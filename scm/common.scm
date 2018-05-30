@@ -26,9 +26,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define (count-one-atom ATM TIMES)
+(define (count-one-atom ATM)
 "
-  count-one-atom ATM TIMES-- increment the count by one on ATM, and
+  count-one-atom ATM -- increment the count by one on ATM, and
   update the SQL database to hold that count.
 
   This will also automatically fetch the previous count from
@@ -40,7 +40,7 @@
   so if some other process updates the database, this will miss that
   update.
 "
-	(define (incr-one atom times)
+	(define (incr-one atom)
 		; If the atom doesn't yet have a count TV attached to it,
 		; then its probably a freshly created atom. Go fetch it
 		; from SQL. Otherwise, assume that what we've got here,
@@ -48,10 +48,10 @@
 		; there is only one process updating the counts.
 		(if (not (cog-ctv? (cog-tv atom)))
 			(fetch-atom atom)) ; get from SQL
-		(cog-inc-count! atom times) ; increment
+		(cog-inc-count! atom 1) ; increment
 	)
 	(begin
-		(incr-one ATM TIMES) ; increment the count on ATM
+		(incr-one ATM) ; increment the count on ATM
 		(store-atom ATM)) ; save to SQL
 )
 
