@@ -117,7 +117,300 @@ key "Manin1977"
 
 \end_inset
 
+ a collection of axioms, and the language that they form, can be studied
+ independently of the interpretation of thier meaning.
+ This statement can be made precise: one defines what a 
+\begin_inset Quotes eld
+\end_inset
 
+language
+\begin_inset Quotes erd
+\end_inset
+
+ is, and separately, one provides a map from that language to a collection
+ of sets.
+ That map is called the 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+; when it obeys a certain set of requirements, it can be called a 
+\begin_inset Quotes eld
+\end_inset
+
+model
+\begin_inset Quotes erd
+\end_inset
+
+ of the axiomatic system.
+\end_layout
+
+\begin_layout Standard
+In exploring the real world - in the activity of performing science, and
+ of discovery, one is faced with the inverse task: one has a collection
+ of evidence, and from this evidence, one attempts to tease out a minimal
+ explanation of the world, as a collection of rules, axioms and theories.
+\end_layout
+
+\begin_layout Standard
+This essay provides a short definition of the formal mathematical concept
+ of an 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+, and then examines how it can be inverted to obtain science from evidence.
+\end_layout
+
+\begin_layout Subsection*
+Interpretation
+\end_layout
+
+\begin_layout Standard
+This subsection gives a quasi-formal defintion of an interpretation.
+ It is quite brief, providing just enough detail to get the general idea
+ across, but playing fast and loose with important theorems.
+ The reader is urged to consult standard texts for a full and complete definitio
+n.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Manin1977,Dalen1980,Baader1998,Hodges1997"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One defines the concept of 
+\begin_inset Quotes eld
+\end_inset
+
+terms
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+relations
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A 
+\begin_inset Quotes eld
+\end_inset
+
+term
+\begin_inset Quotes erd
+\end_inset
+
+ is either some constant 
+\begin_inset Formula $c$
+\end_inset
+
+ or some variable 
+\begin_inset Formula $x$
+\end_inset
+
+ or some (uninterpreted) expression 
+\begin_inset Formula $f\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ where the 
+\begin_inset Formula $t_{k}$
+\end_inset
+
+ are also terms.
+ In some given, fixed system, there may be zero, one or more constants,
+ and there may be zero or more expressions taking some number of arguments.
+ A relation is an expression 
+\begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ that can be either true, or false.
+ Alternately, it can be thought of as a set of tuples: when a tuple 
+\begin_inset Formula $\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ belongs to the relation 
+\begin_inset Formula $R$
+\end_inset
+
+, then 
+\begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ is true.
+\end_layout
+
+\begin_layout Standard
+One standard example of terms and relations is arithmetic: it has two function-e
+xpressions (or operations): 
+\begin_inset Quotes eld
+\end_inset
+
+plus
+\begin_inset Quotes erd
+\end_inset
+
+, and 
+\begin_inset Quotes eld
+\end_inset
+
+times
+\begin_inset Quotes erd
+\end_inset
+
+, both taking two arguments, and two relations: 
+\begin_inset Quotes eld
+\end_inset
+
+equals
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+greater-than
+\begin_inset Quotes erd
+\end_inset
+
+, and two constants: 
+\begin_inset Quotes eld
+\end_inset
+
+zero
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+one
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Another standard example is set theory, which has no operations, one constant
+ 
+\begin_inset Quotes eld
+\end_inset
+
+the empty set
+\begin_inset Quotes erd
+\end_inset
+
+, and two relations: 
+\begin_inset Quotes eld
+\end_inset
+
+equals
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+is member of
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Examples can be found everywhere in mathematics: groups, rings, fields,
+ algebras and so on.
+\end_layout
+
+\begin_layout Standard
+Formulas are obtained by combining relations with logical connectives: 
+\begin_inset Quotes eld
+\end_inset
+
+and
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+or
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+not
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+for all
+\begin_inset Quotes erd
+\end_inset
+
+ ad 
+\begin_inset Quotes eld
+\end_inset
+
+there exists
+\begin_inset Quotes erd
+\end_inset
+
+.
+ From the collection of terms, relations and logical connectives, one can
+ build up all of first-order propositional logic, define what a 
+\begin_inset Quotes eld
+\end_inset
+
+tautology
+\begin_inset Quotes erd
+\end_inset
+
+ is, define a 
+\begin_inset Quotes eld
+\end_inset
+
+theorem
+\begin_inset Quotes erd
+\end_inset
+
+, explain how to use modus ponens, define logical implication 
+\begin_inset Formula $\vdash$
+\end_inset
+
+ and so on.
+ This is all very-well known ground, and cannot be rehashed here.
+ Instead, we skip immediately to the definition of an interpretation.
+ 
+\end_layout
+
+\begin_layout Standard
+An interpretation is a function 
+\begin_inset Formula $\phi$
+\end_inset
+
+ that mapes constants, terms and relations to sets.
+\end_layout
+
+\begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "/home/linas/src/novamente/src/learn-git/learn-lang-diary/lang"
