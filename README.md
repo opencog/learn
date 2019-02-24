@@ -5,7 +5,7 @@ Unsupervised Language Learning
 * Updated May 2017
 * Updated June 2018
 
-Current project, under construction.  See the
+Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
 for an alternate overview.
 
