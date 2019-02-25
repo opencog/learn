@@ -890,8 +890,66 @@ weight of evidence
  
 \end_layout
 
+\begin_layout Standard
+The claim of this essay is that the formal understanding of what an interpretati
+on is, together with the informal explanation provided above, is just enough
+ to be able to design and implement an actual, functional machine that extracts
+ 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ from 
+\begin_inset Quotes eld
+\end_inset
+
+oberevation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In short 
+\begin_inset Quotes eld
+\end_inset
+
+machine learning
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But this first requires an examination of how variables are interpreted.
+\end_layout
+
 \begin_layout Subsection*
 The Interpretation of Variables
+\end_layout
+
+\begin_layout Standard
+In geeral, terms can be of the form 
+\begin_inset Formula $f\left(x,y,\cdots,z\right)$
+\end_inset
+
+ containing variables 
+\begin_inset Formula $x,y,\cdots,z$
+\end_inset
+
+ and likewise relations 
+\begin_inset Formula $R\left(x,y,\cdots,z\right)$
+\end_inset
+
+.
+ These two have to be given an interpretation: what do they mean? In colloquial
+ terms, its not hard: one imagines that 
+\begin_inset Formula $x,y,\cdots,z$
+\end_inset
+
+ stands for the set of all of those things that are appropriate for the
+ term, or make the relation true.
+ It takes some work to convert this informal understanding into a formal
+ statement.
 \end_layout
 
 \begin_layout Standard
@@ -915,15 +973,317 @@ random
 
 .
  In itself, it has no particular meaning.
- However, one considers the space 
+ One defines the space 
 \begin_inset Formula $\overline{M}$
 \end_inset
 
- of all possible
+ as the space of all possible variable assignments.
+ Thus, a single point 
+\begin_inset Formula $\xi\in\overline{M}$
+\end_inset
+
+ corresponds to an assignment of elements in 
+\begin_inset Formula $M$
+\end_inset
+
+ for 
+\begin_inset Formula $x,y,\cdots,z$
+\end_inset
+
+.
+ In formulas, 
+\begin_inset Formula $\phi\left(x\right)\left(\xi\right)=\xi\left(x\right)\in M$
+\end_inset
+
+, so that 
+\begin_inset Formula $\phi\left(x\right):\overline{M}\to M$
+\end_inset
+
+ is a function that maps a point in 
+\begin_inset Formula $\overline{M}$
+\end_inset
+
+ to an element of 
+\begin_inset Formula $M$
+\end_inset
+
+, and (by currying) 
+\begin_inset Formula $\phi:V\times\overline{M}\to M$
+\end_inset
+
+ takes a variable, and some point in 
+\begin_inset Formula $\overline{M}$
+\end_inset
+
+, and produces and element in the 
+\begin_inset Quotes eld
+\end_inset
+
+real world
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ That is, the interpretation of a variable is a function ranging over variable
+ assignments.
+\end_layout
+
+\begin_layout Standard
+This is a bit painfully abstract, but it allows for a natural way of examining
+ statements such as 
+\begin_inset Quotes eld
+\end_inset
+
+if 
+\begin_inset Formula $x$
+\end_inset
+
+ is furry, then 
+\begin_inset Formula $x$
+\end_inset
+
+ is an animal
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We can try to test if this statement is generically true by replacing 
+\begin_inset Formula $x$
+\end_inset
+
+ with an instance of every possible object in the real world.
+ If a formula 
+\begin_inset Formula $p\left(x\right)$
+\end_inset
+
+ remains true as 
+\begin_inset Formula $\xi\in\overline{M}$
+\end_inset
+
+ is varied, i.e.
+ if 
+\begin_inset Formula $\phi\left(p\right)\left(\phi\left(x\right)\left(\xi\right)\right)=\phi\left(p\right)\left(\xi\left(x\right)\right)$
+\end_inset
+
+ remains true for all 
+\begin_inset Formula $\xi\in\overline{M}$
+\end_inset
+
+, then one says that 
+\begin_inset Formula $p\left(x\right)$
+\end_inset
+
+ is a 
+\begin_inset Formula $\phi$
+\end_inset
+
+-true statement.
+ The goal of learning is to discover 
+\begin_inset Formula $\phi$
+\end_inset
+
+-true statements.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+In mathematics, when an interpretation 
+\begin_inset Formula $\phi$
+\end_inset
+
+ of a collection of formulas 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+ renders all of the formulas 
+\begin_inset Formula $\phi$
+\end_inset
+
+-true, then 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is called a 
+\begin_inset Quotes eld
+\end_inset
+
+model
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+.
+ This is perversely backwards from the meaing of the word 
+\begin_inset Quotes eld
+\end_inset
+
+model
+\begin_inset Quotes erd
+\end_inset
+
+ in engineering and process control.
+ In the latter case, one has the evidence 
+\begin_inset Formula $\phi\left(\mathcal{E}\right)$
+\end_inset
+
+ of real life, but doesn't really know what either 
+\begin_inset Formula $\phi$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+ are.
+ When some 
+\begin_inset Formula $\phi$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathcal{E}$
+\end_inset
+
+ are found that approximate reality, these are called a 
+\begin_inset Quotes eld
+\end_inset
+
+model
+\begin_inset Quotes erd
+\end_inset
+
+ of reality.
+ Examples include a thermostat, which attempts to model the temperature
+ inside a house.
+ It cannot ever know the true temperature (drafty windows, cold basements),
+ but it can form some reasonable model of what this might be, and then act
+ to turn on the heat (or cooling).
+ Likewise, the casual use of the word 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+ can mean exactly the opposite of the defintioin given here.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Revising the example might make this clearer.
+ Consider instead the proposition 
+\begin_inset Formula $p\left(x\right)=$
+\end_inset
+
+
+\begin_inset Quotes eld
+\end_inset
+
+if 
+\begin_inset Formula $x$
+\end_inset
+
+ is 
+\begin_inset Formula $c_{f}$
+\end_inset
+
+ then 
+\begin_inset Formula $x$
+\end_inset
+
+ is a 
+\begin_inset Formula $c_{a}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The symbols 
+\begin_inset Formula $c_{f}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{a}$
+\end_inset
+
+ are (uninterpreted) constants.
+ What might they mean? Well, if 
+\begin_inset Formula $\phi\left(c_{f}\right)=\mbox{"furry"}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi\left(c_{a}\right)=\mbox{"animal"}$
+\end_inset
+
+ then we are on to something, because when we interpret 
+\begin_inset Formula $\phi\left(x\right)$
+\end_inset
+
+ as a the set of all possible things that could be 
+\begin_inset Formula $x$
+\end_inset
+
+, we can then examine if 
+\begin_inset Formula $p\left(x\right)$
+\end_inset
+
+ is true (or not) (or rather, more precisely, if 
+\begin_inset Formula $\phi\left(p\right)\left(\phi\left(x\right)\right)$
+\end_inset
+
+ is true or not, as it varies over all of 
+\begin_inset Formula $\overline{M}$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+This now provides a criterion for determining whether an interpretation
+ is real-world-reasonable, or not.
+ So, 
+\begin_inset Formula $\phi\left(c_{f}\right)=\mbox{"furry"}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi\left(c_{a}\right)=\mbox{"animal"}$
+\end_inset
+
+ seems to work, but 
+\begin_inset Formula $\phi\left(c_{f}\right)=\mbox{"slimey"}$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi\left(c_{a}\right)=\mbox{"wooden"}$
+\end_inset
+
+ does not.
 \end_layout
 
 \begin_layout Subsection*
 Machine Learning
+\end_layout
+
+\begin_layout Standard
+The point of this machinery is that it provides just enough specifity to
+ imagine that it could be implemented as a machine learning algorithm.
+ There is no actual machine learning algorithm presented; nor is there any
+ claim that it might be efficient, fast or practical.
+ Rather, it sketches what one must attempt to do, if one wishes to develop
+ a symbolic understanding of reality.
 \end_layout
 
 \begin_layout Standard
