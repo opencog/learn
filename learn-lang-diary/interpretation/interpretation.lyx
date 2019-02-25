@@ -127,8 +127,7 @@ language
 \begin_inset Quotes erd
 \end_inset
 
- is, and separately, one provides a map from that language to a collection
- of sets.
+ is, and separately, one provides a map from that language to a set.
  That map is called the 
 \begin_inset Quotes eld
 \end_inset
@@ -137,15 +136,16 @@ interpretation
 \begin_inset Quotes erd
 \end_inset
 
-; when it obeys a certain set of requirements, it can be called a 
+; when it obeys a certain set of requirements regarding consistency, it
+ can be said to provide the 
 \begin_inset Quotes eld
 \end_inset
 
-model
+meaning
 \begin_inset Quotes erd
 \end_inset
 
- of the axiomatic system.
+ of the axioms.
 \end_layout
 
 \begin_layout Standard
@@ -165,11 +165,37 @@ interpretation
 \begin_inset Quotes erd
 \end_inset
 
-, and then examines how it can be inverted to obtain science from evidence.
+, illustrates why it provides 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+, and then examines how one can find 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ in the evidence obtained from real life.
+ Effectively, the discovery of meaning is the inversion of the process of
+ assigning it: given some evidence collected from real life, we may not
+ know the meaning, but we can seek to find it by discovering the underlying
+ structure, and coupling the two with an interpretation.
+\end_layout
+
+\begin_layout Standard
+This essay could devolve into a philosophical tract; rather, it attempts
+ to be just concrete enough, just grounded and practical enough that one
+ can imagine creating software that actually performs the described process.
 \end_layout
 
 \begin_layout Subsection*
-Interpretation
+Meaning
 \end_layout
 
 \begin_layout Standard
@@ -231,25 +257,14 @@ term
 
  are also terms.
  In some given, fixed system, there may be zero, one or more constants,
- and there may be zero or more expressions taking some number of arguments.
+ and there may be zero or more function-expressions taking some number of
+ arguments.
  A relation is an expression 
 \begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
 \end_inset
 
  that can be either true, or false.
- Alternately, it can be thought of as a set of tuples: when a tuple 
-\begin_inset Formula $\left(t_{1},\cdots,t_{n}\right)$
-\end_inset
-
- belongs to the relation 
-\begin_inset Formula $R$
-\end_inset
-
-, then 
-\begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
-\end_inset
-
- is true.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -331,6 +346,7 @@ is member of
 .
  Examples can be found everywhere in mathematics: groups, rings, fields,
  algebras and so on.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -366,7 +382,7 @@ for all
 \begin_inset Quotes erd
 \end_inset
 
- ad 
+ and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -375,31 +391,41 @@ there exists
 \end_inset
 
 .
- From the collection of terms, relations and logical connectives, one can
- build up all of first-order propositional logic, define what a 
+ This collection of terms, relations and logical connectives, and thier
+ various combinations forms a 
 \begin_inset Quotes eld
 \end_inset
 
-tautology
+language
 \begin_inset Quotes erd
 \end_inset
 
- is, define a 
+: a collection of symbols arranged in various ways with respect to one-another.
+ But what is the 
 \begin_inset Quotes eld
 \end_inset
 
-theorem
+meaning
 \begin_inset Quotes erd
 \end_inset
 
-, explain how to use modus ponens, define logical implication 
-\begin_inset Formula $\vdash$
+ of that language? What do all of the symbols mean?
+\end_layout
+
+\begin_layout Standard
+The canonical answer is that an interpretation provides 
+\begin_inset Quotes eld
 \end_inset
 
- and so on.
- This is all very-well known ground, and cannot be rehashed here.
- Instead, we skip immediately to the definition of an interpretation.
- 
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ to the above formal symbolic expressions.
+ It makes a language concrete by assigining real-world items to each of
+ the symbols, each of the expressions obtained by combining these various
+ elements.
+ It connects the abstract to the real.
 \end_layout
 
 \begin_layout Standard
@@ -407,7 +433,262 @@ An interpretation is a function
 \begin_inset Formula $\phi$
 \end_inset
 
- that mapes constants, terms and relations to sets.
+ that maps constants, terms and relations to elements of some set 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ For example, the set 
+\begin_inset Formula $M$
+\end_inset
+
+ could consist of an apple, pear and bannana, and of all of the different
+ ways that they might be arranged on a table-top.
+ In this example, one might consider the axioms that define the permuation
+ group 
+\begin_inset Formula $S_{3}$
+\end_inset
+
+, which contains abstract expressions such as 
+\begin_inset Formula $a^{2}b$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $ba$
+\end_inset
+
+ and so on.
+ What do 
+\begin_inset Formula $a^{2}b$
+\end_inset
+
+ and 
+\begin_inset Formula $e$
+\end_inset
+
+ and 
+\begin_inset Formula $ba$
+\end_inset
+
+ mean? Acting on the set of arrangements of an apple, pear and bannana on
+ a tabletop, it becomes clear: the element 
+\begin_inset Formula $e$
+\end_inset
+
+ does nothing at all, the element 
+\begin_inset Formula $b$
+\end_inset
+
+ swaps a pair of fruit, and the element 
+\begin_inset Formula $a$
+\end_inset
+
+ exchanges all three pieces of fruit.
+ The equality relation expression as well: the world in which we applied
+ only 
+\begin_inset Formula $e$
+\end_inset
+
+ comes out just the same as the world where we applied 
+\begin_inset Formula $b^{2}$
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ of the permuation group 
+\begin_inset Formula $S_{3}$
+\end_inset
+
+ is the re-arrangement of three items.
+\end_layout
+
+\begin_layout Subsection*
+Interpretation
+\end_layout
+
+\begin_layout Standard
+A quick sketch of the more formal defintion of an interpretation is in order.
+ An interpretation of a constant 
+\begin_inset Formula $c$
+\end_inset
+
+ is some element 
+\begin_inset Formula $\phi\left(c\right)$
+\end_inset
+
+ of the set 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ (In real life, this 
+\begin_inset Quotes eld
+\end_inset
+
+element
+\begin_inset Quotes erd
+\end_inset
+
+ might be a single object, a movement or action, a color or attribute; nothing
+ is presupposed).
+ In casual speech, the constants 
+\begin_inset Formula $c$
+\end_inset
+
+ are the 
+\begin_inset Quotes eld
+\end_inset
+
+names
+\begin_inset Quotes erd
+\end_inset
+
+ of real-life things 
+\begin_inset Formula $\phi\left(c\right)$
+\end_inset
+
+.
+ We call something 
+\begin_inset Formula $c$
+\end_inset
+
+ whenever we see, in the real world, an object 
+\begin_inset Formula $\phi\left(c\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The interpretation of an 
+\begin_inset Formula $n$
+\end_inset
+
+-ary term 
+\begin_inset Formula $f\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ is a function 
+\begin_inset Formula $\phi\left(f\right):M\times\cdots\times M\to M$
+\end_inset
+
+, that is, it is some function defined on the cartesian product of 
+\begin_inset Formula $n$
+\end_inset
+
+ copies of 
+\begin_inset Formula $M$
+\end_inset
+
+, returning a value in 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ Here, by 
+\begin_inset Quotes eld
+\end_inset
+
+function
+\begin_inset Quotes erd
+\end_inset
+
+ we mean the usual thing from school: a function that has a domain and a
+ range: takes objects as inputes and generates an output.
+ Its specific and concrete, whereas the uninterpreted term 
+\begin_inset Formula $f\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ had no such constraints: it wasn't a function at all, just a (meaningless)
+ arrangment of the the typographical symbols 
+\begin_inset Formula $f,t,1,n,(,)$
+\end_inset
+
+ on the written page.
+ That the typography of it just happens to resmble that of a function is
+ already a powerful nod to the importance of notation and visual resemblance
+ to understanding...
+ and also to misunderstanding.
+\end_layout
+
+\begin_layout Standard
+The interpretation of a relation 
+\begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ is a subset 
+\begin_inset Formula $\phi\left(R\right)$
+\end_inset
+
+ of 
+\begin_inset Formula $M\times\cdots\times M$
+\end_inset
+
+.
+ That is, the 
+\begin_inset Formula $n$
+\end_inset
+
+-tuple 
+\begin_inset Formula $\left\langle \phi\left(t_{1}\right),\cdots,\phi\left(t_{n}\right)\right\rangle \in\phi\left(R\right)$
+\end_inset
+
+ if and only if 
+\begin_inset Formula $R\left(t_{1},\cdots,t_{n}\right)$
+\end_inset
+
+ is true.
+ This is just the usual correspondance between set-memembership, and indicator
+ functions.
+ So a relation 
+\begin_inset Formula $R$
+\end_inset
+
+ is some intensive predicate; it's interpretation is some extensive set
+ of objects.
+ It is easiest to consider a unary predicate first, i.e.
+ 
+\begin_inset Formula $n=1$
+\end_inset
+
+ so that 
+\begin_inset Formula $R(t)$
+\end_inset
+
+ is either true or false for any given 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ Given the set 
+\begin_inset Formula $\phi\left(R\right)=\left\{ \mbox{cat},\mbox{dog},\mbox{mouse}\right\} $
+\end_inset
+
+ we might conclude that 
+\begin_inset Formula $R\left(t\right)$
+\end_inset
+
+ is true whenever 
+\begin_inset Formula $\phi\left(t\right)$
+\end_inset
+
+ is a mammal.
+ (or perhaps if 
+\begin_inset Formula $\phi\left(t\right)$
+\end_inset
+
+ is furry...)
 \end_layout
 
 \begin_layout Standard
