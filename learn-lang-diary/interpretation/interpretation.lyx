@@ -649,7 +649,7 @@ The interpretation of a relation
 \end_inset
 
  is true.
- This is just the usual correspondance between set-memembership, and indicator
+ This is just the usual correspondance between set-membership, and indicator
  functions.
  So a relation 
 \begin_inset Formula $R$
@@ -689,6 +689,241 @@ The interpretation of a relation
 \end_inset
 
  is furry...)
+\end_layout
+
+\begin_layout Standard
+Terms can also be variables.
+ The interpretation of variables is more abstract and difficult to understand;
+ it is picked up again in a later section.
+ It is, however, the central theme to this essay: the interpretation of
+ variables is how one actually 
+\begin_inset Quotes eld
+\end_inset
+
+learns
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Metaphysics
+\end_layout
+
+\begin_layout Standard
+The above is a broader, and looser sketch of an 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+ than what is canonically found in books on mathematics.
+ There's nothing particularly wrong with the formulas provided; rather,
+ its the examples.
+ Fruit and animals are never used as examples; whereas integers and sets
+ are.
+ The goal here is different: it is to illustrate that the formal, narrow
+ mathematical concept of 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+ has a broader application than just mathematical logic.
+\end_layout
+
+\begin_layout Standard
+But, I can almost hear you object: if the goal is to make analogies between
+ real life and mathematics, there are many ways that this can be done.
+ So, the interpretation 
+\begin_inset Formula $\phi$
+\end_inset
+
+ behaves a lot like a homomorphism, why not talk about homomorphisms, instead?
+ But also, 
+\begin_inset Formula $\phi$
+\end_inset
+
+ behaves a lot like an action, so why not talk about actions? The answer
+ is perhaps a let-down: the interpretation 
+\begin_inset Formula $\phi$
+\end_inset
+
+ is a lot closer to what we really want, than a homomorphism or action is.
+ 
+\end_layout
+
+\begin_layout Standard
+What do we really want? We want a correspondance between an internal mode
+ of thought and perceived external experience, coupled in such a way that
+ the internal system adequately reflects or describes the external world:
+ predicting it, as it were, allowing the external world to be manipulated
+ based on deductions performed on the internal system.
+\end_layout
+
+\begin_layout Standard
+But why mathematical logic? Here the answer is stronger.
+ Mathematical logic is a theory of symbols, and how they work together.
+ Much of (but not all of) human endevor involves a relationship with the
+ symbolic world: for communication, for science, for deducing evidence in
+ murder-mystery thrillers.
+ The symbolic domain is part of human existence, and vitally important for
+ science; its not going away.
+ Mathematical logic has a well-articulated, deep and broad theory, with
+ a giant treasure-chest of useful results that can be used (here, I am thinking
+ broadly: proof theory, model theory, category theory and type theory all
+ being sub-disciplines of mathematical logic).
+ Many of these results are described as algorithms, with various degrees
+ of efficiency: parsers and solvers coming in a rainbow of different forms.
+\end_layout
+
+\begin_layout Standard
+Perhaps there is a better way of thinking about and talking about the correspond
+ence between abstract understanding and real-world evidence.
+ For right now, though, the concept of 
+\begin_inset Quotes eld
+\end_inset
+
+interpretation
+\begin_inset Quotes erd
+\end_inset
+
+ seems adequate.
+ In particular, the previous section is trying to set up the next section:
+ a claim that one can invert this process, and discover interpretations,
+ and meaning, algorithmically, automatically, by machine.
+\end_layout
+
+\begin_layout Subsection*
+Science
+\end_layout
+
+\begin_layout Standard
+One naive way of understanding science is that it is the process of obtaining
+ formal, axiomatic systems that have interpretations in physical reality.
+ To oversimplify: one observes how gravity makes things fall down, and then
+ deduces 
+\begin_inset Formula $\vec{F}=m\vec{a}$
+\end_inset
+
+.
+ What is the meaning of 
+\begin_inset Formula $\vec{F}=m\vec{a}$
+\end_inset
+
+? It means 
+\begin_inset Quotes eld
+\end_inset
+
+things fall down
+\begin_inset Quotes erd
+\end_inset
+
+.
+ How do we know that is what it means? We know in two different ways.
+ First, it has a very large collection of interpretations: one where 
+\begin_inset Formula $m$
+\end_inset
+
+ is an apple, another where 
+\begin_inset Formula $m$
+\end_inset
+
+ is a canon-ball, and yet another where its a planet.
+ The second way is that 
+\begin_inset Formula $\vec{F}=m\vec{a}$
+\end_inset
+
+ can be combined with the logical connectives 
+\begin_inset Quotes eld
+\end_inset
+
+and
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+or
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+for all
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+there exists
+\begin_inset Quotes erd
+\end_inset
+
+, as well as other formulas an symbol maniuplation techniques to obtain
+ a very large collection of related formulas, each of which also has an
+ interpretation that is consistent with logical reasoning applied to the
+ formulas.
+ That is, the 
+\begin_inset Quotes eld
+\end_inset
+
+weight of evidence
+\begin_inset Quotes erd
+\end_inset
+
+ is multi-faceted: not just that there is a large body of evidence, but
+ that this evidence can be reverse-mapped to the theory, and to the symbolic
+ articulations of the theory.
+ 
+\end_layout
+
+\begin_layout Subsection*
+The Interpretation of Variables
+\end_layout
+
+\begin_layout Standard
+One interprets not a single variable at a time, but all of them, at once,
+ assigning to each variable 
+\begin_inset Formula $x$
+\end_inset
+
+ an element 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ The assignment is effectively 
+\begin_inset Quotes eld
+\end_inset
+
+random
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In itself, it has no particular meaning.
+ However, one considers the space 
+\begin_inset Formula $\overline{M}$
+\end_inset
+
+ of all possible
+\end_layout
+
+\begin_layout Subsection*
+Machine Learning
 \end_layout
 
 \begin_layout Standard
