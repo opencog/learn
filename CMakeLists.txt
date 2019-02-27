@@ -4,30 +4,32 @@ PROJECT(learn)
 
 # Cogutil
 FIND_PACKAGE(CogUtil 2.0.3 CONFIG REQUIRED)
-IF (COGUTIL_FOUND)
+IF(COGUTIL_FOUND)
   ADD_DEFINITIONS(-DHAVE_COGUTIL)
   SET(HAVE_COGUTIL 1)
 
   # Add the 'cmake' directory from cogutil to search path
   list(APPEND CMAKE_MODULE_PATH  ${COGUTIL_DATA_DIR}/cmake)
-
-  # Load cmake functions.
-  INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogFunctions.cmake")
-ENDIF ()
+ENDIF()
 
 # AtomSpace
 FIND_PACKAGE(AtomSpace 5.0.4 CONFIG REQUIRED)
-IF (ATOMSPACE_FOUND)
+IF(ATOMSPACE_FOUND)
   ADD_DEFINITIONS(-DHAVE_ATOMSPACE)
   SET(HAVE_ATOMSPACE 1)
-ENDIF ()
+ENDIF()
 
 # Guile
 FIND_PACKAGE(Guile 2.2.2 REQUIRED)
-IF (GUILE_FOUND)
+IF(GUILE_FOUND)
   ADD_DEFINITIONS(-DHAVE_GUILE)
   SET(HAVE_GUILE 1)
-ENDIF ()
+ENDIF()
+
+# Load cmake functions defined in cogutil repo that depend on Guile.
+IF(GUILE_FOUND AND COGUTIL_FOUND)
+  INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogFunctions.cmake")
+ENDIF()
 
 # Used for configuring experimental setup. Run 'make run-ull' from build
 # directory to configure the setup for expirmenting with code in run-poc.
