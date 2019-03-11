@@ -49,12 +49,6 @@ case $1 in
       ;;
 esac
 
-# define opencog variables needed for cnt_mode=file
-if [[ "$cnt_mode" == "file" ]]; then
-   echo "(define new-sent-flag #t)"| netcat $coghost $cogport;
-   echo "(define current-sentence \"\")"| netcat $coghost $cogport;
-fi
-
 # Punt if the cogserver has crashed: use netcat to ping it.
 haveping=`echo foo | nc $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
@@ -74,8 +68,12 @@ else # escape double quotes and backslashes if not split-sentence
    cat "$filename" | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g' > "$splitdir/$rest"
 fi
 
-# Submit the split article
-cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params
+# Submit the split-article depending on the weights source
+if [[ "$cnt_mode" == "file" ]]; then
+   cat "$splitdir/$rest" | ./submit-one-block.pl $coghost $cogport $observe $params;
+else
+   cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params;
+fi
 
 # Punt if the cogserver has crashed (second test, before doing the mv and rm below)
 haveping=`echo foo | nc $coghost $cogport`

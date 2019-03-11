@@ -6,28 +6,46 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
-(define-public (mst-parse-text-file plain-text mst-dist)
+(define-public (mst-parse-text-file plain-textblock mst-dist)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
 "
-	(define inst-pair-pred (PredicateNode "*-Sentence Instance Pair-*"))
-	(define weight-key (PredicateNode "*-Pair Weight Key-*"))
-
-	; Return the atom holding the count, if it exists, else return nil.
-	(define (get-pair-instances L-ATOM R-ATOM)
-		(define maybe-list (cog-link 'ListLink L-ATOM R-ATOM))
-		(if (null? maybe-list) 
-			'()
-			(cog-link 'EvaluationLink inst-pair-pred maybe-list)
-		)
+	; Split input textblock
+	(define split-textblock
+		(string-split plain-textblock #\newline)
 	)
 
-	; Assuming input is tokenized, just separate by spaces
+	; Define current sentence
+	(define current-sentence (car split-textblock))
+
+	; Assuming input is tokenized, this procedure separates by spaces
 	(define (word-strs text-line)
 		(string-split text-line #\ )
 	)
 
-	; Create a list of atoms from the sequence of strings and their position
+	; Create weights 2D-array from file info
+	(define weights-array
+		(let* ((array-dim (length (word-strs current-sentence)))
+			(tmp-array (make-array -1e40 array-dim array-dim))
+			)
+			; split each line and assign weight to corresponding element
+			(for-each
+				(lambda (weightline)
+					(let ((split-weightline (word-strs weightline))
+						(i1 (string->number (list-ref split-weightline 0)))
+						(i2 (string->number (list-ref split-weightline 2)))
+						(weight (string->number (list-ref split-weightline 4)))
+						)
+						(array-set! tmp-array weight i1 i2)
+					)
+				)
+				(cdr split-textblock)
+			)
+			tmp-array
+		)
+	)
+
+	; Create a list of atoms from the sequence of strings and their position.
 	; Atoms have the structure:
 	; (WordSequenceLink
 	;		(WordNode "example") 
@@ -47,49 +65,15 @@
 		)
 	)	
 
-	; Create instance-pair atom with position-tagged words
-	; Also attach the corresponding weight as a value
-	(define (make-pair-atom text-pair)
-		(define tokens (word-strs plain-text))
-		(define pair-weight (FloatValue (string->number (fifth tokens))))
-		(define pare  ; Create ListLink with numbered words
-			(ListLink 
-				(WordSequenceLink
-					(WordNode (second tokens))
-					(NumberNode (first tokens))
-				) 
-				(WordSequenceLink
-					(WordNode (fourth tokens))
-					(NumberNode (third tokens))
-				)
-			) 
-		)
-
-		; Create EvaluationLink and assign weight
-		(cog-set-value! 
-			(EvaluationLink inst-pair-pred pare) 
-			weight-key pair-weight
-		)
-	)
-
-	; Define scoring function to look for weights in atoms
+	; Define scoring function to look for values in weights-array.
+	; Scorer lambda function should store weights-array from its
+	; current environment (array was defined above).
 	(define scorer 
-		(let ((bad-weight -1e40)) ; losing score
-
-			; We take care here to not actually create the atoms,
-			; if they aren't already in the atomspace. get-pair returns
-			; nil if the atoms can't be found.
-			(lambda (left-atom right-atom distance)
-				(define wpr
-					(if (and (not (null? left-atom)) (not (null? right-atom)))
-						(get-pair-instances left-atom right-atom)
-						'()
-					)
+		(lambda (left-atom right-atom distance)
+			(let ((left-index (gdr left-atom))
+				(right-index (gdr right-atom))
 				)
-				(if (null? wpr) 
-					bad-weight 
-					(cog-value-ref (cog-value wpr weight-key) 0)
-				)
+				(array-ref weights-array left-index right-index)
 			)
 		)
 	)
@@ -109,27 +93,9 @@
 				((modifier (if mst-dist (/ 1 LEN) 0)))
 				(+ modifier (scorer LW RW LEN)))))
 
-	; Check if blank line, which marks sentence end
-	(if (equal? plain-text "")
-		; Parse stored sentence and set new-sentence flag to true
-		(begin
-			(set! new-sent-flag #t)
-			(mst-parse-atom-seq (word-list (word-strs current-sentence)) trunc-scorer)
-		)
+	; Entry point, call parser on atomized sentence with ad-hoc scorer
+	(mst-parse-atom-seq (word-list (word-strs current-sentence)) trunc-scorer)
 
-		; Check if it's the first line in a block (contains sentence to parse)
-		; If not, it's an instance-pair with its weight
-		(if new-sent-flag
-			; store current sent, set new-sent-flag to false, flush prev instance-pairs
-			(begin
-				;###After parsing, flush the newly created atoms to avoid RAM explosion.
-				(set! current-sentence plain-text)
-				(set! new-sent-flag #f)
-			)
-			; if not a new-sentence, create instance-pair atom
-			(make-pair-atom plain-text)
-		)
-	)
 )
 
 
