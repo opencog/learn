@@ -28,7 +28,8 @@ my $start_time = time();
 my $buffer="";
 while (<STDIN>)
 {
-	if (/\n/) {
+	if (/^\n$/) {
+		chomp($buffer);
 		open NC, $netcat || die "nc failed: $!\n";
 		print NC "($ARGV[2] \"$buffer\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n";
 		my $elapsed = time() - $start_time;
@@ -37,7 +38,7 @@ while (<STDIN>)
 	}
 	else {
 		chop;
-		$buffer = $buffer . $_;
+		$buffer = $buffer . $_ . "\n";
 	}
 }
 print "Done with article.\n";

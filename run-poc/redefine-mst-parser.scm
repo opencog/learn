@@ -31,13 +31,12 @@
 			; split each line and assign weight to corresponding element
 			(for-each
 				(lambda (weightline)
-					(let ((split-weightline (word-strs weightline))
-						(i1 (string->number (list-ref split-weightline 0)))
-						(i2 (string->number (list-ref split-weightline 2)))
-						(weight (string->number (list-ref split-weightline 4)))
-						)
-						(array-set! tmp-array weight i1 i2)
-					)
+					(define split-weightline (word-strs weightline))
+					(define i1 (string->number (list-ref split-weightline 0)))
+					(define i2 (string->number (list-ref split-weightline 2)))
+					(define weight (string->number (list-ref split-weightline 4)))
+
+					(array-set! tmp-array weight i1 i2)
 				)
 				(cdr split-textblock)
 			)
@@ -70,11 +69,10 @@
 	; current environment (array was defined above).
 	(define scorer 
 		(lambda (left-atom right-atom distance)
-			(let ((left-index (gdr left-atom))
-				(right-index (gdr right-atom))
-				)
-				(array-ref weights-array left-index right-index)
-			)
+			(define left-index (inexact->exact (string->number (cog-name (gdr left-atom)))))
+			(define right-index (inexact->exact (string->number (cog-name (gdr right-atom)))))
+
+			(array-ref weights-array left-index right-index)
 		)
 	)
 
@@ -232,20 +230,16 @@
 		)
 	)
 
-	(if (list? parse)
-		(begin
-			; The count-one-atom function fetches from the SQL database,
-			; increments the count by one, and stores the result back
-			(for-each
-				(lambda (dj) (if (not (is-oversize? dj)) (count-one-atom dj)))
-				(make-sections parse)
-			)
-			(if EXPORT-MST
-				(if file-cnt-mode
-					(export-mst-parse current-sentence parse "mst-parses.ull")
-					(export-mst-parse plain-text parse "mst-parses.ull")
-				)
-			)
+	; The count-one-atom function fetches from the SQL database,
+	; increments the count by one, and stores the result back
+	(for-each
+		(lambda (dj) (if (not (is-oversize? dj)) (count-one-atom dj)))
+		(make-sections parse)
+	)
+	(if EXPORT-MST
+		(if file-cnt-mode
+			(export-mst-parse (car (string-split plain-text #\newline)) parse "mst-parses.ull")
+			(export-mst-parse plain-text parse "mst-parses.ull")
 		)
 	)
 )
