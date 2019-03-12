@@ -68,8 +68,8 @@ else # escape double quotes and backslashes if not split-sentence
    cat "$filename" | sed -e 's/\\/\\\\/g' -e 's/\"/\\\"/g' > "$splitdir/$rest"
 fi
 
-# Submit the split-article depending on the weights source
-cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params;
+# Submit the split article
+cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params
 
 # Punt if the cogserver has crashed (second test, before doing the mv and rm below)
 haveping=`echo foo | nc $coghost $cogport`
