@@ -69,11 +69,7 @@ else # escape double quotes and backslashes if not split-sentence
 fi
 
 # Submit the split-article depending on the weights source
-if [[ "$cnt_mode" == "file" ]]; then
-   cat "$splitdir/$rest" | ./submit-one-block.pl $coghost $cogport $observe $params;
-else
-   cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params;
-fi
+cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe $params;
 
 # Punt if the cogserver has crashed (second test, before doing the mv and rm below)
 haveping=`echo foo | nc $coghost $cogport`
