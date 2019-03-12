@@ -49,12 +49,6 @@ case $1 in
       ;;
 esac
 
-# define opencog variables needed for cnt_mode=file
-if [[ "$cnt_mode" == "file" ]]; then
-   echo "(define new-sent-flag #t)"| netcat $coghost $cogport;
-   echo "(define current-sentence \"\")"| netcat $coghost $cogport;
-fi
-
 # Punt if the cogserver has crashed: use netcat to ping it.
 haveping=`echo foo | nc $coghost $cogport`
 if [[ $? -ne 0 ]] ; then

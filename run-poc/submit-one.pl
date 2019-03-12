@@ -5,7 +5,12 @@
 # Submit a collection of sentences, one sentence at a time, to the
 # cogserver located on host ARGV[0] and port ARGV[1].  The sentences
 # are read from standard input, and must be arranged with one sentence
-# per line. The are sent to the cogserver using ARGV[2] as the command.
+# per line.
+# For the "file" mode, where word-instance-pair weights are read from a file, 
+# the input must be arranged in blocks starting with 
+# one sentence, and followed by the word-pairs and their weights, one pair
+# per line.  
+# They are sent to the cogserver using ARGV[2] as the command.
 # For word-pair counting, ARGV[2] is "observe-text-mode"
 # For disjunct counting, ARGV[2] is "observe-mst-mode"
 # ARGV[3] and ARGV[4] (and ARGV[5] for observe-mst-mode) are necessary
@@ -24,7 +29,27 @@ die "Netcat failed! Bad host or port?" if (0 != $?);
 my $netcat = "|nc $ARGV[0] $ARGV[1]";
 
 my $start_time = time();
-while (<STDIN>)
+
+if ($ARGV[3] eq "file")
+{
+	my $buffer="";
+	while (<STDIN>)
+	{
+		if (/^\n$/) {
+			chomp($buffer);
+			open NC, $netcat || die "nc failed: $!\n";
+			print NC "($ARGV[2] \"$buffer\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n";
+			my $elapsed = time() - $start_time;
+			print "submit-one (elapsed $elapsed): $_\n";
+			$buffer="";
+		}
+		else {
+			chop;
+			$buffer = $buffer . $_ . "\n";
+		}
+	}
+}
+else
 {
 	if (/<P>/) { next; }
 	chop;
