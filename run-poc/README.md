@@ -174,14 +174,14 @@ Now, let's set up the **text-ingestion pipeline:**
    the following in a second terminal:
 ```
    rlwrap telnet localhost 17005
-   opencog-en> (observe-text "this is a test" "any" 24)
+   opencog-en> (observe-text "this is a test")
 ```
 
    Or better yet (in a third terminal):
 ```
-   echo -e "(observe-text \"this is a another test\" \"any\" 24)" |nc localhost 17005
-   echo -e "(observe-text \"Bernstein () (1876\" \"any\" 24)" |nc localhost 17005
-   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\" \"any\" 24)" |nc localhost 17005
+   echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
+   echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
+   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
    *Note:* 17005 is the default port for the REPL server in English.
