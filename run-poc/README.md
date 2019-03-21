@@ -174,7 +174,7 @@ Now, let's set up the **text-ingestion pipeline:**
    the following in a second terminal:
 ```
    rlwrap telnet localhost 17005
-   opencog-en> (observe-text "this is a test" "any" 24)
+   opencog-en> (observe-text "this is a test")
 ```
 
    Or better yet (in a third terminal):
