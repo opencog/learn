@@ -99,8 +99,9 @@
 
 (define-public (mst-parse-text-mode plain-text cnt-mode mst-dist)
 
-	; Assuming input is tokenized, this procedure separates by spaces
-	(define word-strs (string-split plain-text #\ )
+	; Assuming input is tokenized, this procedure separates by spaces 
+	; and adds LEFT-WALL
+	(define word-strs (cons '"###LEFT-WALL###" (string-split plain-text #\ ))
 	)
 
 	; Create a sequence of atoms from the sequence of strings.
