@@ -523,7 +523,7 @@ MST parsing cannot be started before the above steps to compute word-pair
 MI have been accomplished.
 Alternatively, one can obtain the weights between word-instance-pairs
 from a different source (e.g. a neural-network-generated language model)
-and feed them to the MST algorithm.
+and feed them to the MST algorithm (see instructions after step 7).
 
 The minimum spanning tree code is called from `scm/mst-parser.scm` and
 `run-poc/redefine-mst-parser.scm`. The current
@@ -629,7 +629,8 @@ Second Sentence (prefixed with ###LEFT-WALL###)
 0 ###LEFT-WALL### 2 Second-word-in-sentence link-weight
 ...
 ```
-where each block of a sentence and all its word-instance-pair lines are
+where each block of a sentence (notice that the sentences need to include 
+the initial ###LEFT-WALL### toekn) and all its word-instance-pair lines are
 separated from the next sentence by an empty line.
 The 7 steps above still apply, with the following modifications:
 In step 2), place the special-format files in `gamma-pages`, instead
