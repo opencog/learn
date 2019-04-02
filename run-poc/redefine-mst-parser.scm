@@ -99,8 +99,10 @@
 
 (define-public (mst-parse-text-mode plain-text cnt-mode mst-dist)
 
-	; Tokenize the sentence into a list of words.
-	(define word-strs (tokenize-text plain-text))
+	; Assuming input is tokenized, this procedure separates by spaces 
+	; and adds LEFT-WALL
+	(define word-strs (cons '"###LEFT-WALL###" (string-split plain-text #\ ))
+	)
 
 	; Create a sequence of atoms from the sequence of strings.
 	(define word-list (map (lambda (str) (WordNode str)) word-strs))
