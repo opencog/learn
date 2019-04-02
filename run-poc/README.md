@@ -238,10 +238,22 @@ battles, etc. that get mistaken for sentences, and leads to unusual
 deductions of grammar.  Thus, Wikipedia is not a good choice for
 learning text.
 
-There are various scripts in the [nlp/learn/download](../download)
-directory for downloading and pre-processing texts from Project Gutenberg, Wikipedia, and the "Archive of Our Own"
-fan-fiction website. Once you are sure you have the right material to start, follow the next steps:
+There are various scripts in the [learn/download](../download)
+directory for downloading and pre-processing texts from Project Gutenberg, 
+Wikipedia, and the "Archive of Our Own" fan-fiction website.
+Once you are sure you have the right material to start, follow the next steps:
 
+0) To avoid using an ad-hoc tokenizer in the process, the current pipeline
+   assumes that the texts have been pre-tokenized in the user's preferred way, 
+   and the current pipeline only does naive tokenization on them (splitting by space).
+   As such, we need to empty the affix-punc file in link-grammar/any/ directory.
+   It's recommended to make a copy of the origina to restore for other possible uses
+   of the link-parser in "any" mode.
+   If you didn't build link-grammar in a different location, this should work:
+   ```
+   sudo mv /usr/local/share/link-grammar/any/affix-punc /usr/local/share/link-grammar/any/affix-punc_original 
+   sudo touch /usr/local/share/link-grammar/any/affix-punc
+   ```
 
 1) Setup the working directory by running the following commands from the
    root of your opencog clone, if you haven't already.
@@ -383,6 +395,8 @@ Also, be sure to perform the postgres tuning recommendations found in
 various online postgres performance wikis, or in the
 [atomspace/opencog/persist/sql/README.md](https://github.com/opencog/atomspace/tree/master/opencog/persist/sql) file. See 'Performance' section below.
 
+When you're done observing, restore the original affix-punc file that
+we modified in step 0 of this section.
 
 Mutual Information of Word Pairs
 --------------------------------
@@ -530,7 +544,8 @@ of weights):
    Review the file [README-run.md](./README-run.md) if you want to have a
    general understanding of what each of these scripts/files do.
 
-2) Copy again all your text files, now to the `gamma-pages` directory
+2) Copy again all your text files (pre-tokenized if you wish), 
+   now to the `gamma-pages` directory
    (or edit `text-process.sh` and change the corresponding directory
    name). Once again, keep in mind that during processing, text files
    are removed from this directory.
