@@ -52,7 +52,7 @@
 
 ; Gets count value from word-pair atom
 (define (get-counts PAIR-ATOM)
-	(fetch-atom PAIR-ATOM)
+	;(fetch-atom PAIR-ATOM)
 	(cog-value-ref (cog-tv PAIR-ATOM) 2)
 )
 
@@ -75,17 +75,17 @@
 (define tok-pair-6 (make-word-pair "first" "test-sentence."))
 
 ; First sentence possible pairs
-;(define tok-pair-7 (make-word-pair "###LEFT-WALL###" "second"))
-;(define tok-pair-8 (make-word-pair "###LEFT-WALL###" "one"))
-;(define tok-pair-9 (make-word-pair "A" "second"))
-;(define tok-pair-10 (make-word-pair "A" "one"))
-;(define tok-pair-11 (make-word-pair "second" "one"))
+(define tok-pair-7 (make-word-pair "###LEFT-WALL###" "second"))
+(define tok-pair-8 (make-word-pair "###LEFT-WALL###" "one"))
+(define tok-pair-9 (make-word-pair "The" "second"))
+(define tok-pair-10 (make-word-pair "The" "one"))
+(define tok-pair-11 (make-word-pair "second" "one"))
 
 ; First mode to check
 (define mode "clique")
 (define window 2)
 (observe-text-mode test-str-1 mode window)
-;(observe-text-mode test-str-2 mode window)
+(observe-text-mode test-str-2 mode window)
 
 ; Test that tokenization is done by simple space splitting
 (test-assert "Space-based tokenization" (= (get-counts tok-pair-5) 1))
@@ -99,12 +99,12 @@
 (test-assert check-cnts-text (= (get-counts tok-pair-3) 0)) ; Out of window
 (test-assert check-cnts-text (= (get-counts tok-pair-4) 1))
 (test-assert check-cnts-text (= (get-counts tok-pair-6) 1))
-;(test-assert check-cnts-text (= (get-counts tok-pair-7) 1))
-;(test-assert check-cnts-text (= (get-counts tok-pair-8) 0)) ; Out of window
-;(test-assert check-cnts-text (= (get-counts tok-pair-9) 1))
-;(test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
-;(test-assert check-cnts-text (= (get-counts tok-pair-11) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-7) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-8) 0)) ; Out of window
+(test-assert check-cnts-text (= (get-counts tok-pair-9) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-11) 1))
 
-;(sql-close)
+(sql-close)
 
-;(test-end suite-name)
+(test-end suite-name)
