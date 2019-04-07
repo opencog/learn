@@ -70,77 +70,134 @@
 ; Open the database.
 (sql-open "postgres:///pair-count-test")
 
-; First sentence possible pairs
-(define tok-pair-1 (make-word-pair "###LEFT-WALL###" "The"))
-(define tok-pair-2 (make-word-pair "###LEFT-WALL###" "first"))
-(define tok-pair-3 (make-word-pair "###LEFT-WALL###" "test-sentence."))
-(define tok-pair-4 (make-word-pair "The" "first"))
-(define tok-pair-5 (make-word-pair "The" "test-sentence."))
-(define tok-pair-6 (make-word-pair "first" "test-sentence."))
+(define word-pair-atoms
+	(list
+		; First sentence possible pairs
+		(make-word-pair "###LEFT-WALL###" "The")
+		(make-word-pair "###LEFT-WALL###" "first")
+		(make-word-pair "###LEFT-WALL###" "test-sentence.")
+		(make-word-pair "The" "first")
+		(make-word-pair "The" "test-sentence.")
+		(make-word-pair "first" "test-sentence.")
+		; Second sentence possible pairs
+		(make-word-pair "###LEFT-WALL###" "second")
+		(make-word-pair "###LEFT-WALL###" "one")
+		(make-word-pair "The" "second")
+		(make-word-pair "The" "one")
+		(make-word-pair "second" "one")
+	)
+)
 
-; First sentence possible pairs
-(define tok-pair-7 (make-word-pair "###LEFT-WALL###" "second"))
-(define tok-pair-8 (make-word-pair "###LEFT-WALL###" "one"))
-(define tok-pair-9 (make-word-pair "The" "second"))
-(define tok-pair-10 (make-word-pair "The" "one"))
-(define tok-pair-11 (make-word-pair "second" "one"))
-
+; -------------------------------------------------
 ; First mode to check: clique
 (define mode "clique")
 (define window 2)
 (observe-text-mode test-str-1 mode window)
 (observe-text-mode test-str-2 mode window)
 
+; Counts that each pair should have been observed
+; First pair appears on both sentences
+; 3rd and 8th pairs are out of window
+(define counts-list
+	(list 2 1 0 1 1 1 1 0 1 1 1)
+)
+
 ; Test that tokenization is done by simple space splitting
-(test-assert "Space-based tokenization" (= (get-counts tok-pair-5) 1))
+(test-assert "Space-based tokenization" 
+	(= (get-counts (list-ref word-pair-atoms 4)) (list-ref counts-list 4)))
 
 ; Test that LEFT-WALL is included
-(test-assert "LEFT-WALL added to parse" (= (get-counts tok-pair-2) 1))
+(test-assert "LEFT-WALL added to parse" 
+	(= (get-counts (list-ref word-pair-atoms 1)) (list-ref counts-list 1)))
 
 ; Test that the rest of the pairs were counted correctly
 (define check-cnts-text "Checking correct counts clique")
-(test-assert check-cnts-text (= (get-counts tok-pair-1) 2)) ; Two occurences
-(test-assert check-cnts-text (= (get-counts tok-pair-3) 0)) ; Out of window
-(test-assert check-cnts-text (= (get-counts tok-pair-4) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-6) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-7) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-8) 0)) ; Out of window
-(test-assert check-cnts-text (= (get-counts tok-pair-9) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-11) 1))
+(for-each
+	(lambda (atom count)
+		(test-assert check-cnts-text (= (get-counts atom) count))
+		(reset-atom-count atom)
+	)
+	word-pair-atoms counts-list
+)
 
-(reset-atom-count tok-pair-1)
-(reset-atom-count tok-pair-2)
-(reset-atom-count tok-pair-3)
-(reset-atom-count tok-pair-4)
-(reset-atom-count tok-pair-5)
-(reset-atom-count tok-pair-6)
-(reset-atom-count tok-pair-7)
-(reset-atom-count tok-pair-8)
-(reset-atom-count tok-pair-9)
-(reset-atom-count tok-pair-10)
-(reset-atom-count tok-pair-11)
-
+; -------------------------------------------------
 ; Second mode to check: clique-dist
 (define mode "clique-dist")
 (define window 2)
 (observe-text-mode test-str-1 mode window)
 (observe-text-mode test-str-2 mode window)
 
+; Counts that each pair should have been observed, w/distance modifier
+; First pair appears on both sentences
+; 3rd and 8th pairs are out of window
+(set! counts-list
+	(list 4 1 0 2 1 2 1 0 2 1 2)
+)
+
 ; Test that pairs were counted correctly
 (define check-cnts-text "Checking correct counts clique-dist")
-(test-assert check-cnts-text (= (get-counts tok-pair-1) 4)) ; Two occurences
-(test-assert check-cnts-text (= (get-counts tok-pair-2) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-3) 0)) ; Out of window
-(test-assert check-cnts-text (= (get-counts tok-pair-4) 2))
-(test-assert check-cnts-text (= (get-counts tok-pair-5) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-6) 2))
-(test-assert check-cnts-text (= (get-counts tok-pair-7) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-8) 0)) ; Out of window
-(test-assert check-cnts-text (= (get-counts tok-pair-9) 2))
-(test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
-(test-assert check-cnts-text (= (get-counts tok-pair-11) 2))
+(for-each
+	(lambda (atom count)
+		(test-assert check-cnts-text (= (get-counts atom) count))
+		(reset-atom-count atom)
+	)
+	word-pair-atoms counts-list
+)
 
+; -------------------------------------------------
+; Third mode to check: any
+
+; Generator of word-pair atoms for testing
+(define (make-word-pair word1 word2)
+	(define pare (ListLink (WordNode word1) (WordNode word2)))
+	(define pair-atom (EvaluationLink (LinkGrammarRelationshipNode "ANY") pare))
+	(reset-atom-count pair-atom) ; avoid interference if database is pre-used
+	pair-atom ; return the atom for the word-pair
+)
+
+(set! word-pair-atoms
+	(list
+		; First sentence possible pairs
+		(make-word-pair "###LEFT-WALL###" "The")
+		(make-word-pair "###LEFT-WALL###" "first")
+		(make-word-pair "###LEFT-WALL###" "test-sentence.")
+		(make-word-pair "The" "first")
+		(make-word-pair "The" "test-sentence.")
+		(make-word-pair "first" "test-sentence.")
+		; Second sentence possible pairs
+		(make-word-pair "###LEFT-WALL###" "second")
+		(make-word-pair "###LEFT-WALL###" "one")
+		(make-word-pair "The" "second")
+		(make-word-pair "The" "one")
+		(make-word-pair "second" "one")
+	)
+)
+
+; Just a minumum of times each pair should have been observed
+; because "any" mode is random
+(set! counts-list
+	(list 1 1 1 1 1 1 1 1 1 1 1)
+)
+
+(define mode "any")
+(define window 0)
+(observe-text-mode test-str-1 mode window)
+(observe-text-mode test-str-2 mode window)
+
+; Test that pairs were counted, meaning parsing took effect
+; This test is less strict than prvious, because there is
+; a random component in `any` mode
+(define check-cnts-text "Checking minimum counts in 'any' mode")
+(for-each
+	(lambda (atom count)
+		(test-assert check-cnts-text (>= (get-counts atom) count))
+		(reset-atom-count atom)
+	)
+	word-pair-atoms counts-list
+)
+
+; -------------------------------------------------
+; Close testing database and suite
 (sql-close)
 
 (test-end suite-name)
