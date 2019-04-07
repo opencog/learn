@@ -40,13 +40,17 @@
 (load-from-path "opencog/nlp/learn/gram-class.scm")
 (load-from-path "opencog/nlp/learn/gram-agglo.scm")
 
+; Resets atom count to zero
+(define (reset-atom-count ATOM)
+	(cog-set-tv! ATOM (cog-new-ctv 0 0 0))
+	(store-atom ATOM)
+)
+
 ; Generator of word-pair atoms for testing
 (define (make-word-pair word1 word2)
 	(define pare (ListLink (WordNode word1) (WordNode word2)))
 	(define pair-atom (EvaluationLink pair-pred pare))
-
-	(cog-set-tv! pair-atom (cog-new-ctv 0 0 0))
-	(store-atom pair-atom)
+	(reset-atom-count pair-atom) ; avoid interference if database is pre-used
 	pair-atom ; return the atom for the word-pair
 )
 
@@ -81,7 +85,7 @@
 (define tok-pair-10 (make-word-pair "The" "one"))
 (define tok-pair-11 (make-word-pair "second" "one"))
 
-; First mode to check
+; First mode to check: clique
 (define mode "clique")
 (define window 2)
 (observe-text-mode test-str-1 mode window)
@@ -94,7 +98,7 @@
 (test-assert "LEFT-WALL added to parse" (= (get-counts tok-pair-2) 1))
 
 ; Test that the rest of the pairs were counted correctly
-(define check-cnts-text "Checking correct counts")
+(define check-cnts-text "Checking correct counts clique")
 (test-assert check-cnts-text (= (get-counts tok-pair-1) 2)) ; Two occurences
 (test-assert check-cnts-text (= (get-counts tok-pair-3) 0)) ; Out of window
 (test-assert check-cnts-text (= (get-counts tok-pair-4) 1))
@@ -104,6 +108,38 @@
 (test-assert check-cnts-text (= (get-counts tok-pair-9) 1))
 (test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
 (test-assert check-cnts-text (= (get-counts tok-pair-11) 1))
+
+(reset-atom-count tok-pair-1)
+(reset-atom-count tok-pair-2)
+(reset-atom-count tok-pair-3)
+(reset-atom-count tok-pair-4)
+(reset-atom-count tok-pair-5)
+(reset-atom-count tok-pair-6)
+(reset-atom-count tok-pair-7)
+(reset-atom-count tok-pair-8)
+(reset-atom-count tok-pair-9)
+(reset-atom-count tok-pair-10)
+(reset-atom-count tok-pair-11)
+
+; Second mode to check: clique-dist
+(define mode "clique-dist")
+(define window 2)
+(observe-text-mode test-str-1 mode window)
+(observe-text-mode test-str-2 mode window)
+
+; Test that pairs were counted correctly
+(define check-cnts-text "Checking correct counts clique-dist")
+(test-assert check-cnts-text (= (get-counts tok-pair-1) 4)) ; Two occurences
+(test-assert check-cnts-text (= (get-counts tok-pair-2) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-3) 0)) ; Out of window
+(test-assert check-cnts-text (= (get-counts tok-pair-4) 2))
+(test-assert check-cnts-text (= (get-counts tok-pair-5) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-6) 2))
+(test-assert check-cnts-text (= (get-counts tok-pair-7) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-8) 0)) ; Out of window
+(test-assert check-cnts-text (= (get-counts tok-pair-9) 2))
+(test-assert check-cnts-text (= (get-counts tok-pair-10) 1))
+(test-assert check-cnts-text (= (get-counts tok-pair-11) 2))
 
 (sql-close)
 
