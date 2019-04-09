@@ -83,7 +83,7 @@ jobs:
           command: cd build && make -j2
       - run:
           name: Build tests
-          command: cd build && make -j2 tests
+          command: cd build && make -j2 test
       - run:
           name: Run tests
           command: cd build && make -j2 test args=-j2
