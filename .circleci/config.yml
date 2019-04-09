@@ -17,93 +17,93 @@ jobs:
       - attach_workspace:
           at: /ws
       - run:
-          name: start restoring ccache
+          name: Start restoring ccache
           command: date +%d-%m-%y > /tmp/date
       - restore_cache:
           keys:
             - ccache-{{ checksum "/tmp/date" }}
             - ccache-
       - run:
-          name: install cogutil
+          name: Install cogutil
           command: |
-            git clone --depth 1 https://github.com/$CIRCLE_USERNAME/cogutil /ws/cogutil
+            git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/cogutil /ws/cogutil
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
       - run:
-          name: checkout atomspace
-          command: git clone --depth 1 https://github.com/$circle_project_username/atomspace /ws/atomspace
+          name: Checkout atomspace
+          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/atomspace /ws/atomspace
       - restore_cache:
-          name: restore gch cache
+          name: Restore GCH Cache
           keys:
             - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
       - restore_cache:
-          name: restore haskell deps cache
+          name: Restore Haskell Deps Cache
           keys:
             - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
       - run:
-          name: install atomspace
+          name: Install atomspace
           command: |
             mkdir -p /ws/atomspace/build
             cd /ws/atomspace/build && cmake .. && make -j4 && make -j4 install
             ldconfig
       - save_cache:
-          name: save ghc cache
+          name: Save GHC Cache
           key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
           paths:
             - /root/.stack
       - save_cache:
-          name: save haskell deps cache
+          name: Save Haskell Deps Cache
           key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
       - run:
           name: checkout opencog
-          command: git clone --depth 1 https://github.com/$circle_project_username/opencog /ws/opencog
+          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/opencog /ws/opencog
       - run:
-          name: install opencog
+          name: Install Opencog
           command: |
             mkdir -p /ws/opencog/build
             cd /ws/opencog/build && cmake .. && make -j4 && make -j4 install
             ldconfig
       - checkout
       - restore_cache:
-          name: restore gch cache
+          name: Restore GCH Cache
           keys:
             - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
       - restore_cache:
-          name: restore haskell deps cache
+          name: Restore Haskell Deps Cache
           keys:
             - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
       - run:
-          name: cmake configure
+          name: Cmake Configure
           command: mkdir build && cd build && cmake ..
       - run:
-          name: build
+          name: Build
           command: cd build && make -j2
       - run:
-          name: build tests
+          name: Build tests
           command: cd build && make -j2 tests
       - run:
-          name: run tests
+          name: Run tests
           command: cd build && make -j2 test args=-j2
       - run:
-          name: install learn
+          name: Install learn
           command: cd build && make -j2 install && ldconfig
       # - run:
       #     name: build examples
       #     command: cd build && make -j2 examples
       - run:
-          name: print test log
+          name: Print test log
           command: cat build/tests/testing/temporary/lasttest.log
           when: always
       - save_cache:
-          name: save ghc cache
+          name: Save GHC Cache
           key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
           paths:
             - /root/.stack
       - save_cache:
-          name: save haskell deps cache
+          name: Save Haskell Deps Cache
           key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
@@ -115,21 +115,21 @@ jobs:
             - opencog
             - ccache
 
-  package: #Place holder
-    docker:
-      - image: opencog/opencog-deps
-        user: root
-    working_directory: /ws/atomspace
-    steps:
-      - attach_workspace:
-          at: /ws/
-      - run:
-          name: Start storing ccache
-          command: date +%d-%m-%Y > /tmp/date
-      - save_cache:
-          key: ccache-{{ checksum "/tmp/date" }}
-          paths:
-            - /ws/ccache
+#   package: #place holder
+#     docker:
+#       - image: opencog/opencog-deps
+#         user: root
+#     working_directory: /ws/atomspace
+#     steps:
+#       - attach_workspace:
+#           at: /ws/
+#       - run:
+#           name: start storing ccache
+#           command: date +%d-%m-%y > /tmp/date
+#       - save_cache:
+#           key: ccache-{{ checksum "/tmp/date" }}
+#           paths:
+#             - /ws/ccache
 
 workflows:
   version: 2
