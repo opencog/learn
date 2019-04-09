@@ -23,7 +23,7 @@
   (print-matrix-summary-report star-obj)
 
   ; Clear the sql cache and the stats counters
-  (sql-close)
+  ;(sql-close)
  
   (display "Done computing MI from word pairs.\n")
 )
