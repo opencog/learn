@@ -1,15 +1,15 @@
 version: 2.0
 
 jobs:
-  atomspace:
+  build:
     docker:
       - image: opencog/opencog-deps
         user: root
         environment:
-          PGHOST: opencog-postgres
-          PGUSER: opencog_test
-          PGPASSWORD: cheese
-          CCACHE_DIR: /ws/ccache
+          pghost: opencog-postgres
+          pguser: opencog_test
+          pgpassword: cheese
+          ccache_dir: /ws/ccache
       - image: opencog/postgres
         name: opencog-postgres
     working_directory: /ws/learn
@@ -17,93 +17,93 @@ jobs:
       - attach_workspace:
           at: /ws
       - run:
-          name: Start restoring ccache
-          command: date +%d-%m-%Y > /tmp/date
+          name: start restoring ccache
+          command: date +%d-%m-%y > /tmp/date
       - restore_cache:
           keys:
             - ccache-{{ checksum "/tmp/date" }}
             - ccache-
       - run:
-          name: Install cogutil
+          name: install cogutil
           command: |
-            git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/cogutil /ws/cogutil
+            git clone --depth 1 https://github.com/$circle_project_username/cogutil /ws/cogutil
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
       - run:
-          name: Checkout AtomSpace
-          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/atomspace /ws/atomspace
+          name: checkout atomspace
+          command: git clone --depth 1 https://github.com/$circle_project_username/atomspace /ws/atomspace
       - restore_cache:
-          name: Restore GCH Cache
+          name: restore gch cache
           keys:
             - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
       - restore_cache:
-          name: Restore Haskell Deps Cache
+          name: restore haskell deps cache
           keys:
             - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
       - run:
-          name: Install AtomSpace
+          name: install atomspace
           command: |
             mkdir -p /ws/atomspace/build
             cd /ws/atomspace/build && cmake .. && make -j4 && make -j4 install
             ldconfig
       - save_cache:
-          name: Save GHC Cache
+          name: save ghc cache
           key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
           paths:
             - /root/.stack
       - save_cache:
-          name: Save Haskell Deps Cache
+          name: save haskell deps cache
           key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
       - run:
-          name: Checkout OpenCog
-          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/opencog /ws/opencog
+          name: checkout opencog
+          command: git clone --depth 1 https://github.com/$circle_project_username/opencog /ws/opencog
       - run:
-          name: Install OpenCog
+          name: install opencog
           command: |
             mkdir -p /ws/opencog/build
             cd /ws/opencog/build && cmake .. && make -j4 && make -j4 install
             ldconfig
       - checkout
       - restore_cache:
-          name: Restore GCH Cache
+          name: restore gch cache
           keys:
             - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
       - restore_cache:
-          name: Restore Haskell Deps Cache
+          name: restore haskell deps cache
           keys:
             - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
       - run:
-          name: CMake Configure
+          name: cmake configure
           command: mkdir build && cd build && cmake ..
       - run:
-          name: Build
+          name: build
           command: cd build && make -j2
       - run:
-          name: Build tests
+          name: build tests
           command: cd build && make -j2 tests
       - run:
-          name: Run tests
-          command: cd build && make -j2 test ARGS=-j2
+          name: run tests
+          command: cd build && make -j2 test args=-j2
       - run:
-          name: Install learn
+          name: install learn
           command: cd build && make -j2 install && ldconfig
       # - run:
-      #     name: Build examples
+      #     name: build examples
       #     command: cd build && make -j2 examples
       - run:
-          name: Print test log
-          command: cat build/tests/Testing/Temporary/LastTest.log
+          name: print test log
+          command: cat build/tests/testing/temporary/lasttest.log
           when: always
       - save_cache:
-          name: Save GHC Cache
+          name: save ghc cache
           key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
           paths:
             - /root/.stack
       - save_cache:
-          name: Save Haskell Deps Cache
+          name: save haskell deps cache
           key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
