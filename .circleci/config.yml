@@ -1,7 +1,7 @@
 version: 2.0
 
 jobs:
-  build:
+  atomspace:
     docker:
       - image: opencog/opencog-deps
         user: root
@@ -115,30 +115,30 @@ jobs:
             - opencog
             - ccache
 
-#   package: #Place holder
-#     docker:
-#       - image: opencog/opencog-deps
-#         user: root
-#     working_directory: /ws/atomspace
-#     steps:
-#       - attach_workspace:
-#           at: /ws/
-#       - run:
-#           name: Start storing ccache
-#           command: date +%d-%m-%Y > /tmp/date
-#       - save_cache:
-#           key: ccache-{{ checksum "/tmp/date" }}
-#           paths:
-#             - /ws/ccache
+  package: #Place holder
+    docker:
+      - image: opencog/opencog-deps
+        user: root
+    working_directory: /ws/atomspace
+    steps:
+      - attach_workspace:
+          at: /ws/
+      - run:
+          name: Start storing ccache
+          command: date +%d-%m-%Y > /tmp/date
+      - save_cache:
+          key: ccache-{{ checksum "/tmp/date" }}
+          paths:
+            - /ws/ccache
 
-# workflows:
-#   version: 2
-#   build-test-package:
-#     jobs:
-#       - atomspace
-#       - package:
-#           requires:
-#             - atomspace
-#           filters:
-#             branches:
-#               only: master
+workflows:
+  version: 2
+  build-test-package:
+    jobs:
+      - atomspace
+      - package:
+          requires:
+            - atomspace
+          filters:
+            branches:
+              only: master
