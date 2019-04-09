@@ -26,7 +26,7 @@ jobs:
       - run:
           name: install cogutil
           command: |
-            git clone --depth 1 https://github.com/$circle_project_username/cogutil /ws/cogutil
+            git clone --depth 1 https://github.com/$CIRCLE_USERNAME/cogutil /ws/cogutil
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
