@@ -95,7 +95,7 @@ jobs:
       #     command: cd build && make -j2 examples
       - run:
           name: Print test log
-          command: cat build/tests/testing/temporary/lasttest.log
+          command: cat build/tests/Testing/Temporary/LastTest.log
           when: always
       - save_cache:
           name: Save GHC Cache
