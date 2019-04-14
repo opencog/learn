@@ -1,5 +1,5 @@
 ; Perform unit tests for the Mutual Information calculation
-; part of the ULL pipeline
+; in clique modes, part of the ULL pipeline.
 
 (use-modules (opencog test-runner))
 
