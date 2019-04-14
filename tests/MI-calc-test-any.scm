@@ -1,11 +1,11 @@
 ; Perform unit tests for the Mutual Information calculation
-; in clique modes, part of the ULL pipeline.
+; in "any" mode, part of the ULL pipeline.
 
 (use-modules (opencog test-runner))
 
 (opencog-test-runner)
 ; Name of test-suite
-(define suite-name "MI-calc-test-clique")
+(define suite-name "MI-calc-test-any")
 
 ;------------------------------------------------------------------------------
 ; Setup
@@ -55,7 +55,7 @@
 ; Generator of word-pair atoms for testing
 (define (make-word-pair word1 word2)
 	(define pare (ListLink (WordNode word1) (WordNode word2)))
-	(define pair-atom (EvaluationLink pair-pred pare))
+	(define pair-atom (EvaluationLink (LinkGrammarRelationshipNode "ANY") pare))
 	(set-atom-count pair-atom 0) ; avoid interference if database is pre-used
 	pair-atom ; return the atom for the word-pair
 )
@@ -74,7 +74,7 @@
 (test-begin suite-name)
 
 ; Open the database.
-(sql-open "postgres:///MI-calc-test-clique")
+(sql-open "postgres:///MI-calc-test-any")
 
 ; Only create word-pairs that have positive counts
 ; otherwise there's a problem when calculating MI
@@ -95,11 +95,11 @@
 )
 
 ; -------------------------------------------------
-; First mode to check: clique and clique-dist, they use same api
-(define cnt-mode "clique")
+; Second mode to check: any, which uses its own api
+(define cnt-mode "any")
 
-; Counts that each pair should have been observed, considering a
-; clique window of 2
+; Artificial number of counts that each pair was observed, just to
+; test that MI-calculation works for "any" mode too.
 ; First pair appears on both sentences
 (define counts-list
 	(list 2 1 1 1 1 1 1 1 1)
@@ -124,7 +124,7 @@
 (define tolerance 0.000001) ; tolerated diff between MI-values
 
 ; Test that the MI values were calculated correctly by pipeline
-(define check-MI-text "Checking correct MI values clique")
+(define check-MI-text "Checking correct MI values 'any'")
 
 (for-each
 	(lambda (atom expected-MI)
