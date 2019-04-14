@@ -6,10 +6,10 @@ jobs:
       - image: opencog/opencog-deps
         user: root
         environment:
-          pghost: opencog-postgres
-          pguser: opencog_test
-          pgpassword: cheese
-          ccache_dir: /ws/ccache
+          PGHOST: opencog-postgres
+          PGUSER: opencog_test
+          PGPASSWORD: cheese
+          CCACHE_DIR: /ws/ccache
       - image: opencog/postgres
         name: opencog-postgres
     working_directory: /ws/learn
@@ -18,7 +18,7 @@ jobs:
           at: /ws
       - run:
           name: Start restoring ccache
-          command: date +%d-%m-%y > /tmp/date
+          command: date +%d-%m-%Y > /tmp/date
       - restore_cache:
           keys:
             - ccache-{{ checksum "/tmp/date" }}
@@ -58,7 +58,7 @@ jobs:
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
       - run:
-          name: checkout opencog
+          name: Checkout Opencog
           command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/opencog /ws/opencog
       - run:
           name: Install Opencog
