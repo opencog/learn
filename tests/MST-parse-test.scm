@@ -7,11 +7,15 @@
 (define suite-name "MST-parse-test")
 
 ; Setup
-
 (load "setup.scm") ; custom unit-test utilities
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")
+
+; Sets MI value for word-pair atom
+(define (set-MI-value PAIR-ATOM MI-VALUE)
+	(cog-set-value! PAIR-ATOM mi-key (FloatValue 0 MI-VALUE))
+)
 
 ;-------------------------------------------------------
 ; Begin test
@@ -20,11 +24,12 @@
 ; Open the database.
 (sql-open "postgres:///MST-parse-test")
 
-; First mode to check: mst without distance
+; First mode to check: clique, without mst-distance
+(define cnt-mode "clique")
 (define mst-dist #f)
 
-; Only create word-pairs that have positive counts
-; otherwise there's a problem when calculating MI
+; Only create word-pairs that were observed. Counts are
+; irrelevant, as we'll attach the MI-values next
 (define word-pair-atoms
 	(list
 		; First sentence possible pairs
@@ -41,41 +46,56 @@
 	)
 )
 
-; Counts that each pair should have been observed, considering a
-; clique window of 2
-; First pair appears on both sentences
-(define counts-list
-	(list 2 1 1 1 1 1 1 1 1)
-)
-
-; Set the counts for each pair as if it was observed
-(for-each
-	(lambda (atom count)
-		(set-atom-count atom count)
-	)
-	word-pair-atoms counts-list
-)
-
-; Run ULL pipeline to calculate MI
-(comp-mi cnt-mode)
-
-; manually calculated, expected MI values for each pair in the list
+; manually calculated, arbitrary values for each pair in the list
+; suited to test parses for the mst-parser
 (define MI-list
 	(list (- (log2 5) 1) (- (log2 5) 2) (- (log2 5) 2) (- (log2 5) 2) (log2 5)
-	(- (log2 5) 2) (- (log2 5) 2) (- (log2 5) 2) (log2 5))
+	(1) (1) (1) (1))
 )
-(define tolerance 0.000001) ; tolerated diff between MI-values
 
-; Test that the MI values were calculated correctly by pipeline
-(define check-MI-text "Checking correct MI values clique")
-
+; Assign mi-values to each atom
 (for-each
-	(lambda (atom expected-MI)
-		(define diff (- (get-MI-value atom) expected-MI))
-		(test-assert check-MI-text (< (abs diff) tolerance))
+	(lambda (pair-atom mi-value)
+		(set-MI-value pair-atom mi-value)
 	)
 	word-pair-atoms MI-list
 )
+
+; Parse the sentences
+(define parse-1 (observe-mst-mode test-str-1 cnt-mode mst-dist #f))
+(define parse-2 (observe-mst-mode test-str-2 cnt-mode mst-dist #f))
+
+; manually calculated, expected parses
+(define w1 (cons 1 (WordNode "###LEFT-WALL###")))
+(define w2 (cons 2 (WordNode "The")))
+(define w3 (cons 3 (WordNode "first")))
+(define w4 (cons 4 (WordNode "test-sentence.")))
+(define expected-parse-1
+	(append 
+		(append 
+			(list (cons (cons w3 w4) (log2 5)))
+			(list (cons (cons w2 w4) (- (log2 5) 2)))
+		)
+		(list (cons (cons w1 w2) (- (log2 5) 1)))
+	)
+)
+
+(set! w3 (cons 3 (WordNode "second")))
+(set! w4 (cons 4 (WordNode "one")))
+(define expected-parse-2
+	(append 
+		(append 
+			(list (cons (cons w3 w4) (log2 5)))
+			(list (cons (cons w2 w4) (- (log2 5) 2)))
+		)
+		(list (cons (cons w1 w2) (- (log2 5) 1)))
+	)
+)
+
+; Test that MST-parses are as expected
+(define check-MST-text "Checking MST-parses clique no mst-dist")
+(test-assert check-MST-text (equal? parse-1 expected-parse-1))
+(test-assert check-MST-text (equal? parse-2 expected-parse-2))
 
 ; -------------------------------------------------
 ; Close testing database and suite
