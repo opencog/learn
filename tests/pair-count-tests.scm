@@ -8,57 +8,7 @@
 
 ;------------------------------------------------------------------------------
 ; Setup
-
-(use-modules
-  (opencog)
-  (opencog nlp)
-  (opencog persist)
-  (opencog persist-sql)
-  (opencog cogserver))
-
-; NOTE
-; 1. The files are loaded in pipeline order. In general, the later files
-;  depend on definitions contained
-; in the earlier files.
-; 2. Poc changes are loaded after files of the same name are loaded so as to
-; redfefine the functions.
-; 3. load-from-path is used so as to be able to redfine some functions. If
-; (opencog nlp learn) that will not be possilbe as some of the functions
-; are not exported.
-(load-from-path "opencog/nlp/learn/common.scm")
-(load "../run-poc/redefine-common.scm")
-(load-from-path "opencog/nlp/learn/utilities.scm")
-(load-from-path "opencog/nlp/learn/link-pipeline.scm")
-(load "../run-poc/redefine-link-pipeline.scm")
-(load-from-path "opencog/nlp/learn/singletons.scm")
-(load-from-path "opencog/nlp/learn/batch-word-pair.scm")
-(load-from-path "opencog/nlp/learn/mst-parser.scm")
-(load "../run-poc/redefine-mst-parser.scm")
-(load-from-path "opencog/nlp/learn/pseudo-csets.scm")
-(load-from-path "opencog/nlp/learn/shape-vec.scm")
-(load-from-path "opencog/nlp/learn/summary.scm")
-(load-from-path "opencog/nlp/learn/gram-class.scm")
-(load-from-path "opencog/nlp/learn/gram-agglo.scm")
-
-; Resets atom count to zero
-(define (reset-atom-count ATOM)
-	(cog-set-tv! ATOM (cog-new-ctv 0 0 0))
-	(store-atom ATOM)
-)
-
-; Generator of word-pair atoms for testing
-(define (make-word-pair word1 word2)
-	(define pare (ListLink (WordNode word1) (WordNode word2)))
-	(define pair-atom (EvaluationLink pair-pred pare))
-	(reset-atom-count pair-atom) ; avoid interference if database is pre-used
-	pair-atom ; return the atom for the word-pair
-)
-
-; Gets count value from word-pair atom
-(define (get-counts PAIR-ATOM)
-	;(fetch-atom PAIR-ATOM)
-	(cog-value-ref (cog-tv PAIR-ATOM) 2)
-)
+(load "setup.scm")
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")
@@ -70,30 +20,31 @@
 ; Open the database.
 (sql-open "postgres:///pair-count-test")
 
+(define cnt-mode "clique")
+
 (define word-pair-atoms
 	(list
 		; First sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "The")
-		(make-word-pair "###LEFT-WALL###" "first")
-		(make-word-pair "###LEFT-WALL###" "test-sentence.")
-		(make-word-pair "The" "first")
-		(make-word-pair "The" "test-sentence.")
-		(make-word-pair "first" "test-sentence.")
+		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "test-sentence." cnt-mode 0)
+		(make-word-pair "The" "first" cnt-mode 0)
+		(make-word-pair "The" "test-sentence." cnt-mode 0)
+		(make-word-pair "first" "test-sentence." cnt-mode 0)
 		; Second sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "second")
-		(make-word-pair "###LEFT-WALL###" "one")
-		(make-word-pair "The" "second")
-		(make-word-pair "The" "one")
-		(make-word-pair "second" "one")
+		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "one" cnt-mode 0)
+		(make-word-pair "The" "second" cnt-mode 0)
+		(make-word-pair "The" "one" cnt-mode 0)
+		(make-word-pair "second" "one" cnt-mode 0)
 	)
 )
 
 ; -------------------------------------------------
 ; First mode to check: clique
-(define mode "clique")
 (define window 2)
-(observe-text-mode test-str-1 mode window)
-(observe-text-mode test-str-2 mode window)
+(observe-text-mode test-str-1 cnt-mode window)
+(observe-text-mode test-str-2 cnt-mode window)
 
 ; Counts that each pair should have been observed
 ; First pair appears on both sentences
@@ -115,17 +66,17 @@
 (for-each
 	(lambda (atom count)
 		(test-assert check-cnts-text (= (get-counts atom) count))
-		(reset-atom-count atom)
+		(set-atom-count atom 0)
 	)
 	word-pair-atoms counts-list
 )
 
 ; -------------------------------------------------
 ; Second mode to check: clique-dist
-(define mode "clique-dist")
+(define cnt-mode "clique-dist")
 (define window 2)
-(observe-text-mode test-str-1 mode window)
-(observe-text-mode test-str-2 mode window)
+(observe-text-mode test-str-1 cnt-mode window)
+(observe-text-mode test-str-2 cnt-mode window)
 
 ; Counts that each pair should have been observed, w/distance modifier
 ; First pair appears on both sentences
@@ -139,37 +90,30 @@
 (for-each
 	(lambda (atom count)
 		(test-assert check-cnts-text (= (get-counts atom) count))
-		(reset-atom-count atom)
+		(set-atom-count atom 0)
 	)
 	word-pair-atoms counts-list
 )
 
 ; -------------------------------------------------
 ; Third mode to check: any
-
-; Generator of word-pair atoms for testing
-(define (make-word-pair word1 word2)
-	(define pare (ListLink (WordNode word1) (WordNode word2)))
-	(define pair-atom (EvaluationLink (LinkGrammarRelationshipNode "ANY") pare))
-	(reset-atom-count pair-atom) ; avoid interference if database is pre-used
-	pair-atom ; return the atom for the word-pair
-)
+(define cnt-mode "any")
 
 (set! word-pair-atoms
 	(list
 		; First sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "The")
-		(make-word-pair "###LEFT-WALL###" "first")
-		(make-word-pair "###LEFT-WALL###" "test-sentence.")
-		(make-word-pair "The" "first")
-		(make-word-pair "The" "test-sentence.")
-		(make-word-pair "first" "test-sentence.")
+		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "test-sentence." cnt-mode 0)
+		(make-word-pair "The" "first" cnt-mode 0)
+		(make-word-pair "The" "test-sentence." cnt-mode 0)
+		(make-word-pair "first" "test-sentence." cnt-mode 0)
 		; Second sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "second")
-		(make-word-pair "###LEFT-WALL###" "one")
-		(make-word-pair "The" "second")
-		(make-word-pair "The" "one")
-		(make-word-pair "second" "one")
+		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "one" cnt-mode 0)
+		(make-word-pair "The" "second" cnt-mode 0)
+		(make-word-pair "The" "one" cnt-mode 0)
+		(make-word-pair "second" "one" cnt-mode 0)
 	)
 )
 
@@ -179,10 +123,9 @@
 	(list 1 1 1 1 1 1 1 1 1 1 1)
 )
 
-(define mode "any")
-(define window 0)
-(observe-text-mode test-str-1 mode window)
-(observe-text-mode test-str-2 mode window)
+(define window 0) ; all parses returned by LG "any"
+(observe-text-mode test-str-1 cnt-mode window)
+(observe-text-mode test-str-2 cnt-mode window)
 
 ; Test that pairs were counted, meaning parsing took effect
 ; This test is less strict than prvious, because there is
@@ -191,7 +134,7 @@
 (for-each
 	(lambda (atom count)
 		(test-assert check-cnts-text (>= (get-counts atom) count))
-		(reset-atom-count atom)
+		(set-atom-count atom 0)
 	)
 	word-pair-atoms counts-list
 )
