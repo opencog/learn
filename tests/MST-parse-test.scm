@@ -1,13 +1,11 @@
-; Perform unit tests for the Mutual Information calculation
-; in "any" mode, part of the ULL pipeline.
+; Perform unit tests for the MST-parsing part of the ULL pipeline.
 
 (use-modules (opencog test-runner))
 
 (opencog-test-runner)
 ; Name of test-suite
-(define suite-name "MI-calc-test-any")
+(define suite-name "MST-parse-test")
 
-;------------------------------------------------------------------------------
 ; Setup
 
 (load "setup.scm") ; custom unit-test utilities
@@ -20,30 +18,42 @@
 (test-begin suite-name)
 
 ; Open the database.
-(sql-open "postgres:///MI-calc-test-any")
+(sql-open "postgres:///MST-parse-test")
 
-; Second mode to check: any, which uses its own api
-(define cnt-mode "any")
+; First mode to check: mst without distance
+(define mst-dist #f)
 
 ; Only create word-pairs that have positive counts
-; otherwise there's a problem when calculating MI.
-; Assign artificial number of counts that each pair was observed, just to
-; test that MI-calculation works for "any" mode too.
-; First pair appears on both sentences
+; otherwise there's a problem when calculating MI
 (define word-pair-atoms
 	(list
 		; First sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 2)
-		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 1)
-		(make-word-pair "The" "first" cnt-mode 1)
-		(make-word-pair "The" "test-sentence." cnt-mode 1)
-		(make-word-pair "first" "test-sentence." cnt-mode 1)
+		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 0)
+		(make-word-pair "The" "first" cnt-mode 0)
+		(make-word-pair "The" "test-sentence." cnt-mode 0)
+		(make-word-pair "first" "test-sentence." cnt-mode 0)
 		; Second sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 1)
-		(make-word-pair "The" "second" cnt-mode 1)
-		(make-word-pair "The" "one" cnt-mode 1)
-		(make-word-pair "second" "one" cnt-mode 1)
+		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 0)
+		(make-word-pair "The" "second" cnt-mode 0)
+		(make-word-pair "The" "one" cnt-mode 0)
+		(make-word-pair "second" "one" cnt-mode 0)
 	)
+)
+
+; Counts that each pair should have been observed, considering a
+; clique window of 2
+; First pair appears on both sentences
+(define counts-list
+	(list 2 1 1 1 1 1 1 1 1)
+)
+
+; Set the counts for each pair as if it was observed
+(for-each
+	(lambda (atom count)
+		(set-atom-count atom count)
+	)
+	word-pair-atoms counts-list
 )
 
 ; Run ULL pipeline to calculate MI
@@ -57,7 +67,7 @@
 (define tolerance 0.000001) ; tolerated diff between MI-values
 
 ; Test that the MI values were calculated correctly by pipeline
-(define check-MI-text "Checking correct MI values 'any'")
+(define check-MI-text "Checking correct MI values clique")
 
 (for-each
 	(lambda (atom expected-MI)
