@@ -98,6 +98,7 @@
 ; -------------------------------------------------
 ; Third mode to check: any
 (define cnt-mode "any")
+(display cnt-mode)
 
 (set! word-pair-atoms
 	(list
@@ -127,6 +128,7 @@
 (observe-text-mode test-str-1 cnt-mode window)
 (observe-text-mode test-str-2 cnt-mode window)
 
+(display word-pair-atoms)
 ; Test that pairs were counted, meaning parsing took effect
 ; This test is less strict than prvious, because there is
 ; a random component in `any` mode

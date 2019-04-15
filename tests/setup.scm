@@ -47,7 +47,7 @@
 (define (make-word-pair word1 word2 MODE CNT)
 	(define pare (ListLink (WordNode word1) (WordNode word2)))
 	(define pair-atom
-		(if (eq? MODE "any") 
+		(if (equal? MODE "any") 
 			(EvaluationLink (LinkGrammarRelationshipNode "ANY") pare)
 			(EvaluationLink pair-pred pare)
 		)
@@ -60,4 +60,10 @@
 (define (get-MI-value PAIR-ATOM)
 	(define mi-key (Predicate "*-Mutual Info Key-*"))
 	(cog-value-ref (cog-value PAIR-ATOM mi-key) 1)
+)
+
+; Gets count value from word-pair atom
+(define (get-counts PAIR-ATOM)
+	;(fetch-atom PAIR-ATOM)
+	(cog-value-ref (cog-tv PAIR-ATOM) 2)
 )
