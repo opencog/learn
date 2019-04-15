@@ -50,7 +50,7 @@
 ; suited to test parses for the mst-parser
 (define MI-list
 	(list (- (log2 5) 1) (- (log2 5) 2) (- (log2 5) 2) (- (log2 5) 2) (log2 5)
-	(1) (1) (1) (1))
+	1 1.1 1.4 0.8)
 )
 
 ; Assign mi-values to each atom
@@ -85,10 +85,10 @@
 (define expected-parse-2
 	(append 
 		(append 
-			(list (cons (cons w3 w4) (log2 5)))
-			(list (cons (cons w2 w4) (- (log2 5) 2)))
+			(list (cons (cons w2 w4) 1.4))
+			(list (cons (cons w1 w2) (- (log2 5) 1)))
 		)
-		(list (cons (cons w1 w2) (- (log2 5) 1)))
+		(list (cons (cons w2 w3) 1.1))
 	)
 )
 
