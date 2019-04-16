@@ -8,9 +8,9 @@
 (define suite-name "MI-calc-test-any")
 
 ;------------------------------------------------------------------------------
-; Setup
-
-(load "setup.scm") ; custom unit-test utilities
+; Setup file contains unit-test utility functions and resets and
+; opens the testing psql database
+(load "setup.scm")
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")

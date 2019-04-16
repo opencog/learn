@@ -7,8 +7,9 @@
 (define suite-name "pair-count-tests")
 
 ;------------------------------------------------------------------------------
-; Setup
-(load "setup.scm")
+; Setup file contains unit-test utility functions and resets and
+; opens the testing psql database
+(load "setup.scm") 
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")
@@ -16,9 +17,6 @@
 ;-------------------------------------------------------
 ; Begin test
 (test-begin suite-name)
-
-; Open the database.
-(sql-open "postgres:///pair-count-test")
 
 (define cnt-mode "clique")
 
@@ -98,7 +96,6 @@
 ; -------------------------------------------------
 ; Third mode to check: any
 (define cnt-mode "any")
-(display cnt-mode)
 
 (set! word-pair-atoms
 	(list
@@ -128,7 +125,6 @@
 (observe-text-mode test-str-1 cnt-mode window)
 (observe-text-mode test-str-2 cnt-mode window)
 
-(display word-pair-atoms)
 ; Test that pairs were counted, meaning parsing took effect
 ; This test is less strict than prvious, because there is
 ; a random component in `any` mode
