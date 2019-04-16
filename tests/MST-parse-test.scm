@@ -156,37 +156,39 @@
 
 (define text-block
 "###LEFT-WALL### Test in file mode\n\
-0 ###LEFT-WALL### 1 Test 1\n\
-0 ###LEFT-WALL### 2 in 1\n\
-0 ###LEFT-WALL### 3 file 1\n\
+0 ###LEFT-WALL### 1 Test 2.1\n\
+0 ###LEFT-WALL### 2 in 4.1\n\
+0 ###LEFT-WALL### 3 file 4\n\
 0 ###LEFT-WALL### 4 mode 1\n\
-1 Test 2 in 1\n\
+1 Test 2 in 2.05\n\
 1 Test 3 file 1\n\
-1 Test 4 mode 1\n\
+1 Test 4 mode 5\n\
 2 in 3 file 1\n\
 2 in 4 mode 1\n\
-3 file 4 mode 1")
+3 file 4 mode 2")
 
 ; Parse the sentences
 (set! parse-1 (observe-mst-mode text-block cnt-mode mst-dist #f))
-(display parse-1)
 
-; manually calculated, expected parses
-(set! w1 (cons 1 (WordNode "###LEFT-WALL###")))
-(set! w2 (cons 2 (WordNode "Test")))
-(set! w3 (cons 3 (WordNode "in")))
-(set! w4 (cons 4 (WordNode "file")))
-(define w5 (cons 5 (WordNode "mode")))
+; manually calculated, expected parses (note that current heuristic doesn't
+; give us the actual MST parse, but a close one)
+; atoms in "file" mode mst-parser have a different structure, needed
+; to retain the word positions in the sentece
+(set! w1 (cons 1 (WordSequenceLink (WordNode "###LEFT-WALL###") (NumberNode 0))))
+(set! w2 (cons 2 (WordSequenceLink (WordNode "Test") (NumberNode 1))))
+(set! w3 (cons 3 (WordSequenceLink (WordNode "in") (NumberNode 2))))
+(set! w4 (cons 4 (WordSequenceLink (WordNode "file") (NumberNode 3))))
+(define w5 (cons 5 (WordSequenceLink (WordNode "mode") (NumberNode 4))))
 (define expected-parse-1
 	(append
 		(append 
 			(append 
-				(list (cons (cons w3 w4) 1))
-				(list (cons (cons w2 w3) 1))
+				(list (cons (cons w2 w5) 5))
+				(list (cons (cons w1 w2) 2.1))
 			)
-			(list (cons (cons w1 w2) 1))
+			(list (cons (cons w2 w3) 2.05))
 		)
-		(list cons (cons w1 w1) 1)
+		(list (cons (cons w4 w5) 2))
 	)
 )
 
