@@ -26,36 +26,24 @@
 (define cnt-mode "any")
 
 ; Only create word-pairs that have positive counts
-; otherwise there's a problem when calculating MI
+; otherwise there's a problem when calculating MI.
+; Assign artificial number of counts that each pair was observed, just to
+; test that MI-calculation works for "any" mode too.
+; First pair appears on both sentences
 (define word-pair-atoms
 	(list
 		; First sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 0)
-		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 0)
-		(make-word-pair "The" "first" cnt-mode 0)
-		(make-word-pair "The" "test-sentence." cnt-mode 0)
-		(make-word-pair "first" "test-sentence." cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "The" cnt-mode 2)
+		(make-word-pair "###LEFT-WALL###" "first" cnt-mode 1)
+		(make-word-pair "The" "first" cnt-mode 1)
+		(make-word-pair "The" "test-sentence." cnt-mode 1)
+		(make-word-pair "first" "test-sentence." cnt-mode 1)
 		; Second sentence possible pairs
-		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 0)
-		(make-word-pair "The" "second" cnt-mode 0)
-		(make-word-pair "The" "one" cnt-mode 0)
-		(make-word-pair "second" "one" cnt-mode 0)
+		(make-word-pair "###LEFT-WALL###" "second" cnt-mode 1)
+		(make-word-pair "The" "second" cnt-mode 1)
+		(make-word-pair "The" "one" cnt-mode 1)
+		(make-word-pair "second" "one" cnt-mode 1)
 	)
-)
-
-; Artificial number of counts that each pair was observed, just to
-; test that MI-calculation works for "any" mode too.
-; First pair appears on both sentences
-(define counts-list
-	(list 2 1 1 1 1 1 1 1 1)
-)
-
-; Set the counts for each pair as if it was observed
-(for-each
-	(lambda (atom count)
-		(set-atom-count atom count)
-	)
-	word-pair-atoms counts-list
 )
 
 ; Run ULL pipeline to calculate MI

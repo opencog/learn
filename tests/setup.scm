@@ -57,8 +57,8 @@
 )
 
 ; Gets MI value from word-pair atom
+(define mi-key (Predicate "*-Mutual Info Key-*"))
 (define (get-MI-value PAIR-ATOM)
-	(define mi-key (Predicate "*-Mutual Info Key-*"))
 	(cog-value-ref (cog-value PAIR-ATOM mi-key) 1)
 )
 
