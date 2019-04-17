@@ -7,7 +7,7 @@ jobs:
         user: root
         environment:
           PGHOST: opencog-postgres
-          PGUSER: opencog_test
+          PGUSER: opencog_user
           PGPASSWORD: cheese
           CCACHE_DIR: /ws/ccache
       - image: opencog/postgres
@@ -26,13 +26,13 @@ jobs:
       - run:
           name: Install cogutil
           command: |
-            git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/cogutil /ws/cogutil
+            git clone --depth 1 https://github.com/singnet/cogutil /ws/cogutil
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
       - run:
           name: Checkout AtomSpace
-          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/atomspace /ws/atomspace
+          command: git clone --depth 1 https://github.com/singnet/atomspace /ws/atomspace
       - restore_cache:
           name: Restore GCH Cache
           keys:
@@ -59,7 +59,7 @@ jobs:
             - /ws/atomspace/opencog/haskell/.stack-work
       - run:
           name: Checkout OpenCog
-          command: git clone --depth 1 https://github.com/$CIRCLE_PROJECT_USERNAME/opencog /ws/opencog
+          command: git clone --depth 1 https://github.com/singnet/opencog /ws/opencog
       - run:
           name: Install OpenCog
           command: |
