@@ -12,12 +12,26 @@ ENABLE_TESTING()
 
 # Set postgress credentials
 if(NOT DEFINED ENV{PGUSER})
-	SET(ENV{PGUSER} ENV{USER})
+	SET(ENV{PGUSER} $ENV{USER})
 endif(NOT DEFINED ENV{PGUSER})
-
 SET(ENV{PGPASSWORD} "cheese")
 
+# Reset all test databases needed
+message("\nIf database doesn't exist, dropdb sends error message. Disregard it.")
+execute_process(COMMAND "dropdb" "ULL_tests")
+execute_process(COMMAND "createdb" "ULL_tests")
+execute_process(COMMAND "psql" "ULL_tests" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+
+execute_process(COMMAND "dropdb" "ULL_calcMI_clique_test")
+execute_process(COMMAND "createdb" "ULL_calcMI_clique_test")
+execute_process(COMMAND "psql" "ULL_calcMI_clique_test" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+
+execute_process(COMMAND "dropdb" "ULL_calcMI_any_test")
+execute_process(COMMAND "createdb" "ULL_calcMI_any_test")
+execute_process(COMMAND "psql" "ULL_calcMI_any_test" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+
+# Add Unit tests
 ADD_GUILE_TEST(UllPairCounting pair-count-tests.scm)
+ADD_GUILE_TEST(UllMSTParsing MST-parse-test.scm)
 ADD_GUILE_TEST(UllMICalcClique MI-calc-test-clique.scm)
 ADD_GUILE_TEST(UllMICalcAny MI-calc-test-any.scm)
-ADD_GUILE_TEST(UllMSTParsing MST-parse-test.scm)

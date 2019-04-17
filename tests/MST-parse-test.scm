@@ -7,9 +7,11 @@
 (define suite-name "MST-parse-test")
 
 ;-------------------------------------------------------
-; Setup file contains unit-test utility functions and resets and
-; opens the testing psql database
+; Setup file contains unit-test utility functions
 (load "setup.scm")
+
+; Open the database.
+(sql-open "postgres:///ULL_tests")
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")

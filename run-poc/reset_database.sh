@@ -2,4 +2,4 @@ dropdb $1
 
 createdb $1
 
-cat ~/MyOpenCogSources/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql $1
+cat ${LEARN_SOURCE_DIR}/run-poc/atom.sql | psql $1

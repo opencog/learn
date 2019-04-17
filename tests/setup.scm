@@ -34,10 +34,6 @@
 (load-from-path "opencog/nlp/learn/gram-agglo.scm")
 (load "../run-poc/compute-mi.scm")
 
-; Reset and open the database.
-(system* "../run-poc/reset_database.sh" "ULL_tests")
-(sql-open "postgres:///ULL_tests")
-
 ; Define log2 function
 (define (log2 x) (/ (log x) (log 2)))
 
