@@ -30,6 +30,13 @@ execute_process(COMMAND "dropdb" "ULL_calcMI_any_test")
 execute_process(COMMAND "createdb" "ULL_calcMI_any_test")
 execute_process(COMMAND "psql" "ULL_calcMI_any_test" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
 
+# The current ULL pipeline is tokenization-agnostic, so the input
+# should be pre-tokenized by some other method. The pipeline only
+# splits sentences by spaces. For the tests to work, we need to
+# remove the content of the affix-file in the link-grammar dictionary
+# for "any" language. For the test suite, it is done below.
+execute_process(COMMAND "echo ''" OUTPUT_FILE "usr/local/share/link-grammar/any/affix-punc")
+
 # Add Unit tests
 ADD_GUILE_TEST(UllPairCounting pair-count-tests.scm)
 ADD_GUILE_TEST(UllMSTParsing MST-parse-test.scm)
