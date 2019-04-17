@@ -8,9 +8,11 @@
 (define suite-name "MI-calc-test-any")
 
 ;------------------------------------------------------------------------------
-; Setup
+; Setup file contains unit-test utility functions
+(load "setup.scm")
 
-(load "setup.scm") ; custom unit-test utilities
+; Open the database.
+(sql-open "postgres:///ULL_calcMI_any_test")
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")
@@ -18,9 +20,6 @@
 ;-------------------------------------------------------
 ; Begin test
 (test-begin suite-name)
-
-; Open the database.
-(sql-open "postgres:///MI-calc-test-any")
 
 ; Second mode to check: any, which uses its own api
 (define cnt-mode "any")

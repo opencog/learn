@@ -7,9 +7,12 @@
 ; Name of test-suite
 (define suite-name "MI-calc-test-clique")
 
-; Setup
+;-------------------------------------------------------
+; Setup file contains unit-test utility functions
+(load "setup.scm")
 
-(load "setup.scm") ; custom unit-test utilities
+; Open the database.
+(sql-open "postgres:///ULL_calcMI_clique_test")
 
 (define test-str-1 "The first test-sentence.")
 (define test-str-2 "The second one")
@@ -17,9 +20,6 @@
 ;-------------------------------------------------------
 ; Begin test
 (test-begin suite-name)
-
-; Open the database.
-(sql-open "postgres:///MI-calc-test-clique")
 
 ; First mode to check: clique and clique-dist, they use same api
 (define cnt-mode "clique")
