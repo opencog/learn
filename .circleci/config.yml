@@ -139,14 +139,14 @@ jobs:
 #           paths:
 #             - /ws/ccache
 
-workflows:
-  version: 2
-  build-test-package:
-    jobs:
-      - atomspace
-      - package:
-          requires:
-            - atomspace
-          filters:
-            branches:
-              only: circleci_add
+# workflows:
+#   version: 2
+#   build-test-package:
+#     jobs:
+#       - atomspace
+#       - package:
+#           requires:
+#             - atomspace
+#           filters:
+#             branches:
+#               only: circleci_add
