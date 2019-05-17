@@ -17,18 +17,21 @@ endif(NOT DEFINED ENV{PGUSER})
 SET(ENV{PGPASSWORD} "cheese")
 
 # Reset all test databases needed
-message("\nIf database doesn't exist, dropdb sends error message. Disregard it.")
+message("\nIf database doesn't exist, dropdb sends error message. Disregard it.\n")
 execute_process(COMMAND "dropdb" "ULL_tests")
 execute_process(COMMAND "createdb" "ULL_tests")
 execute_process(COMMAND "psql" "ULL_tests" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+message("\nCreated database ULL_tests.\n")
 
 execute_process(COMMAND "dropdb" "ULL_calcMI_clique_test")
 execute_process(COMMAND "createdb" "ULL_calcMI_clique_test")
 execute_process(COMMAND "psql" "ULL_calcMI_clique_test" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+message("\nCreated database ULL_calcMI_clique_test.\n")
 
 execute_process(COMMAND "dropdb" "ULL_calcMI_any_test")
 execute_process(COMMAND "createdb" "ULL_calcMI_any_test")
 execute_process(COMMAND "psql" "ULL_calcMI_any_test" INPUT_FILE "${CMAKE_SOURCE_DIR}/run-poc/atom.sql")
+message("\nCreated database ULL_calcMI_any_test.\n")
 
 # The current ULL pipeline is tokenization-agnostic, so the input
 # should be pre-tokenized by some other method. The pipeline only

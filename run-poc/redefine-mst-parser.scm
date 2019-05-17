@@ -15,8 +15,10 @@
 		(string-split plain-textblock #\newline)
 	)
 
-	; Define current sentence
-	(define current-sentence (car split-textblock))
+	; Define and add LEFT-WALL to current-sentence
+	(define current-sentence 
+		(string-append "###LEFT-WALL### " (car split-textblock))
+	)
 
 	; Assuming input is tokenized, this procedure separates by spaces
 	(define (word-strs text-line)

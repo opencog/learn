@@ -156,7 +156,7 @@
 (set! mst-dist #f)
 
 (define text-block
-"###LEFT-WALL### Test in file mode\n\
+"Test in file mode\n\
 0 ###LEFT-WALL### 1 Test 2.1\n\
 0 ###LEFT-WALL### 2 in 4.1\n\
 0 ###LEFT-WALL### 3 file 4\n\
