@@ -145,7 +145,7 @@
 	(mst-parse-text-mode plain-text "any" #f))
 
 ; ---------------------------------------------------------------------
-(define (export-mst-parse plain-text mstparse filename)
+(define (export-mst-parse plain-text mstparse SENT-NBR filename)
 "
   Export an MST-parse to a text file named filename,
   so that parses can be examined.
@@ -186,10 +186,11 @@
 		(lambda (l1 l2)
 			(< (get-lindex l1) (get-lindex l2))))
 
-	; Print the sentence first
+	; Print the numbered sentence first
 	(if (not (null? plain-text))
 		(display
-			(format #f "~a\n"
+			(format #f "~a\t~a\t"
+				SENT-NBR
 				plain-text)
 			file-port))
 
@@ -198,7 +199,7 @@
 		(lambda (l) ; links
 			(if (> (get-mi l) -1.0e10) ; bad-MI
 				(display
-					(format #f "~a ~a ~a ~a ~a\n"
+					(format #f "~a ~a ~a ~a ~a\t"
 						(get-lindex l)
 						(get-lword l)
 						(get-rindex l)
@@ -214,7 +215,7 @@
 	(close-port file-port)
 )
 
-(define-public (observe-mst-mode plain-text CNT-MODE MST-DIST EXPORT-MST)
+(define-public (observe-mst-mode plain-text SENT-NBR CNT-MODE MST-DIST EXPORT-MST)
 "
   observe-mst-mode -- update pseduo-disjunct counts by observing raw text.
 					  Build mst-parses using MI calculated beforehand.
@@ -242,8 +243,8 @@
 	)
 	(if EXPORT-MST
 		(if file-cnt-mode
-			(export-mst-parse (car (string-split plain-text #\newline)) parse "mst-parses.ull")
-			(export-mst-parse plain-text parse "mst-parses.ull")
+			(export-mst-parse (car (string-split plain-text #\newline)) parse SENT-NBR "mst-parses.ull")
+			(export-mst-parse plain-text parse SENT-NBR "mst-parses.ull")
 		)
 	)
 
@@ -252,5 +253,5 @@
 
 ; Wrapper for backwards compatibility
 (define-public (observe-mst plain-text)
-	(observe-mst-mode plain-text "any" #f #f)
+	(observe-mst-mode plain-text "any" 1 #f #f)
 )

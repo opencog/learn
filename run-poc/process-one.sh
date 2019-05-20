@@ -77,7 +77,14 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
+if [ -f "mst-parses.ull" ];
+then
+   # Sort parses and remove index, convert to ull format
+   sort -g mst-parses.ull | cut -f2- | tr '\t' '\n';
+   # Organize parse file
+   mv mst-parses.ull "$parsesdir/${rest}.ull";
+fi
+
 # Move article to the done-queue
-mv mst-parses.ull "$parsesdir/${rest}.ull"
 mv "$splitdir/$rest" "$subdir/$rest"
 rm "$base/$rest"

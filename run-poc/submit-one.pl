@@ -57,6 +57,7 @@ sub send_stuff {
 }
 
 my $start_time = time();
+my $sent_nbr = 0;
 
 if ($ARGV[3] eq "file")
 {
@@ -86,7 +87,8 @@ else
 		if ( $ARGV[2] eq "observe-text-mode" )
 			{ send_stuff("($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"); }
 		elsif ( $ARGV[2] eq "observe-mst-mode" )
-			{ send_stuff("($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n"); }
+			{ $sent_nbr += 1;
+			send_stuff("($ARGV[2] \"$_\" \"$sent_nbr\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n"); }
 		my $elapsed = time() - $start_time;
 		print "submit-one (elapsed $elapsed): $_\n";
 	}
