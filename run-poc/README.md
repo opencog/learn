@@ -676,18 +676,20 @@ Before you follow the next steps make sure you have cloned the repositories from
 
 2) Clone the docker repository:
    ```
-   ~$ git clone https://github.com/opencog/docker.git
+   ~$ git clone https://github.com/singnet/docker.git
    ```
 
-3) Enter the opencog directory and build your images:
+3) Make sure your user is in the docker group (`getent group docker`), otherwise you will get the error
+   > Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
+
+   If this happens, follow the instructions [here](https://docs.docker.com/install/linux/linux-postinstall/).
+
+   Enter the opencog directory and build your images:
    ```
    ~$ cd docker/opencog/
    ~/docker/opencog$ ./docker-build.sh -a
    ```
-   Make sure your user is in the docker group (`getent group docker`), otherwise you will get the error
-   > Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
-   If this happens, follow the instructions [here](https://docs.docker.com/install/linux/linux-postinstall/).
-
+   
 4) Create a directory in your machine to store code that will make building
    again the containers faster (change path to your own, ex: $HOME/.ccache):
    ```
@@ -697,7 +699,11 @@ Before you follow the next steps make sure you have cloned the repositories from
    Optionally you can instead just comment out the `$CCACHE_DIR:/home/opencog/.ccache`
    line in *common.yml* file
 
-5) Add these lines to *~/.bashrc* at *$HOME* of your host OS (change paths to your
+5) If you don't have opencog installed and running in your OS, you need to first install
+   opencog. Please follow all instructions [here](https://wiki.opencog.org/w/Building_OpenCog)
+   and make sure you have a running opencog.
+
+6) Add these lines to *~/.bashrc* at *$HOME* of your host OS (change paths to your
    own) and run `source ~/.bashrc`.
    ```
    export OPENCOG_SOURCE_DIR=$HOME/path/to/opencog
@@ -707,18 +713,18 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
    If you are trying to install the container in a shared server insert these lines in the file *~/.profile* instead, and restart your session before continuing.
 
-6) Run the container:
+7) Run the container:
    ```
    ~$ cd docker/opencog/
    ~/docker/opencog$ docker-compose run dev
    ```
 
-7) Inside the container, clone the `learn` repository with the ULL pipeline into your home directory:
+8) Inside the container, clone the `learn` repository with the ULL pipeline into your home directory:
    ```
-   git clone https://github.com/singnet/learn /home/opencog/
+   git clone https://github.com/singnet/learn /home/opencog/learn
    ```
 
-8) Setup the working directory by running the following commands from the
+9) Setup the working directory by running the following commands from the
    newly cloned container.
    ```
    cd ~/learn
@@ -728,7 +734,7 @@ Before you follow the next steps make sure you have cloned the repositories from
    ~/learn/build$ cmake ..
    ~/learn/build$ make run-ull
    ```
-9) Test that everything is working:
+10) Test that everything is working:
 
    a) Create and format a database (password is cheese):
    ```
