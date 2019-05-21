@@ -713,16 +713,22 @@ Before you follow the next steps make sure you have cloned the repositories from
    ~/docker/opencog$ docker-compose run dev
    ```
 
-7) Setup the working directory by running the following commands from the
-   root of your opencog clone, if you haven't already.
+7) Inside the container, clone the `learn` repository with the ULL pipeline into your home directory:
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   git clone https://github.com/singnet/learn /home/opencog/
    ```
-8) Test that everything is working:
+
+8) Setup the working directory by running the following commands from the
+   newly cloned container.
+   ```
+   cd ~/learn
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make run-ull
+   ```
+9) Test that everything is working:
 
    a) Create and format a database (password is cheese):
    ```
@@ -734,7 +740,7 @@ Before you follow the next steps make sure you have cloned the repositories from
 
    b) In a separate session start the REPL server.
    ```
-    $ cd /opencog/build/run-ull/
+    $ cd ~/learn/build/run-ull/
     $ guile -l launch-cogserver.scm  -- --mode pairs --lang en --db learn_pairs --user opencog_user --password cheese
    ```
 
