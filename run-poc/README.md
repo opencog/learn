@@ -686,6 +686,7 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
    Make sure your user is in the docker group (`getent group docker`), otherwise you will get the error
    > Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
+   If this happens, follow the instructions [here](https://docs.docker.com/install/linux/linux-postinstall/).
 
 4) Create a directory in your machine to store code that will make building
    again the containers faster (change path to your own, ex: $HOME/.ccache):
