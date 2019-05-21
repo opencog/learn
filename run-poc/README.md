@@ -256,20 +256,20 @@ Once you are sure you have the right material to start, follow the next steps:
    ```
 
 1) Setup the working directory by running the following commands from the
-   root of your opencog clone, if you haven't already.
+   root of your `learn` clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make run-ull
    ```
 
    Review the file [README-run.md](./README-run.md) if you want to have a
    general understanding of what each of these scripts/files do.
 
 2) Put all the training plain text files of the same language in a separate
-   directory inside your working directory, at `/opencog/build/run-ull/`.
+   directory inside your working directory, at `~/learn/build/run-ull/`.
    The scripts used in this section use by default the name `beta-pages`
    for such a directory,  so if you want to use a different name make sure
    you change the respective path inside the `text-process.sh` script. Also,
@@ -306,7 +306,7 @@ Once you are sure you have the right material to start, follow the next steps:
     - clique-dist: same word-pairs as 'clique', but the count in each word
            pair is incremented by 'cnt_reach / distance'
 
-5) In your working directory at `/opencog/build/run-ull` run the following:
+5) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh pairs lang ??_pairs your_user your_password
    ```
@@ -409,13 +409,13 @@ will automatically pick up where they left off.
 1) Setup the working directory by running the following commands from the
    root of your opencog clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make run-ull
    ```
-2) In your working directory at `/opencog/build/run-ull` run the following:
+2) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh cmi lang ??_pairs your_user your_password
    ```
@@ -534,11 +534,11 @@ of weights):
 1) Setup the working directory by running the following commands from the
    root of your opencog clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make run-ull
    ```
 
    Review the file [README-run.md](./README-run.md) if you want to have a
@@ -567,7 +567,7 @@ of weights):
    The parameter cnt_reach does not
    have an effect at this stage, you can leave it as is.
 
-5) In your working directory at `/opencog/build/run-ull` run the following:
+5) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh mst lang dbname your_user your_password
    ```
@@ -713,16 +713,22 @@ Before you follow the next steps make sure you have cloned the repositories from
    ~/docker/opencog$ docker-compose run dev
    ```
 
-7) Setup the working directory by running the following commands from the
-   root of your opencog clone, if you haven't already.
+7) Inside the container, clone the `learn` repository with the ULL pipeline into your home directory:
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   git clone https://github.com/singnet/learn /home/opencog/
    ```
-8) Test that everything is working:
+
+8) Setup the working directory by running the following commands from the
+   newly cloned container.
+   ```
+   cd ~/learn
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make run-ull
+   ```
+9) Test that everything is working:
 
    a) Create and format a database (password is cheese):
    ```
@@ -734,7 +740,7 @@ Before you follow the next steps make sure you have cloned the repositories from
 
    b) In a separate session start the REPL server.
    ```
-    $ cd /opencog/build/run-ull/
+    $ cd ~/learn/build/run-ull/
     $ guile -l launch-cogserver.scm  -- --mode pairs --lang en --db learn_pairs --user opencog_user --password cheese
    ```
 
@@ -787,3 +793,5 @@ Some usefull commands for managing your containers on your local machine are lis
 
 ***Note 5***: Remember to always close any cogserver (Ctrl+D) sessions you have started before continuing,
 otherwise you will have problems accessing your databases later.
+
+***Note 6***: If you prefer to avoid specifying username and password for the postgres databases, you can follow [these instructions](https://www.postgresql.org/docs/current/libpq-pgpass.html)
