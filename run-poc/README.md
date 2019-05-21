@@ -793,3 +793,5 @@ Some usefull commands for managing your containers on your local machine are lis
 
 ***Note 5***: Remember to always close any cogserver (Ctrl+D) sessions you have started before continuing,
 otherwise you will have problems accessing your databases later.
+
+***Note 6***: If you prefer to avoid specifying username and password for the postgres databases, you can follow [these instructions](https://www.postgresql.org/docs/current/libpq-pgpass.html)
