@@ -262,6 +262,8 @@ Once you are sure you have the right material to start, follow the next steps:
    ~/learn$ cd build
    ~/learn/build$ rm -rf *
    ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
    ~/learn/build$ make run-ull
    ```
 
@@ -413,6 +415,8 @@ will automatically pick up where they left off.
    ~/learn$ cd build
    ~/learn/build$ rm -rf *
    ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
    ~/learn/build$ make run-ull
    ```
 2) In your working directory at `~/learn/build/run-ull` run the following:
@@ -538,6 +542,8 @@ of weights):
    ~/learn$ cd build
    ~/learn/build$ rm -rf *
    ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
    ~/learn/build$ make run-ull
    ```
 
@@ -732,6 +738,8 @@ Before you follow the next steps make sure you have cloned the repositories from
    ~/learn$ cd build
    ~/learn/build$ rm -rf *
    ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
    ~/learn/build$ make run-ull
    ```
 10) Test that everything is working:
