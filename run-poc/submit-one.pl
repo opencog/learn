@@ -101,4 +101,5 @@ else
 		print "submit-one (elapsed $elapsed): $_\n";
 	}
 }
+sleep 5 ; # Small delay to allow socket processes to finish
 print "Done with article.\n";
