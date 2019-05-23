@@ -31,6 +31,4 @@ esac
 source ./config/det-port-num.sh $1 $2
 
 # Process files in assigned directory
-echo "ANTES"
 time find $directory -type f -exec ./process-one.sh $1 $2 {} localhost $PORT \;
-echo "DESPUES"

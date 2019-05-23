@@ -5,7 +5,7 @@
 # Submit a collection of sentences, one sentence at a time, to the
 # cogserver located on host ARGV[0] and port ARGV[1].  The sentences
 # are read from standard input, and must be arranged with one sentence
-# per line. The are sent to the cogserver using ARGV[2] as the command.
+# per line. They are sent to the cogserver using ARGV[2] as the command.
 # For word-pair counting, ARGV[2] is "observe-text-mode"
 # For disjunct counting, ARGV[2] is "observe-mst-mode"
 # ARGV[3] and ARGV[4] (and ARGV[5] for observe-mst-mode) are necessary
@@ -17,7 +17,13 @@
 
 die "Wrong number of args!" if ($#ARGV < 4);
 
-# Avoid using netcat.
+# Use netcat only for pair-counting, not for mst-parsing (this may cause
+# problems if we care about disjunct counting, but for now we don't care
+# about them)
+# Verify that the host and port number are OK.
+`nc -z $ARGV[0] $ARGV[1]`;
+die "Netcat failed! Bad host or port?" if (0 != $?);
+my $netcat = "|nc $ARGV[0] $ARGV[1]";
 
 use Socket;
 my $port =  "$ARGV[1]";
@@ -85,7 +91,9 @@ else
 		chop;
 
 		if ( $ARGV[2] eq "observe-text-mode" )
-			{ send_stuff("($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"); }
+			{open NC, $netcat || die "nc failed: $!\n";
+ 			print NC "($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"; }
+			#{ send_stuff("($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"); }
 		elsif ( $ARGV[2] eq "observe-mst-mode" )
 			{ $sent_nbr += 1;
 			send_stuff("($ARGV[2] \"$_\" \"$sent_nbr\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n"); }
