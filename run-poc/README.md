@@ -747,7 +747,7 @@ Before you follow the next steps make sure you have cloned the repositories from
    a) Create and format a database (password is cheese):
    ```
     $ createdb learn_pairs
-    $ cat /atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
+    $ cat atom.sql | psql learn_pairs
    ```
    Use tmux to create parallel sessions of the container. If you are not familiar with
    it you can use this cheatsheet in [here](https://gist.github.com/MohamedAlaa/2961058).
@@ -767,8 +767,9 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
     $ psql learn_pairs
     learn_pairs=# SELECT * FROM atoms;
-    ```
-    The words from the sentence "*This is a test*" should appear inside the table below the *name* column.
+   ```
+
+   The words from the sentence "This is a test" should appear inside the table below the *name* column.
 
 IF EVERYTHING WORKED FINE YOU ARE READY TO WORK (go to [Bulk Text Parsing](#bulk-text-parsing)),
 OTHERWISE GO BACK TO STEP 0 (or fix your bug if you happen to know what went wrong)!!
