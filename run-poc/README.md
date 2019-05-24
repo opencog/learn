@@ -767,7 +767,8 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
     $ psql learn_pairs
     learn_pairs=# SELECT * FROM atoms;
-    ```
+   ```
+   
     The words from the sentence "*This is a test*" should appear inside the table below the *name* column.
 
 IF EVERYTHING WORKED FINE YOU ARE READY TO WORK (go to [Bulk Text Parsing](#bulk-text-parsing)),
