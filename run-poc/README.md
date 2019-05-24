@@ -769,7 +769,7 @@ Before you follow the next steps make sure you have cloned the repositories from
     learn_pairs=# SELECT * FROM atoms;
    ```
 
-    The words from the sentence "This is a test" should appear inside the table below the *name* column.
+   The words from the sentence "This is a test" should appear inside the table below the *name* column.
 
 IF EVERYTHING WORKED FINE YOU ARE READY TO WORK (go to [Bulk Text Parsing](#bulk-text-parsing)),
 OTHERWISE GO BACK TO STEP 0 (or fix your bug if you happen to know what went wrong)!!
