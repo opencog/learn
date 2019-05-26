@@ -72,6 +72,13 @@ Thus, operating the system requires three basic steps:
 
 Each of these is described in greater detail in separate sections below.
 
+Alternatively to word-pair counting and MI calculations, we have also
+set up the system to be able to generate MST parses for sentences by
+providing the weights of their instance-pairs in a file (instead of MI).
+This allows for the use of different algorithms that estimate the
+relationship between words, e.g. neural networks.
+See the MST section below for more details.
+
 
 Setting up the AtomSpace
 ------------------------
@@ -167,14 +174,14 @@ Now, let's set up the **text-ingestion pipeline:**
    the following in a second terminal:
 ```
    rlwrap telnet localhost 17005
-   opencog-en> (observe-text "this is a test" "any" 24)
+   opencog-en> (observe-text "this is a test")
 ```
 
    Or better yet (in a third terminal):
 ```
-   echo -e "(observe-text \"this is a another test\" \"any\" 24)" |nc localhost 17005
-   echo -e "(observe-text \"Bernstein () (1876\" \"any\" 24)" |nc localhost 17005
-   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\" \"any\" 24)" |nc localhost 17005
+   echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
+   echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
+   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
    *Note:* 17005 is the default port for the REPL server in English.
@@ -231,26 +238,40 @@ battles, etc. that get mistaken for sentences, and leads to unusual
 deductions of grammar.  Thus, Wikipedia is not a good choice for
 learning text.
 
-There are various scripts in the [nlp/learn/download](../download)
-directory for downloading and pre-processing texts from Project Gutenberg, Wikipedia, and the "Archive of Our Own"
-fan-fiction website. Once you are sure you have the right material to start, follow the next steps:
+There are various scripts in the [learn/download](../download)
+directory for downloading and pre-processing texts from Project Gutenberg, 
+Wikipedia, and the "Archive of Our Own" fan-fiction website.
+Once you are sure you have the right material to start, follow the next steps:
 
+0) To avoid using an ad-hoc tokenizer in the process, the current pipeline
+   assumes that the texts have been pre-tokenized in the user's preferred way, 
+   and the current pipeline only does naive tokenization on them (splitting by space).
+   As such, we need to empty the affix-punc file in link-grammar/any/ directory.
+   It's recommended to make a copy of the origina to restore for other possible uses
+   of the link-parser in "any" mode.
+   If you didn't build link-grammar in a different location, this should work:
+   ```
+   sudo mv /usr/local/share/link-grammar/any/affix-punc /usr/local/share/link-grammar/any/affix-punc_original 
+   sudo touch /usr/local/share/link-grammar/any/affix-punc
+   ```
 
 1) Setup the working directory by running the following commands from the
-   root of your opencog clone, if you haven't already.
+   root of your `learn` clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
+   ~/learn/build$ make run-ull
    ```
 
    Review the file [README-run.md](./README-run.md) if you want to have a
    general understanding of what each of these scripts/files do.
 
 2) Put all the training plain text files of the same language in a separate
-   directory inside your working directory, at `/opencog/build/run-ull/`.
+   directory inside your working directory, at `~/learn/build/run-ull/`.
    The scripts used in this section use by default the name `beta-pages`
    for such a directory,  so if you want to use a different name make sure
    you change the respective path inside the `text-process.sh` script. Also,
@@ -287,7 +308,7 @@ fan-fiction website. Once you are sure you have the right material to start, fol
     - clique-dist: same word-pairs as 'clique', but the count in each word
            pair is incremented by 'cnt_reach / distance'
 
-5) In your working directory at `/opencog/build/run-ull` run the following:
+5) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh pairs lang ??_pairs your_user your_password
    ```
@@ -376,6 +397,8 @@ Also, be sure to perform the postgres tuning recommendations found in
 various online postgres performance wikis, or in the
 [atomspace/opencog/persist/sql/README.md](https://github.com/opencog/atomspace/tree/master/opencog/persist/sql) file. See 'Performance' section below.
 
+When you're done observing, restore the original affix-punc file that
+we modified in step 0 of this section.
 
 Mutual Information of Word Pairs
 --------------------------------
@@ -388,13 +411,15 @@ will automatically pick up where they left off.
 1) Setup the working directory by running the following commands from the
    root of your opencog clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
+   ~/learn/build$ make run-ull
    ```
-2) In your working directory at `/opencog/build/run-ull` run the following:
+2) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh cmi lang ??_pairs your_user your_password
    ```
@@ -420,7 +445,19 @@ will automatically pick up where they left off.
    open `process-word-pairs.sh` and remove the -N option from the nc commands
    (some old version of netcat still support this option).
 
-4) Wait some time, possibly a few days. When finished, stop the cogserver.
+4) Wait some time, possibly a few days. When finished, you can export the
+   word-pair MI values to a file if you want. Start by loading the file in
+   the cogserver:
+   ```
+      (load "export-mi.scm")
+   ```
+   and running the export comand (change "any" to the mode used when
+   pair counting):
+   ```
+      (export-mi "any")
+   ```
+   This will generate a file called `mi-pairs.txt` in your working directory.
+   Then stop the cogserver.
 
    These scripts use commands from the scripts in the `scm` directory.
    The code for computing word-pair MI is in `batch-word-pair.scm`.
@@ -483,28 +520,38 @@ Minimum Spanning Tree Parsing
 -----------------------------
 
 The MST parser discovers the minimum spanning tree that connects the
-words together in a sentence.  The link-cost used is (minus) the mutual
-information between word-pairs (so we are maximizing MI). Thus, MST
-parsing cannot be started before the above steps to compute word-pair
+words together in a sentence, using the provided link weights. 
+The link-cost used can be (minus) the mutual
+information between word-pairs (so we are maximizing MI). In this case, 
+MST parsing cannot be started before the above steps to compute word-pair
 MI have been accomplished.
+Alternatively, one can obtain the weights between word-instance-pairs
+from a different source (e.g. a neural-network-generated language model)
+and feed them to the MST algorithm (see instructions after step 7).
 
-The minimum spanning tree code is in `scm/mst-parser.scm`. The current
-version works well. To run it follow the next steps:
+The minimum spanning tree code is called from `scm/mst-parser.scm` and
+`run-poc/redefine-mst-parser.scm`. The current
+version works well. To run it using MI calculated as explained in the previous
+sections, follow the next steps (see after step 7 below for using other type 
+of weights):
 
 1) Setup the working directory by running the following commands from the
    root of your opencog clone, if you haven't already.
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
+   ~/learn/build$ make run-ull
    ```
 
    Review the file [README-run.md](./README-run.md) if you want to have a
    general understanding of what each of these scripts/files do.
 
-2) Copy again all your text files, now to the `gamma-pages` directory
+2) Copy again all your text files (pre-tokenized if you wish), 
+   now to the `gamma-pages` directory
    (or edit `text-process.sh` and change the corresponding directory
    name). Once again, keep in mind that during processing, text files
    are removed from this directory.
@@ -526,7 +573,7 @@ version works well. To run it follow the next steps:
    The parameter cnt_reach does not
    have an effect at this stage, you can leave it as is.
 
-5) In your working directory at `/opencog/build/run-ull` run the following:
+5) In your working directory at `~/learn/build/run-ull` run the following:
    ```
       ./run-multiple-terminals.sh mst lang dbname your_user your_password
    ```
@@ -570,9 +617,39 @@ version works well. To run it follow the next steps:
    scripts; they will pick up where they left off. When finished,
    remember to stop the cogserver.
 
-Once this is done, you can move to the next step, which is explained in
+
+To use link weights calculated in some other way (instead of MI), you
+need to provide them in files with the following format:
+
+```
+First Sentence (prefixed with ###LEFT-WALL###)
+0 ###LEFT-WALL### 1 First-word-in-sentence link-weight
+0 ###LEFT-WALL### 2 Second-word-in-sentence link-weight
+...
+1 First-word-in-sentence 2 Second-word-in-sentence link-weight
+1 First-word-in-sentence 3 Third-word-in-sentence link-weight
+...
+
+Second Sentence (prefixed with ###LEFT-WALL###)
+0 ###LEFT-WALL### 1 First-word-in-sentence link-weight
+0 ###LEFT-WALL### 2 Second-word-in-sentence link-weight
+...
+```
+where each block of a sentence (notice that the sentences need to include 
+the initial ###LEFT-WALL### toekn) and all its word-instance-pair lines are
+separated from the next sentence by an empty line.
+The 7 steps above still apply, with the following modifications:
+In step 2), place the special-format files in `gamma-pages`, instead
+of the plain text files.
+In step 4), you need to set `cnt_mode="file"`, to indicate you're using
+file-based weights, and make sure `split_sents="#f"`. 
+All other parameters still apply.
+Step 6) is not needed.
+
+Once this is done (either using MI or file-based weights), you can move 
+to the next step, which is explained in
 the next section. If you activated the option, you can check out the
-sentence parses in `mst-parses.txt`.
+sentence parses generated in the folder `mst-parses/`.
 
 
 Exploring Connector-Sets
@@ -605,17 +682,20 @@ Before you follow the next steps make sure you have cloned the repositories from
 
 2) Clone the docker repository:
    ```
-   ~$ git clone https://github.com/opencog/docker.git
+   ~$ git clone https://github.com/singnet/docker.git
    ```
 
-3) Enter the opencog directory and build your images:
+3) Make sure your user is in the docker group (`getent group docker`), otherwise you will get the error
+   > Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
+
+   If this happens, follow the instructions [here](https://docs.docker.com/install/linux/linux-postinstall/).
+
+   Enter the opencog directory and build your images:
    ```
    ~$ cd docker/opencog/
    ~/docker/opencog$ ./docker-build.sh -a
    ```
-   Make sure your user is in the docker group (`getent group docker`), otherwise you will get the error
-   > Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: ...
-
+   
 4) Create a directory in your machine to store code that will make building
    again the containers faster (change path to your own, ex: $HOME/.ccache):
    ```
@@ -625,7 +705,11 @@ Before you follow the next steps make sure you have cloned the repositories from
    Optionally you can instead just comment out the `$CCACHE_DIR:/home/opencog/.ccache`
    line in *common.yml* file
 
-5) Add these lines to *~/.bashrc* at *$HOME* of your host OS (change paths to your
+5) If you don't have opencog installed and running in your OS, you need to first install
+   opencog. Please follow all instructions [here](https://wiki.opencog.org/w/Building_OpenCog)
+   and make sure you have a running opencog.
+
+6) Add these lines to *~/.bashrc* at *$HOME* of your host OS (change paths to your
    own) and run `source ~/.bashrc`.
    ```
    export OPENCOG_SOURCE_DIR=$HOME/path/to/opencog
@@ -635,34 +719,42 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
    If you are trying to install the container in a shared server insert these lines in the file *~/.profile* instead, and restart your session before continuing.
 
-6) Run the container:
+7) Run the container:
    ```
    ~$ cd docker/opencog/
    ~/docker/opencog$ docker-compose run dev
    ```
 
-7) Setup the working directory by running the following commands from the
-   root of your opencog clone, if you haven't already.
+8) Inside the container, clone the `learn` repository with the ULL pipeline into your home directory:
    ```
-   /opencog$ mkdir build
-   /opencog$ cd build
-   /opencog/build$ rm -rf *
-   /opencog/build$ cmake ..
-   /opencog/build$ make run-ull
+   git clone https://github.com/singnet/learn /home/opencog/learn
    ```
-8) Test that everything is working:
+
+9) Setup the working directory by running the following commands from the
+   newly cloned container.
+   ```
+   cd ~/learn
+   ~/learn$ mkdir build
+   ~/learn$ cd build
+   ~/learn/build$ rm -rf *
+   ~/learn/build$ cmake ..
+   ~/learn/build$ make
+   ~/learn/build$ sudo make install
+   ~/learn/build$ make run-ull
+   ```
+10) Test that everything is working:
 
    a) Create and format a database (password is cheese):
    ```
     $ createdb learn_pairs
-    $ cat /atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
+    $ cat atom.sql | psql learn_pairs
    ```
    Use tmux to create parallel sessions of the container. If you are not familiar with
    it you can use this cheatsheet in [here](https://gist.github.com/MohamedAlaa/2961058).
 
    b) In a separate session start the REPL server.
    ```
-    $ cd /opencog/build/run-ull/
+    $ cd ~/learn/build/run-ull/
     $ guile -l launch-cogserver.scm  -- --mode pairs --lang en --db learn_pairs --user opencog_user --password cheese
    ```
 
@@ -675,8 +767,9 @@ Before you follow the next steps make sure you have cloned the repositories from
    ```
     $ psql learn_pairs
     learn_pairs=# SELECT * FROM atoms;
-    ```
-    The words from the sentence "*This is a test*" should appear inside the table below the *name* column.
+   ```
+
+   The words from the sentence "This is a test" should appear inside the table below the *name* column.
 
 IF EVERYTHING WORKED FINE YOU ARE READY TO WORK (go to [Bulk Text Parsing](#bulk-text-parsing)),
 OTHERWISE GO BACK TO STEP 0 (or fix your bug if you happen to know what went wrong)!!
@@ -715,3 +808,5 @@ Some usefull commands for managing your containers on your local machine are lis
 
 ***Note 5***: Remember to always close any cogserver (Ctrl+D) sessions you have started before continuing,
 otherwise you will have problems accessing your databases later.
+
+***Note 6***: If you prefer to avoid specifying username and password for the postgres databases, you can follow [these instructions](https://www.postgresql.org/docs/current/libpq-pgpass.html)
