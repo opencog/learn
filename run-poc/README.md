@@ -179,11 +179,17 @@ Now, let's set up the **text-ingestion pipeline:**
 
    Or better yet (in a third terminal):
 ```
-   echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
-   echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
-   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
+   echo -e "(observe-text \"this is a another test\")" |nc -N localhost 17005
+   echo -e "(observe-text \"Bernstein () (1876\")" |nc -N localhost 17005
+   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc -N localhost 17005
 ```
 
+   If this command shows the error
+   > nc: invalid option -- 'N'
+
+   open `process-one.sh` and remove the -N option from the nc commands
+   (some versions of netcat require this option).
+   
    *Note:* 17005 is the default port for the REPL server in English.
    This should result in activity on the cogserver and on the database:
    the "observe text" scheme code sends the text for parsing,
@@ -760,7 +766,7 @@ Before you follow the next steps make sure you have cloned the repositories from
 
    c) Send input to the pipeline:
    ```
-    $ echo -e "(observe-text-mode \"This is a test\" \"any\" 24)" |nc localhost 17005
+    $ echo -e "(observe-text-mode \"This is a test\" \"any\" 24)" |nc -N localhost 17005
    ```
 
    d) Check that the input was registered in the database:
