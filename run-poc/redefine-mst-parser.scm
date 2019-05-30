@@ -218,12 +218,10 @@
 (define-public (observe-mst-mode plain-text SENT-NBR CNT-MODE MST-DIST EXPORT-MST)
 "
   observe-mst-mode -- update pseduo-disjunct counts by observing raw text.
-					  Build mst-parses using MI calculated beforehand.
-					  When MST-DIST is true, word-pair MI values are adjusted
-					  for distance.
-					  Obtained parses are exported to file if EXPORT-MST
-					  is true.
-
+  
+  Build mst-parses using MI calculated beforehand.
+  When MST-DIST is true, word-pair MI values are adjusted for distance.
+  Obtained parses are exported to file if EXPORT-MST is true.
   This is the second part of the learning algo: simply count how
   often pseudo-disjuncts show up.
 "
