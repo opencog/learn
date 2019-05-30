@@ -332,7 +332,7 @@ Once you are sure you have the right material to start, follow the next steps:
    > nc: invalid option -- 'N'
 
    open `process-one.sh` and remove the -N option from the nc commands
-   (some old version of netcat still support this option).
+   (some versions of netcat require this option).
 
 7) Wait some time, possibly a few days. When finished, stop the cogserver.
 
@@ -443,7 +443,7 @@ will automatically pick up where they left off.
    > nc: invalid option -- 'N'
 
    open `process-word-pairs.sh` and remove the -N option from the nc commands
-   (some old version of netcat still support this option).
+   (some versions of netcat require this option).
 
 4) Wait some time, possibly a few days. When finished, you can export the
    word-pair MI values to a file if you want. Start by loading the file in
