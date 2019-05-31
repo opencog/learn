@@ -23,7 +23,7 @@ die "Wrong number of args!" if ($#ARGV < 4);
 # Verify that the host and port number are OK.
 `nc -z $ARGV[0] $ARGV[1]`;
 die "Netcat failed! Bad host or port?" if (0 != $?);
-my $netcat = "|nc $ARGV[0] $ARGV[1]";
+my $netcat = "|nc -N $ARGV[0] $ARGV[1]";
 
 use Socket;
 my $port =  "$ARGV[1]";
