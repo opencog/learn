@@ -47,31 +47,30 @@ ADD_CUSTOM_TARGET(run-ull
 	COMMENT "Setting run-ull in ${PROJECT_BINARY_DIR}/run-ull"
 )
 
-MESSAGE("Curr dir: ${CMAKE_SOURCE_DIR}")
-
 ADD_CUSTOM_TARGET(db
 	# Reset all test databases needed
 	VERBATIM
 	COMMAND bash -c "dropdb --if-exists ULL_tests"
 	COMMAND bash -c "createdb ULL_tests"
 	COMMAND bash -c "cat ${CMAKE_SOURCE_DIR}/run-poc/atom.sql | psql ULL_tests"
-	COMMENT "\nCreated database ULL_tests.\n"
+	COMMAND bash -c "echo 'Created database ULL_tests.'"
 
 	COMMAND bash -c "dropdb --if-exists ULL_calcMI_clique_test"
 	COMMAND bash -c "createdb ULL_calcMI_clique_test"
 	COMMAND bash -c "cat ${CMAKE_SOURCE_DIR}/run-poc/atom.sql | psql ULL_calcMI_clique_test"
-	COMMENT "\nCreated database ULL_calcMI_clique_test.\n"
+	COMMAND bash -c "echo 'Created database ULL_calcMI_clique_test.'"
 
 	COMMAND bash -c "dropdb --if-exists ULL_calcMI_any_test"
 	COMMAND bash -c "createdb ULL_calcMI_any_test"
 	COMMAND bash -c "cat ${CMAKE_SOURCE_DIR}/run-poc/atom.sql | psql ULL_calcMI_any_test"
-	COMMENT "\nCreated database ULL_calcMI_any_test.\n"
+	COMMAND bash -c "echo 'Created database ULL_calcMI_any_test.'"
 
 	# The current ULL pipeline is tokenization-agnostic, so the input
 	# should be pre-tokenized by some other method. The pipeline only
 	# splits sentences by spaces. For the tests to work, we need to
 	# remove the content of the affix-file in the link-grammar dictionary
 	# for "any" language. For the test suite, it is done below.
+	COMMAND bash -c "echo ''; echo 'Backing up and clearing affix file for LG any'"
 	COMMAND bash -c "if [ ! -f /usr/local/share/link-grammar/any/affix-punc-original ]; then sudo cp /usr/local/share/link-grammar/any/affix-punc /usr/local/share/link-grammar/any/affix-punc-original; fi"
 	COMMAND bash -c "echo '' > tmp; sudo mv tmp /usr/local/share/link-grammar/any/affix-punc"
 )
