@@ -15411,7 +15411,7 @@ scheme@(guile-user)> (hva 'explode-sections)
 Elapsed time to create shapes: 1523 secs
 scheme@(guile-user)> (hst 'store-pairs (cog-incoming-set (Predicate "*-word-shape pair-*")))
 Hang on .. that is not really needed ... is it?  What's the point?
-Just always remember to explode the setions each time before use ....
+Just always remember to explode the sections each time before use ....
 
 scheme@(guile-user)> (bhv 'mmt-marginals)
 Finished left norm marginals in 376195 secs  <<< 104 hours ....
@@ -16521,20 +16521,32 @@ Restart. Where were we?
 
 LXC container learn-en:
 \l
-en_dj_cfive           47 GB Disjuncts only, no pairs.
-en_dj_efive           72 GB failed cross-connector marginal attempt... delete
-en_pairs_cfive        16 GB ANY-pairs parse tranche 1-5, infix punct. removed
-en_pairs_cfive_class  90 GB mystery-junk ... delete
-en_pairs_cfive_mst    72 GB MST disjuncts from tranche 1-5, and marginals.
+en_dj_efive           72 GB failed cross-connector marginal attempt...  deleted
+en_pairs_cfive_class  90 GB mystery-junk ... deleted
 
-can be sacrificed: en_dj_efive - en_pairs_cfive_mst - en_pairs_cfive_class
-deleted: en_dj_efive en_pairs_cfive_class
+en_pairs_cfive        16 GB ANY-pairs parse tranche 1-5, infix punct. removed
+en_pairs_cfive_mst    72 GB MST disjuncts from tranche 1-5, and marginals.
+en_dj_cfive           47 GB Disjuncts + dj-marginals only, no pairs.
+
+LXC container cfives are cleaned-up versions of rfives.
+TODO: copy en_dj_cfive, make the entropies, and then cluster.
+
+to make entropies:
+-- createdb en_sh_cfive -T en_dj_cfive
+   (i/o bound - 40% CPU but 115MBytes/sec write speed)
+
+
+
 
 fanny:
-en_sh_mi_two   56 GB
-en_sh_two      25 GB  Section and Shape marginals
+en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
+en_sh_mi_two   56 GB 
 en_sh_two_sim  27 GB  Word Similarities
 mrg_tst
 mrg_two
 
 Archives /home2/linas/src/novamente/data/sql-dumps
+
+
+en_sh_two is en_dj_mtwo plus ...
+
