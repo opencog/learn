@@ -89,12 +89,12 @@ jobs:
       - run:
           name: Build
           command: cd build && make -j2
-      #- run:
-      #    name: Build tests
-      #    command: cd build && make -j2 test
+      - run:
+          name: Reset databases
+          command: cd build && make -j2 db
       - run:
           name: Run tests
-          command: cd build && make db && make -j2 test ARGS=-j2
+          command: cd build && make -j2 test ARGS=-j2
       - run:
           name: Install learn
           command: cd build && make -j2 install && ldconfig
