@@ -16252,7 +16252,7 @@ Total time: 75.565334546 seconds (128.369109622 seconds in GC)
 
 GC Warning: Repeated allocation of very large block (appr. size 536875008):
         May lead to memory leak and poor performance
-wtf!? o profilig
+wtf!? o profiling
 
 
 =========================================================================
@@ -16277,7 +16277,7 @@ cross mi to ... 571 + 50*20 = 1571
 =========================================================================
 =========================================================================
 =========================================================================
-NEW TODO LIST
+NEW TODO LIST 2018
 
 Authoring TODO:
 connector-sets.lyx:
@@ -16312,10 +16312,10 @@ connector-sets.lyx:
 -- Copy en_sh_two to en_sh_two_sim and start running cosines,
    entropies, etc. for the top 1K's for both disjuncts and for
    cross connectors.
-   - 13 August - In process.
+   - 13 August 2018 - In process.
 
 -- start old-style MI cross-marginal in en_sh_mi_etwo
-   - 13 August - In process.
+   - 13 August 2018 - In process.
 
 -- Explain in the text, what this is:
   -- there are C+1 MI's:
@@ -16430,6 +16430,8 @@ arxiv  1702.00764v1
 
 =========================================================================
 
+But list Augsut 2018
+
 Crazy idea: iterate; the places we end up at should be the dependents
 since everything points at them, and they never point away.
 
@@ -16511,3 +16513,28 @@ DONE
 * Create an LXC container for public use. DONE.
   But not updated.... Well no one is interested in this so punt.
 * Implement sql-delete. DONE.
+
+=========================================================================
+1 June 2019
+-----------
+Restart. Where were we?
+
+LXC container learn-en:
+\l
+en_dj_cfive           47 GB Disjuncts only, no pairs.
+en_dj_efive           72 GB failed cross-connector marginal attempt... delete
+en_pairs_cfive        16 GB ANY-pairs parse tranche 1-5, infix punct. removed
+en_pairs_cfive_class  90 GB mystery-junk ... delete
+en_pairs_cfive_mst    72 GB MST disjuncts from tranche 1-5, and marginals.
+
+can be sacrificed: en_dj_efive - en_pairs_cfive_mst - en_pairs_cfive_class
+deleted: en_dj_efive en_pairs_cfive_class
+
+fanny:
+en_sh_mi_two   56 GB
+en_sh_two      25 GB  Section and Shape marginals
+en_sh_two_sim  27 GB  Word Similarities
+mrg_tst
+mrg_two
+
+Archives /home2/linas/src/novamente/data/sql-dumps
