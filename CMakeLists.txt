@@ -78,3 +78,4 @@ ADD_CUSTOM_TARGET(db
 ADD_SUBDIRECTORY (scm)
 ADD_SUBDIRECTORY (tests)
 ENABLE_TESTING()
+MESSAGE("Before running 'make test', make sure to 'make db'")
