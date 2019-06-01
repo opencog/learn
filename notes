@@ -15509,7 +15509,7 @@ Stored 40000 of 137075 right-wilds in 27 secs (1481 pairs/sec)
 Stored 80000 of 137075 right-wilds in 28 secs (1429 pairs/sec)
 Stored 120000 of 137075 right-wilds in 29 secs (1379 pairs/sec)
 Done storing 137075 right-wilds in 96 secs
-Finished with MI computations; this took 354. hours
+Finished with MI computations; this took 354. hours (15 days)
 
 =========================================================================
 en_sh_mi_two
@@ -16534,19 +16534,51 @@ TODO: copy en_dj_cfive, make the entropies, and then cluster.
 to make entropies:
 -- createdb en_sh_cfive -T en_dj_cfive
    (i/o bound - 40% CPU but 115MBytes/sec write speed)
-
+-- cross-en.conf
+-- guile -l cross.scm
+-- cross-shells.sh
+-- (hvs 'fetch-pairs)
+   top: 550% cpu  on guile, 4x60% on postgres
+   more than half of CPU in kernel, not user! kernel-data-transfer-bound
+   rate = 11.5K atoms/sec dropping over time to 10.3 avg
+   Elapsed time to load word sections: 5753 seconds
+   Atoms - 56786428= 57M using ... 68 GBytes RAM
+   Caution: fetch-pairs also does the explode.
+   (explode bopped it up to 133 GB RAM and then started hitting swap.)
+   Seems that postgres was using another 50+ GB ...
+   I killed it - watching it swap is pointless. This won't fly.
+   Some kind of incremental design is needed.
+-- dropdb en_sh_cfive
 
 
 
 fanny:
 en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
-en_sh_mi_two   56 GB 
+en_sh_mi_two   56 GB  Above, w/batch-all-pair-mi
+                      I guess this is not neeed; compute MI on demand...
 en_sh_two_sim  27 GB  Word Similarities
-mrg_tst
-mrg_two
+mrg_tst        47 GB
+mrg_two        51 GB
 
 Archives /home2/linas/src/novamente/data/sql-dumps
 
+-- play with mrg_tst
+   90912007 reserved uuids == 91M atoms
+-- Run x-shell.sh
+   (define pca (make-pseudo-cset-api))
+   (define pss (add-pair-stars pca))
+   (pss 'fetch-pairs)
+   starts out 13.5K/sec, 2/3user, 1/3 kernel 286% guile, 8x42% postgres
+   suckin it off the disk at 5.5MBytes/sec (24KBytes/transaction in iostat)
+   .. for words.. then spurts to 200MBytes/sec for csets
+   .. then low disk-read rates, but 640% on guile,  3x50% on postgres
+      this is for (load-atoms-of-type 'Section)
+      running at 80% kernel, 20% user... wtf??
 
-en_sh_two is en_dj_mtwo plus ...
 
+
+
+
+
+
+Add 'help method
