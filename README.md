@@ -14,12 +14,18 @@ Table of Contents
 1. [Project Summary](#project-summary)
 2. [Processing Overview](#processing-overview)
 3. [Computational Pre-requisites](#computational-pre-requisites)
-4. [Obtain Corpora](#obtain-corpora)
-5. [Setting up the AtomSpace](#setting-up-the-atomspace)
-6. [Bulk Text Parsing](#bulk-text-parsing)
-7. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
-8. [Minimum Spanning Tree Parsing](#minimum-spanning-tree-parsing)
-9. [Exploring Connector Sets](#exploring-connector-sets)
+4. [Setting up the AtomSpace](#setting-up-the-atomspace)
+5. [Bulk Pair Counting](#bulk-pair-counting)
+6. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
+7. [The Vector Structure Encoded in Pairs](#the-vector-structure-encoded-in-pairs)
+8. [Maximum Spanning Trees](#maximum-spanning-trees)
+9. [MST Disjunct Counting](#mst-disjunct-counting)
+10. [Disjunct Marginal Statistics](#disjunct-marginal-statistics)
+11. [Determining Grammatical Classes](#determining-grammatical-classes)
+12. [Creating Grammatical Classes](#creating-grammatical-classes)
+13. [Exporting a Lexis](#exporting-a-lexis)
+14. [Next Steps](#next-steps)
+15. [Precomputed LXC containers](#precomputed-lxc-containers)
 
 
 Project Summary
@@ -325,25 +331,6 @@ unhappy, painful experience.
            The main link-grammar project page is here:
            https://www.abisource.com/projects/link-grammar/
 
-Obtain Corpora
---------------
-You will need some natural language text to feed the system. Currently,
-the recommended minumum size is text of at least one million words in
-length. It is strognly suggested that you use novels and narratives, or
-any literature that is rich in action-verbs. The use of Wikipedia is not
-recommended: it is short on action-verbs, human emotions and human
-encounters; the resulting grammar and vocabulary is less rich. Another
-drawback is that Wikipedia is filled with geographical names, and the
-names of people, devices, inventions, products. These will clutter up
-the dictionary with many infrequent and relatively useless words,
-shedding very little light on grammar.
-
-The [download](download) directory contains a number of ad-hoc scripts
-for downloading from Project Gutenberg, and various fanic sites. The
-earlier scripts are nasty; the later ones are cleaned up a bit. Note
-that Project Gutenberg consists of predominantly 19th-century books,
-and the resulting grammar will be distinctly Victorian.
-
 
 Setting up the AtomSpace
 ------------------------
@@ -363,11 +350,11 @@ important for saving partial results.
    cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
 ```
 
-* **3)** Copy all files from the `run` directory to a new directory;
-         suggest the directory `run-practice`.  Its best to try a few
-         practice runs before committing to serious data processing.
-         The next number of steps describe how to do a practice run;
-         a later section focuses on batch processing.
+* **3)** Copy all files from the `run/1-word-pairs` directory to a
+         new directory; suggest the directory `run-practice`.  Its
+         best to try a few practice runs before committing to serious
+         data processing.  The next number of steps describe how to
+         do a practice run; a later section focuses on batch processing.
 
          There are two types of files in this directory: generic
          processing scripts, and language-specific configuration files.
@@ -383,83 +370,87 @@ important for saving partial results.
          `en` files. The other language files can be ignored (and can
          be deleted).
 
+* **3.1)** `cd` to that directory. The instructins below are relative
+         to the files there.
+
 * **4)* Start the OpenCog server.  Later on, the batch processing
         instructions (below) indicate how to automate this. However,
         for the practice run, it is better to do all this by hand.
 
          First, review the contents of `config/opencog-pairs-en.conf`.
-         This
-	simply declares the prompts that the cogserver will use; most
-   importantly, it declares the port number for the cogserver. It's
-   currently coded to be 17005.
+         This simply declares the prompts that the cogserver will use;
+         most importantly, it declares the port number for the cogserver.
+         It's currently coded to be 17005.
 
-   Edit the `pair-count-en.scm` and hard-code your database credentials
-   into it. This saves you the trouble of having to remember them, and
-   to type them in by hand.
+         Edit the `pair-count-en.scm` and hard-code your database
+         credentials into it. This saves you the trouble of having to
+         remember them, and to type them in by hand.
 
-   Finally, start the cogserver by
+         Finally, start the cogserver by
 ```
   guile -l pair-count-en.scm
 ```
 
-5) Verify that the pair-counting pipeline works. In a second terminal,
-   try this:
+* **5)** Verify that the pair-counting pipeline works. In a second
+         terminal, try this:
 ```
    rlwrap telnet localhost 17005
    opencog-en> (observe-text "this is a test")
 ```
-   The port number 17005 was from the above-mentioned config file.
+         The port number 17005 was from the above-mentioned config file.
 
-   Better yet:
+         Better yet:
 ```
    echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
    echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
    echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
-   This should result in activity in the cogserver and on the database:
-   the "observe text" scheme code sends the text for parsing, counts
-   the returned word-pairs, and stores them in the database.
+         This should result in activity in the cogserver and on the
+         database: the `observe text` scheme code sends the text for
+         parsing, counts the returned word-pairs, and stores them in
+         the database.
 
-   If you are truly curious, type in `(sql-stats)` in the guile shell.
-   This will print some very technical stats about the Atomspace SQL
-   database backend.
+         If you are truly curious, type in `(sql-stats)` in the guile
+         shell.  This will print some very technical stats about the
+         Atomspace SQL database backend.
 
-6) Verify that the above resulted in data sent to the SQL database.
-   Log into the database, and check:
+* **6)** Verify that the above resulted in data sent to the SQL database.
+         Log into the database, and check:
 ```
    psql learn-pairs
    learn-pairs=# SELECT * FROM atoms;
    learn-pairs=# SELECT COUNT(*) FROM atoms;
    learn-pairs=# SELECT * FROM valuations;
 ```
-   The above shows that the database now contains word-counts for
-   pair-wise linkages for the above sentences. If the above are empty,
-   something is wrong. Go to back to step zero and try again.
+         The above shows that the database now contains word-counts for
+         pair-wise linkages for the above sentences. If the above are
+         empty, something is wrong. Go to back to step zero and try again.
 
-7) Halt the cogserver by killing the guile process. In the next stage,
-   it will be started in a different way, and having a running server
-   here will interfere with things.  Unless, of course, you are careful
-   to juggle the config files. There's nothing wrong with running
-   multiple servers at the same time: you just have to be careful to
-   avoid clashes, and for that, you can to be careful with config-file
-   settings.
+* **7)** Halt the cogserver by killing the guile process. In the next
+         stage, it will be started in a different way, and having a
+         running server here will interfere with things.  Unless, of
+         course, you are careful to juggle the config files. There's
+         nothing wrong with running multiple servers at the same time:
+         you just have to be careful to avoid clashes, and for that,
+         you can to be careful with config-file settings.
 
-That's for the practice run. If stuff is showing up in the database,
+That's it for the practice run. If stuff is showing up in the database,
 then processing is proceeding as expected.
 
 The next step is to set up bulk test processing. There are three general
-stages: (I) collection of word-pair statistics (II) collection of
-disjunct statistics (III) clustering.  These are described next.
+stages: **(I)** collection of word-pair statistics **(II)** collection of
+disjunct statistics **(III)** clustering.  These are described next.
 
-Note Bene: Please do NOT spend any time at all trying to figure out
+*Note Bene*: Please do NOT spend any time at all trying to figure out
 what is stored in the SQL tables.  There are "no user-serviceable parts
 inside" and there is "risk of electrical shock". The SQL tables are a
 very twisted, distorted and awkward representation of the AtomSpace
 contents. Its kind-of like reading assembly code: you will not learn
 how the AtomSpace works by reading the SQL code.  In fact, doing this
-will probably make you anti-learn, by planting incorrect ideas in your
-head.  Don't look in there. You have been warned!
+will probably make you anti-learn, by damaging your brain, and then
+planting incorrect ideas into it.  Don't look in there. *You have been
+warned!*
 
 
 Bulk Pair Counting
@@ -493,7 +484,7 @@ There are various scripts in the `download` directory for downloading
 and pre-processing texts from Project Gutenberg, Wikipedia, and the
 "Archive of Our Own" fan-fiction website.
 
-8) Explore the scripts in the `download` directory. Download or
+* **8)** Explore the scripts in the `download` directory. Download or
    otherwise obtain a collection of texts to process. Put them in
    some master directory, and also copy them to the `beta-pages`
    directory.  The name `beta-pages` is not mandatory, but some of
@@ -517,7 +508,7 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    at most ten-thousand sentences each; larger files cause trouble
    if the counting needs to be restarted.
 
-9) Review the `observe-text` function in `link-pipeline.scm`. The
+* **9)* Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).  Just be aware that this function
    was written to collect a large amount of additional information,
@@ -552,8 +543,8 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    Currently, no other code examines lengths; this is an open
    experiment.
 
-10) (Optional) Review the `sometimes-gc` and `maybe-gc` settings in
-   the file `link-pipeline.scm`.  These force garbage collection to
+* **10)** (Optional) Review the `sometimes-gc` and `maybe-gc` settings
+   in the file `link-pipeline.scm`.  These force garbage collection to
    occur more often than normal; they help keep the process size
    reasonable.  The current default is to force garbage collection
    whenever the guile heap exceeds 750 MBytes; this helps keep RAM
@@ -562,7 +553,7 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    `link-pipeline.scm` file to suit your whims in RAM usage and time
    spent in GC.  The default should be adequate for almost all users.
 
-11) Its convenient to have lots of terminals open and ready for use;
+* **11)** Its convenient to have lots of terminals open and ready for use;
     the `byobu+tmux` terminal server provides this, without chewing up
     a lot of screen real-estate.  The `run-shells.sh` script will run
     a `byobu/tmux` session, start the cogserver in one of the terminals,
@@ -584,9 +575,9 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
 
     Run `pair-submit-en.sh` in one of the byobu terminals.
 
-12) Pair-counting can take days or weeks.  The `pair-submit-en.sh` will
-    run until all of the text files have been processed, or until it is
-    interrupted.  If it is interrupted, it can be restarted; it will
+* **12)** Pair-counting can take days or weeks.  The `pair-submit-en.sh`
+    will run until all of the text files have been processed, or until it
+    is interrupted.  If it is interrupted, it can be restarted; it will
     resume with the previous unfinished text file. As text files are
     being processed, they are moved to the `split-articles` directory
     and then, to the `submitted-articles` directory.  The input directory
@@ -731,7 +722,7 @@ in the URL above!
 
 
 The Vector Structure Encoded in Pairs
---------------------------------------
+-------------------------------------
 Note that any kind of pair `(x,y)` of things `x,y` that have a number
 `N(x,y)` associated with the pair can be though of as a matrix from
 linear algebra.  That is, `N` is a number, `x` is a row-index, and `y`
@@ -843,8 +834,8 @@ word was in. The code in this part of the pipeline accumulates
 observation counts on the large variety of possible disjuncts (that is,
 word-disjunct pairs) that can be observed.
 
-Running MST Disjunct Counting
------------------------------
+MST Disjunct Counting
+---------------------
 The overall processing is very similar to batch pair-counting. The steps
 are as follows:
 
@@ -1239,7 +1230,7 @@ simil-en       RUNNING 0         -      10.0.3.89 -
   to get the latest.
 
   (For example, this README file, that you are reading, is in
-  `/home/ubuntu/src/opencog/opencog/nlp/learn/README`. Right now.)
+  `/home/ubuntu/src/learn/README`. Right now.)
 
 * You can now hop directly to the section "Exploring Connector-Sets"
   above, and just go for it.  Everything should be set and done.
