@@ -13,14 +13,13 @@ Table of Contents
 ------------------
 1. [Project Summary](#project-summary)
 2. [Processing Overview](#processing-overview)
-3. [Computational Pre-requisites](computational-pre-requisites)
-4. [Setting up the AtomSpace](#setting-up-the-atomspace)
-
-3. [Bulk Text Parsing](#bulk-text-parsing)
-4. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
-5. [Minimum Spanning Tree Parsing](#minimum-spanning-tree-parsing)
-6. [Exploring Connector Sets](#exploring-connector-sets)
-7. [Setting up a Docker Container](#setting-up-a-docker-container)
+3. [Computational Pre-requisites](#computational-pre-requisites)
+4. [Obtain Corpora](#obtain-corpora)
+5. [Setting up the AtomSpace](#setting-up-the-atomspace)
+6. [Bulk Text Parsing](#bulk-text-parsing)
+7. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
+8. [Minimum Spanning Tree Parsing](#minimum-spanning-tree-parsing)
+9. [Exploring Connector Sets](#exploring-connector-sets)
 
 
 Project Summary
@@ -326,6 +325,25 @@ unhappy, painful experience.
            The main link-grammar project page is here:
            https://www.abisource.com/projects/link-grammar/
 
+Obtain Corpora
+--------------
+You will need some natural language text to feed the system. Currently,
+the recommended minumum size is text of at least one million words in
+length. It is strognly suggested that you use novels and narratives, or
+any literature that is rich in action-verbs. The use of Wikipedia is not
+recommended: it is short on action-verbs, human emotions and human
+encounters; the resulting grammar and vocabulary is less rich. Another
+drawback is that Wikipedia is filled with geographical names, and the
+names of people, devices, inventions, products. These will clutter up
+the dictionary with many infrequent and relatively useless words,
+shedding very little light on grammar.
+
+The [download](download) directory contains a number of ad-hoc scripts
+for downloading from Project Gutenberg, and various fanic sites. The
+earlier scripts are nasty; the later ones are cleaned up a bit. Note
+that Project Gutenberg consists of predominantly 19th-century books,
+and the resulting grammar will be distinctly Victorian.
+
 
 Setting up the AtomSpace
 ------------------------
@@ -334,40 +352,43 @@ statistics.  The most time-consuming, difficult and error-prone step
 is the setup and configuration of Postgres.  Postgres is centrally
 important for saving partial results.
 
-1) Set up and configure Postgres, as described in
-   `atomspace/opencog/persist/sql/README.md`
+* **1)** Set up and configure Postgres, as described in
+         [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
 
-2) Create and initialize a database. Pick any name you want; here it
-   is `learn-pairs`.  Later on, you will have to place this name into
-   a config file (see below).
+* **2)** Create and initialize a database. Pick any name you want; here
+         it is `learn-pairs`.  Later on, you will have to place this name
+         into a config file (see below).
 ```
    createdb learn-pairs
    cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
 ```
 
-3) Copy all files from the `opencog/opencog/nlp/learn/run` directory to
-   a new directory; suggest the directory `run-practice`.  Its best to
-   try a few practice runs before committing to serious data processing.
-   The next number of steps describe how to do a practice run; a later
-   section focuses on batch processing.
+* **3)** Copy all files from the `run` directory to a new directory;
+         suggest the directory `run-practice`.  Its best to try a few
+         practice runs before committing to serious data processing.
+         The next number of steps describe how to do a practice run;
+         a later section focuses on batch processing.
 
-   There are two types of files in this directory: generic processing
-   scripts, and language-specific configuration files. Different
-   languages require different processing pipelines; e.g. most languages
-   will require a morphology processing step; English does not.
-   Different languages will typically train on a different set of
-   corpora organized in different directories in different ways. The
-   multitude of config files allows each language to be configured in
-   sharply different ways, running different kinds of experiments.
+         There are two types of files in this directory: generic
+         processing scripts, and language-specific configuration files.
+         Different languages require different processing pipelines;
+         e.g. most languages will require a morphology processing step;
+         English does not.  Different languages will typically train
+         on a different set of corpora organized in different directories
+         in different ways. The multitude of config files allows each
+         language to be configured in sharply different ways, running
+         different kinds of experiments.
 
-   For the practice run, suggest picking English, and using the `en`
-   files. The other language files can be ignored (and can be deleted).
+         For the practice run, suggest picking English, and using the
+         `en` files. The other language files can be ignored (and can
+         be deleted).
 
-4) Start the OpenCog server.  Later on, the batch processing
-   instructions (below) indicate how to automate this. However, for
-   the practice run, it is better to do all this by hand.
+* **4)* Start the OpenCog server.  Later on, the batch processing
+        instructions (below) indicate how to automate this. However,
+        for the practice run, it is better to do all this by hand.
 
-   First, review the contents of `config/opencog-pairs-en.conf`. This
+         First, review the contents of `config/opencog-pairs-en.conf`.
+         This
 	simply declares the prompts that the cogserver will use; most
    importantly, it declares the port number for the cogserver. It's
    currently coded to be 17005.
