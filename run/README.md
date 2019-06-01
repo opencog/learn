@@ -2,25 +2,51 @@
 Parse management scripts
 ========================
 
-The scripts here are used to automate the ingestion of plain-text
-UTF-8 files into the language learning pipeline.  These can be applied
-to any flat text files from any origin of your choice.  Some tools
-for downloading Wikipedia and Project Gutenberg texts can be found
-in the `../download` directory.
+The scripts here are used to automate the operation of the
+language-learning pipeline. Currently, it consists of four steps:
 
-You will typically want to make copies of these, and tailor them to
-your specific needs and procedures. In particular, many of these
-files require database credentials to be set; the exact credentials
-to use will depend on which copy of which database you are using.
-You WILL be copying around a lot of databases!
+* An initial step, of gathering a text corpus to train on. Any
+  sufficiently large collection of plain-text UTF-8 files will do
+  Some tools for downloading Wikipedia and Project Gutenberg texts
+  can be found in the `../download` directory.
 
-A quick overview:
+* Word-pair counting. Automation scripts can be found in the
+  [1-word-pairs](1-word-pairs) directory.
 
-* `submit-one.pl`: script to send sentences to the cogserver.
+* MST parsing. Automation scripts can be found in the
+  [2-mst-parsing](2-mst-parsing) directory. The previous step must
+  have been completed, before starting this.
 
-* `split-sentences.pl`: split text into sentences. Accepts free-form text,
-  and looks for likely end-of sentence locations, so that there is one
-  sentence per line.
+* Grammatical class learning. Automation scripts can be found in the
+  [3-gram-class](3-gram-class) directory. The previous step must
+  have been completed, before starting this.
+
+File overview
+-------------
+Several files common to several of these steps are located in this
+directory.  A quick overview:
+
+* `split-sentences.pl`: Split text files into sentences. Accepts
+  free-form text, and looks for language-depedeny likely end-of
+  sentence locations, so that there is one sentence per line.
+  It's language-dependent, in order to not confuse abbreviations
+  with end-of-sentence markers.
+
+* `nonbreaking_prefixes` Used by the sentence-splitter to avoid
+  breaking on abbreviations.
+
+* `submit-one.pl`: Script to send single sentences to the cogserver.
+  Used both for pair-counting, and for MST-parsing.
+
+* `renice.sh`: Make the postgres server run under a nice priorty.
+
+* `rc.local.shutdown`, `rc-local-shutdown.service`, `rc.lxc.shutdown`:
+  Shutdown scripts. These are invoked automatically by the system
+  during a power outage, or during a normal shutdown. They attempt
+  to properly helt the learning pipeline, so as to avoid a scrambled
+  database upon reboot.
+
+* `halt-all.sh`: Stop all running LXC containers.
 
 
 Sentence Splitting
