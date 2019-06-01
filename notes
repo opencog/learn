@@ -16314,10 +16314,11 @@ connector-sets.lyx:
    cross connectors.
    - 13 August 2018 - In process.
 
--- start old-style MI cross-marginal in en_sh_mi_etwo
+-- start old-style MI cross-marginal in en_sh_mi_two
    - 13 August 2018 - In process.
+   - 28 August 2018 - Done, backed-up.
 
--- Explain in the text, what this is:
+-- Explain in the text, what this is (these are the shapes)
   -- there are C+1 MI's:
      * word to connector-seq
      * word-to-first-connector
@@ -16347,6 +16348,7 @@ connector-sets.lyx:
 While waiting for above, write code for:
 
 * Wait -- is fetch-pairs of pseudo-csets also getting WordClassNodes??
+  Yes, it is. Why?
 
 * Merging crosses.  Do it same way as for pseudo-disjuncts,
   just with independent parameter.
@@ -16574,6 +16576,13 @@ Archives /home2/linas/src/novamente/data/sql-dumps
    .. then low disk-read rates, but 640% on guile,  3x50% on postgres
       this is for (load-atoms-of-type 'Section)
       running at 80% kernel, 20% user... wtf??
+-- Elapsed time to load csets: 3037 secs  24664854 total == 8K/sec avg.
+   32 GBytes RAM total
+
+   (cog-report-counts) (WordNode . 137078) (Connector . 268592)
+   (ConnectorSeq . 6239997) (ListLink . 6377076) (Section . 11642010)
+   (WordClassNode . 93)
+
 
 
 

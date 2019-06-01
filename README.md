@@ -9,6 +9,20 @@ Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
 for an alternate overview.
 
+Table of Contents
+------------------
+1. [Project Summary](#project-summary)
+2. [Processing Overview](#processing-overview)
+3. [Computational Pre-requisites](computational-pre-requisites)
+4. [Setting up the AtomSpace](#setting-up-the-atomspace)
+
+3. [Bulk Text Parsing](#bulk-text-parsing)
+4. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
+5. [Minimum Spanning Tree Parsing](#minimum-spanning-tree-parsing)
+6. [Exploring Connector Sets](#exploring-connector-sets)
+7. [Setting up a Docker Container](#setting-up-a-docker-container)
+
+
 Project Summary
 ---------------
 The goal of this project is to create a system that is capable of
@@ -77,44 +91,57 @@ and results is in the [learn-lang-diary](learn-lang-diary) subdirectory.
 
 The basic algorithmic steps, as implemented so far, are as follows:
 
-A) Ingest a lot of raw text, such as novels and narrative literature,
-   and count the occurrence of nearby word-pairs.
+* **A)** Ingest a lot of raw text, such as novels and narrative
+         literature, and count the occurrence of nearby word-pairs.
+         Anything that has lots of action-verbs will do.
 
-B) Compute the mutual information (mutual entropy) between the word-pairs.
+* **B)** Compute the mutual information (mutual entropy or MI) between
+         the word-pairs. The MI gives the affinity between words.
 
-C) Use a Minimum-Spanning-Tree algorithm to obtain provisional parses
-   of sentences.  This requires ingesting a lot of raw text, again.
-   (Independently of step A)
+* **C)** Use a Minimum-Spanning-Tree algorithm to obtain provisional
+         parses of sentences.  This requires ingesting a lot of raw
+         text, again. (Independently of step **A**) The resulting
+         parses are "provisional": medium accuracy, a lot better than
+         random chance, but still very imperfect.
 
-D) Extract linkage disjuncts from the parses, and count their frequency.
+* **D)** Extract linkage disjuncts from the parses, and count their
+         frequency. Linkage disjuncts capture how words connect to
+         thier neighbors.  By counting the frequencies, errors in
+         the MST parses get washed out by the law of averages, while
+         the likely-correct disjuncts accumulate large counts. The
+         resulting dictionary is *more* accurate than any single
+         MST parse!
 
-E) Use agglomerative clustering to merge similar linkage disjuncts,
-   while simultaneously merging similar words.  This will result in
-   a set of word-classes (grammatical classes) with disjuncts on them
-   that use word-class connectors.
+* **E)** Use agglomerative clustering to merge similar disjuncts,
+         while simultaneously merging similar words.  This will
+         result in a set of word-classes (grammatical classes)
+         with disjuncts on them that use word-class connectors.
+         By law of averages, random errors get further washed out,
+         while recurring frequent patterns get large counts.
 
-F) Place word-classes and word-class connectors into a link-grammar
-   dictionary.
+* **F)** Place word-classes and word-class connectors into a
+         link-grammar dictionary.
 
-G) Parse a large quantity of raw text, using the parser constructed in
-   the previous step. Using maximum-entropy-style techniques, attempt
-   to extract higher-order relations (resolve anaphora and other
-   referents, determine rheme+theme, learn "lexical functions")
+* **G)** Parse a large quantity of raw text, using the parser
+         constructed in the previous step. Using maximum-entropy-style
+         techniques, attempt to extract higher-order relations
+         (resolve anaphora and other referents, determine rheme+theme,
+         learn "lexical functions").
 
-Currently, the software implements steps A, B, C, D, F and much of
-step E, although this step remains a topic of current research.
-Its quite unclear how to determine the quality of lexis that falls out
-of step F.  Some initial experiments on step G have been performed,
-and look promising.
+Currently, the software implements steps **A**, **B**, **C**, **D**,
+**F** and much of step **E**, although this step remains a topic of
+current research and experimentation.  Its quite unclear how to
+determine the quality of lexis that falls out of step **F**.  Some
+initial experiments on step **G** have been performed, and look promising.
 
-Steps A-C are "well-known" in the academic literature, with results
+Steps **A-C** are "well-known" in the academic literature, with results
 reported by many researchers over the last two decades. The results
-from Steps D & E are new, and have never been published before.
-Results from Step D can be found in the PDF file
+from Steps **D** & **E** are new, and have never been published before.
+Results from Step **D** can be found in the PDF file
 [Connector Sets](learn-lang-diary/drafts/connector-sets.pdf)
 in the diary subdirectory.
 
-It is very important to understand that Step E is ***very different***
+It is important to understand that Step **E** is ***very different***
 from commonly-reported algorithms used in the published literature,
 such as using K-means clustering and dimensional reduction to obtain
 word classes (grammatical categories). The reason for this is that the
@@ -128,17 +155,17 @@ This connectivity information is absent from ordinary approaches to
 the machine-learning of grammatical classes.
 
 As a result, ***none*** of the industry-standard classifiers and
-clustering algorithms can be applied to step E: they all assume that
+clustering algorithms can be applied to step **E**: they all assume that
 the input data can be structured as a vector space.  The axioms of
 algebraic linguistics can resemble the axioms of a vector space, which
 is why vector-space techniques can work pretty well in the machine-
 learning of linguistic structure. However, ultimately, the axioms of
 algebraic linguistics are ***not*** the axioms of a vector space.
 In practical terms, this means that clustering/classification algorithm
-used in step E is completely different than anything else available in
+used in step **E** is completely different than anything else available in
 the industry.
 
-The complete novelty of step E, coupled to the need to perform
+The complete novelty of step **E**, coupled to the need to perform
 experiments in earlier and later stages means that industry-standard,
 generic big-data, machine-learning tools are wholly inadequate for the
 task. It is for thus reason that all data processing is being done in
@@ -176,68 +203,80 @@ This section describes minimum mandatory hardware and software
 requirements. Failing to take these seriously will result in an
 unhappy, painful experience.
 
-0.1) Optional, but strongly recommended! Consider investing in an
-   uninterruptible power supply (UPS) to avoid data loss/data
-   corruption in the event of a power outage. The scripts below can
-   take weeks to run, and unexpected power outages can corrupt
-   databases, resulting in weeks or months of lost work.
+* **0.1)** Optional, but strongly recommended! Consider investing
+           in an uninterruptible power supply (UPS) to avoid data
+           loss/data corruption in the event of a power outage.
+           The scripts below can take weeks to run, and unexpected
+           power outages can corrupt databases, resulting in weeks
+           or months of lost work.
 
-   *You have been warned! This is not a joke!*
+   ***You have been warned! This is not a joke!***
 
-0.2) Optional, but strongly recommended!  Consider investing in a
-   pair of solid-state disk drives (SSD), configured as a RAID-1
-   (mirroring) array, to hold the Postgres database.  Accumulating
-   observation statistics, as well as other data processing operations,
-   is database intensive, and the writes to disk are often the main
-   bottleneck to performance. In practice, 1TB (one terabyte) devoted
-   to just the Postgres server is just barely enough to perform the
-   work described here. Database copies quickly chew up disk space.
-   Individual databases are typically in the 10GB to 150GB in size,
-   and the number of copies of a 150GB database that fit onto a
-   1TB disk is not big.  2TB is a more comfortable size to work with.
+* **0.2)** Optional, but strongly recommended!  Consider investing in
+           a pair of solid-state disk drives (SSD), configured as a
+           RAID-1 (mirroring) array, to hold the Postgres database.
+           Accumulating observation statistics, as well as other data
+           processing operations, is database intensive, and the writes
+           to disk are often the main bottleneck to performance. In
+           practice, 1TB (one terabyte) devoted to just the Postgres
+           server is just barely enough to perform the work described
+           here. Database copies quickly chew up disk space.
+           Individual databases are typically in the 10GB to 150GB in
+           size, and not very many copies of a 150GB database will fit
+           onto a 1TB disk.  2TB is a more comfortable size to work with.
 
-0.3) Get a machine with 4 or more CPU cores, and a minimum of 64GB RAM.
-   It will be less agonizing and infuriating if you have 128 GB RAM or
-   more.  The datasets do get large, and although many of the scripts
-   are designed to only fetch from disk "on demand", the in-RAM sizes
-   can get large. As I write this, my grammatical-clustering process
-   is using 53GB resident-in-RAM working-set size (57GB virtual size).
-   You need additional RAM for the Postgres server -- 24GB is
-   reasonable -- and so 53+24=78GB is the current bare-minimum.  More,
-   if you want to e.g. run a web-browser or something.
+* **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
+           64GB RAM.  It will be less agonizing and infuriating if you
+           have 128 GB RAM or more.  The datasets do get large, and
+           although many of the scripts are designed to only fetch from
+           disk "on demand", the in-RAM sizes can get large. As I write
+           this, my grammatical-clustering process is using 53GB
+           resident-in-RAM working-set size (57GB virtual size).
+           You need additional RAM for the Postgres server -- 24GB is
+           reasonable -- and so 53+24=78GB is the current bare-minimum.
+           More, if you want to e.g. run a web-browser or something.
 
-   An alternative is to run Postgres on one box, and the processing
-   on another. This is a bit more complicated to deal with -- you will
-   want to have a high-speed Ethernet between the two.  Two machines
-   are harder to monitor than one.
+           An alternative is to run Postgres on one box, and the
+           processing on another. This is a bit more complicated to
+           deal with -- you will want to have a high-speed Ethernet
+           between the two.  Two machines are harder to sysadmin and
+           monitor than one.
 
-0.4) Optional but recommended. If you plan to run the pipeline on
-   multiple different languages, it can be convenient, for various
-   reasons, to run the processing in an LXC container. If you already
-   know LXC, then do it. If not, or this is your first time, then don't
-   bother right now. Come back to this later.
+* **0.4)** Optional but recommended. If you plan to run the pipeline
+           on multiple different languages, it can be convenient, for
+           various reasons, to run the processing in an LXC container.
+           If you already know LXC, then do it. If not, or this is
+           your first time, then don't bother right now. Come back to
+           this later.
 
-   LXC containers are nice because:
-   * Each container can have a different config, different datasets,
-     and be executing different steps of the pipeline.  This is great,
-     for juggling multiple jobs.
-   * The system install in one container won't corrupt the other
-     containers; you can experiment, without impacting stable systems.
-   * LXC containers can be stopped and move to other system with more
-     RAM (or less RAM), more disk, or less disk. Handy for load-
-     balancing, and/or easily moving to a bigger system.
+           LXC containers are nice because:
+         * Each container can have a different config, different
+           datasets, and be executing different steps of the pipeline.
+           This is great, for juggling multiple jobs.
+         * The system install in one container won't corrupt the other
+           containers; you can experiment, without impacting stable
+           systems.
+         * LXC containers can be stopped and move to other system with
+           more RAM (or less RAM), more disk, or less disk. Handy for
+           load-balancing, and/or easily moving to a bigger system.
+         * Do not confuse LXC with Docker! They are similar, but LXC
+           is superior for the current task! Why, you ask? Because
+           when you reboot a Docker container, you lose all your work!
+           Dohhh!
 
-0.5) Optional but strongly recommended. Install system shutdown scripts.
-   This will help protect your data in case of an unexpected power loss.
-   These scripts, and the instructions for them, are located in the
-   `run/rc.local.shutdown`, `run/rc-local-shutdown.service` and the
-   `run/rc.lxc.shutdown` files. You will need to alter these files, and
-   use your own login credentials in place of the generic ones.
+* **0.5)** Optional but strongly recommended. Install system shutdown
+           scripts.  This will help protect your data in case of an
+           unexpected power loss.  These scripts, and the instructions
+           for them, are located in the `run/rc.local.shutdown`,
+           `run/rc-local-shutdown.service` and the `run/rc.lxc.shutdown`
+           files. You will need to alter these files, and use your own
+           login credentials in place of the generic ones.
 
-0.6) Mandatory.  You'll work with large datasets; default guile is
-   not equipped to deal wit the sizes encountered here.  Skipping this
-   step will lead to the error `Too many heap sections: Increase
-   MAXHINCR or MAX_HEAP_SECTS`. So:
+* **0.6)** Mandatory.  You'll work with large datasets; default guile
+           is not equipped to deal wit the sizes encountered here.
+           Skipping this step will lead to the error
+           `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
+           So:
 ```
    git clone https://github.com/ivmai/bdwgc
    cd bdwgc
@@ -247,23 +286,26 @@ unhappy, painful experience.
    make; sudo make install
 ```
 
-0.7) The AtomSpace MUST be built with guile version 2.2.2.1 or newer,
-   which can be obtained from the Guile ftp repo
-   https://ftp.gnu.org/gnu/guile/ or git, by doing
+* **0.7)** The AtomSpace MUST be built with guile version 2.2.2.1 or
+           newer, which can be obtained from the Guile ftp repo
+           https://ftp.gnu.org/gnu/guile/ or `git`, by doing
 ```
    git clone git://git.sv.gnu.org/guile.git
-   git checkout stable-2.2
 ```
-   Earlier versions have problems of various sorts. Version 2.0.11
-   will quickly crash with the error message: `guile: hashtab.c:137:
-   vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
+            The above will provide guile-2.9.2 which seems to run
+            quite well. The `stable-2.2` branch, which provides
+            guile-2.2.4 will also work, but version 2.9.2 is faster.
 
-   Also par-for-each hangs:
-   https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
-   (in guile-2.2, it doesn't hang, but still behaves very badly)
+            Earlier versions are not usable. Version 2.0.11
+            will quickly crash with the error message:
+            `guile: hashtab.c:137: vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
 
-0.8) Create/edit the `~/.guile` file and add the content below.
-   This makes the arrow keys work, and prints nicer stack traces.
+            Also par-for-each hangs:
+            https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
+            (in guile-2.2, it doesn't hang, but still behaves very badly).
+
+* **0.8)** Create/edit the `~/.guile` file and add the content below.
+           This makes the arrow keys work, and prints nicer stack traces.
 ```
    (use-modules (ice-9 readline))
    (activate-readline)
@@ -273,16 +315,16 @@ unhappy, painful experience.
    (add-to-load-path ".")
 ```
 
-0.9) Opencog should be built with `link-grammar-5.5.0` or newer.
-   The currently installed version can be displayed by running
+* **0.9)** Opencog should be built with `link-grammar-5.6.1` or newer.
+           The currently installed version can be displayed by running
 ```
    link-parser --version
 ```
-   Newer versions are available at:
-   https://www.abisource.com/downloads/link-grammar/
+           Newer versions are available at:
+           https://www.abisource.com/downloads/link-grammar/
 
-   The main link-grammar project page is here:
-   https://www.abisource.com/projects/link-grammar/
+           The main link-grammar project page is here:
+           https://www.abisource.com/projects/link-grammar/
 
 
 Setting up the AtomSpace
