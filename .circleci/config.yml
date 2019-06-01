@@ -30,14 +30,14 @@ jobs:
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
-      - run:
-          name: Remove link-grammar "any" tokenization
+      #- run:
+      #    name: Remove link-grammar "any" tokenization
             # The current ULL pipeline is tokenization-agnostic, so the input
             # should be pre-tokenized by some other method. The pipeline only
             # splits sentences by spaces. For the tests to work, we need to
             # remove the content of the affix-file in the link-grammar dictionary
             # for "any" language. For the test suite, it is done below.
-          command: echo "" > /usr/local/share/link-grammar/any/affix-punc
+      #    command: echo "" > /usr/local/share/link-grammar/any/affix-punc
       - run:
           name: Checkout AtomSpace
           command: git clone --depth 1 https://github.com/singnet/atomspace /ws/atomspace
@@ -90,11 +90,11 @@ jobs:
           name: Build
           command: cd build && make -j2
       - run:
-          name: Build tests
-          command: cd build && make -j2 test
+          name: Reset databases
+          command: cd build && make -j2 db
       - run:
           name: Run tests
-          command: cd build && make -j2 test ARGS=-j2
+          command: cd build && make test
       - run:
           name: Install learn
           command: cd build && make -j2 install && ldconfig
