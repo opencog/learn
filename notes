@@ -16568,8 +16568,8 @@ Archives /home2/linas/src/novamente/data/sql-dumps
    90912007 reserved uuids == 91M atoms
 -- Run x-shell.sh
    (define pca (make-pseudo-cset-api))
-   (define pss (add-pair-stars pca))
-   (pss 'fetch-pairs)
+   (define psa (add-pair-stars pca))
+   (psa 'fetch-pairs)
    starts out 13.5K/sec, 2/3user, 1/3 kernel 286% guile, 8x42% postgres
    suckin it off the disk at 5.5MBytes/sec (24KBytes/transaction in iostat)
    .. for words.. then spurts to 200MBytes/sec for csets
@@ -16583,9 +16583,32 @@ Archives /home2/linas/src/novamente/data/sql-dumps
    (ConnectorSeq . 6239997) (ListLink . 6377076) (Section . 11642010)
    (WordClassNode . 93)
 
+-- Before: 24664861
+   (load-atoms-of-type 'SimilarityLink)
+   approx 600 seconds at 2.5K atoms/sec, more than half of that waiting
+   on postgres... loaded 1457522 links (SimilarityLink . 1457522)
+   After: 26122396
 
+-- (cog-get-atoms 'PredicateNode)  Hmm no cosines in this dataset.
+   wtf ... the keys were not loaded ???  That's a bug! Pull req #2199
 
+-- (define (prt-atom h) (display h) #t)
+   (cog-map-type prt-atom 'SimilarityLink)
+   (cog-keys x)
 
+-- review learn-lang-diary/similarity.scm
+
+-- (pmi 'mmt-fmi (Word "other") (Word "same"))
+   (pta 'mmt-count (Word "other"))
+
+--  (define btr (batch-transpose psa))
+    (btr 'mmt-marginals)
+    might take ten hours ouch...
+    add-transpose-compute
+    (define ptc (add-transpose-compute psa))
+    (ptc 'mmt-marginals)
+
+64 threads with par-for-each from t.scm
 
 
 

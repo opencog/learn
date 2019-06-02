@@ -531,7 +531,7 @@
 	(close outport))
 
 ; ---------------------------------------------------------------------
-; Rank word-disjunct pairs according to thier fractonal MI.
+; Rank word-disjunct pairs according to thier fractional MI.
 
 (define (cset-mi CSET) (psf 'pair-fmi CSET))
 

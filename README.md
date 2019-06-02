@@ -901,9 +901,9 @@ Disjunct Marginal Statistics
 The next steps require marginal statistics to be available for the
 disjuncts. The previous step gathered a large number of observation
 counts for disjuncts. These need to be summarized, so that one obtains
-per-word statistics.  Marginals will be needed both form the
-pseudo-csets and for the cross-connector sets.  First, compute the
-marginals for the pseudo-csets:
+per-word statistics.  Marginals will be needed both for the
+pseudo-csets and (optionally) for the cross-connector sets.  First,
+compute the marginals for the pseudo-csets:
 ```
   (sql-open "postgres:///en_disjuncts?user=linas")
   (define pca (make-pseudo-cset-api))
@@ -915,10 +915,17 @@ marginals for the pseudo-csets:
 To obtain the marginals for the cross-connectors, repeat the above
 steps, but this time with `(make-shape-vec-api)` as the base class.
 At this time, the need for the cross-connectors (shapes) is optional...
+It would be recommended, except that there are explosiveluy more of
+them: 2 to 5 cross-connectors get created for each ordinary connector
+(since each slot can be a wild-card, and a word typically has 2-5
+connectors). This can double or triple the size of a dataset.
 
-The above omputations may take hours or days, depending on the size of
+The above computations may take hours or days, depending on the size of
 the disjunct set.  Be sure to make a backup copy of the resulting
 database before proceeding to the next step.
+
+While the above is running, read and contemplate the next section.
+Games you can play with the resulting dataset follow afterwards.
 
 
 Determining Grammatical Classes
@@ -1029,6 +1036,29 @@ stitching of this fabric be accounted for. The paper on 'sheaf theory'
 tries to explain this in greater detail. The code here tries to actually
 implement these ideas.
 
+Exploring Word-Word Distances
+-----------------------------
+The classic word-word distance is the cosine distance. As the above
+explains, this is not really the correct metric. But you can play
+around with it, anyway:
+```
+  (define pco (add-pair-cosine-compute psa))
+  (pco 'right-cosine (Word "this") (Word "that"))
+  (pco 'right-cosine (Word "he") (Word "she"))
+```
+A superior measure to the cosine-distance is the mutual information
+between word-disjunct vectors. This is computed using the same vectors,
+and a similar dot-product, but is weighted differrently, in a way that
+makes more sense for probabilities.
+```
+  (define pmi (add-symmetric-mi-compute psa))
+  (pmi 'mmt-fmi (Word "this") (Word "that"))
+```
+
+Experimental code is located in
+[disjunct-stats.scm](learn-lang-diary/disjunct-stats.scm)
+
+
 Creating Grammatical Classes
 ----------------------------
 The clustering code, for isolating grammatical classes, is in active
@@ -1073,27 +1103,16 @@ altered by the clustering code):
   (length (get-all-words))
 
   (define pca (make-pseudo-cset-api))
-  (define psa (add-pair-stars pca))
-  (psa 'fetch-pairs)
-  (define all-cset-words (get-all-cset-words))
-  (length all-cset-words)
-  ; This reports 37413 in for my `en_pairs_sim`.
-  (define all-disjuncts (get-all-disjuncts))
-  (length all-disjuncts)
-  ; This reports 291637 in for my `en_pairs_sim`.
+  (define pss (add-pair-stars pca))
+  (pss 'fetch-pairs)
+  (cog-report-counts)
+  ; This reports  137078 WordNodes,
+  ;               268592 Connectors,
+  ;              6239997 ConnectorSeq,
+  ;             11642010 Sections
+  ; for my `mrg_tst` database.
 
 ```
-  You can now play games:
-```
- (cset-vec-cosine (Word "this") (Word "that"))
- (cset-vec-cosine (Word "he") (Word "she"))
-
-```
-  The `pseudo-csets.scm` file contains code for working with word-
-  disjunct vectors.  Any routine that is `define-public` can be
-  invoked at the guile prompt. Most are safe to use.  If its not
-  `define-public`, you should not call it by hand.
-
   The `lang-learn-diary/disjunct-stats.scm` file contains ad-hoc code
   used to prepare the summary report.  To use it, just cut-n-paste to
   the guile prompt, to get it to do things.
