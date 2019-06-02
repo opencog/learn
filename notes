@@ -16601,12 +16601,112 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 -- (pmi 'mmt-fmi (Word "other") (Word "same"))
    (pta 'mmt-count (Word "other"))
 
---  (define btr (batch-transpose psa))
-    (btr 'mmt-marginals)
-    might take ten hours ouch...
-    add-transpose-compute
-    (define ptc (add-transpose-compute psa))
-    (ptc 'mmt-marginals)
+-- (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+   might take ten hours ouch...
+   Finished left norm marginals in 31830 secs
+   Finished left totals in 238 secs
+   Finished column (left) norm averages in 963 secs
+   Done storing 6239919 left-wilds in 6024 secs
+   Finished mmt norm marginals in 613 secs
+   Done storing 6239919 left-wilds in 5701 secs
+
+   add-transpose-compute
+   (define ptc (add-transpose-compute psa))
+   (ptc 'mmt-marginals)
+
+	total loop over 137078 items in a list
+   Finished mmt norm marginals in 3012 secs -- colliding
+   Finished mmt norm marginals in 1329 secs - par-for-each -- cpu=100%
+   Finished mmt norm marginals in 525 secs - for-each -- 
+   Finished mmt norm marginals in 359 secs - n-par-for-each 4 -- cpu=250%
+   Finished mmt norm marginals in 413 secs - n-par-for-each 2 -- cpu=170%
+   Finished mmt norm marginals in 474 secs - n-par-for-each 1 -- cpu=100%
+   Finished mmt norm marginals in 370 secs - n-par-for-each 8 -- cpu=250%
+   Finished mmt norm marginals in 375 secs - n-par-for-each 24 -- cpu=230%
+   Finished mmt norm marginals in 557 secs - par-for-each -- 
+   Finished mmt norm marginals in 530 secs - par-for-each -- cpu=100%
+   Finished mmt norm marginals in 345 secs - my-par-for-each 6
+	Finished mmt norm marginals in 349 secs - my-par-for-each 12
+   Finished mmt norm marginals in 357 secs - my-new-for-each 12 
+
+
+102:
+#0  0x00007f343c36c91b in GC_register_finalizer_inner (obj=0x55efee7aba60, 
+    fn=0x7f343d25d490 <finalize_smob>, cd=0x0, ofn=ofn@entry=0x7f320c8f8570, 
+    ocd=ocd@entry=0x7f320c8f8578, 
+    mp=mp@entry=0x7f343c36b7d0 <GC_null_finalize_mark_proc>) at finalize.c:655
+#1  0x00007f343c36cd7c in GC_register_finalizer_no_order (obj=<optimized out>, 
+    fn=<optimized out>, cd=<optimized out>, ofn=ofn@entry=0x7f320c8f8570, 
+    ocd=ocd@entry=0x7f320c8f8578) at finalize.c:771
+#2  0x00007f343d20e2e1 in scm_i_set_finalizer (obj=<optimized out>, 
+    proc=<optimized out>, data=<optimized out>)
+    at ../../libguile/finalizers.c:59
+#3  0x00007f343d25d8a2 in scm_i_new_smob (tc=tc@entry=5239, 
+    data=data@entry=139822156266736) at ../../libguile/smob.c:440
+#4  0x00007f3431c48a4b in scm_new_smob (data=139822156266736, tc=5239)
+    at /usr/local/include/guile/3.0/libguile/smob.h:140
+#5  opencog::SchemeSmob::protom_to_scm (
+    pa=std::shared_ptr (count 7, weak 3) 0x7f30578d05a0)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/guile/SchemeSmobNew.cc:160
+
+103: 
+#0  pthread_cond_wait@@GLIBC_2.3.2 ()
+    at ../sysdeps/unix/sysv/linux/x86_64/pthread_cond_wait.S:185
+#1  0x00007f343d27bb95 in scm_pthread_cond_wait (cond=<optimized out>, 
+    mutex=<optimized out>) at ../../libguile/threads.c:1615
+#2  0x00007f343d27bd8b in block_self (queue=0x55ef64391cd0, 
+    mutex=mutex@entry=0x55ef63d21fc0, waittime=waittime@entry=0x0)
+    at ../../libguile/threads.c:316
+#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60, 
+    waittime=0x0, m=0x55ef63d21fc0, kind=SCM_MUTEX_STANDARD)
+    at ../../libguile/threads.c:1031
+#4  scm_timed_lock_mutex (mutex=0x55ef64391cc0, timeout=<optimized out>)
+    at ../../libguile/threads.c:1092
+#5  0x00007f343d56582a in ?? ()
+#6  0x00007f34104bdf90 in ?? ()
+#7  0x00007f343d4f00a0 in jump_table_ () from /usr/local/lib/libguile-3.0.so.0
+#8  0x000055ef6347b3a8 in ?? ()
+#9  0x00007f343d22bf61 in scm_jit_enter_mcode (thread=0x55f0a3d42840, 
+    mcode=0x55f0a3d42840 "\240)ԣ\360U") at ../../libguile/jit.c:4819
+#10 0x00007f343d28089c in vm_debug_engine (thread=0x55f0a3d42840)
+    at ../../libguile/vm-engine.c:370
+#11 0x00007f343d28707a in scm_call_n (proc=proc@entry=0x55eff19c9f00, 
+    argv=argv@entry=0x0, nargs=nargs@entry=0) at ../../libguile/vm.c:1605
+
+104, 106, 107: same as above
+
+105:
+#0  0x00007f342ff7fb03 in opencog::Variables::is_type (this=0x7f2b146d3c00, 
+    var=..., val=...)
+
+-------------------------------------------
+66: 
+#5  std::lock_guard<std::recursive_mutex>::lock_guard (__m=..., 
+    this=<synthetic pointer>) at /usr/include/c++/6/bits/std_mutex.h:162
+#6  opencog::AtomTable::lookupHandle (this=this@entry=0x55ef63c282a0, 
+    a=std::shared_ptr (count 1, weak 1) 0x7f2b24bffdb0)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atomspace/AtomTable.cc:247
+
+67: same
+
+69: opencog, but then gc
+71: atomspace, but then gc
+
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+#1  0x00007f343ca69bb5 in __GI___pthread_mutex_lock (
+    mutex=mutex@entry=0x7f343d4f0f40 <bytes_until_gc_lock>)
+    at ../nptl/pthread_mutex_lock.c:80
+#2  0x00007f343d213e20 in scm_gc_register_allocation (size=size@entry=16)
+    at ../../libguile/gc.c:591
+
+
+
+
+
+
+
+
 
 64 threads with par-for-each from t.scm
 
