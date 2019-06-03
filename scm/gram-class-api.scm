@@ -35,7 +35,7 @@
   Recall that word classes are marked with a 'WordClassNode', and that
   the membership of a word to a WordClass is denoted as
 
-      (MemberLink (WordNode "foo") (WordClassNode "bar"))
+      (MemberLink (WordNode \"foo\") (WordClassNode \"bar\"))
 
   Keep in mind that a word might belong to more than one WordClass.
 
