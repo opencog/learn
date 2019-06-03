@@ -83,7 +83,10 @@
 			; marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
-			(load-atoms-of-type 'Section)
+			; Fetch only the Sections that have a WordClass in them,
+			; and not the others.
+			(load-atoms-of-type 'WordClassNode)
+			(for-each fetch-incoming-set (cog-get-atoms 'WordClassNode))
 			(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 				(- (current-time) start-time)))
 

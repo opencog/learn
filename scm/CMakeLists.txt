@@ -4,6 +4,7 @@ ADD_GUILE_MODULE (FILES
 	common.scm
 	gram-agglo.scm
 	gram-class.scm
+	gram-class-api.scm
 	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm
