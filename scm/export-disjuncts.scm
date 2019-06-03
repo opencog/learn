@@ -253,7 +253,7 @@
 			; Insert the word/word-class (but only if we haven't
 			; done so previously.)
 			(if (not (word-cache germ))
-				(add-word-class germ)
+				(add-word-class germ))
 
 			; Insert the disjunct, assigning a cost according
 			; to the float-point value returned by the function
