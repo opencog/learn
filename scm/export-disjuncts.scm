@@ -191,7 +191,7 @@
 ;
 (define (make-db-adder DB-NAME LOCALE COST-FN)
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
-			(cnt 0)
+			(wrd-id 0)
 			(nprt 0)
 			(secs (current-time))
 		)
@@ -206,15 +206,67 @@
 					(+ pos 2))
 				STR))
 
-		; Add data to the database
-		(define (add-section SECTION)
-			; The germ of the section (the word)
-			(define germ-str (cog-name (gar SECTION)))
-			(define dj-str (cset-to-lg-dj SECTION))
+		; ---------------
+		; Insert a single word, with it's grammatical class,
+		; into the dict.
+		(define (add-one-word WORD-STR CLASS-STR)
 
 			; Oh no!!! Need to fix LEFT-WLL!
-			(if (string=? germ-str "###LEFT-WALL###")
-				(set! germ-str "LEFT-WALL"))
+			(if (string=? WORD-STR "###LEFT-WALL###")
+				(set! WORD-STR "LEFT-WALL"))
+
+			(set! WORD-STR (escquote WORD-STR 0))
+			(set! CLASS-STR (escquote CLASS-STR 0))
+
+			(dbi-query db-obj (format #f
+				"INSERT INTO Morphemes VALUES ('~A', '~A.~D', '~A');"
+				WORD-STR WORD-STR wrd-id CLASS-STR))
+
+			(if (not (equal? 0 (car (dbi-get_status db-obj))))
+				(throw 'fail-insert 'make-db-adder
+					(cdr (dbi-get_status db-obj))))
+		)
+
+		; ---------------
+		; Return a string identifying a word-class
+		(define (mk-cls-str STR)
+			(format #f "<~A.~D>" STR wrd-id))
+
+		; ---------------
+		; Insert either a word, or a word-class, into the dict
+		; CLASS-NODE is either a WordNode or a WordClass
+		(define (add-word-class CLASS-NODE)
+			(define cls-type (cog-type CLASS-NODE))
+
+			; wrd-id serves as a unique ID.
+			(set! wrd-id (+ wrd-id 1))
+
+			(cond
+
+				; If we have a word, just invent a word-class for it.
+				((eq? cls-type 'WordNode)
+					(let ((word-str (cog-name CLASS-NODE)))
+						(add-one-word word-str (mk-cls-str word-str))))
+
+				; Loop over all words in the word-class
+				((eq? cls-type 'WordClassNode)
+					(let ((cls-str (mk-cls-str (cog-name CLASS-NODE))))
+						(for-each
+							(lambda (memb)
+								(add-one-word (cog-name (gar memb)) cls-str))
+							(cog-incoming-by-type CLASS-NODE 'MemberLink))))
+
+				; Must be either a WordNode or a WordClassNode
+				(else
+					(throw 'fail-insert 'make-db-adder
+						"Must be either a WordNode or a WordClassNode")))
+		)
+
+		; Add data to the database
+		(define (add-section SECTION)
+			; The germ of the section is either a WordNode or a WordClass
+			(define germ (gar SECTION))
+			(define dj-str (cset-to-lg-dj SECTION))
 
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
@@ -226,23 +278,14 @@
 					(dbi-query db-obj "BEGIN TRANSACTION;")
 				))
 
-			(set! germ-str (escquote germ-str 0))
-
-			; Insert the word
-			(set! cnt (+ cnt 1))
-			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('~A', '~A.~D', '(~A.~D)');"
-				germ-str germ-str cnt germ-str cnt))
-
-			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-db-adder
-					(cdr (dbi-get_status db-obj))))
-
+			; Insert the word/word-class
+			(add-word-class germ)
+xxxxx
 			; Insert the disjunct, assigning a cost according
-			; to the float-ppoint value returned by teh function
+			; to the float-point value returned by the function
 			(dbi-query db-obj (format #f
 				"INSERT INTO Disjuncts VALUES ('(~A.~D)', '~A', ~F);"
-				germ-str cnt dj-str (COST-FN SECTION)))
+				germ-str wrd-id dj-str (COST-FN SECTION)))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder

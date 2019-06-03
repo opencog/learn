@@ -16574,6 +16574,15 @@ Now try MI-sims on LXC
 
 -- (define btr (batch-transpose psa))
 -- (btr 'mmt-marginals)
+   Finished mmt norm marginals in 16919 secs
+   Finished mmt totals in 96 secs
+	Done storing 444903 right-wilds in 695 secs
+ 
+-- How many are done?
+   (define psn (add-support-api psa))
+   (fold (lambda (ITEM sum)
+         (if (< 0  (psn 'left-support ITEM)) (+ sum 1) sum))
+     0 (psa 'right-basis))
 
 
 fanny:
