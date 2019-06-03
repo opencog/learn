@@ -1,8 +1,8 @@
 ;
 ; export-disjuncts.scm
 ;
-; Export disjuncts from the atomspace into a dattabase that can be
-; used by the Link-Grammar parser.
+; Export disjuncts from the atomspace into a format suitable for
+; use by the Link-Grammar parser.  This uses the sqlite3 format.
 ;
 ; Copyright (c) 2015 Rohit Shinde
 ; Copyright (c) 2017 Linas Vepstas
@@ -11,12 +11,14 @@
 ; OVERVIEW
 ; --------
 ; After a collection of disjuncts has been observed by the MST pipeline,
-; the can be exported to the link Grammar parser, where they can be used
-; to parse sentences.
+; and optionally clustered into grmmatical classes, they can be exported
+; to the link Grammar parser, where they can be used to parse sentences.
 ;
-; Currently an hack job.
-; What's hacky here is that no word-classes (clusters) are used.
 ; Needs the guile-dbi interfaces, in order to write the SQL files.
+;;
+;; XX hack alert:
+;; TODO support word classes
+;; support min-word-count cutoffs
 ;
 ; Example usage:
 ; (export-all-csets "dict.db" "EN_us")
@@ -39,9 +41,11 @@
 ; associated with that atom.
 ;
 ; This returns a function that returns the same values that AFUNC would
-; return, for the same argument; but if a cached value is available,
-; then return just that.  In order for the cache to be valid, the AFUNC
-; must be side-effect-free.
+; return, for the same argument; if a cached value is available, then
+; return just that.  The cache avoids the CPU overhead of calling AFUNC
+; a second time.
+;
+; In order for the cache to be valid, the AFUNC must be side-effect-free.
 ;
 (define (make-afunc-cache AFUNC)
 
@@ -62,9 +66,9 @@
 )
 
 ; ---------------------------------------------------------------------
-; Convert an integer into a string of letters. Useful for creating
-; link-names.  This prepends the letter "T" to all names, so that
-; all MST link-names start with this letter.
+; Convert an integer into a string of upper-case letters. Useful for
+; creating link-names.  This prepends the letter "T" to all names, so
+; that all MST link-names start with this letter.
 ; Example:  0 --> TA, 1 --> TB
 (define (number->tag num)
 
@@ -99,18 +103,32 @@
 
 ;  ---------------------------------------------------------------------
 
-(define cnr-to-left (ConnectorDir "-"))
-
 ; Link Grammar expects connectors to be structured in the order of:
 ;   near- & far- & near+ & far+
 ; whereas the sections we compute from MST are in the form of
 ;   far- & near- & near+ & far+
 ; Thus, for the leftwards-connectors, we have to reverse the order.
+;
+; Lets recall what a section looks like.
+; Here's a real-life example:
+;
+;    (Section (ctv 1 0 1)
+;       (WordNode "an")
+;       (ConnectorSeq
+;          (Connector
+;             (WordNode "interesting")
+;             (ConnectorDir "+"))
+;          (Connector
+;             (WordNode "undertaking")
+;             (ConnectorDir "+"))))
+;
 (define (cset-to-lg-dj SECTION)
 "
   cset-to-lg-dj - SECTION should be a SectionLink
   Return a link-grammar compatible disjunct string.
 "
+	(define cnr-to-left (ConnectorDir "-"))
+
 	; The germ of the section (the word)
 	(define germ (gar SECTION))
 
@@ -150,21 +168,22 @@
 
 ;  ---------------------------------------------------------------------
 
-; Create a function that can store connector-sets to a database.
+; This returns a function that can store a Section to a database.
 ;
 ; DB-NAME is the databse name to write to.
 ; LOCALE is the locale to use; e.g EN_us or ZH_cn
 ; COST-FN is a function that assigns a link-parser cost to each disjunct.
 ;
 ; This returns a function that will write sections to the database.
-; That is, this returns (lambda (SECTION) ...) so that, when you call
-; it, that section will be saved to the database. Calling with #f closes
-; the database.
+; That is, this creates and returns the function `(lambda (SECTION) ...)`
+; so that, when you call it, that section will be saved to the database.
+; Calling with #f closes the database.
 ;
 ; Example usage:
-; (make-database "dict.db" "EN_us" ...)
+;    (define add-section (make-db-adder "dict.db" "EN_us" ...))
+;    (for-each add-section list-of-sections)
 ;
-(define (make-database DB-NAME LOCALE COST-FN)
+(define (make-db-adder DB-NAME LOCALE COST-FN)
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(cnt 0)
 			(nprt 0)
@@ -210,7 +229,7 @@
 				germ-str germ-str cnt germ-str cnt))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-database
+				(throw 'fail-insert 'make-db-adder
 					(cdr (dbi-get_status db-obj))))
 
 			; Insert the disjunct, assigning a cost according
@@ -220,7 +239,7 @@
 				germ-str cnt dj-str (COST-FN SECTION)))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-database
+				(throw 'fail-insert 'make-db-adder
 					(cdr (dbi-get_status db-obj))))
 		)
 
@@ -242,7 +261,7 @@
 			"classname TEXT NOT NULL);" ))
 
 		(if (not (equal? 0 (car (dbi-get_status db-obj))))
-			(throw 'fail-create 'make-database
+			(throw 'fail-create 'make-db-adder
 				(cdr (dbi-get_status db-obj))))
 
 		(dbi-query db-obj
@@ -325,6 +344,10 @@
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
      (export-csets fca \"dict.db\" \"EN_us\")
+
+  In this example, `pca` is teh usual API to word-disjunct pairs.
+  The subtotal filter only admits those sections with a large-enough
+  count.
 "
 	; Create the object that knows where the disuncts are in the
 	; atomspace. Create the object that knows how to get the MI
@@ -340,7 +363,7 @@
 		(- (mi-source 'pair-fmi SECTION)))
 
 	; Create the SQLite3 database.
-	(define sectioner (make-database DB-NAME LOCALE cost-fn))
+	(define sectioner (make-db-adder DB-NAME LOCALE cost-fn))
 
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))

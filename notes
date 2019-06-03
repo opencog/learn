@@ -14420,6 +14420,8 @@ There are 498239 words, of which 444903 have disjuncts and 53336
 are in connectors only.  From the cross-connectors, we can find
 out the converse: number of words that are in connectors only.
 
+((make-pseudo-cset-api) 'fetch-pairs) loads this:
+
 17121601272 Bytes uncompressed == 17 GBytes
  1873684270 Bytes compressed == 1.87 GBytes
 
@@ -16524,7 +16526,9 @@ Restart. Where were we?
 LXC container learn-en:
 \l
 en_dj_efive           72 GB failed cross-connector marginal attempt...  deleted
-en_pairs_cfive_class  90 GB mystery-junk ... deleted
+en_pairs_cfive_class  90 GB mystery-junk ... deleted .. oh, this was the block-5x5
+                            experiment from the LyX diary .. oops. Should have saved
+                            it?
 
 en_pairs_cfive        16 GB ANY-pairs parse tranche 1-5, infix punct. removed
 en_pairs_cfive_mst    72 GB MST disjuncts from tranche 1-5, and marginals.
@@ -16533,7 +16537,7 @@ en_dj_cfive           47 GB Disjuncts + dj-marginals only, no pairs.
 LXC container cfives are cleaned-up versions of rfives.
 TODO: copy en_dj_cfive, make the entropies, and then cluster.
 
-to make entropies:
+to make shape entropies:
 -- createdb en_sh_cfive -T en_dj_cfive
    (i/o bound - 40% CPU but 115MBytes/sec write speed)
 -- cross-en.conf
@@ -16552,6 +16556,13 @@ to make entropies:
    Some kind of incremental design is needed.
 -- dropdb en_sh_cfive
 
+Now try MI-sims on LXC
+-- createdb en_midj_cfive -T en_dj_cfive -- 5 minutes
+-- midj-shells.sh
+-- (define psa stars on dj's as usual)
+-- (psa 'fetch-pairs)
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
 
 
 fanny:
@@ -16700,7 +16711,11 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 #2  0x00007f343d213e20 in scm_gc_register_allocation (size=size@entry=16)
     at ../../libguile/gc.c:591
 
+---------------------------------------------------------------------
+... continuing
 
+-- (prt-all-classes) in word-classes/word-classes.scm
+-- (fetch-all-gram-classes)
 
 
 
