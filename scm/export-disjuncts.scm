@@ -18,15 +18,21 @@
 ;;
 ;; XX hack alert:
 ;; TODO support word classes
-;; support min-word-count cutoffs
 ;
 ; Example usage:
-; (export-all-csets "dict.db" "EN_us")
+;     (define pca (make-pseudo-cset-api))
+;     (define fca (add-subtotal-filter pca 50 50 10 #f))
+;     (export-csets fca \"dict.db\" \"EN_us\")
+;
+; The subtotal filter rejects all words and connector-seqs that have
+; been observed less than 50 times, and all individual entries that
+; have been observed less than ten times.
 ;
 ; Then, in bash:
-; cp -pr /usr/local/share/link-grammar/demo-sql ./my-place
-; cp dict.db ./my-place
-; link-parser ./my-place
+;    cp -pr /usr/local/share/link-grammar/demo-sql ./my-place
+;    cp dict.db ./my-place
+;    link-parser ./my-place
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))

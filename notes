@@ -14420,7 +14420,17 @@ There are 498239 words, of which 444903 have disjuncts and 53336
 are in connectors only.  From the cross-connectors, we can find
 out the converse: number of words that are in connectors only.
 
-((make-pseudo-cset-api) 'fetch-pairs) loads this:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 6951 secs
+-- Atomspace holds 81224849 atoms
+-- (cog-report-counts)
+   ((PredicateNode . 14) (ListLink . 24169074) (TypeNode . 2)
+   (AnchorNode . 1) (Connector . 971810) (ConnectorDir . 2)
+   (ConnectorSeq . 23670834) (Section . 31914870) (SchemaNode . 1)
+   (WordNode . 498239) (AnyNode . 2))
+-- top says 110 GB RAM
+-- (psa 'left-basis-size) -- 444903 -- agrees with above
+-- (psa 'right-basis-size) -- 23444293 -- as above, took 8GB more RAM!
 
 17121601272 Bytes uncompressed == 17 GBytes
  1873684270 Bytes compressed == 1.87 GBytes
@@ -16560,7 +16570,8 @@ Now try MI-sims on LXC
 -- createdb en_midj_cfive -T en_dj_cfive -- 5 minutes
 -- midj-shells.sh
 -- (define psa stars on dj's as usual)
--- (psa 'fetch-pairs)
+-- (psa 'fetch-pairs)  -- Elapsed time to load csets: 6951 secs
+
 -- (define btr (batch-transpose psa))
 -- (btr 'mmt-marginals)
 
