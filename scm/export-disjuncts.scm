@@ -237,6 +237,7 @@
 		(define (add-section SECTION)
 			; The germ of the section is either a WordNode or a WordClass
 			(define germ (gar SECTION))
+			(define germ-str (cog-name germ))
 			(define dj-str (cset-to-lg-dj SECTION))
 
 			(set! nprt (+ nprt 1))
@@ -253,12 +254,12 @@
 			; done so previously.)
 			(if (not (word-cache germ))
 				(add-word-class germ)
-xxxxx
+
 			; Insert the disjunct, assigning a cost according
 			; to the float-point value returned by the function
 			(dbi-query db-obj (format #f
-				"INSERT INTO Disjuncts VALUES ('(~A.~D)', '~A', ~F);"
-				germ-str wrd-id dj-str (COST-FN SECTION)))
+				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
+				(mk-cls-str germ-str) dj-str (COST-FN SECTION)))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder
