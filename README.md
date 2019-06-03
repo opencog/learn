@@ -1131,6 +1131,10 @@ altered by the clustering code):
   Again, `(w,d)` is just a pair. Like other pairs, its a matrix, and
   has marginal probabilities associated with it.
 
+* The file `learn-lang-diary/word-classes/word-classes.scm` contains
+  utilities for displaying word classes. See, for example
+  `(prt-all-classes)` and `(prt-multi-members)`
+
 
 TODO
 ----
