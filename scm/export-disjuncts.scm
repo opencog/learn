@@ -42,36 +42,6 @@
 (use-modules (opencog sheaf))
 
 ; ---------------------------------------------------------------------
-; Return a caching version of AFUNC. Here, AFUNC is a function that
-; takes a single atom as an argument, and returns some object
-; associated with that atom.
-;
-; This returns a function that returns the same values that AFUNC would
-; return, for the same argument; if a cached value is available, then
-; return just that.  The cache avoids the CPU overhead of calling AFUNC
-; a second time.
-;
-; In order for the cache to be valid, the AFUNC must be side-effect-free.
-;
-(define (make-afunc-cache AFUNC)
-
-	; Define the local hash table we will use.
-	(define cache (make-hash-table))
-
-	; Guile needs help computing the hash of an atom.
-	(define (atom-hash ATOM SZ) (modulo (cog-handle ATOM) SZ))
-	(define (atom-assoc ATOM ALIST)
-		(find (lambda (pr) (equal? ATOM (car pr))) ALIST))
-
-	(lambda (ITEM)
-		(define val (hashx-ref atom-hash atom-assoc cache ITEM))
-		(if val val
-			(let ((fv (AFUNC ITEM)))
-				(hashx-set! atom-hash atom-assoc cache ITEM fv)
-				fv)))
-)
-
-; ---------------------------------------------------------------------
 ; Convert an integer into a string of upper-case letters. Useful for
 ; creating link-names.  This prepends the letter "T" to all names, so
 ; that all MST link-names start with this letter.
@@ -194,6 +164,7 @@
 			(wrd-id 0)
 			(nprt 0)
 			(secs (current-time))
+			(word-cache (make-atom-set))
 		)
 
 		; Escape quotes -- replace single quotes by two successive
@@ -278,8 +249,10 @@
 					(dbi-query db-obj "BEGIN TRANSACTION;")
 				))
 
-			; Insert the word/word-class
-			(add-word-class germ)
+			; Insert the word/word-class (but only if we haven't
+			; done so previously.)
+			(if (not (word-cache germ))
+				(add-word-class germ)
 xxxxx
 			; Insert the disjunct, assigning a cost according
 			; to the float-point value returned by the function
