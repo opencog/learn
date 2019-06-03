@@ -23,22 +23,33 @@
 (use-modules (opencog persist))
 (use-modules (opencog matrix))
 
-(define-public (make-pseudo-cset-api)
+(define-public (make-gram-class-api)
 "
-  make-pseudo-cset-api -- connector-set access methods. Pseudo-
-  connector sets are pairs consisting of a word on the left, and
-  a pseudo-disjunct on the right. These are observed during MST parsing.
-  A more detailed description is at the top of this file.
+  make-gram-class-api -- Create a wordclass-disjunct matrix.
+
+  The matrix consists of (word-class,disjunct) pairs (a 'disjunct' and a
+  'cset' or 'connector set' are all different names for the same thing).
+  The word-classes (grammatical classes) appear as rows of the matrix;
+  the disjuncts as columns.
+
+  Recall that word classes are marked with a 'WordClassNode', and that
+  the membership of a word to a WordClass is denoted as
+
+      (MemberLink (WordNode "foo") (WordClassNode "bar"))
+
+  Keep in mind that a word might belong to more than one WordClass.
+
+  For a detailed description, see the `pseudo-csets.scm` file.
 "
 	(let ((all-csets '()))
 
 		; Get the observational count on ATOM
 		(define (get-count ATOM) (cog-count ATOM))
 
-		(define any-left (AnyNode "cset-word"))
-		(define any-right (AnyNode "cset-disjunct"))
+		(define any-left (AnyNode "gram-class-word"))
+		(define any-right (AnyNode "gram-class-disjunct"))
 
-		(define (get-left-type) 'WordNode)
+		(define (get-left-type) 'WordClassNode)
 		(define (get-right-type) 'ConnectorSeq)
 		(define (get-pair-type) 'Section)
 
@@ -60,27 +71,27 @@
 		(define (get-left-wildcard DJ)
 			(ListLink any-left DJ))
 
-		(define (get-right-wildcard WORD)
-			(ListLink WORD any-right))
+		(define (get-right-wildcard WRD-CLS)
+			(ListLink WRD-CLS any-right))
 
 		(define (get-wild-wild)
 			(ListLink any-left any-right))
 
-		; Fetch (from the database) all pseudo-csets
-		(define (fetch-pseudo-csets)
+		; Fetch (from the database) all disjuncts
+		(define (fetch-disjuncts)
 			(define start-time (current-time))
 			; marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
 			(load-atoms-of-type 'Section)
-			(format #t "Elapsed time to load csets: ~A secs\n"
+			(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 				(- (current-time) start-time)))
 
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
-				((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
-				((id)   (lambda () "cset"))
+				((name) (lambda () "WordClass-Disjunct Pairs"))
+				((id)   (lambda () "gram-class"))
 				((left-type) get-left-type)
 				((right-type) get-right-type)
 				((pair-type) get-pair-type)
@@ -93,10 +104,10 @@
 				((left-wildcard) get-left-wildcard)
 				((right-wildcard) get-right-wildcard)
 				((wild-wild) get-wild-wild)
-				((fetch-pairs) fetch-pseudo-csets)
+				((fetch-pairs) fetch-disjuncts)
 				((provides) (lambda (symb) #f))
 				((filters?) (lambda () #f))
-				(else (error "Bad method call on pseudo-cset:" message)))
+				(else (error "Bad method call on gram-class-api:" message)))
 			args)))
 )
 

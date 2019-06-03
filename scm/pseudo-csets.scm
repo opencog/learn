@@ -91,10 +91,13 @@
 
 (define-public (make-pseudo-cset-api)
 "
-  make-pseudo-cset-api -- connector-set access methods. Pseudo-
-  connector sets are pairs consisting of a word on the left, and
-  a pseudo-disjunct on the right. These are observed during MST parsing.
-  A more detailed description is at the top of this file.
+  make-pseudo-cset-api -- Create a word-disjunct matrix.
+
+  The matrix consists of (word,disjunct) pairs (a 'disjunct' and a
+  'cset' or 'connector set' are all different names for the same thing).
+  The words appear as rows of the matrix; the disjuncts as columns.
+
+  For a detailed description, see the `pseudo-csets.scm` file.
 "
 	(let ((all-csets '()))
 
