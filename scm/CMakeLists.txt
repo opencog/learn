@@ -15,3 +15,10 @@ ADD_GUILE_MODULE (FILES
 	vectors.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/learn"
 )
+
+# A distinct module for export-to-link-grammar
+ADD_GUILE_MODULE (FILES
+	lg-export.scm
+	export-disjuncts.scm
+	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/lg-export"
+)

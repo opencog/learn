@@ -1121,11 +1121,9 @@ Grammar. This can be done as follows:
   Follow the instructions in the README. It's easy and fast. Build the
   sqlite3 bindings.
 
-* Manually load the file `scm/export-disjuncts.scm` in this repo. It
-  is not automatically loaded, because ...
-
 * Run the following:
 ```
+  (use-modules (opencog nlp lg-export))
   (export-csets gcs "dict.db" "EN_us")
 ```
   Then, in bash:
