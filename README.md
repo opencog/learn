@@ -1096,6 +1096,46 @@ change.
   distances or other metrics, you need to do so on a separate, clean
   database load. The above database **will** be altered.
 
+At the conclusion of clustering, the results can be exported to Link
+Grammar. This can be done as follows:
+
+* Stop the cluster process. As currently designed above, it will run
+  for far longer than you will ever care to wait.  Clustering is slow.
+
+* Compute costs. The costs are needed to tell Link Grammar how likely
+  any given disjunct is. Link Grammar ranks it's parses by liklihood.
+  Compute the costs as follows:
+```
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (batch-all-pair-mi gcs)
+```
+  The above may take hours or more to run.
+
+* Make sure you have `dbi` installed. The `dbi` module provides guile
+  with database interfaces for popular databases.  It is needed to write
+  out the Link Grammar dataset.
+```
+   git clone https://github.com/opencog/guile-dbi
+```
+  Follow the instructions in the README. It's easy and fast. Build the
+  sqlite3 bindings.
+
+* Manually load the file `scm/export-disjuncts.scm` in this repo. It
+  is not automatically loaded, because ...
+
+* Run the following:
+```
+  (export-csets gcs "dict.db" "EN_us")
+```
+  Then, in bash:
+```
+   cp -pr /usr/local/share/link-grammar/demo-sql ./some-place
+   cp dict.db ./some-place
+   link-parser ./some-place
+```
+
+
 Here's some games you can play with a clean dataset (before being
 altered by the clustering code):
 ```

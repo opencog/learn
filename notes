@@ -16577,6 +16577,8 @@ Now try MI-sims on LXC
    Finished mmt norm marginals in 16919 secs
    Finished mmt totals in 96 secs
 	Done storing 444903 right-wilds in 695 secs
+   Done storing 23444293 left-wilds in 40798 secs (11.3 hours)
+   Done computing and saving sum_y N(x,y) N(*,y)
  
 -- How many are done?
    (define psn (add-support-api psa))
@@ -16732,13 +16734,24 @@ Archives /home2/linas/src/novamente/data/sql-dumps
     at ../../libguile/gc.c:591
 
 ---------------------------------------------------------------------
-... continuing
+... continuing with the junk-scratch dataset...
 
 -- (prt-all-classes) in word-classes/word-classes.scm
 -- (fetch-all-gram-classes)
 
 -- Exporting
+   (define gca (make-gram-class-api))
+   (gca 'fetch-pairs)   -- before, 24665724 atoms tlbuf holds 24665716 atoms
+	(define gcs (add-pair-stars gca))
+   (define gcl (add-loop-api gcs))
+	(define gcm (add-pair-freq-api gcs))
+	; (gcl 'for-each-pair (lambda (x) (format #t "Foo ~A\n" x))) too many
 
+   Ah haha! FMI frequencies missing on gram class. Hmm.
+   Add this by... (batch-all-pair-mi gcs)
+
+Start computing the basis
+Support: found num left= 93 num right= 2394832 in 101 secs
 
 
 
