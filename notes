@@ -15465,7 +15465,7 @@ Done computing and saving sum_y N(x,y) N(*,y)
 -- dropdb en_dj_etwo
 -- createdb en_sh_mi_two -T en_sh_two
 
-Massive MI computations:  started 13 aug 20:00 CDT
+Massive MI computations:  started 13 aug 20:00 CDT 2018
 guile -l x-mcross.scm
 (hvs 'fetch-pairs)
 (hvs 'explode-sections)
@@ -15530,6 +15530,7 @@ English disjuncts+shapes from rfive-mtwo plus marginals plus entropy.
 
 Extended from en_sh_mtwo (which contains marginals for shapes), and
 adds the left, right, total entropy and total MI calculations.
+(viz MI(w,dj) for all word-disjunct pairs, and all shape-pairs).
 So matrix summary report is same as before, but includes entropy.
 This requires an additional 24M atoms, and 127M values!!  Hefty!
 Built as:
@@ -16281,9 +16282,11 @@ cross mi to ... 571 + 50*20 = 1571
 
 ; below got to 30 + 99*14 = 1416
 (map (lambda (n) (mid 'batch-compute n)) (iota 100 30 14))
-;this should get to 1536:  ... done actually, got to 1591
+; this should get to 1536:  ... done actually, got to 1591
 (for-each (lambda (n) (mid 'batch-compute n)) (iota 7 1416 20))
 
+So it looks like en_sh_two_sim contains both cosine and entropic similarities,
+both for disjunct vectors, and for shapes. (well, no cosines for shapes...)
 
 
 =========================================================================
@@ -16613,7 +16616,7 @@ select count(*) from atoms;      <<<<  81241109 == 81.2 M Atoms
 select count(*) from valuations; <<<< 217533128 == 217.5 M Valuations
                                                    (0.5 M more)
 
-xxxx below is junk
+xxxx below is junk xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 (length (cog-incoming-set (AnyNode "cset-disjunct"))) 498240
 
 Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
@@ -16636,11 +16639,11 @@ Count   (l_1)  9.4430E+5    7917.         4.152        21.54
 Length  (l_2)  2.4549E+4    2397.         .1079        6.520
 RMS Count      2.4499E+4    2379.         .1077        6.472
 
-17121601272 Bytes uncompressed == 17 GBytes
- 1873684270 Bytes compressed == 1.87 GBytes
+17199980652 Bytes uncompressed == 17 GBytes
+ 1885746309 Bytes compressed == 1.89 GBytes
 
-c809c93f690ae0f583848ceb78d0c474  en_dj_cfive.sql
-c63df81bd14e5c0d478e654e3be76369  en_dj_cfive.sql.bz2
+90195f2c6a913ef896454894e651813e  en_midj_cfive.sql
+d79ad6f14a7b1bf0ddfd24c31567a5ba  en_midj_cfive.sql.bz2
 
 ==========
 
@@ -16648,9 +16651,9 @@ c63df81bd14e5c0d478e654e3be76369  en_dj_cfive.sql.bz2
 fanny:
 en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
 en_sh_mi_two   56 GB  Above, w/batch-all-pair-mi
-                      I guess this is not neeed; compute MI on demand...
+                      Is this needed? What do we need MI(w,dj) for?
 en_sh_two_sim  27 GB  Word Similarities
-mrg_tst        47 GB
+mrg_tst        47 GB  Scratch dataset
 mrg_two        51 GB
 
 Archives /home2/linas/src/novamente/data/sql-dumps
@@ -16830,7 +16833,8 @@ Done computing and saving -log P(x,*) and P(*,y)
 Going to do individual pair MI
 Done computing 3096306 pair MI's in 24368 secs
 Going to do column and row subtotals
-
+Finished left entropy subtotals in 27670 secs
+Finished right entropy subtotals in 87 secs
 
 
 

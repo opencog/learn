@@ -7751,9 +7751,9 @@ The cosine similarity between two vectors is simply their inner product.
 
 , it is given by 
 \begin_inset Formula 
-\[
-\mbox{sim}(w_{1},w_{2})=\frac{\sum_{d}N(w_{1},d)N(w_{2},d)}{\mbox{len}(w_{1})\mbox{len}(w_{2})}
-\]
+\begin{equation}
+\mbox{sim}(w_{1},w_{2})=\frac{\sum_{d}N(w_{1},d)N(w_{2},d)}{\mbox{len}(w_{1})\mbox{len}(w_{2})}\label{eq:cosine-sim}
+\end{equation}
 
 \end_inset
 
@@ -13355,8 +13355,76 @@ Entropic Similarity
 \end_layout
 
 \begin_layout Standard
-A similarity between two words, taking the form of the symmetric mutual
- information between them, can be defined by working with the matrix product.
+The entropic similarity is similar to the cosine similarity, in that both
+ start with the dot-product (inner product) between two vectors.
+ As pointed in the 
+\begin_inset Quotes eld
+\end_inset
+
+Gradient Descent vs.
+ Graphical Models 
+\begin_inset Quotes eld
+\end_inset
+
+ paper
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+
+\end_inset
+
+, the cosine similarity 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cosine-sim"
+
+\end_inset
+
+ is inappropriate for probability spaces (because probability spaces are
+ not orthogonal vector spaces).
+ The entropic similarity seems to come closer to the desired form of similarity.
+ Both definitions start with the dot-product of two vectors:
+\begin_inset Formula 
+\begin{equation}
+\mbox{dot}\left(w_{1},w_{2}\right)=\sum_{d}p\left(w_{1},d\right)p\left(w_{2},d\right)\label{eq:dot-prod}
+\end{equation}
+
+\end_inset
+
+with the disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+ playing the role of the basis elements.
+ The cosine similarity of eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cosine-sim"
+
+\end_inset
+
+ can be written as 
+\begin_inset Formula 
+\[
+\mbox{dot}\left(w_{1},w_{2}\right)=\frac{\mbox{dot}\left(w_{1},w_{2}\right)}{\sqrt{\mbox{dot}\left(w_{1},w_{1}\right)\mbox{dot}\left(w_{2},w_{2}\right)}}
+\]
+
+\end_inset
+
+By comparison, the entropic similarity is defined as
+\begin_inset Formula 
+\[
+\mbox{dmi}(w_{1},w_{2})=-\log_{2}\frac{\mbox{dot}\left(w_{1},w_{2}\right)\mbox{dot}\left(*,*\right)}{\mbox{dot}\left(w_{1},*\right)\mbox{dot}\left(*,w_{2}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This looks perhaps a bit awkward.
+ Some insight is gained by rewriting this in terms of a joint probability.
  Let 
 \begin_inset Formula $M=\left[p\left(w,d\right)\right]$
 \end_inset
@@ -13372,10 +13440,10 @@ A similarity between two words, taking the form of the symmetric mutual
 \begin_inset Formula $MM^{T}$
 \end_inset
 
-then has matrix entries
+ then has matrix entries
 \begin_inset Formula 
 \[
-\left[MM^{T}\right]\left(w_{1},w_{2}\right)=\sum_{d}p\left(w_{1},d\right)p\left(w_{2},d\right)
+\left[MM^{T}\right]\left(w_{1},w_{2}\right)=\sum_{d}p\left(w_{1},d\right)p\left(w_{2},d\right)=\mbox{dot}\left(w_{1},w_{2}\right)
 \]
 
 \end_inset
@@ -13397,29 +13465,44 @@ Here, the notation
 
 \end_inset
 
-A symmetric mutual information can be built by normalizing this matrix,
- defining a matrix 
+Normalizing this matrix, one obtains a joint probability matrix 
 \begin_inset Formula $Q$
 \end_inset
 
- such that
+:
 \begin_inset Formula 
 \begin{equation}
-Q\left(w_{1},w_{2}\right)=\frac{\left[MM^{T}\right]\left(w_{1},w_{2}\right)}{\sum_{u,v}\left[MM^{T}\right]\left(u,v\right)}=\frac{\left[MM^{T}\right]\left(w_{1},w_{2}\right)}{\left[MM^{T}\right]\left(*,*\right)}\label{eq:symmetric transpose}
+Q\left(w_{1},w_{2}\right)=\frac{\left[MM^{T}\right]\left(w_{1},w_{2}\right)}{\sum_{u,v}\left[MM^{T}\right]\left(u,v\right)}=\frac{\left[MM^{T}\right]\left(w_{1},w_{2}\right)}{\left[MM^{T}\right]\left(*,*\right)}=\frac{\mbox{dot}\left(w_{1},w_{2}\right)}{\mbox{dot}\left(*,*\right)}\label{eq:symmetric transpose}
 \end{equation}
 
 \end_inset
 
-The entropic similarity can then be defined as
+This really is a joint probability, in that 
+\begin_inset Formula $Q\left(*,*\right)=1$
+\end_inset
+
+ (by definition) and 
+\begin_inset Formula $Q\left(w\right)=Q\left(w,*\right)=Q\left(*,w\right)$
+\end_inset
+
+ is a unique marginal probability (by symmetry).
+ Here, it makes sense that the left and right marginal probabilities are
+ the same: both are words, and there is nothing making the relationship
+ asymmetric.
+\end_layout
+
+\begin_layout Standard
+The point-wise symmetric mutual information between two words, aka the entropic
+ similarity, can then be defined as
 \begin_inset Formula 
 \[
-\mbox{dmi}(w_{1},w_{2})=-\log_{2}\frac{Q\left(w_{1},w_{2}\right)}{Q\left(w_{1},*\right)Q\left(*,w_{2}\right)}
+\mbox{dmi}(w_{1},w_{2})=\log_{2}\frac{Q\left(w_{1},w_{2}\right)}{Q\left(w_{1},*\right)Q\left(*,w_{2}\right)}=\log_{2}\frac{Q\left(w_{1},w_{2}\right)}{Q\left(w_{1}\right)Q\left(w_{2}\right)}
 \]
 
 \end_inset
 
 Written in this fashion, this is clearly a form of mutual information between
- two words; its called 
+ two words; we choose to call it the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -13427,7 +13510,7 @@ entropic similarity
 \begin_inset Quotes erd
 \end_inset
 
- here, to avoid confusion with other uses of the words 
+ here, to avoid confusion with other defintions of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -13435,28 +13518,77 @@ mutual information
 \begin_inset Quotes erd
 \end_inset
 
- in this text.
-\end_layout
-
-\begin_layout Subsection
-Stuff
-\end_layout
-
-\begin_layout Standard
-This redoes the graphs from section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Disjunct-Cosine-Similarity"
+ throughout this text.
+ The total entropic MI is then
+\begin_inset Formula 
+\[
+\mbox{DMI}=\sum_{w_{1},w_{2}}Q\left(w_{1},w_{2}\right)\log_{2}\frac{Q\left(w_{1},w_{2}\right)}{Q\left(w_{1}\right)Q\left(w_{2}\right)}
+\]
 
 \end_inset
 
 
 \end_layout
 
+\begin_layout Subsection
+Experimental Results
+\end_layout
+
 \begin_layout Standard
-First graph: top most frequently-observed 640 words, all pairs, for a total
- of N(N-1)/2=204480 pairs; all pairs shown.
- The fit is eye-balled
+Both the cosine similarity 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cosine-sim"
+
+\end_inset
+
+ and the entropic similarity are built upon the same dot-product 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:dot-prod"
+
+\end_inset
+
+.
+ It is reasonable to think that the two should be correlated.
+ This section explores that correlation.
+\end_layout
+
+\begin_layout Standard
+Begin by a redo of the graphs from section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Disjunct-Cosine-Similarity"
+
+\end_inset
+
+.
+ This uses the same dataset, the 
+\noun on
+en_pairs_rfive_mtwo,
+\noun default
+ but more conveniently trimmed down to a more manageable size 
+\noun on
+en_sh_two_sim.
+
+\noun default
+ 
+\end_layout
+
+\begin_layout Standard
+The first graphs shows the distribution of the 
+\begin_inset Formula $N=640$
+\end_inset
+
+ top most frequently-observed words, all pairs, for a total of 
+\begin_inset Formula $N(N-1)/2=204480$
+\end_inset
+
+ pairs; all pairs shown.
+ This is effectively the same as the figures in section 4.1 but with two
+ differences: there is no minimum-length cutoff (which should make no difference
+, as the top words should all have quite long vectors) and the similarity
+ scores have been extended down to zero (rather than a 0.1 cutoff, as before).
 \end_layout
 
 \begin_layout Standard
@@ -13471,23 +13603,24 @@ First graph: top most frequently-observed 640 words, all pairs, for a total
 \end_layout
 
 \begin_layout Standard
-It resembles the earlier figure in section 4.1 and not the mystery figure
- ...
- .
+\align block
+The fit of the linear section is eye-balled.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-See the `(mksims top-items)` and `sim-dj-cosine` in disjunct-stats.scm file.
+See the `(mksims top-items)` and `sim-dj-cosine` in the `disjunct-stats.scm`
+ file.
 \end_layout
 
 \end_inset
 
- 
+ It is not clear why the slope differs from the figures in section 4.1.
 \end_layout
 
 \begin_layout Standard
-and next we have the entropy score.
+The corresponding figure for the entropic similarity is quite different:
+ 
 \end_layout
 
 \begin_layout Standard
@@ -13502,7 +13635,11 @@ and next we have the entropy score.
 \end_layout
 
 \begin_layout Standard
-This one is based on a dataset of the top 920 words, for a total of 
+This shows the 
+\begin_inset Formula $N=920$
+\end_inset
+
+ top words, for a total of 
 \begin_inset Formula $N\left(N-1\right)/2=422740$
 \end_inset
 
@@ -13512,25 +13649,29 @@ This one is based on a dataset of the top 920 words, for a total of
 \end_inset
 
 , as appropriate for disjuncts with zero overlap (the cosine would be zero,
- too) For this dataset, this bin holds 14334 items.
-\end_layout
+ too) For this dataset, this 
+\begin_inset Formula $MI=-\infty$
+\end_inset
 
-\begin_layout Standard
-The smooth parabolic line is an eyeballed fit - a Gaussian, centered at
+ bin holds 14334 items.
+ The smooth parabolic line is an eyeballed fit - a Gaussian, centered at
  an MI value of -3.5, and having a standard deviation of 3.
 \end_layout
 
 \begin_layout Standard
-What's the relationship between MI and cosines? Here it is: the top 640,
- which have both:
+As both the entropic similarity and the cosine similarity are based on the
+ same inner product, one expects them to be (highly?) correlated.
+ The figures below correlation is show the correlation, for the top 
+\begin_inset Formula $N=640$
+\end_inset
+
+ words:
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename en-sims/scatter-dj-mi-cos-dots.eps
-	lyxscale 50
-	display false
 	width 49col%
 
 \end_inset
@@ -13548,18 +13689,16 @@ What's the relationship between MI and cosines? Here it is: the top 640,
 \begin_layout Standard
 Both graphs show the same data.
  The left graph displays it as a point cloud; the right graph sorts the
- data by MI, and then draws a line through it, in sequential order.
+ data by increasing entropic similarity, and then draws a line connecting
+ the points, in sequential order.
+ There is a very clear and very linear relationship between the two, but
+ it is quite broad and noisy.
+ There does seem to be a bounding-box effect: for any given log cosine,
+ the entropic similarity is guaranteeed to lie in a fixed range, and vice-versa.
 \end_layout
 
 \begin_layout Standard
-Noisy.
- Clearly there is a linear relationship between the log of the cosine similarity
-, and the MI.
- But its very noisy.
-\end_layout
-
-\begin_layout Standard
-Heres a ranked variant:
+One can compare the two according to ranking:
 \end_layout
 
 \begin_layout Standard
@@ -13578,6 +13717,10 @@ Heres a ranked variant:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Both fig
 \end_layout
 
 \begin_layout Standard
@@ -14194,7 +14337,7 @@ Written this way, it resembles a kind of mutual information.
 \end_layout
 
 \begin_layout Subsection
-Symmetric Mutual Information
+Symmetric Mutual Information (Entropic Similarity)
 \end_layout
 
 \begin_layout Standard

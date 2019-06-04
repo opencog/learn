@@ -32164,11 +32164,11 @@ cpu
 
 \begin_layout Standard
 \align center
-\begin_inset Note Note
-status collapsed
+\begin_inset Foot
+status open
 
 \begin_layout Plain Layout
-printed with `(prt-all-classes)` and `(prt-multi-members)`
+Table entries obtained from `(prt-all-classes)` and `(prt-multi-members)`
 \end_layout
 
 \end_inset
@@ -32219,6 +32219,14 @@ meaning
 \begin_inset Quotes erd
 \end_inset
 
+ - aka 
+\begin_inset Quotes eld
+\end_inset
+
+word-sense disambiguation
+\begin_inset Quotes erd
+\end_inset
+
 )
 \end_layout
 
@@ -32233,6 +32241,7 @@ meanings
 \end_inset
 
  that a multi-meaning word has.
+ Currently, this appears to be always 2 in the above dataset.
 \end_layout
 
 \begin_layout Description
@@ -32253,7 +32262,8 @@ Some examples of multi-category words:
 
 \begin_layout Description
 what belongs to <that as when if what before where because until> and also
- <what how why whether> – propostional words and question words.
+ <what how why whether> – The first class appears to correspond to propostional
+ words, the second to question words.
 \end_layout
 
 \begin_layout Description
@@ -32998,12 +33008,12 @@ Below are distribution graphs for the word-clases obtained using the two
  differrent datasets, and three different classification schemes.
  The general similarity of the graphs is immedately apparent.
  One can conclude: 
-\begin_inset Note Note
+\begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-graphs created with word-classes/distribution.gplot from stats generated
- with word-classes.scm 
+Graphs created with `word-classes/distribution.gplot` from stats generated
+ with `word-classes.scm` 
 \end_layout
 
 \end_inset
@@ -33097,6 +33107,12 @@ Evaluating the quality is hard.
  unclear how to be quantititive, except by tedious hand-scoring.
 \end_layout
 
+\begin_layout Standard
+One possibility for an objective external score is to compare these word-classes
+ to WordNet sysnsets.
+ 
+\end_layout
+
 \begin_layout Section*
 Connector distribution from MST parses
 \end_layout
@@ -33134,17 +33150,23 @@ real
 \begin_inset Quotes erd
 \end_inset
 
- linnguistic data, we excpet a much much sharper falloff.
+ linnguistic data, we expect a much much sharper falloff.
  Determiners (the, a this, that ...) should have one connector.
- Nouns should have 2 or 3 or 4: zero or one to a determiner, zero, one or
+ There are few of these, and that is what the chart above sugests.
+ (This chart shows 30K such connectors: since this is pre-clustering, those
+ 30K correspond to some determiner, connecting to some specific word.)
+\end_layout
+
+\begin_layout Standard
+Nouns should have 2 or 3 or 4: zero or one to a determiner, zero, one or
  two (maybe rarely three) to adjectives, one to a verb.
  Transitive verbs should have 3 or 4 connectors: one to the subject, one
  to the object, one to LEFT-WALL, zero or one to adverbs, particles, preposition
 s, etc.
  Thus, six or more connectors should be very very rare.
  its not.
- This suggests that the MST parser is not producing enitrely beleivable
- data.
+ This suggests that the MST parser is not producing enitrely believable
+ data (but we knew that, already).
  
 \end_layout
 
@@ -33198,12 +33220,21 @@ Ran the full cross-connector stats
 \end_layout
 
 \begin_layout Section*
-Entropy-similarity
+Entropic-similarity
 \end_layout
 
 \begin_layout Standard
-Some stats for entropy-similarity.
- Consider `
+Some stats for entropic-similarity.
+ There is good reason to think that the entropic similarity will provide
+ a superior judgement of similarity, as compared to cosine similarity.
+ The entropic similarity is defined as the MI between word-disjunct vectors.
+ Thus, it is similar to the cosine similarity, in being founded on a vector
+ dot-product, but has a different normalization in the denominator.
+ It's defined below.
+\end_layout
+
+\begin_layout Standard
+Consider `
 \series bold
 en_rfive_mtwo
 \series default
@@ -33212,7 +33243,11 @@ en_rfive_mtwo
 \end_layout
 
 \begin_layout Itemize
-Rows: 137078 – viz that many words.
+Rows: 137078 – 
+\emph on
+viz
+\emph default
+ that many words.
  Viz 
 \begin_inset Formula $\sum_{w}1=137078$
 \end_inset
@@ -33221,8 +33256,20 @@ Rows: 137078 – viz that many words.
 \end_layout
 
 \begin_layout Itemize
-Columns: 6239997 - viz that many disjuncts – i.e.
- (Section * dj) with * the wild-card, and dj held fixed.
+Columns: 6239997 - 
+\emph on
+viz
+\emph default
+ that many unique disjuncts – i.e.
+ atoms of the form 
+\family typewriter
+(Section (*) (dj))
+\family default
+ with * the wild-card, and 
+\family typewriter
+dj
+\family default
+ held fixed.
  Viz 
 \begin_inset Formula $\sum_{d}1=6239997$
 \end_inset
@@ -33231,8 +33278,24 @@ Columns: 6239997 - viz that many disjuncts – i.e.
 \end_layout
 
 \begin_layout Itemize
-Size: 8629163 - viz this many sections, viz explicit (Section w dj) for
- fixed w,dj) Viz 
+Size: 8629163 - 
+\emph on
+viz
+\emph default
+ this many unique sections, viz explicit 
+\family typewriter
+(Section w dj)
+\family default
+ for fixed 
+\family typewriter
+(w,dj)
+\family default
+.
+ 
+\emph on
+Viz
+\emph default
+ 
 \begin_inset Formula $\sum_{w,d}\left[0<N(w,d)\right]=8629163$
 \end_inset
 
@@ -33244,7 +33307,7 @@ Let
 \begin_inset Formula $N(w,d)$
 \end_inset
 
- be the count of disjunct 
+ be the observation count of disjunct 
 \begin_inset Formula $d$
 \end_inset
 
@@ -33282,27 +33345,35 @@ viz 63.6G.
 
 \end_inset
 
+and 
+\begin_inset Formula 
+\[
+-\log_{2}\sum_{d}\frac{N(*,d)}{N\left(*,*\right)}\frac{N(*,d)}{N\left(*,*\right)}=-\log_{2}1.8603\times10^{-4}=12.4\mbox{ bits}
+\]
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-Define the product between words as
+Define the dot-product (inner product) between words as
 \begin_inset Formula 
 \[
-f\left(u,w\right)=\sum_{d}N(u,d)N(w,d)
+i\left(u,w\right)=\sum_{d}N(u,d)N(w,d)
 \]
 
 \end_inset
 
-Normalize this as
+Normalize this into a bona-fide joint probability as
 \begin_inset Formula 
 \[
-p(u,w)=f\left(u,w\right)/f\left(*,*\right)
+p(u,w)=i\left(u,w\right)/i\left(*,*\right)
 \]
 
 \end_inset
 
-and define 
+and define the entropic similarity as the MI between these two vectors:
 \begin_inset Formula 
 \[
 MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}
@@ -33310,7 +33381,7 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 
 \end_inset
 
-where
+where the marginal probability is
 \begin_inset Formula 
 \[
 p\left(u\right)=p\left(u,*\right)=\sum_{w,d}N(u,d)N(w,d)=\sum_{d}N(u,d)N(*,d)
@@ -33324,10 +33395,10 @@ p\left(u\right)=p\left(u,*\right)=\sum_{w,d}N(u,d)N(w,d)=\sum_{d}N(u,d)N(*,d)
 \begin_layout Standard
 What's this like? Some pairs below.
  Note that 
-\begin_inset Formula $-\log_{2}1.8603\times10^{-4}=12.3921$
+\begin_inset Formula $-\log_{2}1.8603\times10^{-4}=12.3922\mbox{ bits}$
 \end_inset
 
-
+.
 \end_layout
 
 \begin_layout Standard
@@ -34346,7 +34417,10 @@ called
 \end_layout
 
 \begin_layout Standard
-A table yea.
+Casual observation suggests that the MI and the cosine similarity are correlated
+; when one is high, so is the other.
+ A detailed examination of this is in section 6 approx page 40 of the March
+ 2019 version of `connector-sets-revised.pdf`.
 \end_layout
 
 \begin_layout Section*
