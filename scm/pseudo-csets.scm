@@ -138,7 +138,7 @@
 		; Fetch (from the database) all pseudo-csets
 		(define (fetch-pseudo-csets)
 			(define start-time (current-time))
-			; marginals are located on any-left, any-right
+			; Marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
 			; Loading Sections is a bit too mcuh, as that will also

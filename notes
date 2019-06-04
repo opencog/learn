@@ -16586,6 +16586,64 @@ Now try MI-sims on LXC
          (if (< 0  (psn 'left-support ITEM)) (+ sum 1) sum))
      0 (psa 'right-basis))
 
+en_midj_cfive
+-------------
+Identical to en_dj_cfive, together with the MM^T marginals (needed for
+working with word-vector to word-vector MI). Just like en_dj_cfive,
+this does not have any word-pairs in it. Supposedly it contains the
+pseudo-dj marginals. It does not contain the cross-connector marginals;
+it appears that computing these is prohibitive, at this time.
+
+STATUS: Good.
+DATE: 3 June 2019
+
+en_midj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 7453 MB    |
+ public | spaces     | table | ubuntu | 8192 bytes |
+ public | typecodes  | table | ubuntu | 24 kB      |
+ public | valuations | table | ubuntu | 28 GB      |
+ public | values     | table | ubuntu | 8192 bytes |
+(5 rows)
+
+select count(*) from atoms;      <<<<  81241109 == 81.2 M Atoms
+                                                 (3 more than before)
+select count(*) from valuations; <<<< 217533128 == 217.5 M Valuations
+                                                   (0.5 M more)
+
+xxxx below is junk
+(length (cog-incoming-set (AnyNode "cset-disjunct"))) 498240
+
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 69447009)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 444903 Columns: 23444293
+Size: 31914870 non-zero entries of 10430436288579 possible
+Fraction non-zero: 3.0598E-6 Sparsity (-log_2): 18.318
+Total observations: 69447009.0  Avg obs per pair: 2.1760
+Entropy Total: 23.092   Left: 21.137   Right: 10.112
+Total MI: 8.1569
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  2.2742E+5    367.6
+Count   (l_1)  9.4430E+5    7917.         4.152        21.54
+Length  (l_2)  2.4549E+4    2397.         .1079        6.520
+RMS Count      2.4499E+4    2379.         .1077        6.472
+
+17121601272 Bytes uncompressed == 17 GBytes
+ 1873684270 Bytes compressed == 1.87 GBytes
+
+c809c93f690ae0f583848ceb78d0c474  en_dj_cfive.sql
+c63df81bd14e5c0d478e654e3be76369  en_dj_cfive.sql.bz2
+
+==========
+
 
 fanny:
 en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
@@ -16752,6 +16810,26 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 
 Start computing the basis
 Support: found num left= 93 num right= 2394832 in 101 secs
+Finished left norm marginals in 15230 secs
+Finished left totals in 1232 secs
+Finished right norm marginals in 289 secs
+Finished right totals in 0 secs
+Done with wild-card count N(x,*) and N(*,y) in 16751 secs
+Total count N(*,*) = 4773906.510786109 = 4773906.510891325
+Finished column (left) norm averages in 1243 secs
+Finished row (right) norm averages in 0 secs
+Going to do individual pair frequencies
+Done computing 3096306 pairs in 1584 secs
+Start computing log P(*,y)
+Done computing 2394832 left-wilds in 161 secs
+Done with -log P(*,y), start -log P(x,*)
+Done computing 93 right-wilds in 0 secs
+Done storing 2394832 left-wilds in 5439 secs
+Done storing 93 right-wilds in 0 secs
+Done computing and saving -log P(x,*) and P(*,y)
+Going to do individual pair MI
+Done computing 3096306 pair MI's in 24368 secs
+Going to do column and row subtotals
 
 
 

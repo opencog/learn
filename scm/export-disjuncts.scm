@@ -40,7 +40,8 @@
 (catch #t
 	(lambda () (use-modules (dbi dbi))) ; guile-dbi interface to SQLite3
 	(lambda (key . args)
-		(format #t "Error: guile-dbi interfaces missing")))
+		(format #t "Error: guile-dbi interfaces missing:\n   ~A: ~A: ~A \n"
+			key (car args) (cadr args)) #f))
 
 (use-modules (opencog))
 (use-modules (opencog matrix))
