@@ -13586,9 +13586,8 @@ The first graphs shows the distribution of the
 
  pairs; all pairs shown.
  This is effectively the same as the figures in section 4.1 but with two
- differences: there is no minimum-length cutoff (which should make no difference
-, as the top words should all have quite long vectors) and the similarity
- scores have been extended down to zero (rather than a 0.1 cutoff, as before).
+ differences: there is no minimum-length cutoff, and the similarity scores
+ have been extended down to zero (rather than a 0.1 cutoff, as before).
 \end_layout
 
 \begin_layout Standard
@@ -13698,13 +13697,51 @@ Both graphs show the same data.
 \end_layout
 
 \begin_layout Standard
-One can compare the two according to ranking:
+The distribution for the entropic similarity follows a square-root Zipfian
+ distribution: 
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename en-sims/ranked-dj-mi.eps
+	width 49col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As always, the fit is eyeballed, but it appears to be going as 
+\begin_inset Formula $ES=const.-\log_{2}\sqrt{rank}$
+\end_inset
+
+ (with the const presumably dependent on the size of the dataset).
+ The sharp falloff is presumably an artifact of the limited dataset size
+ (it has a total of 
+\begin_inset Formula $422740$
+\end_inset
+
+ pairs for 
+\begin_inset Formula $N=920$
+\end_inset
+
+ words, same as before).
+\end_layout
+
+\begin_layout Standard
+The distribution of the cosine similarity is not as well-behaved.
+ The figure on the left shows the log of the cosine, so as to make it more
+ directly comparable to the entopic similarity, which is effectively logarithmic.
+ The figure on the right shows the same data, but with a different vertical
+ scale.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims/ranked-dj-log-cos.eps
 	width 49col%
 
 \end_inset
@@ -13720,35 +13757,32 @@ One can compare the two according to ranking:
 \end_layout
 
 \begin_layout Standard
-Both fig
-\end_layout
-
-\begin_layout Standard
-On the left is ranking according to pair-MI.
- Clearly, the similarity drops off a cliff, for high ranking.
- But in the meanwhile, it is very linear, going as 
-\begin_inset Formula $MI=const.-\log_{2}\sqrt{rank}$
-\end_inset
-
-.
- Interesting.
-\end_layout
-
-\begin_layout Standard
-On the right is effectively the same ranking for cosine similarity, as given
- in section 
+A linear region, if any, doesn't even extend to the first 1000 ranked similariti
+es.
+ The figure on the right suggests a possibly parabolic fit, but that does
+ not work out very well, either.
+ (The cusp in the left figue is where the parabola crosses zero.) The right
+ hand-side figure is the same sort of graph as given in section 
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:Disjunct-Cosine-Similarity"
 
 \end_inset
 
- It even uses the curve fit.
- This dataset is a good bit larger, but it also does not have the high-observati
-on-count cutoff.
- Thus, presumably, there are some disjuncts with very low observation counts
- that are polluting the data, and distorting what was previously a very
- nice graph.
+
+\end_layout
+
+\begin_layout Standard
+No data cutoffs were used to generate these figures.
+ It is already clear that the vectors contain disjuncts with very low observatio
+n counts, and that these low counts are often the result of low-quality
+ MST parses.
+ A leading cause for low-quality MST parses are infrequently-observed words.
+ A given word might only occur in the corpus only a handful of times, which
+ is not enough to establish it's syntactic behavior.
+ Thus, disjuncts containing this word are likely to be incorrect, behaving
+ no better than chance.
+ it is not clear how much this affects judgements of word-similarity.
 \end_layout
 
 \begin_layout Standard
