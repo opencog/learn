@@ -36,7 +36,12 @@
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
-(use-modules (dbi dbi))  ; The guile-dbi interface to SQLite3
+
+(catch #t
+	(lambda () (use-modules (dbi dbi))) ; guile-dbi interface to SQLite3
+	(lambda (key . args)
+		(format #t "Error: guile-dbi interfaces missing")))
+
 (use-modules (opencog))
 (use-modules (opencog matrix))
 (use-modules (opencog sheaf))
