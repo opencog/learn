@@ -4,6 +4,7 @@ ADD_GUILE_MODULE (FILES
 	common.scm
 	gram-agglo.scm
 	gram-class.scm
+	gram-class-api.scm
 	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm
@@ -13,4 +14,11 @@ ADD_GUILE_MODULE (FILES
 	utilities.scm
 	vectors.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/learn"
+)
+
+# A distinct module for export-to-link-grammar
+ADD_GUILE_MODULE (FILES
+	lg-export.scm
+	export-disjuncts.scm
+	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/lg-export"
 )

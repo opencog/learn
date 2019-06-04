@@ -91,10 +91,13 @@
 
 (define-public (make-pseudo-cset-api)
 "
-  make-pseudo-cset-api -- connector-set access methods. Pseudo-
-  connector sets are pairs consisting of a word on the left, and
-  a pseudo-disjunct on the right. These are observed during MST parsing.
-  A more detailed description is at the top of this file.
+  make-pseudo-cset-api -- Create a word-disjunct matrix.
+
+  The matrix consists of (word,disjunct) pairs (a 'disjunct' and a
+  'cset' or 'connector set' are all different names for the same thing).
+  The words appear as rows of the matrix; the disjuncts as columns.
+
+  For a detailed description, see the `pseudo-csets.scm` file.
 "
 	(let ((all-csets '()))
 
@@ -135,9 +138,11 @@
 		; Fetch (from the database) all pseudo-csets
 		(define (fetch-pseudo-csets)
 			(define start-time (current-time))
-			; marginals are located on any-left, any-right
+			; Marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
+			; Loading Sections is a bit too mcuh, as that will also
+			; pick up WordClassNodes. But I guess that is OK for now.
 			(load-atoms-of-type 'Section)
 			(format #t "Elapsed time to load csets: ~A secs\n"
 				(- (current-time) start-time)))

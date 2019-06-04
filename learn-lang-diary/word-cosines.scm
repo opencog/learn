@@ -27,6 +27,8 @@
 (use-modules (opencog matrix))
 
 (define pseudo-cset-api (make-pseudo-cset-api))
+
+; XXX FIXME add-pair-count-api is osolete; use add-support-api instead.
 (define pseudo-cset-count-api (add-pair-count-api pseudo-cset-api))
 (define pseudo-cset-freq-api (add-pair-freq-api pseudo-cset-api))
 (define pseudo-cset-support-api (add-support-api pseudo-cset-api))

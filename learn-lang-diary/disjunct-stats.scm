@@ -30,6 +30,7 @@
 
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
+; XXX FIXME add-pair-count-api is obsolete; use add-support-api instead.
 (define psc (add-pair-count-api psa))
 (define psf (add-pair-freq-api psa))
 (define psu (add-support-api psa))
@@ -531,7 +532,7 @@
 	(close outport))
 
 ; ---------------------------------------------------------------------
-; Rank word-disjunct pairs according to thier fractonal MI.
+; Rank word-disjunct pairs according to thier fractional MI.
 
 (define (cset-mi CSET) (psf 'pair-fmi CSET))
 

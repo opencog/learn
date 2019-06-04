@@ -1,8 +1,8 @@
 ;
 ; export-disjuncts.scm
 ;
-; Export disjuncts from the atomspace into a dattabase that can be
-; used by the Link-Grammar parser.
+; Export disjuncts from the atomspace into a format suitable for
+; use by the Link-Grammar parser.  This uses the sqlite3 format.
 ;
 ; Copyright (c) 2015 Rohit Shinde
 ; Copyright (c) 2017 Linas Vepstas
@@ -11,60 +11,46 @@
 ; OVERVIEW
 ; --------
 ; After a collection of disjuncts has been observed by the MST pipeline,
-; the can be exported to the link Grammar parser, where they can be used
-; to parse sentences.
+; and optionally clustered into grmmatical classes, they can be exported
+; to the link Grammar parser, where they can be used to parse sentences.
 ;
-; Currently an hack job.
-; What's hacky here is that no word-classes (clusters) are used.
 ; Needs the guile-dbi interfaces, in order to write the SQL files.
+;;
+;; XX hack alert:
+;; TODO support word classes
 ;
 ; Example usage:
-; (export-all-csets "dict.db" "EN_us")
+;     (define pca (make-pseudo-cset-api))
+;     (define fca (add-subtotal-filter pca 50 50 10 #f))
+;     (export-csets fca \"dict.db\" \"EN_us\")
+;
+; The subtotal filter rejects all words and connector-seqs that have
+; been observed less than 50 times, and all individual entries that
+; have been observed less than ten times.
 ;
 ; Then, in bash:
-; cp -pr /usr/local/share/link-grammar/demo-sql ./my-place
-; cp dict.db ./my-place
-; link-parser ./my-place
+;    cp -pr /usr/local/share/link-grammar/demo-sql ./my-place
+;    cp dict.db ./my-place
+;    link-parser ./my-place
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
-(use-modules (dbi dbi))  ; The guile-dbi interface to SQLite3
+
+(catch #t
+	(lambda () (use-modules (dbi dbi))) ; guile-dbi interface to SQLite3
+	(lambda (key . args)
+		(format #t "Error: guile-dbi interfaces missing:\n   ~A: ~A: ~A \n"
+			key (car args) (cadr args)) #f))
+
 (use-modules (opencog))
 (use-modules (opencog matrix))
 (use-modules (opencog sheaf))
 
 ; ---------------------------------------------------------------------
-; Return a caching version of AFUNC. Here, AFUNC is a function that
-; takes a single atom as an argument, and returns some object
-; associated with that atom.
-;
-; This returns a function that returns the same values that AFUNC would
-; return, for the same argument; but if a cached value is available,
-; then return just that.  In order for the cache to be valid, the AFUNC
-; must be side-effect-free.
-;
-(define (make-afunc-cache AFUNC)
-
-	; Define the local hash table we will use.
-	(define cache (make-hash-table))
-
-	; Guile needs help computing the hash of an atom.
-	(define (atom-hash ATOM SZ) (modulo (cog-handle ATOM) SZ))
-	(define (atom-assoc ATOM ALIST)
-		(find (lambda (pr) (equal? ATOM (car pr))) ALIST))
-
-	(lambda (ITEM)
-		(define val (hashx-ref atom-hash atom-assoc cache ITEM))
-		(if val val
-			(let ((fv (AFUNC ITEM)))
-				(hashx-set! atom-hash atom-assoc cache ITEM fv)
-				fv)))
-)
-
-; ---------------------------------------------------------------------
-; Convert an integer into a string of letters. Useful for creating
-; link-names.  This prepends the letter "T" to all names, so that
-; all MST link-names start with this letter.
+; Convert an integer into a string of upper-case letters. Useful for
+; creating link-names.  This prepends the letter "T" to all names, so
+; that all MST link-names start with this letter.
 ; Example:  0 --> TA, 1 --> TB
 (define (number->tag num)
 
@@ -99,18 +85,32 @@
 
 ;  ---------------------------------------------------------------------
 
-(define cnr-to-left (ConnectorDir "-"))
-
 ; Link Grammar expects connectors to be structured in the order of:
 ;   near- & far- & near+ & far+
 ; whereas the sections we compute from MST are in the form of
 ;   far- & near- & near+ & far+
 ; Thus, for the leftwards-connectors, we have to reverse the order.
+;
+; Lets recall what a section looks like.
+; Here's a real-life example:
+;
+;    (Section (ctv 1 0 1)
+;       (WordNode "an")
+;       (ConnectorSeq
+;          (Connector
+;             (WordNode "interesting")
+;             (ConnectorDir "+"))
+;          (Connector
+;             (WordNode "undertaking")
+;             (ConnectorDir "+"))))
+;
 (define (cset-to-lg-dj SECTION)
 "
   cset-to-lg-dj - SECTION should be a SectionLink
   Return a link-grammar compatible disjunct string.
 "
+	(define cnr-to-left (ConnectorDir "-"))
+
 	; The germ of the section (the word)
 	(define germ (gar SECTION))
 
@@ -150,25 +150,27 @@
 
 ;  ---------------------------------------------------------------------
 
-; Create a function that can store connector-sets to a database.
+; This returns a function that can store a Section to a database.
 ;
 ; DB-NAME is the databse name to write to.
 ; LOCALE is the locale to use; e.g EN_us or ZH_cn
 ; COST-FN is a function that assigns a link-parser cost to each disjunct.
 ;
 ; This returns a function that will write sections to the database.
-; That is, this returns (lambda (SECTION) ...) so that, when you call
-; it, that section will be saved to the database. Calling with #f closes
-; the database.
+; That is, this creates and returns the function `(lambda (SECTION) ...)`
+; so that, when you call it, that section will be saved to the database.
+; Calling with #f closes the database.
 ;
 ; Example usage:
-; (make-database "dict.db" "EN_us" ...)
+;    (define add-section (make-db-adder "dict.db" "EN_us" ...))
+;    (for-each add-section list-of-sections)
 ;
-(define (make-database DB-NAME LOCALE COST-FN)
+(define (make-db-adder DB-NAME LOCALE COST-FN)
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
-			(cnt 0)
+			(wrd-id 0)
 			(nprt 0)
 			(secs (current-time))
+			(word-cache (make-atom-set))
 		)
 
 		; Escape quotes -- replace single quotes by two successive
@@ -181,15 +183,68 @@
 					(+ pos 2))
 				STR))
 
-		; Add data to the database
-		(define (add-section SECTION)
-			; The germ of the section (the word)
-			(define germ-str (cog-name (gar SECTION)))
-			(define dj-str (cset-to-lg-dj SECTION))
+		; ---------------
+		; Insert a single word, with it's grammatical class,
+		; into the dict.
+		(define (add-one-word WORD-STR CLASS-STR)
 
 			; Oh no!!! Need to fix LEFT-WLL!
-			(if (string=? germ-str "###LEFT-WALL###")
-				(set! germ-str "LEFT-WALL"))
+			(if (string=? WORD-STR "###LEFT-WALL###")
+				(set! WORD-STR "LEFT-WALL"))
+
+			(set! WORD-STR (escquote WORD-STR 0))
+			(set! CLASS-STR (escquote CLASS-STR 0))
+
+			(dbi-query db-obj (format #f
+				"INSERT INTO Morphemes VALUES ('~A', '~A.~D', '~A');"
+				WORD-STR WORD-STR wrd-id CLASS-STR))
+
+			(if (not (equal? 0 (car (dbi-get_status db-obj))))
+				(throw 'fail-insert 'make-db-adder
+					(cdr (dbi-get_status db-obj))))
+		)
+
+		; ---------------
+		; Return a string identifying a word-class
+		(define (mk-cls-str STR)
+			(format #f "<~A.~D>" STR wrd-id))
+
+		; ---------------
+		; Insert either a word, or a word-class, into the dict
+		; CLASS-NODE is either a WordNode or a WordClass
+		(define (add-word-class CLASS-NODE)
+			(define cls-type (cog-type CLASS-NODE))
+
+			; wrd-id serves as a unique ID.
+			(set! wrd-id (+ wrd-id 1))
+
+			(cond
+
+				; If we have a word, just invent a word-class for it.
+				((eq? cls-type 'WordNode)
+					(let ((word-str (cog-name CLASS-NODE)))
+						(add-one-word word-str (mk-cls-str word-str))))
+
+				; Loop over all words in the word-class
+				((eq? cls-type 'WordClassNode)
+					(let ((cls-str (mk-cls-str (cog-name CLASS-NODE))))
+						(for-each
+							(lambda (memb)
+								(add-one-word (cog-name (gar memb)) cls-str))
+							(cog-incoming-by-type CLASS-NODE 'MemberLink))))
+
+				; Must be either a WordNode or a WordClassNode
+				(else
+					(throw 'fail-insert 'make-db-adder
+						"Must be either a WordNode or a WordClassNode")))
+		)
+
+		; Add data to the database
+		(define (add-section SECTION)
+			; The germ of the section is either a WordNode or a WordClass
+			(define germ (gar SECTION))
+			(define germ-str (cog-name germ))
+			(define dj-str (cset-to-lg-dj SECTION))
 
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
@@ -201,26 +256,19 @@
 					(dbi-query db-obj "BEGIN TRANSACTION;")
 				))
 
-			(set! germ-str (escquote germ-str 0))
-
-			; Insert the word
-			(set! cnt (+ cnt 1))
-			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('~A', '~A.~D', '(~A.~D)');"
-				germ-str germ-str cnt germ-str cnt))
-
-			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-database
-					(cdr (dbi-get_status db-obj))))
+			; Insert the word/word-class (but only if we haven't
+			; done so previously.)
+			(if (not (word-cache germ))
+				(add-word-class germ))
 
 			; Insert the disjunct, assigning a cost according
-			; to the float-ppoint value returned by teh function
+			; to the float-point value returned by the function
 			(dbi-query db-obj (format #f
-				"INSERT INTO Disjuncts VALUES ('(~A.~D)', '~A', ~F);"
-				germ-str cnt dj-str (COST-FN SECTION)))
+				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
+				(mk-cls-str germ-str) dj-str (COST-FN SECTION)))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-database
+				(throw 'fail-insert 'make-db-adder
 					(cdr (dbi-get_status db-obj))))
 		)
 
@@ -242,7 +290,7 @@
 			"classname TEXT NOT NULL);" ))
 
 		(if (not (equal? 0 (car (dbi-get_status db-obj))))
-			(throw 'fail-create 'make-database
+			(throw 'fail-create 'make-db-adder
 				(cdr (dbi-get_status db-obj))))
 
 		(dbi-query db-obj
@@ -325,6 +373,10 @@
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
      (export-csets fca \"dict.db\" \"EN_us\")
+
+  In this example, `pca` is the usual API to word-disjunct pairs.
+  The subtotal filter only admits those sections with a large-enough
+  count.
 "
 	; Create the object that knows where the disuncts are in the
 	; atomspace. Create the object that knows how to get the MI
@@ -340,7 +392,7 @@
 		(- (mi-source 'pair-fmi SECTION)))
 
 	; Create the SQLite3 database.
-	(define sectioner (make-database DB-NAME LOCALE cost-fn))
+	(define sectioner (make-db-adder DB-NAME LOCALE cost-fn))
 
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))

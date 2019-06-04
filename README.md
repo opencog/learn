@@ -9,6 +9,25 @@ Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
 for an alternate overview.
 
+Table of Contents
+------------------
+1. [Project Summary](#project-summary)
+2. [Processing Overview](#processing-overview)
+3. [Computational Pre-requisites](#computational-pre-requisites)
+4. [Setting up the AtomSpace](#setting-up-the-atomspace)
+5. [Bulk Pair Counting](#bulk-pair-counting)
+6. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
+7. [The Vector Structure Encoded in Pairs](#the-vector-structure-encoded-in-pairs)
+8. [Maximum Spanning Trees](#maximum-spanning-trees)
+9. [MST Disjunct Counting](#mst-disjunct-counting)
+10. [Disjunct Marginal Statistics](#disjunct-marginal-statistics)
+11. [Determining Grammatical Classes](#determining-grammatical-classes)
+12. [Creating Grammatical Classes](#creating-grammatical-classes)
+13. [Exporting a Lexis](#exporting-a-lexis)
+14. [Next Steps](#next-steps)
+15. [Precomputed LXC containers](#precomputed-lxc-containers)
+
+
 Project Summary
 ---------------
 The goal of this project is to create a system that is capable of
@@ -77,44 +96,57 @@ and results is in the [learn-lang-diary](learn-lang-diary) subdirectory.
 
 The basic algorithmic steps, as implemented so far, are as follows:
 
-A) Ingest a lot of raw text, such as novels and narrative literature,
-   and count the occurrence of nearby word-pairs.
+* **A)** Ingest a lot of raw text, such as novels and narrative
+         literature, and count the occurrence of nearby word-pairs.
+         Anything that has lots of action-verbs will do.
 
-B) Compute the mutual information (mutual entropy) between the word-pairs.
+* **B)** Compute the mutual information (mutual entropy or MI) between
+         the word-pairs. The MI gives the affinity between words.
 
-C) Use a Minimum-Spanning-Tree algorithm to obtain provisional parses
-   of sentences.  This requires ingesting a lot of raw text, again.
-   (Independently of step A)
+* **C)** Use a Minimum-Spanning-Tree algorithm to obtain provisional
+         parses of sentences.  This requires ingesting a lot of raw
+         text, again. (Independently of step **A**) The resulting
+         parses are "provisional": medium accuracy, a lot better than
+         random chance, but still very imperfect.
 
-D) Extract linkage disjuncts from the parses, and count their frequency.
+* **D)** Extract linkage disjuncts from the parses, and count their
+         frequency. Linkage disjuncts capture how words connect to
+         thier neighbors.  By counting the frequencies, errors in
+         the MST parses get washed out by the law of averages, while
+         the likely-correct disjuncts accumulate large counts. The
+         resulting dictionary is *more* accurate than any single
+         MST parse!
 
-E) Use agglomerative clustering to merge similar linkage disjuncts,
-   while simultaneously merging similar words.  This will result in
-   a set of word-classes (grammatical classes) with disjuncts on them
-   that use word-class connectors.
+* **E)** Use agglomerative clustering to merge similar disjuncts,
+         while simultaneously merging similar words.  This will
+         result in a set of word-classes (grammatical classes)
+         with disjuncts on them that use word-class connectors.
+         By law of averages, random errors get further washed out,
+         while recurring frequent patterns get large counts.
 
-F) Place word-classes and word-class connectors into a link-grammar
-   dictionary.
+* **F)** Place word-classes and word-class connectors into a
+         link-grammar dictionary.
 
-G) Parse a large quantity of raw text, using the parser constructed in
-   the previous step. Using maximum-entropy-style techniques, attempt
-   to extract higher-order relations (resolve anaphora and other
-   referents, determine rheme+theme, learn "lexical functions")
+* **G)** Parse a large quantity of raw text, using the parser
+         constructed in the previous step. Using maximum-entropy-style
+         techniques, attempt to extract higher-order relations
+         (resolve anaphora and other referents, determine rheme+theme,
+         learn "lexical functions").
 
-Currently, the software implements steps A, B, C, D, F and much of
-step E, although this step remains a topic of current research.
-Its quite unclear how to determine the quality of lexis that falls out
-of step F.  Some initial experiments on step G have been performed,
-and look promising.
+Currently, the software implements steps **A**, **B**, **C**, **D**,
+**F** and much of step **E**, although this step remains a topic of
+current research and experimentation.  Its quite unclear how to
+determine the quality of lexis that falls out of step **F**.  Some
+initial experiments on step **G** have been performed, and look promising.
 
-Steps A-C are "well-known" in the academic literature, with results
+Steps **A-C** are "well-known" in the academic literature, with results
 reported by many researchers over the last two decades. The results
-from Steps D & E are new, and have never been published before.
-Results from Step D can be found in the PDF file
+from Steps **D** & **E** are new, and have never been published before.
+Results from Step **D** can be found in the PDF file
 [Connector Sets](learn-lang-diary/drafts/connector-sets.pdf)
 in the diary subdirectory.
 
-It is very important to understand that Step E is ***very different***
+It is important to understand that Step **E** is ***very different***
 from commonly-reported algorithms used in the published literature,
 such as using K-means clustering and dimensional reduction to obtain
 word classes (grammatical categories). The reason for this is that the
@@ -128,17 +160,17 @@ This connectivity information is absent from ordinary approaches to
 the machine-learning of grammatical classes.
 
 As a result, ***none*** of the industry-standard classifiers and
-clustering algorithms can be applied to step E: they all assume that
+clustering algorithms can be applied to step **E**: they all assume that
 the input data can be structured as a vector space.  The axioms of
 algebraic linguistics can resemble the axioms of a vector space, which
 is why vector-space techniques can work pretty well in the machine-
 learning of linguistic structure. However, ultimately, the axioms of
 algebraic linguistics are ***not*** the axioms of a vector space.
 In practical terms, this means that clustering/classification algorithm
-used in step E is completely different than anything else available in
+used in step **E** is completely different than anything else available in
 the industry.
 
-The complete novelty of step E, coupled to the need to perform
+The complete novelty of step **E**, coupled to the need to perform
 experiments in earlier and later stages means that industry-standard,
 generic big-data, machine-learning tools are wholly inadequate for the
 task. It is for thus reason that all data processing is being done in
@@ -176,68 +208,80 @@ This section describes minimum mandatory hardware and software
 requirements. Failing to take these seriously will result in an
 unhappy, painful experience.
 
-0.1) Optional, but strongly recommended! Consider investing in an
-   uninterruptible power supply (UPS) to avoid data loss/data
-   corruption in the event of a power outage. The scripts below can
-   take weeks to run, and unexpected power outages can corrupt
-   databases, resulting in weeks or months of lost work.
+* **0.1)** Optional, but strongly recommended! Consider investing
+           in an uninterruptible power supply (UPS) to avoid data
+           loss/data corruption in the event of a power outage.
+           The scripts below can take weeks to run, and unexpected
+           power outages can corrupt databases, resulting in weeks
+           or months of lost work.
 
-   *You have been warned! This is not a joke!*
+   ***You have been warned! This is not a joke!***
 
-0.2) Optional, but strongly recommended!  Consider investing in a
-   pair of solid-state disk drives (SSD), configured as a RAID-1
-   (mirroring) array, to hold the Postgres database.  Accumulating
-   observation statistics, as well as other data processing operations,
-   is database intensive, and the writes to disk are often the main
-   bottleneck to performance. In practice, 1TB (one terabyte) devoted
-   to just the Postgres server is just barely enough to perform the
-   work described here. Database copies quickly chew up disk space.
-   Individual databases are typically in the 10GB to 150GB in size,
-   and the number of copies of a 150GB database that fit onto a
-   1TB disk is not big.  2TB is a more comfortable size to work with.
+* **0.2)** Optional, but strongly recommended!  Consider investing in
+           a pair of solid-state disk drives (SSD), configured as a
+           RAID-1 (mirroring) array, to hold the Postgres database.
+           Accumulating observation statistics, as well as other data
+           processing operations, is database intensive, and the writes
+           to disk are often the main bottleneck to performance. In
+           practice, 1TB (one terabyte) devoted to just the Postgres
+           server is just barely enough to perform the work described
+           here. Database copies quickly chew up disk space.
+           Individual databases are typically in the 10GB to 150GB in
+           size, and not very many copies of a 150GB database will fit
+           onto a 1TB disk.  2TB is a more comfortable size to work with.
 
-0.3) Get a machine with 4 or more CPU cores, and a minimum of 64GB RAM.
-   It will be less agonizing and infuriating if you have 128 GB RAM or
-   more.  The datasets do get large, and although many of the scripts
-   are designed to only fetch from disk "on demand", the in-RAM sizes
-   can get large. As I write this, my grammatical-clustering process
-   is using 53GB resident-in-RAM working-set size (57GB virtual size).
-   You need additional RAM for the Postgres server -- 24GB is
-   reasonable -- and so 53+24=78GB is the current bare-minimum.  More,
-   if you want to e.g. run a web-browser or something.
+* **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
+           64GB RAM.  It will be less agonizing and infuriating if you
+           have 128 GB RAM or more.  The datasets do get large, and
+           although many of the scripts are designed to only fetch from
+           disk "on demand", the in-RAM sizes can get large. As I write
+           this, my grammatical-clustering process is using 53GB
+           resident-in-RAM working-set size (57GB virtual size).
+           You need additional RAM for the Postgres server -- 24GB is
+           reasonable -- and so 53+24=78GB is the current bare-minimum.
+           More, if you want to e.g. run a web-browser or something.
 
-   An alternative is to run Postgres on one box, and the processing
-   on another. This is a bit more complicated to deal with -- you will
-   want to have a high-speed Ethernet between the two.  Two machines
-   are harder to monitor than one.
+           An alternative is to run Postgres on one box, and the
+           processing on another. This is a bit more complicated to
+           deal with -- you will want to have a high-speed Ethernet
+           between the two.  Two machines are harder to sysadmin and
+           monitor than one.
 
-0.4) Optional but recommended. If you plan to run the pipeline on
-   multiple different languages, it can be convenient, for various
-   reasons, to run the processing in an LXC container. If you already
-   know LXC, then do it. If not, or this is your first time, then don't
-   bother right now. Come back to this later.
+* **0.4)** Optional but recommended. If you plan to run the pipeline
+           on multiple different languages, it can be convenient, for
+           various reasons, to run the processing in an LXC container.
+           If you already know LXC, then do it. If not, or this is
+           your first time, then don't bother right now. Come back to
+           this later.
 
-   LXC containers are nice because:
-   * Each container can have a different config, different datasets,
-     and be executing different steps of the pipeline.  This is great,
-     for juggling multiple jobs.
-   * The system install in one container won't corrupt the other
-     containers; you can experiment, without impacting stable systems.
-   * LXC containers can be stopped and move to other system with more
-     RAM (or less RAM), more disk, or less disk. Handy for load-
-     balancing, and/or easily moving to a bigger system.
+           LXC containers are nice because:
+         * Each container can have a different config, different
+           datasets, and be executing different steps of the pipeline.
+           This is great, for juggling multiple jobs.
+         * The system install in one container won't corrupt the other
+           containers; you can experiment, without impacting stable
+           systems.
+         * LXC containers can be stopped and move to other system with
+           more RAM (or less RAM), more disk, or less disk. Handy for
+           load-balancing, and/or easily moving to a bigger system.
+         * Do not confuse LXC with Docker! They are similar, but LXC
+           is superior for the current task! Why, you ask? Because
+           when you reboot a Docker container, you lose all your work!
+           Dohhh!
 
-0.5) Optional but strongly recommended. Install system shutdown scripts.
-   This will help protect your data in case of an unexpected power loss.
-   These scripts, and the instructions for them, are located in the
-   `run/rc.local.shutdown`, `run/rc-local-shutdown.service` and the
-   `run/rc.lxc.shutdown` files. You will need to alter these files, and
-   use your own login credentials in place of the generic ones.
+* **0.5)** Optional but strongly recommended. Install system shutdown
+           scripts.  This will help protect your data in case of an
+           unexpected power loss.  These scripts, and the instructions
+           for them, are located in the `run/rc.local.shutdown`,
+           `run/rc-local-shutdown.service` and the `run/rc.lxc.shutdown`
+           files. You will need to alter these files, and use your own
+           login credentials in place of the generic ones.
 
-0.6) Mandatory.  You'll work with large datasets; default guile is
-   not equipped to deal wit the sizes encountered here.  Skipping this
-   step will lead to the error `Too many heap sections: Increase
-   MAXHINCR or MAX_HEAP_SECTS`. So:
+* **0.6)** Mandatory.  You'll work with large datasets; default guile
+           is not equipped to deal wit the sizes encountered here.
+           Skipping this step will lead to the error
+           `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
+           So:
 ```
    git clone https://github.com/ivmai/bdwgc
    cd bdwgc
@@ -247,23 +291,26 @@ unhappy, painful experience.
    make; sudo make install
 ```
 
-0.7) The AtomSpace MUST be built with guile version 2.2.2.1 or newer,
-   which can be obtained from the Guile ftp repo
-   https://ftp.gnu.org/gnu/guile/ or git, by doing
+* **0.7)** The AtomSpace MUST be built with guile version 2.2.2.1 or
+           newer, which can be obtained from the Guile ftp repo
+           https://ftp.gnu.org/gnu/guile/ or `git`, by doing
 ```
    git clone git://git.sv.gnu.org/guile.git
-   git checkout stable-2.2
 ```
-   Earlier versions have problems of various sorts. Version 2.0.11
-   will quickly crash with the error message: `guile: hashtab.c:137:
-   vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
+            The above will provide guile-2.9.2 which seems to run
+            quite well. The `stable-2.2` branch, which provides
+            guile-2.2.4 will also work, but version 2.9.2 is faster.
 
-   Also par-for-each hangs:
-   https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
-   (in guile-2.2, it doesn't hang, but still behaves very badly)
+            Earlier versions are not usable. Version 2.0.11
+            will quickly crash with the error message:
+            `guile: hashtab.c:137: vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
 
-0.8) Create/edit the `~/.guile` file and add the content below.
-   This makes the arrow keys work, and prints nicer stack traces.
+            Also par-for-each hangs:
+            https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
+            (in guile-2.2, it doesn't hang, but still behaves very badly).
+
+* **0.8)** Create/edit the `~/.guile` file and add the content below.
+           This makes the arrow keys work, and prints nicer stack traces.
 ```
    (use-modules (ice-9 readline))
    (activate-readline)
@@ -273,16 +320,16 @@ unhappy, painful experience.
    (add-to-load-path ".")
 ```
 
-0.9) Opencog should be built with `link-grammar-5.5.0` or newer.
-   The currently installed version can be displayed by running
+* **0.9)** Opencog should be built with `link-grammar-5.6.1` or newer.
+           The currently installed version can be displayed by running
 ```
    link-parser --version
 ```
-   Newer versions are available at:
-   https://www.abisource.com/downloads/link-grammar/
+           Newer versions are available at:
+           https://www.abisource.com/downloads/link-grammar/
 
-   The main link-grammar project page is here:
-   https://www.abisource.com/projects/link-grammar/
+           The main link-grammar project page is here:
+           https://www.abisource.com/projects/link-grammar/
 
 
 Setting up the AtomSpace
@@ -292,111 +339,118 @@ statistics.  The most time-consuming, difficult and error-prone step
 is the setup and configuration of Postgres.  Postgres is centrally
 important for saving partial results.
 
-1) Set up and configure Postgres, as described in
-   `atomspace/opencog/persist/sql/README.md`
+* **1)** Set up and configure Postgres, as described in
+         [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
 
-2) Create and initialize a database. Pick any name you want; here it
-   is `learn-pairs`.  Later on, you will have to place this name into
-   a config file (see below).
+* **2)** Create and initialize a database. Pick any name you want; here
+         it is `learn-pairs`.  Later on, you will have to place this name
+         into a config file (see below).
 ```
    createdb learn-pairs
    cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
 ```
 
-3) Copy all files from the `opencog/opencog/nlp/learn/run` directory to
-   a new directory; suggest the directory `run-practice`.  Its best to
-   try a few practice runs before committing to serious data processing.
-   The next number of steps describe how to do a practice run; a later
-   section focuses on batch processing.
+* **3)** Copy all files from the `run/1-word-pairs` directory to a
+         new directory; suggest the directory `run-practice`.  Its
+         best to try a few practice runs before committing to serious
+         data processing.  The next number of steps describe how to
+         do a practice run; a later section focuses on batch processing.
 
-   There are two types of files in this directory: generic processing
-   scripts, and language-specific configuration files. Different
-   languages require different processing pipelines; e.g. most languages
-   will require a morphology processing step; English does not.
-   Different languages will typically train on a different set of
-   corpora organized in different directories in different ways. The
-   multitude of config files allows each language to be configured in
-   sharply different ways, running different kinds of experiments.
+         There are two types of files in this directory: generic
+         processing scripts, and language-specific configuration files.
+         Different languages require different processing pipelines;
+         e.g. most languages will require a morphology processing step;
+         English does not.  Different languages will typically train
+         on a different set of corpora organized in different directories
+         in different ways. The multitude of config files allows each
+         language to be configured in sharply different ways, running
+         different kinds of experiments.
 
-   For the practice run, suggest picking English, and using the `en`
-   files. The other language files can be ignored (and can be deleted).
+         For the practice run, suggest picking English, and using the
+         `en` files. The other language files can be ignored (and can
+         be deleted).
 
-4) Start the OpenCog server.  Later on, the batch processing
-   instructions (below) indicate how to automate this. However, for
-   the practice run, it is better to do all this by hand.
+* **3.1)** `cd` to that directory. The instructins below are relative
+         to the files there.
 
-   First, review the contents of `config/opencog-pairs-en.conf`. This
-	simply declares the prompts that the cogserver will use; most
-   importantly, it declares the port number for the cogserver. It's
-   currently coded to be 17005.
+* **4)* Start the OpenCog server.  Later on, the batch processing
+        instructions (below) indicate how to automate this. However,
+        for the practice run, it is better to do all this by hand.
 
-   Edit the `pair-count-en.scm` and hard-code your database credentials
-   into it. This saves you the trouble of having to remember them, and
-   to type them in by hand.
+         First, review the contents of `config/opencog-pairs-en.conf`.
+         This simply declares the prompts that the cogserver will use;
+         most importantly, it declares the port number for the cogserver.
+         It's currently coded to be 17005.
 
-   Finally, start the cogserver by
+         Edit the `pair-count-en.scm` and hard-code your database
+         credentials into it. This saves you the trouble of having to
+         remember them, and to type them in by hand.
+
+         Finally, start the cogserver by
 ```
   guile -l pair-count-en.scm
 ```
 
-5) Verify that the pair-counting pipeline works. In a second terminal,
-   try this:
+* **5)** Verify that the pair-counting pipeline works. In a second
+         terminal, try this:
 ```
    rlwrap telnet localhost 17005
    opencog-en> (observe-text "this is a test")
 ```
-   The port number 17005 was from the above-mentioned config file.
+         The port number 17005 was from the above-mentioned config file.
 
-   Better yet:
+         Better yet:
 ```
    echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
    echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
    echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
-   This should result in activity in the cogserver and on the database:
-   the "observe text" scheme code sends the text for parsing, counts
-   the returned word-pairs, and stores them in the database.
+         This should result in activity in the cogserver and on the
+         database: the `observe text` scheme code sends the text for
+         parsing, counts the returned word-pairs, and stores them in
+         the database.
 
-   If you are truly curious, type in `(sql-stats)` in the guile shell.
-   This will print some very technical stats about the Atomspace SQL
-   database backend.
+         If you are truly curious, type in `(sql-stats)` in the guile
+         shell.  This will print some very technical stats about the
+         Atomspace SQL database backend.
 
-6) Verify that the above resulted in data sent to the SQL database.
-   Log into the database, and check:
+* **6)** Verify that the above resulted in data sent to the SQL database.
+         Log into the database, and check:
 ```
    psql learn-pairs
    learn-pairs=# SELECT * FROM atoms;
    learn-pairs=# SELECT COUNT(*) FROM atoms;
    learn-pairs=# SELECT * FROM valuations;
 ```
-   The above shows that the database now contains word-counts for
-   pair-wise linkages for the above sentences. If the above are empty,
-   something is wrong. Go to back to step zero and try again.
+         The above shows that the database now contains word-counts for
+         pair-wise linkages for the above sentences. If the above are
+         empty, something is wrong. Go to back to step zero and try again.
 
-7) Halt the cogserver by killing the guile process. In the next stage,
-   it will be started in a different way, and having a running server
-   here will interfere with things.  Unless, of course, you are careful
-   to juggle the config files. There's nothing wrong with running
-   multiple servers at the same time: you just have to be careful to
-   avoid clashes, and for that, you can to be careful with config-file
-   settings.
+* **7)** Halt the cogserver by killing the guile process. In the next
+         stage, it will be started in a different way, and having a
+         running server here will interfere with things.  Unless, of
+         course, you are careful to juggle the config files. There's
+         nothing wrong with running multiple servers at the same time:
+         you just have to be careful to avoid clashes, and for that,
+         you can to be careful with config-file settings.
 
-That's for the practice run. If stuff is showing up in the database,
+That's it for the practice run. If stuff is showing up in the database,
 then processing is proceeding as expected.
 
 The next step is to set up bulk test processing. There are three general
-stages: (I) collection of word-pair statistics (II) collection of
-disjunct statistics (III) clustering.  These are described next.
+stages: **(I)** collection of word-pair statistics **(II)** collection of
+disjunct statistics **(III)** clustering.  These are described next.
 
-Note Bene: Please do NOT spend any time at all trying to figure out
+*Note Bene*: Please do NOT spend any time at all trying to figure out
 what is stored in the SQL tables.  There are "no user-serviceable parts
 inside" and there is "risk of electrical shock". The SQL tables are a
 very twisted, distorted and awkward representation of the AtomSpace
 contents. Its kind-of like reading assembly code: you will not learn
 how the AtomSpace works by reading the SQL code.  In fact, doing this
-will probably make you anti-learn, by planting incorrect ideas in your
-head.  Don't look in there. You have been warned!
+will probably make you anti-learn, by damaging your brain, and then
+planting incorrect ideas into it.  Don't look in there. *You have been
+warned!*
 
 
 Bulk Pair Counting
@@ -430,7 +484,7 @@ There are various scripts in the `download` directory for downloading
 and pre-processing texts from Project Gutenberg, Wikipedia, and the
 "Archive of Our Own" fan-fiction website.
 
-8) Explore the scripts in the `download` directory. Download or
+* **8)** Explore the scripts in the `download` directory. Download or
    otherwise obtain a collection of texts to process. Put them in
    some master directory, and also copy them to the `beta-pages`
    directory.  The name `beta-pages` is not mandatory, but some of
@@ -454,7 +508,7 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    at most ten-thousand sentences each; larger files cause trouble
    if the counting needs to be restarted.
 
-9) Review the `observe-text` function in `link-pipeline.scm`. The
+* **9)* Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).  Just be aware that this function
    was written to collect a large amount of additional information,
@@ -489,8 +543,8 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    Currently, no other code examines lengths; this is an open
    experiment.
 
-10) (Optional) Review the `sometimes-gc` and `maybe-gc` settings in
-   the file `link-pipeline.scm`.  These force garbage collection to
+* **10)** (Optional) Review the `sometimes-gc` and `maybe-gc` settings
+   in the file `link-pipeline.scm`.  These force garbage collection to
    occur more often than normal; they help keep the process size
    reasonable.  The current default is to force garbage collection
    whenever the guile heap exceeds 750 MBytes; this helps keep RAM
@@ -499,7 +553,7 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    `link-pipeline.scm` file to suit your whims in RAM usage and time
    spent in GC.  The default should be adequate for almost all users.
 
-11) Its convenient to have lots of terminals open and ready for use;
+* **11)** Its convenient to have lots of terminals open and ready for use;
     the `byobu+tmux` terminal server provides this, without chewing up
     a lot of screen real-estate.  The `run-shells.sh` script will run
     a `byobu/tmux` session, start the cogserver in one of the terminals,
@@ -521,9 +575,9 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
 
     Run `pair-submit-en.sh` in one of the byobu terminals.
 
-12) Pair-counting can take days or weeks.  The `pair-submit-en.sh` will
-    run until all of the text files have been processed, or until it is
-    interrupted.  If it is interrupted, it can be restarted; it will
+* **12)** Pair-counting can take days or weeks.  The `pair-submit-en.sh`
+    will run until all of the text files have been processed, or until it
+    is interrupted.  If it is interrupted, it can be restarted; it will
     resume with the previous unfinished text file. As text files are
     being processed, they are moved to the `split-articles` directory
     and then, to the `submitted-articles` directory.  The input directory
@@ -668,7 +722,7 @@ in the URL above!
 
 
 The Vector Structure Encoded in Pairs
---------------------------------------
+-------------------------------------
 Note that any kind of pair `(x,y)` of things `x,y` that have a number
 `N(x,y)` associated with the pair can be though of as a matrix from
 linear algebra.  That is, `N` is a number, `x` is a row-index, and `y`
@@ -780,8 +834,8 @@ word was in. The code in this part of the pipeline accumulates
 observation counts on the large variety of possible disjuncts (that is,
 word-disjunct pairs) that can be observed.
 
-Running MST Disjunct Counting
------------------------------
+MST Disjunct Counting
+---------------------
 The overall processing is very similar to batch pair-counting. The steps
 are as follows:
 
@@ -847,9 +901,9 @@ Disjunct Marginal Statistics
 The next steps require marginal statistics to be available for the
 disjuncts. The previous step gathered a large number of observation
 counts for disjuncts. These need to be summarized, so that one obtains
-per-word statistics.  Marginals will be needed both form the
-pseudo-csets and for the cross-connector sets.  First, compute the
-marginals for the pseudo-csets:
+per-word statistics.  Marginals will be needed both for the
+pseudo-csets and (optionally) for the cross-connector sets.  First,
+compute the marginals for the pseudo-csets:
 ```
   (sql-open "postgres:///en_disjuncts?user=linas")
   (define pca (make-pseudo-cset-api))
@@ -861,10 +915,17 @@ marginals for the pseudo-csets:
 To obtain the marginals for the cross-connectors, repeat the above
 steps, but this time with `(make-shape-vec-api)` as the base class.
 At this time, the need for the cross-connectors (shapes) is optional...
+It would be recommended, except that there are explosiveluy more of
+them: 2 to 5 cross-connectors get created for each ordinary connector
+(since each slot can be a wild-card, and a word typically has 2-5
+connectors). This can double or triple the size of a dataset.
 
-The above omputations may take hours or days, depending on the size of
+The above computations may take hours or days, depending on the size of
 the disjunct set.  Be sure to make a backup copy of the resulting
 database before proceeding to the next step.
+
+While the above is running, read and contemplate the next section.
+Games you can play with the resulting dataset follow afterwards.
 
 
 Determining Grammatical Classes
@@ -975,6 +1036,29 @@ stitching of this fabric be accounted for. The paper on 'sheaf theory'
 tries to explain this in greater detail. The code here tries to actually
 implement these ideas.
 
+Exploring Word-Word Distances
+-----------------------------
+The classic word-word distance is the cosine distance. As the above
+explains, this is not really the correct metric. But you can play
+around with it, anyway:
+```
+  (define pco (add-pair-cosine-compute psa))
+  (pco 'right-cosine (Word "this") (Word "that"))
+  (pco 'right-cosine (Word "he") (Word "she"))
+```
+A superior measure to the cosine-distance is the mutual information
+between word-disjunct vectors. This is computed using the same vectors,
+and a similar dot-product, but is weighted differrently, in a way that
+makes more sense for probabilities.
+```
+  (define pmi (add-symmetric-mi-compute psa))
+  (pmi 'mmt-fmi (Word "this") (Word "that"))
+```
+
+Experimental code is located in
+[disjunct-stats.scm](learn-lang-diary/disjunct-stats.scm)
+
+
 Creating Grammatical Classes
 ----------------------------
 The clustering code, for isolating grammatical classes, is in active
@@ -1012,6 +1096,44 @@ change.
   distances or other metrics, you need to do so on a separate, clean
   database load. The above database **will** be altered.
 
+At the conclusion of clustering, the results can be exported to Link
+Grammar. This can be done as follows:
+
+* Stop the cluster process. As currently designed above, it will run
+  for far longer than you will ever care to wait.  Clustering is slow.
+
+* Compute costs. The costs are needed to tell Link Grammar how likely
+  any given disjunct is. Link Grammar ranks it's parses by liklihood.
+  Compute the costs as follows:
+```
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (batch-all-pair-mi gcs)
+```
+  The above may take hours or more to run.
+
+* Make sure you have `dbi` installed. The `dbi` module provides guile
+  with database interfaces for popular databases.  It is needed to write
+  out the Link Grammar dataset.
+```
+   git clone https://github.com/opencog/guile-dbi
+```
+  Follow the instructions in the README. It's easy and fast. Build the
+  sqlite3 bindings.
+
+* Run the following:
+```
+  (use-modules (opencog nlp lg-export))
+  (export-csets gcs "dict.db" "EN_us")
+```
+  Then, in bash:
+```
+   cp -pr /usr/local/share/link-grammar/demo-sql ./some-place
+   cp dict.db ./some-place
+   link-parser ./some-place
+```
+
+
 Here's some games you can play with a clean dataset (before being
 altered by the clustering code):
 ```
@@ -1019,27 +1141,16 @@ altered by the clustering code):
   (length (get-all-words))
 
   (define pca (make-pseudo-cset-api))
-  (define psa (add-pair-stars pca))
-  (psa 'fetch-pairs)
-  (define all-cset-words (get-all-cset-words))
-  (length all-cset-words)
-  ; This reports 37413 in for my `en_pairs_sim`.
-  (define all-disjuncts (get-all-disjuncts))
-  (length all-disjuncts)
-  ; This reports 291637 in for my `en_pairs_sim`.
+  (define pss (add-pair-stars pca))
+  (pss 'fetch-pairs)
+  (cog-report-counts)
+  ; This reports  137078 WordNodes,
+  ;               268592 Connectors,
+  ;              6239997 ConnectorSeq,
+  ;             11642010 Sections
+  ; for my `mrg_tst` database.
 
 ```
-  You can now play games:
-```
- (cset-vec-cosine (Word "this") (Word "that"))
- (cset-vec-cosine (Word "he") (Word "she"))
-
-```
-  The `pseudo-csets.scm` file contains code for working with word-
-  disjunct vectors.  Any routine that is `define-public` can be
-  invoked at the guile prompt. Most are safe to use.  If its not
-  `define-public`, you should not call it by hand.
-
   The `lang-learn-diary/disjunct-stats.scm` file contains ad-hoc code
   used to prepare the summary report.  To use it, just cut-n-paste to
   the guile prompt, to get it to do things.
@@ -1057,6 +1168,10 @@ altered by the clustering code):
 ```
   Again, `(w,d)` is just a pair. Like other pairs, its a matrix, and
   has marginal probabilities associated with it.
+
+* The file `learn-lang-diary/word-classes/word-classes.scm` contains
+  utilities for displaying word classes. See, for example
+  `(prt-all-classes)` and `(prt-multi-members)`
 
 
 TODO
@@ -1176,7 +1291,7 @@ simil-en       RUNNING 0         -      10.0.3.89 -
   to get the latest.
 
   (For example, this README file, that you are reading, is in
-  `/home/ubuntu/src/opencog/opencog/nlp/learn/README`. Right now.)
+  `/home/ubuntu/src/learn/README`. Right now.)
 
 * You can now hop directly to the section "Exploring Connector-Sets"
   above, and just go for it.  Everything should be set and done.

@@ -2,56 +2,51 @@
 Parse management scripts
 ========================
 
-The scripts here are used to automate the ingestion of plain-text
-UTF-8 files into the language learning pipeline.  These can be applied
-to any flat text files from any origin of your choice.  Some tools
-for downloading Wikipedia and Project Gutenberg texts can be found
-in the `../download` directory.
+The scripts here are used to automate the operation of the
+language-learning pipeline. Currently, it consists of four steps:
 
-You will typically want to make copies of these, and tailor them to
-your specific needs and procedures. In particular, many of these
-files require database credentials to be set; the exact credentials
-to use will depend on which copy of which database you are using.
-You WILL be copying around a lot of databases!
+* An initial step, of gathering a text corpus to train on. Any
+  sufficiently large collection of plain-text UTF-8 files will do
+  Some tools for downloading Wikipedia and Project Gutenberg texts
+  can be found in the `../download` directory.
 
-A quick overview:
+* Word-pair counting. Automation scripts can be found in the
+  [1-word-pairs](1-word-pairs) directory.
 
-* `run-shells.sh`: multi-tasking terminal server.  Opens multiple
-  terminal sessions with tmux/byobu, and starts the cogserver in one
-  of them.  Use F3 and F4 to switch to different terminals.
+* MST parsing. Automation scripts can be found in the
+  [2-mst-parsing](2-mst-parsing) directory. The previous step must
+  have been completed, before starting this.
 
-* `pair-submit-??.sh`: language-specific word-pair-counting scripts.
-  These pull text files, one by one, from the data directory, and
-  submit them for word-pair counting. Pick one, and run it manually
-  the 'submit' byobu window.  Be sure to open the database, first.
-  The directory containing the text files needs to be manually adjusted
-  here; its `beta-pages` by default, but you can use any directory
-  that you wish.
+* Grammatical class learning. Automation scripts can be found in the
+  [3-gram-class](3-gram-class) directory. The previous step must
+  have been completed, before starting this.
 
-* `mst-submit-??.sh`: language-specific MST processing scripts.
-  These pull text files, one by one, from the data directory, and
-  submit them for MST processing. Pick one, and run it manually
-  the 'submit' byobu window.  Be sure to have performed the mutual
-  information step first. Be sure to make a copy of your database.
-  Be sure to open the database, first.
+File overview
+-------------
+Several files common to several of these steps are located in this
+directory.  A quick overview:
 
-  The directory containing the text files needs to be manually adjusted
-  here; its `gamma-pages` by default, but you can use any directory
-  that you wish.
+* `split-sentences.pl`: Split text files into sentences. Accepts
+  free-form text, and looks for language-depedeny likely end-of
+  sentence locations, so that there is one sentence per line.
+  It's language-dependent, in order to not confuse abbreviations
+  with end-of-sentence markers.
 
-* `pair-one.sh`: the actual sentence-splitting workhorse. It handles each
-  text file, moving the file to a different directory when finished
-  with it.  Note that there are hard-coded paths in here, pointing to
-  the sentence splitter.
+* `nonbreaking_prefixes` Used by the sentence-splitter to avoid
+  breaking on abbreviations.
 
-* `pair-nosplit-one.sh`: similar to above, but assumes that the
-  text-file contains one sentence per line - i.e. has been pre-split.
+* `submit-one.pl`: Script to send single sentences to the cogserver.
+  Used both for pair-counting, and for MST-parsing.
 
-* `submit-one.pl`: script to send sentences to the cogserver.
+* `renice.sh`: Make the postgres server run under a nice priorty.
 
-* `split-sentences.pl`: split text into sentences. Accepts free-form text,
-  and looks for likely end-of sentence locations, so that there is one
-  sentence per line.
+* `rc.local.shutdown`, `rc-local-shutdown.service`, `rc.lxc.shutdown`:
+  Shutdown scripts. These are invoked automatically by the system
+  during a power outage, or during a normal shutdown. They attempt
+  to properly helt the learning pipeline, so as to avoid a scrambled
+  database upon reboot.
+
+* `halt-all.sh`: Stop all running LXC containers.
 
 
 Sentence Splitting

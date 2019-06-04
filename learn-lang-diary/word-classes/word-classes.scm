@@ -186,3 +186,9 @@
 	(format #t "disjunct-size vs weighted-num-disjuncts\n")
 	(list-tabulate 15 prt-dist)
 )
+;
+; -----------------------------------------------------------------
+;
+; Export word-classes to Link Grammar
+; Temp hack; final version of this code needs a different home
+; and API...

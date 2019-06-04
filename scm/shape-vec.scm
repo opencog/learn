@@ -486,7 +486,7 @@ around for a while.
 ; ---------------------------------------------------------------------
 ; Example usage:
 ;
-; (define cva (make-connector-vec-api))
+; (define cva (make-shape-vec-api))
 ; (cva 'fetch-pairs)
 ; (define cvs (add-pair-stars cva))
 ; (cvs 'left-basis-size)
