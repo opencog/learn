@@ -156,12 +156,48 @@ Version 4:
 \end_layout
 
 \begin_layout Abstract
-This report reviews the statistical distributions of disjuncts and disjunct
- vectors obtained from a large statistical sampling of MST-parsed sentences.
- The goal of this report is to survey the general statistical landscape
- of these structures, with the aim of using these as input data to graph
- algorithms that can extract grammatical classes and perform word-sense
- disambiguation.
+The goal of unsupervised learning of the grammar of natural language is
+ to obtain, by automated means, a valid lexis of dependencies between words.
+ In the Link Grammar formalism, these dependencies are represented as 
+\begin_inset Quotes eld
+\end_inset
+
+connector sets
+\begin_inset Quotes erd
+\end_inset
+
+ (also termed 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+) that capture how a word connects to it's neighbors.
+\end_layout
+
+\begin_layout Abstract
+One well-known model of statistical dependency parsing is the so-called
+ MST-parse model of Deniz Yuret.
+ It provides reasonable but imperfect results, and has several unsatisfying
+ properties: it fails to labelled links and it fails to assign words to
+ grammatical classes.
+ Both of these limitations can be overcome by extracting connector sets
+ from MST linkages, and then performing a statistical averaging over many
+ observations.
+ Arguments for why this might be a good approach to statistical language
+ learning is given in a companion report; this report reports on experimental
+ results.
+\end_layout
+
+\begin_layout Abstract
+A collection of connector sets (disjuncts) and disjunct vectors are obtained
+ from a large statistical sampling of MST-parsed sentences.
+ This report surveys the general statistical landscape of these structures.
+ The ultimate aim is to use such collections as input data to graph algorithms
+ that can extract grammatical classes, perform word-sense disambiguation,
+ obtain synonym-sets and provide accurate dependency parsing.
 \end_layout
 
 \begin_layout Abstract
