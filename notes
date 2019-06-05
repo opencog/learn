@@ -16646,6 +16646,51 @@ RMS Count      2.4499E+4    2379.         .1077        6.472
 d79ad6f14a7b1bf0ddfd24c31567a5ba  en_midj_cfive.sql.bz2
 
 ==========
+(define pcr (add-report-api psa))
+(pcr 'left-dim)
+(pca 'wild-wild)
+(fetch-atom (pca 'wild-wild))  WTF
+(ListLink (ctv 0 0 0) (AnyNode "cset-word") (AnyNode "cset-disjunct"))
+
+psql en_midj_cfive
+select * from atoms where name="cset-word"; 125258427 125 
+cset-disjunct 125258428 125
+select * from atoms where outgoing='{125258427,125258428}';  125258429 21
+select * from valuations where atom=125258429;
+
+    key    |   atom    | type |  floatvalue             |
+-----------+-----------+------+-------------------------+-------------+-----------
+         1 | 125258429 |    7 | {0,0,0}                 | *-TruthValueKey-*
+  61461575 | 125258429 |    1 | {0,0,0}                 | *-Dimension Key-*
+  64841127 | 125258429 |    1 | {21.136,10.112,23.092}  | *-Total Entropy Key-*
+  64841129 | 125258429 |    1 | {NaN,NaN,NaN,NaN}       | *-Right Norm Key-*
+  64841130 | 125258429 |    1 | {8.1569044699464}       | *-Total MI Key-*
+  64841131 | 125258429 |    1 | {NaN,NaN,NaN,NaN}       | *-Left Norm Key-* 
+ 150943106 | 125258429 |    1 | {0,0}                   | *-Left Total Key-*
+ 150943107 | 125258429 |    1 | {31914870,549827672543} | *-MM^T Product Key-* 
+ 150943108 | 125258429 |    1 | {0,0}                   | *-Right Total Key-*
+
+So the keys are there (the wild-atom got written) but contain invalid values.
+Well, en_dj_cfive is healthier:
+
+   key    |   atom    | type |      floatvalue                     |
+----------+-----------+------+-------------------------------------+-----------
+        1 | 125258429 |    7 | {0,0,69447009}                      | *-TruthValueKey-*
+ 61461575 | 125258429 |    1 | {444903,23444293,31914870}          | *-Dimension Key-*
+ 64841127 | 125258429 |    1 | {21.136,10.112,23.092}              | *-Total Entropy Key-*
+ 64841129 | 125258429 |    1 | {367.5,7917.2,2396.7,2379.0}        | *-Right Norm Key-*
+ 64841130 | 125258429 |    1 | {8.1569044699464}                   | *-Total MI Key-*
+ 64841131 | 125258429 |    1 | {227416.0,944297.6,24549.3,24498.6} | *-Left Norm Key-*
+
+So, -- tv got clobbered
+dimension key clobbered
+right norm clobbered 
+left norm clobbered.
+Why?
+
+(for-each (lambda (x) (format #t "~A ~A\n" x (cog-value (pca 'wild-wild) x)))
+    (cog-keys  (pca 'wild-wild)))
+
 
 
 fanny:
@@ -16864,7 +16909,16 @@ Count   (l_1)  4086.        2.6703E+5     274.5        1.915
 Length  (l_2)  3037.        2.4071E+4     204.0        .1726
 RMS Count      2953.        2.4060E+4     198.4        .1725
 
+* (export-csets gcs "dict.db" "EN_us")
+Store 3096306 csets
 
+                                      
+   fail-insert: make-db-adder: near "t": syntax error
+Error: bad section (Section (ctv 1 0 36)             
+
+(current-thread)
+(cancel-thread (car (all-threads)))
+Oooops!
 
 
 
@@ -16877,4 +16931,7 @@ TODO:
 * Add 'help method
 * Add 'verbose method to enable progress reports.
 * cut low-obs words from disjunct sets
-
+* fix filter-api
+* user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
+  will not interrupt running thread. Fix this
+* Matrix summary report to print present of MMT

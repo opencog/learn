@@ -166,10 +166,11 @@
 ;    (for-each add-section list-of-sections)
 ;
 (define (make-db-adder DB-NAME LOCALE COST-FN)
+
 	(if (file-exists? DB-NAME)
 		(throw 'fail-create 'make-db-adder
 			(format #f
-				"make-db-adder: Error: file '~A' already exists; will not over-write.\n\tMaybe you should move it out of the ways?" DB-NAME)))
+				"Error: file '~A' exists; will not over-write.\n\tMaybe you should move it out of the way?" DB-NAME)))
 
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
@@ -408,7 +409,7 @@
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
 	(looper 'for-each-pair cntr)
-	(format #t "Store ~D csets\n" cnt)
+	(format #t "Will store ~D csets\n" cnt)
 
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)

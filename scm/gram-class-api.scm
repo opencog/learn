@@ -27,7 +27,7 @@
 "
   make-gram-class-api -- Create a wordclass-disjunct matrix.
 
-  The matrix consists of (word-class,disjunct) pairs (a 'disjunct' and a
+  The matrix consists of (word-class, disjunct) pairs (a 'disjunct' and a
   'cset' or 'connector set' are all different names for the same thing).
   The word-classes (grammatical classes) appear as rows of the matrix;
   the disjuncts as columns.
@@ -38,6 +38,16 @@
       (MemberLink (WordNode \"foo\") (WordClassNode \"bar\"))
 
   Keep in mind that a word might belong to more than one WordClass.
+
+  This class performs no self-consistency checking; it simply provides
+  access to all elements of the form
+
+     (Section (WordClassNode ...) (ConnectorSeq ...)) 
+
+  that can be found in the atomspace. In particular, the ConnectorSeq
+  may reference words that are not in some WordClass.  Thus, you may
+  want to layer some filtering on top of this, to get a self-consistent
+  network.
 
   For a detailed description, see the `pseudo-csets.scm` file.
 "
@@ -112,6 +122,23 @@
 				((filters?) (lambda () #f))
 				(else (error "Bad method call on gram-class-api:" message)))
 			args)))
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-wordclass-filter LLOBJ)
+"
+  add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
+  that the only connector sequences appearing on the right consist
+  entirely of connectors that have words in word-classes appearning on
+  the left. The resulting wordclass-disjunct is then self-consistent,
+  and does not contain any connectors unable to form a connection to
+  some word-class.
+"
+
+	; Always keep any WordClassNode we are presented with.
+	(define (left-basis-pred ITEM) #t)
+
 )
 
 ; ---------------------------------------------------------------------
