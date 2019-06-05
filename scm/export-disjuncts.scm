@@ -171,7 +171,6 @@
 			(format #f
 				"make-db-adder: Error: file '~A' already exists; will not over-write.\n\tMaybe you should move it out of the ways?" DB-NAME)))
 
-
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
@@ -252,14 +251,20 @@
 			(define germ-str (cog-name germ))
 			(define dj-str (cset-to-lg-dj SECTION))
 
+			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
 				(begin
 					(dbi-query db-obj "END TRANSACTION;")
+					(dbi-query db-obj "BEGIN TRANSACTION;")
+				))
+
+			; Print progress report
+			(if (equal? 0 (remainder nprt 25000))
+				(begin
 					(format #t "~D done in ~D secs; inserting into <~A>: ~A;\n"
 						nprt (- (current-time) secs) germ-str dj-str)
 					(set! secs (current-time))
-					(dbi-query db-obj "BEGIN TRANSACTION;")
 				))
 
 			; Insert the word/word-class (but only if we haven't
