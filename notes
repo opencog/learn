@@ -16853,6 +16853,7 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 	(define gcm (add-pair-freq-api gcs))
 	; (gcl 'for-each-pair (lambda (x) (format #t "Foo ~A\n" x))) too many
 
+
    Ah haha! FMI frequencies missing on gram class. Hmm.
    Add this by... (batch-all-pair-mi gcs)
 
@@ -16920,7 +16921,32 @@ Error: bad section (Section (ctv 1 0 36)
 (cancel-thread (car (all-threads)))
 Oooops!
 
+-- Do it again. again 24664866 after (pca 'fetch-pairs)
+-- (print-matrix-summary-report pcs) looks good.
+-- (print-matrix-summary-report gcs) is empty.
+-- (gcs 'fetch-pairs) now 27060667 XXX why so many more??
 
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 8772002) (MemberLink . 852)
+(AnchorNode . 1) (Connector . 268592) (ConnectorDir . 2) (ConnectorSeq .
+6239997) (Section . 11642010) (SchemaNode . 1) (WordNode . 137078)
+(AnyNode . 4) (WordClassNode . 93))
+
+-- (use-modules (opencog nlp lg-export))
+   opencog/nlp/lg-export/export-disjuncts.scm:317:16: warning: possibly
+   unbound variable `dbi-query'
+    `dbi-open'
+    `dbi-get_status'
+
+ERROR: In procedure apply-smob/1:
+In procedure dbi-close: Wrong type argument in position 1: #<finalized
+smob 55a3ce6361b0>
+
+
+-- (export-csets gcs "dict.db" "EN_us")
+   (define pfa (add-pair-freq-api gcs))
+	(pfa 'set-pair-mi 0.003 3)
+pair-fmi
 
 
 64 threads with par-for-each from t.scm

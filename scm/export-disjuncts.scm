@@ -213,7 +213,7 @@
 		; ---------------
 		; Return a string identifying a word-class
 		(define (mk-cls-str STR)
-			(format #f "<~A.~D>" STR wrd-id))
+			(format #f "<~A.~D>" (escquote STR 0) wrd-id))
 
 		; ---------------
 		; Insert either a word, or a word-class, into the dict
