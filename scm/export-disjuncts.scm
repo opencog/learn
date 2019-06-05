@@ -358,11 +358,18 @@
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
 		(dbi-query db-obj "BEGIN TRANSACTION;")
 
+		; Close the DB if an exception is thrown. But otherwise,
+		; let the excpetion pass through to the user.
+		(define (raii-add-section SECTION)
+			(with-throw-handler #t
+				(lambda () (add-section SECTION))
+				(lambda (key . args) (shutdown))))
+
 		; Return function that adds data to the database
 		; If SECTION if #f, the database is closed.
 		(lambda (SECTION)
 			(if SECTION
-				(add-section SECTION)
+				(raii-add-section SECTION)
 				(shutdown))
 		))
 )
