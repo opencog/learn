@@ -41,7 +41,9 @@ ADD_CUSTOM_TARGET(run-ull
 		"${PROJECT_BINARY_DIR}/run-ull/nonbreaking_prefixes/"
 	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/split-sentences.pl"
 		"${PROJECT_BINARY_DIR}/run-ull/"
-	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/config/*"
+	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/1-word-pairs/config/*"
+		"${PROJECT_BINARY_DIR}/run-ull/config"
+	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/2-mst-parsing/config/*"
 		"${PROJECT_BINARY_DIR}/run-ull/config"
 	WORKING_DIRECTORY ${CURRENT_SOURCE_DIR}
 	COMMENT "Setting run-ull in ${PROJECT_BINARY_DIR}/run-ull"
