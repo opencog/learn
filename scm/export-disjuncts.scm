@@ -166,6 +166,12 @@
 ;    (for-each add-section list-of-sections)
 ;
 (define (make-db-adder DB-NAME LOCALE COST-FN)
+	(if (file-exists? DB-NAME)
+		(throw 'fail-create 'make-db-adder
+			(format #f
+				"make-db-adder: Error: file '~A' already exists; will not over-write.\n\tMaybe you should move it out of the ways?" DB-NAME)))
+
+
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
@@ -249,10 +255,10 @@
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
 				(begin
-					(format #t "~D Will insert ~A: ~A; in ~D secs\n"
-						nprt germ-str dj-str (- (current-time) secs))
-					(set! secs (current-time))
 					(dbi-query db-obj "END TRANSACTION;")
+					(format #t "~D done in ~D secs; inserting into <~A>: ~A;\n"
+						nprt (- (current-time) secs) germ-str dj-str)
+					(set! secs (current-time))
 					(dbi-query db-obj "BEGIN TRANSACTION;")
 				))
 
