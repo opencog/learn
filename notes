@@ -16835,6 +16835,35 @@ Done computing 3096306 pair MI's in 24368 secs
 Going to do column and row subtotals
 Finished left entropy subtotals in 27670 secs
 Finished right entropy subtotals in 87 secs
+Finished left MI subtotals in 12952 secs
+Finished right MI subtotals in 71 secs
+Going to compute the left, right and total entropy
+Done computing totals; start saving wildcards
+Done storing 2394832 left-wilds in 1530 secs
+Done storing 93 right-wilds in 0 secs
+Finished with MI computations; this took 25.2 hours
+
+(print-matrix-summary-report gcs)
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 4773906.5)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 93 Columns: 2394832
+Size: 3096306 non-zero entries of 222719376 possible
+Fraction non-zero: 1.3902E-2 Sparsity (-log_2): 6.1685
+Total observations: 4773906.51  Avg obs per pair: 1.5418
+Entropy Total: 17.039   Left: 15.822   Right: 4.8679
+Total MI: 3.6509
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  14.89        1.3948E+5
+Count   (l_1)  4086.        2.6703E+5     274.5        1.915
+Length  (l_2)  3037.        2.4071E+4     204.0        .1726
+RMS Count      2953.        2.4060E+4     198.4        .1725
+
 
 
 
@@ -16844,5 +16873,8 @@ Finished right entropy subtotals in 87 secs
 
 
 
+TODO:
+* Add 'help method
+* Add 'verbose method to enable progress reports.
+* cut low-obs words from disjunct sets
 
-Add 'help method

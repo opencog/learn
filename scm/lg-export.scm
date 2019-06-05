@@ -7,4 +7,4 @@
 (define-module (opencog nlp lg-export))
 
 ; Just one file for now.
-(load "learn/export-disjuncts.scm")
+(load "lg-export/export-disjuncts.scm")
