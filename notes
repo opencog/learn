@@ -16920,6 +16920,7 @@ Error: bad section (Section (ctv 1 0 36)
 (current-thread)
 (cancel-thread (car (all-threads)))
 Oooops!
+(for-each (lambda (thr) (if (not (eq? thr (current-thread))) (cancel-thread thr))) (all-threads))
 
 -- Do it again. again 24664866 after (pca 'fetch-pairs)
 -- (print-matrix-summary-report pcs) looks good.
@@ -16945,8 +16946,7 @@ smob 55a3ce6361b0>
 
 -- (export-csets gcs "dict.db" "EN_us")
    (define pfa (add-pair-freq-api gcs))
-	(pfa 'set-pair-mi 0.003 3)
-pair-fmi
+	(pfa 'set-pair-mi t 0.003 3)
 
 
 64 threads with par-for-each from t.scm

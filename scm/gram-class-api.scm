@@ -136,9 +136,37 @@
   some word-class.
 "
 
-	; Always keep any WordClassNode we are presented with.
-	(define (left-basis-pred ITEM) #t)
+	(define stars-obj (add-pair-stars LLOBJ))
 
+	; Always keep any WordClassNode we are presented with.
+	(define (left-basis-pred WRDCLS) #t)
+
+	; Only accept a ConnectorSeq if every word in every connector
+	; is in some word-class.
+	(define (right-basis-pred CONSEQ)
+		; Return #t only if WRD belongs to CLS
+		(define (word-in-class WRD CLS)
+			(not (eq? '() (cog-link 'MemberLink WRD CLS))))
+
+		; Return #t only if WRD belongs to some WordClass
+		(define (word-in-any-class WRD)
+			(any (lambda (CLS) (word-in-class WRD CLS))
+				(stars-obj 'left-basis)))
+
+		; Return #t only if every connector has a word in some class.
+		(every
+			(lambda (CON) (word-in-any-class (gar CON)))
+			(cog-outgoing-set CONSEQ))
+	)
+
+	; Always keep any Section that passed the duals test.
+	(define (pair-pred WRDCLS) #t)
+
+	(define id-str "wordclass-filter")
+
+	; ---------------
+	(add-generic-filter LLOBJ
+		left-basis-pred right-basis-pred pair-pred id-str #f)
 )
 
 ; ---------------------------------------------------------------------

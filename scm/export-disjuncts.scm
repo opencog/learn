@@ -46,6 +46,7 @@
 (use-modules (opencog))
 (use-modules (opencog matrix))
 (use-modules (opencog sheaf))
+(use-modules (dbi dbi))
 
 ; ---------------------------------------------------------------------
 ; Convert an integer into a string of upper-case letters. Useful for
