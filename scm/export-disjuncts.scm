@@ -347,13 +347,13 @@
 		; does not support optional-braces {} and multi-connectors @.
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
-			"'UNKNOWN-WORD', "
-			"'UNKNOWN-WORD', "
-			"'UNKNOWN-WORD');"))
+			"'<UNKNOWN-WORD>', "
+			"'<UNKNOWN-WORD>', "
+			"'<UNKNOWN-WORD>');"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'UNKNOWN-WORD', 'XXXBOGUS+', 0.0);"))
+			"'<UNKNOWN-WORD>', 'XXXBOGUS+', 0.0);"))
 
 		(dbi-query db-obj "PRAGMA synchronous = OFF;")
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")

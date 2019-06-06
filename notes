@@ -16950,8 +16950,13 @@ smob 55a3ce6361b0>
 
 -- (define gfs (add-wordclass-filter gcs))
    (gfs 'left-basis-size) ; 96
-	(gfs 'right-basis-size)
+	(gfs 'right-basis-size) ; 127536
+   (export-csets gfs "dict.db" "EN_us")
+   Will store 185416 csets
 
+grep VmSwap /proc/14022/status
+
+(define t (current-time)) (gfs 'right-basis-size) (format #t "Elapsed ~A\n" (- (current-time) t))
 
 
 TODO:
