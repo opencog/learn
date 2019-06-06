@@ -292,6 +292,13 @@
 			(dbi-close db-obj)
 		)
 
+		; Close the DB if an exception is thrown. But otherwise,
+		; let the excpetion pass through to the user.
+		(define (raii-add-section SECTION)
+			(with-throw-handler #t
+				(lambda () (add-section SECTION))
+				(lambda (key . args) (shutdown))))
+
 		; Create the tables for words and disjuncts.
 		; Refer to the Link Grammar documentation to see a
 		; description of this table format. Specifically,
@@ -358,13 +365,6 @@
 		(dbi-query db-obj "PRAGMA synchronous = OFF;")
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
 		(dbi-query db-obj "BEGIN TRANSACTION;")
-
-		; Close the DB if an exception is thrown. But otherwise,
-		; let the excpetion pass through to the user.
-		(define (raii-add-section SECTION)
-			(with-throw-handler #t
-				(lambda () (add-section SECTION))
-				(lambda (key . args) (shutdown))))
 
 		; Return function that adds data to the database
 		; If SECTION if #f, the database is closed.
