@@ -16956,14 +16956,20 @@ smob 55a3ce6361b0>
 
 grep VmSwap /proc/14022/status
 
-(define t (current-time)) (gfs 'right-basis-size) (format #t "Elapsed ~A\n" (- (current-time) t))
+(define t (current-time)) (gfs 'right-basis-size)
+(format #t "Elapsed ~A\n" (- (current-time) t))
+-- filter-publish top obs N words, as well as classes.
+   uhh... but this needs recomputed MI's.
+-- lg lookup words having connector !?
 
 
 TODO:
 * Add 'help method
 * Add 'verbose method to enable progress reports.
 * cut low-obs words from disjunct sets
-* fix filter-api
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
 * Matrix summary report to print present of MMT
+
+DONE:
+* fix filter-api (DONE)

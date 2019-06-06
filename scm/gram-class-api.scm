@@ -130,19 +130,21 @@
 "
   add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
   that the only connector sequences appearing on the right consist
-  entirely of connectors that have words in word-classes appearning on
+  entirely of connectors that have words in word-classes appearing on
   the left. The resulting wordclass-disjunct is then self-consistent,
   and does not contain any connectors unable to form a connection to
   some word-class.
 "
-
 	(define stars-obj (add-pair-stars LLOBJ))
 
 	; Always keep any WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
 
 	; Only accept a ConnectorSeq if every word in every connector
-	; is in some word-class.
+	; is in some word-class. XXX TODO: We can make this run a little
+	; faster by mashing all words into one big list. Note, however,
+	; that the generic filter (below) already has build-in caching,
+	; so this optimization won't make much of a difference (I think).
 	(define (right-basis-pred CONSEQ)
 		; Return #t only if WRD belongs to CLS
 		(define (word-in-class WRD CLS)
