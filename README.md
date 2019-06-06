@@ -1124,7 +1124,8 @@ Grammar. This can be done as follows:
 * Run the following:
 ```
   (use-modules (opencog nlp lg-export))
-  (export-csets gcs "dict.db" "EN_us")
+  (define gcf ((add-wordclass-filter gcs))
+  (export-csets gcf "dict.db" "EN_us")
 ```
   Then, in bash:
 ```

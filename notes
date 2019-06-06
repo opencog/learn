@@ -16948,8 +16948,9 @@ smob 55a3ce6361b0>
    (define pfa (add-pair-freq-api gcs))
 	(pfa 'set-pair-mi t 0.003 3)
 
-
-64 threads with par-for-each from t.scm
+-- (define gfs (add-wordclass-filter gcs))
+   (gfs 'left-basis-size) ; 96
+	(gfs 'right-basis-size)
 
 
 
