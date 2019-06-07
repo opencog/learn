@@ -42,7 +42,7 @@
   This class performs no self-consistency checking; it simply provides
   access to all elements of the form
 
-     (Section (WordClassNode ...) (ConnectorSeq ...)) 
+     (Section (WordClassNode ...) (ConnectorSeq ...))
 
   that can be found in the atomspace. In particular, the ConnectorSeq
   may reference words that are not in some WordClass.  Thus, you may
@@ -126,6 +126,26 @@
 
 ; ---------------------------------------------------------------------
 
+(define-public (make-aset-predicate ATOM-LIST)
+
+   ; Define the local hash table we will use.
+   (define cache (make-hash-table))
+
+   ; Guile needs help computing the hash of an atom.
+   (define (atom-hash ATOM SZ) (modulo (cog-handle ATOM) SZ))
+   (define (atom-assoc ATOM ALIST)
+      (find (lambda (pr) (equal? ATOM (car pr))) ALIST))
+
+	; Insert each atom into the hash table.
+	(for-each
+		(lambda (ITEM) (hashx-set! atom-hash atom-assoc cache ITEM #t))
+		ATOM-LIST)
+
+	; Return #t if the atom is in the hash table.
+   (lambda (ITEM)
+      (hashx-ref atom-hash atom-assoc cache ITEM))
+)
+
 (define-public (add-wordclass-filter LLOBJ)
 "
   add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
@@ -141,47 +161,76 @@
 	(define (left-basis-pred WRDCLS) #t)
 
 	; ---------------
-	; Cached lists for the right-basis-pred
+	; Cached set of valid connector-seqs, for the right-basis-pred.
+	; We need to know if every connector in a connector sequence is
+	; a member of some word-class. Verifying this directly is very
+	; inefficient. It is much faster to precompute the set of known-
+	; good connector sequences, and refer to that.
 
-	; Return #t only if WRD belongs to CLS
-	(define (word-in-class WRD CLS)
-		(not (eq? '() (cog-link 'MemberLink WRD CLS))))
+	; Return a list of words in word-classes
+	(define (get-wordclass-words)
+		(define word-set (make-atom-set))
+		(for-each
+			(lambda (wcls)
+				(for-each word-set
+					(map gar (cog-incoming-by-type wcls 'MemberLink))))
+			(cog-get-atoms 'WordClassNode))
+		(word-set #f)
+	)
 
-	; Return #t only if WRD belongs to some WordClass
-	(define (word-in-any-class WRD)
-		(any (lambda (CLS) (word-in-class WRD CLS))
-			(stars-obj 'left-basis)))
+	; Return a list of connectors containing a word in the list
+	(define (get-connectors WRD-LST)
+		(define con-set (make-atom-set))
+		(for-each
+			(lambda (word)
+				(for-each con-set
+					(cog-incoming-by-type word 'Connector)))
+			WRD-LST)
+		(con-set #f)
+	)
 
-	; Use caches to avoid repeated lookups.
-	(define word-in-any-class-cache
-		(make-afunc-cache word-in-any-class))
+	; Return a list of ConnectorSeq containing one or more
+	; connectors from the CON-LST
+	(define (get-con-seqs CON-LST)
+		(define seq-set (make-atom-set))
+		(for-each
+			(lambda (ctr)
+				(for-each seq-set
+					(cog-incoming-by-type ctr 'ConnectorSeq)))
+			CON-LST)
+		(seq-set #f)
+	)
 
-	; Return true only if connector is in some WordClass.
-	; Use caches to avoid repeated lookups.  There are approx
-	; twice as many connectors as words, so the cache is
-	; effective.
-	(define (con-in-any-class CON)
-		(word-in-any-class-cache (gar CON)))
-	(define con-in-any-class-cache
-		(make-afunc-cache con-in-any-class))
+	; Create a predicate that returns true if a given ConnectorSeq
+	; consists of WordNodes eintirely in some WordClass.  That is,
+	; this returns that predicate. This may take a few minutes to
+	; run, if there are millions of ConnectorSeq's.
+	(define (make-conseq-predicate)
+		; Unwanted words are not part of the matrix.
+		(define unwanted-words
+			(atoms-subtract
+				(cog-get-atoms 'WordNode) (get-wordclass-words)))
 
-	; Return #t only if every connector has a word in some class.
-	(define (seq-in-class CSQ)
-		(every con-in-any-class-cache (cog-outgoing-set CSQ)))
-	(define seq-in-class-cache
-		(make-afunc-cache seq-in-class))
+		(define unwanted-cnctrs
+			(get-connectors unwanted-words))
 
-	(define cnt 0)
+		(define unwanted-conseqs
+			(get-con-seqs unwanted-cnctrs))
+
+		(define good-conseqs
+			(atoms-subtract
+				(cog-get-atoms 'ConnectorSeq) unwanted-conseqs))
+
+		(make-aset-predicate good-conseqs)
+	)
+
+	(define ok-conseq? #f)
 
 	; Only accept a ConnectorSeq if every word in every connector
-	; is in some word-class. XXX TODO: We can make this run a little
-	; faster by mashing all words into one big list.
+	; is in some word-class.
 	(define (right-basis-pred CONSEQ)
-		(set! cnt (+ cnt 1))
-		(if (eqv? 0 (modulo cnt 100000))
-			(format #t "Done filtering ~A of ~A connector sequences\n"
-				cnt (cog-count-atoms 'ConnectorSeq)))
-		(seq-in-class-cache CONSEQ)
+		(if (not ok-conseq?) (set! ok-conseq? (make-conseq-predicate)))
+		(ok-conseq? CONSEQ)
 	)
 
 	; Always keep any Section that passed the duals test.
