@@ -171,10 +171,16 @@
 	(define seq-in-class-cache
 		(make-afunc-cache seq-in-class))
 
+	(define cnt 0)
+
 	; Only accept a ConnectorSeq if every word in every connector
 	; is in some word-class. XXX TODO: We can make this run a little
 	; faster by mashing all words into one big list.
 	(define (right-basis-pred CONSEQ)
+		(set! cnt (+ cnt 1))
+		(if (eqv? 0 (modulo cnt 100000))
+			(format #t "Done filtering ~A of ~A connector sequences\n"
+				cnt (cog-count-atoms 'ConnectorSeq)))
 		(seq-in-class-cache CONSEQ)
 	)
 

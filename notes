@@ -16958,6 +16958,36 @@ grep VmSwap /proc/14022/status
 
 (define t (current-time)) (gcf 'right-basis-size)
 (format #t "Elapsed ~A\n" (- (current-time) t))
+
+22:30...
+22:38 ... 100000 of 6239997 connector sequences
+22:44 .. 200000 of 6239997 connector sequences
+22:53 .. 300000 of 6239997 connector sequences
+22:58 .. 400000 of 6239997
+23:05 .. 500000
+23:11 .. 600000
+23:19 .. 700000
+23:25 .. 800000
+23:31 .. 900000
+23:38 .. 1000000
+23:45 .. 1100000
+23:53 .. 1200000
+00:00 .. 1300000
+00:04 .. 1400000
+00:11 .. 1500000
+
+alternate:
+make list of words in word-classes,
+make list of connectors containing these
+make list of connector seqs containing these. How many? 5837887 of them
+Sooo .. almost all of them. No savings. 
+
+How about the other way? there are 3795126 bad conseqs. Ahh! Much
+better. These can be dropped right away. So there should be
+(- 6239997 3795126) = 2444871 left...
+
+
+
 -- filter-publish top obs N words, as well as classes.
    uhh... but this needs recomputed MI's.
 -- lg lookup words having connector !?
