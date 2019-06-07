@@ -127,7 +127,24 @@
 ; ---------------------------------------------------------------------
 
 (define-public (make-aset-predicate ATOM-LIST)
+"
+  make-aset-predicate ATOM-LIST - create a fast Atom-set predicate.
 
+  This returns a function - a predicate - that will return #t whenever
+  an atom is in the ATOM-LIST. That is, it maintains a set of atoms,
+  and returns #t whenever the argument is in that set; else returning #f.
+  The goal of this predicate is to run much, much faster than any search
+  of the ATOM-LIST. Under the covers, this maintains a hash-table of the
+  list for fast lookup.
+
+  Example usage:
+     (define atoms (list (Concept \"A\") (Concept \"B\") (Concept \"C\")))
+     (define is-abc? (make-aset-predicate atoms))
+     (is-abc? (Concept \"C\"))
+     => #t
+     (is-abc? (Concept \"D\"))
+     => #f
+"
    ; Define the local hash table we will use.
    (define cache (make-hash-table))
 
