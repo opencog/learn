@@ -144,6 +144,12 @@
   Proivded methods:
      'delete-singles -- Remove all WordClassNodes that have only a
            single member.
+
+     'create-singles LIST -- Create a WordClassNode for each WordNode
+           in the LIST. The complete set of Sections will be copied
+           from the WordNode to the WordClassNode; the values on the
+           Section will be copied as well, so that the Sections have
+           correct counts on them.
 "
 	(define (delete-singles)
 		; delete each word-class node..
@@ -155,12 +161,31 @@
 					(eq? 1 (cog-incoming-size-by-type WRDCLS 'MemberLink)))
 				(LLOBJ 'left-basis))))
 
+	; Create singltons
+	(define (create-singles WORD-LIST)
+		; Copy the count-value, and anything else.
+		(define (copy-values NEW OLD)
+			(for-each
+				(lambda (KEY)
+					(cog-set-value! NEW KEY (cog-value OLD KEY)))
+				(cog-keys OLD)))
+		(for-each
+			(lambda (WRD)
+				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
+				; Add the word to the new word-clas (obviously)
+				(MemberLink WRD wcl)
+				; Copy the sections
+				(for-each
+					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
+					(cog-incoming-by-type WRD 'Section)))
+			WORD-LIST)
+	)
 
 	; Methods on the object
 	(lambda (message . args)
 		(case message
 			((delete-singles) (delete-singles)
-			((fetch-pairs)    (apply fetch-disjuncts args)
+			((create-singles) (apply create-singles args)
 			(else             (apply LLOBJ (cons message args))))
 		args))
 )
