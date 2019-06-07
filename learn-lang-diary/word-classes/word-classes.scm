@@ -6,6 +6,7 @@
 (use-modules (srfi srfi-1))
 ;
 ; Load all grammatical classes from storage
+; XXX Don't use this; use ((make-gram-class-api) 'fetch-pairs) instead.
 (define (fetch-all-gram-classes)
 	(load-atoms-of-type 'WordClassNode)
 	(for-each
@@ -188,7 +189,3 @@
 )
 ;
 ; -----------------------------------------------------------------
-;
-; Export word-classes to Link Grammar
-; Temp hack; final version of this code needs a different home
-; and API...

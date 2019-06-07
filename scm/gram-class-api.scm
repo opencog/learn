@@ -155,10 +155,25 @@
 			(any (lambda (CLS) (word-in-class WRD CLS))
 				(stars-obj 'left-basis)))
 
+		; Use caches to avoid repeated lookups.
+		(define word-in-any-class-cache
+			(make-afunc-cache word-in-any-class))
+
+		; Return true only if connector is in some WordClass.
+		; Use caches to avoid repeated lookups.  There are approx
+		; twice as many connectors as words, so the cache is
+		; effective.
+		(define (con-in-any-class CON)
+			(word-in-any-class-cache (gar CON)))
+		(define con-in-any-class-cache
+			(make-afunc-cache con-in-any-class))
+
 		; Return #t only if every connector has a word in some class.
-		(every
-			(lambda (CON) (word-in-any-class (gar CON)))
-			(cog-outgoing-set CONSEQ))
+		(define (seq-in-class CSQ)
+			(every con-in-any-class-cache (cog-outgoing-set CSQ)))
+		(define seq-in-class-cache
+			(make-afunc-cache seq-in-class))
+		(seq-in-class-cache CONSEQ)
 	)
 
 	; Always keep any Section that passed the duals test.

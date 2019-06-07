@@ -16962,6 +16962,35 @@ grep VmSwap /proc/14022/status
    uhh... but this needs recomputed MI's.
 -- lg lookup words having connector !?
 
+-- (define wlst (trim-and-rank psa (cog-get-atoms 'WordNode) 5))
+   51753 of 137078 have count > 5
+   14845 have count > 50
+   2670 have count > 500 of these, 2019 are not in classes...
+
+   (define swlst (trim-and-rank psa (cog-get-atoms 'WordNode) 500))
+
+   ; Remove words in word-classes
+   (define uwlst (filter (lambda (wrd)
+      (eq? '() (cog-incoming-by-type wrd 'MemberLink)))
+      swlst))
+
+   (for-each (lambda (wrd)
+      (MemberLink wrd (WordClassNode
+         (string-append (cog-name wrd) "#uni")))) uwlst)
+
+-- recompute the MI, now (filtered for speed)
+   (define gca (make-gram-class-api))
+	(define gcs (add-pair-stars gca))
+	(define gcf (add-wordclass-filter gcs))
+
+   Before starting: Atomspace holds 27064684 atoms
+	Create the unitary sections: Atomspace holds 30385374 atoms
+   (gcf 'left-basis-size) 2112
+   (gcf 'right-basis-size)
+	(batch-all-pair-mi gcf)
+-- 
+
+
 
 TODO:
 * Add 'help method
