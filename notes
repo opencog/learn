@@ -16982,14 +16982,61 @@ make list of connectors containing these
 make list of connector seqs containing these. How many? 5837887 of them
 Sooo .. almost all of them. No savings. 
 
+; Make a list of words in word-classes
+(define word-set (make-atom-set))
+
+(for-each
+   (lambda (wcls)
+      (for-each word-set
+         (map gar (cog-incoming-by-type wcls 'MemberLink))))
+   (cog-get-atoms 'WordClassNode))
+
+(define words (word-set #f))
+
+(length words) ; 2838 OK
+
+(define all-words (cog-get-atoms 'WordNode))
+(length all-words) ; 137078
+
+(define unwords (atoms-subtract all-words words))
+(length unwords) ; 134240  OK.
+
+(define con-set (make-atom-set))
+
+(for-each
+   (lambda (word)
+      (for-each con-set
+         (cog-incoming-by-type word 'Connector)))
+   words)
+
+(define ctcrs (con-set #f))
+(length ctcrs) ; 5675
+
+(define unctcrs (con-set #f))
+(length unctcrs) ; 262917  OK
+
+(define seq-set (make-atom-set))
+(for-each
+   (lambda (ctr)
+      (for-each seq-set
+         (cog-incoming-by-type ctr 'ConnectorSeq)))
+   ctcrs)
+
+(define conseqs (seq-set #f))
+(length conseqs) ; 5837887
+
+Yikes!
+
+(define unconseqs (seq-set #f))
+(length unconseqs) ; 3795126  OK.
+
 How about the other way? there are 3795126 bad conseqs. Ahh! Much
 better. These can be dropped right away. So there should be
 (- 6239997 3795126) = 2444871 left...
 
 wtf ... it found only 1968134 in 321 seconds ... !?
-oh ... (gcs 'right-basis-size) is 4669759 and
-(- 4669759 3795126)
-
+oh ... (gcs 'right-basis-size) is 4669759 which is already smaller than
+tot.
 
 
 -- filter-publish top obs N words, as well as classes.
@@ -17020,8 +17067,10 @@ oh ... (gcs 'right-basis-size) is 4669759 and
    Before starting: Atomspace holds 27064684 atoms
 	Create the unitary sections: Atomspace holds 30385374 atoms
    (gcf 'left-basis-size) 2112
-   (gcf 'right-basis-size)
+   (gcf 'right-basis-size) 1968134 in 216 sec
 	(batch-all-pair-mi gcf)
+Start computing the basis
+Support: found num left= 2112 num right= 1968134 in 1 secs (actually 216 sec)
 -- 
 
 

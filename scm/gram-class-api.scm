@@ -51,77 +51,83 @@
 
   For a detailed description, see the `pseudo-csets.scm` file.
 "
-	(let ((all-csets '()))
 
-		; Get the observational count on ATOM
-		(define (get-count ATOM) (cog-count ATOM))
+	; Get the observational count on ATOM
+	(define (get-count ATOM) (cog-count ATOM))
 
-		(define any-left (AnyNode "gram-class-word"))
-		(define any-right (AnyNode "gram-class-disjunct"))
+	(define any-left (AnyNode "gram-class-word"))
+	(define any-right (AnyNode "gram-class-disjunct"))
 
-		(define (get-left-type) 'WordClassNode)
-		(define (get-right-type) 'ConnectorSeq)
-		(define (get-pair-type) 'Section)
+	(define (get-left-type) 'WordClassNode)
+	(define (get-right-type) 'ConnectorSeq)
+	(define (get-pair-type) 'Section)
 
-		; Get the pair, if it exists.
-		(define (get-pair L-ATOM R-ATOM)
-			(cog-link 'Section L-ATOM R-ATOM))
+	; Get the pair, if it exists.
+	(define (get-pair L-ATOM R-ATOM)
+		(cog-link 'Section L-ATOM R-ATOM))
 
-		; Get the count, if the pair exists.
-		(define (get-pair-count L-ATOM R-ATOM)
-			(define stats-atom (get-pair L-ATOM R-ATOM))
-			(if (null? stats-atom) 0 (get-count stats-atom)))
+	; Get the count, if the pair exists.
+	(define (get-pair-count L-ATOM R-ATOM)
+		(define stats-atom (get-pair L-ATOM R-ATOM))
+		(if (null? stats-atom) 0 (get-count stats-atom)))
 
-		(define (make-pair L-ATOM R-ATOM)
-			(Section L-ATOM R-ATOM))
+	(define (make-pair L-ATOM R-ATOM)
+		(Section L-ATOM R-ATOM))
 
-		(define (get-left-element PAIR) (gar PAIR))
-		(define (get-right-element PAIR) (gdr PAIR))
+	(define (get-left-element PAIR) (gar PAIR))
+	(define (get-right-element PAIR) (gdr PAIR))
 
-		(define (get-left-wildcard DJ)
-			(ListLink any-left DJ))
+	(define (get-left-wildcard DJ)
+		(ListLink any-left DJ))
 
-		(define (get-right-wildcard WRD-CLS)
-			(ListLink WRD-CLS any-right))
+	(define (get-right-wildcard WRD-CLS)
+		(ListLink WRD-CLS any-right))
 
-		(define (get-wild-wild)
-			(ListLink any-left any-right))
+	(define (get-wild-wild)
+		(ListLink any-left any-right))
 
-		; Fetch (from the database) all disjuncts
-		(define (fetch-disjuncts)
-			(define start-time (current-time))
-			; marginals are located on any-left, any-right
-			(fetch-incoming-set any-left)
-			(fetch-incoming-set any-right)
-			; Fetch only the Sections that have a WordClass in them,
-			; and not the others.
-			(load-atoms-of-type 'WordClassNode)
-			(for-each fetch-incoming-set (cog-get-atoms 'WordClassNode))
-			(format #t "Elapsed time to load grammatical classes: ~A secs\n"
-				(- (current-time) start-time)))
+	; Fetch (from the database) all disjuncts
+	(define (fetch-disjuncts)
+		(define start-time (current-time))
+		; marginals are located on any-left, any-right
+		(fetch-incoming-set any-left)
+		(fetch-incoming-set any-right)
+		; Fetch only the Sections that have a WordClass in them,
+		; and not the others.
+		(load-atoms-of-type 'WordClassNode)
+		(for-each fetch-incoming-set (cog-get-atoms 'WordClassNode))
+		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
+			(- (current-time) start-time)))
 
-		; Methods on the object
-		(lambda (message . args)
-			(apply (case message
-				((name) (lambda () "WordClass-Disjunct Pairs"))
-				((id)   (lambda () "gram-class"))
-				((left-type) get-left-type)
-				((right-type) get-right-type)
-				((pair-type) get-pair-type)
-				((pair-count) get-pair-count)
-				((get-pair) get-pair)
-				((get-count) get-count)
-				((make-pair) make-pair)
-				((left-element) get-left-element)
-				((right-element) get-right-element)
-				((left-wildcard) get-left-wildcard)
-				((right-wildcard) get-right-wildcard)
-				((wild-wild) get-wild-wild)
-				((fetch-pairs) fetch-disjuncts)
-				((provides) (lambda (symb) #f))
-				((filters?) (lambda () #f))
-				(else (error "Bad method call on gram-class-api:" message)))
-			args)))
+	; Methods on the object
+	(lambda (message . args)
+		(apply (case message
+			((name) (lambda () "WordClass-Disjunct Pairs"))
+			((id)   (lambda () "gram-class"))
+			((left-type) get-left-type)
+			((right-type) get-right-type)
+			((pair-type) get-pair-type)
+			((pair-count) get-pair-count)
+			((get-pair) get-pair)
+			((get-count) get-count)
+			((make-pair) make-pair)
+			((left-element) get-left-element)
+			((right-element) get-right-element)
+			((left-wildcard) get-left-wildcard)
+			((right-wildcard) get-right-wildcard)
+			((wild-wild) get-wild-wild)
+			((fetch-pairs) fetch-disjuncts)
+			((provides) (lambda (symb) #f))
+			((filters?) (lambda () #f))
+			(else (error "Bad method call on gram-class-api:" message)))
+		args))
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-singletons LLOBJ)
+"
+"
 )
 
 ; ---------------------------------------------------------------------
