@@ -140,39 +140,41 @@
 	; Always keep any WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
 
+	; ---------------
+	; Cached lists for the right-basis-pred
+
+	; Return #t only if WRD belongs to CLS
+	(define (word-in-class WRD CLS)
+		(not (eq? '() (cog-link 'MemberLink WRD CLS))))
+
+	; Return #t only if WRD belongs to some WordClass
+	(define (word-in-any-class WRD)
+		(any (lambda (CLS) (word-in-class WRD CLS))
+			(stars-obj 'left-basis)))
+
+	; Use caches to avoid repeated lookups.
+	(define word-in-any-class-cache
+		(make-afunc-cache word-in-any-class))
+
+	; Return true only if connector is in some WordClass.
+	; Use caches to avoid repeated lookups.  There are approx
+	; twice as many connectors as words, so the cache is
+	; effective.
+	(define (con-in-any-class CON)
+		(word-in-any-class-cache (gar CON)))
+	(define con-in-any-class-cache
+		(make-afunc-cache con-in-any-class))
+
+	; Return #t only if every connector has a word in some class.
+	(define (seq-in-class CSQ)
+		(every con-in-any-class-cache (cog-outgoing-set CSQ)))
+	(define seq-in-class-cache
+		(make-afunc-cache seq-in-class))
+
 	; Only accept a ConnectorSeq if every word in every connector
 	; is in some word-class. XXX TODO: We can make this run a little
-	; faster by mashing all words into one big list. Note, however,
-	; that the generic filter (below) already has build-in caching,
-	; so this optimization won't make much of a difference (I think).
+	; faster by mashing all words into one big list.
 	(define (right-basis-pred CONSEQ)
-		; Return #t only if WRD belongs to CLS
-		(define (word-in-class WRD CLS)
-			(not (eq? '() (cog-link 'MemberLink WRD CLS))))
-
-		; Return #t only if WRD belongs to some WordClass
-		(define (word-in-any-class WRD)
-			(any (lambda (CLS) (word-in-class WRD CLS))
-				(stars-obj 'left-basis)))
-
-		; Use caches to avoid repeated lookups.
-		(define word-in-any-class-cache
-			(make-afunc-cache word-in-any-class))
-
-		; Return true only if connector is in some WordClass.
-		; Use caches to avoid repeated lookups.  There are approx
-		; twice as many connectors as words, so the cache is
-		; effective.
-		(define (con-in-any-class CON)
-			(word-in-any-class-cache (gar CON)))
-		(define con-in-any-class-cache
-			(make-afunc-cache con-in-any-class))
-
-		; Return #t only if every connector has a word in some class.
-		(define (seq-in-class CSQ)
-			(every con-in-any-class-cache (cog-outgoing-set CSQ)))
-		(define seq-in-class-cache
-			(make-afunc-cache seq-in-class))
 		(seq-in-class-cache CONSEQ)
 	)
 
