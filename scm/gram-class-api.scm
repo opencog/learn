@@ -125,9 +125,44 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-singletons LLOBJ)
+(define-public (add-singleton-classes LLOBJ)
 "
+  add-singleton-classes LLOBJ -- manage singleton WordClassNodes
+
+  After clustering, there will still be many WordNodes that have not
+  been assigned to clusters. This may be the case for three reasons:
+   * The Wordnode really is in a class of it's own.
+   * The clustering algo has not gotten around to it yet.
+   * It is rare, infrequently-observed junk.
+  This object provides management callbacks to place some words into
+  singleton WordClassNodes, based on thier count or relative rank.
+
+  Note that using this object will cause the MI values between
+  word-classes and disjuncts to become invalid; thse will need to be
+  recomputed.
+
+  Proivded methods:
+     'delete-singles -- Remove all WordClassNodes that have only a
+           single member.
 "
+	(define (delete-singles)
+		; delete each word-class node..
+		(for-each cog-delete-recursive
+			; make a list of word-classes containing only one word...
+			(filter
+				(lambda (WRDCLS)
+					; (eq? 1 (length (cog-incoming-by-type WRDCLS 'MemberLink)))
+					(eq? 1 (cog-incoming-size-by-type WRDCLS 'MemberLink)))
+				(LLOBJ 'left-basis))))
+
+
+	; Methods on the object
+	(lambda (message . args)
+		(case message
+			((delete-singles) (delete-singles)
+			((fetch-pairs)    (apply fetch-disjuncts args)
+			(else             (apply LLOBJ (cons message args))))
+		args))
 )
 
 ; ---------------------------------------------------------------------
