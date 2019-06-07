@@ -199,8 +199,12 @@
 
 		(define good-conseqs
 			(atoms-subtract
-				(cog-get-atoms 'ConnectorSeq) unwanted-conseqs))
+				; Take all connector-sequences, and subtract the bad ones.
+				; (cog-get-atoms 'ConnectorSeq)
+				(LLOBJ 'right-basis)
+				unwanted-conseqs))
 
+		; Return the predicate that returns #t only for good ones.
 		(make-aset-predicate good-conseqs)
 	)
 
