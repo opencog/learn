@@ -241,7 +241,7 @@ unhappy, painful experience.
            reasonable -- and so 53+24=78GB is the current bare-minimum.
            More, if you want to e.g. run a web-browser or something.
 
-           An alternative is to run Postgres on one box, and the
+   An alternative is to run Postgres on one box, and the
            processing on another. This is a bit more complicated to
            deal with -- you will want to have a high-speed Ethernet
            between the two.  Two machines are harder to sysadmin and
@@ -254,7 +254,7 @@ unhappy, painful experience.
            your first time, then don't bother right now. Come back to
            this later.
 
-           LXC containers are nice because:
+   LXC containers are nice because:
          * Each container can have a different config, different
            datasets, and be executing different steps of the pipeline.
            This is great, for juggling multiple jobs.
@@ -297,15 +297,15 @@ unhappy, painful experience.
 ```
    git clone git://git.sv.gnu.org/guile.git
 ```
-            The above will provide guile-2.9.2 which seems to run
+   The above will provide guile-2.9.2 which seems to run
             quite well. The `stable-2.2` branch, which provides
             guile-2.2.4 will also work, but version 2.9.2 is faster.
 
-            Earlier versions are not usable. Version 2.0.11
+   Earlier versions are not usable. Version 2.0.11
             will quickly crash with the error message:
             `guile: hashtab.c:137: vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
 
-            Also par-for-each hangs:
+   Also par-for-each hangs:
             https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
             (in guile-2.2, it doesn't hang, but still behaves very badly).
 
@@ -325,10 +325,10 @@ unhappy, painful experience.
 ```
    link-parser --version
 ```
-           Newer versions are available at:
+   Newer versions are available at:
            https://www.abisource.com/downloads/link-grammar/
 
-           The main link-grammar project page is here:
+   The main link-grammar project page is here:
            https://www.abisource.com/projects/link-grammar/
 
 
@@ -356,7 +356,7 @@ important for saving partial results.
          data processing.  The next number of steps describe how to
          do a practice run; a later section focuses on batch processing.
 
-         There are two types of files in this directory: generic
+   There are two types of files in this directory: generic
          processing scripts, and language-specific configuration files.
          Different languages require different processing pipelines;
          e.g. most languages will require a morphology processing step;
@@ -366,23 +366,23 @@ important for saving partial results.
          language to be configured in sharply different ways, running
          different kinds of experiments.
 
-         For the practice run, suggest picking English, and using the
+   For the practice run, suggest picking English, and using the
          `en` files. The other language files can be ignored (and can
          be deleted).
 
 * **3.1)** `cd` to that directory. The instructins below are relative
          to the files there.
 
-* **4)* Start the OpenCog server.  Later on, the batch processing
-        instructions (below) indicate how to automate this. However,
-        for the practice run, it is better to do all this by hand.
+* **4)** Start the OpenCog server.  Later on, the batch processing
+         instructions (below) indicate how to automate this. However,
+         for the practice run, it is better to do all this by hand.
 
-         First, review the contents of `config/opencog-pairs-en.conf`.
+   First, review the contents of `config/opencog-pairs-en.conf`.
          This simply declares the prompts that the cogserver will use;
          most importantly, it declares the port number for the cogserver.
          It's currently coded to be 17005.
 
-         Edit the `pair-count-en.scm` and hard-code your database
+   Edit the `pair-count-en.scm` and hard-code your database
          credentials into it. This saves you the trouble of having to
          remember them, and to type them in by hand.
 
@@ -397,21 +397,21 @@ important for saving partial results.
    rlwrap telnet localhost 17005
    opencog-en> (observe-text "this is a test")
 ```
-         The port number 17005 was from the above-mentioned config file.
+   The port number 17005 was from the above-mentioned config file.
 
-         Better yet:
+   Better yet:
 ```
    echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
    echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
    echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
-         This should result in activity in the cogserver and on the
+   This should result in activity in the cogserver and on the
          database: the `observe text` scheme code sends the text for
          parsing, counts the returned word-pairs, and stores them in
          the database.
 
-         If you are truly curious, type in `(sql-stats)` in the guile
+   If you are truly curious, type in `(sql-stats)` in the guile
          shell.  This will print some very technical stats about the
          Atomspace SQL database backend.
 
@@ -423,7 +423,7 @@ important for saving partial results.
    learn-pairs=# SELECT COUNT(*) FROM atoms;
    learn-pairs=# SELECT * FROM valuations;
 ```
-         The above shows that the database now contains word-counts for
+   The above shows that the database now contains word-counts for
          pair-wise linkages for the above sentences. If the above are
          empty, something is wrong. Go to back to step zero and try again.
 
@@ -508,7 +508,7 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    at most ten-thousand sentences each; larger files cause trouble
    if the counting needs to be restarted.
 
-* **9)* Review the `observe-text` function in `link-pipeline.scm`. The
+* **9)** Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).  Just be aware that this function
    was written to collect a large amount of additional information,
