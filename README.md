@@ -283,19 +283,19 @@ unhappy, painful experience.
            `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
            So:
 ```
-   git clone https://github.com/ivmai/bdwgc
-   cd bdwgc
-   git checkout release-7_6
-   ./autogen.sh
-   ./configure --enable-large-config
-   make; sudo make install
+      git clone https://github.com/ivmai/bdwgc
+      cd bdwgc
+      git checkout release-7_6
+      ./autogen.sh
+      ./configure --enable-large-config
+      make; sudo make install
 ```
 
 * **0.7)** The AtomSpace MUST be built with guile version 2.2.2.1 or
            newer, which can be obtained from the Guile ftp repo
            https://ftp.gnu.org/gnu/guile/ or `git`, by doing
 ```
-   git clone git://git.sv.gnu.org/guile.git
+      git clone git://git.sv.gnu.org/guile.git
 ```
    The above will provide guile-2.9.2 which seems to run
             quite well. The `stable-2.2` branch, which provides
@@ -312,18 +312,18 @@ unhappy, painful experience.
 * **0.8)** Create/edit the `~/.guile` file and add the content below.
            This makes the arrow keys work, and prints nicer stack traces.
 ```
-   (use-modules (ice-9 readline))
-   (activate-readline)
-   (debug-enable 'backtrace)
-   (read-enable 'positions)
-   (add-to-load-path "/usr/local/share/opencog/scm")
-   (add-to-load-path ".")
+      (use-modules (ice-9 readline))
+      (activate-readline)
+      (debug-enable 'backtrace)
+      (read-enable 'positions)
+      (add-to-load-path "/usr/local/share/opencog/scm")
+      (add-to-load-path ".")
 ```
 
 * **0.9)** Opencog should be built with `link-grammar-5.6.1` or newer.
            The currently installed version can be displayed by running
 ```
-   link-parser --version
+      link-parser --version
 ```
    Newer versions are available at:
            https://www.abisource.com/downloads/link-grammar/
@@ -346,8 +346,8 @@ important for saving partial results.
          it is `learn-pairs`.  Later on, you will have to place this name
          into a config file (see below).
 ```
-   createdb learn-pairs
-   cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
+      createdb learn-pairs
+      cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
 ```
 
 * **3)** Copy all files from the `run/1-word-pairs` directory to a
@@ -386,24 +386,24 @@ important for saving partial results.
          credentials into it. This saves you the trouble of having to
          remember them, and to type them in by hand.
 
-         Finally, start the cogserver by
+   Finally, start the cogserver by
 ```
-  guile -l pair-count-en.scm
+     guile -l pair-count-en.scm
 ```
 
 * **5)** Verify that the pair-counting pipeline works. In a second
          terminal, try this:
 ```
-   rlwrap telnet localhost 17005
-   opencog-en> (observe-text "this is a test")
+      rlwrap telnet localhost 17005
+      opencog-en> (observe-text "this is a test")
 ```
    The port number 17005 was from the above-mentioned config file.
 
    Better yet:
 ```
-   echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
-   echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
-   echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
+      echo -e "(observe-text \"this is a another test\")" |nc localhost 17005
+      echo -e "(observe-text \"Bernstein () (1876\")" |nc localhost 17005
+      echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
    This should result in activity in the cogserver and on the
@@ -418,10 +418,10 @@ important for saving partial results.
 * **6)** Verify that the above resulted in data sent to the SQL database.
          Log into the database, and check:
 ```
-   psql learn-pairs
-   learn-pairs=# SELECT * FROM atoms;
-   learn-pairs=# SELECT COUNT(*) FROM atoms;
-   learn-pairs=# SELECT * FROM valuations;
+      psql learn-pairs
+      learn-pairs=# SELECT * FROM atoms;
+      learn-pairs=# SELECT COUNT(*) FROM atoms;
+      learn-pairs=# SELECT * FROM valuations;
 ```
    The above shows that the database now contains word-counts for
          pair-wise linkages for the above sentences. If the above are
@@ -634,8 +634,8 @@ Bulk Pair Counting - Quickstart/Cheat Sheet
 
 * Set up distinct databases, one for each language:
 ```
-    createdb fr_pairs lt_pairs pl_pairs simple_pairs
-    cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql ??_pairs
+       createdb fr_pairs lt_pairs pl_pairs simple_pairs
+       cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql ??_pairs
 ```
 
 * Copy input texts to the `beta-pages` directory (or another directory,
@@ -658,7 +658,7 @@ Bulk Pair Counting - Quickstart/Cheat Sheet
 
 If the above generates the error
 ```
-   nc: invalid option -- 'N'
+      nc: invalid option -- 'N'
 ```
 then edit `pair-one.sh` and remove the `-N` option from the `nc` commands.
 Some versions of `nc` require the `-N` flag: the scripts will just hang
@@ -684,14 +684,14 @@ code below into a guile shell.  Adjust the database URL for the specific
 database that contains word-pairs.
 
 ```
-   (use-modules (opencog) (opencog persist) (opencog persist-sql))
-   (use-modules (opencog matrix))
-   (use-modules (opencog nlp) (opencog nlp learn))
-   (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
-   (define ala (make-any-link-api))
-   (define asa (add-pair-stars ala))
-   (batch-pairs asa)
-   (print-matrix-summary-report asa)
+      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (use-modules (opencog matrix))
+      (use-modules (opencog nlp) (opencog nlp learn))
+      (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
+      (define ala (make-any-link-api))
+      (define asa (add-pair-stars ala))
+      (batch-pairs asa)
+      (print-matrix-summary-report asa)
 ```
 
 Batch-counting might take hours or longer (maybe over a day), depending
@@ -714,7 +714,7 @@ Thus, you may want to:
   to it, if you decide that you need to return to it for some reason.
   You can copy databases by saying:
 ```
-  createdb -T existing_dbname new_dbname
+     createdb -T existing_dbname new_dbname
 ```
 
 Note that this means using a different set of database credentials
@@ -849,7 +849,7 @@ are as follows:
   further expanding it's size.  You probably want to keep a copy of the
   original, "just in case". You can copy databases by saying:
 ```
-  createdb -T existing_dbname new_dbname
+      createdb -T existing_dbname new_dbname
 ```
 * Make a copy of `config/opencog-mst-en.conf` (if you wish) and edit
   it to suit your tastes. Or use the default.  Make note of the port
@@ -905,12 +905,12 @@ per-word statistics.  Marginals will be needed both for the
 pseudo-csets and (optionally) for the cross-connector sets.  First,
 compute the marginals for the pseudo-csets:
 ```
-  (sql-open "postgres:///en_disjuncts?user=linas")
-  (define pca (make-pseudo-cset-api))
-  (define psa (add-pair-stars pca))
-  (define btr (batch-transpose psa))
-  (psa 'fetch-pairs)
-  (btr 'mmt-marginals)
+      (sql-open "postgres:///en_disjuncts?user=linas")
+      (define pca (make-pseudo-cset-api))
+      (define psa (add-pair-stars pca))
+      (define btr (batch-transpose psa))
+      (psa 'fetch-pairs)
+      (btr 'mmt-marginals)
 ```
 To obtain the marginals for the cross-connectors, repeat the above
 steps, but this time with `(make-shape-vec-api)` as the base class.
@@ -966,7 +966,7 @@ for word `w` and disjunct `d` can be thought of as the vector magnitude
 for the basis element `d`. That is, a word `w` can be represented as
 the vector
 ```
-   v = p(w,d_1) e_1 + p(w,d_2) e_2 + ... p(w, d_n) e_n
+      v = p(w,d_1) e_1 + p(w,d_2) e_2 + ... p(w, d_n) e_n
 ```
 The `e_k` are the basis elements of the vector space.  There is exactly
 one such basis element for each disjunct `d_k`, and so one can safely
@@ -1042,17 +1042,17 @@ The classic word-word distance is the cosine distance. As the above
 explains, this is not really the correct metric. But you can play
 around with it, anyway:
 ```
-  (define pco (add-pair-cosine-compute psa))
-  (pco 'right-cosine (Word "this") (Word "that"))
-  (pco 'right-cosine (Word "he") (Word "she"))
+      (define pco (add-pair-cosine-compute psa))
+      (pco 'right-cosine (Word "this") (Word "that"))
+      (pco 'right-cosine (Word "he") (Word "she"))
 ```
 A superior measure to the cosine-distance is the mutual information
 between word-disjunct vectors. This is computed using the same vectors,
 and a similar dot-product, but is weighted differrently, in a way that
 makes more sense for probabilities.
 ```
-  (define pmi (add-symmetric-mi-compute psa))
-  (pmi 'mmt-fmi (Word "this") (Word "that"))
+      (define pmi (add-symmetric-mi-compute psa))
+      (pmi 'mmt-fmi (Word "this") (Word "that"))
 ```
 
 Experimental code is located in
@@ -1072,18 +1072,18 @@ change.
 
 * At the guile prompt:
 ```
-  (use-modules (opencog) (opencog persist) (opencog persist-sql))
-  (use-modules (opencog nlp) (opencog nlp learn))
-  (use-modules (opencog matrix) (opencog sheaf))
-  (sql-open "postgres:///en_pairs_sim?user=linas")
+      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (use-modules (opencog nlp) (opencog nlp learn))
+      (use-modules (opencog matrix) (opencog sheaf))
+      (sql-open "postgres:///en_pairs_sim?user=linas")
 ```
   and the, try either
 ```
-  (gram-classify-greedy-discrim)
+      (gram-classify-greedy-discrim)
 ```
   or
 ```
-  (gram-classify-greedy-fuzz)
+      (gram-classify-greedy-fuzz)
 ```
   Both will take days to run. You can start poking at the results
   earlier, though. the file `learn-lang-diary/word-classes/word-classes.scm`
@@ -1107,20 +1107,20 @@ Grammar. This can be done as follows:
   (singleton word classes).  The following includes all words observed
   more than 500 times:
 ```
-   (define pca (make-pseudo-cset-api))
-   (define psa (add-pair-stars pca))
-   (define asc (add-singleton-classes psa))
-   (asc 'create-hi-count-singles 500)
+       (define pca (make-pseudo-cset-api))
+       (define psa (add-pair-stars pca))
+       (define asc (add-singleton-classes psa))
+       (asc 'create-hi-count-singles 500)
 ```
 
 * Compute costs. The costs are needed to tell Link Grammar how likely
   any given disjunct is. Link Grammar ranks it's parses by liklihood.
   Compute the costs as follows:
 ```
-   (define gca (make-gram-class-api))
-   (define gcs (add-pair-stars gca))
-   (define gcf (add-wordclass-filter gcs))
-   (batch-all-pair-mi gcf)
+       (define gca (make-gram-class-api))
+       (define gcs (add-pair-stars gca))
+       (define gcf (add-wordclass-filter gcs))
+       (batch-all-pair-mi gcf)
 ```
   The above may take (many) hours or more to run, depending linearly
   on the number of observed disjuncts.
@@ -1136,33 +1136,32 @@ Grammar. This can be done as follows:
 
 * Run the following:
 ```
-  (use-modules (opencog nlp lg-export))
-  (export-csets gcf "dict.db" "EN_us")
+      (use-modules (opencog nlp lg-export))
+      (export-csets gcf "dict.db" "EN_us")
 ```
   Then, in bash:
 ```
-   cp -pr /usr/local/share/link-grammar/demo-sql ./some-place
-   cp dict.db ./some-place
-   link-parser ./some-place
+       cp -pr /usr/local/share/link-grammar/demo-sql ./some-place
+       cp dict.db ./some-place
+       link-parser ./some-place
 ```
 
 
 Here's some games you can play with a clean dataset (before being
 altered by the clustering code):
 ```
-  (fetch-all-words)
-  (length (get-all-words))
+      (fetch-all-words)
+      (length (get-all-words))
 
-  (define pca (make-pseudo-cset-api))
-  (define pss (add-pair-stars pca))
-  (pss 'fetch-pairs)
-  (cog-report-counts)
-  ; This reports  137078 WordNodes,
-  ;               268592 Connectors,
-  ;              6239997 ConnectorSeq,
-  ;             11642010 Sections
-  ; for my `mrg_tst` database.
-
+      (define pca (make-pseudo-cset-api))
+      (define pss (add-pair-stars pca))
+      (pss 'fetch-pairs)
+      (cog-report-counts)
+      ; This reports  137078 WordNodes,
+      ;               268592 Connectors,
+      ;              6239997 ConnectorSeq,
+      ;             11642010 Sections
+      ; for my `mrg_tst` database.
 ```
   The `lang-learn-diary/disjunct-stats.scm` file contains ad-hoc code
   used to prepare the summary report.  To use it, just cut-n-paste to
@@ -1174,10 +1173,10 @@ altered by the clustering code):
   function does more than is strictly needed, and one can save some
   disk space and CPU time by computing only the word-similarities:
 ```
-  (define pca (make-pseudo-cset-api))
-  (define psa (add-pair-stars pca))
-  (define btp (batch-transpose psa))
-  (btp 'mmt-marginals)
+      (define pca (make-pseudo-cset-api))
+      (define psa (add-pair-stars pca))
+      (define btp (batch-transpose psa))
+      (btp 'mmt-marginals)
 ```
   Again, `(w,d)` is just a pair. Like other pairs, its a matrix, and
   has marginal probabilities associated with it.
@@ -1197,8 +1196,8 @@ Some things in the pipeline, but unfinished:
   document.  There's alreaddy code for computing the divergence;
   to get it, just say
 ```
-  (define smi (add-symmetric-mi-compute pca))
-  (smi 'mmt-fmi (Word "foo") (Word "bar"))
+      (define smi (add-symmetric-mi-compute pca))
+      (smi 'mmt-fmi (Word "foo") (Word "bar"))
 ```
 
 * Replace centroid means, as explained above.
@@ -1261,7 +1260,7 @@ enough to do some basic work. The steps are:
 
 * Install lxc, Like so:
 ```
-  sudo apt-get install lxc
+       sudo apt-get install lxc
 ```
 
 * Download a container from
@@ -1277,8 +1276,8 @@ enough to do some basic work. The steps are:
 
 * Type in: `sudo lxc-ls -f` You should see a display similar to this:
 ```
-NAME           STATE   AUTOSTART GROUPS IPV4      IPV6
-simil-en       STOPPED 0         -      -         -
+      NAME           STATE   AUTOSTART GROUPS IPV4      IPV6
+      simil-en       STOPPED 0         -      -         -
 ```
 
 * Start the container by saying `lxc-start -n simil-en`. Give it
@@ -1286,15 +1285,15 @@ simil-en       STOPPED 0         -      -         -
   should see the below. It may take a minute for the IPV4 address to
   show up. You will probably get a different IP than the one shown.
 ```
-NAME           STATE   AUTOSTART GROUPS IPV4      IPV6
-simil-en       RUNNING 0         -      10.0.3.89 -
+      NAME           STATE   AUTOSTART GROUPS IPV4      IPV6
+      simil-en       RUNNING 0         -      10.0.3.89 -
 ```
 
 * You can now `ssh` into this container, just as if it were some
   other machine on your network.  It more-or-less is another machine
   on your network.
 ```
-  ssh ubuntu@10.0.3.89
+      ssh ubuntu@10.0.3.89
 ```
   The password is `asdfasdf`.
 
