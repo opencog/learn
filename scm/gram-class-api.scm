@@ -239,7 +239,7 @@
 			(sort! (LLOBJ 'left-basis)
 				(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
 
-		(define short-list (keep ranked-words NUM-TOP))
+		(define short-list (take ranked-words NUM-TOP))
 
 		(format #t "After sorting, kept ~A words out of ~A\n"
 			(length short-list) (LLOBJ 'left-basis-size))
