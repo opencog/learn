@@ -150,6 +150,10 @@
            from the WordNode to the WordClassNode; the values on the
            Section will be copied as well, so that the Sections have
            correct counts on them.
+
+     'create-hi-count-singles MIN-CUTOFF -- Create a WordClassNode for
+           each WordNode whose observation count is greater than
+           MIN-CUTOFF. As above, Sections and values are copied.
 "
 	(define (delete-singles)
 		; delete each word-class node..
@@ -181,8 +185,15 @@
 			WORD-LIST)
 	)
 
+	; Create singletons for those words with more than MIN-CNT
+	; observations.
 	(define (trim-low-counts MIN-CNT)
 		(define pss (add-support-api LLOBJ)) ; Need margins
+
+		; We expect (LLOBJ 'left-basis) to consist of WordNodes.
+		(if (not (eq? 'WordNode (LLOBJ 'left-type)))
+			(throw 'bad-row-type 'create-hi-count-singles
+				(format #f "Expecting WordNode, got ~A" (LLOBJ 'left-type))))
 
 		(define trimmed-words
 			(remove (lambda (WRD) (< (pss 'right-count WRD) MIN-CNT))
