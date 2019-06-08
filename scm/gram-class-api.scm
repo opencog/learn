@@ -188,12 +188,17 @@
 	; Create singletons for those words with more than MIN-CNT
 	; observations.
 	(define (trim-low-counts MIN-CNT)
-		(define pss (add-support-api LLOBJ)) ; Need margins
 
-		; We expect (LLOBJ 'left-basis) to consist of WordNodes.
-		(if (not (eq? 'WordNode (LLOBJ 'left-type)))
-			(throw 'bad-row-type 'create-hi-count-singles
-				(format #f "Expecting WordNode, got ~A" (LLOBJ 'left-type))))
+		; Need to fetch the count from the margin.
+		(define pss
+			(begin
+				; We expect (LLOBJ 'left-basis) to consist of WordNodes.
+				(if (not (eq? 'WordNode (LLOBJ 'left-type)))
+					(throw 'bad-row-type 'create-hi-count-singles
+						(format #f "Expecting WordNode, got ~A"
+							(LLOBJ 'left-type))))
+
+				(add-support-api LLOBJ)))
 
 		(define trimmed-words
 			(remove (lambda (WRD) (< (pss 'right-count WRD) MIN-CNT))
