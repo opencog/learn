@@ -1306,7 +1306,7 @@ scm_lfwrite (s, strlen (s), port); --- again with latin1
 scm_c_put_string
 arggg
 bug-guile@gnu.org  --  bug#25397:
-https://debbugs.gnu.org/cgi/bugreport.cgi?bug=25387  
+https://debbugs.gnu.org/cgi/bugreport.cgi?bug=25387
 GUILE_VERSION_MINOR 1
 
 
@@ -16806,24 +16806,24 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 #6  0x00007f34104bdf90 in ?? ()
 #7  0x00007f343d4f00a0 in jump_table_ () from /usr/local/lib/libguile-3.0.so.0
 #8  0x000055ef6347b3a8 in ?? ()
-#9  0x00007f343d22bf61 in scm_jit_enter_mcode (thread=0x55f0a3d42840, 
+#9  0x00007f343d22bf61 in scm_jit_enter_mcode (thread=0x55f0a3d42840,
     mcode=0x55f0a3d42840 "\240)ԣ\360U") at ../../libguile/jit.c:4819
 #10 0x00007f343d28089c in vm_debug_engine (thread=0x55f0a3d42840)
     at ../../libguile/vm-engine.c:370
-#11 0x00007f343d28707a in scm_call_n (proc=proc@entry=0x55eff19c9f00, 
+#11 0x00007f343d28707a in scm_call_n (proc=proc@entry=0x55eff19c9f00,
     argv=argv@entry=0x0, nargs=nargs@entry=0) at ../../libguile/vm.c:1605
 
 104, 106, 107: same as above
 
 105:
-#0  0x00007f342ff7fb03 in opencog::Variables::is_type (this=0x7f2b146d3c00, 
+#0  0x00007f342ff7fb03 in opencog::Variables::is_type (this=0x7f2b146d3c00,
     var=..., val=...)
 
 -------------------------------------------
-66: 
-#5  std::lock_guard<std::recursive_mutex>::lock_guard (__m=..., 
+66:
+#5  std::lock_guard<std::recursive_mutex>::lock_guard (__m=...,
     this=<synthetic pointer>) at /usr/include/c++/6/bits/std_mutex.h:162
-#6  opencog::AtomTable::lookupHandle (this=this@entry=0x55ef63c282a0, 
+#6  opencog::AtomTable::lookupHandle (this=this@entry=0x55ef63c282a0,
     a=std::shared_ptr (count 1, weak 1) 0x7f2b24bffdb0)
     at /home/linas/src/novamente/src/atomspace-git/opencog/atomspace/AtomTable.cc:247
 
@@ -16913,9 +16913,9 @@ RMS Count      2953.        2.4060E+4     198.4        .1725
 * (export-csets gcs "dict.db" "EN_us")
 Store 3096306 csets
 
-                                      
+
    fail-insert: make-db-adder: near "t": syntax error
-Error: bad section (Section (ctv 1 0 36)             
+Error: bad section (Section (ctv 1 0 36)
 
 (current-thread)
 (cancel-thread (car (all-threads)))
@@ -16980,7 +16980,7 @@ alternate:
 make list of words in word-classes,
 make list of connectors containing these
 make list of connector seqs containing these. How many? 5837887 of them
-Sooo .. almost all of them. No savings. 
+Sooo .. almost all of them. No savings.
 
 ; Make a list of words in word-classes
 (define word-set (make-atom-set))
@@ -17071,7 +17071,34 @@ tot.
 	(batch-all-pair-mi gcf)
 Start computing the basis
 Support: found num left= 2112 num right= 1968134 in 1 secs (actually 216 sec)
--- 
+Finished left norm marginals in 24434 secs
+Finished left totals in 61 secs
+Finished right norm marginals in 210 secs
+Finished right totals in 0 secs
+Done with wild-card count N(x,*) and N(*,y) in 24705 secs
+Total count N(*,*) = 0.0 = 0.0
+Finished column (left) norm averages in 322 secs
+Finished row (right) norm averages in 0 secs
+Going to do individual pair frequencies
+Done computing 2829796 pairs in 337 secs
+Start computing log P(*,y)
+In opencog/matrix/object-api.scm:
+   707:46  3 (set-left-wild-freq _ +nan.0)
+In unknown file:
+           2 (cog-new-value 2 +nan.0 +nan.0-4.532360141827193i +nan.0+nan.0i)
+
+why is the count zero?
+--
+(define gsu (add-support-compute gcf))
+(gsu 'right-support-set (WordClassNode "it there"))
+is empty set...
+(gsu 'right-stars (WordClassNode "it there")) is big -- 30272
+
+(gsu 'get-count (car ..) == 0
+
+(gcf 'get-count sec) = 0
+(gcs 'get-count sec) !=0  why!?
+oohhh filter had a bug. Damn,
 
 
 
