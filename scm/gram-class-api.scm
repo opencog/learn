@@ -271,9 +271,6 @@
 "
 	(define stars-obj (add-pair-stars LLOBJ))
 
-	; Always keep any WordClassNode we are presented with.
-	(define (left-basis-pred WRDCLS) #t)
-
 	; ---------------
 	; Cached set of valid connector-seqs, for the right-basis-pred.
 	; We need to know if every connector in a connector sequence is
@@ -342,6 +339,10 @@
 		(make-aset-predicate good-conseqs)
 	)
 
+	; ---------------
+	; Always keep any WordClassNode we are presented with.
+	(define (left-basis-pred WRDCLS) #t)
+
 	(define ok-conseq? #f)
 
 	; Only accept a ConnectorSeq if every word in every connector
@@ -351,8 +352,9 @@
 		(ok-conseq? CONSEQ)
 	)
 
-	; Always keep any Section that passed the duals test.
-	(define (pair-pred WRDCLS) #t)
+	; Input arg is a Section. The gdr (right hand side of it) is a
+	; conseq. Keep the section if the conseq passes.
+	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
 
 	(define id-str "wordclass-filter")
 

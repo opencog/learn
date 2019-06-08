@@ -17100,6 +17100,27 @@ is empty set...
 (gcs 'get-count sec) !=0  why!?
 oohhh filter had a bug. Damn,
 
+(gcf 'get-pair  (gar don) (gdr don)) returns,
+ (gcf 'get-pair-count  (gar don) (gdr don))  also works ...
+
+-- createdb mini-test
+   cat atoms.sql | psql mini-test
+
+   (sql-close)
+   (sql-open "postgres:///mini-test?user=linas&password=asdf")
+   (define gso (make-store gcf))
+   (gso 'store-wildcards)
+
+   (length (psa 'get-all-elts)) -- 8545704
+   (length (gcs 'get-all-elts)) -- 6416994
+   (length (gcf 'get-all-elts)) -- 6416994
+
+   Hmm that does not seem right... oh bug
+   (length (gcf 'get-all-elts)) -- 2829796
+   That's more like it.
+
+   (gso 'store-all-elts)
+
 
 
 TODO:
