@@ -662,7 +662,8 @@
 ;
 (define (load-stuff)
 	(define start-time (get-internal-real-time))
-
+	; XXX FIXME, should probably use
+	; ((make-gram-class-api) 'fetch-pairs) instead.
 	(display "Start loading words and word-classes\n")
 	(load-atoms-of-type 'WordNode)
 	(load-atoms-of-type 'WordClassNode)

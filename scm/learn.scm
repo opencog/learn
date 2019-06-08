@@ -19,3 +19,4 @@
 (load "learn/vectors.scm")
 (load "learn/gram-class.scm")
 (load "learn/gram-agglo.scm")
+(load "learn/gram-class-api.scm")

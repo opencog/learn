@@ -2,6 +2,7 @@
 ; summary.scm
 ;
 ; Print a summary report for a dataset.
+; XXX This is stale and semi-abandoned and needs to be modernized.
 ;
 ; Copyright (c) 2017 Linas Vepstas
 ;

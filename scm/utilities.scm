@@ -39,7 +39,7 @@
 	; 1) This uses sleep in a hacky manner, to poll for finished
 	;    threads. This is OK for the current application but is
 	;    hacky, and needs to be replaced by some semaphore.
-	; 2) Guile threads suck.  There's some kind of lock contention,
+	; 2) Guile-2.2 threads suck.  There's some kind of lock contention,
 	;    somewhere, which leads to lots of thrashing, when more
 	;    than 2-3 threads are run. The speedup from even 2 threads
 	;    is lackluster and barely acceptable.

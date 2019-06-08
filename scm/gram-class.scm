@@ -822,7 +822,7 @@
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
 
-  UNION-FRAC is the fxied fraction of the union-set of the disjuncts
+  UNION-FRAC is the fixed fraction of the union-set of the disjuncts
   that will be merged.
 
   ZIPF is the smallest observation count, below which counts

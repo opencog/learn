@@ -6,6 +6,7 @@
 (use-modules (srfi srfi-1))
 ;
 ; Load all grammatical classes from storage
+; XXX Don't use this; use ((make-gram-class-api) 'fetch-pairs) instead.
 (define (fetch-all-gram-classes)
 	(load-atoms-of-type 'WordClassNode)
 	(for-each
@@ -186,3 +187,5 @@
 	(format #t "disjunct-size vs weighted-num-disjuncts\n")
 	(list-tabulate 15 prt-dist)
 )
+;
+; -----------------------------------------------------------------
