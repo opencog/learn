@@ -1102,15 +1102,28 @@ Grammar. This can be done as follows:
 * Stop the cluster process. As currently designed above, it will run
   for far longer than you will ever care to wait.  Clustering is slow.
 
+* Make sure that frequently-occuring words that have not been assigned
+  to any cluster will be included in a WordClass of thier own
+  (singleton word classes).  The following includes all words observed
+  more than 500 times:
+```
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 500)
+```
+
 * Compute costs. The costs are needed to tell Link Grammar how likely
   any given disjunct is. Link Grammar ranks it's parses by liklihood.
   Compute the costs as follows:
 ```
    (define gca (make-gram-class-api))
    (define gcs (add-pair-stars gca))
-   (batch-all-pair-mi gcs)
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
 ```
-  The above may take hours or more to run.
+  The above may take (many) hours or more to run, depending linearly
+  on the number of observed disjuncts.
 
 * Make sure you have `dbi` installed. The `dbi` module provides guile
   with database interfaces for popular databases.  It is needed to write
@@ -1124,7 +1137,6 @@ Grammar. This can be done as follows:
 * Run the following:
 ```
   (use-modules (opencog nlp lg-export))
-  (define gcf ((add-wordclass-filter gcs))
   (export-csets gcf "dict.db" "EN_us")
 ```
   Then, in bash:
