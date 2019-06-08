@@ -161,7 +161,7 @@
 					(eq? 1 (cog-incoming-size-by-type WRDCLS 'MemberLink)))
 				(LLOBJ 'left-basis))))
 
-	; Create singltons
+	; Create singletons
 	(define (create-singles WORD-LIST)
 		; Copy the count-value, and anything else.
 		(define (copy-values NEW OLD)
@@ -181,13 +181,27 @@
 			WORD-LIST)
 	)
 
+	(define (trim-low-counts MIN-CNT)
+		(define pss (add-support-api LLOBJ)) ; Need margins
+
+		(define trimmed-words
+			(remove (lambda (WRD) (< (pss 'right-count WRD) MIN-CNT))
+				(LLOBJ 'left-basis)))
+
+		(format #t "After trimming, ~A words left, out of ~A\n"
+			(length trimmed-words) (LLOBJ 'left-basis-size))
+
+		(create-singles trimmed-words)
+	)
+
 	; Methods on the object
 	(lambda (message . args)
 		(case message
-			((delete-singles) (delete-singles)
-			((create-singles) (apply create-singles args)
-			(else             (apply LLOBJ (cons message args))))
-		args))
+			((delete-singles) (delete-singles))
+			((create-singles) (apply create-singles args))
+			((create-hi-count-singles) (apply trim-low-counts args))
+			(else             (apply LLOBJ (cons message args)))
+		))
 )
 
 ; ---------------------------------------------------------------------
