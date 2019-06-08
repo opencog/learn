@@ -154,6 +154,10 @@
      'create-hi-count-singles MIN-CUTOFF -- Create a WordClassNode for
            each WordNode whose observation count is greater than
            MIN-CUTOFF. As above, Sections and values are copied.
+
+     'create-top-rank-singles NUM -- Create a WordClassNode for the
+           top-ranked NUM WordNode's having the highest observation
+           counts.  As above, Sections and values are copied.
 "
 	(define (delete-singles)
 		; delete each word-class node..
@@ -185,20 +189,20 @@
 			WORD-LIST)
 	)
 
+	; Need to fetch the count from the margin.
+	(define pss
+		(begin
+			; We expect (LLOBJ 'left-basis) to consist of WordNodes.
+			(if (not (eq? 'WordNode (LLOBJ 'left-type)))
+				(throw 'bad-row-type 'create-hi-count-singles
+					(format #f "Expecting WordNode, got ~A"
+						(LLOBJ 'left-type))))
+
+			(add-support-api LLOBJ)))
+
 	; Create singletons for those words with more than MIN-CNT
 	; observations.
 	(define (trim-low-counts MIN-CNT)
-
-		; Need to fetch the count from the margin.
-		(define pss
-			(begin
-				; We expect (LLOBJ 'left-basis) to consist of WordNodes.
-				(if (not (eq? 'WordNode (LLOBJ 'left-type)))
-					(throw 'bad-row-type 'create-hi-count-singles
-						(format #f "Expecting WordNode, got ~A"
-							(LLOBJ 'left-type))))
-
-				(add-support-api LLOBJ)))
 
 		(define trimmed-words
 			(remove (lambda (WRD) (< (pss 'right-count WRD) MIN-CNT))
@@ -210,12 +214,31 @@
 		(create-singles trimmed-words)
 	)
 
+	; Create singletons for top-ranked words.
+	(define (top-ranked NUM-TOP)
+
+		; nobs == number of observations
+		(define (nobs WRD) (pss 'right-count WRD))
+
+		(define ranked-words
+			(sort! (LLOBJ 'left-basis)
+				(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
+
+		(define short-list (keep ranked-words NUM-TOP))
+
+		(format #t "After sorting, kept ~A words out of ~A\n"
+			(length short-list) (LLOBJ 'left-basis-size))
+
+		(create-singles short-list)
+	)
+
 	; Methods on the object
 	(lambda (message . args)
 		(case message
 			((delete-singles) (delete-singles))
 			((create-singles) (apply create-singles args))
 			((create-hi-count-singles) (apply trim-low-counts args))
+			((create-top-rank-singles) (apply top-ranked args))
 			(else             (apply LLOBJ (cons message args)))
 		))
 )
