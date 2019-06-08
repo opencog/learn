@@ -46,6 +46,7 @@
 (use-modules (opencog))
 (use-modules (opencog matrix))
 (use-modules (opencog sheaf))
+(use-modules (dbi dbi))
 
 ; ---------------------------------------------------------------------
 ; Convert an integer into a string of upper-case letters. Useful for
@@ -166,6 +167,12 @@
 ;    (for-each add-section list-of-sections)
 ;
 (define (make-db-adder DB-NAME LOCALE COST-FN)
+
+	(if (file-exists? DB-NAME)
+		(throw 'fail-create 'make-db-adder
+			(format #f
+				"Error: file '~A' exists; will not over-write.\n\tMaybe you should move it out of the way?" DB-NAME)))
+
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
@@ -207,7 +214,7 @@
 		; ---------------
 		; Return a string identifying a word-class
 		(define (mk-cls-str STR)
-			(format #f "<~A.~D>" STR wrd-id))
+			(format #f "<~A.~D>" (escquote STR 0) wrd-id))
 
 		; ---------------
 		; Insert either a word, or a word-class, into the dict
@@ -246,14 +253,20 @@
 			(define germ-str (cog-name germ))
 			(define dj-str (cset-to-lg-dj SECTION))
 
+			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
 				(begin
-					(format #t "~D Will insert ~A: ~A; in ~D secs\n"
-						nprt germ-str dj-str (- (current-time) secs))
-					(set! secs (current-time))
 					(dbi-query db-obj "END TRANSACTION;")
 					(dbi-query db-obj "BEGIN TRANSACTION;")
+				))
+
+			; Print progress report
+			(if (equal? 0 (remainder nprt 25000))
+				(begin
+					(format #t "~D done in ~D secs; inserting into <~A>: ~A;\n"
+						nprt (- (current-time) secs) germ-str dj-str)
+					(set! secs (current-time))
 				))
 
 			; Insert the word/word-class (but only if we haven't
@@ -278,6 +291,13 @@
 			(dbi-query db-obj "END TRANSACTION;")
 			(dbi-close db-obj)
 		)
+
+		; Close the DB if an exception is thrown. But otherwise,
+		; let the excpetion pass through to the user.
+		(define (raii-add-section SECTION)
+			(with-throw-handler #t
+				(lambda () (add-section SECTION))
+				(lambda (key . args) (shutdown))))
 
 		; Create the tables for words and disjuncts.
 		; Refer to the Link Grammar documentation to see a
@@ -334,13 +354,13 @@
 		; does not support optional-braces {} and multi-connectors @.
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
-			"'UNKNOWN-WORD', "
-			"'UNKNOWN-WORD', "
-			"'UNKNOWN-WORD');"))
+			"'<UNKNOWN-WORD>', "
+			"'<UNKNOWN-WORD>', "
+			"'<UNKNOWN-WORD>');"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'UNKNOWN-WORD', 'XXXBOGUS+', 0.0);"))
+			"'<UNKNOWN-WORD>', 'XXXBOGUS+', 0.0);"))
 
 		(dbi-query db-obj "PRAGMA synchronous = OFF;")
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
@@ -350,7 +370,7 @@
 		; If SECTION if #f, the database is closed.
 		(lambda (SECTION)
 			(if SECTION
-				(add-section SECTION)
+				(raii-add-section SECTION)
 				(shutdown))
 		))
 )
@@ -397,7 +417,7 @@
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
 	(looper 'for-each-pair cntr)
-	(format #t "Store ~D csets\n" cnt)
+	(format #t "Will store ~D csets\n" cnt)
 
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
