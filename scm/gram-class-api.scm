@@ -177,6 +177,21 @@
 				(lambda (KEY)
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
+
+		; Remove words already in word-classes. XXX This is not
+		; necessarily the correct action to take, depending on the
+		; type of clistering, but this whole object is a kind of
+		; temporary hack till the clustering algos settle down a
+		; bit more. XXX review and FIXME at some later time.
+		; Also this is hack as it looks for MemberLinks which
+		; are not necessarily MemberLinks to WordClassNodes in
+		; the ((make-gram-class-api) 'left-basis) so that's also
+		; broken. This holds water for now.
+		(define unclassed-words
+			(filter (lambda (wrd)
+				(eq? '() (cog-incoming-by-type wrd 'MemberLink)))
+				WORD-LIST))
+
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
@@ -186,7 +201,7 @@
 				(for-each
 					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
 					(cog-incoming-by-type WRD 'Section)))
-			WORD-LIST)
+			unclassed-words)
 	)
 
 	; Need to fetch the count from the margin.
