@@ -968,7 +968,7 @@ the vector
 ```
       v = p(w,d_1) e_1 + p(w,d_2) e_2 + ... p(w, d_n) e_n
 ```
-$v = p(w,d_1) e_1 + p(w,d_2) e_2 + ... p(w, d_n) e_n$
+$$ v = p(w,d_1) e_1 + p(w,d_2) e_2 + ... p(w, d_n) e_n $$
 The `e_k` are the basis elements of the vector space.  There is exactly
 one such basis element for each disjunct `d_k`, and so one can safely
 think of the `d_k` and the `e_k` as being the same thing. We use the
