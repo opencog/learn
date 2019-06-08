@@ -86,16 +86,19 @@
 	(define (get-wild-wild)
 		(ListLink any-left any-right))
 
-	; Fetch (from the database) all disjuncts
+	; Fetch (from the database) all Sections that have a WordClass
+	; on the left-hand-side. Fetch the marginals, too.
 	(define (fetch-disjuncts)
 		(define start-time (current-time))
-		; marginals are located on any-left, any-right
+		; Marginals are located on any-left, any-right
 		(fetch-incoming-set any-left)
 		(fetch-incoming-set any-right)
 		; Fetch only the Sections that have a WordClass in them,
-		; and not the others.
+		; and not any other Sections.
 		(load-atoms-of-type 'WordClassNode)
-		(for-each fetch-incoming-set (cog-get-atoms 'WordClassNode))
+		(for-each
+			(lambda (wcl) (fetch-incoming-by-type wcl 'Section))
+			(cog-get-atoms 'WordClassNode))
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
 
