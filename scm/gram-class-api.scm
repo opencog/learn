@@ -296,7 +296,7 @@
    ; very inefficient. It is much faster to precompute the set of
 	; known-good connector sequences, and refer to that.
 
-	(define stars-obj (add-pair-stars LLOBJ))
+	(define star-obj (add-pair-stars LLOBJ))
 
 	; Return a list of connectors containing a word in the list
 	(define (get-connectors WRD-LST)
@@ -407,7 +407,7 @@
   collection of word-disjunct pairs is then self-consistent, and does
   not contain any connectors unable to form a connection to some word.
 "
-	(define stars-obj (add-pair-stars LLOBJ))
+	(define star-obj (add-pair-stars LLOBJ))
 
 	; Return a list of words
 	(define (get-words) (star-obj 'left-basis))
