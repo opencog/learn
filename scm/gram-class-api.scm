@@ -282,34 +282,21 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-wordclass-filter LLOBJ)
+(define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR)
 "
-  add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
-  that the only connector sequences appearing on the right consist
-  entirely of connectors that have words in word-classes appearing on
-  the left. The resulting wordclass-disjunct is then self-consistent,
-  and does not contain any connectors unable to form a connection to
-  some word-class.
+  add-linking-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  the only connector sequences appearing on the right consist entirely
+  of connectors that have words appearing in the WORD-LIST. This is
+  not a public function; it is used to build several public functions.
 "
-	(define stars-obj (add-pair-stars LLOBJ))
-
 	; ---------------
 	; Cached set of valid connector-seqs, for the right-basis-pred.
 	; We need to know if every connector in a connector sequence is
-	; a member of some word-class. Verifying this directly is very
-	; inefficient. It is much faster to precompute the set of known-
-	; good connector sequences, and refer to that.
+	; a member of some word in WORD-LIST. Verifying this directly is
+   ; very inefficient. It is much faster to precompute the set of
+	; known-good connector sequences, and refer to that.
 
-	; Return a list of words in word-classes
-	(define (get-wordclass-words)
-		(define word-set (make-atom-set))
-		(for-each
-			(lambda (wcls)
-				(for-each word-set
-					(map gar (cog-incoming-by-type wcls 'MemberLink))))
-			(cog-get-atoms 'WordClassNode))
-		(word-set #f)
-	)
+	(define stars-obj (add-pair-stars LLOBJ))
 
 	; Return a list of connectors containing a word in the list
 	(define (get-connectors WRD-LST)
@@ -342,7 +329,7 @@
 		; Unwanted words are not part of the matrix.
 		(define unwanted-words
 			(atoms-subtract
-				(cog-get-atoms 'WordNode) (get-wordclass-words)))
+				(cog-get-atoms 'WordNode) (WORD-LIST-FUNC)))
 
 		(define unwanted-cnctrs
 			(get-connectors unwanted-words))
@@ -354,7 +341,7 @@
 			(atoms-subtract
 				; Take all connector-sequences, and subtract the bad ones.
 				; (cog-get-atoms 'ConnectorSeq)
-				(LLOBJ 'right-basis)
+				(star-obj 'right-basis)
 				unwanted-conseqs))
 
 		; Return the predicate that returns #t only for good ones.
@@ -362,7 +349,7 @@
 	)
 
 	; ---------------
-	; Always keep any WordClassNode we are presented with.
+	; Always keep any WordNode or WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
 
 	(define ok-conseq? #f)
@@ -378,11 +365,56 @@
 	; conseq. Keep the section if the conseq passes.
 	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
 
-	(define id-str "wordclass-filter")
-
 	; ---------------
 	(add-generic-filter LLOBJ
-		left-basis-pred right-basis-pred pair-pred id-str #f)
+		left-basis-pred right-basis-pred pair-pred ID-STR #f)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-wordclass-filter LLOBJ)
+"
+  add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
+  that the only connector sequences appearing on the right consist
+  entirely of connectors that have words in word-classes appearing on
+  the left. The resulting collection of wordclass-disjunct pairs is
+  then self-consistent, and does not contain any connectors unable to
+  form a connection to some word-class.
+"
+	; Return a list of words in word-classes
+	(define (get-wordclass-words)
+		(define word-set (make-atom-set))
+		(for-each
+			(lambda (wcls)
+				(for-each word-set
+					(map gar (cog-incoming-by-type wcls 'MemberLink))))
+			(cog-get-atoms 'WordClassNode))
+		(word-set #f)
+	)
+
+	(define id-str "wordclass-filter")
+
+	(add-linking-filter LLOBJ get-wordclass-words id-str)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-linkage-filter LLOBJ)
+"
+  add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  the only connector sequences appearing on the right consist entirely
+  of connectors that have words appearing on the left. The resulting
+  collection of word-disjunct pairs is then self-consistent, and does
+  not contain any connectors unable to form a connection to some word.
+"
+	(define stars-obj (add-pair-stars LLOBJ))
+
+	; Return a list of words
+	(define (get-words) (star-obj 'left-basis))
+
+	(define id-str "wordclass-filter")
+
+	(add-linking-filter LLOBJ get-words id-str)
 )
 
 ; ---------------------------------------------------------------------

@@ -14487,7 +14487,7 @@ eef31e0cd5edd5ad2626279a2886dff5  en_micro_dj_cfive.sql.bz2
 
 
 en_micro_cfive
------------------
+--------------
 Same as en_micro_dj_cfive, but with marginals and MM^T values.
 
 STATUS: Good.
@@ -14496,7 +14496,7 @@ DATE: 9 June 2019
 COMMENT ON DATABASE en_micro_cfive IS
 'en_cfive Sections + Marginals + MM^T with word-count > 500; section-count > 10';
 
-en_micro_dj_cfive=> \dt+
+en_micro_cfive=> \dt+
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description
 --------+------------+-------+--------+------------+-------------
@@ -14540,6 +14540,9 @@ Count   (l_1)  2.2239E+4    4.8439E+5     183.1        65.57
 Length  (l_2)  7511.        3.4794E+4     61.85        4.710    
 RMS Count      7263.        3.4445E+4     59.80        4.663    
 
+MM^T support=392715.0 count=462177929473.0
+No M^TM data present
+
 154394374 Bytes uncompressed == 154 MBytes
  26066918 Bytes compressed == 26 MBytes
 
@@ -14547,7 +14550,7 @@ RMS Count      7263.        3.4445E+4     59.80        4.663
 9077869c247d29252f361adac46f3b2b  en_micro_cfive.sql.bz2
 
 en_mini_dj_cfive
------------------
+----------------
 Filtered copy of en_dj_cfive, with the (40 5 5) filter-cut applied:
 all words with word-count less than 40 removed; all sections with a
 count of less than 5 removed; all dj's with a count of less than 5
@@ -14567,11 +14570,8 @@ en_mini_dj_cfive=> \dt+
  Schema |    Name    | Type  | Owner  |    Size    | Description
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 206 MB     |
- public | spaces     | table | ubuntu | 8192 bytes |
  public | typecodes  | table | ubuntu | 48 kB      |
  public | valuations | table | ubuntu | 274 MB     |
- public | values     | table | ubuntu | 8192 bytes |
-(5 rows)
 
 select count(*) from atoms;      <<<< 2139220 == 2.1M Atoms
 select count(*) from valuations; <<<< 3191817 == 3.2M Valuations
@@ -14596,6 +14596,68 @@ There are 171522 words, and 647988 disjuncts, and 1063939 Sections
 5e351f5644984574f0e12bedcf9c94d7  en_mini_dj_cfive.sql
 b7e69440de6e6bd6a2d56880f05b2958  en_mini_dj_cfive.sql.bz2
 
+
+en_mini_cfive
+-------------
+Same as en_mini_dj_cfive, but with marginals and MM^T values.
+Note that this has 10x more words in the connectors, than words in
+sections. This needs to be cleaned up.
+
+STATUS: OK. Words in Sections don't match observe words.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_cfive IS
+'en_cfive Sections + Marginals + MM^T with word-count > 40; section-count > 5';
+
+en_mini_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 265 MB     |
+ public | typecodes  | table | ubuntu | 24 kB      |
+ public | valuations | table | ubuntu | 624 MB     |
+
+select count(*) from atoms;      <<<< 2805754 == 2.8M Atoms (660K more)
+select count(*) from valuations; <<<< 5876443 == 5.9M Vals (2.7M more)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 212 secs
+-- Atomspace holds 2805756 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 666522) (Connector . 255766)
+   (ConnectorSeq . 647988) (Section . 1063939) (WordNode . 171522)
+   (AnyNode . 2))
+-- top says 3.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 25642000)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 647988
+Size: 1063939 non-zero entries of 12009161604 possible
+Fraction non-zero: 8.8594E-5 Sparsity (-log_2): 13.462
+Total observations: 25642000.0  Avg obs per pair: 24.101
+Entropy Total: 17.789   Left: 15.123   Right: 7.7718
+Total MI: 5.1061
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  165.4        3.0281E+4
+Count   (l_1)  1.8942E+4    6.4730E+5     114.6        21.38    
+Length  (l_2)  6195.        3.5269E+4     37.46        1.165    
+RMS Count      6045.        3.5067E+4     36.56        1.158    
+
+MM^T support=1063939.0 count=485701926586.0
+No M^TM data present
+
+467604993 Bytes uncompressed == 468 MBytes
+ 46513972 Bytes compressed == 47 MBytes
+
+59df6126b629ae4750877d03a7fbf5be  en_mini_cfive.sql
+2643824974318078d8013b609d81c919  en_mini_cfive.sql.bz2
 
 ==========
 
@@ -16956,6 +17018,16 @@ Support: found num left= 18533 num right= 647988 in 31 secs
 Done with wild-card count N(x,*) and N(*,y) in 787 secs
 Total count N(*,*) = 25642000.0 = 25642000.0
 Done computing 1063939 pairs in 137 secs
+Done storing 647988 left-wilds
+Done computing 1063939 pair MI's in 586 secs
+Finished left entropy subtotals in 722 secs
+Finished left MI subtotals in 749 secs
+Done storing 647988 left-wilds in 349 secs
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 647988 left-wilds in 388 secs
+
 
 
 
@@ -17428,10 +17500,11 @@ Support: found num left= 2112 num right= 1968134 in 0 secs
 TODO:
 * Add 'help method
 * Add 'verbose method to enable progress reports.
-* cut low-obs words from disjunct sets
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
-* Matrix summary report to print present of MMT
+* Consistent dj/word-sets
 
 DONE:
 * fix filter-api (DONE)
+* Matrix summary report to print present of MMT (DONE-ish)
+* cut low-obs words from disjunct sets (DONE - micro and mini)
