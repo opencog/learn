@@ -17121,6 +17121,40 @@ oohhh filter had a bug. Damn,
 
    (gso 'store-all-elts)
 
+-- Start again, on mini-test
+   Elapsed time to load grammatical classes: 974 secs
+   Atomspace holds 6782961 atoms
+   top -- 7.755g in size
+   100% of all atoms loaded!
+   (batch-all-pair-mi gcs)
+Start computing the basis
+Support: found num left= 2112 num right= 0 in 201 secs
+ whoops. Failed to store MemberLinks!
+Support: found num left= 2112 num right= 1968134 in 0 secs
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(begin (set! cnt (+ cnt 1)) (format #t "Ohhh nooo ~A ~A" cnt wc))))
+	(cog-get-atoms 'WordClassNode))
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(let* ((wcn (cog-name wc))
+				(wn (string-copy wcn 0 (string-contains wcn "#uni"))))
+			(set! cnt (+ cnt 1))
+			(store-atom (MemberLink (WordNode wn) wc))
+			(format #t "Fix-hack ~A ~A to ~A\n" cnt wc wn))))
+	(cog-get-atoms 'WordClassNode))
+
+(length
+(filter
+	(lambda (lst) (< 1 (length lst)))
+	(map (lambda (wrdcls) (cog-incoming-by-type wrdcls 'MemberLink))
+            (cog-get-atoms 'WordClassNode))))
+
+
 
 
 TODO:

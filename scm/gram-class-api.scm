@@ -102,6 +102,24 @@
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
 
+	; Store into the database the "auxilliary" MemberLinks between
+	; WordClassNodes and WordNodes. Without this, the dataset is
+	; incomplete.
+	(define (store-aux)
+		(for-each
+			; lambda over lists of MemberLink's
+			(lambda (memb-list)
+				(for-each
+					; lambda over MemberLinks
+					(lambda (memb)
+						; If the right kind of MemberLink
+						(if (eq? 'WordNode (cog-type (gar memb)))
+							(store-atom memb)))
+					memb-list))
+			; Get all MemberLinks that this WordClass belongs to.
+			(map (lambda (wrdcls) (cog-incoming-by-type wrdcls 'MemberLink))
+				(cog-get-atoms 'WordClassNode))))
+
 	; Methods on the object
 	(lambda (message . args)
 		(apply (case message
@@ -120,6 +138,7 @@
 			((right-wildcard) get-right-wildcard)
 			((wild-wild) get-wild-wild)
 			((fetch-pairs) fetch-disjuncts)
+			((store-aux) store-aux)
 			((provides) (lambda (symb) #f))
 			((filters?) (lambda () #f))
 			(else (error "Bad method call on gram-class-api:" message)))
