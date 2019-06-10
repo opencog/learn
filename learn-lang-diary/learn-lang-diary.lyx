@@ -33353,7 +33353,7 @@ and
 
 \end_inset
 
-
+Does this quantity have a name? What is the name?
 \end_layout
 
 \begin_layout Standard
@@ -33384,7 +33384,23 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 where the marginal probability is
 \begin_inset Formula 
 \[
-p\left(u\right)=p\left(u,*\right)=\sum_{w,d}N(u,d)N(w,d)=\sum_{d}N(u,d)N(*,d)
+p\left(u\right)=p\left(u,*\right)=\frac{1}{N\left(*,*\right)}\;\sum_{w,d}N(u,d)N(w,d)=\frac{1}{N\left(*,*\right)}\;\sum_{d}N(u,d)N(*,d)
+\]
+
+\end_inset
+
+The total entropy from the marginal probability is 
+\begin_inset Formula 
+\[
+H=-\sum_{w}p\left(w\right)\log p\left(w\right)
+\]
+
+\end_inset
+
+and the total MI would be
+\begin_inset Formula 
+\[
+MI=\sum_{u,w}p\left(u,w\right)\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}
 \]
 
 \end_inset
@@ -34423,6 +34439,52 @@ Casual observation suggests that the MI and the cosine similarity are correlated
  2019 version of `connector-sets-revised.pdf`.
 \end_layout
 
+\begin_layout Subsection*
+Zipf's Law 
+\end_layout
+
+\begin_layout Standard
+These are interesting:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+Zipf’s law holds for phrases, not words
+\begin_inset Quotes erd
+\end_inset
+
+, Jake Ryland Williams, Paul R.
+ Lessard, Suma Desu, Eric M.
+ Clark, James P.
+ Bagrow, Christopher M.
+ Danforth & Peter Sheridan Dodds, Scientific Reports volume 5, Article number:
+ 12209 (2015)
+\end_layout
+
+\begin_layout Standard
+Based on my experience, it holds for both ...
+ it holds for everyhing.
+\end_layout
+
+\begin_layout Section*
+Word-Sense Disambiguation
+\end_layout
+
+\begin_layout Standard
+How does this work with entropic similarity? Let
+\begin_inset Formula 
+\[
+\vec{w}=\sum_{d}N\left(w,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+be the vector defined by the observed counts of disjuncts.
+ 
+\end_layout
+
 \begin_layout Section*
 June 2019 Restart - Mini Datasets
 \end_layout
@@ -35047,30 +35109,6 @@ So when the datasets are made self-consistent, the entropy and MI and sparrsify
  drop a little bit, but not much.
  These are promising to be a lot cleaner, and stronger.
  Will attempt complete set of sims on micro.
-\end_layout
-
-\begin_layout Section*
-Misc references
-\end_layout
-
-\begin_layout Standard
-These are interesting:
-\end_layout
-
-\begin_layout Itemize
-\begin_inset Quotes eld
-\end_inset
-
-Zipf’s law holds for phrases, not words
-\begin_inset Quotes erd
-\end_inset
-
-, Jake Ryland Williams, Paul R.
- Lessard, Suma Desu, Eric M.
- Clark, James P.
- Bagrow, Christopher M.
- Danforth & Peter Sheridan Dodds, Scientific Reports volume 5, Article number:
- 12209 (2015)
 \end_layout
 
 \begin_layout Section*
