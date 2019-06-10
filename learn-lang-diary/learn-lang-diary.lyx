@@ -33384,7 +33384,7 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 where the marginal probability is
 \begin_inset Formula 
 \[
-p\left(u\right)=p\left(u,*\right)=\frac{1}{N\left(*,*\right)}\;\sum_{w,d}N(u,d)N(w,d)=\frac{1}{N\left(*,*\right)}\;\sum_{d}N(u,d)N(*,d)
+p\left(u\right)=p\left(u,*\right)=\frac{i\left(u,*\right)}{i\left(*,*\right)}=\frac{1}{i\left(*,*\right)}\;\sum_{w,d}N(u,d)N(w,d)=\frac{1}{i\left(*,*\right)}\;\sum_{d}N(u,d)N(*,d)
 \]
 
 \end_inset
@@ -34482,7 +34482,136 @@ How does this work with entropic similarity? Let
 \end_inset
 
 be the vector defined by the observed counts of disjuncts.
+ Suppose it is a linear combination of two distinct word-senses 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\vec{w}=\vec{s}+\vec{t}
+\]
+
+\end_inset
+
+but we don't know what the counts for these are, and are so faced with the
+ challenge of determing the linear decomposition.
  
+\end_layout
+
+\begin_layout Standard
+Suppose that there is some grammatical class 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and we've noticed that 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ is similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and this similarity is probably due to 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ being similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ How can we use this to determine 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+? A classical strategy is orthogonalization: assume that 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is parallel to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, and take the orthogonal complement.
+ The primary problem here is that the space is not Euclidean: it does not
+ have sphere-symmetry that preserves the dot product.
+ The vectors 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ inhabit a simplex; the vector coefficients must always remain zero or positive,
+ and all decompositions must preserve the total count 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ as an invariant.
+\end_layout
+
+\begin_layout Standard
+Thus, it seems we want to find a vector 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ such that 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is maximized, and so that 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ is minimized, subject to the constraint 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+.
+ Lets work that out.
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{i\left(g,s\right)i\left(*,*\right)}{i\left(g,*\right)i\left(*,s\right)}
+\]
+
+\end_inset
+
+The extrema of this would be given by those values of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that are stationary under perturbations 
+\begin_inset Formula $\vec{s}+\delta\vec{s}$
+\end_inset
+
+, where 
+\begin_inset Formula 
+\[
+\delta\vec{s}=\sum_{d}\delta N\left(s,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+so that we must solve 
+\begin_inset Formula $\left|d\right|$
+\end_inset
+
+ different differential equations, one for each disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+0=\left.\frac{\partial MI\left(\vec{g},\vec{s}\right)}{\partial N\left(s,d\right)}\right|_{d\mbox{ held fixed}}
+\]
+
+\end_inset
+
+Its a mess.
+ Lets do it.
 \end_layout
 
 \begin_layout Section*
