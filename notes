@@ -14549,6 +14549,66 @@ No M^TM data present
 9b326477e688522b098aa5df8a699d59  en_micro_cfive.sql
 9077869c247d29252f361adac46f3b2b  en_micro_cfive.sql.bz2
 
+en_micro_links
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Good.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_micro_links IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 51 MB      | 
+ public | valuations | table | ubuntu | 168 MB     | 
+
+select count(*) from atoms;      <<<<  572096 == 572K Atoms, (400K less)
+select count(*) from valuations; <<<< 1417959 == 1.42M Vals (570K less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- Atomspace holds 572099 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 124635) (Connector . 19943)
+   (ConnectorSeq . 113821) (Section . 302867) (WordNode . 10813))
+-- top says 825 MBytes RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 18880223)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 10813 Columns: 113821
+Size: 302867 non-zero entries of 1230746473 possible
+Fraction non-zero: 2.4608E-4 Sparsity (-log_2): 11.989
+Total observations: 18880223.0  Avg obs per pair: 62.338
+Entropy Total: 16.127   Left: 13.127   Right: 7.9071
+Total MI: 4.9067
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  133.4        3462.    
+Count   (l_1)  2.4468E+4    3.6716E+5     183.4        106.1    
+Length  (l_2)  8260.        3.2453E+4     61.91        9.374    
+RMS Count      7991.        +nan.0        59.89        +nan.0   
+
+MM^T support=302867.0 count=461960433973.0
+No M^TM data present
+
+102270103 Bytes uncompressed == 102 MBytes
+ 17233733 Bytes compressed == 17 MBytes
+
+cb04a74e6a8024bb9e7f1ccafbf71dbe  en_micro_links.sql
+c7c14d954818babc861d9efcecfc6204  en_micro_links.sql.bz2
+
+
 en_mini_dj_cfive
 ----------------
 Filtered copy of en_dj_cfive, with the (40 5 5) filter-cut applied:
@@ -14658,6 +14718,65 @@ No M^TM data present
 
 59df6126b629ae4750877d03a7fbf5be  en_mini_cfive.sql
 2643824974318078d8013b609d81c919  en_mini_cfive.sql.bz2
+
+en_mini_links
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Good.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_links IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 143 MB     | 
+ public | valuations | table | ubuntu | 328 MB     | 
+
+select count(*) from atoms;      <<<< 1545047 == 1.5M Atoms(1.3M less)
+select count(*) from valuations; <<<< 3788228 == 3.8M Vals (2.1M less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 127 secs
+-- Atomspace holds 1545049 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 380854) (Connector . 34565)
+   (ConnectorSeq . 362320) (Section . 748758) (WordNode . 18533))
+-- top says 2.0 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 22626006)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 362320
+Size: 748758 non-zero entries of 6714876560 possible
+Fraction non-zero: 1.1151E-4 Sparsity (-log_2): 13.131
+Total observations: 22626006.0  Avg obs per pair: 30.218
+Entropy Total: 17.171   Left: 14.192   Right: 8.0388
+Total MI: 5.0603
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  187.0        1.1736E+4
+Count   (l_1)  2.1460E+4    4.4365E+5     114.7        37.80    
+Length  (l_2)  7016.        3.2343E+4     37.51        2.756    
+RMS Count      6848.        +nan.0        36.61        +nan.0   
+
+MM^T support=748758.0 count=485542996090.0
+No M^TM data present
+
+278672471 Bytes uncompressed == 278 MBytes
+ 40074275 Bytes compressed == 40 MBytes
+
+312fb63ddc80212bf8848ab710235dbc  en_mini_links.sql
+647a8825c97223a2f8d93d86cbc86247  en_mini_links.sql.bz2
 
 ==========
 
@@ -17000,11 +17119,10 @@ also: (PredicateNode "*-MM^T Product Key-*")
 that's two. Third is the SchemaNode
 three more needed...
 AnchorNode ...
-two mkore needed: TypeNode. OK, so it all balances.
+two more needed: TypeNode. OK, so it all balances.
 
-
-
---------
+==================
+Same as above, but a biggger set.
    (sql-open "postgres:///en_mini_dj_cfive")
    (define fsa (add-subtotal-filter psa 40 5 5 #f))
    (fsa 'left-basis-size)   ;; 42406
@@ -17028,7 +17146,21 @@ Done storing 647988 left-wilds in 349 secs
 -- (btr 'mmt-marginals)
 Done storing 647988 left-wilds in 388 secs
 
+==========
+linkage-filter the big one, now:
 
+(sql-open "postgres:///en_dj_cfive")
+(psa 'fetch-pairs)
+(sql-close)
+(sql-open "postgres:///en_dj_links")
+(define alf (add-linkage-filter psa))
+(alf 'store-all-elts)   ; Marginals are not to be stored.
+(sql-close)
+restart
+(sql-open "postgres:///en_dj_links")
+(batch-all-pair-mi psa)
+(define btr (batch-transpose psa))
+(btr 'mmt-marginals)
 
 
 ==========
