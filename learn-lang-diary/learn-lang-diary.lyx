@@ -34612,6 +34612,44 @@ so that we must solve
 
 Its a mess.
  Lets do it.
+ We have
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\,\frac{\sum_{\beta}N\left(s,\beta\right)N\left(g,\beta\right)i\left(*,*\right)}{\sum_{\alpha}N\left(s,\alpha\right)N\left(*,\alpha\right)i\left(g,*\right)}
+\]
+
+\end_inset
+
+The two 
+\begin_inset Formula $i$
+\end_inset
+
+ terms are constants; drop them.
+ What is left is
+\begin_inset Formula 
+\[
+0=\frac{N\left(g,d\right)}{i\left(s,*\right)}-\frac{i\left(s,g\right)}{\left(i\left(s,*\right)\right)^{2}}N\left(*,d\right)
+\]
+
+\end_inset
+
+Reorganizing:
+\begin_inset Formula 
+\[
+0=N\left(g,d\right)i\left(s,*\right)-N\left(*,d\right)i\left(s,g\right)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{i\left(s,g\right)}{i\left(s,*\right)}=\frac{N\left(g,d\right)}{N\left(*,d\right)}
+\]
+
+\end_inset
+
+The
 \end_layout
 
 \begin_layout Section*
