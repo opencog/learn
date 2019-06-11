@@ -16691,12 +16691,12 @@ connector-sets.lyx:
 (1a) Show multiple graphs, of cosines, MI, etc.
      depending on word-frequency
 
-(1b) scatterplot for cosine vs entropy
+(1b) scatterplot for cosine vs entropy (Done)
 
 (2a) graphs, for the crosses, too
 
 (3) Scatterplot of pseudo-cset MI vs. cross-MI.
-    Done, need to add words for this.
+    Done, need to add words for this. XXX done where?
 
 (4) show distribution of the sums, above.
 
@@ -16713,7 +16713,7 @@ While waiting for above, write code for:
 * The cosines do need the supports, right? (does it actually
   use them, or does it ignore them?)
 
-* Also: which cosines: the batch cosines? what do thise use?
+* Also: which cosines: the batch cosines? what do these use?
 
 Merging minor tasks DONE
 ------------------------
@@ -16787,7 +16787,7 @@ arxiv  1702.00764v1
 
 =========================================================================
 
-But list Augsut 2018
+Bug list Augsut 2018
 
 Crazy idea: iterate; the places we end up at should be the dependents
 since everything points at them, and they never point away.
@@ -17028,6 +17028,8 @@ dimension key clobbered
 right norm clobbered 
 left norm clobbered.
 Why?
+Answer: because very old stale scheme code was being loaded from
+a stale old bogus install location :-(
 
 (for-each (lambda (x) (format #t "~A ~A\n" x (cog-value (pca 'wild-wild) x)))
     (cog-keys  (pca 'wild-wild)))
@@ -17156,11 +17158,13 @@ linkage-filter the big one, now:
 (define alf (add-linkage-filter psa))
 (define sto (make-store alf))
 (sto 'store-all-elts)   ; Marginals are not to be stored.
-   (1000 pairs/sec)
+   (1000 pairs/sec) ; Done storing 31749357 pairs in 33336 secs
 (sql-close)
 restart
-(sql-open "postgres:///en_dj_links")
+(sql-open "postgres:///en_midj_links")
 (batch-all-pair-mi psa)
+Support: found num left= 438449 num right= 23308382 in 1095 secs
+
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
 
