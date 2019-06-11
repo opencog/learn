@@ -34553,7 +34553,34 @@ Suppose that there is some grammatical class
 \end_layout
 
 \begin_layout Standard
-Thus, it seems we want to find a vector 
+Recall the definition of 
+\begin_inset Formula $i\left(u,v\right)$
+\end_inset
+
+ above, and note that 
+\begin_inset Formula $i\left(u,v\right)=\vec{u}\cdot\vec{v}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $*$
+\end_inset
+
+ behaves like a constant vector; 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $\vec{*}=\sum_{d}N\left(*,d\right)\widehat{e}_{d}=\sum_{d}\sum_{w}N\left(w,d\right)\widehat{e}_{d}$
+\end_inset
+
+ is a perfectly well-defined vector.
+\end_layout
+
+\begin_layout Standard
+Thus, given the WSD problem before us, it seems we want to find a vector
+ 
 \begin_inset Formula $\vec{s}$
 \end_inset
 
@@ -34571,6 +34598,7 @@ Thus, it seems we want to find a vector
 
 .
  Lets work that out.
+ By defintion,
 \begin_inset Formula 
 \[
 MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{i\left(g,s\right)i\left(*,*\right)}{i\left(g,*\right)i\left(*,s\right)}
@@ -34710,6 +34738,171 @@ which is absurd, its just the square of the earlier result.
  WTF.
  But of course, that's obvious, in a way.
  But what to do?
+\end_layout
+
+\begin_layout Standard
+Repeating the first-order variation calculation for 
+\begin_inset Formula $\cos\theta=i\left(s,g\right)/\sqrt{i\left(s,s\right)i\left(g,g\right)}$
+\end_inset
+
+ promptly gives the standard orthogonalization: 
+\emph on
+viz
+\emph default
+ that 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ is the condition for parallel vectors.
+ This is driven not by the numerator 
+\begin_inset Formula $i\left(s,g\right)$
+\end_inset
+
+ which is shared in common by both 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ and by 
+\begin_inset Formula $MI\left(s,g\right)$
+\end_inset
+
+ but is rather due to the quadratic effects in the denominator.
+ In a sense, it is a 
+\begin_inset Quotes eld
+\end_inset
+
+second order effect
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+OK, so what is the source of the flawed thinking above? Again:
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}+C
+\]
+
+\end_inset
+
+and so we're dealing with a ratio of two dot products.
+ This is new easy to minimize and mazimize, conceptually.
+ In one case, any 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{g}=0$
+\end_inset
+
+ will do the trick.
+ More appropriately, this would be 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ the orthognal complement, and the question becomes: can we find stuch a
+ 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ such that no coeeficients are negative, and such that none of the coefficients
+ of 
+\begin_inset Formula $\vec{s}=\vec{w}-\vec{t}$
+\end_inset
+
+ are also non-negative? 
+\end_layout
+
+\begin_layout Standard
+A different extremum would come from finding some 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{*}=0$
+\end_inset
+
+.
+ It is fairly straight-forward to see that such an 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, wiht all non-negative coefficients, does not exist: By definition, 
+\begin_inset Formula $\vec{*}$
+\end_inset
+
+ has all-positive coefficients; none are zero.
+ Any vector orthogonal to this must have at least one negative coefficient
+ (excluding the trivial zero-vector).
+ This also suggests what the almost-orthogonal vectors will be: the almost-ortho
+gonals will be those 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ for which most 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ are zero, except for a few 
+\begin_inset Formula $d$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ is small.
+ That is, sort the set of 
+\begin_inset Formula $\left\{ d\right\} $
+\end_inset
+
+ according to smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ and then make linear combinations of the the first few in that sorted set.
+ More specifically, the only allowed combinations are those for which 
+\begin_inset Formula $N\left(w,d\right)>0$
+\end_inset
+
+, and so then search for that 
+\begin_inset Formula $d$
+\end_inset
+
+ in that set with the smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+.
+ Of course, this only works if that same 
+\begin_inset Formula $d$
+\end_inset
+
+ has appreciable overlap with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ i.e.
+ if 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ is large or at least non-zero.
+\end_layout
+
+\begin_layout Standard
+This is now gelling towards an algorithm: Obtain the set 
+\begin_inset Formula $\left\{ d\right\} =\left\{ d|N\left(w,d\right)N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and rank that set, from highest to lowest, according to 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Section*

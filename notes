@@ -17165,6 +17165,11 @@ restart
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
 
+Last time, this took "only" 29048 secs (8 hours) for the similarly
+sized en_pairs_rfive_mst dataset. So why is it so much slower now?
+Is the pattern matcher in the stars object getting in the way?
+Yes, it probably is. This needs to be fixed...
+
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
 
@@ -17643,6 +17648,8 @@ Done with wild-card count N(x,*) and N(*,y) in 112399 secs
 Total count N(*,*) = 8364154.64551346 = 8364154.645606807
 Done storing 1968134 left-wilds in 1458 secs
 Done computing 2829796 pair MI's in 1848 secs
+Finished left entropy subtotals in 110243 secs (again, 31 hours!)
+
 
 
 
