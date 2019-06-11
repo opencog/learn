@@ -34664,6 +34664,54 @@ This is mis-constrained, in several ways.
  
 \end_layout
 
+\begin_layout Standard
+Again, second order.
+ Up to a constant,
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}i\left(g,s\right)-\log_{2}i\left(s,*\right)+C
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\,\log_{2}i\left(s,g\right)=\frac{N\left(g,d\right)}{i\left(s,g\right)\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,\log_{2}i\left(s,g\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,MI\left(\vec{g},\vec{s}\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}}+\frac{N\left(*,d\right)N\left(*,d^{\prime}\right)}{\left(i\left(s,*\right)\right)^{2}}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{\left(i\left(s,g\right)\right)^{2}}{\left(i\left(s,*\right)\right)^{2}}=\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{N\left(*,d\right)N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+which is absurd, its just the square of the earlier result.
+ WTF.
+ But of course, that's obvious, in a way.
+ But what to do?
+\end_layout
+
 \begin_layout Section*
 June 2019 Restart - Mini Datasets
 \end_layout
