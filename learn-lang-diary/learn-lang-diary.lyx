@@ -34902,7 +34902,128 @@ This is now gelling towards an algorithm: Obtain the set
 \end_inset
 
 .
+ Pick that 
+\begin_inset Formula $d$
+\end_inset
+
+ and set 
+\begin_inset Formula $N\left(s,d\right)=1$
+\end_inset
+
+.
+ Now pick the second disjunct in that list, call it 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+ and consder fractions of the form 
+\begin_inset Formula 
+\[
+F=\frac{N\left(g,d\right)+\alpha N\left(g,d^{\prime}\right)}{N\left(*,d\right)+\alpha N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+and solve for the non-negative 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ that maximizes this fraction.
+ It appears that the only possible solution to this is 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+; this is forced, since by definition 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)>N\left(g,d^{\prime}\right)/N\left(*,d^{\prime}\right)$
+\end_inset
+
+.
+ Thus, the way to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is to set 
+\begin_inset Formula $N\left(s,d\right)=N\left(w,d\right)$
+\end_inset
+
+ and set all other 
+\begin_inset Formula $N\left(s,d^{\prime}\right)=0$
+\end_inset
+
+.
+ This leaves behind 
+\begin_inset Formula $N\left(t,d\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d^{\prime}\right)=N\left(w,d^{\prime}\right)$
+\end_inset
+
+ for all other 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+.
+ However, it is likely that the result 
+\begin_inset Formula $t$
+\end_inset
+
+ still has a large 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ and so this has not been minimized.
+ Recall, we want to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and also simultaneously minimze 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ It seems that there is a trade-off between the two.
  
+\end_layout
+
+\begin_layout Standard
+In fact, we want to maximize some linear combination of 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Since the MI are being interpreted as entropies, it seems like straight
+ addition is the thing to do, and so perhaps the thing to maximize is 
+\begin_inset Formula $S=MI\left(\vec{g},\vec{s}\right)-MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Another possibility might be 
+\begin_inset Formula $H=p\left(\vec{s}\right)MI\left(\vec{g},\vec{s}\right)-p\left(\vec{t}\right)MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $p\left(\vec{w}\right)$
+\end_inset
+
+ is some probability; possibly, for example, 
+\begin_inset Formula $p\left(\vec{w}\right)=i\left(w,*\right)/i\left(*,*\right)$
+\end_inset
+
+ seems to be 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Maybe this time the variational arguments will work? Lets try them on for
+ size:
 \end_layout
 
 \begin_layout Section*
