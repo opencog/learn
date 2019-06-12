@@ -8,12 +8,32 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; When a pair of words are judged to be grammatically similar, they
-; can be used to create a "grammatical class", containing both the
-; words, and behaving as their average.  Similarly, a word can be
-; compared to an existing grammatical class, to see if it belongs to
-; that class.  This file implements several different systems for
-; comparing the grammatical similarity of words and word-classes.
+; When a pair of words are judged to be grammatically similar, they can
+; be combined to create a "grammatical class", containing both the words,
+; and behaving as their "average".  Similarly, a word can be compared to
+; an existing grammatical class, to see if it belongs to that class.
+;
+; Recall that words are represented as vectors, so that both comparison
+; and merging are comparisons of vectors and merges of vectors.
+; This file implements several different comparison and merge strageies:
+;
+; For comparison:
+; * Cosine similarity
+; * MI similarity
+;
+; For theoretical reasons, MI should work better than cosine, primarily
+; because the vector space is not Eucliden space, but a probability
+; simplex.
+;
+; For merging:
+; * Orthogonal decomposition into parallel & perpendicular components.
+; * Union and overlap of basis elements
+; * Binary optimization (integer programming)
+;
+; For theoretical reasons, the binary-optimization strategy should
+; provide the best results. This is because the merge decision is
+; determined by maximum entropy priciples.
+;
 ;
 ; Representation
 ; --------------
