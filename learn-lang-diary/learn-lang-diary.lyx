@@ -35023,7 +35023,87 @@ natural
 
 .
  Maybe this time the variational arguments will work? Lets try them on for
- size:
+ size, proceeding naively, as before.
+ Just as before, but in altered notation, 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\vec{s}\cdot\vec{w}=\frac{\partial}{\partial N\left(s,d\right)}\sum_{d^{\prime}}N\left(s,d^{\prime}\right)N\left(w,d^{\prime}\right)=N\left(w,d\right)
+\]
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial S}{\partial N\left(s,d\right)} & =\frac{\partial}{\partial N\left(s,d\right)}\left[\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}-\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}\right]\\
+ & =\frac{\vec{s}\cdot\vec{*}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)-\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)
+\end{align*}
+
+\end_inset
+
+What a mess.
+ Continuing as before, we run into the same problem as before: an over-constrain
+ed/mis-constrained system of equations:
+\begin_inset Formula 
+\[
+0=N\left(*,d\right)\vec{s}\cdot\vec{g}\vec{w}\cdot\vec{*}\left(\vec{s}-\vec{w}\right)\cdot\vec{g}-N\left(g,d\right)\vec{s}\cdot\vec{*}\vec{w}\cdot\vec{g}\left(\vec{s}-\vec{w}\right)\cdot\vec{*}
+\]
+
+\end_inset
+
+ or
+\begin_inset Formula 
+\[
+\frac{N\left(g,d\right)}{N\left(*,d\right)}=\frac{\vec{s}\cdot\vec{g}\,\vec{w}\cdot\vec{*}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{g}}{\vec{s}\cdot\vec{*}\,\vec{w}\cdot\vec{g}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{*}}
+\]
+
+\end_inset
+
+so that, again, the LHS depends on 
+\begin_inset Formula $d$
+\end_inset
+
+ and the RHS does not, making it impossible to satisfy in general.
+\end_layout
+
+\begin_layout Standard
+Lets try again with 
+\begin_inset Formula $H$
+\end_inset
+
+, making use of 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{s}\right)=\frac{1}{i\left(*,*\right)}\,\frac{\partial}{\partial N\left(s,d\right)}i\left(s,*\right)=\frac{N\left(*,d\right)}{\vec{*}\cdot\vec{*}}=-\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{t}\right)
+\]
+
+\end_inset
+
+It is conveinet to write 
+\begin_inset Formula $p\left(\vec{s}\right)i\left(*,*\right)=\vec{s}\cdot\vec{*}$
+\end_inset
+
+ and drop the 
+\begin_inset Formula $i\left(*,*\right)$
+\end_inset
+
+ as a constant.
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial H}{\partial N\left(s,d\right)}= & \frac{\left(\vec{s}\cdot\vec{*}\right)^{2}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\\
+ & -\frac{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}
+\end{align*}
+
+\end_inset
+
+Again, quite the mess.
+ Grouping terms, we see that this too has the same failures as before: It
+ lacks any terms that are linear in 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ which are what's needed to make the equations solvable.
+ So we conclude, again, with a WTF, now what?
 \end_layout
 
 \begin_layout Section*
