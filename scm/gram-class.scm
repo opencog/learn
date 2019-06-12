@@ -81,9 +81,7 @@
 ; disjuncts form the basis of the vector space, and the count of
 ; observations of different disjuncts indicating the direction of the
 ; vector. It is the linearity of the observations that implies that
-; such a vector-based linear approach is correct. (Footnote: actually,
-; the vector could/should to include subspaces for the sheaf shapes, as
-; well; this is not elaborated on here.)
+; such a vector-based linear approach is correct.
 ;
 ; The number of grammatical classes that a word might belong to can
 ; vary from a few to a few dozen; in addition, there will be some
@@ -94,6 +92,23 @@
 ; disjoint; there may be significant overlap. That is, different
 ; grammatical classes are not orthogonal, in general.
 ;
+; A Note about "Vectors"
+; ----------------------
+; Unfortunately, the word "vector" is not quite the correct term, as it
+; suggests a vector space with rotational symmetry and basis independence.
+; This is very much NOT the case: the space has NOT rotational symmetry
+; at all, and is very basis-dependent.  The concept of a "matroid" moves
+; in the right direction, but does not quite capture the idea. The space
+; is actually a probability space; the preservation of counts is the
+; same as the preservation of probability.
+;
+; A different problem is that the bases of the vectors are not actually
+; "independent"; they contain words, themselves. One can consider
+; Sections where each word in a Connector is replaced by a variable (by
+; a wild-card): these are called "Shapes" below, and elsewhere, and
+; provide basis elements for a different, but related vector space.
+; These subtleties regarding vectors and shapes are ignored here; the
+; word "vector" will be used only because of the lack of a better word.
 ;
 ; Semantic disambiguation
 ; -----------------------
