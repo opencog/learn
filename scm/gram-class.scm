@@ -232,39 +232,40 @@
 ;    original counts.
 ;
 ;
-; Union word-pair merging
-; ------------------------
+; Overlap merging
+; ---------------
 ; In this merge strategy, `w` is decomposed into `s` and `t` by
 ; orthogonal decomposition, up to a clamping constraint, so as to keep
 ; all counts non-negative. That is, start by taking `s` as the component
 ; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
 ; In general, this will result in `t` having negative components; this
-; is clearly not allowed in a probability space. Thus, those conts are
+; is clearly not allowed in a probability space. Thus, those counts are
 ; clamped to zero, and the excess is transfered back to `s` so that the
 ; total `w = s + t` is preserved.
 ;
 ; Note the following properties of this algo:
-; a) The combined vector `g_new` has strictly equal or larger support
-;    than the parts `g_old` and `s`. This might not be correct, as it
-;    seems that it will mix in disjuncts that should have been assigned
-;    to other meanings.  (the SUPPORT issue; discussed further below).
+; a) The combined vector `g_new` has exactly the same support as `g_old`.
+;    That is, any disjuncts in `w` that are not in `g_old` are already
+;    orthogonal. This may be undesirable, as it prevents the broadening
+;    of the support of `g`, i.e. the learning of new, but compatible
+;    grammatical usage.
 ;
 ; b) The process is not quite linear, as the final `s` is not actually
-;    parallel to `g_old`. (the LEXICAL issue; discussed further, below)
+;    parallel to `g_old`.
 ;
 ;
-; Overlap merging
-; ---------------
-; Similar to the above, a linear sum is taken, but the sum is only over
-; those disjuncts that both words share in common. This might be more
-; appropriate for disentangling linear combinations of multiple word-
-; senses. It seems like it could be robust even with lower similarity
-; scores (e.g. when using cosine similarity).
+; Union merging
+; -------------
+; Here, one decomposes `w` into components that are parallel and
+; perpendicular to `g + w`, instead of `g` as above.  Otherwise, one
+; proceeds as above.
 ;
-; Overlap merging appears to solve the problem a) above (the SUPPORT
-; issue), but, on the flip side, it also seems to prevent the discovery
-; and broadening of the ways in which a word might be used. (Broadening
-; is discussed in greater detail below.)
+; Note that the support of `g + w` is the union of the support of `g`
+; and of `w`, whence the name.  This appears to provide a simple
+; solution to the broadening problem, mentioned above.  Coversely, by
+; taking the union of support, the new support may contain elements
+; from `w` that belong to other word-senses, and do NOT belong to `g`
+; (do not belong to the word sense associate with `g`).
 ;
 ;
 ; Linear Programming merge
