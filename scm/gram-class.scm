@@ -15,14 +15,14 @@
 ;
 ; Recall that words are represented as vectors, so that both comparison
 ; and merging are comparisons of vectors and merges of vectors.
-; This file implements several different comparison and merge strageies:
+; This file implements several different comparison and merge strategies:
 ;
 ; For comparison:
 ; * Cosine similarity
 ; * MI similarity
 ;
 ; For theoretical reasons, MI should work better than cosine, primarily
-; because the vector space is not Eucliden space, but a probability
+; because the vector space is not Euclidean space, but a probability
 ; simplex.
 ;
 ; For merging:
@@ -32,7 +32,7 @@
 ;
 ; For theoretical reasons, the binary-optimization strategy should
 ; provide the best results. This is because the merge decision is
-; determined by maximum entropy priciples.
+; determined by maximum entropy principles.
 ;
 ;
 ; Representation
@@ -169,7 +169,7 @@
 ;
 ; so that log_2 ent(w) is the entropy of word w (Up to a factor of
 ; N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
-; in the defintion. This and other considerations are covered in much
+; in the definition. This and other considerations are covered in much
 ; greater detail in the supporting PDF's.)
 ;
 ;
@@ -206,7 +206,7 @@
 ; `s` should be.
 ;
 ; All of these different merge algos suffer from a certain set of
-; problems. Thease are:
+; problems. These are:
 ;
 ; A) The number of vectors being tracked in the system is increasing:
 ;    merge decisions include the decision to combine two words to form
@@ -240,7 +240,7 @@
 ; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
 ; In general, this will result in `t` having negative components; this
 ; is clearly not allowed in a probability space. Thus, those counts are
-; clamped to zero, and the excess is transfered back to `s` so that the
+; clamped to zero, and the excess is transferred back to `s` so that the
 ; total `w = s + t` is preserved.
 ;
 ; Note the following properties of this algo:
@@ -262,7 +262,7 @@
 ;
 ; Note that the support of `g + w` is the union of the support of `g`
 ; and of `w`, whence the name.  This appears to provide a simple
-; solution to the broadening problem, mentioned above.  Coversely, by
+; solution to the broadening problem, mentioned above.  Conversely, by
 ; taking the union of support, the new support may contain elements
 ; from `w` that belong to other word-senses, and do NOT belong to `g`
 ; (do not belong to the word sense associate with `g`).
@@ -375,7 +375,7 @@
 ; additive.
 ;
 ; That is, during merge, low-frequency observation counts should be
-; merged in thier entirety, rather than split in parts, with one part
+; merged in their entirety, rather than split in parts, with one part
 ; remaining unmerged.  For example, if a word is to be merged into a
 ; word-class, and disjunct d has been observed 4 times or less, then
 ; all 4 of these observation counts should be merged into the word-class.
@@ -392,7 +392,7 @@
 ; union merging. Setting it to fractional values provides a merge
 ; that is intermediate between the two: an overlap, plus a bit more,
 ; viz some of the union.  A second parameter serves as a cutoff, so
-; that any oservation counts below the cutoff are always merged.
+; that any observation counts below the cutoff are always merged.
 ;
 ; That is, the merger is given by the vector
 ;
@@ -416,10 +416,10 @@
 ; is probably very similar to `merge-project`, but not the same.  In
 ; particular, the total number of observation counts in the system is
 ; not preserved (which is surely a bad thing, since counts are
-; interpreted as probablity-frequencies.)
+; interpreted as probability-frequencies.)
 ;
 ; There's no good reason for choosing `merge-ortho` over `merge-project`,
-; and the broken probabilites is a good reason to reject `merge-ortho`.
+; and the broken probabilities is a good reason to reject `merge-ortho`.
 ; It is currently here for historical reasons -- it got coded funky, and
 ; that's that.  It should probably be eventually removed, when
 ; experimentation is done with.
