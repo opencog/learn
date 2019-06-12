@@ -163,7 +163,7 @@
   word-classes and disjuncts to become invalid; thse will need to be
   recomputed.
 
-  Proivded methods:
+  Provided methods:
      'delete-singles -- Remove all WordClassNodes that have only a
            single member.
 
@@ -180,6 +180,15 @@
      'create-top-rank-singles NUM -- Create a WordClassNode for the
            top-ranked NUM WordNode's having the highest observation
            counts.  As above, Sections and values are copied.
+
+  Known bugs:
+  * Other code expects that all of the counts are transfered from the
+    word to the word-class, when generating the word-class. This is not
+    being done here; the counts are only being copied. Also, it is
+    expected that the MemberLink holds the total of the counts that
+    were transfered. This is also not set up. This is a bug, and should
+    be fixed. (Obviously, when desolving single-member classes, the
+    counts should be moved back).
 "
 	(define (delete-singles)
 		; delete each word-class node..

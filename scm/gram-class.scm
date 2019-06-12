@@ -3,7 +3,7 @@
 ;
 ; Compare words and word-classes by grammatical similarities.
 ;
-; Copyright (c) 2017, 2018 Linas Vepstas
+; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
@@ -40,8 +40,8 @@
 ; A grammatical class is represented as
 ;
 ;     MemberLink
-;         WordNode "wordy"      ; the word itself
-;         WordClassNode "noun"  ; the grammatical class of the word.
+;         WordNode "wordy"      ; The word itself.
+;         WordClassNode "noun"  ; The grammatical class of the word.
 ;
 ; Word classes have a designated grammatical behavior, using Sections,
 ; behaving just like the pseudo-connectors on single words. Thus, either
@@ -63,6 +63,8 @@
 ; all of these counts (on the MemberLinks) should exactly equal the sum
 ; over the counts on all Sections for that WordClassNode.  Thus, it can
 ; be used to determine what fraction the word contributed to the class.
+; Since merge strategies are generally non-linear, this value is at best
+; a crude indicator, rather than a way of reconstructing the components.
 ;
 ; Basic assumptions
 ; -----------------
