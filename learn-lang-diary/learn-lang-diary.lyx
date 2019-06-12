@@ -34863,7 +34863,7 @@ after dropping a constant factor of
 
 \begin_layout Standard
 OK, so what is the source of the flawed thinking above? What is the root
- cause of the failure of variational primnciples on MI? Geometrically, the
+ cause of the failure of variational principles on MI? Geometrically, the
  answer is simple: it means that 
 \begin_inset Formula $\cos\theta$
 \end_inset
@@ -34871,7 +34871,7 @@ OK, so what is the source of the flawed thinking above? What is the root
  is symptomatic of a sphere: smooth, differentiable, having will-defined
  derivatives.
  By contrast, surfaces of minimal (or maximal) MI are polytopes of some
- sort, consisting of flat facets, together with non-differentiable corners
+ sort, consisting of smooth facets, together with non-differentiable edges
  where faces meet.
  Variational principles do not apply.
  We'll have to use some kind of linear programming techniques to find a
@@ -35153,12 +35153,12 @@ natural
 \end_inset
 
 .
- 
-\end_layout
+\begin_inset Foot
+status collapsed
 
-\begin_layout Standard
-Is there any chance that we got lucky, and by adding enough complexity to
- the problem, we arrived where, maybe this time, the variational arguments
+\begin_layout Plain Layout
+Is there any chance that we got lucky, that by adding enough complexity
+ to the problem, we arrived where, maybe this time, the variational arguments
  will work? Let's try them on for size, proceeding naively, as before.
  Just as before, but in altered notation, 
 \begin_inset Formula 
@@ -35200,10 +35200,7 @@ so that, again, the LHS depends on
 \end_inset
 
  and the RHS does not, making it impossible to satisfy in general.
-\end_layout
-
-\begin_layout Standard
-Lets try again with 
+ Lets try again with 
 \begin_inset Formula $H$
 \end_inset
 
@@ -35239,14 +35236,16 @@ Again, quite the mess.
 \end_inset
 
  which are what's needed to make the equations solvable.
- So we conclude, again, with a WTF, now what?
+ So we conclude, wtf, what were we thinking?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-We're back in the linear programming world it seems.
- Except we don't yet have an equation formulated in the standard linear-programm
-ming style.
- Lets try to do that now.
+The problem is of linear-programming-type, but not linear.
  Maximizing 
 \begin_inset Formula $S$
 \end_inset
@@ -35254,7 +35253,7 @@ ming style.
  means maximizing 
 \begin_inset Formula 
 \[
-\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}
+\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}=\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\vec{t}\cdot\vec{*}}{\vec{t}\cdot\vec{g}}
 \]
 
 \end_inset
@@ -35273,7 +35272,105 @@ convex programming
 \end_inset
 
  problem, I guess.
- Ugh.
+ Its not that bad (I think) because there are only four dot products.
+ It is slightly confusing because it is completely projective in all four
+ vectors: the magnitudes all cancel.
+\end_layout
+
+\begin_layout Standard
+Define sets that define the support of the vectors.
+ Let 
+\begin_inset Formula $G=\left\{ d|N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and likewise for 
+\begin_inset Formula $W$
+\end_inset
+
+ and 
+\begin_inset Formula $S,T$
+\end_inset
+
+.
+ By definition 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+, so this is the universe 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ The constraint is that 
+\begin_inset Formula $W=S\cup T$
+\end_inset
+
+.
+ By definition, 
+\begin_inset Formula $G\cap W\ne\varnothing$
+\end_inset
+
+.
+ By presumption, 
+\begin_inset Formula $G\subset U$
+\end_inset
+
+ and 
+\begin_inset Formula $W\subset U$
+\end_inset
+
+ are proper subsets.
+\end_layout
+
+\begin_layout Standard
+To proceed, turn this into a decision problem: for and fixed disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+, select some 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ such that 
+\begin_inset Formula $N\left(s,d\right)=\alpha N\left(w,d\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d\right)=\left(1-\alpha\right)N\left(w,d\right)$
+\end_inset
+
+.
+ To keep things easy for now, make this a binary decision problem: 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is zero or one.
+ Holding all other 
+\begin_inset Formula $N$
+\end_inset
+
+ fixed, the optimization problem is to maximize
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)+\alpha N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+\alpha N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(g,d\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $j_{d}\left(u,w\right)=i\left(u,w\right)-N\left(u,d\right)N\left(w,d\right)$
+\end_inset
+
+, that is, the dot product, excluding the 
+\begin_inset Formula $d$
+\end_inset
+
+ term.
+ 
 \end_layout
 
 \begin_layout Section*
