@@ -232,8 +232,8 @@
 ;    original counts.
 ;
 ;
-; Overlap merging
-; ---------------
+; Orthogonal merging
+; ------------------
 ; In this merge strategy, `w` is decomposed into `s` and `t` by
 ; orthogonal decomposition, up to a clamping constraint, so as to keep
 ; all counts non-negative. That is, start by taking `s` as the component
@@ -306,9 +306,19 @@
 ;  5. Loop to step 3 until done.
 ;
 ;
-; Formal definition
-; -----------------
-; A formal (equational, algorithmic) description of overlap merging is
+; Initial cluster formation
+; -------------------------
+; The above described what to do to extend an existing grammatical class
+; with a new candidate word.  It does not describe how to form the
+; initial grammatical class, out of the merger of two words. Several
+; strategies are possible. Given two words `u` and `v`, These are:
+;
+; * Simple sum: let `g=u+v`. That's it; nothing more.
+; * Overlap and union merge, given below.
+;
+; Overlap merge
+; -------------
+; A formal (i.e. mathematically dense) description of overlap merging is
 ; given here. One wishes to compute the intersection of basis elements
 ; (the intersection of "disjuncts" aka "sections") of the two words, and
 ; then sum the counts only on this intersected set. Let
@@ -339,7 +349,7 @@
 ;
 ; where ||v|| == ||v||_1 the l_1 norm aka count aka Manhattan-distance.
 ;
-; If v_a and v_b have several word-senses in common; then so will
+; If v_a and v_b have several word-senses in common, then so will
 ; v_cluster.  Since there is no a priori way to force v_a and v_b to
 ; encode only one common word sense, there needs to be some distinct
 ; mechanism to split v_cluster into multiple word senses, if that is
