@@ -150,29 +150,39 @@
 ; The minimum-allowed cosine-distance is a user-tunable parameter in
 ; the code below; it is currently hard-coded to 0.65.
 ;
-; It appears that a better judge of similarity is the information-
-; theoretic divergence between the vectors (the Kullback-Lielber
-; divergence). If N(w,d) is the count of the number of observations of
-; word w with disjunct d, the divergence is:
+: A fundamental problem with cosine distance is that it is built on an
+; assumption of the rotational invariance of Euclidean space. However,
+; the "vectors" here are not actually vectors, they are points in a
+; probability space that has no rotational symmetry. Acknowledging this
+; leads to the contemplation of probabilistic distance functions.
+;
+; A better judge of similarity is the information-theoretic divergence
+; between the vectors (the Kullback-Lielber divergence). If N(w,d) is
+; the count of the number of observations of word w with disjunct d,
+; the divergence is:
 ;
 ;    MI(w_a, w_b) = log_2 [dot(w_a, w_b) dot(*,*) / ent(w_a) ent(w_b)]
 ;
 ; where
 ;
-;    ent(w) = sum_d N(w,d) N(*,d)
+;    ent(w) = sum_d N(w,d) N(*,d) = dot(w, *)
 ;
-; so that log_2 ent(w) is the entropy of word w (up to a factor of
+; so that log_2 ent(w) is the entropy of word w (Up to a factor of
 ; N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
-; in the defintion. Whatever, this is covered in much greater detail
-; elsewhere.)
+; in the defintion. This and other considerations are covered in much
+; greater detail in the supporting PDF's.)
 ;
 ;
 ; Merge Algos
 ; -----------
 ; There are several ways in which two words might be merged into a
 ; word-class, or a word added to a word-class.  Some of these are
-; described below.  Additional kind of merges can be imagined; how to
-; accurately judge the quality of different approaches is unclear.
+; described below.  Additional kind of merges can be imagined; an
+; adequate theoretical foundation remains unclear.  However, based
+; on the gut-sense intuition that information-theoretic techniques
+; are primal, then a merge strategy based on MI/entropy maximization
+; appears to be the most promising. This is described last, as it
+; is the most complex.
 ;
 ;
 ; Union word-pair merging
@@ -195,7 +205,7 @@
 ;    negative counts are clamped to zero.
 ;    (the LEXICAL issue; discussed further, below)
 ; c) The number of vectors being tracked in the system is increasing:
-;    before there were two, once for each word, now there are three:
+;    before there were two, one for each word; now there are three:
 ;    each word remains, with altered counts, as well as their sum.
 ;    It might be nice to prune the number of vectors, so that the
 ;    dataset does not get outrageously large. Its possible that short
@@ -205,19 +215,21 @@
 ;    direction of the word-class vector, but will not trigger the
 ;    recomputation of previous orthogonal components.
 ; e) The replacement of word-vectors by their orthogonal components
-;    means that the original word vectors are "lost". This could be
-;    avoided by creating new "left-over" word vectors to hold just
-;    the orthogonal components. However, this increases the size of
-;    the dataset, and does not seem to serve any useful purpose.
+;    means that the original word vectors are "lost", and not available
+;    for some other alternative processing. This could be avoided by
+;    creating new "left-over" word vectors to hold just the orthogonal
+;    components. However, this increases the size of the dataset, and
+;    at this time, there does not seem to be any reason to access the
+;    original counts.
 ;
 ;
 ; Overlap merging
 ; ---------------
 ; Similar to the above, a linear sum is taken, but the sum is only over
 ; those disjuncts that both words share in common. This might be more
-; appropriate for disentangling linear combinations of multiple
-; word-senses. It seems like it could be robust even with lower
-; similarity scores (e.g. when using cosine similarity).
+; appropriate for disentangling linear combinations of multiple word-
+; senses. It seems like it could be robust even with lower similarity
+; scores (e.g. when using cosine similarity).
 ;
 ; Overlap merging appears to solve the problem a) above (the SUPPORT
 ; issue), but, on the flip side, it also seems to prevent the discovery
