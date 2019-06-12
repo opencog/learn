@@ -34499,7 +34499,7 @@ be the vector defined by the observed counts of disjuncts.
 \end_inset
 
 but we don't know what the counts for these are, and are so faced with the
- challenge of determing the linear decomposition.
+ challenge of determining the linear decomposition.
  
 \end_layout
 
@@ -34598,7 +34598,7 @@ Thus, given the WSD problem before us, it seems we want to find a vector
 
 .
  Lets work that out.
- By defintion,
+ By definition,
 \begin_inset Formula 
 \[
 MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{i\left(g,s\right)i\left(*,*\right)}{i\left(g,*\right)i\left(*,s\right)}
@@ -34684,16 +34684,16 @@ This is mis-constrained, in several ways.
 
  while the LHS does not.
  Not only is it impossible to satisfy, but even if it were, it tells us
- nothing about 
-\begin_inset Formula $s$
+ nothing about the components of 
+\begin_inset Formula $\vec{s}$
 \end_inset
 
-.
+, a formula for which we were hoping to find.
  
 \end_layout
 
 \begin_layout Standard
-Again, second order.
+Compute again, to second order.
  Up to a constant,
 \begin_inset Formula 
 \[
@@ -34734,10 +34734,10 @@ or
 
 \end_inset
 
-which is absurd, its just the square of the earlier result.
+which is equally absurd; its just the square of the earlier result.
  WTF.
  But of course, that's obvious, in a way.
- But what to do?
+ But what to do? Why is this not working?
 \end_layout
 
 \begin_layout Standard
@@ -34766,7 +34766,11 @@ viz
 \begin_inset Formula $MI\left(s,g\right)$
 \end_inset
 
- but is rather due to the quadratic effects in the denominator.
+ but is rather due to the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ in the denominator.
  In a sense, it is a 
 \begin_inset Quotes eld
 \end_inset
@@ -34776,6 +34780,85 @@ second order effect
 \end_inset
 
 .
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A quick sketch might help.
+ The quadratic term contributes 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}i\left(s,s\right)=2N\left(s,d\right)
+\]
+
+\end_inset
+
+ and so 
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\cos\theta=i\left(s,s\right)N\left(g,d\right)-i\left(s,g\right)N\left(s,d\right)
+\]
+
+\end_inset
+
+after dropping a constant factor of 
+\begin_inset Formula $\sqrt{i\left(g,g\right)}$
+\end_inset
+
+ and multiplying by 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+.
+ Then, up to scale factor, one gets 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ which is the desired result: 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is collinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ To maintain the contraint that 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+ one must set 
+\begin_inset Formula $N\left(s,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $N\left(w,d\right)=0$
+\end_inset
+
+; thus, in the end, 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ might not be completely colinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, but only close.
+ The MI formulation lacks the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ term and thus is unable to generate some analog to 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -34788,7 +34871,7 @@ MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\v
 \end_inset
 
 and so we're dealing with a ratio of two dot products.
- This is new easy to minimize and mazimize, conceptually.
+ This is new easy to minimize and maximize, conceptually.
  In one case, any 
 \begin_inset Formula $\vec{s}$
 \end_inset
@@ -34802,12 +34885,12 @@ and so we're dealing with a ratio of two dot products.
 \begin_inset Formula $\vec{t}$
 \end_inset
 
- the orthognal complement, and the question becomes: can we find stuch a
+ the orthogonal complement, and the question becomes: can we find such a
  
 \begin_inset Formula $\vec{t}$
 \end_inset
 
- such that no coeeficients are negative, and such that none of the coefficients
+ such that no coefficients are negative, and such that none of the coefficients
  of 
 \begin_inset Formula $\vec{s}=\vec{w}-\vec{t}$
 \end_inset
@@ -34829,7 +34912,7 @@ A different extremum would come from finding some
 \begin_inset Formula $\vec{s}$
 \end_inset
 
-, wiht all non-negative coefficients, does not exist: By definition, 
+, with all non-negative coefficients, does not exist: By definition, 
 \begin_inset Formula $\vec{*}$
 \end_inset
 
@@ -34915,7 +34998,7 @@ This is now gelling towards an algorithm: Obtain the set
 \begin_inset Formula $d^{\prime}$
 \end_inset
 
- and consder fractions of the form 
+ and consider fractions of the form 
 \begin_inset Formula 
 \[
 F=\frac{N\left(g,d\right)+\alpha N\left(g,d^{\prime}\right)}{N\left(*,d\right)+\alpha N\left(*,d^{\prime}\right)}
@@ -34976,7 +35059,7 @@ and solve for the non-negative
 \begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
 \end_inset
 
- and also simultaneously minimze 
+ and also simultaneously minimize 
 \begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
 \end_inset
 
@@ -35079,7 +35162,7 @@ Lets try again with
 
 \end_inset
 
-It is conveinet to write 
+It is convenient to write 
 \begin_inset Formula $p\left(\vec{s}\right)i\left(*,*\right)=\vec{s}\cdot\vec{*}$
 \end_inset
 
@@ -35726,7 +35809,7 @@ en_dj_links
 \end_layout
 
 \begin_layout Standard
-So when the datasets are made self-consistent, the entropy and MI and sparrsify
+So when the datasets are made self-consistent, the entropy and MI and sparsity
  drop a little bit, but not much.
  These are promising to be a lot cleaner, and stronger.
  Will attempt complete set of sims on micro.
