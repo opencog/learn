@@ -184,43 +184,73 @@
 ; appears to be the most promising. This is described last, as it
 ; is the most complex.
 ;
+; Given a word (a word-vector) `w`, we wish to decompose it into a
+; component `s` that will be merged into the grammatical class `g`,
+; and a component `t` that will be left over. The preservation of
+; counts (the preservation of probabilities) requires that
+; `w = s + t`; that is, that N(w,d) = N(s,d) + N(t,d) for fixed d.
+;
+; Merging means that `g_new = g_old + s`; that is,
+;
+;      N(g_new, d) = N(g_old, d) + N(s,d)
+;
+; for each disjunct `d`. To keep the number of vectors that need to be
+; track small, the vector `g_old` is immediately discarded. Likewise,
+; the vector `s` is also immediately discarded. The remainder-vector `t`
+; is relabelled as the new `w`; that is, `w_new = t` and `w_old` is
+; discarded. (This is a subtraction that preserves the total counts:
+; if `w_old = w`, then `w_new = w_old - s`.)
+;
+; This is what is meant by "merging" in what follows. The different
+; algos are all about different ways of figuring out what the vector
+; `s` should be.
+;
+; All of these different merge algos suffer from a certain set of
+; problems. Thease are:
+;
+; A) The number of vectors being tracked in the system is increasing:
+;    merge decisions include the decision to combine two words to form
+;    a new grammatical class. The `t` remnants of each word remain in
+;    the system, available for further classification into other
+;    word-senses.  At some point, the remainders `t` are likely to get
+;    small, and consist entirely of noise, and so require pruning.
+;
+; B) There is a hysteresis effect: when `g_new` is obtained, it is in
+;    general no longer parallel to `g_old`, and future merge decisions
+;    will be based on `g_new` rather than on `g_old`. Furthermore, the
+;    earlier merge decisions are not recomputed, and so there is a
+;    gradual drift of each grammatical class `g` as words are assigned
+;    to it. The drift is history-dependent: it depends on the sequence
+;    by which words are added in.
+;
+; C) The replacement of `w` by `w_new` means that the original word
+;    vectors are "lost", and not available for some other alternative
+;    processing. This could be avoided by caching the original
+;    word-vectors somewhere. However, doing this would increase the
+;    size of the dataset (which is already unmanageably large), and
+;    at this time, there does not seem to be any reason to access the
+;    original counts.
+;
 ;
 ; Union word-pair merging
 ; ------------------------
-; Given two words, add them as vectors, creating a new vector, the
-; word-class. This is purely linear summation. Next, compute the
-; orthogonal components of the words to the word-class, and replace
-; the words by their orthogonal components - i.e. subtract the parallel
-; components. It seems best to avoid negative observation counts, so
-; if any count on any section is negative, it is clamped to zero (i.e.
-; that section is removed, as this is a sparse vector). This last step
-; renders this process only quasi-linear.
+; In this merge strategy, `w` is decomposed into `s` and `t` by
+; orthogonal decomposition, up to a clamping constraint, so as to keep
+; all counts non-negative. That is, start by taking `s` as the component
+; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
+; In general, this will result in `t` having negative components; this
+; is clearly not allowed in a probability space. Thus, those conts are
+; clamped to zero, and the excess is transfered back to `s` so that the
+; total `w = s + t` is preserved.
 ;
 ; Note the following properties of this algo:
-; a) The combined vector has strictly equal or larger support than
-;    the parts. This might not be correct, as it seems that it will
-;    mix in disjuncts that should have been assigned to other meanings.
-;    (the SUPPORT issue; discussed further below).
-; b) The process is not quite linear, as orthogonal components with
-;    negative counts are clamped to zero.
-;    (the LEXICAL issue; discussed further, below)
-; c) The number of vectors being tracked in the system is increasing:
-;    before there were two, one for each word; now there are three:
-;    each word remains, with altered counts, as well as their sum.
-;    It might be nice to prune the number of vectors, so that the
-;    dataset does not get outrageously large. Its possible that short
-;    vectors might be mostly noise.
-; d) There is another non-linearity, when a word is assigned to an
-;    existing word-class. This assignment will slightly alter the
-;    direction of the word-class vector, but will not trigger the
-;    recomputation of previous orthogonal components.
-; e) The replacement of word-vectors by their orthogonal components
-;    means that the original word vectors are "lost", and not available
-;    for some other alternative processing. This could be avoided by
-;    creating new "left-over" word vectors to hold just the orthogonal
-;    components. However, this increases the size of the dataset, and
-;    at this time, there does not seem to be any reason to access the
-;    original counts.
+; a) The combined vector `g_new` has strictly equal or larger support
+;    than the parts `g_old` and `s`. This might not be correct, as it
+;    seems that it will mix in disjuncts that should have been assigned
+;    to other meanings.  (the SUPPORT issue; discussed further below).
+;
+; b) The process is not quite linear, as the final `s` is not actually
+;    parallel to `g_old`. (the LEXICAL issue; discussed further, below)
 ;
 ;
 ; Overlap merging
@@ -235,6 +265,10 @@
 ; issue), but, on the flip side, it also seems to prevent the discovery
 ; and broadening of the ways in which a word might be used. (Broadening
 ; is discussed in greater detail below.)
+;
+;
+; Linear Programming merge
+; ------------------------
 ;
 ; Formal definition
 ; -----------------
