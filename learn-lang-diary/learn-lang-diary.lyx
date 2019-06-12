@@ -35370,7 +35370,70 @@ where
 \end_inset
 
  term.
+ This really is a binary decision problem: one need only look at the two
+ endpoints 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+.
+ It is either true that 
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)+N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)}{j_{d}\left(t,g\right)}<\frac{j_{d}\left(s,g\right)}{j_{d}\left(s,*\right)}\;\frac{j_{d}\left(t,*\right)+N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+N\left(w,d\right)N\left(g,d\right)}
+\]
+
+\end_inset
+
+or it is false.
+ There seems to be no point in re-organizing terms here; this is readily
+ computed numerically.
+\end_layout
+
+\begin_layout Standard
+So this is actually a binary decision problem, more narrowly, an binary-integer
+ programming problem.
+ It's supposed NP-hard, but I'm thinking that this is a special case that
+ might not be.
+ A plausible algo is to rank the disjuncts by size of 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ from greatest to least, and assign the disjuncts, one by one, to either
+ of the two classes.
+ One can do likewise for 
+\begin_inset Formula $H$
+\end_inset
+
+ instead of 
+\begin_inset Formula $S$
+\end_inset
+
+, just using a different, more complex decision.
+ Both run in linear time according to size of 
+\begin_inset Formula $W\cap G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As before, the niput data, coming from disjuncts from WSD parses, is noisey,
+ and so a binary assignment might be incorrect.
+ It might be better to assign only a fraction of the passing disjuncts to
  
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and place the remainder in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ This requires yet more experimentation.
 \end_layout
 
 \begin_layout Section*
