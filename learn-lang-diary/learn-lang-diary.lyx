@@ -34858,11 +34858,28 @@ after dropping a constant factor of
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Standard
-OK, so what is the source of the flawed thinking above? Again:
+OK, so what is the source of the flawed thinking above? What is the root
+ cause of the failure of variational primnciples on MI? Geometrically, the
+ answer is simple: it means that 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ is symptomatic of a sphere: smooth, differentiable, having will-defined
+ derivatives.
+ By contrast, surfaces of minimal (or maximal) MI are polytopes of some
+ sort, consisting of flat facets, together with non-differentiable corners
+ where faces meet.
+ Variational principles do not apply.
+ We'll have to use some kind of linear programming techniques to find a
+ solution.
+\end_layout
+
+\begin_layout Standard
+So with that in mind, lets start again:
 \begin_inset Formula 
 \[
 MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}+C
@@ -34871,7 +34888,7 @@ MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\v
 \end_inset
 
 and so we're dealing with a ratio of two dot products.
- This is new easy to minimize and maximize, conceptually.
+ This is now easy to minimize and maximize, conceptually.
  In one case, any 
 \begin_inset Formula $\vec{s}$
 \end_inset
@@ -34890,12 +34907,30 @@ and so we're dealing with a ratio of two dot products.
 \begin_inset Formula $\vec{t}$
 \end_inset
 
- such that no coefficients are negative, and such that none of the coefficients
+ such that no coefficients are negative, and such that the coefficients
  of 
 \begin_inset Formula $\vec{s}=\vec{w}-\vec{t}$
 \end_inset
 
- are also non-negative? 
+ are also non-negative? Given that we already know that 
+\begin_inset Formula $MI\left(\vec{g},\vec{w}\right)$
+\end_inset
+
+ is large, it is clear that bot share a lot of disjuncts in common; the
+ handful that are in 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ that are not also in 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ could serve as a basis for 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ That's a start, but not a terribly good one.
 \end_layout
 
 \begin_layout Standard
@@ -34916,11 +34951,24 @@ A different extremum would come from finding some
 \begin_inset Formula $\vec{*}$
 \end_inset
 
- has all-positive coefficients; none are zero.
+ has all-positive coefficients, 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+; none are zero.
  Any vector orthogonal to this must have at least one negative coefficient
  (excluding the trivial zero-vector).
  This also suggests what the almost-orthogonal vectors will be: the almost-ortho
-gonals will be those 
+gonal vectors will be those 
 \begin_inset Formula $\vec{s}$
 \end_inset
 
@@ -35105,8 +35153,13 @@ natural
 \end_inset
 
 .
- Maybe this time the variational arguments will work? Lets try them on for
- size, proceeding naively, as before.
+ 
+\end_layout
+
+\begin_layout Standard
+Is there any chance that we got lucky, and by adding enough complexity to
+ the problem, we arrived where, maybe this time, the variational arguments
+ will work? Let's try them on for size, proceeding naively, as before.
  Just as before, but in altered notation, 
 \begin_inset Formula 
 \[
@@ -35187,6 +35240,40 @@ Again, quite the mess.
 
  which are what's needed to make the equations solvable.
  So we conclude, again, with a WTF, now what?
+\end_layout
+
+\begin_layout Standard
+We're back in the linear programming world it seems.
+ Except we don't yet have an equation formulated in the standard linear-programm
+ming style.
+ Lets try to do that now.
+ Maximizing 
+\begin_inset Formula $S$
+\end_inset
+
+ means maximizing 
+\begin_inset Formula 
+\[
+\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}
+\]
+
+\end_inset
+
+subject to 
+\begin_inset Formula $0<\vec{s}\le\vec{w}$
+\end_inset
+
+.
+ This is certainly not linear; so it's actually a 
+\begin_inset Quotes eld
+\end_inset
+
+convex programming
+\begin_inset Quotes erd
+\end_inset
+
+ problem, I guess.
+ Ugh.
 \end_layout
 
 \begin_layout Section*
