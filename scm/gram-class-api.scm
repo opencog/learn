@@ -424,7 +424,7 @@
 	; Return a list of words
 	(define (get-words) (star-obj 'left-basis))
 
-	(define id-str "wordclass-filter")
+	(define id-str "linkage-filter")
 
 	(add-linking-filter LLOBJ get-words id-str)
 )

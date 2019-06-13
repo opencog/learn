@@ -120,24 +120,21 @@
 	(define cnr-to-left (ConnectorDir "-"))
 
 	; Get a link-name identifying this word-pair.
-	(define (connector-to-lg-link CONNECTOR)
-		(define cnr (gar CONNECTOR))
-		(define dir (gdr CONNECTOR))
-
-		(if (equal? dir cnr-to-left)
-			(get-cnr-name cnr GERM)
-			(get-cnr-name GERM cnr)
+	(define (connector-to-lg-link WORD DIR)
+		(if (equal? DIR cnr-to-left)
+			(get-cnr-name WORD GERM)
+			(get-cnr-name GERM WORD)
 		)
 	)
 
 	; Get a connector, by concatenating the link name with the direction.
 	(define (connector-to-lg-cnr CONNECTOR)
 		(string-append
-			(connector-to-lg-link CONNECTOR)
+			(connector-to-lg-link (gar CONNECTOR) (gdr CONNECTOR))
 			(cog-name (gdr CONNECTOR))))
 
 	; Link Grammar expects: near- & far- & near+ & far+
-	(define (strappend CONNECTOR dj)
+	(define (dj-append CONNECTOR dj)
 		(define cnr (connector-to-lg-cnr CONNECTOR))
 		(if (equal? (gdr CONNECTOR) cnr-to-left)
 			(string-append cnr " & " dj)
@@ -147,7 +144,7 @@
 	; The connectors in SECTION are in the order as noted above:
 	;   far- & near- & near+ & far+
 	(fold
-		(lambda (CNR dj) (if dj (strappend CNR dj)
+		(lambda (CNR dj) (if dj (dj-append CNR dj)
 				(connector-to-lg-cnr CNR)))
 		#f
 		(cog-outgoing-set CSET))
@@ -288,21 +285,11 @@
 		)
 
 		; Add a section to the database
-		; If the germ of the section is just a WordNode, just add it.
-		; If the germ is a WordClassNode, then add all of the individual
-		; words, as well. This is kind-of a temporary hack, to be removed
-		; when we really get to using WordClassNodes consistently,
-		; both as germs, and in connector sets.
-		;; XXX FIXME this really explodes the size of the file!
 		(define (add-section SECTION)
 			(define germ (gar SECTION))
 			(define cset (gdr SECTION))
 			(define cost (COST-FN SECTION))
-			(if (eq? 'WordNode (cog-type germ))
-				(add-germ-cset-pair germ cset cost)
-				(for-each
-					(lambda (word) (add-germ-cset-pair word cset cost))
-					(map gar (cog-incoming-by-type germ 'MemberLink)))))
+			(add-germ-cset-pair germ cset cost))
 
 		; Write to disk, and close the database.
 		(define (shutdown)
