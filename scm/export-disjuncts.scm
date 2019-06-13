@@ -68,20 +68,23 @@
 
 ;  ---------------------------------------------------------------------
 ;
-; Given a word-pair atom, return a synthetic link name
+; Given two words, return a synthetic link name
 ; The link names are issued in serial order, first-come, first-served.
 ;
 (define get-cnr-name
-	(let ((cnt 0))
+	(let* ((cnt 0)
+			(cache (make-afunc-cache
+				(lambda (WORD-PAIR)
+					(set! cnt (+ cnt 1))
+					(number->tag cnt)))))
 
 		; Notice that the lambda does not actually depend on the
 		; word-pair. It just issues a new string.  The function
 		; cache is what is able to detect and re-emit a previously
 		; issued link name.
-		(make-afunc-cache
-			(lambda (WORD-PAIR)
-				(set! cnt (+ cnt 1))
-				(number->tag cnt))))
+		(lambda (left-word right-word)
+			(cache (ListLink left-word right-word)))
+	)
 )
 
 ;  ---------------------------------------------------------------------
@@ -121,8 +124,8 @@
 		(define dir (gdr CONNECTOR))
 
 		(if (equal? dir cnr-to-left)
-			(get-cnr-name (ListLink germ cnr))
-			(get-cnr-name (ListLink cnr germ))
+			(get-cnr-name cnr germ)
+			(get-cnr-name germ cnr)
 		)
 	)
 

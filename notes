@@ -17730,6 +17730,23 @@ Joe don't tell!
    )
 )
 
+(cog-execute! (Get (VariableList (Glob "g") (Glob "h"))
+	(Section (WordNode "###LEFT-WALL###")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don’t") (ConnectorDir "+"))
+		(Glob "h")))))
+
+
+(cog-execute! (Get (VariableList
+(TypedVariable (Glob "g") (Interval (Number 0) (Number -1)))
+(TypedVariable (Glob "h") (Interval (Number 0) (Number -1))))
+	(Section (WordNode "Joe")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don't") (ConnectorDir "+"))
+		(Glob "h")))))
+
 get-cnr-name is broken ....
 
 Now what???
@@ -17746,6 +17763,9 @@ select count(*) from Morphemes;
 No MemberLinks at all. WTF.
 (load-atoms-of-type 'MemberLink)
 
+s.scm
+
+OK, so mini-tst is incomplete. was it scrubbed wrong?
 
 
 
