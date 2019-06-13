@@ -154,7 +154,7 @@
 ; The minimum-allowed cosine-distance is a user-tunable parameter in
 ; the code below; it is currently hard-coded to 0.65.
 ;
-: A fundamental problem with cosine distance is that it is built on an
+; A fundamental problem with cosine distance is that it is built on an
 ; assumption of the rotational invariance of Euclidean space. However,
 ; the "vectors" here are not actually vectors, they are points in a
 ; probability space that has no rotational symmetry. Acknowledging this
