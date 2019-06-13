@@ -121,8 +121,8 @@
 		(define dir (gdr CONNECTOR))
 
 		(if (equal? dir cnr-to-left)
-			(get-cnr-name (ListLink cnr germ))
 			(get-cnr-name (ListLink germ cnr))
+			(get-cnr-name (ListLink cnr germ))
 		)
 	)
 
@@ -195,7 +195,7 @@
 		; into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
-			; Oh no!!! Need to fix LEFT-WLL!
+			; Oh no!!! Need to fix LEFT-WALL!
 			(if (string=? WORD-STR "###LEFT-WALL###")
 				(set! WORD-STR "LEFT-WALL"))
 
@@ -333,7 +333,7 @@
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-version-number>', 'V5v4v0+', 0.0);"))
+			"'<dictionary-version-number>', 'V5v6v0+', 0.0);"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("

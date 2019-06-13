@@ -17280,7 +17280,7 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 #2  0x00007f343d27bd8b in block_self (queue=0x55ef64391cd0, 
     mutex=mutex@entry=0x55ef63d21fc0, waittime=waittime@entry=0x0)
     at ../../libguile/threads.c:316
-#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60, 
+#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60,
     waittime=0x0, m=0x55ef63d21fc0, kind=SCM_MUTEX_STANDARD)
     at ../../libguile/threads.c:1031
 #4  scm_timed_lock_mutex (mutex=0x55ef64391cc0, timeout=<optimized out>)
@@ -17653,11 +17653,85 @@ Finished left MI subtotals in 111610 secs
 Done storing 1968134 left-wilds in 1299 secs
 Finished with MI computations; this took 94.3 hours
 
+-- again the is the corrupted test dataset; so kind-of bogus.
 (print-matrix-summary-report gcs)
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type:
+Section
+Wildcard: (ListLink (ctv 0 0 8364154.6)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 2112 Columns: 1968134
+Size: 2829796 non-zero entries of 4156699008 possible
+Fraction non-zero: 6.8078E-4 Sparsity (-log_2): 10.521
+Total observations: 8364154.65  Avg obs per pair: 2.9557
+Entropy Total: 17.211   Left: 15.164   Right: 7.3950
+Total MI: 5.3480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  97.23        3.0108E+4
+Count   (l_1)  6941.        1.8845E+5     71.39        6.259
+Length  (l_2)  4549.        2.3722E+4     46.78        .7879
+RMS Count      4430.        2.3689E+4     45.56        .7868
+
 
 -- (use-modules (opencog nlp lg-export))
    (export-csets gcs "dict.db" "EN_us")  ; start 20:48
    Will store 2829796 csets
+   This took 236 MBytes! Yow! (because disjuncts not merged.
+
+!!he
+ he.587  [TJEOI- & TJFFA- & TJEOE+]-6.005
+ LEFT-WALL.803              [TNENU+ & TNEPX+]-3.377
+
+select * from Morphemes where morpheme = "LEFT-WALL";
+There is only one ... how can that be? OK.
+LEFT-WALL|LEFT-WALL.803|<###LEFT-WALL####uni.803>
+
+select count(*) from Disjuncts where classname = "<###LEFT-WALL####uni.803>";
+18883
+
+almost 19K of them, so why only one loaded? (only the last one... oh bug.)
+
+select * from Disjuncts where disjunct like '%TNENU-%';
+Uhh ohh .. this is empty. How?
+
+select count(*) from Morphemes where morpheme = "John";
+John|John.629|<John#uni.629>
+select count(*) from Disjuncts where classname = "<John#uni.629>";
+1129
+
+select count(*) from Disjuncts where classname = "<Joe#uni.647>";
+284
+<Joe#uni.647>|TKIWE- & TKIOY+ & TKIUF+|-14.1628982914518
+
+Joe don't tell!
+(Section (ctv 1 0 0.3)
+   (WordClassNode "don't don’t")
+   (ConnectorSeq
+      (Connector
+         (WordNode "###LEFT-WALL###")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "Joe")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "tell")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "!")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+get-cnr-name is broken ....
+
 
 
 
