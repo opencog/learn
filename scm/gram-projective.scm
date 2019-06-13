@@ -1,27 +1,51 @@
 ;
-; gram-class.scm
+; gram-projective.scm
 ;
-; Compare words and word-classes by grammatical similarities.
+; Merge words into word-classes by grammatical similarity.
+; Projective merge strategies.
 ;
-; Copyright (c) 2017, 2018 Linas Vepstas
+; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; When a pair of words are judged to be grammatically similar, they
-; can be used to create a "grammatical class", containing both the
-; words, and behaving as their average.  Similarly, a word can be
-; compared to an existing grammatical class, to see if it belongs to
-; that class.  This file implements several different systems for
-; comparing the grammatical similarity of words and word-classes.
+; When a pair of words are judged to be grammatically similar, they can
+; be combined to create a "grammatical class", containing both the words,
+; and behaving as their "average".  Similarly, a word can be compared to
+; an existing grammatical class, to see if it belongs to that class.
+;
+; Recall that words are represented as vectors, so that both comparison
+; and merging are comparisons of vectors and merges of vectors.
+; This file implements several different comparison and merge strategies:
+;
+; For comparison:
+; * Cosine similarity
+; * MI similarity
+;
+; For theoretical reasons, MI should work better than cosine, primarily
+; because the vector space is not Euclidean space, but a probability
+; simplex.
+;
+; For merging:
+; * Orthogonal decomposition into parallel & perpendicular components.
+; * Union and overlap of basis elements
+; * Binary optimization (integer programming) (information-theoretic)
+;
+; For theoretical reasons, the binary-optimization strategy, using
+; information-theortic (entropy-maximizing) discriminators should
+; provide the best results.
+;
+; This file implements the orthogonal/union/overlap type merging.
+; See the `gram-optim.scm` file for the entropy-maximizing merge
+; implementation.
 ;
 ; Representation
 ; --------------
 ; A grammatical class is represented as
 ;
 ;     MemberLink
-;         WordNode "wordy"      ; the word itself
-;         WordClassNode "noun"  ; the grammatical class of the word.
+;         WordNode "wordy"      ; The word itself.
+;         WordClassNode "noun"  ; The grammatical class of the word.
 ;
 ; Word classes have a designated grammatical behavior, using Sections,
 ; behaving just like the pseudo-connectors on single words. Thus, either
@@ -43,6 +67,8 @@
 ; all of these counts (on the MemberLinks) should exactly equal the sum
 ; over the counts on all Sections for that WordClassNode.  Thus, it can
 ; be used to determine what fraction the word contributed to the class.
+; Since merge strategies are generally non-linear, this value is at best
+; a crude indicator, rather than a way of reconstructing the components.
 ;
 ; Basic assumptions
 ; -----------------
@@ -59,9 +85,7 @@
 ; disjuncts form the basis of the vector space, and the count of
 ; observations of different disjuncts indicating the direction of the
 ; vector. It is the linearity of the observations that implies that
-; such a vector-based linear approach is correct. (Footnote: actually,
-; the vector could/should to include subspaces for the sheaf shapes, as
-; well; this is not elaborated on here.)
+; such a vector-based linear approach is correct.
 ;
 ; The number of grammatical classes that a word might belong to can
 ; vary from a few to a few dozen; in addition, there will be some
@@ -72,6 +96,23 @@
 ; disjoint; there may be significant overlap. That is, different
 ; grammatical classes are not orthogonal, in general.
 ;
+; A Note about "Vectors"
+; ----------------------
+; Unfortunately, the word "vector" is not quite the correct term, as it
+; suggests a vector space with rotational symmetry and basis independence.
+; This is very much NOT the case: the space has NOT rotational symmetry
+; at all, and is very basis-dependent.  The concept of a "matroid" moves
+; in the right direction, but does not quite capture the idea. The space
+; is actually a probability space; the preservation of counts is the
+; same as the preservation of probability.
+;
+; A different problem is that the bases of the vectors are not actually
+; "independent"; they contain words, themselves. One can consider
+; Sections where each word in a Connector is replaced by a variable (by
+; a wild-card): these are called "Shapes" below, and elsewhere, and
+; provide basis elements for a different, but related vector space.
+; These subtleties regarding vectors and shapes are ignored here; the
+; word "vector" will be used only because of the lack of a better word.
 ;
 ; Semantic disambiguation
 ; -----------------------
@@ -113,83 +154,151 @@
 ; The minimum-allowed cosine-distance is a user-tunable parameter in
 ; the code below; it is currently hard-coded to 0.65.
 ;
-; It appears that a better judge of similarity is the information-
-; theoretic divergence between the vectors (the Kullback-Lielber
-; divergence). If N(w,d) is the count of the number of observations of
-; word w with disjunct d, the divergence is:
+; A fundamental problem with cosine distance is that it is built on an
+; assumption of the rotational invariance of Euclidean space. However,
+; the "vectors" here are not actually vectors, they are points in a
+; probability space that has no rotational symmetry. Acknowledging this
+; leads to the contemplation of probabilistic distance functions.
+;
+; A better judge of similarity is the information-theoretic divergence
+; between the vectors (the Kullback-Lielber divergence). If N(w,d) is
+; the count of the number of observations of word w with disjunct d,
+; the divergence is:
 ;
 ;    MI(w_a, w_b) = log_2 [dot(w_a, w_b) dot(*,*) / ent(w_a) ent(w_b)]
 ;
 ; where
 ;
-;    ent(w) = sum_d N(w,d) N(*,d)
+;    ent(w) = sum_d N(w,d) N(*,d) = dot(w, *)
 ;
-; so that log_2 ent(w) is the entropy of word w (up to a factor of
+; so that log_2 ent(w) is the entropy of word w (Up to a factor of
 ; N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
-; in the defintion. Whatever, this is covered in much greater detail
-; elsewhere.)
+; in the definition. This and other considerations are covered in much
+; greater detail in the supporting PDF's.)
 ;
 ;
 ; Merge Algos
 ; -----------
 ; There are several ways in which two words might be merged into a
 ; word-class, or a word added to a word-class.  Some of these are
-; described below.  Additional kind of merges can be imagined; how to
-; accurately judge the quality of different approaches is unclear.
+; described below.  Additional kind of merges can be imagined; an
+; adequate theoretical foundation remains unclear.  However, based
+; on the gut-sense intuition that information-theoretic techniques
+; are primal, then a merge strategy based on MI/entropy maximization
+; appears to be the most promising. This is described last, as it
+; is the most complex.
+;
+; Given a word (a word-vector) `w`, we wish to decompose it into a
+; component `s` that will be merged into the grammatical class `g`,
+; and a component `t` that will be left over. The preservation of
+; counts (the preservation of probabilities) requires that
+; `w = s + t`; that is, that N(w,d) = N(s,d) + N(t,d) for fixed d.
+;
+; Merging means that `g_new = g_old + s`; that is,
+;
+;      N(g_new, d) = N(g_old, d) + N(s,d)
+;
+; for each disjunct `d`. To keep the number of vectors that need to be
+; track small, the vector `g_old` is immediately discarded. Likewise,
+; the vector `s` is also immediately discarded. The remainder-vector `t`
+; is relabelled as the new `w`; that is, `w_new = t` and `w_old` is
+; discarded. (This is a subtraction that preserves the total counts:
+; if `w_old = w`, then `w_new = w_old - s`.)
+;
+; This is what is meant by "merging" in what follows. The different
+; algos are all about different ways of figuring out what the vector
+; `s` should be.
+;
+; All of these different merge algos suffer from a certain set of
+; problems. These are:
+;
+; A) The number of vectors being tracked in the system is increasing:
+;    merge decisions include the decision to combine two words to form
+;    a new grammatical class. The `t` remnants of each word remain in
+;    the system, available for further classification into other
+;    word-senses.  At some point, the remainders `t` are likely to get
+;    small, and consist entirely of noise, and so require pruning.
+;
+; B) There is a hysteresis effect: when `g_new` is obtained, it is in
+;    general no longer parallel to `g_old`, and future merge decisions
+;    will be based on `g_new` rather than on `g_old`. Furthermore, the
+;    earlier merge decisions are not recomputed, and so there is a
+;    gradual drift of each grammatical class `g` as words are assigned
+;    to it. The drift is history-dependent: it depends on the sequence
+;    by which words are added in.
+;
+; C) The replacement of `w` by `w_new` means that the original word
+;    vectors are "lost", and not available for some other alternative
+;    processing. This could be avoided by caching the original
+;    word-vectors somewhere. However, doing this would increase the
+;    size of the dataset (which is already unmanageably large), and
+;    at this time, there does not seem to be any reason to access the
+;    original counts.
 ;
 ;
-; Union word-pair merging
-; ------------------------
-; Given two words, add them as vectors, creating a new vector, the
-; word-class. This is purely linear summation. Next, compute the
-; orthogonal components of the words to the word-class, and replace
-; the words by their orthogonal components - i.e. subtract the parallel
-; components. It seems best to avoid negative observation counts, so
-; if any count on any section is negative, it is clamped to zero (i.e.
-; that section is removed, as this is a sparse vector). This last step
-; renders this process only quasi-linear.
+; Orthogonal merging
+; ------------------
+; In this merge strategy, `w` is decomposed into `s` and `t` by
+; orthogonal decomposition, up to a clamping constraint, so as to keep
+; all counts non-negative. That is, start by taking `s` as the component
+; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
+; In general, this will result in `t` having negative components; this
+; is clearly not allowed in a probability space. Thus, those counts are
+; clamped to zero, and the excess is transferred back to `s` so that the
+; total `w = s + t` is preserved.
 ;
 ; Note the following properties of this algo:
-; a) The combined vector has strictly equal or larger support than
-;    the parts. This might not be correct, as it seems that it will
-;    mix in disjuncts that should have been assigned to other meanings.
-;    (the SUPPORT issue; discussed further below).
-; b) The process is not quite linear, as orthogonal components with
-;    negative counts are clamped to zero.
-;    (the LEXICAL issue; discussed further, below)
-; c) The number of vectors being tracked in the system is increasing:
-;    before there were two, once for each word, now there are three:
-;    each word remains, with altered counts, as well as their sum.
-;    It might be nice to prune the number of vectors, so that the
-;    dataset does not get outrageously large. Its possible that short
-;    vectors might be mostly noise.
-; d) There is another non-linearity, when a word is assigned to an
-;    existing word-class. This assignment will slightly alter the
-;    direction of the word-class vector, but will not trigger the
-;    recomputation of previous orthogonal components.
-; e) The replacement of word-vectors by their orthogonal components
-;    means that the original word vectors are "lost". This could be
-;    avoided by creating new "left-over" word vectors to hold just
-;    the orthogonal components. However, this increases the size of
-;    the dataset, and does not seem to serve any useful purpose.
+; a) The combined vector `g_new` has exactly the same support as `g_old`.
+;    That is, any disjuncts in `w` that are not in `g_old` are already
+;    orthogonal. This may be undesirable, as it prevents the broadening
+;    of the support of `g`, i.e. the learning of new, but compatible
+;    grammatical usage. See discussion of "broadening" below.
+;
+; b) The process is not quite linear, as the final `s` is not actually
+;    parallel to `g_old`.
 ;
 ;
-; Overlap merging
-; ---------------
-; Similar to the above, a linear sum is taken, but the sum is only over
-; those disjuncts that both words share in common. This might be more
-; appropriate for disentangling linear combinations of multiple
-; word-senses. It seems like it could be robust even with lower
-; similarity scores (e.g. when using cosine similarity).
+; Union merging
+; -------------
+; Here, one decomposes `w` into components that are parallel and
+; perpendicular to `g + w`, instead of `g` as above.  Otherwise, one
+; proceeds as above.
 ;
-; Overlap merging appears to solve the problem a) above (the SUPPORT
-; issue), but, on the flip side, it also seems to prevent the discovery
-; and broadening of the ways in which a word might be used. (Broadening
-; is discussed in greater detail below.)
+; Note that the support of `g + w` is the union of the support of `g`
+; and of `w`, whence the name.  This appears to provide a simple
+; solution to the broadening problem, mentioned above.  Conversely, by
+; taking the union of support, the new support may contain elements
+; from `w` that belong to other word-senses, and do NOT belong to `g`
+; (do not belong to the word sense associate with `g`).
 ;
-; Formal definition
-; -----------------
-; A formal (equational, algorithmic) description of overlap merging is
+;
+; Linear Programming merge
+; ------------------------
+; Here, one searches for a vector `s` that maximizes some some
+; (information-theoretic) criterion for merging. This criterion takes
+; the form of a set of real numbers {a(d) |d is a disjunct} so that
+; N(s,d) = a(d) N(w,d). To obey non-negativity, one must have
+; 0 =< a(d) =< 1 for each `d`. This turns the problem into a linear
+; programming problem (or rather, a convex optimization problem).
+; If a(d) is either zero, or one, then this is a (binary) integer
+; programming problem.
+;
+; This merge style is implemented in the `gram-optim.scm` file, and
+; is described in greater detail there.
+;
+; Initial cluster formation
+; -------------------------
+; The above described what to do to extend an existing grammatical class
+; with a new candidate word.  It does not describe how to form the
+; initial grammatical class, out of the merger of two words. Several
+; strategies are possible. Given two words `u` and `v`, These are:
+;
+; * Simple sum: let `g=u+v`. That's it; nothing more.
+; * Overlap and union merge, given below.
+;
+; Overlap merge
+; -------------
+; A formal (i.e. mathematically dense) description of overlap merging is
 ; given here. One wishes to compute the intersection of basis elements
 ; (the intersection of "disjuncts" aka "sections") of the two words, and
 ; then sum the counts only on this intersected set. Let
@@ -220,7 +329,7 @@
 ;
 ; where ||v|| == ||v||_1 the l_1 norm aka count aka Manhattan-distance.
 ;
-; If v_a and v_b have several word-senses in common; then so will
+; If v_a and v_b have several word-senses in common, then so will
 ; v_cluster.  Since there is no a priori way to force v_a and v_b to
 ; encode only one common word sense, there needs to be some distinct
 ; mechanism to split v_cluster into multiple word senses, if that is
@@ -246,7 +355,7 @@
 ; additive.
 ;
 ; That is, during merge, low-frequency observation counts should be
-; merged in thier entirety, rather than split in parts, with one part
+; merged in their entirety, rather than split in parts, with one part
 ; remaining unmerged.  For example, if a word is to be merged into a
 ; word-class, and disjunct d has been observed 4 times or less, then
 ; all 4 of these observation counts should be merged into the word-class.
@@ -263,7 +372,7 @@
 ; union merging. Setting it to fractional values provides a merge
 ; that is intermediate between the two: an overlap, plus a bit more,
 ; viz some of the union.  A second parameter serves as a cutoff, so
-; that any oservation counts below the cutoff are always merged.
+; that any observation counts below the cutoff are always merged.
 ;
 ; That is, the merger is given by the vector
 ;
@@ -280,6 +389,7 @@
 ;
 ; merge-ortho
 ; -----------
+; DEPRECATED.
 ; The `merge-ortho` function computes the merged vector the same way as
 ; the `merge-project` function; however, it adjusts counts on v_a and
 ; v_b in a different way. What it does is to explicitly orthogonalize
@@ -287,10 +397,10 @@
 ; is probably very similar to `merge-project`, but not the same.  In
 ; particular, the total number of observation counts in the system is
 ; not preserved (which is surely a bad thing, since counts are
-; interpreted as probablity-frequencies.)
+; interpreted as probability-frequencies.)
 ;
 ; There's no good reason for choosing `merge-ortho` over `merge-project`,
-; and the broken probabilites is a good reason to reject `merge-ortho`.
+; and the broken probabilities is a good reason to reject `merge-ortho`.
 ; It is currently here for historical reasons -- it got coded funky, and
 ; that's that.  It should probably be eventually removed, when
 ; experimentation is done with.
@@ -343,16 +453,6 @@
 ; been done, then when a connector-word is replaced by a connector
 ; word-class, that class may be larger than the number of connectors
 ; originally witnessed. Again, the known usage of the word is broadened.
-;
-;
-; Other Merge Strategies
-; ----------------------
-; Insofar as the the "hidden" meanings of words control they way they
-; are used in sentences, it is plausible to assume that perhaps a Hidden
-; Markov Model (HMM) style approach might provide an alternative way of
-; splitting vectors into distinct parts.  Alternately, an Artificial
-; Neural Nets (ANN), possibly with deep-learning, might provide a better
-; factorization. At this time, these remain unexplored.
 ;
 ;
 ; Disjunct merging
@@ -790,25 +890,6 @@
 
 	; True, if similarity is larger than the cutoff.
 	(< CUTOFF (report-progress))
-)
-
-; ---------------------------------------------------------------
-; Is it OK to merge WORD-A and WORD-B into a common vector?
-;
-; Return #t if the two should be merged, else return #f
-; WORD-A might be a WordClassNode or a WordNode.
-; WORD-B should be a WordNode.
-;
-; MIOBJ must offer the 'mmt-fmi method.
-;
-; This uses information-similarity and a cutoff to make the ok-to-merge
-; decision. Uses the information-similarity between the
-; disjunct-vectors only (for now!?), and not between the shapes.
-;
-(define (is-info-similar? MIOBJ CUTOFF WORD-A WORD-B)
-
-	(define (get-info-sim wa wb) (MIOBJ 'mmt-fmi wa wb))
-	(is-similar? get-info-sim CUTOFF WORD-A WORD-B)
 )
 
 ; ---------------------------------------------------------------

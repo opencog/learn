@@ -14438,6 +14438,346 @@ out the converse: number of words that are in connectors only.
 c809c93f690ae0f583848ceb78d0c474  en_dj_cfive.sql
 c63df81bd14e5c0d478e654e3be76369  en_dj_cfive.sql.bz2
 
+en_micro_dj_cfive
+-----------------
+Filtered copy of en_dj_cfive, with the (500 10 10) filter-cut applied:
+all words with word-count less than 500 removed; all sections with a
+count of less than 10 removed; all dj's with a count of less than 10
+removed. DB does NOT contain marginals!
+
+COMMENT ON DATABASE en_micro_dj_cfive IS
+'en_cfive Sections (only) with word-count > 500; section-count > 10';
+
+STATUS: Good.
+DATE: 9 June 2019
+
+en_micro_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 73 MB      |
+ public | spaces     | table | ubuntu | 8192 bytes |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 101 MB     |
+ public | values     | table | ubuntu | 8192 bytes |
+(5 rows)
+
+select count(*) from atoms;      <<<<  791551 == 792K Atoms
+select count(*) from valuations; <<<< 1178145 == 1.2M Valuations
+
+There are 8608 words, and 361894 disjuncts
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 64 secs
+-- Atomspace holds 791555 atoms
+-- (cog-report-counts)
+   ((PredicateNode . 3) (AnchorNode . 1) (Connector . 125223)
+   (ConnectorDir . 2) (ConnectorSeq . 187063) (Section . 392715)
+   (SchemaNode . 1) (WordNode . 86545) (AnyNode . 2))
+-- top says 1 GB RAM
+-- (psa 'left-basis-size)  ;; 10813
+-- (psa 'right-basis-size) ;; 187063
+-- These dimensions do NOT agree with what the filter reported,
+   which was 8608 x 361894  which is understandable.
+
+96968299 Bytes uncompressed == 97 MBytes
+18093513 Bytes compressed == 18 MBytes
+
+3542b295676290071ac2f2e476c3a0c5  en_micro_dj_cfive.sql
+eef31e0cd5edd5ad2626279a2886dff5  en_micro_dj_cfive.sql.bz2
+
+
+en_micro_cfive
+--------------
+Same as en_micro_dj_cfive, but with marginals and MM^T values.
+
+STATUS: Good.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_micro_cfive IS
+'en_cfive Sections + Marginals + MM^T with word-count > 500; section-count > 10';
+
+en_micro_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 90 MB      |
+ public | spaces     | table | ubuntu | 8192 bytes |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 216 MB     |
+ public | values     | table | ubuntu | 8192 bytes |
+(5 rows)
+
+select count(*) from atoms;      <<<<  989440 == 989K Atoms, (200K more)
+select count(*) from valuations; <<<< 1980471 == 1.98M Vals (800K more)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 66 secs
+-- Atomspace holds 989442 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 197877) (Connector . 125223)
+   (ConnectorDir . 2) (ConnectorSeq . 187063) (Section . 392715)
+   (WordNode . 86545) (AnyNode . 2))
+-- top says 1.2 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20782007)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 10813 Columns: 187063
+Size: 392715 non-zero entries of 2022712219 possible
+Fraction non-zero: 1.9415E-4 Sparsity (-log_2): 12.331
+Total observations: 20782007.0  Avg obs per pair: 52.919
+Entropy Total: 16.564   Left: 13.788   Right: 7.7620
+Total MI: 4.9867
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  121.4        7387.    
+Count   (l_1)  2.2239E+4    4.8439E+5     183.1        65.57    
+Length  (l_2)  7511.        3.4794E+4     61.85        4.710    
+RMS Count      7263.        3.4445E+4     59.80        4.663    
+
+MM^T support=392715.0 count=462177929473.0
+No M^TM data present
+
+154394374 Bytes uncompressed == 154 MBytes
+ 26066918 Bytes compressed == 26 MBytes
+
+9b326477e688522b098aa5df8a699d59  en_micro_cfive.sql
+9077869c247d29252f361adac46f3b2b  en_micro_cfive.sql.bz2
+
+en_micro_links
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Good.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_micro_links IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 51 MB      | 
+ public | valuations | table | ubuntu | 168 MB     | 
+
+select count(*) from atoms;      <<<<  572096 == 572K Atoms, (400K less)
+select count(*) from valuations; <<<< 1417959 == 1.42M Vals (570K less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- Atomspace holds 572099 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 124635) (Connector . 19943)
+   (ConnectorSeq . 113821) (Section . 302867) (WordNode . 10813))
+-- top says 825 MBytes RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 18880223)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 10813 Columns: 113821
+Size: 302867 non-zero entries of 1230746473 possible
+Fraction non-zero: 2.4608E-4 Sparsity (-log_2): 11.989
+Total observations: 18880223.0  Avg obs per pair: 62.338
+Entropy Total: 16.127   Left: 13.127   Right: 7.9071
+Total MI: 4.9067
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  133.4        3462.    
+Count   (l_1)  2.4468E+4    3.6716E+5     183.4        106.1    
+Length  (l_2)  8260.        3.2453E+4     61.91        9.374    
+RMS Count      7991.        +nan.0        59.89        +nan.0   
+
+MM^T support=302867.0 count=461960433973.0
+No M^TM data present
+
+102270103 Bytes uncompressed == 102 MBytes
+ 17233733 Bytes compressed == 17 MBytes
+
+cb04a74e6a8024bb9e7f1ccafbf71dbe  en_micro_links.sql
+c7c14d954818babc861d9efcecfc6204  en_micro_links.sql.bz2
+
+
+en_mini_dj_cfive
+----------------
+Filtered copy of en_dj_cfive, with the (40 5 5) filter-cut applied:
+all words with word-count less than 40 removed; all sections with a
+count of less than 5 removed; all dj's with a count of less than 5
+removed. DB does NOT contain marginals!
+
+Note that there is a HUGE number of WordNodes that appear in
+ConnectorSeq's that do NOT appear in Sections!
+
+COMMENT ON DATABASE en_mini_dj_cfive IS
+'en_cfive Sections (only) with word-count > 40; section-count > 5';
+
+STATUS: Good.
+DATE: 9 June 2019
+
+en_mini_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 206 MB     |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 274 MB     |
+
+select count(*) from atoms;      <<<< 2139220 == 2.1M Atoms
+select count(*) from valuations; <<<< 3191817 == 3.2M Valuations
+
+There are 171522 words, and 647988 disjuncts, and 1063939 Sections
+   ((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 157 secs
+-- Atomspace holds 2139224 atoms
+-- (cog-report-counts)
+    ((PredicateNode . 3) (Connector . 255766) (ConnectorDir . 2)
+    (ConnectorSeq . 647988) (Section . 1063939) (WordNode . 171522)
+    (AnyNode . 2))
+-- top says 2.5 GB RAM
+-- (psa 'left-basis-size)  ;; 18533
+-- (psa 'right-basis-size) ;; 647988
+-- These dimensions do NOT agree with what the filter reported,
+   which was 42406 x 968594 which is understandable.
+
+271616272 Bytes uncompressed == 272 MBytes
+ 46513972 Bytes compressed == 46 MBytes
+
+5e351f5644984574f0e12bedcf9c94d7  en_mini_dj_cfive.sql
+b7e69440de6e6bd6a2d56880f05b2958  en_mini_dj_cfive.sql.bz2
+
+
+en_mini_cfive
+-------------
+Same as en_mini_dj_cfive, but with marginals and MM^T values.
+Note that this has 10x more words in the connectors, than words in
+sections. This needs to be cleaned up.
+
+STATUS: OK. Words in Sections don't match observe words.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_cfive IS
+'en_cfive Sections + Marginals + MM^T with word-count > 40; section-count > 5';
+
+en_mini_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 265 MB     |
+ public | typecodes  | table | ubuntu | 24 kB      |
+ public | valuations | table | ubuntu | 624 MB     |
+
+select count(*) from atoms;      <<<< 2805754 == 2.8M Atoms (660K more)
+select count(*) from valuations; <<<< 5876443 == 5.9M Vals (2.7M more)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 212 secs
+-- Atomspace holds 2805756 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 666522) (Connector . 255766)
+   (ConnectorSeq . 647988) (Section . 1063939) (WordNode . 171522)
+   (AnyNode . 2))
+-- top says 3.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 25642000)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 647988
+Size: 1063939 non-zero entries of 12009161604 possible
+Fraction non-zero: 8.8594E-5 Sparsity (-log_2): 13.462
+Total observations: 25642000.0  Avg obs per pair: 24.101
+Entropy Total: 17.789   Left: 15.123   Right: 7.7718
+Total MI: 5.1061
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  165.4        3.0281E+4
+Count   (l_1)  1.8942E+4    6.4730E+5     114.6        21.38    
+Length  (l_2)  6195.        3.5269E+4     37.46        1.165    
+RMS Count      6045.        3.5067E+4     36.56        1.158    
+
+MM^T support=1063939.0 count=485701926586.0
+No M^TM data present
+
+467604993 Bytes uncompressed == 468 MBytes
+ 46513972 Bytes compressed == 47 MBytes
+
+59df6126b629ae4750877d03a7fbf5be  en_mini_cfive.sql
+2643824974318078d8013b609d81c919  en_mini_cfive.sql.bz2
+
+en_mini_links
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Good.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_links IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 143 MB     | 
+ public | valuations | table | ubuntu | 328 MB     | 
+
+select count(*) from atoms;      <<<< 1545047 == 1.5M Atoms(1.3M less)
+select count(*) from valuations; <<<< 3788228 == 3.8M Vals (2.1M less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 127 secs
+-- Atomspace holds 1545049 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 380854) (Connector . 34565)
+   (ConnectorSeq . 362320) (Section . 748758) (WordNode . 18533))
+-- top says 2.0 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 22626006)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 362320
+Size: 748758 non-zero entries of 6714876560 possible
+Fraction non-zero: 1.1151E-4 Sparsity (-log_2): 13.131
+Total observations: 22626006.0  Avg obs per pair: 30.218
+Entropy Total: 17.171   Left: 14.192   Right: 8.0388
+Total MI: 5.0603
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  187.0        1.1736E+4
+Count   (l_1)  2.1460E+4    4.4365E+5     114.7        37.80    
+Length  (l_2)  7016.        3.2343E+4     37.51        2.756    
+RMS Count      6848.        +nan.0        36.61        +nan.0   
+
+MM^T support=748758.0 count=485542996090.0
+No M^TM data present
+
+278672471 Bytes uncompressed == 278 MBytes
+ 40074275 Bytes compressed == 40 MBytes
+
+312fb63ddc80212bf8848ab710235dbc  en_mini_links.sql
+647a8825c97223a2f8d93d86cbc86247  en_mini_links.sql.bz2
+
 ==========
 
 next:
@@ -16351,12 +16691,12 @@ connector-sets.lyx:
 (1a) Show multiple graphs, of cosines, MI, etc.
      depending on word-frequency
 
-(1b) scatterplot for cosine vs entropy
+(1b) scatterplot for cosine vs entropy (Done)
 
 (2a) graphs, for the crosses, too
 
 (3) Scatterplot of pseudo-cset MI vs. cross-MI.
-    Done, need to add words for this.
+    Done, need to add words for this. XXX done where?
 
 (4) show distribution of the sums, above.
 
@@ -16373,7 +16713,7 @@ While waiting for above, write code for:
 * The cosines do need the supports, right? (does it actually
   use them, or does it ignore them?)
 
-* Also: which cosines: the batch cosines? what do thise use?
+* Also: which cosines: the batch cosines? what do these use?
 
 Merging minor tasks DONE
 ------------------------
@@ -16447,7 +16787,7 @@ arxiv  1702.00764v1
 
 =========================================================================
 
-But list Augsut 2018
+Bug list Augsut 2018
 
 Crazy idea: iterate; the places we end up at should be the dependents
 since everything points at them, and they never point away.
@@ -16597,7 +16937,8 @@ this does not have any word-pairs in it. Supposedly it contains the
 pseudo-dj marginals. It does not contain the cross-connector marginals;
 it appears that computing these is prohibitive, at this time.
 
-STATUS: Good.
+STATUS: Never created, due to bugs... Keys are getting clobbered...
+see below ...
 DATE: 3 June 2019
 
 en_midj_cfive=> \dt+
@@ -16687,11 +17028,153 @@ dimension key clobbered
 right norm clobbered 
 left norm clobbered.
 Why?
+Answer: because very old stale scheme code was being loaded from
+a stale old bogus install location :-(
 
 (for-each (lambda (x) (format #t "~A ~A\n" x (cog-value (pca 'wild-wild) x)))
     (cog-keys  (pca 'wild-wild)))
 
+===================================
+Try again. This time, cut first.
+-- (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   Elapsed time to load csets: 6321 secs
+   Atomspace holds 81224843 atoms
+   (sql-close)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (print-matrix-summary-report psa) ;; as expected.
+   createdb en_cut_dj_cfive
+   cat atoms.sql | psql en_micro_dj_cfive
+   COMMENT ON DATABASE en_micro_dj_cfive IS 'en_cfive Sections (only) with word-count > 500; section-count > 10';
+   (sql-open "postgres:///en_micro_dj_cfive")
 
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+
+	(fsa 'left-basis-size)   ;;  8608  ; whoa huge cut!
+   (fsa 'right-basis-size)  ;;  361894 ; also a big cut.
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+Done storing 392715 pairs in 451 secs
+
+   (sql-open "postgres:///en_micro_cfive")
+   (batch-all-pair-mi psa)
+Support: found num left= 10813 num right= 187063 in 0 secs
+Finished left norm marginals in 139 secs
+Done with wild-card count N(x,*) and N(*,y) in 159 secs
+Total count N(*,*) = 20782007.0 = 20782007.0
+Done computing 392715 pairs in 36 secs
+Done storing 187063 left-wilds in 2729 secs
+Done computing 392715 pair MI's in 206 secs
+Done storing 187063 left-wilds in 103 secs
+Finished with MI computations; this took 0.99 hours
+
+   (print-matrix-summary-report psa)
+Fraction non-zero: 1.9415E-4 Sparsity (-log_2): 12.331
+Total observations: 20782007.0  Avg obs per pair: 52.919
+Entropy Total: 16.564   Left: 13.788   Right: 7.7620
+Total MI: 4.9867
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  121.4        7387.    
+Count   (l_1)  2.2239E+4    4.8439E+5     183.1        65.57    
+Length  (l_2)  7511.        3.4794E+4     61.85        4.710    
+RMS Count      7263.        3.4445E+4     59.80        4.663    
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 187063 left-wilds in 113 secs
+Done computing and saving sum_y N(x,y) N(*,y)
+
+Atomspace holds 989445 atoms
+sql-stats: 989440 of 989440 reserved uuids used
+So what are the five missing atoms?
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 197877) (TypeNode . 2) (AnchorNode .
+1) (Connector . 125223) (ConnectorDir . 2) (ConnectorSeq . 187063)
+(Section . 392715) (SchemaNode . 1) (WordNode . 86545) (AnyNode . 2))
+
+select count(*) from atoms where type=71;
+en_micro_cfive=> select * from atoms where type=71;
+  uuid  | space | type | height |         name          | outgoing 
+--------+-------+------+--------+-----------------------+----------
+ 791557 |     1 |   71 |      0 | *-Dimension Key-*     | y
+ 989438 |     1 |   71 |      0 | *-Entropy Key-*       | y
+     73 |     1 |   71 |      0 | *-FrequencyKey-*      | y
+ 791569 |     1 |   71 |      0 | *-Left Norm Key-*     | y
+ 791562 |     1 |   71 |      0 | *-Left Total Key-*    | y
+ 989440 |     1 |   71 |      0 | *-MM^T Product Key-*  | y
+     72 |     1 |   71 |      0 | *-Mutual Info Key-*   | y
+ 791560 |     1 |   71 |      0 | *-Norm Key-*          | y
+ 791566 |     1 |   71 |      0 | *-Right Norm Key-*    | y
+ 791572 |     1 |   71 |      0 | *-Right Total Key-*   | y
+ 989437 |     1 |   71 |      0 | *-Total Entropy Key-* | y
+ 989439 |     1 |   71 |      0 | *-Total MI Key-*      | y
+      1 |     0 |   71 |      0 | *-TruthValueKey-*     | 
+(13 rows)
+atomspace is missing: *-TruthValueKey-* !! Huh!
+This is missing (PredicateNode "*-Sentence Word Pair-*") Why?
+(It is created by common.scm)
+also: (PredicateNode "*-MM^T Product Key-*") 
+that's two. Third is the SchemaNode
+three more needed...
+AnchorNode ...
+two more needed: TypeNode. OK, so it all balances.
+
+==================
+Same as above, but a biggger set.
+   (sql-open "postgres:///en_mini_dj_cfive")
+   (define fsa (add-subtotal-filter psa 40 5 5 #f))
+   (fsa 'left-basis-size)   ;; 42406
+   (fsa 'right-basis-size)  ;; 968594
+Done storing 1063939 pairs in 1218 secs
+
+   (sql-open "postgres:///en_mini_cfive")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+Support: found num left= 18533 num right= 647988 in 31 secs
+Done with wild-card count N(x,*) and N(*,y) in 787 secs
+Total count N(*,*) = 25642000.0 = 25642000.0
+Done computing 1063939 pairs in 137 secs
+Done storing 647988 left-wilds
+Done computing 1063939 pair MI's in 586 secs
+Finished left entropy subtotals in 722 secs
+Finished left MI subtotals in 749 secs
+Done storing 647988 left-wilds in 349 secs
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 647988 left-wilds in 388 secs
+
+==========
+linkage-filter the big one, now:
+
+(sql-open "postgres:///en_dj_cfive")
+(psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
+(sql-close)
+(sql-open "postgres:///en_midj_links")
+(define alf (add-linkage-filter psa))
+(define sto (make-store alf))
+(sto 'store-all-elts)   ; Marginals are not to be stored.
+   (1000 pairs/sec) ; Done storing 31749357 pairs in 33336 secs
+(sql-close)
+restart
+(sql-open "postgres:///en_midj_links")
+(batch-all-pair-mi psa)
+Support: found num left= 438449 num right= 23308382 in 1095 secs
+
+Last time, this took "only" 29048 secs (8 hours) for the similarly
+sized en_pairs_rfive_mst dataset. So why is it so much slower now?
+Is the pattern matcher in the stars object getting in the way?
+Yes, it probably is. This needs to be fixed...
+
+(define btr (batch-transpose psa))
+(btr 'mmt-marginals)
+
+
+==========
 
 fanny:
 en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
@@ -16797,7 +17280,7 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 #2  0x00007f343d27bd8b in block_self (queue=0x55ef64391cd0, 
     mutex=mutex@entry=0x55ef63d21fc0, waittime=waittime@entry=0x0)
     at ../../libguile/threads.c:316
-#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60, 
+#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60,
     waittime=0x0, m=0x55ef63d21fc0, kind=SCM_MUTEX_STANDARD)
     at ../../libguile/threads.c:1031
 #4  scm_timed_lock_mutex (mutex=0x55ef64391cc0, timeout=<optimized out>)
@@ -17100,15 +17583,211 @@ is empty set...
 (gcs 'get-count sec) !=0  why!?
 oohhh filter had a bug. Damn,
 
+(gcf 'get-pair  (gar don) (gdr don)) returns,
+ (gcf 'get-pair-count  (gar don) (gdr don))  also works ...
+
+-- createdb mini-test
+   cat atoms.sql | psql mini-test
+
+   (sql-close)
+   (sql-open "postgres:///mini-test?user=linas&password=asdf")
+   (define gso (make-store gcf))
+   (gso 'store-wildcards)
+
+   (length (psa 'get-all-elts)) -- 8545704
+   (length (gcs 'get-all-elts)) -- 6416994
+   (length (gcf 'get-all-elts)) -- 6416994
+
+   Hmm that does not seem right... oh bug
+   (length (gcf 'get-all-elts)) -- 2829796
+   That's more like it.
+
+   (gso 'store-all-elts)
+
+-- Start again, on mini-test
+   Elapsed time to load grammatical classes: 974 secs
+   Atomspace holds 6782961 atoms
+   top -- 7.755g in size
+   100% of all atoms loaded!
+   (batch-all-pair-mi gcs)
+Start computing the basis
+Support: found num left= 2112 num right= 0 in 201 secs
+ whoops. Failed to store MemberLinks!
+Support: found num left= 2112 num right= 1968134 in 0 secs
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(begin (set! cnt (+ cnt 1)) (format #t "Ohhh nooo ~A ~A" cnt wc))))
+	(cog-get-atoms 'WordClassNode))
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(let* ((wcn (cog-name wc))
+				(wn (string-copy wcn 0 (string-contains wcn "#uni"))))
+			(set! cnt (+ cnt 1))
+			(store-atom (MemberLink (WordNode wn) wc))
+			(format #t "Fix-hack ~A ~A to ~A\n" cnt wc wn))))
+	(cog-get-atoms 'WordClassNode))
+
+(length
+(filter
+	(lambda (lst) (< 1 (length lst)))
+	(map (lambda (wrdcls) (cog-incoming-by-type wrdcls 'MemberLink))
+            (cog-get-atoms 'WordClassNode))))
+
+
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+(batch-all-pair-mi gcs)
+Start computing the basis
+Support: found num left= 2112 num right= 1968134 in 1 secs
+Done with wild-card count N(x,*) and N(*,y) in 112399 secs
+         That's 31 hours!! WTF! why so long?
+Total count N(*,*) = 8364154.64551346 = 8364154.645606807
+Done storing 1968134 left-wilds in 1458 secs
+Done computing 2829796 pair MI's in 1848 secs
+Finished left entropy subtotals in 110243 secs (again, 31 hours!)
+Finished left MI subtotals in 111610 secs
+Done storing 1968134 left-wilds in 1299 secs
+Finished with MI computations; this took 94.3 hours
+
+-- again the is the corrupted test dataset; so kind-of bogus.
+(print-matrix-summary-report gcs)
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type:
+Section
+Wildcard: (ListLink (ctv 0 0 8364154.6)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 2112 Columns: 1968134
+Size: 2829796 non-zero entries of 4156699008 possible
+Fraction non-zero: 6.8078E-4 Sparsity (-log_2): 10.521
+Total observations: 8364154.65  Avg obs per pair: 2.9557
+Entropy Total: 17.211   Left: 15.164   Right: 7.3950
+Total MI: 5.3480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  97.23        3.0108E+4
+Count   (l_1)  6941.        1.8845E+5     71.39        6.259
+Length  (l_2)  4549.        2.3722E+4     46.78        .7879
+RMS Count      4430.        2.3689E+4     45.56        .7868
+
+
+-- (use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us")  ; start 20:48
+   Will store 2829796 csets
+   This took 236 MBytes! Yow! (because disjuncts not merged.
+
+!!he
+ he.587  [TJEOI- & TJFFA- & TJEOE+]-6.005
+ LEFT-WALL.803              [TNENU+ & TNEPX+]-3.377
+
+select * from Morphemes where morpheme = "LEFT-WALL";
+There is only one ... how can that be? OK.
+LEFT-WALL|LEFT-WALL.803|<###LEFT-WALL####uni.803>
+
+select count(*) from Disjuncts where classname = "<###LEFT-WALL####uni.803>";
+18883
+
+almost 19K of them, so why only one loaded? (only the last one... oh bug.)
+
+select * from Disjuncts where disjunct like '%TNENU-%';
+Uhh ohh .. this is empty. How?
+
+select count(*) from Morphemes where morpheme = "John";
+John|John.629|<John#uni.629>
+select count(*) from Disjuncts where classname = "<John#uni.629>";
+1129
+
+select count(*) from Disjuncts where classname = "<Joe#uni.647>";
+284
+<Joe#uni.647>|TKIWE- & TKIOY+ & TKIUF+|-14.1628982914518
+
+Joe don't tell!
+(Section (ctv 1 0 0.3)
+   (WordClassNode "don't don’t")
+   (ConnectorSeq
+      (Connector
+         (WordNode "###LEFT-WALL###")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "Joe")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "tell")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "!")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(cog-execute! (Get (VariableList (Glob "g") (Glob "h"))
+	(Section (WordNode "###LEFT-WALL###")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don’t") (ConnectorDir "+"))
+		(Glob "h")))))
+
+
+(cog-execute! (Get (VariableList
+(TypedVariable (Glob "g") (Interval (Number 0) (Number -1)))
+(TypedVariable (Glob "h") (Interval (Number 0) (Number -1))))
+	(Section (WordNode "Joe")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don't") (ConnectorDir "+"))
+		(Glob "h")))))
+
+get-cnr-name is broken ....
+
+Now what???
+
+select count(*) from Morphemes;
+3
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 2632654) (TypeNode . 2) (AnchorNode .
+1) (Connector . 5674) (ConnectorDir . 2) (ConnectorSeq . 1968134)
+(Section . 2829796) (SchemaNode . 1) (WordNode . 2838) (AnyNode . 4)
+(WordClassNode . 2112))
+
+No MemberLinks at all. WTF.
+(load-atoms-of-type 'MemberLink)
+
+s.scm
+
+OK, so mini-tst is incomplete. was it scrubbed wrong?
+Arghhhh.
+
+Also, lg generator
+TB == (WordClassNode "left#uni") (WordNode "don’t")
+TE == (WordClassNode "don't don’t") (WordNode "###LEFT-WALL###")
+
+So, for uni's do not create a wc link....
+or .. do create one, but also one for each word in the class.
+
+
+
 
 
 TODO:
 * Add 'help method
 * Add 'verbose method to enable progress reports.
-* cut low-obs words from disjunct sets
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
-* Matrix summary report to print present of MMT
+* Consistent dj/word-sets
+* Counts on MemberLink...
 
 DONE:
 * fix filter-api (DONE)
+* Matrix summary report to print present of MMT (DONE-ish)
+* cut low-obs words from disjunct sets (DONE - micro and mini)

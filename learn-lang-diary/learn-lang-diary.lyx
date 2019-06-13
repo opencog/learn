@@ -33353,7 +33353,7 @@ and
 
 \end_inset
 
-
+Does this quantity have a name? What is the name?
 \end_layout
 
 \begin_layout Standard
@@ -33384,7 +33384,23 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 where the marginal probability is
 \begin_inset Formula 
 \[
-p\left(u\right)=p\left(u,*\right)=\sum_{w,d}N(u,d)N(w,d)=\sum_{d}N(u,d)N(*,d)
+p\left(u\right)=p\left(u,*\right)=\frac{i\left(u,*\right)}{i\left(*,*\right)}=\frac{1}{i\left(*,*\right)}\;\sum_{w,d}N(u,d)N(w,d)=\frac{1}{i\left(*,*\right)}\;\sum_{d}N(u,d)N(*,d)
+\]
+
+\end_inset
+
+The total entropy from the marginal probability is 
+\begin_inset Formula 
+\[
+H=-\sum_{w}p\left(w\right)\log p\left(w\right)
+\]
+
+\end_inset
+
+and the total MI would be
+\begin_inset Formula 
+\[
+MI=\sum_{u,w}p\left(u,w\right)\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}
 \]
 
 \end_inset
@@ -34423,8 +34439,8 @@ Casual observation suggests that the MI and the cosine similarity are correlated
  2019 version of `connector-sets-revised.pdf`.
 \end_layout
 
-\begin_layout Section*
-Misc references
+\begin_layout Subsection*
+Zipf's Law 
 \end_layout
 
 \begin_layout Standard
@@ -34445,6 +34461,1605 @@ Zipf’s law holds for phrases, not words
  Bagrow, Christopher M.
  Danforth & Peter Sheridan Dodds, Scientific Reports volume 5, Article number:
  12209 (2015)
+\end_layout
+
+\begin_layout Standard
+Based on my experience, it holds for both ...
+ it holds for everyhing.
+\end_layout
+
+\begin_layout Section*
+Word-Sense Disambiguation
+\end_layout
+
+\begin_layout Standard
+How does this work with entropic similarity? Let
+\begin_inset Formula 
+\[
+\vec{w}=\sum_{d}N\left(w,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+be the vector defined by the observed counts of disjuncts.
+ Suppose it is a linear combination of two distinct word-senses 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\vec{w}=\vec{s}+\vec{t}
+\]
+
+\end_inset
+
+but we don't know what the counts for these are, and are so faced with the
+ challenge of determining the linear decomposition.
+ 
+\end_layout
+
+\begin_layout Standard
+Suppose that there is some grammatical class 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and we've noticed that 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ is similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and this similarity is probably due to 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ being similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ How can we use this to determine 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+? A classical strategy is orthogonalization: assume that 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is parallel to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, and take the orthogonal complement.
+ The primary problem here is that the space is not Euclidean: it does not
+ have sphere-symmetry that preserves the dot product.
+ The vectors 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ inhabit a simplex; the vector coefficients must always remain zero or positive,
+ and all decompositions must preserve the total count 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ as an invariant.
+\end_layout
+
+\begin_layout Standard
+Recall the definition of 
+\begin_inset Formula $i\left(u,v\right)$
+\end_inset
+
+ above, and note that 
+\begin_inset Formula $i\left(u,v\right)=\vec{u}\cdot\vec{v}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $*$
+\end_inset
+
+ behaves like a constant vector; 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $\vec{*}=\sum_{d}N\left(*,d\right)\widehat{e}_{d}=\sum_{d}\sum_{w}N\left(w,d\right)\widehat{e}_{d}$
+\end_inset
+
+ is a perfectly well-defined vector.
+\end_layout
+
+\begin_layout Standard
+Thus, given the WSD problem before us, it seems we want to find a vector
+ 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ such that 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is maximized, and so that 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ is minimized, subject to the constraint 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+.
+ Lets work that out.
+ By definition,
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{i\left(g,s\right)i\left(*,*\right)}{i\left(g,*\right)i\left(*,s\right)}
+\]
+
+\end_inset
+
+The extrema of this would be given by those values of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that are stationary under perturbations 
+\begin_inset Formula $\vec{s}+\delta\vec{s}$
+\end_inset
+
+, where 
+\begin_inset Formula 
+\[
+\delta\vec{s}=\sum_{d}\delta N\left(s,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+so that we must solve 
+\begin_inset Formula $\left|d\right|$
+\end_inset
+
+ different differential equations, one for each disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+0=\left.\frac{\partial MI\left(\vec{g},\vec{s}\right)}{\partial N\left(s,d\right)}\right|_{d\mbox{ held fixed}}
+\]
+
+\end_inset
+
+Its a mess.
+ Lets do it.
+ We have
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\,\frac{\sum_{\beta}N\left(s,\beta\right)N\left(g,\beta\right)i\left(*,*\right)}{\sum_{\alpha}N\left(s,\alpha\right)N\left(*,\alpha\right)i\left(g,*\right)}
+\]
+
+\end_inset
+
+The two 
+\begin_inset Formula $i$
+\end_inset
+
+ terms are constants; drop them.
+ What is left is
+\begin_inset Formula 
+\[
+0=\frac{N\left(g,d\right)}{i\left(s,*\right)}-\frac{i\left(s,g\right)}{\left(i\left(s,*\right)\right)^{2}}N\left(*,d\right)
+\]
+
+\end_inset
+
+Reorganizing:
+\begin_inset Formula 
+\[
+0=N\left(g,d\right)i\left(s,*\right)-N\left(*,d\right)i\left(s,g\right)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{i\left(s,g\right)}{i\left(s,*\right)}=\frac{N\left(g,d\right)}{N\left(*,d\right)}
+\]
+
+\end_inset
+
+This is mis-constrained, in several ways.
+ First, the RHS depends on 
+\begin_inset Formula $d$
+\end_inset
+
+ while the LHS does not.
+ Not only is it impossible to satisfy, but even if it were, it tells us
+ nothing about the components of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, a formula for which we were hoping to find.
+ 
+\end_layout
+
+\begin_layout Standard
+Compute again, to second order.
+ Up to a constant,
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}i\left(g,s\right)-\log_{2}i\left(s,*\right)+C
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\,\log_{2}i\left(s,g\right)=\frac{N\left(g,d\right)}{i\left(s,g\right)\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,\log_{2}i\left(s,g\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,MI\left(\vec{g},\vec{s}\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}}+\frac{N\left(*,d\right)N\left(*,d^{\prime}\right)}{\left(i\left(s,*\right)\right)^{2}}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{\left(i\left(s,g\right)\right)^{2}}{\left(i\left(s,*\right)\right)^{2}}=\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{N\left(*,d\right)N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+which is equally absurd; its just the square of the earlier result.
+ WTF.
+ But of course, that's obvious, in a way.
+ But what to do? Why is this not working?
+\end_layout
+
+\begin_layout Standard
+Repeating the first-order variation calculation for 
+\begin_inset Formula $\cos\theta=i\left(s,g\right)/\sqrt{i\left(s,s\right)i\left(g,g\right)}$
+\end_inset
+
+ promptly gives the standard orthogonalization: 
+\emph on
+viz
+\emph default
+ that 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ is the condition for parallel vectors.
+ This is driven not by the numerator 
+\begin_inset Formula $i\left(s,g\right)$
+\end_inset
+
+ which is shared in common by both 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ and by 
+\begin_inset Formula $MI\left(s,g\right)$
+\end_inset
+
+ but is rather due to the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ in the denominator.
+ In a sense, it is a 
+\begin_inset Quotes eld
+\end_inset
+
+second order effect
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A quick sketch might help.
+ The quadratic term contributes 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}i\left(s,s\right)=2N\left(s,d\right)
+\]
+
+\end_inset
+
+ and so 
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\cos\theta=i\left(s,s\right)N\left(g,d\right)-i\left(s,g\right)N\left(s,d\right)
+\]
+
+\end_inset
+
+after dropping a constant factor of 
+\begin_inset Formula $\sqrt{i\left(g,g\right)}$
+\end_inset
+
+ and multiplying by 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+.
+ Then, up to scale factor, one gets 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ which is the desired result: 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is collinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ To maintain the contraint that 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+ one must set 
+\begin_inset Formula $N\left(s,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $N\left(w,d\right)=0$
+\end_inset
+
+; thus, in the end, 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ might not be completely colinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, but only close.
+ The MI formulation lacks the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ term and thus is unable to generate some analog to 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+OK, so what is the source of the flawed thinking above? What is the root
+ cause of the failure of variational principles on MI? Geometrically, the
+ answer is simple: it means that 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ is symptomatic of a sphere: smooth, differentiable, having will-defined
+ derivatives.
+ By contrast, surfaces of minimal (or maximal) MI are polytopes of some
+ sort, consisting of smooth facets, together with non-differentiable edges
+ where faces meet.
+ Variational principles do not apply.
+ We'll have to use some kind of linear programming techniques to find a
+ solution.
+\end_layout
+
+\begin_layout Standard
+So with that in mind, lets start again:
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}+C
+\]
+
+\end_inset
+
+and so we're dealing with a ratio of two dot products.
+ This is now easy to minimize and maximize, conceptually.
+ In one case, any 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{g}=0$
+\end_inset
+
+ will do the trick.
+ More appropriately, this would be 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ the orthogonal complement, and the question becomes: can we find such a
+ 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ such that no coefficients are negative, and such that the coefficients
+ of 
+\begin_inset Formula $\vec{s}=\vec{w}-\vec{t}$
+\end_inset
+
+ are also non-negative? Given that we already know that 
+\begin_inset Formula $MI\left(\vec{g},\vec{w}\right)$
+\end_inset
+
+ is large, it is clear that bot share a lot of disjuncts in common; the
+ handful that are in 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ that are not also in 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ could serve as a basis for 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ That's a start, but not a terribly good one.
+\end_layout
+
+\begin_layout Standard
+A different extremum would come from finding some 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{*}=0$
+\end_inset
+
+.
+ It is fairly straight-forward to see that such an 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, with all non-negative coefficients, does not exist: By definition, 
+\begin_inset Formula $\vec{*}$
+\end_inset
+
+ has all-positive coefficients, 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+; none are zero.
+ Any vector orthogonal to this must have at least one negative coefficient
+ (excluding the trivial zero-vector).
+ This also suggests what the almost-orthogonal vectors will be: the almost-ortho
+gonal vectors will be those 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ for which most 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ are zero, except for a few 
+\begin_inset Formula $d$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ is small.
+ That is, sort the set of 
+\begin_inset Formula $\left\{ d\right\} $
+\end_inset
+
+ according to smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ and then make linear combinations of the the first few in that sorted set.
+ More specifically, the only allowed combinations are those for which 
+\begin_inset Formula $N\left(w,d\right)>0$
+\end_inset
+
+, and so then search for that 
+\begin_inset Formula $d$
+\end_inset
+
+ in that set with the smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+.
+ Of course, this only works if that same 
+\begin_inset Formula $d$
+\end_inset
+
+ has appreciable overlap with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ i.e.
+ if 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ is large or at least non-zero.
+\end_layout
+
+\begin_layout Standard
+This is now gelling towards an algorithm: Obtain the set 
+\begin_inset Formula $\left\{ d\right\} =\left\{ d|N\left(w,d\right)N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and rank that set, from highest to lowest, according to 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)$
+\end_inset
+
+.
+ Pick that 
+\begin_inset Formula $d$
+\end_inset
+
+ and set 
+\begin_inset Formula $N\left(s,d\right)=1$
+\end_inset
+
+.
+ Now pick the second disjunct in that list, call it 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+ and consider fractions of the form 
+\begin_inset Formula 
+\[
+F=\frac{N\left(g,d\right)+\alpha N\left(g,d^{\prime}\right)}{N\left(*,d\right)+\alpha N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+and solve for the non-negative 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ that maximizes this fraction.
+ It appears that the only possible solution to this is 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+; this is forced, since by definition 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)>N\left(g,d^{\prime}\right)/N\left(*,d^{\prime}\right)$
+\end_inset
+
+.
+ Thus, the way to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is to set 
+\begin_inset Formula $N\left(s,d\right)=N\left(w,d\right)$
+\end_inset
+
+ and set all other 
+\begin_inset Formula $N\left(s,d^{\prime}\right)=0$
+\end_inset
+
+.
+ This leaves behind 
+\begin_inset Formula $N\left(t,d\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d^{\prime}\right)=N\left(w,d^{\prime}\right)$
+\end_inset
+
+ for all other 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+.
+ However, it is likely that the result 
+\begin_inset Formula $t$
+\end_inset
+
+ still has a large 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ and so this has not been minimized.
+ Recall, we want to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and also simultaneously minimize 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ It seems that there is a trade-off between the two.
+ 
+\end_layout
+
+\begin_layout Standard
+In fact, we want to maximize some linear combination of 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Since the MI are being interpreted as entropies, it seems like straight
+ addition is the thing to do, and so perhaps the thing to maximize is 
+\begin_inset Formula $S=MI\left(\vec{g},\vec{s}\right)-MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Another possibility might be 
+\begin_inset Formula $H=p\left(\vec{s}\right)MI\left(\vec{g},\vec{s}\right)-p\left(\vec{t}\right)MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $p\left(\vec{w}\right)$
+\end_inset
+
+ is some probability; possibly, for example, 
+\begin_inset Formula $p\left(\vec{w}\right)=i\left(w,*\right)/i\left(*,*\right)$
+\end_inset
+
+ seems to be 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Is there any chance that we got lucky, that by adding enough complexity
+ to the problem, we arrived where, maybe this time, the variational arguments
+ will work? Let's try them on for size, proceeding naively, as before.
+ Just as before, but in altered notation, 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\vec{s}\cdot\vec{w}=\frac{\partial}{\partial N\left(s,d\right)}\sum_{d^{\prime}}N\left(s,d^{\prime}\right)N\left(w,d^{\prime}\right)=N\left(w,d\right)
+\]
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial S}{\partial N\left(s,d\right)} & =\frac{\partial}{\partial N\left(s,d\right)}\left[\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}-\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}\right]\\
+ & =\frac{\vec{s}\cdot\vec{*}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)-\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)
+\end{align*}
+
+\end_inset
+
+What a mess.
+ Continuing as before, we run into the same problem as before: an over-constrain
+ed/mis-constrained system of equations:
+\begin_inset Formula 
+\[
+0=N\left(*,d\right)\vec{s}\cdot\vec{g}\vec{w}\cdot\vec{*}\left(\vec{s}-\vec{w}\right)\cdot\vec{g}-N\left(g,d\right)\vec{s}\cdot\vec{*}\vec{w}\cdot\vec{g}\left(\vec{s}-\vec{w}\right)\cdot\vec{*}
+\]
+
+\end_inset
+
+ or
+\begin_inset Formula 
+\[
+\frac{N\left(g,d\right)}{N\left(*,d\right)}=\frac{\vec{s}\cdot\vec{g}\,\vec{w}\cdot\vec{*}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{g}}{\vec{s}\cdot\vec{*}\,\vec{w}\cdot\vec{g}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{*}}
+\]
+
+\end_inset
+
+so that, again, the LHS depends on 
+\begin_inset Formula $d$
+\end_inset
+
+ and the RHS does not, making it impossible to satisfy in general.
+ Lets try again with 
+\begin_inset Formula $H$
+\end_inset
+
+, making use of 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{s}\right)=\frac{1}{i\left(*,*\right)}\,\frac{\partial}{\partial N\left(s,d\right)}i\left(s,*\right)=\frac{N\left(*,d\right)}{\vec{*}\cdot\vec{*}}=-\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{t}\right)
+\]
+
+\end_inset
+
+It is convenient to write 
+\begin_inset Formula $p\left(\vec{s}\right)i\left(*,*\right)=\vec{s}\cdot\vec{*}$
+\end_inset
+
+ and drop the 
+\begin_inset Formula $i\left(*,*\right)$
+\end_inset
+
+ as a constant.
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial H}{\partial N\left(s,d\right)}= & \frac{\left(\vec{s}\cdot\vec{*}\right)^{2}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\\
+ & -\frac{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}
+\end{align*}
+
+\end_inset
+
+Again, quite the mess.
+ Grouping terms, we see that this too has the same failures as before: It
+ lacks any terms that are linear in 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ which are what's needed to make the equations solvable.
+ So we conclude, wtf, what were we thinking?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem is of linear-programming-type, but not linear.
+ Maximizing 
+\begin_inset Formula $S$
+\end_inset
+
+ means maximizing 
+\begin_inset Formula 
+\[
+\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}=\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\vec{t}\cdot\vec{*}}{\vec{t}\cdot\vec{g}}
+\]
+
+\end_inset
+
+subject to 
+\begin_inset Formula $0<\vec{s}\le\vec{w}$
+\end_inset
+
+.
+ This is certainly not linear; so it's actually a 
+\begin_inset Quotes eld
+\end_inset
+
+convex programming
+\begin_inset Quotes erd
+\end_inset
+
+ problem, I guess.
+ Its not that bad (I think) because there are only four dot products.
+ It is slightly confusing because it is completely projective in all four
+ vectors: the magnitudes all cancel.
+\end_layout
+
+\begin_layout Standard
+Define sets that define the support of the vectors.
+ Let 
+\begin_inset Formula $G=\left\{ d|N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and likewise for 
+\begin_inset Formula $W$
+\end_inset
+
+ and 
+\begin_inset Formula $S,T$
+\end_inset
+
+.
+ By definition 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+, so this is the universe 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ The constraint is that 
+\begin_inset Formula $W=S\cup T$
+\end_inset
+
+.
+ By definition, 
+\begin_inset Formula $G\cap W\ne\varnothing$
+\end_inset
+
+.
+ By presumption, 
+\begin_inset Formula $G\subset U$
+\end_inset
+
+ and 
+\begin_inset Formula $W\subset U$
+\end_inset
+
+ are proper subsets.
+\end_layout
+
+\begin_layout Standard
+To proceed, turn this into a decision problem: for and fixed disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+, select some 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ such that 
+\begin_inset Formula $N\left(s,d\right)=\alpha N\left(w,d\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d\right)=\left(1-\alpha\right)N\left(w,d\right)$
+\end_inset
+
+.
+ To keep things easy for now, make this a binary decision problem: 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is zero or one.
+ Holding all other 
+\begin_inset Formula $N$
+\end_inset
+
+ fixed, the optimization problem is to maximize
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)+\alpha N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+\alpha N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(g,d\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $j_{d}\left(u,w\right)=i\left(u,w\right)-N\left(u,d\right)N\left(w,d\right)$
+\end_inset
+
+, that is, the dot product, excluding the 
+\begin_inset Formula $d$
+\end_inset
+
+ term.
+ This really is a binary decision problem: one need only look at the two
+ endpoints 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+.
+ It is either true that 
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)+N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)}{j_{d}\left(t,g\right)}<\frac{j_{d}\left(s,g\right)}{j_{d}\left(s,*\right)}\;\frac{j_{d}\left(t,*\right)+N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+N\left(w,d\right)N\left(g,d\right)}
+\]
+
+\end_inset
+
+or it is false.
+ There seems to be no point in re-organizing terms here; this is readily
+ computed numerically.
+\end_layout
+
+\begin_layout Standard
+So this is actually a binary decision problem, more narrowly, an binary-integer
+ programming problem.
+ It's supposed NP-hard, but I'm thinking that this is a special case that
+ might not be.
+ A plausible algo is to rank the disjuncts by size of 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ from greatest to least, and assign the disjuncts, one by one, to either
+ of the two classes.
+ One can do likewise for 
+\begin_inset Formula $H$
+\end_inset
+
+ instead of 
+\begin_inset Formula $S$
+\end_inset
+
+, just using a different, more complex decision.
+ Both run in linear time according to size of 
+\begin_inset Formula $W\cap G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As before, the niput data, coming from disjuncts from WSD parses, is noisey,
+ and so a binary assignment might be incorrect.
+ It might be better to assign only a fraction of the passing disjuncts to
+ 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and place the remainder in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ This requires yet more experimentation.
+\end_layout
+
+\begin_layout Section*
+June 2019 Restart - Mini Datasets
+\end_layout
+
+\begin_layout Standard
+Take the `en_dj_cfive` dataset, and create three subsets:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_micro_cfive 
+\series default
+– Keep only words with observation count>500, sections with count>10.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_micro_links 
+\series default
+– As above, discard all sections that contain connectors that cannot link
+ to anything.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_mini_cfive 
+\series default
+– Keep only words with observation count>40, sections with count>5.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_mini_links 
+\series default
+– As above, discard all sections that contain connectors that cannot link
+ to anything.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_dj_cfive 
+\series default
+– Full database, all connectors, all grunge.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_dj_links 
+\series default
+– Discard all sections that contain connectors that cannot link to anything.
+ 
+\end_layout
+
+\begin_layout Standard
+Comparative stats:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="8">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Size
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Obs'ns
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Obs/sec
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.8K x 187K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+393K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.8M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+53
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.33
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.56
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.99
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_micro_cfive
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.8K x 114K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+303K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+62
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.99
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.91
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_micro_links
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.5K x 648K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.06M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.6M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.46
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.79
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mini_cfive
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.5K x 362K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+749K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22.6M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.17
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.06
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mini_links
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+445K x 23.4M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+69.4M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.18
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.32
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.09
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_dj_cfive
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+438K x 23.3M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_dj_links
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So when the datasets are made self-consistent, the entropy and MI and sparsity
+ drop a little bit, but not much.
+ These are promising to be a lot cleaner, and stronger.
+ Will attempt complete set of sims on micro.
 \end_layout
 
 \begin_layout Section*

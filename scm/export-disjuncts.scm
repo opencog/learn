@@ -68,20 +68,26 @@
 
 ;  ---------------------------------------------------------------------
 ;
-; Given a word-pair atom, return a synthetic link name
+; Given two words, return a synthetic link name
 ; The link names are issued in serial order, first-come, first-served.
 ;
 (define get-cnr-name
-	(let ((cnt 0))
+	(let* ((cnt 0)
+			(cache (make-afunc-cache
+				(lambda (WORD-PAIR)
+					(set! cnt (+ cnt 1))
+					(number->tag cnt)))))
 
 		; Notice that the lambda does not actually depend on the
 		; word-pair. It just issues a new string.  The function
 		; cache is what is able to detect and re-emit a previously
 		; issued link name.
-		(make-afunc-cache
-			(lambda (WORD-PAIR)
-				(set! cnt (+ cnt 1))
-				(number->tag cnt))))
+		;
+		; XXX It would be nicer if we could avoid creating the ListLink
+		; below... use a pair-caching function of some kind ...
+		(lambda (left-word right-word)
+			(cache (ListLink left-word right-word)))
+	)
 )
 
 ;  ---------------------------------------------------------------------
@@ -105,15 +111,13 @@
 ;             (WordNode "undertaking")
 ;             (ConnectorDir "+"))))
 ;
-(define (cset-to-lg-dj SECTION)
+(define (cset-to-lg-dj GERM CSET)
 "
-  cset-to-lg-dj - SECTION should be a SectionLink
-  Return a link-grammar compatible disjunct string.
+  cset-to-lg-dj GERM CSET
+  Return a link-grammar compatible disjunct string for CSET,
+  in such a way that it can connect to GERM
 "
 	(define cnr-to-left (ConnectorDir "-"))
-
-	; The germ of the section (the word)
-	(define germ (gar SECTION))
 
 	; Get a link-name identifying this word-pair.
 	(define (connector-to-lg-link CONNECTOR)
@@ -121,8 +125,8 @@
 		(define dir (gdr CONNECTOR))
 
 		(if (equal? dir cnr-to-left)
-			(get-cnr-name (ListLink cnr germ))
-			(get-cnr-name (ListLink germ cnr))
+			(get-cnr-name cnr GERM)
+			(get-cnr-name GERM cnr)
 		)
 	)
 
@@ -146,7 +150,7 @@
 		(lambda (CNR dj) (if dj (strappend CNR dj)
 				(connector-to-lg-cnr CNR)))
 		#f
-		(cog-outgoing-set (gdr SECTION)))
+		(cog-outgoing-set CSET))
 )
 
 ;  ---------------------------------------------------------------------
@@ -195,7 +199,7 @@
 		; into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
-			; Oh no!!! Need to fix LEFT-WLL!
+			; Oh no!!! Need to fix LEFT-WALL!
 			(if (string=? WORD-STR "###LEFT-WALL###")
 				(set! WORD-STR "LEFT-WALL"))
 
@@ -247,11 +251,9 @@
 		)
 
 		; Add data to the database
-		(define (add-section SECTION)
-			; The germ of the section is either a WordNode or a WordClass
-			(define germ (gar SECTION))
-			(define germ-str (cog-name germ))
-			(define dj-str (cset-to-lg-dj SECTION))
+		(define (add-germ-cset-pair GERM CSET COST)
+			(define germ-str (cog-name GERM))
+			(define dj-str (cset-to-lg-dj GERM CSET))
 
 			; Flush periodically
 			(set! nprt (+ nprt 1))
@@ -271,19 +273,36 @@
 
 			; Insert the word/word-class (but only if we haven't
 			; done so previously.)
-			(if (not (word-cache germ))
-				(add-word-class germ))
+			(if (not (word-cache GERM))
+				(add-word-class GERM))
 
 			; Insert the disjunct, assigning a cost according
 			; to the float-point value returned by the function
 			(dbi-query db-obj (format #f
 				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
-				(mk-cls-str germ-str) dj-str (COST-FN SECTION)))
+				(mk-cls-str germ-str) dj-str COST))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder
 					(cdr (dbi-get_status db-obj))))
 		)
+
+		; Add a section to the database
+		; If the germ of the section is just a WordNode, just add it.
+		; If the germ is a WordClassNode, then add all of the individual
+		; words, as well. This is kind-of a temporary hack, to be removed
+		; when we really get to using WordClassNodes consistently,
+		; both as germs, and in connector sets.
+		;; XXX FIXME this really explodes the size of the file!
+		(define (add-section SECTION)
+			(define germ (gar SECTION))
+			(define cset (gdr SECTION))
+			(define cost (COST-FN SECTION))
+			(if (eq? 'WordNode (cog-type germ))
+				(add-germ-cset-pair germ cset cost)
+				(for-each
+					(lambda (word) (add-germ-cset-pair word cset cost))
+					(map gar (cog-incoming-by-type germ 'MemberLink)))))
 
 		; Write to disk, and close the database.
 		(define (shutdown)
@@ -333,7 +352,7 @@
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-version-number>', 'V5v4v0+', 0.0);"))
+			"'<dictionary-version-number>', 'V5v6v0+', 0.0);"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
@@ -390,13 +409,20 @@
   \"dict.db\", always!
 
   Example usage:
+     (define gca (make-gram-class-api))
+     (export-csets gca \"dict.db\" \"EN_us\")
+
+  In this example, `gca` is the usual API to wordclass-disjunct pairs.
+  It's presumed that wordclasses have been previously formed.
+
+  Example usage:
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
      (export-csets fca \"dict.db\" \"EN_us\")
 
   In this example, `pca` is the usual API to word-disjunct pairs.
   The subtotal filter only admits those sections with a large-enough
-  count.
+  count. Caution: this format can result in HUGE dictionaries!
 "
 	; Create the object that knows where the disuncts are in the
 	; atomspace. Create the object that knows how to get the MI
