@@ -1,7 +1,8 @@
 ;
-; gram-class.scm
+; gram-projective.scm
 ;
-; Compare words and word-classes by grammatical similarities.
+; Merge words into word-classes by grammatical similarity.
+; Projective merge strategies.
 ;
 ; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
@@ -28,12 +29,15 @@
 ; For merging:
 ; * Orthogonal decomposition into parallel & perpendicular components.
 ; * Union and overlap of basis elements
-; * Binary optimization (integer programming)
+; * Binary optimization (integer programming) (information-theoretic)
 ;
-; For theoretical reasons, the binary-optimization strategy should
-; provide the best results. This is because the merge decision is
-; determined by maximum entropy principles.
+; For theoretical reasons, the binary-optimization strategy, using
+; information-theortic (entropy-maximizing) discriminators should
+; provide the best results.
 ;
+; This file implements the orthogonal/union/overlap type merging.
+; See the `gram-optim.scm` file for the entropy-maximizing merge
+; implementation.
 ;
 ; Representation
 ; --------------
@@ -248,7 +252,7 @@
 ;    That is, any disjuncts in `w` that are not in `g_old` are already
 ;    orthogonal. This may be undesirable, as it prevents the broadening
 ;    of the support of `g`, i.e. the learning of new, but compatible
-;    grammatical usage.
+;    grammatical usage. See discussion of "broadening" below.
 ;
 ; b) The process is not quite linear, as the final `s` is not actually
 ;    parallel to `g_old`.
@@ -279,32 +283,8 @@
 ; If a(d) is either zero, or one, then this is a (binary) integer
 ; programming problem.
 ;
-; In the current context, there are two information-theoretic criteria
-; that seem reasonable to pursue. One is to maximize
-;
-;     S = MI(g,s) - MI(g,t)
-;
-; with MI as defined above. That is, we want to decompose `w=s+t` such
-; that the `s` component has the greatest possible MI with `g`, and the
-; remainder has the least-possible.
-;
-; A second possibility is to maximize
-;
-;     H = p(s) MI(g,w) - p(t) MI(g,t)
-;
-; where p(w) = dot(w,*) / dot(*,*) with dot(,) as defined above.
-;
-; In principle, integer optimization problems are NP-hard (NP-complete).
-; It is not entirely clear if that is the case here. There seems to be
-; at least one perhaps-hacky-but-linear-time algo:
-;  1. Create a sorted list of disjuncts `d` according to N(*,d)
-;  2. Create the empty set S
-;  3. For each `d`, from highest N(*,d) to lowest, create a vector `s`
-;     setting N(s,b)=N(w,b) if b is in S or if b==d; else N(s,b)=0.
-;  4. If the vector `s` is accepted by the criteria (i.e. it is larger)
-;     then define S = S union d.
-;  5. Loop to step 3 until done.
-;
+; This merge style is implemented in the `gram-optim.scm` file, and
+; is described in greater detail there.
 ;
 ; Initial cluster formation
 ; -------------------------
@@ -409,6 +389,7 @@
 ;
 ; merge-ortho
 ; -----------
+; DEPRECATED.
 ; The `merge-ortho` function computes the merged vector the same way as
 ; the `merge-project` function; however, it adjusts counts on v_a and
 ; v_b in a different way. What it does is to explicitly orthogonalize
@@ -472,16 +453,6 @@
 ; been done, then when a connector-word is replaced by a connector
 ; word-class, that class may be larger than the number of connectors
 ; originally witnessed. Again, the known usage of the word is broadened.
-;
-;
-; Other Merge Strategies
-; ----------------------
-; Insofar as the the "hidden" meanings of words control they way they
-; are used in sentences, it is plausible to assume that perhaps a Hidden
-; Markov Model (HMM) style approach might provide an alternative way of
-; splitting vectors into distinct parts.  Alternately, an Artificial
-; Neural Nets (ANN), possibly with deep-learning, might provide a better
-; factorization. At this time, these remain unexplored.
 ;
 ;
 ; Disjunct merging

@@ -1,7 +1,8 @@
 ;
-; gram-class.scm
+; gram-optim.scm
 ;
-; Compare words and word-classes by grammatical similarities.
+; Merge words into word-classes by grammatical similarity.
+; Maximum-entropy style merges.
 ;
 ; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
@@ -232,42 +233,6 @@
 ;    original counts.
 ;
 ;
-; Orthogonal merging
-; ------------------
-; In this merge strategy, `w` is decomposed into `s` and `t` by
-; orthogonal decomposition, up to a clamping constraint, so as to keep
-; all counts non-negative. That is, start by taking `s` as the component
-; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
-; In general, this will result in `t` having negative components; this
-; is clearly not allowed in a probability space. Thus, those counts are
-; clamped to zero, and the excess is transferred back to `s` so that the
-; total `w = s + t` is preserved.
-;
-; Note the following properties of this algo:
-; a) The combined vector `g_new` has exactly the same support as `g_old`.
-;    That is, any disjuncts in `w` that are not in `g_old` are already
-;    orthogonal. This may be undesirable, as it prevents the broadening
-;    of the support of `g`, i.e. the learning of new, but compatible
-;    grammatical usage.
-;
-; b) The process is not quite linear, as the final `s` is not actually
-;    parallel to `g_old`.
-;
-;
-; Union merging
-; -------------
-; Here, one decomposes `w` into components that are parallel and
-; perpendicular to `g + w`, instead of `g` as above.  Otherwise, one
-; proceeds as above.
-;
-; Note that the support of `g + w` is the union of the support of `g`
-; and of `w`, whence the name.  This appears to provide a simple
-; solution to the broadening problem, mentioned above.  Conversely, by
-; taking the union of support, the new support may contain elements
-; from `w` that belong to other word-senses, and do NOT belong to `g`
-; (do not belong to the word sense associate with `g`).
-;
-;
 ; Linear Programming merge
 ; ------------------------
 ; Here, one searches for a vector `s` that maximizes some some
@@ -381,107 +346,6 @@
 ; all 4 of these observation counts should be merged into the word-class.
 ; Only high-frequency disjuncts can be considered to be well-known
 ; enough to be distinct, and thus suitable for fractional merging.
-;
-;
-; merge-project
-; -------------
-; The above merge methods are implemented in the `merge-project`
-; function. It takes, as an argument, a fractional weight which is
-; used when the disjunct isn't shared between both words. Setting
-; the weight to zero gives overlap merging; setting it to one gives
-; union merging. Setting it to fractional values provides a merge
-; that is intermediate between the two: an overlap, plus a bit more,
-; viz some of the union.  A second parameter serves as a cutoff, so
-; that any observation counts below the cutoff are always merged.
-;
-; That is, the merger is given by the vector
-;
-;   v_merged = v_overlap + FRAC * (v_union - v_overlap)
-;
-; for those vector components in v_union that have been observed more
-; than the minimum cutoff; else all of the small v_union components
-; are merged.
-;
-; If v_a and v_b are both words, then the counts on v_a and v_b are
-; adjusted to remove the counts that were added into v_merged. If one
-; of the two is already a word-class, then the counts are simply moved
-; from the word to the class.
-;
-; merge-ortho
-; -----------
-; The `merge-ortho` function computes the merged vector the same way as
-; the `merge-project` function; however, it adjusts counts on v_a and
-; v_b in a different way. What it does is to explicitly orthogonalize
-; so that the final v_a and v_b are orthogonal to v_merged.  The result
-; is probably very similar to `merge-project`, but not the same.  In
-; particular, the total number of observation counts in the system is
-; not preserved (which is surely a bad thing, since counts are
-; interpreted as probability-frequencies.)
-;
-; There's no good reason for choosing `merge-ortho` over `merge-project`,
-; and the broken probabilities is a good reason to reject `merge-ortho`.
-; It is currently here for historical reasons -- it got coded funky, and
-; that's that.  It should probably be eventually removed, when
-; experimentation is done with.
-;
-;
-; merge-discrim
-; -------------
-; Built on the merge-project method, the FRAC is a sigmoid function,
-; ranging from 0.0 to 1.0, depending on the cosine between the vectors.
-; The idea is that, if two words are already extremely similar, we may
-; as well assume they really are in the same class, and so do a union
-; merge. But if the words are only kind-of similar, but not a lot, then
-; assume that the are both linear combinations of several word senses,
-; and do only the minimal overlap merge, so as to avoid damaging the
-; other senses.
-;
-; A reasonable strategy would seem to bee to take
-;
-;   FRAC = (cos - cos_min) / (1.0 = cos_min)
-;
-; where cos_min is the minimum cosine acceptable, for any kind of
-; merging to be performed.
-;
-;
-; Parameter choices
-; -----------------
-; Gut-sense intuition suggests these possible experiments:
-;
-; * Fuzz: use `merge-project` with hard-coded frac=0.3 and cosine
-;   distance with min acceptable cosine=0.65
-;
-; * Discrim: use `merge-discrim` with min acceptable cosine = 0.5
-;
-; * Info: use `merge-project` with hard-coded frac=0.3 and information
-;   distance with min acceptable MI=3
-;
-;
-; Broadening
-; ----------
-; The issue described in a) is an issue of broadening the known usages
-; of a word, beyond what has been strictly observed in the text.  There
-; are two distinct opportunities to broaden: first, in the union vs.
-; overlap merging above, and second, in the merging of disjuncts. That
-; is, the above merging did not alter the number of disjuncts in use:
-; the disjuncts on the merged class are still disjuncts with single-word
-; connectors. At some point, disjuncts should also be merged, i.e. by
-; merging the connectors on them.
-;
-; If disjunct merging is performed after a series of word mergers have
-; been done, then when a connector-word is replaced by a connector
-; word-class, that class may be larger than the number of connectors
-; originally witnessed. Again, the known usage of the word is broadened.
-;
-;
-; Other Merge Strategies
-; ----------------------
-; Insofar as the the "hidden" meanings of words control they way they
-; are used in sentences, it is plausible to assume that perhaps a Hidden
-; Markov Model (HMM) style approach might provide an alternative way of
-; splitting vectors into distinct parts.  Alternately, an Artificial
-; Neural Nets (ANN), possibly with deep-learning, might provide a better
-; factorization. At this time, these remain unexplored.
 ;
 ;
 ; Disjunct merging

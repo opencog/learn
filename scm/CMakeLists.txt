@@ -3,8 +3,9 @@ ADD_GUILE_MODULE (FILES
 	batch-word-pair.scm
 	common.scm
 	gram-agglo.scm
-	gram-class.scm
 	gram-class-api.scm
+	gram-optim.scm
+	gram-projective.scm
 	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm
