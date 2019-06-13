@@ -117,11 +117,9 @@
   Return a link-grammar compatible disjunct string for CSET,
   in such a way that it can connect to GERM
 "
-	(define cnr-to-left (ConnectorDir "-"))
-
 	; Get a link-name identifying this word-pair.
 	(define (connector-to-lg-link WORD DIR)
-		(if (equal? DIR cnr-to-left)
+		(if (equal? DIR "-")
 			(get-cnr-name WORD GERM)
 			(get-cnr-name GERM WORD)
 		)
@@ -129,9 +127,10 @@
 
 	; Get a connector, by concatenating the link name with the direction.
 	(define (connector-to-lg-cnr CONNECTOR)
+		(define dirat (gdr CONNECTOR))
+		(define dir (cog-name dirat))
 		(string-append
-			(connector-to-lg-link (gar CONNECTOR) (gdr CONNECTOR))
-			(cog-name (gdr CONNECTOR))))
+			(connector-to-lg-link (gar CONNECTOR) dir) dir))
 
 	; Link Grammar expects: near- & far- & near+ & far+
 	(define (dj-append CONNECTOR dj)
