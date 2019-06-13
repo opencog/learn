@@ -94,10 +94,13 @@
 		(fetch-incoming-set any-left)
 		(fetch-incoming-set any-right)
 		; Fetch only the Sections that have a WordClass in them,
-		; and not any other Sections.
+		; and not any other Sections.  Fetch all MemberLinks,
+		; as these indicate which Words belong to which WordClasses.
 		(load-atoms-of-type 'WordClassNode)
 		(for-each
-			(lambda (wcl) (fetch-incoming-by-type wcl 'Section))
+			(lambda (wcl)
+				(fetch-incoming-by-type wcl 'Section)
+				(fetch-incoming-by-type wcl 'MemberLink))
 			(cog-get-atoms 'WordClassNode))
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
