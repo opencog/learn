@@ -293,6 +293,7 @@
 		; words, as well. This is kind-of a temporary hack, to be removed
 		; when we really get to using WordClassNodes consistently,
 		; both as germs, and in connector sets.
+		;; XXX FIXME this really explodes the size of the file!
 		(define (add-section SECTION)
 			(define germ (gar SECTION))
 			(define cset (gdr SECTION))

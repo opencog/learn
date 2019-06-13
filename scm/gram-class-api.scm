@@ -305,7 +305,7 @@
 	; Cached set of valid connector-seqs, for the right-basis-pred.
 	; We need to know if every connector in a connector sequence is
 	; a member of some word in WORD-LIST. Verifying this directly is
-   ; very inefficient. It is much faster to precompute the set of
+	; very inefficient. It is much faster to precompute the set of
 	; known-good connector sequences, and refer to that.
 
 	(define star-obj (add-pair-stars LLOBJ))
