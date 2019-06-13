@@ -390,13 +390,20 @@
   \"dict.db\", always!
 
   Example usage:
+     (define gca (make-gram-class-api))
+     (export-csets gca \"dict.db\" \"EN_us\")
+
+  In this example, `gca` is the usual API to wordclass-disjunct pairs.
+  It's presumed that wordclasses have been previously formed.
+
+  Example usage:
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
      (export-csets fca \"dict.db\" \"EN_us\")
 
   In this example, `pca` is the usual API to word-disjunct pairs.
   The subtotal filter only admits those sections with a large-enough
-  count.
+  count. Caution: this format can result in HUGE dictionaries!
 "
 	; Create the object that knows where the disuncts are in the
 	; atomspace. Create the object that knows how to get the MI

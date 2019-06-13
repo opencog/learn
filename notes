@@ -17649,7 +17649,13 @@ Total count N(*,*) = 8364154.64551346 = 8364154.645606807
 Done storing 1968134 left-wilds in 1458 secs
 Done computing 2829796 pair MI's in 1848 secs
 Finished left entropy subtotals in 110243 secs (again, 31 hours!)
+Finished left MI subtotals in 111610 secs
+Done storing 1968134 left-wilds in 1299 secs
+Finished with MI computations; this took 94.3 hours
 
+-- (use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us")  ; start 20:48
+   Will store 2829796 csets
 
 
 
@@ -17659,6 +17665,7 @@ TODO:
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
 * Consistent dj/word-sets
+* Counts on MemberLink...
 
 DONE:
 * fix filter-api (DONE)
