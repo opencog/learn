@@ -145,7 +145,9 @@
 	)
 
 	; Get a connector, by concatenating the link name with the direction.
-	(define (connector-to-lg-cnr CONNECTOR)
+	; WRD-OR-CLA should be a WordNode or WordClassNode
+	; DIR should be a string, "+" or "-"
+	(define (connector-to-lg-cnr WRD-OR-CLA DIR)
 		(define wrd-or-cla (gar CONNECTOR))
 		(define dir (cog-name (gdr CONNECTOR)))
 		(define wctype (cog-type wrd-or-cla))
@@ -163,8 +165,10 @@
 
 	; Link Grammar expects: near- & far- & near+ & far+
 	(define (dj-append CONNECTOR dj)
-		(define cnr (connector-to-lg-cnr CONNECTOR))
-		(if (equal? (gdr CONNECTOR) cnr-to-left)
+		(define word (gar CONNECTOR))
+		(define dir (cog-name (gdr CONNECTOR)))
+		(define cnr (connector-to-lg-cnr word dir))
+		(if (equal? dir "-")
 			(string-append cnr " & " dj)
 			(string-append dj " & " cnr)))
 
@@ -172,8 +176,10 @@
 	; The connectors in SECTION are in the order as noted above:
 	;   far- & near- & near+ & far+
 	(fold
-		(lambda (CNR dj) (if dj (dj-append CNR dj)
-				(connector-to-lg-cnr CNR)))
+		(lambda (CNR dj)
+			(if dj
+				(dj-append CNR dj)
+				(connector-to-lg-cnr (gar CNR) (cog-name (gdr CNR)))))
 		#f
 		(cog-outgoing-set CSET))
 )
