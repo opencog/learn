@@ -119,10 +119,10 @@
   be a WordNode or a WordClassNode.
 "
 	; Get a link-name string identifying this word-pair.
-	; WRD should be a WordNode or a WordClassNode
+	; WORD should be a WordNode or a WordClassNode
 	; DIR should be a string, either "+" or "-"
 	; Example returned value is "TCZKG-"
-	(define (cword-to-lg-con WRD DIR)
+	(define (cword-to-lg-con WORD DIR)
 		(string-append
 			(if (equal? DIR "-")
 				(get-cnr-name WORD GERM)
@@ -148,18 +148,16 @@
 	; WRD-OR-CLA should be a WordNode or WordClassNode
 	; DIR should be a string, "+" or "-"
 	(define (connector-to-lg-cnr WRD-OR-CLA DIR)
-		(define wrd-or-cla (gar CONNECTOR))
-		(define dir (cog-name (gdr CONNECTOR)))
-		(define wctype (cog-type wrd-or-cla))
+		(define wctype (cog-type WRD-OR-CLA))
 
 		; If its already a word-class...
 		(if (eq? 'WordClassNode wctype)
 			; ... then just look up the link.
-			(cword-to-lg-con wrd-or-cla dir)
+			(cword-to-lg-con WRD-OR-CLA DIR)
 			; ... else fold together all classes into a string.
 			(cword-list-to-lg-con-list
-				(map gdr (cog-incoming-by-type wrd-or-cla 'MemberLink))
-				dir)
+				(map gdr (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
+				DIR)
 		)
 	)
 
@@ -226,8 +224,8 @@
 				STR))
 
 		; ---------------
-		; Insert a single word, with it's grammatical class,
-		; into the dict.
+		; Insert a single word, with a grammatical class that
+		; it belongs to into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
 			; Oh no!!! Need to fix LEFT-WALL!
@@ -281,11 +279,12 @@
 						"Must be either a WordNode or a WordClassNode")))
 		)
 
-		; Add data to the database
+		; Add connector sets to the database
 		(define (add-germ-cset-pair GERM CSET COST)
 			(define germ-str (cog-name GERM))
 			(define dj-str (cset-to-lg-dj GERM CSET))
 
+(format #t "duuuuude the germ ~A gets dj=~A\n" germ-str dj-str)
 			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
