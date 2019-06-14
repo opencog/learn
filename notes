@@ -17164,6 +17164,7 @@ restart
 (sql-open "postgres:///en_midj_links")
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
+Finished left norm marginals in 316395 secs (3.6 days)
 
 Last time, this took "only" 29048 secs (8 hours) for the similarly
 sized en_pairs_rfive_mst dataset. So why is it so much slower now?
@@ -17774,8 +17775,6 @@ TE == (WordClassNode "don't don’t") (WordNode "###LEFT-WALL###")
 
 So, for uni's do not create a wc link....
 or .. do create one, but also one for each word in the class.
-
-
 
 
 

@@ -16,8 +16,12 @@
 ;
 ; Needs the guile-dbi interfaces, in order to write the SQL files.
 ;;
-;; XX hack alert:
-;; TODO support word classes
+;; XXX hack alert:
+;; TODO WordClassNode support might be .. funky.
+;; In particular, if a WordNode appears in a connector, it is replaced
+;; by all WordClasses that it might be a part of. This is an
+;; over-generalization, but needed for just right now.
+;;
 ;
 ; Example usage:
 ;     (define pca (make-pseudo-cset-api))
@@ -135,13 +139,16 @@
 	; Get a link-string that is an or-list of links.
 	; Example of a returned value is "(TCZKG- or TVFT- or TCPA-)"
 	(define (cword-list-to-lg-con-list WRDLI DIR)
-		(string-append "("
-			(fold
-				(lambda (WRD STR)
-					(string-append STR " or " (cword-to-lg-con WRD DIR)))
-				(cword-to-lg-con (car WRDLI) DIR)
-				(cdr WRDLI))
-			")")
+		(if (eq? 1 (length WRDLI))
+			(cword-to-lg-con (car WRDLI) DIR)
+			(string-append "("
+				(fold
+					(lambda (WRD STR)
+						(string-append STR " or " (cword-to-lg-con WRD DIR)))
+					(cword-to-lg-con (car WRDLI) DIR)
+					(cdr WRDLI))
+				")")
+		)
 	)
 
 	; Get a connector, by concatenating the link name with the direction.
@@ -284,7 +291,7 @@
 			(define germ-str (cog-name GERM))
 			(define dj-str (cset-to-lg-dj GERM CSET))
 
-(format #t "duuuuude the germ ~A gets dj=~A\n" germ-str dj-str)
+			; (format #t "Germ <~A> gets dj=~A\n" germ-str dj-str)
 			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
