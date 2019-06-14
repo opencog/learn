@@ -115,22 +115,51 @@
 "
   cset-to-lg-dj GERM CSET
   Return a link-grammar compatible disjunct string for CSET,
-  in such a way that it can connect to GERM
+  in such a way that it can connect to GERM. Here, GERM should
+  be a WordNode or a WordClassNode.
 "
-	; Get a link-name identifying this word-pair.
-	(define (connector-to-lg-link WORD DIR)
-		(if (equal? DIR "-")
-			(get-cnr-name WORD GERM)
-			(get-cnr-name GERM WORD)
+	; Get a link-name string identifying this word-pair.
+	; WRD should be a WordNode or a WordClassNode
+	; DIR should be a string, either "+" or "-"
+	; Example returned value is "TCZKG-"
+	(define (cword-to-lg-con WRD DIR)
+		(string-append
+			(if (equal? DIR "-")
+				(get-cnr-name WORD GERM)
+				(get-cnr-name GERM WORD)
+			)
+			DIR
 		)
+	)
+
+	; Get a link-string that is an or-list of links.
+	; Example of a returned value is "(TCZKG- or TVFT- or TCPA-)"
+	(define (cword-list-to-lg-con-list WRDLI DIR)
+		(string-append "("
+			(fold
+				(lambda (WRD STR)
+					(string-append STR " or " (cword-to-lg-con WRD DIR)))
+				(cword-to-lg-con (car WRDLI) DIR)
+				(cdr WRDLI))
+			")")
 	)
 
 	; Get a connector, by concatenating the link name with the direction.
 	(define (connector-to-lg-cnr CONNECTOR)
-		(define dirat (gdr CONNECTOR))
-		(define dir (cog-name dirat))
-		(string-append
-			(connector-to-lg-link (gar CONNECTOR) dir) dir))
+		(define wrd-or-cla (gar CONNECTOR))
+		(define dir (cog-name (gdr CONNECTOR)))
+		(define wctype (cog-type wrd-or-cla))
+
+		; If its already a word-class...
+		(if (eq? 'WordClassNode wctype)
+			; ... then just look up the link.
+			(cword-to-lg-con wrd-or-cla dir)
+			; ... else fold together all classes into a string.
+			(cword-list-to-lg-con-list
+				(map gdr (cog-incoming-by-type wrd-or-cla 'MemberLink))
+				dir)
+		)
+	)
 
 	; Link Grammar expects: near- & far- & near+ & far+
 	(define (dj-append CONNECTOR dj)
