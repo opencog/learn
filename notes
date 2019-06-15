@@ -14723,6 +14723,43 @@ select count(*) from valuations; <<<<  749950 == 750K Vals
 3324b5cdaf45aedd164327a4f66c2695  en_micro_fuzz.sql.bz2
 
 
+en_micro_fuzz_exp
+-----------------
+Same as en_micro_fuzz, but with gram class marginals, so that it's
+suitale for export to LG.
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz_exp IS
+   'en_micro_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
+
+en_micro_fuzz_exp=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 47 MB      | 
+ public | valuations | table | ubuntu | 172 MB     | 
+
+select count(*) from atoms;      <<<<  480736 == 481K Atoms
+select count(*) from valuations; <<<< 1358374 == 1.36M Vals
+
+101448026 Bytes uncompressed == 101MBytes
+ 16985054 Bytes compressed   ==  17MBytes
+
+8923771d741c2e086fde599c10314d81  en_micro_fuzz_exp.sql
+097a8a2cbcf440f06ad0b925d80098f1  en_micro_fuzz_exp.sql.bz2
+
+
 en_mini_dj_cfive
 ----------------
 Filtered copy of en_dj_cfive, with the (40 5 5) filter-cut applied:
@@ -18234,7 +18271,6 @@ No M^TM data present
 
 ==================
 Again with cosines....
-; (gram-classify-greedy-discrim 0.5 4)  NOT YET
 
 createdb en_micro_fuzz -T en_micro_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
@@ -18296,7 +18332,16 @@ RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
 No MM^T data present
 No M^TM data present
 
+(export-csets gcf "dict.db" "EN_us")
+Will store 142358 csets
 
+==========
+createdb en_micro_discrim -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.5 4)
+Start greedy-agglomeration of 1610 words
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 20:56:12 -- "." ---
 
 
 
