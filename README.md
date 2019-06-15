@@ -1177,10 +1177,12 @@ Grammar. This can be done as follows:
   The above may take (many) hours or more to run, depending linearly
   on the number of observed disjuncts.
 
-* Make sure you have `dbi` installed. The `dbi` module provides guile
-  with database interfaces for popular databases.  It is needed to write
-  out the Link Grammar dataset.
+* Make sure you have `libsqlite3-dev` and `dbi` installed. The `sqlite3`
+  database provides a fast file format for Link Grammar dictionaries.
+  The `dbi` module provides guile with database interfaces for popular
+  databases.  It is needed to write out the Link Grammar dataset.
 ```
+	apt install libsqlite3-dev
    git clone https://github.com/opencog/guile-dbi
 ```
   Follow the instructions in the README. It's easy and fast. Build the
