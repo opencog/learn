@@ -924,9 +924,58 @@ The above computations may take hours or days, depending on the size of
 the disjunct set.  Be sure to make a backup copy of the resulting
 database before proceeding to the next step.
 
-While the above is running, read and contemplate the next section.
-Games you can play with the resulting dataset follow afterwards.
+(Optional) Trimming Disjunct Datasets
+-------------------------------------
+The previous step can result in unmanagebly large datasets. These can be
+(and should be) trimmed to a smaller size. Good (excellent?) criteria
+for trimming is to remove all words that were observed less then 10 or
+30 times, and all disjuncts seen less than 5 or 10 times. This seems
+like a good idea, as low observation counts suggest the content is
+noise.  Because both the word and the disjunct distribution is Zipfian
+(i.e. half of all disjuncts might be observed only once!) this trimming
+step can easily remove 90% of the dataset.  The following sequence will
+perform the trim, as well as removing connectors that cannot connect to
+anything.
 
+The initial dataset is called `all_disjunct_dataset`. Be sure to create
+the target database:
+```
+$ createdb trimmed_dataset
+$ cat atoms.sql | psql trimmed_dataset
+```
+
+The trim used below keeps all words observed more than 40 times, all
+disjuncts observed more than 8 times, and all word-disjunct pairs
+observed more than 5 times.
+
+```
+   (sql-open "postgres:///all_disjunct_dataset")
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (psa 'fetch-pairs)        ;; Load the dataset
+   (sql-close)               ;; Avoid accidental corruption
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)          ;; compute subtotals
+   (define fsa (add-subtotal-filter psa 40 8 5 #f)) ;; The filter itself
+   (define lfa (add-linkage-filter fsa))
+   (sql-open "postgres:///trimmed_dataset")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)     ;; Do NOT store the marginals!
+   (sql-close)
+   ^D                        ;; Exit.
+```
+The above just trims; but the marginals are needed for grammatical
+classifcation. So build these, as before, starting with a clean load
+of the atomspace with the new trimmed dataset:
+```
+   (sql-open "postgres:///trimmed_dataset")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)    ;; MI between words and disjuncts
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)       ;; Word-pair entropies
+   (sql-close)
+   ^D                         ;; Exit.
+```
 
 Determining Grammatical Classes
 -------------------------------

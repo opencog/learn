@@ -14611,6 +14611,83 @@ No M^TM data present
 cb04a74e6a8024bb9e7f1ccafbf71dbe  en_micro_links.sql
 c7c14d954818babc861d9efcecfc6204  en_micro_links.sql.bz2
 
+en_micro_marg
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+Build:
+   (sql-open "postgres:///en_micro_dj_cfive")
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (psa 'fetch-pairs)
+   (sql-close)
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (define lfa (add-linkage-filter fsa))
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+   (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Good.
+DATE: 14 June 2019
+
+COMMENT ON DATABASE en_micro_marg IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 29 MB      | 
+ public | valuations | table | ubuntu | 154 MB     | 
+
+select count(*) from atoms;      <<<<  324343 == 324K Atoms
+select count(*) from valuations; <<<<  827435 == 827K Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 68722) (Connector . 3226)
+   (ConnectorSeq . 67111) (Section . 183644) (WordNode . 1623))
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47
+RMS Count      9851.        2.9865E+4     112.3        19.18
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+59977841 Bytes uncompressed == 60MBytes
+10305529 Bytes compressed   == 10MBytes
+
+60c5a06f518e36c94a0d57027b59e24d  en_micro_marg.sql
+887a32cfae68484a480c7f34ce44c536  en_micro_marg.sql.bz2
+
 
 en_mini_dj_cfive
 ----------------
@@ -17943,10 +18020,9 @@ Because each iteration knocks out more. I guess that's OK...
    (lfa 'right-basis-size)  ;; 68602
    (length (lfa 'get-all-elts)) ; 183644
 
-   (define lfb (add-linkage-filter-2pass fsa))
-   (lfb 'left-basis-size)   ;; 1624
-   (lfb 'right-basis-size)  ;; 68602 .. wtf ...
-
+   ; XXX (define lfb (add-linkage-filter-2pass fsa))
+   ; XXX (lfb 'left-basis-size)   ;; 1624
+   ; XXX (lfb 'right-basis-size)  ;; 68602 .. wtf ...
 
    createdb en_micro_marg
    cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
@@ -17954,8 +18030,75 @@ Because each iteration knocks out more. I guess that's OK...
    (sql-open "postgres:///en_micro_marg")
    (define fso (make-store lfa))
    (fso 'store-all-elts)   ; Marginals are not to be stored.
-   Done storing 207491 pairs in 186 secs
+   Done storing 183644 pairs in 285 secs
    (sql-close)
+
+   ; clean start.
+	(sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  1610  ... well, smaller, it seems ...
+   (psa 'right-basis-size)  ;;  67111 Huh.
+   (length (psa 'get-all-elts)) ;; 183644  OK
+
+   (batch-all-pair-mi psa)  ;;  MI computations; this took 0.17 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;
+   
+guile-micro-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector
+Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.    
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4    
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47    
+RMS Count      9851.        2.9865E+4     112.3        19.18    
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 68722) (AnchorNode . 1) (Connector .
+3226) (ConnectorDir . 2) (ConnectorSeq . 67111) (Section . 183644)
+(SchemaNode . 1) (WordNode . 1623) (AnyNode . 2))
+
+========
+And now the mini:
+-- mini_dj_cfive:
+   (psa 'left-basis-size)  ;; 18533
+   (psa 'right-basis-size)  ;; 647988
+   (length (psa 'get-all-elts))   ;;  1063939
+   
+   (define fsa (add-subtotal-filter psa 40 5 5 #f))
+   (fsa 'left-basis-size)   ;; 7556
+   (fsa 'right-basis-size)  ;; 647988
+   (length (fsa 'get-all-elts))   ;; 1045903
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 7556
+   (lfa 'right-basis-size)  ;;  271344
+   (length (lfa 'get-all-elts)) ; 608241
+
+   createdb en_mini_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql |
+psql en_mini_marg
+
+   (sql-open "postgres:///en_mini_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+
 
 
 
