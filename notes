@@ -14557,7 +14557,8 @@ en_micro_links
 Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Bad. Contains words below the cutoff.
+STATUS: Bad. Contains words below the cutoff. Use `en_micro_marg`
+        instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_links IS
@@ -14806,7 +14807,7 @@ en_mini_links
 Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Bad. Contains words below the cutoff.
+STATUS: Bad. Contains words below the cutoff. Use en_mini_marg instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_mini_links IS
@@ -14859,6 +14860,67 @@ No M^TM data present
 
 312fb63ddc80212bf8848ab710235dbc  en_mini_links.sql
 647a8825c97223a2f8d93d86cbc86247  en_mini_links.sql.bz2
+
+en_mini_marg
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_mini_marg IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 108 MB     | 
+ public | valuations | table | ubuntu | 551 MB     | 
+
+select count(*) from atoms;      <<<< 1177540 == 1.2M Atoms
+select count(*) from valuations; <<<< 2940501 == 2.9M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 82 secs
+-- Atomspace holds 1177547 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 15) (ListLink . 277097) (Connector . 14926)
+   (ConnectorSeq . 269711) (Section . 608241) (WordNode . 7548)
+-- top says 1.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186
+RMS Count      7399.        3.0766E+4     42.74        4.152
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+217959158 Bytes uncompressed == 218 MBytes
+ 33416655 Bytes compressed == 33 MBytes
+
+fcb0152dedb99304bbc0bac0745c9ebe  en_mini_marg.sql
+fc0f0749efa8caf1416c6aed3509ca17  en_mini_marg.sql.bz2
 
 ==========
 
@@ -17248,6 +17310,7 @@ restart
 Support: found num left= 438449 num right= 23308382 in 1095 secs
 Finished left norm marginals in 316395 secs (3.6 days)
 Done storing 23308382 left-wilds in 16381 secs
+Done computing 31749357 pair MI's in 35266 secs
 
 
 Last time, this took "only" 29048 secs (8 hours) for the similarly
@@ -18098,8 +18161,58 @@ psql en_mini_marg
    (sql-open "postgres:///en_mini_marg")
    (define fso (make-store lfa))
    (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 608241 pairs in 1160 secs
+   (sql-close)
+   (sql-open "postgres:///en_mini_marg")
 
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  7385
+   (psa 'right-basis-size)  ;;  269711
+   (length (psa 'get-all-elts)) ;;  608241
 
+   (batch-all-pair-mi psa)  ;;   this took 0.73 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;    269711 left-wilds in 377 secs
+   
+   (print-matrix-summary-report psa)
+
+> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.    
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28    
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186    
+RMS Count      7399.        3.0766E+4     42.74        4.152    
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+==================
+Again with cosines....
+; (gram-classify-greedy-discrim 0.5 4)  NOT YET
+
+createdb en_micro_fuzz -T en_micro_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+Review meaning ... 
+why long pause afterfirst Bingo! ?
+
+==========
+createdb en_mini_fuzz -T en_mini_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
 
 
 
