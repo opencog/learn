@@ -35925,8 +35925,10 @@ fake
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="6">
+<lyxtabular version="3" rows="2" columns="8">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -35975,6 +35977,24 @@ Entropy
 
 \begin_layout Plain Layout
 MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WC
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sing
 \end_layout
 
 \end_inset
@@ -36035,6 +36055,24 @@ Dataset
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+135
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+540
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -36073,6 +36111,20 @@ en_micro_fuzz_exp
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 \family default
 .
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_micro_discrim
+\series default
+ – Created with 
+\family typewriter
+(gram-classify-greedy-discrim 0.5 4)
+\family default
+.
+ Casual observation shows the clusters are less accurate than above.
+ 
 \end_layout
 
 \begin_layout Section*
