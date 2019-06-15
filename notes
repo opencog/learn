@@ -14492,8 +14492,8 @@ en_micro_cfive
 --------------
 Same as en_micro_dj_cfive, but with marginals and MM^T values.
 
-STATUS: Mediocre. The marginals include unconnectable connectors,
-        which is really pointless. Use `en_micro_marg` instead.
+STATUS: Bad. Filtering failed to discard Sections correctly.
+        Use `en_micro_marg` instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_cfive IS
@@ -14689,6 +14689,39 @@ No M^TM data present
 60c5a06f518e36c94a0d57027b59e24d  en_micro_marg.sql
 887a32cfae68484a480c7f34ce44c536  en_micro_marg.sql.bz2
 
+en_micro_fuzz
+--------------
+Same as en_micro_marg, but after fuzz (cosine) word-classing.
+No gram class marginals, and the pseudo-cset marginals are surely
+left-over junk from before. Why is the dump size smaller??
+(size of Valuations table is bigger; numer of valuations smaller.
+Why are there fewer valuations?)
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz IS
+   'en_micro with (gram-classify-greedy-fuzz 0.65 0.3 4)';
+
+en_micro_fuzz=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 36 MB      | 
+ public | valuations | table | ubuntu | 172 MB     | 
+
+select count(*) from atoms;      <<<<  359686 == 360K Atoms
+select count(*) from valuations; <<<<  749950 == 750K Vals
+
+56016110 Bytes uncompressed == 56MBytes
+ 9020871 Bytes compressed   ==  9MBytes
+
+19b27db361caa7d780a1ac62b08c72dd  en_micro_fuzz.sql
+3324b5cdaf45aedd164327a4f66c2695  en_micro_fuzz.sql.bz2
+
 
 en_mini_dj_cfive
 ----------------
@@ -14744,8 +14777,7 @@ Same as en_mini_dj_cfive, but with marginals and MM^T values.
 Note that this has 10x more words in the connectors, than words in
 sections. This needs to be cleaned up.
 
-STATUS: Mediocre. Words in Sections don't match observed words.
-        Having marginals for this mess is pointless...
+STATUS: Bad. Filtering failed to discard Sections correctly.
         Use `en_mini_marg` instead.
 DATE: 9 June 2019
 
@@ -18207,8 +18239,20 @@ Again with cosines....
 createdb en_micro_fuzz -T en_micro_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 05:28:53 -- "." ---
+--- To-do=0 ncls=135 sing=540 nredo=1062 2019-06-15 11:12:17 -- "()" ---
+So .. not quite 6 hours ...  RSS in top is 600 MBytes
+
+((ListLink . 68735) (MemberLink . 1639) (Connector . 3226) 
+(ConnectorSeq . 67111) (Section . 217212) (WordNode . 1623)
+(WordClassNode . 135))
+
+So no similarity links created... Hmm.
+
+
 Review meaning ... 
-why long pause afterfirst Bingo! ?
+why long pause after first Bingo! ?
 
 ==========
 createdb en_mini_fuzz -T en_mini_marg
