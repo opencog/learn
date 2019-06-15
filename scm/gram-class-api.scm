@@ -241,6 +241,9 @@
 					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
 					(cog-incoming-by-type WRD 'Section)))
 			unclassed-words)
+
+		(format #t "Created ~A singleton word classes\n"
+			(length unclassed-words))
 	)
 
 	; Need to fetch the count from the margin.
