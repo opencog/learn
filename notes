@@ -14477,7 +14477,9 @@ There are 8608 words, and 361894 disjuncts
 -- (psa 'left-basis-size)  ;; 10813
 -- (psa 'right-basis-size) ;; 187063
 -- These dimensions do NOT agree with what the filter reported,
-   which was 8608 x 361894  which is understandable.
+   which was 8608 x 361894. This is because some low-count words
+   remain in connector sets.
+
 
 96968299 Bytes uncompressed == 97 MBytes
 18093513 Bytes compressed == 18 MBytes
@@ -14490,7 +14492,8 @@ en_micro_cfive
 --------------
 Same as en_micro_dj_cfive, but with marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Mediocre. The marginals include unconnectable connectors,
+        which is really pointless. Use `en_micro_marg` instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_cfive IS
@@ -14554,7 +14557,7 @@ en_micro_links
 Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Bad. Contains words below the cutoff.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_links IS
@@ -14663,7 +14666,9 @@ Same as en_mini_dj_cfive, but with marginals and MM^T values.
 Note that this has 10x more words in the connectors, than words in
 sections. This needs to be cleaned up.
 
-STATUS: OK. Words in Sections don't match observe words.
+STATUS: Mediocre. Words in Sections don't match observed words.
+        Having marginals for this mess is pointless...
+        Use `en_mini_marg` instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_mini_cfive IS
@@ -14724,7 +14729,7 @@ en_mini_links
 Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Bad. Contains words below the cutoff.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_mini_links IS
@@ -17165,6 +17170,8 @@ restart
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
 Finished left norm marginals in 316395 secs (3.6 days)
+Done storing 23308382 left-wilds in 16381 secs
+
 
 Last time, this took "only" 29048 secs (8 hours) for the similarly
 sized en_pairs_rfive_mst dataset. So why is it so much slower now?
@@ -17776,6 +17783,182 @@ TE == (WordClassNode "don't don’t") (WordNode "###LEFT-WALL###")
 So, for uni's do not create a wc link....
 or .. do create one, but also one for each word in the class.
 
+===================
+OK, so do cosine for the micro. How?
+-- on LXC, micro-en.scm, etc.
+	createdb en_micro_cosine -T en_micro_links
+   (sql-open "postgres:///en_micro_cosine")
+   (psa 'fetch-pairs)
+
+   Fresh copy shows: (cog-report-counts)
+   (ListLink . 124635) (Connector . 19943) (ConnectorSeq . 113821)
+   (Section . 302867) (WordNode . 10813)
+   but en_micro_dj_cfive claims that there should be 8608 words, so
+   wtf...
+
+(define cnt 0)
+(for-each (lambda (wrd) (if
+   (eq? 'SimpleTruthValue (cog-type (cog-tv wrd)))
+	(set! cnt (+ cnt 1)))) (cog-get-atoms 'WordNode))
+
+(WordNode "Kaladin") in two sections both with count of 11
+total count is well under 500 so wtf?? Answer: when psa got
+saved, some low-count words got saved, ...
+
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+-- No marginals, so cannot filter. So make at least subtotal margs
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 136 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 207491 pairs in 186 secs
+   (sql-close)
+
+-- (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 8386  -- still too big. why?
+   (psa 'right-basis-size)  ;; 68602
+   (length (psa 'get-all-elts)) ;; 207491 so that's what we stored.
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 67 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1407 -- got smaller still. Why?
+   (fsa 'right-basis-size)  ;; 68602
+   (length (fsa 'get-all-elts)) ;; after fix: 181322
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1407
+   (lfa 'right-basis-size)  ;; 66057
+   (length (lfa 'get-all-elts)) ;; 201740 - after fix: 176427
+
+   (define aset (make-atom-set))
+	(for-each (lambda (sec) (aset (gar sec))) (lfa 'get-all-elts))
+   (length (aset #f)) ;; 8170 -- so consistent linkage contains
+                                 words that did not pass the filter.
+                                 so consistent linkage is buggy...
+   ;; 1404 after fix. Yay!
+
+-- Now filter it a second time ...
+   (define psd (add-support-compute lfa))
+   (psd 'cache-all)   ; Finished left norm marginals in 71 secs
+
+   (define fsb (add-subtotal-filter psd 500 10 10 #f))
+   (fsb 'left-basis-size)   ;; 1381 smaller than 1407
+   (fsb 'right-basis-size)  ;; 64667 smaller than 68602
+   (length (fsb 'get-all-elts)) ;; 176163 smaller than 181322
+
+	(define lfb (add-linkage-filter fsb))
+   (lfb 'left-basis-size)   ;; 1381 smaller than 1407
+   (lfb 'right-basis-size)  ;; 64256 smaler than 66057
+   (length (lfb 'get-all-elts)) ;; 175446 smaler than 176427
+
+   (length (aset #f)) ; 1380 OK, that works for me ...
+
+-- Do it a third time:
+   (define pse (add-support-compute lfb))
+   (pse 'cache-all)   ; Finished left norm marginals in 21 secs
+
+   (define fsc (add-subtotal-filter pse 500 10 10 #f))
+   (fsc 'left-basis-size)   ;; 1378  < 1381 smaller than 1407
+   (fsc 'right-basis-size)  ;; 64211 < 64667 smaller than 68602
+   (length (fsc 'get-all-elts)) ;; 175420 < 176163 smaller than 181322
+
+   (define lfc (add-linkage-filter fsc))
+   (lfc 'left-basis-size)   ;; 1378 < 1381 smaller than 1407
+   (lfc 'right-basis-size)  ;; 64192 < 64256 smaler than 66057
+   (length (lfc 'get-all-elts)) ;; 175384 < 175446 smaler than 176427
+
+   (length (aset #f)) ; 1378 consistent, at last...
+
+Because each iteration knocks out more. I guess that's OK...
+
+
+   (length wrd-lst) 1407
+   (length clist) 2808
+   (length unwanted-words)   6992
+   (length unwanted-cnctrs) 425   -- hmm seems small.
+   (length unwanted-conseqs)  2545
+   (length good-conseqs)  66057 so OK....
+   (define ok-conseq? (make-aset-predicate good-conseqs))
+   (define (pair-pred SECT) (ok-conseq? (gdr SECT)))
+
+   (define cnt 0)
+   (for-each (lambda (sec) (if (pair-pred sec) (set! cnt (+ cnt 1))))
+      (fsa 'get-all-elts))
+   cnt 201740 -- like before...
+
+	(define ok-con? (make-aset-predicate clist))
+	(define (ok-seq? seq) (every ok-con? (cog-outgoing-set seq)))
+
+   (for-each (lambda (seq)
+		(if (not (ok-seq? seq)) (format #t "faail ~A\n" seq)))
+		good-conseqs)
+
+   (for-each (lambda (sec)
+		(if (not (ok-seq? (gdr sec))) (format #t "faail ~A\n" sec)))
+      (lfa 'get-all-elts))
+
+   ; all pass this double-check. WTF.  Oh, a bug in filter 'get-all-pairs.
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 185 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+   (length (lfa 'get-all-elts)) ; 183644
+
+   (define lfb (add-linkage-filter-2pass fsa))
+   (lfb 'left-basis-size)   ;; 1624
+   (lfb 'right-basis-size)  ;; 68602 .. wtf ...
+
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 207491 pairs in 186 secs
+   (sql-close)
+
+
+
 
 
 TODO:
@@ -17784,7 +17967,8 @@ TODO:
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
 * Consistent dj/word-sets
-* Counts on MemberLink...
+* Counts on MemberLink... (MemberLink should show what's been merged
+  into it. This is done in some code but not other.)
 
 DONE:
 * fix filter-api (DONE)

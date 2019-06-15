@@ -416,8 +416,10 @@
   add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
   the only connector sequences appearing on the right consist entirely
   of connectors that have words appearing on the left. The resulting
-  collection of word-disjunct pairs is then self-consistent, and does
-  not contain any connectors unable to form a connection to some word.
+  collection of word-disjunct pairs is then mostly self-consistent,
+  in that it does not contain any connectors unable to form a
+  connection to some word.  However, it may still contain words on
+  the left that do not appear in any connectors!
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
