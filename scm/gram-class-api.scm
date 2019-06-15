@@ -214,16 +214,21 @@
 
 		; Remove words already in word-classes. XXX This is not
 		; necessarily the correct action to take, depending on the
-		; type of clistering, but this whole object is a kind of
+		; type of clustering, but this whole object is a kind of
 		; temporary hack till the clustering algos settle down a
 		; bit more. XXX review and FIXME at some later time.
-		; Also this is hack as it looks for MemberLinks which
-		; are not necessarily MemberLinks to WordClassNodes in
-		; the ((make-gram-class-api) 'left-basis) so that's also
-		; broken. This holds water for now.
+		;
+		; XXX specifically, if there are words with non-trivial
+		; counts still left on them, they belong in singletons.
+		; The problem is that the margnals are probably corrupt.
+		; so we are confused about the counts left on them...
+		; (The merge routines did not adjust marginals...!?)
+		;
 		(define unclassed-words
 			(filter (lambda (wrd)
-				(eq? '() (cog-incoming-by-type wrd 'MemberLink)))
+				(not (any (lambda (memb)
+					(eq? 'WordClassNode (cog-type (gdr memb))))
+					(cog-incoming-by-type wrd 'MemberLink))))
 				WORD-LIST))
 
 		(for-each
