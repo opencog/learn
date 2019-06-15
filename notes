@@ -18250,10 +18250,27 @@ So .. not quite 6 hours ...  RSS in top is 600 MBytes
 (WordClassNode . 135))
 
 So no similarity links created... Hmm.
+OK, 
+createdb en_micro_fuzz_exp -T en_micro_fuzz
+(sql-open "postgres:///en_micro_fuzz_exp")
+(define asc (add-singleton-classes psa))
+(asc 'create-hi-count-singles 1) 1575 of 1575 -- borken-ish.
+(psa 'left-basis-size)   ;  1575
+
+are there any unclassed words?
+(define aset (make-atom-set))
+(for-each (lambda (wcn)
+	(for-each (lambda (memb) (aset (gar memb)))
+		(cog-incoming-by-type wcn 'MemberLink)))
+	(cog-get-atoms 'WordClassNode))
 
 
+==========
 Review meaning ... 
 why long pause after first Bingo! ?
+assign-word-to-class calls MERGER 'merge-function
+which calls merge-project
+... should add timers to line 598, etc, for merge-project to see ...
 
 ==========
 createdb en_mini_fuzz -T en_mini_marg

@@ -646,11 +646,24 @@
 
 	(define todo-words (remove! is-single? remain-words))
 
+	(define (print-concluding-report)
+		(define aset (make-atom-set))
+		(for-each (lambda (wcn)
+			(for-each (lambda (memb) (aset (gar memb)))
+				(cog-incoming-by-type wcn 'MemberLink)))
+			(cog-get-atoms 'WordClassNode))
+		(format #t
+			"Finished greedy-agglomeration: ~A words assigned to ~A classes\n"
+			(length (aset #f)) (length (cog-get-atoms 'WordClassNode)))
+	)
+
 	(format #t "Start greedy-agglomeration of ~A words\n"
 		(length todo-words))
 	(format #t "Existing classes=~A singletons=~A done=~A\n"
 		(length CLS-LST) (length singletons) (length done-list))
 	(greedy-grow MERGER CLS-LST singletons done-list todo-words)
+
+	(print-concluding-report)
 
 	; XXX FIXME ... at the conclusion of this, we have a done list,
 	; which, because of repeated merging, might possibly have been
