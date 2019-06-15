@@ -14736,6 +14736,7 @@ BUILD:
    (define gcs (add-pair-stars gca))
    (define gcf (add-wordclass-filter gcs))
    (batch-all-pair-mi gcf)
+   (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
 STATUS: Good.
 DATE: 15 June 2019
@@ -14752,6 +14753,29 @@ en_micro_fuzz_exp=> \dt+
 
 select count(*) from atoms;      <<<<  480736 == 481K Atoms
 select count(*) from valuations; <<<< 1358374 == 1.36M Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 12003313)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 675 Columns: 67056
+Size: 142358 non-zero entries of 45262800 possible
+Fraction non-zero: 3.1451E-3 Sparsity (-log_2): 8.3127
+Total observations: 12003312.5  Avg obs per pair: 84.318
+Entropy Total: 13.746   Left: 11.431   Right: 6.3415
+Total MI: 4.0264
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  50.64        2817.
+Count   (l_1)  3.2160E+4    3.3795E+5     635.0        120.0
+Length  (l_2)  1.9406E+4    6.0704E+4     383.2        21.55
+RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
+
+No MM^T data present
+No M^TM data present
 
 101448026 Bytes uncompressed == 101MBytes
  16985054 Bytes compressed   ==  17MBytes
