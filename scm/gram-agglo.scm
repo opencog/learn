@@ -89,13 +89,16 @@
 ;   only member. For assignment of of words to classes, the most populous
 ;   classes are considered first, and the singleton classes are
 ;   considered last.
-; * When a new cluster is formed, then perform the "greedy"/maximal
-;   cluster expansion, scanning much of the word list to try to grow
-;   the cluster further. Key here is the phrase "much of": instead
-;   of scanning the entire list (which has a lot of dregs at the end)
-;   only scan the top M words, with M=max(200,9D) where D = number of
-;   words scanned so far. Thus, excessive searching down into the
-;   low-frequency boon-docks is avoided.
+; * When a new cluster is formed (by discovery of a pair of similar
+;   words), then perform the "greedy"/maximal cluster expansion,
+;   scanning much of the word list to try to grow the cluster further.
+;   Key to performance is the phrase "much of": instead of scanning the
+;   entire list (which has a lot of dregs at the end) only scan the top
+;   M words, with M=max(200,9D) where D = grand-total number of words
+;   examined so far.  This limits excessive searching down into the
+;   low-frequency boon-docks, while also giving an excellent shot at
+;   discovering similar words immediately, thus immediately creating a
+;   large cluster.
 ; * Once a word has been assigned to a cluster, its added to the 'done'
 ;   list.  Words in the 'done' list are re-scanned, every time that
 ;   a new cluster is created, to see if they might also fit into the
@@ -611,8 +614,8 @@
 ; several tricks to try to get better than the naive O(N^2) perf.
 ;
 ; The idea is that it is unlikely that words with very different
-; observational counts will be similar.  NOTE: this idea has NOT
-; been empirically tested, yet.
+; observational counts will be similar, and so they will not be compared.
+; NOTE: the validity of this idea has NOT been empirically verified, yet.
 ;
 (define (greedy-over-words MERGER WRD-LST CLS-LST)
 
