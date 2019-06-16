@@ -32,6 +32,11 @@
      (compare #f)
 "
 	; -------------------
+	; Stats we are keeping
+	(define total-compares 0)
+	(define length-miscompares 0)
+
+	; -------------------
 	; Misc utilities
 
 	; Get the word of the word instance, i.e. the WordNode.
@@ -76,6 +81,19 @@
 	; -------------------
 	; Comparison functions
 
+	; The length of the sentences should match.
+	(define (compare-lengths en-sorted other-sorted)
+		(define ewlilen (length en-sorted))
+		(define owlilen (length other-sorted))
+
+		; Both should have the same length, assuming the clever
+		; English tokenizer hasn't tripped.
+		(if (not (equal? ewlilen owlilen))
+			(begin
+				(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen)
+				(set! length-miscompares (+ 1 length-miscompares)))))
+
+	; ---
 	; The words should compare. We are not currently comparing the
 	; sequence; doing so would be complicated, and I don't see how
 	; the sequences could ever mis-compare...
@@ -85,6 +103,7 @@
 				(get-index-of-winst ewrd)
 				(get-word-of-winst ewrd) (get-word-of-winst owrd))))
 
+	; ---
 	; Compare links. For the given words, find the words that link to
 	; the right. Verify that there are the same number of them, and
 	; that they have the same targets.
@@ -146,14 +165,12 @@
 		(define en-sorted (sort-word-inst-list en-word-inst-list))
 		(define other-sorted (sort-word-inst-list other-word-inst-list))
 
-		(define ewlilen (length en-sorted))
-		(define owlilen (length other-sorted))
+		(set! total-compares (+ total-compares 1))
 
-		; Both should have the same length, assuming the clever
-		; English tokenizer hasn't tripped.
-		(if (not (equal? ewlilen owlilen))
-			(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen))
+		; Compare sentence lengths
+		(compare-lengths en-sorted other-sorted)
 
+		; Compare words and links
 		(for-each
 			(lambda (ewrd owrd)
 				(compare-words ewrd owrd)
@@ -161,13 +178,19 @@
 			)
 			en-sorted other-sorted)
 
-		(format #t "Finish compare of sentence\n")
+		(format #t "Finish compare of sentence ~A\n", total-compares)
+	)
+
+	; -------------------
+	(define (report-stats)
+		(format #t "Finished comparing ~A parses\n" total-compares)
+		(format #t "Found ~A length-miscompares\n" length-miscompares)
 	)
 
 	; -------------------
 	; The main comparison function
 	(lambda (SENT)
 		(if (not SENT)
-			(format #t "Finished comparing!\n")
+			(report-stats)
 			(do-compare SENT)))
 )
