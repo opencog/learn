@@ -15,8 +15,10 @@
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define*-public (make-lg-comparator en-dict other-dict #:key
-        (INCLUDE-MISSING #f))
+
+(define-public (make-lg-comparator en-dict other-dict
+;;;;       #:key (INCLUDE-MISSING #f)
+)
 "
   lg-compare GOLD-DICT OTHER-DICT - Return a sentence comparison function.
 
@@ -40,8 +42,10 @@
   not in the test dictionary.  Over-ride this by supplying the optional
   argument INCLUDE-MISSING.
 "
+	(define INCLUDE-MISSING #f)
 	; -------------------
 	; Stats we are keeping
+	(define total-sentences 0)
 	(define total-compares 0)
 	(define incomplete-dict 0)
 	(define total-words 0)
@@ -271,15 +275,16 @@
 
 		(define dict-has-missing-words (has-missing-words other-sorted))
 
-		(set! total-compares (+ total-compares 1))
+		(set! total-sentences (+ total-sentences 1))
 
 		(if dict-has-missing-words
-			(format #t "Dictionary is missing words for sentence \"~A"\n" SENT))
+			(format #t "Dictionary is missing words for sentence \"~A\n" SENT))
 
 		; Don't do anything more, if the dict is missing words in the
 		; sentence.
 		(if (or (not dict-has-missing-words) INCLUDE-MISSING)
 			(begin
+				(set! total-compares (+ total-compares 1))
 				; Compare sentence lengths
 				(compare-lengths en-sorted other-sorted)
 
@@ -298,10 +303,11 @@
 
 	; -------------------
 	(define (report-stats)
+		(format #t
+			"Examined ~A sentences; of these, ~A had words not in the dictionary"
+			total-sentences incomplete-dict)
 		(format #t "Finished comparing ~A parses (~A words, ~A links)\n"
 			total-compares total-words total-links)
-		(format #t "Dictionary did not contain word for ~A sentences\n"
-			incomplete-dict)
 		(format #t "Dictionary was missing ~A words\n"
 			(length (missing-words #f)))
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
