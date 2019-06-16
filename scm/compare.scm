@@ -104,7 +104,7 @@
 
 	; -------------------
 	; The main comparison function
-	(lambda (SENT)
+	(define (do-compare SENT)
 		; Get a parse, one for each dictionary.
 		(define en-sent (cog-execute!
 			(LgParseLink (PhraseNode SENT) en-dict (NumberNode 1))))
@@ -156,6 +156,13 @@
 			)
 			en-sorted other-sorted)
 
-		(format #t "Finish compare\m")
+		(format #t "Finish compare of sentence\m")
 	)
+
+	; -------------------
+	; The main comparison function
+	(lambda (SENT)
+		(if (not SENT)
+			(format #t "Finished comparing!\n")
+			(do-compare SENT)))
 )

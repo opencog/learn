@@ -18387,6 +18387,13 @@ createdb en_mini_fuzz -T en_mini_marg
 (load "/tmp/c.scm")
 (lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
 
+Argh.
+Segmentation fault. linkage/sane.c:76
+76					    path[gwordlist_len(path)-1]->sent_wordidx)
+(gdb) print path
+$1 = (const Gword **) 0x0
+
+
 
 TODO:
 * Add 'help method
