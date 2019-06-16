@@ -92,8 +92,11 @@
 	; instance) and rwin (right word instance). There must actually
 	; be a link connecting them, else bad things happen.
 	(define (get-link-name lwin rwin)
-		(gar (car (cog-incoming-by-type (ListLink lwin rwin)
-			'LinkGrammarRelationshipNode))))
+		(gar (car (filter
+			(lambda (evl)
+				(equal? (cog-type (gar evl)) 'LinkGrammarRelationshipNode))
+			(cog-incoming-by-type (ListLink lwin rwin)
+				'EvaluationLink)))))
 
 	; Return the string-name of a link. Truncate link subtypes.
 	(define (get-link-str-name lwin rwin)
