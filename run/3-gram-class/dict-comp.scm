@@ -16,15 +16,24 @@
 (use-modules (ice-9 rdelim))
 (use-modules (opencog) (opencog nlp) (opencog nlp learn))
 
-
-(if (not (equal? 3 (length (program-arguments))))
+(if (not (equal? 2 (length (program-arguments))))
 	(begin
 		(format #t
 			"Usage: guile -s dict-comp.scm <dict-name> <sentence-file-name>\n")
 		(exit #f)))
 
-(define test-dict (second (program-arguments)))
-(define sent-file (third (program-arguments)))
+(define test-dict (first (program-arguments)))
+(define sent-file (second (program-arguments)))
+
+(if (not (access? test-dict R_OK))
+	(begin
+		(format #t "Cannot find dictionary ~A\n" test-dict)
+		(exit #f)))
+
+(if (not (access? sent-file R_OK))
+	(begin
+		(format #t "Cannot find sentence file ~A\n" sent-file)
+		(exit #f)))
 
 (define compare
 	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)))
