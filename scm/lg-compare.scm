@@ -132,7 +132,7 @@
 			(lambda (win cnt)
 				(define wrd (get-word-of-winst win))
 				(cog-execute! (LgDictEntry wrd dict))
-				(if (not (equal? 0 (cog-incoming-size-by-type wrd 'LgDisjunct)))
+				(if (equal? 0 (cog-incoming-size-by-type wrd 'LgDisjunct))
 					(begin
 						(missing-words wrd)
 						(+ cnt 1))
