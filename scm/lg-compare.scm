@@ -304,7 +304,7 @@
 	; -------------------
 	(define (report-stats)
 		(format #t
-			"Examined ~A sentences; of these, ~A had words not in the dictionary"
+			"Examined ~A sentences; ~A had words not in dictionary.\n"
 			total-sentences incomplete-dict)
 		(format #t "Finished comparing ~A parses (~A words, ~A links)\n"
 			total-compares total-words total-links)
