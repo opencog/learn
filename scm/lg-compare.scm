@@ -38,6 +38,7 @@
 	; -------------------
 	; Stats we are keeping
 	(define total-compares 0)
+	(define incomplete-dict 0)
 	(define total-words 0)
 	(define total-links 0)
 	(define length-miscompares 0)
@@ -46,6 +47,7 @@
 	(define missing-links 0)
 	(define extra-links 0)
 	(define missing-link-types '())
+	(define missing-words (make-atom-set))
 
 	; ----------------------------------------
 	; Misc utilities
@@ -122,6 +124,30 @@
 	; ----------------------------------------
 	; Comparison functions
 
+	; Return the number of words in the sentence that are not in
+	; the test dictionary. This also adds them to the mising-words
+	; set.
+	(define (num-missing-words winli)
+		(fold
+			(lambda (win cnt)
+				(define wrd (get-word-of-winst win))
+				(cog-execute! (LgDictEntry wrd en-dict))
+				(if (not (equal? 0 (cog-incoming-size-by-type wrd 'LgDisjunct)))
+					(begin
+						(missing-words wrd)
+						(+ cnt 1))
+					cnt))
+			0 winli))
+
+	; Return #t if the sentnce contains missing words.
+	(define (has-missing-words winli)
+		(if (< 0 (num-missing-words winli))
+			(begin
+				(set! incomplete-dict (+ 1 incomplete-dict))
+				#t)
+			#f))
+
+	; ---
 	; The length of the sentences should match.
 	(define (compare-lengths en-sorted other-sorted)
 		(define ewlilen (length en-sorted))
@@ -259,6 +285,10 @@
 	(define (report-stats)
 		(format #t "Finished comparing ~A parses (~A words, ~A links)\n"
 			total-compares total-words total-links)
+		(format #t "Dictionary did not contain word for ~A sentences\n"
+			incomplete-dict)
+		(format #t "Dictionary was missing ~A words\n"
+			(length (missing-words #f)))
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
 		(format #t
@@ -266,6 +296,8 @@
 			link-count-miscompares
 			missing-links extra-links)
 		(format #t "Missing link-type counts: ~A\n" missing-link-types)
+		(format #t "Missing words: ~A\n"
+			(map cog-name (missing-words #f)))
 	)
 
 	; -------------------
