@@ -65,7 +65,7 @@
 					(define evli (cog-incoming-by-type lili 'EvaluationLink))
 					(and (equal? (gar lili) WRD)
 						(not (eq? '() evli))
-						(eq? 'LgLinkInstanceNode (gar (car evli)))))
+						(equal? 'LgLinkInstanceNode (cog-type (gar (car evli))))))
 				(cog-incoming-by-type WRD 'ListLink))))
 
 	; -------------------
@@ -89,7 +89,7 @@
 		(define olinks (get-linked-winst owin))
 		(define elinks-len (length elinks))
 		(define olinks-len (length olinks))
-		(if (not (eq? elinks-len olinks-len))
+		(if (not (equal? elinks-len olinks-len))
 			(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
 				elinks-len olinks-len ewin))
 		(for-each
@@ -146,7 +146,7 @@
 
 		; Both should have the same length, assuming the clever
 		; English tokenizer hasn't tripped.
-		(if (not (eq? ewlilen owlilen))
+		(if (not (equal? ewlilen owlilen))
 			(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen))
 
 		(for-each
