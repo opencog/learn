@@ -48,7 +48,9 @@
 	(define line (read-line PORT))
 	(if (not (eof-object? line))
 		(begin
-			(compare line)
+			; The # symbol is a comment-card
+			(if (not (equal? #\# (string-ref line 0)))
+				(compare line))
 			(process-file PORT))
 		(compare #f)))
 
