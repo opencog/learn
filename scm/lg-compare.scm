@@ -230,9 +230,9 @@
 	(define (do-compare SENT)
 		; Get a parse, one for each dictionary.
 		(define en-sent (cog-execute!
-			(LgParseLink (PhraseNode SENT) en-dict (NumberNode 1))))
+			(LgParseMinimal (PhraseNode SENT) en-dict (NumberNode 1))))
 		(define other-sent (cog-execute!
-			(LgParseLink (PhraseNode SENT) other-dict (NumberNode 1))))
+			(LgParseMinimal (PhraseNode SENT) other-dict (NumberNode 1))))
 
 		; Since only one parse, we expect only one...
 		(define en-parse (gar (car
