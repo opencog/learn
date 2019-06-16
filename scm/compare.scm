@@ -20,7 +20,7 @@
 
   EN-DICT and OTHER-DICT should be the two LgDictNodes to compare.
   The code makes weak assumptinos that EN-DICT is the reference or
-  "golden" lexis to compare to, so that any differences found in
+  \"golden\" lexis to compare to, so that any differences found in
   OTHER-DICT are blamed on OTHER-DICT.
 
   This returns a comparison function.  To use it, pass one or more
@@ -29,9 +29,9 @@
 
   Example usage:
      (define compare (make-lg-comparator
-        (LgDictNode "en") (LgDictNode "micro-fuzz")))
-     (compare "I saw her face")
-     (compare "I swooned to the floor")
+        (LgDictNode \"en\") (LgDictNode \"micro-fuzz\")))
+     (compare \"I saw her face\")
+     (compare \"I swooned to the floor\")
      (compare #f)
 "
 	; -------------------
@@ -156,7 +156,7 @@
 			)
 			en-sorted other-sorted)
 
-		(format #t "Finish compare of sentence\m")
+		(format #t "Finish compare of sentence\n")
 	)
 
 	; -------------------
