@@ -131,12 +131,12 @@
 		(fold
 			(lambda (win cnt)
 				(define wrd (get-word-of-winst win))
-				(cog-execute! (LgDictEntry wrd dict))
-				(if (equal? 0 (cog-incoming-size-by-type wrd 'LgDisjunct))
+				(if (< 0.5 (cog-tv-mean
+						(cog-evaluate! (LgHaveDictEntry wrd dict))))
+					cnt
 					(begin
 						(missing-words wrd)
-						(+ cnt 1))
-					cnt))
+						(+ cnt 1))))
 			0 winli))
 
 	; Return #t if the sentnce contains missing words.
