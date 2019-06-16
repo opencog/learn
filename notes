@@ -18366,7 +18366,9 @@ createdb en_micro_discrim -T en_micro_marg
 Start greedy-agglomeration of 1610 words
 Existing classes=0 singletons=0 done=0
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 20:56:12 -- "." ---
+--- To-do=0 ncls=124 sing=292 nredo=1303 2019-06-16 00:29:19 -- "()" ---
 
+So that took 3.5 hours -- faster than fuzz. Didn't seem as goood...
 
 
 ==========
@@ -18381,6 +18383,9 @@ createdb en_mini_fuzz -T en_mini_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 
 
+======
+(load "/tmp/c.scm")
+(lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
 
 
 TODO:

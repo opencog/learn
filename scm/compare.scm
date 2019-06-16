@@ -40,6 +40,54 @@
 					(string->number (cog-name (get-index-of-winst wi))))
 				(< (get-num wa) (get-num wb)))))
 
+	; Return a sorted list of the other word-instances that this
+	; word links to. To avoid double-counting, this returns only the
+	; links connecting to the right.
+	(define (get-linked-winst WRD)
+		(sort-word-inst-list
+			; Accept only those ListLinks that are bonfide word-links
+			(filter
+				(lambda (lili)
+					(define evli (cog-incoming-by-type lili 'EvaluationLink))
+					(and (equal? (gar lili) WRD)
+						(not (eq? '() evli))
+						(eq? 'LgLinkInstanceNode (gar (car evli)))))
+				(cog-incoming-by-type WRD 'ListLink))))
+
+	; -------------------
+	; Comparison functions
+
+	; The words should compare. We are not currently comparing the
+	; sequence; doing so would be complicated, and I don't see how
+	; the sequences could ever mis-compare...
+	(define (compare-words ewrd owrd)
+		(if (not (equal? (get-word-of-winst ewrd) (get-word-of-winst owrd)))
+			(format #t "Word miscompare at ~A: ~A vs ~A\n"
+				(get-index-of-winst ewrd)
+				(get-word-of-winst ewrd) (get-word-of-winst owrd))))
+
+	; Compare links. For the given words, find the words that link to
+	; the right. Verify that there are the same number of them, and
+	; that they have the same targets.
+	(define (compare-links ewin owin)
+		(define ewrd (get-word-of-winst  ewin))
+		(define elinks (get-linked-winst ewin))
+		(define olinks (get-linked-winst owin))
+		(define elinks-len (length elinks))
+		(define olinks-len (length olinks))
+		(if (not (eq? elinks-len olinks-len))
+			(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
+				elinks-len olinks-len ewin))
+		(for-each
+			(lambda (erwi orwi)
+				(define erwrd (get-word-of-winst erwi))
+				(define orwrd (get-word-of-winst orwi))
+				(if (not (equal? erwrd orwrd))
+					(format #t "Miscompare of link targets: ~A vs ~A for ~A\n"
+						erwrd orwrd ewrd)))
+			elinks olinks)
+	)
+
 	; -------------------
 	; Get a parse, one for each dictionary.
 	(define en-sent (cog-execute!
@@ -85,14 +133,12 @@
 	(if (not (eq? ewlilen owlilen))
 		(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen))
 
-	; The words should compare. We are not currently comparing the
-	; sequence; doing so would be complicated, and I don't see how
-	; the sequences could ever mis-compare...
 	(for-each
 		(lambda (ewrd owrd)
-			(if (not (equal? (get-word-of-winst ewrd) (get-word-of-winst owrd)))
-				(format #t "Word miscompare at ~A: ~A vs ~A\n"
-					(get-index-of-winst ewrd)
-					(get-word-of-winst ewrd) (get-word-of-winst owrd))))
+			(compare-words ewrd owrd)
+			(compare-links ewrd owrd)
+		)
 		en-sorted other-sorted)
+
+	(format #t "Finish compare\m")
 )
