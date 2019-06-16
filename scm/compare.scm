@@ -41,7 +41,6 @@
 	(define link-count-miscompares 0)
 	(define missing-links 0)
 	(define extra-links 0)
-	(define link-target-miscomp 0)
 	(define missing-link-types '())
 
 	; ----------------------------------------
@@ -147,58 +146,47 @@
 	; owin should be the OTHER word instance.
 	(define (compare-links ewin owin)
 		(define ewrd (get-word-of-winst ewin))
-		(define elinks (get-linked-winst ewin))
-		(define olinks (get-linked-winst owin))
-		(define elinks-len (length elinks))
-		(define olinks-len (length olinks))
+		(define elinked (get-linked-winst ewin))
+		(define olinked (get-linked-winst owin))
+		(define elinked-len (length elinked))
+		(define olinked-len (length olinked))
 
 		; Obtain sets of the links words (not the word-instances)
-		(define ewords (map get-word-of-winst elinks))
-		(define owords (map get-word-of-winst olinks))
+		(define ewords (map get-word-of-winst elinked))
+		(define owords (map get-word-of-winst olinked))
 
 		; A set of words in ewords that are not in owords
 		(define miss-w (lset-difference equal? ewords owords))
 
-		; A set of words that are in both ewords and owords
-		(define common-w (lset-intersection equal? ewords owords))
-
-		; Word-instances that are shared in common. Here, wili is a
-		; list of word-ionstances, and wrds is a set of WordNodes.
-		(define (trim-wili wili wrds)
+		; Keep only word-instances that are in the word-set.
+		(define (trim-wili wili wrd-set)
 			(filter
 				(lambda (wi)
 					(any
 						(lambda (wrd) (equal? (get-word-of-winst wi) wrd))
-						wrds))
+						wrd-set))
 				wili))
 
-		; Two lists, of equal length, containing the common targets.
-		(define ecom (trim-wili elinks common-w))
-		(define ocom (trim-wili olinks common-w))
+		; Missing linked word-instances...
+		(define missing-wi (trim-wili elinked miss-w))
 
-		(set! total-links (+ total-links elinks-len))
-		(if (< elinks-len olinks-len)
-			(set! extra-links (+ extra-links (- olinks-len elinks-len)))
-			(set! missing-links (+ missing-links (- elinks-len olinks-len))))
+		; Keep statistics
+		(set! total-links (+ total-links elinked-len))
+		(if (< elinked-len olinked-len)
+			(set! extra-links (+ extra-links (- olinked-len elinked-len)))
+			(set! missing-links (+ missing-links (- elinked-len olinked-len))))
 
-		(if (not (equal? elinks-len olinks-len))
+		; Compare number of links
+		(if (not (equal? elinked-len olinked-len))
 			(begin
 				(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
-					elinks-len olinks-len ewrd)
+					elinked-len olinked-len ewrd)
 				(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
-;			(incr-link-count  ewin))
-
+		; Make a note of missing link types.
 		(for-each
-			(lambda (erwi orwi)
-				(define erwrd (get-word-of-winst erwi))
-				(define orwrd (get-word-of-winst orwi))
-				(if (not (equal? erwrd orwrd))
-					(begin
-						(format #t "Bad link target: ~A should go to ~A not ~A"
-							ewrd erwrd orwrd)
-						(set! link-target-miscomp (+ 1 link-target-miscomp)))))
-			ecom ocom)
+			(lambda (misw) (incr-link-count ewin misw))
+			missing-wi)
 	)
 
 	; -------------------
@@ -266,7 +254,6 @@
 			"Found ~A link-count miscompares with ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
-		(format #t "Found ~A link-target miscompares\n" link-target-miscomp)
 	)
 
 	; -------------------
