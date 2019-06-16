@@ -22,3 +22,7 @@ A quick overview:
   It reads the sentence file, compares them to parses from the
   default Link Grammar English dictionary, and tabulates results.
   Usage: `guile -s dict-comp.scm <dict-name> <sentence-file-name>`
+
+* `test-data` -- Directory containing evaluation datasets. Currently
+  contains `child-directed-speech.txt`, a collection of over 3000
+  short sentences spoken by adults to children.
