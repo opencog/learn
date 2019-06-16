@@ -59,14 +59,15 @@
 	; links connecting to the right.
 	(define (get-linked-winst WRD)
 		(sort-word-inst-list
-			; Accept only those ListLinks that are bonfide word-links
-			(filter
-				(lambda (lili)
-					(define evli (cog-incoming-by-type lili 'EvaluationLink))
-					(and (equal? (gar lili) WRD)
-						(not (eq? '() evli))
-						(equal? 'LgLinkInstanceNode (cog-type (gar (car evli))))))
-				(cog-incoming-by-type WRD 'ListLink))))
+			(map gdr
+				; Accept only those ListLinks that are bonfide word-links
+				(filter
+					(lambda (lili)
+						(define evli (cog-incoming-by-type lili 'EvaluationLink))
+						(and (equal? (gar lili) WRD)
+							(not (equal? '() evli))
+							(equal? 'LgLinkInstanceNode (cog-type (gar (car evli))))))
+					(cog-incoming-by-type WRD 'ListLink)))))
 
 	; -------------------
 	; Comparison functions
@@ -84,14 +85,14 @@
 	; the right. Verify that there are the same number of them, and
 	; that they have the same targets.
 	(define (compare-links ewin owin)
-		(define ewrd (get-word-of-winst  ewin))
+		(define ewrd (get-word-of-winst ewin))
 		(define elinks (get-linked-winst ewin))
 		(define olinks (get-linked-winst owin))
 		(define elinks-len (length elinks))
 		(define olinks-len (length olinks))
 		(if (not (equal? elinks-len olinks-len))
 			(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
-				elinks-len olinks-len ewin))
+				elinks-len olinks-len ewrd))
 		(for-each
 			(lambda (erwi orwi)
 				(define erwrd (get-word-of-winst erwi))
