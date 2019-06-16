@@ -152,6 +152,30 @@
 		(define elinks-len (length elinks))
 		(define olinks-len (length olinks))
 
+		; Obtain sets of the links words (not the word-instances)
+		(define ewords (map get-word-of-winst elinks))
+		(define owords (map get-word-of-winst olinks))
+
+		; A set of words in ewords that are not in owords
+		(define miss-w (lset-difference equal? ewords owords))
+
+		; A set of words that are in both ewords and owords
+		(define common-w (lset-intersection equal? ewords owords))
+
+		; Word-instances that are shared in common. Here, wili is a
+		; list of word-ionstances, and wrds is a set of WordNodes.
+		(define (trim-wili wili wrds)
+			(filter
+				(lambda (wi)
+					(any
+						(lambda (wrd) (equal? (get-word-of-winst wi) wrd))
+						wrds))
+				wili))
+
+		; Two lists, of equal length, containing the common targets.
+		(define ecom (trim-wili elinks common-w))
+		(define ocom (trim-wili olinks common-w))
+
 		(set! total-links (+ total-links elinks-len))
 		(if (< elinks-len olinks-len)
 			(set! extra-links (+ extra-links (- olinks-len elinks-len)))
@@ -174,7 +198,7 @@
 						(format #t "Bad link target: ~A should go to ~A not ~A"
 							ewrd erwrd orwrd)
 						(set! link-target-miscomp (+ 1 link-target-miscomp)))))
-			elinks olinks)
+			ecom ocom)
 	)
 
 	; -------------------
