@@ -18394,13 +18394,42 @@ createdb en_mini_fuzz -T en_mini_marg
 
 LinkGrammarRelationshipNode
 
-
 Argh.
 Segmentation fault. linkage/sane.c:76
 76					    path[gwordlist_len(path)-1]->sent_wordidx)
 (gdb) print path
 $1 = (const Gword **) 0x0
 
+======
+micro-fuzz with child-directed.txt:
+
+Finished comparing 3037 parses (13567 words, 11183 links)
+Dictionary did not contain word for 2031 sentences
+Dictionary was missing 109 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 6280 link-count miscompares with 6173 missing and 584 extra links
+Missing link-type counts: ((IDBYE . 1) (WR . 2) (BW . 4) (DG . 2) (GN .
+1) (IDBIT . 1) (H . 5) (AL . 2) (AF . 3) (IDLE . 2) (BI . 3) (X . 11) (U
+. 4) (IDQA . 2) (IDBKD . 7) (PF . 13) (V . 9) (MX . 1) (IDLR . 6) (IDPZ
+. 8) (LI . 1) (DD . 6) (RS . 2) (OF . 7) (EE . 3) (C . 17) (QI . 4) (E .
+37) (PP . 21) (SJ . 39) (EA . 27) (TO . 24) (SFI . 4) (EL . 24) (VJ .
+20) (WV . 72) (W . 36) (K . 106) (G . 8) (CV . 37) (YS . 78) (NS . 1)
+(EB . 24) (Q . 136) (AN . 94) (CO . 170) (SF . 82) (B . 213) (R . 97) (A
+. 93) (PH . 25) (P . 480) (SI . 483) (M . 116) (MV . 325) (I . 564) (J .
+399) (D . 1052) (O . 1717) (S . 1254) (IV . 95))
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat egg steak puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye 've a@l feed comb 's toys 'll judy
+fun mirror knock hang button playing bunny hi dolly puppet dale throw
+okay calling smell sing snap knocked balloon turtle telephone color
+stack butterfly pat shoe kitty finger mommy scratchy blocks apple pick
+dragon doggie clock count brush horsie tower cup sleeping mouse untie
+pig zip ear block peekaboo honey toy cow cage gonna ducks pocketbook
+monkey paul)
+
+But there are repeated sentences...
 
 
 TODO:

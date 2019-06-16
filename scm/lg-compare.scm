@@ -15,7 +15,8 @@
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define-public (make-lg-comparator en-dict other-dict)
+(define*-public (make-lg-comparator en-dict other-dict #:key
+        (INCLUDE-MISSING #f))
 "
   lg-compare GOLD-DICT OTHER-DICT - Return a sentence comparison function.
 
@@ -34,6 +35,10 @@
      (compare \"I saw her face\")
      (compare \"I swooned to the floor\")
      (compare #f)
+
+  By default, this does not test sentences that have words that are
+  not in the test dictionary.  Over-ride this by supplying the optional
+  argument INCLUDE-MISSING.
 "
 	; -------------------
 	; Stats we are keeping
@@ -264,24 +269,31 @@
 		(define en-sorted (sort-word-inst-list en-word-inst-list))
 		(define other-sorted (sort-word-inst-list other-word-inst-list))
 
-		(if (has-missing-words other-sorted)
-			(format #t "Dictionary is missing words for sentence \"~A"\n" SENT))
+		(define dict-has-missing-words (has-missing-words other-sorted))
 
 		(set! total-compares (+ total-compares 1))
 
-		; Compare sentence lengths
-		(compare-lengths en-sorted other-sorted)
+		(if dict-has-missing-words
+			(format #t "Dictionary is missing words for sentence \"~A"\n" SENT))
 
-		; Compare words and links
-		(for-each
-			(lambda (ewrd owrd)
-				(compare-words ewrd owrd)
-				(compare-links ewrd owrd)
-			)
-			en-sorted other-sorted)
+		; Don't do anything more, if the dict is missing words in the
+		; sentence.
+		(if (or (not dict-has-missing-words) INCLUDE-MISSING)
+			(begin
+				; Compare sentence lengths
+				(compare-lengths en-sorted other-sorted)
 
-		(format #t "Finish compare of sentence ~A: \"~A\"\n"
-			total-compares SENT)
+				; Compare words and links
+				(for-each
+					(lambda (ewrd owrd)
+						(compare-words ewrd owrd)
+						(compare-links ewrd owrd)
+					)
+					en-sorted other-sorted)
+
+				(format #t "Finish compare of sentence ~A: \"~A\"\n"
+					total-compares SENT)
+			))
 	)
 
 	; -------------------
