@@ -42,7 +42,7 @@
 	(define link-count-differences 0)
 	(define link-target-miscomp 0)
 
-	; -------------------
+	; ----------------------------------------
 	; Misc utilities
 
 	; Get the word of the word instance, i.e. the WordNode.
@@ -53,6 +53,7 @@
 	(define (get-index-of-winst WRD)
 		(gdr (car (cog-incoming-by-type WRD 'WordSequenceLink))))
 
+	; ------
 	; Place the word-instance list into sequential order.
 	; i.e. left-to-right order, as the word appear in a sentence.
 	(define (sort-word-inst-list LST)
@@ -62,6 +63,7 @@
 					(string->number (cog-name (get-index-of-winst wi))))
 				(< (get-num wa) (get-num wb)))))
 
+	; ------
 	; Return a sorted list of the other word-instances that this
 	; word links to. To avoid double-counting, this returns only the
 	; links connecting to the right.
@@ -84,7 +86,15 @@
 						))
 					(cog-incoming-by-type WIN 'ListLink)))))
 
-	; -------------------
+	; ------
+	; Return the name of a link connecting lwin (left word
+	; instance) and rwin (right word instance). There must actually
+	; be a link connecting them, else bad things happen.
+	(define (get-link-name lwin rwin)
+		(gar (car (cog-incoming-by-type (ListLink lwin rwin)
+			'LinkGrammarRelationshipNode))))
+
+	; ----------------------------------------
 	; Comparison functions
 
 	; The length of the sentences should match.
@@ -117,6 +127,8 @@
 	; Compare links. For the given words, find the words that link to
 	; the right. Verify that there are the same number of them, and
 	; that they have the same targets.
+	; ewin should be a word-instance from the EN side
+	; owin should be the OTHER word instance.
 	(define (compare-links ewin owin)
 		(define ewrd (get-word-of-winst ewin))
 		(define elinks (get-linked-winst ewin))
