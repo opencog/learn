@@ -42,6 +42,7 @@
 	(define missing-links 0)
 	(define extra-links 0)
 	(define link-target-miscomp 0)
+	(define missing-link-types '())
 
 	; ----------------------------------------
 	; Misc utilities
@@ -95,6 +96,20 @@
 		(gar (car (cog-incoming-by-type (ListLink lwin rwin)
 			'LinkGrammarRelationshipNode))))
 
+	; Return the string-name of a link. Truncate link subtypes.
+	(define (get-link-str-name lwin rwin)
+		(cog-name (get-link-name lwin rwin)))
+
+	; ------
+	; Increment count for a missing link type
+	(define (incr-link-str-count link-name)
+		(define cnt (assoc-ref missing-link-types link-name))
+		(set! missing-link-types
+			(assoc-set! missing-link-types link-name (+ 1 cnt))))
+
+	(define (incr-link-count lwin rwin)
+		(incr-link-str-count (get-link-str-name lwin rwin)))
+
 	; ----------------------------------------
 	; Comparison functions
 
@@ -147,6 +162,8 @@
 				(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
 					elinks-len olinks-len ewrd)
 				(set! link-count-miscompares (+ 1 link-count-miscompares))))
+
+;			(incr-link-count  ewin))
 
 		(for-each
 			(lambda (erwi orwi)
