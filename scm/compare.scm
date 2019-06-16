@@ -6,12 +6,9 @@
 ; ---------
 ; Goal is to obtain accuracy, recall vs. LG.
 ;
+(use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog exec) (opencog nlp))
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
-
-
-(LgDictNode "en")
-
 
 
 (define (make-lg-comparator en-dict other-dict)
@@ -57,17 +54,24 @@
 	; Return a sorted list of the other word-instances that this
 	; word links to. To avoid double-counting, this returns only the
 	; links connecting to the right.
-	(define (get-linked-winst WRD)
+	(define (get-linked-winst WIN)
 		(sort-word-inst-list
 			(map gdr
 				; Accept only those ListLinks that are bonfide word-links
 				(filter
 					(lambda (lili)
-						(define evli (cog-incoming-by-type lili 'EvaluationLink))
-						(and (equal? (gar lili) WRD)
-							(not (equal? '() evli))
-							(equal? 'LgLinkInstanceNode (cog-type (gar (car evli))))))
-					(cog-incoming-by-type WRD 'ListLink)))))
+						(and
+							; Is the first word (left word) ours?
+							(equal? (gar lili) WIN)
+							; Are any of the possible EvaluationLink's
+							; an LG relation? If so, we are happy.
+							(any
+								(lambda (evlnk)
+									(equal? 'LinkGrammarRelationshipNode
+										(cog-type (gar evlnk))))
+								(cog-incoming-by-type lili 'EvaluationLink))
+						))
+					(cog-incoming-by-type WIN 'ListLink)))))
 
 	; -------------------
 	; Comparison functions
