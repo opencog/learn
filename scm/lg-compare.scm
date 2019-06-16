@@ -251,7 +251,8 @@
 			)
 			en-sorted other-sorted)
 
-		(format #t "Finish compare of sentence ~A\n" total-compares)
+		(format #t "Finish compare of sentence ~A: \"~A\"\n"
+			total-compares SENT)
 	)
 
 	; -------------------
