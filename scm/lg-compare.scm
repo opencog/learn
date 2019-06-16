@@ -264,7 +264,8 @@
 		(define en-sorted (sort-word-inst-list en-word-inst-list))
 		(define other-sorted (sort-word-inst-list other-word-inst-list))
 
-		(has-missing-words other-sorted)
+		(if (has-missing-words other-sorted)
+			(format #t "Dictionary is missing words for sentence \"~A"\n" SENT))
 
 		(set! total-compares (+ total-compares 1))
 
