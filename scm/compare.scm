@@ -100,12 +100,15 @@
 
 	; Return the string-name of a link. Truncate link subtypes.
 	(define (get-link-str-name lwin rwin)
-		(cog-name (get-link-name lwin rwin)))
+		(string-trim-right
+			(cog-name (get-link-name lwin rwin))
+			(char-set-adjoin char-set:lower-case #\*)))
 
 	; ------
 	; Increment count for a missing link type
 	(define (incr-link-str-count link-name)
 		(define cnt (assoc-ref missing-link-types link-name))
+		(if (not cnt) (set! cnt 0))
 		(set! missing-link-types
 			(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
@@ -257,6 +260,7 @@
 			"Found ~A link-count miscompares with ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
+		(format #t "Missing link-type counts: ~A\n" missing-link-types)
 	)
 
 	; -------------------
