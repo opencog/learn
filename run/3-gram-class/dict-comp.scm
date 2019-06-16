@@ -16,16 +16,18 @@
 (use-modules (ice-9 rdelim))
 (use-modules (opencog) (opencog nlp) (opencog nlp learn))
 
-(if (not (equal? 2 (length (program-arguments))))
+; Check usage
+(if (not (equal? 3 (length (program-arguments))))
 	(begin
 		(format #t
 			"Usage: guile -s dict-comp.scm <dict-name> <sentence-file-name>\n")
 		(exit #f)))
 
-(define test-dict (first (program-arguments)))
-(define sent-file (second (program-arguments)))
+(define test-dict (second (program-arguments)))
+(define sent-file (third (program-arguments)))
 
-(if (not (access? test-dict R_OK))
+; Check file access
+(if (not (equal? (stat:type (stat test-dict)) 'directory))
 	(begin
 		(format #t "Cannot find dictionary ~A\n" test-dict)
 		(exit #f)))
@@ -34,6 +36,10 @@
 	(begin
 		(format #t "Cannot find sentence file ~A\n" sent-file)
 		(exit #f)))
+
+; Perform comparison
+(format #t "Verifying dicationary \"~A\" with sentences from \"~A\"\n"
+	test-dict sent-file)
 
 (define compare
 	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)))
@@ -47,3 +53,6 @@
 		(compare #f)))
 
 (process-file (open sent-file O_RDONLY))
+
+(format #t "Finished verifying dicationary \"~A\" with sentences from \"~A\"\n"
+	test-dict sent-file)

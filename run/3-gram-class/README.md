@@ -17,4 +17,8 @@ You WILL be copying around a lot of databases!
 
 A quick overview:
 
-* `foo`
+* `dict-comp.scm` -- Perform validation of dictionary. Takes two
+  arguments: the dictironary name, and a file containing sentences.
+  It reads the sentence file, compares them to parses from the
+  default Link Grammar English dictionary, and tabulates results.
+  Usage: `guile -s dict-comp.scm <dict-name> <sentence-file-name>`
