@@ -14,12 +14,25 @@
 
 
 
-(define (lg-compare en-dict other-dict SENT)
+(define (make-lg-comparator en-dict other-dict)
 "
-  lg-compare
-  SENT should be a string sentence
-  EN-DICT and OTHER-DICT should be LgDictNodes.
+  lg-compare EN-DICT OTHER-DICT - Return a sentence comparison function.
 
+  EN-DICT and OTHER-DICT should be the two LgDictNodes to compare.
+  The code makes weak assumptinos that EN-DICT is the reference or
+  "golden" lexis to compare to, so that any differences found in
+  OTHER-DICT are blamed on OTHER-DICT.
+
+  This returns a comparison function.  To use it, pass one or more
+  sentence strings to it; it will compare the resulting parses.
+  When finished, pass it `#f`, and it will print a summary report.
+
+  Example usage:
+     (define compare (make-lg-comparator
+        (LgDictNode "en") (LgDictNode "micro-fuzz")))
+     (compare "I saw her face")
+     (compare "I swooned to the floor")
+     (compare #f)
 "
 	; -------------------
 	; Misc utilities
@@ -33,6 +46,7 @@
 		(gdr (car (cog-incoming-by-type WRD 'WordSequenceLink))))
 
 	; Place the word-instance list into sequential order.
+	; i.e. left-to-right order, as the word appear in a sentence.
 	(define (sort-word-inst-list LST)
 		(sort LST
 			(lambda (wa wb)
@@ -89,56 +103,59 @@
 	)
 
 	; -------------------
-	; Get a parse, one for each dictionary.
-	(define en-sent (cog-execute!
-		(LgParseLink (PhraseNode SENT) en-dict (NumberNode 1))))
-	(define other-sent (cog-execute!
-		(LgParseLink (PhraseNode SENT) other-dict (NumberNode 1))))
+	; The main comparison function
+	(lambda (SENT)
+		; Get a parse, one for each dictionary.
+		(define en-sent (cog-execute!
+			(LgParseLink (PhraseNode SENT) en-dict (NumberNode 1))))
+		(define other-sent (cog-execute!
+			(LgParseLink (PhraseNode SENT) other-dict (NumberNode 1))))
 
-	; Since only one parse, we expect only one...
-	(define en-parse (gar (car
-		(cog-incoming-by-type en-sent 'ParseLink))))
-	(define other-parse (gar (car
-		(cog-incoming-by-type other-sent 'ParseLink))))
+		; Since only one parse, we expect only one...
+		(define en-parse (gar (car
+			(cog-incoming-by-type en-sent 'ParseLink))))
+		(define other-parse (gar (car
+			(cog-incoming-by-type other-sent 'ParseLink))))
 
-	; Get a list of the words in each parse.
-	(define other-word-inst-list
-		(map gar (cog-incoming-by-type other-parse 'WordInstanceLink)))
+		; Get a list of the words in each parse.
+		(define other-word-inst-list
+			(map gar (cog-incoming-by-type other-parse 'WordInstanceLink)))
 
-	(define left-wall (WordNode "###LEFT-WALL###"))
-	(define right-wall (WordNode "###RIGHT-WALL###"))
+		(define left-wall (WordNode "###LEFT-WALL###"))
+		(define right-wall (WordNode "###RIGHT-WALL###"))
 
-	; Get the list of words in the standard dict.
-	; XXX Temp hack. Currently, the test dicts are missing LEFT-WALL
-	; and RIGHT-WALL and so we filter these out manually. This
-	; should be made more elegant.
-	(define en-word-inst-list
-		(filter
-			(lambda (winst)
-				(define wrd (get-word-of-winst winst))
-				(and
-					(not (equal? wrd left-wall))
-					(not (equal? wrd right-wall))))
-			(map gar (cog-incoming-by-type en-parse 'WordInstanceLink))))
+		; Get the list of words in the standard dict.
+		; XXX Temp hack. Currently, the test dicts are missing LEFT-WALL
+		; and RIGHT-WALL and so we filter these out manually. This
+		; should be made more elegant.
+		(define en-word-inst-list
+			(filter
+				(lambda (winst)
+					(define wrd (get-word-of-winst winst))
+					(and
+						(not (equal? wrd left-wall))
+						(not (equal? wrd right-wall))))
+				(map gar (cog-incoming-by-type en-parse 'WordInstanceLink))))
 
-	; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
-	(define en-sorted (sort-word-inst-list en-word-inst-list))
-	(define other-sorted (sort-word-inst-list other-word-inst-list))
+		; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
+		(define en-sorted (sort-word-inst-list en-word-inst-list))
+		(define other-sorted (sort-word-inst-list other-word-inst-list))
 
-	(define ewlilen (length en-sorted))
-	(define owlilen (length other-sorted))
+		(define ewlilen (length en-sorted))
+		(define owlilen (length other-sorted))
 
-	; Both should have the same length, assuming the clever
-	; English tokenizer hasn't tripped.
-	(if (not (eq? ewlilen owlilen))
-		(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen))
+		; Both should have the same length, assuming the clever
+		; English tokenizer hasn't tripped.
+		(if (not (eq? ewlilen owlilen))
+			(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen))
 
-	(for-each
-		(lambda (ewrd owrd)
-			(compare-words ewrd owrd)
-			(compare-links ewrd owrd)
-		)
-		en-sorted other-sorted)
+		(for-each
+			(lambda (ewrd owrd)
+				(compare-words ewrd owrd)
+				(compare-links ewrd owrd)
+			)
+			en-sorted other-sorted)
 
-	(format #t "Finish compare\m")
+		(format #t "Finish compare\m")
+	)
 )
