@@ -34,6 +34,8 @@
 	; -------------------
 	; Stats we are keeping
 	(define total-compares 0)
+	(define total-words 0)
+	(define total-links 0)
 	(define length-miscompares 0)
 	(define word-miscompares 0)
 	(define link-count-miscompares 0)
@@ -89,6 +91,8 @@
 		(define ewlilen (length en-sorted))
 		(define owlilen (length other-sorted))
 
+		(set! total-words (+ total-words ewlilen))
+
 		; Both should have the same length, assuming the clever
 		; English tokenizer hasn't tripped.
 		(if (not (equal? ewlilen owlilen))
@@ -118,9 +122,12 @@
 		(define olinks (get-linked-winst owin))
 		(define elinks-len (length elinks))
 		(define olinks-len (length olinks))
+
+		(set! total-links (+ total-links elinks-len))
+
 		(if (not (equal? elinks-len olinks-len))
 			(begin
-				(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
+				(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
 					elinks-len olinks-len ewrd)
 				(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
@@ -130,8 +137,8 @@
 				(define orwrd (get-word-of-winst orwi))
 				(if (not (equal? erwrd orwrd))
 					(begin
-						(format #t "Miscompare of link targets: ~A vs ~A for ~A\n"
-							erwrd orwrd ewrd)
+						(format #t "Bad link target: ~A should go to ~A not ~A"
+							ewrd erwrd orwrd)
 						(set! link-target-miscomp (+ 1 link-target-miscomp)))))
 			elinks olinks)
 	)
@@ -188,12 +195,13 @@
 			)
 			en-sorted other-sorted)
 
-		(format #t "Finish compare of sentence ~A\n", total-compares)
+		(format #t "Finish compare of sentence ~A\n" total-compares)
 	)
 
 	; -------------------
 	(define (report-stats)
-		(format #t "Finished comparing ~A parses\n" total-compares)
+		(format #t "Finished comparing ~A parses (~A words, ~A links)\n"
+			total-compares total-words total-links)
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
 		(format #t "Found ~A link-count miscompares\n" link-count-miscompares)
