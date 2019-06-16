@@ -39,6 +39,7 @@
 	(define length-miscompares 0)
 	(define word-miscompares 0)
 	(define link-count-miscompares 0)
+	(define link-count-differences 0)
 	(define link-target-miscomp 0)
 
 	; -------------------
@@ -124,6 +125,8 @@
 		(define olinks-len (length olinks))
 
 		(set! total-links (+ total-links elinks-len))
+		(set! link-count-differences
+			(+ link-count-differences (abs (- elinks-len olinks-len))))
 
 		(if (not (equal? elinks-len olinks-len))
 			(begin
@@ -204,7 +207,9 @@
 			total-compares total-words total-links)
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
-		(format #t "Found ~A link-count miscompares\n" link-count-miscompares)
+		(format #t "Found ~A link-count miscompares with ~A differences\n"
+			link-count-miscompares
+			link-count-differences)
 		(format #t "Found ~A link-target miscompares\n" link-target-miscomp)
 	)
 
