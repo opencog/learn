@@ -35,6 +35,9 @@
 	; Stats we are keeping
 	(define total-compares 0)
 	(define length-miscompares 0)
+	(define word-miscompares 0)
+	(define link-count-miscompares 0)
+	(define link-target-miscomp 0)
 
 	; -------------------
 	; Misc utilities
@@ -99,9 +102,11 @@
 	; the sequences could ever mis-compare...
 	(define (compare-words ewrd owrd)
 		(if (not (equal? (get-word-of-winst ewrd) (get-word-of-winst owrd)))
-			(format #t "Word miscompare at ~A: ~A vs ~A\n"
-				(get-index-of-winst ewrd)
-				(get-word-of-winst ewrd) (get-word-of-winst owrd))))
+			(begin
+				(format #t "Word miscompare at ~A: ~A vs ~A\n"
+					(get-index-of-winst ewrd)
+					(get-word-of-winst ewrd) (get-word-of-winst owrd))
+				(set! word-miscompares (+ 1 word-miscompares)))))
 
 	; ---
 	; Compare links. For the given words, find the words that link to
@@ -114,15 +119,20 @@
 		(define elinks-len (length elinks))
 		(define olinks-len (length olinks))
 		(if (not (equal? elinks-len olinks-len))
-			(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
-				elinks-len olinks-len ewrd))
+			(begin
+				(format #t "Miscompare number of right-links: ~A vs ~A for ~A\n"
+					elinks-len olinks-len ewrd)
+				(set! link-count-miscompares (+ 1 link-count-miscompares))))
+
 		(for-each
 			(lambda (erwi orwi)
 				(define erwrd (get-word-of-winst erwi))
 				(define orwrd (get-word-of-winst orwi))
 				(if (not (equal? erwrd orwrd))
-					(format #t "Miscompare of link targets: ~A vs ~A for ~A\n"
-						erwrd orwrd ewrd)))
+					(begin
+						(format #t "Miscompare of link targets: ~A vs ~A for ~A\n"
+							erwrd orwrd ewrd)
+						(set! link-target-miscomp (+ 1 link-target-miscomp)))))
 			elinks olinks)
 	)
 
@@ -185,6 +195,9 @@
 	(define (report-stats)
 		(format #t "Finished comparing ~A parses\n" total-compares)
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
+		(format #t "Found ~A word-miscompares\n" word-miscompares)
+		(format #t "Found ~A link-count miscompares\n" link-count-miscompares)
+		(format #t "Found ~A link-target miscompares\n" link-target-miscomp)
 	)
 
 	; -------------------
