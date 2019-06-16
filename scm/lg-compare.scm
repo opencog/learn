@@ -127,11 +127,11 @@
 	; Return the number of words in the sentence that are not in
 	; the test dictionary. This also adds them to the mising-words
 	; set.
-	(define (num-missing-words winli)
+	(define (num-missing-words winli dict)
 		(fold
 			(lambda (win cnt)
 				(define wrd (get-word-of-winst win))
-				(cog-execute! (LgDictEntry wrd en-dict))
+				(cog-execute! (LgDictEntry wrd dict))
 				(if (not (equal? 0 (cog-incoming-size-by-type wrd 'LgDisjunct)))
 					(begin
 						(missing-words wrd)
@@ -141,7 +141,7 @@
 
 	; Return #t if the sentnce contains missing words.
 	(define (has-missing-words winli)
-		(if (< 0 (num-missing-words winli))
+		(if (< 0 (num-missing-words winli other-dict))
 			(begin
 				(set! incomplete-dict (+ 1 incomplete-dict))
 				#t)
@@ -263,6 +263,8 @@
 		; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
 		(define en-sorted (sort-word-inst-list en-word-inst-list))
 		(define other-sorted (sort-word-inst-list other-word-inst-list))
+
+		(has-missing-words other-sorted)
 
 		(set! total-compares (+ total-compares 1))
 
