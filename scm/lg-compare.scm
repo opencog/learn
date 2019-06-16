@@ -1,22 +1,26 @@
 ;
-; compare.scm -- Compare parses from two different LG dictionaries.
+; lg-compare.scm -- Compare parses from two different LG dictionaries.
 ;
 ; -----------------------------------------------------------------
 ; Overview:
 ; ---------
-; Goal is to obtain accuracy, recall vs. LG.
+; The general goal of the code here is to obtain the accuracy, recall
+; and other statistics of a test-dictionary, compared to a gold-standard
+; dictionary. This is done by creating a comparison function that can
+; parse sentences with both dictionaries, and then verifies the presence
+; or absence of links between words.
 ;
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog exec) (opencog nlp))
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define (make-lg-comparator en-dict other-dict)
+(define-public (make-lg-comparator en-dict other-dict)
 "
-  lg-compare EN-DICT OTHER-DICT - Return a sentence comparison function.
+  lg-compare GOLD-DICT OTHER-DICT - Return a sentence comparison function.
 
-  EN-DICT and OTHER-DICT should be the two LgDictNodes to compare.
-  The code makes weak assumptinos that EN-DICT is the reference or
+  GOLD-DICT and OTHER-DICT should be the two LgDictNodes to compare.
+  The code makes weak assumptions that GOLD-DICT is the reference or
   \"golden\" lexis to compare to, so that any differences found in
   OTHER-DICT are blamed on OTHER-DICT.
 

@@ -18387,6 +18387,14 @@ createdb en_mini_fuzz -T en_mini_marg
 (load "/tmp/c.scm")
 (lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
 
+(define compare (make-lg-comparator (LgDictNode "en") (LgDictNode "micro-fuzz")))
+     (compare "I saw her face")
+     (compare "I swooned to the floor")
+     (compare #f)
+
+LinkGrammarRelationshipNode
+
+
 Argh.
 Segmentation fault. linkage/sane.c:76
 76					    path[gwordlist_len(path)-1]->sent_wordidx)
