@@ -59,6 +59,7 @@
 	(define extra-links 0)
 	(define missing-link-types '())
 	(define missing-words (make-atom-set))
+	(define vocab-words (make-atom-set))
 
 	; ----------------------------------------
 	; Misc utilities
@@ -177,12 +178,14 @@
 	; The words should compare. We are not currently comparing the
 	; sequence; doing so would be complicated, and I don't see how
 	; the sequences could ever mis-compare...
-	(define (compare-words ewrd owrd)
-		(if (not (equal? (get-word-of-winst ewrd) (get-word-of-winst owrd)))
+	(define (compare-words ewinst owinst)
+		(define ewrd (get-word-of-winst ewinst))
+		(define owrd (get-word-of-winst owinst))
+		(vocab-words ewrd)
+		(if (not (equal? ewrd owrd))
 			(begin
 				(format #t "Word miscompare at ~A: ~A vs ~A\n"
-					(get-index-of-winst ewrd)
-					(get-word-of-winst ewrd) (get-word-of-winst owrd))
+					(get-index-of-winst ewinst) ewrd owrd)
 				(set! word-miscompares (+ 1 word-miscompares)))))
 
 	; ---
@@ -319,18 +322,22 @@
 			(+ link-recall link-precision)))
 
 		(format #t
-			"Examined ~A sentences; ~A had words not in dictionary.\n"
-			total-sentences incomplete-dict)
-		(format #t "Finished comparing ~A parses; ~A parsed incorrectly\n"
-			total-compares bad-sentences)
-		(format #t "Found ~A words, expected to find ~A links\n"
-			total-words total-links)
+			"Examined ~A sentences; ~A had words not in dictionary (~6F %).\n"
+			total-sentences incomplete-dict
+			(/ (* 100.0 incomplete-dict) total-sentences))
+		(format #t
+			"Finished comparing ~A parses; ~A parsed incorrectly (~6F %).\n"
+			total-compares bad-sentences
+			(/ (* 100.0 bad-sentences) total-compares))
+		(format #t
+			"Found ~A word instances, ~A words; expected to find ~A links\n"
+			total-words (length (vocab-words #f)) total-links)
 		(format #t "Dictionary was missing ~A words\n"
 			(length (missing-words #f)))
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
 		(format #t
-			"Found ~A words w/linkage diff; ~A missing and ~A extra links\n"
+			"Found ~A words w/linkage diffs; ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
 
