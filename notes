@@ -18483,6 +18483,39 @@ so precision = TP/(TP+FP) = (/ 1393 1586) = 0.8783
 F1 = harmonic-mean(precision, recall) =
    (* 2 0.5863 0.8783) / (+ 0.5863 0.8783) == 0.7032
 
+Automated:
+Examined 1832 sentences; 1270 had words not in dictionary (69.323 %).
+Finished comparing 562 parses; 482 parsed differently (85.765 %).
+Found 2738 word instances, 176 words; expected to find 2376 links
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1050 words w/linkage diffs; 983 missing and 193 extra links
+Link precision=0.8783 recall=0.5863 F1=0.7032
+
+Missing link-type counts: ((O . 213) (I . 165) (SI . 126) (MV . 102) (D
+. 96) (B . 78) (J . 73) (P . 60) (S . 54) (IV . 42) (R . 34) (CO . 24)
+(K . 22) (M . 19) (EL . 15) (E . 15) (WV . 14) (CV . 8) (TO . 8) (X . 7)
+(A . 7) (VJ . 7) (Q . 6) (SJ . 6) (IDLR . 5) (C . 5) (W . 5) (IDBKD . 4)
+(PF . 4) (U . 3) (DD . 3) (EA . 3) (SFI . 3) (OF . 2) (EE . 2) (SF . 2)
+(H . 2) (IDPZ . 2) (QI . 2) (IDQA . 1) (IDLE . 1) (PP . 1) (BW . 1) (AF
+. 1) (RS . 1) (EB . 1))
+
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat steak egg puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye feed 've comb 's toys 'll judy fun
+mirror knock hang button playing bunny hi dolly puppet dale throw okay
+calling smell sing snap knocked balloon turtle telephone color stack
+butterfly pat shoe kitty finger mommy scratchy blocks apple pick dragon
+doggie clock count brush horsie tower cup sleeping mouse untie pig zip
+ear block peekaboo honey toy cow cage gonna ducks pocketbook monkey
+paul)
+
+Finished verifying dicationary "micro-fuzz" with sentences from
+"child-directed-speech.txt"
+
+
 
 
 TODO:
