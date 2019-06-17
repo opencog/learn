@@ -320,14 +320,15 @@
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
 		(format #t
-			"Found ~A link-count miscompares with ~A missing and ~A extra links\n"
+			"Found ~A sents w/linkage diff; ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
 
-		(format #t "Precision=~A recall=~A F1=~A\n"
-			precision recall f1)
+		(format #t "Precision=~6F recall=~6F F1=~6F\n"
+			(exact->inexact precision) recall f1)
 		(newline)
 		(format #t "Missing link-type counts: ~A\n" missing-link-types)
+		(newline)
 		(format #t "Missing words: ~A\n"
 			(map cog-name (missing-words #f)))
 	)
