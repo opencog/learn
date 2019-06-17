@@ -48,6 +48,7 @@
 	(define total-sentences 0)
 	(define total-compares 0)
 	(define incomplete-dict 0)
+	(define temp-cnt 0)
 	(define bad-sentences 0)
 	(define total-words 0)
 	(define total-links 0)
@@ -300,7 +301,7 @@
 					en-sorted other-sorted)
 
 				(if (not (equal? temp-cnt link-count-miscompares))
-					(set! bad-sentences (+ 1 bad-sentences))
+					(set! bad-sentences (+ 1 bad-sentences)))
 				(format #t "Finish compare of sentence ~A: \"~A\"\n"
 					total-compares SENT)
 			))
@@ -308,12 +309,14 @@
 
 	; -------------------
 	(define (report-stats)
-		(define expected-positives (exact->inexact total-links))
-		(define true-positives (- total-links missing-links))
-		(define false-positives extra-links)
-		(define recall (/ true-positives expected-positives))
-		(define precision (/ true-positives (+ true-positives false-positives)))
-		(define f1 (/ (* 2.0 recall precision) (+ recall precision)))
+		(define link-expected-positives (exact->inexact total-links))
+		(define link-true-positives (- link-expected-positives missing-links))
+		(define link-false-positives extra-links)
+		(define link-recall (/ link-true-positives link-expected-positives))
+		(define link-precision (/ link-true-positives
+			(+ link-true-positives link-false-positives)))
+		(define link-f1 (/ (* 2.0 link-recall link-precision)
+			(+ link-recall link-precision)))
 
 		(format #t
 			"Examined ~A sentences; ~A had words not in dictionary.\n"
@@ -331,12 +334,11 @@
 			link-count-miscompares
 			missing-links extra-links)
 
-		(format #t "Precision=~6F recall=~6F F1=~6F\n"
-			(exact->inexact precision) recall f1)
+		(format #t "Link precision=~6F recall=~6F F1=~6F\n"
+			link-precision link-recall link-f1)
 		(newline)
-		(format #t "Missing link-type counts: ~A\n" missing-link-types)
-		(newline)
-		(format #t "Missing words: ~A\n"
+		(format #t "Missing link-type counts: ~A\n\n" missing-link-types)
+		(format #t "Missing words: ~A\n\n"
 			(map cog-name (missing-words #f)))
 	)
 
