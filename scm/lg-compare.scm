@@ -278,7 +278,7 @@
 		(set! total-sentences (+ total-sentences 1))
 
 		(if dict-has-missing-words
-			(format #t "Dictionary is missing words for sentence \"~A\n" SENT))
+			(format #t "Dictionary is missing words for sentence \"~A\"\n" SENT))
 
 		; Don't do anything more, if the dict is missing words in the
 		; sentence.
@@ -303,10 +303,17 @@
 
 	; -------------------
 	(define (report-stats)
+		(define expected-positives (exact->inexact total-links))
+		(define true-positives (- total-links missing-links))
+		(define false-positives extra-links)
+		(define recall (/ true-positives expected-positives))
+		(define precision (/ true-positives (+ true-positives false-positives)))
+		(define f1 (/ (* 2.0 recall precision) (+ recall precision)))
+
 		(format #t
 			"Examined ~A sentences; ~A had words not in dictionary.\n"
 			total-sentences incomplete-dict)
-		(format #t "Finished comparing ~A parses (~A words, ~A links)\n"
+		(format #t "Finished comparing ~A parses (~A words, ~A expected links)\n"
 			total-compares total-words total-links)
 		(format #t "Dictionary was missing ~A words\n"
 			(length (missing-words #f)))
@@ -316,6 +323,10 @@
 			"Found ~A link-count miscompares with ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
+
+		(format #t "Precision=~A recall=~A F1=~A\n"
+			precision recall f1)
+		(newline)
 		(format #t "Missing link-type counts: ~A\n" missing-link-types)
 		(format #t "Missing words: ~A\n"
 			(map cog-name (missing-words #f)))

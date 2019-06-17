@@ -18472,6 +18472,16 @@ Found 0 word-miscompares
 Found 1050 link-count miscompares with 983 missing and 193 extra links
 
 So, by hand:
+expected positives = P = 2376 (the expected links)
+of these, got (- 2376 983) == 1393 links = TP
+    so recall = (/ 1393 2376) = TP/P = 0.5863
+
+including extras, got 1393+193 = 1586 links total
+extras = false-positives = FP == 193
+so precision = TP/(TP+FP) = (/ 1393 1586) = 0.8783
+
+F1 = harmonic-mean(precision, recall) =
+   (* 2 0.5863 0.8783) / (+ 0.5863 0.8783) == 0.7032
 
 
 
