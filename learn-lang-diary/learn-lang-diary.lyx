@@ -36574,7 +36574,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-2376
+2375
 \end_layout
 
 \end_inset
@@ -37027,11 +37027,15 @@ silver
 
 \begin_layout Standard
 Results for micro-discrim below.
- Expecting this to be worse: the gram classes are looser, and casual inspection
- suggests that they are lower quality.
- Well, lets see what happens.
+ The gram classes are looser, and casual inspection suggests that they are
+ lower quality.
+ This behaves in a not-too-surprising way: precision drops (more junk links
+ produced), while recall improves (the junk links just happen to go to the
+ right places).
+ Overall F1 score is better, which is surprising.
  Same base vocab of 1600 words.
- 
+ The values in the Sents, Skip, Parsed, Words, Vocab, Links columns are
+ unchanged, since both are build on the micro dataset.
 \end_layout
 
 \begin_layout Standard
@@ -37282,7 +37286,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+69%
 \end_layout
 
 \end_inset
@@ -37291,7 +37295,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+562
 \end_layout
 
 \end_inset
@@ -37300,7 +37304,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+82%
 \end_layout
 
 \end_inset
@@ -37309,7 +37313,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2738
 \end_layout
 
 \end_inset
@@ -37318,7 +37322,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+176
 \end_layout
 
 \end_inset
@@ -37327,7 +37331,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2375
 \end_layout
 
 \end_inset
@@ -37336,7 +37340,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.838
 \end_layout
 
 \end_inset
@@ -37345,7 +37349,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.666
 \end_layout
 
 \end_inset
@@ -37354,7 +37358,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.742
 \end_layout
 
 \end_inset
@@ -37383,7 +37387,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+86%
 \end_layout
 
 \end_inset
@@ -37392,7 +37396,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+82
 \end_layout
 
 \end_inset
@@ -37401,7 +37405,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+98%
 \end_layout
 
 \end_inset
@@ -37410,7 +37414,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+666
 \end_layout
 
 \end_inset
@@ -37419,7 +37423,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+209
 \end_layout
 
 \end_inset
@@ -37428,7 +37432,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+649
 \end_layout
 
 \end_inset
@@ -37437,7 +37441,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.819
 \end_layout
 
 \end_inset
@@ -37446,7 +37450,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.570
 \end_layout
 
 \end_inset
@@ -37455,7 +37459,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.672
 \end_layout
 
 \end_inset
@@ -37484,7 +37488,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+82%
 \end_layout
 
 \end_inset
@@ -37493,7 +37497,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+776
 \end_layout
 
 \end_inset
@@ -37502,7 +37506,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+96%
 \end_layout
 
 \end_inset
@@ -37511,7 +37515,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4901
 \end_layout
 
 \end_inset
@@ -37520,7 +37524,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+591
 \end_layout
 
 \end_inset
@@ -37529,7 +37533,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4359
 \end_layout
 
 \end_inset
@@ -37538,7 +37542,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.717
 \end_layout
 
 \end_inset
@@ -37547,7 +37551,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.559
 \end_layout
 
 \end_inset
@@ -37556,7 +37560,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.628
 \end_layout
 
 \end_inset
@@ -37585,7 +37589,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+90%
 \end_layout
 
 \end_inset
@@ -37594,7 +37598,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+24
 \end_layout
 
 \end_inset
@@ -37603,7 +37607,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+100%
 \end_layout
 
 \end_inset
@@ -37612,7 +37616,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+169
 \end_layout
 
 \end_inset
@@ -37621,7 +37625,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+95
 \end_layout
 
 \end_inset
@@ -37630,7 +37634,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+156
 \end_layout
 
 \end_inset
@@ -37639,7 +37643,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.758
 \end_layout
 
 \end_inset
@@ -37648,7 +37652,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.607
 \end_layout
 
 \end_inset
@@ -37657,7 +37661,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.674
 \end_layout
 
 \end_inset
@@ -37686,7 +37690,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+85%
 \end_layout
 
 \end_inset
@@ -37695,7 +37699,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+377
 \end_layout
 
 \end_inset
@@ -37704,7 +37708,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+99%
 \end_layout
 
 \end_inset
@@ -37713,7 +37717,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3323
 \end_layout
 
 \end_inset
@@ -37722,7 +37726,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+527
 \end_layout
 
 \end_inset
@@ -37731,7 +37735,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3220
 \end_layout
 
 \end_inset
@@ -37740,7 +37744,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.731
 \end_layout
 
 \end_inset
@@ -37749,7 +37753,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.591
 \end_layout
 
 \end_inset
@@ -37758,7 +37762,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.654
 \end_layout
 
 \end_inset

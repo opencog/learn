@@ -36,6 +36,7 @@
 			(lambda (CLS-A CLS-B) (> (nmemb CLS-A) (nmemb CLS-B)))))
 	(define multi-cnt 0)
 	(define single-cnt 0)
+	(define hi-cnt 10000000000)
 	(format #t "There are ~A words placed into ~A classes\n"
 		(num-classified-words) (cog-count-atoms 'WordClassNode))
 	
@@ -49,10 +50,16 @@
 		multi-cnt single-cnt)
 	(for-each
 		(lambda (CLS)
-			(if (< 1 (nmemb CLS))
-				(format #t "Class <~A> has ~A members\n"
-					(cog-name CLS) (nmemb CLS))))
+			(define n (nmemb CLS))
+			(if (< 1 n)
+				(if (< n hi-cnt)
+					(begin
+						(set! hi-cnt n)
+						(format #t "\nClasses with ~A members: <~A>"
+							n (cog-name CLS)))
+					(format #t " <~A>" (cog-name CLS)))))
 		by-size)
+	(newline)
 )
 
 ; Print the members of one class.
