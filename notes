@@ -18370,6 +18370,20 @@ Existing classes=0 singletons=0 done=0
 
 So that took 3.5 hours -- faster than fuzz. Didn't seem as goood...
 
+     (define asc (add-singleton-classes psa))
+     (asc 'create-hi-count-singles 1)  ; 1562
+
+     (define gca (make-gram-class-api))
+     (define gcs (add-pair-stars gca))
+     (define gcf (add-wordclass-filter gcs))
+     (batch-all-pair-mi gcf)
+
+
+(use-modules (opencog nlp lg-export))
+(export-csets gcf "dict.db" "EN_us")
+
+
+
 
 ==========
 Review meaning ... 
@@ -18566,6 +18580,8 @@ Link precision=0.7520 recall=0.4981 F1=0.5993
 Finished verifying dicationary "micro-fuzz" with sentences from
 "ull-silver-short.txt"
 
+====
+micro-discrim
 
 
 
