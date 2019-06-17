@@ -18475,6 +18475,11 @@ createdb en_mini_fuzz -T en_mini_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 
 
+==========
+createdb en_mini_discrim -T en_mini_marg
+(gram-classify-greedy-discrim 0.5 4)
+
+
 ======
 (load "/tmp/c.scm")
 (lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
@@ -18659,7 +18664,6 @@ Finished verifying dicationary "micro-fuzz" with sentences from
 "ull-silver-short.txt"
 
 ====
-micro-discrim
 
 
 

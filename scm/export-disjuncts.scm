@@ -216,6 +216,7 @@
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
+			(is-open #t)
 			(secs (current-time))
 			(word-cache (make-atom-set))
 		)
@@ -333,10 +334,12 @@
 
 		; Write to disk, and close the database.
 		(define (shutdown)
-			(format #t "Finished inserting ~D records\n" nprt)
-			(dbi-query db-obj "END TRANSACTION;")
-			(dbi-close db-obj)
-		)
+			(if is-open
+				(begin
+					(set! is-open #f)
+					(format #t "Finished inserting ~D records\n" nprt)
+					(dbi-query db-obj "END TRANSACTION;")
+					(dbi-close db-obj))))
 
 		; Close the DB if an exception is thrown. But otherwise,
 		; let the excpetion pass through to the user.
@@ -412,13 +415,15 @@
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
 		(dbi-query db-obj "BEGIN TRANSACTION;")
 
-		; Return function that adds data to the database
-		; If SECTION if #f, the database is closed.
-		(lambda (SECTION)
-			(if SECTION
-				(raii-add-section SECTION)
-				(shutdown))
-		))
+		; Methods on the object
+		(lambda (message . args)
+			(case message
+				((add-section)     (apply raii-add-section args))
+				((add-unknown)     (apply add-unknown-word args))
+				((shutdown)        (shutdown))
+			)
+		)
+	)
 )
 
 ;  ---------------------------------------------------------------------
@@ -465,7 +470,8 @@
 		(- (mi-source 'pair-fmi SECTION)))
 
 	; Create the SQLite3 database.
-	(define sectioner (make-db-adder DB-NAME LOCALE cost-fn))
+	(define dbase (make-db-adder DB-NAME LOCALE cost-fn))
+	(define (sectioner SECTION) (dbase 'add-section SECTION))
 
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
@@ -476,7 +482,7 @@
 	(looper 'for-each-pair sectioner)
 
 	; Close the database
-	(sectioner #f)
+	(dbase 'shutdown)
 )
 
 ;  ---------------------------------------------------------------------
