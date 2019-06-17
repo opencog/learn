@@ -48,6 +48,7 @@
 	(define total-sentences 0)
 	(define total-compares 0)
 	(define incomplete-dict 0)
+	(define bad-sentences 0)
 	(define total-words 0)
 	(define total-links 0)
 	(define length-miscompares 0)
@@ -285,6 +286,8 @@
 		(if (or (not dict-has-missing-words) INCLUDE-MISSING)
 			(begin
 				(set! total-compares (+ total-compares 1))
+				(set! temp-cnt link-count-miscompares)
+
 				; Compare sentence lengths
 				(compare-lengths en-sorted other-sorted)
 
@@ -296,6 +299,8 @@
 					)
 					en-sorted other-sorted)
 
+				(if (not (equal? temp-cnt link-count-miscompares))
+					(set! bad-sentences (+ 1 bad-sentences))
 				(format #t "Finish compare of sentence ~A: \"~A\"\n"
 					total-compares SENT)
 			))
@@ -313,14 +318,16 @@
 		(format #t
 			"Examined ~A sentences; ~A had words not in dictionary.\n"
 			total-sentences incomplete-dict)
-		(format #t "Finished comparing ~A parses (~A words, ~A expected links)\n"
-			total-compares total-words total-links)
+		(format #t "Finished comparing ~A parses; ~A parsed incorrectly\n"
+			total-compares bad-sentences)
+		(format #t "Found ~A words, expected to find ~A links\n"
+			total-words total-links)
 		(format #t "Dictionary was missing ~A words\n"
 			(length (missing-words #f)))
 		(format #t "Found ~A length-miscompares\n" length-miscompares)
 		(format #t "Found ~A word-miscompares\n" word-miscompares)
 		(format #t
-			"Found ~A sents w/linkage diff; ~A missing and ~A extra links\n"
+			"Found ~A words w/linkage diff; ~A missing and ~A extra links\n"
 			link-count-miscompares
 			missing-links extra-links)
 
