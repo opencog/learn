@@ -234,7 +234,7 @@
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
-				; Add the word to the new word-clas (obviously)
+				; Add the word to the new word-class (obviously)
 				(MemberLink WRD wcl)
 				; Copy the sections
 				(for-each

@@ -35904,7 +35904,7 @@ Grammars
 Different grammars obtained from above.
  All columns are obtained from the gram-class matrix report.
  The is, rows are grammatical classes.
- Columns are currently 
+ Matrix columns are currently 
 \begin_inset Quotes eld
 \end_inset
 
@@ -35913,6 +35913,57 @@ fake
 \end_inset
 
 , in that they are words, not word-classes.
+\end_layout
+
+\begin_layout Standard
+Table is reporting:
+\end_layout
+
+\begin_layout Itemize
+Size – Number of grammatical classs x Number of disjuncts.
+ Note that many of these classes are 
+\begin_inset Quotes eld
+\end_inset
+
+singleton classes
+\begin_inset Quotes erd
+\end_inset
+
+, containing only one word.
+ See the WC and Sing columns for a breakout of the number of classes with
+ one and more than one word.
+ WC+Sing equals the total.
+\end_layout
+
+\begin_layout Itemize
+Secs – Total number of Sections.
+ That is, total number of word-disjunct pairs in the matrix.
+\end_layout
+
+\begin_layout Itemize
+Obs'ns – Total number of observations of Sections.
+ How many have been observed.
+\end_layout
+
+\begin_layout Itemize
+Entropy – As usual for a matrix: 
+\begin_inset Formula $-\sum_{g,d}p\left(g,d\right)\log_{2}p\left(g,d\right)$
+\end_inset
+
+ Note that the log-base-two means this is in bits.
+\end_layout
+
+\begin_layout Itemize
+MI – As usual for a matrix.
+\end_layout
+
+\begin_layout Itemize
+WC – Number of grammatical classes with two or more words in them.
+\end_layout
+
+\begin_layout Itemize
+Sing – Number of singleton classes – that is, classes with only one word
+ in them.
 \end_layout
 
 \begin_layout Standard
@@ -36162,7 +36213,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3692 x 269K
 \end_layout
 
 \end_inset
@@ -36171,7 +36222,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+502K
 \end_layout
 
 \end_inset
@@ -36180,7 +36231,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+16.6M
 \end_layout
 
 \end_inset
@@ -36189,7 +36240,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+15.39
 \end_layout
 
 \end_inset
@@ -36198,7 +36249,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.35
 \end_layout
 
 \end_inset
@@ -36207,7 +36258,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+366
 \end_layout
 
 \end_inset
@@ -36216,7 +36267,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3326
 \end_layout
 
 \end_inset
@@ -36225,7 +36276,7 @@ en_micro_discrim
 \begin_inset Text
 
 \begin_layout Plain Layout
-en_mini_fuzz
+en_mini_fuzz_exp
 \end_layout
 
 \end_inset

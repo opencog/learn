@@ -18460,9 +18460,6 @@ RMS Count      2.2287E+4    +nan.0        614.0        +nan.0
 No MM^T data present
 No M^TM data present
 
-
-
-
 ==========
 Review meaning ... 
 why long pause after first Bingo! ?
@@ -18474,10 +18471,38 @@ which calls merge-project
 createdb en_mini_fuzz -T en_mini_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 
+To-do=0 ncls=366 sing=3326 nredo=3973 2019-06-17 19:25:00 -- "()" ---
+
+Atomspace holds 1340302 atoms
+Time since stats reset=220564 at Sat Jun 15 06:14:32 2019
+So this took... 61 hours == 2.5 days to process.
+
+So...
+366 classes   4176 classified words 
+
+createdb en_mini_fuzz_tmpsav -T en_mini_fuzz
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+3326 unclassed words  so now 3692 WordClasses ...
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+
+   (export-csets gcf "dict.db" "EN_us") ; 
+
 
 ==========
 createdb en_mini_discrim -T en_mini_marg
 (gram-classify-greedy-discrim 0.5 4)
+
+After triming, 7385 words left, out of 7548
+Sorting in 2.028 seconds
+Start greedy-agglomeration of 7385 words
+Existing classes=0 singletons=0 done=0
+--- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-17 17:32:35 -- "." ---
+
 
 
 ======
@@ -18667,7 +18692,10 @@ Finished verifying dicationary "micro-fuzz" with sentences from
 
 
 
+
 TODO:
+* Words that are in word classes, but still have left-over-counts
+  should get thier own classes ...
 * Add 'help method
 * Add 'verbose method to enable progress reports.
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
