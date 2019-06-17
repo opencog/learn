@@ -312,6 +312,7 @@
 
 	; -------------------
 	(define (report-stats)
+		; Compute link precision and recall.
 		(define link-expected-positives (exact->inexact total-links))
 		(define link-true-positives (- link-expected-positives missing-links))
 		(define link-false-positives extra-links)
@@ -321,12 +322,17 @@
 		(define link-f1 (/ (* 2.0 link-recall link-precision)
 			(+ link-recall link-precision)))
 
+		; Put missing link counts into sorted order.
+		(define sorted-missing-links
+			(sort missing-link-types
+				(lambda (ia ib) (> (cdr ia) (cdr ib)))))
+
 		(format #t
 			"Examined ~A sentences; ~A had words not in dictionary (~6F %).\n"
 			total-sentences incomplete-dict
 			(/ (* 100.0 incomplete-dict) total-sentences))
 		(format #t
-			"Finished comparing ~A parses; ~A parsed incorrectly (~6F %).\n"
+			"Finished comparing ~A parses; ~A parsed differently (~6F %).\n"
 			total-compares bad-sentences
 			(/ (* 100.0 bad-sentences) total-compares))
 		(format #t
@@ -344,7 +350,7 @@
 		(format #t "Link precision=~6F recall=~6F F1=~6F\n"
 			link-precision link-recall link-f1)
 		(newline)
-		(format #t "Missing link-type counts: ~A\n\n" missing-link-types)
+		(format #t "Missing link-type counts: ~A\n\n" sorted-missing-links)
 		(format #t "Missing words: ~A\n\n"
 			(map cog-name (missing-words #f)))
 	)
