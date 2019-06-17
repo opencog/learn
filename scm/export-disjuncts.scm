@@ -16,8 +16,12 @@
 ;
 ; Needs the guile-dbi interfaces, in order to write the SQL files.
 ;;
-;; XX hack alert:
-;; TODO support word classes
+;; XXX hack alert:
+;; TODO WordClassNode support might be .. funky.
+;; In particular, if a WordNode appears in a connector, it is replaced
+;; by all WordClasses that it might be a part of. This is an
+;; over-generalization, but needed for just right now.
+;;
 ;
 ; Example usage:
 ;     (define pca (make-pseudo-cset-api))
@@ -115,31 +119,61 @@
 "
   cset-to-lg-dj GERM CSET
   Return a link-grammar compatible disjunct string for CSET,
-  in such a way that it can connect to GERM
+  in such a way that it can connect to GERM. Here, GERM should
+  be a WordNode or a WordClassNode.
 "
-	(define cnr-to-left (ConnectorDir "-"))
+	; Get a link-name string identifying this word-pair.
+	; WORD should be a WordNode or a WordClassNode
+	; DIR should be a string, either "+" or "-"
+	; Example returned value is "TCZKG-"
+	(define (cword-to-lg-con WORD DIR)
+		(string-append
+			(if (equal? DIR "-")
+				(get-cnr-name WORD GERM)
+				(get-cnr-name GERM WORD)
+			)
+			DIR
+		)
+	)
 
-	; Get a link-name identifying this word-pair.
-	(define (connector-to-lg-link CONNECTOR)
-		(define cnr (gar CONNECTOR))
-		(define dir (gdr CONNECTOR))
-
-		(if (equal? dir cnr-to-left)
-			(get-cnr-name cnr GERM)
-			(get-cnr-name GERM cnr)
+	; Get a link-string that is an or-list of links.
+	; Example of a returned value is "(TCZKG- or TVFT- or TCPA-)"
+	(define (cword-list-to-lg-con-list WRDLI DIR)
+		(if (eq? 1 (length WRDLI))
+			(cword-to-lg-con (car WRDLI) DIR)
+			(string-append "("
+				(fold
+					(lambda (WRD STR)
+						(string-append STR " or " (cword-to-lg-con WRD DIR)))
+					(cword-to-lg-con (car WRDLI) DIR)
+					(cdr WRDLI))
+				")")
 		)
 	)
 
 	; Get a connector, by concatenating the link name with the direction.
-	(define (connector-to-lg-cnr CONNECTOR)
-		(string-append
-			(connector-to-lg-link CONNECTOR)
-			(cog-name (gdr CONNECTOR))))
+	; WRD-OR-CLA should be a WordNode or WordClassNode
+	; DIR should be a string, "+" or "-"
+	(define (connector-to-lg-cnr WRD-OR-CLA DIR)
+		(define wctype (cog-type WRD-OR-CLA))
+
+		; If its already a word-class...
+		(if (eq? 'WordClassNode wctype)
+			; ... then just look up the link.
+			(cword-to-lg-con WRD-OR-CLA DIR)
+			; ... else fold together all classes into a string.
+			(cword-list-to-lg-con-list
+				(map gdr (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
+				DIR)
+		)
+	)
 
 	; Link Grammar expects: near- & far- & near+ & far+
-	(define (strappend CONNECTOR dj)
-		(define cnr (connector-to-lg-cnr CONNECTOR))
-		(if (equal? (gdr CONNECTOR) cnr-to-left)
+	(define (dj-append CONNECTOR dj)
+		(define word (gar CONNECTOR))
+		(define dir (cog-name (gdr CONNECTOR)))
+		(define cnr (connector-to-lg-cnr word dir))
+		(if (equal? dir "-")
 			(string-append cnr " & " dj)
 			(string-append dj " & " cnr)))
 
@@ -147,8 +181,10 @@
 	; The connectors in SECTION are in the order as noted above:
 	;   far- & near- & near+ & far+
 	(fold
-		(lambda (CNR dj) (if dj (strappend CNR dj)
-				(connector-to-lg-cnr CNR)))
+		(lambda (CNR dj)
+			(if dj
+				(dj-append CNR dj)
+				(connector-to-lg-cnr (gar CNR) (cog-name (gdr CNR)))))
 		#f
 		(cog-outgoing-set CSET))
 )
@@ -195,8 +231,8 @@
 				STR))
 
 		; ---------------
-		; Insert a single word, with it's grammatical class,
-		; into the dict.
+		; Insert a single word, with a grammatical class that
+		; it belongs to into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
 			; Oh no!!! Need to fix LEFT-WALL!
@@ -250,11 +286,12 @@
 						"Must be either a WordNode or a WordClassNode")))
 		)
 
-		; Add data to the database
+		; Add connector sets to the database
 		(define (add-germ-cset-pair GERM CSET COST)
 			(define germ-str (cog-name GERM))
 			(define dj-str (cset-to-lg-dj GERM CSET))
 
+			; (format #t "Germ <~A> gets dj=~A\n" germ-str dj-str)
 			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
@@ -288,21 +325,11 @@
 		)
 
 		; Add a section to the database
-		; If the germ of the section is just a WordNode, just add it.
-		; If the germ is a WordClassNode, then add all of the individual
-		; words, as well. This is kind-of a temporary hack, to be removed
-		; when we really get to using WordClassNodes consistently,
-		; both as germs, and in connector sets.
-		;; XXX FIXME this really explodes the size of the file!
 		(define (add-section SECTION)
 			(define germ (gar SECTION))
 			(define cset (gdr SECTION))
 			(define cost (COST-FN SECTION))
-			(if (eq? 'WordNode (cog-type germ))
-				(add-germ-cset-pair germ cset cost)
-				(for-each
-					(lambda (word) (add-germ-cset-pair word cset cost))
-					(map gar (cog-incoming-by-type germ 'MemberLink)))))
+			(add-germ-cset-pair germ cset cost))
 
 		; Write to disk, and close the database.
 		(define (shutdown)

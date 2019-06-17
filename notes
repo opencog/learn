@@ -14477,7 +14477,9 @@ There are 8608 words, and 361894 disjuncts
 -- (psa 'left-basis-size)  ;; 10813
 -- (psa 'right-basis-size) ;; 187063
 -- These dimensions do NOT agree with what the filter reported,
-   which was 8608 x 361894  which is understandable.
+   which was 8608 x 361894. This is because some low-count words
+   remain in connector sets.
+
 
 96968299 Bytes uncompressed == 97 MBytes
 18093513 Bytes compressed == 18 MBytes
@@ -14490,7 +14492,8 @@ en_micro_cfive
 --------------
 Same as en_micro_dj_cfive, but with marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Bad. Filtering failed to discard Sections correctly.
+        Use `en_micro_marg` instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_cfive IS
@@ -14554,7 +14557,8 @@ en_micro_links
 Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Bad. Contains words below the cutoff. Use `en_micro_marg`
+        instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_micro_links IS
@@ -14607,6 +14611,177 @@ No M^TM data present
 
 cb04a74e6a8024bb9e7f1ccafbf71dbe  en_micro_links.sql
 c7c14d954818babc861d9efcecfc6204  en_micro_links.sql.bz2
+
+en_micro_marg
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+Build:
+   (sql-open "postgres:///en_micro_dj_cfive")
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (psa 'fetch-pairs)
+   (sql-close)
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (define lfa (add-linkage-filter fsa))
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+   (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Good.
+DATE: 14 June 2019
+
+COMMENT ON DATABASE en_micro_marg IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 29 MB      | 
+ public | valuations | table | ubuntu | 154 MB     | 
+
+select count(*) from atoms;      <<<<  324343 == 324K Atoms
+select count(*) from valuations; <<<<  827435 == 827K Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 68722) (Connector . 3226)
+   (ConnectorSeq . 67111) (Section . 183644) (WordNode . 1623))
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47
+RMS Count      9851.        2.9865E+4     112.3        19.18
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+59977841 Bytes uncompressed == 60MBytes
+10305529 Bytes compressed   == 10MBytes
+
+60c5a06f518e36c94a0d57027b59e24d  en_micro_marg.sql
+887a32cfae68484a480c7f34ce44c536  en_micro_marg.sql.bz2
+
+en_micro_fuzz
+--------------
+Same as en_micro_marg, but after fuzz (cosine) word-classing.
+No gram class marginals, and the pseudo-cset marginals are surely
+left-over junk from before. Why is the dump size smaller??
+(size of Valuations table is bigger; numer of valuations smaller.
+Why are there fewer valuations?)
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz IS
+   'en_micro with (gram-classify-greedy-fuzz 0.65 0.3 4)';
+
+en_micro_fuzz=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 36 MB      | 
+ public | valuations | table | ubuntu | 172 MB     | 
+
+select count(*) from atoms;      <<<<  359686 == 360K Atoms
+select count(*) from valuations; <<<<  749950 == 750K Vals
+
+56016110 Bytes uncompressed == 56MBytes
+ 9020871 Bytes compressed   ==  9MBytes
+
+19b27db361caa7d780a1ac62b08c72dd  en_micro_fuzz.sql
+3324b5cdaf45aedd164327a4f66c2695  en_micro_fuzz.sql.bz2
+
+
+en_micro_fuzz_exp
+-----------------
+Same as en_micro_fuzz, but with gram class marginals, so that it's
+suitale for export to LG.
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz_exp IS
+   'en_micro_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
+
+en_micro_fuzz_exp=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 47 MB      | 
+ public | valuations | table | ubuntu | 172 MB     | 
+
+select count(*) from atoms;      <<<<  480736 == 481K Atoms
+select count(*) from valuations; <<<< 1358374 == 1.36M Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 12003313)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 675 Columns: 67056
+Size: 142358 non-zero entries of 45262800 possible
+Fraction non-zero: 3.1451E-3 Sparsity (-log_2): 8.3127
+Total observations: 12003312.5  Avg obs per pair: 84.318
+Entropy Total: 13.746   Left: 11.431   Right: 6.3415
+Total MI: 4.0264
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  50.64        2817.
+Count   (l_1)  3.2160E+4    3.3795E+5     635.0        120.0
+Length  (l_2)  1.9406E+4    6.0704E+4     383.2        21.55
+RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
+
+No MM^T data present
+No M^TM data present
+
+101448026 Bytes uncompressed == 101MBytes
+ 16985054 Bytes compressed   ==  17MBytes
+
+8923771d741c2e086fde599c10314d81  en_micro_fuzz_exp.sql
+097a8a2cbcf440f06ad0b925d80098f1  en_micro_fuzz_exp.sql.bz2
 
 
 en_mini_dj_cfive
@@ -14663,7 +14838,8 @@ Same as en_mini_dj_cfive, but with marginals and MM^T values.
 Note that this has 10x more words in the connectors, than words in
 sections. This needs to be cleaned up.
 
-STATUS: OK. Words in Sections don't match observe words.
+STATUS: Bad. Filtering failed to discard Sections correctly.
+        Use `en_mini_marg` instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_mini_cfive IS
@@ -14724,7 +14900,7 @@ en_mini_links
 Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
 removed.  Does include marginals and MM^T values.
 
-STATUS: Good.
+STATUS: Bad. Contains words below the cutoff. Use en_mini_marg instead.
 DATE: 9 June 2019
 
 COMMENT ON DATABASE en_mini_links IS
@@ -14777,6 +14953,67 @@ No M^TM data present
 
 312fb63ddc80212bf8848ab710235dbc  en_mini_links.sql
 647a8825c97223a2f8d93d86cbc86247  en_mini_links.sql.bz2
+
+en_mini_marg
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Good.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_mini_marg IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 108 MB     | 
+ public | valuations | table | ubuntu | 551 MB     | 
+
+select count(*) from atoms;      <<<< 1177540 == 1.2M Atoms
+select count(*) from valuations; <<<< 2940501 == 2.9M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 82 secs
+-- Atomspace holds 1177547 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 15) (ListLink . 277097) (Connector . 14926)
+   (ConnectorSeq . 269711) (Section . 608241) (WordNode . 7548)
+-- top says 1.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186
+RMS Count      7399.        3.0766E+4     42.74        4.152
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+217959158 Bytes uncompressed == 218 MBytes
+ 33416655 Bytes compressed == 33 MBytes
+
+fcb0152dedb99304bbc0bac0745c9ebe  en_mini_marg.sql
+fc0f0749efa8caf1416c6aed3509ca17  en_mini_marg.sql.bz2
 
 ==========
 
@@ -17164,6 +17401,10 @@ restart
 (sql-open "postgres:///en_midj_links")
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
+Finished left norm marginals in 316395 secs (3.6 days)
+Done storing 23308382 left-wilds in 16381 secs
+Done computing 31749357 pair MI's in 35266 secs
+
 
 Last time, this took "only" 29048 secs (8 hours) for the similarly
 sized en_pairs_rfive_mst dataset. So why is it so much slower now?
@@ -17775,6 +18016,504 @@ TE == (WordClassNode "don't don’t") (WordNode "###LEFT-WALL###")
 So, for uni's do not create a wc link....
 or .. do create one, but also one for each word in the class.
 
+===================
+OK, so do cosine for the micro. How?
+-- on LXC, micro-en.scm, etc.
+	createdb en_micro_cosine -T en_micro_links
+   (sql-open "postgres:///en_micro_cosine")
+   (psa 'fetch-pairs)
+
+   Fresh copy shows: (cog-report-counts)
+   (ListLink . 124635) (Connector . 19943) (ConnectorSeq . 113821)
+   (Section . 302867) (WordNode . 10813)
+   but en_micro_dj_cfive claims that there should be 8608 words, so
+   wtf...
+
+(define cnt 0)
+(for-each (lambda (wrd) (if
+   (eq? 'SimpleTruthValue (cog-type (cog-tv wrd)))
+	(set! cnt (+ cnt 1)))) (cog-get-atoms 'WordNode))
+
+(WordNode "Kaladin") in two sections both with count of 11
+total count is well under 500 so wtf?? Answer: when psa got
+saved, some low-count words got saved, ...
+
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+-- No marginals, so cannot filter. So make at least subtotal margs
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 136 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 207491 pairs in 186 secs
+   (sql-close)
+
+-- (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 8386  -- still too big. why?
+   (psa 'right-basis-size)  ;; 68602
+   (length (psa 'get-all-elts)) ;; 207491 so that's what we stored.
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 67 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1407 -- got smaller still. Why?
+   (fsa 'right-basis-size)  ;; 68602
+   (length (fsa 'get-all-elts)) ;; after fix: 181322
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1407
+   (lfa 'right-basis-size)  ;; 66057
+   (length (lfa 'get-all-elts)) ;; 201740 - after fix: 176427
+
+   (define aset (make-atom-set))
+	(for-each (lambda (sec) (aset (gar sec))) (lfa 'get-all-elts))
+   (length (aset #f)) ;; 8170 -- so consistent linkage contains
+                                 words that did not pass the filter.
+                                 so consistent linkage is buggy...
+   ;; 1404 after fix. Yay!
+
+-- Now filter it a second time ...
+   (define psd (add-support-compute lfa))
+   (psd 'cache-all)   ; Finished left norm marginals in 71 secs
+
+   (define fsb (add-subtotal-filter psd 500 10 10 #f))
+   (fsb 'left-basis-size)   ;; 1381 smaller than 1407
+   (fsb 'right-basis-size)  ;; 64667 smaller than 68602
+   (length (fsb 'get-all-elts)) ;; 176163 smaller than 181322
+
+	(define lfb (add-linkage-filter fsb))
+   (lfb 'left-basis-size)   ;; 1381 smaller than 1407
+   (lfb 'right-basis-size)  ;; 64256 smaler than 66057
+   (length (lfb 'get-all-elts)) ;; 175446 smaler than 176427
+
+   (length (aset #f)) ; 1380 OK, that works for me ...
+
+-- Do it a third time:
+   (define pse (add-support-compute lfb))
+   (pse 'cache-all)   ; Finished left norm marginals in 21 secs
+
+   (define fsc (add-subtotal-filter pse 500 10 10 #f))
+   (fsc 'left-basis-size)   ;; 1378  < 1381 smaller than 1407
+   (fsc 'right-basis-size)  ;; 64211 < 64667 smaller than 68602
+   (length (fsc 'get-all-elts)) ;; 175420 < 176163 smaller than 181322
+
+   (define lfc (add-linkage-filter fsc))
+   (lfc 'left-basis-size)   ;; 1378 < 1381 smaller than 1407
+   (lfc 'right-basis-size)  ;; 64192 < 64256 smaler than 66057
+   (length (lfc 'get-all-elts)) ;; 175384 < 175446 smaler than 176427
+
+   (length (aset #f)) ; 1378 consistent, at last...
+
+Because each iteration knocks out more. I guess that's OK...
+
+
+   (length wrd-lst) 1407
+   (length clist) 2808
+   (length unwanted-words)   6992
+   (length unwanted-cnctrs) 425   -- hmm seems small.
+   (length unwanted-conseqs)  2545
+   (length good-conseqs)  66057 so OK....
+   (define ok-conseq? (make-aset-predicate good-conseqs))
+   (define (pair-pred SECT) (ok-conseq? (gdr SECT)))
+
+   (define cnt 0)
+   (for-each (lambda (sec) (if (pair-pred sec) (set! cnt (+ cnt 1))))
+      (fsa 'get-all-elts))
+   cnt 201740 -- like before...
+
+	(define ok-con? (make-aset-predicate clist))
+	(define (ok-seq? seq) (every ok-con? (cog-outgoing-set seq)))
+
+   (for-each (lambda (seq)
+		(if (not (ok-seq? seq)) (format #t "faail ~A\n" seq)))
+		good-conseqs)
+
+   (for-each (lambda (sec)
+		(if (not (ok-seq? (gdr sec))) (format #t "faail ~A\n" sec)))
+      (lfa 'get-all-elts))
+
+   ; all pass this double-check. WTF.  Oh, a bug in filter 'get-all-pairs.
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 185 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+   (length (lfa 'get-all-elts)) ; 183644
+
+   ; XXX (define lfb (add-linkage-filter-2pass fsa))
+   ; XXX (lfb 'left-basis-size)   ;; 1624
+   ; XXX (lfb 'right-basis-size)  ;; 68602 .. wtf ...
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 183644 pairs in 285 secs
+   (sql-close)
+
+   ; clean start.
+	(sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  1610  ... well, smaller, it seems ...
+   (psa 'right-basis-size)  ;;  67111 Huh.
+   (length (psa 'get-all-elts)) ;; 183644  OK
+
+   (batch-all-pair-mi psa)  ;;  MI computations; this took 0.17 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;
+   
+guile-micro-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector
+Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.    
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4    
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47    
+RMS Count      9851.        2.9865E+4     112.3        19.18    
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 68722) (AnchorNode . 1) (Connector .
+3226) (ConnectorDir . 2) (ConnectorSeq . 67111) (Section . 183644)
+(SchemaNode . 1) (WordNode . 1623) (AnyNode . 2))
+
+========
+And now the mini:
+-- mini_dj_cfive:
+   (psa 'left-basis-size)  ;; 18533
+   (psa 'right-basis-size)  ;; 647988
+   (length (psa 'get-all-elts))   ;;  1063939
+   
+   (define fsa (add-subtotal-filter psa 40 5 5 #f))
+   (fsa 'left-basis-size)   ;; 7556
+   (fsa 'right-basis-size)  ;; 647988
+   (length (fsa 'get-all-elts))   ;; 1045903
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 7556
+   (lfa 'right-basis-size)  ;;  271344
+   (length (lfa 'get-all-elts)) ; 608241
+
+   createdb en_mini_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql |
+psql en_mini_marg
+
+   (sql-open "postgres:///en_mini_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 608241 pairs in 1160 secs
+   (sql-close)
+   (sql-open "postgres:///en_mini_marg")
+
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  7385
+   (psa 'right-basis-size)  ;;  269711
+   (length (psa 'get-all-elts)) ;;  608241
+
+   (batch-all-pair-mi psa)  ;;   this took 0.73 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;    269711 left-wilds in 377 secs
+   
+   (print-matrix-summary-report psa)
+
+> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.    
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28    
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186    
+RMS Count      7399.        3.0766E+4     42.74        4.152    
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+==================
+Again with cosines....
+
+createdb en_micro_fuzz -T en_micro_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+Start greedy-agglomeration of 1610 words
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 05:28:53 -- "." ---
+--- To-do=0 ncls=135 sing=540 nredo=1062 2019-06-15 11:12:17 -- "()" ---
+So .. not quite 6 hours ...  RSS in top is 600 MBytes
+
+((ListLink . 68735) (MemberLink . 1639) (Connector . 3226) 
+(ConnectorSeq . 67111) (Section . 217212) (WordNode . 1623)
+(WordClassNode . 135))
+
+So no similarity links created... Hmm.
+OK, 
+createdb en_micro_fuzz_exp -T en_micro_fuzz
+(sql-open "postgres:///en_micro_fuzz_exp")
+(define asc (add-singleton-classes psa))
+(asc 'create-hi-count-singles 1) 1575 of 1575 -- borken-ish.
+(psa 'left-basis-size)   ;  1575
+
+are there any unclassed words?
+(define aset (make-atom-set))
+(for-each (lambda (wcn)
+	(for-each (lambda (memb) (aset (gar memb)))
+		(cog-incoming-by-type wcn 'MemberLink)))
+	(cog-get-atoms 'WordClassNode))
+(length (aset #f))   ; 1070 -- so that many words in word-classes.
+
+(cog-get-atoms 'AnchorNode)
+OK, bug fixed...
+
+       (define gca (make-gram-class-api))
+       (define gcs (add-pair-stars gca))
+       (define gcf (add-wordclass-filter gcs))
+       (batch-all-pair-mi gcf)
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 12003313)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 675 Columns: 67056
+Size: 142358 non-zero entries of 45262800 possible
+Fraction non-zero: 3.1451E-3 Sparsity (-log_2): 8.3127
+Total observations: 12003312.5  Avg obs per pair: 84.318
+Entropy Total: 13.746   Left: 11.431   Right: 6.3415
+Total MI: 4.0264
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  50.64        2817.    
+Count   (l_1)  3.2160E+4    3.3795E+5     635.0        120.0    
+Length  (l_2)  1.9406E+4    6.0704E+4     383.2        21.55    
+RMS Count      1.8989E+4    +nan.0        374.9        +nan.0   
+
+No MM^T data present
+No M^TM data present
+
+(export-csets gcf "dict.db" "EN_us")
+Will store 142358 csets
+
+==========
+createdb en_micro_discrim -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.5 4)
+Start greedy-agglomeration of 1610 words
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 20:56:12 -- "." ---
+--- To-do=0 ncls=124 sing=292 nredo=1303 2019-06-16 00:29:19 -- "()" ---
+
+So that took 3.5 hours -- faster than fuzz. Didn't seem as goood...
+
+
+==========
+Review meaning ... 
+why long pause after first Bingo! ?
+assign-word-to-class calls MERGER 'merge-function
+which calls merge-project
+... should add timers to line 598, etc, for merge-project to see ...
+
+==========
+createdb en_mini_fuzz -T en_mini_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+
+======
+(load "/tmp/c.scm")
+(lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
+
+(define compare (make-lg-comparator (LgDictNode "en") (LgDictNode "micro-fuzz")))
+     (compare "I saw her face")
+     (compare "I swooned to the floor")
+     (compare #f)
+
+LinkGrammarRelationshipNode
+
+Argh.
+Segmentation fault. linkage/sane.c:76
+76					    path[gwordlist_len(path)-1]->sent_wordidx)
+(gdb) print path
+$1 = (const Gword **) 0x0
+
+======
+micro-fuzz with child-directed.txt:
+
+Finished comparing 3037 parses (13567 words, 11183 links)
+Dictionary did not contain word for 2031 sentences
+Dictionary was missing 109 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 6280 link-count miscompares with 6173 missing and 584 extra links
+Missing link-type counts: ((IDBYE . 1) (WR . 2) (BW . 4) (DG . 2) (GN .
+1) (IDBIT . 1) (H . 5) (AL . 2) (AF . 3) (IDLE . 2) (BI . 3) (X . 11) (U
+. 4) (IDQA . 2) (IDBKD . 7) (PF . 13) (V . 9) (MX . 1) (IDLR . 6) (IDPZ
+. 8) (LI . 1) (DD . 6) (RS . 2) (OF . 7) (EE . 3) (C . 17) (QI . 4) (E .
+37) (PP . 21) (SJ . 39) (EA . 27) (TO . 24) (SFI . 4) (EL . 24) (VJ .
+20) (WV . 72) (W . 36) (K . 106) (G . 8) (CV . 37) (YS . 78) (NS . 1)
+(EB . 24) (Q . 136) (AN . 94) (CO . 170) (SF . 82) (B . 213) (R . 97) (A
+. 93) (PH . 25) (P . 480) (SI . 483) (M . 116) (MV . 325) (I . 564) (J .
+399) (D . 1052) (O . 1717) (S . 1254) (IV . 95))
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat egg steak puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye 've a@l feed comb 's toys 'll judy
+fun mirror knock hang button playing bunny hi dolly puppet dale throw
+okay calling smell sing snap knocked balloon turtle telephone color
+stack butterfly pat shoe kitty finger mommy scratchy blocks apple pick
+dragon doggie clock count brush horsie tower cup sleeping mouse untie
+pig zip ear block peekaboo honey toy cow cage gonna ducks pocketbook
+monkey paul)
+
+But there are repeated sentences...
+
+Revised:
+
+Finished comparing 1832 parses (9274 words, 7955 links)
+Dictionary did not contain word for 1270 sentences
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 4381 link-count miscompares with 4429 missing and 380 extra links
+Missing link-type counts: ((MX . 1) (WR . 2) (NS . 1) (IDLE . 2) (U . 4)
+(BW . 2) (X . 7) (IDLR . 5) (DG . 2) (IDQA . 2) (BI . 3) (EE . 3) (AF .
+3) (IDBKD . 7) (LI . 1) (AL . 1) (DD . 6) (H . 4) (IDBIT . 1) (IDBYE .
+1) (PP . 14) (CV . 36) (C . 17) (GN . 1) (OF . 6) (IDPZ . 8) (QI . 4) (V
+. 8) (RS . 2) (VJ . 20) (YS . 63) (EA . 25) (TO . 24) (EB . 19) (IV .
+92) (SFI . 4) (Q . 54) (EL . 23) (I . 464) (AN . 81) (PH . 22) (SF . 67)
+(P . 324) (SI . 309) (W . 22) (CO . 126) (M . 111) (WV . 49) (J . 347)
+(PF . 9) (E . 29) (B . 142) (R . 61) (MV . 305) (K . 93) (O . 1023) (S .
+641) (G . 7) (SJ . 33) (A . 79) (D . 878))
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat steak egg puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye feed 've comb 's toys 'll judy fun
+mirror knock hang button playing bunny hi dolly puppet dale throw okay
+calling smell sing snap knocked balloon turtle telephone color stack
+butterfly pat shoe kitty finger mommy scratchy blocks apple pick dragon
+doggie clock count brush horsie tower cup sleeping mouse untie pig zip
+ear block peekaboo honey toy cow cage gonna ducks pocketbook monkey
+paul)
+Finished verifying dicationary "micro-fuzz" with sentences from
+"child-directed-speech.txt"
+
+
+again, without the missing words:
+
+Examined 1832 sentences; of these, 1270 had words not in the dictionary.
+Finished comparing 562 parses (2738 words, 2376 links)
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1050 link-count miscompares with 983 missing and 193 extra links
+
+So, by hand:
+expected positives = P = 2376 (the expected links)
+of these, got (- 2376 983) == 1393 links = TP
+    so recall = (/ 1393 2376) = TP/P = 0.5863
+
+including extras, got 1393+193 = 1586 links total
+extras = false-positives = FP == 193
+so precision = TP/(TP+FP) = (/ 1393 1586) = 0.8783
+
+F1 = harmonic-mean(precision, recall) =
+   (* 2 0.5863 0.8783) / (+ 0.5863 0.8783) == 0.7032
+
+Automated:
+Examined 1832 sentences; 1270 had words not in dictionary (69.323 %).
+Finished comparing 562 parses; 482 parsed differently (85.765 %).
+Found 2738 word instances, 176 words; expected to find 2376 links
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1050 words w/linkage diffs; 983 missing and 193 extra links
+Link precision=0.8783 recall=0.5863 F1=0.7032
+
+Missing link-type counts: ((O . 213) (I . 165) (SI . 126) (MV . 102) (D
+. 96) (B . 78) (J . 73) (P . 60) (S . 54) (IV . 42) (R . 34) (CO . 24)
+(K . 22) (M . 19) (EL . 15) (E . 15) (WV . 14) (CV . 8) (TO . 8) (X . 7)
+(A . 7) (VJ . 7) (Q . 6) (SJ . 6) (IDLR . 5) (C . 5) (W . 5) (IDBKD . 4)
+(PF . 4) (U . 3) (DD . 3) (EA . 3) (SFI . 3) (OF . 2) (EE . 2) (SF . 2)
+(H . 2) (IDPZ . 2) (QI . 2) (IDQA . 1) (IDLE . 1) (PP . 1) (BW . 1) (AF
+. 1) (RS . 1) (EB . 1))
+
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat steak egg puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye feed 've comb 's toys 'll judy fun
+mirror knock hang button playing bunny hi dolly puppet dale throw okay
+calling smell sing snap knocked balloon turtle telephone color stack
+butterfly pat shoe kitty finger mommy scratchy blocks apple pick dragon
+doggie clock count brush horsie tower cup sleeping mouse untie pig zip
+ear block peekaboo honey toy cow cage gonna ducks pocketbook monkey
+paul)
+
+Finished verifying dicationary "micro-fuzz" with sentences from
+"child-directed-speech.txt"
 
 
 
@@ -17785,7 +18524,8 @@ TODO:
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
 * Consistent dj/word-sets
-* Counts on MemberLink...
+* Counts on MemberLink... (MemberLink should show what's been merged
+  into it. This is done in some code but not other.)
 
 DONE:
 * fix filter-api (DONE)
