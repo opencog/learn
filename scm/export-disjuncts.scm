@@ -348,6 +348,25 @@
 				(lambda () (add-section SECTION))
 				(lambda (key . args) (shutdown))))
 
+		; Add CLASS as disjunct-collection for unknown words.
+		; Typically, CLASS will be a WordClassNode with a lot
+		; of sections attached to it.
+		(define (add-unknown-word-handler CLASS)
+
+			; wrd-id serves as a unique ID.
+			(set! wrd-id (+ wrd-id 1))
+
+			(dbi-query db-obj (format #f
+				"INSERT INTO Morphemes VALUES ("
+				"'<UNKNOWN-WORD>', "
+				"'<UNKNOWN-WORD.~D>', '~A');"
+				wrd-id (mk-cls-str (cog-name CLASS))))
+
+			(if (not (equal? 0 (car (dbi-get_status db-obj))))
+				(throw 'fail-insert 'make-db-adder
+					(cdr (dbi-get_status db-obj))))
+		)
+
 		; Create the tables for words and disjuncts.
 		; Refer to the Link Grammar documentation to see a
 		; description of this table format. Specifically,
@@ -398,9 +417,7 @@
 
 		; The UNKNOWN-WORD device is needed to make wild-card searches
 		; work (when dict debugging). The XXXBOGUS+ will not link to
-		; anything. `({@T-} & {@T+})` would almost work, except for two
-		; reasons: all connectors are upper-case, and the SQL backend
-		; does not support optional-braces {} and multi-connectors @.
+		; anything. XXX FIXME is this really needed ??
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
 			"'<UNKNOWN-WORD>', "
@@ -419,7 +436,7 @@
 		(lambda (message . args)
 			(case message
 				((add-section)     (apply raii-add-section args))
-				((add-unknown)     (apply add-unknown-word args))
+				((add-unknown)     (apply add-unknown-word-handler args))
 				((shutdown)        (shutdown))
 			)
 		)
