@@ -14726,9 +14726,7 @@ select count(*) from valuations; <<<<  749950 == 750K Vals
 en_micro_fuzz_exp
 -----------------
 Same as en_micro_fuzz, but with gram class marginals, so that it's
-suitable for export to LG.  Note that (re-)export WILL fail when
-reloading this dataset, unless `add-wordclass-filter` is used!
-That is, this dataset contains sections that have not been filtered.
+suitable for export to LG.
 
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
@@ -14738,10 +14736,14 @@ BUILD:
    (define gcs (add-pair-stars gca))
    (define gcf (add-wordclass-filter gcs))
    (batch-all-pair-mi gcf)
+	(define sto (make-store gcf))
+	(sto 'store-all)
+	(gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
 STATUS: Good.
-DATE: 15 June 2019
+DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_fuzz_exp IS
    'en_micro_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
@@ -14750,11 +14752,11 @@ en_micro_fuzz_exp=> \dt+
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
- public | atoms      | table | ubuntu | 47 MB      | 
- public | valuations | table | ubuntu | 172 MB     | 
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 60 MB      | 
 
-select count(*) from atoms;      <<<<  480736 == 481K Atoms
-select count(*) from valuations; <<<< 1358374 == 1.36M Vals
+select count(*) from atoms;      <<<<  284291 == 284K Atoms
+select count(*) from valuations; <<<<  699105 == 700K Vals
 
 Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
 Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
@@ -14779,12 +14781,11 @@ RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
 No MM^T data present
 No M^TM data present
 
-101448026 Bytes uncompressed == 101MBytes
- 16985054 Bytes compressed   ==  17MBytes
+ 53458027 Bytes uncompressed ==  53 MBytes
+  9439051 Bytes compressed   ==   9 MBytes
 
-8923771d741c2e086fde599c10314d81  en_micro_fuzz_exp.sql
-097a8a2cbcf440f06ad0b925d80098f1  en_micro_fuzz_exp.sql.bz2
-
+8fad77a6ec29bd27cd4d8fc176450beb  en_micro_fuzz_exp.sql
+5b1c02d1430f3e3b15cbfead3ed0b9c4  en_micro_fuzz_exp.sql.bz2
 
 en_micro_discrim
 -----------------
@@ -18898,6 +18899,8 @@ needed to gcs->store-something!?
 
 =============
 
+in the mini-fuzz --
+
 Length miscompare: 9 vs 8
 Finish compare of sentence 1275/3059: "Yes, please, I'll have one."
 Length miscompare: 8 vs 7
@@ -18924,6 +18927,8 @@ LGHaveDictEntry::evaluate
 db_lookup_exp (read-sql.c:212)  Ohhh stupid me.
 ---
 
+leak: 68m18.787s
+delete: 75m23.688s
 
 
 
