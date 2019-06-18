@@ -17561,6 +17561,12 @@ sized en_pairs_rfive_mst dataset. So why is it so much slower now?
 Is the pattern matcher in the stars object getting in the way?
 Yes, it probably is. This needs to be fixed...
 
+OK, system went down. Restart....
+(load "/tmp/cm.scm")
+(xbatch-all-pair-mi psa)
+
+
+
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
 
@@ -18936,16 +18942,18 @@ no-delete: 76m48.013s
 Wow. Unk word lookups are slow....   why? They should not be triggering
 anything ...!
 
-===========
-and a crash ...
-(use-modules (opencog) (opencog exec) (opencog nlp) (opencog nlp lg-dict))
+micro-fuzz: 0m19.788s
 
-I like to tokenize
-  (cog-evaluate!  (LgHaveDictEntry (WordNode "I") (LgDictNode "micro-fuzz")))
-  (cog-execute!  (LgDictEntry (WordNode "I") (LgDictNode "micro-fuzz")))
+oh crash ... 
 
-duuude made a dict node 0x563963d9ba90 with exp=0x563963d886d0
-duude start me up I
+Assertion (NULL != bs->exp) failed at
+../../link-grammar/dict-sql/read-sql.c:260: Missing disjuncts for word
+<UNKNOWN-WORD.759> <didn’t didn't>
+
+select * from Morphemes where morpheme='<UNKNOWN-WORD>';
+.schema Disjuncts
+
+
 
 
 
