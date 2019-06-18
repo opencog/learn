@@ -14790,14 +14790,15 @@ No M^TM data present
 en_micro_discrim
 -----------------
 Same as en_micro_marg, but after discrim (cosine) word-classing.
-Includes marginals
+Includes marginals.
 
 BUILD:
    (gram-classify-greedy-discrim 0.5 4)
    Marginal build just like en_micro_fuzz_exp
+   Will store 132775 csets
 
 STATUS: Good.
-DATE: 17 June 2019
+DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_discrim IS
    'en_micro_marg (greedy-fuzz 0.5 4) plus marginals for export';
@@ -14806,12 +14807,11 @@ en_micro_discrim=> \dt+
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
- public | atoms      | table | ubuntu | 47 MB      | 
- public | valuations | table | ubuntu | 154 MB     | 
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 57 MB      | 
 
-
-select count(*) from atoms;      <<<<  455193 == 455K Atoms
-select count(*) from valuations; <<<< 1282425 == 1.28M Vals
+select count(*) from atoms;      <<<<  274228 == 274K Atoms
+select count(*) from valuations; <<<<  669606 == 670K Vals
 
 Summary Report for Correlation Matrix WordClass-Disjunct Pairs
 Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
@@ -14834,12 +14834,11 @@ Length  (l_2)  2.2783E+4    8.5731E+4     627.7        20.55
 RMS Count      2.2287E+4    +nan.0        614.0        +nan.0   
 
 
- 97656776 Bytes uncompressed == 98 MBytes
- 18950208 Bytes compressed   == 19 MBytes
+ 52474191 Bytes uncompressed == 52 MBytes
+ 12924981 Bytes compressed   == 13 MBytes
 
-86c636a77e0c197ff61fce653163f15b  en_micro_discrim.sql
-767dc10700b345b8a0cba99bdc513dea  en_micro_discrim.sql.bz2
-
+5c986d99da8277fade1ac9d8ec304ba7  en_micro_discrim.sql
+6caaf9579d054d458c7fe1b23085eb67  en_micro_discrim.sql.bz2
 
 en_mini_dj_cfive
 ----------------
@@ -18954,8 +18953,10 @@ select * from Morphemes where morpheme='<UNKNOWN-WORD>';
 .schema Disjuncts
 
 
+#:INCLUDE-MISSING #t
 
 
+en_micro_discrim
 
 
 TODO:
