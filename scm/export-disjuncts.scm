@@ -255,7 +255,7 @@
 		; ---------------
 		; Return a string identifying a word-class
 		(define (mk-cls-str STR)
-			(format #f "<~A.~D>" (escquote STR 0) wrd-id))
+			(format #f "<~A>" (escquote STR 0)))
 
 		; ---------------
 		; Insert either a word, or a word-class, into the dict
@@ -486,6 +486,12 @@
 	(define (cost-fn SECTION)
 		(- (mi-source 'pair-fmi SECTION)))
 
+	(define multi-member-classes
+		(filter
+			(lambda (CLS)
+				(< 1 (length (cog-incoming-by-type CLS 'MemberLink))))
+			(psa 'left-basis)))
+
 	; Create the SQLite3 database.
 	(define dbase (make-db-adder DB-NAME LOCALE cost-fn))
 	(define (sectioner SECTION) (dbase 'add-section SECTION))
@@ -497,6 +503,12 @@
 
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
+
+	(format #t "Will store ~D unknown word classes\n"
+		(length multi-member-classes))
+	(for-each
+		(lambda (cls) (dbase 'add-unknown cls))
+		multi-member-classes)
 
 	; Close the database
 	(dbase 'shutdown)
