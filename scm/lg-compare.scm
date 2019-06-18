@@ -43,6 +43,8 @@
   argument INCLUDE-MISSING.
 "
 	(define INCLUDE-MISSING #f)
+	(define VERBOSE #f)
+
 	; -------------------
 	; Stats we are keeping
 	(define total-sentences 0)
@@ -184,8 +186,9 @@
 		(vocab-words ewrd)
 		(if (not (equal? ewrd owrd))
 			(begin
-				(format #t "Word miscompare at ~A: ~A vs ~A\n"
-					(get-index-of-winst ewinst) ewrd owrd)
+				(if verbose
+					(format #t "Word miscompare at ~A: ~A vs ~A\n"
+						(get-index-of-winst ewinst) ewrd owrd))
 				(set! word-miscompares (+ 1 word-miscompares)))))
 
 	; ---
@@ -229,8 +232,9 @@
 		; Compare number of links
 		(if (not (equal? elinked-len olinked-len))
 			(begin
-				(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
-					elinked-len olinked-len ewrd)
+				(if verbose
+					(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
+						elinked-len olinked-len ewrd))
 				(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
 		; Make a note of missing link types.
@@ -283,7 +287,7 @@
 		(set! total-sentences (+ total-sentences 1))
 
 		(if dict-has-missing-words
-			(format #t "Dictionary is missing words for sentence \"~A\"\n" SENT))
+			(format #t "Dictionary is missing words in: \"~A\"\n" SENT))
 
 		; Don't do anything more, if the dict is missing words in the
 		; sentence.
@@ -305,8 +309,8 @@
 
 				(if (not (equal? temp-cnt link-count-miscompares))
 					(set! bad-sentences (+ 1 bad-sentences)))
-				(format #t "Finish compare of sentence ~A: \"~A\"\n"
-					total-compares SENT)
+				(format #t "Finish compare of sentence ~A/~A: \"~A\"\n"
+					total-compares total-sentences SENT)
 			))
 	)
 
@@ -336,7 +340,7 @@
 			total-compares bad-sentences
 			(/ (* 100.0 bad-sentences) total-compares))
 		(format #t
-			"Found ~A word instances, ~A words; expected to find ~A links\n"
+			"Found ~A word instances, vocab= ~A words; expect to find ~A links\n"
 			total-words (length (vocab-words #f)) total-links)
 		(format #t "Dictionary was missing ~A words\n"
 			(length (missing-words #f)))

@@ -63,5 +63,5 @@
 
 (process-file (open sent-file O_RDONLY))
 
-(format #t "Finished verifying dicationary \"~A\" with sentences from \"~A\"\n"
+(format #t "Finished verifying dictionary \"~A\" with sentences from \"~A\"\n"
 	test-dict sent-file)
