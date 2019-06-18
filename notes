@@ -18793,12 +18793,46 @@ Finished verifying dicationary "micro-fuzz" with sentences from
 
 ====
 
+Examined 2513 sentences; 1570 had words not in dictionary (62.475 %).
+Finished comparing 943 parses; 941 parsed differently (99.788 %).
+Found 9859 word instances, vocab= 1308 words; expect to find 9716 links
+Dictionary was missing 1371 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 5688 words w/linkage diffs; 4845 missing and 1627 extra links
+Link precision=0.7496 recall=0.5013 F1=0.6008
+
+Missing link-type counts: ((RW . 922) (MV . 598) (S . 563) (O . 540) (J
+. 364) (D . 335) (CV . 267) (I . 234) (P . 201) (WV . 170) (X . 168) (VJ
+. 164) (CO . 159) (M . 157) (C . 142) (A . 135) (E . 128) (W . 108) (B .
+96) (SJ . 95) (IV . 70) (R . 61) (AJ . 51) (EA . 50) (TO . 38) (SI . 33)
+(PP . 32) (K . 31) (G . 31) (PH . 24) (AN . 21) (TH . 17) (EE . 17) (EB
+. 15) (QI . 14) (OF . 13) (VC . 12) (RS . 12) (MJ . 9) (L . 9) (Q . 8)
+(DD . 8) (PF . 8) (MX . 7) (SF . 7) (EZ . 7) (LI . 6) (RJ . 5) (DT . 5)
+(EL . 4) (N . 4) (IDBVS . 3) (EC . 3) (IDOT . 3) (AF . 3) (IDBHA . 3)
+(BI . 3) (SX . 3) (Y . 3) (IDBRM . 2) (NI . 2) (IDBHK . 2) (IDBUB . 2)
+(EN . 2) (IDCBH . 2) (DG . 2) (EF . 2) (SFI . 2) (Z . 2) (IDPN . 1)
+(IDBVL . 1) (IDBHJ . 1) (IDCIN . 1) (DP . 1) (IDBRF . 1) (IDPD . 1) (WN
+. 1) (IDPO . 1) (FM . 1) (BW . 1) (IDBJA . 1) (CX . 1) (IDCBT . 1)
+(IDBEW . 1) (IDPH . 1) (IDLS . 1) (IDCGX . 1) (IDCGY . 1) (IDLR . 1) (V
+. 1) (AL . 1) (IDKM . 1) (IDKN . 1) (JT . 1) (IDPP . 1) (IDPQ . 1) (IDQC
+. 1) (OT . 1) (IDOV . 1) (IDCBS . 1) (IDBOO . 1) (IDBIY . 1) (IDBIZ . 1)
+(ER . 1) (IDBJN . 1) (IDBCE . 1) (IDCDD . 1) (IDBTF . 1) (IDBSC . 1)
+(IDCAU . 1) (NS . 1) (IDOP . 1) (IDBGJ . 1) (XJ . 1) (AA . 1) (HA . 1)
+(ND . 1) (IDBJG . 1) (IDBJH . 1))
+
+Finished verifying dictionary "mini-fuzz" with sentences from
+"ull-silver-short.txt"
+real	68m18.787s
+
+====
+
 
 (gcs 'fetch-pairs)
 (use-modules (opencog nlp lg-export))
    (export-csets gcs "dict.db" "EN_us") ;  142420
 
-line 149 
+line 149
 (WordNode "an") .. not a member of anything ... how did that happen?
 it happened because its not a germ .... ohhh we need to use
 the filter during export....
@@ -18810,12 +18844,12 @@ in the atomspace, but "Will store 81700 csets" ... !?
 (gcf 'right-basis-size) ; 33910
 
 fu... not enough, need to pcs 'fetch-pairs too !?
-this loads "an" sections, but still no MemberLink ... 
+this loads "an" sections, but still no MemberLink ...
 
    (define asc (add-singleton-classes psa))
    (asc 'create-hi-count-singles 1)
 
-ahhh ...OK. so lets try it ... 
+ahhh ...OK. so lets try it ...
 
 (define nomem
 	(filter (lambda (cls) (equal? 0
@@ -18825,12 +18859,40 @@ ahhh ...OK. so lets try it ...
 (cog-incoming-by-type (Word "an") 'MemberLink)
 (cog-incoming-by-type (WordClass "an#uni") 'MemberLink)
 
-OK, so that's fixed, but now no MI for 
+OK, so that's fixed, but now no MI for
  (Section (ctv 1 0 4.2)
    (WordClassNode "time way")
    (ConnectorSeq
       (Connector (WordNode "acid") (ConnectorDir "-"))))
 
+(cog-keys sec) only has (PredicateNode "*-TruthValueKey-*")
+why? Others have (PredicateNode "*-FrequencyKey-*")
+ (PredicateNode "*-TruthValueKey-*")
+ (PredicateNode "*-Mutual Info Key-*")
+
+select * from atoms where name='acid';
+WordNode "acid" -- 6035
+(ConnectorDir "-") == 16
+
+(WordClassNode "time way")  == 380120
+
+select * from atoms where outgoing='{6035,16}';
+
+connector == 6036
+seq = 6037
+sect = 382615
+
+*-Mutual Info Key-*   -- 13
+
+select * from valuations where atom=382615;
+OK, so database literally does not have it
+
+7 12 34
+
+Failure to store the MI's for ... some atoms. Crap.
+Failure to store singleton memberships ... Crap.
+
+needed to gcs->store-something!?
 
 
 
@@ -18848,7 +18910,7 @@ is this the word-test??  No, its just the parses piling up.
 Now what?
 "It is a tokenizing parser."
 Oh.
-NumberNode WordInstanceNode PhraseNode LinkGrammarRelationshipNode 
+NumberNode WordInstanceNode PhraseNode LinkGrammarRelationshipNode
 
 ... but it is still leaking.  How?
 
@@ -18857,6 +18919,11 @@ valgrind --leak-check=full  \
 --suppressions=/tmp/valgrind.guile.suppressions \
 --suppressions=/tmp/valgrind.logger.suppressions \
 guile -s dict-comp.scm mini-fuzz x.txt
+
+LGHaveDictEntry::evaluate
+db_lookup_exp (read-sql.c:212)  Ohhh stupid me.
+---
+
 
 
 
