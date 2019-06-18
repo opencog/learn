@@ -14736,9 +14736,9 @@ BUILD:
    (define gcs (add-pair-stars gca))
    (define gcf (add-wordclass-filter gcs))
    (batch-all-pair-mi gcf)
-	(define sto (make-store gcf))
-	(sto 'store-all)
-	(gcs 'store-aux)
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
    (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
@@ -18927,8 +18927,26 @@ LGHaveDictEntry::evaluate
 db_lookup_exp (read-sql.c:212)  Ohhh stupid me.
 ---
 
+==========
 leak: 68m18.787s
 delete: 75m23.688s
+no-delete: 76m48.013s
+
+==========
+Wow. Unk word lookups are slow....   why? They should not be triggering
+anything ...!
+
+===========
+and a crash ...
+(use-modules (opencog) (opencog exec) (opencog nlp) (opencog nlp lg-dict))
+
+I like to tokenize
+  (cog-evaluate!  (LgHaveDictEntry (WordNode "I") (LgDictNode "micro-fuzz")))
+  (cog-execute!  (LgDictEntry (WordNode "I") (LgDictNode "micro-fuzz")))
+
+duuude made a dict node 0x563963d9ba90 with exp=0x563963d886d0
+duude start me up I
+
 
 
 

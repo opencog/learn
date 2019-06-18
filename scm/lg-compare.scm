@@ -42,7 +42,7 @@
   not in the test dictionary.  Over-ride this by supplying the optional
   argument INCLUDE-MISSING.
 "
-	(define INCLUDE-MISSING #f)
+	(define INCLUDE-MISSING #t)
 	(define verbose #f)
 
 	; -------------------
@@ -324,6 +324,8 @@
 		; Cleanup most stuff, but not WordNodes, because
 		; they have to be saved in the "missing words" list.
 		; Sadly, cannot use push-pop atomspace as a result.
+		; This makes an almost unmeasureable difference in
+		; performance and mem usage... so is not really needed.
 		(kill 'NumberNode)
 		(kill 'WordInstanceNode)
 		(kill 'SentenceNode)
