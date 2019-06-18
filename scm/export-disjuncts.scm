@@ -356,10 +356,10 @@
 			; wrd-id serves as a unique ID.
 			(set! wrd-id (+ wrd-id 1))
 
-			(dbi-query db-obj (format #f
+			(dbi-query db-obj (format #f (string-append
 				"INSERT INTO Morphemes VALUES ("
 				"'<UNKNOWN-WORD>', "
-				"'<UNKNOWN-WORD.~D>', '~A');"
+				"'<UNKNOWN-WORD.~D>', '~A');")
 				wrd-id (mk-cls-str (cog-name CLASS))))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))

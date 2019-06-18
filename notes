@@ -15070,7 +15070,7 @@ fcb0152dedb99304bbc0bac0745c9ebe  en_mini_marg.sql
 fc0f0749efa8caf1416c6aed3509ca17  en_mini_marg.sql.bz2
 
 en_mini_fuzz
---------------
+------------
 Same as en_mini_marg, but after fuzz (cosine) word-classing.
 No gram class marginals, and the pseudo-cset marginals are surely
 left-over junk from before. 
@@ -18787,6 +18787,8 @@ Finished verifying dicationary "micro-fuzz" with sentences from
 "ull-silver-short.txt"
 
 ====
+
+(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
 
 
 
