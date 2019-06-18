@@ -317,9 +317,20 @@
 	; -------------------
 	; The main comparison function
 	(define (do-compare-gc SENT)
-		(cog-push-atomspace)
+		(define (kill typ)
+			(for-each cog-extract-recursive (cog-get-atoms typ)))
 		(do-compare SENT)
-		(cog-pop-atomspace)
+
+		; Cleanup most stuff, but not WordNodes, because
+		; they have to be saved in the "missing words" list.
+		; Sadly, cannot use push-pop atomspace as a result.
+		(kill 'NumberNode)
+		(kill 'WordInstanceNode)
+		(kill 'SentenceNode)
+		(kill 'PhraseNode)
+		(kill 'ParseNode)
+		(kill 'LinkGrammarRelationshipNode)
+		(kill 'LgHaveDictEntry)
 	)
 
 	; -------------------

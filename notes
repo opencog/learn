@@ -18557,7 +18557,9 @@ No M^TM data present
 
 ==========
 Review meaning ... 
-why long pause after first Bingo! ?
+why long pause after first Bingo! ? 
+    partial answer: it hits postgres hard. Is it updating counts ??
+
 assign-word-to-class calls MERGER 'merge-function
 which calls merge-project
 ... should add timers to line 598, etc, for merge-project to see ...
@@ -18839,8 +18841,22 @@ Finish compare of sentence 1275/3059: "Yes, please, I'll have one."
 Length miscompare: 8 vs 7
 Finish compare of sentence 1290/3079: "That's what I think, yes."
 
+=============
 Bug: explosive atomspace
 is this the word-test??  No, its just the parses piling up.
+
+Now what?
+"It is a tokenizing parser."
+Oh.
+NumberNode WordInstanceNode PhraseNode LinkGrammarRelationshipNode 
+
+... but it is still leaking.  How?
+
+valgrind --leak-check=full  \
+--suppressions=/tmp/valgrind.boost.suppressions \
+--suppressions=/tmp/valgrind.guile.suppressions \
+--suppressions=/tmp/valgrind.logger.suppressions \
+guile -s dict-comp.scm mini-fuzz x.txt
 
 
 
