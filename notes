@@ -14726,7 +14726,9 @@ select count(*) from valuations; <<<<  749950 == 750K Vals
 en_micro_fuzz_exp
 -----------------
 Same as en_micro_fuzz, but with gram class marginals, so that it's
-suitale for export to LG.
+suitable for export to LG.  Note that (re-)export WILL fail when
+reloading this dataset, unless `add-wordclass-filter` is used!
+That is, this dataset contains sections that have not been filtered.
 
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
@@ -18598,7 +18600,8 @@ After triming, 7385 words left, out of 7548
 Sorting in 2.028 seconds
 Start greedy-agglomeration of 7385 words
 Existing classes=0 singletons=0 done=0
---- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 00:36:15 -- "." ---
+--- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 03:36:40 -- "." ---
+
 
 
 
@@ -18788,8 +18791,56 @@ Finished verifying dicationary "micro-fuzz" with sentences from
 
 ====
 
-(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
 
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ;  142420
+
+line 149 
+(WordNode "an") .. not a member of anything ... how did that happen?
+it happened because its not a germ .... ohhh we need to use
+the filter during export....
+
+Argh not all sections exported .. wtf ... there are (Section . 142420)
+in the atomspace, but "Will store 81700 csets" ... !?
+
+(gcs 'right-basis-size) ; 67104
+(gcf 'right-basis-size) ; 33910
+
+fu... not enough, need to pcs 'fetch-pairs too !?
+this loads "an" sections, but still no MemberLink ... 
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+
+ahhh ...OK. so lets try it ... 
+
+(define nomem
+	(filter (lambda (cls) (equal? 0
+				(length (cog-incoming-by-type cls 'MemberLink))))
+		(cog-get-atoms 'WordClassNode)))
+
+(cog-incoming-by-type (Word "an") 'MemberLink)
+(cog-incoming-by-type (WordClass "an#uni") 'MemberLink)
+
+OK, so that's fixed, but now no MI for 
+ (Section (ctv 1 0 4.2)
+   (WordClassNode "time way")
+   (ConnectorSeq
+      (Connector (WordNode "acid") (ConnectorDir "-"))))
+
+
+
+
+=============
+
+Length miscompare: 9 vs 8
+Finish compare of sentence 1275/3059: "Yes, please, I'll have one."
+Length miscompare: 8 vs 7
+Finish compare of sentence 1290/3079: "That's what I think, yes."
+
+Bug: explosive atomspace
+is this the word-test??  No, its just the parses piling up.
 
 
 

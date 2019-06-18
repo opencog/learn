@@ -43,7 +43,7 @@
   argument INCLUDE-MISSING.
 "
 	(define INCLUDE-MISSING #f)
-	(define VERBOSE #f)
+	(define verbose #f)
 
 	; -------------------
 	; Stats we are keeping
@@ -315,6 +315,14 @@
 	)
 
 	; -------------------
+	; The main comparison function
+	(define (do-compare-gc SENT)
+		(cog-push-atomspace)
+		(do-compare SENT)
+		(cog-pop-atomspace)
+	)
+
+	; -------------------
 	(define (report-stats)
 		; Compute link precision and recall.
 		(define link-expected-positives (exact->inexact total-links))
@@ -364,5 +372,5 @@
 	(lambda (SENT)
 		(if (not SENT)
 			(report-stats)
-			(do-compare SENT)))
+			(do-compare-gc SENT)))
 )
