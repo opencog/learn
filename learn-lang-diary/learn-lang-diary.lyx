@@ -36948,7 +36948,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+680 x 67K
 \end_layout
 
 \end_inset
@@ -36957,7 +36957,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+143K
 \end_layout
 
 \end_inset
@@ -36966,7 +36966,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13.2M
 \end_layout
 
 \end_inset
@@ -36975,7 +36975,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+14.08
 \end_layout
 
 \end_inset
@@ -36984,7 +36984,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.95
 \end_layout
 
 \end_inset
@@ -36993,7 +36993,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+136
 \end_layout
 
 \end_inset
@@ -37002,7 +37002,7 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+544
 \end_layout
 
 \end_inset
@@ -37319,20 +37319,284 @@ Measurements
 \end_layout
 
 \begin_layout Standard
-Quick and dirty comparison of the learned grammars.
- The testing proceedure was as follows:
+There does not appear to be any good way to assess the quality of a grammar.
+ So instead, a trick is used that is obviously flawed, but is 
+\begin_inset Quotes eld
+\end_inset
+
+better than nothing
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The trick is to compare the grammar to the LG English dictionary.
+ That is, a sentence is parsed, once with the grammar-under-test, and once
+ with the LG English grammar.
+ The parses are compared side-by-side, looking to see if they have the same
+ links between words, or not.
+ This allows both precision and recall to be measured: A linkage is high-precisi
+on, if it does not contain link that it shouldn't.
+ A linkage has high recall, if it contains most of the links that it should.
+\end_layout
+
+\begin_layout Standard
+There are obvious problems with this:
+\end_layout
+
+\begin_layout Itemize
+There is no particular reason to beleive that the above algorithms will
+ reproduce LG dictionaries.
+ This is a comparison of apples-to-oranges: the learned dictionaries are
+ obtained by apply probability theory to sparse observational data of strings
+ of words.
+ By contrast, the LG dictionary is hand-curated, by linguists applying innate,
+ common-sense theories of grammatical relationships.
+ The resulting linkages are just opinions expressed by linguists as to what
+ English must be like.
+ That there is significant overlap between statisical results and linguist
+ opinion is itself remarkable.
+\end_layout
+
+\begin_layout Itemize
+The LG English dictionary is imperfect, sometimes creating incorrect parses.
+ Thus, it is possible that the grammar-under-test produced a better parse,
+ while still being scored poorly, because it failed to match LG.
+\end_layout
+
+\begin_layout Itemize
+LG parses in general contain loops, i.e.
+ are not trees.
+ The grammar-under-test might also contain loops, but maybe less than LG.
+ Thus, the grammar-under-test will often have a low recall, simply because
+ of how it was built.
+ Using a non-strict MST at earlier stages might improve the situation.
+\end_layout
+
+\begin_layout Itemize
+Some links are more important than others.
+ It is more important to get links to subject and object correct, than it
+ is to get links to punctuation correct.
+ In particular, LG links to punctuation are rather 
+\emph on
+ad hoc
+\emph default
+, epecially for the end-of-sentence punctuation.
+ It is unlikely that the grammar-under-test will handle punctuation the
+ same way.
+\end_layout
+
+\begin_layout Itemize
+If there is a combinatorial explosion of LG parses, then the parse-scoring
+ system in LG is partially blinded, and the resulting choosen parses might
+ not be the ones with the best scores.
+ It might be possible to ameliorate this with changes to LG.
+ 
+\end_layout
+
+\begin_layout Standard
+Thus, due to the above concerns, the actual meaning of the scores is unclear.
+ Never the less, its a good starting point.
+ Some future version of the measurement tool will keep track of subject
+ and object links, and maybe other link types that are considered important.
+ 
+\end_layout
+
+\begin_layout Standard
+Currently, all of the dictionaries-under-test are missing a LEFT-WALL marker.
+ I'm not sure why; this will be revisited later.
+ Thus, LEFT-WALL links are not compared, and are not a part of the evaluation
+ process.
+\end_layout
+
+\begin_layout Standard
+The test-corpora contain many words not in the dictionary, and vice-versa:
+ the dictionaries contain many words not in the test-corpora.
+ The overlap between these two vocabularies is shockingly small (but perhaps
+ entirely normal – see extended commentary about Zipf's law, elsewhere).
+ In particular, the 
+\begin_inset Quotes eld
+\end_inset
+
+micro
+\begin_inset Quotes erd
+\end_inset
+
+ dictionaries have only 1.6K words in them, and of these, less than a third
+ show up in the test corpora.
+ Thus, we have three testing options:
 \end_layout
 
 \begin_layout Itemize
 Skip the evaluation of a sentence, if it contains words that are not in
- the dictionary.
- Yes, this is not ideal, but is the current method.
- None of the dictionaries perform guessing of any sort (e.g.
- guessing with regard to capitalized words), and thus do not recognize proper
- names, unless they have accidentally landed in the dictionary.
- The test corpora contain a lot of proper names, and thus include sentences
- that are marked as unknown.
+ the dictionary-under-test.
+ The test corpora contain a lot of proper names that never appeared in the
+ training corpora, and this alone accounts for many of the sentence rejections.
+\end_layout
+
+\begin_layout Itemize
+Evaluate the sentence anyway; words not in the dictioary will be null-linked
+ (i.e.
+ have no links going to them.) Mostly all that happens is that precision
+ scores are mostyly unaffected, while recall scores are obviously lower.
+\end_layout
+
+\begin_layout Itemize
+Perform unknown-word-guessing.
+ This is not hard to do, and ultimately is a required ability for any dictionary
+ usable in the real world.
+ The current guessing strategy is to try each unknown word with each gram-class,
+ and then let the parse-scoring system pick the one with the highest score.
+ Note that unknown-word guessing leads to a combinatoric explostion in LG,
+ which can cause extremely long parse-times (hours!); see notes below.
+ Combinatoric explosions can also result in sub-optimal choice of linkage.
+ The determination of the pertinance of this effect is TBD.
+\end_layout
+
+\begin_layout Standard
+Two sets of dictionaries were created: with and without unknown words.
+ Results for both are reported below.
+\end_layout
+
+\begin_layout Standard
+Comparisons were performed for five different corpora.
+ These are also an imperfect choice, but adequate for this intitial rough-cut
+ evaluations.
+ The are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+CDS
+\series default
+ – The 
+\begin_inset Quotes eld
+\end_inset
+
+Child Dircted Speech
+\begin_inset Quotes erd
+\end_inset
+
+ corpus from the ULL project.
+ Contains 1837 sentences uttered by parents towards children.
+ These have a characteristically small vocabulry, and a simple grammatical
+ structure.
+ This corpus consistently results in the highest scores during testing,
+ for all test dictionaries.
  
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+basic
+\series default
+ – The 
+\family typewriter
+corpus-basic.batch
+\family default
+ file from LG.
+ This contains 1000 sentences, of which 421 are intentionally ungrammatical,
+ leaving 579 valid English sentences.
+ These contain a balanced selection of a wide variey of different kinds
+ of English constructions; it was meant to showcase the rich variety of
+ different sentences that LG can handle.
+ (Note, however, that evolving fixes means that not all of these parse correctly
+).
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+fixes
+\series default
+ – The 
+\family typewriter
+corpus-fixes.batch
+\family default
+ file from LG.
+ This contains 4236 sentences, illustrating fixes to the early versions
+ of the LG dictionary.
+ Although there is a wide variety of different kinds of English constructions,
+ it's not particularly 
+\begin_inset Quotes eld
+\end_inset
+
+balanced
+\begin_inset Quotes erd
+\end_inset
+
+, and the sentences tend to be short; just long enought to illustrate some
+ phenomenon.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+gold
+\series default
+ – The 
+\begin_inset Quotes eld
+\end_inset
+
+Golden Corpus
+\begin_inset Quotes erd
+\end_inset
+
+ from the ULL project.
+ This contains 229 sentences.
+ Note that the parses provided by the ULL project are NOT used for evaluation.
+ The LG parses are used instead.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+silver
+\series default
+ – A subset of the 
+\begin_inset Quotes eld
+\end_inset
+
+Silver Corpus
+\begin_inset Quotes erd
+\end_inset
+
+ from the ULL project.
+ This contains 2513 sentences, taken from three different Project Gutenberg
+ books: 
+\begin_inset Quotes eld
+\end_inset
+
+Kilmeny of the Orchard
+\begin_inset Quotes erd
+\end_inset
+
+ by Lucy Maud Montgomery; 
+\begin_inset Quotes eld
+\end_inset
+
+Peter Rabbit
+\begin_inset Quotes erd
+\end_inset
+
+ by Thornton W Burgess; and a portion of 
+\begin_inset Quotes eld
+\end_inset
+
+Under the Lilacs
+\begin_inset Quotes erd
+\end_inset
+
+ by Louisa May Alcott.
+\end_layout
+
+\begin_layout Standard
+All five corpora are available in the 
+\family typewriter
+learn/run/3-gram-class/test-data
+\family default
+ directory.
 \end_layout
 
 \begin_layout Standard
@@ -37341,65 +37605,118 @@ The table below shows results.
 \end_layout
 
 \begin_layout Itemize
-Sents – The total number of sentences in the corpus.
+
+\series bold
+Sents
+\series default
+ – The total number of sentences in the corpus.
+ This repeats the number given above.
 \end_layout
 
 \begin_layout Itemize
-Skip – Percentage of total sentences that were skipped, because they contained
+
+\series bold
+Skip
+\series default
+ – Percentage of total sentences that were skipped, because they contained
  unknown words.
+ (Reported only when unknown-word guessing is disabled.)
 \end_layout
 
 \begin_layout Itemize
-Parsed – The number of sentences that were evaluated.
+
+\series bold
+Parsed
+\series default
+ – The number of sentences that were evaluated.
+ Equal to number of sentences times (100% - Skip).
 \end_layout
 
 \begin_layout Itemize
-Diff – The number of sentences that had parses that differed from the first
- parse given by the English dictionary in Link Grammar version 5.6.1
+
+\series bold
+Diff
+\series default
+ – The number of sentences that had parses that differed from the first
+ parse given by the English dictionary in Link Grammar version 5.6.1.
 \end_layout
 
 \begin_layout Itemize
-Words – The total number of words in the evaluated sentences.
+
+\series bold
+Words
+\series default
+ – The total number of words in the evaluated sentences.
+ This varies from dictionary to dictionary, depending on whether sentences
+ were skipped or not.
+ 
 \end_layout
 
 \begin_layout Itemize
-Vocab – The size of the vocabulary in the evaluated sentences; that is,
- the number of unique words.
- When rejecting sentences with unknwon words, this becomes the intersection
- of the vocabulary of the accepted sentences and the dictioary-under-test.
+
+\series bold
+Vocab
+\series default
+ – The size of the vocabulary in the evaluated sentences; that is, the number
+ of unique words.
+ When rejecting sentences with unknown words, this becomes the intersection
+ of the vocabulary of the accepted sentences and the dictionary-under-test.
 \end_layout
 
 \begin_layout Itemize
-Links – the number of links that the LG English parse generated.
+
+\series bold
+Links
+\series default
+ – The number of links that the LG English parse generated.
+ This varies from dictionary to dictionary, depending on whether sentences
+ were skipped or not.
+ 
 \end_layout
 
 \begin_layout Itemize
-P – Precision of links: TP/(TP+FP) where TP is the count of the links that
+
+\series bold
+P
+\series default
+ – Precision of links: TP/(TP+FP) where TP is the count of the links that
  both dictionaries generated, and FP is the count of the links that the
- dictionary-under-test generated.
+ dictionary-under-test generated, but LG did not.
 \end_layout
 
 \begin_layout Itemize
-R – Recall of the links: TP/P where TP as above, and P the total number
- of links produced by the LG English parse.
+
+\series bold
+R
+\series default
+ – Recall of the links: TP/P where TP as above, and P the total number of
+ links produced by the LG English parse.
 \end_layout
 
 \begin_layout Itemize
-F1 – The harmonic mean of precision and recall.
+
+\series bold
+F1
+\series default
+ – The harmonic mean of precision and recall.
 \end_layout
 
 \begin_layout Standard
-Results for the micro-fuzz dataset.
+Results for the 
+\shape italic
+micro-fuzz
+\shape default
+ dataset.
  This is a tiny dataset, with only 1600 words in it; its the first shot
  at anything even vaguely workable.
  Not expecting good results.
  But they seem passable anyway.
  Most sentences got skipped, because they contained unknown words, but the
- ones that did parse seem not outrageous.
+ ones that did parse seem to not be outrageous.
  Notice the intersection of the test-corpus vocabulary and the dictionary
  size is small – about 1/3rd of the dictionary size, or less.
  That is a small vocabulary; so 2/3rds of the dictionary contains words
- that are not in the test-corpus.
+ that are not in the test-corpus!
 \end_layout
 
 \begin_layout Standard
@@ -41079,7 +41396,631 @@ silver
 \end_layout
 
 \begin_layout Standard
-And again for micro-discrim:
+For 
+\shape italic
+micro-fuzzier-unk
+\shape default
+: almost no difference at all from the above.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="9">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+micro-fuzzier-unk
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sents
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Diff
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Words
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vocab
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+F1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CDS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1832
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+77%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9274
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+300
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7957
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.853
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.698
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.768
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+basic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+579
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+fixes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4236
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gold
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+229
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+100%
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1895
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+782
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1767
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.722
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.607
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.660
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+silver
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2513
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+And again for 
+\shape italic
+micro-discrim-unk
+\shape default
+:
 \end_layout
 
 \begin_layout Standard
@@ -41699,7 +42640,11 @@ silver
 \end_layout
 
 \begin_layout Standard
-And again for mini-fuzz:
+And again for 
+\shape italic
+mini-fuzz-unk
+\shape default
+:
 \end_layout
 
 \begin_layout Standard

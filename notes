@@ -18609,6 +18609,32 @@ createdb en_micro_fuzzier -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-fuzz 0.65 0.6 4)
 To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 16:32:41
+To-do=0 ncls=136 sing=544 nredo=1062 2019-06-19 20:28:34
+So, four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fuzzier_exp
+cat atom.sql | psql en_micro_fuzzier_exp
+(sql-open "postgres:///en_micro_fuzzier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 544 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142938 csets
+
+dict.db-micro-fuzzier-unk
+
 
 ==========
 createdb en_micro_fizz -T en_micro_marg
@@ -18623,6 +18649,12 @@ createdb en_micro_diss -T en_micro_marg
 (gram-classify-greedy-discrim 0.65 4)
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 18:06:56 -- "." ---
 
+
+==========
+createdb en_micro_dissier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.75 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 21:05:25
 
 ==========
 createdb en_mini_discrim -T en_mini_marg
