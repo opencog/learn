@@ -956,7 +956,7 @@
   mergable.
 
   ZIPF is the smallest observation count, below which counts
-  will not be divided up, if a marge is performed.
+  will not be divided up, if a merge is performed.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
