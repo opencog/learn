@@ -18602,6 +18602,25 @@ ALTER DATABASE en_mini_fuzz_tmpsav RENAME TO en_mini_fuzz;
 (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
 
+==========
+createdb en_micro_fuzzier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.65 0.6 4)
+To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 16:32:41
+
+==========
+createdb en_micro_fizz -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.75 0.3 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 17:46:11 -- "." ---
+
+
+==========
+createdb en_micro_diss -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.65 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 18:06:56 -- "." ---
+
 
 ==========
 createdb en_mini_discrim -T en_mini_marg
