@@ -15116,10 +15116,14 @@ BUILD:
    (define gcs (add-pair-stars gca))
    (define gcf (add-wordclass-filter gcs))
    (batch-all-pair-mi gcf)
-   (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
 
 STATUS: Good.
-DATE: 17 June 2019
+DATE: 18 June 2019
 
 COMMENT ON DATABASE en_mini_fuzz_exp IS
    'en_mini_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
@@ -15128,11 +15132,11 @@ en_mini_fuzz_exp=> \dt+
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
- public | atoms      | table | ubuntu | 177 MB     | 
- public | valuations | table | ubuntu | 593 MB     | 
+ public | atoms      | table | ubuntu | 99 MB      | 
+ public | valuations | table | ubuntu | 222 MB     | 
 
-select count(*) from atoms;      <<<< 1821750 == 1.82M Atoms
-select count(*) from valuations; <<<< 5115618 == 5.12M Vals
+select count(*) from atoms;      <<<< 1077157 == 1.08M Atoms
+select count(*) from valuations; <<<< 2601283 == 2.60M Vals
 
 Summary Report for Correlation Matrix WordClass-Disjunct Pairs
 Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
@@ -15157,12 +15161,11 @@ RMS Count      1.4820E+4    +nan.0        152.7        +nan.0
 No MM^T data present
 No M^TM data present
 
-390622420 Bytes uncompressed == 391 MBytes
- 55952187 Bytes compressed   ==  56 MBytes
+209846267 Bytes uncompressed == 210 MBytes
+ 31289650 Bytes compressed   ==  31 MBytes
 
-32b0bec402660a7e6454c6e37a196b38  en_mini_fuzz_exp.sql
-4ba6c39aabf1622ab9e8b706faec59a3  en_mini_fuzz_exp.sql.bz2
-
+298adfde5df642dc9c8dc7442eaf3533  en_mini_fuzz_exp.sql
+e96831e97c5b7a9c906b0792c49817f7  en_mini_fuzz_exp.sql.bz2
 
 ==========
 
