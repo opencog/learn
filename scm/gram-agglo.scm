@@ -870,7 +870,7 @@
 ; Example usage
 ;
 ; (sql-open "postgres:///en_mst_sections?user=linas&password=asdf")
-; (gram-classify-greedy-fuzz 20)
+; (gram-classify-greedy-fuzz 0.65 0.3 4)
 ;
 ; After interruption, its worth recomputing the support marginals.
 ; This can be done by saying:

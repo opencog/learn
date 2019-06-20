@@ -216,6 +216,7 @@
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
+			(is-open #t)
 			(secs (current-time))
 			(word-cache (make-atom-set))
 		)
@@ -254,7 +255,7 @@
 		; ---------------
 		; Return a string identifying a word-class
 		(define (mk-cls-str STR)
-			(format #f "<~A.~D>" (escquote STR 0) wrd-id))
+			(format #f "<~A>" (escquote STR 0)))
 
 		; ---------------
 		; Insert either a word, or a word-class, into the dict
@@ -333,10 +334,12 @@
 
 		; Write to disk, and close the database.
 		(define (shutdown)
-			(format #t "Finished inserting ~D records\n" nprt)
-			(dbi-query db-obj "END TRANSACTION;")
-			(dbi-close db-obj)
-		)
+			(if is-open
+				(begin
+					(set! is-open #f)
+					(format #t "Finished inserting ~D records\n" nprt)
+					(dbi-query db-obj "END TRANSACTION;")
+					(dbi-close db-obj))))
 
 		; Close the DB if an exception is thrown. But otherwise,
 		; let the excpetion pass through to the user.
@@ -344,6 +347,23 @@
 			(with-throw-handler #t
 				(lambda () (add-section SECTION))
 				(lambda (key . args) (shutdown))))
+
+		; Add CLASS as disjunct-collection for unknown words.
+		; Typically, CLASS will be a WordClassNode with a lot
+		; of sections attached to it.
+		(define (add-unknown-word-handler CLASS)
+
+			; wrd-id serves as a unique ID.
+			(set! wrd-id (+ wrd-id 1))
+
+			(dbi-query db-obj (format #f
+				"INSERT INTO Morphemes VALUES ('<UNKNOWN-WORD>', '<UNKNOWN-WORD.~D>', '~A');"
+				wrd-id (mk-cls-str (cog-name CLASS))))
+
+			(if (not (equal? 0 (car (dbi-get_status db-obj))))
+				(throw 'fail-insert 'make-db-adder
+					(cdr (dbi-get_status db-obj))))
+		)
 
 		; Create the tables for words and disjuncts.
 		; Refer to the Link Grammar documentation to see a
@@ -395,9 +415,7 @@
 
 		; The UNKNOWN-WORD device is needed to make wild-card searches
 		; work (when dict debugging). The XXXBOGUS+ will not link to
-		; anything. `({@T-} & {@T+})` would almost work, except for two
-		; reasons: all connectors are upper-case, and the SQL backend
-		; does not support optional-braces {} and multi-connectors @.
+		; anything. XXX FIXME is this really needed ??
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
 			"'<UNKNOWN-WORD>', "
@@ -412,13 +430,15 @@
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
 		(dbi-query db-obj "BEGIN TRANSACTION;")
 
-		; Return function that adds data to the database
-		; If SECTION if #f, the database is closed.
-		(lambda (SECTION)
-			(if SECTION
-				(raii-add-section SECTION)
-				(shutdown))
-		))
+		; Methods on the object
+		(lambda (message . args)
+			(case message
+				((add-section)     (apply raii-add-section args))
+				((add-unknown)     (apply add-unknown-word-handler args))
+				((shutdown)        (shutdown))
+			)
+		)
+	)
 )
 
 ;  ---------------------------------------------------------------------
@@ -464,8 +484,15 @@
 	(define (cost-fn SECTION)
 		(- (mi-source 'pair-fmi SECTION)))
 
+	(define multi-member-classes
+		(filter
+			(lambda (CLS)
+				(< 1 (length (cog-incoming-by-type CLS 'MemberLink))))
+			(psa 'left-basis)))
+
 	; Create the SQLite3 database.
-	(define sectioner (make-db-adder DB-NAME LOCALE cost-fn))
+	(define dbase (make-db-adder DB-NAME LOCALE cost-fn))
+	(define (sectioner SECTION) (dbase 'add-section SECTION))
 
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
@@ -475,8 +502,14 @@
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
 
+	(format #t "Will store ~D unknown word classes\n"
+		(length multi-member-classes))
+	(for-each
+		(lambda (cls) (dbase 'add-unknown cls))
+		multi-member-classes)
+
 	; Close the database
-	(sectioner #f)
+	(dbase 'shutdown)
 )
 
 ;  ---------------------------------------------------------------------

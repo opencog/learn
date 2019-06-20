@@ -14726,7 +14726,7 @@ select count(*) from valuations; <<<<  749950 == 750K Vals
 en_micro_fuzz_exp
 -----------------
 Same as en_micro_fuzz, but with gram class marginals, so that it's
-suitale for export to LG.
+suitable for export to LG.
 
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
@@ -14736,10 +14736,14 @@ BUILD:
    (define gcs (add-pair-stars gca))
    (define gcf (add-wordclass-filter gcs))
    (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
 STATUS: Good.
-DATE: 15 June 2019
+DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_fuzz_exp IS
    'en_micro_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
@@ -14748,11 +14752,11 @@ en_micro_fuzz_exp=> \dt+
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
- public | atoms      | table | ubuntu | 47 MB      | 
- public | valuations | table | ubuntu | 172 MB     | 
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 60 MB      | 
 
-select count(*) from atoms;      <<<<  480736 == 481K Atoms
-select count(*) from valuations; <<<< 1358374 == 1.36M Vals
+select count(*) from atoms;      <<<<  284291 == 284K Atoms
+select count(*) from valuations; <<<<  699105 == 700K Vals
 
 Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
 Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
@@ -14777,12 +14781,64 @@ RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
 No MM^T data present
 No M^TM data present
 
-101448026 Bytes uncompressed == 101MBytes
- 16985054 Bytes compressed   ==  17MBytes
+ 53458027 Bytes uncompressed ==  53 MBytes
+  9439051 Bytes compressed   ==   9 MBytes
 
-8923771d741c2e086fde599c10314d81  en_micro_fuzz_exp.sql
-097a8a2cbcf440f06ad0b925d80098f1  en_micro_fuzz_exp.sql.bz2
+8fad77a6ec29bd27cd4d8fc176450beb  en_micro_fuzz_exp.sql
+5b1c02d1430f3e3b15cbfead3ed0b9c4  en_micro_fuzz_exp.sql.bz2
 
+en_micro_discrim
+-----------------
+Same as en_micro_marg, but after discrim (cosine) word-classing.
+Includes marginals.
+
+BUILD:
+   (gram-classify-greedy-discrim 0.5 4)
+   Marginal build just like en_micro_fuzz_exp
+   Will store 132775 csets
+
+STATUS: Good.
+DATE: 18 June 2019
+
+COMMENT ON DATABASE en_micro_discrim IS
+   'en_micro_marg (greedy-fuzz 0.5 4) plus marginals for export';
+
+en_micro_discrim=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 57 MB      | 
+
+select count(*) from atoms;      <<<<  274228 == 274K Atoms
+select count(*) from valuations; <<<<  669606 == 670K Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 11428005)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 416 Columns: 67056
+Size: 132775 non-zero entries of 27895296 possible
+Fraction non-zero: 4.7598E-3 Sparsity (-log_2): 7.7149
+Total observations: 11428005.3  Avg obs per pair: 86.070
+Entropy Total: 13.230   Left: 11.268   Right: 5.5832
+Total MI: 3.6218
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  36.30        4172.    
+Count   (l_1)  3.3309E+4    4.8650E+5     917.7        116.6    
+Length  (l_2)  2.2783E+4    8.5731E+4     627.7        20.55    
+RMS Count      2.2287E+4    +nan.0        614.0        +nan.0   
+
+
+ 52474191 Bytes uncompressed == 52 MBytes
+ 12924981 Bytes compressed   == 13 MBytes
+
+5c986d99da8277fade1ac9d8ec304ba7  en_micro_discrim.sql
+6caaf9579d054d458c7fe1b23085eb67  en_micro_discrim.sql.bz2
 
 en_mini_dj_cfive
 ----------------
@@ -15014,6 +15070,102 @@ No M^TM data present
 
 fcb0152dedb99304bbc0bac0745c9ebe  en_mini_marg.sql
 fc0f0749efa8caf1416c6aed3509ca17  en_mini_marg.sql.bz2
+
+en_mini_fuzz
+------------
+Same as en_mini_marg, but after fuzz (cosine) word-classing.
+No gram class marginals, and the pseudo-cset marginals are surely
+left-over junk from before. 
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+STATUS: Good.
+DATE: 17 June 2019
+
+COMMENT ON DATABASE en_mini_fuzz IS
+   'en_mini_marg with (gram-classify-greedy-fuzz 0.65 0.3 4)';
+
+en_mini_fuzz=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 135 MB     | 
+ public | valuations | table | ubuntu | 593 MB     | 
+
+select count(*) from atoms;      <<<< 1340138 == 1.34M Atoms
+select count(*) from valuations; <<<< 2814992 == 2.81M Vals
+
+215566437 Bytes uncompressed == 216 MBytes
+ 30940665 Bytes compressed   ==  31 MBytes
+
+3cf78077ef7e79c7a92824f3158b3f6b  en_mini_fuzz.sql
+7e306eaa526e289f61d06ffa9b0e09fa  en_mini_fuzz.sql.bz2
+
+en_mini_fuzz_exp
+-----------------
+Same as en_mini_fuzz, but with gram class marginals, so that it's
+suitable for export to LG. Note that the singleton classes do not
+contain the clustering left-overs, and maybe they should ... 
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
+
+STATUS: Good.
+DATE: 18 June 2019
+
+COMMENT ON DATABASE en_mini_fuzz_exp IS
+   'en_mini_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
+
+en_mini_fuzz_exp=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 99 MB      | 
+ public | valuations | table | ubuntu | 222 MB     | 
+
+select count(*) from atoms;      <<<< 1077157 == 1.08M Atoms
+select count(*) from valuations; <<<< 2601283 == 2.60M Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 16583937)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 3692 Columns: 269115
+Size: 501957 non-zero entries of 993572580 possible
+Fraction non-zero: 5.0520E-4 Sparsity (-log_2): 10.951
+Total observations: 16583936.7  Avg obs per pair: 33.039
+Entropy Total: 15.387   Left: 12.969   Right: 6.7695
+Total MI: 4.3517
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  97.02        1.1241E+4
+Count   (l_1)  2.7228E+4    4.3814E+5     280.6        38.98    
+Length  (l_2)  1.5021E+4    5.7309E+4     154.8        5.098    
+RMS Count      1.4820E+4    +nan.0        152.7        +nan.0   
+
+No MM^T data present
+No M^TM data present
+
+209846267 Bytes uncompressed == 210 MBytes
+ 31289650 Bytes compressed   ==  31 MBytes
+
+298adfde5df642dc9c8dc7442eaf3533  en_mini_fuzz_exp.sql
+e96831e97c5b7a9c906b0792c49817f7  en_mini_fuzz_exp.sql.bz2
 
 ==========
 
@@ -17411,9 +17563,17 @@ sized en_pairs_rfive_mst dataset. So why is it so much slower now?
 Is the pattern matcher in the stars object getting in the way?
 Yes, it probably is. This needs to be fixed...
 
+OK, system went down. Restart....
+(load "/tmp/cm.scm")
+(xbatch-all-pair-mi psa)
+
+
+
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
 
+quick cheat-stats:
+31749357 pairs. tot count== 69197410
 
 ==========
 
@@ -18370,10 +18530,47 @@ Existing classes=0 singletons=0 done=0
 
 So that took 3.5 hours -- faster than fuzz. Didn't seem as goood...
 
+     (define asc (add-singleton-classes psa))
+     (asc 'create-hi-count-singles 1)  ; 1562
+
+     (define gca (make-gram-class-api))
+     (define gcs (add-pair-stars gca))
+     (define gcf (add-wordclass-filter gcs))
+     (batch-all-pair-mi gcf)
+
+
+(use-modules (opencog nlp lg-export))
+(export-csets gcf "dict.db" "EN_us")
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type:
+Section
+Wildcard: (ListLink (ctv 0 0 11428005)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 416 Columns: 67056
+Size: 132775 non-zero entries of 27895296 possible
+Fraction non-zero: 4.7598E-3 Sparsity (-log_2): 7.7149
+Total observations: 11428005.3  Avg obs per pair: 86.070
+Entropy Total: 13.230   Left: 11.268   Right: 5.5832
+Total MI: 3.6218
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  36.30        4172.    
+Count   (l_1)  3.3309E+4    4.8650E+5     917.7        116.6    
+Length  (l_2)  2.2783E+4    8.5731E+4     627.7        20.55    
+RMS Count      2.2287E+4    +nan.0        614.0        +nan.0   
+
+No MM^T data present
+No M^TM data present
 
 ==========
 Review meaning ... 
-why long pause after first Bingo! ?
+why long pause after first Bingo! ? 
+    partial answer: it hits postgres hard. Is it updating counts ??
+
 assign-word-to-class calls MERGER 'merge-function
 which calls merge-project
 ... should add timers to line 598, etc, for merge-project to see ...
@@ -18381,6 +18578,203 @@ which calls merge-project
 ==========
 createdb en_mini_fuzz -T en_mini_marg
 (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+To-do=0 ncls=366 sing=3326 nredo=3973 2019-06-17 19:25:00 -- "()" ---
+
+Atomspace holds 1340302 atoms
+Time since stats reset=220564 at Sat Jun 15 06:14:32 2019
+So this took... 61 hours == 2.5 days to process.
+
+So...
+366 classes   4176 classified words 
+
+
+createdb en_mini_fuzz_tmpsav -T en_mini_fuzz
+ALTER DATABASE en_mini_fuzz RENAME TO en_mini_fuzz_exp;
+ALTER DATABASE en_mini_fuzz_tmpsav RENAME TO en_mini_fuzz;
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+3326 unclassed words  so now 3692 WordClasses ...
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+
+(use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
+
+==========
+createdb en_micro_fuzzier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.65 0.6 4)
+To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 16:32:41
+To-do=0 ncls=136 sing=544 nredo=1062 2019-06-19 20:28:34
+So, four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fuzzier_exp
+cat atom.sql | psql en_micro_fuzzier_exp
+(sql-open "postgres:///en_micro_fuzzier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 544 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142938 csets
+
+dict.db-micro-fuzzier-unk
+
+
+==========
+createdb en_micro_fizz -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.75 0.3 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 17:46:11 -- "." ---
+--- To-do=0 ncls=115 sing=833 nredo=773 2019-06-19 21:49:41
+Four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fizz_exp
+cat atom.sql | psql en_micro_fizz_exp
+(sql-open "postgres:///en_micro_fizz_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155391 csets
+
+mv dict.db dict.db-micro-fizz-unk
+
+
+==========
+createdb en_micro_diss -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.65 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 18:06:56 -- "." ---
+--- To-do=0 ncls=135 sing=537 nredo=1064 2019-06-19 22:07:32 
+four hours...
+
+(sql-close)
+createdb en_micro_diss_exp
+cat atom.sql | psql en_micro_diss_exp
+(sql-open "postgres:///en_micro_diss_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 537 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142238 csets
+
+mv dict.db dict.db-micro-diss-unk
+
+
+==========
+createdb en_micro_dissier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.75 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 21:05:25
+--- To-do=0 ncls=115 sing=833 nredo=772 2019-06-20 01:11:41
+four hours...
+
+(sql-close)
+createdb en_micro_dissier_exp
+cat atom.sql | psql en_micro_dissier_exp
+(sql-open "postgres:///en_micro_dissier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155460 csets
+
+mv dict.db dict.db-micro-dissier-unk
+
+==========
+createdb en_micro_dissiest -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.85 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 22:20:54
+--- To-do=0 ncls=85 sing=1175 nredo=429 2019-06-20 02:45:29
+Four plus hours.
+
+(sql-close)
+createdb en_micro_dissiest_exp
+cat atom.sql | psql en_micro_dissiest_exp
+(sql-open "postgres:///en_micro_dissiest_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 1175 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 167842 csets
+
+mv dict.db dict.db-micro-dissiest-unk
+
+
+==========
+createdb en_mini_discrim -T en_mini_marg
+(gram-classify-greedy-discrim 0.5 4)
+
+After triming, 7385 words left, out of 7548
+Sorting in 2.028 seconds
+Start greedy-agglomeration of 7385 words
+Existing classes=0 singletons=0 done=0
+--- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 03:36:40 -- "." ---
+
+
+
 
 
 ======
@@ -18515,10 +18909,265 @@ paul)
 Finished verifying dicationary "micro-fuzz" with sentences from
 "child-directed-speech.txt"
 
+========
+
+Examined 579 sentences; 497 had words not in dictionary (85.838 %).
+Finished comparing 82 parses; 81 parsed differently (98.780 %).
+Found 666 word instances, 209 words; expected to find 650 links
+Dictionary was missing 696 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 319 words w/linkage diffs; 324 missing and 59 extra links
+Link precision=0.8468 recall=0.5015 F1=0.6300
+Finished verifying dicationary "micro-fuzz" with sentences from
+"corpus-basic.batch"
+
+========
+
+Examined 4236 sentences; 3460 had words not in dictionary (81.681 %).
+Finished comparing 776 parses; 745 parsed differently (96.005 %).
+Found 4901 word instances, 591 words; expected to find 4359 links
+Dictionary was missing 3406 words
+Found 2 length-miscompares
+Found 7 word-miscompares
+Found 2656 words w/linkage diffs; 2237 missing and 700 extra links
+Link precision=0.7519 recall=0.4868 F1=0.5910
+
+Finished verifying dicationary "micro-fuzz" with sentences from
+"corpus-fixes.batch"
+
+=======
+Examined 229 sentences; 205 had words not in dictionary (89.520 %).
+Finished comparing 24 parses; 24 parsed differently ( 100.0 %).
+Found 169 word instances, 95 words; expected to find 156 links
+Dictionary was missing 414 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 83 words w/linkage diffs; 67 missing and 22 extra links
+Link precision=0.8018 recall=0.5705 F1=0.6667
+Finished verifying dicationary "micro-fuzz" with sentences from
+"ull-golden.txt"
+
+=====
+Examined 2513 sentences; 2136 had words not in dictionary (84.998 %).
+Finished comparing 377 parses; 376 parsed differently (99.735 %).
+Found 3323 word instances, 527 words; expected to find 3220 links
+Dictionary was missing 2582 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1911 words w/linkage diffs; 1616 missing and 529 extra links
+Link precision=0.7520 recall=0.4981 F1=0.5993
+Finished verifying dicationary "micro-fuzz" with sentences from
+"ull-silver-short.txt"
+
+====
+
+Examined 2513 sentences; 1570 had words not in dictionary (62.475 %).
+Finished comparing 943 parses; 941 parsed differently (99.788 %).
+Found 9859 word instances, vocab= 1308 words; expect to find 9716 links
+Dictionary was missing 1371 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 5688 words w/linkage diffs; 4845 missing and 1627 extra links
+Link precision=0.7496 recall=0.5013 F1=0.6008
+
+Missing link-type counts: ((RW . 922) (MV . 598) (S . 563) (O . 540) (J
+. 364) (D . 335) (CV . 267) (I . 234) (P . 201) (WV . 170) (X . 168) (VJ
+. 164) (CO . 159) (M . 157) (C . 142) (A . 135) (E . 128) (W . 108) (B .
+96) (SJ . 95) (IV . 70) (R . 61) (AJ . 51) (EA . 50) (TO . 38) (SI . 33)
+(PP . 32) (K . 31) (G . 31) (PH . 24) (AN . 21) (TH . 17) (EE . 17) (EB
+. 15) (QI . 14) (OF . 13) (VC . 12) (RS . 12) (MJ . 9) (L . 9) (Q . 8)
+(DD . 8) (PF . 8) (MX . 7) (SF . 7) (EZ . 7) (LI . 6) (RJ . 5) (DT . 5)
+(EL . 4) (N . 4) (IDBVS . 3) (EC . 3) (IDOT . 3) (AF . 3) (IDBHA . 3)
+(BI . 3) (SX . 3) (Y . 3) (IDBRM . 2) (NI . 2) (IDBHK . 2) (IDBUB . 2)
+(EN . 2) (IDCBH . 2) (DG . 2) (EF . 2) (SFI . 2) (Z . 2) (IDPN . 1)
+(IDBVL . 1) (IDBHJ . 1) (IDCIN . 1) (DP . 1) (IDBRF . 1) (IDPD . 1) (WN
+. 1) (IDPO . 1) (FM . 1) (BW . 1) (IDBJA . 1) (CX . 1) (IDCBT . 1)
+(IDBEW . 1) (IDPH . 1) (IDLS . 1) (IDCGX . 1) (IDCGY . 1) (IDLR . 1) (V
+. 1) (AL . 1) (IDKM . 1) (IDKN . 1) (JT . 1) (IDPP . 1) (IDPQ . 1) (IDQC
+. 1) (OT . 1) (IDOV . 1) (IDCBS . 1) (IDBOO . 1) (IDBIY . 1) (IDBIZ . 1)
+(ER . 1) (IDBJN . 1) (IDBCE . 1) (IDCDD . 1) (IDBTF . 1) (IDBSC . 1)
+(IDCAU . 1) (NS . 1) (IDOP . 1) (IDBGJ . 1) (XJ . 1) (AA . 1) (HA . 1)
+(ND . 1) (IDBJG . 1) (IDBJH . 1))
+
+Finished verifying dictionary "mini-fuzz" with sentences from
+"ull-silver-short.txt"
+real	68m18.787s
+
+====
 
 
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ;  142420
+
+line 149
+(WordNode "an") .. not a member of anything ... how did that happen?
+it happened because its not a germ .... ohhh we need to use
+the filter during export....
+
+Argh not all sections exported .. wtf ... there are (Section . 142420)
+in the atomspace, but "Will store 81700 csets" ... !?
+
+(gcs 'right-basis-size) ; 67104
+(gcf 'right-basis-size) ; 33910
+
+fu... not enough, need to pcs 'fetch-pairs too !?
+this loads "an" sections, but still no MemberLink ...
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+
+ahhh ...OK. so lets try it ...
+
+(define nomem
+	(filter (lambda (cls) (equal? 0
+				(length (cog-incoming-by-type cls 'MemberLink))))
+		(cog-get-atoms 'WordClassNode)))
+
+(cog-incoming-by-type (Word "an") 'MemberLink)
+(cog-incoming-by-type (WordClass "an#uni") 'MemberLink)
+
+OK, so that's fixed, but now no MI for
+ (Section (ctv 1 0 4.2)
+   (WordClassNode "time way")
+   (ConnectorSeq
+      (Connector (WordNode "acid") (ConnectorDir "-"))))
+
+(cog-keys sec) only has (PredicateNode "*-TruthValueKey-*")
+why? Others have (PredicateNode "*-FrequencyKey-*")
+ (PredicateNode "*-TruthValueKey-*")
+ (PredicateNode "*-Mutual Info Key-*")
+
+select * from atoms where name='acid';
+WordNode "acid" -- 6035
+(ConnectorDir "-") == 16
+
+(WordClassNode "time way")  == 380120
+
+select * from atoms where outgoing='{6035,16}';
+
+connector == 6036
+seq = 6037
+sect = 382615
+
+*-Mutual Info Key-*   -- 13
+
+select * from valuations where atom=382615;
+OK, so database literally does not have it
+
+7 12 34
+
+Failure to store the MI's for ... some atoms. Crap.
+Failure to store singleton memberships ... Crap.
+
+needed to gcs->store-something!?
+
+
+
+=============
+
+in the mini-fuzz --
+
+Length miscompare: 9 vs 8
+Finish compare of sentence 1275/3059: "Yes, please, I'll have one."
+Length miscompare: 8 vs 7
+Finish compare of sentence 1290/3079: "That's what I think, yes."
+
+=============
+Bug: explosive atomspace
+is this the word-test??  No, its just the parses piling up.
+
+Now what?
+"It is a tokenizing parser."
+Oh.
+NumberNode WordInstanceNode PhraseNode LinkGrammarRelationshipNode
+
+... but it is still leaking.  How?
+
+valgrind --leak-check=full  \
+--suppressions=/tmp/valgrind.boost.suppressions \
+--suppressions=/tmp/valgrind.guile.suppressions \
+--suppressions=/tmp/valgrind.logger.suppressions \
+guile -s dict-comp.scm mini-fuzz x.txt
+
+LGHaveDictEntry::evaluate
+db_lookup_exp (read-sql.c:212)  Ohhh stupid me.
+---
+
+==========
+leak: 68m18.787s
+delete: 75m23.688s
+no-delete: 76m48.013s
+
+==========
+Wow. Unk word lookups are slow....   why? They should not be triggering
+anything ...!
+
+micro-fuzz: 0m19.788s
+
+oh crash ... 
+
+Assertion (NULL != bs->exp) failed at
+../../link-grammar/dict-sql/read-sql.c:260: Missing disjuncts for word
+<UNKNOWN-WORD.759> <didn’t didn't>
+
+select * from Morphemes where morpheme='<UNKNOWN-WORD>';
+.schema Disjuncts
+
+#:INCLUDE-MISSING #t
+
+discrim 124
+diss  135
+fuzz   135
+fuzzier 136
+fizz -- 115
+
+skirting with madness:
+The strength was in the order of gerE > cotD > yfhP
+
+
+
+hangups:
+People ages 55 to 64 on average are out of work for more than 54 weeks,
+while those ages 25 to 34 are unemployed for about 36 weeks, according
+to figures from the Bureau of Labor Statistics.
+
+
+He obtained the lease of the manor of Great Burstead Grange (near East
+Horndon) from the Abbey of Stratford Langthorne, and purchased the manor
+of Bayhouse in West Thurrock.
+
+this awful threat calmed Bab 's anger at once , and she hastened to
+introduce a safer subject .
+
+The delicately lyrical tone of the cello contrasted with the fiercely percussive piano chords
+
+Hundreds of young men, furious about the verdict in the Rodney King
+case, looted stores in Los Angeles today
+
+The strength was in the order of gerE > cotD > yfhP P2 > yfhP P1
+
+
+
+Based on LG-English parses:
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ALE-dILEd-2019-04-10/context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_31916C_2019-04-08_0007.4.0.dict
+
+Based on "sequential" parses:
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-SEQ-dILEd-2019-05-16-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_31548C_2019-05-19_0007.4.0.dict
+
+Based on "DNN-MI-lked MST-Parses":
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-GUCH-SUMABS-dILEd-2019-05-21-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_34584C_2019-05-25_0007.4.0.dict
+
+
+Evaluation TODO:
+* Fraction of words with null links.
+* Number of linkages found ...  (looking for overflow)
+* Fraction correct S,O links
 
 TODO:
+* Words that are in word classes, but still have left-over-counts
+  should get thier own classes ...
 * Add 'help method
 * Add 'verbose method to enable progress reports.
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard

@@ -49,12 +49,19 @@
 	(if (not (eof-object? line))
 		(begin
 			; The # symbol is a comment-card
-			(if (not (equal? #\# (string-ref line 0)))
+			(if (and
+				(< 0 (string-length line))
+				; % is a comment for LG, ! is a directive for LG,
+				; * means "bad sentence" and # is a comment for python
+				(not (equal? #\# (string-ref line 0)))
+				(not (equal? #\! (string-ref line 0)))
+				(not (equal? #\* (string-ref line 0)))
+				(not (equal? #\% (string-ref line 0))))
 				(compare line))
 			(process-file PORT))
 		(compare #f)))
 
 (process-file (open sent-file O_RDONLY))
 
-(format #t "Finished verifying dicationary \"~A\" with sentences from \"~A\"\n"
+(format #t "Finished verifying dictionary \"~A\" with sentences from \"~A\"\n"
 	test-dict sent-file)
