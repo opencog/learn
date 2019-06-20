@@ -66,6 +66,12 @@
 		)
 
 		; ----------------------------------------
+		; LG English link-type classes
+		(define primary-links (list "S" "O" "MV" "SI" "CV"))
+		(define secondary-links (list "A" "J" "D" "M" "G" "E" "MX" "EA" "EB"))
+		(define punct-links (list "X" "RW"))
+
+		; ----------------------------------------
 		; Misc utilities
 
 		; Get the word of the word instance, i.e. the WordNode.
@@ -127,15 +133,17 @@
 				(char-set-adjoin char-set:lower-case #\*)))
 
 		; ------
-		; Increment count for a missing link type
-		(define (incr-link-str-count link-name)
+		; Increment count for a missing link type putting the count
+		; in an association list, so that we can print all muffed
+		; types at the end.
+		(define (incr-link-type-count link-name)
 			(define cnt (assoc-ref missing-link-types link-name))
 			(if (not cnt) (set! cnt 0))
 			(set! missing-link-types
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
 		(define (incr-link-count lwin rwin)
-			(incr-link-str-count (get-link-str-name lwin rwin)))
+			(incr-link-type-count (get-link-str-name lwin rwin)))
 
 		; ----------------------------------------
 		; Comparison functions
@@ -344,6 +352,18 @@
 		)
 
 		; -------------------
+		; Generate totals of missing link-types, by category.
+		; ALIST is the association-list holding counts, and
+		; TYPCLS is a list of LG link types to count.
+		(define (get-count-of-type-class ALIST TYPCLS)
+			(fold
+				(lambda (PR CNT)
+					(if (any (lambda (lt) (equal? (car PR) lt)) TYPCLS)
+						(+ CNT (cdr PR))
+						CNT))
+				0 ALIST))
+
+		; -------------------
 		(define (report-stats)
 			; Compute link precision and recall.
 			(define link-expected-positives (exact->inexact total-links))
@@ -382,6 +402,10 @@
 
 			(format #t "Link precision=~6F recall=~6F F1=~6F\n"
 				link-precision link-recall link-f1)
+			(newline)
+			(format #t "Primary link-type recall=~A ~A\n"
+				(get-count-of-type-class
+					sorted-missing-links primary-links))
 			(newline)
 			(format #t "Missing link-type counts: ~A\n\n" sorted-missing-links)
 			(format #t "Missing words: ~A\n\n"

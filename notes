@@ -19165,6 +19165,29 @@ http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-GUCH-SUMABS-dILE
 
 28238 / 1154 = 
 
+
+COMMENT ON DATABASE en_micro_diss IS '(discrim 0.65)';
+COMMENT ON DATABASE en_micro_diss_exp IS '(discrim 0.65) plus marginals';
+COMMENT ON DATABASE en_micro_dissier IS '(discrim 0.75)';
+COMMENT ON DATABASE en_micro_dissier_exp IS '(discrim 0.75) plus marginals';
+COMMENT ON DATABASE en_micro_dissiest IS '(discrim 0.85)';
+COMMENT ON DATABASE en_micro_dissiest_exp IS '(discrim 0.85) plus marginals';
+COMMENT ON DATABASE en_micro_fizz IS '(fuzz 0.75 0.3)';
+COMMENT ON DATABASE en_micro_fizz_exp IS '(fuzz 0.75 0.3) plus marginals';
+COMMENT ON DATABASE en_micro_fuzzier IS '(fuzz 0.65 0.6)';
+COMMENT ON DATABASE en_micro_fuzzier_exp IS '(fuzz 0.65 0.6) plus marginals';
+
+ en_micro_diss
+ en_micro_diss_exp
+ en_micro_dissier
+ en_micro_dissier_exp
+ en_micro_dissiest
+ en_micro_dissiest_exp
+ en_micro_fizz
+ en_micro_fizz_exp
+ en_micro_fuzzier
+ en_micro_fuzzier_exp
+
 =======
 Length miscompare:
 I'm going drinking.  5 vs 4
