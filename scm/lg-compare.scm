@@ -421,14 +421,23 @@
 				(+ link-recall link-precision)))
 
 			; Compute the recall of important link types.
+			(define primary-total
+				(+ missing-primary present-primary))
+			(define secondary-total
+				(+ missing-secondary present-secondary))
+			(define punct-total
+				(+ missing-punct present-punct))
+			(define other-total
+				(+ missing-other present-other))
+
 			(define primary-recall
-				(/ present-primary (+ missing-primary present-primary)))
+				(/ present-primary primary-total))
 			(define secondary-recall
-				(/ present-secondary (+ missing-secondary present-secondary)))
+				(/ present-secondary secondary-total))
 			(define punct-recall
-				(/ present-punct (+ missing-punct present-punct)))
+				(/ present-punct punct-total))
 			(define other-recall
-				(/ present-other (+ missing-other present-other)))
+				(/ present-other other-total))
 
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
@@ -461,14 +470,14 @@
 				link-precision link-recall link-f1)
 			(newline)
 
-			(format #t "Primary     link-type recall=~6F ~A\n"
-				primary-recall primary-links)
-			(format #t "Secondary   link-type recall=~6F ~A\n"
-				secondary-recall secondary-links)
-			(format #t "Punctuation link-type recall=~6F ~A\n"
-				punct-recall punct-links)
-			(format #t "Other       link-type recall=~6F (all other types)\n"
-				other-recall)
+			(format #t "Primary     link-type recall=~6F tot=~A ~A\n"
+				primary-recall primary-total primary-links)
+			(format #t "Secondary   link-type recall=~6F tot=~A ~A\n"
+				secondary-recall secondary-total secondary-links)
+			(format #t "Punctuation link-type recall=~6F tot=~A ~A\n"
+				punct-recall punct-total punct-links)
+			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
+				other-recall other-total)
 
 			(newline)
 			(format #t "Counts of missing link-types: ~A\n\n"
