@@ -57,9 +57,9 @@
 			(total-links 0)
 			(length-miscompares 0)
 			(word-miscompares 0)
-			(link-count-miscompares 0)
-			(missing-links 0)
-			(extra-links 0)
+			(link-correct 0)
+			(link-excess 0)
+			(link-deficit 0)
 
 			(present-primary 0)
 			(present-secondary 0)
@@ -160,10 +160,11 @@
 
 		(define (incr-missing-link-count lwin rwin)
 			(define link-name (get-link-str-name lwin rwin))
-			;; (format #t "Missing link: ~A <-- ~A --> ~A\n"
-			;; 	(cog-name (get-word-of-winst lwin))
-			;; 	link-name
-			;; 	(cog-name (get-word-of-winst rwin)))
+			(if VERBOSE
+				(format #t "Missing link: ~A <-- ~A --> ~A\n"
+					(cog-name (get-word-of-winst lwin))
+					link-name
+					(cog-name (get-word-of-winst rwin))))
 			(cond
 				((any (lambda (lt) (equal? lt link-name)) primary-links)
 					(set! missing-primary (+ 1 missing-primary)))
@@ -176,10 +177,11 @@
 
 		(define (incr-present-link-count lwin rwin)
 			(define link-name (get-link-str-name lwin rwin))
-			;; (format #t "Have link: ~A <-- ~A --> ~A\n"
-			;; 	(cog-name (get-word-of-winst lwin))
-			;; 	link-name
-			;; 	(cog-name (get-word-of-winst rwin)))
+			(if VERBOSE
+				(format #t "Have link: ~A <-- ~A --> ~A\n"
+					(cog-name (get-word-of-winst lwin))
+					link-name
+					(cog-name (get-word-of-winst rwin))))
 			(cond
 				((any (lambda (lt) (equal? lt link-name)) primary-links)
 					(set! present-primary (+ 1 present-primary)))
@@ -263,18 +265,22 @@
 			; that are linked to the right of the current word.
 			(define elinked (get-linked-winst ewin))
 			(define olinked (get-linked-winst owin))
-			(define elinked-len (length elinked))
-			(define olinked-len (length olinked))
 
 			; Obtain sets of the linked words (not the word-instances)
 			(define ewords (map get-word-of-winst elinked))
 			(define owords (map get-word-of-winst olinked))
 
 			; A set of words in ewords that are not in owords
+			; These correspond to missing links.
 			(define miss-w (lset-difference equal? ewords owords))
 
 			; A set of words in ewords that are also in owords
+			; These correspond to correct links.
 			(define have-w (lset-intersection equal? ewords owords))
+
+			; A set of words in owords that are not in ewords
+			; These correspond to extra, unexpected links.
+			(define extra-w (lset-difference equal? owords ewords))
 
 			; Keep only word-instances that are in the word-set.
 			(define (trim-wili wili wrd-set)
@@ -288,19 +294,24 @@
 			; Missing linked word-instances...
 			(define missing-wi (trim-wili elinked miss-w))
 			(define present-wi (trim-wili elinked have-w))
+			(define extra-wi (trim-wili elinked extra-w))
 
-			; Keep statistics
+			(define n-missing (length missing-wi))
+			(define n-present (length present-wi))
+			(define n-extra   (length extra-wi))
+
+			(set! link-deficit (+ link-deficit n-missing))
+			(set! link-correct (+ link-correct n-present))
+			(set! link-excess  (+ link-excess  n-extra))
+
+			; A count of how many LG-English generated.
 			(set! total-links (+ total-links elinked-len))
-			(if (< elinked-len olinked-len)
-				(set! extra-links (+ extra-links (- olinked-len elinked-len)))
-				(set! missing-links (+ missing-links (- elinked-len olinked-len))))
 
-			; Compare number of links
-			(if (not (equal? elinked-len olinked-len))
+			(if (or (< 0 link-deficit) (< 0 link-excess))
 				(begin
 					(if verbose
-						(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
-							elinked-len olinked-len ewrd))
+						(format #t "Miscompare right-links: ~A missing, ~A extra for ~A"
+							n-missing n-extra ewrd))
 					(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
 			; Create a histogram of missing link types.
@@ -411,8 +422,13 @@
 		; -------------------
 		(define (report-stats)
 			; Compute link precision and recall.
+			; total-links is the number of links that LG English found.
 			(define link-expected-positives (exact->inexact total-links))
+
+			; missing-links is the number of expected links we did not find.
 			(define link-true-positives (- link-expected-positives missing-links))
+
+xxxxxxx
 			(define link-false-positives extra-links)
 			(define link-recall (/ link-true-positives link-expected-positives))
 			(define link-precision (/ link-true-positives
@@ -462,9 +478,9 @@
 			(format #t "Found ~A length-miscompares\n" length-miscompares)
 			(format #t "Found ~A word-miscompares\n" word-miscompares)
 			(format #t
-				"Found ~A words w/linkage diffs; ~A missing and ~A extra links\n"
+				"Found ~A words w/diffs in #links: ~A fewer and ~A extra links\n"
 				link-count-miscompares
-				missing-links extra-links)
+				link-deficit link-excess)
 
 			(format #t "Link precision=~6F recall=~6F F1=~6F\n"
 				link-precision link-recall link-f1)
@@ -478,6 +494,9 @@
 				punct-recall punct-total punct-links)
 			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
 				other-recall other-total)
+(format #t "duuude thinko=~A sum=~A\n"
+link-true-positives (+ present-primary
+present-secondary present-punct present-other))
 
 			(newline)
 			(format #t "Counts of missing link-types: ~A\n\n"

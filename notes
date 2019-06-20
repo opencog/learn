@@ -19177,22 +19177,16 @@ COMMENT ON DATABASE en_micro_fizz_exp IS '(fuzz 0.75 0.3) plus marginals';
 COMMENT ON DATABASE en_micro_fuzzier IS '(fuzz 0.65 0.6)';
 COMMENT ON DATABASE en_micro_fuzzier_exp IS '(fuzz 0.65 0.6) plus marginals';
 
- en_micro_diss
- en_micro_diss_exp
- en_micro_dissier
- en_micro_dissier_exp
- en_micro_dissiest
- en_micro_dissiest_exp
- en_micro_fizz
- en_micro_fizz_exp
- en_micro_fuzzier
- en_micro_fuzzier_exp
-
 =======
 Length miscompare:
 I'm going drinking.  5 vs 4
 Maybe, I'm not sure. 8 vs 7
 
+
+      (define primary-links (list "S" "O" "MV" "SI" "CV"))
+      (define secondary-links (list "A" "J" "D" "M" "G" "E" "MX" "EA"
+"EB"))
+      (define punct-links (list "X" "RW"))
 
 
 Evaluation TODO:
