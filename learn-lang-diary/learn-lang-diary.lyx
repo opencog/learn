@@ -41663,6 +41663,13 @@ For
 micro-fuzzier-unk
 \shape default
 : almost no difference at all from the above.
+ Note that both have almost exactly the same number of grammatical classes
+ (135 
+\emph on
+vs.
+
+\emph default
+ 136) and so unknown-word guessing seems to be unaffected.
 \end_layout
 
 \begin_layout Standard
@@ -42099,6 +42106,21 @@ micro-fizz-unk
 : Precision went up a little, recall dropped much more.
  Not unexpected: the tighter discriminator makes each grammatical class
  more accurate, but the overall coverage (the recall) drops.
+ There are two possible explanations for this differrence: 
+\end_layout
+
+\begin_layout Enumerate
+The tighter discriminator is leading to more accurate grammatical classes
+ (?)
+\end_layout
+
+\begin_layout Enumerate
+A smaller number of grammatical classes to choose from suggests that unkown
+ word guessing might struggle more.
+\end_layout
+
+\begin_layout Standard
+Disentangling these effects is not obvious.
 \end_layout
 
 \begin_layout Standard
@@ -42312,7 +42334,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+98%
 \end_layout
 
 \end_inset
@@ -42321,7 +42343,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.797
 \end_layout
 
 \end_inset
@@ -42330,7 +42352,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.576
 \end_layout
 
 \end_inset
@@ -42339,7 +42361,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.669
 \end_layout
 
 \end_inset
@@ -42480,7 +42502,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+100%
 \end_layout
 
 \end_inset
@@ -42489,7 +42511,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.722
 \end_layout
 
 \end_inset
@@ -42498,7 +42520,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.553
 \end_layout
 
 \end_inset
@@ -42507,7 +42529,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.626
 \end_layout
 
 \end_inset
@@ -42524,11 +42546,20 @@ silver
 \begin_inset VSpace defskip
 \end_inset
 
-And again for 
+Here is for 
 \shape italic
 micro-discrim-unk
-\shape default
-:
+\emph on
+; it should be compared to 
+\emph default
+micro-discrim
+\emph on
+, which uses the same algo and paramaters, but doesn't have word-guessing
+ built in.
+\end_layout
+
+\begin_layout Standard
+Prelim, incomplete data: word-guessing helps ...
 \end_layout
 
 \begin_layout Standard
@@ -42963,13 +42994,19 @@ micro-diss-unk
 \shape italic
 micro-discrim-unk
 \emph on
-, immediately above, which uses the same clustering algo, but a weaker discrimin
-ator, also to 
+, immediately above, which uses the same clustering algo, but a weaker cutoff,
+ also to 
 \emph default
 micro-fuzz-unk
 \emph on
-, which uses a different clustering algo, but the same discriminator.
- 
+, which uses a different clustering algo, but the same cutoff.
+ Note that when the cutoff is the same, both produce the same number of
+ grammatical classes (135, either way).
+ The looser cutoff produces fewer classes (124); presumably each class is
+ larger.
+ This does not resolve the question of whether it is the sharpenss of the
+ classes that matter, or thier raw number.
+ Perhaps these effects cannot be disentangled...
 \end_layout
 
 \begin_layout Standard
@@ -44263,16 +44300,20 @@ silver
 \end_layout
 
 \begin_layout Standard
-Comparing 
+Below is 
 \shape italic
-mini-fuzz-unk
+mini-fuzz-unk.
+
 \shape default
- to 
+ It is to be compared to 
 \shape italic
 micro-fuzz-unk
 \shape default
-, as both use the same parameters, but mini has the larger vocabulary, it
- appears that ...
+, which uses the same parameters, but has a smaller vocabulary.
+\end_layout
+
+\begin_layout Standard
+it appears that ...
  mixed results ...
  
 \end_layout
