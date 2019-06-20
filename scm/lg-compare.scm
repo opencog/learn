@@ -308,7 +308,7 @@
 			; A count of how many LG-English generated.
 			(set! total-links (+ total-links (length elinked)))
 
-			(if (or (< 0 link-deficit) (< 0 link-excess))
+			(if (or (< 0 n-missing) (< 0 n-extra))
 				(begin
 					(if verbose
 						(format #t "Miscompare right-links: ~A missing, ~A extra for ~A"
