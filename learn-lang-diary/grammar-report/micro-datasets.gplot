@@ -3,8 +3,10 @@
 #################################################
 # Used to generate the three precisions vs. MI plots
 #
-set term postscript eps enhanced color 28
-set out 'mi-prec.eps'
+set term png medium
+set out 'mi-prec.png'
+# set term postscript eps enhanced color 28
+# set out 'mi-prec.eps'
 set xrange [3.6:4.5]
 set key left top
 set title "Dataset MI vs. Precision"
@@ -21,7 +23,7 @@ set xtics out rotate add ( \
 
 plot "micro-datasets.dat" using 2:6 with lines linewidth 5 title "CDS", \
  "micro-datasets.dat" using 2:9 with lines linewidth 5 title "Silver", \
- "micro-datasets.dat" using 2:13 with lines linewidth 5 title "Basic"
+ "micro-datasets.dat" using 2:12 with lines linewidth 5 title "Basic"
 
 #################################################
 # Used to generate the three recall vs. MI plots
@@ -46,4 +48,29 @@ set xtics out rotate add ( \
 
 plot "micro-datasets.dat" using 2:7 with lines linewidth 5 title "CDS", \
  "micro-datasets.dat" using 2:10 with lines linewidth 5 title "Silver", \
+ "micro-datasets.dat" using 2:13 with lines linewidth 5 title "Basic"
+
+#################################################
+# Used to generate the three F1 vs. MI plots
+#
+set term png medium
+set out 'mi-f1.png'
+# set term postscript eps enhanced color 28
+# set out 'mi-f1.eps'
+set xrange [3.6:4.5]
+set key right top
+set title "Dataset MI vs. F1"
+set ylabel "F1"
+set xlabel "Dataset MI"
+set xtics out rotate add ( \
+   "discrim" 3.62, \
+   "fuzzier" 3.95, \
+   "diss" 4.0, \
+   "fuzz" 4.03, \
+   "fizz" 4.29, \
+   "dissier" 4.30, \
+   "dissiest" 4.46)
+
+plot "micro-datasets.dat" using 2:8 with lines linewidth 5 title "CDS", \
+ "micro-datasets.dat" using 2:11 with lines linewidth 5 title "Silver", \
  "micro-datasets.dat" using 2:14 with lines linewidth 5 title "Basic"
