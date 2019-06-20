@@ -1,0 +1,18 @@
+# set term png small color
+set term png medium
+set out 'mi-prec.png'
+
+#################################################
+# Used to generate the binned average observations
+#
+# set term postscript eps enhanced color 28
+# set out 'mi-prec.eps'
+set xrange [3.6:4.5]
+set key left top
+set title "Dataset MI vs. Precision"
+set ylabel "Precision"
+set xlabel "Dataset MI"
+plot "micro-datasets.dat" using 2:6 with lines linewidth 5 title "CDS", \
+ "micro-datasets.dat" using 2:9 with lines linewidth 5 title "Silver", \
+ "micro-datasets.dat" using 2:13 with lines linewidth 5 title "Basic"
+
