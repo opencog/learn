@@ -60,6 +60,13 @@
 			(link-count-miscompares 0)
 			(missing-links 0)
 			(extra-links 0)
+
+			(total-primary 0)
+			(total-secondary 0)
+			(total-punct 0)
+			(missing-primary 0)
+			(missing-secondary 0)
+			(missing-punct 0)
 			(missing-link-types '())
 			(missing-words (make-atom-set))
 			(vocab-words (make-atom-set))
@@ -142,9 +149,19 @@
 			(set! missing-link-types
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
-		(define (incr-link-count lwin rwin)
+		(define (incr-missing-link-count lwin rwin)
+			(format #t "Missing link: ~A <-- ~A --> ~A\n"
+				(cog-name (get-word-of-winst lwin))
+				(get-link-str-name lwin rwin)
+				(cog-name (get-word-of-winst rwin)))
 			(incr-link-type-count (get-link-str-name lwin rwin)))
 
+		(define (incr-present-link-count lwin rwin)
+			(format #t "Have link: ~A <-- ~A --> ~A\n"
+				(cog-name (get-word-of-winst lwin))
+				(get-link-str-name lwin rwin)
+				(cog-name (get-word-of-winst rwin)))
+)
 		; ----------------------------------------
 		; Comparison functions
 
@@ -214,17 +231,23 @@
 		; owin should be the OTHER word instance.
 		(define (compare-links ewin owin)
 			(define ewrd (get-word-of-winst ewin))
+
+			; elinked and olinked are lists of word instances
+			; that are linked to the right of the current word.
 			(define elinked (get-linked-winst ewin))
 			(define olinked (get-linked-winst owin))
 			(define elinked-len (length elinked))
 			(define olinked-len (length olinked))
 
-			; Obtain sets of the links words (not the word-instances)
+			; Obtain sets of the linked words (not the word-instances)
 			(define ewords (map get-word-of-winst elinked))
 			(define owords (map get-word-of-winst olinked))
 
 			; A set of words in ewords that are not in owords
 			(define miss-w (lset-difference equal? ewords owords))
+
+			; A set of words in ewords that are also in owords
+			(define have-w (lset-intersection equal? ewords owords))
 
 			; Keep only word-instances that are in the word-set.
 			(define (trim-wili wili wrd-set)
@@ -237,6 +260,7 @@
 
 			; Missing linked word-instances...
 			(define missing-wi (trim-wili elinked miss-w))
+			(define present-wi (trim-wili elinked have-w))
 
 			; Keep statistics
 			(set! total-links (+ total-links elinked-len))
@@ -252,10 +276,16 @@
 							elinked-len olinked-len ewrd))
 					(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
-			; Make a note of missing link types.
+			; Create a histogram of missing link types.
 			(for-each
-				(lambda (misw) (incr-link-count ewin misw))
+				(lambda (misw) (incr-missing-link-count ewin misw))
 				missing-wi)
+
+			; And also the ones that we have.
+			(for-each
+				(lambda (havw) (incr-present-link-count ewin havw))
+				present-wi)
+
 		)
 
 		; -------------------
@@ -405,7 +435,7 @@
 			(newline)
 			(format #t "Primary link-type recall=~A ~A\n"
 				(get-count-of-type-class
-					sorted-missing-links primary-links))
+					sorted-missing-links primary-links) primary-links)
 			(newline)
 			(format #t "Missing link-type counts: ~A\n\n" sorted-missing-links)
 			(format #t "Missing words: ~A\n\n"
