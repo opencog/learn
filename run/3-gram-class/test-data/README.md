@@ -13,7 +13,7 @@ comparisons. Included are:
 
 * `ull-child-directed-speech.txt` -- The ULL project "CDS corpus",
    approx 1800 short sentences spoken by adults to children. All
-   are very short.
+   are very short, averaging 5 words per sentence.
 
 * `ull-golden.txt` -- The ULL project "Golden Corpus". A total of 229
   sentences, mostly medium-short in length.
@@ -23,9 +23,9 @@ comparisons. Included are:
   It appears to be the (partial) contents of three books from
   Project Gutenberg: Kilmeny of the Orchard (Lucy Maud Montgomery),
   Peter Rabbit (Thornton W Burgess), and a portion of Under the Lilacs
-  (Louisa May Alcott).
+  (Louisa May Alcott). Average sentence length of 12 words.
 
-* `wikipedia.txt` -- A concatenation of three English Wikipedia
-  articles: "Autoethnography", "Astor House Hotel (Shanghai)", and
-  "History of Virginia".  The sentences are all quite long. A total
-  of 1154 sentences.
+* `wikipedia.txt` -- A concatenation of every third sentence from
+  three English Wikipedia articles: "Autoethnography", "Astor House
+  Hotel (Shanghai)", and "History of Virginia".  The sentences are
+  all quite long, averaging 24 words each. A total of 384 sentences.
