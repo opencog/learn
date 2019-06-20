@@ -100,9 +100,10 @@
 					(< (get-num wa) (get-num wb)))))
 
 		; ------
-		; Return a sorted list of the other word-instances that this
+		; Return a sorted list of the paired word-instances that this
 		; word links to. To avoid double-counting, this returns only the
-		; links connecting to the right.
+		; links connecting to the right. To avoid spurious RIGHT-WALL
+		; miscompares, all instances of RIGHT-WALL are stripped out.
 		(define (get-linked-winst WIN)
 			(sort-word-inst-list
 				(map gdr
@@ -112,6 +113,11 @@
 							(and
 								; Is the first word (left word) ours?
 								(equal? (gar lili) WIN)
+
+								; Is the second word (right word) the RIGHT-WALL?
+								(not (equal? (cog-name
+									(get-word-of-winst (gdr lili))) "###RIGHT-WALL###"))
+
 								; Are any of the possible EvaluationLink's
 								; an LG relation? If so, we are happy.
 								(any
