@@ -295,7 +295,7 @@
 			; Missing linked word-instances...
 			(define missing-wi (trim-wili elinked miss-w))
 			(define present-wi (trim-wili elinked have-w))
-			(define extra-wi (trim-wili elinked extra-w))
+			(define extra-wi   (trim-wili olinked extra-w))
 
 			(define n-missing (length missing-wi))
 			(define n-present (length present-wi))
@@ -324,7 +324,6 @@
 			(for-each
 				(lambda (havw) (incr-present-link-count ewin havw))
 				present-wi)
-
 		)
 
 		; -------------------
