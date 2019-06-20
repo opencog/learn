@@ -18705,6 +18705,31 @@ createdb en_micro_dissier -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.75 4)
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 21:05:25
+--- To-do=0 ncls=115 sing=833 nredo=772 2019-06-20 01:11:41
+four hours...
+
+(sql-close)
+createdb en_micro_dissier_exp
+cat atom.sql | psql en_micro_dissier_exp
+(sql-open "postgres:///en_micro_dissier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155460 csets
+
+mv dict.db dict.db-micro-dissier-unk
 
 ==========
 createdb en_micro_dissiest -T en_micro_marg
@@ -19072,7 +19097,35 @@ fuzz   135
 fuzzier 136
 fizz -- 115
 
+skirting with madness:
+The strength was in the order of gerE > cotD > yfhP
 
+
+
+hangups:
+People ages 55 to 64 on average are out of work for more than 54 weeks,
+while those ages 25 to 34 are unemployed for about 36 weeks, according
+to figures from the Bureau of Labor Statistics.
+
+
+He obtained the lease of the manor of Great Burstead Grange (near East
+Horndon) from the Abbey of Stratford Langthorne, and purchased the manor
+of Bayhouse in West Thurrock.
+
+this awful threat calmed Bab 's anger at once , and she hastened to
+introduce a safer subject .
+
+The delicately lyrical tone of the cello contrasted with the fiercely
+percussive piano chords
+
+Hundreds of young men, furious about the verdict in the Rodney King
+case, looted stores in Los Angeles today
+
+The strength was in the order of gerE > cotD > yfhP P2 > yfhP P1
+
+Evaluation TODO:
+* Fraction of words with null links.
+* Number of linakges found ... 
 
 
 TODO:
