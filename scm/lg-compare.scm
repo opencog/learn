@@ -409,18 +409,6 @@
 		)
 
 		; -------------------
-		; Generate totals of missing link-types, by category.
-		; ALIST is the association-list holding counts, and
-		; TYPCLS is a list of LG link types to count.
-		(define (get-count-of-type-class ALIST TYPCLS)
-			(fold
-				(lambda (PR CNT)
-					(if (any (lambda (lt) (equal? (car PR) lt)) TYPCLS)
-						(+ CNT (cdr PR))
-						CNT))
-				0 ALIST))
-
-		; -------------------
 		(define (report-stats)
 			; Compute link precision and recall.
 			(define link-expected-positives (exact->inexact total-links))
@@ -432,11 +420,23 @@
 			(define link-f1 (/ (* 2.0 link-recall link-precision)
 				(+ link-recall link-precision)))
 
+			; Compute the recall of important link types.
+			(define primary-recall
+				(/ (- total-primary missing-primary) total-primary))
+			(define secondary-recall
+				(/ (- total-secondary missing-secondary) total-secondary))
+			(define punct-recall
+				(/ (- total-punct missing-punct) total-punct))
+			(define other-recall
+				(/ (- total-other missing-other) total-other))
+
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
 				(sort missing-link-types
 					(lambda (ia ib) (> (cdr ia) (cdr ib)))))
 
+			(newline)
+			(newline)
 			(format #t
 				"Examined ~A sentences; ~A had words not in dictionary (~6F %).\n"
 				total-sentences incomplete-dict
@@ -460,11 +460,19 @@
 			(format #t "Link precision=~6F recall=~6F F1=~6F\n"
 				link-precision link-recall link-f1)
 			(newline)
+
 			(format #t "Primary link-type recall=~A ~A\n"
-				(get-count-of-type-class
-					sorted-missing-links primary-links) primary-links)
+				primary-recall primary-links)
+			(format #t "Secondary link-type recall=~A ~A\n"
+				secondary-recall secondary-links)
+			(format #t "Punctuation link-type recall=~A ~A\n"
+				punct-recall punct-links)
+			(format #t "Other link-type recall=~A (all other types)\n"
+				other-recall)
+
 			(newline)
-			(format #t "Missing link-type counts: ~A\n\n" sorted-missing-links)
+			(format #t "Counts of missing link-types: ~A\n\n"
+				sorted-missing-links)
 			(format #t "Missing words: ~A\n\n"
 				(map cog-name (missing-words #f)))
 		)
