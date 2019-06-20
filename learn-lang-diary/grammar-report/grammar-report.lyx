@@ -9564,11 +9564,11 @@ Finally, the reciprocal mean of the two, aka the F1-score.
 \end_layout
 
 \begin_layout Section*
-ULL Dataset Measurements
+ULL Dictionary Measurements
 \end_layout
 
 \begin_layout Standard
-Same proceedures as above, applied to the ULL datasets.
+Same proceedures as above, applied to the ULL dictionaries.
  These are:
 \end_layout
 
@@ -9731,7 +9731,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+93%
 \end_layout
 
 \end_inset
@@ -9740,7 +9740,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.951
 \end_layout
 
 \end_inset
@@ -9749,7 +9749,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.335
 \end_layout
 
 \end_inset
@@ -9758,7 +9758,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.496
 \end_layout
 
 \end_inset
@@ -9787,7 +9787,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+100%
 \end_layout
 
 \end_inset
@@ -9796,7 +9796,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.945
 \end_layout
 
 \end_inset
@@ -9805,7 +9805,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.157
 \end_layout
 
 \end_inset
@@ -9814,7 +9814,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.269
 \end_layout
 
 \end_inset
@@ -9843,7 +9843,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+98%
 \end_layout
 
 \end_inset
@@ -9852,7 +9852,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.942
 \end_layout
 
 \end_inset
@@ -9861,7 +9861,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.145
 \end_layout
 
 \end_inset
@@ -9870,7 +9870,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.251
 \end_layout
 
 \end_inset
@@ -9899,7 +9899,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+100%
 \end_layout
 
 \end_inset
@@ -9908,7 +9908,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.982
 \end_layout
 
 \end_inset
@@ -9917,7 +9917,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.623
 \end_layout
 
 \end_inset
@@ -9926,7 +9926,7 @@ gold
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.763
 \end_layout
 
 \end_inset
@@ -9955,7 +9955,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+100%
 \end_layout
 
 \end_inset
@@ -9964,7 +9964,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.957
 \end_layout
 
 \end_inset
@@ -9973,7 +9973,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.582
 \end_layout
 
 \end_inset
@@ -9982,7 +9982,7 @@ silver
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.724
 \end_layout
 
 \end_inset
@@ -10878,8 +10878,16 @@ The tighter the clustering, the higher the precision.
 \end_layout
 
 \begin_layout Itemize
-The ULL dataset quality could be improved by providing some unknown-word
- guessing system.
+The ULL precision is high – better than what I've got; recall is poor, considera
+bly worse.
+ Need to explore why; I don't understand
+\end_layout
+
+\begin_layout Itemize
+The ULL dictionary is brought down by low recall.
+ Root cause is unclear, needst to be explored.
+ Perhaps it is missing vocabulary plus no unknown-word mechanism.
+ Need to double-check what is going on here.
 \end_layout
 
 \begin_layout Section*
