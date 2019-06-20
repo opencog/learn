@@ -155,7 +155,7 @@
 							(+ cnt 1))))
 				0 winli))
 
-		; Return #t if the sentnce contains missing words.
+		; Return #t if the sentence contains missing words.
 		(define (has-missing-words winli)
 			(if (< 0 (num-missing-words winli other-dict))
 				(begin
@@ -169,14 +169,19 @@
 			(define ewlilen (length en-sorted))
 			(define owlilen (length other-sorted))
 
-			(set! total-words (+ total-words ewlilen))
-
-			; Both should have the same length, assuming the clever
-			; English tokenizer hasn't tripped.
-			(if (not (equal? ewlilen owlilen))
+			; Both should usually have the same length. Note, however,
+			; that LG English will split "I'm" -> "I 'm" i.e. one word
+			; into two, and that many/most test dictionaries do NOT do
+			; this.  This leads to instant miscompares... Count total
+			; words ONLY if lengh-compare passes.
+			(if (equal? ewlilen owlilen)
+				(set! total-words (+ total-words ewlilen))
 				(begin
 					(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen)
-					(set! length-miscompares (+ 1 length-miscompares)))))
+					(set! length-miscompares (+ 1 length-miscompares))))
+
+			; Return #t is the lengths are good!
+			(equal? ewlilen owlilen))
 
 		; ---
 		; The words should compare. We are not currently comparing the
@@ -292,14 +297,15 @@
 				(format #t "Dictionary is missing words in: \"~A\"\n" SENT))
 
 			; Don't do anything more, if the dict is missing words in the
-			; sentence.
-			(if (or (not dict-has-missing-words) INCLUDE-MISSING)
+			; sentence. ... unless the INCLUDE-MISSING flag is set.
+			; Don't do anything if there as a sentence-length miscompare.
+			; Such miscompares pointlessly garbage up the stats.
+			(if (and
+					(or (not dict-has-missing-words) INCLUDE-MISSING)
+					(compare-lengths en-sorted other-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
 					(set! temp-cnt link-count-miscompares)
-
-					; Compare sentence lengths
-					(compare-lengths en-sorted other-sorted)
 
 					; Compare words and links
 					(for-each
