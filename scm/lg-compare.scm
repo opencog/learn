@@ -455,7 +455,8 @@
 			(define secondary-recall
 				(/ present-secondary secondary-total))
 			(define punct-recall
-				(/ present-punct punct-total))
+				(if (equal? 0 punct-total) (inf)
+					(/ present-punct punct-total)))
 			(define other-recall
 				(/ present-other other-total))
 
@@ -498,9 +499,6 @@
 				punct-recall punct-total punct-links)
 			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
 				other-recall other-total)
-(format #t "duuude thinko=~A sum=~A\n"
-link-true-positives (+ present-primary
-present-secondary present-punct present-other))
 
 			(newline)
 			(format #t "Counts of missing link-types: ~A\n\n"
