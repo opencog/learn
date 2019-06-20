@@ -57,6 +57,7 @@
 			(total-links 0)
 			(length-miscompares 0)
 			(word-miscompares 0)
+			(link-count-miscompares 0)
 			(link-correct 0)
 			(link-excess 0)
 			(link-deficit 0)
@@ -305,7 +306,7 @@
 			(set! link-excess  (+ link-excess  n-extra))
 
 			; A count of how many LG-English generated.
-			(set! total-links (+ total-links elinked-len))
+			(set! total-links (+ total-links (length elinked)))
 
 			(if (or (< 0 link-deficit) (< 0 link-excess))
 				(begin
@@ -425,11 +426,15 @@
 			; total-links is the number of links that LG English found.
 			(define link-expected-positives (exact->inexact total-links))
 
-			; missing-links is the number of expected links we did not find.
-			(define link-true-positives (- link-expected-positives missing-links))
+			; The links that were exactly right.
+			(define link-true-positives link-correct)
 
-xxxxxxx
-			(define link-false-positives extra-links)
+			; The links we should not have seen...
+			(define link-false-positives link-excess)
+
+			; The links that were just-pain missing.
+			(define link-false-negatives link-deficit)
+
 			(define link-recall (/ link-true-positives link-expected-positives))
 			(define link-precision (/ link-true-positives
 				(+ link-true-positives link-false-positives)))
