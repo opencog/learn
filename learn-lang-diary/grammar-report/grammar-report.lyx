@@ -84,29 +84,103 @@
 \begin_body
 
 \begin_layout Title
-Preliminary Grammar Results 
+Preliminary Grammar Results
+\end_layout
+
+\begin_layout Title
+June 2019 Restart - Mini Datasets
 \end_layout
 
 \begin_layout Author
 Linas Vepstas
 \end_layout
 
+\begin_layout Date
+Version of 19 June 2019
+\end_layout
+
 \begin_layout Abstract
-The language-learning effort ...
+This reports some very preliminary results on learning grammars.
+ The algorithms being applied have a variety of missing features and imperfectio
+ns but appear to be usable enough to provide at least some early-stage results.
+ The results ar encouraging.
+ This report brefily reviews the dataset(s), the algorithms used to obtain
+ them, and measurement results.
+ 
 \end_layout
 
 \begin_layout Section*
-June 2019 Restart - Mini Datasets
+Introduction
 \end_layout
 
 \begin_layout Standard
-Restart activities that were put aside in the fuall of 2018.
- Basiline is the 
+Work was suspended in the Fall of 2018, and was restarted in June 2019.
+ This is an attempt to pick up where things got left off.
+ It summarizes grammar learning dataset, algorithms and preliminary results,
+ as it stands at the moment.
+ 
+\end_layout
+
+\begin_layout Itemize
+The primary dataset, 
+\family typewriter
+en_dj_cfive,
+\family default
+ appears to be in good condition and should be useable for a good long while,
+ before updates are needed.
+\end_layout
+
+\begin_layout Itemize
+The algorithms are incomplete; much work remains to be done.
+ Work on the core ideas, such as the 
+\begin_inset Quotes eld
+\end_inset
+
+sheaf
+\begin_inset Quotes erd
+\end_inset
+
+ idea, has not yet started in earnest, although some scaffolding has been
+ laid.
+\end_layout
+
+\begin_layout Itemize
+Existing code is sufficient to generate word-classes, word-sense disambiguation
+ and grammars.
+ 
+\end_layout
+
+\begin_layout Standard
+An eyeball inspection of the word-classes suggests that they are quite healthy,
+ but there are no auomated tools to verify thier quality.
+ The clustering seems to be able to split words into word-senses, placing
+ them into correct clusters.
+ The assignments look reasonable, when judged by eye, but there are no automated
+ measurements.
+ These last two results were previously reported in detail in the Winter
+ of 2017 and Spring of 2018.
+ This report focuses on the resulting grammars that can currently be generated,
+ and an automated process to measure thier quality.
+\end_layout
+
+\begin_layout Standard
+To repeat: these are highly preliminary, as most of the important parts
+ of the grammar generation mechanism have not yet been implemented.
+ The results here are a sniff-test or proof-of-concept, to show that the
+ idea works at some minimal level.
+\end_layout
+
+\begin_layout Section*
+Baseline Dataset
+\end_layout
+
+\begin_layout Standard
+The baseline is the 
 \family typewriter
 en_dj_cfive
 \family default
  dataset.
- Lets recall how this dataset was obtained:
+ Let's recall how this dataset was obtained:
 \end_layout
 
 \begin_layout Enumerate
@@ -820,11 +894,16 @@ Note that the MI score drops as words are trimmed from the dataset.
 \end_layout
 
 \begin_layout Standard
-These are promising to be a lot cleaner, and stronger than the rfive dataset.
+These are promising to be a lot cleaner, and stronger than the previous
+ 
+\emph on
+rfive
+\emph default
+ dataset.
  
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 Grammars
 \end_layout
 
@@ -857,7 +936,7 @@ These use the cosine-distance metric (I expect the MI metric to be much
 \end_layout
 
 \begin_layout Itemize
-Parameters are not tuned (some paramters were picked that seemed reasonable
+Parameters are not tuned (some parameters were picked that seemed reasonable
  to start with; the second table explores some tuning.)
 \end_layout
 
@@ -868,9 +947,17 @@ Clustering remainders are being ignored.
  This leaves behind a left-over word-vector, containing disjuncts that did
  not fit into the cluster.
  This remainder represents a second word-sense for that word; it's part
- of how WSD happens.
+ of how WSD happens 
+\begin_inset Quotes eld
+\end_inset
+
+automatically
+\begin_inset Quotes erd
+\end_inset
+
+ in these algorithms.
  Currently, these left-over bits are either being reclustered, if possible,
- or are being discarded.
+ otherwise they are being discarded at the end (I think, I'm not sure).
  They should not be discarded.) 
 \end_layout
 
@@ -883,12 +970,16 @@ shapes
 \begin_inset Quotes erd
 \end_inset
 
- are disjuncts with wild-cards in them; see elsewhere for detailed explanation.
+ are disjuncts with wild-cards in them; see elsewhere for a detailed explanation.
  I expect that cluster quality will improve when shapes are included.)
 \end_layout
 
 \begin_layout Itemize
-Connectors are not being assigned to word-classes (i.e.
+Connectors are not being assigned to word-classes (
+\emph on
+i.e.
+
+\emph default
  the 
 \begin_inset Quotes eld
 \end_inset
@@ -897,7 +988,8 @@ sheaves
 \begin_inset Quotes erd
 \end_inset
 
- concept is not being used; this needs to be coupled with the shapes.)
+ concept is not being used; the code for the sheaves algo has not yet been
+ written; it needs to be coupled with the shapes code.)
 \end_layout
 
 \begin_layout Standard
@@ -1903,7 +1995,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1260 x 67K
 \end_layout
 
 \end_inset
@@ -1912,7 +2004,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+168K
 \end_layout
 
 \end_inset
@@ -1921,7 +2013,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13.7M
 \end_layout
 
 \end_inset
@@ -1930,7 +2022,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+14.66
 \end_layout
 
 \end_inset
@@ -1939,7 +2031,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.46
 \end_layout
 
 \end_inset
@@ -1948,7 +2040,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+85
 \end_layout
 
 \end_inset
@@ -1957,7 +2049,7 @@ en_micro_dissier
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1175
 \end_layout
 
 \end_inset
@@ -2060,7 +2152,7 @@ en_micro_dissiest
  Similar to en_micro_discrim, but more discriminating (0.85 instead of 0.5).
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 Measurements
 \end_layout
 
