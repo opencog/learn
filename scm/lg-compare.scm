@@ -61,10 +61,10 @@
 			(missing-links 0)
 			(extra-links 0)
 
-			(total-primary 0)
-			(total-secondary 0)
-			(total-punct 0)
-			(total-other 0)
+			(present-primary 0)
+			(present-secondary 0)
+			(present-punct 0)
+			(present-other 0)
 			(missing-primary 0)
 			(missing-secondary 0)
 			(missing-punct 0)
@@ -182,12 +182,12 @@
 			;; 	(cog-name (get-word-of-winst rwin)))
 			(cond
 				((any (lambda (lt) (equal? lt link-name)) primary-links)
-					(set! total-primary (+ 1 total-primary)))
+					(set! present-primary (+ 1 present-primary)))
 				((any (lambda (lt) (equal? lt link-name)) secondary-links)
-					(set! total-secondary (+ 1 total-secondary)))
+					(set! present-secondary (+ 1 present-secondary)))
 				((any (lambda (lt) (equal? lt link-name)) punct-links)
-					(set! total-punct (+ 1 total-punct)))
-				(else (set! total-other (+ 1 total-other))))
+					(set! present-punct (+ 1 present-punct)))
+				(else (set! present-other (+ 1 present-other))))
 		)
 		; ----------------------------------------
 		; Comparison functions
@@ -422,13 +422,13 @@
 
 			; Compute the recall of important link types.
 			(define primary-recall
-				(/ (- total-primary missing-primary) total-primary))
+				(/ present-primary (+ missing-primary present-primary)))
 			(define secondary-recall
-				(/ (- total-secondary missing-secondary) total-secondary))
+				(/ present-secondary (+ missing-secondary present-secondary)))
 			(define punct-recall
-				(/ (- total-punct missing-punct) total-punct))
+				(/ present-punct (+ missing-punct present-punct)))
 			(define other-recall
-				(/ (- total-other missing-other) total-other))
+				(/ present-other (+ missing-other present-other)))
 
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
@@ -461,13 +461,13 @@
 				link-precision link-recall link-f1)
 			(newline)
 
-			(format #t "Primary link-type recall=~A ~A\n"
+			(format #t "Primary     link-type recall=~6F ~A\n"
 				primary-recall primary-links)
-			(format #t "Secondary link-type recall=~A ~A\n"
+			(format #t "Secondary   link-type recall=~6F ~A\n"
 				secondary-recall secondary-links)
-			(format #t "Punctuation link-type recall=~A ~A\n"
+			(format #t "Punctuation link-type recall=~6F ~A\n"
 				punct-recall punct-links)
-			(format #t "Other link-type recall=~A (all other types)\n"
+			(format #t "Other       link-type recall=~6F (all other types)\n"
 				other-recall)
 
 			(newline)
