@@ -104,7 +104,7 @@ This reports some very preliminary results on learning grammars.
  The algorithms being applied have a variety of missing features and imperfectio
 ns but appear to be usable enough to provide at least some early-stage results.
  The results are encouraging.
- This report brefily reviews the dataset(s), the algorithms used to obtain
+ This report briefly reviews the dataset(s), the algorithms used to obtain
  them, and measurement results.
  
 \end_layout
@@ -126,7 +126,7 @@ The primary dataset,
 \family typewriter
 en_dj_cfive,
 \family default
- appears to be in good condition and should be useable for a good long while,
+ appears to be in good condition and should be usable for a good long while,
  before updates are needed.
 \end_layout
 
@@ -152,7 +152,7 @@ Existing code is sufficient to generate word-classes, word-sense disambiguation
 
 \begin_layout Standard
 An eyeball inspection of the word-classes suggests that they are quite healthy,
- but there are no auomated tools to verify thier quality.
+ but there are no automated tools to verify their quality.
  The clustering seems to be able to split words into word-senses, placing
  them into correct clusters.
  The assignments look reasonable, when judged by eye, but there are no automated
@@ -160,7 +160,7 @@ An eyeball inspection of the word-classes suggests that they are quite healthy,
  These last two results were previously reported in detail in the Winter
  of 2017 and Spring of 2018.
  This report focuses on the resulting grammars that can currently be generated,
- and an automated process to measure thier quality.
+ and an automated process to measure their quality.
 \end_layout
 
 \begin_layout Standard
@@ -212,7 +212,7 @@ strict
 \begin_inset Quotes erd
 \end_inset
 
-, in that it always created a tree (no loops) that always conected every
+, in that it always created a tree (no loops) that always connected every
  word in a sentence.
  Each word-disjunct pair has an associated count, which is the number of
  times it was seen during MST parsing.
@@ -901,7 +901,7 @@ Note that the MI score drops as words are trimmed from the dataset.
 These are promising to be a lot cleaner, and stronger than the previous
  
 \emph on
-rfive
+en_rfive
 \emph default
  dataset.
  
@@ -929,7 +929,7 @@ learn/scm/gram-projective.scm
 
 \begin_layout Standard
 First table: summary report for the first four survey sets.
- The second table is like the first; it just explores more paramter settings.
+ The second table is like the first; it just explores more parameter settings.
  These are just a rough first-cut, and are not expected to be good, for
  five reasons:
 \end_layout
@@ -1023,7 +1023,7 @@ The table is much like the above:
 \series bold
 Size
 \series default
- – Number of grammatical classs x Number of disjuncts.
+ – Number of grammatical class x Number of disjuncts.
  Note that many of these classes are 
 \begin_inset Quotes eld
 \end_inset
@@ -1532,13 +1532,13 @@ en_micro_fuzz_exp
 en_micro_marg
 \family default
 .
- Here, the paramater 
+ Here, the parameter 
 \family typewriter
 0.65
 \family default
  is the cosine-distance cutoff; vectors with a cosine distance less than
  this are not clustered.
- The paramter 
+ The parameter 
 \family typewriter
 0.3
 \family default
@@ -1562,7 +1562,7 @@ en_micro_discrim
 \series default
  – Created with 
 \family typewriter
-(gram-classify-greedy-discrim 0.5 4)
+(gram-classify-greedy-disc rim 0.5 4)
 \family default
 .
  Casual observation shows the clusters are less accurate than above.
@@ -2096,7 +2096,7 @@ en_micro_fuzzier
 (gram-classify-greedy-fuzz 0.65 0.6 4)
 \family default
 .
- Note the fuzz paramter is 0.6 not 0.3 as before.
+ Note the fuzz parameter is 0.6 not 0.3 as before.
  This means that when a words is being merged into an existing word-class,
  it will merge in 60% of the non-shared disjuncts from the new word.
  This will probably harm word-sense disambiguation.
@@ -2113,7 +2113,7 @@ en_micro_fizz
 (gram-classify-greedy-fuzz 0.75 0.3 4)
 \family default
 .
- The fuzz paramter is the same as for en_micro-fuzz, but the discriminator
+ The fuzz parameter is the same as for en_micro-fuzz, but the discriminator
  is tighter – 0.75 instead of 0.65.
 \end_layout
 
@@ -2124,7 +2124,7 @@ en_micro_diss
 \series default
  – Created with 
 \family typewriter
-(gram-classify-greedy-discrim 0.65 4)
+(gram-classify-greedy-disc rim 0.65 4)
 \family default
 .
  Similar to en_micro_discrim, but more discriminating (0.65 instead of 0.5).
@@ -2137,7 +2137,7 @@ en_micro_dissier
 \series default
  – Created with 
 \family typewriter
-(gram-classify-greedy-discrim 0.75 4)
+(gram-classify-greedy-disc rim 0.75 4)
 \family default
 .
  Similar to en_micro_discrim, but more discriminating (0.75 instead of 0.5).
@@ -2150,7 +2150,7 @@ en_micro_dissiest
 \series default
  – Created with 
 \family typewriter
-(gram-classify-greedy-discrim 0.85 4)
+(gram-classify-greedy-disc rim 0.85 4)
 \family default
 .
  Similar to en_micro_discrim, but more discriminating (0.85 instead of 0.5).
@@ -2186,7 +2186,7 @@ There are obvious problems with this:
 \end_layout
 
 \begin_layout Itemize
-There is no particular reason to beleive that the above algorithms will
+There is no particular reason to believe that the above algorithms will
  reproduce LG dictionaries.
  This is a comparison of apples-to-oranges: the learned dictionaries are
  obtained by apply probability theory to sparse observational data of strings
@@ -2195,7 +2195,7 @@ There is no particular reason to beleive that the above algorithms will
  common-sense theories of grammatical relationships.
  The resulting linkages are just opinions expressed by linguists as to what
  English must be like.
- That there is significant overlap between statisical results and linguist
+ That there is significant overlap between statistical results and linguist
  opinion is itself remarkable.
 \end_layout
 
@@ -2222,14 +2222,14 @@ Some links are more important than others.
 \emph on
 ad hoc
 \emph default
-, epecially for the end-of-sentence punctuation.
+, especially for the end-of-sentence punctuation.
  It is unlikely that the grammar-under-test will handle punctuation the
  same way.
 \end_layout
 
 \begin_layout Itemize
 If there is a combinatorial explosion of LG parses, then the parse-scoring
- system in LG is partially blinded, and the resulting choosen parses might
+ system in LG is partially blinded, and the resulting chosen parses might
  not be the ones with the best scores.
  It might be possible to ameliorate this with changes to LG.
  
@@ -2276,10 +2276,10 @@ Skip the evaluation of a sentence, if it contains words that are not in
 \end_layout
 
 \begin_layout Itemize
-Evaluate the sentence anyway; words not in the dictioary will be null-linked
+Evaluate the sentence anyway; words not in the dictionary will be null-linked
  (i.e.
  have no links going to them.) Mostly all that happens is that precision
- scores are mostyly unaffected, while recall scores are obviously lower.
+ scores are mostly unaffected, while recall scores are obviously lower.
 \end_layout
 
 \begin_layout Itemize
@@ -2288,10 +2288,10 @@ Perform unknown-word-guessing.
  usable in the real world.
  The current guessing strategy is to try each unknown word with each gram-class,
  and then let the parse-scoring system pick the one with the highest score.
- Note that unknown-word guessing leads to a combinatoric explostion in LG,
+ Note that unknown-word guessing leads to a combinatoric explosion in LG,
  which can cause extremely long parse-times (hours!); see notes below.
  Combinatoric explosions can also result in sub-optimal choice of linkage.
- The determination of the pertinance of this effect is TBD.
+ The determination of the pertinence of this effect is TBD.
 \end_layout
 
 \begin_layout Standard
@@ -2301,7 +2301,7 @@ Two sets of dictionaries were created: with and without unknown words.
 
 \begin_layout Standard
 Comparisons were performed for five different corpora.
- These are also an imperfect choice, but adequate for this intitial rough-cut
+ These are also an imperfect choice, but adequate for this initial rough-cut
  evaluations.
  The are:
 \end_layout
@@ -2315,13 +2315,13 @@ CDS
 \begin_inset Quotes eld
 \end_inset
 
-Child Dircted Speech
+Child Directed Speech
 \begin_inset Quotes erd
 \end_inset
 
  corpus from the ULL project.
  Contains 1837 sentences uttered by parents towards children.
- These have a characteristically small vocabulry, and a simple grammatical
+ These have a characteristically small vocabulary, and a simple grammatical
  structure.
  This corpus consistently results in the highest scores during testing,
  for all test dictionaries.
@@ -2340,7 +2340,7 @@ corpus-basic.batch
  file from LG.
  This contains 1000 sentences, of which 421 are intentionally ungrammatical,
  leaving 579 valid English sentences.
- These contain a balanced selection of a wide variey of different kinds
+ These contain a balanced selection of a wide variety of different kinds
  of English constructions; it was meant to showcase the rich variety of
  different sentences that LG can handle.
  (Note, however, that evolving fixes means that not all of these parse correctly
@@ -2368,7 +2368,7 @@ balanced
 \begin_inset Quotes erd
 \end_inset
 
-, and the sentences tend to be short; just long enought to illustrate some
+, and the sentences tend to be short; just long enough to illustrate some
  phenomenon.
 \end_layout
 
@@ -5618,7 +5618,7 @@ How about automated unknown words? The tactic here is to insert an unknown-word
 \end_layout
 
 \begin_layout Standard
-Processing is noticably slower; there appears to be an combinatoric explosion
+Processing is noticeably slower; there appears to be an combinatoric explosion
  - a runtime of 
 \begin_inset Formula $O\left(N^{k}\right)$
 \end_inset
@@ -5646,12 +5646,12 @@ hours
 \begin_layout Standard
 We except 100% of the sentences to be covered, so this is a big change from
  before.
- Two columns from earlier tables are ommitted: 100% of the test-corpus is
+ Two columns from earlier tables are omitted: 100% of the test-corpus is
  parsed and compared.
  Since LG will run on every sentence in each test-corpus, the total number
  of observed words, and the total known-vocabulary will be the same for
  all of the different dictionaries-under-test.
- These are resported just once, below.
+ These are reported just once, below.
  
 \end_layout
 
@@ -5974,7 +5974,7 @@ Here are the results for
 micro-fuzz
 \shape default
 , with unknown-word-guessing enabled.
- Recall, the peramaters were 
+ Recall, the parameters were 
 \family typewriter
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 \family default
@@ -5982,7 +5982,7 @@ micro-fuzz
  Compared to the same dataset without guessing, precision drops a bit, (no
  surprise), recall improves a lot, enough that the F1 improves a lot, with
  the exception of the gold-corpus for which F1 stays the same.
- Conclusion: adding unknoown-word guessing vastly improves coverage, and
+ Conclusion: adding unknown-word guessing vastly improves coverage, and
  also helps recall and F1, with just a bit of damage to precision.
 \end_layout
 
@@ -6861,7 +6861,7 @@ micro-fizz-unk
 : Precision went up a little, recall dropped much more.
  Not unexpected: the tighter discriminator makes each grammatical class
  more accurate, but the overall coverage (the recall) drops.
- There are two possible explanations for this differrence: 
+ There are two possible explanations for this difference: 
 \end_layout
 
 \begin_layout Enumerate
@@ -6870,7 +6870,7 @@ The tighter discriminator is leading to more accurate grammatical classes
 \end_layout
 
 \begin_layout Enumerate
-A smaller number of grammatical classes to choose from suggests that unkown
+A smaller number of grammatical classes to choose from suggests that unknown
  word guessing might struggle more.
 \end_layout
 
@@ -7309,7 +7309,7 @@ micro-discrim-unk
 \emph default
 micro-discrim
 \emph on
-, which uses the same algo and paramaters, but doesn't have word-guessing
+, which uses the same algo and parameters, but doesn't have word-guessing
  built in.
 \end_layout
 
@@ -7759,8 +7759,8 @@ micro-fuzz-unk
  grammatical classes (135, either way).
  The looser cutoff produces fewer classes (124); presumably each class is
  larger.
- This does not resolve the question of whether it is the sharpenss of the
- classes that matter, or thier raw number.
+ This does not resolve the question of whether it is the sharpness of the
+ classes that matter, or their raw number.
  Perhaps these effects cannot be disentangled...
 \end_layout
 
@@ -8199,7 +8199,8 @@ Here's
 \emph on
 micro-dissier
 \emph default
-: it can be compared to the above, which uses a weaker cutoff, or to 
+-unk: it can be compared to the above, which uses a weaker cutoff, or to
+ 
 \shape italic
 micro-fizz-unk
 \shape default
@@ -9572,7 +9573,7 @@ ULL Dictionary Measurements
 \end_layout
 
 \begin_layout Standard
-Same proceedures as above, applied to the ULL dictionaries.
+Same procedures as above, applied to the ULL dictionaries.
  These are provided by Anton Kolonin and his crew, and are generated using
  completely different software pipeline, described elsewhere.
 \end_layout
@@ -10890,7 +10891,7 @@ bly worse.
 
 \begin_layout Itemize
 The ULL dictionary is brought down by low recall.
- Root cause is unclear, needst to be explored.
+ Root cause is unclear, needs to be explored.
  Perhaps it is missing vocabulary plus no unknown-word mechanism.
  Need to double-check what is going on here.
 \end_layout
