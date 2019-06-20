@@ -27,5 +27,5 @@ comparisons. Included are:
 
 * `wikipedia.txt` -- A concatenation of three English Wikipedia
   articles: "Autoethnography", "Astor House Hotel (Shanghai)", and
-  "History of Virginia".  These are remarkable, as the sentences
-  are all quite very long. A total of 312 sentences.
+  "History of Virginia".  The sentences are all quite long. A total
+  of 1154 sentences.
