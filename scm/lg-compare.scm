@@ -79,7 +79,7 @@
 		; ----------------------------------------
 		; LG English link-type classes
 		(define primary-links (list "S" "O" "MV" "SI" "CV"))
-		(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "IV" "J" "M" "MX" "R"))
+		(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
 		(define punct-links (list "X"))
 
 		; ----------------------------------------
