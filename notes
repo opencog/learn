@@ -18641,6 +18641,31 @@ createdb en_micro_fizz -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-fuzz 0.75 0.3 4)
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 17:46:11 -- "." ---
+--- To-do=0 ncls=115 sing=833 nredo=773 2019-06-19 21:49:41
+Four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fizz_exp
+cat atom.sql | psql en_micro_fizz_exp
+(sql-open "postgres:///en_micro_fizz_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155391 csets
+
+mv dict.db dict.db-micro-fizz-unk
 
 
 ==========
@@ -18648,6 +18673,31 @@ createdb en_micro_diss -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.65 4)
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 18:06:56 -- "." ---
+--- To-do=0 ncls=135 sing=537 nredo=1064 2019-06-19 22:07:32 
+four hours...
+
+(sql-close)
+createdb en_micro_diss_exp
+cat atom.sql | psql en_micro_diss_exp
+(sql-open "postgres:///en_micro_diss_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 537 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142238 csets
+
+mv dict.db dict.db-micro-diss-unk
 
 
 ==========
@@ -18655,6 +18705,12 @@ createdb en_micro_dissier -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.75 4)
 --- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 21:05:25
+
+==========
+createdb en_micro_dissiest -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.85 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 22:20:54
 
 ==========
 createdb en_mini_discrim -T en_mini_marg
@@ -19008,11 +19064,10 @@ Assertion (NULL != bs->exp) failed at
 select * from Morphemes where morpheme='<UNKNOWN-WORD>';
 .schema Disjuncts
 
-
 #:INCLUDE-MISSING #t
 
 
-en_micro_discrim
+
 
 
 TODO:
