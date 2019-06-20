@@ -64,9 +64,12 @@
 			(total-primary 0)
 			(total-secondary 0)
 			(total-punct 0)
+			(total-other 0)
 			(missing-primary 0)
 			(missing-secondary 0)
 			(missing-punct 0)
+			(missing-other 0)
+
 			(missing-link-types '())
 			(missing-words (make-atom-set))
 			(vocab-words (make-atom-set))
@@ -76,7 +79,7 @@
 		; LG English link-type classes
 		(define primary-links (list "S" "O" "MV" "SI" "CV"))
 		(define secondary-links (list "A" "J" "D" "M" "G" "E" "MX" "EA" "EB"))
-		(define punct-links (list "X" "RW"))
+		(define punct-links (list "X"))
 
 		; ----------------------------------------
 		; Misc utilities
@@ -149,25 +152,43 @@
 		; Increment count for a missing link type putting the count
 		; in an association list, so that we can print all muffed
 		; types at the end.
-		(define (incr-link-type-count link-name)
+		(define (incr-missing-link-type-count link-name)
 			(define cnt (assoc-ref missing-link-types link-name))
 			(if (not cnt) (set! cnt 0))
 			(set! missing-link-types
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
 		(define (incr-missing-link-count lwin rwin)
-			(format #t "Missing link: ~A <-- ~A --> ~A\n"
-				(cog-name (get-word-of-winst lwin))
-				(get-link-str-name lwin rwin)
-				(cog-name (get-word-of-winst rwin)))
-			(incr-link-type-count (get-link-str-name lwin rwin)))
+			(define link-name (get-link-str-name lwin rwin))
+			;; (format #t "Missing link: ~A <-- ~A --> ~A\n"
+			;; 	(cog-name (get-word-of-winst lwin))
+			;; 	link-name
+			;; 	(cog-name (get-word-of-winst rwin)))
+			(cond
+				((any (lambda (lt) (equal? lt link-name)) primary-links)
+					(set! missing-primary (+ 1 missing-primary)))
+				((any (lambda (lt) (equal? lt link-name)) secondary-links)
+					(set! missing-secondary (+ 1 missing-secondary)))
+				((any (lambda (lt) (equal? lt link-name)) punct-links)
+					(set! missing-punct (+ 1 missing-punct)))
+				(else (set! missing-other (+ 1 missing-other))))
+			(incr-missing-link-type-count link-name))
 
 		(define (incr-present-link-count lwin rwin)
-			(format #t "Have link: ~A <-- ~A --> ~A\n"
-				(cog-name (get-word-of-winst lwin))
-				(get-link-str-name lwin rwin)
-				(cog-name (get-word-of-winst rwin)))
-)
+			(define link-name (get-link-str-name lwin rwin))
+			;; (format #t "Have link: ~A <-- ~A --> ~A\n"
+			;; 	(cog-name (get-word-of-winst lwin))
+			;; 	link-name
+			;; 	(cog-name (get-word-of-winst rwin)))
+			(cond
+				((any (lambda (lt) (equal? lt link-name)) primary-links)
+					(set! total-primary (+ 1 total-primary)))
+				((any (lambda (lt) (equal? lt link-name)) secondary-links)
+					(set! total-secondary (+ 1 total-secondary)))
+				((any (lambda (lt) (equal? lt link-name)) punct-links)
+					(set! total-punct (+ 1 total-punct)))
+				(else (set! total-other (+ 1 total-other))))
+		)
 		; ----------------------------------------
 		; Comparison functions
 
