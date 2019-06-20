@@ -12,7 +12,15 @@ set key left top
 set title "Dataset MI vs. Precision"
 set ylabel "Precision"
 set xlabel "Dataset MI"
+set xtics out rotate add ( \
+   "discrim" 3.62, \
+   "fuzzier" 3.95, \
+   "diss" 4.0, \
+   "fuzz" 4.03, \
+   "fizz" 4.29, \
+   "dissier" 4.30, \
+   "dissiest" 4.46)
+
 plot "micro-datasets.dat" using 2:6 with lines linewidth 5 title "CDS", \
  "micro-datasets.dat" using 2:9 with lines linewidth 5 title "Silver", \
  "micro-datasets.dat" using 2:13 with lines linewidth 5 title "Basic"
-
