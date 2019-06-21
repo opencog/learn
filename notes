@@ -18772,6 +18772,31 @@ Sorting in 2.028 seconds
 Start greedy-agglomeration of 7385 words
 Existing classes=0 singletons=0 done=0
 --- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 03:36:40 -- "." ---
+--- To-do=0 ncls=371 sing=2097 nredo=5089 2019-06-20 19:57:15
+64 hours .... Ouch.
+
+(sql-close)
+createdb en_mini_discrim_exp
+cat atom.sql | psql en_mini_discrim_exp
+(sql-open "postgres:///en_mini_discrim_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 2097 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 498582 csets
+
+mv dict.db dict.db-mini-discrim-unk
 
 
 
@@ -19127,7 +19152,6 @@ skirting with madness:
 The strength was in the order of gerE > cotD > yfhP
 
 
-
 hangups:
 People ages 55 to 64 on average are out of work for more than 54 weeks,
 while those ages 25 to 34 are unemployed for about 36 weeks, according
@@ -19160,12 +19184,58 @@ Based on "DNN-MI-lked MST-Parses":
 http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-GUCH-SUMABS-dILEd-2019-05-21-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_34584C_2019-05-25_0007.4.0.dict
 
 
+./A/Autoethnography -- 128
+./H/History of Virginia -- 277
+./A/Astor House Hotel (Shanghai) -- 103
+
+28238 / 1154 = 
+
+
+COMMENT ON DATABASE en_micro_diss IS '(discrim 0.65)';
+COMMENT ON DATABASE en_micro_diss_exp IS '(discrim 0.65) plus marginals';
+COMMENT ON DATABASE en_micro_dissier IS '(discrim 0.75)';
+COMMENT ON DATABASE en_micro_dissier_exp IS '(discrim 0.75) plus marginals';
+COMMENT ON DATABASE en_micro_dissiest IS '(discrim 0.85)';
+COMMENT ON DATABASE en_micro_dissiest_exp IS '(discrim 0.85) plus marginals';
+COMMENT ON DATABASE en_micro_fizz IS '(fuzz 0.75 0.3)';
+COMMENT ON DATABASE en_micro_fizz_exp IS '(fuzz 0.75 0.3) plus marginals';
+COMMENT ON DATABASE en_micro_fuzzier IS '(fuzz 0.65 0.6)';
+COMMENT ON DATABASE en_micro_fuzzier_exp IS '(fuzz 0.65 0.6) plus marginals';
+
+=======
+Length miscompare:
+I'm going drinking.  5 vs 4
+Maybe, I'm not sure. 8 vs 7
+
+micro-fuzz:
+Prec  recall  F1
+0.705 0.627 0.534
+0.577 0.545 0.473
+0.371 0.399 0.485
+0.407 0.566 0.466
+0.457 0.527 0.466
+
+micro-fuzz-unk:
+0.660 0.555 0.502
+0.484 0.492 0.541
+0.440 0.459 0.468
+0.445 0.595 0.491
+0.479 0.476 0.467
+
+
+115 vs 135
+
+
+
 Evaluation TODO:
 * Fraction of words with null links.
 * Number of linkages found ...  (looking for overflow)
-* Fraction correct S,O links
+* Fraction correct S,O links (DONE)
+* Why hang? Why not popping timeout?
 
 TODO:
+* MI is wrong, given how we ad-hoc export to gram classes.
+
 * Words that are in word classes, but still have left-over-counts
   should get thier own classes ...
 * Add 'help method

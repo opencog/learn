@@ -8,10 +8,10 @@
 set term postscript eps enhanced color 22
 set out 'mi-prec.eps'
 set xrange [3.6:4.5]
-set key left top
-set title "Dataset MI vs. Precision"
+set key left bottom
+set title "Dictionary MI vs. Precision"
 set ylabel "Precision"
-set xlabel "Dataset MI"
+set xlabel "Dictionary MI"
 set xtics out rotate add ( \
    "discrim" 3.62, \
    "fuzzier" 3.95, \
@@ -34,9 +34,9 @@ set term postscript eps enhanced color 22
 set out 'mi-recall.eps'
 set xrange [3.6:4.5]
 set key right top
-set title "Dataset MI vs. Recall"
+set title "Dictionary MI vs. Recall"
 set ylabel "Recall"
-set xlabel "Dataset MI"
+set xlabel "Dictionary MI"
 set xtics out rotate add ( \
    "discrim" 3.62, \
    "fuzzier" 3.95, \
@@ -59,9 +59,9 @@ set term postscript eps enhanced color 22
 set out 'mi-f1.eps'
 set xrange [3.6:4.5]
 set key right top
-set title "Dataset MI vs. F1"
+set title "Dictionary MI vs. F1"
 set ylabel "F1"
-set xlabel "Dataset MI"
+set xlabel "Dictionary MI"
 set xtics out rotate add ( \
    "discrim" 3.62, \
    "fuzzier" 3.95, \

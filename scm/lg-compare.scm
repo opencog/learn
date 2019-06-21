@@ -58,12 +58,29 @@
 			(length-miscompares 0)
 			(word-miscompares 0)
 			(link-count-miscompares 0)
-			(missing-links 0)
-			(extra-links 0)
+			(link-correct 0)
+			(link-excess 0)
+			(link-deficit 0)
+
+			(present-primary 0)
+			(present-secondary 0)
+			(present-punct 0)
+			(present-other 0)
+			(missing-primary 0)
+			(missing-secondary 0)
+			(missing-punct 0)
+			(missing-other 0)
+
 			(missing-link-types '())
 			(missing-words (make-atom-set))
 			(vocab-words (make-atom-set))
 		)
+
+		; ----------------------------------------
+		; LG English link-type classes
+		(define primary-links (list "S" "O" "MV" "SI" "CV"))
+		(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
+		(define punct-links (list "X"))
 
 		; ----------------------------------------
 		; Misc utilities
@@ -87,9 +104,10 @@
 					(< (get-num wa) (get-num wb)))))
 
 		; ------
-		; Return a sorted list of the other word-instances that this
+		; Return a sorted list of the paired word-instances that this
 		; word links to. To avoid double-counting, this returns only the
-		; links connecting to the right.
+		; links connecting to the right. To avoid spurious RIGHT-WALL
+		; miscompares, all instances of RIGHT-WALL are stripped out.
 		(define (get-linked-winst WIN)
 			(sort-word-inst-list
 				(map gdr
@@ -99,6 +117,11 @@
 							(and
 								; Is the first word (left word) ours?
 								(equal? (gar lili) WIN)
+
+								; Is the second word (right word) the RIGHT-WALL?
+								(not (equal? (cog-name
+									(get-word-of-winst (gdr lili))) "###RIGHT-WALL###"))
+
 								; Are any of the possible EvaluationLink's
 								; an LG relation? If so, we are happy.
 								(any
@@ -127,16 +150,48 @@
 				(char-set-adjoin char-set:lower-case #\*)))
 
 		; ------
-		; Increment count for a missing link type
-		(define (incr-link-str-count link-name)
+		; Increment count for a missing link type putting the count
+		; in an association list, so that we can print all muffed
+		; types at the end.
+		(define (incr-missing-link-type-count link-name)
 			(define cnt (assoc-ref missing-link-types link-name))
 			(if (not cnt) (set! cnt 0))
 			(set! missing-link-types
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
-		(define (incr-link-count lwin rwin)
-			(incr-link-str-count (get-link-str-name lwin rwin)))
+		(define (incr-missing-link-count lwin rwin)
+			(define link-name (get-link-str-name lwin rwin))
+			(if VERBOSE
+				(format #t "Missing link: ~A <-- ~A --> ~A\n"
+					(cog-name (get-word-of-winst lwin))
+					link-name
+					(cog-name (get-word-of-winst rwin))))
+			(cond
+				((any (lambda (lt) (equal? lt link-name)) primary-links)
+					(set! missing-primary (+ 1 missing-primary)))
+				((any (lambda (lt) (equal? lt link-name)) secondary-links)
+					(set! missing-secondary (+ 1 missing-secondary)))
+				((any (lambda (lt) (equal? lt link-name)) punct-links)
+					(set! missing-punct (+ 1 missing-punct)))
+				(else (set! missing-other (+ 1 missing-other))))
+			(incr-missing-link-type-count link-name))
 
+		(define (incr-present-link-count lwin rwin)
+			(define link-name (get-link-str-name lwin rwin))
+			(if VERBOSE
+				(format #t "Have link: ~A <-- ~A --> ~A\n"
+					(cog-name (get-word-of-winst lwin))
+					link-name
+					(cog-name (get-word-of-winst rwin))))
+			(cond
+				((any (lambda (lt) (equal? lt link-name)) primary-links)
+					(set! present-primary (+ 1 present-primary)))
+				((any (lambda (lt) (equal? lt link-name)) secondary-links)
+					(set! present-secondary (+ 1 present-secondary)))
+				((any (lambda (lt) (equal? lt link-name)) punct-links)
+					(set! present-punct (+ 1 present-punct)))
+				(else (set! present-other (+ 1 present-other))))
+		)
 		; ----------------------------------------
 		; Comparison functions
 
@@ -155,7 +210,7 @@
 							(+ cnt 1))))
 				0 winli))
 
-		; Return #t if the sentnce contains missing words.
+		; Return #t if the sentence contains missing words.
 		(define (has-missing-words winli)
 			(if (< 0 (num-missing-words winli other-dict))
 				(begin
@@ -169,14 +224,19 @@
 			(define ewlilen (length en-sorted))
 			(define owlilen (length other-sorted))
 
-			(set! total-words (+ total-words ewlilen))
-
-			; Both should have the same length, assuming the clever
-			; English tokenizer hasn't tripped.
-			(if (not (equal? ewlilen owlilen))
+			; Both should usually have the same length. Note, however,
+			; that LG English will split "I'm" -> "I 'm" i.e. one word
+			; into two, and that many/most test dictionaries do NOT do
+			; this.  This leads to instant miscompares... Count total
+			; words ONLY if lengh-compare passes.
+			(if (equal? ewlilen owlilen)
+				(set! total-words (+ total-words ewlilen))
 				(begin
 					(format #t "Length miscompare: ~A vs ~A\n" ewlilen owlilen)
-					(set! length-miscompares (+ 1 length-miscompares)))))
+					(set! length-miscompares (+ 1 length-miscompares))))
+
+			; Return #t is the lengths are good!
+			(equal? ewlilen owlilen))
 
 		; ---
 		; The words should compare. We are not currently comparing the
@@ -201,17 +261,27 @@
 		; owin should be the OTHER word instance.
 		(define (compare-links ewin owin)
 			(define ewrd (get-word-of-winst ewin))
+
+			; elinked and olinked are lists of word instances
+			; that are linked to the right of the current word.
 			(define elinked (get-linked-winst ewin))
 			(define olinked (get-linked-winst owin))
-			(define elinked-len (length elinked))
-			(define olinked-len (length olinked))
 
-			; Obtain sets of the links words (not the word-instances)
+			; Obtain sets of the linked words (not the word-instances)
 			(define ewords (map get-word-of-winst elinked))
 			(define owords (map get-word-of-winst olinked))
 
 			; A set of words in ewords that are not in owords
+			; These correspond to missing links.
 			(define miss-w (lset-difference equal? ewords owords))
+
+			; A set of words in ewords that are also in owords
+			; These correspond to correct links.
+			(define have-w (lset-intersection equal? ewords owords))
+
+			; A set of words in owords that are not in ewords
+			; These correspond to extra, unexpected links.
+			(define extra-w (lset-difference equal? owords ewords))
 
 			; Keep only word-instances that are in the word-set.
 			(define (trim-wili wili wrd-set)
@@ -224,25 +294,36 @@
 
 			; Missing linked word-instances...
 			(define missing-wi (trim-wili elinked miss-w))
+			(define present-wi (trim-wili elinked have-w))
+			(define extra-wi   (trim-wili olinked extra-w))
 
-			; Keep statistics
-			(set! total-links (+ total-links elinked-len))
-			(if (< elinked-len olinked-len)
-				(set! extra-links (+ extra-links (- olinked-len elinked-len)))
-				(set! missing-links (+ missing-links (- elinked-len olinked-len))))
+			(define n-missing (length missing-wi))
+			(define n-present (length present-wi))
+			(define n-extra   (length extra-wi))
 
-			; Compare number of links
-			(if (not (equal? elinked-len olinked-len))
+			(set! link-deficit (+ link-deficit n-missing))
+			(set! link-correct (+ link-correct n-present))
+			(set! link-excess  (+ link-excess  n-extra))
+
+			; A count of how many LG-English generated.
+			(set! total-links (+ total-links (length elinked)))
+
+			(if (or (< 0 n-missing) (< 0 n-extra))
 				(begin
 					(if verbose
-						(format #t "Miscompare number of right-links: ~A vs ~A for ~A"
-							elinked-len olinked-len ewrd))
+						(format #t "Miscompare right-links: ~A missing, ~A extra for ~A"
+							n-missing n-extra ewrd))
 					(set! link-count-miscompares (+ 1 link-count-miscompares))))
 
-			; Make a note of missing link types.
+			; Create a histogram of missing link types.
 			(for-each
-				(lambda (misw) (incr-link-count ewin misw))
+				(lambda (misw) (incr-missing-link-count ewin misw))
 				missing-wi)
+
+			; And also the ones that we have.
+			(for-each
+				(lambda (havw) (incr-present-link-count ewin havw))
+				present-wi)
 		)
 
 		; -------------------
@@ -292,14 +373,15 @@
 				(format #t "Dictionary is missing words in: \"~A\"\n" SENT))
 
 			; Don't do anything more, if the dict is missing words in the
-			; sentence.
-			(if (or (not dict-has-missing-words) INCLUDE-MISSING)
+			; sentence. ... unless the INCLUDE-MISSING flag is set.
+			; Don't do anything if there as a sentence-length miscompare.
+			; Such miscompares pointlessly garbage up the stats.
+			(if (and
+					(or (not dict-has-missing-words) INCLUDE-MISSING)
+					(compare-lengths en-sorted other-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
 					(set! temp-cnt link-count-miscompares)
-
-					; Compare sentence lengths
-					(compare-lengths en-sorted other-sorted)
 
 					; Compare words and links
 					(for-each
@@ -340,20 +422,51 @@
 		; -------------------
 		(define (report-stats)
 			; Compute link precision and recall.
+			; total-links is the number of links that LG English found.
 			(define link-expected-positives (exact->inexact total-links))
-			(define link-true-positives (- link-expected-positives missing-links))
-			(define link-false-positives extra-links)
+
+			; The links that were exactly right.
+			(define link-true-positives link-correct)
+
+			; The links we should not have seen...
+			(define link-false-positives link-excess)
+
+			; The links that were just-pain missing.
+			(define link-false-negatives link-deficit)
+
 			(define link-recall (/ link-true-positives link-expected-positives))
 			(define link-precision (/ link-true-positives
 				(+ link-true-positives link-false-positives)))
 			(define link-f1 (/ (* 2.0 link-recall link-precision)
 				(+ link-recall link-precision)))
 
+			; Compute the recall of important link types.
+			(define primary-total
+				(+ missing-primary present-primary))
+			(define secondary-total
+				(+ missing-secondary present-secondary))
+			(define punct-total
+				(+ missing-punct present-punct))
+			(define other-total
+				(+ missing-other present-other))
+
+			(define primary-recall
+				(/ present-primary primary-total))
+			(define secondary-recall
+				(/ present-secondary secondary-total))
+			(define punct-recall
+				(if (equal? 0 punct-total) (inf)
+					(/ present-punct punct-total)))
+			(define other-recall
+				(/ present-other other-total))
+
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
 				(sort missing-link-types
 					(lambda (ia ib) (> (cdr ia) (cdr ib)))))
 
+			(newline)
+			(newline)
 			(format #t
 				"Examined ~A sentences; ~A had words not in dictionary (~6F %).\n"
 				total-sentences incomplete-dict
@@ -370,14 +483,26 @@
 			(format #t "Found ~A length-miscompares\n" length-miscompares)
 			(format #t "Found ~A word-miscompares\n" word-miscompares)
 			(format #t
-				"Found ~A words w/linkage diffs; ~A missing and ~A extra links\n"
+				"Found ~A words w/diffs in #links: ~A fewer and ~A extra links\n"
 				link-count-miscompares
-				missing-links extra-links)
+				link-deficit link-excess)
 
 			(format #t "Link precision=~6F recall=~6F F1=~6F\n"
 				link-precision link-recall link-f1)
 			(newline)
-			(format #t "Missing link-type counts: ~A\n\n" sorted-missing-links)
+
+			(format #t "Primary     link-type recall=~6F tot=~A ~A\n"
+				primary-recall primary-total primary-links)
+			(format #t "Secondary   link-type recall=~6F tot=~A ~A\n"
+				secondary-recall secondary-total secondary-links)
+			(format #t "Punctuation link-type recall=~6F tot=~A ~A\n"
+				punct-recall punct-total punct-links)
+			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
+				other-recall other-total)
+
+			(newline)
+			(format #t "Counts of missing link-types: ~A\n\n"
+				sorted-missing-links)
 			(format #t "Missing words: ~A\n\n"
 				(map cog-name (missing-words #f)))
 		)
