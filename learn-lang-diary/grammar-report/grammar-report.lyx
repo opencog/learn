@@ -12035,24 +12035,69 @@ Results presented below; this uses the same measuring techniques as above.
 \end_layout
 
 \begin_layout Standard
-Two conclusions stand out:
+These measurements indicate that two major breakthroughs have been made
+ in the ULL project.
+ These are:
 \end_layout
 
 \begin_layout Itemize
-All three grammars have low recall, sometimes extremely low recall.
- This is particularly noticable when these grammars are compared to non-ULL-sour
-ced test corpora.
- Why? My best guess is that the ULL test and training corpora do not represent
- a good slice of typical English.
- Both are drawn entirely from Project Gutenberg books; when tested against
- non-Porject Gutenberg English, the scores fall apart.
+Results from the 
+\emph on
+ull-lgeng
+\emph default
+ dataset indicates that the ULL pipeline is a high-fidelity transducer of
+ grammars.
+ The grammar that is pushed in is the effectively the same as the grammar
+ that falls out.
+ If this can be preproduced for other grammars, e.g.
+ Stanford, McParseface or some HPSG grammar, then one has a reliable way
+ of tuning the pipeline.
+ After it is tuned to maximize fidelity on known grammars, then, when applied
+ to unknown grammars, it can be assumed to be working correctly, so that
+ whatever cmoes out must in fact be correct.
 \end_layout
 
 \begin_layout Itemize
-When these grammars are retested by skipping sentences with unknown words
- in them, the recall on ULL-test sets jumps up significantly.
- The recall on the other test sets is not helped by this, and remains disasterou
-sly low.
+The relative lack of differences between the 
+\emph on
+ull-dnn-mi
+\emph default
+ and the 
+\emph on
+ull-sequential
+\emph default
+ datasets suggests that the accuracy of the so-called 
+\begin_inset Quotes eld
+\end_inset
+
+MST parse
+\begin_inset Quotes erd
+\end_inset
+
+ is relatively unimportant.
+ Any parse, giving any results with beter-than-random outputs can be used
+ to feed the pipeline.
+ What matters is that a lot of observation counts need to be accumulated
+ so that junky parses cancel each-other out, on average, while good ones
+ add up and occur with high frequency.
+ That is, if you want a good signal, then integrate long enough that the
+ noise cancels out.
+\end_layout
+
+\begin_layout Standard
+A third item should be mentioned:
+\end_layout
+
+\begin_layout Itemize
+It appears that the Project Gutenberg training corpus does not appear to
+ be a good sample of the English language.
+ When the learned dictionaries are applied to other corpora, the scorres
+ are disasterously bad!
+\end_layout
+
+\begin_layout Standard
+These are strong claims.
+ Lets look at the results justifying them.
 \end_layout
 
 \begin_layout Subsection*
@@ -12060,7 +12105,9 @@ ULL Results
 \end_layout
 
 \begin_layout Standard
-Three data files
+The ULL team provided three dictionaris.
+ These are analyzed below.
+ 
 \end_layout
 
 \begin_layout Paragraph*
@@ -12624,6 +12671,38 @@ silver
 \begin_layout Standard
 The table above shows results when all sentences are tested; the table below
  when sentences with unknown words are skipped.
+ Here, the picture brightens considerably! For 
+\emph on
+gold/silver
+\emph default
+, the accuracy goes up, almost maxing out for 
+\emph on
+gold
+\emph default
+.
+ The recall shoots way up as well, with the F1 scores on 
+\emph on
+gold/silver
+\emph default
+ being just fantastic! It is based on these two lines that the above claims
+ of a breakthrough are founded.
+ If this can be reproduces for Stanford/McParse/
+\emph on
+etc
+\emph default
+.
+ we're wll on the way! 
+\end_layout
+
+\begin_layout Standard
+The table also emphasizes the incompleteness of the Gutenberg training set.
+ The recall scores for 
+\emph on
+basic/fixes
+\emph default
+ are a complete disaster.
+ Whatever is in that grammar, its not covering perffectly common 20th-century
+ English.
 \end_layout
 
 \begin_layout Standard
@@ -15801,30 +15880,64 @@ Conclusions
 \end_layout
 
 \begin_layout Standard
-Conclusions TBD.
- Here's what seems to be happening so far:
-\end_layout
+The most important results come from the ULL datasets.
+ These suggest a method for how to tune the language learning pipeline:
+ it should be tuned to maximize the fidelity of its action on known grammars.
+ That way, when applied to new, unknown grammars, it can be trusted to produce
+ good results.
+ A second conclusion is that the results are only weakly dependent on the
+ so-called 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Itemize
-The tighter the clustering, the higher the precision.
- But the relationship is fairly weak, and is more than offset by loss of
- recall.
-\end_layout
+MST parse
+\begin_inset Quotes erd
+\end_inset
 
-\begin_layout Itemize
-The ULL precision is high – better than what I've got; recall is poor, verging
- on terrible.
- It is hypothesized that the training set used for the ULL data is not represent
-ative of typical modern English.
-\end_layout
-
-\begin_layout Itemize
-Diversity of the training set is important.
- Gutenberg is not enough.
+.
+ Anything that gives reasonably decent results at this stage is good enough
+ to fish out a grammar.
+ A thid conclusion was that the Project Gutenberg coproa do not provide
+ an adequate sample of modern English.
 \end_layout
 
 \begin_layout Standard
-More examination and conclusions pending.
+There are a separate set of conclusions for the Linas variant of the pipeline.
+ These are minor compared to the above, but important for thier own sake.
+\end_layout
+
+\begin_layout Itemize
+Taken as a proof-of-concept, the Linas variant of the pipeline seems to
+ work, and provide a stable foundation for further research.
+\end_layout
+
+\begin_layout Itemize
+The Linas pipeline seems to be producing dictionaries with better coverage
+ than the ULL dictionaries.
+ This is almost certainly due to only three factors: a training set that
+ is broader than just Gutenberg; a much larger training set, with porbably
+ an order of magnitude (or two) more samples in it; the use of the unkown-word
+ mechanism.
+\end_layout
+
+\begin_layout Itemize
+Tighter clustering only marginally improves precision, but sharply damages
+ recall.
+ Given a choice, looser clustering improves the overall coverage of the
+ dictionary.
+ In effect, the dictionary understand more, even if it doesn't understand
+ it quite as well.
+\end_layout
+
+\begin_layout Itemize
+Unknown-word guessing by the parser appears to be an effective strategy
+ for broadening the coverage of the dictionary.
+\end_layout
+
+\begin_layout Itemize
+The Linas pipeline should be tuned in the fashion that the tuning breakthhrough
+ suggests.
+ Without this, one is working blind.
 \end_layout
 
 \begin_layout Section*
