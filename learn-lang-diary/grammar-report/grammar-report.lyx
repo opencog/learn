@@ -108,7 +108,7 @@ This report presents measurements of the quality of various different dictionari
 es learned from two different language-learning pipelines; one is the ULL/Koloni
 n variant, the other is the Linas variant.
  The ULL/Kolonin dictionaries suggest two major breakthroughs: they suggest
- how the learning pipeline should be tuned, and they indicate how the peipeline
+ how the learning pipeline should be tuned, and they indicate how the pipeline
  is relatively insensitive to early stages of processing.
  The Linas variant results indicate that the sheer quantity of training
  data has a strong impact on the quality of the learned grammars.
@@ -125,7 +125,7 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The langauge learning project attempts to extract symbolic grammars from
+The language learning project attempts to extract symbolic grammars from
  a sampling of raw text.
  The general process is conceptually straight-forward:
 \end_layout
@@ -135,13 +135,13 @@ Obtain provisional parses for a (very) large quantity of text.
 \end_layout
 
 \begin_layout Enumerate
-Chop up up the resulting parses into individual words, with co-occuring
+Chop up up the resulting parses into individual words, with co-occurring
  connectors.
  That is, each word-instance in the text is associated with a set of connectors
  pointing at the other words it connected to in that particular parse.
  Thus, one has a word-instance, and a connector-set extracted from the parse
  in the first step.
- These connector-sets are variously refred to as 
+ These connector-sets are variously referred to as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -168,7 +168,7 @@ Treat connector-sets as the basis vectors in a vector space.
 \end_layout
 
 \begin_layout Enumerate
-The vector representation allows different kinds of word-similarity judgements
+The vector representation allows different kinds of word-similarity judgments
  to be used, and thus allows words to be clustered into classes.
  These classes should be called 
 \begin_inset Quotes eld
@@ -193,16 +193,16 @@ grammar
 \end_inset
 
 ; this dictionary is now a valid symbolic description of grammar, in that
- it can be use to parse new, perviously-unseen sentences, and extract thier
+ it can be use to parse new, previously-unseen sentences, and extract their
  syntactic structure, as well as some fair amount of semantic content.
 \end_layout
 
 \begin_layout Standard
-The langauge-learning project contains two distinct implementations of the
+The language-learning project contains two distinct implementations of the
  above pipeline.
  The first implementation, tightly coupled to the OpenCog AtomSpace, was
  created by Linas (the author), but put on hold as various other intervening
- priorities interceeded.
+ priorities interceded.
  Development of that pipeline has recently resumed.
  A second implementation, termed 
 \begin_inset Quotes eld
@@ -212,8 +212,8 @@ the ULL Project
 \begin_inset Quotes erd
 \end_inset
 
- was subsequently developed by a team lead by Anton Kolonin, includingg
- Andres Suarez Madrigal and Alexei Glushchenko.
+ was subsequently developed by a team lead by Anton Kolonin, including Andres
+ Suarez Madrigal and Alexei Glushchenko.
  It is partly derived from the first implementation, but diverges in many
  important ways.
  In particular, it eschews the use of the AtomSpace, replacing it by a collectio
@@ -227,7 +227,7 @@ This paper reports on early results from these two different systems.
  The first several sections review the status and datasets used by the author,
  in his own pipeline.
  As such, this becomes a bit like a laboratory notebook diary, making notes
- of datasets in possession of the author, thier names, thier status, thier
+ of datasets in possession of the author, their names, their status, their
  general characteristics.
  The next section reviews some very early dictionaries that were produced
  by the author.
@@ -239,21 +239,21 @@ This paper reports on early results from these two different systems.
 
 \begin_layout Standard
 The last section reviews the ULL datasets.
- These suggest not one, but two extremely important break-throughs for the
+ These suggest not one, but two extremely important breakthroughs for the
  project.
- The first is that it seems like a method for tuning the learning pipleine
+ The first is that it seems like a method for tuning the learning pipeline
  has been discovered, as well as an objective measure for the fidelity of
  the pipeline.
  In short, it seems that there is a way of validating that, when given a
  fixed grammar, the pipeline preserves the structure of that grammar, despite
  the steps 2-through-5 above.
- That is, it seems that stpes 2 through 5, when performed with some care
+ That is, it seems that steps 2 through 5, when performed with some care
  and diligence, preserve the structure of a grammar, and do not wreck it,
  nor do they alter it into something else.
  This is still a preliminary result, and needs additional validation.
  But if it holds true, it is extremely important, as it allows the quality
  of the 2-through-5 pipeline to be measured and tuned.
- Once tuned, the pipeline can be trusted: whatever rammar goes in, that
+ Once tuned, the pipeline can be trusted: whatever grammar goes in, that
  is the grammar that comes out.
  Thus, when an unknown grammar is put in, then whatever comes out must be
  correct.
@@ -267,12 +267,12 @@ A second breakthrough from the ULL datasets is that the resulting grammar
  will cancel out.
  This is as it should be in radio receivers, or any kind of statistical
  sampling: The bigger the sample, the better the signal-to-noise ratio.
- Although the provisional parses of step 1 are noisey and often incorrect,
+ Although the provisional parses of step 1 are noisy and often incorrect,
  they are good enough, when enough samples are collected.
 \end_layout
 
 \begin_layout Standard
-There are several minor results worht mentioning.
+There are several minor results worth mentioning.
  From the ULL datasets, it is clear that the Project Gutenberg tests provide
  an inadequate sample of modern English.
  From the Linas dictionaries, its clear that large sample size really makes
@@ -289,11 +289,11 @@ unknown word
 \begin_inset Quotes erd
 \end_inset
 
- system, described below, appears to be quite effective in offering borad
+ system, described below, appears to be quite effective in offering broad
  coverage when new, unknown words are encountered in the test texts.
  Due to Zipfian distributions and long tails, the overlap of the test-vocabulary
  with the dictionary vocabulary is shockingly tiny.
- Thus, an unknwn-word mechanism is critical for providing reasonable coverage.
+ Thus, an unknown-word mechanism is critical for providing reasonable coverage.
 \end_layout
 
 \begin_layout Section*
@@ -5626,7 +5626,7 @@ mini-fuzz
  test corpora.
  This lack of overlap is remarkable! The precision increases dramatically,
  except for CDS where it is maybe maxed out, and basic.
- Recall drops shaprly lower, so that the resulting F1 is mostly lower.
+ Recall drops sharply lower, so that the resulting F1 is mostly lower.
 \end_layout
 
 \begin_layout Standard
@@ -7752,7 +7752,7 @@ Unknown word guessing
 \end_layout
 
 \begin_layout Standard
-Having tiny vocabularies is disaterous for understanding text.
+Having tiny vocabularies is disastrous for understanding text.
  Can one automate the guessing of unknown words? Of course one can! The
  default LG parser has an 
 \begin_inset Quotes eld
@@ -7766,8 +7766,8 @@ UNKNOWN-WORD
  to a collection of UNKNOWN-WORD entries, each carrying a set of associated
  disjuncts.
  Multiple UNKNOWN-WORD entries are allowed, in order to simplify disjunct
- management; however, when they are used, they are all used, and no prefernce
- is givven for one over another.
+ management; however, when they are used, they are all used, and no preference
+ is given for one over another.
 \end_layout
 
 \begin_layout Standard
@@ -10844,7 +10844,7 @@ Here's
 \emph on
 micro-dissiest-unk
 \emph default
-, with a sharpt cutoff still.
+, with a sharp cutoff still.
  Precision drops, recall drops, F1 drops.
  Conclusion: it is quite possible to make the classes too narrow.
 \end_layout
@@ -12237,12 +12237,12 @@ ull-lgeng
  grammars.
  The grammar that is pushed in is the effectively the same as the grammar
  that falls out.
- If this can be preproduced for other grammars, e.g.
+ If this can be reproduced for other grammars, e.g.
  Stanford, McParseface or some HPSG grammar, then one has a reliable way
  of tuning the pipeline.
  After it is tuned to maximize fidelity on known grammars, then, when applied
  to unknown grammars, it can be assumed to be working correctly, so that
- whatever cmoes out must in fact be correct.
+ whatever comes out must in fact be correct.
 \end_layout
 
 \begin_layout Itemize
@@ -12263,7 +12263,7 @@ MST parse
 \end_inset
 
  is relatively unimportant.
- Any parse, giving any results with beter-than-random outputs can be used
+ Any parse, giving any results with better-than-random outputs can be used
  to feed the pipeline.
  What matters is that a lot of observation counts need to be accumulated
  so that junky parses cancel each-other out, on average, while good ones
@@ -12279,8 +12279,8 @@ A third item should be mentioned:
 \begin_layout Itemize
 It appears that the Project Gutenberg training corpus does not appear to
  be a good sample of the English language.
- When the learned dictionaries are applied to other corpora, the scorres
- are disasterously bad!
+ When the learned dictionaries are applied to other corpora, the scores
+ are disastrously bad!
 \end_layout
 
 \begin_layout Standard
@@ -12293,7 +12293,7 @@ ULL Results
 \end_layout
 
 \begin_layout Standard
-The ULL team provided three dictionaris.
+The ULL team provided three dictionaries.
  These are analyzed below.
  
 \end_layout
@@ -12311,7 +12311,7 @@ a-col:6_word-space:discrete/
 \end_layout
 
 \begin_layout Standard
-I beleive that this dictionary was generated by replacing the MST step with
+I believe that this dictionary was generated by replacing the MST step with
  a parse where linkages are obtained from LG; these are then busted up back
  into disjuncts.
  This is an interesting test, because it validates the fidelity of the overall
@@ -12365,7 +12365,7 @@ If the above two bullet points hold out, then this is a major breakthrough,
  The problem is that of evaluating the quality of the grammars generated
  by the system.
  To what should they be compared? If we input MST parses, there is no particular
- reason to beleive that they should correspond to LG grammars.
+ reason to believe that they should correspond to LG grammars.
  One might hope that they would, based, perhaps, on some a-priori hand-waving
  about how most linguists agree about what the subject and object of a sentences
  is.
@@ -12381,10 +12381,10 @@ ad hoc
 
 \begin_layout Standard
 This result offers an alternative: don't validate the grammar; validate
- the pipelne itself.
+ the pipeline itself.
  If the pipeline is found to be structure-preserving, then it is a good
  pipeline.
- If we want to improve or strangthen the pipeline, we know have a reliable
+ If we want to improve or strengthen the pipeline, we know have a reliable
  way of measuring, free of quibbles and argumentation: if it can transfer
  an input grammar to an output grammar with high-fidelity, with low loss
  and low noise, then it is a quality pipeline.
@@ -12395,8 +12395,8 @@ This result offers an alternative: don't validate the grammar; validate
 \end_layout
 
 \begin_layout Standard
-This alllows one to move forward.
- If one beleives that probability and statistics are the correct way of
+This allows one to move forward.
+ If one believes that probability and statistics are the correct way of
  discerning reality, then that's it: if one has a high-fidelity corpus-to-gramma
 r transducer, then whatever grammar falls out is necessarily, a priori a
  correct grammar.
@@ -12418,7 +12418,7 @@ gold/silver
 \emph on
 gold/silver
 \emph default
- are based on a selectino of Gutenberg texts, the same class as the training
+ are based on a selection of Gutenberg texts, the same class as the training
  set, and so high precision is commendable.
  Recall suffers a bit, but F1 is passable.
  When tested against corpora that are quite different from the training
@@ -12879,7 +12879,7 @@ gold/silver
 etc
 \emph default
 .
- we're wll on the way! 
+ we're well on the way! 
 \end_layout
 
 \begin_layout Standard
@@ -12889,7 +12889,7 @@ The table also emphasizes the incompleteness of the Gutenberg training set.
 basic/fixes
 \emph default
  are a complete disaster.
- Whatever is in that grammar, its not covering perffectly common 20th-century
+ Whatever is in that grammar, its not covering perfectly common 20th-century
  English.
 \end_layout
 
@@ -13652,7 +13652,7 @@ col:11_pa-col:6_word-space:discrete/
 \end_layout
 
 \begin_layout Standard
-I beleive that this dictionary was generated by replacing the MST step with
+I believe that this dictionary was generated by replacing the MST step with
  a parse where there are links between neighboring words, and then extracting
  disjuncts that way.
  This is an interesting test, as it leverages the fact that most links really
@@ -14846,7 +14846,7 @@ ow:1_f1-col:11_pa-col:6_word-space:discrete/
 \end_layout
 
 \begin_layout Standard
-I beleive that this dictionary was generated by replacing the MST step with
+I believe that this dictionary was generated by replacing the MST step with
  a parse where some sort of neural net is used to obtain the parse.
  
 \end_layout
@@ -16085,13 +16085,13 @@ MST parse
 .
  Anything that gives reasonably decent results at this stage is good enough
  to fish out a grammar.
- A thid conclusion was that the Project Gutenberg coproa do not provide
+ A third conclusion was that the Project Gutenberg corpora do not provide
  an adequate sample of modern English.
 \end_layout
 
 \begin_layout Standard
 There are a separate set of conclusions for the Linas variant of the pipeline.
- These are minor compared to the above, but important for thier own sake.
+ These are minor compared to the above, but important for their own sake.
 \end_layout
 
 \begin_layout Itemize
@@ -16104,7 +16104,7 @@ The Linas pipeline seems to be producing dictionaries with better coverage
  than the ULL dictionaries.
  This is almost certainly due to only three factors: a training set that
  is broader than just Gutenberg; a much larger training set, with probably
- an order of magnitude (or two) more samples in it; the use of the unkown-word
+ an order of magnitude (or two) more samples in it; the use of the unknown-word
  mechanism.
 \end_layout
 
@@ -16123,7 +16123,7 @@ Unknown-word guessing by the parser appears to be an effective strategy
 \end_layout
 
 \begin_layout Itemize
-The Linas pipeline should be tuned in the fashion that the tuning breakthhrough
+The Linas pipeline should be tuned in the fashion that the tuning breakthrough
  suggests.
  Without this, one is working blind.
 \end_layout
