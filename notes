@@ -19207,24 +19207,35 @@ Length miscompare:
 I'm going drinking.  5 vs 4
 Maybe, I'm not sure. 8 vs 7
 
+micro-fuzz:
+Prec  recall  F1
+0.705 0.627 0.534
+0.577 0.545 0.473
+0.371 0.399 0.485
+0.407 0.566 0.466
+0.457 0.527 0.466
 
-      (define primary-links (list "S" "O" "MV" "SI" "CV"))
-      (define secondary-links (list "A" "J" "D" "M" "G" "E" "MX" "EA"
-"EB"))
-      (define punct-links (list "X" "RW"))
-         (link-correct 0)
-         (link-excess 0)
-         (link-deficit 0)
+micro-fuzz-unk:
+0.660 0.555 0.502
+0.484 0.492 0.541
+0.440 0.459 0.468
+0.445 0.595 0.491
+0.479 0.476 0.467
 
+
+115 vs 135
 
 
 
 Evaluation TODO:
 * Fraction of words with null links.
 * Number of linkages found ...  (looking for overflow)
-* Fraction correct S,O links
+* Fraction correct S,O links (DONE)
+* Why hang? Why not popping timeout?
 
 TODO:
+* MI is wrong, given how we ad-hoc export to gram classes.
+
 * Words that are in word classes, but still have left-over-counts
   should get thier own classes ...
 * Add 'help method

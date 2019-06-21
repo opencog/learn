@@ -2592,7 +2592,7 @@ micro-fuzz
  This is a tiny dataset, with only 1600 words in it; its the first shot
  at anything even vaguely workable.
  Not expecting good results.
- But they seem passable anyway.
+ But they seem passable.
  Most sentences got skipped, because they contained unknown words, but the
  ones that did parse seem to not be outrageous.
  Notice the intersection of the test-corpus vocabulary and the dictionary
@@ -3349,7 +3349,9 @@ silver
 Not all link-types are created equal.
  Correct links to the subject and object should be considered to be more
  important, than ambient links to punctuation.
- Thus, the LG link-types were placed into four categories:
+ Thus, consider placing the LG link-types into four categories: important,
+ less important, and the others.
+ The categories that seemed about right were these:
 \end_layout
 
 \begin_layout Itemize
@@ -3406,6 +3408,11 @@ Other
 \begin_layout Standard
 Glancing at this table, there is no obvious indication that the important
  (primary) links are gotten correct more than the other links.
+ Perhaps the 
+\family typewriter
+MV
+\family default
+ link does not belong in the primary category?
 \end_layout
 
 \begin_layout Standard
@@ -4031,8 +4038,14 @@ micro-discrim
 \shape default
  below.
  The gram classes are looser (the cutoff is lower - 0.5 instead of 0.65 as
- above), and casual inspection suggests that they are lower quality (its
- clear that many unlike words are being classed together).
+ above), and casual inspection (
+\emph on
+i.e.
+
+\emph default
+ just reading the list of words in each) suggests that they are lower quality
+ (from eyeballing, it's clear that many dissimilar words are being classed
+ together).
  This behaves in a not-too-surprising way: precision drops (more junk links
  produced), while recall improves (the junk links just happen to go to the
  right places).
@@ -5419,30 +5432,13 @@ mini-fuzz
 .
  This dictionary has a much larger vocabulary: 7385 words instead of 1600
  as above.
- Despite the much larger vocabulary, there is not much change in F1: it
- is just a hairs-breadth better than the micro version, except for 
-\emph on
-ull-golden
-\emph default
-, which is markedly worse, and 
-\emph on
-corpus-basic
-\emph default
-, which is better.
- Precision ad recall are very nearly unchanged, except for 
-\emph on
-ull-golden
-\emph default
- and 
-\emph on
-corpus-basic
-\emph default
-.
- The big difference is that considerably fewer sentences get skipped due
- to unknown vocabulary (but still more than half).
- The mini dictionaries contain 7385 words, and at most 1/5th of them appear
- in the test corpora.
- The lack of overlap is remarkable!
+ Several large differences are apparent: considerably fewer sentences get
+ skipped due to unknown vocabulary (but still more than half!) The mini
+ dictionaries contain 7385 words, and at most 1/5th of them appear in the
+ test corpora.
+ This lack of overlap is remarkable! The precision increases dramatically,
+ except for CDS where it is maybe maxed out, and basic.
+ Recall drops shaprly lower, so that the resulting F1 is mostly lower.
 \end_layout
 
 \begin_layout Standard
@@ -7564,22 +7560,46 @@ silver
 \end_layout
 
 \begin_layout Section*
-Unknown words
+Unknown word guessing
 \end_layout
 
 \begin_layout Standard
-How about automated unknown words? The tactic here is to insert an unknown-word
- marker, pointing to each gram-class with two or more members.
- Basically, unknown words are guessed at by trying to assign them to each
- gram class – the disjunct with the best-possible fit (highest class-disjunct
- MI) is used.
- The dictionaries are the same as those above, except that UNKNOWN-WORD
- is added to them.
+Having tiny vocabularies is disaterous for understanding text.
+ Can one automate the guessing of unknown words? Of course one can! The
+ default LG parser has an 
+\begin_inset Quotes eld
+\end_inset
+
+UNKNOWN-WORD
+\begin_inset Quotes erd
+\end_inset
+
+ mechanism, whereby any word that does not appear in the dictionary is defaulted
+ to a collection of UNKNOWN-WORD entries, each carrying a set of associated
+ disjuncts.
+ Multiple UNKNOWN-WORD entries are allowed, in order to simplify disjunct
+ management; however, when they are used, they are all used, and no prefernce
+ is givven for one over another.
 \end_layout
 
 \begin_layout Standard
-Processing is noticeably slower; there appears to be an combinatoric explosion
- - a runtime of 
+The tactic obvious tactic to use in the current situation is to insert one
+ UNKNOWN-WORD marker for each grammatical class.
+ The effect will be that, during parsing, each unknown word will be tried
+ out with each gram-class.
+ When a parse is found, the tag on the UNKNOWN-WORD entry will indicate
+ which class was used.
+ When multiple parses are found, they are ranked according to the total
+ word-disjunct MI for the sentence.
+ The dictionaries evaluated in this section are the same ones as those above,
+ except that one UNKNOWN-WORD entry was added for each gram class containing
+ two or more members; singleton-classes were ignored.
+\end_layout
+
+\begin_layout Standard
+The use of the UNKNOWN-WORD mechanism can (and does) lead to a combinatoric
+ explosion during parsing.
+ Naively, one might expect a runtime of 
 \begin_inset Formula $O\left(N^{k}\right)$
 \end_inset
 
@@ -7587,13 +7607,18 @@ Processing is noticeably slower; there appears to be an combinatoric explosion
 \begin_inset Formula $k$
 \end_inset
 
- unknown words in the sentence; the 
+ unknown words in the sentence; here 
 \begin_inset Formula $N$
 \end_inset
 
  is presumably the total of all disjuncts in all candidate classes, as each
  is tried against the next as a possible match.
- Sentences with 3,4,5 unknown words can take 
+ For these dictionaries, 
+\begin_inset Formula $N$
+\end_inset
+
+ varies from 1K to 100K, and so it seems that sentences with 3,4,5 unknown
+ words might take 
 \emph on
 hours
 \emph default
@@ -7601,13 +7626,21 @@ hours
  Hours is really bad.
  We are patient, here, but clearly, something needs to be done to avoid
  the bog-down.
+ In practice, the actual slow-down is highly variable from dictionary to
+ dictionary, as a preparse-pruning stage can decimate 
+\begin_inset Formula $N$
+\end_inset
+
+ down to a reasonable number quite effectively ...
+ most of the time.
+ However, some dictionaries choke on some sentences.
 \end_layout
 
 \begin_layout Standard
-We except 100% of the sentences to be covered, so this is a big change from
+We expect 100% of the sentences to be covered, so this is a big change from
  before.
- Two columns from earlier tables are omitted: 100% of the test-corpus is
- parsed and compared.
+ Two columns from earlier tables are omitted, since all of the test-corpus
+ is parsed and compared.
  Since LG will run on every sentence in each test-corpus, the total number
  of observed words, and the total known-vocabulary will be the same for
  all of the different dictionaries-under-test.
@@ -7939,11 +7972,12 @@ micro-fuzz
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 \family default
 .
- Compared to the same dataset without guessing, precision drops a bit, (no
- surprise), recall improves a lot, enough that the F1 improves a lot, with
- the exception of the gold-corpus for which F1 stays the same.
+ Compared to the same dataset without guessing, the resulting precision
+ and recall changes erratically, sometime moving up, or down, depending
+ on the test corpus.
+ The overall F1 is unchanged or improved.
  Conclusion: adding unknown-word guessing vastly improves coverage, and
- also helps recall and F1, with just a bit of damage to precision.
+ also helps F1.
 \end_layout
 
 \begin_layout Standard
@@ -8814,24 +8848,45 @@ silver
 \end_layout
 
 \begin_layout Standard
-For 
+Below is 
 \shape italic
 micro-fizz-unk
 \shape default
-: Precision went up a little, recall dropped much more.
- Not unexpected: the tighter discriminator makes each grammatical class
- more accurate, but the overall coverage (the recall) drops.
- There are two possible explanations for this difference: 
+, which uses a cosine-cutoff of 0.75.
+ Comparing to 
+\shape italic
+micro-fizz-unk
+\shape default
+ with a cutoff of 0.65, it seems that precision is mostly unchanged.
+ Recall is sharply down, and so, for the most part, the F1 scores are down.
+ 
+\end_layout
+
+\begin_layout Standard
+There are two possible explanations for this difference: 
 \end_layout
 
 \begin_layout Enumerate
-The tighter discriminator is leading to more accurate grammatical classes
- (?)
+The tighter discriminator results in narrower gram classes, which have trouble
+ hooking up into a good parse.
+ Here, 
+\begin_inset Quotes eld
+\end_inset
+
+narrower
+\begin_inset Quotes erd
+\end_inset
+
+ means that each gram class has fewer disjuncts in it.
 \end_layout
 
 \begin_layout Enumerate
-A smaller number of grammatical classes to choose from suggests that unknown
- word guessing might struggle more.
+The 
+\shape italic
+micro-fizz-unk
+\shape default
+ dictionary has fewer grammatical classes (115 vs 135), which, in addition
+ to each class being narrower, causes unknown word guessing to struggle.
 \end_layout
 
 \begin_layout Standard
@@ -9725,7 +9780,8 @@ micro-fuzz-unk
 \end_layout
 
 \begin_layout Standard
-Based on prelim incomplete numbers: the algo don't matter, the discrim does.
+Based on prelim incomplete numbers: the algo don't matter very much, the
+ discrim does.
 \end_layout
 
 \begin_layout Standard
@@ -10165,7 +10221,8 @@ micro-dissier
 micro-fizz-unk
 \shape default
 , which uses the same cutoff.
- 
+ The sharper cutoff is having little effect on precision.
+ It is forcing down recall, and thus F1.
 \end_layout
 
 \begin_layout Standard
@@ -10435,7 +10492,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+97%
 \end_layout
 
 \end_inset
@@ -10444,7 +10501,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.493
 \end_layout
 
 \end_inset
@@ -10453,7 +10510,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.417
 \end_layout
 
 \end_inset
@@ -10462,7 +10519,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.451
 \end_layout
 
 \end_inset
@@ -10595,7 +10652,13 @@ silver
 \end_layout
 
 \begin_layout Standard
-Here's dissiest:
+Here's 
+\emph on
+micro-dissiest-unk
+\emph default
+, with a sharpt cutoff still.
+ Precision drops, recall drops, F1 drops.
+ Conclusion: it is quite possible to make the classes too narrow.
 \end_layout
 
 \begin_layout Standard
@@ -10874,7 +10937,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.487
 \end_layout
 
 \end_inset
@@ -10883,7 +10946,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.365
 \end_layout
 
 \end_inset
@@ -10892,7 +10955,7 @@ fixes
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.417
 \end_layout
 
 \end_inset
@@ -11198,7 +11261,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-78%
+87%
 \end_layout
 
 \end_inset
@@ -11207,7 +11270,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.677
 \end_layout
 
 \end_inset
@@ -11216,7 +11279,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.529
 \end_layout
 
 \end_inset
@@ -11225,7 +11288,7 @@ CDS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.594
 \end_layout
 
 \end_inset
