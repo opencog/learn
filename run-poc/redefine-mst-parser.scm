@@ -244,8 +244,6 @@
 			(export-mst-parse plain-text parse "mst-parses.ull")
 		)
 	)
-
-	parse ; return the parse
 )
 
 ; Wrapper for backwards compatibility
