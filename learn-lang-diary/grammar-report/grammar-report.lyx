@@ -84,11 +84,15 @@
 \begin_body
 
 \begin_layout Title
-Preliminary Grammar Results
+Grammar Evaluation Results
 \end_layout
 
 \begin_layout Title
-June 2019 Restart - Mini Datasets
+ULL Dictionaries
+\end_layout
+
+\begin_layout Title
+June 2019 Mini Dictionaries
 \end_layout
 
 \begin_layout Author
@@ -96,17 +100,24 @@ Linas Vepstas
 \end_layout
 
 \begin_layout Date
-Version of 20 June 2019
+Version of 21 June 2019
 \end_layout
 
 \begin_layout Abstract
-This reports some very preliminary results on learning grammars.
- The algorithms being applied have a variety of missing features and imperfectio
-ns but appear to be usable enough to provide at least some early-stage results.
- The results are encouraging.
- This report briefly reviews the dataset(s), the algorithms used to obtain
+This report presents measurements of the quality of various different dictionari
+es learned from two different language-learning pipelines; one is the ULL/Koloni
+n variant, the other is the Linas variant.
+ The ULL/Kolonin dictionaries suggest two major breakthroughs: they suggest
+ how the learning pipeline should be tuned, and they indicate how the peipeline
+ is relatively insensitive to early stages of processing.
+ The Linas variant results indicate that the sheer quantity of training
+ data has a strong impact on the quality of the learned grammars.
+\end_layout
+
+\begin_layout Abstract
+This report briefly reviews the dictionaries, the algorithms used to obtain
  them, and measurement results.
- 
+ It is assumed that the reader has a general familiarity with the project.
 \end_layout
 
 \begin_layout Section*
@@ -114,10 +125,187 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Work was suspended in the Fall of 2018, and was restarted in June 2019.
+The langauge learning project attempts to extract symbolic grammars from
+ a sampling of raw text.
+ The general process is conceptually straight-forward:
+\end_layout
+
+\begin_layout Enumerate
+Obtain provisional parses for a (very) large quantity of text.
+\end_layout
+
+\begin_layout Enumerate
+Chop up up the resulting parses into individual words, with co-occuring
+ connectors.
+ That is, each word-instance in the text is associated with a set of connectors
+ pointing at the other words it connected to in that particular parse.
+ Thus, one has a word-instance, and a connector-set extracted from the parse
+ in the first step.
+ These connector-sets are variously refred to as 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+germs
+\begin_inset Quotes erd
+\end_inset
+
+ in related texts.
+\end_layout
+
+\begin_layout Enumerate
+Treat connector-sets as the basis vectors in a vector space.
+ Thus, a word is actually a collection of (word, connector-set) pairs, with
+ an associated count of the number of times that particular (word, connector-set
+) was seen during parsing.
+\end_layout
+
+\begin_layout Enumerate
+The vector representation allows different kinds of word-similarity judgements
+ to be used, and thus allows words to be clustered into classes.
+ These classes should be called 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical classes
+\begin_inset Quotes erd
+\end_inset
+
+, as all of the members of that class behave in a grammatically-similar
+ fashion.
+\end_layout
+
+\begin_layout Enumerate
+The grand-total collection of grammatical classes forms a dictionary or
+ a lexis or a 
+\begin_inset Quotes eld
+\end_inset
+
+grammar
+\begin_inset Quotes erd
+\end_inset
+
+; this dictionary is now a valid symbolic description of grammar, in that
+ it can be use to parse new, perviously-unseen sentences, and extract thier
+ syntactic structure, as well as some fair amount of semantic content.
+\end_layout
+
+\begin_layout Standard
+The langauge-learning project contains two distinct implementations of the
+ above pipeline.
+ The first implementation, tightly coupled to the OpenCog AtomSpace, was
+ created by Linas (the author), but put on hold as various other intervening
+ priorities interceeded.
+ Development of that pipeline has recently resumed.
+ A second implementation, termed 
+\begin_inset Quotes eld
+\end_inset
+
+the ULL Project
+\begin_inset Quotes erd
+\end_inset
+
+ was subsequently developed by a team lead by Anton Kolonin, includingg
+ Andres Suarez Madrigal and Alexei Glushchenko.
+ It is partly derived from the first implementation, but diverges in many
+ important ways.
+ In particular, it eschews the use of the AtomSpace, replacing it by a collectio
+n of ad-hoc text-file data formats and Python tools.
+ 
+\end_layout
+
+\begin_layout Standard
+This paper reports on early results from these two different systems.
+ It is structured as follows.
+ The first several sections review the status and datasets used by the author,
+ in his own pipeline.
+ As such, this becomes a bit like a laboratory notebook diary, making notes
+ of datasets in possession of the author, thier names, thier status, thier
+ general characteristics.
+ The next section reviews some very early dictionaries that were produced
+ by the author.
+ They are highly preliminary: many important processing stages have not
+ been implemented, various shortcuts and hacks were applied to the stages
+ that do exist, and the evaluated dictionaries are just tiny.
+ 
+\end_layout
+
+\begin_layout Standard
+The last section reviews the ULL datasets.
+ These suggest not one, but two extremely important break-throughs for the
+ project.
+ The first is that it seems like a method for tuning the learning pipleine
+ has been discovered, as well as an objective measure for the fidelity of
+ the pipeline.
+ In short, it seems that there is a way of validating that, when given a
+ fixed grammar, the pipeline preserves the structure of that grammar, despite
+ the steps 2-through-5 above.
+ That is, it seems that stpes 2 through 5, when performed with some care
+ and diligence, preserve the structure of a grammar, and do not wreck it,
+ nor do they alter it into something else.
+ This is still a preliminary result, and needs additional validation.
+ But if it holds true, it is extremely important, as it allows the quality
+ of the 2-through-5 pipeline to be measured and tuned.
+ Once tuned, the pipeline can be trusted: whatever rammar goes in, that
+ is the grammar that comes out.
+ Thus, when an unknown grammar is put in, then whatever comes out must be
+ correct.
+\end_layout
+
+\begin_layout Standard
+A second breakthrough from the ULL datasets is that the resulting grammar
+ is relatively insensitive to step 1.
+ As long as the provisional parses have some accuracy above random chance,
+ then, by accumulating enough samples, the errors in the provisional parses
+ will cancel out.
+ This is as it should be in radio receivers, or any kind of statistical
+ sampling: The bigger the sample, the better the signal-to-noise ratio.
+ Although the provisional parses of step 1 are noisey and often incorrect,
+ they are good enough, when enough samples are collected.
+\end_layout
+
+\begin_layout Standard
+There are several minor results worht mentioning.
+ From the ULL datasets, it is clear that the Project Gutenberg tests provide
+ an inadequate sample of modern English.
+ From the Linas dictionaries, its clear that large sample size really makes
+ a difference; the Linas dictionaries, although tiny, inadequate and hacked,
+ trounce the ULL datasets when measured out-of-training-set.
+\end_layout
+
+\begin_layout Standard
+One last result is worth mentioning: an 
+\begin_inset Quotes eld
+\end_inset
+
+unknown word
+\begin_inset Quotes erd
+\end_inset
+
+ system, described below, appears to be quite effective in offering borad
+ coverage when new, unknown words are encountered in the test texts.
+ Due to Zipfian distributions and long tails, the overlap of the test-vocabulary
+ with the dictionary vocabulary is shockingly tiny.
+ Thus, an unknwn-word mechanism is critical for providing reasonable coverage.
+\end_layout
+
+\begin_layout Section*
+June 2019 Restart
+\end_layout
+
+\begin_layout Standard
+Work by the author was suspended in the Fall of 2018, and was restarted
+ in June 2019.
  This is an attempt to pick up where things got left off.
- It summarizes grammar learning dataset, algorithms and preliminary results,
- as it stands at the moment.
+ It summarizes the grammar learning dataset, the algorithms and some preliminary
+ results, as it stands at the moment.
  
 \end_layout
 
@@ -15915,7 +16103,7 @@ Taken as a proof-of-concept, the Linas variant of the pipeline seems to
 The Linas pipeline seems to be producing dictionaries with better coverage
  than the ULL dictionaries.
  This is almost certainly due to only three factors: a training set that
- is broader than just Gutenberg; a much larger training set, with porbably
+ is broader than just Gutenberg; a much larger training set, with probably
  an order of magnitude (or two) more samples in it; the use of the unkown-word
  mechanism.
 \end_layout
