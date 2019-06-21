@@ -18772,6 +18772,31 @@ Sorting in 2.028 seconds
 Start greedy-agglomeration of 7385 words
 Existing classes=0 singletons=0 done=0
 --- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 03:36:40 -- "." ---
+--- To-do=0 ncls=371 sing=2097 nredo=5089 2019-06-20 19:57:15
+64 hours .... Ouch.
+
+(sql-close)
+createdb en_mini_discrim_exp
+cat atom.sql | psql en_mini_discrim_exp
+(sql-open "postgres:///en_mini_discrim_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 2097 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 167842 csets
+
+mv dict.db dict.db-mini-discrim-unk
 
 
 
@@ -19187,6 +19212,11 @@ Maybe, I'm not sure. 8 vs 7
       (define secondary-links (list "A" "J" "D" "M" "G" "E" "MX" "EA"
 "EB"))
       (define punct-links (list "X" "RW"))
+         (link-correct 0)
+         (link-excess 0)
+         (link-deficit 0)
+
+
 
 
 Evaluation TODO:
