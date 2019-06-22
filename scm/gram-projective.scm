@@ -50,21 +50,6 @@
 ; from `w` that belong to other word-senses, and do NOT belong to `g`
 ; (do not belong to the word sense associate with `g`).
 ;
-;
-; Linear Programming merge
-; ------------------------
-; Here, one searches for a vector `s` that maximizes some some
-; (information-theoretic) criterion for merging. This criterion takes
-; the form of a set of real numbers {a(d) |d is a disjunct} so that
-; N(s,d) = a(d) N(w,d). To obey non-negativity, one must have
-; 0 =< a(d) =< 1 for each `d`. This turns the problem into a linear
-; programming problem (or rather, a convex optimization problem).
-; If a(d) is either zero, or one, then this is a (binary) integer
-; programming problem.
-;
-; This merge style is implemented in the `gram-optim.scm` file, and
-; is described in greater detail there.
-;
 ; Initial cluster formation
 ; -------------------------
 ; The above described what to do to extend an existing grammatical class
@@ -118,29 +103,6 @@
 ; that one takes
 ;
 ;   {e_union} = {e_a} set-union {e_b}
-;
-;
-; Zipf Tails
-; ----------
-; The distribution of disjuncts on words is necessarily Zipfian. That
-; is, the vectors could be called "Zipf vectors", in that the vector
-; coefficients follow a Zipfian distribution.  There are many reasons
-; why this is so, and multiple effects feed into this.
-;
-; It seems plausible to treat extremely-low frequency observations as
-; a kind of noise, but which might also contain some signal. Thus,
-; during merge, all of a Zipfian tail should be merged in. If its noise,
-; it will tend to cancel during merge; if its signal, it will tend to be
-; additive.
-;
-; That is, during merge, low-frequency observation counts should be
-; merged in their entirety, rather than split in parts, with one part
-; remaining unmerged.  For example, if a word is to be merged into a
-; word-class, and disjunct d has been observed 4 times or less, then
-; all 4 of these observation counts should be merged into the word-class.
-; Only high-frequency disjuncts can be considered to be well-known
-; enough to be distinct, and thus suitable for fractional merging.
-;
 ;
 ; merge-project
 ; -------------
@@ -213,33 +175,9 @@
 ;
 ; * Discrim: use `merge-discrim` with min acceptable cosine = 0.5
 ;
-; * Info: use `merge-project` with hard-coded frac=0.3 and information
-;   distance with min acceptable MI=3
-;
-;
-; Broadening
-; ----------
-; The issue described in a) is an issue of broadening the known usages
-; of a word, beyond what has been strictly observed in the text.  There
-; are two distinct opportunities to broaden: first, in the union vs.
-; overlap merging above, and second, in the merging of disjuncts. That
-; is, the above merging did not alter the number of disjuncts in use:
-; the disjuncts on the merged class are still disjuncts with single-word
-; connectors. At some point, disjuncts should also be merged, i.e. by
-; merging the connectors on them.
-;
-; If disjunct merging is performed after a series of word mergers have
-; been done, then when a connector-word is replaced by a connector
-; word-class, that class may be larger than the number of connectors
-; originally witnessed. Again, the known usage of the word is broadened.
-;
-;
-; Disjunct merging
-; ----------------
-; Disjunct merging is the second step in creating grammatical classes.
-; The idea here is to replace individual connectors that specify words
-; with connectors that specify word-classes. This step is examined in
-; greater detail in `cset-class.scm`.
+; Actual measurements (see `grammar-report/grammar-report.pdf`) indicate
+; that these are actually rather good parameter choices; and surprisingly,
+; the `merge-discrim` works better than `merge-project`.
 ;
 ; ---------------------------------------------------------------------
 

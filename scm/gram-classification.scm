@@ -232,99 +232,6 @@
 ;    original counts.
 ;
 ;
-; Linear Programming merge
-; ------------------------
-; Here, one searches for a vector `s` that maximizes some some
-; (information-theoretic) criterion for merging. This criterion takes
-; the form of a set of real numbers {a(d) |d is a disjunct} so that
-; N(s,d) = a(d) N(w,d). To obey non-negativity, one must have
-; 0 =< a(d) =< 1 for each `d`. This turns the problem into a linear
-; programming problem (or rather, a convex optimization problem).
-; If a(d) is either zero, or one, then this is a (binary) integer
-; programming problem.
-;
-; In the current context, there are two information-theoretic criteria
-; that seem reasonable to pursue. One is to maximize
-;
-;     S = MI(g,s) - MI(g,t)
-;
-; with MI as defined above. That is, we want to decompose `w=s+t` such
-; that the `s` component has the greatest possible MI with `g`, and the
-; remainder has the least-possible.
-;
-; A second possibility is to maximize
-;
-;     H = p(s) MI(g,w) - p(t) MI(g,t)
-;
-; where p(w) = dot(w,*) / dot(*,*) with dot(,) as defined above.
-;
-; In principle, integer optimization problems are NP-hard (NP-complete).
-; It is not entirely clear if that is the case here. There seems to be
-; at least one perhaps-hacky-but-linear-time algo:
-;  1. Create a sorted list of disjuncts `d` according to N(*,d)
-;  2. Create the empty set S
-;  3. For each `d`, from highest N(*,d) to lowest, create a vector `s`
-;     setting N(s,b)=N(w,b) if b is in S or if b==d; else N(s,b)=0.
-;  4. If the vector `s` is accepted by the criteria (i.e. it is larger)
-;     then define S = S union d.
-;  5. Loop to step 3 until done.
-;
-;
-; Initial cluster formation
-; -------------------------
-; The above described what to do to extend an existing grammatical class
-; with a new candidate word.  It does not describe how to form the
-; initial grammatical class, out of the merger of two words. Several
-; strategies are possible. Given two words `u` and `v`, These are:
-;
-; * Simple sum: let `g=u+v`. That's it; nothing more.
-; * Overlap and union merge, given below.
-;
-; Overlap merge
-; -------------
-; A formal (i.e. mathematically dense) description of overlap merging is
-; given here. One wishes to compute the intersection of basis elements
-; (the intersection of "disjuncts" aka "sections") of the two words, and
-; then sum the counts only on this intersected set. Let
-;
-;   {e_a} = set of basis elements in v_a with non-zero coefficients
-;   {e_b} = set of basis elements in v_b with non-zero coefficients
-;   {e_overlap} = {e_a} set-intersection {e_b}
-;   pi_overlap = unit on diagonal for each e in {e_overlap}
-;              == projection matrix onto the subspace {e_overlap}
-;   v_a^pi = pi_overlap . v_a == projection of v_a onto {e_overlap}
-;   v_b^pi = pi_overlap . v_b == projection of v_b onto {e_overlap}
-;
-;   v_cluster = v_a^pi + v_b^pi
-;   v_a^new = v_a - v_a^pi
-;   v_b^new = v_b - v_b^pi
-;
-; The idea here is that the vector subspace {e_overlap} consists of
-; those grammatical usages that are common for both words a and b,
-; and thus hopefully correspond to how words a and b are used in a
-; common sense. Thus v_cluster is the common word-sense, while v_a^new
-; and v_b^new are everything else, everything left-over.  Note that
-; v_a^new and v_b^new are orthogonal to v_cluster. Note that v_a^new
-; and v_b^new are both exactly zero on {e_overlap} -- the subtraction
-; wipes out those coefficients. Note that the total number of counts
-; is preserved.  That is,
-;
-;   ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
-;
-; where ||v|| == ||v||_1 the l_1 norm aka count aka Manhattan-distance.
-;
-; If v_a and v_b have several word-senses in common, then so will
-; v_cluster.  Since there is no a priori way to force v_a and v_b to
-; encode only one common word sense, there needs to be some distinct
-; mechanism to split v_cluster into multiple word senses, if that is
-; needed.
-;
-; Union merging can be described using almost the same formulas, except
-; that one takes
-;
-;   {e_union} = {e_a} set-union {e_b}
-;
-;
 ; Zipf Tails
 ; ----------
 ; The distribution of disjuncts on words is necessarily Zipfian. That
@@ -346,6 +253,22 @@
 ; Only high-frequency disjuncts can be considered to be well-known
 ; enough to be distinct, and thus suitable for fractional merging.
 ;
+;
+; Broadening
+; ----------
+; The issue described in a) is an issue of broadening the known usages
+; of a word, beyond what has been strictly observed in the text.  There
+; are two distinct opportunities to broaden: first, in the union vs.
+; overlap merging above, and second, in the merging of disjuncts. That
+; is, the above merging did not alter the number of disjuncts in use:
+; the disjuncts on the merged class are still disjuncts with single-word
+; connectors. At some point, disjuncts should also be merged, i.e. by
+; merging the connectors on them.
+;
+; If disjunct merging is performed after a series of word mergers have
+; been done, then when a connector-word is replaced by a connector
+; word-class, that class may be larger than the number of connectors
+; originally witnessed. Again, the known usage of the word is broadened.
 ;
 ; Disjunct merging
 ; ----------------
