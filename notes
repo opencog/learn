@@ -17563,6 +17563,9 @@ sized en_pairs_rfive_mst dataset. So why is it so much slower now?
 Is the pattern matcher in the stars object getting in the way?
 Yes, it probably is. This needs to be fixed...
 
+Umm, the en_sh_mi_two which contained the exploded shapes took that long
+... probably for the same reason...
+
 OK, system went down. Restart....
 (load "/tmp/cm.scm")
 (xbatch-all-pair-mi psa)
