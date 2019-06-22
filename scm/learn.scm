@@ -17,6 +17,7 @@
 (load "learn/shape-vec.scm")
 (load "learn/summary.scm")
 (load "learn/vectors.scm")
+(load "learn/gram-classification.scm")
 (load "learn/gram-projective.scm")
 (load "learn/gram-optim.scm")
 (load "learn/gram-agglo.scm")

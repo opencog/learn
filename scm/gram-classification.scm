@@ -176,13 +176,14 @@
 ; Merge Algos
 ; -----------
 ; There are several ways in which two words might be merged into a
-; word-class, or a word added to a word-class.  Some of these are
-; described below.  Additional kind of merges can be imagined; an
-; adequate theoretical foundation remains unclear.  However, based
-; on the gut-sense intuition that information-theoretic techniques
-; are primal, then a merge strategy based on MI/entropy maximization
-; appears to be the most promising. This is described last, as it
-; is the most complex.
+; word-class, or a word added to a word-class.  All of these involve
+; the transfer of counts from individual word-vectors to the word-class
+; vector.  One generic style of merging uses concepts from Eucliden
+; geometry, and involve taking parallel and perpendicular components
+; of vectors. This is implemented in `gram-projective.scm`.  Another
+; style suggests that information-theoretic techniques are primal, and
+; a merge strategy based on MI/entropy maximization is best. This is
+; implemented in the `gram-optim.scm` file.
 ;
 ; Given a word (a word-vector) `w`, we wish to decompose it into a
 ; component `s` that will be merged into the grammatical class `g`,
@@ -270,6 +271,7 @@
 ; word-class, that class may be larger than the number of connectors
 ; originally witnessed. Again, the known usage of the word is broadened.
 ;
+;
 ; Disjunct merging
 ; ----------------
 ; Disjunct merging is the second step in creating grammatical classes.
@@ -277,29 +279,5 @@
 ; with connectors that specify word-classes. This step is examined in
 ; greater detail in `cset-class.scm`.
 ;
-; ---------------------------------------------------------------------
-
-(use-modules (srfi srfi-1))
-(use-modules (opencog) (opencog matrix) (opencog persist))
-
 ; ---------------------------------------------------------------
-; Is it OK to merge WORD-A and WORD-B into a common vector?
-;
-; Return #t if the two should be merged, else return #f
-; WORD-A might be a WordClassNode or a WordNode.
-; WORD-B should be a WordNode.
-;
-; MIOBJ must offer the 'mmt-fmi method.
-;
-; This uses information-similarity and a cutoff to make the ok-to-merge
-; decision. Uses the information-similarity between the
-; disjunct-vectors only (for now!?), and not between the shapes.
-;
-(define (is-info-similar? MIOBJ CUTOFF WORD-A WORD-B)
-
-	(define (get-info-sim wa wb) (MIOBJ 'mmt-fmi wa wb))
-	(is-similar? get-info-sim CUTOFF WORD-A WORD-B)
-)
-
-; ---------------------------------------------------------------
-; Example usage
+; This file currently contains no code!  It just documents the code!
