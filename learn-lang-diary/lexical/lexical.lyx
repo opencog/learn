@@ -1,0 +1,282 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url} 
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "courier" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Learning a Lexis
+\end_layout
+
+\begin_layout Author
+Linas Vepstas
+\end_layout
+
+\begin_layout Date
+June 2019
+\end_layout
+
+\begin_layout Abstract
+Lexical descriptions of language can be learned using information theoertic
+ techniques.
+ This is a rough draft (collection of notes) for a planned future paper
+ describing the language-learning system, and justifying why it works.
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+The language learning project attempts to extract symbolic grammars from
+ a sampling of raw text.
+ The general process is conceptually straight-forward:
+\end_layout
+
+\begin_layout Enumerate
+Obtain provisional parses for a (very) large quantity of text.
+\end_layout
+
+\begin_layout Enumerate
+Chop up up the resulting parses into individual words, with co-occurring
+ connectors.
+ That is, each word-instance in the text is associated with a set of connectors
+ pointing at the other words it connected to in that particular parse.
+ Thus, one has a word-instance, and a connector-set extracted from the parse
+ in the first step.
+ These connector-sets are variously referred to as 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+germs
+\begin_inset Quotes erd
+\end_inset
+
+ in related texts.
+\end_layout
+
+\begin_layout Enumerate
+Treat connector-sets as the basis vectors in a vector space.
+ Thus, a word is actually a collection of (word, connector-set) pairs, with
+ an associated count of the number of times that particular (word, connector-set
+) was seen during parsing.
+\end_layout
+
+\begin_layout Enumerate
+The vector representation allows different kinds of word-similarity judgments
+ to be used, and thus allows words to be clustered into classes.
+ These classes should be called 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical classes
+\begin_inset Quotes erd
+\end_inset
+
+, as all of the members of that class behave in a grammatically-similar
+ fashion.
+\end_layout
+
+\begin_layout Enumerate
+The grand-total collection of grammatical classes forms a dictionary or
+ a lexis or a 
+\begin_inset Quotes eld
+\end_inset
+
+grammar
+\begin_inset Quotes erd
+\end_inset
+
+; this dictionary is now a valid symbolic description of grammar, in that
+ it can be use to parse new, previously-unseen sentences, and extract their
+ syntactic structure, as well as some fair amount of semantic content.
+\end_layout
+
+\begin_layout Standard
+The language-learning project contains two distinct implementations of the
+ above pipeline.
+ The first implementation, tightly coupled to the OpenCog AtomSpace, was
+ created by Linas (the author), but put on hold as various other intervening
+ priorities interceded.
+ Development of that pipeline has recently resumed.
+ A second implementation, termed 
+\begin_inset Quotes eld
+\end_inset
+
+the ULL Project
+\begin_inset Quotes erd
+\end_inset
+
+ was subsequently developed by a team lead by Anton Kolonin, including Andres
+ Suarez Madrigal and Alexei Glushchenko.
+ It is partly derived from the first implementation, but diverges in many
+ important ways.
+ In particular, it eschews the use of the AtomSpace, replacing it by a collectio
+n of ad-hoc text-file data formats and Python tools.
+ 
+\end_layout
+
+\begin_layout Standard
+This paper reports on early results from these two different systems.
+ It is structured as follows.
+ The first several sections review the status and datasets used by the author,
+ in his own pipeline.
+ As such, this becomes a bit like a laboratory notebook diary, making notes
+ of datasets in possession of the author, their names, their status, their
+ general characteristics.
+ The next section reviews some very early dictionaries that were produced
+ by the author.
+ They are highly preliminary: many important processing stages have not
+ been implemented, various shortcuts and hacks were applied to the stages
+ that do exist, and the evaluated dictionaries are just tiny.
+ 
+\end_layout
+
+\begin_layout Standard
+The last section reviews the ULL datasets.
+ These suggest not one, but two extremely important breakthroughs for the
+ project.
+ The first is that it seems like a method for tuning the learning pipeline
+ has been discovered, as well as an objective measure for the fidelity of
+ the pipeline.
+ In short, it seems that there is a way of validating that, when given a
+ fixed grammar, the pipeline preserves the structure of that grammar, despite
+ the steps 2-through-5 above.
+ That is, it seems that steps 2 through 5, when performed with some care
+ and diligence, preserve the structure of a grammar, and do not wreck it,
+ nor do they alter it into something else.
+ This is still a preliminary result, and needs additional validation.
+ But if it holds true, it is extremely important, as it allows the quality
+ of the 2-through-5 pipeline to be measured and tuned.
+ Once tuned, the pipeline can be trusted: whatever grammar goes in, that
+ is the grammar that comes out.
+ Thus, when an unknown grammar is put in, then whatever comes out must be
+ correct.
+\end_layout
+
+\begin_layout Standard
+A second breakthrough from the ULL datasets is that the resulting grammar
+ is relatively insensitive to step 1.
+ As long as the provisional parses have some accuracy above random chance,
+ then, by accumulating enough samples, the errors in the provisional parses
+ will cancel out.
+ This is as it should be in radio receivers, or any kind of statistical
+ sampling: The bigger the sample, the better the signal-to-noise ratio.
+ Although the provisional parses of step 1 are noisy and often incorrect,
+ they are good enough, when enough samples are collected.
+\end_layout
+
+\begin_layout Standard
+There are several minor results worth mentioning.
+ From the ULL datasets, it is clear that the Project Gutenberg tests provide
+ an inadequate sample of modern English.
+ From the Linas dictionaries, its clear that large sample size really makes
+ a difference; the Linas dictionaries, although tiny, inadequate and hacked,
+ trounce the ULL datasets when measured out-of-training-set.
+\end_layout
+
+\begin_layout Standard
+One last result is worth mentioning: an 
+\begin_inset Quotes eld
+\end_inset
+
+unknown word
+\begin_inset Quotes erd
+\end_inset
+
+ system, described below, appears to be quite effective in offering broad
+ coverage when new, unknown words are encountered in the test texts.
+ Due to Zipfian distributions and long tails, the overlap of the test-vocabulary
+ with the dictionary vocabulary is shockingly tiny.
+ Thus, an unknown-word mechanism is critical for providing reasonable coverage.
+\end_layout
+
+\end_body
+\end_document
