@@ -571,7 +571,9 @@
 ; The CUTOFF is used to make the ok-to-merge decision; if the similarity
 ; is greater than CUTOFF, then this returns #t else it returns #f.
 ;
-; This requires only a single trivial line of code ... but ...
+; The is effectively the same as saying
+;    (< CUTOFF (SIM-FUNC WORD-A WORD-B))
+; which is only a single trivial line of code ... but ...
 ; The below is a mass of print statements to show forward progress.
 ; The current infrastructure is sufficiently slow, that the prints are
 ; reassuring that the system is not hung.

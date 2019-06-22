@@ -19261,6 +19261,18 @@ In Vienna, Beethoven met someone who would later be greatly influenced by him: F
 
 http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ANY-dILEd-2019-05-09-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_36740C_2019-05-11_0007.4.0.dict
 
+==========
+Start work on info-sim.
+use langtest which contains ... 4K words, 26K sections
+-- (psa 'fetch-pairs) ; 7 seconds... great!
+-- (define pta (add-transpose-api psa))
+   (pta 'mmt-count (Word "he"))
+	(pta 'total-mmt-count)
+
+	(define pss (add-support-api psa))
+
+
+
 
 Evaluation TODO:
 * Fraction of words with null links.

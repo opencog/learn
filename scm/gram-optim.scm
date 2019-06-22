@@ -29,9 +29,10 @@
 ;
 ;     S = MI(g,s) - MI(g,t)
 ;
-; with MI as defined above. That is, we want to decompose `w=s+t` such
-; that the `s` component has the greatest possible MI with `g`, and the
-; remainder has the least-possible.
+; with MI as defined in `gram-classification.scm` (and elsewhere).
+; That is, we want to decompose `w=s+t` such that the `s` component has
+; the greatest possible MI with `g`, and the remainder has the
+; least-possible.
 ;
 ; A second possibility is to maximize
 ;
@@ -76,11 +77,46 @@
 ; decision. Uses the information-similarity between the
 ; disjunct-vectors only (for now!?), and not between the shapes.
 ;
+; Example usage
+;     (define pca (make-pseudo-cset-api))
+;     (define psa (add-pair-stars pca))
+;     (define mio (add-symmetric-mi-compute psa))
+;     (is-info-similar? mio 4.0 (Word "he") (Word "she"))
+;
 (define (is-info-similar? MIOBJ CUTOFF WORD-A WORD-B)
 
 	(define (get-info-sim wa wb) (MIOBJ 'mmt-fmi wa wb))
-	(is-similar? get-info-sim CUTOFF WORD-A WORD-B)
+
+	; To print an ad hoc progresss report, call is-similar?
+	; (is-similar? get-info-sim CUTOFF WORD-A WORD-B)
+	(define sim (get-info-sim WORD-A WORD-B))
+	(< CUTOFF sim)
+)
+
+; ---------------------------------------------------------------
+
+(define (foo LLOBJ)
+
+	(define stars-obj (add-pair-stars LLOBJ))
+	(define suppt-obj (add-support-api stars-obj))
+	(define trans-obj (add-transpose-api stars-obj))
+	(define symio-obj (add-symmetric-mi-compute trans-obj))
+
+	; Obtain a sorted list of all disjuncts, ordered from highest
+	; to lowest counts.
+	(define sorted-djs
+		(sort (stars-obj 'right-basis)
+			(lambda (da db)
+				(> (suppt-obj `left-count da) (suppt-obj `left-count db)))))
+
+
+
 )
 
 ; ---------------------------------------------------------------
 ; Example usage
+;
+; (define pca (make-pseudo-cset-api))
+; (define psa (add-pair-stars pca))
+; (define mio (add-symmetric-mi-compute psa))
+; (is-info-similar? mio 4.0 (Word "he") (Word "she"))
