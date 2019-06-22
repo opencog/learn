@@ -19222,8 +19222,37 @@ micro-fuzz-unk:
 0.445 0.595 0.491
 0.479 0.476 0.467
 
-
 115 vs 135
+
+Actress Whoopi Goldberg and singer Michael Jackson attended the ceremony
+
+
+../../link-grammar/parse/count.c:222
+#0  0x00007fa689d2c213 in find_table_pointer (ctxt=0x55ea149f7b00, lw=4,
+rw=6, 
+    le=0x0, re=0x55ea22126170, null_count=0)
+    at ../../link-grammar/parse/count.c:222
+#1  0x00007fa689d2c319 in table_lookup (ctxt=<optimized out>, 
+    lw=<optimized out>, rw=<optimized out>, le=<optimized out>, 
+    re=<optimized out>, null_count=<optimized out>)
+    at ../../link-grammar/parse/count.c:255
+#2  0x00007fa689d2d512 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=4, rw=rw@entry=6,
+le=0x0, 
+    re=0x55ea22126170, null_count=0, pex=0x55ea14729f80)
+    at ../../link-grammar/parse/extract-links.c:356
+#3  0x00007fa689d2dbc7 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=4, rw=rw@entry=9, 
+    le=0x55ea2202c810, re=re@entry=0x55ea22180d90, null_count=0, 
+    pex=0x55ea14729f80) at ../../link-grammar/parse/extract-links.c:483
+#4  0x00007fa689d2dab9 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=3, rw=rw@entry=9, 
+    le=0x55ea22019b10, re=re@entry=0x55ea22180d90, null_count=0, 
+    pex=0x55ea14729f80) at ../../link-grammar/parse/extract-links.c:547
+
 
 
 

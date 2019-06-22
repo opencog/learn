@@ -403,7 +403,9 @@
 		(define (do-compare-gc SENT)
 			(define (kill typ)
 				(for-each cog-extract-recursive (cog-get-atoms typ)))
-			(do-compare SENT)
+			(catch 'C++-EXCEPTION
+				(lambda () (do-compare SENT))
+				(lambda (key . args) #f))
 
 			; Cleanup most stuff, but not WordNodes, because
 			; they have to be saved in the "missing words" list.
