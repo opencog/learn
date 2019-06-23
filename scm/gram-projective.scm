@@ -409,9 +409,9 @@
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
-		(define (fraction WA WA) UNION-FRAC)
+		(define (fixed-frac WA WA) UNION-FRAC)
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project fixed-frac ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall

@@ -18582,6 +18582,10 @@ No MM^T data present
 No M^TM data present
 
 ==========
+createdb en_micro_rediscrim -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.5 4)
+==========
 Review meaning ... 
 why long pause after first Bingo! ? 
     partial answer: it hits postgres hard. Is it updating counts ??
