@@ -173,7 +173,8 @@
 (define (merge-project LLOBJ FRAC-FN ZIPF WA WB)
 "
   merge-project LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
-  grammatical class.  Return the merged class. This merges the
+  grammatical class.  Returns the merged class (a WordClassNode with
+  Sections on it, contaiing the merged counts). This merges the
   Sections; this does not merge connectors, nor does it merge shapes.
   See `cset-class.scm` for connector merging.
 
@@ -522,6 +523,7 @@
 			(pss (add-support-api psa))
 			(psu (add-support-compute psa))
 			(pmi (add-symmetric-mi-compute psa))
+			(ptc (add-transpose-compute psa))
 		)
 		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 		(define (mpred WORD-A WORD-B)
@@ -531,7 +533,15 @@
 			0.5)
 
 		(define (merge WORD-A WORD-B)
-			(merge-project mi-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project mi-fraction ZIPF WORD-A WORD-B))
+			; Need to recompute the marginals, in order for future
+			; MI evaluations to work correctly.  We also store this,
+			; so that restarts can see the correct values.  Recall
+			; that merge-project also updates storage...
+			(store-atom (ptc 'set-mmt-marginals WORD-A))
+			(store-atom (ptc 'set-mmt-marginals WORD-B))
+			(store-atom (ptc 'set-mmt-marginals cls))
+		)
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))

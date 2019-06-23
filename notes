@@ -18771,6 +18771,24 @@ restart, (gcs 'fetch-pairs)
 
 mv dict.db dict.db-micro-dissiest-unk
 
+==========
+createdb en_micro_disinfo -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-disc-info 3.0 4)
+
+Ooops -- Bingo! Dist=+inf.0 for class "was is" -- "he"
+duuude (WordClassNode "was is") =   0.0  and (WordNode "be") =2820944933.0
+duuuude xy=3006719756504542000.0 0.0 lo =+inf.0
+---------Bingo! Dist=+inf.0 for class "was is" -- "be"
+---- Remaining count =    0.0 for (WordNode "be")
+
+Need to create marginals for the post-merge ... (BTW, cosine???)
+i.e. need ...(trans-obj 'mmt-count word-class) to be correct...
+(annd the other two to be revised)
+add-transpose-api  -- transobj 'set-mmt-norms SUP CNT
+
+store-atom ...
+
 
 ==========
 createdb en_mini_discrim -T en_mini_marg
@@ -19277,6 +19295,7 @@ use langtest which contains ... 4K words, 26K sections
 
 	(define pss (add-support-api psa))
 
+make-disc-info
 
 
 
