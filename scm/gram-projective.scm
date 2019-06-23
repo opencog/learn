@@ -411,7 +411,15 @@
 
 		(define (fraction WA WA) UNION-FRAC)
 		(define (merge WORD-A WORD-B)
-			(merge-project pcos fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project fraction ZIPF WORD-A WORD-B))
+			; Need to recompute the marginals, in order for future
+			; cosine evaluations to work correctly.  We also store this,
+			; so that restarts can see the correct values.  Recall
+			; that merge-project also updates storage...
+			(store-atom (psu 'set-right-marginals WORD-A))
+			(store-atom (psu 'set-right-marginals WORD-B))
+			(store-atom (psu 'set-right-marginals cls))
+		)
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))
@@ -477,7 +485,15 @@
 			(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
 		(define (merge WORD-A WORD-B)
-			(merge-project cos-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project cos-fraction ZIPF WORD-A WORD-B))
+			; Need to recompute the marginals, in order for future
+			; cosine evaluations to work correctly.  We also store this,
+			; so that restarts can see the correct values.  Recall
+			; that merge-project also updates storage...
+			(store-atom (psu 'set-right-marginals WORD-A))
+			(store-atom (psu 'set-right-marginals WORD-B))
+			(store-atom (psu 'set-right-marginals cls))
+		)
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))
