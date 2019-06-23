@@ -14700,7 +14700,9 @@ Why are there fewer valuations?)
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
 
-STATUS: Good.
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 15 June 2019
 
 COMMENT ON DATABASE en_micro_fuzz IS
@@ -14797,7 +14799,9 @@ BUILD:
    Marginal build just like en_micro_fuzz_exp
    Will store 132775 csets
 
-STATUS: Good.
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_discrim IS
@@ -15080,7 +15084,9 @@ left-over junk from before.
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
 
-STATUS: Good.
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 17 June 2019
 
 COMMENT ON DATABASE en_mini_fuzz IS
@@ -18788,6 +18794,8 @@ i.e. need ...(trans-obj 'mmt-count word-class) to be correct...
 add-transpose-api  -- transobj 'set-mmt-norms SUP CNT
 
 store-atom ...
+
+add-pair-cosine-compute 'right-cosine
 
 
 ==========
