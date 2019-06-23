@@ -18585,6 +18585,8 @@ No M^TM data present
 createdb en_micro_rediscrim -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.5 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-23 21:47:38
+
 ==========
 Review meaning ... 
 why long pause after first Bingo! ? 
@@ -18800,6 +18802,13 @@ add-transpose-api  -- transobj 'set-mmt-norms SUP CNT
 store-atom ...
 
 add-pair-cosine-compute 'right-cosine
+
+(strftime "%c" (localtime (current-time)))
+duude got pairs len=4295 Sun 23 Jun 2019 10:21:36 PM UTC
+duude done merge Sun 23 Jun 2019 10:37:56 PM UTC
+(/ 4295 980.) == 4.38 sections/second ... why so slow?
+
+
 
 
 ==========

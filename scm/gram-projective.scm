@@ -300,8 +300,21 @@
 		(set! accum-rcnt (+ accum-rcnt wrc))
 	)
 
-	(for-each merge-section-pair (ptu 'right-stars (list WA WB)))
+	; This is what we want to do...
+	;   (for-each merge-section-pair (ptu 'right-stars (list WA WB)))
+	; But its so slow, we break out some stats...
+	;
+	; A list of pairs of sections to merge.
+	(define perls (ptu 'right-stars (list WA WB)))
+	(define start-time (get-internal-real-time))
+	(define junk (for-each merge-section-pair perls))
+	(define now (get-internal-real-time))
+	(define elapsed-time (* 1.0e-9 (- now start-time)))
+	(format #t "Merged ~A sections in ~5F secs; ~6F scts/sec\n"
+		(length perls) elapsed-time (/ (length perls) elapsed-time))
 
+
+	; Create and store MemberLinks
 	(if (eq? 'WordNode (cog-type WA))
 		(let ((ma (MemberLink WA wrd-class))
 				(mb (MemberLink WB wrd-class)))
