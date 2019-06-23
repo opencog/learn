@@ -411,7 +411,7 @@
 
 		(define (fixed-frac WA WB) UNION-FRAC)
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project fixed-frac ZIPF WORD-A WORD-B))
+			(define cls (merge-project pcos fixed-frac ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -481,11 +481,11 @@
 		; to the cosine between them. The more similar they are,
 		; the more they are merged together.
 		(define (cos-fraction WA WB)
-			(define cosi (COSOBJ 'right-cosine WA WB))
+			(define cosi (pcos 'right-cosine WA WB))
 			(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project cos-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project pcos cos-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -549,7 +549,7 @@
 			0.5)
 
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project mi-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-project pmi mi-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
