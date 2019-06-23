@@ -866,6 +866,23 @@
 	(gram-classify greedy-over-words (make-discrim COSINE ZIPF MIN-OBS))
 )
 
+(define-public (gram-classify-greedy-disc-info MI MIN-OBS)
+"
+  gram-classify-greedy-disc-info - Merge words into word-classes.
+
+  Same as `gram-classify-greedy-discrim` but hacked to use MI instead
+  of cosine.
+
+  MI should be the minimum MI acceptable to perform a merge on.
+  This is dataset dependent; currently, 3.0 is recommended.
+
+  MIN-OBS is the smallest number of observations of the word that
+  is acceptable; words with fewer observations will be ignored.
+"
+	(define ZIPF 4)
+	(gram-classify greedy-over-words (make-disc-info MI ZIPF MIN-OBS))
+)
+
 ; ---------------------------------------------------------------
 ; Example usage
 ;

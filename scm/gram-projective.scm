@@ -175,6 +175,9 @@
 ;
 ; * Discrim: use `merge-discrim` with min acceptable cosine = 0.5
 ;
+; * Info: use `merge-project` with hard-coded frac=0.3 and information
+;   distance with min acceptable MI=3
+;
 ; Actual measurements (see `grammar-report/grammar-report.pdf`) indicate
 ; that these are actually rather good parameter choices; and surprisingly,
 ; the `merge-discrim` works better than `merge-project`.
@@ -690,6 +693,63 @@
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
+		(define (merge WORD-A WORD-B)
+			(merge-disambig pcos CUTOFF ZIPF WORD-A WORD-B))
+
+		(define (is-small-margin? WORD)
+			(< (pss 'right-count WORD) MIN-CNT))
+
+		(define (is-small? WORD)
+			(< (psu 'right-count WORD) MIN-CNT))
+
+		; ------------------
+		; Methods on this class.
+		(lambda (message . args)
+			(case message
+				((merge-predicate)  (apply mpred args))
+				((merge-function)   (apply merge args))
+				((discard-margin?)  (apply is-small-margin? args))
+				((discard?)         (apply is-small? args))
+				((clobber)          (begin (psa 'clobber) (psu 'clobber)))
+				(else               (apply psa (cons message args)))
+			)))
+)
+
+; ---------------------------------------------------------------
+
+(define (make-disc-info CUTOFF ZIPF MIN-CNT)
+"
+  make-disc-info -- Do a \"discriminating\" merge, using MI for
+  similarity. This is sort-of a crazy way to merge for MI-based
+  similarity, but what the heck, an experiment for now, just to
+  see what happens.
+
+  Use `merge-project` with sigmoid taper of the union-merge.
+  This is the same as `merge-discrim` above, but using MI instead
+  of cosine similarity.
+
+  CUTOFF is the min acceptable MI, for words to be considered
+  mergable.
+
+  ZIPF is the smallest observation count, below which counts
+  will not be divided up, if a merge is performed.
+
+  MIN-CNT is the minimum count (l1-norm) of the observations of
+  disjuncts that a word is allowed to have, to even be considered.
+"
+	(let* ((pca (make-pseudo-cset-api))
+			(psa (add-dynamic-stars pca))
+			(pss (add-support-api psa))
+			(psu (add-support-compute psa))
+			(pmi (add-symmetric-mi-compute psa))
+			(pcos (add-pair-cosine-compute psa))
+		)
+		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
+		(define (mpred WORD-A WORD-B)
+			(is-similar? get-mi CUTOFF WORD-A WORD-B))
+
+		; It's kind-of weird to use a cosine here, but whatever,
+		; its an experiment, for now.
 		(define (merge WORD-A WORD-B)
 			(merge-disambig pcos CUTOFF ZIPF WORD-A WORD-B))
 

@@ -56,9 +56,6 @@
 ; -----------------
 ; Gut-sense intuition suggests these possible experiments:
 ;
-; * Info: use `merge-project` with hard-coded frac=0.3 and information
-;   distance with min acceptable MI=3
-;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
@@ -97,10 +94,11 @@
 
 (define (foo LLOBJ)
 
-	(define stars-obj (add-pair-stars LLOBJ))
-	(define suppt-obj (add-support-api stars-obj))
-	(define trans-obj (add-transpose-api stars-obj))
-	(define symio-obj (add-symmetric-mi-compute trans-obj))
+	(let* ((stars-obj (add-pair-stars LLOBJ))
+			(suppt-obj (add-support-api stars-obj))
+			(trans-obj (add-transpose-api stars-obj))
+			(symio-obj (add-symmetric-mi-compute trans-obj))
+		)
 
 	; Obtain a sorted list of all disjuncts, ordered from highest
 	; to lowest counts.
@@ -109,8 +107,7 @@
 			(lambda (da db)
 				(> (suppt-obj `left-count da) (suppt-obj `left-count db)))))
 
-
-
+	)
 )
 
 ; ---------------------------------------------------------------
