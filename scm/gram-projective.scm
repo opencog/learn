@@ -409,7 +409,7 @@
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
-		(define (fixed-frac WA WA) UNION-FRAC)
+		(define (fixed-frac WA WB) UNION-FRAC)
 		(define (merge WORD-A WORD-B)
 			(define cls (merge-project fixed-frac ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
