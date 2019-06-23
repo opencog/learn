@@ -128,25 +128,6 @@
 ; of the two is already a word-class, then the counts are simply moved
 ; from the word to the class.
 ;
-; merge-ortho
-; -----------
-; DEPRECATED.
-; The `merge-ortho` function computes the merged vector the same way as
-; the `merge-project` function; however, it adjusts counts on v_a and
-; v_b in a different way. What it does is to explicitly orthogonalize
-; so that the final v_a and v_b are orthogonal to v_merged.  The result
-; is probably very similar to `merge-project`, but not the same.  In
-; particular, the total number of observation counts in the system is
-; not preserved (which is surely a bad thing, since counts are
-; interpreted as probability-frequencies.)
-;
-; There's no good reason for choosing `merge-ortho` over `merge-project`,
-; and the broken probabilities is a good reason to reject `merge-ortho`.
-; It is currently here for historical reasons -- it got coded funky, and
-; that's that.  It should probably be eventually removed, when
-; experimentation is done with.
-;
-;
 ; merge-discrim
 ; -------------
 ; Built on the merge-project method, the FRAC is a sigmoid function,
@@ -344,207 +325,6 @@
 	wrd-class
 )
 
-; ---------------------------------------------------------------------
-
-(define (merge-ortho LLOBJ FRAC WA WB)
-"
-  DEPRECATED! Use merge-project instead!
-
-  merge-ortho FRAC WA WB - merge WA and WB into a grammatical class.
-  Return the merged class.
-
-  WA should be a WordNode or a WordClassNode.
-  WB is expected to be a WordNode.
-  FRAC should be a floating point number between zero and one,
-     indicating the fraction of a non-shared count to be used.
-     Setting this to 1.0 gives the sum of the union of supports;
-     setting this to 0.0 gives the sum of the intersection of supports.
-  LLOBJ is used to access counts on pairs.  Pairs are SectionLinks,
-     that is, are (word,disjunct) pairs wrapped in a SectionLink.
-
-  The merger of WA and WB are performed, using the 'orthogonal
-  merge' strategy. This is done like so. If WA and WB are both
-  WordNodes, then a WordClass is created, having both WA and WB as
-  members.  The counts on that word-class are the sum of the counts
-  on WA and WB. Next, the counts on WA and WB are adjusted, so that
-  only the orthogonal components are left (that is, the parts
-  orthogonal to the sum). Next, zero-clamping is applied, so that
-  any non-positive components are erased.
-
-  The counts are summed only if both counts are non-zero. Otherwise,
-  only a FRAC fraction of a single, unmatched count is transferred.
-
-  If WA is a WordClassNode, and WB is not, then WB is merged into
-  WA.
-"
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
-
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (cog-new-ctv 1 0 CNT)))
-
-	; Create a new word-class out of the two words.
-	; Concatenate the string names to get the class name.
-	; If WA is already a word-class, just use it as-is.
-	(define wrd-class
-		(if (eq? 'WordClassNode (cog-type WA)) WA
-			(WordClassNode (string-concatenate
-					(list (cog-name WA) " " (cog-name WB))))))
-
-	; Merge two sections into one, placing the result on the word-class.
-	; Given, given a pair of sections, sum the counts from each, and
-	; then place that count on a corresponding section on the word-class.
-	; Store the updated section to the database.
-	;
-	; One or the other sections can be null. If both sections are not
-	; null, then both are assumed to have exactly the same disjunct.
-	;
-	; This works fine for merging two words, or for merging
-	; a word and a word-class.  It even works for merging
-	; two word-classes.
-	;
-	; This is a fold-helper; the fold accumulates the length-squared
-	; of the merged vector.
-	(define (merge-section-pair SECT-PAIR LENSQ)
-		; The two word-sections to merge
-		(define lsec (first SECT-PAIR))
-		(define rsec (second SECT-PAIR))
-
-		; The counts on each, or zero.
-		(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
-		(define rcnt (if (null? rsec) 0 (LLOBJ 'get-count rsec)))
-
-		; Return #t if sect is a Word section, not a word-class section.
-		(define (is-word-sect? sect)
-			(eq? 'WordNode (cog-type (cog-outgoing-atom sect 0))))
-
-		; If the other count is zero, take only a FRAC of the count.
-		; But only if we are merging in a word, not a word-class;
-		; we never want to shrink the support of a word-class, here.
-		(define wlc (if
-				(and (null? rsec) (is-word-sect? lsec))
-				(* FRAC lcnt) lcnt))
-		(define wrc (if
-				(and (null? lsec) (is-word-sect? rsec))
-				(* FRAC rcnt) rcnt))
-
-		; Sum them.
-		(define cnt (+ wlc wrc))
-
-		; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
-		(if (< 0 cnt)
-			(let* (
-					; The disjunct. Both lsec and rsec have the same disjunct.
-					(seq (if (null? lsec) (cog-outgoing-atom rsec 1)
-							(cog-outgoing-atom lsec 1)))
-					; The merged word-class
-					(mrg (Section wrd-class seq))
-				)
-
-				; The summed counts
-				(set-count mrg cnt)
-				(store-atom mrg) ; save to the database.
-			))
-
-		; Return the accumulated sum-square length
-		(+ LENSQ (* cnt cnt))
-	)
-
-	; The length-squared of the merged vector.
-	(define lensq
-		(fold merge-section-pair 0.0 (ptu 'right-stars (list WA WB))))
-
-	; Given a WordClassNode CLS and a WordNode WRD, alter the
-	; counts on the disjuncts on WRD, so that they are orthogonal
-	; to CLS.  If the counts are negative, that word-disjunct pair
-	; is deleted (from the database as well as the atomspace).
-	; The updated counts are stored in the database.
-	;
-	(define (orthogonalize CLS WRD)
-
-		; Fold-helper to compute the dot-product between the WRD
-		; vector and the CLS vector.
-		(define (compute-dot-prod CLAPR DOT-PROD)
-			(define cla (first CLAPR))
-			(define wrd (second CLAPR))
-
-			; The counts on each, or zero.
-			(define cc (if (null? cla) 0 (LLOBJ 'get-count cla)))
-			(define wc (if (null? wrd) 0 (LLOBJ 'get-count wrd)))
-
-			(+ DOT-PROD (* cc wc))
-		)
-
-		; Compute the dot-product of WA and the merged class.
-		(define dot-prod
-			(fold compute-dot-prod 0.0 (ptu 'right-stars (list CLS WRD))))
-		(define unit-prod (/ dot-prod lensq))
-
-		; (format #t "sum ~A dot-prod=~A length=~A unit=~A\n"
-		;      WRD dot-prod lensq unit-prod)
-
-		; Alter the counts on the word so that they are orthogonal
-		; to the class. Assumes that the dot-product was previously
-		; computed, and also that the mean-square length of the
-		; class was also previously computed.
-		(define (ortho CLAPR)
-			(define cla (first CLAPR))
-			(define wrd (second CLAPR))
-
-			; The counts on each, or zero.
-			; Both cla and wrd are actually Sections.
-			(define cc (if (null? cla) 0 (LLOBJ 'get-count cla)))
-			(define wc (if (null? wrd) 0 (LLOBJ 'get-count wrd)))
-
-			; The orthogonal component.
-			(define orth (if (null? wrd) -999
-					(- wc (* cc unit-prod))))
-
-			; Update count on positive sections;
-			; Delete non-positive sections. The deletion is not just
-			; from the atomspace, but also the database backend!
-			(if (< 0 orth)
-				(set-count wrd orth)
-				(if (not (null? wrd))
-					(begin
-						; Set to 0 just in case the delete below can't happen.
-						(set-count wrd 0)
-						(cog-delete wrd))))
-
-			; Update the database.
-			(if (cog-atom? wrd) (store-atom wrd))
-
-			; (if (< 3 orth) (format #t "Large remainder: ~A\n" wrd))
-		)
-
-		; Compute the orthogonal components
-		(for-each ortho (ptu 'right-stars (list CLS WRD)))
-	)
-
-	(if (eq? 'WordNode (cog-type WA))
-		(begin
-
-			; Put the two words into the new word-class.
-			(store-atom (MemberLink WA wrd-class))
-			(store-atom (MemberLink WB wrd-class))
-
-			(orthogonalize wrd-class WA)
-			(orthogonalize wrd-class WB))
-
-		; If WA is not a WordNode, assume its a WordClassNode.
-		; The process is similar, but slightly altered.
-		; We assume that WB is a WordNode, but perform no safety
-		; checking to verify this.
-		(begin
-			; Add WB to the mrg-class (which is WA already)
-			(store-atom (MemberLink WB wrd-class))
-
-			; Redefine WB to be orthogonal to the word-class.
-			(orthogonalize wrd-class WB))
-	)
-	wrd-class
-)
-
 ; ---------------------------------------------------------------
 ; Is it OK to merge WORD-A and WORD-B into a common vector?
 ;
@@ -722,13 +502,11 @@
 (define (make-disinfo CUTOFF ZIPF MIN-CNT)
 "
   make-disinfo -- Do a \"discriminating\" merge, using MI for
-  similarity. This is sort-of a crazy way to merge for MI-based
-xxxxxxxxxxx
+  similarity.
 
-  Use `merge-project` with sigmoid taper of the union-merge.
+  Use `merge-project` with linear taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
-xxxxxxxxx
 
   CUTOFF is the min acceptable MI, for words to be considered
   mergable.
