@@ -107,6 +107,7 @@
 			(lambda (da db)
 				(> (suppt-obj `left-count da) (suppt-obj `left-count db)))))
 
+(format #t "foo")
 	)
 )
 

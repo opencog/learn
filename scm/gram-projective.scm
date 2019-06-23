@@ -160,7 +160,7 @@
 ;
 ; A reasonable strategy would seem to bee to take
 ;
-;   FRAC = (cos - cos_min) / (1.0 = cos_min)
+;   FRAC = (cos - cos_min) / (1.0 - cos_min)
 ;
 ; where cos_min is the minimum cosine acceptable, for any kind of
 ; merging to be performed.
@@ -189,19 +189,20 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-project LLOBJ FRAC ZIPF WA WB)
+(define (merge-project LLOBJ FRAC-FN ZIPF WA WB)
 "
-  merge-project LLOBJ FRAC ZIPF WA WB - merge WA and WB into a grammatical
-  class.  Return the merged class. This merges the Sections, this does not
-  merge connectors, nor does it merge shapes.  See `cset-class.scm` for
-  connector merging.
+  merge-project LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
+  grammatical class.  Return the merged class. This merges the
+  Sections; this does not merge connectors, nor does it merge shapes.
+  See `cset-class.scm` for connector merging.
 
   WA should be a WordNode or a WordClassNode.
   WB is expected to be a WordNode.
-  FRAC should be a floating point number between zero and one,
-     indicating the fraction of a non-shared count to be used.
-     Setting this to 1.0 gives the sum of the union of supports;
-     setting this to 0.0 gives the sum of the intersection of supports.
+  FRAC-FN should be a function taking WA and WB as arguments, and
+     returning a floating point number between zero and one, indicating
+     the fraction of a non-shared count to be used.
+     Returning 1.0 gives the sum of the union of supports;
+     Returning 0.0 gives the sum of the intersection of supports.
   ZIPF is the smallest observation count, below which counts
      will not be divided up, if a marge is performed.
   LLOBJ is used to access counts on pairs.  Pairs are SectionLinks,
@@ -265,12 +266,13 @@
 		; If the other count is zero, take only a FRAC of the count.
 		; But only if we are merging in a word, not a word-class;
 		; we never want to shrink the support of a word-class, here.
+		(define frac (FRAC-FN WA WB))
 		(define wlc (if
 				(and (null? rsec) (is-word-sect? lsec) (< ZIPF lcnt))
-				(* FRAC lcnt) lcnt))
+				(* frac lcnt) lcnt))
 		(define wrc (if
 				(and (null? lsec) (is-word-sect? rsec) (< ZIPF rcnt))
-				(* FRAC rcnt) rcnt))
+				(* frac rcnt) rcnt))
 
 		; Sum them.
 		(define cnt (+ wlc wrc))
@@ -543,24 +545,6 @@
 	wrd-class
 )
 
-; ---------------------------------------------------------------------
-
-(define (merge-disambig COSOBJ COS-MIN ZIPF WA WB)
-"
-  merge-disambig COS-MIN WA WB - merge WB into WA, returning the merged
-  class.  If WA is a word, and not a class, then a new class is created
-  and returned. The counts on both WA and WB are altered.
-
-  COSOBJ is used to compute the cosine between WA and WB, and thus
-     in needs to provide the 'right-cosine method.
-
-  This is built on `merge-project`. See documentation for that.
-"
-	(define cosi (COSOBJ 'right-cosine WA WB))
-	(define frac (/ (- cosi COS-MIN)  (- 1.0 COS-MIN)))
-	(merge-project COSOBJ frac ZIPF WA WB)
-)
-
 ; ---------------------------------------------------------------
 ; Is it OK to merge WORD-A and WORD-B into a common vector?
 ;
@@ -644,8 +628,9 @@
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
+		(define (fraction WA WA) UNION-FRAC)
 		(define (merge WORD-A WORD-B)
-			(merge-project pcos UNION-FRAC ZIPF WORD-A WORD-B))
+			(merge-project pcos fraction ZIPF WORD-A WORD-B))
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))
@@ -670,9 +655,19 @@
 
 (define (make-discrim CUTOFF ZIPF MIN-CNT)
 "
-  make-discrim -- Do a \"discriminating\" merge.
+  make-discrim -- Do a \"discriminating\" merge. When a word is to be
+  merged into a word class, the fraction to be merged will depend on
+  the cosine angle between the two. Effectively, there is a sigmoid
+  taper between the union-merge and the intersection-merge. The more
+  similar they are, the more of a union merge; the less similar the
+  more of an intersection merge.
 
-  Use `merge-project` with sigmoid taper of the union-merge.
+  The idea is that if two words are highly similar, they really should
+  be taken together. If they are only kind-of similar, then maybe one
+  word has multiple senses, and we only want to merge the fraction that
+  shares a common word-sense, and leave the other word-sense out of it.
+
+  Built on top of `merge-project`, using a sigmoid taper.
 
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
@@ -693,8 +688,15 @@
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
+		; The fractional amount to merge will be proportional
+		; to the cosine between them. The more similar they are,
+		; the more they are merged together.
+		(define (cos-fraction WA WB)
+			(define cosi (COSOBJ 'right-cosine WA WB))
+			(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
+
 		(define (merge WORD-A WORD-B)
-			(merge-disambig pcos CUTOFF ZIPF WORD-A WORD-B))
+			(merge-project cos-fraction ZIPF WORD-A WORD-B))
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))
@@ -717,16 +719,16 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-disc-info CUTOFF ZIPF MIN-CNT)
+(define (make-disinfo CUTOFF ZIPF MIN-CNT)
 "
-  make-disc-info -- Do a \"discriminating\" merge, using MI for
+  make-disinfo -- Do a \"discriminating\" merge, using MI for
   similarity. This is sort-of a crazy way to merge for MI-based
-  similarity, but what the heck, an experiment for now, just to
-  see what happens.
+xxxxxxxxxxx
 
   Use `merge-project` with sigmoid taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
+xxxxxxxxx
 
   CUTOFF is the min acceptable MI, for words to be considered
   mergable.
@@ -742,16 +744,16 @@
 			(pss (add-support-api psa))
 			(psu (add-support-compute psa))
 			(pmi (add-symmetric-mi-compute psa))
-			(pcos (add-pair-cosine-compute psa))
 		)
 		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-mi CUTOFF WORD-A WORD-B))
 
-		; It's kind-of weird to use a cosine here, but whatever,
-		; its an experiment, for now.
+		(define (mi-fraction WA WB)
+			0.5)
+
 		(define (merge WORD-A WORD-B)
-			(merge-disambig pcos CUTOFF ZIPF WORD-A WORD-B))
+			(merge-project mi-fraction ZIPF WORD-A WORD-B))
 
 		(define (is-small-margin? WORD)
 			(< (pss 'right-count WORD) MIN-CNT))
@@ -802,7 +804,8 @@
 ; (is-cosine-similar? pcos (Word "city") (Word "village"))
 ;
 ; Perform the actual merge
-; (merge-project pcos 0.3 4 (Word "city") (Word "village"))
+; (define (frac WA WB) 0.3)
+; (merge-project pcos frac 4 (Word "city") (Word "village"))
 ;
 ; Verify presence in the database:
 ; select count(*) from atoms where type=22;

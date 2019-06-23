@@ -854,7 +854,8 @@
   `gram-classify-pair-wise` and `gram-classify-agglo` variants. Should
   be faster and more accurate than `gram-classify-diag-blocks`.
 
-  Uses the \"discrim\" merge algo: cosine=0.50, frac=variable
+  Uses the \"discriminating\" merge algo: cosine, frac=sigmoid
+  See `make-discrim` for detailed documentation.
 
   COSINE should be the minimum cosine angle acceptable to perform
   a merge on. Currently, 0.5 is recommended.
@@ -866,12 +867,13 @@
 	(gram-classify greedy-over-words (make-discrim COSINE ZIPF MIN-OBS))
 )
 
-(define-public (gram-classify-greedy-disc-info MI MIN-OBS)
+(define-public (gram-classify-greedy-disinfo MI MIN-OBS)
 "
-  gram-classify-greedy-disc-info - Merge words into word-classes.
+  gram-classify-greedy-disinfo - Merge words into word-classes.
 
-  Same as `gram-classify-greedy-discrim` but hacked to use MI instead
-  of cosine.
+  Similar to `gram-classify-greedy-discrim`, but uses MI instead
+  of cosine to perform merge decisions and determine a merge fraction.
+  See `make-disinfo` for detailed documentation.
 
   MI should be the minimum MI acceptable to perform a merge on.
   This is dataset dependent; currently, 3.0 is recommended.
@@ -880,7 +882,7 @@
   is acceptable; words with fewer observations will be ignored.
 "
 	(define ZIPF 4)
-	(gram-classify greedy-over-words (make-disc-info MI ZIPF MIN-OBS))
+	(gram-classify greedy-over-words (make-disinfo MI ZIPF MIN-OBS))
 )
 
 ; ---------------------------------------------------------------
