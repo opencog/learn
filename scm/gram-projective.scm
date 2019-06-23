@@ -220,6 +220,9 @@
 	(define accum-lcnt 0)
 	(define accum-rcnt 0)
 
+	; Fraction of non-overlapping disjuncts to merge
+	(define frac-to-merge (FRAC-FN WA WB))
+
 	; Merge two sections into one, placing the result on the word-class.
 	; Given a pair of sections, sum the counts from each, and then place
 	; that count on a corresponding section on the word-class.  Store the
@@ -248,13 +251,12 @@
 		; If the other count is zero, take only a FRAC of the count.
 		; But only if we are merging in a word, not a word-class;
 		; we never want to shrink the support of a word-class, here.
-		(define frac (FRAC-FN WA WB))
 		(define wlc (if
 				(and (null? rsec) (is-word-sect? lsec) (< ZIPF lcnt))
-				(* frac lcnt) lcnt))
+				(* frac-to-merge lcnt) lcnt))
 		(define wrc (if
 				(and (null? lsec) (is-word-sect? rsec) (< ZIPF rcnt))
-				(* frac rcnt) rcnt))
+				(* frac-to-merge rcnt) rcnt))
 
 		; Sum them.
 		(define cnt (+ wlc wrc))
