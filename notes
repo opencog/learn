@@ -18585,9 +18585,24 @@ No M^TM data present
 createdb en_micro_rediscrim -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.5 4)
---- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 02:58:53
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 05:10:25
+--- To-do=0 ncls=124 sing=292 nredo=1303 2019-06-24 08:38:22
+Three & half hours ... 
 
-(set-right-marginals (WordNode "in")
+(sql-open "postgres:///en_micro_rediscrim_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
 
 
 ==========
@@ -18847,14 +18862,60 @@ which is wrong...
 assign-word-to-class is returning ... ohh bug ...
 
 Argh... (WordClassNode "the a") (WordNode "from")
+(mio 'mmt-fmi (WordClassNode "the a") (WordNode "from"))
++nan.0+4.532360141827193i
+
+(pti 'mmt-count (WordNode "from"))
+(cog-incoming-size-by-type (WordNode "from") 'Section) 
+Ahhh! all gone!
 
 
 ==========
 createdb en_micro_disinfo -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-disinfo 2.0 4)
---- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 02:41:26 
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 05:08:28
+--- To-do=0 ncls=34 sing=57 nredo=1499 2019-06-24 09:02:15
+Four hours ...
 
+---------Bingo! Dist=2.0813 for word "of" -- "in"
+---------Bingo! Dist=2.0510 for class "of in" -- "at"
+---------Bingo! Dist=2.1541 for class "of in" -- "on"
+---------Bingo! Dist=2.1868 for class "of in" -- "from"
+---------Bingo! Dist=2.0750 for class "of in" -- "by"
+---------Bingo! Dist=2.0555 for class "of in" -- "into"
+---------Bingo! Dist=2.1758 for class "of in" -- "upon"
+---------Bingo! Dist=2.1062 for class "of in" -- "through"
+
+I assume the appallingly low MI is due to ... micro??
+
+---------Bingo! Dist=2.7938 for word "the" -- "a"
+---------Bingo! Dist=3.5941 for class "the a" -- "his"
+---------Bingo! Dist=3.3722 for class "the a" -- "this"
+
+(sql-open "postgres:///en_micro_disinfo_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 57 singleton word classes
+Wow!
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+shutdown, restart
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+(export-csets gcs "dict.db-micro-disinfo" "EN_us")
+
+==========
+createdb en_micro_disinfo3 -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-disinfo 3.0 4)
 
 
 
@@ -19304,22 +19365,25 @@ Maybe, I'm not sure. 8 vs 7
 
 micro-fuzz:
 Prec  recall  F1
-0.705 0.627 0.534
-0.577 0.545 0.473
-0.371 0.399 0.485
-0.407 0.566 0.466
-0.457 0.527 0.466
+0.705 0.473 0.566
+0.627 0.371 0.466
+0.534 0.399 0.457
+0.577 0.485 0.527
+0.545 0.407 0.466
 
 micro-fuzz-unk:
-0.660 0.555 0.502
-0.484 0.492 0.541
-0.440 0.459 0.468
-0.445 0.595 0.491
-0.479 0.476 0.467
+0.660 0.541 0.595
+0.555 0.440 0.491
+0.502 0.459 0.479
+0.484 0.468 0.476
+0.492 0.445 0.467
+
 
 115 vs 135
 
 Actress Whoopi Goldberg and singer Michael Jackson attended the ceremony
+
+
 
 
 ../../link-grammar/parse/count.c:222
@@ -19370,10 +19434,11 @@ make-disc-info
 Evaluation TODO:
 * Fraction of words with null links.
 * Number of linkages found ...  (looking for overflow)
-* Fraction correct S,O links (DONE)
-* Why hang? Why not popping timeout?
 
 TODO:
+* Words with less than 1% of orig counts should be canned.
+* Why isn't "Remaining count" called on Greedy-checking and done-list?
+
 * MI is wrong, given how we ad-hoc export to gram classes.
 
 * Words that are in word classes, but still have left-over-counts
@@ -19390,3 +19455,5 @@ DONE:
 * fix filter-api (DONE)
 * Matrix summary report to print present of MMT (DONE-ish)
 * cut low-obs words from disjunct sets (DONE - micro and mini)
+* Fraction correct S,O links (DONE)
+* Why hang? Why not popping timeout? (Bug, DONE)
