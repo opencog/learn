@@ -405,6 +405,8 @@
 	(define min-greedy 200)
 	(define scan-multiplier 4)
 
+	(define supp-obj (add-support-compute MERGER))
+
 	; How many words have been classified?
 	(define (num-classified-words)
 		(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
@@ -416,12 +418,11 @@
 			(+ (num-classified-words) (length FAKE-CLS-LST)))))
 
 	; If only a stub of a word is left, throw it away.
-	(define (keep WORD)
-		(define old-count ((add-support-api MERGER) 'right-count WORD))
+	(define (keep WORD OLD-COUNT)
 		(MERGER 'clobber)
-		(format #t "---- Remaining count = ~6F of ~6F for ~A"
-			((add-support-compute MERGER) 'right-count WORD)
-			old-count (cog-name WORD))
+		(format #t "---- Remaining count = ~6F of ~6F for \"~A\"\n"
+			(supp-obj 'right-count WORD) OLD-COUNT (cog-name WORD))
+
 		(if (MERGER 'discard? WORD) '() (list WORD)))
 
 	(format #t "--- To-do=~A ncls=~A sing=~A nredo=~A ~A -- \"~A\" ---\n"
@@ -435,6 +436,7 @@
 	(if (null? WRD-LST) TRUE-CLS-LST
 		(let* ((wrd (car WRD-LST))
 				(rest (cdr WRD-LST))
+				(old-count (supp-obj 'right-count WORD))
 				; Attempt to assign the word to an existing class.
 				(cls (assign-word-to-class MERGER wrd TRUE-CLS-LST)))
 
@@ -442,7 +444,7 @@
 			; recurse.  Place the word onto the done-list.
 			(if (eq? 'WordClassNode (cog-type cls))
 				(greedy-grow MERGER TRUE-CLS-LST FAKE-CLS-LST
-					(append! DONE-LST (keep wrd)) rest)
+					(append! DONE-LST (keep wrd old-count)) rest)
 
 				; If the word was not assigned to an existing class,
 				; see if it can be merged with any of the singleton
@@ -498,7 +500,7 @@
 								; The new done-list is probably a lot longer
 								(append! DONE-LST
 									(got-done FAKE-CLS-LST new-cls)
-									(keep wrd)
+									(keep wrd old-count)
 									(got-done short-list new-cls))
 
 								; The new todo list is probably a lot shorter
