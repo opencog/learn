@@ -18585,7 +18585,10 @@ No M^TM data present
 createdb en_micro_rediscrim -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-discrim 0.5 4)
---- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-23 21:47:38
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 02:58:53
+
+(set-right-marginals (WordNode "in")
+
 
 ==========
 Review meaning ... 
@@ -18842,6 +18845,9 @@ duuude wtf marga=   0.0 for (ListLink
 
 which is wrong...
 assign-word-to-class is returning ... ohh bug ...
+
+Argh... (WordClassNode "the a") (WordNode "from")
+
 
 ==========
 createdb en_micro_disinfo -T en_micro_marg

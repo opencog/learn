@@ -432,6 +432,8 @@
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
 			; that merge-project also updates storage...
+			; Clobber first, since Sections were probably deleted.
+			(psa 'clobber)
 			(store-atom (psu 'set-right-marginals WORD-A))
 			(store-atom (psu 'set-right-marginals WORD-B))
 			(store-atom (psu 'set-right-marginals cls))
@@ -508,6 +510,8 @@
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
 			; that merge-project also updates storage...
+			; Clobber first, since Sections were probably deleted.
+			(psa 'clobber)
 			(store-atom (psu 'set-right-marginals WORD-A))
 			(store-atom (psu 'set-right-marginals WORD-B))
 			(store-atom (psu 'set-right-marginals cls))
@@ -594,6 +598,8 @@
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
 			; that merge-project also updates storage...
+			; Clobber first, since Sections were probably deleted.
+			(dsa 'clobber)
 			(psu 'set-right-marginals WORD-A)
 			(psu 'set-right-marginals WORD-B)
 			(psu 'set-right-marginals cls)
