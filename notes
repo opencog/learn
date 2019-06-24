@@ -18808,6 +18808,17 @@ duude got pairs len=4295 Sun 23 Jun 2019 10:21:36 PM UTC
 duude done merge Sun 23 Jun 2019 10:37:56 PM UTC
 (/ 4295 980.) == 4.38 sections/second ... why so slow?
 
+(mio 'mmt-fmi (Word "this") (Word "this")) << 4.034011726028252
+
+(suppt-obj 'right-length (Word "this")) << 8404.05687748483
+(trans-obj 'mmt-count (Word "this")) << 1327823651.0
+(trans-obj 'total-mmt-count) << 408941670158.0
+
+(/ (* 8404.05687748483 8404.05687748483 408941670158.0) (* 1327823651.0 1327823651.0))
+
+16.381683554400546
+(/ (log 16.381683554400546) (log 2)) << 4.034011726028254 SO OK, that
+works.
 
 
 
