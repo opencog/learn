@@ -312,9 +312,8 @@
 	(define junk (for-each merge-section-pair perls))
 	(define now (get-internal-real-time))
 	(define elapsed-time (* 1.0e-9 (- now start-time)))
-	(format #t "Merged ~A sections in ~5F secs; ~6F scts/sec\n"
+	(format #t "---------Merged ~A sections in ~5F secs; ~6F scts/sec\n"
 		(length perls) elapsed-time (/ (length perls) elapsed-time))
-
 
 	; Create and store MemberLinks
 	(if (eq? 'WordNode (cog-type WA))
@@ -554,14 +553,33 @@
 			(pss (add-support-api psa))
 			(psu (add-support-compute psa))
 			(pmi (add-symmetric-mi-compute psa))
+			(pti (add-transpose-api psa))
 			(ptc (add-transpose-compute psa))
 		)
 		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-mi CUTOFF WORD-A WORD-B))
 
+		(define total-mmt-count (pti 'total-mmt-count))
+		(define ol2 (/ 1.0 (log 2.0)))
+		(define (log2 x) (* (log x) ol2))
+
+		; The self-MI is just the same as (get-mi wrd wrd).
+		; The below is faster than calling `get-mi`; it uses
+		; cached values. Still, it would be better if we
+		; stored a cached self-mi value.
+		(define (get-self-mi wrd)
+			(define len (pss 'right-length wrd))
+			(define mmt (pti 'mmt-count wrd))
+			(log2 (/ (* len len total-mmt-count) (* mmt mmt))))
+
+		; The fraction to merge is a linear ramp, starting at zero
+		; at the cutoff, and ramping up to one when these are very
+		; similar.
 		(define (mi-fraction WA WB)
-			0.5)
+			(define milo (min (get-self-mi WA) (get-self-mi WB)))
+			(define fmi (get-mi WA WB))
+			(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
 		(define (merge WORD-A WORD-B)
 			(define cls (merge-project pmi mi-fraction ZIPF WORD-A WORD-B))
