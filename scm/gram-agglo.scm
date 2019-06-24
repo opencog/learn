@@ -466,10 +466,10 @@
 						; so as to not blow out performance. See if any of
 						; the previously-assigned words might also go into the
 						; new class. And then recurse.
-						(let* ((short-list (take rest
-									(min (num-to-scan) (length rest)))))
+						(let* ((rest-len (min (num-to-scan) (length rest)))
+								(short-list (take rest rest-len)))
 							(format #t "--- Greedy-checking next ~A items\n"
-								(min (num-to-scan) (length rest)))
+								rest-len)
 							(assign-expand-class MERGER new-cls short-list)
 							(format #t "--- Checking the done-list len=~A\n"
 								(length DONE-LST))

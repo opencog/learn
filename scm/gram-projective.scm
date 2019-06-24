@@ -424,6 +424,8 @@
 			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
 		(define (fixed-frac WA WB) UNION-FRAC)
+
+		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
 			(define cls (merge-project pcos fixed-frac ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
@@ -433,6 +435,7 @@
 			(store-atom (psu 'set-right-marginals WORD-A))
 			(store-atom (psu 'set-right-marginals WORD-B))
 			(store-atom (psu 'set-right-marginals cls))
+			cls
 		)
 
 		(define (is-small-margin? WORD)
@@ -498,6 +501,7 @@
 			(define cosi (pcos 'right-cosine WA WB))
 			(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
+		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
 			(define cls (merge-project pcos cos-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
@@ -507,6 +511,7 @@
 			(store-atom (psu 'set-right-marginals WORD-A))
 			(store-atom (psu 'set-right-marginals WORD-B))
 			(store-atom (psu 'set-right-marginals cls))
+			cls
 		)
 
 		(define (is-small-margin? WORD)
@@ -556,6 +561,7 @@
 			(pti (add-transpose-api dsa))
 			(ptc (add-transpose-compute dsa))
 		)
+
 		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 		(define (mpred WORD-A WORD-B)
 			(is-similar? get-mi CUTOFF WORD-A WORD-B))
@@ -581,6 +587,7 @@
 			(define fmi (get-mi WA WB))
 			(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
+		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
 			(define cls (merge-project pmi mi-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
@@ -593,6 +600,7 @@
 			(store-atom (ptc 'set-mmt-marginals WORD-A))
 			(store-atom (ptc 'set-mmt-marginals WORD-B))
 			(store-atom (ptc 'set-mmt-marginals cls))
+			cls
 		)
 
 		(define (is-small-margin? WORD)

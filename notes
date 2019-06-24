@@ -18786,7 +18786,7 @@ mv dict.db dict.db-micro-dissiest-unk
 ==========
 createdb en_micro_disinfo -T en_micro_marg
 (psa 'fetch-pairs)
-(gram-classify-greedy-disinfo 3.0 4)
+(gram-classify-greedy-disinfo 2.0 4)
 
 Ooops -- Bingo! Dist=+inf.0 for class "was is" -- "he"
 duuude (WordClassNode "was is") =   0.0  and (WordNode "be") =2820944933.0
@@ -18822,6 +18822,27 @@ works.
 
 hang on ...
 (define mio (add-symmetric-mi-compute psa))
+(mio 'mmt-fmi (WordClass "it he") (Word "but"))
+
+it he but
+
+--- Greedy-checking next 200 items
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- with
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- I
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- ;
+
+Ahhh:
+duuude wtf marga=   0.0 for (ListLink
+   (WordClassNode ", ;")
+   (AnyNode "cset-disjunct")
+)
+
+which is wrong...
+assign-word-to-class is returning ... ohh bug ...
+
 
 
 
