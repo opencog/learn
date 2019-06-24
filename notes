@@ -18917,6 +18917,13 @@ createdb en_micro_disinfo3 -T en_micro_marg
 (psa 'fetch-pairs)
 (gram-classify-greedy-disinfo 3.0 4)
 
+--- To-do=0 ncls=70 sing=209 nredo=1381 2019-06-24 17:29:54 
+Created 209 singleton word classes
+
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+(export-csets gcs "dict.db-micro-disinfo3" "EN_us")
+
 
 
 ==========
@@ -19377,6 +19384,20 @@ micro-fuzz-unk:
 0.502 0.459 0.479
 0.484 0.468 0.476
 0.492 0.445 0.467
+
+mini-fuzz
+0.710 0.480 0.573
+0.580 0.376 0.456
+0.540 0.399 0.459
+0.504 0.362 0.421
+0.531 0.392 0.451
+
+micro-discrim:
+0.679 0.542 0.603 
+0.595 0.412 0.487
+0.529 0.476 0.501
+0.565 0.534 0.549
+0.546 0.490 0.522
 
 
 115 vs 135
