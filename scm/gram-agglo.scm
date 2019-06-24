@@ -436,7 +436,7 @@
 	(if (null? WRD-LST) TRUE-CLS-LST
 		(let* ((wrd (car WRD-LST))
 				(rest (cdr WRD-LST))
-				(old-count (supp-obj 'right-count WORD))
+				(old-count (supp-obj 'right-count wrd))
 				; Attempt to assign the word to an existing class.
 				(cls (assign-word-to-class MERGER wrd TRUE-CLS-LST)))
 
