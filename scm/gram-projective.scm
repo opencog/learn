@@ -587,6 +587,9 @@
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
 			; that merge-project also updates storage...
+			(psu 'set-right-marginals WORD-A)
+			(psu 'set-right-marginals WORD-B)
+			(psu 'set-right-marginals cls)
 			(store-atom (ptc 'set-mmt-marginals WORD-A))
 			(store-atom (ptc 'set-mmt-marginals WORD-B))
 			(store-atom (ptc 'set-mmt-marginals cls))

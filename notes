@@ -18786,7 +18786,7 @@ mv dict.db dict.db-micro-dissiest-unk
 ==========
 createdb en_micro_disinfo -T en_micro_marg
 (psa 'fetch-pairs)
-(gram-classify-greedy-disc-info 3.0 4)
+(gram-classify-greedy-disinfo 3.0 4)
 
 Ooops -- Bingo! Dist=+inf.0 for class "was is" -- "he"
 duuude (WordClassNode "was is") =   0.0  and (WordNode "be") =2820944933.0
@@ -18796,7 +18796,7 @@ duuuude xy=3006719756504542000.0 0.0 lo =+inf.0
 
 Need to create marginals for the post-merge ... (BTW, cosine???)
 i.e. need ...(trans-obj 'mmt-count word-class) to be correct...
-(annd the other two to be revised)
+(and the other two to be revised)
 add-transpose-api  -- transobj 'set-mmt-norms SUP CNT
 
 store-atom ...
@@ -18819,6 +18819,9 @@ duude done merge Sun 23 Jun 2019 10:37:56 PM UTC
 16.381683554400546
 (/ (log 16.381683554400546) (log 2)) << 4.034011726028254 SO OK, that
 works.
+
+hang on ...
+(define mio (add-symmetric-mi-compute psa))
 
 
 
