@@ -100,7 +100,7 @@ Linas Vepstas
 \end_layout
 
 \begin_layout Date
-Version of 21 June 2019
+Version of 24 June 2019
 \end_layout
 
 \begin_layout Abstract
@@ -12053,6 +12053,25 @@ The basic corpus contains sentences that took excessive times to parse with
  this dictionary; as a result, those sentences were skipped.
  The second, smaller number indicates the number of setences that did not
  time-out.
+ Compared to 
+\emph on
+mini-discrim
+\emph default
+ (same dictionary, but skipping sentences with unknown words), this is a
+ wash – precision is mostly lower, just a bit, recall is mostly higher,
+ just a bit, and F1 is about the same, varying.
+ Conclusion: unknown word guessing does not hurt, and sometimes helps.
+ Compared to 
+\emph on
+micro-discrim-unk
+\emph default
+, (same algorithm applied to a much smaller dataset; both use unknown-word-guess
+ing) this has a slightly better precision, slightly lower recall, and F1
+ is the same or slightly worse.
+ Apparently, unknown-word-guessing with a small vocabulary is pretty much
+ as good as that for a bigger vocabulary (and neither are terribly good).
+ So, increasing vocabulary size, in and of itself, does not offer any benefit,
+ with the algos as they currently stand.
 \end_layout
 
 \begin_layout Standard
@@ -12257,7 +12276,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-579
+579/491
 \end_layout
 
 \end_inset
@@ -12266,7 +12285,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+55%
 \end_layout
 
 \end_inset
@@ -12275,7 +12294,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.581
 \end_layout
 
 \end_inset
@@ -12284,7 +12303,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.462
 \end_layout
 
 \end_inset
@@ -12293,7 +12312,7 @@ basic
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.515
 \end_layout
 
 \end_inset
@@ -18570,7 +18589,9 @@ fuzz
 Larger dictionaries with larger vocabularies provide only mixed results.
  The scores are roughly the same, which is surprising.
  Tiny vocabularies with effective unknown-word guessing are mostly just
- as good as larger vocabularies (and unknown word guessing).
+ as good as larger vocabularies (with unknown word guessing).
+ This indicates that the current algos are not effectively extracting any
+ extra info from the larger vocabularies!
 \end_layout
 
 \begin_layout Itemize

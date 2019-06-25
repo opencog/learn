@@ -18925,7 +18925,6 @@ Created 209 singleton word classes
 (export-csets gcs "dict.db-micro-disinfo3" "EN_us")
 
 
-
 ==========
 createdb en_mini_discrim -T en_mini_marg
 (gram-classify-greedy-discrim 0.5 4)
@@ -19398,6 +19397,22 @@ micro-discrim:
 0.529 0.476 0.501
 0.565 0.534 0.549
 0.546 0.490 0.522
+
+mini-discrim
+0.658 0.538 0.592
+0.590 0.452 0.512
+0.522 0.469 0.494
+0.516 0.475 0.495
+0.532 0.475 0.502
+
+micro-discrim-unk:
+0.651 0.580 0.614
+0.571 0.482 0.523
+0.496 0.490 0.493
+0.475 0.497 0.485
+0.507 0.491 0.499
+
+
 
 
 115 vs 135
