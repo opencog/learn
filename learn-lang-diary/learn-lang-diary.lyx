@@ -34465,7 +34465,7 @@ Zipf’s law holds for phrases, not words
 
 \begin_layout Standard
 Based on my experience, it holds for both ...
- it holds for everyhing.
+ it holds for everything.
 \end_layout
 
 \begin_layout Section*
@@ -35383,14 +35383,37 @@ where
  It is either true that 
 \begin_inset Formula 
 \[
-\frac{j_{d}\left(s,g\right)+N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)}{j_{d}\left(t,g\right)}<\frac{j_{d}\left(s,g\right)}{j_{d}\left(s,*\right)}\;\frac{j_{d}\left(t,*\right)+N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+N\left(w,d\right)N\left(g,d\right)}
+\frac{j_{d}\left(s,g\right)}{j_{d}\left(s,*\right)}\;\frac{j_{d}\left(t,*\right)+N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+N\left(w,d\right)N\left(g,d\right)}<\frac{j_{d}\left(s,g\right)+N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)}{j_{d}\left(t,g\right)}
 \]
 
 \end_inset
 
 or it is false.
- There seems to be no point in re-organizing terms here; this is readily
- computed numerically.
+ That is, if LHS < RHS holds true, then 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+ maximizes, and the disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+ belongs to the set 
+\begin_inset Formula $S$
+\end_inset
+
+; otherwise 
+\begin_inset Formula $d$
+\end_inset
+
+ belongs in set 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This is readily computed numerically.
 \end_layout
 
 \begin_layout Standard

@@ -153,7 +153,6 @@ Now, let's set up the **text-ingestion pipeline:**
    (activate-readline)
    (debug-enable 'backtrace)
    (read-enable 'positions)
-   (add-to-load-path "/usr/local/share/opencog/scm")
    (add-to-load-path ".")
 ```
 
