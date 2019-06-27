@@ -17556,6 +17556,8 @@ linkage-filter the big one, now:
    (1000 pairs/sec) ; Done storing 31749357 pairs in 33336 secs
 (sql-close)
 restart
+-- The alf linkage-filter + restart implies that en_midj_links
+   should contain only consistant connectors & links.
 (sql-open "postgres:///en_midj_links")
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
@@ -17580,9 +17582,31 @@ Restart computing
 Going to do column and row subtotals
 Finished left entropy subtotals in 339785 secs <<< 94 hours, i.e. 4 days
 Finished right entropy subtotals in 1776 secs
+Finished left MI subtotals in 336719 secs << 93 hours
+Done storing 23308382 left-wilds in 13255 secs
+Finished with MI computations; this took 193. hours  (8 days!)
 
 
+guile-midj-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 69197410)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 438449 Columns: 23308382
+Size: 31749357 non-zero entries of 10219536779518 possible
+Fraction non-zero: 3.1067E-6 Sparsity (-log_2): 18.296
+Total observations: 69197410.0  Avg obs per pair: 2.1795
+Entropy Total: 23.080   Left: 21.119   Right: 10.109
+Total MI: 8.1482
 
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  368.9        2.2490E+5
+Count   (l_1)  7946.        9.3725E+5     21.54        4.167    
+Length  (l_2)  2405.        2.4518E+4     6.520        .1090    
+RMS Count      2388.        2.4467E+4     6.473        .1088    
 
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
