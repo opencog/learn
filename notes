@@ -17512,7 +17512,7 @@ en_micro_cfive=> select * from atoms where type=71;
 atomspace is missing: *-TruthValueKey-* !! Huh!
 This is missing (PredicateNode "*-Sentence Word Pair-*") Why?
 (It is created by common.scm)
-also: (PredicateNode "*-MM^T Product Key-*") 
+also: (PredicateNode "*-MM^T Product Key-*")
 that's two. Third is the SchemaNode
 three more needed...
 AnchorNode ...
@@ -17549,7 +17549,7 @@ xxxxx
    (sql-open "postgres:///en_dj_cfive")
    (psa 'fetch-pairs)
    (psa 'left-basis-size)   ;;
-   (psa 'right-basis-size)  ;; 
+   (psa 'right-basis-size)  ;;
    (length (psa 'get-all-elts)) ;;
    (print-matrix-summary-report psa)
    (sql-close)
@@ -17560,7 +17560,7 @@ xxxxx
 
    (define fsa (add-subtotal-filter psa 8 3 3 #f))
    (fsa 'left-basis-size)   ;;
-   (fsa 'right-basis-size)  ;; 
+   (fsa 'right-basis-size)  ;;
    (define fso (make-store fsa))
    (fso 'store-all-elts)   ; Marginals are not to be stored.
    (sql-close)
@@ -17627,8 +17627,62 @@ Finished left MI subtotals in 336719 secs << 93 hours
 Done storing 23308382 left-wilds in 13255 secs
 Finished with MI computations; this took 193. hours  (8 days!)
 
+------
+(define btr (batch-transpose psa))
+(btr 'mmt-marginals)
+Finished mmt norm marginals in 2822 secs
+Finished mmt totals in 21 secs
+Done storing 438449 right-wilds in 327 secs
+Done storing 23308382 left-wilds in 14668 secs
 
-guile-midj-en> (print-matrix-summary-report psa)
+12587 minutes cpu time for guile = 210 cpu-hours = 9 cpu-days
+
+quick cheat-stats:
+31749357 pairs. tot count== 69197410
+
+ALTER DATABASE en_midj_links RENAME TO en_full_marg;
+
+en_full_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values. This is effectively the
+"full" cfive dataset, with only impossible linkages removed.
+
+BUILD:
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
+   (sql-close)
+   (sql-open "postgres:///en_full_marg")
+   (define alf (add-linkage-filter psa))
+   (define sto (make-store alf))
+   (sto 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+   restart
+   (sql-open "postgres:///en_full_marg")
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Good.
+DATE: 27 June 2019
+
+COMMENT ON DATABASE en_full_marg IS
+'All consistent en_cfive Sections plus MI plus MM^T';
+
+en_full_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 7356 MB    |
+ public | valuations | table | ubuntu | 27 GB      |
+
+select count(*) from atoms;      <<<<  80111606 ==  80M Atoms
+select count(*) from valuations; <<<< 190673853 == 191M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 6100 secs
+
+guile-en> (print-matrix-summary-report psa)
 Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
 Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
 Wildcard: (ListLink (ctv 0 0 69197410)
@@ -17645,24 +17699,18 @@ Total MI: 8.1482
                  Left         Right     Avg-left     Avg-right
                  ----         -----     --------     ---------
 Support (l_0)  368.9        2.2490E+5
-Count   (l_1)  7946.        9.3725E+5     21.54        4.167    
-Length  (l_2)  2405.        2.4518E+4     6.520        .1090    
-RMS Count      2388.        2.4467E+4     6.473        .1088    
+Count   (l_1)  7946.        9.3725E+5     21.54        4.167
+Length  (l_2)  2405.        2.4518E+4     6.520        .1090
+RMS Count      2388.        2.4467E+4     6.473        .1088
 
 MM^T support=31749357.0     count=549825893944.0     entropy=10.840
 No M^TM data present
 
-(define btr (batch-transpose psa))
-(btr 'mmt-marginals)
-Finished mmt norm marginals in 2822 secs
-Finished mmt totals in 21 secs
-Done storing 438449 right-wilds in 327 secs
-Done storing 23308382 left-wilds in 14668 secs
+15053083395 Bytes uncompressed == 15 GBytes
+ 1738289510 Bytes compressed   ==  1.7 GBytes
 
-12587 minutes cpu time for guile = 210 cpu-hours = 9 cpu-days
-
-quick cheat-stats:
-31749357 pairs. tot count== 69197410
+30812d532e2dfa774fc1caf04ee24722  en_full_marg.sql
+b94eee614a869de1517235962e26828b  en_full_marg.sql.bz2
 
 ==========
 
@@ -17730,13 +17778,13 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 	total loop over 137078 items in a list
    Finished mmt norm marginals in 3012 secs -- colliding
    Finished mmt norm marginals in 1329 secs - par-for-each -- cpu=100%
-   Finished mmt norm marginals in 525 secs - for-each -- 
+   Finished mmt norm marginals in 525 secs - for-each --
    Finished mmt norm marginals in 359 secs - n-par-for-each 4 -- cpu=250%
    Finished mmt norm marginals in 413 secs - n-par-for-each 2 -- cpu=170%
    Finished mmt norm marginals in 474 secs - n-par-for-each 1 -- cpu=100%
    Finished mmt norm marginals in 370 secs - n-par-for-each 8 -- cpu=250%
    Finished mmt norm marginals in 375 secs - n-par-for-each 24 -- cpu=230%
-   Finished mmt norm marginals in 557 secs - par-for-each -- 
+   Finished mmt norm marginals in 557 secs - par-for-each --
    Finished mmt norm marginals in 530 secs - par-for-each -- cpu=100%
    Finished mmt norm marginals in 345 secs - my-par-for-each 6
 	Finished mmt norm marginals in 349 secs - my-par-for-each 12
