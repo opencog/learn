@@ -17439,7 +17439,7 @@ Try again. This time, cut first.
    (psa 'left-basis-size)   ;; 444903
    (psa 'right-basis-size)  ;; 23444293
    (print-matrix-summary-report psa) ;; as expected.
-   createdb en_cut_dj_cfive
+   createdb en_micro_dj_cfive
    cat atoms.sql | psql en_micro_dj_cfive
    COMMENT ON DATABASE en_micro_dj_cfive IS 'en_cfive Sections (only) with word-count > 500; section-count > 10';
    (sql-open "postgres:///en_micro_dj_cfive")
@@ -17544,6 +17544,47 @@ Done storing 647988 left-wilds in 349 secs
 Done storing 647988 left-wilds in 388 secs
 
 ==========
+Same as above, but a biggger set.
+xxxxx
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;;
+   (psa 'right-basis-size)  ;; 
+   (length (psa 'get-all-elts)) ;;
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_large_dj_cfive
+   cat atoms.sql | psql en_large_dj_cfive
+   COMMENT ON DATABASE en_large_dj_cfive IS 'en_cfive Sections (only) with word-count > 8; section-count > 3';
+   (sql-open "postgres:///en_large_dj_cfive")
+
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;;
+   (fsa 'right-basis-size)  ;; 
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+xxxx
+   (sql-open "postgres:///en_large_dj_cfive")
+   (psa 'fetch-pairs)
+xxxx
+   (batch-all-pair-mi psa)
+Support: found num left= 18533 num right= 647988 in 31 secs
+Done with wild-card count N(x,*) and N(*,y) in 787 secs
+Total count N(*,*) = 25642000.0 = 25642000.0
+Done computing 1063939 pairs in 137 secs
+Done storing 647988 left-wilds
+Done computing 1063939 pair MI's in 586 secs
+Finished left entropy subtotals in 722 secs
+Finished left MI subtotals in 749 secs
+Done storing 647988 left-wilds in 349 secs
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 647988 left-wilds in 388 secs
+
+==========
 linkage-filter the big one, now:
 
 (sql-open "postgres:///en_dj_cfive")
@@ -17608,8 +17649,17 @@ Count   (l_1)  7946.        9.3725E+5     21.54        4.167
 Length  (l_2)  2405.        2.4518E+4     6.520        .1090    
 RMS Count      2388.        2.4467E+4     6.473        .1088    
 
+MM^T support=31749357.0     count=549825893944.0     entropy=10.840
+No M^TM data present
+
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
+Finished mmt norm marginals in 2822 secs
+Finished mmt totals in 21 secs
+Done storing 438449 right-wilds in 327 secs
+Done storing 23308382 left-wilds in 14668 secs
+
+12587 minutes cpu time for guile = 210 cpu-hours = 9 cpu-days
 
 quick cheat-stats:
 31749357 pairs. tot count== 69197410
