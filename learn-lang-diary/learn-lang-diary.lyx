@@ -34469,6 +34469,155 @@ Based on my experience, it holds for both ...
 \end_layout
 
 \begin_layout Section*
+Grammatical Class Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words 
+\begin_inset Formula $w$
+\end_inset
+
+ into word-classes 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ More precisely, this is a partitioning of the observation counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ into count-classes 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a grammatically similar fashion.
+\end_layout
+
+\begin_layout Standard
+One naive (but approximate and incorrect) way of doing this is to come up
+ with a membership function – a membership matrix 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+, behaving like a normalized conditional probability
+\begin_inset Formula 
+\[
+\sum_{g}p\left(g|w\right)=1
+\]
+
+\end_inset
+
+which says that every word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to one or more clases 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ A partitioning of counts is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+The intended interpretation is that 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a similar fashion, syntactically, so that
+ 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+ is the conditional probability that a word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ Typically, 
+\begin_inset Formula $w$
+\end_inset
+
+ will belong to no more than half-a-dozen grammatical classes, with each
+ grammatical class corresponding loosely to each word-sense that the word
+ has.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem with the above is that it is incorrect – a too-strong approximation.
+ The problem is that different word-senses behave in grammatically different
+ fashion – 
+\emph on
+e.g.
+
+\emph default
+ a word can be both a verb and a noun.
+ The correct partitioning is then neccessarily given by 
+\begin_inset Formula $p\left(g|w,d\right)$
+\end_inset
+
+ so that, for example, if 
+\begin_inset Formula $g$
+\end_inset
+
+ is a verb-class, then 
+\begin_inset Formula $p\left(g|w,d\right)\ne0$
+\end_inset
+
+ only when 
+\begin_inset Formula $d$
+\end_inset
+
+ is a verb-style disjunct, otherwise, 
+\begin_inset Formula $p\left(g|w,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $d$
+\end_inset
+
+ is a noun-style disjunct.
+ That is, the correct partitioning is given by 
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w,d\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+and word-sense disambiguation fundamentally disallow the assumption that
+ 
+\begin_inset Formula $p\left(g|w,d\right)\sim p\left(g|w\right)$
+\end_inset
+
+ since this assumption erases the grammatical differences between different
+ word-senses.
+\end_layout
+
+\begin_layout Section*
 Word-Sense Disambiguation
 \end_layout
 
@@ -35457,6 +35606,34 @@ As before, the niput data, coming from disjuncts from WSD parses, is noisey,
 
 .
  This requires yet more experimentation.
+\end_layout
+
+\begin_layout Section*
+Connector Merge Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words into word-classes.
+ 
+\end_layout
+
+\begin_layout Section*
+Reading list
+\end_layout
+
+\begin_layout Standard
+Papers that people want me to read and have an opinion on:
+\end_layout
+
+\begin_layout Itemize
+https://arxiv.org/abs/1904.03746
 \end_layout
 
 \begin_layout Section*
