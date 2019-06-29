@@ -35621,7 +35621,159 @@ The word-disjunct dataset, containing counts
  It also fails to provide sufficient coverage to parse most sentences.
  Thus, it needs to be simultaneously be compressed and also generalized.
  This is partly acheived by clustering words into word-classes.
- 
+ However, the current system leaves the connectors un-clustered.
+ That is, each disjunct is an ordered sequence of connectors: 
+\begin_inset Formula 
+\[
+d=\left(c_{1},c_{2},\cdots,c_{k}\right)
+\]
+
+\end_inset
+
+with each connector being a word plus direction (polarity) indicator:
+\begin_inset Formula 
+\[
+c_{j}=\left[w_{j},p_{j}\right]
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{j}\in\left\{ +,-\right\} $
+\end_inset
+
+.
+ We wish to cluster these, replacing the 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ with a 
+\begin_inset Formula $\gamma_{j}=\left[g_{j},p_{j}\right]$
+\end_inset
+
+ where each 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+ is a grammatical class, with 
+\begin_inset Formula $w_{j}\in g_{j}$
+\end_inset
+
+.
+ In order for this to be self-consistent, the 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+'s need to be the same grammatical classes as used elsewhere.
+ How might this be done?
+\end_layout
+
+\begin_layout Standard
+A notation that preaks out the spider diagram is needed.
+ Instead of writing 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, one actually has a collection of observation counts 
+\begin_inset Formula 
+\[
+N\left(w,\left(\left[w_{1},p_{1}\right],\left[w_{2},p_{2}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $k$
+\end_inset
+
+ being the arity of the disjunct.
+ Square brackets are used for easy reading.
+ Fixing 
+\begin_inset Formula $j$
+\end_inset
+
+, consider the wild-card:
+\begin_inset Formula 
+\[
+N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[*,p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)=\sum_{w_{j}}N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)
+\]
+
+\end_inset
+
+Consider also the proto-class 
+\begin_inset Formula $V_{j}=V_{j}\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[*,p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)$
+\end_inset
+
+, a set whose elements are those words 
+\begin_inset Formula $w_{j}\in V_{j}$
+\end_inset
+
+ for which 
+\begin_inset Formula $N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)>0$
+\end_inset
+
+ – that is, the set of all words that accurally occured (were actually observed)
+ in some disjunct of a given 
+\begin_inset Quotes eld
+\end_inset
+
+shape
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+One tempting algo is to examine all existing classes 
+\begin_inset Formula $g$
+\end_inset
+
+ and select the one that maximizes the overlap 
+\begin_inset Formula $V_{j}\cap g$
+\end_inset
+
+.
+ How should one compute 
+\begin_inset Quotes eld
+\end_inset
+
+overlap
+\begin_inset Quotes erd
+\end_inset
+
+? Several definitions are possible: one weighted, one unweighted.
+ Perhaps 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ should be replaced by every possible 
+\begin_inset Formula $\gamma_{j}$
+\end_inset
+
+ for which 
+\begin_inset Formula $w_{j}\in g_{j}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+The current LG export code does the last – replace 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ by every possible 
+\begin_inset Formula $\gamma_{j}$
+\end_inset
+
+ for which 
+\begin_inset Formula $w_{j}\in g_{j}$
+\end_inset
+
+; this results in a combinatorial explosion, as one disjunct gets replaces
+ by dozens...
+ this seems incorrect.
 \end_layout
 
 \begin_layout Section*

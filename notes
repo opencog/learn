@@ -17557,6 +17557,7 @@ Same as above, but a much bigger set.
    (define psc (add-support-compute psa))
    (psc 'cache-all)
    Finished left norm marginals in 2934 secs
+   (so, I guess 1671691/2934 = 570 per second...)
 
    (define fsa (add-subtotal-filter psc 8 3 3 #f))
    (fsa 'left-basis-size)   ;; 17985 << continuing to shrink...
@@ -17741,9 +17742,9 @@ Same as above, but the hugest non-full set.
    (sql-open "postgres:///en_huge_marg")
    (define psc (add-support-compute psa))
    (psc 'cache-all)
-xxx
+   Estimate: 570/second x 7345963 = 13000 seconds = 214 min 3.5 hours)
    Finished left norm marginals in x secs
-
+xxxx
    (define fsa (add-subtotal-filter psc 3 1 1 #f))
    (fsa 'left-basis-size)   ;;
    (fsa 'right-basis-size)  ;; .
