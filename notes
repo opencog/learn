@@ -17352,35 +17352,6 @@ select count(*) from atoms;      <<<<  81241109 == 81.2 M Atoms
 select count(*) from valuations; <<<< 217533128 == 217.5 M Valuations
                                                    (0.5 M more)
 
-xxxx below is junk xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-(length (cog-incoming-set (AnyNode "cset-disjunct"))) 498240
-
-Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
-Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
-Wildcard: (ListLink (ctv 0 0 69447009)
-   (AnyNode "cset-word")
-   (AnyNode "cset-disjunct")
-)
-Rows: 444903 Columns: 23444293
-Size: 31914870 non-zero entries of 10430436288579 possible
-Fraction non-zero: 3.0598E-6 Sparsity (-log_2): 18.318
-Total observations: 69447009.0  Avg obs per pair: 2.1760
-Entropy Total: 23.092   Left: 21.137   Right: 10.112
-Total MI: 8.1569
-
-                 Left         Right     Avg-left     Avg-right
-                 ----         -----     --------     ---------
-Support (l_0)  2.2742E+5    367.6
-Count   (l_1)  9.4430E+5    7917.         4.152        21.54
-Length  (l_2)  2.4549E+4    2397.         .1079        6.520
-RMS Count      2.4499E+4    2379.         .1077        6.472
-
-17199980652 Bytes uncompressed == 17 GBytes
- 1885746309 Bytes compressed == 1.89 GBytes
-
-90195f2c6a913ef896454894e651813e  en_midj_cfive.sql
-d79ad6f14a7b1bf0ddfd24c31567a5ba  en_midj_cfive.sql.bz2
-
 ==========
 (define pcr (add-report-api psa))
 (pcr 'left-dim)
@@ -17440,7 +17411,7 @@ Try again. This time, cut first.
    (psa 'right-basis-size)  ;; 23444293
    (print-matrix-summary-report psa) ;; as expected.
    createdb en_micro_dj_cfive
-   cat atoms.sql | psql en_micro_dj_cfive
+   cat atom.sql | psql en_micro_dj_cfive
    COMMENT ON DATABASE en_micro_dj_cfive IS 'en_cfive Sections (only) with word-count > 500; section-count > 10';
    (sql-open "postgres:///en_micro_dj_cfive")
 
@@ -17544,48 +17515,196 @@ Done storing 647988 left-wilds in 349 secs
 Done storing 647988 left-wilds in 388 secs
 
 ==========
-Same as above, but a biggger set.
-xxxxx
+Same as above, but a much bigger set.
    (sql-open "postgres:///en_dj_cfive")
    (psa 'fetch-pairs)
-   (psa 'left-basis-size)   ;;
-   (psa 'right-basis-size)  ;;
-   (length (psa 'get-all-elts)) ;;
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
    (print-matrix-summary-report psa)
    (sql-close)
    createdb en_large_dj_cfive
-   cat atoms.sql | psql en_large_dj_cfive
+   cat atom.sql | psql en_large_dj_cfive
    COMMENT ON DATABASE en_large_dj_cfive IS 'en_cfive Sections (only) with word-count > 8; section-count > 3';
    (sql-open "postgres:///en_large_dj_cfive")
 
    (define fsa (add-subtotal-filter psa 8 3 3 #f))
-   (fsa 'left-basis-size)   ;;
-   (fsa 'right-basis-size)  ;;
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
    (define fso (make-store fsa))
    (fso 'store-all-elts)   ; Marginals are not to be stored.
    (sql-close)
 
-xxxx
+-- Shutdown and restart guile.
    (sql-open "postgres:///en_large_dj_cfive")
    (psa 'fetch-pairs)
-xxxx
-   (batch-all-pair-mi psa)
-Support: found num left= 18533 num right= 647988 in 31 secs
-Done with wild-card count N(x,*) and N(*,y) in 787 secs
-Total count N(*,*) = 25642000.0 = 25642000.0
-Done computing 1063939 pairs in 137 secs
-Done storing 647988 left-wilds
-Done computing 1063939 pair MI's in 586 secs
-Finished left entropy subtotals in 722 secs
-Finished left MI subtotals in 749 secs
-Done storing 647988 left-wilds in 349 secs
+   (sql-close)
 
--- (define btr (batch-transpose psa))
--- (btr 'mmt-marginals)
-Done storing 647988 left-wilds in 388 secs
+   (cog-report-counts)
+       (WordNode . 246103)
+       (ConnectorSeq . 1671691)
+       (Section . 2358816)
+
+   (psa 'left-basis-size)   ;; 27655  <<< lots smaller than Word count!
+   (psa 'right-basis-size)  ;; 1671691
+
+   createdb en_large_marg
+   cat atom.sql | psql en_large_marg
+   COMMENT ON DATABASE en_large_marg IS
+   'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 2934 secs
+
+   (define fsa (add-subtotal-filter psc 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 17985 << continuing to shrink...
+   (fsa 'right-basis-size)  ;; 1671691  << unchanged.
+   (length (fsa 'get-all-elts)) ;; 2348252
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 17985
+   (lfa 'right-basis-size)  ;; 949252 << much smaller
+   (length (lfa 'get-all-elts)) ;; 1563939
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_large_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+xxxxxx
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+
+xxxxxx
+
+   (batch-all-pair-mi psa)
+   Finished left norm marginals in 2976 secs
+   Done with wild-card count N(x,*) and N(*,y) in 3158 secs
+   Done computing 2358816 pair MI's in 1343 secs
+   Finished left entropy subtotals in 2776 secs
+   Finished left MI subtotals in 2859 secs
+
+Rows: 27655 Columns: 1671691
+Size: 2358816 non-zero entries of 46230614605 possible
+Fraction non-zero: 5.1023E-5 Sparsity (-log_2): 14.258
+Total observations: 31216529.0  Avg obs per pair: 13.234
+Entropy Total: 18.914   Left: 16.464   Right: 7.6589
+Total MI: 5.2087
+
+
+en_large_dj_cfive
+---------------
+Filtered copy of en_dj_cfive, with the (8 3 3) filter-cut applied:
+all words with word-count less than 8 removed; all sections with a
+count of less than 3 removed; all dj's with a count of less than 3
+removed. DB does NOT contain marginals!
+
+Note that there is a HUGE number of WordNodes that appear in
+ConnectorSeq's that do NOT appear in Sections!
+
+COMMENT ON DATABASE en_large_dj_cfive IS
+'en_cfive Sections (only) with word-count > 8; section-count > 3';
+
+STATUS: Good.
+DATE: 28 June 2019
+
+en_large_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 602 MB     | 
+ public | valuations | table | ubuntu | 1158 MB    | 
+
+select count(*) from atoms;      <<<< 4653425 == 4.6M Atoms
+select count(*) from valuations; <<<< 7076448 == 7.1M Valuations
+
+-- (psa 'left-basis-size)   ;; 27655
+-- (psa 'right-basis-size)  ;; 1671691
+-- after re-filtering, these shrink a bit (of course)
+
+602555918 Bytes uncompressed == 603 MBytes
+ 89639884 Bytes compressed   ==  90 MBytes
+
+d6ad6a2437b07424088f2f19f54b5ab8  en_large_dj_cfive.sql
+fef1307912ac291ce826ad4e8e6861e0  en_large_dj_cfive.sql.bz2
 
 ==========
-linkage-filter the big one, now:
+Same as above, but the hugest non-full set.
+   (sql-open "postgres:///en_dj_cfive")
+xxxxxx
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_huge_dj_cfive
+   cat atom.sql | psql en_huge_dj_cfive
+   COMMENT ON DATABASE en_huge_dj_cfive IS 'en_cfive Sections (only) with word-count > 3; section-count > 1';
+   (sql-open "postgres:///en_large_dj_cfive")
+
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+xxxxxxxx
+-- Shutdown and restart guile.
+   (sql-open "postgres:///en_large_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+
+   (cog-report-counts)
+       (WordNode . 246103)
+       (ConnectorSeq . 1671691)
+       (Section . 2358816)
+
+   (psa 'left-basis-size)   ;; 27655  <<< lots smaller than Word count!
+   (psa 'right-basis-size)  ;; 1671691
+
+   createdb en_large_marg
+   cat atom.sql | psql en_large_marg
+   COMMENT ON DATABASE en_large_marg IS
+   'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 2934 secs
+
+   (define fsa (add-subtotal-filter psc 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 17985 << continuing to shrink...
+   (fsa 'right-basis-size)  ;; 1671691  << unchanged.
+   (length (fsa 'get-all-elts)) ;; 2348252
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 17985
+   (lfa 'right-basis-size)  ;; 949252 << much smaller
+   (length (lfa 'get-all-elts)) ;; 1563939
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_large_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+xxxxxx
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+
+==========
+linkage-filter the full set, now:
 
 (sql-open "postgres:///en_dj_cfive")
 (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
@@ -18125,7 +18244,7 @@ oohhh filter had a bug. Damn,
  (gcf 'get-pair-count  (gar don) (gdr don))  also works ...
 
 -- createdb mini-test
-   cat atoms.sql | psql mini-test
+   cat atom.sql | psql mini-test
 
    (sql-close)
    (sql-open "postgres:///mini-test?user=linas&password=asdf")
