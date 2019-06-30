@@ -124,7 +124,7 @@ This report briefly reviews the dictionaries, the algorithms used to obtain
  It is assumed that the reader has a general familiarity with the project.
 \end_layout
 
-\begin_layout Part
+\begin_layout Chapter
 Baseline Measurements
 \end_layout
 
@@ -1230,8 +1230,9 @@ Parameters are not tuned (some parameters were picked that seemed reasonable
 \end_layout
 
 \begin_layout Itemize
-Clustering remainders are being ignored.
- (When a word is placed into a cluster, the counts of any shared disjuncts
+Clustering is only weakly sensitive to distinct word-senses; a quasi-linear
+ merge of observation counts is used.
+ When a word is placed into a cluster, the counts of any shared disjuncts
  are transfered to the cluster.
  This leaves behind a left-over word-vector, containing disjuncts that did
  not fit into the cluster.
@@ -1245,9 +1246,11 @@ automatically
 \end_inset
 
  in these algorithms.
- Currently, these left-over bits are either being reclustered, if possible,
- otherwise they are being discarded at the end (I think, I'm not sure).
- They should not be discarded.) 
+ These left-over bits are either being reclustered, if possible, unless
+ the remaining counts are tiny, in which case they are discarded.
+ A more refined clustering algo would replace this quasi-linear merge with
+ a disjunct-by-disjunct decision, to minimize the accidental mixing of disjuncts
+ that should have been associated with different word-senses.
 \end_layout
 
 \begin_layout Itemize
@@ -1264,7 +1267,8 @@ shapes
 \end_layout
 
 \begin_layout Itemize
-Connectors are not being assigned to word-classes (
+Link-types are being clustered badly; that is, connectors are not being
+ assigned properly to word-classes (
 \emph on
 i.e.
 
@@ -1277,8 +1281,23 @@ sheaves
 \begin_inset Quotes erd
 \end_inset
 
- concept is not being used; the code for the sheaves algo has not yet been
- written; it needs to be coupled with the shapes code.)
+ concept is not being used.) The current code over-generalizes: if it finds
+ a link between two words, then it automatically promotes that to a link
+ between all word-classes that those word belong to.
+ This creates linkages between word-senses that should have been kept distinct.
+ It also leads to a combinatoric explostion in the parser.
+ This desperately needs to be fixed.
+\end_layout
+
+\begin_layout Standard
+Solutions to all of these issues are explored in Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Info-theoretic-Improvements"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -13150,7 +13169,7 @@ Unknown-word guessing by the parser appears to be an effective strategy
  for broadening the coverage of the dictionary.
 \end_layout
 
-\begin_layout Part
+\begin_layout Chapter
 ULL Dictionary Measurements
 \end_layout
 
@@ -18303,12 +18322,19 @@ The Linas pipeline should be tuned in the fashion that the tuning breakthrough
  Without this, one is working blind.
 \end_layout
 
-\begin_layout Part
+\begin_layout Chapter
 Info-theoretic Improvements
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Info-theoretic-Improvements"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-The results in Part I embodied several "known bugs", each of which needs
+The results in Part 1 embodied several "known bugs", each of which needs
  to be fixed.
  These are:
 \end_layout
@@ -18341,7 +18367,7 @@ Failure to perform a fine-grained merge that distinguishes different word-senses
 
 \begin_layout Itemize
 Failure to cluster link-types/connectors.
- Part I used a brute-force combinatoric algo: if there was a link between
+ Part 1 used a brute-force combinatoric algo: if there was a link between
  two words (even if that link was wrong), then a link between all word-classes
  containing those words was created.
  This is wrong in three different ways: 
