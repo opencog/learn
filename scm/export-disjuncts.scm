@@ -21,7 +21,7 @@
 ;; In particular, if a WordNode appears in a connector, it is replaced
 ;; by all WordClasses that it might be a part of. This is an
 ;; over-generalization, but needed for just right now.
-;;
+;; This is done in the `connector-to-lg-cnr` function below.
 ;
 ; Example usage:
 ;     (define pca (make-pseudo-cset-api))
@@ -72,8 +72,11 @@
 
 ;  ---------------------------------------------------------------------
 ;
-; Given two words, return a synthetic link name
-; The link names are issued in serial order, first-come, first-served.
+; Return a function that assigns link-names to atom-pairs.
+;
+; Given two words, the function returns a synthetic link name,
+; in the form of a string. The link names are issued in serial
+; order, first-come, first-served.
 ;
 (define get-cnr-name
 	(let* ((cnt 0)
@@ -95,7 +98,7 @@
 )
 
 ;  ---------------------------------------------------------------------
-
+;
 ; Link Grammar expects connectors to be structured in the order of:
 ;   near- & far- & near+ & far+
 ; whereas the sections we compute from MST are in the form of
@@ -123,9 +126,10 @@
   be a WordNode or a WordClassNode.
 "
 	; Get a link-name string identifying this word-pair.
-	; WORD should be a WordNode or a WordClassNode
-	; DIR should be a string, either "+" or "-"
-	; Example returned value is "TCZKG-"
+	; The link joins together WORD and GERM.
+	; WORD should be a WordNode or a WordClassNode.
+	; DIR should be a string, either "+" or "-".
+	; Example returned value is the string "TCZKG-".
 	(define (cword-to-lg-con WORD DIR)
 		(string-append
 			(if (equal? DIR "-")
@@ -136,7 +140,8 @@
 		)
 	)
 
-	; Get a link-string that is an or-list of links.
+	; Given a list of words, return a link-string that is an
+	; or-list of links (links connecting the words to the GERM).
 	; Example of a returned value is "(TCZKG- or TVFT- or TCPA-)"
 	(define (cword-list-to-lg-con-list WRDLI DIR)
 		(if (eq? 1 (length WRDLI))
@@ -151,9 +156,11 @@
 		)
 	)
 
-	; Get a connector, by concatenating the link name with the direction.
-	; WRD-OR-CLA should be a WordNode or WordClassNode
-	; DIR should be a string, "+" or "-"
+	; Get a connector, by finding the link that connects WRD-OR-CLA
+	; to GERM, and then concatenating the link name with the direction.
+	; WRD-OR-CLA should be a WordNode or WordClassNode.
+	; DIR should be a string, "+" or "-".
+	; hack -- Note that this "broadens" coverage, as flagged up top.
 	(define (connector-to-lg-cnr WRD-OR-CLA DIR)
 		(define wctype (cog-type WRD-OR-CLA))
 
@@ -161,7 +168,9 @@
 		(if (eq? 'WordClassNode wctype)
 			; ... then just look up the link.
 			(cword-to-lg-con WRD-OR-CLA DIR)
-			; ... else fold together all classes into a string.
+			; ... else fold together all classes that the word belongs
+			; to into a string. So, if the word belongs to two classes,
+			; the resulting string will be an or-list of those two classes.
 			(cword-list-to-lg-con-list
 				(map gdr (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
 				DIR)

@@ -17760,9 +17760,10 @@ Same as above, but the hugest non-full set.
 
 -- Stop and restart guile
    (sql-open "postgres:///en_huge_marg")
-   (psa 'fetch-pairs)
+   (psa 'fetch-pairs)   ; Elapsed time to load csets: 1049 secs
+   ; Support: found num left= 54832 num right= 6031954
    (batch-all-pair-mi psa)
-xxxxxx
+xxxxxxxxxxxx
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
@@ -19757,6 +19758,15 @@ In Vienna, Beethoven met someone who would later be greatly influenced by him: F
 
 
 http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ANY-dILEd-2019-05-09-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_36740C_2019-05-11_0007.4.0.dict
+
+
+Token "this" matches:
+    this.672                       3221  disjuncts
+
+    this.331                       5037  disjuncts
+
+the old beast was whinnying on his shoulder .
+
 
 ==========
 Start work on info-sim.
