@@ -17754,9 +17754,8 @@ Same as above, but the hugest non-full set.
    (lfa 'right-basis-size)  ;; 6045624 << a bit smaller
    (length (lfa 'get-all-elts)) ;; 7907629 << smaller
 
-xxxx
    (define fso (make-store lfa))
-   (fso 'store-all-elts)
+   (fso 'store-all-elts)    ;; Done storing 7907629 pairs in 8034 secs
    (sql-close)
 
 -- Stop and restart guile
