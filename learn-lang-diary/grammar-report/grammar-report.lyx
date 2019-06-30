@@ -120,6 +120,15 @@ This report briefly reviews the dictionaries, the algorithms used to obtain
  It is assumed that the reader has a general familiarity with the project.
 \end_layout
 
+\begin_layout Part
+Baseline Measurements
+\end_layout
+
+\begin_layout Standard
+This provides the introduction and the baseline to the algorithm, the measuremen
+ts, and the results.
+\end_layout
+
 \begin_layout Section
 Introduction
 \end_layout
@@ -13026,7 +13035,7 @@ silver
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Graphs
 \end_layout
 
@@ -13085,7 +13094,59 @@ Finally, the reciprocal mean of the two, aka the F1-score.
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
+Conclusions for Part I
+\end_layout
+
+\begin_layout Standard
+The following conclusions can be made for the above baseline measurements.
+ 
+\end_layout
+
+\begin_layout Itemize
+Taken as a proof-of-concept, the pipeline seems to work, and provides a
+ stable foundation for further research.
+\end_layout
+
+\begin_layout Itemize
+Tighter clustering only marginally improves precision, but sharply damages
+ recall.
+ Given a choice, looser clustering improves the overall coverage of the
+ dictionary.
+ In effect, the dictionary understand more, even if it doesn't understand
+ it quite as well.
+\end_layout
+
+\begin_layout Itemize
+The sigmoid taper decision used in the 
+\emph on
+discrim
+\emph default
+ merge algo, vs.
+ the 
+\emph on
+fuzz
+\emph default
+ algo seems to make an important improvement in quality.
+ Accidental tweaks seem to further improve scores.
+ This suggests that the manner of clustering has an important effect.
+\end_layout
+
+\begin_layout Itemize
+Larger dictionaries with larger vocabularies provide only mixed results.
+ The scores are roughly the same, which is surprising.
+ Tiny vocabularies with effective unknown-word guessing are mostly just
+ as good as larger vocabularies (with unknown word guessing).
+ This indicates that the current algos are not effectively extracting any
+ extra info from the larger vocabularies!
+\end_layout
+
+\begin_layout Itemize
+Unknown-word guessing by the parser appears to be an effective strategy
+ for broadening the coverage of the dictionary.
+\end_layout
+
+\begin_layout Part
 ULL Dictionary Measurements
 \end_layout
 
@@ -18152,12 +18213,12 @@ ull-dnn-mi
  dataset.
 \end_layout
 
-\begin_layout Section*
-Conclusions
+\begin_layout Section
+Conclusions for Part II – ULL pipeline
 \end_layout
 
 \begin_layout Standard
-The most important results come from the ULL datasets.
+There are several vitally important results gleaned from the ULL datasets.
  These suggest a method for how to tune the language learning pipeline:
  it should be tuned to maximize the fidelity of its action on known grammars.
  That way, when applied to new, unknown grammars, it can be trusted to produce
@@ -18179,13 +18240,7 @@ MST parse
 \end_layout
 
 \begin_layout Standard
-There are a separate set of conclusions for the Linas variant of the pipeline.
- These are minor compared to the above, but important for their own sake.
-\end_layout
-
-\begin_layout Itemize
-Taken as a proof-of-concept, the Linas variant of the pipeline seems to
- work, and provide a stable foundation for further research.
+Contrasting to the Linas pipeline, one can also say:
 \end_layout
 
 \begin_layout Itemize
@@ -18198,41 +18253,9 @@ The Linas pipeline seems to be producing dictionaries with better coverage
 \end_layout
 
 \begin_layout Itemize
-Tighter clustering only marginally improves precision, but sharply damages
- recall.
- Given a choice, looser clustering improves the overall coverage of the
- dictionary.
- In effect, the dictionary understand more, even if it doesn't understand
- it quite as well.
-\end_layout
-
-\begin_layout Itemize
-The sigmoid taper decision used in the 
-\emph on
-discrim
-\emph default
- merge algo, vs.
- the 
-\emph on
-fuzz
-\emph default
- algo seems to make an important improvement in quality.
- Accidental tweaks seem to further improve scores.
- This suggests that the manner of clustering has an important effect.
-\end_layout
-
-\begin_layout Itemize
-Larger dictionaries with larger vocabularies provide only mixed results.
- The scores are roughly the same, which is surprising.
- Tiny vocabularies with effective unknown-word guessing are mostly just
- as good as larger vocabularies (with unknown word guessing).
- This indicates that the current algos are not effectively extracting any
- extra info from the larger vocabularies!
-\end_layout
-
-\begin_layout Itemize
 Unknown-word guessing by the parser appears to be an effective strategy
- for broadening the coverage of the dictionary.
+ for broadening the coverage of the dictionary; supporting this in the ULL
+ pipeline is surely a good idea!
 \end_layout
 
 \begin_layout Itemize
@@ -18241,11 +18264,11 @@ The Linas pipeline should be tuned in the fashion that the tuning breakthrough
  Without this, one is working blind.
 \end_layout
 
-\begin_layout Section*
-x
+\begin_layout Part
+Info-theoretic improvments
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Info-based distances
 \end_layout
 
