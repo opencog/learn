@@ -35609,7 +35609,7 @@ As before, the niput data, coming from disjuncts from WSD parses, is noisey,
 \end_layout
 
 \begin_layout Section*
-Connector Merge Redux
+Link Merge Redux
 \end_layout
 
 \begin_layout Standard
@@ -35622,7 +35622,7 @@ The word-disjunct dataset, containing counts
  Thus, it needs to be simultaneously be compressed and also generalized.
  This is partly acheived by clustering words into word-classes.
  However, the current system leaves the connectors un-clustered.
- That is, each disjunct is an ordered sequence of connectors: 
+ That is, each disjunct is an ordered sequence of (pseudo-)connectors: 
 \begin_inset Formula 
 \[
 d=\left(c_{1},c_{2},\cdots,c_{k}\right)
@@ -35630,7 +35630,7 @@ d=\left(c_{1},c_{2},\cdots,c_{k}\right)
 
 \end_inset
 
-with each connector being a word plus direction (polarity) indicator:
+with each (pseudo-)connector being a word plus direction (polarity) indicator:
 \begin_inset Formula 
 \[
 c_{j}=\left[w_{j},p_{j}\right]
@@ -35660,16 +35660,18 @@ with
 \end_inset
 
 .
- In order for this to be self-consistent, the 
+ A naive (but wrong) conception of self-consistency it to have the 
 \begin_inset Formula $g_{j}$
 \end_inset
 
-'s need to be the same grammatical classes as used elsewhere.
- How might this be done?
+'s appearing in connectors be the same grammatical classes as those used
+ to categorize words.
+ The notion of self-consistent connector classes is different (given below).
+ At any rate, how does one cluster connectors? 
 \end_layout
 
 \begin_layout Standard
-A notation that preaks out the spider diagram is needed.
+To proceed, a notation that breaks out the spider diagram is needed.
  Instead of writing 
 \begin_inset Formula $N\left(w,d\right)$
 \end_inset
@@ -35688,7 +35690,138 @@ with
 
  being the arity of the disjunct.
  Square brackets are used for easy reading.
- Fixing 
+ Prior to clustering, one can convert pseudo-connectors to real connectors
+ (and real links) by observing that word 
+\begin_inset Formula $w_{a}$
+\end_inset
+
+ (on the left) can link to word 
+\begin_inset Formula $w_{b}$
+\end_inset
+
+ (on the right) if an only if exists two word-disjunct pairs 
+\begin_inset Formula $\left(w_{a},d_{a}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(w_{b},d_{b}\right)$
+\end_inset
+
+ such that 
+\begin_inset Formula $d_{a}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{b}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{m},p_{m}\right],\cdots,\left[w_{n},p_{n}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{j}=w_{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{j}=+$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{m}=w_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{m}=-$
+\end_inset
+
+.
+ A link can then be defined as any function that provides a unique label
+ 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ to the word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+.
+ Given a 
+\begin_inset Quotes eld
+\end_inset
+
+true link
+\begin_inset Quotes erd
+\end_inset
+
+ type 
+\begin_inset Formula $l$
+\end_inset
+
+, the corresponding 
+\begin_inset Quotes eld
+\end_inset
+
+true connectors
+\begin_inset Quotes erd
+\end_inset
+
+ are then 
+\begin_inset Formula $l+$
+\end_inset
+
+ and 
+\begin_inset Formula $l-$
+\end_inset
+
+.
+ Thus, for the above example, 
+\begin_inset Formula $\left[w_{j},p_{j}\right]\to l_{ab}+$
+\end_inset
+
+ and 
+\begin_inset Formula $\left[w_{m},p_{m}\right]\to l_{ab}-$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The clustering task is now to find all other links that can be argued to
+ be 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+.
+ One very simple ansatz is to create a link 
+\begin_inset Formula $l_{gg^{\prime}}$
+\end_inset
+
+ that corresponds to the gram-class pair 
+\begin_inset Formula $\left(g,g^{\prime}\right)$
+\end_inset
+
+ and is used to connect any word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+ whenever 
+\begin_inset Formula $w_{a}\in g$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{b}\in g^{\prime}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+xxxx
+\end_layout
+
+\begin_layout Standard
+Fixing 
 \begin_inset Formula $j$
 \end_inset
 
@@ -35768,12 +35901,22 @@ The current LG export code does the last – replace
 \end_inset
 
  for which 
-\begin_inset Formula $w_{j}\in g_{j}$
+\begin_inset Formula $w_{j}\in g$
 \end_inset
 
-; this results in a combinatorial explosion, as one disjunct gets replaces
- by dozens...
+ for some 
+\begin_inset Formula $g$
+\end_inset
+
+; this results in a combinatorial explosion whenever a word belongs to more
+ than one 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ One simple disjunct gets replaced by dozens...
  this seems incorrect.
+ A few, maybe, but dozens, no.
 \end_layout
 
 \begin_layout Section*

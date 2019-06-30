@@ -17742,25 +17742,25 @@ Same as above, but the hugest non-full set.
    (sql-open "postgres:///en_huge_marg")
    (define psc (add-support-compute psa))
    (psc 'cache-all)
-   Estimate: 570/second x 7345963 = 13000 seconds = 214 min 3.5 hours)
-   Finished left norm marginals in x secs
-xxxx
+   Finished left norm marginals in 37844 secs 
+     so 7345963 / 37844 = 194/second ...
    (define fsa (add-subtotal-filter psc 3 1 1 #f))
-   (fsa 'left-basis-size)   ;;
-   (fsa 'right-basis-size)  ;; .
-   (length (fsa 'get-all-elts)) ;;
+   (fsa 'left-basis-size)   ;; 57400  << so, a bit smaller
+   (fsa 'right-basis-size)  ;; 7345963 << unchanged
+   (length (fsa 'get-all-elts)) ;; 9288551
 
    (define lfa (add-linkage-filter fsa))
-   (lfa 'left-basis-size)   ;; 
-   (lfa 'right-basis-size)  ;; 
-   (length (lfa 'get-all-elts)) ;; 
+   (lfa 'left-basis-size)   ;; 57400 << unchanged
+   (lfa 'right-basis-size)  ;; 6045624 << a bit smaller
+   (length (lfa 'get-all-elts)) ;; 7907629 << smaller
 
+xxxx
    (define fso (make-store lfa))
    (fso 'store-all-elts)
    (sql-close)
 
 -- Stop and restart guile
-   (sql-open "postgres:///en_large_marg")
+   (sql-open "postgres:///en_huge_marg")
    (psa 'fetch-pairs)
    (batch-all-pair-mi psa)
 xxxxxx
