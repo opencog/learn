@@ -18213,6 +18213,41 @@ ull-dnn-mi
  dataset.
 \end_layout
 
+\begin_layout Subsection*
+Open Questions
+\end_layout
+
+\begin_layout Standard
+There are some things I do not understand about the ULL pipeline.
+ These are:
+\end_layout
+
+\begin_layout Itemize
+When the ULL pipeline clusters words together, what distance metric is used?
+ Cosine? Something else?
+\end_layout
+
+\begin_layout Itemize
+How are link types clustered? That is, how does ULL determine if two links
+ are similar, and belong in the same class? What metric is use? (Clustering
+ links is a distinct step from clustering words; for ULL, I think tehse
+ are somehow combined into one?)
+\end_layout
+
+\begin_layout Itemize
+How are words merged into word-classes? I believe that when ULL decides
+ that two words are similar, a whole-sale merge all disjuncts into the word-clas
+s is performed, without any attempt at setting aside the disjuncts that
+ "don't belong".
+ Is that right? (Disallowing the merger of disjuncts that "don't belong"
+ is the primary mechanism of WSD, so this is important to understand.)
+\end_layout
+
+\begin_layout Standard
+Without a clear description of these, its hard to tell what, exactly, ULL
+ is doing.
+\end_layout
+
 \begin_layout Section
 Conclusions for Part II – ULL pipeline
 \end_layout
@@ -18265,7 +18300,72 @@ The Linas pipeline should be tuned in the fashion that the tuning breakthrough
 \end_layout
 
 \begin_layout Part
-Info-theoretic improvments
+Info-theoretic improvements
+\end_layout
+
+\begin_layout Standard
+The results in Part I embodied several "known bugs", each of which needs
+ to be fixed.
+ These are:
+\end_layout
+
+\begin_layout Itemize
+Failure to use the Kullback-Liebler divergence instead of cosine distance.
+ I argued last summer about why KL is better than cosine distance, but my
+ own code base has yet to catch up with my theory.
+ All of the Part I dictionaries used cosine distance.
+\end_layout
+
+\begin_layout Itemize
+Failure to perform a fine-grained merge that distinguishes different word-senses.
+ The Part I merge algo was a quasi-linear merge that moved many/most of
+ the disjunct counts from a word into the word-class it was assigned to.
+ This has the unintended effect of blurring together distinct word-senses.
+ A more fine-grained merge would make this decision on a disjunct-by-disjunct
+ basis, deciding when a disjunct belongs, and when it doesn't.
+ Such an algo will be (when I get done writing it) a "binary optimization"
+ algo (That is, an "integer programming" algo with the integers restricted
+ to 0 or 1: https://en.wikipedia.org/wiki/Integer_programming) The algo chooses,
+ on a disjunct-by-disjunct basis, whether that disjunct belongs to the given
+ word-sense, or not.
+ I think I have an OK algo for this that can run in linear time; written
+ up in the diary, but not yet converted into code.
+ This should improve WSD by a lot.
+ Maybe.
+ Hmmm...
+\end_layout
+
+\begin_layout Itemize
+Failure to cluster link-types/connectors.
+ Part I used a brute-force combinatoric algo: if there was a link between
+ two words (even if that link was wrong), then a link between all word-classes
+ containing those words was created.
+ This is wrong in three different ways: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+It excessively generalizes ("blurs") the grammar, allowing two word-classes
+ to connect, just because some random error in the MST stage accidentally
+ connected two words.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Its wrong because it also blurs different word-senses: if a word belongs
+ to two or more word-classes, each will be connected to, thus allowing links
+ between word-senses that should have been disallowed.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Finally, it is the direct and immediate cause of the combinatoric explosions
+ that make parsing so terribly slow.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Here in Part III, solutions to the problems above will be explored.
 \end_layout
 
 \begin_layout Section
