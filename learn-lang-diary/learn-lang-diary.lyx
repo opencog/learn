@@ -35934,106 +35934,299 @@ One might consider adjusting the above by counts on connectors, or ..
 \end_layout
 
 \begin_layout Standard
-xxxx
+How practical is this? Lets look at the number of potential links in various
+ datasets:
 \end_layout
 
 \begin_layout Standard
-Fixing 
-\begin_inset Formula $j$
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#half-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#full-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1610 x 67K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+146K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_micro_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7385 x 270K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mini_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17K x 947K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_large_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55K x 6.03M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_huge_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+438K x 23.3M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_full_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
 \end_inset
 
-, consider the wild-card:
-\begin_inset Formula 
-\[
-N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[*,p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)=\sum_{w_{j}}N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)
-\]
 
-\end_inset
+\end_layout
 
-Consider also the proto-class 
-\begin_inset Formula $V_{j}=V_{j}\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[*,p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)$
-\end_inset
+\begin_layout Standard
+The columns in the table are:
+\end_layout
 
-, a set whose elements are those words 
-\begin_inset Formula $w_{j}\in V_{j}$
-\end_inset
+\begin_layout Itemize
 
- for which 
-\begin_inset Formula $N\left(w,\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)>0$
-\end_inset
+\series bold
+Dimensions
+\series default
+ – Number of words x Number of disjuncts
+\end_layout
 
- – that is, the set of all words that accurally occured (were actually observed)
- in some disjunct of a given 
+\begin_layout Itemize
+
+\series bold
+#half-links
+\series default
+ – Total number of unique links between all words in the dataset, and some
+ connector in any disjunct.
+ This is a 
 \begin_inset Quotes eld
 \end_inset
 
-shape
+half-link
 \begin_inset Quotes erd
 \end_inset
 
-.
+, as any given disjunct might be shared by multiple words.
 \end_layout
 
-\begin_layout Standard
-One tempting algo is to examine all existing classes 
-\begin_inset Formula $g$
-\end_inset
+\begin_layout Itemize
 
- and select the one that maximizes the overlap 
-\begin_inset Formula $V_{j}\cap g$
-\end_inset
-
-.
- How should one compute 
-\begin_inset Quotes eld
-\end_inset
-
-overlap
-\begin_inset Quotes erd
-\end_inset
-
-? Several definitions are possible: one weighted, one unweighted.
- Perhaps 
-\begin_inset Formula $c_{j}$
-\end_inset
-
- should be replaced by every possible 
-\begin_inset Formula $\gamma_{j}$
-\end_inset
-
- for which 
-\begin_inset Formula $w_{j}\in g_{j}$
-\end_inset
-
-?
+\series bold
+#full-links
+\series default
+ – Total number of unique links in the dataset, as defined above.
+ 
 \end_layout
 
-\begin_layout Standard
-The current LG export code does the last – replace 
-\begin_inset Formula $c_{j}$
-\end_inset
+\begin_layout Itemize
 
- by every possible 
-\begin_inset Formula $\gamma_{j}$
-\end_inset
-
- for which 
-\begin_inset Formula $w_{j}\in g$
-\end_inset
-
- for some 
-\begin_inset Formula $g$
-\end_inset
-
-; this results in a combinatorial explosion whenever a word belongs to more
- than one 
-\begin_inset Formula $g$
-\end_inset
-
-.
- One simple disjunct gets replaced by dozens...
- this seems incorrect.
- A few, maybe, but dozens, no.
+\series bold
+Name
+\series default
+ – Dataset name
 \end_layout
 
 \begin_layout Section*
