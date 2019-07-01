@@ -53,7 +53,7 @@
 ;         ConnectorSeq
 ;             Connector
 ;                WordClassNode "verb" ; or possibly a WordNode
-;                LgConnDirNode "+"
+;                ConnectorDir "+"
 ;             Connector
 ;                ....
 ;

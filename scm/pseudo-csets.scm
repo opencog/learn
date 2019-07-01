@@ -57,10 +57,10 @@
 ;       (ConnectorSeq
 ;          (Connector
 ;             (WordNode "level")
-;             (LgConnDirNode "-"))
+;             (ConnectorDir "-"))
 ;          (Connector
 ;             (WordNode "field")
-;             (LgConnDirNode "+"))))
+;             (ConnectorDir "+"))))
 ;
 ; In dictionary short-hand, this would be written as
 ;
