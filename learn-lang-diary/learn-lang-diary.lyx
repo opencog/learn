@@ -35842,6 +35842,98 @@ baseline
 \end_layout
 
 \begin_layout Standard
+How might one determine if two links are similar? The same way that one
+ determines if any other vectors are similar.
+ In this case, one starts with the double-spider diagram:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/seeds-two.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The disjoint union of the open circles (the unconnected connectors) define
+ a defacto basis element for the two linked words.
+ Associated with this is a product of observation counts, which can effectively
+ be used to define any distance metric previously considered.
+ Notationally, write 
+\begin_inset Formula 
+\[
+d_{a}=\left(c_{1}^{\left(a\right)},\cdots,c_{j}^{\left(a\right)},\cdots,c_{k}^{\left(a\right)}\right)
+\]
+
+\end_inset
+
+just as before, but now with a superscript 
+\begin_inset Formula $\left(a\right)$
+\end_inset
+
+ to tell the connectors apart from hos on 
+\begin_inset Formula $d_{b}$
+\end_inset
+
+.
+ The connector set on 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+d_{ab}=\left(c_{1}^{\left(a\right)},\cdots,\widehat{c_{j}^{\left(a\right)}},\cdots,c_{k}^{\left(a\right)},c_{1}^{\left(b\right)},\cdots,\widehat{c_{m}^{\left(b\right)}},\cdots,c_{n}^{\left(b\right)}\right)
+\]
+
+\end_inset
+
+with the widehat notation 
+\begin_inset Formula $\widehat{c_{i}}$
+\end_inset
+
+ indicating that connector 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is absent from the list.
+ Both 
+\begin_inset Formula $c_{j}^{\left(a\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{m}^{\left(b\right)}$
+\end_inset
+
+ need to be absent, as those are the two connectors forming the link.
+ Thus, associated with every 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is a (fairly large) set of 
+\begin_inset Formula $d_{ab}$
+\end_inset
+
+.
+ To turn this into a bona-fide vector, a count is needed.
+ It seems reasonable to define 
+\begin_inset Formula 
+\[
+N\left(l_{ab},d_{ab}\right)=N\left(w_{a},d_{a}\right)N\left(w_{b},d_{b}\right)
+\]
+
+\end_inset
+
+One might consider adjusting the above by counts on connectors, or ..
+ something...
+ but this seems like un-needed complexity, at this point.
+\end_layout
+
+\begin_layout Standard
 xxxx
 \end_layout
 
