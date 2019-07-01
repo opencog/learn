@@ -17765,6 +17765,7 @@ Same as above, but the hugest non-full set.
    (batch-all-pair-mi psa)
    Finished left norm marginals in 33135 secs
    Finished left entropy subtotals in 32088 secs
+   Finished left MI subtotals in 33280 secs
 xxxxxxxxxxxx
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
@@ -17834,6 +17835,10 @@ Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
 Includes marginals, pair-MI's and MM^T values. This is effectively the
 "full" cfive dataset, with only impossible linkages removed.
 
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 6100 secs
+
 BUILD:
    (sql-open "postgres:///en_dj_cfive")
    (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
@@ -17864,9 +17869,6 @@ en_full_marg=> \dt+
 
 select count(*) from atoms;      <<<<  80111606 ==  80M Atoms
 select count(*) from valuations; <<<< 190673853 == 191M Vals
-
-((make-pseudo-cset-api) 'fetch-pairs):
--- Elapsed time to load csets: 6100 secs
 
 guile-en> (print-matrix-summary-report psa)
 Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
