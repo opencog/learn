@@ -35941,8 +35941,9 @@ How practical is this? Lets look at the number of potential links in various
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="4">
+<lyxtabular version="3" rows="6" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -35953,6 +35954,15 @@ How practical is this? Lets look at the number of potential links in various
 
 \begin_layout Plain Layout
 Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+#qrt-links
 \end_layout
 
 \end_inset
@@ -36008,6 +36018,15 @@ Name
 \begin_inset Text
 
 \begin_layout Plain Layout
+309K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -36029,6 +36048,15 @@ en_micro_marg
 
 \begin_layout Plain Layout
 7385 x 270K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -36089,6 +36117,15 @@ en_mini_marg
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -36105,6 +36142,15 @@ en_large_marg
 
 \begin_layout Plain Layout
 55K x 6.03M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -36165,6 +36211,15 @@ en_huge_marg
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -36197,10 +36252,34 @@ Dimensions
 \begin_layout Itemize
 
 \series bold
-#half-links
+#qrt-links
 \series default
  – Total number of unique links between all words in the dataset, and some
  connector in any disjunct.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
+
+quarter-link
+\begin_inset Quotes erd
+\end_inset
+
+, as any given disjunct might be shared by multiple (word,disjunct) pairs.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+#half-links
+\series default
+ – Total number of unique links between all words in the dataset, and some
+ connector in any (word, disjunct) pair.
  This is a 
 \begin_inset Quotes eld
 \end_inset
@@ -36209,7 +36288,14 @@ half-link
 \begin_inset Quotes erd
 \end_inset
 
-, as any given disjunct might be shared by multiple words.
+, as the relation is not symmetric; to be symetric, there needs to be another
+ half-link going in the opposite direction.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
 \end_layout
 
 \begin_layout Itemize
