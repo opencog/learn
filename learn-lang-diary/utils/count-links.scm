@@ -75,14 +75,16 @@
 		(cog-incoming-by-type CON 'ConnectorSeq)))
 
 	; Return a list of Sections that are right-half-links,
-	; containing the word LEFT-WRD in some right-pointing
+	; containing the word LEFT-WRD in some left-pointing
 	; connector in the Section.  That is, these sections can
 	; only appear to the right of LEFT-WRD.
 	(define (right-halves LEFT-WRD)
-		(define rc (right-con LEFT-WRD))
+		(define rc (left-con LEFT-WRD))
 		(if rc (sects-w-con rc) '()))
 
 	; Return a list of WordNodes that are linked from the left.
+	; These are words that can appear to the right of LEFT-WRD
+	; because they contain left-pointing connectors to LEFT-WORD.
 	; This list contains no duplicated entries.
 	(define (right-words LEFT-WRD)
 		(define word-set (make-atom-set))
@@ -97,7 +99,7 @@
 			(lambda (SECT)
 				(equal? (gar SECT) LEFT-WRD))
 			(append-map sects-w-con
-				(filter-map left-con (right-words LEFT-WRD)))))
+				(filter-map right-con (right-words LEFT-WRD)))))
 
 	; As above, but without duplicates
 	(define (links LEFT-WRD)
@@ -113,7 +115,7 @@
 
 ; As above, but attempt a fast version, using BindLink
 ; to obtain the results.  ... But its slower. WTF.
-(define (count-links WORD-LST)
+(define (fast-count-links WORD-LST)
 	(define (link-set LEFT-WRD)
 		(cog-execute!
 			(BindLink
@@ -148,7 +150,7 @@
 	(ConnectorSeq (Glob "l-pre") (Any "Right Link") (Glob "l-post"))
 	(ConnectorSeq (Glob "r-pre") (Any "Left Link") (Glob "r-post"))))))
 		
-	%		(Variable "r-word"))))
+	;;; 	Variable "r-word"
 
 	(define (links LEFT-WRD)
 		(define ls (link-set LEFT-WRD))
