@@ -110,3 +110,54 @@
 		(lambda (WRD CNT) (+ CNT (length (links WRD))))
 		0 WORD-LST)
 )
+
+; As above, but attempt a fast version, using BindLink
+; to obtain the results.  ... But its slower. WTF.
+(define (count-links WORD-LST)
+	(define (link-set LEFT-WRD)
+		(cog-execute!
+			(BindLink
+				(VariableList
+					(TypedVariable (Glob "r-pre") (Type 'Connector))
+					(TypedVariable (Variable "r-word") (Type 'WordNode))
+					(TypedVariable (Glob "r-post") (Type 'Connector))
+					(TypedVariable (Glob "l-pre") (Type 'Connector))
+					(TypedVariable (Glob "l-post") (Type 'Connector))
+				)
+				(And
+					(Present
+						(Section
+							LEFT-WRD
+							(ConnectorSeq
+								(Glob "l-pre")
+								(Connector
+									(Variable "r-word")
+									(ConnectorDir "+"))
+								(Glob "l-post"))))
+					(Present
+						(Section
+							(Variable "r-word")
+							(ConnectorSeq
+								(Glob "r-pre")
+								(Connector
+									LEFT-WRD
+									(ConnectorDir "-"))
+								(Glob "r-post")))))
+(Execution
+	(Variable "r-word")
+	(ConnectorSeq (Glob "l-pre") (Any "Right Link") (Glob "l-post"))
+	(ConnectorSeq (Glob "r-pre") (Any "Left Link") (Glob "r-post"))))))
+		
+	%		(Variable "r-word"))))
+
+	(define (links LEFT-WRD)
+		(define ls (link-set LEFT-WRD))
+		(define wl (cog-outgoing-set ls))
+		(cog-delete ls)
+		wl)
+
+	; Now count.
+	(fold
+		(lambda (WRD CNT) (+ CNT (length (links WRD))))
+		0 WORD-LST)
+)

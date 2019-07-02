@@ -17770,6 +17770,66 @@ xxxxxxxxxxxx
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
+RAM usage: 36 GB resident.
+
+
+en_huge_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values.
+
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 
+-- 36 GBytes RAM
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Good.
+DATE: 1 July 2019
+
+COMMENT ON DATABASE en_huge_marg IS
+'en_cfive consistent Sections with word-count > 3; section-count > 1';
+
+en_huge_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 1878 MB    | 
+ public | valuations | table | ubuntu | 6407 MB    | 
+
+select count(*) from atoms;      <<<< 20195313 == 20M Atoms
+select count(*) from valuations; <<<< 48124872 == 48M Vals
+
+guile-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 42284522)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 54832 Columns: 6031954
+Size: 7907629 non-zero entries of 330744101728 possible
+Fraction non-zero: 2.3909E-5 Sparsity (-log_2): 15.352
+Total observations: 42284522.0  Avg obs per pair: 5.3473
+Entropy Total: 20.691   Left: 18.450   Right: 8.1271
+Total MI: 5.8865
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  268.7        1.8714E+5
+Count   (l_1)  1.2368E+4    9.9142E+5     46.03        5.298    
+Length  (l_2)  3858.        3.2396E+4     14.36        .1731    
+RMS Count      3813.        3.2323E+4     14.19        .1727    
+
+MM^T support=7907629.0     count=522992873156.0     entropy=6.9016
+No M^TM data present
+
+3772947413 Bytes uncompressed == 3.77 GBytes
+ 417542166 Bytes compressed   ==  418 MBytes
+
+eeed40c6a36fe0319cd8e53fc1d2bc6b  en_huge_marg.sql
+8c409609d5535473f21d7c469f2dfd53  en_huge_marg.sql.bz2
 
 ==========
 linkage-filter the full set, now:
@@ -17838,6 +17898,7 @@ Includes marginals, pair-MI's and MM^T values. This is effectively the
 Loading and running this takes time and uses significant RAM:
 ((make-pseudo-cset-api) 'fetch-pairs):
 -- Elapsed time to load csets: 6100 secs
+-- 97 GBytes RAM
 
 BUILD:
    (sql-open "postgres:///en_dj_cfive")
@@ -19794,7 +19855,78 @@ Token "." matches:
     ..34                       3730768318  disjuncts
 
 
+--------
+Other crazy shit:
+en_mini_marg contains this:
 
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+is this for real, or a corrupt MST parse?
+
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+$47 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+   ))
+
+$49 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "Province") (ConnectorDir "-"))
+      (Connector (WordNode "basis") (ConnectorDir "-"))
+      (Connector (WordNode "scope") (ConnectorDir "-"))
+      (Connector (WordNode "name") (ConnectorDir "-"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+   ))
+
+This sure looks like broken MST parses to me ...
+
+$50 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "warriors") (ConnectorDir "-"))
+      (Connector (WordNode "assistance") (ConnectorDir "-"))
+      (Connector (WordNode "cause") (ConnectorDir "-"))
+      (Connector (WordNode "throne") (ConnectorDir "-"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "warriors") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "these") (ConnectorDir "+"))
+   ))
+
+There seem to be a lot of these ... WTF.
 
 
 
