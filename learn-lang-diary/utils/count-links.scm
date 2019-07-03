@@ -9,6 +9,12 @@
 ; are there in a dataset? The three functions below count them.
 ; Warning; the last one is very very slow.
 ;
+; All functions expect a word list. Use (psa 'left-basis)
+; i.e. (define pca (make-pseudo-cset-api))
+;      (define psa (add-pair-stars pca))
+; Example usage: (count-linkable-word-pairs (psa 'left-basis))
+;
+; ------------------------------------------------------------------
 ;; Just count how many disjuncts connect to some word, either to
 ;; the left or to the right. WORD-LST should be a list of WordNodes.
 ;; This just gets the two connectors that WordNode might appear in,
@@ -26,6 +32,7 @@
 			WORD-LST))
 )
 
+; ------------------------------------------------------------------
 ; Count the number of half-links. A half-link joins together a
 ; connector to a word at the head of a section. There are always
 ; more of these, than quarter-links, because a given connector-seq
@@ -50,13 +57,14 @@
 			WORD-LST))
 )
 
+; ------------------------------------------------------------------
 ; Count the total number of word-pairs that can have links between
-; them. This only counts the number of pairs, and NOT all the different
-; ways they might connect.
+; them. This only counts the number of word-pairs, and NOT all the
+; different ways that sections associated with those words might
+; connect.
 ; Caution: this is very slow for large datasets, since it's brute-force
 ; in how it connects the two half-links.
-; Example usage: (count-links (psa 'left-basis))
-(define (count-links WORD-LST)
+(define (count-linkable-word-pairs WORD-LST)
 	; Return a right-pointing connector for the word, if it exists,
 	; else return #f
 	(define (right-con WRD)
@@ -121,9 +129,9 @@
 		0 WORD-LST)
 )
 
-; As above, but attempt a fast version, using BindLink
-; to obtain the results.  ... But its slower. WTF.
-;(define (fast-count-links WORD-LST)
+; ------------------------------------------------------------------
+; Count links between sections.
+(define (count-full-links WORD-LST)
 
 	; Define variables only once.
 	(define blvars
@@ -150,10 +158,14 @@
 			(Connector (Variable "r-word") (ConnectorDir "+"))
 		(Glob "l-post")))
 
+	; Create a BindLink that will obtain the links between sections,
+	; and report the results.
 	(define (make-blink LEFT-WRD)
 		(BindLink blvars
 			(And
+				; A Setion from the LEFT-WRD connecting to the right.
 				(Present (Section LEFT-WRD rcon))
+				; A Section from the discovered right-word, pointing left.
 				(Present
 					(Section
 						(Variable "r-word")
@@ -163,25 +175,31 @@
 								LEFT-WRD
 								(ConnectorDir "-"))
 							(Glob "r-post")))))
+
+			; Temp stand-in for "the real thing"
 			(List
+				LEFT-WRD
 				(Variable "r-word")
 				(List (Glob "l-pre") (Any "Left") (Glob "l-post"))
 				(List (Glob "r-pre") (Any "Right") (Glob "r-post")))
 		))
-		
+
+	; Avoid atomspace polution.
 	(define (wrap func)
 		(cog-push-atomspace)
 		(let ((rc (func)))
 			(cog-pop-atomspace)
 			rc))
 
-	(define (links LEFT-WRD)
+	; Return a count of the links that were found.
+	(define (link-count LEFT-WRD)
 		(define (func)
-			(cog-outgoing-set (cog-execute! (make-blink LEFT-WRD))))
+			(cog-arity (cog-execute! (make-blink LEFT-WRD))))
 		(wrap func))
 
-;	; Now count.
-;	(fold
-;		(lambda (WRD CNT) (+ CNT (length (links WRD))))
-;		0 WORD-LST)
-;)
+	; Count over all words.
+	(fold
+		(lambda (WRD CNT) (+ CNT (link-count WRD)))
+		0 WORD-LST)
+)
+; ------------------------------------------------------------------

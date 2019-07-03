@@ -35964,8 +35964,9 @@ count-links.scm.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="6">
+<lyxtabular version="3" rows="6" columns="7">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -35986,7 +35987,7 @@ Dimensions
 \begin_inset Text
 
 \begin_layout Plain Layout
-#qrt-links
+qrt-links
 \end_layout
 
 \end_inset
@@ -35995,7 +35996,7 @@ Dimensions
 \begin_inset Text
 
 \begin_layout Plain Layout
-#half-links
+half-links
 \end_layout
 
 \end_inset
@@ -36004,7 +36005,16 @@ Dimensions
 \begin_inset Text
 
 \begin_layout Plain Layout
-#full-links
+pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full-links
 \end_layout
 
 \end_inset
@@ -36052,6 +36062,15 @@ Name
 
 \begin_layout Plain Layout
 309K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.4K
 \end_layout
 
 \end_inset
@@ -36116,6 +36135,15 @@ en_micro_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
+88.6K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 x395K
 \end_layout
 
@@ -36164,6 +36192,15 @@ en_mini_marg
 
 \begin_layout Plain Layout
 4.64M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -36237,6 +36274,15 @@ en_large_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 7.91M
 \end_layout
 
@@ -36293,6 +36339,15 @@ en_huge_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 31.7M
 \end_layout
 
@@ -36330,10 +36385,10 @@ Dimensions
 \begin_layout Itemize
 
 \series bold
-#qrt-links
+qrt-links
 \series default
- – Total number of unique links between all words in the dataset, and some
- connector in any disjunct.
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in some disjunct.
  This is a 
 \begin_inset Quotes eld
 \end_inset
@@ -36354,10 +36409,10 @@ i.e.
 \begin_layout Itemize
 
 \series bold
-#half-links
+half-links
 \series default
- – Total number of unique links between all words in the dataset, and some
- connector in any (word, disjunct) pair.
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in any (word, disjunct) pair.
  This is a 
 \begin_inset Quotes eld
 \end_inset
@@ -36366,8 +36421,9 @@ half-link
 \begin_inset Quotes erd
 \end_inset
 
-, as the relation is not symmetric; to be symetric, there needs to be another
- half-link going in the opposite direction.
+, as the relation is not symmetric; to be symmetric, i.e.
+ a full-link, there needs to be another matching half-link going in the
+ opposite direction.
  The counting is without multiplicity (
 \emph on
 i.e.
@@ -36379,9 +36435,17 @@ i.e.
 \begin_layout Itemize
 
 \series bold
-#full-links
+pairs
 \series default
- – Total number of unique links in the dataset, as defined above.
+ – Total number of word-pairs having full-links between them.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+full-links
+\series default
+ – Total number of unique full-links in the dataset, as defined above.
  
 \end_layout
 
