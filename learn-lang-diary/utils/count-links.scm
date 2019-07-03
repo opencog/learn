@@ -115,51 +115,65 @@
 
 ; As above, but attempt a fast version, using BindLink
 ; to obtain the results.  ... But its slower. WTF.
-(define (fast-count-links WORD-LST)
-	(define (link-set LEFT-WRD)
-		(cog-execute!
-			(BindLink
-				(VariableList
-					(TypedVariable (Glob "r-pre") (Type 'Connector))
-					(TypedVariable (Variable "r-word") (Type 'WordNode))
-					(TypedVariable (Glob "r-post") (Type 'Connector))
-					(TypedVariable (Glob "l-pre") (Type 'Connector))
-					(TypedVariable (Glob "l-post") (Type 'Connector))
-				)
-				(And
-					(Present
-						(Section
-							LEFT-WRD
-							(ConnectorSeq
-								(Glob "l-pre")
-								(Connector
-									(Variable "r-word")
-									(ConnectorDir "+"))
-								(Glob "l-post"))))
-					(Present
-						(Section
-							(Variable "r-word")
-							(ConnectorSeq
-								(Glob "r-pre")
-								(Connector
-									LEFT-WRD
-									(ConnectorDir "-"))
-								(Glob "r-post")))))
-(Execution
-	(Variable "r-word")
-	(ConnectorSeq (Glob "l-pre") (Any "Right Link") (Glob "l-post"))
-	(ConnectorSeq (Glob "r-pre") (Any "Left Link") (Glob "r-post"))))))
+;(define (fast-count-links WORD-LST)
+
+	; Define variables only once.
+	(define blvars
+		(VariableList
+			(TypedVariable (Variable "r-word") (Type 'WordNode))
+			(TypedVariable (Glob "r-pre")
+				(TypeSet (Type 'Connector)
+					(Interval (Number 0) (Number -1))))
+			(TypedVariable (Glob "r-post")
+				(TypeSet (Type 'Connector)
+					(Interval (Number 0) (Number -1))))
+			(TypedVariable (Glob "l-pre")
+				(TypeSet (Type 'Connector)
+					(Interval (Number 0) (Number -1))))
+			(TypedVariable (Glob "l-post")
+				(TypeSet (Type 'Connector)
+					(Interval (Number 0) (Number -1))))
+		))
+
+	; Another invariant part of the pattern
+	(define rcon
+		(ConnectorSeq
+			(Glob "l-pre")
+			(Connector (Variable "r-word") (ConnectorDir "+"))
+		(Glob "l-post")))
+
+	(define (make-blink LEFT-WRD)
+		(BindLink blvars
+			(And
+				(Present (Section LEFT-WRD rcon))
+				(Present
+					(Section
+						(Variable "r-word")
+						(ConnectorSeq
+							(Glob "r-pre")
+							(Connector
+								LEFT-WRD
+								(ConnectorDir "-"))
+							(Glob "r-post")))))
+			(List
+				(Variable "r-word")
+				(List (Glob "l-pre") (Any "Left") (Glob "l-post"))
+				(List (Glob "r-pre") (Any "Right") (Glob "r-post")))
+		))
 		
-	;;; 	Variable "r-word"
+	(define (wrap func)
+		(cog-push-atomspace)
+		(let ((rc (func)))
+			(cog-pop-atomspace)
+			rc))
 
 	(define (links LEFT-WRD)
-		(define ls (link-set LEFT-WRD))
-		(define wl (cog-outgoing-set ls))
-		(cog-delete ls)
-		wl)
+		(define (func)
+			(cog-outgoing-set (cog-execute! (make-blink LEFT-WRD))))
+		(wrap func))
 
-	; Now count.
-	(fold
-		(lambda (WRD CNT) (+ CNT (length (links WRD))))
-		0 WORD-LST)
-)
+;	; Now count.
+;	(fold
+;		(lambda (WRD CNT) (+ CNT (length (links WRD))))
+;		0 WORD-LST)
+;)
