@@ -50,10 +50,12 @@
 			WORD-LST))
 )
 
-; Count the total number of links, that is, the total mumber of
-; symmetric links between words, where each has a half-link back
-; to the other. Caustion: this is very slow for large datasets,
-; since it's crute-force in how it connects the two half-links.
+; Count the total number of word-pairs that can have links between
+; them. This only counts the number of pairs, and NOT all the different
+; ways they might connect.
+; Caution: this is very slow for large datasets, since it's brute-force
+; in how it connects the two half-links.
+; Example usage: (count-links (psa 'left-basis))
 (define (count-links WORD-LST)
 	; Return a right-pointing connector for the word, if it exists,
 	; else return #f
@@ -82,6 +84,10 @@
 		(define rc (left-con LEFT-WRD))
 		(if rc (sects-w-con rc) '()))
 
+	(define (left-halves RIGHT-WRD)
+		(define rc (right-con RIGHT-WRD))
+		(if rc (sects-w-con rc) '()))
+
 	; Return a list of WordNodes that are linked from the left.
 	; These are words that can appear to the right of LEFT-WRD
 	; because they contain left-pointing connectors to LEFT-WORD.
@@ -91,15 +97,17 @@
 		(for-each word-set (map gar (right-halves LEFT-WRD)))
 		(word-set #f))
 
-	; Return a list of sections which contain LEFT-WRD on
-	; the left, and are able to form a link to some word
-	; on the right. This list may contain duplicates!
+	; Return a list of words that can appear to the right of
+	; LEFT-WRD, and are mutually linked (i.e. have half-links
+	; that point to one-another.)  This list might contain
+	; duplicates!
 	(define (linkables LEFT-WRD)
 		(filter
-			(lambda (SECT)
-				(equal? (gar SECT) LEFT-WRD))
-			(append-map sects-w-con
-				(filter-map right-con (right-words LEFT-WRD)))))
+			(lambda (R-WRD)
+				(any
+					(lambda (SECT) (equal? (gar SECT) LEFT-WRD))
+					(left-halves R-WRD)))
+			(right-words LEFT-WRD)))
 
 	; As above, but without duplicates
 	(define (links LEFT-WRD)
