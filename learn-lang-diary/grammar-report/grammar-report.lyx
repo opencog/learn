@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass article
+\textclass scrreprt
 \begin_preamble
 \usepackage{url} 
 \end_preamble
@@ -87,12 +87,16 @@
 Grammar Evaluation Results
 \end_layout
 
-\begin_layout Title
-ULL Dictionaries
-\end_layout
-
-\begin_layout Title
+\begin_layout Subtitle
 June 2019 Mini Dictionaries
+\begin_inset Newline newline
+\end_inset
+
+ULL Dictionaries
+\begin_inset Newline newline
+\end_inset
+
+July 2019 Info Dictionaries
 \end_layout
 
 \begin_layout Author
@@ -100,7 +104,7 @@ Linas Vepstas
 \end_layout
 
 \begin_layout Date
-Version of 24 June 2019
+Version of 30 June 2019
 \end_layout
 
 \begin_layout Abstract
@@ -120,7 +124,16 @@ This report briefly reviews the dictionaries, the algorithms used to obtain
  It is assumed that the reader has a general familiarity with the project.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Chapter
+Baseline Measurements
+\end_layout
+
+\begin_layout Standard
+This provides the introduction and the baseline to the algorithm, the measuremen
+ts, and the results.
+\end_layout
+
+\begin_layout Section
 Introduction
 \end_layout
 
@@ -296,7 +309,7 @@ unknown word
  Thus, an unknown-word mechanism is critical for providing reasonable coverage.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 June 2019 Restart
 \end_layout
 
@@ -358,7 +371,7 @@ To repeat: these are highly preliminary, as most of the important parts
  idea works at some minimal level.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Baseline Dataset
 \end_layout
 
@@ -444,7 +457,17 @@ en_large_marg
 \begin_layout Itemize
 
 \series bold
-en_midj_links 
+en_huge_marg 
+\series default
+– Keep only words with observation count>3, sections with count>1; discard
+ all sections that contain connectors that cannot link to anything.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+en_full_marg 
 \series default
 – Discard all sections that contain connectors that cannot link to anything.
  (todo: rename to full-marg)
@@ -479,7 +502,7 @@ Section
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="6" columns="8">
+<lyxtabular version="3" rows="7" columns="8">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -716,7 +739,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17K x 947K
 \end_layout
 
 \end_inset
@@ -725,7 +748,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.56M
 \end_layout
 
 \end_inset
@@ -734,7 +757,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+26.2M
 \end_layout
 
 \end_inset
@@ -743,7 +766,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+16.7
 \end_layout
 
 \end_inset
@@ -752,7 +775,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13.34
 \end_layout
 
 \end_inset
@@ -761,7 +784,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.08
 \end_layout
 
 \end_inset
@@ -770,7 +793,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.16
 \end_layout
 
 \end_inset
@@ -780,6 +803,80 @@ en_mini_marg
 
 \begin_layout Plain Layout
 en_large_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55K x 6.03M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.91M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+42.3M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.35
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.69
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.89
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_huge_marg
 \end_layout
 
 \end_inset
@@ -835,7 +932,7 @@ en_large_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+23.08
 \end_layout
 
 \end_inset
@@ -844,7 +941,7 @@ en_large_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.15
 \end_layout
 
 \end_inset
@@ -853,7 +950,7 @@ en_large_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-en_midj_links
+en_full_marg
 \end_layout
 
 \end_inset
@@ -1095,7 +1192,7 @@ en_rfive
  
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Grammars
 \end_layout
 
@@ -1133,8 +1230,9 @@ Parameters are not tuned (some parameters were picked that seemed reasonable
 \end_layout
 
 \begin_layout Itemize
-Clustering remainders are being ignored.
- (When a word is placed into a cluster, the counts of any shared disjuncts
+Clustering is only weakly sensitive to distinct word-senses; a quasi-linear
+ merge of observation counts is used.
+ When a word is placed into a cluster, the counts of any shared disjuncts
  are transfered to the cluster.
  This leaves behind a left-over word-vector, containing disjuncts that did
  not fit into the cluster.
@@ -1148,9 +1246,11 @@ automatically
 \end_inset
 
  in these algorithms.
- Currently, these left-over bits are either being reclustered, if possible,
- otherwise they are being discarded at the end (I think, I'm not sure).
- They should not be discarded.) 
+ These left-over bits are either being reclustered, if possible, unless
+ the remaining counts are tiny, in which case they are discarded.
+ A more refined clustering algo would replace this quasi-linear merge with
+ a disjunct-by-disjunct decision, to minimize the accidental mixing of disjuncts
+ that should have been associated with different word-senses.
 \end_layout
 
 \begin_layout Itemize
@@ -1167,7 +1267,8 @@ shapes
 \end_layout
 
 \begin_layout Itemize
-Connectors are not being assigned to word-classes (
+Link-types are being clustered badly; that is, connectors are not being
+ assigned properly to word-classes (
 \emph on
 i.e.
 
@@ -1180,8 +1281,23 @@ sheaves
 \begin_inset Quotes erd
 \end_inset
 
- concept is not being used; the code for the sheaves algo has not yet been
- written; it needs to be coupled with the shapes code.)
+ concept is not being used.) The current code over-generalizes: if it finds
+ a link between two words, then it automatically promotes that to a link
+ between all word-classes that those word belong to.
+ This creates linkages between word-senses that should have been kept distinct.
+ It also leads to a combinatoric explostion in the parser.
+ This desperately needs to be fixed.
+\end_layout
+
+\begin_layout Standard
+Solutions to all of these issues are explored in Chapter 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "chap:Info-theoretic-Improvements"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -2623,7 +2739,7 @@ en_micro_disinfo3
  As above, but higher MI cutoff.
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Measurements
 \end_layout
 
@@ -2946,6 +3062,28 @@ All five corpora are available in the
 learn/run/3-gram-class/test-data
 \family default
  directory.
+\end_layout
+
+\begin_layout Standard
+Measurements were performed with the script 
+\family typewriter
+learn/run/3-gram-class/dict-comp.scm
+\family default
+ specifying the dictionary to test and the corpus as
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+guile -s learn/run/3-gram-class/dict-comp.scm <dict-to-test> <corpus>
+\begin_inset Newline newline
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8059,7 +8197,7 @@ silver
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
 Unknown word guessing
 \end_layout
 
@@ -12942,455 +13080,7 @@ silver
 
 \end_layout
 
-\begin_layout Section*
-Info-based distances
-\end_layout
-
-\begin_layout Standard
-These dictionaries are generated by using MI scores instead of cosines for
- determining distances between words.
- They use the same projective clustering as the earlier datasets.
- These use a 
-\begin_inset Quotes eld
-\end_inset
-
-sigmoid
-\begin_inset Quotes erd
-\end_inset
-
- taper; its not sigmoid in this case, but linear, running between 0% at
- the MI cutoff and 100% at the lesser of the two self-MI's of the items
- being merged.
- All of these use the unknown-word mechanism.
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="6">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-micro-disinfo 
-\family typewriter
-(disinfo 2.0)
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Sents
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Diff
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-P
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-F1
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-CDS
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1832
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-basic
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-579
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-fixes
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4236
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-gold
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-229
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-silver
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2513
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section*
+\begin_layout Section
 Graphs
 \end_layout
 
@@ -13449,7 +13139,59 @@ Finally, the reciprocal mean of the two, aka the F1-score.
 
 \end_layout
 
-\begin_layout Section*
+\begin_layout Section
+Conclusions for Part I
+\end_layout
+
+\begin_layout Standard
+The following conclusions can be made for the above baseline measurements.
+ 
+\end_layout
+
+\begin_layout Itemize
+Taken as a proof-of-concept, the pipeline seems to work, and provides a
+ stable foundation for further research.
+\end_layout
+
+\begin_layout Itemize
+Tighter clustering only marginally improves precision, but sharply damages
+ recall.
+ Given a choice, looser clustering improves the overall coverage of the
+ dictionary.
+ In effect, the dictionary understand more, even if it doesn't understand
+ it quite as well.
+\end_layout
+
+\begin_layout Itemize
+The sigmoid taper decision used in the 
+\emph on
+discrim
+\emph default
+ merge algo, vs.
+ the 
+\emph on
+fuzz
+\emph default
+ algo seems to make an important improvement in quality.
+ Accidental tweaks seem to further improve scores.
+ This suggests that the manner of clustering has an important effect.
+\end_layout
+
+\begin_layout Itemize
+Larger dictionaries with larger vocabularies provide only mixed results.
+ The scores are roughly the same, which is surprising.
+ Tiny vocabularies with effective unknown-word guessing are mostly just
+ as good as larger vocabularies (with unknown word guessing).
+ This indicates that the current algos are not effectively extracting any
+ extra info from the larger vocabularies!
+\end_layout
+
+\begin_layout Itemize
+Unknown-word guessing by the parser appears to be an effective strategy
+ for broadening the coverage of the dictionary.
+\end_layout
+
+\begin_layout Chapter
 ULL Dictionary Measurements
 \end_layout
 
@@ -18516,12 +18258,47 @@ ull-dnn-mi
  dataset.
 \end_layout
 
-\begin_layout Section*
-Conclusions
+\begin_layout Subsection*
+Open Questions
 \end_layout
 
 \begin_layout Standard
-The most important results come from the ULL datasets.
+There are some things I do not understand about the ULL pipeline.
+ These are:
+\end_layout
+
+\begin_layout Itemize
+When the ULL pipeline clusters words together, what distance metric is used?
+ Cosine? Something else?
+\end_layout
+
+\begin_layout Itemize
+How are link types clustered? That is, how does ULL determine if two links
+ are similar, and belong in the same class? What metric is use? (Clustering
+ links is a distinct step from clustering words; for ULL, I think tehse
+ are somehow combined into one?)
+\end_layout
+
+\begin_layout Itemize
+How are words merged into word-classes? I believe that when ULL decides
+ that two words are similar, a whole-sale merge all disjuncts into the word-clas
+s is performed, without any attempt at setting aside the disjuncts that
+ "don't belong".
+ Is that right? (Disallowing the merger of disjuncts that "don't belong"
+ is the primary mechanism of WSD, so this is important to understand.)
+\end_layout
+
+\begin_layout Standard
+Without a clear description of these, its hard to tell what, exactly, ULL
+ is doing.
+\end_layout
+
+\begin_layout Section
+Conclusions for Part II – ULL pipeline
+\end_layout
+
+\begin_layout Standard
+There are several vitally important results gleaned from the ULL datasets.
  These suggest a method for how to tune the language learning pipeline:
  it should be tuned to maximize the fidelity of its action on known grammars.
  That way, when applied to new, unknown grammars, it can be trusted to produce
@@ -18543,13 +18320,7 @@ MST parse
 \end_layout
 
 \begin_layout Standard
-There are a separate set of conclusions for the Linas variant of the pipeline.
- These are minor compared to the above, but important for their own sake.
-\end_layout
-
-\begin_layout Itemize
-Taken as a proof-of-concept, the Linas variant of the pipeline seems to
- work, and provide a stable foundation for further research.
+Contrasting to the Linas pipeline, one can also say:
 \end_layout
 
 \begin_layout Itemize
@@ -18562,47 +18333,706 @@ The Linas pipeline seems to be producing dictionaries with better coverage
 \end_layout
 
 \begin_layout Itemize
-Tighter clustering only marginally improves precision, but sharply damages
- recall.
- Given a choice, looser clustering improves the overall coverage of the
- dictionary.
- In effect, the dictionary understand more, even if it doesn't understand
- it quite as well.
-\end_layout
-
-\begin_layout Itemize
-The sigmoid taper decision used in the 
-\emph on
-discrim
-\emph default
- merge algo, vs.
- the 
-\emph on
-fuzz
-\emph default
- algo seems to make an important improvement in quality.
- Accidental tweaks seem to further improve scores.
- This suggests that the manner of clustering has an important effect.
-\end_layout
-
-\begin_layout Itemize
-Larger dictionaries with larger vocabularies provide only mixed results.
- The scores are roughly the same, which is surprising.
- Tiny vocabularies with effective unknown-word guessing are mostly just
- as good as larger vocabularies (with unknown word guessing).
- This indicates that the current algos are not effectively extracting any
- extra info from the larger vocabularies!
-\end_layout
-
-\begin_layout Itemize
 Unknown-word guessing by the parser appears to be an effective strategy
- for broadening the coverage of the dictionary.
+ for broadening the coverage of the dictionary; supporting this in the ULL
+ pipeline is surely a good idea!
 \end_layout
 
 \begin_layout Itemize
 The Linas pipeline should be tuned in the fashion that the tuning breakthrough
  suggests.
  Without this, one is working blind.
+\end_layout
+
+\begin_layout Chapter
+Info-theoretic Improvements
+\begin_inset CommandInset label
+LatexCommand label
+name "chap:Info-theoretic-Improvements"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The results in Part 1 embodied several "known bugs", each of which needs
+ to be fixed.
+ These are:
+\end_layout
+
+\begin_layout Itemize
+Failure to use the Kullback-Liebler divergence instead of cosine distance.
+ I argued last summer about why KL is better than cosine distance, but my
+ own code base has yet to catch up with my theory.
+ All of the Part I dictionaries used cosine distance.
+\end_layout
+
+\begin_layout Itemize
+Failure to perform a fine-grained merge that distinguishes different word-senses.
+ The Part I merge algo was a quasi-linear merge that moved many/most of
+ the disjunct counts from a word into the word-class it was assigned to.
+ This has the unintended effect of blurring together distinct word-senses.
+ A more fine-grained merge would make this decision on a disjunct-by-disjunct
+ basis, deciding when a disjunct belongs, and when it doesn't.
+ Such an algo will be (when I get done writing it) a "binary optimization"
+ algo (That is, an "integer programming" algo with the integers restricted
+ to 0 or 1: https://en.wikipedia.org/wiki/Integer_programming) The algo chooses,
+ on a disjunct-by-disjunct basis, whether that disjunct belongs to the given
+ word-sense, or not.
+ I think I have an OK algo for this that can run in linear time; written
+ up in the diary, but not yet converted into code.
+ This should improve WSD by a lot.
+ Maybe.
+ Hmmm...
+\end_layout
+
+\begin_layout Itemize
+Failure to cluster link-types/connectors.
+ Part 1 used a brute-force combinatoric algo: if there was a link between
+ two words (even if that link was wrong), then a link between all word-classes
+ containing those words was created.
+ This is wrong in three different ways: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+It excessively generalizes ("blurs") the grammar, allowing two word-classes
+ to connect, just because some random error in the MST stage accidentally
+ connected two words.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Its wrong because it also blurs different word-senses: if a word belongs
+ to two or more word-classes, each will be connected to, thus allowing links
+ between word-senses that should have been disallowed.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Finally, it is the direct and immediate cause of the combinatoric explosions
+ that make parsing so terribly slow.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+Here in Part III, solutions to the problems above will be explored.
+\end_layout
+
+\begin_layout Section
+Info-based distances
+\end_layout
+
+\begin_layout Standard
+These dictionaries are generated by using MI scores instead of cosines for
+ determining distances between words.
+ They use the same projective clustering as the earlier datasets.
+ These use a 
+\begin_inset Quotes eld
+\end_inset
+
+sigmoid
+\begin_inset Quotes erd
+\end_inset
+
+ taper; its not sigmoid in this case, but linear, running between 0% at
+ the MI cutoff and 100% at the lesser of the two self-MI's of the items
+ being merged.
+ All of these use the unknown-word mechanism.
+\end_layout
+
+\begin_layout Standard
+The initial form of these dicts, where a connector is created for each distinct
+ word-class that a word belongs to cannot be measured.
+ The result is that there is a combinatoric explosion of expressions for
+ each word, leading to an even worse combinatoric overflow during parsing.
+ Here's a snapshot example from the 
+\emph on
+micro-disinfo
+\emph default
+ dictionary:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "the" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       the.54                     2879150524  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       the.24                        3397807  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "old" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       old.71                        3568091  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "was" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       was.89                        4809781  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       was.19                          20761  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "on" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       on.68                      3259929866  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       on.24                         3397807  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       on.17                           22768  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "his" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       his.24                        3397807  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "shoulder" matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       shoulder.44                1274692269  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       shoulder.39                    204008  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       shoulder.28                 269503230  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+   Token "." matches:
+\end_layout
+
+\begin_layout Plain Layout
+
+       ..81                        509547141  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+       ..34                       3730768318  disjuncts
+\end_layout
+
+\begin_layout Plain Layout
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice how 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+ explodes into almost 3 billion disjuncts, 
+\begin_inset Quotes eld
+\end_inset
+
+on
+\begin_inset Quotes erd
+\end_inset
+
+ into more than 3 billion, and even a common noun like 
+\begin_inset Quotes eld
+\end_inset
+
+shoulder
+\begin_inset Quotes erd
+\end_inset
+
+ ends up with over a billion disjuncts.
+ Clearly, this is intolerable.
+\end_layout
+
+\begin_layout Standard
+Therefore ....
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+micro-disinfo 
+\family typewriter
+(disinfo 2.0)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sents
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Diff
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+R
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+F1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CDS
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1832
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+basic
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+579
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+fixes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4236
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gold
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+229
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+silver
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2513
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*

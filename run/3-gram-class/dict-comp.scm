@@ -41,8 +41,13 @@
 (format #t "Verifying dicationary \"~A\" with sentences from \"~A\"\n"
 	test-dict sent-file)
 
+
+;; Set #:INCLUDE-MISSING to #f to disable the processing of sentences
+;; containing words that the dictionary does not know about (i.e. to
+;; disable unknown-word guessing.)
 (define compare
-	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)))
+	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)
+		#:INCLUDE-MISSING #t))
 
 (define (process-file PORT)
 	(define line (read-line PORT))

@@ -13811,7 +13811,7 @@ Elapsed time to load csets: 3382 secs
 but now its 24634125 atoms .... in mrg_test db
 
 (define psu (add-support-compute pca))
-(psu 'cache-all) ; XXX to slow, left not needed.
+(psu 'cache-all) ; XXX too slow, left not needed.
 (psu 'right-marginals)
 Finished left support subtotals in 36823 secs
 Finished right support subtotals in 520 secs   now 457
@@ -17352,35 +17352,6 @@ select count(*) from atoms;      <<<<  81241109 == 81.2 M Atoms
 select count(*) from valuations; <<<< 217533128 == 217.5 M Valuations
                                                    (0.5 M more)
 
-xxxx below is junk xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-(length (cog-incoming-set (AnyNode "cset-disjunct"))) 498240
-
-Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
-Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
-Wildcard: (ListLink (ctv 0 0 69447009)
-   (AnyNode "cset-word")
-   (AnyNode "cset-disjunct")
-)
-Rows: 444903 Columns: 23444293
-Size: 31914870 non-zero entries of 10430436288579 possible
-Fraction non-zero: 3.0598E-6 Sparsity (-log_2): 18.318
-Total observations: 69447009.0  Avg obs per pair: 2.1760
-Entropy Total: 23.092   Left: 21.137   Right: 10.112
-Total MI: 8.1569
-
-                 Left         Right     Avg-left     Avg-right
-                 ----         -----     --------     ---------
-Support (l_0)  2.2742E+5    367.6
-Count   (l_1)  9.4430E+5    7917.         4.152        21.54
-Length  (l_2)  2.4549E+4    2397.         .1079        6.520
-RMS Count      2.4499E+4    2379.         .1077        6.472
-
-17199980652 Bytes uncompressed == 17 GBytes
- 1885746309 Bytes compressed == 1.89 GBytes
-
-90195f2c6a913ef896454894e651813e  en_midj_cfive.sql
-d79ad6f14a7b1bf0ddfd24c31567a5ba  en_midj_cfive.sql.bz2
-
 ==========
 (define pcr (add-report-api psa))
 (pcr 'left-dim)
@@ -17439,8 +17410,8 @@ Try again. This time, cut first.
    (psa 'left-basis-size)   ;; 444903
    (psa 'right-basis-size)  ;; 23444293
    (print-matrix-summary-report psa) ;; as expected.
-   createdb en_cut_dj_cfive
-   cat atoms.sql | psql en_micro_dj_cfive
+   createdb en_micro_dj_cfive
+   cat atom.sql | psql en_micro_dj_cfive
    COMMENT ON DATABASE en_micro_dj_cfive IS 'en_cfive Sections (only) with word-count > 500; section-count > 10';
    (sql-open "postgres:///en_micro_dj_cfive")
 
@@ -17512,7 +17483,7 @@ en_micro_cfive=> select * from atoms where type=71;
 atomspace is missing: *-TruthValueKey-* !! Huh!
 This is missing (PredicateNode "*-Sentence Word Pair-*") Why?
 (It is created by common.scm)
-also: (PredicateNode "*-MM^T Product Key-*") 
+also: (PredicateNode "*-MM^T Product Key-*")
 that's two. Third is the SchemaNode
 three more needed...
 AnchorNode ...
@@ -17544,7 +17515,324 @@ Done storing 647988 left-wilds in 349 secs
 Done storing 647988 left-wilds in 388 secs
 
 ==========
-linkage-filter the big one, now:
+Same as above, but a much bigger set.
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_large_dj_cfive
+   cat atom.sql | psql en_large_dj_cfive
+   COMMENT ON DATABASE en_large_dj_cfive IS 'en_cfive Sections (only) with word-count > 8; section-count > 3';
+   (sql-open "postgres:///en_large_dj_cfive")
+
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+-- Shutdown and restart guile.
+   (sql-open "postgres:///en_large_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+
+   (cog-report-counts)
+       (WordNode . 246103)
+       (ConnectorSeq . 1671691)
+       (Section . 2358816)
+
+   (psa 'left-basis-size)   ;; 27655  <<< lots smaller than Word count!
+   (psa 'right-basis-size)  ;; 1671691
+
+   createdb en_large_marg
+   cat atom.sql | psql en_large_marg
+   COMMENT ON DATABASE en_large_marg IS
+   'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 2934 secs
+   (so, I guess 1671691/2934 = 570 per second...)
+
+   (define fsa (add-subtotal-filter psc 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 17985 << continuing to shrink...
+   (fsa 'right-basis-size)  ;; 1671691  << unchanged.
+   (length (fsa 'get-all-elts)) ;; 2348252
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 17985
+   (lfa 'right-basis-size)  ;; 949252 << much smaller
+   (length (lfa 'get-all-elts)) ;; 1563939
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_large_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+   Finished left norm marginals in 1964 secs
+   Done with wild-card count N(x,*) and N(*,y) in 2137 secs
+   Done computing 1563939 pair MI's in 936 secs
+   Finished left entropy subtotals in 1809 secs
+   Finished left MI subtotals in 1860 secs
+
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+
+
+en_large_dj_cfive
+-----------------
+Filtered copy of en_dj_cfive, with the (8 3 3) filter-cut applied:
+all words with word-count less than 8 removed; all sections with a
+count of less than 3 removed; all dj's with a count of less than 3
+removed. DB does NOT contain marginals!
+
+Note that there is a HUGE number of WordNodes that appear in
+ConnectorSeq's that do NOT appear in Sections!
+
+BUILD:
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (sql-close)
+   createdb en_large_dj_cfive
+   cat atom.sql | psql en_large_dj_cfive
+   COMMENT ON DATABASE en_large_dj_cfive IS
+   'en_cfive Sections (only) with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_dj_cfive")
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+STATUS: Good.
+DATE: 28 June 2019
+
+en_large_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 602 MB     | 
+ public | valuations | table | ubuntu | 1158 MB    | 
+
+select count(*) from atoms;      <<<< 4653425 == 4.6M Atoms
+select count(*) from valuations; <<<< 7076448 == 7.1M Valuations
+
+-- (psa 'left-basis-size)   ;; 27655
+-- (psa 'right-basis-size)  ;; 1671691
+-- after re-filtering, these shrink a bit (of course)
+
+602555918 Bytes uncompressed == 603 MBytes
+ 89639884 Bytes compressed   ==  90 MBytes
+
+d6ad6a2437b07424088f2f19f54b5ab8  en_large_dj_cfive.sql
+fef1307912ac291ce826ad4e8e6861e0  en_large_dj_cfive.sql.bz2
+
+en_large_marg
+-------------
+Same as en_large_dj_cfive, but count-filtered a second time, and
+with unconnectable connectors/conseqs removed.  Includes marginals
+and MM^T values.
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Good.
+DATE: 28 June 2019
+
+COMMENT ON DATABASE en_large_marg IS
+'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+en_large_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 332 MB     | 
+ public | valuations | table | ubuntu | 1050 MB    | 
+
+select count(*) from atoms;      <<<< 3528943 == 3.5M Atoms
+select count(*) from valuations; <<<< 8567215 == 8.6M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 312 secs
+-- Atomspace holds 3528945 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 964563) (Connector . 35093)
+   (ConnectorSeq . 947421) (Section . 1563939) (WordNode . 17910)
+-- top says 4.5 GB RAM
+
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 26185082)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 17141 Columns: 947421
+Size: 1563939 non-zero entries of 16239743361 possible
+Fraction non-zero: 9.6303E-5 Sparsity (-log_2): 13.342
+Total observations: 26185082.0  Avg obs per pair: 16.743
+Entropy Total: 18.075   Left: 15.220   Right: 8.0117
+Total MI: 5.1571
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  219.1        3.5091E+4
+Count   (l_1)  1.9001E+4    5.4787E+5     86.74        15.61    
+Length  (l_2)  6119.        3.2536E+4     27.93        .9272    
+RMS Count      6002.        3.2390E+4     27.40        .9230    
+
+MM^T support=1563939.0     count=497539636092.0     entropy=2.2975
+No M^TM data present
+
+
+656651442 Bytes uncompressed == 657 MBytes
+ 86400823 Bytes compressed   ==  86 MBytes
+
+3f0b2d8c2b32c1ecef814e46724e88f8  en_large_marg.sql
+9c26bafdf5a7328364709a3d789e516d  en_large_marg.sql.bz2
+
+==========
+Same as above, but the hugest non-full set.
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_huge_dj_cfive
+   cat atom.sql | psql en_huge_dj_cfive
+   COMMENT ON DATABASE en_huge_dj_cfive IS 'en_cfive Sections (only) with word-count > 3; section-count > 1';
+
+   (sql-open "postgres:///en_huge_dj_cfive")
+   (define fsa (add-subtotal-filter psa 3 1 1 #f))
+   (fsa 'left-basis-size)   ;; 151951
+   (fsa 'right-basis-size)  ;; 8233844
+   (length (fsa 'get-all-elts)) ;; 9315925
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+-- Shutdown and restart guile.
+   (sql-open "postgres:///en_huge_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+
+   (cog-report-counts)
+   (Connector . 636895) (ConnectorSeq . 7345963)
+   (Section . 9315925)  (WordNode . 387402)
+
+   (psa 'left-basis-size)   ;; 84774
+   (psa 'right-basis-size)  ;; 7345963
+
+   createdb en_huge_marg
+   cat atom.sql | psql en_huge_marg
+   COMMENT ON DATABASE en_huge_marg IS
+   'en_cfive consistent Sections with word-count > 3; section-count > 1';
+
+   (sql-open "postgres:///en_huge_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 37844 secs 
+     so 7345963 / 37844 = 194/second ...
+   (define fsa (add-subtotal-filter psc 3 1 1 #f))
+   (fsa 'left-basis-size)   ;; 57400  << so, a bit smaller
+   (fsa 'right-basis-size)  ;; 7345963 << unchanged
+   (length (fsa 'get-all-elts)) ;; 9288551
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 57400 << unchanged
+   (lfa 'right-basis-size)  ;; 6045624 << a bit smaller
+   (length (lfa 'get-all-elts)) ;; 7907629 << smaller
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)    ;; Done storing 7907629 pairs in 8034 secs
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_huge_marg")
+   (psa 'fetch-pairs)   ; Elapsed time to load csets: 1049 secs
+   ; Support: found num left= 54832 num right= 6031954
+   (batch-all-pair-mi psa)
+   Finished left norm marginals in 33135 secs
+   Finished left entropy subtotals in 32088 secs
+   Finished left MI subtotals in 33280 secs
+xxxxxxxxxxxx
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+RAM usage: 36 GB resident.
+
+
+en_huge_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values.
+
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 
+-- 36 GBytes RAM
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Good.
+DATE: 1 July 2019
+
+COMMENT ON DATABASE en_huge_marg IS
+'en_cfive consistent Sections with word-count > 3; section-count > 1';
+
+en_huge_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 1878 MB    | 
+ public | valuations | table | ubuntu | 6407 MB    | 
+
+select count(*) from atoms;      <<<< 20195313 == 20M Atoms
+select count(*) from valuations; <<<< 48124872 == 48M Vals
+
+guile-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 42284522)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 54832 Columns: 6031954
+Size: 7907629 non-zero entries of 330744101728 possible
+Fraction non-zero: 2.3909E-5 Sparsity (-log_2): 15.352
+Total observations: 42284522.0  Avg obs per pair: 5.3473
+Entropy Total: 20.691   Left: 18.450   Right: 8.1271
+Total MI: 5.8865
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  268.7        1.8714E+5
+Count   (l_1)  1.2368E+4    9.9142E+5     46.03        5.298    
+Length  (l_2)  3858.        3.2396E+4     14.36        .1731    
+RMS Count      3813.        3.2323E+4     14.19        .1727    
+
+MM^T support=7907629.0     count=522992873156.0     entropy=6.9016
+No M^TM data present
+
+3772947413 Bytes uncompressed == 3.77 GBytes
+ 417542166 Bytes compressed   ==  418 MBytes
+
+eeed40c6a36fe0319cd8e53fc1d2bc6b  en_huge_marg.sql
+8c409609d5535473f21d7c469f2dfd53  en_huge_marg.sql.bz2
+
+==========
+linkage-filter the full set, now:
 
 (sql-open "postgres:///en_dj_cfive")
 (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
@@ -17556,6 +17844,8 @@ linkage-filter the big one, now:
    (1000 pairs/sec) ; Done storing 31749357 pairs in 33336 secs
 (sql-close)
 restart
+-- The alf linkage-filter + restart implies that en_midj_links
+   should contain only consistant connectors & links.
 (sql-open "postgres:///en_midj_links")
 (batch-all-pair-mi psa)
 Support: found num left= 438449 num right= 23308382 in 1095 secs
@@ -17580,15 +17870,96 @@ Restart computing
 Going to do column and row subtotals
 Finished left entropy subtotals in 339785 secs <<< 94 hours, i.e. 4 days
 Finished right entropy subtotals in 1776 secs
+Finished left MI subtotals in 336719 secs << 93 hours
+Done storing 23308382 left-wilds in 13255 secs
+Finished with MI computations; this took 193. hours  (8 days!)
 
-
-
-
+------
 (define btr (batch-transpose psa))
 (btr 'mmt-marginals)
+Finished mmt norm marginals in 2822 secs
+Finished mmt totals in 21 secs
+Done storing 438449 right-wilds in 327 secs
+Done storing 23308382 left-wilds in 14668 secs
+
+12587 minutes cpu time for guile = 210 cpu-hours = 9 cpu-days
 
 quick cheat-stats:
 31749357 pairs. tot count== 69197410
+
+ALTER DATABASE en_midj_links RENAME TO en_full_marg;
+
+en_full_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values. This is effectively the
+"full" cfive dataset, with only impossible linkages removed.
+
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 6100 secs
+-- 97 GBytes RAM
+
+BUILD:
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
+   (sql-close)
+   (sql-open "postgres:///en_full_marg")
+   (define alf (add-linkage-filter psa))
+   (define sto (make-store alf))
+   (sto 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+   restart
+   (sql-open "postgres:///en_full_marg")
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Good.
+DATE: 27 June 2019
+
+COMMENT ON DATABASE en_full_marg IS
+'All consistent en_cfive Sections plus MI plus MM^T';
+
+en_full_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 7356 MB    |
+ public | valuations | table | ubuntu | 27 GB      |
+
+select count(*) from atoms;      <<<<  80111606 ==  80M Atoms
+select count(*) from valuations; <<<< 190673853 == 191M Vals
+
+guile-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 69197410)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 438449 Columns: 23308382
+Size: 31749357 non-zero entries of 10219536779518 possible
+Fraction non-zero: 3.1067E-6 Sparsity (-log_2): 18.296
+Total observations: 69197410.0  Avg obs per pair: 2.1795
+Entropy Total: 23.080   Left: 21.119   Right: 10.109
+Total MI: 8.1482
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  368.9        2.2490E+5
+Count   (l_1)  7946.        9.3725E+5     21.54        4.167
+Length  (l_2)  2405.        2.4518E+4     6.520        .1090
+RMS Count      2388.        2.4467E+4     6.473        .1088
+
+MM^T support=31749357.0     count=549825893944.0     entropy=10.840
+No M^TM data present
+
+15053083395 Bytes uncompressed == 15 GBytes
+ 1738289510 Bytes compressed   ==  1.7 GBytes
+
+30812d532e2dfa774fc1caf04ee24722  en_full_marg.sql
+b94eee614a869de1517235962e26828b  en_full_marg.sql.bz2
 
 ==========
 
@@ -17656,13 +18027,13 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 	total loop over 137078 items in a list
    Finished mmt norm marginals in 3012 secs -- colliding
    Finished mmt norm marginals in 1329 secs - par-for-each -- cpu=100%
-   Finished mmt norm marginals in 525 secs - for-each -- 
+   Finished mmt norm marginals in 525 secs - for-each --
    Finished mmt norm marginals in 359 secs - n-par-for-each 4 -- cpu=250%
    Finished mmt norm marginals in 413 secs - n-par-for-each 2 -- cpu=170%
    Finished mmt norm marginals in 474 secs - n-par-for-each 1 -- cpu=100%
    Finished mmt norm marginals in 370 secs - n-par-for-each 8 -- cpu=250%
    Finished mmt norm marginals in 375 secs - n-par-for-each 24 -- cpu=230%
-   Finished mmt norm marginals in 557 secs - par-for-each -- 
+   Finished mmt norm marginals in 557 secs - par-for-each --
    Finished mmt norm marginals in 530 secs - par-for-each -- cpu=100%
    Finished mmt norm marginals in 345 secs - my-par-for-each 6
 	Finished mmt norm marginals in 349 secs - my-par-for-each 12
@@ -18003,7 +18374,7 @@ oohhh filter had a bug. Damn,
  (gcf 'get-pair-count  (gar don) (gdr don))  also works ...
 
 -- createdb mini-test
-   cat atoms.sql | psql mini-test
+   cat atom.sql | psql mini-test
 
    (sql-close)
    (sql-open "postgres:///mini-test?user=linas&password=asdf")
@@ -19452,6 +19823,142 @@ In Vienna, Beethoven met someone who would later be greatly influenced by him: F
 
 
 http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ANY-dILEd-2019-05-09-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_36740C_2019-05-11_0007.4.0.dict
+
+
+Token "this" matches:
+    this.672                       3221  disjuncts
+
+    this.331                       5037  disjuncts
+
+the old beast was whinnying on his shoulder .
+
+Token "the" matches:
+    the.54                     2879150524  disjuncts
+    the.24                      3397807  disjuncts
+Token "old" matches:
+    old.71                      3568091  disjuncts
+Token "was" matches:
+    was.89                      4809781  disjuncts
+    was.19                        20761  disjuncts
+Token "on" matches:
+    on.68                      3259929866  disjuncts
+    on.24                       3397807  disjuncts
+    on.17                         22768  disjuncts
+Token "his" matches:
+    his.24                      3397807  disjuncts
+Token "shoulder" matches:
+    shoulder.44                1274692269  disjuncts
+    shoulder.39                  204008  disjuncts
+    shoulder.28                269503230  disjuncts
+Token "." matches:
+    ..81                       509547141  disjuncts
+    ..34                       3730768318  disjuncts
+
+----------
+(length (links w)) -- 13
+
+but pattern found only 8--
+in the m of them -- midst midst o the
+in the m of -- midst midst o the
+In the m of these -- midst midst o the
+the m of this  -- "
+in the m of these -- "
+in the m of all -- ditto
+the m of them -- ditto
+in the m of crowd -- "
+
+Confusion.
+midst-  is in 6 conseq's
+9 sections contain midst-  (sects-w-con)
+sec words are: of all them this matches right-words
+19 Sections contain midst
+13 are linkable (unique)
+
+(r-pre with zero matches not consideered....!?) ohh.
+d.scm = blink matches 7 times
+
+in unit test: (right-halves == 5
+(right-words  = 5
+links == 5
+
+
+
+
+--------
+Other crazy shit:
+en_mini_marg contains this:
+
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+is this for real, or a corrupt MST parse?
+
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+$47 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+   ))
+
+$49 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "Province") (ConnectorDir "-"))
+      (Connector (WordNode "basis") (ConnectorDir "-"))
+      (Connector (WordNode "scope") (ConnectorDir "-"))
+      (Connector (WordNode "name") (ConnectorDir "-"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+   ))
+
+This sure looks like broken MST parses to me ...
+
+$50 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "warriors") (ConnectorDir "-"))
+      (Connector (WordNode "assistance") (ConnectorDir "-"))
+      (Connector (WordNode "cause") (ConnectorDir "-"))
+      (Connector (WordNode "throne") (ConnectorDir "-"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "warriors") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "these") (ConnectorDir "+"))
+   ))
+
+There seem to be a lot of these ... WTF.
+
+
+
 
 ==========
 Start work on info-sim.

@@ -8,6 +8,7 @@ ADD_GUILE_MODULE (FILES
 	gram-optim.scm
 	gram-projective.scm
 	lg-compare.scm
+	link-class.scm
 	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm

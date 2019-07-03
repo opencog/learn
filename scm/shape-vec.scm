@@ -36,11 +36,11 @@
 ; Consider, for example, the word "level". It can appear in a connector
 ; both as
 ;
-;    (Connector (WordNode "level") (LgConnDirNode "-"))
+;    (Connector (WordNode "level") (ConnectorDir "-"))
 ;
 ; and as
 ;
-;    (Connector (WordNode "level") (LgConnDirNode "+"))
+;    (Connector (WordNode "level") (ConnectorDir "+"))
 ;
 ; One of these connectors appears in the section
 ;

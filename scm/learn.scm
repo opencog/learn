@@ -22,4 +22,5 @@
 (load "learn/gram-optim.scm")
 (load "learn/gram-agglo.scm")
 (load "learn/gram-class-api.scm")
+(load "learn/link-class.scm")
 (load "learn/lg-compare.scm")

@@ -34469,6 +34469,155 @@ Based on my experience, it holds for both ...
 \end_layout
 
 \begin_layout Section*
+Grammatical Class Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words 
+\begin_inset Formula $w$
+\end_inset
+
+ into word-classes 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ More precisely, this is a partitioning of the observation counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ into count-classes 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a grammatically similar fashion.
+\end_layout
+
+\begin_layout Standard
+One naive (but approximate and incorrect) way of doing this is to come up
+ with a membership function – a membership matrix 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+, behaving like a normalized conditional probability
+\begin_inset Formula 
+\[
+\sum_{g}p\left(g|w\right)=1
+\]
+
+\end_inset
+
+which says that every word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to one or more clases 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ A partitioning of counts is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+The intended interpretation is that 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a similar fashion, syntactically, so that
+ 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+ is the conditional probability that a word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ Typically, 
+\begin_inset Formula $w$
+\end_inset
+
+ will belong to no more than half-a-dozen grammatical classes, with each
+ grammatical class corresponding loosely to each word-sense that the word
+ has.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem with the above is that it is incorrect – a too-strong approximation.
+ The problem is that different word-senses behave in grammatically different
+ fashion – 
+\emph on
+e.g.
+
+\emph default
+ a word can be both a verb and a noun.
+ The correct partitioning is then neccessarily given by 
+\begin_inset Formula $p\left(g|w,d\right)$
+\end_inset
+
+ so that, for example, if 
+\begin_inset Formula $g$
+\end_inset
+
+ is a verb-class, then 
+\begin_inset Formula $p\left(g|w,d\right)\ne0$
+\end_inset
+
+ only when 
+\begin_inset Formula $d$
+\end_inset
+
+ is a verb-style disjunct, otherwise, 
+\begin_inset Formula $p\left(g|w,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $d$
+\end_inset
+
+ is a noun-style disjunct.
+ That is, the correct partitioning is given by 
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w,d\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+and word-sense disambiguation fundamentally disallow the assumption that
+ 
+\begin_inset Formula $p\left(g|w,d\right)\sim p\left(g|w\right)$
+\end_inset
+
+ since this assumption erases the grammatical differences between different
+ word-senses.
+\end_layout
+
+\begin_layout Section*
 Word-Sense Disambiguation
 \end_layout
 
@@ -35457,6 +35606,875 @@ As before, the niput data, coming from disjuncts from WSD parses, is noisey,
 
 .
  This requires yet more experimentation.
+\end_layout
+
+\begin_layout Section*
+Link Merge Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words into word-classes.
+ However, the current system leaves the connectors un-clustered.
+ That is, each disjunct is an ordered sequence of (pseudo-)connectors: 
+\begin_inset Formula 
+\[
+d=\left(c_{1},c_{2},\cdots,c_{k}\right)
+\]
+
+\end_inset
+
+with each (pseudo-)connector being a word plus direction (polarity) indicator:
+\begin_inset Formula 
+\[
+c_{j}=\left[w_{j},p_{j}\right]
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{j}\in\left\{ +,-\right\} $
+\end_inset
+
+.
+ We wish to cluster these, replacing the 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ with a 
+\begin_inset Formula $\gamma_{j}=\left[g_{j},p_{j}\right]$
+\end_inset
+
+ where each 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+ is a grammatical class, with 
+\begin_inset Formula $w_{j}\in g_{j}$
+\end_inset
+
+.
+ A naive (but wrong) conception of self-consistency it to have the 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+'s appearing in connectors be the same grammatical classes as those used
+ to categorize words.
+ The notion of self-consistent connector classes is different (given below).
+ At any rate, how does one cluster connectors? 
+\end_layout
+
+\begin_layout Standard
+To proceed, a notation that breaks out the spider diagram is needed.
+ Instead of writing 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, one actually has a collection of observation counts 
+\begin_inset Formula 
+\[
+N\left(w,\left(\left[w_{1},p_{1}\right],\left[w_{2},p_{2}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $k$
+\end_inset
+
+ being the arity of the disjunct.
+ Square brackets are used for easy reading.
+ Prior to clustering, one can convert pseudo-connectors to real connectors
+ (and real links) by observing that word 
+\begin_inset Formula $w_{a}$
+\end_inset
+
+ (on the left) can link to word 
+\begin_inset Formula $w_{b}$
+\end_inset
+
+ (on the right) if an only if exists two word-disjunct pairs 
+\begin_inset Formula $\left(w_{a},d_{a}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(w_{b},d_{b}\right)$
+\end_inset
+
+ such that 
+\begin_inset Formula $d_{a}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{b}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{m},p_{m}\right],\cdots,\left[w_{n},p_{n}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{j}=w_{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{j}=+$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{m}=w_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{m}=-$
+\end_inset
+
+.
+ A link can then be defined as any function that provides a unique label
+ 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ to the word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+.
+ Given a 
+\begin_inset Quotes eld
+\end_inset
+
+true link
+\begin_inset Quotes erd
+\end_inset
+
+ type 
+\begin_inset Formula $l$
+\end_inset
+
+, the corresponding 
+\begin_inset Quotes eld
+\end_inset
+
+true connectors
+\begin_inset Quotes erd
+\end_inset
+
+ are then 
+\begin_inset Formula $l+$
+\end_inset
+
+ and 
+\begin_inset Formula $l-$
+\end_inset
+
+.
+ Thus, for the above example, 
+\begin_inset Formula $\left[w_{j},p_{j}\right]\to l_{ab}+$
+\end_inset
+
+ and 
+\begin_inset Formula $\left[w_{m},p_{m}\right]\to l_{ab}-$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The clustering task is now to find all other links that can be argued to
+ be 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+.
+ One very simple ansatz is to create a link 
+\begin_inset Formula $l_{gg^{\prime}}$
+\end_inset
+
+ that corresponds to the gram-class pair 
+\begin_inset Formula $\left(g,g^{\prime}\right)$
+\end_inset
+
+ and is used to connect any word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+ whenever 
+\begin_inset Formula $w_{a}\in g$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{b}\in g^{\prime}.$
+\end_inset
+
+ This ansataz has a strong 
+\begin_inset Quotes eld
+\end_inset
+
+broadening
+\begin_inset Quotes erd
+\end_inset
+
+ effect, as the generic link type allows words in 
+\begin_inset Formula $g$
+\end_inset
+
+ and 
+\begin_inset Formula $g^{\prime}$
+\end_inset
+
+ to connect, for which actual links were never observed at earlier stages.
+ (This is the variant used in the 
+\begin_inset Quotes eld
+\end_inset
+
+baseline
+\begin_inset Quotes erd
+\end_inset
+
+ datasets measured in the grammar baseline report.) 
+\end_layout
+
+\begin_layout Standard
+How might one determine if two links are similar? The same way that one
+ determines if any other vectors are similar.
+ In this case, one starts with the double-spider diagram:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/seeds-two.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The disjoint union of the open circles (the unconnected connectors) define
+ a defacto basis element for the two linked words.
+ Associated with this is a product of observation counts, which can effectively
+ be used to define any distance metric previously considered.
+ Notationally, write 
+\begin_inset Formula 
+\[
+d_{a}=\left(c_{1}^{\left(a\right)},\cdots,c_{j}^{\left(a\right)},\cdots,c_{k}^{\left(a\right)}\right)
+\]
+
+\end_inset
+
+just as before, but now with a superscript 
+\begin_inset Formula $\left(a\right)$
+\end_inset
+
+ to tell the connectors apart from hos on 
+\begin_inset Formula $d_{b}$
+\end_inset
+
+.
+ The connector set on 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+d_{ab}=\left(c_{1}^{\left(a\right)},\cdots,\widehat{c_{j}^{\left(a\right)}},\cdots,c_{k}^{\left(a\right)},c_{1}^{\left(b\right)},\cdots,\widehat{c_{m}^{\left(b\right)}},\cdots,c_{n}^{\left(b\right)}\right)
+\]
+
+\end_inset
+
+with the widehat notation 
+\begin_inset Formula $\widehat{c_{i}}$
+\end_inset
+
+ indicating that connector 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is absent from the list.
+ Both 
+\begin_inset Formula $c_{j}^{\left(a\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{m}^{\left(b\right)}$
+\end_inset
+
+ need to be absent, as those are the two connectors forming the link.
+ Thus, associated with every 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is a (fairly large) set of 
+\begin_inset Formula $d_{ab}$
+\end_inset
+
+.
+ To turn this into a bona-fide vector, a count is needed.
+ It seems reasonable to define 
+\begin_inset Formula 
+\[
+N\left(l_{ab},d_{ab}\right)=N\left(w_{a},d_{a}\right)N\left(w_{b},d_{b}\right)
+\]
+
+\end_inset
+
+One might consider adjusting the above by counts on connectors, or ..
+ something...
+ but this seems like un-needed complexity, at this point.
+\end_layout
+
+\begin_layout Standard
+How practical is this? Lets look at the number of potential links
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Counted with the 
+\family typewriter
+count-quarter-links
+\family default
+, 
+\family typewriter
+count-half-links
+\family default
+ and 
+\family typewriter
+count-links
+\family default
+ functions in 
+\family typewriter
+count-links.scm.
+\end_layout
+
+\end_inset
+
+ in various datasets:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+qrt-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+half-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1610 x 67K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+146K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+309K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.4K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+x120K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+184K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_micro_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7385 x 270K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+864K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.33M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+88.6K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+x395K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+608K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mini_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17K x 947K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.78M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.64M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+x1.13M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.56M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_large_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55K x 6.03M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.1M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.91M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_huge_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+438K x 23.3M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+76.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+90.1M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.7M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_full_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The columns in the table are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Dimensions
+\series default
+ – Number of words x Number of disjuncts
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+qrt-links
+\series default
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in some disjunct.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
+
+quarter-link
+\begin_inset Quotes erd
+\end_inset
+
+, as any given disjunct might be shared by multiple (word,disjunct) pairs.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+half-links
+\series default
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in any (word, disjunct) pair.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
+
+half-link
+\begin_inset Quotes erd
+\end_inset
+
+, as the relation is not symmetric; to be symmetric, i.e.
+ a full-link, there needs to be another matching half-link going in the
+ opposite direction.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pairs
+\series default
+ – Total number of word-pairs having full-links between them.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+full-links
+\series default
+ – Total number of unique full-links in the dataset, as defined above.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Secs
+\series default
+ – Number of sections in the dataset.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Name
+\series default
+ – Dataset name
+\end_layout
+
+\begin_layout Section*
+Reading list
+\end_layout
+
+\begin_layout Standard
+Papers that people want me to read and have an opinion on:
+\end_layout
+
+\begin_layout Itemize
+https://arxiv.org/abs/1904.03746
 \end_layout
 
 \begin_layout Section*
