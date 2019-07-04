@@ -6,7 +6,7 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
-(define-public (mst-parse-text-file plain-textblock mst-dist DIST-MOD)
+(define-public (mst-parse-text-file plain-textblock DIST-MOD)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
 "
@@ -76,7 +76,7 @@
 			(define right-index (inexact->exact (string->number (cog-name (gdr right-atom)))))
 			; modifier values are given in DIST-MOD. If distance is longer than 
 			; what has been defined in the array, use last array value:
-			(define modifier (list-ref DIST-MOD (min distance (length DIST-MOD))))
+			(define modifier (list-ref DIST-MOD (- (min distance (length DIST-MOD)) 1)))
 
 			(* modifier (array-ref weights-array left-index right-index))
 		)
@@ -227,6 +227,7 @@
 			(mst-parse-text-mode plain-text CNT-MODE MST-DIST)
 		)
 	)
+	(display parse)
 
 	; The count-one-atom function fetches from the SQL database,
 	; increments the count by one, and stores the result back

@@ -153,7 +153,7 @@
 ; -------------------------------------------------
 ; Third mode to check: file, no mst-distance
 (set! cnt-mode "file")
-(set! mst-dist #f)
+(set! mst-dist '(1 1))
 
 (define text-block
 "Test in file mode\n\
