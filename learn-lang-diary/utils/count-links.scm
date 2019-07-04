@@ -15,6 +15,9 @@
 ; Example usage: (count-linkable-word-pairs (psa 'left-basis))
 ;
 ; ------------------------------------------------------------------
+(use-modules (ice-9 threads))
+
+; ------------------------------------------------------------------
 ;; Just count how many disjuncts connect to some word, either to
 ;; the left or to the right. WORD-LST should be a list of WordNodes.
 ;; This just gets the two connectors that WordNode might appear in,
@@ -227,8 +230,21 @@
 		lc)
 
 	; Count over all words.
-	(fold
-		(lambda (WRD CNT) (+ CNT (link-count-x WRD)))
-		0 WORD-LST)
+	; (fold (lambda (WRD CNT) (+ CNT (link-count-x WRD))) 0 WORD-LST)
+
+	; The above is painfully slow, so do a threaded version as well.
+	; This threads very nicely, because almost all CPU time is wasted
+	; in the C++ pattern matcher, so guile can handle these threads
+	; quite well, without getting tangled up.
+	(define sum-cnt 0)
+	(define mtx (make-mutex))
+	(par-for-each
+		(lambda (WRD)
+			(define cnt (link-count-x WRD))
+			(lock-mutex mtx)
+			(set! sum-cnt (+ sum-cnt cnt))
+			(unlock-mutex mtx))
+		WORD-LST)
 )
+
 ; ------------------------------------------------------------------
