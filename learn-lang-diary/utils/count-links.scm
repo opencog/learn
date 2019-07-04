@@ -178,8 +178,6 @@
 
 			; Temp stand-in for "the real thing"
 			(List
-				LEFT-WRD
-				(Variable "r-word")
 				(List (Glob "l-pre") (Any "Left") (Glob "l-post"))
 				(List (Glob "r-pre") (Any "Right") (Glob "r-post")))
 		))
@@ -197,9 +195,40 @@
 			(cog-arity (cog-execute! (make-blink LEFT-WRD))))
 		(wrap func))
 
+	; Why is this so slow?
+	(define wrd-no 0)
+	(define (word-no) (set! wrd-no (+ wrd-no 1)) wrd-no)
+
+	(define start-time (current-time))
+	(define since-time (current-time))
+	(define (elapsed-secs)
+		(define now (current-time))
+		(define diff (- now since-time))
+		(set! since-time now)
+		diff)
+
+	(define tot-cnt 0)
+	(define nwrds (length WORD-LST))
+
+	(define (link-count-x LEFT-WRD)
+		(define lc (link-count LEFT-WRD))
+		(define ti (- (current-time) start-time))
+		(if (= 0 ti) (set! ti 1))
+		(set! tot-cnt (+ tot-cnt lc))
+		(format #t "~A of ~A count=~A in ~A secs wrd ~A"
+			(word-no) nwrds lc (elapsed-secs) LEFT-WRD)
+		(format #t "--- Elapsed: ~D:~2,'0D:~2,'0D Tot-cnt=~A Avg=~6F secs/word Rate=~6F cnts/sec\n"
+			(inexact->exact (floor (/ ti 3600.0)))
+			(inexact->exact (floor (/ (remainder ti 3600) 60.)))
+			(remainder ti 60)
+			tot-cnt
+			(/ ti wrd-no)
+			(/ tot-cnt ti))
+		lc)
+
 	; Count over all words.
 	(fold
-		(lambda (WRD CNT) (+ CNT (link-count WRD)))
+		(lambda (WRD CNT) (+ CNT (link-count-x WRD)))
 		0 WORD-LST)
 )
 ; ------------------------------------------------------------------
