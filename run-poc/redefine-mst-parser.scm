@@ -6,6 +6,7 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
+
 (define-public (mst-parse-text-file plain-textblock DIST-MOD)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
@@ -82,12 +83,7 @@
 		)
 	)
 
-	; Assign a bad cost to links that are too long --
-	; longer than 16. This is a sharp cutoff.
-	; This causes parser to run at O(N^3) for LEN < 16 and
-	; a faster rate, O(N^2.3) for 16<LEN. This should help.
-	(define (trunc-scorer LW RW LEN)
-		(if (< 16 LEN) -2e25 (scorer LW RW LEN)))
+	(define trunc-scorer (make-trunc-scorer scorer))
 
 	; Entry point, call parser on atomized sentence with ad-hoc scorer
 	(mst-parse-atom-seq (word-list (word-strs current-sentence)) trunc-scorer)
@@ -241,7 +237,7 @@
 			(export-mst-parse plain-text parse "mst-parses.ull")
 		)
 	)
-	
+
 	parse; return the parse, for unit-test purposes
 )
 

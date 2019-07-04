@@ -195,6 +195,15 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
+
+; Assign a bad cost to links that are too long --
+; longer than 16. This is a sharp cutoff.
+; This causes parser to run at O(N^3) for LEN < 16 and
+; a faster rate, O(N^2.3) for 16<LEN. This should help.
+(define (make-trunc-scorer scorer)
+	(lambda (LW RW LEN)
+		(if (< 16 LEN) -2e25 (scorer LW RW LEN))))
+
 (define-public (mst-parse-text plain-text)
 
 	; Tokenize the sentence into a list of words.
@@ -211,12 +220,7 @@
 
 	(define scorer (make-score-fn mi-source 'pair-fmi))
 
-	; Assign a bad cost to links that are too long --
-	; longer than 16. This is a sharp cutoff.
-	; This causes parser to run at O(N^3) for LEN < 16 and
-	; a faster rate, O(N^2.3) for 16<LEN. This should help.
-	(define (trunc-scorer LW RW LEN)
-		(if (< 16 LEN) -2e25 (scorer LW RW LEN)))
+	(define trunc-scorer (make-trunc-scorer scorer))
 
 	; Process the list of words.
 	(mst-parse-atom-seq word-list trunc-scorer)
