@@ -6,7 +6,7 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
-(define-public (mst-parse-text-file plain-textblock mst-dist)
+(define-public (mst-parse-text-file plain-textblock mst-dist DIST-MOD)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
 "
@@ -67,14 +67,18 @@
 	)	
 
 	; Define scoring function to look for values in weights-array.
-	; Scorer lambda function should store weights-array from its
+	; Scorer lambda function should refer to weights-array from its
 	; current environment (array was defined above).
+	; Scoring function considers weight multipliers coming from DIST-MOD
 	(define scorer 
 		(lambda (left-atom right-atom distance)
 			(define left-index (inexact->exact (string->number (cog-name (gdr left-atom)))))
 			(define right-index (inexact->exact (string->number (cog-name (gdr right-atom)))))
+			; modifier values are given in DIST-MOD. If distance is longer than 
+			; what has been defined in the array, use last array value:
+			(define modifier (list-ref DIST-MOD (min distance (length DIST-MOD))))
 
-			(array-ref weights-array left-index right-index)
+			(* modifier (array-ref weights-array left-index right-index))
 		)
 	)
 
