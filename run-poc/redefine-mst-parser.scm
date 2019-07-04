@@ -7,7 +7,7 @@
 ; is returned.
 ;
 
-(define-public (mst-parse-text-file plain-textblock DIST-MOD)
+(define-public (mst-parse-text-file plain-textblock DIST-MULT)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
 "
@@ -70,14 +70,14 @@
 	; Define scoring function to look for values in weights-array.
 	; Scorer lambda function should refer to weights-array from its
 	; current environment (array was defined above).
-	; Scoring function considers weight multipliers coming from DIST-MOD
+	; Scoring function considers weight multipliers coming from DIST-MULT
 	(define scorer 
 		(lambda (left-atom right-atom distance)
 			(define left-index (inexact->exact (string->number (cog-name (gdr left-atom)))))
 			(define right-index (inexact->exact (string->number (cog-name (gdr right-atom)))))
-			; modifier values are given in DIST-MOD. If distance is longer than 
+			; modifier values are given in DIST-MULT. If distance is longer than 
 			; what has been defined in the array, use last array value:
-			(define modifier (list-ref DIST-MOD (- (min distance (length DIST-MOD)) 1)))
+			(define modifier (list-ref DIST-MULT (- (min distance (length DIST-MULT)) 1)))
 
 			(* modifier (array-ref weights-array left-index right-index))
 		)
@@ -91,7 +91,7 @@
 )
 
 
-(define-public (mst-parse-text-mode plain-text cnt-mode mst-dist)
+(define-public (mst-parse-text-mode plain-text cnt-mode DIST-MULT)
 
 	; Assuming input is tokenized, this procedure separates by spaces 
 	; and adds LEFT-WALL
@@ -111,7 +111,7 @@
 
 	(define mi-source (add-pair-freq-api pair-obj))
 
-	(define scorer (make-score-fn mi-source 'pair-fmi))
+	(define scorer (make-score-fn-dist mi-source 'pair-fmi DIST-MULT))
 
 	(define trunc-scorer (make-trunc-scorer scorer))
 
@@ -198,7 +198,7 @@
   observe-mst-mode -- update pseduo-disjunct counts by observing raw text.
   
   Build mst-parses using MI calculated beforehand.
-  When MST-DIST is true, word-pair MI values are adjusted for distance.
+  Values in MST-DIST adjust word-pair weight values for distance.
   Obtained parses are exported to file if EXPORT-MST is true.
   This is the second part of the learning algo: simply count how
   often pseudo-disjuncts show up.
