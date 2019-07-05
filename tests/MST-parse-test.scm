@@ -126,10 +126,10 @@
 (define expected-parse-1
 	(append 
 		(append 
-			(list (cons (cons w3 w4) (+ (log2 5) 1)))
-			(list (cons (cons w2 w3) (+ (- (log2 5) 2) 1)))
+			(list (cons (cons w3 w4) (log2 5)))
+			(list (cons (cons w2 w3) (- (log2 5) 2)))
 		)
-		(list (cons (cons w1 w2) (+ (- (log2 5) 1) 1)))
+		(list (cons (cons w1 w2) (- (log2 5) 1)))
 	)
 )
 
@@ -138,10 +138,10 @@
 (define expected-parse-2
 	(append 
 		(append 
-			(list (cons (cons w1 w2) (+ (- (log2 5) 1) 1)))
-			(list (cons (cons w2 w3) 2.1))
+			(list (cons (cons w1 w2) (- (log2 5) 1)))
+			(list (cons (cons w2 w3) 1.1))
 		)
-		(list (cons (cons w2 w4) 1.9))
+		(list (cons (cons w3 w4) 0.8))
 	)
 )
 
