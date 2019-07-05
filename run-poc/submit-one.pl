@@ -106,7 +106,7 @@ else
  			# print NC "($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"; }
 			#{ send_stuff("($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4])\n"); }
 		elsif ( $ARGV[2] eq "observe-mst-mode" )
-			{ print NC "($ARGV[2] \"$_\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n"; }
+			{ print NC "($ARGV[2] \"$_\" \"$ARGV[3]\" '(${ARGV[@]}) $ARGV[5])\n"; }
 			#{ $sent_nbr += 1;
 			#send_stuff("($ARGV[2] \"$_\" \"$sent_nbr\" \"$ARGV[3]\" $ARGV[4] $ARGV[5])\n"); }
 		my $elapsed = time() - $start_time;
