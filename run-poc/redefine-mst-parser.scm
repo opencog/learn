@@ -210,7 +210,6 @@
 			(mst-parse-text-mode plain-text CNT-MODE MST-DIST)
 		)
 	)
-	(display parse)
 
 	; The count-one-atom function fetches from the SQL database,
 	; increments the count by one, and stores the result back
