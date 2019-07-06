@@ -104,7 +104,7 @@
 ; Second mode to check: any, with dist-mult
 ; any doesn't change the MST-parser, just testing option works
 (set! cnt-mode "any")
-(set! dist-mult '(1 0.5 0.1)) ; currently fails, need to update results
+(set! dist-mult '(1 0.5 0.1))
 
 (set! word-pair-atoms (make-word-pair-list cnt-mode))
 
