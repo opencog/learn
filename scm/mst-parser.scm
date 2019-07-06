@@ -200,7 +200,7 @@
 ; longer than 16. This is a sharp cutoff.
 ; This causes parser to run at O(N^3) for LEN < 16 and
 ; a faster rate, O(N^2.3) for 16<LEN. This should help.
-(define (make-trunc-scorer scorer)
+(define-public (make-trunc-scorer scorer)
 	(lambda (LW RW LEN)
 		(if (< 16 LEN) -2e25 (scorer LW RW LEN))))
 
