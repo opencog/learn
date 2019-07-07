@@ -93,10 +93,6 @@ June 2019 Mini Dictionaries
 \end_inset
 
 ULL Dictionaries
-\begin_inset Newline newline
-\end_inset
-
-July 2019 Info Dictionaries
 \end_layout
 
 \begin_layout Author
@@ -1189,7 +1185,39 @@ These are promising to be a lot cleaner, and stronger than the previous
 en_rfive
 \emph default
  dataset.
- 
+\end_layout
+
+\begin_layout Subsection*
+Issues
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Update 7 July 2019
+\emph default
+: After the above sets were created, and the data analysis was performed
+ below, an issue was found with the quality of the data.
+ When a sentence contained multiple instances of a word, the resulting disjuncts
+ involving that word are incorrect: they include the multiple instances,
+ and sometimes get the order wrong (being confused about which is which).
+ Thus, the datasets are polluted with bad disjuncts.
+ It is unclear whether this hurts the data very much.
+ I'm guessing it makes only a small difference, because: (1) there are few
+ sentences containing words with multiple instances, and (2) the counts
+ on these crazy-bad disjuncts are low (because they are infrequent) and
+ so they probably mostly do not survive the count cutoffs.
+ ...
+ But some do survive; the bug was first discovered in the 
+\begin_inset Quotes eld
+\end_inset
+
+mini
+\begin_inset Quotes erd
+\end_inset
+
+ dataset, so bad stuff did get into that.
+ Fixed in https://github.com/opencog/atomspace/pull/2252 
 \end_layout
 
 \begin_layout Section
