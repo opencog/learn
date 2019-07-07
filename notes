@@ -20029,6 +20029,69 @@ $50 = (Section (ctv 1 0 7)
 
 There seem to be a lot of these ... WTF.
 
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+Ahh .. caught red-handed!
+
+(Section
+   (WordNode "the")
+   (ConnectorSeq
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "craziness")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(Section
+   (WordNode "is")
+   (ConnectorSeq
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "that")
+         (ConnectorDir "-")
+      )
+   )
+)
+
+(Section
+   (WordNode "stage")
+   (ConnectorSeq
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+
 
 So:
 get: en_pairs_cfive and compute MI
