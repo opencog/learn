@@ -6332,6 +6332,9 @@ DATE: 12 July 2017
 REASON: Best so far, I think.  One issue:
   1) infix-marks: dashes, ellipsis, long-dashes are not split.
      It now seems that this would have been the right thing to do.
+     See `en_pairs_cfive` for a cleaned-up version of this data.
+     (i.e. a copy of this data, but with infixed words removed.)
+
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6592,11 +6595,16 @@ en_pairs_cfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A cleaned-up version of en_pairs_rfive.  Words with infix marks
 were removed.  However, hyphenated words and apostrophised words
-remain.  Does NOT contain pair-MI values.
+remain.  Does NOT contain pair-MI values. Use en_pairs_cfive_mi
+for dataset with word-pair marginals.
+
+Appears to contain 27892737 (27.9M) word-pairs.
+Resulting AtomSpace occupies 60GB of RAM when loaded.
+Loads in about 3000 seconds. Loads 56408360 Atoms (56M Atoms)
 
 STATUS: good
 DATE: 1 Sept 2017
-REASON: Best so far, I think.  One issue:
+REASON: Best so far, I think.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6609,6 +6617,11 @@ REASON: Best so far, I think.  One issue:
 
 select count(*) from atoms;      -- 56409030 = 56M = 5M fewer than rfive.
 select count(*) from valuations; -- 28516287 = 28.5M = 2.5M fewer 
+
+(cog-report-counts)
+((PredicateNode . 2) (ListLink . 27892737) (EvaluationLink . 27892737)
+(AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858) (AnyNode . 2)
+(LinkGrammarRelationshipNode . 1))
 
 2638878848 bytes uncompressed = 2.64 GBytes
  453916099 bytes compressed   = 454 MBytes
@@ -19956,6 +19969,21 @@ $50 = (Section (ctv 1 0 7)
    ))
 
 There seem to be a lot of these ... WTF.
+
+
+So:
+get: en_pairs_cfive and compute MI
+(wps 'fetch-pairs)
+(sql-close)
+createdb en_pairs_cfive_mi
+cat atom.sql | psql en_pairs_cfive_mi
+COMMENT ON DATABASE en_pairs_cfive_mi IS
+  'en_pairs_cfive plus marginals (i.e. clean word-pairs, only)';
+(sql-open "postgres:///en_pairs_cfive_mi")
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+Support: found num left= 619168 num right= 580804 in 680 secs
+
 
 
 
