@@ -20091,6 +20091,52 @@ Ahh .. caught red-handed!
    )
 )
 
+(
+(((6 . (WordNode "complicated")) 7 . (WordNode "sentence")) . 4.544568075409504)
+
+ (((2 . (WordNode "This")) 7 . (WordNode "sentence")) . 2.5698179211813894)
+ (((2 . (WordNode "This")) 9 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 3 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 10 . (WordNode "meant")
+) . 2.85136143940991) (((10 . (WordNode "meant")) 11 . (WordNode "to")
+) . 2.995166614025761) (((11 . (WordNode "to")) 12 . (WordNode "test")
+) . 2.4676368796347674) (((4 . (WordNode "a")) 7 . (WordNode "sentence")
+) . 2.157432042482352) (((4 . (WordNode "a")) 5 . (WordNode "long")
+) . 2.8337745270444152) (((12 . (WordNode "test")) 19 . (WordNode "of")
+) . 2.076930367265735) (((18 . (WordNode "stage")) 19 . (WordNode "of")
+) . 2.098831656855328) (((16 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 14 . (WordNode "craziness")
+) . 2.4141307658002162) (((14 . (WordNode "craziness")) 15 . (WordNode "of")
+) . 1.6669586994997374) (((19 . (WordNode "of")) 20 . (WordNode "the")
+) . 1.6553378921463375) (((8 . (WordNode "that")) 9 . (WordNode "is")
+) . 1.5597634187783882) (((19 . (WordNode "of")) 21 . (WordNode "processing")
+) . -0.24884483707755933))
+
+
+(print-linkage link-seq)
+6-7      complicated <--> sentence       MI=4.5446
+2-7      This <--> sentence      MI=2.5698
+2-9      This <--> is    MI=4.3761
+2-3      This <--> is    MI=4.3761
+2-10     This <--> meant         MI=2.8514
+10-11    meant <--> to   MI=2.9952
+11-12    to <--> test    MI=2.4676
+4-7      a <--> sentence         MI=2.1574
+4-5      a <--> long     MI=2.8338
+12-19    test <--> of    MI=2.0769
+18-19    stage <--> of   MI=2.0988
+16-18    the <--> stage  MI=2.3297
+13-18    the <--> stage  MI=2.3297
+13-14    the <--> craziness      MI=2.4141
+14-15    craziness <--> of       MI=1.6670
+19-20    of <--> the     MI=1.6553
+8-9      that <--> is    MI=1.5598
+19-21    of <--> processing      MI=-0.249
+
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+
 
 
 So:

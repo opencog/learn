@@ -192,8 +192,8 @@
 ; Given a raw-text sentence, it splits apart the sentence into distinct
 ; words, and finds an (unlabelled) dependency parse of the sentence, by
 ; finding a dependency tree that maximizes the mutual information.
-; A list of word-pairs, together with the associated mutual information,
-; is returned.
+; Returns a list of word-pairs, together with the associated mutual
+; information.
 ;
 (define-public (mst-parse-text plain-text)
 
@@ -201,7 +201,7 @@
 	(define word-strs (tokenize-text plain-text))
 
 	; Create a sequence of atoms from the sequence of strings.
-	(define word-list (map (lambda (str) (WordNode str)) word-strs))
+	(define word-list (map WordNode word-strs))
 
 	; Define where the costs are coming from.
 	(define pair-obj (make-any-link-api))
@@ -221,6 +221,22 @@
 	; Process the list of words.
 	(mst-parse-atom-seq word-list trunc-scorer)
 )
+
+; ---------------------------------------------------------------------
+; Debug utility -- print the MST parse above in slightly more readable
+; form.
+
+(define (print-linkage LINK-SEQ)
+	(for-each
+		(lambda (LINK)
+			(format #t "~D-~D\t ~A <--> ~A\t MI=~6F\n"
+				(caaar LINK) (cadar LINK)
+				(cog-name (cdaar LINK)) (cog-name (cddar LINK))
+				(cdr LINK)
+			))
+		LINK-SEQ)
+)
+
 
 ; ---------------------------------------------------------------------
 ; Return #t if the section is bigger than what the current postgres
