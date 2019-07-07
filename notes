@@ -6700,6 +6700,65 @@ RMS Count      2.4499E+4    2379.         .1077        6.472
 
 
 ==================================================================
+
+en_pairs_cfive_mi
+-----------------
+Same as en_pairs_cfive but with marginals. So: this is a large, clean
+collection of word-pairs, together with thier MI and other marginals.
+
+Contains 27892737 (27.9M) word-pairs.
+Requires 72 GB RAM for the AtomSpace when loaded.
+Loads 58808293 (59M) Atoms in under an hour.
+
+STATUS: good
+DATE: 7 July 2019
+
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 5203 MB    |
+ public | valuations | table | ubuntu | 7807 MB    |
+
+select count(*) from atoms;      -- 58808293 = 59M Atoms
+select count(*) from valuations; -- 88478107 = 88M Valuations
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 29092710) (EvaluationLink . 29092710)
+(TypeNode . 1) (AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 1.2474572e+09)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 27892737 non-zero entries of 359615251072 possible
+Fraction non-zero: 7.7563E-5 Sparsity (-log_2): 13.654
+Total observations: 1247457239.0  Avg obs per pair: 44.723
+Entropy Total: 18.645   Left: 10.053   Right: 10.390
+Total MI: 1.7982
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  7.3126E+4    5.3758E+4
+Count   (l_1)  1.8578E+7    1.5140E+7     254.1        281.6    
+Length  (l_2)  1.8923E+6    1.8653E+6     25.88        34.70    
+RMS Count      1.8917E+6    1.8647E+6     25.87        34.69    
+
+No MM^T data present
+No M^TM data present
+
+7567839839 bytes uncompressed = 7.5 GBytes
+1203314284 bytes compressed   = 1.2 GBytes
+
+faf3b6ab15c26eb965bce14a5ea873c8  en_pairs_cfive_mi.sql
+eed7f70d3fbdfbd7154615512aa4d29f  en_pairs_cfive_mi.sql.bz2
+
+==================================================================
 zh_pairs_one
 ------------
 Mandarin individual character pairs.  Only that, without any pair stats.
@@ -19982,7 +20041,22 @@ COMMENT ON DATABASE en_pairs_cfive_mi IS
 (sql-open "postgres:///en_pairs_cfive_mi")
 (batch-all-pair-mi wps)
 (print-matrix-summary-report wps)
-Support: found num left= 619168 num right= 580804 in 680 secs
+Support: found num left= 619168 num right= 580804 in 680 secs << as before. Good
+Finished left norm marginals in 1239 secs
+Finished right norm marginals in 1175 secs
+Done with wild-card count N(x,*) and N(*,y) in 2478 secs
+Total count N(*,*) = 1247457239.0 = 1247457239.0 << same as before. Good
+Done computing 27892737 pairs in 1599 secs
+Done storing 580804 left-wilds in 868 secs
+Done storing 619168 right-wilds in 702 secs
+Done computing 27892737 pair MI's in 31017 secs
+Finished left entropy subtotals in 1212 secs
+Finished right entropy subtotals in 1227 secs
+Finished left MI subtotals in 1221 secs
+Finished right MI subtotals in 1229 secs
+Finished with MI computations; this took 12.0 hours
+
+
 
 
 
