@@ -223,10 +223,14 @@
 )
 
 ; ---------------------------------------------------------------------
-; Debug utility -- print the MST parse above in slightly more readable
-; form.
 
 (define (print-linkage LINK-SEQ)
+"
+  print-linkage LINK-SEQ
+
+  Debug utility: print the MST parse in a human-readable form.
+  LINK-SEQ must be a parse, as returned by `mst-parse-atom-seq`.
+"
 	(for-each
 		(lambda (LINK)
 			(format #t "~D-~D\t ~A <--> ~A\t MI=~6F\n"

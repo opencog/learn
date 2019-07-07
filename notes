@@ -6327,7 +6327,7 @@ en_pairs_rfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A continutation of en_pairs_rfour. Does NOT contain pair-MI values.
 
-STATUS: good
+STATUS: good/fair
 DATE: 12 July 2017
 REASON: Best so far, I think.  One issue:
   1) infix-marks: dashes, ellipsis, long-dashes are not split.
@@ -6380,9 +6380,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-one. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 16 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive
+REASON: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6424,9 +6426,13 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1 and 2. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 17 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
+ISSUES: Dump does not have
+   `CREATE INDEX incoming_idx on Atoms USING GIN(outgoing);` on it.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6453,9 +6459,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2 and 3. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 2 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6483,9 +6491,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3 and 4. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 8 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6512,9 +6522,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3, 4 and 5. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 14 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6539,11 +6551,12 @@ en_pairs_rfive_mst
 ------------------
 Same as en_pairs_rfive_mfive, but with word-disjunct marginals in it.
 
-STATUS: good
+STATUS: fair
 DATE: 6 Sept 2017
-REASON: Best so far, I think. Except it contains infixed punctuation.
-    Which is a pointless waste of space. And which throws off stats
-    slightly, I suppose.
+ISSUES: It contains infixed punctuation.  Which is a pointless waste of
+    space. And which throws off stats slightly, I suppose.
+ISSUES:
+    Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
     requires 75GBytes. (25M csets and 25M ListLinks and umpteen valuations) 
 
@@ -6551,10 +6564,7 @@ ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 34 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 150550752 = 150M (so +25M for marginals)
 select count(*) from valuations; -- 330716326 = 331M (+200M for marginals!!!)
@@ -6610,10 +6620,7 @@ REASON: Best so far, I think.
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 5380 MB    | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 3365 MB    | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 56409030 = 56M = 5M fewer than rfive.
 select count(*) from valuations; -- 28516287 = 28.5M = 2.5M fewer 
@@ -6634,11 +6641,12 @@ ad6e0ad034855441be507344f201f624  en_pairs_cfive.psql.bz2
 en_pairs_cfive_mst
 ------------------
 Same as en_pairs_rfive_mst, but with infix-punctuation words removed.
+The pair marginals have been recomputed, and the dj marginals also.
 
-STATUS: good
+STATUS: fair
 DATE: 12 Sept 2017
-REASON: Best so far, I think. The pair marginals have been recomputed.
-    and the dj marginals also.
+ISSUES:
+  * Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM. 
     Loading word-pairs and marginals requires 72GBytes.
     Just loading disjunct marginals requires 75GBytes. 
@@ -6649,10 +6657,7 @@ ISSUES: Too big to fit into RAM.
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 57 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 139638908 = 140 M atoms (10M less)
 select count(*) from valuations; -- 307109283 = 307 M values (24M less)
@@ -20136,6 +20141,11 @@ Ahh .. caught red-handed!
 
 (observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
 
+make-sections
+wedge-get-left-overt
+
+Found and fixed https://github.com/opencog/atomspace/pull/2252
+Arghhh.
 
 
 
