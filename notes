@@ -6706,6 +6706,31 @@ RMS Count      2.4499E+4    2379.         .1077        6.472
 
 ==================================================================
 
+get: en_pairs_cfive and compute MI
+(wps 'fetch-pairs)
+(sql-close)
+createdb en_pairs_cfive_mi
+cat atom.sql | psql en_pairs_cfive_mi
+COMMENT ON DATABASE en_pairs_cfive_mi IS
+  'en_pairs_cfive plus marginals (i.e. clean word-pairs, only)';
+(sql-open "postgres:///en_pairs_cfive_mi")
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+Support: found num left= 619168 num right= 580804 in 680 secs << as before. Good
+Finished left norm marginals in 1239 secs
+Finished right norm marginals in 1175 secs
+Done with wild-card count N(x,*) and N(*,y) in 2478 secs
+Total count N(*,*) = 1247457239.0 = 1247457239.0 << same as before. Good
+Done computing 27892737 pairs in 1599 secs
+Done storing 580804 left-wilds in 868 secs
+Done storing 619168 right-wilds in 702 secs
+Done computing 27892737 pair MI's in 31017 secs
+Finished left entropy subtotals in 1212 secs
+Finished right entropy subtotals in 1227 secs
+Finished left MI subtotals in 1221 secs
+Finished right MI subtotals in 1229 secs
+Finished with MI computations; this took 12.0 hours
+
 en_pairs_cfive_mi
 -----------------
 Same as en_pairs_cfive but with marginals. So: this is a large, clean
@@ -14375,7 +14400,7 @@ the disjuncts left.  Contains disjunct marginals.
 
 Recall that rfive is not "as good as" cfive.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 27 June 2018
 
 en_dj_mtwo=> \dt+
@@ -14452,7 +14477,7 @@ Identical to en_pairs_cfive_mst but with word-pairs removed. This
 does contain the pseudo-dj marginals, but not the cross-connector
 marginals.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2018
 
 en_dj_cfive=> \dt+
@@ -14525,7 +14550,7 @@ removed. DB does NOT contain marginals!
 COMMENT ON DATABASE en_micro_dj_cfive IS
 'en_cfive Sections (only) with word-count > 500; section-count > 10';
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 9 June 2019
 
 en_micro_dj_cfive=> \dt+
@@ -14714,7 +14739,7 @@ Build:
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 14 June 2019
 
 COMMENT ON DATABASE en_micro_marg IS
@@ -14821,7 +14846,10 @@ BUILD:
    (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_fuzz_exp IS
@@ -14876,7 +14904,8 @@ BUILD:
    Marginal build just like en_micro_fuzz_exp
    Will store 132775 csets
 
-STATUS: Uncertain. Turns out dot-product denominators used for cosine
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
         were not recomputed after merge, leading to questionable
         cosines.
 DATE: 18 June 2019
@@ -14934,7 +14963,7 @@ ConnectorSeq's that do NOT appear in Sections!
 COMMENT ON DATABASE en_mini_dj_cfive IS
 'en_cfive Sections (only) with word-count > 40; section-count > 5';
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 9 June 2019
 
 en_mini_dj_cfive=> \dt+
@@ -15098,7 +15127,7 @@ removed.  Does include marginals and MM^T values.
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 15 June 2019
 
 COMMENT ON DATABASE en_mini_marg IS
@@ -15161,6 +15190,7 @@ left-over junk from before.
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
 
+STATUS: Fair; has the disjunct bug #2252
 STATUS: Uncertain. Turns out dot-product denominators used for cosine
         were not recomputed after merge, leading to questionable
         cosines.
@@ -15205,7 +15235,10 @@ BUILD:
    (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 18 June 2019
 
 COMMENT ON DATABASE en_mini_fuzz_exp IS
@@ -16151,7 +16184,7 @@ are:
 * 'mmt-marginals for both of the above.
 
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 13 August 2018
 
 en_sh_two=> \dt+
@@ -16351,7 +16384,7 @@ Built as:
 (hvs 'explode-sections)
 (batch-all-pair-mi hvs)
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 29 August 2018
 
 en_sh_mi_two=> \dt+
@@ -17695,7 +17728,7 @@ BUILD:
    (fso 'store-all-elts)   ; Marginals are not to be stored.
    (sql-close)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2019
 
 en_large_dj_cfive=> \dt+
@@ -17726,7 +17759,7 @@ and MM^T values.
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2019
 
 COMMENT ON DATABASE en_large_marg IS
@@ -17862,7 +17895,7 @@ Loading and running this takes time and uses significant RAM:
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 1 July 2019
 
 COMMENT ON DATABASE en_huge_marg IS
@@ -17992,7 +18025,7 @@ BUILD:
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 27 June 2019
 
 COMMENT ON DATABASE en_full_marg IS
@@ -20148,35 +20181,18 @@ Found and fixed https://github.com/opencog/atomspace/pull/2252
 Arghhh.
 
 
+===========
+dropdb en_pairs_cfive en_pairs_cfive_mst
+createdb en_pairs_cfive_mi_1.8
 
-So:
-get: en_pairs_cfive and compute MI
-(wps 'fetch-pairs)
-(sql-close)
-createdb en_pairs_cfive_mi
-cat atom.sql | psql en_pairs_cfive_mi
-COMMENT ON DATABASE en_pairs_cfive_mi IS
-  'en_pairs_cfive plus marginals (i.e. clean word-pairs, only)';
-(sql-open "postgres:///en_pairs_cfive_mi")
-(batch-all-pair-mi wps)
-(print-matrix-summary-report wps)
-Support: found num left= 619168 num right= 580804 in 680 secs << as before. Good
-Finished left norm marginals in 1239 secs
-Finished right norm marginals in 1175 secs
-Done with wild-card count N(x,*) and N(*,y) in 2478 secs
-Total count N(*,*) = 1247457239.0 = 1247457239.0 << same as before. Good
-Done computing 27892737 pairs in 1599 secs
-Done storing 580804 left-wilds in 868 secs
-Done storing 619168 right-wilds in 702 secs
-Done computing 27892737 pair MI's in 31017 secs
-Finished left entropy subtotals in 1212 secs
-Finished right entropy subtotals in 1227 secs
-Finished left MI subtotals in 1221 secs
-Finished right MI subtotals in 1229 secs
-Finished with MI computations; this took 12.0 hours
-
-
-
+COMMENT ON DATABASE "en_pairs_cfive_mi_1.8" IS
+'Same as en_pairs_cfive_mi but all pairs w/ FMI<1.8 removed.';
+(define fpm (add-fmi-filter wps 1.8 #f))
+(fpm 'left-basis-size)
+(fpm 'right-basis-size) << unchanged ...
+(sql-open "postgres:///en_pairs_cfive_mi_1.8")
+(define sfp (make-store fpm))
+(sfp 'store-all)
 
 
 
