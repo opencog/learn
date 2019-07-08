@@ -20180,6 +20180,20 @@ wedge-get-left-overt
 Found and fixed https://github.com/opencog/atomspace/pull/2252
 Arghhh.
 
+===========
+(define plain-text "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+(define word-strs (tokenize-text plain-text))
+(define word-list (map WordNode word-strs))
+(define mst-tree (mst-parse-atom-seq word-list trunc-scorer))
+(print-linkage ordered-tree)
+
+(print-linkage (sort-wedgelist (mpg-parse-atom-seq word-list trunc-scorer 20)))
+
+1) cross-any does allow overlaps!! DONE
+2) 1e30 reject has to be 1e20 DONE
+
+(1 . (WordNode "###LEFT-WALL###") (5 . (WordNode "long")
+
 
 ===========
 dropdb en_pairs_cfive en_pairs_cfive_mst
@@ -20190,9 +20204,32 @@ COMMENT ON DATABASE "en_pairs_cfive_mi_1.8" IS
 (define fpm (add-fmi-filter wps 1.8 #f))
 (fpm 'left-basis-size)
 (fpm 'right-basis-size) << unchanged ...
+(length (fpm 'get-all-elts))  <<< 15795739 down from 27892737
 (sql-open "postgres:///en_pairs_cfive_mi_1.8")
 (define sfp (make-store fpm))
 (sfp 'store-all)
+Done storing 15795739 pairs in 17337 secs
+
+--------
+cleanup words that do not participate any longer ...
+
+(cog-map-type (lambda (word)
+	(if (= 0 (length (filter
+			(lambda (wpr) (and
+				 (not (equal? (cog-type (gar wpr)) 'AnyNode))
+				 (not (equal? (cog-type (gdr wpr)) 'AnyNode))
+			))
+			(cog-incoming-by-type word 'ListLink))))
+		(format #t "Empty: ~A\n" (cog-name word))))
+'WordNode)
+
+None-such. Inteesting ... OK.
+
+--------
+createdb en_pairs_mi_1.8tmp -T en_pairs_cfive_mi_1.8
+(wps 'fetch-pairs)
+(define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
+(batch-all-pair-mi fpm)
 
 
 

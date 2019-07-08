@@ -35,10 +35,17 @@
   the SQL database, so that counting will work correctly, when
   picking up from a previous point.
 
+  Warning: this is NOT THREAD SAFE! during rapid startup of multiple
+  threads, each thread could fetch the same count, and increment
+  that, leading to a loss of counts!  Once the system is up and running,
+  things should be fine (i.e. it is "eventaully thread-safe"); but
+  there's a race-window during startup.
+
   Warning: this is NOT SAFE for distributed processing! That is
   because this does NOT grab the count from the database every time,
   so if some other process updates the database, this will miss that
-  update.
+  update. Multiple distributed counters will continue to clobber
+  each-other indefinitely; the system will NOT settle-down long-term.
 "
 	(define (incr-one atom)
 		; If the atom doesn't yet have a count TV attached to it,
