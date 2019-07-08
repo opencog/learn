@@ -1,6 +1,7 @@
 ;
 ; batch-word-pair.scm
 ;
+; Define word-pair access API objects.
 ; Batch-compute the mutual information of pairs of natural-language words.
 ;
 ; Copyright (c) 2013, 2014, 2017 Linas Vepstas
@@ -8,12 +9,20 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; The scripts below compute the Yuret-style lexical attraction between
-; pairs of words.  They make use of the generic API for computing
-; mutual information between ordered pairs in some relation.
-; See `compute-mi.scm` for more detail about what is computed, and how.
-; They are designed to run in as a batch, and may take hours to
-; complete. The results are stored in the database, for future reference.
+; The objects below define API's to access narutral language word-pairs,
+; stored in the AtomSpace, as a rank-2 matrix, i.e. as a matrix of
+; (left, right) word-pairs.  This provides exactly the API needed for
+; use with the `(use-modules (opencog matrix))` statistical analysis
+; subsystem.
+;
+; Given a generic API, the `(opencog matrix)` can do things such as
+; computing the Yuret-style lexical attraction between pairs of words.
+; (See `compute-mi.scm` for more detail about what is computed, and how.)
+;
+; Given the generic API, there is a handful of small scripts, at the
+; bottom of this file, that will perform the MI calculations as a batch
+; job.  As a batch job, and may take hours to complete. The results are
+; stored in the currently-open database, for future reference.
 ;
 ; One structure, among several, in which the pair counts are held,
 ; is of the form
@@ -519,6 +528,8 @@
 (define-public (batch-pairs LLOBJ)
 
 	; Make sure all words are in the atomspace
+	; This is not really needed, except that it makes the
+	; fetching of pairs below faster!?
 	(display "Start loading words ...\n")
 	(call-only-once fetch-all-words)
 	(display "Done loading words, now loading pairs\n")
@@ -527,6 +538,7 @@
 	(call-only-once (lambda() (LLOBJ 'fetch-pairs)))
 	(display "Finished loading sparse matrix pairs\n")
 
+	(cog-report-counts)
 	(batch-all-pair-mi LLOBJ)
 	(print-matrix-summary-report LLOBJ)
 )

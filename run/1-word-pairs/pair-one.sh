@@ -45,7 +45,7 @@ mkdir -p $(dirname "$subdir/$rest")
 cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
 
 # Submit the split article
-cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe
+cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)

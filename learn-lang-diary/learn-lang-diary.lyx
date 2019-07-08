@@ -36079,7 +36079,7 @@ Name
 \begin_inset Text
 
 \begin_layout Plain Layout
-x120K
+2.45M
 \end_layout
 
 \end_inset
@@ -36144,7 +36144,7 @@ en_micro_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-x395K
+7.8M
 \end_layout
 
 \end_inset
@@ -36209,7 +36209,7 @@ en_mini_marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-x1.13M
+
 \end_layout
 
 \end_inset
@@ -36463,6 +36463,63 @@ Secs
 Name
 \series default
  – Dataset name
+\end_layout
+
+\begin_layout Section*
+Disjunct dataset redo
+\end_layout
+
+\begin_layout Standard
+The code that converted MST oparses to disjuncts had a bug in it – sentences
+ with multiple instances of the same word created disjuncts that were incorrect.
+ Fixed in pull req opencog/atomspace#2252.
+ However, need to redo the DB's.
+\end_layout
+
+\begin_layout Standard
+While we are at it, here's a new processing pipeline:
+\end_layout
+
+\begin_layout Itemize
+Filter the word-pair database
+\emph on
+ en_pairs_cfive
+\emph default
+ so that all word-pairs with MI<1.8 are removed.
+ The value of 1.8 seems reasonable, as this is the mean MI of that database.
+\end_layout
+
+\begin_layout Itemize
+Instead of creating MST parses, create MPG parses: 
+\begin_inset Quotes eld
+\end_inset
+
+Maximum Planar Graph
+\begin_inset Quotes erd
+\end_inset
+
+ parses.
+ These start with the MST parse, and add additional high-MI edges, creating
+ a planar graph with loops.
+ The resulting disjuncts are larger.
+\end_layout
+
+\begin_layout Itemize
+At a later time, e.g.
+ during clustering, the disjuncts can be trimmed down (if desired) by looking
+ up the MI between germ and connector, and discarding it if it falls below
+ some threshold.
+ Thus, MPG disjuncts are both 
+\begin_inset Quotes eld
+\end_inset
+
+fuller
+\begin_inset Quotes erd
+\end_inset
+
+ than MST disjuncts, but can also be trimmed in a fairly coherent fashion,
+ offering yet another way to limit dataset size (in exchange for additional
+ processing :-o).
 \end_layout
 
 \begin_layout Section*

@@ -6327,11 +6327,14 @@ en_pairs_rfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A continutation of en_pairs_rfour. Does NOT contain pair-MI values.
 
-STATUS: good
+STATUS: good/fair
 DATE: 12 July 2017
 REASON: Best so far, I think.  One issue:
   1) infix-marks: dashes, ellipsis, long-dashes are not split.
      It now seems that this would have been the right thing to do.
+     See `en_pairs_cfive` for a cleaned-up version of this data.
+     (i.e. a copy of this data, but with infixed words removed.)
+
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6377,9 +6380,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-one. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 16 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive
+REASON: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6421,9 +6426,13 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1 and 2. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 17 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
+ISSUES: Dump does not have
+   `CREATE INDEX incoming_idx on Atoms USING GIN(outgoing);` on it.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6450,9 +6459,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2 and 3. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 2 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6480,9 +6491,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3 and 4. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 8 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6509,9 +6522,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3, 4 and 5. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 14 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6536,11 +6551,12 @@ en_pairs_rfive_mst
 ------------------
 Same as en_pairs_rfive_mfive, but with word-disjunct marginals in it.
 
-STATUS: good
+STATUS: fair
 DATE: 6 Sept 2017
-REASON: Best so far, I think. Except it contains infixed punctuation.
-    Which is a pointless waste of space. And which throws off stats
-    slightly, I suppose.
+ISSUES: It contains infixed punctuation.  Which is a pointless waste of
+    space. And which throws off stats slightly, I suppose.
+ISSUES:
+    Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
     requires 75GBytes. (25M csets and 25M ListLinks and umpteen valuations) 
 
@@ -6548,10 +6564,7 @@ ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 34 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 150550752 = 150M (so +25M for marginals)
 select count(*) from valuations; -- 330716326 = 331M (+200M for marginals!!!)
@@ -6592,23 +6605,30 @@ en_pairs_cfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A cleaned-up version of en_pairs_rfive.  Words with infix marks
 were removed.  However, hyphenated words and apostrophised words
-remain.  Does NOT contain pair-MI values.
+remain.  Does NOT contain pair-MI values. Use en_pairs_cfive_mi
+for dataset with word-pair marginals.
+
+Appears to contain 27892737 (27.9M) word-pairs.
+Resulting AtomSpace occupies 60GB of RAM when loaded.
+Loads in about 3000 seconds. Loads 56408360 Atoms (56M Atoms)
 
 STATUS: good
 DATE: 1 Sept 2017
-REASON: Best so far, I think.  One issue:
+REASON: Best so far, I think.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 5380 MB    | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 3365 MB    | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 56409030 = 56M = 5M fewer than rfive.
 select count(*) from valuations; -- 28516287 = 28.5M = 2.5M fewer 
+
+(cog-report-counts)
+((PredicateNode . 2) (ListLink . 27892737) (EvaluationLink . 27892737)
+(AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858) (AnyNode . 2)
+(LinkGrammarRelationshipNode . 1))
 
 2638878848 bytes uncompressed = 2.64 GBytes
  453916099 bytes compressed   = 454 MBytes
@@ -6621,11 +6641,12 @@ ad6e0ad034855441be507344f201f624  en_pairs_cfive.psql.bz2
 en_pairs_cfive_mst
 ------------------
 Same as en_pairs_rfive_mst, but with infix-punctuation words removed.
+The pair marginals have been recomputed, and the dj marginals also.
 
-STATUS: good
+STATUS: fair
 DATE: 12 Sept 2017
-REASON: Best so far, I think. The pair marginals have been recomputed.
-    and the dj marginals also.
+ISSUES:
+  * Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM. 
     Loading word-pairs and marginals requires 72GBytes.
     Just loading disjunct marginals requires 75GBytes. 
@@ -6636,10 +6657,7 @@ ISSUES: Too big to fit into RAM.
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 57 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 139638908 = 140 M atoms (10M less)
 select count(*) from valuations; -- 307109283 = 307 M values (24M less)
@@ -6685,6 +6703,90 @@ RMS Count      2.4499E+4    2379.         .1077        6.472
 85a872a283314d5bc1900b20da35a017  en_pairs_cfive_mst.sql
 8f5eab41474c92c1a084ce9fc60f243c  en_pairs_cfive_mst.sql.bz2
 
+
+==================================================================
+
+get: en_pairs_cfive and compute MI
+(wps 'fetch-pairs)
+(sql-close)
+createdb en_pairs_cfive_mi
+cat atom.sql | psql en_pairs_cfive_mi
+COMMENT ON DATABASE en_pairs_cfive_mi IS
+  'en_pairs_cfive plus marginals (i.e. clean word-pairs, only)';
+(sql-open "postgres:///en_pairs_cfive_mi")
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+Support: found num left= 619168 num right= 580804 in 680 secs << as before. Good
+Finished left norm marginals in 1239 secs
+Finished right norm marginals in 1175 secs
+Done with wild-card count N(x,*) and N(*,y) in 2478 secs
+Total count N(*,*) = 1247457239.0 = 1247457239.0 << same as before. Good
+Done computing 27892737 pairs in 1599 secs
+Done storing 580804 left-wilds in 868 secs
+Done storing 619168 right-wilds in 702 secs
+Done computing 27892737 pair MI's in 31017 secs
+Finished left entropy subtotals in 1212 secs
+Finished right entropy subtotals in 1227 secs
+Finished left MI subtotals in 1221 secs
+Finished right MI subtotals in 1229 secs
+Finished with MI computations; this took 12.0 hours
+
+en_pairs_cfive_mi
+-----------------
+Same as en_pairs_cfive but with marginals. So: this is a large, clean
+collection of word-pairs, together with thier MI and other marginals.
+
+Contains 27892737 (27.9M) word-pairs.
+Requires 72 GB RAM for the AtomSpace when loaded.
+Loads 58808293 (59M) Atoms in under an hour.
+
+STATUS: good
+DATE: 7 July 2019
+
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 5203 MB    |
+ public | valuations | table | ubuntu | 7807 MB    |
+
+select count(*) from atoms;      -- 58808293 = 59M Atoms
+select count(*) from valuations; -- 88478107 = 88M Valuations
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 29092710) (EvaluationLink . 29092710)
+(TypeNode . 1) (AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 1.2474572e+09)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 27892737 non-zero entries of 359615251072 possible
+Fraction non-zero: 7.7563E-5 Sparsity (-log_2): 13.654
+Total observations: 1247457239.0  Avg obs per pair: 44.723
+Entropy Total: 18.645   Left: 10.053   Right: 10.390
+Total MI: 1.7982
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  7.3126E+4    5.3758E+4
+Count   (l_1)  1.8578E+7    1.5140E+7     254.1        281.6    
+Length  (l_2)  1.8923E+6    1.8653E+6     25.88        34.70    
+RMS Count      1.8917E+6    1.8647E+6     25.87        34.69    
+
+No MM^T data present
+No M^TM data present
+
+7567839839 bytes uncompressed = 7.5 GBytes
+1203314284 bytes compressed   = 1.2 GBytes
+
+faf3b6ab15c26eb965bce14a5ea873c8  en_pairs_cfive_mi.sql
+eed7f70d3fbdfbd7154615512aa4d29f  en_pairs_cfive_mi.sql.bz2
 
 ==================================================================
 zh_pairs_one
@@ -14298,7 +14400,7 @@ the disjuncts left.  Contains disjunct marginals.
 
 Recall that rfive is not "as good as" cfive.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 27 June 2018
 
 en_dj_mtwo=> \dt+
@@ -14375,7 +14477,7 @@ Identical to en_pairs_cfive_mst but with word-pairs removed. This
 does contain the pseudo-dj marginals, but not the cross-connector
 marginals.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2018
 
 en_dj_cfive=> \dt+
@@ -14448,7 +14550,7 @@ removed. DB does NOT contain marginals!
 COMMENT ON DATABASE en_micro_dj_cfive IS
 'en_cfive Sections (only) with word-count > 500; section-count > 10';
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 9 June 2019
 
 en_micro_dj_cfive=> \dt+
@@ -14637,7 +14739,7 @@ Build:
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 14 June 2019
 
 COMMENT ON DATABASE en_micro_marg IS
@@ -14744,7 +14846,10 @@ BUILD:
    (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 18 June 2019
 
 COMMENT ON DATABASE en_micro_fuzz_exp IS
@@ -14799,7 +14904,8 @@ BUILD:
    Marginal build just like en_micro_fuzz_exp
    Will store 132775 csets
 
-STATUS: Uncertain. Turns out dot-product denominators used for cosine
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
         were not recomputed after merge, leading to questionable
         cosines.
 DATE: 18 June 2019
@@ -14857,7 +14963,7 @@ ConnectorSeq's that do NOT appear in Sections!
 COMMENT ON DATABASE en_mini_dj_cfive IS
 'en_cfive Sections (only) with word-count > 40; section-count > 5';
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 9 June 2019
 
 en_mini_dj_cfive=> \dt+
@@ -15021,7 +15127,7 @@ removed.  Does include marginals and MM^T values.
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 15 June 2019
 
 COMMENT ON DATABASE en_mini_marg IS
@@ -15084,6 +15190,7 @@ left-over junk from before.
 BUILD:
    (gram-classify-greedy-fuzz 0.65 0.3 4)
 
+STATUS: Fair; has the disjunct bug #2252
 STATUS: Uncertain. Turns out dot-product denominators used for cosine
         were not recomputed after merge, leading to questionable
         cosines.
@@ -15128,7 +15235,10 @@ BUILD:
    (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
 DATE: 18 June 2019
 
 COMMENT ON DATABASE en_mini_fuzz_exp IS
@@ -16074,7 +16184,7 @@ are:
 * 'mmt-marginals for both of the above.
 
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 13 August 2018
 
 en_sh_two=> \dt+
@@ -16274,7 +16384,7 @@ Built as:
 (hvs 'explode-sections)
 (batch-all-pair-mi hvs)
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 29 August 2018
 
 en_sh_mi_two=> \dt+
@@ -17618,7 +17728,7 @@ BUILD:
    (fso 'store-all-elts)   ; Marginals are not to be stored.
    (sql-close)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2019
 
 en_large_dj_cfive=> \dt+
@@ -17649,7 +17759,7 @@ and MM^T values.
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2019
 
 COMMENT ON DATABASE en_large_marg IS
@@ -17785,7 +17895,7 @@ Loading and running this takes time and uses significant RAM:
 
 BUILD: Same as `en_micro_marg`.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 1 July 2019
 
 COMMENT ON DATABASE en_huge_marg IS
@@ -17915,7 +18025,7 @@ BUILD:
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 27 June 2019
 
 COMMENT ON DATABASE en_full_marg IS
@@ -19957,6 +20067,169 @@ $50 = (Section (ctv 1 0 7)
 
 There seem to be a lot of these ... WTF.
 
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+Ahh .. caught red-handed!
+
+(Section
+   (WordNode "the")
+   (ConnectorSeq
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "craziness")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(Section
+   (WordNode "is")
+   (ConnectorSeq
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "that")
+         (ConnectorDir "-")
+      )
+   )
+)
+
+(Section
+   (WordNode "stage")
+   (ConnectorSeq
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(
+(((6 . (WordNode "complicated")) 7 . (WordNode "sentence")) . 4.544568075409504)
+
+ (((2 . (WordNode "This")) 7 . (WordNode "sentence")) . 2.5698179211813894)
+ (((2 . (WordNode "This")) 9 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 3 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 10 . (WordNode "meant")
+) . 2.85136143940991) (((10 . (WordNode "meant")) 11 . (WordNode "to")
+) . 2.995166614025761) (((11 . (WordNode "to")) 12 . (WordNode "test")
+) . 2.4676368796347674) (((4 . (WordNode "a")) 7 . (WordNode "sentence")
+) . 2.157432042482352) (((4 . (WordNode "a")) 5 . (WordNode "long")
+) . 2.8337745270444152) (((12 . (WordNode "test")) 19 . (WordNode "of")
+) . 2.076930367265735) (((18 . (WordNode "stage")) 19 . (WordNode "of")
+) . 2.098831656855328) (((16 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 14 . (WordNode "craziness")
+) . 2.4141307658002162) (((14 . (WordNode "craziness")) 15 . (WordNode "of")
+) . 1.6669586994997374) (((19 . (WordNode "of")) 20 . (WordNode "the")
+) . 1.6553378921463375) (((8 . (WordNode "that")) 9 . (WordNode "is")
+) . 1.5597634187783882) (((19 . (WordNode "of")) 21 . (WordNode "processing")
+) . -0.24884483707755933))
+
+
+(print-linkage link-seq)
+6-7      complicated <--> sentence       MI=4.5446
+2-7      This <--> sentence      MI=2.5698
+2-9      This <--> is    MI=4.3761
+2-3      This <--> is    MI=4.3761
+2-10     This <--> meant         MI=2.8514
+10-11    meant <--> to   MI=2.9952
+11-12    to <--> test    MI=2.4676
+4-7      a <--> sentence         MI=2.1574
+4-5      a <--> long     MI=2.8338
+12-19    test <--> of    MI=2.0769
+18-19    stage <--> of   MI=2.0988
+16-18    the <--> stage  MI=2.3297
+13-18    the <--> stage  MI=2.3297
+13-14    the <--> craziness      MI=2.4141
+14-15    craziness <--> of       MI=1.6670
+19-20    of <--> the     MI=1.6553
+8-9      that <--> is    MI=1.5598
+19-21    of <--> processing      MI=-0.249
+
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+make-sections
+wedge-get-left-overt
+
+Found and fixed https://github.com/opencog/atomspace/pull/2252
+Arghhh.
+
+===========
+(define plain-text "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+(define word-strs (tokenize-text plain-text))
+(define word-list (map WordNode word-strs))
+(define mst-tree (mst-parse-atom-seq word-list trunc-scorer))
+(print-linkage ordered-tree)
+
+(print-linkage (sort-wedgelist (mpg-parse-atom-seq word-list trunc-scorer 20)))
+
+1) cross-any does allow overlaps!! DONE
+2) 1e30 reject has to be 1e20 DONE
+
+(1 . (WordNode "###LEFT-WALL###") (5 . (WordNode "long")
+
+
+===========
+dropdb en_pairs_cfive en_pairs_cfive_mst
+createdb en_pairs_cfive_mi_1.8
+
+COMMENT ON DATABASE "en_pairs_cfive_mi_1.8" IS
+'Same as en_pairs_cfive_mi but all pairs w/ FMI<1.8 removed.';
+(define fpm (add-fmi-filter wps 1.8 #f))
+(fpm 'left-basis-size)
+(fpm 'right-basis-size) << unchanged ...
+(length (fpm 'get-all-elts))  <<< 15795739 down from 27892737
+(sql-open "postgres:///en_pairs_cfive_mi_1.8")
+(define sfp (make-store fpm))
+(sfp 'store-all)
+Done storing 15795739 pairs in 17337 secs
+
+--------
+cleanup words that do not participate any longer ...
+
+(cog-map-type (lambda (word)
+	(if (= 0 (length (filter
+			(lambda (wpr) (and
+				 (not (equal? (cog-type (gar wpr)) 'AnyNode))
+				 (not (equal? (cog-type (gdr wpr)) 'AnyNode))
+			))
+			(cog-incoming-by-type word 'ListLink))))
+		(format #t "Empty: ~A\n" (cog-name word))))
+'WordNode)
+
+None-such. Inteesting ... OK.
+
+--------
+createdb en_pairs_mi_1.8tmp -T en_pairs_cfive_mi_1.8
+(wps 'fetch-pairs)
+(define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
+(batch-all-pair-mi fpm)
 
 
 
