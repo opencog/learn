@@ -7,6 +7,23 @@
 ; is returned.
 ;
 
+; Create a distance-modified scorer function:
+; The list DIST-MULTS contains multipliers for the score for each
+; possible integer distance between the atoms. For distances longer 
+; than the range of the list, the list's last value is used as multiplier.
+; Also: assign a bad cost to links that are too long --
+; longer than 16. This is a sharp cutoff.
+; This causes parser to run at O(N^3) for LEN < 16 and
+; a faster rate, O(N^2.3) for 16<LEN. This should help.
+(define (make-distance-scorer scorer DIST-MULTS)
+	(lambda (LW RW LEN)
+		; take distance-multiplier from DIST-MULT list
+		(define multiplier (list-ref DIST-MULTS (- (min LEN (length DIST-MULTS)) 1)))
+
+		(if (< 16 LEN) -2e25 (* multiplier (scorer LW RW LEN)))
+	)
+)
+
 (define-public (mst-parse-text-file plain-textblock DIST-MULT)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
@@ -70,23 +87,19 @@
 	; Define scoring function to look for values in weights-array.
 	; Scorer lambda function should refer to weights-array from its
 	; current environment (array was defined above).
-	; Scoring function considers weight multipliers coming from DIST-MULT
 	(define scorer 
 		(lambda (left-atom right-atom distance)
 			(define left-index (inexact->exact (string->number (cog-name (gdr left-atom)))))
 			(define right-index (inexact->exact (string->number (cog-name (gdr right-atom)))))
-			; modifier values are given in DIST-MULT. If distance is longer than 
-			; what has been defined in the array, use last array value:
-			(define modifier (list-ref DIST-MULT (- (min distance (length DIST-MULT)) 1)))
 
-			(* modifier (array-ref weights-array left-index right-index))
+			(array-ref weights-array left-index right-index)
 		)
 	)
 
-	(define trunc-scorer (make-trunc-scorer scorer))
+	(define dist-scorer (make-distance-scorer scorer DIST-MULT))
 
 	; Entry point, call parser on atomized sentence with ad-hoc scorer
-	(mst-parse-atom-seq (word-list (word-strs current-sentence)) trunc-scorer)
+	(mst-parse-atom-seq (word-list (word-strs current-sentence)) dist-scorer)
 
 )
 
@@ -111,12 +124,12 @@
 
 	(define mi-source (add-pair-freq-api pair-obj))
 
-	(define scorer (make-score-fn-dist mi-source 'pair-fmi DIST-MULT))
+	(define scorer (make-score-fn mi-source 'pair-fmi))
 
-	(define trunc-scorer (make-trunc-scorer scorer))
+	(define dist-scorer (make-distance-scorer scorer DIST-MULT))
 
 	; Process the list of words.
-	(mst-parse-atom-seq word-list trunc-scorer)
+	(mst-parse-atom-seq word-list dist-scorer)
 )
 
 ; wrapper for backwards compatibility
