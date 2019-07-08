@@ -6,7 +6,25 @@
 ; A list of word-pairs, together with the associated mutual information,
 ; is returned.
 ;
-(define-public (mst-parse-text-file plain-textblock mst-dist)
+
+; Create a distance-modified scorer function:
+; The list DIST-MULTS contains multipliers for the score for each
+; possible integer distance between the atoms. For distances longer 
+; than the range of the list, the list's last value is used as multiplier.
+; Also: assign a bad cost to links that are too long --
+; longer than 16. This is a sharp cutoff.
+; This causes parser to run at O(N^3) for LEN < 16 and
+; a faster rate, O(N^2.3) for 16<LEN. This should help.
+(define (make-distance-scorer scorer DIST-MULTS)
+	(lambda (LW RW LEN)
+		; take distance-multiplier from DIST-MULT list
+		(define multiplier (list-ref DIST-MULTS (- (min LEN (length DIST-MULTS)) 1)))
+
+		(if (< 16 LEN) -2e25 (* multiplier (scorer LW RW LEN)))
+	)
+)
+
+(define-public (mst-parse-text-file plain-textblock DIST-MULT)
 "
 	Procedure to MST-parse sentences coming from an instance-pair weight file.
 "
@@ -67,7 +85,7 @@
 	)	
 
 	; Define scoring function to look for values in weights-array.
-	; Scorer lambda function should store weights-array from its
+	; Scorer lambda function should refer to weights-array from its
 	; current environment (array was defined above).
 	(define scorer 
 		(lambda (left-atom right-atom distance)
@@ -78,28 +96,15 @@
 		)
 	)
 
-	; Assign a bad cost to links that are too long --
-	; longer than 16. This is a sharp cutoff.
-	; This causes parser to run at O(N^3) for LEN < 16 and
-	; a faster rate, O(N^2.3) for 16<LEN. This should help.
-	; Otherwise, assign modification to scorer depending on
-	; mst-parsing mode. If mst-distance accounting is activated
-	; shift all mi-values by 1/LEN, where LEN is the difference
-	; in positions in a sentence between words in word-pair.
-	(define (trunc-scorer LW RW LEN)
-		(if (< 16 LEN)
-			-2e25
-			(let
-				((modifier (if mst-dist (/ 1 LEN) 0)))
-				(+ modifier (scorer LW RW LEN)))))
+	(define dist-scorer (make-distance-scorer scorer DIST-MULT))
 
 	; Entry point, call parser on atomized sentence with ad-hoc scorer
-	(mst-parse-atom-seq (word-list (word-strs current-sentence)) trunc-scorer)
+	(mst-parse-atom-seq (word-list (word-strs current-sentence)) dist-scorer)
 
 )
 
 
-(define-public (mst-parse-text-mode plain-text cnt-mode mst-dist)
+(define-public (mst-parse-text-mode plain-text cnt-mode DIST-MULT)
 
 	; Assuming input is tokenized, this procedure separates by spaces 
 	; and adds LEFT-WALL
@@ -121,23 +126,10 @@
 
 	(define scorer (make-score-fn mi-source 'pair-fmi))
 
-	; Assign a bad cost to links that are too long --
-	; longer than 16. This is a sharp cutoff.
-	; This causes parser to run at O(N^3) for LEN < 16 and
-	; a faster rate, O(N^2.3) for 16<LEN. This should help.
-	; Otherwise, assign modification to scorer depending on
-	; mst-parsing mode. If mst-distance accounting is activated
-	; shift all mi-values by 1/LEN, where LEN is the difference
-	; in positions in a sentence between words in word-pair.
-	(define (trunc-scorer LW RW LEN)
-		(if (< 16 LEN)
-			-2e25
-			(let
-				((modifier (if mst-dist (/ 1 LEN) 0)))
-				(+ modifier (scorer LW RW LEN)))))
+	(define dist-scorer (make-distance-scorer scorer DIST-MULT))
 
 	; Process the list of words.
-	(mst-parse-atom-seq word-list trunc-scorer)
+	(mst-parse-atom-seq word-list dist-scorer)
 )
 
 ; wrapper for backwards compatibility
@@ -219,7 +211,7 @@
   observe-mst-mode -- update pseduo-disjunct counts by observing raw text.
   
   Build mst-parses using MI calculated beforehand.
-  When MST-DIST is true, word-pair MI values are adjusted for distance.
+  Values in MST-DIST adjust word-pair weight values for distance.
   Obtained parses are exported to file if EXPORT-MST is true.
   This is the second part of the learning algo: simply count how
   often pseudo-disjuncts show up.
@@ -244,6 +236,8 @@
 			(export-mst-parse plain-text parse "mst-parses.ull")
 		)
 	)
+
+	parse; return the parse, for unit-test purposes
 )
 
 ; Wrapper for backwards compatibility
