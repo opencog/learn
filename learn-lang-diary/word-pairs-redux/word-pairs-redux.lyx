@@ -111,6 +111,37 @@ MI graphs – 31 May 2015
 
 \begin_layout Standard
 Results from Rohit:
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Rohit's scripts for generating the plots were lost.
+ The datasets were 
+\emph on
+en_pairs_2016
+\emph default
+ and 
+\emph on
+en_pairs_rohit
+\emph default
+; see the `
+\emph on
+notes
+\emph default
+` file for a detailed description of the contents of this dataset.
+ In short: these hold 8.9M word-pairs obtained from random parses of Wikipedia
+ articles.
+ Archived in the `
+\emph on
+data/sql-dumps
+\emph default
+` directory.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -765,7 +796,7 @@ AMI(w_{l},w_{r})=MI(w_{l},w_{r})/\log
 \end_layout
 
 \begin_layout Section*
-Dataset report 3 June 2017
+Word-pair dataset report 3 June 2017
 \begin_inset CommandInset label
 LatexCommand label
 name "sec:Dataset-report"
@@ -776,15 +807,8 @@ name "sec:Dataset-report"
 \end_layout
 
 \begin_layout Standard
-Some summary reports from various different datasets.
-\end_layout
-
-\begin_layout Subsection*
-Word-Pair datasets
-\end_layout
-
-\begin_layout Standard
-First, datasets that hold word-pairs, parsed using the LG 
+Some summary report of various different datasets holding word-pairs.
+ All of the word-pair-counts were obtained by usig the LG 
 \begin_inset Quotes eld
 \end_inset
 
@@ -792,12 +816,93 @@ ANY
 \begin_inset Quotes erd
 \end_inset
 
- link type: i.e.
- random parse trees.
-\begin_inset Newline newline
+ parser, which generates random planar graphs (random planar parse trees).
+ Many of these datasets refer to 
+\begin_inset Quotes eld
 \end_inset
 
+MST
+\begin_inset Quotes erd
+\end_inset
 
+, and that is because those datasets 
+\emph on
+also
+\emph default
+ contain disjuncts (Sections) from MST parses.
+ This additional data has no effect on the word-pairs; it just makes the
+ datasets fatter.
+\end_layout
+
+\begin_layout Standard
+The common proceedure used during this era was to take a tranche of text,
+ perform random planar-graph parsing, and count the resulting word-pairs.
+ Next, marginal statistics and word-pair MI is computed.
+ Then the same tranche of text was run through the MST parser, and so disjunct
+ stats are added.
+ Then the next, and the next tranche are processed (up to a total of five
+ distinct tranches, described below.)
+\end_layout
+
+\begin_layout Standard
+There were several problems encountered:
+\end_layout
+
+\begin_layout Itemize
+Early datasets include as 
+\begin_inset Quotes eld
+\end_inset
+
+words
+\begin_inset Quotes erd
+\end_inset
+
+ character sequences that contain infix punctuation, typically because the
+ input text used hyphens, dashes, double-dashes and commas to delimit words,
+ but did not put spaces before or after the punctuation.
+ The tokenizer was to 
+\begin_inset Quotes eld
+\end_inset
+
+stupid
+\begin_inset Quotes erd
+\end_inset
+
+ to recognize these, and treated them as single words.
+ Some of the datasets filter these out, after-the-fact.
+\end_layout
+
+\begin_layout Itemize
+Same as above, with with sentence-ending periods.
+ These can be reconized as 
+\begin_inset Quotes eld
+\end_inset
+
+words
+\begin_inset Quotes erd
+\end_inset
+
+ that have an embedded period, followed by a capital letter.
+ None of the datasets have these filtered out.
+\end_layout
+
+\begin_layout Itemize
+The MST parser was (mildly) buggy; when a sentence contained multiple instances
+ of the same word, the generated disjuncts were incorrect.
+ See bug
+\emph on
+ opencog/atomspace#2252
+\emph default
+ for the fix.
+ This does not affect word-pair data, but does produce low-quality disjuncts
+ that contribute to the overall noise.
+\end_layout
+
+\begin_layout Itemize
+The inclusion of the MST data makes the datasets large and slow to load.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Separator latexpar
 \end_inset
 
@@ -1699,7 +1804,7 @@ Obsn's The total number of observations of these pairs.
 \end_layout
 
 \begin_layout Description
-Obs/pr The average number of times each pair was observed.
+Obs/pr The average number of times each word-pair was observed.
 \end_layout
 
 \begin_layout Description
@@ -1813,7 +1918,13 @@ en_pairs_rfive_mst As above, except that this is the MST parse of all of
 \begin_layout Description
 en_pairs_cfive_mst Same as en_pairs_rfive_mst above, but with all words
  that contained bogus infix punctuation removed.
- (hyphenated words remain, as do decimal numbers and abbreviations).
+ Hyphenated words remain, as do decimal numbers and abbreviations.
+ Unfortunately, this means that there are some bogus words that remain -
+ sentence boundaries were not detected when there was no space after a period,
+ and before the start of the next sentence.
+ These are characteristically words with a period in them, followed by a
+ capital letter.
+ These should have been filtered out, but weren't.
  
 \end_layout
 
@@ -4081,6 +4192,23 @@ Graph obtained from the binned-hanpr-mi data, in the zh-pairs.scm file.
  Note that this is qualitatively similar to the English word-pairs distribution,
  shown above, although the slopes are different, and the peak is slightly
  shifted.
+\end_layout
+
+\begin_layout Section*
+Cutting and recomputing the MI - July 2019
+\end_layout
+
+\begin_layout Standard
+This section provides an analysis of what happens when MI is cut and recomputed.
+ The starting point is the 
+\series bold
+en_pairs_cfive
+\series default
+ dataset; this is the 
+\series bold
+en_pairs_cfive_mst
+\series default
+ dataset with the disjuncts (Sections) deleted.
 \end_layout
 
 \begin_layout Section*
