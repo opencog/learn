@@ -13,6 +13,12 @@
 ;
 ; See disjunct-cross.scm for the 2018 version of this.
 ;
+; Much of what goes on here is to attach scores to various things,
+; then rank them according to score, then dump to file. The next
+; stage is to create histograms, e.g. with `bin-count-simple` and
+; then create graphs (using gnuplot). The histogram tools are
+; currently a part of the `(opencog matrix)` scheme module.
+;
 ; Copyright (c) 2017 Linas Vepstas
 ;
 
