@@ -59,6 +59,16 @@
    (close outport))
 
 ; ----------
+Scatterplot of both mi's. Huge.
+
+(let ((outport (open-file "/tmp/scatter-fmi.dat" "w")))
+	(format outport "#\n# Cut-FMI	Recomputed-FMI\n#\n")
+	(for-each (lambda (pr)
+		(format outport "~6F	~6F\n" (wpf 'pair-fmi pr) (fpf 'pair-fmi pr)))
+		wall)
+   (close outport))
+
+; ----------
 ; As above, but all pairs, unfiltered.
 (sql-open "postgres:///en_pairs_mi")
 (define all-bins (bin-count wall 400
@@ -78,7 +88,6 @@
 (let ((outport (open-file "/tmp/full-weighted-fmi.dat" "w")))
    (print-bincounts-tsv call-bins outport)
    (close outport))
-
 
 
 ; ---------------------------------------------------------------------

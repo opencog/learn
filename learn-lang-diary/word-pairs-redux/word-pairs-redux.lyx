@@ -92,7 +92,8 @@ Linas Vepstas
 \end_layout
 
 \begin_layout Abstract
-Extract from diary, focused on word-pairs only.
+Extract from the Language-Learning Diary, focused on describing recent (2015
+ and later) word-pair datasets only.
 \end_layout
 
 \begin_layout Section*
@@ -100,9 +101,30 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Focus on word-pairs.
- See also an eariler 2009 paper, on the same topic.
- This one looks at more recent datasets.
+The current langauge-learning pipeline requires, as input, datasets describing
+ word-pair frequencies and word-pair mutual information.
+ This text describes those datasets and characterizes thier content, focusing
+ primarily on the distribution of the mutual-information values.
+\end_layout
+
+\begin_layout Standard
+An earlier 2009 paper
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2009"
+
+\end_inset
+
+ provides a general overview of the disribution of mutual information of
+ word-pairs.
+ It provides formal defintions, which are not given here.
+\end_layout
+
+\begin_layout Standard
+This report looks at more recent datasets.
+ It's organization is mostly chronological.
+ It's style is that of a research diary, noting results as they come in,
+ rather than presenting them in any kind of final form.
 \end_layout
 
 \begin_layout Section*
@@ -110,9 +132,10 @@ MI graphs – 31 May 2015
 \end_layout
 
 \begin_layout Standard
-Results from Rohit:
+Results from Rohit.
+ Rohit Shinde, Google Summer-of-Code student in 2015, provided these results.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Rohit's scripts for generating the plots were lost.
@@ -141,10 +164,49 @@ data/sql-dumps
 
 \end_inset
 
+ These are based on the 
+\emph on
+en_pairs_rohit 
+\emph default
+dataset, which contained about 400K words (exactly 396255 words), between
+ which there were about 8.9M word-pairs observed (exactly 8880914 of them),
+ for which there were about 418M observations (exactly 418235277 of them).
+ These were obtained by generating random planar graphs for English-language
+ Wikiepdia articles.
+ As a 
+\begin_inset Quotes eld
+\end_inset
 
+balanced English-language corpus
+\begin_inset Quotes erd
+\end_inset
+
+, Wikipedia articles have several deficiencies: 
+\end_layout
+
+\begin_layout Itemize
+A near-complete absence of action verbs (run, jump, hit, ...) and a vast surplus
+ of ontological descriptions (was, is, has, ...)
+\end_layout
+
+\begin_layout Itemize
+An unusually high proportion of proper nouns (geographical place names,
+ commercial product names, names of famous persons, ...)
 \end_layout
 
 \begin_layout Standard
+For these reasons, this dataset is perhaps less than ideal for studying
+ the English language, although in most ways it should still be generally
+ representative.
+\end_layout
+
+\begin_layout Standard
+First graph: word observation frequency vs.
+ frequency rank for single words.
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename images/frequency-vs-frequency-rank-words.png
 	lyxscale 30
@@ -156,16 +218,28 @@ data/sql-dumps
 \end_layout
 
 \begin_layout Standard
-Above is for single words.
- Frequency is the number of times the word was observed.
+Frequency is the number of times the word was observed.
+ Eyeballing this, it appears to be a classic Zipfian distribution.
+ The log is the natural log.
+ There's something not entirely right with this graph/dataset: given that
+ number of words is 396255 and that 
+\begin_inset Formula $\log\left(396255\right)=12.89$
+\end_inset
+
+, the x-axis of the graph should have extended a bit farther.
+ The reason for the premature drop-off is unknown.
+ Perhaps the graph was generated early in the data-collection process, before
+ the complete set of had been assembled.
+ It does seem to be exactly Zipfian, with an exponent of what seems to be
+ exactly 1.0, so this seems to be in good shape.
 \end_layout
 
 \begin_layout Standard
-The log is the natural log.
- Below is for word-pairs.
+Next, the distribution for word-pairs.
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename images/frequency-vs-frequency-rank-wordpairs.png
 	lyxscale 50
@@ -177,13 +251,78 @@ The log is the natural log.
 \end_layout
 
 \begin_layout Standard
-Below is a scatterplot for mutual information of word-paris vs rank.
+The final dataset had 8880914 word-pairs, and 
+\begin_inset Formula $\log\left(8880914\right)=16.00$
+\end_inset
+
+ and so again, this appears to be graphing only a preliminary, earlier version
+ of the final dataset.
+ Again, it has a Zipfian distribution, although now the exponent seems to
+ be 0.7 and not 1.0 (just eye-balling it).
 \end_layout
 
 \begin_layout Standard
+Below is a scatterplot of the mutual information of word-pairs vs.
+ the rank.
+ The distribution seems to be bi-modal: there seem to be two contributions.
+ One is an isoceles triangle (or gaussian?), centered on an MI=0; then another,
+ second distribution, containing only lower-ranked word pairs, having an
+ MI centered on 10 or so.
+ This suggests an interesting hypothesis: the larger mode, centered at MI=0,
+ captures an essentially random distribution of word-pairs in text.
+ The second, smaller high-MI mode captures colocations: idioms, institutional
+ phrases, set phrases, etc.
+ The bi-modality suggests several ways of arranging data-cuts to separate
+ these two modes.
+ One cut would be to simply discard all word-pairs with an MI of about 5
+ (again, just eye-balling this particular graph).
+ A completely different cut would be to discard the 
+\begin_inset Formula $e^{6}=403$
+\end_inset
+
+ top-ranked word-pairs.
+ This cut doesn't separate the two modes, but does decaptitate the zero-mode.
+ 
+\end_layout
+
+\begin_layout Standard
+The core question is, of course, how do these two modes contribute to grammatica
+l structure.
+ That is, does the zero-mode contribute to grammar, or not? Is the zero
+ mode 
+\begin_inset Quotes eld
+\end_inset
+
+just random noise
+\begin_inset Quotes erd
+\end_inset
+
+, or does it contain signal? Perhaps its the other way around: the colocations
+ should be treated as 
+\begin_inset Quotes eld
+\end_inset
+
+single words
+\begin_inset Quotes erd
+\end_inset
+
+, whereas all 
+\begin_inset Quotes eld
+\end_inset
+
+true grammar
+\begin_inset Quotes erd
+\end_inset
+
+ is to be found in the zero mode.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename images/mi-vs-frequency-rank.png
-	lyxscale 50
+	lyxscale 35
 	width 100col%
 
 \end_inset
@@ -192,10 +331,13 @@ Below is a scatterplot for mutual information of word-paris vs rank.
 \end_layout
 
 \begin_layout Standard
-number of word pairs as function of word rank
+The final graph shows the number of word pairs, as function of single-word
+ rank.
+ It appearrs Zipfian.
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename images/Nth-word-frequency-regression.png
 	lyxscale 40
@@ -207,8 +349,23 @@ number of word pairs as function of word rank
 \end_layout
 
 \begin_layout Standard
-Summary: these are more or less exactly as expected.
- Will need to make cuts to get rid of the low-frequency word pairs...
+Summary: the first two, and the last graph show a classic Zipfian distribution,
+ which is exactly what is expected.
+ The third graph appears to be bimodal, and suggests the presence of a mode
+ with 
+\begin_inset Quotes eld
+\end_inset
+
+true colocations
+\begin_inset Quotes erd
+\end_inset
+
+ (high MI) and a dominant mode of random word-pair associations (centered
+ on an MI of zero.) It is not clear if that bimodality is actually present
+ in the data, or is merely a trick of the eye.
+ If it is present, it is not clear how these two modes contribute to grammar.
+ The presence (or absence) of bimodality, and it's effect on grammar seems
+ to be an important question to pursue.
 \end_layout
 
 \begin_layout Section*
@@ -746,7 +903,7 @@ nguage word pairs, where were observed for a total of 420 million times.
 \align center
 \begin_inset Graphics
 	filename images/lr-balance.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -3596,7 +3753,7 @@ The figure below shows the distribution of the mutual information of English
 \align center
 \begin_inset Graphics
 	filename binned-enpr-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -4160,7 +4317,7 @@ The figure below shows the distribution of the mutual information of the
 \align center
 \begin_inset Graphics
 	filename binned-hanpr-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -4476,7 +4633,7 @@ So this:
 \align center
 \begin_inset Graphics
 	filename full-unique-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -4491,7 +4648,7 @@ and this
 \align center
 \begin_inset Graphics
 	filename full-weighted-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -4506,7 +4663,7 @@ and this
 \align center
 \begin_inset Graphics
 	filename cut-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -4517,6 +4674,21 @@ and this
 so then
 \end_layout
 
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename scatter-mi.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and then
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
@@ -4524,7 +4696,7 @@ The End
 \begin_layout Standard
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
-bibfiles "lang"
+bibfiles "/home/linas/src/novamente/src/learn-git/learn-lang-diary/lang"
 options "alpha"
 
 \end_inset
