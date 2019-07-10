@@ -1,0 +1,23 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate the binned MI observations
+#
+# set term postscript eps enhanced color 28
+# set out 'cut-mi.eps'
+
+set term png
+set out 'cut.png'
+
+# set yrange [:1]
+set logscale y
+set format y "10^{%L}"
+set title "pair distribution"
+set xlabel "Mutual Information"
+set ylabel "Probability"
+# Probability is divided by total count, and divided by bin-width.
+plot "all-fmi.dat" using 2:3 with lines linewidth 2 title "all", \
+     "cut-fmi.dat" using 2:3 with lines linewidth 2 title "cut", \
+     "cut-recomp-fmi.dat" using 2:3 with lines linewidth 2 title "recomp"
