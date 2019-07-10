@@ -27,44 +27,44 @@
 #################################################
 # Used to generate the binned MI observations w/ multiplicity
 #
-set term postscript eps enhanced color 28
-set out 'full-weighted-mi.eps'
-
-# set term png
-# set out 'full-weighted-mi.png'
-
-set xrange [-10:30]
-set yrange [1e-6:1]
-set logscale y
-set format y "10^{%L}"
-set title "Distribution of Word Pairs (with Multiplicity)"
-set xlabel "Mutual Information"
-set ylabel "Probability"
-# Probability is divided by total count, and divided by bin-width.
-binwidth= (30 + 15.) / 400
-count= 1247457239.0
-plot "full-weighted-fmi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
-     "full-weighted-fmi.dat" using 2:(0.04 * 2**(-0.3*$2)) with lines linewidth 5 title "2^{-0.3 MI}", \
-     "full-weighted-fmi.dat" using 2:(2 * 2**(2.5*$2)) with lines linewidth 5 title "2^{2.5 MI}"
-
-##     "full-weighted-fmi.dat" using 2:(0.2 * 2**(-0.2*($2-1.4)*($2-1.4))) with lines linewidth 2 title "2^{-0.2 MI*MI}"
-
+# set term postscript eps enhanced color 28
+# set out 'full-weighted-mi.eps'
+# 
+# # set term png
+# # set out 'full-weighted-mi.png'
+# 
+# set xrange [-10:30]
+# set yrange [1e-6:1]
+# set logscale y
+# set format y "10^{%L}"
+# set title "Distribution of Word Pairs (with Multiplicity)"
+# set xlabel "Mutual Information"
+# set ylabel "Probability"
+# # Probability is divided by total count, and divided by bin-width.
+# binwidth= (30 + 15.) / 400
+# count= 1247457239.0
+# plot "full-weighted-fmi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
+#      "full-weighted-fmi.dat" using 2:(0.04 * 2**(-0.3*$2)) with lines linewidth 5 title "2^{-0.3 MI}", \
+#      "full-weighted-fmi.dat" using 2:(2 * 2**(2.5*$2)) with lines linewidth 5 title "2^{2.5 MI}"
+# 
+# ##     "full-weighted-fmi.dat" using 2:(0.2 * 2**(-0.2*($2-1.4)*($2-1.4))) with lines linewidth 2 title "2^{-0.2 MI*MI}"
+# 
 #################################################
 # Used to generate the binned MI observations
 #
-# set term postscript eps enhanced color 28
-# set out 'cut-mi.eps'
+set term postscript eps enhanced color 28
+set out 'cut-mi.eps'
 
-set term png
-set out 'cut.png'
+# set term png
+# set out 'cut-mi.png'
 
-set yrange [:1e6]
+set key font ",20"
+set yrange [1:1e6]
 set logscale y
 set format y "10^{%L}"
-set title "pair distribution"
+set title "Distribution of Unique Word Pairs"
 set xlabel "Mutual Information"
-set ylabel "Probability"
-# Probability is divided by total count, and divided by bin-width.
-plot "full-fmi.dat" using 2:3 with lines linewidth 2 title "all", \
-     "cut-fmi.dat" using 2:3 with lines linewidth 2 title "cut", \
-     "cut-recomp-fmi.dat" using 2:3 with lines linewidth 2 title "recomp"
+set ylabel "Count"
+plot "full-fmi.dat" using 2:3 with lines linewidth 5 title "All Pairs", \
+     "cut-fmi.dat" using 2:3 with lines linewidth 5 title "Cut MI<1.8", \
+     "cut-recomp-fmi.dat" using 2:3 with lines linewidth 5 title "Recomputed cut"
