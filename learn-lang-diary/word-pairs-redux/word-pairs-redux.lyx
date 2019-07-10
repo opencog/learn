@@ -101,9 +101,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The current langauge-learning pipeline requires, as input, datasets describing
+The current language-learning pipeline requires, as input, datasets describing
  word-pair frequencies and word-pair mutual information.
- This text describes those datasets and characterizes thier content, focusing
+ This text describes those datasets and characterizes their content, focusing
  primarily on the distribution of the mutual-information values.
 \end_layout
 
@@ -115,9 +115,9 @@ key "Vepstas2009"
 
 \end_inset
 
- provides a general overview of the disribution of mutual information of
+ provides a general overview of the distribution of mutual information of
  word-pairs.
- It provides formal defintions, which are not given here.
+ It provides formal definitions, which are not given here.
 \end_layout
 
 \begin_layout Standard
@@ -172,7 +172,7 @@ dataset, which contained about 400K words (exactly 396255 words), between
  which there were about 8.9M word-pairs observed (exactly 8880914 of them),
  for which there were about 418M observations (exactly 418235277 of them).
  These were obtained by generating random planar graphs for English-language
- Wikiepdia articles.
+ Wikipedia articles.
  As a 
 \begin_inset Quotes eld
 \end_inset
@@ -262,15 +262,15 @@ The final dataset had 8880914 word-pairs, and
 \end_layout
 
 \begin_layout Standard
-Below is a scatterplot of the mutual information of word-pairs vs.
+Below is a scatter-plot of the mutual information of word-pairs vs.
  the rank.
  The distribution seems to be bi-modal: there seem to be two contributions.
- One is an isoceles triangle (or gaussian?), centered on an MI=0; then another,
- second distribution, containing only lower-ranked word pairs, having an
- MI centered on 10 or so.
+ One is an isosceles triangle (or Gaussian?), centered on an MI=0; then
+ another, second distribution, containing only lower-ranked word pairs,
+ having an MI centered on 10 or so.
  This suggests an interesting hypothesis: the larger mode, centered at MI=0,
  captures an essentially random distribution of word-pairs in text.
- The second, smaller high-MI mode captures colocations: idioms, institutional
+ The second, smaller high-MI mode captures collocations: idioms, institutional
  phrases, set phrases, etc.
  The bi-modality suggests several ways of arranging data-cuts to separate
  these two modes.
@@ -281,7 +281,7 @@ Below is a scatterplot of the mutual information of word-pairs vs.
 \end_inset
 
  top-ranked word-pairs.
- This cut doesn't separate the two modes, but does decaptitate the zero-mode.
+ This cut doesn't separate the two modes, but does decapitate the zero-mode.
  
 \end_layout
 
@@ -297,7 +297,7 @@ just random noise
 \begin_inset Quotes erd
 \end_inset
 
-, or does it contain signal? Perhaps its the other way around: the colocations
+, or does it contain signal? Perhaps its the other way around: the collocations
  should be treated as 
 \begin_inset Quotes eld
 \end_inset
@@ -333,7 +333,7 @@ true grammar
 \begin_layout Standard
 The final graph shows the number of word pairs, as function of single-word
  rank.
- It appearrs Zipfian.
+ It appears Zipfian.
 \end_layout
 
 \begin_layout Standard
@@ -356,15 +356,15 @@ Summary: the first two, and the last graph show a classic Zipfian distribution,
 \begin_inset Quotes eld
 \end_inset
 
-true colocations
+true collocations
 \begin_inset Quotes erd
 \end_inset
 
  (high MI) and a dominant mode of random word-pair associations (centered
- on an MI of zero.) It is not clear if that bimodality is actually present
+ on an MI of zero.) It is not clear if that bi-modality is actually present
  in the data, or is merely a trick of the eye.
  If it is present, it is not clear how these two modes contribute to grammar.
- The presence (or absence) of bimodality, and it's effect on grammar seems
+ The presence (or absence) of bi-modality, and it's effect on grammar seems
  to be an important question to pursue.
 \end_layout
 
@@ -374,7 +374,7 @@ Word-pair Asymmetry
 
 \begin_layout Standard
 This section reports on the asymmetry of the distribution of word-pairs.
- Some words appear more often at the begining of sentences (and thus, appear
+ Some words appear more often at the beginning of sentences (and thus, appear
  more often on the left-hand-side of a word-pair) while others appear more
  often at the end (the period ending a sentence, treated as a word, is dominant
  on the right-hand side of pairs).
@@ -492,7 +492,7 @@ This cannot hold for human languages: the exclamation point, question mark
  and period occur exclusively on the right hand-side of any randomly-generated
  pair.
  This is not limited to punctuation: for Japanese, sentences usually end
- in a verb, and thus, for Japanse verbs 
+ in a verb, and thus, for Japanese verbs 
 \begin_inset Formula $v$
 \end_inset
 
@@ -826,7 +826,7 @@ nguage word pairs, where were observed for a total of 420 million times.
  These pairs connected about 400K distinct words.
  The number of distinct words is large, because these include surnames,
  and geographical names, as well as an assortment of foreign-language words
- as might be encountered in a sampling of English wikipedia pages.
+ as might be encountered in a sampling of English Wikipedia pages.
 \begin_inset Separator latexpar
 \end_inset
 
@@ -857,7 +857,7 @@ The above got generated by lr-balance.scm and plotted with lr-balance.gplot
 Observe that the y-axis is drawn with a logarithmic scale.
  The two sides to this peak are conjectured to be linear.
  Two lines guessing at the slopes are indicated in the graph; the (natural
- logarithm) slopes are +13 and -18.
+ logarithm) slopes are +13 and -18 (or +19 and -26 base two).
 \end_layout
 
 \begin_layout Section*
@@ -884,7 +884,7 @@ status collapsed
 
 \begin_layout Plain Layout
 Note that the AtomSpace infrastructure does have some serious performance
- limitations: the AtomSpace is designed to be a very general-purpose hypergraph
+ limitations: the AtomSpace is designed to be a very general-purpose hyper-graph
  manipulation and analysis tool, and not a fast statistics-collecting tool
  for narrow tasks.
  One could probably write custom word-pair-counting software that would
@@ -1005,7 +1005,7 @@ name "sec:Dataset-report"
 
 \begin_layout Standard
 Some summary report of various different datasets holding word-pairs.
- All of the word-pair-counts were obtained by usig the LG 
+ All of the word-pair-counts were obtained by using the LG 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1032,7 +1032,7 @@ also
 \end_layout
 
 \begin_layout Standard
-The common proceedure used during this era was to take a tranche of text,
+The common procedure used during this era was to take a tranche of text,
  perform random planar-graph parsing, and count the resulting word-pairs.
  Next, marginal statistics and word-pair MI is computed.
  Then the same tranche of text was run through the MST parser, and so disjunct
@@ -1071,7 +1071,7 @@ stupid
 
 \begin_layout Itemize
 Same as above, with with sentence-ending periods.
- These can be reconized as 
+ These can be recognized as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3294,12 +3294,12 @@ morphemes
 \end_layout
 
 \begin_layout Section*
-English wordpair small dataset July 2017
+English word-pair small dataset July 2017
 \end_layout
 
 \begin_layout Standard
 This report provides a quick sketch of a small dataset containing English
- wordpairs.
+ word-pairs.
  This is the 
 \noun on
 en_pairs_rone
