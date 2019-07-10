@@ -28,6 +28,7 @@
 (wps 'fetch-pairs)
 (print-matrix-summary-report wps)
 
+; ----------
 (define wall (wps 'get-all-elts))
 (length wall)  ; << 15795739
 
@@ -45,6 +46,7 @@
 (define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
 ; (batch-all-pair-mi fpm) ; << how it got created. 
 (define fpf (add-pair-freq-api fpm))
+(print-matrix-summary-report fpf)
 
 ; Recomputed FMI on the very same pairs...
 (define recomp-bins (bin-count wall 400
