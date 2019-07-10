@@ -64,8 +64,17 @@
 	(lambda (item) 1)
 	-15 30))
 
-(let ((outport (open-file "/tmp/all-fmi.dat" "w")))
+(let ((outport (open-file "/tmp/full-fmi.dat" "w")))
    (print-bincounts-tsv all-bins outport)
+   (close outport))
+
+(define call-bins (bin-count wall 400
+	(lambda (item) (wpf 'pair-fmi item))
+	(lambda (item) (wpf 'get-count item))
+	-15 30))
+
+(let ((outport (open-file "/tmp/full-weighted-fmi.dat" "w")))
+   (print-bincounts-tsv call-bins outport)
    (close outport))
 
 

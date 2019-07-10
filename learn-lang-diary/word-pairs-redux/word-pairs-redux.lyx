@@ -4202,13 +4202,14 @@ Cutting and recomputing the MI - July 2019
 This section provides an analysis of what happens when MI is cut and recomputed.
  The starting point is the 
 \series bold
-en_pairs_cfive
+en_pairs_cfive_mi
 \series default
  dataset; this is the 
 \series bold
 en_pairs_cfive_mst
 \series default
- dataset with the disjuncts (Sections) deleted.
+ dataset with the disjuncts (Sections) deleted, and word-pair MI+marginals
+ recomputed.
  Starting with this dataset, all word-pairs with an MI of less than 1.8 are
  discarded, then the MI is recomputed, from scratch, with the remaining
  pairs.
@@ -4218,7 +4219,7 @@ en_pairs_mi_1.8cut
 \series default
  dataset contains both the old, and the new MI values.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 See the `word-pairs.scm` file for the scripts.
@@ -4460,6 +4461,25 @@ en_pairs_mi_1.8cut
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+So this:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename full-unique-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and this
 \end_layout
 
 \begin_layout Section*
