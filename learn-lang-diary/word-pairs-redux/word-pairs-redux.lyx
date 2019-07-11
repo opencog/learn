@@ -140,24 +140,24 @@ status collapsed
 \begin_layout Plain Layout
 Rohit's scripts for generating the plots were lost.
  The datasets were 
-\emph on
+\noun on
 en_pairs_2016
-\emph default
+\noun default
  and 
-\emph on
+\noun on
 en_pairs_rohit
-\emph default
+\noun default
 ; see the `
-\emph on
+\family typewriter
 notes
-\emph default
+\family default
 ` file for a detailed description of the contents of this dataset.
- In short: these hold 8.9M word-pairs obtained from random parses of Wikipedia
- articles.
+ In short: these hold 8.9M word-pairs obtained from random planar parses
+ of Wikipedia articles.
  Archived in the `
-\emph on
+\family typewriter
 data/sql-dumps
-\emph default
+\family default
 ` directory.
  
 \end_layout
@@ -165,8 +165,11 @@ data/sql-dumps
 \end_inset
 
  These are based on the 
+\noun on
+en_pairs_rohit
 \emph on
-en_pairs_rohit 
+\noun default
+ 
 \emph default
 dataset, which contained about 400K words (exactly 396255 words), between
  which there were about 8.9M word-pairs observed (exactly 8880914 of them),
@@ -229,7 +232,7 @@ Frequency is the number of times the word was observed.
 , the x-axis of the graph should have extended a bit farther.
  The reason for the premature drop-off is unknown.
  Perhaps the graph was generated early in the data-collection process, before
- the complete set of had been assembled.
+ the complete set of data had been assembled.
  It does seem to be exactly Zipfian, with an exponent of what seems to be
  exactly 1.0, so this seems to be in good shape.
 \end_layout
@@ -871,7 +874,11 @@ This section reports on data collected for a small sample of English sentences,
 status collapsed
 
 \begin_layout Plain Layout
-The `en_snapshot` dataset
+The `
+\noun on
+en_snapshot
+\noun default
+` dataset
 \end_layout
 
 \end_inset
@@ -903,7 +910,9 @@ There were 106696 unique words observed in the dataset
 status collapsed
 
 \begin_layout Plain Layout
-Obtained with (fetch-all-words)(length (get-all-words))
+Obtained with
+\family typewriter
+ (fetch-all-words)(length (get-all-words))
 \end_layout
 
 \end_inset
@@ -917,8 +926,13 @@ Obtained with (fetch-all-words)(length (get-all-words))
 status collapsed
 
 \begin_layout Plain Layout
-(get-total-atom-count (get-all-words)) which is the same as (total-word-observat
-ions)
+
+\family typewriter
+(get-total-atom-count (get-all-words))
+\family default
+ which is the same as 
+\family typewriter
+(total-word-observations)
 \end_layout
 
 \end_inset
@@ -929,9 +943,11 @@ ions)
 \begin_layout Standard
 A total of 80613 sentences were observed
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
+
+\family typewriter
 (get-sentence-count)
 \end_layout
 
@@ -942,6 +958,8 @@ status open
 status collapsed
 
 \begin_layout Plain Layout
+
+\family typewriter
 (/ (get-parse-count) (get-sentence-count))
 \end_layout
 
@@ -953,6 +971,8 @@ status collapsed
 status collapsed
 
 \begin_layout Plain Layout
+
+\family typewriter
 (avg-sentence-length)
 \end_layout
 
@@ -974,22 +994,32 @@ Word-pairs were obtained via 'clique counting': given a window size of 6,
 status collapsed
 
 \begin_layout Plain Layout
+
+\family typewriter
 (fetch-clique-pairs) (length (get-all-clique-pairs))
 \end_layout
 
 \end_inset
 
- for a total of XXX observations
+ for a total of XXX observations.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
+
+\family typewriter
 (get-total-atom-count (get-all-clique-pairs))
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+This dataset is not used in any further experiments; effectively all of
+ the major datasets and experiments are built on counts obtained from random
+ planar graph parses, rather than from clique-pair counts.
 \end_layout
 
 \begin_layout Section*
@@ -1088,8 +1118,11 @@ The MST parser was (mildly) buggy; when a sentence contained multiple instances
  of the same word, the generated disjuncts were incorrect.
  See bug
 \emph on
- opencog/atomspace#2252
+ 
+\family typewriter
 \emph default
+opencog/atomspace#2252
+\family default
  for the fix.
  This does not affect word-pair data, but does produce low-quality disjuncts
  that contribute to the overall noise.
@@ -1242,6 +1275,8 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_sim
 \end_layout
 
@@ -1307,7 +1342,11 @@ en_pairs_sim
 \begin_inset Text
 
 \begin_layout Plain Layout
-en_pairs_tone_mst 
+
+\noun on
+en_pairs_tone_mst
+\noun default
+ 
 \end_layout
 
 \end_inset
@@ -1372,6 +1411,8 @@ en_pairs_tone_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_ttwo_mst
 \end_layout
 
@@ -1437,6 +1478,8 @@ en_pairs_ttwo_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_tthree
 \end_layout
 
@@ -1502,6 +1545,8 @@ en_pairs_tthree
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rone_mst
 \end_layout
 
@@ -1567,6 +1612,8 @@ en_pairs_rone_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rtwo_mst
 \end_layout
 
@@ -1632,6 +1679,8 @@ en_pairs_rtwo_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rthree
 \end_layout
 
@@ -1697,6 +1746,8 @@ en_pairs_rthree
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rfive
 \end_layout
 
@@ -1762,6 +1813,8 @@ en_pairs_rfive
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_cfive_mst
 \end_layout
 
@@ -1827,6 +1880,8 @@ en_pairs_cfive_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zh_pairs_sone
 \end_layout
 
@@ -1892,6 +1947,8 @@ zh_pairs_sone
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zen_pairs
 \end_layout
 
@@ -1957,6 +2014,8 @@ zen_pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zen_pairs_three
 \end_layout
 
@@ -2031,7 +2090,11 @@ The datasets are as below.
 \end_layout
 
 \begin_layout Description
-en_pairs_sim This contains text parsed from Wikipedia, only.
+
+\noun on
+en_pairs_sim
+\noun default
+ This contains text parsed from Wikipedia, only.
  As noted previously, Wikipedia is painfully short of verbs and pronouns.
  Compared to the Gutenberg datasets below, it is also very rich in foreign
  words and proper names (product and brand names, geographical place names,
@@ -2041,7 +2104,11 @@ en_pairs_sim This contains text parsed from Wikipedia, only.
 \end_layout
 
 \begin_layout Description
-en_pairs_tone_mst Text from Project Gutenberg 
+
+\noun on
+en_pairs_tone_mst
+\noun default
+ Text from Project Gutenberg 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2063,58 +2130,146 @@ famous authors
 \end_layout
 
 \begin_layout Description
-en_pairs_ttwo_mst Tranche two - Everything from tranche one, plus fan-fiction
- from http://archiveofourown.org.
+
+\noun on
+en_pairs_ttwo_mst
+\noun default
+ Tranche two - Everything from tranche one, plus fan-fiction from 
+\family typewriter
+http://archiveofourown.org
+\family default
+.
  Most of the selected texts were 10K words or longer.
- See the 'download.sh' file for the precise texts.
- Issues: tone_mst and ttwo_mst are missing connectors the LEFT-WALL.
+ See the '
+\family typewriter
+download.sh
+\family default
+' file for the precise texts.
+ Issues: 
+\noun on
+tone_mst
+\noun default
+ and 
+\noun on
+ttwo_mst
+\noun default
+ are missing connectors the 
+\family typewriter
+LEFT-WALL
+\family default
+.
  Certain types of punctuation is mis-handled.
 \end_layout
 
 \begin_layout Description
-en_pairs_tthree Tranche three - Everything in tranche two, plus several
- hundred of the most recently created Project Gutenberg texts, whatever
- they may be.
- See the 'download.sh' file for the precise texts.
- The _mst version has the same issues that ttwo_mst has, although some connector
-s to LEFT-WALL do get added.
- The _mst version is probably not useful for similarity measurements.
+
+\noun on
+en_pairs_tthree
+\noun default
+ Tranche three - Everything in tranche two, plus several hundred of the
+ most recently created Project Gutenberg texts, whatever they may be.
+ See the '
+\family typewriter
+download.sh
+\family default
+' file for the precise texts.
+ The 
+\noun on
+_mst
+\noun default
+ version has the same issues that ttwo_mst has, although some connectors
+ to 
+\family typewriter
+LEFT-WALL
+\family default
+ do get added.
+ The 
+\noun on
+_mst
+\noun default
+ version is probably not useful for similarity measurements.
 \end_layout
 
 \begin_layout Description
-en_pairs_rone_mst Same as en_pairs_tone_mst, but with minor issues fixed.
- However, links to LEFT-WALL still missing.
+
+\noun on
+en_pairs_rone_mst
+\noun default
+ Same as 
+\noun on
+en_pairs_tone_mst
+\noun default
+, but with minor issues fixed.
+ However, links to 
+\family typewriter
+LEFT-WALL
+\family default
+ still missing.
 \end_layout
 
 \begin_layout Description
-en_pairs_rtwo_mst As above, tranche 1 & 2.
+
+\noun on
+en_pairs_rtwo_mst
+\noun default
+ As above, tranche 1 & 2.
 \end_layout
 
 \begin_layout Description
-en_pairs_rthree As above, tranche 1,2 & 3.
+
+\noun on
+en_pairs_rthree
+\noun default
+ As above, tranche 1,2 & 3.
 \end_layout
 
 \begin_layout Description
-en_pairs_rfive As above, tranche 1,2,3,4 & 5.
+
+\noun on
+en_pairs_rfive
+\noun default
+ As above, tranche 1,2,3,4 & 5.
 \end_layout
 
 \begin_layout Description
-en_pairs_rfive_mtwo The MST parses of tranches 1-2, performed on the word-pairs
- computed from en_pairs_rfive.
+
+\noun on
+en_pairs_rfive_mtwo
+\noun default
+ The MST parses of tranches 1-2, performed on the word-pairs computed from
+ 
+\noun on
+en_pairs_rfive
+\noun default
+.
  That is, the word-pair stats for tranches 1-5 were accumulated to completion
  first, before the MST parsing is started.
 \end_layout
 
 \begin_layout Description
-en_pairs_rfive_mst As above, except that this is the MST parse of all of
- the tranches 1-5.
+
+\noun on
+en_pairs_rfive_mst
+\noun default
+ As above, except that this is the MST parse of all of the tranches 1-5.
  That is, the MST corpus is the same corpus as the word-pair corpus.
- (Same as en_pairs_rfive_mfive, but with dj marginals)
+ (Same as 
+\noun on
+en_pairs_rfive_mfive
+\noun default
+, but with dj marginals)
 \end_layout
 
 \begin_layout Description
-en_pairs_cfive_mst Same as en_pairs_rfive_mst above, but with all words
- that contained bogus infix punctuation removed.
+
+\noun on
+en_pairs_cfive_mst
+\noun default
+ Same as 
+\noun on
+en_pairs_rfive_mst
+\noun default
+ above, but with all words that contained bogus infix punctuation removed.
  Hyphenated words remain, as do decimal numbers and abbreviations.
  Unfortunately, this means that there are some bogus words that remain -
  sentence boundaries were not detected when there was no space after a period,
@@ -2126,9 +2281,13 @@ en_pairs_cfive_mst Same as en_pairs_rfive_mst above, but with all words
 \end_layout
 
 \begin_layout Description
-zh_pairs_sone A parse of Mandarin Wikipedia, with each individual character
- (hanzi) treated as a single item (so that, during pair-counting, pairs
- are formed between items).
+
+\noun on
+zh_pairs_sone
+\noun default
+ A parse of Mandarin Wikipedia, with each individual character (hanzi) treated
+ as a single item (so that, during pair-counting, pairs are formed between
+ items).
  Non-Chinese characters are grouped into words in the normal way, by splitting
  according to white-space (and punctuation).
  Thus, the total dimensions of the dataset are given by the number of observed
@@ -2137,13 +2296,21 @@ zh_pairs_sone A parse of Mandarin Wikipedia, with each individual character
 \end_layout
 
 \begin_layout Description
-zen_pairs A parse of a small set of Mandarin novels, with text segmented
- into words by external third-party tools (provided by Ruiting).
+
+\noun on
+zen_pairs
+\noun default
+ A parse of a small set of Mandarin novels, with text segmented into words
+ by external third-party tools (provided by Ruiting).
 \end_layout
 
 \begin_layout Description
-zen_pairs_three Word-pairs for tranch-1 and tranche-2-part-1 of Mandarin
- novels, segmentation by Ruiting.
+
+\noun on
+zen_pairs_three
+\noun default
+ Word-pairs for tranche-1 and tranche-2-part-1 of Mandarin novels, segmentation
+ by Ruiting.
 \end_layout
 
 \begin_layout Standard
@@ -2161,9 +2328,28 @@ Now, for some commentary, as to the summary stats.
 \end_layout
 
 \begin_layout Standard
-Comparing the English _sim dataset to the _rone, _rtwo and _rthree datasets
- does provide some contrast: The _sim dataset, built from Wikipedia, is
- distinctly different from the Gutenberg datasets.
+Comparing the English 
+\noun on
+_sim
+\noun default
+ dataset to the 
+\noun on
+_rone
+\noun default
+, 
+\noun on
+_rtwo
+\noun default
+ and 
+\noun on
+_rthree
+\noun default
+ datasets does provide some contrast: The 
+\noun on
+_sim
+\noun default
+ dataset, built from Wikipedia, is distinctly different from the Gutenberg
+ datasets.
  Certainly, the prose style in the two datasets is quite different, with
  Wikipedia consisting of statements of facts (
 \begin_inset Quotes eld
@@ -2204,13 +2390,9 @@ went
 \begin_layout Standard
 Comparing English to Chinese is very interesting.
  The Chinese 
-\begin_inset Quotes eld
-\end_inset
-
+\noun on
 zh
-\begin_inset Quotes erd
-\end_inset
-
+\noun default
  dataset has three times, almost four times more observations per pair;
  equivalently about 3-4 fewer 
 \begin_inset Quotes eld
@@ -2231,44 +2413,58 @@ words
 
 \begin_layout Standard
 By contrast, the 
-\begin_inset Quotes eld
-\end_inset
-
+\noun on
 zen_pairs
-\begin_inset Quotes erd
-\end_inset
-
+\noun default
  dataset, where the Mandarin was pre-segmented into words by 3rd-party tools,
  behaves much more like English in it's statistics.
  This is also evident in the table below, where the 
-\begin_inset Quotes eld
-\end_inset
-
+\noun on
 zen
-\begin_inset Quotes erd
-\end_inset
-
+\noun default
  dataset behaves like 
-\begin_inset Quotes eld
-\end_inset
-
+\noun on
 en
-\begin_inset Quotes erd
-\end_inset
-
+\noun default
 , and not like 
-\begin_inset Quotes eld
-\end_inset
-
+\noun on
 zh
-\begin_inset Quotes erd
-\end_inset
-
+\noun default
 .
 \end_layout
 
+\begin_layout Subsection*
+Vector Norms
+\end_layout
+
 \begin_layout Standard
-There's something else interesting going on, shown in the table below.
+The rows and columns of any matrix can be treated as vectors; any vector
+ can be given an 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+-norm as 
+\begin_inset Formula 
+\[
+\ell_{p}=\left(\sum_{k}\left|a_{k}\right|^{p}\right)^{1/p}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\left\{ a_{k}\right\} $
+\end_inset
+
+ being the vector elements.
+ The following table reports on three for these norms, for 
+\begin_inset Formula $p=0$
+\end_inset
+
+, 1 and 2, respectively called the support, count and length.
+ 
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -2532,6 +2728,8 @@ Name
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zh_pairs_sone
 \end_layout
 
@@ -2615,6 +2813,8 @@ zh_pairs_sone
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zen_pairs
 \end_layout
 
@@ -2698,6 +2898,8 @@ zen_pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 zen_pairs_three
 \end_layout
 
@@ -2781,6 +2983,8 @@ zen_pairs_three
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_cfive_mst
 \end_layout
 
@@ -2864,6 +3068,8 @@ en_pairs_cfive_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rfive
 \end_layout
 
@@ -2947,6 +3153,8 @@ en_pairs_rfive
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rthree
 \end_layout
 
@@ -3030,6 +3238,8 @@ en_pairs_rthree
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rtwo_mst
 \end_layout
 
@@ -3113,6 +3323,8 @@ en_pairs_rtwo_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rone_mst
 \end_layout
 
@@ -3156,7 +3368,7 @@ support
 
  of a (row or column) vector.
  Mathematically, this is the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
  norm of each vector: 
@@ -3176,16 +3388,16 @@ Count The count is the average number of observations that a word-pair was
  Viewed as a matrix, this is the average value of each non-zero entry (averaged
  over rows, or columns).
  Viewed as vectors, this is the 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  norm divided by the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
  norm.
  The 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  norm is just the wild-card counts 
@@ -3211,16 +3423,16 @@ Count The count is the average number of observations that a word-pair was
 \begin_layout Description
 Length The length is the average length of the row and column vectors.
  This is the 
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
  norm divided by the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
  norm.
  The 
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
  norm is just the standard concept of the length of a vector in Euclidean
@@ -3311,7 +3523,7 @@ reference "sec:Dataset-report"
 
 \end_inset
 
-.
+ above.
  To recap, its this one:
 \end_layout
 
@@ -3458,6 +3670,8 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rone_mst
 \end_layout
 
@@ -3486,7 +3700,7 @@ reference "sec:Dataset-report"
 
 \end_inset
 
-.
+ above.
  The explanation of the column labels can be found there.
 \end_layout
 
@@ -3754,6 +3968,8 @@ Name
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_rone
 \end_layout
 
@@ -3830,9 +4046,10 @@ en-pairs.scm
 
 \end_inset
 
- Note that this is qualitatively similar to the Chinese hanzi pairs distribution
-, shown below, although the slopes are different, and the peak is slightly
- shifted.
+ Note that this is quantitatively (and not just qualitatively) similar to
+ the Chinese hanzi pairs distribution, shown below.
+ Both have the same shape, and the slopes are only a little bit different,
+ and the peak is slightly shifted.
 \end_layout
 
 \begin_layout Standard
@@ -3859,7 +4076,7 @@ eyeballed
 \begin_inset Quotes erd
 \end_inset
 
- fit, and not a numerical fit.
+ fit (it looks good, by eye), and not a precision numerical fit.
  As noted in an earlier experiment
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -3867,9 +4084,9 @@ key "Vepstas2009"
 
 \end_inset
 
-, a gaussian is symptomatic of a random distribution: the low-MI word-pairs
- are effectively just noise, the completely random arrangement of nearby
- words.
+, a Gaussian distribution is symptomatic of randomly generated word-pairs:
+ the low-MI word-pairs are effectively just noise, the completely random
+ arrangement of nearby words.
  The 
 \begin_inset Quotes eld
 \end_inset
@@ -3887,6 +4104,159 @@ true collocations
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+The RMS variation is given by 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ where 
+\begin_inset Formula $0.1=1/2\sigma^{2}$
+\end_inset
+
+; solving, one finds that 
+\begin_inset Formula $\sigma=\sqrt{5}\approx2.2$
+\end_inset
+
+.
+ The entropy of a normal distribution is given by 
+\begin_inset Formula $H=0.5\log_{2}\left(2\pi e\sigma^{2}\right)$
+\end_inset
+
+.
+ Plugging in, one has 
+\begin_inset Formula $H\approx3.2$
+\end_inset
+
+bits for the zero-mode distribution.
+\end_layout
+
+\begin_layout Section*
+Interpretation of the zero-mode
+\end_layout
+
+\begin_layout Standard
+The Gaussian in the above figure is slightly offset to the right, centered
+ on an MI=1 rather than MI=0.
+ As noted in
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2009"
+
+\end_inset
+
+, such an offset to positive MI is characteritic of an 
+\emph on
+incomplete
+\emph default
+ sampling of random text.
+ That is, if one had a vocabulary of 
+\begin_inset Formula $N$
+\end_inset
+
+ words, there are 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+ possible word-pairs, each of which one might expect to see equally often,
+ in the long-run.
+ However, if one samples randomly generated sentences, and these sentences
+ contain less than about 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+ words amongst all of them, then some pairs will never be observed.
+ The resulting MI distribution will be a Gaussian, but it will be centered
+ on a positive value of MI.
+ 
+\end_layout
+
+\begin_layout Standard
+This should be compared to the distribution given below, for hanzi pairs.
+ The effective hanzi vocabulary is much much smaller; about 
+\begin_inset Formula $N=$
+\end_inset
+
+7K, as noted for 
+\noun on
+zh_pairs_sone
+\noun default
+.
+ This vocabulary size allows for 
+\begin_inset Formula $N^{2}=$
+\end_inset
+
+50M word-pairs to be observed, in principle, if they were randomly arranged;
+ in practice 6M were observed.
+ This is a much 
+\begin_inset Quotes eld
+\end_inset
+
+deeper
+\begin_inset Quotes erd
+\end_inset
+
+ sample of all possible word-pairs than the English corpora allow; the English
+ vocabulary is orders of magnitude larger.
+\end_layout
+
+\begin_layout Standard
+The experiments with randomly-generated corpora, given in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2009"
+
+\end_inset
+
+ are interesting, but incomplete.
+ They leave open multiple questions:
+\end_layout
+
+\begin_layout Itemize
+How does the MI distribution change when random planar tree parses are used
+ to obtain word-pairs, as opposed to clique-counting?
+\end_layout
+
+\begin_layout Itemize
+How does the MI distribution change as a function of sample size (holding
+ the vacabulary size fixed)?
+\end_layout
+
+\begin_layout Itemize
+How does the MI distribution change as frequency of vacabulary words is
+ altered from a uniform distribution to a Zipfian distribution?
+\end_layout
+
+\begin_layout Standard
+The last question is perhaps the most relevant: it implies that there is
+ no finite-sized vocabulary; that all vocabularies are infinite.
+ This is exactly what is seen, as more and more text is analyzed.
+ A survey of the words in the 
+\emph on
+en_cfive
+\emph default
+ dataset shows more than a few (ancient) Greek words, written in the Greek
+ alphabet.
+ These are clearly 
+\begin_inset Quotes eld
+\end_inset
+
+not English
+\begin_inset Quotes erd
+\end_inset
+
+, but they did appear in some English text, somewhere in the collection
+ of corpora.
+ They are rare; they necessarily can participate in only a small number
+ of word-pairs.
+ Yet most of the words in the dataset are like this - if not Greek, then
+ Latin or Spanish or German (I guess there are travelouges amongst the corpora),
+ and plenty of given names, surnames, geographical place names and the like.
+ Each is increasingly more rare than the last, but the grand-total bulk
+ of them is quite large.
+ How does this large bulk of infrequent, unlikely word-pairs affect the
+ MI distribution? How does it manifest itself?
 \end_layout
 
 \begin_layout Section*
@@ -4670,8 +5040,12 @@ en_pairs_cfive
 
 \end_layout
 
+\begin_layout Subsubsection*
+Vector Norms
+\end_layout
+
 \begin_layout Standard
-The Banach norms of the rows and columns treated as vectors are given in
+The rows and columns of the matrix can be treated as vectors are given in
  the next table; these are as defined previously.
 \end_layout
 
