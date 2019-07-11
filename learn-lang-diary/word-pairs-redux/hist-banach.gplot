@@ -1,0 +1,59 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate bincount graphs of support
+#
+set term postscript eps enhanced color 28
+set out 'hist-support.eps'
+# 
+# set term png
+# set out 'hist-support.png'
+ 
+set xrange [0:18]
+set yrange [:0.1]
+set logscale y
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Size of Support"
+set ylabel "Probability"
+nitems= 580804.0
+plot "hist-support.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+
+#################################################
+# Used to generate bincount graphs of count
+#
+set term postscript eps enhanced color 28
+set out 'hist-count.eps'
+# 
+# set term png
+# set out 'hist-count.png'
+ 
+set xrange [0:25]
+set logscale y
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Size of Support"
+set ylabel "Probability"
+nitems= 580804.0
+plot "hist-count.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+
+#################################################
+# Used to generate binlength graphs of length
+#
+set term postscript eps enhanced color 28
+set out 'hist-length.eps'
+# 
+# set term png
+# set out 'hist-length.png'
+ 
+set xrange [0:25]
+set logscale y
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Size of Support"
+set ylabel "Probability"
+nitems= 580804.0
+plot "hist-length.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+

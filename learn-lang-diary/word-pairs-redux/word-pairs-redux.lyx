@@ -4951,7 +4951,55 @@ These distributions are explicitly shown below:
 The support, count and length are as defined above.
  All of the graphs have a bit of a hump in the middle, with the hump being
  most prominant in the support distribution.
- The ratio of count and length to support is show below.
+ The corresponding histograms are shown below.
+ These are to be understood as follows.
+ There are precisely 580804 columns, and thus that many column vectors.
+ The log (base 2) of the support (respectively, count and length) of each
+ vector is taken; this is then placed into one of 400 bins.
+\end_layout
+
+\begin_layout Standard
+place each of the 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename hist-support.eps
+	lyxscale 70
+	width 31col%
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename hist-count.eps
+	lyxscale 70
+	width 31col%
+
+\end_inset
+
+
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename hist-length.eps
+	lyxscale 70
+	width 31col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The ratio of count and length to support is show below.
 \end_layout
 
 \begin_layout Standard
@@ -4987,6 +5035,7 @@ This:
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename bancor-l1.eps
 	width 45col%

@@ -227,3 +227,39 @@ Like above, but ratios
    (close outport))
 
 ; ---------------------------------------------------------------------
+; Bin-counted stuff.
+;
+(define bincs (bin-count (wps 'right-basis) 200
+	; 1.442695 is 1/log 2 so that we plot log2.
+	(lambda (item)
+		(* 1.442695 (log (wpu 'left-support item))))
+	(lambda (item) 1)
+	0 20))
+
+(let ((outport (open-file "/tmp/hist-support.dat" "w")))
+   (print-bincounts-tsv bincs outport)
+   (close outport))
+
+; ---------
+(define bincs (bin-count (wps 'right-basis) 200
+	; 1.442695 is 1/log 2 so that we plot log2.
+	(lambda (item)
+		(* 1.442695 (log (wpu 'left-count item))))
+	(lambda (item) 1)
+	0 30))
+
+(let ((outport (open-file "/tmp/hist-count.dat" "w")))
+   (print-bincounts-tsv bincs outport)
+   (close outport))
+
+(define bincs (bin-count (wps 'right-basis) 200
+	; 1.442695 is 1/log 2 so that we plot log2.
+	(lambda (item)
+		(* 1.442695 (log (wpu 'left-length item))))
+	(lambda (item) 1)
+	0 25))
+
+(let ((outport (open-file "/tmp/hist-length.dat" "w")))
+   (print-bincounts-tsv bincs outport)
+   (close outport))
+
