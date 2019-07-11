@@ -157,5 +157,44 @@ Scatterplot of frequency vs. mi. Huge dataset.
    (close outport))
 
 
+; ---------------------
+Like above, but ratios
+
+(let ((outport (open-file "/tmp/banach-l1-l0-row.dat" "w")))
+	(format outport "#\n# Banach l_1/l_0 row\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (/ (wpu 'right-count row)
+					(wpu 'right-support row)))
+				(wps 'left-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l1-l0-col.dat" "w")))
+	(format outport "#\n# Banach l_1/l_0 col\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (/ (wpu 'left-count row)
+					(wpu 'left-support row)))
+				(wps 'right-basis))   >))
+   (close outport))
+
+
+(let ((outport (open-file "/tmp/banach-l2-l0-row.dat" "w")))
+	(format outport "#\n# Banach l_2/l_0 row\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (/ (wpu 'right-length row)
+					(wpu 'right-support row)))
+				(wps 'left-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l2-l0-col.dat" "w")))
+	(format outport "#\n# Banach l_2/l_0 col\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (/ (wpu 'left-length row)
+					(wpu 'left-support row)))
+				(wps 'right-basis))   >))
+   (close outport))
 
 ; ---------------------------------------------------------------------
