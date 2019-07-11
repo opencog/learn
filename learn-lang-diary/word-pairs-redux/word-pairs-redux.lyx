@@ -3835,6 +3835,60 @@ en-pairs.scm
  shifted.
 \end_layout
 
+\begin_layout Standard
+Recall that a normal distribution takes the form of a parabola, when graphed
+ on semi-log plot such as this.
+ The parabola, here labelled 
+\begin_inset Quotes eld
+\end_inset
+
+gauss
+\begin_inset Quotes erd
+\end_inset
+
+, is given by the normal distribution 
+\begin_inset Formula $P=0.11\exp-0.1\left(MI-1\right)^{2}$
+\end_inset
+
+.
+ This is an 
+\begin_inset Quotes eld
+\end_inset
+
+eyeballed
+\begin_inset Quotes erd
+\end_inset
+
+ fit, and not a numerical fit.
+ As noted in an earlier experiment
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2009"
+
+\end_inset
+
+, a gaussian is symptomatic of a random distribution: the low-MI word-pairs
+ are effectively just noise, the completely random arrangement of nearby
+ words.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+meaningful
+\begin_inset Quotes erd
+\end_inset
+
+ distribution - the excess of pairs with large positive MI are due to 
+\begin_inset Quotes eld
+\end_inset
+
+true collocations
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section*
 Chinese character pair dataset July 2017
 \end_layout
@@ -4389,6 +4443,30 @@ Graph obtained from the binned-hanpr-mi data, in the zh-pairs.scm file.
  Note that this is qualitatively similar to the English word-pairs distribution,
  shown above, although the slopes are different, and the peak is slightly
  shifted.
+\end_layout
+
+\begin_layout Standard
+Recall that a Gaussian distribution takes the form of a parabola, when graphed
+ on semi-log plot such as this.
+ In this case, the parabola is centered exactly on zero, with an eye-balled
+ fit as indicated.
+ This implies that the RMS variance 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ is given by 
+\begin_inset Formula $0.16\log2=1/2\sigma^{2}$
+\end_inset
+
+.
+ Solving, this gives 
+\begin_inset Formula $\sigma=\sqrt{1/\left(0.32\log2\right)}\approx\sqrt{4.5}\approx2.1$
+\end_inset
+
+.
+ As noted before, the gaussian centered is symptomatic of a random distribution
+ of pairs: the low-MI hanzi pairs are effectively just noise, completely
+ random groupings.
 \end_layout
 
 \begin_layout Section*
