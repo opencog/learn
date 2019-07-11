@@ -59,7 +59,7 @@
    (close outport))
 
 ; ----------
-Scatterplot of both mi's. Huge.
+Scatterplot of both mi's. Huge dataset.
 
 (let ((outport (open-file "/tmp/scatter-fmi.dat" "w")))
 	(format outport "#\n# Cut-FMI	Recomputed-FMI\n#\n")
@@ -91,4 +91,71 @@ Scatterplot of both mi's. Huge.
 
 
 ; ---------------------------------------------------------------------
+; ----------
+Scatterplot of frequency vs. mi. Huge dataset.
+
+(define wall (wps 'get-all-elts))
+(define wpf (add-pair-freq-api wps))
+(let ((outport (open-file "/tmp/scatter-freq-fmi.dat" "w")))
+	(format outport "#\n# Frequency FMI\n#\n")
+	(for-each (lambda (pr)
+		(format outport "~7F	~7F\n" (wpf 'pair-freq pr) (wpf 'pair-fmi pr)))
+		wall)
+   (close outport))
+
+; ---------------------------------------------------------------------
+; Distribution of Banach norms 
+
+(define wpu (add-support-api wps))
+(let ((outport (open-file "/tmp/banach-l0-row.dat" "w")))
+	(format outport "#\n# Banach l_0 row\n#\n")
+	(for-each
+		(lambda (num) (format outport "~8F\n" num))
+		(sort (map (lambda (row) (wpu 'right-support row))
+				(wps 'left-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l0-col.dat" "w")))
+	(format outport "#\n# Banach l_0 col\n#\n")
+	(for-each
+		(lambda (num) (format outport "~8F\n" num))
+		(sort (map (lambda (row) (wpu 'left-support row))
+				(wps 'right-basis))   >))
+   (close outport))
+
+
+(let ((outport (open-file "/tmp/banach-l1-row.dat" "w")))
+	(format outport "#\n# Banach l_1 row\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (wpu 'right-count row))
+				(wps 'left-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l1-col.dat" "w")))
+	(format outport "#\n# Banach l_1 col\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (wpu 'left-count row))
+				(wps 'right-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l2-row.dat" "w")))
+	(format outport "#\n# Banach l_2 row\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (wpu 'right-length row))
+				(wps 'left-basis))   >))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l2-col.dat" "w")))
+	(format outport "#\n# Banach l_2 col\n#\n")
+	(for-each
+		(lambda (num) (format outport "~9F\n" num))
+		(sort (map (lambda (row) (wpu 'left-length row))
+				(wps 'right-basis))   >))
+   (close outport))
+
+
+
 ; ---------------------------------------------------------------------
