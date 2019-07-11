@@ -12,14 +12,15 @@ set out 'hist-support.eps'
 # set out 'hist-support.png'
  
 set xrange [0:18]
-set yrange [:0.1]
+set yrange [:1]
 set logscale y
 set format y "10^{%L}"
 set title "Word-Pair Vectors"
 set xlabel "Size of Support"
 set ylabel "Probability"
+binwidth= 20 / 200.0
 nitems= 580804.0
-plot "hist-support.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+plot "hist-support.dat" using 2:($3 / (binwidth * nitems)) with lines linewidth 2 title ""
 
 #################################################
 # Used to generate bincount graphs of count
@@ -36,8 +37,9 @@ set format y "10^{%L}"
 set title "Word-Pair Vectors"
 set xlabel "Size of Support"
 set ylabel "Probability"
+binwidth= 30 / 200.0
 nitems= 580804.0
-plot "hist-count.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+plot "hist-count.dat" using 2:($3 / (binwidth * nitems)) with lines linewidth 2 title ""
 
 #################################################
 # Used to generate binlength graphs of length
@@ -54,6 +56,7 @@ set format y "10^{%L}"
 set title "Word-Pair Vectors"
 set xlabel "Size of Support"
 set ylabel "Probability"
+binwidth= 25 / 200.0
 nitems= 580804.0
-plot "hist-length.dat" using 2:($3 / nitems) with lines linewidth 2 title ""
+plot "hist-length.dat" using 2:($3 / (binwidth * nitems)) with lines linewidth 2 title ""
 
