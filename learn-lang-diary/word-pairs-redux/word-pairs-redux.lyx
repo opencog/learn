@@ -4902,13 +4902,22 @@ inappropriate
 \begin_inset Quotes erd
 \end_inset
 
-, for Zipfian distributions.
- In particular, the RMS deviation from the average is equal to the average.
- 
+, for true Zipfian distributions.
+ The exact meaning of the word 
+\begin_inset Quotes eld
+\end_inset
+
+average
+\begin_inset Quotes erd
+\end_inset
+
+ is explored in the following graphs.
 \end_layout
 
 \begin_layout Standard
-These distributions are explicitly shown below:
+First, one can observe the explicitly Zipfian distribution in each of these
+ three vector norms.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4948,7 +4957,20 @@ These distributions are explicitly shown below:
 \end_layout
 
 \begin_layout Standard
-The support, count and length are as defined above.
+The support, count and length are the 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ vector norms, for the columns and rows of the pair-matrix (these norms
+ are exactly as defined in an earlier table above).
  All of the graphs have a bit of a hump in the middle, with the hump being
  most prominant in the support distribution.
  The corresponding histograms are shown below.
@@ -5005,7 +5027,73 @@ The support, count and length are as defined above.
 \end_layout
 
 \begin_layout Standard
-The ratio of count and length to support is show below.
+These histograms help 
+\begin_inset Quotes eld
+\end_inset
+
+explain
+\begin_inset Quotes erd
+\end_inset
+
+ the not-quite straight-line Zipfian dependence in the earlier graphs.
+ A true Zipf distribution would not demonstrate peaks at a finite size.
+ Consider, for example, the vector length distribution.
+ Eyeballing the rightmost graph, it appears that there is a peak at about
+ 
+\begin_inset Formula $2^{4}=16$
+\end_inset
+
+, so that 
+\begin_inset Quotes eld
+\end_inset
+
+most
+\begin_inset Quotes erd
+\end_inset
+
+ vectors have a length of about 16.
+ There are many vectors longer than this, but not so many shorter than this.
+ The correct interpretation for this is that most words have 
+\begin_inset Formula $2^{4}=16$
+\end_inset
+
+ nerby neighbors, or more; very few words are so strongly tied into idioms
+ or collocations that they have a paucity of neighbors, a paucity of context.
+ This should be contrasted with vectors having very large support or length:
+ these correspond to words that appear next to just about any other word.
+ That is, for a fixed word 
+\begin_inset Formula $w_{r}$
+\end_inset
+
+, the support counts the number of distinct pairs 
+\begin_inset Formula $\left(w_{l},w_{r}\right)$
+\end_inset
+
+; a large support means that there are many words 
+\begin_inset Formula $w_{l}$
+\end_inset
+
+ the appeared near 
+\begin_inset Formula $w_{r}$
+\end_inset
+
+; a small support means that very few were.
+ The count (the 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+-norm) just counts how many such word-pair observations were made (
+\emph on
+i.e.
+
+\emph default
+ with multiplicity).
+ 
+\end_layout
+
+\begin_layout Standard
+One might wonder if the ratio of count and length to support is Zipfian;
+ it is; this is shown below.
 \end_layout
 
 \begin_layout Standard
@@ -5037,7 +5125,21 @@ Presumably, the prominant dip in the middle is due to the hump visible in
 \end_layout
 
 \begin_layout Standard
-This:
+One might wonder just how strongly the 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ vector norms correlate with each other; that is, whether the ratio taken
+ above was justified.
+ It does seem to be, as the following graphs show.
 \end_layout
 
 \begin_layout Standard
@@ -5063,7 +5165,61 @@ This:
 \end_layout
 
 \begin_layout Standard
-but this only plots every 25 th point to reduce graphic image size.
+These are scatter-plots of 581K column vectors, showing the scatter of 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+ vs.
+ 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ and of 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+ vs.
+ 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+, respectively.
+ To keep the graphs relatively small and not overly busy, only every 25th
+ point is graphed (so only 581K/25= approx 23K points are actually shown).
+ Keep in mind that the projection of these scatterplots along the horizontal
+ axis gives rise to the histograms presented earlier.
+ The linear lower bound apparent in both figures is simply a statement that
+ the 
+\begin_inset Formula $l_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $l_{2}$
+\end_inset
+
+ norms cannot be less than the 
+\begin_inset Formula $l_{0}$
+\end_inset
+
+-norm.
+ That is, a given word-pair cannot be observed less than once.
+ The large variation at low support is an alternative indication for a fair
+ number of collocations in the data.
+ When a column-vector (the vector for the fixed word 
+\begin_inset Formula $w_{r}$
+\end_inset
+
+) has low support, that means that only a few distinct pairs 
+\begin_inset Formula $\left(w_{l},w_{r}\right)$
+\end_inset
+
+ were seen.
+ But if that same vector has a large length, that means that this handful
+ of pairs was seen many, many times.
+ These are collocations: words that appear near each other.
+ Of course, one expects collocations in textual data.
+ These graphs characterize just how many actually show up, when one does
+ unbiased, random counting.
 \end_layout
 
 \begin_layout Section*
