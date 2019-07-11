@@ -5040,13 +5040,14 @@ en_pairs_cfive
 
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Vector Norms
 \end_layout
 
 \begin_layout Standard
-The rows and columns of the matrix can be treated as vectors are given in
- the next table; these are as defined previously.
+The rows and columns of the matrix can be treated as vectors; the norms
+ are given in the next table.
+ Definitions are as before.
 \end_layout
 
 \begin_layout Standard
@@ -5410,15 +5411,15 @@ First, one can observe the explicitly Zipfian distribution in each of these
 
 \begin_layout Standard
 The support, count and length are the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
 , 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  and 
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
  vector norms, for the columns and rows of the pair-matrix (these norms
@@ -5531,7 +5532,7 @@ most
 
 ; a small support means that very few were.
  The count (the 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
 -norm) just counts how many such word-pair observations were made (
@@ -5578,15 +5579,15 @@ Presumably, the prominant dip in the middle is due to the hump visible in
 
 \begin_layout Standard
 One might wonder just how strongly the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
 , 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  and 
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
  vector norms correlate with each other; that is, whether the ratio taken
@@ -5618,21 +5619,21 @@ One might wonder just how strongly the
 
 \begin_layout Standard
 These are scatter-plots of 581K column vectors, showing the scatter of 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
  vs.
  
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  and of 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
  vs.
  
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
 , respectively.
@@ -5642,15 +5643,15 @@ These are scatter-plots of 581K column vectors, showing the scatter of
  axis gives rise to the histograms presented earlier.
  The linear lower bound apparent in both figures is simply a statement that
  the 
-\begin_inset Formula $l_{1}$
+\begin_inset Formula $\ell_{1}$
 \end_inset
 
  and 
-\begin_inset Formula $l_{2}$
+\begin_inset Formula $\ell_{2}$
 \end_inset
 
  norms cannot be less than the 
-\begin_inset Formula $l_{0}$
+\begin_inset Formula $\ell_{0}$
 \end_inset
 
 -norm.
@@ -5672,6 +5673,155 @@ These are scatter-plots of 581K column vectors, showing the scatter of
  Of course, one expects collocations in textual data.
  These graphs characterize just how many actually show up, when one does
  unbiased, random counting.
+\end_layout
+
+\begin_layout Subsection*
+MI Distributions
+\end_layout
+
+\begin_layout Standard
+More interesting than the vector norms is the MI distribution, as this has
+ the most immediate effect on the results of MST parsing.
+ The next graph shows bin-counts of the 28M unique word-pairs, sorted into
+ 400 bins.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Scripts are in `
+\family typewriter
+word-pairs.scm
+\family default
+` and `
+\family typewriter
+cfive.gplot
+\family default
+`.
+\end_layout
+
+\end_inset
+
+ The distribution is both qualitatively and quantitatively similar to the
+ distributions previously shown, for other datasets.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename full-unique-mi.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The normal distribution in the graph above is an eyeballed-fit, and is given
+ by 
+\begin_inset Formula $P\left(MI\right)=0.11\exp\left(-0.1\left(MI-0.8\right)^{2}\right)$
+\end_inset
+
+ which is very similar to the distributions given earlier.
+ The RMS variation is given by 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ where 
+\begin_inset Formula $0.1=1/2\sigma^{2}$
+\end_inset
+
+; solving, one finds that 
+\begin_inset Formula $\sigma=\sqrt{5}\approx2.2$
+\end_inset
+
+, exactly the same as that given before, for the 
+\noun on
+en_pairs_rone
+\noun default
+ dataset, and only a little bit different from the 
+\begin_inset Formula $\sigma\approx2.1$
+\end_inset
+
+ seen in the Mandarin hanzi-pair dataset.
+ This Gaussian appears to be a generic feature in natural-language word-pairs.
+ 
+\end_layout
+
+\begin_layout Standard
+The above was a historgram of the unique word-pairs; below is the same histogram
+, this time counted with multiplicity.
+ That is, if a word-pair was observed 
+\begin_inset Formula $N$
+\end_inset
+
+ times, then it contributes 
+\begin_inset Formula $N$
+\end_inset
+
+ to the histogram bin to which it is assigned.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename full-weighted-mi.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Zipf distribution is drawn with the same slope as before; this is done
+ to allow direct comparison.
+ The Gaussian is, again, an eye-ball fit, given by 
+\begin_inset Formula $P\left(MI\right)=0.2\exp\left(-0.18\left(MI-0.9\right)^{2}\right)$
+\end_inset
+
+.
+ Again, this is an eyeball fit; the difference in the mean should be considered
+ as an indicator of the uncertainty in the mean.
+ The difference in the variance is quite real.
+ This time, the distribution appears to be more obviously a sum of two distinct
+ distributions.
+ This is shown more clearly in the figure below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename full-sum-mi.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The curve labelled 
+\begin_inset Quotes eld
+\end_inset
+
+zipf+gauss
+\begin_inset Quotes erd
+\end_inset
+
+ is a sum of the two distributions; note that the slope of the Zipfian has
+ been adjusted to provide a better fit.
+ Again, the paramters are obtained by eyeballing; the curve is given by
+\begin_inset Formula 
+\[
+0.08\times2^{-0.37MI}+0.17\exp\left(-0.18\left(MI-0.9\right)^{2}\right)
+\]
+
+\end_inset
+
+The gaussian has the same shape as before; it's strength was reduced to
+ better fit the data.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -6357,33 +6507,7 @@ inappropriate
 \end_layout
 
 \begin_layout Standard
-trao this:
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename full-unique-mi.eps
-	width 80col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-and this
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename full-weighted-mi.eps
-	width 80col%
-
-\end_inset
-
-
+trao 
 \end_layout
 
 \begin_layout Standard
