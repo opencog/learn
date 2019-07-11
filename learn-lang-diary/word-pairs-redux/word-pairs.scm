@@ -197,4 +197,33 @@ Like above, but ratios
 				(wps 'right-basis))   >))
    (close outport))
 
+; ---------------------
+Like above, but ratios
+
+(let ((outport (open-file "/tmp/banach-l0-l1-l2-row.dat" "w")))
+	(format outport "#\n# l_0	l1	l2 row\n#\n")
+	(for-each
+		(lambda (row) (format outport "~9F	~9F	~9F\n" 
+			(wpu 'right-support row)
+			(wpu 'right-count row)
+			(wpu 'right-length row)))
+
+		(sort (wps 'left-basis)
+			(lambda (ra rb)
+				(> (wpu 'right-support ra) (wpu 'right-support rb)))))
+   (close outport))
+
+(let ((outport (open-file "/tmp/banach-l0-l1-l2-col.dat" "w")))
+	(format outport "#\n# l_0	l1	l2 row\n#\n")
+	(for-each
+		(lambda (row) (format outport "~9F	~9F	~9F\n" 
+			(wpu 'left-support row)
+			(wpu 'left-count row)
+			(wpu 'left-length row)))
+
+		(sort (wps 'right-basis)
+			(lambda (ra rb)
+				(> (wpu 'left-support ra) (wpu 'left-support rb)))))
+   (close outport))
+
 ; ---------------------------------------------------------------------
