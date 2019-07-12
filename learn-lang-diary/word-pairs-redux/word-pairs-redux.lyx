@@ -84,16 +84,37 @@
 \begin_body
 
 \begin_layout Title
-Word Pairs Redux
+Word Pair Distributions
 \end_layout
 
 \begin_layout Author
 Linas Vepstas
 \end_layout
 
+\begin_layout Date
+12 July 2019 - Final Version
+\end_layout
+
 \begin_layout Abstract
-Extract from the Language-Learning Diary, focused on describing recent (2015
- and later) word-pair datasets only.
+The distribution of the the mutual information (MI) for word-pairs is examined
+ for English and Chinese.
+ Understanding this distribution is important, as the MI is an important
+ ingredient for the unsupervised learning of grammatical structure.
+ The distribution is found to be bi-modal, decomposing into a zero-mode
+ that appears to describe completely ranom pairings of words, and a true
+ mode, that captures actual collocations (idioms, institutional phrases,
+ 
+\emph on
+etc.
+\emph default
+) This bimodal structure is found both in English and in Chinese, and is
+ not only the same qualitiatively, but is also quantitatively quite similar.
+\end_layout
+
+\begin_layout Abstract
+This report is an adjunct to, and an extract from the Language-Learning
+ Diary, focused on describing recent (2015 and later) word-pair datasets.
+ It is meant to provide context for a broader scope of work.
 \end_layout
 
 \begin_layout Section*
@@ -101,8 +122,111 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The current language-learning pipeline requires, as input, datasets describing
- word-pair frequencies and word-pair mutual information.
+The current conception of the language-learning pipeline
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Goertzel2014,Vepstas2014learn"
+
+\end_inset
+
+ attempts to extract grammatical structure from text corpora by overlaying
+ a rough, preliminary connectivity network on the text.
+ That preliminary network can then be chopped up into small pieces, and
+ those pieces can then be compared, using statistical techniques, to refine
+ it's accuracy, and to build a lexical description of the network.
+ The lexical description then captures the structure of the preliminary
+ network, which is presumably some combination of colocational, syntactic,
+ semantic and predicate-argument structure, the details of which depending
+ on what structure is highlighted in the preliminary network.
+\end_layout
+
+\begin_layout Standard
+In a general mathematical setting, the statistical properties of a network
+ are captured by the so-called 
+\begin_inset Quotes eld
+\end_inset
+
+partition function
+\begin_inset Quotes erd
+\end_inset
+
+, an abstract mathematical structure that is given by the functional integral
+ over all possible network configurations, each configuration weighted by
+ a Boltzmann distribution, assigning a specific probability to that configuratio
+n.
+ Given that partition function, many network properties can be obtained,
+ including approximate lexical descriptions of the network (as perturbation
+ theory expansions).
+ Unfortunately, the partition function is unweildy, verging on impossible
+ to compute with numerically, and so a wide variety of approximations to
+ it are commonly used, ranging from Ising models to neural networks.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+One particularly common and important task is finding a decompositional,
+ lexical description of the network.
+ In physics, such a decompostion is given in terms of a perturbation theory
+ derived from a Hamiltonian, and the associated Greeen's functions (propagators)
+ obtained therefrom.
+ In linguistics, such a decompostion is commonly given as a dependency grammar
+ of a natural langauge.
+ It is useful to recognize that these two descriptions are effectively equivalen
+t; both seek to describe the network structure interms of local interactions
+ with not-too-distant neighbors, using a tensor algebra to capture connectivity
+ information.
+ Toggling between these two descriptions, one of which assigns weights and
+ probabilities, the other of which invokes the algebraic structure of grammar,
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lambek61,Marcus1967"
+
+\end_inset
+
+ can provide considerable insight into the problem of the machine understanding
+ of natural language.
+\end_layout
+
+\begin_layout Standard
+The leading order structure of a network can often be described in terms
+ of the pair-wise iteraction of network elements.
+ This is a foundational assumption of perturbation theory.
+ Conversely, simple pair-wise interactions can lead to rich and complex
+ network behaviors; this is the primary lesson taught by the Ising models.
+ Despite thier structural simplcity, Ising models still pose a tremendous
+ computational barrier in all but the simplest cases.
+ One common simplifying assumption is to approximate the interactions between
+ pairs of elements in the system by the mutual information (MI) in that
+ network.
+ The MI approximation is sometimes a reasonable approximation.
+\end_layout
+
+\begin_layout Standard
+Natural language alone clearly does not have simplicity of the Ising model;
+ however, a 
+\end_layout
+
+\begin_layout Standard
+expectation value of the network, or rather, the most likely configuration
+ of the network, given
+\end_layout
+
+\begin_layout Standard
+simple and direct approximation to the network is to attach scores to network
+ edges, those scores being given by the mutual information (MI) of the connected
+ pair.
+ One can then approximate the
+\end_layout
+
+\begin_layout Standard
+requires, as input, datasets describing word-pair frequencies and word-pair
+ mutual information.
  This text describes those datasets and characterizes their content, focusing
  primarily on the distribution of the mutual-information values.
 \end_layout
@@ -6823,7 +6947,7 @@ Placing the cut at
 
  would remove 98% of the zero-mode; this cut would be located at MI=5.3 –
  its well up there, but not ineffectively so.
- 
+ This deeper cut is examined in the next section.
 \end_layout
 
 \begin_layout Standard
