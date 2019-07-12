@@ -35,7 +35,7 @@ fi
 base=`echo $filename | cut -d \/ -f 1`
 rest=`echo $filename | cut -d \/ -f 2-6`
 
-echo "MST-Processing file >>>$rest<<<"
+echo "MPG-Processing file >>>$rest<<<"
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
