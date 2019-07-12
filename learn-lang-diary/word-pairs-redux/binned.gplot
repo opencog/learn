@@ -19,7 +19,7 @@ count=5922477
 plot "binned-hanpr-mi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
      "binned-hanpr-mi.dat" using 2:(0.1 * 2**(-0.25*$2)) with lines linewidth 5 title "2^{-MI/4}", \
      "binned-hanpr-mi.dat" using 2:(50 * 2**(2.4*$2)) with lines linewidth 5 title "2^{2.4 MI}", \
-     "binned-hanpr-mi.dat" using 2:(0.14*2**(-0.16*$2*$2)) with lines linewidth 2 title "2^{-0.16 MI * MI}"
+     "binned-hanpr-mi.dat" using 2:(0.14*2**(-0.16*$2*$2)) with lines linewidth 5 title "2^{-0.16 MI * MI}"
 
 
 #################################################
@@ -39,9 +39,9 @@ set ylabel "Probability"
 binwidth= (25.007502004757587 + 11.628744630986512) / 400
 count=5544578
 # Probability is divided by total count, and divided by bin-width.
-plot "binned-enpr-mi.dat" using 2:($3/(binwidth*count)) with lines linewidth 2 title "", \
-     "binned-enpr-mi.dat" using 2:(0.35 * 2**(-0.4*$2)) with lines linewidth 2 title "2^{-0.4 MI}", \
-     "binned-enpr-mi.dat" using 2:(4 * 2**(2*$2)) with lines linewidth 2 title "2^{2 MI}", \
-     "binned-enpr-mi.dat" using 2:(0.11*exp(-0.1*($2-1)*($2-1))) with lines linewidth 2 title "gauss"
+plot "binned-enpr-mi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
+     "binned-enpr-mi.dat" using 2:(0.35 * 2**(-0.4*$2)) with lines linewidth 5 title "2^{-0.4 MI}", \
+     "binned-enpr-mi.dat" using 2:(4 * 2**(2*$2)) with lines linewidth 5 title "2^{2 MI}", \
+     "binned-enpr-mi.dat" using 2:(0.11*exp(-0.1*($2-1)*($2-1))) with lines linewidth 5 title "gauss"
 
 #      "binned-enpr-mi.dat" using 2:(0.11*exp(-0.1*($2-1)*($2-1))) with lines linewidth 2 title "exp(-0.1 (MI-1)*(MI-1))"
