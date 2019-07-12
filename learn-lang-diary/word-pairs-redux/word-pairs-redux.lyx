@@ -375,6 +375,91 @@ The general organizational structure of this report is chronological.
 \end_layout
 
 \begin_layout Section*
+Definition of Mutual Information
+\end_layout
+
+\begin_layout Standard
+The mutual information of word pairs has a non-obvious form.
+ This is because a pair is already structured: one word necesarily preceeds
+ the other.
+ Thus, one must use a definition that acknowledges that structure.
+ For a word pair 
+\begin_inset Formula $\left(w_{l},w_{r}\right)$
+\end_inset
+
+ consisting of a word 
+\begin_inset Formula $w_{l}$
+\end_inset
+
+ on the left, and a word 
+\begin_inset Formula $w_{r}$
+\end_inset
+
+ on the right, the MI is defined as
+\begin_inset Formula 
+\[
+MI\left(w_{l},w_{r}\right)=\log_{2}\frac{N\left(w_{l},w_{r}\right)N\left(*,*\right)}{N\left(w_{l},*\right)N\left(*,w_{r}\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $N\left(w_{l},w_{r}\right)$
+\end_inset
+
+ is the observation count: the number of times that particular word pair
+ was observed in text.
+ The other quantities are wild-card sums: 
+\begin_inset Formula $N\left(w_{l},*\right)=\sum_{w_{r}}N\left(w_{l},w_{r}\right)$
+\end_inset
+
+ and so on.
+ The correctness of this definition, and it's precise interpretation and
+ meaning is not given here; the reader is encouraged to consult other texts
+ for this.
+\end_layout
+
+\begin_layout Standard
+Word pairs can be observed in several different ways.In what follows, two
+ of these ways are refered to as the 
+\begin_inset Quotes eld
+\end_inset
+
+clique counting
+\begin_inset Quotes erd
+\end_inset
+
+ method, and the 
+\begin_inset Quotes eld
+\end_inset
+
+random planar tree
+\begin_inset Quotes erd
+\end_inset
+
+ method.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+clique counting
+\begin_inset Quotes erd
+\end_inset
+
+ method considers a window of some fixed size, and then counts all possible
+ word-pairings within that window.
+ The random planar tree method constructs a random planar tree connecting
+ all of the words in a given sentence, and then counts only those pairs
+ appearing in that tree.
+ It is expected that these two methods give similar results, however this
+ has not been characterized, and the true differences between these methods
+ remains unknown.
+ Almost all of the following results are obtained with the random-planar-tree
+ method.
+ 
+\end_layout
+
+\begin_layout Section*
 Distribution of Mutual Information – 31 May 2015
 \end_layout
 
