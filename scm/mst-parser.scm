@@ -1,23 +1,24 @@
 ;
 ; mst-parser.scm
 ;
-; Maximum Spanning Tree parser.
+; Wrappers for Maximum Spanning Tree and Maximum Planar Graph parsers.
 ;
 ; Copyright (c) 2014, 2017 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; The scripts below use a simple minimum spanning-tree (MST) parser to
-; create an MST parse of a text sentence. This parse tree is then used
-; to create a set of equivalent Link Grammar disjuncts (which are
-; essentially the same thing as a local section of a sheaf of graphs;
-; this is explained more, below).
+; The scripts below are utility wrappers for the Maximum Spanning-Tree
+; (MST) and the Maximum Planar Graph parsers, adapting the core parsers
+; to format suitable for natural language.  That is, they're wrapped so
+; that they can parse text sentences.  The parse graphs are then used
+; to create a set of Sections describing the graph that was found,
+; locally (lexically).
 ;
-; Input to this should be a single unicode utf8-encoded text sentence.
-; It is presumed, as background, that the atomspace is loaded with a
-; large number of word-pairs and their associated mutual information.
-; These word-pairs need to have been previously computed.
+; Input to these are expected to be a single unicode utf8-encoded text
+; sentence.  It is presumed, as background, that the atomspace is loaded
+; with a large number of word-pairs and their associated mutual
+; information.  These word-pairs need to have been previously computed.
 ;
 ; The sentence is tokenized, assuming that white-space represents word
 ; boundaries. Leading and trailing punctuation is stripped from each
@@ -27,24 +28,32 @@
 ; or "clique", with the edges being word-pairs. The MST parser obtains
 ; the spanning tree that maximizes the sum of the mutual information (or
 ; other additive quantity) associated with the edges. This tree is the
-; MST tree.
+; MST tree.  The MPG parser does the same, but then adds edges, one at
+; a time, having the next-highest MI value, until the largest possible
+; planar graph is obtained (or no such edges (word-pairs) exist in the
+; AtomSpace.)
 ;
-; After an sentence has been parsed with the MST parser, the links
-; between words in the parse can be interpreted as Link Grammar links.
-; There are two possible interpretations that can be given to these
-; links: they are either "ANY" links, that connect between any words,
-; or they are links capable of connecting ONLY those two words.
-; In the later case, the link-name can be thought of as the
-; concatenation of the two words it connects.
+; After a sentence has been analyzed by either parser, the resulting
+; graph (i.e. edges between words) can be broken up into individual,
+; local Sections. Here, a Section (also sometimes called a "pseudo-
+; disjunct") is a single word (of the sentence), called a "germ" or
+; "root", and a list of connectors indicating the connections
+; (half-edges) made to the other words. This germ+connector-list
+; combination thus provides a local, lexical description of the parse
+; graph.
 ;
-; In either case, one can work "backwards", and obtain the effective
-; disjunct on each word, that would have lead to the given MST parse.
-; For each word, this disjunct is just the collection of the other words
-; that it is connected to. It is the unit-distance section of a sheaf.
+; The desciption is "lexical" in the sense that knowing the germ or
+; root is enough to find the assocciated connector list (and then
+; reassemble the original graph from these pieces).
 ;
-; All the hard work is done in the `sheaf` module. This is just a very
-; slim wrapper to parse the text, and update the number of times the
-; disjunct has been observed.
+; Functions included in this file:
+; * A tokenizer, which splits a text sentence into a list of strings.
+; * Wrappers for the MST and MPG parsers, which take text strings,
+;   tokenize them, and pass them through the parsers proper.
+; * A utility to print the resulting graph.
+; * A second wrapper that combines the parser with the step that
+;   extracts sections (disjuncts).
+;
 ; ---------------------------------------------------------------------
 ;
 (use-modules (srfi srfi-1))
