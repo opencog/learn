@@ -203,15 +203,10 @@
 
 ; ---------------------------------------------------------------------
 ;
-(define-public (mst-parse-text plain-text)
+(define (parse-setup-tool parser plain-text)
 "
-  mst-parse-text -- Maximum Spanning Tree parser.
-
-  Given a raw-text sentence, it splits apart the sentence into distinct
-  words, and finds an (unlabelled) dependency parse of the sentence, by
-  finding a dependency tree that maximizes the mutual information.
-  Returns a list of word-pairs, together with the associated mutual
-  information.
+  Handy dandy utility to avoid excess cut-n-paste for
+  customization.
 "
 	; Tokenize the sentence into a list of words.
 	(define word-strs (tokenize-text plain-text))
@@ -220,6 +215,7 @@
 	(define word-list (map WordNode word-strs))
 
 	; Define where the costs are coming from.
+	: We'll be using the MI scores coming from the random planar trees.
 	(define pair-obj (make-any-link-api))
 	; (define pair-obj (make-clique-pair-api))
 
@@ -231,11 +227,54 @@
 	; longer than 16. This is a sharp cutoff.
 	; This causes parser to run at O(N^3) for LEN < 16 and
 	; a faster rate, O(N^2.3) for 16<LEN. This should help.
-	(define (trunc-scorer LW RW LEN)
-		(if (< 16 LEN) -2e25 (scorer LW RW LEN)))
+	; For edges linking words more than 8 apart, progressively
+	; ramp down the score; we don't want long links in general.
+	(define (ramp-scorer LW RW LEN)
+		(define MAXLEN 16)
+		(define RAMPLEN 8)
+		(define mplu1 (+ MAXLEN 1))
+		(define (ramp len) (/ (- mplu1 len) (- mplu1 RAMPLEN)))
+
+		(if (< MAXLEN LEN) -2e25
+			(let ((sco (scorer LW RW LEN)))
+				; Negative scores pass right through. Others get ramped.
+				(if (or (< LEN RAMPLEN) (< sco 0))
+					sco
+					(* sco (ramp (LEN)))))))
 
 	; Process the list of words.
-	(mst-parse-atom-seq word-list trunc-scorer)
+	(parser word-list ramp-scorer)
+)
+
+; ---------------------------------------------------------------------
+;
+(define-public (mst-parse-text plain-text)
+"
+  mst-parse-text -- Maximum Spanning Tree parser.
+
+  Given a raw-text sentence, it splits apart the sentence into distinct
+  words, and finds an (unlabelled) dependency parse of the sentence, by
+  finding a dependency tree that maximizes the mutual information.
+  Returns a list of word-pairs, together with the associated mutual
+  information.
+"
+	(parse-setup-tool mst-parse-atom-seq plain-text)
+)
+
+; ---------------------------------------------------------------------
+;
+(define-public (mpg-parse-text plain-text)
+"
+  mpg-parse-text -- Maximum Planar Graph parser.
+
+  Given a raw-text sentence, it splits apart the sentence into distinct
+  words, and finds an (unlabelled) dependency parse of the sentence, by
+  finding a dependency graph that maximizes the mutual information,
+  and maximizes the number of edges while keeping the graph planar.
+  Returns a list of word-pairs, together with the associated mutual
+  information.
+"
+	(parse-setup-tool mpg-parse-atom-seq plain-text)
 )
 
 ; ---------------------------------------------------------------------
@@ -275,13 +314,30 @@
   observe-mst -- update pseduo-disjunct counts by observing raw text.
 
   This is the second part of the learning algo: simply count how
-  often pseudo-disjuncts show up.
+  often pseudo-disjuncts show up. Uses the MST parser to obtain
+  a spanning tree parse.
 "
 	; The count-one-atom function fetches from the SQL database,
 	; increments the count by one, and stores the result back
 	(for-each
 		(lambda (dj) (if (not (is-oversize? dj)) (count-one-atom dj)))
 		(make-sections (mst-parse-text plain-text))
+	)
+)
+
+(define-public (observe-mpg plain-text)
+"
+  observe-mpg -- update pseduo-disjunct counts by observing raw text.
+
+  This is the second part of the learning algo: simply count how
+  often pseudo-disjuncts show up. Uses the MPG parser to obtain
+  the maximal planar graph.
+"
+	; The count-one-atom function fetches from the SQL database,
+	; increments the count by one, and stores the result back
+	(for-each
+		(lambda (dj) (if (not (is-oversize? dj)) (count-one-atom dj)))
+		(make-sections (mpg-parse-text plain-text))
 	)
 )
 
