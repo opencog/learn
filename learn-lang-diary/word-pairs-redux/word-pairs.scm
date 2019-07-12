@@ -99,7 +99,7 @@ Scatterplot of frequency vs. mi. Huge dataset.
 (let ((outport (open-file "/tmp/scatter-freq-fmi.dat" "w")))
 	(format outport "#\n# Frequency FMI\n#\n")
 	(for-each (lambda (pr)
-		(format outport "~7F	~7F\n" (wpf 'pair-freq pr) (wpf 'pair-fmi pr)))
+		(format outport "~11G	~8F\n" (wpf 'pair-freq pr) (wpf 'pair-fmi pr)))
 		wall)
    (close outport))
 

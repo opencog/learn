@@ -20270,7 +20270,45 @@ Finished right entropy subtotals in 3490 secs
 The fpm -- 
 
 
+(print-matrix-summary-report fpf)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 4.7020738e+08)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 15795739 non-zero entries of 359615251072 possible
+Fraction non-zero: 4.3924E-5 Sparsity (-log_2): 14.475
+Total observations: 470207380.  Avg obs per pair: 29.768
+Entropy Total: 18.590   Left: 12.338   Right: 11.623
+Total MI: 5.3712
 
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  9987.        1.2491E+4
+Count   (l_1)  1.3805E+6    2.6232E+6     138.2        210.0    
+Length  (l_2)  2.4211E+5    3.2904E+5     24.24        26.34    
+RMS Count      2.4179E+5    3.2853E+5     24.21        26.30    
+
+No MM^T data present
+No M^TM data present
+
+Above takes 45 gigs to load.
+
+======
+Do it again, cutting at MI=5.3
+
+createdb en_pairs_mi_5.3remi
+cat atom.sql | psql en_pairs_mi_5.3remi
+(define fpm (add-fmi-filter wps 5.3 #f))
+(sql-open "postgres:///en_pairs_mi_5.3remi")
+   (define fps (make-store fpm))
+   (fps 'store-all-elts)
+   (sql-close)
 
 
 

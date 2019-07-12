@@ -5776,6 +5776,8 @@ The above was a historgram of the unique word-pairs; below is the same histogram
 \begin_layout Standard
 The Zipf distribution is drawn with the same slope as before; this is done
  to allow direct comparison.
+ A Gaussian is drawn, but this time, the left edge appears more linear than
+ parabolic.
  The Gaussian is, again, an eye-ball fit, given by 
 \begin_inset Formula $P\left(MI\right)=0.2\exp\left(-0.18\left(MI-0.9\right)^{2}\right)$
 \end_inset
@@ -5819,43 +5821,226 @@ zipf+gauss
 
 \end_inset
 
-The gaussian has the same shape as before; it's strength was reduced to
+The Gaussian has the same shape as before; it's strength was reduced to
  better fit the data.
- 
+ Again, the left edge of the data appears more linear than parabolic; perhaps
+ the correct fit would be some blending of of two semi-log-linear distributions.
+ Without a robust theoretical foundation, its uncertain just how far these
+ fits can be pushed.
 \end_layout
 
-\begin_layout Section*
-Cutting and recomputing the MI - July 2019
+\begin_layout Subsection*
+MI vs.
+ Frequency
 \end_layout
 
 \begin_layout Standard
-This section provides an analysis of what happens when MI is cut and recomputed.
- The starting point is the 
+A final bit of insight can be gained by examining the MI vs.
+ frequency scatterplot.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename cor-line.png
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This image, 400 pixels by 200 pixels, is a sequence of histograms.
+ The image extends, left to right, from MI=-10 to MI=+30, that is, spanning
+ exactly the same MI range as the earlier histograms, as well as having
+ the same bin-width.
+ The bottom-most horizontal line corresponds to (unique) word-pairs that
+ were observed only once; the second-from-the-bottom horizontal line word-pairs
+ that were observed twice, and so on by frequency.
+ The vertical axis is logarithmic, so the lines soon run together, once
+ the log-frequency is less than a pixel in size (with some aliasing effects
+ at first).
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The vertical axis runs from 
+\begin_inset Formula $-\log p=32$
+\end_inset
+
+ at the bottom to 
+\begin_inset Formula $-\log_{2}p=12$
+\end_inset
+
+ at the top.
+ The pixels are effectively 
+\begin_inset Quotes eld
+\end_inset
+
+square
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The first horizontal lines is at 
+\begin_inset Formula $-\log_{2}8.016\times10^{-10}=30.21$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ The color coding, from black to red, indicates how many word-pairs were
+ observed that can be assigned to a single pixel.
+ The color scale is logarithmic, so that red-pixels have bin-counts that
+ are orders of magnitude larger than blue pixels.
+ The integral along a vertical line then yeilds a single bin-count for single
+ MI-range, independent of the observation frequency.
+ The counts are for unique word-pairs, and not word-pairs with multiplicity.
+\end_layout
+
+\begin_layout Standard
+The scatterplot provides a bit more insight into the bimodal distribution.
+ As noted before, many of the most-frequent word-pairs (pixels in the upper
+ half of the image) are also the ones with the lowest MI (pixels to the
+ left of the image).
+ Indeed, the prominant peak is located at just above MI=0; the left-most
+ vertical white line is positioned on MI=0; the one on the right is at MI=5.
+\end_layout
+
+\begin_layout Section*
+Cutting distributions - July 2019
+\end_layout
+
+\begin_layout Standard
+That there is a bimodal distribution seems clearly established, no matter
+ how one looks at the data.
+ It also seems clear that one of the modes, termed the zero-mode, corresponds
+ to completely random word-pair choices.
+ Since MST parses and the extracted disjuncts are based on the MI of individual
+ word-pairs, it seems reasonable that their quality might be improved by
+ cutting away those word-pairs corresponding to random noise, and keeping
+ only those arising from 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ word collocations.
+\end_layout
+
+\begin_layout Standard
+There are several ways in which such cuts might be made.
+ One can trim away all word pairs having an MI below some threshold.
+ One can trim away word pairs having support above some given threshold.
+ Perhaps a cut combining length and support would be appropriate.
+ Each different cut will generate a diffrent word-pair dataset; each different
+ dataset will result in different parses and disjuncts.
+\end_layout
+
+\begin_layout Standard
+The variety of different cuts means that the paramter space needs to be
+ explored.
+ Cutting before parsing means that a lot of CPU time must be devoted to
+ re-parsing the corpora to obtain disjuncts.
+ Fortunately, there is a trick that can be used to reduce the amount of
+ required computations: there is a way to apply the cuts after parsing,
+ rather than before.
+ The trick works as follows.
+\end_layout
+
+\begin_layout Standard
+Rather than parsing to obtain a Maximum Spanning Tree (MST), one can parse
+ to obtain a Maximum Planar Graph (MPG).
+ The MPG parse starts with the MST parse, and then adds edges, one at a
+ time, each having the highest MI of all the others, to obtain the largest
+ possible planar graph.
+ This planar graph can be cut, just as before, and used to obtain disjuncts.
+ The resulting disjuncts are necessarily 
+\begin_inset Quotes eld
+\end_inset
+
+bushier
+\begin_inset Quotes erd
+\end_inset
+
+ than the MST-derived disjuncts, as there are more edges in the graph.
+\end_layout
+
+\begin_layout Standard
+The utility of the MPG-derived disjuncts is that the data cuts can be applied
+ to these, rather than at an earlier stage.
+ Given an MPG-derived disjunct, one can examine each individual connector,
+ and then decide whether it should be kept or not, based on whether the
+ word-connector MI is too low, or the support is too high, or whichever
+ cut one might wish to explore.
+ This enables just a single computational pass to create the disjunct dataset,
+ and the exploration of different data cuts delayed until afterwards, closer
+ to the later stages used for quality evaluation.
+\end_layout
+
+\begin_layout Subsection*
+Cutting and recomputing the MI 
+\end_layout
+
+\begin_layout Standard
+It is not entirely clear what happens to the data when low-MI word-pairs
+ are discarded.
+ This section takes a closer look at this.
+ In particular, it looks to see just how close the marginal and MI computations
+ are to being idempotent.
+ Thus, the dataset with cuts applied is compared to the same cut dataset,
+ but with the marginals and MI recomputed from scratch, cleanly, to see
+ just how much these might change.
+\end_layout
+
+\begin_layout Standard
+The starting point is the 
 \series bold
+\noun on
 en_pairs_cfive_mi
 \series default
+\noun default
  dataset; this is the 
 \series bold
+\noun on
 en_pairs_cfive_mst
 \series default
- dataset with the disjuncts (Sections) deleted, and word-pair MI and marginals
- recomputed.
+\noun default
+ dataset with the disjuncts (Sections) deleted.
  Starting with this dataset, all word-pairs with an MI of less than 1.8 are
  discarded, then the MI is recomputed, from scratch, with the remaining
  pairs.
  The 
 \series bold
+\noun on
 en_pairs_mi_1.8cut
 \series default
+\noun default
  dataset contains both the old, and the new MI values.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-See the `word-pairs.scm` file for the scripts.
- The new values can be accessed by using the filter (add-fmi-filter wps
- 1.8 #t) where the #t provides the filter-label under which the values are
- stored.
+See the `
+\family typewriter
+word-pairs.scm
+\family default
+` file for the scripts.
+ The new values can be accessed by using the filter 
+\family typewriter
+(add-fmi-filter wps 1.8 #t)
+\family default
+ where the 
+\family typewriter
+#t
+\family default
+ generates the filter-label under which the recomputed marginals can be
+ found.
  
 \end_layout
 
@@ -5865,7 +6050,8 @@ See the `word-pairs.scm` file for the scripts.
 \end_layout
 
 \begin_layout Standard
-The table below compares dataset stats.
+The table below summarizes these two datasets.
+ The first row is the same as before.
  
 \begin_inset VSpace defskip
 \end_inset
@@ -6009,6 +6195,8 @@ Dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_cfive
 \end_layout
 
@@ -6074,6 +6262,8 @@ en_pairs_cfive
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\noun on
 en_pairs_mi_1.8cut
 \end_layout
 
@@ -6095,22 +6285,23 @@ en_pairs_mi_1.8cut
 \end_layout
 
 \begin_layout Standard
-The cut was positioned so that it was locted at the average MI of the original
+The cut was positioned so that it was located at the average MI of the original
  dataset.
  This eliminated slightly less than half of all word-pairs.
  However, more than half of all observations were eliminated; apparently,
  as suggested in the Rohit data, some of the very high-frequency pairs have
  a low MI.
- Eliminating low-MI pairs also eliminates the high-frequency pairs.
- The total observations-per-pair drops by a third.
+ Thus, eliminating low-MI pairs appears to eliminate some of the high-frequency
+ pairs.
+ Although the total number of observations drops by more than one-half,
+ the total observations-per-pair drops only by a third.
  At the same time, the MI goes up, as the location of the peak shifts over,
- as showin in the graphs below.
+ as shown in the graphs below.
  
 \end_layout
 
 \begin_layout Standard
-The Banach norms of the rows and columns treated as vectors are given in
- the table below.
+The vector norms of the rows and columns are given in the table below.
 \end_layout
 
 \begin_layout Standard
@@ -6478,40 +6669,55 @@ en_pairs_mi_1.8cut
 \end_layout
 
 \begin_layout Standard
-The The relation between the support and the size is ...
- surprising.
- Before the cut, the average support is about 1/10th of the matrix size;
- after the cut, this is sharply cut.
- One impediment to understand quite what this means is that the distribution
- of support is also Zipfian; that is, if rows (or columns) are ranked according
- to the size of the support, these also follow a Zipfian distribution.
- The figures reported here are averages, and the concept of 
-\begin_inset Quotes eld
-\end_inset
+Particularly interesting is the change in the support.
+ The drop is dramatic: something like 5/6ths of the support disappears.
+ This corresponds quite well with the earlier analysis: vectors with a large
+ support correspond to effectively random pairings.
+ Random pairings have a low MI.
+ Thus, when low-MI pairs are cut, then so are the vectors with large support.
+ The count drops by only a third, and the length is very nearly unchanged.
+ This can be understood as saying that the cut eliminites primarily low-frequenc
+y pairs.
+ This is particularly dramatic in the length: the dominant contribution
+ to the length comes from high-frequency pairs (sum-of-squares amplifies
+ large values, and makes small values irrelevant).
+ This, the MI cut appears to do not just one, but two desirable things:
+ 
+\end_layout
 
-average
-\begin_inset Quotes erd
-\end_inset
+\begin_layout Itemize
+It removes support from high-support vectors, the support of which obviously
+ comes from random associations.
+\end_layout
 
- is delicate ...
- one should say 
-\begin_inset Quotes eld
-\end_inset
+\begin_layout Itemize
+It removes low-frequency tails, i.e.
+ those word-pairs for which there is little evidence of any meaningful associati
+on.
+ Word pairs that just happened to be seen, but not seen often enough to
+ be interpreted as evidence of asociation.
+\end_layout
 
-inappropriate
-\begin_inset Quotes erd
-\end_inset
-
-, for Zipfian distributions.
- The distributions are explicitly shown below:
+\begin_layout Subsection*
+MI distribution
 \end_layout
 
 \begin_layout Standard
-trao 
-\end_layout
+One might wonder: by discarding the low-MI pairs, how much is the dataset
+ truly altered? The change in support was quite dramatic.
+ The change in the average MI was large.
+ What about the MI distribution - how is that affected? The answer appears
+ to be 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Standard
-and this
+not much
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is explicitly showin in the graph below.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -6526,7 +6732,108 @@ and this
 \end_layout
 
 \begin_layout Standard
-so then
+The 
+\emph on
+all-pairs
+\emph default
+ curve just reproduces the bin-counts previously shown; this time the counts
+ are shown un-normalized.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The bin-count depends not only on the total number of observed pairs, but
+ also on the width of each bin.
+ Here, the interval from -15 to +30 is divided into 400 bins; thus, the
+ width of each bin is 45/400=0.1125.
+ Thus, at the peak there are more than 100K word-pairs having an MI that
+ is within 0.1125 of each-other.
+\end_layout
+
+\end_inset
+
+ The 
+\emph on
+cut-mi
+\emph default
+ curve is exactly the same data, but with the cut plain to see.
+ Lower-MI pairs are just gone.
+ The 
+\emph on
+recomputed-mi
+\emph default
+ curve is the interesting one: this takes the cut data, and recomputes the
+ MI from scratch.
+ Interestingly, this recomputation does not alter the distribution very
+ much.
+ 
+\end_layout
+
+\begin_layout Standard
+This should not be much of a surprise, perhaps.
+ In an earlier section, the zero-mode was fit with a parabola, centered
+ at MI=0.8 and a standard diviation of 
+\begin_inset Formula $\sigma=\sqrt{5}\approx2.2$
+\end_inset
+
+.
+ The cut at MI=1.8 thus corresponds to a cut at 
+\begin_inset Formula $(1.8-0.8)\approx0.45\sigma$
+\end_inset
+
+.
+ At this cut, the fraction of 
+\begin_inset Quotes eld
+\end_inset
+
+random
+\begin_inset Quotes erd
+\end_inset
+
+ pairs that were removed is 
+\begin_inset Formula 
+\[
+CDF=\frac{1}{\sqrt{2\pi\sigma^{2}}}\int_{-\infty}^{0.45\sigma}e^{-x^{2}/2\sigma^{2}}dx\approx67\%
+\]
+
+\end_inset
+
+Placing the cut at 
+\begin_inset Formula $2\sigma$
+\end_inset
+
+ would remove 98% of the zero-mode; this cut would be located at MI=5.3 –
+ its well up there, but not ineffectively so.
+ 
+\end_layout
+
+\begin_layout Standard
+When the MI is recomputed, how are existing pairs actually affected? The
+ figure below is a scatterplot of old vs.
+ new MI values.
+ The old values are plotted along the x-axis; the sharp cutoff at MI=1.8
+ is clearly visible.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+To make the size of the figure manageable, only 200K of the nearly 16M pairs
+ are shown.There's no qualitative change by doing so.
+\end_layout
+
+\end_inset
+
+ The straight line in the graph is drawn at 
+\begin_inset Formula $\left(oldMI-1.8\right)$
+\end_inset
+
+.
+ It appears to provide the lower bound for the reassigned MI's.
+ It's clear that pairs that used to have a high MI still have almost the
+ same high MI as before.
+ There is some reshuffling at the lower scores, but not all that much.
+ This provides proof that the reshuffling is local, that the changes are
+ limited in scope.
 \end_layout
 
 \begin_layout Standard
