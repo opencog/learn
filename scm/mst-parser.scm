@@ -215,7 +215,7 @@
 	(define word-list (map WordNode word-strs))
 
 	; Define where the costs are coming from.
-	: We'll be using the MI scores coming from the random planar trees.
+	; We'll be using the MI scores coming from the random planar trees.
 	(define pair-obj (make-any-link-api))
 	; (define pair-obj (make-clique-pair-api))
 
