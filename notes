@@ -20269,6 +20269,123 @@ Finished right entropy subtotals in 3490 secs
 
 The fpm -- 
 
+======
+Do it again, cutting at MI=5.3
+
+createdb en_pairs_5.3_remi
+cat atom.sql | psql en_pairs_5.3_remi
+(define fpm (add-fmi-filter wps 5.3 #f))
+(length (fpm 'get-all-elts)) << 8953449
+(sql-open "postgres:///en_pairs_5.3_remi")
+   (define fps (make-store fpm))
+   (fps 'store-all-elts)
+   (sql-close)
+(sql-open "postgres:///en_pairs_5.3_remi")
+(wps 'fetch-pairs)
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+
+en_pairs_5.3_remi
+-----------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<5.3
+removed.  After removal, the MI and marginals are recomputed. The
+resulting dataset is reasonably small, taking 24GB and 960 seconds to
+load.
+
+BUILD:
+(sql-open "postgres:///en_pairs_cfive_mi")
+(define wpa (make-any-link-api)) 
+(define wps (add-pair-stars wpa))
+(wps 'fetch-pairs)
+(sql-close)
+(sql-open "postgres:///en_pairs_5.3_remi")
+(define fpm (add-fmi-filter wps 5.3 #f))
+(define fps (make-store fpm))
+(fps 'store-all-elts)
+(sql-close)
+halt, restart
+(batch-all-pair-mi wps)
+
+STATUS: Good. (as good as en_pairs_cfive_mi)
+DATE: 12 July 2019
+
+COMMENT ON DATABASE "en_pairs_5.3_remi" IS
+'Same as en_pairs_cfive_mi but pairs w/FMI<5.3 cut & MI+marginals recomputed.';
+
+en_pairs_5.3_remi=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 1834 MB    | 
+ public | valuations | table | ubuntu | 4689 MB    | 
+
+select count(*) from atoms;      <<<< 20908235 == 21M Atoms
+select count(*) from valuations; <<<< 31618063 == 32M values 
+
+(print-matrix-summary-report wps)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 1.6649902e+08)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 615950 Columns: 573477
+Size: 8953449 non-zero entries of 353233158150 possible
+Fraction non-zero: 2.5347E-5 Sparsity (-log_2): 15.268
+Total observations: 166499020.  Avg obs per pair: 18.596
+Entropy Total: 18.647   Left: 13.418   Right: 13.647
+Total MI: 8.4182
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  2915.        1840.    
+Count   (l_1)  3.1752E+5    2.5220E+5     108.9        137.1    
+Length  (l_2)  1.6175E+5    1.5049E+5     55.48        81.80    
+RMS Count      1.6155E+5    1.5034E+5     55.41        81.72    
+
+No MM^T data present
+No M^TM data present
+
+2637685531 Bytes uncompressed == 2.6GB
+ 473114452 Bytes compressed   == 473MBytes
+
+83e6b75a2ffd7c248cf153a9108320f6  en_pairs_5.3_remi.sql
+ef654a29a94845a166ac47fc470c369e  en_pairs_5.3_remi.sql.bz2
+
+
+========
+dropdb en_pairs_cfive_mi_1.8
+dropdb en_dj_cfive
+dropdb en_full_marg
+
+en_pairs_1.8_remi
+-----------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<1.8
+removed.  After removal, the MI and marginals are recomputed. The
+resulting dataset is reasonably small, taking 45GB to load.
+
+BUILD:
+See en_pairs_5.3_remi
+
+STATUS: Good. (as good as en_pairs_cfive_mi)
+DATE: 12 July 2019
+
+COMMENT ON DATABASE "en_pairs_1.8_remi" IS
+'Same as en_pairs_cfive_mi but pairs w/FMI<1.8 cut & MI+marginals recomputed.';
+
+en_pairs_1.8_remi=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 3055 MB    | 
+ public | valuations | table | ubuntu | 6599 MB    | 
+
+select count(*) from atoms;      <<<< 34614297 == 35M Atoms 
+select count(*) from valuations; <<<< 52187113 == 52M Valuations
+
 
 (print-matrix-summary-report fpf)
 Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
@@ -20297,27 +20414,59 @@ RMS Count      2.4179E+5    3.2853E+5     24.21        26.30
 No MM^T data present
 No M^TM data present
 
-Above takes 45 gigs to load.
+4353431720 Bytes uncompressed == 4.3 GBytes
+ 789427829 Bytes compressed   == 789 MBytes
 
-======
-Do it again, cutting at MI=5.3
+dfb1bf8f6e61fba18c93fbb591d34650  en_pairs_1.8_remi.sql
+5f51c11907ea6cc624274707ed7eabc5  en_pairs_1.8_remi.sql.bz2
 
-createdb en_pairs_5.3_remi
-cat atom.sql | psql en_pairs_5.3_remi
-(define fpm (add-fmi-filter wps 5.3 #f))
-(length (fpm 'get-all-elts)) << 8953449
-(sql-open "postgres:///en_pairs_5.3_remi")
-   (define fps (make-store fpm))
-   (fps 'store-all-elts)
-   (sql-close)
-(sql-open "postgres:///en_pairs_5.3_remi")
+
+en_pairs_mi_1.8cut
+------------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<1.8
+removed.  After removal, a filter is applied and the MI and marginals
+are recomputed on that filter. Thus, the dataset contains two sets of
+MI data: the original data, at the standard locations, and the
+recomputed MI, at the filtered location.
+
+BUILD:
+createdb en_pairs_mi_1.8cut -T en_pairs_cfive_mi_1.8
 (wps 'fetch-pairs)
-(batch-all-pair-mi wps)
-(print-matrix-summary-report wps)
+(define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
+(batch-all-pair-mi fpm)
 
+STATUS: OK. (as good as en_pairs_cfive_mi)
+REASON: It's good, but most ongoing apps do not need both sets of MI,
+   so its a waste of space ... and mildly confusing.
+DATE: 12 July 2019
 
+COMMENT ON DATABASE "en_pairs_mi_1.8cut" IS
+'en_pairs_cfive_mi and pairs w/FMI<1.8 cut and both old and new MI/marginals.';
 
+en_pairs_mi_1.8cut=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 3055 MB    | 
+ public | valuations | table | ubuntu | 12 GB      | 
 
+select count(*) from atoms;      <<<< 34614308 == 34M Atoms
+select count(*) from valuations; <<<< 88578486 == 89M Valuations
+
+(print-matrix-summary-report fpf)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
+(This is same as en_pairs_1.8_remi)
+
+7335895086 Bytes uncompressed == 7.3 GBytes
+1289552824 Bytes compressed   == 1.3 GBytes
+
+ac2920d95c949d7220c917d108b668cc  en_pairs_mi_1.8cut.sql
+ff6157f7cdf5dda1ff191ead93ace247  en_pairs_mi_1.8cut.sql.bz2
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
 
 ==========
 Start work on info-sim.
