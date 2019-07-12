@@ -101,14 +101,14 @@ The distribution of the the mutual information (MI) for word-pairs is examined
  Understanding this distribution is important, as the MI is an important
  ingredient for the unsupervised learning of grammatical structure.
  The distribution is found to be bi-modal, decomposing into a zero-mode
- that appears to describe completely ranom pairings of words, and a true
+ that appears to describe completely random pairings of words, and a true
  mode, that captures actual collocations (idioms, institutional phrases,
  
 \emph on
 etc.
 \emph default
 ) This bimodal structure is found both in English and in Chinese, and is
- not only the same qualitiatively, but is also quantitatively quite similar.
+ not only the same qualitatively, but is also quantitatively quite similar.
 \end_layout
 
 \begin_layout Abstract
@@ -135,7 +135,7 @@ key "Goertzel2014,Vepstas2014learn"
  those pieces can then be compared, using statistical techniques, to refine
  it's accuracy, and to build a lexical description of the network.
  The lexical description then captures the structure of the preliminary
- network, which is presumably some combination of colocational, syntactic,
+ network, which is presumably some combination of co-locational, syntactic,
  semantic and predicate-argument structure, the details of which depending
  on what structure is highlighted in the preliminary network.
 \end_layout
@@ -172,7 +172,7 @@ In machine learning and biological settings, the mechanism of a partition
 
 \end_inset
 
- Unfortunately, the partition function is unweildy, verging on impossible
+ Unfortunately, the partition function is unwieldy, verging on impossible
  to compute with numerically, and so a wide variety of approximations to
  it are commonly used, ranging from Ising models to neural networks.
 \begin_inset CommandInset citation
@@ -187,13 +187,13 @@ key "Vepstas2018skippy"
 \begin_layout Standard
 One particularly common and important task is finding a decompositional,
  lexical description of the network.
- In physics, such a decompostion is given in terms of a perturbation theory
- derived from a Hamiltonian, and the associated Greeen's functions (propagators)
+ In physics, such a decomposition is given in terms of a perturbation theory
+ derived from a Hamiltonian, and the associated Green's functions (propagators)
  obtained therefrom.
- In linguistics, such a decompostion is commonly given as a dependency grammar
- of a natural langauge.
+ In linguistics, such a decomposition is commonly given as a dependency
+ grammar of a natural language.
  It is useful to recognize that these two descriptions are effectively equivalen
-t; both seek to describe the network structure interms of local interactions
+t; both seek to describe the network structure in terms of local interactions
  with not-too-distant neighbors, using a tensor algebra to capture connectivity
  information.
  Toggling between these two descriptions, one of which assigns weights and
@@ -210,11 +210,11 @@ key "Lambek61,Marcus1967"
 
 \begin_layout Standard
 The leading order structure of a network can often be described in terms
- of the pair-wise iteraction of network elements.
+ of the pair-wise interaction of network elements.
  This is a foundational assumption of perturbation theory.
  Conversely, simple pair-wise interactions can lead to rich and complex
  network behaviors; this is the primary lesson taught by the Ising models.
- Despite thier structural simplcity, Ising models still pose a tremendous
+ Despite their structural simplicity, Ising models still pose a tremendous
  computational barrier in all but the simplest cases.
  One common simplifying assumption is to approximate the interactions between
  pairs of elements in the system by the mutual information (MI) in that
@@ -232,7 +232,7 @@ key "Mora2010"
 
 \begin_layout Standard
 Natural language clearly does not have simplicity of the Ising model; however,
- one can still puruse an MI approximation thereof.
+ one can still pursue an MI approximation thereof.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
@@ -243,8 +243,8 @@ key "Yuret1998"
  word-pair MI.
  These can be used as the weights of links of an overlay network.
  In particular, if one discards all links with the lowest MI, one is left
- with a spanning tree connecting all fo the nodes in the network.
- This is refered to as the Minimum Spanning Tree (MST) or the Maximum Spanning
+ with a spanning tree connecting all of the nodes in the network.
+ This is referred to as the Minimum Spanning Tree (MST) or the Maximum Spanning
  Tree, depending on whether one is maximizing the MI of all of the links,
  or minimizing minus the MI.
  Such trees have been applied in a wide variety of settings, from immunoglobulin
@@ -288,8 +288,8 @@ Given that such MST models depend on the the mutual information between
  This is performed in the current report, for several datasets obtained
  from English and Chinese corpora.
  This report is structured as a diary entry from an ongoing research project,
- and thus, subsequent sections will document to a large variaty of different
- datasets, how they were constructed, and thier status.
+ and thus, subsequent sections will document to a large variety of different
+ datasets, how they were constructed, and their status.
  This documentation is mostly irrelevant to the primary findings of this
  report; rather, it is a formal record of the progress of ongoing research.
 \end_layout
@@ -319,7 +319,7 @@ noise
 
 \begin_layout Standard
 A hypothesis is then advanced: after discarding the zero model, the overlay
- network provided by the minimum spaning tree will be more accurate, or
+ network provided by the minimum spanning tree will be more accurate, or
  at least, more representative of the syntactic structure of natural language.
  This hypothesis is not tested here; it is the subject of ongoing research.
  
@@ -380,7 +380,7 @@ Definition of Mutual Information
 
 \begin_layout Standard
 The mutual information of word pairs has a non-obvious form.
- This is because a pair is already structured: one word necesarily preceeds
+ This is because a pair is already structured: one word necessarily precedes
  the other.
  Thus, one must use a definition that acknowledges that structure.
  For a word pair 
@@ -421,7 +421,7 @@ where
 
 \begin_layout Standard
 Word pairs can be observed in several different ways.In what follows, two
- of these ways are refered to as the 
+ of these ways are referred to as the 
 \begin_inset Quotes eld
 \end_inset
 
