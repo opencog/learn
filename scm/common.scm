@@ -38,7 +38,7 @@
   Warning: this is NOT THREAD SAFE! during rapid startup of multiple
   threads, each thread could fetch the same count, and increment
   that, leading to a loss of counts!  Once the system is up and running,
-  things should be fine (i.e. it is \"eventaully thread-safe\"); but
+  things should be fine (i.e. it is \"eventually thread-safe\"); but
   there's a race-window during startup.
 
   Warning: this is NOT SAFE for distributed processing! That is
