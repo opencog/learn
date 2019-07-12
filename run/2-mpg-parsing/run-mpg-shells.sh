@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# run-mst-shells.sh
+# run-mpg-shells.sh
 #
 # Run tmux with byobu to multiplex multiple terminals; start the
 # CogServer in one terminal, and suggest which processes to run
@@ -19,7 +19,7 @@ fi
 # Use byobu so that the scroll bars actually work
 byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
-byobu new-window -n 'cogsrv' 'nice guile -l mst-count-en.scm; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l mpg-count-en.scm; $SHELL'
 sleep 2;
 
 # Telnet window
@@ -27,7 +27,7 @@ tmux new-window -n 'telnet' 'rlwrap telnet localhost 19005; $SHELL'
 
 # Parse
 tmux new-window -n 'submit' \
-	'echo -e "\nYou might want to run ./mst-submit-en.sh here.\n"; $SHELL'
+	'echo -e "\nYou might want to run ./mpg-submit-en.sh here.\n"; $SHELL'
 
 # Spare
 tmux new-window -n 'spare' 'echo -e "\nSpare-use shell.\n"; $SHELL'
