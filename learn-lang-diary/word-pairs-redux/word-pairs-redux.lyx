@@ -4034,13 +4034,13 @@ status collapsed
 
 \begin_layout Plain Layout
 Graph obtained from the 
-\emph on
+\family typewriter
 binned-enpr-mi
-\emph default
+\family default
  data, in the 
-\emph on
+\family typewriter
 en-pairs.scm
-\emph default
+\family default
  file.
 \end_layout
 
@@ -4055,7 +4055,7 @@ en-pairs.scm
 \begin_layout Standard
 Recall that a normal distribution takes the form of a parabola, when graphed
  on semi-log plot such as this.
- The parabola, here labelled 
+ The parabola, here labeled 
 \begin_inset Quotes eld
 \end_inset
 
@@ -4146,7 +4146,7 @@ key "Vepstas2009"
 
 \end_inset
 
-, such an offset to positive MI is characteritic of an 
+, such an offset to positive MI is characteristic of an 
 \emph on
 incomplete
 \emph default
@@ -4220,11 +4220,11 @@ How does the MI distribution change when random planar tree parses are used
 
 \begin_layout Itemize
 How does the MI distribution change as a function of sample size (holding
- the vacabulary size fixed)?
+ the vocabulary size fixed)?
 \end_layout
 
 \begin_layout Itemize
-How does the MI distribution change as frequency of vacabulary words is
+How does the MI distribution change as frequency of vocabulary words is
  altered from a uniform distribution to a Zipfian distribution?
 \end_layout
 
@@ -4251,7 +4251,7 @@ not English
  They are rare; they necessarily can participate in only a small number
  of word-pairs.
  Yet most of the words in the dataset are like this - if not Greek, then
- Latin or Spanish or German (I guess there are travelouges amongst the corpora),
+ Latin or Spanish or German (I guess there are travelogues amongst the corpora),
  and plenty of given names, surnames, geographical place names and the like.
  Each is increasingly more rare than the last, but the grand-total bulk
  of them is quite large.
@@ -4805,7 +4805,15 @@ meaningful
 status collapsed
 
 \begin_layout Plain Layout
-Graph obtained from the binned-hanpr-mi data, in the zh-pairs.scm file.
+Graph obtained from the 
+\family typewriter
+binned-hanpr-mi
+\family default
+ data, in the 
+\family typewriter
+zh-pairs.scm
+\family default
+ file.
 \end_layout
 
 \end_inset
@@ -4834,7 +4842,7 @@ Recall that a Gaussian distribution takes the form of a parabola, when graphed
 \end_inset
 
 .
- As noted before, the gaussian centered is symptomatic of a random distribution
+ As noted before, the Gaussian centered is symptomatic of a random distribution
  of pairs: the low-MI hanzi pairs are effectively just noise, completely
  random groupings.
 \end_layout
@@ -5425,7 +5433,7 @@ The support, count and length are the
  vector norms, for the columns and rows of the pair-matrix (these norms
  are exactly as defined in an earlier table above).
  All of the graphs have a bit of a hump in the middle, with the hump being
- most prominant in the support distribution.
+ most prominent in the support distribution.
  The corresponding histograms are shown below.
  These are to be understood as follows.
  There are precisely 580804 columns, and thus that many column vectors.
@@ -5434,12 +5442,12 @@ The support, count and length are the
  to that log-value.
  The final tally of the number of vectors in each bin is shown in the graphs
  below.
- Properly, this can be labelled as a probability; simply by multiplying
- by the binwidth, and dividing by the total number of vectors.
+ Properly, this can be labeled as a probability; simply by multiplying by
+ the bin-width, and dividing by the total number of vectors.
  Thus, the total area under the curve is exactly 1.0.
- Do not be deceived by the spikey areas on the left: these are very full
+ Do not be deceived by the spiky areas on the left: these are very full
  bins next to empty bins.
- With a bit of smoothing, these would get smoothed down; but no smothing
+ With a bit of smoothing, these would get smoothed down; but no smoothing
  was applied (other than the natural smoothing of the finite bin-width.)
 \end_layout
 
@@ -5510,7 +5518,7 @@ most
 \begin_inset Formula $2^{4}=16$
 \end_inset
 
- nerby neighbors, or more; very few words are so strongly tied into idioms
+ nearby neighbors, or more; very few words are so strongly tied into idioms
  or collocations that they have a paucity of neighbors, a paucity of context.
  This should be contrasted with vectors having very large support or length:
  these correspond to words that appear next to just about any other word.
@@ -5572,9 +5580,9 @@ One might wonder if the ratio of count and length to support is Zipfian;
 \end_layout
 
 \begin_layout Standard
-Presumably, the prominant dip in the middle is due to the hump visible in
+Presumably, the prominent dip in the middle is due to the hump visible in
  the support distribution.
- One can still see that the distribution is roughy Zipfian.
+ One can still see that the distribution is roughly Zipfian.
 \end_layout
 
 \begin_layout Standard
@@ -5639,7 +5647,7 @@ These are scatter-plots of 581K column vectors, showing the scatter of
 , respectively.
  To keep the graphs relatively small and not overly busy, only every 25th
  point is graphed (so only 581K/25= approx 23K points are actually shown).
- Keep in mind that the projection of these scatterplots along the horizontal
+ Keep in mind that the projection of these scatter-plots along the horizontal
  axis gives rise to the histograms presented earlier.
  The linear lower bound apparent in both figures is simply a statement that
  the 
@@ -5749,8 +5757,8 @@ en_pairs_rone
 \end_layout
 
 \begin_layout Standard
-The above was a historgram of the unique word-pairs; below is the same histogram
-, this time counted with multiplicity.
+The above was a histogram of the unique word-pairs; below is the same histogram,
+ this time counted with multiplicity.
  That is, if a word-pair was observed 
 \begin_inset Formula $N$
 \end_inset
@@ -5803,7 +5811,7 @@ The Zipf distribution is drawn with the same slope as before; this is done
 \end_layout
 
 \begin_layout Standard
-The curve labelled 
+The curve labeled 
 \begin_inset Quotes eld
 \end_inset
 
@@ -5813,7 +5821,7 @@ zipf+gauss
 
  is a sum of the two distributions; note that the slope of the Zipfian has
  been adjusted to provide a better fit.
- Again, the paramters are obtained by eyeballing; the curve is given by
+ Again, the parameters are obtained by eyeballing; the curve is given by
 \begin_inset Formula 
 \[
 0.08\times2^{-0.37MI}+0.17\exp\left(-0.18\left(MI-0.9\right)^{2}\right)
@@ -5836,7 +5844,7 @@ MI vs.
 
 \begin_layout Standard
 A final bit of insight can be gained by examining the MI vs.
- frequency scatterplot.
+ frequency scatter-plot.
 \end_layout
 
 \begin_layout Standard
@@ -5896,17 +5904,17 @@ square
  observed that can be assigned to a single pixel.
  The color scale is logarithmic, so that red-pixels have bin-counts that
  are orders of magnitude larger than blue pixels.
- The integral along a vertical line then yeilds a single bin-count for single
+ The integral along a vertical line then yields a single bin-count for single
  MI-range, independent of the observation frequency.
  The counts are for unique word-pairs, and not word-pairs with multiplicity.
 \end_layout
 
 \begin_layout Standard
-The scatterplot provides a bit more insight into the bimodal distribution.
+The scatter-plot provides a bit more insight into the bimodal distribution.
  As noted before, many of the most-frequent word-pairs (pixels in the upper
  half of the image) are also the ones with the lowest MI (pixels to the
  left of the image).
- Indeed, the prominant peak is located at just above MI=0; the left-most
+ Indeed, the prominent peak is located at just above MI=0; the left-most
  vertical white line is positioned on MI=0; the one on the right is at MI=5.
 \end_layout
 
@@ -5938,12 +5946,12 @@ There are several ways in which such cuts might be made.
  One can trim away all word pairs having an MI below some threshold.
  One can trim away word pairs having support above some given threshold.
  Perhaps a cut combining length and support would be appropriate.
- Each different cut will generate a diffrent word-pair dataset; each different
+ Each different cut will generate a different word-pair dataset; each different
  dataset will result in different parses and disjuncts.
 \end_layout
 
 \begin_layout Standard
-The variety of different cuts means that the paramter space needs to be
+The variety of different cuts means that the parameter space needs to be
  explored.
  Cutting before parsing means that a lot of CPU time must be devoted to
  re-parsing the corpora to obtain disjuncts.
@@ -5984,7 +5992,7 @@ The utility of the MPG-derived disjuncts is that the data cuts can be applied
 \end_layout
 
 \begin_layout Standard
-Linguistically, connectors with a low MI value to thier root might be treated
+Linguistically, connectors with a low MI value to their root might be treated
  as optional connectors: if present in a parse, they should be used, but,
  if absent, that's OK too, as the low MI indicates that no connection is
  required.
@@ -6687,7 +6695,7 @@ Particularly interesting is the change in the support.
  Random pairings have a low MI.
  Thus, when low-MI pairs are cut, then so are the vectors with large support.
  The count drops by only a third, and the length is very nearly unchanged.
- This can be understood as saying that the cut eliminites primarily low-frequenc
+ This can be understood as saying that the cut eliminates primarily low-frequenc
 y pairs.
  This is particularly dramatic in the length: the dominant contribution
  to the length comes from high-frequency pairs (sum-of-squares amplifies
@@ -6706,7 +6714,7 @@ It removes low-frequency tails, i.e.
  those word-pairs for which there is little evidence of any meaningful associati
 on.
  Word pairs that just happened to be seen, but not seen often enough to
- be interpreted as evidence of asociation.
+ be interpreted as evidence of association.
 \end_layout
 
 \begin_layout Subsection*
@@ -6727,7 +6735,7 @@ not much
 \end_inset
 
 .
- This is explicitly showin in the graph below.
+ This is explicitly shown in the graph below.
  
 \end_layout
 
@@ -6748,7 +6756,7 @@ The
 all-pairs
 \emph default
  curve just reproduces the bin-counts previously shown; this time the counts
- are shown un-normalized.
+ are shown unnormalized.
 \begin_inset Foot
 status collapsed
 
@@ -6775,7 +6783,7 @@ recomputed-mi
 \emph default
  curve is the interesting one: this takes the cut data, and recomputes the
  MI from scratch.
- Interestingly, this recomputation does not alter the distribution very
+ Interestingly, this re-computation does not alter the distribution very
  much.
  
 \end_layout
@@ -6783,7 +6791,7 @@ recomputed-mi
 \begin_layout Standard
 This should not be much of a surprise, perhaps.
  In an earlier section, the zero-mode was fit with a parabola, centered
- at MI=0.8 and a standard diviation of 
+ at MI=0.8 and a standard deviation of 
 \begin_inset Formula $\sigma=\sqrt{5}\approx2.2$
 \end_inset
 
@@ -6820,7 +6828,7 @@ Placing the cut at
 
 \begin_layout Standard
 When the MI is recomputed, how are existing pairs actually affected? The
- figure below is a scatterplot of old vs.
+ figure below is a scatter-plot of old vs.
  new MI values.
  The old values are plotted along the x-axis; the sharp cutoff at MI=1.8
  is clearly visible.
@@ -6858,6 +6866,11 @@ To make the size of the figure manageable, only 200K of the nearly 16M pairs
 
 \end_layout
 
+\begin_layout Standard
+There seems to be a slight gap between lower bound, and the distribution.
+ The explanation for this gap is unknown.
+\end_layout
+
 \begin_layout Subsection*
 A deeper cut
 \end_layout
@@ -6871,7 +6884,7 @@ en_pairs_5.3_remi
 \noun default
  contains only those pairs which originally had an MI>5.3.
  After discarding those pairs, the MI and marginals are recomputed.
- Results are presented below; the earlier datsets are repeated for easier
+ Results are presented below; the earlier datasets are repeated for easier
  comparison.
 \end_layout
 
@@ -7175,9 +7188,9 @@ en_pairs_5.3_remi
 \end_layout
 
 \begin_layout Standard
-As before, the cut to the number of observations is proportionatly greater
+As before, the cut to the number of observations is proportionately greater
  than the cut to the number of pairs: the number of pairs is about a third
- of the original dataset; the number of observations droped by almost a
+ of the original dataset; the number of observations dropped by almost a
  factor of 8.
 \end_layout
 
@@ -7651,8 +7664,8 @@ With the deeper cut, the support continues to drop dramatically.
 \end_layout
 
 \begin_layout Standard
-If the MI is recomputed on the smaller dataset, the effect of the recomputation
- is much as before: a general shift downwards of all MI, and a rounding-offf
+If the MI is recomputed on the smaller dataset, the effect of the re-computation
+ is much as before: a general shift downwards of all MI, and a rounding-off
  of the sharp corner in the cut.
 \end_layout
 
@@ -7668,7 +7681,7 @@ If the MI is recomputed on the smaller dataset, the effect of the recomputation
 \end_layout
 
 \begin_layout Standard
-In the above figure, the distribution labelled 
+In the above figure, the distribution labeled 
 \begin_inset Quotes eld
 \end_inset
 
@@ -7699,8 +7712,8 @@ The above analysis has lead to several insights and proposals:
 \begin_layout Itemize
 The distribution of word-pairs observed in natural language corpora have
  a clear bimodal distribution.
- One mode, termed the zero-mode, appears to concist of effectively random
- word-pairs, having little correlation or affintity to one-another.
+ One mode, termed the zero-mode, appears to consist of effectively random
+ word-pairs, having little correlation or affinity to one-another.
  This mode reveals itself in several ways: the word pairs have a low MI
  value, and they are paired with a large variety of other words.
  
@@ -7748,7 +7761,7 @@ true mode
 
 \begin_layout Itemize
 The Maximal Planar Graph parsing strategy seems to offer a CPU-efficient
- machanism for exploring the effect of different data cuts on disjunct quality,
+ mechanism for exploring the effect of different data cuts on disjunct quality,
  and should probably adopted as the primary pipeline parser.
 \end_layout
 
@@ -7758,7 +7771,7 @@ ed pseudo-language remains a bit murky, despite an earlier investigation.
  In particular, the earlier experiments did not emulate the Zipfian distribution
  of natural language, and did not make any clear conclusions relating corpus
  size to vocabulary size.
- This ommissions mean that it remains unclear which statistical properties
+ This omissions mean that it remains unclear which statistical properties
  are particular to natural language, and which statistical properties are
  typical of any random text.
  Understanding the differences between random corpora and natural text remains
