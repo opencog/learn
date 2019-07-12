@@ -157,6 +157,21 @@ n.
  Given that partition function, many network properties can be obtained,
  including approximate lexical descriptions of the network (as perturbation
  theory expansions).
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In machine learning and biological settings, the mechanism of a partition
+ function with a Boltzmann distribution is commonly given the name of a
+ Maximum Entropy Model.
+ This simply refers to the idea that the states of the system are equiprobable
+ (after weighting) and that equiprobable distributions maximize the entropy.
+ This holds as a fundamental theorem, and can be used to define the entropy,
+ or, equivalently, the notion of equiprobability.
+\end_layout
+
+\end_inset
+
  Unfortunately, the partition function is unweildy, verging on impossible
  to compute with numerically, and so a wide variety of approximations to
  it are commonly used, ranging from Ising models to neural networks.
@@ -204,51 +219,159 @@ The leading order structure of a network can often be described in terms
  One common simplifying assumption is to approximate the interactions between
  pairs of elements in the system by the mutual information (MI) in that
  network.
- The MI approximation is sometimes a reasonable approximation.
+ The MI approximation is sometimes a reasonable approximation to the Ising
+ model, and sometimes less so.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mora2010"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-Natural language alone clearly does not have simplicity of the Ising model;
- however, a 
+Natural language clearly does not have simplicity of the Ising model; however,
+ one can still puruse an MI approximation thereof.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+
+\end_inset
+
+ In this approximation, one samples a large corpus of text, and computes
+ word-pair MI.
+ These can be used as the weights of links of an overlay network.
+ In particular, if one discards all links with the lowest MI, one is left
+ with a spanning tree connecting all fo the nodes in the network.
+ This is refered to as the Minimum Spanning Tree (MST) or the Maximum Spanning
+ Tree, depending on whether one is maximizing the MI of all of the links,
+ or minimizing minus the MI.
+ Such trees have been applied in a wide variety of settings, from immunoglobulin
+ interactions in zebrafish
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mora2010,Mora2011"
+
+\end_inset
+
+ to natural language.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998,Nivre2006"
+
+\end_inset
+
+ No claim is made here that MST models are the 
+\emph on
+sine qua non
+\emph default
+ of unsupervised natural language learning.
+ Rather, they provide a particularly simple and easy preliminary guide to
+ the underlying network structure.
+ This guide is meant to be refined to obtain the 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ syntactic, referential (endophora and diectic), and general semantic structure
+ of text.
 \end_layout
 
 \begin_layout Standard
-expectation value of the network, or rather, the most likely configuration
- of the network, given
+Given that such MST models depend on the the mutual information between
+ word-pairs, it is important to gain some reasonable understanding of the
+ structure and distribution of word-pairs arising in natural language.
+ This is performed in the current report, for several datasets obtained
+ from English and Chinese corpora.
+ This report is structured as a diary entry from an ongoing research project,
+ and thus, subsequent sections will document to a large variaty of different
+ datasets, how they were constructed, and thier status.
+ This documentation is mostly irrelevant to the primary findings of this
+ report; rather, it is a formal record of the progress of ongoing research.
 \end_layout
 
 \begin_layout Standard
-simple and direct approximation to the network is to attach scores to network
- edges, those scores being given by the mutual information (MI) of the connected
- pair.
- One can then approximate the
+This report does describe multiple important findings and observations.
+ These include the discovery that the distribution of the MI of word-pairs
+ is bi-modal, with one mode, the zero-mode, appearing to correspond with
+ essentially random pairings of words, and another mode capturing the true
+ colocational quality of natural language.
+ These two different modes can be seen to manifest in several different
+ ways, in multiple different statistical quantities, and thus can be fairly
+ easily identified.
+ From this easy identification follows the idea that the two modes can be
+ separated or cut-apart, with the zero-mode discarded, as it appears to
+ be just 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ in the data.
+ Several different cuts are explored, to see what they do to the data.
 \end_layout
 
 \begin_layout Standard
-requires, as input, datasets describing word-pair frequencies and word-pair
- mutual information.
- This text describes those datasets and characterizes their content, focusing
- primarily on the distribution of the mutual-information values.
+A hypothesis is then advanced: after discarding the zero model, the overlay
+ network provided by the minimum spaning tree will be more accurate, or
+ at least, more representative of the syntactic structure of natural language.
+ This hypothesis is not tested here; it is the subject of ongoing research.
+ 
 \end_layout
 
 \begin_layout Standard
-An earlier 2009 paper
+To facilitate that research, the idea of a Maximum Planar Graph (MPG) is
+ introduced.
+ The MPG is constructed by starting the MST tree, and then adding additional
+ edges, for progressively lower MI, until a complete, maximal planar graph
+ is obtained.
+ The utility of the MPG parse is that the grammar obtained from it can be
+ filtered after the fact: whenever a root word attaches to a connector with
+ a low MI, that connector can be discarded.
+ This can result in a huge savings of compute time and dataset management
+ effort: rather than recomputing MST parses over and over again, with different
+ data cuts applied, a single MPG parse can be computed once, with data cuts
+ applied at later stages.
+ 
+\end_layout
+
+\begin_layout Standard
+Finally, it is pointed out that relatively little is known (by this author,
+ at least) about the distribution of MI in random Zipfian (scale-free) networks.
+ An earlier 2009 paper
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2009"
 
 \end_inset
 
- provides a general overview of the distribution of mutual information of
- word-pairs.
- It provides formal definitions, which are not given here.
+ had begun an exploration of the distribution of MI in random networks,
+ comparing it to the distribution of MI found in natural language texts.
+ It provides some initial guidance for how to tell apart 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ natural language from a random network; unfortunately, it leaves too many
+ questions open.
+ Carefully characterizing random networks, and how they differ from natural
+ language networks remains an open, important task.
 \end_layout
 
 \begin_layout Standard
-This report looks at more recent datasets.
- It's organization is mostly chronological.
- It's style is that of a research diary, noting results as they come in,
- rather than presenting them in any kind of final form.
+The general organizational structure of this report is chronological.
+ Again: it is primarily a diary of research results, with a fair amount
+ of interpretation and description added, so that it can be read by a wider
+ audience.
 \end_layout
 
 \begin_layout Section*
@@ -256,8 +379,10 @@ Distribution of Mutual Information – 31 May 2015
 \end_layout
 
 \begin_layout Standard
-Results from Rohit.
- Rohit Shinde, Google Summer-of-Code student in 2015, provided these results.
+A preliminary look at the distribution of mutual information in large English
+ language datasets was performed by Rohit Shinde, Google Summer-of-Code
+ student, in 2015.
+ These results are recorded in this section.
 \begin_inset Foot
 status collapsed
 
@@ -300,7 +425,11 @@ dataset, which contained about 400K words (exactly 396255 words), between
  for which there were about 418M observations (exactly 418235277 of them).
  These were obtained by generating random planar graphs for English-language
  Wikipedia articles.
- As a 
+ 
+\end_layout
+
+\begin_layout Standard
+As a 
 \begin_inset Quotes eld
 \end_inset
 
