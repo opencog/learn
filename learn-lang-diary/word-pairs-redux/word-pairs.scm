@@ -17,7 +17,6 @@
 (use-modules (opencog matrix))
 (use-modules (opencog cogserver))
 (start-cogserver)
-(sql-open "postgres:///en_pairs_mi_1.8tmp")
 
 (define wpa (make-any-link-api))
 (define wps (add-pair-stars wpa))
@@ -29,10 +28,15 @@
 (print-matrix-summary-report wps)
 
 ; ----------
+; Start with the cut dataset, where all pairs with MI<1.8 were
+; thrown away...
+(sql-open "postgres:///en_pairs_mi_1.8cut")
 (define wall (wps 'get-all-elts))
 (length wall)  ; << 15795739
 
 ; Just the bin counts on the cut dataset
+; This should be idntical to the bin-counts on the full dataset,
+; but with a sharp cliff at MI=1.8
 (define cut-bins (bin-count wall 400
 	(lambda (item) (wpf 'pair-fmi item))
 	(lambda (item) 1)
@@ -43,6 +47,8 @@
    (close outport))
 
 ; ----------
+; Like above, but now we access the recomputed MI on the same
+; pairs. This smooths away the cliff.
 (define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
 ; (batch-all-pair-mi fpm) ; << how it got created. 
 (define fpf (add-pair-freq-api fpm))
@@ -59,7 +65,7 @@
    (close outport))
 
 ; ----------
-Scatterplot of both mi's. Huge dataset.
+; Scatterplot of both mi's. Huge dataset.
 
 (let ((outport (open-file "/tmp/scatter-fmi.dat" "w")))
 	(format outport "#\n# Cut-FMI	Recomputed-FMI\n#\n")
@@ -89,6 +95,24 @@ Scatterplot of both mi's. Huge dataset.
    (print-bincounts-tsv call-bins outport)
    (close outport))
 
+
+; ---------------------------------------------------------------------
+; ----------
+; Like above, but for the recomputed MI on the deeper cut.
+
+; Recomputed FMI on the 5.3<MI dataset.
+(sql-open "postgres:///en_pairs_5.3_remi")
+(define wall (wps 'get-all-elts))
+(length wall)  ; << 8953449
+
+(define recomp-bins (bin-count wall 400
+	(lambda (item) (wpf 'pair-fmi item))
+	(lambda (item) 1)
+	-15 30))
+
+(let ((outport (open-file "/tmp/deep-recomp-fmi.dat" "w")))
+   (print-bincounts-tsv recomp-bins outport)
+   (close outport))
 
 ; ---------------------------------------------------------------------
 ; ----------
@@ -198,7 +222,7 @@ Like above, but ratios
    (close outport))
 
 ; ---------------------
-Like above, but ratios
+; Correlation of support, count, length
 
 (let ((outport (open-file "/tmp/banach-l0-l1-l2-row.dat" "w")))
 	(format outport "#\n# l_0	l1	l2 row\n#\n")

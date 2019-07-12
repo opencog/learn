@@ -5983,6 +5983,13 @@ The utility of the MPG-derived disjuncts is that the data cuts can be applied
  to the later stages used for quality evaluation.
 \end_layout
 
+\begin_layout Standard
+Linguistically, connectors with a low MI value to thier root might be treated
+ as optional connectors: if present in a parse, they should be used, but,
+ if absent, that's OK too, as the low MI indicates that no connection is
+ required.
+\end_layout
+
 \begin_layout Subsection*
 Cutting and recomputing the MI 
 \end_layout
@@ -6851,10 +6858,6 @@ To make the size of the figure manageable, only 200K of the nearly 16M pairs
 
 \end_layout
 
-\begin_layout Standard
-and then
-\end_layout
-
 \begin_layout Subsection*
 A deeper cut
 \end_layout
@@ -7131,7 +7134,7 @@ en_pairs_mi_1.8cut
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.65
 \end_layout
 
 \end_inset
@@ -7140,7 +7143,7 @@ en_pairs_mi_1.8cut
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.42
 \end_layout
 
 \end_inset
@@ -7645,6 +7648,44 @@ With the deeper cut, the support continues to drop dramatically.
  observations: thus the length (per basis element) increases! Again, this
  is a confirmation of the behavior reported earlier.
  
+\end_layout
+
+\begin_layout Standard
+If the MI is recomputed on the smaller dataset, the effect of the recomputation
+ is much as before: a general shift downwards of all MI, and a rounding-offf
+ of the sharp corner in the cut.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename deep-cut-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the above figure, the distribution labelled 
+\begin_inset Quotes eld
+\end_inset
+
+Shallow Cut
+\begin_inset Quotes erd
+\end_inset
+
+ just reproduces the earlier recomputed 1.8<MI distribution.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+Deep Cut
+\begin_inset Quotes erd
+\end_inset
+
+ is the distribution after recomputing the 5.3<MI cut.
 \end_layout
 
 \begin_layout Section*
