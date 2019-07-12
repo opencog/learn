@@ -1,0 +1,48 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate Zipf graphs of count vs support
+#
+set term postscript eps enhanced color 28
+set out 'bancor-l1.eps'
+# 
+# set term png
+# set out 'bancor-l1.png'
+ 
+set key left
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Size of Support"
+set ylabel "Count"
+# plot "banach-l0-l1-l2-row.dat" using 1:2 with points pointtype 5 pointsize 0.3 title "rows", \
+#     "banach-l0-l1-l2-col.dat" using 1:2 with points pointtype 5 pointsize 0.3 title "columns"
+
+plot "banach-l0-l1-l2-small.dat" using 1:2 with points pointtype 5 pointsize 0.3 title ""
+
+#################################################
+# Used to generate Zipf graphs of length vs support.
+#
+set term postscript eps enhanced color 28
+set out 'bancor-l2.eps'
+# 
+# set term png
+# set out 'bancor-l2.png'
+ 
+set key left
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Size of Support"
+set ylabel "Length"
+
+# plot "banach-l0-l1-l2-row.dat" using 1:3 with points pointtype 5 pointsize 0.3 title "rows", \
+#     "banach-l0-l1-l2-col.dat" using 1:3 with points pointtype 5 pointsize 0.3 title "columns"
+
+plot "banach-l0-l1-l2-small.dat" using 1:3 with points pointtype 5 pointsize 0.3 title ""

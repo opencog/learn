@@ -1,0 +1,24 @@
+# set term png small color
+# set term png small
+# set out 'lr-balance.png'
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate the graph in the text
+#
+set term postscript eps color 24
+set out 'lr-balance.eps'
+set xrange [-0.4:0.4]
+set yrange [20:100000]
+set logscale y
+set format y "10^{%L}"
+set title "Left-right word-pair asymmetry"
+set xlabel "asymmetry"
+set ylabel "Count"
+plot "lr-balance.dat" using 1:2 with lines linewidth 5 title "", \
+     "lr-balance.dat" using 1:(75000 * 2**(-26*$1)) with lines linewidth 5 title "2^{-26 x}", \
+     "lr-balance.dat" using 1:(35000 * 2**(19*$1)) with lines linewidth 5 title "2^{19 x}"
+
+

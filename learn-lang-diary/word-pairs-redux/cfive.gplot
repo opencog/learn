@@ -1,0 +1,71 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate the binned MI observations of unique pairs
+#
+set term postscript eps enhanced color 28
+set out 'full-unique-mi.eps'
+
+# set term png
+# set out 'full-unique-mi.png'
+
+set yrange [1e-6:1]
+set logscale y
+set format y "10^{%L}"
+set title "Distribution of Unique Word Pairs"
+set xlabel "Mutual Information"
+set ylabel "Probability"
+# Probability is divided by total count, and divided by bin-width.
+binwidth= (30 + 15.) / 400
+count= 27892737
+plot "full-fmi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
+     "full-fmi.dat" using 2:(0.17 * 2**(-0.3*$2)) with lines linewidth 5 title "2^{-0.3 MI}", \
+     "full-fmi.dat" using 2:(0.11 * exp(-0.1*($2-0.8)*($2-0.8))) with lines linewidth 5 title "gauss"
+
+#################################################
+# Used to generate the binned MI observations w/ multiplicity
+#
+set term postscript eps enhanced color 28
+set out 'full-weighted-mi.eps'
+
+# set term png
+# set out 'full-weighted-mi.png'
+
+set xrange [-10:30]
+set yrange [1e-6:1]
+set logscale y
+set format y "10^{%L}"
+set title "Distribution of Word Pairs (with Multiplicity)"
+set xlabel "Mutual Information"
+set ylabel "Probability"
+# Probability is divided by total count, and divided by bin-width.
+binwidth= (30 + 15.) / 400
+count= 1247457239.0
+plot "full-weighted-fmi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
+     "full-weighted-fmi.dat" using 2:(0.03 * 2**(-0.3*$2)) with lines linewidth 5 title "2^{-0.3 MI}", \
+     "full-weighted-fmi.dat" using 2:(0.2 * exp(-0.18*($2-0.9)*($2-0.9))) with lines linewidth 5 title "gauss"
+
+#################################################
+# Used to generate the binned MI observations w/ multiplicity
+#
+set term postscript eps enhanced color 28
+set out 'full-sum-mi.eps'
+
+# set term png
+# set out 'full-weighted-mi.png'
+
+set xrange [-10:30]
+set yrange [1e-6:1]
+set logscale y
+set format y "10^{%L}"
+set title "Distribution of Word Pairs (with Multiplicity)"
+set xlabel "Mutual Information"
+set ylabel "Probability"
+# Probability is divided by total count, and divided by bin-width.
+binwidth= (30 + 15.) / 400
+count= 1247457239.0
+plot "full-weighted-fmi.dat" using 2:($3/(binwidth*count)) with lines linewidth 5 title "", \
+     "full-weighted-fmi.dat" using 2:(0.08 * 2**(-0.37*$2)) with lines linewidth 5 title "2^{-0.37 MI}", \
+     "full-weighted-fmi.dat" using 2:((0.08 * 2**(-0.37*$2)) + (0.17 * exp(-0.18*($2-0.9)*($2-0.9)))) with lines linewidth 5 title "zipf+gauss"

@@ -5253,7 +5253,7 @@ md5sum en_pairs_2016.sql.bz2
 en_pairs_rohit
 --------------
 forked from en_pairs_2016, converted to modern format
-This includes 8.9 word-pairs with MI on them. (But the MI is
+This includes 8.9M word-pairs with MI on them. (But the MI is
 in the old format).
 
 STATUS: obsolete, archived.
@@ -20181,6 +20181,7 @@ Found and fixed https://github.com/opencog/atomspace/pull/2252
 Arghhh.
 
 ===========
+MPG parser -- DONE
 (define plain-text "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
 (define word-strs (tokenize-text plain-text))
 (define word-list (map WordNode word-strs))
@@ -20223,13 +20224,98 @@ cleanup words that do not participate any longer ...
 		(format #t "Empty: ~A\n" (cog-name word))))
 'WordNode)
 
-None-such. Inteesting ... OK.
+None-such. Interesting ... OK.
 
 --------
 createdb en_pairs_mi_1.8tmp -T en_pairs_cfive_mi_1.8
 (wps 'fetch-pairs)
 (define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
 (batch-all-pair-mi fpm)
+
+Going to compute and store individual pair MI
+
+Single-threaded: << vs. multi-threaded ... no advantage
+Start computing the basis
+Support: found num left= 619168 num right= 580804 in 373 secs
+Finished left norm marginals in 3587 secs  << vs. 5266 multi is slower
+Finished left totals in 38 secs
+Finished right norm marginals in 8654 secs  << vs 4658 harrrumpf
+Finished right totals in 36 secs
+Done with wild-card count N(x,*) and N(*,y) in 12315 secs 
+Total count N(*,*) = 470207380.0 = 470207380.0
+Finished column (left) norm averages in 166 secs  << vs 111
+Finished row (right) norm averages in 185 secs << vs 131 when multi
+Going to do individual pair frequencies
+Done computing 15795739 pair frequencies in 595 secs << vs 3919 Yow!
+Start computing log P(*,y)
+Done computing 580804 left-wild log frequencies in 32 secs << vs 3003 Yow!
+Done with -log P(*,y), start -log P(x,*)
+Done computing 619168 right-wild log frequencies in 35 secs << vs 3448 Yow!
+Stored 40000 of 580804 left-wilds in 34 secs (1176 pairs/sec)
+Stored 80000 of 580804 left-wilds in 33 secs (1212 pairs/sec)
+...
+Done storing 580804 left-wilds in 505 secs
+Done storing 619168 right-wilds in 542 secs
+Done computing and saving -log P(x,*) and P(*,y)
+Going to compute and store individual pair MI
+Done 10001 of 619168 outer loops in 481 secs, pairs=238841 (496.55 pairs/sec)
+Done 10000 of 619168 outer loops in 578 secs, pairs=238839 (413.22 pairs/sec)
+
+Then from multi--
+Finished left entropy subtotals in 3144 secs
+Finished right entropy subtotals in 3490 secs
+
+===========
+
+The fpm -- 
+
+
+(print-matrix-summary-report fpf)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 4.7020738e+08)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 15795739 non-zero entries of 359615251072 possible
+Fraction non-zero: 4.3924E-5 Sparsity (-log_2): 14.475
+Total observations: 470207380.  Avg obs per pair: 29.768
+Entropy Total: 18.590   Left: 12.338   Right: 11.623
+Total MI: 5.3712
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  9987.        1.2491E+4
+Count   (l_1)  1.3805E+6    2.6232E+6     138.2        210.0    
+Length  (l_2)  2.4211E+5    3.2904E+5     24.24        26.34    
+RMS Count      2.4179E+5    3.2853E+5     24.21        26.30    
+
+No MM^T data present
+No M^TM data present
+
+Above takes 45 gigs to load.
+
+======
+Do it again, cutting at MI=5.3
+
+createdb en_pairs_5.3_remi
+cat atom.sql | psql en_pairs_5.3_remi
+(define fpm (add-fmi-filter wps 5.3 #f))
+(length (fpm 'get-all-elts)) << 8953449
+(sql-open "postgres:///en_pairs_5.3_remi")
+   (define fps (make-store fpm))
+   (fps 'store-all-elts)
+   (sql-close)
+(sql-open "postgres:///en_pairs_5.3_remi")
+(wps 'fetch-pairs)
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+
+
 
 
 
