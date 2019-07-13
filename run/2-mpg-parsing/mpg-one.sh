@@ -22,7 +22,7 @@ cogport=$4
 splitter=./split-sentences.pl
 
 splitdir=split-articles
-subdir=mpg-articles
+subdir=mpg-done-articles
 observe="observe-mpg"
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
