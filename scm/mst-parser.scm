@@ -274,7 +274,11 @@
   Returns a list of word-pairs, together with the associated mutual
   information.
 "
-	(parse-setup-tool mpg-parse-atom-seq plain-text)
+	(parse-setup-tool
+		; Two arguments provided, but MPG wants three...
+		(lambda (atom-list score-fun)
+			(mpg-parse-atom-seq atom-list score-fun 1000000))
+		plain-text)
 )
 
 ; ---------------------------------------------------------------------
