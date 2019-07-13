@@ -277,7 +277,7 @@
 	(parse-setup-tool
 		; Two arguments provided, but MPG wants three...
 		(lambda (atom-list score-fun)
-			(mpg-parse-atom-seq atom-list score-fun 1000000))
+			(mpg-parse-atom-seq atom-list score-fun -1))
 		plain-text)
 )
 
