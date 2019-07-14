@@ -43,9 +43,9 @@
 ; Begin test
 (test-begin suite-name)
 
-; First mode to check: clique, without mst-distance
+; First mode to check: clique, without mst distance multipliers
 (define cnt-mode "clique")
-(define mst-dist #f)
+(define dist-mult '(1))
 
 (define word-pair-atoms (make-word-pair-list cnt-mode))
 
@@ -65,8 +65,8 @@
 )
 
 ; Parse the sentences
-(define parse-1 (observe-mst-mode test-str-1 1 cnt-mode mst-dist #f))
-(define parse-2 (observe-mst-mode test-str-2 1 cnt-mode mst-dist #f))
+(define parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult #f))
+(define parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult #f))
 
 ; manually calculated, expected parses
 (define w1 (cons 1 (WordNode "###LEFT-WALL###")))
@@ -96,15 +96,15 @@
 )
 
 ; Test that MST-parses are as expected
-(define check-MST-text "Checking MST-parses: 'clique' mode, no mst-dist")
+(define check-MST-text "Checking MST-parses: 'clique' mode, no dist-mult")
 (test-assert check-MST-text (equal? parse-1 expected-parse-1))
 (test-assert check-MST-text (equal? parse-2 expected-parse-2))
 
 ; -------------------------------------------------
-; Second mode to check: any, with mst-distance
+; Second mode to check: any, with dist-mult
 ; any doesn't change the MST-parser, just testing option works
 (set! cnt-mode "any")
-(set! mst-dist #t)
+(set! dist-mult '(1 0.5 0.1))
 
 (set! word-pair-atoms (make-word-pair-list cnt-mode))
 
@@ -117,8 +117,8 @@
 )
 
 ; Parse the sentences
-(set! parse-1 (observe-mst-mode test-str-1 1 cnt-mode mst-dist #f))
-(set! parse-2 (observe-mst-mode test-str-2 1 cnt-mode mst-dist #f))
+(set! parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult #f))
+(set! parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult #f))
 
 ; manually calculated, expected parses
 (set! w3 (cons 3 (WordNode "first")))
@@ -126,10 +126,10 @@
 (define expected-parse-1
 	(append 
 		(append 
-			(list (cons (cons w3 w4) (+ (log2 5) 1)))
-			(list (cons (cons w2 w3) (+ (- (log2 5) 2) 1)))
+			(list (cons (cons w3 w4) (log2 5)))
+			(list (cons (cons w2 w3) (- (log2 5) 2)))
 		)
-		(list (cons (cons w1 w2) (+ (- (log2 5) 1) 1)))
+		(list (cons (cons w1 w2) (- (log2 5) 1)))
 	)
 )
 
@@ -138,22 +138,23 @@
 (define expected-parse-2
 	(append 
 		(append 
-			(list (cons (cons w1 w2) (+ (- (log2 5) 1) 1)))
-			(list (cons (cons w2 w3) 2.1))
+			(list (cons (cons w1 w2) (- (log2 5) 1)))
+			(list (cons (cons w2 w3) 1.1))
 		)
-		(list (cons (cons w2 w4) 1.9))
+		(list (cons (cons w3 w4) 0.8))
 	)
 )
 
 ; Test that MST-parses are as expected
-(define check-MST-text "Checking MST-parses: 'any' mode with mst-dist")
+(define check-MST-text "Checking MST-parses: 'any' mode with dist-mult")
 (test-assert check-MST-text (equal? parse-1 expected-parse-1))
 (test-assert check-MST-text (equal? parse-2 expected-parse-2))
 
 ; -------------------------------------------------
-; Third mode to check: file, no mst-distance
+; Third mode to check: file 
+; First test: no mst distance multipliers
 (set! cnt-mode "file")
-(set! mst-dist #f)
+(set! dist-mult '(1 1))
 
 (define text-block
 "Test in file mode\n\
@@ -169,12 +170,12 @@
 3 file 4 mode 2")
 
 ; Parse the sentences
-(set! parse-1 (observe-mst-mode text-block 1 cnt-mode mst-dist #f))
+(set! parse-1 (observe-mst-mode text-block cnt-mode dist-mult #f))
 
-; manually calculated, expected parses (note that current heuristic doesn't
-; give us the actual MST parse, but a close one)
-; atoms in "file" mode mst-parser have a different structure, needed
-; to retain the word positions in the sentece
+; Manually calculated, expected parses (note that current heuristic doesn't
+; give us the actual MST parse, but a close one).
+; Atoms in "file" mode mst-parser have a different structure from other modes,
+; needed to retain the word positions in the sentece.
 (set! w1 (cons 1 (WordSequenceLink (WordNode "###LEFT-WALL###") (NumberNode 0))))
 (set! w2 (cons 2 (WordSequenceLink (WordNode "Test") (NumberNode 1))))
 (set! w3 (cons 3 (WordSequenceLink (WordNode "in") (NumberNode 2))))
@@ -194,8 +195,32 @@
 )
 
 ; Test that MST-parses are as expected
-(define check-MST-text "Checking MST-parses: 'file' mode, no mst-dist")
+(define check-MST-text "Checking MST-parses: 'file' mode, no dist-mult")
 (test-assert check-MST-text (equal? parse-1 expected-parse-1))
+
+; Second test: mst-distance multipliers
+(set! dist-mult '(1 0.5))
+
+; Parse the sentences
+(set! parse-2 (observe-mst-mode text-block cnt-mode dist-mult #f))
+
+; Manually calculated, expected parses
+(define expected-parse-2
+	(append
+		(append 
+			(append 
+				(list (cons (cons w2 w5) 2.5))
+				(list (cons (cons w1 w2) 2.1))
+			)
+			(list (cons (cons w2 w3) 2.05))
+		)
+		(list (cons (cons w4 w5) 2))
+	)
+)
+
+; Test that MST-parses are as expected
+(define check-MST-text "Checking MST-parses: 'file' mode, w/dist-mult")
+(test-assert check-MST-text (equal? parse-2 expected-parse-2))
 
 ; -------------------------------------------------
 ; Close testing database and suite

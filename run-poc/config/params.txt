@@ -3,7 +3,7 @@
 
 export cnt_mode="file" 	 # clique, clique-dist, any, or file
 export cnt_reach=6		 # num-parses for any, or win-size for cliques
-export mst_dist="#f"		 # #t or #f; use distance weight during mst
+export mst_dist=(1 1 1 1)	# distance multipliers for pair-weight during mst
 export exp_parses="#t"  	 # #t or #f; exports parses in folder mst-parses
 export split_sents="#f"		 # #t or #f; calls sentence splitter before parser
 #TODO export store_fmi="#t"	# #t or #f 

@@ -22,7 +22,7 @@ parsesdir=mst-parses
 # Default parameter values
 cnt_mode="clique-dist"
 cnt_reach=6
-mst_dist="#t"
+mst_dist=(1)
 exp_parses="#t"
 split_sents="#t"
 source ./config/params.txt # overrides default values, if present
@@ -45,7 +45,7 @@ case $1 in
          # create parses directory if missing
          mkdir -p $(dirname "$parsesdir/$rest")
       fi
-      params="$cnt_mode $mst_dist $exp_parses"
+      params="$cnt_mode ${mst_dist[@]} $exp_parses"
       ;;
 esac
 
@@ -79,10 +79,11 @@ fi
 
 if [ -f "mst-parses.ull" ]; then
    # Sort parses and remove index, convert to ull format
-   sort -g mst-parses.ull | cut -f2- | tr '\t' '\n' > mst-parses.ull_ordered;
+   # sort -g mst-parses.ull | cut -f2- | tr '\t' '\n' > mst-parses.ull_ordered;
    # Organize parse file
-   mv mst-parses.ull_ordered "$parsesdir/${rest}.ull";
-   rm mst-parses.ull
+   # mv mst-parses.ull_ordered "$parsesdir/${rest}.ull";
+   # rm mst-parses.ull
+   mv mst-parses.ull "$parsesdir/${rest}.ull"
 fi
 
 # Move article to the done-queue
