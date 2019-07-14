@@ -274,32 +274,25 @@
   Returns a list of word-pairs, together with the associated mutual
   information.
 "
-	(parse-setup-tool
-		; Two arguments provided, but MPG wants three...
-		(lambda (atom-list score-fun)
-			(mpg-parse-atom-seq atom-list score-fun -1))
-		plain-text)
+	(define (mpg-linear ATOM-LIST SCORE-FN)
+		; Number the atoms in sequence-order.
+		(define numa-list (atom-list->numa-list ATOM-LIST))
+
+		; Start with the MST parse
+		(define mst-tree (graph-add-mst '() numa-list SCORE-FN -1))
+
+		; Add the mpg edges
+		(define mpgraph (graph-add-mpg mst-tree numa-list SCORE-FN -1))
+
+		; Connect up disconnected words
+		(define disco (graph-add-linear mpgraph numa-list))
+
+		; Connect up islands
+		(graph-add-bridges disco)
+	)
+
+	(parse-setup-tool mpg-linear plain-text)
 )
-
-; ---------------------------------------------------------------------
-
-(define (print-linkage LINK-SEQ)
-"
-  print-linkage LINK-SEQ
-
-  Debug utility: print the MST parse in a human-readable form.
-  LINK-SEQ must be a parse, as returned by `mst-parse-atom-seq`.
-"
-	(for-each
-		(lambda (LINK)
-			(format #t "~D-~D\t ~A <--> ~A\t MI=~6F\n"
-				(caaar LINK) (cadar LINK)
-				(cog-name (cdaar LINK)) (cog-name (cddar LINK))
-				(cdr LINK)
-			))
-		LINK-SEQ)
-)
-
 
 ; ---------------------------------------------------------------------
 ; Return #t if the section is bigger than what the current postgres

@@ -20468,6 +20468,59 @@ OK go for MPG parsing.
 createdb en_mpg_18 -T en_pairs_1.8_remi
 createdb en_mpg_53 -T en_pairs_5.3_remi
 
+
+OK, 53 hang on split-books/lisa-wit-ah
+gc is spinning like crazy .... and allocs are spinning like crazy too.
+
+18 hang on split-books/pascal-br
+
+Crap. 157 threads.
+
+57 GC_allochblk_nth
+
+scheme@(guile-user) [1]> ,bt
+In opencog/nlp/learn/mst-parser.scm:
+   344:31  5 (observe-mpg _)
+In opencog/sheaf/mpg-parser.scm:
+    72:25  4 (mpg-parse-atom-seq _ #<procedure ramp-scorer (LW RW LEN)> 1000000)
+In opencog/sheaf/mst-parser.scm:
+   342:25  3 (mst-parse-atom-seq _ #<procedure ramp-scorer (LW RW LEN)>)
+In opencog/sheaf/vo-graph.scm:
+   206:33  2 (wedge-cross? _ _)
+In unknown file:
+
+write items=1853
+num_get_nodes=1109
+num_get_links=6085
+
+(define tit (tokenize-text "this is a test"))
+(define wit (map WordNode tit))
+(define pai (make-any-link-api))
+(define mis (add-pair-freq-api pai))
+(define sco (make-score-fn mis 'pair-fmi))
+
+
+(define mst (mst-parse-atom-seq wit sco))
+
+(define start-cost-pair (pick-best-cost-pair numa-list))
+returns bad node ... it should check and abort...
+
+pick-best-cost-left-pair retursn bad node ...
+1e-40 wall-this
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+12871 101000    30  10 56.172g 0.042t  39880 S  1178 17.1  91:08.50 guile 
+12871 101000    30  10 59.010g 0.045t  39880 S  1156 18.1 119:18.34 guile
+12871 101000    30  10 63.820g 0.049t  39880 S  1318 20.1 135:03.21 guile
+
+
+
+%Cpu(s):  3.9 us, 29.5 sy, 20.0 ni, 46.2 id,  0.3 wa,  0.0 hi,  0.1 si,  0.0 st
+
+
+
+
+
 ==========
 Start work on info-sim.
 use langtest which contains ... 4K words, 26K sections
