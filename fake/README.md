@@ -1,5 +1,5 @@
-Fake Languages
-==============
+Fake (Artificial) Languages
+===========================
 
 Tools to create custom-taylored fake languages having custom-tailored
 statistical properties. This will allow the learning code to be
