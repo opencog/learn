@@ -20513,15 +20513,288 @@ pick-best-cost-left-pair retursn bad node ...
 12871 101000    30  10 59.010g 0.045t  39880 S  1156 18.1 119:18.34 guile
 12871 101000    30  10 63.820g 0.049t  39880 S  1318 20.1 135:03.21 guile
 
-
-
 %Cpu(s):  3.9 us, 29.5 sy, 20.0 ni, 46.2 id,  0.3 wa,  0.0 hi,  0.1 si,  0.0 st
 
+(gdb) bt
+#0  0x00007f85d38ef428 in __GI_raise (sig=sig@entry=6)
+    at ../sysdeps/unix/sysv/linux/raise.c:54
+#1  0x00007f85d38f102a in __GI_abort () at abort.c:89
+#2  0x00007f85d3f6ecdb in capture_delimited_continuation (
+    current_registers=<optimized out>, dynstack=<optimized out>, 
+    saved_registers=<optimized out>, saved_mra=<optimized out>, 
+    saved_fp=<optimized out>, vp=<optimized out>) at ../../libguile/vm.c:1327
+#3  abort_to_prompt (thread=0x15f692dc0, saved_mra=<optimized out>)
+    at ../../libguile/vm.c:1454
+#8  0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+
+#13 0x00007f85d3f6c546 in scm_throw (key=key@entry=0xdc5420, args=0x15af130a0)
+    at ../../libguile/throw.c:272
+#15 0x00007f85d3eedeb5 in scm_error_scm (key=key@entry=0xdc5420, 
+    subr=<optimized out>, message=message@entry=0x1607c9380, 
+    args=args@entry=0x15af130e0, data=data@entry=0x15af130f0)
+    at ../../libguile/error.c:90
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0, 
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S", args=0x15af130e0, 
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+#22 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+#30 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+
+#34 0x00007f85d3f6c1aa in catch (tag=tag@entry=0x404, thunk=0x15b341ee0, 
+    handler=0x15b341ec0, pre_unwind_handler=0x15b341ea0) at
+../../libguile/throw.c:146
+#35 0x00007f85d3f6c505 in scm_catch_with_pre_unwind_handler (key=key@entry=0x404, 
+    thunk=<optimized out>, handler=<optimized out>, 
+    pre_unwind_handler=<optimized out>) at ../../libguile/throw.c:260
+#36 0x00007f85d3f6c6bf in scm_c_catch (tag=tag@entry=0x404, body=<optimized out>, 
+    body_data=<optimized out>, 
+    handler=handler@entry=0x7f85c95d0f00
+<opencog::SchemeEval::catch_handler_wrapper(void*, scm_unused_struct*,
+scm_unused_struct*)>, 
+    handler_data=handler_data@entry=0x7f7e60000980, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85c95d0c40
+<opencog::SchemeEval::preunwind_handler_wrapper(void*, scm_unused_struct*,
+scm_unused_struct*)>, 
+    pre_unwind_handler_data=0x7f7e60000980) at ../../libguile/throw.c:385
+#37 0x00007f85c95d122a in opencog::SchemeEval::do_eval (this=0x7f7e60000980, 
+    expr="(observe-mpg \"The countess, with her loving heart, felt that her
+children were being ruined, that it was not the count's fault for he could not
+help being what he was -- that (though he tried to hide "...)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:590
+#38 0x00007f85c95d12aa in opencog::SchemeEval::c_wrap_eval (p=0x7f7e60000980)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:507
+#39 0x00007f85d3eeb47a in c_body (d=0x7f7e85fe2d40)
+    at ../../libguile/continuations.c:430
+#40 0x00007f85d4262b6f in ?? ()
+#41 0x00007f85d4262a80 in ?? ()
+#42 0x00007f85d41e10c0 in jump_table_ () from /usr/local/lib/libguile-3.0.so.0
+#43 0x000000015f692dc0 in ?? ()
+#44 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+#45 0x00007f85d3f70600 in vm_debug_engine (thread=0x304)
+    at ../../libguile/vm-engine.c:370
+#46 0x00007f85d3f76db2 in scm_call_n (proc=proc@entry=0x15b341fe0, 
+    argv=argv@entry=0x0, nargs=nargs@entry=0) at ../../libguile/vm.c:1605
+#47 0x00007f85d3eef8d9 in scm_call_0 (proc=proc@entry=0x15b341fe0)
+    at ../../libguile/eval.c:490
+#48 0x00007f85d3f6c1aa in catch (tag=tag@entry=0x404, thunk=0x15b341fe0, 
+    handler=0x15b341fc0, pre_unwind_handler=0x15b341fa0) at
+../../libguile/throw.c:146
+#49 0x00007f85d3f6c505 in scm_catch_with_pre_unwind_handler (key=key@entry=0x404, 
+    thunk=<optimized out>, handler=<optimized out>, 
+    pre_unwind_handler=<optimized out>) at ../../libguile/throw.c:260
+#50 0x00007f85d3f6c6bf in scm_c_catch (tag=tag@entry=0x404, 
+    body=body@entry=0x7f85d3eeb470 <c_body>, 
+    body_data=body_data@entry=0x7f7e85fe2d40, 
+    handler=handler@entry=0x7f85d3eeb720 <c_handler>, 
+    handler_data=handler_data@entry=0x7f7e85fe2d40, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85d3eeb580
+<pre_unwind_handler>, 
+    pre_unwind_handler_data=0xe174a0) at ../../libguile/throw.c:385
+#51 0x00007f85d3eeb9e3 in scm_i_with_continuation_barrier (
+    body=body@entry=0x7f85d3eeb470 <c_body>, 
+    body_data=body_data@entry=0x7f7e85fe2d40, 
+    handler=handler@entry=0x7f85d3eeb720 <c_handler>, 
+    handler_data=handler_data@entry=0x7f7e85fe2d40, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85d3eeb580
+<pre_unwind_handler>, 
+    pre_unwind_handler_data=0xe174a0) at ../../libguile/continuations.c:368
+#52 0x00007f85d3eebac5 in scm_c_with_continuation_barrier (func=<optimized out>, 
+    data=<optimized out>) at ../../libguile/continuations.c:464
+#53 0x00007f85d3575127 in GC_call_with_gc_active (
+    fn=fn@entry=0x7f85d3f6a070 <with_guile_trampoline>, 
+    client_data=client_data@entry=0x7f7e85fe2e20) at ../pthread_support.c:1343
+#54 0x00007f85d3f6ac4f in with_guile (base=base@entry=0x7f7e85fe2df0, 
+    data=data@entry=0x7f7e85fe2e20) at ../../libguile/threads.c:683
+#55 0x00007f85d356f132 in GC_call_with_stack_base (
+    fn=fn@entry=0x7f85d3f6abb0 <with_guile>, arg=arg@entry=0x7f7e85fe2e20)
+    at ../misc.c:1941
+#56 0x00007f85d3f6aff8 in scm_i_with_guile (dynamic_state=<optimized out>, 
+    data=0x7f7e60000980, 
+    func=0x7f85c95d1290 <opencog::SchemeEval::c_wrap_eval(void*)>)
+    at ../../libguile/threads.c:698
+#57 scm_with_guile (
+    func=func@entry=0x7f85c95d1290 <opencog::SchemeEval::c_wrap_eval(void*)>, 
+    data=data@entry=0x7f7e60000980) at ../../libguile/threads.c:704
+#58 0x00007f85c95d126e in opencog::SchemeEval::eval_expr (this=0x7f7e60000980, 
+    expr=...) at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:479
+#59 0x00007f85bc783439 in opencog::GenericShell::eval_loop (this=0x7f7ef0001e90)
+    at /home/ubuntu/src/opencog/opencog/cogserver/shell/GenericShell.cc:588
+#60 0x00007f85c6e5ac80 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#61 0x00007f85d3c916ba in start_thread (arg=0x7f7e85fe3700) at
+pthread_create.c:333
+#62 0x00007f85d39c141d in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+
+
+up 58
+print *this
+shows "(observe-mpg \"The countess,
+
+_input_line = "(observe-mpg \"The countess, with her loving heart, felt that her
+children were being ruined, that it was not the count's fault for he could not
+help being what he was -- that (though he tried to hide "...,
+
+libguile/vm.c 1327:
+  if (SCM_FRAME_DYNAMIC_LINK (base_fp) != saved_fp)
+    abort();
+
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0, 
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S",
+args=0x15af130e0, 
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+
+  vp->ip = SCM_FRAME_VIRTUAL_RETURN_ADDRESS (vp->fp);
+
+  scm_error (scm_arg_type_key, NULL, "Wrong type to apply: ~S",
+             scm_list_1 (proc), scm_list_1 (proc));
+}
+
+149 threads
+Half(?) are in
+
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+#1  0x00007f85d3c93dbd in __GI___pthread_mutex_lock (mutex=mutex@entry=0xd80f68)
+    at ../nptl/pthread_mutex_lock.c:80
+#2  0x00007f85d3f7845f in scm_c_weak_set_lookup (set=<optimized out>, 
+    raw_hash=raw_hash@entry=2291501516460283252, 
+    pred=pred@entry=0x7f85d3f69270 <string_lookup_predicate_fn>, 
+    closure=closure@entry=0x7f7e177fcf50, dflt=dflt@entry=0x4)
+    at ../../libguile/weak-set.c:760
+#3  0x00007f85d3f68df9 in lookup_interned_symbol (raw_hash=2291501516460283252, 
+    name=0x15abbbd80) at ../../libguile/symbols.c:112
+#4  scm_i_str2symbol (str=0x15abbbd80) at ../../libguile/symbols.c:244
+
+One is this:
+#0  0x00007f85d3c954ee in __pthread_mutex_unlock_usercnt (decr=1, 
+    mutex=0x7f85d37c4260 <GC_allocate_ml>) at pthread_mutex_unlock.c:55
+#1  __GI___pthread_mutex_unlock (mutex=0x7f85d37c4260 <GC_allocate_ml>)
+    at pthread_mutex_unlock.c:314
+#2  0x00007f85d356f0d0 in GC_call_with_alloc_lock (
+    fn=fn@entry=0x7f85d3f777e0 <do_copy_weak_entry>, 
+    client_data=client_data@entry=0x7f85a47f6ef0) at ../misc.c:1925
+#3  0x00007f85d3f7850b in copy_weak_entry (dst=0x7f85a47f6ee0, src=0x100e450)
+    at ../../libguile/weak-set.c:128
+#4  weak_set_lookup (dflt=0x4, closure=0x7f85a47f6f50, 
+    pred=0x7f85d3f69270 <string_lookup_predicate_fn>, hash=671639580896511065, 
+    set=0xd80f60) at ../../libguile/weak-set.c:493
+#5  scm_c_weak_set_lookup (set=<optimized out>, 
+    raw_hash=raw_hash@entry=335819790448255532, 
+    pred=pred@entry=0x7f85d3f69270 <string_lookup_predicate_fn>, 
+    closure=closure@entry=0x7f85a47f6f50, dflt=dflt@entry=0x4)
+    at ../../libguile/weak-set.c:762
+#6  0x00007f85d3f68df9 in lookup_interned_symbol (raw_hash=335819790448255532, 
+    name=0x15c4c11e0) at ../../libguile/symbols.c:112
+#7  scm_i_str2symbol (str=0x15c4c11e0) at ../../libguile/symbols.c:244
+
+
+So, here's my next installment on using guile-2.9.2. The first installment said
+that I'd piled up CPU-months of guile 2.9.2 experience without any crashes. Well,
+now, a different workload crashes in minutes.  Below is a highly simplified,
+edited gdb session -- it crashes because it unexpectedly aborts, during an
+abort(!) because `get_callee_vcode()` failed. Harrumpf.  
+
+
+Background: there are 140 threads, half in guile, the other half waiting for guile
+to finish. Yes, that's too many, but anyways ... 70 threads in guile and one
+crashed:
+
+
+#2  0x00007f85d3f6ecdb in capture_delimited_continuation (
+    current_registers=<optimized out>, dynstack=<optimized out>,
+    saved_registers=<optimized out>, saved_mra=<optimized out>,
+    saved_fp=<optimized out>, vp=<optimized out>) at ../../libguile/vm.c:1327
+#3  abort_to_prompt (thread=0x15f692dc0, saved_mra=<optimized out>)
+    at ../../libguile/vm.c:1454
+
+
+Both frames are interesting, because libguile/vm.c:1327 shows
+  if (SCM_FRAME_DYNAMIC_LINK (base_fp) != saved_fp)
+     abort();
+hey!? who called this? line 1454 is in the middle of abort_to_prompt ()  Yow! an
+unexpected abort during an abort...
+
+How did we get here?
+
+#15 0x00007f85d3eedeb5 in scm_error_scm (key=key@entry=0xdc5420,
+    subr=<optimized out>, message=message@entry=0x1607c9380,
+    args=args@entry=0x15af130e0, data=data@entry=0x15af130f0)
+    at ../../libguile/error.c:90
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0,
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S",
+args=0x15af130e0,
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+
+and libguile/vm.c:1527
+
+
+and libguile/vm.c:1527 tells me that get_callee_vcode () is very unhappy. But why?
+I cannot tell .. after that, things peter out in boring stack frames that started
+with my call scm_c_catch() ... the same seemingly harmless call that is pending in
+70 other threads. (the same call that has survived several CPU month of pounding
+with a different collection of scheme code) 
+
+My best guess is that the current code, that crashes, is .. compiling into
+something new/different/unusual, triggering a bug.  Either that, or the 70 threads
+are exposing a race condition that has been hithertho hidden.  I don't know how to
+debug any further.  I will try a slightly newer guile shortly.
+
+-- Linas
+
+p.s. here's the whole stack trace. But really, its boring, except for the above
+highlights.
+
+above was for
+commit 1fb39929f9c1c292b11aedb7b29a166471b1c555
+Author: Andy Wingo <wingo@pobox.com>
+Date:   Mon May 27 19:05:10 2019 +0200
+
+Lets try again.
+
+=========
+
+lthread 151 and 143, 142, 141 140, 138, 137, 136, 135, 127, 126, 124
+GC_generic_malloc_many mallocx.c:304
+scm_inline_gc_alloc libguile/gc-inline.h:79
+allocate_words_with_freelist libguile/intrinsics.c:424
+
+thread 150 and 148
+GC_malloc_kind_global malloc.c:254
+ make_bytevector libguile/bytevectors.c:233
+
+thread 125
+scm_c_weak_set_lookup libguile/weak-set.c:760
+lookup_interned_symbol libguile/symbols.c:112
+scm_i_str2symbol libguile/symbols.c:244
+
+========
+
+MPG-Processing file >>>split-books/lisa-sorc-aa<<<
+Sentence Splitter v3
+Language: en
+utf8 "\xA9" does not map to Unicode at ./split-sentences.pl line 72, <STDIN> line 9.
+Malformed UTF-8 character (fatal) at ./split-sentences.pl line 115, <STDIN> line 10.
+
+ Copyright <A9> 2010 by Eric Flint and Dave Freer
+
+
+
+=========
+18: done  tranche 1
 
 
 
 
-==========
+
+=========
 Start work on info-sim.
 use langtest which contains ... 4K words, 26K sections
 -- (psa 'fetch-pairs) ; 7 seconds... great!
