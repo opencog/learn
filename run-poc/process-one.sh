@@ -81,10 +81,11 @@ fi
 
 if [ -f "${rest}.ull" ]; then
    # Sort parses and remove index, convert to ull format
-   sort -g "${rest}.ull" | cut -f2- | tr '\t' '\n' > "${rest}.ull_ordered";
+   # sort -g "${rest}.ull" | cut -f2- | tr '\t' '\n' > "${rest}.ull_ordered";
    # Organize parse file
-   mv "${rest}.ull_ordered" "$parsesdir/${rest}.ull";
-   rm "${rest}.ull"
+   # mv "${rest}.ull_ordered" "$parsesdir/${rest}.ull";
+   # rm "${rest}.ull"
+   mv ${rest}.ull "$parsesdir/${rest}.ull"
 fi
 
 # Move article to the done-queue
