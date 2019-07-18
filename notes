@@ -20759,6 +20759,123 @@ Date:   Mon May 27 19:05:10 2019 +0200
 
 Lets try again.
 
+
+guard
+scm_thread
+scm_vm
+scm_tc16_thread = scm_make_smob_type ("thread", sizeof (scm_thread));
+scm_init_threads
+SCM_NEWSMOB (t->handle, scm_tc16_thread, t)
+0xf00fbaaa for the thread
+0xd00d1111 for the vm
+SCM_FRAME_LOCAL
+  SCM proc = SCM_FRAME_LOCAL (vp->fp, 0);
+
+scm_t_bits scm.h SCM_UNPACK
+
+2e -- 10 1110 -- odd small int -- 11
+36 -- 11 0110 -- odd small int -- 13
+2a -- 10 1010 -- odd small int -- 10
+26 -- 10 0110 -- odd small int -- 9
+22 -- 10 0010 -- even small int -- 8 -- just shift >>2 with SCM_I_INUM (exp)
+3a --
+3e --
+42 --
+
+SCM_I_INUM (exp)
+if (SCM_I_INUMP(xp)...
+
+#define SCM_PROGRAM_P(x) (SCM_HAS_TYP7 (x, scm_tc7_program))  0x45 & 0x7f
+#define SCM_STRUCTP(X)        (!SCM_IMP(X) && (SCM_TYP3(X) == scm_tc3_struct))
+
+
+who sets SCM_FRAME_LOCAL to short int??
+unpack_values does .. why?
+because subr-call in vm-engine.c called it
+
+SP_SET (0, ret);  ??
+
+          RESET_FRAME (1);      // sets sp = fp-1
+          SP_SET (0, ret);  ////
+          NEXT (1);
+
+
+if (SCM_I_INUMP(SCM_FRAME_LOCAL (thread->vm.fp, 0))) {
+printf("duuude fail in foeign call! \n"); assert(0); }
+
+  eng halt
+
+Both
+VM_DEFINE_OP (7, return_values, "return-values", OP1 (X32))
+and
+VM_DEFINE_OP (0, halt, "halt", OP1 (X32))
+set fp to whack values....
+and so does
+  VM_DEFINE_OP (4, call_label, "call-label", OP3 (X8_F24, X8_C24, L32))
+
+scm_i_vm_prepare_stack
+
+==========
+get_callee_vcode
+jump_table_
+scm_jit_enter_mcode mcode == 0x49cc8949  0x8349c429 0x8f0f38fc 0x00000013
+vm_debug_engine
+scm_call_n
+
+only four places call scm_jit_enter_mcode
+-- two for instrumentation
+-- one for return-values
+-- one for compose-continuation << probably this
+-- one is abort
+
+what does scm_jit_enter_mcode do?
+  if (!SCM_FRAME_MACHINE_RETURN_ADDRESS (thread->vm.fp))
+    SCM_FRAME_SET_MACHINE_RETURN_ADDRESS
+      (thread->vm.fp, scm_jit_return_to_interpreter_trampoline);
+
+so vm.fp is a C pointer to trampoline bytecode
+
+enter_mcode = jit_address_to_function_pointer (enter_mcode_addr);
+jit_address_to_function_pointer bless_function_pointer
+
+enter_mcode_addr = emit_code (j, emit_entry_trampoline);
+
+ohh and then there is emit_get_callee_vcode
+which is from emit_indirect_tail_call
+  emit_call_1 (j, scm_vm_intrinsics.get_callee_vcode, thread_operand ());
+
+duuuude wtf return valueo thread=0xbd5540 mcode=49
+
+fp val=7fffd83a0168 yeah=a3aa30
+
+SCM_FRAME_LOCAL (VP->fp, 0)
+#define SCM_FRAME_LOCAL(fp,i)           (SCM_FRAME_SLOT (fp, i)->as_scm)
+#define SCM_FRAME_SLOT(fp,i)            ((fp) - (i) - 1)
+
+So what does emit_get_callee_vcode do??
+emit_get_callee_vcode (scm_jit_state *j, jit_gpr_t dst)
+{
+  emit_call_1 (j, scm_vm_intrinsics.get_callee_vcode, thread_operand ());
+  emit_retval (j, dst);
+  emit_reload_sp (j);
+  emit_reload_fp (j);
+}
+
+emit_reload_fp (scm_jit_state *j)
+{
+  emit_ldxi (j, FP, THREAD, thread_offset_fp);
+  set_register_state (j, FP_IN_REGISTER);
+}
+
+where the heck is thread_offset_fp ??? must be computed durig build...
+frame_offset_vra,
+thread_offset_sp,
+
+ohh I get it ... its just not needed...
+
+scm_i_vm_prepare_stack
+
+
 =========
 
 lthread 151 and 143, 142, 141 140, 138, 137, 136, 135, 127, 126, 124
@@ -20785,12 +20902,57 @@ Malformed UTF-8 character (fatal) at ./split-sentences.pl line 115, <STDIN> line
 
  Copyright <A9> 2010 by Eric Flint and Dave Freer
 
-
-
 =========
-18: done  tranche 1
+
+34614581
+
+(WordNode "###LEFT-WALL###") has a minscule incoming set .... why?
+
+one threat at prompt
+24 threads in pthread_cond_wait for GC
+2 threads in some blocking gc thing
+1 immortal
+1 in nanosleep in cogserver
+1 in boost::asio recv
+
+1 in
+0  0x00007f6017f25cd8 in __GI___tls_get_addr (ti=0x7f6017ef42f8) at dl-tls.c:834
+#1  0x00007f6017c01e86 in scm_async_tick () at ../../libguile/async.c:148
+#2  0x00007f6017c0d6ee in scm_equal_p (x=0x26, y=0x6) at ../../libguile/eq.c:299
+#3  0x00007f6017c0d752 in scm_equal_p (x=0x1f33060, y=0x1f330e0)
+    at ../../libguile/eq.c:308
+#4  0x00007f6017c702e0 in scm_srfi1_delete_duplicates_x (lst=0x2606aa0a0, pred=0x9
+(observe-mpg \"Contact the Foundation as set forth in Section 3 below.\")
+
+1 in srfi1_find_tail
+(observe-mpg \"Section 2.\")
+Another with (observe-mpg \"Section 3.\")
+Another with (observe-mpg \"Section 4.\")
+Another with (observe-mpg \"Section 5.\")
+Another with (observe-mpg \"Section 1.\")
+ans (observe-mpg \"See paragraph 1.C below.\")
+(observe-mpg \"See paragraph 1.E below.\")
+
+1 in CACHE_REGISTER
+(observe-mpg \"The Foundation’s EIN or federal tax identification number is
+64-6221541.\")
 
 
+(mst-parse-text "Section 1.")
+
+(graph-add-bridges disco)
+
+((((2 . (WordNode "Section")) 3 . (WordNode "1")) . 7.98934111276043)
+(((2 . (WordNode "Section")) 4 . (WordNode ".")) . 4.02007251964681))
+
+((1 . (WordNode "###LEFT-WALL###"))
+ (2 . (WordNode "Section"))
+ (3 . (WordNode "1"))
+ (4 . (WordNode ".")
+))
+
+So -- graph-add-linear fails
+graph-add-bridges hangs ...
 
 
 

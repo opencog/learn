@@ -45,6 +45,19 @@
 
 ; create sections
 
-; use sections to generate text. This is hard, actually.
-; Two ways: (1) generate random strings, let LG discard those
-; that do not parse. (2) something else... yow!
+; Generate text. There are two ways to do this:
+; A) Start with sections, and build a sentence
+; B) Create a random planar tree, and assign sections to it.
+;
+; Approach A) is difficult: it basically means we have to run the
+; parser, using a dictionary containing the desired sections, and
+; allowing an "any word" mode during parsing. This can be done,
+; because we already have scheme interfaces into LG, via the
+; ParseMinimalLink. But its complex and awkard.
+;
+; Approach B) is easier(?): create an unlabelled tree; that's easy.
+; Start adding random labels to it, veryifying that each disjunct
+; is in the dictionary. This is harder, as this is a coloring problem,
+; and requires backtracking if the first coloring attempt fails.
+; As the final step, one randomly picks a word from the dictionary that
+; appears in a section for that disjunct.
