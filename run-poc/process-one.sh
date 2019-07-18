@@ -22,7 +22,7 @@ parsesdir=mst-parses
 # Default parameter values
 cnt_mode="clique-dist"
 cnt_reach=6
-mst_dist="#t"
+mst_dist=(1)
 exp_parses="#t"
 split_sents="#t"
 source ./config/params.txt # overrides default values, if present
