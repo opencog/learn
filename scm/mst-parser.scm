@@ -240,7 +240,7 @@
 				; Negative scores pass right through. Others get ramped.
 				(if (or (< LEN RAMPLEN) (< sco 0))
 					sco
-					(* sco (ramp (LEN)))))))
+					(* sco (ramp LEN))))))
 
 	; Process the list of words.
 	(parser word-list ramp-scorer)
