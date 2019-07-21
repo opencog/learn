@@ -288,7 +288,16 @@
 		(define disco (graph-add-linear mpgraph numa-list))
 
 		; Connect up islands
-		(graph-add-bridges disco)
+		; NOOOO! This last step goes exponentially as the size of the
+		; graph. Its 2 seconds for 50-word sentences; it's 30 seconds
+		; for 90-word sentences and its 300 for 100-word sentences!
+		; Yes, long sentences are fundamentally borken (e.g. tables
+		; of contents, indexes, price-lists, etc.) but still...
+		; Are bridges even important? Or is this a feel-good attempt?
+		; Screw it, decide some other day. For right now, just clamp.
+		(if (< 30 (length numa-list))
+			disco
+			(graph-add-bridges disco))
 	)
 
 	(parse-setup-tool mpg-linear plain-text)

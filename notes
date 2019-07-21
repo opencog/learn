@@ -21011,6 +21011,83 @@ createdb en_mpg_53 -T en_pairs_5.3_remi
 ERROR: Wrong type to apply: 10
 mpg-linear
 
+alpha-guten-tranche-1/split-books/steam-br
+
+39 41 43
+(observe-mpg \"INDEMNITY - You agree to indemnify and hold the Foundation, the
+trademark owner, any agent or employee of the Foundation, anyone providing copies
+of Project Gutenberg-tm electronic works"
+
+45
+(observe-mpg \"+ -- -- -- -- -- + -- -- -- -- -- + -- -- -- -- + -- -- -- -- -+ --
+-- -- -- -- + -- -- -- -- -- -- -- -+ | | | | | | Relative | | | | | Weight | |
+Density, | | | | | of | Volume | Hydro
+
+47
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -- -- + -- -- -- -+ -- -- -- -- + --
+-- -- -+ |Substance |Carbon |Hydrogen|Oxygen | + -- -- -- -- -- -- -- -- -- -- --
++
+
+49
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -+ -- -- -- -- -- -- -- -- -- -- -- --
+-- -- + -- -- -- -- -- -- -- + | Kind of Coal | Per Cent of Combustible | B. t. u.
+| | + -- -- -- -- -- -- + -- -- -- "
+
+52
+(observe-mpg \"Starting with Tioga and Bradford Counties of northern Pennsylvania,
+the bed runs southwest through Lycoming, Clearfield, Centre, Huntingdon, Cambria,
+Somerset and Fulton Counties, Pennsy"...)
+
+54
+(observe-mpg \"Absolute pressure 117 Absolute zero 80 Accessibility of Babcock &
+Wilcox boiler 59 Acidity in boiler feed water 106 Actual evap. corresponding to
+boiler horse power 288 Advantages of Bab"
+
+56
+(observe-mpg \"Calorimeter, coal, Mahler bomb 184 Mahler bomb, method of
+correction 187 Mahler bomb, method of operation of 185 Calorimeter, steam, compact
+type of throttling 132 Correction for 131 Loc"
+
+report-avg-gc-cpu-time
+
+10 0.0051
+20 0.0264
+30 0.0771
+40 0.4769
+50 2.1231
+60 3.5993
+70 8.3258
+80 29.464
+90 51.217
+100 298.25
+110
+
+OK, this is exponential explosion, not power. Why
+
+graph-add-mpg: length vs time:
+10 0.0027
+50 0.0742
+80 0.1658
+120 0.3634
+160 0.5767
+200 0.7824
+300 1.5131
+400 3.6476
+500 5.7588
+600 8.1915
+
+add-linear: trivial
+
+ad-bridges:
+10 0.0007
+40 0.5250
+50 2.0587
+60 3.3997
+70 8.1694
+80 29.494
+
+
+
 
 =========
 Start work on info-sim.
