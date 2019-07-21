@@ -20904,6 +20904,53 @@ Malformed UTF-8 character (fatal) at ./split-sentences.pl line 115, <STDIN> line
 
 =========
 
+guile 2.2.3
+
+Thread 7 "guile" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7ffff358f700 (LWP 17049)]
+scm_i_vm_mark_stack (vp=0x15b827a20, mark_stack_ptr=0x7ffff357ef00, 
+    mark_stack_limit=0x7ffff358eeb0) at ../../libguile/vm.c:995
+995                   if (SCM_NIMP (sp->as_scm) &&
+(gdb) bt
+#0  scm_i_vm_mark_stack (vp=0x15b827a20, mark_stack_ptr=0x7ffff357ef00, 
+    mark_stack_limit=0x7ffff358eeb0) at ../../libguile/vm.c:995
+#1  0x00007ffff717335e in GC_mark_from (mark_stack_top=0x7ffff357eed0, 
+    mark_stack_top@entry=0x7ffff357eef0,
+mark_stack=mark_stack@entry=0x7ffff357eeb0, 
+    mark_stack_limit=mark_stack_limit@entry=0x7ffff358eeb0) at ../mark.c:772
+#2  0x00007ffff717397e in GC_do_local_mark (local_mark_stack=0x7ffff357eeb0, 
+    local_top=0x7ffff357eef0) at ../mark.c:1037
+#3  0x00007ffff7173b98 in GC_mark_local (
+    local_mark_stack=local_mark_stack@entry=0x7ffff357eeb0, id=id@entry=5)
+    at ../mark.c:1170
+#4  0x00007ffff7173eaa in GC_help_marker (my_mark_no=my_mark_no@entry=101042)
+    at ../mark.c:1238
+#5  0x00007ffff717de3c in GC_mark_thread (id=<optimized out>)
+    at ../pthread_support.c:380
+#6  0x00007ffff78916ba in start_thread (arg=0x7ffff358f700) at
+pthread_create.c:333
+#7  0x00007ffff75c741d in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+(gdb) info thr
+
+(gdb) print sp
+$1 = (union scm_vm_stack_element *) 0x7fffe000c038
+(gdb) print *sp
+Cannot access memory at address 0x7fffe000c038
+
+(gdb) print vp
+$2 = (struct scm_vm *) 0x15b827a20
+(gdb) print *vp
+$3 = {ip = 0x7fffee315f2c, sp = 0x7fffe000c038, fp = 0x7ffff7e03050, 
+  stack_limit = 0x7ffff7e02000, trace_level = 0, sp_min_since_gc = 0x7fffe000c008, 
+  stack_size = 1024, stack_bottom = 0x7ffff7e02000, stack_top = 0x7ffff7e04000, 
+  overflow_handler_stack = 0x304, hooks = {0x4, 0x4, 0x4, 0x4, 0x4}, 
+  resumable_prompt_cookie = 0x7fffcade1fe0, engine = 1}
+
+
+
+=========
+
 34614581
 
 (WordNode "###LEFT-WALL###") has a minscule incoming set .... why?
@@ -20954,6 +21001,15 @@ ans (observe-mpg \"See paragraph 1.C below.\")
 So -- graph-add-linear fails
 graph-add-bridges hangs ...
 
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+(observe-mpg "“Can you define anything which you only feel and cannot see—heat for instance, or cold?”")
+
+ERROR: Wrong type to apply: 10
+mpg-linear
 
 
 =========
