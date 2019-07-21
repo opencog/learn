@@ -427,13 +427,7 @@
 		)))
 
 ; ---------------------------------------------------------------------
-;
-; Report the average amount of time spent in GC
-;
-; Print statistics about how much time has been spent in GC.
-; Resets the stats after each call, so it only prints the stats
-; since the previous call.
-;
+; Report the average time spent in GC.
 (define-public report-avg-gc-cpu-time
 	(let ((last-gc (gc-stats))
 			(start-time (get-internal-real-time))
@@ -456,6 +450,17 @@
 			(set! last-gc cur)
 			(set! start-time now)
 			(set! run-time run))))
+
+(set-procedure-property! report-avg-gc-cpu-time 'documentation
+"
+  report-avg-gc-cpu-time - Report the average time spent in GC.
+
+  Print statistics about how much time has been spent in garbage
+  collection, and how much time spent in other computational tasks.
+  Resets the stats after each call, so only the stats since the
+  previous call are printed.
+"
+)
 
 ; --------------------------------------------------------------------
 
