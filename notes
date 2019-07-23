@@ -21087,6 +21087,39 @@ ad-bridges:
 80 29.494
 
 
+(use-modules (srfi srfi-1))
+
+(for-each (lambda (x) (x)) (iota 10))
+(for-each call-with-new-thread (iota 10))
+
+
+(catch #t 
+	(for-each call-with-new-thread (iota 10))
+	(lambda key args ...) #f)
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+OK, so 
+en_mpg_53 blew up to 72 GB RAM but parsed everything in under 20 hours
+en_mpg_18 blows up to 90+
+
+mpg_53: 
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 10142877) (EvaluationLink . 10142877)
+(AnchorNode . 1) (Connector . 1114710) (ConnectorDir . 2) (ConnectorSeq .
+21886812) (Section . 34540275) (SchemaNode . 1) (WordNode . 689109)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+mpg_18:
+(cog-report-counts)
+((PredicateNode . 15) (ListLink . 16995712) (EvaluationLink . 16995712)
+(AnchorNode . 1) (Connector . 1102437) (ConnectorDir . 2) (ConnectorSeq .
+29842172) (Section . 39642130) (SchemaNode . 1) (WordNode . 688016)
+(AnyNode . 4) (LinkGrammarRelationshipNode . 1))
+
 
 
 =========
