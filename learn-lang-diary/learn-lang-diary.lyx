@@ -18873,15 +18873,32 @@ Effecect on Grammar Induction
 
 \begin_layout Standard
 There is a surprising effect on the quality of the learned grammars, as
- shown in the graph below, obtained from Andres Suarez via the Kolonin learning
- project.
+ shown in the graph below, obtained from Andres Suarez
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Email on the lang-learn@gmail.com mailing list, 22 July 2019, titled 
+\begin_inset Quotes eld
+\end_inset
+
+MI-threshold for MST-parses
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ via the Kolonin learning project.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename images/andres-mi-cut.png
-	width 60col%
+	width 100col%
 
 \end_inset
 
@@ -18892,7 +18909,7 @@ There is a surprising effect on the quality of the learned grammars, as
 The graph shows the a score for the quality of a learned grammar, after
  pair-counting, MST parsing, extraction of disjuncts, dimensional reduction
  and aggolmerative clustering.
- The horzontal axis shows score dependence on an MI threshold: word pairs
+ The horizontal axis shows score dependence on an MI threshold: word pairs
  with an MI of less than the threshold are discarded, before the pipeline
  is run.
 \end_layout
@@ -18900,7 +18917,7 @@ The graph shows the a score for the quality of a learned grammar, after
 \begin_layout Standard
 Keeping the late stages of the pipeline invariant, the different lines correspon
 d to different ways of counting word-pairs.
- The lines are labelled as:
+ The lines are labeled as:
 \end_layout
 
 \begin_layout Itemize
@@ -18909,7 +18926,7 @@ d to different ways of counting word-pairs.
 WIN6
 \series default
  – A moving window, 6 words wide; every possible word pair is counted once
- (36 word pairs) and then the window slides over by one.
+ (30 word pairs) and then the window slides over by one.
  Words in the middle of a sentence thus get to participate in 
 \begin_inset Formula $5\times6=30$
 \end_inset
@@ -18922,7 +18939,7 @@ WIN6
 \end_inset
 
  counts.
- Consider the word sequnce shown below, with the dots and the star representing
+ Consider the word sequence shown below, with the dots and the star representing
  words:
 \begin_inset Formula 
 \[
@@ -18937,20 +18954,20 @@ WIN6
 
 \end_inset
 
-The star indicates the word-of-interest; the over-brace is the window, size
+The star indicates the word-of-interest; the over-brace is the window, six
  words wide.
- The pair betwen the center-star and the left-most dot can only be counted
+ The pair between the center-star and the left-most dot can only be counted
  once; these are five words apart, and when the window shifts, the farthest
  word will be out of range for counting.
- Words that are four-apart get to be counted twice, before the window shitfs,
+ Words that are four-apart get to be counted twice, before the window shifts,
  
 \emph on
 etc.
 
 \emph default
- Nearest neighbors have five opporunities to be counted as the window slides.
- Thus, there is a preferential treament for nearest word-pairs.
- This is refered to as the 
+ Nearest neighbors have five opportunities to be counted as the window slides.
+ Thus, there is a preferential treatment for nearest word-pairs.
+ This is referred to as the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -18966,8 +18983,9 @@ clique-pair counting
 \series bold
 WIN6-odist
 \series default
- – This adds an addtional distance penalty on top of the existing windowed
- counting: words are counted with an addtional penalty of 
+ – This adds an additional distance penalty on top of the naturally-existing
+ windowed counting distance penalty: words are counted with an additional
+ penalty of 
 \begin_inset Formula $\mbox{floor}\left(6/dist\right)$
 \end_inset
 
@@ -19003,14 +19021,14 @@ any
 
  language parser.
  The number of such possible samples was counted in the previous section.
- Unfortunately, the prvius section does not estimate the typical distance
+ Unfortunately, the previous section does not estimate the typical distance
  distribution for words in the middle of a sentence, so its not comparable
  to above without extra work.
 \end_layout
 
 \begin_layout Standard
 It seems quite remarkable that there is such a big difference in grammar
- quality, stemming from these different word-pair counting tehcniques.
+ quality, stemming from these different word-pair counting techniques.
 \end_layout
 
 \begin_layout Section*
