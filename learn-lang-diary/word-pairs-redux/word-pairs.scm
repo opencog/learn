@@ -287,3 +287,6 @@ Like above, but ratios
    (print-bincounts-tsv bincs outport)
    (close outport))
 
+; ---------------------------------------------------------------------
+;
+(define all-words (cog-get-atoms 'WordNode #f))
