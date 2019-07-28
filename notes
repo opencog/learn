@@ -21011,6 +21011,272 @@ createdb en_mpg_53 -T en_pairs_5.3_remi
 ERROR: Wrong type to apply: 10
 mpg-linear
 
+alpha-guten-tranche-1/split-books/steam-br
+
+39 41 43
+(observe-mpg \"INDEMNITY - You agree to indemnify and hold the Foundation, the
+trademark owner, any agent or employee of the Foundation, anyone providing copies
+of Project Gutenberg-tm electronic works"
+
+45
+(observe-mpg \"+ -- -- -- -- -- + -- -- -- -- -- + -- -- -- -- + -- -- -- -- -+ --
+-- -- -- -- + -- -- -- -- -- -- -- -+ | | | | | | Relative | | | | | Weight | |
+Density, | | | | | of | Volume | Hydro
+
+47
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -- -- + -- -- -- -+ -- -- -- -- + --
+-- -- -+ |Substance |Carbon |Hydrogen|Oxygen | + -- -- -- -- -- -- -- -- -- -- --
++
+
+49
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -+ -- -- -- -- -- -- -- -- -- -- -- --
+-- -- + -- -- -- -- -- -- -- + | Kind of Coal | Per Cent of Combustible | B. t. u.
+| | + -- -- -- -- -- -- + -- -- -- "
+
+52
+(observe-mpg \"Starting with Tioga and Bradford Counties of northern Pennsylvania,
+the bed runs southwest through Lycoming, Clearfield, Centre, Huntingdon, Cambria,
+Somerset and Fulton Counties, Pennsy"...)
+
+54
+(observe-mpg \"Absolute pressure 117 Absolute zero 80 Accessibility of Babcock &
+Wilcox boiler 59 Acidity in boiler feed water 106 Actual evap. corresponding to
+boiler horse power 288 Advantages of Bab"
+
+56
+(observe-mpg \"Calorimeter, coal, Mahler bomb 184 Mahler bomb, method of
+correction 187 Mahler bomb, method of operation of 185 Calorimeter, steam, compact
+type of throttling 132 Correction for 131 Loc"
+
+report-avg-gc-cpu-time
+
+10 0.0051
+20 0.0264
+30 0.0771
+40 0.4769
+50 2.1231
+60 3.5993
+70 8.3258
+80 29.464
+90 51.217
+100 298.25
+110
+
+OK, this is exponential explosion, not power. Why
+
+graph-add-mpg: length vs time:
+10 0.0027
+50 0.0742
+80 0.1658
+120 0.3634
+160 0.5767
+200 0.7824
+300 1.5131
+400 3.6476
+500 5.7588
+600 8.1915
+
+add-linear: trivial
+
+ad-bridges:
+10 0.0007
+40 0.5250
+50 2.0587
+60 3.3997
+70 8.1694
+80 29.494
+
+
+(use-modules (srfi srfi-1))
+
+(for-each (lambda (x) (x)) (iota 10))
+(for-each call-with-new-thread (iota 10))
+
+
+(catch #t 
+	(for-each call-with-new-thread (iota 10))
+	(lambda key args ...) #f)
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+OK, so 
+en_mpg_53 blew up to 72 GB RAM but parsed everything in under 20 hours
+en_mpg_18 blows up to 90+
+
+mpg_53: 
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 10142877) (EvaluationLink . 10142877)
+(AnchorNode . 1) (Connector . 1114710) (ConnectorDir . 2) (ConnectorSeq .
+21886812) (Section . 34540275) (SchemaNode . 1) (WordNode . 689109)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+mpg_18:
+(cog-report-counts)
+((PredicateNode . 15) (ListLink . 16995712) (EvaluationLink . 16995712)
+(AnchorNode . 1) (Connector . 1102437) (ConnectorDir . 2) (ConnectorSeq .
+29842172) (Section . 39642130) (SchemaNode . 1) (WordNode . 688016)
+(AnyNode . 4) (LinkGrammarRelationshipNode . 1))
+
+
+mpg-53
+(psa 'fetch-pairs)
+Elapsed time to load csets: 3930 secs  248:41.08 cputime
+53.4g  RAM  total of 58105983 atoms
+
+(batch-all-pair-mi psa)
+Support: found num left= 564178 num right= 21886812 in 1193 secs
+Finished left norm marginals in 117149 secs << 33 hours!
+Finished left totals in 3064 secs
+Finished right norm marginals in 1382 secs
+Finished right totals in 25 secs
+Done with wild-card count N(x,*) and N(*,y) in 121620 secs <<< 34 hours
+Total count N(*,*) = 78200160.0 = 78200160.0
+Finished column (left) norm averages in 4026 secs
+Finished row (right) norm averages in 106 secs
+Going to do individual pair frequencies
+Done computing 34540275 pair frequencies in 5465 secs
+Start computing log P(*,y)
+Done computing 21886812 left-wild log frequencies in 813 secs
+Done computing 564178 right-wild log frequencies in 18 secs
+Done storing 21886812 left-wilds in 15511 secs  << 4 hours
+Done storing 564178 right-wilds in 487 secs
+Done computing 34540275 pair MI's in 28113 secs
+Finished left entropy subtotals in 114463 secs  << 32 hours
+Finished right entropy subtotals in 1373 secs
+Finished left MI subtotals in 115187 secs << 32 hours
+Finished right MI subtotals in 1379 secs
+Done storing 21886812 left-wilds in 11512 secs << 3 hours
+Done storing 564178 right-wilds in 308 secs
+Finished with MI computations; this took 116. hours << 5 days.
+
+guile -l mpg-53-djmi.scm
+
+==================================================================
+
+en_mpg_53
+---------
+Brand new recomputation of disjuncts, using the MPG (Maximal Planar
+Graph) parser.  The starting dataset is one where all word-pairs of
+MI < 5.3 are discarded. Then the MPG parse is performed. Any islands
+that remain are linked with adjacent words (whether or not such word
+pairs can be found in the pairs dataset). This dataset contains both
+the word-pairs, and also the disjuncts, and also the disjunct marginals.
+The goal of the MPG parse is to be able to apply data cuts much later
+in the pipeline.
+
+This is a full copy of `en_pairs_5.3_remi`, with the djs and dj
+marginals added.
+
+BUILD:
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+
+STATUS: Good. The word-pair dataset contains some junk - words with
+   markup that should have been split off. About 5%(?) of words are
+   affected.
+
+DATE: 27 July 2019
+
+COMMENT ON DATABASE en_mpg_53 IS
+'en_pairs_5.3_remi plus disjuncts plus dj marginals.';
+
+Final RAM usage: 110 GBytes for 80556988 Atoms
+
+en_mpg_53=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 9047 MB    | 
+ public | valuations | table | ubuntu | 23 GB      | 
+
+select count(*) from atoms;      <<<< 100967670 == 100M Atoms
+select count(*) from valuations; <<<< 225042856 == 225M Values
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 78200160)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 564178 Columns: 21886812
+Size: 34540275 non-zero entries of 12348057820536 possible
+Fraction non-zero: 2.7972E-6 Sparsity (-log_2): 18.448
+Total observations: 78200160.0  Avg obs per pair: 2.2640
+Entropy Total: 22.410   Left: 20.005   Right: 10.120
+Total MI: 7.7151
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  447.7        2.7665E+5
+Count   (l_1)  1.1523E+4    1.0087E+6     25.74        3.646    
+Length  (l_2)  5540.        4.0915E+4     12.37        .1479    
+RMS Count      4252.        4.0864E+4     9.497        .1477    
+
+No MM^T data present
+No M^TM data present
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 22450991) (TypeNode . 2) (AnchorNode . 1)
+(Connector . 1114710) (ConnectorDir . 2) (ConnectorSeq . 21886812) (Section .
+34540275) (SchemaNode . 1) (WordNode . 564178) (AnyNode . 2))
+
+Note that 564178 + 21886812 = 22450990 so the ListLinks are
+holding the marginals. (plus one for any-any)
+
+18014180469 Bytes uncompressed == 18 GBytes
+ 2235538306 Bytes compressed   == 2.2GBytes
+
+36379f212836ab4b07dc71d0a2623854  en_mpg_53.sql
+79069ae3d5d6d51d4eea15cf24f2e2bf  en_mpg_53.sql.bz2
+
+
+==================================================================
+Try again,
+en_mpg_18
+
+(psa 'fetch-pairs)
+Elapsed time to load csets: 5249 secs
+total of 71223993 Atoms == 71M of them.  Takes 66GBytes RAM
+
+(cog-report-counts)
+((PredicateNode . 2) (AnchorNode . 1) (Connector . 1103016) (ConnectorDir . 2)
+(ConnectorSeq . 29873423) (Section . 39684585) (SchemaNode . 1) (WordNode .
+562961) (AnyNode . 2))
+
+So lets go:
+
+
+==================================================================
+
+??? Why are there ListLinks in the above?
+?? Why are there 564K words!? Wow!
+
+Issues: there are words that begin/end with equals-signs:
+e.g. (WordNode "=Carolina.=")
+Also words that begin/end with vertical bar: (WordNode "789│") (WordNode "16.42|") 
+  note the UTF8 bar in above....
+a few but annoying: mayeb 1 in 20 of above.
+Next: some that begin/end with asterisk.
+or backslash: (WordNode "unfitness,\") (WordNode "gone.\")
+or (WordNode "@deserted@")  
+(WordNode "HEALTH"*")
+ (WordNode "Wiley...............A")
+(WordNode "Elizabeth......how")
+(WordNode "Mother....we're")
+(WordNode "Sorry...sorry...it's") (WordNode "Keith...remember..remember")
+(WordNode "classroom.“")
+ (WordNode "King._~") (WordNode "Confessor.~")
+(WordNode "]Klauber")
+(WordNode "+SEBASTIEN")
+(WordNode "winter/spring")
+
+None of the words have any counts on tham (!) Why?
+
+
 
 =========
 Start work on info-sim.

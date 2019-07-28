@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -24,6 +24,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -62,6 +64,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -70,7 +73,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -97,6 +103,7 @@ The language-learning effort involves research and software development
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
@@ -123,6 +130,7 @@ The language-learning effort involves research and software development
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
@@ -140,6 +148,7 @@ s from raw text, and the use of these to induce a Link Grammar
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -148,6 +157,7 @@ key "Sleator1991,Sleator1993"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -163,6 +173,7 @@ Later stages further extend beyond what is possible with Link Grammar by
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Poon2009,Lin1998,Lin2001"
+literal "true"
 
 \end_inset
 
@@ -200,6 +211,7 @@ Discovery of Linguistic Relations Using Lexical Attraction
 LatexCommand href
 name "http://www2.denizyuret.com/pub/yuretphd.pdf"
 target "http://www2.denizyuret.com/pub/yuretphd.pdf"
+literal "false"
 
 \end_inset
 
@@ -1925,6 +1937,7 @@ Yuret proposes a way of discovering the pair-wise relations
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -2024,6 +2037,7 @@ Why do syntactic links not cross?
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ferrer2006"
+literal "true"
 
 \end_inset
 
@@ -2106,6 +2120,7 @@ y.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Liu2008"
+literal "true"
 
 \end_inset
 
@@ -3595,6 +3610,7 @@ In linguistics, similar notions of freedom and constraint arise, but seem
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Anderson2012"
+literal "true"
 
 \end_inset
 
@@ -16757,6 +16773,7 @@ This formula is given by Deniz Yuret in
 LatexCommand href
 name "Lexical Attraction Models of Language"
 target "http://www2.denizyuret.com/pub/lex-attr/lam-iscis06.pdf"
+literal "false"
 
 \end_inset
 
@@ -16781,6 +16798,7 @@ matrix-tree theorem
 LatexCommand href
 name "Kirchoff's Theorem"
 target "https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem"
+literal "false"
 
 \end_inset
 
@@ -16793,6 +16811,7 @@ target "https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem"
 LatexCommand href
 name "Cayley's formula"
 target "https://en.wikipedia.org/wiki/Cayley's_formula"
+literal "false"
 
 \end_inset
 
@@ -17095,7 +17114,7 @@ If graphs with cycles are also allowed, (but no edge crossings) then, in
 
 \begin_layout Standard
 Again, we count the number of edges, as before.
- The 'tree' column shows he counts from before; the loop count count the
+ The 'tree' column shows the counts from before; the loop count count the
  edges from the additional eleven diagrams; the total is just that.
 \begin_inset Separator latexpar
 \end_inset
@@ -18848,6 +18867,170 @@ x
 
 \end_layout
 
+\begin_layout Subsection*
+Effecect on Grammar Induction
+\end_layout
+
+\begin_layout Standard
+There is a surprising effect on the quality of the learned grammars, as
+ shown in the graph below, obtained from Andres Suarez
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Email on the lang-learn@gmail.com mailing list, 22 July 2019, titled 
+\begin_inset Quotes eld
+\end_inset
+
+MI-threshold for MST-parses
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ via the Kolonin learning project.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/andres-mi-cut.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The graph shows the a score for the quality of a learned grammar, after
+ pair-counting, MST parsing, extraction of disjuncts, dimensional reduction
+ and aggolmerative clustering.
+ The horizontal axis shows score dependence on an MI threshold: word pairs
+ with an MI of less than the threshold are discarded, before the pipeline
+ is run.
+\end_layout
+
+\begin_layout Standard
+Keeping the late stages of the pipeline invariant, the different lines correspon
+d to different ways of counting word-pairs.
+ The lines are labeled as:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+WIN6
+\series default
+ – A moving window, 6 words wide; every possible word pair is counted once
+ (30 word pairs) and then the window slides over by one.
+ Words in the middle of a sentence thus get to participate in 
+\begin_inset Formula $5\times6=30$
+\end_inset
+
+ counts of pairs, of which there are 10 distinct pairs; two of these pairs
+ are counted once (the ones 5 words apart) two pairs are counted twice,
+ two pairs are counted 3 times, etc.
+ for a total of 
+\begin_inset Formula $2\times\left(1+2+3+4+5\right)=30$
+\end_inset
+
+ counts.
+ Consider the word sequence shown below, with the dots and the star representing
+ words:
+\begin_inset Formula 
+\[
+\overbrace{\begin{array}{ccccccccccc}
+\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
+ & 1 &  & 2 &  & 3 &  & 4 &  & 5
+\end{array}}\begin{array}{cccccccccc}
+ & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
+5 &  & 4 &  & 3 &  & 2 &  & 1
+\end{array}
+\]
+
+\end_inset
+
+The star indicates the word-of-interest; the over-brace is the window, six
+ words wide.
+ The pair between the center-star and the left-most dot can only be counted
+ once; these are five words apart, and when the window shifts, the farthest
+ word will be out of range for counting.
+ Words that are four-apart get to be counted twice, before the window shifts,
+ 
+\emph on
+etc.
+
+\emph default
+ Nearest neighbors have five opportunities to be counted as the window slides.
+ Thus, there is a preferential treatment for nearest word-pairs.
+ This is referred to as the 
+\begin_inset Quotes eld
+\end_inset
+
+clique-pair counting
+\begin_inset Quotes erd
+\end_inset
+
+ method in the code base.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+WIN6-odist
+\series default
+ – This adds an additional distance penalty on top of the naturally-existing
+ windowed counting distance penalty: words are counted with an additional
+ penalty of 
+\begin_inset Formula $\mbox{floor}\left(6/dist\right)$
+\end_inset
+
+, so, as shown below:
+\begin_inset Formula 
+\[
+\overbrace{\begin{array}{ccccccccccc}
+\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
+ & 1 &  & 2 &  & 3 &  & 8 &  & 15
+\end{array}}\begin{array}{cccccccccc}
+ & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
+15 &  & 8 &  & 3 &  & 2 &  & 1
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+LG-all
+\series default
+ – There are 100 random planar tree parses created, using the LG 
+\begin_inset Quotes eld
+\end_inset
+
+any
+\begin_inset Quotes erd
+\end_inset
+
+ language parser.
+ The number of such possible samples was counted in the previous section.
+ Unfortunately, the previous section does not estimate the typical distance
+ distribution for words in the middle of a sentence, so its not comparable
+ to above without extra work.
+\end_layout
+
+\begin_layout Standard
+It seems quite remarkable that there is such a big difference in grammar
+ quality, stemming from these different word-pair counting techniques.
+\end_layout
+
 \begin_layout Section*
 English Dataset Sample 28 April 2017
 \end_layout
@@ -19069,7 +19252,7 @@ Next, datasets that hold disjuncts.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="9">
+<lyxtabular version="3" rows="9" columns="9">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -19585,7 +19768,7 @@ zen_pairs_mst
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19594,7 +19777,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19603,7 +19786,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19612,7 +19795,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19621,7 +19804,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19630,7 +19813,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19639,7 +19822,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19648,7 +19831,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -19657,11 +19840,177 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 zen_pairs_three_mst
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mpg_18
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+564K x 21.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34.5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+78.2M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.26
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22.41
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.72
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mpg_53
 \end_layout
 
 \end_inset
@@ -19780,6 +20129,60 @@ zen_pairs_three_mst
  dataset might be blamed on the 3rd-party word segmentation tool.
  It is known not to be very accurate, and the low MI might be a by-product
  of that.
+\end_layout
+
+\begin_layout Standard
+The descriptinos of the datasets can be found in the 
+\begin_inset Quotes eld
+\end_inset
+
+connector-sets-revised.lyx
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+word-pairs-redux.lyx
+\begin_inset Quotes erd
+\end_inset
+
+ files.
+ There are several new datasets since then.
+\end_layout
+
+\begin_layout Description
+
+\noun on
+en_mpg_53
+\noun default
+ The disjuncts were built using the MPG parser, after discarding all word
+ pairs with MI<5.3 (and then recomputing word-pair MI marginals).
+ The stats, as given in the table above, are not all that different than
+ 
+\series bold
+\noun on
+en_pairs_cfive_mst
+\series default
+\noun default
+ and its not clear if this shold be surprising or not...
+ Both
+\series bold
+\noun on
+ en_pairs_cfive_mst
+\series default
+\noun default
+ and this are built from the same original word-pair stats.
+ If a different set of word-pairs were obtained, how much would things differ?
+\end_layout
+
+\begin_layout Description
+
+\noun on
+en_mpg_18
+\noun default
+ As above, but after discarding all word pairs with MI<1.8.
 \end_layout
 
 \begin_layout Section*
@@ -21767,6 +22170,7 @@ Anyway: this is not just all-talk, no-action.
 LatexCommand href
 name "github atomspace repo"
 target "https://github.com/opencog/atomspace/tree/master/opencog/sheaf"
+literal "false"
 
 \end_inset
 
@@ -25625,6 +26029,7 @@ Nida
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Nida97"
+literal "true"
 
 \end_inset
 
