@@ -23,7 +23,7 @@ parsesdir=mst-parses
 cnt_mode="clique-dist"
 cnt_reach=6
 mst_dist=(1)
-exp_parses="#t"
+exp_parses="EXPORT"
 split_sents="#t"
 source ./config/params.txt # overrides default values, if present
 
@@ -41,7 +41,7 @@ case $1 in
    mst)
       subdir=mst-articles
       observe="observe-mst-mode"
-      if [[ "$exp_parses" != "#f" ]]; then
+      if [[ "$exp_parses" != "NONE" ]]; then
          # create parses directory if missing
          mkdir -p $(dirname "$parsesdir/$rest");
          params="$cnt_mode $mst_dist ${rest}.ull"; # pass parses filename
