@@ -1,0 +1,102 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate Zipf graphs of support.
+#
+set term postscript eps enhanced color 28
+set out 'banach-l0.eps'
+# 
+# set term png
+# set out 'banach-l0.png'
+ 
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Ranked Size"
+set ylabel "Size of Support"
+plot "banach-l0-row.dat" using 1 with lines linewidth 5 title "rows", \
+     "banach-l0-col.dat" using 1 with lines linewidth 5 title "columns"
+ 
+#################################################
+# Used to generate Zipf graphs of count.
+#
+set term postscript eps enhanced color 28
+set out 'banach-l1.eps'
+# 
+# set term png
+# set out 'banach-l1.png'
+ 
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Ranked Count"
+set ylabel "Count"
+plot "banach-l1-row.dat" using 1 with lines linewidth 5 title "rows", \
+     "banach-l1-col.dat" using 1 with lines linewidth 5 title "columns"
+ 
+#################################################
+# Used to generate Zipf graphs of length.
+#
+set term postscript eps enhanced color 28
+set out 'banach-l2.eps'
+# 
+# set term png
+# set out 'banach-l2.png'
+ 
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Ranked Length"
+set ylabel "Length"
+plot "banach-l2-row.dat" using 1 with lines linewidth 5 title "rows", \
+     "banach-l2-col.dat" using 1 with lines linewidth 5 title "columns"
+ 
+#################################################
+#################################################
+# Used to generate Zipf graphs of count/support ratio
+#
+set term postscript eps enhanced color 28
+set out 'banach-l1-l0.eps'
+# 
+# set term png
+# set out 'banach-l1-l0.png'
+ 
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Ranked Count / Support Ratio"
+set ylabel "Count / Support"
+plot "banach-l1-l0-row.dat" using 1 with lines linewidth 5 title "rows", \
+     "banach-l1-l0-col.dat" using 1 with lines linewidth 5 title "columns"
+# 
+##################################################
+## Used to generate Zipf graphs of count/support ratio
+##
+set term postscript eps enhanced color 28
+set out 'banach-l2-l0.eps'
+# 
+# set term png
+# set out 'banach-l2-l0.png'
+ 
+set yrange [1:]
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set title "Word-Pair Vectors"
+set xlabel "Ranked Length / Support Ratio"
+set ylabel "Length / Support"
+plot "banach-l2-l0-row.dat" using 1 with lines linewidth 5 title "rows", \
+     "banach-l2-l0-col.dat" using 1 with lines linewidth 5 title "columns"
+# 
+##################################################

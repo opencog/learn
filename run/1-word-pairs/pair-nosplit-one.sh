@@ -44,7 +44,7 @@ mkdir -p $(dirname "$subdir/$rest")
 cp "$filename" "$splitdir/$rest"
 
 # Submit the pre-split article
-cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe
+cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)

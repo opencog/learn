@@ -1,0 +1,60 @@
+
+# set data style linespoints
+# set data style points
+
+#################################################
+# Used to generate the comparison of cut/uncut distributions.
+#
+# set term postscript eps enhanced color 28
+# set out 'cut-mi.eps'
+# 
+# # set term png
+# # set out 'cut-mi.png'
+# 
+# set key font ",20"
+# set yrange [1:1e6]
+# set logscale y
+# set format y "10^{%L}"
+# set title "Distribution of Unique Word Pairs"
+# set xlabel "Mutual Information"
+# set ylabel "Bin-count"
+# plot "full-fmi.dat" using 2:3 with lines linewidth 5 title "All Pairs", \
+#      "cut-fmi.dat" using 2:3 with lines linewidth 5 title "Cut MI<1.8", \
+#      "cut-recomp-fmi.dat" using 2:3 with lines linewidth 5 title "Recomputed cut"
+
+#################################################
+# Used to generate the comparison of cut/deep-cut/uncut distributions.
+#
+set term postscript eps enhanced color 28
+set out 'deep-cut-mi.eps'
+
+# set term png
+# set out 'deep-cut-mi.png'
+
+set key font ",20"
+set yrange [1:1e6]
+set logscale y
+set format y "10^{%L}"
+set title "Distribution of Unique Word Pairs"
+set xlabel "Mutual Information"
+set ylabel "Bin-count"
+plot "full-fmi.dat" using 2:3 with lines linewidth 5 title "All Pairs", \
+     "cut-recomp-fmi.dat" using 2:3 with lines linewidth 5 title "Shallow Cut", \
+     "deep-recomp-fmi.dat" using 2:3 with lines linewidth 5 title "Deep Cut"
+
+#################################################
+# Used to generate the binned MI observations
+#
+set term postscript eps enhanced color 28
+set out 'scatter-mi.eps'
+
+# set term png
+# set out 'scatter-tiny-mi.png'
+
+set xrange [0:30]
+set yrange [0:30]
+set title "Correlation of Word Pair MI"
+set xlabel "Full dataset MI"
+set ylabel "Recomputed MI"
+plot "scatter-tiny-fmi.dat" using 1:2 with points pointtype 5 pointsize 0.1 title "", \
+     x-1.8 with lines linewidth 2 title ""

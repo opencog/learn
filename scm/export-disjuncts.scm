@@ -16,8 +16,12 @@
 ;
 ; Needs the guile-dbi interfaces, in order to write the SQL files.
 ;;
-;; XX hack alert:
-;; TODO support word classes
+;; XXX hack alert:
+;; TODO WordClassNode support might be .. funky.
+;; In particular, if a WordNode appears in a connector, it is replaced
+;; by all WordClasses that it might be a part of. This is an
+;; over-generalization, but needed for just right now.
+;; This is done in the `connector-to-lg-cnr` function below.
 ;
 ; Example usage:
 ;     (define pca (make-pseudo-cset-api))
@@ -68,24 +72,33 @@
 
 ;  ---------------------------------------------------------------------
 ;
-; Given a word-pair atom, return a synthetic link name
-; The link names are issued in serial order, first-come, first-served.
+; Return a function that assigns link-names to atom-pairs.
+;
+; Given two words, the function returns a synthetic link name,
+; in the form of a string. The link names are issued in serial
+; order, first-come, first-served.
 ;
 (define get-cnr-name
-	(let ((cnt 0))
+	(let* ((cnt 0)
+			(cache (make-afunc-cache
+				(lambda (WORD-PAIR)
+					(set! cnt (+ cnt 1))
+					(number->tag cnt)))))
 
 		; Notice that the lambda does not actually depend on the
 		; word-pair. It just issues a new string.  The function
 		; cache is what is able to detect and re-emit a previously
 		; issued link name.
-		(make-afunc-cache
-			(lambda (WORD-PAIR)
-				(set! cnt (+ cnt 1))
-				(number->tag cnt))))
+		;
+		; XXX It would be nicer if we could avoid creating the ListLink
+		; below... use a pair-caching function of some kind ...
+		(lambda (left-word right-word)
+			(cache (ListLink left-word right-word)))
+	)
 )
 
 ;  ---------------------------------------------------------------------
-
+;
 ; Link Grammar expects connectors to be structured in the order of:
 ;   near- & far- & near+ & far+
 ; whereas the sections we compute from MST are in the form of
@@ -105,37 +118,71 @@
 ;             (WordNode "undertaking")
 ;             (ConnectorDir "+"))))
 ;
-(define (cset-to-lg-dj SECTION)
+(define (cset-to-lg-dj GERM CSET)
 "
-  cset-to-lg-dj - SECTION should be a SectionLink
-  Return a link-grammar compatible disjunct string.
+  cset-to-lg-dj GERM CSET
+  Return a link-grammar compatible disjunct string for CSET,
+  in such a way that it can connect to GERM. Here, GERM should
+  be a WordNode or a WordClassNode.
 "
-	(define cnr-to-left (ConnectorDir "-"))
-
-	; The germ of the section (the word)
-	(define germ (gar SECTION))
-
-	; Get a link-name identifying this word-pair.
-	(define (connector-to-lg-link CONNECTOR)
-		(define cnr (gar CONNECTOR))
-		(define dir (gdr CONNECTOR))
-
-		(if (equal? dir cnr-to-left)
-			(get-cnr-name (ListLink cnr germ))
-			(get-cnr-name (ListLink germ cnr))
+	; Get a link-name string identifying this word-pair.
+	; The link joins together WORD and GERM.
+	; WORD should be a WordNode or a WordClassNode.
+	; DIR should be a string, either "+" or "-".
+	; Example returned value is the string "TCZKG-".
+	(define (cword-to-lg-con WORD DIR)
+		(string-append
+			(if (equal? DIR "-")
+				(get-cnr-name WORD GERM)
+				(get-cnr-name GERM WORD)
+			)
+			DIR
 		)
 	)
 
-	; Get a connector, by concatenating the link name with the direction.
-	(define (connector-to-lg-cnr CONNECTOR)
-		(string-append
-			(connector-to-lg-link CONNECTOR)
-			(cog-name (gdr CONNECTOR))))
+	; Given a list of words, return a link-string that is an
+	; or-list of links (links connecting the words to the GERM).
+	; Example of a returned value is "(TCZKG- or TVFT- or TCPA-)"
+	(define (cword-list-to-lg-con-list WRDLI DIR)
+		(if (eq? 1 (length WRDLI))
+			(cword-to-lg-con (car WRDLI) DIR)
+			(string-append "("
+				(fold
+					(lambda (WRD STR)
+						(string-append STR " or " (cword-to-lg-con WRD DIR)))
+					(cword-to-lg-con (car WRDLI) DIR)
+					(cdr WRDLI))
+				")")
+		)
+	)
+
+	; Get a connector, by finding the link that connects WRD-OR-CLA
+	; to GERM, and then concatenating the link name with the direction.
+	; WRD-OR-CLA should be a WordNode or WordClassNode.
+	; DIR should be a string, "+" or "-".
+	; hack -- Note that this "broadens" coverage, as flagged up top.
+	(define (connector-to-lg-cnr WRD-OR-CLA DIR)
+		(define wctype (cog-type WRD-OR-CLA))
+
+		; If its already a word-class...
+		(if (eq? 'WordClassNode wctype)
+			; ... then just look up the link.
+			(cword-to-lg-con WRD-OR-CLA DIR)
+			; ... else fold together all classes that the word belongs
+			; to into a string. So, if the word belongs to two classes,
+			; the resulting string will be an or-list of those two classes.
+			(cword-list-to-lg-con-list
+				(map gdr (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
+				DIR)
+		)
+	)
 
 	; Link Grammar expects: near- & far- & near+ & far+
-	(define (strappend CONNECTOR dj)
-		(define cnr (connector-to-lg-cnr CONNECTOR))
-		(if (equal? (gdr CONNECTOR) cnr-to-left)
+	(define (dj-append CONNECTOR dj)
+		(define word (gar CONNECTOR))
+		(define dir (cog-name (gdr CONNECTOR)))
+		(define cnr (connector-to-lg-cnr word dir))
+		(if (equal? dir "-")
 			(string-append cnr " & " dj)
 			(string-append dj " & " cnr)))
 
@@ -143,10 +190,12 @@
 	; The connectors in SECTION are in the order as noted above:
 	;   far- & near- & near+ & far+
 	(fold
-		(lambda (CNR dj) (if dj (strappend CNR dj)
-				(connector-to-lg-cnr CNR)))
+		(lambda (CNR dj)
+			(if dj
+				(dj-append CNR dj)
+				(connector-to-lg-cnr (gar CNR) (cog-name (gdr CNR)))))
 		#f
-		(cog-outgoing-set (gdr SECTION)))
+		(cog-outgoing-set CSET))
 )
 
 ;  ---------------------------------------------------------------------
@@ -176,6 +225,7 @@
 	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
 			(wrd-id 0)
 			(nprt 0)
+			(is-open #t)
 			(secs (current-time))
 			(word-cache (make-atom-set))
 		)
@@ -191,11 +241,11 @@
 				STR))
 
 		; ---------------
-		; Insert a single word, with it's grammatical class,
-		; into the dict.
+		; Insert a single word, with a grammatical class that
+		; it belongs to into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
-			; Oh no!!! Need to fix LEFT-WLL!
+			; Oh no!!! Need to fix LEFT-WALL!
 			(if (string=? WORD-STR "###LEFT-WALL###")
 				(set! WORD-STR "LEFT-WALL"))
 
@@ -214,7 +264,7 @@
 		; ---------------
 		; Return a string identifying a word-class
 		(define (mk-cls-str STR)
-			(format #f "<~A.~D>" (escquote STR 0) wrd-id))
+			(format #f "<~A>" (escquote STR 0)))
 
 		; ---------------
 		; Insert either a word, or a word-class, into the dict
@@ -246,13 +296,12 @@
 						"Must be either a WordNode or a WordClassNode")))
 		)
 
-		; Add data to the database
-		(define (add-section SECTION)
-			; The germ of the section is either a WordNode or a WordClass
-			(define germ (gar SECTION))
-			(define germ-str (cog-name germ))
-			(define dj-str (cset-to-lg-dj SECTION))
+		; Add connector sets to the database
+		(define (add-germ-cset-pair GERM CSET COST)
+			(define germ-str (cog-name GERM))
+			(define dj-str (cset-to-lg-dj GERM CSET))
 
+			; (format #t "Germ <~A> gets dj=~A\n" germ-str dj-str)
 			; Flush periodically
 			(set! nprt (+ nprt 1))
 			(if (equal? 0 (remainder nprt 5000))
@@ -271,26 +320,35 @@
 
 			; Insert the word/word-class (but only if we haven't
 			; done so previously.)
-			(if (not (word-cache germ))
-				(add-word-class germ))
+			(if (not (word-cache GERM))
+				(add-word-class GERM))
 
 			; Insert the disjunct, assigning a cost according
 			; to the float-point value returned by the function
 			(dbi-query db-obj (format #f
 				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
-				(mk-cls-str germ-str) dj-str (COST-FN SECTION)))
+				(mk-cls-str germ-str) dj-str COST))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder
 					(cdr (dbi-get_status db-obj))))
 		)
 
+		; Add a section to the database
+		(define (add-section SECTION)
+			(define germ (gar SECTION))
+			(define cset (gdr SECTION))
+			(define cost (COST-FN SECTION))
+			(add-germ-cset-pair germ cset cost))
+
 		; Write to disk, and close the database.
 		(define (shutdown)
-			(format #t "Finished inserting ~D records\n" nprt)
-			(dbi-query db-obj "END TRANSACTION;")
-			(dbi-close db-obj)
-		)
+			(if is-open
+				(begin
+					(set! is-open #f)
+					(format #t "Finished inserting ~D records\n" nprt)
+					(dbi-query db-obj "END TRANSACTION;")
+					(dbi-close db-obj))))
 
 		; Close the DB if an exception is thrown. But otherwise,
 		; let the excpetion pass through to the user.
@@ -298,6 +356,23 @@
 			(with-throw-handler #t
 				(lambda () (add-section SECTION))
 				(lambda (key . args) (shutdown))))
+
+		; Add CLASS as disjunct-collection for unknown words.
+		; Typically, CLASS will be a WordClassNode with a lot
+		; of sections attached to it.
+		(define (add-unknown-word-handler CLASS)
+
+			; wrd-id serves as a unique ID.
+			(set! wrd-id (+ wrd-id 1))
+
+			(dbi-query db-obj (format #f
+				"INSERT INTO Morphemes VALUES ('<UNKNOWN-WORD>', '<UNKNOWN-WORD.~D>', '~A');"
+				wrd-id (mk-cls-str (cog-name CLASS))))
+
+			(if (not (equal? 0 (car (dbi-get_status db-obj))))
+				(throw 'fail-insert 'make-db-adder
+					(cdr (dbi-get_status db-obj))))
+		)
 
 		; Create the tables for words and disjuncts.
 		; Refer to the Link Grammar documentation to see a
@@ -333,7 +408,7 @@
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-version-number>', 'V5v4v0+', 0.0);"))
+			"'<dictionary-version-number>', 'V5v6v0+', 0.0);"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
@@ -349,9 +424,7 @@
 
 		; The UNKNOWN-WORD device is needed to make wild-card searches
 		; work (when dict debugging). The XXXBOGUS+ will not link to
-		; anything. `({@T-} & {@T+})` would almost work, except for two
-		; reasons: all connectors are upper-case, and the SQL backend
-		; does not support optional-braces {} and multi-connectors @.
+		; anything. XXX FIXME is this really needed ??
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
 			"'<UNKNOWN-WORD>', "
@@ -366,13 +439,15 @@
 		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
 		(dbi-query db-obj "BEGIN TRANSACTION;")
 
-		; Return function that adds data to the database
-		; If SECTION if #f, the database is closed.
-		(lambda (SECTION)
-			(if SECTION
-				(raii-add-section SECTION)
-				(shutdown))
-		))
+		; Methods on the object
+		(lambda (message . args)
+			(case message
+				((add-section)     (apply raii-add-section args))
+				((add-unknown)     (apply add-unknown-word-handler args))
+				((shutdown)        (shutdown))
+			)
+		)
+	)
 )
 
 ;  ---------------------------------------------------------------------
@@ -390,13 +465,20 @@
   \"dict.db\", always!
 
   Example usage:
+     (define gca (make-gram-class-api))
+     (export-csets gca \"dict.db\" \"EN_us\")
+
+  In this example, `gca` is the usual API to wordclass-disjunct pairs.
+  It's presumed that wordclasses have been previously formed.
+
+  Example usage:
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
      (export-csets fca \"dict.db\" \"EN_us\")
 
   In this example, `pca` is the usual API to word-disjunct pairs.
   The subtotal filter only admits those sections with a large-enough
-  count.
+  count. Caution: this format can result in HUGE dictionaries!
 "
 	; Create the object that knows where the disuncts are in the
 	; atomspace. Create the object that knows how to get the MI
@@ -411,8 +493,15 @@
 	(define (cost-fn SECTION)
 		(- (mi-source 'pair-fmi SECTION)))
 
+	(define multi-member-classes
+		(filter
+			(lambda (CLS)
+				(< 1 (length (cog-incoming-by-type CLS 'MemberLink))))
+			(psa 'left-basis)))
+
 	; Create the SQLite3 database.
-	(define sectioner (make-db-adder DB-NAME LOCALE cost-fn))
+	(define dbase (make-db-adder DB-NAME LOCALE cost-fn))
+	(define (sectioner SECTION) (dbase 'add-section SECTION))
 
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
@@ -422,8 +511,14 @@
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
 
+	(format #t "Will store ~D unknown word classes\n"
+		(length multi-member-classes))
+	(for-each
+		(lambda (cls) (dbase 'add-unknown cls))
+		multi-member-classes)
+
 	; Close the database
-	(sectioner #f)
+	(dbase 'shutdown)
 )
 
 ;  ---------------------------------------------------------------------

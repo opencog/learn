@@ -86,18 +86,42 @@
 	(define (get-wild-wild)
 		(ListLink any-left any-right))
 
-	; Fetch (from the database) all disjuncts
+	; Fetch (from the database) all Sections that have a WordClass
+	; on the left-hand-side. Fetch the marginals, too.
 	(define (fetch-disjuncts)
 		(define start-time (current-time))
-		; marginals are located on any-left, any-right
+		; Marginals are located on any-left, any-right
 		(fetch-incoming-set any-left)
 		(fetch-incoming-set any-right)
 		; Fetch only the Sections that have a WordClass in them,
-		; and not the others.
+		; and not any other Sections.  Fetch all MemberLinks,
+		; as these indicate which Words belong to which WordClasses.
 		(load-atoms-of-type 'WordClassNode)
-		(for-each fetch-incoming-set (cog-get-atoms 'WordClassNode))
+		(for-each
+			(lambda (wcl)
+				(fetch-incoming-by-type wcl 'Section)
+				(fetch-incoming-by-type wcl 'MemberLink))
+			(cog-get-atoms 'WordClassNode))
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
+
+	; Store into the database the "auxilliary" MemberLinks between
+	; WordClassNodes and WordNodes. Without this, the dataset is
+	; incomplete.
+	(define (store-aux)
+		(for-each
+			; lambda over lists of MemberLink's
+			(lambda (memb-list)
+				(for-each
+					; lambda over MemberLinks
+					(lambda (memb)
+						; If the right kind of MemberLink
+						(if (eq? 'WordNode (cog-type (gar memb)))
+							(store-atom memb)))
+					memb-list))
+			; Get all MemberLinks that this WordClass belongs to.
+			(map (lambda (wrdcls) (cog-incoming-by-type wrdcls 'MemberLink))
+				(cog-get-atoms 'WordClassNode))))
 
 	; Methods on the object
 	(lambda (message . args)
@@ -117,6 +141,7 @@
 			((right-wildcard) get-right-wildcard)
 			((wild-wild) get-wild-wild)
 			((fetch-pairs) fetch-disjuncts)
+			((store-aux) store-aux)
 			((provides) (lambda (symb) #f))
 			((filters?) (lambda () #f))
 			(else (error "Bad method call on gram-class-api:" message)))
@@ -141,7 +166,7 @@
   word-classes and disjuncts to become invalid; thse will need to be
   recomputed.
 
-  Proivded methods:
+  Provided methods:
      'delete-singles -- Remove all WordClassNodes that have only a
            single member.
 
@@ -158,6 +183,15 @@
      'create-top-rank-singles NUM -- Create a WordClassNode for the
            top-ranked NUM WordNode's having the highest observation
            counts.  As above, Sections and values are copied.
+
+  Known bugs:
+  * Other code expects that all of the counts are transfered from the
+    word to the word-class, when generating the word-class. This is not
+    being done here; the counts are only being copied. Also, it is
+    expected that the MemberLink holds the total of the counts that
+    were transfered. This is also not set up. This is a bug, and should
+    be fixed. (Obviously, when desolving single-member classes, the
+    counts should be moved back).
 "
 	(define (delete-singles)
 		; delete each word-class node..
@@ -180,28 +214,36 @@
 
 		; Remove words already in word-classes. XXX This is not
 		; necessarily the correct action to take, depending on the
-		; type of clistering, but this whole object is a kind of
+		; type of clustering, but this whole object is a kind of
 		; temporary hack till the clustering algos settle down a
 		; bit more. XXX review and FIXME at some later time.
-		; Also this is hack as it looks for MemberLinks which
-		; are not necessarily MemberLinks to WordClassNodes in
-		; the ((make-gram-class-api) 'left-basis) so that's also
-		; broken. This holds water for now.
+		;
+		; XXX specifically, if there are words with non-trivial
+		; counts still left on them, they belong in singletons.
+		; The problem is that the margnals are probably corrupt.
+		; so we are confused about the counts left on them...
+		; (The merge routines did not adjust marginals...!?)
+		;
 		(define unclassed-words
 			(filter (lambda (wrd)
-				(eq? '() (cog-incoming-by-type wrd 'MemberLink)))
+				(not (any (lambda (memb)
+					(eq? 'WordClassNode (cog-type (gdr memb))))
+					(cog-incoming-by-type wrd 'MemberLink))))
 				WORD-LIST))
 
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
-				; Add the word to the new word-clas (obviously)
+				; Add the word to the new word-class (obviously)
 				(MemberLink WRD wcl)
 				; Copy the sections
 				(for-each
 					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
 					(cog-incoming-by-type WRD 'Section)))
 			unclassed-words)
+
+		(format #t "Created ~A singleton word classes\n"
+			(length unclassed-words))
 	)
 
 	; Need to fetch the count from the margin.
@@ -260,37 +302,21 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-wordclass-filter LLOBJ)
+(define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR)
 "
-  add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
-  that the only connector sequences appearing on the right consist
-  entirely of connectors that have words in word-classes appearing on
-  the left. The resulting wordclass-disjunct is then self-consistent,
-  and does not contain any connectors unable to form a connection to
-  some word-class.
+  add-linking-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  the only connector sequences appearing on the right consist entirely
+  of connectors that have words appearing in the WORD-LIST. This is
+  not a public function; it is used to build several public functions.
 "
-	(define stars-obj (add-pair-stars LLOBJ))
-
-	; Always keep any WordClassNode we are presented with.
-	(define (left-basis-pred WRDCLS) #t)
-
 	; ---------------
 	; Cached set of valid connector-seqs, for the right-basis-pred.
 	; We need to know if every connector in a connector sequence is
-	; a member of some word-class. Verifying this directly is very
-	; inefficient. It is much faster to precompute the set of known-
-	; good connector sequences, and refer to that.
+	; a member of some word in WORD-LIST. Verifying this directly is
+	; very inefficient. It is much faster to precompute the set of
+	; known-good connector sequences, and refer to that.
 
-	; Return a list of words in word-classes
-	(define (get-wordclass-words)
-		(define word-set (make-atom-set))
-		(for-each
-			(lambda (wcls)
-				(for-each word-set
-					(map gar (cog-incoming-by-type wcls 'MemberLink))))
-			(cog-get-atoms 'WordClassNode))
-		(word-set #f)
-	)
+	(define star-obj (add-pair-stars LLOBJ))
 
 	; Return a list of connectors containing a word in the list
 	(define (get-connectors WRD-LST)
@@ -323,7 +349,7 @@
 		; Unwanted words are not part of the matrix.
 		(define unwanted-words
 			(atoms-subtract
-				(cog-get-atoms 'WordNode) (get-wordclass-words)))
+				(cog-get-atoms 'WordNode) (WORD-LIST-FUNC)))
 
 		(define unwanted-cnctrs
 			(get-connectors unwanted-words))
@@ -335,12 +361,16 @@
 			(atoms-subtract
 				; Take all connector-sequences, and subtract the bad ones.
 				; (cog-get-atoms 'ConnectorSeq)
-				(LLOBJ 'right-basis)
+				(star-obj 'right-basis)
 				unwanted-conseqs))
 
 		; Return the predicate that returns #t only for good ones.
 		(make-aset-predicate good-conseqs)
 	)
+
+	; ---------------
+	; Always keep any WordNode or WordClassNode we are presented with.
+	(define (left-basis-pred WRDCLS) #t)
 
 	(define ok-conseq? #f)
 
@@ -351,14 +381,62 @@
 		(ok-conseq? CONSEQ)
 	)
 
-	; Always keep any Section that passed the duals test.
-	(define (pair-pred WRDCLS) #t)
-
-	(define id-str "wordclass-filter")
+	; Input arg is a Section. The gdr (right hand side of it) is a
+	; conseq. Keep the section if the conseq passes.
+	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
 
 	; ---------------
 	(add-generic-filter LLOBJ
-		left-basis-pred right-basis-pred pair-pred id-str #f)
+		left-basis-pred right-basis-pred pair-pred ID-STR #f)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-wordclass-filter LLOBJ)
+"
+  add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
+  that the only connector sequences appearing on the right consist
+  entirely of connectors that have words in word-classes appearing on
+  the left. The resulting collection of wordclass-disjunct pairs is
+  then self-consistent, and does not contain any connectors unable to
+  form a connection to some word-class.
+"
+	; Return a list of words in word-classes
+	(define (get-wordclass-words)
+		(define word-set (make-atom-set))
+		(for-each
+			(lambda (wcls)
+				(for-each word-set
+					(map gar (cog-incoming-by-type wcls 'MemberLink))))
+			(cog-get-atoms 'WordClassNode))
+		(word-set #f)
+	)
+
+	(define id-str "wordclass-filter")
+
+	(add-linking-filter LLOBJ get-wordclass-words id-str)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-linkage-filter LLOBJ)
+"
+  add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  the only connector sequences appearing on the right consist entirely
+  of connectors that have words appearing on the left. The resulting
+  collection of word-disjunct pairs is then mostly self-consistent,
+  in that it does not contain any connectors unable to form a
+  connection to some word.  However, it may still contain words on
+  the left that do not appear in any connectors!
+"
+	(define star-obj (add-pair-stars LLOBJ))
+
+	; Return a list of words
+	(define (get-words) (star-obj 'left-basis))
+
+	(define id-str "linkage-filter")
+
+	(add-linking-filter LLOBJ get-words id-str)
 )
 
 ; ---------------------------------------------------------------------

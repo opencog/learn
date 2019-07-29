@@ -19,11 +19,48 @@
 ; Show them all
 (cog-get-atoms 'WordClassNode)
 
-; How many words have been classified?
+; How many words have been classified? Note that this will double-count
+; (triple-count, ...) all words that belong to two (three, ...)
+; word-classes.
 (define (num-classified-words)
 	(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
 	(fold (lambda (CLS cnt) (+ cnt (nmemb CLS))) 0
 		(cog-get-atoms 'WordClassNode)))
+
+; Print membership summary.
+(define (prt-class-summary)
+	(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
+	(define all-classes (cog-get-atoms 'WordClassNode))
+	(define by-size
+		(sort! all-classes
+			(lambda (CLS-A CLS-B) (> (nmemb CLS-A) (nmemb CLS-B)))))
+	(define multi-cnt 0)
+	(define single-cnt 0)
+	(define hi-cnt 10000000000)
+	(format #t "There are ~A words placed into ~A classes\n"
+		(num-classified-words) (cog-count-atoms 'WordClassNode))
+	
+	(for-each
+		(lambda (CLS)
+			(if (< 1 (nmemb CLS))
+				(set! multi-cnt (+ multi-cnt 1))
+				(set! single-cnt (+ single-cnt 1))))
+		by-size)
+	(format #t "There are ~A classes with multiple members, and ~A singltons\n"
+		multi-cnt single-cnt)
+	(for-each
+		(lambda (CLS)
+			(define n (nmemb CLS))
+			(if (< 1 n)
+				(if (< n hi-cnt)
+					(begin
+						(set! hi-cnt n)
+						(format #t "\nClasses with ~A members: <~A>"
+							n (cog-name CLS)))
+					(format #t " <~A>" (cog-name CLS)))))
+		by-size)
+	(newline)
+)
 
 ; Print the members of one class.
 ; Print most frequent words first.
@@ -44,7 +81,7 @@
 		words-by-freq)
 	(newline))
 
-; Print all classes and members
+; Print all classes and members.
 (define (prt-all-classes)
 	(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
 	(define all-classes (cog-get-atoms 'WordClassNode))

@@ -24,7 +24,7 @@
 ;         ConnectorSeq
 ;             Connector
 ;                WordNode "bar"
-;                LgConnDirNode "+"
+;                ConnectorDir "+"
 ;             Connector
 ;                ....
 ;

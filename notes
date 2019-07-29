@@ -5253,7 +5253,7 @@ md5sum en_pairs_2016.sql.bz2
 en_pairs_rohit
 --------------
 forked from en_pairs_2016, converted to modern format
-This includes 8.9 word-pairs with MI on them. (But the MI is
+This includes 8.9M word-pairs with MI on them. (But the MI is
 in the old format).
 
 STATUS: obsolete, archived.
@@ -6327,11 +6327,14 @@ en_pairs_rfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A continutation of en_pairs_rfour. Does NOT contain pair-MI values.
 
-STATUS: good
+STATUS: good/fair
 DATE: 12 July 2017
 REASON: Best so far, I think.  One issue:
   1) infix-marks: dashes, ellipsis, long-dashes are not split.
      It now seems that this would have been the right thing to do.
+     See `en_pairs_cfive` for a cleaned-up version of this data.
+     (i.e. a copy of this data, but with infixed words removed.)
+
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6377,9 +6380,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-one. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 16 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive
+REASON: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6421,9 +6426,13 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1 and 2. Contains pair-MI values; does NOT contain
 any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 17 July 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
+ISSUES: Dump does not have
+   `CREATE INDEX incoming_idx on Atoms USING GIN(outgoing);` on it.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6450,9 +6459,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2 and 3. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 2 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6480,9 +6491,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3 and 4. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 8 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6509,9 +6522,11 @@ Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5.
 MST-parsed tranche-1, 2, 3, 4 and 5. Contains pair-MI values; does NOT
 contain any disjunct marginals.
 
-STATUS: good
+STATUS: fair
 DATE: 14 August 2017
-REASON: Best so far, I think.  Same issues as en_pairs_rfive_mone
+ISSUES: Two issues:
+  * Contains words with infixed dashes (see en_pairs_rfive)
+  * Contains bad disjuncts from sentences with repeated words. #2252
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
@@ -6536,11 +6551,12 @@ en_pairs_rfive_mst
 ------------------
 Same as en_pairs_rfive_mfive, but with word-disjunct marginals in it.
 
-STATUS: good
+STATUS: fair
 DATE: 6 Sept 2017
-REASON: Best so far, I think. Except it contains infixed punctuation.
-    Which is a pointless waste of space. And which throws off stats
-    slightly, I suppose.
+ISSUES: It contains infixed punctuation.  Which is a pointless waste of
+    space. And which throws off stats slightly, I suppose.
+ISSUES:
+    Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
     requires 75GBytes. (25M csets and 25M ListLinks and umpteen valuations) 
 
@@ -6548,10 +6564,7 @@ ISSUES: Too big to fit into RAM.  Just loading disjunct marginals
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 34 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 150550752 = 150M (so +25M for marginals)
 select count(*) from valuations; -- 330716326 = 331M (+200M for marginals!!!)
@@ -6592,23 +6605,30 @@ en_pairs_cfive
 Random-planar-tree parsed books from tranche-1, 2, 3, 4 and 5. 
 A cleaned-up version of en_pairs_rfive.  Words with infix marks
 were removed.  However, hyphenated words and apostrophised words
-remain.  Does NOT contain pair-MI values.
+remain.  Does NOT contain pair-MI values. Use en_pairs_cfive_mi
+for dataset with word-pair marginals.
+
+Appears to contain 27892737 (27.9M) word-pairs.
+Resulting AtomSpace occupies 60GB of RAM when loaded.
+Loads in about 3000 seconds. Loads 56408360 Atoms (56M Atoms)
 
 STATUS: good
 DATE: 1 Sept 2017
-REASON: Best so far, I think.  One issue:
+REASON: Best so far, I think.
 
                         List of relations
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 5380 MB    | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 3365 MB    | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 56409030 = 56M = 5M fewer than rfive.
 select count(*) from valuations; -- 28516287 = 28.5M = 2.5M fewer 
+
+(cog-report-counts)
+((PredicateNode . 2) (ListLink . 27892737) (EvaluationLink . 27892737)
+(AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858) (AnyNode . 2)
+(LinkGrammarRelationshipNode . 1))
 
 2638878848 bytes uncompressed = 2.64 GBytes
  453916099 bytes compressed   = 454 MBytes
@@ -6621,11 +6641,12 @@ ad6e0ad034855441be507344f201f624  en_pairs_cfive.psql.bz2
 en_pairs_cfive_mst
 ------------------
 Same as en_pairs_rfive_mst, but with infix-punctuation words removed.
+The pair marginals have been recomputed, and the dj marginals also.
 
-STATUS: good
+STATUS: fair
 DATE: 12 Sept 2017
-REASON: Best so far, I think. The pair marginals have been recomputed.
-    and the dj marginals also.
+ISSUES:
+  * Contains bad disjuncts from sentences with repeated words. #2252
 ISSUES: Too big to fit into RAM. 
     Loading word-pairs and marginals requires 72GBytes.
     Just loading disjunct marginals requires 75GBytes. 
@@ -6636,10 +6657,7 @@ ISSUES: Too big to fit into RAM.
  Schema |    Name    | Type  | Owner  |    Size    | Description 
 --------+------------+-------+--------+------------+-------------
  public | atoms      | table | ubuntu | 13 GB      | 
- public | spaces     | table | ubuntu | 40 kB      | 
- public | typecodes  | table | ubuntu | 56 kB      | 
  public | valuations | table | ubuntu | 57 GB      | 
- public | values     | table | ubuntu | 8192 bytes | 
 
 select count(*) from atoms;      -- 139638908 = 140 M atoms (10M less)
 select count(*) from valuations; -- 307109283 = 307 M values (24M less)
@@ -6685,6 +6703,90 @@ RMS Count      2.4499E+4    2379.         .1077        6.472
 85a872a283314d5bc1900b20da35a017  en_pairs_cfive_mst.sql
 8f5eab41474c92c1a084ce9fc60f243c  en_pairs_cfive_mst.sql.bz2
 
+
+==================================================================
+
+get: en_pairs_cfive and compute MI
+(wps 'fetch-pairs)
+(sql-close)
+createdb en_pairs_cfive_mi
+cat atom.sql | psql en_pairs_cfive_mi
+COMMENT ON DATABASE en_pairs_cfive_mi IS
+  'en_pairs_cfive plus marginals (i.e. clean word-pairs, only)';
+(sql-open "postgres:///en_pairs_cfive_mi")
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+Support: found num left= 619168 num right= 580804 in 680 secs << as before. Good
+Finished left norm marginals in 1239 secs
+Finished right norm marginals in 1175 secs
+Done with wild-card count N(x,*) and N(*,y) in 2478 secs
+Total count N(*,*) = 1247457239.0 = 1247457239.0 << same as before. Good
+Done computing 27892737 pairs in 1599 secs
+Done storing 580804 left-wilds in 868 secs
+Done storing 619168 right-wilds in 702 secs
+Done computing 27892737 pair MI's in 31017 secs
+Finished left entropy subtotals in 1212 secs
+Finished right entropy subtotals in 1227 secs
+Finished left MI subtotals in 1221 secs
+Finished right MI subtotals in 1229 secs
+Finished with MI computations; this took 12.0 hours
+
+en_pairs_cfive_mi
+-----------------
+Same as en_pairs_cfive but with marginals. So: this is a large, clean
+collection of word-pairs, together with thier MI and other marginals.
+
+Contains 27892737 (27.9M) word-pairs.
+Requires 72 GB RAM for the AtomSpace when loaded.
+Loads 58808293 (59M) Atoms in under an hour.
+
+STATUS: good
+DATE: 7 July 2019
+
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 5203 MB    |
+ public | valuations | table | ubuntu | 7807 MB    |
+
+select count(*) from atoms;      -- 58808293 = 59M Atoms
+select count(*) from valuations; -- 88478107 = 88M Valuations
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 29092710) (EvaluationLink . 29092710)
+(TypeNode . 1) (AnchorNode . 1) (SchemaNode . 1) (WordNode . 622858)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 1.2474572e+09)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 27892737 non-zero entries of 359615251072 possible
+Fraction non-zero: 7.7563E-5 Sparsity (-log_2): 13.654
+Total observations: 1247457239.0  Avg obs per pair: 44.723
+Entropy Total: 18.645   Left: 10.053   Right: 10.390
+Total MI: 1.7982
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  7.3126E+4    5.3758E+4
+Count   (l_1)  1.8578E+7    1.5140E+7     254.1        281.6    
+Length  (l_2)  1.8923E+6    1.8653E+6     25.88        34.70    
+RMS Count      1.8917E+6    1.8647E+6     25.87        34.69    
+
+No MM^T data present
+No M^TM data present
+
+7567839839 bytes uncompressed = 7.5 GBytes
+1203314284 bytes compressed   = 1.2 GBytes
+
+faf3b6ab15c26eb965bce14a5ea873c8  en_pairs_cfive_mi.sql
+eed7f70d3fbdfbd7154615512aa4d29f  en_pairs_cfive_mi.sql.bz2
 
 ==================================================================
 zh_pairs_one
@@ -13811,7 +13913,7 @@ Elapsed time to load csets: 3382 secs
 but now its 24634125 atoms .... in mrg_test db
 
 (define psu (add-support-compute pca))
-(psu 'cache-all) ; XXX to slow, left not needed.
+(psu 'cache-all) ; XXX too slow, left not needed.
 (psu 'right-marginals)
 Finished left support subtotals in 36823 secs
 Finished right support subtotals in 520 secs   now 457
@@ -14298,7 +14400,7 @@ the disjuncts left.  Contains disjunct marginals.
 
 Recall that rfive is not "as good as" cfive.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 27 June 2018
 
 en_dj_mtwo=> \dt+
@@ -14375,7 +14477,7 @@ Identical to en_pairs_cfive_mst but with word-pairs removed. This
 does contain the pseudo-dj marginals, but not the cross-connector
 marginals.
 
-STATUS: Good.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 28 June 2018
 
 en_dj_cfive=> \dt+
@@ -14437,6 +14539,749 @@ out the converse: number of words that are in connectors only.
 
 c809c93f690ae0f583848ceb78d0c474  en_dj_cfive.sql
 c63df81bd14e5c0d478e654e3be76369  en_dj_cfive.sql.bz2
+
+en_micro_dj_cfive
+-----------------
+Filtered copy of en_dj_cfive, with the (500 10 10) filter-cut applied:
+all words with word-count less than 500 removed; all sections with a
+count of less than 10 removed; all dj's with a count of less than 10
+removed. DB does NOT contain marginals!
+
+COMMENT ON DATABASE en_micro_dj_cfive IS
+'en_cfive Sections (only) with word-count > 500; section-count > 10';
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 9 June 2019
+
+en_micro_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 73 MB      |
+ public | spaces     | table | ubuntu | 8192 bytes |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 101 MB     |
+ public | values     | table | ubuntu | 8192 bytes |
+(5 rows)
+
+select count(*) from atoms;      <<<<  791551 == 792K Atoms
+select count(*) from valuations; <<<< 1178145 == 1.2M Valuations
+
+There are 8608 words, and 361894 disjuncts
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 64 secs
+-- Atomspace holds 791555 atoms
+-- (cog-report-counts)
+   ((PredicateNode . 3) (AnchorNode . 1) (Connector . 125223)
+   (ConnectorDir . 2) (ConnectorSeq . 187063) (Section . 392715)
+   (SchemaNode . 1) (WordNode . 86545) (AnyNode . 2))
+-- top says 1 GB RAM
+-- (psa 'left-basis-size)  ;; 10813
+-- (psa 'right-basis-size) ;; 187063
+-- These dimensions do NOT agree with what the filter reported,
+   which was 8608 x 361894. This is because some low-count words
+   remain in connector sets.
+
+
+96968299 Bytes uncompressed == 97 MBytes
+18093513 Bytes compressed == 18 MBytes
+
+3542b295676290071ac2f2e476c3a0c5  en_micro_dj_cfive.sql
+eef31e0cd5edd5ad2626279a2886dff5  en_micro_dj_cfive.sql.bz2
+
+
+en_micro_cfive
+--------------
+Same as en_micro_dj_cfive, but with marginals and MM^T values.
+
+STATUS: Bad. Filtering failed to discard Sections correctly.
+        Use `en_micro_marg` instead.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_micro_cfive IS
+'en_cfive Sections + Marginals + MM^T with word-count > 500; section-count > 10';
+
+en_micro_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 90 MB      |
+ public | spaces     | table | ubuntu | 8192 bytes |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 216 MB     |
+ public | values     | table | ubuntu | 8192 bytes |
+(5 rows)
+
+select count(*) from atoms;      <<<<  989440 == 989K Atoms, (200K more)
+select count(*) from valuations; <<<< 1980471 == 1.98M Vals (800K more)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 66 secs
+-- Atomspace holds 989442 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 197877) (Connector . 125223)
+   (ConnectorDir . 2) (ConnectorSeq . 187063) (Section . 392715)
+   (WordNode . 86545) (AnyNode . 2))
+-- top says 1.2 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20782007)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 10813 Columns: 187063
+Size: 392715 non-zero entries of 2022712219 possible
+Fraction non-zero: 1.9415E-4 Sparsity (-log_2): 12.331
+Total observations: 20782007.0  Avg obs per pair: 52.919
+Entropy Total: 16.564   Left: 13.788   Right: 7.7620
+Total MI: 4.9867
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  121.4        7387.    
+Count   (l_1)  2.2239E+4    4.8439E+5     183.1        65.57    
+Length  (l_2)  7511.        3.4794E+4     61.85        4.710    
+RMS Count      7263.        3.4445E+4     59.80        4.663    
+
+MM^T support=392715.0 count=462177929473.0
+No M^TM data present
+
+154394374 Bytes uncompressed == 154 MBytes
+ 26066918 Bytes compressed == 26 MBytes
+
+9b326477e688522b098aa5df8a699d59  en_micro_cfive.sql
+9077869c247d29252f361adac46f3b2b  en_micro_cfive.sql.bz2
+
+en_micro_links
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Bad. Contains words below the cutoff. Use `en_micro_marg`
+        instead.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_micro_links IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 51 MB      | 
+ public | valuations | table | ubuntu | 168 MB     | 
+
+select count(*) from atoms;      <<<<  572096 == 572K Atoms, (400K less)
+select count(*) from valuations; <<<< 1417959 == 1.42M Vals (570K less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- Atomspace holds 572099 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 124635) (Connector . 19943)
+   (ConnectorSeq . 113821) (Section . 302867) (WordNode . 10813))
+-- top says 825 MBytes RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 18880223)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 10813 Columns: 113821
+Size: 302867 non-zero entries of 1230746473 possible
+Fraction non-zero: 2.4608E-4 Sparsity (-log_2): 11.989
+Total observations: 18880223.0  Avg obs per pair: 62.338
+Entropy Total: 16.127   Left: 13.127   Right: 7.9071
+Total MI: 4.9067
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  133.4        3462.    
+Count   (l_1)  2.4468E+4    3.6716E+5     183.4        106.1    
+Length  (l_2)  8260.        3.2453E+4     61.91        9.374    
+RMS Count      7991.        +nan.0        59.89        +nan.0   
+
+MM^T support=302867.0 count=461960433973.0
+No M^TM data present
+
+102270103 Bytes uncompressed == 102 MBytes
+ 17233733 Bytes compressed == 17 MBytes
+
+cb04a74e6a8024bb9e7f1ccafbf71dbe  en_micro_links.sql
+c7c14d954818babc861d9efcecfc6204  en_micro_links.sql.bz2
+
+en_micro_marg
+--------------
+Same as en_micro_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+Build:
+   (sql-open "postgres:///en_micro_dj_cfive")
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (psa 'fetch-pairs)
+   (sql-close)
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (define lfa (add-linkage-filter fsa))
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+   (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 14 June 2019
+
+COMMENT ON DATABASE en_micro_marg IS
+'en_cfive consistent Sections with word-count > 500; section-count > 10';
+
+en_micro_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 29 MB      | 
+ public | valuations | table | ubuntu | 154 MB     | 
+
+select count(*) from atoms;      <<<<  324343 == 324K Atoms
+select count(*) from valuations; <<<<  827435 == 827K Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 37 secs
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 14) (ListLink . 68722) (Connector . 3226)
+   (ConnectorSeq . 67111) (Section . 183644) (WordNode . 1623))
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47
+RMS Count      9851.        2.9865E+4     112.3        19.18
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+59977841 Bytes uncompressed == 60MBytes
+10305529 Bytes compressed   == 10MBytes
+
+60c5a06f518e36c94a0d57027b59e24d  en_micro_marg.sql
+887a32cfae68484a480c7f34ce44c536  en_micro_marg.sql.bz2
+
+en_micro_fuzz
+--------------
+Same as en_micro_marg, but after fuzz (cosine) word-classing.
+No gram class marginals, and the pseudo-cset marginals are surely
+left-over junk from before. Why is the dump size smaller??
+(size of Valuations table is bigger; numer of valuations smaller.
+Why are there fewer valuations?)
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz IS
+   'en_micro with (gram-classify-greedy-fuzz 0.65 0.3 4)';
+
+en_micro_fuzz=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 36 MB      | 
+ public | valuations | table | ubuntu | 172 MB     | 
+
+select count(*) from atoms;      <<<<  359686 == 360K Atoms
+select count(*) from valuations; <<<<  749950 == 750K Vals
+
+56016110 Bytes uncompressed == 56MBytes
+ 9020871 Bytes compressed   ==  9MBytes
+
+19b27db361caa7d780a1ac62b08c72dd  en_micro_fuzz.sql
+3324b5cdaf45aedd164327a4f66c2695  en_micro_fuzz.sql.bz2
+
+
+en_micro_fuzz_exp
+-----------------
+Same as en_micro_fuzz, but with gram class marginals, so that it's
+suitable for export to LG.
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 142358 csets
+
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
+DATE: 18 June 2019
+
+COMMENT ON DATABASE en_micro_fuzz_exp IS
+   'en_micro_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
+
+en_micro_fuzz_exp=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 60 MB      | 
+
+select count(*) from atoms;      <<<<  284291 == 284K Atoms
+select count(*) from valuations; <<<<  699105 == 700K Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 12003313)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 675 Columns: 67056
+Size: 142358 non-zero entries of 45262800 possible
+Fraction non-zero: 3.1451E-3 Sparsity (-log_2): 8.3127
+Total observations: 12003312.5  Avg obs per pair: 84.318
+Entropy Total: 13.746   Left: 11.431   Right: 6.3415
+Total MI: 4.0264
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  50.64        2817.
+Count   (l_1)  3.2160E+4    3.3795E+5     635.0        120.0
+Length  (l_2)  1.9406E+4    6.0704E+4     383.2        21.55
+RMS Count      1.8989E+4    +nan.0        374.9        +nan.0
+
+No MM^T data present
+No M^TM data present
+
+ 53458027 Bytes uncompressed ==  53 MBytes
+  9439051 Bytes compressed   ==   9 MBytes
+
+8fad77a6ec29bd27cd4d8fc176450beb  en_micro_fuzz_exp.sql
+5b1c02d1430f3e3b15cbfead3ed0b9c4  en_micro_fuzz_exp.sql.bz2
+
+en_micro_discrim
+-----------------
+Same as en_micro_marg, but after discrim (cosine) word-classing.
+Includes marginals.
+
+BUILD:
+   (gram-classify-greedy-discrim 0.5 4)
+   Marginal build just like en_micro_fuzz_exp
+   Will store 132775 csets
+
+STATUS: Fair; has the disjunct bug #2252
+ISSUE: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
+DATE: 18 June 2019
+
+COMMENT ON DATABASE en_micro_discrim IS
+   'en_micro_marg (greedy-fuzz 0.5 4) plus marginals for export';
+
+en_micro_discrim=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 25 MB      | 
+ public | valuations | table | ubuntu | 57 MB      | 
+
+select count(*) from atoms;      <<<<  274228 == 274K Atoms
+select count(*) from valuations; <<<<  669606 == 670K Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 11428005)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 416 Columns: 67056
+Size: 132775 non-zero entries of 27895296 possible
+Fraction non-zero: 4.7598E-3 Sparsity (-log_2): 7.7149
+Total observations: 11428005.3  Avg obs per pair: 86.070
+Entropy Total: 13.230   Left: 11.268   Right: 5.5832
+Total MI: 3.6218
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  36.30        4172.    
+Count   (l_1)  3.3309E+4    4.8650E+5     917.7        116.6    
+Length  (l_2)  2.2783E+4    8.5731E+4     627.7        20.55    
+RMS Count      2.2287E+4    +nan.0        614.0        +nan.0   
+
+
+ 52474191 Bytes uncompressed == 52 MBytes
+ 12924981 Bytes compressed   == 13 MBytes
+
+5c986d99da8277fade1ac9d8ec304ba7  en_micro_discrim.sql
+6caaf9579d054d458c7fe1b23085eb67  en_micro_discrim.sql.bz2
+
+en_mini_dj_cfive
+----------------
+Filtered copy of en_dj_cfive, with the (40 5 5) filter-cut applied:
+all words with word-count less than 40 removed; all sections with a
+count of less than 5 removed; all dj's with a count of less than 5
+removed. DB does NOT contain marginals!
+
+Note that there is a HUGE number of WordNodes that appear in
+ConnectorSeq's that do NOT appear in Sections!
+
+COMMENT ON DATABASE en_mini_dj_cfive IS
+'en_cfive Sections (only) with word-count > 40; section-count > 5';
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 9 June 2019
+
+en_mini_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 206 MB     |
+ public | typecodes  | table | ubuntu | 48 kB      |
+ public | valuations | table | ubuntu | 274 MB     |
+
+select count(*) from atoms;      <<<< 2139220 == 2.1M Atoms
+select count(*) from valuations; <<<< 3191817 == 3.2M Valuations
+
+There are 171522 words, and 647988 disjuncts, and 1063939 Sections
+   ((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 157 secs
+-- Atomspace holds 2139224 atoms
+-- (cog-report-counts)
+    ((PredicateNode . 3) (Connector . 255766) (ConnectorDir . 2)
+    (ConnectorSeq . 647988) (Section . 1063939) (WordNode . 171522)
+    (AnyNode . 2))
+-- top says 2.5 GB RAM
+-- (psa 'left-basis-size)  ;; 18533
+-- (psa 'right-basis-size) ;; 647988
+-- These dimensions do NOT agree with what the filter reported,
+   which was 42406 x 968594 which is understandable.
+
+271616272 Bytes uncompressed == 272 MBytes
+ 46513972 Bytes compressed == 46 MBytes
+
+5e351f5644984574f0e12bedcf9c94d7  en_mini_dj_cfive.sql
+b7e69440de6e6bd6a2d56880f05b2958  en_mini_dj_cfive.sql.bz2
+
+
+en_mini_cfive
+-------------
+Same as en_mini_dj_cfive, but with marginals and MM^T values.
+Note that this has 10x more words in the connectors, than words in
+sections. This needs to be cleaned up.
+
+STATUS: Bad. Filtering failed to discard Sections correctly.
+        Use `en_mini_marg` instead.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_cfive IS
+'en_cfive Sections + Marginals + MM^T with word-count > 40; section-count > 5';
+
+en_mini_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 265 MB     |
+ public | typecodes  | table | ubuntu | 24 kB      |
+ public | valuations | table | ubuntu | 624 MB     |
+
+select count(*) from atoms;      <<<< 2805754 == 2.8M Atoms (660K more)
+select count(*) from valuations; <<<< 5876443 == 5.9M Vals (2.7M more)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 212 secs
+-- Atomspace holds 2805756 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 666522) (Connector . 255766)
+   (ConnectorSeq . 647988) (Section . 1063939) (WordNode . 171522)
+   (AnyNode . 2))
+-- top says 3.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 25642000)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 647988
+Size: 1063939 non-zero entries of 12009161604 possible
+Fraction non-zero: 8.8594E-5 Sparsity (-log_2): 13.462
+Total observations: 25642000.0  Avg obs per pair: 24.101
+Entropy Total: 17.789   Left: 15.123   Right: 7.7718
+Total MI: 5.1061
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  165.4        3.0281E+4
+Count   (l_1)  1.8942E+4    6.4730E+5     114.6        21.38    
+Length  (l_2)  6195.        3.5269E+4     37.46        1.165    
+RMS Count      6045.        3.5067E+4     36.56        1.158    
+
+MM^T support=1063939.0 count=485701926586.0
+No M^TM data present
+
+467604993 Bytes uncompressed == 468 MBytes
+ 46513972 Bytes compressed == 47 MBytes
+
+59df6126b629ae4750877d03a7fbf5be  en_mini_cfive.sql
+2643824974318078d8013b609d81c919  en_mini_cfive.sql.bz2
+
+en_mini_links
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+STATUS: Bad. Contains words below the cutoff. Use en_mini_marg instead.
+DATE: 9 June 2019
+
+COMMENT ON DATABASE en_mini_links IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_links=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 143 MB     | 
+ public | valuations | table | ubuntu | 328 MB     | 
+
+select count(*) from atoms;      <<<< 1545047 == 1.5M Atoms(1.3M less)
+select count(*) from valuations; <<<< 3788228 == 3.8M Vals (2.1M less)
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 127 secs
+-- Atomspace holds 1545049 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 380854) (Connector . 34565)
+   (ConnectorSeq . 362320) (Section . 748758) (WordNode . 18533))
+-- top says 2.0 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 22626006)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 18533 Columns: 362320
+Size: 748758 non-zero entries of 6714876560 possible
+Fraction non-zero: 1.1151E-4 Sparsity (-log_2): 13.131
+Total observations: 22626006.0  Avg obs per pair: 30.218
+Entropy Total: 17.171   Left: 14.192   Right: 8.0388
+Total MI: 5.0603
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  187.0        1.1736E+4
+Count   (l_1)  2.1460E+4    4.4365E+5     114.7        37.80    
+Length  (l_2)  7016.        3.2343E+4     37.51        2.756    
+RMS Count      6848.        +nan.0        36.61        +nan.0   
+
+MM^T support=748758.0 count=485542996090.0
+No M^TM data present
+
+278672471 Bytes uncompressed == 278 MBytes
+ 40074275 Bytes compressed == 40 MBytes
+
+312fb63ddc80212bf8848ab710235dbc  en_mini_links.sql
+647a8825c97223a2f8d93d86cbc86247  en_mini_links.sql.bz2
+
+en_mini_marg
+-------------
+Same as en_mini_dj_cfive, but with unconnectable connectors/conseqs
+removed.  Does include marginals and MM^T values.
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 15 June 2019
+
+COMMENT ON DATABASE en_mini_marg IS
+'en_cfive consistent Sections with word-count > 40; section-count > 5';
+
+en_mini_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 108 MB     | 
+ public | valuations | table | ubuntu | 551 MB     | 
+
+select count(*) from atoms;      <<<< 1177540 == 1.2M Atoms
+select count(*) from valuations; <<<< 2940501 == 2.9M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 82 secs
+-- Atomspace holds 1177547 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 15) (ListLink . 277097) (Connector . 14926)
+   (ConnectorSeq . 269711) (Section . 608241) (WordNode . 7548)
+-- top says 1.5 GB RAM
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186
+RMS Count      7399.        3.0766E+4     42.74        4.152
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+217959158 Bytes uncompressed == 218 MBytes
+ 33416655 Bytes compressed == 33 MBytes
+
+fcb0152dedb99304bbc0bac0745c9ebe  en_mini_marg.sql
+fc0f0749efa8caf1416c6aed3509ca17  en_mini_marg.sql.bz2
+
+en_mini_fuzz
+------------
+Same as en_mini_marg, but after fuzz (cosine) word-classing.
+No gram class marginals, and the pseudo-cset marginals are surely
+left-over junk from before. 
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+STATUS: Fair; has the disjunct bug #2252
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
+DATE: 17 June 2019
+
+COMMENT ON DATABASE en_mini_fuzz IS
+   'en_mini_marg with (gram-classify-greedy-fuzz 0.65 0.3 4)';
+
+en_mini_fuzz=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 135 MB     | 
+ public | valuations | table | ubuntu | 593 MB     | 
+
+select count(*) from atoms;      <<<< 1340138 == 1.34M Atoms
+select count(*) from valuations; <<<< 2814992 == 2.81M Vals
+
+215566437 Bytes uncompressed == 216 MBytes
+ 30940665 Bytes compressed   ==  31 MBytes
+
+3cf78077ef7e79c7a92824f3158b3f6b  en_mini_fuzz.sql
+7e306eaa526e289f61d06ffa9b0e09fa  en_mini_fuzz.sql.bz2
+
+en_mini_fuzz_exp
+-----------------
+Same as en_mini_fuzz, but with gram class marginals, so that it's
+suitable for export to LG. Note that the singleton classes do not
+contain the clustering left-overs, and maybe they should ... 
+
+BUILD:
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all)
+   (gcs 'store-aux)
+   (use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
+
+STATUS: Fair; has the disjunct bug #2252
+STATUS: Uncertain. Turns out dot-product denominators used for cosine
+        were not recomputed after merge, leading to questionable
+        cosines.
+DATE: 18 June 2019
+
+COMMENT ON DATABASE en_mini_fuzz_exp IS
+   'en_mini_fuzz + marginals for export (greedy-fuzz 0.65 0.3)';
+
+en_mini_fuzz_exp=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 99 MB      | 
+ public | valuations | table | ubuntu | 222 MB     | 
+
+select count(*) from atoms;      <<<< 1077157 == 1.08M Atoms
+select count(*) from valuations; <<<< 2601283 == 2.60M Vals
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 16583937)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 3692 Columns: 269115
+Size: 501957 non-zero entries of 993572580 possible
+Fraction non-zero: 5.0520E-4 Sparsity (-log_2): 10.951
+Total observations: 16583936.7  Avg obs per pair: 33.039
+Entropy Total: 15.387   Left: 12.969   Right: 6.7695
+Total MI: 4.3517
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  97.02        1.1241E+4
+Count   (l_1)  2.7228E+4    4.3814E+5     280.6        38.98    
+Length  (l_2)  1.5021E+4    5.7309E+4     154.8        5.098    
+RMS Count      1.4820E+4    +nan.0        152.7        +nan.0   
+
+No MM^T data present
+No M^TM data present
+
+209846267 Bytes uncompressed == 210 MBytes
+ 31289650 Bytes compressed   ==  31 MBytes
+
+298adfde5df642dc9c8dc7442eaf3533  en_mini_fuzz_exp.sql
+e96831e97c5b7a9c906b0792c49817f7  en_mini_fuzz_exp.sql.bz2
 
 ==========
 
@@ -15339,7 +16184,7 @@ are:
 * 'mmt-marginals for both of the above.
 
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 13 August 2018
 
 en_sh_two=> \dt+
@@ -15539,7 +16384,7 @@ Built as:
 (hvs 'explode-sections)
 (batch-all-pair-mi hvs)
 
-STATUS:  GOOD.
+STATUS: Fair; has the disjunct bug #2252
 DATE: 29 August 2018
 
 en_sh_mi_two=> \dt+
@@ -16351,12 +17196,12 @@ connector-sets.lyx:
 (1a) Show multiple graphs, of cosines, MI, etc.
      depending on word-frequency
 
-(1b) scatterplot for cosine vs entropy
+(1b) scatterplot for cosine vs entropy (Done)
 
 (2a) graphs, for the crosses, too
 
 (3) Scatterplot of pseudo-cset MI vs. cross-MI.
-    Done, need to add words for this.
+    Done, need to add words for this. XXX done where?
 
 (4) show distribution of the sums, above.
 
@@ -16373,7 +17218,7 @@ While waiting for above, write code for:
 * The cosines do need the supports, right? (does it actually
   use them, or does it ignore them?)
 
-* Also: which cosines: the batch cosines? what do thise use?
+* Also: which cosines: the batch cosines? what do these use?
 
 Merging minor tasks DONE
 ------------------------
@@ -16447,7 +17292,7 @@ arxiv  1702.00764v1
 
 =========================================================================
 
-But list Augsut 2018
+Bug list Augsut 2018
 
 Crazy idea: iterate; the places we end up at should be the dependents
 since everything points at them, and they never point away.
@@ -16597,7 +17442,8 @@ this does not have any word-pairs in it. Supposedly it contains the
 pseudo-dj marginals. It does not contain the cross-connector marginals;
 it appears that computing these is prohibitive, at this time.
 
-STATUS: Good.
+STATUS: Never created, due to bugs... Keys are getting clobbered...
+see below ...
 DATE: 3 June 2019
 
 en_midj_cfive=> \dt+
@@ -16615,35 +17461,6 @@ select count(*) from atoms;      <<<<  81241109 == 81.2 M Atoms
                                                  (3 more than before)
 select count(*) from valuations; <<<< 217533128 == 217.5 M Valuations
                                                    (0.5 M more)
-
-xxxx below is junk xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-(length (cog-incoming-set (AnyNode "cset-disjunct"))) 498240
-
-Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
-Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
-Wildcard: (ListLink (ctv 0 0 69447009)
-   (AnyNode "cset-word")
-   (AnyNode "cset-disjunct")
-)
-Rows: 444903 Columns: 23444293
-Size: 31914870 non-zero entries of 10430436288579 possible
-Fraction non-zero: 3.0598E-6 Sparsity (-log_2): 18.318
-Total observations: 69447009.0  Avg obs per pair: 2.1760
-Entropy Total: 23.092   Left: 21.137   Right: 10.112
-Total MI: 8.1569
-
-                 Left         Right     Avg-left     Avg-right
-                 ----         -----     --------     ---------
-Support (l_0)  2.2742E+5    367.6
-Count   (l_1)  9.4430E+5    7917.         4.152        21.54
-Length  (l_2)  2.4549E+4    2397.         .1079        6.520
-RMS Count      2.4499E+4    2379.         .1077        6.472
-
-17199980652 Bytes uncompressed == 17 GBytes
- 1885746309 Bytes compressed == 1.89 GBytes
-
-90195f2c6a913ef896454894e651813e  en_midj_cfive.sql
-d79ad6f14a7b1bf0ddfd24c31567a5ba  en_midj_cfive.sql.bz2
 
 ==========
 (define pcr (add-report-api psa))
@@ -16687,11 +17504,574 @@ dimension key clobbered
 right norm clobbered 
 left norm clobbered.
 Why?
+Answer: because very old stale scheme code was being loaded from
+a stale old bogus install location :-(
 
 (for-each (lambda (x) (format #t "~A ~A\n" x (cog-value (pca 'wild-wild) x)))
     (cog-keys  (pca 'wild-wild)))
 
+===================================
+Try again. This time, cut first.
+-- (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   Elapsed time to load csets: 6321 secs
+   Atomspace holds 81224843 atoms
+   (sql-close)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (print-matrix-summary-report psa) ;; as expected.
+   createdb en_micro_dj_cfive
+   cat atom.sql | psql en_micro_dj_cfive
+   COMMENT ON DATABASE en_micro_dj_cfive IS 'en_cfive Sections (only) with word-count > 500; section-count > 10';
+   (sql-open "postgres:///en_micro_dj_cfive")
 
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+
+	(fsa 'left-basis-size)   ;;  8608  ; whoa huge cut!
+   (fsa 'right-basis-size)  ;;  361894 ; also a big cut.
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+Done storing 392715 pairs in 451 secs
+
+   (sql-open "postgres:///en_micro_cfive")
+   (batch-all-pair-mi psa)
+Support: found num left= 10813 num right= 187063 in 0 secs
+Finished left norm marginals in 139 secs
+Done with wild-card count N(x,*) and N(*,y) in 159 secs
+Total count N(*,*) = 20782007.0 = 20782007.0
+Done computing 392715 pairs in 36 secs
+Done storing 187063 left-wilds in 2729 secs
+Done computing 392715 pair MI's in 206 secs
+Done storing 187063 left-wilds in 103 secs
+Finished with MI computations; this took 0.99 hours
+
+   (print-matrix-summary-report psa)
+Fraction non-zero: 1.9415E-4 Sparsity (-log_2): 12.331
+Total observations: 20782007.0  Avg obs per pair: 52.919
+Entropy Total: 16.564   Left: 13.788   Right: 7.7620
+Total MI: 4.9867
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  121.4        7387.    
+Count   (l_1)  2.2239E+4    4.8439E+5     183.1        65.57    
+Length  (l_2)  7511.        3.4794E+4     61.85        4.710    
+RMS Count      7263.        3.4445E+4     59.80        4.663    
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 187063 left-wilds in 113 secs
+Done computing and saving sum_y N(x,y) N(*,y)
+
+Atomspace holds 989445 atoms
+sql-stats: 989440 of 989440 reserved uuids used
+So what are the five missing atoms?
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 197877) (TypeNode . 2) (AnchorNode .
+1) (Connector . 125223) (ConnectorDir . 2) (ConnectorSeq . 187063)
+(Section . 392715) (SchemaNode . 1) (WordNode . 86545) (AnyNode . 2))
+
+select count(*) from atoms where type=71;
+en_micro_cfive=> select * from atoms where type=71;
+  uuid  | space | type | height |         name          | outgoing 
+--------+-------+------+--------+-----------------------+----------
+ 791557 |     1 |   71 |      0 | *-Dimension Key-*     | y
+ 989438 |     1 |   71 |      0 | *-Entropy Key-*       | y
+     73 |     1 |   71 |      0 | *-FrequencyKey-*      | y
+ 791569 |     1 |   71 |      0 | *-Left Norm Key-*     | y
+ 791562 |     1 |   71 |      0 | *-Left Total Key-*    | y
+ 989440 |     1 |   71 |      0 | *-MM^T Product Key-*  | y
+     72 |     1 |   71 |      0 | *-Mutual Info Key-*   | y
+ 791560 |     1 |   71 |      0 | *-Norm Key-*          | y
+ 791566 |     1 |   71 |      0 | *-Right Norm Key-*    | y
+ 791572 |     1 |   71 |      0 | *-Right Total Key-*   | y
+ 989437 |     1 |   71 |      0 | *-Total Entropy Key-* | y
+ 989439 |     1 |   71 |      0 | *-Total MI Key-*      | y
+      1 |     0 |   71 |      0 | *-TruthValueKey-*     | 
+(13 rows)
+atomspace is missing: *-TruthValueKey-* !! Huh!
+This is missing (PredicateNode "*-Sentence Word Pair-*") Why?
+(It is created by common.scm)
+also: (PredicateNode "*-MM^T Product Key-*")
+that's two. Third is the SchemaNode
+three more needed...
+AnchorNode ...
+two more needed: TypeNode. OK, so it all balances.
+
+==================
+Same as above, but a biggger set.
+   (sql-open "postgres:///en_mini_dj_cfive")
+   (define fsa (add-subtotal-filter psa 40 5 5 #f))
+   (fsa 'left-basis-size)   ;; 42406
+   (fsa 'right-basis-size)  ;; 968594
+Done storing 1063939 pairs in 1218 secs
+
+   (sql-open "postgres:///en_mini_cfive")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+Support: found num left= 18533 num right= 647988 in 31 secs
+Done with wild-card count N(x,*) and N(*,y) in 787 secs
+Total count N(*,*) = 25642000.0 = 25642000.0
+Done computing 1063939 pairs in 137 secs
+Done storing 647988 left-wilds
+Done computing 1063939 pair MI's in 586 secs
+Finished left entropy subtotals in 722 secs
+Finished left MI subtotals in 749 secs
+Done storing 647988 left-wilds in 349 secs
+
+-- (define btr (batch-transpose psa))
+-- (btr 'mmt-marginals)
+Done storing 647988 left-wilds in 388 secs
+
+==========
+Same as above, but a much bigger set.
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_large_dj_cfive
+   cat atom.sql | psql en_large_dj_cfive
+   COMMENT ON DATABASE en_large_dj_cfive IS 'en_cfive Sections (only) with word-count > 8; section-count > 3';
+   (sql-open "postgres:///en_large_dj_cfive")
+
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+-- Shutdown and restart guile.
+   (sql-open "postgres:///en_large_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+
+   (cog-report-counts)
+       (WordNode . 246103)
+       (ConnectorSeq . 1671691)
+       (Section . 2358816)
+
+   (psa 'left-basis-size)   ;; 27655  <<< lots smaller than Word count!
+   (psa 'right-basis-size)  ;; 1671691
+
+   createdb en_large_marg
+   cat atom.sql | psql en_large_marg
+   COMMENT ON DATABASE en_large_marg IS
+   'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 2934 secs
+   (so, I guess 1671691/2934 = 570 per second...)
+
+   (define fsa (add-subtotal-filter psc 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 17985 << continuing to shrink...
+   (fsa 'right-basis-size)  ;; 1671691  << unchanged.
+   (length (fsa 'get-all-elts)) ;; 2348252
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 17985
+   (lfa 'right-basis-size)  ;; 949252 << much smaller
+   (length (lfa 'get-all-elts)) ;; 1563939
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_large_marg")
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+   Finished left norm marginals in 1964 secs
+   Done with wild-card count N(x,*) and N(*,y) in 2137 secs
+   Done computing 1563939 pair MI's in 936 secs
+   Finished left entropy subtotals in 1809 secs
+   Finished left MI subtotals in 1860 secs
+
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+
+
+en_large_dj_cfive
+-----------------
+Filtered copy of en_dj_cfive, with the (8 3 3) filter-cut applied:
+all words with word-count less than 8 removed; all sections with a
+count of less than 3 removed; all dj's with a count of less than 3
+removed. DB does NOT contain marginals!
+
+Note that there is a HUGE number of WordNodes that appear in
+ConnectorSeq's that do NOT appear in Sections!
+
+BUILD:
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 444903
+   (psa 'right-basis-size)  ;; 23444293
+   (sql-close)
+   createdb en_large_dj_cfive
+   cat atom.sql | psql en_large_dj_cfive
+   COMMENT ON DATABASE en_large_dj_cfive IS
+   'en_cfive Sections (only) with word-count > 8; section-count > 3';
+
+   (sql-open "postgres:///en_large_dj_cfive")
+   (define fsa (add-subtotal-filter psa 8 3 3 #f))
+   (fsa 'left-basis-size)   ;; 95628
+   (fsa 'right-basis-size)  ;; 2167176
+   (length (fsa 'get-all-elts)) ;; 2358816
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 28 June 2019
+
+en_large_dj_cfive=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 602 MB     | 
+ public | valuations | table | ubuntu | 1158 MB    | 
+
+select count(*) from atoms;      <<<< 4653425 == 4.6M Atoms
+select count(*) from valuations; <<<< 7076448 == 7.1M Valuations
+
+-- (psa 'left-basis-size)   ;; 27655
+-- (psa 'right-basis-size)  ;; 1671691
+-- after re-filtering, these shrink a bit (of course)
+
+602555918 Bytes uncompressed == 603 MBytes
+ 89639884 Bytes compressed   ==  90 MBytes
+
+d6ad6a2437b07424088f2f19f54b5ab8  en_large_dj_cfive.sql
+fef1307912ac291ce826ad4e8e6861e0  en_large_dj_cfive.sql.bz2
+
+en_large_marg
+-------------
+Same as en_large_dj_cfive, but count-filtered a second time, and
+with unconnectable connectors/conseqs removed.  Includes marginals
+and MM^T values.
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 28 June 2019
+
+COMMENT ON DATABASE en_large_marg IS
+'en_cfive consistent Sections with word-count > 8; section-count > 3';
+
+en_large_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 332 MB     | 
+ public | valuations | table | ubuntu | 1050 MB    | 
+
+select count(*) from atoms;      <<<< 3528943 == 3.5M Atoms
+select count(*) from valuations; <<<< 8567215 == 8.6M Vals
+
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 312 secs
+-- Atomspace holds 3528945 atoms
+-- (cog-report-counts) (omitting bogus AnchorNode, SchemaNode)
+   ((PredicateNode . 13) (ListLink . 964563) (Connector . 35093)
+   (ConnectorSeq . 947421) (Section . 1563939) (WordNode . 17910)
+-- top says 4.5 GB RAM
+
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 26185082)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 17141 Columns: 947421
+Size: 1563939 non-zero entries of 16239743361 possible
+Fraction non-zero: 9.6303E-5 Sparsity (-log_2): 13.342
+Total observations: 26185082.0  Avg obs per pair: 16.743
+Entropy Total: 18.075   Left: 15.220   Right: 8.0117
+Total MI: 5.1571
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  219.1        3.5091E+4
+Count   (l_1)  1.9001E+4    5.4787E+5     86.74        15.61    
+Length  (l_2)  6119.        3.2536E+4     27.93        .9272    
+RMS Count      6002.        3.2390E+4     27.40        .9230    
+
+MM^T support=1563939.0     count=497539636092.0     entropy=2.2975
+No M^TM data present
+
+
+656651442 Bytes uncompressed == 657 MBytes
+ 86400823 Bytes compressed   ==  86 MBytes
+
+3f0b2d8c2b32c1ecef814e46724e88f8  en_large_marg.sql
+9c26bafdf5a7328364709a3d789e516d  en_large_marg.sql.bz2
+
+==========
+Same as above, but the hugest non-full set.
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)
+   (print-matrix-summary-report psa)
+   (sql-close)
+   createdb en_huge_dj_cfive
+   cat atom.sql | psql en_huge_dj_cfive
+   COMMENT ON DATABASE en_huge_dj_cfive IS 'en_cfive Sections (only) with word-count > 3; section-count > 1';
+
+   (sql-open "postgres:///en_huge_dj_cfive")
+   (define fsa (add-subtotal-filter psa 3 1 1 #f))
+   (fsa 'left-basis-size)   ;; 151951
+   (fsa 'right-basis-size)  ;; 8233844
+   (length (fsa 'get-all-elts)) ;; 9315925
+   (define fso (make-store fsa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+
+-- Shutdown and restart guile.
+   (sql-open "postgres:///en_huge_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+
+   (cog-report-counts)
+   (Connector . 636895) (ConnectorSeq . 7345963)
+   (Section . 9315925)  (WordNode . 387402)
+
+   (psa 'left-basis-size)   ;; 84774
+   (psa 'right-basis-size)  ;; 7345963
+
+   createdb en_huge_marg
+   cat atom.sql | psql en_huge_marg
+   COMMENT ON DATABASE en_huge_marg IS
+   'en_cfive consistent Sections with word-count > 3; section-count > 1';
+
+   (sql-open "postgres:///en_huge_marg")
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)
+   Finished left norm marginals in 37844 secs 
+     so 7345963 / 37844 = 194/second ...
+   (define fsa (add-subtotal-filter psc 3 1 1 #f))
+   (fsa 'left-basis-size)   ;; 57400  << so, a bit smaller
+   (fsa 'right-basis-size)  ;; 7345963 << unchanged
+   (length (fsa 'get-all-elts)) ;; 9288551
+
+   (define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 57400 << unchanged
+   (lfa 'right-basis-size)  ;; 6045624 << a bit smaller
+   (length (lfa 'get-all-elts)) ;; 7907629 << smaller
+
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)    ;; Done storing 7907629 pairs in 8034 secs
+   (sql-close)
+
+-- Stop and restart guile
+   (sql-open "postgres:///en_huge_marg")
+   (psa 'fetch-pairs)   ; Elapsed time to load csets: 1049 secs
+   ; Support: found num left= 54832 num right= 6031954
+   (batch-all-pair-mi psa)
+   Finished left norm marginals in 33135 secs
+   Finished left entropy subtotals in 32088 secs
+   Finished left MI subtotals in 33280 secs
+xxxxxxxxxxxx
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+RAM usage: 36 GB resident.
+
+
+en_huge_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values.
+
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 
+-- 36 GBytes RAM
+
+BUILD: Same as `en_micro_marg`.
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 1 July 2019
+
+COMMENT ON DATABASE en_huge_marg IS
+'en_cfive consistent Sections with word-count > 3; section-count > 1';
+
+en_huge_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 1878 MB    | 
+ public | valuations | table | ubuntu | 6407 MB    | 
+
+select count(*) from atoms;      <<<< 20195313 == 20M Atoms
+select count(*) from valuations; <<<< 48124872 == 48M Vals
+
+guile-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 42284522)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 54832 Columns: 6031954
+Size: 7907629 non-zero entries of 330744101728 possible
+Fraction non-zero: 2.3909E-5 Sparsity (-log_2): 15.352
+Total observations: 42284522.0  Avg obs per pair: 5.3473
+Entropy Total: 20.691   Left: 18.450   Right: 8.1271
+Total MI: 5.8865
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  268.7        1.8714E+5
+Count   (l_1)  1.2368E+4    9.9142E+5     46.03        5.298    
+Length  (l_2)  3858.        3.2396E+4     14.36        .1731    
+RMS Count      3813.        3.2323E+4     14.19        .1727    
+
+MM^T support=7907629.0     count=522992873156.0     entropy=6.9016
+No M^TM data present
+
+3772947413 Bytes uncompressed == 3.77 GBytes
+ 417542166 Bytes compressed   ==  418 MBytes
+
+eeed40c6a36fe0319cd8e53fc1d2bc6b  en_huge_marg.sql
+8c409609d5535473f21d7c469f2dfd53  en_huge_marg.sql.bz2
+
+==========
+linkage-filter the full set, now:
+
+(sql-open "postgres:///en_dj_cfive")
+(psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
+(sql-close)
+(sql-open "postgres:///en_midj_links")
+(define alf (add-linkage-filter psa))
+(define sto (make-store alf))
+(sto 'store-all-elts)   ; Marginals are not to be stored.
+   (1000 pairs/sec) ; Done storing 31749357 pairs in 33336 secs
+(sql-close)
+restart
+-- The alf linkage-filter + restart implies that en_midj_links
+   should contain only consistant connectors & links.
+(sql-open "postgres:///en_midj_links")
+(batch-all-pair-mi psa)
+Support: found num left= 438449 num right= 23308382 in 1095 secs
+Finished left norm marginals in 316395 secs (3.6 days)
+Done storing 23308382 left-wilds in 16381 secs
+Done computing 31749357 pair MI's in 35266 secs
+
+
+Last time, this took "only" 29048 secs (8 hours) for the similarly
+sized en_pairs_rfive_mst dataset. So why is it so much slower now?
+Is the pattern matcher in the stars object getting in the way?
+Yes, it probably is. This needs to be fixed...
+
+Umm, the en_sh_mi_two which contained the exploded shapes took that long
+... probably for the same reason...
+
+OK, system went down. Restart....
+(load "/tmp/cm.scm")
+(xbatch-all-pair-mi psa)
+
+Restart computing
+Going to do column and row subtotals
+Finished left entropy subtotals in 339785 secs <<< 94 hours, i.e. 4 days
+Finished right entropy subtotals in 1776 secs
+Finished left MI subtotals in 336719 secs << 93 hours
+Done storing 23308382 left-wilds in 13255 secs
+Finished with MI computations; this took 193. hours  (8 days!)
+
+------
+(define btr (batch-transpose psa))
+(btr 'mmt-marginals)
+Finished mmt norm marginals in 2822 secs
+Finished mmt totals in 21 secs
+Done storing 438449 right-wilds in 327 secs
+Done storing 23308382 left-wilds in 14668 secs
+
+12587 minutes cpu time for guile = 210 cpu-hours = 9 cpu-days
+
+quick cheat-stats:
+31749357 pairs. tot count== 69197410
+
+ALTER DATABASE en_midj_links RENAME TO en_full_marg;
+
+en_full_marg
+------------
+Same as en_dj_cfive, but with unconnectable connectors/conseqs removed.
+Includes marginals, pair-MI's and MM^T values. This is effectively the
+"full" cfive dataset, with only impossible linkages removed.
+
+Loading and running this takes time and uses significant RAM:
+((make-pseudo-cset-api) 'fetch-pairs):
+-- Elapsed time to load csets: 6100 secs
+-- 97 GBytes RAM
+
+BUILD:
+   (sql-open "postgres:///en_dj_cfive")
+   (psa 'fetch-pairs)  ; 81224843 atoms  in 6614 secs
+   (sql-close)
+   (sql-open "postgres:///en_full_marg")
+   (define alf (add-linkage-filter psa))
+   (define sto (make-store alf))
+   (sto 'store-all-elts)   ; Marginals are not to be stored.
+   (sql-close)
+   restart
+   (sql-open "postgres:///en_full_marg")
+   (batch-all-pair-mi psa)
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)
+
+STATUS: Fair; has the disjunct bug #2252
+DATE: 27 June 2019
+
+COMMENT ON DATABASE en_full_marg IS
+'All consistent en_cfive Sections plus MI plus MM^T';
+
+en_full_marg=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 7356 MB    |
+ public | valuations | table | ubuntu | 27 GB      |
+
+select count(*) from atoms;      <<<<  80111606 ==  80M Atoms
+select count(*) from valuations; <<<< 190673853 == 191M Vals
+
+guile-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 69197410)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 438449 Columns: 23308382
+Size: 31749357 non-zero entries of 10219536779518 possible
+Fraction non-zero: 3.1067E-6 Sparsity (-log_2): 18.296
+Total observations: 69197410.0  Avg obs per pair: 2.1795
+Entropy Total: 23.080   Left: 21.119   Right: 10.109
+Total MI: 8.1482
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  368.9        2.2490E+5
+Count   (l_1)  7946.        9.3725E+5     21.54        4.167
+Length  (l_2)  2405.        2.4518E+4     6.520        .1090
+RMS Count      2388.        2.4467E+4     6.473        .1088
+
+MM^T support=31749357.0     count=549825893944.0     entropy=10.840
+No M^TM data present
+
+15053083395 Bytes uncompressed == 15 GBytes
+ 1738289510 Bytes compressed   ==  1.7 GBytes
+
+30812d532e2dfa774fc1caf04ee24722  en_full_marg.sql
+b94eee614a869de1517235962e26828b  en_full_marg.sql.bz2
+
+==========
 
 fanny:
 en_sh_two      25 GB  Section and Shape marginals (w/o explodes)
@@ -16757,13 +18137,13 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 	total loop over 137078 items in a list
    Finished mmt norm marginals in 3012 secs -- colliding
    Finished mmt norm marginals in 1329 secs - par-for-each -- cpu=100%
-   Finished mmt norm marginals in 525 secs - for-each -- 
+   Finished mmt norm marginals in 525 secs - for-each --
    Finished mmt norm marginals in 359 secs - n-par-for-each 4 -- cpu=250%
    Finished mmt norm marginals in 413 secs - n-par-for-each 2 -- cpu=170%
    Finished mmt norm marginals in 474 secs - n-par-for-each 1 -- cpu=100%
    Finished mmt norm marginals in 370 secs - n-par-for-each 8 -- cpu=250%
    Finished mmt norm marginals in 375 secs - n-par-for-each 24 -- cpu=230%
-   Finished mmt norm marginals in 557 secs - par-for-each -- 
+   Finished mmt norm marginals in 557 secs - par-for-each --
    Finished mmt norm marginals in 530 secs - par-for-each -- cpu=100%
    Finished mmt norm marginals in 345 secs - my-par-for-each 6
 	Finished mmt norm marginals in 349 secs - my-par-for-each 12
@@ -16797,7 +18177,7 @@ Archives /home2/linas/src/novamente/data/sql-dumps
 #2  0x00007f343d27bd8b in block_self (queue=0x55ef64391cd0, 
     mutex=mutex@entry=0x55ef63d21fc0, waittime=waittime@entry=0x0)
     at ../../libguile/threads.c:316
-#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60, 
+#3  0x00007f343d27bedf in lock_mutex (current_thread=0x55f0a3d42c60,
     waittime=0x0, m=0x55ef63d21fc0, kind=SCM_MUTEX_STANDARD)
     at ../../libguile/threads.c:1031
 #4  scm_timed_lock_mutex (mutex=0x55ef64391cc0, timeout=<optimized out>)
@@ -17100,15 +18480,2841 @@ is empty set...
 (gcs 'get-count sec) !=0  why!?
 oohhh filter had a bug. Damn,
 
+(gcf 'get-pair  (gar don) (gdr don)) returns,
+ (gcf 'get-pair-count  (gar don) (gdr don))  also works ...
 
+-- createdb mini-test
+   cat atom.sql | psql mini-test
+
+   (sql-close)
+   (sql-open "postgres:///mini-test?user=linas&password=asdf")
+   (define gso (make-store gcf))
+   (gso 'store-wildcards)
+
+   (length (psa 'get-all-elts)) -- 8545704
+   (length (gcs 'get-all-elts)) -- 6416994
+   (length (gcf 'get-all-elts)) -- 6416994
+
+   Hmm that does not seem right... oh bug
+   (length (gcf 'get-all-elts)) -- 2829796
+   That's more like it.
+
+   (gso 'store-all-elts)
+
+-- Start again, on mini-test
+   Elapsed time to load grammatical classes: 974 secs
+   Atomspace holds 6782961 atoms
+   top -- 7.755g in size
+   100% of all atoms loaded!
+   (batch-all-pair-mi gcs)
+Start computing the basis
+Support: found num left= 2112 num right= 0 in 201 secs
+ whoops. Failed to store MemberLinks!
+Support: found num left= 2112 num right= 1968134 in 0 secs
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(begin (set! cnt (+ cnt 1)) (format #t "Ohhh nooo ~A ~A" cnt wc))))
+	(cog-get-atoms 'WordClassNode))
+
+(define cnt 0)
+(for-each (lambda (wc)
+	(if (eq? '() (cog-incoming-by-type wc 'MemberLink))
+		(let* ((wcn (cog-name wc))
+				(wn (string-copy wcn 0 (string-contains wcn "#uni"))))
+			(set! cnt (+ cnt 1))
+			(store-atom (MemberLink (WordNode wn) wc))
+			(format #t "Fix-hack ~A ~A to ~A\n" cnt wc wn))))
+	(cog-get-atoms 'WordClassNode))
+
+(length
+(filter
+	(lambda (lst) (< 1 (length lst)))
+	(map (lambda (wrdcls) (cog-incoming-by-type wrdcls 'MemberLink))
+            (cog-get-atoms 'WordClassNode))))
+
+
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+(batch-all-pair-mi gcs)
+Start computing the basis
+Support: found num left= 2112 num right= 1968134 in 1 secs
+Done with wild-card count N(x,*) and N(*,y) in 112399 secs
+         That's 31 hours!! WTF! why so long?
+Total count N(*,*) = 8364154.64551346 = 8364154.645606807
+Done storing 1968134 left-wilds in 1458 secs
+Done computing 2829796 pair MI's in 1848 secs
+Finished left entropy subtotals in 110243 secs (again, 31 hours!)
+Finished left MI subtotals in 111610 secs
+Done storing 1968134 left-wilds in 1299 secs
+Finished with MI computations; this took 94.3 hours
+
+-- again the is the corrupted test dataset; so kind-of bogus.
+(print-matrix-summary-report gcs)
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type:
+Section
+Wildcard: (ListLink (ctv 0 0 8364154.6)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 2112 Columns: 1968134
+Size: 2829796 non-zero entries of 4156699008 possible
+Fraction non-zero: 6.8078E-4 Sparsity (-log_2): 10.521
+Total observations: 8364154.65  Avg obs per pair: 2.9557
+Entropy Total: 17.211   Left: 15.164   Right: 7.3950
+Total MI: 5.3480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  97.23        3.0108E+4
+Count   (l_1)  6941.        1.8845E+5     71.39        6.259
+Length  (l_2)  4549.        2.3722E+4     46.78        .7879
+RMS Count      4430.        2.3689E+4     45.56        .7868
+
+
+-- (use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us")  ; start 20:48
+   Will store 2829796 csets
+   This took 236 MBytes! Yow! (because disjuncts not merged.
+
+!!he
+ he.587  [TJEOI- & TJFFA- & TJEOE+]-6.005
+ LEFT-WALL.803              [TNENU+ & TNEPX+]-3.377
+
+select * from Morphemes where morpheme = "LEFT-WALL";
+There is only one ... how can that be? OK.
+LEFT-WALL|LEFT-WALL.803|<###LEFT-WALL####uni.803>
+
+select count(*) from Disjuncts where classname = "<###LEFT-WALL####uni.803>";
+18883
+
+almost 19K of them, so why only one loaded? (only the last one... oh bug.)
+
+select * from Disjuncts where disjunct like '%TNENU-%';
+Uhh ohh .. this is empty. How?
+
+select count(*) from Morphemes where morpheme = "John";
+John|John.629|<John#uni.629>
+select count(*) from Disjuncts where classname = "<John#uni.629>";
+1129
+
+select count(*) from Disjuncts where classname = "<Joe#uni.647>";
+284
+<Joe#uni.647>|TKIWE- & TKIOY+ & TKIUF+|-14.1628982914518
+
+Joe don't tell!
+(Section (ctv 1 0 0.3)
+   (WordClassNode "don't don’t")
+   (ConnectorSeq
+      (Connector
+         (WordNode "###LEFT-WALL###")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "Joe")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "tell")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "!")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(cog-execute! (Get (VariableList (Glob "g") (Glob "h"))
+	(Section (WordNode "###LEFT-WALL###")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don’t") (ConnectorDir "+"))
+		(Glob "h")))))
+
+
+(cog-execute! (Get (VariableList
+(TypedVariable (Glob "g") (Interval (Number 0) (Number -1)))
+(TypedVariable (Glob "h") (Interval (Number 0) (Number -1))))
+	(Section (WordNode "Joe")
+	(ConnectorSeq
+		(Glob "g")
+      (Connector (WordNode "don't") (ConnectorDir "+"))
+		(Glob "h")))))
+
+get-cnr-name is broken ....
+
+Now what???
+
+select count(*) from Morphemes;
+3
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 2632654) (TypeNode . 2) (AnchorNode .
+1) (Connector . 5674) (ConnectorDir . 2) (ConnectorSeq . 1968134)
+(Section . 2829796) (SchemaNode . 1) (WordNode . 2838) (AnyNode . 4)
+(WordClassNode . 2112))
+
+No MemberLinks at all. WTF.
+(load-atoms-of-type 'MemberLink)
+
+s.scm
+
+OK, so mini-tst is incomplete. was it scrubbed wrong?
+Arghhhh.
+
+Also, lg generator
+TB == (WordClassNode "left#uni") (WordNode "don’t")
+TE == (WordClassNode "don't don’t") (WordNode "###LEFT-WALL###")
+
+So, for uni's do not create a wc link....
+or .. do create one, but also one for each word in the class.
+
+===================
+OK, so do cosine for the micro. How?
+-- on LXC, micro-en.scm, etc.
+	createdb en_micro_cosine -T en_micro_links
+   (sql-open "postgres:///en_micro_cosine")
+   (psa 'fetch-pairs)
+
+   Fresh copy shows: (cog-report-counts)
+   (ListLink . 124635) (Connector . 19943) (ConnectorSeq . 113821)
+   (Section . 302867) (WordNode . 10813)
+   but en_micro_dj_cfive claims that there should be 8608 words, so
+   wtf...
+
+(define cnt 0)
+(for-each (lambda (wrd) (if
+   (eq? 'SimpleTruthValue (cog-type (cog-tv wrd)))
+	(set! cnt (+ cnt 1)))) (cog-get-atoms 'WordNode))
+
+(WordNode "Kaladin") in two sections both with count of 11
+total count is well under 500 so wtf?? Answer: when psa got
+saved, some low-count words got saved, ...
+
+   (gram-classify-greedy-fuzz 0.65 0.3 4)
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+-- No marginals, so cannot filter. So make at least subtotal margs
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 136 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 207491 pairs in 186 secs
+   (sql-close)
+
+-- (sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)
+   (psa 'left-basis-size)   ;; 8386  -- still too big. why?
+   (psa 'right-basis-size)  ;; 68602
+   (length (psa 'get-all-elts)) ;; 207491 so that's what we stored.
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 67 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1407 -- got smaller still. Why?
+   (fsa 'right-basis-size)  ;; 68602
+   (length (fsa 'get-all-elts)) ;; after fix: 181322
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1407
+   (lfa 'right-basis-size)  ;; 66057
+   (length (lfa 'get-all-elts)) ;; 201740 - after fix: 176427
+
+   (define aset (make-atom-set))
+	(for-each (lambda (sec) (aset (gar sec))) (lfa 'get-all-elts))
+   (length (aset #f)) ;; 8170 -- so consistent linkage contains
+                                 words that did not pass the filter.
+                                 so consistent linkage is buggy...
+   ;; 1404 after fix. Yay!
+
+-- Now filter it a second time ...
+   (define psd (add-support-compute lfa))
+   (psd 'cache-all)   ; Finished left norm marginals in 71 secs
+
+   (define fsb (add-subtotal-filter psd 500 10 10 #f))
+   (fsb 'left-basis-size)   ;; 1381 smaller than 1407
+   (fsb 'right-basis-size)  ;; 64667 smaller than 68602
+   (length (fsb 'get-all-elts)) ;; 176163 smaller than 181322
+
+	(define lfb (add-linkage-filter fsb))
+   (lfb 'left-basis-size)   ;; 1381 smaller than 1407
+   (lfb 'right-basis-size)  ;; 64256 smaler than 66057
+   (length (lfb 'get-all-elts)) ;; 175446 smaler than 176427
+
+   (length (aset #f)) ; 1380 OK, that works for me ...
+
+-- Do it a third time:
+   (define pse (add-support-compute lfb))
+   (pse 'cache-all)   ; Finished left norm marginals in 21 secs
+
+   (define fsc (add-subtotal-filter pse 500 10 10 #f))
+   (fsc 'left-basis-size)   ;; 1378  < 1381 smaller than 1407
+   (fsc 'right-basis-size)  ;; 64211 < 64667 smaller than 68602
+   (length (fsc 'get-all-elts)) ;; 175420 < 176163 smaller than 181322
+
+   (define lfc (add-linkage-filter fsc))
+   (lfc 'left-basis-size)   ;; 1378 < 1381 smaller than 1407
+   (lfc 'right-basis-size)  ;; 64192 < 64256 smaler than 66057
+   (length (lfc 'get-all-elts)) ;; 175384 < 175446 smaler than 176427
+
+   (length (aset #f)) ; 1378 consistent, at last...
+
+Because each iteration knocks out more. I guess that's OK...
+
+
+   (length wrd-lst) 1407
+   (length clist) 2808
+   (length unwanted-words)   6992
+   (length unwanted-cnctrs) 425   -- hmm seems small.
+   (length unwanted-conseqs)  2545
+   (length good-conseqs)  66057 so OK....
+   (define ok-conseq? (make-aset-predicate good-conseqs))
+   (define (pair-pred SECT) (ok-conseq? (gdr SECT)))
+
+   (define cnt 0)
+   (for-each (lambda (sec) (if (pair-pred sec) (set! cnt (+ cnt 1))))
+      (fsa 'get-all-elts))
+   cnt 201740 -- like before...
+
+	(define ok-con? (make-aset-predicate clist))
+	(define (ok-seq? seq) (every ok-con? (cog-outgoing-set seq)))
+
+   (for-each (lambda (seq)
+		(if (not (ok-seq? seq)) (format #t "faail ~A\n" seq)))
+		good-conseqs)
+
+   (for-each (lambda (sec)
+		(if (not (ok-seq? (gdr sec))) (format #t "faail ~A\n" sec)))
+      (lfa 'get-all-elts))
+
+   ; all pass this double-check. WTF.  Oh, a bug in filter 'get-all-pairs.
+
+=========
+ Try again.
+-- (sql-open "postgres:///en_micro_dj_cfive")
+   (psa 'fetch-pairs)
+   (sql-close)
+   (psa 'left-basis-size)   ;;  10813
+   (psa 'right-basis-size)  ;;  187063
+
+   (define psc (add-support-compute psa))
+   (psc 'cache-all)   ; Finished left norm marginals in 185 secs
+
+   (define fsa (add-subtotal-filter psa 500 10 10 #f))
+   (fsa 'left-basis-size)   ;; 1624
+   (fsa 'right-basis-size)  ;; 187063
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 1624
+   (lfa 'right-basis-size)  ;; 68602
+   (length (lfa 'get-all-elts)) ; 183644
+
+   ; XXX (define lfb (add-linkage-filter-2pass fsa))
+   ; XXX (lfb 'left-basis-size)   ;; 1624
+   ; XXX (lfb 'right-basis-size)  ;; 68602 .. wtf ...
+
+   createdb en_micro_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql | psql en_micro_marg
+
+   (sql-open "postgres:///en_micro_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 183644 pairs in 285 secs
+   (sql-close)
+
+   ; clean start.
+	(sql-open "postgres:///en_micro_marg")
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  1610  ... well, smaller, it seems ...
+   (psa 'right-basis-size)  ;;  67111 Huh.
+   (length (psa 'get-all-elts)) ;; 183644  OK
+
+   (batch-all-pair-mi psa)  ;;  MI computations; this took 0.17 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;
+   
+guile-micro-en> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector
+Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 14751096)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 1610 Columns: 67111
+Size: 183644 non-zero entries of 108048710 possible
+Fraction non-zero: 1.6996E-3 Sparsity (-log_2): 9.2006
+Total observations: 14751096.0  Avg obs per pair: 80.324
+Entropy Total: 15.167   Left: 12.043   Right: 7.7236
+Total MI: 4.6004
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  87.72        1557.    
+Count   (l_1)  2.7723E+4    2.3734E+5     316.0        152.4    
+Length  (l_2)  1.0224E+4    3.0318E+4     116.6        19.47    
+RMS Count      9851.        2.9865E+4     112.3        19.18    
+
+MM^T support=183644.0     count=408941670158.0     entropy=-3.600
+No M^TM data present
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 68722) (AnchorNode . 1) (Connector .
+3226) (ConnectorDir . 2) (ConnectorSeq . 67111) (Section . 183644)
+(SchemaNode . 1) (WordNode . 1623) (AnyNode . 2))
+
+========
+And now the mini:
+-- mini_dj_cfive:
+   (psa 'left-basis-size)  ;; 18533
+   (psa 'right-basis-size)  ;; 647988
+   (length (psa 'get-all-elts))   ;;  1063939
+   
+   (define fsa (add-subtotal-filter psa 40 5 5 #f))
+   (fsa 'left-basis-size)   ;; 7556
+   (fsa 'right-basis-size)  ;; 647988
+   (length (fsa 'get-all-elts))   ;; 1045903
+
+	(define lfa (add-linkage-filter fsa))
+   (lfa 'left-basis-size)   ;; 7556
+   (lfa 'right-basis-size)  ;;  271344
+   (length (lfa 'get-all-elts)) ; 608241
+
+   createdb en_mini_marg
+   cat /home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/atom.sql |
+psql en_mini_marg
+
+   (sql-open "postgres:///en_mini_marg")
+   (define fso (make-store lfa))
+   (fso 'store-all-elts)   ; Marginals are not to be stored.
+   Done storing 608241 pairs in 1160 secs
+   (sql-close)
+   (sql-open "postgres:///en_mini_marg")
+
+   (psa 'fetch-pairs)       ;;  Elapsed time to load csets: 19 secs
+   (psa 'left-basis-size)   ;;  7385
+   (psa 'right-basis-size)  ;;  269711
+   (length (psa 'get-all-elts)) ;;  608241
+
+   (batch-all-pair-mi psa)  ;;   this took 0.73 hours
+   (define btr (batch-transpose psa))
+   (btr 'mmt-marginals)     ;;    269711 left-wilds in 377 secs
+   
+   (print-matrix-summary-report psa)
+
+> (print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 20817076)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 7385 Columns: 269711
+Size: 608241 non-zero entries of 1991815735 possible
+Fraction non-zero: 3.0537E-4 Sparsity (-log_2): 11.677
+Total observations: 20817076.0  Avg obs per pair: 34.225
+Entropy Total: 16.792   Left: 13.687   Right: 8.0653
+Total MI: 4.9602
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  173.1        7409.    
+Count   (l_1)  2.2831E+4    3.6516E+5     131.9        49.28    
+Length  (l_2)  7585.        3.1013E+4     43.82        4.186    
+RMS Count      7399.        3.0766E+4     42.74        4.152    
+
+MM^T support=608241.0     count=475267638744.0     entropy=-0.361
+No M^TM data present
+
+==================
+Again with cosines....
+
+createdb en_micro_fuzz -T en_micro_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+Start greedy-agglomeration of 1610 words
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 05:28:53 -- "." ---
+--- To-do=0 ncls=135 sing=540 nredo=1062 2019-06-15 11:12:17 -- "()" ---
+So .. not quite 6 hours ...  RSS in top is 600 MBytes
+
+((ListLink . 68735) (MemberLink . 1639) (Connector . 3226) 
+(ConnectorSeq . 67111) (Section . 217212) (WordNode . 1623)
+(WordClassNode . 135))
+
+So no similarity links created... Hmm.
+OK, 
+createdb en_micro_fuzz_exp -T en_micro_fuzz
+(sql-open "postgres:///en_micro_fuzz_exp")
+(define asc (add-singleton-classes psa))
+(asc 'create-hi-count-singles 1) 1575 of 1575 -- borken-ish.
+(psa 'left-basis-size)   ;  1575
+
+are there any unclassed words?
+(define aset (make-atom-set))
+(for-each (lambda (wcn)
+	(for-each (lambda (memb) (aset (gar memb)))
+		(cog-incoming-by-type wcn 'MemberLink)))
+	(cog-get-atoms 'WordClassNode))
+(length (aset #f))   ; 1070 -- so that many words in word-classes.
+
+(cog-get-atoms 'AnchorNode)
+OK, bug fixed...
+
+       (define gca (make-gram-class-api))
+       (define gcs (add-pair-stars gca))
+       (define gcf (add-wordclass-filter gcs))
+       (batch-all-pair-mi gcf)
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs wordclass-filter
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 12003313)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 675 Columns: 67056
+Size: 142358 non-zero entries of 45262800 possible
+Fraction non-zero: 3.1451E-3 Sparsity (-log_2): 8.3127
+Total observations: 12003312.5  Avg obs per pair: 84.318
+Entropy Total: 13.746   Left: 11.431   Right: 6.3415
+Total MI: 4.0264
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  50.64        2817.    
+Count   (l_1)  3.2160E+4    3.3795E+5     635.0        120.0    
+Length  (l_2)  1.9406E+4    6.0704E+4     383.2        21.55    
+RMS Count      1.8989E+4    +nan.0        374.9        +nan.0   
+
+No MM^T data present
+No M^TM data present
+
+(export-csets gcf "dict.db" "EN_us")
+Will store 142358 csets
+
+==========
+createdb en_micro_discrim -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.5 4)
+Start greedy-agglomeration of 1610 words
+Existing classes=0 singletons=0 done=0
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-15 20:56:12 -- "." ---
+--- To-do=0 ncls=124 sing=292 nredo=1303 2019-06-16 00:29:19 -- "()" ---
+
+So that took 3.5 hours -- faster than fuzz. Didn't seem as goood...
+
+     (define asc (add-singleton-classes psa))
+     (asc 'create-hi-count-singles 1)  ; 1562
+
+     (define gca (make-gram-class-api))
+     (define gcs (add-pair-stars gca))
+     (define gcf (add-wordclass-filter gcs))
+     (batch-all-pair-mi gcf)
+
+
+(use-modules (opencog nlp lg-export))
+(export-csets gcf "dict.db" "EN_us")
+
+Summary Report for Correlation Matrix WordClass-Disjunct Pairs
+Left type: WordClassNode    Right Type: ConnectorSeq    Pair Type:
+Section
+Wildcard: (ListLink (ctv 0 0 11428005)
+   (AnyNode "gram-class-word")
+   (AnyNode "gram-class-disjunct")
+)
+Rows: 416 Columns: 67056
+Size: 132775 non-zero entries of 27895296 possible
+Fraction non-zero: 4.7598E-3 Sparsity (-log_2): 7.7149
+Total observations: 11428005.3  Avg obs per pair: 86.070
+Entropy Total: 13.230   Left: 11.268   Right: 5.5832
+Total MI: 3.6218
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  36.30        4172.    
+Count   (l_1)  3.3309E+4    4.8650E+5     917.7        116.6    
+Length  (l_2)  2.2783E+4    8.5731E+4     627.7        20.55    
+RMS Count      2.2287E+4    +nan.0        614.0        +nan.0   
+
+No MM^T data present
+No M^TM data present
+
+==========
+createdb en_micro_rediscrim -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.5 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 05:10:25
+--- To-do=0 ncls=124 sing=292 nredo=1303 2019-06-24 08:38:22
+Three & half hours ... 
+
+(sql-open "postgres:///en_micro_rediscrim_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+
+
+==========
+Review meaning ... 
+why long pause after first Bingo! ? 
+    partial answer: it hits postgres hard. Is it updating counts ??
+
+assign-word-to-class calls MERGER 'merge-function
+which calls merge-project
+... should add timers to line 598, etc, for merge-project to see ...
+
+==========
+createdb en_mini_fuzz -T en_mini_marg
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+To-do=0 ncls=366 sing=3326 nredo=3973 2019-06-17 19:25:00 -- "()" ---
+
+Atomspace holds 1340302 atoms
+Time since stats reset=220564 at Sat Jun 15 06:14:32 2019
+So this took... 61 hours == 2.5 days to process.
+
+So...
+366 classes   4176 classified words 
+
+
+createdb en_mini_fuzz_tmpsav -T en_mini_fuzz
+ALTER DATABASE en_mini_fuzz RENAME TO en_mini_fuzz_exp;
+ALTER DATABASE en_mini_fuzz_tmpsav RENAME TO en_mini_fuzz;
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+3326 unclassed words  so now 3692 WordClasses ...
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+
+(use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us") ; Will store 501957 csets
+
+==========
+createdb en_micro_fuzzier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.65 0.6 4)
+To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 16:32:41
+To-do=0 ncls=136 sing=544 nredo=1062 2019-06-19 20:28:34
+So, four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fuzzier_exp
+cat atom.sql | psql en_micro_fuzzier_exp
+(sql-open "postgres:///en_micro_fuzzier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 544 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142938 csets
+
+dict.db-micro-fuzzier-unk
+
+
+==========
+createdb en_micro_fizz -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-fuzz 0.75 0.3 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 17:46:11 -- "." ---
+--- To-do=0 ncls=115 sing=833 nredo=773 2019-06-19 21:49:41
+Four hours. Not bad.
+
+(sql-close)
+createdb en_micro_fizz_exp
+cat atom.sql | psql en_micro_fizz_exp
+(sql-open "postgres:///en_micro_fizz_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155391 csets
+
+mv dict.db dict.db-micro-fizz-unk
+
+
+==========
+createdb en_micro_diss -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.65 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 18:06:56 -- "." ---
+--- To-do=0 ncls=135 sing=537 nredo=1064 2019-06-19 22:07:32 
+four hours...
+
+(sql-close)
+createdb en_micro_diss_exp
+cat atom.sql | psql en_micro_diss_exp
+(sql-open "postgres:///en_micro_diss_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 537 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 142238 csets
+
+mv dict.db dict.db-micro-diss-unk
+
+
+==========
+createdb en_micro_dissier -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.75 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 21:05:25
+--- To-do=0 ncls=115 sing=833 nredo=772 2019-06-20 01:11:41
+four hours...
+
+(sql-close)
+createdb en_micro_dissier_exp
+cat atom.sql | psql en_micro_dissier_exp
+(sql-open "postgres:///en_micro_dissier_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 833 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 155460 csets
+
+mv dict.db dict.db-micro-dissier-unk
+
+==========
+createdb en_micro_dissiest -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-discrim 0.85 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-19 22:20:54
+--- To-do=0 ncls=85 sing=1175 nredo=429 2019-06-20 02:45:29
+Four plus hours.
+
+(sql-close)
+createdb en_micro_dissiest_exp
+cat atom.sql | psql en_micro_dissiest_exp
+(sql-open "postgres:///en_micro_dissiest_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 1175 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 167842 csets
+
+mv dict.db dict.db-micro-dissiest-unk
+
+==========
+createdb en_micro_disinfo -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-disinfo 2.0 4)
+
+Ooops -- Bingo! Dist=+inf.0 for class "was is" -- "he"
+duuude (WordClassNode "was is") =   0.0  and (WordNode "be") =2820944933.0
+duuuude xy=3006719756504542000.0 0.0 lo =+inf.0
+---------Bingo! Dist=+inf.0 for class "was is" -- "be"
+---- Remaining count =    0.0 for (WordNode "be")
+
+Need to create marginals for the post-merge ... (BTW, cosine???)
+i.e. need ...(trans-obj 'mmt-count word-class) to be correct...
+(and the other two to be revised)
+add-transpose-api  -- transobj 'set-mmt-norms SUP CNT
+
+store-atom ...
+
+add-pair-cosine-compute 'right-cosine
+
+(strftime "%c" (localtime (current-time)))
+duude got pairs len=4295 Sun 23 Jun 2019 10:21:36 PM UTC
+duude done merge Sun 23 Jun 2019 10:37:56 PM UTC
+(/ 4295 980.) == 4.38 sections/second ... why so slow?
+
+(mio 'mmt-fmi (Word "this") (Word "this")) << 4.034011726028252
+
+(suppt-obj 'right-length (Word "this")) << 8404.05687748483
+(trans-obj 'mmt-count (Word "this")) << 1327823651.0
+(trans-obj 'total-mmt-count) << 408941670158.0
+
+(/ (* 8404.05687748483 8404.05687748483 408941670158.0) (* 1327823651.0 1327823651.0))
+
+16.381683554400546
+(/ (log 16.381683554400546) (log 2)) << 4.034011726028254 SO OK, that
+works.
+
+hang on ...
+(define mio (add-symmetric-mi-compute psa))
+(mio 'mmt-fmi (WordClass "it he") (Word "but"))
+
+it he but
+
+--- Greedy-checking next 200 items
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- with
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- I
+duuude as for xy=    0.0 and    0.0
+duuuude its     -inf.0 for  -- ;
+
+Ahhh:
+duuude wtf marga=   0.0 for (ListLink
+   (WordClassNode ", ;")
+   (AnyNode "cset-disjunct")
+)
+
+which is wrong...
+assign-word-to-class is returning ... ohh bug ...
+
+Argh... (WordClassNode "the a") (WordNode "from")
+(mio 'mmt-fmi (WordClassNode "the a") (WordNode "from"))
++nan.0+4.532360141827193i
+
+(pti 'mmt-count (WordNode "from"))
+(cog-incoming-size-by-type (WordNode "from") 'Section) 
+Ahhh! all gone!
+
+
+==========
+createdb en_micro_disinfo -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-disinfo 2.0 4)
+--- To-do=1610 ncls=0 sing=0 nredo=0 2019-06-24 05:08:28
+--- To-do=0 ncls=34 sing=57 nredo=1499 2019-06-24 09:02:15
+Four hours ...
+
+---------Bingo! Dist=2.0813 for word "of" -- "in"
+---------Bingo! Dist=2.0510 for class "of in" -- "at"
+---------Bingo! Dist=2.1541 for class "of in" -- "on"
+---------Bingo! Dist=2.1868 for class "of in" -- "from"
+---------Bingo! Dist=2.0750 for class "of in" -- "by"
+---------Bingo! Dist=2.0555 for class "of in" -- "into"
+---------Bingo! Dist=2.1758 for class "of in" -- "upon"
+---------Bingo! Dist=2.1062 for class "of in" -- "through"
+
+I assume the appallingly low MI is due to ... micro??
+
+---------Bingo! Dist=2.7938 for word "the" -- "a"
+---------Bingo! Dist=3.5941 for class "the a" -- "his"
+---------Bingo! Dist=3.3722 for class "the a" -- "this"
+
+(sql-open "postgres:///en_micro_disinfo_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 57 singleton word classes
+Wow!
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+shutdown, restart
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+(export-csets gcs "dict.db-micro-disinfo" "EN_us")
+
+==========
+createdb en_micro_disinfo3 -T en_micro_marg
+(psa 'fetch-pairs)
+(gram-classify-greedy-disinfo 3.0 4)
+
+--- To-do=0 ncls=70 sing=209 nredo=1381 2019-06-24 17:29:54 
+Created 209 singleton word classes
+
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+(export-csets gcs "dict.db-micro-disinfo3" "EN_us")
+
+
+==========
+createdb en_mini_discrim -T en_mini_marg
+(gram-classify-greedy-discrim 0.5 4)
+
+After triming, 7385 words left, out of 7548
+Sorting in 2.028 seconds
+Start greedy-agglomeration of 7385 words
+Existing classes=0 singletons=0 done=0
+--- To-do=7385 ncls=0 sing=0 nredo=0 2019-06-18 03:36:40 -- "." ---
+--- To-do=0 ncls=371 sing=2097 nredo=5089 2019-06-20 19:57:15
+64 hours .... Ouch.
+
+(sql-close)
+createdb en_mini_discrim_exp
+cat atom.sql | psql en_mini_discrim_exp
+(sql-open "postgres:///en_mini_discrim_exp")
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)  ; Created 2097 singleton word classes
+   (define gca (make-gram-class-api))
+   (define gcs (add-pair-stars gca))
+   (define gcf (add-wordclass-filter gcs))
+   (batch-all-pair-mi gcf)
+   (define sto (make-store gcf))
+   (sto 'store-all-elts)
+   (sto 'store-wildcards)
+   (gcs 'store-aux)
+   (sql-close)
+
+restart, (gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ; Will store 498582 csets
+
+mv dict.db dict.db-mini-discrim-unk
+
+
+
+
+
+======
+(load "/tmp/c.scm")
+(lg-compare (LgDictNode "en") (LgDictNode "micro-fuzz") "I saw her face")
+
+(define compare (make-lg-comparator (LgDictNode "en") (LgDictNode "micro-fuzz")))
+     (compare "I saw her face")
+     (compare "I swooned to the floor")
+     (compare #f)
+
+LinkGrammarRelationshipNode
+
+Argh.
+Segmentation fault. linkage/sane.c:76
+76					    path[gwordlist_len(path)-1]->sent_wordidx)
+(gdb) print path
+$1 = (const Gword **) 0x0
+
+======
+micro-fuzz with child-directed.txt:
+
+Finished comparing 3037 parses (13567 words, 11183 links)
+Dictionary did not contain word for 2031 sentences
+Dictionary was missing 109 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 6280 link-count miscompares with 6173 missing and 584 extra links
+Missing link-type counts: ((IDBYE . 1) (WR . 2) (BW . 4) (DG . 2) (GN .
+1) (IDBIT . 1) (H . 5) (AL . 2) (AF . 3) (IDLE . 2) (BI . 3) (X . 11) (U
+. 4) (IDQA . 2) (IDBKD . 7) (PF . 13) (V . 9) (MX . 1) (IDLR . 6) (IDPZ
+. 8) (LI . 1) (DD . 6) (RS . 2) (OF . 7) (EE . 3) (C . 17) (QI . 4) (E .
+37) (PP . 21) (SJ . 39) (EA . 27) (TO . 24) (SFI . 4) (EL . 24) (VJ .
+20) (WV . 72) (W . 36) (K . 106) (G . 8) (CV . 37) (YS . 78) (NS . 1)
+(EB . 24) (Q . 136) (AN . 94) (CO . 170) (SF . 82) (B . 213) (R . 97) (A
+. 93) (PH . 25) (P . 480) (SI . 483) (M . 116) (MV . 325) (I . 564) (J .
+399) (D . 1052) (O . 1717) (S . 1254) (IV . 95))
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat egg steak puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye 've a@l feed comb 's toys 'll judy
+fun mirror knock hang button playing bunny hi dolly puppet dale throw
+okay calling smell sing snap knocked balloon turtle telephone color
+stack butterfly pat shoe kitty finger mommy scratchy blocks apple pick
+dragon doggie clock count brush horsie tower cup sleeping mouse untie
+pig zip ear block peekaboo honey toy cow cage gonna ducks pocketbook
+monkey paul)
+
+But there are repeated sentences...
+
+Revised:
+
+Finished comparing 1832 parses (9274 words, 7955 links)
+Dictionary did not contain word for 1270 sentences
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 4381 link-count miscompares with 4429 missing and 380 extra links
+Missing link-type counts: ((MX . 1) (WR . 2) (NS . 1) (IDLE . 2) (U . 4)
+(BW . 2) (X . 7) (IDLR . 5) (DG . 2) (IDQA . 2) (BI . 3) (EE . 3) (AF .
+3) (IDBKD . 7) (LI . 1) (AL . 1) (DD . 6) (H . 4) (IDBIT . 1) (IDBYE .
+1) (PP . 14) (CV . 36) (C . 17) (GN . 1) (OF . 6) (IDPZ . 8) (QI . 4) (V
+. 8) (RS . 2) (VJ . 20) (YS . 63) (EA . 25) (TO . 24) (EB . 19) (IV .
+92) (SFI . 4) (Q . 54) (EL . 23) (I . 464) (AN . 81) (PH . 22) (SF . 67)
+(P . 324) (SI . 309) (W . 22) (CO . 126) (M . 111) (WV . 49) (J . 347)
+(PF . 9) (E . 29) (B . 142) (R . 61) (MV . 305) (K . 93) (O . 1023) (S .
+641) (G . 7) (SJ . 33) (A . 79) (D . 878))
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat steak egg puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye feed 've comb 's toys 'll judy fun
+mirror knock hang button playing bunny hi dolly puppet dale throw okay
+calling smell sing snap knocked balloon turtle telephone color stack
+butterfly pat shoe kitty finger mommy scratchy blocks apple pick dragon
+doggie clock count brush horsie tower cup sleeping mouse untie pig zip
+ear block peekaboo honey toy cow cage gonna ducks pocketbook monkey
+paul)
+Finished verifying dicationary "micro-fuzz" with sentences from
+"child-directed-speech.txt"
+
+
+again, without the missing words:
+
+Examined 1832 sentences; of these, 1270 had words not in the dictionary.
+Finished comparing 562 parses (2738 words, 2376 links)
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1050 link-count miscompares with 983 missing and 193 extra links
+
+So, by hand:
+expected positives = P = 2376 (the expected links)
+of these, got (- 2376 983) == 1393 links = TP
+    so recall = (/ 1393 2376) = TP/P = 0.5863
+
+including extras, got 1393+193 = 1586 links total
+extras = false-positives = FP == 193
+so precision = TP/(TP+FP) = (/ 1393 1586) = 0.8783
+
+F1 = harmonic-mean(precision, recall) =
+   (* 2 0.5863 0.8783) / (+ 0.5863 0.8783) == 0.7032
+
+Automated:
+Examined 1832 sentences; 1270 had words not in dictionary (69.323 %).
+Finished comparing 562 parses; 482 parsed differently (85.765 %).
+Found 2738 word instances, 176 words; expected to find 2376 links
+Dictionary was missing 108 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1050 words w/linkage diffs; 983 missing and 193 extra links
+Link precision=0.8783 recall=0.5863 F1=0.7032
+
+Missing link-type counts: ((O . 213) (I . 165) (SI . 126) (MV . 102) (D
+. 96) (B . 78) (J . 73) (P . 60) (S . 54) (IV . 42) (R . 34) (CO . 24)
+(K . 22) (M . 19) (EL . 15) (E . 15) (WV . 14) (CV . 8) (TO . 8) (X . 7)
+(A . 7) (VJ . 7) (Q . 6) (SJ . 6) (IDLR . 5) (C . 5) (W . 5) (IDBKD . 4)
+(PF . 4) (U . 3) (DD . 3) (EA . 3) (SFI . 3) (OF . 2) (EE . 2) (SF . 2)
+(H . 2) (IDPZ . 2) (QI . 2) (IDQA . 1) (IDLE . 1) (PP . 1) (BW . 1) (AF
+. 1) (RS . 1) (EB . 1))
+
+Missing words: (spoon cat lots eating truck let's build baby rabbit gail
+kiss yeah doesn't push duck today tie daddy funny stick lena doll phone
+balloons meat steak egg puppy bite cindy alice 're kay nice likes zipper
+lift wanna nose can't pull shoes bye feed 've comb 's toys 'll judy fun
+mirror knock hang button playing bunny hi dolly puppet dale throw okay
+calling smell sing snap knocked balloon turtle telephone color stack
+butterfly pat shoe kitty finger mommy scratchy blocks apple pick dragon
+doggie clock count brush horsie tower cup sleeping mouse untie pig zip
+ear block peekaboo honey toy cow cage gonna ducks pocketbook monkey
+paul)
+
+Finished verifying dicationary "micro-fuzz" with sentences from
+"child-directed-speech.txt"
+
+========
+
+Examined 579 sentences; 497 had words not in dictionary (85.838 %).
+Finished comparing 82 parses; 81 parsed differently (98.780 %).
+Found 666 word instances, 209 words; expected to find 650 links
+Dictionary was missing 696 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 319 words w/linkage diffs; 324 missing and 59 extra links
+Link precision=0.8468 recall=0.5015 F1=0.6300
+Finished verifying dicationary "micro-fuzz" with sentences from
+"corpus-basic.batch"
+
+========
+
+Examined 4236 sentences; 3460 had words not in dictionary (81.681 %).
+Finished comparing 776 parses; 745 parsed differently (96.005 %).
+Found 4901 word instances, 591 words; expected to find 4359 links
+Dictionary was missing 3406 words
+Found 2 length-miscompares
+Found 7 word-miscompares
+Found 2656 words w/linkage diffs; 2237 missing and 700 extra links
+Link precision=0.7519 recall=0.4868 F1=0.5910
+
+Finished verifying dicationary "micro-fuzz" with sentences from
+"corpus-fixes.batch"
+
+=======
+Examined 229 sentences; 205 had words not in dictionary (89.520 %).
+Finished comparing 24 parses; 24 parsed differently ( 100.0 %).
+Found 169 word instances, 95 words; expected to find 156 links
+Dictionary was missing 414 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 83 words w/linkage diffs; 67 missing and 22 extra links
+Link precision=0.8018 recall=0.5705 F1=0.6667
+Finished verifying dicationary "micro-fuzz" with sentences from
+"ull-golden.txt"
+
+=====
+Examined 2513 sentences; 2136 had words not in dictionary (84.998 %).
+Finished comparing 377 parses; 376 parsed differently (99.735 %).
+Found 3323 word instances, 527 words; expected to find 3220 links
+Dictionary was missing 2582 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 1911 words w/linkage diffs; 1616 missing and 529 extra links
+Link precision=0.7520 recall=0.4981 F1=0.5993
+Finished verifying dicationary "micro-fuzz" with sentences from
+"ull-silver-short.txt"
+
+====
+
+Examined 2513 sentences; 1570 had words not in dictionary (62.475 %).
+Finished comparing 943 parses; 941 parsed differently (99.788 %).
+Found 9859 word instances, vocab= 1308 words; expect to find 9716 links
+Dictionary was missing 1371 words
+Found 0 length-miscompares
+Found 0 word-miscompares
+Found 5688 words w/linkage diffs; 4845 missing and 1627 extra links
+Link precision=0.7496 recall=0.5013 F1=0.6008
+
+Missing link-type counts: ((RW . 922) (MV . 598) (S . 563) (O . 540) (J
+. 364) (D . 335) (CV . 267) (I . 234) (P . 201) (WV . 170) (X . 168) (VJ
+. 164) (CO . 159) (M . 157) (C . 142) (A . 135) (E . 128) (W . 108) (B .
+96) (SJ . 95) (IV . 70) (R . 61) (AJ . 51) (EA . 50) (TO . 38) (SI . 33)
+(PP . 32) (K . 31) (G . 31) (PH . 24) (AN . 21) (TH . 17) (EE . 17) (EB
+. 15) (QI . 14) (OF . 13) (VC . 12) (RS . 12) (MJ . 9) (L . 9) (Q . 8)
+(DD . 8) (PF . 8) (MX . 7) (SF . 7) (EZ . 7) (LI . 6) (RJ . 5) (DT . 5)
+(EL . 4) (N . 4) (IDBVS . 3) (EC . 3) (IDOT . 3) (AF . 3) (IDBHA . 3)
+(BI . 3) (SX . 3) (Y . 3) (IDBRM . 2) (NI . 2) (IDBHK . 2) (IDBUB . 2)
+(EN . 2) (IDCBH . 2) (DG . 2) (EF . 2) (SFI . 2) (Z . 2) (IDPN . 1)
+(IDBVL . 1) (IDBHJ . 1) (IDCIN . 1) (DP . 1) (IDBRF . 1) (IDPD . 1) (WN
+. 1) (IDPO . 1) (FM . 1) (BW . 1) (IDBJA . 1) (CX . 1) (IDCBT . 1)
+(IDBEW . 1) (IDPH . 1) (IDLS . 1) (IDCGX . 1) (IDCGY . 1) (IDLR . 1) (V
+. 1) (AL . 1) (IDKM . 1) (IDKN . 1) (JT . 1) (IDPP . 1) (IDPQ . 1) (IDQC
+. 1) (OT . 1) (IDOV . 1) (IDCBS . 1) (IDBOO . 1) (IDBIY . 1) (IDBIZ . 1)
+(ER . 1) (IDBJN . 1) (IDBCE . 1) (IDCDD . 1) (IDBTF . 1) (IDBSC . 1)
+(IDCAU . 1) (NS . 1) (IDOP . 1) (IDBGJ . 1) (XJ . 1) (AA . 1) (HA . 1)
+(ND . 1) (IDBJG . 1) (IDBJH . 1))
+
+Finished verifying dictionary "mini-fuzz" with sentences from
+"ull-silver-short.txt"
+real	68m18.787s
+
+====
+
+
+(gcs 'fetch-pairs)
+(use-modules (opencog nlp lg-export))
+   (export-csets gcs "dict.db" "EN_us") ;  142420
+
+line 149
+(WordNode "an") .. not a member of anything ... how did that happen?
+it happened because its not a germ .... ohhh we need to use
+the filter during export....
+
+Argh not all sections exported .. wtf ... there are (Section . 142420)
+in the atomspace, but "Will store 81700 csets" ... !?
+
+(gcs 'right-basis-size) ; 67104
+(gcf 'right-basis-size) ; 33910
+
+fu... not enough, need to pcs 'fetch-pairs too !?
+this loads "an" sections, but still no MemberLink ...
+
+   (define asc (add-singleton-classes psa))
+   (asc 'create-hi-count-singles 1)
+
+ahhh ...OK. so lets try it ...
+
+(define nomem
+	(filter (lambda (cls) (equal? 0
+				(length (cog-incoming-by-type cls 'MemberLink))))
+		(cog-get-atoms 'WordClassNode)))
+
+(cog-incoming-by-type (Word "an") 'MemberLink)
+(cog-incoming-by-type (WordClass "an#uni") 'MemberLink)
+
+OK, so that's fixed, but now no MI for
+ (Section (ctv 1 0 4.2)
+   (WordClassNode "time way")
+   (ConnectorSeq
+      (Connector (WordNode "acid") (ConnectorDir "-"))))
+
+(cog-keys sec) only has (PredicateNode "*-TruthValueKey-*")
+why? Others have (PredicateNode "*-FrequencyKey-*")
+ (PredicateNode "*-TruthValueKey-*")
+ (PredicateNode "*-Mutual Info Key-*")
+
+select * from atoms where name='acid';
+WordNode "acid" -- 6035
+(ConnectorDir "-") == 16
+
+(WordClassNode "time way")  == 380120
+
+select * from atoms where outgoing='{6035,16}';
+
+connector == 6036
+seq = 6037
+sect = 382615
+
+*-Mutual Info Key-*   -- 13
+
+select * from valuations where atom=382615;
+OK, so database literally does not have it
+
+7 12 34
+
+Failure to store the MI's for ... some atoms. Crap.
+Failure to store singleton memberships ... Crap.
+
+needed to gcs->store-something!?
+
+
+
+=============
+
+in the mini-fuzz --
+
+Length miscompare: 9 vs 8
+Finish compare of sentence 1275/3059: "Yes, please, I'll have one."
+Length miscompare: 8 vs 7
+Finish compare of sentence 1290/3079: "That's what I think, yes."
+
+=============
+Bug: explosive atomspace
+is this the word-test??  No, its just the parses piling up.
+
+Now what?
+"It is a tokenizing parser."
+Oh.
+NumberNode WordInstanceNode PhraseNode LinkGrammarRelationshipNode
+
+... but it is still leaking.  How?
+
+valgrind --leak-check=full  \
+--suppressions=/tmp/valgrind.boost.suppressions \
+--suppressions=/tmp/valgrind.guile.suppressions \
+--suppressions=/tmp/valgrind.logger.suppressions \
+guile -s dict-comp.scm mini-fuzz x.txt
+
+LGHaveDictEntry::evaluate
+db_lookup_exp (read-sql.c:212)  Ohhh stupid me.
+---
+
+==========
+leak: 68m18.787s
+delete: 75m23.688s
+no-delete: 76m48.013s
+
+==========
+Wow. Unk word lookups are slow....   why? They should not be triggering
+anything ...!
+
+micro-fuzz: 0m19.788s
+
+oh crash ... 
+
+Assertion (NULL != bs->exp) failed at
+../../link-grammar/dict-sql/read-sql.c:260: Missing disjuncts for word
+<UNKNOWN-WORD.759> <didn’t didn't>
+
+select * from Morphemes where morpheme='<UNKNOWN-WORD>';
+.schema Disjuncts
+
+#:INCLUDE-MISSING #t
+
+discrim 124
+diss  135
+fuzz   135
+fuzzier 136
+fizz -- 115
+
+skirting with madness:
+The strength was in the order of gerE > cotD > yfhP
+
+
+hangups:
+People ages 55 to 64 on average are out of work for more than 54 weeks,
+while those ages 25 to 34 are unemployed for about 36 weeks, according
+to figures from the Bureau of Labor Statistics.
+
+
+He obtained the lease of the manor of Great Burstead Grange (near East
+Horndon) from the Abbey of Stratford Langthorne, and purchased the manor
+of Bayhouse in West Thurrock.
+
+this awful threat calmed Bab 's anger at once , and she hastened to
+introduce a safer subject .
+
+The delicately lyrical tone of the cello contrasted with the fiercely percussive piano chords
+
+Hundreds of young men, furious about the verdict in the Rodney King
+case, looted stores in Los Angeles today
+
+The strength was in the order of gerE > cotD > yfhP P2 > yfhP P1
+
+
+
+Based on LG-English parses:
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ALE-dILEd-2019-04-10/context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_31916C_2019-04-08_0007.4.0.dict
+
+Based on "sequential" parses:
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-SEQ-dILEd-2019-05-16-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_31548C_2019-05-19_0007.4.0.dict
+
+Based on "DNN-MI-lked MST-Parses":
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-GUCH-SUMABS-dILEd-2019-05-21-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_34584C_2019-05-25_0007.4.0.dict
+
+
+./A/Autoethnography -- 128
+./H/History of Virginia -- 277
+./A/Astor House Hotel (Shanghai) -- 103
+
+28238 / 1154 = 
+
+
+COMMENT ON DATABASE en_micro_diss IS '(discrim 0.65)';
+COMMENT ON DATABASE en_micro_diss_exp IS '(discrim 0.65) plus marginals';
+COMMENT ON DATABASE en_micro_dissier IS '(discrim 0.75)';
+COMMENT ON DATABASE en_micro_dissier_exp IS '(discrim 0.75) plus marginals';
+COMMENT ON DATABASE en_micro_dissiest IS '(discrim 0.85)';
+COMMENT ON DATABASE en_micro_dissiest_exp IS '(discrim 0.85) plus marginals';
+COMMENT ON DATABASE en_micro_fizz IS '(fuzz 0.75 0.3)';
+COMMENT ON DATABASE en_micro_fizz_exp IS '(fuzz 0.75 0.3) plus marginals';
+COMMENT ON DATABASE en_micro_fuzzier IS '(fuzz 0.65 0.6)';
+COMMENT ON DATABASE en_micro_fuzzier_exp IS '(fuzz 0.65 0.6) plus marginals';
+
+=======
+Length miscompare:
+I'm going drinking.  5 vs 4
+Maybe, I'm not sure. 8 vs 7
+
+micro-fuzz:
+Prec  recall  F1
+0.705 0.473 0.566
+0.627 0.371 0.466
+0.534 0.399 0.457
+0.577 0.485 0.527
+0.545 0.407 0.466
+
+micro-fuzz-unk:
+0.660 0.541 0.595
+0.555 0.440 0.491
+0.502 0.459 0.479
+0.484 0.468 0.476
+0.492 0.445 0.467
+
+mini-fuzz
+0.710 0.480 0.573
+0.580 0.376 0.456
+0.540 0.399 0.459
+0.504 0.362 0.421
+0.531 0.392 0.451
+
+micro-discrim:
+0.679 0.542 0.603 
+0.595 0.412 0.487
+0.529 0.476 0.501
+0.565 0.534 0.549
+0.546 0.490 0.522
+
+mini-discrim
+0.658 0.538 0.592
+0.590 0.452 0.512
+0.522 0.469 0.494
+0.516 0.475 0.495
+0.532 0.475 0.502
+
+micro-discrim-unk:
+0.651 0.580 0.614
+0.571 0.482 0.523
+0.496 0.490 0.493
+0.475 0.497 0.485
+0.507 0.491 0.499
+
+
+
+
+115 vs 135
+
+Actress Whoopi Goldberg and singer Michael Jackson attended the ceremony
+
+
+
+
+../../link-grammar/parse/count.c:222
+#0  0x00007fa689d2c213 in find_table_pointer (ctxt=0x55ea149f7b00, lw=4,
+rw=6, 
+    le=0x0, re=0x55ea22126170, null_count=0)
+    at ../../link-grammar/parse/count.c:222
+#1  0x00007fa689d2c319 in table_lookup (ctxt=<optimized out>, 
+    lw=<optimized out>, rw=<optimized out>, le=<optimized out>, 
+    re=<optimized out>, null_count=<optimized out>)
+    at ../../link-grammar/parse/count.c:255
+#2  0x00007fa689d2d512 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=4, rw=rw@entry=6,
+le=0x0, 
+    re=0x55ea22126170, null_count=0, pex=0x55ea14729f80)
+    at ../../link-grammar/parse/extract-links.c:356
+#3  0x00007fa689d2dbc7 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=4, rw=rw@entry=9, 
+    le=0x55ea2202c810, re=re@entry=0x55ea22180d90, null_count=0, 
+    pex=0x55ea14729f80) at ../../link-grammar/parse/extract-links.c:483
+#4  0x00007fa689d2dab9 in mk_parse_set
+(mchxt=mchxt@entry=0x55ea144f3910, 
+    ctxt=ctxt@entry=0x55ea149f7b00, lw=lw@entry=3, rw=rw@entry=9, 
+    le=0x55ea22019b10, re=re@entry=0x55ea22180d90, null_count=0, 
+    pex=0x55ea14729f80) at ../../link-grammar/parse/extract-links.c:547
+
+In Vienna, Beethoven met someone who would later be greatly influenced by him: Franz Schubert
+
+
+http://langlearn.singularitynet.io/data/aglushchenko_parses/GCB-FULL-ANY-dILEd-2019-05-09-94/GL_context:2_db-row:1_f1-col:11_pa-col:6_word-space:discrete/dict_36740C_2019-05-11_0007.4.0.dict
+
+
+Token "this" matches:
+    this.672                       3221  disjuncts
+
+    this.331                       5037  disjuncts
+
+the old beast was whinnying on his shoulder .
+
+Token "the" matches:
+    the.54                     2879150524  disjuncts
+    the.24                      3397807  disjuncts
+Token "old" matches:
+    old.71                      3568091  disjuncts
+Token "was" matches:
+    was.89                      4809781  disjuncts
+    was.19                        20761  disjuncts
+Token "on" matches:
+    on.68                      3259929866  disjuncts
+    on.24                       3397807  disjuncts
+    on.17                         22768  disjuncts
+Token "his" matches:
+    his.24                      3397807  disjuncts
+Token "shoulder" matches:
+    shoulder.44                1274692269  disjuncts
+    shoulder.39                  204008  disjuncts
+    shoulder.28                269503230  disjuncts
+Token "." matches:
+    ..81                       509547141  disjuncts
+    ..34                       3730768318  disjuncts
+
+----------
+(length (links w)) -- 13
+
+but pattern found only 8--
+in the m of them -- midst midst o the
+in the m of -- midst midst o the
+In the m of these -- midst midst o the
+the m of this  -- "
+in the m of these -- "
+in the m of all -- ditto
+the m of them -- ditto
+in the m of crowd -- "
+
+Confusion.
+midst-  is in 6 conseq's
+9 sections contain midst-  (sects-w-con)
+sec words are: of all them this matches right-words
+19 Sections contain midst
+13 are linkable (unique)
+
+(r-pre with zero matches not consideered....!?) ohh.
+d.scm = blink matches 7 times
+
+in unit test: (right-halves == 5
+(right-words  = 5
+links == 5
+
+
+
+
+--------
+Other crazy shit:
+en_mini_marg contains this:
+
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+is this for real, or a corrupt MST parse?
+
+$44 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "one") (ConnectorDir "-"))
+      (Connector (WordNode "speak") (ConnectorDir "-"))
+      (Connector (WordNode "December") (ConnectorDir "+"))
+      (Connector (WordNode "them") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "gold") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+      (Connector (WordNode "iron") (ConnectorDir "+"))
+   ))
+
+$47 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+      (Connector (WordNode "hatred") (ConnectorDir "-"))
+   ))
+
+$49 = (Section (ctv 1 0 6)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "Province") (ConnectorDir "-"))
+      (Connector (WordNode "basis") (ConnectorDir "-"))
+      (Connector (WordNode "scope") (ConnectorDir "-"))
+      (Connector (WordNode "name") (ConnectorDir "-"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "Ontario") (ConnectorDir "+"))
+   ))
+
+This sure looks like broken MST parses to me ...
+
+$50 = (Section (ctv 1 0 7)
+   (WordNode "of")
+   (ConnectorSeq
+      (Connector (WordNode "warriors") (ConnectorDir "-"))
+      (Connector (WordNode "assistance") (ConnectorDir "-"))
+      (Connector (WordNode "cause") (ConnectorDir "-"))
+      (Connector (WordNode "throne") (ConnectorDir "-"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "warriors") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "the") (ConnectorDir "+"))
+      (Connector (WordNode "these") (ConnectorDir "+"))
+   ))
+
+There seem to be a lot of these ... WTF.
+
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+Ahh .. caught red-handed!
+
+(Section
+   (WordNode "the")
+   (ConnectorSeq
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "craziness")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+      (Connector
+         (WordNode "stage")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(Section
+   (WordNode "is")
+   (ConnectorSeq
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "This")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "that")
+         (ConnectorDir "-")
+      )
+   )
+)
+
+(Section
+   (WordNode "stage")
+   (ConnectorSeq
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "the")
+         (ConnectorDir "-")
+      )
+      (Connector
+         (WordNode "of")
+         (ConnectorDir "+")
+      )
+   )
+)
+
+(
+(((6 . (WordNode "complicated")) 7 . (WordNode "sentence")) . 4.544568075409504)
+
+ (((2 . (WordNode "This")) 7 . (WordNode "sentence")) . 2.5698179211813894)
+ (((2 . (WordNode "This")) 9 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 3 . (WordNode "is")
+) . 4.376083014264772) (((2 . (WordNode "This")) 10 . (WordNode "meant")
+) . 2.85136143940991) (((10 . (WordNode "meant")) 11 . (WordNode "to")
+) . 2.995166614025761) (((11 . (WordNode "to")) 12 . (WordNode "test")
+) . 2.4676368796347674) (((4 . (WordNode "a")) 7 . (WordNode "sentence")
+) . 2.157432042482352) (((4 . (WordNode "a")) 5 . (WordNode "long")
+) . 2.8337745270444152) (((12 . (WordNode "test")) 19 . (WordNode "of")
+) . 2.076930367265735) (((18 . (WordNode "stage")) 19 . (WordNode "of")
+) . 2.098831656855328) (((16 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 18 . (WordNode "stage")
+) . 2.3297106242932806) (((13 . (WordNode "the")) 14 . (WordNode "craziness")
+) . 2.4141307658002162) (((14 . (WordNode "craziness")) 15 . (WordNode "of")
+) . 1.6669586994997374) (((19 . (WordNode "of")) 20 . (WordNode "the")
+) . 1.6553378921463375) (((8 . (WordNode "that")) 9 . (WordNode "is")
+) . 1.5597634187783882) (((19 . (WordNode "of")) 21 . (WordNode "processing")
+) . -0.24884483707755933))
+
+
+(print-linkage link-seq)
+6-7      complicated <--> sentence       MI=4.5446
+2-7      This <--> sentence      MI=2.5698
+2-9      This <--> is    MI=4.3761
+2-3      This <--> is    MI=4.3761
+2-10     This <--> meant         MI=2.8514
+10-11    meant <--> to   MI=2.9952
+11-12    to <--> test    MI=2.4676
+4-7      a <--> sentence         MI=2.1574
+4-5      a <--> long     MI=2.8338
+12-19    test <--> of    MI=2.0769
+18-19    stage <--> of   MI=2.0988
+16-18    the <--> stage  MI=2.3297
+13-18    the <--> stage  MI=2.3297
+13-14    the <--> craziness      MI=2.4141
+14-15    craziness <--> of       MI=1.6670
+19-20    of <--> the     MI=1.6553
+8-9      that <--> is    MI=1.5598
+19-21    of <--> processing      MI=-0.249
+
+(observe-mst "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+
+make-sections
+wedge-get-left-overt
+
+Found and fixed https://github.com/opencog/atomspace/pull/2252
+Arghhh.
+
+===========
+MPG parser -- DONE
+(define plain-text "This is a long complicated sentence that is meant to test the craziness of the MST stage of the processing")
+(define word-strs (tokenize-text plain-text))
+(define word-list (map WordNode word-strs))
+(define mst-tree (mst-parse-atom-seq word-list trunc-scorer))
+(print-linkage ordered-tree)
+
+(print-linkage (sort-wedgelist (mpg-parse-atom-seq word-list trunc-scorer 20)))
+
+1) cross-any does allow overlaps!! DONE
+2) 1e30 reject has to be 1e20 DONE
+
+(1 . (WordNode "###LEFT-WALL###") (5 . (WordNode "long")
+
+
+===========
+dropdb en_pairs_cfive en_pairs_cfive_mst
+createdb en_pairs_cfive_mi_1.8
+
+COMMENT ON DATABASE "en_pairs_cfive_mi_1.8" IS
+'Same as en_pairs_cfive_mi but all pairs w/ FMI<1.8 removed.';
+(define fpm (add-fmi-filter wps 1.8 #f))
+(fpm 'left-basis-size)
+(fpm 'right-basis-size) << unchanged ...
+(length (fpm 'get-all-elts))  <<< 15795739 down from 27892737
+(sql-open "postgres:///en_pairs_cfive_mi_1.8")
+(define sfp (make-store fpm))
+(sfp 'store-all)
+Done storing 15795739 pairs in 17337 secs
+
+--------
+cleanup words that do not participate any longer ...
+
+(cog-map-type (lambda (word)
+	(if (= 0 (length (filter
+			(lambda (wpr) (and
+				 (not (equal? (cog-type (gar wpr)) 'AnyNode))
+				 (not (equal? (cog-type (gdr wpr)) 'AnyNode))
+			))
+			(cog-incoming-by-type word 'ListLink))))
+		(format #t "Empty: ~A\n" (cog-name word))))
+'WordNode)
+
+None-such. Interesting ... OK.
+
+--------
+createdb en_pairs_mi_1.8tmp -T en_pairs_cfive_mi_1.8
+(wps 'fetch-pairs)
+(define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
+(batch-all-pair-mi fpm)
+
+Going to compute and store individual pair MI
+
+Single-threaded: << vs. multi-threaded ... no advantage
+Start computing the basis
+Support: found num left= 619168 num right= 580804 in 373 secs
+Finished left norm marginals in 3587 secs  << vs. 5266 multi is slower
+Finished left totals in 38 secs
+Finished right norm marginals in 8654 secs  << vs 4658 harrrumpf
+Finished right totals in 36 secs
+Done with wild-card count N(x,*) and N(*,y) in 12315 secs 
+Total count N(*,*) = 470207380.0 = 470207380.0
+Finished column (left) norm averages in 166 secs  << vs 111
+Finished row (right) norm averages in 185 secs << vs 131 when multi
+Going to do individual pair frequencies
+Done computing 15795739 pair frequencies in 595 secs << vs 3919 Yow!
+Start computing log P(*,y)
+Done computing 580804 left-wild log frequencies in 32 secs << vs 3003 Yow!
+Done with -log P(*,y), start -log P(x,*)
+Done computing 619168 right-wild log frequencies in 35 secs << vs 3448 Yow!
+Stored 40000 of 580804 left-wilds in 34 secs (1176 pairs/sec)
+Stored 80000 of 580804 left-wilds in 33 secs (1212 pairs/sec)
+...
+Done storing 580804 left-wilds in 505 secs
+Done storing 619168 right-wilds in 542 secs
+Done computing and saving -log P(x,*) and P(*,y)
+Going to compute and store individual pair MI
+Done 10001 of 619168 outer loops in 481 secs, pairs=238841 (496.55 pairs/sec)
+Done 10000 of 619168 outer loops in 578 secs, pairs=238839 (413.22 pairs/sec)
+
+Then from multi--
+Finished left entropy subtotals in 3144 secs
+Finished right entropy subtotals in 3490 secs
+
+===========
+
+The fpm -- 
+
+======
+Do it again, cutting at MI=5.3
+
+createdb en_pairs_5.3_remi
+cat atom.sql | psql en_pairs_5.3_remi
+(define fpm (add-fmi-filter wps 5.3 #f))
+(length (fpm 'get-all-elts)) << 8953449
+(sql-open "postgres:///en_pairs_5.3_remi")
+   (define fps (make-store fpm))
+   (fps 'store-all-elts)
+   (sql-close)
+(sql-open "postgres:///en_pairs_5.3_remi")
+(wps 'fetch-pairs)
+(batch-all-pair-mi wps)
+(print-matrix-summary-report wps)
+
+en_pairs_5.3_remi
+-----------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<5.3
+removed.  After removal, the MI and marginals are recomputed. The
+resulting dataset is reasonably small, taking 24GB and 960 seconds to
+load.
+
+BUILD:
+(sql-open "postgres:///en_pairs_cfive_mi")
+(define wpa (make-any-link-api)) 
+(define wps (add-pair-stars wpa))
+(wps 'fetch-pairs)
+(sql-close)
+(sql-open "postgres:///en_pairs_5.3_remi")
+(define fpm (add-fmi-filter wps 5.3 #f))
+(define fps (make-store fpm))
+(fps 'store-all-elts)
+(sql-close)
+halt, restart
+(batch-all-pair-mi wps)
+
+STATUS: Good. (as good as en_pairs_cfive_mi)
+DATE: 12 July 2019
+
+COMMENT ON DATABASE "en_pairs_5.3_remi" IS
+'Same as en_pairs_cfive_mi but pairs w/FMI<5.3 cut & MI+marginals recomputed.';
+
+en_pairs_5.3_remi=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 1834 MB    | 
+ public | valuations | table | ubuntu | 4689 MB    | 
+
+select count(*) from atoms;      <<<< 20908235 == 21M Atoms
+select count(*) from valuations; <<<< 31618063 == 32M values 
+
+(print-matrix-summary-report wps)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 1.6649902e+08)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 615950 Columns: 573477
+Size: 8953449 non-zero entries of 353233158150 possible
+Fraction non-zero: 2.5347E-5 Sparsity (-log_2): 15.268
+Total observations: 166499020.  Avg obs per pair: 18.596
+Entropy Total: 18.647   Left: 13.418   Right: 13.647
+Total MI: 8.4182
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  2915.        1840.    
+Count   (l_1)  3.1752E+5    2.5220E+5     108.9        137.1    
+Length  (l_2)  1.6175E+5    1.5049E+5     55.48        81.80    
+RMS Count      1.6155E+5    1.5034E+5     55.41        81.72    
+
+No MM^T data present
+No M^TM data present
+
+2637685531 Bytes uncompressed == 2.6GB
+ 473114452 Bytes compressed   == 473MBytes
+
+83e6b75a2ffd7c248cf153a9108320f6  en_pairs_5.3_remi.sql
+ef654a29a94845a166ac47fc470c369e  en_pairs_5.3_remi.sql.bz2
+
+
+========
+dropdb en_pairs_cfive_mi_1.8
+dropdb en_dj_cfive
+dropdb en_full_marg
+
+en_pairs_1.8_remi
+-----------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<1.8
+removed.  After removal, the MI and marginals are recomputed. The
+resulting dataset is reasonably small, taking 45GB to load.
+
+BUILD:
+See en_pairs_5.3_remi
+
+STATUS: Good. (as good as en_pairs_cfive_mi)
+DATE: 12 July 2019
+
+COMMENT ON DATABASE "en_pairs_1.8_remi" IS
+'Same as en_pairs_cfive_mi but pairs w/FMI<1.8 cut & MI+marginals recomputed.';
+
+en_pairs_1.8_remi=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 3055 MB    | 
+ public | valuations | table | ubuntu | 6599 MB    | 
+
+select count(*) from atoms;      <<<< 34614297 == 35M Atoms 
+select count(*) from valuations; <<<< 52187113 == 52M Valuations
+
+
+(print-matrix-summary-report fpf)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
+Left type: WordNode    Right Type: WordNode    Pair Type: EvaluationLink
+Wildcard: (EvaluationLink (ctv 0 0 4.7020738e+08)
+   (LinkGrammarRelationshipNode "ANY")
+   (ListLink
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+   )
+)
+Rows: 619168 Columns: 580804
+Size: 15795739 non-zero entries of 359615251072 possible
+Fraction non-zero: 4.3924E-5 Sparsity (-log_2): 14.475
+Total observations: 470207380.  Avg obs per pair: 29.768
+Entropy Total: 18.590   Left: 12.338   Right: 11.623
+Total MI: 5.3712
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  9987.        1.2491E+4
+Count   (l_1)  1.3805E+6    2.6232E+6     138.2        210.0    
+Length  (l_2)  2.4211E+5    3.2904E+5     24.24        26.34    
+RMS Count      2.4179E+5    3.2853E+5     24.21        26.30    
+
+No MM^T data present
+No M^TM data present
+
+4353431720 Bytes uncompressed == 4.3 GBytes
+ 789427829 Bytes compressed   == 789 MBytes
+
+dfb1bf8f6e61fba18c93fbb591d34650  en_pairs_1.8_remi.sql
+5f51c11907ea6cc624274707ed7eabc5  en_pairs_1.8_remi.sql.bz2
+
+
+en_pairs_mi_1.8cut
+------------------
+A copy of `en_pairs_cfive_mi`, but with all word-pairs with an MI<1.8
+removed.  After removal, a filter is applied and the MI and marginals
+are recomputed on that filter. Thus, the dataset contains two sets of
+MI data: the original data, at the standard locations, and the
+recomputed MI, at the filtered location.
+
+BUILD:
+createdb en_pairs_mi_1.8cut -T en_pairs_cfive_mi_1.8
+(wps 'fetch-pairs)
+(define fpm (add-fmi-filter wps 1.8 #t))  ;; <<< #t so filter-keys!
+(batch-all-pair-mi fpm)
+
+STATUS: OK. (as good as en_pairs_cfive_mi)
+REASON: It's good, but most ongoing apps do not need both sets of MI,
+   so its a waste of space ... and mildly confusing.
+DATE: 12 July 2019
+
+COMMENT ON DATABASE "en_pairs_mi_1.8cut" IS
+'en_pairs_cfive_mi and pairs w/FMI<1.8 cut and both old and new MI/marginals.';
+
+en_pairs_mi_1.8cut=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 3055 MB    | 
+ public | valuations | table | ubuntu | 12 GB      | 
+
+select count(*) from atoms;      <<<< 34614308 == 34M Atoms
+select count(*) from valuations; <<<< 88578486 == 89M Valuations
+
+(print-matrix-summary-report fpf)
+Summary Report for Correlation Matrix Link Grammar ANY link Word Pairs fmi-cut-1.8
+(This is same as en_pairs_1.8_remi)
+
+7335895086 Bytes uncompressed == 7.3 GBytes
+1289552824 Bytes compressed   == 1.3 GBytes
+
+ac2920d95c949d7220c917d108b668cc  en_pairs_mi_1.8cut.sql
+ff6157f7cdf5dda1ff191ead93ace247  en_pairs_mi_1.8cut.sql.bz2
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+
+OK, 53 hang on split-books/lisa-wit-ah
+gc is spinning like crazy .... and allocs are spinning like crazy too.
+
+18 hang on split-books/pascal-br
+
+Crap. 157 threads.
+
+57 GC_allochblk_nth
+
+scheme@(guile-user) [1]> ,bt
+In opencog/nlp/learn/mst-parser.scm:
+   344:31  5 (observe-mpg _)
+In opencog/sheaf/mpg-parser.scm:
+    72:25  4 (mpg-parse-atom-seq _ #<procedure ramp-scorer (LW RW LEN)> 1000000)
+In opencog/sheaf/mst-parser.scm:
+   342:25  3 (mst-parse-atom-seq _ #<procedure ramp-scorer (LW RW LEN)>)
+In opencog/sheaf/vo-graph.scm:
+   206:33  2 (wedge-cross? _ _)
+In unknown file:
+
+write items=1853
+num_get_nodes=1109
+num_get_links=6085
+
+(define tit (tokenize-text "this is a test"))
+(define wit (map WordNode tit))
+(define pai (make-any-link-api))
+(define mis (add-pair-freq-api pai))
+(define sco (make-score-fn mis 'pair-fmi))
+
+
+(define mst (mst-parse-atom-seq wit sco))
+
+(define start-cost-pair (pick-best-cost-pair numa-list))
+returns bad node ... it should check and abort...
+
+pick-best-cost-left-pair retursn bad node ...
+1e-40 wall-this
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND
+12871 101000    30  10 56.172g 0.042t  39880 S  1178 17.1  91:08.50 guile 
+12871 101000    30  10 59.010g 0.045t  39880 S  1156 18.1 119:18.34 guile
+12871 101000    30  10 63.820g 0.049t  39880 S  1318 20.1 135:03.21 guile
+
+%Cpu(s):  3.9 us, 29.5 sy, 20.0 ni, 46.2 id,  0.3 wa,  0.0 hi,  0.1 si,  0.0 st
+
+(gdb) bt
+#0  0x00007f85d38ef428 in __GI_raise (sig=sig@entry=6)
+    at ../sysdeps/unix/sysv/linux/raise.c:54
+#1  0x00007f85d38f102a in __GI_abort () at abort.c:89
+#2  0x00007f85d3f6ecdb in capture_delimited_continuation (
+    current_registers=<optimized out>, dynstack=<optimized out>, 
+    saved_registers=<optimized out>, saved_mra=<optimized out>, 
+    saved_fp=<optimized out>, vp=<optimized out>) at ../../libguile/vm.c:1327
+#3  abort_to_prompt (thread=0x15f692dc0, saved_mra=<optimized out>)
+    at ../../libguile/vm.c:1454
+#8  0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+
+#13 0x00007f85d3f6c546 in scm_throw (key=key@entry=0xdc5420, args=0x15af130a0)
+    at ../../libguile/throw.c:272
+#15 0x00007f85d3eedeb5 in scm_error_scm (key=key@entry=0xdc5420, 
+    subr=<optimized out>, message=message@entry=0x1607c9380, 
+    args=args@entry=0x15af130e0, data=data@entry=0x15af130f0)
+    at ../../libguile/error.c:90
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0, 
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S", args=0x15af130e0, 
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+#22 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+#30 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+
+#34 0x00007f85d3f6c1aa in catch (tag=tag@entry=0x404, thunk=0x15b341ee0, 
+    handler=0x15b341ec0, pre_unwind_handler=0x15b341ea0) at
+../../libguile/throw.c:146
+#35 0x00007f85d3f6c505 in scm_catch_with_pre_unwind_handler (key=key@entry=0x404, 
+    thunk=<optimized out>, handler=<optimized out>, 
+    pre_unwind_handler=<optimized out>) at ../../libguile/throw.c:260
+#36 0x00007f85d3f6c6bf in scm_c_catch (tag=tag@entry=0x404, body=<optimized out>, 
+    body_data=<optimized out>, 
+    handler=handler@entry=0x7f85c95d0f00
+<opencog::SchemeEval::catch_handler_wrapper(void*, scm_unused_struct*,
+scm_unused_struct*)>, 
+    handler_data=handler_data@entry=0x7f7e60000980, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85c95d0c40
+<opencog::SchemeEval::preunwind_handler_wrapper(void*, scm_unused_struct*,
+scm_unused_struct*)>, 
+    pre_unwind_handler_data=0x7f7e60000980) at ../../libguile/throw.c:385
+#37 0x00007f85c95d122a in opencog::SchemeEval::do_eval (this=0x7f7e60000980, 
+    expr="(observe-mpg \"The countess, with her loving heart, felt that her
+children were being ruined, that it was not the count's fault for he could not
+help being what he was -- that (though he tried to hide "...)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:590
+#38 0x00007f85c95d12aa in opencog::SchemeEval::c_wrap_eval (p=0x7f7e60000980)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:507
+#39 0x00007f85d3eeb47a in c_body (d=0x7f7e85fe2d40)
+    at ../../libguile/continuations.c:430
+#40 0x00007f85d4262b6f in ?? ()
+#41 0x00007f85d4262a80 in ?? ()
+#42 0x00007f85d41e10c0 in jump_table_ () from /usr/local/lib/libguile-3.0.so.0
+#43 0x000000015f692dc0 in ?? ()
+#44 0x00007f85d3f19581 in scm_jit_enter_mcode (thread=0x15f692dc0, 
+    mcode=0x15f692dc0 "\200\205\267_\001") at ../../libguile/jit.c:4796
+#45 0x00007f85d3f70600 in vm_debug_engine (thread=0x304)
+    at ../../libguile/vm-engine.c:370
+#46 0x00007f85d3f76db2 in scm_call_n (proc=proc@entry=0x15b341fe0, 
+    argv=argv@entry=0x0, nargs=nargs@entry=0) at ../../libguile/vm.c:1605
+#47 0x00007f85d3eef8d9 in scm_call_0 (proc=proc@entry=0x15b341fe0)
+    at ../../libguile/eval.c:490
+#48 0x00007f85d3f6c1aa in catch (tag=tag@entry=0x404, thunk=0x15b341fe0, 
+    handler=0x15b341fc0, pre_unwind_handler=0x15b341fa0) at
+../../libguile/throw.c:146
+#49 0x00007f85d3f6c505 in scm_catch_with_pre_unwind_handler (key=key@entry=0x404, 
+    thunk=<optimized out>, handler=<optimized out>, 
+    pre_unwind_handler=<optimized out>) at ../../libguile/throw.c:260
+#50 0x00007f85d3f6c6bf in scm_c_catch (tag=tag@entry=0x404, 
+    body=body@entry=0x7f85d3eeb470 <c_body>, 
+    body_data=body_data@entry=0x7f7e85fe2d40, 
+    handler=handler@entry=0x7f85d3eeb720 <c_handler>, 
+    handler_data=handler_data@entry=0x7f7e85fe2d40, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85d3eeb580
+<pre_unwind_handler>, 
+    pre_unwind_handler_data=0xe174a0) at ../../libguile/throw.c:385
+#51 0x00007f85d3eeb9e3 in scm_i_with_continuation_barrier (
+    body=body@entry=0x7f85d3eeb470 <c_body>, 
+    body_data=body_data@entry=0x7f7e85fe2d40, 
+    handler=handler@entry=0x7f85d3eeb720 <c_handler>, 
+    handler_data=handler_data@entry=0x7f7e85fe2d40, 
+    pre_unwind_handler=pre_unwind_handler@entry=0x7f85d3eeb580
+<pre_unwind_handler>, 
+    pre_unwind_handler_data=0xe174a0) at ../../libguile/continuations.c:368
+#52 0x00007f85d3eebac5 in scm_c_with_continuation_barrier (func=<optimized out>, 
+    data=<optimized out>) at ../../libguile/continuations.c:464
+#53 0x00007f85d3575127 in GC_call_with_gc_active (
+    fn=fn@entry=0x7f85d3f6a070 <with_guile_trampoline>, 
+    client_data=client_data@entry=0x7f7e85fe2e20) at ../pthread_support.c:1343
+#54 0x00007f85d3f6ac4f in with_guile (base=base@entry=0x7f7e85fe2df0, 
+    data=data@entry=0x7f7e85fe2e20) at ../../libguile/threads.c:683
+#55 0x00007f85d356f132 in GC_call_with_stack_base (
+    fn=fn@entry=0x7f85d3f6abb0 <with_guile>, arg=arg@entry=0x7f7e85fe2e20)
+    at ../misc.c:1941
+#56 0x00007f85d3f6aff8 in scm_i_with_guile (dynamic_state=<optimized out>, 
+    data=0x7f7e60000980, 
+    func=0x7f85c95d1290 <opencog::SchemeEval::c_wrap_eval(void*)>)
+    at ../../libguile/threads.c:698
+#57 scm_with_guile (
+    func=func@entry=0x7f85c95d1290 <opencog::SchemeEval::c_wrap_eval(void*)>, 
+    data=data@entry=0x7f7e60000980) at ../../libguile/threads.c:704
+#58 0x00007f85c95d126e in opencog::SchemeEval::eval_expr (this=0x7f7e60000980, 
+    expr=...) at /home/ubuntu/src/atomspace/opencog/guile/SchemeEval.cc:479
+#59 0x00007f85bc783439 in opencog::GenericShell::eval_loop (this=0x7f7ef0001e90)
+    at /home/ubuntu/src/opencog/opencog/cogserver/shell/GenericShell.cc:588
+#60 0x00007f85c6e5ac80 in ?? () from /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+#61 0x00007f85d3c916ba in start_thread (arg=0x7f7e85fe3700) at
+pthread_create.c:333
+#62 0x00007f85d39c141d in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+
+
+up 58
+print *this
+shows "(observe-mpg \"The countess,
+
+_input_line = "(observe-mpg \"The countess, with her loving heart, felt that her
+children were being ruined, that it was not the count's fault for he could not
+help being what he was -- that (though he tried to hide "...,
+
+libguile/vm.c 1327:
+  if (SCM_FRAME_DYNAMIC_LINK (base_fp) != saved_fp)
+    abort();
+
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0, 
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S",
+args=0x15af130e0, 
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+
+  vp->ip = SCM_FRAME_VIRTUAL_RETURN_ADDRESS (vp->fp);
+
+  scm_error (scm_arg_type_key, NULL, "Wrong type to apply: ~S",
+             scm_list_1 (proc), scm_list_1 (proc));
+}
+
+149 threads
+Half(?) are in
+
+#0  __lll_lock_wait () at ../sysdeps/unix/sysv/linux/x86_64/lowlevellock.S:135
+#1  0x00007f85d3c93dbd in __GI___pthread_mutex_lock (mutex=mutex@entry=0xd80f68)
+    at ../nptl/pthread_mutex_lock.c:80
+#2  0x00007f85d3f7845f in scm_c_weak_set_lookup (set=<optimized out>, 
+    raw_hash=raw_hash@entry=2291501516460283252, 
+    pred=pred@entry=0x7f85d3f69270 <string_lookup_predicate_fn>, 
+    closure=closure@entry=0x7f7e177fcf50, dflt=dflt@entry=0x4)
+    at ../../libguile/weak-set.c:760
+#3  0x00007f85d3f68df9 in lookup_interned_symbol (raw_hash=2291501516460283252, 
+    name=0x15abbbd80) at ../../libguile/symbols.c:112
+#4  scm_i_str2symbol (str=0x15abbbd80) at ../../libguile/symbols.c:244
+
+One is this:
+#0  0x00007f85d3c954ee in __pthread_mutex_unlock_usercnt (decr=1, 
+    mutex=0x7f85d37c4260 <GC_allocate_ml>) at pthread_mutex_unlock.c:55
+#1  __GI___pthread_mutex_unlock (mutex=0x7f85d37c4260 <GC_allocate_ml>)
+    at pthread_mutex_unlock.c:314
+#2  0x00007f85d356f0d0 in GC_call_with_alloc_lock (
+    fn=fn@entry=0x7f85d3f777e0 <do_copy_weak_entry>, 
+    client_data=client_data@entry=0x7f85a47f6ef0) at ../misc.c:1925
+#3  0x00007f85d3f7850b in copy_weak_entry (dst=0x7f85a47f6ee0, src=0x100e450)
+    at ../../libguile/weak-set.c:128
+#4  weak_set_lookup (dflt=0x4, closure=0x7f85a47f6f50, 
+    pred=0x7f85d3f69270 <string_lookup_predicate_fn>, hash=671639580896511065, 
+    set=0xd80f60) at ../../libguile/weak-set.c:493
+#5  scm_c_weak_set_lookup (set=<optimized out>, 
+    raw_hash=raw_hash@entry=335819790448255532, 
+    pred=pred@entry=0x7f85d3f69270 <string_lookup_predicate_fn>, 
+    closure=closure@entry=0x7f85a47f6f50, dflt=dflt@entry=0x4)
+    at ../../libguile/weak-set.c:762
+#6  0x00007f85d3f68df9 in lookup_interned_symbol (raw_hash=335819790448255532, 
+    name=0x15c4c11e0) at ../../libguile/symbols.c:112
+#7  scm_i_str2symbol (str=0x15c4c11e0) at ../../libguile/symbols.c:244
+
+
+So, here's my next installment on using guile-2.9.2. The first installment said
+that I'd piled up CPU-months of guile 2.9.2 experience without any crashes. Well,
+now, a different workload crashes in minutes.  Below is a highly simplified,
+edited gdb session -- it crashes because it unexpectedly aborts, during an
+abort(!) because `get_callee_vcode()` failed. Harrumpf.  
+
+
+Background: there are 140 threads, half in guile, the other half waiting for guile
+to finish. Yes, that's too many, but anyways ... 70 threads in guile and one
+crashed:
+
+
+#2  0x00007f85d3f6ecdb in capture_delimited_continuation (
+    current_registers=<optimized out>, dynstack=<optimized out>,
+    saved_registers=<optimized out>, saved_mra=<optimized out>,
+    saved_fp=<optimized out>, vp=<optimized out>) at ../../libguile/vm.c:1327
+#3  abort_to_prompt (thread=0x15f692dc0, saved_mra=<optimized out>)
+    at ../../libguile/vm.c:1454
+
+
+Both frames are interesting, because libguile/vm.c:1327 shows
+  if (SCM_FRAME_DYNAMIC_LINK (base_fp) != saved_fp)
+     abort();
+hey!? who called this? line 1454 is in the middle of abort_to_prompt ()  Yow! an
+unexpected abort during an abort...
+
+How did we get here?
+
+#15 0x00007f85d3eedeb5 in scm_error_scm (key=key@entry=0xdc5420,
+    subr=<optimized out>, message=message@entry=0x1607c9380,
+    args=args@entry=0x15af130e0, data=data@entry=0x15af130f0)
+    at ../../libguile/error.c:90
+#16 0x00007f85d3eedf4f in scm_error (key=0xdc5420, subr=subr@entry=0x0,
+    message=message@entry=0x7f85d3fa228c "Wrong type to apply: ~S",
+args=0x15af130e0,
+    rest=rest@entry=0x15af130f0) at ../../libguile/error.c:62
+#17 0x00007f85d3f6f913 in get_callee_vcode (thread=0x15f692dc0)
+    at ../../libguile/vm.c:1527
+
+and libguile/vm.c:1527
+
+
+and libguile/vm.c:1527 tells me that get_callee_vcode () is very unhappy. But why?
+I cannot tell .. after that, things peter out in boring stack frames that started
+with my call scm_c_catch() ... the same seemingly harmless call that is pending in
+70 other threads. (the same call that has survived several CPU month of pounding
+with a different collection of scheme code) 
+
+My best guess is that the current code, that crashes, is .. compiling into
+something new/different/unusual, triggering a bug.  Either that, or the 70 threads
+are exposing a race condition that has been hithertho hidden.  I don't know how to
+debug any further.  I will try a slightly newer guile shortly.
+
+-- Linas
+
+p.s. here's the whole stack trace. But really, its boring, except for the above
+highlights.
+
+above was for
+commit 1fb39929f9c1c292b11aedb7b29a166471b1c555
+Author: Andy Wingo <wingo@pobox.com>
+Date:   Mon May 27 19:05:10 2019 +0200
+
+Lets try again.
+
+
+guard
+scm_thread
+scm_vm
+scm_tc16_thread = scm_make_smob_type ("thread", sizeof (scm_thread));
+scm_init_threads
+SCM_NEWSMOB (t->handle, scm_tc16_thread, t)
+0xf00fbaaa for the thread
+0xd00d1111 for the vm
+SCM_FRAME_LOCAL
+  SCM proc = SCM_FRAME_LOCAL (vp->fp, 0);
+
+scm_t_bits scm.h SCM_UNPACK
+
+2e -- 10 1110 -- odd small int -- 11
+36 -- 11 0110 -- odd small int -- 13
+2a -- 10 1010 -- odd small int -- 10
+26 -- 10 0110 -- odd small int -- 9
+22 -- 10 0010 -- even small int -- 8 -- just shift >>2 with SCM_I_INUM (exp)
+3a --
+3e --
+42 --
+
+SCM_I_INUM (exp)
+if (SCM_I_INUMP(xp)...
+
+#define SCM_PROGRAM_P(x) (SCM_HAS_TYP7 (x, scm_tc7_program))  0x45 & 0x7f
+#define SCM_STRUCTP(X)        (!SCM_IMP(X) && (SCM_TYP3(X) == scm_tc3_struct))
+
+
+who sets SCM_FRAME_LOCAL to short int??
+unpack_values does .. why?
+because subr-call in vm-engine.c called it
+
+SP_SET (0, ret);  ??
+
+          RESET_FRAME (1);      // sets sp = fp-1
+          SP_SET (0, ret);  ////
+          NEXT (1);
+
+
+if (SCM_I_INUMP(SCM_FRAME_LOCAL (thread->vm.fp, 0))) {
+printf("duuude fail in foeign call! \n"); assert(0); }
+
+  eng halt
+
+Both
+VM_DEFINE_OP (7, return_values, "return-values", OP1 (X32))
+and
+VM_DEFINE_OP (0, halt, "halt", OP1 (X32))
+set fp to whack values....
+and so does
+  VM_DEFINE_OP (4, call_label, "call-label", OP3 (X8_F24, X8_C24, L32))
+
+scm_i_vm_prepare_stack
+
+==========
+get_callee_vcode
+jump_table_
+scm_jit_enter_mcode mcode == 0x49cc8949  0x8349c429 0x8f0f38fc 0x00000013
+vm_debug_engine
+scm_call_n
+
+only four places call scm_jit_enter_mcode
+-- two for instrumentation
+-- one for return-values
+-- one for compose-continuation << probably this
+-- one is abort
+
+what does scm_jit_enter_mcode do?
+  if (!SCM_FRAME_MACHINE_RETURN_ADDRESS (thread->vm.fp))
+    SCM_FRAME_SET_MACHINE_RETURN_ADDRESS
+      (thread->vm.fp, scm_jit_return_to_interpreter_trampoline);
+
+so vm.fp is a C pointer to trampoline bytecode
+
+enter_mcode = jit_address_to_function_pointer (enter_mcode_addr);
+jit_address_to_function_pointer bless_function_pointer
+
+enter_mcode_addr = emit_code (j, emit_entry_trampoline);
+
+ohh and then there is emit_get_callee_vcode
+which is from emit_indirect_tail_call
+  emit_call_1 (j, scm_vm_intrinsics.get_callee_vcode, thread_operand ());
+
+duuuude wtf return valueo thread=0xbd5540 mcode=49
+
+fp val=7fffd83a0168 yeah=a3aa30
+
+SCM_FRAME_LOCAL (VP->fp, 0)
+#define SCM_FRAME_LOCAL(fp,i)           (SCM_FRAME_SLOT (fp, i)->as_scm)
+#define SCM_FRAME_SLOT(fp,i)            ((fp) - (i) - 1)
+
+So what does emit_get_callee_vcode do??
+emit_get_callee_vcode (scm_jit_state *j, jit_gpr_t dst)
+{
+  emit_call_1 (j, scm_vm_intrinsics.get_callee_vcode, thread_operand ());
+  emit_retval (j, dst);
+  emit_reload_sp (j);
+  emit_reload_fp (j);
+}
+
+emit_reload_fp (scm_jit_state *j)
+{
+  emit_ldxi (j, FP, THREAD, thread_offset_fp);
+  set_register_state (j, FP_IN_REGISTER);
+}
+
+where the heck is thread_offset_fp ??? must be computed durig build...
+frame_offset_vra,
+thread_offset_sp,
+
+ohh I get it ... its just not needed...
+
+scm_i_vm_prepare_stack
+
+
+=========
+
+lthread 151 and 143, 142, 141 140, 138, 137, 136, 135, 127, 126, 124
+GC_generic_malloc_many mallocx.c:304
+scm_inline_gc_alloc libguile/gc-inline.h:79
+allocate_words_with_freelist libguile/intrinsics.c:424
+
+thread 150 and 148
+GC_malloc_kind_global malloc.c:254
+ make_bytevector libguile/bytevectors.c:233
+
+thread 125
+scm_c_weak_set_lookup libguile/weak-set.c:760
+lookup_interned_symbol libguile/symbols.c:112
+scm_i_str2symbol libguile/symbols.c:244
+
+========
+
+MPG-Processing file >>>split-books/lisa-sorc-aa<<<
+Sentence Splitter v3
+Language: en
+utf8 "\xA9" does not map to Unicode at ./split-sentences.pl line 72, <STDIN> line 9.
+Malformed UTF-8 character (fatal) at ./split-sentences.pl line 115, <STDIN> line 10.
+
+ Copyright <A9> 2010 by Eric Flint and Dave Freer
+
+=========
+
+guile 2.2.3
+
+Thread 7 "guile" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7ffff358f700 (LWP 17049)]
+scm_i_vm_mark_stack (vp=0x15b827a20, mark_stack_ptr=0x7ffff357ef00, 
+    mark_stack_limit=0x7ffff358eeb0) at ../../libguile/vm.c:995
+995                   if (SCM_NIMP (sp->as_scm) &&
+(gdb) bt
+#0  scm_i_vm_mark_stack (vp=0x15b827a20, mark_stack_ptr=0x7ffff357ef00, 
+    mark_stack_limit=0x7ffff358eeb0) at ../../libguile/vm.c:995
+#1  0x00007ffff717335e in GC_mark_from (mark_stack_top=0x7ffff357eed0, 
+    mark_stack_top@entry=0x7ffff357eef0,
+mark_stack=mark_stack@entry=0x7ffff357eeb0, 
+    mark_stack_limit=mark_stack_limit@entry=0x7ffff358eeb0) at ../mark.c:772
+#2  0x00007ffff717397e in GC_do_local_mark (local_mark_stack=0x7ffff357eeb0, 
+    local_top=0x7ffff357eef0) at ../mark.c:1037
+#3  0x00007ffff7173b98 in GC_mark_local (
+    local_mark_stack=local_mark_stack@entry=0x7ffff357eeb0, id=id@entry=5)
+    at ../mark.c:1170
+#4  0x00007ffff7173eaa in GC_help_marker (my_mark_no=my_mark_no@entry=101042)
+    at ../mark.c:1238
+#5  0x00007ffff717de3c in GC_mark_thread (id=<optimized out>)
+    at ../pthread_support.c:380
+#6  0x00007ffff78916ba in start_thread (arg=0x7ffff358f700) at
+pthread_create.c:333
+#7  0x00007ffff75c741d in clone () at
+../sysdeps/unix/sysv/linux/x86_64/clone.S:109
+(gdb) info thr
+
+(gdb) print sp
+$1 = (union scm_vm_stack_element *) 0x7fffe000c038
+(gdb) print *sp
+Cannot access memory at address 0x7fffe000c038
+
+(gdb) print vp
+$2 = (struct scm_vm *) 0x15b827a20
+(gdb) print *vp
+$3 = {ip = 0x7fffee315f2c, sp = 0x7fffe000c038, fp = 0x7ffff7e03050, 
+  stack_limit = 0x7ffff7e02000, trace_level = 0, sp_min_since_gc = 0x7fffe000c008, 
+  stack_size = 1024, stack_bottom = 0x7ffff7e02000, stack_top = 0x7ffff7e04000, 
+  overflow_handler_stack = 0x304, hooks = {0x4, 0x4, 0x4, 0x4, 0x4}, 
+  resumable_prompt_cookie = 0x7fffcade1fe0, engine = 1}
+
+
+
+=========
+
+34614581
+
+(WordNode "###LEFT-WALL###") has a minscule incoming set .... why?
+
+one threat at prompt
+24 threads in pthread_cond_wait for GC
+2 threads in some blocking gc thing
+1 immortal
+1 in nanosleep in cogserver
+1 in boost::asio recv
+
+1 in
+0  0x00007f6017f25cd8 in __GI___tls_get_addr (ti=0x7f6017ef42f8) at dl-tls.c:834
+#1  0x00007f6017c01e86 in scm_async_tick () at ../../libguile/async.c:148
+#2  0x00007f6017c0d6ee in scm_equal_p (x=0x26, y=0x6) at ../../libguile/eq.c:299
+#3  0x00007f6017c0d752 in scm_equal_p (x=0x1f33060, y=0x1f330e0)
+    at ../../libguile/eq.c:308
+#4  0x00007f6017c702e0 in scm_srfi1_delete_duplicates_x (lst=0x2606aa0a0, pred=0x9
+(observe-mpg \"Contact the Foundation as set forth in Section 3 below.\")
+
+1 in srfi1_find_tail
+(observe-mpg \"Section 2.\")
+Another with (observe-mpg \"Section 3.\")
+Another with (observe-mpg \"Section 4.\")
+Another with (observe-mpg \"Section 5.\")
+Another with (observe-mpg \"Section 1.\")
+ans (observe-mpg \"See paragraph 1.C below.\")
+(observe-mpg \"See paragraph 1.E below.\")
+
+1 in CACHE_REGISTER
+(observe-mpg \"The Foundation’s EIN or federal tax identification number is
+64-6221541.\")
+
+
+(mst-parse-text "Section 1.")
+
+(graph-add-bridges disco)
+
+((((2 . (WordNode "Section")) 3 . (WordNode "1")) . 7.98934111276043)
+(((2 . (WordNode "Section")) 4 . (WordNode ".")) . 4.02007251964681))
+
+((1 . (WordNode "###LEFT-WALL###"))
+ (2 . (WordNode "Section"))
+ (3 . (WordNode "1"))
+ (4 . (WordNode ".")
+))
+
+So -- graph-add-linear fails
+graph-add-bridges hangs ...
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+(observe-mpg "“Can you define anything which you only feel and cannot see—heat for instance, or cold?”")
+
+ERROR: Wrong type to apply: 10
+mpg-linear
+
+alpha-guten-tranche-1/split-books/steam-br
+
+39 41 43
+(observe-mpg \"INDEMNITY - You agree to indemnify and hold the Foundation, the
+trademark owner, any agent or employee of the Foundation, anyone providing copies
+of Project Gutenberg-tm electronic works"
+
+45
+(observe-mpg \"+ -- -- -- -- -- + -- -- -- -- -- + -- -- -- -- + -- -- -- -- -+ --
+-- -- -- -- + -- -- -- -- -- -- -- -+ | | | | | | Relative | | | | | Weight | |
+Density, | | | | | of | Volume | Hydro
+
+47
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -- -- + -- -- -- -+ -- -- -- -- + --
+-- -- -+ |Substance |Carbon |Hydrogen|Oxygen | + -- -- -- -- -- -- -- -- -- -- --
++
+
+49
+(observe-mpg \"+ -- -- -- -- -- -- -- -- -- -+ -- -- -- -- -- -- -- -- -- -- -- --
+-- -- + -- -- -- -- -- -- -- + | Kind of Coal | Per Cent of Combustible | B. t. u.
+| | + -- -- -- -- -- -- + -- -- -- "
+
+52
+(observe-mpg \"Starting with Tioga and Bradford Counties of northern Pennsylvania,
+the bed runs southwest through Lycoming, Clearfield, Centre, Huntingdon, Cambria,
+Somerset and Fulton Counties, Pennsy"...)
+
+54
+(observe-mpg \"Absolute pressure 117 Absolute zero 80 Accessibility of Babcock &
+Wilcox boiler 59 Acidity in boiler feed water 106 Actual evap. corresponding to
+boiler horse power 288 Advantages of Bab"
+
+56
+(observe-mpg \"Calorimeter, coal, Mahler bomb 184 Mahler bomb, method of
+correction 187 Mahler bomb, method of operation of 185 Calorimeter, steam, compact
+type of throttling 132 Correction for 131 Loc"
+
+report-avg-gc-cpu-time
+
+10 0.0051
+20 0.0264
+30 0.0771
+40 0.4769
+50 2.1231
+60 3.5993
+70 8.3258
+80 29.464
+90 51.217
+100 298.25
+110
+
+OK, this is exponential explosion, not power. Why
+
+graph-add-mpg: length vs time:
+10 0.0027
+50 0.0742
+80 0.1658
+120 0.3634
+160 0.5767
+200 0.7824
+300 1.5131
+400 3.6476
+500 5.7588
+600 8.1915
+
+add-linear: trivial
+
+ad-bridges:
+10 0.0007
+40 0.5250
+50 2.0587
+60 3.3997
+70 8.1694
+80 29.494
+
+
+(use-modules (srfi srfi-1))
+
+(for-each (lambda (x) (x)) (iota 10))
+(for-each call-with-new-thread (iota 10))
+
+
+(catch #t 
+	(for-each call-with-new-thread (iota 10))
+	(lambda key args ...) #f)
+
+==========
+OK go for MPG parsing.
+createdb en_mpg_18 -T en_pairs_1.8_remi
+createdb en_mpg_53 -T en_pairs_5.3_remi
+
+OK, so 
+en_mpg_53 blew up to 72 GB RAM but parsed everything in under 20 hours
+en_mpg_18 blows up to 90+
+
+mpg_53: 
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 10142877) (EvaluationLink . 10142877)
+(AnchorNode . 1) (Connector . 1114710) (ConnectorDir . 2) (ConnectorSeq .
+21886812) (Section . 34540275) (SchemaNode . 1) (WordNode . 689109)
+(AnyNode . 2) (LinkGrammarRelationshipNode . 1))
+
+mpg_18:
+(cog-report-counts)
+((PredicateNode . 15) (ListLink . 16995712) (EvaluationLink . 16995712)
+(AnchorNode . 1) (Connector . 1102437) (ConnectorDir . 2) (ConnectorSeq .
+29842172) (Section . 39642130) (SchemaNode . 1) (WordNode . 688016)
+(AnyNode . 4) (LinkGrammarRelationshipNode . 1))
+
+
+mpg-53
+(psa 'fetch-pairs)
+Elapsed time to load csets: 3930 secs  248:41.08 cputime
+53.4g  RAM  total of 58105983 atoms
+
+(batch-all-pair-mi psa)
+Support: found num left= 564178 num right= 21886812 in 1193 secs
+Finished left norm marginals in 117149 secs << 33 hours!
+Finished left totals in 3064 secs
+Finished right norm marginals in 1382 secs
+Finished right totals in 25 secs
+Done with wild-card count N(x,*) and N(*,y) in 121620 secs <<< 34 hours
+Total count N(*,*) = 78200160.0 = 78200160.0
+Finished column (left) norm averages in 4026 secs
+Finished row (right) norm averages in 106 secs
+Going to do individual pair frequencies
+Done computing 34540275 pair frequencies in 5465 secs
+Start computing log P(*,y)
+Done computing 21886812 left-wild log frequencies in 813 secs
+Done computing 564178 right-wild log frequencies in 18 secs
+Done storing 21886812 left-wilds in 15511 secs  << 4 hours
+Done storing 564178 right-wilds in 487 secs
+Done computing 34540275 pair MI's in 28113 secs
+Finished left entropy subtotals in 114463 secs  << 32 hours
+Finished right entropy subtotals in 1373 secs
+Finished left MI subtotals in 115187 secs << 32 hours
+Finished right MI subtotals in 1379 secs
+Done storing 21886812 left-wilds in 11512 secs << 3 hours
+Done storing 564178 right-wilds in 308 secs
+Finished with MI computations; this took 116. hours << 5 days.
+
+guile -l mpg-53-djmi.scm
+
+==================================================================
+
+en_mpg_53
+---------
+Brand new recomputation of disjuncts, using the MPG (Maximal Planar
+Graph) parser.  The starting dataset is one where all word-pairs of
+MI < 5.3 are discarded. Then the MPG parse is performed. Any islands
+that remain are linked with adjacent words (whether or not such word
+pairs can be found in the pairs dataset). This dataset contains both
+the word-pairs, and also the disjuncts, and also the disjunct marginals.
+The goal of the MPG parse is to be able to apply data cuts much later
+in the pipeline.
+
+This is a full copy of `en_pairs_5.3_remi`, with the djs and dj
+marginals added.
+
+BUILD:
+   (psa 'fetch-pairs)
+   (batch-all-pair-mi psa)
+
+STATUS: Good. The word-pair dataset contains some junk - words with
+   markup that should have been split off. About 5%(?) of words are
+   affected.
+
+DATE: 27 July 2019
+
+COMMENT ON DATABASE en_mpg_53 IS
+'en_pairs_5.3_remi plus disjuncts plus dj marginals.';
+
+Final RAM usage: 110 GBytes for 80556988 Atoms
+
+en_mpg_53=> \dt+
+                        List of relations
+ Schema |    Name    | Type  | Owner  |    Size    | Description 
+--------+------------+-------+--------+------------+-------------
+ public | atoms      | table | ubuntu | 9047 MB    | 
+ public | valuations | table | ubuntu | 23 GB      | 
+
+select count(*) from atoms;      <<<< 100967670 == 100M Atoms
+select count(*) from valuations; <<<< 225042856 == 225M Values
+
+(print-matrix-summary-report psa)
+Summary Report for Correlation Matrix Word-Disjunct Pairs (Connector Sets)
+Left type: WordNode    Right Type: ConnectorSeq    Pair Type: Section
+Wildcard: (ListLink (ctv 0 0 78200160)
+   (AnyNode "cset-word")
+   (AnyNode "cset-disjunct")
+)
+Rows: 564178 Columns: 21886812
+Size: 34540275 non-zero entries of 12348057820536 possible
+Fraction non-zero: 2.7972E-6 Sparsity (-log_2): 18.448
+Total observations: 78200160.0  Avg obs per pair: 2.2640
+Entropy Total: 22.410   Left: 20.005   Right: 10.120
+Total MI: 7.7151
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  447.7        2.7665E+5
+Count   (l_1)  1.1523E+4    1.0087E+6     25.74        3.646    
+Length  (l_2)  5540.        4.0915E+4     12.37        .1479    
+RMS Count      4252.        4.0864E+4     9.497        .1477    
+
+No MM^T data present
+No M^TM data present
+
+(cog-report-counts)
+((PredicateNode . 14) (ListLink . 22450991) (TypeNode . 2) (AnchorNode . 1)
+(Connector . 1114710) (ConnectorDir . 2) (ConnectorSeq . 21886812) (Section .
+34540275) (SchemaNode . 1) (WordNode . 564178) (AnyNode . 2))
+
+Note that 564178 + 21886812 = 22450990 so the ListLinks are
+holding the marginals. (plus one for any-any)
+
+18014180469 Bytes uncompressed == 18 GBytes
+ 2235538306 Bytes compressed   == 2.2GBytes
+
+36379f212836ab4b07dc71d0a2623854  en_mpg_53.sql
+79069ae3d5d6d51d4eea15cf24f2e2bf  en_mpg_53.sql.bz2
+
+
+==================================================================
+Try again,
+en_mpg_18
+
+(psa 'fetch-pairs)
+Elapsed time to load csets: 5249 secs
+total of 71223993 Atoms == 71M of them.  Takes 66GBytes RAM
+
+(cog-report-counts)
+((PredicateNode . 2) (AnchorNode . 1) (Connector . 1103016) (ConnectorDir . 2)
+(ConnectorSeq . 29873423) (Section . 39684585) (SchemaNode . 1) (WordNode .
+562961) (AnyNode . 2))
+
+So lets go:
+
+
+==================================================================
+
+??? Why are there ListLinks in the above?
+?? Why are there 564K words!? Wow!
+
+Issues: there are words that begin/end with equals-signs:
+e.g. (WordNode "=Carolina.=")
+Also words that begin/end with vertical bar: (WordNode "789│") (WordNode "16.42|") 
+  note the UTF8 bar in above....
+a few but annoying: mayeb 1 in 20 of above.
+Next: some that begin/end with asterisk.
+or backslash: (WordNode "unfitness,\") (WordNode "gone.\")
+or (WordNode "@deserted@")  
+(WordNode "HEALTH"*")
+ (WordNode "Wiley...............A")
+(WordNode "Elizabeth......how")
+(WordNode "Mother....we're")
+(WordNode "Sorry...sorry...it's") (WordNode "Keith...remember..remember")
+(WordNode "classroom.“")
+ (WordNode "King._~") (WordNode "Confessor.~")
+(WordNode "]Klauber")
+(WordNode "+SEBASTIEN")
+(WordNode "winter/spring")
+
+None of the words have any counts on tham (!) Why?
+
+
+
+=========
+Start work on info-sim.
+use langtest which contains ... 4K words, 26K sections
+-- (psa 'fetch-pairs) ; 7 seconds... great!
+-- (define pta (add-transpose-api psa))
+   (pta 'mmt-count (Word "he"))
+	(pta 'total-mmt-count)
+
+	(define pss (add-support-api psa))
+
+make-disc-info
+
+
+
+Evaluation TODO:
+* Fraction of words with null links.
+* Number of linkages found ...  (looking for overflow)
 
 TODO:
+* Words with less than 1% of orig counts should be canned.
+* Why isn't "Remaining count" called on Greedy-checking and done-list?
+
+* MI is wrong, given how we ad-hoc export to gram classes.
+
+* Words that are in word classes, but still have left-over-counts
+  should get thier own classes ...
 * Add 'help method
 * Add 'verbose method to enable progress reports.
-* cut low-obs words from disjunct sets
 * user-interrupt: SchemeEval::interrupt: User interrupt from keyboard
   will not interrupt running thread. Fix this
-* Matrix summary report to print present of MMT
+* Consistent dj/word-sets
+* Counts on MemberLink... (MemberLink should show what's been merged
+  into it. This is done in some code but not other.)
 
 DONE:
 * fix filter-api (DONE)
+* Matrix summary report to print present of MMT (DONE-ish)
+* cut low-obs words from disjunct sets (DONE - micro and mini)
+* Fraction correct S,O links (DONE)
+* Why hang? Why not popping timeout? (Bug, DONE)

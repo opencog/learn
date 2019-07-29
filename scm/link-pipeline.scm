@@ -427,13 +427,7 @@
 		)))
 
 ; ---------------------------------------------------------------------
-;
-; Report the average amount of time spent in GC
-;
-; Print statistics about how much time has been spent in GC.
-; Resets the stats after each call, so it only prints the stats
-; since the previous call.
-;
+; Report the average time spent in GC.
 (define-public report-avg-gc-cpu-time
 	(let ((last-gc (gc-stats))
 			(start-time (get-internal-real-time))
@@ -456,6 +450,17 @@
 			(set! last-gc cur)
 			(set! start-time now)
 			(set! run-time run))))
+
+(set-procedure-property! report-avg-gc-cpu-time 'documentation
+"
+  report-avg-gc-cpu-time - Report the average time spent in GC.
+
+  Print statistics about how much time has been spent in garbage
+  collection, and how much time spent in other computational tasks.
+  Resets the stats after each call, so only the stats since the
+  previous call are printed.
+"
+)
 
 ; --------------------------------------------------------------------
 
@@ -519,33 +524,6 @@
 						(set! cnt (+ cnt 1))
 						;(report-avg-gc-cpu-time)
 					)))))
-
-	; Caution: RelEx-bassed parsing is deprecated, for three reasons:
-	; 1) Its slower, because it has to go to the relex server;
-	; 2) The RelEx server returns long strings containing scheme,
-	;    (often up to 8MBytes long) which cause HUGE GC issues for
-	;    guile - blowing up RAM usage.
-	; 3) The current guile-2.2 compiler has a bug compiling code
-	;    obtained from strings, and intermittently crashes. (A bug
-	;    report has been submitted, but is missing code to reproduce
-	;    it, and so is not getting fixed...)
-	;
-	; Use the RelEx server to parse the text via Link Grammar.
-	; Return a SentenceNode. Attention: when run in parallel,
-	; the returned SentenceNode is not necessarily that of the
-	; the one that was submitted for parsing! It might be just
-	; some other sentence that is sitting there, ready to go.
-	(define (relex-process TXT)
-		(define (do-all-sents)
-			(let ((sent (get-one-new-sentence)))
-				(if (not (null? sent))
-					(begin (process-sent sent obs-mode cnt-reach)
-						(do-all-sents)))))
-
-		(relex-parse TXT)
-		(do-all-sents)
-		(maybe-gc) ;; need agressive gc to keep RAM under control.
-	)
 
 	; Process the text locally (in RAM), with the LG API link or clique-count.
 	(define (local-process TXT obs-mode cnt-reach)

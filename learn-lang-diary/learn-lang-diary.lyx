@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -24,6 +24,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -62,6 +64,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 0
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -70,7 +73,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -97,12 +103,21 @@ The language-learning effort involves research and software development
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
 .
  This document contains supplementary notes and a loosely-organized semi-chronol
 ogical diary of results.
+\end_layout
+
+\begin_layout Abstract
+Because this document has repeatedly become overly large, it has been split
+ into multiple sub-documents.
+ Notable ones include the report on connector sets, the preliminary report
+ on grammatical classes, and several reports on word-pairs.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -115,6 +130,7 @@ The language-learning effort involves research and software development
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
@@ -132,6 +148,7 @@ s from raw text, and the use of these to induce a Link Grammar
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -140,6 +157,7 @@ key "Sleator1991,Sleator1993"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -155,6 +173,7 @@ Later stages further extend beyond what is possible with Link Grammar by
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Poon2009,Lin1998,Lin2001"
+literal "true"
 
 \end_inset
 
@@ -192,6 +211,7 @@ Discovery of Linguistic Relations Using Lexical Attraction
 LatexCommand href
 name "http://www2.denizyuret.com/pub/yuretphd.pdf"
 target "http://www2.denizyuret.com/pub/yuretphd.pdf"
+literal "false"
 
 \end_inset
 
@@ -1917,6 +1937,7 @@ Yuret proposes a way of discovering the pair-wise relations
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -2016,6 +2037,7 @@ Why do syntactic links not cross?
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ferrer2006"
+literal "true"
 
 \end_inset
 
@@ -2098,6 +2120,7 @@ y.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Liu2008"
+literal "true"
 
 \end_inset
 
@@ -3587,6 +3610,7 @@ In linguistics, similar notions of freedom and constraint arise, but seem
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Anderson2012"
+literal "true"
 
 \end_inset
 
@@ -15505,81 +15529,6 @@ Baez primary result on impedence networks is that the black box is describable
 \end_layout
 
 \begin_layout Section*
-MI graphs – 31 May 2015
-\end_layout
-
-\begin_layout Standard
-Results from Rohit:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename images/frequency-vs-frequency-rank-words.png
-	lyxscale 30
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Above is for single words.
- Frequency is the number of times the word was observed.
-\end_layout
-
-\begin_layout Standard
-The log is the natural log.
- Below is for word-pairs.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename images/frequency-vs-frequency-rank-wordpairs.png
-	lyxscale 50
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Below is a scatterplot for mutual information of word-paris vs rank.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename images/mi-vs-frequency-rank.png
-	lyxscale 50
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-number of word pairs as function of word rank
-\end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename images/Nth-word-frequency-regression.png
-	lyxscale 40
-	width 100col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Summary: these are more or less exactly as expected.
- Will need to make cuts to get rid of the low-frequency word pairs...
-\end_layout
-
-\begin_layout Section*
 Mining Grammatical Categories – 20 June 2015
 \end_layout
 
@@ -16824,6 +16773,7 @@ This formula is given by Deniz Yuret in
 LatexCommand href
 name "Lexical Attraction Models of Language"
 target "http://www2.denizyuret.com/pub/lex-attr/lam-iscis06.pdf"
+literal "false"
 
 \end_inset
 
@@ -16848,6 +16798,7 @@ matrix-tree theorem
 LatexCommand href
 name "Kirchoff's Theorem"
 target "https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem"
+literal "false"
 
 \end_inset
 
@@ -16860,6 +16811,7 @@ target "https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem"
 LatexCommand href
 name "Cayley's formula"
 target "https://en.wikipedia.org/wiki/Cayley's_formula"
+literal "false"
 
 \end_inset
 
@@ -17162,7 +17114,7 @@ If graphs with cycles are also allowed, (but no edge crossings) then, in
 
 \begin_layout Standard
 Again, we count the number of edges, as before.
- The 'tree' column shows he counts from before; the loop count count the
+ The 'tree' column shows the counts from before; the loop count count the
  edges from the additional eleven diagrams; the total is just that.
 \begin_inset Separator latexpar
 \end_inset
@@ -18915,542 +18867,38 @@ x
 
 \end_layout
 
-\begin_layout Section*
-English Dataset Sample 28 April 2017
-\end_layout
-
-\begin_layout Subsubsection*
-Samples for English
+\begin_layout Subsection*
+Effecect on Grammar Induction
 \end_layout
 
 \begin_layout Standard
-This section reports on data collected for a small sample of English sentences,
- taken from Wikipedia, late April 2017.
- 
+There is a surprising effect on the quality of the learned grammars, as
+ shown in the graph below, obtained from Andres Suarez
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
-The `en_snapshot` dataset
-\end_layout
-
+Email on the lang-learn@gmail.com mailing list, 22 July 2019, titled 
+\begin_inset Quotes eld
 \end_inset
 
-.
- It was collected over the course of a few days, and so should be considered
- to be a medium-sized sample: larger ones, collected over weeks or months,
- are possible, as well as smaller samples collected over a few hours.
- Note that the current atomspace infrastructure does have some serious performan
-ce limitations: the atomspace is designed to be a very general-purpose hypergrap
-h tool, and not a fast statistics-collecting tool.
-\end_layout
-
-\begin_layout Standard
-There were 106696 unique words observed in the dataset
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-Obtained with (fetch-all-words)(length (get-all-words))
-\end_layout
-
-\end_inset
-
-.
- This number is fairly large, as it includes not only common nouns, but
- also surnames, geographical location names, and a variety of foreign-language
- words, as would be observed in typical wikipedia articles.
- These words were observed for a total of 24417409 times
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(get-total-atom-count (get-all-words)) which is the same as (total-word-observat
-ions)
-\end_layout
-
+MI-threshold for MST-parses
+\begin_inset Quotes erd
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Standard
-These were observed in 80613 sentences
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(get-sentence-count)
-\end_layout
-
 \end_inset
 
- with 15.88 parses per sentence
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(/ (get-parse-count) (get-sentence-count))
-\end_layout
-
-\end_inset
-
-.
- On average, there were 19.07 words per sentence
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(avg-sentence-length)
-\end_layout
-
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-There were 9376710 (about 9M) unique 'clique pairs' observed
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(fetch-clique-pairs) (length (get-all-clique-pairs))
-\end_layout
-
-\end_inset
-
- for a total of XXX observations
-\begin_inset Foot
-status open
-
-\begin_layout Plain Layout
-(get-total-atom-count (get-all-clique-pairs))
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Graphs.
- TODO.TODO graphs P(w), P(t,w), etc.
- show zipf
-\end_layout
-
-\begin_layout Standard
-XXX
-\end_layout
-
-\begin_layout Standard
-Define the relation 
-\begin_inset Formula $E(w_{1},w_{2})$
-\end_inset
-
- as being the relation that both words 
-\begin_inset Formula $w_{1}$
-\end_inset
-
- and 
-\begin_inset Formula $w_{2}$
-\end_inset
-
- occur at the ends of an edge in the same sentence, but in arbitrary order.
- It is symmetric: 
-\begin_inset Formula $E(w_{1},w_{2})=E(w_{2},w_{1})$
-\end_inset
-
-.
- By this definition, one has that 
-\begin_inset Formula 
-\[
-N(E,w_{1},w_{2})=N(R,w_{1},w_{2})+N(R,w_{2},w_{1})
-\]
-
-\end_inset
-
-This is the symmetrized count.
- It is useful to mod out one of the two words, and to consider the sum
-\begin_inset Formula 
-\[
-N(E,w)\equiv N(E,w,*)=\sum_{w_{2}}N(E,w,w_{2})
-\]
-
-\end_inset
-
-This counts how often the word 
-\begin_inset Formula $w$
-\end_inset
-
- occurs at one end or the other of a word-pair.
- It is a distinct count from 
-\begin_inset Formula $N(w)$
-\end_inset
-
-, which, by definition, counts only once per word in a sentence.
-\end_layout
-
-\begin_layout Subsubsection*
-Left-right asymmetry
-\end_layout
-
-\begin_layout Standard
-This section explores how often a given word occurs on the left side of
- a word pair, vs.
- how often it occurs on the right.
- This, of course, depends on the word.
- If sentences and words were randomly generate, one would expect that a
- given word would occur on the left, or on the right, exactly half the time.
- That is, in a random world 
-\begin_inset Formula 
-\[
-N(w,*)\approx N(*,w)
-\]
-
-\end_inset
-
-Of course, this cannot hold for a given human language: the exclamation
- point, question mark and period occur exclusively on the right hand-side
- of any randomly-generated pair.
- This is not limited to punctuation: for Japanese, sentences usually end
- in a verb, and thus, for Japanse verbs 
-\begin_inset Formula $v$
-\end_inset
-
-, one expects that 
-\begin_inset Formula $N(v,*)\ll N(*,v)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Some typical values for English words are given in the table below.
- Here, by defintion, 
-\begin_inset Formula $N(w)\equiv N(*,w)+N(*,w)$
-\end_inset
-
- is the number of times the word 
-\begin_inset Formula $w$
-\end_inset
-
- is observed in a pair relation.
- The word-pairs were generated by creating random parse trees of the sentences
- in the data-set, and then counting a pair, if two words are connected by
- a parse link.
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="13" columns="2">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $w$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset Formula $N(*,w)-N(w,*)/N(w)$
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-how
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.0058
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-when
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.0051
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-,
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.0021
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-will
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.00114
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-usually
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.00112
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-a
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--0.00085
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-the
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.0035
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-finally
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.0043
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-word
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.0094
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-hope
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.0128
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-?
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.3197
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-.
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.8578
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-A histogram summarizing the above table is shown below.
- It bin-counts the asymmetry 
-\begin_inset Formula $N(*,w)-N(w,*)/N(w)$
-\end_inset
-
-.
- About 100 bins are used, from an observation of 8.88 million distinct English-la
-nguage word pairs, where were observed for a total of 420 million times.
- These pairs connected about 400K distinct words.
- The number of distinct words is large, because these include surname, and
- geographical names, as well as an assortment of foreign-language words
- as might be encountered in a sampling of English wikipedia pages.
- (This is the dataset collected by Rohit, summer of 2015).
-\begin_inset Separator latexpar
-\end_inset
-
-
+ via the Kolonin learning project.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename images/lr-balance.eps
-	width 60col%
+	filename images/andres-mi-cut.png
+	width 100col%
 
 \end_inset
 
@@ -19458,45 +18906,138 @@ nguage word pairs, where were observed for a total of 420 million times.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Note Note
-status collapsed
-
-\begin_layout Plain Layout
-The above got generated by lr-balance.scm and plotted with lr-balance.gplot
+The graph shows the a score for the quality of a learned grammar, after
+ pair-counting, MST parsing, extraction of disjuncts, dimensional reduction
+ and aggolmerative clustering.
+ The horizontal axis shows score dependence on an MI threshold: word pairs
+ with an MI of less than the threshold are discarded, before the pipeline
+ is run.
 \end_layout
 
+\begin_layout Standard
+Keeping the late stages of the pipeline invariant, the different lines correspon
+d to different ways of counting word-pairs.
+ The lines are labeled as:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+WIN6
+\series default
+ – A moving window, 6 words wide; every possible word pair is counted once
+ (30 word pairs) and then the window slides over by one.
+ Words in the middle of a sentence thus get to participate in 
+\begin_inset Formula $5\times6=30$
 \end_inset
 
-Observe that the y-axis is drawn with a logarithmic scale.
- The two sides to this peak are conjectured to be linear.
- Two lines guessing at the slopes are indicated in the graph; the (natural
- logarithm) slopes are +13 and -18.
-\end_layout
+ counts of pairs, of which there are 10 distinct pairs; two of these pairs
+ are counted once (the ones 5 words apart) two pairs are counted twice,
+ two pairs are counted 3 times, etc.
+ for a total of 
+\begin_inset Formula $2\times\left(1+2+3+4+5\right)=30$
+\end_inset
 
-\begin_layout Subsubsection*
-Total Entropy
-\end_layout
-
-\begin_layout Standard
-Of some
-\end_layout
-
-\begin_layout Subsubsection*
-Asymmetric Mutual Information
-\end_layout
-
-\begin_layout Standard
-Reviewing some old results suggests that asymmetric mutual information should
- be attempted.
- For the results reported below, this will be defined as 
+ counts.
+ Consider the word sequence shown below, with the dots and the star representing
+ words:
 \begin_inset Formula 
 \[
-AMI(w_{l},w_{r})=MI(w_{l},w_{r})/\log
+\overbrace{\begin{array}{ccccccccccc}
+\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
+ & 1 &  & 2 &  & 3 &  & 4 &  & 5
+\end{array}}\begin{array}{cccccccccc}
+ & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
+5 &  & 4 &  & 3 &  & 2 &  & 1
+\end{array}
+\]
+
+\end_inset
+
+The star indicates the word-of-interest; the over-brace is the window, six
+ words wide.
+ The pair between the center-star and the left-most dot can only be counted
+ once; these are five words apart, and when the window shifts, the farthest
+ word will be out of range for counting.
+ Words that are four-apart get to be counted twice, before the window shifts,
+ 
+\emph on
+etc.
+
+\emph default
+ Nearest neighbors have five opportunities to be counted as the window slides.
+ Thus, there is a preferential treatment for nearest word-pairs.
+ This is referred to as the 
+\begin_inset Quotes eld
+\end_inset
+
+clique-pair counting
+\begin_inset Quotes erd
+\end_inset
+
+ method in the code base.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+WIN6-odist
+\series default
+ – This adds an additional distance penalty on top of the naturally-existing
+ windowed counting distance penalty: words are counted with an additional
+ penalty of 
+\begin_inset Formula $\mbox{floor}\left(6/dist\right)$
+\end_inset
+
+, so, as shown below:
+\begin_inset Formula 
+\[
+\overbrace{\begin{array}{ccccccccccc}
+\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
+ & 1 &  & 2 &  & 3 &  & 8 &  & 15
+\end{array}}\begin{array}{cccccccccc}
+ & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
+15 &  & 8 &  & 3 &  & 2 &  & 1
+\end{array}
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+LG-all
+\series default
+ – There are 100 random planar tree parses created, using the LG 
+\begin_inset Quotes eld
+\end_inset
+
+any
+\begin_inset Quotes erd
+\end_inset
+
+ language parser.
+ The number of such possible samples was counted in the previous section.
+ Unfortunately, the previous section does not estimate the typical distance
+ distribution for words in the middle of a sentence, so its not comparable
+ to above without extra work.
+\end_layout
+
+\begin_layout Standard
+It seems quite remarkable that there is such a big difference in grammar
+ quality, stemming from these different word-pair counting techniques.
+\end_layout
+
+\begin_layout Section*
+English Dataset Sample 28 April 2017
+\end_layout
+
+\begin_layout Standard
+This section was moved to `word-pairs-redux.lyx` in July 2019, so that all
+ the word-pair stuff would be in one place.
 \end_layout
 
 \begin_layout Section*
@@ -19675,2212 +19216,8 @@ name "sec:Dataset-report"
 
 \begin_layout Standard
 Some summary reports from various different datasets.
-\end_layout
-
-\begin_layout Subsection*
-Word-Pair datasets
-\end_layout
-
-\begin_layout Standard
-First, datasets that hold word-pairs, parsed using the LG 
-\begin_inset Quotes eld
-\end_inset
-
-ANY
-\begin_inset Quotes erd
-\end_inset
-
- link type: i.e.
- random parse trees.
-\begin_inset Newline newline
-\end_inset
-
-
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="13" columns="7">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Pairs
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs'ns
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs/pr
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Entropy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-MI
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-395K x 396K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.88M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-418M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-47.0
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-19.28
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.02
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_sim
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-138K x 140K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.89M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-140M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-28.6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.73
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.03
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_tone_mst 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-183K x 187K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.05M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-268M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-33.3
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.83
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.84
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_ttwo_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-425K x 432K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-15.2M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-557M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-36.6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.32
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.93
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_tthree
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-134K x 135K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5.54M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-174M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-31.4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.67
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.94
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rone_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-185K x 188K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.95M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-321M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-35.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.77
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.79
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rtwo_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-428K x 434K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-16.4M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-639M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-38.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.27
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.90
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rthree
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-839K x 851K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-30.1M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.35G
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-44.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.54
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.84
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rfive
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-619K x 581K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-27.9M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.25G
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-44.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.65
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.80
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_cfive_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-158K x 159K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5.92M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-729M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-123
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.45
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.02
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zh_pairs_sone
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-60K x 60K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.68M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-87.8M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-52.3
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.47
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.88
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zen_pairs
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-351K x 351K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-14.6M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-632M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-43.4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-19.35
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.37
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zen_pairs_three
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The legend is as follows:
-\end_layout
-
-\begin_layout Description
-Size The dimensions of the array.
- This is the number of unique, distinct words observed occurring on the
- left-side of a word pair, times the number of words occurring on the right.
- We expect the dimensions to be approximately equal, as most words will
- typically occur on both the left and right side of a pair.
- 
-\end_layout
-
-\begin_layout Description
-Pairs The total number of distinct pairs observed.
-\end_layout
-
-\begin_layout Description
-Obsn's The total number of observations of these pairs.
- Most pairs will be observed more than once.
- Distributions are typically Zipfian, as previous sections point out.
-\end_layout
-
-\begin_layout Description
-Obs/pr The average number of times each pair was observed.
-\end_layout
-
-\begin_layout Description
-Entropy The total entropy of these pairs in this dataset, as defined previously:
- for word-pairs 
-\begin_inset Formula $(w_{L},w_{R})$
-\end_inset
-
- it is 
-\begin_inset Formula $H=-\sum_{w_{L},w_{R}}p(w_{L},w_{R})\log_{2}p(w_{L},w_{R})$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-MI The total mutual information for the pairs in this dataset, as defined
- previously: 
-\begin_inset Formula $MI=\sum_{w_{L},w_{R}}p(w_{L},w_{R})\log_{2}\left[p(w_{L},w_{R})/p(w_{L},*)p(*,w_{R})\right]$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The datasets are as below.
-\end_layout
-
-\begin_layout Description
-en_pairs_sim This contains text parsed from Wikipedia, only.
- As noted previously, Wikipedia is painfully short of verbs and pronouns.
- Compared to the Gutenberg datasets below, it is also very rich in foreign
- words and proper names (product and brand names, geographical place names,
- biographical mentions and other named entities).
- Issue: missing connectors the LEFT-WALL.
- 
-\end_layout
-
-\begin_layout Description
-en_pairs_tone_mst Text from Project Gutenberg 
-\begin_inset Quotes eld
-\end_inset
-
-tranche one
-\begin_inset Quotes erd
-\end_inset
-
-, mostly all 
-\begin_inset Quotes eld
-\end_inset
-
-famous authors
-\begin_inset Quotes erd
-\end_inset
-
-, popular, well-known 19th century books.
- Includes six modern sci-fi/fantasy novels from other sources, and some
- 20th century non-fiction, including a military appraisal of Vietnam.
-\end_layout
-
-\begin_layout Description
-en_pairs_ttwo_mst Tranche two - Everything from tranche one, plus fan-fiction
- from http://archiveofourown.org.
- Most of the selected texts were 10K words or longer.
- See the 'download.sh' file for the precise texts.
- Issues: tone_mst and ttwo_mst are missing connectors the LEFT-WALL.
- Certain types of punctuation is mis-handled.
-\end_layout
-
-\begin_layout Description
-en_pairs_tthree Tranche three - Everything in tranche two, plus several
- hundred of the most recently created Project Gutenberg texts, whatever
- they may be.
- See the 'download.sh' file for the precise texts.
- The _mst version has the same issues that ttwo_mst has, although some connector
-s to LEFT-WALL do get added.
- The _mst version is probably not useful for similarity measurements.
-\end_layout
-
-\begin_layout Description
-en_pairs_rone_mst Same as en_pairs_tone_mst, but with minor issues fixed.
- However, links to LEFT-WALL still missing.
-\end_layout
-
-\begin_layout Description
-en_pairs_rtwo_mst As above, tranche 1 & 2.
-\end_layout
-
-\begin_layout Description
-en_pairs_rthree As above, tranche 1,2 & 3.
-\end_layout
-
-\begin_layout Description
-en_pairs_rfive As above, tranche 1,2,3,4 & 5.
-\end_layout
-
-\begin_layout Description
-en_pairs_rfive_mtwo The MST parses of tranches 1-2, performed on the word-pairs
- computed from en_pairs_rfive.
- That is, the word-pair stats for tranches 1-5 were accumulated to completion
- first, before the MST parsing is started.
-\end_layout
-
-\begin_layout Description
-en_pairs_rfive_mst As above, except that this is the MST parse of all of
- the tranches 1-5.
- That is, the MST corpus is the same corpus as the word-pair corpus.
- (Same as en_pairs_rfive_mfive, but with dj marginals)
-\end_layout
-
-\begin_layout Description
-en_pairs_cfive_mst Same as en_pairs_rfive_mst above, but with all words
- that contained bogus infix punctuation removed.
- (hyphenated words remain, as do decimal numbers and abbreviations).
- 
-\end_layout
-
-\begin_layout Description
-zh_pairs_sone A parse of Mandarin Wikipedia, with each individual character
- (hanzi) treated as a single item (so that, during pair-counting, pairs
- are formed between items).
- Non-Chinese characters are grouped into words in the normal way, by splitting
- according to white-space (and punctuation).
- Thus, the total dimensions of the dataset are given by the number of observed
- Chinese characters (hanzi) plus the number of observed non-Chinese words
- (and punctuation).
-\end_layout
-
-\begin_layout Description
-zen_pairs A parse of a small set of Mandarin novels, with text segmented
- into words by external third-party tools (provided by Ruiting).
-\end_layout
-
-\begin_layout Description
-zen_pairs_three Word-pairs for tranch-1 and tranche-2-part-1 of Mandarin
- novels, segmentation by Ruiting.
-\end_layout
-
-\begin_layout Standard
-Now, for some commentary, as to the summary stats.
- For English, as the number of pair observations increase, so do the number
- of unique, distinct words.
- The relation even seems to be linear: double the number of pair observations,
- and the number of different words also increases.
- This suggests something Zipfian at work.
- The explosion of words is hypothesized to be given names, although these
- datasets all fail to split hyphenated words, and so some may be due to
- that.
- The point is that the average observations per pair increases with difficulty,
- and the entropy and MI does not budge at all.
-\end_layout
-
-\begin_layout Standard
-Comparing the English _sim dataset to the _rone, _rtwo and _rthree datasets
- does provide some contrast: The _sim dataset, built from Wikipedia, is
- distinctly different from the Gutenberg datasets.
- Certainly, the prose style in the two datasets is quite different, with
- Wikipedia consisting of statements of facts (
-\begin_inset Quotes eld
-\end_inset
-
-is
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-has
-\begin_inset Quotes erd
-\end_inset
-
- relational statements) concerning a broad range of named entities, whereas
- the Gutenberg texts are primarily narrative adventures (
-\begin_inset Quotes eld
-\end_inset
-
-did
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-went
-\begin_inset Quotes erd
-\end_inset
-
- activity statements) involving fictional personages.
-\end_layout
-
-\begin_layout Standard
-Comparing English to Chinese is very interesting.
- The Chinese 
-\begin_inset Quotes eld
-\end_inset
-
-zh
-\begin_inset Quotes erd
-\end_inset
-
- dataset has three times, almost four times more observations per pair;
- equivalently about 3-4 fewer 
-\begin_inset Quotes eld
-\end_inset
-
-words
-\begin_inset Quotes erd
-\end_inset
-
-.
- This is partly due to the fixed number of ideograms in the language.
- Remarkably, the entropy and MI are untouched.
- This suggests that the entropy and MI are capturing something about the
- human nature of language use, as opposed to something descriptive of the
- language itself.
- However, a lot more data would be needed to see if this is really true.
-\end_layout
-
-\begin_layout Standard
-By contrast, the 
-\begin_inset Quotes eld
-\end_inset
-
-zen_pairs
-\begin_inset Quotes erd
-\end_inset
-
- dataset, where the Mandarin was pre-segmented into words by 3rd-party tools,
- behaves much more like English in it's statistics.
- This is also evident in the table below, where the 
-\begin_inset Quotes eld
-\end_inset
-
-zen
-\begin_inset Quotes erd
-\end_inset
-
- dataset behaves like 
-\begin_inset Quotes eld
-\end_inset
-
-en
-\begin_inset Quotes erd
-\end_inset
-
-, and not like 
-\begin_inset Quotes eld
-\end_inset
-
-zh
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-There's something else interesting going on, shown in the table below.
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="9">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Support
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Count
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Length
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Name
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-158K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-159K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6819
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6411
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-548
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-487
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-41.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-37.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zh_pairs_sone
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-60K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-60K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8170
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8702
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-191
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-156
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-15.1
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zen_pairs
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-351K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-351K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-28.8K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-27.1K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-239
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-203
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-22.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-19.8
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zen_pairs_three
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-619K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-581K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-53.8K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-73.1K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-282
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-254
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-34.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-25.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_cfive_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-839K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-851K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-80.6K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-80.6K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-249
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-230
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-28.2
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-24.5
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rfive
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-428K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-434K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-45.6K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-45.1K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-208
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-187
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-22.9
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-19.4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rthree
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-185K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-188K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-24.7K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-23.8K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-199
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-173
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-21.5
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.8
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rtwo_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-134K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-135K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.4K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.4K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-143
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-129
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-16.6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-14.0
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rone_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The columns are as follows:
-\end_layout
-
-\begin_layout Description
-Size The left and right dimensions, as before.
- Viz, the number of unique, distinctly different words observed on the left
- and the right side of a pair.
- Viewed as a matrix, this is the number of columns and rows in the matrix.
-\end_layout
-
-\begin_layout Description
-Support The support is the average number of word-pairs that a word participates
- in (on the left, or on the right).
- Viewed as a matrix, this is the average number of non-zero entries in each
- row or column.
- Viewed as (row or column) vectors, this is the 
-\begin_inset Quotes eld
-\end_inset
-
-support
-\begin_inset Quotes erd
-\end_inset
-
- of a (row or column) vector.
- Mathematically, this is the 
-\begin_inset Formula $l_{0}$
-\end_inset
-
- norm of each vector: 
-\begin_inset Formula $\left|(w_{L},*)\right|=\sum_{w_{R}}\left(0<N(w_{L},w_{R})\right)$
-\end_inset
-
- and likewise 
-\begin_inset Formula $\left|(*,w_{R})\right|=\sum_{w_{L}}\left(0<N(w_{L},w_{R})\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Description
-Count The count is the average number of observations that a word-pair was
- observed, for a given word.
- Viewed as a matrix, this is the average value of each non-zero entry (averaged
- over rows, or columns).
- Viewed as vectors, this is the 
-\begin_inset Formula $l_{1}$
-\end_inset
-
- norm divided by the 
-\begin_inset Formula $l_{0}$
-\end_inset
-
- norm.
- The 
-\begin_inset Formula $l_{1}$
-\end_inset
-
- norm is just the wild-card counts 
-\begin_inset Formula $N(w_{L},*)$
-\end_inset
-
- and 
-\begin_inset Formula $N(*,w_{R})$
-\end_inset
-
-, where as always, the wild-card counts are defined as 
-\begin_inset Formula $N(w_{L},*)=\sum_{w_{R}}N(w_{L},w_{R})$
-\end_inset
-
-.
- The count shown in the table is then the average count: 
-\begin_inset Formula $N(w_{L},*)/\left|(w_{L},*)\right|$
-\end_inset
-
- for the rows, and likewise for the columns.
-\end_layout
-
-\begin_layout Description
-Length The length is the average length of the row and column vectors.
- This is the 
-\begin_inset Formula $l_{2}$
-\end_inset
-
- norm divided by the 
-\begin_inset Formula $l_{0}$
-\end_inset
-
- norm.
- The 
-\begin_inset Formula $l_{2}$
-\end_inset
-
- norm is just the standard concept of the length of a vector in Euclidean
- space.
- Here, 
-\begin_inset Formula $L(w_{L},*)=\sqrt{\sum_{w_{R}}N^{2}(w_{L},w_{R})}$
-\end_inset
-
-, and likewise 
-\begin_inset Formula $L(*,w_{R})=\sqrt{\sum_{w_{L}}N^{2}(w_{L},w_{R})}$
-\end_inset
-
-.
- The length is interesting, because it 
-\begin_inset Quotes eld
-\end_inset
-
-penalizes
-\begin_inset Quotes erd
-\end_inset
-
- word-pairs with only a small number of counts.
- The act of squaring the count has the effect of giving much higher 
-\begin_inset Quotes eld
-\end_inset
-
-confidence
-\begin_inset Quotes erd
-\end_inset
-
- to large observation counts: a word-pair observed twice as often is given
- four times the credit.
- The length shown in this table is the 
-\begin_inset Quotes eld
-\end_inset
-
-average
-\begin_inset Quotes erd
-\end_inset
-
- length: it is 
-\begin_inset Formula $L(w_{L},*)/\left|(w_{L},*)\right|$
-\end_inset
-
- for the rows, and likewise for the columns.
-\end_layout
-
-\begin_layout Standard
-So here's what is so interesting in this table: the support, for Chinese,
- is outrageously different than it is for English.
- For a given item (hanzi, for Chinese, word, for English), the Chinese hanzi
- participates in three to four fewer item-pairs! Since pairs are formed
- on a sentence-by-sentence basis, this means that the variety of different
- hanzi that can occur in a single sentence is much more constrained, much
- more strongly correlated.
- Now, perhaps this comparison is not quite valid: because we are not comparing
- words to words, but rather English words to Chinese 
-\begin_inset Quotes eld
-\end_inset
-
-morphemes
-\begin_inset Quotes erd
-\end_inset
-
- (in the sense that Chinese words are typically composed of 1, 2 or 3 hanzi).
- Still, its interesting and surprising.
- This has knock-on effects: the observational counts are much higher, as
- are the average lengths.
- It would be interesting to repeat the previously given analysis of the
- various distributions, and see how they differ.
+ The summary for the word-pair datasets was moved to the `word-pairs-redux.lyx`
+ directory, so that all word-pair stuff lives together.
 \end_layout
 
 \begin_layout Subsection*
@@ -21915,7 +19252,7 @@ Next, datasets that hold disjuncts.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="9">
+<lyxtabular version="3" rows="9" columns="9">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -21940,7 +19277,7 @@ Size
 \begin_inset Text
 
 \begin_layout Plain Layout
-Csets
+Sects
 \end_layout
 
 \end_inset
@@ -21958,7 +19295,7 @@ Obs'ns
 \begin_inset Text
 
 \begin_layout Plain Layout
-Ob/cs
+Ob/sec
 \end_layout
 
 \end_inset
@@ -22431,7 +19768,7 @@ zen_pairs_mst
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22440,7 +19777,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22449,7 +19786,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22458,7 +19795,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22467,7 +19804,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22476,7 +19813,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22485,7 +19822,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22494,7 +19831,7 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -22503,11 +19840,177 @@ zen_pairs_mst
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 zen_pairs_three_mst
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mpg_18
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+564K x 21.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+34.5M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+78.2M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.26
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22.41
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.12
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.72
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mpg_53
 \end_layout
 
 \end_inset
@@ -22532,6 +20035,42 @@ An updated legend for the columns:
 Size The dimensions of the array.
  The left dimension counts words, the right dimension counts the number
  of unique, distinct pseudo-disjuncts.
+\end_layout
+
+\begin_layout Description
+Sects The total number of distinct Sections observed.
+\end_layout
+
+\begin_layout Description
+Obsn's The total number of observations of these Sections.
+ Most Sections will be observed more than once.
+ Distributions are typically Zipfian, as pointed out earlier.
+\end_layout
+
+\begin_layout Description
+Obs/sec The average number of times each Section was observed.
+\end_layout
+
+\begin_layout Description
+Entropy The total entropy of the Sections in this dataset, as defined previously
+: for Sections 
+\begin_inset Formula $(w,d)$
+\end_inset
+
+ it is 
+\begin_inset Formula $H=-\sum_{w,d}p(w,d)\log_{2}p(w,d)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Description
+MI The total mutual information for the Sections in this dataset, as defined
+ previously: 
+\begin_inset Formula $MI=\sum_{w,d}p(w,d)\log_{2}\left[p(w,d)/p(w,*)p(*,d)\right]$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Description
@@ -22590,6 +20129,60 @@ zen_pairs_three_mst
  dataset might be blamed on the 3rd-party word segmentation tool.
  It is known not to be very accurate, and the low MI might be a by-product
  of that.
+\end_layout
+
+\begin_layout Standard
+The descriptinos of the datasets can be found in the 
+\begin_inset Quotes eld
+\end_inset
+
+connector-sets-revised.lyx
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+word-pairs-redux.lyx
+\begin_inset Quotes erd
+\end_inset
+
+ files.
+ There are several new datasets since then.
+\end_layout
+
+\begin_layout Description
+
+\noun on
+en_mpg_53
+\noun default
+ The disjuncts were built using the MPG parser, after discarding all word
+ pairs with MI<5.3 (and then recomputing word-pair MI marginals).
+ The stats, as given in the table above, are not all that different than
+ 
+\series bold
+\noun on
+en_pairs_cfive_mst
+\series default
+\noun default
+ and its not clear if this shold be surprising or not...
+ Both
+\series bold
+\noun on
+ en_pairs_cfive_mst
+\series default
+\noun default
+ and this are built from the same original word-pair stats.
+ If a different set of word-pairs were obtained, how much would things differ?
+\end_layout
+
+\begin_layout Description
+
+\noun on
+en_mpg_18
+\noun default
+ As above, but after discarding all word pairs with MI<1.8.
 \end_layout
 
 \begin_layout Section*
@@ -24577,6 +22170,7 @@ Anyway: this is not just all-talk, no-action.
 LatexCommand href
 name "github atomspace repo"
 target "https://github.com/opencog/atomspace/tree/master/opencog/sheaf"
+literal "false"
 
 \end_inset
 
@@ -27883,533 +25477,8 @@ English wordpair small dataset July 2017
 \end_layout
 
 \begin_layout Standard
-This report provides a quick sketch of a small dataset containing English
- wordpairs.
- This is the 
-\noun on
-en_pairs_rone
-\noun default
- dataset described in section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Dataset-report"
-
-\end_inset
-
-.
- To recap, its this one:
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="7">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Pairs
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs'ns
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs/pr
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Entropy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-MI
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-134K x 135K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5.54M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-174M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-31.4
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.67
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.94
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rone_mst
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The size and support is recapped here below, just copied from section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Dataset-report"
-
-\end_inset
-
-.
- The explanation of the column labels can be found there.
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="9">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Support
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Count
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Length
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Name
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-134K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-135K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.4K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-17.4K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-143
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-129
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-16.6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-14.0
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-en_pairs_rone
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The dataset contains 5544578 pairs.
-\end_layout
-
-\begin_layout Subsection*
-Distribution of Mutual Information
-\end_layout
-
-\begin_layout Standard
-The figure below shows the distribution of the mutual information of English
- word-pairs.
- 
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename pairs/binned-enpr-mi.eps
-	width 60col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The peak of the distribution occurs near an MI=1.0.
- The two straight lines are eyeballed to fit the bimodal distribution.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-meaningful
-\begin_inset Quotes erd
-\end_inset
-
- mode, with positive MI, has a slope of -0.4.
- The negative-MI mode has a slope of 2.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Graph obtained from the binned-enpr-mi data, in the en-pairs.scm file.
-\end_layout
-
-\end_inset
-
- Note that this is qualitatively similar to the Chinese hanzi pairs distribution
-, shown below, although the slopes are different, and the peak is slightly
- shifted.
+This section moved to `word-pairs-redux.lyx` in July 2019 so that all word-pair
+ stuff is in the same place.
 \end_layout
 
 \begin_layout Section*
@@ -28417,555 +25486,8 @@ Chinese character pair dataset July 2017
 \end_layout
 
 \begin_layout Standard
-This report provides a quick sketch of a dataset containing Mandarin Chinese
- character pairs.
- This differs from English in two important ways.
- First, obviously, its not English.
- Second, there was no word segmentation done: each character (hanzi, ideogram)
- is treated as being distinct, and so all pairs are between hanzi.
- The goal/hope here is that word segmentation will appear 
-\begin_inset Quotes eld
-\end_inset
-
-naturally
-\begin_inset Quotes erd
-\end_inset
-
-, as a by-product of high-MI hanzi pairs.
- The dataset is the 
-\noun on
-zh_pairs_sone
-\noun default
- dataset described in section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Dataset-report"
-
-\end_inset
-
-.
- To recap, its this one:
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="2" columns="7">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Pairs
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs'ns
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Obs/pr
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Entropy
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-MI
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-158K x 159K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5.92M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-729M
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-123
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18.45
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.02
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zh_pairs_sone
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The size and support is recapped here below, just copied from section 
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "sec:Dataset-report"
-
-\end_inset
-
-.
- The explanation of the column labels can be found there.
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="9">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Size
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Support
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Count
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="1" alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Length
-\end_layout
-
-\end_inset
-</cell>
-<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dataset
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-L
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-R
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Name
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-158K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-159K
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6819
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6411
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-548
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-487
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-41.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-37.7
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zh_pairs_sone
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-As mentioned before: the dimensions of the dataset are larger than the number
- of hanzi, because the dataset treats all Latin-alphabet words as single
- words.
- Since this dataset is generated from Wikipedia, we can expect that many
- of the entries correspond to English-language technical terms and named
- entities, such as product names, geographical place names and the names
- of people.
- There is also likely to be a mixture of simplified and traditional hanzi
- in the dataset.
-\end_layout
-
-\begin_layout Standard
-The dataset contains exactly 5922477 pairs.
-\end_layout
-
-\begin_layout Subsection*
-Distribution of Mutual Information
-\end_layout
-
-\begin_layout Standard
-The figure below shows the distribution of the mutual information of the
- hanzi pairs.
- 
-\begin_inset Separator latexpar
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename pairs/binned-hanpr-mi.eps
-	width 60col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The peak of the distribution occurs near an MI=-0.25.
- The two straight lines are eyeballed to fit the bimodal distribution.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-meaningful
-\begin_inset Quotes erd
-\end_inset
-
- mode, with positive MI, has a slope of -0.25.
- The negative-MI mode has a slope of 2.4.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Graph obtained from the binned-hanpr-mi data, in the zh-pairs.scm file.
-\end_layout
-
-\end_inset
-
- Note that this is qualitatively similar to the English word-pairs distribution,
- shown above, although the slopes are different, and the peak is slightly
- shifted.
+This section moved to `word-pairs-redux.lyx` in July 2019 so that all word-pair
+ stuff is in the same place.
 \end_layout
 
 \begin_layout Section*
@@ -29507,6 +26029,7 @@ Nida
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Nida97"
+literal "true"
 
 \end_inset
 
@@ -33353,7 +29876,7 @@ and
 
 \end_inset
 
-
+Does this quantity have a name? What is the name?
 \end_layout
 
 \begin_layout Standard
@@ -33384,7 +29907,23 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 where the marginal probability is
 \begin_inset Formula 
 \[
-p\left(u\right)=p\left(u,*\right)=\sum_{w,d}N(u,d)N(w,d)=\sum_{d}N(u,d)N(*,d)
+p\left(u\right)=p\left(u,*\right)=\frac{i\left(u,*\right)}{i\left(*,*\right)}=\frac{1}{i\left(*,*\right)}\;\sum_{w,d}N(u,d)N(w,d)=\frac{1}{i\left(*,*\right)}\;\sum_{d}N(u,d)N(*,d)
+\]
+
+\end_inset
+
+The total entropy from the marginal probability is 
+\begin_inset Formula 
+\[
+H=-\sum_{w}p\left(w\right)\log p\left(w\right)
+\]
+
+\end_inset
+
+and the total MI would be
+\begin_inset Formula 
+\[
+MI=\sum_{u,w}p\left(u,w\right)\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}
 \]
 
 \end_inset
@@ -34423,8 +30962,8 @@ Casual observation suggests that the MI and the cosine similarity are correlated
  2019 version of `connector-sets-revised.pdf`.
 \end_layout
 
-\begin_layout Section*
-Misc references
+\begin_layout Subsection*
+Zipf's Law 
 \end_layout
 
 \begin_layout Standard
@@ -34445,6 +30984,2077 @@ Zipf’s law holds for phrases, not words
  Bagrow, Christopher M.
  Danforth & Peter Sheridan Dodds, Scientific Reports volume 5, Article number:
  12209 (2015)
+\end_layout
+
+\begin_layout Standard
+Based on my experience, it holds for both ...
+ it holds for everything.
+\end_layout
+
+\begin_layout Section*
+Grammatical Class Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words 
+\begin_inset Formula $w$
+\end_inset
+
+ into word-classes 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ More precisely, this is a partitioning of the observation counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ into count-classes 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a grammatically similar fashion.
+\end_layout
+
+\begin_layout Standard
+One naive (but approximate and incorrect) way of doing this is to come up
+ with a membership function – a membership matrix 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+, behaving like a normalized conditional probability
+\begin_inset Formula 
+\[
+\sum_{g}p\left(g|w\right)=1
+\]
+
+\end_inset
+
+which says that every word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to one or more clases 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ A partitioning of counts is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+The intended interpretation is that 
+\begin_inset Formula $g$
+\end_inset
+
+ is a set of words that behave in a similar fashion, syntactically, so that
+ 
+\begin_inset Formula $p\left(g|w\right)$
+\end_inset
+
+ is the conditional probability that a word 
+\begin_inset Formula $w$
+\end_inset
+
+ belongs to 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ Typically, 
+\begin_inset Formula $w$
+\end_inset
+
+ will belong to no more than half-a-dozen grammatical classes, with each
+ grammatical class corresponding loosely to each word-sense that the word
+ has.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem with the above is that it is incorrect – a too-strong approximation.
+ The problem is that different word-senses behave in grammatically different
+ fashion – 
+\emph on
+e.g.
+
+\emph default
+ a word can be both a verb and a noun.
+ The correct partitioning is then neccessarily given by 
+\begin_inset Formula $p\left(g|w,d\right)$
+\end_inset
+
+ so that, for example, if 
+\begin_inset Formula $g$
+\end_inset
+
+ is a verb-class, then 
+\begin_inset Formula $p\left(g|w,d\right)\ne0$
+\end_inset
+
+ only when 
+\begin_inset Formula $d$
+\end_inset
+
+ is a verb-style disjunct, otherwise, 
+\begin_inset Formula $p\left(g|w,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $d$
+\end_inset
+
+ is a noun-style disjunct.
+ That is, the correct partitioning is given by 
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\sum_{w}p\left(g|w,d\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+and word-sense disambiguation fundamentally disallow the assumption that
+ 
+\begin_inset Formula $p\left(g|w,d\right)\sim p\left(g|w\right)$
+\end_inset
+
+ since this assumption erases the grammatical differences between different
+ word-senses.
+\end_layout
+
+\begin_layout Section*
+Word-Sense Disambiguation
+\end_layout
+
+\begin_layout Standard
+How does this work with entropic similarity? Let
+\begin_inset Formula 
+\[
+\vec{w}=\sum_{d}N\left(w,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+be the vector defined by the observed counts of disjuncts.
+ Suppose it is a linear combination of two distinct word-senses 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+, so that 
+\begin_inset Formula 
+\[
+\vec{w}=\vec{s}+\vec{t}
+\]
+
+\end_inset
+
+but we don't know what the counts for these are, and are so faced with the
+ challenge of determining the linear decomposition.
+ 
+\end_layout
+
+\begin_layout Standard
+Suppose that there is some grammatical class 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and we've noticed that 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ is similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ and this similarity is probably due to 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ being similar to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ How can we use this to determine 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+? A classical strategy is orthogonalization: assume that 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is parallel to 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, and take the orthogonal complement.
+ The primary problem here is that the space is not Euclidean: it does not
+ have sphere-symmetry that preserves the dot product.
+ The vectors 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ inhabit a simplex; the vector coefficients must always remain zero or positive,
+ and all decompositions must preserve the total count 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ as an invariant.
+\end_layout
+
+\begin_layout Standard
+Recall the definition of 
+\begin_inset Formula $i\left(u,v\right)$
+\end_inset
+
+ above, and note that 
+\begin_inset Formula $i\left(u,v\right)=\vec{u}\cdot\vec{v}$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $*$
+\end_inset
+
+ behaves like a constant vector; 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $\vec{*}=\sum_{d}N\left(*,d\right)\widehat{e}_{d}=\sum_{d}\sum_{w}N\left(w,d\right)\widehat{e}_{d}$
+\end_inset
+
+ is a perfectly well-defined vector.
+\end_layout
+
+\begin_layout Standard
+Thus, given the WSD problem before us, it seems we want to find a vector
+ 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ such that 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is maximized, and so that 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ is minimized, subject to the constraint 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+.
+ Lets work that out.
+ By definition,
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{i\left(g,s\right)i\left(*,*\right)}{i\left(g,*\right)i\left(*,s\right)}
+\]
+
+\end_inset
+
+The extrema of this would be given by those values of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that are stationary under perturbations 
+\begin_inset Formula $\vec{s}+\delta\vec{s}$
+\end_inset
+
+, where 
+\begin_inset Formula 
+\[
+\delta\vec{s}=\sum_{d}\delta N\left(s,d\right)\widehat{e}_{d}
+\]
+
+\end_inset
+
+so that we must solve 
+\begin_inset Formula $\left|d\right|$
+\end_inset
+
+ different differential equations, one for each disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+0=\left.\frac{\partial MI\left(\vec{g},\vec{s}\right)}{\partial N\left(s,d\right)}\right|_{d\mbox{ held fixed}}
+\]
+
+\end_inset
+
+Its a mess.
+ Lets do it.
+ We have
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\,\frac{\sum_{\beta}N\left(s,\beta\right)N\left(g,\beta\right)i\left(*,*\right)}{\sum_{\alpha}N\left(s,\alpha\right)N\left(*,\alpha\right)i\left(g,*\right)}
+\]
+
+\end_inset
+
+The two 
+\begin_inset Formula $i$
+\end_inset
+
+ terms are constants; drop them.
+ What is left is
+\begin_inset Formula 
+\[
+0=\frac{N\left(g,d\right)}{i\left(s,*\right)}-\frac{i\left(s,g\right)}{\left(i\left(s,*\right)\right)^{2}}N\left(*,d\right)
+\]
+
+\end_inset
+
+Reorganizing:
+\begin_inset Formula 
+\[
+0=N\left(g,d\right)i\left(s,*\right)-N\left(*,d\right)i\left(s,g\right)
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{i\left(s,g\right)}{i\left(s,*\right)}=\frac{N\left(g,d\right)}{N\left(*,d\right)}
+\]
+
+\end_inset
+
+This is mis-constrained, in several ways.
+ First, the RHS depends on 
+\begin_inset Formula $d$
+\end_inset
+
+ while the LHS does not.
+ Not only is it impossible to satisfy, but even if it were, it tells us
+ nothing about the components of 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, a formula for which we were hoping to find.
+ 
+\end_layout
+
+\begin_layout Standard
+Compute again, to second order.
+ Up to a constant,
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}i\left(g,s\right)-\log_{2}i\left(s,*\right)+C
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\,\log_{2}i\left(s,g\right)=\frac{N\left(g,d\right)}{i\left(s,g\right)\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,\log_{2}i\left(s,g\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}\log2}
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\frac{\partial}{\partial N\left(s,d^{\prime}\right)}\,MI\left(\vec{g},\vec{s}\right)=-\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{\left(i\left(s,g\right)\right)^{2}}+\frac{N\left(*,d\right)N\left(*,d^{\prime}\right)}{\left(i\left(s,*\right)\right)^{2}}
+\]
+
+\end_inset
+
+or
+\begin_inset Formula 
+\[
+\frac{\left(i\left(s,g\right)\right)^{2}}{\left(i\left(s,*\right)\right)^{2}}=\frac{N\left(g,d\right)N\left(g,d^{\prime}\right)}{N\left(*,d\right)N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+which is equally absurd; its just the square of the earlier result.
+ WTF.
+ But of course, that's obvious, in a way.
+ But what to do? Why is this not working?
+\end_layout
+
+\begin_layout Standard
+Repeating the first-order variation calculation for 
+\begin_inset Formula $\cos\theta=i\left(s,g\right)/\sqrt{i\left(s,s\right)i\left(g,g\right)}$
+\end_inset
+
+ promptly gives the standard orthogonalization: 
+\emph on
+viz
+\emph default
+ that 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ is the condition for parallel vectors.
+ This is driven not by the numerator 
+\begin_inset Formula $i\left(s,g\right)$
+\end_inset
+
+ which is shared in common by both 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ and by 
+\begin_inset Formula $MI\left(s,g\right)$
+\end_inset
+
+ but is rather due to the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ in the denominator.
+ In a sense, it is a 
+\begin_inset Quotes eld
+\end_inset
+
+second order effect
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A quick sketch might help.
+ The quadratic term contributes 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}i\left(s,s\right)=2N\left(s,d\right)
+\]
+
+\end_inset
+
+ and so 
+\begin_inset Formula 
+\[
+0=\frac{\partial}{\partial N\left(s,d\right)}\cos\theta=i\left(s,s\right)N\left(g,d\right)-i\left(s,g\right)N\left(s,d\right)
+\]
+
+\end_inset
+
+after dropping a constant factor of 
+\begin_inset Formula $\sqrt{i\left(g,g\right)}$
+\end_inset
+
+ and multiplying by 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+.
+ Then, up to scale factor, one gets 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+ which is the desired result: 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ is collinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+.
+ To maintain the contraint that 
+\begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
+\end_inset
+
+ one must set 
+\begin_inset Formula $N\left(s,d\right)=0$
+\end_inset
+
+ whenever 
+\begin_inset Formula $N\left(w,d\right)=0$
+\end_inset
+
+; thus, in the end, 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ might not be completely colinear with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+, but only close.
+ The MI formulation lacks the quadratic 
+\begin_inset Formula $i\left(s,s\right)$
+\end_inset
+
+ term and thus is unable to generate some analog to 
+\begin_inset Formula $N\left(s,d\right)\sim N\left(g,d\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+OK, so what is the source of the flawed thinking above? What is the root
+ cause of the failure of variational principles on MI? Geometrically, the
+ answer is simple: it means that 
+\begin_inset Formula $\cos\theta$
+\end_inset
+
+ is symptomatic of a sphere: smooth, differentiable, having will-defined
+ derivatives.
+ By contrast, surfaces of minimal (or maximal) MI are polytopes of some
+ sort, consisting of smooth facets, together with non-differentiable edges
+ where faces meet.
+ Variational principles do not apply.
+ We'll have to use some kind of linear programming techniques to find a
+ solution.
+\end_layout
+
+\begin_layout Standard
+So with that in mind, lets start again:
+\begin_inset Formula 
+\[
+MI\left(\vec{g},\vec{s}\right)=\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}+C
+\]
+
+\end_inset
+
+and so we're dealing with a ratio of two dot products.
+ This is now easy to minimize and maximize, conceptually.
+ In one case, any 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{g}=0$
+\end_inset
+
+ will do the trick.
+ More appropriately, this would be 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ the orthogonal complement, and the question becomes: can we find such a
+ 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ such that no coefficients are negative, and such that the coefficients
+ of 
+\begin_inset Formula $\vec{s}=\vec{w}-\vec{t}$
+\end_inset
+
+ are also non-negative? Given that we already know that 
+\begin_inset Formula $MI\left(\vec{g},\vec{w}\right)$
+\end_inset
+
+ is large, it is clear that bot share a lot of disjuncts in common; the
+ handful that are in 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+ that are not also in 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ could serve as a basis for 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ That's a start, but not a terribly good one.
+\end_layout
+
+\begin_layout Standard
+A different extremum would come from finding some 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ that satisfies 
+\begin_inset Formula $\vec{s}\cdot\vec{*}=0$
+\end_inset
+
+.
+ It is fairly straight-forward to see that such an 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+, with all non-negative coefficients, does not exist: By definition, 
+\begin_inset Formula $\vec{*}$
+\end_inset
+
+ has all-positive coefficients, 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+; none are zero.
+ Any vector orthogonal to this must have at least one negative coefficient
+ (excluding the trivial zero-vector).
+ This also suggests what the almost-orthogonal vectors will be: the almost-ortho
+gonal vectors will be those 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ for which most 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ are zero, except for a few 
+\begin_inset Formula $d$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ is small.
+ That is, sort the set of 
+\begin_inset Formula $\left\{ d\right\} $
+\end_inset
+
+ according to smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ and then make linear combinations of the the first few in that sorted set.
+ More specifically, the only allowed combinations are those for which 
+\begin_inset Formula $N\left(w,d\right)>0$
+\end_inset
+
+, and so then search for that 
+\begin_inset Formula $d$
+\end_inset
+
+ in that set with the smallest 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+.
+ Of course, this only works if that same 
+\begin_inset Formula $d$
+\end_inset
+
+ has appreciable overlap with 
+\begin_inset Formula $\vec{g}$
+\end_inset
+
+ i.e.
+ if 
+\begin_inset Formula $N\left(g,d\right)$
+\end_inset
+
+ is large or at least non-zero.
+\end_layout
+
+\begin_layout Standard
+This is now gelling towards an algorithm: Obtain the set 
+\begin_inset Formula $\left\{ d\right\} =\left\{ d|N\left(w,d\right)N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and rank that set, from highest to lowest, according to 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)$
+\end_inset
+
+.
+ Pick that 
+\begin_inset Formula $d$
+\end_inset
+
+ and set 
+\begin_inset Formula $N\left(s,d\right)=1$
+\end_inset
+
+.
+ Now pick the second disjunct in that list, call it 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+ and consider fractions of the form 
+\begin_inset Formula 
+\[
+F=\frac{N\left(g,d\right)+\alpha N\left(g,d^{\prime}\right)}{N\left(*,d\right)+\alpha N\left(*,d^{\prime}\right)}
+\]
+
+\end_inset
+
+and solve for the non-negative 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ that maximizes this fraction.
+ It appears that the only possible solution to this is 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+; this is forced, since by definition 
+\begin_inset Formula $N\left(g,d\right)/N\left(*,d\right)>N\left(g,d^{\prime}\right)/N\left(*,d^{\prime}\right)$
+\end_inset
+
+.
+ Thus, the way to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ is to set 
+\begin_inset Formula $N\left(s,d\right)=N\left(w,d\right)$
+\end_inset
+
+ and set all other 
+\begin_inset Formula $N\left(s,d^{\prime}\right)=0$
+\end_inset
+
+.
+ This leaves behind 
+\begin_inset Formula $N\left(t,d\right)=0$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d^{\prime}\right)=N\left(w,d^{\prime}\right)$
+\end_inset
+
+ for all other 
+\begin_inset Formula $d^{\prime}$
+\end_inset
+
+.
+ However, it is likely that the result 
+\begin_inset Formula $t$
+\end_inset
+
+ still has a large 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ and so this has not been minimized.
+ Recall, we want to maximize 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and also simultaneously minimize 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ It seems that there is a trade-off between the two.
+ 
+\end_layout
+
+\begin_layout Standard
+In fact, we want to maximize some linear combination of 
+\begin_inset Formula $MI\left(\vec{g},\vec{s}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Since the MI are being interpreted as entropies, it seems like straight
+ addition is the thing to do, and so perhaps the thing to maximize is 
+\begin_inset Formula $S=MI\left(\vec{g},\vec{s}\right)-MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+.
+ Another possibility might be 
+\begin_inset Formula $H=p\left(\vec{s}\right)MI\left(\vec{g},\vec{s}\right)-p\left(\vec{t}\right)MI\left(\vec{g},\vec{t}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $p\left(\vec{w}\right)$
+\end_inset
+
+ is some probability; possibly, for example, 
+\begin_inset Formula $p\left(\vec{w}\right)=i\left(w,*\right)/i\left(*,*\right)$
+\end_inset
+
+ seems to be 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Is there any chance that we got lucky, that by adding enough complexity
+ to the problem, we arrived where, maybe this time, the variational arguments
+ will work? Let's try them on for size, proceeding naively, as before.
+ Just as before, but in altered notation, 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}\vec{s}\cdot\vec{w}=\frac{\partial}{\partial N\left(s,d\right)}\sum_{d^{\prime}}N\left(s,d^{\prime}\right)N\left(w,d^{\prime}\right)=N\left(w,d\right)
+\]
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial S}{\partial N\left(s,d\right)} & =\frac{\partial}{\partial N\left(s,d\right)}\left[\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}-\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}\right]\\
+ & =\frac{\vec{s}\cdot\vec{*}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)-\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)
+\end{align*}
+
+\end_inset
+
+What a mess.
+ Continuing as before, we run into the same problem as before: an over-constrain
+ed/mis-constrained system of equations:
+\begin_inset Formula 
+\[
+0=N\left(*,d\right)\vec{s}\cdot\vec{g}\vec{w}\cdot\vec{*}\left(\vec{s}-\vec{w}\right)\cdot\vec{g}-N\left(g,d\right)\vec{s}\cdot\vec{*}\vec{w}\cdot\vec{g}\left(\vec{s}-\vec{w}\right)\cdot\vec{*}
+\]
+
+\end_inset
+
+ or
+\begin_inset Formula 
+\[
+\frac{N\left(g,d\right)}{N\left(*,d\right)}=\frac{\vec{s}\cdot\vec{g}\,\vec{w}\cdot\vec{*}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{g}}{\vec{s}\cdot\vec{*}\,\vec{w}\cdot\vec{g}\,\left(\vec{s}-\vec{w}\right)\cdot\vec{*}}
+\]
+
+\end_inset
+
+so that, again, the LHS depends on 
+\begin_inset Formula $d$
+\end_inset
+
+ and the RHS does not, making it impossible to satisfy in general.
+ Lets try again with 
+\begin_inset Formula $H$
+\end_inset
+
+, making use of 
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{s}\right)=\frac{1}{i\left(*,*\right)}\,\frac{\partial}{\partial N\left(s,d\right)}i\left(s,*\right)=\frac{N\left(*,d\right)}{\vec{*}\cdot\vec{*}}=-\frac{\partial}{\partial N\left(s,d\right)}p\left(\vec{t}\right)
+\]
+
+\end_inset
+
+It is convenient to write 
+\begin_inset Formula $p\left(\vec{s}\right)i\left(*,*\right)=\vec{s}\cdot\vec{*}$
+\end_inset
+
+ and drop the 
+\begin_inset Formula $i\left(*,*\right)$
+\end_inset
+
+ as a constant.
+\begin_inset Formula 
+\begin{align*}
+0=\frac{\partial H}{\partial N\left(s,d\right)}= & \frac{\left(\vec{s}\cdot\vec{*}\right)^{2}}{\vec{s}\cdot\vec{g}}\left(\frac{N\left(g,d\right)}{\vec{s}\cdot\vec{*}}-\frac{\vec{s}\cdot\vec{g}\,N\left(*,d\right)}{\left(\vec{s}\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\\
+ & -\frac{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}\left(\frac{-N\left(g,d\right)}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}+\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}\,N\left(*,d\right)}{\left(\left(\vec{w}-\vec{s}\right)\cdot\vec{*}\right)^{2}}\right)+N\left(*,d\right)\log_{2}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}
+\end{align*}
+
+\end_inset
+
+Again, quite the mess.
+ Grouping terms, we see that this too has the same failures as before: It
+ lacks any terms that are linear in 
+\begin_inset Formula $N\left(s,d\right)$
+\end_inset
+
+ which are what's needed to make the equations solvable.
+ So we conclude, wtf, what were we thinking?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem is of linear-programming-type, but not linear.
+ Maximizing 
+\begin_inset Formula $S$
+\end_inset
+
+ means maximizing 
+\begin_inset Formula 
+\[
+\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\left(\vec{w}-\vec{s}\right)\cdot\vec{*}}{\left(\vec{w}-\vec{s}\right)\cdot\vec{g}}=\frac{\vec{s}\cdot\vec{g}}{\vec{s}\cdot\vec{*}}\frac{\vec{t}\cdot\vec{*}}{\vec{t}\cdot\vec{g}}
+\]
+
+\end_inset
+
+subject to 
+\begin_inset Formula $0<\vec{s}\le\vec{w}$
+\end_inset
+
+.
+ This is certainly not linear; so it's actually a 
+\begin_inset Quotes eld
+\end_inset
+
+convex programming
+\begin_inset Quotes erd
+\end_inset
+
+ problem, I guess.
+ Its not that bad (I think) because there are only four dot products.
+ It is slightly confusing because it is completely projective in all four
+ vectors: the magnitudes all cancel.
+\end_layout
+
+\begin_layout Standard
+Define sets that define the support of the vectors.
+ Let 
+\begin_inset Formula $G=\left\{ d|N\left(g,d\right)>0\right\} $
+\end_inset
+
+ and likewise for 
+\begin_inset Formula $W$
+\end_inset
+
+ and 
+\begin_inset Formula $S,T$
+\end_inset
+
+.
+ By definition 
+\begin_inset Formula $N\left(*,d\right)>0$
+\end_inset
+
+ for all 
+\begin_inset Formula $d$
+\end_inset
+
+, so this is the universe 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ The constraint is that 
+\begin_inset Formula $W=S\cup T$
+\end_inset
+
+.
+ By definition, 
+\begin_inset Formula $G\cap W\ne\varnothing$
+\end_inset
+
+.
+ By presumption, 
+\begin_inset Formula $G\subset U$
+\end_inset
+
+ and 
+\begin_inset Formula $W\subset U$
+\end_inset
+
+ are proper subsets.
+\end_layout
+
+\begin_layout Standard
+To proceed, turn this into a decision problem: for and fixed disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+, select some 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ such that 
+\begin_inset Formula $N\left(s,d\right)=\alpha N\left(w,d\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $N\left(t,d\right)=\left(1-\alpha\right)N\left(w,d\right)$
+\end_inset
+
+.
+ To keep things easy for now, make this a binary decision problem: 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is zero or one.
+ Holding all other 
+\begin_inset Formula $N$
+\end_inset
+
+ fixed, the optimization problem is to maximize
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)+\alpha N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+\alpha N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+\left(1-\alpha\right)N\left(w,d\right)N\left(g,d\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $j_{d}\left(u,w\right)=i\left(u,w\right)-N\left(u,d\right)N\left(w,d\right)$
+\end_inset
+
+, that is, the dot product, excluding the 
+\begin_inset Formula $d$
+\end_inset
+
+ term.
+ This really is a binary decision problem: one need only look at the two
+ endpoints 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+.
+ It is either true that 
+\begin_inset Formula 
+\[
+\frac{j_{d}\left(s,g\right)}{j_{d}\left(s,*\right)}\;\frac{j_{d}\left(t,*\right)+N\left(w,d\right)N\left(*,d\right)}{j_{d}\left(t,g\right)+N\left(w,d\right)N\left(g,d\right)}<\frac{j_{d}\left(s,g\right)+N\left(w,d\right)N\left(g,d\right)}{j_{d}\left(s,*\right)+N\left(w,d\right)N\left(*,d\right)}\;\frac{j_{d}\left(t,*\right)}{j_{d}\left(t,g\right)}
+\]
+
+\end_inset
+
+or it is false.
+ That is, if LHS < RHS holds true, then 
+\begin_inset Formula $\alpha=1$
+\end_inset
+
+ maximizes, and the disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+ belongs to the set 
+\begin_inset Formula $S$
+\end_inset
+
+; otherwise 
+\begin_inset Formula $d$
+\end_inset
+
+ belongs in set 
+\begin_inset Formula $T$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This is readily computed numerically.
+\end_layout
+
+\begin_layout Standard
+So this is actually a binary decision problem, more narrowly, an binary-integer
+ programming problem.
+ It's supposed NP-hard, but I'm thinking that this is a special case that
+ might not be.
+ A plausible algo is to rank the disjuncts by size of 
+\begin_inset Formula $N\left(*,d\right)$
+\end_inset
+
+ from greatest to least, and assign the disjuncts, one by one, to either
+ of the two classes.
+ One can do likewise for 
+\begin_inset Formula $H$
+\end_inset
+
+ instead of 
+\begin_inset Formula $S$
+\end_inset
+
+, just using a different, more complex decision.
+ Both run in linear time according to size of 
+\begin_inset Formula $W\cap G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As before, the niput data, coming from disjuncts from WSD parses, is noisey,
+ and so a binary assignment might be incorrect.
+ It might be better to assign only a fraction of the passing disjuncts to
+ 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+ and place the remainder in 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+.
+ This requires yet more experimentation.
+\end_layout
+
+\begin_layout Section*
+Link Merge Redux
+\end_layout
+
+\begin_layout Standard
+The word-disjunct dataset, containing counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, is far too large to be used as a practical dictionary for parsing.
+ It also fails to provide sufficient coverage to parse most sentences.
+ Thus, it needs to be simultaneously be compressed and also generalized.
+ This is partly acheived by clustering words into word-classes.
+ However, the current system leaves the connectors un-clustered.
+ That is, each disjunct is an ordered sequence of (pseudo-)connectors: 
+\begin_inset Formula 
+\[
+d=\left(c_{1},c_{2},\cdots,c_{k}\right)
+\]
+
+\end_inset
+
+with each (pseudo-)connector being a word plus direction (polarity) indicator:
+\begin_inset Formula 
+\[
+c_{j}=\left[w_{j},p_{j}\right]
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $p_{j}\in\left\{ +,-\right\} $
+\end_inset
+
+.
+ We wish to cluster these, replacing the 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ with a 
+\begin_inset Formula $\gamma_{j}=\left[g_{j},p_{j}\right]$
+\end_inset
+
+ where each 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+ is a grammatical class, with 
+\begin_inset Formula $w_{j}\in g_{j}$
+\end_inset
+
+.
+ A naive (but wrong) conception of self-consistency it to have the 
+\begin_inset Formula $g_{j}$
+\end_inset
+
+'s appearing in connectors be the same grammatical classes as those used
+ to categorize words.
+ The notion of self-consistent connector classes is different (given below).
+ At any rate, how does one cluster connectors? 
+\end_layout
+
+\begin_layout Standard
+To proceed, a notation that breaks out the spider diagram is needed.
+ Instead of writing 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, one actually has a collection of observation counts 
+\begin_inset Formula 
+\[
+N\left(w,\left(\left[w_{1},p_{1}\right],\left[w_{2},p_{2}\right],\cdots,\left[w_{k},p_{k}\right]\right)\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $k$
+\end_inset
+
+ being the arity of the disjunct.
+ Square brackets are used for easy reading.
+ Prior to clustering, one can convert pseudo-connectors to real connectors
+ (and real links) by observing that word 
+\begin_inset Formula $w_{a}$
+\end_inset
+
+ (on the left) can link to word 
+\begin_inset Formula $w_{b}$
+\end_inset
+
+ (on the right) if an only if exists two word-disjunct pairs 
+\begin_inset Formula $\left(w_{a},d_{a}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(w_{b},d_{b}\right)$
+\end_inset
+
+ such that 
+\begin_inset Formula $d_{a}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{j},p_{j}\right],\cdots,\left[w_{k},p_{k}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{b}=\left(\left[w_{1},p_{1}\right],\cdots,\left[w_{m},p_{m}\right],\cdots,\left[w_{n},p_{n}\right]\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{j}=w_{b}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{j}=+$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{m}=w_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $p_{m}=-$
+\end_inset
+
+.
+ A link can then be defined as any function that provides a unique label
+ 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ to the word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+.
+ Given a 
+\begin_inset Quotes eld
+\end_inset
+
+true link
+\begin_inset Quotes erd
+\end_inset
+
+ type 
+\begin_inset Formula $l$
+\end_inset
+
+, the corresponding 
+\begin_inset Quotes eld
+\end_inset
+
+true connectors
+\begin_inset Quotes erd
+\end_inset
+
+ are then 
+\begin_inset Formula $l+$
+\end_inset
+
+ and 
+\begin_inset Formula $l-$
+\end_inset
+
+.
+ Thus, for the above example, 
+\begin_inset Formula $\left[w_{j},p_{j}\right]\to l_{ab}+$
+\end_inset
+
+ and 
+\begin_inset Formula $\left[w_{m},p_{m}\right]\to l_{ab}-$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The clustering task is now to find all other links that can be argued to
+ be 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+.
+ One very simple ansatz is to create a link 
+\begin_inset Formula $l_{gg^{\prime}}$
+\end_inset
+
+ that corresponds to the gram-class pair 
+\begin_inset Formula $\left(g,g^{\prime}\right)$
+\end_inset
+
+ and is used to connect any word-pair 
+\begin_inset Formula $(w_{a},w_{b})$
+\end_inset
+
+ whenever 
+\begin_inset Formula $w_{a}\in g$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{b}\in g^{\prime}.$
+\end_inset
+
+ This ansataz has a strong 
+\begin_inset Quotes eld
+\end_inset
+
+broadening
+\begin_inset Quotes erd
+\end_inset
+
+ effect, as the generic link type allows words in 
+\begin_inset Formula $g$
+\end_inset
+
+ and 
+\begin_inset Formula $g^{\prime}$
+\end_inset
+
+ to connect, for which actual links were never observed at earlier stages.
+ (This is the variant used in the 
+\begin_inset Quotes eld
+\end_inset
+
+baseline
+\begin_inset Quotes erd
+\end_inset
+
+ datasets measured in the grammar baseline report.) 
+\end_layout
+
+\begin_layout Standard
+How might one determine if two links are similar? The same way that one
+ determines if any other vectors are similar.
+ In this case, one starts with the double-spider diagram:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images/seeds-two.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The disjoint union of the open circles (the unconnected connectors) define
+ a defacto basis element for the two linked words.
+ Associated with this is a product of observation counts, which can effectively
+ be used to define any distance metric previously considered.
+ Notationally, write 
+\begin_inset Formula 
+\[
+d_{a}=\left(c_{1}^{\left(a\right)},\cdots,c_{j}^{\left(a\right)},\cdots,c_{k}^{\left(a\right)}\right)
+\]
+
+\end_inset
+
+just as before, but now with a superscript 
+\begin_inset Formula $\left(a\right)$
+\end_inset
+
+ to tell the connectors apart from hos on 
+\begin_inset Formula $d_{b}$
+\end_inset
+
+.
+ The connector set on 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+d_{ab}=\left(c_{1}^{\left(a\right)},\cdots,\widehat{c_{j}^{\left(a\right)}},\cdots,c_{k}^{\left(a\right)},c_{1}^{\left(b\right)},\cdots,\widehat{c_{m}^{\left(b\right)}},\cdots,c_{n}^{\left(b\right)}\right)
+\]
+
+\end_inset
+
+with the widehat notation 
+\begin_inset Formula $\widehat{c_{i}}$
+\end_inset
+
+ indicating that connector 
+\begin_inset Formula $c_{i}$
+\end_inset
+
+ is absent from the list.
+ Both 
+\begin_inset Formula $c_{j}^{\left(a\right)}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{m}^{\left(b\right)}$
+\end_inset
+
+ need to be absent, as those are the two connectors forming the link.
+ Thus, associated with every 
+\begin_inset Formula $l_{ab}$
+\end_inset
+
+ is a (fairly large) set of 
+\begin_inset Formula $d_{ab}$
+\end_inset
+
+.
+ To turn this into a bona-fide vector, a count is needed.
+ It seems reasonable to define 
+\begin_inset Formula 
+\[
+N\left(l_{ab},d_{ab}\right)=N\left(w_{a},d_{a}\right)N\left(w_{b},d_{b}\right)
+\]
+
+\end_inset
+
+One might consider adjusting the above by counts on connectors, or ..
+ something...
+ but this seems like un-needed complexity, at this point.
+\end_layout
+
+\begin_layout Standard
+How practical is this? Lets look at the number of potential links
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Counted with the 
+\family typewriter
+count-quarter-links
+\family default
+, 
+\family typewriter
+count-half-links
+\family default
+ and 
+\family typewriter
+count-links
+\family default
+ functions in 
+\family typewriter
+count-links.scm.
+\end_layout
+
+\end_inset
+
+ in various datasets:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="7">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+qrt-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+half-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full-links
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Secs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Name
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1610 x 67K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+146K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+309K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30.4K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.45M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+184K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_micro_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7385 x 270K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+864K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.33M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+88.6K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.8M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+608K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_mini_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17K x 947K
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.78M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.64M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.56M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_large_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+55K x 6.03M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.1M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.91M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_huge_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+438K x 23.3M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+76.9M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+90.1M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+31.7M
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+en_full_marg
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The columns in the table are:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Dimensions
+\series default
+ – Number of words x Number of disjuncts
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+qrt-links
+\series default
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in some disjunct.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
+
+quarter-link
+\begin_inset Quotes erd
+\end_inset
+
+, as any given disjunct might be shared by multiple (word,disjunct) pairs.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+half-links
+\series default
+ – Total number of unique links that can be made between some word in the
+ dataset, and some connector in any (word, disjunct) pair.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
+
+half-link
+\begin_inset Quotes erd
+\end_inset
+
+, as the relation is not symmetric; to be symmetric, i.e.
+ a full-link, there needs to be another matching half-link going in the
+ opposite direction.
+ The counting is without multiplicity (
+\emph on
+i.e.
+
+\emph default
+ if the connector appears twice in the sequence, it is counted only once.)
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+pairs
+\series default
+ – Total number of word-pairs having full-links between them.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+full-links
+\series default
+ – Total number of unique full-links in the dataset, as defined above.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Secs
+\series default
+ – Number of sections in the dataset.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Name
+\series default
+ – Dataset name
+\end_layout
+
+\begin_layout Section*
+Disjunct dataset redo
+\end_layout
+
+\begin_layout Standard
+The code that converted MST oparses to disjuncts had a bug in it – sentences
+ with multiple instances of the same word created disjuncts that were incorrect.
+ Fixed in pull req opencog/atomspace#2252.
+ However, need to redo the DB's.
+\end_layout
+
+\begin_layout Standard
+While we are at it, here's a new processing pipeline:
+\end_layout
+
+\begin_layout Itemize
+Filter the word-pair database
+\emph on
+ en_pairs_cfive
+\emph default
+ so that all word-pairs with MI<1.8 are removed.
+ The value of 1.8 seems reasonable, as this is the mean MI of that database.
+\end_layout
+
+\begin_layout Itemize
+Instead of creating MST parses, create MPG parses: 
+\begin_inset Quotes eld
+\end_inset
+
+Maximum Planar Graph
+\begin_inset Quotes erd
+\end_inset
+
+ parses.
+ These start with the MST parse, and add additional high-MI edges, creating
+ a planar graph with loops.
+ The resulting disjuncts are larger.
+\end_layout
+
+\begin_layout Itemize
+At a later time, e.g.
+ during clustering, the disjuncts can be trimmed down (if desired) by looking
+ up the MI between germ and connector, and discarding it if it falls below
+ some threshold.
+ Thus, MPG disjuncts are both 
+\begin_inset Quotes eld
+\end_inset
+
+fuller
+\begin_inset Quotes erd
+\end_inset
+
+ than MST disjuncts, but can also be trimmed in a fairly coherent fashion,
+ offering yet another way to limit dataset size (in exchange for additional
+ processing :-o).
+\end_layout
+
+\begin_layout Section*
+Reading list
+\end_layout
+
+\begin_layout Standard
+Papers that people want me to read and have an opinion on:
+\end_layout
+
+\begin_layout Itemize
+https://arxiv.org/abs/1904.03746
 \end_layout
 
 \begin_layout Section*

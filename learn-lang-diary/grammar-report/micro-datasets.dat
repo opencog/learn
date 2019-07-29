@@ -1,0 +1,20 @@
+#
+# dataset-name, MI, cutoff, clusters, singletons,
+# precision, recall, f1, --- for child-directed
+# precision, recall, f1, -- for silver
+# precision, recall, f1, -- for basic
+#
+# mini-fuzz is hard to compare and incomplete.
+# mini_fuzz	4.35	0.65	366	3326
+#
+# These two are for the "missing words" data.
+# micro_fuzz_missing	4.03	0.65	135	540	
+# micro_discrim_missing	3.62	0.5	124	292	
+#
+micro_discrim	3.62	0.5	124	292	0.651 0.580 0.614	0.507 0.491 0.499 0.571 0.482 0.523
+micro_fuzzier	3.95	0.65	136	544	0.657 0.538 0.592	0.490 0.443 0.465	0.557 0.441 0.493
+micro_diss	4.00	0.65	135	537	0.654 0.537 0.590	0.493 0.443 0.467	0.560 0.440 0.493
+micro_fuzz	4.03	0.65	135	540	0.660 0.541 0.595	0.492 0.445 0.467	0.555 0.440 0.491
+micro_fizz	4.29	0.75	115	833	0.665 0.486 0.562	0.483 0.402 0.439	0.555 0.403 0.467
+micro_dissier	4.30	0.75	115	833	0.660 0.481 0.556	0.487 0.405 0.442	0.464 0.421 0.442
+micro_dissiest	4.46	0.85	85	1175	0.666 0.441 0.531	0.462 0.339 0.391	0.536 0.343 0.418

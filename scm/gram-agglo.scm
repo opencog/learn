@@ -89,13 +89,16 @@
 ;   only member. For assignment of of words to classes, the most populous
 ;   classes are considered first, and the singleton classes are
 ;   considered last.
-; * When a new cluster is formed, then perform the "greedy"/maximal
-;   cluster expansion, scanning much of the word list to try to grow
-;   the cluster further. Key here is the phrase "much of": instead
-;   of scanning the entire list (which has a lot of dregs at the end)
-;   only scan the top M words, with M=max(200,9D) where D = number of
-;   words scanned so far. Thus, excessive searching down into the
-;   low-frequency boon-docks is avoided.
+; * When a new cluster is formed (by discovery of a pair of similar
+;   words), then perform the "greedy"/maximal cluster expansion,
+;   scanning much of the word list to try to grow the cluster further.
+;   Key to performance is the phrase "much of": instead of scanning the
+;   entire list (which has a lot of dregs at the end) only scan the top
+;   M words, with M=max(200,9D) where D = grand-total number of words
+;   examined so far.  This limits excessive searching down into the
+;   low-frequency boon-docks, while also giving an excellent shot at
+;   discovering similar words immediately, thus immediately creating a
+;   large cluster.
 ; * Once a word has been assigned to a cluster, its added to the 'done'
 ;   list.  Words in the 'done' list are re-scanned, every time that
 ;   a new cluster is created, to see if they might also fit into the
@@ -402,6 +405,8 @@
 	(define min-greedy 200)
 	(define scan-multiplier 4)
 
+	(define supp-obj (add-support-compute MERGER))
+
 	; How many words have been classified?
 	(define (num-classified-words)
 		(define (nmemb CLS) (length (cog-incoming-by-type CLS 'MemberLink)))
@@ -413,10 +418,11 @@
 			(+ (num-classified-words) (length FAKE-CLS-LST)))))
 
 	; If only a stub of a word is left, throw it away.
-	(define (keep WORD)
+	(define (keep WORD OLD-COUNT)
 		(MERGER 'clobber)
-		(format #t "---- Remaining count = ~6F for ~A"
-			((add-support-compute MERGER) 'right-count WORD) WORD)
+		(format #t "---- Remaining count = ~6F of ~6F for \"~A\"\n"
+			(supp-obj 'right-count WORD) OLD-COUNT (cog-name WORD))
+
 		(if (MERGER 'discard? WORD) '() (list WORD)))
 
 	(format #t "--- To-do=~A ncls=~A sing=~A nredo=~A ~A -- \"~A\" ---\n"
@@ -430,6 +436,7 @@
 	(if (null? WRD-LST) TRUE-CLS-LST
 		(let* ((wrd (car WRD-LST))
 				(rest (cdr WRD-LST))
+				(old-count (supp-obj 'right-count wrd))
 				; Attempt to assign the word to an existing class.
 				(cls (assign-word-to-class MERGER wrd TRUE-CLS-LST)))
 
@@ -437,7 +444,7 @@
 			; recurse.  Place the word onto the done-list.
 			(if (eq? 'WordClassNode (cog-type cls))
 				(greedy-grow MERGER TRUE-CLS-LST FAKE-CLS-LST
-					(append! DONE-LST (keep wrd)) rest)
+					(append! DONE-LST (keep wrd old-count)) rest)
 
 				; If the word was not assigned to an existing class,
 				; see if it can be merged with any of the singleton
@@ -461,10 +468,10 @@
 						; so as to not blow out performance. See if any of
 						; the previously-assigned words might also go into the
 						; new class. And then recurse.
-						(let* ((short-list (take rest
-									(min (num-to-scan) (length rest)))))
+						(let* ((rest-len (min (num-to-scan) (length rest)))
+								(short-list (take rest rest-len)))
 							(format #t "--- Greedy-checking next ~A items\n"
-								(min (num-to-scan) (length rest)))
+								rest-len)
 							(assign-expand-class MERGER new-cls short-list)
 							(format #t "--- Checking the done-list len=~A\n"
 								(length DONE-LST))
@@ -493,7 +500,7 @@
 								; The new done-list is probably a lot longer
 								(append! DONE-LST
 									(got-done FAKE-CLS-LST new-cls)
-									(keep wrd)
+									(keep wrd old-count)
 									(got-done short-list new-cls))
 
 								; The new todo list is probably a lot shorter
@@ -611,8 +618,8 @@
 ; several tricks to try to get better than the naive O(N^2) perf.
 ;
 ; The idea is that it is unlikely that words with very different
-; observational counts will be similar.  NOTE: this idea has NOT
-; been empirically tested, yet.
+; observational counts will be similar, and so they will not be compared.
+; NOTE: the validity of this idea has NOT been empirically verified, yet.
 ;
 (define (greedy-over-words MERGER WRD-LST CLS-LST)
 
@@ -643,11 +650,24 @@
 
 	(define todo-words (remove! is-single? remain-words))
 
+	(define (print-concluding-report)
+		(define aset (make-atom-set))
+		(for-each (lambda (wcn)
+			(for-each (lambda (memb) (aset (gar memb)))
+				(cog-incoming-by-type wcn 'MemberLink)))
+			(cog-get-atoms 'WordClassNode))
+		(format #t
+			"Finished greedy-agglomeration: ~A words assigned to ~A classes\n"
+			(length (aset #f)) (length (cog-get-atoms 'WordClassNode)))
+	)
+
 	(format #t "Start greedy-agglomeration of ~A words\n"
 		(length todo-words))
 	(format #t "Existing classes=~A singletons=~A done=~A\n"
 		(length CLS-LST) (length singletons) (length done-list))
 	(greedy-grow MERGER CLS-LST singletons done-list todo-words)
+
+	(print-concluding-report)
 
 	; XXX FIXME ... at the conclusion of this, we have a done list,
 	; which, because of repeated merging, might possibly have been
@@ -838,7 +858,8 @@
   `gram-classify-pair-wise` and `gram-classify-agglo` variants. Should
   be faster and more accurate than `gram-classify-diag-blocks`.
 
-  Uses the \"discrim\" merge algo: cosine=0.50, frac=variable
+  Uses the \"discriminating\" merge algo: cosine, frac=sigmoid
+  See `make-discrim` for detailed documentation.
 
   COSINE should be the minimum cosine angle acceptable to perform
   a merge on. Currently, 0.5 is recommended.
@@ -850,11 +871,29 @@
 	(gram-classify greedy-over-words (make-discrim COSINE ZIPF MIN-OBS))
 )
 
+(define-public (gram-classify-greedy-disinfo MI MIN-OBS)
+"
+  gram-classify-greedy-disinfo - Merge words into word-classes.
+
+  Similar to `gram-classify-greedy-discrim`, but uses MI instead
+  of cosine to perform merge decisions and determine a merge fraction.
+  See `make-disinfo` for detailed documentation.
+
+  MI should be the minimum MI acceptable to perform a merge on.
+  This is dataset dependent; currently, 3.0 is recommended.
+
+  MIN-OBS is the smallest number of observations of the word that
+  is acceptable; words with fewer observations will be ignored.
+"
+	(define ZIPF 4)
+	(gram-classify greedy-over-words (make-disinfo MI ZIPF MIN-OBS))
+)
+
 ; ---------------------------------------------------------------
 ; Example usage
 ;
 ; (sql-open "postgres:///en_mst_sections?user=linas&password=asdf")
-; (gram-classify-greedy-fuzz 20)
+; (gram-classify-greedy-fuzz 0.65 0.3 4)
 ;
 ; After interruption, its worth recomputing the support marginals.
 ; This can be done by saying:

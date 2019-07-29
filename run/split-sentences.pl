@@ -89,6 +89,10 @@ if (-e "$prefixfile") {
 my $text = "";
 while(<STDIN>) {
 	chop;
+
+	# Punt on lines containing stray ISO-8859 chars
+	if (utf8::valid($_) != 1) { next; }
+
 	if (/^<.+>$/ || /^\s*$/) {
 		#time to process this block, we've hit a blank or <p>
 		&do_it_for($text,$_);
