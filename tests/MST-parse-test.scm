@@ -65,8 +65,8 @@
 )
 
 ; Parse the sentences
-(define parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult #f))
-(define parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult #f))
+(define parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult "NONE"))
+(define parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult "NONE"))
 
 ; manually calculated, expected parses
 (define w1 (cons 1 (WordNode "###LEFT-WALL###")))
@@ -117,8 +117,8 @@
 )
 
 ; Parse the sentences
-(set! parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult #f))
-(set! parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult #f))
+(set! parse-1 (observe-mst-mode test-str-1 cnt-mode dist-mult "NONE"))
+(set! parse-2 (observe-mst-mode test-str-2 cnt-mode dist-mult "NONE"))
 
 ; manually calculated, expected parses
 (set! w3 (cons 3 (WordNode "first")))
@@ -170,7 +170,7 @@
 3 file 4 mode 2")
 
 ; Parse the sentences
-(set! parse-1 (observe-mst-mode text-block cnt-mode dist-mult #f))
+(set! parse-1 (observe-mst-mode text-block cnt-mode dist-mult "NONE"))
 
 ; Manually calculated, expected parses (note that current heuristic doesn't
 ; give us the actual MST parse, but a close one).
@@ -202,7 +202,7 @@
 (set! dist-mult '(1 0.5))
 
 ; Parse the sentences
-(set! parse-2 (observe-mst-mode text-block cnt-mode dist-mult #f))
+(set! parse-2 (observe-mst-mode text-block cnt-mode dist-mult "NONE"))
 
 ; Manually calculated, expected parses
 (define expected-parse-2

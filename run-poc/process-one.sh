@@ -23,7 +23,7 @@ parsesdir=mst-parses
 cnt_mode="clique-dist"
 cnt_reach=6
 mst_dist=(1)
-exp_parses="#t"
+exp_parses="EXPORT"
 split_sents="#t"
 source ./config/params.txt # overrides default values, if present
 
@@ -41,11 +41,13 @@ case $1 in
    mst)
       subdir=mst-articles
       observe="observe-mst-mode"
-      if [[ "$exp_parses" == "#t" ]]; then
+      if [[ "$exp_parses" != "NONE" ]]; then
          # create parses directory if missing
-         mkdir -p $(dirname "$parsesdir/$rest")
+         mkdir -p $(dirname "$parsesdir/$rest");
+         params="$cnt_mode $mst_dist ${rest}.ull"; # pass parses filename
+      else
+         params="$cnt_mode $mst_dist $exp_parses"; # don't print parses
       fi
-      params="$cnt_mode ${mst_dist[@]} $exp_parses"
       ;;
 esac
 
@@ -77,13 +79,13 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-if [ -f "mst-parses.ull" ]; then
+if [ -f "${rest}.ull" ]; then
    # Sort parses and remove index, convert to ull format
-   # sort -g mst-parses.ull | cut -f2- | tr '\t' '\n' > mst-parses.ull_ordered;
+   # sort -g "${rest}.ull" | cut -f2- | tr '\t' '\n' > "${rest}.ull_ordered";
    # Organize parse file
-   # mv mst-parses.ull_ordered "$parsesdir/${rest}.ull";
-   # rm mst-parses.ull
-   mv mst-parses.ull "$parsesdir/${rest}.ull"
+   # mv "${rest}.ull_ordered" "$parsesdir/${rest}.ull";
+   # rm "${rest}.ull"
+   mv ${rest}.ull "$parsesdir/${rest}.ull"
 fi
 
 # Move article to the done-queue
