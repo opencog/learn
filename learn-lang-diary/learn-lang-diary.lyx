@@ -19000,26 +19000,27 @@ WIN6-odist
 \end_inset
 
 
-\begin_inset space \qquad{}
-\end_inset
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
 
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
+\begin_layout Plain Layout
+\noindent
+\align center
 \begin_inset Tabular
 <lyxtabular version="3" rows="8" columns="2">
 <features tabularvalignment="middle">
@@ -19190,6 +19191,11 @@ weight
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
 \begin_inset Newline newline
 \end_inset
 
@@ -19215,7 +19221,31 @@ any
 \end_layout
 
 \begin_layout Standard
-There are two rather remarkable results here:
+Word-pair MI values were obtained from the ULL Project 
+\begin_inset Quotes eld
+\end_inset
+
+Gutenberg Children's Corpus
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This consists of 200K sentences of average length 13.5, for a total of 2.7M
+ words.
+ The F1-scores were obtained by evaluatng 228 sentences (average length
+ of 8) from the 
+\begin_inset Quotes eld
+\end_inset
+
+golden corpus
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are two rather suprising results here:
 \end_layout
 
 \begin_layout Enumerate
@@ -24288,7 +24318,7 @@ Iteration appears to converge very rapidly.
 
 \begin_inset Graphics
 	filename images/power-iter-close.eps
-	width 45page%
+	width 45col%
 
 \end_inset
 
