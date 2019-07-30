@@ -18906,18 +18906,42 @@ MI-threshold for MST-parses
 \end_layout
 
 \begin_layout Standard
-The graph shows the a score for the quality of a learned grammar, after
- pair-counting, MST parsing, extraction of disjuncts, dimensional reduction
- and aggolmerative clustering.
+The graph shows the F1-score (geometric mean of recall and precision) for
+ parse trees obtained four different ways.
+ The recall and precision are relative to a 
+\begin_inset Quotes eld
+\end_inset
+
+golden
+\begin_inset Quotes erd
+\end_inset
+
+ corpus.
  The horizontal axis shows score dependence on an MI threshold: word pairs
- with an MI of less than the threshold are discarded, before the pipeline
- is run.
+ with an MI of less than the threshold are discarded, before the parse tree
+ is generated.
 \end_layout
 
 \begin_layout Standard
-Keeping the late stages of the pipeline invariant, the different lines correspon
-d to different ways of counting word-pairs.
- The lines are labeled as:
+The lines are labeled as:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Sequential 
+\series default
+– The parse 
+\begin_inset Quotes eld
+\end_inset
+
+tree
+\begin_inset Quotes erd
+\end_inset
+
+ is just a sequence of links connecting neighboring words.
+ This is independent of the MI score of individual word-pairs, and so is
+ a flat line.
 \end_layout
 
 \begin_layout Itemize
@@ -18925,49 +18949,8 @@ d to different ways of counting word-pairs.
 \series bold
 WIN6
 \series default
- – A moving window, 6 words wide; every possible word pair is counted once
- (30 word pairs) and then the window slides over by one.
- Words in the middle of a sentence thus get to participate in 
-\begin_inset Formula $5\times6=30$
-\end_inset
-
- counts of pairs, of which there are 10 distinct pairs; two of these pairs
- are counted once (the ones 5 words apart) two pairs are counted twice,
- two pairs are counted 3 times, etc.
- for a total of 
-\begin_inset Formula $2\times\left(1+2+3+4+5\right)=30$
-\end_inset
-
- counts.
- Consider the word sequence shown below, with the dots and the star representing
- words:
-\begin_inset Formula 
-\[
-\overbrace{\begin{array}{ccccccccccc}
-\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
- & 1 &  & 2 &  & 3 &  & 4 &  & 5
-\end{array}}\begin{array}{cccccccccc}
- & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
-5 &  & 4 &  & 3 &  & 2 &  & 1
-\end{array}
-\]
-
-\end_inset
-
-The star indicates the word-of-interest; the over-brace is the window, six
- words wide.
- The pair between the center-star and the left-most dot can only be counted
- once; these are five words apart, and when the window shifts, the farthest
- word will be out of range for counting.
- Words that are four-apart get to be counted twice, before the window shifts,
- 
-\emph on
-etc.
-
-\emph default
- Nearest neighbors have five opportunities to be counted as the window slides.
- Thus, there is a preferential treatment for nearest word-pairs.
- This is referred to as the 
+ – The parse tree is an MST tree obtained using previously-obtained word-pair
+ MI scores from a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -18975,35 +18958,249 @@ clique-pair counting
 \begin_inset Quotes erd
 \end_inset
 
- method in the code base.
+ word-pair generation technique.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The code base calls this 
+\begin_inset Quotes eld
+\end_inset
+
+clique-pair counting
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ The counting is done by considering all word-pairs formed between the left-most
+ word in a 7-wide window, and all the other words in that window.
+ Thus, six word-pairs are counted for each window position, then the window
+ is slid over by one.
 \end_layout
 
 \begin_layout Itemize
+\noindent
+\align block
 
 \series bold
 WIN6-odist
 \series default
- – This adds an additional distance penalty on top of the naturally-existing
- windowed counting distance penalty: words are counted with an additional
- penalty of 
+ – The parse tree is an MST tree obtained using previously-obtained word-pair
+ MI scores from a weighted-window counting technique.
+ This counts pairs with a distance penalty of 
 \begin_inset Formula $\mbox{floor}\left(6/dist\right)$
 \end_inset
 
-, so, as shown below:
-\begin_inset Formula 
-\[
-\overbrace{\begin{array}{ccccccccccc}
-\bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \star\\
- & 1 &  & 2 &  & 3 &  & 8 &  & 15
-\end{array}}\begin{array}{cccccccccc}
- & \bullet &  & \bullet &  & \bullet &  & \bullet &  & \bullet\\
-15 &  & 8 &  & 3 &  & 2 &  & 1
-\end{array}
-\]
+, as shown below:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+distance
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+weight
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
 
 \end_inset
 
 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+That is, a word pair formed from nearest neighbors is given a weight of
+ six, and so on.
 \end_layout
 
 \begin_layout Itemize
@@ -19011,7 +19208,8 @@ WIN6-odist
 \series bold
 LG-all
 \series default
- – There are 100 random planar tree parses created, using the LG 
+ – The parse tree is an MST tree obtained using previously-obtained word-pair
+ MI scores from a 100 random planar tree parses created using the LG 
 \begin_inset Quotes eld
 \end_inset
 
@@ -19020,15 +19218,58 @@ any
 \end_inset
 
  language parser.
- The number of such possible samples was counted in the previous section.
- Unfortunately, the previous section does not estimate the typical distance
- distribution for words in the middle of a sentence, so its not comparable
- to above without extra work.
 \end_layout
 
 \begin_layout Standard
-It seems quite remarkable that there is such a big difference in grammar
- quality, stemming from these different word-pair counting techniques.
+Word-pair MI values were obtained from the ULL Project 
+\begin_inset Quotes eld
+\end_inset
+
+Gutenberg Children's Corpus
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This consists of 200K sentences of average length 13.5, for a total of 2.7M
+ words.
+ The F1-scores were obtained by evaluatng 228 sentences (average length
+ of 8) from the 
+\begin_inset Quotes eld
+\end_inset
+
+golden corpus
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+There are two rather suprising results here:
+\end_layout
+
+\begin_layout Enumerate
+The MST tree always has a lower score than the sequential 
+\begin_inset Quotes eld
+\end_inset
+
+tree
+\begin_inset Quotes erd
+\end_inset
+
+, when compared against the golden parse tree.
+ The reson for this is not currently understood.
+\end_layout
+
+\begin_layout Enumerate
+The way in which the MI values were collected has a strong effect on the
+ quality of the MST parse.
+ This is unexpected.
+\end_layout
+
+\begin_layout Standard
+Both of these results are unexpected, and lack an adequate explanation.
+ Understanding the first is more important.
 \end_layout
 
 \begin_layout Section*
@@ -19855,7 +20096,7 @@ zen_pairs_three_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+563K x 29.9M
 \end_layout
 
 \end_inset
@@ -19864,7 +20105,7 @@ zen_pairs_three_mst
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+39.7M
 \end_layout
 
 \end_inset
@@ -24077,7 +24318,7 @@ Iteration appears to converge very rapidly.
 
 \begin_inset Graphics
 	filename images/power-iter-close.eps
-	width 45page%
+	width 45col%
 
 \end_inset
 
