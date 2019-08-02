@@ -103,5 +103,46 @@ Lets start with an obvious observation: natural language is used to transmit
  and will instead tackle grammar again, the grammar of natural language.
 \end_layout
 
+\begin_layout Subsection*
+Grammar via Beleif Propagation
+\end_layout
+
+\begin_layout Standard
+This is a reprise of a recurring theme.
+ Here, we formulate the grammar of natural language as a lexical grammar,
+ using the Link Grammar formalism.
+ The goal is to learn the grammar, using unsupervised techniques.
+ The approach here is to treat it as a constraint satisfaction problem,
+ and then use a generalized beleif-propagation algroithm, as inspired and
+ described by Mézard and Mora
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mezard2008"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+To do so will require the articulation of a lot of notation to make things
+ clear.
+ A lot of this will repeat what I've written before.
+ The other thing to point out is due to loops, etc.
+ it won't be naive beleif propagation, but it will be Survey Propagation,
+ as mentioned there....
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "lang"
+options "tufte"
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
