@@ -109,12 +109,127 @@ Grammar via Beleif Propagation
 
 \begin_layout Standard
 This is a reprise of a recurring theme.
- Here, we formulate the grammar of natural language as a lexical grammar,
- using the Link Grammar formalism.
- The goal is to learn the grammar, using unsupervised techniques.
- The approach here is to treat it as a constraint satisfaction problem,
- and then use a generalized beleif-propagation algorithm, as inspired and
- described by Mézard and Mora
+ The goal is to find effective and tractable computational strategies for
+ extracting meaning from natural language.
+ The current work concerns itself with a very basic layer, that of extracting
+ a lexical grammar, describing the syntax of the language, and a crude level
+ of semantics that follows therefrom.
+ By a 
+\begin_inset Quotes eld
+\end_inset
+
+lexical grammar
+\begin_inset Quotes erd
+\end_inset
+
+, it is meant that sentences of the language can be broken down into words,
+ and that the relatioinship between words can be obtained from a lexicon,
+ that is, from a dictionary where each word can be looked up to discover
+ the grammatical relationships that word can engage in.
+ It is useful to note that such lexicons are redily extended to include
+ idioms, set phrases, institutional expressions, colocations; such multi-word
+ constructions do not alter the underlying concept.
+\end_layout
+
+\begin_layout Standard
+Lexicality implies that language can be analyzed in terms of words (or set
+ phrases, 
+\emph on
+etc.
+\emph default
+).
+ But language is also fundamentally statistical and probabilisitic: there
+ is no ultimate, final truth to syntax and semantics, but only likely meanings
+ and interpretations.
+ In this setting, lexicality means not only that language can be viewed
+ as a graph of relationships between words, but also that the graph can
+ be factored into local components.
+ Specifically, each local component consists of a word, and the other nearby
+ words that it may interact with: a word, and its syntactico-semantically-neares
+t neighbors.
+\end_layout
+
+\begin_layout Standard
+Modern probability theory has a standard formulation using the terminology
+ and notation of statistical mechanics.
+ In this formulation, one begins by asserting that the universe is described
+ by a summation over all possibilities: everything that might happen, can
+ happen, with some associated probability.
+ This sum is called the partition function; it is symbolized by 
+\begin_inset Formula $Z$
+\end_inset
+
+, and the partitioning is simply the statement each possibility has a probabilit
+y.
+ For natural language, this just means that every possible sequence of words
+ (a 
+\begin_inset Quotes eld
+\end_inset
+
+sentence
+\begin_inset Quotes erd
+\end_inset
+
+) occurs with some probability; ungrammatical sentences have a low, approximatel
+y vanishing probability.
+\end_layout
+
+\begin_layout Standard
+It is a theorem of Boltzmann that paritition functions can be written as
+ sums over exponentials, and that the most likely possibility is given by
+ maximizing the entropy.
+ This is not an assumption that has to be artificially forced onto the system;
+ rather, it is the factual statement that, if you beleive in probability,
+ then there is no other way: it is a theorem.
+ Combining natural language with probability then suggests that it is fruitful
+ to articulate the statistical mechanics thereof.
+\end_layout
+
+\begin_layout Standard
+In what follows, the formal grammar of choice is Link Grammar.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991,Sleator1993"
+
+\end_inset
+
+ This choice is made for several reasons.
+ First, one may argue that the actual choice of a grammar formalism is immateria
+l, as all grammars are effectvely inter-convertable between one-another
+ by algorithmic means.
+ Thus, the choice of formalism boils down to convenience; what notational
+ system is most convenient? Here, Link Grammar stands out.
+ First, it is effectively a form of dependency grammar, and so is natural
+ to linguists trained in that tradition.
+ Second, by expressing grammar in terms of link types, it leverages type
+ theory, and has a very natural bridge to categorial grammars and pregroup
+ grammars: link types are just the type-theoretical types of the relationships
+ that categorial grammars articulate.
+ As categorial grammars are normally considered to be a form of phrase-structure
+ grammars, exposing the relationships as types provides the natural bridge
+ between the phrase-structure and dependency grammar schools of thought.
+ Finally, Link Grammar is appealing from the tradition of mathematics: Link
+ Grammar is a tensor algebra.
+ Lexical entries are tensors, and lexical entries are composed into sentences
+ in exactly the same way that one composes tensors in a tensor algebra.
+ It is precisely this tensorial nature that then enables Curry–Howard correspond
+ance; Link Grammar is the 
+\begin_inset Quotes eld
+\end_inset
+
+internal language
+\begin_inset Quotes erd
+\end_inset
+
+ of monoidal categories.
+\end_layout
+
+\begin_layout Standard
+The next section articulates the statistical mechanics Link Grammar.
+ This presents Link Grammar as both a constraint-statistfaction problem
+ as well as a maximum entropy problem.
+ This is followed by a section looking at the belief-propagation aglorithm,
+ inspired by and devloped along the lines described by Mézard and Mora
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008"
