@@ -124,6 +124,10 @@ key "Mezard2008"
 .
 \end_layout
 
+\begin_layout Subsection*
+Statistical Mechanics of Link Grammar
+\end_layout
+
 \begin_layout Standard
 To do so will require the articulation of a lot of notation to make things
  clear.
@@ -311,7 +315,7 @@ P\left(\underbar{w}\right)=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
 so that the action now incorporates the boolean satisfiability factor:
 \begin_inset Formula 
 \[
-\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\Xi\left(\underbar{d}\right)+\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)
+\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\left[\Xi\left(\underbar{d}\right)+\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)\right]
 \]
 
 \end_inset
@@ -321,13 +325,242 @@ so that
 \end_inset
 
  is either minus-infinity for an invalid parse, or zero for a valid parse.
- In the Link Grammar formulation, the term 
+ The sum is taken over all possble lists 
+\begin_inset Formula $\underbar{d}$
+\end_inset
+
+ of disjuncts 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ term excludes those lists that do not correspond to valid parses in the
+ formal grammar.
+ The 
+\begin_inset Formula $h$
+\end_inset
+
+ term excludes those pairings of words-to-disjuncts that do not occur in
+ the lexis; and it they do occur, then 
+\begin_inset Formula $h$
+\end_inset
+
+ provides a weight (a lexical weight) indicating how likely that word-disjunct
+ pairing may be.
+\end_layout
+
+\begin_layout Standard
+In the Link Grammar formulation, the term 
 \begin_inset Formula $\Delta\left(\underbar{d}\right)$
 \end_inset
 
  can also be factorized locally, as it is a product of graphical elements;
  the disjuncts consist of lists of connectors, which either can connect,
  or not.
+ That is, an arity-
+\begin_inset Formula $m$
+\end_inset
+
+ disjunct is a conjunction of connectors 
+\begin_inset Formula $c$
+\end_inset
+
+ written as
+\begin_inset Formula 
+\[
+d_{j}=c_{j1}\&\cdots\&c_{jm}
+\]
+
+\end_inset
+
+with each connector being a half-link, that is, a link with a direction
+ indicator: 
+\begin_inset Formula 
+\[
+c=\left(\ell,\sigma\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\ell\in L$
+\end_inset
+
+ being one of the Link Grammar link types, and 
+\begin_inset Formula $\sigma\in\left\{ +,-\right\} $
+\end_inset
+
+ being a direction indicator.
+ Define the conjugate direction indicator 
+\begin_inset Formula $\bar{\sigma}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+\bar{\sigma}=\begin{cases}
+- & \mbox{if }\sigma=+\\
++ & \mbox{if }\sigma=-
+\end{cases}
+\]
+
+\end_inset
+
+Thus, two connectors 
+\begin_inset Formula $c_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{2}$
+\end_inset
+
+ connect if the link types match, and the direction indicators are conjugate.
+ Thus, one may define
+\begin_inset Formula 
+\[
+\delta\left(c_{1},c_{2}\right)=\delta\left(\ell_{1},\ell_{2}\right)\delta\left(\sigma_{1},\bar{\sigma}_{2}\right)
+\]
+
+\end_inset
+
+A sentence is parsable when all connectors are connectable, and so
+\begin_inset Formula 
+\[
+\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)
+\]
+
+\end_inset
+
+with the product being over all of the individual connectors in each disjunct.
+ Implicit in the above is a further constraint that the parse graph be a
+ planar graph, i.e.
+ that there is a no-links-crossing constraint.
+ This constraint is very useful for controlling the combinatorial explosion
+ of possible parses; unfortunately, it is a non-local constraint, and thus
+ cannot be easily written in a factorizable manner.
+ Rather than tackling the difficulty of obtaining an adequate notation for
+ such a non-local constraint, it is easier, for now, to implicitly keep
+ this in the background.
+ There are multiple techniques that can be used when dealing with this;
+ for now these are secondary concerns.
+\end_layout
+
+\begin_layout Standard
+Taking the logarithm, so as to turn products into sums, the action 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ can then be expressed as a summation of local interactions.
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\sum_{j=1}^{n}\left[h\left(w_{j},d_{j}\right)+\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\]
+
+\end_inset
+
+The intent of the above expression is that it is to be interpreted as a
+ summation over Feynmann diagrams, with 
+\begin_inset Formula $h$
+\end_inset
+
+ corresponding to a 
+\begin_inset Formula $m$
+\end_inset
+
+-point vertex (when the disjunct 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+ has arity 
+\begin_inset Formula $m$
+\end_inset
+
+), and the 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ terms corresponding to propagators connecting vertexes.
+ The propagaotrs are exactly the Link Grammar links, weighted in such a
+ way that it contributes zero to the action, when the link is allowed, and
+ otherwise contributes minus-infinity.
+\end_layout
+
+\begin_layout Standard
+The partition function can then be formally written as
+\begin_inset Formula 
+\[
+Z=\sum_{\underbar{w}}\exp-\mathcal{A}\left(\underbar{w}\right)
+\]
+
+\end_inset
+
+with the summation over 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ running over all possible word-sequences of arbitrary length.
+ As usual, is is convenient to introduce external currents 
+\begin_inset Formula $\underbar{J}$
+\end_inset
+
+ so that variational principles can be used to extract quantities of interest.
+ Thus, for example, writing 
+\begin_inset Formula 
+\[
+Z\left[J\right]=\sum_{\underbar{w}}\exp-\mathcal{A}\left(\underbar{w}\right)+\underbar{J}\cdot\underbar{w}
+\]
+
+\end_inset
+
+and taking a variation 
+\begin_inset Formula $\delta J$
+\end_inset
+
+ along the direction 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+, the limit reduces to 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta J}\right|_{J=0}=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Grammar via Beleif Propagation
+\end_layout
+
+\begin_layout Standard
+The learning task is that the valid disjuncts are not known 
+\emph on
+a priori
+\emph default
+, they must be discovered.
+ To accomplish this, the first step is to replace each possible connection-pair
+ 
+\begin_inset Formula $\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)$
+\end_inset
+
+ by a belief of the possibility 
+\begin_inset Formula $p\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)$
+\end_inset
+
+ of such a connection being present, interpreted as a probability: 
+\begin_inset Formula $0\le p\le1$
+\end_inset
+
+ with the goal of eventually driving each connectable pair to be zero or
+ one.
+ Similarly
 \end_layout
 
 \begin_layout Standard
