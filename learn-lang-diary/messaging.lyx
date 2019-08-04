@@ -195,32 +195,95 @@ cost
 \begin_inset Quotes erd
 \end_inset
 
- or entropy associated with the pair 
-\begin_inset Formula $\left(w,d\right)$
+ or entropy associated with the word-disjunct pair.
+ It is convenient to write 
+\begin_inset Formula $h=h\left(w,d\right)$
 \end_inset
 
-.
- In this Ansatz, the probability of a word sequence 
+ as the cost of the word-disjunct pair; only the lowest cost is meaningful,
+ and it does not make sense for a given disjunct to have more than one cost.
+ Impossible word-disjunct pairs have infinite cost, rendering thier probability
+ zero.
+ That is, the probability of a word-disjunct pair, up to an overall normalizatio
+n, can be taken as
+\begin_inset Formula 
+\[
+P\left(w,d\right)\sim\exp-h\left(w,d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this Ansatz, the probability of a word sequence 
 \begin_inset Formula $\underbar{w}$
 \end_inset
 
  is then 
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\exp\mathcal{A}\left(\underbar{w}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{w_{j}}\prod_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
 \]
 
 \end_inset
 
-with 
+where the formal grammar is encoded as a boolean satisfiability factor 
+\begin_inset Formula 
+\[
+\Delta\left(d_{1},\cdots,d_{n}\right)=\begin{cases}
+1 & \left(d_{1},\cdots,d_{n}\right)\mbox{ is a valid parse}\\
+0 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+while the probabilistic aspects, that some parses are more likely than others,
+ are encoded in the lexical factors 
+\begin_inset Formula $P\left(w,d\right)$
+\end_inset
+
+.
+ Replacing probabilities by thier logs, one can equivalently write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{\underbar{d}}\Delta\left(\underbar{d}\right)\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
+\]
+
+\end_inset
+
+using as shorthand 
+\begin_inset Formula $\underbar{d}=\left(d_{1},\cdots,d_{n}\right)$
+\end_inset
+
+ as the string of 
+\begin_inset Formula $n$
+\end_inset
+
+ disjuncts associated with the 
+\begin_inset Formula $n$
+\end_inset
+
+ words 
+\begin_inset Formula $\underbar{w}=\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+.
+ The 
 \begin_inset Formula $Z$
 \end_inset
 
- a noramlization: the partitiion function, and 
+ is famously a normalization: the partition function.
+ The 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
- the 
+ is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -231,12 +294,40 @@ action
 , given by 
 \begin_inset Formula 
 \[
-\mathcal{A}\left(\underbar{w}\right)=\sum_{j=1}^{n}\sum_{w}\sum_{d}\delta\left(\underbar{w}_{j},w\right)
+\mathcal{A}\left(\underbar{w},\underbar{d}\right)=\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)
 \]
 
 \end_inset
 
- 
+A slightly more formal and more accepted notation would be to write this
+ as 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
+\]
+
+\end_inset
+
+so that the action now incorporates the boolean satisfiability factor:
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\Xi\left(\underbar{d}\right)+\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $\Xi\left(\underbar{d}\right)=-\ln\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ is either minus-infinity for an invalid parse, or zero for a valid parse.
+ In the Link Grammar formulation, the term 
+\begin_inset Formula $\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ can also be factorized locally, as it is a product of graphical elements;
+ the disjuncts consist of lists of connectors, which either can connect,
+ or not.
 \end_layout
 
 \begin_layout Standard
