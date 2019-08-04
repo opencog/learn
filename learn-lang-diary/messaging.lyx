@@ -113,7 +113,7 @@ This is a reprise of a recurring theme.
  using the Link Grammar formalism.
  The goal is to learn the grammar, using unsupervised techniques.
  The approach here is to treat it as a constraint satisfaction problem,
- and then use a generalized beleif-propagation algroithm, as inspired and
+ and then use a generalized beleif-propagation algorithm, as inspired and
  described by Mézard and Mora
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -127,10 +127,153 @@ key "Mezard2008"
 \begin_layout Standard
 To do so will require the articulation of a lot of notation to make things
  clear.
- A lot of this will repeat what I've written before.
- The other thing to point out is due to loops, etc.
+ A lot of this will repeat what I've written before, brought together into
+ one place.
+ Following the template given in section 4 of Mézard and Mora, one begins
+ from first principles by defining the probability of a word sequence 
+\begin_inset Formula $\underline{w}=\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\lim_{N\to\infty}\frac{1}{N}\sum_{i=1}^{N}\delta\left(\underbar{w},\underbar{w}_{i}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the number of sentences in the training corpus, each 
+\begin_inset Formula $\underbar{w}_{i}$
+\end_inset
+
+ is a grammatically valid sentence.
+ The above states that, basicly, a word sequence 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ is valid if it occurs in the training corpus; else it is not.
+ While perhaps this might be formally appropriate expression, this is neither
+ a good practical definition of language, nor does it even give much of
+ a theoretical foothold.
+\end_layout
+
+\begin_layout Standard
+One then applies the standard Ansatz that grammar is lexical, or rather,
+ that a lexical approach can describe most of the aspects of human language.
+ As usual, we presume that the Link Grammar formalism is the most directly
+ appriopriate for the task.
+ Lexical entries are then of the form 
+\begin_inset Formula 
+\[
+\left(\left(w,d\right),h\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $w$
+\end_inset
+
+ is a word, 
+\begin_inset Formula $d$
+\end_inset
+
+ is a disjunct describing the the grammatical relationship the word can
+ engage in, and 
+\begin_inset Formula $h$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+cost
+\begin_inset Quotes erd
+\end_inset
+
+ or entropy associated with the pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+.
+ In this Ansatz, the probability of a word sequence 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\exp\mathcal{A}\left(\underbar{w}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $Z$
+\end_inset
+
+ a noramlization: the partitiion function, and 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+action
+\begin_inset Quotes erd
+\end_inset
+
+, given by 
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w}\right)=\sum_{j=1}^{n}\sum_{w}\sum_{d}\delta\left(\underbar{w}_{j},w\right)
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+The other thing to point out is due to loops, etc.
  it won't be naive beleif propagation, but it will be Survey Propagation,
- as mentioned there....
+ as mentioned there...
+ The starting point appears to have an Ansatz about the form of partition
+ function.
+ The appropriate form seems to be 
+\begin_inset Formula 
+\[
+P\left(\right)=\frac{1}{Z}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+The End
 \end_layout
 
 \begin_layout Standard
