@@ -244,16 +244,29 @@ Statistical Mechanics of Link Grammar
 \end_layout
 
 \begin_layout Standard
-To do so will require the articulation of a lot of notation to make things
- clear.
- A lot of this will repeat what I've written before, brought together into
- one place.
- Following the template given in section 4 of Mézard and Mora, one begins
- from first principles by defining the probability of a word sequence 
+The goal of this section is to formulate a model of language, simultaneously
+ invoking both its graph-theoretical and statistical properties.
+ This mostly requires the introduction and review of fairly mainstream ideas
+ and notation, and an articulation of the notation so that it's meaning
+ becomes clear.
+\end_layout
+
+\begin_layout Standard
+Consider first a word sequence 
 \begin_inset Formula $\underline{w}=\left(w_{1},\cdots,w_{n}\right)$
 \end_inset
 
- as 
+ which can be taken to be a sentence that is 
+\begin_inset Formula $n$
+\end_inset
+
+ words long; it need not be grammatical; that is, it need not be a valid
+ sentence.
+ One possible way of defining the statistics of langauge is to claim that
+ the probability of this word sequence is 
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 P\left(\underbar{w}\right)=\lim_{N\to\infty}\frac{1}{N}\sum_{i=1}^{N}\delta\left(\underbar{w},\underbar{w}_{i}\right)
@@ -265,7 +278,8 @@ where
 \begin_inset Formula $N$
 \end_inset
 
- is the number of sentences in the training corpus, each 
+ is the number of sentences in a sample corpus representative of the langauge,
+ so that each 
 \begin_inset Formula $\underbar{w}_{i}$
 \end_inset
 
@@ -274,10 +288,51 @@ where
 \begin_inset Formula $\underbar{w}$
 \end_inset
 
- is valid if it occurs in the training corpus; else it is not.
- While perhaps this might be formally appropriate expression, this is neither
- a good practical definition of language, nor does it even give much of
- a theoretical foothold.
+ is valid if and only if it occurs in the sample corpus; else it is not.
+ This is a naive and simplistic definition of language, dounded on a frequentist
+ view of probability.
+ It is inadequate on multiple fronts.
+ It's worth articulating these, lest they become an impediement later.
+\end_layout
+
+\begin_layout Itemize
+The notation above assigned a fixed sentence length of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ This seems to be a notational inconvenience, rather than a fundamental
+ limitation.
+ From here on, sentences are assumed to be varying in length, and can be
+ chosen as desired.
+\end_layout
+
+\begin_layout Itemize
+Morphology is ignored.
+ For the most part, this should not be an impediment; Link Grammar is able
+ to deal adequately with morpho-syntax, and even enforce phonetic agreement,
+ so this presents no particular stumbling block.
+\end_layout
+
+\begin_layout Itemize
+Semantic structure on a scale larger than one sentence is ignored.
+ Most of what follows will be focused on syntax, and the lower reaches of
+ semantics, and so this simplification seems reasonable at this time.
+\end_layout
+
+\begin_layout Itemize
+Corpora are assumed to be finite in size.
+ This is naturally the case for natural langauge, but it can cause difficulties
+ for certain mathematical approaches, which are more naturally expressed
+ in the continuum limit.
+ This is also glossed over, as it rarely presents any practical difficulties.
+ Note that formal langauges with generative grammars are capable of producing
+ infinite corpora.
+\end_layout
+
+\begin_layout Itemize
+No theory of grammar is presumed ...
+ so lexical.
 \end_layout
 
 \begin_layout Standard
@@ -639,7 +694,7 @@ and taking a variation
 \begin_inset Formula $\underbar{w}$
 \end_inset
 
-, the limit reduces to 
+, the limit of the logarithmic derivative gives the probability: 
 \begin_inset Formula 
 \[
 P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta J}\right|_{J=0}=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
@@ -647,7 +702,11 @@ P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta
 
 \end_inset
 
+The logarithm of the partition function 
+\begin_inset Formula $-\ln Z$
+\end_inset
 
+ is the free energy.
 \end_layout
 
 \begin_layout Subsection*
@@ -655,7 +714,8 @@ Grammar via Beleif Propagation
 \end_layout
 
 \begin_layout Standard
-The learning task is that the valid disjuncts are not known 
+The learning task begins by noting that the valid disjuncts are not known
+ 
 \emph on
 a priori
 \emph default
