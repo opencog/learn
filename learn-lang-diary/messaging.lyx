@@ -548,7 +548,7 @@ The probability of a word sequence
  is then 
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{w_{j}}\sum_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\sum_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
 \]
 
 \end_inset
@@ -568,6 +568,17 @@ This is just the indicator function for a predicate.
 \end_inset
 
 .
+ There is an implicit assumption that a parse, if it exists, is unique.
+ If this is not the case, and multiple distinct parses exist with a given
+ fixed 
+\begin_inset Formula $\underbar{d}$
+\end_inset
+
+, then 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ needs to count these with multiplicity.
 \end_layout
 
 \end_inset
@@ -705,7 +716,7 @@ As the cost
  is infinite for those words-disjunct pairs that do not occur in the lexis,
  this sum excludes impossible pairings; no addtional effort is needed to
  otherwise exclude them.
-  
+ 
 \end_layout
 
 \begin_layout Standard
@@ -829,7 +840,8 @@ with the product being over all of the individual connectors in each disjunct.
 
  if and only if every connector can be uniquely paired with some other connector
 , and no dangling connectors remain.
- 
+ To avoid double-counting, the product is meant to extend only over the
+ links (edges) in the graph, with one term per edge.
 \end_layout
 
 \begin_layout Standard
@@ -891,20 +903,45 @@ i.e.
 \end_layout
 
 \begin_layout Standard
-Taking the logarithm, so as to turn products into sums, the action 
-\begin_inset Formula $\mathcal{A}$
-\end_inset
-
- can be expressed as a summation of local interactions.
+Taking the logarithm, so as to turn products into sums, the constraint can
+ be written in the form
 \begin_inset Formula 
 \[
-\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\sum_{j=1}^{n}\left[h\left(w_{j},d_{j}\right)+\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\exp-\left[\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
 \]
 
 \end_inset
 
-The intent of the above expression is that it is to be interpreted as a
- summation over Feynmann diagrams, with 
+where 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ can be interpreted as a kinetic term, having a value of zero when 
+\begin_inset Formula $c_{jk}$
+\end_inset
+
+ can be contracted with 
+\begin_inset Formula $c_{j^{\prime}k^{\prime}}$
+\end_inset
+
+ and is infinite otherwise.
+\end_layout
+
+\begin_layout Standard
+In this form, the constraint can be pulled into the action 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, redefining it as a summation of local interactions:
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w},\underbar{d}\right)=\sum_{j=1}^{n}\left[h\left(w_{j},d_{j}\right)+\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\]
+
+\end_inset
+
+The intended reading of the above expression is that it is a summation over
+ Feynmann diagrams, with 
 \begin_inset Formula $h$
 \end_inset
 
@@ -927,14 +964,14 @@ The intent of the above expression is that it is to be interpreted as a
  terms corresponding to propagators connecting vertexes.
  The propagators are exactly the Link Grammar links, weighted in such a
  way that they contribute zero to the action, when the link is allowed,
- and otherwise contribute infinity.
+ and otherwise contributing infinity.
 \end_layout
 
 \begin_layout Standard
 The partition function can then be formally written as
 \begin_inset Formula 
 \[
-Z=\sum_{\underbar{w}}\exp-\mathcal{A}\left(\underbar{w}\right)
+Z=\sum_{\underbar{w},\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
 \]
 
 \end_inset
@@ -953,7 +990,7 @@ with the summation over
  Thus, for example, writing 
 \begin_inset Formula 
 \[
-Z\left[J\right]=\sum_{\underbar{w}}\exp-\mathcal{A}\left(\underbar{w}\right)+\underbar{J}\cdot\underbar{w}
+Z\left[J\right]=\sum_{\underbar{w},\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)+\underbar{J}\cdot\underbar{w}
 \]
 
 \end_inset
@@ -969,7 +1006,7 @@ and taking a variation
 , the limit of the logarithmic derivative gives the probability: 
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta J}\right|_{J=0}=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta J}\right|_{J=0}=\frac{1}{Z}\sum_{\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
 \]
 
 \end_inset
