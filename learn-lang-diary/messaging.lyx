@@ -240,7 +240,7 @@ key "Mezard2008"
 \end_layout
 
 \begin_layout Subsection*
-Statistical Mechanics of Link Grammar
+A Frequentist Model of Language
 \end_layout
 
 \begin_layout Standard
@@ -268,9 +268,9 @@ Consider first a word sequence
 
 \begin_layout Standard
 \begin_inset Formula 
-\[
-P\left(\underbar{w}\right)=\lim_{N\to\infty}\frac{1}{N}\sum_{i=1}^{N}\delta\left(\underbar{w},\underbar{w}_{i}\right)
-\]
+\begin{equation}
+P\left(\underbar{w}\right)=\lim_{N\to\infty}\frac{1}{N}\sum_{i=1}^{N}\delta\left(\underbar{w},\underbar{w}_{i}\right)\label{eq:frequentist}
+\end{equation}
 
 \end_inset
 
@@ -326,18 +326,137 @@ Corpora are assumed to be finite in size.
  for certain mathematical approaches, which are more naturally expressed
  in the continuum limit.
  This is also glossed over, as it rarely presents any practical difficulties.
- Note that formal langauges with generative grammars are capable of producing
- infinite corpora.
+ By contrast, formal langauges with generative grammars are capable of producing
+ infinite corpora, and so the distinction between finite and infinite can
+ be blurred.
 \end_layout
 
 \begin_layout Itemize
-No theory of grammar is presumed ...
- so lexical.
+The above definition completely ignores the obvious fact that language is
+ compositional: one can form sentences from sentence fragments; phrases
+ can have meanings; language is a collection of recurring word-patterns
+ plainly visible at a sub-sentence level.
+ Yet, one of the goals of research into linguistics is to elucidate teh
+ compositional structure of language.
 \end_layout
 
 \begin_layout Standard
-One then applies the standard Ansatz that grammar is lexical, or rather,
- that a lexical approach can describe most of the aspects of human language.
+For all of these various reasons, the above probabilistic description of
+ language is patently absurd.
+ Yet it is often quoted as a foundational cornerstone, and so is worth repeating
+ here.
+ Despite these abusrdities, one might like the final formulation of language
+ be such that eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:frequentist"
+
+\end_inset
+
+, or at least something similar, can arise naturally from the theory.
+\end_layout
+
+\begin_layout Standard
+For the remainder of this section, the assumption is made that the compostional
+ nature of langauge can be adequately captured by means of a lexis.
+ This is closely related too the assumption that language is syntactic,
+ but is, in some sense, strictly weaker, or, at least, should be interpreted
+ in a broader setting.
+ A lexical description of langauge is one where each word is associated
+ with a collection of properties and relations that specify how that word
+ can occur in grammatical contexts, and how rough, basic meaning can be
+ pinned down.
+ This is in contrast to 
+\begin_inset Quotes eld
+\end_inset
+
+syntax
+\begin_inset Quotes erd
+\end_inset
+
+, which is usally taken to be synonym for the existence of a (planar) parse
+ tree.
+ The point here is that the graphical structure of languge need not be tree-like
+: the parse may contain loops; it may contain non-planar edges between words,
+ and it may contain relations operating at different conceptual levels.
+ For example, graphical relations enforcing phonetic agreement might typically
+ operate at a different level than count and tense agreement, and that in
+ turn operates at a different level than anaphora agreement.
+\end_layout
+
+\begin_layout Standard
+It is possible that natural language has structure that cannot be captured
+ by probabilistic graphical representations.
+ That author, however, is currently unable to imagine what this might be.
+ Therefore, in all that follows, the assumption is made that the entirety
+ of meaning and structure in language can be captured by graphs that encode
+ functions and relations with statistical, probabilistic properties.
+\end_layout
+
+\begin_layout Subsection*
+Link Grammar
+\end_layout
+
+\begin_layout Standard
+The remainder of this paper asumes that Link Grammar is well suited to capture
+ most of the lexical, syntactic properties of language.
+ There are multiple reasons that this assumption seems justified.
+ These include:
+\end_layout
+
+\begin_layout Itemize
+The Link Grammar formalism can be more-or-less directly related to dependency
+ grammars; it can be taken as a certain kind of dependency grammar, and
+ is rich enough that it can be mapped or translated to different styles
+ of dependency.
+\end_layout
+
+\begin_layout Itemize
+The Link Grammar formalism can be directly related to categorial and pregroup
+ grammar-style grammars; insofar as those can be taken as examples of phrase-str
+ucture grammar, a route exists to map Link Grammar into phrase structure,
+ and the kinds of phenomena exhibited there.
+\end_layout
+
+\begin_layout Itemize
+Link Grammar bridges naturally to Lambek calculus.
+ The link types of Link Grammar can be interpreted as the types of type
+ theory; the 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+ of Link Grammar are manifestly tensorial, and so Link Grammar can be taken
+ as a kind of tensor algebra.
+ As such, it can be understood via category theory: Link Grammar is the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+internal language
+\begin_inset Quotes erd
+\end_inset
+
+ of a monoidal category.
+ This makes it simultaneously very general, and abstractly powerful.
+\end_layout
+
+\begin_layout Standard
+To summarize, the Link Grammar formalism lies at the nexus of a multitude
+ of different viewpoints and theories of language.
+ One need not go very far, or work particularly hard, to see how it captures
+ different linguistic (and mathematical) phenomena and theories.
+\end_layout
+
+\begin_layout Subsection*
+Statistical Mechanics of Link Grammar
+\end_layout
+
+\begin_layout Standard
+.
  As usual, we presume that the Link Grammar formalism is the most directly
  appriopriate for the task.
  Lexical entries are then of the form 
