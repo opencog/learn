@@ -456,10 +456,7 @@ Statistical Mechanics of Link Grammar
 \end_layout
 
 \begin_layout Standard
-.
- As usual, we presume that the Link Grammar formalism is the most directly
- appriopriate for the task.
- Lexical entries are then of the form 
+Lexical entries are then of the form 
 \begin_inset Formula 
 \[
 \left(\left(w,d\right),h\right)
@@ -475,8 +472,30 @@ where
 \begin_inset Formula $d$
 \end_inset
 
- is a disjunct describing the the grammatical relationship the word can
- engage in, and 
+ is a disjunct
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A definition of 
+\begin_inset Quotes eld
+\end_inset
+
+disjunct
+\begin_inset Quotes erd
+\end_inset
+
+ will be given shortly; the next few paragraphs do not rely on a precise
+ defintion, and hold true generally for any lexical formulation.
+ In particular, one can imagine that a disjunct is an n-gram or a skip-gram;
+ this is useful, as it makes contact with nueral-net/deep-learning approaches
+ to language.
+\end_layout
+
+\end_inset
+
+ describing one of the grammatical relationships the word can engage in,
+ and 
 \begin_inset Formula $h$
 \end_inset
 
@@ -488,13 +507,25 @@ cost
 \begin_inset Quotes erd
 \end_inset
 
- or entropy associated with the word-disjunct pair.
- It is convenient to write 
+ or entropy associated with this word-disjunct pair.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A single word might be associated with multiple disjuncts.
+ During grammatical analysis, only one of these may be used at a time; thus
+ the disjuncts are disjoined from one-another, whence the name.
+\end_layout
+
+\end_inset
+
+ It is convenient to write the cost as a function of the word-disjunct pair:
+ 
 \begin_inset Formula $h=h\left(w,d\right)$
 \end_inset
 
- as the cost of the word-disjunct pair; only the lowest cost is meaningful,
- and it does not make sense for a given disjunct to have more than one cost.
+ as only the lowest cost is meaningful, and it does not make sense for a
+ given disjunct to have more than one cost.
  Impossible word-disjunct pairs have infinite cost, rendering thier probability
  zero.
  That is, the probability of a word-disjunct pair, up to an overall normalizatio
@@ -510,7 +541,7 @@ P\left(w,d\right)\sim\exp-h\left(w,d\right)
 \end_layout
 
 \begin_layout Standard
-In this Ansatz, the probability of a word sequence 
+The probability of a word sequence 
 \begin_inset Formula $\underbar{w}$
 \end_inset
 
@@ -522,7 +553,26 @@ P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{w_{j}}\prod_{\left(d_{1},\cdots,d_{
 
 \end_inset
 
-where the formal grammar is encoded as a boolean satisfiability factor 
+where the formal grammar is encoded as a boolean satisfiability factor
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This is just the indicator function for a predicate.
+ Common alternate notation is 
+\begin_inset Formula $\mathbb{I}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{1}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ 
 \begin_inset Formula 
 \[
 \Delta\left(d_{1},\cdots,d_{n}\right)=\begin{cases}
@@ -533,7 +583,7 @@ where the formal grammar is encoded as a boolean satisfiability factor
 
 \end_inset
 
-while the probabilistic aspects, that some parses are more likely than others,
+The probabilistic aspects, that some parses are more likely than others,
  are encoded in the lexical factors 
 \begin_inset Formula $P\left(w,d\right)$
 \end_inset
@@ -567,11 +617,20 @@ using as shorthand
 \end_inset
 
 .
- The 
+ The normalization 
 \begin_inset Formula $Z$
 \end_inset
 
- is famously a normalization: the partition function.
+ is famously known as the partition function.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Wikipedia.
+\end_layout
+
+\end_inset
+
  The 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
@@ -584,6 +643,17 @@ action
 \begin_inset Quotes erd
 \end_inset
 
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This word comes from physics, specifically, the Lagrangian formulation of
+ classical mechanics.
+\end_layout
+
+\end_inset
+
 , given by 
 \begin_inset Formula 
 \[
@@ -592,8 +662,8 @@ action
 
 \end_inset
 
-A slightly more formal and more accepted notation would be to write this
- as 
+A slightly more formal and more commonly accepted notation would be to write
+ this as 
 \begin_inset Formula 
 \[
 P\left(\underbar{w}\right)=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
@@ -613,8 +683,22 @@ so that
 \begin_inset Formula $\Xi\left(\underbar{d}\right)=-\ln\Delta\left(\underbar{d}\right)$
 \end_inset
 
- is either minus-infinity for an invalid parse, or zero for a valid parse.
- The sum is taken over all possble lists 
+ is either infinity for an invalid parse, or zero for a valid parse.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Roughly speaking, 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ can be thought of as an energy term, or even a kinetic energy, as captures
+ the interaction between words, as will be shown shortly.
+\end_layout
+
+\end_inset
+
+ The sum is taken over all possible lists 
 \begin_inset Formula $\underbar{d}$
 \end_inset
 
@@ -627,8 +711,8 @@ so that
 \begin_inset Formula $\Xi$
 \end_inset
 
- term excludes those lists that do not correspond to valid parses in the
- formal grammar.
+ term excludes those sequences that do not correspond to valid parses in
+ the formal grammar.
  The 
 \begin_inset Formula $h$
 \end_inset
@@ -640,15 +724,49 @@ so that
 
  provides a weight (a lexical weight) indicating how likely that word-disjunct
  pairing may be.
-\end_layout
+ Note the peculiary form of the decomposition, here: the left-hand side
+ is a function of the word-sequence 
+\begin_inset Formula $\underbar{w}$
+\end_inset
 
-\begin_layout Standard
-In the Link Grammar formulation, the term 
+ only; the parsability constraint 
 \begin_inset Formula $\Delta\left(\underbar{d}\right)$
 \end_inset
 
- can also be factorized locally, as it is a product of graphical elements;
- the disjuncts consist of lists of connectors, which either can connect,
+ is a function of the disjunct-sequence only; words are not directly a part
+ of the parse, but are rather connected to it only by means of the pairing
+ 
+\begin_inset Formula $h$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Although the above formulation uses the word 
+\begin_inset Quotes eld
+\end_inset
+
+disjunct
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+, it was intentionally vague; none of the development required a more precise
+ definition.
+ In a lexical formulation, the term 
+\begin_inset Formula $\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ can also be factorized locally, as it is determined by a product of lexical
+ elements.
+ In the Link Grammar formulation, the lexical elements are explicitly graphical:
+ a vertex surrounded by half-edges or connectors, with two half-edges required
+ to make a full edge (link) connecting two vertexes.
+ Algebraically, a disjunct is a list of connectors, which either can connect,
  or not.
  That is, an arity-
 \begin_inset Formula $m$
@@ -661,7 +779,7 @@ In the Link Grammar formulation, the term
  written as
 \begin_inset Formula 
 \[
-d_{j}=c_{j1}\&\cdots\&c_{jm}
+d=c_{1}\&\cdots\&c_{m}
 \]
 
 \end_inset
@@ -680,10 +798,24 @@ with
 \end_inset
 
  being one of the Link Grammar link types, and 
-\begin_inset Formula $\sigma\in\left\{ +,-\right\} $
+\begin_inset Formula $\sigma\in\left\{ -,+\right\} $
 \end_inset
 
  being a direction indicator.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In standard link grammar, these direction indicators point to the left and
+ right, respecively, and encode the directional dependence of word order.
+ For languages with free word-order, it is convenient to use symbols for
+ head and tail instead of, or in addition to the direction indicators.
+ Head/tail markings are also useful for indicating dependency directions,
+ when these are desired, or for indicating catena.
+\end_layout
+
+\end_inset
+
  Define the conjugate direction indicator 
 \begin_inset Formula $\bar{\sigma}$
 \end_inset
@@ -700,18 +832,18 @@ with
 \end_inset
 
 Thus, two connectors 
-\begin_inset Formula $c_{1}$
+\begin_inset Formula $c_{a}$
 \end_inset
 
  and 
-\begin_inset Formula $c_{2}$
+\begin_inset Formula $c_{b}$
 \end_inset
 
  connect if the link types match, and the direction indicators are conjugate.
  Thus, one may define
 \begin_inset Formula 
 \[
-\delta\left(c_{1},c_{2}\right)=\delta\left(\ell_{1},\ell_{2}\right)\delta\left(\sigma_{1},\bar{\sigma}_{2}\right)
+\delta\left(c_{a},c_{b}\right)=\delta\left(\ell_{a},\ell_{b}\right)\delta\left(\sigma_{a},\bar{\sigma}_{b}\right)
 \]
 
 \end_inset
@@ -725,8 +857,62 @@ A sentence is parsable when all connectors are connectable, and so
 \end_inset
 
 with the product being over all of the individual connectors in each disjunct.
- Implicit in the above is a further constraint that the parse graph be a
- planar graph, i.e.
+ That is, 
+\begin_inset Formula $\Delta=1$
+\end_inset
+
+ if and only if every connector can be uniquely paired with some other connector
+, and no dangling connectors remain.
+ 
+\end_layout
+
+\begin_layout Standard
+It is from this that the interpretation as a tensor algebra arises: Each
+ disjunct 
+\begin_inset Formula $d=d_{j}$
+\end_inset
+
+ can be thought of as a tensor having 
+\begin_inset Formula $m$
+\end_inset
+
+ indexes on it; each index must be contracted with some other index on some
+ other tensor.
+ The tensor indexes are always contracted pair-wise, and once connected
+ (consumed) cannot be connected to any other index.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This is the content of the 
+\begin_inset Quotes eld
+\end_inset
+
+no cloning
+\begin_inset Quotes erd
+\end_inset
+
+ theorem.
+\end_layout
+
+\end_inset
+
+ A parse is valid if and only if 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a scalar, having no remaining uncontracted indexes.
+ Unlike symmetric tensor algebras, the connectors are directional: they
+ can contract only to the left, or to the right.
+\end_layout
+
+\begin_layout Standard
+Implicit in the above is a further constraint that the parse graph be a
+ planar graph, 
+\emph on
+i.e.
+
+\emph default
  that there is a no-links-crossing constraint.
  This constraint is very useful for controlling the combinatorial explosion
  of possible parses; unfortunately, it is a non-local constraint, and thus
@@ -735,7 +921,7 @@ with the product being over all of the individual connectors in each disjunct.
  such a non-local constraint, it is easier, for now, to implicitly keep
  this in the background.
  There are multiple techniques that can be used when dealing with this;
- for now these are secondary concerns.
+ these, and planarity in general, are for now secondary concerns.
 \end_layout
 
 \begin_layout Standard
@@ -743,7 +929,7 @@ Taking the logarithm, so as to turn products into sums, the action
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
- can then be expressed as a summation of local interactions.
+ can be expressed as a summation of local interactions.
 \begin_inset Formula 
 \[
 \mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\sum_{j=1}^{n}\left[h\left(w_{j},d_{j}\right)+\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
@@ -773,9 +959,9 @@ The intent of the above expression is that it is to be interpreted as a
 \end_inset
 
  terms corresponding to propagators connecting vertexes.
- The propagaotrs are exactly the Link Grammar links, weighted in such a
- way that it contributes zero to the action, when the link is allowed, and
- otherwise contributes minus-infinity.
+ The propagators are exactly the Link Grammar links, weighted in such a
+ way that they contribute zero to the action, when the link is allowed,
+ and otherwise contribute infinity.
 \end_layout
 
 \begin_layout Standard
@@ -792,7 +978,8 @@ with the summation over
 \end_inset
 
  running over all possible word-sequences of arbitrary length.
- As usual, is is convenient to introduce external currents 
+ As is conventional in partition function formulations, it is convenient
+ to introduce external currents 
 \begin_inset Formula $\underbar{J}$
 \end_inset
 
@@ -821,11 +1008,38 @@ P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta
 
 \end_inset
 
-The logarithm of the partition function 
+The 
+\begin_inset Quotes eld
+\end_inset
+
+current
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $J$
+\end_inset
+
+ is just an algebraic device, a trick, used to single out one particular
+ word-sequence out of the infinite sum.
+ It is conventient to also introduce other currents coupling to other parts
+ of the action, so that the variational principle can be used to extract
+ other quantities of interest.
+ The logarithm of the partition function 
 \begin_inset Formula $-\ln Z$
 \end_inset
 
- is the free energy.
+ is the free energy; standard algebraic variations can be used to extract
+ an entire zoo of 
+\begin_inset Quotes eld
+\end_inset
+
+thermodynamic
+\begin_inset Quotes erd
+\end_inset
+
+ variables, including correlation functions, mean values, mean-square deviations
+ and the like.
 \end_layout
 
 \begin_layout Subsection*
@@ -862,11 +1076,25 @@ x
 \end_layout
 
 \begin_layout Standard
-x
+if only one link-type, then its an unlablled dependency parse, and the solution
+ is mean-field or Markovian.
+ To make it tractable use the page-rank algorithm...
 \end_layout
 
 \begin_layout Standard
 x
+\end_layout
+
+\begin_layout Standard
+x but the shafiness of it all ....
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x if multiple link types....
 \end_layout
 
 \begin_layout Standard
@@ -877,17 +1105,7 @@ x
 The other thing to point out is due to loops, etc.
  it won't be naive beleif propagation, but it will be Survey Propagation,
  as mentioned there...
- The starting point appears to have an Ansatz about the form of partition
- function.
- The appropriate form seems to be 
-\begin_inset Formula 
-\[
-P\left(\right)=\frac{1}{Z}
-\]
-
-\end_inset
-
-
+ 
 \end_layout
 
 \begin_layout Section*
