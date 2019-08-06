@@ -548,7 +548,7 @@ The probability of a word sequence
  is then 
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\sum_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\sum_{\left(d_{1},\cdots,d_{n}\right)}\prod_{j=1}^{n}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
 \]
 
 \end_inset
@@ -1060,7 +1060,51 @@ a priori
 \end_layout
 
 \begin_layout Standard
-Here are the beleif-prop eqns:
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\left[\sum_{d_{j}}P\left(w_{j},d_{j}\right)\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+so that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{a}\psi_{a}\left(w_{i_{1}(a)},w_{i_{2}(a)},\cdots,w_{i_{m}(a)}\right)
+\]
+
+\end_inset
+
+The factors 
+\begin_inset Formula $a$
+\end_inset
+
+ are in one-to-one correspondance with words ...
+ the 
+\begin_inset Formula $i_{n}\left(a\right)$
+\end_inset
+
+ are the other words that can connect via disjuncts ...
+ so write
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\psi_{w_{j}}\left(w_{i_{1}(w_{j})},w_{i_{2}(w_{j})},\cdots,w_{i_{m}(w_{j})}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here are the belief-prop eqns:
 \end_layout
 
 \begin_layout Standard
