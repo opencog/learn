@@ -548,7 +548,7 @@ The probability of a word sequence
  is then 
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{w_{j}}\prod_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{w_{j}}\sum_{\left(d_{1},\cdots,d_{n}\right)}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
 \]
 
 \end_inset
@@ -595,7 +595,7 @@ The probabilistic aspects, that some parses are more likely than others,
 \begin_layout Standard
 \begin_inset Formula 
 \[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{\underbar{d}}\Delta\left(\underbar{d}\right)\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
+P\left(\underbar{w}\right)=\frac{1}{Z}\sum_{\underbar{d}}\Delta\left(\underbar{d}\right)\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
 \]
 
 \end_inset
@@ -617,6 +617,38 @@ using as shorthand
 \end_inset
 
 .
+ The sum is taken over all possible lists 
+\begin_inset Formula $\underbar{d}$
+\end_inset
+
+ of disjuncts 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+; the 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ term excludes those sequences that do not correspond to valid parses in
+ the formal grammar.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The summation 
+\begin_inset Formula $\sum_{\underbar{d}}\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ has the form that makes it clear that 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ has the form of an integration measure.
+ An obvious generalization is to replace it by a fuzzy or fractional measure.
+\end_layout
+
+\end_inset
+
  The normalization 
 \begin_inset Formula $Z$
 \end_inset
@@ -631,7 +663,11 @@ See Wikipedia.
 
 \end_inset
 
- The 
+ 
+\end_layout
+
+\begin_layout Standard
+The 
 \begin_inset Formula $\mathcal{A}$
 \end_inset
 
@@ -662,84 +698,14 @@ This word comes from physics, specifically, the Lagrangian formulation of
 
 \end_inset
 
-A slightly more formal and more commonly accepted notation would be to write
- this as 
-\begin_inset Formula 
-\[
-P\left(\underbar{w}\right)=\frac{1}{Z}\exp-\mathcal{A}\left(\underbar{w}\right)
-\]
-
-\end_inset
-
-so that the action now incorporates the boolean satisfiability factor:
-\begin_inset Formula 
-\[
-\mathcal{A}\left(\underbar{w}\right)=\sum_{\underbar{d}}\left[\Xi\left(\underbar{d}\right)+\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)\right]
-\]
-
-\end_inset
-
-so that 
-\begin_inset Formula $\Xi\left(\underbar{d}\right)=-\ln\Delta\left(\underbar{d}\right)$
-\end_inset
-
- is either infinity for an invalid parse, or zero for a valid parse.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Roughly speaking, 
-\begin_inset Formula $\Xi$
-\end_inset
-
- can be thought of as an energy term, or even a kinetic energy, as captures
- the interaction between words, as will be shown shortly.
-\end_layout
-
-\end_inset
-
- The sum is taken over all possible lists 
-\begin_inset Formula $\underbar{d}$
-\end_inset
-
- of disjuncts 
-\begin_inset Formula $d_{j}$
-\end_inset
-
-.
- The 
-\begin_inset Formula $\Xi$
-\end_inset
-
- term excludes those sequences that do not correspond to valid parses in
- the formal grammar.
- The 
+As the cost 
 \begin_inset Formula $h$
 \end_inset
 
- term excludes those pairings of words-to-disjuncts that do not occur in
- the lexis; and it they do occur, then 
-\begin_inset Formula $h$
-\end_inset
-
- provides a weight (a lexical weight) indicating how likely that word-disjunct
- pairing may be.
- Note the peculiary form of the decomposition, here: the left-hand side
- is a function of the word-sequence 
-\begin_inset Formula $\underbar{w}$
-\end_inset
-
- only; the parsability constraint 
-\begin_inset Formula $\Delta\left(\underbar{d}\right)$
-\end_inset
-
- is a function of the disjunct-sequence only; words are not directly a part
- of the parse, but are rather connected to it only by means of the pairing
- 
-\begin_inset Formula $h$
-\end_inset
-
-.
+ is infinite for those words-disjunct pairs that do not occur in the lexis,
+ this sum excludes impossible pairings; no addtional effort is needed to
+ otherwise exclude them.
+  
 \end_layout
 
 \begin_layout Standard
@@ -1053,8 +1019,26 @@ The learning task begins by noting that the valid disjuncts are not known
 a priori
 \emph default
 , they must be discovered.
- To accomplish this, the first step is to replace each possible connection-pair
- 
+ To accomplish this, 
+\end_layout
+
+\begin_layout Standard
+Here are the beleif-prop eqns:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\eta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The first step is to replace each possible connection-pair 
 \begin_inset Formula $\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)$
 \end_inset
 
