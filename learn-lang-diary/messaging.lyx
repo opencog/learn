@@ -27,6 +27,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
+\spacing single
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -42,7 +43,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
-\biblio_style plain
+\biblio_style tufte
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -827,9 +828,9 @@ Thus, two connectors
 
 A sentence is parsable when all connectors are connectable, and so
 \begin_inset Formula 
-\[
-\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)
-\]
+\begin{equation}
+\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\label{eq:factor-graph}
+\end{equation}
 
 \end_inset
 
@@ -1057,13 +1058,9 @@ a priori
 \emph default
 , they must be discovered.
  To accomplish this, 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\left[\sum_{d_{j}}P\left(w_{j},d_{j}\right)\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
-\]
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Chavas2005"
 
 \end_inset
 
@@ -1071,51 +1068,50 @@ P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\left[\sum_{d_{j}}P\left(w_
 \end_layout
 
 \begin_layout Standard
-so that
+Its a constraint-satisfaction problem.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:factor-graph"
+
+\end_inset
+
+ defines a factorization of the constraints, that is, a factor-graph.
+ For a given parse, the factor graph is a bipartite graph, connecting elements
+ 
+\begin_inset Formula $d\in D$
+\end_inset
+
+ (the disjuncts) to elements 
+\begin_inset Formula $\ell\in L$
+\end_inset
+
+ (the links).
+ In the factor graph, each link 
+\begin_inset Formula $\ell$
+\end_inset
+
+ corresponds to a vertex, and, of course, links are always arity-2.
+ To be precise, the vertexes of the factor graph are taken from 
+\begin_inset Formula $V=D\cup L$
+\end_inset
+
+ and the edges are taken from 
+\begin_inset Formula $E=\left\{ \left(d,\ell\right)|d\in D\mbox{ and }d=c_{1}\&\cdots\&c_{m}\mbox{ and }c_{k}\in\ell\right\} $
+\end_inset
+
+.
+ This last just states that an edge in the factor graph must connect some
+ connector (half-link) on a disjunct to the link (as links are just pairs
+ of half-links).
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula 
-\[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{a}\psi_{a}\left(w_{i_{1}(a)},w_{i_{2}(a)},\cdots,w_{i_{m}(a)}\right)
-\]
-
-\end_inset
-
-The factors 
-\begin_inset Formula $a$
-\end_inset
-
- are in one-to-one correspondance with words ...
- the 
-\begin_inset Formula $i_{n}\left(a\right)$
-\end_inset
-
- are the other words that can connect via disjuncts ...
- so write
-\begin_inset Formula 
-\[
-P\left(\underbar{w}\right)=\frac{1}{Z}\prod_{j=1}^{n}\psi_{w_{j}}\left(w_{i_{1}(w_{j})},w_{i_{2}(w_{j})},\cdots,w_{i_{m}(w_{j})}\right)
-\]
-
-\end_inset
-
-
+XXX Need figure here XXX.
 \end_layout
 
 \begin_layout Standard
 Here are the belief-prop eqns:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\eta
-\]
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
