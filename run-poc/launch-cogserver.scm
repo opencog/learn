@@ -32,7 +32,6 @@
 (load-from-path "opencog/nlp/learn/pseudo-csets.scm")
 (load-from-path "opencog/nlp/learn/shape-vec.scm")
 (load-from-path "opencog/nlp/learn/summary.scm")
-(load-from-path "opencog/nlp/learn/gram-class.scm")
 (load-from-path "opencog/nlp/learn/gram-agglo.scm")
 
 (add-to-load-path ".")
