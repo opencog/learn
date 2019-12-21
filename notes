@@ -21337,3 +21337,66 @@ DONE:
 * cut low-obs words from disjunct sets (DONE - micro and mini)
 * Fraction correct S,O links (DONE)
 * Why hang? Why not popping timeout? (Bug, DONE)
+
+Dec 2019
+========
+Upgrade everything to
+* Ubuntu Bionic 18.04
+* bdwgc version 8.0
+* guile-2.9.7
+* link-grammar-5.7.0
+* current vintage opencog
+* Postgres 12.1
+* hugepages /etc/sysctl.conf
+
+sudo apt install update-manager-core
+sudo do-release-upgrade
+
+The hardest part is the postgres upgrade:
+
+Here they are in ubuntu-16.04 postgres 9.5.19:
+actually, now its 9.5.20 after upgrade ...
+                                                                                          List of databases
+         Name          |  Size   | Tablespace |                                 Description
+-----------------------+---------+------------+------------------------------------------------------------------------------
+ en_huge_marg          | 18 GB   | pg_default | en_cfive consistent Sections with word-count > 3; section-count > 1
+ en_large_marg         | 3089 MB | pg_default | en_cfive consistent Sections with word-count > 8; section-count > 3
+ en_micro_disinfo      | 684 MB  | pg_default |
+ en_micro_disinfo3     | 504 MB  | pg_default |
+ en_micro_disinfo3_exp | 303 MB  | pg_default |
+ en_micro_disinfo_exp  | 323 MB  | pg_default |
+ en_micro_marg         | 346 MB  | pg_default | en_cfive consistent Sections with word-count > 500; section-count > 10
+ en_mini_marg          | 1251 MB | pg_default | en_cfive consistent Sections with word-count > 40; section-count > 5
+ en_mpg_18             | 78 GB   | pg_default | en_pairs_1.8_remi plus disjuncts plus dj marginals.
+ en_mpg_53             | 69 GB   | pg_default | en_pairs_5.3_remi plus disjuncts plus dj marginals.
+ en_nano               | 53 MB   | pg_default |
+ en_pairs_1.8_remi     | 22 GB   | pg_default | Same as en_pairs_cfive_mi but pairs w/FMI<1.8 cut & MI+marginals recomputed.
+ en_pairs_5.3_remi     | 14 GB   | pg_default | Same as en_pairs_cfive_mi but pairs w/FMI<5.3 cut & MI+marginals recomputed.
+ en_pairs_cfive_mi     | 31 GB   | pg_default | en_pairs_cfive plus marginals (i.e. clean word-pairs, only)
+ ubuntu                | 7112 kB | pg_default |
+(19 rows)
+
+/usr/lib/postgresql/12/bin/pg_upgrade
+/usr/lib/postgresql/9.5/bin
+
+/etc/postgresql/12/main/pg_hba.conf
+/etc/postgresql/9.5/main/postgresql.conf
+
+systemctl status postgresql.service
+service postgresql stop
+
+/usr/lib/postgresql/12/bin/initdb /var/lib/postgresql/12/main
+
+So:
+/usr/lib/postgresql/12/bin/pg_upgrade -b /usr/lib/postgresql/9.5/bin -B /usr/lib/postgresql/12/bin -d /etc/postgresql/9.5/main -D /etc/postgresql/12/main -c
+
+Don't forget hte -k flag, else the data is copied!
+
+/usr/lib/postgresql/12/bin/pg_upgrade -b /usr/lib/postgresql/9.5/bin -B /usr/lib/postgresql/12/bin -d /etc/postgresql/9.5/main -D /etc/postgresql/12/main -k
+
+service postgresql start
+
+./analyze_new_cluster.sh
+
+Hmm. Looks like it all worked out fine...
+
