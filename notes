@@ -21390,7 +21390,7 @@ service postgresql stop
 So:
 /usr/lib/postgresql/12/bin/pg_upgrade -b /usr/lib/postgresql/9.5/bin -B /usr/lib/postgresql/12/bin -d /etc/postgresql/9.5/main -D /etc/postgresql/12/main -c
 
-Don't forget hte -k flag, else the data is copied!
+Don't forget the -k flag, else the data is copied!
 
 /usr/lib/postgresql/12/bin/pg_upgrade -b /usr/lib/postgresql/9.5/bin -B /usr/lib/postgresql/12/bin -d /etc/postgresql/9.5/main -D /etc/postgresql/12/main -k
 
@@ -21399,4 +21399,3 @@ service postgresql start
 ./analyze_new_cluster.sh
 
 Hmm. Looks like it all worked out fine...
-
