@@ -66,6 +66,15 @@ jobs:
           paths:
             - /ws/atomspace/opencog/haskell/.stack-work
       - run:
+          name: Checkout CogServer
+          command: git clone --depth 1 https://github.com/singnet/cogserver /ws/cogserver
+      - run:
+          name: Install CogServer
+          command: |
+            mkdir -p /ws/cogserver/build
+            cd /ws/cogserver/build && cmake .. && make -j4 && make -j4 install
+            ldconfig
+      - run:
           name: Checkout OpenCog
           command: git clone --depth 1 https://github.com/singnet/opencog /ws/opencog
       - run:
