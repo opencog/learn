@@ -53,15 +53,25 @@
 	(list-tabulate VSIZE (lambda (N) (make-word (+ N 1))))
 )
 
+; --------------------------------------------------------
+; Draw random numbers from a (Zipfian) distribution
+
+; --------------------------------------------------------
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e. each word-class contains zipf words in it.
 
+; --------------------------------------------------------
 ; create connectors
 
-; create disjuncts
+; Create disjuncts
+; To simplify text generation, each disjunct shal have:
+; * Exactly one incoming (head) connector.
+; * Zero or more outgoing (tail/dependent) connectors.
+; * Connectors must match, as per link-grammar usual.
 
 ; create sections
 
+; --------------------------------------------------------
 ; Generate text. There are two ways to do this:
 ; A) Start with sections, and build a sentence
 ; B) Create a random planar tree, and assign sections to it.
