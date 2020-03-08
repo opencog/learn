@@ -26,48 +26,21 @@ jobs:
       - run:
           name: Install cogutil
           command: |
-            git clone --depth 1 https://github.com/singnet/cogutil /ws/cogutil
+            git clone --depth 1 https://github.com/opencog/cogutil /ws/cogutil
             mkdir -p /ws/cogutil/build
             cd /ws/cogutil/build && cmake .. && make -j2 && make -j2 install
             ldconfig
-      #- run:
-      #    name: Remove link-grammar "any" tokenization
-            # The current ULL pipeline is tokenization-agnostic, so the input
-            # should be pre-tokenized by some other method. The pipeline only
-            # splits sentences by spaces. For the tests to work, we need to
-            # remove the content of the affix-file in the link-grammar dictionary
-            # for "any" language. For the test suite, it is done below.
-      #    command: echo "" > /usr/local/share/link-grammar/any/affix-punc
       - run:
           name: Checkout AtomSpace
-          command: git clone --depth 1 https://github.com/singnet/atomspace /ws/atomspace
-      - restore_cache:
-          name: Restore GCH Cache
-          keys:
-            - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
-      - restore_cache:
-          name: Restore Haskell Deps Cache
-          keys:
-            - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
-      - run:
+          command: git clone --depth 1 https://github.com/opencog/atomspace /ws/atomspace
           name: Install AtomSpace
           command: |
             mkdir -p /ws/atomspace/build
             cd /ws/atomspace/build && cmake .. && make -j4 && make -j4 install
             ldconfig
-      - save_cache:
-          name: Save GHC Cache
-          key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
-          paths:
-            - /root/.stack
-      - save_cache:
-          name: Save Haskell Deps Cache
-          key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
-          paths:
-            - /ws/atomspace/opencog/haskell/.stack-work
       - run:
           name: Checkout CogServer
-          command: git clone --depth 1 https://github.com/singnet/cogserver /ws/cogserver
+          command: git clone --depth 1 https://github.com/opencog/cogserver /ws/cogserver
       - run:
           name: Install CogServer
           command: |
@@ -75,32 +48,11 @@ jobs:
             cd /ws/cogserver/build && cmake .. && make -j4 && make -j4 install
             ldconfig
       - run:
-          name: Checkout OpenCog
-          command: git clone --depth 1 https://github.com/singnet/opencog /ws/opencog
-      - run:
-          name: Install OpenCog
-          command: |
-            mkdir -p /ws/opencog/build
-            cd /ws/opencog/build && cmake .. && make -j4 && make -j4 install
-            ldconfig
-      - checkout
-      - restore_cache:
-          name: Restore GCH Cache
-          keys:
-            - ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
-      - restore_cache:
-          name: Restore Haskell Deps Cache
-          keys:
-            - haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
-      - run:
           name: CMake Configure
           command: mkdir build && cd build && cmake ..
       - run:
           name: Build
           command: cd build && make -j2
-      - run:
-          name: Reset databases
-          command: cd build && make db
       - run:
           name: Run tests
           command: cd build && make test
@@ -111,16 +63,6 @@ jobs:
           name: Print test log
           command: cat build/Testing/Temporary/LastTest.log
           when: always
-      - save_cache:
-          name: Save GHC Cache
-          key: ghc-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{ arch }}
-          paths:
-            - /root/.stack
-      - save_cache:
-          name: Save Haskell Deps Cache
-          key: haskelldeps-{{checksum "/ws/atomspace/opencog/haskell/stack.yaml"}}-{{checksum "/ws/atomspace/opencog/haskell/opencog-atomspace.cabal"}}-{{ arch }}
-          paths:
-            - /ws/atomspace/opencog/haskell/.stack-work
       - persist_to_workspace:
           root: /ws/
           paths:
