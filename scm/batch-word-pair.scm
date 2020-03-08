@@ -9,7 +9,7 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; The objects below define API's to access narutral language word-pairs,
+; The objects below define API's to access natural language word-pairs,
 ; stored in the AtomSpace, as a rank-2 matrix, i.e. as a matrix of
 ; (left, right) word-pairs.  This provides exactly the API needed for
 ; use with the `(use-modules (opencog matrix))` statistical analysis
