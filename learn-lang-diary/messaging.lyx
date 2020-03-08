@@ -1,0 +1,1188 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style tufte
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Messaging
+\end_layout
+
+\begin_layout Abstract
+Thoughts about messaging and a relationship to grammar.
+ Some old ideas, rephrased, some new ideas, incocomplete.
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+Two almost inrelated ideas, and one theme.
+\end_layout
+
+\begin_layout Standard
+Lets start with an obvious observation: natural language is used to transmit
+ messages, from one human mind to another.
+ Language carries messages.
+ Painfully obviously.
+ Now pair this with another idea: message-passing algorithms are a good
+ way of solving NP-complete graphical constraint satisfaction problems.
+ This pairing suggests a wild insight: that a collection of human minds,
+ working together, are using message passing as a technique for collectively
+ solving some difficult problem.
+ To what degree can this insight be developed into a formal theory of the
+ mind, and speciffically, a formalm theory of the collective, social mind?
+ I don't know, and what follows below will be mostly unrelated to that,
+ and will instead tackle grammar again, the grammar of natural language.
+\end_layout
+
+\begin_layout Subsection*
+Grammar via Beleif Propagation
+\end_layout
+
+\begin_layout Standard
+This is a reprise of a recurring theme.
+ The goal is to find effective and tractable computational strategies for
+ extracting meaning from natural language.
+ The current work concerns itself with a very basic layer, that of extracting
+ a lexical grammar, describing the syntax of the language, and a crude level
+ of semantics that follows therefrom.
+ By a 
+\begin_inset Quotes eld
+\end_inset
+
+lexical grammar
+\begin_inset Quotes erd
+\end_inset
+
+, it is meant that sentences of the language can be broken down into words,
+ and that the relatioinship between words can be obtained from a lexicon,
+ that is, from a dictionary where each word can be looked up to discover
+ the grammatical relationships that word can engage in.
+ It is useful to note that such lexicons are redily extended to include
+ idioms, set phrases, institutional expressions, colocations; such multi-word
+ constructions do not alter the underlying concept.
+\end_layout
+
+\begin_layout Standard
+Lexicality implies that language can be analyzed in terms of words (or set
+ phrases, 
+\emph on
+etc.
+\emph default
+).
+ But language is also fundamentally statistical and probabilisitic: there
+ is no ultimate, final truth to syntax and semantics, but only likely meanings
+ and interpretations.
+ In this setting, lexicality means not only that language can be viewed
+ as a graph of relationships between words, but also that the graph can
+ be factored into local components.
+ Specifically, each local component consists of a word, and the other nearby
+ words that it may interact with: a word, and its syntactico-semantically-neares
+t neighbors.
+\end_layout
+
+\begin_layout Standard
+Modern probability theory has a standard formulation using the terminology
+ and notation of statistical mechanics.
+ In this formulation, one begins by asserting that the universe is described
+ by a summation over all possibilities: everything that might happen, can
+ happen, with some associated probability.
+ This sum is called the partition function; it is symbolized by 
+\begin_inset Formula $Z$
+\end_inset
+
+, and the partitioning is simply the statement each possibility has a probabilit
+y.
+ For natural language, this just means that every possible sequence of words
+ (a 
+\begin_inset Quotes eld
+\end_inset
+
+sentence
+\begin_inset Quotes erd
+\end_inset
+
+) occurs with some probability; ungrammatical sentences have a low, approximatel
+y vanishing probability.
+\end_layout
+
+\begin_layout Standard
+It is a theorem of Boltzmann that paritition functions can be written as
+ sums over exponentials, and that the most likely possibility is given by
+ maximizing the entropy.
+ This is not an assumption that has to be artificially forced onto the system;
+ rather, it is the factual statement that, if you beleive in probability,
+ then there is no other way: it is a theorem.
+ Combining natural language with probability then suggests that it is fruitful
+ to articulate the statistical mechanics thereof.
+\end_layout
+
+\begin_layout Standard
+In what follows, the formal grammar of choice is Link Grammar.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991,Sleator1993"
+
+\end_inset
+
+ This choice is made for several reasons.
+ First, one may argue that the actual choice of a grammar formalism is immateria
+l, as all grammars are effectvely inter-convertable between one-another
+ by algorithmic means.
+ Thus, the choice of formalism boils down to convenience; what notational
+ system is most convenient? Here, Link Grammar stands out.
+ First, it is effectively a form of dependency grammar, and so is natural
+ to linguists trained in that tradition.
+ Second, by expressing grammar in terms of link types, it leverages type
+ theory, and has a very natural bridge to categorial grammars and pregroup
+ grammars: link types are just the type-theoretical types of the relationships
+ that categorial grammars articulate.
+ As categorial grammars are normally considered to be a form of phrase-structure
+ grammars, exposing the relationships as types provides the natural bridge
+ between the phrase-structure and dependency grammar schools of thought.
+ Finally, Link Grammar is appealing from the tradition of mathematics: Link
+ Grammar is a tensor algebra.
+ Lexical entries are tensors, and lexical entries are composed into sentences
+ in exactly the same way that one composes tensors in a tensor algebra.
+ It is precisely this tensorial nature that then enables Curry–Howard correspond
+ance; Link Grammar is the 
+\begin_inset Quotes eld
+\end_inset
+
+internal language
+\begin_inset Quotes erd
+\end_inset
+
+ of monoidal categories.
+\end_layout
+
+\begin_layout Standard
+The next section articulates the statistical mechanics Link Grammar.
+ This presents Link Grammar as both a constraint-statistfaction problem
+ as well as a maximum entropy problem.
+ This is followed by a section looking at the belief-propagation aglorithm,
+ inspired by and devloped along the lines described by Mézard and Mora
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mezard2008"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
+A Frequentist Model of Language
+\end_layout
+
+\begin_layout Standard
+The goal of this section is to formulate a model of language, simultaneously
+ invoking both its graph-theoretical and statistical properties.
+ This mostly requires the introduction and review of fairly mainstream ideas
+ and notation, and an articulation of the notation so that it's meaning
+ becomes clear.
+\end_layout
+
+\begin_layout Standard
+Consider first a word sequence 
+\begin_inset Formula $\underline{w}=\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+ which can be taken to be a sentence that is 
+\begin_inset Formula $n$
+\end_inset
+
+ words long; it need not be grammatical; that is, it need not be a valid
+ sentence.
+ One possible way of defining the statistics of langauge is to claim that
+ the probability of this word sequence is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+P\left(\underbar{w}\right)=\lim_{N\to\infty}\frac{1}{N}\sum_{i=1}^{N}\delta\left(\underbar{w},\underbar{w}_{i}\right)\label{eq:frequentist}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the number of sentences in a sample corpus representative of the langauge,
+ so that each 
+\begin_inset Formula $\underbar{w}_{i}$
+\end_inset
+
+ is a grammatically valid sentence.
+ The above states that, basicly, a word sequence 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ is valid if and only if it occurs in the sample corpus; else it is not.
+ This is a naive and simplistic definition of language, dounded on a frequentist
+ view of probability.
+ It is inadequate on multiple fronts.
+ It's worth articulating these, lest they become an impediement later.
+\end_layout
+
+\begin_layout Itemize
+The notation above assigned a fixed sentence length of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ This seems to be a notational inconvenience, rather than a fundamental
+ limitation.
+ From here on, sentences are assumed to be varying in length, and can be
+ chosen as desired.
+\end_layout
+
+\begin_layout Itemize
+Morphology is ignored.
+ For the most part, this should not be an impediment; Link Grammar is able
+ to deal adequately with morpho-syntax, and even enforce phonetic agreement,
+ so this presents no particular stumbling block.
+\end_layout
+
+\begin_layout Itemize
+Semantic structure on a scale larger than one sentence is ignored.
+ Most of what follows will be focused on syntax, and the lower reaches of
+ semantics, and so this simplification seems reasonable at this time.
+\end_layout
+
+\begin_layout Itemize
+Corpora are assumed to be finite in size.
+ This is naturally the case for natural langauge, but it can cause difficulties
+ for certain mathematical approaches, which are more naturally expressed
+ in the continuum limit.
+ This is also glossed over, as it rarely presents any practical difficulties.
+ By contrast, formal langauges with generative grammars are capable of producing
+ infinite corpora, and so the distinction between finite and infinite can
+ be blurred.
+\end_layout
+
+\begin_layout Itemize
+The above definition completely ignores the obvious fact that language is
+ compositional: one can form sentences from sentence fragments; phrases
+ can have meanings; language is a collection of recurring word-patterns
+ plainly visible at a sub-sentence level.
+ Yet, one of the goals of research into linguistics is to elucidate teh
+ compositional structure of language.
+\end_layout
+
+\begin_layout Standard
+For all of these various reasons, the above probabilistic description of
+ language is patently absurd.
+ Yet it is often quoted as a foundational cornerstone, and so is worth repeating
+ here.
+ Despite these abusrdities, one might like the final formulation of language
+ be such that eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:frequentist"
+
+\end_inset
+
+, or at least something similar, can arise naturally from the theory.
+\end_layout
+
+\begin_layout Standard
+For the remainder of this section, the assumption is made that the compostional
+ nature of langauge can be adequately captured by means of a lexis.
+ This is closely related too the assumption that language is syntactic,
+ but is, in some sense, strictly weaker, or, at least, should be interpreted
+ in a broader setting.
+ A lexical description of langauge is one where each word is associated
+ with a collection of properties and relations that specify how that word
+ can occur in grammatical contexts, and how rough, basic meaning can be
+ pinned down.
+ This is in contrast to 
+\begin_inset Quotes eld
+\end_inset
+
+syntax
+\begin_inset Quotes erd
+\end_inset
+
+, which is usally taken to be synonym for the existence of a (planar) parse
+ tree.
+ The point here is that the graphical structure of languge need not be tree-like
+: the parse may contain loops; it may contain non-planar edges between words,
+ and it may contain relations operating at different conceptual levels.
+ For example, graphical relations enforcing phonetic agreement might typically
+ operate at a different level than count and tense agreement, and that in
+ turn operates at a different level than anaphora agreement.
+\end_layout
+
+\begin_layout Standard
+It is possible that natural language has structure that cannot be captured
+ by probabilistic graphical representations.
+ That author, however, is currently unable to imagine what this might be.
+ Therefore, in all that follows, the assumption is made that the entirety
+ of meaning and structure in language can be captured by graphs that encode
+ functions and relations with statistical, probabilistic properties.
+\end_layout
+
+\begin_layout Subsection*
+Link Grammar
+\end_layout
+
+\begin_layout Standard
+The remainder of this paper asumes that Link Grammar is well suited to capture
+ most of the lexical, syntactic properties of language.
+ There are multiple reasons that this assumption seems justified.
+ These include:
+\end_layout
+
+\begin_layout Itemize
+The Link Grammar formalism can be more-or-less directly related to dependency
+ grammars; it can be taken as a certain kind of dependency grammar, and
+ is rich enough that it can be mapped or translated to different styles
+ of dependency.
+\end_layout
+
+\begin_layout Itemize
+The Link Grammar formalism can be directly related to categorial and pregroup
+ grammar-style grammars; insofar as those can be taken as examples of phrase-str
+ucture grammar, a route exists to map Link Grammar into phrase structure,
+ and the kinds of phenomena exhibited there.
+\end_layout
+
+\begin_layout Itemize
+Link Grammar bridges naturally to Lambek calculus.
+ The link types of Link Grammar can be interpreted as the types of type
+ theory; the 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+ of Link Grammar are manifestly tensorial, and so Link Grammar can be taken
+ as a kind of tensor algebra.
+ As such, it can be understood via category theory: Link Grammar is the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+internal language
+\begin_inset Quotes erd
+\end_inset
+
+ of a monoidal category.
+ This makes it simultaneously very general, and abstractly powerful.
+\end_layout
+
+\begin_layout Standard
+To summarize, the Link Grammar formalism lies at the nexus of a multitude
+ of different viewpoints and theories of language.
+ One need not go very far, or work particularly hard, to see how it captures
+ different linguistic (and mathematical) phenomena and theories.
+\end_layout
+
+\begin_layout Subsection*
+Statistical Mechanics of Link Grammar
+\end_layout
+
+\begin_layout Standard
+Lexical entries are then of the form 
+\begin_inset Formula 
+\[
+\left(\left(w,d\right),h\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $w$
+\end_inset
+
+ is a word, 
+\begin_inset Formula $d$
+\end_inset
+
+ is a disjunct
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A definition of 
+\begin_inset Quotes eld
+\end_inset
+
+disjunct
+\begin_inset Quotes erd
+\end_inset
+
+ will be given shortly; the next few paragraphs do not rely on a precise
+ defintion, and hold true generally for any lexical formulation.
+ In particular, one can imagine that a disjunct is an n-gram or a skip-gram;
+ this is useful, as it makes contact with nueral-net/deep-learning approaches
+ to language.
+\end_layout
+
+\end_inset
+
+ describing one of the grammatical relationships the word can engage in,
+ and 
+\begin_inset Formula $h$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+cost
+\begin_inset Quotes erd
+\end_inset
+
+ or entropy associated with this word-disjunct pair.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A single word might be associated with multiple disjuncts.
+ During grammatical analysis, only one of these may be used at a time; thus
+ the disjuncts are disjoined from one-another, whence the name.
+\end_layout
+
+\end_inset
+
+ It is convenient to write the cost as a function of the word-disjunct pair:
+ 
+\begin_inset Formula $h=h\left(w,d\right)$
+\end_inset
+
+ as only the lowest cost is meaningful, and it does not make sense for a
+ given disjunct to have more than one cost.
+ Impossible word-disjunct pairs have infinite cost, rendering thier probability
+ zero.
+ That is, the probability of a word-disjunct pair, up to an overall normalizatio
+n, can be taken as
+\begin_inset Formula 
+\[
+P\left(w,d\right)\sim\exp-h\left(w,d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The probability of a word sequence 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\sum_{\left(d_{1},\cdots,d_{n}\right)}\prod_{j=1}^{n}P\left(w_{j},d_{j}\right)\Delta\left(d_{1},\cdots,d_{n}\right)
+\]
+
+\end_inset
+
+where the formal grammar is encoded as a boolean satisfiability factor
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This is just the indicator function for a predicate.
+ Common alternate notation is 
+\begin_inset Formula $\mathbb{I}$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathbf{1}$
+\end_inset
+
+.
+ There is an implicit assumption that a parse, if it exists, is unique.
+ If this is not the case, and multiple distinct parses exist with a given
+ fixed 
+\begin_inset Formula $\underbar{d}$
+\end_inset
+
+, then 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ needs to count these with multiplicity.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+\Delta\left(d_{1},\cdots,d_{n}\right)=\begin{cases}
+1 & \left(d_{1},\cdots,d_{n}\right)\mbox{ is a valid parse}\\
+0 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+The probabilistic aspects, that some parses are more likely than others,
+ are encoded in the lexical factors 
+\begin_inset Formula $P\left(w,d\right)$
+\end_inset
+
+.
+ Replacing probabilities by thier logs, one can equivalently write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\sum_{\underbar{d}}\Delta\left(\underbar{d}\right)\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
+\]
+
+\end_inset
+
+using as shorthand 
+\begin_inset Formula $\underbar{d}=\left(d_{1},\cdots,d_{n}\right)$
+\end_inset
+
+ as the string of 
+\begin_inset Formula $n$
+\end_inset
+
+ disjuncts associated with the 
+\begin_inset Formula $n$
+\end_inset
+
+ words 
+\begin_inset Formula $\underbar{w}=\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+.
+ The sum is taken over all possible lists 
+\begin_inset Formula $\underbar{d}$
+\end_inset
+
+ of disjuncts 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+; the 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ term excludes those sequences that do not correspond to valid parses in
+ the formal grammar.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The summation 
+\begin_inset Formula $\sum_{\underbar{d}}\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ has the form that makes it clear that 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ has the form of an integration measure.
+ An obvious generalization is to replace it by a fuzzy or fractional measure.
+\end_layout
+
+\end_inset
+
+ The normalization 
+\begin_inset Formula $Z$
+\end_inset
+
+ is famously known as the partition function.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Wikipedia.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+action
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This word comes from physics, specifically, the Lagrangian formulation of
+ classical mechanics.
+\end_layout
+
+\end_inset
+
+, given by 
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w},\underbar{d}\right)=\sum_{j=1}^{n}h\left(w_{j},d_{j}\right)
+\]
+
+\end_inset
+
+As the cost 
+\begin_inset Formula $h$
+\end_inset
+
+ is infinite for those words-disjunct pairs that do not occur in the lexis,
+ this sum excludes impossible pairings; no addtional effort is needed to
+ otherwise exclude them.
+ 
+\end_layout
+
+\begin_layout Standard
+Although the above formulation uses the word 
+\begin_inset Quotes eld
+\end_inset
+
+disjunct
+\begin_inset Quotes erd
+\end_inset
+
+ for 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+, it was intentionally vague; none of the development required a more precise
+ definition.
+ In a lexical formulation, the term 
+\begin_inset Formula $\Delta\left(\underbar{d}\right)$
+\end_inset
+
+ can also be factorized locally, as it is determined by a product of lexical
+ elements.
+ In the Link Grammar formulation, the lexical elements are explicitly graphical:
+ a vertex surrounded by half-edges or connectors, with two half-edges required
+ to make a full edge (link) connecting two vertexes.
+ Algebraically, a disjunct is a list of connectors, which either can connect,
+ or not.
+ That is, an arity-
+\begin_inset Formula $m$
+\end_inset
+
+ disjunct is a conjunction of connectors 
+\begin_inset Formula $c$
+\end_inset
+
+ written as
+\begin_inset Formula 
+\[
+d=c_{1}\&\cdots\&c_{m}
+\]
+
+\end_inset
+
+with each connector being a half-link, that is, a link with a direction
+ indicator: 
+\begin_inset Formula 
+\[
+c=\left(\ell,\sigma\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\ell\in L$
+\end_inset
+
+ being one of the Link Grammar link types, and 
+\begin_inset Formula $\sigma\in\left\{ -,+\right\} $
+\end_inset
+
+ being a direction indicator.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In standard link grammar, these direction indicators point to the left and
+ right, respecively, and encode the directional dependence of word order.
+ For languages with free word-order, it is convenient to use symbols for
+ head and tail instead of, or in addition to the direction indicators.
+ Head/tail markings are also useful for indicating dependency directions,
+ when these are desired, or for indicating catena.
+\end_layout
+
+\end_inset
+
+ Define the conjugate direction indicator 
+\begin_inset Formula $\bar{\sigma}$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+\bar{\sigma}=\begin{cases}
+- & \mbox{if }\sigma=+\\
++ & \mbox{if }\sigma=-
+\end{cases}
+\]
+
+\end_inset
+
+Thus, two connectors 
+\begin_inset Formula $c_{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $c_{b}$
+\end_inset
+
+ connect if the link types match, and the direction indicators are conjugate.
+ Thus, one may define
+\begin_inset Formula 
+\[
+\delta\left(c_{a},c_{b}\right)=\delta\left(\ell_{a},\ell_{b}\right)\delta\left(\sigma_{a},\bar{\sigma}_{b}\right)
+\]
+
+\end_inset
+
+A sentence is parsable when all connectors are connectable, and so
+\begin_inset Formula 
+\begin{equation}
+\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\prod_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\label{eq:factor-graph}
+\end{equation}
+
+\end_inset
+
+with the product being over all of the individual connectors in each disjunct.
+ That is, 
+\begin_inset Formula $\Delta=1$
+\end_inset
+
+ if and only if every connector can be uniquely paired with some other connector
+, and no dangling connectors remain.
+ To avoid double-counting, the product is meant to extend only over the
+ links (edges) in the graph, with one term per edge.
+\end_layout
+
+\begin_layout Standard
+It is from this that the interpretation as a tensor algebra arises: Each
+ disjunct 
+\begin_inset Formula $d=d_{j}$
+\end_inset
+
+ can be thought of as a tensor having 
+\begin_inset Formula $m$
+\end_inset
+
+ indexes on it; each index must be contracted with some other index on some
+ other tensor.
+ The tensor indexes are always contracted pair-wise, and once connected
+ (consumed) cannot be connected to any other index.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This is the content of the 
+\begin_inset Quotes eld
+\end_inset
+
+no cloning
+\begin_inset Quotes erd
+\end_inset
+
+ theorem.
+\end_layout
+
+\end_inset
+
+ A parse is valid if and only if 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ is a scalar, having no remaining uncontracted indexes.
+ Unlike symmetric tensor algebras, the connectors are directional: they
+ can contract only to the left, or to the right.
+\end_layout
+
+\begin_layout Standard
+Implicit in the above is a further constraint that the parse graph be a
+ planar graph, 
+\emph on
+i.e.
+
+\emph default
+ that there is a no-links-crossing constraint.
+ This constraint is very useful for controlling the combinatorial explosion
+ of possible parses; unfortunately, it is a non-local constraint, and thus
+ cannot be easily written in a factorizable manner.
+ Rather than tackling the difficulty of obtaining an adequate notation for
+ such a non-local constraint, it is easier, for now, to implicitly keep
+ this in the background.
+ There are multiple techniques that can be used when dealing with this;
+ these, and planarity in general, are for now secondary concerns.
+\end_layout
+
+\begin_layout Standard
+Taking the logarithm, so as to turn products into sums, the constraint can
+ be written in the form
+\begin_inset Formula 
+\[
+\Delta\left(\underbar{d}\right)=\Delta\left(d_{1},\cdots,d_{n}\right)=\exp-\left[\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ can be interpreted as a kinetic term, having a value of zero when 
+\begin_inset Formula $c_{jk}$
+\end_inset
+
+ can be contracted with 
+\begin_inset Formula $c_{j^{\prime}k^{\prime}}$
+\end_inset
+
+ and is infinite otherwise.
+\end_layout
+
+\begin_layout Standard
+In this form, the constraint can be pulled into the action 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, redefining it as a summation of local interactions:
+\begin_inset Formula 
+\[
+\mathcal{A}\left(\underbar{w},\underbar{d}\right)=\sum_{j=1}^{n}\left[h\left(w_{j},d_{j}\right)+\sum_{d_{j}=\left(c_{j1}\&\cdots\&c_{jm}\right)}\Xi\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)\right]
+\]
+
+\end_inset
+
+The intended reading of the above expression is that it is a summation over
+ Feynmann diagrams, with 
+\begin_inset Formula $h$
+\end_inset
+
+ corresponding to a 
+\begin_inset Formula $m$
+\end_inset
+
+-point vertex (when the disjunct 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+ has arity 
+\begin_inset Formula $m$
+\end_inset
+
+), and the 
+\begin_inset Formula $\Xi$
+\end_inset
+
+ terms corresponding to propagators connecting vertexes.
+ The propagators are exactly the Link Grammar links, weighted in such a
+ way that they contribute zero to the action, when the link is allowed,
+ and otherwise contributing infinity.
+\end_layout
+
+\begin_layout Standard
+The partition function can then be formally written as
+\begin_inset Formula 
+\[
+Z=\sum_{\underbar{w},\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
+\]
+
+\end_inset
+
+with the summation over 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+ running over all possible word-sequences of arbitrary length.
+ As is conventional in partition function formulations, it is convenient
+ to introduce external currents 
+\begin_inset Formula $\underbar{J}$
+\end_inset
+
+ so that variational principles can be used to extract quantities of interest.
+ Thus, for example, writing 
+\begin_inset Formula 
+\[
+Z\left[J\right]=\sum_{\underbar{w},\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)+\underbar{J}\cdot\underbar{w}
+\]
+
+\end_inset
+
+and taking a variation 
+\begin_inset Formula $\delta J$
+\end_inset
+
+ along the direction 
+\begin_inset Formula $\underbar{w}$
+\end_inset
+
+, the limit of the logarithmic derivative gives the probability: 
+\begin_inset Formula 
+\[
+P\left(\underbar{w}\right)=\frac{1}{Z}\left.\frac{\delta Z\left[J\right]}{\delta J}\right|_{J=0}=\frac{1}{Z}\sum_{\underbar{d}}\exp-\mathcal{A}\left(\underbar{w},\underbar{d}\right)
+\]
+
+\end_inset
+
+The 
+\begin_inset Quotes eld
+\end_inset
+
+current
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $J$
+\end_inset
+
+ is just an algebraic device, a trick, used to single out one particular
+ word-sequence out of the infinite sum.
+ It is conventient to also introduce other currents coupling to other parts
+ of the action, so that the variational principle can be used to extract
+ other quantities of interest.
+ The logarithm of the partition function 
+\begin_inset Formula $-\ln Z$
+\end_inset
+
+ is the free energy; standard algebraic variations can be used to extract
+ an entire zoo of 
+\begin_inset Quotes eld
+\end_inset
+
+thermodynamic
+\begin_inset Quotes erd
+\end_inset
+
+ variables, including correlation functions, mean values, mean-square deviations
+ and the like.
+\end_layout
+
+\begin_layout Subsection*
+Grammar via Beleif Propagation
+\end_layout
+
+\begin_layout Standard
+The learning task begins by noting that the valid disjuncts are not known
+ 
+\emph on
+a priori
+\emph default
+, they must be discovered.
+ To accomplish this, 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Braunstein2002"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Its a constraint-satisfaction problem.
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:factor-graph"
+
+\end_inset
+
+ defines a factorization of the constraints, that is, a factor-graph.
+ For a given parse, the factor graph is a bipartite graph, connecting elements
+ 
+\begin_inset Formula $d\in D$
+\end_inset
+
+ (the disjuncts) to elements 
+\begin_inset Formula $\ell\in L$
+\end_inset
+
+ (the links).
+ In the factor graph, each link 
+\begin_inset Formula $\ell$
+\end_inset
+
+ corresponds to a vertex, and, of course, links are always arity-2.
+ To be precise, the vertexes of the factor graph are taken from 
+\begin_inset Formula $V=D\cup L$
+\end_inset
+
+ and the edges are taken from 
+\begin_inset Formula $E=\left\{ \left(d,\ell\right)|d\in D\mbox{ and }d=c_{1}\&\cdots\&c_{m}\mbox{ and }c_{k}\in\ell\right\} $
+\end_inset
+
+.
+ This last just states that an edge in the factor graph must connect some
+ connector (half-link) on a disjunct to the link (as links are just pairs
+ of half-links).
+\end_layout
+
+\begin_layout Standard
+XXX Need figure here XXX.
+\end_layout
+
+\begin_layout Standard
+Here are the belief-prop eqns:
+\end_layout
+
+\begin_layout Standard
+The first step is to replace each possible connection-pair 
+\begin_inset Formula $\delta\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)$
+\end_inset
+
+ by a belief of the possibility 
+\begin_inset Formula $p\left(c_{jk},c_{j^{\prime}k^{\prime}}\right)$
+\end_inset
+
+ of such a connection being present, interpreted as a probability: 
+\begin_inset Formula $0\le p\le1$
+\end_inset
+
+ with the goal of eventually driving each connectable pair to be zero or
+ one.
+ Similarly
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+if only one link-type, then its an unlablled dependency parse, and the solution
+ is mean-field or Markovian.
+ To make it tractable use the page-rank algorithm...
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x but the shafiness of it all ....
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+x if multiple link types....
+\end_layout
+
+\begin_layout Standard
+x
+\end_layout
+
+\begin_layout Standard
+The other thing to point out is due to loops, etc.
+ it won't be naive beleif propagation, but it will be Survey Propagation,
+ as mentioned there...
+ 
+\end_layout
+
+\begin_layout Section*
+The End
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "lang"
+options "tufte"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
