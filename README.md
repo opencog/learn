@@ -24,8 +24,9 @@ Table of Contents
 11. [Determining Grammatical Classes](#determining-grammatical-classes)
 12. [Creating Grammatical Classes](#creating-grammatical-classes)
 13. [Exporting a Lexis](#exporting-a-lexis)
-14. [Next Steps](#next-steps)
-15. [Precomputed LXC containers](#precomputed-lxc-containers)
+14. [Clustering](#clustering)
+15. [Measuring Quality](#measuring-quality)
+16. [Precomputed LXC containers](#precomputed-lxc-containers)
 
 
 Project Summary
@@ -1270,17 +1271,12 @@ function. When copied to a location where Link Grammar can find it,
 it can be used to parse text by the link parser.
 
 
-Next Steps
+Clustering
 ----------
 The clustering code is in development, and the best/fastest algorithms
 are not yet known.  The best metrics are not known; currently, the code
-uses cosine distance, but the (symmetric) mutual information is surely
-better.
-
-It is not clear how to judge the quality of the results. Manual
-inspection looks pretty good. Manual inspection does not reveal that
-one or another variant with different parameters is qualitatively
-better.
+can be configured to use (symmetric) mutual information or cosing
+distance.
 
 Given a set of grammatical classes derived in this way, together with
 disjuncts that are formed from the classes, these can be loaded into
@@ -1298,6 +1294,30 @@ different parses than others; where do they differ? Why?
 
 Given a stable dictionary, an obvious next step is to attempt to
 perform reference resolution.
+
+
+Measuring Quality
+-----------------
+Current efforts are focused on judging the quality of the results. Manual
+inspection looks pretty good. Manual inspection is not enough to allow
+the fine-tuning of the algorithms and parameters. Measuring results
+against linguist-created corpora and grammars is problematic: the
+child-directed speech corpora is too small, and newspaper-English
+grammars do not correctly describe children's speech. Full corpora
+with complex grammars are hard to evaluate, as issues with synonyms,
+synonymous phrases, word-sense disambiguation, quoted speach, and
+reference resolution arise. How can the quality of the results be
+assessed? Linguist-created grammars are insufficient to control and
+evaluate results.
+
+To bypass this deep and fundamental measurement issue, work has begun
+on creating infrastructure for generating random grammars (with closely
+controlled grammaical behaviors) and sample corpora from those
+grammars. Thus, the known-input grammar can be closely controlled;
+will the learning system reproduce this known-input grammar? This work
+is located in the ["fake"](./fake) directory. It depends on the
+[corpus-generation](https://github.com/opencog/generate) code, currently
+under development.
 
 
 Precomputed LXC containers

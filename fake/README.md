@@ -50,3 +50,7 @@ The advantages of doing this:
 Status
 ------
 Project just started. Nothing here yet.
+
+See the [Network Generation project](https://github.com/opencog/generate/)
+for the code that will be used to generate a corpus of "grammatically
+valid sentences" aka syntactic trees from a randomly generated grammar.
