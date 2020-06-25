@@ -35,7 +35,8 @@ ENDIF()
 
 # Load cmake functions defined in cogutil repo that depend on Guile.
 IF(GUILE_FOUND AND COGUTIL_FOUND)
-	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogFunctions.cmake")
+	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogMacros.cmake")
+	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogGuile.cmake")
 ENDIF()
 
 # Used for configuring experimental setup. Run 'make run-ull' from build
