@@ -65,6 +65,11 @@
 (define (test-sphere N REPS)
 "
   Take REPS samples from unit sphere, verify random distribution.
+
+  This test checks that:
+  * Every sample has unit length, within numerical tolerance.
+  * The REPS samples are uniformly distributed.
+  * Rotations of the REPS samples are uniformly distributed.
 "
 	(define sphereg (make-sphere-generator N))
 
@@ -75,13 +80,45 @@
 	(define (l2-norm VEC)
 		(sqrt (fold (lambda (x sum) (+ sum (* x x))) 0 VEC)))
 
-	; Expect a vector approaching zero.
-	(define converge-to-zero
-		(fold (lambda (samp acc) (map + samp acc))
-			(make-list REPS 0) samples))
+	; Rotate a vector by some arbitrary amount
+	(define (pair-rot VEC)
+		(define j (random N))
+		(define k (+ j 1 (random (- N j))))
+		(define theta (* 3.14 (random:uniform)))
+		(define co (cos theta))
+		(define si (sin theta))
+		(define oj (list-ref VEC j))
+		(define ok (list-ref VEC k))
+		(define nj (+ (* co oj) (* si ok)))
+		(define nk (+ (* (- si) oj) (* co ok)))
+		(define beg (take VEC j))
+		(define mid (take (drop VEC (+ j 1)) (- k j 1)))
+		(define end (drop VEC (+ k 1)))
+		(append beg (list nj) mid (list nk) end))
 
-	(define should-be-zero (l2-norm converge-to-zero))
-	(define norm-should-be-zero (/ should-be-zero (* 1.57 (sqrt REPS))))
+	; More arbitrary rotations
+	(define (arb-rot VEC)
+		(define rv (pair-rot VEC))
+		(if (not (= 0 (random N))) (arb-rot rv) rv))
+
+	; Expect a vector approaching zero. That is, each individual
+	; coordinate should be uniformly randomly distributed in the
+	; interval [-1,1]. The sum of REPS samples of these should
+	; converge to zero, within pi/2 sqrt(REPS).
+	(define (converge-to-zero VEC)
+		(fold (lambda (samp acc) (map + samp acc))
+			(make-list REPS 0) VEC))
+
+	(define (should-be-zero VEC) (l2-norm (converge-to-zero VEC)))
+	(define (norm-should-be-zero VEC)
+		(/ (should-be-zero VEC) (* 1.57 (sqrt REPS))))
+
+	(define FAIL #f)
+	(define (check-zero VEC)
+		(define zz (norm-should-be-zero VEC))
+		(if (< 1 zz)
+			(begin (set! FAIL #t)
+			(format #t "Error: Sphere distribution test FAIL: ~A\n" zz))))
 
 	; maximum allowed tolerance for radius deviation
 	(define EPS (* 2e-16 (sqrt N)))
@@ -97,9 +134,13 @@
 		samples)
 
 	; The distribution should be zero
-	(if (< 1 norm-should-be-zero)
-		(format #t "Error: Sphere distribution test FAIL: ~A\n"
-			norm-should-be-zero))
+	(check-zero samples)
 
-	norm-should-be-zero
+	; Rotate wildly. Should still be uniform.
+	(for-each
+		(lambda (junk) (check-zero (map arb-rot samples)))
+		(make-list 12))
+
+	(if (not FAIL)
+		(format #t "Sphere test pass!\n"))
 )
