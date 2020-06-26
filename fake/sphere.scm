@@ -22,7 +22,7 @@
   distributed on an N-dimensional sphere.
 
   This implements the BoxMeuller algorithm, that is, of normalizing
-  Gaussian random  variables.
+  N+1 Gaussian random variables.
 "
 	; Work-around for guile
 	; (define gaussg (make-normal-generator))
@@ -54,9 +54,7 @@
 
 	; Create a vector of N+2 values, and drop the last two.
 	; (The sphere already added one, so we only add one more)
-	(lambda ()
-		(take (sphereg) N)
-	)
+	(lambda () (take (sphereg) N))
 )
 
 ; -------------------------------------
