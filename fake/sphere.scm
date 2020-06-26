@@ -61,3 +61,45 @@
 
 ; -------------------------------------
 ; pseudo unit-test junk
+
+(define (test-sphere N REPS)
+"
+  Take REPS samples from unit sphere, verify random distribution.
+"
+	(define sphereg (make-sphere-generator N))
+
+	; Fix list of samples
+	(define samples
+		(map (lambda (junk) (sphereg)) (make-list REPS)))
+
+	(define (l2-norm VEC)
+		(sqrt (fold (lambda (x sum) (+ sum (* x x))) 0 VEC)))
+
+	; Expect a vector approaching zero.
+	(define converge-to-zero
+		(fold (lambda (samp acc) (map + samp acc))
+			(make-list REPS 0) samples))
+
+	(define should-be-zero (l2-norm converge-to-zero))
+	(define norm-should-be-zero (/ should-be-zero (* 1.57 (sqrt REPS))))
+
+	; maximum allowed tolerance for radius deviation
+	(define EPS (* 2e-16 (sqrt N)))
+
+	; Each individual sphere radius should be 1.0 to within float
+	; tolerance.
+	(for-each (lambda (SAMP)
+		(define diff (abs (- 1 (l2-norm SAMP))))
+		(if (< EPS diff)
+			(format #t "Error: Sphere radius-test FAIL: ~A\n" diff)
+			; (format #t "Sphere radius-test pass: ~A\n" diff)
+		))
+		samples)
+
+	; The distribution should be zero
+	(if (< 1 norm-should-be-zero)
+		(format #t "Error: Sphere distribution test FAIL: ~A\n"
+			norm-should-be-zero))
+
+	norm-should-be-zero
+)
