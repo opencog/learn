@@ -80,13 +80,9 @@
 	(define (l2-norm VEC)
 		(sqrt (fold (lambda (x sum) (+ sum (* x x))) 0 VEC)))
 
-	; Rotate a vector by some arbitrary amount
-	(define (pair-rot VEC)
-		(define j (random N))
-		(define k (+ j 1 (random (- N j))))
-		(define theta (* 3.14 (random:uniform)))
-		(define co (cos theta))
-		(define si (sin theta))
+	; Rotate the j'th amnd k'th coordinates of a vector VEC
+	; by cosine co and sine si
+	(define (pair-rot VEC j k co si)
 		(define oj (list-ref VEC j))
 		(define ok (list-ref VEC k))
 		(define nj (+ (* co oj) (* si ok)))
@@ -96,10 +92,25 @@
 		(define end (drop VEC (+ k 1)))
 		(append beg (list nj) mid (list nk) end))
 
-	; More arbitrary rotations
-	(define (arb-rot VEC)
-		(define rv (pair-rot VEC))
-		(if (not (= 0 (random N))) (arb-rot rv) rv))
+	; Randomly rotate a single vector in some plane.
+	(define (rand-pair-rot VEC)
+		(define j (random N))
+		(define k (+ j 1 (random (- N j))))
+		(define theta (* 3.14 (random:uniform)))
+		(define co (cos theta))
+		(define si (sin theta))
+		(pair-rot VEC j k co si))
+
+	; Apply a random rotation to a collection of vectors
+	(define how-many-rots (if (< 10 N) 10 N))
+	(define (arb-rot VEC-LIST)
+		(define j (random N))
+		(define k (+ j 1 (random (- N j))))
+		(define theta (* 3.14 (random:uniform)))
+		(define co (cos theta))
+		(define si (sin theta))
+		(define rvl (map (lambda (vec) (pair-rot vec j k co si)) VEC-LIST))
+		(if (not (= 0 (random how-many-rots))) (arb-rot rvl) rvl))
 
 	; Expect a vector approaching zero. That is, each individual
 	; coordinate should be uniformly randomly distributed in the
@@ -138,7 +149,7 @@
 
 	; Rotate wildly. Should still be uniform.
 	(for-each
-		(lambda (junk) (check-zero (map arb-rot samples)))
+		(lambda (junk) (check-zero (arb-rot samples)))
 		(make-list 12))
 
 	(if (not FAIL)
