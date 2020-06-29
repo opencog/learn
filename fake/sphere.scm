@@ -130,7 +130,7 @@
 			(format #t "Error: Sphere distribution test FAIL: ~A\n" zz))))
 
 	; maximum allowed tolerance for radius deviation
-	(define EPS (* 2e-16 (sqrt N)))
+	(define EPS (* 4e-16 (sqrt N)))
 
 	; Each individual sphere radius should be 1.0 to within float
 	; tolerance.
@@ -153,3 +153,67 @@
 	(if (not FAIL)
 		(format #t "Sphere test pass!\n"))
 )
+
+; ----------------------------------------------------
+; Eyeballed sanity checking...
+
+; For the histogramming tools
+(use-modules (opencog) (opencog matrix))
+
+(define (histogram samples nbins filename)
+"
+  Take `samples`, histogram them into nbins, write to a file.
+  It is assumed `samples` is a list of floats, distributed
+  over -1 to 1 with some distribution.
+"
+	(define nsamp (length samples))
+	(define norm (lambda (VEC) (exact->inexact (/ nbins nsamp))))
+
+	(define bins (bin-count samples nbins (lambda (x) x) norm -1 1))
+
+	(let ((outport (open-file filename "w")))
+		(print-bincounts-tsv bins outport)
+		(close outport))
+)
+
+(define (mk-coord N REPS selector)
+"
+  Generate `REPS` points uniformly distributed over an `N` dimensional
+  sphere. Apply the function `selector` to each point, with `selector`
+  returning a single floating point value. Histogram these, and write
+  the historgram out to file `foo.dat` for graphing.
+"
+	(define sphereg (make-sphere-generator N))
+	(define points (map (lambda (junk) (sphereg)) (make-list REPS)))
+
+	(define samples (map selector points))
+	(histogram samples 100 "foo.dat")
+)
+
+; (mk-coord 2 50000 first)
+; (mk-coord 2 50000 second)
+
+; Obtain the angular coordinate from a vector VEC, by taking the
+; arctan, dividing by pi, to get an angle in the range -1 to 1.
+(define (theta VEC) (/ (atan (first VEC) (second VEC)) 3.14159265358979))
+
+; (mk-coord 2 50000 theta)
+
+; Rotate the point by an angle, returning the rotated first coord.
+(define (rot VEC)
+	(define phi 0.7854)
+	; (define phi 1.5707963268)
+	(define co (cos phi))
+	(define si (sin phi))
+	(+ (* co (first VEC)) (* si (second VEC))))
+
+; (mk-coord 2 50000 rot)
+
+; Return a list of `LEN` floating point numbers randomly distributed
+; over -1 to 1, using ordinary random number generators.
+(define (unifomy LEN)
+	(map (lambda (r) (* 2 (- r 0.5)))
+		(map (lambda (n) (random:uniform)) (iota LEN))))
+
+; (histogram (unifomy 50000) 100 "foo.dat")
+
