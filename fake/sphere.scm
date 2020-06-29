@@ -217,3 +217,19 @@
 
 ; (histogram (unifomy 50000) 100 "foo.dat")
 
+(define (rehisto samples nbins nrebins filename)
+"
+  Take `samples`, histogram them then re-histogram them.
+"
+	(define nsamp (length samples))
+	(define norm (lambda (VEC) (exact->inexact (/ nbins nsamp))))
+	(define bins (bin-count samples nbins (lambda (x) x) norm -1 1))
+
+	(define vals (array->list (second bins)))
+
+	(define rebins (bin-count-scores vals nrebins))
+
+	(let ((outport (open-file filename "w")))
+		(print-bincounts-tsv rebins outport)
+		(close outport))
+)
