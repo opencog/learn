@@ -1,6 +1,6 @@
 
-Unsupervised Language Learning
-==============================
+Unsupervised Natural Language Learning
+======================================
 * Linas Vepstas December 2013
 * Updated May 2017
 * Updated June 2018
