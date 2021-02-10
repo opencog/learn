@@ -1,11 +1,24 @@
-Language Learning
-=================
+Language Learning Proof-of-Concept
+==================================
 Linas Vepstas December 2013
-
 Updated May 2018 by Claudia Castillo
 
-Current project, under construction. See the [language learning wiki](http://wiki.opencog.org/w/Language_learning)
-for an alternate overview.
+Obsolete. This file describes the language-learning project as it
+existed in the 2015-2018 timeframe. It was enough to demonstrate
+the basic ideas.  It is missing multiple important parts:
+
+* It does not provide any way of learning grammatical classes
+  (for clustering words int grammatically similar categories)
+
+* It does not employ a calibrated learner. The quality of results
+  depends strongly on the various parameters that control learning.
+  Setting these blindly will give results, but of unknown quality.
+
+* It uses the Postgress backend. The RocksDB backend is simpler
+  to deploy and manage.
+
+See the [language learning wiki](http://wiki.opencog.org/w/Language_learning)
+for a general overview of the project.
 
 Table of Contents
 -----------------
