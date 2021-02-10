@@ -1,20 +1,26 @@
 ;
-; fake.scm -- tools for creating fake (artificial) languages.
+; random-dict.scm -- create random Link-Grammar dictionaries.
 ;
 ; Copyright (c) 2019, 2021 - Linas Vepstas
 ;
 ; --------------------------------------------------------
 ; OVERVIEW:
-; Assumes a ....
+; Create random Link Grammar dictionaries with specific statistical
+; distributions of link-types, disjunct-lengths, vocabulary size, etc.
 ;
 ; Example Usage:
 ; --------------
+; See documentation below for description of paramaters.
 ; (define dictgen (create-dict-generator 10 10 10 3 20))
-; (print-LG-flat #t (dictgen))
+; (define dict (dictgen))
 ;
+; Print dict to stdout.
+; (print-LG-flat #t dict)
+;
+; Print dict to file.
 ; (define port (open-file "/tmp/4.0.dict" "w"))
-; (print-LG-flat port (dictgen))
-; (close port)
+; (print-LG-flat port dict)
+; (fsync port) (close port)
 ;
 ; Issues: 
 ; -------

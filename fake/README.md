@@ -49,8 +49,14 @@ The advantages of doing this:
 
 Status
 ------
-Project just started. Almost nothing here yet.
+Basic Link Grammar flat-file dictionaries can be created.
 
+To create a dictionary, load the `random-dict.scm` file, and follow
+the instructions at the top of that file.
+
+
+Generating a corpus
+-------------------
 A corpus will be generated in one of two different ways.
 
 === Method 1 "Link-Grammar hack"
