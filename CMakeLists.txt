@@ -39,24 +39,6 @@ IF(GUILE_FOUND AND COGUTIL_FOUND)
 	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogGuile.cmake")
 ENDIF()
 
-# Used for configuring experimental setup. Run 'make run-ull' from build
-# directory to configure the setup for expirmenting with code in run-poc.
-# NOTE: The order of the command matters, so test after making changes.
-ADD_CUSTOM_TARGET(run-ull
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/run-poc"
-		"${PROJECT_BINARY_DIR}/run-ull"
-	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/run/nonbreaking_prefixes/"
-		"${PROJECT_BINARY_DIR}/run-ull/nonbreaking_prefixes/"
-	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/split-sentences.pl"
-		"${PROJECT_BINARY_DIR}/run-ull/"
-	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/1-word-pairs/config/*"
-		"${PROJECT_BINARY_DIR}/run-ull/config"
-	COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/run/2-mst-parsing/config/*"
-		"${PROJECT_BINARY_DIR}/run-ull/config"
-	WORKING_DIRECTORY ${CURRENT_SOURCE_DIR}
-	COMMENT "Setting run-ull in ${PROJECT_BINARY_DIR}/run-ull"
-)
-
 ADD_CUSTOM_TARGET(db
 	# Reset all test databases needed
 	VERBATIM
@@ -85,6 +67,7 @@ ADD_CUSTOM_TARGET(db
 	COMMAND bash -c "echo '' > tmp; sudo mv tmp /usr/local/share/link-grammar/any/affix-punc"
 )
 
+ADD_SUBDIRECTORY (run-poc)
 ADD_SUBDIRECTORY (scm)
 ADD_SUBDIRECTORY (tests)
 ENABLE_TESTING()
