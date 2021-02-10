@@ -59,13 +59,13 @@ Generating a corpus
 -------------------
 A corpus will be generated in one of two different ways.
 
-=== Method 1 "Link-Grammar hack"
+### Method 1 "Link-Grammar hack"
 Amir is creating (has created) a tool that will create a corpus of
 sentences, given a Link Grammar dictionary. The current plan is to
 use the code in this directory to create random grammars, and feed
 them to Amir's tool to create a corpus of sentences.
 
-=== Method 2 "The right way"
+### Method 2 "The right way"
 The "right way" to generate a corpus is to use a properly designed
 corpus generator that can create corpora of not just natural language
 sentences, but also of more complex graphs (e.g. chemistry, social
@@ -80,7 +80,7 @@ larger generations have not yet been attempted. This is partly because
 the code there is also trying to do far more sophisticated things, and
 to solve far more complex problems as well.
 
-=== Method 3 "More ideas"
+### Method 3 "More ideas"
 Several more ways to generate text:
 1. Start with sections, and build a sentence
 2. Create a random planar tree, and assign sections to it.
@@ -100,9 +100,12 @@ appears in a section for that disjunct.
 
 HOWTO
 -----
-Start the guile shell, and load `fake.scm`:
+Start the guile shell, and load `random-dict.scm`:
 ```
 $ guile
-scheme@(guile-user)> (load "fake.scm")
-scheme@(guile-user)> (create-classes 10 10)
+scheme@(guile-user)> (load "random-dict.scm")
+scheme@(guile-user)> (define dictgen (create-dict-generator 10 10 10 3 20))
+scheme@(guile-user)> (print-LG-flat #t (dictgen))
 ```
+
+See the file `random-dict.scm` for documentation.
