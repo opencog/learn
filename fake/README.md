@@ -74,6 +74,24 @@ larger generations have not yet been attempted. This is partly because
 the code there is also trying to do far more sophisticated things, and
 to solve far more complex problems as well.
 
+=== Method 3 "More ideas"
+Several more ways to generate text:
+1. Start with sections, and build a sentence
+2. Create a random planar tree, and assign sections to it.
+
+Approach 1. is difficult: it basically means we have to run the
+parser, using a dictionary containing the desired sections, and
+allowing an "any word" mode during parsing. This can be done,
+because we already have scheme interfaces into LG, via the
+ParseMinimalLink. But its complex and awkard.
+
+Approach 2. is easier(?): create an unlabelled tree; that's easy.
+Start adding random labels to it, veryifying that each disjunct
+is in the dictionary. This is harder, as this is a coloring problem,
+and requires backtracking if the first coloring attempt fails.
+As the final step, one randomly picks a word from the dictionary that
+appears in a section for that disjunct.
+
 HOWTO
 -----
 Start the guile shell, and load `fake.scm`:

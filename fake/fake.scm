@@ -7,6 +7,12 @@
 ; OVERVIEW:
 ; Assumes a ....
 ;
+; Issues: this will generate grammers parts of which are "impossible".
+; That is, it will generate grammars that have disjuncts that may be
+; impossible to use in a sentence, because there is no way of using
+; that disjunct during sentence generation.  The sentence generator
+; will need to keep track of unusable disjuncts.
+;
 ; This file has many TODO's to expand the kinds and varieties
 ; of grammars that could be produced.
 
@@ -159,31 +165,38 @@
 
 (define (make-disjunct-generator NCON DSIZE)
 "
-  make-disjuncts NCON DSIZE - Create random disjuncts.
+  make-disjunct-generator NCON DSIZE - Create random disjuncts.
 
   The length of the disjuncts will be at most DSIZE, and they will
   employ at most NCON different link types.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
+	(define congen (make-connector-generator NCON))
+	(define zippy (make-zipf-generator DSIZE))
+
+	(lambda ()
+		(list-tabulate (zippy) (lambda (X) (congen)))
+	)
 )
 
 ; create sections
+(define (make-section-generator NCON DSIZE NDISJ)
+"
+  make-section-generator NCON DSIZE NDISJ - Create random sections.
+
+  The length of the disjuncts will be at most DSIZE, and they will
+  employ at most NCON different link types. Each section will contain
+  at most NDISJ disjuncts.
+
+  Uses 26 upper-case ascii chars only, starting at \"A\".
+"
+	(define disgen (make-disjunct-generator NCON DSIZE))
+	(define zippy (make-zipf-generator NDISJ))
+
+	(lambda ()
+		(list-tabulate (zippy) (lambda (X) (disgen)))
+	)
+)
 
 ; --------------------------------------------------------
-; Generate text. There are two ways to do this:
-; A) Start with sections, and build a sentence
-; B) Create a random planar tree, and assign sections to it.
-;
-; Approach A) is difficult: it basically means we have to run the
-; parser, using a dictionary containing the desired sections, and
-; allowing an "any word" mode during parsing. This can be done,
-; because we already have scheme interfaces into LG, via the
-; ParseMinimalLink. But its complex and awkard.
-;
-; Approach B) is easier(?): create an unlabelled tree; that's easy.
-; Start adding random labels to it, veryifying that each disjunct
-; is in the dictionary. This is harder, as this is a coloring problem,
-; and requires backtracking if the first coloring attempt fails.
-; As the final step, one randomly picks a word from the dictionary that
-; appears in a section for that disjunct.
