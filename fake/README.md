@@ -49,13 +49,36 @@ The advantages of doing this:
 
 Status
 ------
-Project just started. Nothing here yet.
+Project just started. Almost nothing here yet.
 
-See the [Network Generation project](https://github.com/opencog/generate/)
-for the code that will be used to generate a corpus of "grammatically
-valid sentences" aka syntactic trees from a randomly generated grammar.
+A corpus will be generated in one of two different ways.
 
-Random Number Generation
-------------------------
-See https://github.com/scheme-requests-for-implementation/srfi-194/
-and https://srfi.schemers.org/srfi-194/
+=== Method 1 "Link-Grammar hack"
+Amir is creating (has created) a tool that will create a corpus of
+sentences, given a Link Grammar dictionary. The current plan is to
+use the code in this directory to create random grammars, and feed
+them to Amir's tool to create a corpus of sentences.
+
+=== Method 2 "The right way"
+The "right way" to generate a corpus is to use a properly designed
+corpus generator that can create corpora of not just natural language
+sentences, but also of more complex graphs (e.g. chemistry, social
+networks, etc.)
+
+The [Network Generation project](https://github.com/opencog/generate/)
+is supposed to be able to do this.  The current prototype there is able
+to generate a corpus of "grammatically valid sentences" aka syntactic
+trees from small grammars. It should work ... it might get slow on
+grammars larger than a few dozen words, a few dozen disjuncts; such
+larger generations have not yet been attempted. This is partly because
+the code there is also trying to do far more sophisticated things, and
+to solve far more complex problems as well.
+
+HOWTO
+-----
+Start the guile shell, and load `fake.scm`:
+```
+$ guile
+scheme@(guile-user)> (load "fake.scm")
+scheme@(guile-user)> (create-classes 10 10)
+```
