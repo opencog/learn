@@ -56,8 +56,8 @@
   create-vocab VSIZE - Create a list containing VSIZE words.
 "
 	; Number of letters in a word, assuming ASCII 26 letters.
-	(define word-length
-		(inexact->exact (ceiling (/ (log VSIZE) (log 26)))))
+	; (define word-length
+	;	(inexact->exact (ceiling (/ (log VSIZE) (log 26)))))
 
 	(list-tabulate VSIZE (lambda (N) (make-word (+ N 1))))
 )
@@ -65,6 +65,53 @@
 ; --------------------------------------------------------
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
+
+(define (create-classes NCLASS CSIZE)
+"
+  create-classes NCLASS CSIZE - create word-classes
+
+  Create NCLASS different word-classes. Each word-class will have
+  a random number of words in it, drawn from a Zipfian distribution
+  of size CSIZE. That is, some word classes will have a lot of words,
+  and some will have very few.
+
+  Return an association list of word-classes and the word in them.
+
+  Any given word belongs to only one class.  Thus, all words in a
+  a class are synonyms, and all words have only one 'meaning'.
+
+  TODO: Create a variant function that assigns words to multiple
+  word classes.
+
+  TODO: We can make the zipfian distribution more uniform or steeper.
+  This eventually needs to be an adjustable parameter.
+"
+
+	; Create NCLASS word-classes
+	(define word-types
+		(list-tabulate NCLASS
+			(lambda (N) (string-append "<" (base-26 (+ N 1) #f) ">"))))
+
+	(define zippy (make-zipf-generator CSIZE))
+
+	; Return a list of words.
+	; Each list starts with the word after the last word of the
+	; previous list.
+	(define next-word 1)
+	(define zipper
+		(lambda ()
+			(define nwords (zippy))
+			(define wrds
+				(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
+			(set! next-word (+ next-word nwords))
+			(list wrds)))
+
+	; Populate the word-classes.
+	(map
+		(lambda (CLS)
+			(cons CLS (zipper)))
+		word-types)
+)
 
 
 
