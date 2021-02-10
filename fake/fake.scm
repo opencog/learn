@@ -230,28 +230,26 @@
 ; --------------------------------------------------------
 ; Print dictionary.
 
-(define (print-LG-file DICTGEN)
+(define (print-LG-file DICT)
 "
-  print-LG-file DICTGEN - print a Link-Grammar style dictionary.
+  print-LG-file DICT - print a Link-Grammar style dictionary.
 
-  The DICTGEN must be a dictionary generator.
+  The DICT must be a dictionary.
 "
-
-	(define dict (DICTGEN))
 
 	(define (prt-wordlist WL)
-		(string-concatenate
-			(map (lambda (WORD) (format #f "~A " WORD)) WL)))
+		(string-join
+			(map (lambda (WORD) (format #f "~A" WORD)) WL)))
 
 	(define (prt-disjunct CL)
-		(string-concatenate
-			(map (lambda (CON) (format #f "~A & " CON)) CL)))
+		(string-join
+			(map (lambda (CON) (format #f "~A" CON)) CL)
+			" & "))
 
 	(define (prt-section SECT)
-		(string-concatenate
-			(map
-				(lambda (DISJ) (format #f "(~A) or " (prt-disjunct DISJ)))
-				SECT)))
+		(string-join
+			(map (lambda (DISJ) (format #f "(~A)" (prt-disjunct DISJ))) SECT)
+			" or "))
 
 	(for-each
 		(lambda (ENTRY)
@@ -260,7 +258,7 @@
 			(format #t "~A: ~A;\n" (prt-wordlist (second ENTRY)) (first ENTRY))
 			(format #t "~A: ~A;\n" (first ENTRY) (prt-section (third ENTRY)))
 		)
-		dict)
+		DICT)
 )
 
 ; --------------------------------------------------------
