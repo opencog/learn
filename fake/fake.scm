@@ -195,9 +195,9 @@
 		cls)
 )
 
-(define (create-dict NCLASS CSIZE NLKTYPES DSIZE NDISJ)
+(define (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
 "
-  create-dict NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
+  create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
 
   Create NCLASS different word-classes (dictionary entries)
   Each word-class will have a random number of words in it, drawn
@@ -222,8 +222,45 @@
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
 	; Populate the word-classes.
-	(reverse (list-tabulate NCLASS
-		(lambda (N) (list (wcg) (wlg) (msg)))))
+	(lambda ()
+		(reverse (list-tabulate NCLASS
+			(lambda (N) (list (wcg) (wlg) (msg))))))
+)
+
+; --------------------------------------------------------
+; Print dictionary.
+
+(define (print-LG-file DICTGEN)
+"
+  print-LG-file DICTGEN - print a Link-Grammar style dictionary.
+
+  The DICTGEN must be a dictionary generator.
+"
+
+	(define dict (DICTGEN))
+
+	(define (prt-wordlist WL)
+		(string-concatenate
+			(map (lambda (WORD) (format #f "~A " WORD)) WL)))
+
+	(define (prt-disjunct CL)
+		(string-concatenate
+			(map (lambda (CON) (format #f "~A & " CON)) CL)))
+
+	(define (prt-section SECT)
+		(string-concatenate
+			(map
+				(lambda (DISJ) (format #f "(~A) or " (prt-disjunct DISJ)))
+				SECT)))
+
+	(for-each
+		(lambda (ENTRY)
+			(format #t "\n")
+			; (format #t "% ~A\n" ENTRY)
+			(format #t "~A: ~A;\n" (prt-wordlist (second ENTRY)) (first ENTRY))
+			(format #t "~A: ~A;\n" (first ENTRY) (prt-section (third ENTRY)))
+		)
+		dict)
 )
 
 ; --------------------------------------------------------
