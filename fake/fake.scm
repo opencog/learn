@@ -10,6 +10,12 @@
 
 (use-modules (srfi srfi-1))
 
+; (use-modules (srfi srfi-194))
+(load "zipf.scm")
+
+; --------------------------------------------------------
+; Convert integers to base-26 strings
+
 (define (base-26 N UP)
 "
   base-26 N UP - Print number N in base-26. This returns a string.
@@ -28,6 +34,9 @@
 		((= 0 quot) lett)
 		(else (string-append/shared (base-26 quot UP) lett)))
 )
+
+; --------------------------------------------------------
+; Return the N'th word in the vocabulary.
 
 (define (make-word N)
 "
@@ -54,17 +63,30 @@
 )
 
 ; --------------------------------------------------------
-; Draw random numbers from a (Zipfian) distribution
-
-; --------------------------------------------------------
 ; create word-classes -- assign words to classes with zipf distribution.
-; i.e. each word-class contains zipf words in it.
+; i.e.  word-class contains zipf words in it.
+
+
 
 ; --------------------------------------------------------
 ; create connectors
 
+(define (make-connector N DIR)
+"
+  make-connector N DIR - Return the N'th connector in directin DIR.
+
+  Uses 26 upper-case ascii chars only, starting at \"A\".
+
+  Basically, this just prints the number N in base-26, as a string
+  of upper-case letters, and appends DIR. Connector 1 is \"A\", and
+  so on.
+"
+	(string-append (base-26 N #t) DIR)
+)
+
+
 ; Create disjuncts
-; To simplify text generation, each disjunct shal have:
+; To simplify text generation, each disjunct shall have:
 ; * Exactly one incoming (head) connector.
 ; * Zero or more outgoing (tail/dependent) connectors.
 ; * Connectors must match, as per link-grammar usual.
