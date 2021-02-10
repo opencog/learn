@@ -103,45 +103,6 @@
 		wrds)
 )
 
-(define (create-classes NCLASS CSIZE)
-"
-  XXX DO NOT USE THIS
-  create-classes NCLASS CSIZE - create word-classes
-
-  Create NCLASS different word-classes. Each word-class will have
-  a random number of words in it, drawn from a Zipfian distribution
-  of size CSIZE. That is, some word classes will have a lot of words,
-  and some will have very few.
-
-  Return an association list of word-classes and the word in them.
-
-  Any given word belongs to only one class.  Thus, all words in a
-  a class are synonyms, and all words have only one 'meaning'.
-
-  TODO: Create a variant function that assigns words to multiple
-  word classes.
-
-  TODO: We can make the zipfian distribution more uniform or steeper.
-  This eventually needs to be an adjustable parameter.
-"
-
-	; Create NCLASS word-classes
-	(define word-types
-		(list-tabulate NCLASS
-			(lambda (N) (string-append "<" (base-26 (+ N 1) #f) ">"))))
-
-	; Return a list of words.
-	; Each list starts with the word after the last word of the
-	; previous list.
-	(define wlg (make-wordlist-generator CSIZE))
-
-	; Populate the word-classes.
-	(map
-		(lambda (CLS) (cons CLS (list (wlg))))
-		word-types)
-)
-
-
 ; --------------------------------------------------------
 ; create connectors
 
@@ -201,22 +162,65 @@
 )
 
 ; create sections
-(define (make-section-generator NCON DSIZE NDISJ)
+(define (make-section-generator NLKTYPES DSIZE NDISJ)
 "
-  make-section-generator NCON DSIZE NDISJ - Create random sections.
+  make-section-generator NLKTYPES DSIZE NDISJ - Create random sections.
 
   The length of the disjuncts will be at most DSIZE, and they will
-  employ at most NCON different link types. Each section will contain
+  employ at most NLKTYPES different link types. Each section will contain
   at most NDISJ disjuncts.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
-	(define disgen (make-disjunct-generator NCON DSIZE))
+	(define disgen (make-disjunct-generator NLKTYPES DSIZE))
 	(define zippy (make-zipf-generator NDISJ))
 
 	(lambda ()
 		(list-tabulate (zippy) (lambda (X) (disgen)))
 	)
+)
+
+; --------------------------------------------------------
+
+(define (create-dict NCLASS CSIZE NLKTYPES DSIZE NDISJ)
+"
+  create-dict NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
+
+  Create NCLASS different word-classes (dictionary entries)
+  Each word-class will have a random number of words in it, drawn
+  from a Zipfian distribution of size CSIZE. That is, some word
+  classes will have a lot of words, and some will have very few.
+
+  Associated with each word-class will be a section (a collection
+  of disjuncts). Each disjunct will use at most NLKTYPES link types.
+  Each section will have at most NDISJ disjuncts in it.  Each
+  disjunct will be at most DSIZE in size.
+
+  Return an association list of word-classes and the word in them.
+
+  TODO: Fix the 'core factorization'. Currently, a word will only
+  appear in any one word-class; thus no synonyms. By contrast,
+  a disjunct may or may not appear in multiple word classes, and
+  there is no explicit way to control this. We want explicit control
+  over this.
+"
+
+	; Create NCLASS word-classes
+	(define word-types
+		(list-tabulate NCLASS
+			(lambda (N) (string-append "<" (base-26 (+ N 1) #f) ">"))))
+
+	; Return a list of words.
+	; Each list starts with the word after the last word of the
+	; previous list.
+	(define wlg (make-wordlist-generator CSIZE))
+
+	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
+
+	; Populate the word-classes.
+	(map
+		(lambda (CLS) (list CLS (wlg) (msg)))
+		word-types)
 )
 
 ; --------------------------------------------------------
