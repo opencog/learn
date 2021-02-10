@@ -1,13 +1,24 @@
 ;
 ; fake.scm -- tools for creating fake (artificial) languages.
 ;
-; Copyright (c) 2019 - Linas Vepstas
+; Copyright (c) 2019, 2021 - Linas Vepstas
 ;
 ; --------------------------------------------------------
 ; OVERVIEW:
 ; Assumes a ....
 ;
-; Issues: this will generate grammers parts of which are "impossible".
+; Example Usage:
+; --------------
+; (define dictgen (create-dict-generator 10 10 10 3 20))
+; (print-LG-flat #t (dictgen))
+;
+; (define port (open-file "/tmp/4.0.dict" "w"))
+; (print-LG-flat port (dictgen))
+; (close port)
+;
+; Issues: 
+; -------
+; This will generate grammers parts of which are "impossible".
 ; That is, it will generate grammars that have disjuncts that may be
 ; impossible to use in a sentence, because there is no way of using
 ; that disjunct during sentence generation.  The sentence generator
@@ -230,9 +241,14 @@
 ; --------------------------------------------------------
 ; Print dictionary.
 
-(define (print-LG-file DICT)
+(define (print-LG-flat DEST DICT)
 "
-  print-LG-file DICT - print a Link-Grammar style dictionary.
+  print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
+
+  Prints a flat-file style dictionary.
+
+  The DEST must be the destination file-handle, or #t to print to
+  stdout, or #f to print to string.
 
   The DICT must be a dictionary.
 "
@@ -253,10 +269,10 @@
 
 	(for-each
 		(lambda (ENTRY)
-			(format #t "\n")
-			; (format #t "% ~A\n" ENTRY)
-			(format #t "~A: ~A;\n" (prt-wordlist (second ENTRY)) (first ENTRY))
-			(format #t "~A: ~A;\n" (first ENTRY) (prt-section (third ENTRY)))
+			(format DEST "\n")
+			; (format DEST "% ~A\n" ENTRY)
+			(format DEST "~A: ~A;\n" (prt-wordlist (second ENTRY)) (first ENTRY))
+			(format DEST "~A: ~A;\n" (first ENTRY) (prt-section (third ENTRY)))
 		)
 		DICT)
 )
