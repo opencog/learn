@@ -74,8 +74,38 @@
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
 
+(define (make-wordlist-generator LEN)
+"
+  make-wordlist-generator LEN -- return a random wordlist.
+
+  Create a list of words of at most length LEN, having a Zipfian
+  distribution.
+
+  The current implementation will never re-use a previously-used word.
+  That is, synonyms will never be created.
+
+  TODO: Create a variant that generates synonyms.
+
+  TODO: We can make the zipfian distribution more uniform or steeper.
+  This eventually needs to be an adjustable parameter.
+"
+	(define zippy (make-zipf-generator LEN))
+
+	; Return a list of words.
+	; Each list starts with the word after the last word of the
+	; previous list.
+	(define next-word 1)
+	(lambda ()
+		(define nwords (zippy))
+		(define wrds
+			(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
+		(set! next-word (+ next-word nwords))
+		wrds)
+)
+
 (define (create-classes NCLASS CSIZE)
 "
+  XXX DO NOT USE THIS
   create-classes NCLASS CSIZE - create word-classes
 
   Create NCLASS different word-classes. Each word-class will have
@@ -100,24 +130,14 @@
 		(list-tabulate NCLASS
 			(lambda (N) (string-append "<" (base-26 (+ N 1) #f) ">"))))
 
-	(define zippy (make-zipf-generator CSIZE))
-
 	; Return a list of words.
 	; Each list starts with the word after the last word of the
 	; previous list.
-	(define next-word 1)
-	(define zipper
-		(lambda ()
-			(define nwords (zippy))
-			(define wrds
-				(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
-			(set! next-word (+ next-word nwords))
-			(list wrds)))
+	(define wlg (make-wordlist-generator CSIZE))
 
 	; Populate the word-classes.
 	(map
-		(lambda (CLS)
-			(cons CLS (zipper)))
+		(lambda (CLS) (cons CLS (list (wlg))))
 		word-types)
 )
 
