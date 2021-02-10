@@ -4,6 +4,7 @@ Unsupervised Language Learning
 * Linas Vepstas December 2013
 * Updated May 2017
 * Updated June 2018
+* Updated February 2021
 
 Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
@@ -88,6 +89,36 @@ example, disjuncts with WordNet word-senses. The correlation is real and
 is measureable (and has been measured). The goal of this project is to
 move beyond this.
 
+Status
+------
+In 2019 we realized that training on English corpora does not offer
+sufficient control to measure the quality of the learning algorithm.
+Thus, we've devised a new approach: create a random grammar, create
+a corpus of sentences from that random grammar, learn a grammar from
+that corpus, and validate that the learned grammar accurately matches
+the input grammar.  Doing this will allow the learning algorithm to
+be correctly calibrated for grammars of different sizes and
+complexities, and for corpora of different sizes. We will be able to
+measure how accuracy scales as a function of training time, how well
+different training algorithms perform, how large a corpus is neeed to
+get good results, and other related questions.
+
+As of 2021, we are still setting up the infrastruture to do the above.
+Once this is done (real soon now?) the project can resume training runs.
+Please contact via email or discord opencog chat for details.
+
+The instructions below still assume training is done on an English
+corpus, and will need to be modified to describe the above.  The work
+on English seemed to work "pretty well", in that it was converging to
+what seemed to be the right answers. However, controlling the rate
+of convergence was a challenge, since measuring the accuracy of the
+results was impossible. We could "eyeball" the accuracy and it "looked
+OK". But "eyeballing it" is not very scientific.
+
+Note also: The instructions below refer to storing the data in
+PostgreSQL. However, the RocksDB is much faster, and will be used
+for the next-gen work. They both use the same API, so conversion
+will not be hard.
 
 Processing Overview
 -------------------
