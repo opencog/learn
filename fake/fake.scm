@@ -7,6 +7,8 @@
 ; OVERVIEW:
 ; Assumes a ....
 ;
+; This file has many TODO's to expand the kinds and varieties
+; of grammars that could be produced.
 
 (use-modules (srfi srfi-1))
 
@@ -114,13 +116,12 @@
 )
 
 
-
 ; --------------------------------------------------------
 ; create connectors
 
 (define (make-connector N DIR)
 "
-  make-connector N DIR - Return the N'th connector in directin DIR.
+  make-connector N DIR - Return the N'th connector in direction DIR.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 
@@ -131,12 +132,41 @@
 	(string-append (base-26 N #t) DIR)
 )
 
+(define (make-connector-generator N)
+"
+  make-connector-generator N - Return a generator for random connectors.
+  The connector will be chosen randomly out of N of them, with Zipf
+  distribution and random 50-50 direction.
+
+  Uses 26 upper-case ascii chars only, starting at \"A\".
+"
+	(define zippy (make-zipf-generator N))
+
+	(define (dire) (if (< 0 (random 2)) "+" "-"))
+
+	(lambda () (make-connector (zippy) (dire)))
+)
 
 ; Create disjuncts
-; To simplify text generation, each disjunct shall have:
+;
+; TODO: Implement a mode with head and tail indicators, so that
+; each disjunct has:
 ; * Exactly one incoming (head) connector.
 ; * Zero or more outgoing (tail/dependent) connectors.
 ; * Connectors must match, as per link-grammar usual.
+;
+; TODO: use bi-directional directions, for order-independent languages.
+
+(define (make-disjunct-generator NCON DSIZE)
+"
+  make-disjuncts NCON DSIZE - Create random disjuncts.
+
+  The length of the disjuncts will be at most DSIZE, and they will
+  employ at most NCON different link types.
+
+  Uses 26 upper-case ascii chars only, starting at \"A\".
+"
+)
 
 ; create sections
 
