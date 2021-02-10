@@ -181,6 +181,19 @@
 )
 
 ; --------------------------------------------------------
+; Create dictionaries
+
+(define (make-wordclass-generator)
+"
+  make-wordclass-generator -- return the next unused wordclass.
+"
+	(define next-cls 1)
+
+	(lambda ()
+		(define cls (string-append "<" (base-26 next-cls #f) ">"))
+		(set! next-cls (+ 1 next-cls))
+		cls)
+)
 
 (define (create-dict NCLASS CSIZE NLKTYPES DSIZE NDISJ)
 "
@@ -204,23 +217,13 @@
   there is no explicit way to control this. We want explicit control
   over this.
 "
-
-	; Create NCLASS word-classes
-	(define word-types
-		(list-tabulate NCLASS
-			(lambda (N) (string-append "<" (base-26 (+ N 1) #f) ">"))))
-
-	; Return a list of words.
-	; Each list starts with the word after the last word of the
-	; previous list.
+	(define wcg (make-wordclass-generator))
 	(define wlg (make-wordlist-generator CSIZE))
-
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
 	; Populate the word-classes.
-	(map
-		(lambda (CLS) (list CLS (wlg) (msg)))
-		word-types)
+	(reverse (list-tabulate NCLASS
+		(lambda (N) (list (wcg) (wlg) (msg)))))
 )
 
 ; --------------------------------------------------------
