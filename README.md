@@ -107,6 +107,20 @@ See the [README-Calibration](README-Calibration.md) file for the "new"
 statistical properties, learning them, and then measuring the accuracy
 of the learned language vs. the generated artificial language.
 
+Directories
+-----------
+A quick overview:
+
+* download - code for downloading sample corpora off the intertubes.
+* fake - code for generating artificial grammars
+* learn-lang-diary - diary and notes and papers describing results and
+  theory.
+* run - scripts for running the learning pipeline.
+* run-poc - scripts for running the old proof-of-concept pipeline.
+  (Now obsolete)
+* scm - the code that actually does all the work.
+* tests - unit tests. Currently unmaintained and broken.
+
 
 That's all for now!
 -------------------
