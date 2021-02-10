@@ -10,6 +10,26 @@ Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
 for an alternate overview.
 
+Table of Contents
+------------------
+1. [Project Summary](#project-summary)
+2. [Processing Overview](#processing-overview)
+3. [Computational Pre-requisites](#computational-pre-requisites)
+4. [Setting up the AtomSpace](#setting-up-the-atomspace)
+5. [Bulk Pair Counting](#bulk-pair-counting)
+6. [Mutual Information of Word Pairs](#mutual-information-of-word-pairs)
+7. [The Vector Structure Encoded in Pairs](#the-vector-structure-encoded-in-pairs)
+8. [Maximum Spanning Trees](#maximum-spanning-trees)
+9. [MST Disjunct Counting](#mst-disjunct-counting)
+10. [Disjunct Marginal Statistics](#disjunct-marginal-statistics)
+11. [Determining Grammatical Classes](#determining-grammatical-classes)
+12. [Creating Grammatical Classes](#creating-grammatical-classes)
+13. [Exporting a Lexis](#exporting-a-lexis)
+14. [Clustering](#clustering)
+15. [Measuring Quality](#measuring-quality)
+16. [Precomputed LXC containers](#precomputed-lxc-containers)
+
+
 Project Summary
 ---------------
 The goal of this project is to create a system that is capable of
@@ -95,15 +115,19 @@ of convergence was a challenge, since measuring the accuracy of the
 results was impossible. We could "eyeball" the accuracy and it "looked
 OK". But "eyeballing it" is not very scientific.
 
+Note also: The instructions below refer to storing the data in
+PostgreSQL. However, the RocksDB is much faster, and will be used
+for the next-gen work. They both use the same API, so conversion
+will not be hard.
+
 Processing Overview
 -------------------
 See the [README-Natural](README-Natural.md) file for a description of
-the "open-loop" (uncalibrated) processing system. It describes the
-processing steps in detail.  Getting good results requires tuning
-a variety of parameters, and so calibration needs to be run first.
+the "old" (uncalibrated) processing. It describes the processing steps
+in detail.
 
 See the [README-Calibration](README-Calibration.md) file for the "new"
-(next-gen) process of generating artificial languages with bounded
+(next-gen) process of generating artficifical languages with bounded
 statistical properties, learning them, and then measuring the accuracy
 of the learned language vs. the generated artificial language.
 
