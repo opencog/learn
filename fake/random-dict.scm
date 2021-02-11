@@ -212,7 +212,7 @@
 		cls)
 )
 
-(define (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
+(define-public (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
 "
   create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
 
@@ -247,7 +247,7 @@
 ; --------------------------------------------------------
 ; Print dictionary.
 
-(define (print-LG-flat DEST DICT)
+(define-public (print-LG-flat DEST DICT)
 "
   print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
 

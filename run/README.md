@@ -5,8 +5,12 @@ Parse management scripts
 The scripts here are used to automate the operation of the
 language-learning pipeline. Currently, it consists of four steps:
 
-* An initial step, of gathering a text corpus to train on. Any
-  sufficiently large collection of plain-text UTF-8 files will do
+* Artificial grammar generation. Automation scripts can be found in the
+  [0-gen-dict](0-gen-dict) directory. This is required for calibration
+  of the learning system.
+
+* For natural language learning, a text corpus is needed. Any
+  sufficiently large collection of plain-text UTF-8 files will do.
   Some tools for downloading Wikipedia and Project Gutenberg texts
   can be found in the `../download` directory.
 

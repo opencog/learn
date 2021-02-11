@@ -100,7 +100,12 @@ appears in a section for that disjunct.
 
 HOWTO
 -----
-Start the guile shell, and load `fake.scm`:
+Go to the `run/0-gen-dict` directory, and use the `gen-dict.scm` file
+to generate radom dictionaries.
+
+There's no user-servicable code here, but if you must screw around in
+this directory, then here's a hint:
+Start the guile shell, and load the `fake` module:
 ```
 $ guile
 scheme@(guile-user)> (use-modules (opencog) (opencog nlp fake))
