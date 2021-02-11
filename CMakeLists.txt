@@ -67,7 +67,6 @@ ADD_CUSTOM_TARGET(db
 	COMMAND bash -c "echo '' > tmp; sudo mv tmp /usr/local/share/link-grammar/any/affix-punc"
 )
 
-ADD_SUBDIRECTORY (run-poc)
 ADD_SUBDIRECTORY (scm)
 ADD_SUBDIRECTORY (tests)
 ENABLE_TESTING()
