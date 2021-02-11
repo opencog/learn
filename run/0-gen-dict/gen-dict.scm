@@ -5,12 +5,6 @@
 ;
 (use-modules (opencog) (opencog nlp fake))
 
-; Number of grammatical classes
-(define num-classes 10)
-
-; Number of synonyms in a word-class
-(define num-synonyms 1)
-
 ; Number of Link Grammar link types (connector types)
 (define num-link-types 6)
 
@@ -20,8 +14,33 @@
 ; Disjuncts per section
 (define num-disjuncts 20)
 
+; Number of pos tags
+(define num-pos 10)
+
+; Number of grammatical classes
+(define num-classes 10)
+
+; Number of pos tags per class
+(define class-size 8)
+
+; Number of synonyms in a word-class
+(define num-synonyms 1)
+
 ; Output file
 (define dict-file "/tmp/4.0.dict")
+
+(define posgen
+	(create-pos-generator
+		num-pos
+		num-link-types
+		max-disjunct-size
+		num-disjuncts))
+
+(define classgen
+	(create-class-generator
+		num-classes
+		num-pos
+		class-size))
 
 (define dictgen
 	(create-dict-generator

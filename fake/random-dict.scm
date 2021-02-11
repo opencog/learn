@@ -226,9 +226,32 @@
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
-	; Populate the word-classes.
+	; Populate the pos-tags.
 	(lambda ()
 		(list-tabulate NPOS (lambda (N) (list (pos N) (msg)))))
+)
+
+(define-public (create-class-generator NCLASS NPOS CSIZE)
+"
+  create-class-generator NCLASS NPOS CSIZE - create dictionary
+
+  Create NCLASS different word classes.
+  Each word class will have at most CSIZE different pos-tags in it,
+  these will be assigned randomly following a Zipfian distribution.
+  The post-tags will be drawn randomly from a pool of size NPOS.
+
+  Return an association list of class-tags and the pos-tags in them.
+"
+	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+
+	(define zippy (make-zipf-generator CSIZE))
+	(define (pick-pos)
+		(list-tabulate (zippy) (lambda (N) (pos (random NPOS)))))
+
+	; Populate the word-classes.
+	(lambda ()
+		(list-tabulate NCLASS (lambda (N) (list (wcl N) (pick-pos)))))
 )
 
 (define-public (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
