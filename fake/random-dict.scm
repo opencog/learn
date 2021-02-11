@@ -22,7 +22,7 @@
 ; (print-LG-flat port dict)
 ; (fsync port) (close port)
 ;
-; Issues: 
+; Issues:
 ; -------
 ; This will generate grammers parts of which are "impossible".
 ; That is, it will generate grammars that have disjuncts that may be
@@ -200,18 +200,6 @@
 ; --------------------------------------------------------
 ; Create dictionaries
 
-(define (make-tag-generator TAG)
-"
-  make-pos-generator TAG -- return the next unused pos or wordclass.
-"
-	(define next-cls 1)
-
-	(lambda ()
-		(define cls (string-append "<" TAG (base-26 next-cls #f) ">"))
-		(set! next-cls (+ 1 next-cls))
-		cls)
-)
-
 (define-public (create-pos-generator NPOS NLKTYPES DSIZE NDISJ)
 "
   create-pos-generator NPOS NLKTYPES DSIZE NDISJ - create dictionary
@@ -226,9 +214,19 @@
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
+	; Convert sections to strings
+	(define (sex)
+		(map
+			(lambda (CONLIST)
+				(string-append
+					"("
+					(string-join CONLIST " & ")
+					")"))
+			(msg)))
+
 	; Populate the pos-tags.
 	(lambda ()
-		(list-tabulate NPOS (lambda (N) (list (list (pos N)) (msg)))))
+		(list-tabulate NPOS (lambda (N) (list (list (pos N)) (sex)))))
 )
 
 (define-public (create-class-generator NCLASS NPOS CSIZE)
@@ -278,7 +276,7 @@
 ; --------------------------------------------------------
 ; Print dictionary.
 
-(define-public (print-LG-flat DEST JUNCT DICT)
+(define-public (print-LG-flat DEST DICT)
 "
   print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
 
@@ -295,20 +293,12 @@
 			(map (lambda (WORD) (format #f "~A" WORD)) WL)))
 
 	(define (prt-junct CL)
-		(if (= 1 (length CL))
-			(format #f "~A" (first CL))
-			(string-append
-				"("
-				(string-join
-					(map (lambda (CON) (format #f "~A" CON)) CL)
-					JUNCT)
-				")")))
+		(string-join
+			(map (lambda (CON) (format #f "~A" CON)) CL) " or "))
 
 	(for-each
 		(lambda (ENTRY)
-			(format DEST "\n")
-			; (format DEST "% ~A\n" ENTRY)
-			(format DEST "~A: ~A;\n"
+			(format DEST "\n~A: ~A;\n"
 				(prt-wordlist (first ENTRY))
 				(prt-junct (second ENTRY)))
 		)

@@ -50,7 +50,7 @@
 (define port (open-file "/tmp/4.0.dict" "w"))
 
 (print-LG-flat dict-file (posgen))
-(print-LG-flat dict-file " or "(classgen))
-(print-LG-flat dict-file " " (wordgen))
+(print-LG-flat dict-file (classgen))
+(print-LG-flat dict-file (wordgen))
 
 (close port)
