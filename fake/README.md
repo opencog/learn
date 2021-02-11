@@ -51,8 +51,88 @@ Status
 ------
 Basic Link Grammar flat-file dictionaries can be created.
 
-To create a dictionary, load the `random-dict.scm` file, and follow
-the instructions at the top of that file.
+To create a dictionary, use the scripts in the `run/0-gen-dict`
+directory.
+
+Theory
+------
+The language-learning code attempts to untangle synonyms, multiple
+word senses, and "parts of speech". The goal of the artificial
+grammars is to mash these up, so that the learner can untangle them.
+
+### POS
+Roughly speaking, "parts of speech", for lack of a better name.
+These are a collection of disjuncts, for example:
+```
+<pos-foo>: (P+ & Q-) or (R+ & T+) or (U+);
+```
+Link Grammar is driven by extremely fine-grained POS, so there will be
+hundreds or thousands of these. (e.g. "transitive verb taking a
+direct object and an indirect object but not a particle")
+
+### Word Senses
+A single word may have multiple senses. For the present case, these
+correspond to words with multiple POS. For example:
+```
+foobar: <pos-foo> or <pos-bar>;
+```
+
+### Synonyms
+For the present case, these correspond to words that have the same
+POS. For example:
+```
+foo fu fumbled: <pos-foo>;
+```
+
+### Corpus generation
+Generating syntactically valid sentences from the dictionary requires
+sophisticated algorithms and is CPU intensive. By contrast, replacing
+words by synonyms is easy; likewise assigning multiple senses to one
+word.
+
+Thus, the simplest approach is to first generate a corpus where there
+is only one representative word per POS, followed by a second processing
+step to insert multiple word senses and synonyms.  Thus, for example,
+the dictionary might look like:
+
+```
+<pos-foo>: (P+ & Q-) or (R+ & T+) or (U+);
+<pos-bar>: (Q+) or (X- & Y+);
+
+Wfoo: <pos-foo>;
+Wbar: <pos-bar>;
+```
+
+The corpus generated from the above contains only representative words,
+so, for example:
+```
+Wyada Wmimble Wfoo?
+Wbar Wfoo Wlump!
+```
+To each representative word, we can assign synonyms:
+```
+able baker charlie: Wyada;
+```
+To each word, we can assign multiple senses:
+```
+delta: Wbar or Wlump;
+echo: Wmimble or Wlump
+foxtrot: Wfoo;
+```
+These are substitued into the representative sentences to obtain the
+the final, "real" sentences. Thus, `Wyada Wmimble Wfoo?` can become:
+```
+able echo foxtrot?
+baker echo foxtrot?
+charlie echo foxtrot?
+```
+while `Wbar Wfoo Wlump!` can become:
+```
+delta foxtrot delta!
+delta foxtrot echo!
+```
+The word `echo` thus has two distinct word-senses, while `able baker
+charlie` are synonyms for each other.
 
 
 Generating a corpus
