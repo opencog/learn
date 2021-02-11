@@ -212,6 +212,26 @@
 		cls)
 )
 
+(define-public (create-pos-generator NPOS NLKTYPES DSIZE NDISJ)
+"
+  create-pos-generator NPOS NLKTYPES DSIZE NDISJ - create dictionary
+
+  Create NPOS different disjunct-collections (sections).
+  Each disjunct will use at most NLKTYPES link types.
+  Each section will have at most NDISJ disjuncts in it.
+  Each disjunct will be at most DSIZE in size.
+
+  Return an association list of pos-tags and the disjuncts in them.
+"
+	(define pos (make-tag-generator "pos-"))
+	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
+
+	; Populate the word-classes.
+	(lambda ()
+		(reverse (list-tabulate NPOS
+			(lambda (N) (list (pos) (msg))))))
+)
+
 (define-public (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
 "
   create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
