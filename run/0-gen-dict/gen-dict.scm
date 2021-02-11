@@ -24,7 +24,7 @@
 (define class-size 8)
 
 ; Number of synonyms in a word-class
-(define num-synonyms 1)
+(define num-synonyms 6)
 
 ; Output file
 (define dict-file "/tmp/4.0.dict")
@@ -42,12 +42,15 @@
 		num-pos
 		class-size))
 
-(define dictgen
-	(create-dict-generator
+(define wordgen
+	(create-word-generator
 		num-classes
-		num-synonyms
-		num-link-types
-		max-disjunct-size
-		num-disjuncts))
+		num-synonyms))
 
-(print-LG-flat dict-file (dictgen))
+(define port (open-file "/tmp/4.0.dict" "w"))
+
+(print-LG-flat dict-file (posgen))
+(print-LG-flat dict-file " or "(classgen))
+(print-LG-flat dict-file " " (wordgen))
+
+(close port)

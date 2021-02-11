@@ -228,7 +228,7 @@
 
 	; Populate the pos-tags.
 	(lambda ()
-		(list-tabulate NPOS (lambda (N) (list (pos N) (msg)))))
+		(list-tabulate NPOS (lambda (N) (list (list (pos N)) (msg)))))
 )
 
 (define-public (create-class-generator NCLASS NPOS CSIZE)
@@ -251,46 +251,34 @@
 
 	; Populate the word-classes.
 	(lambda ()
-		(list-tabulate NCLASS (lambda (N) (list (wcl N) (pick-pos)))))
+		(list-tabulate NCLASS (lambda (N) (list (list (wcl N)) (pick-pos)))))
 )
 
-(define-public (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
+(define-public (create-word-generator NCLASS CSIZE)
 "
-  create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ - create dictionary
+  create-dict-generator NCLASS CSIZE - create dictionary
 
-  Create NCLASS different word-classes (dictionary entries)
+  Create NCLASS different word-classes, placing at most CSIZE
+  words into each class.
   Each word-class will have a random number of words in it, drawn
   from a Zipfian distribution of size CSIZE. That is, some word
   classes will have a lot of words, and some will have very few.
 
-  Associated with each word-class will be a section (a collection
-  of disjuncts). Each disjunct will use at most NLKTYPES link types.
-  Each section will have at most NDISJ disjuncts in it.  Each
-  disjunct will be at most DSIZE in size.
-
-  Return an association list of word-classes and the word in them.
-
-  TODO: Fix the 'core factorization'. Currently, a word will only
-  appear in any one word-class; thus no synonyms. By contrast,
-  a disjunct may or may not appear in multiple word classes, and
-  there is no explicit way to control this. We want explicit control
-  over this.
+  Return an association list of word-classes and the words in them.
 "
-	(define pos (make-tag-generator "pos-"))
-	(define wcg (make-tag-generator "cls-"))
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
 	(define wlg (make-wordlist-generator CSIZE))
-	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
 	; Populate the word-classes.
 	(lambda ()
-		(reverse (list-tabulate NCLASS
-			(lambda (N) (list (wcg) (wlg) (msg))))))
+		(list-tabulate NCLASS
+			(lambda (N) (list (wlg) (list (wcl N))))))
 )
 
 ; --------------------------------------------------------
 ; Print dictionary.
 
-(define-public (print-LG-flat DEST DICT)
+(define-public (print-LG-flat DEST JUNCT DICT)
 "
   print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
 
@@ -306,22 +294,23 @@
 		(string-join
 			(map (lambda (WORD) (format #f "~A" WORD)) WL)))
 
-	(define (prt-disjunct CL)
-		(string-join
-			(map (lambda (CON) (format #f "~A" CON)) CL)
-			" & "))
-
-	(define (prt-section SECT)
-		(string-join
-			(map (lambda (DISJ) (format #f "(~A)" (prt-disjunct DISJ))) SECT)
-			" or "))
+	(define (prt-junct CL)
+		(if (= 1 (length CL))
+			(format #f "~A" (first CL))
+			(string-append
+				"("
+				(string-join
+					(map (lambda (CON) (format #f "~A" CON)) CL)
+					JUNCT)
+				")")))
 
 	(for-each
 		(lambda (ENTRY)
 			(format DEST "\n")
 			; (format DEST "% ~A\n" ENTRY)
-			(format DEST "~A: ~A;\n" (prt-wordlist (second ENTRY)) (first ENTRY))
-			(format DEST "~A: ~A;\n" (first ENTRY) (prt-section (third ENTRY)))
+			(format DEST "~A: ~A;\n"
+				(prt-wordlist (first ENTRY))
+				(prt-junct (second ENTRY)))
 		)
 		DICT)
 )
