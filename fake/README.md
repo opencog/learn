@@ -100,10 +100,10 @@ appears in a section for that disjunct.
 
 HOWTO
 -----
-Start the guile shell, and load `random-dict.scm`:
+Start the guile shell, and load `fake.scm`:
 ```
 $ guile
-scheme@(guile-user)> (load "random-dict.scm")
+scheme@(guile-user)> (use-modules (opencog) (opencog nlp fake))
 scheme@(guile-user)> (define dictgen (create-dict-generator 10 10 10 3 20))
 scheme@(guile-user)> (print-LG-flat #t (dictgen))
 ```

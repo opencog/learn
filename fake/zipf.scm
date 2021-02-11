@@ -18,4 +18,4 @@
 (define (exact FLOAT) (inexact->exact (floor FLOAT)))
 
 ; Load the actual implementation.
-(load "zipf-zri.scm")
+; (load "zipf-zri.scm")

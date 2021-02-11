@@ -36,7 +36,7 @@
 (use-modules (srfi srfi-1))
 
 ; (use-modules (srfi srfi-194))
-(load "zipf.scm")
+; (load "zipf.scm")
 
 ; --------------------------------------------------------
 ; Convert integers to base-26 strings
