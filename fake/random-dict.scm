@@ -200,14 +200,14 @@
 ; --------------------------------------------------------
 ; Create dictionaries
 
-(define (make-wordclass-generator)
+(define (make-pos-generator TAG)
 "
-  make-wordclass-generator -- return the next unused wordclass.
+  make-pos-generator TAG -- return the next unused pos or wordclass.
 "
 	(define next-cls 1)
 
 	(lambda ()
-		(define cls (string-append "<" (base-26 next-cls #f) ">"))
+		(define cls (string-append "<" TAG (base-26 next-cls #f) ">"))
 		(set! next-cls (+ 1 next-cls))
 		cls)
 )
@@ -234,7 +234,8 @@
   there is no explicit way to control this. We want explicit control
   over this.
 "
-	(define wcg (make-wordclass-generator))
+	(define pos (make-pos-generator "pos-"))
+	(define wcg (make-pos-generator "cls-"))
 	(define wlg (make-wordlist-generator CSIZE))
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
