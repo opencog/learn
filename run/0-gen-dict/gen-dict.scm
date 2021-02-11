@@ -29,6 +29,9 @@
 ; Output file
 (define dict-file "/tmp/4.0.dict")
 
+; -------------------------------------------
+; Generators for each of the different parts of the grammar.
+
 (define posgen
 	(create-pos-generator
 		num-pos
@@ -49,8 +52,8 @@
 
 (define port (open-file "/tmp/4.0.dict" "w"))
 
-(print-LG-flat dict-file (posgen))
-(print-LG-flat dict-file (classgen))
-(print-LG-flat dict-file (wordgen))
+(print-LG-flat port (posgen))
+(print-LG-flat port (classgen))
+(print-LG-flat port (wordgen))
 
 (close port)
