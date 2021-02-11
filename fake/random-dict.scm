@@ -200,7 +200,7 @@
 ; --------------------------------------------------------
 ; Create dictionaries
 
-(define (make-pos-generator TAG)
+(define (make-tag-generator TAG)
 "
   make-pos-generator TAG -- return the next unused pos or wordclass.
 "
@@ -234,8 +234,8 @@
   there is no explicit way to control this. We want explicit control
   over this.
 "
-	(define pos (make-pos-generator "pos-"))
-	(define wcg (make-pos-generator "cls-"))
+	(define pos (make-tag-generator "pos-"))
+	(define wcg (make-tag-generator "cls-"))
 	(define wlg (make-wordlist-generator CSIZE))
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
