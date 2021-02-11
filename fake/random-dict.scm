@@ -223,13 +223,12 @@
 
   Return an association list of pos-tags and the disjuncts in them.
 "
-	(define pos (make-tag-generator "pos-"))
+	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
 	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
 
 	; Populate the word-classes.
 	(lambda ()
-		(reverse (list-tabulate NPOS
-			(lambda (N) (list (pos) (msg))))))
+		(list-tabulate NPOS (lambda (N) (list (pos N) (msg)))))
 )
 
 (define-public (create-dict-generator NCLASS CSIZE NLKTYPES DSIZE NDISJ)
