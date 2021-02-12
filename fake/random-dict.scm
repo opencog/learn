@@ -195,7 +195,7 @@
 )
 
 ; create sections
-(define (make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP)
+(define-public (make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP)
 "
   make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP
   Create random sections.
@@ -225,24 +225,16 @@
 ; --------------------------------------------------------
 ; Create dictionaries
 
-(define-public (create-pos-generator
-	NPOS NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP)
+(define-public (make-pos-generator NPOS SECT-GEN)
 "
-  create-pos-generator NPOS NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP
-  Create dictionary
+  create-pos-generator NPOS SECT-GEN - Create dictionary
 
   Create NPOS different disjunct-collections (sections).
-  Each disjunct will use at most NLKTYPES link types.
-  Each section will have at most NDISJ disjuncts in it.
-  Each disjunct will be at most DSIZE in size.
-  The shape of the distribution is controlled by LINK-EXP D-EXP S-EXP.
-  See `make-section-generator` for details.
+  The function SECT-GEN is called to obtain a section.
 
   Return an association list of pos-tags and the disjuncts in them.
 "
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
-	(define msg (make-section-generator
-		NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP))
 
 	; Convert sections to strings
 	(define (sex)
@@ -252,16 +244,16 @@
 					"("
 					(string-join CONLIST " & ")
 					")"))
-			(msg)))
+			(SECT-GEN)))
 
 	; Populate the pos-tags.
 	(lambda ()
 		(list-tabulate NPOS (lambda (N) (list (list (pos N)) (sex)))))
 )
 
-(define-public (create-class-generator NCLASS NPOS CSIZE EXP)
+(define-public (make-class-generator NCLASS NPOS CSIZE EXP)
 "
-  create-class-generator NCLASS NPOS CSIZE EXP - create dictionary
+  make-class-generator NCLASS NPOS CSIZE EXP - create dictionary
 
   Create NCLASS different word classes.
   Each word class will have at most CSIZE different pos-tags in it.
@@ -286,9 +278,9 @@
 		(list-tabulate NCLASS (lambda (N) (list (list (wcl N)) (pick-pos)))))
 )
 
-(define-public (create-word-generator NCLASS CSIZE EXP)
+(define-public (make-word-generator NCLASS CSIZE EXP)
 "
-  create-word-generator NCLASS CSIZE EXP - create dictionary
+  make-word-generator NCLASS CSIZE EXP - create dictionary
 
   Create NCLASS different word-classes, placing at most CSIZE
   words into each class.

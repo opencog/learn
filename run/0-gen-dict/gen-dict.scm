@@ -82,9 +82,8 @@
 ; -------------------------------------------
 ; Generators for each of the different parts of the grammar.
 
-(define posgen
-	(create-pos-generator
-		num-pos
+(define secgen
+	(make-section-generator
 		num-link-types
 		max-disjunct-size
 		section-size
@@ -92,15 +91,20 @@
 		disjunct-exp
 		section-exp))
 
+(define posgen
+	(make-pos-generator
+		num-pos
+		secgen))
+
 (define classgen
-	(create-class-generator
+	(make-class-generator
 		num-classes
 		num-pos
 		class-size
 		class-exp))
 
 (define wordgen
-	(create-word-generator
+	(make-word-generator
 		num-classes
 		num-synonyms
 		synonym-exp))
