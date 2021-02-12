@@ -183,20 +183,23 @@ A quick overview:
 Architecture Overview
 ---------------------
 All the "heavy lifting" is done in the OpenCog
-[AtomSpace](https://github.com/opencog/atomspace). It can be accessed
-through python, C++, haskel and scheme bindings.  This project glues all
-of the parts together with scheme
+[AtomSpace](https://github.com/opencog/atomspace). The AtomSpace is a
+graph database for working with typed (hyper-)graphs. (Typed hypergraphs
+are ideal for storing very abstract kinds of knowledge.) The AtomSpace
+can be manipulated through Atomese, python, C++, haskel and scheme
+bindings.  This project glues all of the parts together with scheme
 ([guile](https://www.gnu.org/software/guile/)). If you are a python fan,
 sorry! The goal here is rapid prototyping, easy experimentation, rapid
 reconfiguration/redesign. For that, scheme is just simpler, better,
-faster.
+faster. (At least, for me.)
 
 Long-term, the best and finest algorithms will probably be re-written
 in C++ (for speed), and exported with Atomese, python, haskel, scheme,
-etc. bindings. This migration process happens as we gain understanding
-of what the problem is, and what reasonable solutions look like.
+(pick your favorite) bindings. This migration process happens as we gain
+understanding of what the problem is, and what reasonable solutions look
+like.
 
-This is a **science project**. The goal is to determine how things work,
+This is a ***science project***. The goal is to determine how things work,
 run experiments, create and refine new algorithms. Thus, the code in
 this repo is organized like a science lab: stuff laying around in
 a bit of a jumble, sometimes connected and working, and sometimes not.
