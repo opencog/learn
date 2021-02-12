@@ -8,11 +8,41 @@
 ; Number of Link Grammar link types (connector types)
 (define num-link-types 6)
 
-; Maximum size of disjuncts
+; Link-type Zipf distribution exponent. The generated random grammar
+; will use different link types with a Zipfian distribution, with this
+; exponent. Setting this to 1 gives the classic Zipf distribution, with
+; link type "A" being more likely than "B" which is more likely than "C"
+; and so on. Setting this to zero gives a uniform random distribution.
+(define link-type-exp 1)
+
+; Maximum size of disjuncts; that is, the maximum number of connectors
+; in a disjunct. Randomly-created disjuncts will have 1 to this many
+; connectors in them. The size distribution is Zipfian, controlled by
+; the exponent `disjunct-exp`.
 (define max-disjunct-size 3)
 
-; Disjuncts per section
-(define num-disjuncts 20)
+; Disjunct-size Zipf distribution exponent. The generated random
+; disjunct will be of varying length, with the length following a
+; Zipfian distribution. Setting this to 1 gives the classic Zipf
+; distribution, so that most disjuncts will be of size 1, a few will
+; be size 2, fewer still of size 3, etc. Setting this to zero gives
+; a uniform distribution. Setting this negative will make most disjuncts
+; have the `max-disjunct-size`.
+(define disjunct-exp 0.5)
+
+; Disjuncts per section. Each section will contain up to this many
+; different disjuncts. The number of disjuncts per section follows a
+; Zipfian distribution, with an exponent of `section-exp`.
+(define section-size 20)
+
+; Section-size Zipf distribution exponent. The generated random section
+; will have a varying number of disjuncts in it, with the number
+; following a Zipfian distribution. Setting this to 1 gives the classic
+; Zipf distribution, so that most sections will be have only 1 disjunct
+; in them; a few will be size 2, fewer still of size 3, etc. Setting
+; this to zero gives a uniform size distribution. Setting this negative
+; will make most sections have `section-size` disjuncts in them.
+(define section-exp 0.0)
 
 ; Number of pos tags
 (define num-pos 10)
@@ -57,7 +87,10 @@
 		num-pos
 		num-link-types
 		max-disjunct-size
-		num-disjuncts))
+		section-size
+		link-type-exp
+		disjunct-exp
+		section-exp))
 
 (define classgen
 	(create-class-generator

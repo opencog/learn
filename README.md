@@ -194,7 +194,7 @@ reconfiguration/redesign. For that, scheme is just simpler, better,
 faster. (At least, for me.)
 
 Long-term, the best and finest algorithms will probably be re-written
-in C++ (for speed), and exported with Atomese, python, haskel, scheme,
+in C++ (for speed), and exported with Atomese, python, haskel, scheme
 (pick your favorite) bindings. This migration process happens as we gain
 understanding of what the problem is, and what reasonable solutions look
 like.
