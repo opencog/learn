@@ -195,18 +195,27 @@
 )
 
 ; create sections
-(define (make-section-generator NLKTYPES DSIZE NDISJ)
+(define (make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP)
 "
-  make-section-generator NLKTYPES DSIZE NDISJ - Create random sections.
+  make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP
+  Create random sections.
 
-  The length of the disjuncts will be at most DSIZE, and they will
-  employ at most NLKTYPES different link types. Each section will contain
-  at most NDISJ disjuncts.
+  A 'section' is a collection of disjuncts. The number of disjuncts
+  in a section is controlled by NDISJ and S-EXP.  The number of
+  disjuncts in a section will vary from 1 to NDISJ, following a Zipfian
+  distribution with exponent S-EXP. For S-EXP=1, most sections will
+  have only 1 disjunct in them, only a few will have 2 or more. For
+  S-EXP negative, most sections will have NDISJ disjuncts in them.
+
+  The size of a disjunct is controlled by DSIZE and D-EXP.
+
+  The distribution of connector types in a disjunct is controlled by
+  NLKTYPES and LINK-EXP. See `make-disjunct-generator` for details.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
-	(define disgen (make-disjunct-generator NLKTYPES DSIZE 1 1))
-	(define zippy (make-zipf-generator NDISJ))
+	(define disgen (make-disjunct-generator NLKTYPES DSIZE LINK-EXP D-EXP))
+	(define zippy (make-zipf-generator NDISJ S-EXP))
 
 	(lambda ()
 		(list-tabulate (zippy) (lambda (X) (disgen)))
@@ -228,7 +237,7 @@
   Return an association list of pos-tags and the disjuncts in them.
 "
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
-	(define msg (make-section-generator NLKTYPES DSIZE NDISJ))
+	(define msg (make-section-generator NLKTYPES DSIZE NDISJ 1 1 1))
 
 	; Convert sections to strings
 	(define (sex)
