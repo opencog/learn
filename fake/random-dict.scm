@@ -227,21 +227,25 @@
 		(list-tabulate NPOS (lambda (N) (list (list (pos N)) (sex)))))
 )
 
-(define-public (create-class-generator NCLASS NPOS CSIZE)
+(define-public (create-class-generator NCLASS NPOS CSIZE EXP)
 "
   create-class-generator NCLASS NPOS CSIZE - create dictionary
 
   Create NCLASS different word classes.
-  Each word class will have at most CSIZE different pos-tags in it,
-  these will be assigned randomly following a Zipfian distribution.
-  The post-tags will be drawn randomly from a pool of size NPOS.
+  Each word class will have at most CSIZE different pos-tags in it.
+  These will be assigned randomly following a Zipfian distribution.
+  The pos-tags will be drawn randomly from a pool of size NPOS.
+  The slope of the distribution is controlled by EXP, with EXP=1
+  giving the classic Zipf distribution, and EXP=0 giving the uniform
+  distribution. A negative EXP will cause most word-classes to have
+  CSIZE memebrs in them.
 
   Return an association list of class-tags and the pos-tags in them.
 "
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
 	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
 
-	(define zippy (make-zipf-generator CSIZE))
+	(define zippy (make-zipf-generator CSIZE EXP))
 	(define (pick-pos)
 		(list-tabulate (zippy) (lambda (N) (pos (random NPOS)))))
 

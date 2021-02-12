@@ -23,6 +23,16 @@
 ; Number of pos tags per class
 (define class-size 8)
 
+; Exponent of the class-size distribution.
+; Setting this to 1.0 gives the classic Zipf distribution;
+; setting it to 0.0 gives the uniform distribution.
+; Using Zipf means that in most cases, each word class will have only
+; one or two pos-tags in it; setting it to uniform means that larger
+; classes (largr complexity) will be common. Setting the exponent
+; negative will make most classes to be maximal in size, i.e. to have
+; to have `class-size` elements.
+(define class-exp -0.1)
+
 ; Number of synonyms in a word-class
 (define num-synonyms 6)
 
@@ -31,7 +41,9 @@
 ; setting it to 0.0 gives the uniform distribution.
 ; Using Zipf means that in most cases, there will be only one or
 ; two synonyms; setting it to uniform means that large synonym classes
-; will be common.
+; will be common. Setting the exponent negative will make most
+; synonym clases have the max allowed, i.e. to have `num-synonyms`
+; in each one.
 (define synonym-exp 0.5)
 
 ; Output file
@@ -51,7 +63,8 @@
 	(create-class-generator
 		num-classes
 		num-pos
-		class-size))
+		class-size
+		class-exp))
 
 (define wordgen
 	(create-word-generator
