@@ -265,12 +265,14 @@
   Return an association list of word-classes and the words in them.
 "
 	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (wclr N) (wcl (- NCLASS N 1)))
 	(define wlg (make-wordlist-generator CSIZE EXP))
 
 	; Populate the word-classes.
 	(lambda ()
-		(list-tabulate NCLASS
-			(lambda (N) (list (wlg) (list (wcl N))))))
+		(reverse
+			(list-tabulate NCLASS
+				(lambda (N) (list (wlg) (list (wclr N)))))))
 )
 
 ; --------------------------------------------------------
