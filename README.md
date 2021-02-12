@@ -90,7 +90,7 @@ paper. This important step is simply summarized in a later section,
 below.
 
 The key process is a sequence of steps that can be used to extract the
-structure of the "language graph", with each step being noisey and
+structure of the "language graph", with each step being noisy and
 error-prone, but the subsequent step averaging over this structure in
 such a way as to cancel noise, and allow the actual graphical structure
 to emerge. Central to this process is extracting the actual structure of
@@ -99,14 +99,14 @@ done with neural-net techniques or other styles of clustering.
 
 The core insight is that although vector spaces can be layered onto
 language data (thus explaining the success of modern-day neural net
-techniques), ther is also a way of "stitching together" these vector
+techniques), there is also a way of "stitching together" these vector
 spaces in such a way that they extract the underlying graphical
 structure.  The appearance of vector spaces is not an accident: the
 axioms of algebraic linguistics (such as those found in categorial
 grammar, pregroup grammar, link grammar) are similar to the axioms that
 define a vector space. The similarity accounts for why techniques such
 as Word2Vec are successful. The dis-similarity is why these same
-tecniques are incomplete.  The road-block can be overcome by viewing
+techniques are incomplete.  The road-block can be overcome by viewing
 the language graph (and graphs in general) as being constructed out
 of connected parts, with explicitly-named connectors. This
 connector-based approach to the definition of a graph just so happens
@@ -127,7 +127,7 @@ given by EA Nida,
 (1997) *International Journal of Lexicography*, **10**(4): 265–274.
 What Nida is saying can, in fact, be measured, by correlating, for
 example, disjuncts with WordNet word-senses. The correlation is real and
-is measureable (and has been measured). The goal of this project is to
+is measurable (and has been measured). The goal of this project is to
 move beyond this.
 
 Status
@@ -141,10 +141,10 @@ the input grammar.  Doing this will allow the learning algorithm to
 be correctly calibrated for grammars of different sizes and
 complexities, and for corpora of different sizes. We will be able to
 measure how accuracy scales as a function of training time, how well
-different training algorithms perform, how large a corpus is neeed to
+different training algorithms perform, how large a corpus is need to
 get good results, and other related questions.
 
-As of 2021, we are still setting up the infrastruture to do the above.
+As of 2021, we are still setting up the infrastructure to do the above.
 Once this is done (real soon now?) the project can resume training runs.
 Please contact via email or discord opencog chat for details.
 
