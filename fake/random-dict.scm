@@ -10,17 +10,8 @@
 ;
 ; Example Usage:
 ; --------------
-; See documentation below for description of paramaters.
-; (define dictgen (create-dict-generator 10 10 10 3 20))
-; (define dict (dictgen))
-;
-; Print dict to stdout.
-; (print-LG-flat #t dict)
-;
-; Print dict to file.
-; (define port (open-file "/tmp/4.0.dict" "w"))
-; (print-LG-flat port dict)
-; (fsync port) (close port)
+; See `run/0-gen-dict/gen-dict.scm` for example usage.
+; See documentation below for description of parameters.
 ;
 ; Issues:
 ; -------
@@ -28,9 +19,9 @@
 ; That is, it will generate grammars that have disjuncts that may be
 ; impossible to use in a sentence, because there is no way of using
 ; that disjunct during sentence generation.  The sentence generator
-; will need to keep track of unusable disjuncts.
+; will need to keep track of unusable disjuncts and report them.
 ;
-; This file has many TODO's to expand the kinds and varieties
+; This file has some TODO's to expand the kinds and varieties
 ; of grammars that could be produced.
 
 (use-modules (srfi srfi-1))
@@ -100,7 +91,7 @@
   for a uniform distribution.
 
   The current implementation will never re-use a previously-used word.
-  That is, synonyms will never be created.
+  That is, multiple meanings will never be created.
 
   TODO: Create a variant that generates synonyms.
 "
@@ -301,38 +292,6 @@
 		(reverse
 			(list-tabulate NCLASS
 				(lambda (N) (list (wlg) (list (wclr N)))))))
-)
-
-; --------------------------------------------------------
-; Print dictionary.
-
-(define-public (print-LG-flat DEST DICT)
-"
-  print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
-
-  Prints a flat-file style dictionary.
-
-  The DEST must be the destination file-handle, or #t to print to
-  stdout, or #f to print to string.
-
-  The DICT must be a dictionary.
-"
-
-	(define (prt-wordlist WL)
-		(string-join
-			(map (lambda (WORD) (format #f "~A" WORD)) WL)))
-
-	(define (prt-junct CL)
-		(string-join
-			(map (lambda (CON) (format #f "~A" CON)) CL) " or "))
-
-	(for-each
-		(lambda (ENTRY)
-			(format DEST "\n~A: ~A;\n"
-				(prt-wordlist (first ENTRY))
-				(prt-junct (second ENTRY)))
-		)
-		DICT)
 )
 
 ; --------------------------------------------------------

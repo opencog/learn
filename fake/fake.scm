@@ -10,3 +10,4 @@
 (load "fake/zipf.scm")
 (load "fake/zipf-zri.scm")
 (load "fake/random-dict.scm")
+(load "fake/print-dict.scm")
