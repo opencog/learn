@@ -1,17 +1,78 @@
+Learning
+========
+
+The Big Idea - Knowledge
+------------------------
+Here's the big idea: "everything is a graph" -- all knowledge is linked
+information. For example, knowledge-bases describe relations between
+"things" - entities, ideas, concepts.
+
+Graphs are described by local connectivity: what is connected to what,
+nearby. These local connections are given many different names:
+assertions, statements, rules, facts, axioms.
+
+Many local neighborhoods look alike, and connect in similar ways. Such
+similarities also have many different names: an "instance of a class",
+an "example of this type", a "template", a "general rule", an "axiom
+schema".
+
+The way in which regions of graphs look locally similar can be described
+by a "grammar".  The way they connect is a "syntax". Valid graphs have
+shapes that follow from the syntax/grammar. The "meaning" or the
+"semantics" of the graph lies in the connections themselves.
+
+This project takes the above as the structure of "knowledge" and
+"meaning". For now, this is just metaphysics; more concrete details
+are provided below and in related PDF's in github, and on OpenCog wiki
+pages.
+
+The Big Idea - Learning and Understanding
+-----------------------------------------
+If you want to describe something, some idea, some concept, some
+situation or event, you have several choices: draw a picture, make a
+movie, write some text.
+
+If you are writing text, what you are "actually doing" is taking the
+network of interconnected facts/ideas, and serializing them into a
+sequence of words. A sequential, time-like order, one word after
+another.  You "serialize" the "graph of ideas."
+
+When you read, and try to understand and learn, you try to "deserialize"
+the words, and reconstruct the graph-network of ideas in your mind.
+
+The goal of this project is to build a serializer/deserializer pair.
+More narrowly, to convert natural language into a graph of ideas, and
+conversely, to express the knowledge-graph as a sequence of sentences.
+Narrower still, the goal is to extract the grammar and syntax from
+a corpus of natural language text.
+
+This narrow focus is the starting point. Thus, most of what follows will
+talk about grammar. That focus is necessary to make forward progress,
+although the vision above hints at a far more general, far more powerful
+possibility for working with knowledge. This vision should be portable
+to (bio-)chemical structures, the 3D-shapes of physical objects, the
+correlation of images to text, the correlation of movement to text.
+But to keep things focused, for now its just text.
+
+The "graph of knowledge" sketched above is assumed to be a "sparse
+graph", or olde-school "symbolic AI". This is in contrast to neural nets
+and deep learning, where knowledge is encoded in a dense graph, the
+network connectivity graph of weight matrices, vectors and the like.
+The deep learning industry has plenty of folks working on it. The goal
+of this project is to move forward on sparse-graph knowledge
+representation. (Note however: some parts of sparse graphs are densely
+connected, and, for those parts, deep-learning type structures may be
+ideal.  This idea is explored in detail in several PDF's here and
+elsewhere. The heading for that discussion is "matrix factorization",
+or rather, "sparse matrix factorization.")
+
+This is an ongoing project, with continuing if sometimes sporadic activity.
 
 Unsupervised Language Learning
 ==============================
-* Linas Vepstas December 2013
-* Updated May 2017
-* Updated June 2018
-* Updated February 2021
+(See also: [Language learning wiki](http://wiki.opencog.org/w/Language_learning)
+for an alternate overview.)
 
-Ongoing project, continuing activity.  See the
-[language learning wiki](http://wiki.opencog.org/w/Language_learning)
-for an alternate overview.
-
-Project Summary
----------------
 The goal of this project is to create a system that is capable of
 learning the grammar and some of the semantics of natural language.
 The fundamental goal is to do this in an unsupervised fashion, with
