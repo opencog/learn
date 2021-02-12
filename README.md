@@ -188,22 +188,29 @@ through python, C++, haskel and scheme bindings.  This project glues all
 of the parts together with scheme
 ([guile](https://www.gnu.org/software/guile/)). If you are a python fan,
 sorry! The goal here is rapid prototyping, easy experimentation, rapid
-reconfiguration/redesign. For that, scheme is just simpler, better faster.
+reconfiguration/redesign. For that, scheme is just simpler, better,
+faster.
 
 Long-term, the best and finest algorithms will probably be re-written
 in C++ (for speed), and exported with Atomese, python, haskel, scheme,
 etc. bindings. This migration process happens as we gain understanding
 of what the problem is, and what reasonable solutions look like.
 
-However, this is a *science project*. The goal is to determine how
-things work, run experiments, create and refine new algorithms. Thus,
-the code in this repo is a bit of a science lab: stuff laying around in
+This is a **science project**. The goal is to determine how things work,
+run experiments, create and refine new algorithms. Thus, the code in
+this repo is organized like a science lab: stuff laying around in
 a bit of a jumble, sometimes connected and working, and sometimes not.
 Sometimes with instructions and an operating manual, and sometimes not.
 If you're  a scientist, you're used to this. If you're a software
 engineer, you might find all this to just be a vast incomprehensible
 mess of cryptic code. Sorry about that!  This is a permanent
 construction site, evolving and changing regularly.
+
+Yes, the code "works". It works the same way any science experiment
+works: you turn it on, things happen, and its up to you to figure out
+what that means. What to do with the results. If you were expecting
+an intelligent AI that you can crack jokes with, sorry, we don't have
+that here.
 
 That's all for now!
 -------------------
