@@ -91,22 +91,20 @@
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
 
-(define (make-wordlist-generator LEN)
+(define (make-wordlist-generator LEN EXP)
 "
-  make-wordlist-generator LEN -- return a random wordlist.
+  make-wordlist-generator LEN EXP -- return a random wordlist.
 
   Create a list of words of at most length LEN, having a Zipfian
-  distribution.
+  distribution with exponent EXP. Use EXP=1 for Zipf, and EXP=0
+  for a uniform distribution.
 
   The current implementation will never re-use a previously-used word.
   That is, synonyms will never be created.
 
   TODO: Create a variant that generates synonyms.
-
-  TODO: We can make the zipfian distribution more uniform or steeper.
-  This eventually needs to be an adjustable parameter.
 "
-	(define zippy (make-zipf-generator LEN))
+	(define zippy (make-zipf-generator LEN EXP))
 
 	; Return a list of words.
 	; Each list starts with the word after the last word of the
@@ -252,20 +250,22 @@
 		(list-tabulate NCLASS (lambda (N) (list (list (wcl N)) (pick-pos)))))
 )
 
-(define-public (create-word-generator NCLASS CSIZE)
+(define-public (create-word-generator NCLASS CSIZE EXP)
 "
-  create-dict-generator NCLASS CSIZE - create dictionary
+  create-word-generator NCLASS CSIZE EXP - create dictionary
 
   Create NCLASS different word-classes, placing at most CSIZE
   words into each class.
   Each word-class will have a random number of words in it, drawn
   from a Zipfian distribution of size CSIZE. That is, some word
   classes will have a lot of words, and some will have very few.
+  The EXP is the exponent of the Zipfian distribution; set EXP=1
+  for a pure Zipf, and set EXP=0 for a uniform distribution.
 
   Return an association list of word-classes and the words in them.
 "
 	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
-	(define wlg (make-wordlist-generator CSIZE))
+	(define wlg (make-wordlist-generator CSIZE EXP))
 
 	; Populate the word-classes.
 	(lambda ()

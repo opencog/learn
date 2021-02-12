@@ -26,6 +26,14 @@
 ; Number of synonyms in a word-class
 (define num-synonyms 6)
 
+; Exponent of the synonym word-class size distribution.
+; Setting this to 1.0 gives the classic Zipf distribution;
+; setting it to 0.0 gives the uniform distribution.
+; Using Zipf means that in most cases, there will be only one or
+; two synonyms; setting it to uniform means that large synonym classes
+; will be common.
+(define synonym-exp 0.5)
+
 ; Output file
 (define dict-file "/tmp/4.0.dict")
 
@@ -48,7 +56,8 @@
 (define wordgen
 	(create-word-generator
 		num-classes
-		num-synonyms))
+		num-synonyms
+		synonym-exp))
 
 (define port (open-file "/tmp/4.0.dict" "w"))
 

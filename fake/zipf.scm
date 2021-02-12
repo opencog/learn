@@ -3,7 +3,7 @@
 ;
 ; Zipf random distribution in scheme.
 ;
-; This provides guile-specific scaffolding to anable using the
+; This provides guile-specific scaffolding to enable using the
 ; srfi-194 random number generator. This is a hack. This is only
 ; needed because guile does not currently support srfi-194.
 ;
