@@ -134,15 +134,23 @@
 	(string-append (base-26 N #t) DIR)
 )
 
-(define (make-connector-generator N)
+(define (make-connector-generator N EXP)
 "
-  make-connector-generator N - Return a generator for random connectors.
-  The connector will be chosen randomly out of N of them, with Zipf
-  distribution and random 50-50 direction.
+  make-connector-generator N EXP - generator for random connectors.
+
+  Return a generator that returns random connectors. They will be
+  chosen randomly, out of N, following a Zipfian distribution with
+  exponent EXP. For EXP=1, the classic Zipf diistribution is used,
+  which results in the link-type 'A' being more common than 'B' ... etc.
+  For EXP=0, the distribution becomes uniform, and all link types
+  are equally likely.
+
+  The connector direction will be randomly left-right with a 50-50
+  probability.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
-	(define zippy (make-zipf-generator N))
+	(define zippy (make-zipf-generator N EXP))
 
 	(define (dire) (if (< 0 (random 2)) "+" "-"))
 
@@ -159,17 +167,27 @@
 ;
 ; TODO: use bi-directional directions, for order-independent languages.
 
-(define (make-disjunct-generator NCON DSIZE)
+(define (make-disjunct-generator NLINK DSIZE LINK-EXP SIZE-EXP)
 "
-  make-disjunct-generator NCON DSIZE - Create random disjuncts.
+  make-disjunct-generator NLINK DSIZE LINK-EXP SIZE-EXP - Random disjuncts.
 
-  The length of the disjuncts will be at most DSIZE, and they will
-  employ at most NCON different link types.
+  Return a generator for random disjuncts. Each disjunct is a
+  sequence of randomly chosen connectors. Connectors are chosen
+  out of a pool of NLINK different link types. The LINK-EXP is the
+  Zipf exponent for chosing link types; a value of 0 gives a uniform
+  distribution, a value of 1 makes the first link types more likely.
+
+  The length of the sequence of connectors will be chosen randomly,
+  but will never exceed DSIZE. The length of the sequence is given
+  by the Zipfian distribution with exponent SIZE-EXP. Setting
+  SIZE-EXP=1 gives the classic Zipf distribution, and most disjuncts
+  will be length 1 or 2. Setting SIZE-EXP to a negative value will
+  cause most disjuncts to be of length DSIZE.
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
-	(define congen (make-connector-generator NCON))
-	(define zippy (make-zipf-generator DSIZE))
+	(define congen (make-connector-generator NLINK LINK-EXP))
+	(define zippy (make-zipf-generator DSIZE SIZE-EXP))
 
 	(lambda ()
 		(list-tabulate (zippy) (lambda (X) (congen)))
@@ -187,7 +205,7 @@
 
   Uses 26 upper-case ascii chars only, starting at \"A\".
 "
-	(define disgen (make-disjunct-generator NLKTYPES DSIZE))
+	(define disgen (make-disjunct-generator NLKTYPES DSIZE 1 1))
 	(define zippy (make-zipf-generator NDISJ))
 
 	(lambda ()
@@ -229,7 +247,7 @@
 
 (define-public (create-class-generator NCLASS NPOS CSIZE EXP)
 "
-  create-class-generator NCLASS NPOS CSIZE - create dictionary
+  create-class-generator NCLASS NPOS CSIZE EXP - create dictionary
 
   Create NCLASS different word classes.
   Each word class will have at most CSIZE different pos-tags in it.
