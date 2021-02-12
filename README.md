@@ -30,7 +30,7 @@ The Big Idea - Learning and Understanding
 -----------------------------------------
 If you want to describe something, some idea, some concept, some
 situation or event, you have several choices: draw a picture, make a
-movie, write some text.
+movie, write some text, dance about it, build a machine.
 
 If you are writing text, what you are "actually doing" is taking the
 network of interconnected facts/ideas, and serializing them into a
@@ -172,14 +172,38 @@ Directories
 -----------
 A quick overview:
 
-* download - code for downloading sample corpora off the intertubes.
-* fake - code for generating artificial grammars.
-* learn-lang-diary - diary and notes and papers describing results and
-  theory.
-* run - scripts for running the learning pipeline.
-* scm - the code that actually does all the work.
-* tests - unit tests. Currently unmaintained and broken.
+* [download](download) - code for downloading sample corpora off the intertubes.
+* [fake](fake) - code for generating artificial grammars.
+* [learn-lang-diary](learn-lang-diary) - diary and notes and papers
+  describing results and theory.
+* [run](run) - scripts for running the learning pipeline.
+* [scm](scm) - the code that actually does all the work.
+* [tests](tests) - unit tests. Currently unmaintained and broken.
 
+Architecture Overview
+---------------------
+All the "heavy lifting" is done in the OpenCog
+[AtomSpace](https://github.com/opencog/atomspace). It can be accessed
+through python, C++, haskel and scheme bindings.  This project glues all
+of the parts together with scheme
+([guile](https://www.gnu.org/software/guile/)). If you are a python fan,
+sorry! The goal here is rapid prototyping, easy experimentation, rapid
+reconfiguration/redesign. For that, scheme is just simpler, better faster.
+
+Long-term, the best and finest algorithms will probably be re-written
+in C++ (for speed), and exported with Atomese, python, haskel, scheme,
+etc. bindings. This migration process happens as we gain understanding
+of what the problem is, and what reasonable solutions look like.
+
+However, this is a *science project*. The goal is to determine how
+things work, run experiments, create and refine new algorithms. Thus,
+the code in this repo is a bit of a science lab: stuff laying around in
+a bit of a jumble, sometimes connected and working, and sometimes not.
+Sometimes with instructions and an operating manual, and sometimes not.
+If you're  a scientist, you're used to this. If you're a software
+engineer, you might find all this to just be a vast incomprehensible
+mess of cryptic code. Sorry about that!  This is a permanent
+construction site, evolving and changing regularly.
 
 That's all for now!
 -------------------
