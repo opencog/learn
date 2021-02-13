@@ -3,7 +3,7 @@ Parse management scripts
 ========================
 
 The scripts here are used to automate the operation of the
-language-learning pipeline. Currently, it consists of four steps:
+language-learning pipeline. Currently, it consists of five or six steps:
 
 * Artificial grammar generation. Automation scripts can be found in the
   [0-gen-dict](0-gen-dict) directory. This is required for calibration
@@ -24,6 +24,10 @@ language-learning pipeline. Currently, it consists of four steps:
 * Grammatical class learning. Automation scripts can be found in the
   [3-gram-class](3-gram-class) directory. The previous step must
   have been completed, before starting this.
+
+* Comparison of the learned grammar to the input grammar in step 0.
+  TBD.
+
 
 File overview
 -------------
@@ -52,6 +56,7 @@ directory.  A quick overview:
 
 * `halt-all.sh`: Stop all running LXC containers.
 
+* [attic](attic) -- obsolete code that might still be useful.
 
 Sentence Splitting
 ------------------
