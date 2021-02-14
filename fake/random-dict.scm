@@ -68,37 +68,6 @@
 )
 
 ; --------------------------------------------------------
-; create word-classes -- assign words to classes with zipf distribution.
-; i.e.  word-class contains zipf words in it.
-
-(define (make-wordlist-generator LEN EXP)
-"
-  make-wordlist-generator LEN EXP -- return a random wordlist.
-
-  Create a list of words of at most length LEN, having a Zipfian
-  distribution with exponent EXP. Use EXP=1 for Zipf, and EXP=0
-  for a uniform distribution.
-
-  The current implementation will never re-use a previously-used word.
-  That is, multiple meanings will never be created.
-
-  TODO: Create a variant that generates synonyms.
-"
-	(define zippy (make-zipf-generator LEN EXP))
-
-	; Return a list of words.
-	; Each list starts with the word after the last word of the
-	; previous list.
-	(define next-word 1)
-	(lambda ()
-		(define nwords (zippy))
-		(define wrds
-			(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
-		(set! next-word (+ next-word nwords))
-		wrds)
-)
-
-; --------------------------------------------------------
 ; create connectors
 
 (define (make-connector N DIR)
@@ -207,7 +176,7 @@
 
 (define-public (make-pos-generator NPOS SECT-GEN)
 "
-  create-pos-generator NPOS SECT-GEN - Create dictionary
+  make-pos-generator NPOS SECT-GEN - Make lists of disjuncts
 
   Create NPOS different disjunct-collections (sections).
   The function SECT-GEN is called to obtain a section.
@@ -233,7 +202,7 @@
 
 (define-public (make-class-generator NCLASS NPOS CSIZE EXP)
 "
-  make-class-generator NCLASS NPOS CSIZE EXP - create dictionary
+  make-class-generator NCLASS NPOS CSIZE EXP - collections of POS tags
 
   Create NCLASS different word classes.
   Each word class will have at most CSIZE different pos-tags in it.
@@ -256,6 +225,37 @@
 	; Populate the word-classes.
 	(lambda ()
 		(list-tabulate NCLASS (lambda (N) (list (list (wcl N)) (pick-pos)))))
+)
+
+; --------------------------------------------------------
+; create word-classes -- assign words to classes with zipf distribution.
+; i.e.  word-class contains zipf words in it.
+
+(define (make-wordlist-generator LEN EXP)
+"
+  make-wordlist-generator LEN EXP -- return a random wordlist.
+
+  Create a list of words of at most length LEN, having a Zipfian
+  distribution with exponent EXP. Use EXP=1 for Zipf, and EXP=0
+  for a uniform distribution.
+
+  The current implementation will never re-use a previously-used word.
+  That is, multiple meanings will never be created.
+
+  TODO: Create a variant that generates synonyms.
+"
+	(define zippy (make-zipf-generator LEN EXP))
+
+	; Return a list of words.
+	; Each list starts with the word after the last word of the
+	; previous list.
+	(define next-word 1)
+	(lambda ()
+		(define nwords (zippy))
+		(define wrds
+			(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
+		(set! next-word (+ next-word nwords))
+		wrds)
 )
 
 (define-public (make-word-generator NCLASS CSIZE EXP)
