@@ -241,8 +241,6 @@
 
   The current implementation will never re-use a previously-used word.
   That is, multiple meanings will never be created.
-
-  TODO: Create a variant that generates synonyms.
 "
 	(define zippy (make-zipf-generator LEN EXP))
 
@@ -252,10 +250,9 @@
 	(define next-word 1)
 	(lambda ()
 		(define nwords (zippy))
-		(define wrds
-			(list-tabulate nwords (lambda (N) (make-word (+ N next-word)))))
+		(define nstart next-word)
 		(set! next-word (+ next-word nwords))
-		wrds)
+		(list-tabulate nwords (lambda (N) (make-word (+ N nstart)))))
 )
 
 (define-public (make-word-generator NCLASS CSIZE EXP)
