@@ -83,11 +83,14 @@ An early draft of how this can be done is presented in the paper
 [ArXiv abs/1401.3372](https://arxiv.org/abs/1401.3372). Some of this
 is repeated on the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning).
-A very important update, describing how to move past state-of-the-art
-results, is presented in the
+Updates, describing how to move past state-of-the-art results, are
+presented in the
 "[Sheaf Theory](https://github.com/opencog/atomspace/blob/master/opencog/sheaf/docs/sheaves.pdf)"
-paper. This important step is simply summarized in a later section,
-below.
+paper and in the
+"[Neural-Net vs. Symbolic Machine Learning](learn-lang-diary/skippy.pdf)"
+paper. Other ideas and details are sketched in
+"[Stitching Together Vector Spaces](learn-lang-diary/stitching.pdf)" and
+"[Messaging](learn-lang-diary/messaging.pdf)".
 
 The key process is a sequence of steps that can be used to extract the
 structure of the "language graph", with each step being noisy and
