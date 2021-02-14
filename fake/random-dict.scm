@@ -67,17 +67,6 @@
 	(base-26 N #f)
 )
 
-(define (create-vocab VSIZE)
-"
-  create-vocab VSIZE - Create a list containing VSIZE words.
-"
-	; Number of letters in a word, assuming ASCII 26 letters.
-	; (define word-length
-	;	(inexact->exact (ceiling (/ (log VSIZE) (log 26)))))
-
-	(list-tabulate VSIZE (lambda (N) (make-word (+ N 1))))
-)
-
 ; --------------------------------------------------------
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
