@@ -231,6 +231,10 @@
 ; create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
 
+; Used for counting the number of words issued.
+; The final value of this will be the vocabulary size.
+(define next-word 1)
+
 (define (make-wordlist-generator LEN EXP)
 "
   make-wordlist-generator LEN EXP -- return a random wordlist.
@@ -247,7 +251,6 @@
 	; Return a list of words.
 	; Each list starts with the word after the last word of the
 	; previous list.
-	(define next-word 1)
 	(lambda ()
 		(define nwords (zippy))
 		(define nstart next-word)
@@ -257,7 +260,7 @@
 
 (define-public (make-word-generator NCLASS CSIZE EXP)
 "
-  make-word-generator NCLASS CSIZE EXP - create dictionary
+  make-word-generator NCLASS CSIZE EXP - create word-clases
 
   Create NCLASS different word-classes, placing at most CSIZE
   words into each class.
@@ -278,6 +281,35 @@
 		(reverse
 			(list-tabulate NCLASS
 				(lambda (N) (list (wlg) (list (wclr N)))))))
+)
+
+(define-public (make-sense-generator NVOCAB NCLASS NSENSES EXP)
+"
+  make-sense-generator NVOCAB NCLASS NSENSES EXP - create word senses
+
+  Place each word in NVOCAB into multiple classes picked randomly from
+  NCLASS (with a uniform distribution). Each word will belong to at
+  most NSENSES different classes.  The number of senses will be chosen
+  randomly, with a Zipfian distribution with exponent EXP.  That is,
+  some words will have many senses, and some will have very few.
+  The EXP is the exponent of the Zipfian distribution; set EXP=1
+  for a pure Zipf, and set EXP=0 for a uniform distribution.
+
+  A word with multiple word-senses is just a word that has has multiple
+  distinct grammatical behaviors; that it, it belongs to multiple
+  different word-classes.
+
+  Return an association list of words and the classes they below to.
+"
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+	(define zippy (make-zipf-generator NSENSES EXP))
+	(define (pick-cls)
+		(list-tabulate (zippy) (lambda (N) (wcl (random NCLASS)))))
+
+	; Populate the word-classes.
+	(lambda ()
+		(list-tabulate NVOCAB
+			(lambda (N) (list (make-word (+ N 1)) (pick-cls)))))
 )
 
 ; --------------------------------------------------------
