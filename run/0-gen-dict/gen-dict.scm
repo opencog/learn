@@ -76,6 +76,17 @@
 ; in each one.
 (define synonym-exp 0.5)
 
+; Fraction of words that may have multiple word-senses.
+; Must be floating point between zero and one.
+(define sense-frac 0.3)
+
+; Maximum number of distinct word-senses each word may have.
+; The actual number of word senses generated will follow a Zipfian
+; distribution, with exponent `sense-exp`.
+(define num-senses 3)
+(define sense-exp 0.5)
+
+
 ; Output file
 (define dict-file "/tmp/4.0.dict")
 
@@ -109,10 +120,18 @@
 		num-synonyms
 		synonym-exp))
 
+(define sensegen
+	(make-sense-generator
+		sense-frac
+		num-classes
+		num-senses
+		sense-exp))
+
 (define port (open-file "/tmp/4.0.dict" "w"))
 
 (print-LG-flat port (posgen))
 (print-LG-flat port (classgen))
 (print-LG-flat port (wordgen))
+(print-LG-flat port (sensegen))
 
 (close port)

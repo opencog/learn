@@ -60,6 +60,11 @@ The language-learning code attempts to untangle synonyms, multiple
 word senses, and "parts of speech". The goal of the artificial
 grammars is to mash these up, so that the learner can untangle them.
 
+The definitions below for "word senses", and so on, are a bit
+idiosyncratic, and are tailored to the idea of a random dictionary.
+They're attempting to model the conventional ideas of the same name,
+but may feel a bit odd. So take these with a pinch of salt.
+
 ### POS
 Roughly speaking, "parts of speech", for lack of a better name.
 These are a collection of disjuncts, for example:

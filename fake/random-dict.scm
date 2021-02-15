@@ -233,7 +233,9 @@
 
 ; Used for counting the number of words issued.
 ; The final value of this will be the vocabulary size.
+; This is a global, specific to this module.
 (define next-word 1)
+(define (get-vocab-size) next-word)
 
 (define (make-wordlist-generator LEN EXP)
 "
@@ -283,17 +285,18 @@
 				(lambda (N) (list (wlg) (list (wclr N)))))))
 )
 
-(define-public (make-sense-generator NVOCAB NCLASS NSENSES EXP)
+(define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)
 "
-  make-sense-generator NVOCAB NCLASS NSENSES EXP - create word senses
+  make-sense-generator VFRAC NCLASS NSENSES EXP - create word senses
 
-  Place each word in NVOCAB into multiple classes picked randomly from
-  NCLASS (with a uniform distribution). Each word will belong to at
-  most NSENSES different classes.  The number of senses will be chosen
-  randomly, with a Zipfian distribution with exponent EXP.  That is,
-  some words will have many senses, and some will have very few.
-  The EXP is the exponent of the Zipfian distribution; set EXP=1
-  for a pure Zipf, and set EXP=0 for a uniform distribution.
+  Place a fraction VFRAC of the total number of vocabulary words into
+  multiple classes picked randomly from NCLASS (with a uniform
+  distribution). Each word will belong to at most NSENSES different
+  classes.  The number of senses will be chosen randomly, with a
+  Zipfian distribution with exponent EXP.  That is, some words will
+  have many senses, and some will have very few.  The EXP is the
+  exponent of the Zipfian distribution; set EXP=1 for a pure Zipf,
+  and set EXP=0 for a uniform distribution.
 
   A word with multiple word-senses is just a word that has has multiple
   distinct grammatical behaviors; that it, it belongs to multiple
@@ -308,8 +311,9 @@
 
 	; Populate the word-classes.
 	(lambda ()
+		(define NVOCAB (inexact->exact (floor (* VFRAC next-word))))
 		(list-tabulate NVOCAB
-			(lambda (N) (list (make-word (+ N 1)) (pick-cls)))))
+			(lambda (N) (list (list (make-word (+ N 1))) (pick-cls)))))
 )
 
 ; --------------------------------------------------------
