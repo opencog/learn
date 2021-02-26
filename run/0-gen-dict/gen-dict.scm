@@ -80,6 +80,11 @@
 ; Must be floating point between zero and one.
 (define sense-frac 0.3)
 
+; XXX FIXME: The LG dictionary complains about multiply defined words.
+; We should modify LG to either allow this, or we should change the
+; code here to not do this.
+(define sense-frac 0.0)
+
 ; Maximum number of distinct word-senses each word may have.
 ; The actual number of word senses generated will follow a Zipfian
 ; distribution, with exponent `sense-exp`.

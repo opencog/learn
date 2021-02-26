@@ -80,7 +80,7 @@ $ mv /tmp/4.0.dict /tmp/fake-lang
    sentences will be made.
 
 ```
-$ link-generator -l /tmp/fake-lang -l 6 -s 50000
+$ link-generator -l /tmp/fake-lang -s 6 -c 50000
 ```
 
 3. Run the processing pipeline described in 
