@@ -61,9 +61,7 @@ sudo make install
    See `0-gen-dict/gen-dict.scm` for an example usage.
    Sample usage:
 ```
-$ guile
-> (load "0-gen-dict/gen-dict.scm")
-> ,q
+$ guile -l 0-gen-dict/gen-dict.scm
 ```
 
 3. Copy the dictionary into place:
@@ -80,13 +78,15 @@ $ mv /tmp/4.0.dict /tmp/fake-lang
    sentences will be made.
 
 ```
-$ link-generator -l /tmp/fake-lang -s 6 -c 50000
+$ link-generator -l /tmp/fake-lang -s 6 -c 50000 > /tmp/corpus.txt
 ```
 
-3. Run the processing pipeline described in 
+5. Alternately, use `gen-corpus.sh` to perform steps 2,3,4 above.
+
+6. Run the processing pipeline described in
 [README-Natural](README-Natural.md)
 
-4. Measure accuracy.
+7. Measure accuracy.
 
 So far, none of this has been automated. Contact us (me) for details.
 

@@ -1,3 +1,5 @@
+#! /usr/bin/env guile
+!#
 ;
 ; gen-dict.scm - Generate a random artificial grammar
 ;
@@ -159,4 +161,6 @@
 (print-LG-flat port (wordgen))
 (print-LG-flat port (sensegen))
 
+(format port "<UNKNOWN-WORD>:  XXXXXX+;\n")
 (close port)
+(exit)
