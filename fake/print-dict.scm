@@ -27,7 +27,9 @@
 "
   print-LG-flat DEST DICT - print a Link-Grammar style dictionary.
 
-  Prints a flat-file style dictionary. That is a "4.0.dict" style file.
+  Prints a flat-file style dictionary. That is a \"4.0.dict\" style
+  file. This does NOT print the file boilerplate, it only prints
+  the raw dictionary contents.
 
   The DEST must be the destination file-handle, or #t to print to
   stdout, or #f to print to string.

@@ -50,7 +50,13 @@ mkdir build; cd build; ../configure; make
 sudo make install
 ```
 
-1. Go to the [fake](fake) directory, and review the `random-dict.scm`
+1. Build and install this project:
+```
+mkdir build; cd build; cmake ..; make
+sudo make install
+```
+
+2. Go to the [fake](fake) directory, and review the `random-dict.scm`
    file, which describes how to create a create a Link Grammar Dictionary.
    See `0-gen-dict/gen-dict.scm` for an example usage.
    Sample usage:
@@ -60,7 +66,13 @@ $ guile
 > ,q
 ```
 
-2. Generate a corpus, as shown below. This assumes the created language
+3. Copy the dictionary into place:
+```
+$ cp -r /where/ever/link-grammar/data/gen /tmp/fake-lang
+$ mv /tmp/4.0.dict /tmp/fake-lang
+```
+
+4. Generate a corpus, as shown below. This assumes the created language
    is called `fake-lang`. The below will generate 50000 random sentences
    that are 6 words long.  If the grammar does not allow this many
    sentences to be generated, fewer will be created. If the grammar
@@ -68,9 +80,7 @@ $ guile
    sentences will be made.
 
 ```
-$ cp -r /where/ever/link-grammar/data/gen /tmp/fake-lang
-
-$ link-generate -l fake-lang -l 6 -s 50000
+$ link-generator -l /tmp/fake-lang -l 6 -s 50000
 ```
 
 3. Run the processing pipeline described in 

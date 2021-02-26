@@ -127,7 +127,7 @@
 		num-senses
 		sense-exp))
 
-(define port (open-file "/tmp/4.0.dict" "w"))
+(define port (open-file dict-file "w"))
 
 (format port "%\n% Randomly generated dictionary\n%\n")
 (format port "% Version: 0.1\n")
