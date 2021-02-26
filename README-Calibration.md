@@ -5,7 +5,8 @@ Calibrating Unsupervised Language Learning
 
 Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
-for an alternate overview.
+for an alternate overview. See the diary at
+`learn-lang-diary/learn-lang-diary-part-two.lyx` for a progress log.
 
 Project Summary
 ---------------
@@ -39,10 +40,38 @@ the the learned grammar to the generating grammar.
 
 This pipeline is in the process of being set up. So far:
 
-1. Go to the [fake](fake) directory, load the `random-dict.scm` file,
-and run it to create a Link Grammar Dictionary.
+0. Build the corpus generation tools, as follows:
+```
+git clone https://github.com/linas/link-grammar
+cd link-grammar
+git checkout generate
+./autogen.sh --no-configure
+mkdir build; cd build; ../configure; make
+sudo make install
+```
 
-2. Copy the above and use Amir's tools to generate a corpus.
+1. Go to the [fake](fake) directory, and review the `random-dict.scm`
+   file, which describes how to create a create a Link Grammar Dictionary.
+   See `0-gen-dict/gen-dict.scm` for an example usage.
+   Sample usage:
+```
+$ guile
+> (load "0-gen-dict/gen-dict.scm")
+> ,q
+```
+
+2. Generate a corpus, as shown below. This assumes the created language
+   is called `fake-lang`. The below will generate 50000 random sentences
+   that are 6 words long.  If the grammar does not allow this many
+   sentences to be generated, fewer will be created. If the grammar
+   allows more than 50000 sentences, then a random sampling of 50000
+   sentences will be made.
+
+```
+$ cp -r /where/ever/link-grammar/data/gen /tmp/fake-lang
+
+$ link-generate -l fake-lang -l 6 -s 50000
+```
 
 3. Run the processing pipeline described in 
 [README-Natural](README-Natural.md)
