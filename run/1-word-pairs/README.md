@@ -6,7 +6,9 @@ The scripts here are used to automate the ingestion of plain-text
 UTF-8 files into the first stage of the language learning pipeline.
 These can be applied to any flat text files from any origin of your
 choice.  Some tools for downloading Wikipedia and Project Gutenberg
-texts can be found in the `../../download` directory.
+texts can be found in the `../../download` directory.  Tools for
+generating artificial langauges are in the
+[`../0-gen-dict`](../0-gen-dict) directory.
 
 You will typically want to make copies of these scripts, and tailor
 them to your specific needs and procedures. In particular, many of
@@ -14,6 +16,11 @@ these files require database credentials to be set; the exact
 credentials to use will depend on which copy of which database you
 are using.  You WILL be copying around a lot of databases!
 
+Detailed istructions on what to do can be found in
+[`../../README-Natural.md`](../../README-Natural.md)
+
+File overview
+-------------
 A quick overview:
 
 * `run-shells.sh`: multi-tasking terminal server.  Opens multiple

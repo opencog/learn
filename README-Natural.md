@@ -178,20 +178,30 @@ unhappy, painful experience.
 
 * **0.2)** Optional, but strongly recommended!  Consider investing in
            a pair of solid-state disk drives (SSD), configured as a
-           RAID-1 (mirroring) array, to hold the Postgres database.
+           RAID-1 (mirroring) array, to hold the database.
            Accumulating observation statistics, as well as other data
            processing operations, is database intensive, and the writes
-           to disk are often the main bottleneck to performance. In
-           practice, 1TB (one terabyte) devoted to just the Postgres
-           server is just barely enough to perform the work described
-           here. Database copies quickly chew up disk space.
+           to disk are often the main bottleneck to performance.
+
+           When running English-language learning, 1TB (one terabyte)
+           devoted to just the databases is just barely enough to
+           perform the work described here. Database copies quickly
+           chew up disk space.
+
            Individual databases are typically in the 10GB to 150GB in
            size, and not very many copies of a 150GB database will fit
            onto a 1TB disk.  2TB is a more comfortable size to work with.
 
+           Databases for the artifical-language pipeline might be
+           smaller, so this is perhaps less of a concern.
+
 * **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
-           64GB RAM.  It will be less agonizing and infuriating if you
-           have 128 GB RAM or more.  The datasets do get large, and
+           64GB RAM.  For English-language learning, it will be less
+           agonizing and infuriating if you have 128 GB RAM or more.
+           Smaller RAM sizes are enough for artificial-language
+           learning experiments.
+
+           For English-langauge work, the datasets do get large, and
            although many of the scripts are designed to only fetch from
            disk "on demand", the in-RAM sizes can get large. As I write
            this, my grammatical-clustering process is using 53GB
@@ -200,11 +210,8 @@ unhappy, painful experience.
            reasonable -- and so 53+24=78GB is the current bare-minimum.
            More, if you want to e.g. run a web-browser or something.
 
-   An alternative is to run Postgres on one box, and the
-           processing on another. This is a bit more complicated to
-           deal with -- you will want to have a high-speed Ethernet
-           between the two.  Two machines are harder to sysadmin and
-           monitor than one.
+           At this time, RocksDB is recommended over Posgres for the
+           database backend.
 
 * **0.4)** Optional but recommended. If you plan to run the pipeline
            on multiple different languages, it can be convenient, for
@@ -238,6 +245,8 @@ unhappy, painful experience.
 
 * **0.6)** Mandatory.  You'll work with large datasets; default guile
            is not equipped to deal wit the sizes encountered here.
+           (Maybe? This might be fixed in the newest guile ???)
+
            Skipping this step will lead to the error
            `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
            So:
@@ -250,23 +259,17 @@ unhappy, painful experience.
       make; sudo make install
 ```
 
-* **0.7)** The AtomSpace MUST be built with guile version 2.2.2.1 or
-           newer, which can be obtained from the Guile ftp repo
-           https://ftp.gnu.org/gnu/guile/ or `git`, by doing
+* **0.7)** Guile version 3.0 or newer is required. Most recent distros
+           include this version. Otherwise,
+           guile must be built from source, which can be obtained from
+           the Guile ftp repo https://ftp.gnu.org/gnu/guile/ or
+           with `git`, by doing
 ```
       git clone git://git.sv.gnu.org/guile.git
 ```
-   The above will provide guile-2.9.2 which seems to run
-            quite well. The `stable-2.2` branch, which provides
-            guile-2.2.4 will also work, but version 2.9.2 is faster.
 
-   Earlier versions are not usable. Version 2.0.11
-            will quickly crash with the error message:
-            `guile: hashtab.c:137: vacuum_weak_hash_table: Assertion 'removed <= len' failed.`
-
-   Also par-for-each hangs:
+   Note `par-for-each` hangs:
             https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
-            (in guile-2.2, it doesn't hang, but still behaves very badly).
 
 * **0.8)** Create/edit the `~/.guile` file and add the content below.
            This makes the arrow keys work, and prints nicer stack traces.
@@ -278,7 +281,16 @@ unhappy, painful experience.
       (add-to-load-path ".")
 ```
 
-* **0.9)** Opencog should be built with `link-grammar-5.6.1` or newer.
+* **0.9)** Install assorted build tools. At this time, the following
+           are recommended:
+```
+      sudo apt install git cmake g++
+      sudo apt install libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev
+      sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
+      sudo apt install autoconf-archive flex
+```
+
+* **0.10)** Link-grammar version 5.6.1 or newer is required.
            The currently installed version can be displayed by running
 ```
       link-parser --version
@@ -289,6 +301,27 @@ unhappy, painful experience.
    The main link-grammar project page is here:
            https://www.abisource.com/projects/link-grammar/
 
+   Install as:
+```
+      tar -zxf link-grammar-5.x.x.tar.gz
+      cd link-grammar-5.x.x
+      mkdir build; cd build
+      ../configure
+      make -j
+      sudo make install
+```
+
+* **0.11)** The following AtomSpace and OpenCog components are needed:
+            `cogutils`, `atomspace`, `atomspace-rocks`, `cogserver`,
+            `opencog`. Each of these follows this generic pattern:
+```
+      git clone https://github.com/opencog/cogutils
+      cd cogutils; mkdir build; cd build
+      cmake ..
+      make -j
+      sudo make install
+```
+     Repeat the above for each of the other github repos.
 
 Setting up the AtomSpace
 ------------------------
