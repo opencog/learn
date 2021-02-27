@@ -287,7 +287,7 @@ unhappy, painful experience.
       sudo apt install git cmake g++
       sudo apt install libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev
       sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
-      sudo apt install autoconf-archive flex
+      sudo apt install autoconf-archive flex byobu rlwrap telnet
 ```
 
 * **0.10)** Link-grammar version 5.6.1 or newer is required.

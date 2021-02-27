@@ -6,9 +6,20 @@
 # Sentence-split one file, submit it, via perl script, to the cogserver.
 # When done, move the file over to the `submitted-pages` directory.
 #
+# This script is handles the case for text files that are organized into
+# conventional paragraphs, with multiple sentences per paragraph. Such
+# paragraphs have to be split into distinct sentences before further
+# processing. If the text file already has one sentence per line, then
+# sentence-splitting is not needed, and `pair-nosplit-one.sh` can be used.
+#
 # Example usage:
 #    ./pair-one.sh en Barbara localhost 17001
 #
+
+# Some versions of netcat require the -N flag, and some versions
+# of netcat do not know about the -N flag. This is mega-annoying.
+# Hack this to match your netcat.
+netcat="nc -N"
 
 # Set up assorted constants needed to run.
 lang=$1
@@ -26,7 +37,7 @@ subdir=submitted-articles
 observe="observe-text"
 
 # Punt if the cogserver has crashed.  Use netcat to ping it.
-haveping=`echo foo | nc -N $coghost $cogport`
+haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
@@ -49,7 +60,7 @@ cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)
-haveping=`echo foo | nc -N $coghost $cogport`
+haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
 	exit 1
 fi

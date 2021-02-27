@@ -19,11 +19,11 @@ fi
 # Use byobu so that the scroll bars actually work
 byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
-byobu new-window -n 'cogsrv' 'nice guile -l pair-count-en.scm; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l pair-count-fake.scm; $SHELL'
 sleep 2;
 
 # Telnet window
-tmux new-window -n 'telnet' 'rlwrap telnet localhost 17005; $SHELL'
+tmux new-window -n 'telnet' 'rlwrap telnet localhost 17008; $SHELL'
 
 # Parse
 tmux new-window -n 'submit' \
