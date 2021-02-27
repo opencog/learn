@@ -1,0 +1,139 @@
+
+2 June 2018
+-----------
+
+"second order proximity" from LINE paper
+===================
+(define pcos (add-pair-cosine-compute psa))
+
+trim-and-rank
+loop-over-words
+
+      (loop-over-words psa 0.3
+         (cog-get-atoms 'WordNode)
+         (cog-get-atoms 'WordClassNode))
+
+(define ranked-words
+(trim-and-rank psa (cog-get-atoms 'WordNode) 20)
+
+(for-each (lambda (w) (display w) (nobs w)) (cog-get-atoms 'WordNode))
+
+(WordNode "slow-cooked")
+add-support-api 'right-count fails
+
+(length (filter (lambda (WRD) (not (null? (cog-keys 
+   (List WRD (AnyNode "cset-disjunct"))
+	)))) (cog-get-atoms 'WordNode)))
+
+ Should use left-stars not 
+
+(psa 'left-basis)
+
+WTF --- (length (psa 'left-basis)) == 623548
+which is much bigger than matrix dim 444903 wtf?
+
+(catch 'wrong-type-arg
+	(lambda () ...
+	(lambda (key . args) 0)))
+
+(define OK (filter (lambda (WRD) (<= 1 (nobs WRD))) (cog-get-atoms 'WordNode)))
+(length OK) is 498239
+
+(start-time (get-internal-real-time))
+ (define elapsed-time (* 1.0e-9 (- now start-time)))
+
+
+assign-to-classes paral
+
+assign-word-to-class paralll
+
+Cosine=0.6862397194384998 for word "?" -- "!"
+------------------------------ Bingo!
+Cosine=0.5531525850466233 for class "? !" -- "!"
+
+which looks odd ...
+
+Likewise: 
+Cosine=0.7398859541229513 for word "would" -- "will"
+------------------------------ Bingo!
+Cosine=0.6030429912609625 for class "would will" -- "will"
+
+18:24
+
+23:58:10  again
+00:00:00 start wilds
+00:05:00 start
+-- with 2 threads, took 0:30 to do exactly 12 of them
+-- with 1 thread, took 1986 = 0:33 to do 12...
+
+-- alt: 1-thread: 01:19:30 - 12:56:12 = 23:18 for first 20
+-- again 1 thread:
+     01:47:45 - 01:28:21 = 19:24 for first 20
+     01:54:54 - 01:47:45 = 7:09 next 19
+     02:01:39 - 01:54:54 = 6:45 next 18
+     02:08:34 - 02:01:39 = 6:55 next 17
+     02:14:52 - 02:08:34 = 6:18 next 16
+     02:20:58 - 02:14:52 = 6:06 next 15
+     02:26:45 - 02:20:58 = 5:47 next 14
+     02:31:56 - 02:26:45 = 5:11 next 13
+
+
+alt: 2-threads: 
+     03:01:35 - 02:43:20 = 18:15 first 20
+     03:07:57 - 03:01:35 =  6:22 next 19
+     03:13:39 - 03:07:57 =  5:42 next 18
+     03:19:26 - 03:13:39 =  5:50 next 17
+     03:24:45 - 03:19:26 =  5:19 next 16
+     03:29:51 - 03:24:45 =  5:06 next 15
+     03:34:48 - 03:29:51 =  4:47 next 14
+     03:39:06 - 03:34:48 =  4:18 next 13
+
+                         alt-2thr       alt-1thr
+       "of in" -- "-" in 612.1  secs  320.2   secs
+         ", ;" -- "-" in 335.4  secs  237.1   secs
+      "was is" -- "-" in 187.7  secs   80.51  secs
+     "her him" -- "-" in  86.21 secs   39.32  secs
+    "are were" -- "-" in  56.62 secs   34.19  secs
+         "? !" -- "-" in  54.48 secs   19.55  secs
+     "they we" -- "-" in  48.27 secs   26.95  secs
+      "but or" -- "-" in  38.83 secs   30.16  secs
+  "would will" -- "-" in  28.96 secs   22.97  secs
+"city village" -- "-" in  16.09 secs    5.307 secs
+
+Clearly pretty loosing -- execution takes much longer.
+but since in parallel... 1.x speedup!?
+
+Start loading words and word-classes
+Finished loading 623548 words in 63.81 seconds
+Finished fetching wildcards in 269.2 sconds
+Now trim to min of 20 observation counts
+Start classification of 62607 (of 623548) words, chunksz=20
+---------  Words remaining=20 Classes=10 ------------
+Start cosine class "was is" -- ","
+Cosine=0.0105 for class "was is" -- "," in 369.0 secs
+Start cosine class "but or" -- ","
+Cosine=0.0012 for class "but or" -- "," in 89.56 secs
+Start cosine class "of in" -- ","
+Cosine=0.0172 for class "of in" -- "," in 406.1 secs
+Start cosine class "are were" -- ","
+Cosine=0.0108 for class "are were" -- "," in 88.06 secs
+Start cosine class "city village" -- ","
+Cosine=0.0028 for class "city village" -- "," in 56.33 secs
+Start cosine class "? !" -- ","
+Cosine=0.2233 for class "? !" -- "," in 73.86 secs
+Start cosine class ", ;" -- ","
+Cosine=0.3747 for class ", ;" -- "," in 255.3 secs
+Start cosine class "her him" -- ","
+Cosine=0.0115 for class "her him" -- "," in 92.37 secs
+Start cosine class "they we" -- ","
+Cosine=0.0075 for class "they we" -- "," in 78.82 secs
+Start cosine class "would will" -- ","
+Cosine=0.0030 for class "would will" -- "," in 72.63 secs
+Start cosine word "," -- "the"
+Cosine=0.0013 for word "," -- "the" in 272.8 secs
+Start cosine word "," -- "."
+Cosine=0.1906 for word "," -- "." in 131.1 secs
+
+
+
+
