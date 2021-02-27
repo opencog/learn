@@ -401,17 +401,21 @@ statistics.
       echo -e "(observe-text \"Lietuvos žydų kilmės žurnalistas\")" |nc localhost 17005
 ```
 
-   This should result in activity in the cogserver and on the
-         database: the `observe text` scheme code sends the text for
-         parsing, counts the returned word-pairs, and stores them in
-         the database.
+   This should result in activity in the cogserver. (If running
+         Postgres, then the postgres server should be active.)
+         The `observe text` scheme code sends the text for parsing,
+         counts the returned word-pairs, and stores them in the
+         database.
 
-   If you are truly curious, type in `(sql-stats)` in the guile
-         shell.  This will print some very technical stats about the
-         Atomspace SQL database backend.
+   If you are curious, go to the guile shell, and type in
+         `(cog-report-counts)` to see a summary of the diffent Atom
+         types in the AtomSpace.  Database stats are printed by
+         `(cog-rocks-stats)` for RocksDB and by `(sql-stats)` for
+         Postgres.  Both database reports are highly technical,
+         and are mostly useful for debugging, only.
 
-* **6)** Verify that the above resulted in data sent to the SQL database.
-         Log into the database, and check:
+* **6)** (Postgres only) Verify that the above resulted in data sent
+         to the SQL database.  Log into the database, and check:
 ```
       psql learn-pairs
       learn-pairs=# SELECT * FROM atoms;

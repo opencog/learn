@@ -18,4 +18,4 @@
 
 ; Open the database.
 ; Edit the below, setting the database name as desired
-(cog-rocks-open "rocks:///home/ubuntu/fake_pairs.rdb")
+(cog-rocks-open "rocks:///home/ubuntu/data/fake_pairs.rdb")
