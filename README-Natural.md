@@ -449,7 +449,7 @@ contents. Its kind-of like reading assembly code: you will not learn
 how the AtomSpace works by reading the SQL code.  In fact, doing this
 will probably make you anti-learn, by damaging your brain, and then
 planting incorrect ideas into it.  Don't look in there. *You have been
-warned!*
+warned!* (This warning applies equally to the RocksDB backend.)
 
 
 Bulk Pair Counting
