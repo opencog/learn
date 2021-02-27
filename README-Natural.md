@@ -326,16 +326,20 @@ unhappy, painful experience.
 Setting up the AtomSpace
 ------------------------
 This section describes how to set up the AtomSpace to collect
-statistics.  The most time-consuming, difficult and error-prone step
-is the setup and configuration of Postgres.  Postgres is centrally
-important for saving partial results.
+statistics.
 
-* **1)** Set up and configure Postgres, as described in
+* **1)** Optional. Skip this step if using RocksDB. RocksDB is
+         recommended. This step is required only if using Postgres.
+
+         Warning: Postgres is slower. Setting it up to work with the
+         AtomSpace is time-consuming, difficult and error-prone.
+
+* **1.1)** (Postgres only) Set up and configure Postgres, as described in
          [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
 
-* **2)** Create and initialize a database. Pick any name you want; here
-         it is `learn-pairs`.  Later on, you will have to place this name
-         into a config file (see below).
+* **1.2)** (Postgres only) Create and initialize a database. Pick any
+         name you want; here it is `learn-pairs`.  Later on, you will
+         have to place this name into a config file (see below).
 ```
       createdb learn-pairs
       cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
