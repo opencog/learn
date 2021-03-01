@@ -326,20 +326,21 @@ unhappy, painful experience.
 Setting up the AtomSpace
 ------------------------
 This section describes how to set up the AtomSpace to collect
-statistics.
+statistics. Statistics are collected in a database; you have a choice
+of two: RocksDB and PostgreSQL. RocksDB is recommended, because it is
+2x or 3x faster when used with the AtomSpace, and seems to use less RAM.
+The instructions below desribe both databases; skip the parts that don't
+apply to you.
 
-* **1)** Optional. Skip this step if using RocksDB. RocksDB is
-         recommended. This step is required only if using Postgres.
+These instructions go through a basic "sniff test" to make sure
+everything works. It's a small orientation demo.
 
-         Warning: Postgres is slower. Setting it up to work with the
-         AtomSpace is time-consuming, difficult and error-prone.
-
-* **1.1)** (Postgres only) Set up and configure Postgres, as described in
+* **1)** (Postgres only) Set up and configure Postgres, as described in
          [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
 
-* **1.2)** (Postgres only) Create and initialize a database. Pick any
+* **2)** (Postgres only) Create and initialize a database. Pick any
          name you want; here it is `learn-pairs`.  Later on, you will
-         have to place this name into a config file (see below).
+         have to place this name into a config file (see further below).
 ```
       createdb learn-pairs
       cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
@@ -365,8 +366,8 @@ statistics.
          `en` files. The other language files can be ignored (and can
          be deleted).
 
-* **3.1)** `cd` to that directory. The instructins below are relative
-         to the files there.
+* **3.1)** `cd` to the practice directory you created. The instructions
+         below are relative to the files there.
 
 * **4)** Start the OpenCog server.  Later on, the batch processing
          instructions (below) indicate how to automate this. However,
