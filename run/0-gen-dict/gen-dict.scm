@@ -10,8 +10,8 @@
 ;
 (use-modules (opencog) (opencog nlp fake))
 
+(define param-file (cadr (program-arguments)))
 (define x
-	(define param-file (cadr (program-arguments)))
 	(begin
 		(if (not (access? param-file R_OK))
 			(begin
@@ -97,6 +97,9 @@
 
 	(mkdir dict-dir)
 	(copy-dir)
+
+	; Copy the parameters file so that we have a log of what was done.
+	(copy-file param-file (string-append experiment-dir "/" param-file))
 )
 
 ; Do the actual copy, first
