@@ -13,7 +13,8 @@ CORP=/home/ubuntu/data/fake-corpus
 # Generate a dictionary and move it into place
 guile -l gen-dict.scm
 
-mv $BASE/4.0.dict $DICT
+# Above writes the file to /tmp
+mv /tmp/4.0.dict $DICT
 
 # Generate corpus files, containing sentences of different lengths.
 link-generator -l $DICT -s 1 -c 150000 > $CORP/corpus-1.txt
