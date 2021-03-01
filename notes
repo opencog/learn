@@ -21,3 +21,46 @@ Next aid: 633
 Atoms/Links/Nodes a@: 633 l@: 586 n@: 46
 Keys/Incoming/Hash k@: 338 i@: 336 h@: 0
 
+Thread 172410 "guile" received signal SIGABRT, Aborted.
+[Switching to Thread 0x7fff57fff700 (LWP 14341)]
+__GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
+50      ../sysdeps/unix/sysv/linux/raise.c: No such file or directory.
+
+(gdb) bt
+#0  __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
+#1  0x00007ffff7cbe859 in __GI_abort () at abort.c:79
+#2  0x00007ffff7cbe729 in __assert_fail_base (
+    fmt=0x7ffff7e54588 "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n",
+    assertion=0x7ffff787262d "mutex->__data.__owner == 0",
+    file=0x7ffff78725fa "../nptl/pthread_mutex_lock.c", line=117,
+    function=<optimized out>) at assert.c:92
+#3  0x00007ffff7ccff36 in __GI___assert_fail (
+    assertion=assertion@entry=0x7ffff787262d "mutex->__data.__owner == 0",
+    file=file@entry=0x7ffff78725fa "../nptl/pthread_mutex_lock.c",
+    line=line@entry=117,
+    function=function@entry=0x7ffff7872790 <__PRETTY_FUNCTION__.10174> "__pthread_mutex_lock") at assert.c:101
+#4  0x00007ffff78661a9 in __GI___pthread_mutex_lock (mutex=<optimized out>)
+    at ../nptl/pthread_mutex_lock.c:117
+#5  0x00007fffececc047 in __gthread_mutex_lock (__mutex=0x5555559b1560)
+    at /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:749
+#6  __gthread_recursive_mutex_lock (__mutex=0x5555559b1560)
+    at /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:811
+#7  std::recursive_mutex::lock (this=0x5555559b1560)
+    at /usr/include/c++/9/mutex:106
+#8  std::unique_lock<std::recursive_mutex>::lock (this=<synthetic pointer>,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:141
+#9  std::unique_lock<std::recursive_mutex>::unique_lock (__m=...,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:71
+#10 opencog::AtomTable::add (this=this@entry=0x5555559b1560, orig=...,
+    force=force@entry=false)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomTable.cc:216
+#11 0x00007fffecec1b85 in opencog::AtomSpace::add_node (
+    this=this@entry=0x5555559b1560, t=<optimized out>, t@entry=240, name=...)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomSpace.cc:287
+#12 0x00007fffeceff99b in opencog::SchemeSmob::ss_new_node (
+    stype=<optimized out>, sname=<optimized out>, kv_pairs=0x304)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeSmobNew.cc:390
+
+
+(gdb) print in
+$4 = "(observe-text \" n j d s b o u g\")\n"
