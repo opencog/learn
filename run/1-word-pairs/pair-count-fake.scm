@@ -4,6 +4,8 @@
 ; Set up everything needed for the language-learning word-pair
 ; counting pipeline. Starts the CogServer, opens the database.
 ;
+; This has assorted hard-coded file-paths in it. Adjust these to taste.
+;
 (use-modules (system repl common))
 (use-modules (system repl server))
 (use-modules (opencog) (opencog logger))
