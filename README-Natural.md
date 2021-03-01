@@ -531,12 +531,15 @@ Running Bulk Pair-counting
 --------------------------
 Do this.
 
-* **9)** Review the `observe-text` function in `link-pipeline.scm`. The
+* **9)** (Optional)
+   Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
-   (And so you can skip this step).  Just be aware that this function
-   was written to collect a large amount of additional information,
-   which you can explore, if you are adventurous. Caution, though:
-   it creates a deluge of data.
+   (And so you can skip this step).  This function was written to
+   collect a large amount of additional information, which the current
+   pipeline does not use.  You can begin new exploration here.
+   Caution, though: enabling some of these variants will create a
+   deluge of data. You may have trouble with RAM, and with managing
+   the size of datasets on disk.
 
    The `observe-text` function in 'link-pipeline.scm` collects
    observation counts on four different kinds of structures:
@@ -560,7 +563,7 @@ Do this.
    bullets are not needed. In particular, word counts are not needed;
    they are almost evil to collect, as they serve to confuse things.
 
-   Knowing th length of the pairs might be important for "understanding"
+   Knowing the length of the pairs might be important for "understanding"
    that adjectives, adverbs, determiners and possessives modify only
    nearby words. They might be important in analyzing morphology.
    Currently, no other code examines lengths; this is an open
@@ -585,6 +588,17 @@ Do this.
     Make a copy this file, and manually alter it to start the cogserver
     the way that you want it started.
 
+    Cheat-sheet:
+    ++ `F3` -- move left
+    ++ `F4` -- move right
+    ++ `F7` -- enable the page-up and page-down keys for scrolling.
+    ++ `F6` -- dettach from byobu. Reattach by saying `tmux attach`.
+    ++ `F2` -- create new terminal
+    ++ `F8` -- change terminal title
+
+    See `man byobu` for details.
+
+* **11.1)** (*Natural Language pipeline only*)
     The `pair-submit-en.sh` script starts the process of observing text
     for pair-counting. It looks for files in the `beta-pages` directory,
     performs sentence-splitting (ss) on each, and then passes these to
@@ -598,7 +612,11 @@ Do this.
 
     Run `pair-submit-en.sh` in one of the byobu terminals.
 
-* **12)** Pair-counting can take days or weeks.  The `pair-submit-en.sh`
+* **11.2)** (*Fake Language pipeline only*)
+    The `pair-submit-fake.sh` script starts the process of observing text
+    for pair-counting.
+
+* **12)** Pair-counting can take days or weeks.  The `pair-submit-*.sh`
     will run until all of the text files have been processed, or until it
     is interrupted.  If it is interrupted, it can be restarted; it will
     resume with the previous unfinished text file. As text files are
@@ -628,7 +646,7 @@ Notes:
   off-the-shelf segmenter.  Its got OK-but-not-great accuracy.
 
   This can be done using jieba
-      https://github.com/fxsjy/jieba
+      [https://github.com/fxsjy/jieba](https://github.com/fxsjy/jieba)
   If you are working with Chinese texts, install:
   `pip install jieba` and then segment text:
   `run/jieba-segment.py PATH-IN PATH-OUT`. This python utility is in
@@ -648,9 +666,9 @@ Notes:
 
 Bulk Pair Counting - Quickstart/Cheat Sheet
 -------------------------------------------
-* Don't forget to perform the Postgres tuning recommendations
-  found in various online Postgres performance wikis, or in the
-  `atomspace/opencog/persist/sql/README.md` file.
+* (Postgres only) Don't forget to perform the Postgres tuning
+  recommendations found in various online Postgres performance wikis,
+  or in the `atomspace/opencog/persist/sql/README.md` file.
 
 * Use LXC containers, one for each language. Buy SSD disks. Buy an UPS.
   Install the system shutdown scripts.
