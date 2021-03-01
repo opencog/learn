@@ -15,18 +15,20 @@ File overview
    a Link-Grammar file-based dictionary. Copy this to whichever directory
    you and to use to hold the generated grammar. For example:
 ```
-   $ cp -r fake-lang /home/ubuntu/data/fake-lang
+   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
 ```
 
 * `gen-dict.scm` -- This contains the configurable parameters for
    generating a random artificial ("fake") grammar. Once these are
    configured as desired, the grammar can be generated as
 ```
-   $ guile -l gen-dict.scm
+   $ ./gen-dict.scm
 ```
 
 * `gen-corpus.sh` -- This generates a random corpus from the fake
-   grammar. Edit and configure as desired.
+   grammar. Edit and configure as desired. This automatically invokes
+   `gen-dict.scm` to crete the dictionary. The location of the
+   dictionary, and the corpus, is configured in `gen-dict.scm`.
 
 Notes
 -----
