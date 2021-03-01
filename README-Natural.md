@@ -462,6 +462,18 @@ typically thousands or tens of thousands of them, for run-time of a
 few days to a week or two.  For a practice run, half-an-hour is
 sufficient, but a half-hours worth of data will be quite low-quality.
 
+There are two basic pipelines: "fake" and "natural". "Fake" uses
+artificially generated grammars and text corpora, and is essential for
+calibrating and adjusting the learning algorithms to produce the best
+results. This is a closed-loop process, where the accuracy of the final
+result can be compared to input grammar. "Natural" uses natural-langauge
+corpora downloaded from the web. Since the algorithms are currently
+uncalibrated (untuned) you ... get what you get: it will be of uncertain
+quality, and there is no practical way to measure the accuracy. There
+are instructions below for both pipelines.
+
+Natural Language Corpora
+------------------------
 The best text for "natural" English is narrative literature, adventure
 and young-adult novels, and newspaper stories. These contain a good
 mix of common nouns and verbs, which is needed for conversational
@@ -507,6 +519,17 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    It is best to split texts into files containing a few hundred to
    at most ten-thousand sentences each; larger files cause trouble
    if the counting needs to be restarted.
+
+
+Fake Language Corpora
+---------------------
+Under development. Go to [run/0-gen-dict](./run/0-gen-dict) and follow
+the instructions there. Return to here when done.
+
+
+Running Bulk Pair-counting
+--------------------------
+Do this.
 
 * **9)** Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
