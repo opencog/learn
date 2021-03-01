@@ -93,9 +93,8 @@
 (define num-senses 3)
 (define sense-exp 0.5)
 
-
 ; Output file
-(define dict-file "/tmp/4.0.dict")
+(define dict-dir "/home/ubuntu/data/fake-lang")
 
 ; End of configuration. You can ignore what comes below.
 ; ----------------------------------------------------------
@@ -137,6 +136,47 @@
 		num-senses
 		sense-exp))
 
+; Make a copy of the link-grammar boilerplate
+(define (copy-boilerplate)
+
+	; Location of the boilerplate files
+	(define source-dir "fake-lang")
+
+	; Recursive copy
+	(define DIR_STREAM (opendir source-dir))
+	(define (copy-dir)
+		(define DIRENT (readdir DIR_STREAM))
+		(if (not (eof-object? DIRENT))
+			(let ((lgfi (string-append source-dir "/" DIRENT))
+					(tofi (string-append dict-dir "/" DIRENT)))
+				(if (equal? 'regular (stat:type (stat lgfi)))
+					(copy-file lgfi tofi))
+				(copy-dir)
+			)))
+
+	; Does the source directory exist?
+	(if (not (access? source-dir R_OK))
+		(begin
+			(format #t "Error: unable to access '~A'\n" source-dir)
+			(format #t "This directory needed for its template files\n")
+			(exit -1)))
+
+	; Does the target directory exist already?
+	; If so, do not over-write it.
+	(if (access? dict-dir R_OK)
+		(begin
+			(format #t "Error: target directory exists: ~A\n" dict-dir)
+			(format #t "Remove or rename this directory and try again\n")
+			(exit -1)))
+
+	(mkdir dict-dir)
+	(copy-dir)
+)
+
+; Do the actual copy, first
+(define x (copy-boilerplate))
+
+(define dict-file (string-append dict-dir "/4.0.dict"))
 (define port (open-file dict-file "w"))
 
 (format port "%\n% Randomly generated dictionary\n%\n")
