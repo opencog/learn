@@ -97,7 +97,10 @@
 ; Output file
 (define dict-file "/tmp/4.0.dict")
 
-; -------------------------------------------
+; End of configuration. You can ignore what comes below.
+; ----------------------------------------------------------
+; ----------------------------------------------------------
+; ----------------------------------------------------------
 ; Generators for each of the different parts of the grammar.
 
 (define secgen

@@ -523,8 +523,8 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
 
 Fake Language Corpora
 ---------------------
-Under development. Go to [run/0-gen-dict](./run/0-gen-dict) and follow
-the instructions there. Return to here when done.
+See the instructions in [README-Calibration.md](README-Calibration.md).
+Return to here when done.
 
 
 Running Bulk Pair-counting
