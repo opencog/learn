@@ -11,24 +11,27 @@ Move to step `../run/1-word-pairs` next.
 
 File overview
 -------------
-* `fake-lang` -- Link Grammar boilerplate, required for working with
-   a Link-Grammar file-based dictionary. Copy this to whichever directory
-   you and to use to hold the generated grammar. For example:
-```
-   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
-```
-
-* `gen-dict.scm` -- This contains the configurable parameters for
-   generating a random artificial ("fake") grammar. Once these are
+* `dict-conf.scm` -- This contains the configurable parameters for
+   generating a random artificial ("fake") grammar. Edit this file
+   as desired (or copy it and edit it...). Once the parameters are
    configured as desired, the grammar can be generated as
 ```
-   $ ./gen-dict.scm
+   $ ./gen-dict.scm dict-conf.scm
+```
+
+* `gen-dict.scm` -- Generates the dictionary.
+
+* `fake-lang` -- Link Grammar boilerplate, required for working with
+   a Link-Grammar file-based dictionary. The `gen-dict.scm` file copies
+   these files to the target dictionary location. For example:
+```
+   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
 ```
 
 * `gen-corpus.sh` -- This generates a random corpus from the fake
    grammar. Edit and configure as desired. This automatically invokes
    `gen-dict.scm` to crete the dictionary. The location of the
-   dictionary, and the corpus, is configured in `gen-dict.scm`.
+   dictionary, and the corpus, is configured in `dict-conf.scm`.
 
 Notes
 -----
