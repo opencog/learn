@@ -1,8 +1,11 @@
 #! /bin/bash
 #
 # Automated corpus generation. Most configurable parameters are located
-# in `gen-dict.scm`. A few more are below.
+# in `dict-conf.scm`. Edit that file as desired. A few more config
+# paramters are below.
 #
+DICT_CONF=dict-conf.scm
+
 # The length of the shortest and the longest sentences to generate.
 # Sentences between these lengths (inclusive) will be generated.
 SHORTEST=3
@@ -20,7 +23,7 @@ NSENT=50000
 #
 # Generate a dictionary. The return string is either an error message,
 # or its the configured directory.
-EXPERIMENT_DIR=`./gen-dict.scm`
+EXPERIMENT_DIR=`./gen-dict.scm $DICT_CONF`
 
 if [ $? -ne 0 ]; then
 	echo $EXPERIMENT_DIR
