@@ -93,8 +93,9 @@
 (define num-senses 3)
 (define sense-exp 0.5)
 
-; Output file
-(define dict-dir "/home/ubuntu/data/fake-lang")
+; Directory where the learning experiment will be carried out.
+(define experiment-dir "/home/ubuntu/data/experiment-42")
+(define experiment-dir "/tmp/foo")
 
 ; End of configuration. You can ignore what comes below.
 ; ----------------------------------------------------------
@@ -136,6 +137,8 @@
 		num-senses
 		sense-exp))
 
+(define dict-dir (string-append experiment-dir "/fake-lang"))
+
 ; Make a copy of the link-grammar boilerplate
 (define (copy-boilerplate)
 
@@ -168,6 +171,9 @@
 			(format #t "Error: target directory exists: ~A\n" dict-dir)
 			(format #t "Remove or rename this directory and try again\n")
 			(exit -1)))
+
+	; Create the experiment-directory, if needed.
+	(if (not (access? experiment-dir R_OK)) (mkdir experiment-dir))
 
 	(mkdir dict-dir)
 	(copy-dir)
@@ -206,4 +212,9 @@
 
 (format port "<UNKNOWN-WORD>:  XXXXXX+;\n")
 (close port)
-(exit)
+
+; If we got to here, then everything must have worked.
+
+(format #t "~A\n" experiment-dir)
+
+(exit 0)

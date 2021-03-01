@@ -1,20 +1,31 @@
 #! /bin/bash
 #
-# Partially automated corpus generation
-# Before running this script, be sure to do this first:
-# `cp -r /where/ever/link-grammar/data/gen /tmp/fake-lang`
+# Automated corpus generation. There are no configurable parameters
+# in this file. All configuration is located in `gen-dict.scm`.
 #
 # -----------
-# Location where files should go. Suggest /home/user/data
-DICT=/home/ubuntu/data/fake-lang
-CORP=/home/ubuntu/data/fake-corpus
+# Generate a dictionary. The return string is either an error message,
+# or its the configured directory.
+EXPERIMENT_DIR=`./gen-dict.scm`
 
-# -----------
-# Generate a dictionary and move it into place
-guile -l gen-dict.scm
+if [ $? -ne 0 ]; then
+	echo $EXPERIMENT_DIR
+	exit -1
+fi
 
-# Above writes the file to /tmp
-mv /tmp/4.0.dict $DICT
+DICT=$EXPERIMENT_DIR/fake-lang
+CORP=$EXPERIMENT_DIR/fake-corpus
+
+if [[ -d $CORP ]]; then
+	echo Corpus directory exists: $CORP
+	echo Delete or move this directory and try again
+	exit -1
+fi
+
+echo Dictionary is located in $DICT
+echo Corpus is in $CORP
+
+mkdir $CORP
 
 # Generate corpus files, containing sentences of different lengths.
 link-generator -l $DICT -s 1 -c 150000 > $CORP/corpus-1.txt
