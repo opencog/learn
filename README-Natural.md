@@ -729,7 +729,7 @@ database that contains word-pairs.
       (use-modules (opencog matrix))
       (use-modules (opencog nlp) (opencog nlp learn))
       ; (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
-      (cog-rocks-open "rocks:////home/ubuntu/data/expt-42/fake_pairs.rdb")
+      (cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
       (define ala (make-any-link-api))
       (define asa (add-pair-stars ala))
       (batch-pairs asa)

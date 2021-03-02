@@ -10,6 +10,11 @@
 #    ./mst-one.sh en Barbara localhost 17001
 #
 
+# Some versions of netcat require the -N flag, and some versions
+# of netcat do not know about the -N flag. This is mega-annoying.
+# Hack this to match your netcat.
+netcat="nc -N"
+
 # Set up assorted constants needed to run.
 lang=$1
 filename="$2"
@@ -26,14 +31,14 @@ subdir=mst-articles
 observe="observe-mst"
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
-haveping=`echo foo | nc -N $coghost $cogport`
+haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
 # Split the filename into two parts
 base=`echo $filename | cut -d \/ -f 1`
-rest=`echo $filename | cut -d \/ -f 2-6`
+rest=`echo $filename | cut -d \/ -f 2-20`
 
 echo "MST-Processing file >>>$rest<<<"
 
@@ -49,7 +54,7 @@ cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)
-haveping=`echo foo | nc -N $coghost $cogport`
+haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
 	exit 1
 fi

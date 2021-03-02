@@ -32,8 +32,8 @@ cogport=$4
 #splitter=/usr/local/bin/split-sentences.pl
 splitter=./split-sentences.pl
 
-splitdir=split-articles
-subdir=submitted-articles
+splitdir=pair-split-articles
+subdir=pair-counted-articles
 observe="observe-text"
 
 # Punt if the cogserver has crashed.  Use netcat to ping it.

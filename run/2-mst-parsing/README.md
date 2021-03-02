@@ -30,3 +30,9 @@ A quick overview:
   The directory containing the text files needs to be manually adjusted
   here; its `gamma-pages` by default, but you can use any directory
   that you wish.
+
+* `mst-one.sh`: processes files, one at a time. Performs sentence
+   splitting on the provided file, using the provided language encoding.
+
+* `mst-nosplit-one.sh`: processes files, one at a time. Assumes one
+   sentence per line.

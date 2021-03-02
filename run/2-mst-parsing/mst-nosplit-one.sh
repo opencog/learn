@@ -1,16 +1,13 @@
 #!/bin/bash
 #
-# pair-nosplit-one.sh <filename> <cogserver-host> <cogserver-port>
+# mst-nosplit-one.sh <filename> <cogserver-host> <cogserver-port>
 #
-# Support script for word-pair counting of pre-split plain-text.
-# The file should contain one sentence per line, and words should be
-# delimited by whitespace.
-#
-# Submit that one file, via perl script, to the parser.
-# When done, move the file over to a `submitted-articles` directory.
+# Support script for MST processing (disjunct counting) of text files.
+# Sentence-split one file, submit it, via perl script, to the cogserver.
+# When done, move the file over to the `mst-articles` directory.
 #
 # Example usage:
-#    ./pair-nosplit-one.sh en Barbara localhost 17001
+#    ./mst-nosplit-one.sh foo.txt localhost 17001
 #
 
 # Some versions of netcat require the -N flag, and some versions
@@ -25,9 +22,9 @@ filename="$1"
 coghost="$2"
 cogport=$3
 
-splitdir=pair-articles-staging
-subdir=pair-counted-articles
-observe="observe-text"
+splitdir=mst-articles-staging
+subdir=mst-articles
+observe="observe-mst"
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`
@@ -37,9 +34,9 @@ fi
 
 # Split the filename into two parts
 base=`echo $filename | cut -d \/ -f 1`
-rest=`echo $filename | cut -d \/ -f 2-30`
+rest=`echo $filename | cut -d \/ -f 2-20`
 
-echo "Pair-count processing file >>>$rest<<<"
+echo "MST-Processing file >>>$rest<<<"
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
@@ -48,7 +45,7 @@ mkdir -p $(dirname "$subdir/$rest")
 # Move article to temp directory, while processing.
 cp "$filename" "$splitdir/$rest"
 
-# Submit the pre-split article
+# Submit the split article
 cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,

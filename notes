@@ -233,4 +233,16 @@ guile: symbol lookup error: /usr/local/lib/opencog/libpersist-rocks.so: undefine
 
 or .. libasan
 
+(cog-get-all-roots)
+(fetch-all-words)
+(load-atoms-of-type 'WordNode)
+
+after pair-mi:
+$ du -s  ~/data/expt-1
+4820    /home/ubuntu/data/expt-1
+(cog-rocks-stats)
+cog-rocks-stats: Atomspace holds 731 atoms
+Next aid: 734
+Atoms/Links/Nodes a@: 733 l@: 674 n@: 55
+Keys/Incoming/Hash k@: 1122 i@: 379 h@: 0
 
