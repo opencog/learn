@@ -44,7 +44,13 @@ sub send_nowait
 my $start_time = time();
 while (<STDIN>)
 {
+	# Stray html markup.  Do not pas it on.
 	if (/<P>/) { next; }
+
+	# Artificial corpora include comments starting with hash
+	# that describe what kind of corpus it is. Don't process
+	# the comments.
+	if (/^#/) { next; }
 	chop;
 
 	send_nowait("($ARGV[2] \"$_\")\n");
