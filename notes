@@ -64,3 +64,33 @@ __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
 
 (gdb) print in
 $4 = "(observe-text \" n j d s b o u g\")\n"
+
+
+scheme@(guile-user)>
+==7309== Thread 57:
+==7309== Syscall param futex(futex) points to unaddressable byte(s)
+==7309==    at 0x4FA2839: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+==7309==    by 0x4FA2839: pthread_mutex_unlock (pthread_mutex_unlock.c:357)
+==7309==    by 0x10FAC951: rocksdb::WriteThread::ExitAsBatchGroupFollower(rocksdb::WriteThread::Writer*) (in /usr/lib/librocksdb.so.5.17.2)
+==7309==    by 0x10EFCCAC: rocksdb::DBImpl::WriteImpl(rocksdb::WriteOptions const&, rocksdb::WriteBatch*, rocksdb::WriteCallback*, unsigned long*, unsigned long, bool, unsigned long*, unsigned long, rocksdb::PreReleaseCallback*) (in /usr/lib/librocksdb.so.5.17.2)
+==7309==    by 0x10EFE9AF: rocksdb::DBImpl::Write(rocksdb::WriteOptions const&, rocksdb::WriteBatch*) (in /usr/lib/librocksdb.so.5.17.2)
+==7309==    by 0x10EFEC1B: rocksdb::DB::Delete(rocksdb::WriteOptions const&, rocksdb::ColumnFamilyHandle*, rocksdb::Slice const&) (in /usr/lib/librocksdb.so.5.1
+7.2)
+==7309==    by 0x10EFEC7F: rocksdb::DBImpl::Delete(rocksdb::WriteOptions const&, rocksdb::ColumnFamilyHandle*, rocksdb::Slice const&) (in /usr/lib/librocksdb.so.5.17.2)
+==7309==    by 0x10E65771: rocksdb::DB::Delete(rocksdb::WriteOptions const&, rocksdb::Slice const&) (in /usr/lib/librocksdb.so.5.17.2)
+==7309==    by 0x10BC6D97: opencog::RocksStorage::storeAtom(opencog::Handle const&, bool) (RocksIO.cc:254)
+==7309==    by 0x10B5F908: opencog::PersistSCM::dflt_store_atom(opencog::Handle) (PersistSCM.cc:289)
+==7309==    by 0x10B63459: conv_call_method<0> (SchemePrimitive.h:253)
+==7309==    by 0x10B63459: cpp_invoke (SchemePrimitive.h:261)
+==7309==    by 0x10B63459: opencog::SchemePrimitive<opencog::Handle, opencog::PersistSCM, opencog::Handle>::invoke(scm_unused_struct*) (SchemePrimitive.h:399)
+==7309==    by 0x1011B8CD: opencog::PrimitiveEnviron::do_call(scm_unused_struct*, scm_unused_struct*) (SchemePrimitive.cc:172)
+==7309==    by 0x2464E105: ???
+==7309==  Address 0x29042bc0 is on thread 62's stack
+==7309==  1384 bytes below stack pointer
+==7309==
+
+
+std::lock_guard<std::mutex> lck(_mtx);
+removeSatom
+
+maybe put a lock into storeAtom circa line 254???
