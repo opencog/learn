@@ -673,7 +673,7 @@ Bulk Pair Counting - Quickstart/Cheat Sheet
 * Use LXC containers, one for each language. Buy SSD disks. Buy an UPS.
   Install the system shutdown scripts.
 
-* Set up distinct databases, one for each language:
+* (Postgres only) Set up distinct databases, one for each language:
 ```
        createdb fr_pairs lt_pairs pl_pairs simple_pairs
        cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql ??_pairs
@@ -725,10 +725,11 @@ code below into a guile shell.  Adjust the database URL for the specific
 database that contains word-pairs.
 
 ```
-      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (use-modules (opencog) (opencog persist) (opencog persist-rocks))
       (use-modules (opencog matrix))
       (use-modules (opencog nlp) (opencog nlp learn))
-      (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
+      ; (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
+      (cog-rocks-open "rocks:////home/ubuntu/data/expt-42/fake_pairs.rdb")
       (define ala (make-any-link-api))
       (define asa (add-pair-stars ala))
       (batch-pairs asa)
@@ -753,13 +754,8 @@ Thus, you may want to:
 
 * Make a copy of the word-pair-only database, so that you can return
   to it, if you decide that you need to return to it for some reason.
-  You can copy databases by saying:
-```
-     createdb -T existing_dbname new_dbname
-```
-
-Note that this means using a different set of database credentials
-in the URL above!
+  RocksDB databases can be copied with the `cp -pr` command. Postgres
+  databses can be copied with the `createdb -T` command.
 
 
 The Vector Structure Encoded in Pairs

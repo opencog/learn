@@ -9,5 +9,5 @@
 #
 # The below assumes $CORP is a directory relative to the current path.
 #
-CORP=fake-corpus
+CORP=../fake-corpus
 time find $CORP -type f -exec ./pair-nosplit-one.sh {} localhost 17008 \;
