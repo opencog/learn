@@ -62,6 +62,7 @@ __GI_raise (sig=sig@entry=6) at ../sysdeps/unix/sysv/linux/raise.c:50
     at /home/ubuntu/src/atomspace/opencog/guile/SchemeSmobNew.cc:390
 
 
+
 (gdb) print in
 $4 = "(observe-text \" n j d s b o u g\")\n"
 
@@ -89,8 +90,147 @@ scheme@(guile-user)>
 ==7309==  1384 bytes below stack pointer
 ==7309==
 
+and again .. just like above ...
+==7309== Warning: unimplemented fcntl command: 1036
+==7309== Thread 59:
+==7309== Syscall param futex(futex) points to unaddressable byte(s)
+==7309==    at 0x4FA2839: __pthread_mutex_unlock_usercnt (pthread_mutex_unlock.c:58)
+...
+==7309==  Address 0x45bd3bc0 is on thread 48's stack
+==7309==  1384 bytes below stack pointer
+==7309==
+==7309== Warning: unimplemented fcntl command: 1036
+==7309== Warning: unimplemented fcntl command: 1036
 
-std::lock_guard<std::mutex> lck(_mtx);
-removeSatom
+identical stack trace, different thread.
 
 maybe put a lock into storeAtom circa line 254???
+
+
+gdb: almost identical stack trace, except add_link:
+
+#8  std::unique_lock<std::recursive_mutex>::lock (this=<synthetic pointer>,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:141
+#9  std::unique_lock<std::recursive_mutex>::unique_lock (__m=...,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:71
+#10 opencog::AtomTable::add (this=this@entry=0x55d164c980c0, orig=...,
+    force=force@entry=false)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomTable.cc:216
+#11 0x00007f053765ac75 in opencog::AtomSpace::add_link (
+    this=this@entry=0x55d164c980c0, t=<optimized out>, t@entry=137,
+    outgoing=...)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomSpace.cc:304
+#12 0x00007f0537697cf3 in opencog::SchemeSmob::ss_new_link (
+    stype=<optimized out>, satom_list=0x55d1682d6f70)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeSmobNew.cc:508
+
+
+* 1    Thread 0x7f051a7fc700 (LWP 26727) __GI_raise (sig=sig@entry=6)
+    at ../sysdeps/unix/sysv/linux/raise.c:50
+  2    Thread 0x7f05412c5740 (LWP 8955)  __GI___libc_read (nbytes=1,
+    buf=0x55d1647fcad0, fd=0) at ../sysdeps/unix/sysv/linux/read.c:26
+scm_readline
+
+  3    Thread 0x7f05406f7700 (LWP 8956)  futex_wait_cancelable (
+    private=<optimized out>, expected=0, futex_word=0x7f0541099dec)
+    at ../sysdeps/nptl/futex-internal.h:183
+
+GC_wait_marker ... also 4 5 7 13 14 15 23 24
+
+6 is ConsoleSocket
+
+8 is rocksdb::ThreadPoolImpl::Impl::BGThread 16 17 19 20 22 25 26
+
+9 is opencog::Logger::LogWriter::writing_loop
+
+  10   Thread 0x7f04a4ff9700 (LWP 26729) __pthread_clockjoin_ex (
+    threadid=139657933203200, thread_return=0x0, clockid=<optimized out>,
+    abstime=<optimized out>, block=<optimized out>)
+
+10 is opencog::GenericShell::~GenericShell also 11 also 39
+
+
+12 is ~ConsoleSocket
+
+  18   Thread 0x7f04a67fc700 (LWP 9013)  __GI___libc_read (nbytes=1,
+    buf=0x7f04a67fb5c0, fd=22) at ../sysdeps/unix/sysv/linux/read.c:26
+
+GC_do_blocking_inner also 43
+
+21 is immortal_thread
+
+27 is opencog::SchemeEval::do_eval
+
+  31   Thread 0x7f04a6ffd700 (LWP 10064) __libc_recvmsg (flags=0,
+    msg=0x7f04a6ffcbe0, fd=16) at ../sysdeps/unix/sysv/linux/recvmsg.c:28
+
+31 is boost::asio::detail::socket_ops::recv ServerSocket.cc:143
+
+  35   Thread 0x7f0532fae700 (LWP 8976)  __lll_lock_wait (
+    futex=futex@entry=0x55d16514e698, private=0) at lowlevellock.c:52
+
+35 is opencog::CogServer::runLoopStep
+
+45 is shutdown .. asio opencog::ServerConsole::Exit
+
+52 is
+
+add_link
+#0  __lll_lock_wait (futex=futex@entry=0x55d164c980c0, private=0)
+    at lowlevellock.c:52
+#1  0x00007f0540c7c131 in __GI___pthread_mutex_lock (mutex=0x55d164c980c0)
+    at ../nptl/pthread_mutex_lock.c:115
+#2  0x00007f0537665047 in __gthread_mutex_lock (__mutex=0x55d164c980c0)
+    at /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:749
+#3  __gthread_recursive_mutex_lock (__mutex=0x55d164c980c0)
+    at /usr/include/x86_64-linux-gnu/c++/9/bits/gthr-default.h:811
+#4  std::recursive_mutex::lock (this=0x55d164c980c0)
+    at /usr/include/c++/9/mutex:106
+#5  std::unique_lock<std::recursive_mutex>::lock (this=<synthetic pointer>,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:141
+#6  std::unique_lock<std::recursive_mutex>::unique_lock (__m=...,
+    this=<synthetic pointer>) at /usr/include/c++/9/bits/unique_lock.h:71
+#7  opencog::AtomTable::add (this=this@entry=0x55d164c980c0, orig=...,
+    force=force@entry=false)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomTable.cc:216
+#8  0x00007f053765ac75 in opencog::AtomSpace::add_link (
+    this=this@entry=0x55d164c980c0, t=<optimized out>, t@entry=137,
+    outgoing=...)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/AtomSpace.cc:304
+#9  0x00007f0537697cf3 in opencog::SchemeSmob::ss_new_link (
+    stype=<optimized out>, satom_list=0x55d1682ac410)
+    at /home/ubuntu/src/atomspace/opencog/guile/SchemeSmobNew.cc:508
+
+
+stack #6 lock is
+print __m
+$1 = (std::unique_lock<std::recursive_mutex>::mutex_type &) @0x55d164c980c0: {<std::__recursive_mutex_base> = {_M_mutex = {__data = {__lock = 2, __count = 0,
+        __owner = -955664080, __nusers = 32514, __kind = 1, __spins = 0,
+        __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
+      __size = "\002\000\000\000\000\000\000\000\060\271\t\307\002\177\000\000\001", '\000' <repeats 22 times>, __align = 2}}, <No data fields>}
+
+stack 7
+print _mtx
+$2 = {<std::__recursive_mutex_base> = {_M_mutex = {__data = {__lock = 2,
+        __count = 0, __owner = -955664080, __nusers = 32514, __kind = 1,
+        __spins = 0, __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
+      __size = "\002\000\000\000\000\000\000\000\060\271\t\307\002\177\000\000\001", '\000' <repeats 22 times>, __align = 2}}, <No data fields>}
+(gdb) print lck
+$3 = {_M_device = 0x55d164c980c0, _M_owns = <optimized out>}
+
+
+thr 1 stack #10
+Its the same lock w/ same lock corruption.`
+
+Above is with stock rocks on ubuntu 20.04 LTS focal
+
+sudo apt purge librocksdb-dev librocksdb5.17  (october 2018)
+
+git clone https://github.com/facebook/rocksdb
+make shared_lib
+guile: symbol lookup error: /usr/local/lib/opencog/libpersist-rocks.so: undefined symbol: ZSTD_versionNumber
+
+
+or .. libasan
+
+

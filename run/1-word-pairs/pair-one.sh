@@ -44,7 +44,7 @@ fi
 
 # Split the filename into two parts
 base=`echo $filename | cut -d \/ -f 1`
-rest=`echo $filename | cut -d \/ -f 2-6`
+rest=`echo $filename | cut -d \/ -f 2-30`
 
 echo "Word-paring counting file >>>$rest<<<"
 
