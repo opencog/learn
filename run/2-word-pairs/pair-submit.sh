@@ -30,8 +30,8 @@ fi
 
 if $SENTENCE_SPLIT; then
 	time find $CORPORA_DIR -type f \
-		-exec ./pair-one.sh $SPLIT_LANG {} $HOSTNAME $PORT \;
+		-exec ./pair-one.sh $SPLIT_LANG {} $HOSTNAME $PORT $CORPORA_DIR \;
 else
 	time find $CORPORA_DIR -type f \
-		-exec ./pair-nosplit-one.sh {} $HOSTNAME $PORT \;
+		-exec ./pair-nosplit-one.sh {} $HOSTNAME $PORT $CORPORA_DIR \;
 fi

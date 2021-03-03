@@ -1,16 +1,21 @@
 #!/bin/bash
 #
-# pair-nosplit-one.sh <filename> <cogserver-host> <cogserver-port>
+# pair-nosplit-one.sh <file> <cog-host> <cog-port> <base-path>
 #
 # Support script for word-pair counting of pre-split plain-text.
-# The file should contain one sentence per line, and words should be
+# The <file> should contain one sentence per line, and words should be
 # delimited by whitespace.
 #
-# Submit that one file, via perl script, to the parser.
-# When done, move the file over to a `submitted-articles` directory.
+# <cog-host> and <cog-port> are the hostname and port number where
+# the cogserver is running.
+#
+# Submit that one file, via perl script, to the parser. When done,
+# move the file over to the `pair-counted-articles` directory in
+# the <base-path>.
 #
 # Example usage:
-#    ./pair-nosplit-one.sh en Barbara localhost 17001
+#    ./pair-nosplit-one.sh file.txt localhost 17001
+#    ./pair-nosplit-one.sh /home/data/dir/file.txt localhost 17001 /home/data
 #
 
 # Some versions of netcat require the -N flag, and some versions
@@ -20,13 +25,10 @@ netcat="nc -N"
 
 # Set up assorted constants needed to run.
 filename="$1"
-# coghost="localhost"
-# cogport=17002
 coghost="$2"
 cogport=$3
+basepath="$4"
 
-splitdir=pair-articles-staging
-subdir=pair-counted-articles
 observe="observe-text"
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
@@ -36,10 +38,15 @@ if [[ $? -ne 0 ]] ; then
 fi
 
 # Split the filename into two parts
-base=`echo $filename | cut -d \/ -f 1`
-rest=`echo $filename | cut -d \/ -f 2-30`
+alen=${#basepath}
+blen=$(($alen+2))
+# base=`echo $filename | cut -c1-$alen`
+rest=`echo $filename | cut -c$blen-500`
 
 echo "Pair-count processing file >>>$rest<<<"
+
+splitdir=$basepath/pair-articles-staging
+subdir=$basepath/pair-counted-articles
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
@@ -60,4 +67,4 @@ fi
 
 # Move article to the done-queue
 mv "$splitdir/$rest" "$subdir/$rest"
-rm "$base/$rest"
+rm "$basepath/$rest"

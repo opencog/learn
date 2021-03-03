@@ -27,7 +27,7 @@ A quick overview:
   terminal sessions with tmux/byobu, and starts the cogserver in one
   of them.  Use F3 and F4 to switch to different terminals.
 
-* `pair-submit-??.sh`: language-specific word-pair-counting scripts.
+* `pair-submit.sh`: language-specific word-pair-counting scripts.
   These pull text files, one by one, from the data directory, and
   submit them for word-pair counting. Pick one, and run it manually
   the 'submit' byobu window.  Be sure to open the database, first.
@@ -35,7 +35,7 @@ A quick overview:
   here; its `beta-pages` by default, but you can use any directory
   that you wish.
 
-* `pair-one.sh`: the actual sentence-splitting workhorse. It handles each
+* `pair-split-one.sh`: the actual sentence-splitting workhorse. It handles each
   text file, moving the file to a different directory when finished
   with it.  Note that there are hard-coded paths in here, pointing to
   the sentence splitter.
