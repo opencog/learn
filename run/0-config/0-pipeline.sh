@@ -7,4 +7,10 @@
 #
 # Directory in which configuration parameters (including this file)
 # are located.
-EXPERIMENT_DIR=/home/ubuntu/run/expt-42
+CONFIG_DIR=/home/ubuntu/run/expt-42/0-config
+
+# Directory where dictionary will be written
+DICT_DIR=/home/ubuntu/run/expt-42/fake-lang
+
+# Directory where corpora files will be written
+CORPORA_DIR=/home/ubuntu/run/expt-42/fake-corpus

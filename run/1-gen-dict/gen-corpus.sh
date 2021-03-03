@@ -1,38 +1,36 @@
 #! /bin/bash
 #
-# Automated corpus generation. Most configurable parameters are located
-# in `dict-conf.scm`. Edit that file as desired. A few more config
-# paramters are below.
+# Automated corpus generation. Configurable parameters are located
+# in `0-config/1-corpus-conf.sh` and in `1-dict-conf.scm`. Edit those
+# file as desired.
 #
-DICT_CONF=dict-conf.scm
+# ---------
 
-# The length of the shortest and the longest sentences to generate.
-# Sentences between these lengths (inclusive) will be generated.
-SHORTEST=3
-LONGEST=12
-
-# Maximum number of sentences to generate for each fixed sentence
-# length. If more sentences than this are possible, then a random
-# subset will be sampled. Otherwise, all possible sentences will
-# be generated.
-NSENT=50000
-
-# No user-configurable parameters below this point.
-# ===================================================================
-# No user-configurable parameters below this point.
-#
-# Generate a dictionary. The return string is either an error message,
-# or its the configured directory.
-EXPERIMENT_DIR=`./gen-dict.scm $DICT_CONF`
-
-if [ $? -ne 0 ]; then
-	echo $EXPERIMENT_DIR
+if [ -r ../0-config/0-pipeline.sh ]; then
+	. ../0-config/0-pipeline.sh
+else
+	echo "Cannot find master configuration file!"
 	exit -1
 fi
 
-# Hard-coded grammar and corpus directories
-DICT=$EXPERIMENT_DIR/fake-lang
-CORP=$EXPERIMENT_DIR/fake-corpus
+if [ -r $CONFIG_DIR/1-corpus-conf.sh ]; then
+	. $CONFIG_DIR/1-corpus-conf.sh
+else
+	echo "Cannot find corpus configuration file!"
+	exit -1
+fi
+
+# Generate a dictionary. The return string is either an error message,
+# or its the configured directory.
+RET_STR=`./gen-dict.scm $CONFIG_DIR/$DICT_CONF $DICT_DIR`
+
+if [ $? -ne 0 ]; then
+	echo $RET_STR
+	exit -1
+fi
+
+DICT=$DICT_DIR
+CORP=$CORPORA_DIR
 
 if [[ -d $CORP ]]; then
 	echo Corpus directory exists: $CORP

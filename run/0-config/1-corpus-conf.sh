@@ -3,7 +3,7 @@
 # Configuration parameters for artificial language corpus generation.
 #
 # The file that contains the dictionary configuration information.
-DICT_CONF=dict-conf.scm
+DICT_CONF=1-dict-conf.scm
 
 # The length of the shortest and the longest sentences to generate.
 # Sentences between these lengths (inclusive) will be generated.
