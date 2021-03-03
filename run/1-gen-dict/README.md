@@ -7,19 +7,19 @@ Edit `gen-dict.scm` and adjust parameters as desired.
 Edit `gen-corpus.sh` and set directory path to where you want the
 generated corpus to go. Then run it.
 
-Move to step `../run/1-word-pairs` next.
+Move to step `../run/2-word-pairs` next.
 
 File overview
 -------------
-* `dict-conf.scm` -- This contains the configurable parameters for
-   generating a random artificial ("fake") grammar. Edit this file
-   as desired (or copy it and edit it...). Once the parameters are
-   configured as desired, the grammar can be generated as
+* `gen-dict.scm` -- Generates a random artificial ("fake") grammar.
+  Requires configuration paramters to be declared; see
+  `../0.config/dict-conf.scm` for an example configuration file.
+
+   Once the parameters are configured as desired, the grammar can
+   be generated as
 ```
    $ ./gen-dict.scm dict-conf.scm
 ```
-
-* `gen-dict.scm` -- Generates the dictionary.
 
 * `fake-lang` -- Link Grammar boilerplate, required for working with
    a Link-Grammar file-based dictionary. The `gen-dict.scm` file copies
