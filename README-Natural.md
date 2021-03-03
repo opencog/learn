@@ -873,8 +873,11 @@ word-disjunct pairs) that can be observed.
 
 MST Disjunct Counting
 ---------------------
-The overall processing is very similar to batch pair-counting. The steps
-are as follows:
+The overall processing is very similar to batch pair-counting. Scripts
+for performing this are located in `2-mst-parsing` for non-planar MST
+and in `2-mpg-parsing` for planar MST. Pick on or the other.
+
+The steps are as follows:
 
 * Copy text files to the directory `gamma-pages` directory. This can
   be a different set of text files from before, or the same. It does
@@ -884,10 +887,9 @@ are as follows:
 * Make a copy of the database containing word-pair mutual information.
   The disjunct observation counts will be accumulated into the database,
   further expanding it's size.  You probably want to keep a copy of the
-  original, "just in case". You can copy databases by saying:
-```
-      createdb -T existing_dbname new_dbname
-```
+  original, "just in case". You can copy RocksDB databases with `cp -pr`
+  and Postgres databases with `createdb -T`.
+
 * Make a copy of `config/opencog-mst-en.conf` (if you wish) and edit
   it to suit your tastes. Or use the default.  Make note of the port
   number: this one uses port 19005.
@@ -942,11 +944,12 @@ per-word statistics.  Marginals will be needed both for the
 pseudo-csets and (optionally) for the cross-connector sets.  First,
 compute the marginals for the pseudo-csets:
 ```
-      (sql-open "postgres:///en_disjuncts?user=linas")
+      (cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
       (define pca (make-pseudo-cset-api))
       (define psa (add-pair-stars pca))
       (define btr (batch-transpose psa))
       (psa 'fetch-pairs)
+      ((add-support-compute psa) 'cache-all) ; uhhh
       (btr 'mmt-marginals)
 ```
 To obtain the marginals for the cross-connectors, repeat the above
@@ -1158,10 +1161,10 @@ change.
 
 * At the guile prompt:
 ```
-      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (use-modules (opencog) (opencog persist) (opencog persist-rocks))
       (use-modules (opencog nlp) (opencog nlp learn))
       (use-modules (opencog matrix) (opencog sheaf))
-      (sql-open "postgres:///en_pairs_sim?user=linas")
+      (cog-rocks-open "rocks:///home/ubuntu/data/expt-1/fake_pairs.rdb")
 ```
   and the, try either
 ```
