@@ -2,6 +2,8 @@
 #
 # Configuration parameters for word-pair counting.
 #
+# This is an example config file; you might want to use one of the
+# preconfigured files, e.g. `2-pair-conf-fake.sh` or `2-pair-conf-en.sh`
 #
 # Enable or disable sentence splitting.
 # If the text corpora have one sentence per line, then splitting is not
