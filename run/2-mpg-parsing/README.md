@@ -1,6 +1,12 @@
 
 MPG-Parsing management scripts
 ==============================
+Maximum Planar Graph Parsing. The scripts here are almost identical to
+the MST-parsing scripts; except that they invoke the planar-MST parser,
+which avoids crossing links.
+
+TODO: MPG should be made into a configurable parameter in the MST
+stage, instead of carrying around these duplicate scripts.
 
 The scripts here are used to automate the ingestion of plain-text
 UTF-8 files into the second stage, (the MPG-parsing stage) of the

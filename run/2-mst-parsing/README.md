@@ -1,6 +1,14 @@
 
 MST-Parsing management scripts
 ==============================
+Maximum Spanning Tree Parsing. The parser invoked in these scripts
+performs an MST parse. This parse may result in non-planar trees;
+the scripts in the `2-mpg-parsing` directory invoke a panar MST
+parser.
+
+TODO: the MPG scripts are very nearly identical to the scripts here;
+they should be merged, so that planar/non-planar is a configurable
+flag.
 
 The scripts here are used to automate the ingestion of plain-text
 UTF-8 files into the second stage, (the MST-parsing stage) of the
