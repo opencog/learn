@@ -94,9 +94,5 @@
 (define num-senses 3)
 (define sense-exp 0.5)
 
-; Directory where the learning experiment will be carried out.
-(define experiment-dir "/home/ubuntu/run/expt-42")
-(define experiment-dir "/tmp/foo")
-
 ; End of configuration.
 ; ---------------------

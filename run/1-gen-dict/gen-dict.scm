@@ -3,14 +3,15 @@
 ;
 ; gen-dict.scm - Generate a random artificial grammar
 ;
-; Usage: `./gen-dict.scm paramaters-file.scm`
+; Usage: `./gen-dict.scm <paramaters-file.scm> <output-dir>`
 ;
-; The file containing the required parameters is passed on the
-; command line.
+; This expects two arguments: a file containing configuration paramters
+; and the directory where the generated files should be written.
 ;
 (use-modules (opencog) (opencog nlp fake))
 
 (define param-file (cadr (program-arguments)))
+(define experiment-dir (caddr (program-arguments)))
 (define x
 	(begin
 		(if (not (access? param-file R_OK))
