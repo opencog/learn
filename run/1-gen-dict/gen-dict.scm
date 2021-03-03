@@ -10,8 +10,29 @@
 ;
 (use-modules (opencog) (opencog nlp fake))
 
+; Get the program arguments
 (define param-file (cadr (program-arguments)))
-(define experiment-dir (caddr (program-arguments)))
+(define dict-dir (caddr (program-arguments)))
+
+; Program paramters. Define these so that guile compilation
+; does not spew errors.
+(define num-link-types #f)
+(define link-type-exp #f)
+(define max-disjunct-size #f)
+(define disjunct-exp #f)
+(define section-size #f)
+(define section-exp #f)
+(define num-pos #f)
+(define num-classes #f)
+(define class-size #f)
+(define class-exp #f)
+(define num-synonyms #f)
+(define synonym-exp #f)
+(define sense-frac #f)
+(define sense-frac #f)
+(define num-senses #f)
+(define sense-exp #f)
+
 (define x
 	(begin
 		(if (not (access? param-file R_OK))
@@ -58,8 +79,6 @@
 		num-senses
 		sense-exp))
 
-(define dict-dir (string-append experiment-dir "/fake-lang"))
-
 ; Make a copy of the link-grammar boilerplate
 (define (copy-boilerplate)
 
@@ -93,18 +112,15 @@
 			(format #t "Remove or rename this directory and try again\n")
 			(exit -1)))
 
-	; Create the experiment-directory, if needed.
-	(if (not (access? experiment-dir R_OK)) (mkdir experiment-dir))
-
 	(mkdir dict-dir)
 	(copy-dir)
 
 	; Copy the parameters file so that we have a log of what was done.
-	(copy-file param-file (string-append experiment-dir "/" param-file))
+	(copy-file param-file (string-append dict-dir "/dict-conf.scm"))
 )
 
 ; Do the actual copy, first
-(define x (copy-boilerplate))
+(define xx (copy-boilerplate))
 
 (define dict-file (string-append dict-dir "/4.0.dict"))
 (define port (open-file dict-file "w"))
@@ -138,7 +154,6 @@
 (close port)
 
 ; If we got to here, then everything must have worked.
-
-(format #t "~A\n" experiment-dir)
+(format #t "~A\n" dict-dir)
 
 (exit 0)
