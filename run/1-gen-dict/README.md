@@ -1,13 +1,16 @@
 
 Artificial grammars and corpora
 ===============================
+Scripts for generating artificial grammars and corpora ("fake
+languages"). Configuration files are in [../0-config](../0-config).
 
-Edit `gen-dict.scm` and adjust parameters as desired.
+Edit [../0-config/0-pipeline.sh](../0-config/0-pipeline.sh) and
+[../0-config/1-dict-conf.scm](../0-config/1-dict-conf.scm) and
+[../0-config/1-corpus-conf.sh](../0-config/1-corpus-conf.sh) to
+configure.
 
-Edit `gen-corpus.sh` and set directory path to where you want the
-generated corpus to go. Then run it.
-
-Move to step `../run/2-word-pairs` next.
+Then run `gen-corpus.sh`. That's it. Now move to step
+[../2-word-pairs](../2-word-pairs) next.
 
 File overview
 -------------
@@ -30,7 +33,7 @@ File overview
 
 * `gen-corpus.sh` -- This generates a random corpus from the fake
    grammar. Edit and configure as desired. This automatically invokes
-   `gen-dict.scm` to crete the dictionary. The location of the
+   `gen-dict.scm` to create the dictionary. The location of the
    dictionary, and the corpus, is configured in `dict-conf.scm`.
 
 Notes
