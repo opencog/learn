@@ -2,7 +2,7 @@
 #
 # halt.sh
 #
-# Stop all opencog langauge-learning processes.
+# Stop all word-pair counting processes.
 
 # This just sends sighup to the file feeder process.
 echo "Shutting down the word-pair text feeder ..."

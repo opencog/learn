@@ -8,7 +8,7 @@ These can be applied to any flat text files from any origin of your
 choice.  Some tools for downloading Wikipedia and Project Gutenberg
 texts can be found in the `../../download` directory.  Tools for
 generating artificial langauges are in the
-[`../0-gen-dict`](../0-gen-dict) directory.
+[`../1-gen-dict`](../1-gen-dict) directory.
 
 You will typically want to make copies of these scripts, and tailor
 them to your specific needs and procedures. In particular, many of

@@ -5,9 +5,12 @@ Parse management scripts
 The scripts here are used to automate the operation of the
 language-learning pipeline. Currently, it consists of five or six steps:
 
+* Overall pipeline configuration files. Located in
+  [0-config](0-config). These should be reviewed and edited to suit.
+
 * Artificial grammar generation. Automation scripts can be found in the
-  [0-gen-dict](0-gen-dict) directory. This is required for calibration
-  of the learning system.
+  [1-gen-dict](1-gen-dict) directory. This is required for calibration
+  of the learning system. Just run `gen-corpus.sh` in this directory.
 
 * For natural language learning, a text corpus is needed. Any
   sufficiently large collection of plain-text UTF-8 files will do.
@@ -15,7 +18,7 @@ language-learning pipeline. Currently, it consists of five or six steps:
   can be found in the `../download` directory.
 
 * Word-pair counting. Automation scripts can be found in the
-  [1-word-pairs](1-word-pairs) directory.
+  [2-word-pairs](2-word-pairs) directory.
 
 * MST parsing. Automation scripts can be found in the
   [2-mst-parsing](2-mst-parsing) directory. The previous step must

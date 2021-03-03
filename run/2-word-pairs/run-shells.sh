@@ -27,7 +27,7 @@ tmux new-window -n 'telnet' 'rlwrap telnet localhost 17008; $SHELL'
 
 # Parse
 tmux new-window -n 'submit' \
-	'echo -e "\nYou might want to run ./pair-submit-en.sh here.\n"; $SHELL'
+	'echo -e "\nYou might want to run ./pair-submit-fake.sh here.\n"; $SHELL'
 
 # Spare
 tmux new-window -n 'spare' 'echo -e "\nSpare-use shell.\n"; $SHELL'

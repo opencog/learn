@@ -2,8 +2,9 @@
 #
 # 0-pipeline.sh
 #
-# Master file for Configuration parameters for artificial langugage
-# corpus generation.
+# Master file for configuration parameters for langugage learning.
+# This particular file is aimed at artificial-language/corpus
+# generation and processing.
 #
 # Directory roots. One for text data (the corpus, and assorted text files)
 # the other for RocksDB databases. This allows the text files to live on a
@@ -22,3 +23,6 @@ DICT_DIR=$TEXT_DIR/fake-lang
 
 # Directory where corpora files will be written
 CORPORA_DIR=$TEXT_DIR/fake-corpus
+
+# File contiaing pair-counting configuration
+PAIR_CONF=$CONFIG_DIR/2-fake-pair-conf.sh
