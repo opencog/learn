@@ -40,13 +40,14 @@ fi
 # Split the filename into two parts
 alen=${#basepath}
 blen=$(($alen+2))
-# base=`echo $filename | cut -c1-$alen`
 rest=`echo $filename | cut -c$blen-500`
 
 echo "Pair-count processing file >>>$rest<<<"
 
-splitdir=$basepath/pair-articles-staging
-subdir=$basepath/pair-counted-articles
+# Remove everything after the last slash in the basepath.
+base=`echo ${basepath%*/}`
+splitdir=$base/pair-staging
+subdir=$base/pair-counted
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")

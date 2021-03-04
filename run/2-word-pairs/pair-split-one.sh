@@ -49,13 +49,14 @@ fi
 # Split the filename into two parts
 alen=${#basepath}
 blen=$(($alen+2))
-# base=`echo $filename | cut -c1-$alen`
 rest=`echo $filename | cut -c$blen-500`
 
 echo "Splitting and word-pair counting file >>>$rest<<<"
 
-splitdir=$basepath/pair-split-articles
-subdir=$basepath/pair-counted-articles
+# Remove everything after the last slash in the basepath.
+base=`echo ${basepath%*/}`
+splitdir=$base/pair-split-articles
+subdir=$base/pair-counted-articles
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
