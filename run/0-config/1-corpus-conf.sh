@@ -23,4 +23,5 @@ LONGEST=12
 #
 # Pair counting runs at about 15 to 30 sentences per second
 # on present-day desktop CPUs.
+# MPG parsing runs at about 100 to 300 sentences per second.
 NSENT=25000

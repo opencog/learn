@@ -874,15 +874,13 @@ word-disjunct pairs) that can be observed.
 MST Disjunct Counting
 ---------------------
 The overall processing is very similar to batch pair-counting. Scripts
-for performing this are located in `2-mst-parsing` for non-planar MST
-and in `2-mpg-parsing` for planar MST. Pick on or the other.
+for performing this are located in the `run/2-mst-parsing` directory.
 
 The steps are as follows:
 
-* Copy text files to the directory `gamma-pages` directory. This can
-  be a different set of text files from before, or the same. It does
-  not seem to matter. You can pick a different directory name, if you
-  wish.
+* Pick one of the configuration files `run/0-config/3-*sh` files.
+  If needed, adjust the configuration. The default configuration
+  should work well, without adjustment.
 
 * Make a copy of the database containing word-pair mutual information.
   The disjunct observation counts will be accumulated into the database,
@@ -890,50 +888,28 @@ The steps are as follows:
   original, "just in case". You can copy RocksDB databases with `cp -pr`
   and Postgres databases with `createdb -T`.
 
-* Make a copy of `config/opencog-mst-en.conf` (if you wish) and edit
-  it to suit your tastes. Or use the default.  Make note of the port
-  number: this one uses port 19005.
+* Review `run-shells.sh` and (optionally) change it as desired. Run it.
+  It will start a tmux/byobu session. One of the tmux terminals will
+  start a cogserver. This may stall for a while, as it loads word-pairs
+  into RAM. This may take from seconds to over an hour, depending on
+  the number of word-pairs and the databse backend.
 
-* Make a copy of `mst-count-en.scm` (or another `mst-count-??.scm` file)
-  Edit it, and insert the database credentials for the database that
-  contains the word-pair MI data.  Indicate the cogserver config file to
-  use (previous step).
+* Once the word-pair loading is done, MST parsing can be started.
+  When word-pair loading finishes, a summary report will be printed,
+  followed by a guile prompt. After this appears, flip to the `submit`
+  tmux/byobu terminal, and run the `./mst-submit.sh` script. This
+  will pass all of the files in the corpus through the MST parsing
+  stage, accumulating disjunct counts as it goes.
 
-* Make a copy of `run-shells.sh` and edit it to specify the copy of the
-  `mst-count-en.scm` file, created above.  Also adjust the port number
-  to match (19005 instead of 17005). Then run it, to get the byobu/tmux
-  session started.
+  You can monitor progress by saying `find|wc`.  If you interrupt
+  processing, you can safely resume it -- it will pick up again, with
+  the last unprocessed file.
 
-* Wait. And then wait a little bit longer. If you set up `run-shells.sh`
-  to automatically start `guile -l mst-count-en.scm`, then it will
-  stall. If you look at that file, you will notice the line
-  `(pair-obj 'fetch-pairs)` -- this loads all word-pairs into the
-  AtomSpace. This can take anywhere from 10 minutes to several hours,
-  depending on the size of your word-pair database. If you start this
-  in byobu, you will need to wait until it prints, and the guile prompt
-  re-appears.  After it finishes loading, it will print some SQL
-  performance stats, and a matrix summary report. You're good to
-  go once these appear.
-
-* Make a copy of the `mst-submit-en.sh` file, and adjust the location
-  of the  text files, and the port number, to match the above.  If
-  you accept the defaults, no changes are needed.  In one of the tmux
-  terminals, run the `mst-submit-en.sh` file.  This starts the MST
-  processing stage.  As before, the text files will be moved to the
-  `split-articles` directory while they are being processed, and then
-  finally to the `mst-articles` directory, when processing is complete.
-
-  The processing will stop automatically, when the `gamma-pages`
-  directory empties out.  You can monitor progress by saying `find|wc`.
-  If you interrupt processing, you can safely resume it -- it will pick
-  up again, with the last unprocessed file.  You may want to empty out
-  the `mst-articles` directory -- those files are no longer needed
-  (assuming you still have the originals).
-
-  As before, it is reasonable to run this for at least several days,
-  if not a week or two, to accumulate a sufficient number of observation
-  counts for the disjuncts.  For a trial-run, a half-hour should be
-  sufficient.
+  At this time, it is not known how much data is needed to get a good
+  sampling. Experiments with English have used several days worth of
+  processing, and this seemed OK. The small artificial corpora can
+  be processed in an hour or two. For a trial-run, run this for a
+  half-hour, and kill it, and move to the next step.
 
 Disjunct Marginal Statistics
 ----------------------------

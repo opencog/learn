@@ -1,3 +1,5 @@
+#! /usr/bin/env -S guile
+!#
 ;
 ; dict-comp.scm
 ; Compare LG dictionary to the English dictionary.
@@ -20,7 +22,8 @@
 (if (not (equal? 3 (length (program-arguments))))
 	(begin
 		(format #t
-			"Usage: guile -s dict-comp.scm <dict-name> <sentence-file-name>\n")
+			"Usage: ~A <dict-name> <sentence-file-name>\n"
+			(first (program-arguments)))
 		(exit #f)))
 
 (define test-dict (second (program-arguments)))

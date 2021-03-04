@@ -25,7 +25,7 @@ language-learning pipeline. Currently, it consists of five or six steps:
   have been completed, before starting this.
 
 * Grammatical class learning. Automation scripts can be found in the
-  [6-gram-class](6-gram-class) directory. The previous step must
+  [4-gram-class](4-gram-class) directory. The previous step must
   have been completed, before starting this.
 
 * Comparison of the learned grammar to the input grammar in step 0.
