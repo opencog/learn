@@ -2,15 +2,18 @@
 #
 # file-split-process.sh <lang> <file> <base-path>
 #
-# Support script for word-pair counting of plain-text files.
-# Sentence-split one file, submit it, via perl script, to the cogserver.
-# When done, move the file over to the `submitted-pages` directory.
+# Support script for processing of files containing paragraphs of text.
+#
+# Sentence-split each paragraph into individual files, and submit it,
+# via perl script, to the cogserver. When done, move the file over to
+# the $COMPLETED_DIR directory.
 #
 # This script is handles the case for text files that are organized into
 # conventional paragraphs, with multiple sentences per paragraph. Such
 # paragraphs have to be split into distinct sentences before further
 # processing. If the text file already has one sentence per line, then
-# sentence-splitting is not needed, and `pair-nosplit-one.sh` can be used.
+# sentence-splitting is not needed, and `file-nosplit-process.sh` can be
+# used.
 #
 # <lang> is the language to use for determining sentence boundaries.
 # <file> is the file to process
@@ -63,7 +66,8 @@ mkdir -p $(dirname "$subdir/$rest")
 cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
 
 # Submit the split article
-cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe
+cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)

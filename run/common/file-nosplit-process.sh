@@ -1,21 +1,20 @@
 #!/bin/bash
 #
-# pair-nosplit-one.sh <file> <cog-host> <cog-port> <base-path>
+# file-nosplit-process.sh <file> <base-path>
 #
-# Support script for word-pair counting of pre-split plain-text.
+# Support script for processing of pre-split plain-text files.
 # The <file> should contain one sentence per line, and words should be
 # delimited by whitespace.
 #
-# <cog-host> and <cog-port> are the hostname and port number where
-# the cogserver is running.
-#
 # Submit that one file, via perl script, to the parser. When done,
-# move the file over to the `pair-counted-articles` directory in
-# the <base-path>.
+# move the file over to the $COMPLETED_DIR directory.
+#
+# <file> is the file to process
+# <base-path> is the directory in which the test corpora are located.
 #
 # Example usage:
-#    ./pair-nosplit-one.sh file.txt localhost 17001
-#    ./pair-nosplit-one.sh /home/data/dir/file.txt localhost 17001 /home/data
+#    ./file-nosplit-process.sh file.txt
+#    ./file-nosplit-process.sh /home/data/dir/file.txt /home/data
 #
 
 # Some versions of netcat require the -N flag, and some versions
@@ -25,11 +24,11 @@ netcat="nc -N"
 
 # Set up assorted constants needed to run.
 filename="$1"
-coghost="$2"
-cogport=$3
-basepath="$4"
+basepath="$2"
 
-observe="observe-text"
+coghost=HOSTNAME
+cogport=PORT
+observe=OBSERVE
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`
@@ -42,12 +41,12 @@ alen=${#basepath}
 blen=$(($alen+2))
 rest=`echo $filename | cut -c$blen-500`
 
-echo "Pair-count processing file >>>$rest<<<"
+echo "$MSG file >>>$rest<<<"
 
 # Remove everything after the last slash in the basepath.
 base=`echo ${basepath%/*}`
-splitdir=$base/pair-staging
-subdir=$base/pair-counted
+splitdir=${base}/${IN_PROCESS_DIR}
+subdir=${base}/${COMPLETED_DIR}
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
@@ -57,7 +56,8 @@ mkdir -p $(dirname "$subdir/$rest")
 cp "$filename" "$splitdir/$rest"
 
 # Submit the pre-split article
-cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
+cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)
