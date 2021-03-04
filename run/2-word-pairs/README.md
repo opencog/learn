@@ -54,15 +54,6 @@ A quick overview:
 * `pair-marginals.scm`: A guile script that computes marginal statistics
   after pair countig has concluded. This needs to be run by hand.
 
-* `pair-split-one.sh`: helper script. This is used when the text appears
-  in conventional paragraphs; it will split the paragraphs into
-  individual sentences.  It handles each text file, moving the file to
-  a different directory when finished with it.  Note that there are
-  hard-coded paths in here, pointing to the sentence splitter.
-
-* `pair-nosplit-one.sh`: similar to above, but assumes that the
-  text-file contains one sentence per line - i.e. has been pre-split.
-
 Notes about the CogServer
 -------------------------
 The CogServer is used only because the conventional guile REPL server
