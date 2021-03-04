@@ -24,6 +24,10 @@ DICT_DIR=$TEXT_DIR/fake-lang
 # Directory where corpora files will be written
 CORPORA_DIR=$TEXT_DIR/fake-corpus
 
-# File contianing pair-counting configuration
+# File containing pair-counting configuration
 PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-en.sh
 PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-fake.sh
+
+# File containing MST-parsing configuration
+MST_CONF_FILE=$CONFIG_DIR/3-mst-conf.sh
+MST_CONF_FILE=$CONFIG_DIR/3-mpg-conf-fake.sh

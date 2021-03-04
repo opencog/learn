@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# pair-submit.sh
+# mpg-submit.sh
 #
-# Batch word-pair counting script.
+# Batch Planar MST parsing.
 #
 # Loop over all of the corpora files (all the files in $CORPORA_DIR),
 # and then (optionally) sentence-split them and submit them for
@@ -17,4 +17,4 @@ else
 	exit -1
 fi
 
-../common/process-corpus.sh $PAIR_CONF_FILE
+../common/process-corpus.sh $MST_CONF_FILE
