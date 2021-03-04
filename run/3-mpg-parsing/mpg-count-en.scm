@@ -6,27 +6,11 @@
 ; database (which can take an hour or more!).
 ;
 (use-modules (system repl common))
-(use-modules (system repl server))
 (use-modules (opencog) (opencog logger))
 (use-modules (opencog persist) (opencog persist-sql))
 (use-modules (opencog nlp) (opencog nlp learn))
 (use-modules (opencog matrix))
 (use-modules (opencog cogserver))
-
-;;; Hmm. We would like to use the native guile repl server in place
-;;; of the cogserver, but it is not sufficiently stable for that
-;;; purpose.  Therefore, we have to launch the cogserver.
-;;;
-;;;; Write a log-file, just in case...
-;;;(cog-logger-set-filename! "/tmp/mpg-en.log")
-;;;(cog-logger-info "Start MPG parsing for English.")
-;;;
-;;;; Start the network REPL server on port 19005
-;;;(call-with-new-thread (lambda ()
-;;;   (repl-default-option-set! 'prompt "scheme@(en-mpg)> ")
-;;;   (set-current-error-port (%make-void-port "w"))
-;;;   (run-server (make-tcp-server-socket #:port 19005)))
-;;;)
 
 (start-cogserver "config/opencog-mpg-en.conf")
 
