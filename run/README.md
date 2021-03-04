@@ -21,11 +21,11 @@ language-learning pipeline. Currently, it consists of five or six steps:
   [2-word-pairs](2-word-pairs) directory.
 
 * MST parsing. Automation scripts can be found in the
-  [2-mst-parsing](2-mst-parsing) directory. The previous step must
+  [3-mst-parsing](3-mst-parsing) directory. The previous step must
   have been completed, before starting this.
 
 * Grammatical class learning. Automation scripts can be found in the
-  [3-gram-class](3-gram-class) directory. The previous step must
+  [6-gram-class](6-gram-class) directory. The previous step must
   have been completed, before starting this.
 
 * Comparison of the learned grammar to the input grammar in step 0.
