@@ -54,9 +54,9 @@ rest=`echo $filename | cut -c$blen-500`
 echo "Splitting and word-pair counting file >>>$rest<<<"
 
 # Remove everything after the last slash in the basepath.
-base=`echo ${basepath%*/}`
-splitdir=$base/pair-split-articles
-subdir=$base/pair-counted-articles
+base=`echo ${basepath%/*}`
+splitdir=$base/pair-split
+subdir=$base/pair-counted
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
