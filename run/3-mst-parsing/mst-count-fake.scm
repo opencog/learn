@@ -17,7 +17,7 @@
 
 ; Open the database.
 ; Edit the below, setting the database name
-(cog-rocks-open "rocks:///home/ubuntu/data/expt-1/fake_pairs.rdb")
+(cog-rocks-open "rocks:///home/ubuntu/data/expt-3/fake_disjuncts.rdb")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")
