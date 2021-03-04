@@ -21,15 +21,15 @@ directory.  A quick overview:
   breaking on abbreviations.
 
 * `submit-one.pl`: Script to send single sentences to the cogserver.
-  Used both for pair-counting, and for MST-parsing.
+  Used for pair-counting, MST-parsing and MPG-parsing.
 
-* `renice.sh`: Make the postgres server run under a nice priorty.
+* `renice.sh`: Make the Postgres server run under a nice priorty.
 
 * `rc.local.shutdown`, `rc-local-shutdown.service`, `rc.lxc.shutdown`:
-  Shutdown scripts. These are invoked automatically by the system
-  during a power outage, or during a normal shutdown. They attempt
-  to properly helt the learning pipeline, so as to avoid a scrambled
-  database upon reboot.
+  Shutdown scripts. Once these are correctly configured and installed,
+  they will be invoked automatically by the OS during a power outage,
+  or during a normal shutdown. They attempt to properly halt the
+  learning pipeline, so as to avoid a scrambled database upon reboot.
 
 * `halt-all.sh`: Stop all running LXC containers.
 

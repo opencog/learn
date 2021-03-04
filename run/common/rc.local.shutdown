@@ -9,6 +9,6 @@
 echo "Shut down the opencog system" > /root/opencog-shutdown.log
 date >> /root/opencog-shutdown.log
 
-sudo -u ubuntu /home/ubuntu/run/halt.sh >> /root/opencog-shutdown.log
+sudo -u ubuntu /home/ubuntu/run/common/halt.sh >> /root/opencog-shutdown.log
 
 exit 0
