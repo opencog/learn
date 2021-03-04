@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# pair-split-one.sh <lang> <file> <cog-host> <cog-port> <base-path>
+# file-split-process.sh <lang> <file> <base-path>
 #
 # Support script for word-pair counting of plain-text files.
 # Sentence-split one file, submit it, via perl script, to the cogserver.
@@ -14,13 +14,11 @@
 #
 # <lang> is the language to use for determining sentence boundaries.
 # <file> is the file to process
-# <cog-host> and <cog-port> are teh cogserver ipv4 hostname and port
-#    number where the processing will be done.
 # <base-path> is the directory in which the test corpora are located.
 #
 # Example usage:
-#    ./pair-one.sh en foo.txt localhost 17001
-#    ./pair-one.sh en /home/data/dir/foo.txt localhost 17001 /home/data/
+#    ./file-split-process.sh en foo.txt
+#    ./file-split-process.sh en /home/data/dir/foo.txt /home/data/
 #
 
 # Some versions of netcat require the -N flag, and some versions
@@ -31,14 +29,13 @@ netcat="nc -N"
 # Set up assorted constants needed to run.
 lang=$1
 filename="$2"
-coghost="$3"
-cogport=$4
-basepath="$5"
+basepath="$3"
 
-#splitter=/usr/local/bin/split-sentences.pl
 splitter=./split-sentences.pl
 
-observe="observe-text"
+coghost=HOSTNAME
+cogport=PORT
+observe=OBSERVE
 
 # Punt if the cogserver has crashed.  Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`
@@ -51,12 +48,12 @@ alen=${#basepath}
 blen=$(($alen+2))
 rest=`echo $filename | cut -c$blen-500`
 
-echo "Splitting and word-pair counting file >>>$rest<<<"
+echo "$MSG file >>>$rest<<<"
 
 # Remove everything after the last slash in the basepath.
 base=`echo ${basepath%/*}`
-splitdir=$base/pair-split
-subdir=$base/pair-counted
+splitdir=${base}/${IN_PROCESS_DIR}
+subdir=${base}/${COMPLETED_DIR}
 
 # Create directories if missing
 mkdir -p $(dirname "$splitdir/$rest")
@@ -66,7 +63,7 @@ mkdir -p $(dirname "$subdir/$rest")
 cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
 
 # Submit the split article
-cat "$splitdir/$rest" | ../submit-one.pl $coghost $cogport $observe
+cat "$splitdir/$rest" | ./submit-one.pl $coghost $cogport $observe
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)

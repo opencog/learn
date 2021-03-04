@@ -28,10 +28,17 @@ else
 	exit -1
 fi
 
+export HOSTNAME
+export PORT
+export OBSERVE
+export IN_PROCESS_DIR
+export COMPLETED_DIR
+export MSG
+
 if $SENTENCE_SPLIT; then
 	time find $CORPORA_DIR -type f \
-		-exec ./pair-one.sh $SPLIT_LANG {} $HOSTNAME $PORT $CORPORA_DIR \;
+		-exec ../common/file-split-process.sh $SPLIT_LANG {} $CORPORA_DIR \;
 else
 	time find $CORPORA_DIR -type f \
-		-exec ./pair-nosplit-one.sh {} $HOSTNAME $PORT $CORPORA_DIR \;
+		-exec ../common/file-nosplit-process.sh {} $CORPORA_DIR \;
 fi

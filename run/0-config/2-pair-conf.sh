@@ -22,5 +22,19 @@ PORT=17001
 PROMPT="scheme@(count-pairs)> "
 COGSERVER_CONF=""
 
+# Scheme function name for word-pair counting. This is a scheme function
+# that will be called to process each sentence.  For example, if the corpus
+# contains "Some sentence." then the cogserver will receive
+#   (observe-text "Some sentence.")
+#
+OBSERVE="observe-text"
+
 # URL for the database where pair counts will be accumulated
 PAIR_DB_URL=rocks://${DATA_DIR}/word_pairs.rdb
+
+# Directories where in-process and completed files will be moved.
+IN_PROCESS_DIR=pair-split
+COMPLETED_DIR=pair-counted
+
+# Message printed for each processed file
+MSG="Splitting and word-pair counting"
