@@ -15,6 +15,9 @@ the general process is hard to automate, and works best if it is
 monitored for forward progress. This is done by starting a cogserver
 in one terminal, and sending text to it in another.
 
+After counting has completed, marginal statistics must be computed.
+This can be done by hand, by running `pair-marginals.scm`.
+
 The main entry point here is `run-shells.sh` which creates multiple
 terminal sessions in tmux/byobu. One terminal will have the cogserver
 running in it, and another will have the text-feeder script. By default,
@@ -41,6 +44,12 @@ A quick overview:
   them for word-pair counting. Start it manually in the `submit` byobu
   window. The cogserver needs to be running first, and a database needs
   to be open (it should be in another byobu terminal).
+
+* `pair-count.scm`: A guile script that loaded needed modues and starts
+  the cogserver.
+
+* `pair-marginals.scm`: A guile script that computes marginal statistics
+  after pair countig has concluded. This needs to be run by hand.
 
 * `pair-split-one.sh`: helper script. This is used when the text appears
   in conventional paragraphs; it will split the paragraphs into

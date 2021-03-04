@@ -1,12 +1,12 @@
 #! /usr/bin/env -S guile
 !#
 ;
-; pair-count-fake.scm
+; pair-count.scm
 ;
 ; Set up everything needed for the language-learning word-pair
 ; counting pipeline. Starts the CogServer, opens the database.
 ;
-; This has assorted hard-coded file-paths in it. Adjust these to taste.
+; All configurable paramters are passed as arguments.
 ;
 (use-modules (system repl common))
 (use-modules (system repl server))
