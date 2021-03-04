@@ -21,6 +21,15 @@
 (define star-obj (add-pair-stars pair-obj))
 (pair-obj 'fetch-pairs)
 
+; Check to see if the marginals have been computed.
+; Common error is to forget to do them manually.
+; So we check, and compute if necessary.
+(catch #t
+	(lambda () ((add-report-api star-obj) 'num-pairs))
+	(lambda (key . args)
+		(format #t "Word pair marginals missing; computing them now.\n")
+		(batch-pairs star-obj)
+		#f))
 
 ; Print the sql stats
 ; (sql-stats)
