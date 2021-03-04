@@ -8,7 +8,8 @@
 # per line. The are sent to the cogserver using ARGV[2] as the command.
 #
 # For word-pair counting, ARGV[2] is "observe-text"
-# For disjunct counting, ARGV[2] is "observe-mst"
+# For MST disjunct counting, ARGV[2] is "observe-mst"
+# For planar MST disjunct counting, ARGV[2] is "observe-mpg"
 #
 # Example usage:
 #    cat file | ./submit-one.pl localhost 17001 observe-text
