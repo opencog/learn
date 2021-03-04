@@ -21,6 +21,7 @@
 (define star-obj (add-pair-stars pair-obj))
 (pair-obj 'fetch-pairs)
 
+
 ; Print the sql stats
 ; (sql-stats)
 ; (cog-rocks-stats)
@@ -28,4 +29,5 @@
 ; Clear the sql cache and the stats counters
 ; (sql-clear-cache)
 ; (sql-clear-stats)
+
 (print-matrix-summary-report star-obj)

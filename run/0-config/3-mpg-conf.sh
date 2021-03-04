@@ -10,31 +10,31 @@
 # needed. If the corpora are arranged into paragraphs (as conventional
 # for natural language), then the paragraphs must be split into distinct
 # sentences.
-SENTENCE_SPLIT=false
+export SENTENCE_SPLIT=false
 
 # If splitting is enabled, then specify the splitting language. Choices
 # include `en`, `fr`, `pl` and many more; see the splitter directory for more.
-SPLIT_LANG=en
+export SPLIT_LANG=en
 
 # IPv4 hostname and port number of where the cogserver is running.
-HOSTNAME=localhost
-PORT=17001
-PROMPT="scheme@(mpg-parse)> "
-COGSERVER_CONF=""
+export HOSTNAME=localhost
+export PORT=17001
+export PROMPT="scheme@(mpg-parse)> "
+export COGSERVER_CONF=""
 
 # Scheme function name for planar MST parsing. This is a scheme function
 # that will be called to process each sentence.  For example, if the corpus
 # contains "Some sentence." then the cogserver will receive
 #   (observe-text "Some sentence.")
 #
-OBSERVE="observe-mpg"
+export OBSERVE="observe-mpg"
 
 # URL for the database where disjunct counts will be accumulated
-ROCKS_DB_URL=rocks://${DATA_DIR}/mpg_parse.rdb
+export ROCKS_DB_URL=rocks://${DATA_DIR}/mpg_parse.rdb
 
 # Directories where in-process and completed files will be moved.
-IN_PROCESS_DIR=mpg-split
-COMPLETED_DIR=mpg-done
+export IN_PROCESS_DIR=mpg-split
+export COMPLETED_DIR=mpg-done
 
 # Message printed for each processed file
-MSG="MPG-Processing"
+export MSG="MPG-Processing"

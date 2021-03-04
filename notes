@@ -343,6 +343,11 @@ guile -l pair-count-fake.scm -- a b c
 
 c-start-cogserver
 
+(print-matrix-summary-report star-obj)
+((add-support-compute star-obj) 'cache-all)
+
+((make-central-compute star-obj) 'cache-all)
+
 TODO:
 
 Bugs: quotes are not being escaped by submit-one.pl!!
