@@ -1,11 +1,20 @@
 #! /usr/bin/env perl
 #
-# submit-one.pl <cogserver-host> <cogserver-port> <observe-cmd>
+# submit-lines.pl <cogserver-host> <cogserver-port> <observe-cmd>
 #
-# Submit a collection of sentences, one sentence at a time, to the
-# cogserver located on host ARGV[0] and port ARGV[1].  The sentences
-# are read from standard input, and must be arranged with one sentence
-# per line. The are sent to the cogserver using ARGV[2] as the command.
+# Read lines from `stdin` and submit them to the cogserver for
+# processing. Each line is quoted and then wrapped by the <observe-cmd>
+# before being sent. For example, if the line is "some text\n", and
+# <observe-cmd> is "do-thing", then the CogServer will receive
+#
+#   (do-thing "some test")\n
+#
+# Note that the trailing newline is chopped off the end of the line,
+# and "do-thing" is assumed to be a scheme function that has been
+# defined.
+#
+# By convention, each line is assumed to be a single sentence. If
+# sentence-splitting is needed, it must be done at an earlier stage.
 #
 # For word-pair counting, ARGV[2] is "observe-text"
 # For MST disjunct counting, ARGV[2] is "observe-mst"
@@ -22,6 +31,10 @@ die "Wrong number of args!" if ($#ARGV != 2);
 die "Netcat failed! Bad host or port?" if (0 != $?);
 
 # Use plain-old TCP sockets.
+# (An earlier vrsion of this file used netcat. This was OK but...
+# it bottlnecked and lead to poor performance, especially when the
+# cogserver could respond quickly. Forking a new netcat each time
+# was inefficient.)
 use Socket;
 my $server = $ARGV[0];
 my $port = $ARGV[1];
