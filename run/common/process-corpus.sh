@@ -31,10 +31,12 @@ export IN_PROCESS_DIR
 export COMPLETED_DIR
 export MSG
 
+cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
 if $SENTENCE_SPLIT; then
 	time find $CORPORA_DIR -type f \
-		-exec ./file-split-process.sh $SPLIT_LANG {} $CORPORA_DIR \;
+		-exec $cwd/file-split-process.sh $SPLIT_LANG {} $CORPORA_DIR \;
 else
 	time find $CORPORA_DIR -type f \
-		-exec ./file-nosplit-process.sh {} $CORPORA_DIR \;
+		-exec $cwd/file-nosplit-process.sh {} $CORPORA_DIR \;
 fi
