@@ -24,7 +24,7 @@
 (repl-default-option-set! 'prompt (cadr (program-arguments)))
 
 ; Start the cogserver using the indicated config file.
-(start-cogserver caddr (program-arguments)))
+(start-cogserver (caddr (program-arguments)))
 
 ; Open the database.
 (cog-rocks-open (cadddr (program-arguments)))
