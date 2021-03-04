@@ -36,7 +36,7 @@ fi
 byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 
-byobu new-window -n 'cogsrv' 'nice guile -l ../common/cogserver-rocks.scm -- ${PROMPT} ${COGSERVER_CONF} ${PAIR_DB_URL}; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ../common/cogserver-rocks.scm ;   $SHELL'
 sleep 2;
 
 # Telnet window

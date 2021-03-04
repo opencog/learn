@@ -15,7 +15,7 @@ COGSERVER_CONF="config/opencog-mpg-en.conf"
 OBSERVE="observe-mpg"
 
 # URL for the database where disjunct counts will be accumulated
-PAIR_DB_URL=rocks://${DATA_DIR}/mpg_parse.rdb
+ROCKS_DB_URL=rocks://${DATA_DIR}/mpg_parse.rdb
 
 # Directories where in-process and completed files will be moved.
 IN_PROCESS_DIR=mpg-split

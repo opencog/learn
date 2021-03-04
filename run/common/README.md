@@ -75,3 +75,30 @@ are a number of exceptions.  For example, if the period is part of an
 abbreviated title ("Mr.", "Gen.", ...), it does not end a sentence.
 A period following a single capitalized letter is assumed to be a
 person's initial, and is not considered the end of a sentence.
+
+Notes about the CogServer
+-------------------------
+The CogServer is used only because the conventional guile REPL server
+is not sufficiently stable to be usable in production. It is also rather
+slow; the CogServer is roughly 4x faster.
+
+If it weren't for these issues, you could get functionality more-or-less
+equivalent to the CogServer in pure guile, by running the following:
+```
+(use-modules (system repl common))
+(use-modules (system repl server))
+
+; Write a log-file, just in case...
+(cog-logger-set-filename! "/tmp/mpg-en.log")
+(cog-logger-info "Start MPG parsing for English.")
+
+; Start the network REPL server on port 19005
+(call-with-new-thread (lambda ()
+   (repl-default-option-set! 'prompt "scheme@(en-mpg)> ")
+   (set-current-error-port (%make-void-port "w"))
+   (run-server (make-tcp-server-socket #:port 19005)))
+)
+```
+For short runs, the above does behave more or less the same way as the
+CogServer does. Unfortunately, it crashes/hangs after about half and
+hour (or sooner???), under a heavy load.

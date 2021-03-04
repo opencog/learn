@@ -31,8 +31,7 @@ The scripts here assume that `../0-config/0-pipeline.sh` and that
 Detailed instructions on what to do can be found in
 [`../../README-Natural.md`](../../README-Natural.md)
 
-After this stage is completed, move on to either `../3-mpg-parsing` or
-to `../3-mst-parsing`.
+After this stage is completed, move on to `../3-mst-parsing`.
 
 File overview
 -------------
@@ -50,30 +49,3 @@ A quick overview:
 
 * `pair-marginals.scm`: A guile script that computes marginal statistics
   after pair counting has concluded. This needs to be run by hand.
-
-Notes about the CogServer
--------------------------
-The CogServer is used only because the conventional guile REPL server
-is not sufficiently stable to be usable in production. It is also rather
-slow; the CogServer is roughly 4x faster.
-
-If it weren't for these issues, you could get functionality more-or-less
-equivalent to the CogServer in pure guile, by running the following:
-```
-(use-modules (system repl common))
-(use-modules (system repl server))
-
-; Write a log-file, just in case...
-(cog-logger-set-filename! "/tmp/mpg-en.log")
-(cog-logger-info "Start MPG parsing for English.")
-
-; Start the network REPL server on port 19005
-(call-with-new-thread (lambda ()
-   (repl-default-option-set! 'prompt "scheme@(en-mpg)> ")
-   (set-current-error-port (%make-void-port "w"))
-   (run-server (make-tcp-server-socket #:port 19005)))
-)
-```
-For short runs, the above does behave more or less the same way as the
-CogServer does. Unfortunately, it crashes/hangs after about half and
-hour (or sooner???), under a heavy load.

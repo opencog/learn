@@ -16,7 +16,7 @@ COGSERVER_CONF=config/opencog-pairs-en.conf
 OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-PAIR_DB_URL=rocks://${DATA_DIR}/en_pairs.rdb
+ROCKS_DB_URL=rocks://${DATA_DIR}/en_pairs.rdb
 
 # File processing grunge
 MSG="Splitting and word-pair counting"

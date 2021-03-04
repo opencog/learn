@@ -1,22 +1,11 @@
 ;
-; mst-count-fake.scm
+; mst-count.scm
 ;
 ; Run everyting needed for the language-learning disjunct-counting
 ; pipeline. Starts the CogServer, opens the database, loads the
 ; database (which can take an hour or more!).
 ;
-(use-modules (system repl common))
-(use-modules (opencog) (opencog logger))
-(use-modules (opencog persist) (opencog persist-rocks))
-(use-modules (opencog nlp) (opencog nlp learn))
-(use-modules (opencog matrix))
-(use-modules (opencog cogserver))
-
-(start-cogserver "config/opencog-mst-fake.conf")
-
-; Open the database.
-; Edit the below, setting the database name
-(cog-rocks-open "rocks:///home/ubuntu/data/expt-3/fake_disjuncts.rdb")
+(load "../common/cogserver-rocks.scm")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")

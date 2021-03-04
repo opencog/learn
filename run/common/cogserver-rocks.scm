@@ -6,7 +6,7 @@
 ; Set up everything needed for the language-learning pipeline
 ; Starts the CogServer, opens the database.
 ;
-; All configurable paramters are passed as arguments.
+; Configurable paramters are pulled from the shell environment.
 ;
 (use-modules (system repl common))
 (use-modules (opencog) (opencog logger))
@@ -15,16 +15,10 @@
 (use-modules (opencog nlp) (opencog nlp learn))
 (use-modules (opencog cogserver))
 
-(if (not (equal? 4 (length (program-arguments))))
-	(begin
-		(format #t "Usage: ~A <prompt> <cog-conf> <rocks-url>\n"
-			(car (program-arguments)))
-		(exit -1)))
-
-(repl-default-option-set! 'prompt (cadr (program-arguments)))
+(repl-default-option-set! 'prompt (getenv "PROMPT"))
 
 ; Start the cogserver using the indicated config file.
-(start-cogserver (caddr (program-arguments)))
+(start-cogserver (getenv "COGSERVER_CONF"))
 
 ; Open the database.
-(cog-rocks-open (cadddr (program-arguments)))
+(cog-rocks-open (getenv "ROCKS_DB_URL"))

@@ -30,7 +30,7 @@ COGSERVER_CONF=""
 OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-PAIR_DB_URL=rocks://${DATA_DIR}/word_pairs.rdb
+ROCKS_DB_URL=rocks://${DATA_DIR}/word_pairs.rdb
 
 # Directories where in-process and completed files will be moved.
 IN_PROCESS_DIR=pair-split

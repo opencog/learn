@@ -7,7 +7,7 @@
 ; compute marginal statistics. This computes assorted totals and
 ; conditional probabilities needed before the next step.
 ;
-; (load "../common/cogserver-rocks.scm")
+(load "../common/cogserver-rocks.scm")
 
 ; Init the statistics objects.
 (define ala (make-any-link-api))

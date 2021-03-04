@@ -24,3 +24,7 @@ A quick overview:
   tmux/byobu window.  Be sure to have performed the word-pair mutual
   information step first. Be sure to make a copy of your database.
   Be sure to open the database, first.
+
+* `mst-count.scm`: Guile script to start the cogserver, connect to
+  the database, and perform initialization needed before MST parsing
+  can begin.
