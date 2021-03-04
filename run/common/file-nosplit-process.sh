@@ -26,9 +26,9 @@ netcat="nc -N"
 filename="$1"
 basepath="$2"
 
-coghost=HOSTNAME
-cogport=PORT
-observe=OBSERVE
+coghost=$HOSTNAME
+cogport=$PORT
+observe=$OBSERVE
 
 # Punt if the cogserver has crashed. Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`

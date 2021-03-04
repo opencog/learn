@@ -36,9 +36,9 @@ basepath="$3"
 
 splitter=./split-sentences.pl
 
-coghost=HOSTNAME
-cogport=PORT
-observe=OBSERVE
+coghost=$HOSTNAME
+cogport=$PORT
+observe=$OBSERVE
 
 # Punt if the cogserver has crashed.  Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`
