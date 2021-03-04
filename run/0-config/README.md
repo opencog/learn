@@ -27,6 +27,11 @@ they are needed to run the processing.
   Pre-configured variants for English and artificial langauges are in
   `2-pair-conf-en.sh` and in `2-pair-conf-fake.sh`.
 
+* `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
+  parsing and disjunct counting. The MPG variant is the "Maximum Planar
+  Graph" variation of MST, as ordinary MST parsing may result in
+  non-planar trees.
+
 Notes
 -----
 What is the best way to automate complex data processing pipelines?
@@ -38,3 +43,6 @@ What is the best way to automate complex data processing pipelines?
 
 * Something from the [Awesome Pipeline](https://github.com/pditommaso/awesome-pipeline)
   list.
+
+The above all seem far too complicated. We're sticking to plain-old
+bash scripts for now.

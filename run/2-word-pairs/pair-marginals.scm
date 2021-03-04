@@ -7,19 +7,7 @@
 ; compute marginal statistics. This computes assorted totals and
 ; conditional probabilities needed before the next step.
 ;
-(use-modules (opencog) (opencog logger))
-(use-modules (opencog persist) (opencog persist-rocks))
-(use-modules (opencog matrix))
-(use-modules (opencog nlp) (opencog nlp learn))
-
-(if (not (equal? 2 (length (program-arguments))))
-	(begin
-		(format #t "Usage: ~A <rocks-url>\n"
-			(car (program-arguments)))
-		(exit -1)))
-
-; Open the database.
-(cog-rocks-open (cadddr (program-arguments)))
+; (load "../common/cogserver-rocks.scm")
 
 ; Init the statistics objects.
 (define ala (make-any-link-api))
@@ -30,4 +18,4 @@
 
 ; (print-matrix-summary-report asa)
 
-(cog-rocks-close)
+; (cog-rocks-close)

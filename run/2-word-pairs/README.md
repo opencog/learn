@@ -48,11 +48,8 @@ A quick overview:
   window. The cogserver needs to be running first, and a database needs
   to be open (it should be in another byobu terminal).
 
-* `pair-count.scm`: A guile script that loaded needed modues and starts
-  the cogserver.
-
 * `pair-marginals.scm`: A guile script that computes marginal statistics
-  after pair countig has concluded. This needs to be run by hand.
+  after pair counting has concluded. This needs to be run by hand.
 
 Notes about the CogServer
 -------------------------

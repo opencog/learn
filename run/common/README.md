@@ -23,14 +23,17 @@ directory.  A quick overview:
 * `submit-one.pl`: Script to send single sentences to the cogserver.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
-* `file-split-process.sh`: helper script. This is used when the text appears
-  in conventional paragraphs; it will split the paragraphs into
+* `file-split-process.sh`: helper script. This is used when the text
+  appears in conventional paragraphs; it will split the paragraphs into
   individual sentences.  It handles each text file, moving the file to
   a different directory when finished with it.  Note that there are
   hard-coded paths in here, pointing to the sentence splitter.
 
 * `file-nosplit-process.sh`: similar to above, but assumes that the
   text-file contains one sentence per line - i.e. has been pre-split.
+
+* `cogserver-rocks.scm`: Guile scheme script to load needed guile
+  modules, start the cogserver, and open the RocksDB database backend.
 
 
 Management scripts

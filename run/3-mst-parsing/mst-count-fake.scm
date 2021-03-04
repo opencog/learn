@@ -6,7 +6,6 @@
 ; database (which can take an hour or more!).
 ;
 (use-modules (system repl common))
-(use-modules (system repl server))
 (use-modules (opencog) (opencog logger))
 (use-modules (opencog persist) (opencog persist-rocks))
 (use-modules (opencog nlp) (opencog nlp learn))
