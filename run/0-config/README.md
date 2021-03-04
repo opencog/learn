@@ -23,6 +23,10 @@ they are needed to run the processing.
 * `1-corpus-conf.sh` -- This contains paramaters that control the size
    of the generated corpus.
 
+* `2-pair-conf.sh` -- Parameters that control word-pair counting.
+  Pre-configured variants for English and artificial langauges are in
+  `2-pair-conf-en.sh` and in `2-pair-conf-fake.sh`.
+
 Notes
 -----
 What is the best way to automate complex data processing pipelines?

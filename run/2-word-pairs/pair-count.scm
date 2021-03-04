@@ -1,3 +1,5 @@
+#! /usr/bin/env -S guile
+!#
 ;
 ; pair-count-fake.scm
 ;
@@ -13,11 +15,16 @@
 (use-modules (opencog nlp) (opencog nlp learn))
 (use-modules (opencog cogserver))
 
-(repl-default-option-set! 'prompt "scheme@(fake-pairs)> ")
+(if (not (equal? 4 (length (program-arguments))))
+	(begin
+		(format #t "Usage: ~A <prompt> <cog-conf> <rocks-url>\n"
+			(car (program-arguments)))
+		(exit -1)))
 
-; Start the cogserver on port 17008
-(start-cogserver "config/opencog-pairs-fake.conf")
+(repl-default-option-set! 'prompt (cadr (program-arguments)))
+
+; Start the cogserver using the indicated config file.
+(start-cogserver caddr (program-arguments)))
 
 ; Open the database.
-; Edit the below, setting the database name as desired
-(cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
+(cog-rocks-open (cadddr (program-arguments)))

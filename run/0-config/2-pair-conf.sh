@@ -18,4 +18,9 @@ SPLIT_LANG=en
 
 # IPv4 hostname and port number of where the cogserver is running.
 HOSTNAME=localhost
-PORT=17008
+PORT=17001
+PROMPT="scheme@(count-pairs)> "
+COGSERVER_CONF=""
+
+# URL for the database where pair counts will be accumulated
+PAIR_DB_URL=rocks://${DATA_DIR}/word_pairs.rdb

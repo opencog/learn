@@ -338,6 +338,12 @@ RocksIO.cc:306
 
 Speed is about 16 sentences/second for pair-counting.
 
+repl:
+guile -l pair-count-fake.scm -- a b c
+
+c-start-cogserver
+
 TODO:
 
 Bugs: quotes are not being escaped by submit-one.pl!!
+Enhance: revise guile start-cogserver to take args directly
