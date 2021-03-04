@@ -14,4 +14,7 @@ LONGEST=12
 # length. If more sentences than this are possible, then a random
 # subset will be sampled. Otherwise, all possible sentences will
 # be generated.
-NSENT=50000
+#
+# Pair counting runs at about 15 to 30 sentences per second
+# on present-day desktop CPUs.
+NSENT=25000
