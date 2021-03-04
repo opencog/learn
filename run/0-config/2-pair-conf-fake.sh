@@ -2,6 +2,10 @@
 #
 # Configuration parameters for artificial-language word-pair counting.
 #
+#
+# Directory where corpora files can be found
+export CORPORA_DIR=$TEXT_DIR/fake-corpus
+
 # Disable sentence splitting.
 export SENTENCE_SPLIT=false
 

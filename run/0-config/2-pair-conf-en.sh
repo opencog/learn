@@ -2,6 +2,10 @@
 #
 # Configuration parameters for English word-pair counting.
 #
+#
+# Directory where corpora files can be found
+export CORPORA_DIR=$TEXT_DIR/beta-pages
+
 # Enable sentence splitting.
 export SENTENCE_SPLIT=true
 export SPLIT_LANG=en

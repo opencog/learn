@@ -4,7 +4,11 @@
 #
 # This is an example config file; you might want to use one of the
 # preconfigured files, e.g. `2-pair-conf-fake.sh` or `2-pair-conf-en.sh`
+# ------------
 #
+# Directory where corpora files can be found
+export CORPORA_DIR=$TEXT_DIR/beta-pages
+
 # Enable or disable sentence splitting.
 # If the text corpora have one sentence per line, then splitting is not
 # needed. If the corpora are arranged into paragraphs (as conventional

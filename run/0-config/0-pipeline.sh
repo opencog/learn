@@ -18,11 +18,8 @@ export DATA_DIR=/home/ubuntu/data/expt-42
 # are located.
 export CONFIG_DIR=$TEXT_DIR/0-config
 
-# Directory where dictionary will be written
-export DICT_DIR=$TEXT_DIR/fake-lang
-
-# Directory where corpora files will be written
-export CORPORA_DIR=$TEXT_DIR/fake-corpus
+# File containing artificial-languaage generation configuration
+export GEN_CONF_FILE=$CONFIG_DIR/1-corpus-conf.sh
 
 # File containing pair-counting configuration
 export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-en.sh

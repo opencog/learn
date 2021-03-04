@@ -1,10 +1,17 @@
 #! /bin/bash
 #
-# Configuration parameters for Planar MST parsing.
+# Configuration parameters for (Planar) MST parsing.
 #
 # This is an example config file; you might want to use one of the
 # preconfigured files, e.g. `3-mpg-conf-fake.sh` or `3-mpg-conf-en.sh`
+# --------------
 #
+# Directory where corpora files can be found. This can be anywhere;
+# however, it is most convenient to make it the same as the output
+# directory configured in the previous (pair-counting) stage. This is
+# the setting of the `$COMPLETED_DIR` of the earlier stage.
+export CORPORA_DIR=$TEXT_DIR/pair-counted
+
 # Enable or disable sentence splitting.
 # If the text corpora have one sentence per line, then splitting is not
 # needed. If the corpora are arranged into paragraphs (as conventional
@@ -25,7 +32,11 @@ export COGSERVER_CONF=""
 # Scheme function name for planar MST parsing. This is a scheme function
 # that will be called to process each sentence.  For example, if the corpus
 # contains "Some sentence." then the cogserver will receive
-#   (observe-text "Some sentence.")
+#   (observe-mpg "Some sentence.")
+#
+# Use `observe-mpg` to get planar MST parsing.
+# Use `observe-mst` to get generic MST parsing.
+# The trees created by the generic parser might not be planar.
 #
 export OBSERVE="observe-mpg"
 

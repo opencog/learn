@@ -2,6 +2,8 @@
 #
 # Configuration parameters for Planar MST parsing.
 #
+export CORPORA_DIR=$TEXT_DIR/pair-counted
+
 export SENTENCE_SPLIT=true
 export SPLIT_LANG=en
 

@@ -2,6 +2,7 @@
 #
 # Configuration parameters for Planar MST parsing.
 #
+export CORPORA_DIR=$TEXT_DIR/pair-counted
 export SENTENCE_SPLIT=false
 
 # IPv4 hostname and port number of where the cogserver is running.

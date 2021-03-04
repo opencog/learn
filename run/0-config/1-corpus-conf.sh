@@ -2,6 +2,12 @@
 #
 # Configuration parameters for artificial language corpus generation.
 #
+# Directory where dictionary will be written
+export DICT_DIR=$TEXT_DIR/fake-lang
+
+# Directory where corpora files will be written
+export CORPORA_DIR=$TEXT_DIR/fake-corpus
+
 # The file that contains the dictionary configuration information.
 DICT_CONF=1-dict-conf.scm
 
