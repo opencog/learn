@@ -363,6 +363,9 @@ Stored 320000 of 394854 left-wilds in 379 secs (106 pairs/sec)
 Nasty, old postgres was 10x faster in SSD.
 Done storing 394854 left-wilds in 2912 secs
 
+Never mind, above is due to a stupid debug print...
+as_ref_count: oas
+
 cog-rocks-stats: Atomspace holds 1265536 atoms
 Connected to rocks:///home/ubuntu/data/expt-3/mpg_parse.rdb
 Database contents:
@@ -375,7 +378,26 @@ du -s /home/ubuntu/data/expt-3/*
 re-open and close:
 566020  /home/ubuntu/data/expt-3/mpg_parse.rdb
 
+gram-1.rdb is (gram-classify-greedy-discrim 0.5 4)
 
+a b: <wcl-a>;
+c: <wcl-b>;
+d e: <wcl-c>;
+f g: <wcl-d>;
+h i j: <wcl-e>;
+k l m n: <wcl-f>;
+o: <wcl-g>;
+p: <wcl-h>;
+q r s: <wcl-i>;
+t u: <wcl-j>;
+
+Throw to key `C++-EXCEPTION' with args `("dflt-delete" "Internal Error! (/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksIO.cc:563)\nFunction args:\n((Section (ctv 1 0 0)\n  (WordNode \"s\" (ctv 1 0 1.19871e+07))\n  (ConnectorSeq\n    (Connector\n      (WordNode \"###LEFT-WALL###\" (ctv 1 0 1.24572e+07))\n      (ConnectorDir \"-\"))\n    (Connector\n      (WordNode \"o\" (ctv 1 0 2.3094e+06))\n      (ConnectorDir \"-\"))\n    (Connector\n      (WordNode \"p\" (ctv 1 0 1.32314e+07))\n      (ConnectorDir \"-\"))\n    (Connector\n      (WordNode \"u\" (ctv 1 0 1.05214e+07))\n      (ConnectorDir \"-\"))))\n)")'.
+
+Can't find the sid in the sid-list...
+
+RocksStorage::remIncoming
+RocksStorage::removeSatom(
+RocksStorage::removeAtom
 
 
 TODO:
