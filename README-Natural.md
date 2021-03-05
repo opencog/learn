@@ -948,8 +948,8 @@ them: 2 to 5 cross-connectors get created for each ordinary connector
 (since each slot can be a wild-card, and a word typically has 2-5
 connectors). This can double or triple the size of a dataset.
 
-The above computations may take hours or days, depending on the size of
-the disjunct set.  Be sure to make a backup copy of the resulting
+The above computations may take hours or days, depending on the size
+of the disjunct set.  Be sure to make a backup copy of the resulting
 database before proceeding to the next step.
 
 (Optional) Trimming Disjunct Datasets
@@ -965,45 +965,52 @@ step can easily remove 90% of the dataset.  The following sequence will
 perform the trim, as well as removing connectors that cannot connect to
 anything.
 
-The initial dataset is called `all_disjunct_dataset`. Be sure to create
-the target database:
-```
-$ createdb trimmed_dataset
-$ cat atoms.sql | psql trimmed_dataset
-```
-
 The trim used below keeps all words observed more than 40 times, all
 disjuncts observed more than 8 times, and all word-disjunct pairs
-observed more than 5 times.
+observed more than 5 times.  The initial dataset is called
+`all_disjunct_dataset`.
 
 ```
-   (sql-open "postgres:///all_disjunct_dataset")
+   (rocks-open "rocks:///where/ever/all_disjunct_dataset")
    (define pca (make-pseudo-cset-api))
    (define psa (add-pair-stars pca))
    (psa 'fetch-pairs)        ;; Load the dataset
-   (sql-close)               ;; Avoid accidental corruption
+   (rocks-close)             ;; Avoid accidental corruption
    (define psc (add-support-compute psa))
    (psc 'cache-all)          ;; compute subtotals
    (define fsa (add-subtotal-filter psa 40 8 5 #f)) ;; The filter itself
    (define lfa (add-linkage-filter fsa))
-   (sql-open "postgres:///trimmed_dataset")
+   (rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (define fso (make-store lfa))
    (fso 'store-all-elts)     ;; Do NOT store the marginals!
-   (sql-close)
+   (rocks-close)
    ^D                        ;; Exit.
 ```
 The above just trims; but the marginals are needed for grammatical
 classifcation. So build these, as before, starting with a clean load
 of the atomspace with the new trimmed dataset:
 ```
-   (sql-open "postgres:///trimmed_dataset")
+   (rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (psa 'fetch-pairs)
    (batch-all-pair-mi psa)    ;; MI between words and disjuncts
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)       ;; Word-pair entropies
-   (sql-close)
+   (rocks-close)
    ^D                         ;; Exit.
 ```
+
+***Footnote***: Postgres users: be sure to create the target database.
+Like so:
+```
+$ createdb trimmed_dataset
+$ cat atoms.sql | psql trimmed_dataset
+```
+Then use
+```
+   (sql-open "postgres:///all_disjunct_dataset.rdb")
+	(sql-close)
+```
+as needed.
 
 Determining Grammatical Classes
 -------------------------------
@@ -1275,7 +1282,7 @@ Some things in the pipeline, but unfinished:
 * Replace cosine distance in the clustering algos by the information
   divergence, as explained in the
   [Graph Models vs. Gradient Descent](https://github.com/opencog/opencog/raw/master/opencog/nlp/learn/learn-lang-diary/skippy.pdf)
-  document.  There's alreaddy code for computing the divergence;
+  document.  There's already code for computing the divergence;
   to get it, just say
 ```
       (define smi (add-symmetric-mi-compute pca))
