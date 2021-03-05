@@ -349,6 +349,35 @@ c-start-cogserver
 
 ((make-central-compute star-obj) 'cache-all)
 
+Spinning disks:
+iostat -d 5
+sudo iotop -d 5
+shows about 15MB/sec to 40MB/sec of disk-writes to
+spinning disk (dm-0 aka md15 aka sdb/sde)
+speed:
+Stored 200000 of 394854 left-wilds in 287 secs (139 pairs/sec)
+Stored 240000 of 394854 left-wilds in 353 secs (113 pairs/sec)
+Stored 280000 of 394854 left-wilds in 413 secs (97 pairs/sec)
+Stored 320000 of 394854 left-wilds in 379 secs (106 pairs/sec)
+
+Nasty, old postgres was 10x faster in SSD.
+Done storing 394854 left-wilds in 2912 secs
+
+cog-rocks-stats: Atomspace holds 1265536 atoms
+Connected to rocks:///home/ubuntu/data/expt-3/mpg_parse.rdb
+Database contents:
+Next aid: 1265559
+Atoms/Links/Nodes a@: 1265558 l@: 1265494 n@: 37
+Keys/Incoming/Hash k@: 870932 i@: 790044 h@: 0
+
+du -s /home/ubuntu/data/expt-3/*
+1140496 /home/ubuntu/data/expt-3/mpg_parse.rdb
+re-open and close:
+566020  /home/ubuntu/data/expt-3/mpg_parse.rdb
+
+
+
+
 TODO:
 
 Bugs: quotes are not being escaped by submit-one.pl!!
