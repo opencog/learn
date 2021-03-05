@@ -531,7 +531,7 @@ Running Bulk Pair-counting
 --------------------------
 Do this.
 
-* **9)** (Optional)
+* **9)** (Optional; needed only if you are experimenting.)
    Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).  This function was written to
@@ -569,26 +569,48 @@ Do this.
    Currently, no other code examines lengths; this is an open
    experiment.
 
-* **10)** (Optional) Review the `sometimes-gc` and `maybe-gc` settings
-   in the file `link-pipeline.scm`.  These force garbage collection to
-   occur more often than normal; they help keep the process size
-   reasonable.  The current default is to force garbage collection
-   whenever the guile heap exceeds 750 MBytes; this helps keep RAM
-   usage down on small-RAM machines.  However, it does cost CPU time.
+* **10)** (Optional; needed only if you are running out of RAM.)
+   Review the `sometimes-gc` and `maybe-gc` settings in the file
+   `link-pipeline.scm`.  These force garbage collection to occur more
+   often than normal; they help keep the process size reasonable.
+   The current default is to force garbage collection whenever the
+   guile heap exceeds 750 MBytes; this helps keep RAM usage down on
+   small-RAM machines.  However, it does cost CPU time.
    Adjust the `max-size` parameter in `observe-text` in the
    `link-pipeline.scm` file to suit your whims in RAM usage and time
    spent in GC.  The default should be adequate for almost all users.
 
-* **11)** Its convenient to have lots of terminals open and ready for use;
+* **11)** Configuration. The pipeline is controlled by a collection of
+    configuration files. These specify things like the training corpora
+    and the databases in which to store intermediate results. Multiple
+    experiments can be run at the same time, by twiddling the port
+    numbers at which the cogservers are started (being careful to pipe
+    the right data to the right server!)
+
+    The config files are located in the `run/0-config` directory.
+    The master config is in `0-pipeline.sh`. The intent is that,
+    for each distinct experiment, you can make a copy of the `run`
+    directory, and adjust file and database locations for each
+    experiment by editing the config files.
+
+    Artificial language generation is controlled with the
+    `run/0-config/1-*` files.
+
+    Pair counting is controlled by the `run/0-config/2-pair-conf*sh`
+    files. Pick one; there are several preconfigured variants.
+    Edit as required.
+
+* **12)** Processing preliminaries.
+    It is convenient to have lots of terminals open and ready for use;
     the `byobu+tmux` terminal server provides this, without chewing up
-    a lot of screen real-estate.  The `run-shells.sh` script will run
+    a lot of screen real-estate.  The `run-shells.sh` scripts will run
     a `byobu/tmux` session, start the cogserver in one of the terminals,
     and leave open several other terminals for general use.
 
-    Make a copy this file, and manually alter it to start the cogserver
-    the way that you want it started.
+    (Optional) Make a copy this file, and manually alter it to start
+    the cogserver the way that you want it started.
 
-    Cheat-sheet:
+    Byobu cheat-sheet:
     ++ `F3` -- move left
     ++ `F4` -- move right
     ++ `F7` -- enable the page-up and page-down keys for scrolling.
@@ -598,52 +620,55 @@ Do this.
 
     See `man byobu` for details.
 
-* **11.1)** (*Natural Language pipeline only*)
-    The `pair-submit-en.sh` script starts the process of observing text
-    for pair-counting. It looks for files in the `beta-pages` directory,
-    performs sentence-splitting (ss) on each, and then passes these to
-    the pair-counting scripts.
 
-    Make a copy of this file, and edit it to change the location of your
-    text files (if not using the default `beta-pages`) and to change the
-    port number (if not using the default 17005 for English). For
-    convenience, there are other files `pair-submit-??.sh`, set up for other
-    languages, using alternative default port numbers.
+* **13)** Processing.
+    Change directory to (your private copy of) the `run/2-word-pairs`
+    directory, and start tmux/byobu by running `run-shells.sh`.
 
-    Run `pair-submit-en.sh` in one of the byobu terminals.
+    If all went well, you should find that the cogserver is running
+    in the `cogsrv` tmux terminal.  It should be sitting at the guile
+    prompt.
 
-* **11.2)** (*Fake Language pipeline only*)
-    The `pair-submit-fake.sh` script starts the process of observing text
-    for pair-counting.
+    Change to the `submit` tmux terminal, and start text processing by
+    running the `./pair-submit.sh`.
 
-* **12)** Pair-counting can take days or weeks.  The `pair-submit-*.sh`
-    will run until all of the text files have been processed, or until it
-    is interrupted.  If it is interrupted, it can be restarted; it will
-    resume with the previous unfinished text file. As text files are
-    being processed, they are moved to the `split-articles` directory
-    and then, to the `submitted-articles` directory.  The input directory
-    will gradually empty out, the `submitted-articles` directory will
-    gradually fill up.  Progress can be monitored by saying `find |wc`.
+    Depending on the size of the corpus, pair counting can take an hour
+    or two, up to days or weeks. It runs at about 5-30 sentences per
+    second, depending on the length of the sentence (and, of course,
+    the CPU speed, the disk speed, and the database configuration.)
 
-    Although high-quality pair-counts require a minimum of several days
-    of processing, a half-hour or so is sufficient for a trial run.
-    Feel free to ctrl-C at this point, and move to the next step
+    At this time, it is not known how big a sample should be taken to
+    get accurate results. It seems like a few days of processing for
+    natural langauge (English) seems to be OK, while a few weeks is
+    better. Too-large a sample will slow down some of the later stages,
+    however, and the databases might get unmanagebly large.
+    Experimentation is needed.
+
+    The `pair-submit.sh` script will run until all of the text files
+    have been processed, or until it is interrupted.  If it is
+    interrupted, it can be restarted; it will resume with the previous
+    unfinished text file. As text files are being processed, they are
+    moved to the `pair-split` directory (this is configurable) and then,
+    to the `pair-submitted` directory (again, configurable).   The
+    input directory will gradually empty out, the `pair-submitted`
+    directory will gradually fill up.  Progress can be monitored by
+    saying `find |wc`.
+
+    For a trial run, a half-hour or so is sufficient. Feel free to
+    ctrl-C at this point, and move to the next step
     (covered in the section **Mutual Information** below.)
 
-    You may want to use the `renice.sh` script to lower the priority
-    of the Postgres server.  This will help make your system more
-    responsive, if you are also doing other work on it.  You would
-    need to run this script as root (i.e. as `sudo renice.sh`).
-
-    You may want to empty out the `submitted-articles` directory upon
-    completion. The files there are no longer needed (assuming you kept
-    a copy of the originals).
-
 Notes:
-* Segmentation for Chinese. Currently, only some preliminary work has
-  been done for word segmentation in Chinese. It is incomplete. In the
-  meanwhile, if you want to just skip to the next step, you can use an
-  off-the-shelf segmenter.  Its got OK-but-not-great accuracy.
+* Segmentation for Chinese. There are two possibilities, here. One is
+  to try to segment; the other is to ignore the problem, and try to
+  learn the grammar on a hanzi-by-hanzi basis. In principle, the
+  resulting grammar should be able to detect word boundaries by noting
+  that intra-word MI is large, and inter-word MI is much lower. These
+  experiments have not been run to conclusion. See the section
+  'Morphology' immediately below.
+
+  Alternately, you can try to use an off-the-shelf segmenter.  This
+  gives fair accuracy, but not really all that good.
 
   This can be done using jieba
       [https://github.com/fxsjy/jieba](https://github.com/fxsjy/jieba)
@@ -663,6 +688,8 @@ Notes:
   pre-written scripts for the processing pipeline to handle this. You
   are on your own, for now.
 
+  Morphology for those languages that need it (Russian, French, etc.)
+  resembles the Chinese word-segmentation problem.
 
 Bulk Pair Counting - Quickstart/Cheat Sheet
 -------------------------------------------
@@ -682,37 +709,22 @@ Bulk Pair Counting - Quickstart/Cheat Sheet
 * Copy input texts to the `beta-pages` directory (or another directory,
   if you wish).
 
-* Select one of the cogserver config files in the config directory.
-  Possibly alter the port number, if desired (after making a copy).
+* Copy the `run/0-config` and edit to suit.
 
-* Select one of the `pair-count-??.scm` files.  Copy it. Manually edit
-  it to indicate the cogserver config from the above. Change the
-  database credentials to match your database.
+* Run `run-shells.sh`.
 
-* Copy `run-shells.sh`, edit it to specify the `pair-count-??.scm` file
-  from above. Run it.
-
-* Select one of the `pair-submit-??.sh` files, copy it, and edit it to set
-  the location of the input texts (if not `beta-pages`) and to use a
-  port number that is consistent with the cogserver config file.
-  Then run it in one of the byobu terminals.
+* Run `pair-submit.sh` in the tmux/byobu `submit` terminal. Wait until
+  done.
 
 If the above generates the error
 ```
       nc: invalid option -- 'N'
 ```
-then edit `pair-one.sh` and remove the `-N` option from the `nc` commands.
-Some versions of `nc` require the `-N` flag: the scripts will just hang
-without it. Other versions of `nc` are unaware of the `-N` option, and
-don't need it.  This is an `nc` design flaw.
-
-Some of the other files used in processing:
-
--- `pair-one.sh` calls `split-sentences.pl` to split the text file into
-   sentences, and then calls `submit-one.pl` to send the sentences,
-   one at a time, to the cogserver for processing. None of these
-   should need any modification.
-
+then edit `run/common/file-split-process.sh` and `file-nosplit-process.sh`
+and remove the `-N` option from the `nc` command.  Some versions of `nc`
+require the `-N` flag: the scripts will just hang without it. Other
+versions of `nc` are unaware of the `-N` option, and don't need it.
+This is an `nc` design flaw.
 
 Mutual Information of Word Pairs
 --------------------------------

@@ -1,8 +1,9 @@
 #! /bin/bash
 #
 # Configuration parameters for English word-pair counting.
-#
-#
+# See `2-pair-conf.sh` for documentation of these parameters.
+# ------------
+
 # Directory where corpora files can be found
 export CORPORA_DIR=$TEXT_DIR/beta-pages
 

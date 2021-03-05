@@ -13,8 +13,8 @@ else
 	exit -1
 fi
 
-if [ -r $CONFIG_DIR/1-corpus-conf.sh ]; then
-	. $CONFIG_DIR/1-corpus-conf.sh
+if [ -r $GEN_CONF_FILE ]; then
+	. $GEN_CONF_FILE
 else
 	echo "Cannot find corpus configuration file!"
 	exit -1
