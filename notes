@@ -363,8 +363,14 @@ Stored 320000 of 394854 left-wilds in 379 secs (106 pairs/sec)
 Nasty, old postgres was 10x faster in SSD.
 Done storing 394854 left-wilds in 2912 secs
 
-Never mind, above is due to a stupid debug print...
+// Never mind, above is due to a stupid debug print...
 as_ref_count: oas
+Uh no, after removing print its still slow.
+Stored 200000 of 394854 left-wilds in 213 secs (188 pairs/sec)
+Stored 240000 of 394854 left-wilds in 239 secs (167 pairs/sec)
+Stored 280000 of 394854 left-wilds in 286 secs (140 pairs/sec)
+Stored 320000 of 394854 left-wilds in 347 secs (115 pairs/sec)
+
 
 cog-rocks-stats: Atomspace holds 1265536 atoms
 Connected to rocks:///home/ubuntu/data/expt-3/mpg_parse.rdb
@@ -379,6 +385,7 @@ re-open and close:
 566020  /home/ubuntu/data/expt-3/mpg_parse.rdb
 
 gram-1.rdb is (gram-classify-greedy-discrim 0.5 4)
+gram-2.rdb is (gram-classify-greedy-fuzz 0.65 0.3 4)
 
 a b: <wcl-a>;
 c: <wcl-b>;
@@ -398,9 +405,178 @@ Can't find the sid in the sid-list...
 RocksStorage::remIncoming
 RocksStorage::removeSatom(
 RocksStorage::removeAtom
+Can't find sid=KI4< in sidlist=JqF BTG irD1 nFX2 NoU5 <
+klist is=i@XI4:Section<
+
+rei osatom= (this should be XI4 and since its in KI4, KI4 should be in
+it's oset.
+(ConnectorSeq
+	(Connector (WordNode "###LEFT-WALL###")(ConnectorDir "-"))
+	(Connector (WordNode "o")(ConnectorDir "-"))
+	(Connector (WordNode "p")(ConnectorDir "-"))
+	(Connector (WordNode "u")(ConnectorDir "-")))
+
+rein satom= (this is sid KI4) we're trying to delete this
+(Section (WordNode "s")
+	(ConnectorSeq
+	(Connector (WordNode "###LEFT-WALL###")(ConnectorDir "-"))
+	(Connector (WordNode "o")(ConnectorDir "-"))
+	(Connector (WordNode "p")(ConnectorDir "-"))
+	(Connector (WordNode "u")(ConnectorDir "-"))))
+
+sid should be the section... KI4
+ConSeq should be XI4
+klist is the osid of the osatom
+
+        std::string sidlist;
+        rocksdb::Status s = _rfile->Get(rocksdb::ReadOptions(), klist, &sidlist);
+export ROCKS_DB_URL=rocks:///home/ubuntu/data/expt-3/gram-2.rdb
+
+Its not there in gram-1.db either
+Its not there in mpg_parse.rdb ...
+
+print_all
+
+BlockBasedTableOptions table_options;
+table_options.filter_policy.reset(NewBloomFilterPolicy(10, false));
+table_options.optimize_filters_for_memory = true;
+auto table_factory = new BlockBasedTableFactory(table_options);
+rocksdb::Options options;
+  options.table_factory.reset(rocksdb::NewBlockBasedTableFactory(table_options));
+  rocksdb::DB* db;
+  rocksdb::DB::Open(options, name, &db);
+table.h
+
+ 1/11 Test  #1: BasicSaveUTest ...................   Passed    7.03 sec
+ 2/11 Test  #2: ValueSaveUTest ...................   Passed    2.62 sec
+ 3/11 Test  #3: PersistUTest .....................   Passed    0.78 sec
+ 4/11 Test  #4: FetchUTest .......................   Passed    3.21 sec
+ 5/11 Test  #5: BasicDeleteUTest .................   Passed    3.39 sec
+ 6/11 Test  #6: DeleteUTest ......................   Passed    0.60 sec
+ 7/11 Test  #7: AlphaEquivUTest ..................   Passed    2.93 sec
+ 8/11 Test  #8: MultiPersistUTest ................   Passed    1.53 sec
+ 9/11 Test  #9: QueryPersistUTest ................   Passed    2.09 sec
+10/11 Test #10: LargeFlatUTest ...................   Passed   76.56 sec
+11/11 Test #11: LargeZipfUTest ...................   Passed  167.55 sec
+Total Test time (real) = 268.36 sec
+Total Test time (real) = 254.93 sec
+
+
+ 1/11 Test  #1: BasicSaveUTest ...................   Passed    6.60 sec
+ 2/11 Test  #2: ValueSaveUTest ...................   Passed    2.13 sec
+ 3/11 Test  #3: PersistUTest .....................   Passed    0.84 sec
+ 4/11 Test  #4: FetchUTest .......................   Passed    2.61 sec
+ 5/11 Test  #5: BasicDeleteUTest .................   Passed    2.55 sec
+ 6/11 Test  #6: DeleteUTest ......................   Passed    0.57 sec
+ 7/11 Test  #7: AlphaEquivUTest ..................   Passed    2.81 sec
+ 8/11 Test  #8: MultiPersistUTest ................   Passed    0.72 sec
+ 9/11 Test  #9: QueryPersistUTest ................   Passed    2.53 sec
+10/11 Test #10: LargeFlatUTest ...................   Passed   75.35 sec
+11/11 Test #11: LargeZipfUTest ...................   Passed  172.17 sec
+Total Test time (real) = 268.90 sec
+Total Test time (real) = 271.28 sec
+
+
+(use-modules (opencog))
+ (use-modules (opencog persist))
+(use-modules (opencog persist-rocks))
+
+(define a (Concept "a"))
+(define b (Concept "b"))
+(define l1 (List a b))
+(define l2 (List l1 a))
+(cog-rocks-open "rocks:///tmp/foo")
+(store-atom l2)
+
+(cog-delete-recursive! a)
+
+Boom.
+$ du -s *rdb
+7016    fake_pairs.rdb
+21710584        gram-2.rdb   <<<<<<<<<<< wtf
+417488  mpg_parse-no-margs.rdb
+954720  mpg_parse.rdb
+
+closing and reopening does this:
+538360  gram-2.rdb
+
+
+---------Bingo! Dist=0.7606 for class "j n" -- "t"
+Can't find sid=sQ23< in sidlist=xQ23 pNu5 <
+inset key=i@0R23:Section<
+remin osatom=
+(ConnectorSeq
+	(Connector (WordNode "###LEFT-WALL###")(ConnectorDir "-"))
+	(Connector (WordNode "j")(ConnectorDir "-"))
+	(Connector (WordNode "g")(ConnectorDir "-"))
+	(Connector (WordNode "t")(ConnectorDir "-"))
+	(Connector (WordNode "s")(ConnectorDir "-"))
+	(Connector (WordNode "s")(ConnectorDir "-")))
+reminc satom=sQ23
+(Section (WordNode "t")
+(ConnectorSeq
+	(Connector (WordNode "###LEFT-WALL###")(ConnectorDir "-"))
+	(Connector (WordNode "j")(ConnectorDir "-"))
+	(Connector (WordNode "g")(ConnectorDir "-"))
+	(Connector (WordNode "t")(ConnectorDir "-"))
+	(Connector (WordNode "s")(ConnectorDir "-"))
+	(Connector (WordNode "s")(ConnectorDir "-"))))
+well foo, delete was n=0 r=0 satom=sQ23
+(Section (WordNode "t")(ConnectorSeq (Connector (WordNode "###LEFT-WALL###")(ConnectorDir "-"))(Connector (WordNode "j")(ConnectorDir "-"))(Connector (WordNode "g")(ConnectorDir "-"))(Connector (WordNode "t")(ConnectorDir "-"))(Connector (WordNode "s")(ConnectorDir "-"))(Connector (WordNode "s")(ConnectorDir "-"))))
+ice-9/boot-9.scm:1669:16: In procedure raise-exception:
+Throw to key `C++-EXCEPTION' with args `("dflt-delete" "Internal Error! (/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksIO.cc:582)
+Function args:
+((Section (ctv 1 0 0)
+  (WordNode "t" (ctv 1 0 1.0531e+07))
+  (ConnectorSeq
+    (Connector
+      (WordNode "###LEFT-WALL###" (ctv 1 0 1.24572e+07))
+  (ConnectorDir "-"))
+    (Connector
+      (WordNode "j" (ctv 1 0 1.56322e+07))
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "g" (ctv 1 0 4.84869e+06))
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "t" (ctv 1 0 1.0531e+07))
+      (ConnectorDir "-"))
+    (Connector
+     (WordNode "s" (ctv 1 0 1.19871e+07))
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "s" (ctv 1 0 1.19871e+07))
+      (ConnectorDir "-"))))
+)")'.
+
+(cog-rocks-get "i@0R23:Section")  yes its missing
+(cog-rocks-get "a@sQ23")   this is the section.
+(cog-rocks-get "l@(ConnectorSeq (Connector (WordNode \"###LEFT-WALL###\")(ConnectorDir \"-\"))(Connector (WordNode \"j\")(ConnectorDir \"-\"))(Connector (WordNode \"g\")(ConnectorDir \"-\"))(Connector (WordNode \"t\")(ConnectorDir \"-\"))(Connector (WordNode \"s\")(ConnectorDir \"-\"))(Connector (WordNode \"s\")(ConnectorDir \"-\")))")
+yes, this is 0R23 so wtf...
+
+
+Huh. mpg_parse:
+(cog-rocks-get "i@0R23:Section") ...  also missing...
+(cog-rocks-get "a@sQ23")  is the expected secion.
+(cog-rocks-get "l@ returns 0R23  as expcected... so wtf.
+
+How about no-margs... also missing there...
+
+(cog-rocks-get "l@(Section (WordNode \"t\")(ConnectorSeq (Connector (WordNode \"###LEFT-WALL###\")(ConnectorDir \"-\"))(Connector (WordNode \"j\")(ConnectorDir \"-\"))(Connector (WordNode \"g\")(ConnectorDir \"-\"))(Connector (WordNode \"t\")(ConnectorDir \"-\"))(Connector (WordNode \"s\")(ConnectorDir \"-\"))(Connector (WordNode \"s\")(ConnectorDir \"-\"))))")
+
+gives sQ23 exactly as expected. ...
+
+Conclude: dj parsing failes to write the sections correctly ... why?
+How? WTF???
+
+
 
 
 TODO:
 
-Bugs: quotes are not being escaped by submit-one.pl!!
-Enhance: revise guile start-cogserver to take args directly
+* Bugs: quotes are not being escaped by submit-one.pl!!
+* Enhance: revise guile start-cogserver to take args directly
+* Bug: RockDB needs to be compacted on close. lcosing and reopening
+  a DB shrinks disk use by 20x for some workloads.
+  Also its chewing up vast
+* amounts of RAM.
