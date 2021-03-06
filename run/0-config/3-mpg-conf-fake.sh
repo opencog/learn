@@ -7,7 +7,7 @@ export SENTENCE_SPLIT=false
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
-export PORT=19010
+export PORT=18008
 export PROMPT="scheme@(mpg-parse)> "
 export COGSERVER_CONF="config/opencog-mst-fake.conf"
 

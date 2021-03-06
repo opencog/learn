@@ -9,7 +9,7 @@ export SPLIT_LANG=en
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
-export PORT=19005
+export PORT=18005
 export PROMPT="scheme@(mpg-parse)> "
 export COGSERVER_CONF="config/opencog-mst-en.conf"
 

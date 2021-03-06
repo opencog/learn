@@ -566,8 +566,83 @@ How about no-margs... also missing there...
 
 gives sQ23 exactly as expected. ...
 
-Conclude: dj parsing failes to write the sections correctly ... why?
+Conclude: dj parsing fails to write the sections correctly ... why?
 How? WTF???
+
+/data/expt-3/bad-again/mpg_parse-no-margs.rdb
+Next aid: 870677
+Atoms/Links/Nodes a@: 870676 l@: 870624 n@: 34
+Keys/Incoming/Hash k@: 476041 i@: 395182 h@: 0
+
+
+Mising sid dR92 (ConnectorSeq (Connector (WordNode "c")(ConnectorDir "-"))(Connector (WordNode "p")(ConnectorDir "+"))(Connector (WordNode "c")(ConnectorDir "+"))(Connector (WordNode "j")(ConnectorDir "+"))(Connector (WordNode "t")(ConnectorDir "+")))
+Not in incoming for DB (Connector (WordNode "c")(ConnectorDir "-"))
+
+(cog-rocks-get "l@(ConnectorSeq (Connector (WordNode \"c\")(ConnectorDir \"-\"))(Connector (WordNode \"p\")(ConnectorDir \"+\"))(Connector (WordNode \"c\")(ConnectorDir \"+\"))(Connector (WordNode \"j\")(ConnectorDir \"+\"))(Connector (WordNode \"t\")(ConnectorDir \"+\")))")
+dR92
+
+OK -- fake_pairs has one bad link ... out of 480
+Ahhh!
+Mising sid M1 (EvaluationLink (LinkGrammarRelationshipNode "ANY")(ListLink (WordNode "p")(WordNode "d")))
+Not in incoming for K1 (ListLink (WordNode "p")(WordNode "d"))
+cog-rocks-get "i@K1:")
+rkey: >>i@K1:EvaluationLink<<    rval: >>G1 <<
+(cog-rocks-get "a@G1")
+rkey: >>a@G1<<    rval: >>(EvaluationLink (LinkGrammarRelationshipNode "ANY")(ListLink (WordNode "p")(WordNode "d")))<<
+
+... M1 and G1 are the same... Ooops!
+
+Hypoth:
+two threads writing, neither thread finds l@ or n@ so start a new one.
+200 looks it up.
+235 writes it.
+
+17008
+
+expt-3/bad-again/mpg_parse-no-margs.rdb
+has
+Next aid: 870677
+Atoms/Links/Nodes a@: 870676 l@: 870624 n@: 34
+Keys/Incoming/Hash k@: 476041 i@: 395182 h@: 0
+Same M1/G1 from above and three more... total of 4
+
+expt-3/bad-again/mpg_parse.rdb (with marginals) has
+
+----------
+Try again:
+stock rocksdb-5.17 from ubuntu focal
+mounted on ssd
+djgeneration is now:
+
+OLD speed:
+MPG-Processing file >>>corpus-7.txt<<<
+Sent out article in 259 seconds
+MPG-Processing file >>>corpus-11.txt<<<
+Sent out article in 648 seconds
+MPG-Processing file >>>corpus-12.txt<<<
+Sent out article in 1134 seconds
+MPG-Processing file >>>corpus-10.txt<<<
+Sent out article in 1185 seconds
+MPG-Processing file >>>corpus-8.txt<<<
+Sent out article in 916 seconds
+MPG-Processing file >>>corpus-9.txt<<<
+Sent out article in 1218 seconds
+real    90m16.308s
+
+NEW speed:
+MPG-Processing file >>>corpus-7.txt<<<
+Sent out article in 257 seconds
+MPG-Processing file >>>corpus-11.txt<<<
+Sent out article in 502 seconds
+MPG-Processing file >>>corpus-12.txt<<<
+Sent out article in 958 seconds
+MPG-Processing file >>>corpus-10.txt<<<
+Sent out article in 977 seconds
+MPG-Processing file >>>corpus-8.txt<<<
+Sent out article in 774 seconds
+MPG-Processing file >>>corpus-9.txt<<<
+Sent out article in 1020 seconds
+real    75m45.906s
 
 
 
@@ -578,5 +653,4 @@ TODO:
 * Enhance: revise guile start-cogserver to take args directly
 * Bug: RockDB needs to be compacted on close. lcosing and reopening
   a DB shrinks disk use by 20x for some workloads.
-  Also its chewing up vast
-* amounts of RAM.
+  Also its chewing up vast amounts of RAM. Bugs #9 and #10
