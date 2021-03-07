@@ -342,8 +342,8 @@ everything works. It's a small orientation demo.
          name you want; here it is `learn-pairs`.  Later on, you will
          have to place this name into a config file (see further below).
 ```
-      createdb learn-pairs
-      cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql learn_pairs
+      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (sql-create "postgres:///learn-pairs")
 ```
 
 * **3)** Copy all files from the `run/1-word-pairs` directory to a
@@ -378,13 +378,12 @@ everything works. It's a small orientation demo.
          most importantly, it declares the port number for the cogserver.
          It's currently coded to be 17005.
 
-   Edit the `pair-count-en.scm` and hard-code your database
-         credentials into it. This saves you the trouble of having to
-         remember them, and to type them in by hand.
+   Edit the `0-config/0-pipeline.sh` and `0-config/2-pair-conf-en.sh`
+         and hard-code your database credentials into it.
 
    Finally, start the cogserver by
 ```
-     guile -l pair-count-en.scm
+     guile -l ../common/cogserver.scm
 ```
 
 * **5)** Verify that the pair-counting pipeline works. In a second
@@ -702,8 +701,8 @@ Bulk Pair Counting - Quickstart/Cheat Sheet
 
 * (Postgres only) Set up distinct databases, one for each language:
 ```
-       createdb fr_pairs lt_pairs pl_pairs simple_pairs
-       cat atomspace/opencog/persist/sql/multi-driver/atom.sql | psql ??_pairs
+      (use-modules (opencog) (opencog persist) (opencog persist-sql))
+      (sql-create "postgres:///en_word_pairs")
 ```
 
 * Copy input texts to the `beta-pages` directory (or another directory,

@@ -652,6 +652,15 @@ Splitting and word-pair counting file >>>corpus-7.txt<<<
 Sent out article in 1764 seconds
 Splitting and word-pair counting file >>>corpus-11.txt<<<
 Sent out article in 3788 seconds
+Splitting and word-pair counting file >>>corpus-12.txt<<<
+Sent out article in 4706 seconds
+24GB or RAM at this point running at 680% cpu
+$ du -s *
+292816  fake_pairs.rdb
+guile looks OK.
+Something is leaking RAM.
+Splitting and word-pair counting file >>>corpus-10.txt<<<
+Sent out article in 4025 seconds
 
 
 
@@ -671,8 +680,10 @@ Throw to key `C++-EXCEPTION' with args `("sql-create" "Failed to execute SQL com
 
 Throw to key `C++-EXCEPTION' with args `("sql-create" "Cannot connect to database: FATAL:  database \"foo\" does not exist\n (/home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/ll-pg-cxx.cc:54)\nFunction args:\n(postgres:///foo)")'
 
-
 postgres:///fake_pairs
+
+
+
 
 TODO:
 
