@@ -5,7 +5,7 @@
 ; pipeline. Starts the CogServer, opens the database, loads the
 ; database (which can take an hour or more!).
 ;
-(load "../common/cogserver-rocks.scm")
+(load "../common/cogserver.scm")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")
@@ -40,3 +40,5 @@
 ; (sql-clear-stats)
 
 (print-matrix-summary-report star-obj)
+
+; (cog-close storage-node)

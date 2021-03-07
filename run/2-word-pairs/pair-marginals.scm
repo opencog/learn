@@ -7,7 +7,7 @@
 ; compute marginal statistics. This computes assorted totals and
 ; conditional probabilities needed before the next step.
 ;
-(load "../common/cogserver-rocks.scm")
+(load "../common/cogserver.scm")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")
@@ -26,4 +26,4 @@
 
 ; (print-matrix-summary-report asa)
 
-; (cog-rocks-close)
+; (cog-close storage-node)

@@ -11,4 +11,5 @@ export PROMPT="scheme@(gram-class)> "
 export COGSERVER_CONF="config/opencog-gram-fake.conf"
 
 # URL for the database where disjunct counts will be accumulated
-export ROCKS_DB_URL=rocks://${DATA_DIR}/gram-2.rdb
+ROCKS_DB_URL=rocks://${DATA_DIR}/gram-2.rdb
+export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
