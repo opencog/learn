@@ -644,8 +644,33 @@ MPG-Processing file >>>corpus-9.txt<<<
 Sent out article in 1020 seconds
 real    75m45.906s
 
+-----------
+Restarted pair counting from scratch in expt-4
+
+Why is this so slow!???
+Splitting and word-pair counting file >>>corpus-7.txt<<<
+Sent out article in 1764 seconds
 
 
+
+--------------
+expt-5 is the postgres version
+postgresql-client postgresql pgtop libpq-dev
+
+Do NOT do these opts in /etc/postgresql/12/main
+effective_cache_size = 60GB
+seq_page_cost = 0.1
+random_page_cost = 0.1
+checkpoint_completion_target = 0.9
+effective_io_concurrency = 100
+max_worker_processes = 24
+
+Throw to key `C++-EXCEPTION' with args `("sql-create" "Failed to execute SQL command!\nPQresult message: ERROR:  database \"foo\" already exists\n\nPQ query was: CREATE DATABASE foo; (/home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/ll-pg-cxx.cc:130)\nFunction args:\n(postgres:///foo)")'.
+
+Throw to key `C++-EXCEPTION' with args `("sql-create" "Cannot connect to database: FATAL:  database \"foo\" does not exist\n (/home/ubuntu/src/atomspace/opencog/persist/sql/multi-driver/ll-pg-cxx.cc:54)\nFunction args:\n(postgres:///foo)")'
+
+
+postgres:///fake_pairs
 
 TODO:
 
