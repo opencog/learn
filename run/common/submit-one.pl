@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 #
-# submit-lines.pl <cogserver-host> <cogserver-port> <observe-cmd>
+# submit-one.pl <cogserver-host> <cogserver-port> <observe-cmd>
 #
 # Read lines from `stdin` and submit them to the cogserver for
 # processing. Each line is quoted and then wrapped by the <observe-cmd>
@@ -45,6 +45,9 @@ sub send_nowait
 	socket(SOCKET, PF_INET, SOCK_STREAM, (getprotobyname('tcp'))[2])
 		or die "Can't create a socket $!\n";
 
+	# This is rare, but seems to happen if the cogserver is really
+	# slow (e.g. if it is being debugged.) Instead of dying, we
+	# should sleep and try again... right!?
 	connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)))
 		or die "Can't connect to port $port! \n";
 

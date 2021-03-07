@@ -661,8 +661,50 @@ guile looks OK.
 Something is leaking RAM.
 Splitting and word-pair counting file >>>corpus-10.txt<<<
 Sent out article in 4025 seconds
+Splitting and word-pair counting file >>>corpus-8.txt<<<
+Sent out article in 3333 seconds
+Splitting and word-pair counting file >>>corpus-9.txt<<<
+Sent out article in 3654 seconds
+real    359m9.453s
 
+(gc-time-taken . 10549268042307)  Yow!!!
+(heap-size . 42799104) 43MB
+(heap-free-size . 16207872)
+(heap-total-allocated . 449802881088) ; Yow! 450GB!!! what the!?
+(heap-allocated-since-gc . 2444768)
+(protected-objects . 51) (gc-times . 35781))
 
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+12795 ubuntu    20   0   40.5g  37.6g  38708 S   0.3  14.9   2370:57 guile
+
+Total of 445 atoms in atomspace ...
+
+djparsing: Same as "NEW speed", above.
+real    78m48.721s
+
+$ du -s *
+728     fake_pairs.rdb
+532628  mpg_parse.rdb
+
+disjunct marginals:
+      (define pca (make-pseudo-cset-api))
+      (define psa (add-pair-stars pca))
+      (define btr (batch-transpose psa))
+      (psa 'fetch-pairs)
+Elapsed time to load csets: 54 secs
+
+((add-support-compute psa) 'cache-all)
+Finished left norm marginals in 176 secs
+Finished left totals in 17 secs
+Finished right norm marginals in 25 secs
+Finished right totals in 0 secs
+
+piss-ant slow as before:
+(btr 'mmt-marginals)
+Stored 240000 of 370186 left-wilds in 321 secs (125 pairs/sec)
+Stored 280000 of 370186 left-wilds in 366 secs (109 pairs/sec)
+Stored 320000 of 370186 left-wilds in 423 secs (95 pairs/sec)
+Done storing 370186 left-wilds in 2511 secs
 
 --------------
 expt-5 is the postgres version
@@ -682,13 +724,77 @@ Throw to key `C++-EXCEPTION' with args `("sql-create" "Cannot connect to databas
 
 postgres:///fake_pairs
 
+Splitting and word-pair counting file >>>corpus-7.txt<<<
+Sent out article in 1707 seconds
+Splitting and word-pair counting file >>>corpus-11.txt<<<
+Sent out article in 3007 seconds
+Splitting and word-pair counting file >>>corpus-12.txt<<<
+Sent out article in 3455 seconds
+Splitting and word-pair counting file >>>corpus-10.txt<<<
+Sent out article in 3196 seconds
+Splitting and word-pair counting file >>>corpus-8.txt<<<
+Sent out article in 2479 seconds
+Splitting and word-pair counting file >>>corpus-9.txt<<<
+Sent out article in 2738 seconds
+real    279m53.779s
+Much faster than the rocksDB version but still stunningly slow...
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+23108 ubuntu    20   0   39.1g  37.3g  30760 S   0.0  14.8   1958:42 guile
+
+Total of 445 atoms in atomspace ...
+(gc-stats)
+((gc-time-taken . 7407763599459) ;; 7407 seconds=2 hours whoa
+(heap-size . 33619968) (heap-free-size . 13774848)
+(heap-total-allocated . 449690164592) 450 GBytes just like rocks version
+(heap-allocated-since-gc . 6156032)
+(protected-objects . 51) (gc-times . 29863))
+
+-----------
+disjunct counting ...
+cogserver is nearly idle...
+MPG-Processing file >>>corpus-7.txt<<<
+Can't connect to port 18108!
+Seems to be waiting on postgres, which is waiting on disk,
+because rocks in another process is hogging the disk bandwidth!?
+This is the non-optimized postgres...
+
+MPG-Processing file >>>corpus-7.txt<<<
+Sent out article in 851 seconds
+MPG-Processing file >>>corpus-11.txt<<<
+Sent out article in 1485 seconds
+MPG-Processing file >>>corpus-12.txt<<<
+Sent out article in 1513 seconds
+
+
+
+
+-----
+expt-6 valgrind
+
+corpus-3.txt
+==29958==    definitely lost: 3,151,147 bytes in 67 blocks
+==29958==    indirectly lost: 310 bytes in 10 blocks
+==29958==      possibly lost: 139,792 bytes in 26 blocks
+
+==29958==    by 0x120C2218: init_table (count.c:216)
+==29958==    by 0x120C2218: alloc_count_context (count.c:1333)
+==29958==    by 0x120C4EDB: classic_parse (parse.c:417)
+==29958==    by 0x1209EBFF: sentence_parse (api.c:698)
+==29958==    by 0x12065C49: opencog::LGParseLink::execute(opencog::AtomSpace*, bool) (LGParseLink.cc:173)
+
+corpus-4.txt
+==25891==    definitely lost: 14,753,451 bytes in 242 blocks
+==25891==    indirectly lost: 3,434,581 bytes in 289 blocks
+==25891==      possibly lost: 1,188,368 bytes in 34 blocks
 
 
 
 TODO:
 
 * Bugs: quotes are not being escaped by submit-one.pl!!
-* Enhance: revise guile start-cogserver to take args directly
+* Enhance: revise atomspace start-cogserver to take args directly
 * Bug: RockDB needs to be compacted on close. lcosing and reopening
   a DB shrinks disk use by 20x for some workloads.
   Also its chewing up vast amounts of RAM. Bugs #9 and #10
+* Pair counting insanely slow and leaks RAM.

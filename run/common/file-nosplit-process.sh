@@ -33,6 +33,7 @@ observe=$OBSERVE
 # Punt if the cogserver has crashed. Use netcat to ping it.
 haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
+	echo "Error: Unable to ping cogserver; not processing file."
 	exit 1
 fi
 
@@ -63,6 +64,7 @@ cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport $observe
 # before doing the mv and rm below)
 haveping=`echo foo | $netcat $coghost $cogport`
 if [[ $? -ne 0 ]] ; then
+	echo "Error: Failed to ping cogserver after processing $rest"
 	exit 1
 fi
 
