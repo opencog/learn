@@ -32,11 +32,15 @@ directory.  A quick overview:
 * `file-nosplit-process.sh`: similar to above, but assumes that the
   text-file contains one sentence per line - i.e. has been pre-split.
 
-* `cogserver.scm`: Guile scheme script to load needed guile
-  modules, start the cogserver, and open the database backend.
+* `cogserver.scm`: Guile scheme script to load needed guile modules,
+  start the cogserver, and open the database storage backend.
 
 * `pair-marginals.scm`: Guile scheme script to compute word-pair
   marginal statistics.
+
+* `mst-cogserver.scm`: Same as `cogserver.scm`, but also loads
+  word-pairs from storage. (Word pairs must be in RAM in order for
+  MST parsing to proceed.)
 
 
 Management scripts

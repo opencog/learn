@@ -5,7 +5,7 @@
 ; pipeline. Starts the CogServer, opens the database, loads the
 ; database (which can take an hour or more!).
 ;
-(load "../common/cogserver.scm")
+(load "cogserver.scm")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")

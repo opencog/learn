@@ -7,7 +7,7 @@
 ; compute marginal statistics. This computes assorted totals and
 ; conditional probabilities needed before the next step.
 ;
-(load "../common/cogserver.scm")
+(load "cogserver.scm")
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")

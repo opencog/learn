@@ -37,6 +37,9 @@ File overview
 -------------
 A quick overview:
 
+* `run-cogserver.sh`: Starts a guile shell, runs the atomspace, starts
+  the cogserver in the background, and opens the storage database.
+
 * `run-shells.sh`: multi-tasking terminal server.  Opens multiple
   terminal sessions with tmux/byobu, and starts the cogserver in one
   of them.  Use F3 and F4 to switch to different terminals.
@@ -47,5 +50,5 @@ A quick overview:
   window. The cogserver needs to be running first, and a database needs
   to be open (it should be in another byobu terminal).
 
-* `pair-marginals.scm`: A guile script that computes marginal statistics
+* `compute-marginals.sh`: A bash script that computes marginal statistics
   after pair counting has concluded. This needs to be run by hand.
