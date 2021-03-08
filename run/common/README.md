@@ -32,8 +32,11 @@ directory.  A quick overview:
 * `file-nosplit-process.sh`: similar to above, but assumes that the
   text-file contains one sentence per line - i.e. has been pre-split.
 
-* `cogserver-rocks.scm`: Guile scheme script to load needed guile
-  modules, start the cogserver, and open the RocksDB database backend.
+* `cogserver.scm`: Guile scheme script to load needed guile
+  modules, start the cogserver, and open the database backend.
+
+* `pair-marginals.scm`: Guile scheme script to compute word-pair
+  marginal statistics.
 
 
 Management scripts

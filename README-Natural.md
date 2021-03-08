@@ -722,27 +722,11 @@ After observing word-pair counts, the mutual information (mutual
 entropy) between them needs to be computed.  This is a required step
 before disjunct observation can be started.
 
-This is most-easily done manually, by cutting and pasting the scheme
-code below into a guile shell.  Adjust the database URL for the specific
-database that contains word-pairs.
-
-```
-      (use-modules (opencog) (opencog persist) (opencog persist-rocks))
-      (use-modules (opencog matrix))
-      (use-modules (opencog nlp) (opencog nlp learn))
-      ; (sql-open "postgres:///en_pairs?user=ubuntu&password=asdf")
-      (cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
-      (define ala (make-any-link-api))
-      (define asa (add-pair-stars ala))
-      (batch-pairs asa)
-      (print-matrix-summary-report asa)
-```
-
+Do this by running the `run/2-word-pairs/compute-marginals.sh`.
 Batch-counting might take hours or longer (maybe over a day), depending
 on your dataset size. Small trial-run datasets should take no more than
-5-10 minutes.  The `batch-pairs` routine will print to stdout, giving a
-hint of the rate of progress.  The `print-matrix-summary-report` will
-print some technical stats about the result of the run.
+5-10 minutes... or seconds, for small artificial languages. This script
+prints a lot of output, including a techical summary at the end.
 
 The above might double the size of the database, as it sits on disk --
 adding frequencies and mutual-information values to word pairs will
@@ -751,8 +735,7 @@ the marginal stats are not insignificant in size.
 
 Thus, you may want to:
 
-* Check that you have enough storage allocated for the postgres
-  database.
+* Check that you have enough storage allocated for the database.
 
 * Make a copy of the word-pair-only database, so that you can return
   to it, if you decide that you need to return to it for some reason.

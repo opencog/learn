@@ -26,4 +26,5 @@
 
 ; (print-matrix-summary-report asa)
 
+(barrier storage-node)
 ; (cog-close storage-node)
