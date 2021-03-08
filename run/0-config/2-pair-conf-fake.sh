@@ -20,7 +20,7 @@ export COGSERVER_CONF=config/opencog-pairs-fake.conf
 export OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-ROCKS_DB_URL=rocks://${DATA_DIR}/fake_pairs.rdb
+ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/fake_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
 
 # File processing grunge

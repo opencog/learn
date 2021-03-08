@@ -10,9 +10,10 @@
 # the other for RocksDB databases. This allows the text files to live on a
 # spinning disk (where speed is not important) and databases to live on a
 # smaller SSD (where speed is important). Set these any way you want.
-#
+# If you are using Postgres, just delete `ROCKS_DATA_DIR`
+
 export TEXT_DIR=/home/ubuntu/run/expt-42
-export DATA_DIR=/home/ubuntu/data/expt-42
+export ROCKS_DATA_DIR=/home/ubuntu/data/expt-42
 
 # Directory in which configuration parameters (including this file)
 # are located.

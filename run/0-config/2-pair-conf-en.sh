@@ -21,10 +21,15 @@ export COGSERVER_CONF=config/opencog-pairs-en.conf
 export OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-ROCKS_DB_URL=rocks://${DATA_DIR}/en_pairs.rdb
+
+# For Postgres, use this. (The quotes are important!)
+export STORAGE_NODE="(PostgresStorageNode \"postgres:///en_pairs\")"
+
+# For RocksDB, use this.
+ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/en_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
 
-# File processing grunge
+# File processing grunge.
 export MSG="Splitting and word-pair counting"
 export IN_PROCESS_DIR=pair-split
 export COMPLETED_DIR=pair-counted

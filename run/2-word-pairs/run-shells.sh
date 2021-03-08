@@ -17,7 +17,7 @@ then
 	exit 0
 fi
 
-# Load config paramters
+# Load config parameters
 if [ -r ../0-config/0-pipeline.sh ]; then
 	. ../0-config/0-pipeline.sh
 else
@@ -25,8 +25,8 @@ else
 	exit -1
 fi
 
-if [ -r ${CONFIG_DIR}/${PAIR_CONF_FILE} ]; then
-	. ${CONFIG_DIR}/${PAIR_CONF_FILE}
+if [ -r ${PAIR_CONF_FILE} ]; then
+	. ${PAIR_CONF_FILE}
 else
 	echo "Cannot find pair-counting configuration file!"
 	exit -1

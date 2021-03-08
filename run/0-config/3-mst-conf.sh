@@ -25,7 +25,7 @@ export COGSERVER_CONF=""
 export OBSERVE="observe-mst"
 
 # URL for the database where disjunct counts will be accumulated
-ROCKS_DB_URL=rocks://${DATA_DIR}/mst_parse.rdb
+ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/mst_parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
 
 # Directories where in-process and completed files will be moved.
