@@ -45,11 +45,26 @@ sub send_nowait
 	socket(SOCKET, PF_INET, SOCK_STREAM, (getprotobyname('tcp'))[2])
 		or die "Can't create a socket $!\n";
 
-	# This is rare, but seems to happen if the cogserver is really
-	# slow (e.g. if it is being debugged.) Instead of dying, we
-	# should sleep and try again... right!?
-	connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)))
-		or die "Can't connect to port $port! \n";
+	# If the cogserver is really slow (e.g. if it is being debugged)
+	# the connet will fail (a max of 140 pending connects are possible
+	# without changing ulimit). This is very rare. If it fails, we retry.
+	my $rc = connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)));
+	if (not $rc) {
+		print "Couldn't connect to port $port! Retrying...\n";
+		my $i=0;
+		sleep 1;
+		while ($i<100 and not $rc) {
+			$i++;
+			$rc = connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)));
+			if (not $rc)
+			{
+				print "Retry $i\n";
+				sleep 1;
+			}
+		}
+
+		($i<100) or die "Fatal Error: Unable to connect to port $port\n";
+	}
 
 	# Two dots: one to exit scheme, one to exit cogserver prompt.
 	print SOCKET "$_[0]\n.\n.\n";

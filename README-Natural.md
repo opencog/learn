@@ -339,11 +339,11 @@ everything works. It's a small orientation demo.
          [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
 
 * **2)** (Postgres only) Create and initialize a database. Pick any
-         name you want; here it is `learn-pairs`.  Later on, you will
+         name you want; here it is `learn_pairs`.  Later on, you will
          have to place this name into a config file (see further below).
 ```
       (use-modules (opencog) (opencog persist) (opencog persist-sql))
-      (sql-create "postgres:///learn-pairs")
+      (sql-create "postgres:///learn_pairs")
 ```
 
 * **3)** Copy all files from the `run/1-word-pairs` directory to a
