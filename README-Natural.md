@@ -859,7 +859,7 @@ word-disjunct pairs) that can be observed.
 MST Disjunct Counting
 ---------------------
 The overall processing is very similar to batch pair-counting. Scripts
-for performing this are located in the `run/2-mst-parsing` directory.
+for performing this are located in the `run/3-mst-parsing` directory.
 
 The steps are as follows:
 
@@ -873,11 +873,14 @@ The steps are as follows:
   original, "just in case". You can copy RocksDB databases with `cp -pr`
   and Postgres databases with `createdb -T`.
 
-* Review `run-shells.sh` and (optionally) change it as desired. Run it.
-  It will start a tmux/byobu session. One of the tmux terminals will
-  start a cogserver. This may stall for a while, as it loads word-pairs
-  into RAM. This may take from seconds to over an hour, depending on
-  the number of word-pairs and the databse backend.
+* Review `run-mst-shells.sh` and (optionally) change it as desired.
+  Run it.  It will start a tmux/byobu session. One of the tmux terminals
+  will start a cogserver. This may stall for a while, as it loads
+  word-pairs into RAM. This may take from seconds to over an hour,
+  depending on the number of word-pairs and the databse backend.
+
+* If you don't want to run byobu/tmux, just start the cogserver with
+  `run-mst-cogserver.sh`.
 
 * Once the word-pair loading is done, MST parsing can be started.
   When word-pair loading finishes, a summary report will be printed,
