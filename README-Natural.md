@@ -351,18 +351,16 @@ everything works. It's a small orientation demo.
          language to be configured in sharply different ways, running
          different kinds of experiments.
 
-   For the practice run, suggest picking English, and using the
-         `en` files. The other language files can be ignored (and can
-         be deleted).
-
-* **3.1)** `cd` to the practice directory you created. The instructions
-         below are relative to the files there.
+   The config files are in the numbered subdirectories: `run/0-config`,
+         `run/1-gen-dict`, `run/2-word-pairs`, etc. They are meant to
+         be run in order. For the demo, skip `1-gen-dict`, it is for
+         generating artificial languages.
 
 * **4)** Start the OpenCog server.  Later on, the batch processing
          instructions (below) indicate how to automate this. However,
          for the practice run, it is better to do all this by hand.
 
-   First, review the contents of `config/opencog-pairs-en.conf`.
+   First, review the contents of `2-word-pairs/config/opencog-pairs-en.conf`.
          This simply declares the prompts that the cogserver will use;
          most importantly, it declares the port number for the cogserver.
          It's currently coded to be 17005.
@@ -372,8 +370,10 @@ everything works. It's a small orientation demo.
 
    Finally, start the cogserver by
 ```
-     guile -l ../common/cogserver.scm
+     $ ./run-cogserver.sh
 ```
+   This will start a guile REPL shell, and will have the cogserver
+   running in the background. The database will have been opened too.
 
 * **5)** Verify that the pair-counting pipeline works. In a second
          terminal, try this:
@@ -392,7 +392,7 @@ everything works. It's a small orientation demo.
 
    This should result in activity in the cogserver. (If running
          Postgres, then the postgres server should be active.)
-         The `observe text` scheme code sends the text for parsing,
+         The `observe-text` scheme function sends the text for parsing,
          counts the returned word-pairs, and stores them in the
          database.
 
@@ -406,10 +406,10 @@ everything works. It's a small orientation demo.
 * **6)** (Postgres only) Verify that the above resulted in data sent
          to the SQL database.  Log into the database, and check:
 ```
-      psql learn-pairs
-      learn-pairs=# SELECT * FROM atoms;
-      learn-pairs=# SELECT COUNT(*) FROM atoms;
-      learn-pairs=# SELECT * FROM valuations;
+      psql en-pairs
+      en-pairs=# SELECT * FROM atoms;
+      en-pairs=# SELECT COUNT(*) FROM atoms;
+      en-pairs=# SELECT * FROM valuations;
 ```
    The above shows that the database now contains word-counts for
          pair-wise linkages for the above sentences. If the above are
@@ -426,7 +426,7 @@ everything works. It's a small orientation demo.
 That's it for the practice run. If stuff is showing up in the database,
 then processing is proceeding as expected.
 
-The next step is to set up bulk test processing. There are three general
+The next step is to set up bulk text processing. There are three general
 stages: **(I)** collection of word-pair statistics **(II)** collection of
 disjunct statistics **(III)** clustering.  These are described next.
 
