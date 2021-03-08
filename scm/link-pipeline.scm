@@ -368,8 +368,8 @@
 ; update-lg-link-counts -- Increment link counts
 ;
 ; This routine updates LG link counts in the database. The algo is trite:
-; fetch the LG link from SQL, increment the attached CountTruthValue,
-; and save back to SQL.
+; fetch the LG link from storage, increment the attached CountTruthValue,
+; and save back to storage.
 
 (define (update-lg-link-counts single-sent)
 
@@ -499,6 +499,10 @@
 		(monitor-parse-rate '()))
 
 	; -------------------------------------------------------
+#!
+As of guile-3.0, the RAM usage issues seem to have gone away,
+and so manual garbage colection is not needed any more.
+
 	; Manually run the garbage collector, every now and then.
 	; This helps keep RAM usage down, which is handy on small-RAM
 	; machines. However, it does cost CPU time, in exchange.
@@ -515,7 +519,7 @@
 	; from relex seem to cause bad memory fragmentation.
 	(define maybe-gc
 		(let ((cnt 0)
-				(max-size (* 2750 1000 1000)))  ; 750 MB
+				(max-size (* 2750 1000 1000)))  ; 2750 MB
 			(lambda ()
 				(if (< max-size (- (assoc-ref (gc-stats) 'heap-size)
 							(assoc-ref (gc-stats) 'heap-free-size)))
@@ -524,7 +528,8 @@
 						(set! cnt (+ cnt 1))
 						;(report-avg-gc-cpu-time)
 					)))))
-
+!#
+	; -------------------------------------------------------
 	; Process the text locally (in RAM), with the LG API link or clique-count.
 	(define (local-process TXT obs-mode cnt-reach)
 		; try-catch wrapper for duplicated text. Here's the problem:
@@ -545,8 +550,8 @@
 					)
 					(process-sent sent obs-mode cnt-reach)
 					; Remove crud so it doesn't build up.
-					(cog-extract lgn)
-					(cog-extract phr)
+					(cog-extract! lgn)
+					(cog-extract! phr)
 				))
 			(lambda (key . args) #f))
 	)
@@ -561,7 +566,10 @@
 (define-public (observe-text plain-text)
 "
  Wrapper to maintain backwards compatibility in NLP pipeline.
- Passes default parameters to observe-text-mode
+ Passes default parameters to observe-text-mode.
+
+ Uses the LG parser to create 24 different planar tree parses
+ per sentence.
 "
 	(observe-text-mode plain-text "any" 24)
 )

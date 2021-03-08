@@ -533,12 +533,15 @@ Do this.
 * **9)** (Optional; needed only if you are experimenting.)
    Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
-   (And so you can skip this step).  This function was written to
-   collect a large amount of additional information, which the current
-   pipeline does not use.  You can begin new exploration here.
+   (And so you can skip this step).
+
+   The code in `link-pipeline.scm` is written to collect a several
+   kinds of information, using several different approaches. Most
+   of these variants remain unexplored.
+
    Caution, though: enabling some of these variants will create a
-   deluge of data. You may have trouble with RAM, and with managing
-   the size of datasets on disk.
+   deluge of data. Some unsuspecting users were frustrated by the
+   explosion in RAM and disk use.
 
    The `observe-text` function in 'link-pipeline.scm` collects
    observation counts on four different kinds of structures:
@@ -555,12 +558,11 @@ Do this.
                   length apart, each of these is an atom with a count.
                   Watch out!
    * Disjunct counts -- how often the random ANY disjuncts are used.
-                  You almost surely do not need this.  This is for my
-                  own personal curiosity.
+                  You almost surely do not need this.  (This is for my
+                  own personal curiosity.)
 
-   Only the first bullet is needed: LG "ANY" word pairs. The other
-   bullets are not needed. In particular, word counts are not needed;
-   they are almost evil to collect, as they serve to confuse things.
+   The default config is to only count the LG "ANY" word pairs. None
+   of the other styles are used in the current pipeline.
 
    Knowing the length of the pairs might be important for "understanding"
    that adjectives, adverbs, determiners and possessives modify only
@@ -568,18 +570,11 @@ Do this.
    Currently, no other code examines lengths; this is an open
    experiment.
 
-* **10)** (Optional; needed only if you are running out of RAM.)
-   Review the `sometimes-gc` and `maybe-gc` settings in the file
-   `link-pipeline.scm`.  These force garbage collection to occur more
-   often than normal; they help keep the process size reasonable.
-   The current default is to force garbage collection whenever the
-   guile heap exceeds 750 MBytes; this helps keep RAM usage down on
-   small-RAM machines.  However, it does cost CPU time.
-   Adjust the `max-size` parameter in `observe-text` in the
-   `link-pipeline.scm` file to suit your whims in RAM usage and time
-   spent in GC.  The default should be adequate for almost all users.
+   The code was written with flexibility in mind, and not performance.
+   Re-writing the word-pair counting to run in straight C++ code
+   could improve performance by 100x. This is not a current priority.
 
-* **11)** Configuration. The pipeline is controlled by a collection of
+* **10)** Configuration. The pipeline is controlled by a collection of
     configuration files. These specify things like the training corpora
     and the databases in which to store intermediate results. Multiple
     experiments can be run at the same time, by twiddling the port
@@ -599,7 +594,7 @@ Do this.
     files. Pick one; there are several preconfigured variants.
     Edit as required.
 
-* **12)** Processing preliminaries.
+* **11)** Processing preliminaries.
     It is convenient to have lots of terminals open and ready for use;
     the `byobu+tmux` terminal server provides this, without chewing up
     a lot of screen real-estate.  The `run-shells.sh` scripts will run
@@ -619,8 +614,7 @@ Do this.
 
     See `man byobu` for details.
 
-
-* **13)** Processing.
+* **12)** Processing.
     Change directory to (your private copy of) the `run/2-word-pairs`
     directory, and start tmux/byobu by running `run-shells.sh`.
 

@@ -756,16 +756,43 @@ Total of 445 atoms in atomspace ...
 OK, so mem explosion was a link-grammar init-table bug.
 https://github.com/opencog/link-grammar/pull/1149
 
-Hmm And now it takes longer (well, also tweaked postgress config:
+Also tweaked postgress config:
 Splitting and word-pair counting file >>>corpus-7.txt<<<
-Sent out article in 2885 seconds
+Sent out article in 1466 seconds
 Splitting and word-pair counting file >>>corpus-11.txt<<<
-Sent out article in 3944 seconds
+Sent out article in 2996 seconds
 
-So the postgres config .. fails!? Ouch.
-Or is it something else?
-ps axms -q 28252
-55 threads, so that's OK ....
+after parsing 96044 sentences --
+((gc-time-taken . 3341717491309)  <<< 3341 seconds ouch!
+(heap-size . 33153024) (heap-free-size . 18305024)
+(gc-times . 19226)) << so one gc every 4.995 sentences ...
+is this hard-coded somewhere?
+`sometimes-gc` and `maybe-gc
+
+(report-avg-gc-cpu-time)
+Elapsed: 5544.8 secs. Rate: 213.7 gc/min %cpu-GC: 63.66%  %cpu-use: 696.6%
+
+=============================
+currrent status postgres word pair counting:
+... real    279m2.812s == 16743 secs wall clock
+total of 290676 sentences so: 17.36 sentences/second
+cputime= 1896:14 = 113775 secs so 6.8 threads avg.
+cpu processing is 2.55 sents per cpu sec.
+(gc-time-taken . 8468975661196) = 8468 secs = 7.4% in gc ...
+(gc-times . 32526)) = 8.9 sentences per gc
+(heap-total-allocated . 449898824256) = 450GB = 1.5MB/sentence
+
+vs same dataset, RocksDB:
+... real    313m46.959s = 18827 secs wall clock
+total of 290676 sentences so: 15.4 sentences/second
+cputime= 2098:46 = 125946 secs so 6.7 threads avg
+cpu processing is 2.3 sents per cpu-sec
+(gc-time-taken . 9867992214539) = 9868 secs = 7.8% in gc
+(gc-times . 64144) = 4.5 sentences per gc
+(heap-total-allocated . 449155740720) = 449GB = 1.5MB/sentence
+
+why so much??
+
 
 -----------
 disjunct counting ...
@@ -828,9 +855,43 @@ corpus-4.txt
 140 is ulimit
 557
 848
+1865 -> 1185
+
+OK, so 5481 sents in real    5m43.822s
+so 16 sents/second
+But only 1017 thread frees...!?
+
+with valgrind ... stopped at 1017 thread frees ...
+Ohh duhh bad code.
+
+OK, so 5481 sents in real    3m24.520s = 204 secs
+so 27 sents/sec  thats better.
+and ram looks good but gc-time-taken=115 secs so wow too much.
+(gc-times . 1342) maybe its too much
+
+OK fixed the leak, it seems:
+
+Again: with rocks:
+Splitting and word-pair counting file >>>corpus-7.txt<<<
+Sent out article in 1938 seconds
+Splitting and word-pair counting file >>>corpus-11.txt<<<
+Sent out article in 4147 seconds
+
+((gc-time-taken . 2683799849797)
+(heap-size . 22302720)
+(gc-times . 14410))
+
+at 90686 sentences parsed... so one gc every 6.3 sentences
+
+Elapsed: 6474.5 secs. Rate: 134.7 gc/min %cpu-GC: 41.82%  %cpu-use: 573.7%
+
+vast amounts of gc because vast amounts of heap... who is using this?
 
 
 
+
+
+FIXED:
 * Pair counting insanely slow and leaks RAM.
 
 TODO:
@@ -840,5 +901,6 @@ TODO:
 * Bug: RockDB needs to be compacted on close. lcosing and reopening
   a DB shrinks disk use by 20x for some workloads.
   Also its chewing up vast amounts of RAM. Bugs #9 and #10
-* Pair counting insanely slow.
-
+* GC during pair counting happens too often.
+  (that is, gc takes up too large a fraction of CPU.)
+* Pair counting disappointingly slow.
