@@ -454,11 +454,16 @@ There are two basic pipelines: "fake" and "natural". "Fake" uses
 artificially generated grammars and text corpora, and is essential for
 calibrating and adjusting the learning algorithms to produce the best
 results. This is a closed-loop process, where the accuracy of the final
-result can be compared to input grammar. "Natural" uses natural-langauge
+result can be compared to input grammar. "Natural" uses natural-language
 corpora downloaded from the web. Since the algorithms are currently
 uncalibrated (untuned) you ... get what you get: it will be of uncertain
 quality, and there is no practical way to measure the accuracy. There
 are instructions below for both pipelines.
+
+Performance: it takes days/weeks because the processing pipeline has
+been optimized for experimentation, and not for speed. We are playing
+with different algos. Once the "best" algo is selected, hard-coding
+it in C++ *will* run 100x faster!
 
 Natural Language Corpora
 ------------------------
@@ -590,9 +595,6 @@ Do this.
     a `byobu/tmux` session, start the cogserver in one of the terminals,
     and leave open several other terminals for general use.
 
-    (Optional) Make a copy this file, and manually alter it to start
-    the cogserver the way that you want it started.
-
     Byobu cheat-sheet:
     ++ `F3` -- move left
     ++ `F4` -- move right
@@ -635,6 +637,12 @@ Do this.
     input directory will gradually empty out, the `pair-submitted`
     directory will gradually fill up.  Progress can be monitored by
     saying `find |wc`.
+
+    There are several functions to monitor parsing from scheme:
+```
+    (monitor-parse-rate "some message")
+    (report-avg-gc-cpu-time)
+```
 
     For a trial run, a half-hour or so is sufficient. Feel free to
     ctrl-C at this point, and move to the next step

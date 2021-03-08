@@ -422,8 +422,8 @@
 					(lock-mutex mtx)
 					(set! cnt (+ cnt 1))
 					(unlock-mutex mtx))
-				(format #t "~A cnt=~A rate=~A\n" msg cnt
-					(/ cnt (- (current-time) start-time))))
+				(format #t "~A sentences done=~A rate=~5f sents/sec\n"
+					msg cnt (/ cnt (- (current-time) start-time))))
 		)))
 
 ; ---------------------------------------------------------------------
