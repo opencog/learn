@@ -2,6 +2,10 @@
 #
 # run-cogserver.sh
 #
+# Run everything needed for the language-learning word-pair counting
+# pipeline. Starts the CogServer and opens the storage database.
+#
+# ----------------------
 # Load config parameters
 if [ -r ../0-config/0-pipeline.sh ]; then
 	. ../0-config/0-pipeline.sh

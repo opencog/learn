@@ -1,7 +1,12 @@
 #! /bin/bash
 #
-# run-cogserver.sh
+# run-mst-cogserver.sh
 #
+# Run everything needed for the language-learning disjunct-counting
+# pipeline. Starts the CogServer, opens the database, loads the
+# word-pairs in the database (which can take an hour or more!).
+#
+# ----------------------
 # Load config parameters
 if [ -r ../0-config/0-pipeline.sh ]; then
 	. ../0-config/0-pipeline.sh
@@ -17,4 +22,4 @@ else
 	exit -1
 fi
 
-exec guile -l ../common/mst-count.scm
+exec guile -l ../common/cogserver-mst.scm
