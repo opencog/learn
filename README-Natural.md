@@ -39,14 +39,6 @@ and if you don't pick some good settings, the result will be mediocre
 quality. See [README-Calibration](README-Calibration.md) for calibration
 details.
 
-Note: The instructions below refer to storing the data in PostgreSQL.
-These need to be updated to use RocksDB instead, mostly because RocksDB
-is much faster, and simplifies data-set management (datasets are
-directories, instead of SQL databases).
-
-The code still uses the Postgres backend. The Rocks backend uses the
-same API, so conversion will not be hard.
-
 Processing Overview
 -------------------
 Most of this README concerns the practical details of configuring and
@@ -148,18 +140,11 @@ component of the processing pipeline. Most of the data analysis is
 performed with an assortment of scheme scripts.
 
 Thus, operating the system requires three basic steps:
-* Setting up the AtomSpace with the SQL backing store,
-* Setting up the misc scripts to feed in raw text, and
+* Setting up the AtomSpace,
+* Configuring scripts to feed in raw text, and
 * Processing the data after it has been collected.
 
 Each of these is described in greater detail in separate sections below.
-
-If you are lazy, you can just hop to the end, to the section titled
-"Precomputed LXC containers", and grab one of those.  It will have
-everything in it, up to the last step.  Of course, you won't know what
-to do with it, if you don't read the below. Its not a magic "get smart"
-pill. You've got a lot of RTFM in front of you.
-
 
 Computational Pre-requisites
 ----------------------------
@@ -192,7 +177,7 @@ unhappy, painful experience.
            size, and not very many copies of a 150GB database will fit
            onto a 1TB disk.  2TB is a more comfortable size to work with.
 
-           Databases for the artifical-language pipeline might be
+           Databases for the artificial-language pipeline might be
            smaller, so this is perhaps less of a concern.
 
 * **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
@@ -210,9 +195,6 @@ unhappy, painful experience.
            reasonable -- and so 53+24=78GB is the current bare-minimum.
            More, if you want to e.g. run a web-browser or something.
 
-           At this time, RocksDB is recommended over Posgres for the
-           database backend.
-
 * **0.4)** Optional but recommended. If you plan to run the pipeline
            on multiple different languages, it can be convenient, for
            various reasons, to run the processing in an LXC container.
@@ -227,7 +209,7 @@ unhappy, painful experience.
          * The system install in one container won't corrupt the other
            containers; you can experiment, without impacting stable
            systems.
-         * LXC containers can be stopped and move to other system with
+         * LXC containers can be stopped and moved to other system with
            more RAM (or less RAM), more disk, or less disk. Handy for
            load-balancing, and/or easily moving to a bigger system.
          * Do not confuse LXC with Docker! They are similar, but LXC
@@ -243,8 +225,19 @@ unhappy, painful experience.
            files. You will need to alter these files, and use your own
            login credentials in place of the generic ones.
 
-* **0.6)** Mandatory.  You'll work with large datasets; default guile
-           is not equipped to deal wit the sizes encountered here.
+* **0.6)** Guile version 3.0 or newer is required. Most recent distros
+           include this version. Otherwise, guile must be built from
+           source, which can be obtained from the Guile ftp repo
+           https://ftp.gnu.org/gnu/guile/ or with `git`, by doing
+```
+      git clone git://git.sv.gnu.org/guile.git
+```
+
+   Note `par-for-each` hangs:
+            https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
+
+* **0.7)** Mandatory (!?)  You'll work with large datasets; default
+           guile is not equipped to deal wit the sizes encountered here.
            (Maybe? This might be fixed in the newest guile ???)
 
            Skipping this step will lead to the error
@@ -253,23 +246,11 @@ unhappy, painful experience.
 ```
       git clone https://github.com/ivmai/bdwgc
       cd bdwgc
-      git checkout release-7_6
+      git checkout release-7_6     # (or newer)
       ./autogen.sh
       ./configure --enable-large-config
       make; sudo make install
 ```
-
-* **0.7)** Guile version 3.0 or newer is required. Most recent distros
-           include this version. Otherwise,
-           guile must be built from source, which can be obtained from
-           the Guile ftp repo https://ftp.gnu.org/gnu/guile/ or
-           with `git`, by doing
-```
-      git clone git://git.sv.gnu.org/guile.git
-```
-
-   Note `par-for-each` hangs:
-            https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
 
 * **0.8)** Create/edit the `~/.guile` file and add the content below.
            This makes the arrow keys work, and prints nicer stack traces.
@@ -287,6 +268,7 @@ unhappy, painful experience.
       sudo apt install git cmake g++
       sudo apt install libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev
       sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
+      sudo apt install postgresql-client postgresql libpq-dev pgtop
       sudo apt install autoconf-archive flex byobu rlwrap telnet
 ```
 
@@ -327,16 +309,23 @@ Setting up the AtomSpace
 ------------------------
 This section describes how to set up the AtomSpace to collect
 statistics. Statistics are collected in a database; you have a choice
-of two: RocksDB and PostgreSQL. RocksDB is recommended, because it is
-2x or 3x faster when used with the AtomSpace, and seems to use less RAM.
-The instructions below desribe both databases; skip the parts that don't
-apply to you.
+of two: RocksDB and PostgreSQL. Pick one.
+
+* Although RocksDB seems to be 2x or 3x faster in synthetic benchmarks,
+  it is in fact 10% or 20% slower for the current pipeline.
+
+* Postgres requires a more complicated setup. There are more
+  instructions to read and follow. If you are new to Postgres, this
+  will be confusing and error-prone.
+
+The instructions below desribe both databases; skip the parts that
+don't apply to you.
 
 These instructions go through a basic "sniff test" to make sure
 everything works. It's a small orientation demo.
 
 * **1)** (Postgres only) Set up and configure Postgres, as described in
-         [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/README.md)
+         [`atomspace/opencog/persist/sql/README.md`](https://github.com/opencog/atomspace/tree/master/opencog/persist/sql/README.md)
 
 * **2)** (Postgres only) Create and initialize a database. Pick any
          name you want; here it is `learn_pairs`.  Later on, you will
@@ -346,11 +335,11 @@ everything works. It's a small orientation demo.
       (sql-create "postgres:///learn_pairs")
 ```
 
-* **3)** Copy all files from the `run/1-word-pairs` directory to a
-         new directory; suggest the directory `run-practice`.  Its
-         best to try a few practice runs before committing to serious
-         data processing.  The next number of steps describe how to
-         do a practice run; a later section focuses on batch processing.
+* **3)** Copy all files from the `run` directory to a new directory;
+         suggest the directory `run-practice`.  Its best to try a few
+         practice runs before committing to serious data processing.
+         The next number of steps describe how to do a practice run;
+         a later section focuses on batch processing.
 
    There are two types of files in this directory: generic
          processing scripts, and language-specific configuration files.
