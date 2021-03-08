@@ -1,7 +1,7 @@
 ;
 ; cogserver-mst.scm
 ;
-; Run everyting needed for the language-learning disjunct-counting
+; Run everything needed for the language-learning disjunct-counting
 ; pipeline. Starts the CogServer, opens the database, loads the
 ; word-pairs in the database (which can take an hour or more!).
 ;

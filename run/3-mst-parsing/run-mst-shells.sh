@@ -16,10 +16,25 @@ then
 	exit 0
 fi
 
+# Load config parameters
+if [ -r ../0-config/0-pipeline.sh ]; then
+	. ../0-config/0-pipeline.sh
+else
+	echo "Cannot find master configuration file!"
+	exit -1
+fi
+
+if [ -r ${MST_CONF_FILE} ]; then
+	. ${MST_CONF_FILE}
+else
+	echo "Cannot find MST configuration file!"
+	exit -1
+fi
+
 # Use byobu so that the scroll bars actually work
 byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
-byobu new-window -n 'cogsrv' 'nice guile -l mst-count.scm; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ../common/cogserver-mst.scm; $SHELL'
 sleep 2;
 
 # Telnet window
