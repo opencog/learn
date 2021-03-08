@@ -1,8 +1,8 @@
 #! /bin/bash
 #
-# compute-marginals.sh
+# compute-mst-marginals.sh
 #
-# Start the cogserver, open the database and compute the word-pair
+# Start the cogserver, open the database and compute the disjunct
 # marginal statistics.  It is safe to run this multiple times.
 #
 # ----------------------
@@ -14,11 +14,11 @@ else
 	exit -1
 fi
 
-if [ -r ${PAIR_CONF_FILE} ]; then
-	. ${PAIR_CONF_FILE}
+if [ -r ${MST_CONF_FILE} ]; then
+	. ${MST_CONF_FILE}
 else
-	echo "Cannot find pair-counting configuration file!"
+	echo "Cannot find MST configuration file!"
 	exit -1
 fi
 
-guile -s ../common/marginals-pair.scm
+guile -s ../common/marginals-mst.scm

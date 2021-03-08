@@ -1,7 +1,7 @@
 #! /usr/bin/env -S guile
 !#
 ;
-; pair-marginals.scm
+; marginals-pair.scm
 ;
 ; After word-pair counting has been completed, this script is run to
 ; compute marginal statistics. This computes assorted totals and

@@ -26,3 +26,7 @@ A quick overview:
   This pulls text files, one by one, from the data directory, and
   submits them for MST processing. Run this manually in the `submit`
   tmux/byobu window.
+
+* `compute-mst-marginals.sh`: A bash script that computes marginal
+  statistics after MST parsing has concluded. This needs to be run
+  by hand.

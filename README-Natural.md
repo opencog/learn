@@ -905,8 +905,10 @@ The next steps require marginal statistics to be available for the
 disjuncts. The previous step gathered a large number of observation
 counts for disjuncts. These need to be summarized, so that one obtains
 per-word statistics.  Marginals will be needed both for the
-pseudo-csets and (optionally) for the cross-connector sets.  First,
-compute the marginals for the pseudo-csets:
+pseudo-csets and (optionally) for the cross-connector sets.
+
+The first part is automated in `3-mst-parsing/compute-mst-marginals.sh`.
+Run that script. Its a wrapper around this:
 ```
       (cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
       (define pca (make-pseudo-cset-api))
@@ -916,10 +918,12 @@ compute the marginals for the pseudo-csets:
       ((add-support-compute psa) 'cache-all) ; uhhh
       (btr 'mmt-marginals)
 ```
+Experimentation with cross-connectors is in progress.
+
 To obtain the marginals for the cross-connectors, repeat the above
 steps, but this time with `(make-shape-vec-api)` as the base class.
 At this time, the need for the cross-connectors (shapes) is optional...
-It would be recommended, except that there are explosiveluy more of
+It would be recommended, except that there are explosively more of
 them: 2 to 5 cross-connectors get created for each ordinary connector
 (since each slot can be a wild-card, and a word typically has 2-5
 connectors). This can double or triple the size of a dataset.
