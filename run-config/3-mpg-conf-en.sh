@@ -11,7 +11,7 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=18005
 export PROMPT="scheme@(mpg-parse)> "
-export COGSERVER_CONF="config/opencog-mst-en.conf"
+export COGSERVER_CONF="3-cogserver/cogserver-mst-en.conf"
 
 # Scheme function name for planar MST parsing.
 export OBSERVE="observe-mpg"
