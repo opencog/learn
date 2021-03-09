@@ -643,6 +643,7 @@ Sent out article in 774 seconds
 MPG-Processing file >>>corpus-9.txt<<<
 Sent out article in 1020 seconds
 real    75m45.906s
+real    80m52.774s
 
 -----------
 Restarted pair counting from scratch in expt-4
@@ -815,7 +816,30 @@ MPG-Processing file >>>corpus-8.txt<<<
 Sent out article in 876 seconds
 MPG-Processing file >>>corpus-9.txt<<<
 Sent out article in 1004 seconds
-real    115m55.803s
+real    115m55.803s   (this is the non-optimized postgres)
+
+DB activity: 587 tps,  0 rollbs/s,   6 buffer r/s, 99 hit%,    941 row r/s,  47
+DB activity: 638 tps,  0 rollbs/s,   5 buffer r/s, 99 hit%,   1132 row r/s,  613 row w/s
+DB activity: 675 tps,  0 rollbs/s,   4 buffer r/s, 99 hit%,   1275 row r/s,  683 row w/s
+
+DB I/O:     0 reads/s,     0 KB/s,  1169 writes/s,  5101 KB/s
+
+Total DISK READ:         0.00 B/s | Total DISK WRITE:         2.55 M/s
+Current DISK READ:       0.00 B/s | Current DISK WRITE:       2.53 M/s
+
+Why is pg_top reporting twice the rate of iotop? Is this an mdraid thing?
+
+  PID USERNAME PRI NICE  SIZE   RES STATE   TIME   WCPU    CPU COMMAND
+11723 postgres  20    0  217M   12M sleep   0:04  4.21%  8.74% postgres: 12/mai
+11720 postgres  20    0  217M   12M sleep   0:09  5.48%  8.54% postgres: 12/mai
+11727 postgres  20    0  217M   12M sleep   0:09  6.37%  8.34% postgres: 12/mai
+11728 postgres  20    0  217M   12M run     0:07  4.63%  8.34% postgres: 12/mai
+11722 postgres  20    0  217M   12M sleep   0:09  5.07%  6.95% postgres: 12/mai
+11729 postgres  20    0  217M   12M sleep   0:03  3.44%  5.36% postgres: 12/mai
+11732 postgres  20    0  218M   16M sleep   0:09  4.77%  0.79% postgres: 12/mai
+24851 postgres  20    0  215M 6144K sleep   0:30  0.06%  0.00% postgres: 12/mai
+11725 postgres  20    0  217M   12M sleep   0:08  4.22%  0.00% postgres: 12/mai
+
 
 ((PredicateNode . 15) (ListLink . 240) (AnyNode . 2) (Connector . 29) (ConnectorDir . 2) (ConnectorSeq . 371468) (Section . 466340) (EvaluationLink . 240)
 (TypeNode . 1) (AnchorNode . 1) (SchemaNode . 1) (PostgresStorageNode . 1) (WordNode . 15) (LinkGrammarRelationshipNode . 1))

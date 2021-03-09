@@ -14,23 +14,6 @@ Then run `gen-corpus.sh`. That's it. Now move to step
 
 File overview
 -------------
-* `gen-dict.scm` -- Generates a random artificial ("fake") grammar.
-  Requires configuration paramters to be declared; see
-  `../0.config/dict-conf.scm` for an example configuration file.
-
-   Once the parameters are configured as desired, the grammar can
-   be generated as
-```
-   $ ./gen-dict.scm dict-conf.scm
-```
-
-* `fake-lang` -- Link Grammar boilerplate, required for working with
-   a Link-Grammar file-based dictionary. The `gen-dict.scm` file copies
-   these files to the target dictionary location. For example:
-```
-   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
-```
-
 * `gen-corpus.sh` -- This generates a random corpus from the fake
    grammar. Edit and configure as desired. This automatically invokes
    `gen-dict.scm` to create the dictionary. The location of the

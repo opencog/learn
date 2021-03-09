@@ -5,7 +5,7 @@
 % All sentences are exactly 5 words long.
 %
 #define dictionary-version-number 5.9.0;
-#define dictionary-locale en_US.UTF-8;
+#define dictionary-locale         en_US.UTF-8;
 
 
 <verb>: S- & O+;
@@ -19,3 +19,6 @@ cat bird dog squirrel: <noun>;
 a the: <determiner>;
 
 saw chased: <verb>
+
+% Mandatory, else the generator won't work.
+<UNKNOWN-WORD>:  XXXXXXXX+;

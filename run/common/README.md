@@ -11,6 +11,23 @@ File overview
 Several files common to several of these steps are located in this
 directory.  A quick overview:
 
+* `gen-dict.scm` -- Generates a random artificial ("fake") grammar.
+  Requires configuration paramters to be declared; see
+  `../0-config/dict-conf.scm` for an example configuration file.
+
+   Once the parameters are configured as desired, the grammar can
+   be generated as
+```
+   $ ./gen-dict.scm dict-conf.scm
+```
+
+* `fake-lang` -- Link Grammar boilerplate, required for working with
+   a Link-Grammar file-based dictionary. The `gen-dict.scm` file copies
+   these files to the target dictionary location. For example:
+```
+   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
+```
+
 * `split-sentences.pl`: Split text files into sentences. Accepts
   free-form text, and looks for language-depedeny likely end-of
   sentence locations, so that there is one sentence per line.
