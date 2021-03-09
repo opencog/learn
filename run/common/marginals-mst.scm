@@ -19,9 +19,13 @@
 (display "Fetch all disjuncts. This may take well over half-an-hour!\n")
 (psa 'fetch-pairs)
 
+; Compute the lp-norms
 ((add-support-compute psa) 'cache-all)
 
-; Compute the marginals
+; Cache the total matrix dimensions
+((make-central-compute psa) 'cache-total)
+
+; Compute the matrix-transpose marginals
 (btr 'mmt-marginals)
 
 (print-matrix-summary-report psa)

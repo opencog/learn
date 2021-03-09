@@ -849,9 +849,36 @@ Elapsed time to load csets: 65 secs
 ((add-support-compute psa) 'cache-all)
 (btr 'mmt-marginals)
 Done storing 371468 left-wilds in 1567 secs
+Done storing 371515 left-wilds in 1722 secs
 OK, so that's faster than RocksDB, which took 2511 secs
 rocks started out faster, then really slowed down...
 Why?
+
+Also, why is the number different?
+
+(define rpt-obj (add-report-api psa))
+(define size (rpt-obj 'num-pairs))
+(define size (rpt-obj 'left-dim))
+
+(define dim-key (PredicateNode "*-Dimension Key-*"))
+(define wild-atom (psa 'wild-wild))
+
+      (define (get-left-dim)
+         (inexact->exact (round
+            (cog-value-ref (cog-value wild-atom dim-key) 0))))
+
+support stuff was not stored ...!? Why?
+((add-support-compute psa) 'cache-all)
+fails to compute the dim key
+
+well, OK, central-compute is needed for that...
+
+   (define size (rpt-obj 'num-pairs)) same as (psu 'total-support-left
+                               or total-support-right
+   (define nrows (rpt-obj 'left-dim))
+same as (psa 'left-basis-size)
+
+   (define ncols (rpt-obj 'right-dim))
 
 
 
