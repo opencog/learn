@@ -31,10 +31,3 @@ language-learning pipeline. Currently, it consists of five or six steps:
 
 The file `wikipedia.txt` contains multiple wikipedia artices, and can be
 used for trial runs.
-
-Other things
--------------
-* [common](common) -- helper scripts that get things done. Some are
-  common to multiple processing steps.
-
-* [attic](attic) -- obsolete code that might still be useful.

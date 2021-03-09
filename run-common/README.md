@@ -120,3 +120,7 @@ equivalent to the CogServer in pure guile, by running the following:
 For short runs, the above does behave more or less the same way as the
 CogServer does. Unfortunately, it crashes/hangs after about half and
 hour (or sooner???), under a heavy load.
+
+Attic
+-----
+Obsolete code that might still be useful.
