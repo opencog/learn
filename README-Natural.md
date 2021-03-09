@@ -358,7 +358,8 @@ everything works. It's a small orientation demo.
      They just need to be installed once.
    + The run scripts in `run` are organized by processing stages. They
      are designed so that you can `cd` into that directory, and then
-     run the scripts there, as needed.
+     run the scripts there, as needed.  All of the different
+     experiments can use the same `run` directory.
    + Each experiment gets it's own copy of the corpora. This is because
      the corpora files are moved around during processing. They are
      moved around so that progress can be monitored, and so that, if
