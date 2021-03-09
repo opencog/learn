@@ -9,15 +9,19 @@ Edit [../0-config/0-pipeline.sh](../0-config/0-pipeline.sh) and
 [../0-config/1-corpus-conf.sh](../0-config/1-corpus-conf.sh) to
 configure.
 
-Then run `gen-corpus.sh`. That's it. Now move to step
+Then run `gen-dict.sh` to create a dictionary, and run `gen-corpus.sh`
+to create a corpus. That's it. Now move to step
 [../2-word-pairs](../2-word-pairs) next.
 
 File overview
 -------------
+* `gen-dict.sh` -- This generates a random dictionary encoding an
+   artificial grammar.  The structure of the dictionary is configured
+   in `../0-config/1-dict-conf.scm`.
+
 * `gen-corpus.sh` -- This generates a random corpus from the fake
-   grammar. Edit and configure as desired. This automatically invokes
-   `gen-dict.scm` to create the dictionary. The location of the
-   dictionary, and the corpus, is configured in `dict-conf.scm`.
+   grammar. The location of the dictionary, and the corpus, is
+   configured in `../0-config/1-corpus-conf.scm`.
 
 Notes
 -----

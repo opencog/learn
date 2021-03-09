@@ -2,10 +2,8 @@
 ; dict-conf.scm - Configuration paramters for a random artificial grammar.
 ;
 ; Copy and edit this file and adjust the parameters as desired.
-; Then create the dictionary, and a sample corpus, by running
-; `./gen-corpus.sh`.
+; Then create the dictionary by running `../1-gen-dict/gen-dict.sh`.
 ;
-; The location of the output is set at the bottom of tihis file.
 ; ---------------------
 
 ; Number of Link Grammar link types (connector types)

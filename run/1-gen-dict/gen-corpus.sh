@@ -20,15 +20,6 @@ else
 	exit -1
 fi
 
-# Generate a dictionary. The return string is either an error message,
-# or its the configured directory.
-RET_STR=`./gen-dict.scm $CONFIG_DIR/$DICT_CONF $DICT_DIR`
-
-if [ $? -ne 0 ]; then
-	echo $RET_STR
-	exit -1
-fi
-
 DICT=$DICT_DIR
 CORP=$CORPORA_DIR
 
