@@ -238,10 +238,9 @@ unhappy, painful experience.
 * **0.7)** Mandatory (!?)  You'll work with large datasets; default
            guile is not equipped to deal wit the sizes encountered here.
            (Maybe? This might be fixed in the newest guile ???)
-
            Skipping this step will lead to the error
            `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
-           So:
+           Fix this with:
 ```
       git clone https://github.com/ivmai/bdwgc
       cd bdwgc
@@ -302,7 +301,7 @@ unhappy, painful experience.
       make -j
       sudo make install
 ```
-     Repeat the above for each of the other github repos.
+  Repeat the above for each of the other github repos.
 
 Setting up the AtomSpace
 ------------------------
