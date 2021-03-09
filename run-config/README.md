@@ -10,14 +10,15 @@ Files are numbered so that they appear in the same order (roughly) as
 they are needed to run the processing.
 
 * `0-pipeline.sh` -- Master configuration file, contains parameters
-  that are generic to the entire pipeline.
+  that are generic to the entire pipeline. Set the environment variable
+  $MASTER_CONFIG_FILE to the location of this file.
 
 * `1-dict-conf.scm` -- This contains the configurable parameters for
    generating a random artificial ("fake") grammar. Edit this file
    as desired (or copy it and edit it...). Once the parameters are
    configured as desired, the grammar can be generated as
 ```
-   $ ../1-gen-dict/gen-dict.scm 1-dict-conf.scm
+   $ /run/1-gen-dict/gen-dict.scm 1-dict-conf.scm
 ```
 
 * `1-corpus-conf.sh` -- This contains paramaters that control the size
