@@ -1,0 +1,26 @@
+%
+% Test dictionary
+%
+% An extremely simple dictionary, meant to serve as a "sniff test".
+% All sentences are exactly 5 words long.
+%
+#define dictionary-version-number 5.9.0;
+#define dictionary-locale         en_US.UTF-8;
+
+
+<verb>: S- & W- & O+;
+
+<noun>: (D- & S+) or (D- & O-);
+
+<determiner>: D+;
+
+LEFT-WALL: W+;
+
+cat bird dog squirrel: <noun>;
+
+a the: <determiner>;
+
+saw chased: <verb>;
+
+% Mandatory, else the generator won't work.
+<UNKNOWN-WORD>:  XXXXXXXX+;
