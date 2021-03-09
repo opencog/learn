@@ -220,10 +220,9 @@ unhappy, painful experience.
 * **0.5)** Optional but strongly recommended. Install system shutdown
            scripts.  This will help protect your data in case of an
            unexpected power loss.  These scripts, and the instructions
-           for them, are located in the `run/rc.local.shutdown`,
-           `run/rc-local-shutdown.service` and the `run/rc.lxc.shutdown`
-           files. You will need to alter these files, and use your own
-           login credentials in place of the generic ones.
+           for them, are located in the `run/manual` directory. They
+           need to be adjusted and manually installed. Several of them
+           hold login credentials that have to be adjusted.
 
 * **0.6)** Guile version 3.0 or newer is required. Most recent distros
            include this version. Otherwise, guile must be built from

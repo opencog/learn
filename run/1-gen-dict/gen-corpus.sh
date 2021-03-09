@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 # Automated corpus generation. Configurable parameters are located
-# in `0-config/1-corpus-conf.sh` and in `1-dict-conf.scm`. Edit those
+# in `run-config/1-corpus-conf.sh` and in `1-dict-conf.scm`. Edit those
 # file as desired.
 #
 # ---------

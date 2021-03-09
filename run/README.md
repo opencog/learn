@@ -5,12 +5,10 @@ Parse management scripts
 The scripts here are used to automate the operation of the
 language-learning pipeline. Currently, it consists of five or six steps:
 
-* Overall pipeline configuration files. Located in
-  [0-config](0-config). These should be reviewed and edited to suit.
-
 * Artificial grammar generation. Automation scripts can be found in the
   [1-gen-dict](1-gen-dict) directory. This is required for calibration
-  of the learning system. Just run `gen-corpus.sh` in this directory.
+  of the learning system. Run `gen-dict.sh` and `gen-corpus.sh` in this
+  directory.
 
 * For natural language learning, a text corpus is needed. Any
   sufficiently large collection of plain-text UTF-8 files will do.
@@ -36,7 +34,7 @@ used for trial runs.
 
 Other things
 -------------
-* [common](common) -- scripts that are common to several processing
-  steps.
+* [common](common) -- helper scripts that get things done. Some are
+  common to multiple processing steps.
 
 * [attic](attic) -- obsolete code that might still be useful.

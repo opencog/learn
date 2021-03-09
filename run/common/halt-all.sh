@@ -3,6 +3,7 @@
 # halt-all.sh
 #
 # Stop all LXC containers.
+#
 # See also rc.local.shutdown
 
 # This just "cleanly" halts all of the LXC containers.

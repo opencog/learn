@@ -3,7 +3,7 @@
 # gen-dict.sh
 #
 # Automated artificial dictionary generation. Configurable parameters
-# are located in `0-config/1-dict-conf.scm`. Edit that file as desired.
+# are located in `run-config/1-dict-conf.scm`. Edit that file as desired.
 #
 # ---------
 
