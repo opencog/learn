@@ -6,8 +6,8 @@
 #
 # ---------
 
-if [ -r ../0-config/0-pipeline.sh ]; then
-	. ../0-config/0-pipeline.sh
+if [ -r $MASTER_CONFIG_FILE ]; then
+	. $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file!"
 	exit -1
