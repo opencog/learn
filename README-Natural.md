@@ -334,41 +334,69 @@ everything works. It's a small orientation demo.
       (sql-create "postgres:///learn_pairs")
 ```
 
-* **3)** Copy all files from the `run` directory to a new directory;
-         suggest the directory `run-practice`.  Its best to try a few
-         practice runs before committing to serious data processing.
-         The next number of steps describe how to do a practice run;
-         a later section focuses on batch processing.
+* **3)** Make plans for five different directories. These will be:
 
-   There are two types of files in this directory: generic
-         processing scripts, and language-specific configuration files.
-         Different languages require different processing pipelines;
-         e.g. most languages will require a morphology processing step;
-         English does not.  Different languages will typically train
-         on a different set of corpora organized in different directories
-         in different ways. The multitude of config files allows each
-         language to be configured in sharply different ways, running
-         different kinds of experiments.
+    + A directory for helper scripts
+    + A directory for running the experiment
+    + A directory for the text corpus
+    + A directory for database files (if using RocksDB)
+    + A directory for per-experiment config files
 
-   The config files are in the numbered subdirectories: `run/0-config`,
-         `run/1-gen-dict`, `run/2-word-pairs`, etc. They are meant to
-         be run in order. For the demo, skip `1-gen-dict`, it is for
-         generating artificial languages.
+    The goal of this directory structure is to allow lots of
+    experiments to be performed and tracked, without clobbering
+    each-other, and while minimizing duplicated/shared files.
+    Here is a suggested directory structure, for "Experiment 42":
+```
+    cp -pr run-common /home/ubuntu/run-common
+    cp -pr run /home/ubuntu/run
+    mkdir /home/ubuntu/text/expt-42
+    mkdir /home/ubuntu/data/expt-42
+    cp -pr run-config /home/ubuntu/config/expt-42
+```
+
+   + The helper scripts in `run-common` are shared by all experiments.
+     They just need to be installed once.
+   + The run scripts in `run` are organized by processing stages. They
+     are designed so that you can `cd` into that directory, and then
+     run the scripts there, as needed.
+   + Each experiment gets it's own copy of the corpora. This is because
+     the corpora files are moved around during processing. They are
+     moved around so that progress can be monitored, and so that, if
+     the processing pipeline is killed and restarted, previously-handled
+     files are not reprocessed.
+   + If using RocksDB, each experiment can get it's own database
+     directory. This allows the same filenames to get re-used. However,
+     you can configure this however you want to.
+   + Each experiment gets it's own set of config files.  This is key!
+     Each experiment will ... do things differently, with different
+     parameters. Some of these include the directory locations above.
+
+   The config files are numbered: `run-config/0-pipeline.sh` is the
+   master config file shared by all stages. It will need to be edited
+   and sourced. Conclude by exporting it's location:
+```
+   $ export MASTER_CONFIG_FILE=/home/ubuntu/config/expt-42/0-pipeline.sh
+```
+
+   You can skip doing configuration for this initial demo; it will
+   be needed when you get serious about running things.
 
 * **4)** Start the OpenCog server.  Later on, the batch processing
          instructions (below) indicate how to automate this. However,
          for the practice run, it is better to do all this by hand.
 
-   First, review the contents of `2-word-pairs/config/opencog-pairs-en.conf`.
+   First, review the contents of
+         `run-config/2-cogserver/cogserver-pairs-en.conf`.
          This simply declares the prompts that the cogserver will use;
          most importantly, it declares the port number for the cogserver.
          It's currently coded to be 17005.
 
-   Edit the `0-config/0-pipeline.sh` and `0-config/2-pair-conf-en.sh`
+   Edit the `run-config/0-pipeline.sh` and `run-config/2-pair-conf-en.sh`
          and hard-code your database credentials into it.
 
    Finally, start the cogserver by
 ```
+     $ cd run/2-word-pairs
      $ ./run-cogserver.sh
 ```
    This will start a guile REPL shell, and will have the cogserver
@@ -414,13 +442,9 @@ everything works. It's a small orientation demo.
          pair-wise linkages for the above sentences. If the above are
          empty, something is wrong. Go to back to step zero and try again.
 
-* **7)** Halt the cogserver by killing the guile process. In the next
-         stage, it will be started in a different way, and having a
-         running server here will interfere with things.  Unless, of
-         course, you are careful to juggle the config files. There's
-         nothing wrong with running multiple servers at the same time:
-         you just have to be careful to avoid clashes, and for that,
-         you can to be careful with config-file settings.
+* **7)** Halt the cogserver either by exiting the guile shell (with
+         control-D or with `(quit)` or with `(exit)`) or by killing
+         the guile process.
 
 That's it for the practice run. If stuff is showing up in the database,
 then processing is proceeding as expected.
