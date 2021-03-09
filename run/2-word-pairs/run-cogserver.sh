@@ -21,4 +21,4 @@ else
 	exit -1
 fi
 
-exec guile -l ../common/cogserver.scm
+exec guile -l ${COMMON_DIR}/cogserver.scm

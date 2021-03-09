@@ -21,4 +21,4 @@ else
 	exit -1
 fi
 
-guile -s ../common/marginals-pair.scm
+guile -s ${COMMON_DIR}/marginals-pair.scm

@@ -7,13 +7,19 @@
 # generation and processing.
 # ----------
 
-# Directory roots. One for text data (the corpus, and assorted text files)
-# the other for RocksDB databases. This allows the text files to live on a
-# spinning disk (where speed is not important) and databases to live on a
-# smaller SSD (where speed is important). Set these any way you want.
-# If you are using Postgres, just delete `ROCKS_DATA_DIR`.
+# Location where processing scripts are installed.
+export COMMON_DIR=/usr/local/share/opencog/learn/run-common
+export COMMON_DIR=/home/ubuntu/run-common
 
+# Location where the text corpus and the dictionary files are located.
+# This allows different corpora to be used in different experiments.
 export TEXT_DIR=/home/ubuntu/text/expt-42
+
+# Location where the RocksDB databases are kept. This allows different
+# experiments to re-use the same filenames, changing only the directory.
+# It is recommended that this be located on an SSD disk, for
+# performance.
+# If you are using Postgres, just delete `ROCKS_DATA_DIR`.
 export ROCKS_DATA_DIR=/home/ubuntu/data/expt-42
 
 # Directory in which configuration parameters (including this file)

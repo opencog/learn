@@ -17,4 +17,4 @@ else
 	exit -1
 fi
 
-../common/process-corpus.sh $MST_CONF_FILE
+${COMMON_DIR}/process-corpus.sh $MST_CONF_FILE
