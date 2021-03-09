@@ -335,55 +335,7 @@ everything works. It's a small orientation demo.
       (sql-create "postgres:///learn_pairs")
 ```
 
-* **3)** Make plans for five different directories. These will be:
-
-    + A directory for helper scripts
-    + A directory for running the experiment
-    + A directory for the text corpus
-    + A directory for database files (if using RocksDB)
-    + A directory for per-experiment config files
-
-    The goal of this directory structure is to allow lots of
-    experiments to be performed and tracked, without clobbering
-    each-other, and while minimizing duplicated/shared files.
-    Here is a suggested directory structure, for "Experiment 42":
-`
-    cp -pr run-common /home/ubuntu/run-common
-    cp -pr run /home/ubuntu/run
-    mkdir /home/ubuntu/text/expt-42
-    mkdir /home/ubuntu/data/expt-42
-    cp -pr run-config /home/ubuntu/config/expt-42
-`
-
-   + The helper scripts in `run-common` are shared by all experiments.
-     They just need to be installed once.
-   + The run scripts in `run` are organized by processing stages. They
-     are designed so that you can `cd` into that directory, and then
-     run the scripts there, as needed.  All of the different
-     experiments can use the same `run` directory.
-   + Each experiment gets it's own copy of the corpora. This is because
-     the corpora files are moved around during processing. They are
-     moved around so that progress can be monitored, and so that, if
-     the processing pipeline is killed and restarted, previously-handled
-     files are not reprocessed.
-   + If using RocksDB, each experiment can get it's own database
-     directory. This allows the same filenames to get re-used. However,
-     you can configure this however you want to.
-   + Each experiment gets it's own set of config files.  This is key!
-     Each experiment will ... do things differently, with different
-     parameters. Some of these include the directory locations above.
-
-   The config files are numbered: `run-config/0-pipeline.sh` is the
-   master config file shared by all stages. It will need to be edited
-   and sourced. Conclude by exporting it's location:
-```
-   $ export MASTER_CONFIG_FILE=/home/ubuntu/config/expt-42/0-pipeline.sh
-```
-
-   You can skip doing configuration for this initial demo; it will
-   be needed when you get serious about running things.
-
-* **4)** Start the OpenCog server.  Later on, the batch processing
+* **3)** Start the OpenCog server.  Later on, the batch processing
          instructions (below) indicate how to automate this. However,
          for the practice run, it is better to do all this by hand.
 
@@ -404,7 +356,7 @@ everything works. It's a small orientation demo.
    This will start a guile REPL shell, and will have the cogserver
    running in the background. The database will have been opened too.
 
-* **5)** Verify that the pair-counting pipeline works. In a second
+* **4)** Verify that the pair-counting pipeline works. In a second
          terminal, try this:
 ```
       rlwrap telnet localhost 17005
@@ -432,7 +384,7 @@ everything works. It's a small orientation demo.
          Postgres.  Both database reports are highly technical,
          and are mostly useful for debugging, only.
 
-* **6)** (Postgres only) Verify that the above resulted in data sent
+* **5)** (Postgres only) Verify that the above resulted in data sent
          to the SQL database.  Log into the database, and check:
 ```
       psql en-pairs
@@ -444,7 +396,7 @@ everything works. It's a small orientation demo.
          pair-wise linkages for the above sentences. If the above are
          empty, something is wrong. Go to back to step zero and try again.
 
-* **7)** Halt the cogserver either by exiting the guile shell (with
+* **6)** Halt the cogserver either by exiting the guile shell (with
          control-D or with `(quit)` or with `(exit)`) or by killing
          the guile process.
 
@@ -514,7 +466,7 @@ There are various scripts in the `download` directory for downloading
 and pre-processing texts from Project Gutenberg, Wikipedia, and the
 "Archive of Our Own" fan-fiction website.
 
-* **8)** Explore the scripts in the `download` directory. Download or
+* **7)** Explore the scripts in the `download` directory. Download or
    otherwise obtain a collection of texts to process. Put them in
    some master directory, and also copy them to the `beta-pages`
    directory.  The name `beta-pages` is not mandatory, but some of
@@ -549,7 +501,7 @@ Running Bulk Pair-counting
 --------------------------
 Do this.
 
-* **9)** (Optional; needed only if you are experimenting.)
+* **8)** (Optional; needed only if you are experimenting.)
    Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).
@@ -593,25 +545,71 @@ Do this.
    Re-writing the word-pair counting to run in straight C++ code
    could improve performance by 100x. This is not a current priority.
 
-* **10)** Configuration. The pipeline is controlled by a collection of
+* **9)** Configuration. The pipeline is controlled by a collection of
     configuration files. These specify things like the training corpora
     and the databases in which to store intermediate results. Multiple
     experiments can be run at the same time, by twiddling the port
     numbers at which the cogservers are started (being careful to pipe
     the right data to the right server!)
 
-    The config files are located in the `run/0-config` directory.
+    The config files are located in the `run-config` directory.
     The master config is in `0-pipeline.sh`. The intent is that,
-    for each distinct experiment, you can make a copy of the `run`
-    directory, and adjust file and database locations for each
-    experiment by editing the config files.
+    for each distinct experiment, you can make a copy of the
+    `run-config` directory, and adjust file and database locations
+    for each experiment by editing the config files.
 
     Artificial language generation is controlled with the
-    `run/0-config/1-*` files.
+    `run-config/1-*` files.
 
-    Pair counting is controlled by the `run/0-config/2-pair-conf*sh`
+    Pair counting is controlled by the `run-config/2-pair-conf*sh`
     files. Pick one; there are several preconfigured variants.
     Edit as required.
+
+* **10)** Configuration planning and setup.
+    Make plans for five different directories. These will be:
+
+    + A directory for helper scripts
+    + A directory for running the experiment
+    + A directory for the text corpus
+    + A directory for database files (if using RocksDB)
+    + A directory for per-experiment config files
+
+    The goal of this directory structure is to allow lots of
+    experiments to be performed and tracked, without clobbering
+    each-other, and while minimizing duplicated/shared files.
+    Here is a suggested directory structure, for "Experiment 42":
+```
+    cp -pr run-common /home/ubuntu/run-common
+    cp -pr run /home/ubuntu/run
+    mkdir /home/ubuntu/text/expt-42
+    mkdir /home/ubuntu/data/expt-42
+    cp -pr run-config /home/ubuntu/config/expt-42
+```
+
+   + The helper scripts in `run-common` are shared by all experiments.
+     They just need to be installed once.
+   + The run scripts in `run` are organized by processing stages. They
+     are designed so that you can `cd` into that directory, and then
+     run the scripts there, as needed.  All of the different
+     experiments can use the same `run` directory.
+   + Each experiment gets it's own copy of the corpora. This is because
+     the corpora files are moved around during processing. They are
+     moved around so that progress can be monitored, and so that, if
+     the processing pipeline is killed and restarted, previously-handled
+     files are not reprocessed.
+   + If using RocksDB, each experiment can get it's own database
+     directory. This allows the same filenames to get re-used. However,
+     you can configure this however you want to.
+   + Each experiment gets it's own set of config files.  This is key!
+     Each experiment will ... do things differently, with different
+     parameters. Some of these include the directory locations above.
+
+   The config files are numbered: `run-config/0-pipeline.sh` is the
+   master config file shared by all stages. It will need to be edited
+   and sourced. Conclude by exporting it's location:
+```
+   $ export MASTER_CONFIG_FILE=/home/ubuntu/config/expt-42/0-pipeline.sh
+```
 
 * **11)** Processing preliminaries.
     It is convenient to have lots of terminals open and ready for use;
@@ -631,8 +629,8 @@ Do this.
     See `man byobu` for details.
 
 * **12)** Processing.
-    Change directory to (your private copy of) the `run/2-word-pairs`
-    directory, and start tmux/byobu by running `run-shells.sh`.
+    Change directory to the `run/2-word-pairs` directory, and start
+    tmux/byobu by running `run-shells.sh`.
 
     If all went well, you should find that the cogserver is running
     in the `cogsrv` tmux terminal.  It should be sitting at the guile
