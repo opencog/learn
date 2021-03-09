@@ -275,6 +275,7 @@ unhappy, painful experience.
 ```
       link-parser --version
 ```
+
    Newer versions are available at:
            https://www.abisource.com/downloads/link-grammar/
 
@@ -301,7 +302,8 @@ unhappy, painful experience.
       make -j
       sudo make install
 ```
-  Repeat the above for each of the other github repos.
+
+   Repeat the above for each of the other github repos.
 
 Setting up the AtomSpace
 ------------------------
@@ -345,13 +347,13 @@ everything works. It's a small orientation demo.
     experiments to be performed and tracked, without clobbering
     each-other, and while minimizing duplicated/shared files.
     Here is a suggested directory structure, for "Experiment 42":
-```
+`
     cp -pr run-common /home/ubuntu/run-common
     cp -pr run /home/ubuntu/run
     mkdir /home/ubuntu/text/expt-42
     mkdir /home/ubuntu/data/expt-42
     cp -pr run-config /home/ubuntu/config/expt-42
-```
+`
 
    + The helper scripts in `run-common` are shared by all experiments.
      They just need to be installed once.
