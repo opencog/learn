@@ -15,7 +15,7 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=17005
 export PROMPT="scheme@(en-pairs)> "
-export COGSERVER_CONF=2-cogserver/cogserver-pairs-en.conf
+export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-en.conf
 
 # Scheme function name for word-pair counting
 export OBSERVE="observe-text"

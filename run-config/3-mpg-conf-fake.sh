@@ -9,7 +9,7 @@ export SENTENCE_SPLIT=false
 export HOSTNAME=localhost
 export PORT=18008
 export PROMPT="scheme@(mpg-parse)> "
-export COGSERVER_CONF="3-cogserver/cogserver-mst-fake.conf"
+export COGSERVER_CONF=${CONFIG_DIR}/"3-cogserver/cogserver-mst-fake.conf"
 
 # Scheme function name for planar MST parsing.
 export OBSERVE="observe-mpg"
