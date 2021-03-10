@@ -6,7 +6,13 @@
 # marginal statistics.  It is safe to run this multiple times.
 #
 # ----------------------
+
 # Load config parameters
+if [ -z $MASTER_CONFIG_FILE ]; then
+	echo "MASTER_CONFIG_FILE not defined!"
+	exit -1
+fi
+
 if [ -r $MASTER_CONFIG_FILE ]; then
 	. $MASTER_CONFIG_FILE
 else

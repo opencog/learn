@@ -7,7 +7,13 @@
 # word-pairs in the database (which can take an hour or more!).
 #
 # ----------------------
+
 # Load config parameters
+if [ -z $MASTER_CONFIG_FILE ]; then
+	echo "MASTER_CONFIG_FILE not defined!"
+	exit -1
+fi
+
 if [ -r $MASTER_CONFIG_FILE ]; then
 	. $MASTER_CONFIG_FILE
 else
