@@ -41,3 +41,6 @@ export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-fake.sh
 # File containing MST-parsing configuration.
 export MST_CONF_FILE=$CONFIG_DIR/3-mst-conf.sh
 export MST_CONF_FILE=$CONFIG_DIR/3-mpg-conf-fake.sh
+
+# File containing grammatical-class configuration
+export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh

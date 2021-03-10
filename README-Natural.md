@@ -1156,13 +1156,16 @@ change.
   critical! The clustering algorithm(s) actively alter the per-word
   statistics as they proceed. The database contents will be scrambled
   in such a way that the original word-disjunct stats will be lost.
+```
+    cp -pr mpg_parse.rdb gram-1.rdb
+```
 
 * At the guile prompt:
 ```
       (use-modules (opencog) (opencog persist) (opencog persist-rocks))
       (use-modules (opencog nlp) (opencog nlp learn))
       (use-modules (opencog matrix) (opencog sheaf))
-      (cog-rocks-open "rocks:///home/ubuntu/data/expt-1/fake_pairs.rdb")
+      (cog-rocks-open "rocks:///home/ubuntu/data/expt-8/gram-1.rdb")
 ```
   and the, try either
 ```
