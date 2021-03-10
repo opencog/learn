@@ -21,7 +21,7 @@ else
 	exit -1
 fi
 
-if [ -r ${GRAM_CONF_FILE} ]; then
+if ! [ -z ${GRAM_CONF_FILE} ] && [ -r ${GRAM_CONF_FILE} ]; then
 	. ${GRAM_CONF_FILE}
 else
 	echo "Cannot find grammatical class clustering configuration file!"

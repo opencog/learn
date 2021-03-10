@@ -21,7 +21,7 @@ else
 	exit -1
 fi
 
-if [ -r ${MST_CONF_FILE} ]; then
+if ! [ -z ${MST_CONF_FILE} ] && [ -r ${MST_CONF_FILE} ]; then
 	. ${MST_CONF_FILE}
 else
 	echo "Cannot find MST configuration file!"

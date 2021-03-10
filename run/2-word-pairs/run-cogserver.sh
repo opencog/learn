@@ -20,7 +20,7 @@ else
 	exit -1
 fi
 
-if [ -r ${PAIR_CONF_FILE} ]; then
+if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
 	. ${PAIR_CONF_FILE}
 else
 	echo "Cannot find pair-counting configuration file!"
