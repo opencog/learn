@@ -19,7 +19,7 @@ export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-fake.conf
 # Scheme function name for word-pair counting
 export OBSERVE="observe-text"
 
-# URL for the database where pair counts will be accumulated
+# Location of the database where pair counts will be accumulated
 export PAIRS_DB=${ROCKS_DATA_DIR}/fake_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 

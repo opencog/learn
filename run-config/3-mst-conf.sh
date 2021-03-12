@@ -24,7 +24,7 @@ export COGSERVER_CONF=""
 # Scheme function name for MST parsing.
 export OBSERVE="observe-mst"
 
-# URL for the database where disjunct counts will be accumulated
+# Location of the database where disjunct counts will be accumulated
 export MST_DB=${ROCKS_DATA_DIR}/mst_parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${MST_DB}\")"
 

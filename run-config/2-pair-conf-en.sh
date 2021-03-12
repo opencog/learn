@@ -20,7 +20,7 @@ export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-en.conf
 # Scheme function name for word-pair counting
 export OBSERVE="observe-text"
 
-# URL for the database where pair counts will be accumulated
+# Location of the database where pair counts will be accumulated
 
 # For Postgres, use this. (The quotes are important!)
 export PAIRS_DB=en_pairs

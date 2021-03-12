@@ -16,7 +16,7 @@ export COGSERVER_CONF=${CONFIG_DIR}/3-cogserver/cogserver-mst-en.conf
 # Scheme function name for planar MST parsing.
 export OBSERVE="observe-mpg"
 
-# URL for the database where disjunct counts will be accumulated
+# Location of the database where disjunct counts will be accumulated
 export MST_DB=${ROCKS_DATA_DIR}/mpg_parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${MST_DB}\")"
 

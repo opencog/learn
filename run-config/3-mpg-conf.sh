@@ -40,7 +40,7 @@ export COGSERVER_CONF=""
 #
 export OBSERVE="observe-mpg"
 
-# URL for the database where disjunct counts will be accumulated
+# Location of the database where disjunct counts will be accumulated
 export MST_DB=rocks://${ROCKS_DATA_DIR}/mpg_parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${MST_DB}\")"
 

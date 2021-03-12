@@ -33,7 +33,7 @@ export COGSERVER_CONF=""
 #
 export OBSERVE="observe-text"
 
-# URL for the database where pair counts will be accumulated
+# Location of the database where pair counts will be accumulated
 export PAIRS_DB=${ROCKS_DATA_DIR}/word_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
