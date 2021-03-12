@@ -26,7 +26,7 @@ export SPLIT_LANG=en
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
-export PROMPT="scheme@(mpg-parse)> "
+export PROMPT="scheme@(mpg-parse)"
 export COGSERVER_CONF=""
 
 # Scheme function name for planar MST parsing. This is a scheme function

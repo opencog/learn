@@ -7,7 +7,7 @@
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=19008
-export PROMPT="scheme@(gram-class)> "
+export PROMPT="scheme@(gram-class)"
 export COGSERVER_CONF=${CONFIG_DIR}/4-cogserver/cogserver-gram-fake.conf
 
 # Location of the database where disjunct counts will be accumulated

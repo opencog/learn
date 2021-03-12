@@ -15,7 +15,18 @@
 (use-modules (opencog nlp) (opencog nlp learn))
 (use-modules (opencog cogserver))
 
-(repl-default-prompt-set! (getenv "PROMPT"))
+(define env-prompt (getenv "PROMPT"))
+
+; Prompt magic, copied from `module/system/repl/common.scm`
+(define (cog-prompt)
+	(let ((level (length (cond
+				((fluid-ref *repl-stack*) => cdr)
+				(else '())))))
+		(if (zero? level)
+			(string-append env-prompt "> ")
+			(format #f "~A [~A]> " env-prompt level))))
+
+(repl-default-prompt-set! cog-prompt)
 
 ; Start the cogserver using the indicated config file.
 (start-cogserver (getenv "COGSERVER_CONF"))

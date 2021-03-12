@@ -23,7 +23,7 @@ export SPLIT_LANG=en
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
-export PROMPT="scheme@(count-pairs)> "
+export PROMPT="scheme@(count-pairs)"
 export COGSERVER_CONF=""
 
 # Scheme function name for word-pair counting. This is a scheme function
