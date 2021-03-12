@@ -466,6 +466,8 @@
 #!
 As of guile-3.0, the RAM usage issues seem to have gone away,
 and so manual garbage colection is not needed any more.
+(I don't know if this is due to changes in guile, or due to
+how we run the pipeline, in general.)
 
 	; Manually run the garbage collector, every now and then.
 	; This helps keep RAM usage down, which is handy on small-RAM
