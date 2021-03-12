@@ -45,7 +45,10 @@ echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
 sleep 1
 
 # Compute the pair marginals.
+echo "Start computing the pair marginals"
 guile -s ${COMMON_DIR}/marginals-pair.scm
+echo "Finish computing the pair marginals"
+echo -e "\n\n\n"
 
 echo Done processing word-pairs
 # ------------------------

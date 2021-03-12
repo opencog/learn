@@ -65,7 +65,10 @@ echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
 sleep 1
 
 # Compute the disjunct marginals.
+echo "Start computing the disjunct marginals"
 guile -s ${COMMON_DIR}/marginals-mst.scm
+echo "Finish computing the disjunct marginals"
+echo -e "\n\n\n"
 
 echo Done MST parsing and disjunct counting
 # ------------------------
