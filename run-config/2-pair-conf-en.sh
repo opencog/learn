@@ -23,11 +23,12 @@ export OBSERVE="observe-text"
 # URL for the database where pair counts will be accumulated
 
 # For Postgres, use this. (The quotes are important!)
-export STORAGE_NODE="(PostgresStorageNode \"postgres:///en_pairs\")"
+export PAIRS_DB=en_pairs
+export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 
 # For RocksDB, use this.
-ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/en_pairs.rdb
-export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
+export PAIRS_DB=${ROCKS_DATA_DIR}/en_pairs.rdb
+export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # File processing grunge.
 export MSG="Splitting and word-pair counting"

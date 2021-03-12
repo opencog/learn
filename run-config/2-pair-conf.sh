@@ -34,11 +34,12 @@ export COGSERVER_CONF=""
 export OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/word_pairs.rdb
-export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
+export PAIRS_DB=${ROCKS_DATA_DIR}/word_pairs.rdb
+export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # For Postgres, use this. (The quotes are important!)
-export STORAGE_NODE="(PostgresStorageNode \"postgres:///word_pairs\")"
+export PAIRS_DB=word_pairs
+export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 
 # Directories where in-process and completed files will be moved.
 # This avoids double-processing of corpus files, if the pair-processing

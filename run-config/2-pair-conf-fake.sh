@@ -20,8 +20,8 @@ export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-fake.conf
 export OBSERVE="observe-text"
 
 # URL for the database where pair counts will be accumulated
-ROCKS_DB_URL=rocks://${ROCKS_DATA_DIR}/fake_pairs.rdb
-export STORAGE_NODE="(RocksStorageNode \"${ROCKS_DB_URL}\")"
+export PAIRS_DB=${ROCKS_DATA_DIR}/fake_pairs.rdb
+export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # File processing grunge
 export MSG="Splitting and word-pair counting"
