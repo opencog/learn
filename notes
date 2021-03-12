@@ -952,9 +952,53 @@ the: LEFT-WALL- & (cat+ or squirrel or mouse+ or bird+ or dog+)
 
 saw chased: (bird- or cat- or ...) & the+;
 
+~/src/learn/run/4*/run-gram-cogserver.sh
+
 (gram-classify-greedy-discrim 0.5 4)
+(cog-get-atoms 'WordClassNode)
+(cog-get-root (WordClassNode "squirrel dog"))
+(cog-get-root (WordClassNode "saw chased"))
+
+(star-obj 'right-stars (Word "saw"))
+(star-obj 'right-duals (Word "saw"))
+
+saw chased:
+
 (gram-classify-greedy-fuzz 0.65 0.3 4)
 
+/usr/local/share/guile/3.0
+[GenericShell] evaluator error:
+ice-9/boot-9.scm:
+(quit-exception?
+(apply throw 'quit args))
+
+_evaluator->eval_error()
+_caught_error
+_error_string
+
+scm_primitive_exit(0) foo
+get_quit_exception
+scm_exit_status
+_wait_done.notify_all();
+restore_output
+termios
+libguile/posix.c:
+~/src/learn/run/4*/run-gram-cogserver.sh
+duude if=2502
+duude of=5
+duude cf=bf
+duude lf=8a3b must mst set ISIG ICANON ECHO
+
+duude if=22402 must set ICRNL IXON IUTF8
+duude of=5
+duude cf=277
+duude lf=105073
+
+duude if=42400
+
+------------------
+Sexpr::decode_value
+RocksStorage::getKeys
 
 
 

@@ -76,8 +76,11 @@ sub send_nowait
 my $start_time = time();
 while (<STDIN>)
 {
-	# Stray html markup.  Do not pas it on.
+	# Stray html markup.  Do not pass it on.
 	if (/<P>/) { next; }
+
+	# Empty line. Skip it. (Its length 1 because of newline)
+	if (1 >= length $_) { next; }
 
 	# Artificial corpora include comments starting with hash
 	# that describe what kind of corpus it is. Don't process

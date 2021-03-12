@@ -204,6 +204,33 @@ March 2021
 
 \begin_layout Standard
 First real experiment, in expt-7/expt-8.
+ The dict in expt-7 fails to generate the correct corpus, because the generator
+ does not expand synonyms (this is a combinatorial explosion and it just
+ doesn't do that.) expanded by hand in expt-8.
+\end_layout
+
+\begin_layout Standard
+Issues:
+\end_layout
+
+\begin_layout Itemize
+After MST parsing, the grammar is correct, in that (I think) it will produce
+ exactly the same corpus.
+ However, the rules are different (and more verbose).
+ TODO: check that the same corpus is actually produced.
+ How?
+\end_layout
+
+\begin_layout Itemize
+After MST (MPG) parsing, the verbs link to obj-determiner instead of object.
+ Why? Was there a cutoff that was missed? The corpus is just ..
+ tiny.
+\end_layout
+
+\begin_layout Itemize
+After (gram-classify-greedy-discrim 0.5 4) the right clusters are produced,
+ but the connectors are not clustered; they need to be.
+ TBD.
 \end_layout
 
 \end_body
