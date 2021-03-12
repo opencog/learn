@@ -3,7 +3,13 @@ Parse management scripts
 ========================
 
 The scripts here are used to automate the operation of the
-language-learning pipeline. Currently, it consists of five or six steps:
+language-learning pipeline. Currently, it consists of five or six
+semi-automated steps. These steps are "semi-automated", in that
+they are meant to be run by hand, by running the shell scripts
+in each directory.
+
+An (almost) "fully automated" script is provided in `all-in-one.sh`.
+Currently, it only automates steps 2 and 3.
 
 * Artificial grammar generation. Automation scripts can be found in the
   [1-gen-dict](1-gen-dict) directory. This is required for calibration
@@ -28,6 +34,10 @@ language-learning pipeline. Currently, it consists of five or six steps:
 
 * Comparison of the learned grammar to the input grammar in step 0.
   TBD.
+
+* All-in-one. The `all-in-one.sh` file combines steps 2 and 3 in
+  a completely automated way.
+
 
 The file `wikipedia.txt` contains multiple wikipedia artices, and can be
 used for trial runs.

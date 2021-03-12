@@ -10,23 +10,29 @@ texts can be found in the `../../download` directory.  Tools for
 generating artificial languages are in the
 [`../1-gen-dict`](../1-gen-dict) directory.
 
-Because the text processing can take a long time to run (hours or days)
-the general process is hard to automate, and works best if it is
-monitored for forward progress. This is done by starting a cogserver
-in one terminal, and sending text to it in another.
+Processing can be done in a "fully automated" way or in a semi-automated
+way. For full automation, just run `run-all.sh` and move to the next
+stage (stage `3-mst-parsing`). However...
+
+Text processing a large corpus can take a long time to run (hours or
+days) and if issues arise, it may be easier to run in a semi-automated
+mode.  This is done by starting a cogserver in one terminal with
+`run-cogserver.sh`, and sending text to it in another, with
+`pair-submit.sh`. If counting is interrupted, just re-run
+`pair-submit.sh` again, and it will pick up hwere it left off.
 
 After counting has completed, marginal statistics must be computed.
-This can be done by hand, by running `pair-marginals.scm`.
+This can be done by hand, by running `compute-marginals.sh`.
 
-The main entry point here is `run-shells.sh` which creates multiple
-terminal sessions in tmux/byobu. One terminal will have the cogserver
-running in it, and another will have the text-feeder script. By default,
-the text-feeder script is not started automatically; toggle through
-the terminals with F3 and F4 for hints, or look at `run-shells.sh`
-directly.
+The easiest way to run in semi-automated mode is to run the
+`run-shells.sh` script.  It creates multiple terminal sessions in
+tmux/byobu. One terminal will have the cogserver running in it, and
+another will have the text-feeder script. By default, the text-feeder
+script is not started automatically; toggle through the terminals
+with F3 and F4 for hints, or just look at `run-shells.sh` directly.
 
-The scripts here assume that `../0-config/0-pipeline.sh` and that
-`../0-config/2-pair-conf.sh` have been configured.
+The scripts here assume that `run-config/0-pipeline.sh` and that
+`run-config/2-pair-conf.sh` have been configured.
 
 Detailed instructions on what to do can be found in
 [`../../README-Natural.md`](../../README-Natural.md)
@@ -40,10 +46,6 @@ A quick overview:
 * `run-cogserver.sh`: Starts a guile shell, runs the atomspace, starts
   the cogserver in the background, and opens the storage database.
 
-* `run-shells.sh`: multi-tasking terminal server.  Opens multiple
-  terminal sessions with tmux/byobu, and starts the cogserver in one
-  of them.  Use F3 and F4 to switch to different terminals.
-
 * `pair-submit.sh`: feeds text to the cogserver for word-pair counting.
   This pull text files, one by one, from the data directory, and submits
   them for word-pair counting. Start it manually in the `submit` byobu
@@ -52,3 +54,11 @@ A quick overview:
 
 * `compute-marginals.sh`: A bash script that computes marginal statistics
   after pair counting has concluded. This needs to be run by hand.
+
+* `run-all.sh`: Combine all of the above into one step. When this
+  finishes, move to step `3-mst-parsing`.
+
+* `run-shells.sh`: multi-tasking terminal server.  Opens multiple
+  terminal sessions with tmux/byobu, and starts the cogserver in one
+  of them.  Use F3 and F4 to switch to different terminals. Switch
+  to the "submit" terminal, and start `pair-submit.sh` by hand.

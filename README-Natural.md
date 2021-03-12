@@ -1175,7 +1175,7 @@ change.
 ```
       (gram-classify-greedy-fuzz 0.65 0.3 4)
 ```
-  The meanings of the paramters are explained in the function
+  The meanings of the parameters are explained in the function
   documentation; See the [gram-agglo.scm](scm/gram-agglo.scm) file.
 
   Both will take days to run. You can start poking at the results
