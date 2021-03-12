@@ -5,12 +5,28 @@ Maximum Spanning Tree Parsing. The parser invoked in these scripts
 performs an MST parse.
 
 The scripts here are used to automate the ingestion of plain-text
-UTF-8 files into the second stage, (the MST-parsing stage) of the
+UTF-8 files into the third stage, (the MST-parsing stage) of the
 language learning pipeline. This stage assumes that word-pair counting
 has been performed, and that marginals and the mutual information (MI)
 for word pairs has been computed and stored in a database.
 
 Adjust the configuration in `../0-config` before running anything here.
+
+This step can be run in a fully-automated way, by invoking
+`run-all-mst.sh` and then moving to the next step: `4-gram-class`.
+
+However ... if any issues arise, this step can be run in a semi-automated
+way. The cogserver can be started with `run-mst-cogserver.sh`. Be sure
+to copy the database, first. (Copying the pairs database to a distinct
+MST database provides isolation and protection against data corruption,
+in case anything goes wrong.)
+
+Once the cogserver has started, run `mst-submit.sh` to process the
+corpus. If processing is interrupted, it can be restarted; processing
+will resume where it left off.
+
+Once processing is complete, run `compute-mst-marginals.sh` as the last
+step before moving to stage four (`4-gram-class`).
 
 A quick overview:
 
@@ -30,3 +46,5 @@ A quick overview:
 * `compute-mst-marginals.sh`: A bash script that computes marginal
   statistics after MST parsing has concluded. This needs to be run
   by hand.
+
+* `run-all.sh`: combines all opf the above steps into one.

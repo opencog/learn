@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# all.sh
+# all-in-one.sh
 #
 # Run everything needed for the language-learning pipeline.
 #
