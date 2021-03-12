@@ -1,9 +1,10 @@
 ;
 ; cogserver-gram.scm
 ;
-; Run everything needed for the language-learning grammatical class
-; clustering pipeline. Starts the CogServer, opens the database, loads
-; the disjuncts in the database (which can take an hour or more!).
+; Run everything needed to get ready to start the language-learning
+; grammatical class clustering pipeline. Starts the CogServer, opens
+; the database, loads the disjuncts in the database (which can take
+; an hour or more!).
 ;
 (load "cogserver.scm")
 
