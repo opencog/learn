@@ -742,7 +742,7 @@
 		(format #t "Trimmed in ~5F seconds\n"
 			(* 1.0e-9 (- (get-internal-real-time) tr-start)))
 
-		(format #t "After triming, ~A words left, out of ~A\n"
+		(format #t "After trimming, ~A words left, out of ~A\n"
 			(length trimed-words) (length WRD-LST))
 
 		(let* ((ra-start (get-internal-real-time))

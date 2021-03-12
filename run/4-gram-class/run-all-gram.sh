@@ -54,7 +54,10 @@ guile -l ${COMMON_DIR}/cogserver-gram.scm -c "(sleep 150000000)" &
 sleep 3
 
 # Perform the desired clustering.
-echo $GRAM_CLUSTER | nc $HOSTNAME $PORT
+# The trailing newline-dots exit the cogserver shell,
+# as otherwise the netcat willl hang, waiting for completion.
+# We avoid "nc -q 0" because we want to see the output.
+echo -e "$GRAM_CLUSTER\n.\n." | nc $HOSTNAME $PORT
 
 # Shut down the server.
 echo Done clustering
