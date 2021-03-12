@@ -165,3 +165,23 @@
 )
 
 ; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+
+(define-public (block-until-idle BUSY-FRAC)
+"
+  block-until-idle BUSY-FRAC - Block until CPU usage goes below BUSY-FRAC
+
+  This function simply won't return until the CPU usage drops below
+  BUSY-FRAC, which must be a number less than 1.0 and greater than
+  0.03. The min value is because this function uses CPU time itself,
+  and so contributes to the business of the system.
+"
+	(define (block cpuuse)
+		(sleep 1)
+		(let ((now (get-internal-run-time)))
+			(if (< BUSY-FRAC (/ (- now cpuuse) 1000000000.0))
+				(block now))))
+	(block (get-internal-run-time))
+)
+
+; ---------------------------------------------------------------
