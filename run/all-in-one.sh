@@ -104,18 +104,14 @@ else
 	exit -1
 fi
 
-echo duuude done for now
-exit 0
-
 # Run the classification cogserver
 guile -l ${COMMON_DIR}/cogserver-gram.scm -c "(sleep 150000000)" &
 
 # Wait for the cogserver to intialize.
 sleep 3
 
-# Example. Don't do this unless you mean it.
-echo "(gram-classify-greedy-fuzz 0.65 0.3 4)" | nc $HOSTNAME $PORT >> /dev/null
-echo "(do-stuff-xxxx)" | nc $HOSTNAME $PORT >> /dev/null
+# Perform the desired clustering.
+echo $GRAM_CLUSTER | nc $HOSTNAME $PORT >> /dev/null
 
 # Shut down the server.
 echo Done clustering

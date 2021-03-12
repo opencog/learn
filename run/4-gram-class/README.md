@@ -14,3 +14,9 @@ A quick overview:
 * `test-data` -- Directory containing evaluation corpora. These
   can be used to measure parser covereage, and to compare the operation
   of different parsers.
+
+* `run-gram-cogserver.sh`: Starts a guile shell, runs the atomspace,
+  starts the cogserver in the background, and opens the storage
+  database, and loads the disjuncts from the database.
+
+* `run-all-gram.sh`: combines all of the above steps into one.

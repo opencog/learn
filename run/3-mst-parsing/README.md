@@ -47,4 +47,4 @@ A quick overview:
   statistics after MST parsing has concluded. This needs to be run
   by hand.
 
-* `run-all.sh`: combines all opf the above steps into one.
+* `run-all.sh`: combines all of the above steps into one.
