@@ -166,6 +166,33 @@
 
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
+;
+(define-public monitor-rate
+	(let ((mtx (make-mutex))
+			(cnt 0)
+			(start-time (- (current-time) 0.000001)))
+		(lambda (msg)
+			(if (or (not msg) (null? msg))
+				(begin
+					(lock-mutex mtx)
+					(set! cnt (+ cnt 1))
+					(unlock-mutex mtx))
+				(format #t "~A done=~A rate=~5f per sec\n"
+					msg cnt (/ cnt (- (current-time) start-time))))
+		)))
+
+(set-procedure-property! monitor-rate 'documentation
+"
+  monitor-rate MSG - simplistic parse-rate monitoring utility.
+
+  Use this to monitor how many sentences have been processed.
+  It will count how many sentences have been processed so far.
+  If called with a null argument (if MSG is #f or is '()), then
+  it increments the count. Otherwise, it prints the argument as
+  a string, followed by the count and rate.
+"
+
+; ---------------------------------------------------------------
 
 (define-public (block-until-idle BUSY-FRAC)
 "

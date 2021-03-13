@@ -403,29 +403,6 @@
 		(sentence-get-parses SENT))
 )
 
-; ---------------------------------------------------------------------
-;
-; Simplistic parse-rate monitoring utility.
-;
-; Used to monitor how many sentences have been processed.  It counts
-; how many sentences have been processed so far. If called with a null
-; argument, it increments the count; else it prints the argument as
-; a string, followed by the count and rate.
-;
-(define-public monitor-parse-rate
-	(let ((mtx (make-mutex))
-			(cnt 0)
-			(start-time (- (current-time) 0.000001)))
-		(lambda (msg)
-			(if (null? msg)
-				(begin
-					(lock-mutex mtx)
-					(set! cnt (+ cnt 1))
-					(unlock-mutex mtx))
-				(format #t "~A sentences done=~A rate=~5f sents/sec\n"
-					msg cnt (/ cnt (- (current-time) start-time))))
-		)))
-
 ; --------------------------------------------------------------------
 
 (define-public (observe-text-mode plain-text observe-mode count-reach)
@@ -460,7 +437,7 @@
 		; LgParseLink below, because LgParseMinimal is not enough.
 		; (update-disjunct-counts sent)
 		(delete-sentence SENT)
-		(monitor-parse-rate '()))
+		(monitor-rate #f))
 
 	; -------------------------------------------------------
 #!
