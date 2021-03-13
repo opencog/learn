@@ -133,7 +133,7 @@
 	; Discard everything that is not a word.
 	(define (wmemb CLS)
 		(filter (lambda (w) (eq? 'WordNode (cog-type w))) (memb CLS)))
-	; concqatenate them all together.
+	; Concatenate them all together.
 	(fold (lambda (CLS lst) (append! (memb CLS) lst)) '()
 		(cog-get-atoms 'WordClassNode))
 )
@@ -170,7 +170,8 @@
 ; ---------------------------------------------------------------
 ;
 ; Given a word or a word-class, return a list of all sections that
-; have disjuncts with N connectors.
+; have disjuncts with N connectors. Just like `get-all-sections-in-classes`
+; above, but filtered to the requested size.
 ;
 (define (get-sections-by-size WCL SIZ)
 
@@ -191,8 +192,7 @@
   in-gram-class? WORD GRAM-CLASS - is the WORD a member of the
   grammatical class CRAM-CLASS? Returns either #t or #f.
 "
-	(define memlnk (cog-link 'MemberLink WORD GCLS))
-	(if (null? memlnk) #f #t)
+	(not (null? (cog-link 'MemberLink WORD GCLS)))
 )
 
 ; ---------------------------------------------------------------
