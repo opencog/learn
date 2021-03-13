@@ -66,7 +66,7 @@
 ;   many word-pairs are not explored, although cross-frequency compares
 ;   can be forced by restarting the algo.
 ;
-; One restart, all of the algos suffer from a common problem: they create
+; On restart, all of the algos suffer from a common problem: they create
 ; an ordered list of words by frequency; however, this is computed from
 ; the marginals for the words, which are no longer accurate.  Thus, the
 ; marginals (holding frequencies) should be recomputed before each
