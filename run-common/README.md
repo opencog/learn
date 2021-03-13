@@ -52,12 +52,22 @@ directory.  A quick overview:
 * `cogserver.scm`: Guile scheme script to load needed guile modules,
   start the cogserver, and open the database storage backend.
 
-* `pair-marginals.scm`: Guile scheme script to compute word-pair
+* `marginals-pair.scm`: Guile scheme script to compute word-pair
   marginal statistics.
 
-* `mst-cogserver.scm`: Same as `cogserver.scm`, but also loads
+* `marginals-mst.scm`: Guile scheme script to compute disjunct
+  marginal statistics.
+
+* `cogserver-mst.scm`: Same as `cogserver.scm`, but also loads
   word-pairs from storage. (Word pairs must be in RAM in order for
   MST parsing to proceed.)
+
+* `cogserver-gram.scm`: Same as `cogserver.scm`, but also loads
+  disjuncts from storage. (Disjuncts must be in RAM in order for
+  grammatical classification to proceed.)
+
+* `export-dictionary.scm`: Export the result of classification as
+  a Link Grammar-compatible dictionary.
 
 
 Management scripts

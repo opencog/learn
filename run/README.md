@@ -33,9 +33,9 @@ Currently, it only automates steps 2 and 3.
   have been completed, before starting this.
 
 * Comparison of the learned grammar to the input grammar in step 0.
-  TBD.
+  Incomplete. Some work in [5-compare](5-compare).
 
-* All-in-one. The `all-in-one.sh` file combines steps 2 and 3 in
+* All-in-one. The `all-in-one.sh` file combines steps 2, 3 and 4 in
   a completely automated way.
 
 
