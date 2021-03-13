@@ -3,6 +3,11 @@
 ;
 ; Merge connectors into classes of connectors -  merge connector sets.
 ;
+; XXX FIXME. The ideas in here seem reasonable. None of the code is used
+; anywhere.  I think the "shape" code is supposed to take it's place.
+; The general discussion should be saved somewhere. The rest of the file
+; can probably be killed, or at least moved to the attic.
+;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
@@ -145,7 +150,8 @@
 ; a disjunct with a connector that belongs to an existing WordClass.
 ; The goal is to trim the list of sections to something smaller.
 ;
-; XXX FIXME this might be pointless and useless?
+; XXX FIXME this might be pointless and useless? Its dead code, it's
+; not used anywhere ...
 (define (get-all-sections-in-classes WCL)
 
 	; Return not-#f if the connector is in any class.
@@ -172,6 +178,8 @@
 ; Given a word or a word-class, return a list of all sections that
 ; have disjuncts with N connectors. Just like `get-all-sections-in-classes`
 ; above, but filtered to the requested size.
+;
+; XXX This is dead code, not used anywhere...
 ;
 (define (get-sections-by-size WCL SIZ)
 
@@ -200,6 +208,8 @@
 ; differing in only one location.  If this is the case, return
 ; the index offset to the location that is different. The index
 ; is zero-based. If they are not matchable, return #f.
+;
+; XXX Currently, this is dead code, not used anywhere.
 
 (define (connector-seq-compare SEQA SEQB)
 	; Get the index of the difference. Return #f if there are two
@@ -235,6 +245,9 @@
 ; In most cases, this is not strictly necessary, as the usual case is
 ; that all words and word-classes are already in RAM.
 ;
+; XXX this is maybe-dead code, its only used by `fetch-mergable-sections`
+; below, which is not used anywhere...
+;
 (define (fetch-class-words CLS-LST)
 
 	; Return a list without duplicates.
@@ -263,6 +276,16 @@
 ;
 ; CLS-LST should be a list of word-classes.
 ;
+; Example usage
+;
+; (define cls-lst (cog-get-atoms 'WordClassNode))
+; (fetch-mergable-sections cls-lst)
+; (get-classified-words) ; verify that they were fetched.
+;
+; The above gets *everything*. A better way to get everything is to say
+; ((make-gram-class-api) 'fetch-pairs)
+;
+; XXX this is dead code, it's not used anywhere right now...
 (define (fetch-mergable-sections CLS-LST)
 
 	; Loop over all WordClassNodes
@@ -276,6 +299,7 @@
 ;
 ; (define cls-lst (cog-get-atoms 'WordClassNode))
 ; (fetch-mergable-sections cls-lst)
+; (get-classified-words) ; verify that they were fetched.
 ;
 ; (define wrd (Word "chance"))
 ; (define secs (cog-incoming-by-type wrd 'Section))
