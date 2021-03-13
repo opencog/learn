@@ -190,7 +190,7 @@
   If called with a null argument (if MSG is #f or is '()), then
   it increments the count. Otherwise, it prints the argument as
   a string, followed by the count and rate.
-"
+")
 
 ; ---------------------------------------------------------------
 
