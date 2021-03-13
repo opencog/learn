@@ -261,13 +261,14 @@ unhappy, painful experience.
 ```
 
 * **0.9)** Install assorted build tools. At this time, the following
-           are recommended:
+           are required:
 ```
       sudo apt install git cmake g++
       sudo apt install libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev
       sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
       sudo apt install postgresql-client postgresql libpq-dev pgtop
       sudo apt install autoconf-archive flex byobu rlwrap telnet
+      sudo apt install automake libsqlite3-dev
 ```
 
 * **0.10)** Link-grammar version 5.6.1 or newer is required.
@@ -304,6 +305,21 @@ unhappy, painful experience.
 ```
 
    Repeat the above for each of the other github repos.
+
+* **0.12)** Install the guile bindings for sqlite3. This is needed
+            so as to export the resulting dictionary to Link Grammar.
+```
+      git clone https://github.com/opencog/guile-dbi
+      cd guile-dbi/guile-dbi
+      ./autogen.sh --no-configure
+      mkdir build; cd build; ../configure; make
+      sudo make install
+
+      cd ../guile-dbd-sqlite3
+      ./autogen.sh --no-configure
+      mkdir build; cd build; ../configure; make
+      sudo make install
+```
 
 Setting up the AtomSpace
 ------------------------

@@ -1031,6 +1031,18 @@ after clustering do
 
 monitor-parse-rate
 
+        modified:   depcomp
+        modified:   install-sh
+        modified:   missing
+
+commit dfc4362417bf9aa3468a29360681f13f76949ac6
+$(libguile_dbi_la_LINK)
+
+libguile_dbi_la_LDFLAGS = -export-dynamic -version-info 2:6:0
+libguile_dbi_la_LDFLAGS = -export-dynamic -version-info @DBI_INTERFACE@
+
+src/guile-dbd-mysql.c:120
+
 
 
 add-linkage-filter
