@@ -1,6 +1,6 @@
 
-Working Notes
--------------
+Working Notes (Part C)
+----------------------
 This file contains a diary of random working notes, which I use to keep
 track of what the heck it is that I'm doing.  It is almost surely totally
 useless to you, except maybe for some weird voyeuristic reasons.
@@ -1007,13 +1007,41 @@ echo $GRAM_CLUSTER | nc $HOSTNAME $PORT
        (define gca (make-gram-class-api))
        (define gcs (add-pair-stars gca))
        (define gcf (add-wordclass-filter gcs))
+after clustering do
+(gca 'fetch-pairs)
+
+(define cset-obj (make-pseudo-cset-api)) 
+(define psa (add-pair-stars cset-obj))
+(define asc (add-singleton-classes psa))
+(asc 'create-hi-count-singles 1)
+
        (batch-all-pair-mi gcf) 
 
 (gcs 'left-basis)
 (gcf 'left-basis)
-(gcf 'right-basis)
+(length (gcf 'right-basis))
+
+(length (gcf 'right-duals (WordClassNode "squirrel dog")))
+(length (gcf 'right-stars (WordClassNode "squirrel dog")))
+
+(batch-all-pair-mi gcf)
+
+(use-modules (opencog nlp lg-export))
+   (export-csets gcf "dict.db" "EN_us")
+
+monitor-parse-rate
 
 
+
+add-linkage-filter
+
+cset-class.scm: -- merges, but no define-public 
+   connector-seq-compare .. its dead code...
+gram-agglo.scm:
+gram-projective.scm:
+shape-vec.scm:
+
+(load "/home/ubnutu/src/learn/scm/cset-class.scm")
 
 
 
@@ -1022,6 +1050,7 @@ FIXED:
 
 TODO:
 
+* learn.scm use include not load or export...
 * Bugs: quotes are not being escaped by submit-one.pl!!
 * Enhance: revise atomspace start-cogserver to take args directly
 * Bug: RockDB needs to be compacted on close. lcosing and reopening
