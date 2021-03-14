@@ -14,9 +14,6 @@
 (define gca (make-gram-class-api))
 (gca 'fetch-pairs)
 
-; Close the DB to avoid accidental corrruption!?
-(barrier storage-node)
-(cog-close storage-node)
 
 ; Create singleton classes. XXX This should be done elsewhere!?
 (display "Create singleton classes\n")
@@ -34,8 +31,12 @@
 
 ; (print-matrix-summary-report gcf)
 
+; `batch-all-pair-mi` writes to the database...
+(barrier storage-node)
+(cog-close storage-node)
+
 ; Perform the actual export
-; XXX get dictionary name from config file!?
+; XXX get dictionary name from config file!? and path too
 (display "Exporting Dictionary\n")
 (use-modules (opencog nlp lg-export))
 (export-csets gcf "dict.db" "EN_us")

@@ -268,7 +268,7 @@ unhappy, painful experience.
       sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
       sudo apt install postgresql-client postgresql libpq-dev pgtop
       sudo apt install autoconf-archive flex byobu rlwrap telnet
-      sudo apt install automake libsqlite3-dev
+      sudo apt install automake libsqlite3-dev libedit-dev
 ```
 
 * **0.10)** Link-grammar version 5.6.1 or newer is required.
