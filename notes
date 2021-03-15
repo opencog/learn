@@ -1043,6 +1043,41 @@ libguile_dbi_la_LDFLAGS = -export-dynamic -version-info @DBI_INTERFACE@
 
 src/guile-dbd-mysql.c:120
 
+<UNKNOWN-WORD>|<UNKNOWN-WORD.5>|<a the>
+<UNKNOWN-WORD>|<UNKNOWN-WORD.6>|<squirrel dog>
+<UNKNOWN-WORD>|<UNKNOWN-WORD.7>|<saw chased>
+
+LEFT-WALL.2 <UNKNOWN-WORD.5> squirrel.3 a.1 <UNKNOWN-WORD.6>
+
+Many duplicates!!!!
+<###LEFT-WALL####uni>|TB+ & TB+|-2.58496250072116
+<a the>|TD- & TC- & TB- & TE+|-1.58496250072116
+<a the>|TB- & TE+|-1.58496250072116
+<squirrel dog>|TE-|-1.58496250072116
+<squirrel dog>|TE- & TF+ & TC+|-1.58496250072116
+<saw chased>|TF- & TD+|-2.58496250072116
+
+
+linkparser> the squirrel a dog
+Found 1 linkage (1 had no P.P. violations)
+        Unique linkage, cost vector = (UNUSED=0 DIS=-8.92 LEN=2)
+
+     +-----------TB-----------+
+     +---TB---+---TE---+      +-TE-+
+     |        |        |      |    |
+LEFT-WALL.2 the.1 squirrel.3 a.1 dog.3
+
+linkparser> the squirrel saw a dog
+Found 1 linkage (1 had no P.P. violations)
+        Unique linkage, cost vector = (UNUSED=0 DIS=-11.51 LEN=4)
+
+     +--------------TB--------------+
+     |                 +-----TC-----+
+     +---TB---+---TE---+---TF--+-TD-+-TE-+
+     |        |        |       |    |    |
+LEFT-WALL.2 the.1 squirrel.3 saw.4 a.1 dog.3
+
+
 
 
 add-linkage-filter
