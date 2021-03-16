@@ -1010,12 +1010,12 @@ echo $GRAM_CLUSTER | nc $HOSTNAME $PORT
 after clustering do
 (gca 'fetch-pairs)
 
-(define cset-obj (make-pseudo-cset-api)) 
+(define cset-obj (make-pseudo-cset-api))
 (define psa (add-pair-stars cset-obj))
 (define asc (add-singleton-classes psa))
 (asc 'create-hi-count-singles 1)
 
-       (batch-all-pair-mi gcf) 
+       (batch-all-pair-mi gcf)
 
 (gcs 'left-basis)
 (gcf 'left-basis)
@@ -1028,6 +1028,7 @@ after clustering do
 
 (use-modules (opencog nlp lg-export))
    (export-csets gcf "dict.db" "EN_us")
+
 
 monitor-parse-rate
 
@@ -1057,6 +1058,13 @@ Many duplicates!!!!
 <squirrel dog>|TE- & TF+ & TC+|-1.58496250072116
 <saw chased>|TF- & TD+|-2.58496250072116
 
+The duplicate are because the connectors were never
+consolidated into classes.
+
+export-dictionary.scm
+LG_DICT_EXPORT
+EN_us
+
 
 linkparser> the squirrel a dog
 Found 1 linkage (1 had no P.P. violations)
@@ -1082,7 +1090,7 @@ LEFT-WALL.2 the.1 squirrel.3 saw.4 a.1 dog.3
 
 add-linkage-filter
 
-cset-class.scm: -- merges, but no define-public 
+cset-class.scm: -- merges, but no define-public
    connector-seq-compare .. its dead code...
 gram-agglo.scm:
 gram-projective.scm:

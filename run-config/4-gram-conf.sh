@@ -10,7 +10,7 @@ export PORT=19008
 export PROMPT="scheme@(gram-class)"
 export COGSERVER_CONF=${CONFIG_DIR}/4-cogserver/cogserver-gram-fake.conf
 
-# Location of the database where disjunct counts will be accumulated
+# Location of the database where grammatical classes will be formed.
 export GRAM_DB=${ROCKS_DATA_DIR}/gram-2.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${GRAM_DB}\")"
 

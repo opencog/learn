@@ -44,3 +44,6 @@ export MST_CONF_FILE=$CONFIG_DIR/3-mpg-conf-fake.sh
 
 # File containing grammatical-class configuration
 export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh
+
+# File containing dictionary export configuration
+export GRAM_CONF_FILE=$CONFIG_DIR/5-export-conf.sh

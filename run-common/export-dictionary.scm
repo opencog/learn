@@ -35,8 +35,8 @@
 (barrier storage-node)
 (cog-close storage-node)
 
-; Perform the actual export
-; XXX get dictionary name from config file!? and path too
+; Perform the actual export. The dictionary name and locale
+; are taken from environment variables.
 (display "Exporting Dictionary\n")
 (use-modules (opencog nlp lg-export))
-(export-csets gcf "dict.db" "EN_us")
+(export-csets gcf (getenv "LG_DICT_EXPORT") (getenv "LG_DICT_LOCALE"))

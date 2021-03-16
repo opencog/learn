@@ -408,7 +408,7 @@
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-version-number>', 'V5v6v0+', 0.0);"))
+			"'<dictionary-version-number>', 'V5v9v0+', 0.0);"))
 
 		(dbi-query db-obj (string-append
 			"INSERT INTO Morphemes VALUES ("
