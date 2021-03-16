@@ -330,6 +330,8 @@
 				(mk-cls-str germ-str) dj-str COST))
 
 			; Might fail with "UNIQUE constraint failed:" so just warn.
+			; XXX This is a temp hack, because the classification code
+			; is not yet written.
 			;;;(if (not (equal? 0 (car (dbi-get_status db-obj))))
 			;;;	(throw 'fail-insert 'make-db-adder
 			;;;		(cdr (dbi-get_status db-obj))))
