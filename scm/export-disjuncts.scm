@@ -395,7 +395,8 @@
 			"CREATE TABLE Disjuncts ("
 			"classname TEXT NOT NULL, "
 			"disjunct TEXT NOT NULL, "
-			"cost REAL );"))
+			"cost REAL, "
+			"UNIQUE(classname,disjunct) );"))
 
 		(dbi-query db-obj
 			"CREATE INDEX class_idx ON Disjuncts(classname);")
