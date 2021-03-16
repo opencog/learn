@@ -1123,6 +1123,51 @@ wall-the 1.411
 Why only the determiners? Was this filtered!? No ... then what?
 
 link-pipeline.scm
+(define phr (Phrase "the dog chased the cat"))
+(define lgn (LgParseMinimal phr (LgDict "any") (Number 24)))
+(define sent (cog-execute! lgn))
+(sentence-get-parses sent)
+
+(define parse (list-ref (sentence-get-parses sent) 12))
+(parse-get-links parse)
+
+1:
+wall-the
+the-dog
+dog-chase
+chase-the
+the-cat
+
+(for-each
+	(lambda (parse)
+		; (format #t "parse ~A" parse)
+		(for-each
+			(lambda (link)
+				(if (equal? (WordNode "###LEFT-WALL###")
+						(word-inst-get-word (gadr link)))
+					(if (and
+							(not (equal? (WordNode "the")
+								(word-inst-get-word (gddr link))))
+							(not (equal? (WordNode "dog")
+								(word-inst-get-word (gddr link)))))
+						(format #t "its ~A ~A"
+							(word-inst-get-word (gddr link)) parse))))
+			(parse-get-links parse)))
+	(sentence-get-parses sent))
+
+Hmm parse #156 is the first parse that links to "dog"
+parse #225 first to link to chased
+#393 first to link to "cat"
+
+total of 1162 linakges so this sampling is extremely non-random!
+
+and no parses link elsewhere.
+
+
+
+
+(for-each-lg-link try-count-one-link (list single-sent))
+
 
 
 
