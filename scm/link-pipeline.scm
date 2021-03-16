@@ -511,10 +511,21 @@ how we run the pipeline, in general.)
  Wrapper to maintain backwards compatibility in NLP pipeline.
  Passes default parameters to observe-text-mode.
 
- Uses the LG parser to create 24 different planar tree parses
- per sentence.
+ Uses the LG parser to create 96 different planar tree parses
+ per sentence. Why 96? Well, if we did a six-word-wide click
+ sampling, there would be 6!=720 word pairs. Picking 96 planar
+ parses will generate at least 96*N pairs, where N is the length
+ of the sentence. So this produces roughly the same number of pairs.
+
+ Picking fewer parses seems to under-sample the variety of random
+ trees. It seem like the parser just doesn't generate very many
+ trees with long links between the LEFT-WALL and words way over to
+ the right. That is, it seems like the Link Grammar \"any\" dict does
+ not sample trees very uniformly. I don't know if this is an actual
+ bug/feature, or whether its a statistical accident. At any rate,
+ sampling more trees seems to even things out more.
 "
-	(observe-text-mode plain-text "any" 24)
+	(observe-text-mode plain-text "any" 96)
 )
 
 ; ---------------------------------------------------------------------
