@@ -1088,6 +1088,29 @@ Found 1 linkage (1 had no P.P. violations)
      |        |        |       |    |    |
 LEFT-WALL.2 the.1 squirrel.3 saw.4 a.1 dog.3
 
+$ ~/src/learn/run/3*/run-mst-cogserver.sh
+(define (prt-atom h) (display h) #f)
+(cog-map-type  prt-atom 'WordNode)
+
+(WordNode "###LEFT-WALL###" (ctv 1 0 4800))
+(WordNode "saw" (ctv 1 0 2400))
+(WordNode "the" (ctv 1 0 4800))
+
+(cog-incoming-set (WordNode "###LEFT-WALL###"))
+
+(define ala (make-any-link-api))
+(define asa (add-pair-stars ala))
+(define als (add-support-api asa))
+(define alf (add-pair-freq-api als))
+
+(ala 'fetch-pairs)
+(ala 'pair-count (WordNode "###LEFT-WALL###") (WordNode "the"))
+
+(alf 'help)
+,d add-pair-freq-api
+(alf 'left-count (WordNode "the"))
+(alf 'wild-wild-count)
+(alf 'pair-fmi (alf 'get-pair (Word "###LEFT-WALL###") (Word "the")))
 
 
 

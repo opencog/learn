@@ -845,6 +845,52 @@ portions of a graph to be viewed as a collection of vectors.  The
 tools then allow probabilities, entropies and mutual information to
 be computed for these vectors.
 
+Exploring Word-pair Mutual Information
+--------------------------------------
+After word-pairs have been counted, and the mutual information between
+them has been computed, the results can be explored manually, so as to
+understand the process or to verify expected results. Here's how.
+Working from a guile shell that has the pair-count database open:
+```
+(define ala (make-any-link-api))
+(define asa (add-pair-stars ala))
+(define als (add-support-api asa))
+(define alf (add-pair-freq-api als))
+
+(ala 'fetch-pairs)
+```
+View the count on a word-pair:
+```
+(ala 'pair-count (Word "the") (Word "thing"))
+```
+View the actual pair that is actually holding the count:
+```
+(ala 'get-pair (Word "the") (Word "thing"))
+```
+View marginal counts, and the word-pair MI:
+```
+(alf 'left-count (Word "the"))
+(alf 'wild-wild-count)
+(alf 'pair-fmi (alf 'get-pair (Word "the") (Word "thing")))
+(alf 'right-wild-fmi (Word "the"))
+(alf 'left-wild-fmi (Word "thing"))
+```
+Print documentation about other methods:
+```
+(asa 'help)
+,d add-pair-stars
+(alf 'help)
+,d add-pair-freq-api
+,d add-support-api
+```
+The above API works for any kind of pairs held in the AtomSpace.
+The `(make-any-link-api)` function makes an API for word-pairs.
+The `(make-pseudo-cset-api)` function make an API for pairs, where
+the left item is a word, and the right item is a connector-set
+(aka disjunct). Other pairs that are currently available are:
+`make-clique-pair-api`, `make-distance-pair-api`,
+`make-gram-class-api` and `make-shape-vec-api` and there may be
+more in the future.
 
 Maximum Spanning Trees
 ----------------------
