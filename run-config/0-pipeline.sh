@@ -46,4 +46,4 @@ export MST_CONF_FILE=$CONFIG_DIR/3-mpg-conf-fake.sh
 export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh
 
 # File containing dictionary export configuration
-export GRAM_CONF_FILE=$CONFIG_DIR/5-export-conf.sh
+export EXPORT_CONF_FILE=$CONFIG_DIR/5-export-conf.sh
