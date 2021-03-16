@@ -203,10 +203,11 @@ March 2021
 \end_layout
 
 \begin_layout Standard
-First real experiment, in expt-7/expt-8.
+First real experiment, in expt-7/expt-8/expt-9.
  The dict in expt-7 fails to generate the correct corpus, because the generator
  does not expand synonyms (this is a combinatorial explosion and it just
- doesn't do that.) expanded by hand in expt-8.
+ doesn't do that.) Expanded by hand in expt-8.
+ Same data, new scripts and config in expt-9.
 \end_layout
 
 \begin_layout Standard
@@ -218,7 +219,7 @@ After MST parsing, the grammar is correct, in that (I think) it will produce
  exactly the same corpus.
  However, the rules are different (and more verbose).
  TODO: check that the same corpus is actually produced.
- How?
+ How? Answer: generate the corpus, and compare...
 \end_layout
 
 \begin_layout Itemize
@@ -231,6 +232,126 @@ After MST (MPG) parsing, the verbs link to obj-determiner instead of object.
 After (gram-classify-greedy-discrim 0.5 4) the right clusters are produced,
  but the connectors are not clustered; they need to be.
  TBD.
+\end_layout
+
+\begin_layout Itemize
+Result: the correct corpus is produced (via manual checking), however, extra
+ sentences are produces, which are missing the verb.
+ This is because the wall links to the two determiners, and the wall can
+ be skipped.
+ However, the sentence with the verb has a higher MI.
+ (11.51 instead of 8.92.
+ See below.)
+\end_layout
+
+\begin_layout Standard
+Here's the result:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+linkparser> the squirrel a dog
+\end_layout
+
+\begin_layout Plain Layout
+
+Found 1 linkage (1 had no P.P.
+ violations)
+\end_layout
+
+\begin_layout Plain Layout
+
+        Unique linkage, cost vector = (UNUSED=0 DIS=-8.92 LEN=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+     +-----------TB-----------+
+\end_layout
+
+\begin_layout Plain Layout
+
+     +---TB---+---TE---+      +-TE-+
+\end_layout
+
+\begin_layout Plain Layout
+
+     |        |        |      |    |
+\end_layout
+
+\begin_layout Plain Layout
+
+LEFT-WALL.2 the.1 squirrel.3 a.1 dog.3
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+linkparser> the squirrel saw a dog 
+\end_layout
+
+\begin_layout Plain Layout
+
+Found 1 linkage (1 had no P.P.
+ violations)
+\end_layout
+
+\begin_layout Plain Layout
+
+        Unique linkage, cost vector = (UNUSED=0 DIS=-11.51 LEN=4)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+     +--------------TB--------------+
+\end_layout
+
+\begin_layout Plain Layout
+
+     |                 +-----TC-----+
+\end_layout
+
+\begin_layout Plain Layout
+
+     +---TB---+---TE---+---TF--+-TD-+-TE-+
+\end_layout
+
+\begin_layout Plain Layout
+
+     |        |        |       |    |    |
+\end_layout
+
+\begin_layout Plain Layout
+
+LEFT-WALL.2 the.1 squirrel.3 saw.4 a.1 dog.3
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hypothesis: The MI of wall-verb is lower than the MI of wall-determiner.
+ Thus, the planar parser always picks the wall-derminer.
+ Lets find out.
 \end_layout
 
 \end_body
