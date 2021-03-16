@@ -329,8 +329,12 @@
 				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
 				(mk-cls-str germ-str) dj-str COST))
 
+			; Might fail with "UNIQUE constraint failed:" so just warn.
+			;;;(if (not (equal? 0 (car (dbi-get_status db-obj))))
+			;;;	(throw 'fail-insert 'make-db-adder
+			;;;		(cdr (dbi-get_status db-obj))))
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-db-adder
+				(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
 					(cdr (dbi-get_status db-obj))))
 		)
 
