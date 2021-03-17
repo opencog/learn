@@ -19,6 +19,7 @@
 (display "Create singleton classes\n")
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
 (define asc (add-singleton-classes psa))
 (asc 'create-hi-count-singles 1)
 
