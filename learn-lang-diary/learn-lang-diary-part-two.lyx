@@ -236,12 +236,13 @@ After (gram-classify-greedy-discrim 0.5 4) the right clusters are produced,
 
 \begin_layout Itemize
 Result: the correct corpus is produced (via manual checking), however, extra
- sentences are produces, which are missing the verb.
+ sentences are produced, which are missing the verb.
  This is because the wall links to the two determiners, and the wall can
  be skipped.
  However, the sentence with the verb has a higher MI.
  (11.51 instead of 8.92.
- See below.)
+ See below.) This is due to a bug.
+ See below.
 \end_layout
 
 \begin_layout Standard

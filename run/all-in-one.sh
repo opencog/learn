@@ -129,5 +129,26 @@ echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
 # Wait for the shutdown to complete.
 sleep 1
 
+# ------------------------
+# Step five - Export to Link Grammar
+
+if ! [ -z ${EXPORT_CONF_FILE} ] && [ -r ${EXPORT_CONF_FILE} ]; then
+	. ${EXPORT_CONF_FILE}
+else
+	echo "Cannot find grammatical class export configuration file!"
+	exit -1
+fi
+
+echo "Exporting grammar to $LG_DICT_EXPORT"
+
+# Create the export directory, if its not already there.
+# Add the Link Grammar boilerlate files.
+EXPORT_DIR= $(dirname "$LG_DICT_EXPORT")
+mkdir -p $EXPORT_DIR
+cp -p /usr/local/share/link-grammar/demo-sql/4.0.* $EXPORT_DIR
+
+exec guile -l ${COMMON_DIR}/export-dictionary.scm
+
+# ------------------------
 echo Done
 # ------------------------
