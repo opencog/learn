@@ -58,6 +58,10 @@ sleep 1
 # Compute the pair marginals.
 echo "Start computing the pair marginals"
 guile -s ${COMMON_DIR}/marginals-pair.scm
+if [ $? -ne 0 ]; then
+	echo "Failure computing the pair marginals!"
+	exit -1
+fi
 echo "Finish computing the pair marginals"
 echo -e "\n\n\n"
 
@@ -99,6 +103,10 @@ sleep 1
 # Compute the disjunct marginals.
 echo "Start computing the disjunct marginals"
 guile -s ${COMMON_DIR}/marginals-mst.scm
+if [ $? -ne 0 ]; then
+	echo "Failure computing the disjunct marginals!"
+	exit -1
+fi
 echo "Finish computing the disjunct marginals"
 echo -e "\n\n\n"
 
@@ -158,7 +166,11 @@ EXPORT_DIR=$(dirname $LG_DICT_EXPORT)
 mkdir -p $EXPORT_DIR
 cp -p /usr/local/share/link-grammar/demo-sql/4.0.* $EXPORT_DIR
 
-exec guile -l ${COMMON_DIR}/export-dictionary.scm
+guile -s ${COMMON_DIR}/export-dictionary.scm
+if [ $? -ne 0 ]; then
+	echo "Failure exporting the dictionary!"
+	exit -1
+fi
 
 # ------------------------
 echo Done
