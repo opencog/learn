@@ -28,6 +28,17 @@ else
 	exit -1
 fi
 
+# Verify that the input corpus can be found, and is not empty.
+if [ ! -d $CORPORA_DIR ]; then
+	echo "Cannot find a text corpus at $CORPORA_DIR"
+	exit -1
+fi
+
+if [ 0 -eq `find $CORPORA_DIR -type f |wc -l` ]; then
+	echo "Empty text corpus directory at $CORPORA_DIR"
+	exit -1
+fi
+
 # Run the pair-counting cogserver
 guile -l ${COMMON_DIR}/cogserver.scm -c "(sleep 150000000)" &
 
