@@ -20,6 +20,31 @@ else
 fi
 
 # ----------------------
+# Step one - dictionary and corpus generation.
+# Skip this step if the config file is missing.
+if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
+	. ${GEN_CONF_FILE}
+
+	# Generate a dictionary, only if a config is given, and
+	# if the dict directory isn't populated.
+	if ! [ -z ${DICT_CONF} ] && [-r ${DICT_CONF} ]; then
+
+		if [ -d ${DICT_DIR} ]; then
+			echo "Dictionary already exists; not generating a new one!"
+			echo "Skipping this step!"
+		else
+			xxxxx
+		fi
+	else
+		echo "Cannot find dictionary defintion file!"
+		echo "Skipping this step!"
+	fi
+else
+	echo "Cannot find corpus-generation configuration file!"
+	echo "Skipping this step!"
+fi
+
+# ----------------------
 # Step two - pair counting
 if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
 	. ${PAIR_CONF_FILE}

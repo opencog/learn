@@ -22,7 +22,7 @@ fi
 
 # Generate a dictionary. The return string is either an error message,
 # or its the configured directory.
-RET_STR=`./gen-dict.scm $CONFIG_DIR/$DICT_CONF $DICT_DIR`
+RET_STR=`${COMMON_DIR}/gen-dict.scm ${CONFIG_DIR}/${DICT_CONF} $DICT_DIR`
 
 if [ $? -ne 0 ]; then
 	echo $RET_STR
