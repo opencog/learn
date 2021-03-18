@@ -53,7 +53,7 @@ if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 
 		for (( n=$SHORTEST; n<=$LONGEST; n++)); do
 			echo "Generating sentences of length $n"
-			link-generator -l $DICT -s $n -c $NSENT > $CORP/corpus-$n.txt
+			link-generator -l $DICT -s $n -c $NSENT > $GEN_CORPUS_DIR/corpus-$n.txt
 		done
 	fi
 
