@@ -27,7 +27,7 @@ if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 
 	# Generate a dictionary, but only if a config is given, and
 	# if the dict directory isn't populated.
-	if ! [ -z ${DICT_CONF} ] && [-r ${DICT_CONF} ]; then
+	if ! [ -z ${DICT_CONF} ] && [ -r ${DICT_CONF} ]; then
 
 		if [ -d ${DICT_DIR} ]; then
 			echo "Dictionary already exists; not generating a new one!"
