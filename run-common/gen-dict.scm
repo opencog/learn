@@ -80,10 +80,12 @@
 		sense-exp))
 
 ; Make a copy of the link-grammar boilerplate
+; This copies the boilerplate files from the source dir
+; to the target dir.
 (define (copy-boilerplate)
 
-	; Location of the boilerplate files
-	(define source-dir "fake-lang")
+	; Location of the boilerplate files.
+	(define source-dir (string-append (getenv "COMMON_DIR") "/fake-lang"))
 
 	; Recursive copy
 	(define DIR_STREAM (opendir source-dir))
