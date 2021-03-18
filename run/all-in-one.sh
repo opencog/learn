@@ -33,10 +33,11 @@ if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 			echo "Dictionary already exists; not generating a new one!"
 			echo "Skipping this step!"
 		else
-			${COMMON_DIR}/gen-dict.scm ${CONFIG_DIR}/${DICT_CONF} $DICT_DIR
+			${COMMON_DIR}/gen-dict.scm $DICT_CONF $DICT_DIR
 		fi
 	else
 		echo "Cannot find dictionary definition file!"
+		echo "Expected to find it at ${DICT_CONF}"
 		echo "Skipping this step!"
 	fi
 
