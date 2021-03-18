@@ -44,9 +44,9 @@ mkdir $CORP
 # For example:
 # link-generator -l $DICT -s 4 -c 150000 > $CORP/corpus-4.txt
 
-for (( n=$SHORTEST; n<=$LONGEST; n++)); do
+for (( n=$SENT_SHORTEST; n<=$SENT_LONGEST; n++)); do
 	echo "Generating sentences of length $n"
-	link-generator -l $DICT -s $n -c $NSENT > $CORP/corpus-$n.txt
+	link-generator -l $DICT -s $n -c $NUM_SENTENCES > $GEN_CORPUS_DIR/corpus-$n.txt
 done
 
 exit 0

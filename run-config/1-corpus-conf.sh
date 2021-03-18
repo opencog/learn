@@ -13,8 +13,8 @@ export $CONFIG_DIR/DICT_CONF=1-dict-conf.scm
 
 # The length of the shortest and the longest sentences to generate.
 # Sentences between these lengths (inclusive) will be generated.
-SHORTEST=3
-LONGEST=12
+export SENT_SHORTEST=3
+export SENT_LONGEST=12
 
 # Maximum number of sentences to generate for each fixed sentence
 # length. If more sentences than this are possible, then a random
@@ -24,4 +24,4 @@ LONGEST=12
 # Pair counting runs at about 15 to 30 sentences per second
 # on present-day desktop CPUs.
 # MPG parsing runs at about 100 to 300 sentences per second.
-NSENT=25000
+export NUM_SENTENCES=25000
