@@ -2,7 +2,7 @@
 #
 # Automated corpus generation. Configurable parameters are located
 # in `run-config/1-corpus-conf.sh` and in `1-dict-conf.scm`. Edit those
-# file as desired.
+# files as desired.
 #
 # ---------
 
@@ -27,7 +27,7 @@ else
 fi
 
 DICT=$DICT_DIR
-CORP=$CORPORA_DIR
+CORP=$GEN_CORPUS_DIR
 
 if [[ -d $CORP ]]; then
 	echo Corpus directory exists: $CORP
@@ -35,8 +35,8 @@ if [[ -d $CORP ]]; then
 	exit -1
 fi
 
-echo Dictionary is located in $DICT
-echo Corpus is in $CORP
+echo "Using dictionary found in $DICT"
+echo "Placing generated corpus in $CORP"
 
 mkdir $CORP
 
@@ -45,7 +45,7 @@ mkdir $CORP
 # link-generator -l $DICT -s 4 -c 150000 > $CORP/corpus-4.txt
 
 for (( n=$SHORTEST; n<=$LONGEST; n++)); do
-	echo Generating sentences of length $n
+	echo "Generating sentences of length $n"
 	link-generator -l $DICT -s $n -c $NSENT > $CORP/corpus-$n.txt
 done
 

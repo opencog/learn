@@ -36,13 +36,5 @@ if [ -d ${DICT_DIR} ]; then
 	exit -1
 fi
 
-# Generate a dictionary. The return string is either an error message,
-# or its the configured directory.
-RET_STR=`${COMMON_DIR}/gen-dict.scm ${CONFIG_DIR}/${DICT_CONF} $DICT_DIR`
-
-if [ $? -ne 0 ]; then
-	echo $RET_STR
-	exit -1
-fi
-
-exit 0
+# Generate a dictionary.
+${COMMON_DIR}/gen-dict.scm ${CONFIG_DIR}/${DICT_CONF} $DICT_DIR

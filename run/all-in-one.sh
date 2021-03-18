@@ -25,7 +25,7 @@ fi
 if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 	. ${GEN_CONF_FILE}
 
-	# Generate a dictionary, only if a config is given, and
+	# Generate a dictionary, but only if a config is given, and
 	# if the dict directory isn't populated.
 	if ! [ -z ${DICT_CONF} ] && [-r ${DICT_CONF} ]; then
 
@@ -33,12 +33,38 @@ if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 			echo "Dictionary already exists; not generating a new one!"
 			echo "Skipping this step!"
 		else
-			xxxxx
+			${COMMON_DIR}/gen-dict.scm ${CONFIG_DIR}/${DICT_CONF} $DICT_DIR
 		fi
 	else
-		echo "Cannot find dictionary defintion file!"
+		echo "Cannot find dictionary definition file!"
 		echo "Skipping this step!"
 	fi
+
+	# Generate a corpus, but only if the corpus directory is not
+	# yet populated.
+	if [ -d $GEN_CORPUS_DIR ]; then
+		echo "Corpus directory already exists; not generating a new one!"
+		echo "Skipping this step!"
+	else
+		echo "Using dictionary found in $DICT_DIR"
+		echo "Placing generated corpus in $GEN_CORPUS_DIR"
+
+		mkdir $GEN_CORPUS_DIR
+
+		for (( n=$SHORTEST; n<=$LONGEST; n++)); do
+			echo "Generating sentences of length $n"
+			link-generator -l $DICT -s $n -c $NSENT > $CORP/corpus-$n.txt
+		done
+	fi
+
+	# Copy the generated corpus over to the directory that the
+	# pair-processing expects to find it.
+	if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
+		. ${PAIR_CONF_FILE}
+		mkdir -p $CORPORA_DIR
+		cp -pr $GEN_CORPUS_DIR $CORPORA_DIR
+	fi
+
 else
 	echo "Cannot find corpus-generation configuration file!"
 	echo "Skipping this step!"

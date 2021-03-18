@@ -156,6 +156,6 @@
 (close port)
 
 ; If we got to here, then everything must have worked.
-(format #t "~A\n" dict-dir)
+(format #t "Created dictionary at ~A\n" dict-dir)
 
 (exit 0)
