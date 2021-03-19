@@ -1242,11 +1242,9 @@ How many (gcs 'right-stars left-item) are missing keys?
 
 answer 998 of them! out of 45186 .. how?
 
-
-
-
-
-
+Oh. Use nil? not null?
+Use nil? not null? for cog-value-ref; it returns #f or '()
+fixed in f29b3dc52 opencog/atomspace
 
 
 

@@ -345,7 +345,10 @@
 			(define germ (gar SECTION))
 			(define cset (gdr SECTION))
 			(define cost (COST-FN SECTION))
-			(add-germ-cset-pair germ cset cost))
+			; Cost will be +inf.0 for sections that have no MI on them.
+			; This .. uhh, might be due to a bug in earlier code!?
+			(if (< cost 1.0e3)
+				(add-germ-cset-pair germ cset cost)))
 
 		; Write to disk, and close the database.
 		(define (shutdown)
@@ -491,7 +494,7 @@
 	; atomspace. Create the object that knows how to get the MI
 	; of a word-disjunct pair.
 	(define psa (add-pair-stars CSETS))
-	(define mi-source (add-pair-freq-api psa))
+	(define mi-source (add-pair-freq-api psa #:nothrow #t))
 	(define looper (add-loop-api psa))
 
 	; Use the MI between word and disjunct as the link-grammar cost
