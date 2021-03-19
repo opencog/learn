@@ -1190,6 +1190,11 @@ ERROR: In procedure cog-value-ref:
 In procedure cog-value-ref: Wrong type argument in position 1 (expecting opencog value): #f
 Failure exporting the dictionary!
 
+guile -l ~/src/learn/run-common/cogserver.scm
+
+(define gca (make-gram-class-api))
+(gca 'fetch-pairs)
+(define gcs (add-pair-stars gca))
 
 (define gcf (add-wordclass-filter gcs))
 (define frqobj (add-pair-freq-api gcf #:nothrow #t))
@@ -1199,11 +1204,12 @@ Failure exporting the dictionary!
   (Connector (WordNode "d") (ConnectorDir "-"))
   (Connector (WordNode "a") (ConnectorDir "+"))))
 
-(define lipr (gcf 'get-pair left-item right-item))
+(define lipr (gca 'get-pair left-item right-item))
 (define pr-freq (frqobj 'pair-freq lipr))
 
 
 Ah hah frequencies missing on gcf. make-compute-freq
+.. turns out no, counts are missing.
 
 batch-all-pair-mi clready does
 (define freq-obj (make-compute-freq wild-obj)) at line 573
@@ -1245,6 +1251,61 @@ answer 998 of them! out of 45186 .. how?
 Oh. Use nil? not null?
 Use nil? not null? for cog-value-ref; it returns #f or '()
 fixed in f29b3dc52 opencog/atomspace
+
+Try again.
+
+. config/3*sh
+guile -l ~/src/learn/run-common/cogserver.scm
+
+(define cset-obj (make-pseudo-cset-api))
+(define star-obj (add-pair-stars cset-obj))
+(cset-obj 'fetch-pairs)
+
+(define right-item (ConnectorSeq
+  (Connector (WordNode "d") (ConnectorDir "-"))
+  (Connector (WordNode "a") (ConnectorDir "+"))))
+
+(star-obj 'left-stars right-item)
+There are 10 of these.
+
+All of these have counts on them. So it was the classifier
+that busted things.
+mpg_parse.rdb has MM^T on it but no support, no MI
+
+. config/4*sh
+guile -l ~/src/learn/run-common/cogserver.scm
+
+(star-obj 'left-stars right-item)
+Only one is left.
+
+Try (gram-classify-greedy-discrim 0.5 4) see what happens...
+(gcs 'left-stars right-item)
+has two items, both have counts.
+
+try again, manually.
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+
+(gcs 'left-stars right-item)
+has two items, both have counts.
+(Section (ctv 1 0 683) (WordClassNode "b f")
+(Section (ctv 1 0 1340) (WordClassNode "e j")
+
+
+wtf ... was there a store problem?
+
+
+
+
+
+
+
+
+
+
+
 
 
 

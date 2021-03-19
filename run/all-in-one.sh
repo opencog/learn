@@ -189,9 +189,11 @@ sleep 3
 
 # Perform the desired clustering.
 # The trailing newline-dots exit the cogserver shell,
-# as otherwise the netcat willl hang, waiting for completion.
+# as otherwise the netcat will hang, waiting for completion.
 # We avoid "nc -q 0" because we want to see the output.
 echo -e "$GRAM_CLUSTER\n.\n." | nc $HOSTNAME $PORT
+
+sleep 1
 
 # Shut down the server.
 echo Done clustering
