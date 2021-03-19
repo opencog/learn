@@ -1191,6 +1191,59 @@ In procedure cog-value-ref: Wrong type argument in position 1 (expecting opencog
 Failure exporting the dictionary!
 
 
+(define gcf (add-wordclass-filter gcs))
+(define frqobj (add-pair-freq-api gcf #:nothrow #t))
+
+(define left-item (WordClassNode "b f"))
+(define right-item (ConnectorSeq
+  (Connector (WordNode "d") (ConnectorDir "-"))
+  (Connector (WordNode "a") (ConnectorDir "+"))))
+
+(define lipr (gcf 'get-pair left-item right-item))
+(define pr-freq (frqobj 'pair-freq lipr))
+
+
+Ah hah frequencies missing on gcf. make-compute-freq
+
+batch-all-pair-mi clready does
+(define freq-obj (make-compute-freq wild-obj)) at line 573
+line 620 is (freq-obj 'init-freq)
+
+prints
+Done computing 30026 pair frequencies in 3 secs so wtf ... line  624
+called (freq-obj 'cache-all-pair-freqs)
+MI starts line 645
+Jumps to line 297
+
+(define supobj (add-support-api gcf))
+
+(cog-keys lipr) shows no keys. ... not even a TV ...!?
+
+(define mcf (make-compute-freq gcf))
+
+line 258...
+do it by hand (mcf 'cache-all-pair-freqs) .. fails... at line 232
+ (for-each right-loop (wldobj 'left-basis))
+
+where wildobj == gcs
+so line 227 fails... (cache-pair-freq lipr) ... line 203
+(compute-pair-freq  at line 189 fails cause no count on the item.
+
+why does lipr not have a TV on it???
+
+How many (gcs 'right-stars left-item) are missing keys?
+
+(use-modules (srfi srfi-1))
+(fold
+	(lambda (star cnt)
+		(if (nil? (cog-keys star)) (+ 1 cnt) cnt))
+		0
+		(gcs 'right-stars left-item))
+
+answer 998 of them! out of 45186 .. how?
+
+
+
 
 
 
