@@ -269,7 +269,7 @@
 		(define (update-section-count SECT CNT)
 			(if (< 1.0e-10 CNT)
 				(begin (set-count SECT CNT) (store-atom SECT))
-				(begin (set-count SECT 0) (cog-delete SECT))))
+				(begin (set-count SECT 0) (cog-delete! SECT))))
 
 		; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
 		(if (< 1.0e-10 cnt)

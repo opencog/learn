@@ -195,7 +195,7 @@
 "
 	(define (delete-singles)
 		; delete each word-class node..
-		(for-each cog-delete-recursive
+		(for-each cog-delete-recursive!
 			; make a list of word-classes containing only one word...
 			(filter
 				(lambda (WRDCLS)

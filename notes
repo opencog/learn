@@ -1295,9 +1295,27 @@ has two items, both have counts.
 
 
 wtf ... was there a store problem?
+yes ... exit server, close, re-open, have no TV on
+(Section (WordClassNode "b f")
+
+why not? Is this a rocks bug or a script bug?
+
+(cog-rocks-open "rocks:///home/ubuntu/data/expt-12/gram-4.rdb")
+(cog-rocks-get "l@(Section (WordClassNode \"b f\")(ConnectorSeq (Connector (WordNode \"d\")(ConnectorDir \"-\"))(Connector (WordNode \"a\")(ConnectorDir \"+\"))))")
+(cog-rocks-get "k@rXg1") ... returns nothing.
+even after immediately computing things.
+So it was never saved...!?
+
+need to 
+(gcs 'store-aux)  ??? This doesn't fix it.
+
+(gram-classify greedy-over-words (make-fuzz 
+
+make-fuzz stores some stuff...
+... seems to store hmmm
 
 
-
+gram-projective.scm:
 
 
 

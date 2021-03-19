@@ -482,7 +482,7 @@
 							; (this is a database-delete).
 							(for-each
 								(lambda (unfake)
-									(cog-delete (Member unfake *-greedy-anchor-*)))
+									(cog-delete! (Member unfake *-greedy-anchor-*)))
 								(got-done FAKE-CLS-LST new-cls))
 
 							; If anything from the done-list was merged, then
