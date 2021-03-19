@@ -1167,6 +1167,29 @@ and was fixed.
 No LEFT-WALL is being exported .. why?
 Oh, need to import disjuncts .. fixed.
 
+--------
+expt-12 works but then
+guile-gram-fake> Done clustering
+Rocks: initial aid=441673   <<<<<<<<< wow that's pretty big... too big!?
+Support: found num left= 2 num right= 27798 in 7 secs
+Total count N(*,*) = 372848.5999
+...
+
+Done storing 2 right-wilds in 0 secs
+Done saving -log P(x,*) and P(*,y)
+Going to compute and store individual pair MI.
+Backtrace:
+In srfi/srfi-1.scm:
+   586:29 19 (map1 (# # # # # # # # # # # # # # # # # # # # # # # # …))
+In opencog/matrix/compute-mi.scm:
+   345:56  1 (do-one-pair #)
+In unknown file:
+           0 (cog-value-ref #f 0)
+
+ERROR: In procedure cog-value-ref:
+In procedure cog-value-ref: Wrong type argument in position 1 (expecting opencog value): #f
+Failure exporting the dictionary!
+
 
 
 
@@ -1189,13 +1212,15 @@ shape-vec.scm:
 
 FIXED:
 * Pair counting insanely slow and leaks RAM.
+* learn.scm use include not load or export... DONE
 
 TODO:
 
-* learn.scm use include not load or export...
+* Alter dict generator to automatically place period at end of sentence.
+* Alter LG to allow multiple word defintions.
 * Bugs: quotes are not being escaped by submit-one.pl!!
 * Enhance: revise atomspace start-cogserver to take args directly
-* Bug: RockDB needs to be compacted on close. lcosing and reopening
+* Bug: RockDB needs to be compacted on close. closing and reopening
   a DB shrinks disk use by 20x for some workloads.
   Also its chewing up vast amounts of RAM. Bugs #9 and #10
 * GC during pair counting happens too often.

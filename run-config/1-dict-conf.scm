@@ -92,5 +92,9 @@
 (define num-senses 3)
 (define sense-exp 0.5)
 
+; XXX FIXME: Create dictionaries that automatically place a period
+; at the end of each sentence (or not!?) to avoid discovery of
+; recursively-long sentences.
+
 ; End of configuration.
 ; ---------------------
