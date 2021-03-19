@@ -34,4 +34,4 @@ EXPORT_DIR=$(dirname $LG_DICT_EXPORT)
 mkdir -p $EXPORT_DIR
 cp -p /usr/local/share/link-grammar/demo-sql/4.0.* $EXPORT_DIR
 
-exec guile -l ${COMMON_DIR}/export-dictionary.scm
+exec guile -s ${COMMON_DIR}/export-dictionary.scm
