@@ -1306,21 +1306,28 @@ why not? Is this a rocks bug or a script bug?
 even after immediately computing things.
 So it was never saved...!?
 
-need to 
+need to
 (gcs 'store-aux)  ??? This doesn't fix it.
 
-(gram-classify greedy-over-words (make-fuzz 
+(gram-classify greedy-over-words (make-fuzz
 
 make-fuzz stores some stuff...
 ... seems to store the revised marginals on the words and the class
 what about the section itself?
 gram-projective.scm
 
-
 explicit store works.
 
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+(define gco (make-store gcs))
+(gco 'store-all)
 
 
+with explicit store:
+select count(*) from disjuncts; 1754
+without explicit store:
+1530
 
 
 

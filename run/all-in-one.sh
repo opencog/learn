@@ -195,6 +195,11 @@ echo -e "$GRAM_CLUSTER\n.\n." | nc $HOSTNAME $PORT
 
 sleep 1
 
+# Make sure all counts on all classes are stored.
+echo -e "((make-store (make-gram-class-api)) 'store-all)\n.\n." | nc $HOSTNAME $PORT
+
+sleep 1
+
 # Shut down the server.
 echo Done clustering
 echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
