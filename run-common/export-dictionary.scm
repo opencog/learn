@@ -33,6 +33,11 @@
 ; (print-matrix-summary-report gcf)
 
 ; `batch-all-pair-mi` writes to the database...
+; ... but it does not write the individual pair-MI's
+; so we maybe should do this:
+; ((make-store gcs) 'store-all)
+
+; `batch-all-pair-mi` writes to the database...
 (barrier storage-node)
 (cog-close storage-node)
 
