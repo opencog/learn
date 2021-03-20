@@ -63,7 +63,7 @@ if ! [ -z ${GEN_CONF_FILE} ] && [ -r ${GEN_CONF_FILE} ]; then
 	if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
 		. ${PAIR_CONF_FILE}
 		mkdir -p $CORPORA_DIR
-		cp -pr $GEN_CORPUS_DIR $CORPORA_DIR
+		cp -pr $GEN_CORPUS_DIR/* $CORPORA_DIR
 	fi
 
 else
