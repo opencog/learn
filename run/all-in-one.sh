@@ -95,7 +95,7 @@ fi
 guile -l ${COMMON_DIR}/cogserver.scm -c "(sleep 150000000)" &
 
 # Wait for the cogserver to intialize.
-sleep 3
+echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Batch-process the corpus.
 ${COMMON_DIR}/process-corpus.sh $PAIR_CONF_FILE
@@ -140,7 +140,7 @@ fi
 guile -l ${COMMON_DIR}/cogserver-mst.scm -c "(sleep 150000000)" &
 
 # Wait for the cogserver to intialize.
-sleep 3
+echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Batch-process the corpus.
 ${COMMON_DIR}/process-corpus.sh $MST_CONF_FILE
@@ -185,7 +185,7 @@ fi
 guile -l ${COMMON_DIR}/cogserver-gram.scm -c "(sleep 150000000)" &
 
 # Wait for the cogserver to intialize.
-sleep 3
+echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Perform the desired clustering.
 # The trailing newline-dots exit the cogserver shell,

@@ -1329,8 +1329,46 @@ select count(*) from disjuncts; 1754
 without explicit store:
 1530
 
+clustered exported db generates no sentences.
+non-clustered db works.
 
+clustered db is missing left-wall. Why?
 
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+(gcs 'fetch-pairs)
+
+(define (prt-atom h) (display h) #f)
+(cog-map-type prt-atom 'Word)
+(cog-map-type prt-atom 'WordClass)
+No uni for left wall?
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+(define asc (add-singleton-classes psa))
+(asc 'create-hi-count-singles 1)
+After trimming, 9 words left, out of 11
+Created 0 singleton word classes
+
+so no keys on left-wall
+(use-modules (srfi srfi-1))
+(define lw (WordNode "###LEFT-WALL###"))
+(length (cog-incoming-set lw))  ; 19887
+(list-ref (cog-incoming-set lw) 2)
+(cog-keys (list-ref (cog-incoming-set lw) 333)) ; None!!! wtf!
+for gram-5, at least ...
+
+... but mpg_parse does have counts on left-wall.
+How did they disappear?
+
+issue: failed to wait for cogserver to finish loading.
+2-word-pairs/run-all.sh
+3-mst-parsing/run-all-mst.sh
+4-gram-class/run-all-gram.sh
+all-in-one.sh
+
+echo -e "(block-until-idle 0.01)\n.\n."
 
 
 

@@ -43,6 +43,7 @@
 (define storage-node (eval-string sns))
 (cog-open storage-node)
 
+; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
 ; is idle (taken to be a sign that there's no more text to be
 ; processed) and then exits guile.
