@@ -1370,10 +1370,53 @@ all-in-one.sh
 
 echo -e "(block-until-idle 0.01)\n.\n."
 
+another issue: export prints
+Going to compute and store individual pair MI.
+
+but that's a lie, its never stored... no, ok, it just doesn't 
+do the progress prints, that's all...
+DO-STORE is true...
+... huh, claims it is stored... is it?
+so, yeah they are there...
+
+but wait ..
+(gcs 'left-stars right-item)
+shows that some unis have no counts...
+wtf
+ again, done in gram-7
+now export-7
 
 
+(define gca (make-gram-class-api))
+(define gcs (add-pair-stars gca))
+(define right-item (ConnectorSeq
+  (Connector (WordNode "d") (ConnectorDir "-"))
+  (Connector (WordNode "a") (ConnectorDir "+"))))
 
+(gcs 'left-stars right-item)
+only two items, they have counts but no MI's on them.
 
+(use-modules (srfi srfi-1))
+(fold
+	(lambda (star cnt)
+		(if (nil? (cog-keys star)) (+ 1 cnt) cnt))
+		0
+		(gcs 'get-all-elts)) ; 0 OK everything has a count. good
+
+(length (gcs 'get-all-elts))  ; 93056
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+(length (psa 'get-all-elts)) ; 32383
+
+(fold
+   (lambda (star cnt)
+      (if (nil? (cog-keys star)) (+ 1 cnt) cnt))
+      0 (psa 'get-all-elts))
+; 9869
+ok that's broken, but maybe from the earlier breakages.
+Need rerun from scratch.
 
 
 
@@ -1395,6 +1438,9 @@ FIXED:
 
 TODO:
 
+* cogserver is not flushing output on 2nd and later connections .. wtf!
+  or just behaving incoherently/inconsistently with netcat.
+  echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
 * Alter dict generator to automatically place period at end of sentence.
 * Alter LG to allow multiple word defintions.
 * Bugs: quotes are not being escaped by submit-one.pl!!
