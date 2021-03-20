@@ -228,6 +228,7 @@
 			(is-open #t)
 			(secs (current-time))
 			(word-cache (make-atom-set))
+			(warn-cnt 0)
 		)
 
 		; Escape quotes -- replace single quotes by two successive
@@ -332,12 +333,16 @@
 			; Might fail with "UNIQUE constraint failed:" so just warn.
 			; XXX This is a temp hack, because the classification code
 			; is not yet written.
-			;;;(if (not (equal? 0 (car (dbi-get_status db-obj))))
-			;;;	(throw 'fail-insert 'make-db-adder
-			;;;		(cdr (dbi-get_status db-obj))))
-			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
-					(cdr (dbi-get_status db-obj))))
+			(let ((err-code (car (dbi-get_status db-obj)))
+					(err-msg (cdr (dbi-get_status db-obj))))
+				(if (not (equal? 0 err-code))
+					(if (string-prefix? "UNIQUE" err-msg)
+						(if (< warn-cnt 10)
+							(begin
+								(set! warn-cnt (+ 1 warn-cnt))
+								(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
+									errmsg)))
+						(throw 'fail-insert 'make-db-adder err-msg))))
 		)
 
 		; Add a section to the database
