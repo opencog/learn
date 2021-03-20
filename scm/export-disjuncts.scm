@@ -341,7 +341,7 @@
 							(begin
 								(set! warn-cnt (+ 1 warn-cnt))
 								(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
-									errmsg)))
+									err-msg)))
 						(throw 'fail-insert 'make-db-adder err-msg))))
 		)
 
