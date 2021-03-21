@@ -454,31 +454,21 @@
 			(define link-f1 (/ (* 2.0 link-recall link-precision)
 				(+ link-recall link-precision)))
 
-			; Compute the recall of important link types.
-xxxxxx
-			(define primary-total
-				(+ missing-primary present-primary))
-			(define secondary-total
-				(+ missing-secondary present-secondary))
-			(define punct-total
-				(+ missing-punct present-punct))
-			(define other-total
-				(+ missing-other present-other))
-
-			(define primary-recall
-				(/ present-primary primary-total))
-			(define secondary-recall
-				(/ present-secondary secondary-total))
-			(define punct-recall
-				(if (equal? 0 punct-total) (inf)
-					(/ present-punct punct-total)))
-			(define other-recall
-				(/ present-other other-total))
-
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
 				(sort missing-link-types
 					(lambda (ia ib) (> (cdr ia) (cdr ib)))))
+
+			; Compute the recall of important link types.
+			(define recall (make-vector (+ 1 nclasses) 0))
+			(for-each
+				(lambda (k)
+					(define tot (+ (vector-ref missing k) (vector-ref present k)))
+					(define rcl
+						(if (equal? 0 tot) (inf)
+							(/ (vector-ref present k) tot)))
+					(vector-set! recall k rcl))
+				(iota (+ 1 nclasses)))
 
 			(newline)
 			(newline)
