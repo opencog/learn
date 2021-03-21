@@ -22,7 +22,8 @@
      (VERBOSE #f)
 )
 "
-  lg-compare GOLD-DICT OTHER-DICT CLASSES - Return a sentence comparison function.
+  make-lg-comparator GOLD-DICT OTHER-DICT CLASSES - Return a sentence
+  comparison function.
 
   GOLD-DICT and OTHER-DICT should be the two LgDictNodes to compare.
   The code assumes that GOLD-DICT is the reference or \"golden\" lexis
@@ -530,7 +531,7 @@
      (VERBOSE #f)
 )
 "
-  lg-compare DICT - Return an English sentence comparison function.
+  make-lg-en-comparator DICT - Return an English sentence comparison function.
 
   DICT should be an LgDictNode containing a dictionary that will be
   compared to the Link Grammar English dictionary.
@@ -558,5 +559,7 @@
 
 	(define classes (list primary-links secondary-links punct-links))
 
-	(make-lg-comparator (LgDictNode "en") DICT classes)
+	(make-lg-comparator (LgDictNode "en") DICT classes
+     #:INCLUDE-MISSING INCLUDE-MISSING
+     #:VERBOSE VERBOSE)
 )
