@@ -7,7 +7,7 @@
 ; The general goal of the code here is to obtain the accuracy, recall
 ; and other statistics of a test-dictionary, compared to a gold-standard
 ; dictionary. This is done by creating a comparison function that can
-; parse sentences with both dictionaries, and then verifies the presence
+; parse sentences with both dictionaries, and then verify the presence
 ; or absence of links between words.
 ;
 (use-modules (srfi srfi-1))
@@ -17,17 +17,23 @@
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define*-public (make-lg-comparator en-dict other-dict #:key
+(define*-public (make-lg-comparator gold-dict other-dict classes #:key
      (INCLUDE-MISSING #f)
      (VERBOSE #f)
 )
 "
-  lg-compare GOLD-DICT OTHER-DICT - Return a sentence comparison function.
+  lg-compare GOLD-DICT OTHER-DICT CLASSES - Return a sentence comparison function.
 
   GOLD-DICT and OTHER-DICT should be the two LgDictNodes to compare.
-  The code makes weak assumptions that GOLD-DICT is the reference or
-  \"golden\" lexis to compare to, so that any differences found in
-  OTHER-DICT are blamed on OTHER-DICT.
+  The code assumes that GOLD-DICT is the reference or \"golden\" lexis
+  to compare to, so that any differences found in OTHER-DICT are blamed
+  on OTHER-DICT.
+
+  CLASSES is a list of lists of link types in the GOLD-DICT for which
+  statistics should be kept. The idea is that some link types in the
+  golden dict are more important to get right than others, and so stats
+  should be kept just for those.  CLASSES may be an empty list, in which
+  case only overall stats are kept.
 
   This returns a comparison function.  To use it, pass one or more
   sentence strings to it; it will compare the resulting parses.
@@ -35,7 +41,8 @@
 
   Example usage:
      (define compare (make-lg-comparator
-        (LgDictNode \"en\") (LgDictNode \"micro-fuzz\")))
+        (LgDictNode \"en\") (LgDictNode \"micro-fuzz\")
+        (list (list \"S\" \"O\" \"MV\") (list \"X\")) ))
      (compare \"I saw her face\")
      (compare \"I swooned to the floor\")
      (compare #f)
@@ -75,12 +82,6 @@
 			(missing-words (make-atom-set))
 			(vocab-words (make-atom-set))
 		)
-
-		; ----------------------------------------
-		; LG English link-type classes
-		(define primary-links (list "S" "O" "MV" "SI" "CV"))
-		(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
-		(define punct-links (list "X"))
 
 		; ----------------------------------------
 		; Misc utilities
@@ -516,4 +517,40 @@
 				(report-stats)
 				(do-compare-gc SENT)))
 	)
+)
+
+(define*-public (make-lg-en-comparator other-dict #:key
+     (INCLUDE-MISSING #f)
+     (VERBOSE #f)
+)
+"
+  lg-compare DICT - Return an English sentence comparison function.
+
+  DICT should be an LgDictNode containing a dictionary that will be
+  compared to the Link Grammar English dictionary.
+
+  This returns a comparison function.  To use it, pass one or more
+  sentence strings to it; it will compare the resulting parses.
+  When finished, pass it `#f`, and it will print a summary report.
+
+  Example usage:
+     (define compare (make-lg-comparator (LgDictNode \"micro-fuzz\")))
+     (compare \"I saw her face\")
+     (compare \"I swooned to the floor\")
+     (compare #f)
+
+  By default, this does not test sentences that have words that are
+  not in the test dictionary.  Over-ride this by supplying the optional
+  argument INCLUDE-MISSING.
+"
+
+	; ----------------------------------------
+	; LG English link-type classes
+	(define primary-links (list "S" "O" "MV" "SI" "CV"))
+	(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
+	(define punct-links (list "X"))
+
+	(define classes (list primary-links secondary-links punct-links)
+
+	(make-lg-comparator (LgDictNode "en") DICT classes)
 )

@@ -2,7 +2,8 @@
 !#
 ;
 ; dict-comp.scm
-; Compare LG dictionary to the English dictionary.
+; Compare parses produced by a given LG dictionary to those of
+; the English dictionary.
 ;
 ; Usage:
 ; guile -s dict-comp.scm <dict-name> <sentence-file-name>
@@ -41,7 +42,7 @@
 		(exit #f)))
 
 ; Perform comparison
-(format #t "Verifying dicationary \"~A\" with sentences from \"~A\"\n"
+(format #t "Verifying dictionary \"~A\" with sentences from \"~A\"\n"
 	test-dict sent-file)
 
 
