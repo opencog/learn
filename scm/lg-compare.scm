@@ -52,7 +52,7 @@
   not in the test dictionary.  Over-ride this by supplying the optional
   argument INCLUDE-MISSING.
 "
-	(let ((verbose VERBOSE)
+	(let* ((verbose VERBOSE)
 
 		; -------------------
 		; Stats we are keeping
@@ -233,8 +233,8 @@
 
 		; ---
 		; The length of the sentences should match.
-		(define (compare-lengths en-sorted other-sorted)
-			(define ewlilen (length en-sorted))
+		(define (compare-lengths gold-sorted other-sorted)
+			(define ewlilen (length gold-sorted))
 			(define owlilen (length other-sorted))
 
 			; Both should usually have the same length. Note, however,
@@ -343,14 +343,14 @@
 		; The main comparison function
 		(define (do-compare SENT)
 			; Get a parse, one for each dictionary.
-			(define en-sent (cog-execute!
-				(LgParseMinimal (PhraseNode SENT) en-dict (NumberNode 1))))
+			(define gold-sent (cog-execute!
+				(LgParseMinimal (PhraseNode SENT) gold-dict (NumberNode 1))))
 			(define other-sent (cog-execute!
 				(LgParseMinimal (PhraseNode SENT) other-dict (NumberNode 1))))
 
 			; Since only one parse, we expect only one...
-			(define en-parse (gar (car
-				(cog-incoming-by-type en-sent 'ParseLink))))
+			(define gold-parse (gar (car
+				(cog-incoming-by-type gold-sent 'ParseLink))))
 			(define other-parse (gar (car
 				(cog-incoming-by-type other-sent 'ParseLink))))
 
@@ -365,17 +365,17 @@
 			; XXX Temp hack. Currently, the test dicts are missing LEFT-WALL
 			; and RIGHT-WALL and so we filter these out manually. This
 			; should be made more elegant.
-			(define en-word-inst-list
+			(define gold-word-inst-list
 				(filter
 					(lambda (winst)
 						(define wrd (get-word-of-winst winst))
 						(and
 							(not (equal? wrd left-wall))
 							(not (equal? wrd right-wall))))
-					(map gar (cog-incoming-by-type en-parse 'WordInstanceLink))))
+					(map gar (cog-incoming-by-type gold-parse 'WordInstanceLink))))
 
 			; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
-			(define en-sorted (sort-word-inst-list en-word-inst-list))
+			(define gold-sorted (sort-word-inst-list gold-word-inst-list))
 			(define other-sorted (sort-word-inst-list other-word-inst-list))
 
 			(define dict-has-missing-words (has-missing-words other-sorted))
@@ -391,7 +391,7 @@
 			; Such miscompares pointlessly garbage up the stats.
 			(if (and
 					(or (not dict-has-missing-words) INCLUDE-MISSING)
-					(compare-lengths en-sorted other-sorted))
+					(compare-lengths gold-sorted other-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
 					(set! temp-cnt link-count-miscompares)
@@ -402,7 +402,7 @@
 							(compare-words ewrd owrd)
 							(compare-links ewrd owrd)
 						)
-						en-sorted other-sorted)
+						gold-sorted other-sorted)
 
 					(if (not (equal? temp-cnt link-count-miscompares))
 						(set! bad-sentences (+ 1 bad-sentences)))
@@ -526,7 +526,7 @@
 	)
 )
 
-(define*-public (make-lg-en-comparator other-dict #:key
+(define*-public (make-lg-en-comparator DICT #:key
      (INCLUDE-MISSING #f)
      (VERBOSE #f)
 )
