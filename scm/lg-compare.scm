@@ -69,11 +69,11 @@
 			(link-excess 0)
 			(link-deficit 0)
 
+			; Counts of missing/present link types.
+			; The last entry is fo "none of the above".
 			(nclasses (length classes))
-			(present (make-vector nclasses 0))
-			(missing (make-vector nclasses 0))
-			(present-other 0)
-			(missing-other 0)
+			(present (make-vector (+ 1 nclasses) 0))
+			(missing (make-vector (+ 1 nclasses) 0))
 
 			(missing-link-types '())
 			(missing-words (make-atom-set))
@@ -147,6 +147,24 @@
 				(cog-name (get-link-name lwin rwin))
 				(char-set-adjoin char-set:lower-case #\*)))
 
+		; For each link-class, see if the link type is in that class.
+		; If it is, then increment the count on that class. If it is
+		; not in any class, then increment the n+1'th count.
+		(define (incr-class-counts COUNT-VEC LINK-NAME)
+			(define touched #f)
+			(for-each
+				(lambda (k)
+					(if (any (lambda (ltyp) (equal? ltyp LINK-NAME)) (list-ref classes k))
+						(begin
+							(vector-set! COUNT-VEC k (+ 1 (vector-ref COUNT-VEC k)))
+							(set! touched #t))))
+				(iota nclasses))
+
+			; If the link-type was not in any class, thenm increment "other"
+			(if (not touched)
+				(vector-set! COUNT-VEC nclasses (+ 1 (vector-ref COUNT-VEC nclasses))))
+		)
+
 		; ------
 		; Increment count for a missing link type putting the count
 		; in an association list, so that we can print all muffed
@@ -158,7 +176,6 @@
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
 		(define (incr-missing-link-count lwin rwin)
-			(define touched #f)
 			(define link-name (get-link-str-name lwin rwin))
 			(if VERBOSE
 				(format #t "Missing link: ~A <-- ~A --> ~A\n"
@@ -166,19 +183,11 @@
 					link-name
 					(cog-name (get-word-of-winst rwin))))
 
-			; For each link-class, see if the link type is in that class.
-			; If it is, then increment the count on that class.
-			(for-each
-				(lambda (k)
-					(if (any (lambda (ltyp) (equal? ltyp link-name)) (list-ref classes k))
-						(begin
-							(vector-set! missing k (+ 1 (vector-ref missing k)))
-							(set! touched #t))))
-				(iota nclasses))
+			; Increment the count on specific link classes in the
+			; golden dictionary.
+			(incr-class-counts missing link-name)
 
-			; If the link-type was not in any class, thenm increment "other"
-			(if (not touched)
-				(set! missing-other (+ 1 missing-other)))
+			; Increment the count on individual link types.
 			(incr-missing-link-type-count link-name))
 
 		(define (incr-present-link-count lwin rwin)
