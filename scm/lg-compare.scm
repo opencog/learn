@@ -188,7 +188,8 @@
 			(incr-class-counts missing link-name)
 
 			; Increment the count on individual link types.
-			(incr-missing-link-type-count link-name))
+			(incr-missing-link-type-count link-name)
+		)
 
 		(define (incr-present-link-count lwin rwin)
 			(define link-name (get-link-str-name lwin rwin))
@@ -197,16 +198,12 @@
 					(cog-name (get-word-of-winst lwin))
 					link-name
 					(cog-name (get-word-of-winst rwin))))
-xxxxxxxxxx
-			(cond
-				((any (lambda (lt) (equal? lt link-name)) primary-links)
-					(set! present-primary (+ 1 present-primary)))
-				((any (lambda (lt) (equal? lt link-name)) secondary-links)
-					(set! present-secondary (+ 1 present-secondary)))
-				((any (lambda (lt) (equal? lt link-name)) punct-links)
-					(set! present-punct (+ 1 present-punct)))
-				(else (set! present-other (+ 1 present-other))))
+
+			; Increment the count on specific link classes in the
+			; golden dictionary.
+			(incr-class-counts missing link-name)
 		)
+
 		; ----------------------------------------
 		; Comparison functions
 
@@ -458,6 +455,7 @@ xxxxxxxxxx
 				(+ link-recall link-precision)))
 
 			; Compute the recall of important link types.
+xxxxxx
 			(define primary-total
 				(+ missing-primary present-primary))
 			(define secondary-total
