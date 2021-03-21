@@ -62,7 +62,9 @@ echo -e "$GRAM_CLUSTER\n.\n." | nc $HOSTNAME $PORT
 
 sleep 1
 
-# Make sure all counts on all classes are stored.
+# Make sure all counts on all grammatical classes are stored.
+# The disjuncts need to be saved again; counts have changed.
+echo -e "((make-store (make-pseudo-cset-api)) 'store-all)\n.\n." | nc $HOSTNAME $PORT
 echo -e "((make-store (make-gram-class-api)) 'store-all)\n.\n." | nc $HOSTNAME $PORT
 
 sleep 1

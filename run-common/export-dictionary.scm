@@ -29,7 +29,7 @@
 (define gcf (add-wordclass-filter gcs))
 (batch-all-pair-mi gcf)
 
-; (print-matrix-summary-report gcf)
+(print-matrix-summary-report gcf)
 
 ; `batch-all-pair-mi` writes to the database...
 (barrier storage-node)

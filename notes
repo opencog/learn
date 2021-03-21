@@ -1410,16 +1410,80 @@ only two items, they have counts but no MI's on them.
 (psa 'fetch-pairs)
 (length (psa 'get-all-elts)) ; 32383
 
-(fold
-   (lambda (star cnt)
+(fold (lambda (star cnt)
       (if (nil? (cog-keys star)) (+ 1 cnt) cnt))
       0 (psa 'get-all-elts))
 ; 9869
 ok that's broken, but maybe from the earlier breakages.
 Need rerun from scratch.
 
+After re-running from scratch, get 
+(length all ...; 90809
+(fold ... ; 26245
+for the fold. Are these the zero-count disjuncts!? why aren't they
+deleted? WTF??
+
+for gcs: 94984 total elts, and 25329 without counts...
+-----------
+try to figure it out. expt-13
+cp -pr mpg_parse.rdb gram-2.rdb
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+
+(use-modules (srfi srfi-1))
+(length (psa 'get-all-elts))  ;134089
+(fold; 0 very good.
+
+cluster
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+
+(length (psa 'get-all-elts)) ;32625 wow big drop but expected OK
+(fold ; 0 so still good!
+
+(define pca2 (make-pseudo-cset-api))
+(define psa2 (add-pair-stars pca2))
+(length (psa2 'get-all-elts)) ; 32625 OK consistent
+(fold ; 0 still good.
+
+((make-store (make-gram-class-api)) 'store-all)
+
+close, restart cogserver load.
+(length (psa 'get-all-elts)) ; 32625 OK, no change
+
+(use-modules (srfi srfi-1))
+(fold (lambda (star cnt)
+      (if (nil? (cog-keys star)) (+ 1 cnt) cnt))
+      0 (psa 'get-all-elts))
+
+fold ; 9685 
+OK, so ... TV's disappeared. How?
+
+------
+gram-3
+
+(use-modules (srfi srfi-1))
+(fold (lambda (star cnt)
+      (if (nil? (cog-keys star)) (+ 1 cnt)
+			(if (nil? (cog-value star (Predicate "*-TruthValueKey-*")))
+				(+ 1 cnt) cnt)))
+      0 (psa 'get-all-elts))
+
+0 -- so they all have TV's.
+
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+(fold ; -- still zero.
+
+((make-store psa) 'store-all)
+
+close, reopen.
+(length (psa 'get-all-elts)) ; 32625 OK good.
+
+fold ; 0 Yayyy! well, that solves that!
 
 
+---------------------
 add-linkage-filter
 
 cset-class.scm: -- merges, but no define-public

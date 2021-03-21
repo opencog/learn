@@ -1212,8 +1212,21 @@ Expt-13, expt-14, expt-15
 Try again with the same initial corpus.
  Expt-13 overflowed with fake warning message, so II couldn't see the log;
  thus expt-14 is an exact rerun.
- Then expt-15 uses exactly the same corpus, with a period at the end of
- sentence placed manually.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Exact
+\begin_inset Quotes erd
+\end_inset
+
+ in the sense of using the same config.
+ However, the random sampling of pairs during pair counting was different.
+\end_layout
+
+\begin_layout Standard
+Then expt-15 uses exactly the same corpus, with a period at the end of sentence
+ placed manually.
 \end_layout
 
 \begin_layout Standard
@@ -1225,11 +1238,15 @@ length: length of sentence
 \end_layout
 
 \begin_layout Itemize
-time to generate all sentences, in seconds (expt-14)
+time to generate all sentences, in seconds (expt-13)
 \end_layout
 
 \begin_layout Itemize
-num: number of sentences generated (expt-14)
+num: number of sentences generated (expt-13)
+\end_layout
+
+\begin_layout Itemize
+expt-14: number of sentences generated
 \end_layout
 
 \begin_layout Itemize
@@ -1245,8 +1262,9 @@ expt-15: redo, but with a period at the end of the sentence.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="11" columns="5">
+<lyxtabular version="3" rows="11" columns="6">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1275,7 +1293,16 @@ time for all
 \begin_inset Text
 
 \begin_layout Plain Layout
-num
+num expt-13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+expt-14
 \end_layout
 
 \end_inset
@@ -1331,6 +1358,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 10
 \end_layout
 
@@ -1340,7 +1376,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+24
 \end_layout
 
 \end_inset
@@ -1378,6 +1414,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+163
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 23
 \end_layout
 
@@ -1387,7 +1432,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+104
 \end_layout
 
 \end_inset
@@ -1425,6 +1470,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+1356
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 75
 \end_layout
 
@@ -1434,7 +1488,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+485
 \end_layout
 
 \end_inset
@@ -1472,6 +1526,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+12090
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 254
 \end_layout
 
@@ -1481,7 +1544,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2294
 \end_layout
 
 \end_inset
@@ -1519,6 +1582,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+111633
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 892
 \end_layout
 
@@ -1528,7 +1600,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10845
 \end_layout
 
 \end_inset
@@ -1566,6 +1638,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+1054583
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 3402
 \end_layout
 
@@ -1575,7 +1656,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+51673
 \end_layout
 
 \end_inset
@@ -1613,6 +1694,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+10134151
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 12728
 \end_layout
 
@@ -1622,7 +1712,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+248242
 \end_layout
 
 \end_inset
@@ -1660,6 +1750,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+98702133
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 25000/48364
 \end_layout
 
@@ -1669,7 +1768,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1198418
 \end_layout
 
 \end_inset
@@ -1707,6 +1806,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 25000/187541
 \end_layout
 
@@ -1716,7 +1824,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5807783
 \end_layout
 
 \end_inset
@@ -1754,6 +1862,15 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 25000/733525
 \end_layout
 
@@ -1763,7 +1880,7 @@ expt-15
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+28246686
 \end_layout
 
 \end_inset
@@ -1777,9 +1894,18 @@ expt-15
 \end_layout
 
 \begin_layout Standard
-The input corpus lacks periods at the ends of sentences.
+Expt-13 and expt-14 differ only in how the pair-counts were collected (they
+ are randomly different samplings of pairs).
+ Both wildly over-sample the corpus.
+\end_layout
+
+\begin_layout Standard
+The expt-13/14 input corpus lacks periods at the ends of sentences.
  This seems to be the most likely explanation for the over-generation; i.e.
- last time a period ws lacking, the same thing happened.
+ last time a period was lacking, the same thing happened.
+ So expt-15 takes exactly the same corpus - identical copy, and adds a period.
+ This does sharply cut down on the number of sentences, especially the long
+ ones, but still over-generates.
 \end_layout
 
 \begin_layout Standard
@@ -1787,8 +1913,9 @@ General processing stats:
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="3">
+<lyxtabular version="3" rows="22" columns="3">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1836,7 +1963,7 @@ time, pair-counting
 \begin_inset Text
 
 \begin_layout Plain Layout
-100 minutes
+109 minutes
 \end_layout
 
 \end_inset
@@ -1845,7 +1972,7 @@ time, pair-counting
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+107 minutes
 \end_layout
 
 \end_inset
@@ -1874,7 +2001,7 @@ pair aid
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+259/318
 \end_layout
 
 \end_inset
@@ -1903,7 +2030,7 @@ pair dimensions
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11x10
 \end_layout
 
 \end_inset
@@ -1923,7 +2050,7 @@ pair counts
 \begin_inset Text
 
 \begin_layout Plain Layout
-27365406
+27367456
 \end_layout
 
 \end_inset
@@ -1932,7 +2059,7 @@ pair counts
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+29988408
 \end_layout
 
 \end_inset
@@ -1961,7 +2088,7 @@ pair sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0
 \end_layout
 
 \end_inset
@@ -1990,14 +2117,14 @@ pair entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.14=3.08+3.08
 \end_layout
 
 \end_inset
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2006,7 +2133,7 @@ pair MI
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -2015,11 +2142,214 @@ pair MI
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.012
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+time, mpg-parsing
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12 minutes
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
+19 minutes
+\end_layout
 
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg aid
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+246691
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+201594/298813
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg dim
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11 x 111712
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12 x 97203
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg counts
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1067417
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1159801
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.19
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.49
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg MM^T support
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+134663
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+104049
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+mpg MM^T count
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2341493237
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9220550155
 \end_layout
 
 \end_inset
@@ -2030,7 +2360,7 @@ pair MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-time, mpg-parsing
+mpg MM^T entropy
 \end_layout
 
 \end_inset
@@ -2039,7 +2369,7 @@ time, mpg-parsing
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.95
 \end_layout
 
 \end_inset
@@ -2048,7 +2378,181 @@ time, mpg-parsing
 \begin_inset Text
 
 \begin_layout Plain Layout
+0.232
+\end_layout
 
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gram dim
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3 x 103552
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4 x 92299
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gram count
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+880090
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1080580
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gram sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.60
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.46
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gram entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.58=11.30+1.09-MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.83=8.75+1.15-MI
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+gram MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.806
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.08
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dict records
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+102644
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+67140
 \end_layout
 
 \end_inset
@@ -2062,7 +2566,15 @@ time, mpg-parsing
 \end_layout
 
 \begin_layout Standard
-soo
+Issues:
+\end_layout
+
+\begin_layout Itemize
+There seems to be a dataset issue: both the disjunct pairs and gram pairs
+ have 1/3rd of them without counts on them.
+ Are they being corrupted? Not saved? What's happening? Clearly, bad counts
+ means bad MI...
+ right?
 \end_layout
 
 \end_body
