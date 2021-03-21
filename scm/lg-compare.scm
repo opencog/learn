@@ -69,13 +69,10 @@
 			(link-excess 0)
 			(link-deficit 0)
 
-			(present-primary 0)
-			(present-secondary 0)
-			(present-punct 0)
+			(nclasses (length classes))
+			(present (make-vector nclasses 0))
+			(missing (make-vector nclasses 0))
 			(present-other 0)
-			(missing-primary 0)
-			(missing-secondary 0)
-			(missing-punct 0)
 			(missing-other 0)
 
 			(missing-link-types '())
@@ -161,20 +158,27 @@
 				(assoc-set! missing-link-types link-name (+ 1 cnt))))
 
 		(define (incr-missing-link-count lwin rwin)
+			(define touched #f)
 			(define link-name (get-link-str-name lwin rwin))
 			(if VERBOSE
 				(format #t "Missing link: ~A <-- ~A --> ~A\n"
 					(cog-name (get-word-of-winst lwin))
 					link-name
 					(cog-name (get-word-of-winst rwin))))
-			(cond
-				((any (lambda (lt) (equal? lt link-name)) primary-links)
-					(set! missing-primary (+ 1 missing-primary)))
-				((any (lambda (lt) (equal? lt link-name)) secondary-links)
-					(set! missing-secondary (+ 1 missing-secondary)))
-				((any (lambda (lt) (equal? lt link-name)) punct-links)
-					(set! missing-punct (+ 1 missing-punct)))
-				(else (set! missing-other (+ 1 missing-other))))
+
+			; For each link-class, see if the link type is in that class.
+			; If it is, then increment the count on that class.
+			(for-each
+				(lambda (k)
+					(if (any (lambda (ltyp) (equal? ltyp link-name)) (list-ref classes k))
+						(begin
+							(vector-set! missing k (+ 1 (vector-ref missing k)))
+							(set! touched #t))))
+				(iota nclasses))
+
+			; If the link-type was not in any class, thenm increment "other"
+			(if (not touched)
+				(set! missing-other (+ 1 missing-other)))
 			(incr-missing-link-type-count link-name))
 
 		(define (incr-present-link-count lwin rwin)
@@ -184,6 +188,7 @@
 					(cog-name (get-word-of-winst lwin))
 					link-name
 					(cog-name (get-word-of-winst rwin))))
+xxxxxxxxxx
 			(cond
 				((any (lambda (lt) (equal? lt link-name)) primary-links)
 					(set! present-primary (+ 1 present-primary)))
