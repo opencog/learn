@@ -460,14 +460,16 @@
 					(lambda (ia ib) (> (cdr ia) (cdr ib)))))
 
 			; Compute the recall of important link types.
-			(define recall (make-vector (+ 1 nclasses) 0))
+			(define class-recall (make-vector (+ 1 nclasses) 0))
+			(define class-total (make-vector (+ 1 nclasses) 0))
 			(for-each
 				(lambda (k)
 					(define tot (+ (vector-ref missing k) (vector-ref present k)))
 					(define rcl
 						(if (equal? 0 tot) (inf)
 							(/ (vector-ref present k) tot)))
-					(vector-set! recall k rcl))
+					(vector-set! class-total k tot)
+					(vector-set! class-recall k rcl))
 				(iota (+ 1 nclasses)))
 
 			(newline)
@@ -496,14 +498,16 @@
 				link-precision link-recall link-f1)
 			(newline)
 
-			(format #t "Primary     link-type recall=~6F tot=~A ~A\n"
-				primary-recall primary-total primary-links)
-			(format #t "Secondary   link-type recall=~6F tot=~A ~A\n"
-				secondary-recall secondary-total secondary-links)
-			(format #t "Punctuation link-type recall=~6F tot=~A ~A\n"
-				punct-recall punct-total punct-links)
-			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
-				other-recall other-total)
+			(for-each
+				(lambda (k)
+					(format #t "Link-class recall=~6F tot=~A ~A\n"
+						(vector-ref class-recall k)
+						(vector-ref class-total k)
+						(list-ref classes k)))
+				(iota nclasses))
+			(format #t "Other link-classes recall=~6F tot=~A\n"
+				(vector-ref class-recall nclasses)
+				(vector-ref class-total nclasses))
 
 			(newline)
 			(format #t "Counts of missing link-types: ~A\n\n"
@@ -552,7 +556,7 @@
 	(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
 	(define punct-links (list "X"))
 
-	(define classes (list primary-links secondary-links punct-links)
+	(define classes (list primary-links secondary-links punct-links))
 
 	(make-lg-comparator (LgDictNode "en") DICT classes)
 )
