@@ -1,7 +1,7 @@
 #! /usr/bin/env -S guile
 !#
 ;
-; dict-comp.scm
+; en-dict-comp.scm
 ; Compare parses produced by a given LG dictionary to those of
 ; the English dictionary.
 ;
@@ -50,7 +50,7 @@
 ;; containing words that the dictionary does not know about (i.e. to
 ;; disable unknown-word guessing.)
 (define compare
-	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)
+	(make-lg-en-comparator (LgDictNode test-dict)
 		#:INCLUDE-MISSING #t))
 
 (define (process-file PORT)

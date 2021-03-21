@@ -7,7 +7,7 @@
 ; The general goal of the code here is to obtain the accuracy, recall
 ; and other statistics of a test-dictionary, compared to a gold-standard
 ; dictionary. This is done by creating a comparison function that can
-; parse sentences with both dictionaries, and then verifies the presence
+; parse sentences with both dictionaries, and then verify the presence
 ; or absence of links between words.
 ;
 (use-modules (srfi srfi-1))
@@ -17,17 +17,24 @@
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define*-public (make-lg-comparator en-dict other-dict #:key
+(define*-public (make-lg-comparator gold-dict other-dict classes #:key
      (INCLUDE-MISSING #f)
      (VERBOSE #f)
 )
 "
-  lg-compare GOLD-DICT OTHER-DICT - Return a sentence comparison function.
+  make-lg-comparator GOLD-DICT OTHER-DICT CLASSES - Return a sentence
+  comparison function.
 
   GOLD-DICT and OTHER-DICT should be the two LgDictNodes to compare.
-  The code makes weak assumptions that GOLD-DICT is the reference or
-  \"golden\" lexis to compare to, so that any differences found in
-  OTHER-DICT are blamed on OTHER-DICT.
+  The code assumes that GOLD-DICT is the reference or \"golden\" lexis
+  to compare to, so that any differences found in OTHER-DICT are blamed
+  on OTHER-DICT.
+
+  CLASSES is a list of lists of link types in the GOLD-DICT for which
+  statistics should be kept. The idea is that some link types in the
+  golden dict are more important to get right than others, and so stats
+  should be kept just for those.  CLASSES may be an empty list, in which
+  case only overall stats are kept.
 
   This returns a comparison function.  To use it, pass one or more
   sentence strings to it; it will compare the resulting parses.
@@ -35,7 +42,8 @@
 
   Example usage:
      (define compare (make-lg-comparator
-        (LgDictNode \"en\") (LgDictNode \"micro-fuzz\")))
+        (LgDictNode \"en\") (LgDictNode \"micro-fuzz\")
+        (list (list \"S\" \"O\" \"MV\") (list \"X\")) ))
      (compare \"I saw her face\")
      (compare \"I swooned to the floor\")
      (compare #f)
@@ -44,7 +52,7 @@
   not in the test dictionary.  Over-ride this by supplying the optional
   argument INCLUDE-MISSING.
 "
-	(let ((verbose VERBOSE)
+	(let* ((verbose VERBOSE)
 
 		; -------------------
 		; Stats we are keeping
@@ -62,25 +70,16 @@
 			(link-excess 0)
 			(link-deficit 0)
 
-			(present-primary 0)
-			(present-secondary 0)
-			(present-punct 0)
-			(present-other 0)
-			(missing-primary 0)
-			(missing-secondary 0)
-			(missing-punct 0)
-			(missing-other 0)
+			; Counts of missing/present link types.
+			; The last entry is fo "none of the above".
+			(nclasses (length classes))
+			(present (make-vector (+ 1 nclasses) 0))
+			(missing (make-vector (+ 1 nclasses) 0))
 
 			(missing-link-types '())
 			(missing-words (make-atom-set))
 			(vocab-words (make-atom-set))
 		)
-
-		; ----------------------------------------
-		; LG English link-type classes
-		(define primary-links (list "S" "O" "MV" "SI" "CV"))
-		(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
-		(define punct-links (list "X"))
 
 		; ----------------------------------------
 		; Misc utilities
@@ -149,6 +148,24 @@
 				(cog-name (get-link-name lwin rwin))
 				(char-set-adjoin char-set:lower-case #\*)))
 
+		; For each link-class, see if the link type is in that class.
+		; If it is, then increment the count on that class. If it is
+		; not in any class, then increment the n+1'th count.
+		(define (incr-class-counts COUNT-VEC LINK-NAME)
+			(define touched #f)
+			(for-each
+				(lambda (k)
+					(if (any (lambda (ltyp) (equal? ltyp LINK-NAME)) (list-ref classes k))
+						(begin
+							(vector-set! COUNT-VEC k (+ 1 (vector-ref COUNT-VEC k)))
+							(set! touched #t))))
+				(iota nclasses))
+
+			; If the link-type was not in any class, thenm increment "other"
+			(if (not touched)
+				(vector-set! COUNT-VEC nclasses (+ 1 (vector-ref COUNT-VEC nclasses))))
+		)
+
 		; ------
 		; Increment count for a missing link type putting the count
 		; in an association list, so that we can print all muffed
@@ -166,15 +183,14 @@
 					(cog-name (get-word-of-winst lwin))
 					link-name
 					(cog-name (get-word-of-winst rwin))))
-			(cond
-				((any (lambda (lt) (equal? lt link-name)) primary-links)
-					(set! missing-primary (+ 1 missing-primary)))
-				((any (lambda (lt) (equal? lt link-name)) secondary-links)
-					(set! missing-secondary (+ 1 missing-secondary)))
-				((any (lambda (lt) (equal? lt link-name)) punct-links)
-					(set! missing-punct (+ 1 missing-punct)))
-				(else (set! missing-other (+ 1 missing-other))))
-			(incr-missing-link-type-count link-name))
+
+			; Increment the count on specific link classes in the
+			; golden dictionary.
+			(incr-class-counts missing link-name)
+
+			; Increment the count on individual link types.
+			(incr-missing-link-type-count link-name)
+		)
 
 		(define (incr-present-link-count lwin rwin)
 			(define link-name (get-link-str-name lwin rwin))
@@ -183,15 +199,12 @@
 					(cog-name (get-word-of-winst lwin))
 					link-name
 					(cog-name (get-word-of-winst rwin))))
-			(cond
-				((any (lambda (lt) (equal? lt link-name)) primary-links)
-					(set! present-primary (+ 1 present-primary)))
-				((any (lambda (lt) (equal? lt link-name)) secondary-links)
-					(set! present-secondary (+ 1 present-secondary)))
-				((any (lambda (lt) (equal? lt link-name)) punct-links)
-					(set! present-punct (+ 1 present-punct)))
-				(else (set! present-other (+ 1 present-other))))
+
+			; Increment the count on specific link classes in the
+			; golden dictionary.
+			(incr-class-counts missing link-name)
 		)
+
 		; ----------------------------------------
 		; Comparison functions
 
@@ -220,8 +233,8 @@
 
 		; ---
 		; The length of the sentences should match.
-		(define (compare-lengths en-sorted other-sorted)
-			(define ewlilen (length en-sorted))
+		(define (compare-lengths gold-sorted other-sorted)
+			(define ewlilen (length gold-sorted))
 			(define owlilen (length other-sorted))
 
 			; Both should usually have the same length. Note, however,
@@ -330,14 +343,14 @@
 		; The main comparison function
 		(define (do-compare SENT)
 			; Get a parse, one for each dictionary.
-			(define en-sent (cog-execute!
-				(LgParseMinimal (PhraseNode SENT) en-dict (NumberNode 1))))
+			(define gold-sent (cog-execute!
+				(LgParseMinimal (PhraseNode SENT) gold-dict (NumberNode 1))))
 			(define other-sent (cog-execute!
 				(LgParseMinimal (PhraseNode SENT) other-dict (NumberNode 1))))
 
 			; Since only one parse, we expect only one...
-			(define en-parse (gar (car
-				(cog-incoming-by-type en-sent 'ParseLink))))
+			(define gold-parse (gar (car
+				(cog-incoming-by-type gold-sent 'ParseLink))))
 			(define other-parse (gar (car
 				(cog-incoming-by-type other-sent 'ParseLink))))
 
@@ -352,17 +365,17 @@
 			; XXX Temp hack. Currently, the test dicts are missing LEFT-WALL
 			; and RIGHT-WALL and so we filter these out manually. This
 			; should be made more elegant.
-			(define en-word-inst-list
+			(define gold-word-inst-list
 				(filter
 					(lambda (winst)
 						(define wrd (get-word-of-winst winst))
 						(and
 							(not (equal? wrd left-wall))
 							(not (equal? wrd right-wall))))
-					(map gar (cog-incoming-by-type en-parse 'WordInstanceLink))))
+					(map gar (cog-incoming-by-type gold-parse 'WordInstanceLink))))
 
 			; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
-			(define en-sorted (sort-word-inst-list en-word-inst-list))
+			(define gold-sorted (sort-word-inst-list gold-word-inst-list))
 			(define other-sorted (sort-word-inst-list other-word-inst-list))
 
 			(define dict-has-missing-words (has-missing-words other-sorted))
@@ -378,7 +391,7 @@
 			; Such miscompares pointlessly garbage up the stats.
 			(if (and
 					(or (not dict-has-missing-words) INCLUDE-MISSING)
-					(compare-lengths en-sorted other-sorted))
+					(compare-lengths gold-sorted other-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
 					(set! temp-cnt link-count-miscompares)
@@ -389,7 +402,7 @@
 							(compare-words ewrd owrd)
 							(compare-links ewrd owrd)
 						)
-						en-sorted other-sorted)
+						gold-sorted other-sorted)
 
 					(if (not (equal? temp-cnt link-count-miscompares))
 						(set! bad-sentences (+ 1 bad-sentences)))
@@ -442,30 +455,23 @@
 			(define link-f1 (/ (* 2.0 link-recall link-precision)
 				(+ link-recall link-precision)))
 
-			; Compute the recall of important link types.
-			(define primary-total
-				(+ missing-primary present-primary))
-			(define secondary-total
-				(+ missing-secondary present-secondary))
-			(define punct-total
-				(+ missing-punct present-punct))
-			(define other-total
-				(+ missing-other present-other))
-
-			(define primary-recall
-				(/ present-primary primary-total))
-			(define secondary-recall
-				(/ present-secondary secondary-total))
-			(define punct-recall
-				(if (equal? 0 punct-total) (inf)
-					(/ present-punct punct-total)))
-			(define other-recall
-				(/ present-other other-total))
-
 			; Put missing link counts into sorted order.
 			(define sorted-missing-links
 				(sort missing-link-types
 					(lambda (ia ib) (> (cdr ia) (cdr ib)))))
+
+			; Compute the recall of important link types.
+			(define class-recall (make-vector (+ 1 nclasses) 0))
+			(define class-total (make-vector (+ 1 nclasses) 0))
+			(for-each
+				(lambda (k)
+					(define tot (+ (vector-ref missing k) (vector-ref present k)))
+					(define rcl
+						(if (equal? 0 tot) (inf)
+							(/ (vector-ref present k) tot)))
+					(vector-set! class-total k tot)
+					(vector-set! class-recall k rcl))
+				(iota (+ 1 nclasses)))
 
 			(newline)
 			(newline)
@@ -493,14 +499,16 @@
 				link-precision link-recall link-f1)
 			(newline)
 
-			(format #t "Primary     link-type recall=~6F tot=~A ~A\n"
-				primary-recall primary-total primary-links)
-			(format #t "Secondary   link-type recall=~6F tot=~A ~A\n"
-				secondary-recall secondary-total secondary-links)
-			(format #t "Punctuation link-type recall=~6F tot=~A ~A\n"
-				punct-recall punct-total punct-links)
-			(format #t "Other       link-type recall=~6F tot=~A (all other types)\n"
-				other-recall other-total)
+			(for-each
+				(lambda (k)
+					(format #t "Link-class recall=~6F tot=~A ~A\n"
+						(vector-ref class-recall k)
+						(vector-ref class-total k)
+						(list-ref classes k)))
+				(iota nclasses))
+			(format #t "Other link-classes recall=~6F tot=~A\n"
+				(vector-ref class-recall nclasses)
+				(vector-ref class-total nclasses))
 
 			(newline)
 			(format #t "Counts of missing link-types: ~A\n\n"
@@ -516,4 +524,42 @@
 				(report-stats)
 				(do-compare-gc SENT)))
 	)
+)
+
+(define*-public (make-lg-en-comparator DICT #:key
+     (INCLUDE-MISSING #f)
+     (VERBOSE #f)
+)
+"
+  make-lg-en-comparator DICT - Return an English sentence comparison function.
+
+  DICT should be an LgDictNode containing a dictionary that will be
+  compared to the Link Grammar English dictionary.
+
+  This returns a comparison function.  To use it, pass one or more
+  sentence strings to it; it will compare the resulting parses.
+  When finished, pass it `#f`, and it will print a summary report.
+
+  Example usage:
+     (define compare (make-lg-comparator (LgDictNode \"micro-fuzz\")))
+     (compare \"I saw her face\")
+     (compare \"I swooned to the floor\")
+     (compare #f)
+
+  By default, this does not test sentences that have words that are
+  not in the test dictionary.  Over-ride this by supplying the optional
+  argument INCLUDE-MISSING.
+"
+
+	; ----------------------------------------
+	; LG English link-type classes
+	(define primary-links (list "S" "O" "MV" "SI" "CV"))
+	(define secondary-links (list "A" "AN" "B" "C" "D" "E" "EA" "G" "J" "M" "MX" "R"))
+	(define punct-links (list "X"))
+
+	(define classes (list primary-links secondary-links punct-links))
+
+	(make-lg-comparator (LgDictNode "en") DICT classes
+     #:INCLUDE-MISSING INCLUDE-MISSING
+     #:VERBOSE VERBOSE)
 )
