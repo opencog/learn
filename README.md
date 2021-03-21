@@ -68,6 +68,19 @@ or rather, "sparse matrix factorization.")
 
 This is an ongoing project, with continuing if sometimes sporadic activity.
 
+The Big Idea - Redux
+--------------------
+Some other ways of thinking of the goals of this project.
+* The aim is to produce an *automonous agent*.  This agent observes
+  its environoment (a time-series of sensory inputs, such as sight,
+  sound, and, to keep it simple, plain text). From these observations,
+  it builds a *world model*, that encapsulates what it has learned.
+  Finally, based on it's world model, it generates actions. Something
+  gets done, some action is performed (for example, a physical movement
+  of a robot, a change of facial expression in a robot, or, to keep
+  things simple, generation of some text.)
+
+
 Unsupervised Language Learning
 ==============================
 (See also: [Language learning wiki](http://wiki.opencog.org/w/Language_learning)
