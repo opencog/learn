@@ -378,12 +378,16 @@
 			(define gold-sorted (sort-word-inst-list gold-word-inst-list))
 			(define other-sorted (sort-word-inst-list other-word-inst-list))
 
-			(define dict-has-missing-words (has-missing-words other-sorted))
+			(define gold-has-missing-words (has-missing-words gold-sorted))
+			(define test-has-missing-words (has-missing-words other-sorted))
 
 			(set! total-sentences (+ total-sentences 1))
 
-			(if dict-has-missing-words
-				(format #t "Dictionary is missing words in: \"~A\"\n" SENT))
+			(if gold-has-missing-words
+				(format #t "Gold dictionary is missing words in: \"~A\"\n" SENT))
+
+			(if test-has-missing-words
+				(format #t "Test dictionary is missing words in: \"~A\"\n" SENT))
 
 			; Don't do anything more, if the dict is missing words in the
 			; sentence. ... unless the INCLUDE-MISSING flag is set.
