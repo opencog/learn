@@ -59,8 +59,8 @@
 ;; containing words that the dictionary does not know about (i.e. to
 ;; disable unknown-word guessing.)
 (define compare
-	(make-lg-comparator (LgDictNode gold-dict) (LgDictNode test-dict)
-		#:INCLUDE-MISSING #t))
+	(make-lg-comparator (LgDictNode gold-dict) (LgDictNode test-dict) '()
+		#:INCLUDE-MISSING #f))
 
 (define (process-file PORT)
 	(define line (read-line PORT))
