@@ -397,7 +397,8 @@
 			; Don't do anything if there as a sentence-length miscompare.
 			; Such miscompares pointlessly garbage up the stats.
 			(if (and
-					(or (not dict-has-missing-words) INCLUDE-MISSING)
+					(or (not test-has-missing-words) INCLUDE-MISSING
+						(not gold-has-missing-words))
 					(compare-lengths gold-sorted test-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
