@@ -37,6 +37,10 @@
 
 ; Perform the actual export. The dictionary name and locale
 ; are taken from environment variables.
+; XXX put INCLUDE-UNKNOWN into the environment.
 (display "Exporting Dictionary\n")
 (use-modules (opencog nlp lg-export))
-(export-csets gcf (getenv "LG_DICT_EXPORT") (getenv "LG_DICT_LOCALE"))
+(export-csets gcf
+	(getenv "LG_DICT_EXPORT")
+	(getenv "LG_DICT_LOCALE")
+	#:INCLUDE-UNKNOWN #f)
