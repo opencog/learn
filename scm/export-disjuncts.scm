@@ -40,6 +40,7 @@
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs)) ; for define*-public
 
 (catch #t
 	(lambda () (use-modules (dbi dbi))) ; guile-dbi interface to SQLite3
@@ -253,10 +254,10 @@
 			(set! WORD-STR (escquote WORD-STR 0))
 			(set! CLASS-STR (escquote CLASS-STR 0))
 
-			; Link-grammar SUBSCRIPT_MARK is hex 0x3
+			; Link-grammar SUBSCRIPT_MARK is hex 0x3 aka ASCII #\etx
 			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('~A', '~A#\3~D', '~A');"
-				WORD-STR WORD-STR wrd-id CLASS-STR))
+				"INSERT INTO Morphemes VALUES ('~A', '~A~C~D', '~A');"
+				WORD-STR WORD-STR #\etx wrd-id CLASS-STR))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder
@@ -468,7 +469,7 @@
 
 ;  ---------------------------------------------------------------------
 
-(define-public (export-csets CSETS DB-NAME LOCALE #:key
+(define*-public (export-csets CSETS DB-NAME LOCALE #:key
 	(INCLUDE-UNKNOWN #f))
 "
   export-csets CSETS DB-NAME LOCALE
