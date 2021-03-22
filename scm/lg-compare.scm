@@ -17,7 +17,7 @@
 (use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
 
 
-(define*-public (make-lg-comparator gold-dict other-dict classes #:key
+(define*-public (make-lg-comparator gold-dict test-dict classes #:key
      (INCLUDE-MISSING #f)
      (VERBOSE #f)
 )
@@ -225,7 +225,7 @@
 
 		; Return #t if the sentence contains missing words.
 		(define (has-missing-words winli)
-			(if (< 0 (num-missing-words winli other-dict))
+			(if (< 0 (num-missing-words winli test-dict))
 				(begin
 					(set! incomplete-dict (+ 1 incomplete-dict))
 					#t)
@@ -233,9 +233,9 @@
 
 		; ---
 		; The length of the sentences should match.
-		(define (compare-lengths gold-sorted other-sorted)
+		(define (compare-lengths gold-sorted test-sorted)
 			(define ewlilen (length gold-sorted))
-			(define owlilen (length other-sorted))
+			(define owlilen (length test-sorted))
 
 			; Both should usually have the same length. Note, however,
 			; that LG English will split "I'm" -> "I 'm" i.e. one word
@@ -345,18 +345,18 @@
 			; Get a parse, one for each dictionary.
 			(define gold-sent (cog-execute!
 				(LgParseMinimal (PhraseNode SENT) gold-dict (NumberNode 1))))
-			(define other-sent (cog-execute!
-				(LgParseMinimal (PhraseNode SENT) other-dict (NumberNode 1))))
+			(define test-sent (cog-execute!
+				(LgParseMinimal (PhraseNode SENT) test-dict (NumberNode 1))))
 
 			; Since only one parse, we expect only one...
 			(define gold-parse (gar (car
 				(cog-incoming-by-type gold-sent 'ParseLink))))
-			(define other-parse (gar (car
-				(cog-incoming-by-type other-sent 'ParseLink))))
+			(define test-parse (gar (car
+				(cog-incoming-by-type test-sent 'ParseLink))))
 
 			; Get a list of the words in each parse.
-			(define other-word-inst-list
-				(map gar (cog-incoming-by-type other-parse 'WordInstanceLink)))
+			(define test-word-inst-list
+				(map gar (cog-incoming-by-type test-parse 'WordInstanceLink)))
 
 			(define left-wall (WordNode "###LEFT-WALL###"))
 			(define right-wall (WordNode "###RIGHT-WALL###"))
@@ -376,10 +376,10 @@
 
 			; Sort into sequential order. Pain-in-the-neck. Hardly worth it.
 			(define gold-sorted (sort-word-inst-list gold-word-inst-list))
-			(define other-sorted (sort-word-inst-list other-word-inst-list))
+			(define test-sorted (sort-word-inst-list test-word-inst-list))
 
 			(define gold-has-missing-words (has-missing-words gold-sorted))
-			(define test-has-missing-words (has-missing-words other-sorted))
+			(define test-has-missing-words (has-missing-words test-sorted))
 
 			(set! total-sentences (+ total-sentences 1))
 
@@ -395,7 +395,7 @@
 			; Such miscompares pointlessly garbage up the stats.
 			(if (and
 					(or (not dict-has-missing-words) INCLUDE-MISSING)
-					(compare-lengths gold-sorted other-sorted))
+					(compare-lengths gold-sorted test-sorted))
 				(begin
 					(set! total-compares (+ total-compares 1))
 					(set! temp-cnt link-count-miscompares)
@@ -406,7 +406,7 @@
 							(compare-words ewrd owrd)
 							(compare-links ewrd owrd)
 						)
-						gold-sorted other-sorted)
+						gold-sorted test-sorted)
 
 					(if (not (equal? temp-cnt link-count-miscompares))
 						(set! bad-sentences (+ 1 bad-sentences)))
