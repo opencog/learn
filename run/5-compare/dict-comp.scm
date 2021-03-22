@@ -2,17 +2,20 @@
 !#
 ;
 ; dict-comp.scm
-; Compare parses produced by a given LG dictionary to those of
-; the English dictionary.
+; Compare parses produced by two different LG dictionaries over
+; a sample corpus.
 ;
 ; Usage:
-; guile -s dict-comp.scm <dict-name> <sentence-file-name>
+; guile -s dict-comp.scm <gold-dict> <test-dict> <sentence-file>
 ;
-; <dict-name> should be a valid Link-Grammar dictionary
-; <sentence-file-name> should be a file containing sentences
+; <gold-dict> should be the reference dictionary; it must be a
+;        valid Link-Grammar dictionary
+; <test-dict> is the dictionary that will be compared to the reference.
+; <sentence-file> should be a file containing sentences whose parses
+;        will be compared.
 ;
 ; Example:
-; guile -s dict-comp.scm micro-fuzz sentences.txt
+; guile -s dict-comp.scm en micro-fuzz sentences.txt
 ;
 
 (use-modules (srfi srfi-1))
@@ -20,20 +23,26 @@
 (use-modules (opencog) (opencog nlp) (opencog nlp learn))
 
 ; Check usage
-(if (not (equal? 3 (length (program-arguments))))
+(if (not (equal? 4 (length (program-arguments))))
 	(begin
 		(format #t
-			"Usage: ~A <dict-name> <sentence-file-name>\n"
+			"Usage: ~A <gold-dict> <test-dict> <sentence-file>\n"
 			(first (program-arguments)))
 		(exit #f)))
 
-(define test-dict (second (program-arguments)))
-(define sent-file (third (program-arguments)))
+(define gold-dict (second (program-arguments)))
+(define test-dict (third (program-arguments)))
+(define sent-file (fourth (program-arguments)))
 
 ; Check file access
+(if (not (equal? (stat:type (stat gold-dict)) 'directory))
+	(begin
+		(format #t "Cannot find reference dictionary ~A\n" gold-dict)
+		(exit #f)))
+
 (if (not (equal? (stat:type (stat test-dict)) 'directory))
 	(begin
-		(format #t "Cannot find dictionary ~A\n" test-dict)
+		(format #t "Cannot find test dictionary ~A\n" test-dict)
 		(exit #f)))
 
 (if (not (access? sent-file R_OK))
@@ -42,15 +51,15 @@
 		(exit #f)))
 
 ; Perform comparison
-(format #t "Verifying dictionary \"~A\" with sentences from \"~A\"\n"
-	test-dict sent-file)
+(format #t "Comparing \"~A\" to \"~A\" with sentences from \"~A\"\n"
+	gold-dict test-dict sent-file)
 
 
 ;; Set #:INCLUDE-MISSING to #f to disable the processing of sentences
 ;; containing words that the dictionary does not know about (i.e. to
 ;; disable unknown-word guessing.)
 (define compare
-	(make-lg-comparator (LgDictNode "en") (LgDictNode test-dict)
+	(make-lg-comparator (LgDictNode gold-dict) (LgDictNode test-dict)
 		#:INCLUDE-MISSING #t))
 
 (define (process-file PORT)
@@ -72,5 +81,5 @@
 
 (process-file (open sent-file O_RDONLY))
 
-(format #t "Finished verifying dictionary \"~A\" with sentences from \"~A\"\n"
-	test-dict sent-file)
+(format #t "Finiished comparing \"~A\" to \"~A\" with sentences from \"~A\"\n"
+	gold-dict test-dict sent-file)
