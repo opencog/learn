@@ -3193,6 +3193,19 @@ OK, so the numbers are dramatically larger.
  Yikes!
 \end_layout
 
+\begin_layout Standard
+Well, the above is massively undercounting – it is only sampling one random
+ word-draw per class.
+ Since multiple words are in each class...
+\end_layout
+
+\begin_layout Standard
+...
+ anyway, this is nuts, because the connectors need to be classified, instead
+ of issueing new connector types.
+ So more work before something meaningful is possible.
+\end_layout
+
 \begin_layout Subsection*
 expt-13 vs expt-15 precision, recall
 \end_layout
@@ -3202,6 +3215,14 @@ So now that we've got things working, lets look at precision and recall.
  Clearly precision will be terrible, but maybe recall will be excellent?
  Compare expt-13-gram-4 to expt-15-gram-2 (which rebuilds after fixing the
  borked save.
+\end_layout
+
+\begin_layout Standard
+Uhh ..
+ No its not working yet, in the sense that the connector classes are being
+ mis-handled.
+ Those need to be grouped correctly before export.
+ More work...
 \end_layout
 
 \end_body
