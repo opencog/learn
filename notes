@@ -1544,13 +1544,15 @@ FIXED:
 * Pair counting insanely slow and leaks RAM.
 * learn.scm use include not load or export... DONE
 
-TODO:
+TODO/BUGS:
 
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
 * Alter dict generator to automatically place period at end of sentence.
-* Alter LG to allow multiple word defintions.
+  Also, to automatically produce left-wall and right wall; these
+  need to be present for dict-compare to work without hackery.
+* Alter LG to allow multiple word definitions w/o subscripts.
 * Bugs: quotes are not being escaped by submit-one.pl!!
 * Enhance: revise atomspace start-cogserver to take args directly
 * Bug: RockDB needs to be compacted on close. closing and reopening

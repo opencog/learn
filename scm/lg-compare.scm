@@ -362,9 +362,12 @@
 			(define right-wall (WordNode "###RIGHT-WALL###"))
 
 			; Get the list of words in the standard dict.
-			; XXX Temp hack. Currently, the test dicts are missing LEFT-WALL
-			; and RIGHT-WALL and so we filter these out manually. This
-			; should be made more elegant.
+			; XXX Temp hack. Currently, the test dicts are missing
+			; RIGHT-WALL and so we filter it out manually. This
+			; should be made more elegant. Argh. And the gold dict
+			; is missing them too ...
+			; hang on, this is broken, anyway, because the test dicts are
+			; exported to LG without hash-marks. ...
 			(define gold-word-inst-list
 				(filter
 					(lambda (winst)

@@ -247,17 +247,19 @@
 		; it belongs to into the dict.
 		(define (add-one-word WORD-STR CLASS-STR)
 
-			; Oh no!!! Need to fix LEFT-WALL!
-			(if (string=? WORD-STR "###LEFT-WALL###")
-				(set! WORD-STR "LEFT-WALL"))
-
 			(set! WORD-STR (escquote WORD-STR 0))
 			(set! CLASS-STR (escquote CLASS-STR 0))
 
-			; Link-grammar SUBSCRIPT_MARK is hex 0x3 aka ASCII #\etx
-			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('~A', '~A~C~D', '~A');"
-				WORD-STR WORD-STR #\etx wrd-id CLASS-STR))
+			; Oh no!!! Need to fix LEFT-WALL!
+			(if (string=? WORD-STR "###LEFT-WALL###")
+				(dbi-query db-obj (format #f
+					"INSERT INTO Morphemes VALUES ('LEFT-WALL', 'LEFT-WALL', '~A');"
+					CLASS-STR))
+
+				; Link-grammar SUBSCRIPT_MARK is hex 0x3 aka ASCII #\etx
+				(dbi-query db-obj (format #f
+					"INSERT INTO Morphemes VALUES ('~A', '~A~C~D', '~A');"
+					WORD-STR WORD-STR #\etx wrd-id CLASS-STR)))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
 				(throw 'fail-insert 'make-db-adder
