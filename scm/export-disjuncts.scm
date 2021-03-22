@@ -253,8 +253,9 @@
 			(set! WORD-STR (escquote WORD-STR 0))
 			(set! CLASS-STR (escquote CLASS-STR 0))
 
+			; Link-grammar SUBSCRIPT_MARK is hex 0x3
 			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('~A', '~A.~D', '~A');"
+				"INSERT INTO Morphemes VALUES ('~A', '~A#\3~D', '~A');"
 				WORD-STR WORD-STR wrd-id CLASS-STR))
 
 			(if (not (equal? 0 (car (dbi-get_status db-obj))))
