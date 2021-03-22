@@ -224,8 +224,8 @@
 				0 winli))
 
 		; Return #t if the sentence contains missing words.
-		(define (has-missing-words winli)
-			(if (< 0 (num-missing-words winli test-dict))
+		(define (has-missing-words winli dict)
+			(if (< 0 (num-missing-words winli dict))
 				(begin
 					(set! incomplete-dict (+ 1 incomplete-dict))
 					#t)
@@ -378,8 +378,8 @@
 			(define gold-sorted (sort-word-inst-list gold-word-inst-list))
 			(define test-sorted (sort-word-inst-list test-word-inst-list))
 
-			(define gold-has-missing-words (has-missing-words gold-sorted))
-			(define test-has-missing-words (has-missing-words test-sorted))
+			(define gold-has-missing-words (has-missing-words gold-sorted gold-dict))
+			(define test-has-missing-words (has-missing-words test-sorted test-dict))
 
 			(set! total-sentences (+ total-sentences 1))
 
