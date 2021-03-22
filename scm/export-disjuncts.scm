@@ -467,7 +467,8 @@
 
 ;  ---------------------------------------------------------------------
 
-(define-public (export-csets CSETS DB-NAME LOCALE)
+(define-public (export-csets CSETS DB-NAME LOCALE #:key
+	(INCLUDE-UNKNOWN #f))
 "
   export-csets CSETS DB-NAME LOCALE
 
@@ -475,6 +476,11 @@
   CSETS is a matrix containing the connector sets to be written.
   DB-NAME is the databse name to write to.
   LOCALE is the locale to use; e.g EN_us or ZH_cn
+
+  Optional keyword: #:INCLUDE-UNKNOWN If set to #t, then each word class
+  will also be exported as an UNKNOWN-WORD, allowing the LG parser to use
+  this word class when encountering a word that it does not know (i.e.
+  is not a part of the vocabulary.)
 
   Note that link-grammar expects the database file to be called
   \"dict.db\", always!
@@ -489,7 +495,7 @@
   Example usage:
      (define pca (make-pseudo-cset-api))
      (define fca (add-subtotal-filter pca 50 50 10 #f))
-     (export-csets fca \"dict.db\" \"EN_us\")
+     (export-csets fca \"dict.db\" \"EN_us\" #:INCLUDE-UNKNOWN #t)
 
   In this example, `pca` is the usual API to word-disjunct pairs.
   The subtotal filter only admits those sections with a large-enough
@@ -526,11 +532,14 @@
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
 
-	(format #t "Will store ~D unknown word classes\n"
-		(length multi-member-classes))
-	(for-each
-		(lambda (cls) (dbase 'add-unknown cls))
-		multi-member-classes)
+	(if INCLUDE-UNKNOWN
+		(begin
+			(format #t "Will store ~D unknown word classes\n"
+				(length multi-member-classes))
+			(for-each
+				(lambda (cls) (dbase 'add-unknown cls))
+				multi-member-classes))
+		(format #t "Skipping adding unknown-word classes\n"))
 
 	; Close the database
 	(dbase 'shutdown)
