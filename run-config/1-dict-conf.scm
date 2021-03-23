@@ -48,6 +48,7 @@
 ; Number of pos tags
 (define num-pos 10)
 
+; -----------------
 ; Number of grammatical classes
 (define num-classes 10)
 
@@ -64,19 +65,21 @@
 ; to have `class-size` elements.
 (define class-exp -0.1)
 
-; Number of synonyms in a word-class
-(define num-synonyms 6)
+; -----------------
+; Number of different types of LEFT-WALL connectors. Each wall
+; connector type corresponds to a root of a dependency parse, so that
+; if there is just one, it it would be the root-verb conector (if this
+; was English). If two, then there would be connectors to the root-noun
+; (the root-subject) as well as the root-verb. Every generated sentence
+; will always have one of each of these connectors to the LEFT-WALL.
+; Set to zero to disable.
+(define num-wall-types 1)
 
-; Exponent of the synonym word-class size distribution.
-; Setting this to 1.0 gives the classic Zipf distribution;
-; setting it to 0.0 gives the uniform distribution.
-; Using Zipf means that in most cases, there will be only one or
-; two synonyms; setting it to uniform means that large synonym classes
-; will be common. Setting the exponent negative will make most
-; synonym clases have the max allowed, i.e. to have `num-synonyms`
-; in each one.
-(define synonym-exp 0.5)
+; Number of classes that will be considered to be root-classes. All
+; disjuncts in this many classes will get a connector to the LEFT-WALL.
+(define num-to-wall 1)
 
+; -----------------
 ; Fraction of words that may have multiple word-senses.
 ; Must be floating point between zero and one.
 (define sense-frac 0.3)
@@ -91,6 +94,20 @@
 ; distribution, with exponent `sense-exp`.
 (define num-senses 3)
 (define sense-exp 0.5)
+
+; -----------------
+; Number of synonyms in a word-class
+(define num-synonyms 6)
+
+; Exponent of the synonym word-class size distribution.
+; Setting this to 1.0 gives the classic Zipf distribution;
+; setting it to 0.0 gives the uniform distribution.
+; Using Zipf means that in most cases, there will be only one or
+; two synonyms; setting it to uniform means that large synonym classes
+; will be common. Setting the exponent negative will make most
+; synonym clases have the max allowed, i.e. to have `num-synonyms`
+; in each one.
+(define synonym-exp 0.5)
 
 ; XXX FIXME: Create dictionaries that automatically place a period
 ; at the end of each sentence (or not!?) to avoid discovery of
