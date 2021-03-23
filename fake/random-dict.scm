@@ -245,12 +245,20 @@
 	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
 	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
 
-	(define fclasses (list-tabulate NCLASS fcl))
+	; Define the wall
+	(define wall
+		(list (list (list "LEFT-WALL") (list "WV+"))))
 
 	; Populate the word-classes.
-	(lambda ()
+	(define asocs
 			(list-tabulate NCLASS
-				(lambda (N) (list (list (wcl N)) (list (fcl N))))))
+				(lambda (N) (list (list (wcl N)) (list
+					(if (< N NWALLS)
+						(string-append "(" (fcl N) " & WV-)")
+						(fcl N)))))))
+	(lambda ()
+		(append wall asocs)
+	)
 )
 
 (define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)
