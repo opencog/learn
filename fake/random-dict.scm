@@ -263,10 +263,10 @@
 	(define dj-punct
 		(if have-punct (string-append wall-dj " & PUNCT+") wall-dj))
 
-	; Define the wall, optionally with the ending punctuation
+	; Define the wall, optionally with the ending punctuation.
 	(define wall
 		(list
-			(if (0 < NROOTS) (list (list "LEFT-WALL") (list dj-punct)) '())
+			(if (< 0 NROOTS) (list (list "LEFT-WALL") (list dj-punct)) '())
 			(if have-punct (list (list ENDERS) (list "PUNCT-")) '())))
 
 	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
