@@ -10,7 +10,7 @@
 ;
 ; Example Usage:
 ; --------------
-; See `run/0-gen-dict/gen-dict.scm` for example usage.
+; See `run-common/gen-dict.scm` for an example usage.
 ; See documentation below for description of parameters.
 ;
 ; Issues:
@@ -68,7 +68,7 @@
 )
 
 ; --------------------------------------------------------
-; create connectors
+; Create connectors
 
 (define (make-connector N DIR)
 "
@@ -143,7 +143,7 @@
 	)
 )
 
-; create sections
+; Create sections
 (define-public (make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP)
 "
   make-section-generator NLKTYPES DSIZE NDISJ LINK-EXP D-EXP S-EXP
@@ -228,7 +228,7 @@
 )
 
 ; --------------------------------------------------------
-; create word-classes -- assign words to classes with zipf distribution.
+; Create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
 
 ; Used for counting the number of words issued.
