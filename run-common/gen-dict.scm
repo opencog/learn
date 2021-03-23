@@ -15,7 +15,7 @@
 (define dict-dir (caddr (program-arguments)))
 
 ; Program paramters. Define these so that guile compilation
-; does not spew errors.
+; does not spew errors. (Maybe these should be #<unspecified>?)
 (define num-link-types #f)
 (define link-type-exp #f)
 (define max-disjunct-size #f)
@@ -66,12 +66,6 @@
 		class-size
 		class-exp))
 
-(define wordgen
-	(make-word-generator
-		num-classes
-		num-synonyms
-		synonym-exp))
-
 (define wallgen
 	(make-wall-generator num-classes 1 1))
 
@@ -81,6 +75,12 @@
 		num-classes
 		num-senses
 		sense-exp))
+
+(define wordgen
+	(make-word-generator
+		num-classes
+		num-synonyms
+		synonym-exp))
 
 ; Make a copy of the link-grammar boilerplate
 ; This copies the boilerplate files from the source dir
@@ -159,9 +159,9 @@
 (format port "#define dictionary-locale C;\n")
 (print-LG-flat port (posgen))
 (print-LG-flat port (classgen))
-(print-LG-flat port (wordgen))
 (print-LG-flat port (wallgen))
 (print-LG-flat port (sensegen))
+(print-LG-flat port (wordgen))
 
 (format port "\n<UNKNOWN-WORD>:  XXXXXX+;\n")
 (close port)

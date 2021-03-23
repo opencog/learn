@@ -228,6 +228,63 @@
 )
 
 ; --------------------------------------------------------
+;
+(define-public (make-wall-generator NCLASS NWALLS NROOTS)
+"
+  make-wall-generator NCLASS NWALLS NROOTS - create root-word classes
+
+  Out of NCLASS different word-classes, connect NWALLS of them to
+  the left-wall. Use NROOTS different kinds of wall connector types.
+
+  This emulates the idea of a 'root word' in a dependency grammar.
+  For example, in English, this would be the 'main verb' of a sentence,
+  which is indicated with a link to LEFT-WALL.
+
+  Return an association list of word-classes possibly with walls on them.
+"
+	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+
+	(define fclasses (list-tabulate NCLASS fcl))
+
+	; Populate the word-classes.
+	(lambda ()
+			(list-tabulate NCLASS
+				(lambda (N) (list (list (wcl N)) (list (fcl N))))))
+)
+
+(define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)
+"
+  make-sense-generator VFRAC NCLASS NSENSES EXP - create word senses
+
+  Place a fraction VFRAC of the total number of vocabulary words into
+  multiple classes picked randomly from NCLASS (with a uniform
+  distribution). Each word will belong to at most NSENSES different
+  classes.  The number of senses will be chosen randomly, with a
+  Zipfian distribution with exponent EXP.  That is, some words will
+  have many senses, and some will have very few.  The EXP is the
+  exponent of the Zipfian distribution; set EXP=1 for a pure Zipf,
+  and set EXP=0 for a uniform distribution.
+
+  A word with multiple word-senses is just a word that has has multiple
+  distinct grammatical behaviors; that it, it belongs to multiple
+  different word-classes.
+
+  Return an association list of words and the classes they below to.
+"
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+	(define zippy (make-zipf-generator NSENSES EXP))
+	(define (pick-cls)
+		(list-tabulate (zippy) (lambda (N) (wcl (random NCLASS)))))
+
+	; Populate the word-classes.
+	(lambda ()
+		(define NVOCAB (inexact->exact (floor (* VFRAC next-word))))
+		(list-tabulate NVOCAB
+			(lambda (N) (list (list (make-word (+ N 1))) (pick-cls)))))
+)
+
+; --------------------------------------------------------
 ; Create word-classes -- assign words to classes with zipf distribution.
 ; i.e.  word-class contains zipf words in it.
 
@@ -283,61 +340,6 @@
 		(reverse
 			(list-tabulate NCLASS
 				(lambda (N) (list (wlg) (list (wclr N)))))))
-)
-
-(define-public (make-wall-generator NCLASS NWALLS NROOTS)
-"
-  make-wall-generator NCLASS NWALLS NROOTS - create root-word classes
-
-  Out of NCLASS different word-classes, connect NWALLS of them to
-  the left-wall. Use NROOTS different kinds of wall connector types.
-
-  This emulates the idea of a 'root word' in a dependency grammar.
-  For example, in English, this would be the 'main verb' of a sentence,
-  which is indicated with a link to LEFT-WALL.
-
-  Return an association list of word-classes possibly with walls on them.
-"
-	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
-	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
-
-	(define fclasses (list-tabulate NCLASS fcl))
-
-	; Populate the word-classes.
-	(lambda ()
-			(list-tabulate NCLASS
-				(lambda (N) (list (list (wcl N)) (list (fcl N))))))
-)
-
-(define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)
-"
-  make-sense-generator VFRAC NCLASS NSENSES EXP - create word senses
-
-  Place a fraction VFRAC of the total number of vocabulary words into
-  multiple classes picked randomly from NCLASS (with a uniform
-  distribution). Each word will belong to at most NSENSES different
-  classes.  The number of senses will be chosen randomly, with a
-  Zipfian distribution with exponent EXP.  That is, some words will
-  have many senses, and some will have very few.  The EXP is the
-  exponent of the Zipfian distribution; set EXP=1 for a pure Zipf,
-  and set EXP=0 for a uniform distribution.
-
-  A word with multiple word-senses is just a word that has has multiple
-  distinct grammatical behaviors; that it, it belongs to multiple
-  different word-classes.
-
-  Return an association list of words and the classes they below to.
-"
-	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
-	(define zippy (make-zipf-generator NSENSES EXP))
-	(define (pick-cls)
-		(list-tabulate (zippy) (lambda (N) (wcl (random NCLASS)))))
-
-	; Populate the word-classes.
-	(lambda ()
-		(define NVOCAB (inexact->exact (floor (* VFRAC next-word))))
-		(list-tabulate NVOCAB
-			(lambda (N) (list (list (make-word (+ N 1))) (pick-cls)))))
 )
 
 ; --------------------------------------------------------
