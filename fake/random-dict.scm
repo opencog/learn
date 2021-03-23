@@ -229,9 +229,9 @@
 
 ; --------------------------------------------------------
 ;
-(define-public (make-wall-generator NCLASS NROOTS NWALLS)
+(define-public (make-wall-generator NCLASS NROOTS NWALLS ENDERS)
 "
-  make-wall-generator NCLASS NROOTS NWALLS - create root-word classes
+  make-wall-generator NCLASS NROOTS NWALLS ENDERS - create root-word classes
 
   Out of NCLASS different word-classes, connect NWALLS of them to
   the left-wall. Use NROOTS different kinds of wall connector types.
@@ -244,17 +244,30 @@
   was 2, then there would be connectors to the man verb and the main
   subject (main noun).
 
+  ENDERS is a string containing sentence-ending punctuation marks.
+  For example, the string '. ? !'. If this string is empty, no
+  punctuation will be generated.
+
   Return an association list of word-classes possibly with walls on them.
 "
 	(define (wall-plus N) (string-append "WALL" (base-26 (+ 1 N) #t) "+"))
 	(define (wall-minus N) (string-append "WALL" (base-26 (+ 1 N) #t) "-"))
 
 	; Define the wall connectors
-	(define wall-dj (string-join (list-tabulate NROOTS wall-plus) " & "))
+	(define wall-dj
+		(string-join (list-tabulate NROOTS wall-plus) " & "))
 
-	; Define the wall
+	(define have-punct
+		(and (not (nil? ENDERS)) (< 0 (string-length ENDERS))))
+
+	(define dj-punct
+		(if have-punct (string-append wall-dj " & PUNCT+") wall-dj))
+
+	; Define the wall, optionally with the ending punctuation
 	(define wall
-		(list (list (list "LEFT-WALL") (list wall-dj))))
+		(list
+			(if (0 < NROOTS) (list (list "LEFT-WALL") (list dj-punct)) '())
+			(if have-punct (list (list ENDERS) (list "PUNCT-")) '())))
 
 	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
 	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
@@ -266,8 +279,8 @@
 					(if (< N (* NWALLS NROOTS))
 						(string-append "(" (fcl N) " & " (wall-minus (modulo N NROOTS)) ")")
 						(fcl N)))))))
-	(lambda ()
-		(if (< 0 NROOTS) (append wall asocs) asocs))
+
+	(lambda () (append wall asocs))
 )
 
 (define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)

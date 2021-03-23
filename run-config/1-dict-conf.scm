@@ -79,6 +79,16 @@
 ; disjuncts in this many classes will get a connector to the LEFT-WALL.
 (define num-to-wall 1)
 
+; A list of punctuation symbols to use as sentence-endings. If empty,
+; sentence-ending punctuation is not written. Having sentence-enders
+; prevents (or at least suppresses) the learning algorithm from learning
+; recursive grammars that generate arbitrary-length sentences, such as
+; "the dog saw the cat saw the dog saw the mouse saw the squirrel ..."
+;
+; The list should be space-separated if more than one; for example:
+; (define sentence-enders ". ! ?")
+(define sentence-enders ".")
+
 ; -----------------
 ; Fraction of words that may have multiple word-senses.
 ; Must be floating point between zero and one.
@@ -108,10 +118,6 @@
 ; synonym clases have the max allowed, i.e. to have `num-synonyms`
 ; in each one.
 (define synonym-exp 0.5)
-
-; XXX FIXME: Create dictionaries that automatically place a period
-; at the end of each sentence (or not!?) to avoid discovery of
-; recursively-long sentences.
 
 ; End of configuration.
 ; ---------------------

@@ -29,6 +29,7 @@
 
 (define num-wall-types #f)
 (define num-to-wall #f)
+(define sentence-enders #f)
 
 (define sense-frac #f)
 (define sense-frac #f)
@@ -72,7 +73,11 @@
 		class-exp))
 
 (define wallgen
-	(make-wall-generator num-classes num-wall-types num-to-wall))
+	(make-wall-generator
+		num-classes
+		num-wall-types
+		num-to-wall
+		sentence-enders))
 
 (define sensegen
 	(make-sense-generator
@@ -157,6 +162,7 @@
 (format port "%\n")
 (format port "% Wall connector types: ~A\n" num-wall-types)
 (format port "% Wall connections: ~A\n" num-to-wall)
+(format port "% Sentence-ending punctuation: ~A\n" sentence-enders)
 (format port "%\n")
 (format port "% Word-sense fraction: ~A\n" sense-frac)
 (format port "% Number of word-senses: ~A\n" num-senses)
