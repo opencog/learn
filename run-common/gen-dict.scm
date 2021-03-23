@@ -67,7 +67,7 @@
 		class-exp))
 
 (define wallgen
-	(make-wall-generator num-classes 1 1))
+	(make-wall-generator num-classes 3 2))
 
 (define sensegen
 	(make-sense-generator

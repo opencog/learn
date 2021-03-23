@@ -236,25 +236,33 @@
   Out of NCLASS different word-classes, connect NWALLS of them to
   the left-wall. Use NROOTS different kinds of wall connector types.
 
+  NCLASS must be equal to or larger than NWALLS * NROOTS
+
   This emulates the idea of a 'root word' in a dependency grammar.
   For example, in English, this would be the 'main verb' of a sentence,
   which is indicated with a link to LEFT-WALL.
 
   Return an association list of word-classes possibly with walls on them.
 "
-	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
-	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (wall-plus N) (string-append "WALL" (base-26 (+ 1 N) #t) "+"))
+	(define (wall-minus N) (string-append "WALL" (base-26 (+ 1 N) #t) "-"))
+
+	; Define the wall connectors
+	(define wall-dj (string-join (list-tabulate NROOTS wall-plus) " & "))
 
 	; Define the wall
 	(define wall
-		(list (list (list "LEFT-WALL") (list "WV+"))))
+		(list (list (list "LEFT-WALL") (list wall-dj))))
+
+	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
 
 	; Populate the word-classes.
 	(define asocs
 			(list-tabulate NCLASS
 				(lambda (N) (list (list (wcl N)) (list
-					(if (< N NWALLS)
-						(string-append "(" (fcl N) " & WV-)")
+					(if (< N (* NWALLS NROOTS))
+						(string-append "(" (fcl N) " & " (wall-minus (modulo N NROOTS)) ")")
 						(fcl N)))))))
 	(lambda ()
 		(append wall asocs)
