@@ -87,12 +87,19 @@
 ; to the target dir.
 (define (copy-boilerplate)
 
+	(define x
+		(if (not (getenv "COMMON_DIR"))
+		(begin
+			(format #t "Error: Environment variable $COMMON_DIR is not defined.\n")
+			(format #t "This directory needed for its template files.\n")
+			(exit -1))))
+
 	; Location of the boilerplate files.
-	(define (source-dir) (string-append (getenv "COMMON_DIR") "/fake-lang"))
+	(define source-dir (string-append (getenv "COMMON_DIR") "/fake-lang"))
 
 	; Recursive copy
+	(define DIR_STREAM (opendir source-dir))
 	(define (copy-dir)
-		(define DIR_STREAM (opendir (source-dir)))
 		(define DIRENT (readdir DIR_STREAM))
 		(if (not (eof-object? DIRENT))
 			(let ((lgfi (string-append source-dir "/" DIRENT))
@@ -103,7 +110,7 @@
 			)))
 
 	; Does the source directory exist?
-	(if (not (or (getenv "COMMON_DIR") (access? (source-dir) R_OK)))
+	(if (not (or (getenv "COMMON_DIR") (access? source-dir R_OK)))
 		(begin
 			(format #t "Error: unable to access '~A'\n" (source-dir))
 			(format #t "This directory needed for its template files\n")
