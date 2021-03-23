@@ -229,18 +229,20 @@
 
 ; --------------------------------------------------------
 ;
-(define-public (make-wall-generator NCLASS NWALLS NROOTS)
+(define-public (make-wall-generator NCLASS NROOTS NWALLS)
 "
-  make-wall-generator NCLASS NWALLS NROOTS - create root-word classes
+  make-wall-generator NCLASS NROOTS NWALLS - create root-word classes
 
   Out of NCLASS different word-classes, connect NWALLS of them to
   the left-wall. Use NROOTS different kinds of wall connector types.
 
-  NCLASS must be equal to or larger than NWALLS * NROOTS
+  It is recommended that NCLASS be equal to or larger than NWALLS * NROOTS.
 
   This emulates the idea of a 'root word' in a dependency grammar.
-  For example, in English, this would be the 'main verb' of a sentence,
-  which is indicated with a link to LEFT-WALL.
+  For example, in English, if NROOTS=1, this would be the 'main verb'
+  of a sentence, which is indicated with a link to LEFT-WALL. If NROOTS
+  was 2, then there would be connectors to the man verb and the main
+  subject (main noun).
 
   Return an association list of word-classes possibly with walls on them.
 "
@@ -265,8 +267,7 @@
 						(string-append "(" (fcl N) " & " (wall-minus (modulo N NROOTS)) ")")
 						(fcl N)))))))
 	(lambda ()
-		(append wall asocs)
-	)
+		(if (< 0 NROOTS) (append wall asocs) asocs))
 )
 
 (define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)

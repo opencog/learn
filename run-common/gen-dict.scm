@@ -26,12 +26,17 @@
 (define num-classes #f)
 (define class-size #f)
 (define class-exp #f)
-(define num-synonyms #f)
-(define synonym-exp #f)
+
+(define num-wall-types #f)
+(define num-to-wall #f)
+
 (define sense-frac #f)
 (define sense-frac #f)
 (define num-senses #f)
 (define sense-exp #f)
+
+(define num-synonyms #f)
+(define synonym-exp #f)
 
 (define x
 	(begin
@@ -67,7 +72,7 @@
 		class-exp))
 
 (define wallgen
-	(make-wall-generator num-classes 3 2))
+	(make-wall-generator num-classes num-wall-types num-to-wall))
 
 (define sensegen
 	(make-sense-generator
