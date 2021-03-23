@@ -15,7 +15,10 @@
 )
 
 ; Convert float to exact integer.
-(define (exact FLOAT) (inexact->exact (floor FLOAT)))
+; This causes truly bizarro error in the guile compiler.
+; Calling floor a second time really messes it up!
+; (define (exact FLOAT) (inexact->exact (floor FLOAT)))
+(define (exact FLOAT) (inexact->exact FLOAT))
 
 ; Load the actual implementation.
 ; (load "zipf-zri.scm")
