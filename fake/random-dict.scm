@@ -216,7 +216,7 @@
   Return an association list of class-tags and the pos-tags in them.
 "
 	(define (pos N) (string-append "<pos-" (base-26 (+ 1 N) #f) ">"))
-	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
 
 	(define zippy (make-zipf-generator CSIZE EXP))
 	(define (pick-pos)
@@ -224,7 +224,7 @@
 
 	; Populate the word-classes.
 	(lambda ()
-		(list-tabulate NCLASS (lambda (N) (list (list (wcl N)) (pick-pos)))))
+		(list-tabulate NCLASS (lambda (N) (list (list (fcl N)) (pick-pos)))))
 )
 
 ; --------------------------------------------------------
@@ -262,7 +262,7 @@
 
 (define-public (make-word-generator NCLASS CSIZE EXP)
 "
-  make-word-generator NCLASS CSIZE EXP - create word-clases
+  make-word-generator NCLASS CSIZE EXP - create word-classes
 
   Create NCLASS different word-classes, placing at most CSIZE
   words into each class.
@@ -283,6 +283,30 @@
 		(reverse
 			(list-tabulate NCLASS
 				(lambda (N) (list (wlg) (list (wclr N)))))))
+)
+
+(define-public (make-wall-generator NCLASS NWALLS NROOTS)
+"
+  make-wall-generator NCLASS NWALLS NROOTS - create root-word classes
+
+  Out of NCLASS different word-classes, connect NWALLS of them to
+  the left-wall. Use NROOTS different kinds of wall connector types.
+
+  This emulates the idea of a 'root word' in a dependency grammar.
+  For example, in English, this would be the 'main verb' of a sentence,
+  which is indicated with a link to LEFT-WALL.
+
+  Return an association list of word-classes possibly with walls on them.
+"
+	(define (fcl N) (string-append "<fcl-" (base-26 (+ 1 N) #f) ">"))
+	(define (wcl N) (string-append "<wcl-" (base-26 (+ 1 N) #f) ">"))
+
+	(define fclasses (list-tabulate NCLASS fcl))
+
+	; Populate the word-classes.
+	(lambda ()
+			(list-tabulate NCLASS
+				(lambda (N) (list (list (wcl N)) (list (fcl N))))))
 )
 
 (define-public (make-sense-generator VFRAC NCLASS NSENSES EXP)

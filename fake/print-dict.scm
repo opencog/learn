@@ -5,7 +5,8 @@
 ;
 ; --------------------------------------------------------
 ; OVERVIEW:
-; Print Link Grammar dictionaries to a file.
+; Print Link Grammar dictionaries to a file. The print format is the
+; standard `4.0.dict` utf-8 file format.
 ;
 ; Example Usage:
 ; --------------

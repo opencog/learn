@@ -72,6 +72,9 @@
 		num-synonyms
 		synonym-exp))
 
+(define wallgen
+	(make-wall-generator num-classes 1 1))
+
 (define sensegen
 	(make-sense-generator
 		sense-frac
@@ -85,11 +88,11 @@
 (define (copy-boilerplate)
 
 	; Location of the boilerplate files.
-	(define source-dir (string-append (getenv "COMMON_DIR") "/fake-lang"))
+	(define (source-dir) (string-append (getenv "COMMON_DIR") "/fake-lang"))
 
 	; Recursive copy
-	(define DIR_STREAM (opendir source-dir))
 	(define (copy-dir)
+		(define DIR_STREAM (opendir (source-dir)))
 		(define DIRENT (readdir DIR_STREAM))
 		(if (not (eof-object? DIRENT))
 			(let ((lgfi (string-append source-dir "/" DIRENT))
@@ -100,9 +103,9 @@
 			)))
 
 	; Does the source directory exist?
-	(if (not (access? source-dir R_OK))
+	(if (not (or (getenv "COMMON_DIR") (access? (source-dir) R_OK)))
 		(begin
-			(format #t "Error: unable to access '~A'\n" source-dir)
+			(format #t "Error: unable to access '~A'\n" (source-dir))
 			(format #t "This directory needed for its template files\n")
 			(exit -1)))
 
@@ -150,9 +153,10 @@
 (print-LG-flat port (posgen))
 (print-LG-flat port (classgen))
 (print-LG-flat port (wordgen))
+(print-LG-flat port (wallgen))
 (print-LG-flat port (sensegen))
 
-(format port "<UNKNOWN-WORD>:  XXXXXX+;\n")
+(format port "\n<UNKNOWN-WORD>:  XXXXXX+;\n")
 (close port)
 
 ; If we got to here, then everything must have worked.
