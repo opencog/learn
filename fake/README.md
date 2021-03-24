@@ -51,8 +51,17 @@ Status
 ------
 Basic Link Grammar flat-file dictionaries can be created.
 
-To create a dictionary, use the scripts in the `run/0-gen-dict`
-directory.
+To create a dictionary, use the
+[`gen-dict.sh`](../run/1-gen-dict/gen-dict.sh)
+script in the [`run/1-gen-dict`](../run/1-gen-dict) directory.
+The configuration file for this is
+[`run-config/1-dict-conf.scm`](../run-config/1-dict-conf.scm).
+
+To create a corpus from the dictionary, use the
+[`gen-corpus.sh`](../run/1-gen-dict/gen-corpus.sh)
+script.  The configuration file for this is
+[`run-config/1-corpus-conf.sh`](../run-config/1-corpus-conf.sh).
+
 
 Theory
 ------
@@ -144,14 +153,16 @@ Generating a corpus
 -------------------
 A corpus will be generated in one of two different ways.
 
-### Method 1 "Link-Grammar hack"
-Amir is creating (has created) a tool that will create a corpus of
-sentences, given a Link Grammar dictionary. The current plan is to
-use the code in this directory to create random grammars, and feed
-them to Amir's tool to create a corpus of sentences.
+### Method 1 "Link Grammar"
+The Link Grammar version 5.9.0 and newer distribution comes with a
+sentence generation tool. Given a dictionary, it can generate all
+possible sentences of a fixed length.
 
-### Method 2 "The right way"
-The "right way" to generate a corpus is to use a properly designed
+Note: version 5.9.0 has not yet been released. Until then, `git clone`
+the repo, and `git checkout generate` to get teh correct branch.
+
+### Method 2 "The fancy way"
+The "fancy way" to generate a corpus is to use a properly designed
 corpus generator that can create corpora of not just natural language
 sentences, but also of more complex graphs (e.g. chemistry, social
 networks, etc.)
@@ -165,9 +176,14 @@ larger generations have not yet been attempted. This is partly because
 the code there is also trying to do far more sophisticated things, and
 to solve far more complex problems as well.
 
+It is slow; probably several orders of magnitude slower than the Link
+Grammar generator. This is because LG has been very highly tuned for
+performance over the years, whereas the AtomSpace-based generator is
+in early development, barely past a proof-of-concept stage.
+
 ### Method 3 "More ideas"
 Several more ways to generate text:
-1. Start with sections, and build a sentence
+1. Start with sections, and build a sentence.
 2. Create a random planar tree, and assign sections to it.
 
 Approach 1. is difficult: it basically means we have to run the
@@ -185,7 +201,7 @@ appears in a section for that disjunct.
 
 HOWTO
 -----
-Go to the `run/0-gen-dict` directory, and use the `gen-dict.scm` file
+Go to the `run/1-gen-dict` directory, and use the `gen-dict.scm` file
 to generate random dictionaries.
 
 There's no user-serviceable code here, but if you must screw around in
