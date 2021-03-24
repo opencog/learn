@@ -27,7 +27,7 @@ This project takes the above to be the structure of "knowledge" and
 "meaning". Stronger and more detailed arguments for why this is the
 correct defintion of "knowledge" and "meaning", together with concrete
 definitions, details and examples are provided by the PDF's in the
-[AtomSpace "sheaf" directory](https://github.com/opencog/atomspace/tree/master/sheaf/docs).
+[AtomSpace "sheaf" directory](https://github.com/opencog/atomspace/tree/master/opencog/sheaf/docs).
 
 
 The Big Idea - Learning and Understanding
