@@ -146,6 +146,10 @@
 ; where cos_min is the minimum cosine acceptable, for any kind of
 ; merging to be performed.
 ;
+; merge-frac
+; ----------
+; Abstraction of the above two merge styles, using a callback function
+; to obtain the merge fraction.
 ;
 ; Parameter choices
 ; -----------------
@@ -170,9 +174,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-project LLOBJ FRAC-FN ZIPF WA WB)
+(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB)
 "
-  merge-project LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
+  merge-frac LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
   grammatical class.  Returns the merged class (a WordClassNode with
   Sections on it, contaiing the merged counts). This merges the
   Sections; this does not merge connectors, nor does it merge shapes.
@@ -399,7 +403,7 @@
 "
   make-fuzz -- Do projection-merge, with a fixed merge fraction.
 
-  Uses `merge-project`.
+  Uses the `merge-project` merge style.
 
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
@@ -427,11 +431,11 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project pcos fixed-frac ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pcos fixed-frac ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
-			; that merge-project also updates storage...
+			; that merge-frac also updates storage...
 			; Clobber first, since Sections were probably deleted.
 			(psa 'clobber)
 			(store-atom (psu 'set-right-marginals WORD-A))
@@ -475,7 +479,8 @@
   word has multiple senses, and we only want to merge the fraction that
   shares a common word-sense, and leave the other word-sense out of it.
 
-  Built on top of `merge-project`, using a sigmoid taper.
+  Uses the `merge-discrim` merge style; the merge fraction is a sigmoid
+  taper.
 
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
@@ -505,11 +510,11 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project pcos cos-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pcos cos-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
-			; that merge-project also updates storage...
+			; that merge-frac also updates storage...
 			; Clobber first, since Sections were probably deleted.
 			(psa 'clobber)
 			(store-atom (psu 'set-right-marginals WORD-A))
@@ -544,7 +549,7 @@
   make-disinfo -- Do a \"discriminating\" merge, using MI for
   similarity.
 
-  Use `merge-project` with linear taper of the union-merge.
+  Use `merge-project` style merging, with linear taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
 
@@ -593,11 +598,11 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-project pmi mi-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pmi mi-fraction ZIPF WORD-A WORD-B))
 			; Need to recompute the marginals, in order for future
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
-			; that merge-project also updates storage...
+			; that merge-frac also updates storage...
 			; Clobber first, since Sections were probably deleted.
 			(dsa 'clobber)
 			(psu 'set-right-marginals WORD-A)
@@ -659,7 +664,7 @@
 ;
 ; Perform the actual merge
 ; (define (frac WA WB) 0.3)
-; (merge-project pcos frac 4 (Word "city") (Word "village"))
+; (merge-frac pcos frac 4 (Word "city") (Word "village"))
 ;
 ; Verify presence in the database:
 ; select count(*) from atoms where type=22;
