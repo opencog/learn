@@ -2,6 +2,7 @@
 #
 # Configuration parameters for artificial language corpus generation.
 #
+# --------------
 # Directory where dictionary will be written
 export DICT_DIR=$TEXT_DIR/fake-lang
 
