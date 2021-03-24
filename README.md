@@ -8,23 +8,24 @@ information. For example, knowledge-bases describe relations between
 "things" - entities, ideas, concepts.
 
 Graphs are described by local connectivity: what is connected to what,
-nearby. These local connections are given many different names:
-assertions, statements, rules, facts, axioms.
+nearby. Different problem domains call these local connections by various
+different names: They might be called assertions, statements, rules, facts,
+axioms, ontologies, abstract syntax trees, directed acyclic graphs,
+decision trees, decision forests, ProLog statements, and so on.
 
-Many local neighborhoods look alike, and connect in similar ways. Such
-similarities also have many different names: an "instance of a class",
-an "example of this type", a "template", a "general rule", an "axiom
-schema".
+Many local neighborhoods of a graph look alike, and connect in similar
+ways. Such similarities also have many different names: an "instance of
+a class", an "example of this type", a "template", a "general rule", an
+"axiom schema", and so on.
 
 The way in which regions of graphs look locally similar can be described
 by a "grammar".  The way they connect is a "syntax". Valid graphs have
 shapes that follow from the syntax/grammar. The "meaning" or the
 "semantics" of the graph lies in the connections themselves.
 
-This project takes the above as the structure of "knowledge" and
-"meaning". For now, this is just metaphysics; more concrete details
-are provided below and in related PDF's in github, and on OpenCog wiki
-pages.
+This project takes the above to be the structure of "knowledge" and
+"meaning". Concrete definitions and details are provided below and in
+related PDF's in github, and on OpenCog wiki pages.
 
 The Big Idea - Learning and Understanding
 -----------------------------------------
@@ -68,23 +69,61 @@ or rather, "sparse matrix factorization.")
 
 This is an ongoing project, with continuing if sometimes sporadic activity.
 
-The Big Idea - Redux
---------------------
-Some other ways of thinking of the goals of this project.
-* The aim is to produce an *automonous agent*.  This agent observes
-  its environoment (a time-series of sensory inputs, such as sight,
-  sound, and, to keep it simple, plain text). From these observations,
-  it builds a *world model*, that encapsulates what it has learned.
-  Finally, based on it's world model, it generates actions. Something
-  gets done, some action is performed (for example, a physical movement
-  of a robot, a change of facial expression in a robot, or, to keep
-  things simple, generation of some text.)
+The Big Idea - World Models
+---------------------------
+In a text, there is both a small-scale structure, and a large scale
+structure. The small scale structure consists of grammatically-correct
+sentences written in some natural language. The large-scale structure
+is determined by the type of the text: is it a short story?
+A dissertation? An owner's manual? The large scale flows from sentence
+to sentence, as repeating ideas, characters, topics, themes occur
+paragraph by paragraph, chapter by chapter.
+
+There is also an intermediate-scale structure that has been
+well-developed by linguists; a particularly apt one is Melcuk's
+"Meaning-Text Theory", which described ideas like "Deep Syntax"
+and "Lexical Functions".
+
+The goal of this project is to recursively extract deeper and deeper
+layers of structure, starting from the surface structure of a sequence
+of words. The author believes this can be done, so perhaps one could
+say the goal is to prove that it can be done.
+
+Effectively, this means that the goal is really to produce an
+***autonomous agent***.  This agent observes its environment (a
+time-series of sensory inputs, such as sight, sound, and, to keep it
+simple, plain text). From these observations, it builds a
+***world model***, that encapsulates what it has learned.  Finally,
+based on it's world model, it generates actions. Something gets done,
+some action is performed (for example, a physical movement of a robot,
+a change of facial expression in a robot, or, to keep things simple,
+generation of some text.)
+
+In the narrowest sense, this agent can be imagined to be a chatbot,
+perhaps answering questions based on pattern matches on it's world-model.
+More generally, the goal is that the agent should be able to write
+one or more paragraphs (of grammatically correct English) articulating
+some particular portion of the World Model. This includes choosing the
+topic, the narrative form, and so on. In this sense, the agent is
+imagined to be an AGI, in the complete sense.
+
+Obviously, no such thing has been created. However, the current methods
+developed here appear to be promising, and there is no apparent
+impediment in sight, other than perhaps the general scale of the project
+itself.  Plainly, there's a lot of code to write, test, debug, and a
+lot of research and development to be performed.
 
 
+### The Small Idea
 Unsupervised Language Learning
 ==============================
 (See also: [Language learning wiki](http://wiki.opencog.org/w/Language_learning)
 for an alternate overview.)
+
+In order to make forward progress, the current actual scope of the
+project is limited to what is reasonably achievable with a relatively
+small amount of work. The current primary focus is on unsupervised
+language learning.
 
 The goal of this project is to create a system that is capable of
 learning the grammar and some of the semantics of natural language.
@@ -175,7 +214,7 @@ OK". But "eyeballing it" is not very scientific.
 Processing Overview
 -------------------
 See the [README-Natural](README-Natural.md) file for a description of
-the "open-loop" (uncalibrated) processing system. It describes the
+the "open-loop" (un-calibrated) processing system. It describes the
 processing steps in detail.  Getting good results requires tuning
 a variety of parameters, and so calibration needs to be run first.
 
@@ -193,6 +232,7 @@ A quick overview:
 * [learn-lang-diary](learn-lang-diary) - diary and notes and papers
   describing results and theory.
 * [run](run) - scripts for running the learning pipeline.
+* [run-config](run-config) - configuration paramters for the learning pipeline.
 * [scm](scm) - the code that actually does all the work.
 * [tests](tests) - unit tests. Currently unmaintained and broken.
 
@@ -202,18 +242,18 @@ All the "heavy lifting" is done in the OpenCog
 [AtomSpace](https://github.com/opencog/atomspace). The AtomSpace is a
 graph database for working with typed (hyper-)graphs. (Typed hypergraphs
 are ideal for storing very abstract kinds of knowledge.) The AtomSpace
-can be manipulated through Atomese, python, C++, haskel and scheme
-bindings.  This project glues all of the parts together with scheme
-([guile](https://www.gnu.org/software/guile/)). If you are a python fan,
+can be manipulated through Atomese, Python, C++, Haskell and Scheme
+bindings.  This project glues all of the parts together with Scheme
+([guile](https://www.gnu.org/software/guile/)). If you are a Python fan,
 sorry! The goal here is rapid prototyping, easy experimentation, rapid
-reconfiguration/redesign. For that, scheme is just simpler, better,
+reconfiguration/redesign. For that, Scheme is just simpler, better,
 faster. (At least, for me.)
 
 Long-term, the best and finest algorithms will probably be re-written
-in C++ (for speed), and exported with Atomese, python, haskel, scheme
-(pick your favorite) bindings. This migration process happens as we gain
-understanding of what the problem is, and what reasonable solutions look
-like.
+in C++ (for speed), and exported with Atomese, Python, Haskell, Scheme
+(pick your favorite) bindings. This migration process should happen as
+we gain understanding of what the problem is, and what reasonable
+solutions look like.
 
 This is a ***science project***. The goal is to determine how things work,
 run experiments, create and refine new algorithms. Thus, the code in
