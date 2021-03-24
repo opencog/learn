@@ -3,9 +3,9 @@ Learning
 
 The Big Idea - Knowledge
 ------------------------
-Here's the big idea: "everything is a graph" -- all knowledge is linked
+Here's the big idea: ***everything is a graph*** -- all knowledge is linked
 information. For example, knowledge-bases describe relations between
-"things" - entities, ideas, concepts.
+*things* - entities, ideas, concepts.
 
 Graphs are described by local connectivity: what is connected to what,
 nearby. Different problem domains call these local connections by various
@@ -19,12 +19,12 @@ a class", an "example of this type", a "template", a "general rule", an
 "axiom schema", and so on.
 
 The way in which regions of graphs look locally similar can be described
-by a "grammar".  The way they connect is a "syntax". Valid graphs have
-shapes that follow from the syntax/grammar. The "meaning" or the
-"semantics" of the graph lies in the connections themselves.
+by a *grammar*.  The way they connect is a *syntax*. Valid graphs have
+shapes that follow from the syntax/grammar. The *meaning* or the
+*semantics* of the graph lies in the connections themselves.
 
-This project takes the above to be the structure of "knowledge" and
-"meaning". Stronger and more detailed arguments for why this is the
+This project takes the above to be the structure of ***knowledge*** and
+***meaning***. Stronger and more detailed arguments for why this is the
 correct defintion of "knowledge" and "meaning", together with concrete
 definitions, details and examples are provided by the PDF's in the
 [AtomSpace "sheaf" directory](https://github.com/opencog/atomspace/tree/master/opencog/sheaf/docs).
@@ -39,12 +39,12 @@ movie, write some text, dance about it, build a machine.
 If you are writing text, what you are "actually doing" is taking the
 network of interconnected facts/ideas, and serializing them into a
 sequence of words. A sequential, time-like order, one word after
-another.  You "serialize" the "graph of ideas."
+another.  You *serialize* the *graph of ideas.*
 
-When you read, and try to understand and learn, you try to "deserialize"
+When you read, and try to understand and learn, you try to *deserialize*
 the words, and reconstruct the graph-network of ideas in your mind.
 
-The goal of this project is to build a serializer/deserializer pair.
+The goal of this project is to build a ***serializer/deserializer pair***.
 More narrowly, to convert natural language into a graph of ideas, and
 conversely, to express the knowledge-graph as a sequence of sentences.
 Narrower still, the goal is to extract the grammar and syntax from
@@ -55,15 +55,16 @@ talk about grammar. That focus is necessary to make forward progress,
 although the vision above hints at a far more general, far more powerful
 possibility for working with knowledge. This vision should be portable
 to (bio-)chemical structures, the 3D-shapes of physical objects, the
-correlation of images to text, the correlation of movement to text.
-But to keep things focused, for now its just text.
+correlation of images to text, the correlation of movement and action
+to sound and text.  But to keep things focused, for now its just text.
 
-The "graph of knowledge" sketched above is assumed to be a "sparse
-graph", or olde-school "symbolic AI". This is in contrast to neural nets
+The "graph of knowledge" sketched above is assumed to be a ***sparse
+graph***, or olde-school "symbolic AI". This is in contrast to neural nets
 and deep learning, where knowledge is encoded in a dense graph, the
 network connectivity graph of weight matrices, vectors and the like.
-The deep learning industry has plenty of folks working on it. The goal
-of this project is to move forward on sparse-graph knowledge
+The deep learning industry has plenty of folks working on it. It's
+a multi-billion-dollar industry. We are not competing with that behemouth.
+The goal of this project is to move forward on sparse-graph knowledge
 representation. (Note however: some parts of sparse graphs are densely
 connected, and, for those parts, deep-learning type structures may be
 ideal.  This idea is explored in detail in several PDF's here and
@@ -79,18 +80,18 @@ structure. The small scale structure consists of grammatically-correct
 sentences written in some natural language. The large-scale structure
 is determined by the type of the text: is it a short story?
 A dissertation? An owner's manual? The large scale flows from sentence
-to sentence, as repeating ideas, characters, topics, themes occur
-paragraph by paragraph, chapter by chapter.
+to sentence, paragraph to paragraph, as repeating ideas, characters,
+topics, themes reoccur throughout the text.
 
 There is also an intermediate-scale structure that has been
-well-developed by linguists; a particularly apt one is Melcuk's
-"Meaning-Text Theory", which described ideas like "Deep Syntax"
+well-developed by linguists; a particularly apt one is Mel'čuk's
+"Meaning-Text Theory", which describes ideas like "Deep Syntax"
 and "Lexical Functions".
 
 The goal of this project is to recursively extract deeper and deeper
 layers of structure, starting from the surface structure of a sequence
 of words. The author believes this can be done, so perhaps one could
-say the goal is to prove that it can be done.
+say the goal of this project is to prove that it can be done.
 
 Effectively, this means that the goal is really to produce an
 ***autonomous agent***.  This agent observes its environment (a
@@ -104,11 +105,13 @@ generation of some text.)
 
 In the narrowest sense, this agent can be imagined to be a chatbot,
 perhaps answering questions based on pattern matches on it's world-model.
-More generally, the goal is that the agent should be able to write
-one or more paragraphs (of grammatically correct English) articulating
-some particular portion of the World Model. This includes choosing the
-topic, the narrative form, and so on. In this sense, the agent is
-imagined to be an AGI, in the complete sense.
+More generally, the goal is that the agent should be able to conduct
+entertaining conversations when called upon, or to write erudite
+paragraphs (of grammatically correct English, in appropriate narrative
+form) articulating some particular portion of the World Model. As the
+World Model necessarily includes a self-model, this implies a certain
+degree of "self-awareness".  In this sense, the agent is imagined to be
+an AGI, in the complete sense.
 
 Obviously, no such thing has been created. However, the current methods
 developed here appear to be promising, and there is no apparent
