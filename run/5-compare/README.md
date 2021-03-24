@@ -3,7 +3,17 @@ Result evaluation scripts
 =========================
 See `../../README-Natural.md` for more info.
 
+These are currently ad hoc and unpolished. It is still not clear how
+to best evaluate results.
+
 A quick overview:
+
+* `dict-comp.scm` -- Validate a test dictionary against a golden
+  dictionary, using a corpus of sentences. Takes three arguments:
+  the golden dictionary, the test dictionary, and the corpus of
+  sentences that the two should be evaluated on.
+  Example usage:
+  `./dict-comp.scm fake-lang learned fake-corpus/corpus-5.txt`
 
 * `en-dict-comp.scm` -- Perform validation of a dictionary against
   the Link Grammar English dictionary. Takes two arguments: the
