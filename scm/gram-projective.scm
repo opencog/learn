@@ -178,9 +178,19 @@
 "
   merge-frac LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
   grammatical class.  Returns the merged class (a WordClassNode with
-  Sections on it, contaiing the merged counts). This merges the
-  Sections; this does not merge connectors, nor does it merge shapes.
-  See `cset-class.scm` for connector merging.
+  words WA and WB in it). The corresponding pairs in LLOBJ are merged.
+  That is, both WA and WB are assumed to occur on the left of two
+  different pairs in LLOBJ. The counts on those pairs are merged into
+  one. If the result leaves a pair with a count of zero, that pair
+  is deleted.  This assumes that storage is connected; the updated
+  pair is written to storage.
+
+  By convention, it is assumed that the pairs are (word,disjunct)
+  pairs, and LLOBJ was made by `make-gram-class-api`. Thus, this
+  will merge Sections.
+
+  XXX At this time, this does not merge connectors, nor does it merge
+  shapes. Working on that. See `cset-class.scm` for connector merging.
 
   WA should be a WordNode or a WordClassNode.
   WB is expected to be a WordNode.
@@ -191,8 +201,8 @@
      Returning 0.0 gives the sum of the intersection of supports.
   ZIPF is the smallest observation count, below which counts
      will not be divided up, if a marge is performed.
-  LLOBJ is used to access counts on pairs.  Pairs are SectionLinks,
-     that is, are (word,disjunct) pairs wrapped in a SectionLink.
+  LLOBJ is used to access pairs. The left item on a pair is assumed
+     to be a WordNode.
 
   The merger of WA and WB are performed, using the 'projection
   merge' strategy. This is done like so. If WA and WB are both
@@ -210,6 +220,7 @@
 	(define ptu (add-tuple-math LLOBJ bogus))
 
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (cog-new-ctv 1 0 CNT)))
 
 	; Create a new word-class out of the two words.
@@ -282,7 +293,7 @@
 					(seq (if (null? lsec) (cog-outgoing-atom rsec 1)
 							(cog-outgoing-atom lsec 1)))
 					; The merged word-class
-					(mrg (Section wrd-class seq))
+					(mrg (LLOBJ 'make-pair wrd-class seq))
 				)
 
 				; The summed counts
