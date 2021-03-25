@@ -1373,7 +1373,7 @@ echo -e "(block-until-idle 0.01)\n.\n."
 another issue: export prints
 Going to compute and store individual pair MI.
 
-but that's a lie, its never stored... no, ok, it just doesn't 
+but that's a lie, its never stored... no, ok, it just doesn't
 do the progress prints, that's all...
 DO-STORE is true...
 ... huh, claims it is stored... is it?
@@ -1417,7 +1417,7 @@ only two items, they have counts but no MI's on them.
 ok that's broken, but maybe from the earlier breakages.
 Need rerun from scratch.
 
-After re-running from scratch, get 
+After re-running from scratch, get
 (length all ...; 90809
 (fold ... ; 26245
 for the fold. Are these the zero-count disjuncts!? why aren't they
@@ -1457,7 +1457,7 @@ close, restart cogserver load.
       (if (nil? (cog-keys star)) (+ 1 cnt) cnt))
       0 (psa 'get-all-elts))
 
-fold ; 9685 
+fold ; 9685
 OK, so ... TV's disappeared. How?
 
 ------
@@ -1546,7 +1546,7 @@ shape-vec.scm:
 Who writes MemberLinks? gram-projective.scm does ...
 so does gram-class-api.scm ...
 
-merge-project only does the sections, not shapes.  Why not? 
+merge-project only does the sections, not shapes.  Why not?
 I think it could. It creates the new sections directly... thats a bug.
 
 What is merge-discrim?
@@ -1559,6 +1559,54 @@ What is merge-discrim?
 
 (define wst (batch-transpose wss))
 (wst 'mmt-marginals)
+
+(define s (EvaluationLink
+  (PredicateNode "*-word-shape pair-*")
+  (WordNode "!")
+  (EvaluationLink
+    (PredicateNode "*-shape-*")
+    (WordNode "d")
+	 (Connector (WordNode "d") (ConnectorDir "-"))
+    (Connector (WordNode "b") (ConnectorDir "-"))
+    (Connector (WordNode "e") (ConnectorDir "-"))
+    (Connector (WordNode "b") (ConnectorDir "-"))
+    (Connector (WordNode "a") (ConnectorDir "+"))
+    (Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+(wss 'left-stars s)
+
+((add-support-compute wss) 'cache-all)
+Finished left norm marginals in 271 secs
+Finished left totals in 34 secs
+
+Finished left norm marginals in 1295 secs
+duude failure not atom at 92387 of 101856
+
+(define e (WordNode "e"))
+(define sa (EvaluationLink
+    (PredicateNode "*-shape-*")
+    (WordNode "a")
+    (Connector
+      (WordNode "e")
+      (ConnectorDir "-"))))
+(wsv 'get-pair e sa)
+
+
+no stars for .... cause its not an item, its a pair!
+(wss 'left-basis)
+(define s (car (wss 'right-basis)))
+(wss 'left-stars s)
+(cog-incoming-set pair-pred)
+
+
+
+
+(cog-atom? x)
+
+f-left-star-pat
+'left-star-pattern
+
+
 
 FIXED:
 * Pair counting insanely slow and leaks RAM.

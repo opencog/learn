@@ -222,7 +222,7 @@
 			l-basis)
 
 		(define (get-right-basis)
-			(if (null? r-basis) (set! r-basis (cog-incoming-set pair-pred)))
+			(if (null? r-basis) (set! r-basis (cog-incoming-set shape-pred)))
 			r-basis)
 
 		(define (get-left-size)
@@ -241,7 +241,7 @@
 		; inside of it, replaces each word with a variable (to define
 		; the shape) and then creates a pair consisting of that word,
 		; and that shape.  We fudge the observation count, by taking
-		; the observation count on the secion, and distributing it
+		; the observation count on the section, and distributing it
 		; uniformly over each word-shape pair.
 		;
 		; Note that the shapes will hold marginal counts.
