@@ -458,6 +458,7 @@ around for a while.
 				((right-basis)        get-right-basis)
 				((left-basis-size)    get-left-size)
 				((right-basis-size)   get-right-size)
+				(else #f)
 		))
 
 		; Methods on the object
