@@ -1551,6 +1551,14 @@ I think it could. It creates the new sections directly... thats a bug.
 
 What is merge-discrim?
 
+(define wsv (make-shape-vec-api))
+(wsv 'fetch-pairs)
+(define wss (add-pair-stars wsv))
+(wss 'left-basis-size)
+((add-support-compute wss) 'cache-all)
+
+(define wst (batch-transpose wss))
+(wst 'mmt-marginals)
 
 FIXED:
 * Pair counting insanely slow and leaks RAM.

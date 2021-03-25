@@ -447,6 +447,10 @@ around for a while.
 		)
 
 		;-------------------------------------------
+		(define (describe)
+			(display (procedure-property make-shape-vec-api 'documentation)))
+
+		;-------------------------------------------
 		; Explain the non-default provided methods.
 		(define (provides meth)
 			(case meth
@@ -479,6 +483,8 @@ around for a while.
 
 				((provides)         provides)
 				((filters?)         (lambda () #f))
+
+				((describe)         (describe))
 				(else (error "Bad method call on cross-section:" message)))
 			args))
 ))
