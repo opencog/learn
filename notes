@@ -1575,6 +1575,11 @@ What is merge-discrim?
 
 (wss 'left-stars s)
 
+(cog-atom? x)
+
+f-left-star-pat
+'left-star-pattern
+
 ((add-support-compute wss) 'cache-all)
 Finished left norm marginals in 271 secs
 Finished left totals in 34 secs
@@ -1598,13 +1603,211 @@ no stars for .... cause its not an item, its a pair!
 (wss 'left-stars s)
 (cog-incoming-set pair-pred)
 
+(WordNode "d")
+(define rs (wss 'right-stars (WordNode "d")))
+92387 of 101856
+(list-ref rs 92387)
+
+(define var (Variable "$api-right-star"))
+(define term (wss 'make-pair (WordNode "d") var))
+(define b (Bind (TypedVariable var (Type "EvaluationLink")) term term))
+(use-modules (opencog exec))
+(define setl (cog-execute! b))
+(define o (cog-outgoing-set setl))
+(list-ref o 92387)
+
+(define term
+(EvaluationLink
+  (PredicateNode "*-word-shape pair-*")
+  (WordNode "d")
+  (VariableNode "$api-right-star")))
+
+which is wrong.  .
+
+(cog-incoming-set term)
+
+Doesn't happen when fresh.
+(length o) ; 101855 insead of 101856
+
+(for-each (lambda (atm) (if (equal? atm term) (format #t "yes its here\n")))
+	o)
 
 
+(all-left-marginals)
+(maybe-par-for-each set-left-marginals (star-obj 'right-basis))
 
-(cog-atom? x)
+(define wsc (add-support-compute wss))
+(for-each (lambda (atm) (wsc 'set-left-marginals atm))
+		 (wss 'right-basis))
+still good. so OK.
+	(wsc 'total-support-left)
+still OK
+	(wsc 'total-count-left)
+still OK
 
-f-left-star-pat
-'left-star-pattern
+(define wap (add-support-api wss))
+(wap 'set-left-totals
+	(wsc 'total-support-left)
+	(wsc 'total-count-left))
+still OK
+
+(wsc 'all-left-marginals)
+still OK ...
+so wtf is going on??
+
+----
+(for-each (lambda (atm) (wsc 'set-right-marginals atm))
+		 (wss 'left-basis))
+and its kaboom.
+duude failure not atom at 11440 of 39214
+duude wtf right fail for (WordNode "b")
+
+although the bindlink is OK still.
+----
+(define wsv (make-shape-vec-api))
+(wsv 'fetch-pairs)
+(define wss (add-pair-stars wsv))
+(wss 'left-basis-size)
+
+(define wsc (add-support-compute wss))
+(for-each (lambda (atm) (wsc 'set-right-marginals atm))
+       (wss 'left-basis))
+duude failure not atom at 92387 of 101856
+ so very reproducible. Not raceey
+
+Direct:
+(define wsv (make-shape-vec-api))
+(wsv 'fetch-pairs)
+(define wss (add-pair-stars wsv))
+(wss 'left-basis-size)
+
+(define var (Variable "$api-right-star"))
+(define term (wss 'make-pair (WordNode "d") var))
+(define b (Bind (TypedVariable var (Type "EvaluationLink")) term term))
+(use-modules (opencog exec))
+(define setl (cog-execute! b))
+(cog-arity setl) ; 36320 ... wtf!? ohh, bug
+(define o (cog-outgoing-set setl))
+(length o) ; 101856 .. wtf!?
+
+(list-ref o 92387) ; borken...
+
+/* Arity is currently an unsigned short */ uhh ohhh
+
+QueryLink::do_execute
+   Implicator impl(as);
+   impl.implicand = this->get_implicand();
+   impl.satisfy(PatternLinkCast(get_handle()));
+
+QueueValuePtr
+ohhh nooo 26915
+ohhh nooo 4473
+ohhh nooo 623
+
+ohhh nooo 10725 
+OK
+ohhh nooo 4358
+But (list-ref o 92387) is still the location of the baddie!?
+OK
+4555 atomic
+4382/4474/28622
+4402/33396
+4286/8018
+
+report_grounding
+
+bool have_var=false;
+for (const auto& j: var_soln) {
+Handle var(j.first);
+Type vtype = var->get_type();
+if (VARIABLE_NODE == vtype) have_var = true;
+}
+if (not have_var) printf("duuude missing var grounding on %d\n", cnt.load());
+
+
+duuude FINITO var grounding at gnt=4106
+[FINE] ==================== FINITO! accepted= 0
+[FINE] There are groundings for 1 terms
+[FINE] Groundings for 0 variables:
+[FINE] Groundings for 0 clauses:
+[FINE] xxxxxxxxxx neighbor_search xxxxxxxxxx
+       Loop candidate (4554/108680):
+
+incomplete search.
+
+Normally:
+Loop candidate
+Clause is matchable; start matching i -- explore_clause_direct
+duuude FINITO var grounding at gnt=11121
+duuude FINITO var grounding at gnt=22310
+duuude FINITO var grounding at gnt=22377
+
+insert into NACK .. all of them.
+cache hit -- the four failures!
+
+search: nserting into cache -- each and every one.
+search: no key must explore -- zero hits in good or bad.
+
+cahce hit:term is clause, grnd is the variable. chached val is clause
+
+Q: why is var not writtten!?
+Q: why is it erratic? A: because neighbor-search is not in consistent
+order.
+_search_set at line 1096  is a HandleSeq
+from _start_choices
+get_incoming_set
+TermMatchMixin.cc line 473
+
+wow when sorted, its 345 baddies.
+why does the number of hits vary?
+
+weird: _pat->clause_variables.at() seems to ctonain terms... line 1964
+or not..
+
+const HandleSeq& clvars(_pat->clause_variables.at(pclause));
+      size_t cvsz = clvars.size();
+if (1 == cvsz and
+const Handle& jgnd(var_grounding.at(clvars[0]));
+key = HandleSeq({clause_root, jgnd});
+
+$- f- h+ g+ a+
+
+So... explore ... find, fail, insert into nack.
+
+there are 101855 reported, 
+there are 108680 in loops
+there are 108335 nacks (which with 345 hits add up.)
+
+there are 101855 cache insertions.
+there are 102200 FINITO's (= 101855 + 345)
+
+all the rest are shapes
+(length (cog-incoming-set (PredicateNode "*-shape-*")))
+510993 wow.
+(length (cog-incoming-set (PredicateNode "*-word-shape pair-*")))
+620436
+(length (cog-incoming-set (WordNode "d")))
+110908  ; ok that is the thinnest.
+(length (cog-incoming-by-type (WordNode "d") 'EvaluationLink))
+108680 ; ok that's the loop, then.  and clearly some of these are
+shapes.
+
+why are there no nacks, despite nack insertiions?
+why are there no "no keys"? Because the clause is always cacheable.
+
+Yow. That was hard work. Fixed in https://github.com/opencog/atomspace/pull/2803
+
+-------------------------------------------
+So, where were we?
+
+(define wsv (make-shape-vec-api))
+(wsv 'fetch-pairs)
+(define wss (add-pair-stars wsv))
+(wss 'left-basis-size)
+((add-support-compute wss) 'cache-all)
+
+(define wst (batch-transpose wss))
+(wst 'mmt-marginals)
 
 
 
