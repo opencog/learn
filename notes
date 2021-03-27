@@ -1704,7 +1704,7 @@ ohhh nooo 26915
 ohhh nooo 4473
 ohhh nooo 623
 
-ohhh nooo 10725 
+ohhh nooo 10725
 OK
 ohhh nooo 4358
 But (list-ref o 92387) is still the location of the baddie!?
@@ -1774,7 +1774,7 @@ $- f- h+ g+ a+
 
 So... explore ... find, fail, insert into nack.
 
-there are 101855 reported, 
+there are 101855 reported,
 there are 108680 in loops
 there are 108335 nacks (which with 345 hits add up.)
 
@@ -1809,7 +1809,110 @@ So, where were we?
 (define wst (batch-transpose wss))
 (wst 'mmt-marginals)
 
+Holy cow:
+Stored 40000 of 510993 left-wilds in 101 secs (396 pairs/sec)
+Stored 80000 of 510993 left-wilds in 356 secs (112 pairs/sec)
+Stored 120000 of 510993 left-wilds in 607 secs (66 pairs/sec)
+Stored 160000 of 510993 left-wilds in 865 secs (46 pairs/sec)
+Stored 200000 of 510993 left-wilds in 1075 secs (37 pairs/sec)
+Stored 240000 of 510993 left-wilds in 1352 secs (30 pairs/sec)
+Stored 280000 of 510993 left-wilds in 1591 secs (25 pairs/sec)
+Stored 320000 of 510993 left-wilds in 1841 secs (22 pairs/sec)
+Stored 360000 of 510993 left-wilds in 2076 secs (19 pairs/sec)
+Stored 400000 of 510993 left-wilds in 2296 secs (17 pairs/sec)
+Stored 440000 of 510993 left-wilds in 2584 secs (15 pairs/sec)
+Stored 480000 of 510993 left-wilds in 2871 secs (14 pairs/sec)
+Done storing 510993 left-wilds in 19969 secs
+freaking disaster.
 
+try again with postgres!?
+
+open mpg_parse.rdb and load all of it then save to postgres
+
+. config/0*h
+. config/3*h
+guile -l ~/src/learn/run-common/cogserver.scm
+
+(load-atomspace)
+(cog-close storage-node)
+(use-modules (opencog persist-sql))
+(sql-create "postgres:///expt_16_shape")
+(sql-open "postgres:///expt_16_shape")
+(store-atomspace)
+^D
+
+        Stored 100K atoms in 377 seconds (265 per second)
+        Stored 200K atoms in 720 seconds (277 per second)
+        Finished storing 232500 atoms total, in 833 seconds (279 per second)
+
+vi config/3*h  use postgres
+
+(define wsv (make-shape-vec-api))
+(wsv 'fetch-pairs)
+Elapsed time to load word sections: 39 seconds
+Elapsed time to load word-shape pairs: 0 seconds
+Elapsed time to create shapes: 31 secs
+
+vs. Rocks:
+Elapsed time to load word sections: 7 seconds
+Elapsed time to load word-shape pairs: 0 seconds
+Elapsed time to create shapes: 35 secs
+
+So postgres had 6x slower load, at least the first time...
+Ouch.
+
+(define wss (add-pair-stars wsv))
+(wss 'left-basis-size)
+((add-support-compute wss) 'cache-all)
+
+Finished left norm marginals in 184 secs
+Finished left totals in 8 secs
+Finished right norm marginals in 28 secs
+Finished right totals in 0 secs
+
+vs rocks:
+Finished left norm marginals in 189 secs
+Finished left totals in 9 secs
+Finished right norm marginals in 29 secs
+Finished right totals in 0 secs
+
+So idential, here.
+
+(define wst (batch-transpose wss))
+(wst 'mmt-marginals)
+
+Finished mmt norm marginals in 66 secs
+Finished mmt totals in 0 secs
+Done storing 12 right-wilds in 0 secs
+Stored 40000 of 510993 left-wilds in 170 secs (235 pairs/sec)
+Stored 80000 of 510993 left-wilds in 168 secs (238 pairs/sec)
+Stored 120000 of 510993 left-wilds in 188 secs (213 pairs/sec)
+Stored 160000 of 510993 left-wilds in 177 secs (226 pairs/sec)
+Stored 200000 of 510993 left-wilds in 171 secs (234 pairs/sec)
+Stored 240000 of 510993 left-wilds in 165 secs (242 pairs/sec)
+Stored 280000 of 510993 left-wilds in 164 secs (244 pairs/sec)
+Stored 320000 of 510993 left-wilds in 176 secs (227 pairs/sec)
+Stored 360000 of 510993 left-wilds in 163 secs (245 pairs/sec)
+Stored 400000 of 510993 left-wilds in 189 secs (212 pairs/sec)
+Stored 440000 of 510993 left-wilds in 187 secs (214 pairs/sec)
+Stored 480000 of 510993 left-wilds in 185 secs (216 pairs/sec)
+Done storing 510993 left-wilds in 2246 secs
+
+vs rocks:
+Finished mmt norm marginals in 50 secs
+Finished mmt totals in 0 secs
+Done storing 12 right-wilds in 0 secs
+...
+Done storing 510993 left-wilds in 19969 secs
+
+so here, where it matters, postgres is 9x faster,
+running in 37 minutes instead of 5.5 hours. Sheesh.
+Why is this shit so slow?
+
+
+
+
+====================================================
 
 FIXED:
 * Pair counting insanely slow and leaks RAM.
@@ -1822,6 +1925,8 @@ FIXED:
 
 TODO/BUGS:
 
+* print-matrix-summary-report after MM^T shows nothing. Why?
+  because 'mmt-marginals computes only word-pair entropies.
 * Fix count transfer in add-singleton-classes
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
