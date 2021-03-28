@@ -1859,7 +1859,15 @@ Elapsed time to load word-shape pairs: 0 seconds
 Elapsed time to create shapes: 35 secs
 
 So postgres had 6x slower load, at least the first time...
-Ouch.
+Ouch. But .... if we use Rocks to open the shape db which
+has the shapes in it, then disaster strikes:
+
+Elapsed time to load word sections: 112 seconds
+
+What if we do the same for postgres?
+Elapsed time to load word sections: 29 seconds
+so it's actually a little faster than it was the first time...
+
 
 (define wss (add-pair-stars wsv))
 (wss 'left-basis-size)
@@ -1876,7 +1884,7 @@ Finished left totals in 9 secs
 Finished right norm marginals in 29 secs
 Finished right totals in 0 secs
 
-So idential, here.
+So identical, here.
 
 (define wst (batch-transpose wss))
 (wst 'mmt-marginals)
@@ -1909,8 +1917,108 @@ so here, where it matters, postgres is 9x faster,
 running in 37 minutes instead of 5.5 hours. Sheesh.
 Why is this shit so slow?
 
+Oh, hang on: redoing the above on Rocks, where the
+Atoms and Values are already there, i.e. writing out
+exactly the same data as what is there, gives a whole new result:
 
+...
+Stored 440000 of 510993 left-wilds in 3 secs (13333 pairs/sec)
+Stored 480000 of 510993 left-wilds in 4 secs (10000 pairs/sec)
+Done storing 510993 left-wilds in 43 secs
 
+Wow! This suggests that the first time, maybe Rocks was recomputing
+some index with each and every store?
+
+Try this with postgres: (i.e. re-store exactly the same data)
+... and that. too, is ... faster!  Go figure!?
+...
+Stored 440000 of 510993 left-wilds in 38 secs (1053 pairs/sec)
+Stored 480000 of 510993 left-wilds in 38 secs (1053 pairs/sec)
+Done storing 510993 left-wilds in 500 secs
+
+so that is 5x faster than the initial store. The magic of indexing.
+
+-----------------------------------------------------
+
+Concatenation of vectors.
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+Elapsed time to load csets: 292 secs
+(length (psa 'get-all-elts)) ; 80807  so 277 atoms/sec
+
+(define wsv (make-shape-vec-api))
+(define wss (add-pair-stars wsv))
+(wsv 'fetch-pairs)
+Elapsed time to load word sections: 110 seconds
+Elapsed time to load word-shape pairs: 0 seconds
+Elapsed time to create shapes: 31 secs
+
+XXX why is it creating? Aren't they already there?
+
+(length (wss 'get-all-elts)) ; 620435
+
+(psa 'right-basis-size) ; 75667
+(wss 'right-basis-size) ; 510993
+
+(load "/tmp/c.scm")
+
+(define cac (direct-sum psa wss))
+(cac 'right-basis-size) ; 586660 yay
+
+(length (cac 'get-all-elts)) ; 701242 = 80807 + 620435 yes, good
+
+-----------------------
+Detour:
+Verify therading/locking behavor for batch-similarity.
+With rocks.
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+(define sim (batch-similarity psa #f))
+(sim 'batch-compute 12)
+Done 10/12 Frac=47.69% Time: 71 Done: 98.5% Rate=0.915 prs/sec (1.092 sec/pr)
+
+again a few more times, for a baseline:
+Done 10/12 Frac=  0.0% Time: 58 Done: 98.5% Rate=0.586 prs/sec (1.706 sec/pr)
+Done 10/12 Frac=  0.0% Time: 51 Done: 98.5% Rate=0.667 prs/sec (  1.5 sec/pr)
+Done 10/12 Frac=  0.0% Time: 50 Done: 98.5% Rate= 0.68 prs/sec (1.471 sec/pr)
+
+(sim 'parallel-batch 12 2)
+
+Fuu not enough to report.  Do the left instead.
+(define lim (batch-similarity psa #t))
+(lim 'batch-compute 300)
+Time: 41
+Time: 17
+Time: 17
+
+(lim 'batch-compute 500)
+Time: 103
+Time: 63
+Time: 64
+
+(lim 'parallel-batch 500 2)
+Time: 67
+
+(lim 'parallel-batch 500 3)
+Time: 71
+
+(lim 'parallel-batch 500 4)
+Time: 70
+
+(lim 'parallel-batch 500 8)
+Time: 72
+
+(lim 'parallel-batch 500 16)
+Time: 72
+
+(lim 'parallel-batch 1000 8)
+Time: 563
+
+OK, so guile-3.0.1-deb+1-2 offers no improvement at all.
+Bummer.
 
 ====================================================
 
