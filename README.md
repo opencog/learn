@@ -1,5 +1,8 @@
 Learning
 ========
+The "big ideas" describe how this project thinks about the world.
+The "small ideas" describe what has been implemented and is doable
+(has been done) with the current technology and code base.
 
 The Big Idea - Knowledge
 ------------------------

@@ -2019,6 +2019,89 @@ Time: 563
 
 OK, so guile-3.0.1-deb+1-2 offers no improvement at all.
 Bummer.
+-----------------------
+OK back to work.
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+
+(define wsv (make-shape-vec-api))
+(define wss (add-pair-stars wsv))
+(wsv 'fetch-pairs)
+
+(define cac (direct-sum psa wss))
+
+(define csc (add-pair-stars cac))
+
+Then do run-common/marginals-mst.scm i.e. do
+
+(define cuc (add-support-compute csc))
+(cuc 'cache-all)
+... but that won't work, it runs at 1.3 columns/sec
+... for 586660 entries it will take 4.5 days
+but 'all-right-marginals is fast: 49 seconds.
+OK, that was a caching bug. Now runs at 2K/sec
+total time of 405 secs.
+
+for each right (i.e. for each dj) do:
+    sum over left-stars for that dj. ....
+       finding the left-stars is slow... why, again?
+
+(define dj (list-ref (csc 'right-basis) 42))  ; is a dj
+(csc 'left-stars dj)
+
+get-internal-run-time
+
+(api-obj (add-support-api star-obj))
+calls
+(set-norms (LLOBJ 'left-wildcard ITEM) L0 L1 L2))
+
+(define sns (get-internal-run-time))
+(define wild (LLOBJ 'left-wildcard ITEM))
+(define ens (get-internal-run-time))
+(format #t "get-wild took ~5f millis\n" (/ (- ens sns) 1000000.0))
+
+Foo, do we actually need left marginals, or are we just spewing CPU time?
+
+
+((make-central-compute csc) 'cache-all)
+((make-central-compute csc) 'cache-total)
+
+Above isn't needed, the batcher does all this, yeah!?
+run-common/marginals-mst.scm does them .. why?
+((add-support-compute psa) 'cache-all)
+((make-central-compute psa) 'cache-total)
+
+
+(define btc (batch-transpose csc))
+(btc 'mmt-marginals)
+(print-matrix-summary-report cac)
+
+
+(gram-classify-greedy-fuzz 0.65 0.3 4)
+(gram-classify-greedy-disinfo 3 4)
+
+... make-disinfo uses make-pseudo-cset-api and we don't want that...
+
+(current-time)
+start-time
+
+similari
+
+elapsed-count
+(define elapsed-secs (make-elapsed-secs))
+
+((make-store (make-pseudo-cset-api)) 'store-all)
+((make-store (make-gram-class-api)) 'store-all)
+
+
+(cac 'right-type)
+(cac 'pair-type
+
+ (if (LLOBJ 'provides 'make-left-stars)
+            (LLOBJ 'make-left-stars))
+
 
 ====================================================
 
@@ -2033,6 +2116,7 @@ FIXED:
 
 TODO/BUGS:
 
+* Write unit test for the recent caching fix, its doable...
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
 * Fix count transfer in add-singleton-classes

@@ -20,10 +20,11 @@
 (psa 'fetch-pairs)
 
 ; Compute the lp-norms
-((add-support-compute psa) 'cache-all)
+; Not needed, btr will do this for us...
+; ((add-support-compute psa) 'cache-all)
 
 ; Cache the total matrix dimensions
-((make-central-compute psa) 'cache-total)
+; ((make-central-compute psa) 'cache-total)
 
 ; Compute the matrix-transpose marginals
 (btr 'mmt-marginals)
