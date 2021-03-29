@@ -840,7 +840,7 @@
 	(gram-classify diag-over-words (make-fuzz STARS 0.65 0.3 ZIPF MIN-OBS))
 )
 
-(define-public (gram-classify-greedy-fuzz COS-CUT FRAC MIN-OBS)
+(define-public (gram-classify-greedy-fuzz STARS COS-CUT FRAC MIN-OBS)
 "
   gram-classify-greedy-fuzz - Merge words into word-classes.
 
