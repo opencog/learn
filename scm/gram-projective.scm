@@ -410,11 +410,14 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-fuzz CUTOFF UNION-FRAC ZIPF MIN-CNT)
+(define (make-fuzz STARS CUTOFF UNION-FRAC ZIPF MIN-CNT)
 "
   make-fuzz -- Do projection-merge, with a fixed merge fraction.
 
   Uses the `merge-project` merge style.
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
 
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
@@ -428,8 +431,7 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(let* ((pca (make-pseudo-cset-api))
-			(psa (add-dynamic-stars pca))
+	(let* ((psa STARS)
 			(pss (add-support-api psa))
 			(psu (add-support-compute psa))
 			(pcos (add-pair-cosine-compute psa))
@@ -476,7 +478,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-discrim CUTOFF ZIPF MIN-CNT)
+(define (make-discrim STARS CUTOFF ZIPF MIN-CNT)
 "
   make-discrim -- Do a \"discriminating\" merge. When a word is to be
   merged into a word class, the fraction to be merged will depend on
@@ -493,6 +495,9 @@
   Uses the `merge-discrim` merge style; the merge fraction is a sigmoid
   taper.
 
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
+
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
 
@@ -502,8 +507,7 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(let* ((pca (make-pseudo-cset-api))
-			(psa (add-dynamic-stars pca))
+	(let* ((psa STARS)
 			(pss (add-support-api psa))
 			(psu (add-support-compute psa))
 			(pcos (add-pair-cosine-compute psa))
@@ -555,7 +559,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-disinfo CUTOFF ZIPF MIN-CNT)
+(define (make-disinfo STARS CUTOFF ZIPF MIN-CNT)
 "
   make-disinfo -- Do a \"discriminating\" merge, using MI for
   similarity.
@@ -563,6 +567,9 @@
   Use `merge-project` style merging, with linear taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
 
   CUTOFF is the min acceptable MI, for words to be considered
   mergable.
@@ -573,8 +580,7 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(let* ((pca (make-pseudo-cset-api))
-			(dsa (add-dynamic-stars pca))
+	(let* ((dsa STARS)
 			(pss (add-support-api dsa))
 			(psu (add-support-compute dsa))
 			(pmi (add-symmetric-mi-compute dsa))

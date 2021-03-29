@@ -2084,6 +2084,8 @@ run-common/marginals-mst.scm does them .. why?
 
 ... make-disinfo uses make-pseudo-cset-api and we don't want that...
 
+if does use dynamic-stars...
+
 (current-time)
 start-time
 
@@ -2102,6 +2104,9 @@ elapsed-count
  (if (LLOBJ 'provides 'make-left-stars)
             (LLOBJ 'make-left-stars))
 
+
+who fetchess marginals? forgot to do that on direct-sum! FIXED
+(PredicateNode (string-append "*-Direct Sum Wild " id-string))
 
 ====================================================
 
