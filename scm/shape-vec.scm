@@ -114,6 +114,9 @@
 ; connector-shape pairs, which is presumably something everyone
 ; will want to do. There's nothing special about WordNodes, here.
 ;
+; The redesign requires passing in the correct object holding the
+; sections that should be shaped.
+;
 ; TODO: Create ShapeLink link type in the atomspace, and create the
 ; CrossSection link type so that its a word-shape pair.
 ;
@@ -240,9 +243,16 @@
 		; Basically, given a Section, it walks over the ConnectorSeq
 		; inside of it, replaces each word with a variable (to define
 		; the shape) and then creates a pair consisting of that word,
-		; and that shape.  We fudge the observation count, by taking
-		; the observation count on the section, and distributing it
-		; uniformly over each word-shape pair.
+		; and that shape.
+		;
+		; We copy the observation count from the observation count on
+		; the section. This is the "right thing to do", because every
+		; observation of a section is also an observation of every shape
+		; in that section, and so we can weight all of these equally.
+		; A case can be made for an alternative: the obsservation of
+		; connectors. In this case, the count on the shapes (and the
+		; count on the sections!) should be devided by the arity of the
+		; disjunct. But that would not alter the counts here.
 		;
 		; Note that the shapes will hold marginal counts.
 		;
@@ -276,10 +286,10 @@
 				(define cncts (cog-outgoing-set (gdr SEC)))
 				(define num-cncts (length cncts))
 
-				; Count on section uniformly distributed across
-				; each of the cross-sections.
-				(define weight (cog-new-ctv 1 0
-					(/ (cog-count SEC) (exact->inexact num-cncts))))
+				; Copy the count. All shapes have the same count as
+				; the section itself. XXX should use getter on section.
+				; (define weight (cog-new-ctv 1 0 (cog-count SEC)))
+				(define weight (cog-tv SEC))
 
 				; Place the wild-card into the N'th location of the section.
 				; Of course, this creates the section, if it does not yet
@@ -303,6 +313,8 @@
 				(for-each insert-wild (list-tabulate num-cncts values))
 			)
 
+			; XXX FIXME: this should call
+			; ((make-pseudo-cset-api) 'get-all-pairs)
 			(for-each explode-section (cog-get-atoms 'Section))
 			(format #t "Elapsed time to create shapes: ~A secs\n"
 				(- (current-time) start-time))
@@ -438,11 +450,12 @@ around for a while.
 			(format #t "Elapsed time to load word-shape pairs: ~A seconds\n"
 				(- (current-time) start-time))
 
-			; It is just to easy for the user to forget to do this,
-			; yet its a very important step for some (but not all)
-			; applications.  If user forgets, its a painful debug
-			; session ahead for the user. If user does not actually
-			; need this, then its just a waste of RAM...
+			; We need to also fetch the shapes. There are two things
+			; we could do here: fetch them from RAM, or just re-create
+			; them. For now, just re-creating them seems to be suficient.
+			; This does lose any kinds of distinct data that may have been
+			; stored on the sections. It also clobbers the counts, and
+			; fails to restore frequencies... is this OK? I'm confused.
 			(explode-sections)
 		)
 

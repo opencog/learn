@@ -141,7 +141,7 @@
 			; Marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
-			; Loading Sections is a bit too mcuh, as that will also
+			; Loading Sections is a bit too much, as that will also
 			; pick up WordClassNodes. But I guess that is OK for now.
 			(load-atoms-of-type 'Section)
 			(format #t "Elapsed time to load csets: ~A secs\n"
