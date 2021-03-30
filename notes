@@ -1938,6 +1938,10 @@ Done storing 510993 left-wilds in 500 secs
 
 so that is 5x faster than the initial store. The magic of indexing.
 
+BTW, a rocks DB holding 750K atoms takes abuot 605M bytes
+so that works out to under 1KBytes per atom. So more compact than
+the in-RAM storage!
+
 -----------------------------------------------------
 
 Concatenation of vectors.
@@ -2079,8 +2083,8 @@ run-common/marginals-mst.scm does them .. why?
 (print-matrix-summary-report cac)
 
 
-(gram-classify-greedy-fuzz 0.65 0.3 4)
-(gram-classify-greedy-disinfo 3 4)
+(gram-classify-greedy-fuzz csc 0.65 0.3 4)
+(gram-classify-greedy-disinfo csc 3 4)
 
 ... make-disinfo uses make-pseudo-cset-api and we don't want that...
 
@@ -2109,6 +2113,39 @@ hang on... (make-store cac) will work
 
 who fetchess marginals? forgot to do that on direct-sum! FIXED
 (PredicateNode (string-append "*-Direct Sum Wild " id-string))
+
+--------------------
+start again.
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (make-shape-vec-api))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+
+(define btc (batch-transpose csc))
+(btc 'mmt-marginals)
+(print-matrix-summary-report csc)
+((make-store csc) 'store-all)  ; ... is this needed? Its slow!
+
+(print-matrix-summary-report csc)
+(gram-classify-greedy-disinfo csc 3 4)
+
+(define csr (add-report-api csc))
+(csr 'num-pairs)
+
+(define ww (csc 'wild-wild)) .. got nothing... did btc not store it?
+
+Hmmm fresh start; only keys on ww are MMT product key
+
+(define support-obj (add-support-api csc))
+(support-obj 'total-support-left)
+*unspecified*
+	(throw 'bad-summation 'compute-total-entropy
 
 ====================================================
 
