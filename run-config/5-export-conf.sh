@@ -20,4 +20,4 @@ export STORAGE_NODE="(RocksStorageNode \"rocks://${EXPORT_DB}\")"
 export LG_DICT_EXPORT=${TEXT_DIR}/learned-2/dict.db
 
 # The locale to apply to the dictionary.
-export LG_DICT_LOCALE=EN_us
+export LG_DICT_LOCALE=en_US

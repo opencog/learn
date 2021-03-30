@@ -2147,6 +2147,35 @@ Hmmm fresh start; only keys on ww are MMT product key
 *unspecified*
 	(throw 'bad-summation 'compute-total-entropy
 
+link-generator -l learned -c 123123123 -s 3
+
+LEFT-WALL e a !
+LEFT-WALL e a !
+LEFT-WALL j a !
+LEFT-WALL a h !
+vs
+
+LEFT-WALL j d !
+LEFT-WALL j b !
+LEFT-WALL j a !
+LEFT-WALL j j !
+LEFT-WALL j e !
+
+generator is under-generating...
+j a ! has three linkages, only one generated.
+e a ! "  "
+
+oh, I see all three are the same ... but there are supposed to be no
+synonyms, but accidentall there are... where are there accidental synonyms?
+Hmm.
+Answer: because word-classes list muultiple poses, and the poses are
+effectiely synonym classes. So.... we're not really generating langs
+correctly. Shoot.
+
+But also, given the dict, we're also not generating the full corpus,
+either; we're generating a corpus that is too small.
+
+
 ====================================================
 
 FIXED:
