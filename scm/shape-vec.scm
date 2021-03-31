@@ -171,6 +171,14 @@
 		(define (make-pair L-ATOM R-ATOM)
 			(EvaluationLink pair-pred L-ATOM R-ATOM))
 
+		; Get the left and right parts of the pair.
+		; The zeroth atom is the predicate.
+		(define (get-pair-left SHAPE-PR)
+			(cog-outgoing-atom SHAPE-PR 1))
+
+		(define (get-pair-right SHAPE-PR)
+			(cog-outgoing-atom SHAPE-PR 2))
+
 		; Create the section corresponding to the word-shape pair.
 		; That is, unexplode (implode?) the word-shape pair back
 		; into a section, again. This is a projection from the
@@ -486,6 +494,8 @@ around for a while.
 				((get-pair)         get-pair)
 				((get-count)        get-count)
 				((make-pair)        make-pair)
+				((left-element)     get-pair-left)
+				((right-element)    get-pair-right)
 				((left-wildcard)    get-left-wildcard)
 				((right-wildcard)   get-right-wildcard)
 				((wild-wild)        get-wild-wild)
