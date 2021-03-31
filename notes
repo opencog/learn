@@ -2178,6 +2178,9 @@ correctly. Shoot.
 But also, given the dict, we're also not generating the full corpus,
 either; we're generating a corpus that is too small.
 ---
+wild-wild-count
+left-element
+
 verify clustering
 
 --- To-do=11 ncls=0 sing=1 nredo=0 2021-03-31 00:06:54 -- "j" ---
@@ -2205,12 +2208,108 @@ Holy cow! how many sections and shapes were on e and j to begin with!?
 (length js) ; 1195
 
 Wow There sure are a lot of shapes. A heck of a lot more than ..
-expected. Why?
+expected. Why? Its a hundred-to-one blow-up...
+
+(cog-report-counts)
+(Section . 80807)
+(EvaluationLink . 1131429)
+so 14x more shapes than sections, which seems too much.
+
+overcounting.
+(length (cog-incoming-set (PredicateNode "*-shape-*")))
+510993  a only 6.3x more
+
+(length (cog-incoming-set (PredicateNode "*-word-shape pair-*")))
+ 620435  so 7.7x more
 
 
+(for-each (lambda (wn) (format #t "~A is ~A\n"
+(cog-name wn) (length (cog-incoming-by-type wn 'Section))))
+(cog-get-atoms 'Word))
 
-wild-wild-count
-left-element
+
+a is 21178
+d is 2226
+g is 591
+b is 1212
+###LEFT-WALL### is 9113
+j is 1195
+i is 2113
+h is 1558
+c is 580
+f is 781
+e is 1416
+! is 38844
+
+(for-each (lambda (wn) (format #t "~A is ~A\n"
+(cog-name wn) (length (cog-incoming-by-type wn 'Evaluation))))
+(cog-get-atoms 'Word))
+
+a is 177916
+d is 108679
+g is 9004
+b is 42191
+###LEFT-WALL### is 122085
+j is 108047
+i is 14077
+h is 40231
+c is 33587
+f is 40733
+e is 124006
+! is 310872
+
+How many connectors in a shape? How many connectors in a section?
+(use-modules (srfi srfi-1))
+(fold (lambda (sec cnt) (+ cnt (cog-arity sec)))
+0 (cog-get-atoms 'Section))
+; 161614 so double (Section . 80807)
+
+(fold (lambda (sec cnt) (+ cnt (cog-arity (gdr sec))))
+0 (cog-get-atoms 'Section))
+
+620435 connectors total, so exactly equal to 
+(length (cog-incoming-set (PredicateNode "*-word-shape pair-*")))
+
+and averages out to 7.6779858 connectors per section. Wow. That's a lot.
+That's huge.
+
+; How many sections of a given length?
+(for-each (lambda (ARI)
+(format #t "len ~A  secs ~A\n" ARI
+(fold (lambda (sec cnt) (if (= ARI (cog-arity (gdr sec))) (+ 1 cnt) cnt))
+0 (cog-get-atoms 'Section))))
+(iota 20))
+
+len 0  secs 0
+len 1  secs 0
+len 2  secs 606
+len 3  secs 2311
+len 4  secs 3723
+len 5  secs 5150
+len 6  secs 8387
+len 7  secs 13907
+len 8  secs 17362
+len 9  secs 15043
+len 10  secs 9061
+len 11  secs 4000
+len 12  secs 1257
+len 13  secs 0
+len 14  secs 0
+
+So its not at all zipfian.
+(for-each (lambda (ARI)
+(format #t "Length= ~A  NSections= ~A\n" ARI
+(fold (lambda (sec cnt) (if (= ARI (cog-arity (gdr sec))) (+ 1 cnt) cnt))
+0 (cog-get-atoms 'Section))))
+(iota 20))
+
+(for-each (lambda (ARI)
+(format #t "Length= ~A  NConSeq= ~A\n" ARI
+(fold (lambda (sec cnt) (if (= ARI (cog-arity sec)) (+ 1 cnt) cnt))
+0 (cog-get-atoms 'ConnectorSeq))))
+(iota 20))
+
+
 
 ====================================================
 
