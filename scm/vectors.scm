@@ -126,7 +126,7 @@
 	(define ptu (add-tuple-math LLOBJ bogus))
 
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (cog-new-ctv 1 0 CNT)))
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 	; Sum two sections, placing the result ont WS.  Given a pair of
 	; sections, sum the counts from each, and then place that count on a

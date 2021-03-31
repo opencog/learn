@@ -221,7 +221,8 @@
 
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
 	; XXX FIXME there should be a set-count on the LLOBJ...
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (cog-new-ctv 1 0 CNT)))
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 	; Create a new word-class out of the two words.
 	; Concatenate the string names to get the class name.
@@ -259,18 +260,20 @@
 		(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
 		(define rcnt (if (null? rsec) 0 (LLOBJ 'get-count rsec)))
 
-		; Return #t if sect is a Word section, not a word-class section.
-		(define (is-word-sect? sect)
-			(eq? 'WordNode (cog-type (cog-outgoing-atom sect 0))))
+		; Return #t if sect is a singleton section, (a section for a
+		; single word) and not a word-class section.
+		(define (is-singleton-sect? sect)
+			; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect 0)))
+			(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect 0))))
 
 		; If the other count is zero, take only a FRAC of the count.
 		; But only if we are merging in a word, not a word-class;
 		; we never want to shrink the support of a word-class, here.
 		(define wlc (if
-				(and (null? rsec) (is-word-sect? lsec) (< ZIPF lcnt))
+				(and (null? rsec) (is-singleton-sect? lsec) (< ZIPF lcnt))
 				(* frac-to-merge lcnt) lcnt))
 		(define wrc (if
-				(and (null? lsec) (is-word-sect? rsec) (< ZIPF rcnt))
+				(and (null? lsec) (is-singleton-sect? rsec) (< ZIPF rcnt))
 				(* frac-to-merge rcnt) rcnt))
 
 		; Sum them.
@@ -290,8 +293,9 @@
 		(if (< 1.0e-10 cnt)
 			(let* (
 					; The disjunct. Both lsec and rsec have the same disjunct.
-					(seq (if (null? lsec) (cog-outgoing-atom rsec 1)
-							(cog-outgoing-atom lsec 1)))
+					(seq (if (null? lsec)
+							(LLOBJ 'right-element rsec)
+							(LLOBJ 'right-element lsec)))
 					; The merged word-class
 					(mrg (LLOBJ 'make-pair wrd-class seq))
 				)
@@ -304,7 +308,7 @@
 				; Left side is either a word or a word-class.
 				; If its a word-class, we've already updated
 				; the count.
-				(if (and (not (null? lsec)) (is-word-sect? lsec))
+				(if (and (not (null? lsec)) (is-singleton-sect? lsec))
 					(update-section-count lsec (- lcnt wlc)))
 
 				; Right side is WB and is always a WordNode

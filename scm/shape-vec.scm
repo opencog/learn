@@ -288,7 +288,7 @@
 
 				; Copy the count. All shapes have the same count as
 				; the section itself. XXX should use getter on section.
-				; (define weight (cog-new-ctv 1 0 (cog-count SEC)))
+				; (define weight (CountTruthValue 1 0 (cog-count SEC)))
 				(define weight (cog-tv SEC))
 
 				; Place the wild-card into the N'th location of the section.

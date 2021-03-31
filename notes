@@ -2134,6 +2134,9 @@ start again.
 
 (print-matrix-summary-report csc)
 (gram-classify-greedy-disinfo csc 3 4)
+(gram-classify-greedy-discrim csc 0.5 4)
+
+
 
 (define csr (add-report-api csc))
 (csr 'num-pairs)
@@ -2174,11 +2177,17 @@ correctly. Shoot.
 
 But also, given the dict, we're also not generating the full corpus,
 either; we're generating a corpus that is too small.
+---
+verify clusterin
 
+
+wild-wild-count
+left-element
 
 ====================================================
 
 FIXED:
+* Fix link-generator to do full combinatorial. DONE
 * Pair counting insanely slow and leaks RAM.
 * learn.scm use include not load or export... DONE
 * Alter dict generator to automatically place period at end of sentence.
@@ -2189,6 +2198,7 @@ FIXED:
 
 TODO/BUGS:
 
+* Fix direct-sum/shape clustering.
 * Write unit test for the recent caching fix, its doable...
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
