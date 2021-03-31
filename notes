@@ -2178,7 +2178,35 @@ correctly. Shoot.
 But also, given the dict, we're also not generating the full corpus,
 either; we're generating a corpus that is too small.
 ---
-verify clusterin
+verify clustering
+
+--- To-do=11 ncls=0 sing=1 nredo=0 2021-03-31 00:06:54 -- "j" ---
+Dist=0.9553 for word "e" -- "j" in 30.10 secs
+---------Bingo! Dist=0.9553 for word "e" -- "j"
+---------Merged 201883 sections in 1102. secs; 183.22 scts/sec
+--- Greedy-checking next 10 items
+
+(cog-get-atoms 'WordClassNode)
+(define ie (cog-incoming-by-type (WordClass "e j") 'Evaluation))
+(length ie) ; 200115
+
+(define is (cog-incoming-by-type (WordClass "e j") 'Section))
+(length is) ; 1768
+
+Holy cow! how many sections and shapes were on e and j to begin with!?
+
+(define ee (cog-incoming-by-type (Word "e") 'Evaluation))
+(length ee) ; 124006
+(define es (cog-incoming-by-type (Word "e") 'Section))
+(length es) ; 1416
+(define je (cog-incoming-by-type (Word "j") 'Evaluation))
+(length je) ; 108047
+(define js (cog-incoming-by-type (Word "j") 'Section))
+(length js) ; 1195
+
+Wow There sure are a lot of shapes. A heck of a lot more than ..
+expected. Why?
+
 
 
 wild-wild-count
