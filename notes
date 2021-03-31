@@ -2267,7 +2267,7 @@ How many connectors in a shape? How many connectors in a section?
 (fold (lambda (sec cnt) (+ cnt (cog-arity (gdr sec))))
 0 (cog-get-atoms 'Section))
 
-620435 connectors total, so exactly equal to 
+620435 connectors total, so exactly equal to
 (length (cog-incoming-set (PredicateNode "*-word-shape pair-*")))
 
 and averages out to 7.6779858 connectors per section. Wow. That's a lot.
@@ -2308,6 +2308,15 @@ So its not at all zipfian.
 (fold (lambda (sec cnt) (if (= ARI (cog-arity sec)) (+ 1 cnt) cnt))
 0 (cog-get-atoms 'ConnectorSeq))))
 (iota 15))
+
+(for-each (lambda (ARI)
+(format #t "Length= ~A  NSections= ~A\n" ARI
+(fold (lambda (sec cnt) (if
+(and (= ARI (cog-arity (gdr sec))) (< 4 (cog-count sec)))
+(+ 1 cnt) cnt))
+0 (cog-get-atoms 'Section))))
+(iota 15))
+
 
 
 

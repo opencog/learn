@@ -1,0 +1,18 @@
+set term png
+# set term png small
+# set out 'dj-len-cut.png'
+set term postscript eps enhanced color 26
+set out 'dj-len-cut.eps'
+
+set logscale y
+set yrange [50:20000]
+set title "Number of sections of given length"
+set xlabel "Length of Disjunct"
+set ylabel "Number of Sections"
+
+set key bottom
+
+plot "dj-len.dat" using 1:2 with lines linewidth 2 title "All Sections", \
+     "dj-len.dat" using 1:4 with lines linewidth 2 title "Sections w/count > 4"
+
+#################################################

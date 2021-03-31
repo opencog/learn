@@ -4934,6 +4934,54 @@ Must never connect
 What happens if we exlude Sections with a low observation count?
 \end_layout
 
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images-diary-two/dj-len-cut.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above shows all sections, and sections that were observed 5 or more
+ times.
+ Apparently, the long, complicated disjuncts are observed very rarely.
+\end_layout
+
+\begin_layout Standard
+How should this be interpreted? Common sense seems to suggest that low-count
+ observations are 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ and should be cut before any merging is performed.
+ Doing so will certainly increase the similarity of vectors.
+ But are cuts really needed? Perhaps the similarity measures can already
+ deal with these? If so, then the only reason for cuts would be performance,
+ rather than accuracy.
+\end_layout
+
+\begin_layout Standard
+How do these affect cosine-similarity vs MI-similarity? Clearly, for cosine-simi
+larity, low counts means short vector components, and so these will not
+ contribute much to the dot product.
+ Likewise, the MI-similarity is built on a dot-product, so again, these
+ should not contribute much.
+ Even more-so, since the MI-similarity never takes a square-root of the
+ dot product.
+ It does, however, re-weight basis elements in a fashion that I do not yet
+ have a good intuition for.
+ (Or rather, developed an intuition, and now I've forgotten what it was...
+ Hmmm.)
+\end_layout
+
 \begin_layout Subsection*
 Connector merging
 \end_layout
