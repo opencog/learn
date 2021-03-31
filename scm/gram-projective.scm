@@ -264,7 +264,7 @@
 		; single word) and not a word-class section.
 		(define (is-singleton-sect? sect)
 			; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect 0)))
-			(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect 0))))
+			(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
 
 		; If the other count is zero, take only a FRAC of the count.
 		; But only if we are merging in a word, not a word-class;
