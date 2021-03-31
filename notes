@@ -2307,7 +2307,7 @@ So its not at all zipfian.
 (format #t "Length= ~A  NConSeq= ~A\n" ARI
 (fold (lambda (sec cnt) (if (= ARI (cog-arity sec)) (+ 1 cnt) cnt))
 0 (cog-get-atoms 'ConnectorSeq))))
-(iota 20))
+(iota 15))
 
 
 

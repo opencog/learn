@@ -4764,7 +4764,7 @@ accidental
 \begin_inset Quotes eld
 \end_inset
 
-accidental sysnonyms
+accidental synonyms
 \begin_inset Quotes erd
 \end_inset
 
@@ -4797,67 +4797,92 @@ status open
 
 \begin_layout Plain Layout
 
-  Length= 1  NSections= 0
+# column 1 length 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 2  NSections= 606
+# column 2: number of Section 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 3  NSections= 2311
+# column 3: number of ConnectorSeq 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 4  NSections= 3723
+# 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 5  NSections= 5150
+1  0  0 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 6  NSections= 8387
+2  606   115 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 7  NSections= 13907
+3  2311  780 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 8  NSections= 17362
+4  3723  1904 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 9  NSections= 15043
+5  5150  4066 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 10  NSections= 9061
+6  8387  8183 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 11  NSections= 4000
+7  13907 13896 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 12  NSections= 1257
+8  17362 17362 
 \end_layout
 
 \begin_layout Plain Layout
 
-  Length= 13  NSections= 0 
+9  15043 15043 
+\end_layout
+
+\begin_layout Plain Layout
+
+10 9061  9061 
+\end_layout
+
+\begin_layout Plain Layout
+
+11 4000  4000 
+\end_layout
+
+\begin_layout Plain Layout
+
+12 1257  1257 
+\end_layout
+
+\begin_layout Plain Layout
+
+13 0 
+\end_layout
+
+\begin_layout Plain Layout
+
+  
 \end_layout
 
 \end_inset
@@ -4866,7 +4891,73 @@ status open
 \end_layout
 
 \begin_layout Standard
-bar
+So ...
+ long disjuncts appear on one and only one word (as witnessed by identical
+ counts for length 8 and above).
+ Short disjuncts might be shared with multiple words.
+ This implies that words are not mergable, or rather, the distinct long
+ sections are preventing merger.
+ Here a graph of above.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename images-diary-two/dj-len.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So its very Gaussian, both peak and tails.
+ All these gaussians here and in earlier results imply that central-limit
+ theorems hold.
+ And all kinds of other classical theorems should hold.
+ Have not been leveraging those theorems, so far.
+ If we did, what would we get? Note it's Gaussian despite the fact that
+ negative connector-seq lengths don't make sense! Right? What would a negaive
+ connector-seq length be? A repulsion? an anti-connect statement? 
+\begin_inset Quotes eld
+\end_inset
+
+Must never connect
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+What happens if we exlude Sections with a low observation count?
+\end_layout
+
+\begin_layout Subsection*
+Connector merging
+\end_layout
+
+\begin_layout Standard
+Before starting expt-17 with fixed sampling, it is time to ponder connector
+ merging, to figure out:
+\end_layout
+
+\begin_layout Itemize
+How would connector merging affect clustering results?
+\end_layout
+
+\begin_layout Itemize
+If connectors are merged, then how should vectors be handled? (Naive vectors
+ no longer work, because the basis is now different.)
+\end_layout
+
+\begin_layout Itemize
+What is the right merge algorithm?
+\end_layout
+
+\begin_layout Standard
+Lets look at a toy model.
 \end_layout
 
 \end_body

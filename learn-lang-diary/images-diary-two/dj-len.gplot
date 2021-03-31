@@ -1,14 +1,19 @@
 set term png
 # set term png small
-set out 'dj-len.png'
-# set term postscript eps enhanced color 28
-# set out 'dj-len.eps'
+# set out 'dj-len.png'
+set term postscript eps enhanced color 24
+set out 'dj-len.eps'
 
 set logscale y
-set title "Number of sections with disjuncts of given length"
-set xlabel "Length of disjunct"
-set ylabel "Number of sections"
+set yrange [100:20000]
+set title "Number of sections/disjuncts of given length"
+set xlabel "Length of Disjunct"
+set ylabel "Number of Sections/Disjuncts"
 
-plot "dj-len.dat" using 1:2 with lines linewidth 2 title "Sections"
+set key bottom
+
+plot "dj-len.dat" using 1:2 with lines linewidth 2 title "Sections", \
+     "dj-len.dat" using 1:3 with lines linewidth 2 title "ConnectorSeqs", \
+     (17400* exp(- ((x-8)**2)/7 )) with lines dashtype ' -' linewidth 2 title "exp -(x-8)^2 / 7"
 
 #################################################
