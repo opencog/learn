@@ -2326,7 +2326,7 @@ So its not at all zipfian.
 ====================================================
 
 FIXED:
-* Fix link-generator to do full combinatorial. DONE
+* Fix link-generator to do full combinatorial. DONE #1175
 * Pair counting insanely slow and leaks RAM.
 * learn.scm use include not load or export... DONE
 * Alter dict generator to automatically place period at end of sentence.
@@ -2337,8 +2337,10 @@ FIXED:
 
 TODO/BUGS:
 
+* Change shape-vect to use ShapeLink, CrossSection.
 * Fix direct-sum/shape clustering.
-* Write unit test for the recent caching fix, its doable...
+* Write unit test for the recent caching fix in the pattern matcher,
+  its doable...
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
 * Fix count transfer in add-singleton-classes

@@ -117,8 +117,9 @@
 ; The redesign requires passing in the correct object holding the
 ; sections that should be shaped.
 ;
-; TODO: Create ShapeLink link type in the atomspace, and create the
-; CrossSection link type so that its a word-shape pair.
+; TODO: Convert the code to use the ShapeLink and the CrossSection
+; link type so that its a word-shape pair. Once this is done, this
+; could almost-but-not-quite be moved to the atomspace matrix repo.
 ;
 ; ---------------------------------------------------------------------
 ;
