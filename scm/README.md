@@ -35,3 +35,57 @@ but the also require, as input, data that was produced by earlier files.
                           strategies to actually create clusters.
 * __cset-class.scm__      Merge connector sets.
 * __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
+
+Data Structures
+---------------
+All code uses a repetitive set of data structures called "vectors",
+"germs", "sections" and "disjuncts". The "vector" is similar to a
+conventional vector, as defined in mathematics, in that it associates
+a number to a basis element. More precisely, the vectors here are just
+sets, with an associated floating-point number for each member of the
+set. Elements of the set are Atoms stored in the AtomSpace.
+
+The 2D version of a "vector" is a "matrix". Again, this is similar to
+to the conventional mathematical definition of a matrix. The primary
+difference is that here, the matrix is just a number associated to pairs
+of things (pairs of Atoms). In general, the matrices are extremely
+sparse, which is why they are stored as pairs - it is much more memory
+(RAM/storage) efficient. In the code here, the matrix objects are just
+called "objects" or `LLOBJ` or "low-level objects": the matrix API is
+an object-oriented class providing methods to obtain marginal sums,
+conditional probabilities, mutual information and many other quantities
+that can be obtained from a matrix.  The full documentation for teh API
+can be found in a different github repo, the
+[matrix](https://github.com/opencog/atomspace/tree/master/opencog/matrix)
+directory in the AtomSpace repo.
+
+Sections and disjuncts (connector sets) are concepts that arise
+naturally when working with subsets of graphs. Roughly speaking, a
+section is what one gets if one takes a graph, and clips some edges in
+half.  Each half-edge becomes a "connector": it signifies the
+possibility of connecting to some appropriate mating connector. The
+"disjunct" is the same thing as a "connector set". (It gets the name
+"disjunct" because it is typically disjoined with other connector sets.
+For example: 'connect (A and B) or (C and D)'. The 'and', 'or' here are
+not Boolean and/or, they are linear-logic and/or, because linear logic
+is the "internal language" of a "monoidal category".) The terms
+"disjunct" and "connector set" are used synonymously throughout the
+code. Sections, connector sets and more are explained in detail in a
+different github repo, in the
+[sheaf](https://github.com/opencog/atomspace/tree/master/opencog/sheaf)
+directory, and the various PDF's in the
+[sheaf/docs](https://github.com/opencog/atomspace/tree/master/opencog/sheaf/docs)
+directory.
+
+
+Documentation
+-------------
+The above files contain documentation embeded within them. Particularly
+notable:
+
+* [gram-classification.scm](gram-classification.scm) Explains the
+                          process of clustering/classification in detail.
+
+* [shape-vec.scm](shape-vec.scm) Explains the concept of "shapes". These
+                          are vectors where one of the connectors has
+                          been made the base of the vector.
