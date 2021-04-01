@@ -5006,6 +5006,382 @@ What is the right merge algorithm?
 
 \begin_layout Standard
 Lets look at a toy model.
+ Suppose the dict is
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: C+ & D+
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: C+ & D+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: A- & E+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: B- & F+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: A- & G+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: B- & G+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From this, conclude that A and B can be merged.
+ However, the connectors on C cannot be merged, the connectors on D can
+ be merged.
+ The final dict is then (with some abuse of notation)
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: C+ & D+
+\end_layout
+
+\begin_layout Plain Layout
+
+   A B: <wclass-AB>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: A- & E+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: B- & F+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: <wclass-AB>- & G+
+\end_layout
+
+\end_inset
+
+Next suppose that we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   S: C+ & D+
+\end_layout
+
+\begin_layout Plain Layout
+
+   T: C+ & D+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: S- & J+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: T- & F+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: S- & H+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: T- & G-
+\end_layout
+
+\end_inset
+
+The determination to merge is now trickier.
+ Naively, S can be merged into <wclass-AB> but doing so would wreck the
+ connector set on D, as it implies an (S- & G+) which was not observed,
+ and thus not mergable.
+ ...
+ unless we are willing to create such new unobserved cases.
+\end_layout
+
+\begin_layout Standard
+Merging T looks OK.
+\end_layout
+
+\begin_layout Standard
+Perhaps this looks bad because we are not doing shape vectors.
+ The shape vector for the above would be:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: (C+ & D+) or (C:x- & E+) or (D:x- & G+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (C+ & D+) or (C:x- & F+) or (D:x- & G+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (A- & E+) or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (B- & F+) or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (A- & G+) or (A:C+ & x+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (B- & G+) or (B:C+ & x+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So the decision to merge A and B is less clear-cut, when using shapes.
+ The shape variant of the S thing is
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   S: (C+ & D+) or (C:x- & J+) or (D:x- & H+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   T: (C+ & D+) or (C:x- & F+) or (D:x- & G+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (S- & H+) or (S:C+ & x+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (T- & H+) or (T:C+ & x+)
+\end_layout
+
+\end_inset
+
+So using shapes weakens the decision to merge S into AB.
+ So it seems that shapes do offer stronger guarantees.
+ It seems like they also allow things to continue to be treated as vectors,
+ instead of muddling the concept of vectors.
+ After the AB-merge, the result would be:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (C+ & D+) or (C:x- & E+) or (C:x- & F+) or (D:x- & G+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   A B: <wclass-AB>
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: A- & E+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: B- & F+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (<wclass-AB>- & G+) or (<wclass-AB>:C+ & x+)
+\end_layout
+
+\end_inset
+
+Now, given this merged-AB thing, when happens when we look at merging S?
+ Well, S is meh, T looks better.
+ The vector for T is comparable to the vector for <wclass-AB> so vector
+ similarity works for that merge decision.
+\end_layout
+
+\begin_layout Standard
+Conclude: the original plan from a few years ago works and holds water.
+ use shape vectors for merge decisions.
+ Once this is done, connectors can be swept up.
+\end_layout
+
+\begin_layout Standard
+However, that's not the end of the story.
+ Consider
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   U: (A- & G+) or (B- & G+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This looks like it could be merged with plain-vanilla D.
+ ..
+ ah, and post-AB-merge, it still looks mergable.
+ There's only trouble if connectors on D were merged, but connectors on
+ U were not, cause then the vectors would be incomparable.
+\end_layout
+
+\begin_layout Standard
+When should connectors be merged? It seems like one could do this as the
+ last step.
+ However, doing it sooner might shrink the siaze of vectors, leading to
+ improved performance.
+ I suppose we can try it both ways...
+\end_layout
+
+\begin_layout Standard
+When writing the LG dict, the shapes are not needed, so we only have to
+ merge connectors on sections.
+ But if merging incrementally, as we go along, then we need to merge connectors
+ both on the sections and on the shapes (Again, I guess we don't have to,
+ on the shapes, but it would improve performance by reducing the number
+ of shapes.)
+\end_layout
+
+\begin_layout Standard
+So I guess this is all consistent, in the end.
+\end_layout
+
+\begin_layout Standard
+The above is just some examples, and some words.
+ The fastiduous would convert all of the above into theorems and proofs.
+ This would be dense.
+ The discussion is already dense to the uninitiated; converting the above
+ 1-2 pages into 40 pages of math proofs seems ...
+ well, I don't think anyone cares.
+ And if no one cares, its wasted effort.
+ However, it would be the right thing to do!?
+\end_layout
+
+\begin_layout Standard
+Anyway, the original plan seems to have been a good plan.
+\end_layout
+
+\begin_layout Subsection*
+expt-17
+\end_layout
+
+\begin_layout Standard
+Moving on...
 \end_layout
 
 \end_body
