@@ -108,6 +108,8 @@ The language-learning effort involves research and software development
  and semantics from corpora.
  This document contains supplementary notes and a loosely-organized semi-chronol
 ogical diary of results.
+ The notes here might not always makes sense; they are a short-hand for
+ my own benefit, rather than aimed at you, dear reader!
 \end_layout
 
 \begin_layout Section*
@@ -117,7 +119,7 @@ Introduction
 \begin_layout Standard
 Part two of the diary on the language-learning effort starts with the new
  task of of closed loop learning.
- The idea of closed loop learning is that the accuraacy of the learned grammars
+ The idea of closed loop learning is that the accuracy of the learned grammars
  can be very closely monitored and measured, thus allowing the learning
  algorithms to be tuned for speed and measured for accuracy.
  The closed loop is a basic three-step process:
@@ -144,7 +146,7 @@ Tune algorithms and procedures, and repeat.
 \end_layout
 
 \begin_layout Standard
-The step-by-step instructions can be found in the directory 
+The step-by-step instructions can be found in the file 
 \begin_inset Quotes eld
 \end_inset
 
@@ -359,7 +361,7 @@ LEFT-WALL.2 the.1 squirrel.3 saw.4 a.1 dog.3
 
 \begin_layout Standard
 Hypothesis: The MI of wall-verb is lower than the MI of wall-determiner.
- Thus, the planar parser always picks the wall-derminer.
+ Thus, the planar parser always picks the wall-determiner.
  Lets find out.
 \end_layout
 
@@ -467,8 +469,8 @@ Expt-11
 \begin_layout Standard
 So...
  expt-11 places a period at the end of every sentence.
- That terminates the infinite-recursive lengths being generated to ony finite-le
-ngth sentences.
+ That terminates the infinite-recursive lengths being generated to only
+ finite-length sentences.
  There is a total of three different parses.
  All have exactly the same cost.
  These are as follows:
@@ -664,13 +666,13 @@ TBD:
 \begin_layout Itemize
 Waiting on completion of link-generator so that multiple-sense corpora can
  be generated.
- Or something like that ...
+ (enabled in lg pull req #1175) Or something like that ...
  what is the right strategy here? Need to rethink to avoid combinatorial
- explosion, while also verifying cattegory contents.
+ explosion, while also verifying category contents.
 \end_layout
 
 \begin_layout Itemize
-Fix bug to allow multiple-sense word defintions in multiple dict locations.
+Fix bug to allow multiple-sense word definitions in multiple dict locations.
 \end_layout
 
 \begin_layout Itemize
@@ -692,7 +694,7 @@ Results:
 
 \begin_layout Itemize
 non-classified dict has 134391 disjuncts, 11 uni-classes including left-wall.
- These are raw disjunts.
+ These are raw disjuncts.
 \end_layout
 
 \begin_layout Itemize
@@ -3241,12 +3243,12 @@ expt-13-gram-4
 
 \begin_layout Standard
 OK, so the numbers are dramatically larger.
- Appearently, this is due to the previously dropped word i.
+ Apparently, this is due to the previously dropped word i.
  Yikes!
 \end_layout
 
 \begin_layout Standard
-Well, the above is massively undercounting – it is only sampling one random
+Well, the above is massively under-counting – it is only sampling one random
  word-draw per class.
  Since multiple words are in each class...
 \end_layout
@@ -3254,7 +3256,7 @@ Well, the above is massively undercounting – it is only sampling one random
 \begin_layout Standard
 ...
  anyway, this is nuts, because the connectors need to be classified, instead
- of issueing new connector types.
+ of issuing new connector types.
  So more work before something meaningful is possible.
 \end_layout
 
@@ -3292,7 +3294,7 @@ Due to absence of left-wall in the above, breaking the dict-compare step,
 
 \begin_layout Standard
 Pair counting seems to be more-or-less the same, slightly higher MI=0.030
- which is still miniscule.
+ which is still minuscule.
  MPG entropy, counts etc.
  look similar to the earlier runs.
 \end_layout
@@ -3622,7 +3624,7 @@ Clearly, the resulting clusters are sensitive to the parameters controlling
 \begin_layout Standard
 The MI's are larger, across the board (vs.
  0.8 or 0.9 before.) How about sentence generation? We expect disinfo to be
- more accurate, since it did very litle clustering.
+ more accurate, since it did very little clustering.
 \end_layout
 
 \begin_layout Standard
@@ -4738,7 +4740,7 @@ expt-16-shape
 \end_layout
 
 \begin_layout Standard
-OK, so wildly overgenerating sentences, despite effectively no clustering
+OK, so wildly over-generating sentences, despite effectively no clustering
  being done.
  Didn't we do an experiment without clustering?? I can't find it above.
  Why are we over-generating? How to best explain it? Too small a vocabulary?
@@ -4781,7 +4783,7 @@ Sections and disjuncts
 
 \begin_layout Standard
 The Sections that were learned in expt-16 have a surprising number of connectors
- on them, averageing at 7.7 connectors per section.
+ on them, averaging at 7.7 connectors per section.
  This seems way too large.
  What's up with that? Step one: get a more detailed view.
 \end_layout
@@ -4895,7 +4897,7 @@ So ...
  long disjuncts appear on one and only one word (as witnessed by identical
  counts for length 8 and above).
  Short disjuncts might be shared with multiple words.
- This implies that words are not mergable, or rather, the distinct long
+ This implies that words are not mergeable, or rather, the distinct long
  sections are preventing merger.
  Here a graph of above.
 \end_layout
@@ -4918,7 +4920,7 @@ So its very Gaussian, both peak and tails.
  And all kinds of other classical theorems should hold.
  Have not been leveraging those theorems, so far.
  If we did, what would we get? Note it's Gaussian despite the fact that
- negative connector-seq lengths don't make sense! Right? What would a negaive
+ negative connector-seq lengths don't make sense! Right? What would a negative
  connector-seq length be? A repulsion? an anti-connect statement? 
 \begin_inset Quotes eld
 \end_inset
@@ -4931,7 +4933,7 @@ Must never connect
 \end_layout
 
 \begin_layout Standard
-What happens if we exlude Sections with a low observation count?
+What happens if we exclude Sections with a low observation count?
 \end_layout
 
 \begin_layout Standard
@@ -5155,7 +5157,7 @@ status open
 The determination to merge is now trickier.
  Naively, S can be merged into <wclass-AB> but doing so would wreck the
  connector set on D, as it implies an (S- & G+) which was not observed,
- and thus not mergable.
+ and thus not mergeable.
  ...
  unless we are willing to create such new unobserved cases.
 \end_layout
@@ -5335,7 +5337,7 @@ status open
 \begin_layout Standard
 This looks like it could be merged with plain-vanilla D.
  ..
- ah, and post-AB-merge, it still looks mergable.
+ ah, and post-AB-merge, it still looks mergeable.
  There's only trouble if connectors on D were merged, but connectors on
  U were not, cause then the vectors would be incomparable.
 \end_layout
@@ -5343,8 +5345,8 @@ This looks like it could be merged with plain-vanilla D.
 \begin_layout Standard
 When should connectors be merged? It seems like one could do this as the
  last step.
- However, doing it sooner might shrink the siaze of vectors, leading to
- improved performance.
+ However, doing it sooner might shrink the size of vectors, leading to improved
+ performance.
  I suppose we can try it both ways...
 \end_layout
 
@@ -5363,7 +5365,7 @@ So I guess this is all consistent, in the end.
 
 \begin_layout Standard
 The above is just some examples, and some words.
- The fastiduous would convert all of the above into theorems and proofs.
+ The fastidious would convert all of the above into theorems and proofs.
  This would be dense.
  The discussion is already dense to the uninitiated; converting the above
  1-2 pages into 40 pages of math proofs seems ...
@@ -5377,7 +5379,7 @@ Anyway, the original plan seems to have been a good plan.
 \end_layout
 
 \begin_layout Subsection*
-expt-17
+expt-17 (April 2021)
 \end_layout
 
 \begin_layout Standard
