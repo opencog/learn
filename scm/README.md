@@ -89,3 +89,7 @@ notable:
 * [shape-vec.scm](shape-vec.scm) Explains the concept of "shapes". These
                           are vectors where one of the connectors has
                           been made the base of the vector.
+
+* [cset-merge.scm](cset-merge.scm) Reviews how connector sets are to be
+                          merged. The merge decision is made elsewhere;
+                          this only goes through the mechanics of merging.

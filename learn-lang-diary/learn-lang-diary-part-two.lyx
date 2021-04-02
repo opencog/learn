@@ -5381,6 +5381,238 @@ Anyway, the original 2019 plan for using shapes seems to have been a good
 \end_layout
 
 \begin_layout Subsection*
+Connector counts
+\end_layout
+
+\begin_layout Standard
+Lets go through above exercise, this time with counts.
+ Suppose the dict, with observation counts in square brackets, is
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: C+ & D+ [na]
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: C+ & D+ [nb]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: A- & E+ [nca]
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: B- & F+ [ncb]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: A- & G+ [nda]
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: B- & G+ [ndb]
+\end_layout
+
+\end_inset
+
+The shapes, with counts, are
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: (C+ & D+)[na] or (C:x- & E+)[nca] or (D:x- & G+)[nda]
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (C+ & D+)[nb] or (C:x- & F+)[ncb] or (D:x- & G+)[ndb]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (A- & E+)[nca] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (B- & F+)[ncb] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (A- & G+)[nda] or (A:C+ & x+)[na]
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (B- & G+)[ndb] or (B:C+ & x+)[nb]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Merging A and B, with 100% of count transfer, gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A B: (C+ & D+)[na+nb] or (C:x- & E+)[nca] or (C:x- & F+)[ncb] or (D:x-
+ & G+)[nda+ndb]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (A- & E+)[nca] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (B- & F+)[ncb] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (A- & G+)[nda] or (A:C+ & x+)[na]
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (B- & G+)[ndb] or (B:C+ & x+)[nb]
+\end_layout
+
+\end_inset
+
+Looking at the connectors on D, we see that they are mergable, and that
+ the counts are consistent.
+ So, based on this toy model, we can either try to merge connectors directly,
+ or we can, at a later date, merge connectors by reconstructing them from
+ merged shapes.
+ Doing it either way should give the same counts: the operations are commutative.
+\end_layout
+
+\begin_layout Standard
+This is not entirely obvious.
+ It seems to work for the toy example.
+ It seems like the toy example could be converted into a full proof.
+ Yet ...
+ are we missing something? Best bet is to write the code both ways, and
+ very numericall that the operations are commutative.
+\end_layout
+
+\begin_layout Subsubsection*
+Fractional counts
+\end_layout
+
+\begin_layout Standard
+Lets try again, this time with fractional counts.
+ Suppose that instead of merging 100% of B into A, wwe merge only a fraction
+ 
+\begin_inset Formula $0\le y\le1$
+\end_inset
+
+ of the count.
+ This gives
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A B: (C+ & D+)[na+y*nb] or (C:x- & E+)[nca] or (C:x- & F+)[y*ncb] or
+ (D:x- & G+)[nda+y*ndb]
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: C+ & D+ [(1-y)nb] or (C:x- & F+)[(1-y)ncb] or (D:x- & G+)[(1-y)ndb]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (A- & E+)[nca] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: (B- & F+)[ncb] or ...
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (A- & G+)[nda] or (A:C+ & x+)[na]
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: (B- & G+)[ndb] or (B:C+ & x+)[nb]
+\end_layout
+
+\end_inset
+
+Then, apparently, the counts will be consistent if and only if the same
+ fraction is used when merging connectors.
+\end_layout
+
+\begin_layout Subsection*
 expt-17 (April 2021)
 \end_layout
 

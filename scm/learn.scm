@@ -23,4 +23,5 @@
 (include-from-path "opencog/nlp/learn/gram-agglo.scm")
 (include-from-path "opencog/nlp/learn/gram-class-api.scm")
 (include-from-path "opencog/nlp/learn/link-class.scm")
+; (include-from-path "opencog/nlp/learn/cset-merge.scm")
 (include-from-path "opencog/nlp/learn/lg-compare.scm")

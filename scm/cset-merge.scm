@@ -1,22 +1,17 @@
 ;
-; cset-class.scm
+; cset-merge.scm
 ;
 ; Merge connectors into classes of connectors -  merge connector sets.
 ;
-; XXX FIXME. The ideas in here seem reasonable. None of the code is used
-; anywhere.  I think the "shape" code is supposed to take it's place.
-; The general discussion should be saved somewhere. The rest of the file
-; can probably be killed, or at least moved to the attic.
-;
-; Copyright (c) 2017, 2018 Linas Vepstas
+; Copyright (c) 2017, 2018, 2021 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
 ; The merging of words into word-classes proceeds in two parts. The
-; first part is reviewed in `gram-class.scm` and proceeds by comparing
-; words to see if they share similar sets of sections. If they do,
-; then the words can be judged to be similar, and merged into a word
+; first part is reviewed in `gram-classification.scm` and proceeds by
+; comparing words to see if they share similar sets of sections. If they
+; do, then the words can be judged to be similar, and merged into a word
 ; class.  The second part, reviewed here, is to merge connector
 ; sequences, so that connectors are made from word classes, instead of
 ; of individual words.
@@ -35,100 +30,63 @@
 ;
 ; The goal of connector-set merging (aka disjunct-merging) is to
 ; replace the WordNode's in a Connector by WordClassNode's, and
-; thence merge two similar ConnectorSeq's into one.  Of course,
-; such a merger can be done only if it "makes sense", and preserves
-; the overall grammatical structure.
+; thence merge two similar ConnectorSeq's into one.
 ;
-; Recall that a grammatical class is represented as
+; Based on the analysis in the diary (Language Learning Diary - Part
+; Two, subsection "Connector merging" (circa March 2021)) it appears
+; that connector merging is commutative with section merging, in that
+; if it has been decided that two words should be merged, then merging
+; both sections and shapes (and later using the shapes to reconstruct
+; sections) gives the same result as merging the connectors, directly.
+; If only a fraction is merged, then the same fraction should be applied
+; to the connectors, as well.
 ;
-;     MemberLink
-;         WordNode "wordy"      ; the word itself
-;         WordClassNode "noun"  ; the grammatical class of the word.
+; The core idea is that the decision to merge is carried out elsewhere,
+; and the only task remaining is to actually carry out the merge,
+; transfering counts, or a fraction of the counts, as determined by
+; the decision maker. If this is done, then merge results appear to
+; always be self-consistent, thanks to the above-mentioned commutativity
+; property.
 ;
+; (An earlier version of this file discussed four different merge
+; strategies that were not sel-consistent. That discussion has been
+; removed).
 ;
-; Single-difference merging
-; -------------------------
-; In single-difference merging, one compares all connector sequences
-; on some given word.  If two connector sequences are nearly identical,
-; differing in only one location, then those two connectors can be
-; merged into one. When the connectors are merged, a new word-class is
-; formed to hold the two words.
-;
-; There are several properties of this merge style:
-; a) The total number of sections on a word decreases as a result
-;    of the merge.  The total atom count probably decreases slightly.
-; b) This seems like a "strict" or very conservative way to merge,
-;    because it does not create any broadening of the allowed
-;    connectors on a word. That is, the grammatical structure on the
-;    word is not altered by this merge.
-; c) The resulting word-class does not have any sections associated with
-;    it! It cannot because of the way it was constructed, but this seems
-;    wrong. Its a kind-of dead-end word-class.
-;
-; Connected merging
-; -----------------
-; Property c) above seems wrong: word-classes should appear fully
-; connected in the graph, symmetrically.  This suggests a merger
-; policy that can maintain graph connectivity.
-;
-; As above, given a single word, one scans the sections, looking
-; for sections that differ in only one location. As before, the words
-; that appear at this variable location are tossed into a set. However,
-; this time, a search is made to see if this set overlaps, or is
-; a subset of an existing grammatical class. If so, then the counts
-; on all of these sections are totalled, a new disjunct is created,
-; using the grammatical class in the connector, and the individual
-; sections are discarded. (If there are multiple grammatical classes
-; that might be appropriate, then a cosine similarity could be used
-; to pick between them.)
-;
-; This merge style overcomes the objection in c), in that the merged
-; class is already participating in many sections. Note, though, it
-; is no longer conservative: the existing grammatical class will
-; typically be larger than the merged class, and so will significantly
-; broaden the grammatical reach.
-;
-; Generous merging
-; ----------------
-; Another possibility is a generous merge, where, whenever a word
-; appears in a ConnectorSeq, and that word is also in a WordClass,
-; then the word is immediately replaced by the WordClass it is in.
-; This has the properties:
-;
-; d) The grammatical usage of that particular connector sequence
-;    is immediately broadened to the new WordClass.
-; e) The procedure is questionable if the word belongs to more
-;    than one WordClass.
-; f) This algorithm is O(N) in the number N of sections, as opposed
-;    to O(N^2) or worse for the others.  That is, one need only loop
-;    once over all the sections, and replace words by word-classes.
-;    There is no need to compare sections pair-wise. (with the de
-;    facto property that the vast majority of such compares will
-;    be rejected.)
-;
-; Property e) is what contrasts this to the connected-merge strategy
-; above: in the connected-merge, a search is made for at least two
-; words belonging to the same class, to confirm (disambiguate) the
-; class membership.
-;
-;
-; Stingy merging
+; Worked example
 ; --------------
-; Some of the word-merging results in word classes that are too broad.
-; Can some form of stingy connector merging be used to narrow down those
-; overly-broad classes?  So, for example, if a `single-difference merge`
-; as described above differs too much from an existing word-class, then
-; perhaps the existing word class was formed too broadly?
+; Two connector sequences can be merged if and only if each one contains
+; one of the connectors to be merged, and if all of the other connectors
+; are the same.
 ;
-; Two problems here: (1) its not clear if the above hypothesis is true
-; (viz, that the original mere was too broad), and (2) there is no
-; effective mechanism to un-merge.
+; Let `P: Q+ & R+` be short-hand notation for
+;
+;     Section
+;         WordNode "P"
+;         ConnectorSeq
+;             Connector
+;                WordNode "Q"
+;                ConnectorDir "+"
+;             Connector
+;                WordNode "R"
+;                ConnectorDir "+"
+;
+; Suppose the decision-making process determines that words `S` and `Q`
+; can be merged.  Then `P: Q+ & R+` can be merged with `P: S+ & R+`
+; because these contain the words in question, and because the conector
+; directions agree, and all the other connectors (i.e. `R+`) are
+; identical. If it has been determined that only a percentage of `S`
+; is to be merged, then that percentage should be applied to the counts
+; on the sections, as well.
+;
+; Note that there are actually two distinct merge tasks: one to be
+; performed on Sections, and another on CrossSections.
 ;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog sheaf) (opencog persist))
 
+; XXX Code below is bad.  It doesn't do what the comments above state.
 ; ---------------------------------------------------------------
 ; Return a list of all words that belong to some grammatical class.
 
