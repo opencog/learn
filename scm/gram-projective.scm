@@ -174,10 +174,96 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE)
+(define (merge-section-pair LLOBJ SECT-PAIR FRAC ZIPF ROW-ELT)
 "
-  merge-frac LLOBJ FRAC-FN ZIPF WA WB - merge the rows WA and WB of
-  LLOBJ into a combined row of CLASS-TYPE. Returns the merged class.
+  merge-section-pair SECT-PAIR - Merge two sections into one, placing the result on the word-class.
+  Given a pair of sections, sum the counts from each, and then place
+  that count on a corresponding section on the word-class.  Store the
+  updated section to the database.
+
+  One or the other sections can be null. If both sections are not
+  null, then both are assumed to have exactly the same disjunct.
+
+  This works fine for merging two words, or for merging
+  a word and a word-class.  It even works for merging
+  two word-classes.
+"
+	; The two word-sections to merge
+	(define lsec (car SECT-PAIR))
+	(define rsec (cdr SECT-PAIR))
+
+	; The counts on each, or zero.
+	(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
+	(define rcnt (if (null? rsec) 0 (LLOBJ 'get-count rsec)))
+
+	; Return #t if sect is a singleton section, (a section for a
+	; single word) and not a word-class section.
+	(define (is-singleton-sect? sect)
+		; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect)))
+		(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
+
+	; If the other count is zero, take only a FRAC of the count.
+	; But only if we are merging in a word, not a word-class;
+	; we never want to shrink the support of a word-class, here.
+	(define wlc (if
+			(and (null? rsec) (is-singleton-sect? lsec) (< ZIPF lcnt))
+			(* FRAC lcnt) lcnt))
+	(define wrc (if
+			(and (null? lsec) (is-singleton-sect? rsec) (< ZIPF rcnt))
+			(* FRAC rcnt) rcnt))
+
+	; Sum them.
+	(define cnt (+ wlc wrc))
+
+	; Compute what's left on each.
+	(define lrem (- lcnt wlc))
+
+	; Update the count on the section.
+	; If the count is zero or less, delete the section.
+	(define (update-section-count SECT CNT)
+		(if (< 1.0e-10 CNT)
+			(begin (set-count SECT CNT) (store-atom SECT))
+			(begin (set-count SECT 0) (cog-delete! SECT))))
+
+	; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
+	(if (< 1.0e-10 cnt)
+		(let* (
+				; The disjunct. Both lsec and rsec have the same disjunct.
+				(seq (if (null? lsec)
+						(LLOBJ 'right-element rsec)
+						(LLOBJ 'right-element lsec)))
+				; The merged word-class
+				(mrg (LLOBJ 'make-pair ROW-ELT seq))
+			)
+
+			; The summed counts
+			(set-count mrg cnt)
+			(store-atom mrg) ; save to the database.
+
+			; Now subtract the counts from the words.
+			; Left side is either a word or a word-class.
+			; If its a word-class, we've already updated
+			; the count.
+			(if (and (not (null? lsec)) (is-singleton-sect? lsec))
+				(update-section-count lsec (- lcnt wlc)))
+
+			; Right side is WB and is always a WordNode
+			; i.e. is always a singleton-sec, so we don't test.
+			(if (not (null? rsec))
+				(update-section-count rsec (- rcnt wrc)))
+		))
+
+	; Return the pair of counts.
+	(cons wlc wrc)
+)
+
+; ---------------------------------------------------------------------
+
+(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE MRG-CON)
+"
+  merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE MRG-CON --
+     merge the rows WA and WB of LLOBJ into a combined row of
+     CLASS-TYPE. Returns the merged class.
 
   In the prototypical use case, each row corresponds to a WordNode,
   and the result of summing them results in a WordClassNode. Thus,
@@ -189,9 +275,9 @@
   This assumes that storage is connected; the updated counts for the
   rows are written to storage.
 
-  XXX At this time, this does not merge connectors, nor does it merge
-  shapes. Working on that. See `cset-class.scm` for connector merging.
+  XXX At this time, this does not merge connectors within shapes.
 
+  LLOBJ is used to access pairs.
   WA should be of `(LLOBJ 'left-type)` or be of CLASS-TYPE (that is,
      either a WordNode or a WordClassNode.)
   WB is expected to be `(LLOBJ 'left-type)` (a WordNode).
@@ -203,8 +289,8 @@
   ZIPF is the smallest observation count, below which counts
      will not be divided up, if a merge is performed. (All of the
      count will be merged, when it is less than ZIPF)
-  LLOBJ is used to access pairs. The left item on a pair is assumed
-     to be a WordNode.
+  CLASS-TYPE is the Atom type that will be the row-type of the merged
+     rows. The two rows will be
 
   The merger of WA and WB are performed, using the 'projection
   merge' strategy described above. To recap, this is done as follows.
@@ -245,91 +331,13 @@
 	(define accum-lcnt 0)
 	(define accum-rcnt 0)
 
+	;
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
-	; Merge two sections into one, placing the result on the word-class.
-	; Given a pair of sections, sum the counts from each, and then place
-	; that count on a corresponding section on the word-class.  Store the
-	; updated section to the database.
-	;
-	; One or the other sections can be null. If both sections are not
-	; null, then both are assumed to have exactly the same disjunct.
-	;
-	; This works fine for merging two words, or for merging
-	; a word and a word-class.  It even works for merging
-	; two word-classes.
-	;
-	(define (merge-section-pair SECT-PAIR)
-		; The two word-sections to merge
-		(define lsec (car SECT-PAIR))
-		(define rsec (cdr SECT-PAIR))
-
-		; The counts on each, or zero.
-		(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
-		(define rcnt (if (null? rsec) 0 (LLOBJ 'get-count rsec)))
-
-		; Return #t if sect is a singleton section, (a section for a
-		; single word) and not a word-class section.
-		(define (is-singleton-sect? sect)
-			; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect)))
-			(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
-
-		; If the other count is zero, take only a FRAC of the count.
-		; But only if we are merging in a word, not a word-class;
-		; we never want to shrink the support of a word-class, here.
-		(define wlc (if
-				(and (null? rsec) (is-singleton-sect? lsec) (< ZIPF lcnt))
-				(* frac-to-merge lcnt) lcnt))
-		(define wrc (if
-				(and (null? lsec) (is-singleton-sect? rsec) (< ZIPF rcnt))
-				(* frac-to-merge rcnt) rcnt))
-
-		; Sum them.
-		(define cnt (+ wlc wrc))
-
-		; Compute what's left on each.
-		(define lrem (- lcnt wlc))
-
-		; Update the count on the section.
-		; If the count is zero or less, delete the section.
-		(define (update-section-count SECT CNT)
-			(if (< 1.0e-10 CNT)
-				(begin (set-count SECT CNT) (store-atom SECT))
-				(begin (set-count SECT 0) (cog-delete! SECT))))
-
-		; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
-		(if (< 1.0e-10 cnt)
-			(let* (
-					; The disjunct. Both lsec and rsec have the same disjunct.
-					(seq (if (null? lsec)
-							(LLOBJ 'right-element rsec)
-							(LLOBJ 'right-element lsec)))
-					; The merged word-class
-					(mrg (LLOBJ 'make-pair wrd-class seq))
-				)
-
-				; The summed counts
-				(set-count mrg cnt)
-				(store-atom mrg) ; save to the database.
-
-				; Now subtract the counts from the words.
-				; Left side is either a word or a word-class.
-				; If its a word-class, we've already updated
-				; the count.
-				(if (and (not (null? lsec)) (is-singleton-sect? lsec))
-					(update-section-count lsec (- lcnt wlc)))
-
-				; Right side is WB and is always a WordNode
-				; i.e. is always a singleton-sec, so we don't test.
-				(if (not (null? rsec))
-					(update-section-count rsec (- rcnt wrc)))
-			))
-
-		; Accumulate the counts, handy for tracking membership fraction
-		(set! accum-lcnt (+ accum-lcnt wlc))
-		(set! accum-rcnt (+ accum-rcnt wrc))
-	)
+	; Accumulate the counts, handy for tracking membership fraction
+	(set! accum-lcnt (+ accum-lcnt wlc))
+	(set! accum-rcnt (+ accum-rcnt wrc))
 
 	; This is what we want to do...
 	;   (for-each merge-section-pair (ptu 'right-stars (cons WA WB)))
