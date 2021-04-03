@@ -174,47 +174,56 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB)
+(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE)
 "
-  merge-frac LLOBJ FRAC-FN ZIPF WA WB - merge WA and WB into a
-  grammatical class.  Returns the merged class (a WordClassNode with
-  words WA and WB in it). The corresponding pairs in LLOBJ are merged.
-  That is, both WA and WB are assumed to occur on the left of two
-  different pairs in LLOBJ. The counts on those pairs are merged into
-  one. If the result leaves a pair with a count of zero, that pair
-  is deleted.  This assumes that storage is connected; the updated
-  pair is written to storage.
+  merge-frac LLOBJ FRAC-FN ZIPF WA WB - merge the rows WA and WB of
+  LLOBJ into a combined row of CLASS-TYPE. Returns the merged class.
 
-  By convention, it is assumed that the pairs are (word,disjunct)
-  pairs, and LLOBJ was made by `make-gram-class-api`. Thus, this
-  will merge Sections.
+  In the prototypical use case, each row corresponds to a WordNode,
+  and the result of summing them results in a WordClassNode. Thus,
+  by convention, it is assumed that the pairs are (word, disjunct)
+  pairs, and LLOBJ was made by `make-gram-class-api` or by
+  `make-shape-vec-api`. The code itself is generic, and may work on
+  other kinds of LLOBJ's too.
+
+  This assumes that storage is connected; the updated counts for the
+  rows are written to storage.
 
   XXX At this time, this does not merge connectors, nor does it merge
   shapes. Working on that. See `cset-class.scm` for connector merging.
 
-  WA should be a WordNode or a WordClassNode.
-  WB is expected to be a WordNode.
+  WA should be of `(LLOBJ 'left-type)` or be of CLASS-TYPE (that is,
+     either a WordNode or a WordClassNode.)
+  WB is expected to be `(LLOBJ 'left-type)` (a WordNode).
   FRAC-FN should be a function taking WA and WB as arguments, and
      returning a floating point number between zero and one, indicating
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
   ZIPF is the smallest observation count, below which counts
-     will not be divided up, if a marge is performed.
+     will not be divided up, if a merge is performed. (All of the
+     count will be merged, when it is less than ZIPF)
   LLOBJ is used to access pairs. The left item on a pair is assumed
      to be a WordNode.
 
   The merger of WA and WB are performed, using the 'projection
-  merge' strategy. This is done like so. If WA and WB are both
-  WordNodes, then a WordClass is created, having both WA and WB as
-  members.  Counts are then transferred from WA and WB to the class.
+  merge' strategy described above. To recap, this is done as follows.
+  If WA and WB are both `(LLOBJ 'left-type)` (i.e. are WordNodes),
+  then a CLASS-TYPE (a WordClass) is created, having both WA and WB
+  as members (via MemberLink).  Counts are then transferred from WA
+  and WB to the class; subtotal contributions to the count are stored
+  on the MemberLink.
 
   The counts are summed only if both counts are non-zero. Otherwise,
   only a FRAC fraction of a single, unmatched count is transferred.
 
-  If WA is a WordClassNode, and WB is not, then WB is merged into
-  WA. That is, the counts on WA are adjusted only upwards, and those
-  on WB only downwards.
+  If the result leaves a pair with a count of zero, that pair
+  is deleted.  This assumes that storage is connected; the updated
+  pair is written to storage.
+
+  If WA is of CLASS-TYPE (e.g. a WordClassNode), and WB is not, then
+  WB is merged into WA. That is, the counts on WA are adjusted only
+  upwards, and those on WB only downwards.
 "
 	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
 	(define ptu (add-tuple-math LLOBJ bogus))
@@ -228,8 +237,8 @@
 	; Concatenate the string names to get the class name.
 	; If WA is already a word-class, just use it as-is.
 	(define wrd-class
-		(if (eq? 'WordClassNode (cog-type WA)) WA
-			(WordClassNode (string-concatenate
+		(if (eq? CLASS-TYPE (cog-type WA)) WA
+			(CLASS-TYPE (string-concatenate
 					(list (cog-name WA) " " (cog-name WB))))))
 
 	; Accumulated counts for the two.
@@ -312,6 +321,7 @@
 					(update-section-count lsec (- lcnt wlc)))
 
 				; Right side is WB and is always a WordNode
+				; i.e. is always a singleton-sec, so we don't test.
 				(if (not (null? rsec))
 					(update-section-count rsec (- rcnt wrc)))
 			))
@@ -356,6 +366,8 @@
 			; Add WB to the mrg-class (which is WA already)
 			(store-atom mb))
 	)
+
+	; Return the word-class
 	wrd-class
 )
 
@@ -448,7 +460,7 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pcos fixed-frac ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pcos fixed-frac ZIPF WORD-A WORD-B 'WordClass))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -529,7 +541,7 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pcos cos-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pcos cos-fraction ZIPF WORD-A WORD-B 'WordClass))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -619,7 +631,7 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pmi mi-fraction ZIPF WORD-A WORD-B))
+			(define cls (merge-frac pmi mi-fraction ZIPF WORD-A WORD-B 'WordClass))
 			; Need to recompute the marginals, in order for future
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -685,7 +697,7 @@
 ;
 ; Perform the actual merge
 ; (define (frac WA WB) 0.3)
-; (merge-frac pcos frac 4 (Word "city") (Word "village"))
+; (merge-frac pcos frac 4 (Word "city") (Word "village") 'WordClass)
 ;
 ; Verify presence in the database:
 ; select count(*) from atoms where type=22;
