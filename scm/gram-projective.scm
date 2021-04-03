@@ -262,8 +262,8 @@
 	;
 	(define (merge-section-pair SECT-PAIR)
 		; The two word-sections to merge
-		(define lsec (first SECT-PAIR))
-		(define rsec (second SECT-PAIR))
+		(define lsec (car SECT-PAIR))
+		(define rsec (cdr SECT-PAIR))
 
 		; The counts on each, or zero.
 		(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
@@ -332,11 +332,11 @@
 	)
 
 	; This is what we want to do...
-	;   (for-each merge-section-pair (ptu 'right-stars (list WA WB)))
+	;   (for-each merge-section-pair (ptu 'right-stars (cons WA WB)))
 	; But its so slow, we break out some stats...
 	;
 	; A list of pairs of sections to merge.
-	(define perls (ptu 'right-stars (list WA WB)))
+	(define perls (ptu 'right-stars (cons WA WB)))
 	(define start-time (get-internal-real-time))
 	(define junk (for-each merge-section-pair perls))
 	(define now (get-internal-real-time))
