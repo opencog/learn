@@ -183,7 +183,7 @@
   and the result of summing them results in a WordClassNode. Thus,
   by convention, it is assumed that the pairs are (word, disjunct)
   pairs, and LLOBJ was made by `make-gram-class-api` or by
-  `make-shape-vec-api`. The code itself is generic, and may work on
+  `add-shape-vec-api`. The code itself is generic, and may work on
   other kinds of LLOBJ's too.
 
   This assumes that storage is connected; the updated counts for the

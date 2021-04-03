@@ -889,7 +889,7 @@ The `(make-pseudo-cset-api)` function make an API for pairs, where
 the left item is a word, and the right item is a connector-set
 (aka disjunct). Other pairs that are currently available are:
 `make-clique-pair-api`, `make-distance-pair-api`,
-`make-gram-class-api` and `make-shape-vec-api` and there may be
+`make-gram-class-api` and `add-shape-vec-api` and there may be
 more in the future.
 
 Maximum Spanning Trees
@@ -1015,12 +1015,14 @@ Run that script. Its a wrapper around this:
 Experimentation with cross-connectors is in progress.
 
 To obtain the marginals for the cross-connectors, repeat the above
-steps, but this time with `(make-shape-vec-api)` as the base class.
-At this time, the need for the cross-connectors (shapes) is optional...
-It would be recommended, except that there are explosively more of
-them: 2 to 5 cross-connectors get created for each ordinary connector
-(since each slot can be a wild-card, and a word typically has 2-5
-connectors). This can double or triple the size of a dataset.
+steps, but this time with `(add-shape-vec-api (make-pseudo-cset-api))`
+as the base class.  At this time, the need for the cross-connectors
+(shapes) is optional, but recommended. It seems to improve accuracy,
+at the cost of a much larger AtomSpace. There are roughly 2 to 5
+CrossSections created for each Section (since each connector in
+a connector-sequence can be a wild-card, and a word typically has 2-5
+connectors). This can double or quadruple the size of a dataset
+(double or quadruple RAM usage.)
 
 The above computations may take hours or days, depending on the size
 of the disjunct set.  Be sure to make a backup copy of the resulting

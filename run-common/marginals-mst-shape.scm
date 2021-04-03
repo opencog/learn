@@ -17,7 +17,7 @@
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
 
-(define wsv (make-shape-vec-api))
+(define wsv (add-shape-vec-api pca))
 (define wss (add-pair-stars wsv))
 
 (define cac (direct-sum psa wss))
