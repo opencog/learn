@@ -97,18 +97,18 @@
   equivalent ConnectorSeq exists, containing CON-B. If so, create
   a scheme pair containing both. Return a list of these matching pairs.
 "
-	(remove
-		(lambda (PR) (null? (cdr PR)))
-		(map
-			(lambda (ASEQ)
-				(cons ASEQ
-					; Is there an equivalent seq with B instead of A?
-					(cog-link 'ConnectorSeq
-						(map
-							(lambda (CON) (if (equal? CON-A CON) CON-B CON))
-							(cog-outgoing-set ASEQ)))))
-			; All 'ConnectorSeq containing A
-			(cog-incoming-by-type CON-A 'ConnectorSeq))))
+	(filter-map
+		(lambda (ASEQ)
+			; Is there an equivalent seq with B instead of A?
+			(define bseq
+				(cog-link 'ConnectorSeq
+					(map
+						(lambda (CON) (if (equal? CON-A CON) CON-B CON))
+						(cog-outgoing-set ASEQ))))
+			(if (nil? bseq) #f (cons ASEQ bseq)))
+
+		; All 'ConnectorSeq containing A
+		(cog-incoming-by-type CON-A 'ConnectorSeq)))
 
 
 
