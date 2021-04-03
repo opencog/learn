@@ -86,113 +86,13 @@
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog sheaf) (opencog persist))
 
-; XXX Code below is bad.  It doesn't do what the comments above state.
 ; ---------------------------------------------------------------
-; Return a list of all words that belong to some grammatical class.
+; XXX Incomplete, in development.
 
-(define (get-classified-words)
-	; Trace the MemberLink
-	(define (memb CLS) (map gar (cog-incoming-by-type CLS 'MemberLink)))
-	; Discard everything that is not a word.
-	(define (wmemb CLS)
-		(filter (lambda (w) (eq? 'WordNode (cog-type w))) (memb CLS)))
-	; Concatenate them all together.
-	(fold (lambda (CLS lst) (append! (memb CLS) lst)) '()
-		(cog-get-atoms 'WordClassNode))
-)
 
-; ---------------------------------------------------------------
-;
-; Given a word or word-class, return a list of all sections attached to
-; that word or word-class that are potentially mergable; that is, have
-; a disjunct with a connector that belongs to an existing WordClass.
-; The goal is to trim the list of sections to something smaller.
-;
-; XXX FIXME this might be pointless and useless? Its dead code, it's
-; not used anywhere ...
-(define (get-all-sections-in-classes WCL)
+(define (get-matchups CON-A CON-B)
+	(define 
 
-	; Return not-#f if the connector is in any class.
-	(define (connector-in-any-class? CTR)
-		(define wrd-of-ctr (gar CTR)) ; Word of the connector
-		(find (lambda (MEMB)
-				(eq? 'WordClassNode (cog-type (gdr MEMB))))
-			(cog-incoming-by-type wrd-of-ctr 'MemberLink)))
-
-	; Return not-#f if section SEC has connectors that
-	; are in some WordClass, any WordClass
-	(define (classifiable-section? SEC)
-		; list of connectors in the section
-		(define con-seq (cog-outgoing-set (gdr SEC)))
-		(find connector-in-any-class? con-seq))
-
-	; Return list of all sections that have connectors that are
-	; in some (any) WordClass.
-	(filter classifiable-section? (cog-incoming-by-type WCL 'Section))
-)
-
-; ---------------------------------------------------------------
-;
-; Given a word or a word-class, return a list of all sections that
-; have disjuncts with N connectors. Just like `get-all-sections-in-classes`
-; above, but filtered to the requested size.
-;
-; XXX This is dead code, not used anywhere...
-;
-(define (get-sections-by-size WCL SIZ)
-
-	(define sects (get-all-sections-in-classes WCL))
-
-	; Return not-#f if section SEC has SIZ connectors
-	(define (size-section? SEC)
-		(eq? SIZ (length (cog-outgoing-set (gdr SEC)))))
-
-	; Return list of all sections that are of the given size
-	(filter size-section? sects)
-)
-
-; ---------------------------------------------------------------
-
-(define-public (in-gram-class? WORD GCLS)
-"
-  in-gram-class? WORD GRAM-CLASS - is the WORD a member of the
-  grammatical class CRAM-CLASS? Returns either #t or #f.
-"
-	(not (null? (cog-link 'MemberLink WORD GCLS)))
-)
-
-; ---------------------------------------------------------------
-; Compare two ConnectorSeq links, to see if they are the same,
-; differing in only one location.  If this is the case, return
-; the index offset to the location that is different. The index
-; is zero-based. If they are not matchable, return #f.
-;
-; XXX Currently, this is dead code, not used anywhere.
-
-(define (connector-seq-compare SEQA SEQB)
-	; Get the index of the difference. Return #f if there are two
-	; or more differences. If both are equal, it returns the length.
-	; Could not figure out how to implement this without using set!
-	(define (get-idx)
-		(define mismatch-idx #f)
-		(define cnt 0)
-		(pair-fold
-			(lambda (subseq-a subseq-b idx)
-				; (format #t "duude ~A and ~A and ifx=~A\n" subseq-a subseq-b idx)
-				(if (not (equal? (car subseq-a) (car subseq-b)))
-					(begin (set! mismatch-idx idx)
-						(set! cnt (+ cnt 1))))
-				(+ idx 1))
-			0 (cog-outgoing-set SEQA) (cog-outgoing-set SEQB))
-
-		; Only one difference allowed.
-		(if (eq? 1 cnt) mismatch-idx #f))
-
-	; Return false if they are equal, else return the index
-	(if (or (eq? SEQA SEQB) (not (eq? (cog-arity SEQA) (cog-arity SEQB))))
-		 #f
-		 (get-idx))
-)
 
 ; ---------------------------------------------------------------
 ; Fetch from storage (load into RAM) all words that appear as members
@@ -225,32 +125,6 @@
 				CLS-LST)))
 )
 
-; ---------------------------------------------------------------
-; Fetch from storage (load into RAM) all connector sequences and
-; sections that are potentially mergeable; i.e. that use words from
-; one of the provided word-classes. This returns a list of all the
-; sections that contain a connector using a word from one of the
-; word-classes.
-;
-; CLS-LST should be a list of word-classes.
-;
-; Example usage
-;
-; (define cls-lst (cog-get-atoms 'WordClassNode))
-; (fetch-mergable-sections cls-lst)
-; (get-classified-words) ; verify that they were fetched.
-;
-; The above gets *everything*. A better way to get everything is to say
-; ((make-gram-class-api) 'fetch-pairs)
-;
-; XXX this is dead code, it's not used anywhere right now...
-(define (fetch-mergable-sections CLS-LST)
-
-	; Loop over all WordClassNodes
-	(delete-dup-atoms
-		(map fetch-endpoint-sections
-			(fetch-class-words CLS-LST)))
-)
 
 ; ---------------------------------------------------------------
 ; Example usage

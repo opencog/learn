@@ -2322,12 +2322,84 @@ So its not at all zipfian.
 
 merge-frac does the merging
 
+(use-modules (opencog exec))
+
+(define b
+	(Bind
+		; (VariableList)
+		(And
+			(ConnectorSeq
+				(Glob "$initial seq")
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Glob "$final seq"))
+			(ConnectorSeq
+				(Glob "$initial seq")
+				(Connector (Word "b") (ConnectorDir "+"))
+				(Glob "$final seq")))
+		(ConnectorSeq
+			(Glob "$initial seq")
+			(Connector (Word "b") (ConnectorDir "+"))
+			(Glob "$final seq"))))
+
+(define start-time (current-time))
+(define r (cog-execute! b))
+(format #t "Elapsed ~A\n" (- (current-time) start-time))
+; 700 seconds ! yikes to traverse 75669 connector seqs
+(cog-arity r)
+; 184 ... 181
+
+
+(define ca (Connector (Word "a") (ConnectorDir "+")))
+(define cb (Connector (Word "b") (ConnectorDir "+")))
+
+(define ca-seq (cog-incoming-by-type ca 'ConnectorSeq))
+(define cb-seq (cog-incoming-by-type cb 'ConnectorSeq))
+(length ca-seq) ; 10466
+(length cb-seq) ; 18342
+
+
+(define SEQ (list-ref ca-seq 3))
+
+(define init
+	(take-while (lambda (CON) (not (equal? ca CON))) (cog-outgoing-set SEQ)))
+(define find
+
+(span (lambda (CON) (not (equal? ca CON))) (cog-outgoing-set SEQ))
+
+(define rw
+	(cog-link 'ConnectorSeq
+		(map (lambda (CON) (if (equal? ca CON) cb CON)) (cog-outgoing-set SEQ))))
+
+(define eq2
+	(remove
+		(lambda (PR) (null? (cdr PR)))
+		(map
+			(lambda (SEQ)
+				(cons SEQ
+					(cog-link 'ConnectorSeq
+						(map
+							(lambda (CON) (if (equal? ca CON) cb CON))
+							(cog-outgoing-set SEQ)))))
+			ca-seq)))
+
+(length eq) ; 272
+
+why is this different than (cog-arity r) which is 182?
+(length (delete-dup-atoms eq)) ; 262  !! what's duplicated in eq?
+(length (keep-duplicate-atoms eq))
+
+(define er (cog-outgoing-set r))
+(length (atoms-subtract er eq)) ; 10
+(length (atoms-subtract eq er)) ; 91
+
+
 
 
 link-class.scm ???
 ====================================================
 
 FIXED:
+* Change shape-vect to use ShapeLink, CrossSection. DONE
 * Fix link-generator to do full combinatorial. DONE #1175
 * Pair counting insanely slow and leaks RAM.
 * learn.scm use include not load or export... DONE
@@ -2339,8 +2411,8 @@ FIXED:
 
 TODO/BUGS:
 
-* Change shape-vect to use ShapeLink, CrossSection.
-* Fix direct-sum/shape clustering.
+* Implement connector merging.
+* Set up direct-sum/shape clustering run scripts.
 * Write unit test for the recent caching fix in the pattern matcher,
   its doable...
 * print-matrix-summary-report after MM^T shows nothing. Why?
