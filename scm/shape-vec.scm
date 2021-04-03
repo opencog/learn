@@ -125,9 +125,11 @@
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ;
-(define-public (make-shape-vec-api)
+(define-public (add-shape-vec-api LLOBJ)
 "
-  make-shape-vec-api -- API for cross-section word-shape pairs.
+  add-shape-vec-api -- Provide API for CrossSections obtained from
+  Sections. Assumes that LLOBJ provides an API that gives access to
+  Sections.
 
   A more detailed description is at the top of this file.
 "
@@ -151,7 +153,6 @@
 		(define (get-left-type) 'WordNode)
 		(define (get-right-type) 'ShapeLink)
 		(define (get-pair-type) 'CrossSection)
-		(define (get-section-type) 'Section)
 
 		; Get the observational count on the word-shape pair
 		(define (get-count SHAPE-PR) (cog-count SHAPE-PR))
@@ -197,7 +198,7 @@
 			(define end (cdr rest))
 			(define ctcr (Connector WORD dir))
 			(define cseq (ConnectorSeq begn ctcr end))
-			(Section point cseq))
+			(LLOBJ 'make-pair point cseq))
 
 		; Get the count, if the pair exists.
 		(define (get-pair-count L-ATOM R-ATOM)
@@ -277,8 +278,6 @@
 		; the atomspace.
 		(define (explode-sections)
 
-			(define start-time (current-time))
-
 			; Walk over a section, and insert a wild-card.
 			(define (explode-section SEC)
 				; The root-point of the seed
@@ -314,9 +313,9 @@
 				(for-each insert-wild (list-tabulate num-cncts values))
 			)
 
-			; XXX FIXME: this should call
-			; ((make-pseudo-cset-api) 'get-all-pairs)
-			(for-each explode-section (cog-get-atoms 'Section))
+			; Ask the LLOBJ for all Sections.
+			(define start-time (current-time))
+			(for-each explode-section (LLOBJ 'get-all-pairs))
 			(format #t "Elapsed time to create shapes: ~A secs\n"
 				(- (current-time) start-time))
 		)
@@ -444,7 +443,7 @@ around for a while.
 			; marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
-			(load-atoms-of-type 'Section)
+			(LLOBJ 'fetch-pairs)
 			(format #t "Elapsed time to load word sections: ~A seconds\n"
 				(- (current-time) start-time))
 			(set! start-time (current-time))
@@ -463,7 +462,7 @@ around for a while.
 
 		;-------------------------------------------
 		(define (describe)
-			(display (procedure-property make-shape-vec-api 'documentation)))
+			(display (procedure-property add-shape-vec-api 'documentation)))
 
 		;-------------------------------------------
 		; Explain the non-default provided methods.
@@ -510,7 +509,7 @@ around for a while.
 ; ---------------------------------------------------------------------
 ; Example usage:
 ;
-; (define cva (make-shape-vec-api))
+; (define cva (add-shape-vec-api (make-pseudo-cset-api)e))
 ; (cva 'fetch-pairs)
 ; (define cvs (add-pair-stars cva))
 ; (cvs 'left-basis-size)
