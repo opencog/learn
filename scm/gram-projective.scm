@@ -4,7 +4,7 @@
 ; Merge words into word-classes by grammatical similarity.
 ; Projective merge strategies.
 ;
-; Copyright (c) 2017, 2018, 2019 Linas Vepstas
+; Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW

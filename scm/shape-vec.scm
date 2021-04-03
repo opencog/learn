@@ -3,7 +3,7 @@
 ;
 ; Representing connector-words as vectors over shapes (word-shape pairs)
 ;
-; Copyright (c) 2018 Linas Vepstas
+; Copyright (c) 2018, 2021 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
@@ -91,8 +91,7 @@
 ;
 ; Using the above example: the shape will be
 ;
-;    (Evaluation
-;       (PredicateNode "*-shape-*")
+;    (Shape
 ;       (WordNode "playing")
 ;       (Connector
 ;          (Variable "$wildcard")
@@ -103,23 +102,18 @@
 ;
 ; and the word-shape pair will be
 ;
-;    (Evaluation
-;       (Predicate "*-word-shape pair-*")
+;    (CrossSection
 ;       (WordNode "level")
-;       (the above shape))
+;       (Shape ... the above shape))
 ;
-; TODO: with appropriate redesign, this probably should be moved
-; to the atomspace (opencog matrix) module.  That is because it
+; TODO: with appropriate cleanup, this probably should be moved
+; to a generic "section" or "sheaf" module.  That is because it
 ; generically explodes a section into all of it's constituent
 ; connector-shape pairs, which is presumably something everyone
 ; will want to do. There's nothing special about WordNodes, here.
 ;
 ; The redesign requires passing in the correct object holding the
 ; sections that should be shaped.
-;
-; TODO: Convert the code to use the ShapeLink and the CrossSection
-; link type so that its a word-shape pair. Once this is done, this
-; could almost-but-not-quite be moved to the atomspace matrix repo.
 ;
 ; ---------------------------------------------------------------------
 ;
@@ -148,8 +142,6 @@
 		)
 
 		(define star-wild (Variable "$connector-word"))
-		(define shape-pred (Predicate "*-shape-*"))
-		(define pair-pred (Predicate "*-word-shape pair-*"))
 
 		(define any-left (AnyNode "shape word"))
 		(define any-right (AnyNode "shape section"))
@@ -157,8 +149,8 @@
 		; Well, left-type can also be a WordClassNode, but we lie
 		; about that, here.
 		(define (get-left-type) 'WordNode)
-		(define (get-right-type) 'EvaluationLink)
-		(define (get-pair-type) 'EvaluationLink)
+		(define (get-right-type) 'ShapeLink)
+		(define (get-pair-type) 'CrossSection)
 		(define (get-section-type) 'Section)
 
 		; Get the observational count on the word-shape pair
@@ -166,11 +158,11 @@
 
 		; L-ATOM is a WordNode or WordClassNode. R-ATOM is a shape.
 		(define (get-pair L-ATOM R-ATOM)
-			(cog-link 'EvaluationLink pair-pred L-ATOM R-ATOM))
+			(cog-link 'CrossSection L-ATOM R-ATOM))
 
 		; As above, but force the creation of the pair.
 		(define (make-pair L-ATOM R-ATOM)
-			(EvaluationLink pair-pred L-ATOM R-ATOM))
+			(CrossSection L-ATOM R-ATOM))
 
 		; Get the left and right parts of the pair.
 		; The zeroth atom is the predicate.
@@ -234,7 +226,7 @@
 			l-basis)
 
 		(define (get-right-basis)
-			(if (null? r-basis) (set! r-basis (cog-incoming-set shape-pred)))
+			(if (null? r-basis) (set! r-basis (cog-get-atoms 'ShapeLink)))
 			r-basis)
 
 		(define (get-left-size)
@@ -277,7 +269,7 @@
 		; avoid using both ConnectorSeq and Section directly, because
 		; these pollute the space of data. So, the above gets encoded
 		; as
-		; (Evaluation (Predicate "shape") (Word "foo")
+		; (Shape (Word "foo")
 		;     (Connector (Word "bar") (ConnectorDir "-"))
 		;     (Connector (Variable $X) (ConnectorDir "-)))
 		; with the left-word "foo" heading up the list.
@@ -304,8 +296,8 @@
 				; Of course, this creates the section, if it does not yet
 				; exist. Well, we don't want to create actual sections; that
 				; would screw up other code that expects sections to not
-				; have wildcards in them. So we are creating EvaluationLinks
-				; instead. This should be renamed...
+				; have wildcards in them. So we are creating ShapeLinks
+				; instead.
 				(define (insert-wild N)
 					(define front (take cncts N))
 					(define back (drop cncts N))
@@ -313,8 +305,8 @@
 					(define wrd (gar ctr))  ; the word being exploded
 					(define dir (gdr ctr))  ; the direction being exploded
 					(define wild (Connector star-wild dir))
-					(Evaluation pair-pred wrd
-						(Evaluation shape-pred point front wild (cdr back))
+					(CrossSection wrd
+						(Shape point front wild (cdr back))
 						weight))
 
 				; Create all the wild-cards for this section.
@@ -386,8 +378,9 @@ around for a while.
 					(Glob "$end"))))
 
 			; We use the DontExec hack, as otherwise the execution of
-			; this attempts to evaluate the resulting EvaluationLink.
-			(define shape (DontExec (Evaluation shape-pred
+			; this attempts to evaluate the resulting ShapeLink.
+			; (XXX really? I don't think so...)
+			(define shape (DontExec (Shape
 				(Variable "$point")
 				(Glob "$begin")
 				(Connector star-wild (Variable "$dir"))
@@ -455,7 +448,7 @@ around for a while.
 			(format #t "Elapsed time to load word sections: ~A seconds\n"
 				(- (current-time) start-time))
 			(set! start-time (current-time))
-			(fetch-incoming-set pair-pred)
+			(load-atoms-of-type 'CrossSection)
 			(format #t "Elapsed time to load word-shape pairs: ~A seconds\n"
 				(- (current-time) start-time))
 
