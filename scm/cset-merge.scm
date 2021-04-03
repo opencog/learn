@@ -89,9 +89,27 @@
 ; ---------------------------------------------------------------
 ; XXX Incomplete, in development.
 
+(define (matching-sequences CON-A CON-B)
+"
+  matching-sequences CON-A CON-B -- return matching ConnectorSeqs's
 
-(define (get-matchups CON-A CON-B)
-	(define 
+  Find all ConnectorSeq that contain CON-A, and check to see if an
+  equivalent ConnectorSeq exists, containing CON-B. If so, create
+  a scheme pair containing both. Return a list of these matching pairs.
+"
+	(remove
+		(lambda (PR) (null? (cdr PR)))
+		(map
+			(lambda (ASEQ)
+				(cons ASEQ
+					; Is there an equivalent seq with B instead of A?
+					(cog-link 'ConnectorSeq
+						(map
+							(lambda (CON) (if (equal? CON-A CON) CON-B CON))
+							(cog-outgoing-set ASEQ)))))
+			; All 'ConnectorSeq containing A
+			(cog-incoming-by-type CON-A 'ConnectorSeq))))
+
 
 
 ; ---------------------------------------------------------------
