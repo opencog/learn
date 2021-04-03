@@ -263,7 +263,7 @@
 		; Return #t if sect is a singleton section, (a section for a
 		; single word) and not a word-class section.
 		(define (is-singleton-sect? sect)
-			; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect 0)))
+			; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect)))
 			(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
 
 		; If the other count is zero, take only a FRAC of the count.
@@ -334,12 +334,12 @@
 	(format #t "---------Merged ~A sections in ~5F secs; ~6F scts/sec\n"
 		(length perls) elapsed-time (/ (length perls) elapsed-time))
 
-	; Create and store MemberLinks
-	(if (eq? 'WordNode (cog-type WA))
+	; Create and store MemberLinks.
+	(if (eq? (LLOBJ 'left-type) (cog-type WA))
 		(let ((ma (MemberLink WA wrd-class))
 				(mb (MemberLink WB wrd-class)))
 			; Track the number of word-observations moved from
-			; the words, the the class. This is how much the words
+			; the words, to the class. This is how much the words
 			; contributed to the class.
 			(set-count ma accum-lcnt)
 			(set-count mb accum-rcnt)
