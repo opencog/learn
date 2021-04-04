@@ -261,7 +261,8 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE MRG-CON)
+(define* (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE
+	#:optional (MRG-CON #t))
 "
   merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE MRG-CON --
      merge the rows WA and WB of LLOBJ into a combined row of
