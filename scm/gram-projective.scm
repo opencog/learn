@@ -333,10 +333,6 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
-	; Accumulate the counts, handy for tracking membership fraction
-	(set! accum-lcnt (+ accum-lcnt wlc))
-	(set! accum-rcnt (+ accum-rcnt wrc))
-
 	; Use the tuple-math object to provide a pair of rows that
 	; are aligned with one-another.
 	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
@@ -353,8 +349,13 @@
 	(define junk
 		(for-each
 			(lambda (ITL)
-				(merge-row-pairs LLOBJ (first ITL) (second ITL)
-					frac-to-merge ZIPF wrd-class))
+				(define counts
+					(merge-row-pairs LLOBJ (first ITL) (second ITL)
+						frac-to-merge ZIPF wrd-class))
+				; Accumulate the counts, handy for tracking membership fraction
+				(set! accum-lcnt (+ accum-lcnt (car counts)))
+				(set! accum-rcnt (+ accum-rcnt (cdr counts))))
+
 			perls))
 	(define now (get-internal-real-time))
 	(define elapsed-time (* 1.0e-9 (- now start-time)))
