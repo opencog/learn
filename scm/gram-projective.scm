@@ -174,27 +174,29 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-section-pair LLOBJ SECT-PAIR FRAC ZIPF ROW-ELT)
+(define (merge-row-pairs LLOBJ PAIR-A PAIR-B FRAC ZIPF ROW-ID)
 "
-  merge-section-pair SECT-PAIR - Merge two sections into one, placing the result on the word-class.
-  Given a pair of sections, sum the counts from each, and then place
-  that count on a corresponding section on the word-class.  Store the
-  updated section to the database.
+  merge-row-pairs LLOBJ PAIR-A PAIR-B FRAC ZIPF ROW-ID --
+     Merge two pairs into one, placing the result on ROW-ID of LLOBJ.
 
-  One or the other sections can be null. If both sections are not
-  null, then both are assumed to have exactly the same disjunct.
+  It is assumed that PAIR-A and PAIR-B are either null, or, if not null,
+  are elements of the matrix LLOBJ belonging to the same row.  That is,
+  the right-hand side of PAIR-A and PAIR-B are identical. That is,
+  (equal? (LLOBJ 'right-element PAIR-A) (LLOBJ 'right-element PAIR-B))
+  evaluates to #t.
 
-  This works fine for merging two words, or for merging
-  a word and a word-class.  It even works for merging
-  two word-classes.
+  The counts of these two pairs are accumulated onto another pair in the
+  same row, identified by ROW-ID. That pair is created, if it does not
+  exist.  The updated count is stored to the database.
+
+  The prototypical use-case has PAIR-A and PAIR-B being two Sections
+  of (word, disjunct) pairs, having the same disjunct but two different
+  words. The goal is to merge the two words together into a single
+  word-class.
 "
-	; The two word-sections to merge
-	(define lsec (car SECT-PAIR))
-	(define rsec (cdr SECT-PAIR))
-
 	; The counts on each, or zero.
-	(define lcnt (if (null? lsec) 0 (LLOBJ 'get-count lsec)))
-	(define rcnt (if (null? rsec) 0 (LLOBJ 'get-count rsec)))
+	(define lcnt (if (null? PAIR-A) 0 (LLOBJ 'get-count PAIR-A)))
+	(define rcnt (if (null? PAIR-B) 0 (LLOBJ 'get-count PAIR-B)))
 
 	; Return #t if sect is a singleton section, (a section for a
 	; single word) and not a word-class section.
@@ -206,10 +208,10 @@
 	; But only if we are merging in a word, not a word-class;
 	; we never want to shrink the support of a word-class, here.
 	(define wlc (if
-			(and (null? rsec) (is-singleton-sect? lsec) (< ZIPF lcnt))
+			(and (null? PAIR-B) (is-singleton-sect? PAIR-A) (< ZIPF lcnt))
 			(* FRAC lcnt) lcnt))
 	(define wrc (if
-			(and (null? lsec) (is-singleton-sect? rsec) (< ZIPF rcnt))
+			(and (null? PAIR-A) (is-singleton-sect? PAIR-B) (< ZIPF rcnt))
 			(* FRAC rcnt) rcnt))
 
 	; Sum them.
@@ -228,12 +230,12 @@
 	; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
 	(if (< 1.0e-10 cnt)
 		(let* (
-				; The disjunct. Both lsec and rsec have the same disjunct.
-				(seq (if (null? lsec)
-						(LLOBJ 'right-element rsec)
-						(LLOBJ 'right-element lsec)))
+				; The disjunct. Both PAIR-A and PAIR-B have the same disjunct.
+				(seq (if (null? PAIR-A)
+						(LLOBJ 'right-element PAIR-B)
+						(LLOBJ 'right-element PAIR-A)))
 				; The merged word-class
-				(mrg (LLOBJ 'make-pair ROW-ELT seq))
+				(mrg (LLOBJ 'make-pair ROW-ID seq))
 			)
 
 			; The summed counts
@@ -244,13 +246,13 @@
 			; Left side is either a word or a word-class.
 			; If its a word-class, we've already updated
 			; the count.
-			(if (and (not (null? lsec)) (is-singleton-sect? lsec))
-				(update-section-count lsec (- lcnt wlc)))
+			(if (and (not (null? PAIR-A)) (is-singleton-sect? PAIR-A))
+				(update-section-count PAIR-A (- lcnt wlc)))
 
 			; Right side is WB and is always a WordNode
 			; i.e. is always a singleton-sec, so we don't test.
-			(if (not (null? rsec))
-				(update-section-count rsec (- rcnt wrc)))
+			(if (not (null? PAIR-B))
+				(update-section-count PAIR-B (- rcnt wrc)))
 		))
 
 	; Return the pair of counts.
