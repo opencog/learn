@@ -195,8 +195,8 @@
   word-class.
 "
 	; The counts on each, or zero.
-	(define lcnt (if (null? PAIR-A) 0 (LLOBJ 'get-count PAIR-A)))
-	(define rcnt (if (null? PAIR-B) 0 (LLOBJ 'get-count PAIR-B)))
+	(define a-cnt (if (null? PAIR-A) 0 (LLOBJ 'get-count PAIR-A)))
+	(define b-cnt (if (null? PAIR-B) 0 (LLOBJ 'get-count PAIR-B)))
 
 	; Return #t if sect is a singleton section, (a section for a
 	; single word) and not a word-class section.
@@ -207,18 +207,15 @@
 	; If the other count is zero, take only a FRAC of the count.
 	; But only if we are merging in a word, not a word-class;
 	; we never want to shrink the support of a word-class, here.
-	(define wlc (if
-			(and (null? PAIR-B) (is-singleton-sect? PAIR-A) (< ZIPF lcnt))
-			(* FRAC lcnt) lcnt))
-	(define wrc (if
-			(and (null? PAIR-A) (is-singleton-sect? PAIR-B) (< ZIPF rcnt))
-			(* FRAC rcnt) rcnt))
+	(define wac (if
+			(and (null? PAIR-B) (is-singleton-sect? PAIR-A) (< ZIPF a-cnt))
+			(* FRAC a-cnt) a-cnt))
+	(define wbc (if
+			(and (null? PAIR-A) (is-singleton-sect? PAIR-B) (< ZIPF b-cnt))
+			(* FRAC b-cnt) b-cnt))
 
 	; Sum them.
-	(define cnt (+ wlc wrc))
-
-	; Compute what's left on each.
-	(define lrem (- lcnt wlc))
+	(define cnt (+ wac wbc))
 
 	; Update the count on the section.
 	; If the count is zero or less, delete the section.
@@ -247,16 +244,16 @@
 			; If its a word-class, we've already updated
 			; the count.
 			(if (and (not (null? PAIR-A)) (is-singleton-sect? PAIR-A))
-				(update-section-count PAIR-A (- lcnt wlc)))
+				(update-section-count PAIR-A (- a-cnt wac)))
 
 			; Right side is WB and is always a WordNode
 			; i.e. is always a singleton-sec, so we don't test.
 			(if (not (null? PAIR-B))
-				(update-section-count PAIR-B (- rcnt wrc)))
+				(update-section-count PAIR-B (- b-cnt wbc)))
 		))
 
 	; Return the pair of counts.
-	(cons wlc wrc)
+	(cons wac wbc)
 )
 
 ; ---------------------------------------------------------------------
