@@ -313,9 +313,6 @@
   WB is merged into WA. That is, the counts on WA are adjusted only
   upwards, and those on WB only downwards.
 "
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
-
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
 	; XXX FIXME there should be a set-count on the LLOBJ...
 	; Strange but true, there is no setter, currently!
@@ -333,7 +330,6 @@
 	(define accum-lcnt 0)
 	(define accum-rcnt 0)
 
-	;
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
@@ -341,14 +337,25 @@
 	(set! accum-lcnt (+ accum-lcnt wlc))
 	(set! accum-rcnt (+ accum-rcnt wrc))
 
+	; Use the tuple-math object to provide a pair of rows that
+	; are aligned with one-another.
+	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+	(define ptu (add-tuple-math LLOBJ bogus))
+
+	; A list of pairs of sections to merge.
+	(define perls (ptu 'right-stars (list WA WB)))
+
 	; This is what we want to do...
-	;   (for-each merge-section-pair (ptu 'right-stars (cons WA WB)))
+	;   (for-each merge-section-pair (ptu 'right-stars (list WA WB)))
 	; But its so slow, we break out some stats...
 	;
-	; A list of pairs of sections to merge.
-	(define perls (ptu 'right-stars (cons WA WB)))
 	(define start-time (get-internal-real-time))
-	(define junk (for-each merge-section-pair perls))
+	(define junk
+		(for-each
+			(lambda (ITL)
+				(merge-row-pairs LLOBJ (first ITL) (second ITL)
+					frac-to-merge ZIPF wrd-class))
+			perls))
 	(define now (get-internal-real-time))
 	(define elapsed-time (* 1.0e-9 (- now start-time)))
 	(format #t "---------Merged ~A sections in ~5F secs; ~6F scts/sec\n"
