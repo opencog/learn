@@ -321,7 +321,7 @@
 	; If WA is already a word-class, just use it as-is.
 	(define wrd-class
 		(if (eq? CLASS-TYPE (cog-type WA)) WA
-			(CLASS-TYPE (string-concatenate
+			(cog-new-node CLASS-TYPE (string-concatenate
 					(list (cog-name WA) " " (cog-name WB))))))
 
 	; Accumulated counts for the two.
