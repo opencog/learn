@@ -2392,10 +2392,88 @@ why is this different than (cog-arity r) which is 182?
 (length (atoms-subtract er eq)) ; 10
 (length (atoms-subtract eq er)) ; 91
 
+gram-projective.scm
+
 gram-7-junk.rdb is 
 (gram-classify-greedy-discrim csc 0.25 4)
 
-gram-projective.scm
+Baseline run:
+
+Start greedy-agglomeration of 12 words
+Existing classes=0 singletons=0 done=0
+--- To-do=12 ncls=0 sing=0 nredo=0 2021-04-03 19:39:24 -- "e" ---
+--- To-do=11 ncls=0 sing=1 nredo=0 2021-04-03 19:39:34 -- "j" ---
+Dist=0.9553 for word "e" -- "j" in 22.73 secs
+---------Bingo! Dist=0.9553 for word "e" -- "j"
+---------Merged 201883 sections in 1272. secs; 158.73 scts/sec
+--- Greedy-checking next 10 items
+Dist=0.0545 for class "e j" -- "!" in 36.12 secs
+Dist=0.6606 for class "e j" -- "d" in 33.66 secs
+---------Bingo! Dist=0.6606 for class "e j" -- "d"
+---------Merged 284538 sections in 295.1 secs; 964.13 scts/sec
+Dist=0.3132 for class "e j" -- "a" in 46.02 secs
+---------Bingo! Dist=0.3132 for class "e j" -- "a"
+---------Merged 355088 sections in 454.0 secs; 782.08 scts/sec
+Dist=0.0953 for class "e j" -- "###LEFT-WALL###" in 51.58 secs
+Dist=0.6138 for class "e j" -- "b" in 36.79 secs
+---------Bingo! Dist=0.6138 for class "e j" -- "b"
+---------Merged 383586 sections in 491.6 secs; 780.29 scts/sec
+Dist=0.5797 for class "e j" -- "f" in 50.06 secs
+---------Bingo! Dist=0.5797 for class "e j" -- "f"
+---------Merged 409308 sections in 516.3 secs; 792.78 scts/sec
+Dist=0.6088 for class "e j" -- "h" in 57.82 secs
+---------Bingo! Dist=0.6088 for class "e j" -- "h"
+---------Merged 430864 sections in 601.2 secs; 716.70 scts/sec
+Dist=0.6421 for class "e j" -- "c" in 56.41 secs
+---------Bingo! Dist=0.6421 for class "e j" -- "c"
+---------Merged 449112 sections in 635.7 secs; 706.50 scts/sec
+Dist=0.3095 for class "e j" -- "g" in 56.84 secs
+---------Bingo! Dist=0.3095 for class "e j" -- "g"
+---------Merged 454015 sections in 590.7 secs; 768.54 scts/sec
+Dist=0.1362 for class "e j" -- "i" in 49.31 secs
+--- Checking the done-list len=0
+---- Remaining count = 1372.9 of 694217.0 for "j"
+--- To-do=3 ncls=1 sing=0 nredo=9 2021-04-03 21:21:22 -- "!" ---
+Dist=0.0865 for class "e j" -- "!" in 83.39 secs
+--- To-do=2 ncls=1 sing=1 nredo=9 2021-04-03 21:22:51 -- "###LEFT-WALL###" ---
+Dist=0.1064 for class "e j" -- "###LEFT-WALL###" in 66.43 secs
+Dist=   0.0 for word "!" -- "###LEFT-WALL###" in 25.67 secs
+--- To-do=1 ncls=1 sing=2 nredo=9 2021-04-03 21:24:27 -- "i" ---
+Dist=0.1362 for class "e j" -- "i" in 57.25 secs
+Dist=0.3250 for word "!" -- "i" in 13.69 secs
+---------Bingo! Dist=0.3250 for word "!" -- "i"
+---------Merged 76771 sections in 148.1 secs; 518.48 scts/sec
+--- Greedy-checking next 0 items
+--- Checking the done-list len=9
+Dist=0.0001 for class "! i" -- "e" in 8.513 secs
+Dist=0.0002 for class "! i" -- "j" in 6.067 secs
+Dist=0.0283 for class "! i" -- "d" in 5.023 secs
+Dist=0.2085 for class "! i" -- "a" in 6.128 secs
+Dist=0.0017 for class "! i" -- "b" in 6.049 secs
+Dist=   0.0 for class "! i" -- "f" in 4.532 secs
+Dist=0.0008 for class "! i" -- "h" in 5.540 secs
+Dist=   0.0 for class "! i" -- "c" in 4.527 secs
+Dist=0.0008 for class "! i" -- "g" in 5.029 secs
+---- Remaining count = 9567.1 of 24508. for "i"
+--- To-do=0 ncls=2 sing=1 nredo=11 2021-04-03 21:29:24 -- "()" ---
+Finished greedy-agglomeration: 11 words assigned to 2 classes
+
+--------------------
+start again.
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (add-shape-vec-api psa))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+
+(gram-classify-greedy-discrim csc 0.25 4)
+
+Bad method call on pseudo-cset: get-all-pairs
 
 link-class.scm ???
 ====================================================
