@@ -360,6 +360,9 @@
 	(format #t "---------Merged ~A sections in ~5F secs; ~6F scts/sec\n"
 		(length perls) elapsed-time (/ (length perls) elapsed-time))
 
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
 	; Create and store MemberLinks.
 	(if (eq? (LLOBJ 'left-type) (cog-type WA))
 		(let ((ma (MemberLink WA wrd-class))

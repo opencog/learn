@@ -238,6 +238,16 @@
 			(if (eq? 0 r-size) (set! r-size (length (get-right-basis))))
 			r-size)
 
+		; Invalidate the caches
+		(define (clobber)
+			(set! l-basis '())
+			(set! r-basis '())
+			(set! l-size 0)
+			(set! r-size 0)
+			(if (LLOBJ 'provides cobber) (LLOBJ 'clobber))
+xxxxx
+		)
+
 		; -------------------------------------------------------
 		; Create all of the word-shape pairs that correspond to a
 		; section. This explodes a section into all of the word-shape
@@ -472,6 +482,7 @@ around for a while.
 				((right-basis)        get-right-basis)
 				((left-basis-size)    get-left-size)
 				((right-basis-size)   get-right-size)
+				((clobber)            clobber)
 				(else #f)
 		))
 
@@ -499,6 +510,7 @@ around for a while.
 				((get-section)      get-section)
 
 				((provides)         provides)
+				((clobbers)         clobbers)
 				((filters?)         (lambda () #f))
 
 				((describe)         (describe))

@@ -2394,7 +2394,7 @@ why is this different than (cog-arity r) which is 182?
 
 gram-projective.scm
 
-gram-7-junk.rdb is 
+gram-7-junk.rdb is
 (gram-classify-greedy-discrim csc 0.25 4)
 
 Baseline run:
@@ -2406,11 +2406,26 @@ Existing classes=0 singletons=0 done=0
 Dist=0.9553 for word "e" -- "j" in 22.73 secs
 ---------Bingo! Dist=0.9553 for word "e" -- "j"
 ---------Merged 201883 sections in 1272. secs; 158.73 scts/sec
+New code:
+---------Merged 201883 sections in 35.73 secs; 5650.6 scts/sec
+wtf!?  is that even possible!? .. buggy? the new code merges
+differently!?
+
+old code:
 --- Greedy-checking next 10 items
 Dist=0.0545 for class "e j" -- "!" in 36.12 secs
 Dist=0.6606 for class "e j" -- "d" in 33.66 secs
 ---------Bingo! Dist=0.6606 for class "e j" -- "d"
 ---------Merged 284538 sections in 295.1 secs; 964.13 scts/sec
+
+vs new code:
+--- Greedy-checking next 10 items
+Dist=   0.0 for class "e j" -- "!" in 10.96 secs
+Dist=0.2479 for class "e j" -- "d" in 17.03 secs
+Dist=0.0609 for class "e j" -- "a" in 10.83 secs
+Dist=   0.0 for class "e j" -- "###LEFT-WALL###" in 9.620 secs
+So the new distances are completely different.. wtf!?
+
 Dist=0.3132 for class "e j" -- "a" in 46.02 secs
 ---------Bingo! Dist=0.3132 for class "e j" -- "a"
 ---------Merged 355088 sections in 454.0 secs; 782.08 scts/sec
@@ -2477,6 +2492,11 @@ Bad method call on pseudo-cset: get-all-pairs
 
  (define cls (merge-frac pcos cos-fraction ZIPF WORD-A WORD-B 'WordClass))
 329
+
+clobber os pseudo and on shapes ... via provides.../
+all-pairs vs get-all-elts
+
+fliter.scm needs a clobber
 
 link-class.scm ???
 ====================================================

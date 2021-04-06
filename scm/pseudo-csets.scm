@@ -152,38 +152,26 @@
 			(format #t "Elapsed time to load csets: ~A secs\n"
 				(- (current-time) start-time)))
 
-		; Just return all Sections.
-		(define  (do-get-all-pseudo-csets)
-			; The marginals are not stored on Sections, so the below
-			; works fine for the general case.
-			(cog-get-atoms 'Section))
-
-		; Return all of the Sections that we hold.
-		(define  (get-all-pseudo-csets)
-			(if (null? all-csets) (set! all-csets (do-get-all-pseudo-csets)))
-			all-csets)
-
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
 				((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
 				((id)   (lambda () "cset"))
-				((left-type) get-left-type)
-				((right-type) get-right-type)
-				((pair-type) get-pair-type)
-				((pair-count) get-pair-count)
-				((get-pair) get-pair)
-				((get-count) get-count)
-				((make-pair) make-pair)
-				((left-element) get-left-element)
-				((right-element) get-right-element)
-				((left-wildcard) get-left-wildcard)
+				((left-type)      get-left-type)
+				((right-type)     get-right-type)
+				((pair-type)      get-pair-type)
+				((pair-count)     get-pair-count)
+				((get-pair)       get-pair)
+				((get-count)      get-count)
+				((make-pair)      make-pair)
+				((left-element)   get-left-element)
+				((right-element)  get-right-element)
+				((left-wildcard)  get-left-wildcard)
 				((right-wildcard) get-right-wildcard)
-				((wild-wild) get-wild-wild)
-				((all-pairs) get-all-pseudo-csets)
-				((fetch-pairs) fetch-pseudo-csets)
-				((provides) (lambda (symb) #f))
-				((filters?) (lambda () #f))
+				((wild-wild)      get-wild-wild)
+				((fetch-pairs)    fetch-pseudo-csets)
+				((provides)       (lambda () #f))
+				((filters?)       (lambda () #f))
 				(else (error "Bad method call on pseudo-cset:" message)))
 			args)))
 )
