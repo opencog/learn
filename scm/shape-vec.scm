@@ -244,8 +244,7 @@
 			(set! r-basis '())
 			(set! l-size 0)
 			(set! r-size 0)
-			(if (LLOBJ 'provides cobber) (LLOBJ 'clobber))
-xxxxx
+			(if (LLOBJ 'provides 'clobber) (LLOBJ 'clobber))
 		)
 
 		; -------------------------------------------------------
