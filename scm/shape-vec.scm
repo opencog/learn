@@ -318,8 +318,8 @@
 						weight))
 
 				; Create all the wild-cards for this section.
-				; (map insert-wild (list-tabulate num-cncts values))
-				(for-each insert-wild (list-tabulate num-cncts values))
+				; (map insert-wild (iota num-cncts))
+				(for-each insert-wild (iota num-cncts))
 			)
 
 			; Ask the LLOBJ for all Sections.
