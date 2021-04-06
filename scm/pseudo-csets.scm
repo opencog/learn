@@ -170,7 +170,7 @@
 				((right-wildcard) get-right-wildcard)
 				((wild-wild)      get-wild-wild)
 				((fetch-pairs)    fetch-pseudo-csets)
-				((provides)       (lambda () #f))
+				((provides)       (lambda (meth) #f))
 				((filters?)       (lambda () #f))
 				(else (error "Bad method call on pseudo-cset:" message)))
 			args)))
