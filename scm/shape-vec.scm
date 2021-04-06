@@ -509,7 +509,7 @@ around for a while.
 				((get-section)      get-section)
 
 				((provides)         provides)
-				((clobbers)         clobbers)
+				((clobber)          clobber)
 				((filters?)         (lambda () #f))
 
 				((describe)         (describe))
