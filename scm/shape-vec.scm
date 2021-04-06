@@ -325,7 +325,7 @@ xxxxx
 
 			; Ask the LLOBJ for all Sections.
 			(define start-time (current-time))
-			(for-each explode-section (LLOBJ 'all-pairs))
+			(for-each explode-section (LLOBJ 'get-all-elts))
 			(format #t "Elapsed time to create shapes: ~A secs\n"
 				(- (current-time) start-time))
 		)

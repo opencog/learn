@@ -108,7 +108,7 @@
   Finally, the 'left-type and 'right-type methods return the type
   of the the two sides of the pair.
 "
-	(let ((all-pairs '()))
+	(let ((unused '()))
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
@@ -156,23 +156,6 @@
 		(define (get-wild-wild)
 			(make-pair any-left any-right))
 
-		; get-all-pairs - return a list holding all of the observed
-		; word-pairs.  Caution: this can be tens of millions long!
-		(define (do-get-all-pairs)
-			; The list of pairs is mostly just the incoming set of the
-			; predicate node. However, this does include some junk, sooo ...
-			; hey, both left and right better be words.
-		   (filter!
-				(lambda (pair)
-					(and
-						(equal? 'WordNode (cog-type (gadr pair)))
-						(equal? 'WordNode (cog-type (gddr pair)))))
-				(cog-incoming-by-type any-pair-pred 'EvaluationLink)))
-
-		(define (get-all-pairs)
-			(if (null? all-pairs) (set! all-pairs (do-get-all-pairs)))
-			all-pairs)
-
 		; fetch-any-pairs -- fetch all counts for link-grammar
 		; ANY links from the database.
 		(define (fetch-any-pairs)
@@ -214,7 +197,6 @@
 					((left-wildcard) get-left-wildcard)
 					((right-wildcard) get-right-wildcard)
 					((wild-wild) get-wild-wild)
-					((all-pairs) get-all-pairs)
 					((fetch-pairs) fetch-any-pairs)
 					((delete-pairs) delete-any-pairs)
 					((provides) (lambda (symb) #f))
@@ -239,7 +221,7 @@
   The counts are stored on EvaluationLinks with the predicate
   (PredicateNode \"*-Sentence Word Pair-*\")
 "
-	(let ((all-pairs '()))
+	(let ((unused '()))
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
@@ -284,24 +266,6 @@
 		(define (get-wild-wild)
 			(make-pair any-left any-right))
 
-		; get-all-pairs - return a list holding all of the observed
-		; word-pairs.  Caution: this can be tens of millions long, and
-		; take many hours to run!
-		(define (do-get-all-pairs)
-			; The list of pairs is mostly just the incoming set of the
-			; predicate node. However, this does include some junk, sooo ...
-			; hey, both left and right better be words.
-		   (filter!
-				(lambda (pair)
-					(and
-						(equal? 'WordNode (cog-type (gadr pair)))
-						(equal? 'WordNode (cog-type (gddr pair)))))
-				(cog-incoming-by-type pair-pred 'EvaluationLink)))
-
-		(define (get-all-pairs)
-			(if (null? all-pairs) (set! all-pairs (do-get-all-pairs)))
-			all-pairs)
-
 		; fetch-clique-pairs -- fetch all counts for clique-pairs
 		; from the database.
 		(define (fetch-clique-pairs)
@@ -315,22 +279,21 @@
 			(apply (case message
 					((name) (lambda () "Sentence Clique Word Pairs"))
 					((id)   (lambda () "cliq"))
-					((left-type) get-left-type)
-					((right-type) get-right-type)
-					((pair-type) get-pair-type)
-					((pair-count) get-pair-count)
-					((get-pair) get-pair)
-					((get-count) get-count)
-					((make-pair) make-pair)
-					((left-element) get-left-element)
-					((right-element) get-right-element)
-					((left-wildcard) get-left-wildcard)
+					((left-type)      get-left-type)
+					((right-type)     get-right-type)
+					((pair-type)      get-pair-type)
+					((pair-count)     get-pair-count)
+					((get-pair)       get-pair)
+					((get-count)      get-count)
+					((make-pair)      make-pair)
+					((left-element)   get-left-element)
+					((right-element)  get-right-element)
+					((left-wildcard)  get-left-wildcard)
 					((right-wildcard) get-right-wildcard)
-					((wild-wild) get-wild-wild)
-					((all-pairs) get-all-pairs)
-					((fetch-pairs) fetch-clique-pairs)
-					((provides) (lambda (symb) #f))
-					((filters?) (lambda () #f))
+					((wild-wild)      get-wild-wild)
+					((fetch-pairs)    fetch-clique-pairs)
+					((provides)       (lambda (symb) #f))
+					((filters?)       (lambda () #f))
 					(else (error "Bad method call on clique-pair:" message)))
 				args))))
 
@@ -363,8 +326,7 @@
 "
 	(let* ((max-dist MAX-DIST)
 			(dist-name (format #f "*-Pair Max Dist ~A-*" max-dist))
-			(pair-max (PredicateNode dist-name))
-			(all-pairs '()))
+			(pair-max (PredicateNode dist-name)))
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
@@ -420,23 +382,6 @@
 		(define (get-wild-wild)
 			(make-pair any-left any-right))
 
-		; get-all-pairs - return a list holding all of the observed
-		; word-pairs.  Caution: this can be tens of millions long!
-		(define (do-get-all-pairs)
-			; The list of pairs is mostly just the incoming set of the
-			; predicate node. However, this does include some junk, sooo ...
-			; hey, both left and right better be words.
-		   (filter!
-				(lambda (pair)
-					(and
-						(equal? 'WordNode (cog-type (gadr pair)))
-						(equal? 'WordNode (cog-type (gddr pair)))))
-				(cog-incoming-by-type pair-pred 'EvaluationLink)))
-
-		(define (get-all-pairs)
-			(if (null? all-pairs) (set! all-pairs (do-get-all-pairs)))
-			all-pairs)
-
 		; fetch-distance-pairs -- fetch all counts for distance-pairs
 		; from the database.
 		(define (fetch-distance-pairs)
@@ -462,7 +407,6 @@
 					((left-wildcard) get-left-wildcard)
 					((right-wildcard) get-right-wildcard)
 					((wild-wild) get-wild-wild)
-					((all-pairs) get-all-pairs)
 					((fetch-pairs) fetch-distance-pairs)
 					((provides) (lambda (symb) #f))
 					((filters?) (lambda () #f))
@@ -483,7 +427,7 @@
 "
 	(define cliq (make-clique-pair-api))
 	(define dist (make-distance-pair-api 10000000))
-	(define all-pairs (cliq 'all-pairs))
+	(define all-pairs (cliq 'get-all-elts))
 
 	(define cnt 0)
 	(for-each
