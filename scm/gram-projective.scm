@@ -341,7 +341,7 @@
 				(define mrg (LLOBJ 'make-pair CLS col))
 
 				; Create a triple.
-				(list-append! PRL mrg)
+				(append! PRL mrg)
 			)
 		perls))
 
