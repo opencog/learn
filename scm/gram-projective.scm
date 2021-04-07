@@ -252,12 +252,12 @@
 
 ; ---------------------------------------------------------------------
 
-(define* (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE
+(define* (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLS SING-A
 	#:optional (MRG-CON #t))
 "
-  merge-frac LLOBJ FRAC-FN ZIPF WA WB CLASS-TYPE MRG-CON --
-     merge the rows WA and WB of LLOBJ into a combined row of
-     CLASS-TYPE. Returns the merged class.
+  merge-frac LLOBJ FRAC-FN ZIPF WA WB CLS SING-A MRG-CON --
+     merge the rows WA and WB of LLOBJ into a combined row.
+     Returns the merged class.
 
   In the prototypical use case, each row corresponds to a WordNode,
   and the result of summing them results in a WordClassNode. Thus,
@@ -283,8 +283,8 @@
   ZIPF is the smallest observation count, below which counts
      will not be divided up, if a merge is performed. (All of the
      count will be merged, when it is less than ZIPF)
-  CLASS-TYPE is the Atom type that will be the row-type of the merged
-     rows. The two rows will be
+  SING-A indicates how merging is to be done.
+     XXX FIXME describe what is done.
 
   The merger of WA and WB are performed, using the 'projection
   merge' strategy described above. To recap, this is done as follows.
@@ -309,16 +309,6 @@
 	; XXX FIXME there should be a set-count on the LLOBJ...
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
-	; Create a new word-class out of the two words.
-	; Concatenate the string names to get the class name.
-	; If WA is already a word-class, just use it as-is.
-	(define SING-A	(not (eq? CLASS-TYPE (cog-type WA))))
-	(define wrd-class
-		(if SING-A
-			(cog-new-node CLASS-TYPE (string-concatenate
-					(list (cog-name WA) " " (cog-name WB))))
-			WA))
 
 	; Accumulated counts for the two.
 	(define accum-lcnt 0)
@@ -348,7 +338,7 @@
 						(LLOBJ 'right-element PAIR-A)))
 
 				; The place where the merge counts should be written
-				(define mrg (LLOBJ 'make-pair wrd-class col))
+				(define mrg (LLOBJ 'make-pair CLS col))
 
 				; Create a triple.
 				(list-append! PRL mrg)
@@ -374,9 +364,9 @@
 	(LLOBJ 'clobber)
 
 	; Create and store MemberLinks.
-	(if (eq? (LLOBJ 'left-type) (cog-type WA))
-		(let ((ma (MemberLink WA wrd-class))
-				(mb (MemberLink WB wrd-class)))
+	(if SING-A
+		(let ((ma (MemberLink WA CLS))
+				(mb (MemberLink WB CLS)))
 			; Track the number of word-observations moved from
 			; the words, to the class. This is how much the words
 			; contributed to the class.
@@ -390,14 +380,14 @@
 		; The process is similar, but slightly altered.
 		; We assume that WB is a WordNode, but perform no safety
 		; checking to verify this.
-		(let ((mb (MemberLink WB wrd-class)))
+		(let ((mb (MemberLink WB CLS)))
 			(set-count mb accum-rcnt)
 			; Add WB to the mrg-class (which is WA already)
 			(store-atom mb))
 	)
 
 	; Return the word-class
-	wrd-class
+	CLS
 )
 
 ; ---------------------------------------------------------------
@@ -455,6 +445,16 @@
 
 ; ---------------------------------------------------------------
 
+; Create a new word-class out of the two words.
+; Concatenate the string names to get the class name.
+; If WA is already a word-class, just use it as-is.
+(define (make-word-class WA WB SING)
+	(if SING
+		(cog-new-node 'WordClass (string-concatenate
+					(list (cog-name WA) " " (cog-name WB))))
+		WA)
+)
+
 (define (make-fuzz STARS CUTOFF UNION-FRAC ZIPF MIN-CNT)
 "
   make-fuzz -- Do projection-merge, with a fixed merge fraction.
@@ -489,7 +489,10 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pcos fixed-frac ZIPF WORD-A WORD-B 'WordClass))
+			(define single (not (eq? 'WordClass (cog-type WORD-A))))
+			(define cls (make-word-class WORD-A WORD-B single))
+			(merge-frac pcos fixed-frac ZIPF WORD-A WORD-B cls single))
+
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -570,7 +573,9 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pcos cos-fraction ZIPF WORD-A WORD-B 'WordClass))
+			(define single (not (eq? 'WordClass (cog-type WORD-A))))
+			(define cls (make-word-class WORD-A WORD-B single))
+			(merge-frac pcos cos-fraction ZIPF WORD-A WORD-B cls single))
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -660,7 +665,9 @@
 
 		; Return a WordClassNode that is the result of the merge.
 		(define (merge WORD-A WORD-B)
-			(define cls (merge-frac pmi mi-fraction ZIPF WORD-A WORD-B 'WordClass))
+			(define single (not (eq? 'WordClass (cog-type WORD-A))))
+			(define cls (make-word-class WORD-A WORD-B single))
+			(merge-frac pmi mi-fraction ZIPF WORD-A WORD-B cls single))
 			; Need to recompute the marginals, in order for future
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -726,7 +733,8 @@
 ;
 ; Perform the actual merge
 ; (define (frac WA WB) 0.3)
-; (merge-frac pcos frac 4 (Word "city") (Word "village") 'WordClass)
+; (define cls (WordClass "city-village"))
+; (merge-frac pcos frac 4 (Word "city") (Word "village") cls #t)
 ;
 ; Verify presence in the database:
 ; select count(*) from atoms where type=22;
