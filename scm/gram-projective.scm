@@ -491,7 +491,7 @@
 		(define (merge WORD-A WORD-B)
 			(define single (not (eq? 'WordClass (cog-type WORD-A))))
 			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac pcos fixed-frac ZIPF WORD-A WORD-B cls single))
+			(merge-frac pcos fixed-frac ZIPF WORD-A WORD-B cls single)
 
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
@@ -575,7 +575,7 @@
 		(define (merge WORD-A WORD-B)
 			(define single (not (eq? 'WordClass (cog-type WORD-A))))
 			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac pcos cos-fraction ZIPF WORD-A WORD-B cls single))
+			(merge-frac pcos cos-fraction ZIPF WORD-A WORD-B cls single)
 			; Need to recompute the marginals, in order for future
 			; cosine evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
@@ -667,7 +667,7 @@
 		(define (merge WORD-A WORD-B)
 			(define single (not (eq? 'WordClass (cog-type WORD-A))))
 			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac pmi mi-fraction ZIPF WORD-A WORD-B cls single))
+			(merge-frac pmi mi-fraction ZIPF WORD-A WORD-B cls single)
 			; Need to recompute the marginals, in order for future
 			; MI evaluations to work correctly.  We also store this,
 			; so that restarts can see the correct values.  Recall
