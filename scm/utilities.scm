@@ -14,8 +14,9 @@
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
-(use-modules (ice-9 threads))
+(use-modules (ice-9 atomic))
 (use-modules (ice-9 receive))   ; for partition
+(use-modules (ice-9 threads))
 
 ; ---------------------------------------------------------------------
 ;
@@ -167,30 +168,32 @@
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ;
-(define-public monitor-rate
-	(let ((mtx (make-mutex))
-			(cnt 0)
-			(start-time (- (current-time) 0.000001)))
-		(lambda (msg)
-			(if (or (not msg) (null? msg))
-				(begin
-					(lock-mutex mtx)
-					(set! cnt (+ cnt 1))
-					(unlock-mutex mtx))
-				(format #t "~A done=~A rate=~5f per sec\n"
-					msg cnt (/ cnt (- (current-time) start-time))))
-		)))
-
-(set-procedure-property! monitor-rate 'documentation
+(define-public (make-rate-monitor)
 "
-  monitor-rate MSG - simplistic parse-rate monitoring utility.
+  make-rate-monitor - simplistic rate monitoring utility.
 
-  Use this to monitor how many sentences have been processed.
-  It will count how many sentences have been processed so far.
-  If called with a null argument (if MSG is #f or is '()), then
-  it increments the count. Otherwise, it prints the argument as
-  a string, followed by the count and rate.
-")
+  Use this to monitor the rate at which actions are being performed.
+  It returns a function taking one argument: either #f or a string
+  message. If called with #f, it increments a count and returns.
+  If called with a message, it will print the processing rate.
+
+  Example usage:
+    (define monitor-rate (make-rate-monitor))
+    (monitor-rate #f)
+    (sleep 1)
+    (monitor-rate #f)
+    (monitor-rate \"This is progress:\")
+"
+	(define cnt (make-atomic-box 0))
+	(define start-time (- (current-time) 0.000001))
+
+	(lambda (msg)
+		(if (nil? msg))
+			(atomic-inc cnt)
+			(format #t "~A done=~A rate=~5f per sec\n"
+				msg (atomic-box-ref cnt)
+				(/ (atomic-box-ref cnt) (- (current-time) start-time))))
+)
 
 ; ---------------------------------------------------------------
 

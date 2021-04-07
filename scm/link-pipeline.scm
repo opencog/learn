@@ -405,6 +405,15 @@
 
 ; --------------------------------------------------------------------
 
+(define-public monitor-parse-rate (make-rate-monitor))
+(set-procedure-property! monitor-parse-rate 'documentation
+"
+   monitor-parse-rate MSG - monitor the parse rate.
+
+   Call this function with a string MSG to print out the current
+   parse rate; that is, how quickly `observe-text-mode` is progressing.
+")
+
 (define-public (observe-text-mode plain-text observe-mode count-reach)
 "
  observe-text-mode -- update word and word-pair counts by observing raw text.
@@ -422,6 +431,9 @@
  and word-pairs observed in incoming text. This takes in raw text, gets
  it parsed, and then updates the counts for the observed words and word
  pairs.
+
+ The parse rate can be monitored by calling, by hand, the guile function
+ `(monitor-parse-rate MSG)` for some string MSG.
 "
 	; Count the atoms in the sentence, according to the counting method
 	; passed as argument, then delete the sentence.
@@ -437,7 +449,7 @@
 		; LgParseLink below, because LgParseMinimal is not enough.
 		; (update-disjunct-counts sent)
 		(delete-sentence SENT)
-		(monitor-rate #f))
+		(monitor-parse-rate #f))
 
 	; -------------------------------------------------------
 #!
