@@ -2396,6 +2396,18 @@ gram-projective.scm
 
 gram-7-junk.rdb is
 (gram-classify-greedy-discrim csc 0.25 4)
+----------
+Old API
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (make-shape-vec-api))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
 
 Baseline run:
 Used 80807 sections to create 620435 x-sections
@@ -2408,12 +2420,68 @@ Existing classes=0 singletons=0 done=0
 Dist=0.9553 for word "e" -- "j" in 22.73 secs
 ---------Bingo! Dist=0.9553 for word "e" -- "j"
 ---------Merged 201883 sections in 1272. secs; 158.73 scts/sec
-Deleted 2446 sections and 224608 cross-sections
+Deleted 2446 sections and 224608 cross-sections tot=228584
+l= 121992 lx= 120576   r= 106592 rx= 105397
+
 
 New code:
 
 ---------Merged 201883 sections in 35.73 secs; 5650.6 scts/sec
 Deleted 2446 sections and 105397 cross-sections
+Deleted 2446 sections and 105397 cross-sections tot=
+
+l= 1416 lx= 0   r= 106592 rx= 105397
+all-pairs before=701242 after=593399
+
+ah hah pair A is never a Cross...
+
+(define WA (Word "e"))
+(define WB (Word "j"))
+(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+(define ptu (add-tuple-math csc bogus))
+(define perls (ptu 'right-stars (list WA WB)))
+(length perls) ; 201883
+
+(define nxc 0)
+(for-each (lambda (spr)
+	(define asec (first spr))
+	(if (and (not (null? asec)) (eq? (cog-type asec) 'CrossSection))
+		(set! nxc (+ 1 nxc))))
+	perls)
+
+nxc ; 120576
+
+Ohh is-singleton fails!
+
+(csc 'left-type) ; WordNode
+
+(define (is-singleton-sect? sect)
+(define LLOBJ csc)
+(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
+
+(any (lambda (spr)
+	(define asec (first spr))
+	(if (and (not (null? asec)) (eq? (cog-type asec) 'CrossSection)
+		(not (is-singleton-sect? asec)))
+		(format #t "fail at ~A\n" asec)
+		#f))
+	perls)
+
+(define fa
+(CrossSection (ctv 1 0 1)
+  (WordNode "e")
+  (ShapeLink
+    (WordNode "###LEFT-WALL###")
+    (Connector (WordNode "j") (ConnectorDir "+"))
+    (Connector (WordNode "j") (ConnectorDir "+"))
+    (Connector (WordNode "g") (ConnectorDir "+"))
+    (Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+    (Connector (WordNode "e") (ConnectorDir "+"))
+    (Connector (WordNode "!") (ConnectorDir "+")))))
+
+(csc 'left-element fa) is wrong!
+
+
 wtf!?  is that even possible!? .. buggy? the new code merges
 differently!?
 
@@ -2616,6 +2684,20 @@ Dist=0.0179 for class "! i" -- "g" in 2.025 secs
 ---- Remaining count = 1695.6 of 24508. for "i"
 --- To-do=0 ncls=3 sing=3 nredo=9 2021-04-05 20:02:08 -- "()" ---
 Finished greedy-agglomeration: 11 words assigned to 8 classes
+
+(make-discrim STARS CUTOFF ZIPF MIN-CNT)
+(deefine (make-discrim wcnt 0.25 4 4)
+
+(define WA (Word "e"))
+(define WB (Word "j"))
+(define CUTOFF 0.25)
+(define pcos (add-pair-cosine-compute csc))
+
+    (define (cos-fraction WA WB)
+       (define cosi (pcos 'right-cosine WA WB))
+       (/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
+
+(merge-frac  pcos cos-fraction 4 WA WB 'WordClass)
 
 link-class.scm ???
 ====================================================

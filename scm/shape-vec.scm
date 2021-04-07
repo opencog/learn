@@ -168,10 +168,10 @@
 		; Get the left and right parts of the pair.
 		; The zeroth atom is the predicate.
 		(define (get-pair-left SHAPE-PR)
-			(cog-outgoing-atom SHAPE-PR 1))
+			(cog-outgoing-atom SHAPE-PR 0))
 
 		(define (get-pair-right SHAPE-PR)
-			(cog-outgoing-atom SHAPE-PR 2))
+			(cog-outgoing-atom SHAPE-PR 1))
 
 		; Create the section corresponding to the word-shape pair.
 		; That is, unexplode (implode?) the word-shape pair back
