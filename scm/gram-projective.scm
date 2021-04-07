@@ -174,26 +174,30 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-row-pairs LLOBJ PAIR-A PAIR-B FRAC ZIPF ROW-ID)
+(define (merge-row-pairs LLOBJ COLS FRAC ZIPF)
 "
-  merge-row-pairs LLOBJ PAIR-A PAIR-B FRAC ZIPF ROW-ID --
-     Merge two pairs into one, placing the result on ROW-ID of LLOBJ.
+  merge-row-pairs LLOBJ COLS FRAC ZIPF -- Merge two rows into a third row.
 
-  It is assumed that PAIR-A and PAIR-B are either null, or, if not null,
-  are elements of the matrix LLOBJ belonging to the same row.  That is,
-  the right-hand side of PAIR-A and PAIR-B are identical. That is,
-  (equal? (LLOBJ 'right-element PAIR-A) (LLOBJ 'right-element PAIR-B))
-  evaluates to #t.
+  COLS should be a list of three items (three pairs) in the same column
+  of the matrix LLOBJ. The counts on the first two items in the list
+  will be totalled and assigned to the third item; the counts on the
+  first two items will be decremented by the amount each contributed.
 
-  The counts of these two pairs are accumulated onto another pair in the
-  same row, identified by ROW-ID. That pair is created, if it does not
-  exist.  The updated count is stored to the database.
+  The first or the second item are allowed to be null. If not null,
+  these are assumed to all be in the same column, in that they all
+  return the same value for (LLOBJ 'right-element item))
+
+  The updated count is stored to the database.
 
   The prototypical use-case has PAIR-A and PAIR-B being two Sections
   of (word, disjunct) pairs, having the same disjunct but two different
   words. The goal is to merge the two words together into a single
   word-class.
 "
+	(define PAIR-A (first COLS))
+	(define PAIR-B (second COLS))
+	(define PR-ACC (third COLS))
+
 	; The counts on each, or zero.
 	(define a-cnt (if (null? PAIR-A) 0 (LLOBJ 'get-count PAIR-A)))
 	(define b-cnt (if (null? PAIR-B) 0 (LLOBJ 'get-count PAIR-B)))
@@ -226,18 +230,11 @@
 
 	; The cnt can be zero, if FRAC is zero.  Do nothing in this case.
 	(if (< 1.0e-10 cnt)
-		(let* (
-				; The disjunct. Both PAIR-A and PAIR-B have the same disjunct.
-				(seq (if (null? PAIR-A)
-						(LLOBJ 'right-element PAIR-B)
-						(LLOBJ 'right-element PAIR-A)))
-				; The merged word-class
-				(mrg (LLOBJ 'make-pair ROW-ID seq))
-			)
+		(begin
 
 			; The summed counts
-			(set-count mrg cnt)
-			(store-atom mrg) ; save to the database.
+			(set-count PR-ACC cnt)
+			(store-atom PR-ACC) ; save to the database.
 
 			; Now subtract the counts from the words.
 			; Left side is either a word or a word-class.
@@ -340,22 +337,37 @@
 	; A list of pairs of sections to merge.
 	(define perls (ptu 'right-stars (list WA WB)))
 
-	; This is what we want to do...
-	;   (for-each merge-section-pair (ptu 'right-stars (list WA WB)))
-	; But its so slow, we break out some stats...
-	;
+	(define trips
+		(map
+			(lambda (PRL)
+				(define PAIR-A (first PRL))
+				(define PAIR-B (second PRL))
+
+				; The column (the right side). Both PAIR-A and
+				; PAIR-B are in the same column. Just get it.
+				(define col (if (null? PAIR-A)
+						(LLOBJ 'right-element PAIR-B)
+						(LLOBJ 'right-element PAIR-A)))
+
+				; The place where the merge counts should be written
+				(define mrg (LLOBJ 'make-pair wrd-class col))
+
+				; Create a triple.
+				(list-append! PRL mrg)
+			)
+		perls))
+
+	; Perform the merge.
 	(define monitor-rate (make-rate-monitor))
 	(for-each
 		(lambda (ITL)
 			(define counts
-				(merge-row-pairs LLOBJ (first ITL) (second ITL)
-					frac-to-merge ZIPF wrd-class))
+				(merge-row-pairs LLOBJ ITL frac-to-merge ZIPF))
 			; Accumulate the counts, handy for tracking membership fraction
 			(set! accum-lcnt (+ accum-lcnt (car counts)))
 			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
 			(monitor-rate #f))
-
-		perls))
+		trips)
 
 	(monitor-rate
 		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
