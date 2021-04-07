@@ -93,3 +93,9 @@ notable:
 * [cset-merge.scm](cset-merge.scm) Reviews how connector sets are to be
                           merged. The merge decision is made elsewhere;
                           this only goes through the mechanics of merging.
+
+TODO
+----
+Review and probably delete:
+
+* singletons.scm - stale rancid unfinished code.

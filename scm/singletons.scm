@@ -2,6 +2,8 @@
 ; singletons.scm
 ;
 ; Stuff for working with singltons.
+; XXX This is not currently used, and should maybe be deleted.
+; It probably does not even work right.
 ;
 ; Copyright (c) 2017 Linas Vepstas
 ;
