@@ -344,22 +344,21 @@
 	;   (for-each merge-section-pair (ptu 'right-stars (list WA WB)))
 	; But its so slow, we break out some stats...
 	;
-	(define start-time (get-internal-real-time))
-	(define junk
-		(for-each
-			(lambda (ITL)
-				(define counts
-					(merge-row-pairs LLOBJ (first ITL) (second ITL)
-						frac-to-merge ZIPF wrd-class))
-				; Accumulate the counts, handy for tracking membership fraction
-				(set! accum-lcnt (+ accum-lcnt (car counts)))
-				(set! accum-rcnt (+ accum-rcnt (cdr counts))))
+	(define monitor-rate (make-rate-monitor))
+	(for-each
+		(lambda (ITL)
+			(define counts
+				(merge-row-pairs LLOBJ (first ITL) (second ITL)
+					frac-to-merge ZIPF wrd-class))
+			; Accumulate the counts, handy for tracking membership fraction
+			(set! accum-lcnt (+ accum-lcnt (car counts)))
+			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
+			(monitor-rate #f))
 
-			perls))
-	(define now (get-internal-real-time))
-	(define elapsed-time (* 1.0e-9 (- now start-time)))
-	(format #t "---------Merged ~A sections in ~5F secs; ~6F scts/sec\n"
-		(length perls) elapsed-time (/ (length perls) elapsed-time))
+		perls))
+
+	(monitor-rate
+		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

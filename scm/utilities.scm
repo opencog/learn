@@ -183,16 +183,22 @@
     (sleep 1)
     (monitor-rate #f)
     (monitor-rate \"This is progress:\")
+    (monitor-rate \"Did ~A in ~A seconds rate=~5F items/sec\")
 "
 	(define cnt (make-atomic-box 0))
 	(define start-time (- (current-time) 0.000001))
 
 	(lambda (msg)
-		(if (nil? msg))
+		(if (nil? msg)
 			(atomic-inc cnt)
-			(format #t "~A done=~A rate=~5f per sec\n"
-				msg (atomic-box-ref cnt)
-				(/ (atomic-box-ref cnt) (- (current-time) start-time))))
+			(let* ((acnt (atomic-box-ref cnt))
+					(elapsed (- (current-time) start-time))
+					(rate (/ acnt elapsed))
+				)
+				(if (string-index msg ~)
+					(format #t msg acnt elapsed rate)
+					(format #t "~A done=~A rate=~5f per sec\n"
+						msg acnt rate)))))
 )
 
 ; ---------------------------------------------------------------
