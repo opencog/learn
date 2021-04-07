@@ -247,8 +247,9 @@
 				(update-section-count PAIR-A (- a-cnt wac)))
 
 			; Right side is WB and is always a WordNode
-			; i.e. is always a singleton-sec, so we don't test.
-			(if (not (null? PAIR-B))
+			; In principle, its always a singleton, so the test
+			; is superfluous.
+			(if (and (not (null? PAIR-B)) (is-singleton-sect? PAIR-B))
 				(update-section-count PAIR-B (- b-cnt wbc)))
 		))
 
