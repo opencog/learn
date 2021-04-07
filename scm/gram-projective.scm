@@ -174,7 +174,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-row-pairs LLOBJ COLS FRAC ZIPF)
+(define (merge-row-pairs LLOBJ COLS SING-A SING-B FRAC ZIPF)
 "
   merge-row-pairs LLOBJ COLS FRAC ZIPF -- Merge two rows into a third row.
 
@@ -186,6 +186,8 @@
   The first or the second item are allowed to be null. If not null,
   these are assumed to all be in the same column, in that they all
   return the same value for (LLOBJ 'right-element item))
+
+  SING-A and SING-B should be #t or #f.
 
   The updated count is stored to the database.
 
@@ -202,20 +204,14 @@
 	(define a-cnt (if (null? PAIR-A) 0 (LLOBJ 'get-count PAIR-A)))
 	(define b-cnt (if (null? PAIR-B) 0 (LLOBJ 'get-count PAIR-B)))
 
-	; Return #t if sect is a singleton section, (a section for a
-	; single word) and not a word-class section.
-	(define (is-singleton-sect? sect)
-		; same as: (eq? 'WordNode (cog-type (LLOBJ 'left-element sect)))
-		(eq? (LLOBJ 'left-type) (cog-type (LLOBJ 'left-element sect))))
-
 	; If the other count is zero, take only a FRAC of the count.
 	; But only if we are merging in a word, not a word-class;
 	; we never want to shrink the support of a word-class, here.
 	(define wac (if
-			(and (null? PAIR-B) (is-singleton-sect? PAIR-A) (< ZIPF a-cnt))
+			(and SING-A (null? PAIR-B) (< ZIPF a-cnt))
 			(* FRAC a-cnt) a-cnt))
 	(define wbc (if
-			(and (null? PAIR-A) (is-singleton-sect? PAIR-B) (< ZIPF b-cnt))
+			(and SING-B (null? PAIR-A) (< ZIPF b-cnt))
 			(* FRAC b-cnt) b-cnt))
 
 	; Sum them.
@@ -240,13 +236,13 @@
 			; Left side is either a word or a word-class.
 			; If its a word-class, we've already updated
 			; the count.
-			(if (and (not (null? PAIR-A)) (is-singleton-sect? PAIR-A))
+			(if (and SING-A (not (null? PAIR-A)))
 				(update-section-count PAIR-A (- a-cnt wac)))
 
 			; Right side is WB and is always a WordNode
 			; In principle, its always a singleton, so the test
 			; is superfluous.
-			(if (and (not (null? PAIR-B)) (is-singleton-sect? PAIR-B))
+			(if (and SING-B (not (null? PAIR-B)))
 				(update-section-count PAIR-B (- b-cnt wbc)))
 		))
 
@@ -317,10 +313,12 @@
 	; Create a new word-class out of the two words.
 	; Concatenate the string names to get the class name.
 	; If WA is already a word-class, just use it as-is.
+	(define SING-A	(not (eq? CLASS-TYPE (cog-type WA))))
 	(define wrd-class
-		(if (eq? CLASS-TYPE (cog-type WA)) WA
+		(if SING-A
 			(cog-new-node CLASS-TYPE (string-concatenate
-					(list (cog-name WA) " " (cog-name WB))))))
+					(list (cog-name WA) " " (cog-name WB))))
+			WA))
 
 	; Accumulated counts for the two.
 	(define accum-lcnt 0)
@@ -362,7 +360,7 @@
 	(for-each
 		(lambda (ITL)
 			(define counts
-				(merge-row-pairs LLOBJ ITL frac-to-merge ZIPF))
+				(merge-row-pairs LLOBJ ITL SING-A #t frac-to-merge ZIPF))
 			; Accumulate the counts, handy for tracking membership fraction
 			(set! accum-lcnt (+ accum-lcnt (car counts)))
 			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
