@@ -2590,6 +2590,116 @@ cset-merge.scm
 
 (define monitor-rate (make-rate-monitor))
 
+/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksIO.cc
+:570 well 565
+
+remFromSidList
+
+remin osatom=ShapeLink  - the osatom, from which the xsection to be removed.
+reminc satom=2Vy3 (CrossSection 
+well foo, delete was n=0 r=0 satom=2Vy3 (CrossSection
+
+removeSatom called under lock gaurd mtx_list
+
+writeAtom locks _mtx_sid, then unlocks it before storing incoming
+set. .... the write of incoming set is done under _mtx_list
+but that is distinct lock.
+
+      std::recursive_mutex _mtx_list;
+      std::mutex _mtx_sid;
+
+error in accessing i@
+remFromSidList called from
+	remIncoming called from
+		removeSatom called from
+			... already covered
+	removeSatom called from
+		removeSatom reccurisvely
+		removeAtom with mtx_list lock held.
+
+i@ handlers:
+	removeSatom with mtx_list held
+	getIncomingSet
+	writeAtom() with mtx_list held
+	remIncoming()
+
+success remFromSidList G1 from i@P:ListLink in tid=13712
+in remFromSidList G1 not found in list i@P:ListLink in tid=13709
+
+so incoming is removed first, then the atom
+SilentException
+NotFoundException
+
+593
+
+OK, revised code:
+removeSatom from removeAtom with mtx_list held
+
+writeAtom wries a@ not holding any lock
+still get an error  11
+
+rocks: 16 18 18
+simple 49 49 47 -- 49
+non-simple: 8m3 7m32
+pg: 8m12 
+pg-short: 20 20 20
+
+uhh,
+/home/linas/src/novamente/src/atomspace-git/opencog/persist/sql/multi-driver/SQLUUID.cc:133
+get_uuid
+
+SQLValues.cc:130
+SQLValues.cc:564
+SQLAtomStore.cc:124	
+
+./tests/persist/sql/multi-driver/MultiDeleteUTest
+again: 50x50 for pg
+pg - 31 31 31
+rocks - 24 18 28 20 34
+
+again 50x500 no barrier
+cog-sim 39 39
+cog-sto - 12 13 12
+
+50x50 no barrier
+rocks 17 27 no has dbg in it.
+rocks 14 24 11
+pg 7 7 7
+
+50x100
+pg 14 14
+
+in removeSatom sid=91
+in remFromSidList 91 not found in list i@2:ListLink 
+
+Enter writeAtom
+In writeAtom new sid=Z1
+In writeAtom onging w/sid=Z1
+
+Enter writeAtom
+Exit writeAtom existing sid=Z1
+
+is the sid being added twice!? Yikes! neear 273 oh its OK
+
+in writeAtom add sid=G1 to ist=i@5:ListLink
+Added sid G1 new sid list for i@5:ListLink is EG1
+
+   size_t pos = sidlist.find(sid);
+   while (std::string::npos != pos and 0 < pos)
+   {
+      if (' ' != sidlist[pos-1])
+         pos = sidlist.find(sid, pos+1);
+else break
+   }
+
+600
+Fixed in latest flurry of rocks pushes
+
+
+terminate called after throwing an instance of 'opencog::InvalidParamException'
+  what():  Atom is already in the TLB, and UUID's don't match! (/home/linas/src/novamente/src/atomspace-git/opencog/atomspaceutils/TLB.cc:129)
+
+
 
 link-class.scm ???
 ====================================================
