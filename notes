@@ -2699,6 +2699,17 @@ Fixed in latest flurry of rocks pushes
 terminate called after throwing an instance of 'opencog::InvalidParamException'
   what():  Atom is already in the TLB, and UUID's don't match! (/home/linas/src/novamente/src/atomspace-git/opencog/atomspaceutils/TLB.cc:129)
 
+SQLAtomLoad.cc:202 ... doGetLink ...
+SQLAtomDelete.cc:106  UUID uuid = check_uuid(h);
+StorageNode.cc:77
+
+check_uuid(h)
+if not in tlbuf,
+   doGetLink
+   returns uuid in db, puts into tlbuf.addAtom(link, uuid_
+
+so storeAtm must have ...gotten a new uuid!?
+test_persist_sql
 
 
 link-class.scm ???
@@ -2717,6 +2728,7 @@ FIXED:
 
 TODO/BUGS:
 
+* Create a generic run-shells.sh
 * Implement connector merging.
 * Set up direct-sum/shape clustering run scripts.
 * Write unit test for the recent caching fix in the pattern matcher,
