@@ -2766,15 +2766,60 @@ lsof -p 30945 |wc
    1248
 lsof -p 30945 |grep junk |wc
     987 
+find ~/data/expt-16/gram-25-junk.rdb |grep sst |wc
+    989 
 
 So ... closing rocks does not close the open file handles... wtf.
 
 CancelAllBackgroundWork(_rfile, true);
 rocksdb_close()
 delete_obsolete_files_period_micros = 5ULL * 1000000;
+max_background_jobs = 4;
+allow_mmap_reads = true;
+options.compaction_pri = kMinOverlappingRatio;
+
+lsof -p 24949 | grep junk | wc
+    992
+find ~/data/expt-16/gram-26-junk.rdb |grep sst |wc
+    986
+
+(cog-rocks-print storage-node "i@A6y3:CrossSection")
 
 
+opts.set_max_open_files(max_open_files);
 
+  int level0_file_num_compaction_trigger = 4;
+soft_pending_compaction_bytes_limit
+
+Wow. vast effing memleak: rocks is using 154 GBytes RAM!
+https://github.com/facebook/rocksdb/issues/3216
+
+avoid memleak by setting
+cache_index_and_filter_blocks=true
+
+need to turn on block cache.
+
+uhh. print-range fails when rocks is corrupting things!
+
+wow Seeks are wrong!
+appendToSidList
+remFromSidList
+loadInset
+fetch_incoming_set
+
+sidlist style:
+ 9/12 Test  #9: MultiDeleteUTest .................   Passed   17.51 sec
+11/12 Test #11: LargeFlatUTest ...................   Passed   83.93 sec
+12/12 Test #12: LargeZipfUTest ...................   Passed  145.84 sec
+Total Test time (real) = 265.20 sec
+
+sidkey-style:
+ 9/12 Test  #9: MultiDeleteUTest .................   Passed   17.00 sec
+11/12 Test #11: LargeFlatUTest ...................   Passed   82.52 sec
+12/12 Test #12: LargeZipfUTest ...................   Passed  110.68 sec
+Total Test time (real) = 225.92 sec
+
+So its actually faster.
 
 
 
