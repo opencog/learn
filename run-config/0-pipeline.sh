@@ -22,6 +22,11 @@ export TEXT_DIR=/home/ubuntu/text/expt-42
 # If you are using Postgres, just delete `ROCKS_DATA_DIR`.
 export ROCKS_DATA_DIR=/home/ubuntu/data/expt-42
 
+# Increase the max allowed open files. The Linux default is 1024
+# but the RocksDB wants to create and open a large number of *.sst
+# files, and will silently corrupt data if this number is exceeded.
+ulimit -n 4096
+
 # Directory in which configuration parameters (including this file)
 # are located. Obtained automatically; don't change.
 export CONFIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )

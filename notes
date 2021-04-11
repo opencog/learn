@@ -2711,11 +2711,78 @@ if not in tlbuf,
 so storeAtm must have ...gotten a new uuid!?
 test_persist_sql
 
+----------
+
+wtf. 
+/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksIO.cc:575
+
+remove 5dy3 its a CrossSection
+it contains 6dy3 which is a ShapeLink
+but 6dy3 has an empty income set...
+
+(cog-rocks-open "rocks:///home/ubuntu/data/expt-16/gram-23-junk.rdb")
+(cog-rocks-get "i@6dy3:")
+(cog-rocks-get "i@6dy3:CrossSection")
+It looks just fine, so wtf...
+Database corruption!
+
+
+cleanup: Removed sid
+
+in removeSatom sid=DNw3
+in remincoming ist=i@:Section
+inset key=i@:Section<
+
+(cog-rocks-open "rocks:///home/ubuntu/data/expt-16/gram-24-junk.rdb")
+(cog-rocks-get "i@DNw3:")
+
+Throw to key `C++-EXCEPTION' with args `("cog-rocks-open" "Can't open file: Corruption: Can't access /048536.sst: IO error: while stat a file for size: /home/ubuntu/data/expt-16/gram-24-junk.rdb/048536.sst: No such file or directory\n (/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksStorage.cc:86)\nFunction args:\n(rocks:///home/ubuntu/data/expt-16/gram-24-junk.rdb)")'.
+
+
+in writeAtom add sid=gRL6 to ist=i@6Lx3:CrossSection
+Added sid gRL6 to sidlist for i@6Lx3:CrossSection bef=0 aft=1
+bef=
+aft=gRL6 
+in removeSatom sid=5Lx3
+in remincoming ist=i@6Lx3:CrossSection
+Error: Empty sidlist; can't find sid=5Lx3<
+inset key=i@6Lx3:CrossSection<
+
+(cog-rocks-print storage-node "i@6Lx3:CrossSection")
+
+completely empty
+
+scheme@(gram-class)> (cog-close storage-node)
+scheme@(gram-class)> (cog-open storage-node)
+ice-9/boot-9.scm:1669:16: In procedure raise-exception:
+Throw to key `C++-EXCEPTION' with args `("cog-open" "Can't open file: IO error: While open directory: /home/ubuntu/data/expt-16/gram-25-junk.rdb: Too many open files (/home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksStorage.cc:86)\nFunction args:\n((RocksStorageNode \"rocks:///home/ubuntu/data/expt-16/gram-25-junk.rdb\")\n)")'.
+
+ ah hah!
+ulimit -1 -- 1024
+find |wc  # 1009
+lsof |grep guile | grep gram-25 |wc
+  42441 
+lsof -p 30945 |wc
+   1248
+lsof -p 30945 |grep junk |wc
+    987 
+
+So ... closing rocks does not close the open file handles... wtf.
+
+CancelAllBackgroundWork(_rfile, true);
+rocksdb_close()
+delete_obsolete_files_period_micros = 5ULL * 1000000;
+
+
+
+
+
 
 link-class.scm ???
 ====================================================
 
 FIXED:
+* Create a generic run-shells.sh   DONE.
 * Change shape-vect to use ShapeLink, CrossSection. DONE
 * Fix link-generator to do full combinatorial. DONE #1175
 * Pair counting insanely slow and leaks RAM.
@@ -2728,7 +2795,6 @@ FIXED:
 
 TODO/BUGS:
 
-* Create a generic run-shells.sh
 * Implement connector merging.
 * Set up direct-sum/shape clustering run scripts.
 * Write unit test for the recent caching fix in the pattern matcher,
