@@ -2596,7 +2596,7 @@ cset-merge.scm
 remFromSidList
 
 remin osatom=ShapeLink  - the osatom, from which the xsection to be removed.
-reminc satom=2Vy3 (CrossSection 
+reminc satom=2Vy3 (CrossSection
 well foo, delete was n=0 r=0 satom=2Vy3 (CrossSection
 
 removeSatom called under lock gaurd mtx_list
@@ -2641,7 +2641,7 @@ still get an error  11
 rocks: 16 18 18
 simple 49 49 47 -- 49
 non-simple: 8m3 7m32
-pg: 8m12 
+pg: 8m12
 pg-short: 20 20 20
 
 uhh,
@@ -2670,7 +2670,7 @@ pg 7 7 7
 pg 14 14
 
 in removeSatom sid=91
-in remFromSidList 91 not found in list i@2:ListLink 
+in remFromSidList 91 not found in list i@2:ListLink
 
 Enter writeAtom
 In writeAtom new sid=Z1
@@ -2713,7 +2713,7 @@ test_persist_sql
 
 ----------
 
-wtf. 
+wtf.
 /home/ubuntu/src/atomspace-rocks/opencog/persist/rocks/RocksIO.cc:575
 
 remove 5dy3 its a CrossSection
@@ -2742,7 +2742,7 @@ Throw to key `C++-EXCEPTION' with args `("cog-rocks-open" "Can't open file: Corr
 in writeAtom add sid=gRL6 to ist=i@6Lx3:CrossSection
 Added sid gRL6 to sidlist for i@6Lx3:CrossSection bef=0 aft=1
 bef=
-aft=gRL6 
+aft=gRL6
 in removeSatom sid=5Lx3
 in remincoming ist=i@6Lx3:CrossSection
 Error: Empty sidlist; can't find sid=5Lx3<
@@ -2761,13 +2761,13 @@ Throw to key `C++-EXCEPTION' with args `("cog-open" "Can't open file: IO error: 
 ulimit -1 -- 1024
 find |wc  # 1009
 lsof |grep guile | grep gram-25 |wc
-  42441 
+  42441
 lsof -p 30945 |wc
    1248
 lsof -p 30945 |grep junk |wc
-    987 
+    987
 find ~/data/expt-16/gram-25-junk.rdb |grep sst |wc
-    989 
+    989
 
 So ... closing rocks does not close the open file handles... wtf.
 
@@ -2832,6 +2832,7 @@ So its actually faster.
 start again. expt-17
 cp -pr fake-corpus-w-wall pair-corpus
 ~/src/learn/run/2-word-pairs/run-all.sh
+~/src/learn/run/3-mst-parsing/run-all-mst.sh
 
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
@@ -2843,7 +2844,66 @@ cp -pr fake-corpus-w-wall pair-corpus
 (define csc (add-pair-stars cac))
 (csc 'fetch-pairs)
 
+(define btc (batch-transpose csc))
+(btc 'mmt-marginals)
+(print-matrix-summary-report csc)
+((make-store csc) 'store-all)  ; ... is this needed? Its slow!
+ ------ its not needed.
+
 (gram-classify-greedy-discrim csc 0.25 4)
+
+starting with shape-naked ...
+
+--- To-do=15 ncls=0 sing=0 nredo=0 2021-04-11 22:55:07 -- "e" ---
+--- To-do=14 ncls=0 sing=1 nredo=0 2021-04-11 22:55:16 -- "WALL" ---
+Dist=0.0014 for word "e" -- "WALL" in 17.69 secs
+--- To-do=13 ncls=0 sing=2 nredo=0 2021-04-11 22:55:38 -- "j" ---
+Dist=0.9878 for word "e" -- "j" in 24.82 secs
+---------Bingo! Dist=0.9878 for word "e" -- "j"
+---------Merged 174041 sections in 48.00 secs; 3625.9 scts/sec
+--- Greedy-checking next 12 items
+Dist=0.6153 for class "e j" -- "d" in 24.99 secs
+---------Bingo! Dist=0.6153 for class "e j" -- "d"
+---------Merged 208189 sections in 104.0 secs; 2001.8 scts/sec
+Dist=   0.0 for class "e j d" -- "###LEFT-WALL###" in 27.79 secs
+Dist=0.0089 for class "e j d" -- "!" in 18.08 secs
+Dist=0.6402 for class "e j d" -- "a" in 22.23 secs
+---------Bingo! Dist=0.6402 for class "e j d" -- "a"
+---------Merged 238977 sections in 130.0 secs; 1838.3 scts/sec
+Dist=   0.0 for class "e j d a" -- "LEFT" in 30.90 secs
+Dist=0.7550 for class "e j d a" -- "b" in 26.49 secs
+---------Bingo! Dist=0.7550 for class "e j d a" -- "b"
+---------Merged 270094 sections in 152.0 secs; 1776.9 scts/sec
+Dist=   0.0 for class "e j d a b" -- "-" in 34.42 secs
+Dist=0.3393 for class "e j d a b" -- "f" in 25.15 secs
+---------Bingo! Dist=0.3393 for class "e j d a b" -- "f"
+---------Merged 279128 sections in 152.0 secs; 1836.4 scts/sec
+Dist=0.2493 for class "e j d a b f" -- "h" in 32.48 secs
+Dist=0.3591 for class "e j d a b f" -- "c" in 28.42 secs
+---------Bingo! Dist=0.3591 for class "e j d a b f" -- "c"
+---------Merged 284704 sections in 164.0 secs; 1736.0 scts/sec
+Dist=0.4848 for class "e j d a b f c" -- "g" in 31.99 secs
+---------Bingo! Dist=0.4848 for class "e j d a b f c" -- "g"
+---------Merged 288253 sections in 163.0 secs; 1768.4 scts/sec
+Dist=0.1007 for class "e j d a b f c g" -- "i" in 32.86 secs
+--- Checking the done-list len=0
+---- Remaining count = 172.63 of 829662.0 for "j"
+--- To-do=12 ncls=1 sing=1 nredo=2 2021-04-11 23:25:40 -- "d" ---
+Dist=0.0000 for word "WALL" -- "d" in 9.347 secs
+--- To-do=11 ncls=1 sing=2 nredo=2 2021-04-11 23:25:50 -- "###LEFT-WALL###" ---
+Dist=   0.0 for class "e j" -- "###LEFT-WALL###" in 6.495 secs
+Dist=   0.0 for word "WALL" -- "###LEFT-WALL###" in 11.76 secs
+Dist=   0.0 for word "d" -- "###LEFT-WALL###" in 5.480 secs
+--- To-do=10 ncls=1 sing=3 nredo=2 2021-04-11 23:26:17 -- "!" ---
+Dist=   0.0 for word "WALL" -- "!" in 6.542 secs
+Dist=   0.0 for word "###LEFT-WALL###" -- "!" in 8.203 secs
+Dist=   0.0 for word "LEFT" -- "-" in 9.220 secs
+
+Bug: the class name is not supposed to get longer like that...
+Bug: there is not supposed to be WALL and LEFT ...
+I guess this is a corpus bug!? A splitter bug?
+
+Bug: why is there a "-" word ???? wtf?
 
 
 link-class.scm ???

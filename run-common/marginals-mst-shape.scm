@@ -22,7 +22,6 @@
 
 (define cac (direct-sum psa wss))
 (define csc (add-pair-stars cac))
-(csc 'fetch-pairs)
 
 ; Load up the word-pairs -- this can take over half an hour!
 (display "Fetch all shapes. This may take well over half-an-hour!\n")
