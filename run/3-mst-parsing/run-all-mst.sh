@@ -40,9 +40,18 @@ fi
 
 # Copy the database, to provide isolation between stages.
 if [[ $STORAGE_NODE = "(RocksStorageNode"* ]]; then
+	if [ -d ${MST_DB} ]; then
+		echo "The MST database ${MST_DB} already exists; not copying!"
+		exit -1
+	fi
 	cp -pr ${PAIRS_DB} ${MST_DB}
 elif [[ $STORAGE_NODE = "(PostgresStorageNode"* ]]; then
 	createdb -T ${PAIRS_DB} ${MST_DB}
+	retVal=$?
+	if [ $retVal -ne 0 ]; then
+		echo "Postgres database create failed; not continuing!"
+		exit -1
+	fi
 else
 	echo "Unknown storage medium!"
 	exit -1

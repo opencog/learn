@@ -2812,15 +2812,38 @@ sidlist style:
 11/12 Test #11: LargeFlatUTest ...................   Passed   83.93 sec
 12/12 Test #12: LargeZipfUTest ...................   Passed  145.84 sec
 Total Test time (real) = 265.20 sec
+Total Test time (real) = 270.37 sec
+Total Test time (real) = 285.15 sec
+
 
 sidkey-style:
  9/12 Test  #9: MultiDeleteUTest .................   Passed   17.00 sec
 11/12 Test #11: LargeFlatUTest ...................   Passed   82.52 sec
 12/12 Test #12: LargeZipfUTest ...................   Passed  110.68 sec
 Total Test time (real) = 225.92 sec
+Total Test time (real) = 233.80 sec
+Total Test time (real) = 226.48 sec
+
 
 So its actually faster.
 
+
+--------------------
+start again. expt-17
+cp -pr fake-corpus-w-wall pair-corpus
+~/src/learn/run/2-word-pairs/run-all.sh
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (add-shape-vec-api psa))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+
+(gram-classify-greedy-discrim csc 0.25 4)
 
 
 link-class.scm ???
