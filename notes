@@ -853,6 +853,7 @@ Done storing 371515 left-wilds in 1722 secs
 OK, so that's faster than RocksDB, which took 2511 secs
 rocks started out faster, then really slowed down...
 Why?
+.... why? update: the incoming set. After redesign, rocks is faster.
 
 Also, why is the number different?
 
@@ -2826,6 +2827,15 @@ Total Test time (real) = 226.48 sec
 
 
 So its actually faster.
+Remove locks:
+Total Test time (real) = 206.39 sec
+Total Test time (real) = 207.73 sec
+
+Fix leaking iterators: 10fb460556f197efa0effe9b2fe90eae7f892d10
+Total Test time (real) = 184.45 sec
+Total Test time (real) = 186.52 sec
+
+
 
 
 --------------------
@@ -2899,12 +2909,163 @@ Dist=   0.0 for word "WALL" -- "!" in 6.542 secs
 Dist=   0.0 for word "###LEFT-WALL###" -- "!" in 8.203 secs
 Dist=   0.0 for word "LEFT" -- "-" in 9.220 secs
 
-Bug: the class name is not supposed to get longer like that...
+Maxes out at 42GB RAM usage
+6.9GB disk, before compaction
+100 sst files
+106 open DB files
+=== then close the database (but not guile)
+37 open DB files descriptors!!
+100 sst files as before
+6.8GB disk use
+Still 42GB RAM use
+== open the database
+Still 42GB RAM use
+519 MBytes DB disk usage
+13 sst files total
+46 open file desciptors
+== close DB again
+37 open DB file descs as before - these have been leaked.
+13 sst files unchanged
+515 MBytes DB disk use unchanged
+
 Bug: there is not supposed to be WALL and LEFT ...
 I guess this is a corpus bug!? A splitter bug?
-
 Bug: why is there a "-" word ???? wtf?
 
+Wrong corpus used.
+
+--------------------
+start again. expt-18
+
+get checkout https://github.com/facebook/rocksdb
+commit bb75092574532c5629c27dcd99fe55f5514af48c (HEAD -> master, origin/master, origin/HEAD)
+version 6.19
+
+cp -pr fake-corpus-w-wall pair-corpus
+~/src/learn/run/2-word-pairs/run-all.sh
+~/src/learn/run/3-mst-parsing/run-all-mst.sh
+
+cp -pr mpg_parse.rdb shape.rdb
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (add-shape-vec-api psa))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+
+(define btc (batch-transpose csc))
+(btc 'mmt-marginals)
+(print-matrix-summary-report csc)
+((make-store csc) 'store-all)  ; ... is this needed? Its slow!
+ ------ its not needed.
+
+cp -pr shape.rdb gram-2-junk.rdb
+(gram-classify-greedy-discrim csc 0.25 4)
+
+log: after word-pairs, rocksdb compressed from
+xxx not measured.
+down to
+ls -la fake_pairs.rdb/*sst |wc  # 4
+du -s fake_pairs.rdb  # 148 M
+
+ls -la mpg_parse.rdb/*sst | wc  # 3
+du -s mpg_parse.rdb # 242 M
+after reopen , compact to 145M
+
+ls -la shape.rdb/*sst | wc  # 10
+lsof -p 18889 | grep sst |wc  # 10
+du -s shape.rdb  # 801 MB
+ps aux |grep guile # 7.36GB virt 4.85 GB rss
+
+(cog-close storage-node)
+no change to RAM
+du -s shape.rdb  # 719 MB so some decrease
+ls -la shape.rdb/*sst | wc # 10 no change
+lsof -p 18889 | grep sst |wc # 3 so its leaking filedescs, still
+
+(cog-open storage-node)
+No change to RAM
+du -s shape.rdb  # 514 MB
+ls -la shape.rdb/*sst | wc # 8
+ls -la shape.rdb/*sst | wc # 11 of which 3 are marked "deleted"
+
+stop guile, start guile, stop guile:
+no change to storage
+ls -la shape.rdb/*sst | wc # 9
+
+OK, greedy-discrim.
+(csc 'fetch-pairs)
+(gc-stats) ;25MB
+ps aux |grep guile # 6.4GB virt, 3.75 GB RSS
+
+(gram-classify-greedy-discrim csc 0.25 4)
+ps aux |grep guile # 37.8GB virt 35.2GB rss
+lsof -p 362 | grep sst |wc # 81
+ls -la gram-1-junk.rdb/*sst |wc  # 81
+du -s gram-1-junk.rdb  # 5.8 GB
+
+(cog-close storage-node)
+du -s gram-1-junk.rdb  # 5.7 GB
+lsof -p 362 | grep sst |wc  # 74 Yow! thats a big leak!
+
+(cog-open storage-node)
+du -s gram-1-junk.rdb  # 606 MB - big shrink
+lsof -p 362 | grep sst |wc  # 91
+ls -la gram-1-junk.rdb/*sst |wc  # 17
+
+options.table_properties_collector_factories.emplace_back(NewCompactOnDeletionCollectorFactory(100, 90, /*deletion_ratio=*/0.5));
+DestroyAndReopen(options);
+
+rocks issues: #3216 #4112 #8041
+
+it's leaking iterators. Fixed in
+10fb460556f197efa0effe9b2fe90eae7f892d10
+
+df: 708513296 before starting gram-classify.
+lsof -p 25951 | grep sst  |wc  # 9
+ls -la gram-2-junk.rdb/*sst |wc # 9
+du -s gram-2-junk.rdb  # 514 MB
+
+after finishing:
+du -s gram-2-junk.rdb  # 1.01 GB
+ps aux |grep guile # 8.5 GB virt 5.6GB rss
+ls -la gram-2-junk.rdb/*sst |wc # 16
+lsof -p 25951 | grep sst  |wc # 16
+
+after cog-close:
+lsof -p 25951 | grep sst  |wc # zero!
+ls -la gram-2-junk.rdb/*sst |wc # 16
+du -s gram-2-junk.rdb  # 927 MB
+
+after cog-open:
+du -s gram-2-junk.rdb  # 1.24 GB
+lsof -p 25951 | grep sst  |wc # 17
+ls -la gram-2-junk.rdb/*sst |wc # 17
+
+after cog-close:
+du -s gram-2-junk.rdb  # 602 MB
+df # 708601988
+
+after exiting guile:
+df # 708601988 -- no change
+
+Perf w/o bloom filters:
+--- To-do=12 ncls=0 sing=0 nredo=0 2021-04-13 12:30:58 -- "e" ---
+--- To-do=0 ncls=4 sing=4 nredo=8 2021-04-13 13:09:18 -- "()" ---
+so 38 minutes.
+
+w/bloom filters:
+--- To-do=12 ncls=0 sing=0 nredo=0 2021-04-13 14:15:51 -- "e" ---
+--- To-do=0 ncls=4 sing=4 nredo=8 2021-04-13 14:54:40 -- "()" ---
+so 39 minutes. No difference.
+
+
+
+Bug -- above re-creates shapes that have been deleted!!
+Bug: the class name is not supposed to get longer like that...
 
 link-class.scm ???
 ====================================================
