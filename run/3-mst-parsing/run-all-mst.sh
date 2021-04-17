@@ -21,7 +21,7 @@ else
 fi
 
 # ----------------------
-# The p[air-conf file holds the pairs DB name.
+# The pair-conf file holds the pairs DB name.
 if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
 	. ${PAIR_CONF_FILE}
 else
