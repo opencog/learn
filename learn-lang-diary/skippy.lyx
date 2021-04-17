@@ -1,5 +1,5 @@
-#LyX 2.2 created this file. For more info see http://www.lyx.org/
-\lyxformat 508
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -24,6 +24,8 @@
 \font_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -62,6 +64,7 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -70,7 +73,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -236,6 +242,7 @@ The starting point for probabilistic approaches (including deep learning)
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-BayesNet"
+literal "true"
 
 \end_inset
 
@@ -299,6 +306,7 @@ Traditional linguistics has done exactly that: when one has a theory of
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-LinkGrammar,Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -314,6 +322,7 @@ le piece, telling you exactly what other words are allowed to the left,
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Word2Vec,Bengio2003"
+literal "true"
 
 \end_inset
 
@@ -321,6 +330,7 @@ key "WP-Word2Vec,Bengio2003"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013b,Mikolov2013a"
+literal "true"
 
 \end_inset
 
@@ -397,6 +407,7 @@ How are Word2Vec and Link Grammar similar? The above description of Link
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Valency"
+literal "true"
 
 \end_inset
 
@@ -661,6 +672,7 @@ partition function
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Partition"
+literal "true"
 
 \end_inset
 
@@ -770,6 +782,7 @@ Thus, both systems perform a rather sharp dimensional reduction, to obtain
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Marcus1967"
+literal "true"
 
 \end_inset
 
@@ -794,6 +807,7 @@ key "Marcus1967"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017sheaves"
+literal "true"
 
 \end_inset
 
@@ -814,6 +828,7 @@ vector space models
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Turney2010"
+literal "true"
 
 \end_inset
 
@@ -924,6 +939,7 @@ One of the barriers to understanding the commonality between symbolic and
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -1550,6 +1566,7 @@ This image illustrates the general concept of a rhizome.
 LatexCommand href
 name "Flickr"
 target "https://www.flickr.com/photos/jennymackness/13388466333/in/set-72157642869468164"
+literal "false"
 
 \end_inset
 
@@ -1621,6 +1638,7 @@ manifold
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017sheaves"
+literal "true"
 
 \end_inset
 
@@ -1661,6 +1679,7 @@ The task of language learning is commonly taken to be one of estimating
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio2003"
+literal "true"
 
 \end_inset
 
@@ -1747,6 +1766,7 @@ At any rate, for
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -2040,6 +2060,7 @@ etal
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013a,Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -2393,6 +2414,7 @@ loss function
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Minnaar2015b"
+literal "true"
 
 \end_inset
 
@@ -2525,6 +2547,7 @@ The neural net model proposed by Bengio
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio2003"
+literal "true"
 
 \end_inset
 
@@ -3213,6 +3236,7 @@ Such long-distance attachments are problematic for CBOW or Skip-Grams, in
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -3679,6 +3703,7 @@ Queen
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013a,Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -3819,6 +3844,7 @@ ns to Markov chains, shift sequences, and finite state machines.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mora2010"
+literal "true"
 
 \end_inset
 
@@ -3834,6 +3860,7 @@ key "Mora2010"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Weigt2009"
+literal "true"
 
 \end_inset
 
@@ -4032,6 +4059,7 @@ The importance of the additive aspect of the Ising model of natural language
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -4039,6 +4067,7 @@ key "Yuret1998"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "McDonald2005,McDonald2006"
+literal "true"
 
 \end_inset
 
@@ -4459,6 +4488,7 @@ For example, for protein folding and protein mating, the solution to the
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Weigt2009"
+literal "true"
 
 \end_inset
 
@@ -4467,6 +4497,7 @@ key "Weigt2009"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008,Weigt2009"
+literal "true"
 
 \end_inset
 
@@ -4641,6 +4672,7 @@ Although Yuret's thesis clearly demonstrates that pair-wise word interactions
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -4704,6 +4736,7 @@ resting on a tradition of linguistics
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hud84,Hud07"
+literal "true"
 
 \end_inset
 
@@ -4969,6 +5002,7 @@ One could have approached this problem from the Monte Carlo direction as
 \begin_inset CommandInset citation
 LatexCommand cite
 key "McDonald2005,McDonald2006"
+literal "true"
 
 \end_inset
 
@@ -5075,6 +5109,7 @@ The can be contrasted with the OpenCog language learning project
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
@@ -5133,6 +5168,7 @@ de facto
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991,Sleator1993"
+literal "true"
 
 \end_inset
 
@@ -5451,6 +5487,7 @@ One way to obtain a fairly accurate unlabeled dependency parse is by performing
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -5476,6 +5513,7 @@ etal
 \begin_inset CommandInset citation
 LatexCommand cite
 key "deSousa2015"
+literal "true"
 
 \end_inset
 
@@ -5487,6 +5525,7 @@ key "deSousa2015"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Temper2008,Temper2007,Ferrer2006"
+literal "true"
 
 \end_inset
 
@@ -5503,6 +5542,7 @@ hubbiness
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ferrer2013"
+literal "true"
 
 \end_inset
 
@@ -5576,6 +5616,7 @@ Practical experience suggests that this outlook is perhaps too strict.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Havelka2007"
+literal "true"
 
 \end_inset
 
@@ -5583,6 +5624,7 @@ key "Havelka2007"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ferrer2017"
+literal "true"
 
 \end_inset
 
@@ -5600,6 +5642,7 @@ well nested
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Havelka2007"
+literal "true"
 
 \end_inset
 
@@ -5615,6 +5658,7 @@ landmark transitivity
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Hud84,Hud07"
+literal "true"
 
 \end_inset
 
@@ -6111,6 +6155,7 @@ zen_three
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2013"
+literal "true"
 
 \end_inset
 
@@ -6393,6 +6438,7 @@ Two more factors compound the confusion.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
+literal "true"
 
 \end_inset
 
@@ -6896,6 +6942,7 @@ Clustering, and in particular,
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ding2005"
+literal "true"
 
 \end_inset
 
@@ -6941,6 +6988,7 @@ et al
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Grygorash2006"
+literal "true"
 
 \end_inset
 
@@ -7008,6 +7056,7 @@ Closely related is the concept of non-negative matrix factorization (NMF
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-NNMF"
+literal "true"
 
 \end_inset
 
@@ -7207,6 +7256,7 @@ nuclear
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Homogenous-space"
+literal "true"
 
 \end_inset
 
@@ -7286,6 +7336,7 @@ Perhaps this explains why results based on SVD are often underwhelming as
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Levy2014"
+literal "true"
 
 \end_inset
 
@@ -7322,6 +7373,7 @@ A reasonable review of NMF is given in
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Eggert2004"
+literal "true"
 
 \end_inset
 
@@ -7339,6 +7391,7 @@ NMF using the Kullback-Leibler divergence is equivalent to Probabilistic
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ding2008"
+literal "true"
 
 \end_inset
 
@@ -7481,6 +7534,7 @@ Local Low Rank Matrix Factorization (LLORMA)
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Lee2016"
+literal "true"
 
 \end_inset
 
@@ -7490,6 +7544,7 @@ key "Lee2016"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Kernel-smoother"
+literal "true"
 
 \end_inset
 
@@ -7497,6 +7552,7 @@ key "WP-Kernel-smoother"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Local-regression"
+literal "true"
 
 \end_inset
 
@@ -7583,6 +7639,7 @@ Neural networks
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Dzuigaite2015"
+literal "true"
 
 \end_inset
 
@@ -7619,6 +7676,7 @@ reference "eq:factorize"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Nida97"
+literal "true"
 
 \end_inset
 
@@ -7633,6 +7691,7 @@ One can skip this round-about route, ignoring the philosophical ruminations
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Levy2014"
+literal "true"
 
 \end_inset
 
@@ -7647,6 +7706,7 @@ et al.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Qiu2017"
+literal "true"
 
 \end_inset
 
@@ -7677,6 +7737,7 @@ reference "eq:SkipGram"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -7700,6 +7761,7 @@ Other work
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017connectors"
+literal "true"
 
 \end_inset
 
@@ -7757,6 +7819,7 @@ reference "subsec:CBOW"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mikolov2013b"
+literal "true"
 
 \end_inset
 
@@ -7764,6 +7827,7 @@ key "Mikolov2013b"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Levy2014"
+literal "true"
 
 \end_inset
 
@@ -7775,6 +7839,7 @@ The remarkable result of Levy and Goldberg
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Levy2014"
+literal "true"
 
 \end_inset
 
@@ -7911,6 +7976,7 @@ et al.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ding2005"
+literal "true"
 
 \end_inset
 
@@ -8757,6 +8823,7 @@ A factorization of this sort is known as co-clustering, bi-clustering or
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Dhillon2003"
+literal "true"
 
 \end_inset
 
@@ -9057,6 +9124,7 @@ must surely be fairly high, as they must capture not only the predicate-argument
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Predicate,WP-Argument"
+literal "true"
 
 \end_inset
 
@@ -9065,6 +9133,7 @@ argument structure.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Selection"
+literal "true"
 
 \end_inset
 
@@ -9202,6 +9271,7 @@ et al
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Dhillon2003"
+literal "true"
 
 \end_inset
 
@@ -9214,6 +9284,7 @@ key "Dhillon2003"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -9506,6 +9577,7 @@ The general problem of how to accomplish this, and several tactics are discussed
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -9937,6 +10009,7 @@ A second step is to replace hard clustering by an algorithm that treats
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -9998,6 +10071,7 @@ et al.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "VerSteeg2014"
+literal "true"
 
 \end_inset
 
@@ -10020,6 +10094,7 @@ Gokcay and Principe
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Gokcay2002"
+literal "true"
 
 \end_inset
 
@@ -10073,6 +10148,7 @@ There are also some practical, language-related reasons to lose interest
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017connectors"
+literal "true"
 
 \end_inset
 
@@ -10119,6 +10195,7 @@ et al
 \begin_inset CommandInset citation
 LatexCommand cite
 key "VerSteeg2014"
+literal "true"
 
 \end_inset
 
@@ -10139,6 +10216,7 @@ There is some appeal in this idea for the language problem: a large cluster
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017connectors"
+literal "true"
 
 \end_inset
 
@@ -10161,6 +10239,7 @@ et al
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ding2005"
+literal "true"
 
 \end_inset
 
@@ -10260,6 +10339,7 @@ is minimized.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ding2005"
+literal "true"
 
 \end_inset
 
@@ -10706,6 +10786,7 @@ Rada Mihalcea describes a word-sense disambiguation algorithm
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mihalcea2004,Mihalcea2005,Mihalcea2007"
+literal "true"
 
 \end_inset
 
@@ -10907,6 +10988,7 @@ Lexical Functions
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Lexical-function"
+literal "true"
 
 \end_inset
 
@@ -10914,6 +10996,7 @@ key "WP-Lexical-function"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mel'cuk1987,Kahane2003"
+literal "true"
 
 \end_inset
 
@@ -10947,6 +11030,7 @@ Given a pair-wise information divergence, how can one infer word senses?
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -10987,6 +11071,7 @@ Solving the Ising model by gradient descent can be done; a good way to do
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008"
+literal "true"
 
 \end_inset
 
@@ -11244,6 +11329,7 @@ stitching
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -11263,6 +11349,7 @@ etal.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bengio2003"
+literal "true"
 
 \end_inset
 
@@ -11371,6 +11458,7 @@ Linear algebra, tensor algebra, Hilbert spaces, in any of their guises,
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Baez2009"
+literal "true"
 
 \end_inset
 
@@ -11379,6 +11467,7 @@ key "Baez2009"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Marcus1967"
+literal "true"
 
 \end_inset
 
@@ -11403,6 +11492,7 @@ One can go farther: linearity and non-linearity commonly work hand-in-hand;
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2017sheaves"
+literal "true"
 
 \end_inset
 
@@ -11501,6 +11591,7 @@ A unified theory of semantic meaning based on graphical representations
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Goertzel2014"
+literal "true"
 
 \end_inset
 
@@ -11508,6 +11599,7 @@ key "Goertzel2014"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Vepstas2018stiching"
+literal "true"
 
 \end_inset
 
@@ -11521,8 +11613,31 @@ key "Vepstas2018stiching"
  The future seems bright.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsection*
+Post-publication remarks
+\end_layout
 
+\begin_layout Standard
+Since this was written, a paper by Lin, Tegmark & Rolnick 
+\begin_inset Quotes eld
+\end_inset
+
+Why does deep and cheap learning work so well?
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Lin2017"
+literal "false"
+
+\end_inset
+
+ was brought to my attention.
+ After even the quickest skim, it appears to be in substantial agreement
+ with what I am trying to say, above.
+ It would seem to provide a suitable foundation on which to build.
 \end_layout
 
 \begin_layout Standard
