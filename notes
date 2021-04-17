@@ -3062,6 +3062,27 @@ w/bloom filters:
 --- To-do=0 ncls=4 sing=4 nredo=8 2021-04-13 14:54:40 -- "()" ---
 so 39 minutes. No difference.
 
+----------------------------
+Regression: MultiUserUTest
+first bad commit:  b6fb7935a93a99e4f0f5b22c8c15288f2d0c5b2d
+
+the erase in TLB::removeAtom(UUID uuid) is needed for multi-user.
+but it also breaks MultiDelete.
+
+atom is not present...
+because it wasn't stored again, I guess....
+not_yet_stored
+
+_uuid_map is erased.
+
+not_yet_stored might not be needed!?
+Fixed pull req #2810
+
+-----------------------------
+merge-row-pairs - change to two items
+
+merge-frac
+ptu
 
 
 
