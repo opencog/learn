@@ -239,6 +239,129 @@
 
 ; ---------------------------------------------------------------------
 
+(define* (start-cluster LLOBJ FRAC-FN NOISE WA WB CLS
+	#:optional (MRG-CON #t))
+"
+  start-cluster LLOBJ FRAC-FN NOISE WA WB CLS MRG-CON --
+     Start a new cluster by merging rows WA and WB of LLOBJ into a
+     combined row. Returns the merged class.
+
+  See merge-frac for detailed documentation.
+
+  LLOBJ is used to access pairs.
+  WA and WB should both be of `(LLOBJ 'left-type)`
+  FRAC-FN should be a function taking WA and WB as arguments, and
+     returning a floating point number between zero and one, indicating
+     the fraction of a non-shared count to be used.
+     Returning 1.0 gives the sum of the union of supports;
+     Returning 0.0 gives the sum of the intersection of supports.
+  NOISE is the smallest observation count, below which counts will
+     not be divided up, when the merge is performed. (All of the
+     count will be merged, when it is less than NOISE)
+
+  The merger of rows WA and WB are performed, using the 'projection
+  merge' strategy described above. To recap, this is done as follows.
+  If counts on a given column of both WA and WB are non-zero, they are
+  summed, and the total is placed on the matching column of CLS. The
+  contributing columns are removed (as thier count is now zero).
+  If one is zero, and the other is not, then only a FRAC of the count
+  is transfered.
+
+  Accumulated row totals are stored in the two MemberLinks that attach
+  WA and WB to CLS.
+
+  This assumes that storage is connected; the updated counts are written
+  to storage.
+"
+	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+
+	; Accumulated counts for the two.
+	(define accum-lcnt 0)
+	(define accum-rcnt 0)
+
+	; Fraction of non-overlapping disjuncts to merge
+	(define frac-to-merge (FRAC-FN WA WB))
+
+	; Use the tuple-math object to provide a pair of rows that
+	; are aligned with one-another.
+	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+	(define ptu (add-tuple-math LLOBJ bogus))
+
+	; A list of pairs of sections to merge.
+	(define perls (ptu 'right-stars (list WA WB)))
+
+	(if SING-A
+
+	(define trips
+		(map
+			(lambda (PRL)
+				(define PAIR-A (first PRL))
+				(define PAIR-B (second PRL))
+
+				; The column (the right side). Both PAIR-A and
+				; PAIR-B are in the same column. Just get it.
+				(define col (if (null? PAIR-A)
+						(LLOBJ 'right-element PAIR-B)
+						(LLOBJ 'right-element PAIR-A)))
+
+				; The place where the merge counts should be written
+				(define mrg (LLOBJ 'make-pair CLS col))
+
+				; Create a triple.
+				(list PAIR-A PAIR-B mrg)
+			)
+		perls))
+
+	; Perform the merge.
+	(define monitor-rate (make-rate-monitor))
+	(for-each
+		(lambda (ITL)
+			(define counts
+				(merge-row-pairs LLOBJ ITL SING-A #t frac-to-merge NOISE))
+			; Accumulate the counts, handy for tracking membership fraction
+			(set! accum-lcnt (+ accum-lcnt (car counts)))
+			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
+			(monitor-rate #f))
+		trips)
+
+	(monitor-rate
+		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
+	; Create and store MemberLinks.
+	(if SING-A
+		(let ((ma (MemberLink WA CLS))
+				(mb (MemberLink WB CLS)))
+			; Track the number of word-observations moved from
+			; the words, to the class. This is how much the words
+			; contributed to the class.
+			(set-count ma accum-lcnt)
+			(set-count mb accum-rcnt)
+			; Put the two words into the new word-class.
+			(store-atom ma)
+			(store-atom mb))
+
+		; If WA is not a WordNode, assume its a WordClassNode.
+		; The process is similar, but slightly altered.
+		; We assume that WB is a WordNode, but perform no safety
+		; checking to verify this.
+		(let ((mb (MemberLink WB CLS)))
+			(set-count mb accum-rcnt)
+			; Add WB to the mrg-class (which is WA already)
+			(store-atom mb))
+	)
+
+	; Return the word-class
+	CLS
+)
+
+; ---------------------------------------------------------------------
+
 (define* (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLS SING-A
 	#:optional (MRG-CON #t))
 "
@@ -311,6 +434,8 @@
 
 	; A list of pairs of sections to merge.
 	(define perls (ptu 'right-stars (list WA WB)))
+
+	(if SING-A
 
 	(define trips
 		(map
