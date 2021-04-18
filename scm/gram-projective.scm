@@ -340,7 +340,7 @@
 		perls)
 
 	(monitor-rate
-		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -402,12 +402,11 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	; Accumulated counts for the two.
-	(define accum-acnt 0)
-	(define accum-bcnt 0)
+	; Accumulated count.
+	(define accum-cnt 0)
 
 	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN WA WB))
+	(define frac-to-merge (FRAC-FN CLS WA))
 
 	; Use the tuple-math object to provide a pair of rows that
 	; are aligned with one-another.
@@ -419,65 +418,50 @@
 	; A list of pairs of sections to merge.
 	; This is a list of pairs of columns from LLOBJ, where either
 	; one or the other or both rows have non-zero elements in them.
-	(define perls (ptu 'right-stars (list WA WB)))
+	(define perls (ptu 'right-stars (list CLS WA)))
 
 	(for-each
 		(lambda (PRL)
-			(define PAIR-A (first PRL))
-			(define PAIR-B (second PRL))
+			(define PAIR-C (first PRL))
+			(define PAIR-A (second PRL))
 
-			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-A))
+			(define (do-acc PRC WEI)
+				(monitor-rate #f)
+				(set! accum-cnt (+ accum-cnt
+						(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
 
-			; The target into which to accumulate counts. This is
-			; an entry in the same column that PAIR-A and PAIR-B
-			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B are in the same column.)
-			(define col (if null-a
-					(LLOBJ 'right-element PAIR-B)
-					(LLOBJ 'right-element PAIR-A)))
+			; There's nothing to do if A is empty.
+			(when (not (null? PAIR-A))
 
-			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLS col))
+				; Two different tasks, depending on whether PAIR-C
+				; exists or not - we merge all, or just some.
+				(if (null? PAIR-C)
 
-			(define (do-acc CNT PR WEI)
-				(set! CNT (+ CNT
-						(accumulate-count LLOBJ mrg PR WEI NOISE))))
+					; pare-c is the non-null version of PAIR-C
+					; We accumulate a fraction of PAIR-A into it.
+					(let* ((col (LLOBJ 'right-element PAIR-A))
+							(pare-c (LLOBJ 'make-pair CLS col)))
+						(do-acc pare-c frac-to-merge))
 
-			; Now perform the merge. Overlapping entries are
-			; completely merged (frac=1.0). Non-overlapping ones
-			; contribute only FRAC.
-			(monitor-rate #f)
-			(cond
-				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
-				(else ; AKA (not (or null-a null-b))
-					(begin
-						(do-acc accum-acnt PAIR-A 1.0)
-						(do-acc accum-bcnt PAIR-B 1.0))))
-		)
+					; PAIR-C exists already. Merge 100% of A into it.
+					(do-acc PAIR-C PAIR-A 1.0))
+			))
 		perls)
 
 	(monitor-rate
-		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	; Create and store MemberLinks.
-	(let ((ma (MemberLink WA CLS))
-			(mb (MemberLink WB CLS)))
+	; Create and store a MemberLink.
+	(let ((ma (MemberLink WA CLS)))
 
-		; Track the number of observations moved from the two items
-		; into the combined class. This tracks the individual
-		; contributions.
-		(set-count ma accum-acnt)
-		(set-count mb accum-bcnt)
-
-		; Put the two words into the new word-class.
-		(store-atom ma)
-		(store-atom mb))
+		; Track the number of observations moved from WA to the class.
+		(set-count ma accum-cnt)
+		(store-atom ma))
 )
+
 
 ; ---------------------------------------------------------------------
 
