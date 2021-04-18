@@ -239,17 +239,22 @@
 
 ; ---------------------------------------------------------------------
 
-(define* (start-cluster LLOBJ FRAC-FN NOISE WA WB CLS
-	#:optional (MRG-CON #t))
+(define (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
-  start-cluster LLOBJ FRAC-FN NOISE WA WB CLS MRG-CON --
+  start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
-     combined row. Returns the merged class.
+     combined row CLS.
 
   See merge-frac for detailed documentation.
 
   LLOBJ is used to access pairs.
-  WA and WB should both be of `(LLOBJ 'left-type)`
+  WA and WB should both be of `(LLOBJ 'left-type)`. They should
+     designate two different rows in LLOBJ that will be merged,
+     column-by-column.
+
+  CLS denotes a new row in LLOBJ, that will contain the merged counts.
+     MemberLinks will be created from WA and WB to CLS.
+
   FRAC-FN should be a function taking WA and WB as arguments, and
      returning a floating point number between zero and one, indicating
      the fraction of a non-shared count to be used.
@@ -269,6 +274,125 @@
 
   Accumulated row totals are stored in the two MemberLinks that attach
   WA and WB to CLS.
+
+  This assumes that storage is connected; the updated counts are written
+  to storage.
+"
+	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+
+	; Accumulated counts for the two.
+	(define accum-acnt 0)
+	(define accum-bcnt 0)
+
+	; Fraction of non-overlapping disjuncts to merge
+	(define frac-to-merge (FRAC-FN WA WB))
+
+	; Use the tuple-math object to provide a pair of rows that
+	; are aligned with one-another.
+	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+	(define ptu (add-tuple-math LLOBJ bogus))
+
+	(define monitor-rate (make-rate-monitor))
+
+	; A list of pairs of sections to merge.
+	; This is a list of pairs of columns from LLOBJ, where either
+	; one or the other or both rows have non-zero elements in them.
+	(define perls (ptu 'right-stars (list WA WB)))
+
+	(for-each
+		(lambda (PRL)
+			(define PAIR-A (first PRL))
+			(define PAIR-B (second PRL))
+
+			(define null-a (null? PAIR-A))
+			(define null-b (null? PAIR-A))
+
+			; The target into which to accumulate counts. This is
+			; an entry in the same column that PAIR-A and PAIR-B
+			; are in. (TODO maybe we could check that both PAIR-A
+			; and PAIR-B are in the same column.)
+			(define col (if null-a
+					(LLOBJ 'right-element PAIR-B)
+					(LLOBJ 'right-element PAIR-A)))
+
+			; The place where the merge counts should be written
+			(define mrg (LLOBJ 'make-pair CLS col))
+
+			(define (do-acc CNT PR WEI)
+				(set! CNT (+ CNT
+						(accumulate-count LLOBJ mrg PR WEI NOISE))))
+
+			; Now perform the merge. Overlapping entries are
+			; completely merged (frac=1.0). Non-overlapping ones
+			; contribute only FRAC.
+			(monitor-rate #f)
+			(cond
+				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
+				(else ; AKA (not (or null-a null-b))
+					(begin
+						(do-acc accum-acnt PAIR-A 1.0)
+						(do-acc accum-bcnt PAIR-B 1.0))))
+		)
+		perls)
+
+	(monitor-rate
+		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
+	; Create and store MemberLinks.
+	(let ((ma (MemberLink WA CLS))
+			(mb (MemberLink WB CLS)))
+
+		; Track the number of observations moved from the two items
+		; into the combined class. This tracks the individual
+		; contributions.
+		(set-count ma accum-acnt)
+		(set-count mb accum-bcnt)
+
+		; Put the two words into the new word-class.
+		(store-atom ma)
+		(store-atom mb))
+)
+
+; ---------------------------------------------------------------------
+
+(define (merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON)
+"
+  merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON --
+     Merge WA into cluster CLS. These are two rows in LLOBJ,
+     the merge is done column-by-column. A memberLink from
+     WA to CLS will be created.
+
+  See merge-frac for detailed documentation.
+
+  LLOBJ is used to access pairs.
+  WA should be of `(LLOBJ 'left-type)`
+  CLS should be interpretable as a row in LLOBJ.
+
+  FRAC-FN should be a function taking CLS and WA as arguments, and
+     returning a floating point number between zero and one, indicating
+     the fraction of a non-shared count to be used.
+     Returning 1.0 gives the sum of the union of supports;
+     Returning 0.0 gives the sum of the intersection of supports.
+  NOISE is the smallest observation count, below which counts will
+     not be divided up, when the merge is performed. (All of the
+     count will be merged, when it is less than NOISE)
+
+  The merger of row WA into CLS is performed, using the 'projection
+  merge' strategy described above. To recap, this is done as follows.
+  If counts on a given column of both CLS and WA are non-zero, then
+  all of the count from WA is transfered to CLS. That column in WA
+  is removed (as it's count is now zero). If the count on CLS is zero,
+  then only a FRAC of WA's count is transfered.
+
+  Accumulated row totals are stored in the MemberLink that attaches
+  WA to CLS.
 
   This assumes that storage is connected; the updated counts are written
   to storage.
