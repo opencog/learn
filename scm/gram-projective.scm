@@ -279,8 +279,8 @@
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 	; Accumulated counts for the two.
-	(define accum-lcnt 0)
-	(define accum-rcnt 0)
+	(define accum-acnt 0)
+	(define accum-bcnt 0)
 
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
@@ -290,42 +290,49 @@
 	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
 	(define ptu (add-tuple-math LLOBJ bogus))
 
+	(define monitor-rate (make-rate-monitor))
+
 	; A list of pairs of sections to merge.
+	; This is a list of pairs of columns from LLOBJ, where either
+	; one or the other or both rows have non-zero elements in them.
 	(define perls (ptu 'right-stars (list WA WB)))
 
-	(if SING-A
-
-	(define trips
-		(map
-			(lambda (PRL)
-				(define PAIR-A (first PRL))
-				(define PAIR-B (second PRL))
-
-				; The column (the right side). Both PAIR-A and
-				; PAIR-B are in the same column. Just get it.
-				(define col (if (null? PAIR-A)
-						(LLOBJ 'right-element PAIR-B)
-						(LLOBJ 'right-element PAIR-A)))
-
-				; The place where the merge counts should be written
-				(define mrg (LLOBJ 'make-pair CLS col))
-
-				; Create a triple.
-				(list PAIR-A PAIR-B mrg)
-			)
-		perls))
-
-	; Perform the merge.
-	(define monitor-rate (make-rate-monitor))
 	(for-each
-		(lambda (ITL)
-			(define counts
-				(merge-row-pairs LLOBJ ITL SING-A #t frac-to-merge NOISE))
-			; Accumulate the counts, handy for tracking membership fraction
-			(set! accum-lcnt (+ accum-lcnt (car counts)))
-			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
-			(monitor-rate #f))
-		trips)
+		(lambda (PRL)
+			(define PAIR-A (first PRL))
+			(define PAIR-B (second PRL))
+
+			(define null-a (null? PAIR-A))
+			(define null-b (null? PAIR-A))
+
+			; The target into which to accumulate counts. This is
+			; an entry in the same column that PAIR-A and PAIR-B
+			; are in. (TODO maybe we could check that both PAIR-A
+			; and PAIR-B are in the same column.)
+			(define col (if null-a
+					(LLOBJ 'right-element PAIR-B)
+					(LLOBJ 'right-element PAIR-A)))
+
+			; The place where the merge counts should be written
+			(define mrg (LLOBJ 'make-pair CLS col))
+
+			(define (do-acc CNT PR WEI)
+				(set! CNT (+ CNT
+						(accumulate-count LLOBJ mrg PR WEI NOISE))))
+
+			; Now perform the merge. Overlapping entries are
+			; completely merged (frac=1.0). Non-overlapping ones
+			; contribute only FRAC.
+			(monitor-rate #f)
+			(cond
+				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
+				(else ; AKA (not (or null-a null-b))
+					(begin
+						(do-acc accum-acnt PAIR-A 1.0)
+						(do-acc accum-bcnt PAIR-B 1.0))))
+		)
+		perls)
 
 	(monitor-rate
 		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
@@ -334,30 +341,18 @@
 	(LLOBJ 'clobber)
 
 	; Create and store MemberLinks.
-	(if SING-A
-		(let ((ma (MemberLink WA CLS))
-				(mb (MemberLink WB CLS)))
-			; Track the number of word-observations moved from
-			; the words, to the class. This is how much the words
-			; contributed to the class.
-			(set-count ma accum-lcnt)
-			(set-count mb accum-rcnt)
-			; Put the two words into the new word-class.
-			(store-atom ma)
-			(store-atom mb))
+	(let ((ma (MemberLink WA CLS))
+			(mb (MemberLink WB CLS)))
 
-		; If WA is not a WordNode, assume its a WordClassNode.
-		; The process is similar, but slightly altered.
-		; We assume that WB is a WordNode, but perform no safety
-		; checking to verify this.
-		(let ((mb (MemberLink WB CLS)))
-			(set-count mb accum-rcnt)
-			; Add WB to the mrg-class (which is WA already)
-			(store-atom mb))
-	)
+		; Track the number of observations moved from the two items
+		; into the combined class. This tracks the individual
+		; contributions.
+		(set-count ma accum-acnt)
+		(set-count mb accum-bcnt)
 
-	; Return the word-class
-	CLS
+		; Put the two words into the new word-class.
+		(store-atom ma)
+		(store-atom mb))
 )
 
 ; ---------------------------------------------------------------------
