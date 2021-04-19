@@ -146,10 +146,15 @@
 ; where cos_min is the minimum cosine acceptable, for any kind of
 ; merging to be performed.
 ;
-; merge-frac
-; ----------
-; Abstraction of the above two merge styles, using a callback function
-; to obtain the merge fraction.
+; start-cluster, merge-into-cluster
+; ---------------------------------
+; Implementation of the common parts of the above merge styles,
+; using callbacks and parameters to obtain the merge fraction.
+; Calls `accumulate-count` to do the column-by-column summing.
+;
+; make-merger
+; -----------
+; High-level wrapper for above. Provides a generic API.
 ;
 ; Parameter choices
 ; -----------------
@@ -245,16 +250,21 @@
      Start a new cluster by merging rows WA and WB of LLOBJ into a
      combined row CLS.
 
-  See merge-frac for detailed documentation.
+  In the prototypical use case, each row corresponds to a WordNode,
+  and the result of summing them results in a WordClassNode. Thus,
+  by convention, it is assumed that the pairs are (word, disjunct)
+  pairs, and LLOBJ was made by `make-gram-class-api` or by
+  `add-shape-vec-api`. The code itself is generic, and may work on
+  other kinds of LLOBJ's too.
+
+  XXX At this time, this does not merge connectors within shapes.
 
   LLOBJ is used to access pairs.
   WA and WB should both be of `(LLOBJ 'left-type)`. They should
      designate two different rows in LLOBJ that will be merged,
      column-by-column.
-
   CLS denotes a new row in LLOBJ, that will contain the merged counts.
      MemberLinks will be created from WA and WB to CLS.
-
   FRAC-FN should be a function taking WA and WB as arguments, and
      returning a floating point number between zero and one, indicating
      the fraction of a non-shared count to be used.
@@ -369,7 +379,7 @@
      the merge is done column-by-column. A memberLink from
      WA to CLS will be created.
 
-  See merge-frac for detailed documentation.
+  See start-cluster for addtional details.
 
   LLOBJ is used to access pairs.
   WA should be of `(LLOBJ 'left-type)`
@@ -460,72 +470,6 @@
 		; Track the number of observations moved from WA to the class.
 		(set-count ma accum-cnt)
 		(store-atom ma))
-)
-
-
-; ---------------------------------------------------------------------
-
-(define* (merge-frac LLOBJ FRAC-FN NOISE WA WB CLS SING-A
-	#:optional (MRG-CON #t))
-"
-  merge-frac LLOBJ FRAC-FN NOISE WA WB CLS SING-A MRG-CON --
-     merge the rows WA and WB of LLOBJ into a combined row.
-     Returns the merged class.
-
-  In the prototypical use case, each row corresponds to a WordNode,
-  and the result of summing them results in a WordClassNode. Thus,
-  by convention, it is assumed that the pairs are (word, disjunct)
-  pairs, and LLOBJ was made by `make-gram-class-api` or by
-  `add-shape-vec-api`. The code itself is generic, and may work on
-  other kinds of LLOBJ's too.
-
-  This assumes that storage is connected; the updated counts for the
-  rows are written to storage.
-
-  XXX At this time, this does not merge connectors within shapes.
-
-  LLOBJ is used to access pairs.
-  WA should be of `(LLOBJ 'left-type)` or be of CLASS-TYPE (that is,
-     either a WordNode or a WordClassNode.)
-  WB is expected to be `(LLOBJ 'left-type)` (a WordNode).
-  FRAC-FN should be a function taking WA and WB as arguments, and
-     returning a floating point number between zero and one, indicating
-     the fraction of a non-shared count to be used.
-     Returning 1.0 gives the sum of the union of supports;
-     Returning 0.0 gives the sum of the intersection of supports.
-  NOISE is the smallest observation count, below which counts
-     will not be divided up, if a merge is performed. (All of the
-     count will be merged, when it is less than NOISE)
-  SING-A indicates how merging is to be done.
-     XXX FIXME describe what is done.
-
-  The merger of WA and WB are performed, using the 'projection
-  merge' strategy described above. To recap, this is done as follows.
-  If WA and WB are both `(LLOBJ 'left-type)` (i.e. are WordNodes),
-  then a CLASS-TYPE (a WordClass) is created, having both WA and WB
-  as members (via MemberLink).  Counts are then transferred from WA
-  and WB to the class; subtotal contributions to the count are stored
-  on the MemberLink.
-
-  The counts are summed only if both counts are non-zero. Otherwise,
-  only a FRAC fraction of a single, unmatched count is transferred.
-
-  If the result leaves a pair with a count of zero, that pair
-  is deleted.  This assumes that storage is connected; the updated
-  pair is written to storage.
-
-  If WA is of CLASS-TYPE (e.g. a WordClassNode), and WB is not, then
-  WB is merged into WA. That is, the counts on WA are adjusted only
-  upwards, and those on WB only downwards.
-"
-
-	; If SING-A is false, then CLS and WA are the same
-	(if SING-A
-		(start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
-		(merge-into-cluster LLOBJ CLS WB FRAC-FN NOISE MRG-CON))
-
-	; Return the word-class
-	CLS
 )
 
 ; ---------------------------------------------------------------
@@ -831,7 +775,7 @@
 ; Perform the actual merge
 ; (define (frac WA WB) 0.3)
 ; (define cls (WordClass "city-village"))
-; (merge-frac pcos frac 4 (Word "city") (Word "village") cls #t)
+; (start-cluster psa cls (Word "city") (Word "village") frac 4.0 #t)
 ;
 ; Verify presence in the database:
 ; select count(*) from atoms where type=22;
