@@ -209,7 +209,7 @@
 	(define (is-zero? cnt) (< cnt 1.0e-10))
 
 	; The counts on the accumulator and the pair to merge.
-	(define mcnt (if (null? PAIR) 0 (LLOBJ 'get-count PAIR)))
+	(define mcnt (LLOBJ 'get-count PAIR))
 	(define acnt (LLOBJ 'get-count ACC))
 
 	; If the accumulator count is zero, transfer only a FRAC of
