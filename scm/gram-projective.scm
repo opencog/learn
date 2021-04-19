@@ -595,7 +595,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT)
+(define (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE)
 "
   make-merger -- Do projection-merge, with ...
 
@@ -609,6 +609,8 @@
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
+
+  STORE is an extra function called, to store additional needed data.
 "
 	(let* ((psa STARS)
 			(pss (add-support-api psa))
@@ -630,6 +632,10 @@
 			(store-atom (psu 'set-right-marginals WORD-A))
 			(store-atom (psu 'set-right-marginals WORD-B))
 			(store-atom (psu 'set-right-marginals cls))
+
+			(STORE WORD-A)
+			(STORE WORD-B)
+			(STORE cls)
 			cls
 		)
 
@@ -682,7 +688,7 @@
 
 	(define (fixed-frac WA WB) UNION-FRAC)
 
-	(make-merger STARS mpred fixed-frac NOISE MIN-CNT)
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT (lambda (x) #f))
 )
 
 ; ---------------------------------------------------------------
@@ -728,7 +734,7 @@
 		(define cosi (pcos 'right-cosine WA WB))
 		(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
-	(make-merger STARS mpred cos-fraction NOISE MIN-CNT)
+	(make-merger STARS mpred cos-fraction NOISE MIN-CNT (lambda (x) #f))
 )
 
 ; ---------------------------------------------------------------
@@ -754,76 +760,39 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(let* ((dsa STARS)
-			(pss (add-support-api dsa))
-			(psu (add-support-compute dsa))
-			(pmi (add-symmetric-mi-compute dsa))
-			(pti (add-transpose-api dsa))
-			(ptc (add-transpose-compute dsa))
-		)
+	(define pmi (add-symmetric-mi-compute STARS))
+	(define pti (add-transpose-api STARS))
+	(define ptc (add-transpose-compute STARS))
 
-		(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
-		(define (mpred WORD-A WORD-B)
-			(is-similar? get-mi CUTOFF WORD-A WORD-B))
+	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
+	(define (mpred WORD-A WORD-B)
+		(is-similar? get-mi CUTOFF WORD-A WORD-B))
 
-		(define total-mmt-count (pti 'total-mmt-count))
-		(define ol2 (/ 1.0 (log 2.0)))
-		(define (log2 x) (* (log x) ol2))
+	(define total-mmt-count (pti 'total-mmt-count))
+	(define ol2 (/ 1.0 (log 2.0)))
+	(define (log2 x) (* (log x) ol2))
 
-		; The self-MI is just the same as (get-mi wrd wrd).
-		; The below is faster than calling `get-mi`; it uses
-		; cached values. Still, it would be better if we
-		; stored a cached self-mi value.
-		(define (get-self-mi wrd)
-			(define len (pss 'right-length wrd))
-			(define mmt (pti 'mmt-count wrd))
-			(log2 (/ (* len len total-mmt-count) (* mmt mmt))))
+	; The self-MI is just the same as (get-mi wrd wrd).
+	; The below is faster than calling `get-mi`; it uses
+	; cached values. Still, it would be better if we
+	; stored a cached self-mi value.
+	(define (get-self-mi wrd)
+		(define len (pss 'right-length wrd))
+		(define mmt (pti 'mmt-count wrd))
+		(log2 (/ (* len len total-mmt-count) (* mmt mmt))))
 
-		; The fraction to merge is a linear ramp, starting at zero
-		; at the cutoff, and ramping up to one when these are very
-		; similar.
-		(define (mi-fraction WA WB)
-			(define milo (min (get-self-mi WA) (get-self-mi WB)))
-			(define fmi (get-mi WA WB))
-			(/ (- fmi CUTOFF) (- milo CUTOFF)))
+	; The fraction to merge is a linear ramp, starting at zero
+	; at the cutoff, and ramping up to one when these are very
+	; similar.
+	(define (mi-fraction WA WB)
+		(define milo (min (get-self-mi WA) (get-self-mi WB)))
+		(define fmi (get-mi WA WB))
+		(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
-		; Return a WordClassNode that is the result of the merge.
-		(define (merge WORD-A WORD-B)
-			(define single (not (eq? 'WordClass (cog-type WORD-A))))
-			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac pmi mi-fraction ZIPF WORD-A WORD-B cls single)
-			; Need to recompute the marginals, in order for future
-			; MI evaluations to work correctly.  We also store this,
-			; so that restarts can see the correct values.  Recall
-			; that merge-frac also updates storage...
-			; Clobber first, since Sections were probably deleted.
-			(dsa 'clobber)
-			(psu 'set-right-marginals WORD-A)
-			(psu 'set-right-marginals WORD-B)
-			(psu 'set-right-marginals cls)
-			(store-atom (ptc 'set-mmt-marginals WORD-A))
-			(store-atom (ptc 'set-mmt-marginals WORD-B))
-			(store-atom (ptc 'set-mmt-marginals cls))
-			cls
-		)
+	(define (store-mmt row)
+		(store-atom (ptc 'set-mmt-marginals row)))
 
-		(define (is-small-margin? WORD)
-			(< (pss 'right-count WORD) MIN-CNT))
-
-		(define (is-small? WORD)
-			(< (psu 'right-count WORD) MIN-CNT))
-
-		; ------------------
-		; Methods on this class.
-		(lambda (message . args)
-			(case message
-				((merge-predicate)  (apply mpred args))
-				((merge-function)   (apply merge args))
-				((discard-margin?)  (apply is-small-margin? args))
-				((discard?)         (apply is-small? args))
-				((clobber)          (begin (dsa 'clobber) (psu 'clobber)))
-				(else               (apply dsa (cons message args)))
-			)))
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt)
 )
 
 ; ---------------------------------------------------------------
