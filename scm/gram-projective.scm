@@ -527,7 +527,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE)
+(define (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE MRG-CON)
 "
   make-merger -- Do projection-merge, with ...
 
@@ -568,13 +568,13 @@
 		(if single
 			(begin
 				(start-cluster psu cls WA WB FRAC-FN NOISE MRG-CON)
-				(psa 'clobber)
+				(psu 'clobber)
 				(store-atom (psu 'set-right-marginals cls))
 				(STORE cls)
 			)
 			(begin
 				(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
-				(psa 'clobber)
+				(psu 'clobber)
 			))
 
 		(store-atom (psu 'set-right-marginals WA))
@@ -600,8 +600,8 @@
 			((merge-function)   (apply merge args))
 			((discard-margin?)  (apply is-small-margin? args))
 			((discard?)         (apply is-small? args))
-			((clobber)          (begin (psa 'clobber) (psu 'clobber)))
-			(else               (apply psa (cons message args)))
+			((clobber)          (begin (STARS 'clobber) (psu 'clobber)))
+			(else               (apply STARS (cons message args)))
 		))
 )
 
@@ -635,7 +635,7 @@
 
 	(define (fixed-frac WA WB) UNION-FRAC)
 
-	(make-merger STARS mpred fixed-frac NOISE MIN-CNT (lambda (x) #f))
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT (lambda (x) #f) #t)
 )
 
 ; ---------------------------------------------------------------
@@ -681,7 +681,7 @@
 		(define cosi (pcos 'right-cosine WA WB))
 		(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
-	(make-merger STARS mpred cos-fraction NOISE MIN-CNT (lambda (x) #f))
+	(make-merger STARS mpred cos-fraction NOISE MIN-CNT (lambda (x) #f) #t)
 )
 
 ; ---------------------------------------------------------------
@@ -740,7 +740,7 @@
 	(define (store-mmt row)
 		(store-atom (ptc 'set-mmt-marginals row)))
 
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt)
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
 )
 
 ; ---------------------------------------------------------------
