@@ -675,52 +675,14 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(let* ((psa STARS)
-			(pss (add-support-api psa))
-			(psu (add-support-compute psa))
-			(pcos (add-pair-cosine-compute psa))
-		)
-		(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
-		(define (mpred WORD-A WORD-B)
-			(is-similar? get-cosine CUTOFF WORD-A WORD-B))
+	(define pcos (add-pair-cosine-compute STARS))
+	(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
+	(define (mpred WORD-A WORD-B)
+		(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
-		(define (fixed-frac WA WB) UNION-FRAC)
+	(define (fixed-frac WA WB) UNION-FRAC)
 
-		; Return a WordClassNode that is the result of the merge.
-		(define (merge WORD-A WORD-B)
-			(define single (not (eq? 'WordClass (cog-type WORD-A))))
-			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac pcos fixed-frac ZIPF WORD-A WORD-B cls single)
-
-			; Need to recompute the marginals, in order for future
-			; cosine evaluations to work correctly.  We also store this,
-			; so that restarts can see the correct values.  Recall
-			; that merge-frac also updates storage...
-			; Clobber first, since Sections were probably deleted.
-			(psa 'clobber)
-			(store-atom (psu 'set-right-marginals WORD-A))
-			(store-atom (psu 'set-right-marginals WORD-B))
-			(store-atom (psu 'set-right-marginals cls))
-			cls
-		)
-
-		(define (is-small-margin? WORD)
-			(< (pss 'right-count WORD) MIN-CNT))
-
-		(define (is-small? WORD)
-			(< (psu 'right-count WORD) MIN-CNT))
-
-		; ------------------
-		; Methods on this class.
-		(lambda (message . args)
-			(case message
-				((merge-predicate)  (apply mpred args))
-				((merge-function)   (apply merge args))
-				((discard-margin?)  (apply is-small-margin? args))
-				((discard?)         (apply is-small? args))
-				((clobber)          (begin (psa 'clobber) (psu 'clobber)))
-				(else               (apply psa (cons message args)))
-			)))
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT)
 )
 
 ; ---------------------------------------------------------------
