@@ -583,18 +583,6 @@
 
 ; ---------------------------------------------------------------
 
-; Create a new word-class out of the two words.
-; Concatenate the string names to get the class name.
-; If WA is already a word-class, just use it as-is.
-(define (make-word-class WA WB SING)
-	(if SING
-		(cog-new-node 'WordClass (string-concatenate
-					(list (cog-name WA) " " (cog-name WB))))
-		WA)
-)
-
-; ---------------------------------------------------------------
-
 (define (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE)
 "
   make-merger -- Do projection-merge, with ...
@@ -616,24 +604,41 @@
 	(define psu (add-support-compute STARS))
 
 	; Return a WordClassNode that is the result of the merge.
-	(define (merge WORD-A WORD-B)
-		(define single (not (eq? 'WordClass (cog-type WORD-A))))
-		(define cls (make-word-class WORD-A WORD-B single))
-		(merge-frac psu FRAC-FN NOISE WORD-A WORD-B cls single)
+	(define (merge WA WB)
+		(define single (not (eq? 'WordClass (cog-type WA))))
+		(define cls
+			(if single
+				(cog-new-node 'WordClass (string-concatenate
+					(list (cog-name WA) " " (cog-name WB))))
+				WA))
 
-		; Need to recompute the marginals, in order for future
-		; cosine evaluations to work correctly.  We also store this,
-		; so that restarts can see the correct values.  Recall
-		; that merge-frac also updates storage...
+		; Cluster - either create a new cluster, or add to an existing
+		; one. Afterwards, need to recompute the marginals. This is so
+		; that future similarity judgements work correctly. This is
+		; because the mergers altered the counts, and so the marginals
+		; are wrong. (Well, they're wrong only for WA, WB and cls,
+		; whereas clobber clobbers everything. Oh well. Its hard.)
+		; The results are stored, so that everything is on disk in
+		; of a restart.
 		; Clobber first, since Sections were probably deleted.
-		(psa 'clobber)
-		(store-atom (psu 'set-right-marginals WORD-A))
-		(store-atom (psu 'set-right-marginals WORD-B))
-		(store-atom (psu 'set-right-marginals cls))
+		(if single
+			(begin
+				(start-cluster psu cls WA WB FRAC-FN NOISE MRG-CON)
+				(psa 'clobber)
+				(store-atom (psu 'set-right-marginals cls))
+				(STORE cls)
+			)
+			(begin
+				(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
+				(psa 'clobber)
+			))
 
-		(STORE WORD-A)
-		(STORE WORD-B)
-		(STORE cls)
+		(store-atom (psu 'set-right-marginals WA))
+		(store-atom (psu 'set-right-marginals WB))
+
+		(STORE WA)
+		(STORE WB)
+
 		cls
 	)
 
