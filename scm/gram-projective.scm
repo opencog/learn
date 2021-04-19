@@ -612,50 +612,48 @@
 
   STORE is an extra function called, to store additional needed data.
 "
-	(let* ((psa STARS)
-			(pss (add-support-api psa))
-			(psu (add-support-compute psa))
-		)
+	(define pss (add-support-api STARS))
+	(define psu (add-support-compute STARS))
 
-		; Return a WordClassNode that is the result of the merge.
-		(define (merge WORD-A WORD-B)
-			(define single (not (eq? 'WordClass (cog-type WORD-A))))
-			(define cls (make-word-class WORD-A WORD-B single))
-			(merge-frac psu FRAC-FN NOISE WORD-A WORD-B cls single)
+	; Return a WordClassNode that is the result of the merge.
+	(define (merge WORD-A WORD-B)
+		(define single (not (eq? 'WordClass (cog-type WORD-A))))
+		(define cls (make-word-class WORD-A WORD-B single))
+		(merge-frac psu FRAC-FN NOISE WORD-A WORD-B cls single)
 
-			; Need to recompute the marginals, in order for future
-			; cosine evaluations to work correctly.  We also store this,
-			; so that restarts can see the correct values.  Recall
-			; that merge-frac also updates storage...
-			; Clobber first, since Sections were probably deleted.
-			(psa 'clobber)
-			(store-atom (psu 'set-right-marginals WORD-A))
-			(store-atom (psu 'set-right-marginals WORD-B))
-			(store-atom (psu 'set-right-marginals cls))
+		; Need to recompute the marginals, in order for future
+		; cosine evaluations to work correctly.  We also store this,
+		; so that restarts can see the correct values.  Recall
+		; that merge-frac also updates storage...
+		; Clobber first, since Sections were probably deleted.
+		(psa 'clobber)
+		(store-atom (psu 'set-right-marginals WORD-A))
+		(store-atom (psu 'set-right-marginals WORD-B))
+		(store-atom (psu 'set-right-marginals cls))
 
-			(STORE WORD-A)
-			(STORE WORD-B)
-			(STORE cls)
-			cls
-		)
+		(STORE WORD-A)
+		(STORE WORD-B)
+		(STORE cls)
+		cls
+	)
 
-		(define (is-small-margin? WORD)
-			(< (pss 'right-count WORD) MIN-CNT))
+	(define (is-small-margin? WORD)
+		(< (pss 'right-count WORD) MIN-CNT))
 
-		(define (is-small? WORD)
-			(< (psu 'right-count WORD) MIN-CNT))
+	(define (is-small? WORD)
+		(< (psu 'right-count WORD) MIN-CNT))
 
-		; ------------------
-		; Methods on this class.
-		(lambda (message . args)
-			(case message
-				((merge-predicate)  (apply MPRED args))
-				((merge-function)   (apply merge args))
-				((discard-margin?)  (apply is-small-margin? args))
-				((discard?)         (apply is-small? args))
-				((clobber)          (begin (psa 'clobber) (psu 'clobber)))
-				(else               (apply psa (cons message args)))
-			)))
+	; ------------------
+	; Methods on this class.
+	(lambda (message . args)
+		(case message
+			((merge-predicate)  (apply MPRED args))
+			((merge-function)   (apply merge args))
+			((discard-margin?)  (apply is-small-margin? args))
+			((discard?)         (apply is-small? args))
+			((clobber)          (begin (psa 'clobber) (psu 'clobber)))
+			(else               (apply psa (cons message args)))
+		))
 )
 
 ; ---------------------------------------------------------------
