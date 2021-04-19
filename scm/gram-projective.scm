@@ -518,88 +518,11 @@
   WB is merged into WA. That is, the counts on WA are adjusted only
   upwards, and those on WB only downwards.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	; Accumulated counts for the two.
-	(define accum-lcnt 0)
-	(define accum-rcnt 0)
-
-	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN WA WB))
-
-	; Use the tuple-math object to provide a pair of rows that
-	; are aligned with one-another.
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
-
-	; A list of pairs of sections to merge.
-	(define perls (ptu 'right-stars (list WA WB)))
-
+	; If SING-A is false, then CLS and WA are the same
 	(if SING-A
-
-	(define trips
-		(map
-			(lambda (PRL)
-				(define PAIR-A (first PRL))
-				(define PAIR-B (second PRL))
-
-				; The column (the right side). Both PAIR-A and
-				; PAIR-B are in the same column. Just get it.
-				(define col (if (null? PAIR-A)
-						(LLOBJ 'right-element PAIR-B)
-						(LLOBJ 'right-element PAIR-A)))
-
-				; The place where the merge counts should be written
-				(define mrg (LLOBJ 'make-pair CLS col))
-
-				; Create a triple.
-				(list PAIR-A PAIR-B mrg)
-			)
-		perls))
-
-	; Perform the merge.
-	(define monitor-rate (make-rate-monitor))
-	(for-each
-		(lambda (ITL)
-			(define counts
-				(merge-row-pairs LLOBJ ITL SING-A #t frac-to-merge ZIPF))
-			; Accumulate the counts, handy for tracking membership fraction
-			(set! accum-lcnt (+ accum-lcnt (car counts)))
-			(set! accum-rcnt (+ accum-rcnt (cdr counts)))
-			(monitor-rate #f))
-		trips)
-
-	(monitor-rate
-		"---------Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-	; Clobber the left and right caches; the cog-delete! changed things.
-	(LLOBJ 'clobber)
-
-	; Create and store MemberLinks.
-	(if SING-A
-		(let ((ma (MemberLink WA CLS))
-				(mb (MemberLink WB CLS)))
-			; Track the number of word-observations moved from
-			; the words, to the class. This is how much the words
-			; contributed to the class.
-			(set-count ma accum-lcnt)
-			(set-count mb accum-rcnt)
-			; Put the two words into the new word-class.
-			(store-atom ma)
-			(store-atom mb))
-
-		; If WA is not a WordNode, assume its a WordClassNode.
-		; The process is similar, but slightly altered.
-		; We assume that WB is a WordNode, but perform no safety
-		; checking to verify this.
-		(let ((mb (MemberLink WB CLS)))
-			(set-count mb accum-rcnt)
-			; Add WB to the mrg-class (which is WA already)
-			(store-atom mb))
-	)
+		(start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
+		(merge-into-cluster LLOBJ CLS WB FRAC-FN NOISE MRG-CON))
 
 	; Return the word-class
 	CLS
