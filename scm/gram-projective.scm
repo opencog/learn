@@ -444,7 +444,7 @@
 						(do-acc pare-c frac-to-merge))
 
 					; PAIR-C exists already. Merge 100% of A into it.
-					(do-acc PAIR-C PAIR-A 1.0))
+					(do-acc PAIR-C 1.0))
 			))
 		perls)
 
@@ -465,10 +465,10 @@
 
 ; ---------------------------------------------------------------------
 
-(define* (merge-frac LLOBJ FRAC-FN ZIPF WA WB CLS SING-A
+(define* (merge-frac LLOBJ FRAC-FN NOISE WA WB CLS SING-A
 	#:optional (MRG-CON #t))
 "
-  merge-frac LLOBJ FRAC-FN ZIPF WA WB CLS SING-A MRG-CON --
+  merge-frac LLOBJ FRAC-FN NOISE WA WB CLS SING-A MRG-CON --
      merge the rows WA and WB of LLOBJ into a combined row.
      Returns the merged class.
 
@@ -493,9 +493,9 @@
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
-  ZIPF is the smallest observation count, below which counts
+  NOISE is the smallest observation count, below which counts
      will not be divided up, if a merge is performed. (All of the
-     count will be merged, when it is less than ZIPF)
+     count will be merged, when it is less than NOISE)
   SING-A indicates how merging is to be done.
      XXX FIXME describe what is done.
 
@@ -660,7 +660,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-fuzz STARS CUTOFF UNION-FRAC ZIPF MIN-CNT)
+(define (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
   make-fuzz -- Do projection-merge, with a fixed merge fraction.
 
@@ -675,7 +675,7 @@
   UNION-FRAC is the fixed fraction of the union-set of the disjuncts
   that will be merged.
 
-  ZIPF is the smallest observation count, below which counts
+  NOISE is the smallest observation count, below which counts
   will not be divided up, if a marge is performed.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
@@ -693,7 +693,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-discrim STARS CUTOFF ZIPF MIN-CNT)
+(define (make-discrim STARS CUTOFF NOISE MIN-CNT)
 "
   make-discrim -- Do a \"discriminating\" merge. When a word is to be
   merged into a word class, the fraction to be merged will depend on
@@ -716,7 +716,7 @@
   CUTOFF is the min acceptable cosine, for words to be considered
   mergable.
 
-  ZIPF is the smallest observation count, below which counts
+  NOISE is the smallest observation count, below which counts
   will not be divided up, if a merge is performed.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
@@ -739,7 +739,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-disinfo STARS CUTOFF ZIPF MIN-CNT)
+(define (make-disinfo STARS CUTOFF NOISE MIN-CNT)
 "
   make-disinfo -- Do a \"discriminating\" merge, using MI for
   similarity.
@@ -754,12 +754,13 @@
   CUTOFF is the min acceptable MI, for words to be considered
   mergable.
 
-  ZIPF is the smallest observation count, below which counts
+  NOISE is the smallest observation count, below which counts
   will not be divided up, if a merge is performed.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
+	(define pss (add-support-api STARS))
 	(define pmi (add-symmetric-mi-compute STARS))
 	(define pti (add-transpose-api STARS))
 	(define ptc (add-transpose-compute STARS))
