@@ -222,7 +222,7 @@
 	; If the count is zero or less, delete the donor pair.
 	(define (update-donor-count SECT CNT)
 		(if (is-zero? CNT)
-			(begin (set-count SECT 0) (cog-delete! SECT))
+			(cog-delete! SECT)
 			(begin (set-count SECT CNT) (store-atom SECT))))
 
 	; If there is nothing to transfer over, do nothing.
@@ -234,8 +234,7 @@
 			(store-atom ACC) ; save to the database.
 
 			; Decrement the equivalent amount from the donor pair.
-			(if (not (null? PAIR))
-				(update-donor-count PAIR (- mcnt taper-cnt)))
+			(update-donor-count PAIR (- mcnt taper-cnt))
 		))
 
 	; Return how much was transfered over.

@@ -2959,7 +2959,7 @@ cp -pr mpg_parse.rdb shape.rdb
 (define btc (batch-transpose csc))
 (btc 'mmt-marginals)
 (print-matrix-summary-report csc)
-((make-store csc) 'store-all)  ; ... is this needed? Its slow!
+; xx ((make-store csc) 'store-all)  ; ... is this needed? Its slow!
  ------ its not needed.
 
 cp -pr shape.rdb gram-2-junk.rdb
@@ -3092,8 +3092,118 @@ make-fuzz vs. make-disinfo
      mpred differs
      fraction differs
 
+Start greedy-agglomeration of 12 words
+Existing classes=0 singletons=0 done=0
+--- To-do=12 ncls=0 sing=0 nredo=0 2021-04-13 14:15:51 -- "e" ---
+--- To-do=11 ncls=0 sing=1 nredo=0 2021-04-13 14:16:02 -- "j" ---
+Dist=0.9557 for word "e" -- "j" in 22.46 secs
+---------Bingo! Dist=0.9557 for word "e" -- "j"
+---------Merged 202021 sections in 56.00 secs; 3607.5 scts/sec
+--- Greedy-checking next 10 items
+Dist=0.0550 for class "e j" -- "!" in 30.12 secs
+Dist=0.6614 for class "e j" -- "d" in 29.77 secs
+---------Bingo! Dist=0.6614 for class "e j" -- "d"
+---------Merged 284859 sections in 136.0 secs; 2094.6 scts/sec
+Dist=0.3121 for class "e j d" -- "a" in 45.09 secs
+---------Bingo! Dist=0.3121 for class "e j d" -- "a"
+---------Merged 355630 sections in 174.0 secs; 2043.9 scts/sec
+Dist=0.0808 for class "e j d a" -- "###LEFT-WALL###" in 46.91 secs
+Dist=0.3918 for class "e j d a" -- "b" in 33.96 secs
+xxxxxxxx
+---------Bingo! Dist=0.3918 for class "e j d a" -- "b"
+---------Merged 384102 sections in 195.0 secs; 1969.8 scts/sec
+Dist=0.2467 for class "e j d a b" -- "f" in 51.38 secs
+Dist=0.2366 for class "e j d a b" -- "h" in 38.39 secs
+Dist=0.2554 for class "e j d a b" -- "c" in 35.86 secs
+---------Bingo! Dist=0.2554 for class "e j d a b" -- "c"
+---------Merged 405139 sections in 216.0 secs; 1875.6 scts/sec
+Dist=0.1044 for class "e j d a b c" -- "g" in 50.52 secs
+Dist=0.0226 for class "e j d a b c" -- "i" in 38.41 secs
+--- Checking the done-list len=0
+---- Remaining count = 1375.5 of 694231.0 for "j"
+--- To-do=10 ncls=1 sing=0 nredo=2 2021-04-13 14:43:47 -- "!" ---
+Dist=0.0003 for class "e j" -- "!" in 11.42 secs
+--- To-do=9 ncls=1 sing=1 nredo=2 2021-04-13 14:44:03 -- "d" ---
+Dist=0.0145 for word "!" -- "d" in 9.435 secs
+--- To-do=8 ncls=1 sing=2 nredo=2 2021-04-13 14:44:13 -- "a" ---
+Dist=0.1250 for word "!" -- "a" in 8.522 secs
+--- To-do=7 ncls=1 sing=3 nredo=2 2021-04-13 14:44:23 -- "###LEFT-WALL###" ---
+Dist=0.0182 for class "e j" -- "###LEFT-WALL###" in 8.379 secs
+Dist=   0.0 for word "!" -- "###LEFT-WALL###" in 16.19 secs
+Dist=0.0000 for word "d" -- "###LEFT-WALL###" in 8.048 secs
+Dist=0.4637 for word "a" -- "###LEFT-WALL###" in 7.529 secs
+---------Bingo! Dist=0.4637 for word "a" -- "###LEFT-WALL###"
+---------Merged 64754 sections in 19.00 secs; 3408.1 scts/sec
+--- Greedy-checking next 6 items
+Dist=0.0001 for class "a ###LEFT-WALL###" -- "b" in 7.143 secs
+Dist=0.0139 for class "a ###LEFT-WALL###" -- "f" in 8.318 secs
+Dist=0.0142 for class "a ###LEFT-WALL###" -- "h" in 8.104 secs
+Dist=0.0000 for class "a ###LEFT-WALL###" -- "c" in 3.733 secs
+Dist=0.0213 for class "a ###LEFT-WALL###" -- "g" in 4.576 secs
+Dist=0.0256 for class "a ###LEFT-WALL###" -- "i" in 5.645 secs
+--- Checking the done-list len=2
+Dist=0.0000 for class "a ###LEFT-WALL###" -- "e" in 4.843 secs
+Dist=0.0062 for class "a ###LEFT-WALL###" -- "j" in 3.892 secs
+---- Remaining count = 182636.0477091671 of 417669.0 for "###LEFT-WALL###"
+--- To-do=6 ncls=2 sing=2 nredo=4 2021-04-13 14:46:54 -- "b" ---
+Dist=0.0001 for class "a ###LEFT-WALL###" -- "b" in 9.050 secs
+Dist=0.0061 for word "!" -- "b" in 8.353 secs
+--- To-do=5 ncls=2 sing=3 nredo=4 2021-04-13 14:47:13 -- "f" ---
+Dist=0.0139 for class "a ###LEFT-WALL###" -- "f" in 11.43 secs
+Dist=0.0198 for class "e j" -- "f" in 5.133 secs
+Dist=0.0365 for word "!" -- "f" in 13.56 secs
+Dist=0.2381 for word "d" -- "f" in 4.999 secs
+Dist=0.0003 for word "b" -- "f" in 5.693 secs
+--- To-do=4 ncls=2 sing=4 nredo=4 2021-04-13 14:47:56 -- "h" ---
+Dist=0.0142 for class "a ###LEFT-WALL###" -- "h" in 10.31 secs
+Dist=0.0174 for class "e j" -- "h" in 5.736 secs
+Dist=0.0901 for word "!" -- "h" in 14.02 secs
+Dist=0.2265 for word "d" -- "h" in 4.433 secs
+Dist=0.0003 for word "b" -- "h" in 4.229 secs
+Dist=0.9304 for word "f" -- "h" in 9.015 secs
+---------Bingo! Dist=0.9304 for word "f" -- "h"
+---------Merged 68219 sections in 18.00 secs; 3789.9 scts/sec
+--- Greedy-checking next 3 items
+Dist=0.1650 for class "f h" -- "c" in 6.589 secs
+Dist=0.0211 for class "f h" -- "g" in 4.638 secs
+Dist=0.0508 for class "f h" -- "i" in 4.224 secs
+--- Checking the done-list len=4
+Dist=0.1188 for class "f h" -- "e" in 3.754 secs
+Dist=0.0420 for class "f h" -- "j" in 3.911 secs
+Dist=0.0014 for class "f h" -- "a" in 4.463 secs
+Dist=0.0663 for class "f h" -- "###LEFT-WALL###" in 5.652 secs
+---- Remaining count = 1465.8 of 187522.0 for "h"
+--- To-do=3 ncls=3 sing=3 nredo=6 2021-04-13 14:50:21 -- "c" ---
+Dist=0.1650 for class "f h" -- "c" in 9.284 secs
+Dist=0.0000 for class "a ###LEFT-WALL###" -- "c" in 7.680 secs
+Dist=0.0000 for word "!" -- "c" in 9.102 secs
+--- To-do=2 ncls=3 sing=4 nredo=6 2021-04-13 14:50:48 -- "g" ---
+Dist=0.0211 for class "f h" -- "g" in 7.101 secs
+Dist=0.0213 for class "a ###LEFT-WALL###" -- "g" in 9.327 secs
+Dist=0.0511 for word "!" -- "g" in 8.720 secs
+--- To-do=1 ncls=3 sing=5 nredo=6 2021-04-13 14:51:18 -- "i" ---
+Dist=0.0508 for class "f h" -- "i" in 7.774 secs
+Dist=0.0256 for class "a ###LEFT-WALL###" -- "i" in 8.618 secs
+Dist=0.3223 for word "!" -- "i" in 10.01 secs
+---------Merged 76769 sections in 32.00 secs; 2399.0 scts/sec
+--- Greedy-checking next 0 items
+--- Checking the done-list len=6
+Dist=0.0001 for class "! i" -- "e" in 7.111 secs
+Dist=0.0002 for class "! i" -- "j" in 4.298 secs
+Dist=0.3660 for class "! i" -- "a" in 4.482 secs
+---------Bingo! Dist=0.3660 for class "! i" -- "a"
+---------Merged 80912 sections in 42.00 secs; 1926.5 scts/sec
+Dist=0.0002 for class "! i a" -- "###LEFT-WALL###" in 8.065 secs
+Dist=0.0000 for class "! i a" -- "f" in 4.291 secs
+Dist=0.0943 for class "! i a" -- "h" in 4.338 secs
+---- Remaining count = 9652.5 of 24657. for "i"
+--- To-do=0 ncls=4 sing=4 nredo=8 2021-04-13 14:54:40 -- "()" ---
+Finished greedy-agglomeration: 16 words assigned to 9 classes
 
 
+
+TODO: Why are the distances.... different? Is clobber not
+working? Are counts not being correctly updated?
 
 
 
