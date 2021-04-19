@@ -3204,7 +3204,28 @@ Finished greedy-agglomeration: 16 words assigned to 9 classes
 
 TODO: Why are the distances.... different? Is clobber not
 working? Are counts not being correctly updated?
+Oh, bug: its always starting a new cluser .. why!?
 
+merge seems strange:
+Dist=0.9549 for word "e" -- "j" 
+but 
+got 122053 duals for (WordNode "e" )
+got 106595 duals for (WordNode "j")
+unio length=202020 so very little overlap of the basis ..
+must be small counts!?
+
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (add-shape-vec-api psa))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+
+(gram-classify-greedy-discrim csc 0.25 4)
 
 
 link-class.scm ???

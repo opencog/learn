@@ -292,6 +292,8 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
+	(define monitor-rate (make-rate-monitor))
+
 	; Accumulated counts for the two.
 	(define accum-acnt 0)
 	(define accum-bcnt 0)
@@ -304,8 +306,6 @@
 	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
 	(define ptu (add-tuple-math LLOBJ bogus))
 
-	(define monitor-rate (make-rate-monitor))
-
 	; A list of pairs of sections to merge.
 	; This is a list of pairs of columns from LLOBJ, where either
 	; one or the other or both rows have non-zero elements in them.
@@ -317,7 +317,7 @@
 			(define PAIR-B (second PRL))
 
 			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-A))
+			(define null-b (null? PAIR-B))
 
 			; The target into which to accumulate counts. This is
 			; an entry in the same column that PAIR-A and PAIR-B
