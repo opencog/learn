@@ -561,7 +561,7 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define single (not (eq? (STARS 'cluster-type (cog-type WA))))
+		(define single (not (eq? (STARS 'cluster-type (cog-type WA)))))
 		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
