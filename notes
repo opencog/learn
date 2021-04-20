@@ -3175,6 +3175,9 @@ Dist=0.0663 for class "f h" -- "###LEFT-WALL###" in 5.652 secs
 ---- Remaining count = 1465.8 of 187522.0 for "h"
 --- To-do=3 ncls=3 sing=3 nredo=6 2021-04-13 14:50:21 -- "c" ---
 Dist=0.1650 for class "f h" -- "c" in 9.284 secs
+
+xxx unchanged and uncached...
+
 Dist=0.0000 for class "a ###LEFT-WALL###" -- "c" in 7.680 secs
 Dist=0.0000 for word "!" -- "c" in 9.102 secs
 --- To-do=2 ncls=3 sing=4 nredo=6 2021-04-13 14:50:48 -- "g" ---
@@ -3204,7 +3207,11 @@ Finished greedy-agglomeration: 16 words assigned to 9 classes
 
 TODO: Why are the distances.... different? Is clobber not
 working? Are counts not being correctly updated?
+Oh bug,  typo in the new code ...
+
 Oh, bug: its always starting a new cluser .. why!?
+
+Oh otpimzation: distance recomputed when not needed.
 
 merge seems strange:
 Dist=0.9549 for word "e" -- "j" 

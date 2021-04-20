@@ -495,9 +495,6 @@
 
 	(define (report-progress)
 		(let* (
-; (foo (format #t "Start distance ~A \"~A\" -- \"~A\"\n"
-; (if (eq? 'WordNode (cog-type WORD-A)) "word" "class")
-; (cog-name WORD-A) (cog-name WORD-B)))
 				(start-time (get-internal-real-time))
 				(sim (SIM-FUNC WORD-A WORD-B))
 				(now (get-internal-real-time))
@@ -548,7 +545,7 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define single (not (eq? 'WordClass (cog-type WA))))
+		(define single (not (eq? 'WordClassNode (cog-type WA))))
 		(define cls
 			(if single
 				(cog-new-node 'WordClass (string-concatenate
