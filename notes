@@ -3208,18 +3208,101 @@ Finished greedy-agglomeration: 16 words assigned to 9 classes
 TODO: Why are the distances.... different? Is clobber not
 working? Are counts not being correctly updated?
 Oh bug,  typo in the new code ...
-
 Oh, bug: its always starting a new cluser .. why!?
+  Because of bad type compare.
 
 Oh otpimzation: distance recomputed when not needed.
 
 merge seems strange:
-Dist=0.9549 for word "e" -- "j" 
-but 
+Dist=0.9549 for word "e" -- "j"
+but
 got 122053 duals for (WordNode "e" )
 got 106595 duals for (WordNode "j")
 unio length=202020 so very little overlap of the basis ..
 must be small counts!?
+
+(format #t "duude ~A m=~A ~A cls=~A\n" single WA WB cls)
+
+Current code expt-17
+Start greedy-agglomeration of 12 words
+Existing classes=0 singletons=0 done=0
+--- To-do=12 ncls=0 sing=0 nredo=0 2021-04-19 22:59:01 -- "e" ---
+--- To-do=11 ncls=0 sing=1 nredo=0 2021-04-19 22:59:14 -- "j" ---
+Dist=0.9557 for word "e" -- "j" in 25.98 secs
+
+identical
+---------Bingo! Dist=0.9557 for word "e" -- "j"
+------ Create: Merged 202021 sections in 114.0 secs; 1772.1 scts/sec
+nsect=1783 nshape=200238
+--- Greedy-checking next 10 items
+Dist=0.0550 for class "e j" -- "!" in 34.13 secs
+Dist=0.6614 for class "e j" -- "d" in 32.89 secs
+---------Bingo! Dist=0.6614 for class "e j" -- "d"
+diffferent and less Dist=0.5231
+
+------ Extend: Merged 104280 sections in 60.00 secs; 1738.0 scts/sec
+Dist=0.3100 for class "e j" -- "a" in 48.94 secs
+---------Bingo! Dist=0.3100 for class "e j" -- "a"
+
+diff Dist=0.4161 so greater
+
+------ Extend: Merged 73083 sections in 68.00 secs; 1074.7 scts/sec
+Dist=0.0900 for class "e j" -- "###LEFT-WALL###" in 56.52 secs
+Dist=0.6042 for class "e j" -- "b" in 36.73 secs
+---------Bingo! Dist=0.6042 for class "e j" -- "b"
+diff Dist=0.6817  so greater
+
+------ Extend: Merged 40401 sections in 48.00 secs; 841.69 scts/sec
+Dist=0.5827 for class "e j" -- "f" in 52.08 secs
+---------Bingo! Dist=0.5827 for class "e j" -- "f"
+different Dist=0.4730  so less
+
+------ Extend: Merged 39769 sections in 49.00 secs; 811.61 scts/sec
+Dist=0.6249 for class "e j" -- "h" in 58.82 secs
+---------Bingo! Dist=0.6249 for class "e j" -- "h"
+diff  Dist=0.5428
+
+------ Extend: Merged 36810 sections in 53.00 secs; 694.53 scts/sec
+Dist=0.6805 for class "e j" -- "c" in 63.55 secs
+---------Bingo! Dist=0.6805 for class "e j" -- "c"
+diff Dist=0.5947
+
+------ Extend: Merged 32955 sections in 50.00 secs; 659.10 scts/sec
+Dist=0.3152 for class "e j" -- "g" in 57.47 secs
+---------Bingo! Dist=0.3152 for class "e j" -- "g"
+diff Dist=0.3768
+
+------ Extend: Merged 8228 sections in 42.00 secs; 195.90 scts/sec
+Dist=0.1258 for class "e j" -- "i" in 57.40 secs
+--- Checking the done-list len=0
+---- Remaining count = 1375.5 of 694231.0 for "j"
+--- To-do=3 ncls=1 sing=0 nredo=9 2021-04-19 23:25:29 -- "!" ---
+Dist=0.0787 for class "e j" -- "!" in 71.03 secs
+--- To-do=2 ncls=1 sing=1 nredo=9 2021-04-19 23:26:44 -- "###LEFT-WALL###" ---
+Dist=0.0960 for class "e j" -- "###LEFT-WALL###" in 57.67 secs
+Dist=   0.0 for word "!" -- "###LEFT-WALL###" in 17.98 secs
+--- To-do=1 ncls=1 sing=2 nredo=9 2021-04-19 23:28:03 -- "i" ---
+Dist=0.1258 for class "e j" -- "i" in 50.40 secs
+Dist=0.3223 for word "!" -- "i" in 9.925 secs
+---------Bingo! Dist=0.3223 for word "!" -- "i"
+------ Create: Merged 76769 sections in 64.00 secs; 1199.5 scts/sec
+nsect=40979 nshape=35790
+--- Greedy-checking next 0 items
+--- Checking the done-list len=9
+Dist=0.0001 for class "! i" -- "e" in 6.509 secs
+Dist=0.0002 for class "! i" -- "j" in 5.446 secs
+Dist=0.0283 for class "! i" -- "d" in 4.782 secs
+Dist=0.2077 for class "! i" -- "a" in 5.683 secs
+Dist=0.0017 for class "! i" -- "b" in 5.224 secs
+Dist=0.0000 for class "! i" -- "f" in 5.820 secs
+Dist=0.0007 for class "! i" -- "h" in 5.168 secs
+Dist=   0.0 for class "! i" -- "c" in 5.144 secs
+Dist=0.0008 for class "! i" -- "g" in 4.424 secs
+---- Remaining count = 9652.5 of 24657. for "i"
+--- To-do=0 ncls=2 sing=1 nredo=11 2021-04-19 23:31:13 -- "()" ---
+Finished greedy-agglomeration: 11 words assigned to 2 classes
+
+
 
 
 (define pca (make-pseudo-cset-api))

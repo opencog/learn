@@ -115,6 +115,7 @@
 		(define (get-left-type) 'WordNode)
 		(define (get-right-type) 'ConnectorSeq)
 		(define (get-pair-type) 'Section)
+		(define (get-cluster-type) 'WordClassNode)
 
 		; Get the pair, if it exists.
 		(define (get-pair L-ATOM R-ATOM)
@@ -152,6 +153,16 @@
 			(format #t "Elapsed time to load csets: ~A secs\n"
 				(- (current-time) start-time)))
 
+		; Create a word-class out of two words, or just
+		; extend an existing word class. Here, "extend"
+		; means "do nothing", return the existing class.
+		; XXX TODO Move this method to `make-gram-class-api`
+		; Moving it requires minor redesign to the clustering code.
+		(define (make-cluster A-ATOM B-ATOM)
+			(if (eq? 'WordClassNode (cog-type A-ATOM)) A-ATOM
+				(WordClass (string-concatenate
+					(list (cog-name A-ATOM) " " (cog-name B-ATOM))))))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -170,6 +181,8 @@
 				((right-wildcard) get-right-wildcard)
 				((wild-wild)      get-wild-wild)
 				((fetch-pairs)    fetch-pseudo-csets)
+				((cluster-type)   get-cluster-type)
+				((make-cluster)   make-cluster)
 				((provides)       (lambda (meth) #f))
 				((filters?)       (lambda () #f))
 				(else (error "Bad method call on pseudo-cset:" message)))

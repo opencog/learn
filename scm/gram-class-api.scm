@@ -50,6 +50,8 @@
   network.
 
   For a detailed description, see the `pseudo-csets.scm` file.
+  This is similar to `make-pseudo-cset-api`; the primary diffference
+  being that it offers word-class access, instead of word access.
 "
 
 	; Get the observational count on ATOM

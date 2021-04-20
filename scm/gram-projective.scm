@@ -15,6 +15,9 @@
 ; described in `gram-classification.scm`. See the `gram-optim.scm` file
 ; for the entropy-maximizing merge implementation.
 ;
+; Although the code keeps talking about words and word-classes, it is
+; very nearly completely generic, and can merge just about anything.
+;
 ; Orthogonal merging
 ; ------------------
 ; In this merge strategy, `w` is decomposed into `s` and `t` by
@@ -172,6 +175,19 @@
 ; that these are actually rather good parameter choices; and surprisingly,
 ; the `merge-discrim` works better than `merge-project`.
 ;
+; TODO
+; ----
+; The code here is almost entirely generic; it should work for
+; "anything", and not just Words/WordClasses. It is generic because
+; it gets the class type from `make-pseudo-cset-api 'cluster-type)`
+; and works with that. The code here should probably be ever-so-slightly
+; refactored to use classes like `make-gram-class-api` as the recipient
+; for clusters (i.e. given the job of determining the names of clusters,
+; including managing the MemberLinks) and letting `make-pseudo-cset-api`
+; be merely the source (i.e. removing 'cluster-type and 'make-cluster
+; from `make-pseudo-cset-api` and moving them to `make-gram-class-api`
+; instead.) This would make the code fully generic.
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
@@ -252,7 +268,7 @@
   In the prototypical use case, each row corresponds to a WordNode,
   and the result of summing them results in a WordClassNode. Thus,
   by convention, it is assumed that the pairs are (word, disjunct)
-  pairs, and LLOBJ was made by `make-gram-class-api` or by
+  pairs, and LLOBJ was made by `make-pseudo-cset-api` or by
   `add-shape-vec-api`. The code itself is generic, and may work on
   other kinds of LLOBJ's too.
 
@@ -545,12 +561,8 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define single (not (eq? 'WordClassNode (cog-type WA))))
-		(define cls
-			(if single
-				(cog-new-node 'WordClass (string-concatenate
-					(list (cog-name WA) " " (cog-name WB))))
-				WA))
+		(define single (not (eq? (STARS 'cluster-type (cog-type WA))))
+		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
 		; one. Afterwards, need to recompute the marginals. This is so
