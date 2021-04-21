@@ -76,6 +76,7 @@ or rather, "sparse matrix factorization.")
 
 This is an ongoing project, with continuing if sometimes sporadic activity.
 
+
 The Big Idea - World Models
 ---------------------------
 In a text, there is both a small-scale structure, and a large scale
@@ -121,6 +122,117 @@ developed here appear to be promising, and there is no apparent
 impediment in sight, other than perhaps the general scale of the project
 itself.  Plainly, there's a lot of code to write, test, debug, and a
 lot of research and development to be performed.
+
+
+The Medium Idea - Part-Whole Hierarchies
+========================================
+The above sketch is sufficiently abstract that, while it may be hard to
+disagree with, it may also be hard to figure out how to write code for
+it. Below is a sketch of what is actually done. It involves a recurring
+process of generating vectors (of several different kinds), applying
+similarity measures to those vectors, and then forming clusters or
+classes (or "islands") of similar vectors.  Distance information can be
+used to extract a graphical structure, which is decomposed into nearest
+neighbors, which can then be formed again into vectors. This is used
+to ratchet up a part-whole heirarchy, where parts are distinctly
+identified as "those things that are similar" and the whole-relationship
+is given by the local graphical structure. As icing on the cake, all
+of the above is done with maximum-entropy principles in mind.
+
+The general process is as follows:
+* Make pair-wise observations, counting frequency of occurances.
+* Interpret pairs as the rows & columns of a matrix: each row and column
+  is a vector. These vectors are extremly high-dimensional and sparse.
+* Obtain pair-wise mutual information (MI). Any distance measure will do,
+  but the information-theoretic ground of maximum entropy principles
+  seems best.
+* Re-observe data, this time using the pair-wise distances to form
+  a spanning tree or spanning graph. The only edges allowed in this
+  graph are those with high MI (i.e. small distance, those that are
+  close to one-another.)
+* Factor the graph into vertexes and thier nearest neighbors. This
+  factorization resembles an N-gram or skip-gram: the list of neighbors
+  is that skip-gram.
+* Just as skip-grams can be interpreted as vectors, the same is possible
+  here. The pair (vertex, nearest-neighbors) can be taken as the row
+  and column addresses of a matrix, and the numeric value of that matrix
+  entry is just the number of times that (vertex, neighbor) combination
+  has been observed.
+* Apply similarity measures to the row-vectors of this matrix, and
+  cluster together or agglomerate similar vectors.
+* These clusters are then the desired outcome: these are the classes of
+  similar or identical observations. The next time some sequence of
+  events is observed, it can be classed into one of these classes.
+* Because the classes have (vertex, neighbor) information, they encode
+  a graph. That is, they explictly encode part-whole relationships.
+  Any given vertex is a "part"; its neighbors determine how it's
+  connected to the "whole".
+
+To obtain hierarchical relationships, one notes that the dimensional
+reduction obtained through clustering can then be used to tackle
+combinatoric explosions and sparse data "at the next level". Thus,
+for example, N-grams/skip-grams are famously high dimensional (e.g.
+for a vocabulary of V = 10K words, there are then (10K)^3 = trillion
+possible 3-grams) By the graphical agglomeration proceedure given
+above, this can be reduce to P=100 different "parts of speech"
+(grammatical classes: nouns, adjectives, verbs, transitive verbs, etc.)
+with graphical structure: the encoded graph is much much smaller.
+Now that the data size is manageable, again, the learning process
+can be restarted, this time looking at correlations between sentences,
+between paragraphs, as opposed to correlations between words.  So,
+for example, if a paragraph contains N=100 words, there gives a
+practical for treating that N-gram with N=100, as the (graphical)
+structure of smaller units in that paragraph are now available.
+
+
+Agglomeration
+-------------
+The current code base implements more-or-less traditional
+high-dimensional agglomerative clustering.
+
+
+this agglomeration by converting
+repeated common observations into vectors, applying similarity
+measures to those vectors, and then clustering them together using
+more-or-less traditional high-dimensional clustering techniques.
+
+There are two key differences between the vectors being formed here,
+and the vectors that are commonplace in neural-net learning systems.
+First is that the vectors here are extremely high-dimensional and
+sparse. Second is that vector similarity is NOT judged by cosine angles,
+but by information-theoretic measures. (In short: these vectors do not
+live in some Euclidean space that has rotational symmetry; using cosines
+is silly in this case.)
+
+Pair-Vectors
+------------
+Vectors may be formed in several ways. At the most basic level, if one
+has a sequence of observations, one can form pairs of neighboring
+observations: these pairs have a high mutual-information content,
+simply because they are close to one-another. Pairs can be regarded as
+a matrix: the left and right elements of the pair are the row and column
+addresses on the matrix, and the number of times that pair has been
+observed is the numerical matrix entry. The rows and the columns are
+then vectors: they are the feature vectors associated with the
+row/column labels.
+
+Building vectors from observation pairs is OK, but one can do better.
+Quotidian approaches include using N-grams or skip-grams. These are also
+OK, but they lack structure, and do not indicate how structure can be
+discovered. The approach taken here is to replace the n-gram/skip-gram 
+by a graph component that captures the strength of the connections
+between the items in the n-gram/skip-gram. This graph component is
+obtained by maximum spanning-tree parsing: discerning the structure
+of a sequence of events by obtaining the graph whose edges maximize
+the mutual information between events. This is then a kind of "maximum
+entropy principle" applied so that time series are converted into
+graphs.
+
+Once one has a graph of vertexes and edges, it may be decomposed into
+vertexes and nearest-neighbors. The collection of nearest neighbors
+roughly resembles a skip-gram.  These form a matrix: rows are the
+vertexes, and columns are the pseudo-skipgrams.
+
 
 
 ### The Small Idea
