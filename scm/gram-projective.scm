@@ -16,7 +16,10 @@
 ; for the entropy-maximizing merge implementation.
 ;
 ; Although the code keeps talking about words and word-classes, it is
-; very nearly completely generic, and can merge just about anything.
+; (almost) entirely generic, and can merge (cluster) anything. The only
+; place(s) where its not generic is in some progress-report printing,
+; and in the general discussion of what this code does. Otherwise, what
+; to merge, and where to put the merger results are defined by LLOBJ.
 ;
 ; Orthogonal merging
 ; ------------------
@@ -177,16 +180,8 @@
 ;
 ; TODO
 ; ----
-; The code here is almost entirely generic; it should work for
-; "anything", and not just Words/WordClasses. It is generic because
-; it gets the class type from `make-pseudo-cset-api 'cluster-type)`
-; and works with that. The code here should probably be ever-so-slightly
-; refactored to use classes like `make-gram-class-api` as the recipient
-; for clusters (i.e. given the job of determining the names of clusters,
-; including managing the MemberLinks) and letting `make-pseudo-cset-api`
-; be merely the source (i.e. removing 'cluster-type and 'make-cluster
-; from `make-pseudo-cset-api` and moving them to `make-gram-class-api`
-; instead.) This would make the code fully generic.
+; It might be useful to move the management of the MemberLink's to
+; the `add-cluster-gram` object.
 ;
 ; ---------------------------------------------------------------------
 
