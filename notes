@@ -3378,6 +3378,12 @@ OK unit test is in opencog/atomspace#2812
 
 
 --------------------------
+(make-concatenation "Sorry, method make-cluster not available!")'
+
+run-common/cogserver-gram.scm
+run-common/marginals-mst-shape.scm:
+
+--------------------------
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
 
@@ -3388,9 +3394,11 @@ OK unit test is in opencog/atomspace#2812
 (define csc (add-pair-stars cac))
 (csc 'fetch-pairs)
 
-(gram-classify-greedy-discrim csc 0.25 4)
+(define gsc (add-cluster-gram csc))
 
-(make-concatenation "Sorry, method make-cluster not available!")'
+(gram-classify-greedy-discrim gsc 0.25 4)
+
+
 
 
 link-class.scm ???

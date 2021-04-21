@@ -14,7 +14,8 @@
 
 ; The object which will be providing disjunct-counts for us.
 (define cset-obj (make-pseudo-cset-api))
-(define star-obj (add-pair-stars cset-obj))
+(define gram-obj (add-cluster-gram cset-obj))
+(define star-obj (add-pair-stars gram-obj))
 (cset-obj 'fetch-pairs)
 
 ; Check to see if the marginals have been computed.
