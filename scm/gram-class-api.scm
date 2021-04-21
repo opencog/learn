@@ -152,6 +152,45 @@
 
 ; ---------------------------------------------------------------------
 
+(define-public (add-cluster-gram LLOBJ)
+"
+  add-cluster-gram LLOBJ
+
+  Add definitions of grammatical classes to LLOBJ, for clustering.
+
+  During clustering, the code identifies pairs of similar words,
+  and provides the mechanics for merging them together, into a cluster.
+  Each such cluster is a grammatical class. However, that code does not
+  know how these should be laid out in the atomspace.  This object
+  defines the methods needed for actually managing and storing the
+  clusters generated during clustering.
+
+  Provided methods:
+    'cluster-type
+
+    'make-cluster
+"
+	(define (get-cluster-type) 'WordClassNode)
+
+	; Create a word-class out of two words, or just extend an
+	; existing word class. Here, "extend" means "do nothing",
+	; return the existing class.
+	(define (make-cluster A-ATOM B-ATOM)
+		(if (eq? 'WordClassNode (cog-type A-ATOM)) A-ATOM
+			(WordClass (string-concatenate
+				(list (cog-name A-ATOM) " " (cog-name B-ATOM))))))
+
+	; Methods on the object
+	(lambda (message . args)
+		(case message
+			((cluster-type)   (get-cluster-type))
+			((make-cluster)   (apply make-cluster args))
+			(else             (apply LLOBJ (cons message args)))
+		))
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (add-singleton-classes LLOBJ)
 "
   add-singleton-classes LLOBJ -- manage singleton WordClassNodes
