@@ -124,8 +124,9 @@ itself.  Plainly, there's a lot of code to write, test, debug, and a
 lot of research and development to be performed.
 
 
-The Medium Idea - Part-Whole Hierarchies
-========================================
+### The Medium Idea
+Part-Whole Hierarchies
+======================
 The above sketch is sufficiently abstract that, while it may be hard to
 disagree with, it may also be hard to figure out how to write code for
 it. Below is a sketch of what is actually done. It involves a recurring
@@ -265,13 +266,13 @@ from the data, in the form of graphical nearest-neighbors. Thus, a
 If some neighbors are excluded, this is a skip-gram. The present case
 is similar, but with several key distinctions.
 
-First: neighbors are determined not by the physical proximity of one
+**First:** neighbors are determined not by the physical proximity of one
 word to another (how close they are in a sentence), but rather by the
 mutual information between the words. (Here, a "word" can be literally
 a "word", or more generically "some time-series event observed in
 nature".)
 
-Second: it is not the raw MI-proximity that counts, but rather, the
+**Second:** it is not the raw MI-proximity that counts, but rather, the
 spanning tree or spanning graph that connects vertexes (words). That
 is, in formulating this "graphical skip-gram", one does not just grab
 the nearest neighbors as measured by the distance function. One instead
@@ -281,17 +282,17 @@ some edges despite those edges being short: it is more important to
 minimize/maximize the local, collective graph, the local connectivity of
 all vertexes, and not just pairs of them.
 
-Third: the use of "graphical skip-grams", as described here, provides
+**Third:** the use of "graphical skip-grams", as described here, provides
 a natural bridge to the concept of syntax and grammar. That is, a
 "graphical skip-gram" is a syntactic element, in a very real and formal
 sense of languages and grammars. This is a foundational, key
 observation, the details of which can be found in 1991 Link Grammar
-papers: Sleator, Temperley, ["Parsing English with a Link Grammar"](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/link/pub/www/papers/ps/tr91-196.pdf).
+papers: Sleator, Temperley, [*"Parsing English with a Link Grammar"*](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/link/pub/www/papers/ps/tr91-196.pdf).
 The earliest mention of these concepts seems to be in a book:
 [*"Algebraic Linguistics; Analytical Models"*](https://monoskop.org/images/2/26/Marcus_Solomon_editor_Algebraic_Linguistics_Analytical_Models_1967.pdf),
 from 1967, by Solomon Marcus (published by Elsevier).
 
-Fourth: the result of the agglomerative clustering on feature vectors
+**Fourth:** the result of the agglomerative clustering on feature vectors
 can be interpreted as "types", in the formal type-theoretical sense.
 The Link Grammar "link types" really are types. They are short-hand
 for ideas like S\NP and S/VP found in pregroup grammars, or more
@@ -301,7 +302,7 @@ more: it explains exactly how those feature vectors should be interpreted
 as graphs, and how that graph structure has regularities defined by a
 grammar.
 
-Fifth: meaning. There are frequent arguments made that neural nets
+**Fifth:** meaning. There are frequent arguments made that neural nets
 extract "meaning", or that weight vectors can be interpreted as
 "meaning". These arguments carry over into the present case. They
 are strengthened, because the feature vectors are no long "just
