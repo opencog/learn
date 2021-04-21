@@ -184,6 +184,23 @@ for example, if a paragraph contains N=100 words, there gives a
 practical for treating that N-gram with N=100, as the (graphical)
 structure of smaller units in that paragraph are now available.
 
+Unsupervised training
+---------------------
+A key difference between the code here, and convetional neural net
+techniques is that all training here is "unsupervised". There are no
+"training sets"; the learning is done entirely by extracting statistical
+regularity from the input stream. In the parlance, it is not "turtles
+all the way down"; but rather "the buck stops here".
+
+This refers to the problem of training in neural nets: the training sets
+are created by expert human markup, usually by grad students. In effect,
+the neural net is ony as smart as the grad student who provided the
+training data.  Politically charged examples of this includes facial
+recognition suites that mistreat people of color, as opposed to white
+people. This effect has been termed "turtles all the way down", in
+reference to the idea that the Earth sits on the back of a turtle:
+but what does the turtle sit on? The neural net sits on the back of
+a grad student.
 
 Agglomeration
 -------------
@@ -239,37 +256,56 @@ a dot-product inside of it; it just has different normalization factors
 that break Euclidean rotational symmetry, and replace it by maximum
 entropy principles.
 
+N-grams, skip-grams, graph decomposition, grammar
+-------------------------------------------------
+Another major difference between the code here, and conventional
+neural net theory, is that the explicit graphical structure is extracted
+from the data, in the form of graphical nearest-neighbors. Thus, a
+(word, neighboring-words) is the conventional defintion of an N-gram.
+If some neighbors are excluded, this is a skip-gram. The present case
+is similar, but with several key distinctions.
 
+First: neighbors are determined not by the physical proximity of one
+word to another (how close they are in a sentence), but rather by the
+mutual information between the words. (Here, a "word" can be literally
+a "word", or more generically "some time-series event observed in
+nature".)
 
-Pair-Vectors
-------------
-Vectors may be formed in several ways. At the most basic level, if one
-has a sequence of observations, one can form pairs of neighboring
-observations: these pairs have a high mutual-information content,
-simply because they are close to one-another. Pairs can be regarded as
-a matrix: the left and right elements of the pair are the row and column
-addresses on the matrix, and the number of times that pair has been
-observed is the numerical matrix entry. The rows and the columns are
-then vectors: they are the feature vectors associated with the
-row/column labels.
+Second: it is not the raw MI-proximity that counts, but rather, the
+spanning tree or spanning graph that connects vertexes (words). That
+is, in formulating this "graphical skip-gram", one does not just grab
+the nearest neighbors as measured by the distance funtion. One instead
+attempts to minimize/maximize the distance measure (the entropy) for
+the entire local graph.  This has the effect of discarding (not forming)
+some edges despite those edges being short: it is more important to
+minimize/maximize the local, collective graph, the local connectivity of
+all vertexes, and not just pairs of them.
 
-Building vectors from observation pairs is OK, but one can do better.
-Quotidian approaches include using N-grams or skip-grams. These are also
-OK, but they lack structure, and do not indicate how structure can be
-discovered. The approach taken here is to replace the n-gram/skip-gram
-by a graph component that captures the strength of the connections
-between the items in the n-gram/skip-gram. This graph component is
-obtained by maximum spanning-tree parsing: discerning the structure
-of a sequence of events by obtaining the graph whose edges maximize
-the mutual information between events. This is then a kind of "maximum
-entropy principle" applied so that time series are converted into
-graphs.
+Third: the use of "graphical skip-grams", as described here, provides
+a natural bridge to the concept of syntax and grammar. That is, a
+"graphical skip-gram" is a syntactic element, in a very real and formal
+sense of languages and grammars. This is a foundational, key
+observation, the details of which can be found in 1991 Link Grammar
+papers: Sleator, Temperley, ["Parsing English with a Link Grammar"](http://www.cs.cmu.edu/afs/cs.cmu.edu/project/link/pub/www/papers/ps/tr91-196.pdf).
+The earliest mention of these concepts seems to be in a book:
+[*"Algebraic Linguistics; Analytical Models"*](https://monoskop.org/images/2/26/Marcus_Solomon_editor_Algebraic_Linguistics_Analytical_Models_1967.pdf),
+from 1967, by Solomon Marcus (published by Elsevier).
 
-Once one has a graph of vertexes and edges, it may be decomposed into
-vertexes and nearest-neighbors. The collection of nearest neighbors
-roughly resembles a skip-gram.  These form a matrix: rows are the
-vertexes, and columns are the pseudo-skipgrams.
+Fourth: the result of the agglomerative clustering on feature vectors
+can be interpreted as "types", in the formal type-theoretical sense.
+The Link Grammar "link types" really are types. They are short-hand
+for ideas like S\NP and S/VP found in pregroup grammars, or more
+genrally in phrase-structure grammars.  The "learning" being performed
+here does not "just" glom together identical feature vectors; it does
+more: it explains exactly how those feature vectors should be interpreted
+as graphs, and how that graph structure has regularities defined by a
+grammar.
 
+Fifth: meaning. There are frequent arguments made that neural nets
+extrct "meaning", or that weight vectors can be interpreted as
+"meaning". These arguments carry over into the present case. They
+are strengthened, because the feature vectors are no long "just
+vectors", they are also components of a graph, components of a grammar.
 
 
 ### The Small Idea
