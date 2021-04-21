@@ -3302,9 +3302,82 @@ Dist=0.0008 for class "! i" -- "g" in 4.424 secs
 --- To-do=0 ncls=2 sing=1 nredo=11 2021-04-19 23:31:13 -- "()" ---
 Finished greedy-agglomeration: 11 words assigned to 2 classes
 
+===============================
+Try to repro the old bug so can write unit test for it.
+Cause I don't remember the bug..
+
+26 March ae9603ff864c1b94926621e53a603790b94ba8cb c426c23923f2e99aa23c1920c9c279a218b3c19f
+(define var (Variable "$api-right-star"))
+(define term (wss 'make-pair (WordNode "d") var))
+(define b (Bind (TypedVariable var (Type "EvaluationLink")) term term))
+(use-modules (opencog exec))
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(define wsv (make-shape-vec-api))
+(define wss (add-pair-stars wsv))
+
+(wsv 'fetch-pairs)
+(define wsc (add-support-compute wss))
+
+(wss 'left-basis-size)
+(wsc 'cache-all)
 
 
+PatternLink with body (EvaluationLink
+  (PredicateNode "*-word-shape pair-*")
+  (WordNode "d")
+  (VariableNode "$api-right-star"))
 
+  (EvaluationLink
+    (PredicateNode "*-word-shape pair-*")
+    (WordNode "d")
+    (EvaluationLink
+      (PredicateNode "*-shape-*")
+      (WordNode "d")
+      (Connector (WordNode "e") (ConnectorDir "-"))
+      (Connector (WordNode "j") (ConnectorDir "+"))
+      (Connector (WordNode "g") (ConnectorDir "+"))
+      (Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+      (Connector (WordNode "!") (ConnectorDir "+"))
+    ))
+
+  (EvaluationLink
+    (PredicateNode "*-word-shape pair-*")
+    (WordNode "d")
+    (EvaluationLink
+      (PredicateNode "*-shape-*")
+      (WordNode "d")
+      (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+      (Connector (WordNode "g") (ConnectorDir "+"))
+      (Connector (WordNode "g") (ConnectorDir "+"))))
+
+ (EvaluationLink
+    (PredicateNode "*-word-shape pair-*")
+    (WordNode "d")
+    (EvaluationLink
+      (PredicateNode "*-shape-*")
+      (WordNode "d")
+      (Connector (WordNode "b") (ConnectorDir "-"))
+      (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+      (Connector (WordNode "g") (ConnectorDir "-"))
+      (Connector (WordNode "e") (ConnectorDir "+"))))
+
+  (EvaluationLink
+    (PredicateNode "*-word-shape pair-*")
+    (WordNode "b")
+    (EvaluationLink
+      (PredicateNode "*-shape-*")
+      (WordNode "b")
+      (Connector (WordNode "###LEFT-WALL###") (ConnectorDir "-"))
+      (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+      (Connector (WordNode "a") (ConnectorDir "+"))))
+
+
+OK unit test is in opencog/atomspace#2812
+
+
+--------------------------
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
 
@@ -3317,11 +3390,17 @@ Finished greedy-agglomeration: 11 words assigned to 2 classes
 
 (gram-classify-greedy-discrim csc 0.25 4)
 
+(make-concatenation "Sorry, method make-cluster not available!")'
+
 
 link-class.scm ???
 ====================================================
 
 FIXED:
+* Write unit test for the recent caching fix in the pattern matcher,
+  its doable... (fix circa 26 march 2021) #2803 Done in #2812
+* During merging, long class names are printed, is that correct?
+  FIXED, it was wrong, because WrodClass test was wrong
 * Bug: RockDB needs to be compacted on close. closing and reopening
   a DB shrinks disk use by 20x for some workloads.
   Also its chewing up vast amounts of RAM. Bugs #9 and #10
@@ -3337,15 +3416,12 @@ FIXED:
   need to be present for dict-compare to work without hackery.
 	DONE.
 
-TODO/BUGS:
 
-* During merging, long class names are printed, is that correct?
+TODO/BUGS:
 * After merging, and then using fetched-pairs on sections,
   some/all merged shapes (that have been deleted) get recreated!
 * Implement connector merging.
 * Set up direct-sum/shape clustering run scripts. (partly done)
-* Write unit test for the recent caching fix in the pattern matcher,
-  its doable... (fix circa march 2021)
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
 * Fix count transfer in add-singleton-classes
