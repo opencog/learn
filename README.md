@@ -28,7 +28,7 @@ shapes that follow from the syntax/grammar. The *meaning* or the
 
 This project takes the above to be the structure of ***knowledge*** and
 ***meaning***. Stronger and more detailed arguments for why this is the
-correct defintion of "knowledge" and "meaning", together with concrete
+correct definition of "knowledge" and "meaning", together with concrete
 definitions, details and examples are provided by the PDF's in the
 [AtomSpace "sheaf" directory](https://github.com/opencog/atomspace/tree/master/opencog/sheaf/docs).
 
@@ -66,7 +66,7 @@ graph***, or olde-school "symbolic AI". This is in contrast to neural nets
 and deep learning, where knowledge is encoded in a dense graph, the
 network connectivity graph of weight matrices, vectors and the like.
 The deep learning industry has plenty of folks working on it. It's
-a multi-billion-dollar industry. We are not competing with that behemouth.
+a multi-billion-dollar industry. We are not competing with that behemoth.
 The goal of this project is to move forward on sparse-graph knowledge
 representation. (Note however: some parts of sparse graphs are densely
 connected, and, for those parts, deep-learning type structures may be
@@ -134,15 +134,15 @@ similarity measures to those vectors, and then forming clusters or
 classes (or "islands") of similar vectors.  Distance information can be
 used to extract a graphical structure, which is decomposed into nearest
 neighbors, which can then be formed again into vectors. This is used
-to ratchet up a part-whole heirarchy, where parts are distinctly
+to ratchet up a part-whole hierarchy, where parts are distinctly
 identified as "those things that are similar" and the whole-relationship
 is given by the local graphical structure. As icing on the cake, all
 of the above is done with maximum-entropy principles in mind.
 
 The general process is as follows:
-* Make pair-wise observations, counting frequency of occurances.
+* Make pair-wise observations, counting frequency of occurrences.
 * Interpret pairs as the rows & columns of a matrix: each row and column
-  is a vector. These vectors are extremly high-dimensional and sparse.
+  is a vector. These vectors are extremely high-dimensional and sparse.
 * Obtain pair-wise mutual information (MI). Any distance measure will do,
   but the information-theoretic ground of maximum entropy principles
   seems best.
@@ -150,7 +150,7 @@ The general process is as follows:
   a spanning tree or spanning graph. The only edges allowed in this
   graph are those with high MI (i.e. small distance, those that are
   close to one-another.)
-* Factor the graph into vertexes and thier nearest neighbors. This
+* Factor the graph into vertexes and their nearest neighbors. This
   factorization resembles an N-gram or skip-gram: the list of neighbors
   is that skip-gram.
 * Just as skip-grams can be interpreted as vectors, the same is possible
@@ -164,7 +164,7 @@ The general process is as follows:
   similar or identical observations. The next time some sequence of
   events is observed, it can be classed into one of these classes.
 * Because the classes have (vertex, neighbor) information, they encode
-  a graph. That is, they explictly encode part-whole relationships.
+  a graph. That is, they explicitly encode part-whole relationships.
   Any given vertex is a "part"; its neighbors determine how it's
   connected to the "whole".
 
@@ -173,7 +173,7 @@ reduction obtained through clustering can then be used to tackle
 combinatoric explosions and sparse data "at the next level". Thus,
 for example, N-grams/skip-grams are famously high dimensional (e.g.
 for a vocabulary of V = 10K words, there are then (10K)^3 = trillion
-possible 3-grams) By the graphical agglomeration proceedure given
+possible 3-grams) By the graphical agglomeration procedure given
 above, this can be reduce to P=100 different "parts of speech"
 (grammatical classes: nouns, adjectives, verbs, transitive verbs, etc.)
 with graphical structure: the encoded graph is much much smaller.
@@ -186,7 +186,7 @@ structure of smaller units in that paragraph are now available.
 
 Unsupervised training
 ---------------------
-A key difference between the code here, and convetional neural net
+A key difference between the code here, and conventional neural net
 techniques is that all training here is "unsupervised". There are no
 "training sets"; the learning is done entirely by extracting statistical
 regularity from the input stream. In the parlance, it is not "turtles
@@ -194,7 +194,7 @@ all the way down"; but rather "the buck stops here".
 
 This refers to the problem of training in neural nets: the training sets
 are created by expert human markup, usually by grad students. In effect,
-the neural net is ony as smart as the grad student who provided the
+the neural net is only as smart as the grad student who provided the
 training data.  Politically charged examples of this includes facial
 recognition suites that mistreat people of color, as opposed to white
 people. This effect has been termed "turtles all the way down", in
@@ -208,7 +208,7 @@ The current code base implements more-or-less traditional
 high-dimensional agglomerative clustering. It does NOT use 3rd-party
 systems or libraries, for three reasons:
 * Other systems do not handle extremely sparse data efficiently.
-* The high-dimenional data produced here is already in the form of a
+* The high-dimensional data produced here is already in the form of a
   graph, and is stored in a graph format in the AtomSpace. Copying
   this data out, and back in again, is wasteful of CPU. It also
   requires complicated import/export code. The complexity of
@@ -216,13 +216,13 @@ systems or libraries, for three reasons:
   nothing is gained by using 3rd-party tools.
 * The formation of clusters here is not quite as simple as throwing
   similar labels into buckets.  The vectors have to be merged,
-  basis-element by basis-lement, and those vectors encode graphical
-  structure. For example, when one merges (vertex-A, neihbors-of-A)
+  basis-element by basis-element, and those vectors encode graphical
+  structure. For example, when one merges (vertex-A, neighbors-of-A)
   with (vertex-B, neighbors-of-B), it is not enough to merge just
   A and B, one must also merge (vertex-X, neighbors-of-X) whenever
   a neighbor-of-X includes A or B. This would require a callback from
   the clustering code to perform that graphical merge. 3rd-party
-  tools are incpable of such callbacks.
+  tools are incapable of such callbacks.
 
 Vectors
 -------
@@ -234,12 +234,12 @@ but by information-theoretic measures.
 
 A short tirade: the neural-net people are probably making a mistake by
 using cosine angles. The cosine is great when a vector lives in a
-Euclidean space, because Eucliden spaces have rotational symmetry.
+Euclidean space, because Euclidean spaces have rotational symmetry.
 But there is no reason to expect neural-net vectors to live in Euclidean
 space, and it is rather silly to force a rotational symmetry onto a
 problem that has none. The problem here is the word "vector".
 
-In conventiional mathematics, a "vector" is a collection of (number,
+In conventional mathematics, a "vector" is a collection of (number,
 basis-element) pairs, and exists "naturally" in Euclidean space. But,
 for neural nets, and for the current code base, this collection is
 should be interpreted as a (number-between-zero-and-one, basis-element),
@@ -249,7 +249,7 @@ are actually points in a simplex; and have the structure of a
 sigma-algebra. Whenever a vector has the structure of a sigma algebra,
 it should be interpreted as a probability, and the similarity of two
 vectors is then given by (take your pick) the conditional probability,
-the Kullbak-Leibler divergence, the conditional or mutual entropy,
+the Kullback-Leibler divergence, the conditional or mutual entropy,
 the mutual information, etc. It is *NOT* given by the dot-product or
 the cosine angle! Note, BTW, that the mutual information does include
 a dot-product inside of it; it just has different normalization factors
@@ -261,7 +261,7 @@ N-grams, skip-grams, graph decomposition, grammar
 Another major difference between the code here, and conventional
 neural net theory, is that the explicit graphical structure is extracted
 from the data, in the form of graphical nearest-neighbors. Thus, a
-(word, neighboring-words) is the conventional defintion of an N-gram.
+(word, neighboring-words) is the conventional definition of an N-gram.
 If some neighbors are excluded, this is a skip-gram. The present case
 is similar, but with several key distinctions.
 
@@ -274,7 +274,7 @@ nature".)
 Second: it is not the raw MI-proximity that counts, but rather, the
 spanning tree or spanning graph that connects vertexes (words). That
 is, in formulating this "graphical skip-gram", one does not just grab
-the nearest neighbors as measured by the distance funtion. One instead
+the nearest neighbors as measured by the distance function. One instead
 attempts to minimize/maximize the distance measure (the entropy) for
 the entire local graph.  This has the effect of discarding (not forming)
 some edges despite those edges being short: it is more important to
@@ -295,14 +295,14 @@ Fourth: the result of the agglomerative clustering on feature vectors
 can be interpreted as "types", in the formal type-theoretical sense.
 The Link Grammar "link types" really are types. They are short-hand
 for ideas like S\NP and S/VP found in pregroup grammars, or more
-genrally in phrase-structure grammars.  The "learning" being performed
+generally in phrase-structure grammars.  The "learning" being performed
 here does not "just" glom together identical feature vectors; it does
 more: it explains exactly how those feature vectors should be interpreted
 as graphs, and how that graph structure has regularities defined by a
 grammar.
 
 Fifth: meaning. There are frequent arguments made that neural nets
-extrct "meaning", or that weight vectors can be interpreted as
+extract "meaning", or that weight vectors can be interpreted as
 "meaning". These arguments carry over into the present case. They
 are strengthened, because the feature vectors are no long "just
 vectors", they are also components of a graph, components of a grammar.
