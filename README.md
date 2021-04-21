@@ -188,21 +188,58 @@ structure of smaller units in that paragraph are now available.
 Agglomeration
 -------------
 The current code base implements more-or-less traditional
-high-dimensional agglomerative clustering.
+high-dimensional agglomerative clustering. It does NOT use 3rd-party
+systems or libraries, for three reasons:
+* Other systems do not handle extremely sparse data efficiently.
+* The high-dimenional data produced here is already in the form of a
+  graph, and is stored in a graph format in the AtomSpace. Copying
+  this data out, and back in again, is wasteful of CPU. It also
+  requires complicated import/export code. The complexity of
+  import/export is about equal to do-it-yourself clustering, so
+  nothing is gained by using 3rd-party tools.
+* The formation of clusters here is not quite as simple as throwing
+  similar labels into buckets.  The vectors have to be merged,
+  basis-element by basis-lement, and those vectors encode graphical
+  structure. For example, when one merges (vertex-A, neihbors-of-A)
+  with (vertex-B, neighbors-of-B), it is not enough to merge just
+  A and B, one must also merge (vertex-X, neighbors-of-X) whenever
+  a neighbor-of-X includes A or B. This would require a callback from
+  the clustering code to perform that graphical merge. 3rd-party
+  tools are incpable of such callbacks.
 
-
-this agglomeration by converting
-repeated common observations into vectors, applying similarity
-measures to those vectors, and then clustering them together using
-more-or-less traditional high-dimensional clustering techniques.
-
+Vectors
+-------
 There are two key differences between the vectors being formed here,
 and the vectors that are commonplace in neural-net learning systems.
 First is that the vectors here are extremely high-dimensional and
 sparse. Second is that vector similarity is NOT judged by cosine angles,
-but by information-theoretic measures. (In short: these vectors do not
-live in some Euclidean space that has rotational symmetry; using cosines
-is silly in this case.)
+but by information-theoretic measures.
+
+A short tirade: the neural-net people are probably making a mistake by
+using cosine angles. The cosine is great when a vector lives in a
+Euclidean space, because Eucliden spaces have rotational symmetry.
+But there is no reason to expect neural-net vectors to live in Euclidean
+space, and it is rather silly to force a rotational symmetry onto a
+problem that has none. The problem here is the word "vector".
+
+In conventiional mathematics, a "vector" is a collection of (number,
+basis-element) pairs, and exists "naturally" in Euclidean space. But,
+for neural nets, and for the current code base, this collection is
+should be interpreted as a (number-between-zero-and-one, basis-element),
+that is, as a frequency or probability: one should write P(A) as
+the number (probability) at basis element A (event A). The "vectors"
+are actually points in a simplex; and have the structure of a
+sigma-algebra. Whenever a vector has the structure of a sigma algebra,
+it should be interpreted as a probability, and the similarity of two
+vectors is then given by (take your pick) the conditional probability,
+the Kullbak-Leibler divergence, the conditional or mutual entropy,
+the mutual information, etc. It is *NOT* given by the dot-product or
+the cosine angle! Note, BTW, that the mutual information does include
+a dot-product inside of it; it just has different normalization factors
+that break Euclidean rotational symmetry, and replace it by maximum
+entropy principles.
+
+
 
 Pair-Vectors
 ------------
@@ -219,7 +256,7 @@ row/column labels.
 Building vectors from observation pairs is OK, but one can do better.
 Quotidian approaches include using N-grams or skip-grams. These are also
 OK, but they lack structure, and do not indicate how structure can be
-discovered. The approach taken here is to replace the n-gram/skip-gram 
+discovered. The approach taken here is to replace the n-gram/skip-gram
 by a graph component that captures the strength of the connections
 between the items in the n-gram/skip-gram. This graph component is
 obtained by maximum spanning-tree parsing: discerning the structure
