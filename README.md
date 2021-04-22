@@ -1,8 +1,11 @@
 Learning
 ========
 The "big ideas" describe how this project thinks about the world.
+The "medium ideas" describe the basic algorithm being used.
 The "small ideas" describe what has been implemented and is doable
-(has been done) with the current technology and code base.
+(has been done) with the current technology and code base. Current focus
+is on language; we're loooking for collaborators on image recognition
+and/or movement classification.
 
 The Big Idea - Knowledge
 ------------------------
@@ -426,6 +429,16 @@ however: this is a risky endevour: it seems like it should work, but
 there is no guarantee.  Competing with conventional neural-net
 technology is hard.
 
+A different problem that this framework should be able to tackle is the
+understanding coordinated motion. Consider, for example, the movement of
+football players on a field: based on thier movements, one can predict
+what kind of play might be made. Similarly, the movements of a ballerina
+- the hand, elbow, hip, knee movements are also correlated and can be
+classified into "dance moves". This problem is unlike image recogintion,
+because one is given the positions of the players on the field, or the
+positions of the dancers limbs, rather than being given a 2D pixellated
+image.  Despite these differences, the overall algorithm "should still
+work" on this data. (It seems like it should work! But what do we know?)
 
 Processing Overview
 -------------------
