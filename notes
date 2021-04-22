@@ -3385,6 +3385,17 @@ run-common/marginals-mst-shape.scm:
 
 gram-optim.scm
 
+--------------------------------
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+
+(define wsv (add-shape-vec-api psa))
+(define wss (add-pair-stars wsv))
+
+(define cac (direct-sum psa wss))
+(define csc (add-pair-stars cac))
+(csc 'fetch-pairs)
+(define gsc (add-cluster-gram csc))
 --------------------------
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
