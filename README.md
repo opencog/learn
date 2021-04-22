@@ -406,6 +406,27 @@ of convergence was a challenge, since measuring the accuracy of the
 results was impossible. We could "eyeball" the accuracy and it "looked
 OK". But "eyeballing it" is not very scientific.
 
+Image recognition
+-----------------
+It seems like the above concepts (from the "medium idea" section) should
+also work "just fine" for images (pixels in images). That's because a
+2D image is "just like" a 1-D stream of words, in that there are obvious
+neighbors, and nearby pixels are correlated. The pixel-pair-MI is a
+stand-in for an edge detector; the minimum-spanning-tree just picks out
+all of the nearby, inter-related image-parts (areas of the image that
+frequently co-occur), and the grammar provides the part-whole hierarchy
+for the image. Thus, it "seems like it should work".
+
+The existing code would choke and be unbearably slow; thus, lots of
+brand-new coded is needed to handle pixels. Interested collaborators
+need to raise thier hands!  This task is suitable for programmers/coders
+familiar with image processing techniques; the more abstract parts of
+the theory should not interfere with the more mundane tasks.  Note,
+however: this is a risky endevour: it seems like it should work, but
+there is no guarantee.  Competing with conventional neural-net
+technology is hard.
+
+
 Processing Overview
 -------------------
 See the [README-Natural](README-Natural.md) file for a description of
