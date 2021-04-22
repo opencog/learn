@@ -151,10 +151,6 @@
 			(r-basis '())
 			(l-size 0)
 			(r-size 0)
-
-			; Temporary atomspace
-			(mtx (make-mutex))
-			(aspace (cog-new-atomspace (cog-atomspace)))
 		)
 
 		(define star-wild (Variable "$connector-word"))
