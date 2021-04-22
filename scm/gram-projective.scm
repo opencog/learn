@@ -254,6 +254,18 @@
 
 ; ---------------------------------------------------------------------
 
+(define (merge-section LLOBJ ACC PAIR FRAC NOISE MRG-CON)
+"
+prototype
+"
+	(define (stuff)
+		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+
+	(if MRG-CON (stuff) (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+)
+
+; ---------------------------------------------------------------------
+
 (define (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
@@ -343,7 +355,7 @@
 
 			(define (do-acc CNT PR WEI)
 				(set! CNT (+ CNT
-						(accumulate-count LLOBJ mrg PR WEI NOISE))))
+						(merge-section LLOBJ mrg PR WEI NOISE))))
 
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
@@ -448,7 +460,7 @@
 			(define (do-acc PRC WEI)
 				(monitor-rate #f)
 				(set! accum-cnt (+ accum-cnt
-						(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
+						(merge-section LLOBJ PRC PAIR-A WEI NOISE))))
 
 			; There's nothing to do if A is empty.
 			(when (not (null? PAIR-A))
