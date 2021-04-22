@@ -135,7 +135,17 @@
 
   In addition to the usual methods, this also provides:
   'get-section CROSS  -- Create and return the section that corresponds
-       to the cross-section CROSS.
+       to the CrossSection CROSS.
+
+  'get-cross-sections SECT -- Return all of the CrossSections that
+       cover the Section SECT. This returns only those cross-sections
+       that are already in the AtomSpace; it does not create them.
+
+  'explode-sections -- create all possible CrossSections that correspond
+       to existing Sections (on LLOBJ).  The count on each cross-section
+       will the set to the count on the section. (This is the correct
+       way to handle counts, if one wants clustering to commute with
+       the creation of sections.)
 "
 	(let ((l-basis '())
 			(r-basis '())
