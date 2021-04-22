@@ -248,6 +248,56 @@
 		)
 
 		; -------------------------------------------------------
+		; Return all of the cross-sections (word-shape pairs) that
+		; correspond to a section. This explodes a section into all
+		; of the word-shape pairs that cover it (in the sense of a
+		; "covering space"). Basically, given a Section, it walks
+		; over the ConnectorSeq inside of it, replaces each word
+		; with a variable (to define the shape) and then gets a pair
+		; consisting of that word, and that shape.
+		;
+		; This only returns those cross-sections that are already
+		; in the AtomSpace; it does NOT create them!
+		;
+		; Conceptually, the shapes (left-stars) are of the form:
+		; (Section (Word "foo") (ConnectorSeq
+		;     (Connector (Word "bar") (ConnectorDir "-"))
+		;     (Connector (Variable $X) (ConnectorDir "-))))
+		; where (Variable $X) is the wildcard.  However, we want to
+		; avoid using both ConnectorSeq and Section directly, because
+		; these pollute the space of data. So, the above gets encoded
+		; as
+		; (Shape (Word "foo")
+		;     (Connector (Word "bar") (ConnectorDir "-"))
+		;     (Connector (Variable $X) (ConnectorDir "-)))
+		; with the left-word "foo" heading up the list.
+		;
+		(define (get-cross-sections SEC)
+			; The root-point of the seed
+			(define point (gar SEC))
+			; The list of connectors
+			(define cncts (cog-outgoing-set (gdr SEC)))
+			(define num-cncts (length cncts))
+
+			; Place the wild-card into the N'th location of the section.
+			(define (insert-wild N)
+				(define front (take cncts N))
+				(define back (drop cncts N))
+				(define ctr (car back)) ; the connector being exploded
+				(define wrd (gar ctr))  ; the word being exploded
+				(define dir (gdr ctr))  ; the direction being exploded
+				(define wild (Connector star-wild dir))
+				(define shape
+					(cog-link 'Shape point front wild (cdr back)))
+				(if (nil? shape) #f
+					(let ((cross (cog-link 'CrossSection wrd shape)))
+						(if (nil? cross) #f cross))))
+
+			; Return all the cross-sections for this section.
+			(filter-map insert-wild (iota num-cncts))
+		)
+
+		; -------------------------------------------------------
 		; Create all of the word-shape pairs that correspond to a
 		; section. This explodes a section into all of the word-shape
 		; pairs that cover it (in the sense of a "covering space").
@@ -271,23 +321,10 @@
 		; viz if the pairs were previously stored, and now have been
 		; fetched with 'fetch-pairs above.
 		;
-		; Conceptually, the shapes (left-stars) are of the form:
-		; (Section (Word "foo") (ConnectorSeq
-		;     (Connector (Word "bar") (ConnectorDir "-"))
-		;     (Connector (Variable $X) (ConnectorDir "-))))
-		; where (Variable $X) is the wildcard.  However, we want to
-		; avoid using both ConnectorSeq and Section directly, because
-		; these pollute the space of data. So, the above gets encoded
-		; as
-		; (Shape (Word "foo")
-		;     (Connector (Word "bar") (ConnectorDir "-"))
-		;     (Connector (Variable $X) (ConnectorDir "-)))
-		; with the left-word "foo" heading up the list.
-		; This can be easily dis-assembled to run actual queries against
-		; the atomspace.
 		(define (explode-sections)
 
-			; Walk over a section, and insert a wild-card.
+			; Walk over a section, and create the matching cross-sections.
+			; Copy the count from the section to each of the cross-secions.
 			(define (explode-section SEC)
 				; The root-point of the seed
 				(define point (gar SEC))
@@ -301,11 +338,6 @@
 				(define weight (cog-tv SEC))
 
 				; Place the wild-card into the N'th location of the section.
-				; Of course, this creates the section, if it does not yet
-				; exist. Well, we don't want to create actual sections; that
-				; would screw up other code that expects sections to not
-				; have wildcards in them. So we are creating ShapeLinks
-				; instead.
 				(define (insert-wild N)
 					(define front (take cncts N))
 					(define back (drop cncts N))
@@ -317,8 +349,7 @@
 						(Shape point front wild (cdr back))
 						weight))
 
-				; Create all the wild-cards for this section.
-				; (map insert-wild (iota num-cncts))
+				; Create all the cross-sections for this section.
 				(for-each insert-wild (iota num-cncts))
 			)
 
