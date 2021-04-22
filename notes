@@ -3387,7 +3387,7 @@ gram-optim.scm
 
 --------------------------
 (define pca (make-pseudo-cset-api))
-(define csc (add-covering-sections pca)
+(define csc (add-covering-sections pca))
 
 (csc 'fetch-pairs)
 (csc 'explode-sections)

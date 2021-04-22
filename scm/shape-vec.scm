@@ -573,6 +573,7 @@ around for a while.
 			((id)                 "cover-section")
 
 			; pass-through
+			((fetch-pairs)        (shape-obj 'fetch-sections))
 			((explode-sections)   (shape-obj 'explode-sections))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
