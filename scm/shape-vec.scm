@@ -552,6 +552,35 @@ around for a while.
 ))
 
 ; ---------------------------------------------------------------------
+;
+(define-public (add-covering-sections LLOBJ)
+"
+  prototype
+"
+	(define stars-obj (add-pair-stars LLOBJ))
+	(define shape-obj (add-shape-vec-api stars-obj))
+	(define shape-stars (add-pair-stars shape-obj))
+
+	; The direct sum create a flatttened vector that contains both
+	; Sections and Cross-sections.
+	(define cover-obj (direct-sum stars-obj shape-stars))
+	(define cover-stars (add-pair-stars cover-obj))
+
+	; Methods on the object
+	(lambda (message . args)
+		(apply (case message
+			((name)       (lambda () "Covering Sections for Words"))
+			((id)         (lambda () "cover-section"))
+
+			; pass-through
+			((explode-sections)   (shape-obj 'explode-sections)
+			((get-section)        (apply shape-obj (cons message args)))
+			((get-cross-sections) (apply shape-obj (cons message args)))
+
+			(else             (apply cover-stars (cons message args))))))
+)
+
+; ---------------------------------------------------------------------
 ; Example usage:
 ;
 ; (define cva (add-shape-vec-api (make-pseudo-cset-api)))

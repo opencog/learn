@@ -3387,14 +3387,10 @@ gram-optim.scm
 
 --------------------------
 (define pca (make-pseudo-cset-api))
-(define psa (add-pair-stars pca))
+(define csc (add-covering-sections pca)
 
-(define wsv (add-shape-vec-api psa))
-(define wss (add-pair-stars wsv))
-
-(define cac (direct-sum psa wss))
-(define csc (add-pair-stars cac))
 (csc 'fetch-pairs)
+(csc 'explode-sections)
 
 (define gsc (add-cluster-gram csc))
 
@@ -3406,6 +3402,9 @@ gram-optim.scm
 
 cset-merge.scm
 shape-vec.scm
+
+
+
 
 
 link-class.scm ???
