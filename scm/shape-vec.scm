@@ -568,16 +568,16 @@ around for a while.
 
 	; Methods on the object
 	(lambda (message . args)
-		(apply (case message
-			((name)       (lambda () "Covering Sections for Words"))
-			((id)         (lambda () "cover-section"))
+		(case message
+			((name)               "Covering Sections for Words")
+			((id)                 "cover-section")
 
 			; pass-through
-			((explode-sections)   (shape-obj 'explode-sections)
+			((explode-sections)   (shape-obj 'explode-sections))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
 
-			(else             (apply cover-stars (cons message args)))))))
+			(else             (apply cover-stars (cons message args)))))
 )
 
 ; ---------------------------------------------------------------------
