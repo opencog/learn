@@ -3400,13 +3400,20 @@ gram-optim.scm
 
 (gram-classify-greedy-discrim gsc 0.25 4)
 
+-----
+(accumulate-count LLOBJ ACC PAIR FRAC NOISE)
+'get-section SHAPE return the matching section
 
+cset-merge.scm
+shape-vec.scm
 
 
 link-class.scm ???
 ====================================================
 
 FIXED:
+* After merging, and then using fetched-pairs on sections,
+  some/all merged shapes (that have been deleted) get recreated! FIXED
 * Write unit test for the recent caching fix in the pattern matcher,
   its doable... (fix circa 26 march 2021) #2803 Done in #2812
 * During merging, long class names are printed, is that correct?
@@ -3428,8 +3435,6 @@ FIXED:
 
 
 TODO/BUGS:
-* After merging, and then using fetched-pairs on sections,
-  some/all merged shapes (that have been deleted) get recreated!
 * Implement connector merging.
 * Set up direct-sum/shape clustering run scripts. (partly done)
 * print-matrix-summary-report after MM^T shows nothing. Why?

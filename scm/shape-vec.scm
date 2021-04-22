@@ -127,11 +127,15 @@
 ;
 (define-public (add-shape-vec-api LLOBJ)
 "
-  add-shape-vec-api -- Provide API for CrossSections obtained from
-  Sections. Assumes that LLOBJ provides an API that gives access to
-  Sections.
+  add-shape-vec-api -- Provide API for CrossSections (word-shape pairs
+  that correspond to Sections).  Assumes that LLOBJ provides an API
+  that gives access to Sections.
 
   A more detailed description is at the top of this file.
+
+  In addition to the usual methods, this also provides:
+  'get-section CROSS  -- Create and return the section that corresponds
+       to the cross-section CROSS.
 "
 	(let ((l-basis '())
 			(r-basis '())
@@ -488,16 +492,8 @@ around for a while.
 				(- (current-time) start-time))
 			(set! start-time (current-time))
 			(load-atoms-of-type 'CrossSection)
-			(format #t "Elapsed time to load word-shape pairs: ~A seconds\n"
+			(format #t "Elapsed time to load cross-sections: ~A seconds\n"
 				(- (current-time) start-time))
-
-			; We need to also fetch the shapes. There are two things
-			; we could do here: fetch them from RAM, or just re-create
-			; them. For now, just re-creating them seems to be suficient.
-			; This does lose any kinds of distinct data that may have been
-			; stored on the sections. It also clobbers the counts, and
-			; fails to restore frequencies... is this OK? I'm confused.
-			(explode-sections)
 		)
 
 		;-------------------------------------------
@@ -535,9 +531,10 @@ around for a while.
 				((wild-wild)        get-wild-wild)
 				((fetch-pairs)      fetch-sections)
 
-				; Custom call. These need to be explicitly made.
+				; Custom calls.
 				((explode-sections) explode-sections)
 				((get-section)      get-section)
+				((get-cross-sections) get-cross-sections)
 
 				((provides)         provides)
 				((clobber)          clobber)
@@ -551,7 +548,7 @@ around for a while.
 ; ---------------------------------------------------------------------
 ; Example usage:
 ;
-; (define cva (add-shape-vec-api (make-pseudo-cset-api)e))
+; (define cva (add-shape-vec-api (make-pseudo-cset-api)))
 ; (cva 'fetch-pairs)
 ; (define cvs (add-pair-stars cva))
 ; (cvs 'left-basis-size)
