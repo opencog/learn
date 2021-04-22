@@ -577,7 +577,7 @@ around for a while.
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
 
-			(else             (apply cover-stars (cons message args))))))
+			(else             (apply cover-stars (cons message args)))))))
 )
 
 ; ---------------------------------------------------------------------
