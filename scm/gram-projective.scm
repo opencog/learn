@@ -264,15 +264,21 @@ unfinished prototype
   (as otherwise, there is not practical way of finding the connectors.)
 "
 
+	; If given a section, then explode it into cross sections,
+	; and merge those. The shapes on the cross-sections should be
+	; identical.
 	(define (do-merge-section)
-		(define xacc-list (LLOBJ 'get-cross-sections ACC))
-		(define xsec-list (LLOBJ 'get-cross-sections PAIR))
 		(for-each
 			(lambda (xa xc)
+				(if (not (eq? (gdr xa) (gdr xc)))
+					(throw 'bad-cross-sections 'merge-section
+						"Shapes should be identical!"))
 				(accumulate-count LLOBJ xa xc FRAC NOISE))
 			(LLOBJ 'get-cross-sections ACC)
 			(LLOBJ 'get-cross-sections PAIR)))
 
+	; If given a cross-section, then recreate the section it came
+	; from, and merge that.
 	(define (do-merge-xsect)
 		(define sacc (LLOBJ 'get-section ACC))
 		(define sect (LLOBJ 'get-section PAIR))

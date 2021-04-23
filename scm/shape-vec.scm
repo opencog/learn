@@ -185,15 +185,15 @@
 
 		; Create the Section corresponding to the CrossSection
 		; (the word-shape pair.)  That is, unexplode (implode?)
-		; the CrossSection back into a section, again. This can
+		; the CrossSection back into a Section, again. This can
 		; be thought of as a projection from the entire space of
 		; exploded word-shape pairs to the base-space of Sections.
 		; (A projecting from the covering space to the base space).
 		;
 		; Disassemble the SHAPE, insert WORD into the variable
 		; location, and return the Section. Note that a Section
-		; always exists, because it was impossible to make a shape,
-		; without having had the underlying section that it reduces to.
+		; always exists, because it was impossible to make a Shape,
+		; without having had the underlying Section that it reduces to.
 		; See (explode-sections) below for documentation
 		; about the structure of the shape.
 		(define (get-section XSECT)
