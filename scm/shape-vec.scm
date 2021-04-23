@@ -200,7 +200,7 @@
 			(define SHAPE-PR (cog-outgoing-set XSECT))
 			(define WORD (first SHAPE-PR))
 			(define SHAPE (second SHAPE-PR))
-			(define tmpl (cdr (cog-outgoing-set SHAPE)))
+			(define tmpl (cog-outgoing-set SHAPE))
 			(define point (car tmpl))
 			(define conseq (cdr tmpl))
 			(define (not-var? ITEM) (not (equal? (gar ITEM) star-wild)))

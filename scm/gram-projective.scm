@@ -263,8 +263,19 @@ unfinished prototype
   correcly, the vector *must* contain both Sections and CrossSections
   (as otherwise, there is not practical way of finding the connectors.)
 "
-	(define (do-merge-con)
+	(define (do-merge-section)
+		(LLOBJ 'get-cross-sections PAIR)
 		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+
+	(define (do-merge-xsect)
+		(LLOBJ 'get-section PAIR)
+		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+
+	(define (do-merge-con)
+		(define ptype (cog-type PAIR))
+		(if (eq? ptype 'Section) (do-merge-section))
+		(if (eq? ptype 'CrossSection) (do-merge-xsect))
+	)
 
 	(if MRG-CON (do-merge-con) (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
 )
