@@ -283,12 +283,13 @@ unfinished prototype
 
 	; If merging connectors, then disassmble/reassemble
 	; (explode/unexplode) the sections/cross-sections.
-	(when MRG-CON
-		(case (cog-type PAIR)
-			(('Section) (do-merge-section))
-			(('CrossSection) (do-merge-xsect))
-			(else (throw 'bad-pair-type 'merge-section
-					"Unexpected pair type for merging!"))))
+	(if MRG-CON
+		(let ((ptype (cog-type PAIR)))
+			(cond
+				((eq? ptype 'Section) (do-merge-section))
+				((eq? ptype 'CrossSection) (do-merge-xsect))
+				(else (throw 'bad-pair-type 'merge-section
+						"Unexpected pair type for merging!")))))
 )
 
 ; ---------------------------------------------------------------------
