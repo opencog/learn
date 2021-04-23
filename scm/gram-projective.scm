@@ -256,12 +256,17 @@
 
 (define (merge-section LLOBJ ACC PAIR FRAC NOISE MRG-CON)
 "
-prototype
+unfinished prototype
+
+  If MRG-CON is set to #t, then merges will be done in connectors
+  appearing in Sections and CrossSections. In order for this to work
+  correcly, the vector *must* contain both Sections and CrossSections
+  (as otherwise, there is not practical way of finding the connectors.)
 "
-	(define (stuff)
+	(define (do-merge-con)
 		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
 
-	(if MRG-CON (stuff) (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+	(if MRG-CON (do-merge-con) (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
 )
 
 ; ---------------------------------------------------------------------

@@ -183,11 +183,12 @@
 		(define (get-pair-right SHAPE-PR)
 			(cog-outgoing-atom SHAPE-PR 1))
 
-		; Create the section corresponding to the word-shape pair.
-		; That is, unexplode (implode?) the word-shape pair back
-		; into a section, again. This is a projection from the
-		; entire space of exploded word-shape pairs to the
-		; base-space of sections.
+		; Create the Section corresponding to the CrossSection
+		; (the word-shape pair.)  That is, unexplode (implode?)
+		; the CrossSection back into a section, again. This can
+		; be thought of as a projection from the entire space of
+		; exploded word-shape pairs to the base-space of Sections.
+		; (A projecting from the covering space to the base space).
 		;
 		; Disassemble the SHAPE, insert WORD into the variable
 		; location, and return the Section. Note that a Section
@@ -195,7 +196,8 @@
 		; without having had the underlying section that it reduces to.
 		; See (explode-sections) below for documentation
 		; about the structure of the shape.
-		(define (get-section SHAPE-PR)
+		(define (get-section XSECT)
+			(define SHAPE-PR (cog-outgoing-set XSECT))
 			(define WORD (first SHAPE-PR))
 			(define SHAPE (second SHAPE-PR))
 			(define tmpl (cdr (cog-outgoing-set SHAPE)))
