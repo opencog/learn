@@ -196,8 +196,8 @@
 		; See (explode-sections) below for documentation
 		; about the structure of the shape.
 		(define (get-section SHAPE-PR)
-			(define WORD (second SHAPE-PR))
-			(define SHAPE (third SHAPE-PR))
+			(define WORD (first SHAPE-PR))
+			(define SHAPE (second SHAPE-PR))
 			(define tmpl (cdr (cog-outgoing-set SHAPE)))
 			(define point (car tmpl))
 			(define conseq (cdr tmpl))
