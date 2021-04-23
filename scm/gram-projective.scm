@@ -263,21 +263,32 @@ unfinished prototype
   correcly, the vector *must* contain both Sections and CrossSections
   (as otherwise, there is not practical way of finding the connectors.)
 "
+
 	(define (do-merge-section)
-		(LLOBJ 'get-cross-sections PAIR)
-		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+		(define xacc-list (LLOBJ 'get-cross-sections ACC))
+		(define xsec-list (LLOBJ 'get-cross-sections PAIR))
+		(for-each
+			(lambda (xa xc)
+				(accumulate-count LLOBJ xa xc FRAC NOISE))
+			(LLOBJ 'get-cross-sections ACC)
+			(LLOBJ 'get-cross-sections PAIR)))
 
 	(define (do-merge-xsect)
-		(LLOBJ 'get-section PAIR)
-		(accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+		(define sacc (LLOBJ 'get-section ACC))
+		(define sect (LLOBJ 'get-section PAIR))
+		(accumulate-count LLOBJ sacc sect FRAC NOISE))
 
-	(define (do-merge-con)
-		(define ptype (cog-type PAIR))
-		(if (eq? ptype 'Section) (do-merge-section))
-		(if (eq? ptype 'CrossSection) (do-merge-xsect))
-	)
+	; Accumulate counts directly on the pair.
+	(accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 
-	(if MRG-CON (do-merge-con) (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+	; If merging connectors, then disassmble/reassemble
+	; (explode/unexplode) the sections/cross-sections.
+	(when MRG-CON
+		(case (cog-type PAIR)
+			(('Section) (do-merge-section))
+			(('CrossSection) (do-merge-xsect))
+			(else (throw 'bad-pair-type 'merge-section
+					"Unexpected pair type for merging!"))))
 )
 
 ; ---------------------------------------------------------------------
