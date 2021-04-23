@@ -155,8 +155,8 @@
 
 		(define star-wild (Variable "$connector-word"))
 
-		(define any-left (AnyNode "shape word"))
-		(define any-right (AnyNode "shape section"))
+		(define any-left (AnyNode "cross word"))
+		(define any-right (AnyNode "cross shape"))
 
 		; Well, left-type can also be a WordClassNode, but we lie
 		; about that, here.
@@ -486,17 +486,13 @@ around for a while.
 ========================  XXX THE CODE ABOVE IS DEAD CODE
 !#
 		;-------------------------------------------
-		; Fetch (from the database) all sections,
-		; as well as all the marginals.
+		; Fetch (from the database) the cross-sections (only),
+		; as well as all the marginals for the cross-sections.
 		(define (fetch-sections)
 			(define start-time (current-time))
 			; marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
-			(LLOBJ 'fetch-pairs)
-			(format #t "Elapsed time to load word sections: ~A seconds\n"
-				(- (current-time) start-time))
-			(set! start-time (current-time))
 			(load-atoms-of-type 'CrossSection)
 			(format #t "Elapsed time to load cross-sections: ~A seconds\n"
 				(- (current-time) start-time))
@@ -573,7 +569,7 @@ around for a while.
 			((id)                 "cover-section")
 
 			; pass-through
-			((fetch-pairs)        (shape-obj 'fetch-pairs))
+			((fetch-pairs)        (cover-obj 'fetch-pairs))
 			((explode-sections)   (shape-obj 'explode-sections))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))

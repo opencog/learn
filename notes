@@ -3407,6 +3407,25 @@ gram-optim.scm
 
 (gram-classify-greedy-discrim gsc 0.25 4)
 
+(define wrd-lst (cog-get-atoms 'WordNode))
+(define w (car wrd-lst))
+((add-support-api csc) 'right-count w)
+
+ (cover-stars 'right-wildcard (WordNode "a"))
+
+Has two different answers, and it depends ... FIXED bug
+
+Does clobber clobber the direct suum contents? Yes it does
+ failed to fetch incoming set correctly for the wild cards. How?
+
+(define wc (EvaluationLink
+  (PredicateNode "*-Direct Sum Wild (cset⊕cross-section)")
+  (WordNode "a")
+  (AnyNode "right-wild-direct-sum")))
+(cog-keys wc)
+(fetch-incoming-set (PredicateNode "*-Direct Sum Wild (cset⊕cross-section)"))
+
+
 -----
 (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 'get-section SHAPE return the matching section
