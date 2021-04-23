@@ -15,17 +15,13 @@
 
 ; Init the statistics objects.
 (define pca (make-pseudo-cset-api))
-(define psa (add-pair-stars pca))
-
-(define wsv (add-shape-vec-api pca))
-(define wss (add-pair-stars wsv))
-
-(define cac (direct-sum psa wss))
-(define csc (add-pair-stars cac))
+(define csc (add-covering-sections pca))
 
 ; Load up the word-pairs -- this can take over half an hour!
-(display "Fetch all shapes. This may take well over half-an-hour!\n")
+(display "Fetch all sections. This may take a long while!\n")
 (csc 'fetch-pairs)
+(display "Create cross-sections. This may take a long while!\n")
+(csc 'explode-sections)
 
 ; Compute the matrix-transpose marginals. As a side-effect, this will
 ; also compute support marginals and the central sums.
