@@ -18,7 +18,6 @@
 (include-from-path "opencog/nlp/learn/summary.scm")
 (include-from-path "opencog/nlp/learn/vectors.scm")
 (include-from-path "opencog/nlp/learn/gram-classification.scm")
-(include-from-path "opencog/nlp/learn/cset-merge.scm")
 (include-from-path "opencog/nlp/learn/gram-projective.scm")
 (include-from-path "opencog/nlp/learn/gram-optim.scm")
 (include-from-path "opencog/nlp/learn/gram-agglo.scm")

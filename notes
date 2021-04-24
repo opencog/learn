@@ -3449,14 +3449,46 @@ it has Norm Kye and MMT key
 (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 'get-section SHAPE return the matching section
 
-cset-merge.scm
-shape-vec.scm
 
 bug: if stopped and restarted, merge-into-cluster fails to give cluster
+FIXED
 
+(cog-report-counts)
+$3 = ((PredicateNode . 25) (ListLink . 75701) (MemberLink . 12) (AnyNode . 8) (Connector . 28) (ConnectorDir . 2) (ConnectorSeq . 522935) (Section . 251631) (ShapeLink . 511484) (CrossSection . 865232) (VariableNode . 1) (EvaluationLink . 16) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 12) (WordClassNode . 2))
 
+So, why aren't tehy all deleted?
+iWhy are tere more sections than we started with?
 
+(define sex (cog-get-atoms 'Section))
 
+(define (is-zero? cnt) (< cnt 1.0e-10))
+
+(define zer (filter (lambda (s) (is-zero? (cog-count s))) sex))
+(length zer) ; 81182
+where are these from?
+
+(define nz (filter (lambda (s) (not (is-zero? (cog-count s)))) sex))
+
+(length nz) ; 170449
+
+(define nc (filter
+	(lambda (s) (not (eq? 'WordClassNode (cog-type (gar s))))) nz))
+
+(length nc) ; 104033
+
+OK, so its not closing up.... Argh.
+
+(define pca (make-pseudo-cset-api))
+(define csc (add-covering-sections pca))
+(csc 'fetch-pairs)
+
+(define sex (cog-get-atoms 'Section))
+(define (is-zero? cnt) (< cnt 1.0e-10))
+(define zer (filter (lambda (s) (is-zero? (cog-count s))) sex))
+(length zer) ; 0 so old stuff is ok.
+
+cset-merge.scm -- delete this.
+shape-vec.scm
 
 link-class.scm ???
 ====================================================
