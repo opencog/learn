@@ -3434,12 +3434,25 @@ it has Norm Kye and MMT key
 (btc 'mmt-marginals)
 (print-matrix-summary-report csc)
 
+--------------------------
+(define pca (make-pseudo-cset-api))
+(define csc (add-covering-sections pca))
+
+(csc 'fetch-pairs)
+(csc 'explode-sections) ; neede both on load and mmt compute
+
+(define gsc (add-cluster-gram csc))
+
+(gram-classify-greedy-discrim gsc 0.25 4)
+
 -----
 (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 'get-section SHAPE return the matching section
 
 cset-merge.scm
 shape-vec.scm
+
+bug: if stopped and restarted, merge-into-cluster fails to give cluster
 
 
 
