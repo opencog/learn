@@ -235,14 +235,14 @@
 	(define (update-donor-count SECT CNT)
 		(if (is-zero? CNT)
 			(cog-delete! SECT)
-			(begin (set-count! SECT CNT) (store-atom SECT))))
+			(begin (set-count SECT CNT) (store-atom SECT))))
 
 	; If there is nothing to transfer over, do nothing.
 	(if (not (is-zero? taper-cnt))
 		(begin
 
 			; The accumulated count
-			(set-count! ACC (+ acnt taper-cnt))
+			(set-count ACC (+ acnt taper-cnt))
 			(store-atom ACC) ; save to the database.
 
 			; Decrement the equivalent amount from the donor pair.
@@ -285,7 +285,7 @@ unfinished prototype
   If MRG-CON is set to #t, then merges will be done in connectors
   appearing in Sections and CrossSections.
 "
-	(define cls (gar acc))
+	(define cls (gar ACC))
 	(define wrd (gar DONOR))
 
 	; Create a new section, replacing `wrd` by `cls` in all
@@ -295,7 +295,7 @@ unfinished prototype
 		(define conseq (cog-outgoing-set (gdr sec)))
 		(define rew (rewrite-conseq conseq cls wrd))
 		(when rew
-			(set-count! (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count ACC))
+			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count ACC))
 			(cog-delete! ACC)))
 
 	; Same as above, but for cross-sections.
@@ -304,7 +304,7 @@ unfinished prototype
 		(define conseq (cdr allseq))
 		(define rew (rewrite-conseq conseq cls wrd))
 		(when rew
-			(set-count!
+			(set-count
 				(CrossSection cls (ConnectorSeq (cons (car allseq) rew)))
 				(LLOBJ 'get-count ACC))
 			(cog-delete! ACC)))
