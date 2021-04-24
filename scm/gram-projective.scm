@@ -289,25 +289,30 @@ unfinished prototype
 	(define wrd (gar DONOR))
 
 	; Create a new section, replacing `wrd` by `cls` in all
-	; connectors. Transfer over the count.
+	; connectors. Transfer over the count. Delete the old section.
+	; If the ConnectorSeq has no incoming, delete it too.
 	; XXX Should we transfer over other keys, too?
 	(define (do-merge-sectn sec)
-		(define conseq (cog-outgoing-set (gdr sec)))
-		(define rew (rewrite-conseq conseq cls wrd))
+		(define conseq (gdr sec))
+		(define conli (cog-outgoing-set conseq))
+		(define rew (rewrite-conseq conli cls wrd))
 		(when rew
 			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count sec))
-			(cog-delete! sec)))
+			(cog-delete! sec)
+			(cog-delete! conseq)))
 
 	; Same as above, but for cross-sections.
 	(define (do-merge-xsect xst)
-		(define allseq (cog-outgoing-set (gdr xst)))
-		(define conseq (cdr allseq))
-		(define rew (rewrite-conseq conseq cls wrd))
+		(define shape (gdr xst))
+		(define allseq (cog-outgoing-set shape))
+		(define conli (cdr allseq))
+		(define rew (rewrite-conseq conli cls wrd))
 		(when rew
 			(set-count
-				(CrossSection cls (ConnectorSeq (cons (car allseq) rew)))
+				(CrossSection cls (Shape (cons (car allseq) rew)))
 				(LLOBJ 'get-count xst))
-			(cog-delete! xst)))
+			(cog-delete! xst)
+			(cog-delete! shape)))
 
 	; Same as above, dispatching on the type.
 	(define (do-merge-cons ITEM)
