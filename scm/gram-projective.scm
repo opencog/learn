@@ -255,7 +255,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-section LLOBJ ACC PAIR FRAC NOISE MRG-CON)
+(define (merge-section LLOBJ ACC DONOR FRAC NOISE MRG-CON)
 "
 unfinished prototype
 
@@ -276,22 +276,22 @@ unfinished prototype
 						"Shapes should be identical!"))
 				(accumulate-count LLOBJ xa xc FRAC NOISE))
 			(LLOBJ 'get-cross-sections ACC)
-			(LLOBJ 'get-cross-sections PAIR)))
+			(LLOBJ 'get-cross-sections DONOR)))
 
 	; If given a cross-section, then recreate the section it came
 	; from, and merge that.
 	(define (do-merge-xsect)
 		(define sacc (LLOBJ 'get-section ACC))
-		(define sect (LLOBJ 'get-section PAIR))
+		(define sect (LLOBJ 'get-section DONOR))
 		(accumulate-count LLOBJ sacc sect FRAC NOISE))
 
 	; Accumulate counts directly on the pair.
-	(define xfer-cnt (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
+	(define xfer-cnt (accumulate-count LLOBJ ACC DONOR FRAC NOISE))
 
 	; If merging connectors, then disassemble/reassemble
 	; (explode/unexplode) the sections/cross-sections.
 	(if MRG-CON
-		(let ((ptype (cog-type PAIR)))
+		(let ((ptype (cog-type DONOR)))
 			(cond
 				((eq? ptype 'Section) (do-merge-sectn))
 				((eq? ptype 'CrossSection) (do-merge-xsect))
@@ -300,7 +300,7 @@ unfinished prototype
 
 	; If the count on the donor dropped to zero, just delete it.
 	; Cannot do this earlier, as it is still being used above.
-	(if (is-zero? (cdr xfer-cnt)) (cog-delete! PAIR))
+	(if (is-zero? (cdr xfer-cnt)) (cog-delete! DONOR))
 
 	; Return how much was transfered over
 	(car xfer-cnt)
