@@ -309,21 +309,25 @@ unfinished prototype
 				(LLOBJ 'get-count ACC))
 			(cog-delete! ACC)))
 
+	; Same as above, dispatching on the type.
+	(define (do-merge-cons ITEM)
+		(let ((ptype (cog-type ITEM)))
+			(cond
+				((eq? ptype 'Section) (do-merge-sectn ITEM))
+				((eq? ptype 'CrossSection) (do-merge-xsect ITEM))
+				(else (throw 'bad-pair-type 'merge-section
+						"Unexpected pair type for merging!")))))
+
 	; Accumulate counts directly on the pair.
 	(define xfer-cnt (accumulate-count LLOBJ ACC DONOR FRAC NOISE))
 
 	; Merge connectors, if asked to do so.
-	(if MRG-CON
-		(let ((ptype (cog-type ACC)))
-			(cond
-				((eq? ptype 'Section) (do-merge-sectn ACC))
-				((eq? ptype 'CrossSection) (do-merge-xsect ACC))
-				(else (throw 'bad-pair-type 'merge-section
-						"Unexpected pair type for merging!")))))
+	(if MRG-CON (do-merge-cons ACC))
 
-	; If the count on the donor dropped to zero, just delete it.
-	; Cannot do this earlier, as it is still being used above.
-	(if (is-zero? (cdr xfer-cnt)) (cog-delete! DONOR))
+	; If the DONOR still exists (was not deleted), then merge the
+	; connectors there, too. Note that `(cog-atom? DONOR)` is false
+	; if DONOR was deleted.
+	(if (and MRG-CON (cog-atom? DONOR)) (do-merge-cons DONOR))
 
 	; Return how much was transfered over
 	xfer-cnt
