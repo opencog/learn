@@ -295,8 +295,8 @@ unfinished prototype
 		(define conseq (cog-outgoing-set (gdr sec)))
 		(define rew (rewrite-conseq conseq cls wrd))
 		(when rew
-			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count ACC))
-			(cog-delete! ACC)))
+			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count sec))
+			(cog-delete! sec)))
 
 	; Same as above, but for cross-sections.
 	(define (do-merge-xsect xst)
@@ -306,8 +306,8 @@ unfinished prototype
 		(when rew
 			(set-count
 				(CrossSection cls (ConnectorSeq (cons (car allseq) rew)))
-				(LLOBJ 'get-count ACC))
-			(cog-delete! ACC)))
+				(LLOBJ 'get-count xst))
+			(cog-delete! xst)))
 
 	; Same as above, dispatching on the type.
 	(define (do-merge-cons ITEM)
