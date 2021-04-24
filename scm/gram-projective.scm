@@ -255,46 +255,69 @@
 
 ; ---------------------------------------------------------------------
 
+(define (rewrite-conseq CONSEQ CLS WRD)
+"
+  rewrite-conseq CONSEQ CLS WRD - replace WRD by CLS in CONSEQ
+
+  Given a scheme list of connectors, replace all occurances of WRD
+  in any connector by CLS.  The new list is returned. If no changes
+  were made, returns #f.
+"
+
+	; If CON contains WRD, then create a new Connector with CLS in it.
+	(define touch #f)
+	(define newli (map
+		(lambda (CON)
+			(if (eq? (gar CON) WRD)
+				(begin (set! touch #t) (Connector CLS (gdr CON)))
+				CON))
+		CONSEQ))
+
+	; Return the newlist only if a change was made.
+	(if touch newli #f)
+)
+
+; ---------------------------------------------------------------------
+
 (define (merge-section LLOBJ ACC DONOR FRAC NOISE MRG-CON)
 "
 unfinished prototype
-
   If MRG-CON is set to #t, then merges will be done in connectors
-  appearing in Sections and CrossSections. In order for this to work
-  correcly, the vector *must* contain both Sections and CrossSections
-  (as otherwise, there is not practical way of finding the connectors.)
+  appearing in Sections and CrossSections.
 "
+	(define cls (gar acc))
+	(define wrd (gar DONOR))
 
-	; If given a section, then explode it into cross sections,
-	; and merge those. The shapes on the cross-sections should be
-	; identical.
-	(define (do-merge-sectn)
-		(for-each
-			(lambda (xa xc)
-				(if (not (eq? (gdr xa) (gdr xc)))
-					(throw 'bad-cross-sections 'merge-section
-						"Shapes should be identical!"))
-				(accumulate-count LLOBJ xa xc FRAC NOISE))
-			(LLOBJ 'get-cross-sections ACC)
-			(LLOBJ 'get-cross-sections DONOR)))
+	; Create a new section, replacing `wrd` by `cls` in all
+	; connectors. Transfer over the count.
+	; XXX Should we transfer over other keys, too?
+	(define (do-merge-sectn sec)
+		(define conseq (cog-outgoing-set (gdr sec)))
+		(define rew (rewrite-conseq conseq cls wrd))
+		(when rew
+			(set-count! (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count ACC))
+			(cog-delte! ACC)))
 
-	; If given a cross-section, then recreate the section it came
-	; from, and merge that.
-	(define (do-merge-xsect)
-		(define sacc (LLOBJ 'get-section ACC))
-		(define sect (LLOBJ 'get-section DONOR))
-		(accumulate-count LLOBJ sacc sect FRAC NOISE))
+	; Same as above, but for cross-sections.
+	(define (do-merge-xsect xst)
+		(define allseq (cog-outgoing-set (gdr xst)))
+		(define conseq (cdr allseq))
+		(define rew (rewrite-conseq conseq cls wrd))
+		(when rew
+			(set-count!
+				(CrossSection cls (ConnectorSeq (cons (car allseq) rew)))
+				(LLOBJ 'get-count ACC))
+			(cog-delte! ACC)))
 
 	; Accumulate counts directly on the pair.
 	(define xfer-cnt (accumulate-count LLOBJ ACC DONOR FRAC NOISE))
 
-	; If merging connectors, then disassemble/reassemble
-	; (explode/unexplode) the sections/cross-sections.
+	; Merge connectors, if asked to do so.
 	(if MRG-CON
-		(let ((ptype (cog-type DONOR)))
+		(let ((ptype (cog-type ACC)))
 			(cond
-				((eq? ptype 'Section) (do-merge-sectn))
-				((eq? ptype 'CrossSection) (do-merge-xsect))
+				((eq? ptype 'Section) (do-merge-sectn ACC))
+				((eq? ptype 'CrossSection) (do-merge-xsect ACC))
 				(else (throw 'bad-pair-type 'merge-section
 						"Unexpected pair type for merging!")))))
 
