@@ -268,7 +268,7 @@
 	(define touch #f)
 	(define newli (map
 		(lambda (CON)
-			(if (eq? (gar CON) WRD)
+			(if (equal? (gar CON) WRD)
 				(begin (set! touch #t) (Connector CLS (gdr CON)))
 				CON))
 		CONSEQ))
