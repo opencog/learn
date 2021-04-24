@@ -231,18 +231,18 @@
 
 	; Update the count on the donor pair.
 	; If the count is zero or less, delete the donor pair.
-	; Well, not any more; we delete later, if merging conenctors.
+	; (Actually, it should never be less than zero!)
 	(define (update-donor-count SECT CNT)
-		(unless (is-zero? CNT)
-			(set-count SECT CNT)
-			(store-atom SECT)))
+		(if (is-zero? CNT)
+			(cog-delete! SECT)
+			(begin (set-count! SECT CNT) (store-atom SECT))))
 
 	; If there is nothing to transfer over, do nothing.
 	(if (not (is-zero? taper-cnt))
 		(begin
 
 			; The accumulated count
-			(set-count ACC (+ acnt taper-cnt))
+			(set-count! ACC (+ acnt taper-cnt))
 			(store-atom ACC) ; save to the database.
 
 			; Decrement the equivalent amount from the donor pair.
@@ -250,7 +250,7 @@
 		))
 
 	; Return how much was transfered over.
-	(cons taper-cnt (- mcnt taper-cnt))
+	taper-cnt
 )
 
 ; ---------------------------------------------------------------------
@@ -296,7 +296,7 @@ unfinished prototype
 		(define rew (rewrite-conseq conseq cls wrd))
 		(when rew
 			(set-count! (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count ACC))
-			(cog-delte! ACC)))
+			(cog-delete! ACC)))
 
 	; Same as above, but for cross-sections.
 	(define (do-merge-xsect xst)
@@ -307,7 +307,7 @@ unfinished prototype
 			(set-count!
 				(CrossSection cls (ConnectorSeq (cons (car allseq) rew)))
 				(LLOBJ 'get-count ACC))
-			(cog-delte! ACC)))
+			(cog-delete! ACC)))
 
 	; Accumulate counts directly on the pair.
 	(define xfer-cnt (accumulate-count LLOBJ ACC DONOR FRAC NOISE))
@@ -326,7 +326,7 @@ unfinished prototype
 	(if (is-zero? (cdr xfer-cnt)) (cog-delete! DONOR))
 
 	; Return how much was transfered over
-	(car xfer-cnt)
+	xfer-cnt
 )
 
 ; ---------------------------------------------------------------------
