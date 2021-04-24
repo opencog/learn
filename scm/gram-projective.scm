@@ -189,6 +189,9 @@
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
+; Return #t if the count is effectively zero.
+; Use an epsilon for rounding errors.
+(define (is-zero? cnt) (< cnt 1.0e-10))
 
 (define (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 "
@@ -215,9 +218,6 @@
   words. The goal is to merge the two words together into a single
   word-class.
 "
-	; Return #t if the count is effectively zero.
-	; Use an epsilon for rounding errors.
-	(define (is-zero? cnt) (< cnt 1.0e-10))
 
 	; The counts on the accumulator and the pair to merge.
 	(define mcnt (LLOBJ 'get-count PAIR))
@@ -231,10 +231,11 @@
 
 	; Update the count on the donor pair.
 	; If the count is zero or less, delete the donor pair.
+	; Well, not any more; we delete later, if merging conenctors.
 	(define (update-donor-count SECT CNT)
-		(if (is-zero? CNT)
-			(cog-delete! SECT)
-			(begin (set-count SECT CNT) (store-atom SECT))))
+		(unless (is-zero? CNT)
+			(set-count SECT CNT)
+			(store-atom SECT)))
 
 	; If there is nothing to transfer over, do nothing.
 	(if (not (is-zero? taper-cnt))
@@ -249,7 +250,7 @@
 		))
 
 	; Return how much was transfered over.
-	taper-cnt
+	(cons taper-cnt (- mcnt taper-cnt))
 )
 
 ; ---------------------------------------------------------------------
@@ -267,7 +268,7 @@ unfinished prototype
 	; If given a section, then explode it into cross sections,
 	; and merge those. The shapes on the cross-sections should be
 	; identical.
-	(define (do-merge-section)
+	(define (do-merge-sectn)
 		(for-each
 			(lambda (xa xc)
 				(if (not (eq? (gdr xa) (gdr xc)))
@@ -285,17 +286,24 @@ unfinished prototype
 		(accumulate-count LLOBJ sacc sect FRAC NOISE))
 
 	; Accumulate counts directly on the pair.
-	(accumulate-count LLOBJ ACC PAIR FRAC NOISE)
+	(define xfer-cnt (accumulate-count LLOBJ ACC PAIR FRAC NOISE))
 
-	; If merging connectors, then disassmble/reassemble
+	; If merging connectors, then disassemble/reassemble
 	; (explode/unexplode) the sections/cross-sections.
 	(if MRG-CON
 		(let ((ptype (cog-type PAIR)))
 			(cond
-				((eq? ptype 'Section) (do-merge-section))
+				((eq? ptype 'Section) (do-merge-sectn))
 				((eq? ptype 'CrossSection) (do-merge-xsect))
 				(else (throw 'bad-pair-type 'merge-section
 						"Unexpected pair type for merging!")))))
+
+	; If the count on the donor dropped to zero, just delete it.
+	; Cannot do this earlier, as it is still being used above.
+	(if (is-zero? (cdr xfr-cnt)) (cog-delete! PAIR))
+
+	; Return how much was transfered over
+	(car xfer-cnt)
 )
 
 ; ---------------------------------------------------------------------
