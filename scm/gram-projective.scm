@@ -300,7 +300,7 @@ unfinished prototype
 
 	; If the count on the donor dropped to zero, just delete it.
 	; Cannot do this earlier, as it is still being used above.
-	(if (is-zero? (cdr xfr-cnt)) (cog-delete! PAIR))
+	(if (is-zero? (cdr xfer-cnt)) (cog-delete! PAIR))
 
 	; Return how much was transfered over
 	(car xfer-cnt)
