@@ -3494,6 +3494,61 @@ shape-vec.scm
 Also delete ShapeLinks w/o any incoming's
 Bingo! Dist=0.6614 for class "e j" -- "d"
 
+Crap.
+is-similar?
+(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
+(is-similar? get-cosine CUTOFF WORD-A WORD-B))
+
+(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
+(is-similar? get-mi CUTOFF WORD-A WORD-B))
+
+cosine.scm
+compute-right-cosine
+(compute-right-product ROW-A ROW-B)
+(prod-obj 'right-count (list ROW-A ROW-B)
+ (define prod-obj  (add-support-compute
+            (add-tuple-math star-obj * GET-CNT)
+(define (sum-right-count ITEM)
+         (sum-count (star-obj 'right-stars ITEM)))
+
+fold-api.scm seems OK ...
+
+make-merger ...
+'merge-function called in gram-agglo
+provides word-or-class as argument to 'merge-function
+uses that word-or-class in merge-predicate
+uses word-or-class in tuple object
+built on pseudo-cset...
+
+merge-predicate defined by make-merger
+
+I don't get it ... how do we fake out pseudo-cset to work with
+WordClass's ??? Does it correctly respond to stars and duals
+requests??? Yes, because add-pair-stars does a pattern match
+and it works..
+
+changes to make-gram-class-api:
+-- need to modify right-stars to return either-or for item.
+-- also left-duals...
+
+No ... that's not it...
+... need tuple to align correctly ...
+
+'right-stars is right-star-union
+right-star-union takes tuple of rows...
+calls get-right-union to get 'right-duals for each row in the tuple.
+    .. this is just a big union set of all columns.
+calls (get-right-tuple righty ROW-TUPLE)
+calls 'get-pair for row-col pairs from  get-right-union
+
+net: returns aligned tuples... cause 'get-pair aligns them
+
+for merged connectors, 'get-pair must ... ugh.
+That won't work either.
+go back to earlier design, and do a post-merge sweep
+with multi-crosses producing one unified section.
+
+
 
 
 link-class.scm ???
