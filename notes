@@ -3566,6 +3566,14 @@ Given acc x-section:
 * does it have more than one...?
 * case no: just create the matching section.
 
+--------------------------
+(define pca (make-pseudo-cset-api))
+(define csc (add-covering-sections pca))
+
+(csc 'fetch-pairs)
+(csc 'explode-sections)
+(define gsc (add-cluster-gram csc))
+(gram-classify-greedy-discrim gsc 0.25 4)
 
 
 link-class.scm ???

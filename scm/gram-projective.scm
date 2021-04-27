@@ -285,8 +285,28 @@ unfinished prototype
 
   Get the row for CLS, walk the row, merge connectors on it.
 "
+
+	; The entire vector associated with the cluster CLS
+	(define all-stars (LLOBJ 'right-stars CLS))
+
+	; Create a predicate to test if a CrossSection is in the CLS cluster.
+	; Usage: (is-merged-xsect? some-sect)
+	(define is-merged-xsect?
+		(make-aset-predicate
+			(filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM)))
+				all-stars)))
+
+	; Does the word appear in the connector CON?
 	(define (word-in-connector? CON)
 		(equal? (gar CON) WRD))
+
+	(define (check-need SEC)
+		(for-each
+			(lambda (XSECT)
+				(when (is-merged-xsect? XSECT)
+					(format #t "duuude can merge ~A\n" XSECT)
+				))
+			(LLOBJ 'get-cross-sections SEC)))
 
 	(define (do-merge-sectn sec)
 		(define conseq (gdr sec))
@@ -294,9 +314,9 @@ unfinished prototype
 		(define need-merge (any word-in-connector? conli))
 		(when need-merge
 			(format #t "duude this needs merge: ~A" sec)
+			(check-need sec)
 			(throw 'need-merge 'merge-connectors "working on it"))
 #!
-(LLOBJ 'get-cross-sections ACC)
 		(define rew (rewrite-conseq conli cls wrd))
 		(when rew
 			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count sec))
@@ -334,7 +354,7 @@ unfinished prototype
 
 	; Loop over all sections and cross-sections associated with
 	; the newly created/expanded cluster.
-	(for-each do-merge-cons (LLOBJ 'right-stars CLS))
+	(for-each do-merge-cons all-stars)
 )
 
 ; ---------------------------------------------------------------------
