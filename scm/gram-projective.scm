@@ -261,6 +261,11 @@ unfinished prototype
   Get the row for CLS, walk the row, merge connectors on it.
 "
 
+(define nsec 0)
+(define msec 0)
+(format #t "\n")
+(format #t "=============================\n")
+(format #t "merge ~A into ~A\n" WRD CLS)
 	; The entire vector associated with the cluster CLS
 	(define all-stars (LLOBJ 'right-stars CLS))
 
@@ -280,13 +285,19 @@ unfinished prototype
 		; cross-sections.
 		(define donor (cog-link 'Section WRD (gdr SEC)))
 
+		; List of matching cross-sections that were merged.
+		; May be empty.
 		(define mumble
 			(if (nil? donor) donor
 				(filter is-merged-xsect? (LLOBJ 'get-cross-sections donor))))
 
+(set! msec (+ 1 msec))
 		(if (nil? donor)
-			(format #t "duude error, missing section\n")
-			(format #t "duuude match sects=~A out of ~A\n" (length mumble)
+			(format #t "duude no section ~A\n" nsec)
+			(format #t
+				"duuude ~A/~A match sects=~A out of ~A\n----------------------\n\n"
+				msec nsec
+				(length mumble)
 				(length (LLOBJ 'get-cross-sections donor))))
 
 		(for-each
@@ -300,10 +311,11 @@ unfinished prototype
 		(define conseq (gdr sec))
 		(define conli (cog-outgoing-set conseq))
 		(define need-merge (any word-in-connector? conli))
+(set! nsec (+ 1 nsec))
 		(when need-merge
-			(format #t "duude this needs merge: ~A" sec)
-			(if (not (eq? 0
+			(when (not (eq? 0
 				(revise-section sec)))
+				(format #t "duude this needs merge: ~A" sec)
 				(throw 'need-merge 'merge-connectors "working on it")))
 #!
 		(define rew (rewrite-conseq conli cls wrd))
@@ -344,6 +356,8 @@ unfinished prototype
 	; Loop over all sections and cross-sections associated with
 	; the newly created/expanded cluster.
 	(for-each do-merge-cons all-stars)
+
+(format #t "in conculsion handled ~A of ~A\n" msec nsec)
 )
 
 ; ---------------------------------------------------------------------
