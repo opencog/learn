@@ -308,10 +308,10 @@ unfinished prototype
 			(format #t "duuude ~A/~A match sects=~A out of ~A\n"
 				msec nsec
 				(length mumble)
-				(length (LLOBJ 'get-cross-sections donor))))
+				(length (LLOBJ 'get-cross-sections donor)))
 			(format #t "no:yes ~A : ~A\n" nodo yesdo)
 			(format #t "----------------------\n\n")
-)
+))
 
 		(for-each
 			(lambda (XSECT)
