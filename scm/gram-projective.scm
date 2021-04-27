@@ -307,6 +307,7 @@ unfinished prototype
 
 	; Same as above, but for cross-sections.
 	(define (do-merge-xsect xst)
+		#f
 #!
 (define sacc (LLOBJ 'get-section ACC))
 		(define shape (gdr xst))
@@ -330,6 +331,10 @@ unfinished prototype
 				((eq? ptype 'CrossSection) (do-merge-xsect ITEM))
 				(else (throw 'bad-pair-type 'merge-connectors
 						"Unexpected pair type for merging!")))))
+
+	; Loop over all sections and cross-sections associated with
+	; the newly created/expanded cluster.
+	(for-each do-merge-cons (LLOBJ 'right-stars CLS))
 )
 
 ; ---------------------------------------------------------------------
