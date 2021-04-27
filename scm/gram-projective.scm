@@ -300,13 +300,18 @@ unfinished prototype
 	(define (word-in-connector? CON)
 		(equal? (gar CON) WRD))
 
-	(define (check-need SEC)
+	(define (revise-section SEC)
+		(define mumble
+			(filter is-merged-xsect? (LLOBJ 'get-cross-sections SEC)))
+
+		(format #t "duuude match sects=~A out of ~A\n" (length mumble)
+			(length (LLOBJ 'get-cross-sections SEC)))
+
 		(for-each
 			(lambda (XSECT)
-				(when (is-merged-xsect? XSECT)
-					(format #t "duuude can merge ~A\n" XSECT)
-				))
-			(LLOBJ 'get-cross-sections SEC)))
+				(format #t "duuude can merge ~A\n" XSECT)
+				)
+			mumble))
 
 	(define (do-merge-sectn sec)
 		(define conseq (gdr sec))
@@ -314,7 +319,7 @@ unfinished prototype
 		(define need-merge (any word-in-connector? conli))
 		(when need-merge
 			(format #t "duude this needs merge: ~A" sec)
-			(check-need sec)
+			(revise-section sec)
 			(throw 'need-merge 'merge-connectors "working on it"))
 #!
 		(define rew (rewrite-conseq conli cls wrd))
