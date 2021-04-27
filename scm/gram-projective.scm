@@ -298,6 +298,11 @@ unfinished prototype
 	(define (word-in-connector? CON)
 		(equal? (gar CON) WRD))
 
+	; Although the Section SEC may contain WRD in one of it's connectors,
+	; that does NOT mean that WRD should be replace by CLS. That
+	; replacement is to be performed only if the corresponding
+	; CrossSection contributed to CLS. The code below searches for
+	; those CrossSections, and if found, performs the substitution.
 	(define (revise-section SEC)
 		; Create the donating section; we need this so as to find the
 		; cross-sections.
@@ -322,8 +327,39 @@ unfinished prototype
 						conli))
 				mumble))
 
-(if (not (eq? 0 (length mumble)))
-(format #t "locatinos ~A in ~A\n" location-list SEC))
+		; Are there any substitutions to be made? If so, then substitute.
+		(when (not (null? location-list))
+			(let* (
+					; The list of connectors in the Section SEC
+					(conli (cog-outgoing-set (gdr SEC)))
+					(idx 0)
+					(next (car location-list))
+					(rest (cdr location-list))
+
+					; The revised list, after substitution
+					(newli
+						(map
+							(lambda (CON)
+								(if (eq? idx next)
+									(begin
+										(when (not (null? rest))
+											(set! next (car rest))
+											(set! rest (cdr rest)))
+										(Connector CLS (gdr CON)))
+									CON)
+								(set! idx (+ 1 idx)))
+							conli))
+
+					; A copy of the Section SEC with substituted connectors
+					(newsec (Section (gar SEC) (ConnectorSeq newli))))
+
+				; Transfer the counts over to the new Section.
+				(set-count newsec (LLOBJ 'get-count SEC))
+				(set-count SEC 0)
+(format #t "locatinos ~A in ~A\n" location-list SEC)
+(format #t "duude new sect=~A\n" newsec)
+(throw 'need-merge 'merge-connectors "working on it")
+			))
 
 (set! msec (+ 1 msec))
 		(if (nil? donor)
@@ -341,18 +377,14 @@ unfinished prototype
 		;	(format #t "----------------------\n\n")
 ))
 
-		(length mumble))
+		)
 
-	(define (do-merge-sectn sec)
-		(define conseq (gdr sec))
+	(define (do-merge-sectn SEC)
+		(define conseq (gdr SEC))
 		(define conli (cog-outgoing-set conseq))
 		(define need-merge (any word-in-connector? conli))
 (set! nsec (+ 1 nsec))
-		(when need-merge
-			(when (not (eq? 0
-				(revise-section sec)))
-				(format #t "duude this needs merge: ~A" sec)
-				(throw 'need-merge 'merge-connectors "working on it")))
+		(when need-merge (revise-section SEC))
 	)
 
 	; Same as above, but for cross-sections.
