@@ -276,6 +276,9 @@ unfinished prototype
 (length (filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM))) all-stars))
 (length all-stars))
 
+	; Create a list of all CrossSections that donated WRD
+	; to the cluster. These CrossSections corespond to Sections
+	; having WRD in a Connector.
 	(define donor-connector-set
 		(filter-map (lambda (ITEM)
 			(when (eq? 'CrossSection (cog-type ITEM))
@@ -306,28 +309,38 @@ unfinished prototype
 			(if (nil? donor) donor
 				(filter is-merged-xsect? (LLOBJ 'get-cross-sections donor))))
 
+		; A list of all the locations in the Sections ConnectorSeq
+		; that need to be replaced with the merged class.
+		(define location-list
+			(map
+				(lambda (XSECT)
+					; The list of connectors in the shape.
+					(define conli (cdr (cog-outgoing-set (gdr XSECT))))
+					(list-index
+						(lambda (CON)
+							(eq? 'VariableNode (cog-type (gar CON))))
+						conli))
+				mumble))
+
+(if (not (eq? 0 (length mumble)))
+(format #t "locatinos ~A in ~A\n" location-list SEC))
+
 (set! msec (+ 1 msec))
 		(if (nil? donor)
 (begin
 (set! nodo (+ 1 nodo))
-			(format #t "duude no section ~A/~A no:yes ~A : ~A\n" msec nsec nodo yesdo)
-
+		;(format #t "duude no sect ~A/~A no:yes ~A : ~A\n" msec nsec nodo yesdo)
 )
 (begin
 (set! yesdo (+ 1 yesdo))
-			(format #t "duuude ~A/~A match sects=~A out of ~A\n"
-				msec nsec
-				(length mumble)
-				(length (LLOBJ 'get-cross-sections donor)))
-			(format #t "no:yes ~A : ~A\n" nodo yesdo)
-			(format #t "----------------------\n\n")
+		;	(format #t "duuude ~A/~A match sects=~A out of ~A\n"
+		;		msec nsec
+		;		(length mumble)
+		;		(length (LLOBJ 'get-cross-sections donor)))
+		;	(format #t "no:yes ~A : ~A\n" nodo yesdo)
+		;	(format #t "----------------------\n\n")
 ))
 
-		(for-each
-			(lambda (XSECT)
-				(format #t "duuude can merge ~A\n" XSECT)
-				)
-			mumble)
 		(length mumble))
 
 	(define (do-merge-sectn sec)
