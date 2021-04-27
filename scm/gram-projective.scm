@@ -269,11 +269,14 @@ unfinished prototype
 	; The entire vector associated with the cluster CLS
 	(define all-stars (LLOBJ 'right-stars CLS))
 
-	; Create a predicate to test if a CrossSection is in the CLS cluster.
+	; Create a predicate to test if a CrossSection for WRD
+	; was merged into the CLS cluster.
 	; Usage: (is-merged-xsect? some-sect)
 	(define is-merged-xsect?
 		(make-aset-predicate
-			(filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM)))
+			(filter (lambda (ITEM)
+				(and (eq? 'CrossSection (cog-type ITEM))
+					(not (nil? (cog-link 'CrossSection WRD (gdr ITEM))))))
 				all-stars)))
 
 	; Does the word appear in the connector CON?
