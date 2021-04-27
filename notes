@@ -3548,6 +3548,23 @@ That won't work either.
 go back to earlier design, and do a post-merge sweep
 with multi-crosses producing one unified section.
 
+(merge-section LLOBJ ACC DONOR FRAC NOISE MRG-CON)
+(merge-connectors LLOBJ CLS)
+
+(load-atoms-of-type 'Member)
+(define x (csc 'right-stars (WordClass "e j")))
+
+
+Given acc section:
+* does any ctr contain word to merge?
+* if so, blow it up to multiple x-sections
+* for all of the blow-ups that have a matching xsect in the vector
+  perform replacement to make new sect w/ rewrite-conseq uhh
+  delete old sect.
+
+Given acc x-section:
+* does it have more than one...?
+* case no: just create the matching section.
 
 
 

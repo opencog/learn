@@ -279,30 +279,36 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-section LLOBJ ACC DONOR FRAC NOISE MRG-CON)
+(define (merge-connectors LLOBJ CLS WRD)
 "
 unfinished prototype
-  If MRG-CON is set to #t, then merges will be done in connectors
-  appearing in Sections and CrossSections.
-"
-	(define cls (gar ACC))
-	(define wrd (gar DONOR))
 
-	; Create a new section, replacing `wrd` by `cls` in all
-	; connectors. Transfer over the count. Delete the old section.
-	; If the ConnectorSeq has no incoming, delete it too.
-	; XXX Should we transfer over other keys, too?
+  Get the row for CLS, walk the row, merge connectors on it.
+"
+	(define (word-in-connector? CON)
+		(equal? (gar CON) WRD))
+
 	(define (do-merge-sectn sec)
 		(define conseq (gdr sec))
 		(define conli (cog-outgoing-set conseq))
+		(define need-merge (any word-in-connector? conli))
+		(when need-merge
+			(format #t "duude this needs merge: ~A" sec)
+			(throw 'need-merge 'merge-connectors "working on it"))
+#!
+(LLOBJ 'get-cross-sections ACC)
 		(define rew (rewrite-conseq conli cls wrd))
 		(when rew
 			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count sec))
 			(cog-delete! sec)
-			(cog-delete! conseq)))
+			(cog-delete! conseq))
+!#
+	)
 
 	; Same as above, but for cross-sections.
 	(define (do-merge-xsect xst)
+#!
+(define sacc (LLOBJ 'get-section ACC))
 		(define shape (gdr xst))
 		(define allseq (cog-outgoing-set shape))
 		(define conli (cdr allseq))
@@ -312,7 +318,9 @@ unfinished prototype
 				(CrossSection cls (Shape (cons (car allseq) rew)))
 				(LLOBJ 'get-count xst))
 			(cog-delete! xst)
-			(cog-delete! shape)))
+			(cog-delete! shape))
+!#
+	)
 
 	; Same as above, dispatching on the type.
 	(define (do-merge-cons ITEM)
@@ -320,22 +328,8 @@ unfinished prototype
 			(cond
 				((eq? ptype 'Section) (do-merge-sectn ITEM))
 				((eq? ptype 'CrossSection) (do-merge-xsect ITEM))
-				(else (throw 'bad-pair-type 'merge-section
+				(else (throw 'bad-pair-type 'merge-connectors
 						"Unexpected pair type for merging!")))))
-
-	; Accumulate counts directly on the pair.
-	(define xfer-cnt (accumulate-count LLOBJ ACC DONOR FRAC NOISE))
-
-	; Merge connectors, if asked to do so.
-	(if MRG-CON (do-merge-cons ACC))
-
-	; If the DONOR still exists (was not deleted), then merge the
-	; connectors there, too. Note that `(cog-atom? DONOR)` is false
-	; if DONOR was deleted.
-	(if (and MRG-CON (cog-atom? DONOR)) (do-merge-cons DONOR))
-
-	; Return how much was transfered over
-	xfer-cnt
 )
 
 ; ---------------------------------------------------------------------
@@ -429,7 +423,7 @@ unfinished prototype
 
 			(define (do-acc CNT PR WEI)
 				(set! CNT (+ CNT
-						(merge-section LLOBJ mrg PR WEI NOISE MRG-CON))))
+						(accumulate-count LLOBJ mrg PR WEI NOISE))))
 
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
@@ -447,6 +441,11 @@ unfinished prototype
 
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	; Merge connectors, if asked to do so.
+	(when MRG-CON
+		(merge-connectors LLOBJ CLS WA)
+		(merge-connectors LLOBJ CLS WB))
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -534,7 +533,7 @@ unfinished prototype
 			(define (do-acc PRC WEI)
 				(monitor-rate #f)
 				(set! accum-cnt (+ accum-cnt
-						(merge-section LLOBJ PRC PAIR-A WEI NOISE MRG-CON))))
+						(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
 
 			; There's nothing to do if A is empty.
 			(when (not (null? PAIR-A))
@@ -556,6 +555,9 @@ unfinished prototype
 
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	; Merge connectors, if asked to do so.
+	(when MRG-CON (merge-connectors LLOBJ CLS WA))
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
