@@ -233,9 +233,8 @@
 	; If the count is zero or less, delete the donor pair.
 	; (Actually, it should never be less than zero!)
 	(define (update-donor-count SECT CNT)
-		(if (is-zero? CNT)
-			(cog-delete! SECT)
-			(begin (set-count SECT CNT) (store-atom SECT))))
+		(set-count SECT CNT)
+		(unless (is-zero? CNT) (store-atom SECT)))
 
 	; If there is nothing to transfer over, do nothing.
 	(if (not (is-zero? taper-cnt))
@@ -251,30 +250,6 @@
 
 	; Return how much was transfered over.
 	taper-cnt
-)
-
-; ---------------------------------------------------------------------
-
-(define (rewrite-conseq CONSEQ CLS WRD)
-"
-  rewrite-conseq CONSEQ CLS WRD - replace WRD by CLS in CONSEQ
-
-  Given a scheme list of connectors, replace all occurances of WRD
-  in any connector by CLS.  The new list is returned. If no changes
-  were made, returns #f.
-"
-
-	; If CON contains WRD, then create a new Connector with CLS in it.
-	(define touch #f)
-	(define newli (map
-		(lambda (CON)
-			(if (equal? (gar CON) WRD)
-				(begin (set! touch #t) (Connector CLS (gdr CON)))
-				CON))
-		CONSEQ))
-
-	; Return the newlist only if a change was made.
-	(if touch newli #f)
 )
 
 ; ---------------------------------------------------------------------
@@ -309,8 +284,10 @@ unfinished prototype
 			(if (nil? donor) donor
 				(filter is-merged-xsect? (LLOBJ 'get-cross-sections donor))))
 
-		(format #t "duuude match sects=~A out of ~A\n" (length mumble)
-			(length (LLOBJ 'get-cross-sections donor)))
+		(if (nil? donor)
+			(format #t "duude error, missing section\n")
+			(format #t "duuude match sects=~A out of ~A\n" (length mumble)
+				(length (LLOBJ 'get-cross-sections donor))))
 
 		(for-each
 			(lambda (XSECT)
@@ -482,6 +459,17 @@ unfinished prototype
 		(merge-connectors LLOBJ CLS WA)
 		(merge-connectors LLOBJ CLS WB))
 
+	; Cleanup after merging.
+	(for-each
+		(lambda (ITEM)
+			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+		(LLOBJ 'right-stars WA))
+
+	(for-each
+		(lambda (ITEM)
+			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+		(LLOBJ 'right-stars WB))
+
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
@@ -593,6 +581,12 @@ unfinished prototype
 
 	; Merge connectors, if asked to do so.
 	(when MRG-CON (merge-connectors LLOBJ CLS WA))
+
+	; Cleanup after merging.
+	(for-each
+		(lambda (ITEM)
+			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+		(LLOBJ 'right-stars WA))
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

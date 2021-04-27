@@ -3554,6 +3554,16 @@ with multi-crosses producing one unified section.
 (load-atoms-of-type 'Member)
 (define x (csc 'right-stars (WordClass "e j")))
 
+(cog-link 'Section
+  (Word "j")
+  (ConnectorSeq
+    (Connector (Word "d") (ConnectorDir "-"))
+    (Connector (Word "b") (ConnectorDir "-"))
+    (Connector (Word "e" ) (ConnectorDir "-"))
+    (Connector (Word "b" ) (ConnectorDir "-"))
+    (Connector (Word "j" ) (ConnectorDir "-"))
+    (Connector (Word "!" ) (ConnectorDir "+"))))
+
 
 Given acc section:
 * does any ctr contain word to merge?
