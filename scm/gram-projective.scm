@@ -293,7 +293,8 @@ unfinished prototype
 			(lambda (XSECT)
 				(format #t "duuude can merge ~A\n" XSECT)
 				)
-			mumble))
+			mumble)
+		(length mumble))
 
 	(define (do-merge-sectn sec)
 		(define conseq (gdr sec))
@@ -301,8 +302,9 @@ unfinished prototype
 		(define need-merge (any word-in-connector? conli))
 		(when need-merge
 			(format #t "duude this needs merge: ~A" sec)
-			(revise-section sec)
-			(throw 'need-merge 'merge-connectors "working on it"))
+			(if (not (eq? 0
+				(revise-section sec)))
+				(throw 'need-merge 'merge-connectors "working on it")))
 #!
 		(define rew (rewrite-conseq conli cls wrd))
 		(when rew
