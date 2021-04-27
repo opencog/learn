@@ -271,15 +271,25 @@ unfinished prototype
 	; The entire vector associated with the cluster CLS
 	(define all-stars (LLOBJ 'right-stars CLS))
 
+(format #t "there are ~A sections and ~A cross of ~A\n"
+(length (filter (lambda (ITEM) (eq? 'Section (cog-type ITEM))) all-stars))
+(length (filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM))) all-stars))
+(length all-stars))
+
+	(define donor-connector-set
+		(filter-map (lambda (ITEM)
+			(when (eq? 'CrossSection (cog-type ITEM))
+				(let ((donor (cog-link 'CrossSection WRD (gdr ITEM))))
+					(if (nil? donor) #f donor))))
+			all-stars))
+
+(format #t "WRD appears as connector in ~A crosses\n"
+(length donor-connector-set))
+
 	; Create a predicate to test if a CrossSection for WRD
 	; was merged into the CLS cluster.
 	; Usage: (is-merged-xsect? some-sect)
-	(define is-merged-xsect?
-		(make-aset-predicate
-			(filter (lambda (ITEM)
-				(and (eq? 'CrossSection (cog-type ITEM))
-					(not (nil? (cog-link 'CrossSection WRD (gdr ITEM))))))
-				all-stars)))
+	(define is-merged-xsect?  (make-aset-predicate donor-connector-set))
 
 	; Does the word appear in the connector CON?
 	(define (word-in-connector? CON)
@@ -330,13 +340,6 @@ unfinished prototype
 				(revise-section sec)))
 				(format #t "duude this needs merge: ~A" sec)
 				(throw 'need-merge 'merge-connectors "working on it")))
-#!
-		(define rew (rewrite-conseq conli cls wrd))
-		(when rew
-			(set-count (Section cls (ConnectorSeq rew)) (LLOBJ 'get-count sec))
-			(cog-delete! sec)
-			(cog-delete! conseq))
-!#
 	)
 
 	; Same as above, but for cross-sections.
