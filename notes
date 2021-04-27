@@ -3552,7 +3552,7 @@ with multi-crosses producing one unified section.
 (merge-connectors LLOBJ CLS)
 
 (load-atoms-of-type 'Member)
-(define x (csc 'right-stars (WordClass "e j")))
+(define all-stars (csc 'right-stars (WordClass "e j")))
 
 (cog-link 'Section
   (Word "j")

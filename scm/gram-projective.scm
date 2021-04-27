@@ -263,6 +263,8 @@ unfinished prototype
 
 (define nsec 0)
 (define msec 0)
+(define yesdo 0)
+(define nodo 0)
 (format #t "\n")
 (format #t "=============================\n")
 (format #t "merge ~A into ~A\n" WRD CLS)
@@ -296,12 +298,20 @@ unfinished prototype
 
 (set! msec (+ 1 msec))
 		(if (nil? donor)
-			(format #t "duude no section ~A\n" nsec)
-			(format #t
-				"duuude ~A/~A match sects=~A out of ~A\n----------------------\n\n"
+(begin
+(set! nodo (+ 1 nodo))
+			(format #t "duude no section ~A/~A no:yes ~A : ~A\n" msec nsec nodo yesdo)
+
+)
+(begin
+(set! yesdo (+ 1 yesdo))
+			(format #t "duuude ~A/~A match sects=~A out of ~A\n"
 				msec nsec
 				(length mumble)
 				(length (LLOBJ 'get-cross-sections donor))))
+			(format #t "no:yes ~A : ~A\n" nodo yesdo)
+			(format #t "----------------------\n\n")
+)
 
 		(for-each
 			(lambda (XSECT)
@@ -360,7 +370,8 @@ unfinished prototype
 	; the newly created/expanded cluster.
 	(for-each do-merge-cons all-stars)
 
-(format #t "in conculsion handled ~A of ~A\n" msec nsec)
+(format #t "in clnclusion: no:yes ~A : ~A\n" nodo yesdo)
+(format #t "in conculsion handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
 )
 
 ; ---------------------------------------------------------------------
