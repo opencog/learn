@@ -301,11 +301,16 @@ unfinished prototype
 		(equal? (gar CON) WRD))
 
 	(define (revise-section SEC)
+		; Create the donating section; we need this so as to find the
+		; cross-sections.
+		(define donor (cog-link 'Section WRD (gdr SEC)))
+
 		(define mumble
-			(filter is-merged-xsect? (LLOBJ 'get-cross-sections SEC)))
+			(if (nil? donor) donor
+				(filter is-merged-xsect? (LLOBJ 'get-cross-sections donor))))
 
 		(format #t "duuude match sects=~A out of ~A\n" (length mumble)
-			(length (LLOBJ 'get-cross-sections SEC)))
+			(length (LLOBJ 'get-cross-sections donor)))
 
 		(for-each
 			(lambda (XSECT)
