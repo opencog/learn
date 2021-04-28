@@ -548,7 +548,7 @@ unfinished prototype
 				(cog-delete! ITEM)))
 		(LLOBJ 'right-stars WB))
 (format #t "Deleted wa=~A wb=~A\n" nda ndb)
-(format "---------------\n")
+(format #t "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -667,11 +667,11 @@ unfinished prototype
 	(for-each
 		(lambda (ITEM)
 			(when (is-zero? (LLOBJ 'get-count ITEM))
-(set ndb (+ 1 ndb))
+(set! ndb (+ 1 ndb))
 				(cog-delete! ITEM)))
 		(LLOBJ 'right-stars WA))
 (format #t "Deleted wb=~A\n" ndb)
-(format "---------------\n")
+(format #t "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
