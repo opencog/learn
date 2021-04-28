@@ -397,7 +397,7 @@ unfinished prototype
 		(when (not (nil? donor))
 			(let ((orig-sect (LLOBJ 'get-section donor))
 					(new-sect (LLOBJ 'get-section XST)))
-				(set-count newsect (LLOBJ 'get-count orig-sect))
+				(set-count new-sect (LLOBJ 'get-count orig-sect))
 				(set-count orig-sect 0))))
 
 	; Merge the connectors in Section Sec, if needed.
