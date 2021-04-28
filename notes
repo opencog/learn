@@ -3586,7 +3586,9 @@ Given acc x-section:
   the original section, and transfer the count.
 * If it has more than one...
   then recreate teh donor section, and give it to
-  revise-section which will...
+  revise-section which will... build what we want,
+  and will xfer counts to it.
+* Then we also need to recreate teh cross...
 
 --------------------------
 (define pca (make-pseudo-cset-api))

@@ -374,14 +374,13 @@ unfinished prototype
 		(define donor (cog-link 'CrossSection WRD (gdr XST)))
 
 		; The Section from whence it came, or null.
-		(define mumble
-			(if (nil? donor) donor
-				(LLOBJ 'get-section donor)))
-
-(when (not (null? mumble))
-(format #t "duuude XST=~A donor=~A\n" XST mumble)
+		(when (not (nil? donor))
+			(let* ((donor-sect (LLOBJ 'get-section donor))
+					(mrg-sect (revise-section donor-sect))
+				)
+(format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
 (throw 'need-merge 'merge-connectors "working on it")
-)
+			))
 	)
 
 	; Handle the simple case, where the CrossSection does not
