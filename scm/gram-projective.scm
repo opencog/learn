@@ -340,14 +340,15 @@ unfinished prototype
 					(newli
 						(map
 							(lambda (CON)
-								(if (eq? idx next)
+								(define jdx idx)
+								(set! idx (+ 1 idx))
+								(if (eq? jdx next)
 									(begin
 										(when (not (null? rest))
 											(set! next (car rest))
 											(set! rest (cdr rest)))
 										(Connector CLS (gdr CON)))
-									CON)
-								(set! idx (+ 1 idx)))
+									CON))
 							conli))
 
 					; A copy of the Section SEC with substituted connectors
