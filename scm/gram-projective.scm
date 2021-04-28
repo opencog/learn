@@ -357,26 +357,12 @@ unfinished prototype
 				; Transfer the counts over to the new Section.
 				(set-count newsec (LLOBJ 'get-count SEC))
 				(set-count SEC 0)
-(format #t "locatinos ~A in ~A\n" location-list SEC)
-(format #t "duude new sect=~A\n" newsec)
-(throw 'need-merge 'merge-connectors "working on it")
 			))
-
 (set! msec (+ 1 msec))
-		(if (nil? donor)
-(begin
+(if (nil? donor)
 (set! nodo (+ 1 nodo))
-		;(format #t "duude no sect ~A/~A no:yes ~A : ~A\n" msec nsec nodo yesdo)
-)
-(begin
 (set! yesdo (+ 1 yesdo))
-		;	(format #t "duuude ~A/~A match sects=~A out of ~A\n"
-		;		msec nsec
-		;		(length mumble)
-		;		(length (LLOBJ 'get-cross-sections donor)))
-		;	(format #t "no:yes ~A : ~A\n" nodo yesdo)
-		;	(format #t "----------------------\n\n")
-))
+)
 
 		)
 
@@ -392,6 +378,7 @@ unfinished prototype
 	(define (do-merge-xsect xst)
 		#f
 #!
+(throw 'need-merge 'merge-connectors "working on it")
 (define sacc (LLOBJ 'get-section ACC))
 		(define shape (gdr xst))
 		(define allseq (cog-outgoing-set shape))
@@ -538,16 +525,24 @@ unfinished prototype
 		(merge-connectors LLOBJ CLS WA)
 		(merge-connectors LLOBJ CLS WB))
 
+(define nda 0)
 	; Cleanup after merging.
 	(for-each
 		(lambda (ITEM)
-			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+			(when (is-zero? (LLOBJ 'get-count ITEM))
+(set! nda (+ 1 nda))
+				(cog-delete! ITEM)))
 		(LLOBJ 'right-stars WA))
 
+(define ndb 0)
 	(for-each
 		(lambda (ITEM)
-			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+			(when (is-zero? (LLOBJ 'get-count ITEM))
+(set! ndb (+ 1 ndb))
+				(cog-delete! ITEM)))
 		(LLOBJ 'right-stars WB))
+(format #t "Deleted wa=~A wb=~A\n" nda ndb)
+(format "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -661,11 +656,16 @@ unfinished prototype
 	; Merge connectors, if asked to do so.
 	(when MRG-CON (merge-connectors LLOBJ CLS WA))
 
+(define ndb 0)
 	; Cleanup after merging.
 	(for-each
 		(lambda (ITEM)
-			(if (is-zero? (LLOBJ 'get-count ITEM)) (cog-delete! ITEM)))
+			(when (is-zero? (LLOBJ 'get-count ITEM))
+(set ndb (+ 1 ndb))
+				(cog-delete! ITEM)))
 		(LLOBJ 'right-stars WA))
+(format #t "Deleted wb=~A\n" ndb)
+(format "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
