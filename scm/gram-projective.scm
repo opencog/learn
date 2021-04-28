@@ -381,6 +381,23 @@ unfinished prototype
 )
 	)
 
+	; Handle the simple case, where the CrossSection does not
+	; have WRD in it. For this case, just transfer the count
+	; from the originating Section to the Section that has
+	; CLS in place of WRD.  Note that XST already has CLS as
+	; it's germ.
+	(define (transfer-xsect XST)
+		; Create the donating CrossSection; we need this,
+		; so as to find the Section it came from.
+		(define donor (cog-link 'CrossSection WRD (gdr XST)))
+
+		; The Section from whence it came, or null.
+		(when (not (nil? donor))
+			(let ((orig-sect (LLOBJ 'get-section donor))
+					(new-sect (LLOBJ 'get-section XST)))
+				(set-count newsect (LLOBJ 'get-count orig-sect))
+				(set-count orig-sect 0))))
+
 	; Merge the connectors in Section Sec, if needed.
 	(define (do-merge-sectn SEC)
 		(define conseq (gdr SEC))
@@ -396,7 +413,10 @@ unfinished prototype
 		(define allseq (cog-outgoing-set shape))
 		(define conli (cdr allseq))
 		(define need-merge (any word-in-connector? conli))
-		(when need-merge (revise-xsect XST))
+		(if need-merge
+			(revise-xsect XST)
+			(transfer-xsect XST)
+		)
 	)
 
 	; Same as above, dispatching on the type.
@@ -412,8 +432,8 @@ unfinished prototype
 	; the newly created/expanded cluster.
 	(for-each do-merge-cons all-stars)
 
-(format #t "in clnclusion: no:yes ~A : ~A\n" nodo yesdo)
-(format #t "in conculsion handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
+(format #t "in conclusion: sections no:yes ~A : ~A\n" nodo yesdo)
+(format #t "in conculsion sections handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
 )
 
 ; ---------------------------------------------------------------------

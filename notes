@@ -3582,8 +3582,9 @@ Given acc section:
   delete old sect.
 
 Given acc x-section:
-* does it have more than one...?
-* case no: just create the matching section.
+* If it has zero connectors of the type, then just recreate
+  the original section, and transfer the count.
+* If it has more than one...
 
 --------------------------
 (define pca (make-pseudo-cset-api))
