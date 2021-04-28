@@ -361,11 +361,27 @@ unfinished prototype
 (set! msec (+ 1 msec))
 (if (nil? donor)
 (set! nodo (+ 1 nodo))
-(set! yesdo (+ 1 yesdo))
-)
-
+(set! yesdo (+ 1 yesdo)))
 		)
 
+	; Same as above, but for CrossSections
+	(define (revise-xsect XST)
+		; Create the donating CrossSection; we need this,
+		; so as to find the Section it came from.
+		(define donor (cog-link 'CrossSection WRD (gdr XST)))
+
+		; The Section from whence it came, or null.
+		(define mumble
+			(if (nil? donor) donor
+				(LLOBJ 'get-section donor)))
+
+(when (not (null? mumble))
+(format #t "duuude XST=~A donor=~A\n" XST mumble)
+(throw 'need-merge 'merge-connectors "working on it")
+)
+	)
+
+	; Merge the connectors in Section Sec, if needed.
 	(define (do-merge-sectn SEC)
 		(define conseq (gdr SEC))
 		(define conli (cog-outgoing-set conseq))
@@ -375,22 +391,12 @@ unfinished prototype
 	)
 
 	; Same as above, but for cross-sections.
-	(define (do-merge-xsect xst)
-		#f
-#!
-(throw 'need-merge 'merge-connectors "working on it")
-(define sacc (LLOBJ 'get-section ACC))
-		(define shape (gdr xst))
+	(define (do-merge-xsect XST)
+		(define shape (gdr XST))
 		(define allseq (cog-outgoing-set shape))
 		(define conli (cdr allseq))
-		(define rew (rewrite-conseq conli cls wrd))
-		(when rew
-			(set-count
-				(CrossSection cls (Shape (cons (car allseq) rew)))
-				(LLOBJ 'get-count xst))
-			(cog-delete! xst)
-			(cog-delete! shape))
-!#
+		(define need-merge (any word-in-connector? conli))
+		(when need-merge (revise-xsect XST))
 	)
 
 	; Same as above, dispatching on the type.
