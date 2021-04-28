@@ -303,6 +303,7 @@ unfinished prototype
 	; replacement is to be performed only if the corresponding
 	; CrossSection contributed to CLS. The code below searches for
 	; those CrossSections, and if found, performs the substitution.
+	; It returns the updated section.
 	(define (revise-section SEC)
 		; Create the donating section; we need this so as to find the
 		; cross-sections.
@@ -327,8 +328,12 @@ unfinished prototype
 						conli))
 				mumble))
 
+(set! msec (+ 1 msec))
+(if (nil? donor)
+(set! nodo (+ 1 nodo))
+(set! yesdo (+ 1 yesdo)))
 		; Are there any substitutions to be made? If so, then substitute.
-		(when (not (null? location-list))
+		(if (null? location-list) '()
 			(let* (
 					; The list of connectors in the Section SEC
 					(conli (cog-outgoing-set (gdr SEC)))
@@ -357,12 +362,10 @@ unfinished prototype
 				; Transfer the counts over to the new Section.
 				(set-count newsec (LLOBJ 'get-count SEC))
 				(set-count SEC 0)
-			))
-(set! msec (+ 1 msec))
-(if (nil? donor)
-(set! nodo (+ 1 nodo))
-(set! yesdo (+ 1 yesdo)))
-		)
+
+				; return the new section
+				newsec))
+	)
 
 	; Same as above, but for CrossSections
 	(define (revise-xsect XST)
