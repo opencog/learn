@@ -304,16 +304,11 @@ unfinished prototype
 	; CrossSection contributed to CLS. The code below searches for
 	; those CrossSections, and if found, performs the substitution.
 	; It returns the updated section.
-	(define (revise-section SEC)
-		; Create the donating section; we need this so as to find the
-		; cross-sections.
-		(define donor (cog-link 'Section WRD (gdr SEC)))
+	(define (revise-section SEC DONOR)
 
 		; List of matching cross-sections that were merged.
-		; May be empty.
 		(define mumble
-			(if (nil? donor) donor
-				(filter is-merged-xsect? (LLOBJ 'get-cross-sections donor))))
+			(filter is-merged-xsect? (LLOBJ 'get-cross-sections DONOR)))
 
 		; A list of all the locations in the Sections ConnectorSeq
 		; that need to be replaced with the merged class.
@@ -329,9 +324,7 @@ unfinished prototype
 				mumble))
 
 (set! msec (+ 1 msec))
-(if (nil? donor)
-(set! nodo (+ 1 nodo))
-(set! yesdo (+ 1 yesdo)))
+(set! yesdo (+ 1 yesdo))
 		; Are there any substitutions to be made? If so, then substitute.
 		(if (null? location-list) '()
 			(let* (
@@ -376,7 +369,7 @@ unfinished prototype
 		; The Section from whence it came, or null.
 		(when (not (nil? donor))
 			(let* ((donor-sect (LLOBJ 'get-section donor))
-					(mrg-sect (revise-section donor-sect))
+					(mrg-sect (revise-section donor-sect donor-sect))
 				)
 (format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
 (throw 'need-merge 'merge-connectors "working on it")
@@ -401,12 +394,16 @@ unfinished prototype
 				(set-count orig-sect 0))))
 
 	; Merge the connectors in Section Sec, if needed.
+	; A merge is needed if WRD appears in any connector in SEC.
+	; A merge is possible only if the WRD donated counts to SEC.
 	(define (do-merge-sectn SEC)
 		(define conseq (gdr SEC))
 		(define conli (cog-outgoing-set conseq))
 		(define need-merge (any word-in-connector? conli))
 (set! nsec (+ 1 nsec))
-		(when need-merge (revise-section SEC))
+		(define donor (cog-link 'Section WRD conseq))
+		(when (and (not (nil? donor)) need-merge)
+			(revise-section SEC donor))
 	)
 
 	; Same as above, but for cross-sections.
