@@ -442,12 +442,24 @@ unfinished prototype
   CrossSections and call cog-delete! on those that have an zero count.
   This will also delete the correspnding cross.
 "
+	(define (del-sect SEC)
+		(if (is-zero? (LLOBJ 'get-count SEC))
+			(begin (cog-delete! SEC) 1)
+			0))
+
+	(define (del-xes XST)
+		(if (is-zero? (LLOBJ 'get-count XST))
+			(begin (cog-delete! XST) 1)
+			0))
+
 	; Cleanup after merging.
 	(fold
 		(lambda (ITEM NDEL)
-			(when (is-zero? (LLOBJ 'get-count ITEM))
-				(cog-delete! ITEM)
-				(+ 1 NDEL)))
+			(cond
+				((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
+				((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
+				(else
+					(throw 'remove-empty-sections 'assert "Its broken"))))
 		0 LST)
 )
 
