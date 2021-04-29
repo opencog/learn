@@ -442,15 +442,30 @@ unfinished prototype
   CrossSections and call cog-delete! on those that have an zero count.
   This will also delete the correspnding cross.
 "
+
+	; This is pointless complex only because we are trying to count
+	; how many sections were deleted. Otherwise, just ditch the `fold`
+	; and replace it with `for-each`.
 	(define (del-sect SEC)
-		(if (is-zero? (LLOBJ 'get-count SEC))
-			(begin (cog-delete! SEC) 1)
-			0))
+		(define xes (LLOBJ 'get-cross-sections SEC))
+		(+
+			(if (is-zero? (LLOBJ 'get-count SEC))
+				(begin (cog-delete! SEC) 1)
+				0)
+			(fold (lambda (xst ndel)
+				(if (is-zero? (LLOBJ 'get-count xst))
+					(begin (cog-delete! xst) 1) 0))
+				0 xes)))
 
 	(define (del-xes XST)
-		(if (is-zero? (LLOBJ 'get-count XST))
-			(begin (cog-delete! XST) 1)
-			0))
+		(define sct (LLOBJ 'get-section XST))
+		(+
+			(if (is-zero? (LLOBJ 'get-count sct))
+				(begin (cog-delete! XST) 1)
+				0)
+			(if (is-zero? (LLOBJ 'get-count XST))
+				(begin (cog-delete! XST) 1)
+				0)))
 
 	; Cleanup after merging.
 	(fold
