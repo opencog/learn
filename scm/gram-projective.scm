@@ -368,11 +368,10 @@ unfinished prototype
 
 		; The Section from whence it came, or null.
 		(when (not (nil? donor))
-			(let* ((donor-sect (LLOBJ 'get-section donor))
-					(mrg-sect (revise-section donor-sect donor-sect))
-				)
-(format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
-(throw 'need-merge 'merge-connectors "working on it")
+			(let* ((donor-sect (LLOBJ 'get-section donor)))
+				(revise-section donor-sect donor-sect)
+; (format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
+; (throw 'need-merge 'merge-connectors "working on it")
 			))
 	)
 
