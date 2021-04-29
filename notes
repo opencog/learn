@@ -3612,6 +3612,9 @@ $2 = ((PredicateNode . 25) (ListLink . 75701) (AnyNode . 8) (Connector . 24) (Co
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
 
+(define xes (filter (lambda (s) (eq? 'CrossSection (cog-type s))) rs))
+
+
 --------------------------
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))

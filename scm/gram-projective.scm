@@ -436,6 +436,23 @@ unfinished prototype
 
 ; ---------------------------------------------------------------------
 
+(define (remove-empty-sections LST)
+"
+  remove-empty-sections LST -- scan the list LST of Sections &
+  CrossSections and call cog-delete! on those that have an zero count.
+  This will also delete the correspnding cross.
+"
+	; Cleanup after merging.
+	(fold
+		(lambda (ITEM NDEL)
+			(when (is-zero? (LLOBJ 'get-count ITEM))
+				(cog-delete! ITEM)
+				(+ 1 NDEL)))
+		0 LST)
+)
+
+; ---------------------------------------------------------------------
+
 (define (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
@@ -549,22 +566,13 @@ unfinished prototype
 		(merge-connectors LLOBJ CLS WA)
 		(merge-connectors LLOBJ CLS WB))
 
-(define nda 0)
 	; Cleanup after merging.
-	(for-each
-		(lambda (ITEM)
-			(when (is-zero? (LLOBJ 'get-count ITEM))
-(set! nda (+ 1 nda))
-				(cog-delete! ITEM)))
-		(LLOBJ 'right-stars WA))
+(define nda
+	(remove-empty-sections (LLOBJ 'right-stars WA))
+)(define ndb
+	(remove-empty-sections (LLOBJ 'right-stars WB))
+)
 
-(define ndb 0)
-	(for-each
-		(lambda (ITEM)
-			(when (is-zero? (LLOBJ 'get-count ITEM))
-(set! ndb (+ 1 ndb))
-				(cog-delete! ITEM)))
-		(LLOBJ 'right-stars WB))
 (format #t "Deleted wa=~A wb=~A\n" nda ndb)
 (format #t "---------------\n")
 
@@ -680,14 +688,10 @@ unfinished prototype
 	; Merge connectors, if asked to do so.
 	(when MRG-CON (merge-connectors LLOBJ CLS WA))
 
-(define ndb 0)
 	; Cleanup after merging.
-	(for-each
-		(lambda (ITEM)
-			(when (is-zero? (LLOBJ 'get-count ITEM))
-(set! ndb (+ 1 ndb))
-				(cog-delete! ITEM)))
-		(LLOBJ 'right-stars WA))
+(define ndb
+	(remove-empty-sections (LLOBJ 'right-stars WB))
+)
 (format #t "Deleted wb=~A\n" ndb)
 (format #t "---------------\n")
 
