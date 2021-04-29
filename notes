@@ -3615,6 +3615,62 @@ $2 = ((PredicateNode . 25) (ListLink . 75701) (AnyNode . 8) (Connector . 24) (Co
 (define xes (filter (lambda (s) (eq? 'CrossSection (cog-type s))) rs))
 (LLOBJ 'get-section donor)
 
+opencog::SchemeSmob::equalp_misc 
+/home/ubuntu/src/atomspace/opencog/guile/SchemeSmob.cc:162
+162                             if (**av == **bv) return SCM_BOOL_T;
+SCM_SMOB_DATA(x)      (SCM_SMOB_DATA_1 (x))
+SCM_SMOB_DATA_1(x)    (SCM_SMOB_DATA_N ((x), 1))
+SCM_SMOB_DATA_N(x, n)    (SCM_CELL_WORD ((x), (n)))
+SCM_CELL_WORD(x, n) SCM_GC_CELL_WORD ((x), (n))
+SCM_GC_CELL_WORD(x, n)   (SCM_UNPACK (SCM_GC_CELL_OBJECT ((x), (n))))
+#define SCM_GC_CELL_OBJECT(x, n) (((SCM *)SCM2PTR (x)) [n])
+
+SCM_SMOB_PREDICATE(tag, obj)	SCM_HAS_TYP16 (obj, tag)
+SCM_HAS_TYP16(x, tag)   (SCM_HAS_HEAP_TYPE (x, SCM_TYP16, tag))
+SCM_TYP16(x)       (0xffff & SCM_CELL_TYPE (x))
+SCM_HAS_HEAP_TYPE(x, type, tag) (SCM_NIMP (x) && type (x) == (tag))
+SCM_CELL_TYPE(x) SCM_CELL_WORD_0 (x)
+
+print SchemeSmob::cog_misc_tag
+$4 = 5751
+
+print *a
+$2 = {scm_unused_field = 119 'w'}  its 0x77
+print *(long*) a
+$6 = 71287
+(gdb) print *(long*) b
+$7 = 71287
+print 0xffff & 71287
+$8 = 5751 OK, great!  so both a & b should be smobs...
+
+
+
+(gdb) print (scm_t_cell) a
+$6 = {word_0 = 0x5555c143f410, word_1 = 0x5555555bbd80}
+(gdb) print (scm_t_cell) b
+Invalid cast.
+(gdb) print *(SCM*) 0x5555a8374de8
+$10 = (SCM) 0x5555accda9b0
+
+(gdb) print *(ValuePtr*) 0x5555555bbd80
+$11 = std::shared_ptr<opencog::Value> (use count 7, weak count -1) = {
+  get() = 0x0}
+
+(gdb) print *(ValuePtr*) 0x5555a8374de8
+$12 = <error reading variable: Cannot access memory at address 0xf>
+
+print /x *(long *)(b+8)
+$13 = 0x5555accdbab0
+
+print *(ValuePtr*) 0x5555accdbab0
+std::shared_ptr<opencog::Value> (use count 2, weak count 3) = {
+  get() = 0x555555e793c0}
+print /x *(long *)(a+8)
+$15 = 0x5555d0d96930
+(gdb) print *(ValuePtr*) 0x5555d0d96930
+$16 = std::shared_ptr<opencog::Value> (empty) = {get() = 0x0}
+
+Ohhhhhh OK.
 
 --------------------------
 (define pca (make-pseudo-cset-api))

@@ -263,8 +263,6 @@ unfinished prototype
 
 (define nsec 0)
 (define msec 0)
-(define yesdo 0)
-(define nodo 0)
 (format #t "\n")
 (format #t "=============================\n")
 (format #t "merge ~A into ~A\n" WRD CLS)
@@ -324,7 +322,6 @@ unfinished prototype
 				mumble))
 
 (set! msec (+ 1 msec))
-(set! yesdo (+ 1 yesdo))
 		; Are there any substitutions to be made? If so, then substitute.
 		(if (null? location-list) '()
 			(let* (
@@ -430,8 +427,7 @@ unfinished prototype
 	; the newly created/expanded cluster.
 	(for-each do-merge-cons all-stars)
 
-(format #t "in conclusion: sections no:yes ~A : ~A\n" nodo yesdo)
-(format #t "in conculsion sections handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
+(format #t "in conclusion sections handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
 )
 
 ; ---------------------------------------------------------------------
@@ -460,7 +456,7 @@ unfinished prototype
 		(define sct (LLOBJ 'get-section XST))
 		(+
 			(if (is-zero? (LLOBJ 'get-count sct))
-				(begin (cog-delete! XST) 1)
+				(begin (cog-delete! sct) 1)
 				0)
 			(if (is-zero? (LLOBJ 'get-count XST))
 				(begin (cog-delete! XST) 1)
