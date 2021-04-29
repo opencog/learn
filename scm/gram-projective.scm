@@ -436,13 +436,12 @@ unfinished prototype
 
 ; ---------------------------------------------------------------------
 
-(define (remove-empty-sections LST)
+(define (remove-empty-sections LLOBJ ROW)
 "
-  remove-empty-sections LST -- scan the list LST of Sections &
+  remove-empty-sections LLOBJ ROW -- scan the ROW of Sections &
   CrossSections and call cog-delete! on those that have an zero count.
   This will also delete the correspnding cross.
 "
-
 	; This is pointless complex only because we are trying to count
 	; how many sections were deleted. Otherwise, just ditch the `fold`
 	; and replace it with `for-each`.
@@ -475,7 +474,7 @@ unfinished prototype
 				((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
 				(else
 					(throw 'remove-empty-sections 'assert "Its broken"))))
-		0 LST)
+		0 (LLOBJ 'right-stars ROW))
 )
 
 ; ---------------------------------------------------------------------
@@ -595,9 +594,9 @@ unfinished prototype
 
 	; Cleanup after merging.
 (define nda
-	(remove-empty-sections (LLOBJ 'right-stars WA))
+	(remove-empty-sections LLOBJ WA)
 )(define ndb
-	(remove-empty-sections (LLOBJ 'right-stars WB))
+	(remove-empty-sections LLOBJ WB)
 )
 
 (format #t "Deleted wa=~A wb=~A\n" nda ndb)
@@ -716,10 +715,10 @@ unfinished prototype
 	(when MRG-CON (merge-connectors LLOBJ CLS WA))
 
 	; Cleanup after merging.
-(define ndb
-	(remove-empty-sections (LLOBJ 'right-stars WB))
+(define nda
+	(remove-empty-sections LLOBJ WA)
 )
-(format #t "Deleted wb=~A\n" ndb)
+(format #t "Deleted wa=~A\n" nda)
 (format #t "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
