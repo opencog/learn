@@ -3590,6 +3590,28 @@ Given acc x-section:
   and will xfer counts to it.
 * Then we also need to recreate teh cross...
 
+
+OK, on conclusion:
+(cog-report-counts)
+$3 = ((PredicateNode . 25) (ListLink . 75701) (MemberLink . 12) (AnyNode . 8) (Connector . 28) (ConnectorDir . 2) (ConnectorSeq . 406773) (Section . 215737) (ShapeLink . 511484) (CrossSection . 765043) (VariableNode . 1) (EvaluationLink . 16) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 12) (WordClassNode . 2))
+
+which is still outrageous. so wtf...
+
+(define sex (cog-get-atoms 'Section))
+(define (is-zero? cnt) (< cnt 1.0e-10))
+(define zer (filter (lambda (s) (is-zero? (cog-count s))) sex))
+(length zer) ; 211702 Huh?
+(define top (filter (lambda (s) (< 0 (cog-incoming-size s))) sex))
+(length top) ; 0
+
+(for-each cog-delete! zer)
+------------
+fresh start: (cog-report-counts)
+$2 = ((PredicateNode . 25) (ListLink . 75701) (AnyNode . 8) (Connector . 24) (ConnectorDir . 2) (ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484) (CrossSection . 620774) (VariableNode . 1) (EvaluationLink . 14) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 12))
+
+(define disc (make-discrim gsc 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
 --------------------------
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
