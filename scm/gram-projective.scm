@@ -448,14 +448,14 @@ unfinished prototype
 				(begin (cog-delete! SEC) 1)
 				0)
 			(fold (lambda (xst ndel)
-				(if (is-zero? (LLOBJ 'get-count xst))
+				(if (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
 					(begin (cog-delete! xst) 1) 0))
 				0 xes)))
 
 	(define (del-xes XST)
 		(define sct (LLOBJ 'get-section XST))
 		(+
-			(if (is-zero? (LLOBJ 'get-count sct))
+			(if (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
 				(begin (cog-delete! sct) 1)
 				0)
 			(if (is-zero? (LLOBJ 'get-count XST))
@@ -465,16 +465,13 @@ unfinished prototype
 	; Cleanup after merging.
 	(fold
 		(lambda (ITEM NDEL)
-			; Catch, because the above will sometimes throw
-			; 'wrong-type-arg when passed an already-deleted atom.
-			; Hmmm, we should catch closer to the source...
-			(catch 'wrong-type-arg (lambda ()
+			(if (cog-atom? ITEM)
 				(cond
 					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
 					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
 					(else
-						(throw 'remove-empty-sections 'assert "Its broken"))))
-				(lambda (key . args) NDEL)))
+						(throw 'remove-empty-sections 'assert "Its broken")))
+				NDEL))
 		0 (LLOBJ 'right-stars ROW))
 )
 
