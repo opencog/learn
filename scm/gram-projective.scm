@@ -465,11 +465,16 @@ unfinished prototype
 	; Cleanup after merging.
 	(fold
 		(lambda (ITEM NDEL)
-			(cond
-				((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
-				((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
-				(else
-					(throw 'remove-empty-sections 'assert "Its broken"))))
+			; Catch, because the above will sometimes throw
+			; 'wrong-type-arg when passed an already-deleted atom.
+			; Hmmm, we should catch closer to the source...
+			(catch 'wrong-type-arg (lambda ()
+				(cond
+					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
+					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
+					(else
+						(throw 'remove-empty-sections 'assert "Its broken"))))
+				(lambda (key . args) NDEL)))
 		0 (LLOBJ 'right-stars ROW))
 )
 
