@@ -8,6 +8,7 @@
 ; * A parallel version of the srfi-1 find function
 ; * A for-all-pairs function
 ; * A fold-over-all-pairs function
+; * A debug-repl-shell tool
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
@@ -254,6 +255,41 @@
   Resets the stats after each call, so only the stats since the
   previous call are printed.
 "
+)
+
+; ---------------------------------------------------------------
+
+(use-modules (ice-9 local-eval))
+(use-modules (ice-9 readline))
+
+(define-public (break env)
+"
+  break ENV - debug repl shell.
+
+  This can be inserted into arbitrary points in scheme code, and will
+  provide a debug prompt there.  Example usage:
+
+     (define (do-stuff)
+        (define x 42)
+        (format #t \"starting x=~A\n\" x)
+        (define env (the-environment))
+        (break env)
+        (format #t \"ending x=~A\n\" x))
+
+  At the prompt, `x` will print `42` and `(set! x 43)` will change it's
+  value.
+"
+	(define (brk env num)
+		(let ((input (readline "yo duude> ")))
+			(unless (or (eq? '. input) (eof-object? input))
+				(catch #t (lambda ()
+					(define sexpr (call-with-input-string input read))
+					(format #t "$~A = ~A\n" num (local-eval sexpr env)))
+					(lambda (key . args)
+						(format #t "Oh no, Mr. Bill: ~A ~A\n" key args)
+						*unspecified*))
+				(brk env (+ 1 num)))))
+	(brk env 1)
 )
 
 ; ---------------------------------------------------------------

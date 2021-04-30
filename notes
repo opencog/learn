@@ -3615,7 +3615,7 @@ $2 = ((PredicateNode . 25) (ListLink . 75701) (AnyNode . 8) (Connector . 24) (Co
 (define xes (filter (lambda (s) (eq? 'CrossSection (cog-type s))) rs))
 (LLOBJ 'get-section donor)
 
-opencog::SchemeSmob::equalp_misc 
+opencog::SchemeSmob::equalp_misc
 /home/ubuntu/src/atomspace/opencog/guile/SchemeSmob.cc:162
 162                             if (**av == **bv) return SCM_BOOL_T;
 SCM_SMOB_DATA(x)      (SCM_SMOB_DATA_1 (x))
@@ -3671,9 +3671,49 @@ $15 = 0x5555d0d96930
 $16 = std::shared_ptr<opencog::Value> (empty) = {get() = 0x0}
 
 Ohhhhhh OK.
+--------------------------
 
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
+
+(define sex (cog-get-atoms 'Section))
+(define (is-zero? cnt) (< cnt 1.0e-10))
+(define zer (filter (lambda (s) (is-zero? (cog-count s))) sex))
+(length zer)
+
+(use-modules (ice-9 local-eval))
+(use-modules (ice-9 readline))
+
+(define (break env)
+	(display "yo duude> ")
+	(let ((input (read)))
+		(unless (or (eq? '. input) (eof-object? input))
+			(catch #t (lambda () (local-eval input env))
+				(lambda (key . args)
+					(format #t "Oh no, Mr. Bill: ~A ~A\n" key args)
+					*unspecified*))
+			(break env))))
+
+(define (break env)
+	(let ((input (readline "yo duude> ")))
+		(unless (or (eq? '. input) (eof-object? input))
+			(catch #t (lambda ()
+				(define sexpr (call-with-input-string input read))
+				(format #t "~A\n" (local-eval sexpr env)))
+				(lambda (key . args)
+					(format #t "Oh no, Mr. Bill: ~A ~A\n" key args)
+					*unspecified*))
+			(break env))))
+
+(define (do-stuff)
+	(define x 42)
+	(format #t "start\n")
+	(define env (the-environment))
+	(break env)
+	(format #t "end ~A\n" x))
+(define (bogo) (define y 56) (do-stuff))
+
+(format #t "it is ~A\n" x)
 
 --------------------------
 (define pca (make-pseudo-cset-api))
