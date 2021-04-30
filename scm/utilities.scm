@@ -272,12 +272,13 @@
      (define (do-stuff)
         (define x 42)
         (format #t \"starting x=~A\n\" x)
-        (define env (the-environment))
-        (break env)
+        (break (the-environment))
         (format #t \"ending x=~A\n\" x))
 
   At the prompt, `x` will print `42` and `(set! x 43)` will change it's
   value.
+
+  MUST say `(use-modules (ice-9 local-eval))` to get `(the-environment)`
 "
 	(define (brk env num)
 		(let ((input (readline "yo duude> ")))

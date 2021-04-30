@@ -3716,6 +3716,10 @@ Ohhhhhh OK.
 (format #t "it is ~A\n" x)
 
 --------------------------
+(define disc (make-discrim gsc 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
+--------------------------
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
 
