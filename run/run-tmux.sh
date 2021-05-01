@@ -33,14 +33,14 @@ fi
 
 # Use byobu so that the scroll bars actually work
 byobu new-session -d -n 'cntl' \
-	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
+	'echo -e "\nControl shell; you might want to run top here.\n"; $SHELL'
 
 byobu new-window -n 'cogsrv' \
-	'echo -e "\nGuile shell; e.g. run 'guile -l cogserver.scm' here. \n"; $SHELL
+	'echo -e "\nGuile shell; e.g. run guile -l cogserver.scm here. \n"; $SHELL'
 
 # Telnet window
 tmux new-window -n 'telnet' \
-	'echo -e "\nTelnet shell; e.g. run 'rlwrap telnet $HOSTNAME $PORT\n"; $SHELL
+	'echo -e "\nTelnet shell; e.g. run rlwrap telnet $HOSTNAME $PORT\n"; $SHELL'
 
 # Parse
 tmux new-window -n 'submit' \
