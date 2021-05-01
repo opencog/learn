@@ -3715,11 +3715,20 @@ Ohhhhhh OK.
 
 (format #t "it is ~A\n" x)
 
+(let* ((rs (LLOBJ 'right-stars ROW))
+	(goo (filter (lambda (s) (cog-atom? s)) rs)))
+(format #t (length rs)
+(length goo)
+)
+
+(define zer (filter (lambda (s) (is-zero? (cog-count s))) sex))
+
 --------------------------
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
 
 --------------------------
+guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
 

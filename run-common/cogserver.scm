@@ -17,6 +17,13 @@
 
 (define env-prompt (getenv "PROMPT"))
 
+; Avoid mystery crash on cold startup.
+(when (not env-prompt)
+	(format #t "Error: Learning pipeline not configured!\n")
+	(format #t "Did you forget to source a config file?\n")
+	(format #t "Config files are in the `run-config` directory.\n")
+	(exit -1))
+
 ; Prompt magic, copied from `module/system/repl/common.scm`
 (define (cog-prompt)
 	(let ((level (length (cond
@@ -52,3 +59,5 @@
 	(cog-close storage-node)
 	(block-until-idle 0.01)
 	(exit 0))
+
+; -----------------------------------------------------------
