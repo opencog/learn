@@ -42,13 +42,13 @@ This pipeline is in the process of being set up. It has been partly
 automated. Currently requires a lot of editing to adjust file paths,
 etc.  So far:
 
-1. Build the corpus generation tools, as follows:
+1. Build the corpus generation tools. Download the latest Link Grammar
+tarball from `http://www.abisource.com/downloads/link-grammar/current`.
+Then unpack it and compile it:
 ```
-git clone https://github.com/opencog/link-grammar
-cd link-grammar
-git checkout generate
-./autogen.sh --no-configure
-mkdir build; cd build; ../configure; make
+tar -zxf link-grammar-*.tar.gz
+cd link-grammar-*
+mkdir build; cd build; ../configure; make -j
 sudo make install
 ```
 

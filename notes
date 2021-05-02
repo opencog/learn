@@ -3777,6 +3777,15 @@ Argh, above reveals that 'get-section is creting empty sections.
 (length zsex) ; 541318 Wow! these are xsections whose matching sec has
 no count!  How is that possible?
 
+--------------------------
+Before merge:
+(ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484) (CrossSection . 620774)
+
+(define disc (make-discrim gsc 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
+After merge:
+(ConnectorSeq . 188592) (Section . 121758) (ShapeLink . 511484) (CrossSection . 596375)
 
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
