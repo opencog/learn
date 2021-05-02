@@ -134,8 +134,11 @@
   A more detailed description is at the top of this file.
 
   In addition to the usual methods, this also provides:
-  'get-section CROSS  -- Create and return the section that corresponds
+  'make-section CROSS  -- Create and return the section that corresponds
        to the CrossSection CROSS.
+
+  'get-section CROSS  -- Return the section that corresponds to the
+       CrossSection CROSS, if it exists.
 
   'get-cross-sections SECT -- Return all of the CrossSections that
        cover the Section SECT. This returns only those cross-sections
@@ -183,20 +186,13 @@
 		(define (get-pair-right SHAPE-PR)
 			(cog-outgoing-atom SHAPE-PR 1))
 
-		; Create the Section corresponding to the CrossSection
-		; (the word-shape pair.)  That is, unexplode (implode?)
-		; the CrossSection back into a Section, again. This can
-		; be thought of as a projection from the entire space of
-		; exploded word-shape pairs to the base-space of Sections.
-		; (A projecting from the covering space to the base space).
+		; Analyze the CrossSection (the word-shape pair.)  Disasemble
+		; it into it's key parts, with intent that these parts can be
+		; assembled into the originating Section.
 		;
-		; Disassemble the SHAPE, insert WORD into the variable
-		; location, and return the Section. Note that a Section
-		; always exists, because it was impossible to make a Shape,
-		; without having had the underlying Section that it reduces to.
 		; See (explode-sections) below for documentation
 		; about the structure of the shape.
-		(define (get-section XSECT)
+		(define (analyze-xsection XSECT)
 			(define SHAPE-PR (cog-outgoing-set XSECT))
 			(define WORD (first SHAPE-PR))
 			(define SHAPE (second SHAPE-PR))
@@ -208,9 +204,46 @@
 			(define rest (drop-while not-var? conseq))
 			(define dir (gdr (car rest)))
 			(define end (cdr rest))
+			(list WORD dir begn end point))
+
+		; Create the Section corresponding to the CrossSection
+		; (the word-shape pair.)  That is, unexplode (implode?)
+		; the CrossSection back into a Section, again. This can
+		; be thought of as a projection from the entire space of
+		; exploded word-shape pairs to the base-space of Sections.
+		; (A projecting from the covering space to the base space).
+		;
+		; Disassemble the SHAPE, insert WORD into the variable
+		; location, and return the Section. Note that a Section
+		; always exists, because it was impossible to make a Shape,
+		; without having had the underlying Section that it reduces to.
+		;
+		; XXX "a Section always exists": currently, this is not true,
+		; presumably due to bugs in the merging code. Unclear what's
+		; going on, at the present time. XXX FIXME.
+		(define (make-section XSECT)
+			(define parts (analyze-xsection XSECT))
+			(define WORD  (list-ref parts 0))
+			(define dir   (list-ref parts 1))
+			(define begn  (list-ref parts 2))
+			(define end   (list-ref parts 3))
+			(define point (list-ref parts 4))
 			(define ctcr (Connector WORD dir))
 			(define cseq (ConnectorSeq begn ctcr end))
 			(LLOBJ 'make-pair point cseq))
+
+		(define (get-section XSECT)
+			(define parts (analyze-xsection XSECT))
+			(define WORD  (list-ref parts 0))
+			(define dir   (list-ref parts 1))
+			(define begn  (list-ref parts 2))
+			(define end   (list-ref parts 3))
+			(define point (list-ref parts 4))
+			(define ctcr (cog-link 'Connector WORD dir))
+			(define cseq (if (nil? ctcr) '()
+				(cog-link 'ConnectorSeq begn ctcr end)))
+			(if (nil? cseq) '()
+				(LLOBJ 'get-pair point cseq)))
 
 		; Get the count, if the pair exists.
 		(define (get-pair-count L-ATOM R-ATOM)
@@ -537,6 +570,7 @@ around for a while.
 
 				; Custom calls.
 				((explode-sections) explode-sections)
+				((make-section)     make-section)
 				((get-section)      get-section)
 				((get-cross-sections) get-cross-sections)
 
@@ -573,6 +607,7 @@ around for a while.
 			; pass-through
 			((fetch-pairs)        (cover-obj 'fetch-pairs))
 			((explode-sections)   (shape-obj 'explode-sections))
+			((make-section)       (apply shape-obj (cons message args)))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
 

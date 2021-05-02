@@ -3734,7 +3734,6 @@ Ohhhhhh OK.
 (define (zer lst)
 	(length (filter (lambda (s) (is-zero? (cog-count s))) lst)))
 (zer es)
-(define sex (cog-get-atoms 'Section))
 
 (define zs 0)
 (define zx 0)
@@ -3744,7 +3743,7 @@ Ohhhhhh OK.
 		(when (is-zero? (gsc 'get-count xst)) (set! zx (+ 1 zx))))
 		xes))
 
-(define (foo-xes XST) 
+(define (foo-xes XST)
 	(define sct (gsc 'get-section XST))
 	(when (is-zero? (gsc 'get-count sct)) (set! zs (+ zs 1))))
 
@@ -3761,6 +3760,22 @@ Ohhhhhh OK.
 	(when (and (cog-atom? sct) (is-zero? (gsc 'get-count sct)))
 		(set! xd (+ xd 1))
 		(cog-delete! sct)))
+
+Argh, above reveals that 'get-section is creting empty sections.
+
+(define sex (cog-get-atoms 'Section))
+(define xes (cog-get-atoms 'CrossSection))
+.. there are no zero xes! (and there are fewer xes than before)
+.. only sex has zeros and there re more sex's so we must be
+   creating them.
+
+(define (nonsex lst)
+	(filter (lambda (XST)
+		(is-zero? (gsc 'get-count (gsc 'get-section XST))))
+		lst))
+(define zsex (nonsex xes))
+(length zsex) ; 541318 Wow! these are xsections whose matching sec has
+no count!  How is that possible?
 
 
 --------------------------
