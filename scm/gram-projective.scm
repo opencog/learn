@@ -357,7 +357,13 @@ unfinished prototype
 				newsec))
 	)
 
-	; Same as above, but for CrossSections
+	; Same as above, but for CrossSections. More precisely:
+	; Although the CrossSection XST may contain WRD in one of it's
+	; connectors, that does NOT mean that WRD should be replace by CLS.
+	; That replacement is to be performed only if the corresponding
+	; Section contributed to CLS. The code below searches for that
+	; Section, and if found, performs the substitution. It returns the
+	; updated CrossSection.
 	(define (revise-xsect XST)
 		; Create the donating CrossSection; we need this,
 		; so as to find the Section it came from.
@@ -386,7 +392,9 @@ unfinished prototype
 		; The Section from whence it came, or null.
 		(when (not (nil? donor))
 			(let ((orig-sect (LLOBJ 'get-section donor))
-					(new-sect (LLOBJ 'get-section XST)))
+					(new-sect (LLOBJ 'make-section XST)))
+				(if (nil? orig-sect)
+					(throw 'bug 'merge-connectors "donor section is missing"))
 				(set-count new-sect (LLOBJ 'get-count orig-sect))
 				(set-count orig-sect 0))))
 
