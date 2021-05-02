@@ -3727,6 +3727,42 @@ Ohhhhhh OK.
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
 
+(define es (gsc 'right-stars (Word "e")))
+(length es) ;891
+
+(define (is-zero? cnt) (< cnt 1.0e-10))
+(define (zer lst)
+	(length (filter (lambda (s) (is-zero? (cog-count s))) lst)))
+(zer es)
+(define sex (cog-get-atoms 'Section))
+
+(define zs 0)
+(define zx 0)
+(define (foo-sec SEC)
+	(define xes (gsc 'get-cross-sections SEC))
+	(for-each (lambda (xst)
+		(when (is-zero? (gsc 'get-count xst)) (set! zx (+ 1 zx))))
+		xes))
+
+(define (foo-xes XST) 
+	(define sct (gsc 'get-section XST))
+	(when (is-zero? (gsc 'get-count sct)) (set! zs (+ zs 1))))
+
+(define (fooli lst)
+	(for-each (lambda (ITEM)
+		(cond
+			((eq? 'Section (cog-type ITEM)) (foo-sec ITEM))
+			((eq? 'CrossSection (cog-type ITEM)) (foo-xes ITEM))))
+		lst))
+
+(define xd 0)
+(define (bar-xes XST)
+	(define sct (gsc 'get-section XST))
+	(when (and (cog-atom? sct) (is-zero? (gsc 'get-count sct)))
+		(set! xd (+ xd 1))
+		(cog-delete! sct)))
+
+
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))

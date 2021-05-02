@@ -365,11 +365,12 @@ unfinished prototype
 
 		; The Section from whence it came, or null.
 		(when (not (nil? donor))
-			(let* ((donor-sect (LLOBJ 'get-section donor)))
-				(revise-section donor-sect donor-sect)
+			(let ((donor-sect (LLOBJ 'get-section donor)))
+				(when (not (nil? donor-sect))
+					(revise-section donor-sect donor-sect)
 ; (format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
 ; (throw 'need-merge 'merge-connectors "working on it")
-			))
+			)))
 	)
 
 	; Handle the simple case, where the CrossSection does not
@@ -490,8 +491,6 @@ unfinished prototype
   `add-shape-vec-api`. The code itself is generic, and may work on
   other kinds of LLOBJ's too.
 
-  XXX At this time, this does not merge connectors within shapes.
-
   LLOBJ is used to access pairs.
   WA and WB should both be of `(LLOBJ 'left-type)`. They should
      designate two different rows in LLOBJ that will be merged,
@@ -506,6 +505,7 @@ unfinished prototype
   NOISE is the smallest observation count, below which counts will
      not be divided up, when the merge is performed. (All of the
      count will be merged, when it is less than NOISE)
+  MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of rows WA and WB are performed, using the 'projection
   merge' strategy described above. To recap, this is done as follows.
@@ -641,6 +641,7 @@ unfinished prototype
   NOISE is the smallest observation count, below which counts will
      not be divided up, when the merge is performed. (All of the
      count will be merged, when it is less than NOISE)
+  MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of row WA into CLS is performed, using the 'projection
   merge' strategy described above. To recap, this is done as follows.

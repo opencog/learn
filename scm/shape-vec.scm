@@ -559,7 +559,7 @@ around for a while.
 	(define shape-obj (add-shape-vec-api stars-obj))
 	(define shape-stars (add-pair-stars shape-obj))
 
-	; The direct sum create a flatttened vector that contains both
+	; The direct sum creates a flattened vector that contains both
 	; Sections and Cross-sections.
 	(define cover-obj (direct-sum stars-obj shape-stars))
 	(define cover-stars (add-pair-stars cover-obj))
