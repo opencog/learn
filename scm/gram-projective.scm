@@ -274,10 +274,11 @@ unfinished prototype
 (length (filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM))) all-stars))
 (length all-stars))
 
-	; Create a list of all CrossSections that donated WRD
-	; to the cluster. These CrossSections corespond to Sections
-	; having WRD in a Connector.
-	(define donor-connector-set
+	; Create a list of CrossSections, appearing in the all-stars vector,
+	; that donated WRD to the cluster. These CrossSections corespond to
+	; Sections (that are typically not in the stars) having WRD in a
+	; Connector.
+	(define donor-xes
 		(filter-map (lambda (ITEM)
 			(if (eq? 'CrossSection (cog-type ITEM))
 				(let ((donor (cog-link 'CrossSection WRD (gdr ITEM))))
@@ -286,12 +287,12 @@ unfinished prototype
 			all-stars))
 
 (format #t "WRD appears as connector in ~A crosses\n"
-(length donor-connector-set))
+(length donor-xes))
 
 	; Create a predicate to test if a CrossSection for WRD
 	; was merged into the CLS cluster.
 	; Usage: (is-merged-xsect? some-sect)
-	(define is-merged-xsect?  (make-aset-predicate donor-connector-set))
+	(define is-merged-xsect?  (make-aset-predicate donor-xes))
 
 	; Does the word appear in the connector CON?
 	(define (word-in-connector? CON)
@@ -332,7 +333,7 @@ unfinished prototype
 					(next (car location-list))
 					(rest (cdr location-list))
 
-					; The revised list, after substitution
+					; The revised list, after substitution.
 					(newli
 						(map
 							(lambda (CON)
@@ -347,14 +348,14 @@ unfinished prototype
 									CON))
 							conli))
 
-					; A copy of the Section SEC with substituted connectors
+					; A copy of the Section SEC with substituted connectors.
 					(newsec (Section (gar SEC) (ConnectorSeq newli))))
 
 				; Transfer the counts over to the new Section.
 				(set-count newsec (LLOBJ 'get-count SEC))
 				(set-count SEC 0)
 
-				; return the new section
+				; Return the new section.
 				newsec))
 	)
 

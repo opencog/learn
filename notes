@@ -3787,6 +3787,26 @@ Before merge:
 After merge:
 (ConnectorSeq . 188592) (Section . 121758) (ShapeLink . 511484) (CrossSection . 596375)
 
+wtf...add-covering-sections
+
+donor-connector-set -- donor crosses that donate to sections
+tbd same but sections that donate to crosses
+
+This won't work:
+   ; Create a list of all CrossSections, obtainable from Sections in
+   ; the all-stars vector, that donated WRD to the cluster. These
+   ; CrossSections (obviously coresponding to Sections in the stars)
+   ; have WRD as the head of the Shape.
+   (define donor-sex
+      (append-map (lambda (ITEM)
+         (if (eq? 'Section (cog-type ITEM))
+            (let ((donor (cog-link 'Section WRD (gdr ITEM))))
+               (if (nil? donor) '()
+                  (LLOBJ 'get-cross-sections donor)))
+            '()))
+         all-stars))
+
+
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))
