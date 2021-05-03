@@ -279,9 +279,10 @@ unfinished prototype
 	; having WRD in a Connector.
 	(define donor-connector-set
 		(filter-map (lambda (ITEM)
-			(when (eq? 'CrossSection (cog-type ITEM))
+			(if (eq? 'CrossSection (cog-type ITEM))
 				(let ((donor (cog-link 'CrossSection WRD (gdr ITEM))))
-					(if (nil? donor) #f donor))))
+					(if (nil? donor) #f donor))
+				#f))
 			all-stars))
 
 (format #t "WRD appears as connector in ~A crosses\n"
