@@ -48,7 +48,7 @@
 
 ; Create CrossSections and verify that they got created
 (csc 'explode-sections)
-(test-equal 15 (cog-get-atoms 'CrossSection))
+(test-equal 15 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 (test-equal 2 (length (gsc 'right-stars (Word "g"))))
@@ -66,6 +66,11 @@
 
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
+
+; 15 CrossSections should have been deleted; 9 should have
+; been created. All nine should have the WordClass as the point of the
+; Shape... XXX hang on, that's not right...
+(test-equal 9 (length (cog-get-atoms 'CrossSection)))
 
 (test-end t-simple)
 
