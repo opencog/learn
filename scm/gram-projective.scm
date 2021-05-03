@@ -274,6 +274,11 @@ unfinished prototype
 (length (filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM))) all-stars))
 (length all-stars))
 
+	; Does the word appear in the connector CON?
+	(define (word-in-connector? CON)
+		(equal? (gar CON) WRD))
+
+	; ------------------------------------------------------------------
 	; Create a list of CrossSections, appearing in the all-stars vector,
 	; that donated WRD to the cluster. These CrossSections corespond to
 	; Sections (that are typically not in the stars) having WRD in a
@@ -294,10 +299,6 @@ unfinished prototype
 	; Usage: (is-merged-xsect? some-sect)
 	(define is-merged-xsect?  (make-aset-predicate donor-xes))
 
-	; Does the word appear in the connector CON?
-	(define (word-in-connector? CON)
-		(equal? (gar CON) WRD))
-
 	; Although the Section SEC may contain WRD in one of it's connectors,
 	; that does NOT mean that WRD should be replace by CLS. That
 	; replacement is to be performed only if the corresponding
@@ -306,7 +307,7 @@ unfinished prototype
 	; It returns the updated section.
 	(define (revise-section SEC DONOR)
 
-		; List of matching cross-sections that were merged.
+		; List of donating cross-sections.
 		(define mumble
 			(filter is-merged-xsect? (LLOBJ 'get-cross-sections DONOR)))
 
@@ -359,6 +360,7 @@ unfinished prototype
 				newsec))
 	)
 
+	; ------------------------------------------------------------------
 	; Similar to `revise-section`, for a CrossSection.
 	; the given CrossSection. More precisely:
 	; Although the CrossSection XST may contain WRD in one of it's
@@ -370,8 +372,38 @@ unfinished prototype
 	(define (revise-xsect XST)
 ; xxxxx
 ; todo
+		#f
 	)
 
+	; ------------------------------------------------------------------
+
+	; Create a list of all CrossSections, obtainable from Sections in
+	; the all-stars vector, that donated WRD to the cluster. These
+	; CrossSections (obviously coresponding to Sections in the stars)
+	; have WRD as the point of the Shape.
+	(define donor-sex-shape
+		(append-map (lambda (ITEM)
+			(if (eq? 'Section (cog-type ITEM))
+				(let ((donor (cog-link 'Section WRD (gdr ITEM))))
+					(if (nil? donor) '()
+						(LLOBJ 'get-cross-sections donor)))
+				'()))
+			all-stars))
+
+	; Given a CrossSection XST having WRD as the point of the Shape,
+	; create a new CrossSection having CLS as the point of the Shape.
+	; Transfer all counts from the old CrossSection to the new one.
+	(define (revise-shape XST)
+		(define newx (CrossSection (gar XST)
+				(Shape CLS (cdr (cog-outgoing-set (gdr XST))))))
+
+		; Transfer the counts over to the new CrossSection.
+		(set-count newx (LLOBJ 'get-count XST))
+		(set-count XST 0))
+
+	(for-each revise-shape donor-sex-shape)
+
+	; ------------------------------------------------------------------
 	; Revise the Section that is obtained from the given CrossSection.
 	; The given CrossSection should be a merged CrossSection (i.e. having
 	; CLS as its point). If WRD was a donor to it, then there is some
