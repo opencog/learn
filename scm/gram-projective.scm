@@ -359,14 +359,25 @@ unfinished prototype
 				newsec))
 	)
 
-	; Same as above, but for CrossSections. More precisely:
+	; Similar to `revise-section`, for a CrossSection.
+	; the given CrossSection. More precisely:
 	; Although the CrossSection XST may contain WRD in one of it's
-	; connectors, that does NOT mean that WRD should be replace by CLS.
+	; connectors, that does NOT mean that WRD should be replaced by CLS.
 	; That replacement is to be performed only if the corresponding
 	; Section contributed to CLS. The code below searches for that
 	; Section, and if found, performs the substitution. It returns the
 	; updated CrossSection.
 	(define (revise-xsect XST)
+; xxxxx
+; todo
+	)
+
+	; Revise the Section that is obtained from the given CrossSection.
+	; The given CrossSection should be a merged CrossSection (i.e. having
+	; CLS as its point). If WRD was a donor to it, then there is some
+	; Section where WRD appears in a Connector, and that WRD should be
+	; replaced by CLS in that Section. Update that Section.
+	(define (revise-sect-from-xsect XST)
 		; Create the donating CrossSection; we need this,
 		; so as to find the Section it came from.
 		(define donor (cog-link 'CrossSection WRD (gdr XST)))
@@ -420,7 +431,7 @@ unfinished prototype
 		(define conli (cdr allseq))
 		(define need-merge (any word-in-connector? conli))
 		(if need-merge
-			(revise-xsect XST)
+			(revise-sect-from-xsect XST)
 			(transfer-xsect XST)
 		)
 	)
