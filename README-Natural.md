@@ -515,6 +515,9 @@ and pre-processing texts from Project Gutenberg, Wikipedia, and the
    at most ten-thousand sentences each; larger files cause trouble
    if the counting needs to be restarted.
 
+   However, if the intent is to scrape web pages or PDF documents,
+   take a look at "Ingestum", https://gitlab.com/sorcero/community/ingestum
+
 
 Fake Language Corpora
 ---------------------
