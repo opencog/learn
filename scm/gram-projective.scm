@@ -598,6 +598,7 @@ unfinished prototype
 	; one or the other or both rows have non-zero elements in them.
 	(define perls (ptu 'right-stars (list WA WB)))
 
+	; Loop over the sections above.
 	(for-each
 		(lambda (PRL)
 			(define PAIR-A (first PRL))

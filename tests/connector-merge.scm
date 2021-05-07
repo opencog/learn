@@ -51,8 +51,13 @@
 (test-equal 15 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
+; i.e. the 'explode should have created some CrossSections
 (test-equal 2 (length (gsc 'right-stars (Word "g"))))
 (test-equal 2 (length (gsc 'right-stars (Word "h"))))
+
+; Should not be any CrossSections on e,j; should be same as before.
+(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+(test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
 ; Merge two sections together.
 (define disc (make-discrim gsc 0.25 4 4))
