@@ -43,20 +43,33 @@
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
 
 ; Create CrossSections and verify that they got created
+; We expect 3 x (3+4) = 21 of them.
 (csc 'explode-sections)
-(test-equal 15 (length (cog-get-atoms 'CrossSection)))
+(test-equal 21 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 2 (length (gsc 'right-stars (Word "g"))))
-(test-equal 2 (length (gsc 'right-stars (Word "h"))))
+(test-equal 3 (length (gsc 'right-stars (Word "g"))))
+(test-equal 3 (length (gsc 'right-stars (Word "h"))))
 
-; Should not be any CrossSections on e,j; should be same as before.
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-(test-equal 2 (length (gsc 'right-stars (Word "j"))))
+; Expect 3 Sections and two CrossSections on e.
+(test-equal 5 (length (gsc 'right-stars (Word "e"))))
+(test-equal 4 (length (gsc 'right-stars (Word "j"))))
+(test-equal 3 (length (filter
+	(lambda (atom) (equal? (cog-type atom) 'Section))
+		(gsc 'right-stars (Word "e")))))
+(test-equal 2 (length (filter
+	(lambda (atom) (equal? (cog-type atom) 'CrossSection))
+		(gsc 'right-stars (Word "e")))))
+(test-equal 4 (length (filter
+	(lambda (atom) (equal? (cog-type atom) 'Section))
+		(gsc 'right-stars (Word "j")))))
+(test-equal 0 (length (filter
+	(lambda (atom) (equal? (cog-type atom) 'CrossSection))
+		(gsc 'right-stars (Word "j")))))
 
-; We expect a total of 3+2=5 Sections
-(test-equal 5 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+4=7 Sections
+(test-equal 7 (length (cog-get-atoms 'Section)))
 
 ; Merge two sections together.
 (define disc (make-discrim gsc 0.25 4 4))
