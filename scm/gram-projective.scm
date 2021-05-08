@@ -371,14 +371,8 @@
 === !#
 
 	; Cleanup after merging.
-(define nda
 	(remove-empty-sections LLOBJ WA)
-)(define ndb
 	(remove-empty-sections LLOBJ WB)
-)
-
-(format #t "Deleted wa=~A wb=~A\n" nda ndb)
-(format #t "---------------\n")
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

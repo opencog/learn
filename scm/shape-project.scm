@@ -82,7 +82,7 @@
 ; having {ej} as the point, and 3 more having just {e} as the point.
 ; Counts should update as well.
 ;
-; The method xxx below ensures this.
+; The function `merge-crosses` below ensures this.
 ;
 ; Connector Merging Example
 ; -------------------------
@@ -373,6 +373,12 @@ unfinished prototype
 (define (merge-crosses LLOBJ GLS DONOR FRAC NOISE)
 "
   merge-crosses - merge cross-sections corresponding to GLS and DONOR.
+
+  GLS should be the germ of a cluster (prototypically, a WordClassNode)
+  DONOR should be a Section which is being merged into GLS.
+
+  This method keeps the CrossSections in sync with the corresponding
+  merged Section (i.e. the Section having GLS as the germ).
 
   A fraction FRAC of all of the CrossSections on DONOR will be merged
   into the corresponding CrossSections on GLS.  Here, GLS is assumed
