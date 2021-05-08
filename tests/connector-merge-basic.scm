@@ -36,8 +36,7 @@
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
 ; and so on.
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
-; "p" is the fraction to merge == 0.357, a magic number coming
-; from the cosine angle between the vectors.
+; "p" is the fraction to merge == 0.25 hard-coded, below.
 ;
 
 (define t-start-cluster "simple start-cluster merge test")
@@ -76,7 +75,8 @@
 (test-equal 5 (length (cog-get-atoms 'Section)))
 
 ; Merge two sections together.
-(define disc (make-discrim gsc 0.25 4 4))
+(define frac 0.25)
+(define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
 ; We expect just one section left on "e", the klm section.
@@ -95,8 +95,7 @@
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
 ; Validate counts.
-(define angl 0.35718064330452926) ; magic value from make-discrim
-(test-approximate (* cnt-e-klm (- 1.0 angl))
+(test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
 
 ; TODO: validate counts on the other Sections...
@@ -154,7 +153,8 @@
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
 ; Merge three sections together.
-(define disc (make-discrim gsc 0.25 4 4))
+(define frac 0.25)
+(define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 (disc 'merge-function (WordClassNode "e j") (Word "f"))
 
@@ -174,8 +174,7 @@
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
 ; Validate counts.
-(define angl 0.35718064330452926) ; magic value from make-discrim
-(test-approximate (* cnt-e-klm (- 1.0 angl))
+(test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
 
 ; TODO: validate counts on the other Sections...
