@@ -72,10 +72,25 @@
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; 15 CrossSections should have been deleted; 9 should have
-; been created. All nine should have the WordClass as the point of the
-; Shape... XXX hang on, that's not right...
-(test-equal 9 (length (cog-get-atoms 'CrossSection)))
+; Of the 3 original Sections, 2 are deleted, and 3 are created,
+; leaving a grand total of 4. The 3 new ones are all e-j, the
+; remaining old one is a e with a reduced count.  This is just
+; the sum of the above.
+(test-equal 4 (length (cog-get-atoms 'Section)))
+
+; Validate counts.
+(define angl 0.35718064330452926) ; magic value from make-discrim
+(test-approximate (* cnt-e-klm (- 1.0 angl))
+	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
+
+; TODO: validate counts on the other Sections...
+
+; Of the 15 original CrossSections, 12 are deleted outright, and three
+; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
+; crosses get created, leaving a grand-total of 12.
+(test-equal 12 (length (cog-get-atoms 'CrossSection)))
+
+; TODO: validate counts on the CrossSections...
 
 (test-end t-simple)
 

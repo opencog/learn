@@ -488,9 +488,9 @@ unfinished prototype
 
 (define (remove-empty-sections LLOBJ ROW)
 "
-  remove-empty-sections LLOBJ ROW -- scan the ROW of Sections &
+  remove-empty-sections LLOBJ ROW -- scan the ROW for Sections &
   CrossSections and call cog-delete! on those that have an zero count.
-  This will also delete the correspnding cross.
+  This will also delete the corresponding CrossSections.
 "
 	; This is pointless complex only because we are trying to count
 	; how many sections were deleted. Otherwise, just ditch the `fold`
@@ -681,6 +681,7 @@ unfinished prototype
 	(when MRG-CON
 		(merge-connectors LLOBJ CLS WA)
 		(merge-connectors LLOBJ CLS WB))
+========== !#
 
 	; Cleanup after merging.
 (define nda
@@ -691,7 +692,6 @@ unfinished prototype
 
 (format #t "Deleted wa=~A wb=~A\n" nda ndb)
 (format #t "---------------\n")
-========== !#
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
