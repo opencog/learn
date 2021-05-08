@@ -46,6 +46,9 @@
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
+; We expect a total of 3+2=5 Sections
+(test-equal 5 (length (cog-get-atoms 'Section)))
+
 ; Merge two sections together.
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
@@ -59,9 +62,9 @@
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; Of the 3 original Sections, 2 are deleted, and 3 are created,
+; Of the 5 original Sections, 4 are deleted, and 3 are created,
 ; leaving a grand total of 4. The 3 new ones are all e-j, the
-; remaining old one is a e with a reduced count.  This is just
+; remaining old one is an "e" with a reduced count.  This is just
 ; the sum of the above.
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
@@ -117,24 +120,26 @@
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 (test-equal 3 (length (gsc 'right-stars (Word "f"))))
 
+; We expect a total of 3+2+3=8 Sections
+(test-equal 8 (length (cog-get-atoms 'Section)))
+
 ; Merge three sections together.
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
 (disc 'merge-function (WordClassNode "e j") (Word "f"))
 
-#! =================
 ; We expect just one section left on "e", the klm section.
-(test-equal 1 (length (gsc 'right-stars (Word "e"))))
-
 ; We expect no sections left on j
+(test-equal 1 (length (gsc 'right-stars (Word "e"))))
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
+(test-equal 0 (length (gsc 'right-stars (Word "f"))))
 
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; Of the 3 original Sections, 2 are deleted, and 3 are created,
+; Of the 8 original Sections, 7 are deleted, and 3 are created,
 ; leaving a grand total of 4. The 3 new ones are all e-j, the
-; remaining old one is a e with a reduced count.  This is just
+; remaining old one is an "e" with a reduced count.  This is just
 ; the sum of the above.
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
@@ -151,7 +156,6 @@
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
 
 ; TODO: validate counts on the CrossSections...
-========== !#
 
 (test-end t-merge-into-cluster)
 
