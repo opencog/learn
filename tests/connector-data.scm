@@ -52,7 +52,7 @@
 )
 
 ; ---------------------------------------------------------------
-; Define sections on a third words, that can be merged into above.
+; Define sections on a third word, that can be merged into above.
 
 (define cnt-f-abc 19)
 (define cnt-f-dgh 36)
@@ -77,6 +77,56 @@
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; ---------------------------------------------------------------
+; Addtional j sections, having e as connector.
+
+(define cnt-j-abe 21)
+(define cnt-j-egh 17)
+
+(define (setup-j-extra)
+
+	; Some j sections having "e" as a connector.
+	(Section (ctv 1 0 cnt-j-abe)
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+	(Section (ctv 1 0 cnt-j-egh)
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; ---------------------------------------------------------------
+; Addtional j sections, having multiple e connectors.
+
+(define cnt-j-ebe 11)
+(define cnt-j-eeh 19)
+
+(define (setup-j-double-e)
+
+	; Some j sections having "e" as a connector.
+	(Section (ctv 1 0 cnt-j-ebe)
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+	(Section (ctv 1 0 cnt-j-eeh)
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+"))))
 
 	*unspecified*
 )

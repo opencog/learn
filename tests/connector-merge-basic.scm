@@ -1,6 +1,17 @@
 ;
-; connector-merge.scm
-; Unit test for merging of Connectors.
+; connector-merge-basic.scm
+; Unit test for merging of Connectors - basic, simple case.
+;
+; Tests merging of several words into a single word-class.
+; The focus here is to make sure that the CrossSections are
+; merged correctly, and specifically, that the "point" of the
+; CrossSection has the cluster in it.
+;
+; None of the sections have the words to be merged as connectors;
+; this makes it "basic", since the complex connector merging logic
+; is not triggered.
+;
+; Created May 2021
 
 (use-modules (opencog) (opencog matrix))
 (use-modules (opencog nlp))

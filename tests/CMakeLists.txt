@@ -7,3 +7,4 @@ ENABLE_TESTING()
 
 # Add Unit tests
 ADD_GUILE_TEST(ConnectorMergeBasic connector-merge-basic.scm)
+ADD_GUILE_TEST(ConnectorMergeFull  connector-merge-full.scm)
