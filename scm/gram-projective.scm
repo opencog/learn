@@ -545,12 +545,10 @@ unfinished prototype
   all of the count will be merged.
 "
 
+	; Create the matching cross-section, and transfer counts to it.
 	(define (merge-cross XST)
 		(define mrg (LLOBJ 're-cross GLS XST))
-
-(format #t "XST recross=~A\n"  mrg)
-
-		#f
+		(accumulate-count LLOBJ mrg XST FRAC NOISE)
 	)
 
 	; Loop over donating cross-sections.
