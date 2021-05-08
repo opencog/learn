@@ -8,18 +8,58 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; See `gram-projective.scm` for an overview.
+; The creation of clusters is done via a "linear" projective merge of
+; vectors that encode Sections. See top of `gram-projective.scm` for
+; an overview of the general idea of linear projective merging.
 ;
-; xxxxxxxxxx
-; This file implements the orthogonal/union/overlap type merging
-; described in `gram-classification.scm`. See the `gram-optim.scm` file
-; for the entropy-maximizing merge implementation.
+; Recall that the "germ" of a Section is the first element of the
+; section, the "vertex". The rest of the Section is a ConnectorSeq.
+; A "vector" is a single germ, and all of the Sections on it.
+; Linear (projective) merging refers to the idea that, to merge two
+; vectors, one need only merge thier germs into a common class
+; (cluster). A new vector is created, having that cluster as the germ,
+; and including parts of the vectors of the two donor germs. The
+; mechanical process of creating the new vector is implemented in
+; `gram-projective.scm`.
 ;
-; Although the code keeps talking about words and word-classes, it is
-; (almost) entirely generic, and can merge (cluster) anything. The only
-; place(s) where its not generic is in some progress-report printing,
-; and in the general discussion of what this code does. Otherwise, what
-; to merge, and where to put the merger results are defined by LLOBJ.
+; A problem arises when Sections contain Connectors in which the
+; donating germs appear. How should this be handled? There is certainly
+; a rich variety of choices, which then easily lead to confusing
+; questions. To minimize the confusion, a principle of linearity is
+; invoked.  This principle leads to the idea of Shapes and
+; CrossSections. These last two are described in `shape-vec.scm`
+;
+; Thus, the concept of a vector of Sections sitting on a germ is
+; extended to a vector of Sections and CrossSections on that germ.
+; This is a kind of "direct sum" of the two vectors. The goal is
+; to continue to do merging as before, a linear projection of two
+; vectors onto a common cluster, making use of the CrossSections to
+; provide a suggestion of how germs in Connectors should be merged.
+;
+; Basic Merging Example
+; ---------------------
+; Consider the following projective merge, taken from the
+; `connector-merge-basic.scm` unit test:
+;
+;    (e, abc) + (j, abc) -> ({ej}, abc)
+;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
+;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+;
+; In this diagram, (e,abc) is abbreviated notation for
+; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
+; and so on.
+; {ej} is short for (WordClassNode "e j") (a set of two words)
+; "p" is the fraction of the count on the original donor section
+; that should be moved to the merged vector. Note that this is where
+; the "linearily" comes in: counts are additive, and p + (1-p) = 1
+; i.e. the total count is preserved; it is only redistributed between
+; the vectors.
+;
+; The above has NO germs in any of the connectors, and so merging the
+; corresponding sections is straight-forward.
+
+;
+;
 ;
 ; ---------------------------------------------------------------------
 

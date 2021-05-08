@@ -28,15 +28,15 @@
 ;
 ; This diagram explains what is being tested here:
 ;
-; (e, abc) + (j, abc) -> ([ej], abc)
-; (e, dgh) + (j, dgh) -> ([ej], dgh)
-; (e, klm) +  none    -> frac([ej], klm) + (1-frac)(e, klm)
+; (e, abc) + (j, abc) -> ({ej}, abc)
+; (e, dgh) + (j, dgh) -> ({ej}, dgh)
+; (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
 ; and so on.
-; [ej] is short for (WordClassNode "e j")
-; "frac" is the fraction to merge == 0.357 a magic number coming
+; {ej} is short for (WordClassNode "e j") (a set of two words)
+; "p" is the fraction to merge == 0.357, a magic number coming
 ; from the cosine angle between the vectors.
 ;
 

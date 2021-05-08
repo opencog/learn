@@ -25,17 +25,17 @@
 ;
 ; This diagram explains what is being tested here:
 ;
-; (e, abc) + (j, abc) -> ([ej], abc)
-; (e, dgh) + (j, dgh) -> ([ej], dgh)
-; (e, klm) +  none    -> frac([ej], klm) + (1-frac)(e, klm)
-;  none    + (j, abe) -> frac([ej], abx) + (1-frac)(j, aby)
-;  none    + (j, ghe) -> frac([ej], zgh) + (1-frac)(j, wgh)
+; (e, abc) + (j, abc) -> ({ej}, abc)
+; (e, dgh) + (j, dgh) -> ({ej}, dgh)
+; (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+;  none    + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
+;  none    + (j, ghe) -> p * ({ej}, zgh) + (1-p) * (j, wgh)
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
 ; and so on.
-; [ej] is short for (WordClassNode "e j")
-; "frac" is the fraction to merge == 0.357 a magic number coming
+; {ej} is short for (WordClassNode "e j") (a set of two words)
+; "p" is the fraction to merge == 0.357 a magic number coming
 ; from the cosine angle between the vectors.
 ;
 ; This is similar to the "simple start-cluster merge test" except
@@ -101,7 +101,7 @@
 
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
-; to the sections (e, ab[ej]) and (e, [ej]gh).
+; to the sections (e, ab{ej}) and (e, {ej}gh).
 ; Why? Because fractional pick-up means these two sections get created,
 ; and we expect matching cross-sections to be populated as well.
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
