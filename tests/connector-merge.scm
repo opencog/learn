@@ -5,25 +5,13 @@
 (use-modules (opencog) (opencog matrix))
 (use-modules (opencog nlp))
 (use-modules (opencog nlp learn))
-(use-modules (opencog persist) (opencog persist-rocks))
 
 (use-modules (opencog test-runner))
 
 (opencog-test-runner)
 
-; ---------------------------------------------------------------
-; Database management
-(define (setup-database)
-
-	(define dbdir "/tmp/test-merge")
-	(cog-atomspace-clear)
-
-	; Create directory if needed.
-	(if (not (access? dbdir F_OK)) (mkdir dbdir))
-	(define storage-node (RocksStorageNode
-		(string-append "rocks://" dbdir)))
-	(cog-open storage-node)
-)
+(load "connector-setup.scm")
+(load "connector-data.scm")
 
 ; ---------------------------------------------------------------
 (define t-simple "simplest merge test")
@@ -33,7 +21,6 @@
 (setup-database)
 
 ; Load some data
-(load "connector-data.scm")
 (setup-basic-sections)
 
 ; Define matrix API to the data
