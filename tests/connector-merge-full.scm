@@ -52,21 +52,19 @@
 (test-equal 3 (length (gsc 'right-stars (Word "g"))))
 (test-equal 3 (length (gsc 'right-stars (Word "h"))))
 
+(define (len-type wrd atype)
+	(length (filter
+		(lambda (atom) (equal? (cog-type atom) atype))
+		(gsc 'right-stars wrd))))
+
 ; Expect 3 Sections and two CrossSections on e.
 (test-equal 5 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
-(test-equal 3 (length (filter
-	(lambda (atom) (equal? (cog-type atom) 'Section))
-		(gsc 'right-stars (Word "e")))))
-(test-equal 2 (length (filter
-	(lambda (atom) (equal? (cog-type atom) 'CrossSection))
-		(gsc 'right-stars (Word "e")))))
-(test-equal 4 (length (filter
-	(lambda (atom) (equal? (cog-type atom) 'Section))
-		(gsc 'right-stars (Word "j")))))
-(test-equal 0 (length (filter
-	(lambda (atom) (equal? (cog-type atom) 'CrossSection))
-		(gsc 'right-stars (Word "j")))))
+
+(test-equal 3 (len-type (Word "e") 'Section))
+(test-equal 2 (len-type (Word "e") 'CrossSection))
+(test-equal 4 (len-type (Word "j") 'Section))
+(test-equal 0 (len-type (Word "j") 'CrossSection))
 
 ; We expect a total of 3+4=7 Sections
 (test-equal 7 (length (cog-get-atoms 'Section)))
@@ -75,10 +73,16 @@
 (define disc (make-discrim gsc 0.25 4 4))
 (disc 'merge-function (Word "e") (Word "j"))
 
-#! =====================
-; We expect just one section left on "e", the klm section.
-(test-equal 1 (length (gsc 'right-stars (Word "e"))))
+; We expect one section left on "e", the klm section, and two
+; cross-sections. The two cross-sections should correspond
+; to the sections (e, ab[ej]) and (e, [ej]gh).
+; Why? Because fractional pick-up means these two sections get created,
+; and we expect matching cross-sections to be populated as well.
+(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+(test-equal 1 (len-type (Word "e") 'Section))
+(test-equal 2 (len-type (Word "e") 'CrossSection))
 
+#! =====================
 ; We expect no sections left on j
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
 
