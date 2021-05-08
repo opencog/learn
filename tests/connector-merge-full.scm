@@ -29,7 +29,7 @@
 ; (e, dgh) + (j, dgh) -> ({ej}, dgh)
 ; (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
 ;  none    + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
-;  none    + (j, ghe) -> p * ({ej}, zgh) + (1-p) * (j, wgh)
+;  none    + (j, egh) -> p * ({ej}, zgh) + (1-p) * (j, wgh)
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))

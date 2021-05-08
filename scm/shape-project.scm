@@ -57,10 +57,58 @@
 ;
 ; The above has NO germs in any of the connectors, and so merging the
 ; corresponding sections is straight-forward.
-
 ;
+; Connector Merging Example
+; -------------------------
+; Consider the following projective merge, taken from the
+; `connector-merge-full.scm` unit test:
 ;
+;    (e, abc) + (j, abc) -> ({ej}, abc)
+;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
+;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+;     none    + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
+;     none    + (j, egh) -> p * ({ej}, zgh) + (1-p) * (j, wgh)
 ;
+; Here, the germ "j" has two sections with contain "e" as a connector.
+; After merging, it is less than clear as to what x,y,z,w should be.
+; There are several possibilities:
+;
+; 1)   x and  y could both be "e"
+; 2)   x and  y could both be {ej}
+; 3)   x could be {ej} and y could be just "e"
+;
+; In addition, although "p" was written as the merge fraction on the
+; last two, it is not obviously the correct fraction.
+;
+; For guidance, lets look at what is happening with the cross-sections.
+; The Section (j, abe) has three cross-sections on it:
+;
+;    [a, <j, vbe>]   and  [b, <j, ave>]  and  [e, <j, abv>]
+;
+; where [] denotes the CrossSection, and <> denotes the Shape. The "v" is
+; the variable node in the Shape (that the germ of the cross-section
+; plugs into).
+;
+; We are interested only in the last cross-section, as it is the only
+; one on the vector for the germ "e". The merge for this looks like:
+;
+;     none + [e, <j, abv>] -> p * [{ej}, <j, abv>] + (1-p) * [e, <j, abv>]
+;
+; Given the above post-merge form, we can now reconstruct the
+; corresponding post-merge Sections. The are
+;
+;     [{ej}, <j, abv>]  => (j, ab{ej})
+;     [e, <j, abv>]  => (j, abe)
+;
+; and so this reconstruction recommends:
+;
+;     none + (j, abe) -> p * (j, ab{ej}) + (1-p) * (j, abe)
+;
+; Compare to the erlier hypothesized form:
+;
+;     none + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
+;
+; Ugh.
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
