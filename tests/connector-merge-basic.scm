@@ -38,6 +38,17 @@
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
 ; "p" is the fraction to merge == 0.25 hard-coded, below.
 ;
+; What about the CrossSections?
+; We expect 15 to be created, 3 each for the 5 total Sections.
+; For example, (e, abc) explodes to
+;    [a, <e, vbc>]   and  [b, <e, avc>]  and  [c, <e, abv>]
+; where [] denotes the CrossSection, and <> denotes the Shape. The "v"
+; is the variable node in the Shape (that the germ of the cross-section
+; plugs into).
+;
+; These should then merge as follws:
+;
+;
 
 (define t-start-cluster "simple start-cluster merge test")
 (test-begin t-start-cluster)

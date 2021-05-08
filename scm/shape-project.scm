@@ -58,6 +58,23 @@
 ; The above has NO germs in any of the connectors, and so merging the
 ; corresponding sections is straight-forward.
 ;
+; CrossSection Merging Example
+; ----------------------------
+; Given the above 5 Sections (3 for "e" and 2 for "j"), they may be
+; exploded into 15 CrossSections, 3 each for the 5 total Sections.
+;
+; For example, (e, abc) explodes to
+;
+;    [a, <e, vbc>]   and  [b, <e, avc>]  and  [c, <e, abv>]
+;
+; where [] denotes the CrossSection, and <> denotes the Shape. The "v"
+; is the variable node in the Shape (that the germ of the cross-section
+; plugs into).
+;
+; Of the 15 CrossSections, none of them have "e" or "j" as a germ,
+; and therefore, none of them contribute to the vectors to be merged.
+; However, they all have Shapes whose point is a germ.
+;
 ; Connector Merging Example
 ; -------------------------
 ; Consider the following projective merge, taken from the
@@ -84,10 +101,6 @@
 ; The Section (j, abe) has three cross-sections on it:
 ;
 ;    [a, <j, vbe>]   and  [b, <j, ave>]  and  [e, <j, abv>]
-;
-; where [] denotes the CrossSection, and <> denotes the Shape. The "v" is
-; the variable node in the Shape (that the germ of the cross-section
-; plugs into).
 ;
 ; We are interested only in the last cross-section, as it is the only
 ; one on the vector for the germ "e". The merge for this looks like:
