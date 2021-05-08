@@ -1,0 +1,332 @@
+;
+; shape-project.scm
+;
+; Merge connectors based on linea shape merges.
+;
+; Copyright (c) 2021 Linas Vepstas
+;
+; ---------------------------------------------------------------------
+; OVERVIEW
+; --------
+; See `gram-projective.scm` for an overview.
+;
+; xxxxxxxxxx
+; This file implements the orthogonal/union/overlap type merging
+; described in `gram-classification.scm`. See the `gram-optim.scm` file
+; for the entropy-maximizing merge implementation.
+;
+; Although the code keeps talking about words and word-classes, it is
+; (almost) entirely generic, and can merge (cluster) anything. The only
+; place(s) where its not generic is in some progress-report printing,
+; and in the general discussion of what this code does. Otherwise, what
+; to merge, and where to put the merger results are defined by LLOBJ.
+;
+; ---------------------------------------------------------------------
+
+(use-modules (srfi srfi-1))
+(use-modules (opencog) (opencog matrix) (opencog persist))
+
+; ---------------------------------------------------------------------
+
+(define (merge-connectors LLOBJ CLS WRD)
+"
+unfinished prototype
+
+  Get the row for CLS, walk the row, merge connectors on it.
+"
+
+(define nsec 0)
+(define msec 0)
+(format #t "\n")
+(format #t "=============================\n")
+(format #t "merge ~A into ~A\n" WRD CLS)
+	; The entire vector associated with the cluster CLS
+	(define all-stars (LLOBJ 'right-stars CLS))
+
+(format #t "there are ~A sections and ~A cross of ~A\n"
+(length (filter (lambda (ITEM) (eq? 'Section (cog-type ITEM))) all-stars))
+(length (filter (lambda (ITEM) (eq? 'CrossSection (cog-type ITEM))) all-stars))
+(length all-stars))
+
+	; Does the word appear in the connector CON?
+	(define (word-in-connector? CON)
+		(equal? (gar CON) WRD))
+
+	; ------------------------------------------------------------------
+	; Create a list of CrossSections, appearing in the all-stars vector,
+	; that donated WRD to the cluster. These CrossSections corespond to
+	; Sections (that are typically not in the stars) having WRD in a
+	; Connector.
+	(define donor-xes
+		(filter-map (lambda (ITEM)
+			(if (eq? 'CrossSection (cog-type ITEM))
+				(let ((donor (cog-link 'CrossSection WRD (gdr ITEM))))
+					(if (nil? donor) #f donor))
+				#f))
+			all-stars))
+
+(format #t "WRD appears as connector in ~A crosses\n"
+(length donor-xes))
+
+	; Create a predicate to test if a CrossSection for WRD
+	; was merged into the CLS cluster.
+	; Usage: (is-merged-xsect? some-sect)
+	(define is-merged-xsect?  (make-aset-predicate donor-xes))
+
+	; Although the Section SEC may contain WRD in one of it's connectors,
+	; that does NOT mean that WRD should be replace by CLS. That
+	; replacement is to be performed only if the corresponding
+	; CrossSection contributed to CLS. The code below searches for
+	; those CrossSections, and if found, performs the substitution.
+	; It returns the updated section.
+	(define (revise-section SEC DONOR)
+
+		; List of donating cross-sections.
+		(define mumble
+			(filter is-merged-xsect? (LLOBJ 'get-cross-sections DONOR)))
+
+		; A list of all the locations in the Sections ConnectorSeq
+		; that need to be replaced with the merged class.
+		(define location-list
+			(map
+				(lambda (XSECT)
+					; The list of connectors in the shape.
+					(define conli (cdr (cog-outgoing-set (gdr XSECT))))
+					(list-index
+						(lambda (CON)
+							(eq? 'VariableNode (cog-type (gar CON))))
+						conli))
+				mumble))
+
+(set! msec (+ 1 msec))
+		; Are there any substitutions to be made? If so, then substitute.
+		(if (null? location-list) '()
+			(let* (
+					; The list of connectors in the Section SEC
+					(conli (cog-outgoing-set (gdr SEC)))
+					(idx 0)
+					(next (car location-list))
+					(rest (cdr location-list))
+
+					; The revised list, after substitution.
+					(newli
+						(map
+							(lambda (CON)
+								(define jdx idx)
+								(set! idx (+ 1 idx))
+								(if (eq? jdx next)
+									(begin
+										(when (not (null? rest))
+											(set! next (car rest))
+											(set! rest (cdr rest)))
+										(Connector CLS (gdr CON)))
+									CON))
+							conli))
+
+					; A copy of the Section SEC with substituted connectors.
+					(newsec (Section (gar SEC) (ConnectorSeq newli))))
+
+				; Transfer the counts over to the new Section.
+				(set-count newsec (LLOBJ 'get-count SEC))
+				(set-count SEC 0)
+
+				; Return the new section.
+				newsec))
+	)
+
+	; ------------------------------------------------------------------
+	; Similar to `revise-section`, for a CrossSection.
+	; the given CrossSection. More precisely:
+	; Although the CrossSection XST may contain WRD in one of it's
+	; connectors, that does NOT mean that WRD should be replaced by CLS.
+	; That replacement is to be performed only if the corresponding
+	; Section contributed to CLS. The code below searches for that
+	; Section, and if found, performs the substitution. It returns the
+	; updated CrossSection.
+	(define (revise-xsect XST)
+; xxxxx
+; todo
+		#f
+	)
+
+	; ------------------------------------------------------------------
+
+	; Create a list of all CrossSections, obtainable from Sections in
+	; the all-stars vector, that donated WRD to the cluster. These
+	; CrossSections (obviously coresponding to Sections in the stars)
+	; have WRD as the point of the Shape.
+	(define donor-sex-shape
+		(append-map (lambda (ITEM)
+			(if (eq? 'Section (cog-type ITEM))
+				(let ((donor (cog-link 'Section WRD (gdr ITEM))))
+					(if (nil? donor) '()
+						(LLOBJ 'get-cross-sections donor)))
+				'()))
+			all-stars))
+
+	; Given a CrossSection XST having WRD as the point of the Shape,
+	; create a new CrossSection having CLS as the point of the Shape.
+	; Transfer all counts from the old CrossSection to the new one.
+	(define (revise-shape XST)
+		(define newx (CrossSection (gar XST)
+				(Shape CLS (cdr (cog-outgoing-set (gdr XST))))))
+
+		; Transfer the counts over to the new CrossSection.
+		(set-count newx (LLOBJ 'get-count XST))
+		(set-count XST 0))
+
+	(for-each revise-shape donor-sex-shape)
+
+	; ------------------------------------------------------------------
+	; Revise the Section that is obtained from the given CrossSection.
+	; The given CrossSection should be a merged CrossSection (i.e. having
+	; CLS as its point). If WRD was a donor to it, then there is some
+	; Section where WRD appears in a Connector, and that WRD should be
+	; replaced by CLS in that Section. Update that Section.
+	(define (revise-sect-from-xsect XST)
+		; Create the donating CrossSection; we need this,
+		; so as to find the Section it came from.
+		(define donor (cog-link 'CrossSection WRD (gdr XST)))
+
+		; The Section from whence it came, or null.
+		(when (not (nil? donor))
+			(let ((donor-sect (LLOBJ 'get-section donor)))
+				(when (not (nil? donor-sect))
+					(revise-section donor-sect donor-sect)
+; (format #t "duuude XST=~A revised=~A\n" XST mrg-sect)
+; (throw 'need-merge 'merge-connectors "working on it")
+			)))
+	)
+
+	; Handle the simple case, where the CrossSection does not
+	; have WRD in it. For this case, just transfer the count
+	; from the originating Section to the Section that has
+	; CLS in place of WRD.  Note that XST already has CLS as
+	; it's germ.
+	(define (transfer-xsect XST)
+		; Create the donating CrossSection; we need this,
+		; so as to find the Section it came from.
+		(define donor (cog-link 'CrossSection WRD (gdr XST)))
+
+		; The Section from whence it came, or null.
+		(when (not (nil? donor))
+			(let ((orig-sect (LLOBJ 'get-section donor))
+					(new-sect (LLOBJ 'make-section XST)))
+				(if (nil? orig-sect)
+					(throw 'bug 'merge-connectors "donor section is missing"))
+				(set-count new-sect (LLOBJ 'get-count orig-sect))
+				(set-count orig-sect 0))))
+
+	; Merge the connectors in Section Sec, if needed.
+	; A merge is needed if WRD appears in any connector in SEC.
+	; A merge is possible only if the WRD donated counts to SEC.
+	(define (do-merge-sectn SEC)
+		(define conseq (gdr SEC))
+		(define conli (cog-outgoing-set conseq))
+		(define need-merge (any word-in-connector? conli))
+(set! nsec (+ 1 nsec))
+		(define donor (cog-link 'Section WRD conseq))
+		(when (and (not (nil? donor)) need-merge)
+			(revise-section SEC donor))
+	)
+
+	; Same as above, but for cross-sections.
+	(define (do-merge-xsect XST)
+		(define shape (gdr XST))
+		(define allseq (cog-outgoing-set shape))
+		(define conli (cdr allseq))
+		(define need-merge (any word-in-connector? conli))
+		(if need-merge
+			(revise-sect-from-xsect XST)
+			(transfer-xsect XST)
+		)
+	)
+
+	; Same as above, dispatching on the type.
+	(define (do-merge-cons ITEM)
+		(let ((ptype (cog-type ITEM)))
+			(cond
+				((eq? ptype 'Section) (do-merge-sectn ITEM))
+				((eq? ptype 'CrossSection) (do-merge-xsect ITEM))
+				(else (throw 'bad-pair-type 'merge-connectors
+						"Unexpected pair type for merging!")))))
+
+	; Loop over all sections and cross-sections associated with
+	; the newly created/expanded cluster.
+	(for-each do-merge-cons all-stars)
+
+(format #t "in conclusion sections handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
+)
+
+; ---------------------------------------------------------------------
+
+(define (merge-crosses LLOBJ GLS DONOR FRAC NOISE)
+"
+  merge-crosses - merge cross-sections corresponding to GLS and DONOR.
+
+  A fraction FRAC of all of the CrossSections on DONOR will be merged
+  into the corresponding CrossSections on GLS.  Here, GLS is assumed
+  to be the germ of the cluster (prototypically, a WordClassNode),
+  while DONOR is assumed to a a Section. The DONOR Section will be
+  exploded into it's CrossSections, and a FRAC of the count on the
+  donor CrossSections will be transfered to the corresponding crosses
+  on GLS. If the count on the CrossSections is less than NOISE, then
+  all of the count will be merged.
+"
+
+	; Create the matching cross-section, and transfer counts to it.
+	(define (merge-cross XST)
+		(define mrg (LLOBJ 're-cross GLS XST))
+		(accumulate-count LLOBJ mrg XST FRAC NOISE)
+	)
+
+	; Loop over donating cross-sections.
+	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
+)
+
+; ---------------------------------------------------------------
+
+(define (remove-empty-sections LLOBJ ROW)
+"
+  remove-empty-sections LLOBJ ROW -- scan the ROW for Sections &
+  CrossSections and call cog-delete! on those that have an zero count.
+  This will also delete the corresponding CrossSections.
+"
+	; This is pointless complex only because we are trying to count
+	; how many sections were deleted. Otherwise, just ditch the `fold`
+	; and replace it with `for-each`.
+	(define (del-sect SEC)
+		(define xes (LLOBJ 'get-cross-sections SEC))
+		(+
+			(if (is-zero? (LLOBJ 'get-count SEC))
+				(begin (cog-delete! SEC) 1)
+				0)
+			(fold (lambda (xst ndel)
+				(if (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+					(begin (cog-delete! xst) 1) 0))
+				0 xes)))
+
+	(define (del-xes XST)
+		(define sct (LLOBJ 'get-section XST))
+		(+
+			(if (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
+				(begin (cog-delete! sct) 1)
+				0)
+			(if (is-zero? (LLOBJ 'get-count XST))
+				(begin (cog-delete! XST) 1)
+				0)))
+
+	; Cleanup after merging.
+	(fold
+		(lambda (ITEM NDEL)
+			(if (cog-atom? ITEM)
+				(cond
+					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
+					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
+					(else
+						(throw 'remove-empty-sections 'assert "Its broken")))
+				NDEL))
+		0 (LLOBJ 'right-stars ROW))
+)
+
+; ---------------------------------------------------------------------

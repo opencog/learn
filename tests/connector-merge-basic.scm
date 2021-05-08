@@ -111,6 +111,10 @@
 (test-end t-start-cluster)
 
 ; ---------------------------------------------------------------
+;
+; Test much as above, but now adding "f" to the existing cluster "ej".
+; This is a minor variation on the above, but tests a diffferent code
+; branch.
 (define t-merge-into-cluster "simple merge-into-cluster test")
 (test-begin t-merge-into-cluster)
 

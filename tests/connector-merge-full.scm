@@ -22,6 +22,32 @@
 (load "connector-data.scm")
 
 ; ---------------------------------------------------------------
+;
+; This diagram explains what is being tested here:
+;
+; (e, abc) + (j, abc) -> ([ej], abc)
+; (e, dgh) + (j, dgh) -> ([ej], dgh)
+; (e, klm) +  none    -> frac([ej], klm) + (1-frac)(e, klm)
+;  none    + (j, abe) -> frac([ej], abx) + (1-frac)(j, aby)
+;  none    + (j, ghe) -> frac([ej], zgh) + (1-frac)(j, wgh)
+;
+; In this diagram, (e,abc) is abbreviated notation for
+; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
+; and so on.
+; [ej] is short for (WordClassNode "e j")
+; "frac" is the fraction to merge == 0.357 a magic number coming
+; from the cosine angle between the vectors.
+;
+; This is similar to the "simple start-cluster merge test" except
+; that now, "j" has two more sections. The merge follows the general
+; pattern as before, but with a twist: what should x,y,z,w be in the
+; above? There are several choices:
+;
+; 1)   x and  y could both be "e"
+; 2)   x and  y could both be "ej"
+; 3)   x could be "ej" and y could be just "e"
+;
+
 (define t-start-cluster "full start-cluster merge test")
 (test-begin t-start-cluster)
 

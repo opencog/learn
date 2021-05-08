@@ -3823,6 +3823,20 @@ done with start-cluster
 todo merge-into-cluster DONE
 (merge-crosses LLOBJ CLS PAIR-A frac-to-merge NOISE))))
 
+ej -> 5 sections (3 + 2 more ... + ??? con merge??
+
+e-> 5 or 3 ?  e-klm as before, plus:
+
+ ab(ej)  (ej)gh  abj(!) jgh(!)  so .. 3
+
+(e, abc) + (j, abc) -> ([ej], abc)
+(e, dgh) + (j, dgh) -> ([ej], dgh)
+(e, klm) +  none    -> frac([ej], klm) + (1-frac)(e, klm)
+ none    + (j, abe) -> frac([ej], abx) + (1-frac)(j, aby)
+ none    + (j, ghe) -> frac([ej], zgh) + (1-frac)(j, wgh)
+
+
+
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))

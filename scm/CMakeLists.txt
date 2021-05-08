@@ -12,6 +12,7 @@ ADD_GUILE_MODULE (FILES
 	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm
+	shape-project.scm
 	shape-vec.scm
 	singletons.scm
 	summary.scm
