@@ -46,9 +46,10 @@
 ; is the variable node in the Shape (that the germ of the cross-section
 ; plugs into).
 ;
-; These should then merge as follws:
-;
-;
+; These should stay consistent with the merged sections. i.e. these
+; should reduce to 12=9+3 grand-total, with appropriate counts.
+; 9 of them will have {ej} as the point, and 3 will have "e" as the
+; point.
 
 (define t-start-cluster "simple start-cluster merge test")
 (test-begin t-start-cluster)
@@ -85,6 +86,7 @@
 ; We expect a total of 3+2=5 Sections
 (test-equal 5 (length (cog-get-atoms 'Section)))
 
+; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
@@ -105,16 +107,23 @@
 ; the sum of the above.
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
-; Validate counts.
-(test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
-
-; TODO: validate counts on the other Sections...
-
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
 ; crosses get created, leaving a grand-total of 12.
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
+
+; --------------
+; Validate counts.
+; For example:
+(test-approximate (* cnt-e-klm (- 1.0 frac))
+	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
+
+; To gain access to the counts, load them by name.
+(expected-e-j-sections)
+(test-equal (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc))
+(test-equal (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh))
+(test-equal (* frac cnt-e-klm) (cog-count sec-ej-klm))
+(test-equal (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm))
 
 ; TODO: validate counts on the CrossSections...
 

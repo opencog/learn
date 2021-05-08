@@ -75,6 +75,15 @@
 ; and therefore, none of them contribute to the vectors to be merged.
 ; However, they all have Shapes whose point is a germ.
 ;
+; Insofar as CrossSections are secondary and are derived from the
+; Sections, self-consistency suggests that they should stay consistent
+; with the results of the merger of the Sections. Thus, post-merger,
+; the number of Sections should reduce to 12 = 3x4, wiht 9 of them
+; having {ej} as the point, and 3 more having just {e} as the point.
+; Counts should update as well.
+;
+; The method xxx below ensures this.
+;
 ; Connector Merging Example
 ; -------------------------
 ; Consider the following projective merge, taken from the

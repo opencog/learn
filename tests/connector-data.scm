@@ -51,6 +51,43 @@
 	*unspecified*
 )
 
+; Expected results from the above.
+(define sec-ej-abc #f)
+(define sec-ej-dgh #f)
+(define sec-ej-klm #f)
+(define sec-e-klm #f)
+
+(define (expected-e-j-sections)
+	(set! sec-ej-abc
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "c") (ConnectorDir "+")))))
+	(set! sec-ej-dgh
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (Word "d") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+	(set! sec-ej-klm
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
+	(set! sec-e-abc
+	(Section
+		(Word "e")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
+)
+
 ; ---------------------------------------------------------------
 ; Define sections on a third word, that can be merged into above.
 
