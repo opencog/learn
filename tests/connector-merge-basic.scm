@@ -176,6 +176,7 @@
 ; We expect a total of 3+2+3=8 Sections
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
+; --------------
 ; Merge three sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
@@ -197,18 +198,33 @@
 ; the sum of the above.
 (test-equal 4 (length (cog-get-atoms 'Section)))
 
-; Validate counts.
-(test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
-
-; TODO: validate counts on the other Sections...
-
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
 ; crosses get created, leaving a grand-total of 12.
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
 
-; TODO: validate counts on the CrossSections...
+; --------------
+; Validate counts.
+(define epsilon 1.0e-8)
+(test-approximate (* cnt-e-klm (- 1.0 frac))
+	(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
+
+; Validate counts on the Sections...
+(expected-e-j-sections)
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
+	(cog-count sec-ej-dgh) epsilon)
+(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+	(cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+
+; Validate counts on select CrossSections...
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count xes-b-ej-avc) epsilon)
+(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+	 (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 (test-end t-merge-into-cluster)
 
