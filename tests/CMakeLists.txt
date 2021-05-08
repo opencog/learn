@@ -6,4 +6,4 @@ ENABLE_TESTING()
 # ADD_SUBDIRECTORY (old)
 
 # Add Unit tests
-ADD_GUILE_TEST(ConnectorMerge connector-merge.scm)
+ADD_GUILE_TEST(ConnectorMergeBasic connector-merge-basic.scm)
