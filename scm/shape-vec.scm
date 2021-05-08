@@ -131,6 +131,15 @@
   that correspond to Sections).  Assumes that LLOBJ provides an API
   that gives access to Sections.
 
+  A CrossSection has the following form:
+      (CrossSection
+          germ  <-- this is a WordNode or a WordClassNode
+          (Shape
+             point  <-- this is a WordNode or a WordClassNode
+             (ConnectorLink ...)
+             (ConnectorLink ...)
+             ...))
+
   A more detailed description is at the top of this file.
 
   In addition to the usual methods, this also provides:
@@ -194,7 +203,7 @@
 		; about the structure of the shape.
 		(define (analyze-xsection XSECT)
 			(define SHAPE-PR (cog-outgoing-set XSECT))
-			(define WORD (first SHAPE-PR))
+			(define GERM (first SHAPE-PR))
 			(define SHAPE (second SHAPE-PR))
 			(define tmpl (cog-outgoing-set SHAPE))
 			(define point (car tmpl))
@@ -204,7 +213,7 @@
 			(define rest (drop-while not-var? conseq))
 			(define dir (gdr (car rest)))
 			(define end (cdr rest))
-			(list WORD dir begn end point))
+			(list GERM dir begn end point))
 
 		; Create the Section corresponding to the CrossSection
 		; (the word-shape pair.)  That is, unexplode (implode?)
@@ -213,7 +222,7 @@
 		; exploded word-shape pairs to the base-space of Sections.
 		; (A projecting from the covering space to the base space).
 		;
-		; Disassemble the SHAPE, insert WORD into the variable
+		; Disassemble the SHAPE, insert GERM into the variable
 		; location, and return the Section. Note that a Section
 		; always exists, because it was impossible to make a Shape,
 		; without having had the underlying Section that it reduces to.
@@ -223,27 +232,38 @@
 		; going on, at the present time. XXX FIXME.
 		(define (make-section XSECT)
 			(define parts (analyze-xsection XSECT))
-			(define WORD  (list-ref parts 0))
+			(define GERM  (list-ref parts 0))
 			(define dir   (list-ref parts 1))
 			(define begn  (list-ref parts 2))
 			(define end   (list-ref parts 3))
 			(define point (list-ref parts 4))
-			(define ctcr (Connector WORD dir))
+			(define ctcr (Connector GERM dir))
 			(define cseq (ConnectorSeq begn ctcr end))
 			(LLOBJ 'make-pair point cseq))
 
 		(define (get-section XSECT)
 			(define parts (analyze-xsection XSECT))
-			(define WORD  (list-ref parts 0))
+			(define GERM  (list-ref parts 0))
 			(define dir   (list-ref parts 1))
 			(define begn  (list-ref parts 2))
 			(define end   (list-ref parts 3))
 			(define point (list-ref parts 4))
-			(define ctcr (cog-link 'Connector WORD dir))
+			(define ctcr (cog-link 'Connector GERM dir))
 			(define cseq (if (nil? ctcr) '()
 				(cog-link 'ConnectorSeq begn ctcr end)))
 			(if (nil? cseq) '()
 				(LLOBJ 'get-pair point cseq)))
+
+		; Build a new CrossSection, by replacing the point of
+		; the given XSECT by GLS. See above for the definition
+		; of a "point".
+		(define (re-cross GLS XSECT)
+			(define SHAPE-PR (cog-outgoing-set XSECT))
+			(define GERM (first SHAPE-PR))
+			(define SHAPE (second SHAPE-PR))
+			(define tmpl (cog-outgoing-set SHAPE))
+			(define conseq (cdr tmpl))
+			(CrossSection GERM (Shape GLS conseq)))
 
 		; Get the count, if the pair exists.
 		(define (get-pair-count L-ATOM R-ATOM)
@@ -573,6 +593,7 @@ around for a while.
 				((make-section)     make-section)
 				((get-section)      get-section)
 				((get-cross-sections) get-cross-sections)
+				((re-cross)         re-cross)
 
 				((provides)         provides)
 				((clobber)          clobber)
@@ -610,6 +631,7 @@ around for a while.
 			((make-section)       (apply shape-obj (cons message args)))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
+			((re-cross)           (apply shape-obj (cons message args)))
 
 			(else             (apply cover-stars (cons message args)))))
 )

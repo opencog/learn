@@ -531,18 +531,25 @@ unfinished prototype
 
 ; ---------------------------------------------------------------------
 
-(define (merge-crosses LLOBJ CLS DONOR FRAC NOISE)
+(define (merge-crosses LLOBJ GLS DONOR FRAC NOISE)
 "
-  merge-crosses - merge cross-sections corresponding to CLS and DONOR.
+  merge-crosses - merge cross-sections corresponding to GLS and DONOR.
 
   A fraction FRAC of all of the CrossSections on DONOR will be merged
-  into the corresponding CrossSections on CLS.  Both CLS and DONOR are
-  assumed to be Sections, having an identical ConnectorSeq (and thus
-  will have identical CrossSections).  If the count on the CrossSections
-  is less than NOISE, then all of the count will be merged.
+  into the corresponding CrossSections on GLS.  Here, GLS is assumed
+  to be the germ of the cluster (prototypically, a WordClassNode),
+  while DONOR is assumed to a a Section. The DONOR Section will be
+  exploded into it's CrossSections, and a FRAC of the count on the
+  donor CrossSections will be transfered to the corresponding crosses
+  on GLS. If the count on the CrossSections is less than NOISE, then
+  all of the count will be merged.
 "
 
-	(define (merge-cross XES)
+	(define (merge-cross XST)
+		(define mrg (LLOBJ 're-cross GLS XST))
+
+(format #t "XST recross=~A\n"  mrg)
+
 		#f
 	)
 
@@ -652,19 +659,19 @@ unfinished prototype
 					(begin
 						(do-acc accum-bcnt PAIR-B frac-to-merge)
 						(if MRG-CON
-							(merge-crosses LLOBJ mrg PAIR-B frac-to-merge NOISE))))
+							(merge-crosses LLOBJ CLS PAIR-B frac-to-merge NOISE))))
 				(null-b
 					(begin
 						(do-acc accum-acnt PAIR-A frac-to-merge)
 						(if MRG-CON
-							(merge-crosses LLOBJ mrg PAIR-A frac-to-merge NOISE))))
+							(merge-crosses LLOBJ CLS PAIR-A frac-to-merge NOISE))))
 				(else ; AKA (not (or null-a null-b))
 					(begin
 						(do-acc accum-acnt PAIR-A 1.0)
 						(do-acc accum-bcnt PAIR-B 1.0)
 						(when MRG-CON
-							(merge-crosses LLOBJ mrg PAIR-A 1.0 NOISE)
-							(merge-crosses LLOBJ mrg PAIR-B 1.0 NOISE)))))
+							(merge-crosses LLOBJ CLS PAIR-A 1.0 NOISE)
+							(merge-crosses LLOBJ CLS PAIR-B 1.0 NOISE)))))
 		)
 		perls)
 
