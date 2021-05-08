@@ -531,6 +531,27 @@ unfinished prototype
 
 ; ---------------------------------------------------------------------
 
+(define (merge-crosses LLOBJ CLS DONOR FRAC NOISE)
+"
+  merge-crosses - merge cross-sections corresponding to CLS and DONOR.
+
+  A fraction FRAC of all of the CrossSections on DONOR will be merged
+  into the corresponding CrossSections on CLS.  Both CLS and DONOR are
+  assumed to be Sections, having an identical ConnectorSeq (and thus
+  will have identical CrossSections).  If the count on the CrossSections
+  is less than NOISE, then all of the count will be merged.
+"
+
+	(define (merge-cross XES)
+		#f
+	)
+
+	; Loop over donating cross-sections.
+	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
+)
+
+; ---------------------------------------------------------------------
+
 (define (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
@@ -627,18 +648,30 @@ unfinished prototype
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
+				(null-a
+					(begin
+						(do-acc accum-bcnt PAIR-B frac-to-merge)
+						(if MRG-CON
+							(merge-crosses LLOBJ mrg PAIR-B frac-to-merge NOISE))))
+				(null-b
+					(begin
+						(do-acc accum-acnt PAIR-A frac-to-merge)
+						(if MRG-CON
+							(merge-crosses LLOBJ mrg PAIR-A frac-to-merge NOISE))))
 				(else ; AKA (not (or null-a null-b))
 					(begin
 						(do-acc accum-acnt PAIR-A 1.0)
-						(do-acc accum-bcnt PAIR-B 1.0))))
+						(do-acc accum-bcnt PAIR-B 1.0)
+						(when MRG-CON
+							(merge-crosses LLOBJ mrg PAIR-A 1.0 NOISE)
+							(merge-crosses LLOBJ mrg PAIR-B 1.0 NOISE)))))
 		)
 		perls)
 
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
+#! ======= ??? Termporary disable, till we figure out wtf.
 	; Merge connectors, if asked to do so.
 	(when MRG-CON
 		(merge-connectors LLOBJ CLS WA)
@@ -653,6 +686,7 @@ unfinished prototype
 
 (format #t "Deleted wa=~A wb=~A\n" nda ndb)
 (format #t "---------------\n")
+========== !#
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
