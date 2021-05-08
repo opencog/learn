@@ -363,10 +363,12 @@
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
+#! ========
 	; Merge connectors, if asked to do so.
 	(when MRG-CON
 		(merge-connectors LLOBJ CLS WA)
 		(merge-connectors LLOBJ CLS WB))
+=== !#
 
 	; Cleanup after merging.
 (define nda

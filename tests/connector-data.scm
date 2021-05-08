@@ -83,7 +83,7 @@
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
-	(set! sec-e-abc
+	(set! sec-e-klm
 	(Section
 		(Word "e")
 		(ConnectorSeq

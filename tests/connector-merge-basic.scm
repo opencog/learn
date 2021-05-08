@@ -115,20 +115,21 @@
 ; --------------
 ; Validate counts.
 ; For example:
+(define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
+	(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
 
 ; To gain access to the counts, load them by name.
 (expected-e-j-sections)
-(test-equal (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc))
-(test-equal (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh))
-(test-equal (* frac cnt-e-klm) (cog-count sec-ej-klm))
-(test-equal (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm))
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
+(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
 ; Validate counts on select CrossSections...
-(test-equal (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc))
-(test-equal (* frac cnt-e-klm) (cog-count xes-k-ej-vlm))
-(test-equal (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm))
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
+(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 (test-end t-start-cluster)
 
