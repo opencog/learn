@@ -57,6 +57,10 @@
 (define sec-ej-klm #f)
 (define sec-e-klm #f)
 
+(define xes-b-ej-avc #f)
+(define xes-k-ej-vlm #f)
+(define xes-k-e-vlm #f)
+
 (define (expected-e-j-sections)
 	(set! sec-ej-abc
 	(Section
@@ -86,8 +90,35 @@
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
+
+	(set! xes-b-ej-avc
+	(CrossSection
+		(Word "b")
+		(Shape
+			(WordClass "e j")
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "c") (ConnectorDir "+")))))
+	(set! xes-k-ej-vlm
+	(CrossSection
+		(Word "k")
+		(Shape
+			(WordClass "e j")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
+	(set! xes-k-e-vlm
+	(CrossSection
+		(Word "k")
+		(Shape
+			(Word "e")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
 )
 
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; Define sections on a third word, that can be merged into above.
 

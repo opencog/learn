@@ -125,7 +125,10 @@
 (test-equal (* frac cnt-e-klm) (cog-count sec-ej-klm))
 (test-equal (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm))
 
-; TODO: validate counts on the CrossSections...
+; Validate counts on select CrossSections...
+(test-equal (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc))
+(test-equal (* frac cnt-e-klm) (cog-count xes-k-ej-vlm))
+(test-equal (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm))
 
 (test-end t-start-cluster)
 
