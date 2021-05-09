@@ -4990,13 +4990,74 @@ TODO: The Shapiro–Wilk test can be used to determine how close a distribution
  The Wikipedia article on it is as clear as mud.
 \end_layout
 
+\begin_layout Section*
+April-May 2021
+\end_layout
+
+\begin_layout Standard
+Before starting expt-17 with fixed sampling, it is time to ponder connector
+ merging.
+ This is turning out to be non-trivial.
+ The general upshot of the below is that the original 2019 concept for Shapes
+ and CrossSections is a good, strong idea.
+ However, assorted non-commutativities arise, and how to resolve them appropriat
+ely is not entirely clear.
+ Thus, we embark on a journey of discovery...
+\end_layout
+
+\begin_layout Standard
+But first: connector merging is needed because without it, the clustering
+ fails to adequately reduce the size of dictionaries.
+ The meta question is this: if words A and B are determined to be near-synonyms,
+ and assigned to the same cluster, then what should be done with connectors
+ that have A or B in them? Should all such connectors be automatically replaced
+ by the cluster? The naive answer is, 
+\begin_inset Quotes eld
+\end_inset
+
+yes, they should be
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The less-naive response is 
+\begin_inset Quotes eld
+\end_inset
+
+but multiple word-senses
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That is, A and B are not just words, but are word-vectors, and vector B
+ may be a linear combintation of two different word senses.
+ One of these senses might be synonymous to A, and the other might be completely
+ diffferent.
+ Thus, we want to merge that part of vector B that is (nearly) colinear
+ with A, while leaving behind a different vector B-prime that is associated
+ with some other word-sense for the word B.
+ When encountering B in a connector, is that B in the sense of wordclass-AB,
+ or is it in the sense of B-prime? If the former, then obviously, that connector
+ should be updated to use wordclass-AB; otherwise, it needs to be left alone,
+ thus implicitly defaulting to B-prime.
+\end_layout
+
+\begin_layout Standard
+TBD: Writing the above, it appears that the need for an explicit B-prime
+ has been overlooked.
+ This could cause havoc, in allowing inappropriate linkages! This is important,
+ and needs to be addressed ...
+\end_layout
+
 \begin_layout Subsection*
 Connector merging
 \end_layout
 
 \begin_layout Standard
-Before starting expt-17 with fixed sampling, it is time to ponder connector
- merging, to figure out:
+Some of the questions that arise with connector merging, to figure out:
 \end_layout
 
 \begin_layout Itemize
@@ -5009,7 +5070,7 @@ If connectors are merged, then how should vectors be handled? (Naive vectors
 \end_layout
 
 \begin_layout Itemize
-What is the right merge algorithm?
+What is the best or most correct merge algorithm?
 \end_layout
 
 \begin_layout Standard
@@ -5367,7 +5428,7 @@ Conclude: the original plan from a few years ago works and holds water.
 \end_layout
 
 \begin_layout Subsection*
-Merge algorithms
+Non-commutativity
 \end_layout
 
 \begin_layout Standard
@@ -5389,7 +5450,7 @@ connector sweep algorithm
 \begin_inset Quotes eld
 \end_inset
 
-swweep
+sweep
 \begin_inset Quotes erd
 \end_inset
 
@@ -5450,12 +5511,55 @@ Comparing, the reconstructed section on D is the same as what the sweep
  The lack of consistency will cause merge judgements to diverge...
 \end_layout
 
-\begin_layout Subsection*
-More
+\begin_layout Standard
+Thus, we have at least two algorithms:
+\end_layout
+
+\begin_layout Itemize
+Sweep-merge, as described above, where connectors are replaced by merged-connect
+ors if and only if the the rest of the connector set is identical.
+ This merge algorithm is naively described, since it does not explain what
+ to do if there are multiple connectors in a conector set that might be
+ merged.
+ It's also naive in that it does not explain how counts (frequencies) are
+ to be handled.
+\end_layout
+
+\begin_layout Itemize
+Reshape-merge, which performs the basic projective merge on the germ-vectors,
+ and then reconstructs Sections from CrossSections, thus restoring consistency
+ between sections and cross-sections.
+ It violates the intuitive correctness of the sweep-merge, but only perhaps
+ because the sweep-merge, as naively described above, assumed the 
+\begin_inset Quotes eld
+\end_inset
+
+union-merge
+\begin_inset Quotes erd
+\end_inset
+
+ strategy of transfering observation counts for vectors taht are not perfectly
+ colinear.
+ The projective-merge count transfers recognize the non-colinearity, and
+ obtain cluster centroids through weighting formulas.
 \end_layout
 
 \begin_layout Standard
-However, that's not the end of the story.
+The above ruminations suggest that reshape-merge enjoys an advantage over
+ sweep-merge, as it keeps the section/cross-section duality consistent.
+\end_layout
+
+\begin_layout Standard
+Anyway, the original 2019 plan for using shapes seems to have been a good
+ plan.
+\end_layout
+
+\begin_layout Subsection*
+Non-Commutivity, Again
+\end_layout
+
+\begin_layout Standard
+The non-communtivity can be hightened with a slightly richer example.
  Consider
 \end_layout
 
@@ -5466,7 +5570,84 @@ status open
 
 \begin_layout Plain Layout
 
-   U: (A- & G+) or (B- & G+)
+   A: (P+ & Q+) or (R+ & S+) or (K- & B+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (P+ & Q+) or (R+ & S+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: B- & T+
+\end_layout
+
+\end_inset
+
+The dictionary entry of C is present to remind us of the fact that, if B+
+ appears as a connector, then B- must also appear as a connector, somewhere.
+\end_layout
+
+\begin_layout Standard
+Based on the first two sections, a decision might be made to merge, with
+ the count on 
+\family typewriter
+(K- & B+)
+\family default
+ being small enough that it does not disrupt the merge decision.
+ Expanding this into it's CrossSections, the full vectors are:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: (P+ & Q+) or (R+ & S+) or (K- & B+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (P+ & Q+) or (R+ & S+) or (K- & A:x+) or (C:x- & T+)
+\end_layout
+
+\end_inset
+
+The merge result is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (P+ & Q+) or (R+ & S+) or (K- & B+) or (K- & A:x+) or (C:x-
+ & T+)  
+\end_layout
+
+\end_inset
+
+The cross-section leads to a reconstruction (reshape) of
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: K- & <wclass-AB>+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: <wclass-AB>- & T+
 \end_layout
 
 \end_inset
@@ -5475,48 +5656,38 @@ status open
 \end_layout
 
 \begin_layout Standard
-This looks like it could be merged with plain-vanilla D.
- ..
- ah, and post-AB-merge, it still looks mergeable.
- There's only trouble if connectors on D were merged, but connectors on
- U were not, cause then the vectors would be incomparable.
+How is this to be interpreted? Let's explore some 
+\begin_inset Quotes eld
+\end_inset
+
+common sense
+\begin_inset Quotes erd
+\end_inset
+
+ reasoning.
 \end_layout
 
-\begin_layout Standard
-When should connectors be merged? It seems like one could do this as the
- last step.
- However, doing it sooner might shrink the size of vectors, leading to improved
- performance.
- I suppose we can try it both ways...
+\begin_layout Itemize
+Case A: The count on 
+\family typewriter
+(K+ & L+ & B+)
+\family default
+ is so small that it is considered to be noise, and is completely dropped
+ before merging even starts.
+ In this case, A and B are exactly colinear (are exact synonyms).
+ The merge of A dnd B is completly unproblematic.
+ It potentially leaves C without the ability to connect to anything; but
+ 
 \end_layout
 
-\begin_layout Standard
-When writing the LG dict, the shapes are not needed, so we only have to
- merge connectors on sections.
- But if merging incrementally, as we go along, then we need to merge connectors
- both on the sections and on the shapes (Again, I guess we don't have to,
- on the shapes, but it would improve performance by reducing the number
- of shapes.)
-\end_layout
-
-\begin_layout Standard
-So I guess this is all consistent, in the end.
-\end_layout
-
-\begin_layout Standard
-The above is just some examples, and some rambling on my part.
- The fastidious would convert all of the above into theorems and proofs.
- This would be dense.
- The discussion is already dense to the uninitiated; converting the above
- 1-2 pages into 40 pages of math proofs seems ...
- well, I don't think anyone cares.
- And if no one cares, its wasted effort.
- However, it would be the right thing to do!?
-\end_layout
-
-\begin_layout Standard
-Anyway, the original 2019 plan for using shapes seems to have been a good
- plan.
+\begin_layout Itemize
+Case B: The count on 
+\family typewriter
+(K+ & L+ & B+)
+\family default
+ is small but not ignorable.
+ It is small enough to not block the merge decision.
+ Since the connector B+ is connecting
 \end_layout
 
 \begin_layout Subsection*

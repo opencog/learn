@@ -14,3 +14,14 @@ Henry W. Lin, Max Tegmark, and David Rolnick
 Why does deep and cheap learning work so well?
 3 Aug 2017
 https://arxiv.org/pdf/1608.08225.pdf
+
+John Baez
+Toplogical Crystals
+2016
+This is interesting because it discusses the treatment of covering
+spaces with vectors. This is similar to what is being done in this
+project.  However, in this project, its not clear that deck
+transformations are meaningful or carry something important, although
+perhaps the exchange of synonymous phrases can be treated as a deck
+transformation.
+
