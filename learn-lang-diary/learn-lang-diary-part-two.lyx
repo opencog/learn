@@ -5626,8 +5626,12 @@ status open
 
 \begin_layout Plain Layout
 
-   <wclass-AB>: (P+ & Q+) or (R+ & S+) or (K- & B+) or (K- & A:x+) or (C:x-
- & T+)  
+   <wclass-AB>: (P+ & Q+) or (R+ & S+) or (K- & B+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (K- & A:x+) or (C:x- & T+)  
 \end_layout
 
 \end_inset
@@ -5667,23 +5671,130 @@ common sense
  reasoning.
 \end_layout
 
-\begin_layout Itemize
-Case A: The count on 
+\begin_layout Paragraph*
+Case A:
+\end_layout
+
+\begin_layout Standard
+The count on 
 \family typewriter
-(K+ & L+ & B+)
+(K+ & B+)
 \family default
  is so small that it is considered to be noise, and is completely dropped
  before merging even starts.
  In this case, A and B are exactly colinear (are exact synonyms).
- The merge of A dnd B is completly unproblematic.
- It potentially leaves C without the ability to connect to anything; but
- 
+ The (naive) merge of A and B is completly unproblematic, except that it
+ leaves C without the ability to connect to anything.
+ This can be handled in one of two ways.
+ One way is to notice that, by detailed balance, the counts on this particular
+ C section must also be tiny, and so this section can be dropped from the
+ dictionary.
 \end_layout
 
-\begin_layout Itemize
-Case B: The count on 
+\begin_layout Standard
+Another way to avoid this dangling-connector problem is to presume that
+ the dictionary also includes
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   D: L- & B+
+\end_layout
+
+\end_inset
+
+which would provide a place for that bar B to connect.
+ but if this were the case, then we did the cross-sections on B wrong.
+ Fixing these would have given
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (P+ & Q+) or (R+ & S+) or (K- & B+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (K- & A:x+) or (C:x- & T+) or (L- & D:x+)
+\end_layout
+
+\end_inset
+
+which then reshapes to
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: K- & <wclass-AB>+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: <wclass-AB>- & T+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: L- & <wclass-AB>+
+\end_layout
+
+\end_inset
+
+This is now fully linkable, and there are no dangling pure-B connectors.
+\end_layout
+
+\begin_layout Standard
+In conclusion, this seems self-consistent eitehr way: either we can drop
+ the 
 \family typewriter
-(K+ & L+ & B+)
+A:(K+ & B+)
+\family default
+ section entirely, and, by detailed balance, we can drop 
+\family typewriter
+D:(L- & B+)
+\family default
+ also; or we can keep both, and doing it correctly leaves nothing dangling.
+\end_layout
+
+\begin_layout Standard
+Note that we have to be careful with tracking in the merge algo: when reshaping
+ to get the 
+\family typewriter
+C:<wclass-AB>- & T+
+\family default
+ section, we have to be careful to notice that the 
+\family typewriter
+C:B- & T+
+\family default
+ section was a donor, and so it should be removed (its counts driven to
+ zero).
+ Otherwise, C would end with both these sections on it, and it would be
+ a bit wonky.
+\end_layout
+
+\begin_layout Paragraph*
+Case B:
+\end_layout
+
+\begin_layout Standard
+The count on 
+\family typewriter
+(K+ & B+)
 \family default
  is small but not ignorable.
  It is small enough to not block the merge decision.
@@ -5923,11 +6034,12 @@ Then, apparently, the counts will be consistent if and only if the same
 \end_layout
 
 \begin_layout Subsection*
-expt-17 (April 2021)
+expt-19 (May 2021)
 \end_layout
 
 \begin_layout Standard
 Moving on...
+ well, not yet ...
 \end_layout
 
 \end_body
