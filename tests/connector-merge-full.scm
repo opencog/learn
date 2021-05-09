@@ -99,6 +99,7 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
+#! =====================
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
 ; to the sections (e, ab{ej}) and (e, {ej}gh).
@@ -108,7 +109,6 @@
 (test-equal 1 (len-type (Word "e") 'Section))
 (test-equal 2 (len-type (Word "e") 'CrossSection))
 
-#! =====================
 ; We expect no sections left on j
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
 
@@ -133,7 +133,7 @@
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
 
 ; TODO: validate counts on the CrossSections...
-============!#
+============ !#
 
 (test-end t-start-cluster)
 

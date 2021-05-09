@@ -82,7 +82,8 @@
 ; having {ej} as the point, and 3 more having just {e} as the point.
 ; Counts should update as well.
 ;
-; The function `merge-crosses` below ensures this.
+; The function `merge-crosses` below maintains this correspondence, for
+; the simple case.
 ;
 ; Connector Merging Example
 ; -------------------------
@@ -126,11 +127,11 @@
 ;
 ;     none + (j, abe) -> p * (j, ab{ej}) + (1-p) * (j, abe)
 ;
-; Compare to the erlier hypothesized form:
+; Compare to the earlier direct merge of the Sections:
 ;
-;     none + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
+;     none + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
 ;
-; Ugh.
+; Ugh. Non-commutative. Now what???
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))

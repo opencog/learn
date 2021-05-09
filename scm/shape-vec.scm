@@ -421,6 +421,9 @@
 			; Ask the LLOBJ for all Sections.
 			(define start-time (current-time))
 			(for-each explode-section (LLOBJ 'get-all-elts))
+
+			; Invalidate any caches that might be holding things.
+			(clobber)
 			(format #t "Elapsed time to create shapes: ~A secs\n"
 				(- (current-time) start-time))
 		)
@@ -619,6 +622,11 @@ around for a while.
 	(define cover-obj (direct-sum stars-obj shape-stars))
 	(define cover-stars (add-pair-stars cover-obj))
 
+	; Pass explode to the sahpe object, and then clobber all caches.
+	(define (explode-sections)
+		(shape-obj 'explode-sections)
+		(cover-stars 'clobber))
+
 	; Methods on the object
 	(lambda (message . args)
 		(case message
@@ -627,7 +635,7 @@ around for a while.
 
 			; pass-through
 			((fetch-pairs)        (cover-obj 'fetch-pairs))
-			((explode-sections)   (shape-obj 'explode-sections))
+			((explode-sections)   (explode-sections))
 			((make-section)       (apply shape-obj (cons message args)))
 			((get-section)        (apply shape-obj (cons message args)))
 			((get-cross-sections) (apply shape-obj (cons message args)))
