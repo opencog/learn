@@ -149,8 +149,14 @@
 ;
 ;   FRAC = (cos - cos_min) / (1.0 - cos_min)
 ;
-; where cos_min is the minimum cosine acceptable, for any kind of
+; where `cos_min` is the minimum cosine acceptable, for any kind of
 ; merging to be performed.
+; Implemented in the `make-discrim` call.
+;
+; merge-disinfo
+; -------------
+; Like `merge-discrim` but using mutual information instead of cosines.
+; Implemented in the `make-disinfo` call.
 ;
 ; start-cluster, merge-into-cluster
 ; ---------------------------------

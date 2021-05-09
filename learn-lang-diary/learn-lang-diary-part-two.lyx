@@ -5161,9 +5161,15 @@ status open
 \end_inset
 
 The determination to merge is now trickier.
- Naively, S can be merged into <wclass-AB> but doing so would wreck the
- connector set on D, as it implies an (S- & G+) which was not observed,
- and thus not mergeable.
+ Naively, S can be merged into 
+\family typewriter
+<wclass-AB>
+\family default
+ but doing so would wreck the connector set on D, as it implies an 
+\family typewriter
+(S- & G+)
+\family default
+ which was not observed, and thus not mergeable.
  ...
  unless we are willing to create such new unobserved cases.
 \end_layout
@@ -5226,7 +5232,8 @@ status open
 \end_layout
 
 \begin_layout Standard
-So the decision to merge A and B is less clear-cut, when using shapes.
+So the decision to merge A and B is less clear-cut, when using shapes (they
+ are not perfect synonyms).
  The shape variant of the S thing is
 \end_layout
 
@@ -5263,10 +5270,48 @@ status open
 
 So using shapes weakens the decision to merge S into AB.
  The decision to merge T remains strong.
- So it seems that shapes do offer stronger guarantees.
+ So it seems that shapes do offer a stronger foundation on which to make
+ merge decisions.
+ They examine similarity (almost-synonymy) out to a greater distance from
+ the germ.
  It seems like they also allow things to continue to be treated as vectors,
  instead of muddling the concept of vectors.
- After the AB-merge, the result would be:
+ After the AB-merge
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+When using the 
+\begin_inset Quotes eld
+\end_inset
+
+union-merge
+\begin_inset Quotes erd
+\end_inset
+
+ strategy, as described in in 
+\family typewriter
+src/gram-projective.scm
+\family default
+.
+ In practice, the merge style used is typically 
+\family typewriter
+merge-project
+\family default
+, which would accept only a fraction of 
+\family typewriter
+(C:x- & E+)
+\family default
+ and 
+\family typewriter
+(C:x- & F+)
+\family default
+ into the final vector.
+\end_layout
+
+\end_inset
+
+ the result would be:
 \end_layout
 
 \begin_layout Standard
@@ -5319,6 +5364,94 @@ Now, given this merged-AB thing, when happens when we look at merging S?
 Conclude: the original plan from a few years ago works and holds water.
  Use shape vectors for merge decisions.
  Once this is done, connectors can be swept up.
+\end_layout
+
+\begin_layout Subsection*
+Merge algorithms
+\end_layout
+
+\begin_layout Standard
+The above description pulls a sleight-of-hand, which presumes an algorithm
+ that is able to crawl across individual disjuncts, compare them, and update
+ words with merged word-classes.
+ Such an algorithm can be written (and has been written/prototyped).
+ It leads to some confusion, because the shapes/cross-sections are no longer
+ consistent.
+ Lets call the above the 
+\begin_inset Quotes eld
+\end_inset
+
+connector sweep algorithm
+\begin_inset Quotes erd
+\end_inset
+
+, or 
+\begin_inset Quotes eld
+\end_inset
+
+swweep
+\begin_inset Quotes erd
+\end_inset
+
+ for short.
+\end_layout
+
+\begin_layout Standard
+Starting with the above example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (C+ & D+) or (C:x- & E+) or (C:x- & F+) or (D:x- & G+)
+\end_layout
+
+\end_inset
+
+the sections can be reconstructed from the cross-sections.
+ The reconstructed sections are
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   C: <wclass-AB>- & E+
+\end_layout
+
+\begin_layout Plain Layout
+
+   C: <wclass-AB>- & F+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   D: <wclass-AB>- & G+
+\end_layout
+
+\end_inset
+
+Comparing, the reconstructed section on D is the same as what the sweep
+ algo produced, but the sections on C are *not* what the sweep merge offers.
+ That is, the sweep is not commutative with the creation of shapes.
+ This is a problem for maintaining the consistency between sections and
+ cross-sections as clusters grow.
+ The lack of consistency will cause merge judgements to diverge...
+\end_layout
+
+\begin_layout Subsection*
+More
 \end_layout
 
 \begin_layout Standard
@@ -5559,7 +5692,7 @@ Fractional counts
 
 \begin_layout Standard
 Lets try again, this time with fractional counts.
- Suppose that instead of merging 100% of B into A, wwe merge only a fraction
+ Suppose that instead of merging 100% of B into A, we merge only a fraction
  
 \begin_inset Formula $0\le y\le1$
 \end_inset
