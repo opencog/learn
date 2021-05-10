@@ -132,6 +132,13 @@
 ;     none + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
 ;
 ; Ugh. Non-commutative. Now what???
+;
+; Diary entry for "April-May 20201 ...Non-Commutivity, Again... Case B"
+; discusses what to do, and why to do it that way. The conclusion is
+; that the right answer, here is to create a section
+;    p * ({ej}, ab{ej})
+; and to zero out the other two.
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
@@ -139,6 +146,7 @@
 
 ; ---------------------------------------------------------------------
 
+#! ================= DEAD CODE
 (define (merge-connectors LLOBJ CLS WRD)
 "
 unfinished prototype
@@ -368,6 +376,8 @@ unfinished prototype
 
 (format #t "in conclusion sections handled ~A of ~A for ~A in ~A\n" msec nsec WRD CLS)
 )
+
+DEAD code ============== !#
 
 ; ---------------------------------------------------------------------
 

@@ -77,10 +77,13 @@
 (test-equal 3 (length (gsc 'right-stars (Word "g"))))
 (test-equal 3 (length (gsc 'right-stars (Word "h"))))
 
-(define (len-type wrd atype)
-	(length (filter
+(define (filter-type wrd atype)
+	(filter
 		(lambda (atom) (equal? (cog-type atom) atype))
-		(gsc 'right-stars wrd))))
+		(gsc 'right-stars wrd)))
+
+(define (len-type wrd atype)
+	(length (filter-type wrd atype)))
 
 ; Expect 3 Sections and two CrossSections on e.
 (test-equal 5 (length (gsc 'right-stars (Word "e"))))
@@ -120,13 +123,16 @@
 ; remaining old one is an "e" with a reduced count.  This is just
 ; the sum of the above.
 (test-equal 4 (length (cog-get-atoms 'Section)))
+============ !#
 
 ; Validate counts.
+(define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) 0.001)
+	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
 ; TODO: validate counts on the other Sections...
 
+#! =====================
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
 ; crosses get created, leaving a grand-total of 12.
