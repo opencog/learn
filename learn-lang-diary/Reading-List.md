@@ -25,3 +25,7 @@ transformations are meaningful or carry something important, although
 perhaps the exchange of synonymous phrases can be treated as a deck
 transformation.
 
+Harmen Prins
+Matching ontologies with distributed word embeddings
+July 7, 2016
+http://www.ru.nl/publish/pages/769526/z_harmen_prins.pdf

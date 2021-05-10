@@ -5798,7 +5798,133 @@ The count on
 \family default
  is small but not ignorable.
  It is small enough to not block the merge decision.
- Since the connector B+ is connecting
+ There are two issues to resolve.
+ The first is easy: the 
+\family typewriter
+C:B- & T+
+\family default
+ section should be recognized as a donor to 
+\family typewriter
+C:<wclass-AB>- & T+
+\family default
+, and removed (its counts driven to zero).
+ This is easy enough to determine at the time of the merge.
+\end_layout
+
+\begin_layout Standard
+The more difficult issue is what to do about the 
+\family typewriter
+<wclass-AB>:(K- & B+)
+\family default
+ section, which appears to have a dangling B connector, and the reshape
+ of 
+\family typewriter
+A:(K- & <wclass-AB>+)
+\family default
+, which seems to be a double-count.
+ The first leaves a dangling A, the second leaves a dangling B.
+ It seems fairly clear that these should be harmonized, merged together,
+ to give 
+\family typewriter
+<wclass-AB>:(K- & <wclass-AB>+)
+\family default
+.
+ It seems that this can be reasonably infered and performed at the time
+ of creation, since the donors are readily identified.
+\end_layout
+
+\begin_layout Paragraph*
+Case C:
+\end_layout
+
+\begin_layout Standard
+The count on 
+\family typewriter
+(K+ & B+)
+\family default
+ is large, large enough to split.
+ That is, A should be understood to be the direct sum of two distinct word-sense
+s, with one word-sense being 
+\family typewriter
+<wclass-AB>
+\family default
+ and the other being 
+\family typewriter
+<A-prime>:(K+ & B+).
+
+\family default
+ So, if were were able to be absolutely sure that A-prime was really a distinct
+ word-sense, then we should transfer none of the counts from the originating
+ section 
+\family typewriter
+A:(K+ & B+)
+\family default
+ to the 
+\family typewriter
+<wclass-AB>
+\family default
+ section.
+\end_layout
+
+\begin_layout Standard
+So, starting with the vectors
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   A: (P+ & Q+) or (R+ & S+) or (K- & B+)[n]
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (P+ & Q+) or (R+ & S+) or (K- & A:x+)[n] or (C:x- & T+)
+\end_layout
+
+\end_inset
+
+where square-bracket-n is the count on that section, we create a merge result
+ of the form
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (P+ & Q+) or (R+ & S+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   <wclass-AB>: (C:x- & T+)
+\end_layout
+
+\begin_layout Plain Layout
+
+   <A-prime>:  (K- & B+)[n]
+\end_layout
+
+\begin_layout Plain Layout
+
+   B: (K- & <A-prime>:x+)[n]
+\end_layout
+
+\end_inset
+
+The cross-sections leads to a reconstruction (reshape) that appears to be
+ self-consistent, so I don't see any problems here.
+\end_layout
+
+\begin_layout Standard
+If we were to split [n] into some fractional parts, then this would reduce
+ to a combination of case B and the current case, so that should also work.
 \end_layout
 
 \begin_layout Subsection*
@@ -5806,7 +5932,9 @@ Connector counts
 \end_layout
 
 \begin_layout Standard
-Lets go through above exercise, this time with counts.
+(TBD, this section needs to be harmonized with the new text above...
+ the below was written before the above was rewritten...) Lets go through above
+ exercise, this time with counts.
  Suppose the dict, with observation counts in square brackets, is
 \end_layout
 
