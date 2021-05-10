@@ -444,6 +444,7 @@ DEAD code ============== !#
 				0)))
 
 	; Cleanup after merging.
+(define cnt
 	(fold
 		(lambda (ITEM NDEL)
 			(if (cog-atom? ITEM)
@@ -454,6 +455,9 @@ DEAD code ============== !#
 						(throw 'remove-empty-sections 'assert "Its broken")))
 				NDEL))
 		0 (LLOBJ 'right-stars ROW))
+)
+(format #t "duuude deleted ~A empties for ~A\n" cnt ROW)
+cnt
 )
 
 ; ---------------------------------------------------------------------
