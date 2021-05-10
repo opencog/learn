@@ -23,28 +23,42 @@
 
 ; ---------------------------------------------------------------
 ;
+; This is similar to the "simple start-cluster merge test" except
+; that the word "e" appears both as germ, and in two connectors.
+;
 ; This diagram explains what is being tested here:
 ;
-; (e, abc) + (j, abc) -> ({ej}, abc)
-; (e, dgh) + (j, dgh) -> ({ej}, dgh)
-; (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
-;  none    + (j, abe) -> p * ({ej}, abx) + (1-p) * (j, aby)
-;  none    + (j, egh) -> p * ({ej}, zgh) + (1-p) * (j, wgh)
+; From basic section merge:
+;    (e, abc) + (j, abc) -> ({ej}, abc)
+;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
+;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+;     none    + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
+;     none    + (j, egh) -> p * ({ej}, egh) + (1-p) * (j, egh)
+;
+; However, the last two are not the final form. From the cross-section
+; merge, one has
+;    [e, <j, abv>] + none -> p * [{ej}, <j, abv>] + (1-p) * [e, <j, abv>]
+;    [e, <j, vgh>] + none -> p * [{ej}, <j, vgh>] + (1-p) * [e, <j, vgh>]
+;
+; which reshapes into
+;     p * (j, ab{ej}) + (1-p) * (j, abe)
+;     p * (j, {ej}gh) + (1-p) * (j, egh)
+;
+; The two reshapes are merged, to yeild as the final form
+;     p * ({ej}, ab{ej}) + (1-p) * (j, abe)
+;     p * ({ej}, {ej}gh) + (1-p) * (j, egh)
+;
+; The cross-sections on e should be:
+;     (1-p) * [e, <j, abv>]
+;     (1-p) * [e, <j, vgh>]
+; and nothing more. The motivation for this is described in the diary
+; entry "April-May 20201 ...Non-Commutivity, Again... Case B".
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
 ; and so on.
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
 ; "p" is the fraction to merge == 0.25, hard-coded below.
-;
-; This is similar to the "simple start-cluster merge test" except
-; that now, "j" has two more sections. The merge follows the general
-; pattern as before, but with a twist: what should x,y,z,w be in the
-; above? There are several choices:
-;
-; 1)   x and  y could both be "e"
-; 2)   x and  y could both be "ej"
-; 3)   x could be "ej" and y could be just "e"
 ;
 
 (define t-start-cluster "full start-cluster merge test")
@@ -102,15 +116,14 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-#! =====================
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
-; to the sections (e, ab{ej}) and (e, {ej}gh).
-; Why? Because fractional pick-up means these two sections get created,
-; and we expect matching cross-sections to be populated as well.
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
+; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
+#! =====================
 (test-equal 2 (len-type (Word "e") 'CrossSection))
+(test-equal 3 (length (gsc 'right-stars (Word "e"))))
 
 ; We expect no sections left on j
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
