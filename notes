@@ -3855,8 +3855,15 @@ which is ok for the basic case, but we want the germ to be ej too.
 so if start; is germ==e then ej
 if merge-into-cluster then ... ?
 
-uh no, should only be reshaping the ACC guy uh, well but we are but the
-count source is then wrong...
+ uhh, no should only be reshaping the mreged guy, who already has
+the correct counts cause accum-count set them up.
+
+in reshape-mere
+if MRG is x-sect then take the xsect  turn it into sect,
+then take that sect and replace germ by CLS.
+
+get-section or make-section?
+
 
 reshape-merge
 
