@@ -113,6 +113,7 @@
 ; We expect a total of 3+4=7 Sections
 (test-equal 7 (length (cog-get-atoms 'Section)))
 
+; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
@@ -123,10 +124,8 @@
 ; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
-#! =====================
 (test-equal 2 (len-type (Word "e") 'CrossSection))
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
-============ !#
 
 ; We expect two sections remaining on j
 (test-equal 2 (len-type (Word "j") 'Section))
@@ -144,7 +143,7 @@
 (test-equal 4 (length (cog-get-atoms 'Section)))
 ============ !#
 
-; ----------------------------------------------------------------
+; ----------------------------
 ; Validate counts.
 (define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
@@ -163,7 +162,7 @@
 (test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
-; ----------------------------------------------------------------
+; --------------------------
 #! =====================
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
