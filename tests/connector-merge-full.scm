@@ -15,6 +15,7 @@
 (use-modules (opencog nlp learn))
 
 (use-modules (opencog test-runner))
+(use-modules (srfi srfi-64))
 
 (opencog-test-runner)
 
@@ -124,10 +125,14 @@
 #! =====================
 (test-equal 2 (len-type (Word "e") 'CrossSection))
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
+============ !#
 
-; We expect no sections left on j
-(test-equal 0 (length (gsc 'right-stars (Word "j"))))
+; We expect two sections remaining on j
+(test-equal 2 (len-type (Word "j") 'Section))
+(test-equal 0 (len-type (Word "j") 'CrossSection))
+(test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
+#! =====================
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
@@ -153,6 +158,7 @@
 
 ; TODO: validate counts on the CrossSections...
 ============ !#
+(expected-j-extra-sections)
 
 (test-end t-start-cluster)
 

@@ -421,9 +421,9 @@ whatever
 	(define resect (LLOBJ 'make-section MRG))
 (format #t "duude resect=~A\n" resect)
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
-(format #t "duude mgs=~A\n" mgs)
 	(set-count mgs (LLOBJ 'get-count MRG))
 	(set-count MRG 0)
+(format #t "duude mgs=~A\n" mgs)
 )
 
 ; ---------------------------------------------------------------------

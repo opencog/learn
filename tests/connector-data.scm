@@ -117,6 +117,26 @@
 			(Connector (Word "m") (ConnectorDir "+")))))
 )
 
+(define sec-j-abe #f)
+(define sec-j-egh #f)
+
+(define (expected-j-extra-sections)
+	(set! sec-j-abe
+	(Section
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+")))))
+	(set! sec-j-egh
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+)
+
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------

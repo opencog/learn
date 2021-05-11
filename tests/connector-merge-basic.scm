@@ -18,6 +18,7 @@
 (use-modules (opencog nlp learn))
 
 (use-modules (opencog test-runner))
+(use-modules (srfi srfi-64))
 
 (opencog-test-runner)
 
@@ -92,10 +93,10 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-; We expect just one section left on "e", the klm section.
+; We expect just one section remaining on "e", the klm section.
 (test-equal 1 (length (gsc 'right-stars (Word "e"))))
 
-; We expect no sections left on j
+; We expect no sections remaining on j
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
 
 ; We expect three merged sections
@@ -183,8 +184,8 @@
 (disc 'merge-function (Word "e") (Word "j"))
 (disc 'merge-function (WordClassNode "e j") (Word "f"))
 
-; We expect just one section left on "e", the klm section.
-; We expect no sections left on j
+; We expect just one section remaining on "e", the klm section.
+; We expect no sections remaining on j
 (test-equal 1 (length (gsc 'right-stars (Word "e"))))
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
 (test-equal 0 (length (gsc 'right-stars (Word "f"))))

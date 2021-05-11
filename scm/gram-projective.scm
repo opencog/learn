@@ -359,7 +359,7 @@
 			(monitor-rate #f)
 			(cond
 				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge)) 
+				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge))
 				(else ; AKA (not (or null-a null-b))
 					(begin
 						(do-acc accum-acnt WA PAIR-A 1.0)
@@ -368,6 +368,8 @@
 
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	(LLOBJ 'clobber)
 
 	; Cleanup after merging.
 	(remove-empty-sections LLOBJ WA)
