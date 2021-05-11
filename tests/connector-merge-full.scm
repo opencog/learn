@@ -179,6 +179,6 @@
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
-; (test-end t-start-cluster)
+(test-end t-start-cluster)
 
 ; ---------------------------------------------------------------

@@ -310,7 +310,12 @@
 
 	(define monitor-rate (make-rate-monitor))
 
-	; Accumulated counts for the two.
+	; Create MemberLinks. We need these early, for decision-making
+	; during the merge.
+	(define ma (MemberLink WA CLS))
+	(define mb (MemberLink WB CLS))
+
+	; Accumulated counts for the two MemberLinks.
 	(define accum-acnt 0)
 	(define accum-bcnt 0)
 
@@ -378,19 +383,15 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	; Create and store MemberLinks.
-	(let ((ma (MemberLink WA CLS))
-			(mb (MemberLink WB CLS)))
+	; Track the number of observations moved from the two items
+	; into the combined class. This tracks the individual
+	; contributions.
+	(set-count ma accum-acnt)
+	(set-count mb accum-bcnt)
 
-		; Track the number of observations moved from the two items
-		; into the combined class. This tracks the individual
-		; contributions.
-		(set-count ma accum-acnt)
-		(set-count mb accum-bcnt)
-
-		; Put the two words into the new word-class.
-		(store-atom ma)
-		(store-atom mb))
+	; Store the counts on the MemberLinks.
+	(store-atom ma)
+	(store-atom mb)
 )
 
 ; ---------------------------------------------------------------------
@@ -436,7 +437,11 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	; Accumulated count.
+	; Create the MemberLink. We need this early, for decision-making
+	; during the merge.
+	(define ma (MemberLink WA CLS))
+
+	; Accumulated count on the MemberLink.
 	(define accum-cnt 0)
 
 	; Fraction of non-overlapping disjuncts to merge
@@ -493,12 +498,10 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	; Create and store a MemberLink.
-	(let ((ma (MemberLink WA CLS)))
-
-		; Track the number of observations moved from WA to the class.
-		(set-count ma accum-cnt)
-		(store-atom ma))
+	; Track the number of observations moved from WA to the class.
+	; Store the updated count.
+	(set-count ma accum-cnt)
+	(store-atom ma)
 )
 
 ; ---------------------------------------------------------------

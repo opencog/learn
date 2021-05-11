@@ -433,10 +433,22 @@ whatever
 (define (reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE)
 "
 under development
+
 "
-	(if (equal? 'Section (cog-type DONOR))
+	(define donor-type (cog-type DONOR))
+
+	(define (non-flat?)
+		; conseq is the connector sequence
+		(define conseq (LLOBJ 'right-element DONOR))
+
+		; Are any of the connectors in the cluster?
+		(any (lambda (con)
+				(not (nil? (cog-link 'MemberLink (gar con) GLS))))
+			(cog-outgoing-set conseq)))
+
+	(if (and (equal? 'Section donor-type) (not (non-flat?)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
-	(if (equal? 'CrossSection (cog-type DONOR))
+	(if (equal? 'CrossSection donor-type)
 		(merge-resects LLOBJ GLS MRG FRAC NOISE))
 )
 
