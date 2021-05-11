@@ -3843,11 +3843,20 @@ e-> 5 or 3 ?  e-klm as before, plus:
 ;     (1-p) * [e, <j, abv>]
 ;     (1-p) * [e, <j, vgh>]
 
-merge-cross is creating this: ???
+merge-cross is creating this:
 [e, <{ej}, vgh>]
 [e, <{ej}, abv>]
 
 from the donor (j, egh) and (j, abe)
+that is  from ({ej}, egh) and ({ej}, abe)
+...
+which is ok for the basic case, but we want the germ to be ej too.
+
+so if start; is germ==e then ej
+if merge-into-cluster then ... ?
+
+uh no, should only be reshaping the ACC guy uh, well but we are but the
+count source is then wrong...
 
 reshape-merge
 

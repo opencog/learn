@@ -351,7 +351,7 @@
 				(set! CNT (+ CNT
 					(accumulate-count LLOBJ mrg PR WEI NOISE)))
 				(if MRG-CON
-					(reshape-merge LLOBJ CLS W PR WEI NOISE)))
+					(reshape-merge LLOBJ CLS mrg W PR WEI NOISE)))
 
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
@@ -462,7 +462,7 @@
 				(set! accum-cnt (+ accum-cnt
 					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE)))
 				(if MRG-CON
-					(reshape-merge LLOBJ CLS WA PAIR-A WEI NOISE)))
+					(reshape-merge LLOBJ CLS PRC WA PAIR-A WEI NOISE)))
 
 			; There's nothing to do if A is empty.
 			(when (not (null? PAIR-A))

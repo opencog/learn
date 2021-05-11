@@ -381,9 +381,10 @@ DEAD code ============== !#
 
 ; ---------------------------------------------------------------------
 
-(define (merge-crosses LLOBJ GLS DONOR FRAC NOISE)
+(define (merge-crosses LLOBJ GLS MRG DONOR FRAC NOISE)
 "
   merge-crosses - merge cross-sections corresponding to GLS and DONOR.
+xxxx
 
   GLS should be the germ of a cluster (prototypically, a WordClassNode)
   DONOR should be a Section which is being merged into GLS.
@@ -400,7 +401,6 @@ DEAD code ============== !#
   on GLS. If the count on the CrossSections is less than NOISE, then
   all of the count will be merged.
 "
-
 	; Create the matching cross-section, and transfer counts to it.
 	; xmr is a CrossSection, with GLS appearing in all places where
 	; the germ of DONOR had appeared.
@@ -412,18 +412,19 @@ DEAD code ============== !#
 
 (format #t "--------------------\n")
 (format #t "duude donor=~A\n" DONOR)
+(format #t "duude MRG=~A\n" MRG)
 	; Loop over donating cross-sections.
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
 
 ; ---------------------------------------------------------------------
 
-(define (reshape-merge LLOBJ GLS W DONOR FRAC NOISE)
+(define (reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE)
 "
 under development
 "
 	(if (equal? 'Section (cog-type DONOR))
-		(merge-crosses LLOBJ GLS DONOR FRAC NOISE))
+		(merge-crosses LLOBJ GLS MRG DONOR FRAC NOISE))
 )
 
 ; ---------------------------------------------------------------
