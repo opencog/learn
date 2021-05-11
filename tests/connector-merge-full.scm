@@ -155,10 +155,12 @@
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
 ; crosses get created, leaving a grand-total of 12.
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
-
-; TODO: validate counts on the CrossSections...
 ============ !#
+
+; Validate counts on the CrossSections...
 (expected-j-extra-sections)
+(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
 (test-end t-start-cluster)
 
