@@ -132,16 +132,14 @@
 (test-equal 0 (len-type (Word "j") 'CrossSection))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
-#! =====================
-; We expect three merged sections
-(test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
+; We expect five merged sections
+(test-equal 5 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; Of the 5 original Sections, 4 are deleted, and 3 are created,
-; leaving a grand total of 4. The 3 new ones are all e-j, the
-; remaining old one is an "e" with a reduced count.  This is just
-; the sum of the above.
-(test-equal 4 (length (cog-get-atoms 'Section)))
-============ !#
+; Of the 7=3+4 original Sections, 4 are deleted, and 5 are created,
+; leaving a grand total of 8. The 5 new ones are all e-j, the
+; remaining three ones are "e" or "j" with reduced counts.
+; This is just a total over everything above.
+(test-equal 8 (length (cog-get-atoms 'Section)))
 
 ; ----------------------------
 ; Validate counts.

@@ -437,6 +437,7 @@ under development
 "
 	(define donor-type (cog-type DONOR))
 
+	; Return #t if any connector in DONOR belongs to GLS.
 	(define (non-flat?)
 		; conseq is the connector sequence
 		(define conseq (LLOBJ 'right-element DONOR))
