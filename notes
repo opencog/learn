@@ -3864,8 +3864,12 @@ then take that sect and replace germ by CLS.
 
 get-section or make-section?
 
-
 reshape-merge
+
+({ej}, abe) -> [e, <{ej}, abv>]   zero
+({ej}, egh) -> [e, <{ej}, vgh>]   zero
+(j, abe)    -> [e, <j, abv>]   OK (1-p)  xes-e-j-abv
+(j, egh)    -> [e, <j, vgh>]   OK (1-p)  xes-e-j-vgh
 
 
 

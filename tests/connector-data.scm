@@ -176,6 +176,8 @@
 
 (define sec-j-abe #f)
 (define sec-j-egh #f)
+(define xes-e-j-abv #f)
+(define xes-e-j-vgh #f)
 
 (define (expected-j-extra-sections)
 	(set! sec-j-abe
@@ -190,6 +192,24 @@
 		(Word "j")
 		(ConnectorSeq
 			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-e-j-abv
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "j")
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-e-j-vgh
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "j")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
 )

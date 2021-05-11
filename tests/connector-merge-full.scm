@@ -45,7 +45,8 @@
 ;     p * (j, ab{ej}) + (1-p) * (j, abe)
 ;     p * (j, {ej}gh) + (1-p) * (j, egh)
 ;
-; The two reshapes are merged, to yeild as the final form
+; The two reshapes are combined with the two merged sections, to yeild
+; as the final form
 ;     p * ({ej}, ab{ej}) + (1-p) * (j, abe)
 ;     p * ({ej}, {ej}gh) + (1-p) * (j, egh)
 ;
@@ -148,8 +149,6 @@
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
-; TODO: validate counts on the other Sections...
-
 #! =====================
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
@@ -157,11 +156,14 @@
 (test-equal 12 (length (cog-get-atoms 'CrossSection)))
 ============ !#
 
-; Validate counts on the CrossSections...
+; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
-(test-end t-start-cluster)
+(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
+
+; (test-end t-start-cluster)
 
 ; ---------------------------------------------------------------
