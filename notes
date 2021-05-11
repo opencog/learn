@@ -3866,11 +3866,19 @@ get-section or make-section?
 
 reshape-merge
 
-({ej}, abe) -> [e, <{ej}, abv>]   zero
+({ej}, abe) -> [e, <{ej}, abv>]   zero   but p(1-p)
 ({ej}, egh) -> [e, <{ej}, vgh>]   zero
-(j, abe)    -> [e, <j, abv>]   OK (1-p)  xes-e-j-abv
+(j, abe)    -> [e, <j, abv>]   OK (1-p)  xes-e-j-abv  but (1-p)(1-p)
 (j, egh)    -> [e, <j, vgh>]   OK (1-p)  xes-e-j-vgh
 
+(j, abe) has count reduced during section merge...
+then handed to the recrosses...
+sent in (j, abe) -> [e, <j, abv>] -> recross [e, <{ej}, abv>]
+donor alreaddy has (1-p)=15.75
+xmr is [e, <{ej}, abv>] with zero
+XST is [e, <j, abv>] wth 15.75   (acting as donor to xmr)
+
+many donors have zero counts... i.e. were totalled
 
 
 --------------------------

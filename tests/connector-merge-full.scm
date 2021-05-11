@@ -144,11 +144,26 @@
 (test-equal 4 (length (cog-get-atoms 'Section)))
 ============ !#
 
+; ----------------------------------------------------------------
 ; Validate counts.
 (define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
+; We expect abc, dgh and klm sections to behave exactly as they do for
+; the basic test case, and so cut-n-paste that unit test code.
+(expected-e-j-sections)
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
+(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+
+; Validate counts on select CrossSections...
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
+(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
+
+; ----------------------------------------------------------------
 #! =====================
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new

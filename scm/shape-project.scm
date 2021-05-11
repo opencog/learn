@@ -381,9 +381,9 @@ DEAD code ============== !#
 
 ; ---------------------------------------------------------------------
 
-(define (merge-crosses LLOBJ GLS DONOR FRAC NOISE)
+(define (merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
 "
-  merge-crosses - merge cross-sections corresponding to GLS and DONOR.
+  merge-recrosses - merge cross-sections corresponding to GLS and DONOR.
 
   GLS should be the germ of a cluster (prototypically, a WordClassNode)
   DONOR should be a Section which is being merged into GLS.
@@ -405,9 +405,15 @@ DEAD code ============== !#
 	; the germ of DONOR had appeared.
 	(define (merge-cross XST)
 		(define xmr (LLOBJ 're-cross GLS XST))
+(define mb (cog-count xmr))
+(define st (cog-count XST))
 		(accumulate-count LLOBJ xmr XST FRAC NOISE)
+(format #t "duude xmr= ~A -> ~A\n" mb xmr)
+(format #t "duude XST= ~A -> ~A\n" st XST)
 	)
 
+(format #t "--------------------\n")
+(format #t "duude donor=~A\n" DONOR)
 	; Loop over donating cross-sections.
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
@@ -416,14 +422,10 @@ DEAD code ============== !#
 "
 whatever
 "
-(format #t "--------------------\n")
-(format #t "duude mrg=~A\n" MRG)
 	(define resect (LLOBJ 'make-section MRG))
-(format #t "duude resect=~A\n" resect)
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 	(set-count mgs (LLOBJ 'get-count MRG))
 	(set-count MRG 0)
-(format #t "duude mgs=~A\n" mgs)
 )
 
 ; ---------------------------------------------------------------------
@@ -433,7 +435,7 @@ whatever
 under development
 "
 	(if (equal? 'Section (cog-type DONOR))
-		(merge-crosses LLOBJ GLS DONOR FRAC NOISE))
+		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
 	(if (equal? 'CrossSection (cog-type DONOR))
 		(merge-resects LLOBJ GLS MRG FRAC NOISE))
 )
