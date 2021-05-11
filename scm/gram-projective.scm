@@ -347,34 +347,27 @@
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLS col))
 
-			(define (do-acc CNT PR WEI)
+			(define (do-acc CNT W PR WEI)
 				(set! CNT (+ CNT
 					(accumulate-count LLOBJ mrg PR WEI NOISE)))
 				(if MRG-CON
-					(merge-crosses LLOBJ CLS PR WEI NOISE)))
+					(reshape-merge LLOBJ CLS W PR WEI NOISE)))
 
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
+				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge)) 
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt PAIR-A 1.0)
-						(do-acc accum-bcnt PAIR-B 1.0)))))
+						(do-acc accum-acnt WA PAIR-A 1.0)
+						(do-acc accum-bcnt WB PAIR-B 1.0)))))
 		perls)
 
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-#! ========
-	; Merge connectors, if asked to do so.
-	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA)
-		(merge-connectors LLOBJ CLS WB))
-=== !#
 
 	; Cleanup after merging.
 	(remove-empty-sections LLOBJ WA)
@@ -469,7 +462,7 @@
 				(set! accum-cnt (+ accum-cnt
 					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE)))
 				(if MRG-CON
-					(merge-crosses LLOBJ CLS PAIR-A WEI NOISE)))
+					(reshape-merge LLOBJ CLS WA PAIR-A WEI NOISE)))
 
 			; There's nothing to do if A is empty.
 			(when (not (null? PAIR-A))
@@ -491,11 +484,6 @@
 
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-#! ==========
-	; Merge connectors, if asked to do so.
-	(when MRG-CON (merge-connectors LLOBJ CLS WA))
-========= !#
 
 	; Cleanup after merging.
 	(remove-empty-sections LLOBJ WA)

@@ -402,13 +402,28 @@ DEAD code ============== !#
 "
 
 	; Create the matching cross-section, and transfer counts to it.
+	; xmr is a CrossSection, with GLS appearing in all places where
+	; the germ of DONOR had appeared.
 	(define (merge-cross XST)
-		(define mrg (LLOBJ 're-cross GLS XST))
-		(accumulate-count LLOBJ mrg XST FRAC NOISE)
+		(define xmr (LLOBJ 're-cross GLS XST))
+(format #t "duude recrssed to xmr=~A\n" xmr)
+		(accumulate-count LLOBJ xmr XST FRAC NOISE)
 	)
 
+(format #t "--------------------\n")
+(format #t "duude donor=~A\n" DONOR)
 	; Loop over donating cross-sections.
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
+)
+
+; ---------------------------------------------------------------------
+
+(define (reshape-merge LLOBJ GLS W DONOR FRAC NOISE)
+"
+under development
+"
+	(if (equal? 'Section (cog-type DONOR))
+		(merge-crosses LLOBJ GLS DONOR FRAC NOISE))
 )
 
 ; ---------------------------------------------------------------

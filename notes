@@ -3839,6 +3839,17 @@ e-> 5 or 3 ?  e-klm as before, plus:
 (define xes-k-ej-vlm #f)
 (define xes-k-e-vlm #f)
 
+; The cross-sections on e should be:
+;     (1-p) * [e, <j, abv>]
+;     (1-p) * [e, <j, vgh>]
+
+merge-cross is creating this: ???
+[e, <{ej}, vgh>]
+[e, <{ej}, abv>]
+
+from the donor (j, egh) and (j, abe)
+
+reshape-merge
 
 
 
