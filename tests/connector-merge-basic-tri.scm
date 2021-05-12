@@ -1,8 +1,8 @@
 ;
-; connector-merge-basic.scm
+; connector-merge-basic-tri.scm
 ; Unit test for merging of Connectors - basic, simple case.
 ;
-; Tests merging of several words into a single word-class.
+; Tests merging of three words into a single word-class.
 ; The focus here is to make sure that the CrossSections are
 ; merged correctly, and specifically, that the "point" of the
 ; CrossSection has the cluster in it.
@@ -29,9 +29,15 @@
 ;
 ; This diagram explains what is being tested here:
 ;
+; The first two words are merged as before (in the basic test):
 ;    (e, abc) + (j, abc) -> ({ej}, abc)
 ;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
 ;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+;
+; and then "f" is added:
+;    ({ej}, abc) + (f, abc) -> ({ej}, abc)
+;    ({ej}, dgh) + (f, dgh) -> ({ej}, dgh)
+;    ({ej}, klm) + (f, klm) -> ({ej}, klm)
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
@@ -52,14 +58,24 @@
 ; 9 of them will have {ej} as the point, and 3 will have "e" as the
 ; point.
 
-(define t-start-cluster "simple start-cluster merge test")
-(test-begin t-start-cluster)
+; ---------------------------------------------------------------
+;
+; Test is more or less the same as the basic test, except that now
+; a third word is added, to extend an existing cluster. Specifically,
+; word "f" to the existing cluster "ej".
+;
+; This minor variation tests a diffferent code branch than the
+; initial cluster formation code.
+;
+(define t-merge-into-cluster "simple merge-into-cluster test")
+(test-begin t-merge-into-cluster)
 
 ; Open the database
 (setup-database)
 
 ; Load some data
 (setup-e-j-sections)
+(setup-f-sections)
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
@@ -70,39 +86,42 @@
 ; We expect 3 sections on "e" and two on "j"
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
+(test-equal 3 (length (gsc 'right-stars (Word "f"))))
 
 ; Create CrossSections and verify that they got created
 (csc 'explode-sections)
-(test-equal 15 (length (cog-get-atoms 'CrossSection)))
+(test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 2 (length (gsc 'right-stars (Word "g"))))
-(test-equal 2 (length (gsc 'right-stars (Word "h"))))
+(test-equal 3 (length (gsc 'right-stars (Word "g"))))
+(test-equal 3 (length (gsc 'right-stars (Word "h"))))
 
 ; Should not be any CrossSections on e,j; should be same as before.
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
+(test-equal 3 (length (gsc 'right-stars (Word "f"))))
 
-; We expect a total of 3+2=5 Sections
-(test-equal 5 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+2+3=8 Sections
+(test-equal 8 (length (cog-get-atoms 'Section)))
 
-; --------------------------
-; Merge two sections together.
+; --------------
+; Merge three sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
+(disc 'merge-function (WordClassNode "e j") (Word "f"))
 
 ; We expect just one section remaining on "e", the klm section.
-(test-equal 1 (length (gsc 'right-stars (Word "e"))))
-
 ; We expect no sections remaining on j
+(test-equal 1 (length (gsc 'right-stars (Word "e"))))
 (test-equal 0 (length (gsc 'right-stars (Word "j"))))
+(test-equal 0 (length (gsc 'right-stars (Word "f"))))
 
 ; We expect three merged sections
 (test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; Of the 5 original Sections, 4 are deleted, and 3 are created,
+; Of the 8 original Sections, 7 are deleted, and 3 are created,
 ; leaving a grand total of 4. The 3 new ones are all e-j, the
 ; remaining old one is an "e" with a reduced count.  This is just
 ; the sum of the above.
@@ -115,23 +134,27 @@
 
 ; --------------
 ; Validate counts.
-; For example:
 (define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
 
-; To gain access to the counts, load them by name.
+; Validate counts on the Sections...
 (expected-e-j-sections)
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
-(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
+	(cog-count sec-ej-dgh) epsilon)
+(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+	(cog-count sec-ej-klm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
 ; Validate counts on select CrossSections...
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count xes-b-ej-avc) epsilon)
+(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+	 (cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
-(test-end t-start-cluster)
+(test-end t-merge-into-cluster)
 
 ; ---------------------------------------------------------------
