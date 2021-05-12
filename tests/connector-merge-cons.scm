@@ -1,8 +1,8 @@
 ;
-; connector-merge-full.scm
-; Unit test for merging of Connectors - full case.
+; connector-merge-cons.scm
+; Unit test for merging of Connectors - single connector; 2-cluster
 ;
-; Tests merging of several words into a single word-class.
+; Tests merging of two words into a single word-class.
 ; The focus here is to make sure that that when the words to
 ; be merged also appear in Connectors, that those are merged
 ; correctly, too. This triggers some extra merge logic, beyond
@@ -75,8 +75,8 @@
 ;     ({ej}, {ej}gh) * p
 ; There are 8 of these, so expect 24=8*3 CrossSections
 
-(define t-start-cluster "full start-cluster merge test")
-(test-begin t-start-cluster)
+(define t-two-cluster "connector 2-cluster merge test")
+(test-begin t-two-cluster)
 
 ; Open the database
 (setup-database)
@@ -192,6 +192,6 @@
 (test-approximate (* frac cnt-j-abe) (cog-count xes-ej-ej-abv) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
 
-(test-end t-start-cluster)
+(test-end t-two-cluster)
 
 ; ---------------------------------------------------------------
