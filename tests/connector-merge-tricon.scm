@@ -1,6 +1,6 @@
 ;
-; connector-merge-tri.scm
-; Unit test for merging of Connectors - single connector; 3-cluster
+; connector-merge-tricon.scm
+; Unit test for merging of Connectors - two single connectors; 3-cluster
 ;
 ; Tests merging of three words into a single word-class.
 ; The focus here is to make sure that that when the words to
@@ -44,7 +44,7 @@
 ;
 ; There are 8 of these, so expect 24=8*3 CrossSections
 
-(define t-three-cluster "connector 3-cluster merge test")
+(define t-three-cluster "one-connector-2-word 3-cluster merge test")
 (test-begin t-three-cluster)
 
 ; Open the database
@@ -54,6 +54,7 @@
 (setup-e-j-sections)
 (setup-f-sections)
 (setup-j-extra)
+(setup-f-extra)
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
@@ -111,8 +112,8 @@
 ; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+(test-equal 4 (len-type (Word "e") 'CrossSection))
+(test-equal 5 (length (gsc 'right-stars (Word "e"))))
 
 ; We expect two sections remaining on j
 (test-equal 2 (len-type (Word "j") 'Section))
@@ -173,6 +174,6 @@
 (test-approximate (* frac cnt-j-abe) (cog-count xes-ej-ej-abv) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
 
-(test-end t-three-cluster)
+; (test-end t-three-cluster)
 
 ; ---------------------------------------------------------------

@@ -556,8 +556,7 @@ DEAD code ============== !#
 						(throw 'remove-empty-sections 'assert "Its broken")))
 				))
 		(LLOBJ 'right-stars ROW))
-
-(format #t "duuude deleted ~A secs, ~A crosses for ~A\n" ns nx ROW)
+	; (format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
 )
 
 ; ---------------------------------------------------------------------
