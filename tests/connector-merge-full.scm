@@ -145,7 +145,9 @@
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
 ; We expect five merged sections
-(test-equal 5 (length (gsc 'right-stars (WordClassNode "e j"))))
+(test-equal 5 (len-type (WordClass "e j") 'Section))
+(test-equal 2 (len-type (WordClass "e j") 'CrossSection))
+(test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
 
 ; Of the 7=3+4 original Sections, 4 are deleted, and 5 are created,
 ; leaving a grand total of 8. The 5 new ones are all e-j, the
