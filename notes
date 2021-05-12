@@ -3896,6 +3896,34 @@ then regerm, then unexplode...
 
 distinct-type
 
+a ej vbc OK from ({ej}, abc) 1.0 checked
+b ej avc
+c ej abv
+
+d ej vgh OK from ({ej}, dgh) 1.0
+g ej dvh
+h ej dgv
+
+k ej vlm OK from ({ej}, klm) p  checked
+l ej kvm
+m ej klv
+
+k e vlm OK from (e, klm) 1-p  checked
+l e kvm
+m e klv
+
+a j vbe OK from (j, abe) 1-p checked
+b j ave
+e j abv
+
+e j vgh OK from (j, egh) 1-p checked
+g j evh
+h j egh
+
+p * ({ej}, ab{ej}) missing
+p * ({ej}, {ej}gh)
+
+
 
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm

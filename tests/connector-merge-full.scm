@@ -62,6 +62,18 @@
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
 ; "p" is the fraction to merge == 0.25, hard-coded below.
 ;
+; What should the cross-sections be?
+; The should track the above sections, with count as appropriate.
+; to recap, expect:
+;     ({ej}, abc)    * 1.0
+;     ({ej}, dgh)    * 1.0
+;     ({ej}, klm)    * p
+;     (e, klm)       * 1-p
+;     (j, abe)       * 1-p
+;     (j, egh)       * 1-p
+;     ({ej}, ab{ej}) * p
+;     ({ej}, {ej}gh) * p
+; There are 8 of these, so expect 24=8*3 CrossSections
 
 (define t-start-cluster "full start-cluster merge test")
 (test-begin t-start-cluster)
@@ -161,12 +173,8 @@
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; --------------------------
-#! =====================
-; Of the 15 original CrossSections, 12 are deleted outright, and three
-; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
-; crosses get created, leaving a grand-total of 12.
-(test-equal 12 (length (cog-get-atoms 'CrossSection)))
-============ !#
+; Expect 24 CrossSections as described above.
+; (test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)
