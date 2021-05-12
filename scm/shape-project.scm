@@ -405,27 +405,39 @@ DEAD code ============== !#
 	; the germ of DONOR had appeared.
 	(define (merge-cross XST)
 		(define xmr (LLOBJ 're-cross GLS XST))
-(define mb (cog-count xmr))
-(define st (cog-count XST))
 		(accumulate-count LLOBJ xmr XST FRAC NOISE)
-(format #t "duude xmr= ~A -> ~A\n" mb xmr)
-(format #t "duude XST= ~A -> ~A\n" st XST)
 	)
 
-(format #t "--------------------\n")
-(format #t "duude donor=~A\n" DONOR)
 	; Loop over donating cross-sections.
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
 
-(define (merge-resects LLOBJ GLS MRG FRAC NOISE)
+(define (merge-resects LLOBJ GLS XMR)
 "
-whatever
+  merge-resects - Merge Sections corresponding to CrossSection XMR
+
+  XMR is assumed to be a CrossSection.
+  GLS is assumed to be a cluster node.
+
+  This recreates the Section corresponding to XMR, and from that,
+  replaces the germ by GLS. The entire count on XMR is transfered
+  to this new section.
+
+  Example:
+    XMR is (CrossSection 'ej' (Shape j a b var))
+    Output is (Section 'ej' (ConnectorSeq a b 'ej'))
 "
-	(define resect (LLOBJ 'make-section MRG))
+	(define resect (LLOBJ 'make-section XMR))
+
+	; Crap. At this point, LLOBJ has a 'make-pair that is incorrect.
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
-	(set-count mgs (LLOBJ 'get-count MRG))
-	(set-count MRG 0)
+
+(format #t "--------------------\n")
+(format #t "duude XMR=~A\n" XMR)
+(format #t "duude mgs=~A\n" mgs)
+	; Should this clobber the count, or increment it?
+	(set-count mgs (LLOBJ 'get-count XMR))
+	(set-count XMR 0)
 )
 
 ; ---------------------------------------------------------------------
@@ -450,7 +462,7 @@ under development
 	(if (and (equal? 'Section donor-type) (not (non-flat?)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
 	(if (equal? 'CrossSection donor-type)
-		(merge-resects LLOBJ GLS MRG FRAC NOISE))
+		(merge-resects LLOBJ GLS MRG))
 )
 
 ; ---------------------------------------------------------------
