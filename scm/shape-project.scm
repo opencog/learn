@@ -426,10 +426,12 @@ DEAD code ============== !#
 
   The goal of this routine is to create a single Section (and its
   crosses) that have GLS both as the germ, and in the appropriate
-  connector locations.
+  connector locations. This will leave behind some Sections with
+  inconsistent connectors; use `kill-unflat` below to remove those.
 
   Example:
     XMR is (CrossSection 'ej' (Shape j a b var))
+    GLS is 'ej'
     Creates (Section 'ej' (ConnectorSeq a b 'ej'))
 "
 	(define resect (LLOBJ 'make-section XMR))
@@ -450,13 +452,23 @@ DEAD code ============== !#
 
 (define (kill-unflat LLOBJ GLS W XMR)
 "
-  stuff
+  kill-unflat LLOBJ GLS W XMR
+
+  Given CrossSection XMR, delete (set the count to zero) for the
+  corresponding section that has GLS as the germ. The goal here
+  is to eliminate those Sections which have inconsistent connectors
+  on them.
+
+  Example:
+    XMR is (CrossSection 'ej' (Shape j a b var))
+    W is 'e'   (not 'j', as the Shape suggests)
+    GLS is 'ej'
+    Eliminates (Section 'ej' (ConnectorSeq a b e))
 "
 	(define xun (LLOBJ 'make-pair W (LLOBJ 'right-element XMR)))
 	(define resect (LLOBJ 'make-section xun))
 	(define unflat (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 
-(format #t "to kill ~A\n" unflat)
 	(set-count unflat 0)
 )
 
