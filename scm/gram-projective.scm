@@ -374,11 +374,11 @@
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
-	(LLOBJ 'clobber)
-
 	; Cleanup after merging.
+	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ WB)
+	(remove-empty-sections LLOBJ CLS)
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -493,7 +493,9 @@
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; Cleanup after merging.
+	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
+	(remove-empty-sections LLOBJ CLS)
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

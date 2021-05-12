@@ -429,12 +429,24 @@ DEAD code ============== !#
 "
 	(define resect (LLOBJ 'make-section XMR))
 
-	; Crap. At this point, LLOBJ has a 'make-pair that is incorrect.
+	; Replace the germ on the Section with the cluster node.
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 
 	; Should this clobber the count, or increment it?
 	(set-count mgs (LLOBJ 'get-count XMR))
 	(set-count XMR 0)
+)
+
+(define (kill-unflat LLOBJ GLS W XMR)
+"
+  stuff
+"
+	(define xun (LLOBJ 'make-pair W (LLOBJ 'right-element XMR)))
+	(define resect (LLOBJ 'make-section xun))
+	(define unflat (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
+
+(format #t "to kill ~A\n" unflat)
+	(set-count unflat 0)
 )
 
 ; ---------------------------------------------------------------------
@@ -459,8 +471,9 @@ under development
 	(if (and (equal? 'Section donor-type) (not (non-flat? DONOR)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
 
-	(if (equal? 'CrossSection donor-type)
-		(merge-resects LLOBJ GLS MRG))
+	(when (equal? 'CrossSection donor-type)
+		(merge-resects LLOBJ GLS MRG)
+		(kill-unflat LLOBJ GLS W MRG))
 )
 
 ; ---------------------------------------------------------------
