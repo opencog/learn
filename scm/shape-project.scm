@@ -432,9 +432,6 @@ DEAD code ============== !#
 	; Crap. At this point, LLOBJ has a 'make-pair that is incorrect.
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 
-(format #t "--------------------\n")
-(format #t "duude XMR=~A\n" XMR)
-(format #t "duude mgs=~A\n" mgs)
 	; Should this clobber the count, or increment it?
 	(set-count mgs (LLOBJ 'get-count XMR))
 	(set-count XMR 0)
@@ -450,17 +447,18 @@ under development
 	(define donor-type (cog-type DONOR))
 
 	; Return #t if any connector in DONOR belongs to GLS.
-	(define (non-flat?)
+	(define (non-flat? sect)
 		; conseq is the connector sequence
-		(define conseq (LLOBJ 'right-element DONOR))
+		(define conseq (LLOBJ 'right-element sect))
 
 		; Are any of the connectors in the cluster?
 		(any (lambda (con)
 				(not (nil? (cog-link 'MemberLink (gar con) GLS))))
 			(cog-outgoing-set conseq)))
 
-	(if (and (equal? 'Section donor-type) (not (non-flat?)))
+	(if (and (equal? 'Section donor-type) (not (non-flat? DONOR)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
+
 	(if (equal? 'CrossSection donor-type)
 		(merge-resects LLOBJ GLS MRG))
 )
