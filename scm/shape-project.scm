@@ -507,45 +507,43 @@ under development
   CrossSections and call cog-delete! on those that have an zero count.
   This will also delete the corresponding CrossSections.
 "
-	; This is pointless complex only because we are trying to count
-	; how many sections were deleted. Otherwise, just ditch the `fold`
-	; and replace it with `for-each`.
+	(define ns 0)
+	(define nx 0)
+
+	; If the count in Section is zero, delete it.
+	; Also scan all of it's crosses
 	(define (del-sect SEC)
-		(define xes (LLOBJ 'get-cross-sections SEC))
-		(+
-			(if (is-zero? (LLOBJ 'get-count SEC))
-				(begin (cog-delete! SEC) 1)
-				0)
-			(fold (lambda (xst ndel)
-				(if (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
-					(begin (cog-delete! xst) 1) 0))
-				0 xes)))
+		(for-each (lambda (xst)
+			(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+				(cog-delete! xst)
+				(set! nx (+ 1 nx))))
+			(LLOBJ 'get-cross-sections SEC))
+		(when (is-zero? (LLOBJ 'get-count SEC))
+			(cog-delete! SEC)
+			(set! ns (+ 1 ns))))
 
 	(define (del-xes XST)
 		(define sct (LLOBJ 'get-section XST))
-		(+
-			(if (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
-				(begin (cog-delete! sct) 1)
-				0)
-			(if (is-zero? (LLOBJ 'get-count XST))
-				(begin (cog-delete! XST) 1)
-				0)))
+		(when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
+			(cog-delete! sct)
+			(set! ns (+ 1 ns)))
+		(when (is-zero? (LLOBJ 'get-count XST))
+			(cog-delete! XST)
+			(set! nx (+ 1 nx))))
 
 	; Cleanup after merging.
-(define cnt
-	(fold
-		(lambda (ITEM NDEL)
+	(for-each
+		(lambda (ITEM)
 			(if (cog-atom? ITEM)
 				(cond
 					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
 					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
 					(else
 						(throw 'remove-empty-sections 'assert "Its broken")))
-				NDEL))
-		0 (LLOBJ 'right-stars ROW))
-)
-(format #t "duuude deleted ~A empties for ~A\n" cnt ROW)
-cnt
+				))
+		(LLOBJ 'right-stars ROW))
+
+(format #t "duuude deleted ~A secs, ~A crosses for ~A\n" ns nx ROW)
 )
 
 ; ---------------------------------------------------------------------
