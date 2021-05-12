@@ -439,8 +439,8 @@ DEAD code ============== !#
 	; Replace the germ on the Section with the cluster node.
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 
-	; Should this clobber the count, or increment it?
-	(define cnt (LLOBJ 'get-count XMR))
+	; Increment the count; mgs may already exist from earlier merges.
+	(define cnt (+ (LLOBJ 'get-count mgs) (LLOBJ 'get-count XMR)))
 	(set-count mgs cnt)
 	(set-count XMR 0)
 
