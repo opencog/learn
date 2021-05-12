@@ -174,7 +174,7 @@
 
 ; --------------------------
 ; Expect 24 CrossSections as described above.
-; (test-equal 24 (length (cog-get-atoms 'CrossSection)))
+(test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)

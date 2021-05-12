@@ -421,11 +421,16 @@ DEAD code ============== !#
 
   This recreates the Section corresponding to XMR, and from that,
   replaces the germ by GLS. The entire count on XMR is transfered
-  to this new section.
+  to this new section.  All of the CrossSections corresponding to
+  the new Section are also created
+
+  The goal of this routine is to create a single Section (and its
+  crosses) that have GLS both as the germ, and in the appropriate
+  connector locations.
 
   Example:
     XMR is (CrossSection 'ej' (Shape j a b var))
-    Output is (Section 'ej' (ConnectorSeq a b 'ej'))
+    Creates (Section 'ej' (ConnectorSeq a b 'ej'))
 "
 	(define resect (LLOBJ 'make-section XMR))
 
@@ -433,8 +438,14 @@ DEAD code ============== !#
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
 
 	; Should this clobber the count, or increment it?
-	(set-count mgs (LLOBJ 'get-count XMR))
+	(define cnt (LLOBJ 'get-count XMR))
+	(set-count mgs cnt)
 	(set-count XMR 0)
+
+	; Now create the cross-sections corresponding to `mgs`
+	(for-each
+		(lambda (xfin) (set-count xfin cnt))
+		(LLOBJ 'make-cross-sections mgs))
 )
 
 (define (kill-unflat LLOBJ GLS W XMR)

@@ -362,6 +362,29 @@
 			(filter-map insert-wild (iota num-cncts))
 		)
 
+		; Same as above, but the cross-sections are created.
+		(define (make-cross-sections SEC)
+			; The root-point of the seed
+			(define point (gar SEC))
+			; The list of connectors
+			(define cncts (cog-outgoing-set (gdr SEC)))
+			(define num-cncts (length cncts))
+
+			; Place the wild-card into the N'th location of the section.
+			(define (insert-wild N)
+				(define front (take cncts N))
+				(define back (drop cncts N))
+				(define ctr (car back)) ; the connector being exploded
+				(define wrd (gar ctr))  ; the word being exploded
+				(define dir (gdr ctr))  ; the direction being exploded
+				(define wild (Connector star-wild dir))
+				(define shape (Shape point front wild (cdr back)))
+				(CrossSection wrd shape))
+
+			; Return all the cross-sections for this section.
+			(map insert-wild (iota num-cncts))
+		)
+
 		; -------------------------------------------------------
 		; Create all of the word-shape pairs that correspond to a
 		; section. This explodes a section into all of the word-shape
@@ -595,7 +618,8 @@ around for a while.
 				((explode-sections) explode-sections)
 				((make-section)     make-section)
 				((get-section)      get-section)
-				((get-cross-sections) get-cross-sections)
+				((make-cross-sections) make-cross-sections)
+				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
 
 				((provides)         provides)
@@ -630,16 +654,17 @@ around for a while.
 	; Methods on the object
 	(lambda (message . args)
 		(case message
-			((name)               "Covering Sections for Words")
-			((id)                 "cover-section")
+			((name)                "Covering Sections for Words")
+			((id)                  "cover-section")
 
 			; pass-through
-			((fetch-pairs)        (cover-obj 'fetch-pairs))
-			((explode-sections)   (explode-sections))
-			((make-section)       (apply shape-obj (cons message args)))
-			((get-section)        (apply shape-obj (cons message args)))
-			((get-cross-sections) (apply shape-obj (cons message args)))
-			((re-cross)           (apply shape-obj (cons message args)))
+			((fetch-pairs)         (cover-obj 'fetch-pairs))
+			((explode-sections)    (explode-sections))
+			((make-section)        (apply shape-obj (cons message args)))
+			((get-section)         (apply shape-obj (cons message args)))
+			((make-cross-sections) (apply shape-obj (cons message args)))
+			((get-cross-sections)  (apply shape-obj (cons message args)))
+			((re-cross)            (apply shape-obj (cons message args)))
 
 			(else             (apply cover-stars (cons message args)))))
 )
