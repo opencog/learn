@@ -28,7 +28,7 @@
 ; that three words form the cluster. See the explanation in the test
 ; `connector-merge-cons.scm` for the general overview.
 ;
-; To recap, we expect 11 sections
+; To recap, we expect 8 sections
 ;     ({ej}, abc)    * 1.0
 ;     ({ej}, dgh)    * 1.0
 ;     ({ej}, klm)    * p
@@ -38,7 +38,7 @@
 ;     ({ej}, ab{ej}) * p
 ;     ({ej}, {ej}gh) * p
 ;
-; There are 11 of these, so expect 33=11*3 CrossSections
+; There are 8 of these, so expect 24=8*3 CrossSections
 
 (define t-three-cluster "connector 3-cluster merge test")
 (test-begin t-three-cluster)
@@ -96,10 +96,11 @@
 (test-equal 10 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
-; Merge two sections together.
+; Merge three sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
+(disc 'merge-function (WordClass "e j") (Word "f"))
 
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
@@ -119,11 +120,11 @@
 (test-equal 2 (len-type (WordClass "e j") 'CrossSection))
 (test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
 
-; Of the 10=3+4+3 original Sections, 4 are deleted, and 5 are created,
-; leaving a grand total of 11. The 5 new ones are all e-j, the
+; Of the 10=3+4+3 original Sections, 7 are deleted, and 5 are created,
+; leaving a grand total of 8. The 5 new ones are all e-j, the
 ; remaining three ones are "e" or "j" with reduced counts.
 ; This is just a total over everything above.
-(test-equal 11 (length (cog-get-atoms 'Section)))
+(test-equal 8 (length (cog-get-atoms 'Section)))
 
 ; ----------------------------
 ; Validate counts.
@@ -134,19 +135,24 @@
 ; We expect abc, dgh and klm sections to behave exactly as they do for
 ; the basic test case, and so cut-n-paste that unit test code.
 (expected-e-j-sections)
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
-(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
+	(cog-count sec-ej-dgh) epsilon)
+(test-approximate (* frac (+ cnt-e-klm cnt-f-klm))
+	(cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm)
+	(cog-count sec-e-klm) epsilon)
 
 ; Validate counts on select CrossSections...
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
+(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+	(cog-count xes-b-ej-avc) epsilon)
 (test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; --------------------------
-; Expect 33 CrossSections as described above.
-(test-equal 33 (length (cog-get-atoms 'CrossSection)))
+; Expect 24 CrossSections as described above.
+(test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)
