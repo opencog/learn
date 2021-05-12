@@ -65,17 +65,17 @@
 ; We expect 3 sections on "e" and four on "j"
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
-(test-equal 3 (length (gsc 'right-stars (Word "f"))))
+(test-equal 5 (length (gsc 'right-stars (Word "f"))))
 
 ; Create CrossSections and verify that they got created
-; We expect 3 x (3+4+3) = 30 of them.
+; We expect 3 x (3+4+5) = 36 of them.
 (csc 'explode-sections)
-(test-equal 30 (length (cog-get-atoms 'CrossSection)))
+(test-equal 36 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 4 (length (gsc 'right-stars (Word "g"))))
-(test-equal 4 (length (gsc 'right-stars (Word "h"))))
+(test-equal 5 (length (gsc 'right-stars (Word "g"))))
+(test-equal 5 (length (gsc 'right-stars (Word "h"))))
 
 (define (filter-type wrd atype)
 	(filter
@@ -85,20 +85,20 @@
 (define (len-type wrd atype)
 	(length (filter-type wrd atype)))
 
-; Expect 3 Sections and two CrossSections on e.
-(test-equal 5 (length (gsc 'right-stars (Word "e"))))
+; Expect 3 Sections and 4 CrossSections on e.
+(test-equal 7 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
-(test-equal 3 (length (gsc 'right-stars (Word "f"))))
+(test-equal 5 (length (gsc 'right-stars (Word "f"))))
 
 (test-equal 3 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
+(test-equal 4 (len-type (Word "e") 'CrossSection))
 (test-equal 4 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
-(test-equal 3 (len-type (Word "f") 'Section))
+(test-equal 5 (len-type (Word "f") 'Section))
 (test-equal 0 (len-type (Word "f") 'CrossSection))
 
-; We expect a total of 3+4+3=10 Sections
-(test-equal 10 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+4+5=12 Sections
+(test-equal 12 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
 ; Merge three sections together.
