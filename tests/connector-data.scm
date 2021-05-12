@@ -150,7 +150,9 @@
 )
 
 ; ---------------------------------------------------------------
-; Addtional j sections, having e as connector.
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; Additional j sections, having e as connector.
 
 (define cnt-j-abe 21)
 (define cnt-j-egh 17)
@@ -253,7 +255,9 @@
 )
 
 ; ---------------------------------------------------------------
-; Addtional j sections, having multiple e connectors.
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; Even more j sections, having multiple e connectors.
 
 (define cnt-j-ebe 11)
 (define cnt-j-eeh 19)

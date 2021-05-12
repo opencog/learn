@@ -476,8 +476,22 @@ DEAD code ============== !#
 
 (define (reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE)
 "
-under development
+  reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE
 
+  Merge connectors on the Section/CrossSection MRG.
+  This creates a set of 'consistent' Sections/CrossSections such that
+  these contain the merged cluster node GLS in the appropriate places
+  as germs, points or in connectors. The problem addressed here is that
+  the ordinary linear projective merge does correctly create the merged
+  Sections/CrossSections with GLS as the germ, but leaves behind a
+  mish-mash of the raw unmerged word W to appear in various Shapes (as
+  the point) and in various Connectors. These need to be harmonzed so
+  that W is replaced by GLS in all the right places, with counts updated
+  appropriately.
+
+  When this completes, the resulting Sections/CrossSections are fully
+  self-consistent. The inconsistent Sections/CrossSections will have
+  thier counts set to zero, and need to be deleted in a subsequent pass.
 "
 	(define donor-type (cog-type DONOR))
 
