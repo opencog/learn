@@ -24,13 +24,34 @@
 
 ; ---------------------------------------------------------------
 ;
-; This is similar to the "connector 2-cluster merge test" except
-; that three words form the cluster. See the explanation in the test
-; `connector-merge-cons.scm` for the general overview.
+; This is similar to the "connector 3-cluster merge test" except
+; that the third word is "non-flat" and has connectors that belong
+; to the cluster. See the explanation in the test
+; `connector-merge-cons.scm` for the general overview of merging, and
+; `connector-merge-tri.scm` for the "flat" three-connector merge.
 ;
-; In addition ot what is described there, we expect one extra merge:
+; When the first two words {ej} are merged, we expect some
+; cross-sections from "f" to contribute:
+;    [e, <f, abv>] + none -> p * [{ej}, <f, abv>] + (1-p) * [e, <f, abv>]
+;    [e, <f, vgh>] + none -> p * [{ej}, <f, vgh>] + (1-p) * [e, <f, vgh>]
+;
+; which reshapes into
+;     p * (f, ab{ej}) + (1-p) * (f, abe)
+;     p * (f, {ej}gh) + (1-p) * (f, egh)
+
+;
+;
+; In addition to what is described there, we expect one flat merge:
 ;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
 ; which will transfer all of the count from f to {ej}.
+;
+; In addition, there are some additional merges that occur.
+
+; In addition,
+; the the linear part of the merge gives
+;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
+;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
+; ???
 ;
 ; To recap, we expect 8 sections
 ;     ({ej}, abc)    * 1.0
@@ -61,6 +82,7 @@
 (define csc (add-covering-sections pca))
 (define gsc (add-cluster-gram csc))
 
+; ------------------
 ; Verify that the data loaded correctly
 ; We expect 3 sections on "e" and four on "j"
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
@@ -101,10 +123,18 @@
 (test-equal 12 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
-; Merge three sections together.
+; Merge the first two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
+
+; 10 sections as before plus 3 more.
+(test-equal 13 (length (cog-get-atoms 'Section)))
+
+; xxx (test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
+
+#! ======================
+(format #t "Now merging 'f' into 'ej'\n")
 (disc 'merge-function (WordClass "e j") (Word "f"))
 
 ; We expect one section left on "e", the klm section, and two
@@ -178,6 +208,7 @@
 (test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
 	(cog-count xes-ej-ej-vgh) epsilon)
 
+==================== !#
 ; (test-end t-three-cluster)
 
 ; ---------------------------------------------------------------

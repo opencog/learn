@@ -505,9 +505,7 @@
 			(define (do-acc PRC WEI)
 				(monitor-rate #f)
 				(set! accum-cnt (+ accum-cnt
-					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE)))
-				(if MRG-CON
-					(reshape-merge LLOBJ CLS PRC WA PAIR-A WEI NOISE)))
+					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
 
 			; There's nothing to do if A is empty.
 			(when (not (null? PAIR-A))
@@ -526,6 +524,36 @@
 					(do-acc PAIR-C 1.0))
 			))
 		perls)
+
+(format #t "duuuude start the reshape------------------------\n")
+	(if MRG-CON
+	(for-each
+		(lambda (PRL)
+			(define PAIR-C (first PRL))
+			(define PAIR-A (second PRL))
+
+			(define (do-acc PRC WEI)
+				(monitor-rate #f)
+				(reshape-merge LLOBJ CLS PRC WA PAIR-A WEI NOISE))
+
+			; There's nothing to do if A is empty.
+			(when (not (null? PAIR-A))
+
+				; Two different tasks, depending on whether PAIR-C
+				; exists or not - we merge all, or just some.
+				(if (null? PAIR-C)
+
+					; pare-c is the non-null version of PAIR-C
+					; We accumulate a fraction of PAIR-A into it.
+					(let* ((col (LLOBJ 'right-element PAIR-A))
+							(pare-c (LLOBJ 'make-pair CLS col)))
+						(do-acc pare-c frac-to-merge))
+
+					; PAIR-C exists already. Merge 100% of A into it.
+					(do-acc PAIR-C 1.0))
+			))
+		perls)
+	)
 
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")

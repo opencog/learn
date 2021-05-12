@@ -28,7 +28,7 @@
 ; that three words form the cluster. See the explanation in the test
 ; `connector-merge-cons.scm` for the general overview.
 ;
-; In addition ot what is described there, we expect one extra merge:
+; In addition to what is described there, we expect one extra merge:
 ;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
 ; which will transfer all of the count from f to {ej}.
 ;

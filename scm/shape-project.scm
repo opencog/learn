@@ -385,7 +385,7 @@ DEAD code ============== !#
 "
   merge-recrosses - merge cross-sections corresponding to GLS and DONOR.
 
-  GLS should be the germ of a cluster (prototypically, a WordClassNode)
+  GLS should be a cluster node (prototypically, a WordClassNode)
   DONOR should be a Section which is being merged into GLS.
 
   This method keeps the CrossSections in sync with the corresponding
@@ -467,9 +467,11 @@ DEAD code ============== !#
 "
 	(define xun (LLOBJ 'make-pair W (LLOBJ 'right-element XMR)))
 	(define resect (LLOBJ 'make-section xun))
-	(define unflat (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
+	(define unflat (LLOBJ 'get-pair GLS (LLOBJ 'right-element resect)))
 
-	(set-count unflat 0)
+(format #t "duuude kil gil given ~A ~A ~A" GLS W XMR)
+(format #t "duuude kiling ~A" unflat)
+	(if unflat (set-count unflat 0))
 )
 
 ; ---------------------------------------------------------------------
@@ -505,8 +507,15 @@ DEAD code ============== !#
 				(not (nil? (cog-link 'MemberLink (gar con) GLS))))
 			(cog-outgoing-set conseq)))
 
+(if (non-flat? DONOR)
+(format #t "duuude non-flat for donor=~A MRG=~A"  DONOR MRG)
+)
 	(if (and (equal? 'Section donor-type) (not (non-flat? DONOR)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
+
+(when (and (equal? 'Section donor-type) (non-flat? DONOR))
+(set-count MRG 0)
+)
 
 	(when (equal? 'CrossSection donor-type)
 		(merge-resects LLOBJ GLS MRG)
