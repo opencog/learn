@@ -28,6 +28,10 @@
 ; that three words form the cluster. See the explanation in the test
 ; `connector-merge-cons.scm` for the general overview.
 ;
+; In addition ot what is described there, we expect one extra merge:
+;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
+; which will transfer all of the count from f to {ej}.
+;
 ; To recap, we expect 8 sections
 ;     ({ej}, abc)    * 1.0
 ;     ({ej}, dgh)    * 1.0
@@ -139,7 +143,7 @@
 	(cog-count sec-ej-abc) epsilon)
 (test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
 	(cog-count sec-ej-dgh) epsilon)
-(test-approximate (* frac (+ cnt-e-klm cnt-f-klm))
+(test-approximate (+ (* frac cnt-e-klm) cnt-f-klm)
 	(cog-count sec-ej-klm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm)
 	(cog-count sec-e-klm) epsilon)
@@ -147,7 +151,8 @@
 ; Validate counts on select CrossSections...
 (test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
 	(cog-count xes-b-ej-avc) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (+ (* frac cnt-e-klm) cnt-f-klm)
+	(cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; --------------------------
