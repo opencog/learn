@@ -50,6 +50,11 @@
 ;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
 ;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
 ; The ({ej}, abe) and ({ej}, egh) are eliminated by the flattening step.
+; XXX ??? direct printfs dont show this .. bug???
+;
+; But also, we have the earlier fraction that gets merged:
+;    ({ej}, ab{ej}) + p * (f, ab{ej}) -> ({ej}, ab{ej})
+;    ({ej}, {ej}gh) + p * (f, {ej}gh) -> ({ej}, {ej}gh)
 ;
 ; To recap, we expect 10 sections
 ;     ({ej}, abc)    * 1.0
@@ -60,8 +65,8 @@
 ;     (j, egh)       * 1-p
 ;     (f, abe)       * (1-p)(1-p)
 ;     (f, egh)       * (1-p)(1-p)
-;     ({ej}, ab{ej}) * p (j + (1-p)f)
-;     ({ej}, {ej}gh) * p (j + (1-p)f)
+;     ({ej}, ab{ej}) * p (j + f)
+;     ({ej}, {ej}gh) * p (j + f)
 ;
 ; There are 8 of these, so expect 24=8*3 CrossSections
 
@@ -230,9 +235,9 @@
 	(cog-count sec-f-egh) epsilon)
 
 ; The remainder got transfered ...
-(test-approximate (+ (* frac cnt-j-abe) (* frac (- 1 frac) cnt-f-abe))
+(test-approximate (* frac (+ cnt-j-abe cnt-f-abe))
 	(cog-count sec-ej-abv) epsilon)
-(test-approximate (+ (* frac cnt-j-egh) (* frac (- 1 frac) cnt-f-egh))
+(test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
 	(cog-count sec-ej-vgh) epsilon)
 
 
