@@ -49,18 +49,19 @@
 ; The "f" merge reduces it some more:
 ;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
 ;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
-;xxxxxxxxxxxx
-; ???
+; The ({ej}, abe) and ({ej}, egh) are eliminated by the flattening step.
 ;
-; To recap, we expect 8 sections
+; To recap, we expect 10 sections
 ;     ({ej}, abc)    * 1.0
 ;     ({ej}, dgh)    * 1.0
 ;     ({ej}, klm)    * p
 ;     (e, klm)       * 1-p
 ;     (j, abe)       * 1-p
 ;     (j, egh)       * 1-p
-;     ({ej}, ab{ej}) * p
-;     ({ej}, {ej}gh) * p
+;     (f, abe)       * (1-p)(1-p)
+;     (f, egh)       * (1-p)(1-p)
+;     ({ej}, ab{ej}) * p (j + (1-p)f)
+;     ({ej}, {ej}gh) * p (j + (1-p)f)
 ;
 ; There are 8 of these, so expect 24=8*3 CrossSections
 
@@ -142,6 +143,12 @@
 (test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
+(expected-j-extra-sections)
+(test-approximate (* frac cnt-j-abe) (cog-count sec-ej-abv) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+
 (expected-f-early-sections)
 (test-approximate (* frac cnt-f-abe) (cog-count sec-f-abej) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-abe) (cog-count sec-f-abe) epsilon)
@@ -181,8 +188,8 @@
 (test-equal 2 (len-type (WordClass "e j") 'CrossSection))
 (test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
 
-; Of the 10=3+4+3 original Sections, 7 are deleted, and 5 are created,
-; leaving a grand total of 8. The 5 new ones are all e-j, the
+; Of the 10=3+4+3 original Sections, 5 are deleted, and 5 are created,
+; leaving a grand total of 10. The 5 new ones are all e-j, the
 ; remaining three ones are "e" or "j" with reduced counts.
 ; This is just a total over everything above.
 (test-equal 10 (length (cog-get-atoms 'Section)))
@@ -211,12 +218,22 @@
 	(cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
+; The j counts should be untouched from before.
+(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+
 ; Now, for some of the more complex cases.
 ; The (f,abe) and (f,egh) sections are twice-reduced, as explained above.
 (test-approximate (* (- 1 frac) (- 1 frac) cnt-f-abe)
 	(cog-count sec-f-abe) epsilon)
 (test-approximate (* (- 1 frac) (- 1 frac) cnt-f-egh)
 	(cog-count sec-f-egh) epsilon)
+
+; The remainder got transfered ...
+(test-approximate (+ (* frac cnt-j-abe) (* frac (- 1 frac) cnt-f-abe))
+	(cog-count sec-ej-abv) epsilon)
+(test-approximate (+ (* frac cnt-j-egh) (* frac (- 1 frac) cnt-f-egh))
+	(cog-count sec-ej-vgh) epsilon)
 
 
 ; --------------------------
