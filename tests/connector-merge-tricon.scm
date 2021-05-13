@@ -154,7 +154,7 @@
 (test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
-(expected-f-early-sections)
+(expected-f-extra-sections)
 (test-approximate (* frac cnt-f-abe) (cog-count sec-f-abej) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-abe) (cog-count sec-f-abe) epsilon)
 (test-approximate (* frac cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
