@@ -412,12 +412,13 @@ DEAD code ============== !#
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
 
-(define (merge-resects LLOBJ GLS XMR)
+(define (flatten-resects LLOBJ GLS XMR RESECT)
 "
-  merge-resects - Merge Sections corresponding to CrossSection XMR
+  flatten-resects - Merge Sections corresponding to CrossSection XMR
 
-  XMR is assumed to be a CrossSection.
   GLS is assumed to be a cluster node.
+  XMR is assumed to be a CrossSection.
+  RESECT is assumed to be the Section corresponding to XMR
 
   This recreates the Section corresponding to XMR, and from that,
   replaces the germ by GLS. The entire count on XMR is transfered
@@ -434,10 +435,8 @@ DEAD code ============== !#
     GLS is 'ej'
     Creates (Section 'ej' (ConnectorSeq a b 'ej'))
 "
-	(define resect (LLOBJ 'make-section XMR))
-
 	; Replace the germ on the Section with the cluster node.
-	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))
+	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT)))
 
 	; Increment the count; mgs may already exist from earlier merges.
 	(define cnt (+ (LLOBJ 'get-count mgs) (LLOBJ 'get-count XMR)))
@@ -469,9 +468,44 @@ DEAD code ============== !#
 	(define resect (LLOBJ 'make-section xun))
 	(define unflat (LLOBJ 'get-pair GLS (LLOBJ 'right-element resect)))
 
-(format #t "duuude kil gil given ~A ~A ~A" GLS W XMR)
-(format #t "duuude kiling ~A" unflat)
+;(format #t "duuude kil gil given ~A ~A ~A" GLS W XMR)
+;(format #t "duuude kiling ~A" unflat)
 	(if unflat (set-count unflat 0))
+)
+
+(define (merge-resects LLOBJ GLS W XMR XDON FRAC NOISE)
+"
+  merge-resects - Merge Sections corresponding to CrossSection XMR
+
+  XMR is assumed to be a cross-section having GLS as it's germ,
+  XDON is assumed to be a cross-section having W as it's germ, and
+  counts have already been transfered approprately from XDON to XMR.
+  That is, its assumed the node W has been merged into the cluster
+  node GLS already.
+
+  This function adjusts counts on the corresponding sections that
+  arise from XDON and XMR. If the germ of the Section arising from
+  XMR belongs to GLS, then a revised Section is created, having GLS
+  as the germ.
+"
+	(define resect (LLOBJ 'make-section XMR))
+
+	(define germ (LLOBJ 'left-element resect))
+	(if (nil? (cog-link 'MemberLink germ GLS))
+		(let
+			((donor (LLOBJ 'make-section XDON)))
+			; We could call accumulate-count as below,
+			; (accumulate-count LLOBJ resect donor FRAC NOISE)
+			; because some of the count on donor needs to be moved
+			; to `resect`. However, it is cheaper and easier to just
+			; copy the counts from the crosses, since these are
+			; correct already.
+			(set-count resect (LLOBJ 'get-count XMR))
+			(set-count donor (LLOBJ 'get-count XDON)))
+		(begin
+			(flatten-resects LLOBJ GLS XMR resect)
+			(kill-unflat LLOBJ GLS W XMR)
+		))
 )
 
 ; ---------------------------------------------------------------------
@@ -507,9 +541,9 @@ DEAD code ============== !#
 				(not (nil? (cog-link 'MemberLink (gar con) GLS))))
 			(cog-outgoing-set conseq)))
 
-(if (non-flat? DONOR)
-(format #t "duuude non-flat for donor=~A MRG=~A"  DONOR MRG)
-)
+;(if (non-flat? DONOR)
+;(format #t "duuude non-flat for donor=~A MRG=~A"  DONOR MRG)
+;)
 	(if (and (equal? 'Section donor-type) (not (non-flat? DONOR)))
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
 
@@ -518,8 +552,7 @@ DEAD code ============== !#
 )
 
 	(when (equal? 'CrossSection donor-type)
-		(merge-resects LLOBJ GLS MRG)
-		(kill-unflat LLOBJ GLS W MRG))
+		(merge-resects LLOBJ GLS W MRG DONOR FRAC NOISE))
 )
 
 ; ---------------------------------------------------------------
