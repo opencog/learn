@@ -40,19 +40,16 @@
 ;     p * (f, {ej}gh) + (1-p) * (f, egh)
 ;
 ; This is explicitly tested.
-; xxxxxxxxxxxx
 ;
-;
-; In addition to what is described there, we expect one flat merge:
+; Next, "f" is merged into {ej}. This gives a "flat" merge:
 ;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
 ; which will transfer all of the count from f to {ej}.
 ;
-; In addition, there are some additional merges that occur.
-
-; In addition,
-; the the linear part of the merge gives
+; The earlier ej merge reduced the count on (f, abe) and (f, egh).
+; The "f" merge reduces it some more:
 ;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
 ;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
+;xxxxxxxxxxxx
 ; ???
 ;
 ; To recap, we expect 8 sections
@@ -133,7 +130,6 @@
 ; 10 sections as before plus 5 more.
 (test-equal 15 (length (cog-get-atoms 'Section)))
 
-; xxxxxxxxxxxx ??????
 (test-equal 1 (length (filter-type (Word "e") 'Section)))
 (test-equal 5 (length (filter-type (WordClass "e j") 'Section)))
 
@@ -142,6 +138,10 @@
 
 ; Validate counts.
 (define epsilon 1.0e-8)
+(expected-e-j-sections)
+(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+
 (expected-f-early-sections)
 (test-approximate (* frac cnt-f-abe) (cog-count sec-f-abej) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-abe) (cog-count sec-f-abe) epsilon)
@@ -153,9 +153,7 @@
 (test-approximate (* frac cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
 
-
-
-#! ======================
+; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (disc 'merge-function (WordClass "e j") (Word "f"))
 
@@ -169,10 +167,14 @@
 (test-equal 4 (len-type (Word "e") 'CrossSection))
 (test-equal 5 (length (gsc 'right-stars (Word "e"))))
 
-; We expect two sections remaining on j
+; We expect two sections remaining on j, and on f
 (test-equal 2 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
+
+(test-equal 2 (len-type (Word "f") 'Section))
+(test-equal 0 (len-type (Word "f") 'CrossSection))
+(test-equal 2 (length (gsc 'right-stars (Word "f"))))
 
 ; We expect five merged sections
 (test-equal 5 (len-type (WordClass "e j") 'Section))
@@ -183,7 +185,7 @@
 ; leaving a grand total of 8. The 5 new ones are all e-j, the
 ; remaining three ones are "e" or "j" with reduced counts.
 ; This is just a total over everything above.
-(test-equal 8 (length (cog-get-atoms 'Section)))
+(test-equal 10 (length (cog-get-atoms 'Section)))
 
 ; ----------------------------
 ; Validate counts.
@@ -209,6 +211,14 @@
 	(cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
+; Now, for some of the more complex cases.
+; The (f,abe) and (f,egh) sections are twice-reduced, as explained above.
+(test-approximate (* (- 1 frac) (- 1 frac) cnt-f-abe)
+	(cog-count sec-f-abe) epsilon)
+(test-approximate (* (- 1 frac) (- 1 frac) cnt-f-egh)
+	(cog-count sec-f-egh) epsilon)
+
+
 ; --------------------------
 ; Expect 24 CrossSections as described above.
 (test-equal 24 (length (cog-get-atoms 'CrossSection)))
@@ -231,7 +241,6 @@
 (test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
 	(cog-count xes-ej-ej-vgh) epsilon)
 
-==================== !#
 ; (test-end t-three-cluster)
 
 ; ---------------------------------------------------------------
