@@ -68,7 +68,7 @@
 ;     ({ej}, ab{ej}) * p (j + f)
 ;     ({ej}, {ej}gh) * p (j + f)
 ;
-; There are 8 of these, so expect 24=8*3 CrossSections
+; There are 10 of these, so expect 30=10*3 CrossSections
 
 (define t-three-cluster "one-connector-2-word 3-cluster merge test")
 (test-begin t-three-cluster)
@@ -242,19 +242,10 @@
 
 
 ; --------------------------
-; Expect 24 CrossSections as described above.
-(test-equal 24 (length (cog-get-atoms 'CrossSection)))
+; Expect 30 CrossSections as described above.
+(test-equal 30 (length (cog-get-atoms 'CrossSection)))
 
-; Validate counts on various Sections and CrossSections...
-(expected-j-extra-sections)
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
-
-(test-approximate (* frac (+ cnt-j-abe cnt-f-abe))
-	(cog-count sec-ej-abv) epsilon)
-(test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
-	(cog-count sec-ej-vgh) epsilon)
-
+; Validate counts on various CrossSections...
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
