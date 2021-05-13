@@ -254,6 +254,11 @@
 (test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
 	(cog-count xes-ej-ej-vgh) epsilon)
 
+; ----------------------
+; Check detailed balance
+(test-assert (check-sections csc epsilon))
+(test-assert (check-crosses csc epsilon))
+
 ; (test-end t-three-cluster)
 
 ; ---------------------------------------------------------------

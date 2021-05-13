@@ -155,6 +155,11 @@
 	 (cog-count xes-k-ej-vlm) epsilon)
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
+; -----------------------
+; Verify detailed balance
+(test-assert (check-sections csc epsilon))
+(test-assert (check-crosses csc epsilon))
+
 (test-end t-merge-into-cluster)
 
 ; ---------------------------------------------------------------

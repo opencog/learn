@@ -52,4 +52,27 @@
 		(cog-get-atoms 'Section))
 )
 
+(define (check-crosses LLOBJ EPSILON)
+"
+  check-crosses -- Loop over CrossSections, verify counts match Sections
+
+  Self-consistent detailed balance requires that counts on CrossSections
+  should be equal to the counts on the Sections from which they came.
+  Return #t if everything balances, else return #f and print the
+  imbalance.
+
+  This performs exactly the same checks as `check-sections`, but in a
+  different order.
+"
+	(every
+		(lambda (cross)
+			(define sect (LLOBJ 'make-section cross))
+			(define diff (- (cog-count sect) (cog-count cross)))
+			(if (< (abs diff) EPSILON) #t
+				(begin
+					(format #t "Error: Unbalanced at ~A ~A" sect cross)
+					#f)))
+		(cog-get-atoms 'CrossSection))
+)
+
 ; ---------------------------------------------------------------
