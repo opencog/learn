@@ -2,6 +2,8 @@
 ; connector-setup.scm
 ; Database setup common to all tests.
 
+(use-modules (srfi srfi-1))
+
 (use-modules (opencog))
 (use-modules (opencog persist) (opencog persist-rocks))
 
@@ -22,6 +24,32 @@
 	(set! storage-node (RocksStorageNode
 		(string-append "rocks://" dbdir)))
 	(cog-open storage-node)
+)
+
+; ---------------------------------------------------------------
+; Detailed balance
+
+(define (check-sections LLOBJ EPSILON)
+"
+  check-sections -- Loop over Sections, verify counts match Crosses
+
+  Self-consistent detailed balance requires that counts on CrossSections
+  should be equal to the counts on the Sections from which they came.
+  Return #t if everything balances, else return #f and print the
+  imbalance.
+"
+	(every
+		(lambda (sect)
+			(define scnt (cog-count sect))
+			(every
+				(lambda (cross)
+					(define diff (- scnt (cog-count cross)))
+					(if (< (abs diff) EPSILON) #t
+						(begin
+							(format #t "Error: Unbalanced at ~A ~A" sect cross)
+							#f)))
+				(LLOBJ 'make-cross-sections sect)))
+		(cog-get-atoms 'Section))
 )
 
 ; ---------------------------------------------------------------
