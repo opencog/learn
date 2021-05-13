@@ -284,6 +284,8 @@
 
 (define sec-f-abe #f)
 (define sec-f-egh #f)
+(define sec-f-abej #f)
+(define sec-f-ejgh #f)
 (define sec-ejf-abv #f)
 (define sec-ejf-vgh #f)
 
@@ -292,7 +294,7 @@
 (define xes-ejf-ejf-abv #f)
 (define xes-ejf-ejf-vgh #f)
 
-(define (expected-f-extra-sections)
+(define (expected-f-early-sections)
 	(set! sec-f-abe
 	(Section
 		(Word "f")
@@ -308,6 +310,23 @@
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
 
+	(set! sec-f-abej
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+	(set! sec-f-ejgh
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+)
+
+(define (expected-f-extra-sections)
 	(set! sec-ejf-abv
 	(Section
 		(WordClass "e j")

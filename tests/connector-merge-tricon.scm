@@ -38,7 +38,8 @@
 ; which reshapes into
 ;     p * (f, ab{ej}) + (1-p) * (f, abe)
 ;     p * (f, {ej}gh) + (1-p) * (f, egh)
-
+;
+; xxxxxxxxxxxx
 ;
 ;
 ; In addition to what is described there, we expect one flat merge:
@@ -133,6 +134,14 @@
 
 ; xxx (test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
 
+; Validate counts.
+(define epsilon 1.0e-8)
+(expected-f-early-sections)
+(test-approximate (* frac cnt-f-abe) (cog-count sec-f-abej) epsilon)
+(test-approximate (* (- 1 frac) cnt-f-abe) (cog-count sec-f-abe) epsilon)
+(test-approximate (* frac cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
+(test-approximate (* (- 1 frac) cnt-f-egh) (cog-count sec-f-egh) epsilon)
+
 #! ======================
 (format #t "Now merging 'f' into 'ej'\n")
 (disc 'merge-function (WordClass "e j") (Word "f"))
@@ -163,7 +172,6 @@
 
 ; ----------------------------
 ; Validate counts.
-(define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
