@@ -39,6 +39,7 @@
 ;     p * (f, ab{ej}) + (1-p) * (f, abe)
 ;     p * (f, {ej}gh) + (1-p) * (f, egh)
 ;
+; This is explicitly tested.
 ; xxxxxxxxxxxx
 ;
 ;
@@ -129,10 +130,15 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-; 10 sections as before plus 3 more.
-(test-equal 13 (length (cog-get-atoms 'Section)))
+; 10 sections as before plus 5 more.
+(test-equal 15 (length (cog-get-atoms 'Section)))
 
-; xxx (test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
+; xxxxxxxxxxxx ??????
+(test-equal 1 (length (filter-type (Word "e") 'Section)))
+(test-equal 5 (length (filter-type (WordClass "e j") 'Section)))
+
+(test-equal 4 (length (filter-type (Word "e") 'CrossSection)))
+(test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))
 
 ; Validate counts.
 (define epsilon 1.0e-8)
@@ -142,9 +148,18 @@
 (test-approximate (* frac cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-egh) (cog-count sec-f-egh) epsilon)
 
+(test-approximate (* frac cnt-f-abe) (cog-count xes-ej-f-abv) epsilon)
+(test-approximate (* (- 1 frac) cnt-f-abe) (cog-count xes-e-f-abv) epsilon)
+(test-approximate (* frac cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
+(test-approximate (* (- 1 frac) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
+
+
+
 #! ======================
 (format #t "Now merging 'f' into 'ej'\n")
 (disc 'merge-function (WordClass "e j") (Word "f"))
+
+(test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
 
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond

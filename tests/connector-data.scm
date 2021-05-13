@@ -291,6 +291,9 @@
 
 (define xes-e-f-abv #f)
 (define xes-e-f-vgh #f)
+(define xes-ej-f-abv #f)
+(define xes-ej-f-vgh #f)
+
 (define xes-ejf-ejf-abv #f)
 (define xes-ejf-ejf-vgh #f)
 
@@ -324,23 +327,6 @@
 			(Connector (WordClass "e j") (ConnectorDir "-"))
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
-)
-
-(define (expected-f-extra-sections)
-	(set! sec-ejf-abv
-	(Section
-		(WordClass "e j")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (WordClass "e j") (ConnectorDir "+")))))
-	(set! sec-ejf-vgh
-	(Section
-		(WordClass "e j")
-		(ConnectorSeq
-			(Connector (WordClass "e j") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+")))))
 
 	(set! xes-e-f-abv
 	(CrossSection
@@ -357,6 +343,41 @@
 		(Shape
 			(Word "f")
 			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-ej-f-abv
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(Word "f")
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-ej-f-vgh
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(Word "f")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+)
+
+(define (expected-f-extra-sections)
+	(set! sec-ejf-abv
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+	(set! sec-ejf-vgh
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
 
