@@ -412,6 +412,22 @@ DEAD code ============== !#
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
 
+(define (balance-recrosses LLOBJ DONOR)
+"
+  balance-recrosses LLOBJ DONOR rebalance cross sections from donor.
+
+  The section DONOR is presumed to be a section that was merged into
+  into some cluster, and so the observation count on DONOR was adjusted
+  to reflect that merge (possible even set to zero.) This function
+  enforces 'detailed balance', making sure that the CrossSections
+  corresponding to DONOR have the same count.
+"
+	(define cnt (LLOBJ 'get-count DONOR))
+	(for-each
+		(lambda (XST) (set-count XST cnt))
+		(LLOBJ 'get-cross-sections DONOR))
+)
+
 (define (flatten-resects LLOBJ GLS XMR RESECT)
 "
   flatten-resects - Merge Sections corresponding to CrossSection XMR
@@ -470,24 +486,6 @@ DEAD code ============== !#
 	(define unflat (LLOBJ 'get-pair GLS (LLOBJ 'right-element resect)))
 
 	(if unflat (set-count unflat 0))
-)
-
-(define (balance-resects LLOBJ DONOR)
-"
-  balance-resects LLOBJ DONOR rebalance cross sections from donor.
-
-  The section DONOR is presumed to be a section that was merged into
-  into some cluster, and so the observation count on DONOR was adjusted
-  to reflect that merge (possible even set to zero.) This function
-  enforces 'detailed balance', making sure that the CrossSections
-  corresponding to DONOR have the same count.
-"
-	(define cnt (LLOBJ 'get-count DONOR))
-	(for-each
-		(lambda (XST)
-			; (accumulate-count LLOBJ xmr XST FRAC NOISE)
-			(set-count XST cnt))
-		(LLOBJ 'get-cross-sections DONOR))
 )
 
 (define (merge-resects LLOBJ GLS W XMR XDON FRAC NOISE)
@@ -560,7 +558,7 @@ DEAD code ============== !#
 
 	(when (equal? 'Section donor-type)
 		(if (non-flat? DONOR)
-			(balance-resects LLOBJ DONOR)
+			(balance-recrosses LLOBJ DONOR)
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 
 	(when (equal? 'CrossSection donor-type)
