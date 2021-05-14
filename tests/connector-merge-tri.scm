@@ -101,9 +101,19 @@
 
 ; --------------------------
 ; Merge three sections together.
+; Merge the first two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
+
+; Verify detailed balance
+(define epsilon 1.0e-8)
+(test-equal 11 (length (cog-get-atoms 'Section)))
+(test-equal 33 (length (cog-get-atoms 'CrossSection)))
+(test-assert (check-sections csc epsilon))
+(test-assert (check-crosses csc epsilon))
+
+; Merge the third section.
 (disc 'merge-function (WordClass "e j") (Word "f"))
 
 ; We expect one section left on "e", the klm section, and two
@@ -132,7 +142,6 @@
 
 ; ----------------------------
 ; Validate counts.
-(define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 

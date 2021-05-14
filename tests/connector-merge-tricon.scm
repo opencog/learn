@@ -165,6 +165,10 @@
 (test-approximate (* frac cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
 (test-approximate (* (- 1 frac) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
 
+; Verify detailed balance
+(test-assert (check-sections csc epsilon))
+(test-assert (check-crosses csc epsilon))
+
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (disc 'merge-function (WordClass "e j") (Word "f"))
@@ -259,6 +263,6 @@
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
 
-; (test-end t-three-cluster)
+(test-end t-three-cluster)
 
 ; ---------------------------------------------------------------
