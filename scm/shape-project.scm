@@ -507,15 +507,24 @@ DEAD code ============== !#
 
 	(define germ (LLOBJ 'left-element resect))
 	(if (nil? (cog-link 'MemberLink germ GLS))
-		(begin
+		(let
+			((x-cnt (LLOBJ 'get-count XMR))
+			 (d-cnt (LLOBJ 'get-count XDON)))
 			; We could call accumulate-count as below,
 			; (accumulate-count LLOBJ resect donor FRAC NOISE)
 			; because some of the count on donor needs to be moved
 			; to `resect`. However, it is cheaper and easier to just
 			; copy the counts from the crosses, since these are
 			; correct already.
-			(set-count resect (LLOBJ 'get-count XMR))
-			(set-count donor (LLOBJ 'get-count XDON)))
+			(set-count resect x-cnt)
+			(set-count donor d-cnt)
+
+			(for-each (lambda (re-d) (set-count re-d d-cnt))
+				(LLOBJ 'make-cross-sections donor))
+
+			(for-each (lambda (re-x) (set-count re-x x-cnt))
+				(LLOBJ 'make-cross-sections resect))
+		)
 		(begin
 			(flatten-resects LLOBJ GLS XMR resect)
 			(kill-unflat LLOBJ GLS W XMR)
