@@ -421,6 +421,11 @@ DEAD code ============== !#
   to reflect that merge (possible even set to zero.) This function
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to DONOR have the same count.
+
+  This assumes that the Section DONOR is "non-flat": that is, it has a
+  connector in it that belongs to the cluster; that connector needs to
+  be revised into being the cluster.
+xxx implement this
 "
 	(define cnt (LLOBJ 'get-count DONOR))
 	(for-each
@@ -487,7 +492,7 @@ DEAD code ============== !#
 	(if unflat (set-count unflat 0))
 )
 
-(define (merge-resects LLOBJ GLS W XMR XDON FRAC NOISE)
+(define (merge-resects LLOBJ GLS W XMR XDON)
 "
   merge-resects - Merge Sections corresponding to CrossSection XMR
 
@@ -502,14 +507,13 @@ DEAD code ============== !#
   XMR belongs to GLS, then a revised Section is created, having GLS
   as the germ.
 "
-	(define donor (LLOBJ 'make-section XDON))
 	(define resect (LLOBJ 'make-section XMR))
 
 	(define germ (LLOBJ 'left-element resect))
 	(if (nil? (cog-link 'MemberLink germ GLS))
-		(let
-			((x-cnt (LLOBJ 'get-count XMR))
-			 (d-cnt (LLOBJ 'get-count XDON)))
+		(let ((donor (LLOBJ 'make-section XDON))
+				(x-cnt (LLOBJ 'get-count XMR))
+				(d-cnt (LLOBJ 'get-count XDON)))
 			; We could call accumulate-count as below,
 			; (accumulate-count LLOBJ resect donor FRAC NOISE)
 			; because some of the count on donor needs to be moved
@@ -570,7 +574,7 @@ DEAD code ============== !#
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 
 	(when (equal? 'CrossSection donor-type)
-		(merge-resects LLOBJ GLS W MRG DONOR FRAC NOISE))
+		(merge-resects LLOBJ GLS W MRG DONOR))
 )
 
 ; ---------------------------------------------------------------
