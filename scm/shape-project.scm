@@ -469,13 +469,18 @@ DEAD code ============== !#
 	(define resect (LLOBJ 'make-section xun))
 	(define unflat (LLOBJ 'get-pair GLS (LLOBJ 'right-element resect)))
 
-;(format #t "duuude kil gil given ~A ~A ~A" GLS W XMR)
-;(format #t "duuude kiling ~A" unflat)
 	(if unflat (set-count unflat 0))
 )
 
 (define (balance-resects LLOBJ DONOR)
 "
+  balance-resects LLOBJ DONOR rebalance cross sections from donor.
+
+  The section DONOR is presumed to be a section that was merged into
+  into some cluster, and so the observation count on DONOR was adjusted
+  to reflect that merge (possible even set to zero.) This function
+  enforces 'detailed balance', making sure that the CrossSections
+  corresponding to DONOR have the same count.
 "
 	(define cnt (LLOBJ 'get-count DONOR))
 	(for-each
@@ -517,7 +522,6 @@ DEAD code ============== !#
 		(begin
 			(flatten-resects LLOBJ GLS XMR resect)
 			(kill-unflat LLOBJ GLS W XMR)
-			(balance-resects LLOBJ donor)
 		))
 )
 
@@ -561,7 +565,8 @@ DEAD code ============== !#
 		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
 
 (when (and (equal? 'Section donor-type) (non-flat? DONOR))
-(set-count MRG 0)
+;(set-count MRG 0)
+(balance-resects LLOBJ DONOR)
 )
 
 	(when (equal? 'CrossSection donor-type)
