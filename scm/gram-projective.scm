@@ -525,7 +525,6 @@
 			))
 		perls)
 
-(format #t "duuuude start the reshape------------------------\n")
 	(if MRG-CON
 	(for-each
 		(lambda (PRL)
