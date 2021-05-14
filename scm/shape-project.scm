@@ -474,6 +474,17 @@ DEAD code ============== !#
 	(if unflat (set-count unflat 0))
 )
 
+(define (balance-resects LLOBJ DONOR)
+"
+"
+	(define cnt (LLOBJ 'get-count DONOR))
+	(for-each
+		(lambda (XST)
+			; (accumulate-count LLOBJ xmr XST FRAC NOISE)
+			(set-count XST cnt))
+		(LLOBJ 'get-cross-sections DONOR))
+)
+
 (define (merge-resects LLOBJ GLS W XMR XDON FRAC NOISE)
 "
   merge-resects - Merge Sections corresponding to CrossSection XMR
@@ -489,12 +500,12 @@ DEAD code ============== !#
   XMR belongs to GLS, then a revised Section is created, having GLS
   as the germ.
 "
+	(define donor (LLOBJ 'make-section XDON))
 	(define resect (LLOBJ 'make-section XMR))
 
 	(define germ (LLOBJ 'left-element resect))
 	(if (nil? (cog-link 'MemberLink germ GLS))
-		(let
-			((donor (LLOBJ 'make-section XDON)))
+		(begin
 			; We could call accumulate-count as below,
 			; (accumulate-count LLOBJ resect donor FRAC NOISE)
 			; because some of the count on donor needs to be moved
@@ -506,6 +517,7 @@ DEAD code ============== !#
 		(begin
 			(flatten-resects LLOBJ GLS XMR resect)
 			(kill-unflat LLOBJ GLS W XMR)
+			(balance-resects LLOBJ donor)
 		))
 )
 
