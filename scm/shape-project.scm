@@ -558,16 +558,10 @@ DEAD code ============== !#
 				(not (nil? (cog-link 'MemberLink (gar con) GLS))))
 			(cog-outgoing-set conseq)))
 
-;(if (non-flat? DONOR)
-;(format #t "duuude non-flat for donor=~A MRG=~A"  DONOR MRG)
-;)
-	(if (and (equal? 'Section donor-type) (not (non-flat? DONOR)))
-		(merge-recrosses LLOBJ GLS DONOR FRAC NOISE))
-
-(when (and (equal? 'Section donor-type) (non-flat? DONOR))
-;(set-count MRG 0)
-(balance-resects LLOBJ DONOR)
-)
+	(when (equal? 'Section donor-type)
+		(if (non-flat? DONOR)
+			(balance-resects LLOBJ DONOR)
+			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 
 	(when (equal? 'CrossSection donor-type)
 		(merge-resects LLOBJ GLS W MRG DONOR FRAC NOISE))
