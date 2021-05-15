@@ -209,7 +209,7 @@
   The goal of this routine is to create a single Section (and its
   crosses) that have GLS both as the germ, and in the appropriate
   connector locations. This will leave behind some Sections with
-  inconsistent connectors; use `kill-unflat` below to remove those.
+  inconsistent connectors; use ??? to remove those.
 
   Example:
     XMR is (CrossSection 'ej' (Shape j a b var))
@@ -220,36 +220,14 @@
 	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT)))
 
 	; Increment the count; mgs may already exist from earlier merges.
-	(define cnt (+ (LLOBJ 'get-count mgs) (LLOBJ 'get-count XMR)))
-	(set-count mgs cnt)
+	(define cnt (LLOBJ 'get-count XMR))
+;	(set-count mgs cnt)
 	(set-count XMR 0)
 
 	; Now create the cross-sections corresponding to `mgs`
 	(for-each
 		(lambda (xfin) (set-count xfin cnt))
 		(LLOBJ 'make-cross-sections mgs))
-)
-
-(define (kill-unflat LLOBJ GLS W XMR)
-"
-  kill-unflat LLOBJ GLS W XMR
-
-  Given CrossSection XMR, delete (set the count to zero) for the
-  corresponding section that has GLS as the germ. The goal here
-  is to eliminate those Sections which have inconsistent connectors
-  on them.
-
-  Example:
-    XMR is (CrossSection 'ej' (Shape j a b var))
-    W is 'e'   (not 'j', as the Shape suggests)
-    GLS is 'ej'
-    Eliminates (Section 'ej' (ConnectorSeq a b e))
-"
-	(define xun (LLOBJ 'make-pair W (LLOBJ 'right-element XMR)))
-	(define resect (LLOBJ 'make-section xun))
-	(define unflat (LLOBJ 'get-pair GLS (LLOBJ 'right-element resect)))
-
-	(if unflat (set-count unflat 0))
 )
 
 (define (merge-resects LLOBJ GLS W XMR XDON)
@@ -289,10 +267,7 @@
 			(for-each (lambda (re-x) (set-count re-x x-cnt))
 				(LLOBJ 'make-cross-sections resect))
 		)
-		(begin
-			(flatten-resects LLOBJ GLS XMR resect)
-			(kill-unflat LLOBJ GLS W XMR)
-		))
+		(flatten-resects LLOBJ GLS XMR resect))
 )
 
 ; ---------------------------------------------------------------------
@@ -319,9 +294,9 @@
 
 	(when non-flat
 		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
-			;(set-count flattened (LLOBJ 'get-count MRG))
 (format #t "duuude rewrite ~A to ~A" MRG flattened)
-			;(set-count MRG 0)
+			(set-count flattened (LLOBJ 'get-count MRG))
+			(set-count MRG 0)
 			; (balance-recrosses LLOBJ MRG)
 			; (balance-recrosses LLOBJ flattened)
 	))
@@ -363,8 +338,8 @@
 			(cog-outgoing-set conseq)))
 
 	(when (equal? 'Section donor-type)
-(when (and (equal? (Word "f") (gar DONOR)) (non-flat? DONOR))
-(format #t "duuude MRG=~A donor=~A" MRG DONOR))
+;(when (and (equal? (Word "f") (gar DONOR)) (non-flat? DONOR))
+;(format #t "duuude MRG=~A donor=~A" MRG DONOR))
 		(if (flatten-section? LLOBJ GLS MRG)
 			(balance-recrosses LLOBJ DONOR)
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
