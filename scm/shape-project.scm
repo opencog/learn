@@ -421,11 +421,6 @@ DEAD code ============== !#
   to reflect that merge (possible even set to zero.) This function
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to DONOR have the same count.
-
-  This assumes that the Section DONOR is "non-flat": that is, it has a
-  connector in it that belongs to the cluster; that connector needs to
-  be revised into being the cluster.
-xxx implement this
 "
 	(define cnt (LLOBJ 'get-count DONOR))
 	(for-each
@@ -441,10 +436,10 @@ xxx implement this
   XMR is assumed to be a CrossSection.
   RESECT is assumed to be the Section corresponding to XMR
 
-  This recreates the Section corresponding to XMR, and from that,
-  replaces the germ by GLS. The entire count on XMR is transfered
-  to this new section.  All of the CrossSections corresponding to
-  the new Section are also created
+  This replaces the germ of RESECT by GLS. The entire count on XMR
+  is transfered to this new section.  All of the CrossSections
+  corresponding to the new Section are also created. By 'transfered'
+  it is meant that XMR ends with a zero count on it.
 
   The goal of this routine is to create a single Section (and its
   crosses) that have GLS both as the germ, and in the appropriate
@@ -537,6 +532,40 @@ xxx implement this
 
 ; ---------------------------------------------------------------------
 
+(define (flatten-section? LLOBJ GLS MRG)
+"
+  Return #t if any connector in MRG belongs to GLS.
+"
+	; conseq is the connector sequence
+	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
+
+	(define non-flat #f)
+
+	; Are any of the connectors in the cluster?
+	(define newseq
+		(map (lambda (con)
+			(define clist (cog-outgoing-set con))
+			(if (nil? (cog-link 'MemberLink (car clist) GLS))
+				con
+				(begin
+					(set! non-flat #t)
+					(Connector GLS (cdr clist)))))
+			conseq))
+
+	(when non-flat
+		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
+			;(set-count flattened (LLOBJ 'get-count MRG))
+(format #t "duuude rewrite ~A to ~A" MRG flattened)
+			;(set-count MRG 0)
+			; (balance-recrosses LLOBJ MRG)
+			; (balance-recrosses LLOBJ flattened)
+	))
+
+	non-flat
+)
+
+; ---------------------------------------------------------------------
+
 (define (reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE)
 "
   reshape-merge LLOBJ GLS MRG W DONOR FRAC NOISE
@@ -569,7 +598,9 @@ xxx implement this
 			(cog-outgoing-set conseq)))
 
 	(when (equal? 'Section donor-type)
-		(if (non-flat? DONOR)
+(when (and (equal? (Word "f") (gar DONOR)) (non-flat? DONOR))
+(format #t "duuude MRG=~A donor=~A" MRG DONOR))
+		(if (flatten-section? LLOBJ GLS MRG)
 			(balance-recrosses LLOBJ DONOR)
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 

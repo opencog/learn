@@ -41,10 +41,12 @@
 ;    [e, <j, evh>] + none -> p * [{ej}, <j, evh>] + (1-p) * [e, <j, evh>]
 ;
 ; which reshapes into
-;     p * (j, {ej}b{ej}) + (1-p) * (j, ebe)
-;     p * (j, {ej}{ej}h) + (1-p) * (j, eeh)
+;     p * (j, {ej}be) + (1-p) * (j, ebe)
+;     p * (j, eb{ej}) + (1-p) * (j, ebe)
+;     p * (j, {ej}eh) + (1-p) * (j, eeh)
+;     p * (j, e{ej}h) + (1-p) * (j, eeh)
 ;
-; The two reshapes are combined with the two merged sections, to yeild
+; The four reshapes are combined with the two merged sections, to yeild
 ; as the final form
 ;     p * ({ej}, {ej}b{ej}) + (1-p) * (j, ebe)
 ;     p * ({ej}, {ej}{ej}h) + (1-p) * (j, eeh)
