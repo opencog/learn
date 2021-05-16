@@ -301,9 +301,8 @@ XXX describe me.
 			(set-count flattened 
 				(+ (LLOBJ 'get-count flattened) (LLOBJ 'get-count MRG)))
 			(set-count MRG 0)
-; XXX TODO
-			; (balance-recrosses LLOBJ MRG)
-			; (balance-recrosses LLOBJ flattened)
+			(balance-recrosses LLOBJ MRG)
+			(balance-recrosses LLOBJ flattened)
 	))
 
 	non-flat

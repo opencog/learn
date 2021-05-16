@@ -246,13 +246,16 @@
 
 ; The remainder got transfered ... these two tests are "TEST F2"
 ; as described up top.
-(test-approximate
+(define expected-sec-ej-abv-count
 	(+ (* frac (+ cnt-j-abe cnt-f-abe))  ; from linear merge
-		(* frac (- 1 frac) cnt-f-abe))    ; from connector merge
+		(* frac (- 1 frac) cnt-f-abe)))   ; from connector merge
+(test-approximate expected-sec-ej-abv-count
 	(cog-count sec-ej-abv) epsilon)
-(test-approximate
+
+(define expected-sec-ej-vgh-count
 	(+ (* frac (+ cnt-j-egh cnt-f-egh))
-		(* frac (- 1 frac) cnt-f-egh))
+		(* frac (- 1 frac) cnt-f-egh)))
+(test-approximate expected-sec-ej-vgh-count
 	(cog-count sec-ej-vgh) epsilon)
 
 
@@ -264,9 +267,9 @@
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
-(test-approximate (* frac (+ cnt-j-abe cnt-f-abe))
+(test-approximate expected-sec-ej-abv-count
 	(cog-count xes-ej-ej-abv) epsilon)
-(test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
+(test-approximate expected-sec-ej-vgh-count
 	(cog-count xes-ej-ej-vgh) epsilon)
 
 ; ----------------------
