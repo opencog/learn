@@ -51,6 +51,7 @@
 ;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
 ; The ({ej}, abe) and ({ej}, egh) are eliminated by the flattening step.
 ; XXX ??? direct printfs dont show this .. bug???
+; xxx yes its a bug
 ;
 ; But also, we have the earlier fraction that gets merged:
 ;    ({ej}, ab{ej}) + p * (f, ab{ej}) -> ({ej}, ab{ej})
@@ -263,6 +264,6 @@
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
 
-(test-end t-three-cluster)
+; (test-end t-three-cluster)
 
 ; ---------------------------------------------------------------

@@ -3809,7 +3809,7 @@ This won't work:
 
 when merging e/j, should fractionate the e
 
-so start-section should ... 
+so start-section should ...
 (Cross k,l,m
    (Shape (Class ej) FRAC))
 
@@ -3940,7 +3940,7 @@ recreated during merge...
 
 Hang on.   first merge should have created crosses picking up f ...!?
 
-(f, abe) -> [e, <f, abv>] 
+(f, abe) -> [e, <f, abv>]
 
 (f, ab{ej})  -> [{ej}, <f, abv>] where'd this go??
 (f, {ej}gh)
@@ -3967,14 +3967,35 @@ balance-recrosses fails to flatten...
 flatten-resects called from merge-resects
 
 balance-recrosses .. given donor section,
-loop over crosses, 
+loop over crosses,
 Hang on ....
 ({ej}, abe) is created and not eliminated.
 
 merge-recrosses handles the flat case .. how!?
 never mind
 
-key issue:
+-----------
+Oh... part 1 merge:
+(f, abe) -> [e, <f, abv>] -> [{ej}, <f, abv>] -> (f, ab{ej}) 7.75
+7.75 = (* frac cnt-f-abe) tested
+
+Then in linear part of second merge,
+so ({ej}, ab{ej}) 5.25 + (f, ab{ej}) 7.75 -> ({ej}, ab{ej}) 13.0
+
+5.25 = (* frac cnt-j-abe)
+13.0 = (* frac (+ cnt-f-abe cnt-j-abe)) = 13.0 also tested....
+
+So now start doing the shapes...
+We find
+({ej}, abe) where is this from?
+came from flatten-section? MRG
+came from reshape-merge called with ({ej}, abe) 5.8125
+
+linear (f,abe) merged to zero ({ej}, abe) !!!
+This was done near line 526 of gram-projective.scm
+
+problem: this is the left-over (f,abe) from the part-1 merge
+it shouldn't be going in ...
 
 
 

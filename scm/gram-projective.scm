@@ -497,6 +497,16 @@
 	; one or the other or both rows have non-zero elements in them.
 	(define perls (ptu 'right-stars (list CLS WA)))
 
+	; Caution: there's a "feature" bug in projection merging when used
+	; with connector merging. The code below will create sections with
+	; dangling connectors that may be unwanted. Easiest to explain by
+	; example. Consider a section (f, abe) being merged into a cluster
+	; {e,j} to form a cluster {e,j,f}. The code below will create a
+	; section ({ej}, abe) as the C-section, and transfer some counts
+	; to it. But, when connector merging is desired, it should have gone
+	; to ({ej}, ab{ej}). There are two possible solutions: have the
+	; connector merging try to detect this, and clean it up, or have
+	; the tuple object pair up (f, abe) to ({ej}, ab{ej}).
 	(for-each
 		(lambda (PRL)
 			(define PAIR-C (first PRL))
