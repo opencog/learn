@@ -275,6 +275,8 @@
 (define (flatten-section? LLOBJ GLS MRG)
 "
   Return #t if any connector in MRG belongs to GLS.
+
+XXX describe me.
 "
 	; conseq is the connector sequence
 	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
@@ -292,13 +294,14 @@
 					(Connector GLS (cdr clist)))))
 			conseq))
 
+; XXX explain this confusion.
 	(when non-flat
 		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
 (format #t "duuude rewrite ~A to ~A" MRG flattened)
 			(set-count flattened 
-(+ (LLOBJ 'get-count flattened)
-(LLOBJ 'get-count MRG)))
+				(+ (LLOBJ 'get-count flattened) (LLOBJ 'get-count MRG)))
 			(set-count MRG 0)
+; XXX TODO
 			; (balance-recrosses LLOBJ MRG)
 			; (balance-recrosses LLOBJ flattened)
 	))
@@ -329,16 +332,7 @@
 "
 	(define donor-type (cog-type DONOR))
 
-(define sec-ej-abe  (Section
-      (WordClass "e j")
-      (ConnectorSeq
-         (Connector (Word "a") (ConnectorDir "-"))
-         (Connector (Word "b") (ConnectorDir "-"))
-         (Connector (Word "e") (ConnectorDir "+")))))
-
 	(when (equal? 'Section donor-type)
-(if (or (equal? sec-ej-abe MRG) (equal? sec-ej-abe DONOR))
-(format #t "duude hey wtf ~A donor ~A" MRG DONOR))
 		(if (flatten-section? LLOBJ GLS MRG)
 			(balance-recrosses LLOBJ DONOR)
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))

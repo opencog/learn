@@ -39,7 +39,7 @@
 ;     p * (f, ab{ej}) + (1-p) * (f, abe)
 ;     p * (f, {ej}gh) + (1-p) * (f, egh)
 ;
-; This is explicitly tested.
+; This is explicitly tested (see "TEST F1" below).
 ;
 ; Next, "f" is merged into {ej}. This gives a "flat" merge:
 ;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
@@ -49,10 +49,14 @@
 ; The "f" merge reduces it some more:
 ;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
 ;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
-; The ({ej}, abe) and ({ej}, egh) are eliminated by the flattening step.
-; XXX ??? direct printfs dont show this .. bug???
-; xxx yes its a bug
 ;
+; The counts on ({ej}, abe) and ({ej}, egh) are accumulated into
+; ({ej}, ab{ej}) and ({ej}, {ej}gh) respectively. It is NOT immediately
+; obvious that these should be accumulated, instead of zeroed out.
+; However, the initial projective cluster formation won't work right
+; if these are zeroed out, so we avoid further special cases, and
+; accumulate here.  These is tested in "TEST F2" below.
+
 ; But also, we have the earlier fraction that gets merged:
 ;    ({ej}, ab{ej}) + p * (f, ab{ej}) -> ({ej}, ab{ej})
 ;    ({ej}, {ej}gh) + p * (f, {ej}gh) -> ({ej}, {ej}gh)
@@ -150,6 +154,7 @@
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
 (expected-j-extra-sections)
+; Next four tests are "TEST F1" described up top.
 (test-approximate (* frac cnt-j-abe) (cog-count sec-ej-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
@@ -239,10 +244,15 @@
 (test-approximate (* (- 1 frac) (- 1 frac) cnt-f-egh)
 	(cog-count sec-f-egh) epsilon)
 
-; The remainder got transfered ...
-(test-approximate (* frac (+ cnt-j-abe cnt-f-abe))
+; The remainder got transfered ... these two tests are "TEST F2"
+; as described up top.
+(test-approximate
+	(+ (* frac (+ cnt-j-abe cnt-f-abe))  ; from linear merge
+		(* frac (- 1 frac) cnt-f-abe))    ; from connector merge
 	(cog-count sec-ej-abv) epsilon)
-(test-approximate (* frac (+ cnt-j-egh cnt-f-egh))
+(test-approximate
+	(+ (* frac (+ cnt-j-egh cnt-f-egh))
+		(* frac (- 1 frac) cnt-f-egh))
 	(cog-count sec-ej-vgh) epsilon)
 
 

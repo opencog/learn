@@ -3997,7 +3997,28 @@ This was done near line 526 of gram-projective.scm
 problem: this is the left-over (f,abe) from the part-1 merge
 it shouldn't be going in ...
 
+get-left-union
+(star-obj 'left-duals row)
+get-pair
 
+OK. So given ({ej}, abe)  it has donor (f,abe)
+as both passed to reshape-merge
+what should we do with this?
+1) all of count of (f,abe) should go to ({ej}, ab{ej})
+2) all of count of ({ej}, abe) should go to ({ej}, ab{ej})
+which means basically all of the original (f,abe) gets reassigned to
+there. So line 243 is wrong ....
+
+Again:
+coming in, have, after the second linear merge, that
+({ej}, ab{ej}) = 13.0 = (* frac (+ cnt-f-abe cnt-j-abe))
+
+so what to do with the new ({ej}, abe) ? old dogma says set it to zero.
+But we need it to be non-zero becaus of initial cluster creation.
+So now, just add it. which means
+({ej}, ab{ej}) = 13.0 + ({ej}, abe) = 13.0 + p*(1-p) cnt-f-abe
+= (* frac (+ cnt-f-abe cnt-j-abe)) + (* frac (1-frac) cnt-f-abe)
+= yuck.
 
 
 
