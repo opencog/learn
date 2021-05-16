@@ -506,7 +506,10 @@
 	; to it. But, when connector merging is desired, it should have gone
 	; to ({ej}, ab{ej}). There are two possible solutions: have the
 	; connector merging try to detect this, and clean it up, or have
-	; the tuple object pair up (f, abe) to ({ej}, ab{ej}).
+	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
+	; "natural" way for the tuple object to create this pairing (it is
+	; "naturally" linear, by design) so we must clean up during connector
+	; merging.
 	(for-each
 		(lambda (PRL)
 			(define PAIR-C (first PRL))
