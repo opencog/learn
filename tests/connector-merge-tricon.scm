@@ -134,9 +134,9 @@
 
 ; --------------------------
 ; Merge the first two sections together.
-(define frac 0.25)
-(define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(define frac1 0.25)
+(define disc1 (make-fuzz gsc 0 frac1 4 0))
+(disc1 'merge-function (Word "e") (Word "j"))
 
 ; 10 sections as before plus 5 more.
 (test-equal 15 (length (cog-get-atoms 'Section)))
@@ -150,26 +150,26 @@
 ; Validate counts.
 (define epsilon 1.0e-8)
 (expected-e-j-sections)
-(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+(test-approximate (* frac1 cnt-e-klm) (cog-count sec-ej-klm) epsilon)
+(test-approximate (* (- 1 frac1) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
 (expected-j-extra-sections)
 ; Next four tests are "TEST F1" described up top.
-(test-approximate (* frac cnt-j-abe) (cog-count sec-ej-abv) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+(test-approximate (* frac1 cnt-j-abe) (cog-count sec-ej-abv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate (* frac1 cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
 (expected-f-extra-sections)
-(test-approximate (* frac cnt-f-abe) (cog-count sec-f-abej) epsilon)
-(test-approximate (* (- 1 frac) cnt-f-abe) (cog-count sec-f-abe) epsilon)
-(test-approximate (* frac cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
-(test-approximate (* (- 1 frac) cnt-f-egh) (cog-count sec-f-egh) epsilon)
+(test-approximate (* frac1 cnt-f-abe) (cog-count sec-f-abej) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-abe) (cog-count sec-f-abe) epsilon)
+(test-approximate (* frac1 cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-egh) (cog-count sec-f-egh) epsilon)
 
-(test-approximate (* frac cnt-f-abe) (cog-count xes-ej-f-abv) epsilon)
-(test-approximate (* (- 1 frac) cnt-f-abe) (cog-count xes-e-f-abv) epsilon)
-(test-approximate (* frac cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
-(test-approximate (* (- 1 frac) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
+(test-approximate (* frac1 cnt-f-abe) (cog-count xes-ej-f-abv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-abe) (cog-count xes-e-f-abv) epsilon)
+(test-approximate (* frac1 cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
 
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
@@ -177,7 +177,9 @@
 
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
-(disc 'merge-function (WordClass "e j") (Word "f"))
+(define frac2 0.35)
+(define disc2 (make-fuzz gsc 0 frac2 4 0))
+(disc2 'merge-function (WordClass "e j") (Word "f"))
 
 (test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
 
@@ -211,7 +213,7 @@
 
 ; ----------------------------
 ; Validate counts.
-(test-approximate (* cnt-e-klm (- 1.0 frac))
+(test-approximate (* cnt-e-klm (- 1.0 frac1))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
 ; We expect abc, dgh and klm sections to behave exactly as they do for
@@ -221,40 +223,40 @@
 	(cog-count sec-ej-abc) epsilon)
 (test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
 	(cog-count sec-ej-dgh) epsilon)
-(test-approximate (+ (* frac cnt-e-klm) cnt-f-klm)
+(test-approximate (+ (* frac1 cnt-e-klm) cnt-f-klm)
 	(cog-count sec-ej-klm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm)
+(test-approximate (* (- 1 frac1) cnt-e-klm)
 	(cog-count sec-e-klm) epsilon)
 
 ; Validate counts on select CrossSections...
 (test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
 	(cog-count xes-b-ej-avc) epsilon)
-(test-approximate (+ (* frac cnt-e-klm) cnt-f-klm)
+(test-approximate (+ (* frac1 cnt-e-klm) cnt-f-klm)
 	(cog-count xes-k-ej-vlm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
+(test-approximate (* (- 1 frac1) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; The j counts should be untouched from before.
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
 ; Now, for some of the more complex cases.
 ; The (f,abe) and (f,egh) sections are twice-reduced, as explained above.
-(test-approximate (* (- 1 frac) (- 1 frac) cnt-f-abe)
+(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-abe)
 	(cog-count sec-f-abe) epsilon)
-(test-approximate (* (- 1 frac) (- 1 frac) cnt-f-egh)
+(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-egh)
 	(cog-count sec-f-egh) epsilon)
 
 ; The remainder got transfered ... these two tests are "TEST F2"
 ; as described up top.
 (define expected-sec-ej-abv-count
-	(+ (* frac (+ cnt-j-abe cnt-f-abe))  ; from linear merge
-		(* frac (- 1 frac) cnt-f-abe)))   ; from connector merge
+	(+ (* frac1 (+ cnt-j-abe cnt-f-abe))  ; from linear merge
+		(* frac2 (- 1 frac1) cnt-f-abe)))  ; from connector merge
 (test-approximate expected-sec-ej-abv-count
 	(cog-count sec-ej-abv) epsilon)
 
 (define expected-sec-ej-vgh-count
-	(+ (* frac (+ cnt-j-egh cnt-f-egh))
-		(* frac (- 1 frac) cnt-f-egh)))
+	(+ (* frac1 (+ cnt-j-egh cnt-f-egh))
+		(* frac2 (- 1 frac1) cnt-f-egh)))
 (test-approximate expected-sec-ej-vgh-count
 	(cog-count sec-ej-vgh) epsilon)
 
@@ -264,8 +266,8 @@
 (test-equal 30 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various CrossSections...
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
 (test-approximate expected-sec-ej-abv-count
 	(cog-count xes-ej-ej-abv) epsilon)

@@ -6162,6 +6162,175 @@ Then, apparently, the counts will be consistent if and only if the same
 \end_layout
 
 \begin_layout Subsection*
+Connector merging, with counts
+\end_layout
+
+\begin_layout Standard
+To get all of the above correct, there is a series of unit tests.
+ They work well, but one of the more complex ones has become painfully difficult
+ to understand and debug.
+ It is reviewed here.
+ But first, a change of notation to make it more compact:
+\end_layout
+
+\begin_layout Itemize
+The entry 
+\family typewriter
+A:(B- & C+)
+\family default
+ will be written as 
+\family typewriter
+(A, BC)
+\family default
+.
+ Here, the perenthesis denote a pair (a matrix entry).
+ The letter sequence is just the connector sequence with the directional
+ indicators ignored.
+\end_layout
+
+\begin_layout Itemize
+Entries with word-classes, such as 
+\family typewriter
+<wclass-AB>:(K- & B+)
+\family default
+ will be written as 
+\family typewriter
+({AB},KB)
+\family default
+.
+ The word-class is denoted with set-notation curly braces.
+ Similarly, 
+\family typewriter
+A:(K- & <wclass-AB>+)
+\family default
+ will be written as 
+\family typewriter
+(A,K{AB})
+\family default
+.
+\end_layout
+
+\begin_layout Itemize
+Cross-sections, which were written above as 
+\family typewriter
+D:(A:C+ & x+)
+\family default
+ will be written as 
+\family typewriter
+[D, <A, Cv>]
+\family default
+.
+ The angle brackets denote the shape, and the lower-case v denotes the location
+ of the variable in the connector sequence.
+ The square brackets just serve to remind that a cross-section is being
+ discussed.
+\end_layout
+
+\begin_layout Itemize
+A property called 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+ is introduced.
+ This is the idea that corresponding sections and cross-sections should
+ have exactly the same observation count on them.
+ Thus for example, given a section 
+\family typewriter
+(A, BC)
+\family default
+ which was observed N times, one expects that the two cross-sections derived
+ from it, namely 
+\family typewriter
+[B, <A, vC>]
+\family default
+ and 
+\family typewriter
+[C, <A, Bv>]
+\family default
+ are also both observed N times each.
+ Prior to any merging, detailed balance holds 
+\begin_inset Quotes eld
+\end_inset
+
+automatically
+\begin_inset Quotes erd
+\end_inset
+
+ or tautologically, as a trite statement about how counting is done.
+ The goal is that connector merging should preserve detailed balance as
+ a property.
+ It is assumed to be a desirable property, and is enforced in the code and
+ unit tests.
+\end_layout
+
+\begin_layout Itemize
+Counts will be denoted with a lower-case n written in front of the pair.
+ Thus, 
+\family typewriter
+n(A, BC)
+\family default
+ would be the number of times that 
+\family typewriter
+(A, BC)
+\family default
+ was observed.
+\end_layout
+
+\begin_layout Standard
+The troublseome test is as follows.
+ The dictionary is assumed to contain many entries; the troubleseome subset
+ is this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   (j, abe)
+\end_layout
+
+\begin_layout Plain Layout
+
+   (f, abe)
+\end_layout
+
+\end_inset
+
+A decision is made to merge the vectors for e and j, based on other dictionary
+ entries not shown here.
+ The vector on e includes the cross-sections
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   [e, <j,abv>]
+\end_layout
+
+\begin_layout Plain Layout
+
+   [e, <f,abv>]
+\end_layout
+
+\end_inset
+
+Ugh.
+ Why am I writing this all out? See the unit test connector-merge-tricon.scm
+ for details ...
+\end_layout
+
+\begin_layout Subsection*
 expt-19 (May 2021)
 \end_layout
 
