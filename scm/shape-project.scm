@@ -269,16 +269,23 @@
 
 (define (flatten-section? LLOBJ GLS MRG)
 "
-  Return #t if any connector in MRG belongs to GLS.
+  flatten-section? LLOBJ GLS MRG -- return #t if any connector in
+  the section MRG belongs to GLS.
 
-XXX describe me.
+  In addition to performing this test, this will also rewrite MRG,
+  replacing the connectors by the corresponding connector for GLS.
+  With this rewrite, all of the count from MRG will be transfered
+  to the rewritten section.
 "
 	; conseq is the connector sequence
 	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
 
 	(define non-flat #f)
 
-	; Are any of the connectors in the cluster?
+	; Walk through the connector sequence. If any of them appear in the
+	; cluster, create a new connector sequence with the cluster replacing
+	; that particular connector. Set the non-flat flag to #t in this
+	; case.
 	(define newseq
 		(map (lambda (con)
 			(define clist (cog-outgoing-set con))
@@ -289,14 +296,17 @@ XXX describe me.
 					(Connector GLS (cdr clist)))))
 			conseq))
 
-; XXX explain this confusion.
+	; Are any of the connectors in the cluster? If so, then transfer
+	; all of the count over to the re-written connector sequence.
+	; Perform the same on the cross-sections, too. (respect detailed
+	; balance).
 	(when non-flat
 		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
-(format #t "duuude rewrite ~A to ~A" MRG flattened)
 			(rebalance-count LLOBJ flattened
 				(+ (LLOBJ 'get-count flattened) (LLOBJ 'get-count MRG)))
 			(rebalance-count LLOBJ MRG 0)))
 
+	; Return #t if a rewrite was performed.
 	non-flat
 )
 
@@ -327,6 +337,8 @@ XXX describe me.
 		(when (not (flatten-section? LLOBJ GLS MRG))
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
 			(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))
+
+		; Always rebalance the donor.
 		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 	)
 
