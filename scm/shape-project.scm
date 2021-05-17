@@ -177,20 +177,19 @@
 	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
 )
 
-(define (balance-recrosses LLOBJ DONOR)
+(define (rebalance-count LLOBJ SECTION CNT)
 "
-  balance-recrosses LLOBJ DONOR rebalance cross sections from donor.
+  rebalance-count LLOBJ SECTION CNT - set count on section and crosses.
 
-  The section DONOR is presumed to be a section that was merged into
-  into some cluster, and so the observation count on DONOR was adjusted
-  to reflect that merge (possible even set to zero.) This function
+  The SECTION is presumed to be some section on which the observation
+  count was adjusted (possibly even set to zero.) This function
   enforces 'detailed balance', making sure that the CrossSections
-  corresponding to DONOR have the same count.
+  corresponding to SECTION have the same count.
 "
-	(define cnt (LLOBJ 'get-count DONOR))
+	(set-count SECTION CNT)
 	(for-each
-		(lambda (XST) (set-count XST cnt))
-		(LLOBJ 'get-cross-sections DONOR))
+		(lambda (XST) (set-count XST CNT))
+		(LLOBJ 'get-cross-sections SECTION))
 )
 
 (define (flatten-resects LLOBJ GLS XMR RESECT)
@@ -258,14 +257,8 @@
 			; to `resect`. However, it is cheaper and easier to just
 			; copy the counts from the crosses, since these are
 			; correct already.
-			(set-count resect x-cnt)
-			(set-count donor d-cnt)
-
-			(for-each (lambda (re-d) (set-count re-d d-cnt))
-				(LLOBJ 'make-cross-sections donor))
-
-			(for-each (lambda (re-x) (set-count re-x x-cnt))
-				(LLOBJ 'make-cross-sections resect))
+			(rebalance-count LLOBJ resect x-cnt)
+			(rebalance-count LLOBJ donor d-cnt)
 		)
 		(flatten-resects LLOBJ GLS XMR resect))
 )
@@ -298,12 +291,9 @@ XXX describe me.
 	(when non-flat
 		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
 (format #t "duuude rewrite ~A to ~A" MRG flattened)
-			(set-count flattened 
+			(rebalance-count LLOBJ flattened
 				(+ (LLOBJ 'get-count flattened) (LLOBJ 'get-count MRG)))
-			(set-count MRG 0)
-			(balance-recrosses LLOBJ MRG)
-			(balance-recrosses LLOBJ flattened)
-	))
+			(rebalance-count LLOBJ MRG 0)))
 
 	non-flat
 )
@@ -333,7 +323,7 @@ XXX describe me.
 
 	(when (equal? 'Section donor-type)
 		(if (flatten-section? LLOBJ GLS MRG)
-			(balance-recrosses LLOBJ DONOR)
+			(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 
 	(when (equal? 'CrossSection donor-type)
