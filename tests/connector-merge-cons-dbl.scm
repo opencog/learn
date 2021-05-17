@@ -116,7 +116,7 @@
 (define (len-type wrd atype)
 	(length (filter-type wrd atype)))
 
-; Expect 3 Sections and two CrossSections on e.
+; Expect 3 Sections and four CrossSections on e.
 (test-equal 7 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
 
@@ -128,20 +128,19 @@
 ; We expect a total of 3+4=7 Sections
 (test-equal 7 (length (cog-get-atoms 'Section)))
 
-#! =======================
 ; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-; We expect one section left on "e", the klm section, and two
-; cross-sections. The two cross-sections should correspond
-; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
+; We expect one section left on "e", the klm section, and 4
+; cross-sections. The four cross-sections should correspond
+; to the sections (1-p) * (j, ebe) and (1-p) * (j, eeh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+(test-equal 4 (len-type (Word "e") 'CrossSection))
+(test-equal 5 (length (gsc 'right-stars (Word "e"))))
 
 ; We expect two sections remaining on j
 (test-equal 2 (len-type (Word "j") 'Section))
@@ -150,8 +149,8 @@
 
 ; We expect five merged sections
 (test-equal 5 (len-type (WordClass "e j") 'Section))
-(test-equal 2 (len-type (WordClass "e j") 'CrossSection))
-(test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 4 (len-type (WordClass "e j") 'CrossSection))
+(test-equal 9 (length (gsc 'right-stars (WordClass "e j"))))
 
 ; Of the 7=3+4 original Sections, 4 are deleted, and 5 are created,
 ; leaving a grand total of 8. The 5 new ones are all e-j, the
@@ -159,6 +158,7 @@
 ; This is just a total over everything above.
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
+#! =======================
 ; ----------------------------
 ; Validate counts.
 (define epsilon 1.0e-8)

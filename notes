@@ -4048,6 +4048,17 @@ pass. TEST F1 ...
 (* frac2 (- 1 frac1) cnt-f-abe) = 8.1375
 7.75 = (* frac1 cnt-f-abe)
 
+[e, <j, vbe>]
+[e, <j, ebv>]
+[e, <j, veh>]
+[e, <j, evh>]
+
+
+unwanted:
+[e, <{ej}, v{ej}h>]
+[e, <{ej}, {ej}vh>]
+[e, <{ej}, {ej}bv>]
+[e, <{ej}, vb{ej}>]
 
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
