@@ -6280,8 +6280,17 @@ n(A, BC)
  was observed.
 \end_layout
 
+\begin_layout Subsubsection*
+First merge
+\end_layout
+
 \begin_layout Standard
-The troublseome test is as follows.
+The troublseome test is '
+\family typewriter
+connector-merge-tricon.scm
+\family default
+'.
+ The relevant portion is as follows.
  The dictionary is assumed to contain many entries; the troubleseome subset
  is this:
 \end_layout
@@ -6303,9 +6312,117 @@ status open
 
 \end_inset
 
-A decision is made to merge the vectors for e and j, based on other dictionary
- entries not shown here.
- The vector on e includes the cross-sections
+A decision is made to merge the vectors for 
+\family typewriter
+e
+\family default
+ and 
+\family typewriter
+j
+\family default
+, based on other dictionary entries not shown here.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+projective merge
+\begin_inset Quotes erd
+\end_inset
+
+ strategy is used, so that a fraction 
+\begin_inset Formula $0\le p\le1$
+\end_inset
+
+ of the count is merged whenever one of the two vectors is missing an entry
+ at a given basis element.
+ In this case, the merge, denoted with an arrow, is
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   none + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
+\end_layout
+
+\end_inset
+
+where '
+\family typewriter
+none
+\family default
+' denotes that there is no section 
+\family typewriter
+(e, abe)
+\family default
+ and so the projective merge was used.
+ That is, the count on 
+\family typewriter
+(j, abe)
+\family default
+ is reduced to 
+\begin_inset Formula $\left(1-p\right)$
+\end_inset
+
+ of it's earlier value, and the remaining 
+\begin_inset Formula $p$
+\end_inset
+
+ is transfered over to 
+\family typewriter
+({ej}, abe)
+\family default
+.
+ That is, the total counts are preserved.
+ That is,
+\begin_inset Formula 
+\[
+n^{\prime}\left(\texttt{\{ej\}, abe}\right)=pn\left(\texttt{j, abe}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $n^{\prime}$
+\end_inset
+
+ denotes the count after the merge, and the unprimed 
+\begin_inset Formula $n$
+\end_inset
+
+ is the count before the merge.
+\end_layout
+
+\begin_layout Standard
+From the connector merging discussion above, we conclude that 
+\family typewriter
+({ej}, abe)
+\family default
+ should be rewritten to 
+\family typewriter
+({ej}, ab{ej})
+\family default
+.
+ The count should be as above, that is:
+\begin_inset Formula 
+\[
+n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The vector on 
+\family typewriter
+e
+\family default
+ includes the cross-sections
 \end_layout
 
 \begin_layout Standard
@@ -6325,9 +6442,223 @@ status open
 
 \end_inset
 
-Ugh.
- Why am I writing this all out? See the unit test connector-merge-tricon.scm
- for details ...
+These merge in a similar fashion:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   [e, <j,abv>] + none -> p * [{ej}, <j,abv>] + (1-p) * [e, <j,abv>]
+\end_layout
+
+\begin_layout Plain Layout
+
+   [e, <f,abv>] + none -> p * [{ej}, <f,abv>] + (1-p) * [e, <f,abv>]
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From detailed balance, we deduce the two new sections
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   (j, ab{ej})
+\end_layout
+
+\begin_layout Plain Layout
+
+   (f, ab{ej})
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The counts on these are
+\begin_inset Formula 
+\[
+n^{\prime}\left(\texttt{j, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+n^{\prime}\left(\texttt{f, ab\{ej\}}\right)=pn\left(\texttt{f, abe}\right)
+\]
+
+\end_inset
+
+From the connector merging discussion above, we conclude that 
+\family typewriter
+(j, ab{ej})
+\family default
+ should be rewritten to 
+\family typewriter
+({ej}, ab{ej})
+\family default
+.
+ The first identity arrives at the same count as before, so this rewrite
+ appears to be self-consistent.
+ Everything works out.
+\end_layout
+
+\begin_layout Subsubsection*
+Second merge
+\end_layout
+
+\begin_layout Standard
+The first merge is more-or-less straightforward.
+ The trouble comes with the second merge.
+ Here, it is decided that the vector for f should be merged into {ej}.
+ The preservation of detailed balance creates subtleties and ambiguities.
+\end_layout
+
+\begin_layout Standard
+The final count on 
+\family typewriter
+({ej}, ab{ej})
+\family default
+ gets contributions from three sources:
+\end_layout
+
+\begin_layout Itemize
+The starting count on 
+\family typewriter
+({ej}, ab{ej})
+\family default
+, which is 
+\begin_inset Formula $n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)$
+\end_inset
+
+ as given above.
+\end_layout
+
+\begin_layout Itemize
+A contribution from 
+\family typewriter
+(f, abe)
+\family default
+ via the projection merge
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   none + (f, abe) -> q * ({ejf}, abe) + (1-q) * (f, abe)
+\end_layout
+
+\end_inset
+
+and then the subsequent rewrite of 
+\family typewriter
+({ejf}, abe) -> ({ejf}, ab{ejf})
+\family default
+.
+ This contribution is 
+\begin_inset Formula $qn^{\prime}\left(\texttt{f, abe}\right)=q\left(1-p\right)n\left(\texttt{f, abe}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+A contribution from 
+\family typewriter
+(f, ab{ej})
+\family default
+ via detailed balance from the earlier cross-section 
+\family typewriter
+[{ej}, <f, abv>]
+\family default
+ created during the first merge.
+ The projection merge is
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   ({ej}, ab{ej}) + (f, ab{ej}) -> ({ejf}, ab{ej})
+\end_layout
+
+\end_inset
+
+This merge absorbes the entire count on 
+\family typewriter
+(f, ab{ej})
+\family default
+ because 
+\family typewriter
+({ej}, ab{ej})
+\family default
+ already exists.
+ The contribution is thus 
+\begin_inset Formula $n^{\prime}\left(\texttt{f, ab\{ej\}}\right)=pn\left(\texttt{f, abe}\right)$
+\end_inset
+
+.
+ Rewriting then promotes 
+\family typewriter
+({ejf}, ab{ej})
+\family default
+ to 
+\family typewriter
+({ejf}, ab{ejf})
+\family default
+.
+\end_layout
+
+\begin_layout Standard
+The total of these three contributions is then
+\begin_inset Formula 
+\begin{align*}
+n^{\prime\prime}\left(\texttt{\{ejf\},ab\{ejf\}}\right)= & n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)+qn^{\prime}\left(\texttt{f, abe}\right)+n^{\prime}\left(\texttt{f, ab\{ej\}}\right)\\
+= & pn\left(\texttt{j, abe}\right)+q\left(1-p\right)n\left(\texttt{f, abe}\right)+pn\left(\texttt{f, abe}\right)\\
+= & pn\left(\texttt{j, abe}\right)+qn\left(\texttt{f, abe}\right)
+\end{align*}
+
+\end_inset
+
+Perhaps the nicest thing about this result is that it appears symmetric
+ with respect to the merge order: either j or f could have been merged first.
+ This is unexpected, as it is not generally the case.
+ (right!? hang on ...
+ uhhh ...
+ is there a history dependence in any of the above? If so, can it be explicitly
+ demonstrated?)
+\end_layout
+
+\begin_layout Standard
+Again, addtional details are in the test file '
+\family typewriter
+connector-merge-tricon.scm
+\family default
+'.
 \end_layout
 
 \begin_layout Subsection*

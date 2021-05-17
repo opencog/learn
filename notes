@@ -4014,7 +4014,7 @@ coming in, have, after the second linear merge, that
 ({ej}, ab{ej}) = 13.0 = (* frac (+ cnt-f-abe cnt-j-abe))
 
 so what to do with the new ({ej}, abe) ? old dogma says set it to zero.
-But we need it to be non-zero becaus of initial cluster creation.
+But we need it to be non-zero because of initial cluster creation.
 So now, just add it. which means
 ({ej}, ab{ej}) = 13.0 + ({ej}, abe) = 13.0 + p*(1-p) cnt-f-abe
 = (* frac (+ cnt-f-abe cnt-j-abe)) + (* frac (1-frac) cnt-f-abe)
