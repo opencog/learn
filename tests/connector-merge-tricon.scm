@@ -250,13 +250,15 @@
 ; as described up top.
 (define expected-sec-ej-abv-count
 	(+ (* frac1 (+ cnt-j-abe cnt-f-abe))  ; from linear merge
-		(* frac2 (- 1 frac1) cnt-f-abe)))  ; from connector merge
+		(* frac2 (- 1 frac1) cnt-f-abe)    ; from connector merge
+		(* frac1 cnt-f-abe)))              ; from linear merge
 (test-approximate expected-sec-ej-abv-count
 	(cog-count sec-ej-abv) epsilon)
 
 (define expected-sec-ej-vgh-count
 	(+ (* frac1 (+ cnt-j-egh cnt-f-egh))
-		(* frac2 (- 1 frac1) cnt-f-egh)))
+		(* frac2 (- 1 frac1) cnt-f-egh)
+		(* frac1 cnt-f-egh)))
 (test-approximate expected-sec-ej-vgh-count
 	(cog-count sec-ej-vgh) epsilon)
 
@@ -279,6 +281,6 @@
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
 
-; (test-end t-three-cluster)
+(test-end t-three-cluster)
 
 ; ---------------------------------------------------------------

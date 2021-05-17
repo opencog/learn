@@ -170,7 +170,9 @@
 	; the germ of DONOR had appeared.
 	(define (merge-cross XST)
 		(define xmr (LLOBJ 're-cross GLS XST))
+		(define mr (LLOBJ 'make-section xmr))
 		(accumulate-count LLOBJ xmr XST FRAC NOISE)
+		(set-count mr (LLOBJ 'get-count xmr))
 	)
 
 	; Loop over donating cross-sections.
@@ -322,9 +324,11 @@ XXX describe me.
 	(define donor-type (cog-type DONOR))
 
 	(when (equal? 'Section donor-type)
-		(if (flatten-section? LLOBJ GLS MRG)
-			(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
-			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
+		(when (not (flatten-section? LLOBJ GLS MRG))
+			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
+			(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))
+		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
+	)
 
 	(when (equal? 'CrossSection donor-type)
 		(merge-resects LLOBJ GLS W MRG DONOR))

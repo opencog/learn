@@ -6220,8 +6220,11 @@ D:(A:C+ & x+)
 [D, <A, Cv>]
 \family default
 .
- The angle brackets denote the shape, and the lower-case v denotes the location
- of the variable in the connector sequence.
+ The angle brackets denote the shape, and the lower-case 
+\family typewriter
+v
+\family default
+ denotes the location of the variable in the connector sequence.
  The square brackets just serve to remind that a cross-section is being
  discussed.
 \end_layout
@@ -6527,14 +6530,22 @@ Second merge
 \begin_layout Standard
 The first merge is more-or-less straightforward.
  The trouble comes with the second merge.
- Here, it is decided that the vector for f should be merged into {ej}.
+ Here, it is decided that the vector for 
+\family typewriter
+f
+\family default
+ should be merged into 
+\family typewriter
+{ej}
+\family default
+.
  The preservation of detailed balance creates subtleties and ambiguities.
 \end_layout
 
 \begin_layout Standard
 The final count on 
 \family typewriter
-({ej}, ab{ej})
+({ejf}, ab{ejf})
 \family default
  gets contributions from three sources:
 \end_layout
@@ -6545,7 +6556,11 @@ The starting count on
 ({ej}, ab{ej})
 \family default
 , which is 
-\begin_inset Formula $n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)$
+\begin_inset Formula 
+\[
+n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)
+\]
+
 \end_inset
 
  as given above.
@@ -6557,9 +6572,6 @@ A contribution from
 (f, abe)
 \family default
  via the projection merge
-\end_layout
-
-\begin_layout Standard
 \begin_inset listings
 inline false
 status open
@@ -6588,15 +6600,18 @@ A contribution from
 \family typewriter
 (f, ab{ej})
 \family default
- via detailed balance from the earlier cross-section 
+ which was created in the first merge, via detailed balance from the earlier
+ cross-section 
 \family typewriter
 [{ej}, <f, abv>]
 \family default
- created during the first merge.
+.
+ This is merged in it's entirety into the the existing 
+\family typewriter
+({ej}, ab{ej})
+\family default
+.
  The projection merge is
-\end_layout
-
-\begin_layout Standard
 \begin_inset listings
 inline false
 status open
@@ -6608,7 +6623,7 @@ status open
 
 \end_inset
 
-This merge absorbes the entire count on 
+This merge absorbs the entire count on 
 \family typewriter
 (f, ab{ej})
 \family default
@@ -6639,22 +6654,19 @@ The total of these three contributions is then
 \begin{align*}
 n^{\prime\prime}\left(\texttt{\{ejf\},ab\{ejf\}}\right)= & n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)+qn^{\prime}\left(\texttt{f, abe}\right)+n^{\prime}\left(\texttt{f, ab\{ej\}}\right)\\
 = & pn\left(\texttt{j, abe}\right)+q\left(1-p\right)n\left(\texttt{f, abe}\right)+pn\left(\texttt{f, abe}\right)\\
-= & pn\left(\texttt{j, abe}\right)+qn\left(\texttt{f, abe}\right)
+= & pn\left(\texttt{j, abe}\right)+\left(q\left(1-p\right)+p\right)n\left(\texttt{f, abe}\right)
 \end{align*}
 
 \end_inset
 
-Perhaps the nicest thing about this result is that it appears symmetric
- with respect to the merge order: either j or f could have been merged first.
- This is unexpected, as it is not generally the case.
- (right!? hang on ...
- uhhh ...
- is there a history dependence in any of the above? If so, can it be explicitly
- demonstrated?)
+Note that this result is history-dependent: merging j into e first, then
+ f gives a different result than merging f into e, then j (and presumably
+ different than the third possibility, of merging f and j first, and only
+ then adding e).
 \end_layout
 
 \begin_layout Standard
-Again, addtional details are in the test file '
+Again, additional details are in the test file '
 \family typewriter
 connector-merge-tricon.scm
 \family default
