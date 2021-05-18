@@ -170,9 +170,7 @@
 	; the germ of DONOR had appeared.
 	(define (merge-cross XST)
 		(define xmr (LLOBJ 're-cross GLS XST))
-		(define mr (LLOBJ 'make-section xmr))
 		(accumulate-count LLOBJ xmr XST FRAC NOISE)
-		(set-count mr (LLOBJ 'get-count xmr))
 	)
 
 	; Loop over donating cross-sections.

@@ -178,6 +178,10 @@
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
 
+; Verify no change in totals
+(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
+	epsilon)
+
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (define frac2 0.35)
