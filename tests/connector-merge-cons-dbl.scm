@@ -98,6 +98,9 @@
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
 
+; Get the total count on all Sections
+(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
+
 ; Create CrossSections and verify that they got created
 ; We expect 3 x (3+4) = 21 of them.
 (csc 'explode-sections)
@@ -200,6 +203,11 @@
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
+
+; Verify no change in totals
+(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
+	epsilon)
+
 ========== !#
 
 ; (test-end t-two-connector-two-cluster)
