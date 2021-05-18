@@ -6569,38 +6569,9 @@ n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)=pn\left(\texttt{j, abe}\right)
 \begin_layout Itemize
 A contribution from 
 \family typewriter
-(f, abe)
-\family default
- via the projection merge
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-   none + (f, abe) -> q * ({ejf}, abe) + (1-q) * (f, abe)
-\end_layout
-
-\end_inset
-
-and then the subsequent rewrite of 
-\family typewriter
-({ejf}, abe) -> ({ejf}, ab{ejf})
-\family default
-.
- This contribution is 
-\begin_inset Formula $qn^{\prime}\left(\texttt{f, abe}\right)=q\left(1-p\right)n\left(\texttt{f, abe}\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Itemize
-A contribution from 
-\family typewriter
 (f, ab{ej})
 \family default
- which was created in the first merge, via detailed balance from the earlier
+, which was created in the first merge, via detailed balance from the earlier
  cross-section 
 \family typewriter
 [{ej}, <f, abv>]
@@ -6648,13 +6619,41 @@ This merge absorbs the entire count on
 .
 \end_layout
 
+\begin_layout Itemize
+A contribution from 
+\family typewriter
+(f, abe)
+\family default
+ via the projection merge
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   none + (f, abe) -> q * ({ejf}, abe) + (1-q) * (f, abe)
+\end_layout
+
+\end_inset
+
+and then the subsequent rewrite of 
+\family typewriter
+({ejf}, abe) -> ({ejf}, ab{ejf})
+\family default
+.
+ This contribution is 
+\begin_inset Formula $qn^{\prime}\left(\texttt{f, abe}\right)=q\left(1-p\right)n\left(\texttt{f, abe}\right)$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Standard
 The total of these three contributions is then
 \begin_inset Formula 
 \begin{align*}
-n^{\prime\prime}\left(\texttt{\{ejf\},ab\{ejf\}}\right)= & n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)+qn^{\prime}\left(\texttt{f, abe}\right)+n^{\prime}\left(\texttt{f, ab\{ej\}}\right)\\
-= & pn\left(\texttt{j, abe}\right)+q\left(1-p\right)n\left(\texttt{f, abe}\right)+pn\left(\texttt{f, abe}\right)\\
-= & pn\left(\texttt{j, abe}\right)+\left(q\left(1-p\right)+p\right)n\left(\texttt{f, abe}\right)
+n^{\prime\prime}\left(\texttt{\{ejf\},ab\{ejf\}}\right)= & n^{\prime}\left(\texttt{\{ej\}, ab\{ej\}}\right)+n^{\prime}\left(\texttt{f, ab\{ej\}}\right)+qn^{\prime}\left(\texttt{f, abe}\right)\\
+= & pn\left(\texttt{j, abe}\right)+pn\left(\texttt{f, abe}\right)+q\left(1-p\right)n\left(\texttt{f, abe}\right)
 \end{align*}
 
 \end_inset
