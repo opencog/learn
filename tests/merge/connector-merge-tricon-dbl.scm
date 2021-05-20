@@ -202,22 +202,21 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-#! =======================
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (define frac2 0.35)
 (define disc2 (make-fuzz gsc 0 frac2 4 0))
 (disc2 'merge-function (WordClass "e j") (Word "f"))
 
-(test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
+(test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))
 
-; We expect one section left on "e", the klm section, and two
-; cross-sections. The two cross-sections should correspond
-; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
+; We expect one section left on "e", the klm section, and four
+; cross-sections. The four cross-sections should correspond
+; to the sections (1-p) * (j, ebe) and (1-p) * (j, eeh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
-(test-equal 4 (len-type (Word "e") 'CrossSection))
-(test-equal 5 (length (gsc 'right-stars (Word "e"))))
+(test-equal 8 (len-type (Word "e") 'CrossSection))
+(test-equal 9 (length (gsc 'right-stars (Word "e"))))
 
 ; We expect two sections remaining on j, and on f
 (test-equal 2 (len-type (Word "j") 'Section))
@@ -230,8 +229,8 @@
 
 ; We expect five merged sections
 (test-equal 5 (len-type (WordClass "e j") 'Section))
-(test-equal 2 (len-type (WordClass "e j") 'CrossSection))
-(test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 4 (len-type (WordClass "e j") 'CrossSection))
+(test-equal 9 (length (gsc 'right-stars (WordClass "e j"))))
 
 ; Of the 10=3+4+3 original Sections, 5 are deleted, and 5 are created,
 ; leaving a grand total of 10. The 5 new ones are all e-j, the
@@ -239,6 +238,7 @@
 ; This is just a total over everything above.
 (test-equal 10 (length (cog-get-atoms 'Section)))
 
+#! =======================
 ; ----------------------------
 ; Validate counts.
 (test-approximate (* cnt-e-klm (- 1.0 frac1))
