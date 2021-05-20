@@ -215,12 +215,13 @@
 	(define mgsf (LLOBJ 'flatten GLS resect))
 	(define mgs (if mgsf mgsf resect))
 
+	(define x-cnt (LLOBJ 'get-count XMR))
+
 	; This is confusing ... can't we just call accumulate-count?
 	; (accumulate-count LLOBJ mgs donor FRAC NOISE)
 	; ???
 	(if (nil? (cog-link 'MemberLink germ GLS))
 		(let ((donor (LLOBJ 'make-section XDON))
-				(x-cnt (LLOBJ 'get-count XMR))
 				(d-cnt (LLOBJ 'get-count XDON)))
 
 			(when mgsf
@@ -229,13 +230,13 @@
 			(rebalance-count LLOBJ mgs x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
-		(let ((reg (LLOBJ 'make-pair GLS (LLOBJ 'right-element mgs)))
-				(cnt (LLOBJ 'get-count XMR)))
+		(let ((reg (if mgsf mgsf
+					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))))
 			(set-count XMR 0)
 
 			; Create the cross-sections corresponding to `regs`
 			(for-each
-				(lambda (xfin) (set-count xfin cnt))
+				(lambda (xfin) (set-count xfin x-cnt))
 				(LLOBJ 'make-cross-sections reg))))
 )
 
