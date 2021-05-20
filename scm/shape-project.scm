@@ -192,6 +192,42 @@
 		(LLOBJ 'get-cross-sections SECTION))
 )
 
+; ---------------------------------------------------------------------
+
+(define (flatten-section LLOBJ GLS MRG)
+"
+  flatten-section LLOBJ GLS MRG -- return #f if no connector in the
+  section MRG belongs to GLS. Otherwise, rewrite MRG, replacing the
+  connectors by the corresponding connector for GLS.
+"
+	; conseq is the connector sequence
+	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
+
+	(define non-flat #f)
+
+	; Walk through the connector sequence. If any of them appear in the
+	; cluster, create a new connector sequence with the cluster replacing
+	; that particular connector. Set the non-flat flag to #t in this
+	; case.
+	(define newseq
+		(map (lambda (con)
+			(define clist (cog-outgoing-set con))
+			(if (nil? (cog-link 'MemberLink (car clist) GLS))
+				con
+				(begin
+					(set! non-flat #t)
+					(Connector GLS (cdr clist)))))
+			conseq))
+
+	; Are any of the connectors in the cluster? If so, then return the
+	; rewritten section; else return false.
+	(if non-flat
+		(LLOBJ 'make-pair GLS (ConnectorSeq newseq))
+		#f)
+)
+
+; ---------------------------------------------------------------------
+
 (define (flatten-resects LLOBJ GLS XMR RESECT)
 "
   flatten-resects - Merge Sections corresponding to CrossSection XMR
@@ -260,40 +296,6 @@
 			(rebalance-count LLOBJ donor d-cnt)
 		)
 		(flatten-resects LLOBJ GLS XMR resect))
-)
-
-; ---------------------------------------------------------------------
-
-(define (flatten-section LLOBJ GLS MRG)
-"
-  flatten-section LLOBJ GLS MRG -- return #f if no connector in the
-  section MRG belongs to GLS. Otherwise, rewrite MRG, replacing the
-  connectors by the corresponding connector for GLS.
-"
-	; conseq is the connector sequence
-	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
-
-	(define non-flat #f)
-
-	; Walk through the connector sequence. If any of them appear in the
-	; cluster, create a new connector sequence with the cluster replacing
-	; that particular connector. Set the non-flat flag to #t in this
-	; case.
-	(define newseq
-		(map (lambda (con)
-			(define clist (cog-outgoing-set con))
-			(if (nil? (cog-link 'MemberLink (car clist) GLS))
-				con
-				(begin
-					(set! non-flat #t)
-					(Connector GLS (cdr clist)))))
-			conseq))
-
-	; Are any of the connectors in the cluster? If so, then return the
-	; rewritten section; else return false.
-	(if non-flat
-		(LLOBJ 'make-pair GLS (ConnectorSeq newseq))
-		#f)
 )
 
 ; ---------------------------------------------------------------------
