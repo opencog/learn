@@ -239,7 +239,9 @@
 				; from MRG to the flattened variant thereof.
 				(begin
 					(accumulate-count LLOBJ flat MRG 1.0 NOISE)
-					(rebalance-count LLOBJ flat (LLOBJ 'get-count flat)))
+					(rebalance-count LLOBJ flat (LLOBJ 'get-count flat))
+					(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
+				)
 
 				; If MRG does not need flattening, then ...
 				; Loop over donating cross-sections.
@@ -249,9 +251,8 @@
 						(accumulate-count LLOBJ xmr XST FRAC NOISE))
 					(LLOBJ 'get-cross-sections DONOR))))
 
-		; Always rebalance the donor.
+		; Always rebalance the merged section.
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
-		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 	)
 
 	(when (equal? 'CrossSection donor-type)
