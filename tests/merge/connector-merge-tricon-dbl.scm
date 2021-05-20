@@ -238,7 +238,6 @@
 ; This is just a total over everything above.
 (test-equal 10 (length (cog-get-atoms 'Section)))
 
-#! =======================
 ; ----------------------------
 ; Validate counts.
 (test-approximate (* cnt-e-klm (- 1.0 frac1))
@@ -246,7 +245,6 @@
 
 ; We expect abc, dgh and klm sections to behave exactly as they do for
 ; the basic test case, and so cut-n-paste that unit test code.
-(expected-e-j-sections)
 (test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
 	(cog-count sec-ej-abc) epsilon)
 (test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
@@ -264,30 +262,31 @@
 (test-approximate (* (- 1 frac1) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; The j counts should be untouched from before.
-(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-ebe) (cog-count sec-j-ebe) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-eeh) (cog-count sec-j-eeh) epsilon)
 
 ; Now, for some of the more complex cases.
-; The (f,abe) and (f,egh) sections are twice-reduced, as explained above.
-(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-abe)
-	(cog-count sec-f-abe) epsilon)
-(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-egh)
-	(cog-count sec-f-egh) epsilon)
+; The (f,ebe) and (f,eeh) sections are twice-reduced, as explained above.
+(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-ebe)
+	(cog-count sec-f-ebe) epsilon)
+(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-eeh)
+	(cog-count sec-f-eeh) epsilon)
 
 ; The remainder got transfered ... these two tests are "TEST F2"
 ; as described up top.
-(define expected-sec-ej-abv-count
-	(+ (* frac1 (+ cnt-j-abe cnt-f-abe))  ; from linear merge
-		(* frac2 (- 1 frac1) cnt-f-abe)))  ; from connector merge
-(test-approximate expected-sec-ej-abv-count
-	(cog-count sec-ej-abv) epsilon)
+(define expected-sec-ej-ejbv-count
+	(+ (* frac1 (+ cnt-j-ebe cnt-f-ebe))  ; from linear merge
+		(* frac2 (- 1 frac1) cnt-f-ebe)))  ; from connector merge
+(test-approximate expected-sec-ej-ejbv-count
+	(cog-count sec-ej-vbv) epsilon)
 
-(define expected-sec-ej-vgh-count
-	(+ (* frac1 (+ cnt-j-egh cnt-f-egh))
-		(* frac2 (- 1 frac1) cnt-f-egh)))
-(test-approximate expected-sec-ej-vgh-count
-	(cog-count sec-ej-vgh) epsilon)
+(define expected-sec-ej-vejh-count
+	(+ (* frac1 (+ cnt-j-eeh cnt-f-eeh))
+		(* frac2 (- 1 frac1) cnt-f-eeh)))
+(test-approximate expected-sec-ej-vejh-count
+	(cog-count sec-ej-vvh) epsilon)
 
+#! =======================
 
 ; --------------------------
 ; Expect 30 CrossSections as described above.
