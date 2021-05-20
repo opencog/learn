@@ -259,7 +259,9 @@
 				(x-cnt (LLOBJ 'get-count XMR))
 				(d-cnt (LLOBJ 'get-count XDON)))
 
-			(if mgsf (rebalance-count LLOBJ resect 0))
+			(when mgsf
+				(rebalance-count LLOBJ resect 0)
+				(LLOBJ 'make-cross-sections mgs))
 			(rebalance-count LLOBJ mgs x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
