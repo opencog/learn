@@ -24,7 +24,7 @@
 ; This is a mashup of two earlier test cases: one for merging three
 ; words (with connectors in them): `connector-merge-tricon.scm` and one
 ; that has multiple connectors in the merge cluster:
-: `connector-merge-cons-dbl.scm`
+; `connector-merge-cons-dbl.scm`
 ;
 ; When the first two words {ej} are merged, we expect some
 ; cross-sections from "f" to contribute:
@@ -111,7 +111,7 @@
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 5 (length (gsc 'right-stars (Word "g"))))
+(test-equal 3 (length (gsc 'right-stars (Word "g"))))
 (test-equal 5 (length (gsc 'right-stars (Word "h"))))
 
 (define (filter-type wrd atype)
@@ -122,13 +122,13 @@
 (define (len-type wrd atype)
 	(length (filter-type wrd atype)))
 
-; Expect 3 Sections and 4 CrossSections on e.
-(test-equal 7 (length (gsc 'right-stars (Word "e"))))
+; Expect 3 Sections and 8 CrossSections on e.
+(test-equal 11 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
 (test-equal 5 (length (gsc 'right-stars (Word "f"))))
 
 (test-equal 3 (len-type (Word "e") 'Section))
-(test-equal 4 (len-type (Word "e") 'CrossSection))
+(test-equal 8 (len-type (Word "e") 'CrossSection))
 (test-equal 4 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
 (test-equal 5 (len-type (Word "f") 'Section))
@@ -137,22 +137,34 @@
 ; We expect a total of 3+4+5=12 Sections
 (test-equal 12 (length (cog-get-atoms 'Section)))
 
-#! =======================
 ; --------------------------
 ; Merge the first two sections together.
 (define frac1 0.25)
 (define disc1 (make-fuzz gsc 0 frac1 4 0))
 (disc1 'merge-function (Word "e") (Word "j"))
 
-; 10 sections as before plus 5 more.
-(test-equal 15 (length (cog-get-atoms 'Section)))
+; 12 sections as before plus 5 more.
+(test-equal 17 (length (cog-get-atoms 'Section)))
 
 (test-equal 1 (length (filter-type (Word "e") 'Section)))
 (test-equal 5 (length (filter-type (WordClass "e j") 'Section)))
 
-(test-equal 4 (length (filter-type (Word "e") 'CrossSection)))
-(test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))
+(test-equal 8 (length (filter-type (Word "e") 'CrossSection)))
 
+; Expect 8 cros-sections. These are:
+;    [{ej}, <{ej}, {ej}bv>]
+;    [{ej}, <{ej}, vb{ej}>]
+;    [{ej}, <{ej}, v{ej}h>]
+;    [{ej}, <{ej}, {ej}vh>]
+;    [{ej}, <f, veh>]
+;    [{ej}, <f, evh>]
+;    [{ej}, <f, vbe>]
+;    [{ej}, <f, ebv>]
+;
+(test-equal 8 (length (filter-type (WordClass "e j") 'CrossSection)))
+
+
+#! =======================
 ; Validate counts.
 (define epsilon 1.0e-8)
 (expected-e-j-sections)
