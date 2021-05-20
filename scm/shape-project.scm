@@ -146,37 +146,6 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
-"
-  merge-recrosses - merge cross-sections corresponding to GLS and DONOR.
-
-  GLS should be a cluster node (prototypically, a WordClassNode)
-  DONOR should be a Section which is being merged into GLS.
-
-  This method keeps the CrossSections in sync with the corresponding
-  merged Section (i.e. the Section having GLS as the germ).
-
-  A fraction FRAC of all of the CrossSections on DONOR will be merged
-  into the corresponding CrossSections on GLS.  Here, GLS is assumed
-  to be the germ of the cluster (prototypically, a WordClassNode),
-  while DONOR is assumed to a a Section. The DONOR Section will be
-  exploded into it's CrossSections, and a FRAC of the count on the
-  donor CrossSections will be transfered to the corresponding crosses
-  on GLS. If the count on the CrossSections is less than NOISE, then
-  all of the count will be merged.
-"
-	; Create the matching cross-section, and transfer counts to it.
-	; xmr is a CrossSection, with GLS appearing in all places where
-	; the germ of DONOR had appeared.
-	(define (merge-cross XST)
-		(define xmr (LLOBJ 're-cross GLS XST))
-		(accumulate-count LLOBJ xmr XST FRAC NOISE)
-	)
-
-	; Loop over donating cross-sections.
-	(for-each merge-cross (LLOBJ 'get-cross-sections DONOR))
-)
-
 (define (rebalance-count LLOBJ SECTION CNT)
 "
   rebalance-count LLOBJ SECTION CNT - set count on section and crosses.
@@ -266,10 +235,19 @@
 	(when (equal? 'Section donor-type)
 		(let ((flat (LLOBJ 'flatten GLS MRG)))
 			(if flat
+				; If MRG can be flattened, then transfer all counts
+				; from MRG to the flattened variant thereof.
 				(begin
 					(accumulate-count LLOBJ flat MRG 1.0 NOISE)
 					(rebalance-count LLOBJ flat (LLOBJ 'get-count flat)))
-				(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
+
+				; If MRG does not need flattening, then ...
+				; Loop over donating cross-sections.
+				(for-each
+					(lambda (XST)
+						(define xmr (LLOBJ 're-cross GLS XST))
+						(accumulate-count LLOBJ xmr XST FRAC NOISE))
+					(LLOBJ 'get-cross-sections DONOR))))
 
 		; Always rebalance the donor.
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
