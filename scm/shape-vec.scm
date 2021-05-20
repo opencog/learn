@@ -290,9 +290,13 @@
 							(Connector CLS (cdr clist)))))
 					conseq))
 
+			(define germ (get-pair-left SECT))
+			(define newgerm
+				(if (nil? (cog-link 'MemberLink germ CLS)) germ CLS))
+
 			; Are any of the connectors in the cluster? If so, then
 			; return the rewritten section; else return false.
-			(if non-flat (LLOBJ 'make-pair CLS (ConnectorSeq newseq)) #f))
+			(if non-flat (LLOBJ 'make-pair newgerm (ConnectorSeq newseq)) #f))
 
 		; -----------------------------------------------
 		; Get the count, if the pair exists.
