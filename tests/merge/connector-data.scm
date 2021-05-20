@@ -469,3 +469,30 @@
 )
 
 ; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; Even more f sections, having multiple e connectors.
+
+(define cnt-f-ebe 34)
+(define cnt-f-eeh 39)
+
+(define (setup-f-double-e)
+
+	; Some f sections having "e" as a connector.
+	(Section (ctv 1 0 cnt-f-ebe)
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+	(Section (ctv 1 0 cnt-f-eeh)
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; ---------------------------------------------------------------
