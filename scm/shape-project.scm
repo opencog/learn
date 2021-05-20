@@ -298,14 +298,12 @@
 		(let ((flat (LLOBJ 'flatten GLS MRG)))
 			(if flat
 				(begin
-					(rebalance-count LLOBJ flat
-						(+ (LLOBJ 'get-count flat) (LLOBJ 'get-count MRG)))
-					(rebalance-count LLOBJ MRG 0))
-				(begin
-					(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
-					(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))))
+					(accumulate-count LLOBJ flat MRG 1.0 NOISE)
+					(rebalance-count LLOBJ flat (LLOBJ 'get-count flat)))
+				(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)))
 
 		; Always rebalance the donor.
+		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
 		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 	)
 
