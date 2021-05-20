@@ -158,6 +158,10 @@
        will the set to the count on the section. (This is the correct
        way to handle counts, if one wants clustering to commute with
        the creation of sections.)
+
+  'flatten CLS SECT -- Rewrite SECT, replacing the germ by CLS, and also
+       and connectors that belong to CLS by the corresponding connector
+       for CLS. If no connectors belong to CLS, then return #f.
 "
 	(let ((l-basis '())
 			(r-basis '())
@@ -195,6 +199,7 @@
 		(define (get-pair-right SHAPE-PR)
 			(cog-outgoing-atom SHAPE-PR 1))
 
+		; ------------------------------------------------
 		; Analyze the CrossSection (the word-shape pair.)  Disasemble
 		; it into it's key parts, with intent that these parts can be
 		; assembled into the originating Section.
@@ -265,6 +270,31 @@
 			(define conseq (cdr tmpl))
 			(CrossSection GERM (Shape GLS conseq)))
 
+		; --------------------------------------------------
+
+		; Replace Connectors in SECT belonging to CLS by CLS.
+		(define (flatten-section CLS SECT)
+			; conseq is the connector sequence
+			(define conseq (cog-outgoing-set (get-pair-right SECT)))
+			(define non-flat #f)
+
+			; Walk through the connector sequence. If any of them
+			; appear in the cluster, create a new connector sequence
+			; with the cluster replacing that particular connector.
+			(define newseq
+				(map (lambda (con)
+					(define clist (cog-outgoing-set con))
+					(if (nil? (cog-link 'MemberLink (car clist) CLS))
+						con
+						(begin (set! non-flat #t)
+							(Connector CLS (cdr clist)))))
+					conseq))
+
+			; Are any of the connectors in the cluster? If so, then
+			; return the rewritten section; else return false.
+			(if non-flat (LLOBJ 'make-pair CLS (ConnectorSeq newseq)) #f))
+
+		; -----------------------------------------------
 		; Get the count, if the pair exists.
 		(define (get-pair-count L-ATOM R-ATOM)
 			(define sect (get-pair L-ATOM R-ATOM))
@@ -621,6 +651,7 @@ around for a while.
 				((make-cross-sections) make-cross-sections)
 				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
+				((flatten)          flatten-section)
 
 				((provides)         provides)
 				((clobber)          clobber)
@@ -665,6 +696,7 @@ around for a while.
 			((make-cross-sections) (apply shape-obj (cons message args)))
 			((get-cross-sections)  (apply shape-obj (cons message args)))
 			((re-cross)            (apply shape-obj (cons message args)))
+			((flatten)             (apply shape-obj (cons message args)))
 
 			(else             (apply cover-stars (cons message args)))))
 )

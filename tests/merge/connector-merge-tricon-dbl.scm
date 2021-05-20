@@ -151,17 +151,13 @@
 
 (test-equal 8 (length (filter-type (Word "e") 'CrossSection)))
 
-; Expect 8 cros-sections. These are:
+; Expect 4 cross-sections. These are:
 ;    [{ej}, <{ej}, {ej}bv>]
 ;    [{ej}, <{ej}, vb{ej}>]
 ;    [{ej}, <{ej}, v{ej}h>]
 ;    [{ej}, <{ej}, {ej}vh>]
-;    [{ej}, <f, veh>]
-;    [{ej}, <f, evh>]
-;    [{ej}, <f, vbe>]
-;    [{ej}, <f, ebv>]
 ;
-(test-equal 8 (length (filter-type (WordClass "e j") 'CrossSection)))
+(test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))
 
 ; Validate counts.
 (define epsilon 1.0e-8)
