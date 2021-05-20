@@ -274,32 +274,31 @@
 
 ; The remainder got transfered ... these two tests are "TEST F2"
 ; as described up top.
-(define expected-sec-ej-ejbv-count
+(define expected-sec-ej-vbv-count
 	(+ (* frac1 (+ cnt-j-ebe cnt-f-ebe))  ; from linear merge
 		(* frac2 (- 1 frac1) cnt-f-ebe)))  ; from connector merge
-(test-approximate expected-sec-ej-ejbv-count
+(test-approximate expected-sec-ej-vbv-count
 	(cog-count sec-ej-vbv) epsilon)
 
-(define expected-sec-ej-vejh-count
+(define expected-sec-ej-vvh-count
 	(+ (* frac1 (+ cnt-j-eeh cnt-f-eeh))
 		(* frac2 (- 1 frac1) cnt-f-eeh)))
-(test-approximate expected-sec-ej-vejh-count
+(test-approximate expected-sec-ej-vvh-count
 	(cog-count sec-ej-vvh) epsilon)
 
-#! =======================
 
 ; --------------------------
 ; Expect 30 CrossSections as described above.
 (test-equal 30 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various CrossSections...
-(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
-(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-ebe) (cog-count xes-e-j-ebv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-eeh) (cog-count xes-e-j-veh) epsilon)
 
-(test-approximate expected-sec-ej-abv-count
-	(cog-count xes-ej-ej-abv) epsilon)
-(test-approximate expected-sec-ej-vgh-count
-	(cog-count xes-ej-ej-vgh) epsilon)
+(test-approximate expected-sec-ej-vbv-count
+	(cog-count xes-ej-ej-ebv) epsilon)
+(test-approximate expected-sec-ej-vvh-count
+	(cog-count xes-ej-ej-veh) epsilon)
 
 ; ----------------------
 ; Check detailed balance
@@ -311,6 +310,5 @@
 	epsilon)
 
 (test-end t-two-three-cluster)
-===============!#
 
 ; ---------------------------------------------------------------
