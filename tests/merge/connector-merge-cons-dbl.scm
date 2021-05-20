@@ -192,13 +192,11 @@
 (test-approximate (* frac cnt-j-ebe) (cog-count sec-ej-vbv) epsilon)
 (test-approximate (* frac cnt-j-eeh) (cog-count sec-ej-vvh) epsilon)
 
-#! ==========
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-ebe) (cog-count xes-e-j-ebv) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-eeh) (cog-count xes-e-j-veh) epsilon)
 
-(test-approximate (* frac cnt-j-abe) (cog-count xes-ej-ej-abv) epsilon)
-(test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
-=========!#
+(test-approximate (* frac cnt-j-ebe) (cog-count xes-ej-ej-ebv) epsilon)
+(test-approximate (* frac cnt-j-eeh) (cog-count xes-ej-ej-veh) epsilon)
 
 ; -----------------------
 ; Verify detailed balance
@@ -209,6 +207,6 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-; (test-end t-two-connector-two-cluster)
+(test-end t-two-connector-two-cluster)
 
 ; ---------------------------------------------------------------

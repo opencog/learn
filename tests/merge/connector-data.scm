@@ -395,6 +395,11 @@
 (define sec-ej-vbv #f)
 (define sec-ej-vvh #f)
 
+(define xes-e-j-ebv #f)
+(define xes-e-j-veh #f)
+(define xes-ej-ej-ebv #f)
+(define xes-ej-ej-veh #f)
+
 (define (expected-j-double-e)
 	(set! sec-j-ebe
 	(Section
@@ -423,6 +428,42 @@
 		(WordClass "e j")
 		(ConnectorSeq
 			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-e-j-ebv
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "j")
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-e-j-veh
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "j")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-ej-ej-ebv
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(WordClass "e j")
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-ej-ej-veh
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(WordClass "e j")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
 			(Connector (WordClass "e j") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
 )
