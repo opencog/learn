@@ -163,21 +163,27 @@
 ;
 (test-equal 8 (length (filter-type (WordClass "e j") 'CrossSection)))
 
-
-#! =======================
 ; Validate counts.
 (define epsilon 1.0e-8)
 (expected-e-j-sections)
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
+(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
 (test-approximate (* frac1 cnt-e-klm) (cog-count sec-ej-klm) epsilon)
 (test-approximate (* (- 1 frac1) cnt-e-klm) (cog-count sec-e-klm) epsilon)
 
-(expected-j-extra-sections)
-; Next four tests are "TEST F1" described up top.
-(test-approximate (* frac1 cnt-j-abe) (cog-count sec-ej-abv) epsilon)
-(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* frac1 cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
-(test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+; Validate counts on select CrossSections...
+(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
+(test-approximate (* frac1 cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate (* (- 1 frac1) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
+(expected-j-double-e)
+; Next four tests are "TEST F1" described up top.
+(test-approximate (* frac1 cnt-j-ebe) (cog-count sec-ej-vbv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-ebe) (cog-count sec-j-ebe) epsilon)
+(test-approximate (* frac1 cnt-j-eeh) (cog-count sec-ej-vvh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-j-eeh) (cog-count sec-j-eeh) epsilon)
+
+#! =======================
 (expected-f-extra-sections)
 (test-approximate (* frac1 cnt-f-abe) (cog-count sec-f-abej) epsilon)
 (test-approximate (* (- 1 frac1) cnt-f-abe) (cog-count sec-f-abe) epsilon)
