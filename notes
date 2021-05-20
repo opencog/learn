@@ -4075,6 +4075,18 @@ merging e first, then j,
 [e, <j, vbe>]
 [e, <j, ebv>
 
+merge-resects
+xmr=[{ej}, <j, evh>]
+resect= (j, e{ej}h)
+germ=j
+XDON=[e, <j, evh>]
+branch to flatten
+flatten-resects
+
+mgs = ({ej}, e{ej}h)
+
+flatten-section? LLOBJ GLS MRG
+
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))

@@ -251,8 +251,15 @@
     GLS is 'ej'
     Creates (Section 'ej' (ConnectorSeq a b 'ej'))
 "
-	; Replace the germ on the Section with the cluster node.
-	(define mgs (LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT)))
+
+	; If RESECT has multiple connectors in GLS, then replace all of them
+	; by GLS.  Otherwise, just do the one. This might be wrong; maybe we
+	; only need to replace the connectors with the donor germ?
+	(define mgsf (flatten-section LLOBJ GLS RESECT))
+	(define mgs
+		(if mgsf mgsf
+			; Replace the germ on the Section with the cluster node.
+			(LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT))))
 
 	; Increment the count; mgs may already exist from earlier merges.
 	(define cnt (LLOBJ 'get-count XMR))
