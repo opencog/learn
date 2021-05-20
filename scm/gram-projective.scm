@@ -369,11 +369,16 @@
 						(do-acc accum-bcnt WB PAIR-B 1.0)))))
 		perls)
 
+	(monitor-rate
+		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
 	; If merging connectors, then make a second pass. We can't do this
 	; in the first pass, because the connector-merge logic needs to
 	; manipulate the merged Sections. (There's no obvious way to do
 	; this in a single pass; I tried.)
-	(if MRG-CON
+	(when MRG-CON
+
+	(set! monitor-rate (make-rate-monitor))
 	(for-each
 		(lambda (PRL)
 			(define PAIR-A (first PRL))
@@ -407,10 +412,13 @@
 					(begin
 						(do-acc accum-acnt WA PAIR-A 1.0)
 						(do-acc accum-bcnt WB PAIR-B 1.0)))))
-		perls))
-
+		perls)
 	(monitor-rate
-		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		"------ Create: Merged ~A crosses in ~5F secs; ~6F x-sct/sec\n")
+	)
+
+	(set! monitor-rate (make-rate-monitor))
+	(monitor-rate #f)
 
 	; Track the number of observations moved from the two items
 	; into the combined class. This tracks the individual
@@ -437,6 +445,9 @@
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
+
+	(monitor-rate
+		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
 
 ; ---------------------------------------------------------------------
@@ -545,7 +556,11 @@
 			))
 		perls)
 
-	(if MRG-CON
+	(monitor-rate
+		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	(when MRG-CON
+	(set! monitor-rate (make-rate-monitor))
 	(for-each
 		(lambda (PRL)
 			(define PAIR-C (first PRL))
@@ -572,23 +587,36 @@
 					(do-acc PAIR-C 1.0))
 			))
 		perls)
-	)
 
 	(monitor-rate
-		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		"------ Extend: Merged ~A x-sect in ~5F secs; ~6F x-scts/sec\n")
+	)
+
+	(set! monitor-rate (make-rate-monitor))
+	(monitor-rate #f)
+
+	; Track the number of observations moved from WA to the class.
+	; Store the updated count.
+	(set-count ma accum-cnt)
+	(store-atom ma)
 
 	; Cleanup after merging.
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ CLS)
 
+	; cog-extract! only removes them from the AtomSpace;
+	; cog-delete removes them from the database.
+	; (for-each cog-extract! (cog-get-atoms 'ShapeLink))
+	(for-each cog-extract! (cog-get-atoms 'ConnectorSeq))
+	(for-each cog-delete! (cog-get-atoms 'ShapeLink))
+	; (for-each cog-delete! (cog-get-atoms 'ConnectorSeq))
+
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	; Track the number of observations moved from WA to the class.
-	; Store the updated count.
-	(set-count ma accum-cnt)
-	(store-atom ma)
+	(monitor-rate
+		"------ Extend: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
 
 ; ---------------------------------------------------------------
