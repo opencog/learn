@@ -495,4 +495,85 @@
 	*unspecified*
 )
 
+(define sec-f-ebe #f)
+(define sec-f-eeh #f)
+(define sec-f-ejbej #f)
+(define sec-f-ejejh #f)
+
+(define xes-e-f-ebv #f)
+(define xes-e-f-veh #f)
+(define xes-ej-f-ejbv #f)
+(define xes-ej-f-vejh #f)
+
+(define xes-ejf-ejf-ejbv #f)
+(define xes-ejf-ejf-vejh #f)
+
+(define (expected-f-double-e)
+	(set! sec-f-ebe
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+")))))
+	(set! sec-f-eeh
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! sec-f-ejbej
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+	(set! sec-f-ejejh
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-e-f-ebv
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "f")
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-e-f-veh
+	(CrossSection
+		(Word "e")
+		(Shape
+			(Word "f")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! xes-ej-f-ejbv
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(Word "f")
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
+
+	(set! xes-ej-f-vejh
+	(CrossSection
+		(WordClass "e j")
+		(Shape
+			(Word "f")
+			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+)
+
 ; ---------------------------------------------------------------

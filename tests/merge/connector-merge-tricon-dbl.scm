@@ -183,17 +183,16 @@
 (test-approximate (* frac1 cnt-j-eeh) (cog-count sec-ej-vvh) epsilon)
 (test-approximate (* (- 1 frac1) cnt-j-eeh) (cog-count sec-j-eeh) epsilon)
 
-#! =======================
-(expected-f-extra-sections)
-(test-approximate (* frac1 cnt-f-abe) (cog-count sec-f-abej) epsilon)
-(test-approximate (* (- 1 frac1) cnt-f-abe) (cog-count sec-f-abe) epsilon)
-(test-approximate (* frac1 cnt-f-egh) (cog-count sec-f-ejgh) epsilon)
-(test-approximate (* (- 1 frac1) cnt-f-egh) (cog-count sec-f-egh) epsilon)
+(expected-f-double-e)
+(test-approximate (* frac1 cnt-f-ebe) (cog-count sec-f-ejbej) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-ebe) (cog-count sec-f-ebe) epsilon)
+(test-approximate (* frac1 cnt-f-eeh) (cog-count sec-f-ejejh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-eeh) (cog-count sec-f-eeh) epsilon)
 
-(test-approximate (* frac1 cnt-f-abe) (cog-count xes-ej-f-abv) epsilon)
-(test-approximate (* (- 1 frac1) cnt-f-abe) (cog-count xes-e-f-abv) epsilon)
-(test-approximate (* frac1 cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
-(test-approximate (* (- 1 frac1) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
+(test-approximate (* frac1 cnt-f-ebe) (cog-count xes-ej-f-ejbv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-ebe) (cog-count xes-e-f-ebv) epsilon)
+(test-approximate (* frac1 cnt-f-eeh) (cog-count xes-ej-f-vejh) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-eeh) (cog-count xes-e-f-veh) epsilon)
 
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
@@ -203,6 +202,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
+#! =======================
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (define frac2 0.35)
