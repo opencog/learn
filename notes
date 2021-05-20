@@ -4119,6 +4119,11 @@ not in flatten-resects
 
 For spacing, setting `basewidth=0.45em` will reduce the inter-letter spacing from a ridiculous `0.6em` to a more compact width, all while preserving the fixed width (whereas `columns=fullflexible` wrecks the spacing).
 --------------------------
+. ~/run/expt-18/config/0*sh
+. ~/run/expt-18/config/4*sh
+cd data
+rm -r gram-25-junk.rdb
+cp -pr shape.rdb gram-25-junk.rdb
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
@@ -4128,11 +4133,42 @@ guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define gsc (add-cluster-gram csc))
 (gram-classify-greedy-discrim gsc 0.25 4)
 
+--------------------------
+Before merge:
+(ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484) (CrossSection . 620774)
+
+(define disc (make-discrim gsc 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
+----- Create: Merged 404042 sections in 434.0 secs; 930.97 scts/sec
+Whoops. Way too slow. Ouch.
+
+After merge:
+(ConnectorSeq . 310032) (Section . 51904) (ShapeLink . 793814) (CrossSection . 729722)
+
+(for-each cog-extract! (cog-get-atoms 'ShapeLink))
+(for-each cog-extract! (cog-get-atoms 'ConnectorSeq))
+
+(ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 630318) (CrossSection . 729722)
+
+(for-each cog-extract! (cog-get-atoms 'CrossSection))
+(for-each cog-extract! (cog-get-atoms 'ShapeLink))
+(csc 'clobber)
+(csc 'explode-sections)
+
+(Section . 51904) (ShapeLink . 339137) (CrossSection . 410724) 
+
+Hmm why is that different?
+(csc 'fetch-pairs)
+
+
 
 link-class.scm ???
 ====================================================
 
 FIXED:
+* Implement connector merging. ... half-done... DONE, I think, and unit
+  tests too.
 * Alter LG to allow multiple word definitions w/o subscripts.
   Amir  fixed this, pull req #1204
 * After merging, and then using fetched-pairs on sections,
@@ -4158,7 +4194,6 @@ FIXED:
 
 
 TODO/BUGS:
-* Implement connector merging. ... half-done...
 * Set up direct-sum/shape clustering run scripts. (partly done)
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.

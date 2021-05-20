@@ -412,15 +412,6 @@
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
-	; Cleanup after merging.
-	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ WB)
-	(remove-empty-sections LLOBJ CLS)
-
-	; Clobber the left and right caches; the cog-delete! changed things.
-	(LLOBJ 'clobber)
-
 	; Track the number of observations moved from the two items
 	; into the combined class. This tracks the individual
 	; contributions.
@@ -430,6 +421,22 @@
 	; Store the counts on the MemberLinks.
 	(store-atom ma)
 	(store-atom mb)
+
+	; Cleanup after merging.
+	(LLOBJ 'clobber)
+	(remove-empty-sections LLOBJ WA)
+	(remove-empty-sections LLOBJ WB)
+	(remove-empty-sections LLOBJ CLS)
+
+	; cog-extract! only removes them from the AtomSpace;
+	; cog-delete removes them from the database.
+	; (for-each cog-extract! (cog-get-atoms 'ShapeLink))
+	(for-each cog-extract! (cog-get-atoms 'ConnectorSeq))
+	(for-each cog-delete! (cog-get-atoms 'ShapeLink))
+	; (for-each cog-delete! (cog-get-atoms 'ConnectorSeq))
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
 )
 
 ; ---------------------------------------------------------------------
