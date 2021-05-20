@@ -4048,17 +4048,32 @@ pass. TEST F1 ...
 (* frac2 (- 1 frac1) cnt-f-abe) = 8.1375
 7.75 = (* frac1 cnt-f-abe)
 
+after first merge,
+({ej}, ab{ej}) has cnt = 5.25
+and
+(f, ab{ej}) has cnt = 7.75 so total of 13.0 on the linear.
+
+-------------------
 [e, <j, vbe>]
 [e, <j, ebv>]
 [e, <j, veh>]
 [e, <j, evh>]
 
 
-unwanted:
+unwanted: .. esp since j was creator!
 [e, <{ej}, v{ej}h>]
 [e, <{ej}, {ej}vh>]
 [e, <{ej}, {ej}bv>]
 [e, <{ej}, vb{ej}>]
+
+merging e first, then j,
+[{ej}, <j, evh>] stripped to zero as expected...
+
+[e, <j, veh>]
+[e, <{ej}, v{ej}h>]  < ---- this
+[e, <j, evh>]
+[e, <j, vbe>]
+[e, <j, ebv>
 
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm

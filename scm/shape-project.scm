@@ -220,7 +220,6 @@
 
 	; Increment the count; mgs may already exist from earlier merges.
 	(define cnt (LLOBJ 'get-count XMR))
-;	(set-count mgs cnt)
 	(set-count XMR 0)
 
 	; Now create the cross-sections corresponding to `mgs`
@@ -265,15 +264,11 @@
 
 ; ---------------------------------------------------------------------
 
-(define (flatten-section? LLOBJ GLS MRG)
+(define (flatten-section LLOBJ GLS MRG)
 "
-  flatten-section? LLOBJ GLS MRG -- return #t if any connector in
-  the section MRG belongs to GLS.
-
-  In addition to performing this test, this will also rewrite MRG,
-  replacing the connectors by the corresponding connector for GLS.
-  With this rewrite, all of the count from MRG will be transfered
-  to the rewritten section.
+  flatten-section LLOBJ GLS MRG -- return #f if no connector in the
+  section MRG belongs to GLS. Otherwise, rewrite MRG, replacing the
+  connectors by the corresponding connector for GLS.
 "
 	; conseq is the connector sequence
 	(define conseq (cog-outgoing-set (LLOBJ 'right-element MRG)))
@@ -294,18 +289,11 @@
 					(Connector GLS (cdr clist)))))
 			conseq))
 
-	; Are any of the connectors in the cluster? If so, then transfer
-	; all of the count over to the re-written connector sequence.
-	; Perform the same on the cross-sections, too. (respect detailed
-	; balance).
-	(when non-flat
-		(let ((flattened (LLOBJ 'make-pair GLS (ConnectorSeq newseq))))
-			(rebalance-count LLOBJ flattened
-				(+ (LLOBJ 'get-count flattened) (LLOBJ 'get-count MRG)))
-			(rebalance-count LLOBJ MRG 0)))
-
-	; Return #t if a rewrite was performed.
-	non-flat
+	; Are any of the connectors in the cluster? If so, then return the
+	; rewritten section; else return false.
+	(if non-flat
+		(LLOBJ 'make-pair GLS (ConnectorSeq newseq))
+		#f)
 )
 
 ; ---------------------------------------------------------------------
@@ -332,9 +320,15 @@
 	(define donor-type (cog-type DONOR))
 
 	(when (equal? 'Section donor-type)
-		(when (not (flatten-section? LLOBJ GLS MRG))
-			(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
-			(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))
+		(let ((flat (flatten-section LLOBJ GLS MRG)))
+			(if flat
+				(begin
+					(rebalance-count LLOBJ flat
+						(+ (LLOBJ 'get-count flat) (LLOBJ 'get-count MRG)))
+					(rebalance-count LLOBJ MRG 0))
+				(begin
+					(merge-recrosses LLOBJ GLS DONOR FRAC NOISE)
+					(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))))
 
 		; Always rebalance the donor.
 		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
