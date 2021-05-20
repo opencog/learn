@@ -143,8 +143,8 @@
 (define disc1 (make-fuzz gsc 0 frac1 4 0))
 (disc1 'merge-function (Word "e") (Word "j"))
 
-; 12 sections as before plus 5 more.
-(test-equal 17 (length (cog-get-atoms 'Section)))
+; 12 sections as before plus 3 more.
+(test-equal 15 (length (cog-get-atoms 'Section)))
 
 (test-equal 1 (length (filter-type (Word "e") 'Section)))
 (test-equal 5 (length (filter-type (WordClass "e j") 'Section)))

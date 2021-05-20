@@ -4094,7 +4094,7 @@ j ebe eeh
 [{ej}, <{ej}, vb{ej}>]
 [{ej}, <{ej}, v{ej}h>]
 [{ej}, <{ej}, {ej}vh>]
-[{ej}, <f, veh>]  <-- No unwanted.
+[{ej}, <f, veh>]  <-- No unwanted. .. created in linear merge
 [{ej}, <f, evh>]
 [{ej}, <f, vbe>]
 [{ej}, <f, ebv>]
@@ -4105,6 +4105,10 @@ j ebe eeh
 no recross
 (accumulate-count LLOBJ flat MRG FRAC NOISE)
 335
+
+not in merge-recrosses
+not in flatten-resects
+
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))

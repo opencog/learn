@@ -209,8 +209,7 @@
 
   The goal of this routine is to create a single Section (and its
   crosses) that have GLS both as the germ, and in the appropriate
-  connector locations. This will leave behind some Sections with
-  inconsistent connectors; use ??? to remove those.
+  connector locations.
 
   Example:
     XMR is (CrossSection 'ej' (Shape j a b var))
@@ -218,16 +217,10 @@
     Creates (Section 'ej' (ConnectorSeq a b 'ej'))
 "
 
-	; If RESECT has multiple connectors in GLS, then replace all of them
-	; by GLS.  Otherwise, just do the one. This might be wrong; maybe we
-	; only need to replace the connectors with the donor germ?
-	(define mgsf (LLOBJ 'flatten GLS RESECT))
+	; Replace the germ of RESECT by GLS.
 	(define mgs
-		(if mgsf mgsf
-			; Replace the germ on the Section with the cluster node.
-			(LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT))))
+		(LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT)))
 
-	; Increment the count; mgs may already exist from earlier merges.
 	(define cnt (LLOBJ 'get-count XMR))
 	(set-count XMR 0)
 
@@ -253,22 +246,24 @@
   as the germ.
 "
 	(define resect (LLOBJ 'make-section XMR))
-
 	(define germ (LLOBJ 'left-element resect))
+
+	(define mgsf (LLOBJ 'flatten GLS resect))
+	(define mgs (if mgsf mgsf resect))
+
+	; This is confusing ... can't we just call accumulate-count?
+	; (accumulate-count LLOBJ mgs donor FRAC NOISE)
+	; ???
 	(if (nil? (cog-link 'MemberLink germ GLS))
 		(let ((donor (LLOBJ 'make-section XDON))
 				(x-cnt (LLOBJ 'get-count XMR))
 				(d-cnt (LLOBJ 'get-count XDON)))
-			; We could call accumulate-count as below,
-			; (accumulate-count LLOBJ resect donor FRAC NOISE)
-			; because some of the count on donor needs to be moved
-			; to `resect`. However, it is cheaper and easier to just
-			; copy the counts from the crosses, since these are
-			; correct already.
-			(rebalance-count LLOBJ resect x-cnt)
+
+			(if mgsf (rebalance-count LLOBJ resect 0))
+			(rebalance-count LLOBJ mgs x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
-		(flatten-resects LLOBJ GLS XMR resect))
+		(flatten-resects LLOBJ GLS XMR mgs))
 )
 
 ; ---------------------------------------------------------------------
