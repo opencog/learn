@@ -162,6 +162,7 @@
   corresponding to SECTION have the same count.
 "
 	(set-count SECTION CNT)
+	(store-atom SECTION)
 	(for-each
 		(lambda (XST) (set-count XST CNT))
 		(LLOBJ 'get-cross-sections SECTION))
