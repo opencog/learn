@@ -414,7 +414,7 @@
 						(do-acc accum-bcnt WB PAIR-B 1.0)))))
 		perls)
 	(monitor-rate
-		"------ Create: Merged ~A crosses in ~5F secs; ~6F x-sct/sec\n")
+		"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
 
 	(set! monitor-rate (make-rate-monitor))
@@ -589,7 +589,7 @@
 		perls)
 
 	(monitor-rate
-		"------ Extend: Merged ~A x-sect in ~5F secs; ~6F x-scts/sec\n")
+		"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
 
 	(set! monitor-rate (make-rate-monitor))
