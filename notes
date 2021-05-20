@@ -4114,6 +4114,10 @@ not in flatten-resects
 [e, <j, veh>]
 [e, <j, evh>]
 
+\basewidth=0.5em
+\small
+
+For spacing, setting `basewidth=0.45em` will reduce the inter-letter spacing from a ridiculous `0.6em` to a more compact width, all while preserving the fixed width (whereas `columns=fullflexible` wrecks the spacing).
 --------------------------
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
 (define pca (make-pseudo-cset-api))
