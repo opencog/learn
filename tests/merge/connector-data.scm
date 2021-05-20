@@ -390,4 +390,41 @@
 	*unspecified*
 )
 
+(define sec-j-ebe #f)
+(define sec-j-eeh #f)
+(define sec-ej-vbv #f)
+(define sec-ej-vvh #f)
+
+(define (expected-j-double-e)
+	(set! sec-j-ebe
+	(Section
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+")))))
+	(set! sec-j-eeh
+	(Section
+		(Word "j")
+		(ConnectorSeq
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+
+	(set! sec-ej-vbv
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+	(set! sec-ej-vvh
+	(Section
+		(WordClass "e j")
+		(ConnectorSeq
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
+)
+
 ; ---------------------------------------------------------------

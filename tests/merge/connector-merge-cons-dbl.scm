@@ -72,8 +72,8 @@
 ;     ({ej}, dgh)    * 1.0
 ;     ({ej}, klm)    * p
 ;     (e, klm)       * 1-p
-;     (j, abe)       * 1-p
-;     (j, egh)       * 1-p
+;     (j, ebe)       * 1-p
+;     (j, eeh)       * 1-p
 ;     ({ej}, {ej}b{ej}) * p
 ;     ({ej}, {ej}{ej}h) * p
 ; There are 8 of these, so expect 24=8*3 CrossSections
@@ -161,7 +161,6 @@
 ; This is just a total over everything above.
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
-#! =======================
 ; ----------------------------
 ; Validate counts.
 (define epsilon 1.0e-8)
@@ -186,18 +185,20 @@
 (test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
-(expected-j-extra-sections)
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
-(test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
+(expected-j-double-e)
+(test-approximate (* (- 1 frac) cnt-j-ebe) (cog-count sec-j-ebe) epsilon)
+(test-approximate (* (- 1 frac) cnt-j-eeh) (cog-count sec-j-eeh) epsilon)
 
-(test-approximate (* frac cnt-j-abe) (cog-count sec-ej-abv) epsilon)
-(test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
+(test-approximate (* frac cnt-j-ebe) (cog-count sec-ej-vbv) epsilon)
+(test-approximate (* frac cnt-j-eeh) (cog-count sec-ej-vvh) epsilon)
 
+#! ==========
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
 (test-approximate (* frac cnt-j-abe) (cog-count xes-ej-ej-abv) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
+=========!#
 
 ; -----------------------
 ; Verify detailed balance
@@ -207,8 +208,6 @@
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
-
-========== !#
 
 ; (test-end t-two-connector-two-cluster)
 
