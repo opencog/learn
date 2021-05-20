@@ -194,42 +194,6 @@
 
 ; ---------------------------------------------------------------------
 
-(define (flatten-resects LLOBJ GLS XMR RESECT)
-"
-  flatten-resects - Merge Sections corresponding to CrossSection XMR
-
-  GLS is assumed to be a cluster node.
-  XMR is assumed to be a CrossSection.
-  RESECT is assumed to be the Section corresponding to XMR
-
-  This replaces the germ of RESECT by GLS. The entire count on XMR
-  is transfered to this new section.  All of the CrossSections
-  corresponding to the new Section are also created. By 'transfered'
-  it is meant that XMR ends with a zero count on it.
-
-  The goal of this routine is to create a single Section (and its
-  crosses) that have GLS both as the germ, and in the appropriate
-  connector locations.
-
-  Example:
-    XMR is (CrossSection 'ej' (Shape j a b var))
-    GLS is 'ej'
-    Creates (Section 'ej' (ConnectorSeq a b 'ej'))
-"
-
-	; Replace the germ of RESECT by GLS.
-	(define mgs
-		(LLOBJ 'make-pair GLS (LLOBJ 'right-element RESECT)))
-
-	(define cnt (LLOBJ 'get-count XMR))
-	(set-count XMR 0)
-
-	; Now create the cross-sections corresponding to `mgs`
-	(for-each
-		(lambda (xfin) (set-count xfin cnt))
-		(LLOBJ 'make-cross-sections mgs))
-)
-
 (define (merge-resects LLOBJ GLS W XMR XDON)
 "
   merge-resects - Merge Sections corresponding to CrossSection XMR
@@ -265,7 +229,14 @@
 			(rebalance-count LLOBJ mgs x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
-		(flatten-resects LLOBJ GLS XMR mgs))
+		(let ((reg (LLOBJ 'make-pair GLS (LLOBJ 'right-element mgs)))
+				(cnt (LLOBJ 'get-count XMR)))
+			(set-count XMR 0)
+
+			; Create the cross-sections corresponding to `regs`
+			(for-each
+				(lambda (xfin) (set-count xfin cnt))
+				(LLOBJ 'make-cross-sections reg))))
 )
 
 ; ---------------------------------------------------------------------
