@@ -78,17 +78,14 @@
 ; Insofar as CrossSections are secondary and are derived from the
 ; Sections, self-consistency suggests that they should stay consistent
 ; with the results of the merger of the Sections. Thus, post-merger,
-; the number of Sections should reduce to 12 = 3x4, wiht 9 of them
+; the number of Sections should reduce to 12 = 3x4, with 9 of them
 ; having {ej} as the point, and 3 more having just {e} as the point.
 ; Counts should update as well.
-;
-; The function `merge-crosses` below maintains this correspondence, for
-; the simple case.
 ;
 ; Connector Merging Example
 ; -------------------------
 ; Consider the following projective merge, taken from the
-; `connector-merge-full.scm` unit test:
+; `connector-merge-cons.scm` unit test:
 ;
 ;    (e, abc) + (j, abc) -> ({ej}, abc)
 ;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
@@ -123,7 +120,7 @@
 ;     [{ej}, <j, abv>]  => (j, ab{ej})
 ;     [e, <j, abv>]  => (j, abe)
 ;
-; and so this reconstruction recommends:
+; and so this reconstruction recommends option 3:
 ;
 ;     none + (j, abe) -> p * (j, ab{ej}) + (1-p) * (j, abe)
 ;
@@ -131,13 +128,22 @@
 ;
 ;     none + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
 ;
-; Ugh. Non-commutative. Now what???
+; Ugh. Clearly, the merge proceedre is non-commutative. Now what?  Well...
 ;
 ; Diary entry for "April-May 20201 ...Non-Commutivity, Again... Case B"
 ; discusses what to do, and why to do it that way. The conclusion is
 ; that the right answer, here is to create a section
 ;    p * ({ej}, ab{ej})
 ; and to zero out the other two.
+;
+; The code below implements the above. It also handles the more complex
+; cases, where ConnectorSeqs may have multiple connectors in them
+; needing to be merged (to be "flattened"). The code below works, and
+; is tested by seven unit tests. My gut feeling is that the code can be
+; simplified, but I haven't found this yet. It's as complicated as it
+; is, because the handling of shapes/cross-sections is "non-linear" in
+; a hard-to-define way. It does not feel like the concept is clearly
+; expressed, just yet...
 ;
 ; ---------------------------------------------------------------------
 
