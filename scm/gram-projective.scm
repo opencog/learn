@@ -436,13 +436,6 @@
 	(remove-empty-sections LLOBJ WB)
 	(remove-empty-sections LLOBJ CLS)
 
-	; cog-extract! only removes them from the AtomSpace;
-	; cog-delete removes them from the database.
-	; (for-each cog-extract! (cog-get-atoms 'ShapeLink))
-	(for-each cog-extract! (cog-get-atoms 'ConnectorSeq))
-	(for-each cog-delete! (cog-get-atoms 'ShapeLink))
-	; (for-each cog-delete! (cog-get-atoms 'ConnectorSeq))
-
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
@@ -604,13 +597,6 @@
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ CLS)
-
-	; cog-extract! only removes them from the AtomSpace;
-	; cog-delete removes them from the database.
-	; (for-each cog-extract! (cog-get-atoms 'ShapeLink))
-	(for-each cog-extract! (cog-get-atoms 'ConnectorSeq))
-	(for-each cog-delete! (cog-get-atoms 'ShapeLink))
-	; (for-each cog-delete! (cog-get-atoms 'ConnectorSeq))
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

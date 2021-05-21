@@ -278,25 +278,34 @@
 	(define nx 0)
 
 	; If the count in Section is zero, delete it.
-	; Also scan all of it's crosses
+	; Also scan all of it's crosses. Crosses aren't normally stored in
+	; the DB, so we just extract them.
 	(define (del-sect SEC)
 		(for-each (lambda (xst)
 			(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
-				(cog-delete! xst)
-				(set! nx (+ 1 nx))))
+				(let ((shp (gdr xst)))
+					(cog-extract! xst)
+					(cog-extract! shp)
+					(set! nx (+ 1 nx)))))
 			(LLOBJ 'get-cross-sections SEC))
 		(when (is-zero? (LLOBJ 'get-count SEC))
-			(cog-delete! SEC)
-			(set! ns (+ 1 ns))))
+			(let ((csq (gdr SEC)))
+				(cog-delete! SEC)
+				(cog-delete! csq)
+				(set! ns (+ 1 ns)))))
 
 	(define (del-xes XST)
 		(define sct (LLOBJ 'get-section XST))
 		(when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
-			(cog-delete! sct)
-			(set! ns (+ 1 ns)))
+			(let ((csq (gdr sct)))
+				(cog-delete! sct)
+				(cog-delete! csq)
+				(set! ns (+ 1 ns))))
 		(when (is-zero? (LLOBJ 'get-count XST))
-			(cog-delete! XST)
-			(set! nx (+ 1 nx))))
+			(let ((shp (gdr XST)))
+				(cog-extract! XST)
+				(cog-extract! shp)
+				(set! nx (+ 1 nx)))))
 
 	; Cleanup after merging.
 	(for-each
