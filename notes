@@ -4125,6 +4125,7 @@ cd data
 rm -r gram-25-junk.rdb
 cp -pr shape.rdb gram-25-junk.rdb
 guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
+(use-modules (srfi srfi-1))
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
 
@@ -4157,7 +4158,7 @@ After merge:
 (csc 'clobber)
 (csc 'explode-sections)
 
-(Section . 51904) (ShapeLink . 339137) (CrossSection . 410724) 
+(Section . 51904) (ShapeLink . 339137) (CrossSection . 410724)
 
 Hmm why is that different?
 ???
@@ -4165,6 +4166,46 @@ Hmm why is that different?
 Well, some of the sections were not written out...
 
 (csc 'fetch-pairs)
+
+--------------------------
+Before merge:
+(ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484) (CrossSection . 620774)
+
+(define gsc (add-cluster-gram csc))
+(gram-classify-greedy-discrim gsc 0.25 4)
+
+After:
+(ConnectorSeq . 81800) (Section . 6711) (ShapeLink . 173569) (CrossSection . 176020)
+
+(check-sections csc epsilon)
+(check-crosses csc epsilon)
+
+One unbalanced section, in total. (c, cba!)21.7514 vs [a, <c, cbv!>]16.9337
+one undeleted cross-section: [!, <f, ebv>]
+
+(define xes (cog-get-atoms 'CrossSection))
+(csc 'explode-sections)
+
+after:
+(ConnectorSeq . 81800) (Section . 6711) (ShapeLink . 205930) (CrossSection . 211762)
+
+Sooo ... merge made a lot of crosses disappear...
+(define nxes (cog-get-atoms 'CrossSection))
+
+(define old (make-aset-predicate xes))
+
+(define news (atoms-subtract nxes xes))
+
+wtf explode created an unbalaced cross!
+(define bad
+(Section
+  (WordClassNode "e j")
+  (ConnectorSeq
+    (Connector (WordClassNode "e j") (ConnectorDir "-"))
+    (Connector (WordNode "g") (ConnectorDir "+"))
+    (Connector (WordNode "g") (ConnectorDir "+")))))
+
+was everything stored?
 
 
 

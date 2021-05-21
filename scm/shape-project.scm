@@ -256,7 +256,7 @@
 					(lambda (XST)
 						(define xmr (LLOBJ 're-cross GLS XST))
 						(accumulate-count LLOBJ xmr XST FRAC NOISE))
-					(LLOBJ 'get-cross-sections DONOR))))
+					(LLOBJ 'make-cross-sections DONOR))))
 
 		; Always rebalance the merged section.
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
