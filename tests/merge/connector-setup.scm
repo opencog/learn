@@ -67,11 +67,15 @@
 	(every
 		(lambda (cross)
 			(define sect (LLOBJ 'get-section cross))
-			(define diff (- (cog-count sect) (cog-count cross)))
-			(if (< (abs diff) EPSILON) #t
+			(if (nil? sect)
 				(begin
-					(format #t "Error: Unbalanced at\n~A~A" sect cross)
-					#f)))
+					(format #t "Error: no Section for ~A" cross)
+					#f)
+				(let ((diff (- (cog-count sect) (cog-count cross))))
+					(if (< (abs diff) EPSILON) #t
+						(begin
+							(format #t "Error: Unbalanced at\n~A~A" sect cross)
+							#f)))))
 		(cog-get-atoms 'CrossSection))
 )
 
