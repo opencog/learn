@@ -108,23 +108,23 @@
 ; We expect a total of 3+4+5+2=14 Sections
 (test-equal 14 (length (cog-get-atoms 'Section)))
 
-#! ===================
 ; --------------------------
 ; Merge the first two sections together.
 (define frac1 0.25)
 (define disc1 (make-fuzz gsc 0 frac1 4 0))
 (disc1 'merge-function (Word "e") (Word "j"))
 
-; 10 sections as before plus 5 more.
-(test-equal 15 (length (cog-get-atoms 'Section)))
+; 10 sections as before plus 9 more.
+(test-equal 19 (length (cog-get-atoms 'Section)))
 
 (test-equal 1 (length (filter-type (Word "e") 'Section)))
 (test-equal 5 (length (filter-type (WordClass "e j") 'Section)))
 
-(test-equal 4 (length (filter-type (Word "e") 'CrossSection)))
-(test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))
+(test-equal 6 (length (filter-type (Word "e") 'CrossSection)))
+(test-equal 6 (length (filter-type (WordClass "e j") 'CrossSection)))
 
 ; Validate counts.
+; This part is *identical* to the tests in `connector-merge-tricon.scm`
 (define epsilon 1.0e-8)
 (expected-e-j-sections)
 (test-approximate (* frac1 cnt-e-klm) (cog-count sec-ej-klm) epsilon)
@@ -148,6 +148,13 @@
 (test-approximate (* frac1 cnt-f-egh) (cog-count xes-ej-f-vgh) epsilon)
 (test-approximate (* (- 1 frac1) cnt-f-egh) (cog-count xes-e-f-vgh) epsilon)
 
+; The next section is *identical* to that of `connector-merge-conind.scm`
+(expected-indirect-sections)
+(test-approximate (* (- 1 frac1) cnt-a-kle) (cog-count sec-a-kle) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-kle) (cog-count sec-f-kle) epsilon)
+(test-approximate (* frac1 cnt-a-kle) (cog-count sec-a-klv) epsilon)
+(test-approximate (* frac1 cnt-f-kle) (cog-count sec-f-klv) epsilon)
+
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
@@ -156,6 +163,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
+#! ===================
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (define frac2 0.35)
