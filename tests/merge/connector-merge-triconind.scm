@@ -78,43 +78,35 @@
 ; We expect 3 sections on "e" and four on "j"
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
-(test-equal 5 (length (gsc 'right-stars (Word "f"))))
+(test-equal 6 (length (gsc 'right-stars (Word "f"))))
 
 ; Get the total count on all Sections
 (define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
 ; Create CrossSections and verify that they got created
-; We expect 3 x (3+4+5) = 36 of them.
+; We expect 3 x (3+4+5+2) = 42 of them.
 (csc 'explode-sections)
-(test-equal 36 (length (cog-get-atoms 'CrossSection)))
+(test-equal 42 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
 (test-equal 5 (length (gsc 'right-stars (Word "g"))))
 (test-equal 5 (length (gsc 'right-stars (Word "h"))))
 
-(define (filter-type wrd atype)
-	(filter
-		(lambda (atom) (equal? (cog-type atom) atype))
-		(gsc 'right-stars wrd)))
-
-(define (len-type wrd atype)
-	(length (filter-type wrd atype)))
-
 ; Expect 3 Sections and 4 CrossSections on e.
-(test-equal 7 (length (gsc 'right-stars (Word "e"))))
+(test-equal 9 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
-(test-equal 5 (length (gsc 'right-stars (Word "f"))))
+(test-equal 6 (length (gsc 'right-stars (Word "f"))))
 
 (test-equal 3 (len-type (Word "e") 'Section))
-(test-equal 4 (len-type (Word "e") 'CrossSection))
+(test-equal 6 (len-type (Word "e") 'CrossSection))
 (test-equal 4 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
-(test-equal 5 (len-type (Word "f") 'Section))
+(test-equal 6 (len-type (Word "f") 'Section))
 (test-equal 0 (len-type (Word "f") 'CrossSection))
 
-; We expect a total of 3+4+5=12 Sections
-(test-equal 12 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+4+5+2=14 Sections
+(test-equal 14 (length (cog-get-atoms 'Section)))
 
 #! ===================
 ; --------------------------

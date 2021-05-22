@@ -111,14 +111,6 @@
 (test-equal 2 (length (gsc 'right-stars (Word "g"))))
 (test-equal 3 (length (gsc 'right-stars (Word "h"))))
 
-(define (filter-type wrd atype)
-	(filter
-		(lambda (atom) (equal? (cog-type atom) atype))
-		(gsc 'right-stars wrd)))
-
-(define (len-type wrd atype)
-	(length (filter-type wrd atype)))
-
 ; Expect 3 Sections and four CrossSections on e.
 (test-equal 7 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))

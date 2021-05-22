@@ -27,6 +27,17 @@
 )
 
 ; ---------------------------------------------------------------
+; Utilities
+
+(define (filter-type wrd atype)
+	(filter
+		(lambda (atom) (equal? (cog-type atom) atype))
+		(gsc 'right-stars wrd)))
+
+(define (len-type wrd atype)
+	(length (filter-type wrd atype)))
+
+; ---------------------------------------------------------------
 ; Detailed balance
 
 (define (check-sections LLOBJ EPSILON)
