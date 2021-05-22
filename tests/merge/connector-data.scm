@@ -257,6 +257,29 @@
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
+; Define two more sections that get split indirectly.
+
+(define cnt-a-kle 23)
+(define cnt-f-kle 17)
+
+(define (setup-indirect-sections)
+	(Section (ctv 1 0 cnt-a-kle)
+		(Word "a")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+	(Section (ctv 1 0 cnt-f-kle)
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+)
+
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
 ; Additional f sections, having e as connector.
 ; Just like the addtional j sections above.
 

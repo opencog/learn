@@ -3,6 +3,7 @@
 ADD_GUILE_TEST(ConnectorMergeBasic     connector-merge-basic.scm)
 ADD_GUILE_TEST(ConnectorMergeBasicTri  connector-merge-basic-tri.scm)
 ADD_GUILE_TEST(ConnectorMergeCons      connector-merge-cons.scm)
+ADD_GUILE_TEST(ConnectorMergeConin     connector-merge-conin.scm)
 ADD_GUILE_TEST(ConnectorMergeTri       connector-merge-tri.scm)
 ADD_GUILE_TEST(ConnectorMergeTriCon    connector-merge-tricon.scm)
 

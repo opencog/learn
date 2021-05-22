@@ -1,9 +1,9 @@
 ;
-; connector-merge-cone.scm
-; Extra test for merging of Connectors - single connector; 2-cluster
+; connector-merge-conin.scm
+; Unit test for merging of Connectors indirectly - one connector; 2-cluster
 ;
-; Tests merging of two words into a single word-class.
-; Similar to connector-merge-cons.scm, but with a twist.
+; Tests merging of two words into a single word-class. Similar to
+; `connector-merge-cons.scm`, but with merging via cross-sections.
 ;
 ; Created May 2021
 
@@ -60,6 +60,7 @@
 ; Load some data
 (setup-e-j-sections)
 (setup-j-extra)
+(setup-indirect-sections)
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
@@ -75,9 +76,9 @@
 (define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
 ; Create CrossSections and verify that they got created
-; We expect 3 x (3+4) = 21 of them.
+; We expect 3 x (3+4+2) = 27 of them.
 (csc 'explode-sections)
-(test-equal 21 (length (cog-get-atoms 'CrossSection)))
+(test-equal 27 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
@@ -92,17 +93,17 @@
 (define (len-type wrd atype)
 	(length (filter-type wrd atype)))
 
-; Expect 3 Sections and two CrossSections on e.
-(test-equal 5 (length (gsc 'right-stars (Word "e"))))
+; Expect 3 Sections and four CrossSections on e.
+(test-equal 7 (length (gsc 'right-stars (Word "e"))))
 (test-equal 4 (length (gsc 'right-stars (Word "j"))))
 
 (test-equal 3 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
+(test-equal 4 (len-type (Word "e") 'CrossSection))
 (test-equal 4 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
 
-; We expect a total of 3+4=7 Sections
-(test-equal 7 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+4+2=9 Sections
+(test-equal 9 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
 ; Merge two sections together.
@@ -110,6 +111,7 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
+#! ==========
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
 ; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
@@ -181,5 +183,6 @@
 	epsilon)
 
 (test-end t-cone-cluster)
+======== !#
 
 ; ---------------------------------------------------------------
