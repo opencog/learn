@@ -183,14 +183,14 @@
 (test-equal 6 (len-type (Word "e") 'CrossSection))
 (test-equal 7 (length (gsc 'right-stars (Word "e"))))
 
-; We expect two sections remaining on j, and on f
+; We expect two sections remaining on j, and three on f
 (test-equal 2 (len-type (Word "j") 'Section))
 (test-equal 0 (len-type (Word "j") 'CrossSection))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
-(test-equal 4 (len-type (Word "f") 'Section))
+(test-equal 3 (len-type (Word "f") 'Section))
 (test-equal 0 (len-type (Word "f") 'CrossSection))
-(test-equal 4 (length (gsc 'right-stars (Word "f"))))
+(test-equal 3 (length (gsc 'right-stars (Word "f"))))
 
 ; We expect five merged sections
 (test-equal 6 (len-type (WordClass "e j") 'Section))
@@ -201,7 +201,7 @@
 ; leaving a grand total of 14. Five of the new ones have {ej} as germ,
 ; and two with {ej} as connectors.
 ; This is just a total over everything above.
-(test-equal 10 (length (cog-get-atoms 'Section)))
+(test-equal 14 (length (cog-get-atoms 'Section)))
 
 #! ===================
 ; ----------------------------
