@@ -52,7 +52,7 @@
 ;
 ;    [e, <f, klv>] + none -> q * [{ej}, <{ej}, klv>] + (1-q) * [e, <f, klv>]
 ;
-; These are tested in "TEST F2" below.
+; These are tested in "TEST F3" below.
 ;
 
 (define t-three-indirect "one-connector-2-word 3-cluster indirect test")
@@ -203,9 +203,10 @@
 ; This is just a total over everything above.
 (test-equal 14 (length (cog-get-atoms 'Section)))
 
-#! ===================
 ; ----------------------------
 ; Validate counts.
+; The first part of this is *identical* to the tests in
+; `connector-merge-tricon.scm`
 (test-approximate (* cnt-e-klm (- 1.0 frac1))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
 
@@ -233,14 +234,15 @@
 (test-approximate (* (- 1 frac1) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
 ; Now, for some of the more complex cases.
-; The (f,abe) and (f,egh) sections are twice-reduced, as explained above.
+; The (f,abe) and (f,egh) sections are twice-reduced, as explained
+; in `connector-merge-tricon.scm`.
 (test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-abe)
 	(cog-count sec-f-abe) epsilon)
 (test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-egh)
 	(cog-count sec-f-egh) epsilon)
 
 ; The remainder got transfered ... these two tests are "TEST F2"
-; as described up top.
+; as described in `connector-merge-tricon.scm`.
 (define expected-sec-ej-abv-count
 	(+ (* frac1 (+ cnt-j-abe cnt-f-abe))  ; from linear merge
 		(* frac2 (- 1 frac1) cnt-f-abe)))  ; from connector merge
@@ -253,10 +255,10 @@
 (test-approximate expected-sec-ej-vgh-count
 	(cog-count sec-ej-vgh) epsilon)
 
-
 ; --------------------------
-; Expect 30 CrossSections as described above.
-(test-equal 30 (length (cog-get-atoms 'CrossSection)))
+; Expect 40 CrossSections (?? why not a multiple of three???)
+; This seems wrong XXX FIXME ...
+(test-equal 40 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various CrossSections...
 (test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
@@ -276,6 +278,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
+#! ===================
 (test-end t-three-indirect)
  =========!#
 
