@@ -277,6 +277,42 @@
 			(Connector (Word "e") (ConnectorDir "+"))))
 )
 
+(define sec-a-kle #f)
+(define sec-f-kle #f)
+(define sec-a-klv #f)
+(define sec-f-klv #f)
+
+(define (expected-indirect-sections)
+	(set! sec-a-kle
+	(Section
+		(Word "a")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+")))))
+	(set! sec-f-kle
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+")))))
+	(set! sec-a-klv
+	(Section
+		(Word "a")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+	(set! sec-f-klv
+	(Section
+		(Word "f")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "-"))
+			(Connector (WordClass "e j") (ConnectorDir "+")))))
+)
+
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------

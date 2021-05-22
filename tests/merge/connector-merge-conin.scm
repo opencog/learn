@@ -44,7 +44,7 @@
 ;    [e, <a, klv>] + none -> p * [{ej}, <a, klv>] + (1-p) * [e, <a, klv>]
 ;    [e, <f, klv>] + none -> p * [{ej}, <f, klv>] + (1-p) * [e, <f, klv>]
 ;
-; Reshaping these gives two new Sectins, and modified counts on the
+; Reshaping these gives two new Sections, and modified counts on the
 ; existing sections:
 ;
 ;    p * (a, kl{ej}) + (1-p) * (a, kle)
@@ -175,6 +175,16 @@
 (test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
 
 ; -----------------------
+; Now test the new sections, not seen in earlier tests.
+(expected-indirect-sections)
+
+(test-approximate (* (- 1 frac) cnt-a-kle) (cog-count sec-a-kle) epsilon)
+(test-approximate (* (- 1 frac) cnt-f-kle) (cog-count sec-f-kle) epsilon)
+
+(test-approximate (* frac cnt-a-kle) (cog-count sec-a-klv) epsilon)
+(test-approximate (* frac cnt-f-kle) (cog-count sec-f-klv) epsilon)
+
+; -----------------------
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
@@ -183,8 +193,6 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-#! ==========
 (test-end t-cone-cluster)
-======== !#
 
 ; ---------------------------------------------------------------
