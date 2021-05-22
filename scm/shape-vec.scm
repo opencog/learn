@@ -298,6 +298,17 @@
 			; return the rewritten section; else return false.
 			(if non-flat (LLOBJ 'make-pair newgerm (ConnectorSeq newseq)) #f))
 
+		; --------------------------------------------------
+
+		; Do any of the Connectors in SECT belonging to CLS?
+		(define (is-nonflat-section? CLS SECT)
+
+			; Walk through the connector sequence. If any of them
+			; appear in the cluster, return true.
+			(any
+				(lambda (con) (equal? (gar con) CLS))
+				(cog-outgoing-set (get-pair-right SECT))))
+
 		; -----------------------------------------------
 		; Get the count, if the pair exists.
 		(define (get-pair-count L-ATOM R-ATOM)
@@ -656,6 +667,7 @@ around for a while.
 				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
 				((flatten)          flatten-section)
+				((is-nonflat?)      is-nonflat-section?)
 
 				((provides)         provides)
 				((clobber)          clobber)
@@ -701,6 +713,7 @@ around for a while.
 			((get-cross-sections)  (apply shape-obj (cons message args)))
 			((re-cross)            (apply shape-obj (cons message args)))
 			((flatten)             (apply shape-obj (cons message args)))
+			((is-nonflat?)         (apply shape-obj (cons message args)))
 
 			(else             (apply cover-stars (cons message args)))))
 )

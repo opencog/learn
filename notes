@@ -4281,6 +4281,17 @@ Same failing ...
 (length bad)
 $6 = 74
 
+------------------------------
+(filter-type (WordClass "e j") 'CrossSection)
+
+[{ej}, <{ej}, abv>]
+[{ej}, <f, klv>]    <---- unwanted
+[{ej}, <a, klv>]
+[{ej}, <{ej}, vgh>]
+[{ej}, <{ej}, klv>]
+
+
+
 (f, kl{ej})
 
 

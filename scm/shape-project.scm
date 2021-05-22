@@ -252,11 +252,21 @@
 
 				; If MRG does not need flattening, then ...
 				; Loop over donating cross-sections.
-				(for-each
-					(lambda (XST)
-						(define xmr (LLOBJ 're-cross GLS XST))
-						(accumulate-count LLOBJ xmr XST FRAC NOISE))
-					(LLOBJ 'make-cross-sections DONOR))))
+				(begin
+					(for-each
+						(lambda (XST)
+							(define xmr (LLOBJ 're-cross GLS XST))
+							(accumulate-count LLOBJ xmr XST FRAC NOISE))
+						(LLOBJ 'make-cross-sections DONOR))
+
+						; We can rebalance here, but it does not seem to
+						; affect anything.
+						; (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
+
+						; Special case: donor was already non-flat. The counts
+						; were already updted earlier.
+						(when (LLOBJ 'is-nonflat? GLS MRG)
+							(rebalance-count LLOBJ DONOR 0)))))
 
 		; Always rebalance the merged section.
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
