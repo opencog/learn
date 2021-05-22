@@ -4205,7 +4205,82 @@ wtf explode created an unbalaced cross!
     (Connector (WordNode "g") (ConnectorDir "+"))
     (Connector (WordNode "g") (ConnectorDir "+")))))
 
-was everything stored?
+was everything stored?  Yes.
+
+(define gtv (make-afunc-cache cog-count))
+(for-each gtv (cog-get-atoms 'Section))
+(load-atoms-of-type 'Section)
+
+(for-each
+	(lambda (atm)
+		(define diff (- (gtv atm) (cog-count atm)))
+		(if (< 1.0e-6 (abs diff))
+			(format #t "fail at ~A ~A" (gtv atm) atm)))
+	(cog-get-atoms 'Section))
+
+Are there CrossSections in storage?
+(cog-rocks-stats storage-node)
+cog-rocks-load-atomspace
+
+(load-atomspace)
+(ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484)
+huh ... but no cross-sections!
+(for-each cog-delete! (cog-get-atoms 'ShapeLink))
+
+who stored these?
+
+--------------------------
+try again
+. ~/run/expt-18/config/0*sh
+. ~/run/expt-18/config/4*sh
+cd data
+rm -r gram-25-junk.rdb; cp -pr shape.rdb gram-25-junk.rdb
+guile -l /home/ubuntu/src/learn/run-common/cogserver.scm
+(use-modules (srfi srfi-1))
+(define pca (make-pseudo-cset-api))
+(define csc (add-covering-sections pca))
+
+(csc 'fetch-pairs)
+(csc 'explode-sections)
+(define gsc (add-cluster-gram csc))
+(gram-classify-greedy-discrim gsc 0.25 4)
+
+--------------------------
+Before merge:
+(ConnectorSeq . 75688) (Section . 80832) (ShapeLink . 511484) (CrossSection . 620774)
+
+(define gsc (add-cluster-gram csc))
+(define disc (make-discrim gsc 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
+------ Create: Merged 202021 sections in 195.0 secs; 1036.0 scts/sec
+------ Create: Revised 202021 shapes in 515.0 secs; 392.27 scts/sec
+------ Create: cleanup 1 in 281.0 secs; 0.0036 ops/sec
+
+(ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 630318) (CrossSection . 729722)
+
+(check-sections csc 1.0e-6)
+Same failing ...
+(check-sections csc 1.0e-6)
+
+(define (check-balance LLOBJ)
+	(define epsilon 1.0e-6)
+
+   (filter
+      (lambda (sect)
+         (define scnt (cog-count sect))
+         (any
+            (lambda (cross)
+               (define diff (- scnt (cog-count cross)))
+               (< epsilon (abs diff)))
+            (LLOBJ 'get-cross-sections sect)))
+      (cog-get-atoms 'Section))
+)
+
+(define bad (check-balance csc))
+(length bad)
+$6 = 74
+
 
 
 
