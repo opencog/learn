@@ -1,6 +1,6 @@
 ;
-; connector-merge-conin.scm
-; Unit test for merging of Connectors indirectly - one connector; 2-cluster
+; connector-merge-conind.scm
+; Unit test for indirect merge of Connectors - one connector; 2-cluster
 ;
 ; Tests merging of two words into a single word-class. Similar to
 ; `connector-merge-cons.scm`, but with merging via cross-sections.

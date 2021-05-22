@@ -1,12 +1,9 @@
 ;
-; connector-merge-tricon.scm
-; Unit test for merging of Connectors - two single connectors; 3-cluster
+; connector-merge-triconind.scm
+; Unit test for indirect merging of Connectors - 3-cluster
 ;
-; Tests merging of three words into a single word-class.
-; The focus here is to make sure that that when the words to
-; be merged also appear in Connectors, that those are merged
-; correctly, too. This triggers some extra merge logic, beyond
-; the basic case.
+; This is a mashup between `connector-merge-conind.scm` and
+; `connector-merge-tricon.scm`, with indirectly generated sections.
 ;
 ; Created May 2021
 
@@ -24,59 +21,42 @@
 
 ; ---------------------------------------------------------------
 ;
-; This is similar to the "connector 3-cluster merge test" except
-; that the third word is "non-flat" and has connectors that belong
-; to the cluster. See the explanation in the test
-; `connector-merge-cons.scm` for the general overview of merging, and
-; `connector-merge-tri.scm` for the "flat" three-connector merge.
+; This is a mashup between `connector-merge-conind.scm` and
+; `connector-merge-tricon.scm`, taking the idea of indirect merges
+; from the first, and an additional third member to the cluster from
+; the second unit test. Most of the unit test is a cut-n-paste of the
+; the first two, with tweaks to handle the differences.
 ;
-; When the first two words {ej} are merged, we expect some
-; cross-sections from "f" to contribute:
-;    [e, <f, abv>] + none -> p * [{ej}, <f, abv>] + (1-p) * [e, <f, abv>]
-;    [e, <f, vgh>] + none -> p * [{ej}, <f, vgh>] + (1-p) * [e, <f, vgh>]
+; After the first merge, which is identical to `connector-merge-conind.scm`
+; one obtains new corss-sections
 ;
-; which reshapes into
-;     p * (f, ab{ej}) + (1-p) * (f, abe)
-;     p * (f, {ej}gh) + (1-p) * (f, egh)
+;    [e, <a, klv>] + none -> p * [{ej}, <a, klv>] + (1-p) * [e, <a, klv>]
+;    [e, <f, klv>] + none -> p * [{ej}, <f, klv>] + (1-p) * [e, <f, klv>]
+;
+; which reshape to
+;
+;    p * (a, kl{ej}) + (1-p) * (a, kle)
+;    p * (f, kl{ej}) + (1-p) * (f, kle)
 ;
 ; This is explicitly tested (see "TEST F1" below).
 ;
-; Next, "f" is merged into {ej}. This gives a "flat" merge:
-;    (f, klm) +  ({ej}, klm) -> ({ej}, klm)
-; which will transfer all of the count from f to {ej}.
+; Next, "f" is merged into {ej}. There is a Section merge:
 ;
-; The earlier ej merge reduced the count on (f, abe) and (f, egh).
-; The "f" merge reduces it some more:
-;    none + (f, abe) -> p * ({ej}, abe) + (1-p) * (f, abe)
-;    none + (f, egh) -> p * ({ej}, egh) + (1-p) * (f, egh)
+;   none + (f, kle) -> q * ({ej}, kle) + (1-q) * (f, kle)
 ;
-; The counts on ({ej}, abe) and ({ej}, egh) are accumulated into
-; ({ej}, ab{ej}) and ({ej}, {ej}gh) respectively. It is NOT immediately
-; obvious that these should be accumulated, instead of zeroed out.
-; However, the initial projective cluster formation won't work right
-; if these are zeroed out, so we avoid further special cases, and
-; accumulate here.  These are tested in "TEST F2" below.
+; which is obviously non-flat, and must flatten out to
+;
+;   none + (f, kle) -> q * ({ej}, kl{ej}) + (1-q) * (f, kle)
+;
+; There is also a cross-section which is similarly flattened:
+;
+;    [e, <f, klv>] + none -> q * [{ej}, <{ej}, klv>] + (1-q) * [e, <f, klv>]
+;
+; These are tested in "TEST F2" below.
+;
 
-; But also, we have the earlier fraction that gets merged:
-;    ({ej}, ab{ej}) + p * (f, ab{ej}) -> ({ej}, ab{ej})
-;    ({ej}, {ej}gh) + p * (f, {ej}gh) -> ({ej}, {ej}gh)
-;
-; To recap, we expect 10 sections
-;     ({ej}, abc)    * 1.0
-;     ({ej}, dgh)    * 1.0
-;     ({ej}, klm)    * p
-;     (e, klm)       * 1-p
-;     (j, abe)       * 1-p
-;     (j, egh)       * 1-p
-;     (f, abe)       * (1-p)(1-p)
-;     (f, egh)       * (1-p)(1-p)
-;     ({ej}, ab{ej}) * p (j + f)
-;     ({ej}, {ej}gh) * p (j + f)
-;
-; There are 10 of these, so expect 30=10*3 CrossSections
-
-(define t-three-cluster "one-connector-2-word 3-cluster merge test")
-(test-begin t-three-cluster)
+(define t-three-indirect "one-connector-2-word 3-cluster indirect test")
+(test-begin t-three-indirect)
 
 ; Open the database
 (setup-database)
@@ -86,6 +66,7 @@
 (setup-f-sections)
 (setup-j-extra)
 (setup-f-extra)
+(setup-indirect-sections)
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
@@ -135,6 +116,7 @@
 ; We expect a total of 3+4+5=12 Sections
 (test-equal 12 (length (cog-get-atoms 'Section)))
 
+#! ===================
 ; --------------------------
 ; Merge the first two sections together.
 (define frac1 0.25)
@@ -290,6 +272,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-(test-end t-three-cluster)
+(test-end t-three-indirect)
+ =========!#
 
 ; ---------------------------------------------------------------
