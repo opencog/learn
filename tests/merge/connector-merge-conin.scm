@@ -111,14 +111,13 @@
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-#! ==========
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
 ; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+(test-equal 4 (len-type (Word "e") 'CrossSection))
+(test-equal 5 (length (gsc 'right-stars (Word "e"))))
 
 ; We expect two sections remaining on j
 (test-equal 2 (len-type (Word "j") 'Section))
@@ -127,14 +126,14 @@
 
 ; We expect five merged sections
 (test-equal 5 (len-type (WordClass "e j") 'Section))
-(test-equal 2 (len-type (WordClass "e j") 'CrossSection))
-(test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 4 (len-type (WordClass "e j") 'CrossSection))
+(test-equal 9 (length (gsc 'right-stars (WordClass "e j"))))
 
-; Of the 7=3+4 original Sections, 4 are deleted, and 5 are created,
-; leaving a grand total of 8. The 5 new ones are all e-j, the
-; remaining three ones are "e" or "j" with reduced counts.
+; Of the 9=3+4+2 original Sections, 4 are deleted, and 7 are created,
+; leaving a grand total of 12. Five of the new ones have {ej} as germ,
+; and two with {ej} as connectors.
 ; This is just a total over everything above.
-(test-equal 8 (length (cog-get-atoms 'Section)))
+(test-equal 12 (length (cog-get-atoms 'Section)))
 
 ; ----------------------------
 ; Validate counts.
@@ -156,10 +155,12 @@
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; --------------------------
-; Expect 24 CrossSections as described above.
-(test-equal 24 (length (cog-get-atoms 'CrossSection)))
+; Expect 32 CrossSections as described above.
+(test-equal 32 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
+; This is identical to the tests in `connector-merge-cons.scm` and so
+; is just a cut-n-paste of that test.
 (expected-j-extra-sections)
 (test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
@@ -182,6 +183,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
+#! ==========
 (test-end t-cone-cluster)
 ======== !#
 
