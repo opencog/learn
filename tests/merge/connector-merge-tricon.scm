@@ -182,9 +182,10 @@
 
 (test-equal 2 (length (filter-type (WordClass "e j") 'CrossSection)))
 
-; We expect one section left on "e", the klm section, and two
-; cross-sections. The two cross-sections should correspond
-; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
+; We expect one section left on "e", the klm section, and four
+; cross-sections. The four cross-sections should correspond
+; to the sections (1-p) * (j, abe) and (1-p) * (j, egh) and
+; (1-p) * (f, abe) and (1-p) * (f, egh)
 ; that is, to the "orthogonal"  word-sense.
 (test-equal 1 (len-type (Word "e") 'Section))
 (test-equal 4 (len-type (Word "e") 'CrossSection))
