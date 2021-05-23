@@ -317,7 +317,7 @@
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; Additional f sections, having e as connector.
-; Just like the addtional j sections above.
+; Just like the additional j sections above.
 
 (define cnt-f-abe 31)
 (define cnt-f-egh 25)

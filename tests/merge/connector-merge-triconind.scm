@@ -156,6 +156,12 @@
 (test-approximate (* frac1 cnt-a-kle) (cog-count sec-a-klv) epsilon)
 (test-approximate (* frac1 cnt-f-kle) (cog-count sec-f-klv) epsilon)
 
+; The next four tests are unique to this unit test.
+(test-approximate (* (- 1 frac1) cnt-a-kle) (cog-count sec-a-kle) epsilon)
+(test-approximate (* frac1 cnt-a-kle) (cog-count sec-a-klv) epsilon)
+(test-approximate (* (- 1 frac1) cnt-f-kle) (cog-count sec-f-kle) epsilon)
+(test-approximate (* frac1 cnt-f-kle) (cog-count sec-f-klv) epsilon)
+
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
@@ -270,6 +276,24 @@
 	(cog-count xes-ej-ej-vgh) epsilon)
 
 ; ----------------------
+; Section "TEST F3" -- test the sections unique to this test, not
+; appearing in the other unit tests. Gonna skip testing the
+; cross-sections, as the `check-sections` and `check-crosses` should
+; be adequate for that.
+
+; Reload, because the merge wiped out one of them.
+(expected-indirect-sections)
+
+; These two are same as before.
+(test-approximate (* (- 1 frac1) cnt-a-kle) (cog-count sec-a-kle) epsilon)
+(test-approximate (* frac1 cnt-a-kle) (cog-count sec-a-klv) epsilon)
+
+; One is reduced, the other enlarged.
+(test-approximate 0.0 (cog-count sec-f-klv) epsilon)
+(test-approximate (* (- 1 frac2) (- 1 frac1) cnt-f-kle)
+	(cog-count sec-f-kle) epsilon)
+
+; ----------------------
 ; Check detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
@@ -278,8 +302,6 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-#! ===================
 (test-end t-three-indirect)
- =========!#
 
 ; ---------------------------------------------------------------
