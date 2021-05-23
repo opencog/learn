@@ -209,7 +209,6 @@
 		(let ((reg (if mgsf mgsf
 					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))))
 			(set-count XMR 0)
-
 			; Create the cross-sections corresponding to `regs`
 			(for-each
 				(lambda (xfin) (set-count xfin x-cnt))
@@ -245,8 +244,9 @@
 				; If MRG can be flattened, then transfer all counts
 				; from MRG to the flattened variant thereof.
 				(begin
-					(accumulate-count LLOBJ flat MRG 1.0 NOISE)
-					(rebalance-count LLOBJ flat (LLOBJ 'get-count flat))
+					(rebalance-count LLOBJ flat
+						(+ (LLOBJ 'get-count flat) (LLOBJ 'get-count MRG)))
+					(rebalance-count LLOBJ MRG 0)
 					(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 				)
 

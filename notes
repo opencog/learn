@@ -4290,9 +4290,37 @@ $6 = 74
 [{ej}, <{ej}, vgh>]
 [{ej}, <{ej}, klv>]
 
+[{ej}, <f, klv>] -> (f, kl{ej}) shoudld have been merged.
+
+none + (f, kl{ej}) -> p * ({ej}, kl{ej}) + (1-p) * (f, kl{ej})
+connector-merge-tricon.scm
+
+385.2375 388.0
 
 
-(f, kl{ej})
+(f, kl{ej}) <- unwanted
+
+(a, kl{ej})
+
+(define sec-a-kle #f)
+(define sec-f-kle #f)
+(define sec-a-klv #f)
+(define sec-f-klv #f)
+
+-------------------------
+try again:
+
+------ Create: Merged 202021 sections in 210.0 secs; 962.00 scts/sec
+------ Create: Revised 202021 shapes in 559.0 secs; 361.40 scts/sec
+------ Create: cleanup 1 in 312.0 secs; 0.0032 ops/sec
+
+(cog-report-counts) -- no change...
+(define bad (check-balance csc))
+(length bad)
+$3 = 74 ... no change. So the test fix fixed nothing here...
+
+sec-ej-abv
+
 
 
 
