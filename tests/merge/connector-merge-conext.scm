@@ -147,8 +147,8 @@
 ; --------------------------
 ; Counts that are unique to this particular unit test.
 ;
-; Expect 28 CrossSections
-(test-equal 28 (length (cog-get-atoms 'CrossSection)))
+; Expect 24 CrossSections
+(test-equal 24 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)
@@ -177,8 +177,6 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-#! =============
 (test-end t-two-cluster-extend)
-========= !#
 
 ; ---------------------------------------------------------------
