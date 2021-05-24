@@ -124,9 +124,9 @@
 ; This is just a total over everything above.
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
-#! =============
 ; ----------------------------
-; Validate counts.
+; Validate counts.  The tests immediatey below are identical to,
+; unchanged from `connector-merge-cons.scm`
 (define epsilon 1.0e-8)
 (test-approximate (* cnt-e-klm (- 1.0 frac))
 	(cog-count (car (filter-type (Word "e") 'Section))) epsilon)
@@ -145,24 +145,30 @@
 (test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 ; --------------------------
-; Expect 24 CrossSections as described above.
-(test-equal 24 (length (cog-get-atoms 'CrossSection)))
+; Counts that are unique to this particular unit test.
+;
+; Expect 28 CrossSections
+(test-equal 28 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-j-extra-sections)
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count sec-j-abe) epsilon)
+(test-approximate 0 (cog-count sec-j-abe) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count sec-j-egh) epsilon)
 
-(test-approximate (* frac cnt-j-abe) (cog-count sec-ej-abv) epsilon)
+(define tot-ej-abv (+ cnt-j-abe cnt-e-abe (* frac cnt-e-abj)))
+(test-approximate tot-ej-abv (cog-count sec-ej-abv) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count sec-ej-vgh) epsilon)
 
-(test-approximate (* (- 1 frac) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
+(test-approximate 0 (cog-count xes-e-j-abv) epsilon)
 (test-approximate (* (- 1 frac) cnt-j-egh) (cog-count xes-e-j-vgh) epsilon)
 
-(test-approximate (* frac cnt-j-abe) (cog-count xes-ej-ej-abv) epsilon)
+(test-approximate tot-ej-abv (cog-count xes-ej-ej-abv) epsilon)
 (test-approximate (* frac cnt-j-egh) (cog-count xes-ej-ej-vgh) epsilon)
 
 ; -----------------------
+; (cog-delete! sec-j-abe)
+; (cog-delete! xes-e-j-abv)
+
 ; Verify detailed balance
 (test-assert (check-sections csc epsilon))
 (test-assert (check-crosses csc epsilon))
@@ -171,6 +177,7 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
+#! =============
 (test-end t-two-cluster-extend)
 ========= !#
 
