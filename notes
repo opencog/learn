@@ -4321,6 +4321,52 @@ $3 = 74 ... no change. So the test fix fixed nothing here...
 
 sec-ej-abv
 
+({ej}, g{ej}i) -- 5
+[g, <{ej}, v{ej}i>] -- 2
+[{ej}, <{ej}, gvi>] -- 2
+[i, <{ej}, g{ej}v>] -- 2
+
+(Section
+  (WordNode "e")
+  (ConnectorSeq
+    (Connector (WordNode "g") (ConnectorDir "-"))
+    (Connector (WordNode "e") (ConnectorDir "+"))
+    (Connector (WordNode "i") (ConnectorDir "+"))))
+
+sec-j-gji 2
+sec-j-gei 1
+sec-e-gji 2
+sec-e-gei 0
+
+j abj
+e abj
+j abe done
+e abe
+e abj
+
+
+(Section
+  (WordClassNode "e j")
+  (ConnectorSeq
+    (Connector (WordNode "g") (ConnectorDir "-"))
+    (Connector (WordClassNode "e j") (ConnectorDir "+"))
+    (Connector (WordNode "i") (ConnectorDir "+"))))
+
+(CrossSection
+  (WordNode "g")
+  (ShapeLink (WordClassNode "e j")
+    (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+    (Connector (WordClassNode "e j") (ConnectorDir "+"))
+    (Connector (WordNode "i") (ConnectorDir "+"))))
+
+(CrossSection
+  (WordClassNode "e j")
+  (ShapeLink (WordClassNode "e j")
+    (Connector (WordNode "g") (ConnectorDir "-"))
+    (Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+    (Connector (WordNode "i") (ConnectorDir "+"))))
+
+
 
 
 

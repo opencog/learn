@@ -257,6 +257,34 @@
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
+; Additional e sections, having e as connector.
+
+(define cnt-e-abe 11)
+(define cnt-e-abj 9)
+
+(define (setup-e-extra)
+
+	; Some e sections having "e" as a connector.
+	(Section (ctv 1 0 cnt-e-abe)
+		(Word "e")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "e") (ConnectorDir "+"))))
+
+	(Section (ctv 1 0 cnt-e-abj)
+		(Word "e")
+		(ConnectorSeq
+			(Connector (Word "a") (ConnectorDir "-"))
+			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "j") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
+; ---------------------------------------------------------------
 ; Define two more sections that get split indirectly.
 
 (define cnt-a-kle 23)
