@@ -93,37 +93,38 @@
 ; We expect a total of 5+4=9 Sections
 (test-equal 9 (length (cog-get-atoms 'Section)))
 
-#! =============
 ; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
 (define disc (make-fuzz gsc 0 frac 4 0))
 (disc 'merge-function (Word "e") (Word "j"))
 
-; We expect one section left on "e", the klm section, and two
-; cross-sections. The two cross-sections should correspond
-; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
-; that is, to the "orthogonal"  word-sense.
-(test-equal 1 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
+; We expect two section left on "e", the klm section, and
+; a fraction of the (e, abj) section.
+; We expect only one cross-section: [e, <j,vgh>] as all others are
+; absorbed. This cross-section corresponds to (1-p) * (j, egh)
+(test-equal 2 (len-type (Word "e") 'Section))
+(test-equal 1 (len-type (Word "e") 'CrossSection))
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 
-; We expect two sections remaining on j
-(test-equal 2 (len-type (Word "j") 'Section))
-(test-equal 0 (len-type (Word "j") 'CrossSection))
+; We expect one sections remaining on j -- (j, egh)
+; We expect one cross-section: a fraction of (e, abj)
+(test-equal 1 (len-type (Word "j") 'Section))
+(test-equal 1 (len-type (Word "j") 'CrossSection))
 (test-equal 2 (length (gsc 'right-stars (Word "j"))))
 
-; We expect five merged sections
+; We expect five merged sections, just like in `merge-cons.scm`
 (test-equal 5 (len-type (WordClass "e j") 'Section))
 (test-equal 2 (len-type (WordClass "e j") 'CrossSection))
 (test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
 
-; Of the 7=3+4 original Sections, 4 are deleted, and 5 are created,
+; Of the 9=5+4 original Sections, 6 are deleted, and 5 are created,
 ; leaving a grand total of 8. The 5 new ones are all e-j, the
 ; remaining three ones are "e" or "j" with reduced counts.
 ; This is just a total over everything above.
 (test-equal 8 (length (cog-get-atoms 'Section)))
 
+#! =============
 ; ----------------------------
 ; Validate counts.
 (define epsilon 1.0e-8)
