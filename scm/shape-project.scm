@@ -207,12 +207,15 @@
 			(rebalance-count LLOBJ donor d-cnt)
 		)
 		(let ((reg (if mgsf mgsf
-					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect)))))
+					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect))))
+				(r-cnt (if mgsf (LLOBJ 'get-count mgsf) x-cnt)))
+
 			(set-count XMR 0)
 			; Create the cross-sections corresponding to `regs`
 			(for-each
-				(lambda (xfin) (set-count xfin x-cnt))
-				(LLOBJ 'make-cross-sections reg))))
+				(lambda (xfin) (set-count xfin r-cnt))
+				(LLOBJ 'make-cross-sections reg))
+	))
 )
 
 ; ---------------------------------------------------------------------

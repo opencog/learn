@@ -4338,6 +4338,38 @@ sec-j-gei 1
 sec-e-gji 2
 sec-e-gei 0
 
+start with donor
+ x-cnt= 2.0 0.0 2.0 for SEC=(Section (ctv 1 0 0) sec-e-gji
+This has zero-count... so was fully merged
+before flat - 0
+after flat 4 and no xes
+
+start with donor
+ x-cnt= 2.0 0.0 2.0 for SEC=(Section (ctv 1 0 0) sec-j-gji
+before flat 4
+after flat - 4 and no xes
+
+crosser sec-j-gei  reg has count of 4....
+ ..  pre-no xes, post xes=3 so this is less than reg...
+crosser sec-j-gji
+ .. pre has xes=3, post has 0 for reg=4
+
+start with donor
+ x-cnt= 1.0 0.0 1.0 for SEC=(Section (ctv 1 0 0) sec-j-gei
+now have xes, but of zero count, before = 4
+after =5 and all xes have 5
+
+crosser sec-e-gji
+ .. pre has xes=5 post has 2 for reg=5
+
+
+so count is effed later.
+
+
+
+
+
+
 j abj
 e abj
 j abe done
@@ -4349,6 +4381,7 @@ sec-ej-vgh
 
 xes-a-e-vbe from (e, abe)
 
+(csc 'get-cross-sections
 
 (Section
   (WordClassNode "e j")
@@ -4371,6 +4404,11 @@ xes-a-e-vbe from (e, abe)
     (Connector (VariableNode "$connector-word") (ConnectorDir "+"))
     (Connector (WordNode "i") (ConnectorDir "+"))))
 
+--------------------
+After delete fix:
+
+ (ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 300931) (CrossSection . 357720)
+half the cross-sections disappear
 
 
 
