@@ -4429,6 +4429,16 @@ provided by commit 5e1d7dfb94867f22642d7cdf0621a833bb96092e
       (lambda (sect) (< (cog-count sect) epsilon))
       (cog-get-atoms 'Section)))
 
+(define gsc (add-cluster-gram csc))
+(define sta (add-pair-stars gsc))
+(define disc (make-discrim sta 0.25 4 4))
+(disc 'merge-function (Word "e") (Word "j"))
+
+-----------------------
+guile -l ~/src/learn/run-common/cogserver-gram.scm
+(define psa star-obj)
+(gram-classify-greedy-disinfo psa 3.0 4)
+
 
 link-class.scm ???
 ====================================================

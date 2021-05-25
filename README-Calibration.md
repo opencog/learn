@@ -1,7 +1,7 @@
 
 Calibrating Unsupervised Language Learning
 ==========================================
-* Version of February 2021
+* Version of May 2021
 
 Ongoing project, continuing activity.  See the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
@@ -22,9 +22,15 @@ measure how accuracy scales as a function of training time, how well
 different training algorithms perform, how large a corpus is neeed to
 get good results, and other related questions.
 
-As of 2021, we are still setting up the infrastruture to do the above.
-Once this is done (real soon now?) the project can resume training runs.
-Please contact via email or discord opencog chat for details.
+Informally, the idea of calibration here is just as with any other
+instrument: you measure a "known quantity", and make sure that the
+instrument is reading it accurately.  In this case, the "known quantity"
+is a known grammar, and the instrument is the grammar-learning system.
+
+As of May 2021, the infrastruture to do the above is more or less
+complete, and mostly automated, and some early calibration runs have
+been performed.  Lessons learned so far are given below, right after a
+quick overview of the processing stages.
 
 Processing Overview
 -------------------
@@ -38,11 +44,12 @@ a text corpus from this grammar, and then attempting to learn a new
 grammar from this text corpus, and then assessing accuracy by comparing
 the the learned grammar to the generating grammar.
 
-This pipeline is in the process of being set up. It has been partly
-automated. Currently requires a lot of editing to adjust file paths,
-etc.  So far:
+This pipeline has been more-or-less fully set up, perhaps with some
+cosmetic bugs and some incomplete automation scripts. Requires a fair
+bit of editing of configuration scripts, to adjust file paths, desirable
+parameters, etc.  So far:
 
-1. Build the corpus generation tools. Download the latest Link Grammar
+1. Build and install link-grammar.  Download the latest Link Grammar
 tarball from `http://www.abisource.com/downloads/link-grammar/current`.
 Then unpack it and compile it:
 ```
@@ -52,11 +59,14 @@ mkdir build; cd build; ../configure; make -j
 sudo make install
 ```
 
-2. Build and install this project:
+2. Build and install `cogutils`, `atomspace`, and this project:
 ```
-mkdir build; cd build; cmake ..; make
+git clone https://github.com/opencog/cogutils
+cd cogutils; mkdir build; cd build; cmake ..; make
 sudo make install
 ```
+Repeat the above, with `atomspace` in place of `cogutils`, and again,
+with `learn` (this project).
 
 3. Go to the [run/0-config](run/0-config) and review both the
    [run/0-config/0-pipeline.sh](run/0-config/0-pipeline.sh) and the
@@ -81,12 +91,63 @@ $ ./gen-dict.sh
 
 6. Measure accuracy.
 
-So far, steps 1-5 have been partially automated. Contact us (me) to
-discuss details.
+So far, steps 1-6 have been automated to varying degrees. Contact us
+(me) to discuss details.
 
-The corpus generation tool is in development. See
-https://github.com/opencog/link-grammar/discussions/1146
-for current status.
+Lessons Learned
+---------------
+The idea of calibration is a good idea, even an excellent idea, but is
+considerably more subtle than it first appears.  The following issues
+and questions arose fairly quickly.
+
+* It is possible for two seemingly different grammars to generate the
+  same corpus. In this case, when learning the grammar, how do we judge
+  if it is "correct"? How can we prove that two different grammars are
+  equivalent? Is there an algorithm for generating this proof? Is this
+  even provable, or is this Turing-undecidable, in the same way that the
+  equivalence of two different group presentations is famously known to
+  be undecideable? Given that group presentations and groups are a
+  special case of grammars and corpora, it would seem that proving the
+  equivalence of grammars is also undecidable.  None-the-less, for
+  simple grammars, one might hope that ad hoc algos might suffice.
+
+* The current code for generating random grammars has a dozen different
+  tunable parameters to control that grammar. They are "common sense"
+  parameters, in tht they directly control different steps in the
+  generation. Yet it has rapidly become clear that most parameter
+  settings result in wildly complex and highly chaotic grammars. The
+  resulting corpora appear to be highly "mixed" or ergodic. If a corpus
+  is ergodic, then, of course, it will be impossible to extract any
+  structure from it. How can one measure the ergodicity of a corpus?
+  How can one measure the complexity of a grammar?
+
+* The way in which grammars are generated was motivated by a perhaps
+  naive understanding of "factorization" - see the paper on sheaves,
+  where an analogy is made between Ising models, matrix factorization,
+  partition functions and other related concepts. The idea is that the
+  word-disjunct matrix M factorizes as M=LCR where L and R are sparse
+  high-dimension matrices, and C is low-dimension and dense (compact).
+  The idea was to generate the grammars so that they resemble this
+  factorization; yet, the generated grammars are likely to have multiple
+  ambiguous factorizations. How can we tell if a grammar has multiple
+  ambiguous factorizations? How can we find these? Obviously, if a
+  grammar has multiple ambiguous factorizations, then the machine that
+  attempts to learn that grammar is likely to come up with one of the
+  equivalent factorizations. How can we characterize this?
+
+* As noted above, most parameter settings generate complex and seemingly
+  ergodic grammmars. Just eyeballing these shows that they do not seem
+  to resemble English or any other natural language grammar. How can we
+  determine if a random grammar is "natural-language-like"? What
+  parameter settings result in human-like languages? Are the "axes" of
+  adjustable parameters even "aligned" with the axes of human language
+  complexity? How does one even judge this?
+
+It appears that we've stumbled into the classic trap of science: the
+more we learn, the more we don't know, and the things we don't know
+appear to be increasingly basic and simple. It feels like I haven't
+even dented the surface of grammar--corpus correspondence. Onward
+through the fog!
 
 
 That's all for now!
