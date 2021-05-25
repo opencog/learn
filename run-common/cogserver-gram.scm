@@ -31,8 +31,8 @@
 ; experimentation.
 (define covr-obj (add-covering-sections cset-obj))
 (define gram-obj (add-cluster-gram cover-obj))
-(cover-obj 'fetch-pairs)
-(cover-obj 'explode-sections)
+(covr-obj 'fetch-pairs)
+(covr-obj 'explode-sections)
 (define star-obj gram-obj)
 
 ; Check to see if the marginals have been computed.
