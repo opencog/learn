@@ -6679,6 +6679,21 @@ connector-merge-tricon.scm
 \end_layout
 
 \begin_layout Subsection*
+Connector Merging, Conclusion
+\end_layout
+
+\begin_layout Standard
+After much work: there are ten unit tests, all passing, with the final fix
+ in commit 5e1d7dfb94867f22642d7cdf0621a833bb96092e of 24 May 2021 which
+ fixes a problem not found in the unit tests; it requires a real-world test-case.
+ Need to run 
+\family typewriter
+(check-balance LLOBJ)
+\family default
+ to evoke it.
+\end_layout
+
+\begin_layout Subsection*
 expt-19 (May 2021)
 \end_layout
 

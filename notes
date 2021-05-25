@@ -4423,6 +4423,12 @@ OK, so this is the final fix
 $3 = 0
 provided by commit 5e1d7dfb94867f22642d7cdf0621a833bb96092e
 
+(define (find-zero)
+	(define epsilon 1.0e-6)
+   (filter
+      (lambda (sect) (< (cog-count sect) epsilon))
+      (cog-get-atoms 'Section)))
+
 
 link-class.scm ???
 ====================================================
