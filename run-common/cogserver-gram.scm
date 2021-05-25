@@ -30,7 +30,7 @@
 ; 3x or 5x more RAM.  This should be configurable for easy
 ; experimentation.
 (define covr-obj (add-covering-sections cset-obj))
-(define gram-obj (add-cluster-gram cover-obj))
+(define gram-obj (add-cluster-gram covr-obj))
 (covr-obj 'fetch-pairs)
 (covr-obj 'explode-sections)
 (define star-obj gram-obj)
