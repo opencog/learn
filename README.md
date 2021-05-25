@@ -4,7 +4,7 @@ The "big ideas" describe how this project thinks about the world.
 The "medium ideas" describe the basic algorithm being used.
 The "small ideas" describe what has been implemented and is doable
 (has been done) with the current technology and code base. Current focus
-is on language; we're loooking for collaborators on image recognition
+is on language; we're looking for collaborators on image recognition
 and/or movement classification.
 
 The Big Idea - Knowledge
@@ -425,21 +425,21 @@ for the image. Thus, it "seems like it should work".
 
 The existing code would choke and be unbearably slow; thus, lots of
 brand-new coded is needed to handle pixels. Interested collaborators
-need to raise thier hands!  This task is suitable for programmers/coders
+need to raise their hands!  This task is suitable for programmers/coders
 familiar with image processing techniques; the more abstract parts of
 the theory should not interfere with the more mundane tasks.  Note,
-however: this is a risky endevour: it seems like it should work, but
+however: this is a risky endeavor: it seems like it should work, but
 there is no guarantee.  Competing with conventional neural-net
 technology is hard.
 
 A different problem that this framework should be able to tackle is the
 understanding coordinated motion. Consider, for example, the movement of
-football players on a field: based on thier movements, one can predict
+football players on a field: based on their movements, one can predict
 what kind of play might be made. Similarly, the movements of a ballerina
 - the hand, elbow, hip, knee movements are also correlated and can be
-classified into "dance moves". This problem is unlike image recogintion,
+classified into "dance moves". This problem is unlike image recognition,
 because one is given the positions of the players on the field, or the
-positions of the dancers limbs, rather than being given a 2D pixellated
+positions of the dancers limbs, rather than being given a 2D pixelated
 image.  Despite these differences, the overall algorithm "should still
 work" on this data. (It seems like it should work! But what do we know?)
 
@@ -464,7 +464,7 @@ A quick overview:
 * [learn-lang-diary](learn-lang-diary) - diary and notes and papers
   describing results and theory.
 * [run](run) - scripts for running the learning pipeline.
-* [run-config](run-config) - configuration paramters for the learning pipeline.
+* [run-config](run-config) - configuration parameters for the learning pipeline.
 * [run-common](run-common) - generic scripts used in multiple different steps.
 * [scm](scm) - the code that actually does all the work.
 * [tests](tests) - unit tests. These should pass. Run `make test`.
