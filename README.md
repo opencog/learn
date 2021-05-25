@@ -443,6 +443,28 @@ positions of the dancers limbs, rather than being given a 2D pixelated
 image.  Despite these differences, the overall algorithm "should still
 work" on this data. (It seems like it should work! But what do we know?)
 
+
+Mechanical Engineering
+----------------------
+The basic rules of mechanical engineering -- inclined planes, levers,
+screws, rope and pulleys -- assemble in a form of a grammar. Can these
+be discovered from observation?
+
+Consider children's toy blocks: blocks and cylinders, columns, pyramids
+and arches. These have rules for stacking, for example, cylinders roll,
+and cannot be stacked unless upright. These can be considered to be
+grammatical rules, describing the range of allowed, allowable
+combinations that give stable structures.  The "corpus" is the
+collection of all allowed, stable structures. Can the grammar of block
+stacking, the grammar of mechanical engineering be learned from the
+corpus of stable structures?
+
+Can it be learned incrementally? Can it be learned by playing? How might
+this be done?  Is the current theory suitable for this, and, if not, why
+not? Can the current theory be amended so that it is suitable for
+learning mechanical engineering?
+
+
 Processing Overview
 -------------------
 See the [README-Natural](README-Natural.md) file for a description of
