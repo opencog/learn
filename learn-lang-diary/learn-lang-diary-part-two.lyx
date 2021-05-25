@@ -1241,7 +1241,7 @@ Expt-13, expt-14, expt-15
 
 \begin_layout Standard
 Try again with the same initial corpus.
- Expt-13 overflowed with fake warning message, so II couldn't see the log;
+ Expt-13 overflowed with fake warning message, so I couldn't see the log;
  thus expt-14 is an exact rerun.
  
 \begin_inset Quotes eld
@@ -6699,7 +6699,497 @@ expt-19 (May 2021)
 
 \begin_layout Standard
 Moving on...
- well, not yet ...
+ expt-19 reuses the same corpus as expt-16, and, in order to be comparable
+ to earlier results, reuses the 
+\family typewriter
+pair-counts
+\family default
+ and the 
+\family typewriter
+mpg-parse
+\family default
+ disjuncts from expt-16.
+\end_layout
+
+\begin_layout Standard
+Using 
+\family typewriter
+(gram-classify-greedy-disinfo psa 3.0 4)
+\family default
+, there wern't any merges that got done.
+ That's because similarity never got above 3.0.
+ The closest that things got was these pairs:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="16" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pair
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI-distance
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+!-i
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.3578
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+a-i
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.2513
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+f-c
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.1714
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+h-c
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0837
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+f-h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0757
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+b-g
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0559
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+j-b
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5846
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+j-g
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5265
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+d-f
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5170
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+e-b
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5066
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+d-c
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.5026
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+e-j
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4612
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+e-g
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4503
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+d-h
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4446
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+e-d
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0049
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Which is ...
+ pretty distant.
+ The distance !-i is alarming.
+ A core problem is that this is a very mixed grammar: lots of ambiguity,
+ lots of word senses, no particular clean factorization.
+ Just looking at it, its quite cloudy as to the actual structure.
+ In particular, although each word belongs to only one word-class, the word-clas
+ses have lots of mixed, shared POS entries, and each POS is a seemingly
+ random (duhh) unstructured mess.
+ For example:
+\end_layout
+
+\begin_layout Itemize
+pos-e has single, divalent, trivalent disjuncts on it.
+ Except for a few words, most of English is not like that.
+\end_layout
+
+\begin_layout Itemize
+pos-c has one disjunct.
+ It's identical to pos-d, which has two disjuncts.
+\end_layout
+
+\begin_layout Itemize
+pos-e has a huge number of disjuncts on it, as do pos-i and pos-j.
+ This seems to allow very grammatically complex sentences to be generated,
+ which 
+\begin_inset Quotes eld
+\end_inset
+
+of course
+\begin_inset Quotes erd
+\end_inset
+
+ are going to be very hard to decode.
+\end_layout
+
+\begin_layout Standard
+Overall, the grammar appears to be over-complex, and very unlike a natural
+ language grammar.
+ it seems unlikely, just from eyeballing it, that the grammar could be untangled
+ without a very large, exhaustive examination of the corpus.
+ This is a bad experimental base.
+\end_layout
+
+\begin_layout Standard
+Issues:
+\end_layout
+
+\begin_layout Itemize
+Is there any sense in which the word 
+\begin_inset Quotes eld
+\end_inset
+
+mixing
+\begin_inset Quotes erd
+\end_inset
+
+ is appropriate, in it's technical sense (from ergodic theory?) Can we define
+ mixing from the point of veiw of disjunct ambiguity? Of the indiscernibility
+ of grammars given a corpus?
+\end_layout
+
+\begin_layout Itemize
+Is the automatic grammar generation controlling sufficiently for word-senses?
+ Yes, there's a tunable paramter for that, but some disjuncts accidentally
+ appear in multiple POS, thus making those POS at least partly synonymous.
+\end_layout
+
+\begin_layout Itemize
+Is the current automatic grammar generation API appropriate? It was based
+ on an intuitive sense of factorization, but the randomness seems to eassily
+ generate ambiguous grammars.
+\end_layout
+
+\begin_layout Itemize
+How does one measure the complexity of a grammar?
+\end_layout
+
+\begin_layout Itemize
+Is there some easy way of writing down its factorizability?
+\end_layout
+
+\begin_layout Itemize
+Is there a way of proving that two grammars are equivalent? If two different
+ grammars generate the exact same corpus, then is there some algorithm that
+ can transmute one grammar into the other? How is this found/discovered?
+\end_layout
+
+\begin_layout Itemize
+How can one characterize human natural language grammars? That is, if an
+ artificial grammar is generated, how can we know if it is similar to a
+ natural human language? I don't think the rainbow of human natural languages
+ lines up well (or at all) with the axes of tunable paramters in the grammar
+ generator.
+\end_layout
+
+\begin_layout Standard
+Conclude: the expt-19 grammar is over-complicated, ambiguous, mixed, ugly.
+ We need to restart with a simple grammar.
+\end_layout
+
+\begin_layout Standard
+Also conclude: I do not understand how the ambiguity of grammars works.
+ I do not really understand how factorization works.
+ The artificial grammar generator 
+\begin_inset Quotes eld
+\end_inset
+
+works
+\begin_inset Quotes erd
+\end_inset
+
+ but I don't understand what it is generating.
+ I don't know how close it is to typical human grammars.
+ There's a bit of a 
+\begin_inset Quotes eld
+\end_inset
+
+back to the drawing board
+\begin_inset Quotes erd
+\end_inset
+
+ moment here.
+\end_layout
+
+\begin_layout Subsection*
+expt-20 (May 2021)
+\end_layout
+
+\begin_layout Standard
+Start again, this time with a simple, relatively unambiguous, relatively
+ unmixed grammar.
+ Perhaps even with a tiny artificial subset of English!? Just to make eyeballing
+ easier?
 \end_layout
 
 \end_body
