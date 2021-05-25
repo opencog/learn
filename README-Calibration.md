@@ -19,7 +19,7 @@ the input grammar.  Doing this will allow the learning algorithm to
 be correctly calibrated for grammars of different sizes and
 complexities, and for corpora of different sizes. We will be able to
 measure how accuracy scales as a function of training time, how well
-different training algorithms perform, how large a corpus is neeed to
+different training algorithms perform, how large a corpus is needed to
 get good results, and other related questions.
 
 Informally, the idea of calibration here is just as with any other
@@ -27,7 +27,7 @@ instrument: you measure a "known quantity", and make sure that the
 instrument is reading it accurately.  In this case, the "known quantity"
 is a known grammar, and the instrument is the grammar-learning system.
 
-As of May 2021, the infrastruture to do the above is more or less
+As of May 2021, the infrastructure to do the above is more or less
 complete, and mostly automated, and some early calibration runs have
 been performed.  Lessons learned so far are given below, right after a
 quick overview of the processing stages.
@@ -44,10 +44,11 @@ a text corpus from this grammar, and then attempting to learn a new
 grammar from this text corpus, and then assessing accuracy by comparing
 the the learned grammar to the generating grammar.
 
-This pipeline has been more-or-less fully set up, perhaps with some
-cosmetic bugs and some incomplete automation scripts. Requires a fair
-bit of editing of configuration scripts, to adjust file paths, desirable
-parameters, etc.  So far:
+This pipeline has been more-or-less fully set up, perhaps with a few
+"rough edges": some cosmetic bugs and some incomplete automation
+scripts and faulty instructions. It requires a fair bit of editing
+of configuration scripts, to adjust file paths, desirable parameters,
+etc.  So far:
 
 1. Build and install link-grammar.  Download the latest Link Grammar
 tarball from `http://www.abisource.com/downloads/link-grammar/current`.
@@ -106,14 +107,14 @@ and questions arose fairly quickly.
   equivalent? Is there an algorithm for generating this proof? Is this
   even provable, or is this Turing-undecidable, in the same way that the
   equivalence of two different group presentations is famously known to
-  be undecideable? Given that group presentations and groups are a
+  be undecidable? Given that group presentations and groups are a
   special case of grammars and corpora, it would seem that proving the
   equivalence of grammars is also undecidable.  None-the-less, for
   simple grammars, one might hope that ad hoc algos might suffice.
 
 * The current code for generating random grammars has a dozen different
   tunable parameters to control that grammar. They are "common sense"
-  parameters, in tht they directly control different steps in the
+  parameters, in that they directly control different steps in the
   generation. Yet it has rapidly become clear that most parameter
   settings result in wildly complex and highly chaotic grammars. The
   resulting corpora appear to be highly "mixed" or ergodic. If a corpus
@@ -136,7 +137,7 @@ and questions arose fairly quickly.
   equivalent factorizations. How can we characterize this?
 
 * As noted above, most parameter settings generate complex and seemingly
-  ergodic grammmars. Just eyeballing these shows that they do not seem
+  ergodic grammars. Just eyeballing these shows that they do not seem
   to resemble English or any other natural language grammar. How can we
   determine if a random grammar is "natural-language-like"? What
   parameter settings result in human-like languages? Are the "axes" of
