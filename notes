@@ -4281,6 +4281,10 @@ Same failing ...
 (length bad)
 $6 = 74
 
+now 42
+
+... now zero! Yayyy!
+
 ------------------------------
 (filter-type (WordClass "e j") 'CrossSection)
 
@@ -4410,7 +4414,14 @@ After delete fix:
  (ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 300931) (CrossSection . 357720)
 half the cross-sections disappear
 
+after count fix:
+(ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 301129) (CrossSection . 358315) 
 
+OK, so this is the final fix
+(define bad (check-balance csc))
+(length bad)
+$3 = 0
+provided by commit 5e1d7dfb94867f22642d7cdf0621a833bb96092e
 
 
 link-class.scm ???
