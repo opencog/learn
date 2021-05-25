@@ -14,9 +14,26 @@
 
 ; The object which will be providing disjunct-counts for us.
 (define cset-obj (make-pseudo-cset-api))
-(define gram-obj (add-cluster-gram cset-obj))
-(define star-obj (add-pair-stars gram-obj))
-(cset-obj 'fetch-pairs)
+
+#! -------------
+; This is the non-cross-section variant. It's commented out.
+; This is a temporary historical reference for what to do.
+(when (not do-cross-sections)
+	(define gram-obj (add-cluster-gram cset-obj))
+	(define star-obj (add-pair-stars gram-obj))
+	(cset-obj 'fetch-pairs)
+)
+-------- !#
+
+; Add cross-sections to all sections.  This improves the accuracy
+; of the clustering, although it does run 3x or 4x slower, and uses
+; 3x or 5x more RAM.  This should be configurable for easy
+; experimentation.
+(define covr-obj (add-covering-sections cset-obj))
+(define gram-obj (add-cluster-gram cover-obj))
+(cover-obj 'fetch-pairs)
+(cover-obj 'explode-sections)
+(define star-obj gram-obj)
 
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.

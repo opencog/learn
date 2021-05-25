@@ -15,8 +15,9 @@ export STORAGE_NODE="(RocksStorageNode \"rocks://${GRAM_DB}\")"
 
 # Scheme function that will perform classification.
 # Pick one. Tune as desired.
-API="(define gsa (add-cluster-gram (make-pseudo-cset-api)))"
-API="${API} (define psa (add-pair-stars gsa))"
+# API="(define gsa (add-cluster-gram (make-pseudo-cset-api)))"
+# API="${API} (define psa (add-pair-stars gsa))"
+API="(define psa star-obj)"
 export GRAM_CLUSTER="${API} (gram-classify-greedy-discrim psa 0.5 4)"
 export GRAM_CLUSTER="${API} (gram-classify-greedy-fuzz psa 0.65 0.3 4)"
 export GRAM_CLUSTER="${API} (gram-classify-greedy-disinfo psa 3.0 4)"
