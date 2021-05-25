@@ -144,6 +144,10 @@ and questions arose fairly quickly.
   adjustable parameters even "aligned" with the axes of human language
   complexity? How does one even judge this?
 
+Additional details, results, questions and head-scartching can be found
+in the [Language Learning Diary, Part
+Two](learn-lang-diary/learn-lang-diary-part-two.pdf).
+
 It appears that we've stumbled into the classic trap of science: the
 more we learn, the more we don't know, and the things we don't know
 appear to be increasingly basic and simple. It feels like I haven't

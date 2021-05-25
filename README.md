@@ -397,17 +397,20 @@ measure how accuracy scales as a function of training time, how well
 different training algorithms perform, how large a corpus is need to
 get good results, and other related questions.
 
-As of 2021, we are still setting up the infrastructure to do the above.
-Once this is done (real soon now?) the project can resume training runs.
+As of May 2021, a basic infrastructure for doing the above has been set
+up and mostly automated. Some initial calibration runs have been
+performed. A multitude of difficult theoretical questions were promptly
+exposed, see [README-Calibration](README-Calibration.md) for these.
+The primary issue is that it seems like it's very easy to generate
+complex and chaotic grammars which produce ergodic corpora. There is no
+structure to something that is ergodic, so attempting to extract a
+grammar is like trying to find structure in white noise. These
+artificial grammars do not resemble those of natural human languages,
+unless the parameters are very carefully chosen. Judging this and
+evaluating results remains challenging.
+
 Please contact via email or discord opencog chat for details.
 
-The instructions below still assume training is done on an English
-corpus, and will need to be modified to describe the above.  The work
-on English seemed to work "pretty well", in that it was converging to
-what seemed to be the right answers. However, controlling the rate
-of convergence was a challenge, since measuring the accuracy of the
-results was impossible. We could "eyeball" the accuracy and it "looked
-OK". But "eyeballing it" is not very scientific.
 
 Image recognition
 -----------------
@@ -462,8 +465,9 @@ A quick overview:
   describing results and theory.
 * [run](run) - scripts for running the learning pipeline.
 * [run-config](run-config) - configuration paramters for the learning pipeline.
+* [run-common](run-common) - generic scripts used in multiple different steps.
 * [scm](scm) - the code that actually does all the work.
-* [tests](tests) - unit tests. Currently unmaintained and broken.
+* [tests](tests) - unit tests. These should pass. Run `make test`.
 
 Architecture Overview
 ---------------------
