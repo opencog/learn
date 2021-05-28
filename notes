@@ -4443,7 +4443,7 @@ guile -l ~/src/learn/run-common/cogserver-gram.scm
 (define psa (add-pair-stars gram-obj))
 (gram-classify-greedy-disinfo psa 8.0 4)
 
-total fail. wtf.
+total fail. wtf. Oh, no its fine. just not printing.
 
 (define pca (make-pseudo-cset-api))
 (define psa (add-pair-stars pca))
@@ -4451,6 +4451,36 @@ total fail. wtf.
 (define gram-obj (add-cluster-gram pca))
 (define gsa (add-pair-stars gram-obj))
 (gram-classify-greedy-disinfo gsa 8.0 4)
+
+(gram-classify greedy-over-words (make-disinfo STARS MI ZIPF MIN-OBS))
+(greedy-grow MERGER CLS-LST singletons done-list todo-words)
+(assign-word-to-class MERGER wrd TRUE-CLS-LST)
+
+(MERGER 'merge-predicate cls WRD)
+
+ (is-similar? get-mi CUTOFF WORD-A WORD-B))
+
+Dist=0.2484 for word "e" -- "j" in 0.066 secs
+Dist=0.5501 for word "d" -- "a" in 0.785 secs
+Dist=0.3725 for word "e" -- "b" in 0.056 secs
+Dist=0.3929 for word "j" -- "b" in 0.061 secs
+Dist=0.8141 for word "d" -- "f" in 0.100 secs
+Dist=0.5596 for word "a" -- "f" in 0.712 secs
+Dist=0.8126 for word "d" -- "h" in 0.127 secs
+Dist=0.6048 for word "a" -- "h" in 0.709 secs
+Dist=1.2800 for word "f" -- "h" in 0.060 secs
+Dist=0.7817 for word "d" -- "c" in 0.083 secs
+Dist=0.5544 for word "a" -- "c" in 0.740 secs
+Dist=1.3032 for word "f" -- "c" in 0.032 secs
+Dist=1.2824 for word "h" -- "c" in 0.051 secs
+Dist=0.3896 for word "e" -- "g" in 0.070 secs
+Dist=0.2684 for word "j" -- "g" in 0.062 secs
+Dist=0.8982 for word "b" -- "g" in 0.050 secs
+Dist=0.0819 for word "e" -- "i" in 0.080 secs
+Dist=0.0185 for word "j" -- "i" in 0.097 secs
+Dist=1.4862 for word "b" -- "i" in 0.103 secs
+Dist=3.2143 for word "g" -- "i" in 0.082 secs
+
 
 
 link-class.scm ???
