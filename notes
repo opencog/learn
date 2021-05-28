@@ -4439,6 +4439,19 @@ guile -l ~/src/learn/run-common/cogserver-gram.scm
 (define psa star-obj)
 (gram-classify-greedy-disinfo psa 3.0 4)
 
+(define gram-obj (add-cluster-gram cset-obj))
+(define psa (add-pair-stars gram-obj))
+(gram-classify-greedy-disinfo psa 8.0 4)
+
+total fail. wtf.
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(psa 'fetch-pairs)
+(define gram-obj (add-cluster-gram pca))
+(define gsa (add-pair-stars gram-obj))
+(gram-classify-greedy-disinfo gsa 8.0 4)
+
 
 link-class.scm ???
 ====================================================

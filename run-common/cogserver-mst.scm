@@ -5,6 +5,14 @@
 ; disjunct-counting pipeline. Starts the CogServer, opens the database,
 ; loads the word-pairs in the database (which can take an hour or more!).
 ;
+; Before disjunct counting can be started, the pair-marginals must be
+; computed, using `marginals-pair.scm`. Use the shell script
+; `3-mst-parsing/compute-mst-marginals.sh` to do this.
+;
+; After disjunct counting has finished, but before grammatical
+; clustering is started, the marginals must be computed, using either
+; `marginals-mst.scm` or `marginals-mst-shape.scm`.
+;
 (load "cogserver.scm")
 
 ; Load up the words
