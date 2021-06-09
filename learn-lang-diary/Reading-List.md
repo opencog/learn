@@ -29,3 +29,9 @@ Harmen Prins
 Matching ontologies with distributed word embeddings
 July 7, 2016
 http://www.ru.nl/publish/pages/769526/z_harmen_prins.pdf
+
+
+Alberto Speranzon, David I. Spivak, Srivatsan Varadarajan
+Abstraction, Composition and Contracts: A Sheaf Theoretic Approach
+8 Feb 2018
+https://arxiv.org/abs/1802.03080
