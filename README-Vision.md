@@ -41,10 +41,10 @@ eye: (Ee & SWn) or (We & SEn);
 nose: NWn & NEn & Sp;
 lips: Np;
 ```
-and so on, for cheeks, forehead, **etc**. This is how one might construct
+and so on, for cheeks, forehead, *etc*. This is how one might construct
 a grammar for 2D faces. 
 
-Given a segmented 2D image, can we "parse" it, **i.e.** apply the above
+Given a segmented 2D image, can we "parse" it, *i.e.* apply the above
 grammar, and thus identify where the eyes, nose, lips are? Or perhaps get
 back the answer "no visible face here"?
 
