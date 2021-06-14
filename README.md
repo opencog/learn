@@ -313,6 +313,12 @@ vectors", they are also components of a graph, components of a grammar.
 
 
 ### The Small Idea
+Unsupervised Image Learning and Recognition (Vision)
+====================================================
+A simple sketch of how the above can be applied to vision (2D images) is
+[presented here](README-Vision.md). No code has been written. Very
+little theoretical exploration has been done.
+
 Unsupervised Language Learning
 ==============================
 (See also: [Language learning wiki](http://wiki.opencog.org/w/Language_learning)
