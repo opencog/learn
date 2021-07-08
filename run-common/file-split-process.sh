@@ -34,7 +34,7 @@ lang=$1
 filename="$2"
 basepath="$3"
 
-splitter=./split-sentences.pl
+splitter=$COMMON_DIR/split-sentences.pl
 
 coghost=$HOSTNAME
 cogport=$PORT

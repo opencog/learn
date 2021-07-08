@@ -41,7 +41,7 @@
 
 ; Print the sql stats
 ; (sql-stats)
-; (cog-rocks-stats)
+; (monitor-storage storage-node)
 
 ; Clear the sql cache and the stats counters
 ; (sql-clear-cache)
