@@ -304,7 +304,7 @@ This will eventually appear in version 5.9.0.
 
 * **0.11)** The following AtomSpace and OpenCog components are needed:
             `cogutils`, `atomspace`, `atomspace-rocks`, `cogserver`,
-            `opencog`. Each of these follows this generic pattern:
+            `lg-atomese`. Each of these follows this generic pattern:
 ```
       git clone https://github.com/opencog/cogutils
       cd cogutils; mkdir build; cd build
