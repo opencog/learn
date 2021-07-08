@@ -168,17 +168,17 @@ unhappy, painful experience.
            processing operations, is database intensive, and the writes
            to disk are often the main bottleneck to performance.
 
-           When running English-language learning, 1TB (one terabyte)
-           devoted to just the databases is just barely enough to
-           perform the work described here. Database copies quickly
-           chew up disk space.
+   When running English-language learning, 1TB (one terabyte)
+   devoted to just the databases is just barely enough to
+   perform the work described here. Database copies quickly
+   chew up disk space.
 
-           Individual databases are typically in the 10GB to 150GB in
-           size, and not very many copies of a 150GB database will fit
-           onto a 1TB disk.  2TB is a more comfortable size to work with.
+   Individual databases are typically in the 10GB to 150GB in
+   size, and not very many copies of a 150GB database will fit
+   onto a 1TB disk.  2TB is a more comfortable size to work with.
 
-           Databases for the artificial-language pipeline might be
-           smaller, so this is perhaps less of a concern.
+   Databases for the artificial-language pipeline might be
+   smaller, so this is perhaps less of a concern.
 
 * **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
            64GB RAM.  For English-language learning, it will be less
@@ -186,14 +186,14 @@ unhappy, painful experience.
            Smaller RAM sizes are enough for artificial-language
            learning experiments.
 
-           For English-langauge work, the datasets do get large, and
-           although many of the scripts are designed to only fetch from
-           disk "on demand", the in-RAM sizes can get large. As I write
-           this, my grammatical-clustering process is using 53GB
-           resident-in-RAM working-set size (57GB virtual size).
-           You need additional RAM for the Postgres server -- 24GB is
-           reasonable -- and so 53+24=78GB is the current bare-minimum.
-           More, if you want to e.g. run a web-browser or something.
+   For English-langauge work, the datasets do get large, and
+   although many of the scripts are designed to only fetch from
+   disk "on demand", the in-RAM sizes can get large. As I write
+   this, my grammatical-clustering process is using 53GB
+   resident-in-RAM working-set size (57GB virtual size).
+   You need additional RAM for the Postgres server -- 24GB is
+   reasonable -- and so 53+24=78GB is the current bare-minimum.
+   More, if you want to e.g. run a web-browser or something.
 
 * **0.4)** Optional but recommended. If you plan to run the pipeline
            on multiple different languages, it can be convenient, for
@@ -203,19 +203,23 @@ unhappy, painful experience.
            this later.
 
    LXC containers are nice because:
-         * Each container can have a different config, different
-           datasets, and be executing different steps of the pipeline.
-           This is great, for juggling multiple jobs.
-         * The system install in one container won't corrupt the other
-           containers; you can experiment, without impacting stable
-           systems.
-         * LXC containers can be stopped and moved to other system with
-           more RAM (or less RAM), more disk, or less disk. Handy for
-           load-balancing, and/or easily moving to a bigger system.
-         * Do not confuse LXC with Docker! They are similar, but LXC
-           is superior for the current task! Why, you ask? Because
-           when you reboot a Docker container, you lose all your work!
-           Dohhh!
+
+   * Each container can have a different config, different
+     datasets, and be executing different steps of the pipeline.
+     This is great, for juggling multiple jobs.
+
+   * The system install in one container won't corrupt the other
+     containers; you can experiment, without impacting stable
+     systems.
+
+   * LXC containers can be stopped and moved to other system with
+     more RAM (or less RAM), more disk, or less disk. Handy for
+     load-balancing, and/or easily moving to a bigger system.
+
+   * Do not confuse LXC with Docker! They are similar, but LXC
+     is superior for the current task! Why, you ask? Because
+     when you reboot a Docker container, you lose all your work!
+     Dohhh!
 
 * **0.5)** Optional but strongly recommended. Install system shutdown
            scripts.  This will help protect your data in case of an
@@ -229,7 +233,7 @@ unhappy, painful experience.
            source, which can be obtained from the Guile ftp repo
            https://ftp.gnu.org/gnu/guile/ or with `git`, by doing
 ```
-      git clone git://git.sv.gnu.org/guile.git
+         git clone git://git.sv.gnu.org/guile.git
 ```
 
    Note `par-for-each` hangs:
