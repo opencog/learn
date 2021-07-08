@@ -23,6 +23,13 @@ else
 	exit -1
 fi
 
+if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
+	. ${PAIR_CONF_FILE}
+else
+	echo "Cannot find pair-counting configuration file!"
+	exit -1
+fi
+
 # Verify that the input corpus can be found, and is not empty.
 if [ ! -d $CORPORA_DIR ]; then
 	echo "Cannot find a text corpus at $CORPORA_DIR"

@@ -379,6 +379,7 @@ everything works. It's a small orientation demo.
 
    Finally, start the cogserver by
 ```
+     $ source run-config/0-pipeline.sh
      $ cd run/2-word-pairs
      $ ./run-cogserver.sh
 ```
@@ -533,7 +534,7 @@ Running Bulk Pair-counting
 --------------------------
 Do this.
 
-* **8)** (Optional; needed only if you are experimenting.)
+* **8)** (Beginners should skip this step; needed only for experiments.)
    Review the `observe-text` function in `link-pipeline.scm`. The
    default, as it is, is fine, and this is almost surely what you want.
    (And so you can skip this step).
@@ -591,7 +592,9 @@ Do this.
     for each experiment by editing the config files.
 
     Artificial language generation is controlled with the
-    `run-config/1-*` files.
+    `run-config/1-*` files. See
+    [README-Calibration.md](README-Calibration.md) is your are
+    interested in calibration experiments.
 
     Pair counting is controlled by the `run-config/2-pair-conf*sh`
     files. Pick one; there are several preconfigured variants.
