@@ -8,8 +8,8 @@
 # ----------
 
 # Location where processing scripts are installed.
-export COMMON_DIR=/usr/local/share/opencog/learn/run-common
-export COMMON_DIR=/home/ubuntu/run-common
+# export COMMON_DIR=/usr/local/share/opencog/learn/run-common
+export COMMON_DIR=/home/ubuntu/src/learn/run-common
 
 # Location where the text corpus and the dictionary files are located.
 # This allows different corpora to be used in different experiments.
