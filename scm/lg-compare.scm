@@ -125,7 +125,7 @@
 								; an LG relation? If so, we are happy.
 								(any
 									(lambda (evlnk)
-										(equal? 'LinkGrammarRelationshipNode
+										(equal? 'LgLinkNode
 											(cog-type (gar evlnk))))
 									(cog-incoming-by-type lili 'EvaluationLink))
 							))
@@ -138,7 +138,7 @@
 		(define (get-link-name lwin rwin)
 			(gar (car (filter
 				(lambda (evl)
-					(equal? (cog-type (gar evl)) 'LinkGrammarRelationshipNode))
+					(equal? (cog-type (gar evl)) 'LgLinkNode))
 				(cog-incoming-by-type (ListLink lwin rwin)
 					'EvaluationLink)))))
 
@@ -438,7 +438,7 @@
 			(kill 'SentenceNode)
 			(kill 'PhraseNode)
 			(kill 'ParseNode)
-			(kill 'LinkGrammarRelationshipNode)
+			(kill 'LgLinkNode)
 			(kill 'LgHaveDictEntry)
 		)
 

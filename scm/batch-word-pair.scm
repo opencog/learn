@@ -28,7 +28,7 @@
 ; is of the form
 ;
 ;     EvaluationLink
-;         LinkGrammarRelationshipNode "ANY"
+;         LgLinkNode "ANY"
 ;         ListLink
 ;             WordNode "some-word"
 ;             WordNode "other-word"
@@ -74,7 +74,7 @@
   That is, a word pair is represented as:
 
     EvaluationLink
-       LinkGrammarRelationshipNode \"ANY\"
+       LgLinkNode \"ANY\"
        ListLink
           WordNode \"word\"
           WordNode \"bird\"
@@ -91,7 +91,7 @@
   by the 'left-wildcard method:
 
     EvaluationLink
-       LinkGrammarRelationshipNode \"ANY\"
+       LgLinkNode \"ANY\"
        ListLink
           AnyNode \"left-word\"
           WordNode \"bird\"
@@ -100,7 +100,7 @@
   by the 'right-wildcard method:
 
     EvaluationLink
-       LinkGrammarRelationshipNode \"ANY\"
+       LgLinkNode \"ANY\"
        ListLink
           WordNode \"word\"
           AnyNode \"right-word\"
@@ -115,7 +115,7 @@
 
 		(define any-left (AnyNode "left-word"))
 		(define any-right (AnyNode "right-word"))
-		(define any-pair-pred (LinkGrammarRelationshipNode "ANY"))
+		(define any-pair-pred (LgLinkNode "ANY"))
 
 		(define (get-left-type) 'WordNode)
 		(define (get-right-type) 'WordNode)
@@ -516,10 +516,10 @@
 ; If it all looks good, then:
 ; (batch-pairs (make-any-link-api))
 ;
-; (define wtfl  (EvaluationLink  (LinkGrammarRelationshipNode "ANY")
+; (define wtfl  (EvaluationLink  (LgLinkNode "ANY")
 ;   (ListLink (AnyNode "left-word") (WordNode "famille"))))
 ;
-; (define wtfr  (EvaluationLink  (LinkGrammarRelationshipNode "ANY")
+; (define wtfr  (EvaluationLink  (LgLinkNode "ANY")
 ;     (ListLink (WordNode "famille") (AnyNode "right-word"))))
 ;
 ; anynode is type 105

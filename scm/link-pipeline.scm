@@ -58,9 +58,9 @@
 ; sentence. A Link Grammar parse creates a list of typed links between
 ; pairs of words in the sentence. Each such link is counted once, for
 ; each time that it occurs.  These counts are maintained in the CountTV
-; on the EvaluationLink for the LinkGrammarRelationshipNode for that
-; word-pair.  In addition, a count is maintained of the length of that
-; link. XXX where??? This is not implemented ??? XXX
+; on the EvaluationLink for the LgLinkNode for that ; word-pair.
+; In addition, a count is maintained of the length of that link.
+; XXX where??? This is not implemented ??? XXX
 ;
 ; For the initial stages of the language-learning project, the parses
 ; are produced by the "any" language parser, which produces random planar
@@ -290,7 +290,7 @@
 ; Each link-grammar link is of the general form:
 ;
 ;   EvaluationLink
-;      LinkGrammarRelationshipNode "FOO"
+;      LgLinkNode "FOO"
 ;      ListLink
 ;         WordInstanceNode "word@uuid"
 ;         WordInstanceNode "bird@uuid"
@@ -315,7 +315,7 @@
 ; For example, given this as input:
 ;
 ;   EvaluationLink
-;      LinkGrammarRelationshipNode "FOO"
+;      LgLinkNode "FOO"
 ;      ListLink
 ;         WordInstanceNode "word@uuid"
 ;         WordInstanceNode "bird@uuid"
@@ -323,7 +323,7 @@
 ; this creates and returns this:
 ;
 ;   EvaluationLink
-;      LinkGrammarRelationshipNode "FOO" -- gar
+;      LgLinkNode "FOO" -- gar
 ;      ListLink                          -- gdr
 ;         WordNode "word"                -- gadr
 ;         WordNode "bird"                -- gddr
