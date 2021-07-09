@@ -29,11 +29,11 @@
 (define (count-one-atom ATM)
 "
   count-one-atom ATM -- increment the count by one on ATM, and
-  update the SQL database to hold that count.
+  update storage to hold that count.
 
-  This will also automatically fetch the previous count from
-  the SQL database, so that counting will work correctly, when
-  picking up from a previous point.
+  This will also automatically fetch the previous count from storage,
+  so that counting will work correctly, when picking up from a previous
+  point.
 
   Warning: this is NOT THREAD SAFE! during rapid startup of multiple
   threads, each thread could fetch the same count, and increment
@@ -50,16 +50,16 @@
 	(define (incr-one atom)
 		; If the atom doesn't yet have a count TV attached to it,
 		; then its probably a freshly created atom. Go fetch it
-		; from SQL. Otherwise, assume that what we've got here,
+		; from storage. Otherwise, assume that what we've got here,
 		; in the atomspace, is the current copy.  This works if
 		; there is only one process updating the counts.
 		(if (not (cog-ctv? (cog-tv atom)))
-			(fetch-atom atom)) ; get from SQL
+			(fetch-atom atom)) ; get from storage
 		(cog-inc-count! atom 1) ; increment
 	)
 	(begin
 		(incr-one ATM) ; increment the count on ATM
-		(store-atom ATM)) ; save to SQL
+		(store-atom ATM)) ; save to storage
 )
 
 ; ---------------------------------------------------------------------
