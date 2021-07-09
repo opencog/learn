@@ -23,6 +23,9 @@
 # Example usage:
 #    cat file | ./submit-one.pl localhost 17001 observe-text
 #
+# This script will wait (hang) until the cogserver is idle enough
+# to be able to respond. That is, it waits until the cogserver has
+# (mostly) finished running the command.
 
 die "Wrong number of args!" if ($#ARGV != 2);
 
@@ -73,6 +76,34 @@ sub send_nowait
 	close SOCKET;
 }
 
+# Hang, until the cogserver is idle enough to allow us to connect.
+# Basically, the cogserver stops responding until it's work queues
+# are empty enough to allow a response.
+sub ping_flush
+{
+	socket(SOCKET, PF_INET, SOCK_STREAM, (getprotobyname('tcp'))[2])
+		or die "Can't create a socket $!\n";
+
+	my $rc = connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)));
+	if ($rc) {
+		# One dot: exit cogserver prompt.
+		print SOCKET ".\n";
+		shutdown(SOCKET, 1);
+
+		# Spin until EOF on the socket
+		my $foo = "";
+		my $rrc = read SOCKET, $foo, 500;
+		while ($rrc) {
+			$rrc = read SOCKET, $foo, 500;
+		}
+
+		# OK, a second shutdown returns error and sets $! to
+		# `Transport endpoint is not connected` so that's really weird.
+		# and a close SOCKET just flat-out crashes!
+		# Whatever. The script exits, the kernel cleans up.
+	}
+}
+
 my $start_time = time();
 while (<STDIN>)
 {
@@ -91,5 +122,10 @@ while (<STDIN>)
 	send_nowait("($ARGV[2] \"$_\")\n");
 	# print "submit-one: $_\n";
 }
+
+# Wait until the cogserver is actually done.
+# If we don't wait, then the time printed below is wrong.
+ping_flush();
+
 my $elapsed = time() - $start_time;
 print "Sent out article in $elapsed seconds\n";

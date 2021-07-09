@@ -4481,8 +4481,26 @@ Dist=0.0185 for word "j" -- "i" in 0.097 secs
 Dist=1.4862 for word "b" -- "i" in 0.103 secs
 Dist=3.2143 for word "g" -- "i" in 0.082 secs
 
+==========================================================
+
+/home2/linas/lxc-local-containers/learn-en-guile-2.2/rootfs/home/ubuntu/run/alpha-guten-tranche-1/split-books/
+
+du -s text
+49549728	text
+
+(monitor-parse-rate "yoo")
+rate to disk: done=236300 rate=5.251 per sec
+gc-stats
+gc-time-taken . 8679181887835) == 8679 seconds = 2.4 hours out of 43 hours cpu
+(heap-total-allocated . 798349198464) = 800 GB
+gc-times . 62637) -> 13MB per gc and 140 mSec/gc
+total 2591 minutes cpu time -> 0.66 cpu-secs sentence. Ouch.
+
+echo "." | nc -N localhost 17005
 
 
+
+====================================================
 link-class.scm ???
 ====================================================
 
