@@ -4415,7 +4415,7 @@ After delete fix:
 half the cross-sections disappear
 
 after count fix:
-(ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 301129) (CrossSection . 358315) 
+(ConnectorSeq . 119999) (Section . 51904) (ShapeLink . 301129) (CrossSection . 358315)
 
 OK, so this is the final fix
 (define bad (check-balance csc))
@@ -4498,6 +4498,72 @@ total 2591 minutes cpu time -> 0.66 cpu-secs sentence. Ouch.
 
 echo "." | nc -N localhost 17005
 
+Running to disk -- took
+real    1372m28.541s
+user    5m24.723s
+sys     2m34.024s
+
+vs. 4816:58 cpu time.
+Database contents:
+  Next aid: 19665661
+  Atoms/Links/Nodes a@: 19665660 l@: 19560096 n@: 105556
+  Keys/Incoming/Hash k@: 9885609 i@: 39112973 h@: 0
+
+du -s *
+1631048 en_pairs.rdb
+1487000 en_pairs.rdb
+1441908 en_pairs.rdb
+
+That works out to ... 75 bytes per atom! Whoa!
+
+Above is for 426556 sentences in tranche-1
+
+------------------
+new code segfaults... damn.
+done: 1955
+split: 1
+left: 1071
+
+
+Throw to key `C++-EXCEPTION' with args `("dflt-fetch-incoming-set" "Syntax error at line 0 Unexpected text: >>A\")))<<\nFunction args:\n((LgLinkNode \"ANY\")\n)")'.
+
+(use-modules (opencog) (opencog logger))
+(use-modules (opencog persist))
+(use-modules (opencog matrix))
+(use-modules (opencog nlp) (opencog nlp learn))
+(define sns (getenv "STORAGE_NODE"))
+(use-modules (opencog persist-rocks))
+(define storage-node (eval-string sns))
+(cog-open storage-node)
+(fetch-all-words)
+
+(define ala (make-any-link-api))
+(define asa (add-pair-stars ala))
+(asa 'fetch-pairs)
+
+opencog/nlp/learn/batch-word-pair.scm:
+
+(fetch-any-pairs)
+(fetch-incoming-set any-pair-pred)
+
+(define any-pair-pred (LgLinkNode "ANY"))
+(fetch-incoming-set any-pair-pred)
+
+(use-modules (opencog extension))
+(opencog-extension dflt-fetch-incoming-set ((LgLinkNode "ANY")))
+
+Wrong type to apply: (LgLinkNode "ANY")
+
+ (dflt-fetch-incoming-set (LgLinkNode "ANY"))
+
+(WordNode "Zek.\\")
+
+(ListLink (WordNode "Zek.\\")(WordNode "A"))
+(ListLink (WordNode "Zek.\";\"")(WordNode "A"))
+
+optimization.... for string so strem ...
+
+get_next_expr
 
 
 ====================================================

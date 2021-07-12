@@ -7,6 +7,13 @@
 # Directory where corpora files can be found
 export CORPORA_DIR=$TEXT_DIR/beta-pages
 
+# Files will be moved from the above, to the below, as they
+# get processed. This allows interrupted processes to be restarted,
+# without repeating earlier work.
+export IN_PROCESS_DIR=pair-split
+export COMPLETED_DIR=pair-counted
+export MSG="Splitting and word-pair counting"
+
 # Enable sentence splitting.
 export SENTENCE_SPLIT=true
 export SPLIT_LANG=en
@@ -29,8 +36,3 @@ export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 # For RocksDB, use this.
 export PAIRS_DB=${ROCKS_DATA_DIR}/en_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
-
-# File processing grunge.
-export MSG="Splitting and word-pair counting"
-export IN_PROCESS_DIR=pair-split
-export COMPLETED_DIR=pair-counted

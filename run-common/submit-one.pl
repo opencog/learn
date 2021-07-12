@@ -105,6 +105,7 @@ sub ping_flush
 }
 
 my $start_time = time();
+my $nsent = 0;
 while (<STDIN>)
 {
 	# Stray html markup.  Do not pass it on.
@@ -121,6 +122,7 @@ while (<STDIN>)
 
 	send_nowait("($ARGV[2] \"$_\")\n");
 	# print "submit-one: $_\n";
+	$nsent = $nsent + 1;
 }
 
 # Wait until the cogserver is actually done.
@@ -128,4 +130,4 @@ while (<STDIN>)
 ping_flush();
 
 my $elapsed = time() - $start_time;
-print "Sent out article in $elapsed seconds\n";
+print "Sent out article of $nsent sentences in $elapsed seconds\n";

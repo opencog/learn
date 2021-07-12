@@ -702,9 +702,9 @@ Do this.
     (report-avg-gc-cpu-time)
 ```
 
-    For a trial run, a half-hour or so is sufficient. Feel free to
-    ctrl-C at this point, and move to the next step
-    (covered in the section **Mutual Information** below.)
+  For a trial run, a half-hour or so is sufficient. Feel free to
+  ctrl-C at this point, and move to the next step
+  (covered in the section **Mutual Information** below.)
 
 Notes:
 * Segmentation for Chinese. There are two possibilities, here. One is
