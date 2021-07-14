@@ -16,7 +16,5 @@
 ; Compute the statistics
 (batch-pairs asa)
 
-; (print-matrix-summary-report asa)
-
 (barrier storage-node)
 ; (cog-close storage-node)

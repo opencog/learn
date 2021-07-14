@@ -4566,6 +4566,7 @@ optimization.... for string so strem ...
 get_next_expr
 
 
+
 ====================================================
 link-class.scm ???
 ====================================================
@@ -4595,6 +4596,8 @@ FIXED:
   Also, to automatically produce left-wall and right wall; these
   need to be present for dict-compare to work without hackery.
 	DONE.
+* Enhance: revise atomspace start-cogserver to take args directly
+  DONE.
 
 
 TODO/BUGS:
@@ -4606,7 +4609,6 @@ TODO/BUGS:
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
 * Bugs: quotes are not being escaped by submit-one.pl!!
-* Enhance: revise atomspace start-cogserver to take args directly
 * GC during pair counting happens too often.
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.

@@ -18,6 +18,7 @@ if [ -r $MASTER_CONFIG_FILE ]; then
 	. $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file!"
+	env |grep CONF
 	exit -1
 fi
 
@@ -25,6 +26,7 @@ if ! [ -z ${MST_CONF_FILE} ] && [ -r ${MST_CONF_FILE} ]; then
 	. ${MST_CONF_FILE}
 else
 	echo "Cannot find MST configuration file!"
+	env |grep CONF
 	exit -1
 fi
 
