@@ -967,9 +967,11 @@ for performing this are located in the `run/3-mst-parsing` directory.
 
 The steps are as follows:
 
-* Pick one of the configuration files `run/0-config/3-*sh` files.
+* Pick one of the configuration files `run-config/3-*sh` files.
   If needed, adjust the configuration. The default configuration
-  should work well, without adjustment.
+  should work well, without adjustment. Here `mpg` is "maximal planar
+  graph" and `mst` is "maximal spanning tree". It seems that `mpg`
+  works better. Maybe.
 
 * Make a copy of the database containing word-pair mutual information.
   The disjunct observation counts will be accumulated into the database,
