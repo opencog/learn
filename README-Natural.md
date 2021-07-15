@@ -1059,31 +1059,31 @@ observed more than 5 times.  The initial dataset is called
 `all_disjunct_dataset`.
 
 ```
-   (rocks-open "rocks:///where/ever/all_disjunct_dataset")
+   (cog-rocks-open "rocks:///where/ever/all_disjunct_dataset")
    (define pca (make-pseudo-cset-api))
    (define psa (add-pair-stars pca))
    (psa 'fetch-pairs)        ;; Load the dataset
-   (rocks-close)             ;; Avoid accidental corruption
+   (cog-rocks-close)         ;; Avoid accidental corruption
    (define psc (add-support-compute psa))
    (psc 'cache-all)          ;; compute subtotals
    (define fsa (add-subtotal-filter psa 40 8 5 #f)) ;; The filter itself
    (define lfa (add-linkage-filter fsa))
-   (rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
+   (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (define fso (make-store lfa))
    (fso 'store-all-elts)     ;; Do NOT store the marginals!
-   (rocks-close)
+   (cog-rocks-close)
    ^D                        ;; Exit.
 ```
 The above just trims; but the marginals are needed for grammatical
 classifcation. So build these, as before, starting with a clean load
 of the atomspace with the new trimmed dataset:
 ```
-   (rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
+   (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (psa 'fetch-pairs)
    (batch-all-pair-mi psa)    ;; MI between words and disjuncts
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)       ;; Word-pair entropies
-   (rocks-close)
+   (cog-rocks-close)
    ^D                         ;; Exit.
 ```
 
