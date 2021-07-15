@@ -15,7 +15,7 @@
 (define psa (add-pair-stars pca))
 (define btr (batch-transpose psa))
 
-; Load up the word-pairs -- this can take over half an hour!
+; Load up the disjuncts -- this can take over half an hour!
 (display "Fetch all disjuncts. This may take well over half-an-hour!\n")
 (psa 'fetch-pairs)
 
