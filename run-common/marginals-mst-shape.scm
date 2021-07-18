@@ -17,7 +17,7 @@
 (define pca (make-pseudo-cset-api))
 (define csc (add-covering-sections pca))
 
-; Load up the word-pairs -- this can take over half an hour!
+; Load up the disjuncts -- this can take over half an hour!
 (display "Fetch all sections. This may take a long while!\n")
 (csc 'fetch-pairs)
 (display "Create cross-sections. This may take a long while!\n")

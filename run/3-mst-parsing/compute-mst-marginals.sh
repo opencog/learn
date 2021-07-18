@@ -29,4 +29,6 @@ else
 	exit -1
 fi
 
-guile -s ${COMMON_DIR}/marginals-mst.scm
+# Default to using shapes. I guess this should be configurable.
+# guile -s ${COMMON_DIR}/marginals-mst.scm
+guile -s ${COMMON_DIR}/marginals-mst-shape.scm

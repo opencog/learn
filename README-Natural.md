@@ -239,19 +239,19 @@ unhappy, painful experience.
    Note `par-for-each` hangs:
             https://debbugs.gnu.org/cgi/bugreport.cgi?bug=26616
 
-* **0.7)** Mandatory (!?)  You'll work with large datasets; default
-           guile is not equipped to deal wit the sizes encountered here.
-           (Maybe? This might be fixed in the newest guile ???)
+* **0.7)** Mandatory (!)  You'll work with large datasets; default
+           guile is not equipped to deal with the sizes encountered here.
            Skipping this step will lead to the error
            `Too many heap sections: Increase MAXHINCR or MAX_HEAP_SECTS`.
            Fix this with:
 ```
       git clone https://github.com/ivmai/bdwgc
       cd bdwgc
-      git checkout release-7_6     # (or newer)
+      git checkout v8.0.4     # (or newer)
       ./autogen.sh
-      ./configure --enable-large-config
-      make; sudo make install
+      mkdir build; cd build;
+      ../configure --enable-large-config
+      make -j; sudo make install
 ```
 
 * **0.8)** Create/edit the `~/.guile` file and add the content below.

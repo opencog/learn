@@ -4566,6 +4566,48 @@ optimization.... for string so strem ...
 get_next_expr
 
 
+Program terminated with signal SIGSEGV, Segmentation fault.
+--Type <RET> for more, q to quit, c to continue without paging--
+#0  0x00007f2f6b8515ae in dictionary_all_categories (dict=0x7f2ec8002f90)
+    at ../../link-grammar/tokenize/tokenize.c:3003
+3003            dn[dict->num_categories-1].right = NULL;
+
+dict->num_categories is 0
+
+ANY-PUNCT
+
+orig_sentence = 0x7f2bcf95f9b0 "regex: (?<=\\n{3})[\\* ]{0,2}\\=([^=]+?)\\=",
+
+Oh foo -- fixed long ago in #1206
+
+----------------------
+
+161516  r2-mpg-trim-10-2-1.rdb
+95060   r2-mpg-trim-20-4-3.rdb
+47944   r2-mpg-trim-40-8-5.rdb
+
+opencog/matrix/direct-sum.scm:261:36: In procedure left-wildcard:
+Wrong type to apply: #f
+
+duude djr=#t RA=(ConnectorSeq
+  (Connector
+    (WordNode "\"")
+    (ConnectorDir "+"))
+  (Connector
+    (WordNode "captain")
+    (ConnectorDir "+"))
+  (Connector
+    (WordNode ".")
+    (ConnectorDir "+")))
+
+init-a-base
+duuude djlrt=#f #t #t
+duuude ABR= ConnectorSeq ShapeLink
+
+
+
+
+
 ====================================================
 link-class.scm ???
 ====================================================
