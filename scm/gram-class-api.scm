@@ -161,14 +161,14 @@
   During clustering, the code identifies pairs of similar words,
   and provides the mechanics for merging them together, into a cluster.
   Each such cluster is a grammatical class. However, that code does not
-  know how these should be laid out in the atomspace.  This object
+  know how these should be laid out in the AtomSpace.  This object
   defines the methods needed for actually managing and storing the
   clusters generated during clustering.
 
   Provided methods:
-    'cluster-type
+    'cluster-type -- returns 'WordClassNode
 
-    'make-cluster
+    'make-cluster WA WB -- Creates a WordClassNode
 "
 	(define (get-cluster-type) 'WordClassNode)
 

@@ -270,8 +270,8 @@
   and the result of summing them results in a WordClassNode. Thus,
   by convention, it is assumed that the pairs are (word, disjunct)
   pairs, and LLOBJ was made by `make-pseudo-cset-api` or by
-  `add-shape-vec-api`. The code itself is generic, and may work on
-  other kinds of LLOBJ's too.
+  `add-shape-vec-api`. The code itself is generic, and might work on
+  other kinds of LLOBJ's too. (It might work, but has not been tested.)
 
   LLOBJ is used to access pairs.
   WA and WB should both be of `(LLOBJ 'left-type)`. They should
