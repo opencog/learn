@@ -7965,8 +7965,18 @@ tranche-1
 \end_layout
 
 \begin_layout Standard
-What's the pair-wise MMI? Lets explore the top seven words that got merged,
- shown in the table below.
+What's the pair-wise MI? The MI here is called the 
+\begin_inset Quotes eld
+\end_inset
+
+entropic similarity
+\begin_inset Quotes erd
+\end_inset
+
+ in other texts in this directory.
+ It's kind-of the same thing, once one adjusts defintions appropriately.
+ Lets call it MI for short.
+ Lets explore the top seven words that got merged, shown in the table below.
 \end_layout
 
 \begin_layout Standard
@@ -9222,12 +9232,159 @@ So what's going wrong, here? Well, we failed to define the projective merge
 \end_layout
 
 \begin_layout Subsection*
-Merge MI Extrema
+Similarity and Projection
 \end_layout
 
 \begin_layout Standard
-Lets' review the defintion for the MI, and the projection.
- 
+Lets' review the definition for the MI, and the projection.
+\end_layout
+
+\begin_layout Subsubsection*
+Entropic Similarity and Cosine Distance
+\end_layout
+
+\begin_layout Standard
+This is a copy of what is in the `connector-sets-revised.pdf` paper, chapter
+ 6 (pages 39-44).
+ There some additional experimental data in the `diary-part-one.pdf`, pages
+ 102-103.
+\end_layout
+
+\begin_layout Standard
+A word 
+\begin_inset Formula $w$
+\end_inset
+
+ is associated with a vector 
+\begin_inset Formula $N\left(w,d_{j}\right)$
+\end_inset
+
+ where the 
+\begin_inset Formula $d_{j}$
+\end_inset
+
+ are the disjuncts observed on the word, and 
+\begin_inset Formula $N$
+\end_inset
+
+ is a count of the number of times that the word-disjunct pair was observed.
+\end_layout
+
+\begin_layout Standard
+For words 
+\begin_inset Formula $w,u$
+\end_inset
+
+, define the dot product (inner product) between the words as 
+\begin_inset Formula 
+\[
+i\left(u,w\right)=\sum_{d}N\left(u,d\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+This can be turned into a 
+\emph on
+bona-fide
+\emph default
+ joint probability by writing
+\begin_inset Formula 
+\[
+p\left(u,w\right)=i\left(u,w\right)/i\left(*,*\right)
+\]
+
+\end_inset
+
+where, as always, * denotes a wild-card – here, a sum over all words:
+\begin_inset Formula 
+\[
+i\left(*,*\right)=\sum_{u,w}i\left(u,w\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is a corresponding marginal probability
+\begin_inset Formula 
+\[
+p\left(w\right)=p\left(w,*\right)=\frac{i\left(w,*\right)}{i\left(*,*\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The entropic similarity between two words is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}
+\]
+
+\end_inset
+
+and written in this form, this is clearly the convetional (fractional) MI
+ between two words.
+\end_layout
+
+\begin_layout Standard
+It's worth comparing this to the cosine distance
+\begin_inset Formula 
+\[
+\theta\left(u,w\right)=\arccos\frac{p\left(u,w\right)}{\sqrt{p\left(u,u\right)p\left(w,w\right)}}
+\]
+
+\end_inset
+
+Note that they both start with the dot product in the numerator.
+ The cosine distance is invariant under rotations (orthogonal transformations)
+ in Euclidean space.
+ However, probability space is not Eucliden, so it is a 
+\begin_inset Quotes eld
+\end_inset
+
+category error
+\begin_inset Quotes erd
+\end_inset
+
+ to work with cosine distance applied to probabilities.
+ By contrast, the MI is 
+\begin_inset Quotes eld
+\end_inset
+
+obviously correct
+\begin_inset Quotes erd
+\end_inset
+
+ when working with probabilities.
+ In practice, the two are correlated.
+ See page 43 of `connector-sets-revised.pdf` for experimental data.
+\end_layout
+
+\begin_layout Standard
+The code for computing this stuff can be found in the AtomSpace github repo,
+ https://github.com/opencog/atomspace/blob/master/opencog/matrix/symmetric-mi.scm
+ To avoid absurdly long compute times, this code uses the MM^T concept (describe
+d in connector-sets) to perform and cache partial results that can be quickly
+ combined to obtain the desired MI value.
+ Note, its impossible to pre-compute the MI for any but the smallest vocabularie
+s, as there are just too many words.
+\end_layout
+
+\begin_layout Subsubsection*
+Projection
+\end_layout
+
+\begin_layout Standard
+The projection is described and implemented in https://github.com/opencog/learn/b
+lob/master/scm/gram-projective.scm
 \end_layout
 
 \end_body
