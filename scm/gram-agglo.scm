@@ -704,10 +704,12 @@
 ; list, ranked in order of the observed number of sections on the
 ; word. (i.e. the sum of the counts on each of the sections).
 ;
-; Words with low observation counts are discarded. A word is
-; considered to be 'big enough' if the LLOBJ says it is.
+; Words with low observation counts are discarded (ignored). A word
+; is considered to be 'big enough' if the LLOBJ says it is.
 ; Sorting is important, because of locality: words in similar
-; grammatical classes also have similar frequency counts.
+; grammatical classes also have similar frequency counts. Here,
+; "discarded/ignored" means that it is removed from the word-list.
+; Its still in the AtomSpace, its just not considered for processing.
 ;
 ; Counts are obtained by looking them up in the margin. It is not
 ; practical, at this point, to count them directly, as this would

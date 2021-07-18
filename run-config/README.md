@@ -33,6 +33,8 @@ they are needed to run the processing.
   Graph" variation of MST, as ordinary MST parsing may result in
   non-planar trees.
 
+* `4-gram-conf.sh` -- Grammatical clustering.
+
 Notes
 -----
 What is the best way to automate complex data processing pipelines?

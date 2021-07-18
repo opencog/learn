@@ -676,7 +676,7 @@
   when the corresponding matrix element in the other row is null.
 
   NOISE is the smallest observation count, below which counts
-  will not be divided up, if a marge is performed.
+  will not be divided up, if a merge is performed.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a row is allowed to have, to even be considered for
@@ -691,9 +691,21 @@
   This object provides the following methods:
 
   'merge-predicate -- a wrapper around MPRED above.
-  'merge-function -- the function that actuall performs the merge.
-  'discard-margin? --
-  'discard? --
+  'merge-function -- the function that actually performs the merge.
+  'discard-margin? -- Return #t if count on word is below MIN-CNT.
+                      Uses the marginal counts for this decision.
+                      Used by `trim-and-rank` to ignore this word.
+                      (`trim-and-rank` prepares the list of words to
+                      cluster.)
+  'discard? --        Same as above, but  count is recomputed, instead
+                      of being pulled from the margin. This is required
+                      when a word has been merged, as then the margin
+                      count will be stale (aka wrong, invalid). Used
+                      by `greedy-grow` to ignore the stub of a word
+                      after merging. That is, if all that remains in a
+                      word after merging is some cruft with a count less
+                      than MIN-CNT, it won't be further merged into
+                      anything; it will be ignored.
   'clobber -- invalidate all caches.
 "
 	(define pss (add-support-api STARS))
