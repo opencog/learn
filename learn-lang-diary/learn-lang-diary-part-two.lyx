@@ -9472,9 +9472,9 @@ N\left(w^{\prime},d\right)=\begin{cases}
 \begin_layout Standard
 This projection merge is designed to preserve the total count:
 \begin_inset Formula 
-\[
-N\left(g,d\right)+N\left(w^{\prime},d\right)+N\left(u^{\prime},d\right)=N\left(w,d\right)+N\left(u,d\right)
-\]
+\begin{equation}
+N\left(g,d\right)+N\left(w^{\prime},d\right)+N\left(u^{\prime},d\right)=N\left(w,d\right)+N\left(u,d\right)\label{eq:detailed balance}
+\end{equation}
 
 \end_inset
 
@@ -9586,7 +9586,7 @@ The projection described above is the same as that described and implemented
 \end_layout
 
 \begin_layout Subsection*
-Minimizing and Maximizing
+Maximum Mutual Information
 \end_layout
 
 \begin_layout Standard
@@ -9609,31 +9609,195 @@ l frequencies.
 \end_layout
 
 \begin_layout Standard
-Thus, we want to replace the projection merge by something else, so that
- 
-\begin_inset Formula $MI\left(g,u^{\prime}\right)$
+For probabilities, the correct goal is to maximize the mutual information
+ (maximize the entropy).
+ There seem to be two ways to define the total MI of the system.
+ One is to write 
+\begin_inset Formula 
+\[
+MI_{tot}=\frac{1}{2}\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)
+\]
+
+\end_inset
+
+where the factor of 1/2 is introduced to adjust for the effect of double-countin
+g in the sum over words.
+ The other is to double-weight the diagonal:
+\begin_inset Formula 
+\[
+MI_{alt}=\sum_{u\ge w}p\left(u,w\right)MI\left(u,w\right)
+\]
+
+\end_inset
+
+Not clear, right now, which is better or more correct.
+\end_layout
+
+\begin_layout Standard
+Detailed balance, eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:detailed balance"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ means that the merge affects only the orws and columns of the merged words.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem: 
+\series default
+The total count 
+\begin_inset Formula $i\left(*,*\right)$
+\end_inset
+
+ is unaffected by the merge.
+ That is, 
+\begin_inset Formula $i^{\prime}\left(*,*\right)=i\left(*,*\right)$
+\end_inset
+
+ where the prime denotes the post-merge sum.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Proof: 
+\emph default
+Let 
+\begin_inset Formula $a,b$
+\end_inset
+
+ be the two words to be merged.
+ Then for 
+\begin_inset Formula $w\ne a,b$
+\end_inset
+
+, one has
+\begin_inset Formula 
+\begin{align*}
+i\left(w,a\right)+i\left(w,b\right)= & \sum_{d}N\left(w,d\right)\left[N\left(a,d\right)+N\left(b,d\right)\right]\\
+= & \sum_{d}N\left(w,d\right)\left[N\left(g,d\right)+N\left(a^{\prime},d\right)+N\left(b^{\prime},d\right)\right]\\
+= & i\left(w,g\right)+i\left(w,a^{\prime}\right)+i\left(w,b^{\prime}\right)
+\end{align*}
+
+\end_inset
+
+No other sums are affected, so that, for 
+\begin_inset Formula $u,w\ne a,b$
+\end_inset
+
+ one has
+\begin_inset Formula 
+\[
+i\left(w,u\right)=i^{\prime}\left(w,u\right)
+\]
+
+\end_inset
+
+Therefore, 
+\begin_inset Formula 
+\[
+i\left(w,*\right)=\sum_{u}i\left(w,u\right)=i^{\prime}\left(w,*\right)
+\]
+
+\end_inset
+
+where the 
+\begin_inset Formula $i^{\prime}$
+\end_inset
+
+ sum includes (runs over) 
+\begin_inset Formula $a^{\prime},b^{\prime}$
 \end_inset
 
  and 
-\begin_inset Formula $MI\left(g,w^{\prime}\right)$
-\end_inset
-
- are minimized, while preserving 
-\begin_inset Formula $MI\left(w^{\prime},u^{\prime}\right)=-\infty$
-\end_inset
-
-, or at least making it as small as possible.
- Simultaneously, it seems wise to maximize 
-\begin_inset Formula $MI\left(g,g\right)$
+\begin_inset Formula $g$
 \end_inset
 
 .
- The primary issue here is that 
-\begin_inset Formula $f$
+ The remaining case is
+\begin_inset Formula 
+\begin{align*}
+i\left(a,a\right)+i\left(a,b\right)+i\left(b,a\right)+i\left(b,b\right)= & \sum_{d}\left[N\left(a,d\right)+N\left(b,d\right)\right]\left[N\left(a,d\right)+N\left(b,d\right)\right]\\
+= & \sum_{d}\left[N\left(g,d\right)+N\left(a^{\prime},d\right)+N\left(b^{\prime},d\right)\right]\left[N\left(g,d\right)+N\left(a^{\prime},d\right)+N\left(b^{\prime},d\right)\right]\\
+= & i\left(g,g\right)+i\left(g,a^{\prime}\right)+i\left(g,b^{\prime}\right)+i\left(a^{\prime},g\right)+i\left(a^{\prime},a^{\prime}\right)+i\left(b^{\prime},g\right)+i\left(b^{\prime},b^{\prime}\right)
+\end{align*}
+
 \end_inset
 
- is just one parameter, and we are trying to minimize two distinct quantities,
- so the problem seems over-constrained (or poorly constrained, poorly posed).
+Two of the terms vanish: 
+\begin_inset Formula $i\left(a^{\prime},b^{\prime}\right)=i\left(b^{\prime},a^{\prime}\right)=0$
+\end_inset
+
+, which is arrived at by noting that the merge has arranged that 
+\begin_inset Formula $N\left(a^{\prime},d\right)=N\left(b^{\prime},d\right)=0$
+\end_inset
+
+ for 
+\begin_inset Formula $d\in D\left(a\right)\cap D\left(b\right)$
+\end_inset
+
+.
+ Even if these terms did not vanish, one still arrives at
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+i\left(a,*\right)+i\left(b,*\right)=i\left(g,*\right)+i\left(a^{\prime},*\right)+i\left(b^{\prime},*\right)
+\]
+
+\end_inset
+
+Plugging through,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+i\left(*,*\right)= & \sum_{u}i\left(u,*\right)\\
+= & i\left(a,*\right)+i\left(b,*\right)+\sum_{u\ne a,b}i\left(u,*\right)\\
+= & i\left(g,*\right)+i\left(a^{\prime},*\right)+i\left(b^{\prime},*\right)+\sum_{u\ne a,b}i\left(u,*\right)\\
+= & \sum_{u^{\prime}}i\left(u^{\prime},*\right)\\
+= & i^{\prime}\left(*,*\right)
+\end{align*}
+
+\end_inset
+
+Phew.
+ That was complicated, given that the result seems obvious.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Corrollary
+\series default
+: Likewise, for the probabilities: 
+\begin_inset Formula $p\left(a,*\right)+p\left(b,*\right)=p\left(g,*\right)+p\left(a^{\prime},*\right)+p\left(b^{\prime},*\right)$
+\end_inset
+
+.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+xxxx
 \end_layout
 
 \begin_layout Standard
@@ -9692,26 +9856,6 @@ nct) pairs with less than 5 observations were discarded.
  remains an open topic.
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Now, the funny thing with creating the vector 
-\begin_inset Formula $g$
-\end_inset
-
- is that doing so will subtley alter the MI between unrelated words, by
- some small fraction of a percent.
- This is due to the normalizations involved in the definition of the MI.
- Thus, one can quickly generate a large number of constraints on 
-\begin_inset Formula $f\left(d\right)$
-\end_inset
-
- by insisting that the MI between unrelated word-pairs should not change
- at all, after the creation of 
-\begin_inset Formula $g.$
 \end_inset
 
 
