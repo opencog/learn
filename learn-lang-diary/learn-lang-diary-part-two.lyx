@@ -9379,12 +9379,294 @@ s, as there are just too many words.
 \end_layout
 
 \begin_layout Subsubsection*
-Projection
+Projection Merge
 \end_layout
 
 \begin_layout Standard
-The projection is described and implemented in https://github.com/opencog/learn/b
-lob/master/scm/gram-projective.scm
+Given two words (word-vectors), the projection merge create three new vectors:
+ a merged vector, and remainders of the two original vectors.
+ This is most easily described in terms of the basis vectors.
+ Define the set of all disjuncts with non-zero counts on word 
+\begin_inset Formula $w$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+D\left(w\right)=\left\{ d:N\left(w,d\right)\ne0\right\} 
+\]
+
+\end_inset
+
+Given a real number 
+\begin_inset Formula $0\le f\le1$
+\end_inset
+
+, the merged vector 
+\begin_inset Formula $g$
+\end_inset
+
+ of the two words 
+\begin_inset Formula $w,u$
+\end_inset
+
+ has counts
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\begin{cases}
+N\left(w,d\right)+N\left(u,d\right) & d\in D\left(w\right)\cap D\left(u\right)\\
+fN\left(w,d\right) & d\in D\left(w\right)\backslash D\left(u\right)\\
+fN\left(u,d\right) & d\in D\left(u\right)\backslash D\left(w\right)
+\end{cases}
+\]
+
+\end_inset
+
+Clearly, the support for 
+\begin_inset Formula $g$
+\end_inset
+
+ is 
+\begin_inset Formula $D\left(g\right)=D\left(w\right)\cup D\left(u\right)$
+\end_inset
+
+ whenever 
+\begin_inset Formula $f>0$
+\end_inset
+
+ and it is 
+\begin_inset Formula $D\left(g\right)=D\left(w\right)\cap D\left(u\right)$
+\end_inset
+
+ when 
+\begin_inset Formula $f=0$
+\end_inset
+
+.
+ The two new words are 
+\begin_inset Formula $u^{\prime}$
+\end_inset
+
+ and 
+\begin_inset Formula $w^{\prime}$
+\end_inset
+
+ which are just the old words, with the overlaps removed:
+\begin_inset Formula 
+\[
+N\left(w^{\prime},d\right)=\begin{cases}
+0 & d\in D\left(w\right)\cap D\left(u\right)\\
+\left(1-f\right)N\left(w,d\right) & d\in D\left(w\right)\backslash D\left(u\right)
+\end{cases}
+\]
+
+\end_inset
+
+ and likewise for 
+\begin_inset Formula $N\left(u^{\prime},d\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This projection merge is designed to preserve the total count:
+\begin_inset Formula 
+\[
+N\left(g,d\right)+N\left(w^{\prime},d\right)+N\left(u^{\prime},d\right)=N\left(w,d\right)+N\left(u,d\right)
+\]
+
+\end_inset
+
+This equation can be called 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+, as it is in thermodynamics.
+\end_layout
+
+\begin_layout Standard
+The merged vector 
+\begin_inset Formula $g$
+\end_inset
+
+ is meant to corrspond to a 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical class
+\begin_inset Quotes erd
+\end_inset
+
+; it is a vector just as any other word-vector, but it is meant to capture
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+average
+\begin_inset Quotes erd
+\end_inset
+
+ of the two words it is made out of.
+ The role of the fraction 
+\begin_inset Formula $f$
+\end_inset
+
+ is to handle the situation of the words 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ having multiple word-senses.
+ The idea here is that the set 
+\begin_inset Formula $D\left(w\right)\cap D\left(u\right)$
+\end_inset
+
+ captures those disjuncts for which both 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ have teh same word-sense (for example, the parts of 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ that are nouns) whereas 
+\begin_inset Formula $D\left(w\right)\backslash D\left(u\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $D\left(u\right)\backslash D\left(w\right)$
+\end_inset
+
+ are the disjuncts that belong to other word-senses (
+\emph on
+e.g.
+
+\emph default
+ the parts of 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ that are verbs).
+ Due to inadequate statistics and systemic noise, a non-zero 
+\begin_inset Formula $f$
+\end_inset
+
+ might help in smoothing out erroneous assignments of disjuncts to word-senses.
+ In the example above, a value of 
+\begin_inset Formula $f=0.187$
+\end_inset
+
+ was used.
+\end_layout
+
+\begin_layout Standard
+The projection described above is the same as that described and implemented
+ in https://github.com/opencog/learn/blob/master/scm/gram-projective.scm (as
+ of this writing).
+\end_layout
+
+\begin_layout Subsection*
+Minimizing and Maximizing
+\end_layout
+
+\begin_layout Standard
+Well, obviously as the example above demonstrates, there's something not
+ quite right with the projection merge, at least, when one works with mutual
+ information.
+\end_layout
+
+\begin_layout Standard
+The projection merge does seem to make sense (mostly) when one thinks of
+ vectors that inhabit Euclidean space: One can easily define the sum of
+ two vectors; and to deal with the fact that the word vectors are themselves
+ sums of multiple senses, one can try to project back out the parts that
+ don't have shared support.
+ The problem with working in Euclidean space is that the counts can go negative:
+ the inner product on Euclidean space really is the cosine (dot) product,
+ and simple linear algebra sense some vector components negative.
+ This is undesirable, as it prevents counts from being interpreted as statistica
+l frequencies.
+\end_layout
+
+\begin_layout Standard
+Thus, we want to replace the projection merge by something else, so that
+ 
+\begin_inset Formula $MI\left(g,u^{\prime}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $MI\left(g,w^{\prime}\right)$
+\end_inset
+
+ are minimized, while preserving 
+\begin_inset Formula $MI\left(w^{\prime},u^{\prime}\right)=-\infty$
+\end_inset
+
+, or at least making it as small as possible.
+ Simultaneously, it seems wise to maximize 
+\begin_inset Formula $MI\left(g,g\right)$
+\end_inset
+
+.
+ The primary issue here is that 
+\begin_inset Formula $f$
+\end_inset
+
+ is just one parameter, and we are trying to minimize two distinct quantities,
+ so the problem seems over-constrained (or poorly constrained, poorly posed).
+\end_layout
+
+\begin_layout Standard
+This can be corrected by using more parameters.
+ Define a parameter for each disjunct, so that one gets a vector 
+\begin_inset Formula $0\le f\left(d\right)\le1$
+\end_inset
+
+.
+ The merged class is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N\left(g,d\right)=\begin{cases}
+f\left(d\right)\left(N\left(w,d\right)+N\left(u,d\right)\right) & d\in D\left(w\right)\cap D\left(u\right)\\
+f\left(d\right)N\left(w,d\right) & d\in D\left(w\right)\backslash D\left(u\right)\\
+f\left(d\right)N\left(u,d\right) & d\in D\left(u\right)\backslash D\left(w\right)
+\end{cases}
+\]
+
+\end_inset
+
+ and, to maintain detailed balance as before, set 
+\begin_inset Formula 
+\[
+N\left(w^{\prime},d\right)=\left(1-f\left(d\right)\right)N\left(w,d\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \end_body
