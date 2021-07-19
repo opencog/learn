@@ -10161,6 +10161,66 @@ and
 
 \end_inset
 
+and
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial p_{a^{\prime}a^{\prime}}}{\partial f_{d}}= & \frac{1}{i_{**}}\frac{\partial}{\partial f_{d}}N_{a^{\prime}d}N_{a^{\prime}d}\\
+= & \frac{N_{ad}^{2}}{i_{**}}\frac{\partial}{\partial f_{d}}\left(1-f_{d}\right)^{2}\\
+= & -2\frac{N_{ad}^{2}}{i_{**}}\left(1-f_{d}\right)
+\end{align*}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial M_{uw}}{\partial f_{d}}= & \frac{\partial}{\partial f_{d}}\log_{2}\frac{p_{uw}}{p_{u}p_{w}}\\
+= & \frac{1}{\log2}\left[\frac{1}{p_{uw}}\frac{\partial p_{uw}}{\partial f_{d}}-\frac{1}{p_{u}}\frac{\partial p_{u}}{\partial f_{d}}-\frac{1}{p_{w}}\frac{\partial p_{w}}{\partial f_{d}}\right]
+\end{align*}
+
+\end_inset
+
+so
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial p_{g}}{\partial f_{d}}= & \frac{1}{i_{**}}\frac{\partial i_{g*}}{\partial f_{d}}\\
+= & \frac{1}{i_{**}}\frac{\partial}{\partial f_{d}}\sum_{d}N_{gd}N_{*d}\\
+= & \frac{1}{i_{**}}\frac{\partial}{\partial f_{d}}N_{gd}N_{*d}\\
+= & \frac{1}{i_{**}}N_{*d}\left[N_{ad}+N_{bd}\right]
+\end{align*}
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial p_{a^{\prime}}}{\partial f_{d}}= & \frac{1}{i_{**}}\frac{\partial i_{a^{\prime}*}}{\partial f_{d}}\\
+= & -\frac{1}{i_{**}}N_{*d}N_{ad}
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Putting all this together is painfully tedious.
+ But it must be done.
+ (Is there some easier way I don't see yet?)
+\begin_inset Formula 
+\begin{align*}
+\sum_{u,w=g,a^{\prime},b^{\prime}}p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}= & p_{gg}\frac{\partial M_{gg}}{\partial f_{d}}+p_{a^{\prime}a^{\prime}}\frac{\partial M_{a^{\prime}a^{\prime}}}{\partial f_{d}}+p_{b^{\prime}b^{\prime}}\frac{\partial M_{b^{\prime}b^{\prime}}}{\partial f_{d}}\\
+ & \quad+2p_{ga^{\prime}}\frac{\partial M_{ga^{\prime}}}{\partial f_{d}}+2p_{gb^{\prime}}\frac{\partial M_{gb^{\prime}}}{\partial f_{d}}\\
+= & \frac{1}{\log2}\times\\
+ & \frac{2}{i_{**}}f_{d}\left(N_{ad}+N_{bd}\right)^{2}-2\frac{p_{gg}}{p_{g}}\cdot\frac{1}{i_{**}}N_{*d}\left[N_{ad}+N_{bd}\right]\\
+ & -2\frac{N_{ad}^{2}}{i_{**}}\left(1-f_{d}\right)-2\frac{p_{a^{\prime}a^{\prime}}}{p_{a^{\prime}}}\cdot\left(-\frac{1}{i_{**}}N_{*d}N_{ad}\right)\\
+ & -2\frac{N_{bd}^{2}}{i_{**}}\left(1-f_{d}\right)+2\frac{p_{b^{\prime}b^{\prime}}}{p_{b^{\prime}}}\cdot\left(\frac{1}{i_{**}}N_{*d}N_{ad}\right)\\
+ & +2\frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{ad}\left(1-2f_{d}\right)+2\frac{p_{ga^{\prime}}}{p_{a^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{ad}+2\frac{p_{ga^{\prime}}}{p_{b^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{bd}\\
+ & +2\frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{bd}\left(1-2f_{d}\right)+2\frac{p_{gb^{\prime}}}{p_{a^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{ad}+2\frac{p_{gb^{\prime}}}{p_{b^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{bd}
+\end{align*}
+
+\end_inset
+
 
 \end_layout
 
