@@ -9785,7 +9785,8 @@ Split out the affected rows and columns.
 \begin{align*}
 i\left(a,a\right)+i\left(a,b\right)+i\left(b,a\right)+i\left(b,b\right)= & \sum_{d}\left[N\left(a,d\right)+N\left(b,d\right)\right]\left[N\left(a,d\right)+N\left(b,d\right)\right]\\
 = & \sum_{d}\left[N\left(g,d\right)+N\left(a^{\prime},d\right)+N\left(b^{\prime},d\right)\right]\left[N\left(g,d\right)+N\left(a^{\prime},d\right)+N\left(b^{\prime},d\right)\right]\\
-= & i\left(g,g\right)+i\left(g,a^{\prime}\right)+i\left(g,b^{\prime}\right)+i\left(a^{\prime},g\right)+i\left(a^{\prime},a^{\prime}\right)+i\left(b^{\prime},g\right)+i\left(b^{\prime},b^{\prime}\right)
+= & i\left(g,g\right)+i\left(g,a^{\prime}\right)+i\left(g,b^{\prime}\right)+i\left(a^{\prime},g\right)+i\left(a^{\prime},a^{\prime}\right)+i\left(b^{\prime},g\right)+i\left(b^{\prime},b^{\prime}\right)\\
+= & i\left(g,g\right)+i\left(a^{\prime},a^{\prime}\right)+i\left(b^{\prime},b^{\prime}\right)+2i\left(g,a^{\prime}\right)+2i\left(g,b^{\prime}\right)
 \end{align*}
 
 \end_inset
@@ -9979,32 +9980,36 @@ The focus is then on how
 \end_inset
 
  changes.
-\end_layout
-
-\begin_layout Subsubsection*
-Change in mutual information
-\end_layout
-
-\begin_layout Standard
-The change in the mutual information due to merging is captured by the differenc
-e, defined as 
+ The change in the mutual information due to merging is captured by the
+ difference, defined as 
 \begin_inset Formula 
 \[
-\Delta=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)-\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)
+S=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)-\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)
 \]
 
 \end_inset
 
+A suitable name for this would be the 
+\begin_inset Quotes eld
+\end_inset
 
+relative entropy
+\begin_inset Quotes erd
+\end_inset
+
+, I guess.
+ Seems reasonable.
+\end_layout
+
+\begin_layout Subsubsection*
+Merge parameterization
 \end_layout
 
 \begin_layout Standard
-xxxxxxxxx
-\end_layout
-
-\begin_layout Standard
-Before moving on the the MI, it's worth defining a multi-parameter merge.
- Define a parameter for each disjunct, so that one gets a vector 
+it's worth considering the most general merge that maintains detailed balance,
+ and symmetry between the two merged words.
+ This is done by defining a merge vector - a merge parameter for each disjunct,
+ so that one gets a vector 
 \begin_inset Formula $0\le f\left(d\right)\le1$
 \end_inset
 
@@ -10086,10 +10091,81 @@ nct) pairs with less than 5 observations were discarded.
  is a large vector.
 \end_layout
 
+\begin_layout Subsubsection*
+Variational problem
+\end_layout
+
 \begin_layout Standard
-Well, lets try this.
- Well, not today.
- Maybe tomorrow.
+A change of notation is in order.
+ Parenthesis have been useful to emphasize what depends on what.
+ Parenthesis are also convenient for plain-ASCII source code documentation.
+ However, for the following, subscript notation will improve readability.
+ Let
+\begin_inset Formula 
+\begin{align*}
+f_{d} & \equiv f\left(d\right)\\
+N_{wd} & \equiv N\left(w,d\right)\\
+M_{uw} & \equiv MI\left(u,w\right)
+\end{align*}
+
+\end_inset
+
+The variational problem is then to obtain 
+\begin_inset Formula 
+\[
+\frac{\partial S}{\partial f_{d}}
+\]
+
+\end_inset
+
+I see no easy way out, other than to brute-force this.
+ First, note that
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial}{\partial f_{d}}\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right) & =\frac{\partial}{\partial f_{d}}\left[p\left(a,a\right)MI\left(a,a\right)+2p\left(a,b\right)MI\left(a,b\right)+p\left(b,b\right)MI\left(b,b\right)\right]\\
+ & =0
+\end{align*}
+
+\end_inset
+
+since none of these have 
+\begin_inset Formula $f\left(d\right)$
+\end_inset
+
+ appearning in the expressions.
+ Lets blast away.
+\begin_inset Formula 
+\[
+\frac{\partial S}{\partial f_{d}}=\sum_{u,w=g,a^{\prime},b^{\prime}}M_{uw}\frac{\partial p_{uw}}{\partial f_{d}}+p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}
+\]
+
+\end_inset
+
+So
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial p_{gg}}{\partial f_{d}}= & \frac{1}{i_{**}}\frac{\partial i_{gg}}{\partial f_{d}}\\
+= & \frac{1}{i_{**}}\frac{\partial}{\partial f_{d}}\sum_{d}N_{gd}N_{gd}\\
+= & \frac{2}{i_{**}}f_{d}\left(N_{ad}+N_{bd}\right)^{2}
+\end{align*}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+\frac{\partial p_{ga^{\prime}}}{\partial f_{d}}= & \frac{1}{i_{**}}\frac{\partial}{\partial f_{d}}N_{gd}N_{a^{\prime}d}\\
+= & \frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{ad}\frac{\partial}{\partial f_{d}}f_{d}\left(1-f_{d}\right)\\
+= & \frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{ad}\left(1-2f_{d}\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+xxxxxxxxx
 \end_layout
 
 \end_body
