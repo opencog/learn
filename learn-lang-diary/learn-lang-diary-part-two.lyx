@@ -9633,6 +9633,10 @@ MI_{alt}=\sum_{u\ge w}p\left(u,w\right)MI\left(u,w\right)
 Not clear, right now, which is better or more correct.
 \end_layout
 
+\begin_layout Subsubsection*
+Detailed balance
+\end_layout
+
 \begin_layout Standard
 Detailed balance, eqn 
 \begin_inset CommandInset ref
@@ -9879,7 +9883,8 @@ Divide by
 \series bold
 Corrollary:
 \series default
- The marginal probability is unaffected by the merge.
+ The marginal probability of rows/columns not being merged is unaffected
+ by the merge.
  That is, 
 \begin_inset Formula $p\left(w\right)=p^{\prime}\left(w\right)$
 \end_inset
@@ -9892,6 +9897,8 @@ Corrollary:
 \end_layout
 
 \begin_layout Standard
+
+\emph on
 Proof:
 \end_layout
 
@@ -9912,7 +9919,91 @@ Follows from the lemma and the theorem above.
 \end_layout
 
 \begin_layout Standard
-Before moving on the the MI, it's worth defining a muklti-parameter merge.
+
+\series bold
+Corrollary:
+\series default
+ The mutual information of rows/columns not being merged is unaffected by
+ the merge.
+ That is, 
+\begin_inset Formula $MI\left(u,w\right)=MI^{\prime}\left(u,w\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $u,w\ne a,b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Proof:
+\emph default
+
+\begin_inset Formula 
+\begin{align*}
+MI\left(u,w\right)= & \log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}\\
+= & \log_{2}\frac{p^{\prime}\left(u,w\right)}{p^{\prime}\left(u\right)p^{\prime}\left(w\right)}=MI^{\prime}\left(u,w\right)
+\end{align*}
+
+\end_inset
+
+Follows as before.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+From the above, it is clear that the 
+\begin_inset Formula $MI_{tot}$
+\end_inset
+
+ splits into an nvariant part, and a part affected by the merge.
+ Write 
+\begin_inset Formula 
+\begin{align*}
+MI_{tot}= & \frac{1}{2}\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)\\
+= & \frac{1}{2}\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)+\frac{1}{2}\sum_{u,w\ne a,b}p\left(u,w\right)MI\left(u,w\right)\\
+= & MI_{merge}+MI_{invariant}
+\end{align*}
+
+\end_inset
+
+The focus is then on how 
+\begin_inset Formula $MI_{merge}$
+\end_inset
+
+ changes.
+\end_layout
+
+\begin_layout Subsubsection*
+Change in mutual information
+\end_layout
+
+\begin_layout Standard
+The change in the mutual information due to merging is captured by the differenc
+e, defined as 
+\begin_inset Formula 
+\[
+\Delta=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)-\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+xxxxxxxxx
+\end_layout
+
+\begin_layout Standard
+Before moving on the the MI, it's worth defining a multi-parameter merge.
  Define a parameter for each disjunct, so that one gets a vector 
 \begin_inset Formula $0\le f\left(d\right)\le1$
 \end_inset
@@ -9993,19 +10084,6 @@ nct) pairs with less than 5 observations were discarded.
 \end_inset
 
  is a large vector.
-\end_layout
-
-\begin_layout Standard
-The total mutual information splits into two parts:
-\begin_inset Formula 
-\begin{align*}
-MI_{tot}= & \frac{1}{2}\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)\\
-= & \frac{1}{2}\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)+\frac{1}{2}\sum_{u,w\ne a,b}p\left(u,w\right)MI\left(u,w\right)
-\end{align*}
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
