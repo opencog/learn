@@ -7955,7 +7955,7 @@ tranche-1
 \begin_inset Quotes erd
 \end_inset
 
- consisting of 3026 articles, 426941 sentences, 8133834 words.
+ consisting of 3026 articles, 426941 sentences, 8133834 word instances.
  Word-pair counting went well (except for the handling error that truncated
  the corpus), as did disjunct formation.
  The MM^T stats were computed for the disjuncts, including shapes.
@@ -9666,7 +9666,61 @@ N\left(w^{\prime},d\right)=\left(1-f\left(d\right)\right)N\left(w,d\right)
 
 \end_inset
 
+The problem here is that the number of disjuncts is huge: in practice, a
+ vocabulary of a few thousands words might have hundreds of thousands of
+ disjuncts.
+\begin_inset Foot
+status collapsed
 
+\begin_layout Plain Layout
+The `run-2` dataset used in the example above had 6029 distinct words and
+ 98102 distinct disjuncts.
+ This was a 
+\begin_inset Quotes eld
+\end_inset
+
+trimmed
+\begin_inset Quotes erd
+\end_inset
+
+ dataset, 40-8-5: all words with less than 40 observations were discarded.
+ All disjuncts with less than 8 observations were discarded, and all (word,disju
+nct) pairs with less than 5 observations were discarded.
+ Trimming tends to filter out a lot of the noise in the dataset, without
+ much compromising the data integrity.
+ That is, assuming one can accurately guess where the noise floor is; this
+ remains an open topic.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, the funny thing with creating the vector 
+\begin_inset Formula $g$
+\end_inset
+
+ is that doing so will subtley alter the MI between unrelated words, by
+ some small fraction of a percent.
+ This is due to the normalizations involved in the definition of the MI.
+ Thus, one can quickly generate a large number of constraints on 
+\begin_inset Formula $f\left(d\right)$
+\end_inset
+
+ by insisting that the MI between unrelated word-pairs should not change
+ at all, after the creation of 
+\begin_inset Formula $g.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well, lets try this.
+ Well, not today.
+ Maybe tomorrow.
 \end_layout
 
 \end_body
