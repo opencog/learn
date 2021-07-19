@@ -9644,24 +9644,42 @@ noprefix "false"
 
 \end_inset
 
- means that the merge affects only the orws and columns of the merged words.
+ means that the merge affects only the rows and columns of the merged words.
+ This is somehow 
+\begin_inset Quotes eld
+\end_inset
+
+intuitively obvious
+\begin_inset Quotes erd
+\end_inset
+
+, but I'll belabor the topic here, to make sure we're not making any mistakes.
+ In the following, let 
+\begin_inset Formula $a,b$
+\end_inset
+
+ be the two words to be merged, creating a category 
+\begin_inset Formula $g$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 
 \series bold
-Theorem: 
+Lemma:
 \series default
-The total count 
-\begin_inset Formula $i\left(*,*\right)$
+ For 
+\begin_inset Formula $w\ne a,b$
 \end_inset
 
- is unaffected by the merge.
- That is, 
-\begin_inset Formula $i^{\prime}\left(*,*\right)=i\left(*,*\right)$
+, the row and column sums are unaffected by the merge.
+ That is, one has 
+\begin_inset Formula $i\left(w,*\right)=i^{\prime}\left(w,*\right)$
 \end_inset
 
- where the prime denotes the post-merge sum.
+.
 \end_layout
 
 \begin_layout Standard
@@ -9702,9 +9720,12 @@ i\left(w,u\right)=i^{\prime}\left(w,u\right)
 
 Therefore, 
 \begin_inset Formula 
-\[
-i\left(w,*\right)=\sum_{u}i\left(w,u\right)=i^{\prime}\left(w,*\right)
-\]
+\begin{align*}
+i\left(w,*\right)= & \sum_{u}i\left(w,u\right)\\
+= & i\left(w,a\right)+i\left(w,b\right)+\sum_{u\ne a,b}i\left(w,u\right)\\
+= & i\left(w,g\right)+i\left(w,a^{\prime}\right)+i\left(w,b^{\prime}\right)+\sum_{u\ne a,b}i\left(w,u\right)\\
+= & i^{\prime}\left(w,*\right)
+\end{align*}
 
 \end_inset
 
@@ -9721,7 +9742,41 @@ where the
 \end_inset
 
 .
- The remaining case is
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This enables a key theorem.
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Theorem: 
+\series default
+The total count 
+\begin_inset Formula $i\left(*,*\right)$
+\end_inset
+
+ is unaffected by the merge.
+ That is, 
+\begin_inset Formula $i^{\prime}\left(*,*\right)=i\left(*,*\right)$
+\end_inset
+
+ where the prime denotes the post-merge sum.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Proof: 
+\emph default
+Split out the affected rows and columns.
+ First, the corner case:
 \begin_inset Formula 
 \begin{align*}
 i\left(a,a\right)+i\left(a,b\right)+i\left(b,a\right)+i\left(b,b\right)= & \sum_{d}\left[N\left(a,d\right)+N\left(b,d\right)\right]\left[N\left(a,d\right)+N\left(b,d\right)\right]\\
@@ -9744,7 +9799,10 @@ Two of the terms vanish:
 \end_inset
 
 .
- Even if these terms did not vanish, one still arrives at
+\end_layout
+
+\begin_layout Standard
+Even if these terms did not vanish, one still arrives at
 \end_layout
 
 \begin_layout Standard
@@ -9784,8 +9842,28 @@ Phew.
 \series bold
 Corrollary
 \series default
-: Likewise, for the probabilities: 
+: Likewise, for the probabilities: if 
+\begin_inset Formula $a,b$
+\end_inset
+
+ are the two words to be merged into 
+\begin_inset Formula $g,$
+\end_inset
+
+then 
 \begin_inset Formula $p\left(a,*\right)+p\left(b,*\right)=p\left(g,*\right)+p\left(a^{\prime},*\right)+p\left(b^{\prime},*\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Proof: 
+\emph default
+Divide by 
+\begin_inset Formula $i\left(*,*\right)$
 \end_inset
 
 .
@@ -9797,11 +9875,44 @@ Corrollary
 \end_layout
 
 \begin_layout Standard
-xxxx
+
+\series bold
+Corrollary:
+\series default
+ The marginal probability is unaffected by the merge.
+ That is, 
+\begin_inset Formula $p\left(w\right)=p^{\prime}\left(w\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $w\ne a,b$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-This can be corrected by using more parameters.
+Proof:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+p\left(w\right)=p\left(w,*\right)=\frac{i\left(w,*\right)}{i\left(*,*\right)}=\frac{i^{\prime}\left(w,*\right)}{i^{\prime}\left(*,*\right)}=p^{\prime}\left(w\right)
+\]
+
+\end_inset
+
+Follows from the lemma and the theorem above.
+ 
+\begin_inset Formula $\square$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Before moving on the the MI, it's worth defining a muklti-parameter merge.
  Define a parameter for each disjunct, so that one gets a vector 
 \begin_inset Formula $0\le f\left(d\right)\le1$
 \end_inset
@@ -9814,25 +9925,44 @@ This can be corrected by using more parameters.
 \begin_inset Formula 
 \[
 N\left(g,d\right)=\begin{cases}
-f\left(d\right)\left(N\left(w,d\right)+N\left(u,d\right)\right) & d\in D\left(w\right)\cap D\left(u\right)\\
-f\left(d\right)N\left(w,d\right) & d\in D\left(w\right)\backslash D\left(u\right)\\
-f\left(d\right)N\left(u,d\right) & d\in D\left(u\right)\backslash D\left(w\right)
+f\left(d\right)\left[N\left(a,d\right)+N\left(b,d\right)\right] & d\in D\left(a\right)\cap D\left(b\right)\\
+f\left(d\right)N\left(a,d\right) & d\in D\left(a\right)\backslash D\left(b\right)\\
+f\left(d\right)N\left(b,d\right) & d\in D\left(b\right)\backslash D\left(a\right)
 \end{cases}
 \]
 
 \end_inset
 
- and, to maintain detailed balance as before, set 
+The above tries to distinguish the overlapping regions.
+ But it is overly complicted, since on the non-overlapping regions, the
+ counts vanish.
+ That is, 
+\begin_inset Formula $N\left(b,d\right)=0$
+\end_inset
+
+ when 
+\begin_inset Formula $d\in D\left(a\right)\backslash D\left(b\right)$
+\end_inset
+
+.
+ Thus, its enough to write 
 \begin_inset Formula 
 \[
-N\left(w^{\prime},d\right)=\left(1-f\left(d\right)\right)N\left(w,d\right)
+N\left(g,d\right)=f\left(d\right)\left[N\left(a,d\right)+N\left(b,d\right)\right]
 \]
 
 \end_inset
 
-The problem here is that the number of disjuncts is huge: in practice, a
- vocabulary of a few thousands words might have hundreds of thousands of
- disjuncts.
+To maintain detailed balance as before, one must have
+\begin_inset Formula 
+\[
+N\left(a^{\prime},d\right)=\left(1-f\left(d\right)\right)N\left(a,d\right)
+\]
+
+\end_inset
+
+Note that the number of disjuncts is huge: in practice, a vocabulary of
+ a few thousands words might have hundreds of thousands of disjuncts.
 \begin_inset Foot
 status collapsed
 
@@ -9855,6 +9985,23 @@ nct) pairs with less than 5 observations were discarded.
  That is, assuming one can accurately guess where the noise floor is; this
  remains an open topic.
 \end_layout
+
+\end_inset
+
+ The vector 
+\begin_inset Formula $f\left(d\right)$
+\end_inset
+
+ is a large vector.
+\end_layout
+
+\begin_layout Standard
+The total mutual information splits into two parts:
+\begin_inset Formula 
+\begin{align*}
+MI_{tot}= & \frac{1}{2}\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)\\
+= & \frac{1}{2}\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)+\frac{1}{2}\sum_{u,w\ne a,b}p\left(u,w\right)MI\left(u,w\right)
+\end{align*}
 
 \end_inset
 
