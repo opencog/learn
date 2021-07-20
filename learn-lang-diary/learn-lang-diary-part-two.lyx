@@ -7916,7 +7916,7 @@ Start again, this time with a simple, relatively unambiguous, relatively
 \end_layout
 
 \begin_layout Section*
-July 2021 - Projective merge issue
+July 2021 - Projective Merge and Entropy Maximization
 \end_layout
 
 \begin_layout Standard
@@ -9231,6 +9231,60 @@ So what's going wrong, here? Well, we failed to define the projective merge
  So lets fix that.
 \end_layout
 
+\begin_layout Subsubsection*
+Conclusion
+\end_layout
+
+\begin_layout Standard
+The following sections explore the problem above.
+ The answer, in retrospect, appears to be obvious: of the paramterized projectiv
+e merge, only the overlap merge maximizes entropy.
+ Ading in any fraction of the union merge lowers the total mutual information.
+ It smears out the word-senses, and damages word-sense disambiguation.
+\end_layout
+
+\begin_layout Standard
+If the answer is so obvious, then how did we get into this mess to begin
+ with? Well, it seemed, at the time, that, because the input data is so
+ noisy, that the number of observations is so incomplete, that there might
+ be some advantage for extending the overlap merge with some 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ fraction of the union merge.
+ In retrospect, this appears to have been a failed idea.
+\end_layout
+
+\begin_layout Standard
+The overall concern is still valid: for a small corpus, there is a lot of
+ noise, and perhaps there does need to be some kind of generalization taking
+ place.
+ But perhaps the smearing provided by the union merge is ...
+ not a good idea ...
+ at present.
+ However ...
+\end_layout
+
+\begin_layout Standard
+However, trying to always maximize the entropy runs the risk of stumbling
+ into local maxima, and being trapped by them.
+ This is an old machine-learning problem: how to avoid local maxima.
+ The union merge might eventually be a good way of jumping out of local
+ maxima.
+ However, at this time, I don't understand what's going on clearly enough.
+ It seems to have been a premature feature.
+ Maybe.
+ At any rate, future work should set a baseline of pure overlap merges,
+ zero union merges.
+ If any part of the union is to be mixed in, it should probably be quite
+ small – well less than a percent, rather than the 30% which almost all
+ earlier work made use of.
+\end_layout
+
 \begin_layout Subsection*
 Similarity and Projection
 \end_layout
@@ -10490,14 +10544,148 @@ total
 \end_layout
 
 \begin_layout Standard
-Hmm.
- The detailed balance seems to be a bit off — 1.910e-3 vs 1.913e-3 before.
- That's a fairly hefty amount of rounding error.
- Surprisingly large...
+The MI reported in the total column is the paramter-dependent entropy from
+ above:
+\begin_inset Formula 
+\[
+S^{\prime}=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a^{\prime}$
+\end_inset
+
+ is what's left of the vector for the word 
+\begin_inset Quotes eld
+\end_inset
+
+of
+\begin_inset Quotes erd
+\end_inset
+
+, after projection-merging the common part.
+ Likewise, 
+\begin_inset Formula $b^{\prime}$
+\end_inset
+
+ is what's left of 
+\begin_inset Quotes eld
+\end_inset
+
+to
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It is numerically confirmed that 
+\begin_inset Formula $a^{\prime}$
+\end_inset
+
+ and 
+\begin_inset Formula $b^{\prime}$
+\end_inset
+
+ are orthogonal to each-other: that 
+\begin_inset Formula $p\left(a^{\prime},b^{\prime}\right)=0$
+\end_inset
+
+ after the merge.
+ This is as expected — the common components have been merged.
+ That 
+\begin_inset Formula $p\left(g,a^{\prime}\right)\ne0$
+\end_inset
+
+ is not surprising: an additional portion of 
+\begin_inset Formula $a$
+\end_inset
+
+ was merged into 
+\begin_inset Formula $g$
+\end_inset
+
+, beyond what is strictly possible with the overlap merge.
+ That is, 
+\begin_inset Formula $g$
+\end_inset
+
+ and 
+\begin_inset Formula $a^{\prime}$
+\end_inset
+
+ are intentionally not orthogonal.
+ That's what this is all about – finding out if something broader than a
+ pure overlap merge is somehow advantageous.
 \end_layout
 
 \begin_layout Standard
-Now try a range of fractions.
+Annoyingly, the detailed balance seems to be a bit off — 1.910e-3 
+\emph on
+vs.
+
+\emph default
+ 1.913e-3 before.
+ That's a fairly hefty amount of rounding error.
+ Surprisingly large...
+ There are 7620 sections and 7620 shapes being merged; calculations should
+ be double-precision, so this rounding error is irritating.
+\end_layout
+
+\begin_layout Standard
+Anyway, that's the baseline.
+ Lets try a range of merge fractions.
+ Again, to reiterate: 
+\begin_inset Formula $f=0$
+\end_inset
+
+ corresponds to a pure overlap projection merge: the cluster 
+\begin_inset Formula $g$
+\end_inset
+
+ consists of only those disjuncts that are shared in common by 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+.
+ Setting 
+\begin_inset Formula $f=1$
+\end_inset
+
+ corresponds to the union merge: all disjuncts on 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $b$
+\end_inset
+
+ are moved into 
+\begin_inset Formula $g$
+\end_inset
+
+ so that 
+\begin_inset Formula $a^{\prime}$
+\end_inset
+
+ and 
+\begin_inset Formula $b^{\prime}$
+\end_inset
+
+ are empty after the merge.
+ Other fractions 
+\begin_inset Formula $0<f<1$
+\end_inset
+
+ interpolate linearly between the overlap merge and the union merge.
+ The table below shows what happens.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -10595,7 +10783,7 @@ p(g,of)
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.499
+11.312
 \end_layout
 
 \end_inset
@@ -11775,8 +11963,22 @@ p(g,of)
 \end_layout
 
 \begin_layout Standard
-So, a numeric exploration of the post-merge mutual information reveals several
- surprises and unexpected behaviors.
+So, this numeric exploration of the post-merge mutual information reveals
+ ...
+ something that perhaps should have been obvious, in retrospect.
+ Sigh.
+\end_layout
+
+\begin_layout Standard
+In retrospect, it should be clear that the union merge serves only to make
+ word-sense disambiguation cloudier and mushier, by placing unrelated disjuncts
+ into the same class/cluster.
+ This seemed somewhat harmless at some conceptual level, by employing the
+ argumnet that the observed disjuncts are rather noisy, and that perhaps
+ there are commonalities that simply were not observed, due to insufficient
+ sampling.
+ This may still be true, but, viewed from the MI angle, it is clear that
+ anything beyond a pure overlap merge is harmful to the entropy maximization.
 \end_layout
 
 \begin_layout Subsection*
@@ -11797,6 +11999,18 @@ noprefix "false"
 
 .
  This requires a lot of algebraic calculation.
+ The calculations below were undertaken before the numeric exploration immediate
+ly above.
+ The numerics show that this effort was ...
+ pointless.
+ The entropy is maximized by doing the overlap merge, setting 
+\begin_inset Formula $f=0$
+\end_inset
+
+; it's it, that's that.
+ The below is simply not necessary.
+ It's kept below for, uhh, posterity.
+ Otherwise, its useless and can be skipped over.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -12137,6 +12351,14 @@ Abandon the second option.
 \end_inset
 
  in the various quantities, some addtional notation is needed.
+\end_layout
+
+\begin_layout Section*
+The End
+\end_layout
+
+\begin_layout Standard
+This is the end of the diary.
 \end_layout
 
 \end_body
