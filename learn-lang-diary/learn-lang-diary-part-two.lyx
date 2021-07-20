@@ -10006,7 +10006,7 @@ Merge parameterization
 \end_layout
 
 \begin_layout Standard
-it's worth considering the most general merge that maintains detailed balance,
+It's worth considering the most general merge that maintains detailed balance,
  and symmetry between the two merged words.
  This is done by defining a merge vector - a merge parameter for each disjunct,
  so that one gets a vector 
@@ -10089,6 +10089,38 @@ nct) pairs with less than 5 observations were discarded.
 \end_inset
 
  is a large vector.
+\end_layout
+
+\begin_layout Standard
+In what follows, this full vector will be retreated from, going back to
+ the original vision of a projection merge.
+ There are two reasons for this:
+\end_layout
+
+\begin_layout Itemize
+The expressions get hopelessly non-linear and intractable,
+\end_layout
+
+\begin_layout Itemize
+It is hard to imagine what sort of additional information might arrive,
+ that would distinguish one disjunct from another.
+ Either a disjunct is associated with 
+\begin_inset Formula $a$
+\end_inset
+
+ or with 
+\begin_inset Formula $b$
+\end_inset
+
+ or with both; there really aren't any other possibilities.
+\end_layout
+
+\begin_layout Standard
+However, until that point, a vector of independent 
+\begin_inset Formula $f$
+\end_inset
+
+'s will be assumed.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -10265,73 +10297,48 @@ p_{g}= & \frac{1}{i_{**}}\sum_{d}N_{gd}N_{*d}\\
 
 \end_inset
 
-So those fractions are nasty, unless we reduce all 
-\begin_inset Formula $f_{d}$
+So those fractions are nasty.
+ There seem to be two choices in front of us.
+ These are
+\end_layout
+
+\begin_layout Itemize
+Set 
+\begin_inset Formula $f_{d}=1$
 \end_inset
 
- to be independent of 
-\begin_inset Formula $d$
-\end_inset
-
-, i.e.
- a constant, instead of a vector.
- I see nothing to rescue this situation, so we may as well reduce things
- now.
- This gives 
-\begin_inset Formula 
-\[
-p_{gg}=f^{2}\left(p_{aa}+2p_{ab}+p_{bb}\right)
-\]
-
+ for 
+\begin_inset Formula $d\in D\left(a\right)\cap D\left(b\right)$
 \end_inset
 
  and 
-\begin_inset Formula 
-\[
-p_{g}=f\left(p_{a*}+p_{b*}\right)=f\left(p_{a}+p_{b}\right)
-\]
-
+\begin_inset Formula $f_{d}=f$
 \end_inset
 
-and 
-\begin_inset Formula 
-\[
-p_{a^{\prime}a^{\prime}}=(1-f)^{2}p_{aa}
-\]
+ otherwise.
+ This is the projection merge.
+\end_layout
 
+\begin_layout Itemize
+Set 
+\begin_inset Formula $f_{d}=f$
 \end_inset
 
-and 
-\begin_inset Formula 
-\[
-p_{ga^{\prime}}=f\left(1-f\right)\left(p_{aa}+p_{ba}\right)
-\]
-
+ for all 
+\begin_inset Formula $d$
 \end_inset
 
-and
-\begin_inset Formula 
-\[
-p_{a^{\prime}}=\left(1-f\right)p_{a}
-\]
-
-\end_inset
-
-
+.
+ This seems to be pointless; it smears together multiple word senses.
 \end_layout
 
 \begin_layout Standard
-The reduction continues.
-\begin_inset Formula 
-\begin{align*}
-\frac{i_{**}}{2}\log2\sum_{u,w=g,a^{\prime},b^{\prime}}p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}= & 2\left(1-f\right)N_{ad}N_{bd}\\
- & \quad+N_{*d}N_{ad}\left[f\frac{p_{aa}+2p_{ab}+p_{bb}}{p_{a*}+p_{b*}}+\frac{}{fp_{a}}\right]
-\end{align*}
-
+Abandon the second option.
+ To disentangle the location of 
+\begin_inset Formula $f$
 \end_inset
 
-oh hang on...
- bug ...
+ in the various quantities, some addtional notation is needed.
 \end_layout
 
 \end_body
