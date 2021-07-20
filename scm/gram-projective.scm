@@ -171,7 +171,7 @@
 ; Parameter choices
 ; -----------------
 ; Gut-sense intuition suggests that `merge-mifuzz` with a min acceptable
-; MI of about 3 works best. The union fraction should be set to zero.
+; MI of about 5 works best. The union fraction should be set to zero.
 ;
 ; Earlier work is summarized in `grammar-report/grammar-report.pdf`.
 ; Pretty much everything there used a union-merge fraction of 0.3,

@@ -910,7 +910,7 @@
   (add-dynamic-stars (make-pseudo-cset-api)) or perhaps a shape vector.
 
   MI should be the minimum MI acceptable to perform a merge on.
-  This is dataset dependent; currently, 3.0 is recommended.
+  This is dataset dependent; currently, 5.0 is recommended.
 
   MIN-OBS is the smallest number of observations of the word that
   is acceptable; words with fewer observations will be ignored.
@@ -931,7 +931,7 @@
   (add-dynamic-stars (make-pseudo-cset-api)) or perhaps a shape vector.
 
   MI should be the minimum MI acceptable to perform a merge on.
-  This is dataset dependent; currently, 3.0 is recommended.
+  This is dataset dependent; currently, 5.0 is recommended.
 
   FRAC is the fraction of the union-merge to be added into the
   cluster. Recommended value is zero, else a very small number,
@@ -956,7 +956,7 @@
   (add-dynamic-stars (make-pseudo-cset-api)) or perhaps a shape vector.
 
   MI should be the minimum MI acceptable to perform a merge on.
-  This is dataset dependent; currently, 3.0 is recommended.
+  This is dataset dependent; currently, 5.0 is recommended.
 
   MIN-OBS is the smallest number of observations of the word that
   is acceptable; words with fewer observations will be ignored.
