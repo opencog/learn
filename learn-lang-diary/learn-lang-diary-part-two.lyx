@@ -10212,9 +10212,9 @@ Putting all this together is painfully tedious.
 \sum_{u,w=g,a^{\prime},b^{\prime}}p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}= & p_{gg}\frac{\partial M_{gg}}{\partial f_{d}}+p_{a^{\prime}a^{\prime}}\frac{\partial M_{a^{\prime}a^{\prime}}}{\partial f_{d}}+p_{b^{\prime}b^{\prime}}\frac{\partial M_{b^{\prime}b^{\prime}}}{\partial f_{d}}\\
  & \quad+2p_{ga^{\prime}}\frac{\partial M_{ga^{\prime}}}{\partial f_{d}}+2p_{gb^{\prime}}\frac{\partial M_{gb^{\prime}}}{\partial f_{d}}\\
 = & \frac{1}{\log2}\times\\
- & \frac{2}{i_{**}}f_{d}\left(N_{ad}+N_{bd}\right)^{2}-2\frac{p_{gg}}{p_{g}}\cdot\frac{1}{i_{**}}N_{*d}\left[N_{ad}+N_{bd}\right]\\
+ & \frac{2}{i_{**}}f_{d}\left(N_{ad}+N_{bd}\right)^{2}-2\frac{p_{gg}}{p_{g}}\cdot\frac{1}{i_{**}}N_{*d}\left(N_{ad}+N_{bd}\right)\\
  & -2\frac{N_{ad}^{2}}{i_{**}}\left(1-f_{d}\right)-2\frac{p_{a^{\prime}a^{\prime}}}{p_{a^{\prime}}}\cdot\left(-\frac{1}{i_{**}}N_{*d}N_{ad}\right)\\
- & -2\frac{N_{bd}^{2}}{i_{**}}\left(1-f_{d}\right)+2\frac{p_{b^{\prime}b^{\prime}}}{p_{b^{\prime}}}\cdot\left(\frac{1}{i_{**}}N_{*d}N_{ad}\right)\\
+ & -2\frac{N_{bd}^{2}}{i_{**}}\left(1-f_{d}\right)+2\frac{p_{b^{\prime}b^{\prime}}}{p_{b^{\prime}}}\cdot\left(\frac{1}{i_{**}}N_{*d}N_{bd}\right)\\
  & +2\frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{ad}\left(1-2f_{d}\right)+2\frac{p_{ga^{\prime}}}{p_{a^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{ad}+2\frac{p_{ga^{\prime}}}{p_{b^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{bd}\\
  & +2\frac{1}{i_{**}}\left(N_{ad}+N_{bd}\right)N_{bd}\left(1-2f_{d}\right)+2\frac{p_{gb^{\prime}}}{p_{a^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{ad}+2\frac{p_{gb^{\prime}}}{p_{b^{\prime}}}\cdot\frac{1}{i_{**}}N_{*d}N_{bd}
 \end{align*}
@@ -10225,7 +10225,113 @@ Putting all this together is painfully tedious.
 \end_layout
 
 \begin_layout Standard
-xxxxxxxxx
+Lets hope there are no mistakes.
+ Gathering terms, 
+\begin_inset Formula 
+\begin{align*}
+\frac{i_{**}}{2}\log2\sum_{u,w=g,a^{\prime},b^{\prime}}p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}= & f_{d}\left[\left(N_{ad}+N_{bd}\right)^{2}+N_{ad}^{2}+N_{bd}^{2}-2\left(N_{ad}+N_{bd}\right)^{2}\right]\\
+ & -\frac{p_{gg}}{p_{g}}N_{*d}\left(N_{ad}+N_{bd}\right)+\frac{p_{a^{\prime}a^{\prime}}}{p_{a^{\prime}}}N_{*d}N_{ad}+\frac{p_{b^{\prime}b^{\prime}}}{p_{b^{\prime}}}N_{*d}N_{bd}\\
+ & -N_{ad}^{2}-N_{bd}^{2}\\
+ & +\left(N_{ad}+N_{bd}\right)^{2}\\
+ & +\frac{p_{ga^{\prime}}}{p_{a^{\prime}}}N_{*d}N_{ad}+\frac{p_{ga^{\prime}}}{p_{b^{\prime}}}N_{*d}N_{bd}\\
+ & +\frac{p_{gb^{\prime}}}{p_{a^{\prime}}}N_{*d}N_{ad}+\frac{p_{gb^{\prime}}}{p_{b^{\prime}}}N_{*d}N_{bd}\\
+= & 2\left(1-f_{d}\right)N_{ad}N_{bd}\\
+ & \quad+N_{*d}N_{ad}\left[-\frac{p_{gg}}{p_{g}}+\frac{p_{a^{\prime}a^{\prime}}+p_{ga^{\prime}}+p_{gb^{\prime}}}{p_{a^{\prime}}}\right]\\
+ & \quad+N_{*d}N_{bd}\left[-\frac{p_{gg}}{p_{g}}+\frac{p_{b^{\prime}b^{\prime}}+p_{ga^{\prime}}+p_{gb^{\prime}}}{p_{b^{\prime}}}\right]
+\end{align*}
+
+\end_inset
+
+Huf.
+ This appears to be quadratic rational in 
+\begin_inset Formula $f$
+\end_inset
+
+ because
+\begin_inset Formula 
+\begin{align*}
+p_{gg}= & \frac{1}{i_{**}}\sum_{d}N_{gd}N_{gd}\\
+= & \frac{1}{i_{**}}\sum_{d}f_{d}^{2}\left(N_{ad}+N_{bd}\right)^{2}
+\end{align*}
+
+\end_inset
+
+while
+\begin_inset Formula 
+\begin{align*}
+p_{g}= & \frac{1}{i_{**}}\sum_{d}N_{gd}N_{*d}\\
+= & \frac{1}{i_{**}}\sum_{d}f_{d}\left(N_{ad}+N_{bd}\right)N_{*d}
+\end{align*}
+
+\end_inset
+
+So those fractions are nasty, unless we reduce all 
+\begin_inset Formula $f_{d}$
+\end_inset
+
+ to be independent of 
+\begin_inset Formula $d$
+\end_inset
+
+, i.e.
+ a constant, instead of a vector.
+ I see nothing to rescue this situation, so we may as well reduce things
+ now.
+ This gives 
+\begin_inset Formula 
+\[
+p_{gg}=f^{2}\left(p_{aa}+2p_{ab}+p_{bb}\right)
+\]
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+p_{g}=f\left(p_{a*}+p_{b*}\right)=f\left(p_{a}+p_{b}\right)
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+p_{a^{\prime}a^{\prime}}=(1-f)^{2}p_{aa}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+p_{ga^{\prime}}=f\left(1-f\right)\left(p_{aa}+p_{ba}\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+p_{a^{\prime}}=\left(1-f\right)p_{a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reduction continues.
+\begin_inset Formula 
+\begin{align*}
+\frac{i_{**}}{2}\log2\sum_{u,w=g,a^{\prime},b^{\prime}}p_{uw}\frac{\partial M_{uw}}{\partial f_{d}}= & 2\left(1-f\right)N_{ad}N_{bd}\\
+ & \quad+N_{*d}N_{ad}\left[f\frac{p_{aa}+2p_{ab}+p_{bb}}{p_{a*}+p_{b*}}+\frac{}{fp_{a}}\right]
+\end{align*}
+
+\end_inset
+
+oh hang on...
+ bug ...
 \end_layout
 
 \end_body
