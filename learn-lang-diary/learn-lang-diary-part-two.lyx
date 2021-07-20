@@ -9615,14 +9615,19 @@ For probabilities, the correct goal is to maximize the mutual information
  One is to write 
 \begin_inset Formula 
 \[
-MI_{tot}=\frac{1}{2}\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)
+MI_{tot}=\sum_{u,w}p\left(u,w\right)MI\left(u,w\right)
 \]
 
 \end_inset
 
-where the factor of 1/2 is introduced to adjust for the effect of double-countin
-g in the sum over words.
- The other is to double-weight the diagonal:
+Note that since both 
+\begin_inset Formula $p$
+\end_inset
+
+ and MI are symmetric, this has the effect of double-counting the off-diagonal
+ entries.
+ This seems to underweight the diagonal.
+ Another possibility is to double-weight the diagonal:
 \begin_inset Formula 
 \[
 MI_{alt}=\sum_{u\ge w}p\left(u,w\right)MI\left(u,w\right)
@@ -9631,6 +9636,39 @@ MI_{alt}=\sum_{u\ge w}p\left(u,w\right)MI\left(u,w\right)
 \end_inset
 
 Not clear, right now, which is better or more correct.
+\end_layout
+
+\begin_layout Standard
+A bit of articulation helps clarify things.
+ From the defintion of MI, one has
+\begin_inset Formula 
+\begin{align*}
+MI_{tot}= & \sum_{u,w}p\left(u,w\right)MI\left(u,w\right)\\
+= & \sum_{u,w}p\left(u,w\right)\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\right)}\\
+= & \sum_{u,w}p\left(u,w\right)\log_{2}p\left(u,w\right)-\sum_{u,w}p\left(u,w\right)\log_{2}p\left(u\right)-\sum_{u,w}p\left(u,w\right)\log_{2}p\left(w\right)\\
+= & \sum_{u,w}p\left(u,w\right)\log_{2}p\left(u,w\right)-2\sum_{w}p\left(w\right)\log_{2}p\left(w\right)\\
+= & H_{joint}-2H_{marg}
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+H_{marg}=\sum_{w}p\left(w\right)\log_{2}p\left(w\right)
+\]
+
+\end_inset
+
+is the 
+\begin_inset Quotes eld
+\end_inset
+
+marginal entropy
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -9983,9 +10021,9 @@ The focus is then on how
  The change in the mutual information due to merging is captured by the
  difference, defined as 
 \begin_inset Formula 
-\[
-S=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)-\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)
-\]
+\begin{equation}
+S=\sum_{u,w=g,a^{\prime},b^{\prime}}p\left(u,w\right)MI\left(u,w\right)-\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)\label{eq:relative entropy}
+\end{equation}
 
 \end_inset
 
@@ -9999,6 +10037,483 @@ relative entropy
 
 , I guess.
  Seems reasonable.
+\end_layout
+
+\begin_layout Subsection*
+Experimental Exploration
+\end_layout
+
+\begin_layout Standard
+The goal of later sections will be to find the extrema (maxima, minima)
+ of eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:relative entropy"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ by algebraic means: that is, to find a value for the parameter 
+\begin_inset Formula $f$
+\end_inset
+
+ that yeilds the projective merge that maximizes the mutual information.
+ As it turns out, a whole lot of rather tedious algebra is required.
+ Thus, its time for an experimental interlude.
+ Given the dataset above, we can vary the merge parameter by hand, and see
+ what happens.
+\end_layout
+
+\begin_layout Standard
+First, a review os the dataset and the computational techniques.
+ The dataset is `r2-mpg-trim-40-8-5.rdb`.
+ It contains 6029 words and 98102 disjuncts, and a total of 171922 word-disjunct
+ pairs that were observed a total of 4006152 times.
+ That is, each word/disjunct pair was observed an average of 23.302 times.
+ The dataset is very sparse, with a log2 sparsity of 11.748.
+ This is a trimmed dataset: all words with less than 40 observations were
+ discared; all disjuncts with less than 8 observations were discarded, and
+ all pairs with less than 5 observations were discarded.
+ See the experiment README file for more info on row and column support,
+ average lengths, etc.
+\end_layout
+
+\begin_layout Standard
+Here are the probabilities and MI, before merge:
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+word-pair
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $MI\left(u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of,of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.199e-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.460
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of,to
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.599e-5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.720
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+to,to
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.623e-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.848
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The total probability is then 1.913e-3 and the weighted MI is 1.336e-2 and
+ the averge MI is then 6.9829.
+ To repeat:
+\begin_inset Formula 
+\begin{align*}
+\sum_{u,w=a,b}p\left(u,w\right) & =1.913\times10^{-3}\\
+\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right) & =1.336\times10^{-2}\\
+\frac{\sum_{u,w=a,b}p\left(u,w\right)MI\left(u,w\right)}{\sum_{u,w=a,b}p\left(u,w\right)} & =6.9829
+\end{align*}
+
+\end_inset
+
+for 
+\begin_inset Formula $a,b=of,to$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Lets repeat this calculation, after merging, with 
+\begin_inset Formula $f=0.18715$
+\end_inset
+
+ as before.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pair
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $MI\left(u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of,of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.831E-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.695
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+to,to
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.153E-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.923
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+g,g
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.465E-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.009
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+g,of
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.105E-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.4107
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+g,to
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.208E-5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.2156
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+total
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.910E-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.431
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ The detailed balance seems to be a bit off — 1.910e-3 vs 1.913e-3 before.
+ That's a fairly hefty amount of rounding error.
+ Surprisingly large...
+\end_layout
+
+\begin_layout Subsection*
+Deriving the Entropy Extrema
+\end_layout
+
+\begin_layout Standard
+The goal of this section is to find the extrema of the relative entropy
+ as given in eqn 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:relative entropy"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This requires a lot of algebraic calculation.
 \end_layout
 
 \begin_layout Subsubsection*
