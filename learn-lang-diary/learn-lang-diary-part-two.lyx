@@ -9297,20 +9297,28 @@ If the union-fraction is greater than zero, then it should be kept small
 
 \begin_layout Standard
 Rule of thumb: if there is a merge fraction, then if should be set to 
-\begin_inset Formula $f=2^{-(MI(a,b)-MI_{cut})}$
+\begin_inset Formula 
+\[
+f=1/2^{\max(MI(a,a),MI(b,b))-MI_{cut}}
+\]
+
 \end_inset
 
- where 
-\begin_inset Formula $MI(a,b)$
+where 
+\begin_inset Formula $a,b$
 \end_inset
 
- is the MI of the two words to be merged and 
+ are the two words to be merged, 
+\begin_inset Formula $MI(a,a)$
+\end_inset
+
+ is the self-MI and 
 \begin_inset Formula $MI_{cut}$
 \end_inset
 
  is the cutoff, below which a merge will not be performed.
  Any fraction larger than this will results in an MI between the new class,
- and the words 
+ and the remainder of the words 
 \begin_inset Formula $a,b$
 \end_inset
 
