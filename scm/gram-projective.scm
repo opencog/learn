@@ -170,19 +170,17 @@
 ;
 ; Parameter choices
 ; -----------------
-; Gut-sense intuition suggests these possible experiments:
+; Gut-sense intuition suggests that `merge-mifuzz` with a min acceptable
+; MI of about 3 works best. The union fraction should be set to zero.
 ;
-; * Fuzz: use `merge-project` with hard-coded frac=0.3 and cosine
-;   distance with min acceptable cosine=0.65
-;
-; * Discrim: use `merge-discrim` with min acceptable cosine = 0.5
-;
-; * Info: use `merge-project` with hard-coded frac=0.3 and information
-;   distance with min acceptable MI=3
-;
-; Actual measurements (see `grammar-report/grammar-report.pdf`) indicate
-; that these are actually rather good parameter choices; and surprisingly,
-; the `merge-discrim` works better than `merge-project`.
+; Earlier work is summarized in `grammar-report/grammar-report.pdf`.
+; Pretty much everything there used a union-merge fraction of 0.3,
+; which, in reprospect, may have been much too large. Certainly,
+; if the goal is to maximize entropy, then any value greater than zero
+; will fail to do that.  Thus, the only reason to usae a union fraction
+; greater than zero is if one suspects one is trapped in a local
+; maximum, and needs to hop out.  Practical experience shows that this
+; can be a bit risky, and easily corrupts clustering.
 ;
 ; TODO
 ; ----
@@ -769,9 +767,13 @@
 
 (define-public (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
-  make-fuzz -- Do projection-merge, with a fixed merge fraction.
+  make-fuzz -- Do a cosine-distance projection-merge, with a fixed
+               union-merge fraction.
 
-  Uses the `merge-project` merge style.
+  Uses the `merge-project` merge style. This implements a fixed
+  linear interpolation between overlap-merge and union merge. Recall
+  that the overlap-merge merges all disjuncts that the two parts have
+  in common, while the nion merge merges all disjuncts.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -842,6 +844,51 @@
 		(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
 	(make-merger STARS mpred cos-fraction NOISE MIN-CNT (lambda (x) #f) #t)
+)
+
+; ---------------------------------------------------------------
+
+(define-public (make-mifuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
+"
+  make-mifuzz -- Do mutual-information projection-merge, with a fixed
+                 union-merge fraction.
+
+  Uses the `merge-project` merge style. This implements a fixed
+  linear interpolation between overlap-merge and union merge. Recall
+  that the overlap-merge merges all disjuncts that the two parts have
+  in common, while the nion merge merges all disjuncts.
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
+
+  CUTOFF is the min acceptable MI, for words to be considered
+  mergable.
+
+  UNION-FRAC is the fixed fraction of the union-set of the disjuncts
+  that will be merged.
+
+  NOISE is the smallest observation count, below which counts
+  will not be divided up, if a marge is performed.
+
+  MIN-CNT is the minimum count (l1-norm) of the observations of
+  disjuncts that a word is allowed to have, to even be considered.
+"
+	(define pmi (add-symmetric-mi-compute STARS))
+	(define ptc (add-transpose-compute STARS))
+
+	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
+	(define (mpred WORD-A WORD-B)
+		(is-similar? get-mi CUTOFF WORD-A WORD-B))
+
+	; The fraction to merge is a linear ramp, starting at zero
+	; at the cutoff, and ramping up to one when these are very
+	; similar.
+	(define (mi-fract WA WB) UNION-FRAC)
+
+	(define (store-mmt row)
+		(store-atom (ptc 'set-mmt-marginals row)))
+
+	(make-merger pmi mpred mi-fract NOISE MIN-CNT store-mmt #t)
 )
 
 ; ---------------------------------------------------------------

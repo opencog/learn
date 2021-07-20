@@ -9285,6 +9285,50 @@ However, trying to always maximize the entropy runs the risk of stumbling
  earlier work made use of.
 \end_layout
 
+\begin_layout Standard
+If the union-fraction is greater than zero, then it should be kept small
+ enough so that the MI between the newly created cluster, and the remainder
+ of the words that were put into the cluster remains less than the cutoff
+ MI that is used to determine if a merge is to be undertaken.
+ Examining the experimental data, below, indicates that this fraction is
+ indeed tiny: its about 0.003 (a third of a percent) for the case that was
+ examined.
+\end_layout
+
+\begin_layout Standard
+Rule of thumb: if there is a merge fraction, then if should be set to 
+\begin_inset Formula $f=2^{-(MI(a,b)-MI_{cut})}$
+\end_inset
+
+ where 
+\begin_inset Formula $MI(a,b)$
+\end_inset
+
+ is the MI of the two words to be merged and 
+\begin_inset Formula $MI_{cut}$
+\end_inset
+
+ is the cutoff, below which a merge will not be performed.
+ Any fraction larger than this will results in an MI between the new class,
+ and the words 
+\begin_inset Formula $a,b$
+\end_inset
+
+ that is 
+\emph on
+larger
+\emph default
+ than the original 
+\begin_inset Formula $MI(a,b)$
+\end_inset
+
+ itself ...
+ and that's a disaaster.
+ This is a rule of thumb, because, I guess a more precise value could be
+ given, but getting it requires some more algebra which I'm too lazy to
+ do.
+\end_layout
+
 \begin_layout Subsection*
 Similarity and Projection
 \end_layout
