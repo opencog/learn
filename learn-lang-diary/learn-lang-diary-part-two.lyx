@@ -12432,7 +12432,7 @@ correctly
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="22" columns="6">
+<lyxtabular version="3" rows="27" columns="6">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -12491,6 +12491,62 @@ Tranche
 
 \begin_layout Plain Layout
 5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Ingestion of corpora for word-pair counting
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -12770,7 +12826,7 @@ Words (cumulative)
 \begin_inset Text
 
 \begin_layout Plain Layout
-62,.194M
+62.194M
 \end_layout
 
 \end_inset
@@ -12781,7 +12837,7 @@ Words (cumulative)
 \begin_inset Text
 
 \begin_layout Plain Layout
-pair count wall-clock (hours)
+Wall-clock time (hours)
 \end_layout
 
 \end_inset
@@ -12837,7 +12893,7 @@ pair count wall-clock (hours)
 \begin_inset Text
 
 \begin_layout Plain Layout
-RAM
+Highest RAM Usage
 \end_layout
 
 \end_inset
@@ -12893,7 +12949,7 @@ RAM
 \begin_inset Text
 
 \begin_layout Plain Layout
-cpu time (hours)
+CPU time (hours)
 \end_layout
 
 \end_inset
@@ -13001,7 +13057,7 @@ Atoms in database
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13010,7 +13066,7 @@ RocksDB file size
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13019,16 +13075,16 @@ RocksDB file size
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-2 GB
+2.0 GB
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13037,7 +13093,7 @@ RocksDB file size
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13046,7 +13102,7 @@ RocksDB file size
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -13057,11 +13113,67 @@ RocksDB file size
 </cell>
 </row>
 <row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Computation of MI for word pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-Time for pair MI (hours)
+Wall-clock time (hours)
 \end_layout
 
 \end_inset
@@ -13079,7 +13191,45 @@ Time for pair MI (hours)
 \begin_inset Text
 
 \begin_layout Plain Layout
+2.185
+\end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.43
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.14 hr
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Highest RAM usage
 \end_layout
 
 \end_inset
@@ -13098,6 +13248,24 @@ Time for pair MI (hours)
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+72 GB
 \end_layout
 
 \end_inset
@@ -13144,7 +13312,7 @@ Left words (rows)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+304085
 \end_layout
 
 \end_inset
@@ -13153,7 +13321,7 @@ Left words (rows)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+397229
 \end_layout
 
 \end_inset
@@ -13200,7 +13368,7 @@ Right words (columns)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+306920
 \end_layout
 
 \end_inset
@@ -13209,7 +13377,7 @@ Right words (columns)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+402896
 \end_layout
 
 \end_inset
@@ -13229,7 +13397,7 @@ Right words (columns)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Total word pairs
+Unique word pairs
 \end_layout
 
 \end_inset
@@ -13256,7 +13424,7 @@ Total word pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+28.184M
 \end_layout
 
 \end_inset
@@ -13265,7 +13433,7 @@ Total word pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+38.011M
 \end_layout
 
 \end_inset
@@ -13303,7 +13471,7 @@ Sparsity (log_2)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.416
 \end_layout
 
 \end_inset
@@ -13312,7 +13480,7 @@ Sparsity (log_2)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11.693
 \end_layout
 
 \end_inset
@@ -13321,7 +13489,7 @@ Sparsity (log_2)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+12.040
 \end_layout
 
 \end_inset
@@ -13368,7 +13536,7 @@ Total observation count
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+985.5M
 \end_layout
 
 \end_inset
@@ -13377,7 +13545,7 @@ Total observation count
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.431G
 \end_layout
 
 \end_inset
@@ -13415,7 +13583,7 @@ Observations/pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+33.804
 \end_layout
 
 \end_inset
@@ -13424,7 +13592,7 @@ Observations/pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+34.966
 \end_layout
 
 \end_inset
@@ -13433,7 +13601,7 @@ Observations/pair
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+37.660
 \end_layout
 
 \end_inset
@@ -13471,7 +13639,7 @@ Entropy Total
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.889
 \end_layout
 
 \end_inset
@@ -13480,7 +13648,7 @@ Entropy Total
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.378
 \end_layout
 
 \end_inset
@@ -13489,7 +13657,7 @@ Entropy Total
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.503
 \end_layout
 
 \end_inset
@@ -13527,7 +13695,7 @@ Entropy Left
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.8102
 \end_layout
 
 \end_inset
@@ -13536,7 +13704,7 @@ Entropy Left
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.069
 \end_layout
 
 \end_inset
@@ -13545,7 +13713,7 @@ Entropy Left
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.109
 \end_layout
 
 \end_inset
@@ -13583,7 +13751,7 @@ Entropy Right
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.5463
 \end_layout
 
 \end_inset
@@ -13592,7 +13760,7 @@ Entropy Right
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.8321
 \end_layout
 
 \end_inset
@@ -13601,7 +13769,119 @@ Entropy Right
 \begin_inset Text
 
 \begin_layout Plain Layout
+9.8801
+\end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5572
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4677
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5227
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4863
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Atoms in database
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20122297
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29852254
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+57897670
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+78025983
 \end_layout
 
 \end_inset
@@ -13621,7 +13901,7 @@ Entropy Right
 \begin_inset Text
 
 \begin_layout Plain Layout
-Total MI
+RocksDB file size
 \end_layout
 
 \end_inset
@@ -13630,7 +13910,7 @@ Total MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.5572
+2.34 GB
 \end_layout
 
 \end_inset
@@ -13639,7 +13919,7 @@ Total MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.44 GB
 \end_layout
 
 \end_inset
@@ -13648,7 +13928,7 @@ Total MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.11 GB
 \end_layout
 
 \end_inset
@@ -13657,7 +13937,7 @@ Total MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.03 GB
 \end_layout
 
 \end_inset
@@ -13680,7 +13960,13 @@ Total MI
 \end_layout
 
 \begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
 So...
+ interestingly, the entropy is roughly independent of the dataset size.
+ Sparsity is high and increasing.
+ That's good.
 \end_layout
 
 \begin_layout Section*
