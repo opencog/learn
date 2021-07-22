@@ -1,6 +1,7 @@
 #! /bin/bash
 #
-# Configuration parameters for (non-planar) MST parsing.
+# Configuration parameters for (non-planar) MST (Max Spanning Tree)
+# parsing.
 #
 # This is an example config file; see `3-mpg-conf.sh` for proper
 # documentation.

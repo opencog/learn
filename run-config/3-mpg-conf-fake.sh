@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Configuration parameters for Planar MST parsing.
+# Configuration parameters for MPG (Max Planar Graph) parsing.
 #
 export CORPORA_DIR=$TEXT_DIR/pair-counted
 export SENTENCE_SPLIT=false

@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Configuration parameters for (Planar) MST parsing.
+# Configuration parameters for MPG (Max Planar Graph) parsing.
 #
 # This is an example config file; you might want to use one of the
 # preconfigured files, e.g. `3-mpg-conf-fake.sh` or `3-mpg-conf-en.sh`
