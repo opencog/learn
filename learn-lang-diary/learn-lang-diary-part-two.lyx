@@ -14051,6 +14051,10 @@ So that's ..
  It lowerd some cross-MI's and raised others, with no apparent overall effect.
 \end_layout
 
+\begin_layout Subsection*
+How Shapes affect MI
+\end_layout
+
 \begin_layout Standard
 The effect on him-her deserves further pondering.
  Without the shapes, it seems to be saying that him-her are being used in
@@ -15010,6 +15014,10 @@ good thing
  Not a lot, but enough to be noticable.
 \end_layout
 
+\begin_layout Subsection*
+Terrible MI values
+\end_layout
+
 \begin_layout Standard
 However, there's a disaster just around the corner.
  The top-MI cset+shape words to 
@@ -15621,6 +15629,209 @@ his
 \end_inset
 
  appears 8th.
+\end_layout
+
+\begin_layout Subsection*
+Close-up inspection
+\end_layout
+
+\begin_layout Standard
+So what is going on here? Lets look close up.
+ The word 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+ has 404 Sections and 430 CrossSections.
+ A random sample of the CrossSections looks mighty healthy:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+    at: (gazing- & him+) or (gazing- & the+) 
+\end_layout
+
+\begin_layout Plain Layout
+
+    upon: (came- & him+) or (came- &  a+)
+\end_layout
+
+\begin_layout Plain Layout
+
+    for: impossible- & (him+ or me+ or any+ or them+)
+\end_layout
+
+\begin_layout Plain Layout
+
+    do: to- & (him+ or her+ or it anything in a something them what ?  so
+ with as the that this .
+ , )
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Sections look good too:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+    him: (assure- & that+) or (put- & in+) or (Let- & go+) or (turned- &out+)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How about the word 
+\begin_inset Quotes eld
+\end_inset
+
+sink
+\begin_inset Quotes erd
+\end_inset
+
+? Wow, it is ..
+ bad.
+ It has one cross-section, and zero sections:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   to: seemed- & sink+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I'm confused.
+ How can it have zero sections??? Anyway, the total observation count is
+ 9, which is small.
+ Just above the dataset cutoff.
+ The self-MI is MI(sink, sink)=12.27.
+ The cross section is 
+\begin_inset Quotes eld
+\end_inset
+
+seemd to xxx
+\begin_inset Quotes erd
+\end_inset
+
+ where xxx can be any of 
+\begin_inset Quotes eld
+\end_inset
+
+like them Pierre grow her have go consider see be take feel say think him
+ make come sink fill me
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Count on 
+\begin_inset Quotes eld
+\end_inset
+
+seemed to him
+\begin_inset Quotes erd
+\end_inset
+
+ is 151.
+ Count on the product is 
+\begin_inset Formula $\sum_{d}N(sink,d)N(him,d)=9\times151=1359$
+\end_inset
+
+.
+ So that's perfect.
+ 
+\begin_inset Formula $\sum_{d}N(sink,d)N(*,d)=10215$
+\end_inset
+
+ Since there is one d, we have 
+\begin_inset Formula $\sum_{d}N(*,d)=1135$
+\end_inset
+
+ which was verified manually.
+ The other marginal is 
+\begin_inset Formula $\sum_{d}N(him,d)N(*,d)=41576753$
+\end_inset
+
+ which was not verified.
+ The total count is 6842054908.
+ Multiplying out:
+\begin_inset Formula 
+\begin{align*}
+\log_{2}\frac{\sum_{d}N(sink,d)N(him,d)}{\sum_{d}N(*,d)N(*,d)} & =\log_{2}\frac{1359}{6842054908}=-22.263\\
+\log_{2}\frac{\sum_{d}N(sink,d)N(*,d)}{\sum_{d}N(*,d)N(*,d)} & =\log_{2}\frac{10215}{6842054908}=-19.353\\
+\log_{2}\frac{\sum_{d}N(him,d)N(*,d)}{\sum_{d}N(*,d)N(*,d)} & =\log_{2}\frac{41576753}{6842054908}=-7.362
+\end{align*}
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\[
+MI(sink,him)=-22.263+19.353+7.362=4.452
+\]
+
+\end_inset
+
+So the numerics verify.
+ What does this teach us? A word with a single cross-section can give us
+ absurd MI values.
+\end_layout
+
+\begin_layout Standard
+Lets compare this to the cosine distance.
+ For that, we need:
+\begin_inset Formula 
+\begin{align*}
+\sum_{d}N(sink,d)N(him,d) & =1359\\
+\sum_{d}N(sink,d)N(sink,d) & =81\\
+\sum_{d}N(him,d)N(him,d) & =1161813
+\end{align*}
+
+\end_inset
+
+and the cosine would be
+\begin_inset Formula 
+\begin{align*}
+\cos\theta & =\frac{\sum_{d}N(sink,d)N(him,d)}{\sqrt{\left(\sum_{d}N(sink,d)N(sink,d)\right)\left(\sum_{d}N(him,d)N(him,d)\right)}}\\
+ & =\frac{1359}{\sqrt{81\times1161813}}\\
+ & =0.1401
+\end{align*}
+
+\end_inset
+
+which is a far more reasonable value.
+ Why is the MI misleading us? What went wrong here? What can we do to fix
+ it?
 \end_layout
 
 \begin_layout Section*

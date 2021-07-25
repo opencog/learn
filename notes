@@ -4604,7 +4604,104 @@ init-a-base
 duuude djlrt=#f #t #t
 duuude ABR= ConnectorSeq ShapeLink
 
+=======================================================
 
+(define rs 
+	(pmi 'right-stars (Word "him")))
+(length rs) ; 834
+
+(define cs
+	(filter (lambda (atom) (equal? (cog-type atom) 'CrossSection))
+		(pmi 'right-stars (Word "him"))))
+(length cs) ; 430
+
+for: impossible- & him+
+do: to- & him+;
+upon: came- & him+
+at: gazing- & him+
+
+(cog-incoming-set 
+(ShapeLink
+    (WordNode "at")
+    (Connector
+      (WordNode "gazing")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
+
+him, the
+
+at: (gazing- & him+)  or (gazing- & the+)
+upon: (came- & him+) or (came- &  a+)
+
+do: to- & (him+ or her+ or it anything in a something them what ?  so with as the that this . , )
+
+for: impossible- & (him+ or me+ or any+ or them+)
+
+(define sc
+	(filter (lambda (atom) (equal? (cog-type atom) 'Section))
+		(pmi 'right-stars (Word "him"))))
+(length sc) ; 404
+
+(define sis 
+	(pmi 'right-stars (Word "sink")))
+(length sis) ; 1
+
+(CrossSection (ctv 1 0 9)
+  (WordNode "sink")
+  (ShapeLink
+    (WordNode "to")
+    (Connector
+      (WordNode "seemed")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
+
+(cog-incoming-set (WordNode "sink"))
+
+(cog-incoming-set
+  (ShapeLink
+    (WordNode "to")
+    (Connector
+      (WordNode "seemed")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+")))))
+
+like them Pierre grow her have go consider see be take feel say think
+him make come sink fill me
+(seemed to xxx)
+
+count on "him" : 151 (seemd to him)
+
+mmt-fmi
+(define (compute-mmt-fmi ROW-A ROW-B)
+         (define marga (trans-obj 'mmt-count ROW-A))
+         (define margb (trans-obj 'mmt-count ROW-B))
+         (define prod (compute-right-product ROW-A ROW-B))
+         (set-mmt-total)
+         (log2 (* prod mmt-total) (* marga margb)))
+
+      (define (compute-right-product ROW-A ROW-B)
+         (prod-obj 'right-count (list ROW-A ROW-B)))
+
+
+
+(define prod-obj  (add-support-compute
+            (add-tuple-math star-obj * 'get-count)))
+
+(prod-obj 'right-count (list (Word "him") (Word "sink"))) ; 1359.0
+
+151 * 9 = 1359 perfect.
+
+(define trans-obj (add-transpose-api star-obj))
+
+sum_d N(sink,d) N(*,d) = 10215
+N(sink,d) = 9
+N(*,d) = 1135
 
 
 
