@@ -4707,6 +4707,31 @@ N(*,d) = 1135
 (list "like" "them" "Pierre" "grow" "her" "have" "go" "consider" "see" "be"
 "take" "feel" "say" "think" "him" "make" "come" "sink" "fill" "me"))
 
+mtm-count
+set-mtm-norms
+
+guile -l marginals-mst-shape.scm
+
+print-transpose-summary-report
+Then:
+Rocks: opened=/home/ubuntu/data//r2-gram-shape-40-junk.rdb
+Rocks: initial aid=208154
+"*-Direct Sum Wild (cset⊕cross-section)"
+MM^T support=171922.0     count=6842054908.0     entropy=2.1110
+OK, so above does this:
+-- computes MM^T for the full dataset, then filters rows and columns
+   (Plus support was computed incorrectly)
+
+Now:
+MM^T support=300245.0     count=561295158.0     entropy=7.3274
+Why is the count so much smaller?
+Because this is MM^T only on the filtered dataset, not the full one.
+
+entropy = log_2 sum_d N(*,d)N(*,d) / [sum_d D(*,d)D(*,d)]^2
+Go back to old master:
+MM^T support=52791.0     count=561295158.0     entropy=2.3118
+This is MM^T on the filtered dataset with the broken support code.
+
 
 
 ====================================================

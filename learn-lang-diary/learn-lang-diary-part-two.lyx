@@ -7962,6 +7962,30 @@ tranche-1
  Everything is fine (nominal) until merge.
  Projective merge fails dramatically – unrelated words are being merged.
  Why?
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+One possible answer to this question is that there is a proceedural error
+ at play.
+ It is this: the MM^T marginals were computed for the full dataset, and
+ then the dataset was trimmed to discard low-count rows and columns.
+ However, the full marginals were still used in computing the MI.
+ This throws everything off, because ..
+ rows and columns are missing.
+ The correct process would have been to recompute the MM^T marginals 
+\emph on
+after
+\emph default
+ trimming! This will be explored a bit, below.
+ Meanwhile, this and most other sections below are making this same mistake,
+ unless otherwise noted.
+ 27 July 2021
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -12415,6 +12439,36 @@ Variation on above theme.
  words gets large, and so merges to those are proposed, too.
  This is presumably some bug.
  What's the bug? Attempt to find out, below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Attention: this section uses the 
+\begin_inset Quotes eld
+\end_inset
+
+bad marginals
+\begin_inset Quotes erd
+\end_inset
+
+, as mentioned above and below.
+ This section is still interesting to read, but the MI values are ...
+ incorrect.
+ The bad marginals problem is explained in a prior footnote, and in the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+How Shapes Affect MI
+\begin_inset Quotes erd
+\end_inset
+
+ section below.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -14093,7 +14147,7 @@ her
 \end_inset
 
 , although this is no longer ranked.
- A third column shows the cset+shape-MI to 
+ There are two columns showing the cset+shape-MI to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -14102,13 +14156,84 @@ him
 \end_inset
 
 .
+ One column is labelled 
+\begin_inset Quotes eld
+\end_inset
+
+trim
+\begin_inset Quotes erd
+\end_inset
+
+, the other is labelled 
+\begin_inset Quotes eld
+\end_inset
+
+redo
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Here's the gotcha.
+ The cset+shape-trim column shows what happens when one computes the MM^T
+ marginals (
+\emph on
+i.e.
+
+\emph default
+ the values of 
+\begin_inset Formula $\sum_{d}N(w,d)N(*,d)$
+\end_inset
+
+) for the large dataset, and then one trims it down to a small size, by
+ discarding words and disjuncts and individual word-disjunct pairs whose
+ counts are below 8 and 5, respectively.
+ When the MI is computed, the marginals for the full dataset got used (i.e.
+ the sum ran over the set of disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+ for the full set); but this is wrong, because the dot-product in computing
+ the MI was missing many disjuncts (
+\emph on
+i.e.
+
+\emph default
+ the dot product 
+\begin_inset Formula $\sum_{d}N(w,d)N(u,d)$
+\end_inset
+
+ ran only over the disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+ in the trimmed dataset, which was not compatible ith the marginals.)
+\end_layout
+
+\begin_layout Standard
+The second table entry for cset+shape-redo shows what happens when the dataset
+ is trimmed first, and then the marginals are computed.
+ This is in fact the correct thing to do, as the sum over disjuncts in the
+ marginals is now over the same set as for the inner product.
+ Phew.
+ The sections up above make this mistake.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="22" columns="4">
+<lyxtabular version="3" rows="22" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -14141,11 +14266,20 @@ cset-only
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cset+shape-trim
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-cset+shape
+cset+shape-redo
 \end_layout
 
 \end_inset
@@ -14175,6 +14309,15 @@ him
 
 \begin_layout Plain Layout
 her
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+him
 \end_layout
 
 \end_inset
@@ -14217,11 +14360,20 @@ him
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 2.201
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.45
 \end_layout
 
 \end_inset
@@ -14255,11 +14407,20 @@ me
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.860
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.969
 \end_layout
 
 \end_inset
@@ -14293,11 +14454,20 @@ example
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.178
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.303
 \end_layout
 
 \end_inset
@@ -14331,11 +14501,20 @@ us
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.758
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.906
 \end_layout
 
 \end_inset
@@ -14369,11 +14548,20 @@ them
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.884
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.200
 \end_layout
 
 \end_inset
@@ -14407,11 +14595,20 @@ speak
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.061
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.464
 \end_layout
 
 \end_inset
@@ -14445,11 +14642,20 @@ instance
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.113
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.353
 \end_layout
 
 \end_inset
@@ -14483,11 +14689,20 @@ happen
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.800
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.036
 \end_layout
 
 \end_inset
@@ -14524,11 +14739,20 @@ difference
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.653
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.104
 \end_layout
 
 \end_inset
@@ -14562,11 +14786,20 @@ themselves
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.784
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.575
 \end_layout
 
 \end_inset
@@ -14600,11 +14833,20 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.817
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.347
 \end_layout
 
 \end_inset
@@ -14638,11 +14880,20 @@ live
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.155
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.862
 \end_layout
 
 \end_inset
@@ -14676,11 +14927,20 @@ why
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 -1.044
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.645
 \end_layout
 
 \end_inset
@@ -14714,11 +14974,20 @@ listen
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.967
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.458
 \end_layout
 
 \end_inset
@@ -14752,11 +15021,20 @@ herself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.730
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.975
 \end_layout
 
 \end_inset
@@ -14790,11 +15068,20 @@ behind
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.280
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.587
 \end_layout
 
 \end_inset
@@ -14828,11 +15115,20 @@ myself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.559
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.807
 \end_layout
 
 \end_inset
@@ -14866,11 +15162,20 @@ her
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.961
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.921
 \end_layout
 
 \end_inset
@@ -14904,11 +15209,20 @@ try
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.635
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.256
 \end_layout
 
 \end_inset
@@ -14942,7 +15256,7 @@ say
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -14951,9 +15265,22 @@ say
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.802
+\end_layout
+
+\end_inset
+</cell>
 </row>
 </lyxtabular>
 
+\end_inset
+
+
+\begin_inset VSpace defskip
 \end_inset
 
 
@@ -14994,24 +15321,23 @@ The third column is peculiar.
 lot
 \emph default
  lower.
- Recall, we're measuring MI in bits, so a difference of MI of 5 means a
- difference of 
-\begin_inset Formula $2^{5}=32$
-\end_inset
+ This is because of the incorrect marginals being used.
+ The fourth column shows the MI with the correct marginals.
+ The MI values are much larger: the use of the shapes clearly bumps it way
+ up high.
+ The bad news is that the MI values fail to distinguish between pronouns,
+ verbs, nouns and preps.
+\end_layout
 
- in absolute magnitude.
- It's pretty big.
- The only 
-\begin_inset Quotes eld
-\end_inset
+\begin_layout Section*
+July 2021 - Vector Lengths and MI
+\end_layout
 
-good thing
-\begin_inset Quotes erd
-\end_inset
-
- here is that the MI to the other pronouns is consistently higher than the
- MI to the verbs, nouns, preps.
- Not a lot, but enough to be noticable.
+\begin_layout Standard
+The likely reason for this is explored below; it appears to be that the
+ MI between a long word-vector and a short word-vector can be quite high,
+ if most of the short vector lies in the same direction as the long vector.
+ This is...well, its good and bad, depending on what one wants.
 \end_layout
 
 \begin_layout Subsection*
@@ -15029,6 +15355,10 @@ him
 \end_inset
 
  are these:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15303,6 +15633,10 @@ him
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15333,6 +15667,10 @@ her
 \end_inset
 
  is no better:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15608,6 +15946,10 @@ her
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -15637,6 +15979,21 @@ Close-up inspection
 
 \begin_layout Standard
 So what is going on here? Lets look close up.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+After the analysis in this section was performed, a proceedural issue was
+ detected.
+ It's not clear how this affects results.
+ The proceedural problem is that the MM^T marginals were computed first,
+ and then the dataset was trimmed.
+ For computing the MI, the MM^T marginals from the full dataset were used.
+ I'm thinking that they should have been recomputed after trimming.
+\end_layout
+
+\end_inset
+
  The word 
 \begin_inset Quotes eld
 \end_inset
@@ -15892,6 +16249,10 @@ seemed to xxx
 
  will be high for all other words xxx appearing in that phrase.
  Indeed this is the case:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -16605,6 +16966,10 @@ them
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -16644,7 +17009,15 @@ high MI
 \begin_inset Quotes erd
 \end_inset
 
-? Well, the average MI for this dataset is 2.1110.
+? Well, the average 
+\begin_inset Quotes eld
+\end_inset
+
+entropy
+\begin_inset Quotes erd
+\end_inset
+
+ for this dataset is 2.1110.
 \begin_inset Foot
 status collapsed
 
@@ -16656,7 +17029,12 @@ It contains 6029 words, 98102 disjuncts, a total of 171922 word-disjunct
 
 \end_inset
 
- Thus, any MI above 2 is 
+ This is a surrogate for the average MI, which we don't know and cannot
+ calculate (without a vast amount of CPU time.)
+\end_layout
+
+\begin_layout Standard
+Thus, any MI above 2 is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -16958,8 +17336,8 @@ a priori
  measure:
 \begin_inset Formula 
 \begin{align*}
-MI_{s}\left(w,u\right) & =\log_{2}\frac{\left(\sum_{d}N^{s}(w,d)N^{s}(u,d)\right)\left(\sum_{d}N^{s}(*,d)N^{s}(*,d)\right)}{\left(\sum_{d}N^{s}(w,d)N^{s}(*,d)\right)\left(\sum_{d}N^{s}(u,d)N^{s}(*,d)\right)}\\
- & =\log_{2}\frac{\left(\sum_{d}p^{s}(w,d)p^{s}(u,d)\right)\left(\sum_{d}p^{s}(*,d)p^{s}(*,d)\right)}{\left(\sum_{d}p^{s}(w,d)p^{s}(*,d)\right)\left(\sum_{d}p^{s}(u,d)p^{s}(*,d)\right)}
+MI_{s,t}\left(w,u\right) & =\log_{2}\frac{\left(\sum_{d}N^{s}(w,d)N^{s}(u,d)\right)\left(\sum_{d}N^{t}(*,d)N^{t}(*,d)\right)}{\left(\sum_{d}N^{s}(w,d)N^{t}(*,d)\right)\left(\sum_{d}N^{s}(u,d)N^{t}(*,d)\right)}\\
+ & =\log_{2}\frac{\left(\sum_{d}p^{s}(w,d)p^{s}(u,d)\right)\left(\sum_{d}p^{t}(*,d)p^{t}(*,d)\right)}{\left(\sum_{d}p^{s}(w,d)p^{t}(*,d)\right)\left(\sum_{d}p^{s}(u,d)p^{t}(*,d)\right)}
 \end{align*}
 
 \end_inset
@@ -16973,22 +17351,54 @@ where
 \end_inset
 
  as desired; the normalization cancels out.
+ The two exponents 
+\begin_inset Formula $s$
+\end_inset
+
+ and 
+\begin_inset Formula $t$
+\end_inset
+
+ are independent of one-another.
+ it's not entirely clear if they should be forced to be equal, 
+\emph on
+i.e.
+
+\emph default
+ to set 
+\begin_inset Formula $s=t$
+\end_inset
+
+ or if it is better to set 
+\begin_inset Formula $t=1$
+\end_inset
+
+ and allowing 
+\begin_inset Formula $s$
+\end_inset
+
+ to remain free.
+ Even setting 
+\begin_inset Formula $t=0$
+\end_inset
+
+ is plausible.
  Setting 
-\begin_inset Formula $s=1$
+\begin_inset Formula $s=t=1$
 \end_inset
 
  gives the earlier MI.
  Setting 
-\begin_inset Formula $s=0$
+\begin_inset Formula $s=t=0$
 \end_inset
 
  gives a Hamming-distance-like MI that only considers those disjuncts that
  have a non-zero count.
  Setting 
-\begin_inset Formula $s=2$
+\begin_inset Formula $s=t=2$
 \end_inset
 
- results in a weighting were the high-count disjuncts dominate, and thus
+ results in a weighting where the high-count disjuncts dominate, and thus
  naturally suppresses 
 \begin_inset Quotes eld
 \end_inset
@@ -18880,7 +19290,7 @@ Highest RAM usage
 \begin_inset Text
 
 \begin_layout Plain Layout
-(89.1)
+(91.2)
 \end_layout
 
 \end_inset
