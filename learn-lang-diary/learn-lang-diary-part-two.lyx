@@ -15330,14 +15330,168 @@ lot
 \end_layout
 
 \begin_layout Section*
-July 2021 - Vector Lengths and MI
+July 2021 - Vector Sizes and MI
 \end_layout
 
 \begin_layout Standard
-The likely reason for this is explored below; it appears to be that the
- MI between a long word-vector and a short word-vector can be quite high,
- if most of the short vector lies in the same direction as the long vector.
- This is...well, its good and bad, depending on what one wants.
+Above, we see that, for a given dataset, the MI values (seem to) fail to
+ distinguish between pronouns, verbs, nouns and prepositions.
+ This section explores why that is the case.
+ The results so far show that the MI between a large word-vector and a small
+ word-vector can be quite high, if most of the small (
+\begin_inset Quotes eld
+\end_inset
+
+short
+\begin_inset Quotes erd
+\end_inset
+
+) vector lies in the same direction as the large (
+\begin_inset Quotes eld
+\end_inset
+
+long
+\begin_inset Quotes erd
+\end_inset
+
+) vector.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The word 
+\begin_inset Quotes eld
+\end_inset
+
+length
+\begin_inset Quotes erd
+\end_inset
+
+ is troublesome.
+ In this paragraph, we are talking about 
+\begin_inset Quotes eld
+\end_inset
+
+the size of the suppport
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph on
+i.e.
+
+\emph default
+ the number of non-zero entries in the vector.
+ This should not be confused with the root-mean-square length of the vector,
+ 
+\emph on
+i.e.
+
+\emph default
+ its Euclidean lenghth.
+ This confusion easily extends to 
+\begin_inset Quotes eld
+\end_inset
+
+short
+\begin_inset Quotes erd
+\end_inset
+
+ vs.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+long
+\begin_inset Quotes erd
+\end_inset
+
+ vs.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+large
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hopefully, things will be clear from context.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is...well, its good and bad, depending on what one wants.
+ If the goal is to take a short fragment and identify where it belongs,
+ then this is unalloyed good.
+ However, if the dataset is small, and almost all words have short vectors,
+ then this is bad.
+ The natural Zipfian distribution indicates that only a small fraction (ballpark
+ of 10%) have long vectors.
+ Thus, it is not surprising that most short vectors will mostly align with
+ one of these long vectors.
+\end_layout
+
+\begin_layout Standard
+There are several conclusions one can make:
+\end_layout
+
+\begin_layout Itemize
+Don't use small datasets with lots of short vectors.
+ This is hard, because (1) the Zipfian distribution means most vectors will
+ be short, no matter the size of the dataset.
+ (2) it is CPU intensive to use large datasets.
+\end_layout
+
+\begin_layout Itemize
+Don't run merge algos on short vectors.
+ This is already done, more or less: the current merge algo considers merging
+ only vectors of similar counts (and thus, presumably of similar sizes.)
+ Stop merging long before reaching down into the short-vector regions of
+ the dataset.
+\end_layout
+
+\begin_layout Itemize
+Don't trim datasets.
+ The goal of trimming was to discard 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+: i.e.
+ infrequently-observed word-disjunct pairs, with the general argument that
+ such low-count pairs are likely to be garbage.
+ However, we have not shown that they actually are 
+\begin_inset Quotes eld
+\end_inset
+
+garbage
+\begin_inset Quotes erd
+\end_inset
+
+, and such low-count trimming might actually be discarding important information.
+ That is, trimming might be creatng short vectors that incorrectly align
+ with large vectros, when the untrimmed variants would have shown that they
+ are quite different.
+\end_layout
+
+\begin_layout Itemize
+Use a different measure of MI that emphasizes non-colinearity.
 \end_layout
 
 \begin_layout Subsection*
@@ -15345,7 +15499,7 @@ Terrible MI values
 \end_layout
 
 \begin_layout Standard
-However, there's a disaster just around the corner.
+Here's the disaster were looking at.
  The top-MI cset+shape words to 
 \begin_inset Quotes eld
 \end_inset
@@ -15355,6 +15509,24 @@ him
 \end_inset
 
  are these:
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Use `(almi 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+)` from the tools file.
+\end_layout
+
+\end_inset
+
+
 \begin_inset VSpace defskip
 \end_inset
 
@@ -15973,6 +16145,27 @@ his
  appears 8th.
 \end_layout
 
+\begin_layout Standard
+The MI values reported above are computed with the incorect marginals, due
+ to a failure to recompute these after trimming.
+ Redoing with he correct marginals reveals a completely different set of
+ words ...
+ however, the overall conclusions below appear to be unaffected.
+\end_layout
+
+\begin_layout Standard
+With the corrected marginals, the top words are (in descending order) 
+\begin_inset Quotes eld
+\end_inset
+
+oh tears asleep window lips answer closed afraid game lord reply red tree
+ Crawley pale hurry loved
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection*
 Close-up inspection
 \end_layout
@@ -16217,18 +16410,7 @@ What's the problem?
 \begin_layout Standard
 Well, the primary problem with the above is that ..
  the MI is correct, but unwanted.
- The dataset is known-broken: the system crashed (repeatedly!?), the dataset
- is relatively small, and it appears that the word 
-\begin_inset Quotes eld
-\end_inset
-
-sink
-\begin_inset Quotes erd
-\end_inset
-
- appars only once in the corpus, and that processing crashed on the sentence
- with that word in it.
- Thus, we have a word with a tiny sample - one disjunct, and that one disjunct
+ We have a word with a tiny sample - one disjunct, and that one disjunct
  overlaps nicely with anything and everything else that has that disjunct
  in it.
 \end_layout
@@ -17017,7 +17199,7 @@ entropy
 \begin_inset Quotes erd
 \end_inset
 
- for this dataset is 2.1110.
+ for this dataset is 2.111.
 \begin_inset Foot
 status collapsed
 
@@ -17029,8 +17211,11 @@ It contains 6029 words, 98102 disjuncts, a total of 171922 word-disjunct
 
 \end_inset
 
- This is a surrogate for the average MI, which we don't know and cannot
- calculate (without a vast amount of CPU time.)
+ This is a surrogate for the average MI.
+ (Upon further reflection, this is a bad surrogate.
+ Computing the average MI is impossible, as the CPU demans to sum over all
+ pairs is simply too high.
+ We need to develope techniques for estimating this from the distribution.)
 \end_layout
 
 \begin_layout Standard
@@ -17067,7 +17252,7 @@ sink
 \end_layout
 
 \begin_layout Standard
-What do we wan, then?
+What do we want, then?
 \end_layout
 
 \begin_layout Subsection*
@@ -17313,13 +17498,52 @@ The size of the datasets used here is deceiving.
 \end_layout
 
 \begin_layout Subsection*
+Triple check
+\end_layout
+
+\begin_layout Standard
+After discovering the bad-marginals bug, another check was needed.
+ After fixing this, the highest MI words to 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+ are 
+\begin_inset Quotes eld
+\end_inset
+
+oh tears asleep window lips answer closed afraid game lord reply red tree
+ Crawley pale hurry loved
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Looking at the supprt for these, they are all in the one-to-two dozen range,
+ compared to a support of 834 for 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So, the support is still fairly small, but is clearly larger than the onsie-two
+sie support seen above.
+ We are still computing the MI between short and long vectors.
+\end_layout
+
+\begin_layout Subsection*
 Other kinds of mutual information
 \end_layout
 
 \begin_layout Standard
 The above suggests that perhaps other measures should be examined.
- Intuitively, one might want a measure that treats vectors of similar length
- as being more similar, than those of dis-similar lengths.
+ Intuitively, one might want a measure that treats vectors of similar size
+ as being more similar, than those of dis-similar sizes.
 \end_layout
 
 \begin_layout Standard
@@ -17408,12 +17632,37 @@ noise
 \end_inset
 
 : the word-disjunct pairs with low observation counts.
-\begin_inset Foot
-status collapsed
+ This assumes that low-count word-disjunct pairs actually are 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Plain Layout
-A question that goes to far is to ask about complex values of s.
- The suggestion of s=1/2 has the appeal of being 
+noise
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This has 
+\emph on
+not
+\emph default
+ been experimentally established.
+ In fact, one can go in the opposite direction: perhaps these carry some
+ kind of important signal.
+ In this case, a weighting of 
+\begin_inset Formula $s=t=1/2$
+\end_inset
+
+ may provide a good intermediate balance between 
+\begin_inset Formula $s=t=0$
+\end_inset
+
+ and 
+\begin_inset Formula $s=t=1$
+\end_inset
+
+.
+ There's a strange intellectual appeal to an exponent of 1/2, in that it
+ is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -17421,13 +17670,24 @@ quantum mechanical
 \begin_inset Quotes erd
 \end_inset
 
- (square root of probability) but does not seem to offer any otherwise appealing
- property.
-\end_layout
-
+: it is the square root of the probability.
+ That this is meaningful in a statistical realm is demonstrated by the Fisher
+ information metric, which reduces to the flat-space Eucliden metric when
+ working with the square-root.
+ This is 
+\begin_inset Quotes eld
 \end_inset
 
+interesting
+\begin_inset Quotes erd
+\end_inset
 
+, the meaning of which is not yet entirely clear to this author.
+ (Asking about complex values of 
+\begin_inset Formula $s$
+\end_inset
+
+ seems like a step too far, at this time.)
 \end_layout
 
 \begin_layout Standard
