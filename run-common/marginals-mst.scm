@@ -21,6 +21,7 @@
 
 ; Compute the matrix-transpose marginals. As a side-effect, this will
 ; also compute support marginals and the central sums.
+(btr 'clobber)
 (btr 'mmt-marginals)
 
 (print-matrix-summary-report psa)

@@ -4732,8 +4732,54 @@ Go back to old master:
 MM^T support=52791.0     count=561295158.0     entropy=2.3118
 This is MM^T on the filtered dataset with the broken support code.
 
+WTF.
+clobber the marginals:
+MM^T support=6455136.0     count=6842054908.0     entropy=12.572
+
+4565380dc65169018a7c11faa87a4e32fc81bf9a -- pre amplitude and no
+clobber.  Gives crazy high MI.
+MM^T support=300245.0     count=561295158.0     entropy=7.3274
+
+Above, with the clobber of support.
+MM^T support=6455136.0     count=6842054908.0     entropy=12.572
+
+Sigh.
+
+
+
 oh tears asleep window lips answer closed afraid game lord reply red tree Crawley pale hurry loved
 
+
+set-right-totals why not L2, L3 ??
+
+get-total-support-right no L2, L3 ...
+
+make-central-compute
+
+all-left-marginals
+
+all-mmt-marginals does not call above...
+
+(define btr (batch-transpose csc))
+(btr 'mmt-marginals)
+
+total-support-right
+   (define left-total-key (PredicateNode "*-Left Total Key-*"))
+
+    (trans-obj (add-transpose-api star-obj))
+    (prod-obj  (add-support-compute
+        (add-tuple-math star-obj * 'get-count)))
+
+   (define marga (trans-obj 'mmt-count ROW-A))
+   (define margb (trans-obj 'mmt-count ROW-B))
+   ; (define prod (compute-right-product ROW-A ROW-B))
+   (define prod (prod-obj 'right-count (list ROW-A ROW-B)))
+   (define mmt-total (trans-obj 'total-mmt-count))
+   (log2 (* prod mmt-total) (* marga margb)))
+
+
+norm-key (add-pair-stars  LLOBJ) 'left-stars
+(LLOBJ 'right-wildcard ITEM)
 
 ====================================================
 link-class.scm ???

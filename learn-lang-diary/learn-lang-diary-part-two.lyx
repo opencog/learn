@@ -7959,6 +7959,17 @@ tranche-1
  Word-pair counting went well (except for the handling error that truncated
  the corpus), as did disjunct formation.
  The MM^T stats were computed for the disjuncts, including shapes.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+It contains 6029 words, 98102 disjuncts, a total of 171922 word-disjunct
+ pairs, has a sparsity of 11.748, a total of 4006152 observations for an
+ average of 23.302 per pair.
+\end_layout
+
+\end_inset
+
  Everything is fine (nominal) until merge.
  Projective merge fails dramatically – unrelated words are being merged.
  Why?
@@ -7966,7 +7977,7 @@ tranche-1
 status collapsed
 
 \begin_layout Plain Layout
-One possible answer to this question is that there is a proceedural error
+One possible answer to this question is that there is a procedural error
  at play.
  It is this: the MM^T marginals were computed for the full dataset, and
  then the dataset was trimmed to discard low-count rows and columns.
@@ -7977,9 +7988,10 @@ One possible answer to this question is that there is a proceedural error
 \emph on
 after
 \emph default
- trimming! This will be explored a bit, below.
- Meanwhile, this and most other sections below are making this same mistake,
- unless otherwise noted.
+ trimming! The MM^T marginals depend on the support marginals as well.
+ Which were also cached.
+ This has lead to some confusion in the below.
+ I think the results are unchanged, but I'm no longer confident.
  27 July 2021
 \end_layout
 
@@ -12164,10 +12176,10 @@ trimmed
  dataset, 40-8-5: all words with less than 40 observations were discarded.
  All disjuncts with less than 8 observations were discarded, and all (word,disju
 nct) pairs with less than 5 observations were discarded.
- Trimming tends to filter out a lot of the noise in the dataset, without
- much compromising the data integrity.
- That is, assuming one can accurately guess where the noise floor is; this
- remains an open topic.
+ I've been assuming that trimming filters out a lot of the noise in the
+ dataset, without much compromising the data integrity.
+ However, this has not been shown experimentally, it just seems like it
+ should be so.
 \end_layout
 
 \end_inset
@@ -12439,36 +12451,6 @@ Variation on above theme.
  words gets large, and so merges to those are proposed, too.
  This is presumably some bug.
  What's the bug? Attempt to find out, below.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Attention: this section uses the 
-\begin_inset Quotes eld
-\end_inset
-
-bad marginals
-\begin_inset Quotes erd
-\end_inset
-
-, as mentioned above and below.
- This section is still interesting to read, but the MI values are ...
- incorrect.
- The bad marginals problem is explained in a prior footnote, and in the
- 
-\begin_inset Quotes eld
-\end_inset
-
-How Shapes Affect MI
-\begin_inset Quotes erd
-\end_inset
-
- section below.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -14147,7 +14129,7 @@ her
 \end_inset
 
 , although this is no longer ranked.
- There are two columns showing the cset+shape-MI to 
+ The third column shows the cset+shape-MI to 
 \begin_inset Quotes eld
 \end_inset
 
@@ -14156,69 +14138,6 @@ him
 \end_inset
 
 .
- One column is labelled 
-\begin_inset Quotes eld
-\end_inset
-
-trim
-\begin_inset Quotes erd
-\end_inset
-
-, the other is labelled 
-\begin_inset Quotes eld
-\end_inset
-
-redo
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-Here's the gotcha.
- The cset+shape-trim column shows what happens when one computes the MM^T
- marginals (
-\emph on
-i.e.
-
-\emph default
- the values of 
-\begin_inset Formula $\sum_{d}N(w,d)N(*,d)$
-\end_inset
-
-) for the large dataset, and then one trims it down to a small size, by
- discarding words and disjuncts and individual word-disjunct pairs whose
- counts are below 8 and 5, respectively.
- When the MI is computed, the marginals for the full dataset got used (i.e.
- the sum ran over the set of disjuncts 
-\begin_inset Formula $d$
-\end_inset
-
- for the full set); but this is wrong, because the dot-product in computing
- the MI was missing many disjuncts (
-\emph on
-i.e.
-
-\emph default
- the dot product 
-\begin_inset Formula $\sum_{d}N(w,d)N(u,d)$
-\end_inset
-
- ran only over the disjuncts 
-\begin_inset Formula $d$
-\end_inset
-
- in the trimmed dataset, which was not compatible ith the marginals.)
-\end_layout
-
-\begin_layout Standard
-The second table entry for cset+shape-redo shows what happens when the dataset
- is trimmed first, and then the marginals are computed.
- This is in fact the correct thing to do, as the sum over disjuncts in the
- marginals is now over the same set as for the inner product.
- Phew.
- The sections up above make this mistake.
 \end_layout
 
 \begin_layout Standard
@@ -14231,9 +14150,8 @@ The second table entry for cset+shape-redo shows what happens when the dataset
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="22" columns="5">
+<lyxtabular version="3" rows="22" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -14266,20 +14184,11 @@ cset-only
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-cset+shape-trim
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-cset+shape-redo
+cset+shape
 \end_layout
 
 \end_inset
@@ -14309,15 +14218,6 @@ him
 
 \begin_layout Plain Layout
 her
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-him
 \end_layout
 
 \end_inset
@@ -14360,20 +14260,11 @@ him
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2.201
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.45
+2.201
 \end_layout
 
 \end_inset
@@ -14407,20 +14298,11 @@ me
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.860
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-9.969
+1.860
 \end_layout
 
 \end_inset
@@ -14454,20 +14336,11 @@ example
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.178
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.303
+1.178
 \end_layout
 
 \end_inset
@@ -14501,20 +14374,11 @@ us
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.758
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-9.906
+1.758
 \end_layout
 
 \end_inset
@@ -14548,20 +14412,11 @@ them
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.884
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.200
+1.884
 \end_layout
 
 \end_inset
@@ -14595,20 +14450,11 @@ speak
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.061
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.464
+1.061
 \end_layout
 
 \end_inset
@@ -14642,20 +14488,11 @@ instance
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.113
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.353
+0.113
 \end_layout
 
 \end_inset
@@ -14689,20 +14526,11 @@ happen
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.800
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.036
+0.800
 \end_layout
 
 \end_inset
@@ -14739,20 +14567,11 @@ difference
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.653
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-14.104
+0.653
 \end_layout
 
 \end_inset
@@ -14786,20 +14605,11 @@ themselves
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.784
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.575
+1.784
 \end_layout
 
 \end_inset
@@ -14833,20 +14643,11 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.817
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.347
+1.817
 \end_layout
 
 \end_inset
@@ -14880,20 +14681,11 @@ live
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.155
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.862
+1.155
 \end_layout
 
 \end_inset
@@ -14927,20 +14719,11 @@ why
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--1.044
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.645
+-1.044
 \end_layout
 
 \end_inset
@@ -14974,20 +14757,11 @@ listen
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.967
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.458
+0.967
 \end_layout
 
 \end_inset
@@ -15021,20 +14795,11 @@ herself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.730
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.975
+1.730
 \end_layout
 
 \end_inset
@@ -15068,20 +14833,11 @@ behind
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.280
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-12.587
+1.280
 \end_layout
 
 \end_inset
@@ -15115,20 +14871,11 @@ myself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.559
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-12.807
+1.559
 \end_layout
 
 \end_inset
@@ -15162,20 +14909,11 @@ her
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.961
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.921
+1.961
 \end_layout
 
 \end_inset
@@ -15209,20 +14947,11 @@ try
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.635
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-12.256
+0.635
 \end_layout
 
 \end_inset
@@ -15256,20 +14985,11 @@ say
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1.135
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-9.802
+1.135
 \end_layout
 
 \end_inset
@@ -15321,12 +15041,56 @@ The third column is peculiar.
 lot
 \emph default
  lower.
- This is because of the incorrect marginals being used.
- The fourth column shows the MI with the correct marginals.
- The MI values are much larger: the use of the shapes clearly bumps it way
- up high.
- The bad news is that the MI values fail to distinguish between pronouns,
+ I'm surprised by this; I was expecting the MI to be improved.
+ There's only a hint of a silver lining: the MI to verbs, nouns and preps
+ seems just a little lower, than it is to pronouns.
+ But just a smidgen.
+ It's not much.
+ Overall, we conclude that the MI values fail to distinguish between pronouns,
  verbs, nouns and preps.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+So this is intermixed with a lot of confusion.
+ The MM^T marginals (
+\emph on
+i.e.
+
+\emph default
+ the values of 
+\begin_inset Formula $\sum_{d}N(w,d)N(*,d)$
+\end_inset
+
+) were originally from the large dataset, kept as a cache.
+ Then the dataset was trimmed, without recomputing marginals.
+ Then I caught the error.
+ Then I discovered that the 
+\begin_inset Formula $N(*,d)$
+\end_inset
+
+ values were cached, too.
+ So, several different mistakes – in some cases, the sum ran over the set
+ of disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+ for the full set, and for some it did not.
+ The dot-product 
+\begin_inset Formula $\sum_{d}N(w,d)N(u,d)$
+\end_inset
+
+ used in computing the MI always runs only over the disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+ in the trimmed dataset.
+ This is obviously not compatible with the cached marginals.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -16143,27 +15907,6 @@ his
 \end_inset
 
  appears 8th.
-\end_layout
-
-\begin_layout Standard
-The MI values reported above are computed with the incorect marginals, due
- to a failure to recompute these after trimming.
- Redoing with he correct marginals reveals a completely different set of
- words ...
- however, the overall conclusions below appear to be unaffected.
-\end_layout
-
-\begin_layout Standard
-With the corrected marginals, the top words are (in descending order) 
-\begin_inset Quotes eld
-\end_inset
-
-oh tears asleep window lips answer closed afraid game lord reply red tree
- Crawley pale hurry loved
-\begin_inset Quotes erd
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Subsection*
@@ -17191,44 +16934,13 @@ high MI
 \begin_inset Quotes erd
 \end_inset
 
-? Well, the average 
-\begin_inset Quotes eld
-\end_inset
-
-entropy
-\begin_inset Quotes erd
-\end_inset
-
- for this dataset is 2.111.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-It contains 6029 words, 98102 disjuncts, a total of 171922 word-disjunct
- pairs, has a sparsity of 11.748, a total of 4006152 observations for an
- average of 23.302 per pair.
-\end_layout
-
-\end_inset
-
- This is a surrogate for the average MI.
- (Upon further reflection, this is a bad surrogate.
- Computing the average MI is impossible, as the CPU demans to sum over all
- pairs is simply too high.
+? (Computing the average MI is impossible, as the CPU demans to sum over
+ all pairs is simply too high.
  We need to develope techniques for estimating this from the distribution.)
 \end_layout
 
 \begin_layout Standard
-Thus, any MI above 2 is 
-\begin_inset Quotes eld
-\end_inset
-
-high
-\begin_inset Quotes erd
-\end_inset
-
-, and that is what we see: almost all of them are well above 2.
- The MI is high, because this word 
+The MI is high, because this word 
 \begin_inset Quotes eld
 \end_inset
 
@@ -17495,45 +17207,6 @@ The size of the datasets used here is deceiving.
  By contrast, in human mother-baby talk, there is a vast amount of repetition.
  Now, most of this repetition is for auditory training, not syntactic training,
  but still, the repetetiveness must surely be quite reinforcing.
-\end_layout
-
-\begin_layout Subsection*
-Triple check
-\end_layout
-
-\begin_layout Standard
-After discovering the bad-marginals bug, another check was needed.
- After fixing this, the highest MI words to 
-\begin_inset Quotes eld
-\end_inset
-
-him
-\begin_inset Quotes erd
-\end_inset
-
- are 
-\begin_inset Quotes eld
-\end_inset
-
-oh tears asleep window lips answer closed afraid game lord reply red tree
- Crawley pale hurry loved
-\begin_inset Quotes erd
-\end_inset
-
-.
- Looking at the supprt for these, they are all in the one-to-two dozen range,
- compared to a support of 834 for 
-\begin_inset Quotes eld
-\end_inset
-
-him
-\begin_inset Quotes erd
-\end_inset
-
-.
- So, the support is still fairly small, but is clearly larger than the onsie-two
-sie support seen above.
- We are still computing the MI between short and long vectors.
 \end_layout
 
 \begin_layout Subsection*

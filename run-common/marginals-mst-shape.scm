@@ -26,6 +26,7 @@
 ; Compute the matrix-transpose marginals. As a side-effect, this will
 ; also compute support marginals and the central sums.
 (define btr (batch-transpose csc))
+(btr 'clobber)
 (btr 'mmt-marginals)
 
 (print-matrix-summary-report csc)
