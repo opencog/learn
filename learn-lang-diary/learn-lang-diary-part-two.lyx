@@ -3275,7 +3275,7 @@ So now that we've got things working, lets look at precision and recall.
 \begin_layout Standard
 Uhh ..
  No its not working yet, in the sense that the connector classes are being
- mis-handled.
+ mishandled.
  Those need to be grouped correctly before export.
  More work...
 \end_layout
@@ -5034,10 +5034,10 @@ but multiple word-senses
 
 .
  That is, A and B are not just words, but are word-vectors, and vector B
- may be a linear combintation of two different word senses.
+ may be a linear combination of two different word senses.
  One of these senses might be synonymous to A, and the other might be completely
- diffferent.
- Thus, we want to merge that part of vector B that is (nearly) colinear
+ different.
+ Thus, we want to merge that part of vector B that is (nearly) co-linear
  with A, while leaving behind a different vector B-prime that is associated
  with some other word-sense for the word B.
  When encountering B in a connector, is that B in the sense of wordclass-AB,
@@ -5509,7 +5509,7 @@ Comparing, the reconstructed section on D is the same as what the sweep
  That is, the sweep is not commutative with the creation of shapes.
  This is a problem for maintaining the consistency between sections and
  cross-sections as clusters grow.
- The lack of consistency will cause merge judgements to diverge...
+ The lack of consistency will cause merge judgments to diverge...
 \end_layout
 
 \begin_layout Standard
@@ -5520,7 +5520,7 @@ Thus, we have at least two algorithms:
 Sweep-merge, as described above, where connectors are replaced by merged-connect
 ors if and only if the the rest of the connector set is identical.
  This merge algorithm is naively described, since it does not explain what
- to do if there are multiple connectors in a conector set that might be
+ to do if there are multiple connectors in a connector set that might be
  merged.
  It's also naive in that it does not explain how counts (frequencies) are
  to be handled.
@@ -5539,8 +5539,8 @@ union-merge
 \begin_inset Quotes erd
 \end_inset
 
- strategy of transfering observation counts for vectors taht are not perfectly
- colinear.
+ strategy of transferring observation counts for vectors that are not perfectly
+ co-linear.
  The projective-merge count transfers recognize the non-colinearity, and
  obtain cluster centroids through weighting formulas.
 \end_layout
@@ -5556,11 +5556,11 @@ Anyway, the original 2019 plan for using shapes seems to have been a good
 \end_layout
 
 \begin_layout Subsection*
-Non-Commutivity, Again
+Non-Commutativity, Again
 \end_layout
 
 \begin_layout Standard
-The non-communtivity can be hightened with a slightly richer example.
+The non-commutativity can be heightened with a slightly richer example.
  Consider
 \end_layout
 
@@ -5683,8 +5683,8 @@ The count on
 \family default
  is so small that it is considered to be noise, and is completely dropped
  before merging even starts.
- In this case, A and B are exactly colinear (are exact synonyms).
- The (naive) merge of A and B is completly unproblematic, except that it
+ In this case, A and B are exactly co-linear (are exact synonyms).
+ The (naive) merge of A and B is completely unproblematic, except that it
  leaves C without the ability to connect to anything.
  This can be handled in one of two ways.
  One way is to notice that, by detailed balance, the counts on this particular
@@ -5760,7 +5760,7 @@ This is now fully linkable, and there are no dangling pure-B connectors.
 \end_layout
 
 \begin_layout Standard
-In conclusion, this seems self-consistent eitehr way: either we can drop
+In conclusion, this seems self-consistent either way: either we can drop
  the 
 \family typewriter
 A:(K+ & B+)
@@ -5830,7 +5830,7 @@ A:(K- & <wclass-AB>+)
 <wclass-AB>:(K- & <wclass-AB>+)
 \family default
 .
- It seems that this can be reasonably infered and performed at the time
+ It seems that this can be reasonably inferred and performed at the time
  of creation, since the donors are readily identified.
 \end_layout
 
@@ -6094,7 +6094,7 @@ This is not entirely obvious.
  It seems like the toy example could be converted into a full proof.
  Yet ...
  are we missing something? Best bet is to write the code both ways, and
- very numericall that the operations are commutative.
+ verify numerically that the operations are commutative.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -6184,7 +6184,7 @@ A:(B- & C+)
 (A, BC)
 \family default
 .
- Here, the perenthesis denote a pair (a matrix entry).
+ Here, the parenthesis denote a pair (a matrix entry).
  The letter sequence is just the connector sequence with the directional
  indicators ignored.
 \end_layout
@@ -6289,13 +6289,13 @@ First merge
 \end_layout
 
 \begin_layout Standard
-The troublseome test is '
+The troublesome test is '
 \family typewriter
 connector-merge-tricon.scm
 \family default
 '.
  The relevant portion is as follows.
- The dictionary is assumed to contain many entries; the troubleseome subset
+ The dictionary is assumed to contain many entries; the troublesome subset
  is this:
 \end_layout
 
@@ -6375,7 +6375,7 @@ none
 \begin_inset Formula $p$
 \end_inset
 
- is transfered over to 
+ is transferred over to 
 \family typewriter
 ({ej}, abe)
 \family default
@@ -7011,7 +7011,7 @@ Using
 \family typewriter
 (gram-classify-greedy-disinfo psa 3.0 4)
 \family default
-, there wern't any merges that got done.
+, there weren't any merges that got done.
  That's because similarity never got above 3.0.
  Here's a table of all positive MI similarities, without shapes, and with.
  It's sorted on the shape column when the shape column MI is positive, otherwise
@@ -7837,19 +7837,19 @@ mixing
 \end_inset
 
  is appropriate, in it's technical sense (from ergodic theory?) Can we define
- mixing from the point of veiw of disjunct ambiguity? Of the indiscernibility
+ mixing from the point of view of disjunct ambiguity? Of the indiscernability
  of grammars given a corpus?
 \end_layout
 
 \begin_layout Itemize
 Is the automatic grammar generation controlling sufficiently for word-senses?
- Yes, there's a tunable paramter for that, but some disjuncts accidentally
+ Yes, there's a tune-able parameter for that, but some disjuncts accidentally
  appear in multiple POS, thus making those POS at least partly synonymous.
 \end_layout
 
 \begin_layout Itemize
 Is the current automatic grammar generation API appropriate? It was based
- on an intuitive sense of factorization, but the randomness seems to eassily
+ on an intuitive sense of factorization, but the randomness seems to easily
  generate ambiguous grammars.
 \end_layout
 
@@ -7871,8 +7871,8 @@ Is there a way of proving that two grammars are equivalent? If two different
 How can one characterize human natural language grammars? That is, if an
  artificial grammar is generated, how can we know if it is similar to a
  natural human language? I don't think the rainbow of human natural languages
- lines up well (or at all) with the axes of tunable paramters in the grammar
- generator.
+ lines up well (or at all) with the axes of tune-able parameters in the
+ grammar generator.
 \end_layout
 
 \begin_layout Standard
@@ -8010,7 +8010,7 @@ entropic similarity
 \end_inset
 
  in other texts in this directory.
- It's kind-of the same thing, once one adjusts defintions appropriately.
+ It's kind-of the same thing, once one adjusts definitions appropriately.
  Lets call it MI for short.
  Lets explore the top seven words that got merged, shown in the table below.
 \end_layout
@@ -8748,7 +8748,7 @@ to
 \end_inset
 
 , which seems low, but acceptable.
- So lets do the merge, by hand (se notes in `run-2/README` for details.
+ So lets do the merge, by hand (see notes in `run-2/README` for details.
  The result is `(WordClassNode 
 \begin_inset Quotes eld
 \end_inset
@@ -9273,9 +9273,9 @@ Conclusion
 
 \begin_layout Standard
 The following sections explore the problem above.
- The answer, in retrospect, appears to be obvious: of the paramterized projectiv
-e merge, only the overlap merge maximizes entropy.
- Ading in any fraction of the union merge lowers the total mutual information.
+ The answer, in retrospect, appears to be obvious: of the parameterized
+ projective merge, only the overlap merge maximizes entropy.
+ Adding in any fraction of the union merge lowers the total mutual information.
  It smears out the word-senses, and damages word-sense disambiguation.
 \end_layout
 
@@ -9367,7 +9367,7 @@ larger
 \end_inset
 
  itself ...
- and that's a disaaster.
+ and that's a disaster.
  This is a rule of thumb, because, I guess a more precise value could be
  given, but getting it requires some more algebra which I'm too lazy to
  do.
@@ -9378,7 +9378,7 @@ Similarity and Projection
 \end_layout
 
 \begin_layout Standard
-Lets' review the definition for the MI, and the projection.
+Let's review the definition for the MI, and the projection.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -9472,8 +9472,8 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u\right)p\left(w\righ
 
 \end_inset
 
-and written in this form, this is clearly the convetional (fractional) MI
- between two words.
+and written in this form, this is clearly the conventional (fractional)
+ MI between two words.
 \end_layout
 
 \begin_layout Standard
@@ -9488,7 +9488,7 @@ It's worth comparing this to the cosine distance
 Note that they both start with the dot product in the numerator.
  The cosine distance is invariant under rotations (orthogonal transformations)
  in Euclidean space.
- However, probability space is not Eucliden, so it is a 
+ However, probability space is not Euclidean, so it is a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -9636,7 +9636,7 @@ The merged vector
 \begin_inset Formula $g$
 \end_inset
 
- is meant to corrspond to a 
+ is meant to correspond to a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -9679,7 +9679,7 @@ average
 \begin_inset Formula $w$
 \end_inset
 
- have teh same word-sense (for example, the parts of 
+ have the same word-sense (for example, the parts of 
 \begin_inset Formula $u$
 \end_inset
 
@@ -9782,7 +9782,7 @@ Not clear, right now, which is better or more correct.
 
 \begin_layout Standard
 A bit of articulation helps clarify things.
- From the defintion of MI, one has
+ From the definition of MI, one has
 \begin_inset Formula 
 \begin{align*}
 MI_{tot}= & \sum_{u,w}p\left(u,w\right)MI\left(u,w\right)\\
@@ -10025,7 +10025,7 @@ Phew.
 \begin_layout Standard
 
 \series bold
-Corrollary
+Corollary
 \series default
 : Likewise, for the probabilities: if 
 \begin_inset Formula $a,b$
@@ -10062,7 +10062,7 @@ Divide by
 \begin_layout Standard
 
 \series bold
-Corrollary:
+Corollary:
 \series default
  The marginal probability of rows/columns not being merged is unaffected
  by the merge.
@@ -10102,7 +10102,7 @@ Follows from the lemma and the theorem above.
 \begin_layout Standard
 
 \series bold
-Corrollary:
+Corollary:
 \series default
  The mutual information of rows/columns not being merged is unaffected by
  the merge.
@@ -10144,7 +10144,7 @@ From the above, it is clear that the
 \begin_inset Formula $MI_{tot}$
 \end_inset
 
- splits into an nvariant part, and a part affected by the merge.
+ splits into an invariant part, and a part affected by the merge.
  Write 
 \begin_inset Formula 
 \begin{align*}
@@ -10201,7 +10201,7 @@ noprefix "false"
 \begin_inset Formula $f$
 \end_inset
 
- that yeilds the projective merge that maximizes the mutual information.
+ that yields the projective merge that maximizes the mutual information.
  As it turns out, a whole lot of rather tedious algebra is required.
  Thus, its time for an experimental interlude.
  Given the dataset above, we can vary the merge parameter by hand, and see
@@ -10209,15 +10209,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-First, a review os the dataset and the computational techniques.
+First, a review of the dataset and the computational techniques.
  The dataset is `r2-mpg-trim-40-8-5.rdb`.
  It contains 6029 words and 98102 disjuncts, and a total of 171922 word-disjunct
  pairs that were observed a total of 4006152 times.
  That is, each word/disjunct pair was observed an average of 23.302 times.
  The dataset is very sparse, with a log2 sparsity of 11.748.
  This is a trimmed dataset: all words with less than 40 observations were
- discared; all disjuncts with less than 8 observations were discarded, and
- all pairs with less than 5 observations were discarded.
+ discarded; all disjuncts with less than 8 observations were discarded,
+ and all pairs with less than 5 observations were discarded.
  See the experiment README file for more info on row and column support,
  average lengths, etc.
 \end_layout
@@ -10373,7 +10373,7 @@ to,to
 
 \begin_layout Standard
 The total probability is then 1.913e-3 and the weighted MI is 1.336e-2 and
- the averge MI is then 6.9829.
+ the average MI is then 6.9829.
  To repeat:
 \begin_inset Formula 
 \begin{align*}
@@ -10632,7 +10632,7 @@ total
 \end_layout
 
 \begin_layout Standard
-The MI reported in the total column is the paramter-dependent entropy from
+The MI reported in the total column is the parameter-dependent entropy from
  above:
 \begin_inset Formula 
 \[
@@ -12062,7 +12062,7 @@ In retrospect, it should be clear that the union merge serves only to make
  word-sense disambiguation cloudier and mushier, by placing unrelated disjuncts
  into the same class/cluster.
  This seemed somewhat harmless at some conceptual level, by employing the
- argumnet that the observed disjuncts are rather noisy, and that perhaps
+ argument that the observed disjuncts are rather noisy, and that perhaps
  there are commonalities that simply were not observed, due to insufficient
  sampling.
  This may still be true, but, viewed from the MI angle, it is clear that
@@ -12130,7 +12130,7 @@ f\left(d\right)N\left(b,d\right) & d\in D\left(b\right)\backslash D\left(a\right
 \end_inset
 
 The above tries to distinguish the overlapping regions.
- But it is overly complicted, since on the non-overlapping regions, the
+ But it is overly complicated, since on the non-overlapping regions, the
  counts vanish.
  That is, 
 \begin_inset Formula $N\left(b,d\right)=0$
@@ -12264,7 +12264,7 @@ since none of these have
 \begin_inset Formula $f\left(d\right)$
 \end_inset
 
- appearning in the expressions.
+ appearing in the expressions.
  Lets blast away.
 \begin_inset Formula 
 \[
@@ -12438,7 +12438,7 @@ Abandon the second option.
 \begin_inset Formula $f$
 \end_inset
 
- in the various quantities, some addtional notation is needed.
+ in the various quantities, some additional notation is needed.
 \end_layout
 
 \begin_layout Section*
@@ -12447,7 +12447,7 @@ July 2021 - Bad Merge Redux
 
 \begin_layout Standard
 Variation on above theme.
- After merging the first two words with the overlap merge, the MI to addtional
+ After merging the first two words with the overlap merge, the MI to additional
  words gets large, and so merges to those are proposed, too.
  This is presumably some bug.
  What's the bug? Attempt to find out, below.
@@ -12714,7 +12714,7 @@ Lets look at the MI before merger.
 \begin_inset Text
 
 \begin_layout Plain Layout
-Symmertric MI - csets+shapes
+Symmetric MI - csets+shapes
 \end_layout
 
 \end_inset
@@ -13410,7 +13410,7 @@ Lets check to see what's going on with the csets-only, without the shapes.
 \begin_inset Text
 
 \begin_layout Plain Layout
-Symmertric MI - csets only
+Symmetric MI - csets only
 \end_layout
 
 \end_inset
@@ -14084,7 +14084,8 @@ So that's ..
  The shapes really lowered the MI on him, her.
  Made them much much more distant.
  It lowered all the self-MI's.
- It lowerd some cross-MI's and raised others, with no apparent overall effect.
+ It lowered some cross-MI's and raised others, with no apparent overall
+ effect.
 \end_layout
 
 \begin_layout Subsection*
@@ -15022,7 +15023,7 @@ her
 \begin_inset Quotes erd
 \end_inset
 
- is also a possesive, and 
+ is also a possessive, and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -15136,7 +15137,7 @@ length
 \begin_inset Quotes eld
 \end_inset
 
-the size of the suppport
+the size of the support
 \begin_inset Quotes erd
 \end_inset
 
@@ -15249,8 +15250,8 @@ garbage
 \end_inset
 
 , and such low-count trimming might actually be discarding important information.
- That is, trimming might be creatng short vectors that incorrectly align
- with large vectros, when the untrimmed variants would have shown that they
+ That is, trimming might be creating short vectors that incorrectly align
+ with large vectors, when the untrimmed variants would have shown that they
  are quite different.
 \end_layout
 
@@ -15919,7 +15920,7 @@ So what is going on here? Lets look close up.
 status collapsed
 
 \begin_layout Plain Layout
-After the analysis in this section was performed, a proceedural issue was
+After the analysis in this section was performed, a procedural issue was
  detected.
  It's not clear how this affects results.
  The proceedural problem is that the MM^T marginals were computed first,
@@ -16052,7 +16053,7 @@ The total observation count is 9, which is small.
 \begin_inset Quotes eld
 \end_inset
 
-seemd to xxx
+seemed to xxx
 \begin_inset Quotes erd
 \end_inset
 
@@ -16898,7 +16899,7 @@ them
 \end_layout
 
 \begin_layout Standard
-The column labelled 
+The column labeled 
 \begin_inset Quotes eld
 \end_inset
 
@@ -16934,9 +16935,9 @@ high MI
 \begin_inset Quotes erd
 \end_inset
 
-? (Computing the average MI is impossible, as the CPU demans to sum over
+? (Computing the average MI is impossible, as the CPU demand to sum over
  all pairs is simply too high.
- We need to develope techniques for estimating this from the distribution.)
+ We need to develop techniques for estimating this from the distribution.)
 \end_layout
 
 \begin_layout Standard
@@ -17206,7 +17207,7 @@ The size of the datasets used here is deceiving.
  corpus are distinct, with very few repeated sentences.
  By contrast, in human mother-baby talk, there is a vast amount of repetition.
  Now, most of this repetition is for auditory training, not syntactic training,
- but still, the repetetiveness must surely be quite reinforcing.
+ but still, the repetitiveness must surely be quite reinforcing.
 \end_layout
 
 \begin_layout Subsection*
@@ -17351,7 +17352,7 @@ quantum mechanical
 
 : it is the square root of the probability.
  That this is meaningful in a statistical realm is demonstrated by the Fisher
- information metric, which reduces to the flat-space Eucliden metric when
+ information metric, which reduces to the flat-space Euclidean metric when
  working with the square-root.
  This is 
 \begin_inset Quotes eld
@@ -18165,7 +18166,7 @@ him
 \end_inset
 
  is the support for that word vector.
- Recall the defintion 
+ Recall the definition 
 \begin_inset Formula $D\left(w,d\right)=1$
 \end_inset
 
@@ -19135,8 +19136,38 @@ stddev
 \end_layout
 
 \begin_layout Standard
-Thus we conclude – for this small, unbalanced, ad hoc sample, the conventional
- MI provides the greatest amount of discrimination.
+Thus we conclude – for this small, unbalanced, 
+\emph on
+ad hoc
+\emph default
+ sample, the conventional MI provides the greatest amount of discrimination.
+\end_layout
+
+\begin_layout Subsection*
+Length Matching
+\end_layout
+
+\begin_layout Standard
+Above section has no considerations for negative matching – mismatches due
+ to size differences.
+ That is, the foundation-stone is built on 
+\begin_inset Formula 
+\[
+\sum_{d}N\left(w,d\right)N\left(u,d\right)
+\]
+
+\end_inset
+
+where, by definition, the sum over the disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+ run over the set where both counts 
+\begin_inset Formula $N$
+\end_inset
+
+ are non-zero.
+ This suggests using a Jaccard distance (Tanimoto distance).
 \end_layout
 
 \begin_layout Section*
@@ -19153,7 +19184,7 @@ correctly
 \end_inset
 
 , this time.
- The corpus comes in five parts, four from project gutenberg, a fifth that
+ The corpus comes in five parts, four from project Gutenberg, a fifth that
  is fan fiction.
  This naturally lends itself to datasets of increasing size.
  Table below shows some stats.
