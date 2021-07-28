@@ -17382,7 +17382,7 @@ sink
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="12" columns="6">
+<lyxtabular version="3" rows="13" columns="6">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -18022,7 +18022,7 @@ themselves
 </cell>
 </row>
 <row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -18031,7 +18031,7 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -18040,7 +18040,7 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -18049,7 +18049,7 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -18058,7 +18058,7 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -18067,11 +18067,67 @@ himself
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 -10.951
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+say
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+257
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.709
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.289
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.136
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-11.831
 \end_layout
 
 \end_inset
@@ -18083,6 +18139,622 @@ himself
 
 
 \begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above table shows four different kinds of MI between 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+ and the other words shown.
+ The 
+\begin_inset Formula $D\left(w,*\right)$
+\end_inset
+
+ is the support for that word vector.
+ Recall the defintion 
+\begin_inset Formula $D\left(w,d\right)=1$
+\end_inset
+
+ if 
+\begin_inset Formula $N\left(w,d\right)>0$
+\end_inset
+
+ and so 
+\begin_inset Formula $D\left(w,*\right)$
+\end_inset
+
+ is just the sum – the size of the vector.
+\end_layout
+
+\begin_layout Standard
+All of these seem to discriminate, but weakly.
+ That is, its plausible to have a high MI between 
+\begin_inset Quotes eld
+\end_inset
+
+him me us them themselves himself
+\begin_inset Quotes erd
+\end_inset
+
+ and a lower MI to 
+\begin_inset Quotes eld
+\end_inset
+
+example speak instance happen difference say
+\begin_inset Quotes erd
+\end_inset
+
+ and all of these do this.
+ The discrimination is imperfect.
+ For 
+\begin_inset Formula $MI_{0}$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+themselves
+\begin_inset Quotes erd
+\end_inset
+
+ is lower than 
+\begin_inset Quotes eld
+\end_inset
+
+instance speak say
+\begin_inset Quotes erd
+\end_inset
+
+, so these two clusters overlap.
+ That's not good.
+ For 
+\begin_inset Formula $MI_{1}$
+\end_inset
+
+ the lowest pronoun is 
+\begin_inset Quotes eld
+\end_inset
+
+us
+\begin_inset Quotes erd
+\end_inset
+
+ at 1.76 while the highest other word is 
+\begin_inset Quotes eld
+\end_inset
+
+example
+\begin_inset Quotes erd
+\end_inset
+
+ at 1.18, so these two clusters are separated.
+ However, the information content is not large: MI is measured in bits,
+ there is less than one bit difference.
+ This is not big enough to get the clustering to work well, as currently
+ designed/implemented.
+\end_layout
+
+\begin_layout Standard
+The huge values for 
+\begin_inset Formula $MI_{0.5}$
+\end_inset
+
+ are surprising.
+ It doesn't seem to be a great discriminator: the width of the clusters
+ is about the same as the distance between them.
+ The lowest pronoun for 
+\begin_inset Formula $MI_{0.5}$
+\end_inset
+
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+themselves
+\begin_inset Quotes erd
+\end_inset
+
+ at 21.60; the highest non-pronoun is 
+\begin_inset Quotes eld
+\end_inset
+
+speak
+\begin_inset Quotes erd
+\end_inset
+
+ at 21.56.
+ So this seems weaker than the usual MI for discrimination.
+\end_layout
+
+\begin_layout Standard
+The negative values for 
+\begin_inset Formula $M_{2}$
+\end_inset
+
+ are surprising.
+ Not sure what to make of that.
+\end_layout
+
+\begin_layout Standard
+Table below shows cluster statistics.
+ The pronoun cluster is 
+\begin_inset Quotes eld
+\end_inset
+
+him me us them themselves himself
+\begin_inset Quotes erd
+\end_inset
+
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+other
+\begin_inset Quotes erd
+\end_inset
+
+ cluster is 
+\begin_inset Quotes eld
+\end_inset
+
+example speak instance happen difference say
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+pronouns
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+other
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+min 
+\begin_inset Formula $MI_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.683
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.174
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max 
+\begin_inset Formula $MI_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.657
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.295
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+avg 
+\begin_inset Formula $MI_{0}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+min 
+\begin_inset Formula $MI_{0.5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max 
+\begin_inset Formula $MI_{0.5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+avg 
+\begin_inset Formula $MI_{0.5}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+min 
+\begin_inset Formula $MI_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max 
+\begin_inset Formula $MI_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+avg 
+\begin_inset Formula $MI_{1}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+min 
+\begin_inset Formula $MI_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+max 
+\begin_inset Formula $MI_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+avg 
+\begin_inset Formula $MI_{2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
 \end_inset
 
 
@@ -19783,7 +20455,7 @@ Time to load pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6488
 \end_layout
 
 \end_inset
@@ -19830,7 +20502,7 @@ Wall-clock time (hours)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11.6
 \end_layout
 
 \end_inset
@@ -19895,7 +20567,7 @@ RAM to load pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+93.0
 \end_layout
 
 \end_inset
@@ -19942,7 +20614,7 @@ Highest RAM usage
 \begin_inset Text
 
 \begin_layout Plain Layout
-(91.2)
+
 \end_layout
 
 \end_inset
@@ -19998,7 +20670,7 @@ CPU time (hours)
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+267
 \end_layout
 
 \end_inset
@@ -20054,7 +20726,7 @@ Atoms in database
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+156M
 \end_layout
 
 \end_inset
@@ -20110,7 +20782,7 @@ RocksDB file size
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.8GB
 \end_layout
 
 \end_inset
@@ -20139,6 +20811,10 @@ RocksDB file size
 \begin_layout Standard
 Wall-clock time is time to process that one particular tranche.
  Cumulative wall-clock is that, plus the sum of the earlier ones.
+\end_layout
+
+\begin_layout Standard
+Loading speed appears to be about 1GB/minute, or 1M atoms/min or 17K atoms/sec.
 \end_layout
 
 \begin_layout Section*
