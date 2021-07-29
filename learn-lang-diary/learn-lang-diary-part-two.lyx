@@ -19167,7 +19167,183 @@ where, by definition, the sum over the disjuncts
 \end_inset
 
  are non-zero.
- This suggests using a Jaccard distance (Tanimoto distance).
+ This suggests using an MI inspired by the Jaccard distance (Tanimoto distance).
+\end_layout
+
+\begin_layout Subsubsection*
+Jaccard MI
+\end_layout
+
+\begin_layout Standard
+To this end, define the support of a vector as
+\begin_inset Formula 
+\[
+S\left(w\right)=\left\{ d:N\left(w,d\right)>0\right\} 
+\]
+
+\end_inset
+
+so that the Jaccard union is 
+\begin_inset Formula 
+\[
+S\left(w\right)\cup S\left(u\right)
+\]
+
+\end_inset
+
+How about the rest, then? Well, lets just try it out.
+ Abusing the notation for conditional probability, write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+p\left(w;u,d\right) & =\frac{N\left(w,d\right)}{\sum_{d}N\left(w,d\right)+N\left(u,d\right)}\\
+ & =\frac{N\left(w,d\right)}{N\left(w,*\right)+N\left(u,*\right)}
+\end{align*}
+
+\end_inset
+
+Then define a Jaccard MI as 
+\begin_inset Formula 
+\[
+MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}p(w;u,d)p(u;w,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}p(w;u,d)p(*;u,d)\right)\left(\sum_{d}p(u;w,d)p(*;w,d)\right)}
+\]
+
+\end_inset
+
+Plugging through, this reduces to
+\begin_inset Formula 
+\[
+MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}N(w,d)N(u,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}N(w,d)p(*;u,d)\right)\left(\sum_{d}N(u,d)p(*;w,d)\right)}
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+p(*;w,d)=\sum_{x}\frac{N\left(x,d\right)}{N\left(x,*\right)+N\left(w,*\right)}
+\]
+
+\end_inset
+
+which is computationally awkward.
+\end_layout
+
+\begin_layout Standard
+Upshot is: the conventional dot product is not altered.
+ The computation of this Jaccard MI is far more complex and time consuming.
+ Curiously, the obvious attempt to simplify/approximate it just takes us
+ back to the conventional MI.
+ So that is kind of ...
+ weird and unexpected.
+ What to do?
+\end_layout
+
+\begin_layout Subsubsection*
+Ruzicka similarity
+\end_layout
+
+\begin_layout Standard
+Perhaps the above is overdoing it.
+ The Ruzicka distance for this problem is
+\begin_inset Formula 
+\[
+J_{R}\left(u,w\right)=\frac{\sum_{d}\min\left(N\left(w,d\right),N\left(u,d\right)\right)}{\sum_{d}\max\left(N\left(w,d\right),N\left(u,d\right)\right)}
+\]
+
+\end_inset
+
+and the Jaccard distance is then
+\begin_inset Formula 
+\[
+J\left(u,w\right)=1-J_{R}\left(u,w\right)
+\]
+
+\end_inset
+
+Note the Jaccard distance her is smaller, the closer these two are.
+ Per Wikipedia, though, this is incorrect for probability distributions;
+ specifically, it is discontinuous in the size of the supports.
+ (I don't see this offhand, but OK ...)
+\end_layout
+
+\begin_layout Standard
+Although WP calls these distances, it does not make any claims that they
+ obey the triangle inequality.
+\end_layout
+
+\begin_layout Subsubsection*
+Probability Jaccard
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+probability Jaccard
+\begin_inset Quotes erd
+\end_inset
+
+ provides 
+\begin_inset Quotes eld
+\end_inset
+
+maximally consistent sampling
+\begin_inset Quotes erd
+\end_inset
+
+ per WP ref.
+ It is defined as 
+\begin_inset Formula 
+\[
+J_{P}\left(u,w\right)=\sum_{d}\left[\sum_{c}\max\left(\frac{N\left(w,c\right)}{N\left(w,d\right)},\frac{N\left(u,c\right)}{N\left(u,d\right)}\right)\right]^{-1}
+\]
+
+\end_inset
+
+Note that 
+\begin_inset Formula 
+\[
+1-J_{P}\left(u,w\right)
+\]
+
+\end_inset
+
+is a 
+\emph on
+bona fide
+\emph default
+ metric over the probability space.
+\end_layout
+
+\begin_layout Subsubsection*
+Joint Entropy
+\end_layout
+
+\begin_layout Standard
+The joint entropy for us is just 
+\begin_inset Formula 
+\[
+H\left(w,u\right)=\log_{2}p\left(u,w\right)=\log_{2}\sum_{d}p\left(w,d\right)p\left(u,d\right)=\log_{2}\frac{\sum_{d}N\left(w,d\right)N\left(u,d\right)}{\left[N\left(*,*\right)\right]^{2}}
+\]
+
+\end_inset
+
+(right??) and so the 
+\begin_inset Quotes eld
+\end_inset
+
+metricized
+\begin_inset Quotes erd
+\end_inset
+
+ version of this is just the marginal entropies.
+ Hang on.
+ This needs work.
+ What did the earlier diary entries say about this, again?
 \end_layout
 
 \begin_layout Section*
@@ -20859,7 +21035,7 @@ Time to load pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-6488
+6488s
 \end_layout
 
 \end_inset
@@ -20971,7 +21147,7 @@ RAM to load pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-93.0
+93.1
 \end_layout
 
 \end_inset
