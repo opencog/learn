@@ -19167,7 +19167,25 @@ where, by definition, the sum over the disjuncts
 \end_inset
 
  are non-zero.
- This suggests using an MI inspired by the Jaccard distance (Tanimoto distance).
+ This suggests that perhaps, we could use a measure that includes negative
+ matching.
+ This suggests using an MI inspired by the Jaccard distance (aka Tanimoto
+ distance).
+\end_layout
+
+\begin_layout Standard
+Is this really needed? Maybe not – and here's why.
+ Merging words into clusters (minimally) means that only the disjuncts in
+ the intersection are merged.
+ The intent of this minimalist merge is to split up words having multiple
+ meanings, associating a collection of disjuncts with a particular meaning.
+ But what this also implies is that having a similarity measure that is
+ likewise tuned to being able to pick out common subsets is a good thing.
+\end_layout
+
+\begin_layout Standard
+That said, it is worth exploring some alternate similarity measures in greater
+ detail.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -19175,7 +19193,24 @@ Jaccard MI
 \end_layout
 
 \begin_layout Standard
-To this end, define the support of a vector as
+This section defines a kind-of 
+\begin_inset Quotes eld
+\end_inset
+
+Jaccard mutual information
+\begin_inset Quotes erd
+\end_inset
+
+, in a kind of 
+\emph on
+ad hoc
+\emph default
+ manner, by inspiration.
+ It's not particularly well-founded; rather, its plausible.
+\end_layout
+
+\begin_layout Standard
+Define the support of a vector as
 \begin_inset Formula 
 \[
 S\left(w\right)=\left\{ d:N\left(w,d\right)>0\right\} 
@@ -19319,31 +19354,305 @@ bona fide
  metric over the probability space.
 \end_layout
 
-\begin_layout Subsubsection*
-Joint Entropy
-\end_layout
-
 \begin_layout Standard
-The joint entropy for us is just 
+How might this work for 
+\begin_inset Quotes eld
+\end_inset
+
+sink
+\begin_inset Quotes erd
+\end_inset
+
+ with one disjunct, and 
+\begin_inset Quotes eld
+\end_inset
+
+him
+\begin_inset Quotes erd
+\end_inset
+
+, with 832 disjuncts on it? The sum over 
+\begin_inset Formula $d$
+\end_inset
+
+ must necessarily run over just this one disjunct.
+ The sum over 
+\begin_inset Formula $c$
+\end_inset
+
+ runs over all 832 of them.
+ For 831 of them, 
+\begin_inset Formula $N(sink,c)=0$
+\end_inset
+
+.
+ Thus,
 \begin_inset Formula 
 \[
-H\left(w,u\right)=\log_{2}p\left(u,w\right)=\log_{2}\sum_{d}p\left(w,d\right)p\left(u,d\right)=\log_{2}\frac{\sum_{d}N\left(w,d\right)N\left(u,d\right)}{\left[N\left(*,*\right)\right]^{2}}
+J_{P}\left(sink,him\right)=\left[1+\sum_{c\ne d}\frac{N\left(him,c\right)}{N\left(him,d\right)}\right]^{-1}
 \]
 
 \end_inset
 
-(right??) and so the 
+and clearly, this will judge these two words to be very different.
+\end_layout
+
+\begin_layout Subsubsection*
+Entropic Similarity
+\end_layout
+
+\begin_layout Standard
+The notation for entropy and MI being used here are susceptible to confusion,
+ when being compared to the contents of Wikipedia.
+ To avoid confusion, a review is worthwhile.
+ This was already presented in part one of the diary, section titled 
 \begin_inset Quotes eld
 \end_inset
 
-metricized
+Entropic Similarity
 \begin_inset Quotes erd
 \end_inset
 
- version of this is just the marginal entropies.
- Hang on.
- This needs work.
- What did the earlier diary entries say about this, again?
+, but is repeated here.
+\end_layout
+
+\begin_layout Standard
+Given a count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ define the 
+\emph on
+joint probability
+\emph default
+
+\begin_inset Formula 
+\[
+p_{M}\left(w,d\right)=\frac{N\left(w,d\right)}{N\left(*,*\right)}
+\]
+
+\end_inset
+
+The subscript 
+\begin_inset Formula $M$
+\end_inset
+
+ is a reminder that these counts are obtained from MST/MPG parsing (maximum
+ spanning tree/maximum planar graph parsing).
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+conditional probablity
+\emph default
+ of observing a word 
+\begin_inset Formula $w$
+\end_inset
+
+ given a fixed disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+ is then 
+\begin_inset Formula 
+\[
+p_{M}\left(w|d\right)=\frac{p_{M}\left(w,d\right)}{p_{M}\left(*,d\right)}
+\]
+
+\end_inset
+
+That is, the conditional probability is just the fraction of all pairs having
+ this disjunct.
+\end_layout
+
+\begin_layout Standard
+The 
+\emph on
+marginal probability
+\emph default
+ of observing a word 
+\begin_inset Formula $w$
+\end_inset
+
+ is just the sum of observing it for any disjunct:
+\begin_inset Formula 
+\[
+p_{M}\left(w\right)\equiv p_{M}\left(w,*\right)=\sum_{d}p_{M}\left(w,d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above is all fine and everything, but inappropriate for comparing two
+ words.
+ The inner product between two words 
+\begin_inset Formula $w,u$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+i\left(w,u\right)=\sum_{d}N\left(w,d\right)N\left(u,d\right)
+\]
+
+\end_inset
+
+and can be written as a proper probability as
+\begin_inset Formula 
+\[
+p\left(w,u\right)=\frac{i\left(w,u\right)}{i\left(*,*\right)}=\sum_{d}p_{M}\left(w,d\right)p_{M}\left(u,d\right)
+\]
+
+\end_inset
+
+Note the absence of a subscript 
+\begin_inset Formula $M$
+\end_inset
+
+; this is a different probability than above.
+\end_layout
+
+\begin_layout Standard
+The marginal probability is then
+\begin_inset Formula 
+\[
+p\left(w\right)\equiv p\left(w,*\right)=\sum_{d}p_{M}\left(w,d\right)p_{M}\left(*,d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The fractional MI between two words is then 
+\begin_inset Formula 
+\[
+MI\left(w,u\right)=\log_{2}\frac{p\left(w,u\right)}{p\left(w\right)p\left(u\right)}
+\]
+
+\end_inset
+
+and so is now manifestly compatible with Wikipedia.
+\end_layout
+
+\begin_layout Standard
+The (fractional) joint entropy is 
+\begin_inset Formula 
+\[
+H\left(w,u\right)=-\log_{2}p\left(u,w\right)
+\]
+
+\end_inset
+
+Note the minus sign.
+\end_layout
+
+\begin_layout Standard
+Wikipedia then defines the 
+\begin_inset Quotes eld
+\end_inset
+
+variation of information
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $d\left(u,w\right)$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\begin{align*}
+d\left(u,w\right) & =H\left(u,w\right)-MI\left(u,w\right)\\
+ & =\log_{2}p\left(w\right)p\left(u\right)-2\log_{2}p\left(u,w\right)
+\end{align*}
+
+\end_inset
+
+It then claims that 
+\begin_inset Formula 
+\[
+0\le\sum_{w,u}p\left(w,u\right)d\left(w,u\right)\le\sum_{w,u}p\left(w,u\right)\log_{2}p\left(w,u\right)
+\]
+
+\end_inset
+
+which is not manifestly obvious to me, but I guess it's plausible.
+ This suggests the 
+\begin_inset Quotes eld
+\end_inset
+
+normalized metric
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula 
+\[
+D\left(w,u\right)=\frac{d\left(w,u\right)}{H\left(w,u\right)}=1-\frac{MI\left(w,u\right)}{H\left(w,u\right)}
+\]
+
+\end_inset
+
+Is this really always positive? If so, its not superficially obvious to
+ me.
+ This is the fractional part of the 
+\begin_inset Quotes eld
+\end_inset
+
+Jaccard distance
+\begin_inset Quotes erd
+\end_inset
+
+, arrived at when given the appropriate measure-theoretic interpretation.
+ There is also a different 
+\begin_inset Quotes eld
+\end_inset
+
+metric
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+D^{\prime}\left(w,u\right)=1-\frac{MI\left(w,u\right)}{\max\left(H\left(w\right),H\left(u\right)\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+July 2021 - Similarity Smackdown
+\end_layout
+
+\begin_layout Standard
+So, above, we have a whole variety of different similarities.
+ Lets see how they perform on real data.
+ This test is to be done on two datasets: `run-1-en_mpg-tranche-123.rdb`
+ and a trimmed version of this.
+ Its our midsize English dataset.
+ It's pretty big.
+ The comparison will be between the top ten most frequent common nouns,
+ the top ten verbs, the top ten adjectives, the top ten pronouns, the top
+ ten prepositions and the top ten adverbs.
+ The min, max, mean and rms similarity will be computed in-group, for each
+ group.
+ This will be between the 10*9/2=45 pairs in each group.
+ Next, the min, max, avg and rms similarity between groups will be computed;
+ this will run over 10*10=100 between-group pairs.
+ This will be repeated for the trimmed dataset, too.
+ (Maybe several trims?) Should probably do this with and without shapes.
+ This is a pretty massive experiment, with a whole lot of compute going
+ into it.
+ This is going to take a while, and spew a lot of data.
 \end_layout
 
 \begin_layout Section*
