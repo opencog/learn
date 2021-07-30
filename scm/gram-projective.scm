@@ -790,7 +790,7 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(define pcos (add-pair-cosine-compute STARS))
+	(define pcos (add-similarity-compute STARS))
 	(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
 	(define (mpred WORD-A WORD-B)
 		(is-similar? get-cosine CUTOFF WORD-A WORD-B))
@@ -831,7 +831,7 @@
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
 "
-	(define pcos (add-pair-cosine-compute STARS))
+	(define pcos (add-similarity-compute STARS))
 	(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
 	(define (mpred WORD-A WORD-B)
 		(is-similar? get-cosine CUTOFF WORD-A WORD-B))
@@ -1044,7 +1044,7 @@
 ; (for-each (lambda (pr) (ptu 'get-count pr)) cit-vil)
 ;
 ; Is it OK to merge?
-; (define pcos (add-pair-cosine-compute psa))
+; (define pcos (add-similarity-compute psa))
 ; (is-cosine-similar? pcos (Word "run") (Word "jump"))
 ; (is-cosine-similar? pcos (Word "city") (Word "village"))
 ;
