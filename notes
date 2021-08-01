@@ -4781,6 +4781,63 @@ total-support-right
 norm-key (add-pair-stars  LLOBJ) 'left-stars
 (LLOBJ 'right-wildcard ITEM)
 
+-----------------
+(define cset-obj (make-pseudo-cset-api))
+(define cstars (add-pair-stars cset-obj))
+(define csc (add-covering-sections cset-obj))
+(define pwrds (cstars 'left-basis))
+(define cwords (csc 'left-basis))
+
+(length pwrds) ; 434
+(length cwords) ; 1294
+
+(define ps (make-aset-predicate  pwrds))
+(define wtf (atoms-subtract cwords pwrds))
+(take wtf 10)
+(WordNode "evening")
+(Connector (WordNode "evening") (ConnectorDir "+"))
+evening: <the, in- & *+>
+the: in- & evening+ 
+ (ConnectorSeq
+  (Connector (WordNode "in") (ConnectorDir "-"))
+  (Connector (WordNode "evening") (ConnectorDir "+")))
+
+
+(define inte
+(Section (ctv 1 0 456)
+  (WordNode "the")
+  (ConnectorSeq (Connector (WordNode "in") (ConnectorDir "-"))
+    (Connector (WordNode "evening") (ConnectorDir "+")))))
+
+(define fsa (add-subtotal-filter psa 640 128 80 #f))
+(define lfa (add-linkage-filter fsa))
+(define ae (lfa 'get-all-elts)) ; takes an hour...
+(length ae) ;   6035 
+(define in-ap? (make-aset-predicate ae))
+(in-ap? inte) ; #t  whoops!
+
+(define sfs (fsa 'left-basis)) 
+(length sfs) ; 4072
+
+(define in-sf? (make-aset-predicate sfs))
+(in-sf? (WordNode "evening"))   ; #t
+
+(fsa 'right-stars (WordNode "evening"))
+... is the empty set.
+
+(fsa '
+
+(define zfa (add-zero-filter fsa #f))
+(define zfs (zfa 'left-basis))
+
+Very slow, cause it requires right-stars .. for "any" yuck.
+
+(length zfs) ; 457  whoa ....
+
+
+
+
+
 ====================================================
 link-class.scm ???
 ====================================================

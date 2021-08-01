@@ -1051,7 +1051,7 @@ noise.  Because both the word and the disjunct distribution is Zipfian
 (i.e. half of all disjuncts might be observed only once!) this trimming
 step can easily remove 90% of the dataset.  The following sequence will
 perform the trim, as well as removing connectors that cannot connect to
-anything.
+anything. (Note: it can be slow; hours for mid-size datasets.)
 
 The trim used below keeps all words observed more than 40 times, all
 disjuncts observed more than 8 times, and all word-disjunct pairs
@@ -1067,7 +1067,8 @@ observed more than 5 times.  The initial dataset is called
    (define psc (add-support-compute psa))
    (psc 'cache-all)          ;; compute subtotals
    (define fsa (add-subtotal-filter psa 40 8 5 #f)) ;; The filter itself
-   (define lfa (add-linkage-filter fsa))
+   (define zfa (add-zero-filter fsa #f))
+   (define lfa (add-linkage-filter zfa))
    (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (define fso (make-store lfa))
    (fso 'store-all-elts)     ;; Do NOT store the marginals!
