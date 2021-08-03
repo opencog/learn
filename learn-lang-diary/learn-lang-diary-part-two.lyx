@@ -19189,91 +19189,13 @@ That said, it is worth exploring some alternate similarity measures in greater
 \end_layout
 
 \begin_layout Subsubsection*
-Jaccard MI
+Flavors of Jaccard similarity
 \end_layout
 
 \begin_layout Standard
-This section defines a kind-of 
-\begin_inset Quotes eld
-\end_inset
-
-Jaccard mutual information
-\begin_inset Quotes erd
-\end_inset
-
-, in a kind of 
-\emph on
-ad hoc
-\emph default
- manner, by inspiration.
- It's not particularly well-founded; rather, its plausible.
-\end_layout
-
-\begin_layout Standard
-Define the support of a vector as
-\begin_inset Formula 
-\[
-S\left(w\right)=\left\{ d:N\left(w,d\right)>0\right\} 
-\]
-
-\end_inset
-
-so that the Jaccard union is 
-\begin_inset Formula 
-\[
-S\left(w\right)\cup S\left(u\right)
-\]
-
-\end_inset
-
-How about the rest, then? Well, lets just try it out.
- Abusing the notation for conditional probability, write
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\begin{align*}
-p\left(w;u,d\right) & =\frac{N\left(w,d\right)}{\sum_{d}N\left(w,d\right)+N\left(u,d\right)}\\
- & =\frac{N\left(w,d\right)}{N\left(w,*\right)+N\left(u,*\right)}
-\end{align*}
-
-\end_inset
-
-Then define a Jaccard MI as 
-\begin_inset Formula 
-\[
-MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}p(w;u,d)p(u;w,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}p(w;u,d)p(*;u,d)\right)\left(\sum_{d}p(u;w,d)p(*;w,d)\right)}
-\]
-
-\end_inset
-
-Plugging through, this reduces to
-\begin_inset Formula 
-\[
-MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}N(w,d)N(u,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}N(w,d)p(*;u,d)\right)\left(\sum_{d}N(u,d)p(*;w,d)\right)}
-\]
-
-\end_inset
-
-where
-\begin_inset Formula 
-\[
-p(*;w,d)=\sum_{x}\frac{N\left(x,d\right)}{N\left(x,*\right)+N\left(w,*\right)}
-\]
-
-\end_inset
-
-which is computationally awkward.
-\end_layout
-
-\begin_layout Standard
-Upshot is: the conventional dot product is not altered.
- The computation of this Jaccard MI is far more complex and time consuming.
- Curiously, the obvious attempt to simplify/approximate it just takes us
- back to the conventional MI.
- So that is kind of ...
- weird and unexpected.
- What to do?
+There are multiple variants of Jaccard similarlity that apply to the current
+ situation.
+ This leads to a bit of a naming crisis.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -19281,32 +19203,144 @@ Ruzicka similarity
 \end_layout
 
 \begin_layout Standard
-Perhaps the above is overdoing it.
- The Ruzicka distance for this problem is
+Given some arbitrary function 
+\begin_inset Formula $f\left(w,d\right)$
+\end_inset
+
+ of word-disjunct pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+, the Ruzicka similarity for this problem is
 \begin_inset Formula 
 \[
-J_{R}\left(u,w\right)=\frac{\sum_{d}\min\left(N\left(w,d\right),N\left(u,d\right)\right)}{\sum_{d}\max\left(N\left(w,d\right),N\left(u,d\right)\right)}
+J_{R}\left(f;u,w\right)=\frac{\sum_{d}\min\left(f\left(w,d\right),f\left(u,d\right)\right)}{\sum_{d}\max\left(f\left(w,d\right),f\left(u,d\right)\right)}
 \]
 
 \end_inset
 
-and the Jaccard distance is then
-\begin_inset Formula 
-\[
-J\left(u,w\right)=1-J_{R}\left(u,w\right)
-\]
-
+The Jaccard similarity corresponds to the case where 
+\begin_inset Formula $f\left(w,d\right)$
 \end_inset
 
-Note the Jaccard distance her is smaller, the closer these two are.
- Per Wikipedia, though, this is incorrect for probability distributions;
- specifically, it is discontinuous in the size of the supports.
- (I don't see this offhand, but OK ...)
+ is either zero or one (is the indicator function: is or is not in the set)
+ so the Ruzicka similarity is a kind of weighted Jaccard.
 \end_layout
 
 \begin_layout Standard
-Although WP calls these distances, it does not make any claims that they
- obey the triangle inequality.
+The corresponding distance is
+\begin_inset Formula 
+\[
+J\left(f;u,w\right)=1-J_{R}\left(f;u,w\right)
+\]
+
+\end_inset
+
+Wikipedia suggests that this obeys the triangle inequality, i.e.
+ is a true metric, but this is not obvious to me.
+\end_layout
+
+\begin_layout Standard
+There are several plausible functions from which 
+\begin_inset Formula $f$
+\end_inset
+
+ can be built.
+ One is the raw observation count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ and the other is the conditional probability of observing a particular
+ word-disjunct pair, for that word:
+\begin_inset Formula 
+\[
+p\left(d|w\right)=\frac{N\left(w,d\right)}{N\left(w,*\right)}
+\]
+
+\end_inset
+
+This is nicer than just using the plain counts, and here's why.
+ Consider first:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+J_{R}\left(N;u,w\right)=\frac{\sum_{d}\min\left(N\left(w,d\right),N\left(u,d\right)\right)}{\sum_{d}\max\left(N\left(w,d\right),N\left(u,d\right)\right)}
+\]
+
+\end_inset
+
+If word 
+\begin_inset Formula $u$
+\end_inset
+
+ is a (perfect) synonym for 
+\begin_inset Formula $w$
+\end_inset
+
+ but is used only rarely, then the comparison of the raw counts will lead
+ to mostly-garbage.
+ That is, if 
+\begin_inset Formula $N\left(u,d\right)=\alpha N\left(w,d\right)$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, these two vectors would come out as dis-similar, even though it is clear
+ that, for this case, we want them to be considered to be identical, as
+ they are synonyms.
+ Thus, using raw 
+\begin_inset Formula $N$
+\end_inset
+
+ is just wrong, for the present case.
+ By contrast, using the conditional probability appears to provide the desired
+ result: the two synonyms would be judged to have perfect similarity.
+\end_layout
+
+\begin_layout Standard
+The simplest, narrowest, original defintion of the Jaccard similarity is
+ the unwieighted similarity given by 
+\begin_inset Formula $f\left(w,d\right)=\left[N\left(w,d\right)>0\right]$
+\end_inset
+
+.
+ This just uses the support of 
+\begin_inset Formula $N$
+\end_inset
+
+ to determine set membership.
+\end_layout
+
+\begin_layout Standard
+The `add-similarity-compute` object provides three Jaccard methods:
+\end_layout
+
+\begin_layout Itemize
+`jaccard` which implements 
+\begin_inset Formula $J_{R}\left(N;u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+`cond-jacc` which implements 
+\begin_inset Formula $J_{R}\left(p;u,w\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+`overlap` which implements 
+\begin_inset Formula $J_{R}\left(N>0;u,w\right)$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -19627,6 +19661,116 @@ D^{\prime}\left(w,u\right)=1-\frac{MI\left(w,u\right)}{\max\left(H\left(w\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection*
+Jaccard MI
+\end_layout
+
+\begin_layout Standard
+This section defines a kind-of 
+\begin_inset Quotes eld
+\end_inset
+
+Jaccard mutual information
+\begin_inset Quotes erd
+\end_inset
+
+, in a kind of 
+\emph on
+ad hoc
+\emph default
+ manner, by inspiration.
+ It's not particularly well-founded; rather, its plausible.
+ Except that it's not – it's broken.
+\end_layout
+
+\begin_layout Standard
+Define the support of a vector as
+\begin_inset Formula 
+\[
+S\left(w\right)=\left\{ d:N\left(w,d\right)>0\right\} 
+\]
+
+\end_inset
+
+so that the Jaccard union is 
+\begin_inset Formula 
+\[
+S\left(w\right)\cup S\left(u\right)
+\]
+
+\end_inset
+
+How about the rest, then? Well, lets just try it out.
+ Abusing the notation for conditional probability, write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+p\left(w;u,d\right) & =\frac{N\left(w,d\right)}{\sum_{d}N\left(w,d\right)+N\left(u,d\right)}\\
+ & =\frac{N\left(w,d\right)}{N\left(w,*\right)+N\left(u,*\right)}
+\end{align*}
+
+\end_inset
+
+Then define a Jaccard MI as 
+\begin_inset Formula 
+\[
+MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}p(w;u,d)p(u;w,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}p(w;u,d)p(*;u,d)\right)\left(\sum_{d}p(u;w,d)p(*;w,d)\right)}
+\]
+
+\end_inset
+
+Plugging through, this reduces to
+\begin_inset Formula 
+\[
+MI_{J}\left(w,u\right)=\log_{2}\frac{\left(\sum_{d}N(w,d)N(u,d)\right)\left(\sum_{d}p(*;u,d)p(*;w,d)\right)}{\left(\sum_{d}N(w,d)p(*;u,d)\right)\left(\sum_{d}N(u,d)p(*;w,d)\right)}
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+p(*;w,d)=\sum_{x}\frac{N\left(x,d\right)}{N\left(x,*\right)+N\left(w,*\right)}
+\]
+
+\end_inset
+
+which is computationally awkward.
+\end_layout
+
+\begin_layout Standard
+Upshot is: the conventional dot product is not altered.
+ The computation of this Jaccard MI is far more complex and time consuming.
+ Curiously, the obvious attempt to simplify/approximate it just takes us
+ back to the conventional MI.
+\end_layout
+
+\begin_layout Standard
+The primary problem here is that this voilates one of the desired properties
+ for the similarity of synonyms.
+ That is, if 
+\begin_inset Formula $N\left(u,d\right)=\alpha N\left(w,d\right)$
+\end_inset
+
+ for some constant 
+\begin_inset Formula $\alpha$
+\end_inset
+
+, then the two words 
+\begin_inset Formula $u$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ should be judged as perfect synonyms, and the resulting similarity should
+ be perfect.
+ This distance violates that.
 \end_layout
 
 \begin_layout Section*
@@ -26554,7 +26698,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+566970
 \end_layout
 
 \end_inset
@@ -26563,7 +26707,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5483
 \end_layout
 
 \end_inset
@@ -26572,7 +26716,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+277064
 \end_layout
 
 \end_inset
@@ -26581,7 +26725,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11.388
 \end_layout
 
 \end_inset
@@ -26590,7 +26734,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+13.206
 \end_layout
 
 \end_inset
@@ -26610,7 +26754,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1558158
 \end_layout
 
 \end_inset
@@ -26619,7 +26763,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10916
 \end_layout
 
 \end_inset
@@ -26628,7 +26772,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+738026
 \end_layout
 
 \end_inset
@@ -26637,7 +26781,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+12.336
 \end_layout
 
 \end_inset
@@ -26646,7 +26790,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.160
 \end_layout
 
 \end_inset
@@ -27778,7 +27922,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+504
 \end_layout
 
 \end_inset
@@ -27787,7 +27931,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.7782
 \end_layout
 
 \end_inset
@@ -27796,7 +27940,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.176
 \end_layout
 
 \end_inset
@@ -27805,7 +27949,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6148
 \end_layout
 
 \end_inset
@@ -27814,7 +27958,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.437
 \end_layout
 
 \end_inset
@@ -27823,7 +27967,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.044
 \end_layout
 
 \end_inset
@@ -27832,7 +27976,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.018
 \end_layout
 
 \end_inset
@@ -27852,7 +27996,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+516
 \end_layout
 
 \end_inset
@@ -27861,7 +28005,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.8864
 \end_layout
 
 \end_inset
@@ -27870,7 +28014,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.134
 \end_layout
 
 \end_inset
@@ -28007,6 +28151,11 @@ So we conclude:
 
 \begin_layout Itemize
 Less filtering gives better results.
+\end_layout
+
+\begin_layout Itemize
+Shapes are stunningly disappointing; but this still may be due to the faulty
+ filtering, and so deserves one more round.
 \end_layout
 
 \begin_layout Subsection*
@@ -30422,6 +30571,27 @@ So we conclude:
 This is not competitive with the probability-based methods.
 \end_layout
 
+\begin_layout Itemize
+Shapes improve the cosine distance! Even though this is still with the broken
+ filtering! Hypothesis: the shape vectors really do improve vector alignment
+ (as this clearly shows) but the extra MI terms dissolve it back out.
+ That is, the shapes do not carry any extra information not already present
+ in the vectors.
+\end_layout
+
+\begin_layout Itemize
+This may be a misinterpretation, though.
+ By comparing inter scores with and without shapes, we see that the shapes
+ make the vectors more similar.
+ This is also the case for the intra scores.
+ In particular, the RMS for the intra scores goes down (cause they're more
+ similar) which makes the separation improve.
+\end_layout
+
+\begin_layout Itemize
+Conclude: shapes make all vectors appear to be more similar.
+\end_layout
+
 \begin_layout Subsection*
 Inter-intra log cosine summary
 \end_layout
@@ -31604,8 +31774,18 @@ So we conclude:
 \end_layout
 
 \begin_layout Itemize
-This is competitive with the joint-probability scores, and is just a hair
- worse than the MI scores.
+This is competitive with the joint-probability scores, maybe even a hair
+ beter, and is just a little worse than the MI scores.
+\end_layout
+
+\begin_layout Itemize
+Unlike the plain cosine, the shapes make things worse.
+ The log has the effect of magnifying differnces (since the log is almost
+ linear for high similarity, but stretches the scale strongly for low similarity.
+) And yet, if we compare the inter scores with and without shapes, it seems
+ that shapes are making vectors more similar.
+ This is consistent with the non-log cosine, and the separation is controlled
+ by the RMS.
 \end_layout
 
 \begin_layout Subsection*
@@ -31618,6 +31798,18 @@ The table below records the inter and intra cluster average overlap similarity
  This is provided per API for the `add-similarity-compute` object.
  The overlap is simply the unweighted Jaccard similarity.
  This ranges from 0.0 to 1.0, with the interpretation that 1.0 means very similar.
+\end_layout
+
+\begin_layout Standard
+That is, define
+\begin_inset Formula 
+\[
+\mbox{jac}_{p}\left(w,u\right)=\sum_{d}\frac{\min\left(N\right)}{\max\left(\right)}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -32518,7 +32710,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -32527,7 +32719,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.668
 \end_layout
 
 \end_inset
@@ -32536,7 +32728,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.499
 \end_layout
 
 \end_inset
@@ -32545,7 +32737,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.343
 \end_layout
 
 \end_inset
@@ -33658,7 +33850,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -33667,7 +33859,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.603
 \end_layout
 
 \end_inset
@@ -33676,7 +33868,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.692
 \end_layout
 
 \end_inset
@@ -33685,7 +33877,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -33694,7 +33886,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.866
 \end_layout
 
 \end_inset
@@ -33703,7 +33895,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.732
 \end_layout
 
 \end_inset
@@ -33712,7 +33904,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.307
 \end_layout
 
 \end_inset
@@ -34029,7 +34221,7 @@ intra prjac
 \begin_inset Text
 
 \begin_layout Plain Layout
-intra RMS
+RMS
 \end_layout
 
 \end_inset
@@ -34056,7 +34248,7 @@ inter prjac
 \begin_inset Text
 
 \begin_layout Plain Layout
-inter RMS
+RMS
 \end_layout
 
 \end_inset
@@ -34455,7 +34647,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -34464,7 +34656,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.813
 \end_layout
 
 \end_inset
@@ -34473,7 +34665,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.107
 \end_layout
 
 \end_inset
@@ -34778,7 +34970,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -34787,7 +34979,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.368
 \end_layout
 
 \end_inset
@@ -34796,7 +34988,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.687
 \end_layout
 
 \end_inset
@@ -34805,7 +34997,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.143
 \end_layout
 
 \end_inset
@@ -34825,7 +35017,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -34834,7 +35026,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.171
 \end_layout
 
 \end_inset
@@ -34843,7 +35035,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.639
 \end_layout
 
 \end_inset
@@ -34852,7 +35044,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -34861,7 +35053,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.342
 \end_layout
 
 \end_inset
@@ -34870,7 +35062,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.663
 \end_layout
 
 \end_inset
@@ -34879,7 +35071,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.306
 \end_layout
 
 \end_inset
