@@ -25832,8 +25832,9 @@ Trimmed dataset
 
 \begin_layout Standard
 Redo of trimming, as explained above.
- These are correctly trimmed.
- Time to perforrm the filtering is about 4200 seconds for each file.
+ These are more tightly trimmed, but still not fully trimmed.
+ See below for dicussion.
+ Time to perform the filtering is about 4200 seconds for each file.
 \end_layout
 
 \begin_layout Standard
@@ -26372,7 +26373,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+34737
 \end_layout
 
 \end_inset
@@ -26381,7 +26382,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+811
 \end_layout
 
 \end_inset
@@ -26390,7 +26391,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18274
 \end_layout
 
 \end_inset
@@ -26399,7 +26400,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.7369
 \end_layout
 
 \end_inset
@@ -26409,6 +26410,19 @@ zfil-320-64-40-shape
 
 \begin_layout Plain Layout
 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+2.4048
 \end_layout
 
 \end_inset
@@ -26428,7 +26442,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+99342
 \end_layout
 
 \end_inset
@@ -26437,7 +26451,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1777
 \end_layout
 
 \end_inset
@@ -26446,7 +26460,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+53238
 \end_layout
 
 \end_inset
@@ -26455,7 +26469,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.8953
 \end_layout
 
 \end_inset
@@ -26464,7 +26478,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.0846
 \end_layout
 
 \end_inset
@@ -26484,7 +26498,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+238735
 \end_layout
 
 \end_inset
@@ -26493,7 +26507,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3081
 \end_layout
 
 \end_inset
@@ -26502,7 +26516,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+120546
 \end_layout
 
 \end_inset
@@ -26511,7 +26525,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.603
 \end_layout
 
 \end_inset
@@ -26520,7 +26534,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.6970
 \end_layout
 
 \end_inset
@@ -26725,6 +26739,28 @@ shape
 \end_inset
 
  datasets include both Sections and Cross-Sections.
+\end_layout
+
+\begin_layout Standard
+So here's the trimming problem: the algo used is not yet fully recursive.
+ So: first round of trimming removes sections which have connectors that
+ don't appear as words in the left-basis.
+ This leaves some words with no sections on them.
+ These are removed.
+ However, those words might still appear in some connectors.
+ Thus a second round of trimming is needed.
+ And so on, and so on, until a stable collection is arrived at.
+\end_layout
+
+\begin_layout Standard
+Some additional confusion: there might be words in the left basis that never
+ appear in connectors.
+ These also have to be removed.
+ When these are removed, corresponding sections disappear as well, necessitating
+ another recursive round.
+ Yech.
+ So lets proceed without this, and see what happens.
+ We can try again, later.
 \end_layout
 
 \begin_layout Subsection*
@@ -27325,7 +27361,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5654
 \end_layout
 
 \end_inset
@@ -27334,7 +27370,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-1.565
 \end_layout
 
 \end_inset
@@ -27343,7 +27379,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.009
 \end_layout
 
 \end_inset
@@ -27352,7 +27388,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.317
 \end_layout
 
 \end_inset
@@ -27446,7 +27482,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -27455,7 +27491,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.5024
 \end_layout
 
 \end_inset
@@ -27464,7 +27500,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.863
 \end_layout
 
 \end_inset
@@ -27473,7 +27509,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -27482,7 +27518,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.2723
 \end_layout
 
 \end_inset
@@ -27491,7 +27527,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.975
 \end_layout
 
 \end_inset
@@ -27500,7 +27536,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.129
 \end_layout
 
 \end_inset
@@ -27520,7 +27556,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -27529,7 +27565,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.8892
 \end_layout
 
 \end_inset
@@ -27538,7 +27574,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.012
 \end_layout
 
 \end_inset
@@ -27547,7 +27583,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -27556,7 +27592,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.204
 \end_layout
 
 \end_inset
@@ -27565,7 +27601,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.959
 \end_layout
 
 \end_inset
@@ -27574,7 +27610,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.041
 \end_layout
 
 \end_inset
@@ -27594,7 +27630,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -27603,7 +27639,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.5841
 \end_layout
 
 \end_inset
@@ -27612,7 +27648,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.350
 \end_layout
 
 \end_inset
@@ -27621,7 +27657,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -27630,7 +27666,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.547
 \end_layout
 
 \end_inset
@@ -27639,7 +27675,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.091
 \end_layout
 
 \end_inset
@@ -27648,7 +27684,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.907
 \end_layout
 
 \end_inset
@@ -27668,7 +27704,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -27677,7 +27713,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.7075
 \end_layout
 
 \end_inset
@@ -27686,7 +27722,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.290
 \end_layout
 
 \end_inset
@@ -27695,7 +27731,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -27704,7 +27740,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.551
 \end_layout
 
 \end_inset
@@ -27713,7 +27749,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.151
 \end_layout
 
 \end_inset
@@ -27722,7 +27758,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.986
 \end_layout
 
 \end_inset
@@ -27966,7 +28002,11 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+Less filtering gives better results.
 \end_layout
 
 \begin_layout Subsection*
@@ -28530,7 +28570,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -28539,7 +28579,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.7920
 \end_layout
 
 \end_inset
@@ -28548,7 +28588,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.126
 \end_layout
 
 \end_inset
@@ -28557,7 +28597,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5654
 \end_layout
 
 \end_inset
@@ -28566,7 +28606,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.218
 \end_layout
 
 \end_inset
@@ -28575,7 +28615,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.179
 \end_layout
 
 \end_inset
@@ -28584,7 +28624,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.262
 \end_layout
 
 \end_inset
@@ -28678,7 +28718,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -28687,7 +28727,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.1093
 \end_layout
 
 \end_inset
@@ -28696,7 +28736,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.033
 \end_layout
 
 \end_inset
@@ -28705,7 +28745,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -28714,7 +28754,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0777
 \end_layout
 
 \end_inset
@@ -28723,7 +28763,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.365
 \end_layout
 
 \end_inset
@@ -28732,7 +28772,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.859
 \end_layout
 
 \end_inset
@@ -28752,7 +28792,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -28761,7 +28801,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.5268
 \end_layout
 
 \end_inset
@@ -28770,7 +28810,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.310
 \end_layout
 
 \end_inset
@@ -28779,7 +28819,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -28788,7 +28828,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.530
 \end_layout
 
 \end_inset
@@ -28797,7 +28837,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.422
 \end_layout
 
 \end_inset
@@ -28806,7 +28846,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.849
 \end_layout
 
 \end_inset
@@ -28826,7 +28866,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -28835,7 +28875,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.0244
 \end_layout
 
 \end_inset
@@ -28844,7 +28884,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.433
 \end_layout
 
 \end_inset
@@ -28853,7 +28893,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -28862,7 +28902,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-1.099
 \end_layout
 
 \end_inset
@@ -28871,7 +28911,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.412
 \end_layout
 
 \end_inset
@@ -28880,7 +28920,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.873
 \end_layout
 
 \end_inset
@@ -28900,7 +28940,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -28909,7 +28949,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.8585
 \end_layout
 
 \end_inset
@@ -28918,7 +28958,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.317
 \end_layout
 
 \end_inset
@@ -28927,7 +28967,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -28936,7 +28976,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-1.416
 \end_layout
 
 \end_inset
@@ -28945,7 +28985,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.384
 \end_layout
 
 \end_inset
@@ -28954,7 +28994,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.954
 \end_layout
 
 \end_inset
@@ -29198,7 +29238,15 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+Less filtering gives better results.
+\end_layout
+
+\begin_layout Itemize
+Quality is close to the MI results, and only slightly poorer.
 \end_layout
 
 \begin_layout Subsection*
@@ -29652,7 +29700,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6163
 \end_layout
 
 \end_inset
@@ -29661,7 +29709,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0211
 \end_layout
 
 \end_inset
@@ -29670,7 +29718,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.070
 \end_layout
 
 \end_inset
@@ -29679,7 +29727,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.701
 \end_layout
 
 \end_inset
@@ -29699,7 +29747,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+516
 \end_layout
 
 \end_inset
@@ -29708,7 +29756,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1620
 \end_layout
 
 \end_inset
@@ -29717,7 +29765,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.197
 \end_layout
 
 \end_inset
@@ -29726,7 +29774,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6270
 \end_layout
 
 \end_inset
@@ -29735,7 +29783,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0223
 \end_layout
 
 \end_inset
@@ -29744,7 +29792,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.069
 \end_layout
 
 \end_inset
@@ -29753,7 +29801,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.710
 \end_layout
 
 \end_inset
@@ -29847,7 +29895,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+404
 \end_layout
 
 \end_inset
@@ -29856,7 +29904,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1773
 \end_layout
 
 \end_inset
@@ -29865,7 +29913,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.193
 \end_layout
 
 \end_inset
@@ -29874,7 +29922,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4646
 \end_layout
 
 \end_inset
@@ -29883,7 +29931,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0467
 \end_layout
 
 \end_inset
@@ -29892,7 +29940,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.099
 \end_layout
 
 \end_inset
@@ -29901,7 +29949,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.676
 \end_layout
 
 \end_inset
@@ -29921,7 +29969,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+475
 \end_layout
 
 \end_inset
@@ -29930,7 +29978,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1851
 \end_layout
 
 \end_inset
@@ -29939,7 +29987,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.184
 \end_layout
 
 \end_inset
@@ -29948,7 +29996,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5741
 \end_layout
 
 \end_inset
@@ -29957,7 +30005,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0515
 \end_layout
 
 \end_inset
@@ -29966,7 +30014,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.095
 \end_layout
 
 \end_inset
@@ -29975,7 +30023,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.726
 \end_layout
 
 \end_inset
@@ -29995,7 +30043,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+484
 \end_layout
 
 \end_inset
@@ -30004,7 +30052,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1863
 \end_layout
 
 \end_inset
@@ -30013,7 +30061,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.179
 \end_layout
 
 \end_inset
@@ -30022,7 +30070,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5844
 \end_layout
 
 \end_inset
@@ -30031,7 +30079,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0530
 \end_layout
 
 \end_inset
@@ -30040,7 +30088,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.091
 \end_layout
 
 \end_inset
@@ -30049,7 +30097,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.743
 \end_layout
 
 \end_inset
@@ -30069,7 +30117,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -30078,7 +30126,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1905
 \end_layout
 
 \end_inset
@@ -30087,7 +30135,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.177
 \end_layout
 
 \end_inset
@@ -30096,7 +30144,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6054
 \end_layout
 
 \end_inset
@@ -30105,7 +30153,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.0546
 \end_layout
 
 \end_inset
@@ -30114,7 +30162,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.090
 \end_layout
 
 \end_inset
@@ -30123,7 +30171,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.770
 \end_layout
 
 \end_inset
@@ -30367,7 +30415,11 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+This is not competitive with the probability-based methods.
 \end_layout
 
 \begin_layout Subsection*
@@ -30806,7 +30858,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+489
 \end_layout
 
 \end_inset
@@ -30815,7 +30867,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.344
 \end_layout
 
 \end_inset
@@ -30824,7 +30876,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.981
 \end_layout
 
 \end_inset
@@ -30833,7 +30885,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4610
 \end_layout
 
 \end_inset
@@ -30842,7 +30894,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-7.958
 \end_layout
 
 \end_inset
@@ -30851,7 +30903,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.071
 \end_layout
 
 \end_inset
@@ -30860,7 +30912,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.177
 \end_layout
 
 \end_inset
@@ -30880,7 +30932,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -30889,7 +30941,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.251
 \end_layout
 
 \end_inset
@@ -30898,7 +30950,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.905
 \end_layout
 
 \end_inset
@@ -30907,7 +30959,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5654
 \end_layout
 
 \end_inset
@@ -30916,7 +30968,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-8.203
 \end_layout
 
 \end_inset
@@ -30925,7 +30977,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.114
 \end_layout
 
 \end_inset
@@ -30934,7 +30986,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.269
 \end_layout
 
 \end_inset
@@ -31028,7 +31080,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -31037,7 +31089,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-2.744
 \end_layout
 
 \end_inset
@@ -31046,7 +31098,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.652
 \end_layout
 
 \end_inset
@@ -31055,7 +31107,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -31064,7 +31116,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.595
 \end_layout
 
 \end_inset
@@ -31073,7 +31125,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.006
 \end_layout
 
 \end_inset
@@ -31082,7 +31134,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.923
 \end_layout
 
 \end_inset
@@ -31102,7 +31154,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -31111,7 +31163,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.263
 \end_layout
 
 \end_inset
@@ -31120,7 +31172,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.074
 \end_layout
 
 \end_inset
@@ -31129,7 +31181,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -31138,7 +31190,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.207
 \end_layout
 
 \end_inset
@@ -31147,7 +31199,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.163
 \end_layout
 
 \end_inset
@@ -31156,7 +31208,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.899
 \end_layout
 
 \end_inset
@@ -31176,7 +31228,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -31185,7 +31237,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.480
 \end_layout
 
 \end_inset
@@ -31194,7 +31246,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.303
 \end_layout
 
 \end_inset
@@ -31203,7 +31255,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -31212,7 +31264,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.581
 \end_layout
 
 \end_inset
@@ -31221,7 +31273,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.283
 \end_layout
 
 \end_inset
@@ -31230,7 +31282,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.912
 \end_layout
 
 \end_inset
@@ -31250,7 +31302,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -31259,7 +31311,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.359
 \end_layout
 
 \end_inset
@@ -31268,7 +31320,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.156
 \end_layout
 
 \end_inset
@@ -31277,7 +31329,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5884
 \end_layout
 
 \end_inset
@@ -31286,7 +31338,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.605
 \end_layout
 
 \end_inset
@@ -31295,7 +31347,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.298
 \end_layout
 
 \end_inset
@@ -31304,7 +31356,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.977
 \end_layout
 
 \end_inset
@@ -31548,7 +31600,12 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+This is competitive with the joint-probability scores, and is just a hair
+ worse than the MI scores.
 \end_layout
 
 \begin_layout Subsection*
@@ -31990,7 +32047,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+489
 \end_layout
 
 \end_inset
@@ -31999,7 +32056,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.102
 \end_layout
 
 \end_inset
@@ -32008,7 +32065,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.982
 \end_layout
 
 \end_inset
@@ -32017,7 +32074,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4610
 \end_layout
 
 \end_inset
@@ -32026,7 +32083,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-7.750
 \end_layout
 
 \end_inset
@@ -32035,7 +32092,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.872
 \end_layout
 
 \end_inset
@@ -32044,7 +32101,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.336
 \end_layout
 
 \end_inset
@@ -32064,7 +32121,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -32073,7 +32130,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.162
 \end_layout
 
 \end_inset
@@ -32082,7 +32139,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.894
 \end_layout
 
 \end_inset
@@ -32091,7 +32148,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5654
 \end_layout
 
 \end_inset
@@ -32100,7 +32157,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-7.968
 \end_layout
 
 \end_inset
@@ -32109,7 +32166,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.915
 \end_layout
 
 \end_inset
@@ -32118,7 +32175,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.465
 \end_layout
 
 \end_inset
@@ -32212,7 +32269,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -32221,7 +32278,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.948
 \end_layout
 
 \end_inset
@@ -32230,7 +32287,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.409
 \end_layout
 
 \end_inset
@@ -32239,7 +32296,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -32248,7 +32305,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.842
 \end_layout
 
 \end_inset
@@ -32257,7 +32314,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.319
 \end_layout
 
 \end_inset
@@ -32266,7 +32323,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.344
 \end_layout
 
 \end_inset
@@ -32286,7 +32343,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -32295,7 +32352,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.444
 \end_layout
 
 \end_inset
@@ -32304,7 +32361,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.616
 \end_layout
 
 \end_inset
@@ -32313,7 +32370,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -32322,7 +32379,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.408
 \end_layout
 
 \end_inset
@@ -32331,7 +32388,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.427
 \end_layout
 
 \end_inset
@@ -32340,7 +32397,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.215
 \end_layout
 
 \end_inset
@@ -32360,7 +32417,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -32369,7 +32426,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.610
 \end_layout
 
 \end_inset
@@ -32378,7 +32435,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.709
 \end_layout
 
 \end_inset
@@ -32387,7 +32444,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -32396,7 +32453,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.697
 \end_layout
 
 \end_inset
@@ -32405,7 +32462,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.508
 \end_layout
 
 \end_inset
@@ -32414,7 +32471,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.221
 \end_layout
 
 \end_inset
@@ -32434,7 +32491,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+500
 \end_layout
 
 \end_inset
@@ -32443,7 +32500,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.531
 \end_layout
 
 \end_inset
@@ -32452,7 +32509,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.590
 \end_layout
 
 \end_inset
@@ -32732,7 +32789,12 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+For the shapeless sections, this provides superior separation to the MI
+ scores.
 \end_layout
 
 \begin_layout Subsection*
@@ -33152,7 +33214,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+489
 \end_layout
 
 \end_inset
@@ -33161,7 +33223,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.362
 \end_layout
 
 \end_inset
@@ -33170,7 +33232,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.311
 \end_layout
 
 \end_inset
@@ -33179,7 +33241,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4610
 \end_layout
 
 \end_inset
@@ -33188,7 +33250,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-8.400
 \end_layout
 
 \end_inset
@@ -33197,7 +33259,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.285
 \end_layout
 
 \end_inset
@@ -33206,7 +33268,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.314
 \end_layout
 
 \end_inset
@@ -33226,7 +33288,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+501
 \end_layout
 
 \end_inset
@@ -33235,7 +33297,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.271
 \end_layout
 
 \end_inset
@@ -33244,7 +33306,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.159
 \end_layout
 
 \end_inset
@@ -33253,7 +33315,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5654
 \end_layout
 
 \end_inset
@@ -33262,7 +33324,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-8.513
 \end_layout
 
 \end_inset
@@ -33271,7 +33333,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.276
 \end_layout
 
 \end_inset
@@ -33280,7 +33342,7 @@ zfil-20-4-2-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.424
 \end_layout
 
 \end_inset
@@ -33374,7 +33436,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -33383,7 +33445,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.147
 \end_layout
 
 \end_inset
@@ -33392,7 +33454,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.566
 \end_layout
 
 \end_inset
@@ -33401,7 +33463,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -33410,7 +33472,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.100
 \end_layout
 
 \end_inset
@@ -33419,7 +33481,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.682
 \end_layout
 
 \end_inset
@@ -33428,7 +33490,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.161
 \end_layout
 
 \end_inset
@@ -33448,7 +33510,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -33457,7 +33519,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.563
 \end_layout
 
 \end_inset
@@ -33466,7 +33528,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.762
 \end_layout
 
 \end_inset
@@ -33475,7 +33537,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -33484,7 +33546,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.665
 \end_layout
 
 \end_inset
@@ -33493,7 +33555,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.798
 \end_layout
 
 \end_inset
@@ -33502,7 +33564,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.170
 \end_layout
 
 \end_inset
@@ -33522,7 +33584,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -33531,7 +33593,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.723
 \end_layout
 
 \end_inset
@@ -33540,7 +33602,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.869
 \end_layout
 
 \end_inset
@@ -33549,7 +33611,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5365
 \end_layout
 
 \end_inset
@@ -33558,7 +33620,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.903
 \end_layout
 
 \end_inset
@@ -33567,7 +33629,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.780
 \end_layout
 
 \end_inset
@@ -33576,7 +33638,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.166
 \end_layout
 
 \end_inset
@@ -33894,7 +33956,12 @@ mpg-shape
 \end_layout
 
 \begin_layout Standard
-So we conclude ...
+So we conclude:
+\end_layout
+
+\begin_layout Itemize
+For the shapeless sections, this provides almost as good separation as the
+ overlaps, and quite a bit better than the MI scores.
 \end_layout
 
 \begin_layout Subsection*
@@ -34314,7 +34381,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+489
 \end_layout
 
 \end_inset
@@ -34323,7 +34390,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.887
 \end_layout
 
 \end_inset
@@ -34332,7 +34399,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.238
 \end_layout
 
 \end_inset
@@ -34341,7 +34408,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4610
 \end_layout
 
 \end_inset
@@ -34350,7 +34417,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-7.840
 \end_layout
 
 \end_inset
@@ -34359,7 +34426,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.214
 \end_layout
 
 \end_inset
@@ -34368,7 +34435,7 @@ zfil-40-8-5-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.319
 \end_layout
 
 \end_inset
@@ -34536,7 +34603,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+307
 \end_layout
 
 \end_inset
@@ -34545,7 +34612,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.696
 \end_layout
 
 \end_inset
@@ -34554,7 +34621,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.466
 \end_layout
 
 \end_inset
@@ -34563,7 +34630,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2359
 \end_layout
 
 \end_inset
@@ -34572,7 +34639,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-5.559
 \end_layout
 
 \end_inset
@@ -34581,7 +34648,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.561
 \end_layout
 
 \end_inset
@@ -34590,7 +34657,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.193
 \end_layout
 
 \end_inset
@@ -34610,7 +34677,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+441
 \end_layout
 
 \end_inset
@@ -34619,7 +34686,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.132
 \end_layout
 
 \end_inset
@@ -34628,7 +34695,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.700
 \end_layout
 
 \end_inset
@@ -34637,7 +34704,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4310
 \end_layout
 
 \end_inset
@@ -34646,7 +34713,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.108
 \end_layout
 
 \end_inset
@@ -34655,7 +34722,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.675
 \end_layout
 
 \end_inset
@@ -34664,7 +34731,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.162
 \end_layout
 
 \end_inset
@@ -34684,7 +34751,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+479
 \end_layout
 
 \end_inset
@@ -34693,7 +34760,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.294
 \end_layout
 
 \end_inset
@@ -34702,7 +34769,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.814
 \end_layout
 
 \end_inset

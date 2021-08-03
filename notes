@@ -4837,6 +4837,111 @@ Very slow, cause it requires right-stars .. for "any" yuck.
 supp-obj (add-support-compute
 'right-count is sum over right-stars i.e. N(w,*)
 
+-----------------
+Its broken again.
+(define cset-obj (make-pseudo-cset-api))
+(define cstars (add-pair-stars cset-obj))
+(define csc (add-covering-sections cset-obj))
+(define pwrds (cstars 'left-basis))
+(define cwords (csc 'left-basis))
+
+(length pwrds) ; 409
+(length cwords) ; 437
+
+(define ps (make-aset-predicate  pwrds))
+(define wtf (atoms-subtract cwords pwrds))
+(take wtf 10)
+(WordNode "your")
+
+[your: <and: you- & *+>]  --- and: you- & your+
+[your: <of: out- & *+>] --- of: out- & your+
+
+(Connector (WordNode "your") (ConnectorDir "+"))
+(ConnectorSeq
+  (Connector (WordNode "out") (ConnectorDir "-"))
+  (Connector (WordNode "your") (ConnectorDir "+")))
+
+(Section (ctv 1 0 135)
+  (WordNode "of")
+  (ConnectorSeq
+    (Connector
+      (WordNode "out")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "your")
+      (ConnectorDir "+"))))
+
+(cstars 'right-stars (WordNode "your"))
+... empty set. How did this happen?
+
+(define zsc (add-zero-filter csc #f))
+(length (zsc 'left-basis)) ; 437 ... why isn't this working? oh right.
+
+; try again
+(define zob (add-zero-filter cstars #f))
+(define zsc (add-covering-sections zob))
+(length (zsc 'left-basis)) ; 437 .... wtf
+
+; try again
+(define lob (add-linkage-filter cstars))
+(define lsc (add-covering-sections lob))
+(length (lsc 'left-basis)) ; 437 .... wtf
+
+; try again
+(define lob (add-linkage-filter cstars))
+(length (lob 'left-basis)) ; 409 OK.
+(define zlb (add-zero-filter lob #f))
+(define czl (add-covering-sections zlb))
+(length (czl 'left-basis)) ; 437 .... wtf
+
+---
+(length (cstars 'right-basis)) ; 2496
+
+(length
+	(delete-dup-atoms
+		(map (lambda (SEC) (gdr SEC))
+			(cstars 'get-all-elts))))  ; 2496 .. again.
+
+(define conseqs
+	(delete-dup-atoms
+		(map (lambda (SEC) (gdr SEC))
+			(lob 'get-all-elts))))
+
+(length conseqs) ; 2405  so some removed.
+
+(define conwords
+	(delete-dup-atoms
+		(concatenate
+			(map (lambda (CONSEQ)
+				(map (lambda (CON) (gar CON))
+					(cog-outgoing-set CONSEQ)))
+				conseqs))))
+
+(length conwords) ; 357 oh huh. much smaller...
+
+---
+(length (psa 'right-stars (WordNode "your")))   ; 36956
+(define fsa (add-subtotal-filter psa 640 128 80 #f))
+(length (fsa 'right-stars (WordNode "your")))   ; 1
+ your: beg- & pardon+
+
+(define zfa (add-zero-filter fsa #f))
+(define zfs (zfa 'left-basis))
+(length zfs)  ; 457
+(zfa 'right-stars (WordNode "your"))
+(length (zfa 'right-stars (WordNode "your"))) ; same as before
+
+(define lfa (add-linkage-filter zfa))
+(lfa 'right-stars (WordNode "your")) 
+; Now its the empty set.  (takes long time)
+
+(length (lfa 'left-basis)) ; 457 ... ouch
+(length (lfa 'right-basis)) ; 2496
+
+(length
+	(delete-dup-atoms
+		(map (lambda (SEC) (gdr SEC))
+			(lfa 'get-all-elts)))) ; 2496 arghh
 
 
 
