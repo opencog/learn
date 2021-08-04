@@ -4943,8 +4943,55 @@ Its broken again.
 		(map (lambda (SEC) (gdr SEC))
 			(lfa 'get-all-elts)))) ; 2496 arghh
 
+=================================================
+r3-zfil-640-128-80-fresh.rdb
+Done storing 4006 pairs in 1 secs
+Total store time = 5275 secs
 
+r3-zfil-640-128-80-wtf.rdb
 
+guile -l cogserver.scm
+(load-atomspace)
+(cog-report-counts)
+
+(Connector . 666)
+(ConnectorSeq . 2496)
+(Section . 4006)
+(WordNode . 437)
+(define all-words (cog-get-atoms 'WordNode))
+(define all-sects (cog-get-atoms 'Section))
+(define all-seqs (cog-get-atoms 'ConnectorSeq))
+(define all-cons (cog-get-atoms 'Connector))
+
+(define pca (make-pseudo-cset-api))
+(define psa (add-pair-stars pca))
+(define btr (batch-transpose psa))
+(btr 'mmt-marginals)
+
+(cog-report-counts)
+(ListLink . 2906)
+
+(print-matrix-summary-report psa)
+Rows: 409 Columns: 2496
+Size: 4006 non-zero entries  Sparsity (-log_2): 7.9934  entropy=-3.191
+
+(report-plain)
+(cog-report-counts)
+(WordNode . 451)  <--- from the report.
+
+guile -l marginals-mst-shape.scm
+Rows: 437 Columns: 6961
+Size: 12340 Sparsity (-log_2): 7.9455 entropy=-1.338  .. this is correct.
+
+(cog-report-counts)
+(Connector . 668)
+(ShapeLink . 4465)
+(CrossSection . 8334)
+(EvaluationLink . 438)
+
+guile -l marginals-mst.scm
+... still OK.
+(load "/tmp/smack.scm")
 
 ====================================================
 link-class.scm ???

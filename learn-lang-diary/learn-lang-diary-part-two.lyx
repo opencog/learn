@@ -26941,440 +26941,6 @@ Some additional confusion: there might be words in the left basis that never
  We can try again, later.
 \end_layout
 
-\begin_layout Standard
-And yet another bug: closing the dataset, and then reopening it, and recomputing
-, gives different (and larger) dimensions than before.
- For both the plain marginal datasets and also the shapes.
- This is a bug.
- Here's a sampling:
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="6">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-file name
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-total pairs
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-words
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-disjuncts
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-sparsity
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-entropy
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-r3-zfil-640-128-80-marg
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-6035
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-434
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4238
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.2516
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
--2.829
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-r3-zfil-320-64-40-marg
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-15733
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-810
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10808
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-9.1201
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.4877
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-r3-zfil-160-32-20-marg
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-40357
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1687
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-27298
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10.156
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-3.5924
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zfil-640-128-80-shape
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-18507
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-1294
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10737
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-9.5521
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-0.7650
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zfil-320-64-40-shape
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-48818
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2674
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-26981
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-10.529
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4.7756
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-zfil-160-32-20-shape
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-129247
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-5180
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-71280
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-11.480
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-8.5478
-\end_layout
-
-\end_inset
-</cell>
-</row>
-</lyxtabular>
-
-\end_inset
-
-
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Why is this different? WTF.
- This is frustrating.
-\end_layout
-
 \begin_layout Subsection*
 Inter-intra MI summary
 \end_layout
@@ -28871,7 +28437,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.02
+1.020
 \end_layout
 
 \end_inset
@@ -29924,13 +29490,6 @@ smaller is better
 \end_layout
 
 \begin_layout Standard
-XXX This might not be directly comparable to earlier results, because thee
- calculations are performed on the re-opened data files, which seem to have
- different dimensions.
- This is a bug of some kind.
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset VSpace defskip
 \end_inset
@@ -30039,7 +29598,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-208
+202
 \end_layout
 
 \end_inset
@@ -30048,7 +29607,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-10.345
+10.121
 \end_layout
 
 \end_inset
@@ -30057,7 +29616,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-2.976
+2.911
 \end_layout
 
 \end_inset
@@ -30066,7 +29625,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-556
+548
 \end_layout
 
 \end_inset
@@ -30075,7 +29634,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.894
+13.619
 \end_layout
 
 \end_inset
@@ -30084,7 +29643,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.722
+3.656
 \end_layout
 
 \end_inset
@@ -30093,7 +29652,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.953
+0.957
 \end_layout
 
 \end_inset
@@ -30113,7 +29672,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-296
+288
 \end_layout
 
 \end_inset
@@ -30122,7 +29681,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-11.728
+11.583
 \end_layout
 
 \end_inset
@@ -30131,7 +29690,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.676
+3.725
 \end_layout
 
 \end_inset
@@ -30140,7 +29699,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1110
+1094
 \end_layout
 
 \end_inset
@@ -30149,7 +29708,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-16.095
+15.957
 \end_layout
 
 \end_inset
@@ -30158,7 +29717,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.273
+4.241
 \end_layout
 
 \end_inset
@@ -30167,7 +29726,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.022
+1.031
 \end_layout
 
 \end_inset
@@ -30187,7 +29746,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-377
+374
 \end_layout
 
 \end_inset
@@ -30196,7 +29755,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.201
+13.206
 \end_layout
 
 \end_inset
@@ -30205,7 +29764,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.681
+4.739
 \end_layout
 
 \end_inset
@@ -30214,7 +29773,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-2120
+2104
 \end_layout
 
 \end_inset
@@ -30223,7 +29782,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-18.565
+18.499
 \end_layout
 
 \end_inset
@@ -30232,7 +29791,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.918
+4.895
 \end_layout
 
 \end_inset
@@ -30241,7 +29800,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.091
+1.081
 \end_layout
 
 \end_inset
@@ -30270,7 +29829,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-14.465
+14.451
 \end_layout
 
 \end_inset
@@ -30279,7 +29838,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.530
+5.516
 \end_layout
 
 \end_inset
@@ -30288,7 +29847,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-3429
+3420
 \end_layout
 
 \end_inset
@@ -30297,7 +29856,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-20.742
+20.701
 \end_layout
 
 \end_inset
@@ -30306,7 +29865,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-5.543
+5.535
 \end_layout
 
 \end_inset
@@ -30315,7 +29874,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.133
+1.129
 \end_layout
 
 \end_inset
@@ -30557,7 +30116,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-311
+307
 \end_layout
 
 \end_inset
@@ -30566,7 +30125,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-13.115
+12.469
 \end_layout
 
 \end_inset
@@ -30575,7 +30134,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.370
+3.178
 \end_layout
 
 \end_inset
@@ -30584,7 +30143,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-2386
+2359
 \end_layout
 
 \end_inset
@@ -30593,7 +30152,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-16.763
+16.093
 \end_layout
 
 \end_inset
@@ -30602,7 +30161,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-3.667
+3.610
 \end_layout
 
 \end_inset
@@ -30611,7 +30170,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.995
+1.004
 \end_layout
 
 \end_inset
@@ -30631,7 +30190,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-448
+441
 \end_layout
 
 \end_inset
@@ -30640,7 +30199,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-14.924
+14.340
 \end_layout
 
 \end_inset
@@ -30649,7 +30208,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.141
+3.995
 \end_layout
 
 \end_inset
@@ -30658,7 +30217,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4349
+4310
 \end_layout
 
 \end_inset
@@ -30667,7 +30226,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-18.703
+18.162
 \end_layout
 
 \end_inset
@@ -30676,7 +30235,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.093
+4.037
 \end_layout
 
 \end_inset
@@ -30685,7 +30244,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.913
+0.947
 \end_layout
 
 \end_inset
@@ -30714,7 +30273,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-15.679
+15.235
 \end_layout
 
 \end_inset
@@ -30723,7 +30282,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.731
+4.682
 \end_layout
 
 \end_inset
@@ -30732,7 +30291,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-5367
+5365
 \end_layout
 
 \end_inset
@@ -30741,7 +30300,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-19.922
+19.448
 \end_layout
 
 \end_inset
@@ -30750,7 +30309,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.603
+4.521
 \end_layout
 
 \end_inset
@@ -30759,7 +30318,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.897
+0.900
 \end_layout
 
 \end_inset
@@ -30788,7 +30347,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-15.934
+15.550
 \end_layout
 
 \end_inset
@@ -30797,7 +30356,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.606
+4.526
 \end_layout
 
 \end_inset
@@ -30806,7 +30365,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-5885
+5884
 \end_layout
 
 \end_inset
@@ -30815,7 +30374,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-20.433
+20.040
 \end_layout
 
 \end_inset
@@ -30824,7 +30383,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4.771
+4.702
 \end_layout
 
 \end_inset
@@ -30833,7 +30392,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.943
+0.955
 \end_layout
 
 \end_inset
@@ -30880,7 +30439,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6148
 \end_layout
 
 \end_inset
@@ -30889,7 +30448,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+20.299
 \end_layout
 
 \end_inset
@@ -30898,7 +30457,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.558
 \end_layout
 
 \end_inset
@@ -30907,7 +30466,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.994
 \end_layout
 
 \end_inset
@@ -30927,7 +30486,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+516
 \end_layout
 
 \end_inset
@@ -30936,7 +30495,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+16.067
 \end_layout
 
 \end_inset
@@ -30945,7 +30504,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.260
 \end_layout
 
 \end_inset
@@ -30954,7 +30513,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6266
 \end_layout
 
 \end_inset
@@ -30963,7 +30522,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+20.369
 \end_layout
 
 \end_inset
@@ -30972,7 +30531,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.280
 \end_layout
 
 \end_inset
@@ -30981,7 +30540,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.005
 \end_layout
 
 \end_inset
@@ -31126,13 +30685,6 @@ larger is better
 \end_layout
 
 \begin_layout Standard
-XXX This might not be directly comparable to earlier results, because thee
- calculations are performed on the re-opened data files, which seem to have
- different dimensions.
- This is a bug of some kind.
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset VSpace defskip
 \end_inset
@@ -31241,7 +30793,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-208
+202
 \end_layout
 
 \end_inset
@@ -31250,7 +30802,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.2829
+0.2925
 \end_layout
 
 \end_inset
@@ -31259,7 +30811,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.148
+0.145
 \end_layout
 
 \end_inset
@@ -31268,7 +30820,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-556
+548
 \end_layout
 
 \end_inset
@@ -31277,7 +30829,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0940
+0.1047
 \end_layout
 
 \end_inset
@@ -31295,7 +30847,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.080
+1.075
 \end_layout
 
 \end_inset
@@ -31315,7 +30867,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-296
+288
 \end_layout
 
 \end_inset
@@ -31324,7 +30876,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.2500
+0.2553
 \end_layout
 
 \end_inset
@@ -31333,7 +30885,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.146
+0.150
 \end_layout
 
 \end_inset
@@ -31342,7 +30894,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1110
+1094
 \end_layout
 
 \end_inset
@@ -31351,7 +30903,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0548
+0.0595
 \end_layout
 
 \end_inset
@@ -31360,7 +30912,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.163
+0.162
 \end_layout
 
 \end_inset
@@ -31369,7 +30921,7 @@ zfil-320-64-40-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.200
+1.207
 \end_layout
 
 \end_inset
@@ -31389,7 +30941,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-377
+374
 \end_layout
 
 \end_inset
@@ -31398,7 +30950,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.2053
+0.2056
 \end_layout
 
 \end_inset
@@ -31407,7 +30959,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.162
+0.163
 \end_layout
 
 \end_inset
@@ -31416,7 +30968,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-2120
+2104
 \end_layout
 
 \end_inset
@@ -31425,7 +30977,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0062
+0.0083
 \end_layout
 
 \end_inset
@@ -31434,7 +30986,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.157
+0.156
 \end_layout
 
 \end_inset
@@ -31443,7 +30995,7 @@ zfil-160-32-20-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.231
+1.212
 \end_layout
 
 \end_inset
@@ -31472,7 +31024,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1737
+0.1746
 \end_layout
 
 \end_inset
@@ -31490,7 +31042,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-3429
+3420
 \end_layout
 
 \end_inset
@@ -31499,7 +31051,7 @@ zfil-80-16-10-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.031
+-0.030
 \end_layout
 
 \end_inset
@@ -31759,7 +31311,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-311
+307
 \end_layout
 
 \end_inset
@@ -31768,7 +31320,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1666
+0.1728
 \end_layout
 
 \end_inset
@@ -31777,7 +31329,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.125
+0.121
 \end_layout
 
 \end_inset
@@ -31786,7 +31338,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-2386
+2359
 \end_layout
 
 \end_inset
@@ -31795,7 +31347,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0247
+0.0244
 \end_layout
 
 \end_inset
@@ -31804,7 +31356,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.116
+0.120
 \end_layout
 
 \end_inset
@@ -31813,7 +31365,7 @@ zfil-640-128-80-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.138
+1.223
 \end_layout
 
 \end_inset
@@ -31833,7 +31385,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-448
+441
 \end_layout
 
 \end_inset
@@ -31842,7 +31394,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1294
+0.1276
 \end_layout
 
 \end_inset
@@ -31851,7 +31403,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.128
+0.125
 \end_layout
 
 \end_inset
@@ -31860,7 +31412,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-4349
+4310
 \end_layout
 
 \end_inset
@@ -31869,7 +31421,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.0051
+-0.003
 \end_layout
 
 \end_inset
@@ -31887,7 +31439,7 @@ zfil-320-64-40-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.970
+1.039
 \end_layout
 
 \end_inset
@@ -31916,7 +31468,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1152
+0.1095
 \end_layout
 
 \end_inset
@@ -31925,7 +31477,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.138
+0.136
 \end_layout
 
 \end_inset
@@ -31934,7 +31486,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-5367
+5365
 \end_layout
 
 \end_inset
@@ -31943,7 +31495,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.010
+-0.019
 \end_layout
 
 \end_inset
@@ -31952,7 +31504,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.109
+0.107
 \end_layout
 
 \end_inset
@@ -31961,7 +31513,7 @@ zfil-160-32-20-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.907
+0.941
 \end_layout
 
 \end_inset
@@ -31990,7 +31542,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.1189
+0.1122
 \end_layout
 
 \end_inset
@@ -31999,7 +31551,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.133
+0.131
 \end_layout
 
 \end_inset
@@ -32008,7 +31560,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-5885
+5884
 \end_layout
 
 \end_inset
@@ -32017,7 +31569,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.008
+-0.018
 \end_layout
 
 \end_inset
@@ -32026,7 +31578,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.108
+0.106
 \end_layout
 
 \end_inset
@@ -32035,7 +31587,7 @@ zfil-80-16-10-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.953
+0.994
 \end_layout
 
 \end_inset
@@ -32055,7 +31607,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+504
 \end_layout
 
 \end_inset
@@ -32064,7 +31616,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1134
 \end_layout
 
 \end_inset
@@ -32073,7 +31625,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.126
 \end_layout
 
 \end_inset
@@ -32082,7 +31634,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6148
 \end_layout
 
 \end_inset
@@ -32091,7 +31643,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.013
 \end_layout
 
 \end_inset
@@ -32100,7 +31652,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.101
 \end_layout
 
 \end_inset
@@ -32109,7 +31661,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.995
 \end_layout
 
 \end_inset
@@ -32129,7 +31681,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+516
 \end_layout
 
 \end_inset
@@ -32138,7 +31690,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.1164
 \end_layout
 
 \end_inset
@@ -32147,7 +31699,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.124
 \end_layout
 
 \end_inset
@@ -32156,7 +31708,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6266
 \end_layout
 
 \end_inset
@@ -32165,7 +31717,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.003
 \end_layout
 
 \end_inset
@@ -32174,7 +31726,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.097
 \end_layout
 
 \end_inset
@@ -32183,7 +31735,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.968
 \end_layout
 
 \end_inset
@@ -36085,7 +35637,7 @@ zfil-640-128-80-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.085
+1.086
 \end_layout
 
 \end_inset
@@ -36919,7 +36471,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+516
 \end_layout
 
 \end_inset
@@ -36928,7 +36480,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.554
 \end_layout
 
 \end_inset
@@ -36937,7 +36489,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.495
 \end_layout
 
 \end_inset
@@ -36946,7 +36498,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6266
 \end_layout
 
 \end_inset
@@ -36955,7 +36507,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-6.630
 \end_layout
 
 \end_inset
@@ -36964,7 +36516,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.430
 \end_layout
 
 \end_inset
@@ -36973,7 +36525,7 @@ zfil-20-4-2-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.389
 \end_layout
 
 \end_inset
@@ -38020,7 +37572,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+504
 \end_layout
 
 \end_inset
@@ -38029,7 +37581,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-4.109
 \end_layout
 
 \end_inset
@@ -38038,7 +37590,7 @@ zfil-40-8-5-shape
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.516
 \end_layout
 
 \end_inset
