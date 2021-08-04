@@ -7,6 +7,49 @@ The "small ideas" describe what has been implemented and is doable
 is on language; we're looking for collaborators on image recognition
 and/or movement classification.
 
+
+The Symbol Grounding Problem
+----------------------------
+Today, AI (AGI) theory stands divided into two camps: the neural net
+approaches, and symbolic approaches. Both approaches have important
+results and shed light on the key problem of intelligence. In the
+middle, between them is the symbol grounding problem. A common complaint
+about symbolic reasoning over common sense knowledge is the problem of
+knowing what a symbol is: when a chatbot talks about chairs and tables,
+sports teams and favorite colors, how can it know what a "chair" is?
+A "chair" is a symbol, but what does it "mean"?  Conventional neural net
+approaches have to opposite problem: they don't have or use symbols,
+and so are not amenable to leveraging the power of logical inference.
+
+The aim of this project is to solve the symbol grounding problem. The
+proposed solution is that symbols are simply names for large, complex,
+***sparse*** networks of hierarchical relationships. Thus, the goal is
+to discover the  large, complex, sparse networks of hierarchical
+relationships in unstructured data. Symbols then become coherent
+networks of relationships. Thus, a "chair" is both a collection of all
+"facts" one might know about chairs, as well as an English word
+participating in the complex grammatical network of the English
+language.  The word "chair" is not so much a "symbol" as it is a bridge
+between these complex networks. Reasoning can be done "sub-symbolically",
+on the network of relationship; the result of reasoning can be
+articulated verbally, adhereing to the rules of grammer. Reasoning itself
+is not (inherently) logical; rather, reasoning is powered by a set of
+"valid" manipulations applied to the network, the validity of which is
+also learned and encoded in a complex network. Thus, the goal of this
+project is to not only learn what a "chair" is from environmental
+stimulous, and not only learn how to use the word "chair" in a
+grammatical sentence, but also to learn the rules of logic, and the
+rules of common sense reasoning, out of thing air.  The rest of this
+file (and other documents in this and other repos) expand in detail
+how the above can be accomplished.
+
+BTW: to be clear: the aim of this project is to create a system that can
+interpret vision, and sound, and language, and sensory data in general,
+from a single, unified theoretical framework. The proof of concept for
+some of these domains is underway, albeit proceeding slowly. Helpers
+needed.
+
+
 The Big Idea - Knowledge
 ------------------------
 Here's the big idea: ***everything is a graph*** -- all knowledge is linked
