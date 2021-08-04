@@ -20561,17 +20561,82 @@ difficult set
 \end_layout
 
 \begin_layout Subsection*
-Trimmed dataset (Badly trimmed)
+Summary of Results
+\end_layout
+
+\begin_layout Standard
+The sections below provide detailed results.
+ To summarize, these are:
+\end_layout
+
+\begin_layout Itemize
+MI beats the pants off of cosine similarity; of all the distance measures,
+ cosine similarity is in a distant last place.
+\end_layout
+
+\begin_layout Itemize
+Suprpsingly, three different metrics provide superior results to MI: overlap
+ similarity (unweighted Jaccard similarity), weighted Jacard similarity
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+probability
+\begin_inset Quotes erd
+\end_inset
+
+ Jaccard similarity, with the last being the best – improving the inter-intra-cl
+uster separation by over 10% compared to using MI.
+\end_layout
+
+\begin_layout Itemize
+This last result is ...
+ surprising, and seems to contradict the naive beleif in information theory.
+ How is this to be explained? Is there some deeper information-theoretic
+ explanation that has not been grasped?
+\end_layout
+
+\begin_layout Itemize
+Surprisingly, the use of shapes makes the MI scores considerably worse.
+ It's possible, but not likely, that this is due to dataset filtering problems.
+ That experiment still needs to be performed.
+ Naive imagination suggests shapes should have made everything better.
+\end_layout
+
+\begin_layout Itemize
+Shapes do seem to make things better, when using the various forms of the
+ Jaccard distance.
+ This is especially the case for the smaller/smallest datasets.
+\end_layout
+
+\begin_layout Subsection*
+Trimmed dataset (Poorly trimmed)
 \end_layout
 
 \begin_layout Standard
 Above is to be run on the following datasets.
- XXX The table immediately below summarizes a borken filtering operation.
- The `add-zero-filter` was not run, resulting in words in Connectors that
- do not appear in Sections.
+ Attention: The table immediately below summarizes datasets generated with
+ a poorly designed filtering operation.
+ The problem is that the `add-zero-filter` was not run, resulting in words
+ in Connectors that do not appear in Sections.
  This not only alters product computations, but it also leads to cross-sections
  whose head word doesn't appear in a section.
- See further below for the correct results.
+ This turns out to skew results, but not all that much - mostly less than
+ a few percent.
+ So these datasets appear to be 
+\begin_inset Quotes eld
+\end_inset
+
+pretty good
+\begin_inset Quotes erd
+\end_inset
+
+, but not entirely fully self-consistent.
+ See further below for the revised results.
+ Funny thing: those revised results are also incompletely self-consistent.
+ They're better, but it turns out a single pass of `add-zero-filter` is
+ not enough.
+ A recursive multi-pass will be required.
 \end_layout
 
 \begin_layout Standard
@@ -21533,16 +21598,17 @@ er` after the row-column filter, but before `add-linkage-filter`.
  The problem was that `add-linkage-filter` was given a list of words that
  had zero counts, because the generic filter does not knock out rows whose
  counts are empty.
- All this is recomputed below.
+ All this is recomputed further below.
 \end_layout
 
 \begin_layout Subsection*
-r3-filt-640-128-80-marg.rdb – MI (for the bad dataset)
+r3-filt-640-128-80-marg.rdb – MI (for the poorly-filtered dataset)
 \end_layout
 
 \begin_layout Standard
 So lets try it out.
- (XXX this is done with the broken datasets above, but might still be 
+ Attention: this is done with the poorly-filtered datasets above, but apparently
+ can still be taken to be 
 \begin_inset Quotes eld
 \end_inset
 
@@ -21550,7 +21616,13 @@ representatitive
 \begin_inset Quotes erd
 \end_inset
 
-.) This is the first dataset big enough to measure.
+.
+ Better filtering changes results by only a few percent, or less.
+\end_layout
+
+\begin_layout Standard
+The r3-filt-640-128-80-marg.rdb dataset is the first dataset big enough to
+ measure.
  The stats are for the MI.
  The cluster stats are:
 \end_layout
@@ -23530,12 +23602,13 @@ see-him
 \end_layout
 
 \begin_layout Subsection*
-r3-filt-40-8-5-marg.rdb – MI (for the bad dataset)
+r3-filt-40-8-5-marg.rdb – MI (for the poorly-filtered dataset)
 \end_layout
 
 \begin_layout Standard
 A much bigger dataset than the above.
- (XXX this is done with the broken datasets above, but might still be 
+ Attention: this is done with the poorly-filtered dataset described above.
+ The results seem to still be 
 \begin_inset Quotes eld
 \end_inset
 
@@ -23543,7 +23616,11 @@ representatitive
 \begin_inset Quotes erd
 \end_inset
 
-.) The stats are for the MI.
+; better filtering changes them by a few percent, sometimes less.
+\end_layout
+
+\begin_layout Standard
+The stats are for the MI.
  The cluster stats are:
 \end_layout
 
@@ -24832,18 +24909,27 @@ Rather than reporting on all 66 inter-cluster distances, it seems simplest
 \end_layout
 
 \begin_layout Subsection*
-Inter-intra MI summary (for the bad datasets)
-\end_layout
-
-\begin_layout Standard
-XXX.
- The table below is generated with the broken filtering, described above.
- A revised version of this table is in a later section, shortly onwards.
+Inter-intra MI summary (for the poorly-filtered datasets)
 \end_layout
 
 \begin_layout Standard
 Pursuing above, the table below records the inter and intra cluster average
  MI for the datasets.
+\end_layout
+
+\begin_layout Standard
+Attention: The table below is generated with the poorly-filtered datasets
+ described above.
+ A table further below presents the same data for better-filtered datasets.
+ Comparing tables, one sees they are mostly the same: most numbers change
+ by a few percent; some differences are as large as 10% and some are under
+ one percent.
+ So this is mostly representative.
+\end_layout
+
+\begin_layout Standard
+The big question here is why shapes make things worse; this remains a big
+ unresolved question.
 \end_layout
 
 \begin_layout Standard
@@ -27030,7 +27116,7 @@ separation
 \end_inset
 
  is the number of stddev's between the intra and inter MI values.
- The stddev is the larger of the two stddev's.
+ The stddev is the larger of the two RMS's.
 \end_layout
 
 \begin_layout Standard
@@ -28188,8 +28274,10 @@ Less filtering gives better results.
 \end_layout
 
 \begin_layout Itemize
-Shapes are stunningly disappointing; but this still may be due to the faulty
- filtering, and so deserves one more round.
+Shapes are stunningly disappointing; the reason for this is quite unclear.
+ It may be due to the faulty filtering, and so deserves one more round.
+ Yet there's a hint that even better filtering still won't improve things.
+ So this is an open problem.
 \end_layout
 
 \begin_layout Subsection*
@@ -29433,7 +29521,7 @@ Quality is close to the MI results, and only slightly poorer.
 \end_layout
 
 \begin_layout Itemize
-Shapes offer no advantage.
+Shapes offer no advantage; they're a clear disadvantage.
 \end_layout
 
 \begin_layout Subsection*
@@ -30640,7 +30728,11 @@ So we conclude:
 \end_layout
 
 \begin_layout Itemize
-Less
+A touch better than the joint-probability results above.
+\end_layout
+
+\begin_layout Itemize
+Separation is not as good as MI, but are within 5% of teh MI separation.
 \end_layout
 
 \begin_layout Subsection*
@@ -31835,7 +31927,15 @@ So we conclude:
 \end_layout
 
 \begin_layout Itemize
-Less
+Separation is a fair bit better than the un-normalized variation of information.
+\end_layout
+
+\begin_layout Itemize
+Separation is about 10% better than the MI separation, for the plain sections.
+\end_layout
+
+\begin_layout Itemize
+Seperaation is about 5% better than the MI separation, for the shapes.
 \end_layout
 
 \begin_layout Subsection*
@@ -33008,11 +33108,11 @@ So we conclude:
 \end_layout
 
 \begin_layout Itemize
-This is not competitive with the probability-based methods.
+This is not competitive with the probability-based methods, not even close.
 \end_layout
 
 \begin_layout Itemize
-Shapes improve the cosine distance! Even though this is still with the broken
+Shapes improve the cosine distance! Even though this is still with non-optimal
  filtering! Hypothesis: the shape vectors really do improve vector alignment
  (as this clearly shows) but the extra MI terms dissolve it back out.
  That is, the shapes do not carry any extra information not already present
@@ -33057,7 +33157,7 @@ highly similar
 \begin_layout Standard
 Doing this does alter the contributions to the averages: for the smaller
  datasets, zero cosines are frequent.
- This is due to the dataset size: just(report-plain) not enough disjuncts.
+ This is due to the dataset size: just not enough disjuncts.
  These do contribute to the average cosine distance, but not to the log
  distance; they're discarded (since log zero is minus infinity).
  This seems to be an OK thing to do for the present situation.
@@ -34214,13 +34314,14 @@ So we conclude:
 \end_layout
 
 \begin_layout Itemize
-This is competitive with the joint-probability scores, maybe even a hair
- beter, and is just a little worse than the MI scores.
+(Looking at the `separation` column:) This is competitive with the joint-probabi
+lity scores, maybe even a hair better, and is just a little worse (about
+ 8% worse) than the MI scores.
 \end_layout
 
 \begin_layout Itemize
 Unlike the plain cosine, the shapes make things worse.
- The log has the effect of magnifying differnces (since the log is almost
+ The log2 has the effect of magnifying differences (since the log is almost
  linear for high similarity, but stretches the scale strongly for low similarity.
 ) And yet, if we compare the inter scores with and without shapes, it seems
  that shapes are making vectors more similar.
@@ -35444,11 +35545,26 @@ So we conclude:
 \begin_layout Itemize
 For the shapeless sections, this provides superior separation to the MI
  scores.
+ Its about 10% or 15% better.
 \end_layout
 
 \begin_layout Itemize
-With shapes, the separation is even better.
- However, as before, the addition of shapes seems to make vectors more similar,
+With shapes, the separation is even better – about 15% to 40% better than
+ the MI scores.
+\end_layout
+
+\begin_layout Itemize
+The separation with shapes is mostly better than that without, so this breaks
+ a trend.
+\end_layout
+
+\begin_layout Itemize
+Shapes give the most improvement for the small datasets! They're not useful,
+ once the dataset gets large.
+\end_layout
+
+\begin_layout Itemize
+However, as before, the addition of shapes seems to make vectors more similar,
  in general, no matter what kind they are.
 \end_layout
 
@@ -36626,11 +36742,13 @@ So we conclude:
 
 \begin_layout Itemize
 For the shapeless sections, this provides almost as good separation as the
- overlaps, and quite a bit better than the MI scores.
+ overlaps, and about 5% better than the MI scores.
 \end_layout
 
 \begin_layout Itemize
-Using shapes seems to improve seperability by a fair amount.
+Using shapes seems to improve seperability by a fair amount – again, bucking
+ a trend.
+ Most of the improvement is in the smaller datasets.
 \end_layout
 
 \begin_layout Itemize
@@ -37805,7 +37923,17 @@ For the shapeless sections, this provides the best separation of all, and
 \end_layout
 
 \begin_layout Itemize
-Adding shapes further improves seperability.
+For shapeless separation, this is about 5% to 10% better than MI.
+\end_layout
+
+\begin_layout Itemize
+Adding shapes further improves seperability, again bucking a trend.
+\end_layout
+
+\begin_layout Standard
+This is stunningly painfully slow for the larger datasets, and so the algo
+ needs to be refactored to move common computations out of the inner loop.
+ If this cannot be done, then this also is useless.
 \end_layout
 
 \begin_layout Section*
