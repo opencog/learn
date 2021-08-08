@@ -4606,7 +4606,7 @@ duuude ABR= ConnectorSeq ShapeLink
 
 =======================================================
 
-(define rs 
+(define rs
 	(pmi 'right-stars (Word "him")))
 (length rs) ; 834
 
@@ -4620,7 +4620,7 @@ do: to- & him+;
 upon: came- & him+
 at: gazing- & him+
 
-(cog-incoming-set 
+(cog-incoming-set
 (ShapeLink
     (WordNode "at")
     (Connector
@@ -4644,7 +4644,7 @@ for: impossible- & (him+ or me+ or any+ or them+)
 		(pmi 'right-stars (Word "him"))))
 (length sc) ; 404
 
-(define sis 
+(define sis
 	(pmi 'right-stars (Word "sink")))
 (length sis) ; 1
 
@@ -4797,7 +4797,7 @@ norm-key (add-pair-stars  LLOBJ) 'left-stars
 (WordNode "evening")
 (Connector (WordNode "evening") (ConnectorDir "+"))
 evening: <the, in- & *+>
-the: in- & evening+ 
+the: in- & evening+
  (ConnectorSeq
   (Connector (WordNode "in") (ConnectorDir "-"))
   (Connector (WordNode "evening") (ConnectorDir "+")))
@@ -4812,11 +4812,11 @@ the: in- & evening+
 (define fsa (add-subtotal-filter psa 640 128 80 #f))
 (define lfa (add-linkage-filter fsa))
 (define ae (lfa 'get-all-elts)) ; takes an hour...
-(length ae) ;   6035 
+(length ae) ;   6035
 (define in-ap? (make-aset-predicate ae))
 (in-ap? inte) ; #t  whoops!
 
-(define sfs (fsa 'left-basis)) 
+(define sfs (fsa 'left-basis))
 (length sfs) ; 4072
 
 (define in-sf? (make-aset-predicate sfs))
@@ -4932,7 +4932,7 @@ Its broken again.
 (length (zfa 'right-stars (WordNode "your"))) ; same as before
 
 (define lfa (add-linkage-filter zfa))
-(lfa 'right-stars (WordNode "your")) 
+(lfa 'right-stars (WordNode "your"))
 ; Now its the empty set.  (takes long time)
 
 (length (lfa 'left-basis)) ; 457 ... ouch
@@ -4992,6 +4992,127 @@ Size: 12340 Sparsity (-log_2): 7.9455 entropy=-1.338  .. this is correct.
 guile -l marginals-mst.scm
 ... still OK.
 (load "/tmp/smack.scm")
+
+-------------------------------------------------------
+54 threads
+
+1:
+futex_wait_cancelable scm_timed_lock_mutex scm_call_n
+
+2 3 4 5 6 7 8 9 10-16:
+futex_wait_cancelable GC_wait_marker
+
+17 45
+__GI___libc_read GC_do_blocking_inner scm_call_n
+
+18 19 20
+futex_wait_cancelable LogWriter::writing_loop
+opencog/util/Logger.cc:239
+18: opencog.log
+19: /tmp/cogserver.log
+20: /tmp/run-3-shape.log
+
+21
+__libc_pause immortal_thread
+
+22
+__libc_accept NetworkServer::listen
+
+23
+__GI___clock_nanosleep CogServer::serverLoop
+
+24-43:
+futex_wait_cancelable rocksdb::ThreadPoolImpl::Impl::BGThreadWrapper
+
+44
+futex_wait_cancelable rocksdb::DeleteScheduler::BackgroundEmptyTrash()
+
+46 49 50
+__libc_recvmsg ServerSocket::handle_connection
+
+47 53 54
+futex_wait_cancelable SchemeEval::do_eval
+
+48 52
+futex_abstimed_wait_cancelable SchemeEval::do_poll_result
+
+51
+_int_free PatternMatchEngine::solution_pop ...opencog::PrimitiveEnviron::do_call
+
+above is running at 100% in thread 51
+
+the other threads that should be running are: 47 53 54 so whats's up?
+
+futex_wait_cancelable
+__pthread_cond_wait_common
+__pthread_cond_wait
+scm_timed_lock_mutex
+scm_call_n
+scm_call_3
+scm_call_n
+scm_call_2
+scm_c_catch
+opencog::SchemeEval::do_eval
+
+So the other threads are waiting on the pattern-matcher thread.
+Because the pattern matcher thread must be running with a lock held.
+which lock?
+
+54   Thread 0x7f5dbbfff700 (LWP 18984)
+53   Thread 0x7f5dd0ff9700 (LWP 18983)
+51   Thread 0x7f5dd1ffb700 (LWP 18575
+47   Thread 0x7f5dd3fff700 (LWP 5861)
+
+
+set thread name....
+#include <sys/prctl.h>
+prctl(PR_SET_NAME, "fo", 0, 0, 0);  16 bytes
+
+cogserv:listen
+cogserv:
+NetworkServer::listen
+CogServer::serverLoop
+ServerSocket::handle_connection
+GenericShell::eval_loop
+poll_loop
+
+__pthread_cond_wait
+scm_timed_lock_mutex
+scm_call_n
+scm_call_3
+scm_call_n
+scm_call_2
+scm_c_catch
+opencog::SchemeEval::do_eval
+
+scm_try_mutex
+scm_lock_mutex
+
+libguile/vm.c
+ret = vm_engines[vp->engine](thread);
+lock-mutex
+
+add-pair-stars object
+run-query
+raii-get-pattern
+
+f-left-star-pat
+f-right-star-pat
+f-left-dual-pat
+f-right-dual-pat
+
+default-left-dual-pat
+default-right-dual-pat -- uses GetLink --> use MeetLink instead
+default-right-star-pat -- uses Bind  --> use Query instead.
+
+use cog-value->list
+
+left-star-pattern
+right-star-pattern
+left-dual-pattern
+right-dual-pattern
+
+Fixed in #2834. Yay!
 
 ====================================================
 link-class.scm ???
