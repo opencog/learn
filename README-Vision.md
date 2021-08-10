@@ -166,13 +166,38 @@ image processing will typically produce 2 to 10 contiguous blocks of
 color. Ideally 4: the three bars, and the background. This seems
 unlikely, though, in most cases.
 
+Counting
+--------
+Create a table of attribute-pairs, and increment by one every time that
+pair is observed.  For example, given two adjacent regions, if the
+redder one is above the other one, then increment the count on (redder,
+above) by one.  That is, there is a number N(redder, above), and it is
+incremented each time that relation is seen. Likewise, N(redder,
+triangular), and N(redder, bigger), and also N(above, bigger), if that
+is the case.
+
+For the above 4 attribute categories, each described by 3 bits, there
+will be 4! x 2^3 x 2^3 = 24 x 8 x 8 = 1536 different possible pairings.
+
+This is one reason to keep the number of attributes low, and the number
+of bits per attribute low: the goal is to keep the "vocabulary" low.
+
+These counts can be kept "anywhere", initially, but all of the rest of
+the pipeline is built on the AtomSpace, so it makes sense to keep these
+counts in the AtomSpace.  Ask me how to do this.  Its not hard, but
+there is a bit of initial complexity. I'll help set this up. Just ask.
+
+
 Pair-wise Mutual Information
 ----------------------------
 Given pairs, compute the mutual information between the above
-attributes.
+attributes. This project provides detailed tools for doing this,
+presuming that you've kept the counts in the AtomSpace. Ask.
 
 Minimum Spanning Tree
 ---------------------
 From this point on, the same algo and code base as used for natural
 language should be possible. The code will need a lot of careful
 generalization, but maybe not a complete rewrite.
+
+Worked example TBD.
