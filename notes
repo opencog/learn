@@ -5114,6 +5114,40 @@ right-dual-pattern
 
 Fixed in #2834. Yay!
 
+-------------------
+(define (dump A)
+	(format FH "(~A 
+	#f)
+(cog-map-type dump 'Atom)
+
+----------
+for amirouche:
+run-1-en_mpg-tranche-1.rdb
+
+(use-modules (opencog) (opencog persist) (opencog persist-file))
+(use-modules (opencog nlp) (opencog persist-rocks))
+(use-modules (opencog matrix) (opencog nlp learn))
+(define rsn (RocksStorageNode "rocks:///data/run-1-en_mpg-tranche-1.rdb"))
+(cog-open rsn)
+;;; (load-atomspace rsn)
+(define cset-obj (make-pseudo-cset-api))
+(cset-obj 'fetch-pairs) ; 994 secs
+(print-matrix-summary-report cset-obj)
+(cog-close rsn)
+(count-all) ; 15996448
+(cog-report-counts)
+((PredicateNode . 11) (ListLink . 1) (AnyNode . 2) (Connector . 260275) (ConnectorDir . 2) (ConnectorSeq . 7470276) (Section . 8131679) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 134199))
+
+(define fsn (FileStorageNode "/tmp/en-tranche-1-mpg.scm"))
+(cog-open fsn)
+(store-atomspace fsn)
+(cog-close fsn)
+
+RSS 12.4 G
+2474901877
+96924177
+
+
 ====================================================
 link-class.scm ???
 ====================================================

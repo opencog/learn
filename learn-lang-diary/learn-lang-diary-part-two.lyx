@@ -96,7 +96,7 @@ Language Learning Diary - Part Two
 \end_layout
 
 \begin_layout Date
-2021-present
+February-August 2021
 \end_layout
 
 \begin_layout Author
@@ -156,6 +156,175 @@ README-Calibration.md
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection*
+Table of Contents
+\end_layout
+
+\begin_layout Standard
+This diary covers the following topics:
+\end_layout
+
+\begin_layout Subsubsection*
+Experiments with random grammars.
+ Feb-May 2021.
+\end_layout
+
+\begin_layout Standard
+Attempt to run the full learning calibration pipeline on a randomly-generated
+ grammar.
+ This pileline creates a random grammar, creates a random corpus with this
+ grammar, runs the learning pipeline, learns a grammar, and then compares
+ the learned grammar to the original one.
+\end_layout
+
+\begin_layout Standard
+Doing this entailed numerous bug fixes and some new code to get everything
+ working.
+ A bit of interesting mathematics popped up: merging is a non-commutative
+ operation.
+ When merging words into a word class, one must also merge connectors into
+ connector classes.
+ The initial idea was that merges can be done as (quasi-)linear operations:
+ Attached to each word is a vector, and creating a word-class is as simple
+ as summing vectors.
+ Or possibly intersecting the basis elements, and then summing only those
+ parts where the basis overlap (thus, the quasi-linear merge.
+ This is needed, because non-overlapping vectors correspond to different
+ word senses, and we need for factor those out.
+\end_layout
+
+\begin_layout Standard
+One might imagine that merging connectors is as simple as creating vectors
+ for those, the so-called 
+\begin_inset Quotes eld
+\end_inset
+
+shape
+\begin_inset Quotes erd
+\end_inset
+
+ vectors, and summing those.
+ Because of how shapes are created, one might think that one could merge
+ words, then shapes, or first shapes and only then words, and get the same
+ thing.
+ Not so: the merge operation is non-commutative.
+ The result depends on the order it's done in.
+ This is interesting, but troublesome.
+\end_layout
+
+\begin_layout Standard
+The goal of merging is to find two things that are similar, and then place
+ them in a common class.
+ Since the 
+\begin_inset Quotes eld
+\end_inset
+
+things
+\begin_inset Quotes erd
+\end_inset
+
+ are word-disjunct pairs, one wishes to find some unambiguous, unique way
+ of merging them.
+ This seems not to be the case: there is some kind of 
+\begin_inset Quotes eld
+\end_inset
+
+torsion
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+curvature
+\begin_inset Quotes erd
+\end_inset
+
+ in the system.
+ It's not clear how to even characterize this concept clearly.
+ An unambiguous merge seems to be asking for some kind of flattening or
+ abelianization of the merge proceedure.
+ It's not clear how to do this.
+\end_layout
+
+\begin_layout Standard
+Mathematically, the formalities are still opaque.
+ The notation for word-disjunct pairs is awkward.
+ The notation for the linearizations are awkward.
+ When I think about linearization, it feels very geometric: as if one is
+ working with some tangent space to some manifold.
+ But there's no manifold, and the analogies quickly falter.
+ Progress requires a much clearer, a much more concrete description of what's
+ going on with this network.
+\end_layout
+
+\begin_layout Standard
+The experiments ended with confusion.
+ Besides the above non-commutative aspect to merging, it became clear that
+ many different initial grammars are effectively equivalent, in that they
+ generate similar, if not identical corpora.
+ Thus, the naive idea of calibration fails: one can't just learn the input
+ grammar; at best one can learn the class of that grammar.
+ But, as of now, we don't have any clear way of defining a 
+\begin_inset Quotes eld
+\end_inset
+
+class of equivalent grammars
+\begin_inset Quotes erd
+\end_inset
+
+, or more broadly, 
+\begin_inset Quotes eld
+\end_inset
+
+a class of very similar grammars
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A secondary problem was that the random grammar didn't resemble a natural
+ langauge grammar.
+ That was not the intent.
+ It was hoped that by picking a Zipfian distribution of vocabulary words,
+ a Zipf distribution of disjuncts, throwing in some synonyms into the mix,
+ the result would resemble a natural language.
+ This was not the case.
+ Despite having done a lot of distributional studies of English, it seems
+ that I still don't know how to characterize a natural langugage very well.
+ I don't know how to measure the complexity of a grammar, or the complexity
+ of a corpus.
+ There are formal questions: how can one tell when two grammars are isomorphic?
+ Almost isomorphic? There are practical questions: what is the best way
+ to factor the word-disjunct matrix?
+\end_layout
+
+\begin_layout Standard
+In the end, it all got muddy, with now easy, obvious way of moving forward.
+\end_layout
+
+\begin_layout Subsubsection*
+Back to English.
+ June-August 2021
+\end_layout
+
+\begin_layout Standard
+The advantage of working with English is that one can develop a gut-feel
+ as to whether one is making progress.
+ It's hard to look at a random grammar, and decide 
+\begin_inset Quotes eld
+\end_inset
+
+does that make sense?
+\begin_inset Quotes erd
+\end_inset
+
+ So, back to English.
 \end_layout
 
 \begin_layout Section*
@@ -39719,7 +39888,7 @@ RAM to load pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+41.3
 \end_layout
 
 \end_inset
@@ -39993,6 +40162,8 @@ The End
 
 \begin_layout Standard
 This is the end of the diary.
+ It spans the time period of February-August 2021.
+ The next part is Part Three.
 \end_layout
 
 \end_body
