@@ -118,52 +118,8 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Part two of the diary on the language-learning effort starts with the new
- task of of closed loop learning.
- The idea of closed loop learning is that the accuracy of the learned grammars
- can be very closely monitored and measured, thus allowing the learning
- algorithms to be tuned for speed and measured for accuracy.
- The closed loop is a basic three-step process:
-\end_layout
-
-\begin_layout Enumerate
-Generating random but controlled grammars
-\end_layout
-
-\begin_layout Enumerate
-Generate a text corpus from these grammars
-\end_layout
-
-\begin_layout Enumerate
-Learn a new grammar from the corpus
-\end_layout
-
-\begin_layout Enumerate
-Compare the controlled-grammar to the learned-grammar
-\end_layout
-
-\begin_layout Enumerate
-Tune algorithms and procedures, and repeat.
-\end_layout
-
-\begin_layout Standard
-The step-by-step instructions can be found in the file 
-\begin_inset Quotes eld
-\end_inset
-
-README-Calibration.md
-\begin_inset Quotes erd
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Subsection*
-Table of Contents
-\end_layout
-
-\begin_layout Standard
-This diary covers the following topics:
+Part two of the diary on the language-learning effort has three major sections.
+ These are summarized here.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -174,14 +130,28 @@ Experiments with random grammars.
 \begin_layout Standard
 Attempt to run the full learning calibration pipeline on a randomly-generated
  grammar.
- This pileline creates a random grammar, creates a random corpus with this
+ This pipeline creates a random grammar, creates a random corpus with this
  grammar, runs the learning pipeline, learns a grammar, and then compares
  the learned grammar to the original one.
 \end_layout
 
 \begin_layout Standard
+The goal of doing this is to be able to perform 
+\begin_inset Quotes eld
+\end_inset
+
+calibration
+\begin_inset Quotes erd
+\end_inset
+
+: by comparing the input and output grammars for fidelity, we could explore
+ the parameter space, and find the best tuning for the learning pipeline.
+ This sounds good in principle, it failed in practice.
+\end_layout
+
+\begin_layout Standard
 Doing this entailed numerous bug fixes and some new code to get everything
- working.
+ working (so that's a good thing).
  A bit of interesting mathematics popped up: merging is a non-commutative
  operation.
  When merging words into a word class, one must also merge connectors into
@@ -414,8 +384,37 @@ Similarity Smackdown, July-August 2021
 \end_layout
 
 \begin_layout Standard
-A sequence of experiments and measurements looks at nine different similarity
- measures:
+The poor merge results prompted a step back, to judge different similarity
+ measures (metrics).
+ Twelve 
+\emph on
+ad hoc
+\emph default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+part of speech
+\begin_inset Quotes erd
+\end_inset
+
+ clusters were defined.
+ They were 
+\emph on
+ad hoc
+\emph default
+ in the sense of being hand-picked out of the first few thousand words with
+ the highest observation counts.
+ The various similarity measures were used to computer the inter-cluster
+ and intra-cluster similarity.
+ The quality of the metrics was assessed based on thier ability to discriminate
+ between clusters, by taking the ratio of the RMS sizes of the clusters
+ to the RMS cluster seprations.
+ Higher discrimination is judged as being better.
+\end_layout
+
+\begin_layout Standard
+Nine different similarity measures were evaluated:
 \end_layout
 
 \begin_layout Itemize
@@ -455,9 +454,107 @@ Probability Jaccard distance.
 \end_layout
 
 \begin_layout Standard
-These were compared with and without shapes, at seven different levels of
- trimming.
- Of all of these, best was vector over
+These were compared one datasets with and without shapes, at seven different
+ levels of trimming (so, 14 datasets total).
+ The results were as follows:
+\end_layout
+
+\begin_layout Itemize
+Trimming is consistently deletrious to results.
+ However, using the full dataset blows up both RAM and compute time.
+ The best compromise, for the given datasets, appear to be to discard all
+ words that have a small number of observation counts, and to discard sections
+ with an observation count of less than two.
+\end_layout
+
+\begin_layout Itemize
+Shapes mostly fail to improve similarity measurements, for any of the similarity
+ measures.
+ Using shapes makes all vectors more similar (smaller RMS intra-cluster,
+ but also smaller RMS inter-cluster).
+ The overall effect of shapes is mixed: they seem to improve things only
+ for highly-trimmed datasets.
+ Given that shapes add a large computational burden, they seem to offer
+ no benefit.
+ (They sharply increase the amount of time needed to compute similarity,
+ and can triple the RAM ussage.)
+\end_layout
+
+\begin_layout Itemize
+The best overall similarity measure was vector overlap.
+ Second place overall goes to Conditional Jaccard (which uses probabilities
+ in the Jaccard min/max formula) Third place goes to Probability Jaccard.
+ MI is consistently in fifth place.
+\end_layout
+
+\begin_layout Standard
+A few comments.
+ Although the motivation for these experiments was the large MI between
+ short and long vecctors, the experiments actually eliminated short vectors.
+ That is, the hand-picked clusters consisted of words with relatively high
+ counts, and thus relatively long vectors.
+\end_layout
+
+\begin_layout Standard
+The failure of Probability Jaccard to dominate is also suprising.
+ The Wikipedia article explains that it is in some sense optimal: it provides
+ 
+\begin_inset Quotes eld
+\end_inset
+
+maximally consistent sampling
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This appears not to help us.
+ It is also very computationally intensive; its the slowest similarity measure
+ of all.
+\end_layout
+
+\begin_layout Section*
+February 2021 - Closed Loop Calibration
+\end_layout
+
+\begin_layout Standard
+Part two of the diary on the language-learning effort starts with the new
+ task of of closed loop learning.
+ The idea of closed loop learning is that the accuracy of the learned grammars
+ can be very closely monitored and measured, thus allowing the learning
+ algorithms to be tuned for speed and measured for accuracy.
+ The closed loop is a basic five-step process:
+\end_layout
+
+\begin_layout Enumerate
+Generating random but controlled grammars
+\end_layout
+
+\begin_layout Enumerate
+Generate a text corpus from these grammars
+\end_layout
+
+\begin_layout Enumerate
+Learn a new grammar from the corpus
+\end_layout
+
+\begin_layout Enumerate
+Compare the controlled-grammar to the learned-grammar
+\end_layout
+
+\begin_layout Enumerate
+Tune algorithms and procedures, and repeat.
+\end_layout
+
+\begin_layout Standard
+The step-by-step instructions can be found in the file 
+\begin_inset Quotes eld
+\end_inset
+
+README-Calibration.md
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
@@ -20862,6 +20959,10 @@ difficult set
  an easier set that way.
 \end_layout
 
+\begin_layout Standard
+Anyway, the experiments below were all performed with the difficult set.
+\end_layout
+
 \begin_layout Subsection*
 Summary of Results
 \end_layout
@@ -20887,8 +20988,10 @@ probability
 \begin_inset Quotes erd
 \end_inset
 
- Jaccard similarity, with the last being the best – improving the inter-intra-cl
-uster separation by over 10% compared to using MI.
+ Jaccard similarity, in order of quality of results.
+ These improve the inter-intra-cluster separation by over 10% compared to
+ using MI.
+ (So - 10% is not a lot, but we'lll take what we can.)
 \end_layout
 
 \begin_layout Itemize
@@ -20896,6 +20999,13 @@ This last result is ...
  surprising, and seems to contradict the naive beleif in information theory.
  How is this to be explained? Is there some deeper information-theoretic
  explanation that has not been grasped?
+\end_layout
+
+\begin_layout Itemize
+The experiment fails to measure the thing that originally inspired it: There
+ are word pairs with very high MI but very low overlap similarity, simply
+ because one of the word vectors is very short.
+ The hand-picked clusters above contain no short vectors!
 \end_layout
 
 \begin_layout Itemize
@@ -20909,6 +21019,11 @@ Surprisingly, the use of shapes makes the MI scores considerably worse.
 Shapes do seem to make things better, when using the various forms of the
  Jaccard distance.
  This is especially the case for the smaller/smallest datasets.
+\end_layout
+
+\begin_layout Standard
+See also a different summary of results at the bottom, and another at the
+ top.
 \end_layout
 
 \begin_layout Subsection*
@@ -26401,6 +26516,15 @@ Redo of trimming, as explained above.
  These are more tightly trimmed, but still not fully trimmed.
  See below for dicussion.
  Time to perform the filtering is about 4200 seconds for each file.
+\end_layout
+
+\begin_layout Standard
+Notation: filename-WW-DD-SS-foo where WW is the cutoff for the minimum time
+ this word has been observed.
+ DD is the cutoff for the number of times a disjunct has been observed,
+ and SS is the cutoff for the number of times a given section has been observed.
+ This is in keeping with how the filter object is designed in the main atomspace
+ repo – these are teh three filter paramters.
 \end_layout
 
 \begin_layout Standard
@@ -40641,7 +40765,7 @@ condj seems to be overall second place, and a fairly strong contender.
 \end_layout
 
 \begin_layout Standard
-Not visible in the above table are teh above factoids, obsserved elsewhere:
+Not visible in the above table are teh above factoids, observed elsewhere:
 \end_layout
 
 \begin_layout Itemize
@@ -40665,6 +40789,26 @@ Using shapes has a large impact on RAM and CPU usage.
  It takes a lot of time to create them, they triple or quaruple RAM usage,
  and all vector similarity computations take longer, because the vectors
  are longer.
+\end_layout
+
+\begin_layout Itemize
+Most of the tables have no results for the full dataset.
+ That's because computing with the full dataset is very CPU intensive.
+ We conclude that a very mild amount of trimming, to eliminate the onsie-twosie
+ counts is likely to be well worth the effort.
+ Particularly notable is that the scores for overlap and condj are tied
+ for the full dataset, and MI is in a close 3rd place.
+ Rerunning the experiment with more lightly trimmed datasets might be worthwhile.
+ (If rerun, then the 
+\begin_inset Quotes eld
+\end_inset
+
+better
+\begin_inset Quotes erd
+\end_inset
+
+ clusters should be used.
+ This will prevent direct comparison, but so what.)
 \end_layout
 
 \begin_layout Standard
