@@ -5147,6 +5147,41 @@ RSS 12.4 G
 2474901877
 96924177
 
+===================================================
+wtf filter.
+
+(psa 'left-basis)
+(define prs (psa 'get-all-elts))
+
+Ahh. No support!  make-compute-freq make-batch-mi
+
+batch-all-pair-mi
+Run `((add-support-compute LLOBJ) 'cache-all)` to compute that data.
+
+'wild-wild-count
+
+(length (LLOBJ 'get-all-elts))
+(rpt-obj 'num-pairs)  --- set with ((add-report-api LLOBJ) 'set-size
+blah
+ do this minimally: ((make-central-compute LLOBJ) 'cache-total)
+
+However, this requires supp-obj 'total-support-left to work
+and that can't work until ....
+
+(sup-obj 'wild-wild-count)
+Set with 'set-left-totals or set-right-totals
+Same as get-total-count-left
+Same as ((add-support-api LLOBJ) 'get-total-count-left)
+
+which is set by ...
+
+computed by (add-support-api LLOBJ) 'total-support-left
+
+Crap. There's no simple efficient way to count.
+What about fetch-pairs !?
+
+
+
 
 ====================================================
 link-class.scm ???

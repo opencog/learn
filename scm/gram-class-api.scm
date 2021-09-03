@@ -343,7 +343,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR)
+(define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR RENAME)
 "
   add-linking-filter LLOBJ - Modify the word-disjunct LLOBJ so that
   the only connector sequences appearing on the right consist entirely
@@ -428,12 +428,12 @@
 
 	; ---------------
 	(add-generic-filter LLOBJ
-		left-basis-pred right-basis-pred pair-pred ID-STR #f)
+		left-basis-pred right-basis-pred pair-pred ID-STR RENAME)
 )
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-wordclass-filter LLOBJ)
+(define-public (add-wordclass-filter LLOBJ RENAME)
 "
   add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
   that the only connector sequences appearing on the right consist
@@ -441,6 +441,9 @@
   the left. The resulting collection of wordclass-disjunct pairs is
   then self-consistent, and does not contain any connectors unable to
   form a connection to some word-class.
+
+  Set RENAME to #t if marginals should be stored under a filter-specific
+  name. Otherwise, set to #f to use the default marginal locations.
 "
 	; Return a list of words in word-classes
 	(define (get-wordclass-words)
@@ -455,12 +458,12 @@
 
 	(define id-str "wordclass-filter")
 
-	(add-linking-filter LLOBJ get-wordclass-words id-str)
+	(add-linking-filter LLOBJ get-wordclass-words id-str RENAME)
 )
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-linkage-filter LLOBJ)
+(define-public (add-linkage-filter LLOBJ RENAME)
 "
   add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
   the only connector sequences appearing on the right consist entirely
@@ -469,6 +472,9 @@
   in that it does not contain any connectors unable to form a
   connection to some word.  However, it may still contain words on
   the left that do not appear in any connectors!
+
+  Set RENAME to #t if marginals should be stored under a filter-specific
+  name. Otherwise, set to #f to use the default marginal locations.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -477,7 +483,7 @@
 
 	(define id-str "linkage-filter")
 
-	(add-linking-filter LLOBJ get-words id-str)
+	(add-linking-filter LLOBJ get-words id-str RENAME)
 )
 
 ; ---------------------------------------------------------------------
