@@ -1,0 +1,186 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url} 
+\usepackage{slashed}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "cmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\ttfamily},basewidth={0.45em}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Language Learning Diary - Part Three
+\end_layout
+
+\begin_layout Date
+Sept 2021-present
+\end_layout
+
+\begin_layout Author
+Linas Vepstas
+\end_layout
+
+\begin_layout Abstract
+The language-learning effort involves research and software development
+ to implement the ideas concerning unsupervised learning of grammar, syntax
+ and semantics from corpora.
+ This document contains supplementary notes and a loosely-organized semi-chronol
+ogical diary of results.
+ The notes here might not always makes sense; they are a short-hand for
+ my own benefit, rather than aimed at you, dear reader!
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+Part three of the diary on the language-learning effort continues work on
+ the English dataset.
+\end_layout
+
+\begin_layout Section*
+September 2021
+\end_layout
+
+\begin_layout Standard
+After the previous setback with grammatical clustering, it seems like more
+ exploratory work is in order.
+ Part of the exploratory effort is to discover faster ways of finding similar
+ words, and to find algorithms that can do incremental or continuous learning.
+ Some questions along this path:
+\end_layout
+
+\begin_layout Itemize
+What is the distribution of disjuncts? (Yes, we've done this before, but
+ lets do it again for the latest 
+\begin_inset Quotes eld
+\end_inset
+
+clean
+\begin_inset Quotes erd
+\end_inset
+
+ dataset.) Create a graph showing rank vs number of times a disjunct has
+ been observed.
+\end_layout
+
+\begin_layout Itemize
+How are disjuncts shared? Create a graph showing the rank vs.
+ the number of words that share this disjunct.
+\end_layout
+
+\begin_layout Subsection*
+Expt-4 Sept 2021
+\end_layout
+
+\begin_layout Standard
+The above questions are being aimed at `run-1-en_mpg-tranche-123.rdb`, as
+ described earlier in the diary.
+ Two versions will be explored: the full dataset, and a lightly trimmed
+ dataset.
+ These are summarized below.
+\end_layout
+
+\begin_layout Standard
+The trimming process is funny: trimming is not idempotent.
+ Basically, the linkage filter, which guarantees that connectors have correspond
+ing word entries, knocks out disjuncts and so pushes words below the cut-off.
+ Repeating this process then knocks out more connectors.
+ It needs to be run until its stable.
+ This is CPU consuming.
+\end_layout
+
+\begin_layout Section*
+The End
+\end_layout
+
+\begin_layout Standard
+This is the end of the diary.
+\end_layout
+
+\end_body
+\end_document
