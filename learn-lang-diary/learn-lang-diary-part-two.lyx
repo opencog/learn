@@ -120,6 +120,8 @@ Introduction
 \begin_layout Standard
 Part two of the diary on the language-learning effort has three major sections.
  These are summarized here.
+ This part has been closed, and part three has been started (there will
+ be no further updates here.)
 \end_layout
 
 \begin_layout Subsubsection*
@@ -216,7 +218,7 @@ curvature
  in the system.
  It's not clear how to even characterize this concept clearly.
  An unambiguous merge seems to be asking for some kind of flattening or
- abelianization of the merge proceedure.
+ abelianization of the merge procedure.
  It's not clear how to do this.
 \end_layout
 
@@ -259,14 +261,14 @@ a class of very similar grammars
 
 \begin_layout Standard
 A secondary problem was that the random grammar didn't resemble a natural
- langauge grammar.
+ language grammar.
  That was not the intent.
  It was hoped that by picking a Zipfian distribution of vocabulary words,
  a Zipf distribution of disjuncts, throwing in some synonyms into the mix,
  the result would resemble a natural language.
  This was not the case.
  Despite having done a lot of distributional studies of English, it seems
- that I still don't know how to characterize a natural langugage very well.
+ that I still don't know how to characterize a natural language very well.
  I don't know how to measure the complexity of a grammar, or the complexity
  of a corpus.
  There are formal questions: how can one tell when two grammars are isomorphic?
@@ -300,9 +302,9 @@ does that make sense?
 \end_layout
 
 \begin_layout Standard
-An embarassing problem was immediately encountered: Setting the merge threshold
+An embarrassing problem was immediately encountered: Setting the merge threshold
  at some apparently innocuous value, that would result in similar words
- getting merged immdiately resulted in chaos and failure.
+ getting merged immediately resulted in chaos and failure.
  This is very unlike the earlier experiments, where things went quite very
  well.
  Something went wrong.
@@ -315,9 +317,9 @@ Well, several things.
 
 \begin_layout Itemize
 Merging requires a merge threshold.
- Eariler experiments searched for this threshold carefully, and then applied
+ Earlier experiments searched for this threshold carefully, and then applied
  it.
- Here, we camplacently picked one, based on past experience and gut-sense,
+ Here, we complacently picked one, based on past experience and gut-sense,
  and it was set too low.
 \end_layout
 
@@ -325,7 +327,7 @@ Merging requires a merge threshold.
 Earlier merges used an overlap strategy, of assuming that similar words
  might have different disjunct sets just because some words were just too
  thinly sampled, to have seen such disjuncts.
- This seems like a good diea, but is perhaps naive.
+ This seems like a good idea, but is perhaps naive.
  If one word-disjunct pair has been observed 100 times, and given another,
  similar word, that word-disjunct pair has been observed zero times, well,
  that might not be due to under-sampling.
@@ -352,7 +354,7 @@ Some confusion regarding the above ensues.
 \begin_layout Itemize
 It was expected that using Shapes would improve similarity scores.
  After some work, it seems that this is not the case - they mostly seem
- to make thigs worse.
+ to make things worse.
  It's not at all clear which this is so.
  Shapes should have helped, but they don't!
 \end_layout
@@ -407,9 +409,9 @@ ad hoc
  the highest observation counts.
  The various similarity measures were used to computer the inter-cluster
  and intra-cluster similarity.
- The quality of the metrics was assessed based on thier ability to discriminate
+ The quality of the metrics was assessed based on their ability to discriminate
  between clusters, by taking the ratio of the RMS sizes of the clusters
- to the RMS cluster seprations.
+ to the RMS cluster separations.
  Higher discrimination is judged as being better.
 \end_layout
 
@@ -438,7 +440,7 @@ Cosine distance
 \end_layout
 
 \begin_layout Itemize
-Log cosing distance
+Log cosine distance
 \end_layout
 
 \begin_layout Itemize
@@ -460,7 +462,7 @@ These were compared one datasets with and without shapes, at seven different
 \end_layout
 
 \begin_layout Itemize
-Trimming is consistently deletrious to results.
+Trimming is consistently deleterious to results.
  However, using the full dataset blows up both RAM and compute time.
  The best compromise, for the given datasets, appear to be to discard all
  words that have a small number of observation counts, and to discard sections
@@ -477,7 +479,7 @@ Shapes mostly fail to improve similarity measurements, for any of the similarity
  Given that shapes add a large computational burden, they seem to offer
  no benefit.
  (They sharply increase the amount of time needed to compute similarity,
- and can triple the RAM ussage.)
+ and can triple the RAM usage.)
 \end_layout
 
 \begin_layout Itemize
@@ -490,13 +492,13 @@ The best overall similarity measure was vector overlap.
 \begin_layout Standard
 A few comments.
  Although the motivation for these experiments was the large MI between
- short and long vecctors, the experiments actually eliminated short vectors.
+ short and long vectors, the experiments actually eliminated short vectors.
  That is, the hand-picked clusters consisted of words with relatively high
  counts, and thus relatively long vectors.
 \end_layout
 
 \begin_layout Standard
-The failure of Probability Jaccard to dominate is also suprising.
+The failure of Probability Jaccard to dominate is also surprising.
  The Wikipedia article explains that it is in some sense optimal: it provides
  
 \begin_inset Quotes eld
@@ -6479,7 +6481,7 @@ status open
 
 \end_inset
 
-Looking at the connectors on D, we see that they are mergable, and that
+Looking at the connectors on D, we see that they are mergeable, and that
  the counts are consistent.
  So, based on this toy model, we can either try to merge connectors directly,
  or we can, at a later date, merge connectors by reconstructing them from
@@ -15552,7 +15554,7 @@ i.e.
 i.e.
 
 \emph default
- its Euclidean lenghth.
+ its Euclidean length.
  This confusion easily extends to 
 \begin_inset Quotes eld
 \end_inset
@@ -16322,7 +16324,7 @@ status collapsed
 After the analysis in this section was performed, a procedural issue was
  detected.
  It's not clear how this affects results.
- The proceedural problem is that the MM^T marginals were computed first,
+ The procedural problem is that the MM^T marginals were computed first,
  and then the dataset was trimmed.
  For computing the MI, the MM^T marginals from the full dataset were used.
  I'm thinking that they should have been recomputed after trimming.
@@ -19592,7 +19594,7 @@ Flavors of Jaccard similarity
 \end_layout
 
 \begin_layout Standard
-There are multiple variants of Jaccard similarlity that apply to the current
+There are multiple variants of Jaccard similarity that apply to the current
  situation.
  This leads to a bit of a naming crisis.
 \end_layout
@@ -19701,8 +19703,8 @@ If word
 \end_layout
 
 \begin_layout Standard
-The simplest, narrowest, original defintion of the Jaccard similarity is
- the unwieighted similarity given by 
+The simplest, narrowest, original definition of the Jaccard similarity is
+ the unweighted similarity given by 
 \begin_inset Formula $f\left(w,d\right)=\left[N\left(w,d\right)>0\right]$
 \end_inset
 
@@ -19877,7 +19879,7 @@ The subscript
 \begin_layout Standard
 The 
 \emph on
-conditional probablity
+conditional probability
 \emph default
  of observing a word 
 \begin_inset Formula $w$
@@ -19991,7 +19993,7 @@ This has the desirable property of giving the same score to synonyms.
 \begin_inset Formula $w$
 \end_inset
 
- should be judged as perfect synonyms, and so should be perfetly similar.
+ should be judged as perfect synonyms, and so should be perfectly similar.
  Plugging through, we find that the MI obeys this condition: 
 \begin_inset Formula 
 \[
@@ -20183,7 +20185,7 @@ Upshot is: the conventional dot product is not altered.
 \end_layout
 
 \begin_layout Standard
-The primary problem here is that this voilates one of the desired properties
+The primary problem here is that this violates one of the desired properties
  for the similarity of synonyms.
  That is, if 
 \begin_inset Formula $N\left(u,d\right)=\alpha N\left(w,d\right)$
@@ -20383,7 +20385,7 @@ I he it you him she they me them we -
 \begin_inset Text
 
 \begin_layout Plain Layout
-posessive
+possessive
 \end_layout
 
 \end_inset
@@ -20720,7 +20722,7 @@ I he it you him she they me them we -
 \begin_inset Text
 
 \begin_layout Plain Layout
-posessive
+possessive
 \end_layout
 
 \end_inset
@@ -20978,8 +20980,8 @@ MI beats the pants off of cosine similarity; of all the distance measures,
 \end_layout
 
 \begin_layout Itemize
-Suprpsingly, three different metrics provide superior results to MI: overlap
- similarity (unweighted Jaccard similarity), weighted Jacard similarity
+Surprisingly, three different metrics provide superior results to MI: overlap
+ similarity (unweighted Jaccard similarity), weighted Jaccard similarity
  and 
 \begin_inset Quotes eld
 \end_inset
@@ -20991,12 +20993,12 @@ probability
  Jaccard similarity, in order of quality of results.
  These improve the inter-intra-cluster separation by over 10% compared to
  using MI.
- (So - 10% is not a lot, but we'lll take what we can.)
+ (So - 10% is not a lot, but we'll take what we can.)
 \end_layout
 
 \begin_layout Itemize
 This last result is ...
- surprising, and seems to contradict the naive beleif in information theory.
+ surprising, and seems to contradict the naive belief in information theory.
  How is this to be explained? Is there some deeper information-theoretic
  explanation that has not been grasped?
 \end_layout
@@ -22029,7 +22031,7 @@ So lets try it out.
 \begin_inset Quotes eld
 \end_inset
 
-representatitive
+representative
 \begin_inset Quotes erd
 \end_inset
 
@@ -24029,7 +24031,7 @@ A much bigger dataset than the above.
 \begin_inset Quotes eld
 \end_inset
 
-representatitive
+representative
 \begin_inset Quotes erd
 \end_inset
 
@@ -25321,7 +25323,7 @@ Rather than reporting on all 66 inter-cluster distances, it seems simplest
  to provide a single score: the grand-total average and rms of the inter-cluster
  scores.
  There are 4617 inter-cluster pairs, with a mean of -1.32 and rms of 3.007.
- Comparing to the intra-cluster mean and rms, it looks like the diffference
+ Comparing to the intra-cluster mean and rms, it looks like the difference
  is 3.70, or about 1.3 std-dev distance between the two.
 \end_layout
 
@@ -26514,7 +26516,7 @@ Trimmed dataset
 \begin_layout Standard
 Redo of trimming, as explained above.
  These are more tightly trimmed, but still not fully trimmed.
- See below for dicussion.
+ See below for discussion.
  Time to perform the filtering is about 4200 seconds for each file.
 \end_layout
 
@@ -26524,7 +26526,7 @@ Notation: filename-WW-DD-SS-foo where WW is the cutoff for the minimum time
  DD is the cutoff for the number of times a disjunct has been observed,
  and SS is the cutoff for the number of times a given section has been observed.
  This is in keeping with how the filter object is designed in the main atomspace
- repo – these are teh three filter paramters.
+ repo – these are the three filter parameters.
 \end_layout
 
 \begin_layout Standard
@@ -27486,7 +27488,7 @@ tot
 \begin_inset Quotes erd
 \end_inset
 
- colum records the total number of pairs.
+ column records the total number of pairs.
  In formulas:
 \begin_inset Formula 
 \[
@@ -28702,13 +28704,13 @@ Less filtering gives better results.
 \begin_layout Itemize
 Shapes make all vectors more similar to each other.
  The RMS with shapes is smaller, considerably smaller, with shapes, than
- withouth them.
+ without them.
 \end_layout
 
 \begin_layout Itemize
 Unfortunately, this is true not only within clusters, but also between them!
  Shapes fail to improve the discrimination between clusters.
- This is counterintuitive.
+ This is counter-intuitive.
 \end_layout
 
 \begin_layout Itemize
@@ -31170,7 +31172,7 @@ A touch better than the joint-probability results above.
 \end_layout
 
 \begin_layout Itemize
-Separation is not as good as MI, but are within 5% of teh MI separation.
+Separation is not as good as MI, but are within 5% of the MI separation.
 \end_layout
 
 \begin_layout Subsection*
@@ -32373,7 +32375,7 @@ Separation is about 10% better than the MI separation, for the plain sections.
 \end_layout
 
 \begin_layout Itemize
-Seperaation is about 5% better than the MI separation, for the shapes.
+Separation is about 5% better than the MI separation, for the shapes.
 \end_layout
 
 \begin_layout Subsection*
@@ -36023,7 +36025,7 @@ conditional Jaccard similarity
  This is provided by the `cond-jacc` method on the `add-similarity-compute`
  object.
  This is the same as that defined, using above: its the Ruzicka similarity
- for the conditional proabilities.
+ for the conditional probabilities.
  To recap, so that I don't have to scroll up and re-read, the conditional
  Jaccard similarity is given by
 \begin_inset Formula 
@@ -37201,7 +37203,7 @@ For the shapeless sections, this provides almost as good separation as the
 \end_layout
 
 \begin_layout Itemize
-Using shapes seems to improve seperability by a fair amount – again, bucking
+Using shapes seems to improve separability by a fair amount – again, bucking
  a trend.
  Most of the improvement is in the smaller datasets.
 \end_layout
@@ -38382,7 +38384,7 @@ For shapeless separation, this is about 5% to 10% better than MI.
 \end_layout
 
 \begin_layout Itemize
-Adding shapes further improves seperability, again bucking a trend.
+Adding shapes further improves separability, again bucking a trend.
 \end_layout
 
 \begin_layout Standard
@@ -38398,7 +38400,7 @@ Summary
 \begin_layout Standard
 Lets try to summarize the results above.
  The table below reproduces the separations for the various different measures.
- The clumn titles are in the same order as in the text.
+ The column titles are in the same order as in the text.
  There are nine columns.
 \begin_inset VSpace defskip
 \end_inset
@@ -39839,13 +39841,13 @@ The MI is a middle-of-the-road measure.
 Shapes have a mixed effect on the discrimination between clusters.
  They make things much worse for the five worst metrics.
  They make things better for the three best metrics, but only when the datasets
- are heaviliy trimmed.
+ are heavily trimmed.
  For the least-trimmed dataset, shapes make things worse.
 \end_layout
 
 \begin_layout Standard
 Ranking depends on the amount of trimming.
- Different randkings result, depending on how much trimming one does.
+ Different rankings result, depending on how much trimming one does.
  The table below shows first through fifth places for rankings.
 \begin_inset VSpace defskip
 \end_inset
@@ -40765,7 +40767,7 @@ condj seems to be overall second place, and a fairly strong contender.
 \end_layout
 
 \begin_layout Standard
-Not visible in the above table are teh above factoids, observed elsewhere:
+Not visible in the above table are the above factoids, observed elsewhere:
 \end_layout
 
 \begin_layout Itemize
@@ -40774,9 +40776,9 @@ prjac is very compute intensive.
 
 \begin_layout Itemize
 Shapes consistently reduce the differences between vectors.
- Both inter-cluster differences are smaller but also intra-cluster diffferences
+ Both inter-cluster differences are smaller but also intra-cluster differences
  are also smaller.
- Both RMS scores are pretty much always tigher, with shapes.
+ Both RMS scores are pretty much always tighter, with shapes.
 \end_layout
 
 \begin_layout Itemize
@@ -40786,7 +40788,7 @@ Shapes have a mixed effect on discrimination between clusters.
 
 \begin_layout Itemize
 Using shapes has a large impact on RAM and CPU usage.
- It takes a lot of time to create them, they triple or quaruple RAM usage,
+ It takes a lot of time to create them, they triple or quadruple RAM usage,
  and all vector similarity computations take longer, because the vectors
  are longer.
 \end_layout
@@ -40794,7 +40796,7 @@ Using shapes has a large impact on RAM and CPU usage.
 \begin_layout Itemize
 Most of the tables have no results for the full dataset.
  That's because computing with the full dataset is very CPU intensive.
- We conclude that a very mild amount of trimming, to eliminate the onsie-twosie
+ We conclude that a very mild amount of trimming, to eliminate the onesie-twosie
  counts is likely to be well worth the effort.
  Particularly notable is that the scores for overlap and condj are tied
  for the full dataset, and MI is in a close 3rd place.
@@ -40825,7 +40827,7 @@ optimal
 \begin_inset Quotes erd
 \end_inset
 
- probability Jacard seems not optimal for this problem is worthwhile.
+ probability Jaccard seems not optimal for this problem is worthwhile.
 \end_layout
 
 \begin_layout Standard
