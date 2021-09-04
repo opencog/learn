@@ -36,7 +36,7 @@
 	; to see if that particular entry still exists.
 	(for-each
 		(lambda (base)
-			(if (and (cog-atom? base) (LEFT-BASIS-PRED base))
+			(if (and (cog-atom? base) (not (LEFT-BASIS-PRED base)))
 				(cog-delete-recursive! base)))
 		(early-stars 'left-basis))
 
@@ -44,7 +44,7 @@
 
 	(for-each
 		(lambda (base)
-			(if (and (cog-atom? base) (RIGHT-BASIS-PRED base))
+			(if (and (cog-atom? base) (not (RIGHT-BASIS-PRED base)))
 				(cog-delete-recursive! base)))
 		(early-stars 'right-basis))
 
@@ -53,7 +53,7 @@
 	; Walk over the list of all entries and just delete them.
 	(for-each
 		(lambda (atom)
-			(if (and (cog-atom? atom) (PAIR-PRED atom))
+			(if (and (cog-atom? atom) (not (PAIR-PRED atom)))
 				(cog-delete-recursive! atom)))
 		(early-stars 'get-all-elts))
 
