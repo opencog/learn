@@ -5180,6 +5180,44 @@ computed by (add-support-api LLOBJ) 'total-support-left
 Crap. There's no simple efficient way to count.
 What about fetch-pairs !?
 
+Hang on. 
+(define sup (add-support-api psa))
+(sup 'total-support-left) is the total pairs.
+(sup 'total-count-left) is the wild-wild
+
+Need ...
+'left-dim
+'right-dim
+'num-pairs ... (inexact->exact (round ... done.
+
+(add-support-compute 'cache-all
+
+(define sup (add-support-api psa))
+(sup 'set-size (psa 'left-basis-size) (psa 'right-basis-size)
+    (sup 'wild-wild-count))
+(store-atom (psa 'wild-wild))
+
+(define storo (make-store psa))
+(storo 'store-wildcards)
+
+-------------------------
+(define wi (ListLink  (AnyNode "cset-word") (AnyNode "cset-disjunct")))
+(cog-keys wi)
+((PredicateNode "*-Right Total Key-*")
+ (PredicateNode "*-TruthValueKey-*")
+ (PredicateNode "*-MM^T Product Key-*")
+ (PredicateNode "*-Left Total Key-*")
+)
+
+and they are good, so wtf
+(define rpt-obj (add-report-api psa))
+(rpt-obj 'left-dim)
+There is no "*-Dimension Key-*" .. why?
+
+cause make-central-compute never ran...
+
+164 min and 69.7 GB before starting central compute.
+
 
 
 
