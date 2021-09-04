@@ -176,6 +176,16 @@ ing word entries, knocks out disjuncts and so pushes words below the cut-off.
  Repeating this process then knocks out more connectors.
  It needs to be run until its stable.
  This is CPU consuming.
+\end_layout
+
+\begin_layout Standard
+The table below shows the result of repeated trimming, interleaved with
+ a linkage filter to remove disjuncts with connectors in them that do not
+ have words any more.
+ Each was written to a distinct file.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -807,6 +817,13 @@ So that took an alarmingly large number of iterations to stabilize.
 \end_layout
 
 \begin_layout Standard
+Same idea, modified algo: here, instead of filtering, just delete outright.
+ This will shrink the AtomSpace as we go along, avoiding some of the hassle
+ with filtering.
+ Hopefully it will run faster, too.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -912,7 +929,7 @@ r4-mpg-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+28436901
 \end_layout
 
 \end_inset
@@ -921,7 +938,7 @@ r4-mpg-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.380
 \end_layout
 
 \end_inset
@@ -930,7 +947,7 @@ r4-mpg-marg
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.2796
 \end_layout
 
 \end_inset
@@ -954,7 +971,7 @@ r4-mpg-marg
 \uwave off
 \noun off
 \color none
-r4-zfil-5-2-1-pass-1
+1-1-1-pass-1
 \end_layout
 
 \end_inset

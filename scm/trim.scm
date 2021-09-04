@@ -10,6 +10,17 @@
 
 ; ---------------------------------------------------------------------
 
+(define (make-elapsed-secs)
+   (define start-time (current-time))
+   (lambda ()
+      (define now (current-time))
+      (define diff (- now start-time))
+      (set! start-time now)
+      diff)
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (trim-matrix LLOBJ
 	LEFT-BASIS-PRED RIGHT-BASIS-PRED PAIR-PRED)
 "
@@ -47,4 +58,33 @@
 		(early-stars 'get-all-elts))
 
 	(format #t "Trimmed all pairs in ~A seconds.\n" (elapsed-secs))
+)
+
+
+(define-public (subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT)
+"
+  subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT
+  Just like `add-subtotal-filter` but it trims.
+"
+	(define stars-obj (add-pair-stars LLOBJ))
+	(define sup-obj (add-support-api stars-obj))
+
+	; ---------------
+	; Remove rows and columns that are below-count.
+	;
+	; Yes, we want LEFT-CUT < right-wild-count this looks weird,
+	; but is correct: as LEFT-CUT gets larger, the size of the
+	; left-basis shrinks.
+	(define (left-basis-pred ITEM)
+		(< LEFT-CUT (sup-obj 'right-count ITEM)))
+
+	(define (right-basis-pred ITEM)
+		(< RIGHT-CUT (sup-obj 'left-count ITEM)))
+
+	(define (pair-pred PAIR)
+		(< PAIR-CUT (LLOBJ 'get-count PAIR)))
+
+	; ---------------
+	(trim-matrix stars-obj
+		left-basis-pred right-basis-pred pair-pred)
 )
