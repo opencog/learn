@@ -132,6 +132,42 @@ However, for intial proof-of-concept, it is best to avoid the above
 complexity. The proof of concept needs to show that shape grammars
 exist, and that a reasonable pipeline can be built to find them.
 
+The Competition: Neural Nets
+----------------------------
+The competition here is very much the  deep-learning, neural net
+industry. As competition, they are far, far ahead, tehcnologically.
+The theory is well-developed, the libraries are sophisticated, they
+run on massive cloud computers and are able to tackle huge datasets,
+including video. By comparison, the examples above are simplistic.
+One might even say "pathetic", and that deep-learning neural nets are
+light-years ahead.  However, this misses a deep and fundamental point.
+
+The point is this: neural nets create a dense network between inputs and
+outputs, and are missing any explicit symbolc representation. The ideas
+described in this project are explicitly symbolic, from the ground up.
+They aim to discover extremely sparse networks. The network
+representation, because it is sparse, is explicitly open to a symbolic
+representation.
+
+Symbolic representations are important, because they allow traditional
+theories or symbolic reasoning to be applied. One can apply logic:
+Aristotelian logic, predicate logic, common sense logic. Careful,
+though: the ultimate goal of a sparse symbolic network is to learn the
+laws of logic itself.  That is, if one observes a correlation, that when
+one does this, that happens, one is in fact learning a bit of
+common-sense inference.  That is, common-sense inference is what
+you can do after you've spotted a pattern in the sparse network of
+symbols. Unsupervised learning has to be a project of spotting patterns
+in sparse symbolic networks. Common-sense reasoning is then the
+application of those learned patterns to the prediction of outcomes.
+
+Perhaps deep learning and neural nets will someday be able to do this.
+Today, they cannot. The algorithms described here currently seem to have
+a fundamental advantage over neural nets.  Whether or not this
+fundamental advantage can be turned into practical, high-speed code
+remains to be seen. We're starting from far behind, but maybe we can
+shoot far ahead.
+
 
 Development Plan
 ================
