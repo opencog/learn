@@ -91,6 +91,48 @@ then readily obtains vectors, and so a grammar. Le Voila!  The same Link
 Grammar as used for natural language can also be applied to visual
 part-whole image segmentation!
 
+Channels and the Channel Grammar
+--------------------------------
+The above sketch glossed over a deep and difficult issue that is far
+more complex and abstract. For initial bringup and proof of concept, it
+can be ignored; for a general theory, it is fundamental and unavoidable.
+
+The problem with image segmentation is that colors are not uniform, but
+vary in brightness and hue. To segment an image, one must make various
+ad hoc assumptions, and, indeed, there are many rather complex
+algorithms published for segmenting images.  These algorithms are
+described in terms of filters and operations applied to an image.
+An example can be found in [this tutorial from
+OpenCV](https://docs.opencv.org/3.4/d2/dbd/tutorial_distance_transform.html):
+the aglo is to first sharpen, then grayscale, convert to binary, apply
+a distance transform, threshold, finally watershed.
+
+The ultimate goal of unsupervised image learning is to learn this
+algorithm, as well as the shape grammar. Consider splitting an image
+into hue and saturation. The hue is a "channel of data": it is a
+specific stream of data that resulted from applying the "hue transform"
+to the input stream.  Image processing can be reduced to the idea of
+applying transformations to input channels, creating output channels.
+Image segmentation is then some specific sequence of transforms applied
+to the input data channels.
+
+Unsupervised learning requires not only a search of the 2D segmented
+space, and a discovery of the shape grammar therein, but also a search
+of the much higher dimensional space of possible filter sequences that
+can be applied to the raw inputs. One is looking not only for meaningful
+arrangements of shapes in a 2D image plane; one is looking for a
+meaningful arrangement of transform filters in a processing pipeline. It
+is the combination of these that must be learned.  Thus, the goal is not
+to find 2D or 3D shapes or shape grammars, but to find N-dimensional
+shapes, where N is the collection of channel transformations. This is
+not a Euclidean N-dimensional space: it is the result of a hierarchical
+combination of filters. The learning occurs in this abstract space.
+
+However, for intial proof-of-concept, it is best to avoid the above
+complexity. The proof of concept needs to show that shape grammars
+exist, and that a reasonable pipeline can be built to find them.
+
+
 Development Plan
 ================
 This section describes the initial steps that can be taken, to validate
