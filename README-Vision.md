@@ -104,7 +104,7 @@ algorithms published for segmenting images.  These algorithms are
 described in terms of filters and operations applied to an image.
 An example can be found in [this tutorial from
 OpenCV](https://docs.opencv.org/3.4/d2/dbd/tutorial_distance_transform.html):
-the aglo is to first sharpen, then grayscale, convert to binary, apply
+the algo is to first sharpen, then gray-scale, convert to binary, apply
 a distance transform, threshold, finally watershed.
 
 The ultimate goal of unsupervised image learning is to learn this
@@ -128,14 +128,14 @@ shapes, where N is the collection of channel transformations. This is
 not a Euclidean N-dimensional space: it is the result of a hierarchical
 combination of filters. The learning occurs in this abstract space.
 
-However, for intial proof-of-concept, it is best to avoid the above
+However, for initial proof-of-concept, it is best to avoid the above
 complexity. The proof of concept needs to show that shape grammars
 exist, and that a reasonable pipeline can be built to find them.
 
 The Competition: Neural Nets
 ----------------------------
 The competition here is very much the  deep-learning, neural net
-industry. As competition, they are far, far ahead, tehcnologically.
+industry. As competition, they are far, far ahead, technologically.
 The theory is well-developed, the libraries are sophisticated, they
 run on massive cloud computers and are able to tackle huge datasets,
 including video. By comparison, the examples above are simplistic.
@@ -143,7 +143,7 @@ One might even say "pathetic", and that deep-learning neural nets are
 light-years ahead.  However, this misses a deep and fundamental point.
 
 The point is this: neural nets create a dense network between inputs and
-outputs, and are missing any explicit symbolc representation. The ideas
+outputs, and are missing any explicit symbolic representation. The ideas
 described in this project are explicitly symbolic, from the ground up.
 They aim to discover extremely sparse networks. The network
 representation, because it is sparse, is explicitly open to a symbolic
