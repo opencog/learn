@@ -4,6 +4,11 @@
 ; Like filter.scm, but removes Atoms outright from the AtomSpace.
 ; The goal is to be a bit more CPU and storage efficient.
 ;
+; XXX TODO
+; -- use either cog-extract! or cog-delete!
+; -- finish writing documentation
+; -- move to the (opencog matrix) module
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
