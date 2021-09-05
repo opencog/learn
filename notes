@@ -5245,6 +5245,7 @@ why more word nodes than array dims ???
          (if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
             (cog-delete-recursive! base)))
       (early-stars 'right-basis))
+		(cog-get-atoms 'WordNode))
 
 (WordNode "whipcord")
 Oh. Linkage filter.

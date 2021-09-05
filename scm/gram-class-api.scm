@@ -415,10 +415,8 @@
   of connectors that have words appearing in the WORD-LIST. This is
   not a public function; it is used to build several public functions.
 "
-
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; ---------------
 	; Always keep any WordNode or WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
 
@@ -450,16 +448,8 @@
   above, except that it doesnt filter, it just deletes.  This is
   not a public function; it is used to build several public functions.
 "
-	; ---------------
-	; Cached set of valid connector-seqs, for the right-basis-pred.
-	; We need to know if every connector in a connector sequence is
-	; a member of some word in WORD-LIST. Verifying this directly is
-	; very inefficient. It is much faster to precompute the set of
-	; known-good connector sequences, and refer to that.
-
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; ---------------
 	; Always keep any WordNode or WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
 
@@ -543,11 +533,10 @@
   trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting words
   and connector sequences and sections which contain words other than
   those appearing in the left-basis.  This is like `add-linkage-filter`,
-  except that it doesnt filter, it just deletes.  The resulting
-  collection of word-disjunct pairs is then mostly self-consistent,
+  except that it doesn't filter, it just deletes.  The resulting
+  collection of word-disjunct pairs is then self-consistent,
   in that it does not contain any connectors unable to form a
-  connection to some word.  However, it may still contain words on
-  the left that do not appear in any connectors!
+  connection to some word.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -557,6 +546,20 @@
 	(define id-str "linkage-filter")
 
 	(linking-trim LLOBJ get-words)
+
+	; After trimming, there may be left and right basis elements
+	; that are not in any pairs, but have not been deleted.
+	; Delete those now.
+	(define (trim-type TYPE)
+		(for-each
+			(lambda (base)
+				(if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
+					(cog-delete! base)))
+			(cog-get-atoms TYPE)))
+
+	(trim-type 'ConnectorSeq)
+	(trim-type 'Connector)
+	(trim-type 'WordNode)
 )
 
 ; ---------------------------------------------------------------------
