@@ -5221,6 +5221,33 @@ cause make-central-compute never ran...
 ----------------------
 ((PredicateNode . 14) (ListLink . 26076503) (AnyNode . 2) (Connector . 725460) (ConnectorDir . 2) (ConnectorSeq . 25698949) (Section . 28436901) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 2) (WordNode . 377553))
 
+after col trim:
+(PredicateNode . 14) (ListLink . 2557528) (AnyNode . 2) (Connector . 379443) (ConnectorDir . 2) (ConnectorSeq . 2366262) (Section . 4962919) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 2) (WordNode . 191265))
+
+
+((PredicateNode . 14) (ListLink . 2557528) (AnyNode . 2) (Connector . 379443) (ConnectorDir . 2) (ConnectorSeq . 2366262) (Section . 4000706) (VariableNode . 2) (QueryLink . 1791930) (TypeNode . 2) (TypedVariableLink . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 2) (WordNode . 191265))
+
+Ooops QueryLink not cleaned up.
+Now
+((PredicateNode . 14) (ListLink . 2557528) (AnyNode . 2) (Connector . 379443) (ConnectorDir . 2) (ConnectorSeq . 2366262) (Section . 2208776) (TypeNode . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 2) (WordNode . 191265))
+
+After save and restore:
+((PredicateNode . 8) (ListLink . 1791931) (AnyNode . 2) (Connector . 157829) (ConnectorDir . 2) (ConnectorSeq . 1733439) (Section . 2208776) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 102656))
+
+why more word nodes than array dims ???
+(VariableNode "$api-right-star")
+
+   ; After trimming, there may be left and right basis elements
+   ; that are not in any pairs, but have not been deleted.
+   ; Delete those now.
+   (for-each
+      (lambda (base)
+         (if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
+            (cog-delete-recursive! base)))
+      (early-stars 'right-basis))
+
+(WordNode "whipcord")
+Oh. Linkage filter.
 
 
 ====================================================

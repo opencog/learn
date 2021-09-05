@@ -343,6 +343,65 @@
 
 ; ---------------------------------------------------------------------
 
+(define (get-connectors WRD-LST)
+"
+  Return a list of connectors containing a word in the list
+"
+	(define con-set (make-atom-set))
+	(for-each
+		(lambda (word)
+			(for-each con-set
+				(cog-incoming-by-type word 'Connector)))
+		WRD-LST)
+	(con-set #f)
+)
+
+;-----------------------------
+(define (get-con-seqs CON-LST)
+"
+  Return a list of ConnectorSeq containing one or more
+  connectors from the CON-LST
+"
+	(define seq-set (make-atom-set))
+	(for-each
+		(lambda (ctr)
+			(for-each seq-set
+				(cog-incoming-by-type ctr 'ConnectorSeq)))
+		CON-LST)
+	(seq-set #f)
+)
+
+;-----------------------------
+(define (make-conseq-predicate STAR-OBJ WORD-LIST-FUNC)
+"
+  Create a predicate that returns true if a given ConnectorSeq
+  consists of WordNodes eintirely in some WordClass.  That is,
+  this returns that predicate. This may take a few minutes to
+  run, if there are millions of ConnectorSeq's.
+"
+	; Unwanted words are not part of the matrix.
+	(define unwanted-words
+		(atoms-subtract
+			(cog-get-atoms 'WordNode) (WORD-LIST-FUNC)))
+
+	(define unwanted-cnctrs
+		(get-connectors unwanted-words))
+
+	(define unwanted-conseqs
+		(get-con-seqs unwanted-cnctrs))
+
+	(define good-conseqs
+		(atoms-subtract
+			; Take all connector-sequences, and subtract the bad ones.
+			; (cog-get-atoms 'ConnectorSeq)
+			(STAR-OBJ 'right-basis)
+			unwanted-conseqs))
+
+	; Return the predicate that returns #t only for good ones.
+	(make-aset-predicate good-conseqs)
+)
+
+;-----------------------------
 (define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR RENAME)
 "
   add-linking-filter LLOBJ - Modify the word-disjunct LLOBJ so that
@@ -359,56 +418,6 @@
 
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; Return a list of connectors containing a word in the list
-	(define (get-connectors WRD-LST)
-		(define con-set (make-atom-set))
-		(for-each
-			(lambda (word)
-				(for-each con-set
-					(cog-incoming-by-type word 'Connector)))
-			WRD-LST)
-		(con-set #f)
-	)
-
-	; Return a list of ConnectorSeq containing one or more
-	; connectors from the CON-LST
-	(define (get-con-seqs CON-LST)
-		(define seq-set (make-atom-set))
-		(for-each
-			(lambda (ctr)
-				(for-each seq-set
-					(cog-incoming-by-type ctr 'ConnectorSeq)))
-			CON-LST)
-		(seq-set #f)
-	)
-
-	; Create a predicate that returns true if a given ConnectorSeq
-	; consists of WordNodes eintirely in some WordClass.  That is,
-	; this returns that predicate. This may take a few minutes to
-	; run, if there are millions of ConnectorSeq's.
-	(define (make-conseq-predicate)
-		; Unwanted words are not part of the matrix.
-		(define unwanted-words
-			(atoms-subtract
-				(cog-get-atoms 'WordNode) (WORD-LIST-FUNC)))
-
-		(define unwanted-cnctrs
-			(get-connectors unwanted-words))
-
-		(define unwanted-conseqs
-			(get-con-seqs unwanted-cnctrs))
-
-		(define good-conseqs
-			(atoms-subtract
-				; Take all connector-sequences, and subtract the bad ones.
-				; (cog-get-atoms 'ConnectorSeq)
-				(star-obj 'right-basis)
-				unwanted-conseqs))
-
-		; Return the predicate that returns #t only for good ones.
-		(make-aset-predicate good-conseqs)
-	)
-
 	; ---------------
 	; Always keep any WordNode or WordClassNode we are presented with.
 	(define (left-basis-pred WRDCLS) #t)
@@ -418,7 +427,8 @@
 	; Only accept a ConnectorSeq if every word in every connector
 	; is in some word-class.
 	(define (right-basis-pred CONSEQ)
-		(if (not ok-conseq?) (set! ok-conseq? (make-conseq-predicate)))
+		(if (not ok-conseq?)
+			(set! ok-conseq? (make-conseq-predicate star-obj WORD-LIST-FUNC)))
 		(ok-conseq? CONSEQ)
 	)
 
