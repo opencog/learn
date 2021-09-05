@@ -342,6 +342,12 @@
 )
 
 ; ---------------------------------------------------------------------
+; The next three routines are used to build a cached set of valid
+; connector-seqs, for the right-basis-pred.
+; We need to know if every connector in a connector sequence is
+; a member of some word in WORD-LIST. Verifying this directly is
+; very inefficient. It is much faster to precompute the set of
+; known-good connector sequences, and refer to that.
 
 (define (get-connectors WRD-LST)
 "
@@ -404,9 +410,44 @@
 ;-----------------------------
 (define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR RENAME)
 "
-  add-linking-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  add-linking-filter LLOBJ - Filter the word-disjunct LLOBJ so that
   the only connector sequences appearing on the right consist entirely
   of connectors that have words appearing in the WORD-LIST. This is
+  not a public function; it is used to build several public functions.
+"
+
+	(define star-obj (add-pair-stars LLOBJ))
+
+	; ---------------
+	; Always keep any WordNode or WordClassNode we are presented with.
+	(define (left-basis-pred WRDCLS) #t)
+
+	(define ok-conseq? #f)
+
+	; Only accept a ConnectorSeq if every word in every connector
+	; is in some word-class.
+	(define (right-basis-pred CONSEQ)
+		(if (not ok-conseq?)
+			(set! ok-conseq? (make-conseq-predicate star-obj WORD-LIST-FUNC)))
+		(ok-conseq? CONSEQ)
+	)
+
+	; Input arg is a Section. The gdr (right hand side of it) is a
+	; conseq. Keep the section if the conseq passes.
+	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
+
+	; ---------------
+	(add-generic-filter LLOBJ
+		left-basis-pred right-basis-pred pair-pred ID-STR RENAME)
+)
+
+;-----------------------------
+(define (linking-trim LLOBJ WORD-LIST-FUNC)
+"
+  linking-trim LLOBJ - Trim the word-disjunct LLOBJ by deleting words
+  and connector sequences and sections which contain words other than
+  those provided by the WORD-LIST-FUNC. This is like `add-linking-filter`
+  above, except that it doesnt filter, it just deletes.  This is
   not a public function; it is used to build several public functions.
 "
 	; ---------------
@@ -437,8 +478,7 @@
 	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
 
 	; ---------------
-	(add-generic-filter LLOBJ
-		left-basis-pred right-basis-pred pair-pred ID-STR RENAME)
+	(trim-matrix LLOBJ left-basis-pred right-basis-pred pair-pred)
 )
 
 ; ---------------------------------------------------------------------
@@ -494,6 +534,29 @@
 	(define id-str "linkage-filter")
 
 	(add-linking-filter LLOBJ get-words id-str RENAME)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (trim-linkage LLOBJ)
+"
+  trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting words
+  and connector sequences and sections which contain words other than
+  those appearing in the left-basis.  This is like `add-linkage-filter`,
+  except that it doesnt filter, it just deletes.  The resulting
+  collection of word-disjunct pairs is then mostly self-consistent,
+  in that it does not contain any connectors unable to form a
+  connection to some word.  However, it may still contain words on
+  the left that do not appear in any connectors!
+"
+	(define star-obj (add-pair-stars LLOBJ))
+
+	; Return a list of words
+	(define (get-words) (star-obj 'left-basis))
+
+	(define id-str "linkage-filter")
+
+	(linking-trim LLOBJ get-words)
 )
 
 ; ---------------------------------------------------------------------
