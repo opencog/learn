@@ -27,7 +27,7 @@
 ; Re-init the stats.
 (set! ala (make-any-link-api))
 (set! asa (add-pair-stars ala))
-(batch-pairs asa)
+(batch-all-pair-mi asa)
 (barrier storage-node)
 
 ; (cog-close storage-node)

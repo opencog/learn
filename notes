@@ -5268,6 +5268,15 @@ Let's hack that..
 		(set! cnt (+ 1 cnt))))
 		(cog-get-atoms 'ConnectorSeq))
 
+   (for-each
+      (lambda (base)
+         (if (and (cog-atom? base) (equal? 0 (cog-incoming-size-by-type base 'Section)))
+            (cog-delete-recursive! base)))
+		(cog-get-atoms 'ConnectorSeq))
+		(cog-get-atoms 'Word))
+
+
+
 ----------------
 dropdb en_mpg_53
 dropdb en_huge_marg

@@ -156,6 +156,9 @@
 			(format #t "Elapsed time to load csets: ~A secs\n"
 				(- (current-time) start-time)))
 
+		(define (describe)
+			(display (procedure-property make-pseudo-cset-api 'documentation)))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -176,6 +179,10 @@
 				((fetch-pairs)    fetch-pseudo-csets)
 				((provides)       (lambda (meth) #f))
 				((filters?)       (lambda () #f))
+				((help)           (describe))
+				((describe)       (describe))
+				((obj)            "make-pseudo-cset-api")
+				((base)           #f)
 				(else (error "Bad method call on pseudo-cset:" message)))
 			args)))
 )
