@@ -1052,63 +1052,68 @@ database before proceeding to the next step.
 (Optional) Trimming Disjunct Datasets
 -------------------------------------
 The previous step can result in unmanagebly large datasets. These can be
-(and should be) trimmed to a smaller size. Good (excellent?) criteria
-for trimming is to remove all words that were observed less then 10 or
-30 times, and all disjuncts seen less than 5 or 10 times. This seems
-like a good idea, as low observation counts suggest the content is
-noise.  Because both the word and the disjunct distribution is Zipfian
-(i.e. half of all disjuncts might be observed only once!) this trimming
-step can easily remove 90% of the dataset.  The following sequence will
-perform the trim, as well as removing connectors that cannot connect to
-anything. (Note: it can be slow; hours for mid-size datasets.)
-
-The trim used below keeps all words observed more than 40 times, all
-disjuncts observed more than 8 times, and all word-disjunct pairs
-observed more than 5 times.  The initial dataset is called
-`all_disjunct_dataset`.
+(and should be) trimmed to a smaller size. Remarkably, approximately 90%
+of all disjuncts are observed only once! Thus, removing these offers a
+tremendous data reduction. Current evidence seems to suggest that
+trimming more than this lowers overall data quality; see the Diary
+entries, circa June 2021, for details.
 
 ```
-   (cog-rocks-open "rocks:///where/ever/all_disjunct_dataset")
+; Utility to perform timming.
+(define (iter-trim a b c)
+   (define pca (make-pseudo-cset-api))
+   (define psa (add-pair-stars pca))
+   (subtotal-trim psa a b c)
+   (trim-linkage psa)
+   (set! pca (make-pseudo-cset-api))
+   (set! psa (add-pair-stars pca))
+   ((add-support-compute psa) 'cache-all)
+   (print-matrix-summary-report psa)
+   (inexact->exact (round ((add-support-api psa) 'total-support-left)))
+)
+```
+The following sequence will perform the trim, as well as removing
+connectors that cannot connect to anything. Running this is slow:
+it may take hours for mid-size datasets.
+
+The trim used below keeps all words observed more than once, all
+disjuncts observed more than once, and word-disjunct pairs observed
+more than once.  The initial dataset is called `all_disjunct_dataset`.
+
+```
+   $ cp -pr full_dataset.rdb trimmed_dataset.rdb
+```
+Then, in guile:
+```
+   (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
    (define pca (make-pseudo-cset-api))
    (define psa (add-pair-stars pca))
    (psa 'fetch-pairs)        ;; Load the dataset
-   (cog-rocks-close)         ;; Avoid accidental corruption
    (define psc (add-support-compute psa))
    (psc 'cache-all)          ;; compute subtotals
-   (define fsa (add-subtotal-filter psa 40 8 5 #f)) ;; The filter itself
-   (define zfa (add-zero-filter fsa #f))
-   (define lfa (add-linkage-filter zfa))
-   (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
-   (define fso (make-store lfa))
-   (fso 'store-all-elts)     ;; Do NOT store the marginals!
-   (cog-rocks-close)
-   ^D                        ;; Exit.
+
+   ; Now, repeatedly trim. This will settle down after 7 or 8
+   ; iterations. The problem is that each trim leaves behind
+   ; unconnectable words, which have to be rremoved, thus
+   ; throwing off the counts.
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+   (iter-trim 1 1 1)
+
 ```
 The above just trims; but the marginals are needed for grammatical
-classifcation. So build these, as before, starting with a clean load
-of the atomspace with the new trimmed dataset:
+classifcation. So build these, as before.
 ```
-   (cog-rocks-open "rocks:///where/ever/trimmed_dataset.rdb")
-   (psa 'fetch-pairs)
    (batch-all-pair-mi psa)    ;; MI between words and disjuncts
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)       ;; Word-pair entropies
    (cog-rocks-close)
    ^D                         ;; Exit.
 ```
-
-***Footnote***: Postgres users: be sure to create the target database.
-Like so:
-```
-$ createdb trimmed_dataset
-$ cat atoms.sql | psql trimmed_dataset
-```
-Then use
-```
-   (sql-open "postgres:///all_disjunct_dataset.rdb")
-	(sql-close)
-```
-as needed.
 
 Determining Grammatical Classes
 -------------------------------
@@ -1474,6 +1479,8 @@ enough to do some basic work. The steps are:
 
 * Download a container from
   https://linas.org/lxc-nlp-containers/
+  XXX No. These are all stale and out of date. Contact me for
+  something modern.
 
 * The following describe root-owned containers. You can also have
   user-owned containers, if you know how to do that.
