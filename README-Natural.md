@@ -780,7 +780,7 @@ After observing word-pair counts, the mutual information (mutual
 entropy) between them needs to be computed.  This is a required step
 before disjunct observation can be started.
 
-Do this by running the `run/2-word-pairs/compute-marginals.sh`.
+Do this by running the `run/2-word-pairs/compute-marginals.sh` script.
 Batch-counting might take hours or longer (maybe over a day), depending
 on your dataset size. Small trial-run datasets should take no more than
 5-10 minutes... or seconds, for small artificial languages. This script
@@ -800,6 +800,15 @@ Thus, you may want to:
   RocksDB databases can be copied with the `cp -pr` command. Postgres
   databses can be copied with the `createdb -T` command.
 
+It appears that trimming the word-pair database may have a small but
+positive effect. Trimming to remove all words that have been observed
+ten or fewer times, and all word-pairs that have been observed 4 or
+fewer times will raise the average MI of the entire dataset, and cut
+the number of pairs in it by about half.  As the bulk of the dataset is
+word-pairs, this smaller number will reduce database size. The downside
+is that trimming requires some extra CPU-intensive steps:marginals have
+to be computed both before and after the trim. Trim by running
+`run/2-word-pairs/trim-dataset.sh`.
 
 The Vector Structure Encoded in Pairs
 -------------------------------------

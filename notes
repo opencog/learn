@@ -5246,10 +5246,58 @@ why more word nodes than array dims ???
             (cog-delete-recursive! base)))
       (early-stars 'right-basis))
 		(cog-get-atoms 'WordNode))
+		(cog-get-atoms 'Connector))
 
 (WordNode "whipcord")
 Oh. Linkage filter.
 
+(WordNode "Bowline")
+OK, marginals were not removed...
+Let's hack that..
+
+   (for-each
+      (lambda (base)
+         (if (and (cog-atom? base) (equal? 1 (cog-incoming-size base)))
+            (cog-delete-recursive! base)))
+		(cog-get-atoms 'WordNode))
+
+(define cnt 0)
+   (for-each
+      (lambda (base)
+         (if (and (cog-atom? base) (equal? 1 (cog-incoming-size base)))
+		(set! cnt (+ 1 cnt))))
+		(cog-get-atoms 'ConnectorSeq))
+
+----------------
+dropdb en_mpg_53
+dropdb en_huge_marg
+--------------------
+
+(load-atoms-of-type 'Any)
+(load-referers (AnyNode "cset-word"))
+(load-referers (AnyNode "cset-disjunct"))
+(define pca (make-pseudo-cset-api))
+(pca 'wild-wild) Gahhh
+
+Atoms tot 156M of which 106M are word-pairs.
+
+75072984
+(ListLink . 37060608)
+(Connector . 951753)
+(ConnectorSeq . 36562917)
+(WordNode . 497690)
+
+after trimming words:
+71610887
+(ListLink . 35561670)
+(Connector . 487523)
+(ConnectorSeq . 35315198) 
+(WordNode . 246471)
+
+after trimming connseqs:
+
+cp -pr run-1-marg-tranche-12.rdb run-1-t12-trim-1-1-1.rdb
+(define storage-node (RocksStorageNode "rocks:///home/ubuntu/data/run-1-t12-trim-1-1-1.rdb"))
 
 ====================================================
 link-class.scm ???

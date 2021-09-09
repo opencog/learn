@@ -7,6 +7,10 @@
 ; compute marginal statistics. This computes assorted totals and
 ; conditional probabilities needed before the next step.
 ;
+; A reasonable alternative to running this is running `trim-pairs.scm`
+; which will trim down the dataset, and then compute the marginals for
+; the smaller dataset.
+;
 (load "cogserver.scm")
 
 ; Init the statistics objects.
