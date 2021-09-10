@@ -1028,9 +1028,9 @@ Run that script. Its a wrapper around this:
       (cog-rocks-open "rocks:///home/ubuntu/data/expt-42/fake_pairs.rdb")
       (define pca (make-pseudo-cset-api))
       (define psa (add-pair-stars pca))
-      (define btr (batch-transpose psa))
       (psa 'fetch-pairs)
-      ((add-support-compute psa) 'cache-all) ; uhhh
+      ((add-support-compute psa) 'cache-all)
+      (define btr (batch-transpose psa))
       (btr 'mmt-marginals)
 ```
 Experimentation with cross-connectors is in progress.
@@ -1103,12 +1103,27 @@ Then, in guile:
    (iter-trim 1 1 1)
    (iter-trim 1 1 1)
    (iter-trim 1 1 1)
+```
+If you are also keeping word-word pairs in the same dataset as
+word-disjunct pairs, then some additonal work is needed to keep these
+two in sync. The problem is that some words never appear in
+word-disjunct pairs, and so were never trimmed to begin with.  Get rid
+of these by saying:
+```
+   (load-atoms-of-type 'WordNode) ; load words that are not in disjuncts.
+   (for-each
+      (lambda (base)
+         (if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
+            (cog-delete-recursive! base)))
+      (cog-get-atoms 'WordNode))
+```
+After the above trim, the marginals for word pairs will be al wrong.
+These now need to be recomputed, as described earlier.
 
+After trimming, the word-disjunct marginals, and the MM^T marginals will
+be stale.  These need to be recomputed, as well (as described earlier)
 ```
-The above just trims; but the marginals are needed for grammatical
-classifcation. So build these, as before.
-```
-   (batch-all-pair-mi psa)    ;; MI between words and disjuncts
+   ((add-support-compute psa) 'cache-all) ;; Must recompute!
    (define btr (batch-transpose psa))
    (btr 'mmt-marginals)       ;; Word-pair entropies
    (cog-rocks-close)

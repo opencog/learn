@@ -5342,6 +5342,9 @@ FIXED:
 
 
 TODO/BUGS:
+* Bugs: quotes are not being escaped by submit-one.pl!!
+  ... and worse, these are showing up as words with lots of
+  backslashes in them. See issue #31.
 * Set up direct-sum/shape clustering run scripts. (partly done)
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
@@ -5349,7 +5352,6 @@ TODO/BUGS:
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
-* Bugs: quotes are not being escaped by submit-one.pl!!
 * GC during pair counting happens too often.
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.
