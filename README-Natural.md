@@ -1105,7 +1105,7 @@ Then, in guile:
    (iter-trim 1 1 1)
 ```
 If you are also keeping word-word pairs in the same dataset as
-word-disjunct pairs, then some additonal work is needed to keep these
+word-disjunct pairs, then some additional work is needed to keep these
 two in sync. The problem is that some words never appear in
 word-disjunct pairs, and so were never trimmed to begin with.  Get rid
 of these by saying:
@@ -1113,11 +1113,12 @@ of these by saying:
    (load-atoms-of-type 'WordNode) ; load words that are not in disjuncts.
    (for-each
       (lambda (base)
-         (if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
+         (if (and (cog-atom? base)
+               (equal? 0 (cog-incoming-size-by-type base 'Section)))
             (cog-delete-recursive! base)))
       (cog-get-atoms 'WordNode))
 ```
-After the above trim, the marginals for word pairs will be al wrong.
+After the above trim, the marginals for word pairs will be all wrong.
 These now need to be recomputed, as described earlier.
 
 After trimming, the word-disjunct marginals, and the MM^T marginals will

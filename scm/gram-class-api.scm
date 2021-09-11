@@ -381,9 +381,14 @@
 (define (make-conseq-predicate STAR-OBJ WORD-LIST-FUNC)
 "
   Create a predicate that returns true if a given ConnectorSeq
-  consists of WordNodes eintirely in some WordClass.  That is,
+  consists of WordNodes entirely in some WordClass.  That is,
   this returns that predicate. This may take a few minutes to
   run, if there are millions of ConnectorSeq's.
+
+  XXX FIXME: shouldn't this be relative to the left-basis of
+  STAR-OBJ, rather than *all words*?  Under the theory that maybe
+  there are words in the AtomSpace which are ... outside of the
+  domain we are supposed to be working on.
 "
 	; Unwanted words are not part of the matrix.
 	(define unwanted-words
@@ -445,7 +450,7 @@
   linking-trim LLOBJ - Trim the word-disjunct LLOBJ by deleting words
   and connector sequences and sections which contain words other than
   those provided by the WORD-LIST-FUNC. This is like `add-linking-filter`
-  above, except that it doesnt filter, it just deletes.  This is
+  above, except that it doesn't filter, it just deletes.  This is
   not a public function; it is used to build several public functions.
 "
 	(define star-obj (add-pair-stars LLOBJ))
@@ -550,16 +555,21 @@
 	; After trimming, there may be left and right basis elements
 	; that are not in any pairs, but have not been deleted.
 	; Delete those now.
-	(define (trim-type TYPE)
+	(define (trim-type BASIS-LIST)
+		(define party (star-obj 'pair-type))
 		(for-each
 			(lambda (base)
-				(if (and (cog-atom? base) (equal? 0 (cog-incoming-size base)))
+				(if (and (cog-atom? base)
+						(equal? 0 (cog-incoming-size-by-type base party)))
 					(cog-delete! base)))
-			(cog-get-atoms TYPE)))
+			BASIS-LIST))
 
-	(trim-type 'ConnectorSeq)
-	(trim-type 'Connector)
-	(trim-type 'WordNode)
+	; OK, here's the deal. After trimming sections, this may leave
+	; ConnectorSeq that are no longer in any Sections. So remove these.
+	; Likewise, there may be WordNodes that might not be in any Sections
+	; Remove those too.
+	(trim-type (star-obj 'right-basis))
+	(trim-type (star-obj 'left-basis))
 )
 
 ; ---------------------------------------------------------------------

@@ -5276,6 +5276,10 @@ Let's hack that..
 		(cog-get-atoms 'Word))
 
 
+WTF. How can we *still* be hitting the above???
+
+((make-store psa) 'store-wildcards)
+
 
 ----------------
 dropdb en_mpg_53
@@ -5307,6 +5311,10 @@ after trimming connseqs:
 
 cp -pr run-1-marg-tranche-12.rdb run-1-t12-trim-1-1-1.rdb
 (define storage-node (RocksStorageNode "rocks:///home/ubuntu/data/run-1-t12-trim-1-1-1.rdb"))
+
+(define pca (make-pseudo-cset-api))
+(fetch-atom (pca 'wild-wild))
+(print-matrix-summary-report pca)
 
 ====================================================
 link-class.scm ???
