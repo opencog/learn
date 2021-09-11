@@ -20,7 +20,9 @@
 (psa 'fetch-pairs)
 
 ; Compute the matrix-transpose marginals. As a side-effect, this will
-; also compute support marginals and the central sums.
+; also compute the support marginals. We clobber, so that if there's
+; stale support data, we don't work with that. (Trimmed files will have
+; stale support marginals in them.)
 (btr 'clobber)
 (btr 'mmt-marginals)
 

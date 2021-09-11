@@ -1124,8 +1124,7 @@ After trimming, the word-disjunct marginals, and the MM^T marginals will
 be stale.  These need to be recomputed, as well (as described earlier)
 ```
    ((add-support-compute psa) 'cache-all) ;; Must recompute!
-   (define btr (batch-transpose psa))
-   (btr 'mmt-marginals)       ;; Word-pair entropies
+   ((batch-transpose psa) 'mmt-marginals) ;; Word-pair entropies
    (cog-rocks-close)
    ^D                         ;; Exit.
 ```
