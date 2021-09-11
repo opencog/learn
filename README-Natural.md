@@ -1124,10 +1124,15 @@ These now need to be recomputed, as described earlier.
 After trimming, the word-disjunct marginals, and the MM^T marginals will
 be stale.  These need to be recomputed, as well (as described earlier)
 ```
-   ((add-support-compute psa) 'cache-all) ;; Must recompute!
    ((batch-transpose psa) 'mmt-marginals) ;; Word-pair entropies
    (cog-rocks-close)
    ^D                         ;; Exit.
+```
+
+If you don't actually recompute the MM^T marginals at this stage, then
+you should at least store the trimmed marginals:
+```
+	((make-store psa) 'store-wildcards)
 ```
 
 Determining Grammatical Classes

@@ -551,25 +551,6 @@
 	(define id-str "linkage-filter")
 
 	(linking-trim LLOBJ get-words)
-
-	; After trimming, there may be left and right basis elements
-	; that are not in any pairs, but have not been deleted.
-	; Delete those now.
-	(define (trim-type BASIS-LIST)
-		(define party (star-obj 'pair-type))
-		(for-each
-			(lambda (base)
-				(if (and (cog-atom? base)
-						(equal? 0 (cog-incoming-size-by-type base party)))
-					(cog-delete! base)))
-			BASIS-LIST))
-
-	; OK, here's the deal. After trimming sections, this may leave
-	; ConnectorSeq that are no longer in any Sections. So remove these.
-	; Likewise, there may be WordNodes that might not be in any Sections
-	; Remove those too.
-	(trim-type (star-obj 'right-basis))
-	(trim-type (star-obj 'left-basis))
 )
 
 ; ---------------------------------------------------------------------

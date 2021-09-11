@@ -29,11 +29,24 @@
 (define-public (trim-matrix LLOBJ
 	LEFT-BASIS-PRED RIGHT-BASIS-PRED PAIR-PRED)
 "
-	trim-matrix LLOBJ - remove Atoms from the AtomSpace that
-	pass the predicates. They ae removed from storage too.
+  trim-matrix LLOBJ - remove Atoms from the AtomSpace that pass the
+  predicates. If storage is connected, then these are removed from
+  storage too.
 "
-	(define early-stars (add-pair-stars LLOBJ))
+	(define star-obj (add-pair-stars LLOBJ))
 	(define elapsed-secs (make-elapsed-secs))
+
+	; After removing pairs, it may now happen that there are left
+	; and right basis elements that are no longer in any pairs.
+	; Remove these too.
+	(define (trim-type BASIS-LIST)
+		(define party (star-obj 'pair-type))
+		(for-each
+			(lambda (base)
+				(if (and (cog-atom? base)
+						(equal? 0 (cog-incoming-size-by-type base party)))
+					(cog-delete! base)))
+			BASIS-LIST))
 
 	; Walk over the left and right basis.
 	; The use of cog-delete-recursive! may knock out other
@@ -43,7 +56,7 @@
 		(lambda (base)
 			(if (and (cog-atom? base) (not (LEFT-BASIS-PRED base)))
 				(cog-delete-recursive! base)))
-		(early-stars 'left-basis))
+		(star-obj 'left-basis))
 
 	(format #t "Trimmed left basis in ~A seconds.\n" (elapsed-secs))
 
@@ -51,7 +64,7 @@
 		(lambda (base)
 			(if (and (cog-atom? base) (not (RIGHT-BASIS-PRED base)))
 				(cog-delete-recursive! base)))
-		(early-stars 'right-basis))
+		(star-obj 'right-basis))
 
 	(format #t "Trimmed right basis in ~A seconds.\n" (elapsed-secs))
 
@@ -60,7 +73,13 @@
 		(lambda (atom)
 			(if (and (cog-atom? atom) (not (PAIR-PRED atom)))
 				(cog-delete-recursive! atom)))
-		(early-stars 'get-all-elts))
+		(star-obj 'get-all-elts))
+
+	; After removing pairs, it may now happen that there are left
+	; and right basis elements that are no longer in any pairs.
+	; Remove these too.
+	(trim-type (star-obj 'left-basis))
+	(trim-type (star-obj 'right-basis))
 
 	(format #t "Trimmed all pairs in ~A seconds.\n" (elapsed-secs))
 )
