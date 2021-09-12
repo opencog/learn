@@ -12,15 +12,18 @@
 ; Ad hoc globals.
 (define pca (make-pseudo-cset-api))
 (define pcs (add-pair-stars pca))
-(define sma (add-similarity-api pcs #f "foo"))
 (define sim (add-similarity-compute pcs))
-(define sup (add-support-api pcs))
 
 ; Need to fetch all pairs, because the similarity object doesn't
 ; automate this.
 (pca 'fetch-pairs)
 
+(define ol2 (/ 1.0 (log 2.0)))
+(define (log2 x)
+	(if (< 0 x) (* (log x) ol2) (- (inf))))
 
+; ---------------------------------------
+; General exploration. Skip this section.
 
 ; Return a sorted list of the NTOP most frequent words.
 (define (top-ranked LLOBJ NTOP)
@@ -41,31 +44,73 @@
 
 (define wli (top-ranked pcs 100))
 
-(define ol2 (/ 1.0 (log 2.0)))
-(define (log2 x)
-	(if (< 0 x) (* (log x) ol2) (- (inf))))
+; ---------------------------------------
+; Compute overlaps.
+; Want ability to restart.
+(define overlap-done? (make-once-predicate))
 
+; The 'right-overlap returns similarity: 1.0 means perfectly similar.
 (define (overlap WA WB)
-	(log2 (sim 'right-overlap WA WB)))
+	(if (overlap-done? (Unordered WA WB))
+		-100000
+		(log2 (sim 'right-overlap WA WB))))
 
-(define bover (batch-similarity pcs #f "overlap" -8.0 overlap))
+(define (prt-overlap WA WB)
+	(define rv (overlap WA WB))
+	(if (< -20 rv)
+		(format #t ">>~A<< -- >>~A<< log2 overlap = ~6F\n"
+			(cog-name WA) (cog-name WB) rv))
+	rv)
+
+; We're going to take -8.0 as the cutoff, because this was seen
+; in run-3 experiments (documented in diary part-two) That is,
+; bad intercluster values were around -8 so that seems like a
+; reasonable place to halt comparison, for now.
+(define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
 (bover 'batch-compute 10)
 
-overlap on diagonal is 1.0
-cond-jac on diagonal is 0.0 ..?? because its the distance!
+(for-each store-atom (cog-get-atoms 'Similarity))
 
+; ---------------------------------------
 
-(sim 'right-cond-jacc
+(define condjacc-done? (make-once-predicate))
 
-(define (sim-mi-and-jacc WA WB)
+; The 'right-cond-jacc returns distance: 0.0 means very close.
+; So we subtract from 1.0 to get similarity.
+(define (condjacc WA WB)
+	(if (condjacc-done? (Unordered WA WB))
+		-100000
+		(log2 (- 1.0 (sim 'right-cond-jacc WA WB)))))
 
-	(xxx 'set-pair-similarity simpr Flaot
-	(define simpr (Similarity WA WB))
-	(store-atom simpr)
-)
+(define (prt-condjacc WA WB)
+	(define rv (condjacc WA WB))
+	(if (< -20 rv)
+		(format #t ">>~A<< -- >>~A<< log2 condjacc = ~6F\n"
+			(cog-name WA) (cog-name WB) rv))
+	rv)
 
-Fuuuuu
-(batch-similarity pcs #f id cutoff fun
+(define bcond (batch-similarity pcs #f "condjacc" -8.0 prt-condjacc))
+(bcond 'batch-compute 10)
 
+; ---------------------------------------
+
+(define mi-done? (make-once-predicate))
+
+(define cmi (add-symmetric-mi-compute pcs))
+
+(define (mi WA WB)
+	(if (mi-done? (Unordered WA WB))
+		-100000
+		(cmi 'mmt-fmi WA WB)))
+
+(define (prt-mi WA WB)
+	(define rv (mi WA WB))
+	(if (< -20 rv)
+		(format #t ">>~A<< -- >>~A<< mi = ~6F\n"
+			(cog-name WA) (cog-name WB) rv))
+	rv)
+
+(define bami (batch-similarity pcs #f "mi" -8.0 prt-mi))
+(bami 'batch-compute 10)
 
 ; ---------------------------------------------------------------
