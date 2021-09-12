@@ -37217,9 +37217,24 @@ Inter-intra Probability Jaccard summary
 \end_layout
 
 \begin_layout Standard
-The table below records the inter and intra cluster average cosine distance
+The table below records the inter and intra cluster average 
+\begin_inset Quotes eld
+\end_inset
+
+probability Jaccard distance
+\begin_inset Quotes erd
+\end_inset
+
  for the datasets.
- This is provided per API for the `add-similarity-compute` object.
+ This is provided by the 
+\family typewriter
+`add-similarity-compute`
+\family default
+ object, by calling the 
+\family typewriter
+'right-prjacc
+\family default
+ method.
  The probability-Jaccard similarity ranges from 0.0 to 1.0.
  As above, log2 is taken.
 \end_layout
