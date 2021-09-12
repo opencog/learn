@@ -5315,6 +5315,14 @@ cp -pr run-1-marg-tranche-12.rdb run-1-t12-trim-1-1-1.rdb
 (define pca (make-pseudo-cset-api))
 (fetch-atom (pca 'wild-wild))
 (print-matrix-summary-report pca)
+-------------------------
+
+(define sim (add-similarity-compute STARS))
+(sim 'foo wa wb)
+
+define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE MRG-CON)
+
+
 
 ====================================================
 link-class.scm ???
