@@ -143,12 +143,10 @@
 		; Fetch (from the database) all pseudo-csets
 		(define (fetch-pseudo-csets)
 			(define start-time (current-time))
-			; Marginals are located on any-left, any-right
-			; But we do not need to fetch these explicitly;
-			; Just loading all Sections will call them up.
-			; Save some CPU time, for now.
-			; (fetch-incoming-set any-left)
-			; (fetch-incoming-set any-right)
+
+			; Marginals are located on a ListLink on any-left, any-right
+			(fetch-incoming-by-type any-left 'ListLink)
+			(fetch-incoming-by-type any-right 'ListLink)
 
 			; Loading Sections is a bit too much, as that will also
 			; pick up WordClassNodes. But I guess that is OK for now.
