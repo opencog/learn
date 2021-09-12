@@ -1,4 +1,5 @@
 ;
+; similarity.scm - Word similarity.
 ; July 2018 version.
 ;
 ; Ad Hoc script to compute word-similarities in four different
