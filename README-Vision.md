@@ -4,8 +4,98 @@ Image Grammar
 Can the ideas here be applied to images? Of course they can. Here's a
 short sketch.
 
-Image Recognition
------------------
+Motivational Anecdote
+---------------------
+An anecdote from Hanson Robotics Sophia the Robot. She had this habit of
+trying to talk through an audience clapping. Basically, she could not
+hear, and didn't know to pause when the audience clapped. (Yes, almost
+all her performances are scripted. Some small fraction are ad libbed.)
+A manual operator in the audience would have to hit a pause button, to
+keep her from rambling on. So I thought: "How can I build a clap
+detector?" Well, it would have to be some kind of audio filter -- some
+level of white noise (broad spectrum noise), but with that peculiar
+clapping sound (so, not pure white noise, but dense shot noise.)
+Elevated above a threshold `T` for some time period of `S` at least one
+second long. It is useful to think of this as a wiring diagram: some
+boxes connected with lines; each box might have some control
+parameters: length, threshold, time, frequency.
+
+So how do I build a clap detector? Well, download some suitable audio
+library, get some sound samples, and start trying to wire up some
+threshold detector *by hand*. Oooof. Yes, you can do it that way:
+classical engineering. After that, you have a dozen different other
+situations: Booing. Laughing. Tense silence. Chairs scraping.  And
+after that, a few hundred more... it's impossible to hand-design a
+filter set for every interesting case. So, instead: unleash automated
+learning.  That is, represent the boxes and wires as Nodes and Links
+in the AtomSpace (the audio stream itself would be an AudioStreamValue)
+and let some automated algo rearrange the wiring diagram until it finds
+a good one.
+
+But what is a "good wiring diagram"? Well, the current very
+fashionable approach is to develop a curated labelled training set,
+and train on that. "Curated" means "organized by humans" (Ooof-dah.
+humans in the loop again!) and "labelled" means each snippet has a
+tag: "clapping" - "cheering" - "yelling". (Yuck. What kind of yelling?
+Happy? Hostile? Asking for help? Are the labels even correct?) This
+might be the way people train neural nets, but really, its the wrong
+approach for AGI. I don't want to do supervised training.  (I mean, we
+could do supervised training in the opencog framework, but I don't see
+any value in that, right now.)  So, lets do unsupervised training.
+
+But how? This requires a conceptual leap. This leap is hard to explain
+in terms of audio filters (its rather abstract) so I want to switch to
+vision, before getting back to audio.  For vision, I claim there
+exists something called a "shape grammar". I hinted at this in the
+last email.  A human face has a shape to it - a pair of eyes,
+symmetrically arranged above a mouth, in good proportion, etc. This
+shape has a "grammar" that looks like this:
+
+```
+left-eye: (connects-to-right-to-right-eye) and
+   (connects-below-to-mouth) and (connects-above-to-forehead);
+forehead: (connects-below-to-left-eye) and
+   (connects-below-to-right-eye) and (connects-above-to-any-background);
+```
+
+Now, if you have some filter collection that is able to detect eyes,
+mouths and foreheads, you can verify whether you have detected an
+actual face by checking against the above grammar. If all of the
+connectors are satisfied, then you have a "grammatically correct
+description of a face".  So, although your filter collection was
+plucking eye-like and mouth-like features out of an image, the fact
+that they could be arranged into a grammatically-correct arrangement
+raises your confidence that you are seeing a face.
+
+Those familiar with Link Grammar will recognize the above as a peculiar
+variant of a Link Grammar dictionary.
+
+But where did the grammar come from? For that matter, where did the
+eye and mouth filters come from? It certainly would be a mistake to
+have an army of grad students writing shape grammars by hand. The
+grammar has to be learned automatically, in an unsupervised fashion.
+... and that is what the opencog/learn project is all about.
+
+At this point, things become very highly abstract very quickly, and I
+will cut this email short. Very roughly, though: one looks for
+pair-wise correlations in data. Having found good pairs, one then
+draws maximum spanning trees (or maximum planar graphs) with those
+pairs, and extracts frequently-occurring vertex-types, and their
+associated connectors. That gives you a raw grammar.  Generalization
+requires clustering specific instances of this into general forms.
+Some of this code is already written in a quasi-generic fashion.
+Some is being developed now. A number of stages beyond the present
+are envisioned, but remain distant.
+
+The above can learn (should be able to learn) both a "shape grammar"
+and also a "filter grammar" ("meaningful" combinations of processing
+filters. Meaningful, in that they extract correlations in the data.)
+
+That is the general idea. The rest of this file fleshes out the above
+in slightly greater detail.
+
+Shape Grammar
+-------------
 Lets presume a segmented image -- one where large blocks of similar
 pixels have been identified, where some edge detector has drawn
 boundaries around these blocks. This is straightforward, and image

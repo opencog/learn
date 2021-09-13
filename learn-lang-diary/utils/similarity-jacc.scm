@@ -17,6 +17,7 @@
 ; Need to fetch all pairs, because the similarity object doesn't
 ; automate this.
 (pca 'fetch-pairs)
+(sim 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
 
 (define ol2 (/ 1.0 (log 2.0)))
 (define (log2 x)

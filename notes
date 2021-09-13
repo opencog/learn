@@ -5332,6 +5332,18 @@ and
 a
 in
 
+Crash:
+mmap(PROT_NONE) failed
+Aborted
+
+bdwgc
+os_dep.c:            ABORT("mmap(PROT_NONE) failed");
+line 2658
+
+GC_INNER void GC_unmap(ptr_t start, size_t bytes)
+
+
+
 
 ====================================================
 link-class.scm ???
