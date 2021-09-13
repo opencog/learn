@@ -224,23 +224,35 @@ exist, and that a reasonable pipeline can be built to find them.
 
 The Competition: Neural Nets
 ----------------------------
-The competition here is very much the  deep-learning, neural net
-industry. As competition, they are far, far ahead, technologically.
-The theory is well-developed, the libraries are sophisticated, they
-run on massive cloud computers and are able to tackle huge datasets,
-including video. By comparison, the examples above are simplistic.
-One might even say "pathetic", and that deep-learning neural nets are
-light-years ahead.  However, this misses a deep and fundamental point.
+The conventional setting for AI these days is the deep-learning, neural
+net industry. Competition, as such, seems absurd: these systems have
+billions of CPU-hours behind them, computed with well-written,
+well-debugged, highly optimized software, created by armies of salaried
+PhD's working at the big tech companies. Any results acheived here will
+look pathetic by comparison.
 
-The point is this: neural nets create a dense network between inputs and
-outputs, and are missing any explicit symbolic representation. The ideas
-described in this project are explicitly symbolic, from the ground up.
-They aim to discover extremely sparse networks. The network
-representation, because it is sparse, is explicitly open to a symbolic
-representation.
+What is being proposed here is very different. Roughly speaking, the
+neural net systems require supervised training. They don't actually
+"think", they don't need to. They don't need to find relationships out
+of thin air. So I think this is something brand new that we're doing that
+no one else does.
+
+Another key difference is that we are working explicitly at the
+symbolic level. By having a grammar, we have an explicit part-whole
+relationship. This is something the neural-net guys cannot do (Hinton,
+I believe, has a paper on how one day in the distant future, neural
+nets might be able to solve the part-whole relationship problem. By
+contrast, we've already solved it, more or less from day one.)
+
+We've also "solved" the "symbol grounding problem" -- from day one.
+This is another problem that AI researchers have been wringing their
+hands about, from the 1960's onwards. Our symbols are grounded, from
+the start: our symbols are the filter sets, the grammatical dictionary
+entries, and we "know what they mean" because they work with explicit
+data.
 
 Symbolic representations are important, because they allow traditional
-theories or symbolic reasoning to be applied. One can apply logic:
+theories of symbolic reasoning to be applied. One can apply logic:
 Aristotelian logic, predicate logic, common sense logic. Careful,
 though: the ultimate goal of a sparse symbolic network is to learn the
 laws of logic itself.  That is, if one observes a correlation, that when
@@ -250,6 +262,19 @@ you can do after you've spotted a pattern in the sparse network of
 symbols. Unsupervised learning has to be a project of spotting patterns
 in sparse symbolic networks. Common-sense reasoning is then the
 application of those learned patterns to the prediction of outcomes.
+
+Another very old AI problem is the "frame problem", and I think that
+we've got that one licked, too, although this is a far more tenuous
+claim. The "frame problem" is one of selecting only those things that
+are relevant to a particular reasoning problem, and ignoring all of
+the rest. Well, hey: this is exactly what grammars do: they tell you
+exactly what is relevant, and they ignore the rest. The grammars have
+learned to ignore the background features that don't affect the
+current situation.
+
+But whatever... This gets abstract and can lead to an endless spill
+of words. I am much more interested in creating software that actually
+works.
 
 Perhaps deep learning and neural nets will someday be able to do this.
 Today, they cannot. The algorithms described here currently seem to have
