@@ -55,9 +55,12 @@
 		-100000
 		(log2 (sim 'right-overlap WA WB))))
 
+; Print only -5 and better. Less than that looks like junk.
+; Actually -4 is an even better limit, but it's nice to keep
+; an eye on things.
 (define (prt-overlap WA WB)
 	(define rv (overlap WA WB))
-	(if (< -20 rv)
+	(if (< -5 rv)
 		(format #t ">>~A<< -- >>~A<< log2 overlap = ~6F\n"
 			(cog-name WA) (cog-name WB) rv))
 	rv)
@@ -67,7 +70,7 @@
 ; bad intercluster values were around -8 so that seems like a
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
-(bover 'batch-compute 10)
+(bover 'batch-compute 300)
 
 (for-each store-atom (cog-get-atoms 'Similarity))
 
@@ -82,15 +85,18 @@
 		-100000
 		(log2 (- 1.0 (sim 'right-cond-jacc WA WB)))))
 
+; Print only -5 and better. Less than that looks like junk.
+; Actually, -4 is a better limit, but its nice to keep an
+; eye on things.
 (define (prt-condjacc WA WB)
 	(define rv (condjacc WA WB))
-	(if (< -20 rv)
+	(if (< -5 rv)
 		(format #t ">>~A<< -- >>~A<< log2 condjacc = ~6F\n"
 			(cog-name WA) (cog-name WB) rv))
 	rv)
 
 (define bcond (batch-similarity pcs #f "condjacc" -8.0 prt-condjacc))
-(bcond 'batch-compute 10)
+(bcond 'batch-compute 300)
 
 ; ---------------------------------------
 
@@ -103,14 +109,16 @@
 		-100000
 		(cmi 'mmt-fmi WA WB)))
 
+; MI=3 and better looks pretty healthy.
 (define (prt-mi WA WB)
 	(define rv (mi WA WB))
-	(if (< -20 rv)
+	(if (< 3 rv)
 		(format #t ">>~A<< -- >>~A<< mi = ~6F\n"
 			(cog-name WA) (cog-name WB) rv))
 	rv)
 
-(define bami (batch-similarity pcs #f "mi" -8.0 prt-mi))
-(bami 'batch-compute 10)
+; Want an MI of greater than zero.
+(define bami (batch-similarity pcs #f "mi" 0.0 prt-mi))
+(bami 'batch-compute 300)
 
 ; ---------------------------------------------------------------
