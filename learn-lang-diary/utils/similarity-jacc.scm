@@ -13,15 +13,27 @@
 (define pca (make-pseudo-cset-api))
 (define pcs (add-pair-stars pca))
 (define sim (add-similarity-compute pcs))
+(define sap (add-similarity-api pcs))
 
 ; Need to fetch all pairs, because the similarity object doesn't
 ; automate this.
 (pca 'fetch-pairs)
-(sim 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
+(sap 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
 
 (define ol2 (/ 1.0 (log 2.0)))
 (define (log2 x)
 	(if (< 0 x) (* (log x) ol2) (- (inf))))
+
+(for-each store-atom (cog-get-atoms 'Similarity))
+
+(call-with-new-thread
+	(lambda ()
+		(define (stosle)
+			(for-each store-atom (cog-get-atoms 'Similarity))
+			(sleep 300)
+			(stosle))
+		(stosle)))
+
 
 ; ---------------------------------------
 ; General exploration. Skip this section.
@@ -33,8 +45,9 @@
 	; nobs == number of observations
 	(define (nobs WRD) (sup 'right-count WRD))
 
+	(define wrds (LLOBJ 'left-basis))
 	(define ranked-words
-		(sort! (LLOBJ 'left-basis)
+		(sort wrds
 			(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
 
 	(define short-list (take ranked-words NTOP))
@@ -72,8 +85,6 @@
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
 (bover 'batch-compute 300)
-
-(for-each store-atom (cog-get-atoms 'Similarity))
 
 ; ---------------------------------------
 
@@ -122,4 +133,41 @@
 (define bami (batch-similarity pcs #f "mi" 0.0 prt-mi))
 (bami 'batch-compute 300)
 
+; ---------------------------------------
+; Compute MI on the diagonals.
+
+(define (ranked LLOBJ)
+	(define sup (add-support-api LLOBJ))
+
+	; nobs == number of observations
+	(define (nobs WRD) (sup 'right-count WRD))
+
+	(define wrds (LLOBJ 'left-basis))
+	(define ranked-words
+		(sort wrds
+			(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
+
+	(format #t "Sorted ~A words\n" (LLOBJ 'left-basis-size))
+	ranked-words
+)
+
+(define diag-cnt 0
+(for-each
+	(lambda (WRD)
+		(set! diag-cnt (+ diag-cnt 1))
+		(format #t "~A " diag-cnt)
+		(bami 'compute-similarity WRD WRD))
+	(ranked pcs))
+
 ; ---------------------------------------------------------------
+
+(define (sim-k n)
+	(fold (lambda (x cnt)
+		(if (equal? n (length (cog-keys x))) (+ cnt 1) cnt))
+		0 (cog-get-atoms 'Similarity)))
+
+(define (sim-rpt)
+	(format #t "Done 1: ~A   2: ~A  3: ~A  tot: ~A\n"
+		(sim-k 1) (sim-k 2) (sim-k 3)
+		(length (cog-get-atoms 'Similarity)))
+	*unspecified*)

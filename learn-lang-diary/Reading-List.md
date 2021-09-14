@@ -70,3 +70,14 @@ Thus, the algorithm they propose is interesting not so much because it
 provides a betting pool for mathematical theorems, than it is a means of
 discerning structure in (formal) languages.  Kind of like what this
 project (`opencog/learn`) is trying to do.
+
+David I. Spivak, Nelson Niu
+Polynomial Functors: A General Theory of Interaction
+2021
+https://topos.site/poly-book.pdf
+
+Knee-jerk reaction after a 30-second skim: yes, exactly! Polynomials in
+n variables lead naturally to the idea of jets and sheaves. So the sheaf
+theory that is being developed in this project is what you would get if
+you took a polynomial, and threw away the addition and multiplication,
+and replaced them by concatenation and composition.

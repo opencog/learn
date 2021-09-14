@@ -123,6 +123,35 @@ Part three of the diary on the language-learning effort continues work on
 \end_layout
 
 \begin_layout Section*
+Summary Conclusions
+\end_layout
+
+\begin_layout Standard
+A short summary of what is found here:
+\end_layout
+
+\begin_layout Itemize
+Trimming the word-disjunct dataset to remove words or disjuncts or word-disjunct
+ pairs observed only once is a good thing, and reduces dataset size by 90%.
+ Trimming more than this is a bad thing.
+\end_layout
+
+\begin_layout Itemize
+Part of the above result may be due to a bug in the word-segmentation code:
+ leading/trailing double-quotes are not split from words.
+ The processing code then tries to escape these with backslashes, and repeated
+ processing creates a shower of backslashes.
+ This bug needs to be fixed.
+\end_layout
+
+\begin_layout Itemize
+It is not known if trimmming word-pair files to remove low-count word-pairs
+ is a good idea or not.
+ This will require new (and time-consuming) experiments.
+ Some trimming is surely good, but how much?
+\end_layout
+
+\begin_layout Section*
 September 2021
 \end_layout
 
@@ -158,23 +187,83 @@ Scatterplots:
 \end_layout
 
 \begin_layout Subsection*
-Expt-4 Trimming - Sept 2021
+Expt-4 – Trimming – Sept 2021
 \end_layout
 
 \begin_layout Standard
 The above questions will be aimed at a specific dataset.
- Seems like are being aimed at `
+ The initial choice of dataset was `
 \family typewriter
 run-1-en_mpg-tranche-123.rdb
 \family default
 `, as described earlier in the diary.
- Two versions will be explored: the full dataset, and a lightly trimmed
- dataset.
- These are summarized below.
+ The intent is to explore two versions: the full dataset, and a lightly
+ trimmed dataset.
 \end_layout
 
 \begin_layout Standard
-The trimming process is funny: trimming is not idempotent.
+What is explored here (in expt-4) is how the size of the dataset varies
+ with the amount of trimming.
+ Trimming is desirable, since it can be used to manage dataset sizes.
+ Computations run faster on smaller datasets.
+\end_layout
+
+\begin_layout Standard
+The outcome of trimming proves to be surprising: even 
+\begin_inset Quotes eld
+\end_inset
+
+mild
+\begin_inset Quotes erd
+\end_inset
+
+ trimming removes large parts of the word–disjunct datasets.
+ It removes much more than one might naively guess from a Zipfian distribution.
+ The underlying reason for this is confusing: it turns out that a bug in
+ tokenization may be ruining the distribution.
+ The tokenizer does not split double-quotes from the begining/ending of
+ words, and later stages add backslashes to escape the quotes.
+ A waterfall of quotes results, polluting the dataset with oodles of backslashes.
+ These are observed infrequently, and how they interact with the quality
+ of the datasets is unclear.
+\end_layout
+
+\begin_layout Standard
+Coupled with the eariler observation that even mild trimming damages the
+ data (as seen in expt-3, at the end of diary Part Two), this suggests that
+ trimming should be kept to a minimum.
+ By the conclusion, it emerges that perhaps the ideal trim is one that removes
+ all words, disjuncts and word–disjunct pairs that are observed only once.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+Trimming
+\begin_inset Quotes erd
+\end_inset
+
+ means removing all words, disjuncts and word–disjunct pairs with observation
+ counts below some given thresholds.
+ Tthe thresholds for these three counts can be set independently.
+ These are the three numbers below: e.g.
+ 10-4-2 means 
+\begin_inset Quotes eld
+\end_inset
+
+discard all words with an observation count of 10 or less, all disjuncts
+ with a count of 4 or less, and all word–disjunct pairs with a count of
+ 2 or less.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The trimming process is funny: trimming (as implemented) is not idempotent
+ (but it should be).
  Basically, the linkage filter, which guarantees that connectors have correspond
 ing word entries, knocks out disjuncts and so pushes words below the cut-off.
  Repeating this process then knocks out more connectors.
@@ -1542,7 +1631,11 @@ Introduce a periodic trim step into the processing pipeline.
 
 \begin_layout Standard
 Let's look at the previous graphs of the Zipfian distributions.
- These can be found in `connector-sets-revised.pdf` page 9ff.
+ These can be found in `
+\family typewriter
+connector-sets-revised.pdf
+\family default
+` page 9ff.
  For words, the graph on page 9, left hand side shows that the count drops
  precipitously as a function of the rank.
  The logarithmic scale is decieving; it looks like more than half of words
@@ -1988,7 +2081,33 @@ Single-count trim
 \end_layout
 
 \begin_layout Standard
-Shown in table below.
+Based on general results, it seems that a trim of removing all words, disjuncts
+ and word–disjunct pairs with an observation count of one is a good thing.
+ Based on this, some 
+\begin_inset Quotes eld
+\end_inset
+
+master
+\begin_inset Quotes erd
+\end_inset
+
+ trimmed files are prepared, stored under 
+\begin_inset Quotes eld
+\end_inset
+
+run-1
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These were carefully processed.
+ monitored and double-checked.
+ They contain MMT values for the word–disjunct pairs.
+ (They also contain word-pairs, and updated MI states for the word-pairs.)
+\end_layout
+
+\begin_layout Standard
+Results of trimming are shown in the table below.
 \end_layout
 
 \begin_layout Standard
@@ -2753,11 +2872,17 @@ run-1-t1234-trim-1-1-1
 \end_layout
 
 \begin_layout Standard
-There
+The shrinkage is dramatic, in each case.
+ Overall effects in each case are quite similar.
+\end_layout
+
+\begin_layout Standard
+I wonder what would happen, if MPG parsing was performed a second time,
+ with the trimmed word-pairs...
 \end_layout
 
 \begin_layout Subsection*
-Trimming pairs
+Expt-5 – Trimming pairs – Sept 2021
 \end_layout
 
 \begin_layout Standard
@@ -2767,6 +2892,19 @@ experiments/run-5
 \family default
 .
  Table below.
+\end_layout
+
+\begin_layout Standard
+Summary of results: the effect of trimming on quality is ambiguous.
+ Because there are 24 observations made of each sentence, most word-pairs
+ have observation counts of 24 or higher, and thus trimming less than this
+ has almost no effect on the word-pair dataset size.
+ Whether or not trimming more than this is a good idea is unknown.
+ Conclusion: don't trim the word-pair dataset, at least not without further
+ experimentation and measurements.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -3411,12 +3549,18 @@ Word pairs in disjunct files
 \end_layout
 
 \begin_layout Standard
-\align center
+\align block
 So ...
  it appears that the disjunct files all have the word-pairs in them.
  If the disjuncts are trimmed, then, as a side effect, many word-pairs are
  also trimmed.
  How does this work out? Lets take a look.
+ The table below reports the word-pair subset of the indicated data files,
+ after trimming and after recomputing the MI for the word-pairs.
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset VSpace defskip
 \end_inset
 
@@ -4256,7 +4400,7 @@ The explanation for this might be as follows: there are lots of unique words
  are broken.
  (XXX TBD Fix these.
  It appears that they have something to do with quotations.) Anyway, such
- words willbe observed only a few times, in fixed combinations, and thus
+ words will be observed only a few times, in fixed combinations, and thus
  have a naturally high MI.
  Yet they are effectively garbage.
  When parsed via MPG, they appear only once, and thus become singletons,
@@ -4265,12 +4409,276 @@ The explanation for this might be as follows: there are lots of unique words
 \end_layout
 
 \begin_layout Standard
-After trimming, these words with these backslashes are entirely absent.
- Completely.
+After trimming, these words with these backslashes are mostly absent.
+\end_layout
+
+\begin_layout Subsection*
+Expt-6 – Similarity – Sept 2021
 \end_layout
 
 \begin_layout Standard
-Expt-6
+OK, so, finally onto similarity.
+ The `
+\family typewriter
+experiments/run-6
+\family default
+` directory contains scripts to compute similarity, although the actual
+ scripts are in `
+\family typewriter
+learn-lang-diary/utils/similarity-jacc.scm
+\family default
+`.
+ Three similarity measures are computed: convetional MI, as before, overlap,
+ and conditional-Jaccard.
+ See diary Part Two for the defintions of these.
+\end_layout
+
+\begin_layout Standard
+Even the most casual peek at the MI data shows that its pretty darned good,
+ and its not obvious that overlap and cond-jacc are actually better.
+ Interestingly, the self-MI of words are all over the place, and sometimes
+ quite high, in the 7 to 11 range for the top most frequent 300 words, or
+ even extremely high, in the 20-32 range for the least-frequently observed
+ words.
+ Many (most) infrequently-observed words have an MI of 31.809.
+ This might be due to the fact that these words appear to have only one
+ disjunct, grand-total?! This needs to be checked, and it suggests that
+ perhaps a further trim step should be taken: get rid of words with only
+ one disjunct on them!
+\end_layout
+
+\begin_layout Standard
+What does it mean for a word to have a high self-MI? Well, I guess that
+ means that it is fairly 
+\begin_inset Quotes eld
+\end_inset
+
+unique
+\begin_inset Quotes erd
+\end_inset
+
+, sharing few disjuncts in common with other words.
+ Assorted curiosities result.
+ There are some words whose self-MI is lower than the MI to another word!
+ Table of examples below.
+\end_layout
+
+\begin_layout Standard
+XXX table here.
+\end_layout
+
+\begin_layout Standard
+Some examples.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ever
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ever
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.4348
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ever
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+never
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.1667
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+those
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+those
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.6643
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+those
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+these
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+7.3967
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Curiously,
+\end_layout
+
+\begin_layout Standard
+This suggests several modifications of clustering: try to cluster the high-self-
+MI words first
 \end_layout
 
 \begin_layout Section*
