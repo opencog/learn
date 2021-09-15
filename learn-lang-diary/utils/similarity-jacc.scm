@@ -30,7 +30,7 @@
 	(lambda ()
 		(define (stosle)
 			(for-each store-atom (cog-get-atoms 'Similarity))
-			(sleep 300)
+			(sleep 600)
 			(stosle))
 		(stosle)))
 
@@ -84,7 +84,7 @@
 ; bad intercluster values were around -8 so that seems like a
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
-(bover 'batch-compute 300)
+(bover 'batch-compute 500)
 
 ; ---------------------------------------
 
@@ -108,7 +108,7 @@
 	rv)
 
 (define bcond (batch-similarity pcs #f "condjacc" -8.0 prt-condjacc))
-(bcond 'batch-compute 300)
+(bcond 'batch-compute 500)
 
 ; ---------------------------------------
 
@@ -131,7 +131,7 @@
 
 ; Want an MI of greater than zero.
 (define bami (batch-similarity pcs #f "mi" 0.0 prt-mi))
-(bami 'batch-compute 300)
+(bami 'batch-compute 800)
 
 ; ---------------------------------------
 ; Compute MI on the diagonals.
