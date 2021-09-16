@@ -5,6 +5,8 @@
 ; Bulk computation of MI and Jaccard similarity. (See also the earlier
 ; `similarity.scm`, which did cosines).
 ;
+; Code to generate graphs from this data in `similarity-graphs.scm`.
+;
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
@@ -34,30 +36,6 @@
 			(stosle))
 		(stosle)))
 
-
-; ---------------------------------------
-; General exploration. Skip this section.
-
-; Return a sorted list of the NTOP most frequent words.
-(define (top-ranked LLOBJ NTOP)
-	(define sup (add-support-api LLOBJ))
-
-	; nobs == number of observations
-	(define (nobs WRD) (sup 'right-count WRD))
-
-	(define wrds (LLOBJ 'left-basis))
-	(define ranked-words
-		(sort wrds
-			(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
-
-	(define short-list (take ranked-words NTOP))
-	(format #t "After sorting, kept ~A words out of ~A\n"
-		(length short-list) (LLOBJ 'left-basis-size))
-	short-list
-)
-
-(define wli (top-ranked pcs 100))
-
 ; ---------------------------------------
 ; Compute overlaps.
 ; Want ability to restart.
@@ -84,7 +62,7 @@
 ; bad intercluster values were around -8 so that seems like a
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
-(bover 'batch-compute 500)
+(bover 'batch-compute 800)
 
 ; ---------------------------------------
 
@@ -108,7 +86,7 @@
 	rv)
 
 (define bcond (batch-similarity pcs #f "condjacc" -8.0 prt-condjacc))
-(bcond 'batch-compute 500)
+(bcond 'batch-compute 1200)
 
 ; ---------------------------------------
 
@@ -160,6 +138,7 @@
 	(ranked pcs))
 
 ; ---------------------------------------------------------------
+; progress report
 
 (define (sim-k n)
 	(fold (lambda (x cnt)
@@ -171,3 +150,5 @@
 		(sim-k 1) (sim-k 2) (sim-k 3)
 		(length (cog-get-atoms 'Similarity)))
 	*unspecified*)
+
+; ---------------------------------------------------------------
