@@ -4444,12 +4444,43 @@ Even the most casual peek at the MI data shows that its pretty darned good,
  This might be due to the fact that these words appear to have only one
  disjunct, grand-total?! This needs to be checked, and it suggests that
  perhaps a further trim step should be taken: get rid of words with only
- one disjunct on them! One the other hand, they might be idioms or set phrases.Ar
-e they? Lets look.
+ one disjunct on them! One the other hand, they might be idioms or set phrases.
+ Are they? Lets look.
+\end_layout
+
+\begin_layout Subsubsection*
+Self-MI
+\end_layout
+
+\begin_layout Standard
+Lets look at the structure of Self-MI.
+ We are using the `run-1-t1234-trim-1-1-1.rdb` dataset.
+ It has 75431 words in it.
+ First up: rank vs observation count.
+ This is the classic Zipf graph.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename en-sims-p3/rank-count.eps
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next: the rank vs self-MI scatterplot.
+\end_layout
+
+\begin_layout Subsubsection*
+TODO Items
 \end_layout
 
 \begin_layout Standard
 XXX TODO look at possible idioms.
+ (Words with only one disjunct on them.)
 \end_layout
 
 \begin_layout Standard

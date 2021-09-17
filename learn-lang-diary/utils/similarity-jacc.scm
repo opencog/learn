@@ -109,7 +109,7 @@
 
 ; Want an MI of greater than zero.
 (define bami (batch-similarity pcs #f "mi" 0.0 prt-mi))
-(bami 'batch-compute 800)
+(bami 'batch-compute 1200)
 
 ; ---------------------------------------
 ; Compute MI on the diagonals.

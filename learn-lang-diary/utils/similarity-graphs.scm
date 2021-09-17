@@ -12,6 +12,7 @@
 ; Ad hoc globals.
 (define pca (make-pseudo-cset-api))
 (define pcs (add-pair-stars pca))
+(define sup (add-support-api pcs))
 (define sap (add-similarity-api pcs))
 (define smi (add-similarity-api pcs #f "mi"))
 (define sov (add-similarity-api pcs #f "overlap"))
@@ -28,17 +29,22 @@
 
 ; ---------------------------------------
 
-; Return a sorted list of the NTOP most frequent words.
-(define (top-ranked LLOBJ NTOP)
+; Return a list of all words, ranked by count.
+(define (rank-words LLOBJ)
 	(define sup (add-support-api LLOBJ))
 
 	; nobs == number of observations
 	(define (nobs WRD) (sup 'right-count WRD))
 
 	(define wrds (LLOBJ 'left-basis))
-	(define ranked-words
-		(sort wrds
-			(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
+	(sort wrds
+		(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B))))
+)
+
+(define ranked-words (rank-words pcs))
+
+; Return a sorted list of the NTOP most frequent words.
+(define (top-ranked LLOBJ NTOP)
 
 	(define short-list (take ranked-words NTOP))
 	(format #t "After sorting, kept ~A words out of ~A\n"
@@ -49,6 +55,30 @@
 (define wli (top-ranked pcs 700))
 
 (list-ref wli 101)
+
+; ---------------------------------------
+; Self-similary rank vs MI scatterplot
+
+(chdir "/home/ubuntu/experiments/run-6/data")
+
+(define (rank-mi-scatter)
+	(define csv (open "rank-mi-scatter.dat" (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# Rank  words vs. self-MI\n#\n")
+	(format csv "#\n# rank\tword\tcount\tself-mi\n")
+	(for-each
+		(lambda (WRD)
+			(define fv-mi (smi 'pair-count WRD WRD))
+			(set! cnt (+ 1 cnt))
+			(format csv
+				"~A\t~A\t~A\t~6F\n" cnt	(cog-name WRD)
+				(sup 'right-count WRD)
+				(cog-value-ref fv-mi 0))
+		)
+		ranked-words
+	)
+	(close csv)
+)
 
 ; ---------------------------------------
 
