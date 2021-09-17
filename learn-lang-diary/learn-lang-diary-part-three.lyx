@@ -4461,9 +4461,10 @@ Lets look at the structure of Self-MI.
 \end_layout
 
 \begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename en-sims-p3/rank-count.eps
-	width 70col%
+	width 80col%
 
 \end_inset
 
@@ -4471,7 +4472,52 @@ Lets look at the structure of Self-MI.
 \end_layout
 
 \begin_layout Standard
+The above graphs the classic Zipf distribution graph, although the distributioni
+s not quite classic: it seems to have two regimes: the first 80 or 90 words
+ follow a 
+\begin_inset Formula $rank^{-1.1}$
+\end_inset
+
+ distribution, which is more-or-less the classic slope, while later words
+ follow a 
+\begin_inset Formula $rank^{-1.4}$
+\end_inset
+
+ slope, which is considerably steeper than conventional Zipf distributions.
+ I don't think I've seen this before.
+ Is this due to trimming?
+\end_layout
+
+\begin_layout Standard
 Next: the rank vs self-MI scatterplot.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/rank-mi-scatter.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It was noted that some words have a very high self-MI value, and it was
+ hypothesized that these are words with a low number of disjuncts.
+ The scatterplot show that there's no particularly clear self-MI vs observation-
+count-rank correlation.
+ Lets explore further.
+\end_layout
+
+\begin_layout Standard
+Support vs.
+ rank-by-bservation-count.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Subsubsection*
