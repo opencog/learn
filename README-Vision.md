@@ -140,7 +140,7 @@ Given a segmented 2D image, can we "parse" it, *i.e.* apply the above
 grammar, and thus identify where the eyes, nose, lips are? Or perhaps get
 back the answer "no visible face here"?
 
-Grammar learning
+Grammar Learning
 ----------------
 There is a converse grammar-learning problem. Suppose we have five
 thousand segmented images containing American flags. These will have
@@ -168,6 +168,44 @@ This is the thing no one has done before.
 
 A Simpler Example
 -----------------
+The above examples raise some confusing questions regarding the
+detection of features (facial features) or the segmentation of images
+(decomposing a flag into component parts). These can be resolved with a
+simpler example: the detection of outdoor scenes with a blue sky
+overhead.
+
+This detection problem can be decomposed into two parts: a vertical
+gradient, and a color filter for the upper part of that gradient. These
+two components in turn may be relativiely "primitive", or they may also
+have a complicated structure. The vertical gradient may need to tolerate
+a horizon that is not centered in the middle of the picture. This
+suggests the gradient should be modeled by a low-order wavelet filter.
+The color filter must be applied before the gradient filter, as there
+might not be a sharp gradient in the hue or saturation of the image.
+
+The gradient filter may need to tolerate trees or buildings or mountains
+disrupting the horizon.  Perhaps a simple blur filter is enough to
+accomplish this. But perhaps some more complex filter sequence can be
+used: perhaps in combination with a edge filter to detect sharp vertical
+and horizontal lines (city buildings) or with speckles (trees with
+visible leaves).
+
+Likewsie, the blue filter might be just a simple color filter, or it
+might be some rather complex arrangement recognizing a complicated
+region of the hue-saturation-value (HSV) space, or the RGB space, or
+some other color-coordinate space.  There is no particular reason to
+limit the color filter to only work on colors: it might also interact in
+some non-trivial way with special filters like laplacians or edge
+dectors.
+
+The overall goal is **not** to engineer these filter sequences by hand,
+but rather, to have the system learn them automatically. Thus, although
+our intuitive notion of a "blue sky filter" is just a sequence of a blue
+filter, a blur filter, and a gradient filter, this might not be what the
+system actually learns! It may learn something more complex; it may
+learn something more clever. It might learn something more fragile, or
+something more robust.
+
 
 Practical matters
 -----------------
