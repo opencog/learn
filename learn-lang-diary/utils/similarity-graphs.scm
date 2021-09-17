@@ -30,24 +30,38 @@
 ; ---------------------------------------
 
 ; Return a list of all words, ranked by count.
+; If counts are equal, then rank by support.
 (define (rank-words LLOBJ)
 	(define sup (add-support-api LLOBJ))
 
 	; nobs == number of observations
 	(define (nobs WRD) (sup 'right-count WRD))
+	(define (nsup WRD) (sup 'right-support WRD))
 
 	(define wrds (LLOBJ 'left-basis))
 	(sort wrds
-		(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B))))
+		(lambda (ATOM-A ATOM-B)
+			(define na (nobs ATOM-A))
+			(define nb (nobs ATOM-B))
+			(if (equal? na nb)
+				(> (nsup ATOM-A) (nsup ATOM-B))
+				(> na nb))))
 )
 
-; Same as above, but ranked by support.
+; Same as above, but ranked by support first, and if equal,
+; only then obs.
 (define (sup-rank-words LLOBJ)
 	(define sup (add-support-api LLOBJ))
-	(define (nobs WRD) (sup 'right-support WRD))
+	(define (nobs WRD) (sup 'right-count WRD))
+	(define (nsup WRD) (sup 'right-support WRD))
 	(define wrds (LLOBJ 'left-basis))
 	(sort wrds
-		(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B))))
+		(lambda (ATOM-A ATOM-B)
+			(define na (nsup ATOM-A))
+			(define nb (nsup ATOM-B))
+			(if (equal? na nb)
+				(> (nobs ATOM-A) (nobs ATOM-B))
+				(> na nb))))
 )
 
 (define ranked-words (rank-words pcs))
@@ -81,10 +95,10 @@
 			(define fv-mi (smi 'pair-count WRD WRD))
 			(set! cnt (+ 1 cnt))
 			(format csv
-				"~A\t~A\t~A\t~6F\t~A\n" cnt (cog-name WRD)
-				(sup 'right-count WRD)
+				"~A\t~A\t~D\t~6F\t~D\n" cnt (cog-name WRD)
+				(inexact->exact (sup 'right-count WRD))
 				(cog-value-ref fv-mi 0)
-				(sup 'right-support WRD)
+				(inexact->exact (sup 'right-support WRD))
 			)
 		)
 		WORD-LIST
@@ -101,6 +115,17 @@
 	"Support Rank words vs. self-MI"
 	"sup-rank-mi-scatter.dat")
 
+(define (wtf WORD-LIST)
+	(for-each
+		(lambda (WRD)
+			(define ct (sup 'right-count WRD))
+			(define su (sup 'right-support WRD))
+			(if (< 1 (/ su ct))
+				(format #t "wtf ~A ~A ~A\n" WRD su ct)))
+		WORD-LIST))
+
+(define fi (sup 'right-duals (Word "fishermen")))
+(map (lambda (CONSEQ) (length (sup 'left-stars CONSEQ))) fi)
 
 ; ---------------------------------------
 

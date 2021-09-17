@@ -3,10 +3,10 @@
 #################################################
 ## Used to generate the standard Zipf distribution graph.
 ##
-## set term png size 1024,768
-## set out 'rank-count.png'
-#set term postscript eps enhanced color 24
-#set out 'rank-count.eps'
+#set term png size 1024,768
+#set out 'rank-count.png'
+##set term postscript eps enhanced color 24
+##set out 'rank-count.eps'
 #set logscale x
 #set format x "10^{%L}"
 #set format y "10^{%L}"
@@ -20,12 +20,12 @@
 #     "rank-mi-scatter.dat" using 1:(1e7/$1**1.4) with lines lw 2 title "(rank)^{-1.4}"
 #
 #################################################
-## Used to generate the ranked MI scattrplot
+## Used to generate the ranked MI scatterplot
 ##
-## set term png
-## set out 'rank-mi-scatter.png'
-#set term postscript eps enhanced color 24
-#set out 'rank-mi-scatter.eps'
+#set term png
+#set out 'rank-mi-scatter.png'
+##set term postscript eps enhanced color 24
+##set out 'rank-mi-scatter.eps'
 #set logscale x
 #set format x "10^{%L}"
 #unset logscale y
@@ -37,12 +37,12 @@
 #plot "rank-mi-scatter.dat" using 1:4 with points title ""
 #
 #################################################
-## Used to generate the ranked support scattrplot
+## Used to generate the ranked support scatterplot
 ##
-##set term png
-##set out 'rank-support-scatter.png'
-#set term postscript eps enhanced color 24
-#set out 'rank-support-scatter.eps'
+#set term png
+#set out 'rank-support-scatter.png'
+##set term postscript eps enhanced color 24
+##set out 'rank-support-scatter.eps'
 #set logscale x
 #set format x "10^{%L}"
 #set logscale y
@@ -55,20 +55,38 @@
 #     "rank-mi-scatter.dat" using 1:(6e5/$1**1.1) with lines lw 2 title "(rank)^{-1.1}"
 #
 #################################################
-# Used to generate the ranked MI scattrplot
+# Used to generate the support-ranked MI scatterplot
 #
-set term png
-set out 'sup-rank-mi-scatter.png'
-# set term postscript eps enhanced color 24
-# set out 'rank-mi-scatter.eps'
+#set term png
+#set out 'sup-rank-mi-scatter.png'
+## set term postscript eps enhanced color 24
+## set out 'sup-rank-mi-scatter.eps'
+#set logscale x
+#set format x "10^{%L}"
+#unset logscale y
+#unset format y
+#set key left bottom
+#set title "Word Rank vs. self-MI"
+#set ylabel "Self-MI"
+#set xlabel "Rank by Support"
+#plot "sup-rank-mi-scatter.dat" using 1:4 with points title ""
+
+#################################################
+# Used to generate the ratio vs MI scatterplot
+#
+# set term png
+# set out 'ratio-mi-scatter.png'
+set term postscript eps enhanced color 24
+set out 'ratio-mi-scatter.eps'
 set logscale x
 set format x "10^{%L}"
 unset logscale y
 unset format y
+# set xrange [1e-4:1]
 set key left bottom
-set title "Word Rank vs. self-MI"
+set title "Support/Count Ratio vs. self-MI"
 set ylabel "Self-MI"
-set xlabel "Rank by Support"
-plot "sup-rank-mi-scatter.dat" using 1:4 with points title ""
+set xlabel "Support / Count"
+plot "rank-mi-scatter.dat" using ($5/$3):4 with points title ""
 
 #################################################
