@@ -4454,8 +4454,17 @@ Self-MI
 
 \begin_layout Standard
 Lets look at the structure of Self-MI.
- We are using the `run-1-t1234-trim-1-1-1.rdb` dataset.
+ We are using the `
+\family typewriter
+run-1-t1234-trim-1-1-1.rdb
+\family default
+` dataset.
  It has 75431 words in it.
+ Datasets generated with code in `
+\family typewriter
+utils/similarity-graphs.scm
+\family default
+`.
  First up: rank vs observation count.
  This is the classic Zipf graph.
 \end_layout
@@ -4508,16 +4517,45 @@ It was noted that some words have a very high self-MI value, and it was
  hypothesized that these are words with a low number of disjuncts.
  The scatterplot show that there's no particularly clear self-MI vs observation-
 count-rank correlation.
- Lets explore further.
+ The above can be re-graphed with a ranking taken from the word-vector support
+ size; it does not change substantially.
+ Looks nearly exactly the same.
 \end_layout
 
 \begin_layout Standard
-Support vs.
- rank-by-bservation-count.
+Lets explore further.
+ Support vs.
+ rank-by-observation-count.
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/rank-support-scatter.eps
+	width 80col%
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+support
+\begin_inset Quotes erd
+\end_inset
+
+ of a word-vector is the number of disjuncts it has on it.
+ This does have the expected shape: the fewer observation counts on a word,
+ the fewer disjuncts on it, too.
+ It even seems to follow the classic Zipf slope.
+\end_layout
+
+\begin_layout Standard
+So, lets take a look at some specific cases.
 \end_layout
 
 \begin_layout Subsubsection*

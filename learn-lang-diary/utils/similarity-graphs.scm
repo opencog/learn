@@ -41,7 +41,17 @@
 		(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B))))
 )
 
+; Same as above, but ranked by support.
+(define (sup-rank-words LLOBJ)
+	(define sup (add-support-api LLOBJ))
+	(define (nobs WRD) (sup 'right-support WRD))
+	(define wrds (LLOBJ 'left-basis))
+	(sort wrds
+		(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B))))
+)
+
 (define ranked-words (rank-words pcs))
+(define sup-ranked-words (sup-rank-words pcs))
 
 ; Return a sorted list of the NTOP most frequent words.
 (define (top-ranked LLOBJ NTOP)
@@ -61,24 +71,36 @@
 
 (chdir "/home/ubuntu/experiments/run-6/data")
 
-(define (rank-mi-scatter)
-	(define csv (open "rank-mi-scatter.dat" (logior O_WRONLY O_CREAT)))
+(define (rank-mi-scatter WORD-LIST TITLE FILENAME)
+	(define csv (open FILENAME (logior O_WRONLY O_CREAT)))
 	(define cnt 0)
-	(format csv "#\n# Rank  words vs. self-MI\n#\n")
-	(format csv "#\n# rank\tword\tcount\tself-mi\n")
+	(format csv "#\n# ~A\n#\n" TITLE)
+	(format csv "#\n# rank\tword\tcount\tself-mi\tsupport\n")
 	(for-each
 		(lambda (WRD)
 			(define fv-mi (smi 'pair-count WRD WRD))
 			(set! cnt (+ 1 cnt))
 			(format csv
-				"~A\t~A\t~A\t~6F\n" cnt	(cog-name WRD)
+				"~A\t~A\t~A\t~6F\t~A\n" cnt (cog-name WRD)
 				(sup 'right-count WRD)
-				(cog-value-ref fv-mi 0))
+				(cog-value-ref fv-mi 0)
+				(sup 'right-support WRD)
+			)
 		)
-		ranked-words
+		WORD-LIST
 	)
 	(close csv)
 )
+
+(rank-mi-scatter ranked-words
+	"Observation-Count Rank words vs. self-MI"
+	"rank-mi-scatter.dat")
+
+; Same as above, but ranked by support.
+(rank-mi-scatter sup-ranked-words
+	"Support Rank words vs. self-MI"
+	"sup-rank-mi-scatter.dat")
+
 
 ; ---------------------------------------
 
