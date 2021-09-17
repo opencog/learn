@@ -66,6 +66,7 @@ description of a face".  So, although your filter collection was
 plucking eye-like and mouth-like features out of an image, the fact
 that they could be arranged into a grammatically-correct arrangement
 raises your confidence that you are seeing a face.
+[(see footnote 1)](#footnote-1).
 
 Those familiar with Link Grammar will recognize the above as a peculiar
 variant of a Link Grammar dictionary.
@@ -100,6 +101,7 @@ Lets presume a segmented image -- one where large blocks of similar
 pixels have been identified, where some edge detector has drawn
 boundaries around these blocks. This is straightforward, and image
 segmentation can be found in conventional image processing libraries.
+[(see footnote 2)](#footnote-2).
 
 Given a segmented image, the goal here is to develop a grammar for it.
 How might this work? Lets consider a grammar for a human face: the
@@ -164,9 +166,12 @@ the grad student did not know about Link Grammar, and did not realize
 the power of high-MI spanning graphs. So I think this is what is novel.
 This is the thing no one has done before.
 
+A Simpler Example
+-----------------
+
 Practical matters
 -----------------
-To me, the above seems doable with present-day CPU's and present-day
+The above seems doable with present-day CPU's and present-day
 image-processing libraries. Segmentation is not that hard. Creating
 spanning graphs is not that hard. Doing this for hundreds of thousands
 of graphs shouldn't take longer than a CPU-day (my rough guess).
@@ -394,3 +399,30 @@ language should be possible. The code will need a lot of careful
 generalization, but maybe not a complete rewrite.
 
 Worked example TBD.
+
+Footnotes
+=========
+
+### footnote-1
+This example is meant to sketch a general idea, but it raises a question:
+"but where did the eye, mouth and nose detectors come from?" The answer
+is that these are in turn built recursively out of other filter trees.
+At no point does this require that some neural net be trained on eyes
+and mouths. A simpler example might be the geometric structure of a
+stop-light: red above yellow above green. That these can be detected
+with relatively simple, straight-forward filter sequences can be taken
+for granted. Details of how these can be constructed are presented
+further into the text.
+
+### footnote-2
+This example is meant to sketch a general idea, but it raises a question:
+"where does the segmentation come from?" The answer is that simple
+segmentation can be built recursively out of more primitive filter trees.
+At no point does this require that some neural net be trained to perform
+image segmentation. A simpler example might be a filter that recognizes
+the upper half of an image is blue. This is composed of two subfilters:
+a vertical gradiant filter, and a color filter. It is the composition of
+such primitive filters that yeilds more complex inputs for the detection
+of features having greater complexities. The example is illustrative; in
+the end, feature detection is performed by complicated assemblages of
+primitive filters.

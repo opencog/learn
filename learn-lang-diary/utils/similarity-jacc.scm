@@ -62,7 +62,7 @@
 ; bad intercluster values were around -8 so that seems like a
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
-(bover 'batch-compute 800)
+(bover 'batch-compute 1200)
 
 ; ---------------------------------------
 
