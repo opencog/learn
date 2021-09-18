@@ -76,7 +76,7 @@
 	short-list
 )
 
-(define wli (top-ranked pcs 700))
+(define wli (top-ranked pcs 1200))
 
 (list-ref wli 101)
 
@@ -175,7 +175,7 @@
 (conlen-mi-scatter ranked-words)
 
 ; ---------------------------------------
-; Bin-count of MI
+; Bin-count of self-MI
 
 (define self-mi-hist
 	(bin-count ranked-words 34
@@ -186,6 +186,42 @@
 (define (prt-self-mi-hist)
 	(define csv (open "self-mi-hist.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv self-mi-hist csv)
+	(close csv))
+
+; ---------------------------------------
+; Bin-count of word similarities.
+
+(define wli (top-ranked pcs 1200))
+
+; Construct long list of simlinks.
+(define (get-simlinks WLI)
+	(filter-map
+		(lambda (WPR)
+			(define sim (cog-link 'Similarity (car WPR) (cdr WPR)))
+			(if (nil? sim) #f sim))
+		(concatenate!   ; a list of all word-pairs
+			(map
+				(lambda (N)
+					(define tli (drop WLI N))
+					(define head (car tli))
+					(map (lambda (WRD) (cons head WRD)) tli))
+				(iota (length WLI))))))
+
+(define all-sims (get-simlinks wli))
+(length all-sims) ; 386380
+
+(define nbins 100)
+(define width 50)
+(define pind (/ 2.0 (length all-sims)))
+(define mi-dist
+	(bin-count all-sims 100
+		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
+		(lambda (SIM) pind)
+		-25 25))
+
+(define (prt-mi-dist)
+	(define csv (open "mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv mi-dist csv)
 	(close csv))
 
 ; ---------------------------------------

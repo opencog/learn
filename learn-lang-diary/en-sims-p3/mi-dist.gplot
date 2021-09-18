@@ -1,0 +1,21 @@
+# set term png small color
+
+#################################################
+# Used to generate the the distribution of self-MI graph.
+#
+# set term png
+# set out 'mi-dist.png'
+set term postscript eps enhanced color 24
+set out 'mi-dist.eps'
+set key right top
+set logscale y
+set title "Distribution of MI"
+set xlabel "MI"
+set ylabel "Probability"
+set yrange [5e-6:0.2]
+set format y "10^{%L}"
+sigma=3.7
+off=-0.5
+plot "mi-dist.dat" using 2:3 with lines lw 2 title "", \
+     "mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-0.5,3.7)"
+#################################################

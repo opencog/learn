@@ -6047,9 +6047,28 @@ Pair distributions
 \end_layout
 
 \begin_layout Standard
-Lets take a quick look at the distributions of the MI, overlap and conditional
- overlap of word pairs.
- The similarity of the top 1200
+Lets take a quick look at the distributions of the MI, log overlap and log
+ conditional Jaccard of word pairs.
+ The similarity between pairs of the top-ranked 1200 words.
+ In principle, there are 
+\begin_inset Formula $N\left(N+1\right)/2=720600$
+\end_inset
+
+ such pairs.
+ In parctice, 386380 pairs are observed; the remaining pairs have no overlap!
+ (and thus a 
+\begin_inset Formula $-\infty$
+\end_inset
+
+ for the three measures).
+\end_layout
+
+\begin_layout Standard
+Here's is the MI distribution:
+\end_layout
+
+\begin_layout Standard
+The
 \end_layout
 
 \begin_layout Subsubsection*
