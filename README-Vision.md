@@ -340,6 +340,10 @@ handle this.
 Given a tree, and a collection of images ... pair-wise MI to be
 extracted, by counting, as usual.
 
+pair counting.
+
+High dimensional sparse vectors.
+
 The Competition: Neural Nets
 ----------------------------
 The conventional setting for AI these days is the deep-learning, neural
@@ -400,6 +404,94 @@ a fundamental advantage over neural nets.  Whether or not this
 fundamental advantage can be turned into practical, high-speed code
 remains to be seen. We're starting from far behind, but maybe we can
 shoot far ahead.
+
+
+How does this work?
+-------------------
+It is often said that no one is quite sure of why neural nets work so
+well (see however, paper by XXX).  The situation here is very different.
+Consider the image grammar for a stoplight. If you are a human, then
+it is "obvious" what the part-whole relationship is. One can write down
+a passable grammar for this in just a few minutes: glowing red above
+yellow above green, surrounded by a painted yellow or black harness.
+This is "obvious", and detecting this in images seems like it should
+be pretty easy.
+
+This is in very sharp contrast to what neural nets do: when a neural
+net picks out a stoplight from an image, no one is quite sure how it is
+doing that.  Perhaps somewhere in there are some weight vectors for red,
+yellow, green, but  where are they? Where are they hiding? How do neural
+nets handle part-whole relationships?  There is a paper (from Hinton?
+XXX find and refernce this) stating that the part-whole relationship for
+neural nets is the grand challenge of the upcoming decades.
+
+By contrast, the part-whole relationship for grammars is "obvious".
+
+What is this good for?
+----------------------
+> The final big question is what can you really do after you get that
+> grammar? What sort of inferences? How useful they are?
+
+Well, for starters, if the system recognizes a stop light, you can ask
+it: _"how do you know its a stop light?"_ and get an answer: _"because
+red above yellow above green."_ This ansswer is obtained by direct
+examination of the primary structure of the filter set, which has
+explict red, yellow, green filters in it, and the examination of the
+explicit image grammar, with above-below connectors explicitly present.
+
+You can ask _"and what else?"_ and get the answer _"on a painted black
+or yellow background"_ -- Again, this info is explcitly available in the
+program tree that represents the stoplight.
+
+Continuing:
+ * _"Q: And what else?"_ _"A: The colors glow in the dark"_
+ * _"Q: and what else?"_ _"A: They are round"_
+ * _"Q: And what else?"_ _"A: only one comes on at a time"_
+ * _"Q: And what else?"_ _"A: The cycle time varies from 30 second to
+    three minutes"_
+ * _"Q: What is a cycle time?"_ _"A: The parameter on the time filter
+    by which repetition repeats"_
+ * _"Q: What do you mean by round?"_ _"A: The image area of the light
+    is defined via a circular aperature filter".
+
+Good luck getting a neural net answering even one of those questions,
+never mind all of them.
+
+Symbolic representations are useful not only in narrow situations like
+the above, but also in broad questin situations:
+ * _"Q: "what else is round?"_ _"A: The sun, the moon, billiard balls,
+   bowling balls, baseballs, basketballs".
+
+I think we are very very far away from having a neural net do that
+kind of question answering. I think this is well within reach of
+grammatical systems.
+
+Associations between symbols and the things they represent is the
+famous "symbol grounding problem", considered to be a very difficult,
+unsolved problem in AI. I'm sketching a technique that solves this
+problem. I think this is unique in the history of AI research. I don't
+see that anyone else has ever proposed a plausible solution to the
+symbol grounding problem.
+
+Performance
+-----------
+There are two distinct stages: learning a given filter sequence and
+image grammar, and applying what has been learned.
+
+There should be no issue with applying previously-learned filter trees:
+1980's-era DSP could do image processing quite well. Modern multi-core
+CPU's and GPU's are capable of applying filter sequences to video feeds
+without much difficulty.
+
+The learning phase has two steps to it. Step one: Can we get it to work,
+at any speed? (I think we can; that's the point of this essay.) Step two:
+can we get it to work fast? Who knows -- compare this to deep learning,
+which took decades of basic research spanning hundreds of PhD theses
+before it started running fast. The motley crew of individuals who might
+appear for this project are not going to replicate a few thousand
+man-years of basic research into performance. At this point, making it
+run fast is subordinate to the more interesting problem of making it do
+something that has never been done before.
 
 
 Development Plan
