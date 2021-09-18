@@ -225,12 +225,20 @@ At this time, the AtomSpace does implement the
 [`GreaterThanLink`](https://wiki.opencog.org/w/GreaterThanLink)
 but not the `HueFilterLink` nor the `HaarWaveletLink` - these would
 need to be created and attached to an image processing library.
+Presumably, OpenCV would be the canonical choice. The Atoms themselves
+should probably be shaped to closely resemble the natural OpenCV API.
 
 It is envisioned that video and audio sources would inherit from
 [`StreamValue`](https://wiki.opencog.org/w/Value), and that video and
 audio samples from specific points in the processing pipeline could
 be samples with StreamValues. Details are TBD, StreamValues are
 currently an experimental part of the AtomSpace.
+
+The reset of this text repeatedly talks about segmentation. In fact,
+segmentation might not be the best approach: it might only be useful
+for initial bringup and proof of concept. If it is used, then the
+corresponding Atom migh be called `ConvexContingousRegionLink` or
+something like that.
 
 Practical matters
 -----------------
@@ -289,6 +297,48 @@ combination of filters. The learning occurs in this abstract space.
 However, for initial proof-of-concept, it is best to avoid the above
 complexity. The proof of concept needs to show that shape grammars
 exist, and that a reasonable pipeline can be built to find them.
+
+Unsupervised Learning of Channel Grammars
+-----------------------------------------
+How might one learn a directed tree of image-processing operations, with
+each vertex in the tree controlled by several adjustable numeric
+parameters? In an earlier example, a tree of this form was offered up as
+a concrete example:
+
+```
+(GreaterThanLink (Number 0.5)
+   (HueFilterLink (Number 0.0 0.0 1.0)
+      (HaarWavelet (Number 0 1)
+         (VariableNode "x"))))
+```
+The general form is then
+```
+(OperationA (Number N)
+   (OperationB (Number K L M)
+      (OperationC (Number P Q)
+         (Variable "x")))
+   (OperationD (Number F G)
+      (Variable "y"))
+   ...)
+```
+Such trees would be constructed randomly, with preference given to
+simple trees, at first. Paramaters can also be chosen randomly, with
+either uniform weightings, or some other distribution.
+
+The Opencog [MOSES](https://wiki.opencog.org/w/Meta-Optimizing_Semantic_Evolutionary_Search)
+(Meta-Optimizing Semantic Evolutionary Search) documentation spells out
+in considerable detail how a pool or "deme" of useful program trees can
+be managed and evloved. The [ASMOSES](https://github.com/opencog/asmoses/)
+project is a port of MOSES to explicitly use the AtomSpace for the
+storage to the deme pool of program trees that are being explored.
+It would need some work to extract the pool-management part of that
+software from the rest of the infrastructure, which this project would
+NOT use. The point here is that the generation and management of program
+trees is not new, and that we already have some existing software to
+handle this.
+
+Given a tree, and a collection of images ... pair-wise MI to be
+extracted, by counting, as usual.
 
 The Competition: Neural Nets
 ----------------------------
