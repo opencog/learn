@@ -101,7 +101,7 @@ Lets presume a segmented image -- one where large blocks of similar
 pixels have been identified, where some edge detector has drawn
 boundaries around these blocks. This is straightforward, and image
 segmentation can be found in conventional image processing libraries.
-[(see footnote 2)](#footnote-2).
+[(see footnote 2)](#footnote-2), [(footnote 3)](#footnote-3).
 
 Given a segmented image, the goal here is to develop a grammar for it.
 How might this work? Lets consider a grammar for a human face: the
@@ -206,6 +206,31 @@ system actually learns! It may learn something more complex; it may
 learn something more clever. It might learn something more fragile, or
 something more robust.
 
+
+Atomese
+-------
+The AtomSpace uses [Atomese](https://wiki.opencog.org/w/Atomese) to
+represent knowledge graphs. An example knowledge graph for a sequence of
+image processing filters might look something like this:
+
+```
+(GreaterThanLink (Number 0.5) ;; Select blue values
+   (HueFilterLink (Number 0.0 0.0 1.0) ; RGB - red green blue
+      (HaarWavelet (Number 0 1)  ; Lowest order Haar in vertical direction
+         (VariableNode "x")))) ; Binding to input.
+```
+It might be convenient to encapsulate the entire tree in a
+[`LambaLink`](https://wiki.opencog.org/w/LambdaLink_and_ScopeLink).
+At this time, the AtomSpace does implement the
+[`GreaterThanLink`](https://wiki.opencog.org/w/GreaterThanLink)
+but not the `HueFilterLink` nor the `HaarWaveletLink` - these would
+need to be created and attached to an image processing library.
+
+It is envisioned that video and audio sources would inherit from
+[`StreamValue`](https://wiki.opencog.org/w/Value), and that video and
+audio samples from specific points in the processing pipeline could
+be samples with StreamValues. Details are TBD, StreamValues are
+currently an experimental part of the AtomSpace.
 
 Practical matters
 -----------------
@@ -464,3 +489,12 @@ such primitive filters that yeilds more complex inputs for the detection
 of features having greater complexities. The example is illustrative; in
 the end, feature detection is performed by complicated assemblages of
 primitive filters.
+
+### footnote-3
+Segmentation is not a process of assigning a label to every pixel. It
+could be but need not be.  More properly, it is the identification of a
+region of an image that can be assigned a particular label.  This text
+talks about filters, and, for the most part, these filters are
+envisioned to be pixel-size independent. That means that spatial filters
+will be based on wavelet filters or something similar, allowing for
+scale-independent, multi-scale image analysis.
