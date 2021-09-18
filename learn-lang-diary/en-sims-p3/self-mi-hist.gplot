@@ -1,0 +1,17 @@
+# set term png small color
+
+#################################################
+# Used to generate the the distribution of self-MI graph.
+#
+# set term png
+# set out 'self-mi-hist.png'
+set term postscript eps enhanced color 24
+set out 'self-mi-hist.eps'
+set key left bottom
+set logscale y
+set title "Distribution of self-MI"
+set xlabel "Self-MI"
+set ylabel "Probability"
+plot "self-mi-hist.dat" using 2:($3/75431) with lines lw 2 title ""
+
+#################################################

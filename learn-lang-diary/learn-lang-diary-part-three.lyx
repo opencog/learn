@@ -4446,15 +4446,15 @@ Even the most casual peek at the MI data shows that its pretty darned good,
  perhaps a further trim step should be taken: get rid of words with only
  one disjunct on them! One the other hand, they might be idioms or set phrases.
  Are they? Lets look.
+ But first, a characterization of the basic dataset.
 \end_layout
 
 \begin_layout Subsubsection*
-Self-MI
+Dataset generics
 \end_layout
 
 \begin_layout Standard
-Lets look at the structure of Self-MI.
- We are using the `
+We are using the `
 \family typewriter
 run-1-t1234-trim-1-1-1.rdb
 \family default
@@ -4497,8 +4497,17 @@ s not quite classic: it seems to have two regimes: the first 80 or 90 words
  Is this due to trimming?
 \end_layout
 
+\begin_layout Subsubsection*
+Self-MI
+\end_layout
+
 \begin_layout Standard
-Next: the rank vs self-MI scatterplot.
+Lets look at the structure of Self-MI.
+ Self-MI is defined as the MI between a word and itself.
+\end_layout
+
+\begin_layout Standard
+Here is a scdatterplot of the rank vs self-MI.
 \end_layout
 
 \begin_layout Standard
@@ -5987,7 +5996,7 @@ destruction
 \begin_inset Quotes erd
 \end_inset
 
-, onne has a support of 2385, and 13 have a support of more than ten.
+, one has a support of 2385, and 13 have a support of more than ten.
  There are 38 connector sequences with a support of just one.
 \end_layout
 
@@ -6000,7 +6009,47 @@ Yikes! The above reveals that the trimming was too conservative.
 \end_layout
 
 \begin_layout Standard
-Question: MI vs connector sequence length? MI vs RMS count?
+Open question/TODO: What is the scatterplot of the MI vs the average connector
+ sequence length? How about the weighted avg sequence length? Issue with
+ this: this takes a huge amount of CPU time, and requires a new set of marginals
+ to be computed on connector sequences.
+ Is it worth the effort?
+\end_layout
+
+\begin_layout Standard
+How is the self-MI distributed? Shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/self-mi-hist.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above shows the probability distribution of the self-MI of the 75K words
+ in the dataset.
+ As can be seen, almost all of these have a high MI.
+ Based on the earlier scatterplots, almost all of these have low observation
+ counts.
+ The high MI is almost surely due to the untrimmed connector-seq support.
+ Ignoring these shows that the self-MI distribution is otherwise rather
+ noisey and quasi-uniform.
+\end_layout
+
+\begin_layout Subsubsection*
+Pair distributions
+\end_layout
+
+\begin_layout Standard
+Lets take a quick look at the distributions of the MI, overlap and conditional
+ overlap of word pairs.
+ The similarity of the top 1200
 \end_layout
 
 \begin_layout Subsubsection*

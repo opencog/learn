@@ -81,7 +81,7 @@
 (list-ref wli 101)
 
 ; ---------------------------------------
-; Self-similary rank vs MI scatterplot
+; Dump datafile -- Self-similary rank vs MI scatterplot
 
 (chdir "/home/ubuntu/experiments/run-6/data")
 
@@ -115,19 +115,81 @@
 	"Support Rank words vs. self-MI"
 	"sup-rank-mi-scatter.dat")
 
-(define (wtf WORD-LIST)
-	(for-each
-		(lambda (WRD)
-			(define ct (sup 'right-count WRD))
-			(define su (sup 'right-support WRD))
-			(if (< 1 (/ su ct))
-				(format #t "wtf ~A ~A ~A\n" WRD su ct)))
-		WORD-LIST))
+; ---------------------------------------
+; How many words share a common connector sequence?
 
 (define fi (sup 'right-duals (Word "fishermen")))
 (map (lambda (CONSEQ) (length (sup 'left-stars CONSEQ))) fi)
 
 ; ---------------------------------------
+; Take a look at connector sequences on specific words...
+;
+
+; Compute average connectorseq length for a word.
+; Unweighted -- every conseq counted once.
+(define (avg-conlen WORD)
+	(define conseqs (sup 'right-duals WORD))
+	(exact->inexact (/
+		(fold + 0 (map (lambda (CONSEQ) (cog-arity CONSEQ)) conseqs))
+		(length conseqs))))
+
+; Compute weighted average connectorseq length for a word.
+; Average is weighted by number of words that conseq is in.
+(define (avg-weighted-conlen WORD)
+	(define conseqs (sup 'right-duals WORD))
+	(exact->inexact (/
+		(fold + 0 
+			(map 
+				(lambda (CONSEQ) (* 
+					(cog-arity CONSEQ)
+					(length (sup 'left-stars CONSEQ))))
+				conseqs))
+		(fold + 0 
+			(map 
+				(lambda (CONSEQ) (length (sup 'left-stars CONSEQ)))
+				conseqs)))))
+
+; Scatterplot of MI vs average connector lengths.
+(define (conlen-mi-scatter WORD-LIST)
+	(define csv (open "conlen-mi-scater.dat" (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# ConnectorSeq Averge Lenghts\n#\n")
+	(format csv "#\n# rank\tword\tself-mi\tAvg\tWeighted\n")
+	(for-each
+		(lambda (WRD)
+			(define fv-mi (smi 'pair-count WRD WRD))
+			(set! cnt (+ 1 cnt))
+			(format csv
+				"~A\t~A\t~6F\t~6F\t~6F\n" cnt (cog-name WRD)
+				(cog-value-ref fv-mi 0)
+				(avg-conlen WRD)
+				(avg-weighted-conlen WRD)
+			)
+			(force-output csv)
+		)
+		WORD-LIST
+	)
+	(close csv)
+)
+
+(conlen-mi-scatter ranked-words)
+
+; ---------------------------------------
+; Bin-count of MI
+
+(define self-mi-hist
+	(bin-count ranked-words 34
+		(lambda (WRD) (cog-value-ref (smi 'pair-count WRD WRD) 0))
+		(lambda (WRD) 1)
+		0 34))
+
+(define (prt-self-mi-hist)
+	(define csv (open "self-mi-hist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv self-mi-hist csv)
+	(close csv))
+
+; ---------------------------------------
+; List of lists, used for inverted-MI exploration.
 
 ; Create a sorted list by sim(WRD, word in WLIST)
 ; LLOBJ should be smi sov or scj
@@ -150,6 +212,7 @@
 	(map (lambda (WRD) (cons WRD (list (sorted-by-sim smi WRD wli)))) wli))
 
 ; ---------------------------------------
+; Sccripts for MI inversion
 
 (define upr
 	(filter
