@@ -251,6 +251,31 @@
 	(close csv))
 
 ; ---------------------------------------
+;
+; Scatterplots of MI vs condjacc vs overlap
+
+(define (mi-ov-cj-scatter)
+	(define csv (open "mi-ov-cj-scatter.dat" (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# MI vs Overlap vs CondJacc\n#\n")
+	(format csv "#\n# idx\tself-mi\toverlap\tcondjacc\n")
+	(for-each
+		(lambda (SIM)
+			(set! cnt (+ 1 cnt))
+			(format csv
+				"~D\t~6F\t~6F\t~6F\n" cnt
+				(cog-value-ref (smi 'get-count SIM) 0)
+				(cog-value-ref (sov 'get-count SIM) 0)
+				(cog-value-ref (scj 'get-count SIM) 0)
+			)
+		)
+		all-sims
+	)
+	(close csv)
+)
+
+
+; ---------------------------------------
 ; List of lists, used for inverted-MI exploration.
 
 ; Create a sorted list by sim(WRD, word in WLIST)

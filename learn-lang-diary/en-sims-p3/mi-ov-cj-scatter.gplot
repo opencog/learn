@@ -1,0 +1,48 @@
+# set term png small color
+
+#################################################
+# Used to generate the MI vs Overlap scatterplot
+#
+# set term png
+# set out 'mi-ov-scatter.png'
+set term postscript eps enhanced color 24
+set out 'mi-ov-scatter.eps'
+set key left bottom
+set title "MI vs. Overlap"
+set xlabel "MI"
+set ylabel "Overlap"
+set xrange [-22:20]
+set yrange [-18:0]
+plot "mi-ov-cj-scatter.dat" using 2:3 with points title ""
+
+#################################################
+# Used to generate the MI vs Condjacc scatterplot
+#
+# set term png
+# set out 'mi-cj-scatter.png'
+set term postscript eps enhanced color 24
+set out 'mi-cj-scatter.eps'
+set key left bottom
+set title "MI vs. Conditional Jaccard"
+set ylabel "Cond Jacc"
+set xlabel "MI"
+set xrange [-22:20]
+set yrange [-20:0]
+plot "mi-ov-cj-scatter.dat" using 2:4 with points title ""
+
+#################################################
+# Used to generate the MI vs Condjacc scatterplot
+#
+# set term png
+# set out 'ov-cj-scatter.png'
+set term postscript eps enhanced color 24
+set out 'ov-cj-scatter.eps'
+set key left bottom
+set title "Overlap vs. Conditional Jaccard"
+set ylabel "Cond Jacc"
+set xlabel "Overlap"
+set xrange [-18:0]
+set yrange [-20:0]
+plot "mi-ov-cj-scatter.dat" using 3:4 with points title ""
+
+#################################################
