@@ -537,4 +537,17 @@
 	(print-bincounts-tsv com-dist csv)
 	(close csv))
 
+(define wmarg (/ nbins (* 30.0 (length all-sims))))
+; (define wmarg 1)
+(define marg-dist
+	(bin-count uniq-sims 100
+		(lambda (SIM) (marg-MI (gar SIM) (gdr SIM)))
+		(lambda (SIM) wmarg)
+		-30 0))
+
+(define (prt-marg-dist)
+	(define csv (open "marg-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv marg-dist csv)
+	(close csv))
+
 ; ---------------------------------------
