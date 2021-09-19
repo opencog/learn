@@ -389,6 +389,7 @@
  (WordNode "hair")
 )
 
+; Dump of all of them
 (for-each
 	(lambda (SLI)
 		(define head-word (car SLI))
@@ -406,5 +407,12 @@
 	)
 	inverted-ranked-pairs)
 
+
+(define (delta-MI WA WB)
+	(-
+		(cog-value-ref (smi 'pair-count (Word WA) (Word WB)) 0)
+		(* 0.5 (+
+			(cog-value-ref (smi 'pair-count (Word WA) (Word WA)) 0)
+			(cog-value-ref (smi 'pair-count (Word WB) (Word WB)) 0)))))
 
 ; ---------------------------------------
