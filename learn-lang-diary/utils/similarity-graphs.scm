@@ -550,4 +550,32 @@
 	(print-bincounts-tsv marg-dist csv)
 	(close csv))
 
+(define (marg-overlap WA WB)
+	(+ (cog-value-ref (sov 'pair-count WA WB) 0)
+		(* 0.5 (+ (right-freq WA) (right-freq WB)))))
+
+(define pairs-marg-ov-sort
+	(rank-pairs (lambda (SIM) (marg-overlap (gar SIM) (gdr SIM)))))
+
+(define (marg-condjacc WA WB)
+	(+ (cog-value-ref (scj 'pair-count WA WB) 0)
+		(* 0.5 (+ (right-freq WA) (right-freq WB)))))
+
+(define pairs-marg-cj-sort
+	(rank-pairs (lambda (SIM) (marg-condjacc (gar SIM) (gdr SIM)))))
+
+(define (prt-csv LST N)
+	(define cnt 0)
+	(for-each
+		(lambda (SIM)
+			(set! cnt (+ cnt 1))
+			(format #t "~D,~A,~A\n" cnt (cog-name (gar SIM)) (cog-name (gdr SIM))))
+		(take LST N)))
+
+(prt-csv pairs-common-mi-sort 100)
+(prt-csv pairs-marg-mi-sort 100)
+(prt-csv pairs-marg-ov-sort 100)
+(prt-csv pairs-marg-cj-sort 100)
+
+
 ; ---------------------------------------
