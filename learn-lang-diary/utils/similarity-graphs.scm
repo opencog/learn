@@ -138,14 +138,14 @@
 (define (avg-weighted-conlen WORD)
 	(define conseqs (sup 'right-duals WORD))
 	(exact->inexact (/
-		(fold + 0 
-			(map 
-				(lambda (CONSEQ) (* 
+		(fold + 0
+			(map
+				(lambda (CONSEQ) (*
 					(cog-arity CONSEQ)
 					(length (sup 'left-stars CONSEQ))))
 				conseqs))
-		(fold + 0 
-			(map 
+		(fold + 0
+			(map
 				(lambda (CONSEQ) (length (sup 'left-stars CONSEQ)))
 				conseqs)))))
 
@@ -282,6 +282,8 @@
 ; ---------------------------------------
 ; List of lists, used for inverted-MI exploration.
 
+(define wli (top-ranked pcs 1200))
+
 ; Create a sorted list by sim(WRD, word in WLIST)
 ; LLOBJ should be smi sov or scj
 (define (sorted-by-sim LLOBJ WRD WLIST)
@@ -299,34 +301,93 @@
 
 % list of ranked lists, sorted by MI.
 % Acutally, cons pairs: (word . sorted-list)
-(define rli
+(define sim-ranked-pairs
 	(map (lambda (WRD) (cons WRD (list (sorted-by-sim smi WRD wli)))) wli))
 
 ; ---------------------------------------
-; Sccripts for MI inversion
+; Scripts for MI inversion
 
-(define upr
+; A subset of the (word . sorted-list) where word is not the first word
+; in the sorted list. This is an inverted-pair situation.
+(define inverted-ranked-pairs
 	(filter
 		(lambda (SLI) (not (equal? (car SLI) (caadr SLI))))
-		rli))
+		sim-ranked-pairs))
 
-(length upr)  ; 135
+(length inverted-ranked-pairs)  ; 135 out of 700 and 286 out of 1200
 
 (WordNode "in") ; le
 (smi 'pair-count (WordNode "in") (WordNode "in")) ; 4.6861
 (smi 'pair-count (WordNode "in") (WordNode "le")) ; 5.0586
-(smi 'pair-count (WordNode "in") (WordNode "le")) ; 16.088
+(smi 'pair-count (WordNode "le") (WordNode "le")) ; 16.088
 
+; Given SLI a (word . sorted-list) pair, return the leading part of
+; the sorted list that is above the word.
 (define (take-upr SLI)
 	(define head-word (car SLI))
 	(take-while
 		(lambda (WRD) (not (equal? WRD head-word)))
 		(cadr SLI)))
 
+; Print.
 (for-each
 	(lambda (SLI)
 		(format #t "~A has ~A\n" (car SLI) (take-upr SLI)))
-	upr)
+	inverted-ranked-pairs)
+
+(define (prt-sim WA WB)
+	(format #t "~5F ~5F ~5F\n"
+		(cog-value-ref (smi 'pair-count (Word WA) (Word WB)) 0)
+		(cog-value-ref (smi 'pair-count (Word WA) (Word WA)) 0)
+		(cog-value-ref (smi 'pair-count (Word WB) (Word WB)) 0))
+	*unspecified*)
+
+(WordNode "I")
+ has ((WordNode "I’ll")
+ (WordNode "You")
+ (WordNode "We")
+ (WordNode "I’ve")
+)
+
+(WordNode "will")
+ has ((WordNode "cannot")
+ (WordNode "may")
+ (WordNode "must")
+ (WordNode "would")
+ (WordNode "can")
+ (WordNode "can’t")
+)
+
+(WordNode "back")
+ has ((WordNode "straight")
+ (WordNode "down")
+ (WordNode "forth")
+ (WordNode "forward")
+ (WordNode "up")
+ (WordNode "out")
+ (WordNode "off")
+)
+
+(WordNode "mouth")
+ has ((WordNode "Majesty")
+ (WordNode "sister")
+ (WordNode "own")
+ (WordNode "husband")
+ (WordNode "brother")
+ (WordNode "friend")
+)
+
+(WordNode "daughter")
+ has ((WordNode "Majesty")
+ (WordNode "sister")
+ (WordNode "own")
+ (WordNode "brother")
+ (WordNode "husband")
+ (WordNode "friend")
+ (WordNode "mother")
+ (WordNode "father")
+ (WordNode "hair")
+)
 
 (for-each
 	(lambda (SLI)
@@ -343,7 +404,7 @@
 			(cog-name head-word) (cog-name head-word)
 			(cog-value-ref (smi 'pair-count head-word head-word) 0))
 	)
-	upr)
+	inverted-ranked-pairs)
 
 
 ; ---------------------------------------
