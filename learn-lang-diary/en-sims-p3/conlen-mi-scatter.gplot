@@ -1,0 +1,29 @@
+# set term png small color
+
+#################################################
+# Used to generate the MI vs connectorseq length scatterplot
+#
+# set term png
+# set out 'conlen-mi-scatter.png'
+set term postscript eps enhanced color 24
+set out 'conlen-mi-scatter.eps'
+set key left bottom
+set title "Self-MI vs. Avg. ConnectorSeq Length"
+set xlabel "Self-MI"
+set ylabel "Avg ConnectorSeq Length"
+plot "conlen-mi-scatter.dat" using 3:4 with points title ""
+
+#################################################
+# Used to generate the MI vs connectorseq length scatterplot
+#
+# set term png
+# set out 'conlenw-mi-scatter.png'
+set term postscript eps enhanced color 24
+set out 'conlenw-mi-scatter.eps'
+set key left bottom
+set title "Self-MI vs. Weighted Avg. ConnectorSeq Length"
+set xlabel "Self-MI"
+set ylabel "Weighted Avg. ConnectorSeq Length"
+plot "conlen-mi-scatter.dat" using 3:5 with points title ""
+
+#################################################

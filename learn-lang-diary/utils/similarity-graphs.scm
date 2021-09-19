@@ -150,8 +150,12 @@
 				conseqs)))))
 
 ; Scatterplot of MI vs average connector lengths.
+; This takes an hour or two to run, because we failed to use the cached
+; support values on disjunct lengths in the above sum. That's just dumb,
+; the above should have been rewritten to do that.
+; Late-night fuzzy-brainedness.
 (define (conlen-mi-scatter WORD-LIST)
-	(define csv (open "conlen-mi-scater.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "conlen-mi-scatter.dat" (logior O_WRONLY O_CREAT)))
 	(define cnt 0)
 	(format csv "#\n# ConnectorSeq Averge Lenghts\n#\n")
 	(format csv "#\n# rank\tword\tself-mi\tAvg\tWeighted\n")

@@ -6009,11 +6009,80 @@ Yikes! The above reveals that the trimming was too conservative.
 \end_layout
 
 \begin_layout Standard
-Open question/TODO: What is the scatterplot of the MI vs the average connector
- sequence length? How about the weighted avg sequence length? Issue with
- this: this takes a huge amount of CPU time, and requires a new set of marginals
- to be computed on connector sequences.
- Is it worth the effort?
+What is the scatterplot of the MI vs the average connector sequence length?
+ How about the weighted avg sequence length? Shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/conlen-mi-scatter.eps
+	width 49col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename en-sims-p3/conlenw-mi-scatter.eps
+	width 49col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Given a fixed word 
+\begin_inset Formula $w$
+\end_inset
+
+, the average connector sequence length is give by 
+\begin_inset Formula 
+\[
+\left\langle \mbox{len}d\right\rangle =\frac{\sum_{d}I\left(w,d\right)\mbox{len}d}{\sum_{d}I\left(w,d\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $I\left(w,d\right)$
+\end_inset
+
+ is the indicator function, equal to 1 if the word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ exists, else equal to zero.
+ The 
+\begin_inset Formula $\mbox{len d}$
+\end_inset
+
+ is the number of connectors in the connector sequence (aka disjunct) 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ The weighted average is 
+\begin_inset Formula 
+\[
+\left\langle \mbox{len}d\right\rangle _{\mbox{weighted}}=\frac{\sum_{d}I\left(w,d\right)\mbox{len}d\sum_{v}I\left(v,d\right)}{\sum_{d}I\left(w,d\right)\sum_{v}I\left(v,d\right)}
+\]
+
+\end_inset
+
+so that the weighting is the total number of words in which a disjunct 
+\begin_inset Formula $d$
+\end_inset
+
+appears in.
+\end_layout
+
+\begin_layout Standard
+This seems to suggest that the commonly used connector sequences, those
+ having a large support, have a small number of conectors in them.
+ The long connector sequences appear to have a small support.
+ Again, this points at trimming away connector sequences that have a small
+ support.
 \end_layout
 
 \begin_layout Standard
