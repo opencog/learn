@@ -6116,7 +6116,30 @@ Distribution of overlaps is shown below.
 \end_layout
 
 \begin_layout Standard
-The fit is an eyeballed fit to the log logistic distribution
+Two eyeballed fits are shown.
+ One is to the log normal distribution
+\begin_inset Formula 
+\[
+N\left(x;\mu,\sigma\right)=\frac{1}{x\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(\ln x-\mu\right)^{2}}{2\sigma^{2}}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\mu=2.15$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=0.25$
+\end_inset
+
+.
+ Note that the normal peak occurs at and overlap of 
+\begin_inset Formula $\exp\mu=8.6$
+\end_inset
+
+.
+ The other curve is an eyeballed fit to the log logistic distribution
 \begin_inset Formula 
 \[
 F\left(x;\alpha,\beta\right)=\frac{\beta\left(x/\alpha\right)^{\beta-1}}{\alpha\left(1+\left(x/\alpha\right)^{\beta}\right)^{2}}
@@ -6133,6 +6156,8 @@ with
 \end_inset
 
 .
+ Both curves seem to provide reaasonable descriptions of the data, and I
+ know of no theoretical reason to prefer one or the other.
 \end_layout
 
 \begin_layout Subsubsection*

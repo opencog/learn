@@ -17,6 +17,11 @@ set format y "10^{%L}"
 
 alpha = 8.8
 beta= 8
+
+mu=2.15
+sigma=0.25
+
 plot "overlap-dist.dat" using 2:3 with lines lw 2 title "", \
+     "overlap-dist.dat" using 2:(exp(-(log(-$2)-mu)**2/(2*sigma**2))/(-$2 * sigma * sqrt(2*3.14159))) with lines lw 2 title "N(2.15,0.25)", \
      "overlap-dist.dat" using 2:(beta * (-$2 / alpha)**(beta - 1) / (alpha * (1 + (-$2/alpha)**beta)**2)) with lines lw 2 title "F(8.8,8)"
 #################################################
