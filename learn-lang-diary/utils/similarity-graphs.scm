@@ -212,16 +212,29 @@
 
 (define nbins 100)
 (define width 50)
-(define pind (/ 2.0 (length all-sims)))
+(define wmi (/ 2.0 (length all-sims)))
 (define mi-dist
 	(bin-count all-sims 100
 		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
-		(lambda (SIM) pind)
+		(lambda (SIM) wmi)
 		-25 25))
 
 (define (prt-mi-dist)
 	(define csv (open "mi-dist.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv mi-dist csv)
+	(close csv))
+
+; ------
+(define wov (/ nbins (* 20.0 (length all-sims))))
+(define ov-dist
+	(bin-count all-sims 100
+		(lambda (SIM) (cog-value-ref (sov 'get-count SIM) 0))
+		(lambda (SIM) wov)
+		-20 0))
+
+(define (prt-ov-dist)
+	(define csv (open "overlap-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv ov-dist csv)
 	(close csv))
 
 ; ---------------------------------------

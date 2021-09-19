@@ -6068,7 +6068,71 @@ Here's is the MI distribution:
 \end_layout
 
 \begin_layout Standard
-The
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/mi-dist.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution appears to be an alomst perfect Gaussian, centered at 
+\begin_inset Formula $\mu=-0.5$
+\end_inset
+
+ and stddev 
+\begin_inset Formula $\sigma=3.7$
+\end_inset
+
+.
+ That is, the smooth parabola superimposed on the data is 
+\begin_inset Formula 
+\[
+G\left(x;\mu,\sigma\right)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}\right)
+\]
+
+\end_inset
+
+The two parameters are an eyeballed fit.
+ The fact that the MI distributions follow a gaussian has been noted before.
+\end_layout
+
+\begin_layout Standard
+Distribution of overlaps is shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/overlap-dist.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The fit is an eyeballed fit to the log logistic distribution
+\begin_inset Formula 
+\[
+F\left(x;\alpha,\beta\right)=\frac{\beta\left(x/\alpha\right)^{\beta-1}}{\alpha\left(1+\left(x/\alpha\right)^{\beta}\right)^{2}}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\alpha=8$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta=8.8$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
