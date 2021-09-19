@@ -458,17 +458,83 @@
 	(format csv "#\n# idx\tmi\tdelta-mi\n")
 	(for-each
 		(lambda (SIM)
-			(set! cnt (+ 1 cnt))
-			(format csv
-				"~D\t~6F\t~6F\n" cnt
-				(cog-value-ref (smi 'get-count SIM) 0)
-				(delta-WMI (gar SIM) (gdr SIM))
-			)
-		)
-		all-sims
-	)
+			(if (not (equal? (gar SIM) (gdr SIM)))
+				(begin
+					(set! cnt (+ 1 cnt))
+					(format csv
+						"~D\t~6F\t~6F\n" cnt
+						(cog-value-ref (smi 'get-count SIM) 0)
+						(delta-WMI (gar SIM) (gdr SIM))
+					))))
+		all-sims)
 	(close csv)
 )
 
+; ---------------------------------------
+; Ranked word-pairs
+
+(define uniq-sims
+	(filter (lambda (SIM) (not (equal? (gar SIM) (gdr SIM)))) all-sims))
+
+(define (rank-pairs FUN)
+	(sort uniq-sims
+		(lambda (ATOM-A ATOM-B)
+			(> (FUN ATOM-A) (FUN ATOM-B))))
+)
+
+(define pairs-mi-sort
+	(rank-pairs (lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))))
+(define pairs-delta-sort
+	(rank-pairs (lambda (SIM) (delta-WMI (gar SIM) (gdr SIM)))))
+
+(define trp (add-transpose-api pcs))
+
+; (trp 'mmt-count) is sum_y N(x,d) N(*,d)
+; (trp 'total-mmt-count) is sum_y N(*,d) N(*,d)
+
+(define tot-mmt (trp 'total-mmt-count))
+(define ltot-mmt (log2 tot-mmt))
+
+(define (marg-mmt WRD)
+	(- (log2 (trp 'mmt-count WRD)) ltot-mmt))
+
+(define pfq (add-pair-freq-api pcs))
+; (pfq 'right-wild-logli)   -log_2 P(x,*)
+; But above has not been computed, prints the
+; "Run `((make-compute-freq LLOBJ) 'cache-all)` " error mesage.
+
+(define tot-cnt (sup 'total-count-right))
+(define ltot-cnt (log2 tot-cnt))
+(define (right-freq WRD)
+	(- (log2 (sup 'right-count WRD)) ltot-cnt))
+
+(define (common-MI WA WB)
+	(+ (cog-value-ref (smi 'pair-count WA WB) 0)
+		(* 0.5 (+ (marg-mmt WA) (marg-mmt WB)))))
+
+(define pairs-common-mi-sort
+	(rank-pairs (lambda (SIM) (common-MI (gar SIM) (gdr SIM)))))
+
+(define (marg-MI WA WB)
+	(+ (cog-value-ref (smi 'pair-count WA WB) 0)
+		(* 0.5 (+ (right-freq WA) (right-freq WB)))))
+
+(define pairs-marg-mi-sort
+	(rank-pairs (lambda (SIM) (marg-MI (gar SIM) (gdr SIM)))))
+
+; And how is this distributed?
+
+(define wcom (/ nbins (* 25.0 (length all-sims))))
+; (define wcom 1)
+(define com-dist
+	(bin-count uniq-sims 100
+		(lambda (SIM) (common-MI (gar SIM) (gdr SIM)))
+		(lambda (SIM) wcom)
+		-25 0))
+
+(define (prt-com-dist)
+	(define csv (open "common-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv com-dist csv)
+	(close csv))
 
 ; ---------------------------------------
