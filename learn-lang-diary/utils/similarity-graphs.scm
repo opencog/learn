@@ -262,7 +262,7 @@
 	(define csv (open "mi-ov-cj-scatter.dat" (logior O_WRONLY O_CREAT)))
 	(define cnt 0)
 	(format csv "#\n# MI vs Overlap vs CondJacc\n#\n")
-	(format csv "#\n# idx\tself-mi\toverlap\tcondjacc\n")
+	(format csv "#\n# idx\tmi\toverlap\tcondjacc\n")
 	(for-each
 		(lambda (SIM)
 			(set! cnt (+ 1 cnt))
@@ -408,11 +408,67 @@
 	inverted-ranked-pairs)
 
 
+; Compute MI(a,b) - 0.5 MI(a,a) - 0.5 MI(b,b)
 (define (delta-MI WA WB)
 	(-
 		(cog-value-ref (smi 'pair-count (Word WA) (Word WB)) 0)
 		(* 0.5 (+
 			(cog-value-ref (smi 'pair-count (Word WA) (Word WA)) 0)
 			(cog-value-ref (smi 'pair-count (Word WB) (Word WB)) 0)))))
+
+; print a triangle from a list.
+(define (prt-tri FUN LST)
+	(define (prt-row ROW)
+		(for-each (lambda (ITEM) (format #t "~6F " (FUN (car ROW) ITEM))) ROW))
+	(for-each
+		(lambda (N) (prt-row (drop LST N)) (newline))
+		(iota (length LST))))
+
+(prt-tri delta-MI (list "I’ll" "You" "We" "I’ve" "I"))
+(prt-tri delta-MI (list "cannot" "may" "must" "would" "can" "can’t" "will"))
+
+; ------
+; Distribution of delta-MI
+(define (delta-WMI WA WB)
+	(-
+		(cog-value-ref (smi 'pair-count WA WB) 0)
+		(* 0.5 (+
+			(cog-value-ref (smi 'pair-count WA WA) 0)
+			(cog-value-ref (smi 'pair-count WB WB) 0)))))
+
+(define wdt (/ nbins (* 25.0 (length all-sims))))
+(define dt-dist
+	(bin-count all-sims 100
+		(lambda (SIM) (delta-WMI (gar SIM) (gdr SIM)))
+		(lambda (SIM) wdt)
+		-25 0))
+
+(define (prt-dt-dist)
+	(define csv (open "delta-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv dt-dist csv)
+	(close csv))
+
+; ------
+; scatterplot of MI vs delta-MI:
+
+(define (mi-delta-scatter)
+	(define csv (open "mi-delta-scatter.dat" (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# MI vs Delta-MI\n#\n")
+	(format csv "#\n# idx\tmi\tdelta-mi\n")
+	(for-each
+		(lambda (SIM)
+			(set! cnt (+ 1 cnt))
+			(format csv
+				"~D\t~6F\t~6F\n" cnt
+				(cog-value-ref (smi 'get-count SIM) 0)
+				(delta-WMI (gar SIM) (gdr SIM))
+			)
+		)
+		all-sims
+	)
+	(close csv)
+)
+
 
 ; ---------------------------------------

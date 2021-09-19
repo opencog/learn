@@ -1,0 +1,18 @@
+# set term png small color
+
+#################################################
+# Used to generate the MI vs Delta-MI scatterplot
+#
+# set term png
+# set out 'mi-delta-scatter.png'
+set term postscript eps enhanced color 24
+set out 'mi-delta-scatter.eps'
+set key left bottom
+set title "MI vs. Delta-MI"
+set xlabel "MI"
+set ylabel "Delta-MI"
+set xrange [-22:20]
+set yrange [-25:0]
+plot "mi-delta-scatter.dat" using 2:3 with points title ""
+
+#################################################
