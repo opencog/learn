@@ -237,6 +237,19 @@
 	(print-bincounts-tsv ov-dist csv)
 	(close csv))
 
+; ------
+(define wcj (/ nbins (* 20.0 (length all-sims))))
+(define cj-dist
+	(bin-count all-sims 100
+		(lambda (SIM) (cog-value-ref (scj 'get-count SIM) 0))
+		(lambda (SIM) wcj)
+		-20 0))
+
+(define (prt-cj-dist)
+	(define csv (open "condjacc-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv cj-dist csv)
+	(close csv))
+
 ; ---------------------------------------
 ; List of lists, used for inverted-MI exploration.
 

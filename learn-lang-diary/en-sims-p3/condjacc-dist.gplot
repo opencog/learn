@@ -1,0 +1,27 @@
+# set term png small color
+
+#################################################
+# Used to generate the the distribution of self-MI graph.
+#
+# set term png
+# set out 'condjacc-dist.png'
+set term postscript eps enhanced color 24
+set out 'condjacc-dist.eps'
+set key right top
+set logscale y
+set title "Distribution of Conditional Jaccard"
+set xlabel "Conditional Jaccard"
+set ylabel "Probability"
+set yrange [1e-5:0.3]
+set format y "10^{%L}"
+
+alpha = 8
+beta= 6
+
+mu=2
+sigma=0.34
+
+plot "condjacc-dist.dat" using 2:3 with lines lw 2 title "", \
+     "condjacc-dist.dat" using 2:(exp(-(log(-$2)-mu)**2/(2*sigma**2))/(-$2 * sigma * sqrt(2*3.14159))) with lines lw 2 title "N(2,0.34)", \
+     "condjacc-dist.dat" using 2:(beta * (-$2 / alpha)**(beta - 1) / (alpha * (1 + (-$2/alpha)**beta)**2)) with lines lw 2 title "F(8,6)"
+#################################################
