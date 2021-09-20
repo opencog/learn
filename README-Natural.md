@@ -1049,20 +1049,23 @@ The above computations may take hours or days, depending on the size
 of the disjunct set.  Be sure to make a backup copy of the resulting
 database before proceeding to the next step.
 
-(Optional) Trimming Disjunct Datasets
--------------------------------------
+(Optional but strongly recommended) Trimming Disjunct Datasets
+--------------------------------------------------------------
 The previous step can result in unmanagebly large datasets. These can be
-(and should be) trimmed to a smaller size. Remarkably, approximately 90%
-of all disjuncts are observed only once! Thus, removing these offers a
-tremendous data reduction. Current evidence seems to suggest that
-trimming more than this lowers overall data quality; see the Diary
-entries, circa June 2021, for details.
+(and should be) trimmed to a smaller size. More than 90% of all disjuncts
+are observed only once! Thus, removing these offers a tremendous data
+reduction. Removing all disjuncts that appear only once not only shrinks
+datasets by a lot, but allow later steps to run much more efficiently!
+(Trimming more than this might not be a good idea. See the Diary entries
+in Part Two, starting in June 2021, continuing into Part Three, Sept.
+2021.)
 
 ```
 ; Utility to perform timming.
 (define (iter-trim a b c)
    (define pca (make-pseudo-cset-api))
    (define psa (add-pair-stars pca))
+   (support-trim psa a b c)
    (subtotal-trim psa a b c)
    (trim-linkage psa)
    (set! pca (make-pseudo-cset-api))
@@ -1094,7 +1097,7 @@ Then, in guile:
 
    ; Now, repeatedly trim. This will settle down after 7 or 8
    ; iterations. The problem is that each trim leaves behind
-   ; unconnectable words, which have to be rremoved, thus
+   ; unconnectable words, which have to be removed, thus
    ; throwing off the counts.
    (iter-trim 1 1 1)
    (iter-trim 1 1 1)
