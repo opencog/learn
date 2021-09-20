@@ -112,3 +112,34 @@
 	(trim-matrix stars-obj
 		left-basis-pred right-basis-pred pair-pred)
 )
+
+
+(define-public (support-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT)
+"
+  support-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT
+
+  Almost exactly identical to subtotal-trim, except that the cuts apply
+  to the size of the support, rather than to the count.
+"
+	(define stars-obj (add-pair-stars LLOBJ))
+	(define sup-obj (add-support-api stars-obj))
+
+	; ---------------
+	; Remove rows and columns that are below-count.
+	;
+	; Yes, we want LEFT-CUT < right-support this looks weird,
+	; but is correct: as LEFT-CUT gets larger, the size of the
+	; left-basis shrinks.
+	(define (left-basis-pred ITEM)
+		(< LEFT-CUT (sup-obj 'right-support ITEM)))
+
+	(define (right-basis-pred ITEM)
+		(< RIGHT-CUT (sup-obj 'left-support ITEM)))
+
+	(define (pair-pred PAIR)
+		(< PAIR-CUT (LLOBJ 'get-count PAIR)))
+
+	; ---------------
+	(trim-matrix stars-obj
+		left-basis-pred right-basis-pred pair-pred)
+)
