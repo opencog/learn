@@ -16007,6 +16007,43 @@ Or even simpler things: scatterplot: rank of word vs number of disjuncts
  on it
 \end_layout
 
+\begin_layout Standard
+histogram of length of disjuncts.
+\end_layout
+
+\begin_layout Subsubsection*
+Correctly trimmed similarity
+\end_layout
+
+\begin_layout Standard
+Lets redo the similarity calculations, after trimming away all disjuncts,
+ words with a support of one.
+ As illustrated in table way above, this is a *huge* trim, removing most
+ words and disjuncts.
+ So copy `
+\family typewriter
+run-1-t1234-tsup-1-1-1.rdb
+\family default
+` to `
+\family typewriter
+r6-similarity-tsup.rdb
+\family default
+` and compute MI pairs for top-ranked words.
+ Computation is a 
+\emph on
+lot
+\emph default
+ faster.
+ There are 15K words in this set ...
+ sstill too many for computing all possible pairs ...
+ still...
+\end_layout
+
+\begin_layout Standard
+TODO: redo some of the above charts, verify that there are no substantial
+ chnages, and that things look as clean or cleaner than before.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout

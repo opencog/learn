@@ -32,7 +32,7 @@
 	(lambda ()
 		(define (stosle)
 			(for-each store-atom (cog-get-atoms 'Similarity))
-			(sleep 600)
+			(sleep 900)
 			(stosle))
 		(stosle)))
 
@@ -62,6 +62,7 @@
 ; bad intercluster values were around -8 so that seems like a
 ; reasonable place to halt comparison, for now.
 (define bover (batch-similarity pcs #f "overlap" -8.0 prt-overlap))
+(define bover (batch-similarity pcs #f "overlap" -88.0 prt-overlap))
 (bover 'batch-compute 1200)
 
 ; ---------------------------------------
@@ -86,6 +87,7 @@
 	rv)
 
 (define bcond (batch-similarity pcs #f "condjacc" -8.0 prt-condjacc))
+(define bcond (batch-similarity pcs #f "condjacc" -88.0 prt-condjacc))
 (bcond 'batch-compute 1200)
 
 ; ---------------------------------------
@@ -109,6 +111,7 @@
 
 ; Want an MI of greater than zero.
 (define bami (batch-similarity pcs #f "mi" 0.0 prt-mi))
+(define bami (batch-similarity pcs #f "mi" -100.0 prt-mi))
 (bami 'batch-compute 1200)
 
 ; ---------------------------------------
@@ -129,13 +132,17 @@
 	ranked-words
 )
 
-(define diag-cnt 0
+(define ranked-words (ranked pcs))
+
+(define diag-cnt 0)
 (for-each
 	(lambda (WRD)
 		(set! diag-cnt (+ diag-cnt 1))
-		(format #t "~A " diag-cnt)
-		(bami 'compute-similarity WRD WRD))
-	(ranked pcs))
+		(if (equal? 0 (remainder diag-cnt 100)) (format #t "~A " diag-cnt))
+		(bomi 'compute-similarity WRD WRD))
+	ranked-words)
+
+(bomi 'batch-list (drop (take ranked-words 1200) 300))
 
 ; ---------------------------------------------------------------
 ; progress report
