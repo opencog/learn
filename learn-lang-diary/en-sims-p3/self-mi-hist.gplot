@@ -3,15 +3,37 @@
 #################################################
 # Used to generate the the distribution of self-MI graph.
 #
+## set term png
+## set out 'self-mi-hist.png'
+#set term postscript eps enhanced color 24
+#set out 'self-mi-hist.eps'
+#set key left bottom
+#set logscale y
+#set title "Distribution of self-MI"
+#set xlabel "Self-MI"
+#set ylabel "Probability"
+#plot "self-mi-hist.dat" using 2:($3/75431) with lines lw 2 title ""
+#
+#################################################
+# Used to generate the the distribution of self-MI graph.
+#
 # set term png
-# set out 'self-mi-hist.png'
+# set out 'self-mi-hist-tsup.png'
 set term postscript eps enhanced color 24
-set out 'self-mi-hist.eps'
-set key left bottom
+set out 'self-mi-hist-tsup.eps'
+set key left top
 set logscale y
+set yrange [0.001:1]
+set format y "10^{%L}"
 set title "Distribution of self-MI"
 set xlabel "Self-MI"
 set ylabel "Probability"
-plot "self-mi-hist.dat" using 2:($3/75431) with lines lw 2 title ""
+
+mu=2.3
+sigma=0.55
+
+plot "self-mi-hist.dat" using 2:($3/75431) with lines lw 2 title "earlier", \
+     "self-mi-hist-tsup.dat" using 2:($3/15083) with lines lw 2 title "supp trim", \
+     "self-mi-hist.dat" using 2:(exp(-(log($2)-mu)**2/(2*sigma**2))/($2 * sigma * sqrt(2*3.14159))) with lines lw 2 title "N(2.3,0.55)", \
 
 #################################################

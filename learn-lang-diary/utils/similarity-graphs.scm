@@ -188,7 +188,8 @@
 		0 34))
 
 (define (prt-self-mi-hist)
-	(define csv (open "self-mi-hist.dat" (logior O_WRONLY O_CREAT)))
+	; (define csv (open "self-mi-hist.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "self-mi-hist-tsup.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv self-mi-hist csv)
 	(close csv))
 
@@ -212,19 +213,22 @@
 				(iota (length WLI))))))
 
 (define all-sims (get-simlinks wli))
-(length all-sims) ; 386380
+(length all-sims) ; 386380  ; or 384548 when retrimmed
 
 (define nbins 100)
 (define width 50)
 (define wmi (/ 2.0 (length all-sims)))
+(define wmi (/ 2.0 (length uniq-sims)))
 (define mi-dist
-	(bin-count all-sims 100
+	(bin-count uniq-sims 100 ;  all-sims 100
 		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
 		(lambda (SIM) wmi)
 		-25 25))
 
 (define (prt-mi-dist)
-	(define csv (open "mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	; (define csv (open "mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	; (define csv (open "mi-dist-tsup.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "mi-dist-uniq.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv mi-dist csv)
 	(close csv))
 
@@ -533,7 +537,8 @@
 		-25 0))
 
 (define (prt-com-dist)
-	(define csv (open "common-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	; (define csv (open "common-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "common-mi-tsup.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv com-dist csv)
 	(close csv))
 

@@ -16035,9 +16035,54 @@ r6-similarity-tsup.rdb
 lot
 \emph default
  faster.
- There are 15K words in this set ...
- sstill too many for computing all possible pairs ...
- still...
+ There are 15083 words in this set ...
+ still too many for computing all possible pairs ...
+ but far more manageable.
+ A skim of these reveals that a large fraction contain backslashes, 
+\emph on
+i.e.
+
+\emph default
+ are still polluted by bad tokenization.
+\end_layout
+
+\begin_layout Standard
+One of the 
+\begin_inset Quotes eld
+\end_inset
+
+bad charts
+\begin_inset Quotes erd
+\end_inset
+
+ above was the self-MI.
+ Words with only a single disjunct on them had a huge self-MI.
+ Upon trimming, this goes away, as shown below:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/self-mi-hist-tsup.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This time, there is a clear downward trend.
+ It can be fit with a log-normal disttribution, the formula given previously
+ above, with 
+\begin_inset Formula $\mu=2.3$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=0.55$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -16049,13 +16094,129 @@ Of the
 \begin_inset Formula $N=1200$
 \end_inset
 
- words, a total of 398431are observed.
+ words, a total of 398431 are observed.
  This is a bit more than the earlier dataset.
+ The pair distribution is the same as before, and only the high-MI excess
+ has been removed.
+ Theree data curves are shown 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+before
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+uniq
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+before
+\begin_inset Quotes erd
+\end_inset
+
+ curve is as before, and the 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+ curve is for the current dataset.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+uniq
+\begin_inset Quotes erd
+\end_inset
+
+ curve repeats the the current dataset, but with all self-MI pairs removed.
+ This makes it especially clear that the goings-on at the high MI end of
+ the curve is entirely due to the high-self-MI of some words.
 \end_layout
 
 \begin_layout Standard
-TODO: redo some of the above charts, verify that there are no substantial
- chnages, and that things look as clean or cleaner than before.
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/mi-dist-tsup.eps
+	width 49text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename en-sims-p3/common-mi-tsup.eps
+	width 49text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Common-MI graph from before is nearly identical to the one from before.
+ No comment.
+\end_layout
+
+\begin_layout Subsection*
+Expt-7 – Merging – Sept 2021
+\end_layout
+
+\begin_layout Standard
+Time to open a new chapter.
+ We are ready to merge word-pairs, with a mostly-trustworthy dataset.
+ The goal here will be to merge just one word at a time, by hand, and see
+ what happens.
+ We're doing this because of the disasterously bad July 2021 merge attempt,
+ which generated complete garbage, quite in contrast to the merges from
+ previous years.
+ 
+\end_layout
+
+\begin_layout Standard
+Part of the reason for the failure of the July merge was that the merge
+ threshold was set much too low.
+ Part of the problem is that the datasets had too much grunge in them; they
+ needed to be trimmed.
+ Part of the problem is that the default merge used a proxy for the common-MI
+ value, based on ranking.
+ Probably most of the failure can be ascribed to the first part: the merge
+ threshold was set too low.
+ 
+\end_layout
+
+\begin_layout Standard
+We've never studied the merges carefully, before.
+ Mostly, they seemed to 
+\begin_inset Quotes eld
+\end_inset
+
+just work
+\begin_inset Quotes erd
+\end_inset
+
+, and we unleashed the machinery, and let it go.
+ The first time, it worked, the second time, it failed.
+ Anyway, now that we've got a bettter dataset, its worth looking at these
+ in detail.
 \end_layout
 
 \begin_layout Section*

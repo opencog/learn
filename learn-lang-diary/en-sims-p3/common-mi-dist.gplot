@@ -3,10 +3,29 @@
 #################################################
 # Used to generate the the distribution of common-MI graph.
 #
-# set term png
-# set out 'common-mi-dist.png'
+## set term png
+## set out 'common-mi-dist.png'
+#set term postscript eps enhanced color 24
+#set out 'common-mi-dist.eps'
+#set key right top
+#set logscale y
+#set title "Distribution of Common-MI"
+#set xlabel "Common-MI"
+#set ylabel "Probability"
+#set yrange [1e-5:0.2]
+#set format y "10^{%L}"
+#sigma=2.7
+#off=-5
+#plot "common-mi-dist.dat" using 2:3 with lines lw 2 title "", \
+#     "common-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-5,2.7)"
+#
+#################################################
+# Used to generate the the distribution of common-MI graph.
+#
+#set term png
+#set out 'common-mi-tsup.png'
 set term postscript eps enhanced color 24
-set out 'common-mi-dist.eps'
+set out 'common-mi-tsup.eps'
 set key right top
 set logscale y
 set title "Distribution of Common-MI"
@@ -16,6 +35,7 @@ set yrange [1e-5:0.2]
 set format y "10^{%L}"
 sigma=2.7
 off=-5
-plot "common-mi-dist.dat" using 2:3 with lines lw 2 title "", \
+plot "common-mi-tsup.dat" using 2:3 with lines lw 2 title "now", \
+     "common-mi-dist.dat" using 2:3 with lines lw 2 title "before", \
      "common-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-5,2.7)"
 #################################################
