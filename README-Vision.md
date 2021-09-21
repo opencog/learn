@@ -325,6 +325,9 @@ Such trees would be constructed randomly, with preference given to
 simple trees, at first. Paramaters can also be chosen randomly, with
 either uniform weightings, or some other distribution.
 
+A preliminary collection of such filters to be developed at
+https://github.com/opencog/vision -- Its currently at version 0.0.0.
+
 The Opencog [MOSES](https://wiki.opencog.org/w/Meta-Optimizing_Semantic_Evolutionary_Search)
 (Meta-Optimizing Semantic Evolutionary Search) documentation spells out
 in considerable detail how a pool or "deme" of useful program trees can
@@ -338,11 +341,20 @@ trees is not new, and that we already have some existing software to
 handle this.
 
 Given a tree, and a collection of images ... pair-wise MI to be
-extracted, by counting, as usual.
+extracted, by counting, as usual. See below for more details.
 
-pair counting.
+pair counting. See the main README
 
-High dimensional sparse vectors.
+High dimensional sparse vectors. see the Main README.
+
+Examples of channel grammars that a working system should be able to
+learn automatically:
+
+* It should be able to learn the Cascade Classifier. For example:
+  https://docs.opencv.org/4.5.3/db/d28/tutorial_cascade_classifier.html
+  That is, intead of using the OpenCV cascade classifier, it should
+  be able to learn the cascde classifier algo, on it's own.
+
 
 The Competition: Neural Nets
 ----------------------------
