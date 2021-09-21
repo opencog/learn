@@ -340,13 +340,6 @@ NOT use. The point here is that the generation and management of program
 trees is not new, and that we already have some existing software to
 handle this.
 
-Given a tree, and a collection of images ... pair-wise MI to be
-extracted, by counting, as usual. See below for more details.
-
-pair counting. See the main README
-
-High dimensional sparse vectors. see the Main README.
-
 Examples of channel grammars that a working system should be able to
 learn automatically:
 
@@ -354,6 +347,35 @@ learn automatically:
   https://docs.opencv.org/4.5.3/db/d28/tutorial_cascade_classifier.html
   That is, intead of using the OpenCV cascade classifier, it should
   be able to learn the cascde classifier algo, on it's own.
+
+
+The Learning Pipeline
+---------------------
+The learning pipeline for images, as I currently envision it, would work
+like so:
+
+Create `N=50` to `N=500` random filter sequences. Given a single image,
+each filter sequence produces a single-bit `t/f` output. Given one image
+and `N` filters, there are `N(N-1)/2` result pairs. If both ends of the
+pair are `t`, then the count is incremented for that pair; otherwise
+not.
+
+Given `M` input images, apply the above to each of the images. The
+result is a collection of pairs, with varying pair-counts. (Up to a
+maximum of `M`. The bigger the `M`, the better is the general rule).
+Given this raw info on pairs, the generic learning pipeline kicks in,
+and does the rest.  The generic pipeline computes the mutual
+information of the pairs, it extracts disjuncts, it merges disjuncts
+into classes, and ... whatever will come next.
+
+There are two aspects that are different with the image pipeline, as
+compared to the language pipeline. One is that some of these random
+filters may be generating useless noise. These are presumably those
+with the lowest marginal MI. They need to be discarded, and replaced,
+so that we build up a good collection of "useful" or "meaningful"
+filters. The other is that the filters with the highest MI with
+each-other might in fact be nearly identical, and so we only need one
+of these, not both. One of the two needs to be discarded.
 
 
 The Competition: Neural Nets
