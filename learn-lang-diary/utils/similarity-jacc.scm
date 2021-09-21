@@ -142,7 +142,12 @@
 		(bomi 'compute-similarity WRD WRD))
 	ranked-words)
 
-(bomi 'batch-list (drop (take ranked-words 1200) 300))
+(bomi 'batch-list (drop (take ranked-words 900) 300))
+(bami 'batch-list (drop (take ranked-words 1200) 900))
+(bomi 'batch-list (drop (take ranked-words 900) 300))
+(bami 'batch-compute 1200)
+(bomi 'batch-list (drop (take ranked-words 1200) 200))
+(bumi 'batch-list (drop (take ranked-words 1200) 100))
 
 ; ---------------------------------------------------------------
 ; progress report
