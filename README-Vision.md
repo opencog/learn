@@ -30,7 +30,7 @@ filter set for every interesting case. So, instead: unleash automated
 learning.  That is, represent the boxes and wires as Nodes and Links
 in the AtomSpace (the audio stream itself would be an AudioStreamValue)
 and let some automated algo rearrange the wiring diagram until it finds
-a good one.
+a good one.  [(See README-Audio.)](./README-Audio.md).
 
 But what is a "good wiring diagram"? Well, the current very
 fashionable approach is to develop a curated labelled training set,
@@ -808,7 +808,7 @@ with (the short-term goals of) this project, but seem to be worth mentioning.
   catalogs three decades of research into how grammatical systems
   express themselves in a botanical setting. This is exremely powerful
   stuff: it explores, in plain and direct terms, how generative grammars,
-  specifically Lindenmeyer systems (L-systems) generate the rough,
+  specifically Lindenmayer systems (L-systems) generate the rough,
   overall structure of plants, and how they can be coupled to
   reaction-diffusion equations to obtain the fine details of shape and
   pigmentation. This captures the essance of what it is that DNA and
