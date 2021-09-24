@@ -561,6 +561,10 @@ commonalities can be easily identified. Ideas include:
   fences. This is considerably more difficult than the flag problem, and
   should not be tackled until the proof-of-concept works for flags.
 
+* Geometric objects in simple spatial arrangements. A sutiable,
+  ready-to-go collection is the DeepMind
+  [Multi-Object Datasets](https://github.com/deepmind/multi_object_datasets)
+
 Basic Image Segmentation
 ------------------------
 For training to work, images need to be segmented into patches of
