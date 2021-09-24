@@ -387,11 +387,29 @@ well-debugged, highly optimized software, created by armies of salaried
 PhD's working at the big tech companies. Any results acheived here will
 look pathetic by comparison.
 
-What is being proposed here is very different. Roughly speaking, the
-neural net systems require supervised training. They don't actually
+What is being proposed here is very different. Roughly speaking, neural
+net systems employ a very shallow representational system: they attempt
+to classify each and every *pixel* in an image, assigning it to an
+object. This makes learning difficult, as most images have a huge number
+of pixels in them. The shallow representation, of x,y,rgb is also an
+impediment to learning: relationships between different pixels in the
+image are cryptically encoded in the weight matrix. Perhaps that weight
+matrix is encoding some combination of well-known image processing
+primitives, such as laplacians, blurs and edge detectors, but there is
+no way of knowing what those might be, or if they are even there.
+
+To put it bluntly: the neural net systems are pixel analysis systems.
+They are assigning probabilities to pixels; they are not examining
+prepositional relationships such as above, below, next to, inside of,
+beside, behind. They are not looking at structural co-occurances: houses
+always have doors. Automobiles always have wheels. Dogs and cats always
+have faces, bodies and legs. This prevents them from aiming at the
+ultimate spatial reasoning question: "will the piano fit through the
+door?" In effect, the pixel-driven neural net systems don't actually
 "think", they don't need to. They don't need to find relationships out
-of thin air. So I think this is something brand new that we're doing that
-no one else does.
+of thin air. By contrast, this project searches for non-pixel-based
+spatial relationships as the very first order of business.  So I think
+this is something brand new that we're doing that no one else does.
 
 Another key difference is that we are working explicitly at the
 symbolic level. By having a grammar, we have an explicit part-whole
@@ -555,6 +573,9 @@ commonalities can be easily identified. Ideas include:
   distinguish the supporting poles, if present. If most of the pictures
   feature blue sky as background, then distinguishing sky from the light
   might be problematic.
+
+* The GTSRB (German Traffic Sign Recognition Benchmark). Images are in
+  43 classes. A total of 52,839 images.
 
 * Different views of stereotypical suburban homes. The goal here is to
   find doors, windows, roofs.  Bonus points: walkways, lawns, shrubbery,
@@ -727,3 +748,19 @@ Bibliography
   Max Jaderberg, Karen Simonyan, Andrew Zisserman, _et al._ "Spatial
   Transformer Networks."  Advances in Neural Information Processing
   Systems, pp. 2017–2025, (2015)
+
+  Specific to the problem of scaling and translation in neural net
+  models. Suggests how to deal with that, by including an explicit
+  2D affine transformation during neural net training.
+
+* IODINE Iterative Object Decomposition Inference Network
+
+  Greff _et al._ ["Multi-Object Representation Learning with Iterative
+  Variational Inference"](http://proceedings.mlr.press/v97/greff19a.html)
+  Proceedings of Machine Learning Research PMLR 97 pp 2424-2433 (2019).
+  JMLR
+
+  Simultaneously segments an image into multiple components and
+  identifies the components as objects. Uses VAE (variational
+  autoencoders) to identify individual objects.  Neural net, pixel
+  based.
