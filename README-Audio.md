@@ -21,5 +21,6 @@ Bibliography
   and Neural Representations for Categorical Emotion Recognition from
   Speech"](https://www.isca-speech.org/archive/pdfs/interspeech_2021/keesing21_interspeech.pdf)
   INTERSPEECH 2021 30 August – 3 September, 2021, Brno, Czechia
+  pp 3415-3419 http://dx.doi.org/10.21437/Interspeech.2021-2217
 
   Provides a useful, short review of speech processing.

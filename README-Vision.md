@@ -716,7 +716,9 @@ scale-independent, multi-scale image analysis.
 
 Bibliography
 ============
-* Burgess _et al._ [MONet: Unsupervised Scene Decomposition and
+* **MONet Algorithm**
+
+  Burgess _et al._ [MONet: Unsupervised Scene Decomposition and
   Representation](https://arxiv.org/abs/1901.11390) arXiv:1901.11390
   (2019)
 
@@ -746,7 +748,7 @@ Bibliography
   the relevant mask sets. That said, some simple blurring and flood-fill
   is probably sufficient for this project.
 
-* Attend-Infer-Repeat (AIR) algorithm
+* **Attend-Infer-Repeat (AIR) algorithm**
 
   Eslami _et al._ ["Neural scene representation and
   rendering"](http://science.sciencemag.org/content/360/6394/1204)
@@ -757,7 +759,7 @@ Bibliography
   "where" is provided by a spatial transformer module, which scales
   and shifts the "what" into the correct "where" location.
 
-* Spatial Transformer Networks
+* **Spatial Transformer Networks**
 
   Max Jaderberg, Karen Simonyan, Andrew Zisserman, _et al._ "Spatial
   Transformer Networks."  Advances in Neural Information Processing
@@ -767,7 +769,7 @@ Bibliography
   models. Suggests how to deal with that, by including an explicit
   2D affine transformation during neural net training.
 
-* IODINE Iterative Object Decomposition Inference Network
+* **IODINE -- Iterative Object Decomposition Inference Network**
 
   Greff _et al._ ["Multi-Object Representation Learning with Iterative
   Variational Inference"](http://proceedings.mlr.press/v97/greff19a.html)
@@ -778,3 +780,39 @@ Bibliography
   identifies the components as objects. Uses VAE (variational
   autoencoders) to identify individual objects.  Neural net, pixel
   based.
+
+
+Honorable Mention
+=================
+Things that are shapes, and are grammars. Really hasve very little to do
+with (the short-term goals of) this project, but seem to be worth mentioning.
+
+* **Shape Grammar**
+
+  Mohamed Sobhy M. Ibrahim, ["Creative approach to design formulation
+  Shape grammars as a tool in architecture design analysis and
+  synthesis"](https://www.researchgate.net/publication/284899276_Creative_approach_to_design_formulation_Shape_grammars_as_a_tool_in_architecture_design_analysis_and_synthesis)
+  Master's Thesis, Architecture, 2005, Beirut Arab University
+
+  The idea of architectural grammars is an old one, and architects have
+  been buzzing about this since at least the 1970's, if not earlier.
+  This Masters Thesis provides a good review of "Shape Grammars":
+  literally grammars, in the formal, and in the linguistic sense, that
+  are about shapes: two-dimensional and three dimensional. The grammars
+  are generally generative, and describe everything from Chinese lattice
+  designs (Stiny, 1977) to floor plans of villas (Stiny, 1978).
+
+* **Algorithmic Botany**, Przemyslaw Prusinkiewicz
+
+  The [Algorithmic Botany](http://algorithmicbotany.org/papers/) website
+  catalogs three decades of research into how grammatical systems
+  express themselves in a botanical setting. This is exremely powerful
+  stuff: it explores, in plain and direct terms, how generative grammars,
+  specifically Lindenmeyer systems (L-systems) generate the rough,
+  overall structure of plants, and how they can be coupled to
+  reaction-diffusion equations to obtain the fine details of shape and
+  pigmentation. This captures the essance of what it is that DNA and
+  proteins do in living systems, while effectively avoiding the
+  complexities and mystifications of biochemistry.  If you want to
+  understand what DNA is doing, from the systems standpoint, this is
+  the way to do it.
