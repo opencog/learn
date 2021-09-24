@@ -348,6 +348,19 @@ learn automatically:
   That is, intead of using the OpenCV cascade classifier, it should
   be able to learn the cascde classifier algo, on it's own.
 
+Related ideas:
+
+* In neural-network based systems, one talks of "attention networks" and
+  "attention masks". See, for example, the MONet paper, cited below.
+  These masks are a set of 2D spatial filters identifying a region of
+  pixels, and thier color. The goal of training is to learn a collection
+  of these masks. Each object in an image corresponds to a mask (the
+  mask picks out the pixels that belong to the object).
+
+  The goal in this project is somewhat similar, in that many of the
+  filter trees that we hope to learn would probably end up resembling
+  attention masks. If this is the case, then it might be reasonable to
+  use an algo such as MONet to find (some of) the relevant mask sets.
 
 The Learning Pipeline
 ---------------------
@@ -678,3 +691,9 @@ talks about filters, and, for the most part, these filters are
 envisioned to be pixel-size independent. That means that spatial filters
 will be based on wavelet filters or something similar, allowing for
 scale-independent, multi-scale image analysis.
+
+Bibliography
+============
+* Burgess _et al._ [MONet: Unsupervised Scene Decomposition and
+  Representation](https://arxiv.org/abs/1901.11390) arXiv:1901.11390
+  (2019) -- Trains a variational autoencoder (VAE)
