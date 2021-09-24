@@ -348,19 +348,6 @@ learn automatically:
   That is, intead of using the OpenCV cascade classifier, it should
   be able to learn the cascde classifier algo, on it's own.
 
-Related ideas:
-
-* In neural-network based systems, one talks of "attention networks" and
-  "attention masks". See, for example, the MONet paper, cited below.
-  These masks are a set of 2D spatial filters identifying a region of
-  pixels, and thier color. The goal of training is to learn a collection
-  of these masks. Each object in an image corresponds to a mask (the
-  mask picks out the pixels that belong to the object).
-
-  The goal in this project is somewhat similar, in that many of the
-  filter trees that we hope to learn would probably end up resembling
-  attention masks. If this is the case, then it might be reasonable to
-  use an algo such as MONet to find (some of) the relevant mask sets.
 
 The Learning Pipeline
 ---------------------
@@ -696,4 +683,47 @@ Bibliography
 ============
 * Burgess _et al._ [MONet: Unsupervised Scene Decomposition and
   Representation](https://arxiv.org/abs/1901.11390) arXiv:1901.11390
-  (2019) -- Trains a variational autoencoder (VAE)
+  (2019)
+
+  The MONet algorithm describes images in terms of "attention networks"
+  and "attention masks".  Roughly speaking, these masks are a set of 2D
+  spatial filters identifying a region of pixels, and thier color. The
+  goal of training is to learn a collection of these masks. Each object
+  in an image corresponds to a mask (the mask picks out the pixels that
+  belong to the object). More precisely, each pixel is assigned a
+  probability of belonging to a given object.
+
+  This project is differrent: there is no desire to classify every pixel;
+  for the most part this is irrelevant. To obtain a grammar, one need
+  only assign the relative orientations and sizes and colors of objects,
+  and not thier absolute locations in the image. Furthermore, the
+  grammar leverages abstract properties, such as texture and shininess,
+  not just hue and saturation.
+
+  The MONet algo appears to attempt to segment single images (snapshots).
+  This project is also incapable of learning from only one image: it
+  needs to train on a broad set of images of the same thing, in order to
+  recognize the "sameness" of it, irrespective of lighting and background.
+
+  That said, it is quite possible that some or many of the learned
+  filter trees will resemble attention masks.  If this is the case, then
+  it might be reasonable to use an algo such as MONet to find (some of)
+  the relevant mask sets. That said, some simple blurring and flood-fill
+  is probably sufficient for this project.
+
+* Attend-Infer-Repeat (AIR) algorithm
+
+  Eslami _et al._ ["Neural scene representation and
+  rendering"](http://science.sciencemag.org/content/360/6394/1204)
+  Science, **360**(6394) pp 1204–1210 (2018).
+
+  The AIR algo factors an image into "what" and a "where" components.
+  The "what" is described by a variational autoencoder (VAE). The
+  "where" is provided by a spatial transformer module, which scales
+  and shifts the "what" into the correct "where" location.
+
+* Spatial Transformer Networks
+
+  Max Jaderberg, Karen Simonyan, Andrew Zisserman, _et al._ "Spatial
+  Transformer Networks."  Advances in Neural Information Processing
+  Systems, pp. 2017–2025, (2015)
