@@ -551,6 +551,12 @@ Development Plan
 This section describes the initial steps that can be taken, to validate
 the above ideas.
 
+Status
+------
+**Version 0.0.1** - The core ideas have been sketched out (this README).
+Almost no vision-specific code has been written; see however the
+[opencog/vision](https://github.com/opencog/vision) git repo.
+
 Corpora
 -------
 Collect a suitable corpus of images. For proof-of-concept, the images
