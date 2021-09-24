@@ -585,6 +585,14 @@ commonalities can be easily identified. Ideas include:
 * Geometric objects in simple spatial arrangements. A sutiable,
   ready-to-go collection is the DeepMind
   [Multi-Object Datasets](https://github.com/deepmind/multi_object_datasets)
+  Of interest is the "Objects Room". This consists of a simple 3D room,
+  with six different geometricly-shaped objects placed in random
+  locations. Since they are in random locations, there is no particular
+  structure to the image, other than the be background is "punctured" by
+  the objects. Since the objects have distinct shapes, the grammar
+  will presumably learns to identify the shape of the object. Of course,
+  the collection of image processing primitives will need to include
+  filters that are senstitive to shapes.
 
 Basic Image Segmentation
 ------------------------
