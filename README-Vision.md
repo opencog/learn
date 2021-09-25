@@ -375,7 +375,10 @@ with the lowest marginal MI. They need to be discarded, and replaced,
 so that we build up a good collection of "useful" or "meaningful"
 filters. The other is that the filters with the highest MI with
 each-other might in fact be nearly identical, and so we only need one
-of these, not both. One of the two needs to be discarded.
+of these, not both. One of the two needs to be discarded. Perhaps the
+theory of matroids will be useful, here: We do not need to find a set of
+vector basis elements, we just need to find something that is
+"independent enough".
 
 
 The Competition: Neural Nets

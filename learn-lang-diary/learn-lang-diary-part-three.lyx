@@ -96,7 +96,7 @@ Language Learning Diary - Part Three
 \end_layout
 
 \begin_layout Date
-Sept 2021-present
+Sept 2021
 \end_layout
 
 \begin_layout Author
@@ -118,8 +118,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Part three of the diary on the language-learning effort continues work on
+Part Three of the diary on the language-learning effort continues work on
  the English dataset.
+ This part is concluded, the next part is Part Four.
 \end_layout
 
 \begin_layout Section*
@@ -132,7 +133,8 @@ A short summary of what is found here:
 
 \begin_layout Itemize
 Trimming the word-disjunct dataset to remove words or disjuncts or word-disjunct
- pairs observed only once is a good thing, and reduces dataset size by 90%.
+ pairs observed only once is a good thing, and reduces dataset size by 90%
+ or more.
  Trimming more than this is a bad thing.
 \end_layout
 
@@ -141,14 +143,96 @@ Part of the above result may be due to a bug in the word-segmentation code:
  leading/trailing double-quotes are not split from words.
  The processing code then tries to escape these with backslashes, and repeated
  processing creates a shower of backslashes.
+ This appears to pointless inflate the number of words in a dataset.
  This bug needs to be fixed.
 \end_layout
 
 \begin_layout Itemize
-It is not known if trimmming word-pair files to remove low-count word-pairs
+It is not known if trimming word-pair files to remove low-count word-pairs
  is a good idea or not.
  This will require new (and time-consuming) experiments.
  Some trimming is surely good, but how much?
+\end_layout
+
+\begin_layout Itemize
+The mutual information between word-vectors is given by a Gaussian distribution.
+ This was seen before, but is confirmed again here.
+ Recall that a word-vector consists of a word, and the vector basis elements
+ are disjuncts.
+ These word-vectors are reminiscent of SkipGrams, but are constructed differentl
+y.
+ I don't know of any theoretical work that could explain this experimental
+ result (or any kind of result, for that matter).
+\end_layout
+
+\begin_layout Itemize
+The self-MI of a word-vector against itself appears to be given by a weak
+ log-normal distribution.
+ It is almost but not quite uniformly distributed, ranging from about 2
+ and gradually tapering to 30 for the dataset explored here.
+ An easy theoretical argument can be made that the self-MI must be positive,
+ but that's all.
+ I don't know of any theoretical work that could explain this experimental
+ result.
+\end_layout
+
+\begin_layout Itemize
+Other ways of comparing word vectors, including basic Jaccard (vector overlap)
+ distance, and a conditional-Jaccard distance do correlate in general with
+ the MI.
+ An exploration of these alternate ways of exploring word similarities was
+ driven by work reported in the Diary part Two.
+ Here, nothing unusual stands out.
+ The distribution of these appears to be given by a log-normal curve, or
+ possible a log logistic curve, but the data is not refined enough to tell.
+ There is no theoretical basis to expect any of this.
+ 
+\end_layout
+
+\begin_layout Itemize
+Examining the top-100 most similar word pairs by hand (by gut feel) suggests
+ that all but one or two word-pair recommendations are excellent.
+ This visual exam also seems to suggest that maybe MI provides better recommenda
+tions than the other metrics (contradicting earlier results).
+ Certainly, computing MI is much faster.
+\end_layout
+
+\begin_layout Itemize
+Both of the Jaccard measures have a self-distance score of exactly zero.
+ By contrast, the self-MI is not zero, and it suggests that there it can
+ be used as a natural scale to help determine when words should be classified
+ together.
+ That is, a low self-MI word is similar to everything, and maybe should
+ not be merged with high self-MI words.
+ Or perhaps it is an indicator of a word with many distinct meanings.
+ I don't understand this yet, and it might be a fruitful topic to examine.
+\end_layout
+
+\begin_layout Itemize
+In order to make a determination to merge a pair of words, one must look
+ at both their similarity, and their frequency of occurrence.
+ One wishes to merge words that are similar and are also frequently-occurring.
+ To this end, the text proposes that the similarity should be combined with
+ the average log-frequency (log-probability) of the two words.
+ Combining this idea with the formula for MI gives the explicit formula
+\begin_inset Formula 
+\[
+\mbox{common}MI\left(w,u\right)=\log_{2}\frac{p\left(w,u\right)}{\sqrt{p\left(w\right)p\left(u\right)}}
+\]
+
+\end_inset
+
+The square-root arises from the factor of 1/2 that arises from averaging
+ two things together.
+ The square-root makes this formula look unusual, but it seems to provide
+ an excellent way of ranking word-pairs for merging.
+ The distribution again follows the normal Gaussian Bell curve.
+ As mentioned, the top 100 suggestions for merge candidates look very healthy.
+ 
+\end_layout
+
+\begin_layout Standard
+The diary Part Four will examine a merge in gruesome detail.
 \end_layout
 
 \begin_layout Section*
@@ -183,7 +267,7 @@ How are disjuncts shared? Create a graph showing the rank vs.
 \end_layout
 
 \begin_layout Itemize
-Scatterplots:
+Scatterplots: ...
 \end_layout
 
 \begin_layout Subsection*
@@ -221,7 +305,7 @@ mild
  It removes much more than one might naively guess from a Zipfian distribution.
  The underlying reason for this is confusing: it turns out that a bug in
  tokenization may be ruining the distribution.
- The tokenizer does not split double-quotes from the begining/ending of
+ The tokenizer does not split double-quotes from the beginning/ending of
  words, and later stages add backslashes to escape the quotes.
  A waterfall of quotes results, polluting the dataset with oodles of backslashes.
  These are observed infrequently, and how they interact with the quality
@@ -229,7 +313,7 @@ mild
 \end_layout
 
 \begin_layout Standard
-Coupled with the eariler observation that even mild trimming damages the
+Coupled with the earlier observation that even mild trimming damages the
  data (as seen in expt-3, at the end of diary Part Two), this suggests that
  trimming should be kept to a minimum.
  By the conclusion, it emerges that perhaps the ideal trim is one that removes
@@ -246,7 +330,7 @@ Trimming
 
  means removing all words, disjuncts and word–disjunct pairs with observation
  counts below some given thresholds.
- Tthe thresholds for these three counts can be set independently.
+ The thresholds for these three counts can be set independently.
  These are the three numbers below: e.g.
  10-4-2 means 
 \begin_inset Quotes eld
@@ -319,7 +403,7 @@ num words
 \begin_inset Text
 
 \begin_layout Plain Layout
-num disjunts
+num disjuncts
 \end_layout
 
 \end_inset
@@ -957,7 +1041,7 @@ num words
 \begin_inset Text
 
 \begin_layout Plain Layout
-num disjunts
+num disjuncts
 \end_layout
 
 \end_inset
@@ -1559,7 +1643,7 @@ The `
 \noun off
 \color none
 xxx-trim-1-1-1-pass-1` version is not a file, but is rather the number of
- WordNodes, ConnectorSeqs and Sections in the Atomspace, after removing
+ WordNodes, ConnectorSeqs and Sections in the AtomSpace, after removing
  those with only one observation count.
  This is not the same as the matrix dimensions, because the matrix is built
  by finding all Sections, and then taking the Words and ConnectorSeqs in
@@ -1638,7 +1722,7 @@ connector-sets-revised.pdf
 ` page 9ff.
  For words, the graph on page 9, left hand side shows that the count drops
  precipitously as a function of the rank.
- The logarithmic scale is decieving; it looks like more than half of words
+ The logarithmic scale is deceiving; it looks like more than half of words
  have a count of only 1.
  The right-hand graph suggests the same for disjuncts.
  Likewise for the graphs on page 11 and 12.
@@ -1691,7 +1775,7 @@ num words
 \begin_inset Text
 
 \begin_layout Plain Layout
-num disjunts
+num disjuncts
 \end_layout
 
 \end_inset
@@ -2153,7 +2237,7 @@ nwords
 \begin_inset Text
 
 \begin_layout Plain Layout
-ndisjunts
+ndisjuncts
 \end_layout
 
 \end_inset
@@ -2887,7 +2971,7 @@ Support Trim
 \end_layout
 
 \begin_layout Standard
-The single-count trim above was the reight idea, but it missed a spot: we
+The single-count trim above was the right idea, but it missed a spot: we
  also need to trim away all words/disjuncts that have a support of just
  one! So trimming is repeated, and summarized below.
  Trim steps alternate between support-trim and count trim.
@@ -2935,7 +3019,7 @@ nwords
 \begin_inset Text
 
 \begin_layout Plain Layout
-ndisjunts
+ndisjuncts
 \end_layout
 
 \end_inset
@@ -3561,7 +3645,7 @@ nwords
 \begin_inset Text
 
 \begin_layout Plain Layout
-ndisjunts
+ndisjuncts
 \end_layout
 
 \end_inset
@@ -5596,9 +5680,9 @@ experiments/run-6
 learn-lang-diary/utils/similarity-jacc.scm
 \family default
 `.
- Three similarity measures are computed: convetional MI, as before, overlap,
+ Three similarity measures are computed: conventional MI, as before, overlap,
  and conditional-Jaccard.
- See diary Part Two for the defintions of these.
+ See diary Part Two for the definitions of these.
 \end_layout
 
 \begin_layout Standard
@@ -5649,9 +5733,9 @@ utils/similarity-graphs.scm
 \end_layout
 
 \begin_layout Standard
-The above graphs the classic Zipf distribution graph, although the distributioni
-s not quite classic: it seems to have two regimes: the first 80 or 90 words
- follow a 
+The above graphs the classic Zipf distribution graph, although the distribution
+ is not quite classic: it seems to have two regimes: the first 80 or 90
+ words follow a 
 \begin_inset Formula $rank^{-1.1}$
 \end_inset
 
@@ -5675,7 +5759,7 @@ Lets look at the structure of Self-MI.
 \end_layout
 
 \begin_layout Standard
-Here is a scdatterplot of the rank vs self-MI.
+Here is a scatterplot of the rank vs self-MI.
 \end_layout
 
 \begin_layout Standard
@@ -6991,8 +7075,8 @@ Comparing the tables, we see that, for the same rank (same observation count),
 The below is a scatterplot of MI vs.
  the ratio of support to observation count.
  There is no obvious correlation, other than a cap on the highest possible
- MI for a fixed ratio, and some sampling underobservations when the support-coun
-t ratio approaches 1.0.
+ MI for a fixed ratio, and some sampling under-observations when the support-cou
+nt ratio approaches 1.0.
 \end_layout
 
 \begin_layout Standard
@@ -7042,7 +7126,7 @@ CONCLUSION (without the period at the end)
 
 \end_deeper
 \begin_layout Itemize
-The wored Scribner appears by itself, and as 
+The word Scribner appears by itself, and as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -7083,11 +7167,11 @@ destruction
 \end_inset
 
  are quite large: 4 or 5 or 6 connectors.
- Many of the connecctors are prepositions.
+ Many of the connectors are prepositions.
  Almost all connector sequences have a determiner in them.
  Almost all sections (disjuncts) have a count of two.
  We conclude: no particular grammatical structure seems to be emerging.
- This word is not mergable with others.
+ This word is not mergeable with others.
 \end_layout
 
 \begin_layout Itemize
@@ -7247,7 +7331,7 @@ appears in.
 
 \begin_layout Standard
 This seems to suggest that the commonly used connector sequences, those
- having a large support, have a small number of conectors in them.
+ having a large support, have a small number of connectors in them.
  The long connector sequences appear to have a small support.
  Again, this points at trimming away connector sequences that have a small
  support.
@@ -7276,7 +7360,7 @@ The above shows the probability distribution of the self-MI of the 75K words
  counts.
  The high MI is almost surely due to the untrimmed connector-seq support.
  Ignoring these shows that the self-MI distribution is otherwise rather
- noisey and quasi-uniform.
+ noisy and quasi-uniform.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -7292,7 +7376,7 @@ Lets take a quick look at the distributions of the MI, log overlap and log
 \end_inset
 
  such pairs.
- In parctice, 386380 pairs are observed; the remaining pairs have no overlap!
+ In practice, 386380 pairs are observed; the remaining pairs have no overlap!
  (and thus a 
 \begin_inset Formula $-\infty$
 \end_inset
@@ -7317,7 +7401,7 @@ Here's is the MI distribution:
 \end_layout
 
 \begin_layout Standard
-The distribution appears to be an alomst perfect Gaussian, centered at 
+The distribution appears to be an almost perfect Gaussian, centered at 
 \begin_inset Formula $\mu=-0.5$
 \end_inset
 
@@ -7335,7 +7419,7 @@ G\left(x;\mu,\sigma\right)=\frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(x-\
 \end_inset
 
 The two parameters are an eyeballed fit.
- The fact that the MI distributions follow a gaussian has been noted before.
+ The fact that the MI distributions follow a Gaussian has been noted before.
 \end_layout
 
 \begin_layout Standard
@@ -7394,7 +7478,7 @@ with
 \end_inset
 
 .
- Both curves seem to provide reaasonable descriptions of the data, and I
+ Both curves seem to provide reasonable descriptions of the data, and I
  know of no theoretical reason to prefer one or the other.
 \end_layout
 
@@ -7503,8 +7587,8 @@ There are some words whose self-MI is lower than the MI to another word!
 
 \begin_layout Standard
 Why this matters: There are several merge strategies: one is to merge a
- pair of words, whenever thier MI is above some threshold.
- A second merge strategy is to compair the pair MI to the two self-MI's,
+ pair of words, whenever their MI is above some threshold.
+ A second merge strategy is to compare the pair MI to the two self-MI's,
  and merge whenever it is close enough.
  That is, we should compare the MI of the word-pair to the average of the
  two self-MI's, and accept for merge if that is high enough.
@@ -10245,7 +10329,7 @@ Let's fill in these tables with the difference, the delta:
 \end_layout
 
 \begin_layout Standard
-Why the average, instead of the geometric mean? Well, MI has a logarthm
+Why the average, instead of the geometric mean? Well, MI has a logarithm
  in it, and it gives the geometric mean after consolidation:
 \begin_inset Formula 
 \begin{align*}
@@ -10260,7 +10344,7 @@ Why the average, instead of the geometric mean? Well, MI has a logarthm
 Well, that's ..
  interesting.
  So, fill it in.
- BTW, caution with the defintions of the above.
+ BTW, caution with the definitions of the above.
  As before, the joint probabilities are sums over the normalized word-disjunct
  probabilities:
 \begin_inset Formula 
@@ -11332,7 +11416,7 @@ Here's the distribution of Delta-MI:
 \begin_layout Standard
 Compared to the distribution of the MI, given further up, this has exactly
  the same width, just a different offset.
- The distribution is smoother: the litte prong is missing.
+ The distribution is smoother: the little prong is missing.
  There are no 
 \begin_inset Formula $\Delta$
 \end_inset
@@ -11925,13 +12009,13 @@ Looks pretty healthy, and there's some commonality.
 \begin_layout Standard
 Both look approximately normal.
  Common-MI is curiously flat-topped.
- Marg-MI retains a bit of the horm that the MI distribution has.
- Prehaps that horn is what makes Common-MI flat-topped.
+ Marg-MI retains a bit of the horn that the MI distribution has.
+ Perhaps that horn is what makes Common-MI flat-topped.
 \end_layout
 
 \begin_layout Standard
 Anyway, either of these seems like a good way to chose which words to rank.
- Marg-MI might be slightly preferable, as it seems to give slightly hihger
+ Marg-MI might be slightly preferable, as it seems to give slightly higher
  priority to frequent words (?).
 \end_layout
 
@@ -15965,7 +16049,7 @@ replied
 \end_layout
 
 \begin_layout Standard
-Ther's one screwy item in this list: United-several at position 46.
+There's one screwy item in this list: United-several at position 46.
  It also notably elevates common Project Gutenberg markup: lower-case roman,
  FIG-Fig, Chapter-Footnote but otherwise looks pretty healthy.
 \end_layout
@@ -15973,7 +16057,7 @@ Ther's one screwy item in this list: United-several at position 46.
 \begin_layout Standard
 Looking at the top-100 marg-overlap entries, these look pretty healthy,
  except for five more questionable comma-preposition suggestions! The top-100
- cond-jacc looks reasonable, too, except for some oddball dterminer-pronoun
+ cond-jacc looks reasonable, too, except for some oddball determiner-pronoun
  similarities.
 \end_layout
 
@@ -16106,7 +16190,7 @@ bad charts
 
 \begin_layout Standard
 This time, there is a clear downward trend.
- It can be fit with a log-normal disttribution, the formula given previously
+ It can be fit with a log-normal distribution, the formula given previously
  above, with 
 \begin_inset Formula $\mu=2.3$
 \end_inset
@@ -16116,6 +16200,16 @@ This time, there is a clear downward trend.
 \end_inset
 
 .
+ Recall that the 
+\begin_inset Quotes eld
+\end_inset
+
+N
+\begin_inset Quotes erd
+\end_inset
+
+ label in the graph is a shorthand for the log-normal distribution, the
+ formula for which is given previously.
 \end_layout
 
 \begin_layout Standard
@@ -16131,7 +16225,7 @@ Of the
  This is a bit more than the earlier dataset.
  The pair distribution is the same as before, and only the high-MI excess
  has been removed.
- Theree data curves are shown 
+ Three data curves are shown: 
 \begin_inset Quotes eld
 \end_inset
 
@@ -16218,7 +16312,7 @@ Time to open a new chapter.
  We are ready to merge word-pairs, with a mostly-trustworthy dataset.
  The goal here will be to merge just one word at a time, by hand, and see
  what happens.
- We're doing this because of the disasterously bad July 2021 merge attempt,
+ We're doing this because of the disastrously bad July 2021 merge attempt,
  which generated complete garbage, quite in contrast to the merges from
  previous years.
  
@@ -16248,8 +16342,12 @@ just work
 
 , and we unleashed the machinery, and let it go.
  The first time, it worked, the second time, it failed.
- Anyway, now that we've got a bettter dataset, its worth looking at these
+ Anyway, now that we've got a better dataset, its worth looking at these
  in detail.
+\end_layout
+
+\begin_layout Standard
+This work resumes in the Diary Part Four.
 \end_layout
 
 \begin_layout Section*
@@ -16258,6 +16356,7 @@ The End
 
 \begin_layout Standard
 This is the end of the diary.
+ The next part is Part Four.
 \end_layout
 
 \end_body
