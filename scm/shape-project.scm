@@ -294,13 +294,15 @@
 	; Also scan all of it's crosses. Crosses aren't normally stored in
 	; the DB, so we just extract them.
 	(define (del-sect SEC)
-		(for-each (lambda (xst)
-			(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
-				(let ((shp (gdr xst)))
-					(cog-extract! xst)
-					(cog-extract! shp)
-					(set! nx (+ 1 nx)))))
-			(LLOBJ 'get-cross-sections SEC))
+		; Cleanup cross sections, if they are provided.
+		(when (LLOBJ 'provides 'get-cross-sections)
+			(for-each (lambda (xst)
+				(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+					(let ((shp (gdr xst)))
+						(cog-extract! xst)
+						(cog-extract! shp)
+						(set! nx (+ 1 nx)))))
+				(LLOBJ 'get-cross-sections SEC)))
 		(when (is-zero? (LLOBJ 'get-count SEC))
 			(cog-delete! SEC)
 			; XXX TODO delete the disjunct too, if and only if
