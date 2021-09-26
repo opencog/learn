@@ -647,3 +647,46 @@
 	(close csv))
 
 ; ---------------------------------------
+
+; Number of uniq words with given disjunct length
+
+(define sets (map (lambda (N) (make-atom-set)) (iota 20)))
+
+(define (get-set N) (list-ref sets N))
+
+; Assign each word to a set of words having that particular length
+(for-each
+	(lambda (DJ)
+		(define aset (get-set (cog-arity DJ)))
+		(for-each
+			(lambda (WORD) (aset WORD))  ; add word to set
+			(pcs 'left-duals DJ)))     ; words on that disjunct
+	(pcs 'right-basis))  ; all disjuncts
+
+; how many words are there, with that length?
+(define sizes
+	(map
+		(lambda (CNT) (length ((get-set CNT) #f)))
+		(iota 19)))
+
+; Total number of observations.
+; Obviously, any given word may have djs of several different lengths.
+(define total-wrds (fold + 1e-30 sizes))
+
+(define djlen-word-dist
+	(bin-count
+		(iota 9 1)
+		9  ; max expected length of 9
+		(lambda (N) N) ; length of that disjunct
+		(lambda (N) (/ (list-ref sizes N) total-wrds))
+		0.5 9.5))
+
+(define (prt-djlen-word-dist)
+	(define csv (open "djlen-word-dist.dat" (logior O_WRONLY O_CREAT)))
+	(format csv "#\n# Count of unique number of words with disjuncts with given length\n")
+	(format csv "# Divived by total of ~A\n" total-wrds)
+	(format csv "#\n# idx\tlen\tword-count\n")
+	(print-bincounts-tsv djlen-word-dist csv)
+	(close csv))
+
+; ---------------------------------------
