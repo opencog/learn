@@ -689,4 +689,38 @@
 	(print-bincounts-tsv djlen-word-dist csv)
 	(close csv))
 
+(define twos ((get-set 2) #f))
+
+(define not-twos (atoms-subtract (pcs 'left-basis) twos))
+
+(define (rank-wordlist LLOBJ WORD-LIST)
+	(define sup (add-support-api LLOBJ))
+
+	; nobs == number of observations
+	(define (nobs WRD) (sup 'right-count WRD))
+	(define (nsup WRD) (sup 'right-support WRD))
+
+	(sort WORD-LIST
+		(lambda (ATOM-A ATOM-B)
+			(define na (nobs ATOM-A))
+			(define nb (nobs ATOM-B))
+			(if (equal? na nb)
+				(> (nsup ATOM-A) (nsup ATOM-B))
+				(> na nb))))
+)
+
+(define rnot-twos (rank-wordlist pcs not-twos))
+
+(define (rank WORD)
+	(+ 1 (length (take-while (lambda (WR) (not (equal? WR WORD))) ranked-words))))
+
+(for-each
+	(lambda (WRD)
+		(format #t "~A   count=~D rank= ~D\n" (cog-name WRD)
+			(sup 'right-count WRD) (rank WRD)))
+	(take rnot-twos 20))
+
+
+
+
 ; ---------------------------------------
