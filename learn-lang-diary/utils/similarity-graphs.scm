@@ -582,5 +582,27 @@
 (prt-csv pairs-marg-ov-sort 100)
 (prt-csv pairs-marg-cj-sort 100)
 
+; ---------------------------------------
+; Graphs for diary part-4 "miscellanous" section
+
+(chdir "/home/ubuntu/experiments/run-7/data")
+(pcs 'right-basis-size)
+
+(define djl (/ 1.0 (pcs 'right-basis-size)))
+(define djlen-dist
+	(bin-count
+		(pcs 'right-basis) ; all disjuncts
+		9  ; max expected length of 10
+		(lambda (DJ) (cog-arity DJ)) ; length of that disjunct
+		(lambda (DJ) djl) ; Just count.
+		0.5 9.5))
+
+(define (prt-djlen-dist)
+	(define csv (open "djlen-dist.dat" (logior O_WRONLY O_CREAT)))
+	(format csv "#\n# Number of disjuncts with given length\n")
+	(format csv "# Divived by total of ~A\n" (pcs 'right-basis-size))
+	(format csv "#\n# idx\tlen\tcount\n")
+	(print-bincounts-tsv djlen-dist csv)
+	(close csv))
 
 ; ---------------------------------------

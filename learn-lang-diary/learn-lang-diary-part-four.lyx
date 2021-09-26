@@ -135,6 +135,94 @@ Nothing yet...
 \end_layout
 
 \begin_layout Subsection*
+TODO List
+\end_layout
+
+\begin_layout Standard
+Some items previously explored, but worth looking at again, with the latest
+ datasets.
+\end_layout
+
+\begin_layout Itemize
+Words with the lowest self-MI - what are they? What do they mean?
+\end_layout
+
+\begin_layout Subsection*
+Expt-4/5/6 – Miscellany – Sept 2021
+\end_layout
+
+\begin_layout Standard
+Diary Part Three carried out the bulk of experiment-4 with trimming until
+ it was discovered that trimming to a minimum support of two is even better.
+ Assorted data analysis was done.
+ There are sttill a few more intresting questions about those datasets.
+\end_layout
+
+\begin_layout Subsubsection*
+Length of disjuncts
+\end_layout
+
+\begin_layout Standard
+For a given length of disjunct, how many sections have a disjunct of that
+ length? (Counted with multiplicity) Previously, in Diary Part Two page
+ 14 this was a Gaussian, centered at 8.
+ But this was for a fake langauge, not for English.
+ Based on what we expect for English, 8 is an alarmingly large number.
+ So, some graphs:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/djlen-dist.eps
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above shows the number of disjuncts of a given length.
+ That is, fixing the length, just count how many disjuncts there are.
+ Also shown is an eyeballed fit usingthe log-normal distribution.
+ As before, this is defnied as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N\left(x;\mu,\sigma\right)=\frac{1}{x\sigma\sqrt{2\pi}}\exp\left(-\frac{\left(\ln x-\mu\right)^{2}}{2\sigma^{2}}\right)
+\]
+
+\end_inset
+
+In this graph, shown is 
+\begin_inset Formula $\mu=0.81$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=0.27$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\exp0.81\approx2.25$
+\end_inset
+
+ and so we can take the average length of a disjunct as 2.25.
+ This is really pretty nice for English, I guess – we expect common-sense
+ lengths: transiitive verbs with a length of 2 (subject, object); common
+ nouns with a length of 2 (determiner, verb-connector) or 3 (determiner,
+ adjective, verb connector); both determiners and modifiers (adjectives,
+ adverbs) should have a length of 1.
+ Punctuation, ditranstive verbs, quotations, etc.
+ have more complex structure.
+ So above looks healthy.
+ 
+\end_layout
+
+\begin_layout Subsection*
 Expt-7 – Merging – Sept 2021
 \end_layout
 
