@@ -588,6 +588,7 @@
 (chdir "/home/ubuntu/experiments/run-7/data")
 (pcs 'right-basis-size)
 
+; Disjunct lengths
 (define djl (/ 1.0 (pcs 'right-basis-size)))
 (define djlen-dist
 	(bin-count
@@ -603,6 +604,46 @@
 	(format csv "# Divived by total of ~A\n" (pcs 'right-basis-size))
 	(format csv "#\n# idx\tlen\tcount\n")
 	(print-bincounts-tsv djlen-dist csv)
+	(close csv))
+
+; ---------------------------------------
+
+; Number of sections with given disjunct length
+(define djs (sup 'total-support-left))
+(define djlen-sect-dist
+	(bin-count
+		(pcs 'right-basis) ; all disjuncts
+		9  ; max expected length of 10
+		(lambda (DJ) (cog-arity DJ)) ; length of that disjunct
+		(lambda (DJ) (/ (sup 'left-support DJ) djs))
+		0.5 9.5))
+
+(define (prt-djlen-sect-dist)
+	(define csv (open "djlen-sect-dist.dat" (logior O_WRONLY O_CREAT)))
+	(format csv "#\n# Number of sections with disjuncts with given length\n")
+	(format csv "# Divived by total of ~A\n" (sup 'total-support-left))
+	(format csv "#\n# idx\tlen\tcount\n")
+	(print-bincounts-tsv djlen-sect-dist csv)
+	(close csv))
+
+; ---------------------------------------
+
+; Number of sections with given disjunct length
+(define djs (sup 'total-count-left))
+(define djlen-count-dist
+	(bin-count
+		(pcs 'right-basis) ; all disjuncts
+		9  ; max expected length of 10
+		(lambda (DJ) (cog-arity DJ)) ; length of that disjunct
+		(lambda (DJ) (/ (sup 'left-count DJ) djs))
+		0.5 9.5))
+
+(define (prt-djlen-count-dist)
+	(define csv (open "djlen-count-dist.dat" (logior O_WRONLY O_CREAT)))
+	(format csv "#\n# Count of sections with disjuncts with given length\n")
+	(format csv "# Divived by total of ~A\n" (sup 'total-count-left))
+	(format csv "#\n# idx\tlen\tcount\n")
+	(print-bincounts-tsv djlen-count-dist csv)
 	(close csv))
 
 ; ---------------------------------------

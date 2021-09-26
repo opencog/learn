@@ -222,6 +222,76 @@ In this graph, shown is
  
 \end_layout
 
+\begin_layout Standard
+How about the observation count of the number of words htat have some disjunct
+ length? Below:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename en-sims-p3/djlen-sect-dist.eps
+	width 80text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So this shows three very similar curves.
+ These are:
+\end_layout
+
+\begin_layout Description
+number: How many disjuncts there are of a given length.
+\end_layout
+
+\begin_layout Description
+support: How many sections there are, with that section having a disjunct
+ of the given length.
+\end_layout
+
+\begin_layout Description
+count: The number of observations of sections having a disjunct of the given
+ length.
+\end_layout
+
+\begin_layout Standard
+Recall that a 
+\begin_inset Quotes eld
+\end_inset
+
+section
+\begin_inset Quotes erd
+\end_inset
+
+ is just a word-disjunct pair.
+ Thus, 
+\begin_inset Quotes eld
+\end_inset
+
+support
+\begin_inset Quotes erd
+\end_inset
+
+ is when we tally 1 if a section exists, else 0, and 
+\begin_inset Quotes eld
+\end_inset
+
+count
+\begin_inset Quotes erd
+\end_inset
+
+ is how many times that particular pair was observed.
+\end_layout
+
+\begin_layout Standard
+Looking at that graph, all three have almost the same log-normal distribution,
+ with the mean inching ever so slightly lower.
+ The nice behavior persists.
+\end_layout
+
 \begin_layout Subsection*
 Expt-7 – Merging – Sept 2021
 \end_layout
