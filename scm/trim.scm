@@ -5,7 +5,6 @@
 ; The goal is to be a bit more CPU and storage efficient.
 ;
 ; XXX TODO
-; -- use either cog-extract! or cog-delete!
 ; -- finish writing documentation
 ; -- move to the (opencog matrix) module
 ;
@@ -29,9 +28,21 @@
 (define-public (trim-matrix LLOBJ
 	LEFT-BASIS-PRED RIGHT-BASIS-PRED PAIR-PRED)
 "
-  trim-matrix LLOBJ - remove Atoms from the AtomSpace that pass the
-  predicates. If storage is connected, then these are removed from
-  storage too.
+  trim-matrix LLOBJ LEFT-BASIS-PRED RIGHT-BASIS-PRED ELEMENT-PRED
+  Remove Atoms from the AtomSpace that pass the predicates. If storage
+  is connected, then these are removed from storage too.
+
+  LLOBJ should be an object with the conventional matrix methods on it.
+
+  LEFT-BASIS-PRED should be a function taking a ROW as an argument; it
+      should return #t if that row is to be deleted, else it returns #f.
+
+  RIGHT-BASIS-PRED should be a function taking a COL as an argument; it
+      should return #t if that column is to be deleted, else it returns #f.
+
+  ELEMENT-PRED should be a function taking a matrix element as an
+      argument; it should return #t if that matrix element should be
+      deleted, else should returns #f.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 	(define elapsed-secs (make-elapsed-secs))
@@ -80,6 +91,9 @@
 	; Remove these too.
 	(trim-type (star-obj 'left-basis))
 	(trim-type (star-obj 'right-basis))
+
+	; Trimming has commited violence to the matrix. Let it know.
+	(if (LLOBJ 'provides 'clobber) (LLOBJ 'clobber))
 
 	(format #t "Trimmed all pairs in ~A seconds.\n" (elapsed-secs))
 )
