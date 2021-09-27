@@ -29,8 +29,8 @@
 	LEFT-BASIS-PRED RIGHT-BASIS-PRED PAIR-PRED)
 "
   trim-matrix LLOBJ LEFT-BASIS-PRED RIGHT-BASIS-PRED ELEMENT-PRED
-  Remove Atoms from the AtomSpace that pass the predicates. If storage
-  is connected, then these are removed from storage too.
+  Remove (delete) Atoms from the AtomSpace that pass the predicates.
+  If storage is connected, then these are removed from storage too.
 
   LLOBJ should be an object with the conventional matrix methods on it.
 
@@ -102,7 +102,20 @@
 (define-public (subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT)
 "
   subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT
-  Just like `add-subtotal-filter` but it trims.
+  Remove (delete) Atoms from the AtomSpace whose counts are at or below
+  the indicated cutoffs. If storage is connected, then these are removed
+  from storage too.
+
+  This function will fail to work correctly, if support marginals have
+  not been computed on LLOBJ. That is because the support marginals are
+  used to obtain subtotal counts for rows and columns.  To compute
+  support marginals, say `((add-support-compute LLOBJ) 'cache-all)`
+
+  LLOBJ should be an object with the conventional matrix methods on it.
+
+  LEFT-CUT should be a number; if the count on that row is equal or less
+      than this number, then the entire row (including marginals) will
+      be deleted.
 "
 	(define stars-obj (add-pair-stars LLOBJ))
 	(define sup-obj (add-support-api stars-obj))
