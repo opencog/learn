@@ -437,7 +437,7 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(let ((psu (add-support-compute STARS)))
+	(let ((psu (add-support-compute LLOBJ)))
 		(store-atom (psu 'set-right-marginals CLS))
 		(store-atom (psu 'set-right-marginals WA))
 		(store-atom (psu 'set-right-marginals WB))
@@ -605,7 +605,7 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(let ((psu (add-support-compute STARS)))
+	(let ((psu (add-support-compute LLOBJ)))
 		(store-atom (psu 'set-right-marginals CLS))
 		(store-atom (psu 'set-right-marginals WA))
 	)
