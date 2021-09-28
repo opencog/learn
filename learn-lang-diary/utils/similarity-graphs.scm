@@ -475,8 +475,11 @@
 )
 
 ; ---------------------------------------
-; Ranked word-pairs
+; Ranked word-pairs. Rank them in various ways, to see which ones give
+; the best merge recommendations.
 
+; uniq-sims are just all sims with the self-sim (diagonal) entries
+; removed.
 (define uniq-sims
 	(filter (lambda (SIM) (not (equal? (gar SIM) (gdr SIM)))) all-sims))
 
@@ -569,12 +572,26 @@
 (define pairs-marg-cj-sort
 	(rank-pairs (lambda (SIM) (marg-condjacc (gar SIM) (gdr SIM)))))
 
+; ----------
+; Given a word, what is it's ranking?
+(define (rank-of-word WRD)
+	(list-index (lambda (RW) (equal? WRD RW)) wli))
+
+
+; Just print out the top 100 ranked pairs, so we can look at them
+; visually.
 (define (prt-csv LST N)
 	(define cnt 0)
 	(for-each
 		(lambda (SIM)
+			(define ra (rank-of-word (gar SIM)))
+			(define rb (rank-of-word (gdr SIM)))
 			(set! cnt (+ cnt 1))
-			(format #t "~D,~A,~A\n" cnt (cog-name (gar SIM)) (cog-name (gdr SIM))))
+			(format #t "~D,~A,~A rank=~D ~D mind=~D ~D  cmi=~6F\n"
+				cnt (cog-name (gar SIM)) (cog-name (gdr SIM))
+				ra rb  (min ra rb) (abs (- ra rb))
+				(common-MI (gar SIM) (gdr SIM))
+			))
 		(take LST N)))
 
 (prt-csv pairs-common-mi-sort 100)
