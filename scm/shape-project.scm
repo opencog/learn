@@ -300,30 +300,24 @@
 				(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
 					(let ((shp (gdr xst)))
 						(cog-extract! xst)
-						(cog-extract! shp)
+						(cog-extract! shp)  ;; Safe, its not recursive.
 						(set! nx (+ 1 nx)))))
 				(LLOBJ 'get-cross-sections SEC)))
 		(when (is-zero? (LLOBJ 'get-count SEC))
-			(cog-delete! SEC)
-			; XXX TODO delete the disjunct too, if and only if
-			; it's support has vanished.
-			(set! ns (+ 1 ns))))
+			(let ((csq (gdr SEC)))
+				(cog-delete! SEC)
+				(cog-delete! csq)  ;; Safe; because its not recursive.
+				(set! ns (+ 1 ns)))))
 
 	(define (del-xes XST)
 		(define sct (LLOBJ 'get-section XST))
 		(when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
 			(del-sect sct))
 		(when (and (cog-atom? XST) (is-zero? (LLOBJ 'get-count XST)))
+			(let ((shp (gdr XST)))
 				(cog-extract! XST)
-				(set! nx (+ 1 nx))))
-
-; Whoa ... the code used to say the below, but this can't be right,
-; because the shape might be getting used elsewhere, right? We can
-; delete the shape, only if it's support has gone to zero.
-;			(let ((shp (gdr XST)))
-;				(cog-extract! XST)
-;				(cog-extract! shp)
-;				(set! nx (+ 1 nx)))
+				(cog-extract! shp)  ;; Safe; because its not recursive.
+				(set! nx (+ 1 nx)))))
 
 	; Cleanup after merging.
 	(for-each
