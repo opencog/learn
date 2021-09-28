@@ -5417,7 +5417,23 @@ Database contents:
 Unix max open files rlimit= 1024 1048576
 
 
+(ListLink
+  (ConnectorSeq
+    (Connector
+      (WordNode "It")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "no")
+      (ConnectorDir "+"))
+    (Connector
+      (WordNode "uncommon")
+      (ConnectorDir "+")))
+  (AnyNode "cset-disjunct"))
 
+  (define (get-right-wildcard WORD)
+         (ListLink WORD any-right))
+
+(right-wildcard)
  
 ====================================================
 link-class.scm ???

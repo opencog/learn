@@ -163,8 +163,8 @@
        and connectors that belong to CLS by the corresponding connector
        for CLS. If no connectors belong to CLS, then return #f.
 "
-	(let ((l-basis '())
-			(r-basis '())
+	(let ((l-basis #f)
+			(r-basis #f)
 			(l-size 0)
 			(r-size 0)
 		)
@@ -332,12 +332,12 @@
 		; Stars API.
 		; Get both the Words and the WordClasses; put WordClasses first.
 		(define (get-left-basis)
-			(if (null? l-basis) (set! l-basis
+			(if (not l-basis) (set! l-basis
 				(append! (cog-get-atoms 'WordClassNode) (cog-get-atoms 'WordNode))))
 			l-basis)
 
 		(define (get-right-basis)
-			(if (null? r-basis) (set! r-basis (cog-get-atoms 'ShapeLink)))
+			(if (not r-basis) (set! r-basis (cog-get-atoms 'ShapeLink)))
 			r-basis)
 
 		(define (get-left-size)
@@ -350,8 +350,8 @@
 
 		; Invalidate the caches
 		(define (clobber)
-			(set! l-basis '())
-			(set! r-basis '())
+			(set! l-basis #f)
+			(set! r-basis #f)
 			(set! l-size 0)
 			(set! r-size 0)
 			(if (LLOBJ 'provides 'clobber) (LLOBJ 'clobber))
@@ -659,6 +659,13 @@ around for a while.
 				((wild-wild)        get-wild-wild)
 				((fetch-pairs)      fetch-sections)
 
+				; Overloaded stars methods
+				((left-basis)       get-left-basis)
+				((right-basis)      get-right-basis)
+				((left-basis-size)  get-left-size)
+				((right-basis-size) get-right-size)
+				((clobber)          clobber)
+
 				; Custom calls.
 				((explode-sections) explode-sections)
 				((make-section)     make-section)
@@ -670,7 +677,6 @@ around for a while.
 				((is-nonflat?)      is-nonflat-section?)
 
 				((provides)         provides)
-				((clobber)          clobber)
 				((filters?)         (lambda () #f))
 
 				((describe)         (describe))
@@ -693,7 +699,7 @@ around for a while.
 	(define cover-obj (direct-sum stars-obj shape-stars))
 	(define cover-stars (add-pair-stars cover-obj))
 
-	; Pass explode to the sahpe object, and then clobber all caches.
+	; Pass explode to the shape object, and then clobber all caches.
 	(define (explode-sections)
 		(shape-obj 'explode-sections)
 		(cover-stars 'clobber))
