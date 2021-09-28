@@ -437,6 +437,12 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
+	(let ((psu (add-support-compute STARS)))
+		(store-atom (psu 'set-right-marginals CLS))
+		(store-atom (psu 'set-right-marginals WA))
+		(store-atom (psu 'set-right-marginals WB))
+	)
+
 	(monitor-rate
 		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
@@ -599,6 +605,11 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
+	(let ((psu (add-support-compute STARS)))
+		(store-atom (psu 'set-right-marginals CLS))
+		(store-atom (psu 'set-right-marginals WA))
+	)
+
 	(monitor-rate
 		"------ Extend: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
@@ -726,21 +737,14 @@
 		(if single
 			(begin
 				(start-cluster psu cls WA WB FRAC-FN NOISE MRG-CON)
-				(psu 'clobber)
-				(store-atom (psu 'set-right-marginals cls))
 				(STORE cls)
 			)
 			(begin
 				(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
-				(psu 'clobber)
 			))
-
-		(store-atom (psu 'set-right-marginals WA))
-		(store-atom (psu 'set-right-marginals WB))
 
 		(STORE WA)
 		(STORE WB)
-
 		cls
 	)
 
