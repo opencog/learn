@@ -692,8 +692,9 @@
   merging.
 
   STORE is an extra function called, after the merge is to completed,
-  and may be used to store additional needed data that the algo here is
-  unaware of.
+  and may be used to compute and store additional needed data that
+  the algo here is unaware of. This include computation of supports,
+  marginal MI and similar.
 
   MRG-CON is #t if Connectors should also be merged.
 
@@ -888,7 +889,8 @@
 	(define (mi-fract WA WB) UNION-FRAC)
 
 	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row)))
+		(store-atom (ptc 'set-mmt-marginals row))
+		(store-atom (ptc 'set-mmt-totals)))
 
 	(make-merger pmi mpred mi-fract NOISE MIN-CNT store-mmt #t)
 )
@@ -955,7 +957,8 @@
 		(expt 2.0 (- CUTOFF mihi)))
 
 	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row)))
+		(store-atom (ptc 'set-mmt-marginals row))
+		(store-atom (ptc 'set-mmt-totals)))
 
 	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
 )
@@ -1018,7 +1021,8 @@
 		(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
 	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row)))
+		(store-atom (ptc 'set-mmt-marginals row))
+		(store-atom (ptc 'set-mmt-totals)))
 
 	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
 )
