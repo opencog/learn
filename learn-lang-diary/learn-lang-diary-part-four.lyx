@@ -5252,6 +5252,79 @@ The above would seem to create a more balanced cluster, as opposed to the
  The democratic voting of step 4 appears to solve this problem.
 \end_layout
 
+\begin_layout Standard
+Democratic voting also appears to address another old bugaboo: how to perform
+ 
+\begin_inset Quotes eld
+\end_inset
+
+generalization
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The pure-intersection clustering performs no generalization whatsoever.
+ The democratic voting allows generalizations to be admitted, when they
+ weren't before.
+ So this seems like a big win.
+\end_layout
+
+\begin_layout Standard
+An open question is how general the generalization should be.
+ Should it be a majority vote? Perhaps it should be an evaluation of the
+ intra-cluster MI after the generalization is made? Could there be some
+ relaxation process, which picks and chooses what disjuncts get admitted,
+ so as to maximize the intra-cluster MI and to minimize the extra-cluster
+ (inter-cluster) MI? Right now, voting is easiest.
+ Perhaps some kind of relaxation algo might be better, in the future.
+ The relaxation algo is certainly harder.
+\end_layout
+
+\begin_layout Standard
+We can steal some ideas from the Tonnoni Phi spin-glass canon: the extra-cluster
+ MI should be best described by an ultrametric, so that the distance from
+ the cluster, to anything else, has the ultrametric property.
+ Recall the definition of an ultrametric: it is the distance between two
+ leaves on a tree.
+ Two leaves are close if they are on the same branch; they are distant if
+ they are on different branches.
+ We want all words in a cluster to not only be close, but to be 
+\begin_inset Quotes eld
+\end_inset
+
+maximally far away
+\begin_inset Quotes erd
+\end_inset
+
+ from anything else, where 
+\begin_inset Quotes eld
+\end_inset
+
+maximally far
+\begin_inset Quotes erd
+\end_inset
+
+ s intended in the ultrametric sense.
+ (The ultrametric appears in the theory of spin glasses.
+ It is the 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ metric for describing human brains in a social network: Every neuron in
+ my head is much more closely connected to every other neuron in my head,
+ than it is to your head.
+ The only connection between my head and yours is the fact that you are
+ reading these words.
+ That is both a spin-glass ultra-metric, and also describes there the lest
+ creul cut can be made.
+ Phew.
+ Sorry for the digression, but this seems important.)
+\end_layout
+
 \begin_layout Subsubsection*
 Word-sense disambiguation
 \end_layout
@@ -5265,16 +5338,80 @@ Issue: If we compute MI and common-MI using only Sections, and not Shapes,
 \end_layout
 
 \begin_layout Standard
-At the naive level, this will ruin MI calculations, unless care is taken
- to equate such connector sequences.
- But this is, in turn, confusing, because, depending on the context, perhaps
- equating them is incorrect? For example, post-merge, the unmerged sections
- are intentionally associated with a different, post-merge word-sense.
- To solve this issue, should the post-merge remainder be explicitly marked
- to belong to a different post-merge word-sense? This seems to be ...
- the inevitable, required conclusion.
- This requires another big complex piece of code to be written.
- Ugh.
+This appears to cause several issues, but does it?
+\end_layout
+
+\begin_layout Standard
+First issue: When the MI's get recomputed, the shape object will be used.
+ So this is a bug, we need to use the non-shape object when recomputing
+ the MI.
+ So this needs to be passed around as a distinct argument to the functions.
+\end_layout
+
+\begin_layout Standard
+Second issue: When the MI's get recomputed, it might seem that connector
+ sequences that should have been comparable are no longer being compared,
+ because one connector sequence has a plain word, while another has a WordClass.
+ Upon furtherr reflection, this is NOT an issue.
+ Connector merging means that all of the various connector sequences have
+ been updated (
+\begin_inset Quotes eld
+\end_inset
+
+correctly
+\begin_inset Quotes erd
+\end_inset
+
+) with the new WordClass, so the sequences remain comparable.
+ Those that have NOT been updated MUST be considered as belonging to a distinct
+ word-sense.
+\end_layout
+
+\begin_layout Standard
+In particular, that means that the corrent connector merge code automatically
+ handles word-sense disambiguation: whatever has not been merged, including
+ unmerged connectors, MUST be understood to belong to a word-sense that
+ is distinct from the WordClass.
+\end_layout
+
+\begin_layout Standard
+Conclude: no issue here, except to be careful in recomputing the MI.
+\end_layout
+
+\begin_layout Subsubsection*
+Conclusion to Expt-7
+\end_layout
+
+\begin_layout Standard
+Looks like everything works great.
+ The functional review provoked a code review, both the functional review
+ and the code review pass, it seems that merging works great.
+ Caveat: at least the non-connector-merge variant works great.
+ The connector-merge code is really complicated, and was developed and dubugged
+ during the random-corpus exploration phase.
+ It was completed, with no known bugs, but it is just complicated enough
+ and squonky enough that perhaps there are issues.
+\end_layout
+
+\begin_layout Standard
+Examination of the agglomerative clustering strategy exposes it's weakness
+ (well-known in the industry) However, unlike the conventional clustering
+ algos, we have the ability to pick and choose, via 
+\begin_inset Quotes eld
+\end_inset
+
+democratic voting
+\begin_inset Quotes erd
+\end_inset
+
+, which disjuncts get admitted into the cluster.
+ This appears to address an important open issue, of (a) a way of performing
+ generalization, and (b) a good way way of performing generalization.
+ The earlier fuzzy-mixin performed generalization, but it was fairly non-selecti
+ve, and some naive MI calculations seemed to indicate that it always made
+ things worse.
+ In particular, it made word-sense disambigutation ugly.
+ So this new democratic algo appears to be a major conceptual improvement.
 \end_layout
 
 \begin_layout Section*
