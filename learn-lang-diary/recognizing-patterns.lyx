@@ -142,7 +142,7 @@ Introduction – Outrageous Claims
 
 \begin_deeper
 \begin_layout Standard
-Old but active issues with symbolic knowledge in AI
+Old but active issues with symbolic knowledge in AI:
 \end_layout
 
 \begin_layout Itemize
@@ -216,7 +216,7 @@ Everything is a (Sparse) Graph
 \end_layout
 
 \begin_layout Frame
-The Universe is a sparse graph of relationships
+The Universe is a sparse graph of relationships.
 \end_layout
 
 \begin_layout Frame
@@ -251,7 +251,18 @@ Sparse graphs are (necessarily) symbolic!
 
 \end_deeper
 \begin_layout Frame
-Not sparse.................................................Sparse!
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+Not sparse.................................Sparse!
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
@@ -283,11 +294,11 @@ Graphs are Decomposable
 \end_layout
 
 \begin_layout Frame
-Graphs can be decomposed into interchangeable parts
+Graphs can be decomposed into interchangeable parts.
 \end_layout
 
 \begin_layout Frame
-Half-edges resemble jigsaw puzzle connectors
+Half-edges resemble jigsaw puzzle connectors.
 \end_layout
 
 \begin_layout Frame
@@ -316,11 +327,23 @@ Half-edges resemble jigsaw puzzle connectors
 \end_layout
 
 \begin_layout Frame
-Graphs are syntactically valid if connectors match up
+Graphs are syntactically valid if connectors match up.
 \end_layout
 
 \begin_layout Frame
 Labelled graphs (implicitly) define a syntax!
+\end_layout
+
+\begin_layout Frame
+Syntax == allowed/allowable relationships between 
+\begin_inset Quotes eld
+\end_inset
+
+things
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -473,7 +496,11 @@ Examples from Category Theory
 \end_layout
 
 \begin_layout Frame
-Lexical Compositionality in physics, mathematics
+Its everywhere!
+\end_layout
+
+\begin_layout Frame
+Lexical Compositionality in physics, mathematics:
 \end_layout
 
 \begin_layout Frame
@@ -678,7 +705,7 @@ Examples from Chemistry, Botany
 \end_layout
 
 \begin_layout Frame
-Lexical compositionality in Chemistry
+Lexical Compositionality in chemical reactions.
 \end_layout
 
 \begin_layout Frame
@@ -686,7 +713,7 @@ Lexical compositionality in Chemistry
 \end_layout
 
 \begin_layout Frame
-Generative L-systems explain biological morphology
+Generative L-systems explain biological morphology!
 \end_layout
 
 \begin_layout Frame
@@ -734,7 +761,7 @@ Modeling plant development with L-systems
 \begin_inset Quotes erd
 \end_inset
 
- http://algorithmicbotany.org 
+ – http://algorithmicbotany.org 
 \end_layout
 
 \end_inset
@@ -921,11 +948,11 @@ Can be converted (algorithmically!) to HPSG, DG, CG, FG, ...
 \end_layout
 
 \begin_layout Frame
-Full dictionaries for English, Russian
+Full dictionaries for English, Russian.
 \end_layout
 
 \begin_layout Frame
-Demos for Farsi, Indonesian, Vietnamese, German & more
+Demos for Farsi, Indonesian, Vietnamese, German & more.
 \end_layout
 
 \begin_layout Standard
@@ -949,11 +976,11 @@ Vision
 \end_layout
 
 \begin_layout Frame
-Shapes have a structural grammar
+Shapes have a structural grammar.
 \end_layout
 
 \begin_layout Frame
-The connectors can specify location, color, shape, texture
+The connectors can specify location, color, shape, texture.
 \end_layout
 
 \begin_layout Frame
@@ -1005,7 +1032,7 @@ Sound
 \end_layout
 
 \begin_layout Frame
-Digital Signal Processing filter trees are labelled graphs
+Digital Signal Processing filter trees are labelled graphs.
 \end_layout
 
 \begin_layout Frame
@@ -1046,13 +1073,19 @@ Part Two: Learning
 \end_layout
 
 \begin_layout Frame
-Outline
+Graph sructure can be learned from observation!
 \end_layout
 
 \begin_layout Frame
-Graph sructure can be learned from observation
+Outline:
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Mutual Information AKA Entropy
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1065,7 +1098,7 @@ Graph sructure can be learned from observation
 status open
 
 \begin_layout Plain Layout
-Mutual Information aka Entropy
+Mutual Information AKA Entropy
 \end_layout
 
 \end_inset
@@ -1113,7 +1146,7 @@ Count the number
 \begin_inset Formula $N\left(u,w\right)$
 \end_inset
 
- of co-occurances of ...
+ of co-occurances of words, or ...
 \end_layout
 
 \begin_layout Frame
@@ -1152,7 +1185,7 @@ Define
 \begin_layout Frame
 
 \emph on
-Warning: This is NOT textbook mutual information!
+Caution: This is NOT textbook mutual information!
 \end_layout
 
 \begin_layout Frame
@@ -1185,7 +1218,7 @@ negative!
 status open
 
 \begin_layout Plain Layout
-Inducing Structure
+Structure in Lexical Entries
 \end_layout
 
 \end_inset
@@ -1194,7 +1227,75 @@ Inducing Structure
 \end_layout
 
 \begin_layout Frame
-Maximum Spanning Tree/Graph
+Draw a Maximum Spanning Tree/Graph.
+\end_layout
+
+\begin_layout Frame
+Cut the edges to form half edges.
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/disjunct-cut.eps
+	lyxscale 60
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+These are Lexical entries:
+\end_layout
+
+\begin_layout Itemize
+ball: the- & throw-;
+\end_layout
+
+\begin_layout Itemize
+ball: 
+\begin_inset Formula $\left|the-\right\rangle \otimes\left|throw-\right\rangle $
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+(word,disjunct) pair
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+Accumulate counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ for each observation of 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -1209,7 +1310,7 @@ Maximum Spanning Tree/Graph
 status open
 
 \begin_layout Plain Layout
-Inducing Disjuncts
+Skip-gram-like Vector Representation
 \end_layout
 
 \end_inset
@@ -1218,16 +1319,10 @@ Inducing Disjuncts
 \end_layout
 
 \begin_layout Frame
-Cut the graph
+C
 \end_layout
 
 \begin_layout Frame
-\begin_inset Graphics
-	filename skimage/disjunct.eps
-	width 60col%
-
-\end_inset
-
 
 \end_layout
 
