@@ -319,7 +319,7 @@ Graphs are syntactically valid if connectors match up
 \end_layout
 
 \begin_layout Frame
-Labelled graphs implicitly define a syntax!
+Labelled graphs (implicitly) define a syntax!
 \end_layout
 
 \begin_layout Standard
@@ -343,7 +343,112 @@ Graphs are Compositional
 \end_layout
 
 \begin_layout Frame
-Jigsaw puzzle pieces
+Terms and variables
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+A term: 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ or an 
+\begin_inset Formula $n$
+\end_inset
+
+-ary function symbol: 
+\begin_inset Formula $f\left(x_{1},x_{2},\cdots,x_{n}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+A variable: 
+\begin_inset Formula $x$
+\end_inset
+
+ or maybe more: 
+\begin_inset Formula $x,y,z,\cdots$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+A number: 42 ..
+ or a string 
+\begin_inset Quotes eld
+\end_inset
+
+foobar
+\begin_inset Quotes erd
+\end_inset
+
+ ...
+ or ...
+\end_layout
+
+\begin_layout Itemize
+Plug it in: 
+\begin_inset Formula $f\left(x\right):42\mapsto f\left(42\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+Call function 
+\begin_inset Formula $f$
+\end_inset
+
+ with argument of 42
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Jisaw puzzle pieces
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/puzzle.eps
+	width 40col%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -367,11 +472,188 @@ Examples
 \end_layout
 
 \begin_layout Frame
-Linguistics, Vision
+
 \end_layout
 
 \begin_layout Frame
-Deep syntax, Lexical Functions (MTT)
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Cobordism
+\size default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\size footnotesize
+John Baez, Mike Stay, (2009) 
+\begin_inset Quotes eld
+\end_inset
+
+Physics, Topology, Logic and Computation: A Rosetta Stone
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Quantum Grammar
+\size default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\size footnotesize
+William Zeng and Bob Coecke (2016) 
+\begin_inset Quotes eld
+\end_inset
+
+Quantum Algorithms for Compositional Natural Language Processing
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename reco-image/cobordism.png
+	lyxscale 30
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset VSpace 10col%
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename reco-image/quantum.png
+	lyxscale 30
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace 10col%
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+
 \end_layout
 
 \begin_layout Standard
@@ -409,6 +691,30 @@ Can be converted, algorithmically! to HPSG, DG, (pick your favorite)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Vision
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Stop lights
 \end_layout
 
 \begin_layout Section
