@@ -1298,6 +1298,25 @@ Accumulate counts
 .
 \end_layout
 
+\begin_layout Frame
+Skip-gram-like (sparse) vector: 
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $\overrightarrow{w}=p\left(w,d_{1}\right)\widehat{d_{1}}+\cdots+p\left(w,d_{n}\right)\widehat{d_{n}}$
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1310,7 +1329,7 @@ Accumulate counts
 status open
 
 \begin_layout Plain Layout
-Skip-gram-like Vector Representation
+Similarity Metrics
 \end_layout
 
 \end_inset
@@ -1319,10 +1338,109 @@ Skip-gram-like Vector Representation
 \end_layout
 
 \begin_layout Frame
-C
+Say 
+\emph on
+no
+\emph default
+ to cosine distance when comparing word-vectors:
 \end_layout
 
 \begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $\cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}p\left(w,d\right)p\left(v,d\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Probability space is not Eucliden; its a simplex.
+\end_layout
+
+\begin_layout Frame
+Say 
+\emph on
+yes
+\emph default
+ to MI:
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $MI\left(w,v\right)=\log_{2}\frac{\sum_{d}p\left(w,d\right)p\left(v,d\right)}{\sum_{d}p\left(w,d\right)p\left(*,d\right)\;\sum_{d}p\left(v,d\right)p\left(*,d\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename en-sims-p3/mi-dist-tsup.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+The distribution of word-pair similarity is Gaussian!
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Distribution of Similarity
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+ccBetter yet: ranked by frequency:
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $\mbox{ranked}MI\left(w,v\right)=\log_{2}\frac{\sum_{d}p\left(w,d\right)p\left(v,d\right)}{\sqrt{\sum_{d}p\left(w,d\right)p\left(*,d\right)\;\sum_{d}p\left(v,d\right)p\left(*,d\right)}}$
+\end_inset
+
 
 \end_layout
 
