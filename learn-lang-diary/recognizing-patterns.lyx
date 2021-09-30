@@ -722,7 +722,7 @@ Krebs Cycle
 \begin_layout Plain Layout
 Algorithmic Botany
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Przemyslaw Prusinkiewicz, etal.
@@ -910,6 +910,13 @@ Parsing English with a Link Grammar
 \end_layout
 
 \begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
 Can be converted (algorithmically!) to HPSG, DG, CG, FG, ...
 \end_layout
 
@@ -947,6 +954,13 @@ Shapes have a structural grammar
 
 \begin_layout Frame
 The connectors can specify location, color, shape, texture
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
@@ -1051,7 +1065,7 @@ Graph sructure can be learned from observation
 status open
 
 \begin_layout Plain Layout
-Mutual Information
+Mutual Information aka Entropy
 \end_layout
 
 \end_inset
@@ -1060,15 +1074,97 @@ Mutual Information
 \end_layout
 
 \begin_layout Frame
-Frequentist approach to probability.
+Frequentist approach to probability
 \end_layout
 
 \begin_layout Frame
-Its defined like this.
+Origins in Corpus Linguistics, N-grams
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Deniz Yuret (1998) 
+\begin_inset Quotes eld
+\end_inset
+
+Discovery of Linguistic Relations Using Lexical Attraction
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
-It can be positive OR negative!
+Relates ordered pairs 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+ of words, ...
+ or other things ...
+\end_layout
+
+\begin_layout Frame
+Count the number 
+\begin_inset Formula $N\left(u,w\right)$
+\end_inset
+
+ of co-occurances of ...
+\end_layout
+
+\begin_layout Frame
+Define 
+\begin_inset Formula $P\left(u,w\right)=N\left(u,w\right)/N\left(*,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Formula $MI\left(w,u\right)=\log_{2}\frac{P\left(w,u\right)}{P\left(w,*\right)P\left(*,u\right)}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+This MI can be positive 
+\emph on
+or 
+\emph default
+negative!
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename reco-image/Yuret.png
+	width 100col%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
