@@ -1085,6 +1085,18 @@ Outline:
 Mutual Information AKA Entropy
 \end_layout
 
+\begin_layout Itemize
+Lexical Entries
+\end_layout
+
+\begin_layout Itemize
+Similarity Metrics
+\end_layout
+
+\begin_layout Itemize
+Learning Syntax
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1417,7 +1429,7 @@ The distribution of word-pair similarity is Gaussian!
 status open
 
 \begin_layout Plain Layout
-Distribution of Similarity
+Learning Syntax; Learning a Lexis
 \end_layout
 
 \end_inset
@@ -1426,7 +1438,37 @@ Distribution of Similarity
 \end_layout
 
 \begin_layout Frame
-ccBetter yet: ranked by frequency:
+Word-disjunct vectors are skip-gram-like.
+\end_layout
+
+\begin_layout Frame
+They encode conventional notions of syntax:
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/disjunct-syntax.eps
+	lyxscale 70
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Agglomerate clusters using ranked similarity:
 \end_layout
 
 \begin_layout Frame
@@ -1444,36 +1486,45 @@ ccBetter yet: ranked by frequency:
 
 \end_layout
 
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Generalization done via 
+\begin_inset Quotes eld
+\end_inset
+
+democratic voting
+\begin_inset Quotes erd
+\end_inset
+
+:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Select an 
+\begin_inset Quotes eld
+\end_inset
+
+in-group
+\begin_inset Quotes erd
+\end_inset
+
+ of similar words.
+\end_layout
+
+\begin_layout Itemize
+Vote to include disjuncts shared by majority.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Classification and Generalization
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-Forming clusters.
-\end_layout
-
-\begin_layout Frame
-Agglomerative
-\end_layout
-
-\begin_layout Frame
-Democratic voting to accept disjuncts
+Yes, this actually works! There's (open) source code, datasets.
 \end_layout
 
 \begin_layout Standard
@@ -1497,7 +1548,19 @@ Compositionality and Recursion
 \end_layout
 
 \begin_layout Frame
-Its hierarchical and recursive; the process can be repeated.
+Jigsaw puzzle assembly is hierarchical and recursive.
+\end_layout
+
+\begin_layout Frame
+The process can be repeated.
+\end_layout
+
+\begin_layout Frame
+Idioms, institutional phrases:
+\end_layout
+
+\begin_layout Frame
+Anaphora resolution:
 \end_layout
 
 \begin_layout Section
