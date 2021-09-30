@@ -14,6 +14,7 @@
 (use-modules (opencog matrix))
 (use-modules (opencog nlp) (opencog nlp learn))
 (use-modules (opencog cogserver))
+(use-modules (srfi srfi-1))
 
 (define env-prompt (getenv "PROMPT"))
 
