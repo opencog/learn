@@ -199,6 +199,9 @@
 (define wli (top-ranked pcs 1200))
 
 ; Construct long list of simlinks.
+; Huh? Why? Why not just call ((add-pair-stars sap) 'get-all-elts) ?
+; that would have been easier...
+; or even `(cog-get-atoms 'Similarity)`
 (define (get-simlinks WLI)
 	(filter-map
 		(lambda (WPR)
