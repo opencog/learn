@@ -23,9 +23,6 @@
   score of the items in WLIST. Similarities are assumed to be symmetric.
   (that is, sim(a,b) == sim(b,a)).
 "
-	(define in-group (list WA WB))
-	(define benchmark (SIMOBJ 'pair-count WA WB))
-
 	; Given the current ingroup INGRP and the CANDIDATE, return #t
 	; if the candidate has a similarity score above MINSCORE to at
 	; least TIGHT other members of the ingroup.
@@ -43,11 +40,28 @@
 			INGRP))
 
 	; Given the current ingroup INGRP and a list of candidates CANDLI,
-	; find the first member of CANDLI that has a score no less than
-	; MINSCORE.
-	(define (nominate INGRP CANDLI MINSCORE)
+	; find the first member of CANDLI that is accepted as a member of the
+	; the clique (i.e. has a score no less than MINSCORE to at least
+	; TIGHT members of the INGRP.)
+	(define (nominate INGRP CANDLI MINSCORE TIGHT)
+		(find
+			(lambda (cand) (accept INGRP cand MINSCORE TIGHT))
+			CANDLI))
 
-	)
+	(define benchmark (SIMOBJ 'pair-count WA WB))
+	(define minscore (- benchmark EPSILON))
+
+	; Convert fractional TIGHTNESS to an integer.
+	(define (get-tight INGRP)
+		(define insz (length INGRP))
+		(if (equal? 2 insz) 2
+			(inexact->exact (round (* TIGHTNESS insz)))))
+
+	(fold
+		(lambda (INGRP CAND)
+		)
+		(list WA WB)
+		WLIST)
 )
 
 ; ---------------------------------------------------------------
