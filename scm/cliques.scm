@@ -63,11 +63,45 @@
 
 ; ---------------------------------------------------------------
 ; Example usage
+; Assumes that a suitable number of word similarities have been
+; previously computed.
 ;
-; (define pca (make-pseudo-cset-api))
-; (define pcs (add-pair-stars pca))
-; (define sha (add-covering-sections pcs))
-; (sha 'fetch-pairs)
-; (sha 'explode-sections)
-; (load-atoms-of-type 'Similarity)
-; (define sap (add-similarity-api sha #f "shape-mi"))
+#! ===========
+;; General setup of data
+(define pca (make-pseudo-cset-api))
+(define pcs (add-pair-stars pca))
+(define sha (add-covering-sections pcs))
+(sha 'fetch-pairs)
+(sha 'explode-sections)
+(load-atoms-of-type 'Similarity)
+(define sap (add-similarity-api sha #f "shape-mi"))
+
+;; Return a list of all words, ranked by count.
+;; If counts are equal, then rank by support.
+(define (rank-words LLOBJ)
+	(define sup (add-support-api LLOBJ))
+
+	; nobs == number of observations
+	(define (nobs WRD) (sup 'right-count WRD))
+	(define (nsup WRD) (sup 'right-support WRD))
+
+	(define wrds (LLOBJ 'left-basis))
+	(sort wrds
+		(lambda (ATOM-A ATOM-B)
+			(define na (nobs ATOM-A))
+			(define nb (nobs ATOM-B))
+			(if (equal? na nb)
+				(> (nsup ATOM-A) (nsup ATOM-B))
+				(> na nb))))
+)
+
+;; Create a list of candidates.
+(define ranked-words (rank-words pcs))
+
+; A short list (those that we have similarities for)
+(define words-with-sims (take ranked-words 1200))
+
+;; Create a sorted list of ranked pairs.
+;; We want to find the top-ranked word-pair.
+
+========== !#
