@@ -1098,6 +1098,10 @@ Similarity Metrics
 Learning Syntax
 \end_layout
 
+\begin_layout Itemize
+Compositino and Recursion
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1553,18 +1557,11 @@ Compositionality and Recursion
 \end_layout
 
 \begin_layout Frame
-Jigsaw puzzle assembly is hierarchical
+Jigsaw puzzle assembly is (free-form) hierarchical!
 \end_layout
 
 \begin_layout Frame
 Recursive structure exists: the process can be repeated.
-\end_layout
-
-\begin_layout Frame
-Idioms, institutional phrases:
-\end_layout
-
-\begin_layout Frame
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1572,14 +1569,76 @@ Idioms, institutional phrases:
 \end_layout
 
 \begin_layout Frame
-\begin_inset Graphics
-	filename reco-image/anaphora.eps
-	lyxscale 70
-	width 60col%
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Idoms,
+\end_layout
 
 \end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
 
+\begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Institutional
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Anaphora
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+phrases
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+resolution
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 \begin_inset Graphics
 	filename reco-image/puzzle-idiom.eps
 	lyxscale 50
@@ -1590,8 +1649,74 @@ Idioms, institutional phrases:
 
 \end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename reco-image/anaphora.eps
+	lyxscale 70
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="4" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Frame
-Anaphora resolution
+
 \end_layout
 
 \begin_layout Section
@@ -1612,25 +1737,27 @@ Part Three: Vision and Sound
 \end_layout
 
 \begin_layout Frame
-Outline
+Not just language!
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Itemize
 Random Filter sequence exploration/mining
 \end_layout
 
-\begin_layout Frame
+\begin_layout Itemize
 Symbol Grounding Problem
 \end_layout
 
-\begin_layout Frame
+\begin_layout Itemize
 Affordances
 \end_layout
 
-\begin_layout Frame
+\begin_layout Itemize
 Common Sense Reasoning
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1652,7 +1779,41 @@ Something from Nothing
 \end_layout
 
 \begin_layout Frame
-Random Filter sequence exploration/mining 
+What is a relevant audio or visual stimulous?
+\end_layout
+
+\begin_layout Frame
+Random Exploration/Mining of Filter sequences! 
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/filters.eps
+	lyxscale 50
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Salience == Filters with high Mututal Information!
 \end_layout
 
 \begin_layout Standard
@@ -1684,11 +1845,7 @@ symbol
 \begin_inset Quotes erd
 \end_inset
 
-?
-\end_layout
-
-\begin_layout Frame
-What does any given 
+? What does any given 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1699,14 +1856,41 @@ symbol
  mean?
 \end_layout
 
-\begin_layout Frame
-It means what it is.
+\begin_deeper
+\begin_layout Itemize
+It means what it is!
 \end_layout
 
+\end_deeper
 \begin_layout Frame
-Affordances
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/grounding.eps
+	lyxscale 60
+	width 70col%
+
+\end_inset
+
+
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Frame Problem!
+\end_layout
+
+\begin_layout Itemize
+Affordances!
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
