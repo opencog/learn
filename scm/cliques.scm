@@ -15,7 +15,40 @@
 ; requirement. An in-group is formed, if the majority of the scores to
 ; other members in the in-group are above the epsilon threshold.
 
-tightness
+(use-modules (srfi srfi-1))
+
+(define (find-in-group SIMOBJ WA WB EPSILON TIGHTNESS WLIST)
+"
+  SIMOBJ is an object whose 'pair-count method returns the similarity
+  score of the items in WLIST. Similarities are assumed to be symmetric.
+  (that is, sim(a,b) == sim(b,a)).
+"
+	(define in-group (list WA WB))
+	(define benchmark (SIMOBJ 'pair-count WA WB))
+
+	; Given the current ingroup INGRP and the CANDIDATE, return #t
+	; if the candidate has a similarity score above MINSCORE to at
+	; least TIGHT other members of the ingroup.
+	(define (accept INGRP CANDIDATE MINSCORE TIGHT)
+
+		; There can be at most `maxfail` bad scores
+		(define maxfail (- (length INGRP) TIGHT))
+		(define failcnt 0)
+		(every
+			(lambda (MEMB)
+				(define score (SIMOBJ 'pair-count CANDIDATE MEMB))
+				(if (< score MINSCORE) (set! failcnt (+ failcnt 1)))
+				(<= failcnt maxfail)
+			)
+			INGRP))
+
+	; Given the current ingroup INGRP and a list of candidates CANDLI,
+	; find the first member of CANDLI that has a score no less than
+	; MINSCORE.
+	(define (nominate INGRP CANDLI MINSCORE)
+
+	)
+)
 
 ; ---------------------------------------------------------------
 ; Example usage
