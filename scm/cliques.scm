@@ -17,7 +17,7 @@
 
 (use-modules (srfi srfi-1))
 
-(define (find-in-group SIMOBJ WA WB EPSILON TIGHTNESS WLIST)
+(define (find-in-group SIMOBJ WA WB EPSILON TIGHTNESS CANDIDATES)
 "
   SIMOBJ is an object whose 'pair-count method returns the similarity
   score of the items in WLIST. Similarities are assumed to be symmetric.
@@ -39,15 +39,6 @@
 			)
 			INGRP))
 
-	; Given the current ingroup INGRP and a list of candidates CANDLI,
-	; find the first member of CANDLI that is accepted as a member of the
-	; the clique (i.e. has a score no less than MINSCORE to at least
-	; TIGHT members of the INGRP.)
-	(define (nominate INGRP CANDLI MINSCORE TIGHT)
-		(find
-			(lambda (cand) (accept INGRP cand MINSCORE TIGHT))
-			CANDLI))
-
 	(define benchmark (SIMOBJ 'pair-count WA WB))
 	(define minscore (- benchmark EPSILON))
 
@@ -57,11 +48,17 @@
 		(if (equal? 2 insz) 2
 			(inexact->exact (round (* TIGHTNESS insz)))))
 
+	; Starting with the minimal clique of `(list WA WB)`, create
+	; an ingroup by adding members to the ingroup if that candidate
+	; has a score no less than `minscore` to at least `TIGHT` members
+	; of the group.
 	(fold
 		(lambda (INGRP CAND)
-		)
+			(if (accept INGRP CAND minscore (get-tight INGRP))
+				(cons CAND INGRP)
+				INGRP))
 		(list WA WB)
-		WLIST)
+		CANDIDATES)
 )
 
 ; ---------------------------------------------------------------
