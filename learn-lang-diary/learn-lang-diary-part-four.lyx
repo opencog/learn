@@ -147,7 +147,7 @@ Some items previously explored, but worth looking at again, with the latest
 Words with the lowest self-MI - what are they? What do they mean?
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 Expt-4/5/6 – Miscellany – Sept 2021
 \end_layout
 
@@ -158,7 +158,7 @@ Diary Part Three carried out the bulk of experiment-4 with trimming until
  There are still a few more interesting questions about those datasets.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Length of disjuncts
 \end_layout
 
@@ -971,7 +971,7 @@ Anyway, we conclude that the distributions look healthy and behave as expected.
  There are no obvious faults to be seen.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Rankings of mergeable words
 \end_layout
 
@@ -999,7 +999,7 @@ Conclude: it is safe to compute common-MI out to about 200 or so, and then
  merge the top-100 out of this list.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Word Similarity with Shapes
 \end_layout
 
@@ -1014,7 +1014,7 @@ Consistent merging requires that merging must be done with shapes.
  others making things bettter.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 Expt-7 – Merging – Sept 2021
 \end_layout
 
@@ -1057,7 +1057,7 @@ just work
  in detail.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Merge is-was
 \end_layout
 
@@ -2430,7 +2430,7 @@ Mystery result: Total number of disjuncts dropped from 205003 to 202922
  Unexpected, but OK.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Merge is-was and connectors too
 \end_layout
 
@@ -3022,7 +3022,7 @@ Issue: the merge code wishes to recmpute the MMT.
  of using an MI cutoff.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Expanded Clusters
 \end_layout
 
@@ -5173,7 +5173,7 @@ After the merge, the remaining It–There mergability ranking is now very
  but a second-order priority.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Revised clustering strategy
 \end_layout
 
@@ -5325,7 +5325,7 @@ obvious
  Sorry for the digression, but this seems important.)
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Word-sense disambiguation
 \end_layout
 
@@ -5378,7 +5378,7 @@ In particular, that means that the corrent connector merge code automatically
 Conclude: no issue here, except to be careful in recomputing the MI.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Conclusion to Expt-7
 \end_layout
 
@@ -5412,6 +5412,19 @@ ve, and some naive MI calculations seemed to indicate that it always made
  things worse.
  In particular, it made word-sense disambigutation ugly.
  So this new democratic algo appears to be a major conceptual improvement.
+\end_layout
+
+\begin_layout Section*
+Clique Sizes
+\end_layout
+
+\begin_layout Standard
+The democratic-voting idea suggests that an initial in-group needs to be
+ selected.
+ This group will be a clique or an almost-clique.
+ But how are we to find it? How similar do words need to be, in order to
+ belong to a clique? Thus, a graph of delta vs clique size.
+ Given a specific word-pair, it will have some common-MI...etc.
 \end_layout
 
 \begin_layout Section*
