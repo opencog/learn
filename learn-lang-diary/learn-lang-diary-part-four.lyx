@@ -5421,10 +5421,74 @@ Clique Sizes (Oct 2021)
 \begin_layout Standard
 The democratic-voting idea suggests that an initial in-group needs to be
  selected.
- This group will be a clique or an almost-clique.
+ This in-group will be a clique or an almost-clique.
  But how are we to find it? How similar do words need to be, in order to
- belong to a clique? Thus, a graph of delta vs clique size.
- Given a specific word-pair, it will have some common-MI...etc.
+ belong to an in-group? Here, we explore the size of the clique, vs.
+ the allowed variation of MI within the clique.
+\end_layout
+
+\begin_layout Standard
+Consider some given initial word-pair, and a threshold 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ The initial pair has some initial value of common-MI 
+\begin_inset Formula $S_{0}$
+\end_inset
+
+.
+ A search is performed to find words that have a common-MI greater than
+ 
+\begin_inset Formula $S_{0}-\varepsilon$
+\end_inset
+
+ to at least 70% of the members of the current in-group.
+ To admit a third word into the ingroup, the common-MI must be greater than
+ 
+\begin_inset Formula $S_{0}-\varepsilon$
+\end_inset
+
+ to both the current members.
+ To admit a fourth word, the threshold must be exceeded to at least two
+ of the three current members, and so on.
+ The formula is 
+\begin_inset Formula $vote=\left\lfloor 0.7n+0.5\right\rfloor $
+\end_inset
+
+ where 
+\begin_inset Formula $n$
+\end_inset
+
+ is the number of members in the current in-group.
+ In general, the larger that 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ gets, the larger the ingroup will be.
+ The process is not monotomic, since it depends on the order in which words
+ are added.
+ For smalle 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, a tight-knit groupd might be formed.
+ As 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ gets larger, one of the early members might be quite different, and becming
+ a peer to it might be a challenge, thus decreasing the size of the in-group!
+ These decreases are visible in the chart below.
+ To avoid this effect, the words are ranked by frequency first, so that
+ the most frequent words are considered first.
+\end_layout
+
+\begin_layout Standard
+The chart below shows the results for eight different initial word-pairs.
+ All eight of these appear in the top-15 list of pairs with the highest
+ common-MI.
+ Many are punctuation; this is inevitable, as punctuation is very frequent.
 \end_layout
 
 \begin_layout Standard
@@ -5439,8 +5503,9 @@ The democratic-voting idea suggests that an initial in-group needs to be
 \end_layout
 
 \begin_layout Standard
-So...interesting ...
- There are two asymptotes 
+So...
+ interesting ...
+ There are two asymptotes: 
 \begin_inset Quotes eld
 \end_inset
 
@@ -5457,11 +5522,44 @@ in-of
 \end_inset
 
  are one, and all the others land on the other.
- Note that the aasymptotes are just lists of garbage words.
+ Note that the asymptotes are just lists of garbage words.
  Still, its curious that there are two.
- Some clusters grow easily - she-he and in-of both grew quick.
- Is was took longer to take off.
- Here are some samples, above which things look iffy.
+ Some clusters grow easily - 
+\begin_inset Quotes eld
+\end_inset
+
+she-he'
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+in-of
+\begin_inset Quotes erd
+\end_inset
+
+ both grew quickly.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Is-was
+\begin_inset Quotes erd
+\end_inset
+
+ took longer to take off.
+ Here are some samples, taken at the maximum value of 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ at which the results look good.
+ That is, for larger 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+, the ingroup starts looking ugly.
 \end_layout
 
 \begin_layout Standard
@@ -5782,25 +5880,35 @@ Yes We This They You What She And The He I It There
 \begin_inset VSpace defskip
 \end_inset
 
-The two collections of punctuation started with different seds, but converged
- to the same place.
+The two collections of punctuation started with different seed pairs, but
+ converged to the same place.
  One started with comma-semicolon, the other started with period-question-mark.
- The last one is curious – its all sentence-starter words.
- 
+ The last one is curious – its all sentence-starter words (That's why they
+ are capitalized).
 \end_layout
 
 \begin_layout Standard
-A reasonable merge strategy might be to start with a threshold of 1.0, merge
- what one can, and then enlarge some more.
- As alway, the question is when to stop enlarging....
+The above does not teach a clear lesson in how to pick 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ Picking a fixed value does not seem like a good idea.
+ A reasonable merge strategy might be to start with 
+\begin_inset Formula $\varepsilon=1$
+\end_inset
+
+, merge what there is, and then enlarge some more.
+ As always, the question is when to stop enlarging....
  no answer for that, yet.
  There are two indicators: stop enlarging just before the size of the group
  increases rapidly, and stop enlarging when the size of the group suddenly
  drops.
+ This seems to be viable – the calculations are relatively fast.
 \end_layout
 
 \begin_layout Standard
-This seems to be viable – the calculations are relatively fast.
+But what if ...
 \end_layout
 
 \begin_layout Section*

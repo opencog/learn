@@ -174,11 +174,12 @@
 	(format csv "#\n# Initial 2-clique: ~A <<>> ~A\n#\n"
 		(cog-name WA) (cog-name WB))
 	(format csv "# Tightness = ~6F\n" TIGHT)
+	(format csv "# This is using plain MI NOT common-MI\n")
 	(format csv "#\n# idx\tepsilon\tsize\twords\n")
 	(for-each
 		(lambda (N)
-			(define epsi (* 0.1 N))
-			(define in-group (find-in-group common-MI
+			(define epsi (+ (* 0.1 N) -2))
+			(define in-group (find-in-group mi-sim ; common-MI
 				WA WB
 				epsi TIGHT words-with-sims))
 			(format csv "~D\t~6F\t~D\t{ "
@@ -190,14 +191,14 @@
 		(iota 100))
 	(close csv))
 
-(in-group-csv "/tmp/grp-is-was.dat" (Word "is") (Word "was") 0.7)
-(in-group-csv "/tmp/grp-and-but.dat" (Word "and") (Word "but") 0.7)
-(in-group-csv "/tmp/grp-in-of.dat" (Word "in") (Word "of") 0.7)
-(in-group-csv "/tmp/grp-she-he.dat" (Word "she") (Word "he") 0.7)
-(in-group-csv "/tmp/grp-comma-semi.dat" (Word ",") (Word ";") 0.7)
-(in-group-csv "/tmp/grp-period-quest.dat" (Word ".") (Word "?") 0.7)
-(in-group-csv "/tmp/grp-plus-minus.dat" (Word "+") (Word "—") 0.7)
-(in-group-csv "/tmp/grp-roman-i-ii.dat" (Word "i") (Word "ii") 0.7)
-(in-group-csv "/tmp/grp-It-There.dat" (Word "It") (Word "There") 0.7)
+(in-group-csv "/tmp/gmi-is-was.dat" (Word "is") (Word "was") 0.7)
+(in-group-csv "/tmp/gmi-and-but.dat" (Word "and") (Word "but") 0.7)
+(in-group-csv "/tmp/gmi-in-of.dat" (Word "in") (Word "of") 0.7)
+(in-group-csv "/tmp/gmi-she-he.dat" (Word "she") (Word "he") 0.7)
+(in-group-csv "/tmp/gmi-comma-semi.dat" (Word ",") (Word ";") 0.7)
+(in-group-csv "/tmp/gmi-period-quest.dat" (Word ".") (Word "?") 0.7)
+(in-group-csv "/tmp/gmi-plus-minus.dat" (Word "+") (Word "—") 0.7)
+(in-group-csv "/tmp/gmi-roman-i-ii.dat" (Word "i") (Word "ii") 0.7)
+(in-group-csv "/tmp/gmi-It-There.dat" (Word "It") (Word "There") 0.7)
 
 ========== !#
