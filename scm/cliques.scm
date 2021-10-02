@@ -23,7 +23,7 @@
   score for those items.  Similarities are assumed to be symmetric,
   that is, (SIMFUN a b) == (SIMFUN b a). Usually, the similarity is
   a floating point number, but in fact it can be anything that is
-  comparable with greter-than.
+  comparable with greater-than.
 "
 	; Given the current ingroup INGRP and the CANDIDATE, return #t
 	; if the candidate has a similarity score above MINSCORE to at
@@ -50,17 +50,23 @@
 		(if (equal? 2 insz) 2
 			(inexact->exact (round (* TIGHTNESS insz)))))
 
+	; Remove WA, WB from the list of candidates
+	(define clean-cand
+		(filter (lambda (cand)
+			(not (or (equal? cand WA) (equal? cand WB))))
+		CANDIDATES))
+
 	; Starting with the minimal clique of `(list WA WB)`, create
 	; an ingroup by adding members to the ingroup if that candidate
 	; has a score no less than `minscore` to at least `TIGHT` members
 	; of the group.
 	(fold
-		(lambda (INGRP CAND)
+		(lambda (CAND INGRP)
 			(if (accept INGRP CAND minscore (get-tight INGRP))
 				(cons CAND INGRP)
 				INGRP))
 		(list WA WB)
-		CANDIDATES)
+		clean-cand)
 )
 
 ; ---------------------------------------------------------------
@@ -107,29 +113,33 @@
 ; Get all of the pairs with similarities on them.
 ; Same thing as `(cog-get-atoms 'Similarity)`
 (define all-sim-pairs (sim 'get-all-elts))
+(length all-sim-pairs)
 ;
 ; Exlude self-similar pairs.
 (define uniq-sims
 	(filter (lambda (SIM) (not (equal? (gar SIM) (gdr SIM)))) all-sim-pairs))
+(length uniq-sims)
 
 ; The precomputed scores are word-pair MI's. But what we really want
 ; are the common-MI's. We'll have to compute that. I guess we could
 ; have cached that ... but didn't.
 
+(define (mi-sim WA WB)
+	(define fmi (sap 'pair-count WA WB))
+	(if fmi (cog-value-ref fmi 0) -1e20))
+
 (define ol2 (/ 1.0 (log 2.0)))
 (define (log2 x)
-   (if (< 0 x) (* (log x) ol2) (- (inf))))
+	(if (< 0 x) (* (log x) ol2) (- (inf))))
 
 (define trp (add-transpose-api sha))
 (define tot-mmt (trp 'total-mmt-count))
 (define ltot-mmt (log2 tot-mmt))
 (define (marg-mmt WRD)
-   (- (log2 (trp 'mmt-count WRD)) ltot-mmt))
+	(- (log2 (trp 'mmt-count WRD)) ltot-mmt))
 
 (define (common-MI WA WB)
-   (+ (cog-value-ref (sap 'pair-count WA WB) 0)
-      (* 0.5 (+ (marg-mmt WA) (marg-mmt WB) ltot-mmt))))
-
+	(+ (mi-sim WA WB) (* 0.5 (+ (marg-mmt WA) (marg-mmt WB) ltot-mmt))))
 
 ;; Create a sorted list of ranked pairs.
 ;; We want to find the top-ranked word-pair.
@@ -142,10 +152,44 @@
 (define sorted-pairs
 	(rank-pairs (lambda (SIM) (common-MI (gar SIM) (gdr SIM)))))
 
-;; What's the top-ranked pair?
-(car sorted-pairs)
+;; What are the top-ranked pairs?
+(take sorted-pairs 10)
 
-(define (sim-fun WA WB) (cog-value-ref (sap 'pair-count WA WB) 0))
+; Take a look at what we're dealing with.
+(for-each
+	(lambda (PR)
+		(format #t "common-MI= ~6F ~A <<-->> ~A\n"
+			(common-MI (gar PR) (gdr PR))
+			(cog-name (gar PR))
+			(cog-name (gdr PR))))
+	(take sorted-pairs 20))
 
+; Go for it
+(define in-group (find-in-group common-MI (Word "is") (Word "was")
+	0.5  0.7 (take words-with-sims 10)))
+
+; Graph
+(define (in-group-csv FILENAME WA WB TIGHT)
+	(define csv (open FILENAME (logior O_WRONLY O_CREAT O_TRUNC)))
+	(format csv "#\n# Initial 2-clique: ~A <<>> ~A\n#\n"
+		(cog-name WA) (cog-name WB))
+	(format csv "# Tightness = ~6F\n" TIGHT)
+	(format csv "#\n# idx\tepsilon\tsize\twords\n")
+	(for-each
+		(lambda (N)
+			(define epsi (* 0.1 N))
+			(define in-group (find-in-group common-MI
+				WA WB
+				epsi TIGHT words-with-sims))
+			(format csv "~D\t~6F\t~D\t{ "
+				N epsi (length in-group))
+			(for-each (lambda (WRD) 
+				(format csv "~A " (cog-name WRD))) in-group)
+			(format csv "}\n")
+			(force-output csv))
+		(iota 100))
+	(close csv))
+
+(in-group-csv "/tmp/grp-is-was.dat" (Word "is") (Word "was") 0.7)
 
 ========== !#
