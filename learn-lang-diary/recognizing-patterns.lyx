@@ -798,7 +798,7 @@ Modeling plant development with L-systems
 \begin_inset Graphics
 	filename reco-image/citric-acid-cycle.png
 	lyxscale 50
-	width 45col%
+	width 37col%
 
 \end_inset
 
@@ -1050,13 +1050,24 @@ Sound
 \end_layout
 
 \begin_layout Frame
-Digital Signal Processing (DSP) filter trees are labeled graphs.
+Audio has graphical structure.
+\end_layout
+
+\begin_layout Frame
+Digital Signal Processing (DSP) can extract features.
 \end_layout
 
 \begin_layout Frame
 \begin_inset Graphics
 	filename reco-image/noaa-fisheries-humpback.jpg
-	width 80col%
+	width 65col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/audio-graph.eps
+	width 30col%
 
 \end_inset
 
@@ -1064,12 +1075,14 @@ Digital Signal Processing (DSP) filter trees are labeled graphs.
 \end_layout
 
 \begin_layout Frame
-\begin_inset Graphics
-	filename reco-image/audio-dsp-filtering.png
-	width 100col%
 
-\end_inset
+\end_layout
 
+\begin_layout Frame
+Where do meaningful filters come from?
+\end_layout
+
+\begin_layout Frame
 
 \end_layout
 
@@ -1100,7 +1113,7 @@ Outline:
 
 \begin_deeper
 \begin_layout Itemize
-Mutual Information AKA Entropy
+Lexcial Attraction (Mutual Information, Entropy)
 \end_layout
 
 \begin_layout Itemize
@@ -1132,7 +1145,7 @@ Composition and Recursion
 status open
 
 \begin_layout Plain Layout
-Mutual Information AKA Entropy
+Lexical Attraction AKA Entropy
 \end_layout
 
 \end_inset
@@ -1146,24 +1159,6 @@ Frequentist approach to probability
 
 \begin_layout Frame
 Origins in Corpus Linguistics, N-grams
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Deniz Yuret (1998) 
-\begin_inset Quotes eld
-\end_inset
-
-Discovery of Linguistic Relations Using Lexical Attraction
-\begin_inset Quotes erd
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Frame
@@ -1203,7 +1198,7 @@ Define
 \end_inset
 
 
-\begin_inset Formula $MI\left(w,u\right)=\log_{2}\frac{P\left(w,u\right)}{P\left(w,*\right)P\left(*,u\right)}$
+\begin_inset Formula $LA\left(w,u\right)=\log_{2}\frac{P\left(w,u\right)}{P\left(w,*\right)P\left(*,u\right)}$
 \end_inset
 
 
@@ -1219,11 +1214,31 @@ Define
 \begin_layout Frame
 
 \emph on
-Caution: This is NOT textbook mutual information!
+Lexical attraction is like mutual information, but structured.
+\emph default
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Deniz Yuret (1998) 
+\begin_inset Quotes eld
+\end_inset
+
+Discovery of Linguistic Relations Using Lexical Attraction
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
-This MI can be positive 
+This LA can be positive 
 \emph on
 or 
 \emph default
@@ -1296,7 +1311,7 @@ Cut the edges to form half-edges.
 
 \begin_deeper
 \begin_layout Standard
-Notation for Lexical entries:
+Alternative notations for Lexical entries:
 \end_layout
 
 \begin_layout Itemize
@@ -1312,7 +1327,11 @@ ball:
 \end_layout
 
 \begin_layout Itemize
-(word,disjunct) pair
+word: connector-seq is a 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ pair
 \end_layout
 
 \end_deeper
@@ -1334,9 +1353,14 @@ Accumulate counts
 
 \begin_layout Frame
 Skip-gram-like (sparse) vector: 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Itemize
 \begin_inset space \qquad{}
 \end_inset
 
@@ -1345,12 +1369,13 @@ Skip-gram-like (sparse) vector:
 \end_inset
 
 
-\begin_inset Formula $\overrightarrow{w}=p\left(w,d_{1}\right)\widehat{d_{1}}+\cdots+p\left(w,d_{n}\right)\widehat{d_{n}}$
+\begin_inset Formula $\overrightarrow{w}=P\left(w,d_{1}\right)\widehat{e_{1}}+\cdots+P\left(w,d_{n}\right)\widehat{e_{n}}$
 \end_inset
 
 
 \end_layout
 
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1372,45 +1397,87 @@ Similarity Scores
 \end_layout
 
 \begin_layout Frame
-Say 
-\emph on
-no
-\emph default
- to cosine distance when comparing word-vectors:
+Probability space is not Euclidean; it's a simplex.
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Itemize
+Dot product alone of word-vectors is insufficient.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
 \begin_inset space \qquad{}
 \end_inset
 
 
-\begin_inset Formula $\cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}p\left(w,d\right)p\left(v,d\right)$
+\begin_inset Formula $\cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}P\left(w,d\right)P\left(v,d\right)$
+\end_inset
+
+
+\begin_inset VSpace defskip
 \end_inset
 
 
 \end_layout
 
+\begin_layout Itemize
+Experimentally, its low quality.
+\end_layout
+
+\end_deeper
 \begin_layout Frame
-Probability space is not Euclidean; its a simplex.
+
 \end_layout
 
 \begin_layout Frame
-Say 
-\emph on
-yes
-\emph default
- to MI:
+\begin_inset VSpace defskip
+\end_inset
+
+Define vector-product mutual information:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
-\begin_layout Frame
+\begin_deeper
+\begin_layout Itemize
 \begin_inset space \qquad{}
 \end_inset
 
 
-\begin_inset Formula $MI\left(w,v\right)=\log_{2}\frac{\sum_{d}p\left(w,d\right)p\left(v,d\right)}{\sum_{d}p\left(w,d\right)p\left(*,d\right)\;\sum_{d}p\left(v,d\right)p\left(*,d\right)}$
+\begin_inset Formula $MI\left(w,v\right)=\log_{2}\overrightarrow{w}\cdot\overrightarrow{v}/\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\;\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)$
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Here, 
+\begin_inset Formula $\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}P\left(w,d\right)P\left(*,d\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+Distribution of (English) word-pair similarity is Gaussian!
 \end_layout
 
 \begin_layout Frame
@@ -1428,17 +1495,23 @@ yes
 
 \begin_inset Graphics
 	filename en-sims-p3/mi-dist-tsup.eps
-	width 50col%
+	width 35col%
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout Frame
-The distribution of word-pair similarity is Gaussian!
+\begin_deeper
+\begin_layout Itemize
+What's the theoretical basis? 
 \end_layout
 
+\begin_layout Itemize
+Is it a Gaussian Unitary Ensemble???
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1550,6 +1623,16 @@ Vote to include disjuncts shared by majority.
 
 \begin_layout Standard
 Yes, this actually works! There's (open) source code, datasets.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+https://github.com/opencog/learn
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_deeper
@@ -2068,5 +2151,39 @@ Shaky theoretical underpinnings
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Supplementary materials
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Filters
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename reco-image/audio-dsp-filtering.png
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
 \end_body
 \end_document
