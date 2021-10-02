@@ -5548,7 +5548,22 @@ in-of
  are one, and all the others land on the other.
  Note that the asymptotes are just lists of garbage words.
  Still, its curious that there are two.
- Some clusters grow easily - 
+ Not shown in the graph: experimentally, the asymptote is almost exactly
+ given by 
+\begin_inset Formula $\exp\left(\varepsilon/2\right)$
+\end_inset
+
+.
+ Missing theory: why? Why the natural exp? Why not something else, like
+ 
+\begin_inset Formula $2^{\varepsilon}$
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+Some clusters grow easily - 
 \begin_inset Quotes eld
 \end_inset
 
@@ -6426,6 +6441,7 @@ Words are added to the in-group one at a time, starting with the most-frequently
  By the time that the construction of the in-group is done, what is the
  difference between the highest-ranked word in the in-group, and the lowest-reak
 ed? This is graphed below.
+ It's done with commmon-MI to determine in-group membership.
 \end_layout
 
 \begin_layout Standard
@@ -6446,13 +6462,296 @@ What this chart shows is that when the in-group has fewer than 10 members,
 \emph on
 not
 \emph default
- a function, thelines can zig-zag left and right.
+ a function, the lines can zig-zag left and right.
  Some cliques are tighter than others.
 \end_layout
 
 \begin_layout Standard
 Recomendations: if we're going to compute similarity, do so in a band of
  about 200 from the diagonal.
+\end_layout
+
+\begin_layout Subsection*
+Mid-level pairs
+\end_layout
+
+\begin_layout Standard
+The above results were all for seed word-pairs that were top-ranked in terms
+ of common-MI.
+ How about something from the middle? Here are some seed word-pairs whose
+ common-MI is about 4 less than the top-ranked pairs above.
+ They are approximate in the 10K'th position of all ranked pairs (ranked
+ by common-MI).
+ They still look pretty good, in terms of English.
+ Those that have an MI of 8 below the top-ranked pair start looking like
+ garbage.
+ The only problem with this exploration is that ...
+ pairs that are 10K down are ...
+ far far from consideration.
+ Words in them are likely to get swept up much earlier.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p4-en-clique/ingroup-middle.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Shown for comparison is the old 
+\begin_inset Quotes eld
+\end_inset
+
+is-was
+\begin_inset Quotes erd
+\end_inset
+
+ group.
+ Note that the ingroups are quite large even for negative 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ This just says that these seed-pairs are likely to be swept up in earlier
+ in-group formations.
+ 
+\end_layout
+
+\begin_layout Standard
+Lets assess thier health.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+epsilon
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+size
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ingroup
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+looked had was spoke sat
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+glance look smile
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+church United sea city country people house world most town earth
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+end head same door house 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well ...
+ mixed bag.
+ In the first row, 
+\begin_inset Quotes eld
+\end_inset
+
+had was
+\begin_inset Quotes erd
+\end_inset
+
+ are likely to be swept up in some other group, leaving 
+\begin_inset Quotes eld
+\end_inset
+
+looked spoke sat
+\begin_inset Quotes erd
+\end_inset
+
+ fairly healthy.
+ In the third row, 
+\begin_inset Quotes eld
+\end_inset
+
+most
+\begin_inset Quotes erd
+\end_inset
+
+ is likely be be swept up in some other in-group; what's left looks OK.
+ The last row looks haphazard.
+ Presumably 
+\begin_inset Quotes eld
+\end_inset
+
+same
+\begin_inset Quotes erd
+\end_inset
+
+ will end up in some other in-group, but what about 
+\begin_inset Quotes eld
+\end_inset
+
+end
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
+\begin_layout Standard
+At this point, there seems to be no choice: we have to run the earlier clusters,
+ and then see what's left over.
+ Perhaps this can be done manually? So we can get a better idea? That requires
+ running 10-20 clusters by hand, and then repeating this exercise.
 \end_layout
 
 \begin_layout Section*

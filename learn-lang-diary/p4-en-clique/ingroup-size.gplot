@@ -54,27 +54,51 @@
 #################################################
 # Used to generate the the size-of-ingroup vs ranking graph.
 #
+## set term png
+## set out 'ingroup-spread.png'
+#set term postscript eps enhanced color 20
+#set out 'ingroup-spread.eps'
+#set key right bottom
+#set logscale x
+#set logscale y
+#set title "Size of Ingroup vs. Index Spread"
+#set xlabel "Size"
+#set ylabel "Index Spread"
+#set yrange [1:1400]
+#set format y "10^{%L}"
+#
+#plot "grp-is-was.dat" using 3:($5-$4) with lines lw 2 title "is - was", \
+#     "grp-and-but.dat" using 3:($5-$4) with lines lw 2 title "and - but",\
+#     "grp-in-of.dat" using 3:($5-$4) with lines lw 2 title "in - of",\
+#     "grp-she-he.dat" using 3:($5-$4) with lines lw 2 title "she - he",\
+#     "grp-comma-semi.dat" using 3:($5-$4) with lines lw 2 title ", - ;",\
+#     "grp-period-quest.dat" using 3:($5-$4) with lines lw 2 title ". - ?",\
+#     "grp-plus-minus.dat" using 3:($5-$4) with lines lw 2 title "+ - -",\
+#     "grp-roman-i-ii.dat" using 3:($5-$4) with lines lw 2 title "i - ii",\
+##     "grp-It-There.dat" using 3:($5-$4) with lines lw 2 title "It - There"
+#
+#################################################
+# Used to generate the the size-of-ingroup vs threshold graph.
+#
 # set term png
-# set out 'ingroup-spread.png'
+# set out 'ingroup-middle.png'
 set term postscript eps enhanced color 20
-set out 'ingroup-spread.eps'
-set key right bottom
-set logscale x
+set out 'ingroup-middle.eps'
+set key left top
 set logscale y
-set title "Size of Ingroup vs. Index Spread"
-set xlabel "Size"
-set ylabel "Index Spread"
-set yrange [1:1400]
+set title "Size of Ingroup vs. Threshold"
+set xlabel "Threshold"
+set ylabel "Size"
+set xrange [-2:8]
+set yrange [1:1000]
 set format y "10^{%L}"
 
-plot "grp-is-was.dat" using 3:($5-$4) with lines lw 2 title "is - was", \
-     "grp-and-but.dat" using 3:($5-$4) with lines lw 2 title "and - but",\
-     "grp-in-of.dat" using 3:($5-$4) with lines lw 2 title "in - of",\
-     "grp-she-he.dat" using 3:($5-$4) with lines lw 2 title "she - he",\
-     "grp-comma-semi.dat" using 3:($5-$4) with lines lw 2 title ", - ;",\
-     "grp-period-quest.dat" using 3:($5-$4) with lines lw 2 title ". - ?",\
-     "grp-plus-minus.dat" using 3:($5-$4) with lines lw 2 title "+ - -",\
-     "grp-roman-i-ii.dat" using 3:($5-$4) with lines lw 2 title "i - ii",\
-#     "grp-It-There.dat" using 3:($5-$4) with lines lw 2 title "It - There"
+plot "grp-is-was.dat" using 2:3 with lines lw 2 title "is - was", \
+     "grp-spoke-sat.dat" using 2:3 with lines lw 2 title "spoke - sat",\
+     "grp-look-smile.dat" using 2:3 with lines lw 2 title "look - smile",\
+     "grp-town-earth.dat" using 2:3 with lines lw 2 title "town - earth",\
+     "grp-door-house.dat" using 2:3 with lines lw 2 title "door - house"
+
+# "grp-is-was.dat" using 2:(3*exp(0.5*$2)) with lines lw 2 title "fit",\
 
 #################################################
