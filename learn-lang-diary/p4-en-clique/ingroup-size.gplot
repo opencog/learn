@@ -29,26 +29,26 @@
 #################################################
 # Used to generate the the size-of-ingroup vs threshold graph.
 #
-set term png
-set out 'in-migrp-size.png'
-# set term postscript eps enhanced color 20
-# set out 'in-migrp-size.eps'
+# set term png
+# set out 'in-migrp-size.png'
+set term postscript eps enhanced color 20
+set out 'in-migrp-size.eps'
 set key left top
 set logscale y
 set title "Size of Ingroup vs. Threshold"
 set xlabel "MI-only Threshold"
 set ylabel "Size"
-# set yrange [1:1000]
+set yrange [1:1000]
 set format y "10^{%L}"
 
 plot "gmi-is-was.dat" using 2:3 with lines lw 2 title "is - was", \
-#     "gmi-and-but.dat" using 2:3 with lines lw 2 title "and - but",\
-#     "gmi-in-of.dat" using 2:3 with lines lw 2 title "in - of",\
-#     "gmi-she-he.dat" using 2:3 with lines lw 2 title "she - he",\
-#     "gmi-comma-semi.dat" using 2:3 with lines lw 2 title ", - ;",\
-#     "gmi-period-quest.dat" using 2:3 with lines lw 2 title ". - ?",\
-#     "gmi-plus-minus.dat" using 2:3 with lines lw 2 title "+ - -",\
-#     "gmi-roman-i-ii.dat" using 2:3 with lines lw 2 title "i - ii",\
-#     "gmi-It-There.dat" using 2:3 with lines lw 2 title "It - There"
+     "gmi-and-but.dat" using 2:3 with lines lw 2 title "and - but",\
+     "gmi-in-of.dat" using 2:3 with lines lw 2 title "in - of",\
+     "gmi-she-he.dat" using 2:3 with lines lw 2 title "she - he",\
+     "gmi-comma-semi.dat" using 2:3 with lines lw 2 title ", - ;",\
+     "gmi-period-quest.dat" using 2:3 with lines lw 2 title ". - ?",\
+     "gmi-plus-minus.dat" using 2:3 with lines lw 2 title "+ - -",\
+     "gmi-roman-i-ii.dat" using 2:3 with lines lw 2 title "i - ii",\
+     "gmi-It-There.dat" using 2:3 with lines lw 2 title "It - There"
 
 #################################################
