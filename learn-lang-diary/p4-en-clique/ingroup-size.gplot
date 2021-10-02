@@ -1,0 +1,24 @@
+# set term png small color
+
+#################################################
+# Used to generate the the distribution of self-MI graph.
+#
+set term png
+set out 'grp-is-was.png'
+# set term postscript eps enhanced color 24
+# set out 'grp-is-was.eps'
+set key left top
+set logscale y
+set title "Size of Ingroup vs. Threshold"
+set xlabel "Threshold"
+set ylabel "Size"
+# set yrange [1:1000]
+set format y "10^{%L}"
+
+plot "grp-is-was.dat" using 2:3 with lines lw 2 title "is-was", \
+     "grp-and-but.dat" using 2:3 with lines lw 2 title "and-but",\
+     "grp-in-of.dat" using 2:3 with lines lw 2 title "in-of",\
+     "grp-she-he.dat" using 2:3 with lines lw 2 title "she-he",\
+     "grp-comma-semi.dat" using 2:3 with lines lw 2 title ",-;",\
+
+#################################################

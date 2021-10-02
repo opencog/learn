@@ -191,5 +191,13 @@
 	(close csv))
 
 (in-group-csv "/tmp/grp-is-was.dat" (Word "is") (Word "was") 0.7)
+(in-group-csv "/tmp/grp-and-but.dat" (Word "and") (Word "but") 0.7)
+(in-group-csv "/tmp/grp-in-of.dat" (Word "in") (Word "of") 0.7)
+(in-group-csv "/tmp/grp-she-he.dat" (Word "she") (Word "he") 0.7)
+(in-group-csv "/tmp/grp-comma-semi.dat" (Word ",") (Word ";") 0.7)
+(in-group-csv "/tmp/grp-period-quest.dat" (Word ".") (Word "?") 0.7)
+(in-group-csv "/tmp/grp-plus-minus.dat" (Word "+") (Word "—") 0.7)
+(in-group-csv "/tmp/grp-roman-i-ii.dat" (Word "i") (Word "ii") 0.7)
+(in-group-csv "/tmp/grp-It-There.dat" (Word "It") (Word "There") 0.7)
 
 ========== !#
