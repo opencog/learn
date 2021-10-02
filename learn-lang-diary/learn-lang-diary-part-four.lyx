@@ -1010,8 +1010,28 @@ Consistent merging requires that merging must be done with shapes.
  it appears to be substantially similar.
  Many (most?) of the same pairs show up in the top-60 list, with similar
  rankings.
- There are some notable differences, sme apparently making things worse,
+ There are some notable differences, some apparently making things worse,
  others making things bettter.
+\end_layout
+
+\begin_layout Standard
+FYI.
+ Of the top-ranked 1200 words, there were 51990 word pairs with no overlap
+ whatsoever, and 668610 with some overlap.
+ The total is as expected, a triangle-number: 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+668610 + 51990 = 720600 = 1200 * 1201 / 2.
 \end_layout
 
 \begin_layout Section*
@@ -5484,6 +5504,10 @@ Consider some given initial word-pair, and a threshold
  the most frequent words are considered first.
 \end_layout
 
+\begin_layout Subsection*
+Common-MI in-groups
+\end_layout
+
 \begin_layout Standard
 The chart below shows the results for eight different initial word-pairs.
  All eight of these appear in the top-15 list of pairs with the highest
@@ -5931,6 +5955,10 @@ The above does not teach a clear lesson in how to pick
  increases rapidly, and stop enlarging when the size of the group suddenly
  drops.
  This seems to be viable – the calculations are relatively fast.
+\end_layout
+
+\begin_layout Subsection*
+Plain-MI in-groups
 \end_layout
 
 \begin_layout Standard
@@ -6388,8 +6416,42 @@ The other groups seem to have a slightly different flavor, but nothing quite
  But we are not yet ready to pursue semantics; we're still working on syntax.
 \end_layout
 
+\begin_layout Subsection*
+In-group ranking spread
+\end_layout
+
 \begin_layout Standard
-Reccomendations: if we're going to compute similarity, do so in a band of
+Words are added to the in-group one at a time, starting with the most-frequently
+ occuring words.
+ By the time that the construction of the in-group is done, what is the
+ difference between the highest-ranked word in the in-group, and the lowest-reak
+ed? This is graphed below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p4-en-clique/ingroup-spread.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+What this chart shows is that when the in-group has fewer than 10 members,
+ all of those members are within 100 of each other in the word-frequency
+ ranking (with exceptions as visibile in the graph.) Note this is 
+\emph on
+not
+\emph default
+ a function, thelines can zig-zag left and right.
+ Some cliques are tighter than others.
+\end_layout
+
+\begin_layout Standard
+Recomendations: if we're going to compute similarity, do so in a band of
  about 200 from the diagonal.
 \end_layout
 

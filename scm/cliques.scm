@@ -156,17 +156,24 @@
 (take sorted-pairs 10)
 
 ; Take a look at what we're dealing with.
-(for-each
-	(lambda (PR)
-		(format #t "common-MI= ~6F ~A <<-->> ~A\n"
-			(common-MI (gar PR) (gdr PR))
-			(cog-name (gar PR))
-			(cog-name (gdr PR))))
-	(take sorted-pairs 20))
+(define (prt-sorted-pairs N)
+	(for-each
+		(lambda (PR)
+			(format #t "common-MI= ~6F ~A <<-->> ~A\n"
+				(common-MI (gar PR) (gdr PR))
+				(cog-name (gar PR))
+				(cog-name (gdr PR))))
+		(drop (take sorted-pairs (+ N 20)) N)))
+
+(prt-sorted-pairs 0)
 
 ; Go for it
 (define in-group (find-in-group common-MI (Word "is") (Word "was")
 	0.5  0.7 (take words-with-sims 10)))
+
+; Given a word, what is it's ranking?
+(define (rank-of-word WRD)
+	(list-index (lambda (RW) (equal? WRD RW)) words-with-sims))
 
 ; Graph
 (define (in-group-csv FILENAME WA WB TIGHT)
@@ -174,16 +181,23 @@
 	(format csv "#\n# Initial 2-clique: ~A <<>> ~A\n#\n"
 		(cog-name WA) (cog-name WB))
 	(format csv "# Tightness = ~6F\n" TIGHT)
-	(format csv "# This is using plain MI NOT common-MI\n")
-	(format csv "#\n# idx\tepsilon\tsize\twords\n")
+	(format csv "# This is using common-MI to determine in-group membership.\n")
+	; (format csv "# This is using plain MI NOT common-MI\n")
+	(format csv "#\n# idx\tepsilon\tsize\tmin-index\tmax-index\twords\n")
 	(for-each
 		(lambda (N)
 			(define epsi (+ (* 0.1 N) -2))
-			(define in-group (find-in-group mi-sim ; common-MI
+			; (define epsi (* 0.1 N))
+			(define in-group (find-in-group common-MI ;;;; mi-sim
 				WA WB
 				epsi TIGHT words-with-sims))
-			(format csv "~D\t~6F\t~D\t{ "
-				N epsi (length in-group))
+			(define max-idx
+				(fold (lambda (W MAXI) (max MAXI (rank-of-word W))) -1000 in-group))
+			(define min-idx
+				(fold (lambda (W MINI) (min MINI (rank-of-word W))) 1000 in-group))
+
+			(format csv "~D\t~6F\t~D\t~D\t~D\t{ "
+				N epsi (length in-group) min-idx max-idx)
 			(for-each (lambda (WRD) 
 				(format csv "~A " (cog-name WRD))) in-group)
 			(format csv "}\n")
@@ -191,14 +205,19 @@
 		(iota 100))
 	(close csv))
 
-(in-group-csv "/tmp/gmi-is-was.dat" (Word "is") (Word "was") 0.7)
-(in-group-csv "/tmp/gmi-and-but.dat" (Word "and") (Word "but") 0.7)
-(in-group-csv "/tmp/gmi-in-of.dat" (Word "in") (Word "of") 0.7)
-(in-group-csv "/tmp/gmi-she-he.dat" (Word "she") (Word "he") 0.7)
-(in-group-csv "/tmp/gmi-comma-semi.dat" (Word ",") (Word ";") 0.7)
-(in-group-csv "/tmp/gmi-period-quest.dat" (Word ".") (Word "?") 0.7)
-(in-group-csv "/tmp/gmi-plus-minus.dat" (Word "+") (Word "—") 0.7)
-(in-group-csv "/tmp/gmi-roman-i-ii.dat" (Word "i") (Word "ii") 0.7)
-(in-group-csv "/tmp/gmi-It-There.dat" (Word "It") (Word "There") 0.7)
+(in-group-csv "/tmp/grp-is-was.dat" (Word "is") (Word "was") 0.7)
+(in-group-csv "/tmp/grp-and-but.dat" (Word "and") (Word "but") 0.7)
+(in-group-csv "/tmp/grp-in-of.dat" (Word "in") (Word "of") 0.7)
+(in-group-csv "/tmp/grp-she-he.dat" (Word "she") (Word "he") 0.7)
+(in-group-csv "/tmp/grp-comma-semi.dat" (Word ",") (Word ";") 0.7)
+(in-group-csv "/tmp/grp-period-quest.dat" (Word ".") (Word "?") 0.7)
+(in-group-csv "/tmp/grp-plus-minus.dat" (Word "+") (Word "—") 0.7)
+(in-group-csv "/tmp/grp-roman-i-ii.dat" (Word "i") (Word "ii") 0.7)
+(in-group-csv "/tmp/grp-It-There.dat" (Word "It") (Word "There") 0.7)
+
+(in-group-csv "/tmp/grp-spoke-sat.dat" (Word "spoke") (Word "sat") 0.7)
+(in-group-csv "/tmp/grp-look-smile.dat" (Word "look") (Word "smile") 0.7)
+(in-group-csv "/tmp/grp-town-earth.dat" (Word "town") (Word "earth") 0.7)
+(in-group-csv "/tmp/grp-door-house.dat" (Word "door") (Word "house") 0.7)
 
 ========== !#
