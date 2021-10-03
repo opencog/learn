@@ -772,13 +772,18 @@
 
 (define-public (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
-  make-fuzz -- Do a cosine-distance projection-merge, with a fixed
-               union-merge fraction.
+  make-fuzz -- Return an object that can perform a cosine-distance
+               projection-merge, with a fixed union-merge fraction.
 
   Uses the `merge-project` merge style. This implements a fixed
   linear interpolation between overlap-merge and union merge. Recall
   that the overlap-merge merges all disjuncts that the two parts have
-  in common, while the nion merge merges all disjuncts.
+  in common, while the union merge merges all disjuncts.
+
+  See `make-merger` for the methods supplied by this object.
+
+  Deprecated, because cosine doesn't work well, and the projection
+  merge to a non-zero union fraction also gives poor results.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -809,12 +814,12 @@
 
 (define-public (make-discrim STARS CUTOFF NOISE MIN-CNT)
 "
-  make-discrim -- Do a \"discriminating\" merge. When a word is to be
-  merged into a word class, the fraction to be merged will depend on
-  the cosine angle between the two. Effectively, there is a sigmoid
-  taper between the union-merge and the intersection-merge. The more
-  similar they are, the more of a union merge; the less similar the
-  more of an intersection merge.
+  make-discrim -- Return an object that can perform a \"discriminating\"
+  merge. When a word is to be merged into a word class, the fraction
+  to be merged will depend on the cosine angle between the two.
+  Effectively, there is a sigmoid taper between the union-merge and
+  the intersection-merge. The more similar they are, the more of a
+  union merge; the less similar the more of an intersection merge.
 
   The idea is that if two words are highly similar, they really should
   be taken together. If they are only kind-of similar, then maybe one
@@ -823,6 +828,11 @@
 
   Uses the `merge-discrim` merge style; the merge fraction is a sigmoid
   taper.
+
+  See `make-merger` for the methods supplied by this object.
+
+  Deprecated, because cosine doesn't work well, and the projection
+  merge to a non-zero union fraction also gives poor results.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -855,13 +865,18 @@
 
 (define-public (make-mifuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
-  make-mifuzz -- Do mutual-information projection-merge, with a fixed
-                 union-merge fraction.
+  make-mifuzz -- Return an object that can perform a mutual-information
+                 projection-merge, with a fixed union-merge fraction.
 
   Uses the `merge-project` merge style. This implements a fixed
   linear interpolation between overlap-merge and union merge. Recall
   that the overlap-merge merges all disjuncts that the two parts have
   in common, while the union merge merges all disjuncts.
+
+  See `make-merger` for the methods supplied by this object.
+
+  Deprecated, because the projection merge to a non-zero union
+  fraction gives poor results.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -899,8 +914,8 @@
 
 (define-public (make-midisc STARS CUTOFF NOISE MIN-CNT)
 "
-  make-midisc -- Do mutual-information projection-merge, with a
-                 tapered union-merge fraction.
+  make-midisc -- Return an object that can perform a mutual-information
+                 projection-merge, with a tapered union-merge fraction.
 
   Uses the `merge-project` merge style. This adds a very small amount
   of the union-merge to the overlap-merge.  Recall that the
@@ -914,6 +929,11 @@
   very roughly, the MI between the cluster, and the remainder of a and b
   after merging will be less than CUTOFF ... roughly. The formula is
   an inexact guesstimate. This could be improved.
+
+  See `make-merger` for the methods supplied by this object.
+
+  Deprecated, because the projection merge to a non-zero union
+  fraction gives poor results.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -977,6 +997,8 @@
   Use `merge-project` style merging, with linear taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
+
+  See `make-merger` for the methods supplied by this object.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
