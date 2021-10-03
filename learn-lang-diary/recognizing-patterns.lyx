@@ -1327,7 +1327,7 @@ ball:
 \end_layout
 
 \begin_layout Itemize
-word: connector-seq is a 
+word: connector-seq; is a 
 \begin_inset Formula $\left(w,d\right)$
 \end_inset
 
@@ -1402,7 +1402,7 @@ Probability space is not Euclidean; it's a simplex.
 
 \begin_deeper
 \begin_layout Itemize
-Dot product alone of word-vectors is insufficient.
+Dot product of word-vectors is insufficient.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1425,7 +1425,7 @@ Dot product alone of word-vectors is insufficient.
 \end_layout
 
 \begin_layout Itemize
-Experimentally, its low quality.
+Experimentally, cosine disttance low quality.
 \end_layout
 
 \end_deeper
@@ -1450,7 +1450,7 @@ Define vector-product mutual information:
 \end_inset
 
 
-\begin_inset Formula $MI\left(w,v\right)=\log_{2}\overrightarrow{w}\cdot\overrightarrow{v}/\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\;\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)$
+\begin_inset Formula $MI\left(w,v\right)=\log_{2}\overrightarrow{w}\cdot\overrightarrow{v}\left/\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\;\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)\right.$
 \end_inset
 
 
@@ -1465,7 +1465,7 @@ Here,
 \begin_inset Formula $\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}P\left(w,d\right)P\left(*,d\right)$
 \end_inset
 
-
+ 
 \end_layout
 
 \end_deeper
@@ -1504,11 +1504,7 @@ Distribution of (English) word-pair similarity is Gaussian!
 
 \begin_deeper
 \begin_layout Itemize
-What's the theoretical basis? 
-\end_layout
-
-\begin_layout Itemize
-Is it a Gaussian Unitary Ensemble???
+What's the theoretical basis for this? Is it a GUE ???
 \end_layout
 
 \end_deeper
@@ -1564,6 +1560,14 @@ They encode conventional notions of syntax:
 
 \begin_layout Frame
 Agglomerate clusters using ranked similarity:
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
@@ -1575,7 +1579,7 @@ Agglomerate clusters using ranked similarity:
 \end_inset
 
 
-\begin_inset Formula $\mbox{ranked}MI\left(w,v\right)=\log_{2}\frac{\sum_{d}p\left(w,d\right)p\left(v,d\right)}{\sqrt{\sum_{d}p\left(w,d\right)p\left(*,d\right)\;\sum_{d}p\left(v,d\right)p\left(*,d\right)}}$
+\begin_inset Formula $\mbox{ranked }MI\left(w,v\right)=\log_{2}\overrightarrow{w}\cdot\overrightarrow{v}\left/\sqrt{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\;\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}\right.$
 \end_inset
 
 
@@ -1627,7 +1631,7 @@ Yes, this actually works! There's (open) source code, datasets.
 status open
 
 \begin_layout Plain Layout
-https://github.com/opencog/learn
+OpenCog Learn Project, https://github.com/opencog/learn
 \end_layout
 
 \end_inset
@@ -1882,6 +1886,12 @@ Something from Nothing
 What is a relevant audio or visual stimulus?
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+(We got lucky, working with words!) 
+\end_layout
+
+\end_deeper
 \begin_layout Frame
 Random Exploration/Mining of Filter sequences! 
 \end_layout
@@ -1913,7 +1923,11 @@ Random Exploration/Mining of Filter sequences!
 \end_layout
 
 \begin_layout Frame
-Salience == Filters with high Mutual Information!
+Salience = Filters with high Mutual Information!
+\end_layout
+
+\begin_layout Frame
+
 \end_layout
 
 \begin_layout Standard
@@ -1958,7 +1972,7 @@ symbol
 
 \begin_deeper
 \begin_layout Itemize
-It means what it is!
+It means what it is! Filters are interpretable.
 \end_layout
 
 \end_deeper
@@ -1983,7 +1997,7 @@ It means what it is!
 
 \begin_deeper
 \begin_layout Itemize
-Frame Problem!
+Solves the Frame Problem!
 \begin_inset Foot
 status open
 
@@ -1999,7 +2013,7 @@ Stanford Encyclopedia of Philosophy
 \end_layout
 
 \begin_layout Itemize
-Affordances!
+Can learn Affordances!
 \begin_inset Foot
 status open
 
@@ -2077,8 +2091,8 @@ Learned Stimulus-Response AI (SRAI)
 status open
 
 \begin_layout Plain Layout
-Metaphorical example only: Yes, Mel'čuk's Meaning Text Theory (MTT) would
- be bettter.
+Metaphorical example: Mel'čuk's Meaning Text Theory (MTT) SemR + Lexical
+ Functions (LF) would be bettter.
 \end_layout
 
 \end_inset
@@ -2109,7 +2123,7 @@ Part Four: Conclusions
 
 \begin_deeper
 \begin_layout Itemize
-Everything is a graph!
+Leverage idea that everything is a graph!
 \end_layout
 
 \begin_layout Itemize
@@ -2117,7 +2131,7 @@ Discern graph structure by frequentist observations!
 \end_layout
 
 \begin_layout Itemize
-Generalize recurring themes by similarity!
+Naively generalize recurring themes by MI-similarity clustering!
 \end_layout
 
 \begin_layout Itemize
@@ -2125,7 +2139,7 @@ Generalize recurring themes by similarity!
 \end_layout
 
 \begin_layout Itemize
-Repeat!
+Repeat! (Abstract to next hierarchical level of pair-wise relations.)
 \end_layout
 
 \end_deeper
@@ -2134,20 +2148,21 @@ Repeat!
 \end_layout
 
 \begin_layout Frame
-Issues:
+Issues blocking forward progress:
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Lack of adequate software
+Better software inrastructure is needed; running experiments is hard!
 \end_layout
 
 \begin_layout Itemize
-Lack of engineering effort
+Engineering can solve many basic performance and scalability issues.
 \end_layout
 
 \begin_layout Itemize
-Shaky theoretical underpinnings
+Shaky or completely absent theoretical underpinnings for most experimental
+ results.
 \end_layout
 
 \end_deeper
@@ -2167,12 +2182,44 @@ Supplementary materials
 status open
 
 \begin_layout Plain Layout
-Filters
+Part Five: Supplementary Materials
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Frame
+Audio Filters
+\end_layout
+
+\begin_layout Frame
+MTT SemR
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Audio Filters
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+A stereotypical audio processing filter sequence:
 \end_layout
 
 \begin_layout Frame
@@ -2182,6 +2229,167 @@ Filters
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Meaning-Text Theory
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Igor Mel’čuk
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename reco-image/Meaningtext.gif
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Lexical Functions
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Syn(helicopter) = copter, chopper
+\end_layout
+
+\begin_layout Itemize
+A0(city) = urban
+\end_layout
+
+\begin_layout Itemize
+S0(analyze) = analysis
+\end_layout
+
+\begin_layout Itemize
+Adv0(followV [N]) = after [N]
+\end_layout
+
+\begin_layout Itemize
+S1(teach) = teacher
+\end_layout
+
+\begin_layout Itemize
+S2(teach) = subject/matter 
+\end_layout
+
+\begin_layout Itemize
+S3(teach) = pupil 
+\end_layout
+
+\begin_layout Itemize
+...
+\end_layout
+
+\begin_layout Standard
+More sophisticated than Predicate-Argument structure
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Factoring the Word-Disjunct Matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Naively:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Curry–Lambek–Howard Correspondance
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Each of these have a corresponding mate:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+A specific Category (e.g.
+ Cartesian Category, Tensor Category)
+\end_layout
+
+\begin_layout Itemize
+An 
+\begin_inset Quotes eld
+\end_inset
+
+internal language
+\begin_inset Quotes erd
+\end_inset
+
+ (e.g.
+ Simply Typed Lambda Calculus)
+\end_layout
+
+\begin_layout Itemize
+A syntax
+\end_layout
+
+\begin_layout Itemize
+A logic (e.g.
+ Classical Logic, Linear Logic)
+\end_layout
+
+\begin_layout Itemize
+Notions of Currying, Topology (Scott Topology)
+\end_layout
+
+\end_deeper
+\begin_layout Frame
 
 \end_layout
 
