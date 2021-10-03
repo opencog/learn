@@ -21,6 +21,14 @@
 ; and in the general discussion of what this code does. Otherwise, what
 ; to merge, and where to put the merger results are defined by LLOBJ.
 ;
+; TODO: This code implements the "projection merge" strategy, but the
+; latest results indicate that this does not improve quality all that
+; much, if at all. So the latest merge style `comi` just disables
+; the projection merge by setting the union-frac to zero.  Thus, the
+; code in this file could be simplified by ripping out all the
+; union-merge stuff.  Anyway, the democratic-vote idea will require
+; explicit lists of disjuncts to merge, so this needs a rewrite, anyway.
+;
 ; Orthogonal merging
 ; ------------------
 ; In this merge strategy, `w` is decomposed into `s` and `t` by
@@ -780,10 +788,13 @@
   that the overlap-merge merges all disjuncts that the two parts have
   in common, while the union merge merges all disjuncts.
 
-  See `make-merger` for the methods supplied by this object.
-
   Deprecated, because cosine doesn't work well, and the projection
   merge to a non-zero union fraction also gives poor results.
+
+  Caution: this has been hacked to assume shapes (the #t flag is
+  passed) and so this is not backwards compat with earlier behavior!
+
+  See `make-merger` for the methods supplied by this object.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -829,10 +840,13 @@
   Uses the `merge-discrim` merge style; the merge fraction is a sigmoid
   taper.
 
-  See `make-merger` for the methods supplied by this object.
-
   Deprecated, because cosine doesn't work well, and the projection
   merge to a non-zero union fraction also gives poor results.
+
+  Caution: this has been hacked to assume shapes (the #t flag is
+  passed) and so this is not backwards compat with earlier behavior!
+
+  See `make-merger` for the methods supplied by this object.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -873,10 +887,13 @@
   that the overlap-merge merges all disjuncts that the two parts have
   in common, while the union merge merges all disjuncts.
 
-  See `make-merger` for the methods supplied by this object.
-
   Deprecated, because the projection merge to a non-zero union
   fraction gives poor results.
+
+  Caution: this has been hacked to assume shapes (the #t flag is
+  passed) and so this is not backwards compat with earlier behavior!
+
+  See `make-merger` for the methods supplied by this object.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -930,10 +947,13 @@
   after merging will be less than CUTOFF ... roughly. The formula is
   an inexact guesstimate. This could be improved.
 
-  See `make-merger` for the methods supplied by this object.
-
   Deprecated, because the projection merge to a non-zero union
   fraction gives poor results.
+
+  Caution: this has been hacked to assume shapes (the #t flag is
+  passed) and so this is not backwards compat with earlier behavior!
+
+  See `make-merger` for the methods supplied by this object.
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
@@ -987,8 +1007,8 @@
 
 (define-public (make-disinfo STARS CUTOFF NOISE MIN-CNT)
 "
-  make-disinfo -- Do a \"discriminating\" merge, using MI for
-  similarity.
+  make-disinfo -- Return an object that can perform a \"discriminating\"
+                  merge, using MI for similarity.
 
   Deprecated. Based on diary results, this appears to give poor results.
   Suggest using either `make-mifuzz` with a zero or a very small union
@@ -997,6 +1017,9 @@
   Use `merge-project` style merging, with linear taper of the union-merge.
   This is the same as `merge-discrim` above, but using MI instead
   of cosine similarity.
+
+  Caution: this has been hacked to assume shapes (the #t flag is
+  passed) and so this is not backwards compat with earlier behavior!
 
   See `make-merger` for the methods supplied by this object.
 
@@ -1008,6 +1031,64 @@
 
   NOISE is the smallest observation count, below which counts
   will not be divided up, if a merge is performed.
+
+  MIN-CNT is the minimum count (l1-norm) of the observations of
+  disjuncts that a word is allowed to have, to even be considered.
+"
+	(define pss (add-support-api STARS))
+	(define pmi (add-symmetric-mi-compute STARS))
+	(define pti (add-transpose-api STARS))
+	(define ptc (add-transpose-compute STARS))
+
+	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
+	(define (mpred WORD-A WORD-B)
+		(is-similar? get-mi CUTOFF WORD-A WORD-B))
+
+	(define total-mmt-count (pti 'total-mmt-count))
+	(define ol2 (/ 1.0 (log 2.0)))
+	(define (log2 x) (* (log x) ol2))
+
+	; The self-MI is just the same as (get-mi wrd wrd).
+	; The below is faster than calling `get-mi`; it uses
+	; cached values. Still, it would be better if we
+	; stored a cached self-mi value.
+	(define (get-self-mi wrd)
+		(define len (pss 'right-length wrd))
+		(define mmt (pti 'mmt-count wrd))
+		(log2 (/ (* len len total-mmt-count) (* mmt mmt))))
+
+	; The fraction to merge is a linear ramp, starting at zero
+	; at the cutoff, and ramping up to one when these are very
+	; similar.
+	(define (mi-fraction WA WB)
+		(define milo (min (get-self-mi WA) (get-self-mi WB)))
+		(define fmi (get-mi WA WB))
+		(/ (- fmi CUTOFF) (- milo CUTOFF)))
+
+	(define (store-mmt row)
+		(store-atom (ptc 'set-mmt-marginals row))
+		(store-atom (ptc 'set-mmt-totals)))
+
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
+)
+
+; ---------------------------------------------------------------
+
+(define-public (make-comi STARS NOISE MIN-CNT)
+"
+  make-comi -- Return an object that always performs an `overlap`
+               merge. Upon conclusion, it will recompute the common-MI
+               for the merged rows/columns.
+
+  This assumes that the STARS object includes shapes.
+
+  See `make-merger` for the methods supplied by this object.
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
+
+  NOISE is the smallest observation count, below which counts
+  will be included into the final merge (union merge).
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a word is allowed to have, to even be considered.
