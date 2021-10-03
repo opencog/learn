@@ -1129,6 +1129,10 @@ Learning Syntax
 \end_layout
 
 \begin_layout Itemize
+Generalization as Factorization
+\end_layout
+
+\begin_layout Itemize
 Composition and Recursion
 \end_layout
 
@@ -1637,6 +1641,79 @@ OpenCog Learn Project, https://github.com/opencog/learn
 \end_inset
 
 
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Factoring the Word-Disjunct Matrix
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+The matrix 
+\begin_inset Formula $P\left(w,d\right)$
+\end_inset
+
+ can be factored:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Formula $P\left(w,d\right)=\sum_{g,g^{\prime}}P\left(w,g\right)P\left(g,g^{\prime}\right)P\left(g^{\prime},d\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $g$
+\end_inset
+
+= word class; 
+\begin_inset Formula $g^{\prime}$
+\end_inset
+
+= grammatical relation.
+\end_layout
+
+\begin_layout Itemize
+Outside is sparse, central matrix is highly connected.
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Graphics
+	filename skimage/factor.eps
+	lyxscale 50
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+This is 
+\emph on
+defacto
+\emph default
+ organization of the English, Russian dictionaries in Link Grammar!
 \end_layout
 
 \end_deeper
@@ -2308,30 +2385,6 @@ More sophisticated than Predicate-Argument structure
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\begin_inset Separator plain
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Factoring the Word-Disjunct Matrix
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Frame
-Naively:
-\end_layout
-
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
