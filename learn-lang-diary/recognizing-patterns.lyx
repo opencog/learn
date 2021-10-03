@@ -1387,6 +1387,10 @@ Skip-gram-like (sparse) vector:
 
 \end_layout
 
+\begin_layout Standard
+Plus sign is logical disjunction (choice in linear logic).
+\end_layout
+
 \end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
@@ -1664,7 +1668,7 @@ OpenCog Learn Project, https://github.com/opencog/learn
 status open
 
 \begin_layout Plain Layout
-Factoring the Word-Disjunct Matrix
+Generalization is Factorization
 \end_layout
 
 \end_inset
@@ -1673,11 +1677,11 @@ Factoring the Word-Disjunct Matrix
 \end_layout
 
 \begin_layout Frame
-Generalization is Factorization!
+
 \end_layout
 
 \begin_layout Frame
-The matrix 
+The word-disjunct matrix 
 \begin_inset Formula $P\left(w,d\right)$
 \end_inset
 
@@ -1700,15 +1704,18 @@ The matrix
 \begin_inset Formula $g^{\prime}$
 \end_inset
 
- = grammatical relation.
+ = grammatical (syntactic) relation.
 \end_layout
 
 \begin_layout Itemize
-Outside is sparse, central matrix is highly connected.
+Outsides are sparse, central matrix is highly connected.
 \end_layout
 
-\end_deeper
-\begin_layout Frame
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
 \begin_inset Graphics
 	filename skimage/factor.eps
 	lyxscale 50
@@ -1719,7 +1726,6 @@ Outside is sparse, central matrix is highly connected.
 
 \end_layout
 
-\begin_deeper
 \begin_layout Itemize
 This is the
 \emph on
@@ -1729,6 +1735,62 @@ This is the
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Key Insight about Interpretability
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+The last graph is ultimately key:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Neural nets can accurately capture the dense, interconnected central region.
+\end_layout
+
+\begin_layout Itemize
+That's 
+\emph on
+why
+\emph default
+ they work.
+\end_layout
+
+\begin_layout Itemize
+They necessarily perform dimensional reduction on the sparse left and right
+ factors.
+\end_layout
+
+\begin_layout Itemize
+By erasing/collapsing the sparse factors, neural nets become no longer interpret
+able!
+\end_layout
+
+\begin_layout Itemize
+Interpretability is about regaining (factoring back out) the sparse factors!
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Boom!
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
