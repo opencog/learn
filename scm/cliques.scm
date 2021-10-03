@@ -81,8 +81,9 @@
 (define sha (add-covering-sections pcs))
 (sha 'fetch-pairs)
 (sha 'explode-sections)
-(load-atoms-of-type 'Similarity)
 (define sap (add-similarity-api sha #f "shape-mi"))
+(sap 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
+
 (define sim (add-pair-stars sap))
 
 ;; Return a list of all words, ranked by count.
@@ -105,15 +106,19 @@
 )
 
 ;; Create a list of candidates.
+(define e (make-elapsed-secs))
 (define ranked-words (rank-words pcs))
+(e)  ;; 19 seconds
 
 ; A short list (those that we have similarities for)
 (define words-with-sims (take ranked-words 1200))
 
 ; Get all of the pairs with similarities on them.
 ; Same thing as `(cog-get-atoms 'Similarity)`
+(define e (make-elapsed-secs))
 (define all-sim-pairs (sim 'get-all-elts))
-(length all-sim-pairs)
+(e)  ;; 32 seconds
+(length all-sim-pairs) ;; 668610
 ;
 ; Exlude self-similar pairs.
 (define uniq-sims
@@ -141,14 +146,24 @@
 (define (common-MI WA WB)
 	(+ (mi-sim WA WB) (* 0.5 (+ (marg-mmt WA) (marg-mmt WB) ltot-mmt))))
 
+;; Discard all similarity pairs with low common-MI.
+(define e (make-elapsed-secs))
+(define hi-comi-sims
+	(filter (lambda (SIM) (< 12.0 (common-MI (gar SIM) (gdr SIM))))
+		 uniq-sims))
+(e) ;; 32 seconds
+(length hi-comi-sims)  ;; 1499 pairs
+
 ;; Create a sorted list of ranked pairs.
-;; We want to find the top-ranked word-pair.
+;; We want to find the top-ranked word-pairs
 (define (rank-pairs FUN)
-	(sort uniq-sims
+	(sort hi-comi-sims
 		(lambda (ATOM-A ATOM-B)
 			(> (FUN ATOM-A) (FUN ATOM-B))))
 )
 
+;; Now sort all of the available pairs. (Sorting all of them takes
+;; 15 minutes. So sort only the high common-MI pairs.)
 (define sorted-pairs
 	(rank-pairs (lambda (SIM) (common-MI (gar SIM) (gdr SIM)))))
 
@@ -198,7 +213,7 @@
 
 			(format csv "~D\t~6F\t~D\t~D\t~D\t{ "
 				N epsi (length in-group) min-idx max-idx)
-			(for-each (lambda (WRD) 
+			(for-each (lambda (WRD)
 				(format csv "~A " (cog-name WRD))) in-group)
 			(format csv "}\n")
 			(force-output csv))
