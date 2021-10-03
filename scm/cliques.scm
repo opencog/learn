@@ -70,9 +70,9 @@
 )
 
 ; ---------------------------------------------------------------
-; Example usage
+; Example usage.
 ; Assumes that a suitable number of word similarities have been
-; previously computed.
+; previously computed. Assumes that shapes are enabled and being used.
 ;
 #! ===========
 ;; General setup of data
@@ -190,7 +190,7 @@
 (define (rank-of-word WRD)
 	(list-index (lambda (RW) (equal? WRD RW)) words-with-sims))
 
-; Graph
+; Create graphs for the diary. These appear in Diary Part Four.
 (define (in-group-csv FILENAME WA WB TIGHT)
 	(define csv (open FILENAME (logior O_WRONLY O_CREAT O_TRUNC)))
 	(format csv "#\n# Initial 2-clique: ~A <<>> ~A\n#\n"
