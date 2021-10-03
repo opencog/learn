@@ -29,6 +29,10 @@
 ; union-merge stuff.  Anyway, the democratic-vote idea will require
 ; explicit lists of disjuncts to merge, so this needs a rewrite, anyway.
 ;
+; XXX Unless we decide to union-in anything below the noise-threshold
+; cutoff, in which case we want to continue doing unions, just to handle
+; this particular case.
+;
 ; Orthogonal merging
 ; ------------------
 ; In this merge strategy, `w` is decomposed into `s` and `t` by
@@ -704,7 +708,8 @@
   the algo here is unaware of. This include computation of supports,
   marginal MI and similar.
 
-  MRG-CON is #t if Connectors should also be merged.
+  MRG-CON is #t if Connectors should also be merged.  This requires
+  that the STARS object have shapes on it.
 
   This object provides the following methods:
 
@@ -920,6 +925,8 @@
 	; The fraction to merge is fixed.
 	(define (mi-fract WA WB) UNION-FRAC)
 
+	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
+	; only once, at the end of the merge.
 	(define (store-mmt row)
 		(store-atom (ptc 'set-mmt-marginals row))
 		(store-atom (ptc 'set-mmt-totals)))
@@ -996,6 +1003,8 @@
 		(define mihi (max (get-self-mi WA) (get-self-mi WB)))
 		(expt 2.0 (- CUTOFF mihi)))
 
+	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
+	; only once, at the end of the merge.
 	(define (store-mmt row)
 		(store-atom (ptc 'set-mmt-marginals row))
 		(store-atom (ptc 'set-mmt-totals)))
@@ -1065,64 +1074,8 @@
 		(define fmi (get-mi WA WB))
 		(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
-	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row))
-		(store-atom (ptc 'set-mmt-totals)))
-
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
-)
-
-; ---------------------------------------------------------------
-
-(define-public (make-comi STARS NOISE MIN-CNT)
-"
-  make-comi -- Return an object that always performs an `overlap`
-               merge. Upon conclusion, it will recompute the common-MI
-               for the merged rows/columns.
-
-  This assumes that the STARS object includes shapes.
-
-  See `make-merger` for the methods supplied by this object.
-
-  STARS is the object holding the disjuncts. For example, it could
-  be (add-dynamic-stars (make-pseudo-cset-api))
-
-  NOISE is the smallest observation count, below which counts
-  will be included into the final merge (union merge).
-
-  MIN-CNT is the minimum count (l1-norm) of the observations of
-  disjuncts that a word is allowed to have, to even be considered.
-"
-	(define pss (add-support-api STARS))
-	(define pmi (add-symmetric-mi-compute STARS))
-	(define pti (add-transpose-api STARS))
-	(define ptc (add-transpose-compute STARS))
-
-	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
-	(define (mpred WORD-A WORD-B)
-		(is-similar? get-mi CUTOFF WORD-A WORD-B))
-
-	(define total-mmt-count (pti 'total-mmt-count))
-	(define ol2 (/ 1.0 (log 2.0)))
-	(define (log2 x) (* (log x) ol2))
-
-	; The self-MI is just the same as (get-mi wrd wrd).
-	; The below is faster than calling `get-mi`; it uses
-	; cached values. Still, it would be better if we
-	; stored a cached self-mi value.
-	(define (get-self-mi wrd)
-		(define len (pss 'right-length wrd))
-		(define mmt (pti 'mmt-count wrd))
-		(log2 (/ (* len len total-mmt-count) (* mmt mmt))))
-
-	; The fraction to merge is a linear ramp, starting at zero
-	; at the cutoff, and ramping up to one when these are very
-	; similar.
-	(define (mi-fraction WA WB)
-		(define milo (min (get-self-mi WA) (get-self-mi WB)))
-		(define fmi (get-mi WA WB))
-		(/ (- fmi CUTOFF) (- milo CUTOFF)))
-
+	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
+	; only once, at the end of the merge.
 	(define (store-mmt row)
 		(store-atom (ptc 'set-mmt-marginals row))
 		(store-atom (ptc 'set-mmt-totals)))
