@@ -698,9 +698,9 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE MRG-CON)
+(define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON)
 "
-  make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE MRG-CON --
+  make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
@@ -726,7 +726,11 @@
   STORE is an extra function called, after the merge is to completed,
   and may be used to compute and store additional needed data that
   the algo here is unaware of. This include computation of supports,
-  marginal MI and similar.
+  marginal MI and similar. It is called with an argument of the altered
+  row.
+
+  FIN is an extra function called, after the merge is to completed.
+  It is called without an argument.
 
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the STARS object have shapes on it.
@@ -780,6 +784,7 @@
 
 		(STORE WA)
 		(STORE WB)
+		(FIN)
 		cls
 	)
 
@@ -845,8 +850,9 @@
 
 	(define (fixed-frac WA WB) UNION-FRAC)
 	(define (recomp W) (recompute-support STARS W))
+	(define (noop) #f)
 
-	(make-merger STARS mpred fixed-frac NOISE MIN-CNT recomp #t)
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -901,8 +907,9 @@
 		(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
 	(define (recomp W) (recompute-support STARS W))
+	(define (noop) #f)
 
-	(make-merger STARS mpred cos-fraction NOISE MIN-CNT recomp #t)
+	(make-merger STARS mpred cos-fraction NOISE MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -948,8 +955,12 @@
 
 	; The fraction to merge is fixed.
 	(define (mi-fract WA WB) UNION-FRAC)
+	(define (redo-mmt WRD) (recompute-mmt STARS WRD))
+	(define (finish)
+		(define ptc (add-transpose-compute STARS))
+		(store-atom (ptc 'set-mmt-totals)))
 
-	(make-merger pmi mpred mi-fract NOISE MIN-CNT recompute-mmt #t)
+	(make-merger pmi mpred mi-fract NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -1020,7 +1031,12 @@
 		(define mihi (max (get-self-mi WA) (get-self-mi WB)))
 		(expt 2.0 (- CUTOFF mihi)))
 
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT recompute-mmt #t)
+	(define (redo-mmt WRD) (recompute-mmt STARS WRD))
+	(define (finish)
+		(define ptc (add-transpose-compute STARS))
+		(store-atom (ptc 'set-mmt-totals)))
+
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -1084,7 +1100,12 @@
 		(define fmi (get-mi WA WB))
 		(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT recompute-mmt #t)
+	(define (redo-mmt WRD) (recompute-mmt STARS WRD))
+	(define (finish)
+		(define ptc (add-transpose-compute STARS))
+		(store-atom (ptc 'set-mmt-totals)))
+
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
