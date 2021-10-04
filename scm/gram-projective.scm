@@ -761,7 +761,9 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define single (not (eq? (acg 'cluster-type) (cog-type WA))))
+		(define wa-is-cls (eq? (acg 'cluster-type) (cog-type WA)))
+		(define wb-is-cls (eq? (acg 'cluster-type) (cog-type WB)))
+		(define is-single (and (not wa-is-cls) (not wb-is-cls)))
 		(define cls (acg 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
@@ -773,13 +775,15 @@
 		; The results are stored, so that everything is on disk in
 		; of a restart.
 		; Clobber first, since Sections were probably deleted.
-		(if single
+		(if is-single
 			(begin
 				(start-cluster psu cls WA WB FRAC-FN NOISE MRG-CON)
 				(STORE cls)
 			)
 			(begin
-				(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
+				(if wa-is-cls
+					(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
+					(merge-into-cluster psu WB WA FRAC-FN NOISE MRG-CON))
 			))
 
 		(STORE WA)

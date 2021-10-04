@@ -115,6 +115,9 @@
 
 ; Get all of the pairs with similarities on them.
 ; Same thing as `(cog-get-atoms 'Similarity)`
+; Well, not quite ... similarity object fails to get
+; the WordClass node similarities!
+; Its also slower, because 'get-all-elts does a Pattern search.
 (define e (make-elapsed-secs))
 (define all-sim-pairs (sim 'get-all-elts))
 (e)  ;; 32 seconds
