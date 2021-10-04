@@ -170,7 +170,7 @@ Explainable AI, understandable (transparent) reasoning.
 \end_layout
 
 \begin_layout Standard
-It's not (just) about Linguistics, its about about Understanding.
+It's not (just) about Linguistics, its about about Understanding
 \end_layout
 
 \begin_layout Standard
@@ -415,7 +415,7 @@ A variable:
 \end_layout
 
 \begin_layout Itemize
-A number: 42 or a string 
+A constant: 42 or 
 \begin_inset Quotes eld
 \end_inset
 
@@ -423,7 +423,7 @@ foobar
 \begin_inset Quotes erd
 \end_inset
 
- or ...
+ or other type instance
 \end_layout
 
 \begin_layout Itemize
@@ -495,7 +495,7 @@ Connectors are (Type Theory) Types.
 
 \begin_deeper
 \begin_layout Itemize
-Matching may be multi-polar, complex, not just bipolar.
+Matching may be multi-polar, complicated, not just bipolar.
 \end_layout
 
 \end_deeper
@@ -555,7 +555,7 @@ status collapsed
 \begin_layout Plain Layout
 
 \size footnotesize
-John Baez, Mike Stay, (2009) 
+John Baez, Mike Stay (2009) 
 \begin_inset Quotes eld
 \end_inset
 
@@ -970,7 +970,7 @@ Parsing English with a Link Grammar
 \end_layout
 
 \begin_layout Frame
-Can be converted (algorithmically!) to HPSG, DG, CG, FG, ...
+Can be (algorithmically) converted to HPSG, DG, CG, FG, ...
 \end_layout
 
 \begin_layout Frame
@@ -1064,7 +1064,7 @@ Sound
 \end_layout
 
 \begin_layout Frame
-Audio has graphical structure.
+Audio has a structural grammar.
 \end_layout
 
 \begin_layout Frame
@@ -1127,7 +1127,7 @@ Outline:
 
 \begin_deeper
 \begin_layout Itemize
-Lexcial Attraction (Mutual Information, Entropy)
+Lexical Attraction (Mutual Information, Entropy)
 \end_layout
 
 \begin_layout Itemize
@@ -1172,11 +1172,11 @@ Lexical Attraction AKA Entropy
 \end_layout
 
 \begin_layout Frame
-Frequentist approach to probability
+Frequentist approach to probability.
 \end_layout
 
 \begin_layout Frame
-Origins in Corpus Linguistics, N-grams
+Origins in Corpus Linguistics, N-grams.
 \end_layout
 
 \begin_layout Frame
@@ -1232,7 +1232,7 @@ Define
 \begin_layout Frame
 
 \emph on
-Lexical attraction is like mutual information, but structured.
+Lexical Attraction is mutual information.
 \emph default
 
 \begin_inset Foot
@@ -1482,8 +1482,15 @@ Define vector-product mutual information:
 
 \end_layout
 
-\begin_layout Itemize
-Here, 
+\begin_layout Standard
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+where 
 \begin_inset Formula $\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}P\left(w,d\right)P\left(*,d\right)$
 \end_inset
 
@@ -2120,7 +2127,7 @@ What is a relevant audio or visual stimulus?
 
 \begin_deeper
 \begin_layout Itemize
-(We got lucky, working with words!) 
+We got lucky, working with words!
 \end_layout
 
 \end_deeper
@@ -2155,7 +2162,7 @@ Random Exploration/Mining of Filter sequences!
 \end_layout
 
 \begin_layout Frame
-Salience = Filters with high Mutual Information!
+Salience is given by filters with high Mutual Information!
 \end_layout
 
 \begin_layout Frame
@@ -2371,7 +2378,7 @@ Naively generalize recurring themes by MI-similarity clustering!
 \end_layout
 
 \begin_layout Itemize
-Repeat! (Abstract to next hierarchical level of pair-wise relations.)
+Repeat! Abstract to next hierarchical level of pair-wise relations
 \end_layout
 
 \end_deeper
@@ -2380,7 +2387,7 @@ Repeat! (Abstract to next hierarchical level of pair-wise relations.)
 \end_layout
 
 \begin_layout Frame
-Issues blocking forward progress:
+Looking to the future:
 \end_layout
 
 \begin_deeper
@@ -2515,7 +2522,25 @@ Meaning-Text Theory
 \end_layout
 
 \begin_layout Frame
-Igor Mel’čuk
+Aleksandr Žolkovskij, Igor Mel’čuk
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Sylvain Kahane, 
+\begin_inset Quotes eld
+\end_inset
+
+The Meaning Text Theory
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Frame
@@ -2566,7 +2591,7 @@ S3(teach) = pupil
 \end_layout
 
 \begin_layout Standard
-More sophisticated than Predicate-Argument structure
+More sophisticated than Predicate-Argument structure.
 \end_layout
 
 \end_deeper
@@ -2592,15 +2617,58 @@ Curry–Lambek–Howard Correspondance
 
 \begin_layout Frame
 Each of these have a corresponding mate:
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Moerdijk & MacLane (1994) 
+\begin_inset Quotes eld
+\end_inset
+
+Sheaves in Geometry and Logic
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+
+\size footnotesize
+Baez & Stay (2009) 
+\begin_inset Quotes eld
+\end_inset
+
+Physics, Topology, Logic and Computation: A Rosetta Stone
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-A specific Category (e.g.
- Cartesian Category vs.
- Tensor Category)
+A specific Category 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Cartesian Category vs.
+ Tensor Category
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 An 
 \begin_inset Quotes eld
@@ -2610,27 +2678,52 @@ internal language
 \begin_inset Quotes erd
 \end_inset
 
- (e.g.
- Simply Typed Lambda Calculus vs.
- distributed computing with mutexes, locks aka a semi-commutative monoid
- - vending machines!)
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Simply Typed Lambda Calculus vs.
+ Semi-Commutative Monoid (distributed computing with mutexes, locks e.g.
+ vending machines!)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+A type theory
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The HoTT Book, Homotopy Type Theory
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-A syntax
+A logic 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-A logic (e.g.
- Classical Logic vs.
- Linear Logic)
+Classical Logic vs.
+ Linear Logic
 \end_layout
 
+\end_deeper
 \begin_layout Itemize
-Notions of Currying, Topology (Scott Topology, e.g.
- schemes in algebraic geometry.)
+Notions of Currying, Topology 
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+Scott Topology, schemes in algebraic geometry
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Frame
 

@@ -679,6 +679,23 @@
 	(store-atom (psu 'set-right-marginals WRD))
 )
 
+(define (recompute-mmt LLOBJ WRD)
+"
+  recompute-mmt LLOBJ WRD - Recomute MMT marginals for WRD
+
+  This recomputes the marginals for support and counts for both
+  the word and the disjuncts on that word. In particular, this
+  recompute N(*,d) which is needed by MMT.
+"
+	(define psu (add-support-compute LLOBJ))
+	(define atc (add-transpose-compute LLOBJ))
+	(for-each
+		(lambda (DJ) (store-atom (psu 'set-left-marginals DJ)))
+		(LLOBJ 'right-duals WRD))
+	(store-atom (psu 'set-right-marginals WRD))
+	(store-atom (atc 'set-mmt-marginals WRD))
+)
+
 ; ---------------------------------------------------------------
 
 (define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE MRG-CON)
@@ -924,7 +941,6 @@
   disjuncts that a word is allowed to have, to even be considered.
 "
 	(define pmi (add-symmetric-mi-compute STARS))
-	(define ptc (add-transpose-compute STARS))
 
 	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 	(define (mpred WORD-A WORD-B)
@@ -933,13 +949,7 @@
 	; The fraction to merge is fixed.
 	(define (mi-fract WA WB) UNION-FRAC)
 
-	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
-	; only once, at the end of the merge.
-	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row))
-		(store-atom (ptc 'set-mmt-totals)))
-
-	(make-merger pmi mpred mi-fract NOISE MIN-CNT store-mmt #t)
+	(make-merger pmi mpred mi-fract NOISE MIN-CNT recompute-mmt #t)
 )
 
 ; ---------------------------------------------------------------
@@ -985,7 +995,6 @@
 	(define pss (add-support-api STARS))
 	(define pmi (add-symmetric-mi-compute STARS))
 	(define pti (add-transpose-api STARS))
-	(define ptc (add-transpose-compute STARS))
 
 	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 	(define (mpred WORD-A WORD-B)
@@ -1011,13 +1020,7 @@
 		(define mihi (max (get-self-mi WA) (get-self-mi WB)))
 		(expt 2.0 (- CUTOFF mihi)))
 
-	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
-	; only once, at the end of the merge.
-	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row))
-		(store-atom (ptc 'set-mmt-totals)))
-
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT recompute-mmt #t)
 )
 
 ; ---------------------------------------------------------------
@@ -1055,7 +1058,6 @@
 	(define pss (add-support-api STARS))
 	(define pmi (add-symmetric-mi-compute STARS))
 	(define pti (add-transpose-api STARS))
-	(define ptc (add-transpose-compute STARS))
 
 	(define (get-mi wa wb) (pmi 'mmt-fmi wa wb))
 	(define (mpred WORD-A WORD-B)
@@ -1082,13 +1084,7 @@
 		(define fmi (get-mi WA WB))
 		(/ (- fmi CUTOFF) (- milo CUTOFF)))
 
-	; XXX FIXME (ptc 'set-mmt-totals) is slow and should be run
-	; only once, at the end of the merge.
-	(define (store-mmt row)
-		(store-atom (ptc 'set-mmt-marginals row))
-		(store-atom (ptc 'set-mmt-totals)))
-
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT store-mmt #t)
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT recompute-mmt #t)
 )
 
 ; ---------------------------------------------------------------
