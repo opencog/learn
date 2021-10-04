@@ -2,7 +2,7 @@
 Title page:
 * Hi, My name is linas Vepstas, you can call me Linas.
 * I'm here to talk about the automated, unsupervised learning
-  of explainable, comprehendable patterns in language, 
+  of explainable, comprehendable patterns in language,
   and in a general setting that includes audio and video,
   or anything -- the noosphere.
 
@@ -20,7 +20,7 @@ Slide 1:
 
 * In this sense, most of what I will say has been said before.
 * It might even seem obvious, or simplisitic to you, or even naive.
-* I'd like to ask for your attention none-the-less, as you may find 
+* I'd like to ask for your attention none-the-less, as you may find
   the particular combination here surprising and unusual.
 * Bear with me. I'll start out simple.
 
@@ -39,8 +39,8 @@ Graphs are decomposable
   you know how to join them again.
 * The metaphor I will us repeatedly is that of the jigsaw puzzle-piece
   connector.
-* Jigsaw puzzle pieces are designed so that the mating 
-  of the pieces is forced. 
+* Jigsaw puzzle pieces are designed so that the mating
+  of the pieces is forced.
 * When you cut an edge, attach a connector to it.
 * In this example, polarity is indeterminate; flip a coin.
 
@@ -60,7 +60,7 @@ Graphs are decomposable
   to occur.
 
 * This might not be the defnition of syntax that you are comfortable
-  with, or that you have learned. 
+  with, or that you have learned.
 * It is, however, entirely equivalent to the more conventional
   defintions you may know.
 * This is not a particularly deep claim, it's fairly well-known and
@@ -73,37 +73,124 @@ Graphs are Compositional
   That's why I have to say these things out loud.
 * At the top of this chart, I've drawn a conventional defintion of a
   term algebra.
-* The jigsaw connectors generalize the concepts of term algebras
-  to not be not just DAG's, but diected/undirected graphs in general.
-* Type theory types may themselves decomposable, may have structure.
+* A term algebra consists of a set of function symbols taking arguments.
+  The arguments can be constants, variables, or other terms.
+* Plugging thing togther has a name: its called "beta reduction"
+  terms are always DAG's, directed acyclic graphs.
+
+* People in symbolic AI and proof theory and programming and compilers
+  and chip design work with term algbras all the time. Its the stock
+  of trade.
+
+* The only point here is that jigsaw connectors generalize the
+  concepts of term algebras.  One can assemble things that aren't just
+  DAG's but can be any but directed or undirected graph, in general.
+
+* The connectors are type theoretical types.
+* Types have structure; types can have a very complex structure.
+* Thus, perhaps the jigsaw diagram is misleading: that connector
+  looks so simple.
+* It can, in fact be, quite very complex.
+
+* By they way: a type theory typ is the same thing as it is in computer
+  science.
+* It can be an int a float, a string: these are primitive types.
+* It can be a compound type: a list, an OO class, a function signature.
+
+* I'm drawing a jigsaw connector to represent any and all of these things.
+
+* I told you that this will all be simple, yet confusing at the same
+  time.  Perhaps it begins here.
 
 Slide physics:
+* In the next two slides, I simply want to indicate that these ideas are
+  just absolutely everywhere.
+* All over the place.
+* Here's a quick tour.
 * Anything tensorial.
-* Compostion is like contracting tensor indexes.
-* Coecke actually says you can parse natural language in linear time
-  with quantum algorithms.
+* On the left: cobordisms, from string theory.
+* On the right: natural language as a quantum algebra.
+* The actual paper there is quite interesing.
+* Coecke is saying that you can parse natural language quickly and
+  easily with quantum algorithms.
+
+* Anyway: Compostion is like contracting tensor indexes.
+* Connecting connectors is like contracting tensor indexes.
 
 Chemistry Biology
+ * Some examples from chemistry and biology.
  * A chemical reaction has inputs and outputs.
- * These are the "connectors", the jigsaw puzzle pieces.
- * The algorithmic botany work is beautiful and stunning.
+ * These are the "connectors", they must connect, for a reaction to
+   happen.
+ * Prusinkiewicz has ben developing algorithmic botany for the last
+   three decades. It is beautiful and stunning and relevant to AGI.
+   You should check it out.
 
 Link Grammar:
-* The diagram is taken from the original 1991 LG paper.
-  It explicitly uses jigsaw-puzzle pieces.
-* The LG type system is oversimplified, here. The type matching system
-  is more complex, and polarity +/- indicate left-right.
+* My fetish for jigsaw connectors comes from Link Grammar.
+* The diagram here is taken from the original 1991 LG paper.
+  That paper explicitly talks about jigsaw-puzzle pieces.
+* Above, you can see some words with connectors.
+* Below, a parse:
+  S for the subject-verb linkage
+  O for the object-verb linkage
+  D for connecting to the dterminer, which English demands.
+* The idagram drawn here is correct for this sentence, but
+  as a warning:
+* I'm glossing over some more complex ideas in the connector
+  type matching system. As I said earlier, types need not be primitive
+  types; they can be compound types.
+
+* A few quick side remarks: the LG grammar can be converted into HPSG,
+  into dependency grammars, into categorial grammars, functional
+  grammars.
+* This can be done algorithmically.
+* There's some eye-watering mathematical proofs of this stuff out there.
+
+* If you haven't head of LG before ... well, now you have. It's real.
+* There are complete dictionaries for English and Russian.
+* There are smaller demo dictionaries for ten more.
+* It's legit, linguistically-speaking; hundreds of published papers.
 
 Vision:
-* Polarity direction is arbitrary, here, but there are differrent
-  kinds of connectors - up-down vs shape vs color.
+* Now for the good stuff.
+* The jigsaw paradigm can be applied to the analysis of shapes and
+  colors.
+* I've drawn the abstract graph for the corresponding image.
+* There are connectors.
+* Some connectors connect north-south directions
+* Some connectors connect to colors
+* Some connector connecto to round shapes.
+* Some connectors connecto to a background.
+* So its not just shape, or just color: some of these connections
+  are abstract.
+
+* A key point: it is not about pixels.
+* Shape grammars really are different than pixel-collections.
 
 Audio:
+* We can do this for sound, too.
 * This is a whale song from NOAA.
-* The diagram is a structural representation of the first 10 seconds
-  of the chart, where you can see (plainly see) chirps, every two
-  seconds.
-* Make chirp/tweet sound
+* Its a fast-fourier-transform FFT spectrum.
+* On the bottom left, you can see a sequence if seven regularly spaced
+  low frequency chirps.
+* You know what a chirp is. Tweet.
+* A rising or a falling pitch.
+* The diagram on the right is a structural representation of the
+  first 10 seconds of the FFT spectrum.
+* I've tried to draw the diagram that captures and extracts that
+  structure.
+
+* AH HAH!
+* But now we come to a key point.
+* Where did those meaningful filters come from?
+* How did we know to look for chirps?
+* Surely it is not because some grad student hand-coded up a bunch of
+  filters just so.
+* I mean, you could do that, but that is not the point of AGI.
+* You want to discover this filters from scratch. From Nothing at all.
+* So how do you do that?
+* How do you find structure from nothing?
 
 Lexical attraction
 * Diagram is from Yuret's thesis
