@@ -434,15 +434,51 @@ Something from Nothing
   something like "words".
 * Some kind of block that we can apply the algo to.
 * How?
-* Extremely high dimensional .. billions!
+* The proposal: generate random processing pipelines, and ... try them
+  out.
+* On the left is some made-up, random audio pipeline, a lopass filter
+  and a chirp filter.
+* On the right is some other random pipeline. Literally random.
+
+* Apply them to audio data.
+* Is there correlation?
+* A little, or a lot?
+* If these filters have some reasonable MI between them, then they
+  are recognizing actual patterns actually present in the input.
+* If not, throw them away, and try again.
+* The claim is -- these will eventually hill-climb thier way to
+  meaningful filter sequences.
+
+* This is kind of like a classical optimzation problem.
+* The difference is that the "objective function" is a good
+  old-fashioned maximum entropy principle.
+
+* Again, this might seem like an old idea, or a naive idea.
+  Nothing particularly new.
+* What is new is that we can couple this to the grammar learning algo,
+  and walk up the hierarchy of abstraction.
+* This is the part that has never been done before.
+
+* The hierarchy allows for feedback from the high-level layers,
+  back down and back up.
+
+* Note also, everything is symbolc, and everything is interpretable.
+
 
 Symbol grounding problem
-* This is interpretability.
-* What is a "whistle"? Oh, it is a specific filter sequence
+* This is how we get to interpretability.
+* Any engineer ccan look at that filter tree, and say "oh I know exactly
+  what it does. OMG, its even labelled: its a low-pass filter, and a
+  chirp filter. So obvious.
+
+* What is a "whistle"? Oh, it is a specific filter sequence.
+* What does the word "whistle" mean?
 * "I know a whistle when I hear it" but how can I explain it?
+* Grammar mining has discovered what the word means. It means
+  this particular sound, described by this filter sequence.
 
 * The frame problem asks: what parts of the environment are
-  important for making deciisions?
+  important for making decisions?
 * Answer: those parts of the environment that have been filtered
   out by the currrent active filters.
 * But what are those?
@@ -453,17 +489,22 @@ Symbol grounding problem
 Common Sense Reasoning
 * Olde-school AI work on reasoning harks to the foundations of
   mathematical logic developed in the first half of the 20th century.
-* The trope is that common sense is somehow like mathematical logic
+* The trope is that common sense is somehow like mathematical logic.
 * "The rational actor" of the enlightenment, of economics.
-  (Its not)
+  (Its not. That's not what common sense is.)
+
+* Doctor Doctor, it hurts whenn I do this. Well, don't do that.
+
 * Never explain a joke.
 * But this is important.
-* This is funny precisely because its logic that correct, but
-  fails the meta problem of why we went to the doctor in the first
-  place.
+* This is funny precisely because the logic is correct, but it
+  fails the meta problem of what doctors do, of why we went to
+  the doctor in the first place.
 * The common-sense reasoning context is that this is taking place in a
   doctors office, which drags in the frame (the frame problem) of
   everything that doctors do, which include curing ailments.
+
+* By the way,
   (Frames are like the lexical functions of MTT. They tell you how to
   navigate the network of relations.)
 * If we can learn lexical functions, then we can learn common-sense
@@ -474,18 +515,30 @@ Common Sense Reasoning
 * We can determine that the advice "don't do that" fails to match the
   "rational" expectations of what happens in a doctors office.
 * But what are the "rational expectations" of what happens in a doctors
-  office? it is that learned network.
+  office? Oh, well, it is that learned network.
 * That's the joke, explained.
 * We can learn the rules of reasoning; they are not God-given (aka
   hard-coded by some programmer.)
+* They can be learned, and I've described an algorithm for learning
+  them.
 
 Conclusions
 * I skipped over experimental results. There are a lot of them.
-  They come out of the blue - like the gaussian distribution.
-  I have no clue why. Nor do any search engines.  There is
-  effectively no published theory on anything I talked about today.
-* Its a HUGE vaccum, and its also an opportunity for any student who
-  want to make a mark on the AGI world.
+* I've been working on this project for a long time.
+* The experimental results ... well,
+
+* They come out of the blue - like the gaussian distribution
+  I showed earlier.
+
+* I have no clue why. Nor do any search engines.
+* Most of what I've talked about seems simple and obvious enough,
+  yet surprisingly there is very little published work that is
+  relevant.
+* Its a grand unknown, unexplored territory. What I've glimpsed
+  so far looks great but who knows -- its an exploration.
+
+* Its an opportunity for any student who want to make a mark on
+  the AGI world.
 
 ----
 
