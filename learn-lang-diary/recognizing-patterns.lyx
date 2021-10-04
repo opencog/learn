@@ -1037,6 +1037,12 @@ The connectors can specify location, color, shape, texture.
 
 \end_layout
 
+\begin_layout Frame
+A key point: 
+\emph on
+It is not about pixels!
+\end_layout
+
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset
@@ -1708,7 +1714,20 @@ The word-disjunct matrix
 \end_layout
 
 \begin_layout Itemize
-Outsides are sparse, central matrix is highly connected.
+Factorize: 
+\begin_inset Formula $P=LCR$
+\end_inset
+
+ Left, central and right block matrices.
+\end_layout
+
+\begin_layout Itemize
+L and R are sparse, large.
+ 
+\end_layout
+
+\begin_layout Itemize
+C is small, compact, highly connected.
 \end_layout
 
 \begin_layout Standard
@@ -1786,11 +1805,65 @@ able!
 Interpretability is about regaining (factoring back out) the sparse factors!
 \end_layout
 
+\begin_layout Itemize
+That is what this symbolic learning algorithm does.
+\end_layout
+
 \end_deeper
 \begin_layout Frame
 Boom!
 \end_layout
 
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Summary of the Learning Algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Note pair-wise correlations in a corpus.
+\end_layout
+
+\begin_layout Itemize
+Compute pair-wise MI.
+\end_layout
+
+\begin_layout Itemize
+Perform a Maximum Spanning Tree (MST) parse.
+\end_layout
+
+\begin_layout Itemize
+Bust up the tree into jigsaw pieces.
+\end_layout
+
+\begin_layout Itemize
+Gather up jigsaw pieces into piles of similar pieces.
+\end_layout
+
+\begin_layout Itemize
+The result is a grammar that models the corpus.
+\end_layout
+
+\begin_layout Itemize
+This is a conventional, ordinary linguistic grammar.
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Separator plain
 \end_inset

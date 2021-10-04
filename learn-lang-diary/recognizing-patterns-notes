@@ -250,41 +250,190 @@ Lexical attraction
 * You can extract a grammar from this.
 
 Lexical entries
-*
-* ampersand resembles "linear logic"
-* Tensorial notation popular in quantum-influenced thinking
-* d is for disjunct because the connector sequences are disjoined.
-* The plus sign is a lie: its actually a menu-choice,
-  to build once sentence you must pick one.
-* hat-e is a unit basis vector
+* Here's how.
+* You've drawn the maximum spanning tree.
+* Now cut the egdes, and form the labelled connectors.
+* Here are severa different notations.
+* The graphical one, opf course.
+* A text version.
+* The minus signs mean "connect to the left"
+
+* The text version uses an ampersand to say you must have both
+  connectors.
+* It turns out this ampersand is the conjunction from a fragment of
+  linear logic.
+* It's not just some naive boolean-and; its a bit more sublte.
+  Interesting.
+* The next row is tensorial notation.
+* Very popular among physicists and those with a formal mathematics
+  background.
+* Tensorial notation popular in quantum-influenced thinking,
+  its very comfortable for them. A known thing.
+* These notations are the same.
+* Jigsaw puzzle connectors are tensorial, that's the message.
+* Oh, note that the whole thing looks like a skip-gram.
+  If you're from the neural net world, you know skip-grams.
+  This is like that, but different. A hah!
+
+* I write d for disjunct because the connector sequences are disjoined.
+* By that I mean, you have a menu choice:
+  you can throw a ball, catch a ball, see a ball,
+* But you can only use one of these words at a time in a sentence
+  Choose one: choose an item from a menu.
+* Its a disjunction.
+
+* Now we do our frequentist thing again.
+* Run through your corpus, a million sentences, and count
+  how often you see a word-disjunct pair.
+* You get a count N(w,d)
+* Turn the count int a probability.
+
+* Given a word, write down the counts for that word.
+* The ruslt is something that looks like a vector.
+* I've written it as a vector here.
+
+* There's something a bit clever here: the plus sign can be interpreted
+  as both literal, mathematical addition.
+* But also as disjunction: the plus sign is a menu choice.
+* To build a sentence you must pick one.
+  P(w,d) tells you how often to pick that choice.
+  Shades of wave-function collapse! OMG!
+
+* hat-e is a unit basis vector.
+
+* OK you've got a bunch of these. Now what?
+* Generalize from the specific to the particular.
+  (Skip a slide)  I've got my slides in the wrong order.
+
+Learning a Lexis
+* From "throw the ball" I want to generalize to "verb determiner noun"
+  How?
+* By similarity.
+
+(Back a slide)
+I need a similarity score.
 
 Similarity scores
+* Cosine distance is commonly used in machine learning.
+* Its not that good.
+* Problem is that cosine distance was designed to be invariant in
+  Euclidean space. It's ideal for that.  Its a Casimir invariant.
+
 * Problem with assuming Euclidean space is that taking orthogonal
   projections can lead to negative probabilities. Its pathological.
-* Experimental measurements show that cosine distance is low quality
+  You can't just take the orthogonal complement, you get nonnsense.
+
+* You need something that works in probability space.
+* Probability stpace is not Euclidean, its a simplex:
+  a triangle, a tetrahedron in 3D, a something-gon in 4D...
+
+* Anyway experimental measurements show that cosine distance is low quality
 * MI is well-behaved under Markov (affine) transformations.
-* Star means sum over everything
-* It's a weighted word probability.
-* Its a feynmann diagram with a vacuum contribution!
+* As  before, star means sum over everything
+* Think of the marginals here as a weighted word probability.
+* There's even a feynmann diagram for this: the marginals
+  are the vacuum contributions! So you can get quite fancy with the
+  theory, here, if you want.
+
+* Now a breif diversion.  I graphs the istribution of MI.
+  This graph is for 2/3rds of a million word pairs.
+* Its on a log scale. Its a parabola.
+* A parabola on a log scale is just a Bell curve. A gaussian. A normal
+  distribution.
+* Why the heck do word pairs, from the English language, when pumped
+  through a grammar detector from MST parses, why would these form
+  a normal distribution?
+* Really? Why? Who knows. I don't think anyone knows.
+  This gives a hint of how this entire topic is lacking in theoretical
+  foundations.
+* I'd love to know why. My pet theory is that its a GUE, but I can't yet
+  show this.
+
+Anyway...
+* So we are learning to generalize.
+* The biggest problem with MI similarity is that very rare words often
+  have a very large MI.
+* It is a poor strategy (I think!?) to start assigning rare words
+  to grammatical classes.
+* You want to start with common words. But how?
+
+* Well, here's a proposal:  Take the average probability of the two
+  words, take the log, and add that.
+* Now, averaging means dividing by two.
+* In a log, that turns into a square root
+* So you get this funny looking square-root here.
+* You won't find this in textbooks, but its completely natural.
+  I think it's interesting.
 
 Factorization
 * When I call two different words "a noun", I am assigning them to a
   "grammatical class".
 * All words in that grammatical class behave similarly.
+* What happens when I do this?
 * I am going from a specific matrix of (word-disjunct) pairs to
   a matrix of (grammatical class, syntactic structure) pairs.
+* This is matrix factorization.
+* I'm factorizing the matrix P into left, center and right parts.
+* The left and right parts are high-dimensional and sparse.
+* The central part is low-dimensional and dense. and highly connected.
+
+* This is the defacto organization of all of the existing Link Grammar
+  dictionaries.
+* The people who wrote them were not thinking of matrix factorization,
+  but it is, defacto, exactly what they've done.
+* Tediously, and by hand, but that is what it is.
+* So I'm not just making this up or blowing hot smoke.
+* This is what linguists actually do, when they write a lexis.
+
+Key insight
 * Neural nets can accurately capture the dense, interconnected central
-  region, but they necessarily perform dimensional reduction on
-  the sparse left and right factors. By erasing the sparse factors,
-  neural nets become no longer interpretable.
+  region, That's why they work.
+* But they necessarily perform dimensional reduction on
+  the sparse left and right factors.
+* By erasing the sparse factors, neural nets become no longer
+  interpretable.
+* There's magic hidden in those neural net weights.
+* The goal of the algorithm I've described here is to do what
+  those neural nets do, but to do it in an interpretable way.
+
+Boom. That's it. I'm done. Lets pause to reflect.
+
+* What I've shown you is an algorithm for extracting structure
+  from observations of a corpus of data.
+* It starts by noting pair-wise correlations.
+* These can be used to form Maximum Spanning Tree parses.
+* These are broken up into Jigsaw pieces, which are counted.
+* These are organized into piles by similarity.
+* The result is a grammar that describes the corpus.
+* The resulting grammar is a conentional, ordinary linguistic-theory
+  grammar.
+
+So what?
+Let me resume with some trivialities.
 
 Compositionality
 * Assembled portions of a jigsaw puzzle are just like a single jigsaw
   puzzle piece: an area with a bunch of unconnected connectors.
+* On the left is an idiom or insitutional phrase.
+* Its a couple of connected words, but there are still some unconnected
+  connectors.
+* On the right is an example of anaphora resolution.
+* We have a grammar for the words in the sentences,
+  How about connections between senetences?
+* Repeat the process. Move up the hierarchy.
+* This is hardly a new idea, people have talked about this
+  for many decades.
+* I've presented you with an algorithm and a theoretical framwork
+  for which software can be written (is being written).
+
+Let me move on. We're near the end here.
 
 Something from Nothing
 * We got lucky with the words
-* We need to find processors that convert input intto "words".
+* We need to find processors that convert sensory input into
+  something like "words".
+* Some kind of block that we can apply the algo to.
+* How?
 * Extremely high dimensional .. billions!
 
 Symbol grounding problem
