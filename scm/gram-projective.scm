@@ -449,12 +449,6 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(let ((psu (add-support-compute LLOBJ)))
-		(store-atom (psu 'set-right-marginals CLS))
-		(store-atom (psu 'set-right-marginals WA))
-		(store-atom (psu 'set-right-marginals WB))
-	)
-
 	(monitor-rate
 		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
@@ -617,11 +611,6 @@
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(let ((psu (add-support-compute LLOBJ)))
-		(store-atom (psu 'set-right-marginals CLS))
-		(store-atom (psu 'set-right-marginals WA))
-	)
-
 	(monitor-rate
 		"------ Extend: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
@@ -674,6 +663,20 @@
 
 	; True, if similarity is larger than the cutoff.
 	(< CUTOFF (report-progress))
+)
+
+; ---------------------------------------------------------------
+
+(define (recompute-support LLOBJ WRD)
+"
+  recompute-support LLOBJ WRD - Recomute support marginals for WRD
+
+  This recomputes the marginals for support and counts, which is
+  what coine distance and Jaccard overlap need to do thier stuff.
+  It is NOT enough for MI/MMT calculations!
+"
+	(define psu (add-support-compute LLOBJ))
+	(store-atom (psu 'set-right-marginals WRD))
 )
 
 ; ---------------------------------------------------------------
@@ -771,6 +774,7 @@
 
 	; ------------------
 	; Methods on this class.
+
 	(lambda (message . args)
 		(case message
 			((merge-predicate)  (apply MPRED args))
@@ -823,8 +827,9 @@
 		(is-similar? get-cosine CUTOFF WORD-A WORD-B))
 
 	(define (fixed-frac WA WB) UNION-FRAC)
+	(define (recomp W) (recompute-support STARS W))
 
-	(make-merger STARS mpred fixed-frac NOISE MIN-CNT (lambda (x) #f) #t)
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT recomp #t)
 )
 
 ; ---------------------------------------------------------------
@@ -878,7 +883,9 @@
 		(define cosi (pcos 'right-cosine WA WB))
 		(/ (- cosi CUTOFF)  (- 1.0 CUTOFF)))
 
-	(make-merger STARS mpred cos-fraction NOISE MIN-CNT (lambda (x) #f) #t)
+	(define (recomp W) (recompute-support STARS W))
+
+	(make-merger STARS mpred cos-fraction NOISE MIN-CNT recomp #t)
 )
 
 ; ---------------------------------------------------------------
