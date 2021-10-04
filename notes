@@ -5445,6 +5445,22 @@ Solving the symbol grounding problem
 
 initially 85219
 
+(define sup (add-support-api sha))
+(define rdl (sha 'right-duals wb))
+(define psu (add-support-compute sha))
+(psu 'set-right-marginals wb)  ;; Uh needed?
+
+psu 'all-left-marginals ; too slow
+
+(for-each
+	(lambda (COL) (psu 'set-left-marginals COL))
+	(sha 'right-duals wb))
+(atc 'set-mmt-marginals wb)
+
+(define e (make-elapsed-secs))
+(psu 'set-left-totals)  ; needed?
+(e)
+
 ====================================================
 link-class.scm ???
 ====================================================

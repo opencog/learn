@@ -1696,7 +1696,7 @@ The word-disjunct matrix
 
 \begin_deeper
 \begin_layout Itemize
-\begin_inset Formula $P\left(w,d\right)=\sum_{g,g^{\prime}}P\left(w,g\right)P\left(g,g^{\prime}\right)P\left(g^{\prime},d\right)$
+\begin_inset Formula $P\left(w,d\right)=\sum_{g,g^{\prime}}P_{L}\left(w,g\right)P_{C}\left(g,g^{\prime}\right)P_{R}\left(g^{\prime},d\right)$
 \end_inset
 
 
@@ -1710,7 +1710,15 @@ The word-disjunct matrix
 \begin_inset Formula $g^{\prime}$
 \end_inset
 
- = grammatical (syntactic) relation.
+ = grammatical relation (
+\begin_inset Quotes eld
+\end_inset
+
+LG macro
+\begin_inset Quotes erd
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Itemize
