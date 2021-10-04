@@ -192,10 +192,65 @@ Audio:
 * So how do you do that?
 * How do you find structure from nothing?
 
+Part Two
+* Now we come to the dense, mathematical part of this talk.
+* I will go fairly quickly, because many of these ideas are
+  well-known in the machine-learning industry.
+* I will show how to build up a graph structure from pair-wise
+  correlations.
+* Then I will show how to generalize from the particulars of
+  specific graphs.
+* This generalization turns out to be isomorphic to clustering,
+  and to matrix factorization.
+* You can use either clustering algorithms to do this, or matrix
+  factorization algorithms to do this.
+* I bet you can even use neural nets to do this.
+* No seriously! You can! No one has done it, but you can!
+* There's gonna be a lot of neural net fans at ths conference,
+  I can't steal thier thunder.
+
+So,the details.
+
 Lexical attraction
-* Diagram is from Yuret's thesis
+* Start with a frequentist approach to probability.
+* Observe things, and count how often they occur.
+* Observing pairs is the easiest.
+* Blast through some large corpus of English text.
+* Say, a million sentences.
+* Count how often you see word pairs: words close to one-another.
+* 2-grams is the fanyc word for it.
+* This gives you a count, call it N(u,w) of the word on the left and the
+  word on the right.
+* Divide by the total number of pairs to get a probability,
+  a frequentist probability.
+* The star here, the asterisk, is a wild-card.
+* Divide the pair probability by the marginal probability of the left
+  word, and the marginal probability of the right word.
+* Take the logarithm
+* This is basic textbook MI
+* I'll call it Lexical attraction because that's what Yuret called it
+  and because I need to distinguish from another MI, coming up.
+* Otherwise, its the same thing.
+
+* The diagram here is from Yuret's thesis.
+* What he did here is very clever:
+  He drew the maximum spanning tree.
+* it is a tree that connects every word in the sentence,
+  and the edges are choosen so that the grand total MI is the largest
+  possible.
+
+* Note that the LA/MI for "Norther Ireland" is huge.  That's because
+  when these two words occur in a text, they commonly occur together.
+
+* You don't much see "Northern" with that many other things, and
+  you don't see lot of other kinds of Ireland.
+* These two words occur together.  That is what a high MI score tells
+  you.
+
+* You can extract a grammar from this.
 
 Lexical entries
+*
 * ampersand resembles "linear logic"
 * Tensorial notation popular in quantum-influenced thinking
 * d is for disjunct because the connector sequences are disjoined.
