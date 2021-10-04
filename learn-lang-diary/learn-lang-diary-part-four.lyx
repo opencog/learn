@@ -6755,6 +6755,25 @@ At this point, there seems to be no choice: we have to run the earlier clusters,
 \end_layout
 
 \begin_layout Section*
+Expt-8 Merging Farther (Oct 2021)
+\end_layout
+
+\begin_layout Standard
+Resuming where expt-7 left off.
+ This time, do merge with shapes, and get further down the process.
+ Lay groundwork for the cliques above.
+ 
+\end_layout
+
+\begin_layout Standard
+One major issue is that, after merging connectors, all of the previous similarit
+y computations are rendered invalid.
+ We need to loop over all merged connectors, and recompute those similarities,
+ if they are/were in the range of computable similarities...
+ then, after that we need to re-rank, to find the next items in the list.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 

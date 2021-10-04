@@ -1,27 +1,78 @@
 
+Title page:
+* Hi, My name is linas Vepstas, you can call me Linas.
+* I'm here to talk about the automated, unsupervised learning
+  of explainable, comprehendable patterns in language, 
+  and in a general setting that includes audio and video,
+  or anything -- the noosphere.
 
 Slide 1:
-* Most of what I will say has been said before.
-* It's not just obvious, but simplisitic, bordering on the naive.
-* But if you don't pay attention, you will become confused.
-* How is it that simple, obvious things can be so confusing?
-* Pay attention!
+* I'm  going to start by making some outrageous claims.
+* I'm going to claim that the system being presented here is capable of
+  solving the famous Frame Problem, the Symol Grounding Problem.
+* That common-sense reasoning can be learned.
+* Not only are these claims the holy grail of AGI, which is why they are
+  outrageous,
+* But I will present an aglortihm that is not particularly complicated.
+* It consists of some fairly well-known parts that many others have
+  fooled with over the decades.
+* Its not in uncharted territory.
 
-Everything is a graph
-* The universe not just of physical stars and planets,
+* In this sense, most of what I will say has been said before.
+* It might even seem obvious, or simplisitic to you, or even naive.
+* I'd like to ask for your attention none-the-less, as you may find 
+  the particular combination here surprising and unusual.
+* Bear with me. I'll start out simple.
+
+Everything in the universe is a graph
+* This is the universe not just of physical stars and planets,
   but also the universe of thoughts and concepts, the noosphere.
+* Sparse graphs are necessarily labeled, as otherwise there is no
+  way of talking about the things in the graph.
+* The edges are necessarily labelled by the vertexes at thier
+  end-points.
 
 Graphs are decomposable
-* Polarity is indeterminate in this example.
-* It can be multi-polar, and not just two polarities.
-* Biologists have found species of fungus that have
-  43 different types of sex, some of which can mate,
-  and some which cannot.
+* This should be obvious, but is rarely mentioned in graph theory.
+* You can gut an edge to get two half-edges.
+* After cutting the egde, you need to label the cut ends so that
+  you know how to join them again.
+* The metaphor I will us repeatedly is that of the jigsaw puzzle-piece
+  connector.
+* Jigsaw puzzle pieces are designed so that the mating 
+  of the pieces is forced. 
+* When you cut an edge, attach a connector to it.
+* In this example, polarity is indeterminate; flip a coin.
+
+* In the gran scheme of things, you will discover that connectors
+  can be multi-polar, multi-sexual.
+* This is perhaps politically controversial, but biologists have found
+  fungi with 43 different types of sex.
+* Some of these can mate, and produce viable offsprint, and some cannot.
+  Its quite strange.
+
+* I've drawn a picture of a telescope jigsaw-puzzle piece, with
+  connectors for looking at the sun and the moon.
+* There are other things that can se the sun and the moon: eyes and
+  lenses.  They have the same jigsaw shape.
+* These shapes define the syntax of the graph..
+* The syntax is exactly that collection of shapes that allow connections
+  to occur.
+
+* This might not be the defnition of syntax that you are comfortable
+  with, or that you have learned. 
+* It is, however, entirely equivalent to the more conventional
+  defintions you may know.
+* This is not a particularly deep claim, it's fairly well-known and
+  well-understood, I'm sorry only in not having a good reference for it
+  at my fingertips.
 
 Graphs are Compositional
-* This stuff is so basic, so obvious that
+* This is so basic, so obvious that
   We are like fish in water, we are not aware of the water.
-  That's why I have to say it out loud.
+  That's why I have to say these things out loud.
+* At the top of this chart, I've drawn a conventional defintion of a
+  term algebra.
 * The jigsaw connectors generalize the concepts of term algebras
   to not be not just DAG's, but diected/undirected graphs in general.
 * Type theory types may themselves decomposable, may have structure.
@@ -112,12 +163,12 @@ Common Sense Reasoning
 * Olde-school AI work on reasoning harks to the foundations of
   mathematical logic developed in the first half of the 20th century.
 * The trope is that common sense is somehow like mathematical logic
-  "The rational actor" of the enlightenment, of economics.
+* "The rational actor" of the enlightenment, of economics.
   (Its not)
 * Never explain a joke.
 * But this is important.
 * This is funny precisely because its logic that correct, but
-  fails the meta problem of why we went to the octor in the first
+  fails the meta problem of why we went to the doctor in the first
   place.
 * The common-sense reasoning context is that this is taking place in a
   doctors office, which drags in the frame (the frame problem) of
@@ -127,8 +178,8 @@ Common Sense Reasoning
 * If we can learn lexical functions, then we can learn common-sense
   behavior patterns, and common-sense reasoning.
 * We can learn the network of what happens in a doctors office, and
-  how to navigate that network. (The same way we naviage lexical
-  functions)
+  how to navigate that network. (The same way we navigate lexical
+  functions).
 * We can determine that the advice "don't do that" fails to match the
   "rational" expectations of what happens in a doctors office.
 * But what are the "rational expectations" of what happens in a doctors
@@ -148,3 +199,7 @@ Conclusions
 ----
 
 is this a gaussian unitary ensemble?
+
+Extra material:
+the definition of syntax here is the same as the conventinoal defn of
+syntax.
