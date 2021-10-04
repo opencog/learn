@@ -4,6 +4,9 @@
 ; Merge words into word-classes by grammatical similarity.
 ; Maximum-entropy style merges.
 ;
+; UNFINISHED. Actually unstarted.
+; This might be a mirage.
+;
 ; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------

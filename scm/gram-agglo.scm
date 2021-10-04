@@ -1,7 +1,8 @@
 ;
 ; gram-agglo.scm
 ;
-; Merge words into grammatical categories. Agglomerative clustering.
+; Loop over all words, merge them into grammatical categories.
+; Agglomerative clustering.
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;

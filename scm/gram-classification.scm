@@ -13,17 +13,24 @@
 ; and behaving as their "average".  Similarly, a word can be compared to
 ; an existing grammatical class, to see if it belongs to that class.
 ;
-; Recall that words are represented as vectors, so that both comparison
-; and merging are comparisons of vectors and merges of vectors.
-; This file implements several different comparison and merge strategies:
+; Recall that words are represented as vectors, so that comparison is a
+; comparison of vectors, and merging merges vectors.
+;
+; The code in this directory implements several different comparison and
+; merge strategies:
 ;
 ; For comparison:
 ; * Cosine similarity
 ; * MI similarity
+; * Common-MI similarity
 ;
-; For theoretical reasons, MI should work better than cosine, primarily
-; because the vector space is not Euclidean space, but a probability
-; simplex.
+; Common-MI works best for merging; it has the best properties of MI but also
+; includes the word frequency as part of the similarity score.  Otherwise,
+; MI works great, as long as one merges high-frequency word pairs first.
+; Cosine similarity is popular in the machine-learning industry, but works
+; poorly, based on  experimental results. This is no surprise: cosine
+; distance is a Casimir invariant for Euclidean space, but probability
+; space is not Euclidean! Its a simplex!
 ;
 ; For merging:
 ; * Orthogonal decomposition into parallel & perpendicular components.
@@ -32,7 +39,9 @@
 ;
 ; For theoretical reasons, the binary-optimization strategy should
 ; provide the best results. This is because the merge decision is
-; determined by maximum entropy principles.
+; determined by maximum entropy principles. This has not yet been
+; verified experimentally, and the code has not yet been written.
+; In fact, it might be a mirage. (See `gram-optim.scm` for more.)
 ;
 ;
 ; Representation
