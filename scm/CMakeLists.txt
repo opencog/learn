@@ -1,8 +1,8 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
+	agglo-loops.scm
 	batch-word-pair.scm
 	common.scm
-	gram-agglo.scm
 	gram-class-api.scm
 	gram-classification.scm
 	gram-optim.scm

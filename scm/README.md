@@ -28,7 +28,7 @@ but the also require, as input, data that was produced by earlier files.
 * __gram-classification.scm__  Text file explanation of grammatical similarity.
 * __gram-class-api.scm__  Public API classes for merging words into
                           grammatical classes.
-* __gram-agglo.scm__      Agglomerative clustering. Loops over all words,
+* __agglo-loops.scm__     Agglomerative clustering. Loops over all words,
                           creating clusters. Multiple different ways of
                           looping over everything are explored here.
 * __gram-projective.scm__ Code that merges pairs of words into a new cluster,
