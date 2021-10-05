@@ -75,7 +75,7 @@
 				(> na nb))))
 )
 
-(define (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
+(define-public (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
 "
   compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH - compute MI.
 
@@ -153,35 +153,27 @@
 
 ; ---------------------------------------------------------------
 
-(define (do stuff LLOBJ)
-	; Start by getting the ranked words.  Note that this may include
-	; WordClass nodes as well as words.
-	(define ranked-words (rank-words LLOBJ))
+(define (get-ranked-pairs LLOBJ MI-CUTOFF)
+"
+  get-ranked-pairs LLOBJ MI-CUTOFF - get a ranked list of word pairs
 
-	; Create sims for the initial set.
-	(define NRANK 200)
-	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
-
+  This returns a list of word-pairs sorted by rank-MI, from greatest
+  to least.  All words in the list will have an MI of greater than
+  MI-CUTOFF.  An MI-CUTOFF of 2 or 3 is recommended.  Setting this
+  too low simply makes this function run a long time (because sorting
+  takes a long time.)
+"
 	; General setup of things we need
-	(define trp (add-transpose-api LLOBJ))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define sms (add-pair-stars sap))
 
-	(define logtot-mmt (log2 (trp 'total-mmt-count)))
-
 	; The MI similarity of two words
 	(define (mi-sim WA WB)
-		(define fmi (sap 'pair-count WA WB))
-		(if fmi (cog-value-ref fmi 0) -inf.0))
-
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
 
 	; Get all the similarities
 	(define all-sim-pairs (sms 'get-all-elts))
-
-	; Get rid of all MI-similarity scores below this cutoff.
-	; This is set quite low; a later loop will use a higher cutoff.
-	; This cuts down on the total work to be done.
-	(define MI-CUTOFF 2.0)
 
 	; Exclude self-similar pairs too.
 	(define good-sims
@@ -192,6 +184,41 @@
 				(and (< MI-CUTOFF (mi-sim WA WB)) (not (equal? WA WB))))
 			all-sim-pairs))
 
+	; The ranked MI similarity of two words
+	(define (ranked-mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		; (if miv (cog-value-ref fmi 1) -inf.0)
+		(define fmi (if miv (cog-value-ref miv 0) -inf.0))
+		(define mwa (smi 'mmt-marginal WA))
+		(define mwb (smi 'mmt-marginal WB))
+		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
+		rmi
+	)
+
+	;; Create a word-pair ranking function
+	(define (rank-pairs PRLI FUN)
+		(sort PRLI
+			(lambda (ATOM-A ATOM-B)
+				(> (FUN ATOM-A) (FUN ATOM-B)))))
+
+	;; Now sort all of the available pairs
+	(rank-pairs good-sims (lambda (SIM) (ranked-mi-sim (gar SIM) (gdr SIM))))
+)
+
+; ---------------------------------------------------------------
+
+(define (do stuff LLOBJ)
+	; Start by getting the ranked words.  Note that this may include
+	; WordClass nodes as well as words.
+	(define ranked-words (rank-words LLOBJ))
+
+	; Create similarities for the initial set.
+	(define NRANK 200)
+	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
+
+	; Get rid of all MI-similarity scores below this cutoff.
+	(define MI-CUTOFF 4.0)
+	(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 )
 
 ; ---------------------------------------------------------------
