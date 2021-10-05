@@ -207,7 +207,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (do stuff LLOBJ)
+(define (do-stuff LLOBJ)
 	; Start by getting the ranked words.  Note that this may include
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
@@ -218,7 +218,55 @@
 
 	; Get rid of all MI-similarity scores below this cutoff.
 	(define MI-CUTOFF 4.0)
-	(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
+
+	; The fraction to merge -- zero.
+	(define (none WA WB) 0.0)
+
+	; When to merge -- always.
+	(define (always WA WB) #t)
+
+	; Recompute the support ...
+	; Although the core merge routine recomputes some of the
+	; marginals, it is not enough to handle MM^T correctly.
+	; So we do more, here.
+	(define asc (add-support-compute LLOBJ))
+	(define atc (add-transpose-compute LLOBJ))
+	(define (store-mmt WRD)
+		(for-each
+			(lambda (DJ) (store-atom (asc 'set-left-marginals DJ)))
+			(LLOBJ 'right-duals WRD))
+		(store-atom (asc 'set-right-marginals WRD))
+		(store-atom (atc 'set-mmt-marginals WRD)))
+
+	(define (store-final)
+		(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
+		(store-atom (asc 'set-right-totals))  ;; is this needed? Its slow.
+		(store-atom (atc 'set-mmt-totals)))
+
+	(define mrg (make-merger (add-cluster-gram LLOBJ)
+		always none 0 0 store-mmt store-final #t))
+
+	(define (do-merge WA WB)
+		(format #t "Start merge of `~A` and `~A`\n"
+			(cog-name WA) (cog-name WB))
+(if (and (equal? (cog-type WA) 'WordClassNode)
+(equal? (cog-type WB) 'WordClassNode))
+(throw 'not-implemented 'do-stuff "both are word classes"))
+
+		(define e (make-elapsed-secs))
+		(define wclass (mrg 'merge-function WA WB))
+		(format #t "Merged `~A` and `~A` into `~A` in ~A secs\n"
+			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
+	)
+
+	; Unleash the fury
+	(for-each
+		(lambda (N)
+			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
+			(defind top-pair (car sorted-pairs))
+			(do-merge (gar top-pair) (gdr top-pair))
+		)
+		(iota 10))
 )
 
 ; ---------------------------------------------------------------
