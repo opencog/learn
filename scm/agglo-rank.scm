@@ -232,16 +232,26 @@
 	(define asc (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 	(define (store-mmt WRD)
+(define e (make-elapsed-secs))
 		(for-each
 			(lambda (DJ) (store-atom (asc 'set-left-marginals DJ)))
 			(LLOBJ 'right-duals WRD))
+(format #t "Did left-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
 		(store-atom (asc 'set-right-marginals WRD))
-		(store-atom (atc 'set-mmt-marginals WRD)))
+(format #t "Did right-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
+		(store-atom (atc 'set-mmt-marginals WRD))
+(format #t "Did mmt-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
+	)
 
 	(define (store-final)
+(define e (make-elapsed-secs))
 		(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
+(format #t "Did left-tots in ~A secs\n" (e))
 		(store-atom (asc 'set-right-totals))  ;; is this needed? Its slow.
-		(store-atom (atc 'set-mmt-totals)))
+(format #t "Did right-tots in ~A secs\n" (e))
+		(store-atom (atc 'set-mmt-totals))
+(format #t "Did mmt-tots in ~A secs\n" (e))
+	)
 
 	(define mrg (make-merger (add-cluster-gram LLOBJ)
 		always none 0 0 store-mmt store-final #t))
@@ -263,7 +273,8 @@
 	(for-each
 		(lambda (N)
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
-			(defind top-pair (car sorted-pairs))
+			(define top-pair (car sorted-pairs))
+(prt-sorted-pairs sorted-pairs 0)
 			(do-merge (gar top-pair) (gdr top-pair))
 		)
 		(iota 10))
