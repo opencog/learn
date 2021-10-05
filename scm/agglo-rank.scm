@@ -101,23 +101,36 @@
   the diagonal.
 
 "
+	(define smi (add-symmetric-mi-compute LLOBJ))
+
 	; Take the word list and trim it down.
 	(define wrange (take (drop WORDLI START-RANK) DEPTH))
 
+	(define ol2 (/ 1.0 (log 2.0)))
+	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
+
+	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
+	(define (marg-mmt WRD) (smi 'mmt-marginal WRD))
+	(define mmt-q (smi 'mmt-q))
+
 	; Print something, so user has something to look at.
-	(define smi (add-symmetric-mi-compute LLOBJ))
 	(define (prt-smi WA WB)
-		(define rv (smi 'mmt-fmi WA WB))
-		(if (< 4 rv)
-			(format #t "\tMI(`~A`, `~A`) = ~6F\n"
-				(cog-name WA) (cog-name WB) rv))
-		rv)
+		(define fmi (smi 'mmt-fmi WA WB))
+		(define mwa (marg-mmt WA))
+		(define mwb (marg-mmt WB))
+		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
+		(if (< 4 fmi)
+			(format #t "\tMI(`~A`, `~A`) = ~6F  rank-MI = ~6F\n"
+				(cog-name WA) (cog-name WB) fmi rmi))
+		(FloatValue fmi rmi))
 
 	; Perform the computations
 	; The only useful thing that `batch-similarity` does for us is to
 	; run a double-loop, and that's just not that hard, and we could
 	; do this ourselves. But for now, let it do the work.
-	(define bami (batch-similarity LLOBJ #f SIM-ID -inf.0 prt-smi))
+	; XXX FIXME this is actuall wrong, this is not what we want it to do.
+	; Fuuu
+	(define bami (batch-similarity LLOBJ prt-smi #f SIM-ID))
 	(bami 'batch-list wrange)
 
 	; Save the similarities. The batch object didn't do this for us.
@@ -147,8 +160,6 @@
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define sms (add-pair-stars sap))
 
-	(define ol2 (/ 1.0 (log 2.0)))
-	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
 	(define logtot-mmt (log2 (trp 'total-mmt-count)))
 
 	; The MI similarity of two words
@@ -156,9 +167,6 @@
 		(define fmi (sap 'pair-count WA WB))
 		(if fmi (cog-value-ref fmi 0) -inf.0))
 
-	; The marginal log2 [ sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d) ]
-	(define (marg-mmt WRD)
-		(- (log2 (trp 'mmt-count WRD)) logtot-mmt))
 
 	; Get all the similarities
 	(define all-sim-pairs (sms 'get-all-elts))

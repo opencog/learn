@@ -6800,11 +6800,19 @@ Confusion.
  We are calculation the marginal similarity as
 \begin_inset Formula 
 \[
-P\left(w\right)=\log_{2}\frac{\sum_{d}P\left(w,d\right)P\left(*,d\right)}{\sum_{d}P\left(*,d\right)P\left(*,d\right)}
+P\left(w\right)=\frac{\sum_{d}P\left(w,d\right)P\left(*,d\right)}{\sum_{d}P\left(*,d\right)P\left(*,d\right)}
 \]
 
 \end_inset
 
+The normalization here is so that 
+\begin_inset Formula $P\left(*\right)=1$
+\end_inset
+
+ which is what we want so that we can interpret these things as probabilities.
+\end_layout
+
+\begin_layout Standard
 What is the value of 
 \begin_inset Formula $\sum_{d}P\left(*,d\right)P\left(*,d\right)$
 \end_inset
@@ -6817,14 +6825,14 @@ What is the value of
  It is
 \begin_inset Formula 
 \[
-P\left(*\right)=\log_{2}\frac{\sum_{d}N\left(*,d\right)N\left(*,d\right)}{\left(\sum_{d}N\left(*,d\right)\right)^{2}}
+Q=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)=-\log_{2}\frac{\sum_{d}N\left(*,d\right)N\left(*,d\right)}{\left(\sum_{d}N\left(*,d\right)\right)^{2}}
 \]
 
 \end_inset
 
 Wow.
  The mind boggles.
- Numerically, for the t1234 dataset, it is -11.946 which is actually a healthy
+ Numerically, for the t1234 dataset, it is 11.946 which is actually a healthy
  value.
 \end_layout
 
@@ -6832,6 +6840,45 @@ Wow.
 The mind boggles because this is...
  well, its a scale parameter.
  It's also a mean-square.
+ It's a screwy matrix norm of some kind.
+ It feels like there should be some kind of physical interpretation for
+ it.
+ Some kind of graph spectral foo-bar, but I don't know what that is.
+\end_layout
+
+\begin_layout Standard
+There's a generic problem here: we've got some kind of graph spectral something-
+or-other here, but I don't know that theory.
+ There's a hint that its simple, elegant, and should have some obvious interpret
+ation.
+ Fer chris sake, the last figure of Part Three was a Gaussian! There's got
+ to be some kind of generic theorems on this stuff.
+\end_layout
+
+\begin_layout Standard
+Note the common-MI was scale invariant.
+ It was defined as
+\begin_inset Formula 
+\[
+\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula 
+\[
+f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
+\]
+
+\end_inset
+
+It's scale invariant in that we can multiply 
+\begin_inset Formula $f$
+\end_inset
+
+ by any constant, and the common-MI is unchanged.
+ So its projective...
 \end_layout
 
 \begin_layout Section*
