@@ -47,6 +47,9 @@
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
+; Where the simiarity scores will be stored
+(define SIM-ID "shape-mi")
+
 ; ---------------------------------------------------------------
 
 (define (rank-words LLOBJ)
@@ -99,7 +102,30 @@
 	; Start by getting the ranked words.  Note that this may include
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
+	(define wrange (take (drop ranked-words START-RANK) DEPTH))
 
+	; Print something, so user has something to look at.
+	(define smi (add-symmetric-mi-compute LLOBJ))
+	(define (prt-smi WA WB)
+		(define rv (smi 'mmt-fmi WA WB))
+		(if (< 4 rv)
+			(format #t "\tMI(`~A`, `~A`) = ~6F\n"
+				(cog-name WA) (cog-name WB) rv))
+		rv)
+
+	; Perform the computations
+	(define bami (batch-similarity LLOBJ #f SIM-ID -inf.0 prt-smi))
+	(bami 'batch-list wrange)
+
+	; Save the similarities. The batch object didn't do this for us.
+	; We'll do a sheap and easy hack, here, since we know where they
+	; are being saved. Just do a double-loop.
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sms (add-pair-stars sap))
+	(for-each (lambda (WRD)
+		(for-each (lambda (DUL) (store-atom (sap 'get-pair WRD DUL)))
+			(sms 'left-duals WRD)))
+		wrange)
 )
 
 ; ---------------------------------------------------------------
@@ -112,6 +138,10 @@
 (define sha (add-covering-sections pcs))
 (sha 'fetch-pairs)
 (sha 'explode-sections)
+
+; If this hasn't been done, then it needs to be!
+(define bat (batch-transpose sha))
+(bat 'mmt-marginals)
 
 (define sap (add-similarity-api sha #f "shape-mi"))
 (define asm (add-symmetric-mi-compute sha))
