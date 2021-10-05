@@ -232,25 +232,22 @@
 	(define asc (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 	(define (store-mmt WRD)
-(define e (make-elapsed-secs))
+		; This first for-each loop accounts for 98% of the CPU time
+		; in typical cases.
 		(for-each
 			(lambda (DJ) (store-atom (asc 'set-left-marginals DJ)))
 			(LLOBJ 'right-duals WRD))
-(format #t "Did left-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
 		(store-atom (asc 'set-right-marginals WRD))
-(format #t "Did right-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
 		(store-atom (atc 'set-mmt-marginals WRD))
-(format #t "Did mmt-margs for `~A` in ~A secs\n" (cog-name WRD) (e))
 	)
 
 	(define (store-final)
-(define e (make-elapsed-secs))
+		; Computing the 'set-left-totals takes about 97% of the total
+		; time in this function, and about 8% of teh grand-total time.
+		; I suspect it is not used anywhere.
 		(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
-(format #t "Did left-tots in ~A secs\n" (e))
-		(store-atom (asc 'set-right-totals))  ;; is this needed? Its slow.
-(format #t "Did right-tots in ~A secs\n" (e))
+		(store-atom (asc 'set-right-totals))  ;; is this needed?
 		(store-atom (atc 'set-mmt-totals))
-(format #t "Did mmt-tots in ~A secs\n" (e))
 	)
 
 	(define mrg (make-merger (add-cluster-gram LLOBJ)
