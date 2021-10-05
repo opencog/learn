@@ -12,17 +12,10 @@
 ; This file manages the top-most loop for traversing over all words,
 ; and assigning them to grammatical clusters. This file does not
 ; provide tools for judging similarity, nor does it provide the
-; low-level merge code.  it only manages the top loop.
+; low-level merge code.  It only manages the top loop.
 ;
 ; This is basically the general concept of "agglomerative clustering",
-; which is what is effectively implemented in this file.  Note, however,
-; that the general problem is not quite this simple: in addition to
-; assigning words to grammatical classes, one must also cluster the
-; connectors, which in turn alters the notion of similarity. That is,
-; words are not isolated points to be clustered; the location of those
-; "points" depend on the connectors and sections ("disjuncts") which
-; must also be clustered in a consistent manner: these two clustering
-; steps form a feedback loop.
+; which is what is (in effect) implemented in this file.
 ;
 ; The code here works, but it seems that one can do a better job with
 ; the code in `agglo-rank.scm`, which seems to provide a better jugdement
