@@ -75,18 +75,20 @@
 				(> na nb))))
 )
 
-(define (compute-diag-mi-sims LLOBJ START-RANK DEPTH)
+(define (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
 "
-  compute-diag-mi-sims LLOBJ START-RANK DEPTH - compute MI similarity.
+  compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH - compute MI.
 
-  This will compute similarity of words lying around a diagonal. The
-  width of the diagonal is DEPTH. The diagonal is defined by the
+  This will compute the MI similarity of words lying around a diagonal.
+  The width of the diagonal is DEPTH. The diagonal is defined by the
   the ranked words. Computations start at START-RANK and proceed to
   DEPTH.  If the Similarity has already been recorded, it will not
   be recomputed.
 
   Think of a tri-diagonal matrix, but instead of three, its N-diagonal
   with N given by DEPTH.
+
+  WORDLI is a list of word, presumed sorted by rank.
 
   Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
   block matrix of similarities will be computed. Since similarities
@@ -99,10 +101,8 @@
   the diagonal.
 
 "
-	; Start by getting the ranked words.  Note that this may include
-	; WordClass nodes as well as words.
-	(define ranked-words (rank-words LLOBJ))
-	(define wrange (take (drop ranked-words START-RANK) DEPTH))
+	; Take the word list and trim it down.
+	(define wrange (take (drop WORDLI START-RANK) DEPTH))
 
 	; Print something, so user has something to look at.
 	(define smi (add-symmetric-mi-compute LLOBJ))
@@ -114,6 +114,9 @@
 		rv)
 
 	; Perform the computations
+	; The only useful thing that `batch-similarity` does for us is to
+	; run a double-loop, and that's just not that hard, and we could
+	; do this ourselves. But for now, let it do the work.
 	(define bami (batch-similarity LLOBJ #f SIM-ID -inf.0 prt-smi))
 	(bami 'batch-list wrange)
 
@@ -126,6 +129,54 @@
 		(for-each (lambda (DUL) (store-atom (sap 'get-pair WRD DUL)))
 			(sms 'left-duals WRD)))
 		wrange)
+)
+
+; ---------------------------------------------------------------
+
+(define (do stuff LLOBJ)
+	; Start by getting the ranked words.  Note that this may include
+	; WordClass nodes as well as words.
+	(define ranked-words (rank-words LLOBJ))
+
+	; Create sims for the initial set.
+	(define NRANK 200)
+	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
+
+	; General setup of things we need
+	(define trp (add-transpose-api LLOBJ))
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sms (add-pair-stars sap))
+
+	(define ol2 (/ 1.0 (log 2.0)))
+	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
+	(define logtot-mmt (log2 (trp 'total-mmt-count)))
+
+	; The MI similarity of two words
+	(define (mi-sim WA WB)
+		(define fmi (sap 'pair-count WA WB))
+		(if fmi (cog-value-ref fmi 0) -inf.0))
+
+	; The marginal log2 [ sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d) ]
+	(define (marg-mmt WRD)
+		(- (log2 (trp 'mmt-count WRD)) logtot-mmt))
+
+	; Get all the similarities
+	(define all-sim-pairs (sms 'get-all-elts))
+
+	; Get rid of all MI-similarity scores below this cutoff.
+	; This is set quite low; a later loop will use a higher cutoff.
+	; This cuts down on the total work to be done.
+	(define MI-CUTOFF 2.0)
+
+	; Exclude self-similar pairs too.
+	(define good-sims
+		(filter
+			(lambda (SIM)
+				(define WA (gar SIM))
+				(define WB (gdr SIM))
+				(and (< MI-CUTOFF (mi-sim WA WB)) (not (equal? WA WB))))
+			all-sim-pairs))
+
 )
 
 ; ---------------------------------------------------------------

@@ -6795,6 +6795,45 @@ So since expt-8 went so swimmingly, ranked merge development should go smoothly,
  Not so lucky.
 \end_layout
 
+\begin_layout Standard
+Confusion.
+ We are calculation the marginal similarity as
+\begin_inset Formula 
+\[
+P\left(w\right)=\log_{2}\frac{\sum_{d}P\left(w,d\right)P\left(*,d\right)}{\sum_{d}P\left(*,d\right)P\left(*,d\right)}
+\]
+
+\end_inset
+
+What is the value of 
+\begin_inset Formula $\sum_{d}P\left(*,d\right)P\left(*,d\right)$
+\end_inset
+
+ ? I think we want to add this as a constant to common-MI.
+ As a constant, it changes nothing, but it prevents common-MI from being
+ always negative.
+ We don't have it handy because we are not storing P's we are storing N's;
+ we need to compute it.
+ It is
+\begin_inset Formula 
+\[
+P\left(*\right)=\log_{2}\frac{\sum_{d}N\left(*,d\right)N\left(*,d\right)}{\left(\sum_{d}N\left(*,d\right)\right)^{2}}
+\]
+
+\end_inset
+
+Wow.
+ The mind boggles.
+ Numerically, for the t1234 dataset, it is -11.946 which is actually a healthy
+ value.
+\end_layout
+
+\begin_layout Standard
+The mind boggles because this is...
+ well, its a scale parameter.
+ It's also a mean-square.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout

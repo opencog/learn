@@ -123,7 +123,7 @@
 (e)  ;; 32 seconds
 (length all-sim-pairs) ;; 668610
 ;
-; Exlude self-similar pairs.
+; Exclude self-similar pairs.
 (define uniq-sims
 	(filter (lambda (SIM) (not (equal? (gar SIM) (gdr SIM)))) all-sim-pairs))
 (length uniq-sims)
