@@ -1,24 +1,20 @@
 ;
-; gram-agglo.scm
+; agglo-loops.scm
 ;
-; Loop over all words, merge them into grammatical categories.
-; Agglomerative clustering.
+; Loop over all words, merging them into grammatical categories.
+; Agglomerative clustering. Deprecated (?), use `agglo-ranked.scm` instead.
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; When a pair of words are judged to be grammatically similar, they
-; can be used to create a "grammatical class", containing both the
-; words, and behaving as their average.  When a word is judged to
-; belong to an existing grammatical-class, then some mechanism must
-; be provided to add that word to the class.  This file implements
-; the tools for creating and managing such classes.  It does not
-; dictate how to judge when words belong to a class; this is done
-; independently of the structure of the classes themselves.
+; This file manages the top-most loop for traversing over all words,
+; and assigning them to grammatical clusters. This file does not
+; provide tools for judging similarity, nor does it provide the
+; low-level merge code.  it only manages the top loop.
 ;
-; The above describes the general concept of "agglomerative clustering",
+; This is basically the general concept of "agglomerative clustering",
 ; which is what is effectively implemented in this file.  Note, however,
 ; that the general problem is not quite this simple: in addition to
 ; assigning words to grammatical classes, one must also cluster the
@@ -28,6 +24,9 @@
 ; must also be clustered in a consistent manner: these two clustering
 ; steps form a feedback loop.
 ;
+; The code here works, but it seems that one can do a better job with
+; the code in `agglo-rank.scm`, which seems to provide a better jugdement
+; of what order things should be merged together.
 ;
 ; Agglomerative clustering
 ; ------------------------
@@ -37,8 +36,8 @@
 ; can make a huge difference in performance.
 ;
 ; Two of the algorithms implemented in this file are effectively O(N^2)
-; algorithms, in the length N of the list of words. One does a bit
-; better, and one might(?) approach O(N log N) performance.
+; algorithms, in the length N of the list of words. One of them does a
+; bit better, and another might(?) approach O(N log N) performance.
 ;
 ; The first three variants are these:
 ;
