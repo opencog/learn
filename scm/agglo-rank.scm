@@ -103,35 +103,47 @@
 "
 	(define smi (add-symmetric-mi-compute LLOBJ))
 
-	; Take the word list and trim it down.
-	(define wrange (take (drop WORDLI START-RANK) DEPTH))
-
 	(define ol2 (/ 1.0 (log 2.0)))
 	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
 
-	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
-	(define (marg-mmt WRD) (smi 'mmt-marginal WRD))
 	(define mmt-q (smi 'mmt-q))
 
-	; Print something, so user has something to look at.
-	(define (prt-smi WA WB)
+	; Compute ans save both the fmi and the ranked-MI.
+	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
+	; The mmt-q is sum_d P(*,d)P(*,d) =
+	;              sum_d N(*,d)N(*,d) / [ sum_d N(*,d) ]^2
+	(define (compute-sim WA WB)
 		(define fmi (smi 'mmt-fmi WA WB))
-		(define mwa (marg-mmt WA))
-		(define mwb (marg-mmt WB))
+		(define mwa (smi 'mmt-marginal WA))
+		(define mwb (smi 'mmt-marginal WB))
 		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
+
+		; Print something, so user has something to look at.
 		(if (< 4 fmi)
 			(format #t "\tMI(`~A`, `~A`) = ~6F  rank-MI = ~6F\n"
 				(cog-name WA) (cog-name WB) fmi rmi))
 		(FloatValue fmi rmi))
 
-	; Perform the computations
-	; The only useful thing that `batch-similarity` does for us is to
-	; run a double-loop, and that's just not that hard, and we could
-	; do this ourselves. But for now, let it do the work.
-	; XXX FIXME this is actuall wrong, this is not what we want it to do.
-	; Fuuu
-	(define bami (batch-similarity LLOBJ prt-smi #f SIM-ID))
-	(bami 'batch-list wrange)
+	; Perform similarity computations for one row.
+	(define (batch-simlist ITEM ITEM-LIST)
+		(for-each
+			(lambda (item) (compute-sim ITEM item))
+			ITEM-LIST))
+
+	; Take the word list and trim it down.
+	(define nwords (length WORDLI))
+	(define start (min START-RANK nwords))   ; avoid overflow
+	(define depth (min DEPTH (- nwords start)))  ; avoid overflow
+	(define row-range (take (drop WORDLI start) depth)) ; list of words to do
+	(define (col-start off) (max 0 (- (+ start off) depth))) ;  column start
+	(define (col-end off) (min (+ start off) depth)) ;  column end
+	(define (col-range off)   ; reverse, so we go from diagonal outwards
+		(reverse (take (drop WORDLI (col-start off)) (col-end off))))
+
+	(define (do-one-row off)
+		(batch-simlist (list-ref row-range off) (col-range (+ 1 off))))
+
+	(for-each (lambda (n) (do-one-row n)) (iota depth))
 
 	; Save the similarities. The batch object didn't do this for us.
 	; We'll do a sheap and easy hack, here, since we know where they
