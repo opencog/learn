@@ -101,6 +101,7 @@
   the diagonal.
 
 "
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define smi (add-symmetric-mi-compute LLOBJ))
 
 	(define ol2 (/ 1.0 (log 2.0)))
@@ -122,7 +123,10 @@
 		(if (< 4 fmi)
 			(format #t "\tMI(`~A`, `~A`) = ~6F  rank-MI = ~6F\n"
 				(cog-name WA) (cog-name WB) fmi rmi))
-		(FloatValue fmi rmi))
+		(store-atom
+			(sap 'set-pair-similarity
+				(sap 'make-pair WA WB)
+				(FloatValue fmi rmi))))
 
 	; Perform similarity computations for one row.
 	(define (batch-simlist ITEM ITEM-LIST)
@@ -143,17 +147,8 @@
 	(define (do-one-row off)
 		(batch-simlist (list-ref row-range off) (col-range (+ 1 off))))
 
+	; Perform the similarity calculations, looping over the fat diagonal.
 	(for-each (lambda (n) (do-one-row n)) (iota depth))
-
-	; Save the similarities. The batch object didn't do this for us.
-	; We'll do a sheap and easy hack, here, since we know where they
-	; are being saved. Just do a double-loop.
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define sms (add-pair-stars sap))
-	(for-each (lambda (WRD)
-		(for-each (lambda (DUL) (store-atom (sap 'get-pair WRD DUL)))
-			(sms 'left-duals WRD)))
-		wrange)
 )
 
 ; ---------------------------------------------------------------
