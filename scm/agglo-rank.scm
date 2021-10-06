@@ -236,11 +236,11 @@
 	; The ranked MI similarity of two words
 	(define (ranked-mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref fmi 1) -inf.0))
+		(if miv (cog-value-ref miv 1) -inf.0))
 
 	(define len (length LST))
 	(define start (min START len))   ; start is just START unless too large.
-	(define num (min N (max 0 (- len M))))  ; num is just N unless too large
+	(define num (min N (max 0 (- len START))))  ; num is just N unless too large
 
 	(for-each
 		(lambda (PR)
