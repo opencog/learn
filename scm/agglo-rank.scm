@@ -189,12 +189,17 @@
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
 
+	; The ranked MI similarity of two words
+	(define (ranked-mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref fmi 1) -inf.0))
+
 	; Get all the similarities. We're going to just hack this, for
 	; now, because we SimilarityLinks with both WordNode and WordClassNode
 	; in them.
 	(define all-sim-pairs (cog-get-atoms 'SimilarityLink))
 
-	; Exclude self-similar pairs too.
+	; Exclude pairs with a low MI, and also self-similar pairs.
 	(define good-sims
 		(filter
 			(lambda (SIM)
@@ -202,19 +207,6 @@
 				(define WB (gdr SIM))
 				(and (< MI-CUTOFF (mi-sim WA WB)) (not (equal? WA WB))))
 			all-sim-pairs))
-
-	; The ranked MI similarity of two words
-; XXX temp hack until we've done all of them correctly.
-(define mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
-	(define (ranked-mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		; (if miv (cog-value-ref fmi 1) -inf.0)
-		(define fmi (if miv (cog-value-ref miv 0) -inf.0))
-		(define mwa (smi 'mmt-marginal WA))
-		(define mwb (smi 'mmt-marginal WB))
-		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
-		rmi
-	)
 
 	;; Create a word-pair ranking function
 	(define (rank-pairs PRLI FUN)
@@ -228,7 +220,41 @@
 
 ; ---------------------------------------------------------------
 
-(define (do-stuff LLOBJ)
+(define (prt-sorted-pairs LST M N)
+"
+  prt-sorted-pairs START NUM - print list of word pairs and similarities
+
+  Handy-dandy debug utility.
+"
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+
+	; The MI similarity of two words
+	(define (mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
+	; The ranked MI similarity of two words
+	(define (ranked-mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref fmi 1) -inf.0))
+
+	(define len (length LST))
+	(define start (min M len))   ; start is just M unless M is too large.
+	(define num (min N (max 0 (- len M))))  ; num is just N unless N too large
+
+	(for-each
+		(lambda (PR)
+			(format #t "ranked-MI = ~6F MI = ~6F (`~A`, `~A`)\n"
+				(ranked-mi-sim (gar PR) (gdr PR))
+				(mi-sim (gar PR) (gdr PR))
+				(cog-name (gar PR))
+				(cog-name (gdr PR))))
+		(take (drop LST start)num))
+)
+
+; ---------------------------------------------------------------
+
+(define-public (do-stuff LLOBJ)
 	; Start by getting the ranked words.  Note that this may include
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
@@ -330,7 +356,7 @@
 		(lambda (N)
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 			(define top-pair (car sorted-pairs))
-(prt-sorted-pairs sorted-pairs 0)
+(prt-sorted-pairs sorted-pairs 0 12)
 			(do-merge (gar top-pair) (gdr top-pair))
 		)
 		(iota 10))
