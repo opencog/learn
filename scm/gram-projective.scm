@@ -761,8 +761,8 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define wa-is-cls (eq? (acg 'cluster-type) (cog-type WA)))
-		(define wb-is-cls (eq? (acg 'cluster-type) (cog-type WB)))
+		(define wa-is-cls (eq? (acg 'cluster-type) (Type (cog-type WA))))
+		(define wb-is-cls (eq? (acg 'cluster-type) (Type (cog-type WB))))
 		(define is-single (and (not wa-is-cls) (not wb-is-cls)))
 		(define cls (acg 'make-cluster WA WB))
 

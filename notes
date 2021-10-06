@@ -5471,19 +5471,23 @@ asc 'set-left-marginals DJ
 calls  left-stars on colum (dj)
 these have secions and crosses as apporiate, bu wclas??
 
-oh no do we need TypeChice!? I think we do...
+oh no do we need TypeChoice!? I think we do...
+* direct-sum.scm left types...  DONE
 
-what is make-gram-class-api ?? used only in export to LG dict.
-
-todo --
-* direct-sum.scm left types...
-* Need to fetch member links, too!?
 * is mmtq loops correct?
   i.e. are supports correct?
   i.e. are duals being fetches correctly?
+  I think it's correct, but WordClass was not right. FIXED.
+* don't recomp similarity if present. DONE.
 
-* don''t recomp mis if present.
+todo --
+* Need to fetch member links, too!?
+* what is make-gram-class-api ?? used only in export to LG dict.
+  In gram-class-api.scm
+
 * backwards order in names for clusters.
+  add-cluster-gram 'make-cluster
+
 * duplicate cluster names how will that work ??
   oh I see, cause renaming bug
 

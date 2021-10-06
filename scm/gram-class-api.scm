@@ -170,11 +170,11 @@
   clusters generated during clustering.
 
   Provided methods:
-    'cluster-type -- returns 'WordClassNode
+    'cluster-type -- returns (Type 'WordClassNode)
 
     'make-cluster WA WB -- Creates a WordClassNode
 "
-	(define (get-cluster-type) 'WordClassNode)
+	(define (get-cluster-type) (Type 'WordClassNode))
 
 	; Create a word-class out of two words, or just extend an
 	; existing word class. Here, "extend" means "do nothing",
