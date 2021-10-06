@@ -174,9 +174,9 @@
 		(define any-left (AnyNode "cross word"))
 		(define any-right (AnyNode "cross shape"))
 
-		; Well, left-type can also be a WordClassNode, but we lie
-		; about that, here.
-		(define (get-left-type) 'WordNode)
+		; The left-type is non-trivial.
+		(define (get-left-type)
+			(TypeChoice (Type 'WordNode) (Type 'WordClassNode)))
 		(define (get-right-type) 'ShapeLink)
 		(define (get-pair-type) 'CrossSection)
 

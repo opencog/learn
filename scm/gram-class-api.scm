@@ -16,6 +16,10 @@
 ; that the rows of the matrix correspond to `WordClassNodes` instead
 ; of `WordNodes`.
 ;
+; TODO ... This is used only in LG dict export. Perhaps this should be
+; merged into make-pseudo-cset-api ... the extra stuff here is used to
+; fetch member links ... so maybe this could be a wrapper on that?
+;
 ; ---------------------------------------------------------------------
 ;
 (use-modules (srfi srfi-1))

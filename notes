@@ -5464,15 +5464,25 @@ store-mmt
 
 (store-atom (atc 'set-mmt-totals))
 
+(sha 'right-duals (WordClass "to from"))
+
 store-mmt
-asc 'set-left-marginals
+asc 'set-left-marginals DJ
+calls  left-stars on colum (dj)
+these have secions and crosses as apporiate, bu wclas??
+
+oh no do we need TypeChice!? I think we do...
+
+what is make-gram-class-api ?? used only in export to LG dict.
 
 todo --
+* Need to fetch member links, too!?
+* is mmtq loops correct?
+  i.e. are supports correct?
+  i.e. are duals being fetches correctly?
 
 * don''t recomp mis if present.
 * backwards order in names for clusters.
-* is mmtq loops correct?
-i.e. are supports correct?
 * duplicate cluster names how will that work ??
   oh I see, cause renaming bug
 
