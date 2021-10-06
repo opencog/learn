@@ -197,7 +197,7 @@
 ; TODO
 ; ----
 ; It might be useful to move the management of the MemberLink's to
-; the `add-cluster-gram` object.
+; the `add-gram-class-api` object.
 ;
 ; ---------------------------------------------------------------------
 
@@ -757,12 +757,11 @@
 "
 	(define pss (add-support-api STARS))
 	(define psu (add-support-compute STARS))
-	(define acg (add-cluster-gram STARS))
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define wa-is-cls (eq? (acg 'cluster-type) (Type (cog-type WA))))
-		(define wb-is-cls (eq? (acg 'cluster-type) (Type (cog-type WB))))
+		(define wa-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WA))))
+		(define wb-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WB))))
 		(define is-single (and (not wa-is-cls) (not wb-is-cls)))
 		(define cls (acg 'make-cluster WA WB))
 
