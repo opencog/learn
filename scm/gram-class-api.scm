@@ -107,12 +107,31 @@
 	; Create a word-class out of two words, or just extend an
 	; existing word class. Here, "extend" means "do nothing",
 	; return the existing class.
+	;
+	; XXX FIXME. This is broken in two different ways.
+	; (1) if A and B have been merged before, and now what's
+	;     left of them is being merged again, then some other
+	;     completely new name is needed, as it would be a distinct
+	;     word-sense. Right now, we throw for this case. I guess
+	;     it's easy-to-handle, but still how often does it happen?
+	; (2) If both A and B are WordClasses, then the MemberLinks
+	;     need to be copied over... but maybe thier counts need
+	;     adjusting? Not clear, yet, what should happen. Right now,
+	;     we throw.
 	(define (make-cluster A-ATOM B-ATOM)
+		(define is-a-class (eq? 'WordClassNode (cog-type A-ATOM)))
+		(define is-b-class (eq? 'WordClassNode (cog-type B-ATOM)))
 		(cond
-			((eq? 'WordClassNode (cog-type A-ATOM)) A-ATOM)
-			((eq? 'WordClassNode (cog-type B-ATOM)) B-ATOM)
-			(else (WordClass (string-concatenate
-					(list (cog-name A-ATOM) " " (cog-name B-ATOM)))))))
+			((and is-a-class is-b-class)
+				(throw 'bad-merge 'make-cluster "Merging two clusters!"))
+			(is-a-class A-ATOM)
+			(is-b-class B-ATOM)
+			(else (begin
+				(define cluname (string-concatenate
+					(list (cog-name A-ATOM) " " (cog-name B-ATOM))))
+				(if (not (nil? (cog-node 'WordClassNode cluname)))
+					(throw 'bad-merge 'make-cluster "Cluster already exists!"))
+				(WordClassNode cluname)))))
 
 	;-------------------------------------------
 	(define (describe)
