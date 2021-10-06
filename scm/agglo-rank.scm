@@ -183,15 +183,16 @@
 "
 	; General setup of things we need
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define sms (add-pair-stars sap))
 
 	; The MI similarity of two words
 	(define (mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
 
-	; Get all the similarities
-	(define all-sim-pairs (sms 'get-all-elts))
+	; Get all the similarities. We're going to just hack this, for
+	; now, because we SimilarityLinks with both WordNode and WordClassNode
+	; in them.
+	(define all-sim-pairs (cog-get-atoms 'SimilarityLink))
 
 	; Exclude self-similar pairs too.
 	(define good-sims
@@ -204,7 +205,7 @@
 
 	; The ranked MI similarity of two words
 ; XXX temp hack until we've done all of them correctly.
-(define mmt-q ((add-symmetric-mi-compute LLLOBJ) 'mmt-q))
+(define mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
 	(define (ranked-mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		; (if miv (cog-value-ref fmi 1) -inf.0)
@@ -289,6 +290,16 @@
 		(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
 			(length existing-list) (cog-name WX) (e)))
 
+	; Compute brand-new sims for brand new clusters.
+	(define (comp-new-sims WX)
+		(define e (make-elapsed-secs))
+		(define compute-sim (make-simmer LLOBJ))
+		(define wli (take ranked-words NRANK))
+		(for-each (lambda (WRD) (compute-sim WRD WX)) wli)
+
+		(format #t "Computed ~3D sims for `~A` in ~A secs\n"
+			(length wli) (cog-name WX) (e)))
+
 	(define (do-merge WA WB)
 		(format #t "Start merge of `~A` and `~A`\n"
 			(cog-name WA) (cog-name WB))
@@ -305,7 +316,7 @@
 		(recomp-all-sim WA)
 		(recomp-all-sim WB)
 		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
-			(recomp-all-sim wclass))
+			(comp-new-sims wclass))
 
 		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
 			(format #t "------ Similarities for `~A` `~A` and `~A` in ~A secs\n"
