@@ -344,9 +344,9 @@
 		(format #t "Computed ~3D sims for `~A` in ~A secs\n"
 			(length wli) (cog-name WX) (e)))
 
-	(define (do-merge WA WB)
-		(format #t "Start merge of `~A` and `~A`\n"
-			(cog-name WA) (cog-name WB))
+	(define (do-merge N WA WB)
+		(format #t "Start merge ~D of `~A` and `~A`\n"
+			N (cog-name WA) (cog-name WB))
 (if (and (equal? (cog-type WA) 'WordClassNode)
 (equal? (cog-type WB) 'WordClassNode))
 (throw 'not-implemented 'do-stuff "both are word classes"))
@@ -357,16 +357,26 @@
 		(format #t "------ Merged `~A` and `~A` into `~A` in ~A secs\n"
 			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
 
+		; After merging, recompute similarities for the words
+		; that were touched.
 		(recomp-all-sim WA)
 		(recomp-all-sim WB)
 		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
 			(comp-new-sims wclass))
 
 		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
-			(format #t "------ Similarities for `~A` `~A` and `~A` in ~A secs\n"
+			(format #t "------ Computed MI for `~A` `~A` and `~A` in ~A secs\n"
 				(cog-name WA) (cog-name WB) (cog-name wclass) (e))
-			(format #t "------ Similarities for `~A` and `~A` in ~A secs\n"
+			(format #t "------ Computed MI for `~A` and `~A` in ~A secs\n"
 				(cog-name WA) (cog-name WB) (e)))
+
+		; Expand the size of teh universe by one.
+		(define ranked-words (rank-words LLOBJ))
+		(for-each (lambda (WRD)
+				(format #t "Top-ranked word: ~A\n" WRD))
+			(take ranked-words 12))
+		(compute-diag-mi-sims LLOBJ ranked-words 0 (+ N NRANK))
+		(format #t "------ Extended the universe in ~A secs\n" (e))
 	)
 
 	; Unleash the fury
@@ -375,9 +385,9 @@
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 			(define top-pair (car sorted-pairs))
 (prt-sorted-pairs LLOBJ sorted-pairs 0 12)
-			(do-merge (gar top-pair) (gdr top-pair))
+			(do-merge N (gar top-pair) (gdr top-pair))
 		)
-		(iota 10))
+		(iota 1000))  ; loop forever, in practical terms...
 )
 
 ; ---------------------------------------------------------------
