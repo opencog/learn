@@ -143,9 +143,15 @@
   the diagonal.
 
 "
-	; Create a new one each time, so we get the updated
+	; Create a new simmer each time, so we get the updated
 	; mmt-q value for this session.
-	(define compute-sim (make-simmer LLOBJ))
+	(define do-compute-sim (make-simmer LLOBJ))
+
+	; Don't recompute similarity, if we've already got it.
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define (compute-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if (not miv) (do-compute-sim WA WB)))
 
 	; Perform similarity computations for one row.
 	(define (batch-simlist ITEM ITEM-LIST)
