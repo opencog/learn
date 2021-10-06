@@ -126,9 +126,9 @@
 				(throw 'bad-merge 'make-cluster "Merging two clusters!"))
 			(is-a-class A-ATOM)
 			(is-b-class B-ATOM)
-			(else (begin
-				(define cluname (string-concatenate
-					(list (cog-name A-ATOM) " " (cog-name B-ATOM))))
+			(else (let
+					((cluname (string-concatenate
+						(list (cog-name A-ATOM) " " (cog-name B-ATOM)))))
 				(if (not (nil? (cog-node 'WordClassNode cluname)))
 					(throw 'bad-merge 'make-cluster "Cluster already exists!"))
 				(WordClassNode cluname)))))
@@ -158,15 +158,20 @@
 			((fetch-pairs)    fetch-disjuncts)
 			((store-aux)      store-aux)
 
-			((cluster-type)   (get-cluster-type))
-			((make-cluster)   (apply make-cluster args))
+			((cluster-type)   get-cluster-type)
+			((make-cluster)   make-cluster)
 
 			((provides)       provides)
 			((filters?)       (lambda () #f))
-			((describe)       (describe))
-
-			(else             (apply LLOBJ (cons message args)))
-		args))
+			((describe)       describe)
+			((help)           describe)
+			((obj)            (lambda () "add-gram-class-api"))
+			((base)           (lambda () LLOBJ))
+			(else             (lambda ( . rest )
+			                     (if (null? rest)
+			                        (LLOBJ message)
+			                        (LLOBJ message rest))))
+		) args))
 )
 
 ; ---------------------------------------------------------------------

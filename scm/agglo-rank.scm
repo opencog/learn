@@ -315,7 +315,7 @@
 		(store-atom (atc 'set-mmt-totals))
 	)
 
-	(define mrg (make-merger (add-cluster-gram LLOBJ)
+	(define mrg (make-merger LLOBJ
 		always none 0 0 store-mmt store-final #t))
 
 	; Recompute all existing similarities to word WX

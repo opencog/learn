@@ -763,7 +763,7 @@
 		(define wa-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WA))))
 		(define wb-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WB))))
 		(define is-single (and (not wa-is-cls) (not wb-is-cls)))
-		(define cls (acg 'make-cluster WA WB))
+		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
 		; one. Afterwards, need to recompute the marginals. This is so
