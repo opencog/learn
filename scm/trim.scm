@@ -9,17 +9,6 @@
 
 (use-modules (srfi srfi-1))
 
-(define-public (trim-matrix LLOBJ LEFT-PRED RIGHT-PRED PAIR-PRED)
-"
-  trim-matrix LLOBJ LEFT-PRED RIGHT-PRED ELEMENT-PRED
-  Deprecated. Use
-  `((add-trimmer LLOBJ) `generic-trim LEFT-PRED RIGHT-PRED ELEMENT-PRED)`
-  instead.
-"
-	((add-trimmer LLOBJ) `generic-trim LEFT-PRED RIGHT-PRED PAIR-PRED)
-)
-
-
 (define-public (subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT)
 "
   subtotal-trim LLOBJ LEFT-CUT RIGHT-CUT PAIR-CUT

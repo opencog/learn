@@ -5471,7 +5471,8 @@ asc 'set-left-marginals DJ
 calls  left-stars on colum (dj)
 these have secions and crosses as apporiate, bu wclas??
 
-oh no do we need TypeChoice!? I think we do...
+fixed bugs:
+oh no do we need TypeChoice!? I think we do... DONE
 * direct-sum.scm left types...  DONE
 
 * is mmtq loops correct?
@@ -5479,13 +5480,15 @@ oh no do we need TypeChoice!? I think we do...
   i.e. are duals being fetches correctly?
   I think it's correct, but WordClass was not right. FIXED.
 * don't recomp similarity if present. DONE.
+* what is make-gram-class-api ?? not used anywhere!
+  In gram-class-api.scm Yeah, fixed. Now its key to clustering.
+* who calls store-aux? No one, it seems ... IGNORE.
+  I guess the run files maybe?? should do this ??
+* Need to fetch member links, too!? DONE now in gram-class-api
+* review trim stuff... as compared to gram-class-api.scm DONE
 
 todo --
-* who calls store-aux?
-* review trim stuff... as compared to gram-class-api.scm
-* Need to fetch member links, too!?
-* what is make-gram-class-api ?? not used anywhere!
-  In gram-class-api.scm
+* fix run files to call add-gram-class-api
 
 * backwards order in names for clusters.
   add-cluster-gram 'make-cluster

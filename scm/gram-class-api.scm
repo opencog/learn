@@ -418,7 +418,8 @@
 	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
 
 	; ---------------
-	(trim-matrix LLOBJ left-basis-pred right-basis-pred pair-pred)
+	(define trim-mtrx (add-trimmer LLOBJ))
+	(trim-mtrx 'generic-trim left-basis-pred right-basis-pred pair-pred)
 )
 
 ; ---------------------------------------------------------------------
