@@ -12,6 +12,7 @@
 ; Init the statistics objects.
 (define ala (make-any-link-api))
 (define asa (add-pair-stars ala))
+(define trm (add-trimmer asa))
 
 ; Compute the statistics; these are needed for trimming.
 (batch-pairs asa)
@@ -22,7 +23,7 @@
 ; for why these are chosen, instead of something else. Basically,
 ; trimming this much raises the average MI of the dataset to its
 ; highest value. It also cuts the number of word pairs about half.
-(subtotal-trim asa 10 10 4)
+(trm 'subtotal-trim asa 10 10 4)
 
 ; Re-init the stats.
 (set! ala (make-any-link-api))

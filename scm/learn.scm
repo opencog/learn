@@ -23,7 +23,6 @@
 (include-from-path "opencog/nlp/learn/gram-optim.scm")
 (include-from-path "opencog/nlp/learn/agglo-loops.scm")
 (include-from-path "opencog/nlp/learn/agglo-rank.scm")
-(include-from-path "opencog/nlp/learn/trim.scm")
 (include-from-path "opencog/nlp/learn/gram-class-api.scm")
 ; (include-from-path "opencog/nlp/learn/link-class.scm")
 (include-from-path "opencog/nlp/learn/lg-compare.scm")
