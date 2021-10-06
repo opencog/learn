@@ -332,19 +332,10 @@
 
 		; -------------------------------------------------------
 		; Stars API.
-		; Get both the Words and the WordClasses; put WordClasses first.
-		(define (get-left-basis)
-			(if (not l-basis) (set! l-basis
-				(append! (cog-get-atoms 'WordClassNode) (cog-get-atoms 'WordNode))))
-			l-basis)
 
 		(define (get-right-basis)
 			(if (not r-basis) (set! r-basis (cog-get-atoms 'ShapeLink)))
 			r-basis)
-
-		(define (get-left-size)
-			(if (eq? 0 l-size) (set! l-size (length (get-left-basis))))
-			l-size)
 
 		(define (get-right-size)
 			(if (eq? 0 r-size) (set! r-size (length (get-right-basis))))
@@ -352,9 +343,7 @@
 
 		; Invalidate the caches
 		(define (clobber)
-			(set! l-basis #f)
 			(set! r-basis #f)
-			(set! l-size 0)
 			(set! r-size 0)
 			(if (LLOBJ 'provides 'clobber) (LLOBJ 'clobber))
 		)
@@ -519,9 +508,7 @@
 		; Explain the non-default provided methods.
 		(define (provides meth)
 			(case meth
-				((left-basis)         get-left-basis)
 				((right-basis)        get-right-basis)
-				((left-basis-size)    get-left-size)
 				((right-basis-size)   get-right-size)
 				((clobber)            clobber)
 				(else #f)
@@ -547,9 +534,7 @@
 				((fetch-pairs)      fetch-sections)
 
 				; Overloaded stars methods
-				((left-basis)       get-left-basis)
 				((right-basis)      get-right-basis)
-				((left-basis-size)  get-left-size)
 				((right-basis-size) get-right-size)
 				((clobber)          clobber)
 
