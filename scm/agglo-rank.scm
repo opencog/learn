@@ -273,9 +273,21 @@
 	(define mrg (make-merger (add-cluster-gram LLOBJ)
 		always none 0 0 store-mmt store-final #t))
 
-	(define (recomp-pair-sim WA WB)
-		(store-atom
-			(sap 'set-pair-similarity
+	; Recompute all existing similarities to word WX
+	(define (recomp-all-sim WX)
+		(define e (make-elapsed-secs))
+		(define compute-sim (make-simmer LLOBJ))
+		(define sap (add-similarity-api LLOBJ #f SIM-ID))
+		(define sms (add-pair-stars sap))
+		(define wrd-list (sms 'left-duals WX))
+		(define existing-list
+			(filter (lambda (WRD) (not (nil? (sap 'get-pair WRD WX))))
+				wrd-list))
+
+		(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
+
+		(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
+			(length existing-list) (cog-name WX) (e)))
 
 	(define (do-merge WA WB)
 		(format #t "Start merge of `~A` and `~A`\n"
@@ -286,8 +298,20 @@
 
 		(define e (make-elapsed-secs))
 		(define wclass (mrg 'merge-function WA WB))
-		(format #t "Merged `~A` and `~A` into `~A` in ~A secs\n"
+
+		(format #t "------ Merged `~A` and `~A` into `~A` in ~A secs\n"
 			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
+
+		(recomp-all-sim WA)
+		(recomp-all-sim WB)
+		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
+			(recomp-all-sim wclass))
+
+		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
+			(format #t "------ Similarities for `~A` `~A` and `~A` in ~A secs\n"
+				(cog-name WA) (cog-name WB) (cog-name wclass) (e))
+			(format #t "------ Similarities for `~A` and `~A` in ~A secs\n"
+				(cog-name WA) (cog-name WB) (e)))
 	)
 
 	; Unleash the fury
