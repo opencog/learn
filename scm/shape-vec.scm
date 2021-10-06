@@ -551,8 +551,14 @@
 				((provides)         provides)
 				((filters?)         (lambda () #f))
 
-				((describe)         (describe))
-				(else (error "Bad method call on cross-section:" message)))
+				((describe)         describe)
+				((help)             describe)
+				((obj)              (lambda () "add-shape-vec-api"))
+				((base)             (lambda () LLOBJ))
+				(else               (lambda ( . rest )
+				                       (if (null? rest)
+				                          (LLOBJ message)
+				                          (LLOBJ message rest)))))
 			args))
 ))
 
