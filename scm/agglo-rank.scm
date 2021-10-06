@@ -90,6 +90,7 @@
 	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
 
 	(define mmt-q (smi 'mmt-q))
+(format #t ">>>> Make-simmer mmt-q =~9F\n" mmt-q)
 
 	; Compute ans save both the fmi and the ranked-MI.
 	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
@@ -176,10 +177,11 @@
   get-ranked-pairs LLOBJ MI-CUTOFF - get a ranked list of word pairs
 
   This returns a list of word-pairs sorted by rank-MI, from greatest
-  to least.  All words in the list will have an MI of greater than
-  MI-CUTOFF.  An MI-CUTOFF of 2 or 3 is recommended.  Setting this
-  too low simply makes this function run a long time (because sorting
-  takes a long time.)
+  to least.  All pairs in the list will have an MI of greater than
+  MI-CUTOFF.  An MI-CUTOFF of 4 is recommended, maybe down to 2.
+  Setting this too low will provide poor merge suggestions, in addition
+  to making it take more time (because setting it low will admit more
+  pairs, which take more time to sort.)
 "
 	; General setup of things we need
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -214,7 +216,7 @@
 			(lambda (ATOM-A ATOM-B)
 				(> (FUN ATOM-A) (FUN ATOM-B)))))
 
-	;; Now sort all of the available pairs
+	;; Now sort all of the available pairs according to ranked-MI
 	(rank-pairs good-sims (lambda (SIM) (ranked-mi-sim (gar SIM) (gdr SIM))))
 )
 
@@ -254,6 +256,7 @@
 
 ; ---------------------------------------------------------------
 
+; Unfinished rough draft.
 (define-public (do-stuff LLOBJ)
 	; Start by getting the ranked words.  Note that this may include
 	; WordClass nodes as well as words.
@@ -272,15 +275,19 @@
 	; When to merge -- always.
 	(define (always WA WB) #t)
 
-	; Recompute the support ...
+	; Recompute the support for merged words and word-classes.
 	; Although the core merge routine recomputes some of the
-	; marginals, it is not enough to handle MM^T correctly.
+	; marginals, that is not enough to handle MM^T correctly.
 	; So we do more, here.
-	(define asc (add-support-compute LLOBJ))
-	(define atc (add-transpose-compute LLOBJ))
 	(define (store-mmt WRD)
+
+		; Get fresh copies, so that stars objects are up to date.
+		(define asc (add-support-compute LLOBJ))
+		(define atc (add-transpose-compute LLOBJ))
+
 		; This first for-each loop accounts for 98% of the CPU time
 		; in typical cases.
+		; 'right duals returns both connector seqs and shapes.
 		(for-each
 			(lambda (DJ) (store-atom (asc 'set-left-marginals DJ)))
 			(LLOBJ 'right-duals WRD))
@@ -289,6 +296,11 @@
 	)
 
 	(define (store-final)
+
+		; Get fresh copies, so that stars objects are up to date.
+		(define asc (add-support-compute LLOBJ))
+		(define atc (add-transpose-compute LLOBJ))
+
 		; Computing the 'set-left-totals takes about 97% of the total
 		; time in this function, and about 8% of teh grand-total time.
 		; I suspect it is not used anywhere.
