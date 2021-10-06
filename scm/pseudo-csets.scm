@@ -112,9 +112,7 @@
 		(define any-left (AnyNode "cset-word"))
 		(define any-right (AnyNode "cset-disjunct"))
 
-		; The left type is non-trivial.
-		(define (get-left-type)
-			(TypeChoice (Type 'WordNode) (Type 'WordClassNode)))
+		(define (get-left-type) (Type 'WordNode))
 		(define (get-right-type) (Type 'ConnectorSeq))
 		(define (get-pair-type) (Type 'Section))
 
