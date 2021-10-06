@@ -8,7 +8,7 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; This file provide the "matrix-object" API that allows grammatical
+; This file provides the `matrix-object` API that allows grammatical
 ; classes of words to be treated as vectors of connector-sets (vectors
 ; of disjuncts; vectors of Sections).
 ;
@@ -22,6 +22,10 @@
 (use-modules (opencog persist))
 (use-modules (opencog matrix))
 
+; ---------------------------------------------------------------------
+
+; This class kind-of resembles a direct sum (as coded in the
+; `direct-sum` object) but its ad hoc, hard-coded, not generic.
 (define-public (add-gram-class-api LLOBJ)
 "
   add-gram-class-api LLOBJ -- Enable (WordClass, disjunct) pairs.
@@ -51,6 +55,13 @@
 "
 	(define (get-left-type)
 		(TypeChoice (LLOBJ 'left-type) (Type 'WordClassNode)))
+
+	(define any-left (AnyNode "gram-class"))
+	(define (get-left-wildcard DJ) (ListLink any-left DJ))
+
+	; Recycle the right wildcard from the parnt class.
+	(define any-right (LLOBJ 'right-element (LLOBJ 'wild-wild)))
+	(define (get-wild-wild) (ListLink any-left any-right))
 
 	; Fetch (from the database) all Sections that have a WordClass
 	; on the left-hand-side. Fetch the marginals, too.
@@ -117,18 +128,21 @@
 	; Methods on the object
 	(lambda (message . args)
 		(apply (case message
-			((name)          (lambda () "WordClass-Disjunct Pairs"))
-			((id)            (lambda () "gram-class"))
-			((left-type)     get-left-type)
-			((fetch-pairs)   fetch-disjuncts)
-			((store-aux)     store-aux)
+			((name)           (lambda () "WordClass-Disjunct Pairs"))
+			((id)             (lambda () "gram-class"))
+			((left-type)      get-left-type)
+			((left-wildcard)  get-left-wildcard)
+			((wild-wild)      get-wild-wild)
+
+			((fetch-pairs)    fetch-disjuncts)
+			((store-aux)      store-aux)
 
 			((cluster-type)   (get-cluster-type))
 			((make-cluster)   (apply make-cluster args))
 
-			((provides)      provides)
-			((filters?)      (lambda () #f))
-			((describe)      (describe))
+			((provides)       provides)
+			((filters?)       (lambda () #f))
+			((describe)       (describe))
 
 			(else             (apply LLOBJ (cons message args)))
 		args))
