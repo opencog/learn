@@ -192,7 +192,7 @@
 	; The ranked MI similarity of two words
 	(define (ranked-mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref fmi 1) -inf.0))
+		(if miv (cog-value-ref miv 1) -inf.0))
 
 	; Get all the similarities. We're going to just hack this, for
 	; now, because we SimilarityLinks with both WordNode and WordClassNode
@@ -220,7 +220,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (prt-sorted-pairs LST M N)
+(define (prt-sorted-pairs LLOBJ LST START N)
 "
   prt-sorted-pairs START NUM - print list of word pairs and similarities
 
@@ -239,8 +239,8 @@
 		(if miv (cog-value-ref fmi 1) -inf.0))
 
 	(define len (length LST))
-	(define start (min M len))   ; start is just M unless M is too large.
-	(define num (min N (max 0 (- len M))))  ; num is just N unless N too large
+	(define start (min START len))   ; start is just START unless too large.
+	(define num (min N (max 0 (- len M))))  ; num is just N unless too large
 
 	(for-each
 		(lambda (PR)
@@ -356,7 +356,7 @@
 		(lambda (N)
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 			(define top-pair (car sorted-pairs))
-(prt-sorted-pairs sorted-pairs 0 12)
+(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 			(do-merge (gar top-pair) (gdr top-pair))
 		)
 		(iota 10))
