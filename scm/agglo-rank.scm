@@ -75,31 +75,13 @@
 				(> na nb))))
 )
 
-(define-public (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
+; ---------------------------------------------------------------
+
+(define (make-simmer LLOBJ)
 "
-  compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH - compute MI.
+  make-simmer LLOBJ -- return function that computes and stores MI's.
 
-  This will compute the MI similarity of words lying around a diagonal.
-  The width of the diagonal is DEPTH. The diagonal is defined by the
-  the ranked words. Computations start at START-RANK and proceed to
-  DEPTH.  If the Similarity has already been recorded, it will not
-  be recomputed.
-
-  Think of a tri-diagonal matrix, but instead of three, its N-diagonal
-  with N given by DEPTH.
-
-  WORDLI is a list of word, presumed sorted by rank.
-
-  Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
-  block matrix of similarities will be computed. Since similarities
-  are symmetric, this is a symmetric matrix, and so 200 x 201 / 2
-  grand total similarities are computed.
-
-  If START-RANK is 300 and DEPTH is 200, then computations start at
-  the 300'th ranked word. This results in a total of 200x200
-  similarities, as 200 rows are computed, out to 200 places away from
-  the diagonal.
-
+  This computes and stores both the MI and the Ranked-MI scores.
 "
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define smi (add-symmetric-mi-compute LLOBJ))
@@ -127,6 +109,42 @@
 			(sap 'set-pair-similarity
 				(sap 'make-pair WA WB)
 				(FloatValue fmi rmi))))
+
+	; Return the function that computes the MI for pairs.
+	compute-sim
+)
+
+; ---------------------------------------------------------------
+
+(define-public (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
+"
+  compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH - compute MI.
+
+  This will compute the MI similarity of words lying around a diagonal.
+  The width of the diagonal is DEPTH. The diagonal is defined by the
+  the ranked words. Computations start at START-RANK and proceed to
+  DEPTH.  If the Similarity has already been recorded, it will not
+  be recomputed.
+
+  Think of a tri-diagonal matrix, but instead of three, its N-diagonal
+  with N given by DEPTH.
+
+  WORDLI is a list of word, presumed sorted by rank.
+
+  Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
+  block matrix of similarities will be computed. Since similarities
+  are symmetric, this is a symmetric matrix, and so 200 x 201 / 2
+  grand total similarities are computed.
+
+  If START-RANK is 300 and DEPTH is 200, then computations start at
+  the 300'th ranked word. This results in a total of 200x200
+  similarities, as 200 rows are computed, out to 200 places away from
+  the diagonal.
+
+"
+	; Create a new one each time, so we get the updated
+	; mmt-q value for this session.
+	(define compute-sim (make-simmer LLOBJ))
 
 	; Perform similarity computations for one row.
 	(define (batch-simlist ITEM ITEM-LIST)
@@ -185,6 +203,8 @@
 			all-sim-pairs))
 
 	; The ranked MI similarity of two words
+; XXX temp hack until we've done all of them correctly.
+(define mmt-q ((add-symmetric-mi-compute LLLOBJ) 'mmt-q))
 	(define (ranked-mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		; (if miv (cog-value-ref fmi 1) -inf.0)
@@ -252,6 +272,10 @@
 
 	(define mrg (make-merger (add-cluster-gram LLOBJ)
 		always none 0 0 store-mmt store-final #t))
+
+	(define (recomp-pair-sim WA WB)
+		(store-atom
+			(sap 'set-pair-similarity
 
 	(define (do-merge WA WB)
 		(format #t "Start merge of `~A` and `~A`\n"
