@@ -108,9 +108,11 @@
 	; existing word class. Here, "extend" means "do nothing",
 	; return the existing class.
 	(define (make-cluster A-ATOM B-ATOM)
-		(if (eq? 'WordClassNode (cog-type A-ATOM)) A-ATOM
-			(WordClass (string-concatenate
-				(list (cog-name A-ATOM) " " (cog-name B-ATOM))))))
+		(cond
+			((eq? 'WordClassNode (cog-type A-ATOM)) A-ATOM)
+			((eq? 'WordClassNode (cog-type B-ATOM)) B-ATOM)
+			(else (WordClass (string-concatenate
+					(list (cog-name A-ATOM) " " (cog-name B-ATOM)))))))
 
 	;-------------------------------------------
 	(define (describe)
