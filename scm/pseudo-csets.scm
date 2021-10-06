@@ -115,8 +115,8 @@
 		; The left type is non-trivial.
 		(define (get-left-type)
 			(TypeChoice (Type 'WordNode) (Type 'WordClassNode)))
-		(define (get-right-type) 'ConnectorSeq)
-		(define (get-pair-type) 'Section)
+		(define (get-right-type) (Type 'ConnectorSeq))
+		(define (get-pair-type) (Type 'Section))
 
 		; Get the pair, if it exists.
 		(define (get-pair L-ATOM R-ATOM)

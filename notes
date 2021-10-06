@@ -5476,6 +5476,7 @@ oh no do we need TypeChice!? I think we do...
 what is make-gram-class-api ?? used only in export to LG dict.
 
 todo --
+* direct-sum.scm left types...
 * Need to fetch member links, too!?
 * is mmtq loops correct?
   i.e. are supports correct?
@@ -5518,13 +5519,13 @@ FIXED:
 	DONE.
 * Enhance: revise atomspace start-cogserver to take args directly
   DONE.
+* Similarity object needs to do all-pairs with word-classes and words.
+  'get-all-elts in the stars object needs to look at several
+  left types. Maybe TypeChoice??  DONE.
+
 
 
 TODO/BUGS:
-* Similarity object needs to do all-pairs with word-classes and words.
-  'get-all-elts in the stars object needs to look at several
-  left types. Maybe TypeChoice??
-
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.

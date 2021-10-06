@@ -174,11 +174,13 @@
 		(define any-left (AnyNode "cross word"))
 		(define any-right (AnyNode "cross shape"))
 
-		; The left-type is non-trivial.
-		(define (get-left-type)
-			(TypeChoice (Type 'WordNode) (Type 'WordClassNode)))
-		(define (get-right-type) 'ShapeLink)
-		(define (get-pair-type) 'CrossSection)
+		; The types are all non-trivial.
+		; We expect (LLOBJ 'right-type) to be (Type 'ConnectorSeq)
+		; We expect (LLOBJ 'pair-type) to be (Type 'Section)
+		(define (get-right-type)
+			(TypeChoice (LLOBJ 'right-type) (Type 'ShapeLink)))
+		(define (get-pair-type)
+			(TypeChoice (LLOBJ 'pair-type) (Type 'CrossSection)))
 
 		; Get the observational count on the word-shape pair
 		(define (get-count SHAPE-PR) (cog-count SHAPE-PR))
@@ -645,7 +647,7 @@ around for a while.
 			(apply (case message
 				((name)       (lambda () "Cross-section Words"))
 				((id)         (lambda () "cross-section"))
-				((left-type)        get-left-type)
+				; ((left-type)        get-left-type)  ; provided by LLOBJ
 				((right-type)       get-right-type)
 				((pair-type)        get-pair-type)
 				((pair-count)       get-pair-count)
