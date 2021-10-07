@@ -441,6 +441,9 @@
 	(store-atom mb)
 
 	; Cleanup after merging.
+	; The LLOBJ is assumed to be just a stars object, and so the
+	; intent of this clobber is to force it to recompute it's left
+	; and right basis.
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ WB)
@@ -604,6 +607,9 @@
 	(store-atom ma)
 
 	; Cleanup after merging.
+	; The LLOBJ is assumed to be just a stars object, and so the
+	; intent of this clobber is to force it to recompute it's left
+	; and right basis.
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ CLS)
@@ -669,7 +675,7 @@
 
 (define (recompute-support LLOBJ WRD)
 "
-  recompute-support LLOBJ WRD - Recomute support marginals for WRD
+  recompute-support LLOBJ WRD - Recompute support marginals for WRD
 
   This recomputes the marginals for support and counts, which is
   what coine distance and Jaccard overlap need to do thier stuff.
@@ -681,7 +687,7 @@
 
 (define (recompute-mmt LLOBJ WRD)
 "
-  recompute-mmt LLOBJ WRD - Recomute MMT marginals for WRD
+  recompute-mmt LLOBJ WRD - Recompute MMT marginals for WRD
 
   This recomputes the marginals for support and counts for both
   the word and the disjuncts on that word. In particular, this
@@ -753,7 +759,6 @@
                       word after merging is some cruft with a count less
                       than MIN-CNT, it won't be further merged into
                       anything; it will be ignored.
-  'clobber -- invalidate all caches.
 "
 	(define pss (add-support-api STARS))
 	(define psu (add-support-compute STARS))
@@ -766,13 +771,16 @@
 		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
-		; one. Afterwards, need to recompute the marginals. This is so
-		; that future similarity judgements work correctly. This is
-		; because the mergers altered the counts, and so the marginals
-		; are wrong. (Well, they're wrong only for WA, WB and cls,
-		; whereas clobber clobbers everything. Oh well. Its hard.)
+		; one. Afterwards, need to recompute selected marginals. This
+		; is required so that future similarity judgements work correctly.
+		; The mergers altered the counts, and so the marginals on
+		; those words and disjuncts are wrong. Specifically, they're
+		; wrong only for WA, WB and cls. Here, we'll just recompute the
+		; most basic support for WA, WB and cls and thier disjuncts.
+		; The MI similarity also needs MM^T to be recomputed; the STORE
+		; callback provides an opporunity to do that.
 		; The results are stored, so that everything is on disk in
-		; of a restart.
+		; case of a restart.
 		; Clobber first, since Sections were probably deleted.
 		(if is-single
 			(begin
@@ -806,7 +814,6 @@
 			((merge-function)   (apply merge args))
 			((discard-margin?)  (apply is-small-margin? args))
 			((discard?)         (apply is-small? args))
-			((clobber)          (begin (STARS 'clobber) (psu 'clobber)))
 			(else               (apply STARS (cons message args)))
 		))
 )

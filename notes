@@ -5486,6 +5486,18 @@ add-covering-sections returns wrong pairs wrong left-right.
 
 Double check -- why weren't we using this before?
 
+OK, so no counts... how did that happen?
+(define sup (add-support-api sha))
+(sup 'right-count (WordNode "—")) ; 20172.0
+(sup 'right-count (WordNode "+")) ; 9339.0
+(sup 'right-count (WordClassNode "— +")) ; 14900.0
+(sup 'right-count (WordNode "coincidence"))
+
+Did clobber do this?  Yes it did!  Ouch!
+clobber kills all left and right support marginals.
+This is too extreme.
+
+
 
 fixed bugs:
 oh no do we need TypeChoice!? I think we do... DONE
