@@ -21,3 +21,15 @@ capture conceptual information, such as "intensional" properties of
 objects (e.g. animals are furry, have a tail, have for feet, can run,
 have babies, and need to eat.) I beleive MetaSections will also be
 capable of performing anaphora resolution.
+
+Details
+-------
+Since this is "same algorithm as before", belaboring it seems pointless.
+Thus, we need to pin down the differences. As below.
+
+=== Corpus Selection
+The pair-window needs to be much larger, spanning multiple sentences.
+This means that the corpus must consist of single "coherent" texts,
+such as novels or other kinds of long books. Short texts would be bad,
+unless they are all on the same topics. Ideal might be 5 or 10 different
+school texbooks on exactly the same topic.
