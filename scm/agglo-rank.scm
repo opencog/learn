@@ -267,8 +267,16 @@
 ; ---------------------------------------------------------------
 
 ; Unfinished rough draft.
-(define-public (do-stuff LLOBJ)
+(define-public (do-stuff LLOBJ NRANK LOOP-CNT)
+"
+  unfinished prototype.
 
+  NRANK is number of words for which similarities are computed.
+  Suggest 100 or 200.
+
+  LOOP-CNT is the number of grammatical classes to create.
+  This will keep looping, until this many are created.
+"
 	(define e (make-elapsed-secs))
 
 	; Start by getting the ranked words.  Note that this may include
@@ -277,7 +285,6 @@
 	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Create similarities for the initial set.
-	(define NRANK 200)
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
 	(format #t "Done computing MI similarity in ~A secs\n" (e))
 
@@ -366,7 +373,7 @@
 (prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 			(do-merge N (gar top-pair) (gdr top-pair))
 		)
-		(iota 1000))  ; loop forever, in practical terms...
+		(iota LOOP-CNT))
 )
 
 ; ---------------------------------------------------------------
