@@ -277,7 +277,7 @@
 	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Create similarities for the initial set.
-	(define NRANK 100)
+	(define NRANK 200)
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
 	(format #t "Done computing MI similarity in ~A secs\n" (e))
 
