@@ -556,9 +556,7 @@
 				((obj)              (lambda () "add-shape-vec-api"))
 				((base)             (lambda () LLOBJ))
 				(else               (lambda ( . rest )
-				                       (if (null? rest)
-				                          (LLOBJ message)
-				                          (LLOBJ message rest)))))
+				                        (apply LLOBJ (cons message args)))))
 			args))
 ))
 

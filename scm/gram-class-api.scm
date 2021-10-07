@@ -167,10 +167,7 @@
 			((help)           describe)
 			((obj)            (lambda () "add-gram-class-api"))
 			((base)           (lambda () LLOBJ))
-			(else             (lambda ( . rest )
-			                     (if (null? rest)
-			                        (LLOBJ message)
-			                        (LLOBJ message rest))))
+			(else             (lambda ( . rest ) (apply LLOBJ (cons message args))))
 		) args))
 )
 
