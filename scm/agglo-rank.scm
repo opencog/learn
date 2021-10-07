@@ -90,7 +90,7 @@
 	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
 
 	(define mmt-q (smi 'mmt-q))
-(format #t ">>>> Make-simmer mmt-q =~9F\n" mmt-q)
+(format #t ">>>> Make-simmer mmt-q = ~9F\n" mmt-q)
 
 	; Compute ans save both the fmi and the ranked-MI.
 	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
@@ -382,7 +382,7 @@
 		; Expand the size of the universe by two.
 		(define ranked-words (rank-words LLOBJ))
 		(for-each (lambda (WRD)
-				(format #t "Top-ranked word: ~A\n" WRD))
+				(format #t "Top-ranked word: ~A\n" (cog-name WRD)))
 			(take ranked-words 12))
 		(compute-diag-mi-sims LLOBJ ranked-words 0 (+ (* 2 N) NRANK))
 		(format #t "------ Extended the universe in ~A secs\n" (e))
