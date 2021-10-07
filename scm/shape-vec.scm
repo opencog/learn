@@ -140,9 +140,13 @@
              (ConnectorLink ...)
              ...))
 
-  A more detailed description is at the top of this file.
+  A more detailed description is given in the `shape-vec.scm` file.
 
-  In addition to the usual methods, this also provides:
+  In addition to the usual methods, this class also provides a
+  collection of methods that are used to merge Sections and
+  CrossSections by replacing specific Words by WordClasses both
+  in the germ, and in the Connectors.  These are described below.
+
   'make-section CROSS  -- Create and return the section that corresponds
        to the CrossSection CROSS.
 
@@ -564,9 +568,33 @@
 ;
 (define-public (add-covering-sections LLOBJ)
 "
-  prototype
+  add-covering-sections LLOBJ -- Direct sum of Sections and CrossSections
+
+  This object accepts an LLOBJ that exposes vectors of Sections, and
+  provides an API for vectors of Sections-oplus-CrossSections, i.e. for
+  the direct sum of these two.  Thus, any given vector will have basis
+  elements taken from both. The CrossSections are provided by the
+  `add-shape-vec-api` object.
+
+  This is done in order to get a self-consistent view into the
+  (word,disjunct) pair matrix, when words are being clustered into
+  clusters. The issue is that words appear not only on the left, but
+  also within Connectors in the disjunct. During clustering, the
+  Connectors need to be merged, and the disjuncts updated. The
+  CrossSections provide an \"almost-linear\" API that helps perform
+  this task. That is, merging is inherently non-linear, and, in some
+  cases, non-cummutative. The CrossSections and Shapes help keep things
+  almost linear as far into the process as possible.
+
+  Since the whole point of this object is to support merging, it will
+  wrap the LLOBJ with the `add-gram-class-api` object.
+
+  See docs for `add-shape-vec-api` for more info about CrossSections
+  and Shapes. See `direct-sum` for more info about the direct sum.
+  See `add-gram-class-api` for more about grammatical classes.
 "
-	(define stars-obj (add-pair-stars LLOBJ))
+	(define gram-obj (add-gram-class-api LLOBJ))
+	(define stars-obj (add-pair-stars gram-obj))
 	(define shape-obj (add-shape-vec-api stars-obj))
 	(define shape-stars (add-pair-stars shape-obj))
 
@@ -589,6 +617,7 @@
 			; pass-through
 			((fetch-pairs)         (cover-obj 'fetch-pairs))
 			((explode-sections)    (explode-sections))
+
 			((make-section)        (apply shape-obj (cons message args)))
 			((get-section)         (apply shape-obj (cons message args)))
 			((make-cross-sections) (apply shape-obj (cons message args)))
@@ -597,6 +626,11 @@
 			((flatten)             (apply shape-obj (cons message args)))
 			((is-nonflat?)         (apply shape-obj (cons message args)))
 
+			((get-cluster-type)    (apply gram-obj (cons message args)))
+			((make-cluster)        (apply gram-obj (cons message args)))
+			((store-aux)           (apply gram-obj (cons message args)))
+
+			; cover-stars is the direct product, and it handles the rest.
 			(else             (apply cover-stars (cons message args)))))
 )
 

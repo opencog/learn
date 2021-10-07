@@ -59,7 +59,12 @@
 	(define any-left (AnyNode "gram-class"))
 	(define (get-left-wildcard DJ) (ListLink any-left DJ))
 
-	; Recycle the right wildcard from the parnt class.
+	; Recycle the right wildcard from the parent class.
+	; XXX FIXME: this won't work for some classes, which store
+	; marginals in a different format than pairs. That is, the
+	; 'right-element method will work correctly on pairs only,
+	; not on marginals. For example, direct-sum is like that.
+	; Perhaps we should blame the classes for mis-handling marginals?
 	(define any-right (LLOBJ 'right-element (LLOBJ 'wild-wild)))
 	(define (get-wild-wild) (ListLink any-left any-right))
 

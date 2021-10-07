@@ -5478,6 +5478,14 @@ distinct-type is #t if wiether differ
 ((PredicateNode . 13) (ListLink . 220087) (AnyNode . 7) (Connector . 17092) (ConnectorDir . 2) (ConnectorSeq . 205003) (Section . 855718) (ShapeLink . 838580) (CrossSection . 1922250) (VariableNode . 1) (TypeNode . 4) (TypeChoice . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 15083))
 
 
+wtf...
+add-covering-sections .. really!?
+
+arg....
+add-covering-sections returns wrong pairs wrong left-right.
+
+Double check -- why weren't we using this before?
+
 
 fixed bugs:
 oh no do we need TypeChoice!? I think we do... DONE
