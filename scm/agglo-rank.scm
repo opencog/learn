@@ -290,39 +290,9 @@
 	; When to merge -- always.
 	(define (always WA WB) #t)
 
-	; Recompute the support for merged words and word-classes.
-	; Although the core merge routine recomputes some of the
-	; marginals, that is not enough to handle MM^T correctly.
-	; So we do more, here.
-	(define (store-mmt WRD)
+	(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
 
-		; Get fresh copies, so that stars objects are up to date.
-		(define asc (add-support-compute LLOBJ))
-		(define atc (add-transpose-compute LLOBJ))
-
-		; This first for-each loop accounts for 98% of the CPU time
-		; in typical cases.
-		; 'right duals returns both connector seqs and shapes.
-		(for-each
-			(lambda (DJ) (store-atom (asc 'set-left-marginals DJ)))
-			(LLOBJ 'right-duals WRD))
-		(store-atom (asc 'set-right-marginals WRD))
-		(store-atom (atc 'set-mmt-marginals WRD))
-	)
-
-	(define (store-final)
-
-		; Get fresh copies, so that stars objects are up to date.
-		(define asc (add-support-compute LLOBJ))
-		(define atc (add-transpose-compute LLOBJ))
-
-		; Computing the 'set-left-totals takes about 97% of the total
-		; time in this function, and about 8% of teh grand-total time.
-		; I suspect it is not used anywhere.
-		(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
-		(store-atom (asc 'set-right-totals))  ;; is this needed?
-		(store-atom (atc 'set-mmt-totals))
-	)
+	(define (store-final) (recompute-mmt-final LLOBJ))
 
 	(define mrg (make-merger LLOBJ
 		always none 0 0 store-mmt store-final #t))
