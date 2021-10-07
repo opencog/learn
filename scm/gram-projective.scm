@@ -802,13 +802,13 @@
 		; Clobber first, since Sections were probably deleted.
 		(if is-single
 			(begin
-				(start-cluster psu cls WA WB FRAC-FN NOISE MRG-CON)
+				(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
 				(STORE cls)
 			)
 			(begin
 				(if wa-is-cls
-					(merge-into-cluster psu WA WB FRAC-FN NOISE MRG-CON)
-					(merge-into-cluster psu WB WA FRAC-FN NOISE MRG-CON))
+					(merge-into-cluster STARS WA WB FRAC-FN NOISE MRG-CON)
+					(merge-into-cluster STARS WB WA FRAC-FN NOISE MRG-CON))
 			))
 
 		(STORE WA)
