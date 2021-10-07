@@ -608,6 +608,11 @@
 		(shape-obj 'explode-sections)
 		(cover-stars 'clobber))
 
+	;-------------------------------------------
+	(define (describe)
+		(display (procedure-property add-gram-class-api 'documentation)))
+
+	;-------------------------------------------
 	; Methods on the object
 	(lambda (message . args)
 		(case message
@@ -626,9 +631,14 @@
 			((flatten)             (apply shape-obj (cons message args)))
 			((is-nonflat?)         (apply shape-obj (cons message args)))
 
-			((get-cluster-type)    (apply gram-obj (cons message args)))
+			((cluster-type)        (apply gram-obj (cons message args)))
 			((make-cluster)        (apply gram-obj (cons message args)))
 			((store-aux)           (apply gram-obj (cons message args)))
+
+			((describe)            describe)
+			((help)                describe)
+			((obj)                 "add-covering-sections")
+			((base)                LLOBJ)
 
 			; cover-stars is the direct product, and it handles the rest.
 			(else             (apply cover-stars (cons message args)))))
