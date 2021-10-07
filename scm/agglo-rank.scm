@@ -169,8 +169,12 @@
 	(define (col-range off)   ; reverse, so we go from diagonal outwards
 		(reverse (take (drop WORDLI (col-start off)) (col-end off))))
 
+	(define e (make-elapsed-secs))
 	(define (do-one-row off)
-		(batch-simlist (list-ref row-range off) (col-range (+ 1 off))))
+		(define pone (+ 1 off))
+		(batch-simlist (list-ref row-range off) (col-range pone))
+		(if (equal? 0 (modulo pone 10))
+			(format #t "Diag: Finished ~D rows in ~D secs\n" pone (e))))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
 	(for-each (lambda (n) (do-one-row n)) (iota depth))
@@ -264,13 +268,18 @@
 
 ; Unfinished rough draft.
 (define-public (do-stuff LLOBJ)
+
+	(define e (make-elapsed-secs))
+
 	; Start by getting the ranked words.  Note that this may include
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
+	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Create similarities for the initial set.
 	(define NRANK 200)
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
+	(format #t "Done computing MI similarity in ~A secs\n" (e))
 
 	; Get rid of all MI-similarity scores below this cutoff.
 	(define MI-CUTOFF 4.0)
