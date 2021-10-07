@@ -277,7 +277,7 @@
 	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Create similarities for the initial set.
-	(define NRANK 200)
+	(define NRANK 100)
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
 	(format #t "Done computing MI similarity in ~A secs\n" (e))
 
@@ -379,12 +379,12 @@
 			(format #t "------ Computed MI for `~A` and `~A` in ~A secs\n"
 				(cog-name WA) (cog-name WB) (e)))
 
-		; Expand the size of teh universe by one.
+		; Expand the size of the universe by two.
 		(define ranked-words (rank-words LLOBJ))
 		(for-each (lambda (WRD)
 				(format #t "Top-ranked word: ~A\n" WRD))
 			(take ranked-words 12))
-		(compute-diag-mi-sims LLOBJ ranked-words 0 (+ N NRANK))
+		(compute-diag-mi-sims LLOBJ ranked-words 0 (+ (* 2 N) NRANK))
 		(format #t "------ Extended the universe in ~A secs\n" (e))
 	)
 
