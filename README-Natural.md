@@ -1468,7 +1468,13 @@ Some things in the pipeline, but unfinished:
   membership.  These can now start to be used for re-parsing, to
   obtain word-sense pair-correlation statistics.
 
-  Explain the above, docuemnnt it more clearly.
+  Explain the above, document it more clearly.
+
+* Unit tests are needed for everything. There are dozens of units in
+  here, none of them are tested, except by daily use.  The code that
+  gives me the willies is the merge code: its extremely complex, and
+  it's not at all clear that it is doing the right thing. I mean, I
+  think it is, but ... wow. Its really complicated. There may be bugs.
 
 TODO - Clustering
 -----------------
