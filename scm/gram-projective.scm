@@ -629,6 +629,9 @@
      Merge clusters CLA and CLB. These are two rows in LLOBJ,
      the merge is done column-by-column.
 
+  This will perform a "union merge" -- all disjuncts on CLB will
+  be transfered to CLA, and CLB will be removed.
+
   See start-cluster for additional details.
 "
 (throw 'not-implemented 'merge-clusters "work underway")
@@ -637,11 +640,6 @@
 	; XXX FIXME there should be a set-count on the LLOBJ...
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
-	; Accumulated count on the MemberLink.
-	(define accum-cnt 0)
-
-xxxxxxx MemberLiks....
 
 	; Use the tuple-math object to provide a pair of rows that
 	; are aligned with one-another.
@@ -674,23 +672,29 @@ xxxxxxx MemberLiks....
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLA col))
 
-			(define (do-acc CNT PR)
-				(set! CNT (+ CNT
-					(accumulate-count LLOBJ mrg PR 1.0 NOISE))))
+			(define (do-acc PR)
+				(accumulate-count LLOBJ mrg PR 1.0 NOISE))
 
-			; Now perform the merge. Overlapping entries are
-			; completely merged (frac=1.0). Non-overlapping ones
-			; contribute only FRAC.
+			; Now perform the merge.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt PAIR-B))
-				(null-b (do-acc accum-acnt PAIR-A))
+				(null-a (do-acc PAIR-B))
+				(null-b (do-acc PAIR-A))
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt PAIR-A)
-						(do-acc accum-bcnt PAIR-B))))
+						(do-acc PAIR-A)
+						(do-acc PAIR-B))))
 		)
 		perls)
+
+	; Copy all counts from MemberLinks on CLB to CLA.
+	; Delete MemberLinks on CLB.
+	(for-each
+		(lambda (MEMB-B)
+		)
+		(cog-incoming-by-type CLB 'MemberLink))
+
+	(cog-delete! CLB)
 
 	(monitor-rate
 		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
