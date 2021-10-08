@@ -318,17 +318,6 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	(define monitor-rate (make-rate-monitor))
-
-	; Create MemberLinks. We need these early, for decision-making
-	; during the merge.
-	(define memb-a (MemberLink WA CLS))
-	(define memb-b (MemberLink WB CLS))
-
-	; Accumulated counts for the two MemberLinks.
-	(define accum-acnt 0)
-	(define accum-bcnt 0)
-
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
@@ -363,7 +352,6 @@
 				; Now perform the merge. Overlapping entries are
 				; completely merged (frac=1.0). Non-overlapping ones
 				; contribute only FRAC.
-				(monitor-rate #f)
 				(cond
 					(null-a (ACCUM-FUN mrg WB PAIR-B frac-to-merge))
 					(null-b (ACCUM-FUN mrg WA PAIR-A frac-to-merge))
@@ -371,6 +359,8 @@
 						(begin
 							(ACCUM-FUN mrg WA PAIR-A 1.0)
 							(ACCUM-FUN mrg WB PAIR-B 1.0))))
+
+				(monitor-rate #f)
 			)
 			; A list of pairs of sections to merge.
 			; This is a list of pairs of columns from LLOBJ, where either
@@ -378,9 +368,16 @@
 			(ptu 'right-stars (list WA WB)))
 	)
 
+	(define monitor-rate (make-rate-monitor))
+
+	; Accumulated counts for the two MemberLinks.
+	(define accum-acnt 0)
+	(define accum-bcnt 0)
+
+	; Accumulate counts from the individual words onto the cluster.
 	(define (accum-counts MRG W PR WEI)
 		(define cnt	(accumulate-count LLOBJ MRG PR WEI NOISE))
-		(if (equal? W WA) 
+		(if (equal? W WA)
 			(set! accum-acnt (+ accum-acnt cnt))
 			(set! accum-bcnt (+ accum-bcnt cnt))))
 
@@ -389,59 +386,34 @@
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
-	; If merging connectors, then make a second pass. We can't do this
-	; in the first pass, because the connector-merge logic needs to
-	; manipulate the merged Sections. (There's no obvious way to do
-	; this in a single pass; I tried.)
-	(when MRG-CON
-
-	(set! monitor-rate (make-rate-monitor))
-	(for-each
-		(lambda (PRL)
-			(define PAIR-A (first PRL))
-			(define PAIR-B (second PRL))
-
-			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-B))
-
-			; The target into which to accumulate counts. This is
-			; an entry in the same column that PAIR-A and PAIR-B
-			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B really are in the same column. They should be.)
-			(define col (if null-a
-					(LLOBJ 'right-element PAIR-B)
-					(LLOBJ 'right-element PAIR-A)))
-
-			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLS col))
-
-			(define (do-acc W PR WEI)
-				(reshape-merge LLOBJ CLS mrg W PR WEI NOISE))
-
-			; Now perform the merge. Overlapping entries are
-			; completely merged (frac=1.0). Non-overlapping ones
-			; contribute only FRAC.
-			(monitor-rate #f)
-			(cond
-				(null-a (do-acc WB PAIR-B frac-to-merge))
-				(null-b (do-acc WA PAIR-A frac-to-merge))
-				(else ; AKA (not (or null-a null-b))
-					(begin
-						(do-acc WA PAIR-A 1.0)
-						(do-acc WB PAIR-B 1.0)))))
-		perls)
-	(monitor-rate
-		"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
-	)
-
-	(set! monitor-rate (make-rate-monitor))
-	(monitor-rate #f)
+	; Create MemberLinks. Do this before the connector-merge step,
+	; as they are examined during that phase.
+	(define memb-a (MemberLink WA CLS))
+	(define memb-b (MemberLink WB CLS))
 
 	; Track the number of observations moved from the two items
 	; into the combined class. This tracks the individual
 	; contributions.
 	(set-count memb-a accum-acnt)
 	(set-count memb-b accum-bcnt)
+
+	; If merging connectors, then make a second pass. We can't do this
+	; in the first pass, because the connector-merge logic needs to
+	; manipulate the merged Sections. (There's no obvious way to do
+	; this in a single pass; I tried.)
+	(when MRG-CON
+		(define (reshape-crosses MRG W PR WEI)
+			(reshape-merge LLOBJ CLS MRG W PR WEI NOISE))
+
+		(set! monitor-rate (make-rate-monitor))
+		(loop-over-disjuncts reshape-crosses)
+
+		(monitor-rate
+			"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+	)
+
+	(set! monitor-rate (make-rate-monitor))
+	(monitor-rate #f)
 
 	; Store the counts on the MemberLinks.
 	(store-atom memb-a)
