@@ -400,6 +400,14 @@
 		(format #t "Start merge ~D of `~A` and `~A`\n"
 			(+ N NSIM-OFFSET) (cog-name WA) (cog-name WB))
 
+		; If we are merging two classes into one, then the
+		; second class will be depopulated. We need to trash
+		; the SimilarityLinks to it to avoid an error.
+		(if (and (equal? (cog-type WA) 'WordClassNode)
+				(equal? (cog-type WB) 'WordClassNode))
+			(for-each cog-delete!
+				(cog-incoming-by-type WB 'SimilarityLink)))
+
 		(define e (make-elapsed-secs))
 		(define wclass (mrg 'merge-function WA WB))
 

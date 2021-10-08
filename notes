@@ -5497,6 +5497,18 @@ Did clobber do this?  Yes it did!  Ouch!
 clobber kills all left and right support marginals.
 This is too extreme.
 
+(recompute-mmt is defined already ...
+
+Ohh...
+(pair-wise-cluster LLOBJ NRANK LOOP-CNT)
+
+(define wc (WordClass "should could"))
+(define cnt 0)
+(for-each (lambda (in)
+	(if (not (equal? (cog-type in) 'SimilarityLink))
+		(format #t "duude ~A\n" in)))
+	(cog-incoming-set wc))
+
 
 
 fixed bugs:
