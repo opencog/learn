@@ -408,7 +408,7 @@
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLS col))
 
-			(define (do-acc CNT W PR WEI)
+			(define (do-acc W PR WEI)
 				(reshape-merge LLOBJ CLS mrg W PR WEI NOISE))
 
 			; Now perform the merge. Overlapping entries are
@@ -416,12 +416,12 @@
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge))
+				(null-a (do-acc WB PAIR-B frac-to-merge))
+				(null-b (do-acc WA PAIR-A frac-to-merge))
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt WA PAIR-A 1.0)
-						(do-acc accum-bcnt WB PAIR-B 1.0)))))
+						(do-acc WA PAIR-A 1.0)
+						(do-acc WB PAIR-B 1.0)))))
 		perls)
 	(monitor-rate
 		"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
@@ -719,11 +719,7 @@
 	(monitor-rate
 		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
-xxxxxxx
-	; If merging connectors, then make a second pass. We can't do this
-	; in the first pass, because the connector-merge logic needs to
-	; manipulate the merged Sections. (There's no obvious way to do
-	; this in a single pass; I tried.)
+	; If merging connectors, then make a second pass.
 	(when MRG-CON
 
 	(set! monitor-rate (make-rate-monitor))
@@ -746,23 +742,24 @@ xxxxxxx
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLS col))
 
-			(define (do-acc CNT W PR WEI)
-				(reshape-merge LLOBJ CLS mrg W PR WEI NOISE))
+			(define (do-acc W PR)
+				(reshape-merge LLOBJ CLS mrg W PR 1.0 NOISE))
 
+xxxxxxx
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge))
+				(null-a (do-acc WB PAIR-B))
+				(null-b (do-acc WA PAIR-A))
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt WA PAIR-A 1.0)
-						(do-acc accum-bcnt WB PAIR-B 1.0)))))
+						(do-acc WA PAIR-A)
+						(do-acc WB PAIR-B)))))
 		perls)
 	(monitor-rate
-		"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		"------ Combine: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
 
 	(set! monitor-rate (make-rate-monitor))
@@ -795,7 +792,7 @@ connectors, though.
 	(cog-delete! CLB)
 
 	(monitor-rate
-		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
+		"------ Combine: cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
 
 ; ---------------------------------------------------------------
