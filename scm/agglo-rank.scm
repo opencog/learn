@@ -321,11 +321,7 @@
       (sha 'fetch-pairs)
       (sha 'explode-sections)
 
-      (if (did-you-do-the-mmt-marginals-yet?)
-          ; Yes you did.
-          ((add-similarity-api sha #f \"shape-mi\") 'fetch-pairs)
-
-          ; No you didn't.
+      (if (forgot-to-do-the-mmt-marginals-yet?)
           ((batch-transpose sha) 'mmt-marginals)
       )
 
@@ -338,6 +334,9 @@
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
 	(format #t "Done ranking words in ~A secs\n" (e))
+
+	; Load similarity-pairs; pointless to recompute if we have them!
+	((add-similarity-api LLOBJ #f SIM-ID) 'fetch-pairs)
 
 	; Create similarities for the initial set.
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)

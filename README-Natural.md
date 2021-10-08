@@ -1332,12 +1332,8 @@ lurking.  The instructions here are provisional and subject to change.
       (sha 'fetch-pairs)
       (sha 'explode-sections)
 
-      (if (have-you-done-mmt-marginals-yet?)
-         ; Nope, not yet.
+      (if (forgot-to-do-mmt-marginals-yet?)
          ((batch-transpose sha) 'mmt-marginals)
-
-         ; Yes, they've been done
-         ((add-similarity-api sha #f "shape-mi") 'fetch-pairs)
       )
 
       ; Create 500 grammatical clusters
