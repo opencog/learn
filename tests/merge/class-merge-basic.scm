@@ -87,8 +87,7 @@
 
 ; --------------------------
 ; Merge two sections together.
-(define frac 1.0)
-(define disc (make-fuzz gsc 0 frac 4 0))
+(define disc (make-fuzz gsc 0 0 4 0))
 (disc 'merge-function (WordClass "e j") (WordClass "r s"))
 
 ; We expect three sections on "e", the abc, dgh and klm sections.

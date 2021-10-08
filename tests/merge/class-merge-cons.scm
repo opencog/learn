@@ -24,8 +24,8 @@
 
 ; ---------------------------------------------------------------
 ;
-; This is similar to `class-merg-basic.scm` except that the class {ej}
-; appears both as germ, and in two connectors.
+; This is similar to `class-merg-basic.scm` except that the classes
+; appear both as germs, and in connectors.
 ;
 ; This diagram explains what is being tested here:
 ;
@@ -36,56 +36,56 @@
 ;        none    + ({rs}, ab{ej}) -> ({ej}, ab{ej})
 ; ({ej}, kl{rs}) +     none       -> ({ej}, kl{ej})
 ;
-(define t-two-cluster "connector 2-cluster merge test")
-(test-begin t-two-cluster)
+(define t-class-connector "class connector merge test")
+(test-begin t-class-connector)
 
 ; Open the database
 (setup-database)
 
 ; Load some data
-(setup-e-j-sections)
-(setup-j-extra)
+(setup-ej-sections)
+(setup-ej-extra)
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
 (define gsc (add-covering-sections pca))
 
 ; Verify that the data loaded correctly
-; We expect 3 sections on "e" and four on "j"
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-(test-equal 4 (length (gsc 'right-stars (Word "j"))))
+; We expect 3 sections on "e j" and 3 on "r s"
+(test-equal 3 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 3 (length (gsc 'right-stars (WordClass "r s"))))
 
 ; Get the total count on all Sections
 (define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
 ; Create CrossSections and verify that they got created
-; We expect 3 x (3+4) = 21 of them.
+; We expect 3 x (3+3) = 18 of them.
 (gsc 'explode-sections)
-(test-equal 21 (length (cog-get-atoms 'CrossSection)))
+(test-equal 18 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 3 (length (gsc 'right-stars (Word "g"))))
-(test-equal 3 (length (gsc 'right-stars (Word "h"))))
+(test-equal 1 (length (gsc 'right-stars (Word "g"))))
+(test-equal 1 (length (gsc 'right-stars (Word "h"))))
 
-; Expect 3 Sections and two CrossSections on e.
-(test-equal 5 (length (gsc 'right-stars (Word "e"))))
-(test-equal 4 (length (gsc 'right-stars (Word "j"))))
+; Expect one CrossSection each on ej and rs.
+(test-equal 4 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 4 (length (gsc 'right-stars (WordClass "r s"))))
 
-(test-equal 3 (len-type (Word "e") 'Section))
-(test-equal 2 (len-type (Word "e") 'CrossSection))
-(test-equal 4 (len-type (Word "j") 'Section))
-(test-equal 0 (len-type (Word "j") 'CrossSection))
+(test-equal 3 (len-type (WordClass "e j") 'Section))
+(test-equal 1 (len-type (WordClass "e j") 'CrossSection))
+(test-equal 3 (len-type (WordClass "r s") 'Section))
+(test-equal 1 (len-type (WordClass "r s") 'CrossSection))
 
-; We expect a total of 3+4=7 Sections
-(test-equal 7 (length (cog-get-atoms 'Section)))
+; We expect a total of 3+3=6 Sections
+(test-equal 6 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
 ; Merge two sections together.
-(define frac 0.25)
-(define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(define disc (make-fuzz gsc 0 0 4 0))
+(disc 'merge-function (WordClass "e j") (WordClass "r s"))
 
+#! =====================
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
 ; to the sections (1-p) * (j, abe) and (1-p) * (j, egh)
@@ -155,7 +155,8 @@
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
+======= !#
 
-(test-end t-two-cluster)
+(test-end t-class-connector)
 
 ; ---------------------------------------------------------------

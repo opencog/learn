@@ -105,63 +105,31 @@
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
-; Define sections on a third word, that can be merged into above.
+; Additional j sections, having e as connector.
 
-#! ====================
-(define cnt-f-abc 19)
-(define cnt-f-dgh 36)
-(define cnt-f-klm 34)
+(define cnt-rs-abej 16)
+(define cnt-ej-klrs 21)
 
-(define (setup-f-sections)
-	(Section (ctv 1 0 cnt-f-abc)
-		(Word "f")
+(define (setup-ej-extra)
+
+	; Some sections with classes as connectors
+	(Section (ctv 1 0 cnt-rs-abej)
+		(WordClass "r s")
 		(ConnectorSeq
 			(Connector (Word "a") (ConnectorDir "-"))
 			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-dgh)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "d") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-klm)
-		(Word "f")
+			(Connector (WordClass "e j") (ConnectorDir "+"))))
+	(Section (ctv 1 0 cnt-ej-klrs)
+		(WordClass "e j")
 		(ConnectorSeq
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+			(Connector (WordClass "r s") (ConnectorDir "+"))))
 
 	*unspecified*
 )
 
-; ---------------------------------------------------------------
-; ---------------------------------------------------------------
-; ---------------------------------------------------------------
-; Additional j sections, having e as connector.
-
-(define cnt-j-abe 21)
-(define cnt-j-egh 17)
-
-(define (setup-j-extra)
-
-	; Some j sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-j-abe)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-j-egh)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-
-	*unspecified*
-)
-
+#! =============
 (define sec-j-abe #f)
 (define sec-j-egh #f)
 (define sec-ej-abv #f)
