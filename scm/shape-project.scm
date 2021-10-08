@@ -327,9 +327,19 @@
 					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
 					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
 					(else
-						(throw 'remove-empty-sections 'assert "Its broken")))
+						(throw 'assert 'remove-empty-sections "Its broken")))
 				))
 		(LLOBJ 'right-stars ROW))
+
+	; After doing the above, we might find that ROW appears in
+	; Connectors that are not used anywhere.  Delete those connectors.
+	(for-each cog-delete! (cog-incoming-by-type ROW 'Connector))
+
+	; After doing the above, we may find that ROW has no more users,
+	; anywhere, except in the marginals. We should clean those up
+	; too, except we don't know what the marginals are. Alas!
+	; FIXME but how?
+
 	; (format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
 )
 
