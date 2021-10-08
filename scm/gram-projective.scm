@@ -691,9 +691,33 @@
 	; Delete MemberLinks on CLB.
 	(for-each
 		(lambda (MEMB-B)
+			; Get the word
+			(define WRD (gar MEMB-B))
+
+			; Get the count
+			(define CNT-A 0)
+			(define CNT-B (LLOBJ 'get-count MEMB-B))
+
+			; Does a corresponding word exist on class A?
+			(define MEMB-A (cog-link 'MemberLink WRD CLA))
+
+			(if (not (nil? MEMB-A))
+				(set! CNT-A (LLOBJ 'get-count MEMB-A)))
+
+			; Create the MmeberLink on A, and update the count.
+			(define MBA (MemberLink WRD CLA))
+			(set-count MBA (+ CNT-A CNT-B))
+			(store-atom MBA)
+
+			; Delete the B-MemberLink.  If its not deleteable,
+			; then wipe out the count on it.
+			(if (not (cog-delete! MEMB-B))
+				(set-count MEMB-B 0))
 		)
 		(cog-incoming-by-type CLB 'MemberLink))
 
+	; Delete the old class.... Let's make sure it is not in any
+connectors, though.
 	(cog-delete! CLB)
 
 	(monitor-rate
