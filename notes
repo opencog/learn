@@ -5512,6 +5512,37 @@ Ohh...
 (remove-empty-sections sha wc)
 
 Failed merge (There there) (should could) be
+Some cross-sections hanging out.
+
+So appearantly, this is a real merge bug.
+We need unit tests.
+
+[be, ({sc}, there- & $+)]
+[be, ({sc}, There- & $+)]
+[there, ({sc}, $- & be+)]
+[There, ({sc}, $- & be+)]
+
+ (CrossSection (ctv 1 0 67)
+  (WordNode "There")
+  (ShapeLink
+    (WordClassNode "should could")
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "be")
+      (ConnectorDir "+"))))
+
+((CrossSection (ctv 1 0 67)
+  (WordNode "be")
+  (ShapeLink
+    (WordClassNode "should could")
+    (Connector
+      (WordNode "There")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
 
 
 
@@ -5532,7 +5563,7 @@ oh no do we need TypeChoice!? I think we do... DONE
 * review trim stuff... as compared to gram-class-api.scm DONE
 * fix trim instructions. DONE
 * backwards order in names for clusters. DONE
-  add-cluster-gram 'make-cluster 
+  add-cluster-gram 'make-cluster
 
 todo --
 * fix run files to call add-gram-class-api
