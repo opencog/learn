@@ -354,7 +354,7 @@
 			; The target into which to accumulate counts. This is
 			; an entry in the same column that PAIR-A and PAIR-B
 			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B are in the same column.)
+			; and PAIR-B really are in the same column. They should be.)
 			(define col (if null-a
 					(LLOBJ 'right-element PAIR-B)
 					(LLOBJ 'right-element PAIR-A)))
@@ -400,7 +400,7 @@
 			; The target into which to accumulate counts. This is
 			; an entry in the same column that PAIR-A and PAIR-B
 			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B are in the same column.)
+			; and PAIR-B really are in the same column. They should be.)
 			(define col (if null-a
 					(LLOBJ 'right-element PAIR-B)
 					(LLOBJ 'right-element PAIR-A)))
@@ -641,8 +641,10 @@
 	; Accumulated count on the MemberLink.
 	(define accum-cnt 0)
 
+xxxxxxx MemberLiks....
+
 	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN CLS WA))
+	(define frac-to-merge (FRAC-FN CLA CLB))
 
 	; Use the tuple-math object to provide a pair of rows that
 	; are aligned with one-another.
@@ -654,51 +656,47 @@
 	; A list of pairs of sections to merge.
 	; This is a list of pairs of columns from LLOBJ, where either
 	; one or the other or both rows have non-zero elements in them.
-	(define perls (ptu 'right-stars (list CLS WA)))
+	(define perls (ptu 'right-stars (list CLA CLB)))
 
-	; Caution: there's a "feature" bug in projection merging when used
-	; with connector merging. The code below will create sections with
-	; dangling connectors that may be unwanted. Easiest to explain by
-	; example. Consider a section (f, abe) being merged into a cluster
-	; {e,j} to form a cluster {e,j,f}. The code below will create a
-	; section ({ej}, abe) as the C-section, and transfer some counts
-	; to it. But, when connector merging is desired, it should have gone
-	; to ({ej}, ab{ej}). There are two possible solutions: have the
-	; connector merging try to detect this, and clean it up, or have
-	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
-	; "natural" way for the tuple object to create this pairing (it is
-	; "naturally" linear, by design) so we must clean up during connector
-	; merging.
 	(for-each
 		(lambda (PRL)
-			(define PAIR-C (first PRL))
-			(define PAIR-A (second PRL))
+			(define PAIR-A (first PRL))
+			(define PAIR-B (second PRL))
 
-			(define (do-acc PRC WEI)
-				(monitor-rate #f)
-				(set! accum-cnt (+ accum-cnt
-					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
+			(define null-a (null? PAIR-A))
+			(define null-b (null? PAIR-B))
 
-			; There's nothing to do if A is empty.
-			(when (not (null? PAIR-A))
+			; The target into which to accumulate counts. This is
+			; an entry in the same column that PAIR-A and PAIR-B
+			; are in. (TODO maybe we could check that both PAIR-A
+			; and PAIR-B really are in the same column. They should be.)
+			(define col (if null-a
+					(LLOBJ 'right-element PAIR-B)
+					(LLOBJ 'right-element PAIR-A)))
 
-				; Two different tasks, depending on whether PAIR-C
-				; exists or not - we merge all, or just some.
-				(if (null? PAIR-C)
+			; The place where the merge counts should be written
+			(define mrg (LLOBJ 'make-pair CLA col))
 
-					; pare-c is the non-null version of PAIR-C
-					; We accumulate a fraction of PAIR-A into it.
-					(let* ((col (LLOBJ 'right-element PAIR-A))
-							(pare-c (LLOBJ 'make-pair CLS col)))
-						(do-acc pare-c frac-to-merge))
+			(define (do-acc CNT W PR WEI)
+				(set! CNT (+ CNT
+					(accumulate-count LLOBJ mrg PR WEI NOISE))))
 
-					; PAIR-C exists already. Merge 100% of A into it.
-					(do-acc PAIR-C 1.0))
-			))
+			; Now perform the merge. Overlapping entries are
+			; completely merged (frac=1.0). Non-overlapping ones
+			; contribute only FRAC.
+			(monitor-rate #f)
+			(cond
+				(null-a (do-acc accum-bcnt CLB PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt CLA PAIR-A frac-to-merge))
+				(else ; AKA (not (or null-a null-b))
+					(begin
+						(do-acc accum-acnt CLA PAIR-A 1.0)
+						(do-acc accum-bcnt CLB PAIR-B 1.0))))
+		)
 		perls)
 
 	(monitor-rate
-		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 )
 
