@@ -332,52 +332,59 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
-	; Use the tuple-math object to provide a pair of rows that
-	; are aligned with one-another.
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
+	; Perform a loop over all the disjuncts on WA and WB.
+	; Call ACCUM-FUN no these, as they are found.
+	(define (loop-over-disjuncts ACCUM-FUN)
+		; Use the tuple-math object to provide a pair of rows that
+		; are aligned with one-another.
+		(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+		(define ptu (add-tuple-math LLOBJ bogus))
 
-	; A list of pairs of sections to merge.
-	; This is a list of pairs of columns from LLOBJ, where either
-	; one or the other or both rows have non-zero elements in them.
-	(define perls (ptu 'right-stars (list WA WB)))
+		; Loop over the sections above, merging them into one cluster.
+		(for-each
+			(lambda (PRL)
+				(define PAIR-A (first PRL))
+				(define PAIR-B (second PRL))
 
-	; Loop over the sections above, merging them into one cluster.
-	(for-each
-		(lambda (PRL)
-			(define PAIR-A (first PRL))
-			(define PAIR-B (second PRL))
+				(define null-a (null? PAIR-A))
+				(define null-b (null? PAIR-B))
 
-			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-B))
+				; The target into which to accumulate counts. This is
+				; an entry in the same column that PAIR-A and PAIR-B
+				; are in. (TODO maybe we could check that both PAIR-A
+				; and PAIR-B really are in the same column. They should be.)
+				(define col (if null-a
+						(LLOBJ 'right-element PAIR-B)
+						(LLOBJ 'right-element PAIR-A)))
 
-			; The target into which to accumulate counts. This is
-			; an entry in the same column that PAIR-A and PAIR-B
-			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B really are in the same column. They should be.)
-			(define col (if null-a
-					(LLOBJ 'right-element PAIR-B)
-					(LLOBJ 'right-element PAIR-A)))
+				; The place where the merge counts should be written
+				(define mrg (LLOBJ 'make-pair CLS col))
 
-			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLS col))
+				; Now perform the merge. Overlapping entries are
+				; completely merged (frac=1.0). Non-overlapping ones
+				; contribute only FRAC.
+				(monitor-rate #f)
+				(cond
+					(null-a (ACCUM-FUN mrg WB PAIR-B frac-to-merge))
+					(null-b (ACCUM-FUN mrg WA PAIR-A frac-to-merge))
+					(else ; AKA (not (or null-a null-b))
+						(begin
+							(ACCUM-FUN mrg WA PAIR-A 1.0)
+							(ACCUM-FUN mrg WB PAIR-B 1.0))))
+			)
+			; A list of pairs of sections to merge.
+			; This is a list of pairs of columns from LLOBJ, where either
+			; one or the other or both rows have non-zero elements in them.
+			(ptu 'right-stars (list WA WB)))
+	)
 
-			(define (do-acc CNT PR WEI)
-				(set! CNT (+ CNT
-					(accumulate-count LLOBJ mrg PR WEI NOISE))))
+	(define (accum-counts MRG W PR WEI)
+		(define cnt	(accumulate-count LLOBJ MRG PR WEI NOISE))
+		(if (equal? W WA) 
+			(set! accum-acnt (+ accum-acnt cnt))
+			(set! accum-bcnt (+ accum-bcnt cnt))))
 
-			; Now perform the merge. Overlapping entries are
-			; completely merged (frac=1.0). Non-overlapping ones
-			; contribute only FRAC.
-			(monitor-rate #f)
-			(cond
-				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
-				(else ; AKA (not (or null-a null-b))
-					(begin
-						(do-acc accum-acnt PAIR-A 1.0)
-						(do-acc accum-bcnt PAIR-B 1.0)))))
-		perls)
+	(loop-over-disjuncts accum-counts)
 
 	(monitor-rate
 		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
@@ -542,6 +549,7 @@
 			)
 			(LLOBJ 'right-stars WA)))
 
+	; Accumulate counts from PAIR-A onto PAIR-C
 	(define (accum-sections PAIR-C PAIR-A WEI)
 		(monitor-rate #f)
 		(set! accum-cnt (+ accum-cnt
@@ -554,6 +562,7 @@
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
 
+		; Perform the connector merge.
 		(define (reshape-crosses PAIR-C PAIR-A WEI)
 			(monitor-rate #f)
 			(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI NOISE))
