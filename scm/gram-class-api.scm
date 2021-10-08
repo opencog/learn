@@ -127,8 +127,6 @@
 		(define is-a-class (eq? 'WordClassNode (cog-type A-ATOM)))
 		(define is-b-class (eq? 'WordClassNode (cog-type B-ATOM)))
 		(cond
-			((and is-a-class is-b-class)
-				(throw 'bad-merge 'make-cluster "Merging two clusters!"))
 			(is-a-class A-ATOM)
 			(is-b-class B-ATOM)
 			(else (let

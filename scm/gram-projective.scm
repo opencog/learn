@@ -462,10 +462,10 @@
 "
   merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON --
      Merge WA into cluster CLS. These are two rows in LLOBJ,
-     the merge is done column-by-column. A memberLink from
+     the merge is done column-by-column. A MemberLink from
      WA to CLS will be created.
 
-  See start-cluster for addtional details.
+  See start-cluster for additional details.
 
   LLOBJ is used to access pairs.
   WA should be of `(LLOBJ 'left-type)`
@@ -619,6 +619,20 @@
 
 	(monitor-rate
 		"------ Extend: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (merge-clusters LLOBJ CLA CLB FRAC-FN NOISE MRG-CON)
+"
+  merge-clusters LLOBJ CLA CLB FRAC-FN NOISE MRG-CON --
+     Merge clusters CLA and CLB. These are two rows in LLOBJ,
+     the merge is done column-by-column.
+
+  See start-cluster for additional details.
+"
+(throw 'not-implemented 'merge-clusters "work underway")
+
 )
 
 ; ---------------------------------------------------------------
@@ -785,7 +799,6 @@
 	(define (merge WA WB)
 		(define wa-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WA))))
 		(define wb-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WB))))
-		(define is-single (and (not wa-is-cls) (not wb-is-cls)))
 		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
@@ -800,16 +813,18 @@
 		; The results are stored, so that everything is on disk in
 		; case of a restart.
 		; Clobber first, since Sections were probably deleted.
-		(if is-single
-			(begin
-				(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
-				(STORE cls)
-			)
-			(begin
-				(if wa-is-cls
-					(merge-into-cluster STARS WA WB FRAC-FN NOISE MRG-CON)
-					(merge-into-cluster STARS WB WA FRAC-FN NOISE MRG-CON))
-			))
+		(case
+			((and wa-is-cls wb-is-cls)
+				(merge-clusters STARS WA WB FRAC-FN NOISE MRG-CON))
+			((and (not wa-is-cls) (not wb-is-cls))
+				(begin
+					(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
+					(STORE cls)))
+			(wa-is-cls
+				(merge-into-cluster STARS WA WB FRAC-FN NOISE MRG-CON))
+			(wb-is-cls
+				(merge-into-cluster STARS WB WA FRAC-FN NOISE MRG-CON))
+		)
 
 		(STORE WA)
 		(STORE WB)
