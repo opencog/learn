@@ -322,8 +322,8 @@
 
 	; Create MemberLinks. We need these early, for decision-making
 	; during the merge.
-	(define ma (MemberLink WA CLS))
-	(define mb (MemberLink WB CLS))
+	(define memb-a (MemberLink WA CLS))
+	(define memb-b (MemberLink WB CLS))
 
 	; Accumulated counts for the two MemberLinks.
 	(define accum-acnt 0)
@@ -433,12 +433,12 @@
 	; Track the number of observations moved from the two items
 	; into the combined class. This tracks the individual
 	; contributions.
-	(set-count ma accum-acnt)
-	(set-count mb accum-bcnt)
+	(set-count memb-a accum-acnt)
+	(set-count memb-b accum-bcnt)
 
 	; Store the counts on the MemberLinks.
-	(store-atom ma)
-	(store-atom mb)
+	(store-atom memb-a)
+	(store-atom memb-b)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
@@ -501,7 +501,7 @@
 
 	; Create the MemberLink. We need this early, for decision-making
 	; during the merge.
-	(define ma (MemberLink WA CLS))
+	(define memb-a (MemberLink WA CLS))
 
 	; Accumulated count on the MemberLink.
 	(define accum-cnt 0)
@@ -603,8 +603,8 @@
 
 	; Track the number of observations moved from WA to the class.
 	; Store the updated count.
-	(set-count ma accum-cnt)
-	(store-atom ma)
+	(set-count memb-a accum-cnt)
+	(store-atom memb-a)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
@@ -632,6 +632,73 @@
   See start-cluster for additional details.
 "
 (throw 'not-implemented 'merge-clusters "work underway")
+
+	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+
+	; Accumulated count on the MemberLink.
+	(define accum-cnt 0)
+
+	; Fraction of non-overlapping disjuncts to merge
+	(define frac-to-merge (FRAC-FN CLS WA))
+
+	; Use the tuple-math object to provide a pair of rows that
+	; are aligned with one-another.
+	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
+	(define ptu (add-tuple-math LLOBJ bogus))
+
+	(define monitor-rate (make-rate-monitor))
+
+	; A list of pairs of sections to merge.
+	; This is a list of pairs of columns from LLOBJ, where either
+	; one or the other or both rows have non-zero elements in them.
+	(define perls (ptu 'right-stars (list CLS WA)))
+
+	; Caution: there's a "feature" bug in projection merging when used
+	; with connector merging. The code below will create sections with
+	; dangling connectors that may be unwanted. Easiest to explain by
+	; example. Consider a section (f, abe) being merged into a cluster
+	; {e,j} to form a cluster {e,j,f}. The code below will create a
+	; section ({ej}, abe) as the C-section, and transfer some counts
+	; to it. But, when connector merging is desired, it should have gone
+	; to ({ej}, ab{ej}). There are two possible solutions: have the
+	; connector merging try to detect this, and clean it up, or have
+	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
+	; "natural" way for the tuple object to create this pairing (it is
+	; "naturally" linear, by design) so we must clean up during connector
+	; merging.
+	(for-each
+		(lambda (PRL)
+			(define PAIR-C (first PRL))
+			(define PAIR-A (second PRL))
+
+			(define (do-acc PRC WEI)
+				(monitor-rate #f)
+				(set! accum-cnt (+ accum-cnt
+					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
+
+			; There's nothing to do if A is empty.
+			(when (not (null? PAIR-A))
+
+				; Two different tasks, depending on whether PAIR-C
+				; exists or not - we merge all, or just some.
+				(if (null? PAIR-C)
+
+					; pare-c is the non-null version of PAIR-C
+					; We accumulate a fraction of PAIR-A into it.
+					(let* ((col (LLOBJ 'right-element PAIR-A))
+							(pare-c (LLOBJ 'make-pair CLS col)))
+						(do-acc pare-c frac-to-merge))
+
+					; PAIR-C exists already. Merge 100% of A into it.
+					(do-acc PAIR-C 1.0))
+			))
+		perls)
+
+	(monitor-rate
+		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 )
 

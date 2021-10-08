@@ -2,7 +2,7 @@
 ; agglo-loops.scm
 ;
 ; Loop over all words, merging them into grammatical categories.
-; Agglomerative clustering. Deprecated (?), use `agglo-ranked.scm` instead.
+; Agglomerative clustering. Deprecated, use `agglo-ranked.scm` instead.
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
@@ -19,7 +19,8 @@
 ;
 ; The code here works, but it seems that one can do a better job with
 ; the code in `agglo-rank.scm`, which seems to provide a better jugdement
-; of what order things should be merged together.
+; of what order things should be merged together.  I think. This has not
+; been carefully measured, experimentally.
 ;
 ; Agglomerative clustering
 ; ------------------------
