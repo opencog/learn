@@ -323,7 +323,7 @@
 
       (if (did-you-do-the-mmt-marginals-yet?)
           ; Yes you did.
-          ((add-similarity-api sha #f "shape-mi") 'fetch-pairs)
+          ((add-similarity-api sha #f \"shape-mi\") 'fetch-pairs)
 
           ; No you didn't.
           ((batch-transpose sha) 'mmt-marginals)
