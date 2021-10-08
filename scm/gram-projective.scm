@@ -591,20 +591,29 @@
 
 	(define monitor-rate (make-rate-monitor))
 
-	(for-each
-		(lambda (PAIR-B)
+	(define (loop-over-disjuncts ACCUM-FUN)
+		(for-each
+			(lambda (PAIR-B)
 
-			; The disjunct on PAIR-B
-			(define DJ (LLOBJ 'right-element PAIR-B))
+				; The disjunct on PAIR-B
+				(define DJ (LLOBJ 'right-element PAIR-B))
 
-			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLA DJ))
+				; The place where the merge counts should be written
+				(define mrg (LLOBJ 'make-pair CLA DJ))
 
-			; Now perform the merge.
-			(monitor-rate #f)
-			(accumulate-count LLOBJ mrg PAIR-B 1.0 NOISE)
-		)
-		(LLOBJ 'right-stars CLB))
+				; Now perform the merge.
+				(ACCUM-FUN MRG PAIR-B)
+
+				(monitor-rate #f)
+			)
+			(LLOBJ 'right-stars CLB))
+	)
+
+	(define (accum-counts MRG PAIR)
+		(accumulate-count LLOBJ MRG PAIR 1.0 NOISE))
+
+	; Run the main merge loop
+	(loop-over-disjuncts accum-counts)
 
 	; Copy all counts from MemberLinks on CLB to CLA.
 	; Delete MemberLinks on CLB.
@@ -641,71 +650,37 @@
 	; If merging connectors, then make a second pass.
 	(when MRG-CON
 
-	(set! monitor-rate (make-rate-monitor))
-	(for-each
-		(lambda (PRL)
-			(define PAIR-A (first PRL))
-			(define PAIR-B (second PRL))
+		(set! monitor-rate (make-rate-monitor))
 
-			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-B))
+		(define (merge-crosses MRG PAIR)
+			(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 NOISE))
 
-			; The target into which to accumulate counts. This is
-			; an entry in the same column that PAIR-A and PAIR-B
-			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B really are in the same column. They should be.)
-			(define col (if null-a
-					(LLOBJ 'right-element PAIR-B)
-					(LLOBJ 'right-element PAIR-A)))
+		; Run the main merge loop
+		(loop-over-disjuncts merge-crosses)
 
-			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLA col))
-
-			(define (do-acc W PR)
-				(reshape-merge LLOBJ CLS mrg W PR 1.0 NOISE))
-
-xxxxxxx
-			; Now perform the merge.
-			(monitor-rate #f)
-			(cond
-				(null-a (do-acc WB PAIR-B))
-				(null-b (do-acc WA PAIR-A))
-				(else ; AKA (not (or null-a null-b))
-					(begin
-						(do-acc WA PAIR-A)
-						(do-acc WB PAIR-B)))))
-		perls)
-	(monitor-rate
-		"------ Combine: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		(monitor-rate
+			"------ Combine: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
 
 	(set! monitor-rate (make-rate-monitor))
 	(monitor-rate #f)
-
-	; Track the number of observations moved from the two items
-	; into the combined class. This tracks the individual
-	; contributions.
-	(set-count memb-a accum-acnt)
-	(set-count memb-b accum-bcnt)
-
-	; Store the counts on the MemberLinks.
-	(store-atom memb-a)
-	(store-atom memb-b)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
 	; intent of this clobber is to force it to recompute it's left
 	; and right basis.
 	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ WB)
-	(remove-empty-sections LLOBJ CLS)
+	(remove-empty-sections LLOBJ CLA)
+	(remove-empty-sections LLOBJ CLB) ; This should remove ALL of them!
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	; Delete the old class.... Let's make sure it is not in any
-connectors, though.
+	; Delete the old class... But first, let's make sure it is
+	; really is empty!  It should not appear in any connectors!
+	(if (not (equal? 0 (cog-incoming-size CLB)))
+		(throw 'non-empy-class 'merge-clusters "we expect it to be empty!"))
+
 	(cog-delete! CLB)
 
 	(monitor-rate
