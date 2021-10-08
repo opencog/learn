@@ -582,8 +582,6 @@
 
   See start-cluster for additional details.
 "
-(throw 'not-implemented 'merge-clusters "work underway")
-
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
 	; XXX FIXME there should be a set-count on the LLOBJ...
 	; Strange but true, there is no setter, currently!
