@@ -509,11 +509,6 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN CLS WA))
 
-	; Use the tuple-math object to provide a pair of rows that
-	; are aligned with one-another.
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
-
 	(define monitor-rate (make-rate-monitor))
 
 	; Caution: there's a "feature" bug in projection merging when used
@@ -529,56 +524,43 @@
 	; "natural" way for the tuple object to create this pairing (it is
 	; "naturally" linear, by design) so we must clean up during connector
 	; merging.
-	(for-each
-		(lambda (PAIR-A)
-			(define DJ (LLOBJ 'right-element PAIR-A))
-			(define PAIR-C (LLOBJ 'get-pair CLS DJ))
+	(define (loop-over-disjuncts ACCUM-FUN)
+		(for-each
+			(lambda (PAIR-A)
+				(define DJ (LLOBJ 'right-element PAIR-A))
+				(define PAIR-C (LLOBJ 'get-pair CLS DJ))
 
-			(define (do-acc PRC WEI)
-				(monitor-rate #f)
-				(set! accum-cnt (+ accum-cnt
-					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
+				; Two different tasks, depending on whether PAIR-C
+				; exists or not - we merge all, or just some.
+				(if (nil? PAIR-C)
 
-			; Two different tasks, depending on whether PAIR-C
-			; exists or not - we merge all, or just some.
-			(if (nil? PAIR-C)
+					; Accumulate just a fraction into the new column.
+					(ACCUM-FUN (LLOBJ 'make-pair CLS DJ) PAIR-A frac-to-merge)
 
-				; Accumulate just a fraction into the new column.
-				(do-acc (LLOBJ 'make-pair CLS DJ) frac-to-merge)
+					; PAIR-C exists already. Merge 100% of A into it.
+					(ACCUM-FUN PAIR-C PAIR-A 1.0))
+			)
+			(LLOBJ 'right-stars WA)))
 
-				; PAIR-C exists already. Merge 100% of A into it.
-				(do-acc PAIR-C 1.0))
-		)
-		(LLOBJ 'right-stars WA))
+	(define (accum-sections PAIR-C PAIR-A WEI)
+		(monitor-rate #f)
+		(set! accum-cnt (+ accum-cnt
+			(accumulate-count LLOBJ PAIR-C PAIR-A WEI NOISE))))
 
+	(loop-over-disjuncts accum-sections)
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	(when MRG-CON
-	(set! monitor-rate (make-rate-monitor))
-	(for-each
-		(lambda (PAIR-A)
-			(define DJ (LLOBJ 'right-element PAIR-A))
-			(define PAIR-C (LLOBJ 'get-pair CLS DJ))
+		(set! monitor-rate (make-rate-monitor))
 
-			(define (do-acc PRC WEI)
-				(monitor-rate #f)
-				(reshape-merge LLOBJ CLS PRC WA PAIR-A WEI NOISE))
+		(define (reshape-crosses PAIR-C PAIR-A WEI)
+			(monitor-rate #f)
+			(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI NOISE))
 
-			; Two different tasks, depending on whether PAIR-C
-			; exists or not - we merge all, or just some.
-			(if (null? PAIR-C)
-
-				; We accumulate a fraction of PAIR-A into it.
-				(do-acc (LLOBJ 'make-pair CLS DJ) frac-to-merge)
-
-				; PAIR-C exists already. Merge 100% of A into it.
-				(do-acc PAIR-C 1.0))
-		)
-		(LLOBJ 'right-stars WA))
-
-	(monitor-rate
-		"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		(loop-over-disjuncts reshape-crosses)
+		(monitor-rate
+			"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
 
 	(set! monitor-rate (make-rate-monitor))
