@@ -1138,6 +1138,9 @@ you should at least store the trimmed marginals:
 ```
 	((make-store psa) 'store-wildcards)
 ```
+Seriously, though, you really need the MM^T marginals for the later
+stages to work.
+
 After the above steps, a typical dataset might contain 15K words and
 about a million disjuncts. The total AtomSpace size will be about 4
 million atoms; this will require about 4GB of RAM. This is quite
@@ -1275,8 +1278,8 @@ these ideas.
 Exploring Word-Word Distances
 -----------------------------
 The classic word-word distance is the cosine distance. As the above
-explains, this is not really the correct metric. But you can play
-around with it, anyway:
+explains, this works rather poorly. But you can play around with it,
+anyway:
 ```
       (define pco (add-pair-cosine-compute psa))
       (pco 'right-cosine (Word "this") (Word "that"))
@@ -1284,22 +1287,26 @@ around with it, anyway:
 ```
 A superior measure to the cosine-distance is the mutual information
 between word-disjunct vectors. This is computed using the same vectors,
-and a similar dot-product, but is weighted differrently, in a way that
+and a similar dot-product, but is weighted differently, in a way that
 makes more sense for probabilities.
 ```
       (define pmi (add-symmetric-mi-compute psa))
       (pmi 'mmt-fmi (Word "this") (Word "that"))
 ```
 
-Experimental code is located in
-[disjunct-stats.scm](learn-lang-diary/disjunct-stats.scm)
+The Diary Part One, Two and Three each explore the statistics and
+structure of these vectors. The code that was used to create the
+various graphs can be found scattered in the
+[learn-lang-diary/utils](learn-lang-diary/utils/) directory, primarily
+in [disjunct-stats.scm](learn-lang-diary/utils/disjunct-stats.scm).
 
 
 Creating Grammatical Classes
 ----------------------------
-The clustering code, for isolating grammatical classes, is in active
-development. The instructions here are provisional and subject to
-change.
+The development of the clustering code, for isolating grammatical
+classes, is winding down.  Things seem to be working. There are a few
+ideas that still need to be coded. There are probably some bugs still
+lurking.  The instructions here are provisional and subject to change.
 
 * Make a copy of the table holding the disjunct statistics. This is
   critical! The clustering algorithm(s) actively alter the per-word
@@ -1316,28 +1323,46 @@ change.
       (use-modules (opencog matrix) (opencog sheaf))
       (cog-rocks-open "rocks:///home/ubuntu/data/expt-8/gram-1.rdb")
 ```
-  and the, try either
+  and then
 ```
-      (gram-classify-greedy-discrim 0.5 4)
-```
-  or
-```
-      (gram-classify-greedy-fuzz 0.65 0.3 4)
+      (use-modules (srfi srfi-1))
+      (define pca (make-pseudo-cset-api))
+      (define pcs (add-pair-stars pca))
+      (define sha (add-covering-sections pcs))
+      (sha 'fetch-pairs)
+      (sha 'explode-sections)
+
+      (if (have-you-done-mmt-marginals-yet?)
+         ; Nope, not yet.
+         ((batch-transpose sha) 'mmt-marginals)
+
+         ; Yes, they've been done
+         ((add-similarity-api sha #f "shape-mi") 'fetch-pairs)
+      )
+
+      ; Create 500 grammatical clusters
+      ; This many will take days or a week!  You can do less!
+      ; This will print lots of diagnostics!
+      (pair-wise-cluster sha 200 500)
 ```
   The meanings of the parameters are explained in the function
-  documentation; See the [gram-agglo.scm](scm/gram-agglo.scm) file.
+  documentation; See the [agglo-rank.scm](scm/agglo-rank.scm) file.
 
-  Both will take days to run. You can start poking at the results
-  earlier, though. the file `learn-lang-diary/word-classes/word-classes.scm`
+  This will take days to run. You can start poking at the results
+  earlier, though. The file `learn-lang-diary/word-classes/word-classes.scm`
   contains an ad-hoc assortment of tools that can be used to examine
   the word-classes discovered so far.  Read it for details.
 
   Note that, because the above alters word-vectors on the fly, the
-  cosine-angles between words will change over time, and thus might
-  not actually be what you expect. If you want to play with cosine
-  distances or other metrics, you need to do so on a separate, clean
-  database load. The above database **will** be altered.
+  MI between words will change over time, and thus might not actually
+  be what you expect. The clusering step splits words up into distinct
+  word-senses based on the grammatical category to which disjuncts are
+  assigned. Thus, words that can be both nouns and verbs are typically
+  split into two or more clusters, at this stage, and what remains of
+  the original word might be just some random noise that was unassigned.
 
+Export to Link Grammar
+----------------------
 At the conclusion of clustering, the results can be exported to Link
 Grammar. This can be done as follows:
 
@@ -1434,46 +1459,28 @@ TODO
 ----
 Some things in the pipeline, but unfinished:
 
-* Replace cosine distance in the clustering algos by the information
-  divergence, as explained in the
+* Read
   [Graph Models vs. Gradient Descent](https://github.com/opencog/opencog/raw/master/opencog/nlp/learn/learn-lang-diary/skippy.pdf)
-  document.  There's already code for computing the divergence;
-  to get it, just say
-```
-      (define smi (add-symmetric-mi-compute pca))
-      (smi 'mmt-fmi (Word "foo") (Word "bar"))
-```
-
-* Replace centroid means, as explained above.
+  document.
 
 * The clustering algos above already perform word-sense factoring.
   Explicit word-senses can be identified by looking at multi-cluster
   membership.  These can now start to be used for re-parsing, to
   obtain word-sense pair-correlation statistics.
 
+  Explain the above, docuemnnt it more clearly.
 
-Exporting a Lexis
+TODO - Clustering
 -----------------
-The collection of grammatical classes, the words that belong to them,
-and the attached disjuncts comprise a lexis that is compatible with the
-Link Grammar parser. It can be exported with the `export-csets`
-function. When copied to a location where Link Grammar can find it,
-it can be used to parse text by the link parser.
+(Finish) implementing clique clustering. See `cliques.scm`.
 
+TODO - Export to Link Grammar
+-----------------------------
+Make sure the above instructions are still correct. Make sure that
+everything works.
 
-Clustering
-----------
-The clustering code is in development, and the best/fastest algorithms
-are not yet known.  The best metrics are not known; currently, the code
-can be configured to use (symmetric) mutual information or cosing
-distance.
-
-Given a set of grammatical classes derived in this way, together with
-disjuncts that are formed from the classes, these can be loaded into
-link-grammar dictionaries. Use the `export-disjuncts.scm` file to do
-this. The exported lexis is in `sqlite3` format, which the link-grammar
-parser understands.
-
+TODO - Quality Evaluation
+-------------------------
 A reasonable next step is to run raw text through this parser,
 accumulate statistics on the individual disjuncts, and see how they
 stack up against the original stats. Are some disjuncts being used far
@@ -1485,9 +1492,12 @@ different parses than others; where do they differ? Why?
 Given a stable dictionary, an obvious next step is to attempt to
 perform reference resolution.
 
+See [README-Calibration](README-Calibration.md) for more about
+quality calibration.
 
-Measuring Quality
------------------
+
+TODO -- Measuring Quality
+-------------------------
 Current efforts are focused on judging the quality of the results. Manual
 inspection looks pretty good. Manual inspection is not enough to allow
 the fine-tuning of the algorithms and parameters. Measuring results
@@ -1528,7 +1538,7 @@ enough to do some basic work. The steps are:
 
 * Download a container from
   https://linas.org/lxc-nlp-containers/
-  XXX No. These are all stale and out of date. Contact me for
+  *** XXX No. These are all stale and out of date. *** Contact me for
   something modern.
 
 * The following describe root-owned containers. You can also have
