@@ -91,8 +91,7 @@
 
 ; Define matrix API to the data
 (define pca (make-pseudo-cset-api))
-(define csc (add-covering-sections pca))
-(define gsc (add-cluster-gram csc))
+(define gsc (add-covering-sections pca))
 
 ; ------------------
 ; Verify that the data loaded correctly
@@ -106,7 +105,7 @@
 
 ; Create CrossSections and verify that they got created
 ; We expect 3 x (3+4+5) = 36 of them.
-(csc 'explode-sections)
+(gsc 'explode-sections)
 (test-equal 36 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
@@ -187,8 +186,8 @@
 (test-approximate (* (- 1 frac1) cnt-f-eeh) (cog-count xes-e-f-veh) epsilon)
 
 ; Verify detailed balance
-(test-assert (check-sections csc epsilon))
-(test-assert (check-crosses csc epsilon))
+(test-assert (check-sections gsc epsilon))
+(test-assert (check-crosses gsc epsilon))
 
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
@@ -294,8 +293,8 @@
 
 ; ----------------------
 ; Check detailed balance
-(test-assert (check-sections csc epsilon))
-(test-assert (check-crosses csc epsilon))
+(test-assert (check-sections gsc epsilon))
+(test-assert (check-crosses gsc epsilon))
 
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
