@@ -9,7 +9,7 @@
 
 (define cnt-ej-abc 13)
 (define cnt-ej-klm 44)
-(define cnt-rs-abc 31)
+(define cnt-rs-abc 25)
 (define cnt-rs-dgh 61)
 
 (define (setup-ej-sections)
@@ -44,18 +44,16 @@
 	*unspecified*
 )
 
-#! ====================
 ; Expected results from the above.
 (define sec-ej-abc #f)
 (define sec-ej-dgh #f)
 (define sec-ej-klm #f)
-(define sec-e-klm #f)
 
 (define xes-b-ej-avc #f)
 (define xes-k-ej-vlm #f)
-(define xes-k-e-vlm #f)
+(define xes-d-ej-vgh #f)
 
-(define (expected-e-j-sections)
+(define (expected-ej-sections)
 	(set! sec-ej-abc
 	(Section
 		(WordClass "e j")
@@ -77,13 +75,6 @@
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
-	(set! sec-e-klm
-	(Section
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+")))))
 
 	(set! xes-b-ej-avc
 	(CrossSection
@@ -101,14 +92,14 @@
 			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
-	(set! xes-k-e-vlm
+	(set! xes-d-ej-vgh
 	(CrossSection
-		(Word "k")
+		(Word "d")
 		(Shape
-			(Word "e")
+			(WordClass "e j")
 			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+")))))
+			(Connector (Word "g") (ConnectorDir "-"))
+			(Connector (Word "h") (ConnectorDir "+")))))
 )
 
 ; ---------------------------------------------------------------
@@ -116,6 +107,7 @@
 ; ---------------------------------------------------------------
 ; Define sections on a third word, that can be merged into above.
 
+#! ====================
 (define cnt-f-abc 19)
 (define cnt-f-dgh 36)
 (define cnt-f-klm 34)

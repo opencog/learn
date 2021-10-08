@@ -104,30 +104,27 @@
 ; The deleted ones are the two rs sections.
 (test-equal 3 (length (cog-get-atoms 'Section)))
 
-#! ================
-; Of the 15 original CrossSections, 12 are deleted outright, and three
-; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
-; crosses get created, leaving a grand-total of 12.
-(test-equal 12 (length (cog-get-atoms 'CrossSection)))
+; Of the 12 original CrossSections, 6 are deleted outright, three
+; get thier counts incremented, and three get created.
+(test-equal 9 (length (cog-get-atoms 'CrossSection)))
 
 ; --------------
 ; Validate counts.
 ; For example:
 (define epsilon 1.0e-8)
-(test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
+(test-approximate cnt-ej-klm
+	(cog-count (car (gsc 'right-stars (WordClass "e j")))) epsilon)
 
 ; To gain access to the counts, load them by name.
-(expected-e-j-sections)
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
-(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+(expected-ej-sections)
+(test-approximate (+ cnt-ej-abc cnt-rs-abc) (cog-count sec-ej-abc) epsilon)
+(test-approximate cnt-rs-dgh (cog-count sec-ej-dgh) epsilon)
+(test-approximate cnt-ej-klm (cog-count sec-ej-klm) epsilon)
 
 ; Validate counts on select CrossSections...
-(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
-(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
+(test-approximate (+ cnt-ej-abc cnt-rs-abc) (cog-count xes-b-ej-avc) epsilon)
+(test-approximate cnt-ej-klm (cog-count xes-k-ej-vlm) epsilon)
+(test-approximate cnt-rs-dgh (cog-count xes-d-ej-vgh) epsilon)
 
 ; -----------------------
 ; Verify detailed balance
@@ -137,7 +134,6 @@
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
-========== !#
 
 (test-end t-start-cluster)
 
