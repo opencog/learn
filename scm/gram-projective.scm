@@ -401,13 +401,11 @@
 	; in the first pass, because the connector-merge logic needs to
 	; manipulate the merged Sections. (There's no obvious way to do
 	; this in a single pass; I tried.)
+	(define (reshape-crosses MRG W PR WEI)
+		(reshape-merge LLOBJ CLS MRG W PR WEI NOISE))
 	(when MRG-CON
-		(define (reshape-crosses MRG W PR WEI)
-			(reshape-merge LLOBJ CLS MRG W PR WEI NOISE))
-
 		(set! monitor-rate (make-rate-monitor))
 		(loop-over-disjuncts reshape-crosses)
-
 		(monitor-rate
 			"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
@@ -534,14 +532,12 @@
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
+	; Perform the connector merge.
+	(define (reshape-crosses PAIR-C PAIR-A WEI)
+		(monitor-rate #f)
+		(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI NOISE))
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
-
-		; Perform the connector merge.
-		(define (reshape-crosses PAIR-C PAIR-A WEI)
-			(monitor-rate #f)
-			(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI NOISE))
-
 		(loop-over-disjuncts reshape-crosses)
 		(monitor-rate
 			"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
@@ -646,16 +642,13 @@
 		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; If merging connectors, then make a second pass.
+	(define (merge-crosses MRG PAIR)
+		(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 NOISE))
+
 	(when MRG-CON
-
 		(set! monitor-rate (make-rate-monitor))
-
-		(define (merge-crosses MRG PAIR)
-			(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 NOISE))
-
-		; Run the main merge loop
+		; Run the main merge loop and merge the connnectors
 		(loop-over-disjuncts merge-crosses)
-
 		(monitor-rate
 			"------ Combine: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 	)
@@ -847,8 +840,8 @@
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
-		(define wa-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WA))))
-		(define wb-is-cls (eq? (STARS 'cluster-type) (Type (cog-type WB))))
+		(define wa-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WA))))
+		(define wb-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WB))))
 		(define cls (STARS 'make-cluster WA WB))
 
 		; Cluster - either create a new cluster, or add to an existing
@@ -863,7 +856,7 @@
 		; The results are stored, so that everything is on disk in
 		; case of a restart.
 		; Clobber first, since Sections were probably deleted.
-		(case
+		(cond
 			((and wa-is-cls wb-is-cls)
 				(merge-clusters STARS WA WB NOISE MRG-CON))
 			((and (not wa-is-cls) (not wb-is-cls))
