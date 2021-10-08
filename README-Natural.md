@@ -1138,6 +1138,10 @@ you should at least store the trimmed marginals:
 ```
 	((make-store psa) 'store-wildcards)
 ```
+After the above steps, a typical dataset might contain 15K words and
+about a million disjuncts. The total AtomSpace size will be about 4
+million atoms; this will require about 4GB of RAM. This is quite
+manageable. Datasets before trimming may be ten times larger!
 
 Determining Grammatical Classes
 -------------------------------
@@ -1150,7 +1154,7 @@ the syntactic structure of the language, on a word-by-word basis,
 complete with statistical information about how often each disjunct
 occurs, relative to all the others.
 
-Unfortunately, its a huge dataset, and it still contains some fair
+Typically, this is a large dataset, and it still contains some fair
 amount of noise (although it contains less noise than a single MST
 tree -- all of those bad MST parses are beginning to average out).
 Further averaging and noise reduction (and thus, higher accuracy)
@@ -1162,14 +1166,31 @@ have to be merged into grammatical categories. What's more, these
 categories have to be consistent with the categories obtained from
 clustering the words.
 
-This requirement makes the algorithm for discovering grammatical
-classes fundamentally unique, and different than any other clustering
-algorithm employed before. This is not an exaggeration; however,
-many/most people struggle with this concept, so its sketched below.
-The paper on "Sheaf Theory", located at
+This requirement makes it difficult to apply off-the-shelf clustering
+software. Thus, a number of different clustering algos have been coded
+up in this project.  All of them are "agglomerative", and have three
+basic steps:
+
+1. Compute similarities between word-vectors.
+
+2. Pick N similar words.
+
+3. Merge these into a cluster.
+
+4. Recompute similarities, and go to step 2.
+
+The primary difficulties are avoiding wasting mind-boggling amounts
+of CPU time computing similarities, and performing the actual merge.
+The first problem is solved by only considering a limited number of
+similarities, those between the top-ranked words (ranked by frequency.)
+
+The actual merge is far more difficult. Basic concepts are sketched
+below.  The paper on "Sheaf Theory", located at
 https://github.com/opencog/atomspace/blob/master/opencog/sheaf/docs/sheaves.pdf
-explains this in greater detail.  There will also be an upcoming blog
-post on this.
+explains this in greater detail.  Somwehere there is a blog
+post on this. (XXX where?)
+
+### Word-vectors
 
 The collection of (word,disjunct) pairs can be thought of as a
 collection of vectors, one per word.  The observed frequency `p(w,d)`
@@ -1189,24 +1210,28 @@ basis vectors.
 There is one such vector per word. The probabilities `p(w,d)` are
 experimentally determined.  Since there is a vector per word, all of the
 industry-standard concepts can be applied: one can compute the cosine
-angle between two words. One can compute the jaccard distance.  One
-can compute the (symmetric!) mutual information between two words (the
-Kullbeck-Liebler divergence) because now, the word-order no longer
-matters; the two words are no longer embedded in a sentence.  All of
-these different metrics give a hint at how similar or different two
-words might be.
+angle between two words. One can compute the Jaccard distance.  One
+can compute the (symmetric!) mutual information (MI) between two words
+(the Kullbeck-Liebler divergence).  All of these different metrics give
+a judgement of how similar or different two words might be.
 
-It is now super-duper tempting to apply industry-standard big-data
-tools to obtain clusters. For example, one can do K-means clustering,
-if one wished.  One can take the famous, well-known Adagram or Word2Vec
-algorithms, and replace the n-grams/skip-grams in these algos by the
-disjuncts. That is, the disjunct-vector above is really very, very much
-like a traditional n-gram/skip-gram.  If one applies these, or other
-neural-net techniques to the disjunct vectors, one could get results
-that are very similar to what the current n-gram/skip-gram techniques
-are producing.  The results would be similar because the "statistical
-power" in the word-disjunct vectors is very similar to the statistical
-power in a skip-gram. They really are not all that different.
+Experimental work indicates that cosine-distance is terrible, and that
+MI works pretty good. The Jaccard distance might be better; this is
+supported by some experiments, but those are poorly designed.
+
+### Clustering
+
+It is tempting to apply industry-standard tools to obtain clusters.
+For example, one could do K-means clustering, if one wished.  One
+could take the famous, well-known Adagram or Word2Vec algorithms, and
+replace the n-grams/skip-grams in these algos by the disjuncts. That is,
+the disjunct-vector above is a lot like a traditional n-gram/skip-gram.
+ If one applies these, or other neural-net techniques to the disjunct
+vectors, one would likely get results that are very similar to what the
+current n-gram/skip-gram techniques are producing.  The results would
+be similar because the "statistical power" in the word-disjunct vectors
+is very similar to the statistical power in a skip-gram. They really
+are not all that different.
 
 ***HOWEVER...***
 There is one hugely-important, critical difference.
@@ -1244,8 +1269,8 @@ exactly how they stitch together.
 
 The correct determination of grammatical classes requires that the
 stitching of this fabric be accounted for. The paper on 'sheaf theory'
-tries to explain this in greater detail. The code here tries to actually
-implement these ideas.
+tries to explain this in greater detail. The code here implements
+these ideas.
 
 Exploring Word-Word Distances
 -----------------------------
