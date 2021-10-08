@@ -33,18 +33,17 @@
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
 ;
 ; What about the CrossSections?
-;xxxx
-; We expect 15 to be created, 3 each for the 5 total Sections.
-; For example, (e, abc) explodes to
-;    [a, <e, vbc>]   and  [b, <e, avc>]  and  [c, <e, abv>]
+; We expect 12 to be created, 3 each for the 4 total Sections.
+; For example, ({ej}, abc) explodes to
+;    [a, <{ej}, vbc>]   and  [b, <{ej}, avc>]  and  [c, <{ej}, abv>]
 ; where [] denotes the CrossSection, and <> denotes the Shape. The "v"
 ; is the variable node in the Shape (that the germ of the cross-section
 ; plugs into).
 ;
 ; These should stay consistent with the merged sections. i.e. these
-; should reduce to 12=9+3 grand-total, with appropriate counts.
-; 9 of them will have {ej} as the point, and 3 will have "e" as the
-; point.
+; should reduce to 9=12-6+3 grand-total, with appropriate counts.
+; All 9 of them will have {ej} as the point, none will have {rs} as
+; the point.
 
 (define t-start-cluster "simple two-cluster merge test")
 (test-begin t-start-cluster)
