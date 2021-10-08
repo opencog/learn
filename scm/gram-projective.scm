@@ -557,31 +557,25 @@
 	(when MRG-CON
 	(set! monitor-rate (make-rate-monitor))
 	(for-each
-		(lambda (PRL)
-			(define PAIR-C (first PRL))
-			(define PAIR-A (second PRL))
+		(lambda (PAIR-A)
+			(define DJ (LLOBJ 'right-element PAIR-A))
+			(define PAIR-C (LLOBJ 'get-pair CLS DJ))
 
 			(define (do-acc PRC WEI)
 				(monitor-rate #f)
 				(reshape-merge LLOBJ CLS PRC WA PAIR-A WEI NOISE))
 
-			; There's nothing to do if A is empty.
-			(when (not (null? PAIR-A))
+			; Two different tasks, depending on whether PAIR-C
+			; exists or not - we merge all, or just some.
+			(if (null? PAIR-C)
 
-				; Two different tasks, depending on whether PAIR-C
-				; exists or not - we merge all, or just some.
-				(if (null? PAIR-C)
+				; We accumulate a fraction of PAIR-A into it.
+				(do-acc (LLOBJ 'make-pair CLS DJ) frac-to-merge)
 
-					; pare-c is the non-null version of PAIR-C
-					; We accumulate a fraction of PAIR-A into it.
-					(let* ((col (LLOBJ 'right-element PAIR-A))
-							(pare-c (LLOBJ 'make-pair CLS col)))
-						(do-acc pare-c frac-to-merge))
-
-					; PAIR-C exists already. Merge 100% of A into it.
-					(do-acc PAIR-C 1.0))
-			))
-		perls)
+				; PAIR-C exists already. Merge 100% of A into it.
+				(do-acc PAIR-C 1.0))
+		)
+		(LLOBJ 'right-stars WA))
 
 	(monitor-rate
 		"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
