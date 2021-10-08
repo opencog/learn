@@ -399,7 +399,7 @@
 
 	(define (do-merge N WA WB)
 		(format #t "Start merge ~D of `~A` and `~A`\n"
-			(+ N NSIM-OFFFSET) (cog-name WA) (cog-name WB))
+			(+ N NSIM-OFFSET) (cog-name WA) (cog-name WB))
 (if (and (equal? (cog-type WA) 'WordClassNode)
 (equal? (cog-type WB) 'WordClassNode))
 (throw 'not-implemented 'do-stuff "both are word classes"))
