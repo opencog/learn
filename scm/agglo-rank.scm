@@ -312,6 +312,25 @@
 
   Status: more-or-less finished. Works. Prints a lot of diagnostics.
   Easy-to-use, simple, not a lot of user-adjustable parameters.
+
+  Recommended usage:
+  ```
+      (define pca (make-pseudo-cset-api))
+      (define pcs (add-pair-stars pca))
+      (define sha (add-covering-sections pcs))
+      (sha 'fetch-pairs)
+      (sha 'explode-sections)
+
+      (if (did-you-do-the-mmt-marginals-yet?)
+          ; Yes you did.
+          ((add-similarity-api sha #f "shape-mi") 'fetch-pairs)
+
+          ; No you didn't.
+          ((batch-transpose sha) 'mmt-marginals)
+      )
+
+      (pair-wise-cluster sha 200 500)
+  ```
 "
 	(define e (make-elapsed-secs))
 
