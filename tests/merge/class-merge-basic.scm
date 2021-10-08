@@ -67,44 +67,44 @@
 ; Get the total count on all Sections
 (define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
-#! ================
 ; Create CrossSections and verify that they got created
 (gsc 'explode-sections)
-(test-equal 15 (length (cog-get-atoms 'CrossSection)))
+(test-equal 12 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 2 (length (gsc 'right-stars (Word "g"))))
-(test-equal 2 (length (gsc 'right-stars (Word "h"))))
+(test-equal 1 (length (gsc 'right-stars (Word "g"))))
+(test-equal 1 (length (gsc 'right-stars (Word "h"))))
 
 ; Should not be any CrossSections on e,j; should be same as before.
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-(test-equal 2 (length (gsc 'right-stars (Word "j"))))
+(test-equal 2 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 2 (length (gsc 'right-stars (WordClass "r s"))))
 
-; We expect a total of 3+2=5 Sections
-(test-equal 5 (length (cog-get-atoms 'Section)))
+(test-equal 2 (length (gsc 'right-stars (Word "a"))))
+(test-equal 2 (length (gsc 'right-stars (Word "b"))))
+
+; We expect a total of 2+2=5 Sections
+(test-equal 4 (length (cog-get-atoms 'Section)))
 
 ; --------------------------
 ; Merge two sections together.
-(define frac 0.25)
+(define frac 1.0)
 (define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(disc 'merge-function (WordClass "e j") (WordClass "r s"))
 
-; We expect just one section remaining on "e", the klm section.
-(test-equal 1 (length (gsc 'right-stars (Word "e"))))
+; We expect three sections on "e", the abc, dgh and klm sections.
+(test-equal 3 (length (gsc 'right-stars (WordClass "e j"))))
 
-; We expect no sections remaining on j
-(test-equal 0 (length (gsc 'right-stars (Word "j"))))
+; We expect no sections remaining on rs
+(test-equal 0 (length (gsc 'right-stars (WordClass "r s"))))
 
-; We expect three merged sections
-(test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
 
-; Of the 5 original Sections, 4 are deleted, and 3 are created,
-; leaving a grand total of 4. The 3 new ones are all e-j, the
-; remaining old one is an "e" with a reduced count.  This is just
-; the sum of the above.
-(test-equal 4 (length (cog-get-atoms 'Section)))
+; Of the 4 original Sections, 2 are deleted, and 1 is created,
+; leaving a grand total of 3. The new one is (ej,dgh).
+; The deleted ones are the two rs sections.
+(test-equal 3 (length (cog-get-atoms 'Section)))
 
+#! ================
 ; Of the 15 original CrossSections, 12 are deleted outright, and three
 ; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
 ; crosses get created, leaving a grand-total of 12.
