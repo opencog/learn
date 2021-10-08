@@ -57,7 +57,7 @@
 ;     (1-p) * [e, <j, veh>]
 ;     (1-p) * [e, <j, evh>]
 ; and nothing more. The motivation for this is described in the diary
-; entry "April-May 20201 ...Non-Commutivity, Again... Case B".
+; entry "April-May 2021 ...Non-Commutivity, Again... Case B".
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))

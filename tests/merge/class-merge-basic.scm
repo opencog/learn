@@ -45,8 +45,8 @@
 ; All 9 of them will have {ej} as the point, none will have {rs} as
 ; the point.
 
-(define t-start-cluster "simple two-cluster merge test")
-(test-begin t-start-cluster)
+(define t-class-merge "simple two-cluster merge test")
+(test-begin t-class-merge)
 
 ; Open the database
 (setup-database)
@@ -134,6 +134,6 @@
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
 
-(test-end t-start-cluster)
+(test-end t-class-merge)
 
 ; ---------------------------------------------------------------

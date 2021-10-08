@@ -1,14 +1,14 @@
 ;
-; connector-merge-cons.scm
+; class-merge-cons.scm
 ; Unit test for merging of Connectors - single connector; 2-cluster
 ;
-; Tests merging of two words into a single word-class.
-; The focus here is to make sure that that when the words to
+; Tests merging of two word-classes into a single word-class.
+; The focus here is to make sure that that when the classes to
 ; be merged also appear in Connectors, that those are merged
 ; correctly, too. This triggers some extra merge logic, beyond
 ; the basic case.
 ;
-; Created May 2021
+; Created October 2021
 
 (use-modules (opencog) (opencog matrix))
 (use-modules (opencog nlp))
@@ -20,61 +20,22 @@
 (opencog-test-runner)
 
 (load "connector-setup.scm")
-(load "connector-data.scm")
+(load "class-data.scm")
 
 ; ---------------------------------------------------------------
 ;
-; This is similar to the "simple start-cluster merge test" except
-; that the word "e" appears both as germ, and in two connectors.
+; This is similar to `class-merg-basic.scm` except that the class {ej}
+; appears both as germ, and in two connectors.
 ;
 ; This diagram explains what is being tested here:
 ;
 ; From basic section merge:
-;    (e, abc) + (j, abc) -> ({ej}, abc)
-;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
-;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
-;     none    + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
-;     none    + (j, egh) -> p * ({ej}, egh) + (1-p) * (j, egh)
+;    ({ej}, abc) + ({rs}, abc)    -> ({ej}, abc)
+;    ({ej}, klm) +     none       -> ({ej}, klm)
+;        none    + ({rs}, dgh)    -> ({ej}, dgh)
+;        none    + ({rs}, ab{ej}) -> ({ej}, ab{ej})
+; ({ej}, kl{rs}) +     none       -> ({ej}, kl{ej})
 ;
-; However, the last two are not the final form. From the cross-section
-; merge, one has
-;    [e, <j, abv>] + none -> p * [{ej}, <j, abv>] + (1-p) * [e, <j, abv>]
-;    [e, <j, vgh>] + none -> p * [{ej}, <j, vgh>] + (1-p) * [e, <j, vgh>]
-;
-; which reshapes into
-;     p * (j, ab{ej}) + (1-p) * (j, abe)
-;     p * (j, {ej}gh) + (1-p) * (j, egh)
-;
-; The two reshapes are combined with the two merged sections, to yeild
-; as the final form
-;     p * ({ej}, ab{ej}) + (1-p) * (j, abe)
-;     p * ({ej}, {ej}gh) + (1-p) * (j, egh)
-;
-; The cross-sections on e should be:
-;     (1-p) * [e, <j, abv>]
-;     (1-p) * [e, <j, vgh>]
-; and nothing more. The motivation for this is described in the diary
-; entry "April-May 2021 ...Non-Commutivity, Again... Case B".
-;
-; In this diagram, (e,abc) is abbreviated notation for
-; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
-; and so on.
-; {ej} is short for (WordClassNode "e j") (a set of two words)
-; "p" is the fraction to merge == 0.25, hard-coded below.
-;
-; What should the cross-sections be?
-; The should track the above sections, with count as appropriate.
-; to recap, expect:
-;     ({ej}, abc)    * 1.0
-;     ({ej}, dgh)    * 1.0
-;     ({ej}, klm)    * p
-;     (e, klm)       * 1-p
-;     (j, abe)       * 1-p
-;     (j, egh)       * 1-p
-;     ({ej}, ab{ej}) * p
-;     ({ej}, {ej}gh) * p
-; There are 8 of these, so expect 24=8*3 CrossSections
-
 (define t-two-cluster "connector 2-cluster merge test")
 (test-begin t-two-cluster)
 
