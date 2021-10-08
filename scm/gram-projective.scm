@@ -716,13 +716,86 @@
 		)
 		(cog-incoming-by-type CLB 'MemberLink))
 
+	(monitor-rate
+		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+xxxxxxx
+	; If merging connectors, then make a second pass. We can't do this
+	; in the first pass, because the connector-merge logic needs to
+	; manipulate the merged Sections. (There's no obvious way to do
+	; this in a single pass; I tried.)
+	(when MRG-CON
+
+	(set! monitor-rate (make-rate-monitor))
+	(for-each
+		(lambda (PRL)
+			(define PAIR-A (first PRL))
+			(define PAIR-B (second PRL))
+
+			(define null-a (null? PAIR-A))
+			(define null-b (null? PAIR-B))
+
+			; The target into which to accumulate counts. This is
+			; an entry in the same column that PAIR-A and PAIR-B
+			; are in. (TODO maybe we could check that both PAIR-A
+			; and PAIR-B really are in the same column. They should be.)
+			(define col (if null-a
+					(LLOBJ 'right-element PAIR-B)
+					(LLOBJ 'right-element PAIR-A)))
+
+			; The place where the merge counts should be written
+			(define mrg (LLOBJ 'make-pair CLS col))
+
+			(define (do-acc CNT W PR WEI)
+				(reshape-merge LLOBJ CLS mrg W PR WEI NOISE))
+
+			; Now perform the merge. Overlapping entries are
+			; completely merged (frac=1.0). Non-overlapping ones
+			; contribute only FRAC.
+			(monitor-rate #f)
+			(cond
+				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge))
+				(else ; AKA (not (or null-a null-b))
+					(begin
+						(do-acc accum-acnt WA PAIR-A 1.0)
+						(do-acc accum-bcnt WB PAIR-B 1.0)))))
+		perls)
+	(monitor-rate
+		"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+	)
+
+	(set! monitor-rate (make-rate-monitor))
+	(monitor-rate #f)
+
+	; Track the number of observations moved from the two items
+	; into the combined class. This tracks the individual
+	; contributions.
+	(set-count memb-a accum-acnt)
+	(set-count memb-b accum-bcnt)
+
+	; Store the counts on the MemberLinks.
+	(store-atom memb-a)
+	(store-atom memb-b)
+
+	; Cleanup after merging.
+	; The LLOBJ is assumed to be just a stars object, and so the
+	; intent of this clobber is to force it to recompute it's left
+	; and right basis.
+	(LLOBJ 'clobber)
+	(remove-empty-sections LLOBJ WA)
+	(remove-empty-sections LLOBJ WB)
+	(remove-empty-sections LLOBJ CLS)
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
 	; Delete the old class.... Let's make sure it is not in any
 connectors, though.
 	(cog-delete! CLB)
 
 	(monitor-rate
-		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
+		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
 
 ; ---------------------------------------------------------------
