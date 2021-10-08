@@ -573,7 +573,7 @@
      Merge clusters CLA and CLB. These are two rows in LLOBJ,
      the merge is done column-by-column.
 
-  This will perform a "union merge" -- all disjuncts on CLB will
+  This will perform a \"union merge\" -- all disjuncts on CLB will
   be transfered to CLA, and CLB will be removed.
 
   See start-cluster for additional details.
@@ -596,7 +596,7 @@
 				(define mrg (LLOBJ 'make-pair CLA DJ))
 
 				; Now perform the merge.
-				(ACCUM-FUN MRG PAIR-B)
+				(ACCUM-FUN mrg PAIR-B)
 
 				(monitor-rate #f)
 			)
