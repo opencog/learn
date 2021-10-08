@@ -400,9 +400,6 @@
 	(define (do-merge N WA WB)
 		(format #t "Start merge ~D of `~A` and `~A`\n"
 			(+ N NSIM-OFFSET) (cog-name WA) (cog-name WB))
-(if (and (equal? (cog-type WA) 'WordClassNode)
-(equal? (cog-type WB) 'WordClassNode))
-(throw 'not-implemented 'do-stuff "both are word classes"))
 
 		(define e (make-elapsed-secs))
 		(define wclass (mrg 'merge-function WA WB))
@@ -425,6 +422,10 @@
 
 		; Expand the size of the universe
 		(define ranked-words (rank-words LLOBJ))
+(format #t "Skipping:")
+(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+(take ranked-words (diag-start N)))
+(format #t "\n")
 (format #t "Head of sim-pair list:")
 (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
 (take (drop ranked-words (diag-start N)) 12))
