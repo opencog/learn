@@ -362,7 +362,7 @@
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLS col))
 
-			(define (do-acc CNT W PR WEI)
+			(define (do-acc CNT PR WEI)
 				(set! CNT (+ CNT
 					(accumulate-count LLOBJ mrg PR WEI NOISE))))
 
@@ -371,12 +371,12 @@
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt WB PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt WA PAIR-A frac-to-merge))
+				(null-a (do-acc accum-bcnt PAIR-B frac-to-merge))
+				(null-b (do-acc accum-acnt PAIR-A frac-to-merge))
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt WA PAIR-A 1.0)
-						(do-acc accum-bcnt WB PAIR-B 1.0)))))
+						(do-acc accum-acnt PAIR-A 1.0)
+						(do-acc accum-bcnt PAIR-B 1.0)))))
 		perls)
 
 	(monitor-rate
@@ -623,7 +623,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-clusters LLOBJ CLA CLB FRAC-FN NOISE MRG-CON)
+(define-public (merge-clusters LLOBJ CLA CLB NOISE MRG-CON)
 "
   merge-clusters LLOBJ CLA CLB FRAC-FN NOISE MRG-CON --
      Merge clusters CLA and CLB. These are two rows in LLOBJ,
@@ -642,9 +642,6 @@
 	(define accum-cnt 0)
 
 xxxxxxx MemberLiks....
-
-	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN CLA CLB))
 
 	; Use the tuple-math object to provide a pair of rows that
 	; are aligned with one-another.
@@ -677,21 +674,21 @@ xxxxxxx MemberLiks....
 			; The place where the merge counts should be written
 			(define mrg (LLOBJ 'make-pair CLA col))
 
-			(define (do-acc CNT W PR WEI)
+			(define (do-acc CNT PR)
 				(set! CNT (+ CNT
-					(accumulate-count LLOBJ mrg PR WEI NOISE))))
+					(accumulate-count LLOBJ mrg PR 1.0 NOISE))))
 
 			; Now perform the merge. Overlapping entries are
 			; completely merged (frac=1.0). Non-overlapping ones
 			; contribute only FRAC.
 			(monitor-rate #f)
 			(cond
-				(null-a (do-acc accum-bcnt CLB PAIR-B frac-to-merge))
-				(null-b (do-acc accum-acnt CLA PAIR-A frac-to-merge))
+				(null-a (do-acc accum-bcnt PAIR-B))
+				(null-b (do-acc accum-acnt PAIR-A))
 				(else ; AKA (not (or null-a null-b))
 					(begin
-						(do-acc accum-acnt CLA PAIR-A 1.0)
-						(do-acc accum-bcnt CLB PAIR-B 1.0))))
+						(do-acc accum-acnt PAIR-A)
+						(do-acc accum-bcnt PAIR-B))))
 		)
 		perls)
 
@@ -880,7 +877,7 @@ xxxxxxx MemberLiks....
 		; Clobber first, since Sections were probably deleted.
 		(case
 			((and wa-is-cls wb-is-cls)
-				(merge-clusters STARS WA WB FRAC-FN NOISE MRG-CON))
+				(merge-clusters STARS WA WB NOISE MRG-CON))
 			((and (not wa-is-cls) (not wb-is-cls))
 				(begin
 					(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
