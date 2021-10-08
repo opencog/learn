@@ -516,6 +516,7 @@
 
 	(define monitor-rate (make-rate-monitor))
 
+; XXX FIXME We don't need this loop. We only need to loop over A!!
 	; A list of pairs of sections to merge.
 	; This is a list of pairs of columns from LLOBJ, where either
 	; one or the other or both rows have non-zero elements in them.
@@ -641,51 +642,22 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	; Use the tuple-math object to provide a pair of rows that
-	; are aligned with one-another.
-	(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-	(define ptu (add-tuple-math LLOBJ bogus))
-
 	(define monitor-rate (make-rate-monitor))
 
-	; A list of pairs of sections to merge.
-	; This is a list of pairs of columns from LLOBJ, where either
-	; one or the other or both rows have non-zero elements in them.
-	(define perls (ptu 'right-stars (list CLA CLB)))
-
 	(for-each
-		(lambda (PRL)
-			(define PAIR-A (first PRL))
-			(define PAIR-B (second PRL))
+		(lambda (PAIR-B)
 
-			(define null-a (null? PAIR-A))
-			(define null-b (null? PAIR-B))
-
-			; The target into which to accumulate counts. This is
-			; an entry in the same column that PAIR-A and PAIR-B
-			; are in. (TODO maybe we could check that both PAIR-A
-			; and PAIR-B really are in the same column. They should be.)
-			(define col (if null-a
-					(LLOBJ 'right-element PAIR-B)
-					(LLOBJ 'right-element PAIR-A)))
+			; The disjunct on PAIR-B
+			(define DJ (LLOBJ 'right-element PAIR-B))
 
 			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLA col))
-
-			(define (do-acc PR)
-				(accumulate-count LLOBJ mrg PR 1.0 NOISE))
+			(define mrg (LLOBJ 'make-pair CLA DJ))
 
 			; Now perform the merge.
 			(monitor-rate #f)
-			(cond
-				(null-a (do-acc PAIR-B))
-				(null-b (do-acc PAIR-A))
-				(else ; AKA (not (or null-a null-b))
-					(begin
-						(do-acc PAIR-A)
-						(do-acc PAIR-B))))
+			(accumulate-count LLOBJ mrg PAIR-B 1.0 NOISE)
 		)
-		perls)
+		(LLOBJ 'right-stars CLB))
 
 	; Copy all counts from MemberLinks on CLB to CLA.
 	; Delete MemberLinks on CLB.
@@ -740,15 +712,13 @@
 					(LLOBJ 'right-element PAIR-A)))
 
 			; The place where the merge counts should be written
-			(define mrg (LLOBJ 'make-pair CLS col))
+			(define mrg (LLOBJ 'make-pair CLA col))
 
 			(define (do-acc W PR)
 				(reshape-merge LLOBJ CLS mrg W PR 1.0 NOISE))
 
 xxxxxxx
-			; Now perform the merge. Overlapping entries are
-			; completely merged (frac=1.0). Non-overlapping ones
-			; contribute only FRAC.
+			; Now perform the merge.
 			(monitor-rate #f)
 			(cond
 				(null-a (do-acc WB PAIR-B))
