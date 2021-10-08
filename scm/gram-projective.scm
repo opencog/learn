@@ -321,8 +321,10 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
+	(define monitor-rate (make-rate-monitor))
+
 	; Perform a loop over all the disjuncts on WA and WB.
-	; Call ACCUM-FUN no these, as they are found.
+	; Call ACCUM-FUN on these, as they are found.
 	(define (loop-over-disjuncts ACCUM-FUN)
 		; Use the tuple-math object to provide a pair of rows that
 		; are aligned with one-another.
@@ -367,8 +369,6 @@
 			; one or the other or both rows have non-zero elements in them.
 			(ptu 'right-stars (list WA WB)))
 	)
-
-	(define monitor-rate (make-rate-monitor))
 
 	; Accumulated counts for the two MemberLinks.
 	(define accum-acnt 0)
@@ -478,17 +478,8 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	; Create the MemberLink. We need this early, for decision-making
-	; during the merge.
-	(define memb-a (MemberLink WA CLS))
-
-	; Accumulated count on the MemberLink.
-	(define accum-cnt 0)
-
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN CLS WA))
-
-	(define monitor-rate (make-rate-monitor))
 
 	; Caution: there's a "feature" bug in projection merging when used
 	; with connector merging. The code below will create sections with
@@ -519,7 +510,13 @@
 					; PAIR-C exists already. Merge 100% of A into it.
 					(ACCUM-FUN PAIR-C PAIR-A 1.0))
 			)
-			(LLOBJ 'right-stars WA)))
+			(LLOBJ 'right-stars WA))
+	)
+
+	(define monitor-rate (make-rate-monitor))
+
+	; Accumulated count on the MemberLink.
+	(define accum-cnt 0)
 
 	; Accumulate counts from PAIR-A onto PAIR-C
 	(define (accum-sections PAIR-C PAIR-A WEI)
@@ -528,6 +525,12 @@
 			(accumulate-count LLOBJ PAIR-C PAIR-A WEI NOISE))))
 
 	(loop-over-disjuncts accum-sections)
+
+	; Create MemberLinks. Do this before the connector-merge step,
+	; as they are examined during that phase.
+	(define memb-a (MemberLink WA CLS))
+	(set-count memb-a accum-cnt)
+
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
@@ -549,7 +552,6 @@
 
 	; Track the number of observations moved from WA to the class.
 	; Store the updated count.
-	(set-count memb-a accum-cnt)
 	(store-atom memb-a)
 
 	; Cleanup after merging.
