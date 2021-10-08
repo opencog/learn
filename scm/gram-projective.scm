@@ -516,12 +516,6 @@
 
 	(define monitor-rate (make-rate-monitor))
 
-; XXX FIXME We don't need this loop. We only need to loop over A!!
-	; A list of pairs of sections to merge.
-	; This is a list of pairs of columns from LLOBJ, where either
-	; one or the other or both rows have non-zero elements in them.
-	(define perls (ptu 'right-stars (list CLS WA)))
-
 	; Caution: there's a "feature" bug in projection merging when used
 	; with connector merging. The code below will create sections with
 	; dangling connectors that may be unwanted. Easiest to explain by
@@ -536,32 +530,26 @@
 	; "naturally" linear, by design) so we must clean up during connector
 	; merging.
 	(for-each
-		(lambda (PRL)
-			(define PAIR-C (first PRL))
-			(define PAIR-A (second PRL))
+		(lambda (PAIR-A)
+			(define DJ (LLOBJ 'right-element PAIR-A))
+			(define PAIR-C (LLOBJ 'get-pair CLS DJ))
 
 			(define (do-acc PRC WEI)
 				(monitor-rate #f)
 				(set! accum-cnt (+ accum-cnt
 					(accumulate-count LLOBJ PRC PAIR-A WEI NOISE))))
 
-			; There's nothing to do if A is empty.
-			(when (not (null? PAIR-A))
+			; Two different tasks, depending on whether PAIR-C
+			; exists or not - we merge all, or just some.
+			(if (nil? PAIR-C)
 
-				; Two different tasks, depending on whether PAIR-C
-				; exists or not - we merge all, or just some.
-				(if (null? PAIR-C)
+				; Accumulate just a fraction into the new column.
+				(do-acc (LLOBJ 'make-pair CLS DJ) frac-to-merge)
 
-					; pare-c is the non-null version of PAIR-C
-					; We accumulate a fraction of PAIR-A into it.
-					(let* ((col (LLOBJ 'right-element PAIR-A))
-							(pare-c (LLOBJ 'make-pair CLS col)))
-						(do-acc pare-c frac-to-merge))
-
-					; PAIR-C exists already. Merge 100% of A into it.
-					(do-acc PAIR-C 1.0))
-			))
-		perls)
+				; PAIR-C exists already. Merge 100% of A into it.
+				(do-acc PAIR-C 1.0))
+		)
+		(LLOBJ 'right-stars WA))
 
 	(monitor-rate
 		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
