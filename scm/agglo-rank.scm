@@ -424,6 +424,9 @@
 	(setup-initial-similarities LLOBJ NRANK)
 
 	; ------------------------------
+	(define NOISE 0)
+	(define MIN-CNT 0)
+
 	; The fraction to merge -- zero.
 	(define (none WA WB) 0.0)
 
@@ -435,7 +438,7 @@
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
 	(define mrg (make-merger LLOBJ
-		always none 0 0 store-mmt store-final #t))
+		always none NOISE MIN-CNT store-mmt store-final #t))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -481,6 +484,9 @@
 
 Unfinished prototype
 "
+	(define NOISE 0)
+	(define MIN-CNT 0)
+
 	(setup-initial-similarities LLOBJ NRANK)
 
 	; The ranked MI similarity of two words
@@ -496,6 +502,14 @@ Unfinished prototype
 	; Recompute marginals after merge.
 	(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
 	(define (store-final) (recompute-mmt-final LLOBJ))
+
+	; ------------------------------
+	; Vote for the disjuncts that will be included in the merge group
+	(define (vote-for-disjuncts IN-GRP VOTE-THRESH)
+		(define (foo . args)
+			'stuff)
+		(define tupe (add-tuple-math LLOBJ foo 'right-element))
+	)
 
 	; ------------------------------
 	; Main workhorse function
@@ -523,7 +537,7 @@ Unfinished prototype
 		; We need a new merge object per in-group, because the votes
 		; depend on the in-group.
 		(define mrg (make-merger LLOBJ
-			votes none 0 0 store-mmt store-final #t))
+			votes none NOISE MIN-CNT store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always
 		; a WordClass.
