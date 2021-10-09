@@ -8574,6 +8574,60 @@ Of course, long-term, this MI threshold needs to be auto-discovered.
  I can make them and still be manageable.
 \end_layout
 
+\begin_layout Subsection*
+Duplicate Cluster Names
+\end_layout
+
+\begin_layout Standard
+OK, so, during merge, after 26 previous merges, we hit a merge of (`###LEFT-WALL
+###`, `:`) which is reasonable, except that we'd already merged these two
+ before, at iteration 12.
+ So what is being merged now is presumably the left-overs of that earlier
+ merge.
+ Is this sane? Is this a bug? Some details.
+\end_layout
+
+\begin_layout Standard
+Previous: at round 12, merged`###LEFT-WALL###`, `:` from a start of ranked-MI
+ = 7.7349 MI = 4.1172.
+ 
+\end_layout
+
+\begin_layout Standard
+At round 26, we merg (`]`, `:`) because they have ranked-MI = 6.9107 MI =
+ 8.5029.
+ This apparently splits off enough of the colon that what is left over is
+ now similar to the left-overs from LEFT-WALL.
+ (Although I'm confused? Didn't the overlap merge pre-emptively remove all
+ traces of similarity? So how did this come back?)
+\end_layout
+
+\begin_layout Standard
+So, at round 27, we get ranked-MI = 7.0566 MI = 6.5282 for `###LEFT-WALL###`,
+ `:` and so these dregs get merged again.
+ Surprise!
+\end_layout
+
+\begin_layout Standard
+The confusion: the overlap merge should have clobbered the dot product,
+ and left the dregs completely orthognal to the cluster.
+ Because overlap merge means to sum over all basis elements that are non-zero
+ in common, which are the *only* basis elements contributing to the dot
+ product.
+ So, post-merge, the cosines should be exactly zero.
+ All three of them: the cluster should be orthogonal to each of the contributing
+ words, which are orthogonal to each-other.
+ Further stripping out disjuncts from the colon should not have changed
+ it's orthogonality to either the first cluster, or to the left wall.
+ 
+\end_layout
+
+\begin_layout Standard
+So it seems like we've got a bug somewhere.
+ Is that correct? Is it possible that connector merging brought these two
+ back in parallel? Lets find out...
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
