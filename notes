@@ -5736,6 +5736,52 @@ todo --
 
 * Maybe do member management in add-cluster-gram ??
 
+-----------------
+
+overlap
+cosine
+(define pcos (add-similarity-compute sha))
+(define (get-cosine wa wb) (pcos 'right-cosine wa wb))
+(get-cosine (WordClass "###LEFT-WALL### :") (Word "###LEFT-WALL###")) ; 0.480889
+(get-cosine (WordClass "###LEFT-WALL### :") (Word ":")) ; 0.35835
+(get-cosine (Word "###LEFT-WALL###") (Word ":"))  ; 0.33167
+
+(define (get-ovlap wa wb) (pcos 'right-overlap wa wb))
+(get-ovlap (Word "###LEFT-WALL###") (Word ":")) ; 8.74631e-4
+
+Wow. So overlap is tiny! but cosine is huge! That means almost all
+disjuncts have a small count (so as to keep the cosine denominator 
+a small as possible)
+
+(define ecnt 0)
+(define bcnt 0)
+
+(define (prt DJA DJB) (format #t "duude ~A" DJ) 0)
+(define opr (add-support-compute (add-tuple-math sha prt 'right-element)))
+
+(define (dct x y) 
+(if (or (< 0 x) (< 0 y)) (set! ecnt (+ 1 ecnt)))
+(if (and (< 0 x) (< 0 y)) (set! bcnt (+ 1 bcnt))) 0)
+(define dpr (add-support-compute (add-tuple-math sha dct 'get-count)))
+
+(dpr 'right-count (list (Word "###LEFT-WALL###") (Word ":")))
+
+(define (add-id OBJ)
+	(lambda (message . args)
+		(case message
+			((ident) args)
+			(else (apply OBJ (cons message args))))))
+
+
+(define (dum SXA SXB) 
+(define x (if (equal? 0 SXA) 0 (get-count (car SXA))))
+(define y (if (equal? 0 SXB) 0 (get-count (car SXB))))
+(if (or (< 0 x) (< 0 y)) (set! ecnt (+ 1 ecnt)))
+(when (and (< 0 x) (< 0 y)) (set! bcnt (+ 1 bcnt))
+(format #t "duude ~A" SXA)
+)
+0)
+(define ppr (add-support-compute (add-tuple-math (add-id sha) dum 'ident)))
 
 
 ====================================================

@@ -132,8 +132,18 @@
 			(else (let
 					((cluname (string-concatenate
 						(list (cog-name A-ATOM) " " (cog-name B-ATOM)))))
-				(if (not (nil? (cog-node 'WordClassNode cluname)))
-					(throw 'bad-merge 'make-cluster "Cluster already exists!"))
+
+				; If `cluname` already exists, then append "(dup)" to the
+				; end of it, and try again. Keep repeating. In the real
+				; world, this should never happen more than once, maybe
+				; twice, unimaginable three times. So that iota is safe.
+				(every
+					(lambda (N)
+						(if (nil? (cog-node 'WordClassNode cluname)) #f
+							(begin
+								(set! cluname (string-append cluname " (dup)"))
+								#t)))
+					(iota 10000))
 				(WordClassNode cluname)))))
 
 	;-------------------------------------------
