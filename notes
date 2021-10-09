@@ -5524,7 +5524,8 @@ We need unit tests.
 [there, ({sc}, $- & be+)]
 [There, ({sc}, $- & be+)]
 
- (CrossSection (ctv 1 0 67)
+(define th-sc-vbe
+ (CrossSection ; (ctv 1 0 67)
   (WordNode "There")
   (ShapeLink
     (WordClassNode "should could")
@@ -5534,8 +5535,10 @@ We need unit tests.
     (Connector
       (WordNode "be")
       (ConnectorDir "+"))))
+)
 
-((CrossSection (ctv 1 0 67)
+(define be-sc-thv
+(CrossSection ; (ctv 1 0 67)
   (WordNode "be")
   (ShapeLink
     (WordClassNode "should could")
@@ -5545,9 +5548,111 @@ We need unit tests.
     (Connector
       (VariableNode "$connector-word")
       (ConnectorDir "+"))))
+)
 
 add-cluster-gram
 gram-class-api.scm
+
+
+
+(define maybes-sc-thv                                                           (cog-link 'Shape
+(WordClassNode "should could")                                                      (Connector
+      (WordNode "There")                                                              (ConnectorDir "-"))
+    (Connector                                                                        (VariableNode "$connector-word")
+      (ConnectorDir "+"))))                                                     (define be-sc-thv #f)
+(if maybes-sc-thv (set! be-sc-thv (cog-link 'CrossSection
+(WordNode "be") maybes-sc-thv)))
+
+(format #t "duuude excess ~A and ~A\n" maybes-sc-thv be-sc-thv)
+
+OK, so these are there prior to the merge!
+
+(define maythere
+(cog-link 'Section
+(WordClassNode "should could")
+(ConnectorSeq
+(Connector (WordNode "There") (ConnectorDir "-"))
+(Connector (WordNode "be") (ConnectorDir "+")))))
+
+(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 NOISE)
+
+(define badcnt 0)
+(define goodcnt 0)
+(define (check-x xsec)
+	(define sect (sha 'get-section xsec))
+	(if (nil? sect)
+(begin
+		 (format #t "oh no! bad cross=~A\n" xsec)
+		(set! badcnt (+ 1 badcnt))
+)
+		(set! goodcnt (+ 1 goodcnt))
+	)
+)
+
+(for-each
+	(lambda (CLS)
+		(for-each
+			(lambda (SHP)
+				(for-each check-x (cog-incoming-by-type SHP 'CrossSection))
+			)
+			(cog-incoming-by-type CLS 'ShapeLink))
+	)
+	(cog-get-atoms 'WordClass))
+
+6152 bad ones
+
+(define cls (car (cog-get-atoms 'WordClass)))
+(define ship (list-ref (cog-incoming-by-type cls 'ShapeLink) 2))
+(define xes (cog-incoming-by-type ship 'CrossSection))
+
+ (for-each
+         (lambda (SHP)
+            (for-each check-x (cog-incoming-by-type SHP 'CrossSection))
+         )
+         (cog-incoming-by-type cls 'ShapeLink))
+
+; Sanity check
+(define (check-crosses LLOBJ WHERE)
+   (for-each
+      (lambda (XSECT)
+         (define sect (LLOBJ 'get-section XSECT))
+         (when (nil? sect)
+            (format #t "Fail with an F on ~A\n" XSECT)
+            (throw 'bad-cleanup WHERE "CrossSections without Sections")))
+      (cog-get-atoms 'CrossSection)))
+
+
+(`—`, `+`) -- no problem
+(`;`, `,`) -- no problem...
+(`is`, `was`) .. no problem ... wtf ...
+(`and`, `but`) .. no problem ...
+
+(for-each
+	(lambda (n)
+		(pair-wise-cluster sha 100 1)
+		(check-crosses sha 'foo))
+	(iota 500))
+
+
+(define (none WA WB) 0.0)
+(define (always WA WB) #t)
+(define (store-mmt WRD)  #f)
+(define (store-final) #f)
+(define mrg (make-merger sha always none 0 0 store-mmt store-final #t))
+
+(mrg 'merge-function (Word "and") (Word "but"))
+(check-crosses sha 'foo)  ;;;; passes good
+(mrg 'merge-function (WordClass "and but") (Word "is"))
+(check-crosses sha 'foo)  ;; passes good
+(mrg 'merge-function (WordClass "and but") (Word "was"))
+(check-crosses sha 'foo)   ;; still good .. wtf
+(mrg 'merge-function (Word "It") (Word "He"))
+(check-crosses sha 'foo) ;; still good ...
+(mrg 'merge-function (WordClass "and but") (WordClass "It He"))
+(check-crosses sha 'foo) ;; still good.
+
+Bug is not reproducible...
+
 
 
 fixed bugs:
