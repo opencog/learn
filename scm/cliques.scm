@@ -41,6 +41,11 @@
   a floating point number, but in fact it can be anything that is
   comparable with greater-than.
 
+  At this time, all experimental results (and thus, recommended
+  parameter values) have been done ONLY with ranked-MI. The code
+  should still work for other SIMFUN's, but these have not been
+  characterized.
+
   EPSILON is a lower bound on the in-group similarities. Most members
   of the in-group must have similarities that are within EPSILON of the
   initial pair.  Pairs that are within EPSILON are termed `similar
@@ -50,7 +55,9 @@
   the in-group pairs that must be similar enough to one-another. A
   TIGHTNESS of 0.5 means that a majority of the pair-relations must
   be `similar enough`, while a TIGHTNESS of 1.0 means that all of
-  them will be. Recommended value of 0.7.
+  them will be. Recommended value of 0.7. Experiments reveal that
+  results are relatively insensitive to this value, ranging over 0.3
+  to 1.0.
 
   CANDIDATES is a list of individuals to consider adding to the group.
 
@@ -106,9 +113,9 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (optimal-in-group SIMFUN WA WB TIGHTNESS CANDIDATES)
+(define-public (optimal-in-group SIMFUN WA WB CANDIDATES)
 "
-  optimal-in-group SIMFUN WA WB TIGHTNESS CANDIDATES
+  optimal-in-group SIMFUN WA WB CANDIDATES
   Return an ingroup of closely related words.
 
   Search for the largest in-group possible that is still exclusive.
@@ -126,14 +133,16 @@
   a floating point number, but in fact it can be anything that is
   comparable with greater-than.
 
-  TIGHTNESS is a number between 0 and 1, specifying the fraction of
-  the in-group pairs that must be similar enough to one-another. A
-  TIGHTNESS of 0.5 means that a majority of the pair-relations must
-  be `similar enough`, while a TIGHTNESS of 1.0 means that all of
-  them will be. Recommended value of 0.7.
+  This function has been experimentally tested only for SIMFUN being
+  ranked-MI!
 
   CANDIDATES is a list of individuals to consider adding to the group.
 "
+	; Hard-coded paramter -- tightness. Experiments show that the results
+	; are insensitive of this, with values ranging from 0.3 to 1.0 giving
+	; identical results in many cases.
+	(define tightness 0.7)
+
 	; Hard-coded parameter -- size of steps that will be taken in epsilon.
 	(define epsi-step 0.1)
 
@@ -163,7 +172,7 @@
 	(take-while
 		(lambda (N)
 			(set! epsilon (* N epsi-step))
-			(define ing (find-in-group SIMFUN WA WB epsilon TIGHTNESS CANDIDATES))
+			(define ing (find-in-group SIMFUN WA WB epsilon tightness CANDIDATES))
 			(define ingsz (length ing))
 			(define prevsz (car window))
 			(set! window (append (drop window 1) (list ingsz)))
@@ -176,7 +185,7 @@
 	; step, and return that. (Maybe we should back off two steps, to be
 	; conservative?)
 
-	(find-in-group SIMFUN WA WB (- epsilon epsi-step) TIGHTNESS CANDIDATES)
+	(find-in-group SIMFUN WA WB (- epsilon epsi-step) tightness CANDIDATES)
 )
 
 ; ---------------------------------------------------------------
