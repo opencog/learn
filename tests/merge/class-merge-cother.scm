@@ -51,36 +51,36 @@
 (define gsc (add-covering-sections pca))
 
 ; Verify that the data loaded correctly
-; We expect 3 sections on "e j" and 3 on "r s"
-(test-equal 3 (length (gsc 'right-stars (WordClass "e j"))))
-(test-equal 3 (length (gsc 'right-stars (WordClass "r s"))))
+; We expect 2 sections on "e j" and 3 on "r s"
+(test-equal 2 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 2 (length (gsc 'right-stars (WordClass "r s"))))
 
 ; Get the total count on all Sections
 (define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
-#! =====
 ; Create CrossSections and verify that they got created
-; We expect 3 x (3+3) = 18 of them.
+; We expect 3 x 7 = 21 of them.
 (gsc 'explode-sections)
-(test-equal 18 (length (cog-get-atoms 'CrossSection)))
+(test-equal 21 (length (cog-get-atoms 'CrossSection)))
 
 ; Verify that direct-sum object is accessing shapes correctly
 ; i.e. the 'explode should have created some CrossSections
-(test-equal 1 (length (gsc 'right-stars (Word "g"))))
-(test-equal 1 (length (gsc 'right-stars (Word "h"))))
+(test-equal 1 (length (gsc 'right-stars (Word "f"))))
+(test-equal 3 (length (gsc 'right-stars (Word "g"))))
 
-; Expect one CrossSection each on ej and rs.
-(test-equal 4 (length (gsc 'right-stars (WordClass "e j"))))
+; Expect one CrossSection on ej two and rs.
+(test-equal 3 (length (gsc 'right-stars (WordClass "e j"))))
 (test-equal 4 (length (gsc 'right-stars (WordClass "r s"))))
 
-(test-equal 3 (len-type (WordClass "e j") 'Section))
+(test-equal 2 (len-type (WordClass "e j") 'Section))
 (test-equal 1 (len-type (WordClass "e j") 'CrossSection))
-(test-equal 3 (len-type (WordClass "r s") 'Section))
-(test-equal 1 (len-type (WordClass "r s") 'CrossSection))
+(test-equal 2 (len-type (WordClass "r s") 'Section))
+(test-equal 2 (len-type (WordClass "r s") 'CrossSection))
 
-; We expect a total of 3+3=6 Sections
-(test-equal 6 (length (cog-get-atoms 'Section)))
+; We expect a total of 2+2=4 Sections and 2+1 CrossSections
+(test-equal 7 (length (cog-get-atoms 'Section)))
 
+#! =====
 ; --------------------------
 ; Merge two sections together.
 (define disc (make-fuzz gsc 0 0 4 0))
@@ -128,7 +128,6 @@
 (test-approximate cnt-rs-abej (cog-count xes-ej-ej-abv) epsilon)
 (test-approximate cnt-ej-klrs (cog-count xes-ej-ej-klv) epsilon)
 
-=== !#
 
 ; -----------------------
 ; Verify detailed balance
@@ -138,6 +137,7 @@
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
+=== !#
 
 (test-end t-class-cother)
 
