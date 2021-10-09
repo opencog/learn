@@ -80,19 +80,18 @@
 ; We expect a total of 2+2=4 Sections and 2+1 CrossSections
 (test-equal 7 (length (cog-get-atoms 'Section)))
 
-#! =====
 ; --------------------------
 ; Merge two sections together.
 (define disc (make-fuzz gsc 0 0 4 0))
 (disc 'merge-function (WordClass "e j") (WordClass "r s"))
 
-; We expect five sections "ej", and zero on rs.
-(test-equal 5 (len-type (WordClass "e j") 'Section))
+; We expect three sections "ej", and zero on rs.
+(test-equal 3 (len-type (WordClass "e j") 'Section))
 (test-equal 2 (len-type (WordClass "e j") 'CrossSection))
 (test-equal 0 (len-type (WordClass "r s") 'Section))
-(test-equal 7 (length (gsc 'right-stars (WordClass "e j"))))
+(test-equal 5 (length (gsc 'right-stars (WordClass "e j"))))
 
-; Of the 6=3+3 original Sections, 3 are deleted, and 2 are created,
+; Of the 7 original Sections, 4 are deleted, and 2 are created,
 ; leaving a grand total of 5.
 (test-equal 5 (length (cog-get-atoms 'Section)))
 (test-equal 13 (length (cog-get-atoms 'CrossSection)))
@@ -105,7 +104,7 @@
 
 ; We expect abc, dgh and klm sections to behave exactly as they do for
 ; the basic test case, and so cut-n-paste that unit test code.
-(expected-fg-sections)
+(expected-ej-sections)
 
 (test-approximate (+ cnt-ej-abc cnt-rs-abc) (cog-count sec-ej-abc) epsilon)
 (test-approximate cnt-rs-dgh (cog-count sec-ej-dgh) epsilon)
@@ -121,13 +120,12 @@
 (test-equal 13 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
-(expected-ej-extra-sections)
-(test-approximate cnt-rs-abej (cog-count sec-ej-abej) epsilon)
-(test-approximate cnt-ej-klrs (cog-count sec-ej-klej) epsilon)
+(expected-fg-extra-sections)
+(test-approximate cnt-f-klrs (cog-count sec-f-klej) epsilon)
+(test-approximate (+ cnt-g-klrs cnt-g-klej) (cog-count sec-g-klej) epsilon)
 
-(test-approximate cnt-rs-abej (cog-count xes-ej-ej-abv) epsilon)
-(test-approximate cnt-ej-klrs (cog-count xes-ej-ej-klv) epsilon)
-
+(test-approximate cnt-f-klrs (cog-count xes-ej-f-klv) epsilon)
+(test-approximate (+ cnt-g-klrs cnt-g-klej) (cog-count xes-ej-g-klv) epsilon)
 
 ; -----------------------
 ; Verify detailed balance
@@ -137,7 +135,6 @@
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 	epsilon)
-=== !#
 
 (test-end t-class-cother)
 

@@ -217,15 +217,15 @@
 	(Section
 		(Word "f")
 		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (WordClass "e j") (ConnectorDir "+")))))
 	(set! sec-g-klej
 	(Section
 		(Word "g")
 		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (WordClass "e j") (ConnectorDir "+")))))
 	(set! xes-ej-f-klv
 	(CrossSection
