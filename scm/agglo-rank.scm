@@ -429,15 +429,16 @@
 
 		; Expand the size of the universe
 		(define ranked-words (rank-words LLOBJ))
-(format #t "Skipping:")
-(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-(take ranked-words (diag-start N)))
-(format #t "\n")
-(format #t "Head of sim-pair list:")
-(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-(take (drop ranked-words (diag-start N)) 12))
-(format #t "\n")
-		(compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
+; (format #t "Skipping:")
+; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+; (take ranked-words (diag-start N)))
+; (format #t "\n")
+; (format #t "Head of sim-pair list:")
+; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+; (take (drop ranked-words (diag-start N)) 12))
+; (format #t "\n")
+		; (compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
+		(compute-diag-mi-sims LLOBJ ranked-words 0 (diag-end N))
 		(format #t "------ Extended the universe in ~A secs\n" (e))
 	)
 
@@ -452,6 +453,16 @@
 			(do-merge N (gar top-pair) (gdr top-pair))
 		)
 		(iota LOOP-CNT))
+)
+
+; ---------------------------------------------------------------
+
+(define-public (in-group-cluster LLOBJ NRANK LOOP-CNT)
+"
+  in-group-cluster LLOBJ NRANK LOOP-CNT - perform clustering.
+
+Unfinished prototype
+"
 )
 
 ; ---------------------------------------------------------------
