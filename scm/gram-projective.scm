@@ -668,14 +668,15 @@
 	(LLOBJ 'clobber)
 
 	; Delete the old class... But first, let's make sure it is
-	; really is empty!  It should not appear in any connectors!
-	; It might appear in marginals, and we cannot control that.
+	; really is empty!  It should not appear in any sections or
+	; cross-sections!  It might appear in Connectors that are in
+	; ConnectorSeqs that are in marginals, and we cannot control
+	; that. XXX FIXME These need to be cleaned up!
 	; So check the types we can control.
 	(if (or
 			(not (equal? 0 (cog-incoming-size-by-type CLB 'Section)))
 			(not (equal? 0 (cog-incoming-size-by-type CLB 'CrossSection)))
-			(not (equal? 0 (cog-incoming-size-by-type CLB 'Shape)))
-			(not (equal? 0 (cog-incoming-size-by-type CLB 'Connector))))
+			(not (equal? 0 (cog-incoming-size-by-type CLB 'Shape))))
 		(throw 'non-empy-class 'merge-clusters "we expect it to be empty!"))
 
 	(cog-delete! CLB)

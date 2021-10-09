@@ -5652,6 +5652,43 @@ OK, so these are there prior to the merge!
 (check-crosses sha 'foo) ;; still good.
 
 Bug is not reproducible...
+------------------------
+------ Next in line:
+ranked-MI = 7.2713 MI = 5.8597 (`would must`, `should could`)
+Start merge 23 of `would must` and `should could`
+------ Combine: Merged 1197 sections in 0.000 secs; 1255145472.0 scts/sec
+------ Combine: Revised 1197 shapes in 1.000 secs; 1197.0 scts/sec
+ice-9/boot-9.scm:1669:16: In procedure raise-exception:
+Throw to key `non-empy-class' with args `(merge-clusters "we expect it to be empty!")'.
+In opencog/nlp/learn/agglo-rank.scm:
+   412:16  3 (_ 0)
+In opencog/nlp/learn/gram-projective.scm:
+   879:32  2 (merge (WordClassNode "would must")
+ #)
+   690:16  1 (merge-clusters _ _ _ _ _)
+
+Not in any sections or crosses any more but ...
+
+(cog-incoming-size (Connector (WordClass "should could") (ConnectorDir "-")))
+(cog-incoming-size (Connector (WordClass "should could") (ConnectorDir "-")))
+119 and 132
+
+(define wc (WordClass "should could"))
+(define cm (list-ref (cog-incoming-set wc) 1))
+(define cp (list-ref (cog-incoming-set wc) 2))
+
+(define bcnt 0)
+(for-each
+	(lambda (CSQ)
+		(for-each
+			(lambda (LL)
+				(if (< 0 (cog-count LL)) (set! bcnt (+ 1 bcnt)))
+			)
+			(cog-incoming-set CSQ))
+	)
+	(cog-incoming-set cp))
+
+
 
 
 
@@ -5673,9 +5710,9 @@ oh no do we need TypeChoice!? I think we do... DONE
 * fix trim instructions. DONE
 * backwards order in names for clusters. DONE
   add-cluster-gram 'make-cluster
+* fix run files to call add-gram-class-api DONE not needed
 
 todo --
-* fix run files to call add-gram-class-api
 
 * Maybe do member management in add-cluster-gram ??
 

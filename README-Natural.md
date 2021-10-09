@@ -1320,7 +1320,7 @@ lurking.  The instructions here are provisional and subject to change.
 ```
       (use-modules (opencog) (opencog persist) (opencog persist-rocks))
       (use-modules (opencog nlp) (opencog nlp learn))
-      (use-modules (opencog matrix) (opencog sheaf))
+      (use-modules (opencog matrix))
       (cog-rocks-open "rocks:///home/ubuntu/data/expt-8/gram-1.rdb")
 ```
   and then
