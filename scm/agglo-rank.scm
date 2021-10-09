@@ -307,7 +307,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (main-loop LLOBJ MERGE-FUN LOOP-CNT)
+(define (main-loop LLOBJ MERGE-FUN NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
@@ -470,7 +470,7 @@
 
 	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ do-merge LOOP-CNT)
+	(main-loop LLOBJ do-merge NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------
@@ -521,7 +521,7 @@ Unfinished prototype
 
 	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ do-merge LOOP-CNT)
+	(main-loop LLOBJ do-merge NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------
