@@ -489,6 +489,15 @@ Unfinished prototype
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
+	; ------------------------------
+	; The fraction to merge -- always zero.
+	(define (none WA WB) 0.0)
+
+	; Recompute marginals after merge.
+	(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
+	(define (store-final) (recompute-mmt-final LLOBJ))
+
+	; ------------------------------
 	; Main workhorse function
 	(define (do-merge N WA WB)
 		(define e (make-elapsed-secs))
@@ -507,7 +516,25 @@ Unfinished prototype
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
 
-(define wclass #f)
+		; When to merge -- depends on how the clique voted.
+; xxxxxx not done
+		(define (votes WA WB) #t)
+
+		; We need a new merge object per in-group, because the votes
+		; depend on the in-group.
+		(define mrg (make-merger LLOBJ
+			votes none 0 0 store-mmt store-final #t))
+
+		; Merge the first two manually, so that wclass is always
+		; a WordClass.
+		(define wclass (mrg 'merge-function WA WB))
+
+		; Merge the rest of them. WA an WB are always at the tail
+		; of the in-group list, so drop them.
+		(for-each
+			(lambda (WRD)
+				(set! wclass (mrg 'merge-function wclass WRD)))
+			(drop-rght in-grp 2))
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
