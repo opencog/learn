@@ -332,7 +332,7 @@
 		(lambda (N)
 			(define e (make-elapsed-secs))
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
-			(format #t "------ Round ~A Next in line:\n" N)
+			(format #t "------ Round ~A Next in line:\n" (diag-start N))
 			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 			(define top-pair (car sorted-pairs))

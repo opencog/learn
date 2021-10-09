@@ -131,7 +131,23 @@ A short summary of what is found here:
 \end_layout
 
 \begin_layout Itemize
-Nothing yet...
+write more here ...
+\end_layout
+
+\begin_layout Itemize
+End of expt-7 proposes a technique for creating in-groups or almost-cliques
+ of related words, and then using 
+\begin_inset Quotes eld
+\end_inset
+
+democratic voting
+\begin_inset Quotes erd
+\end_inset
+
+ to determine which disjuncts will be associated with the in-group.
+ This solves an important clustering problem: it generalizes, without generalizi
+ng over-broadly.
+ I think this is a major advance in the theory, here.
 \end_layout
 
 \begin_layout Subsection*
@@ -5415,6 +5431,9 @@ Looks like everything works great.
  during the random-corpus exploration phase.
  It was completed, with no known bugs, but it is just complicated enough
  and squonky enough that perhaps there are issues.
+ There is a test-suite of 13 unit tests.
+ These pass.
+ Soo I guess its pretty tight?
 \end_layout
 
 \begin_layout Standard
@@ -5434,7 +5453,7 @@ democratic voting
  The earlier fuzzy-mixin performed generalization, but it was fairly non-selecti
 ve, and some naive MI calculations seemed to indicate that it always made
  things worse.
- In particular, it made word-sense disambigutation ugly.
+ In particular, it made word-sense disambiguation ugly.
  So this new democratic algo appears to be a major conceptual improvement.
 \end_layout
 
