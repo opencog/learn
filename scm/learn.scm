@@ -21,6 +21,7 @@
 (include-from-path "opencog/nlp/learn/shape-project.scm")
 (include-from-path "opencog/nlp/learn/gram-projective.scm")
 (include-from-path "opencog/nlp/learn/gram-optim.scm")
+(include-from-path "opencog/nlp/learn/cliques.scm")
 (include-from-path "opencog/nlp/learn/agglo-loops.scm")
 (include-from-path "opencog/nlp/learn/agglo-rank.scm")
 (include-from-path "opencog/nlp/learn/gram-class-api.scm")

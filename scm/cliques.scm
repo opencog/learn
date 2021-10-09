@@ -17,13 +17,48 @@
 
 (use-modules (srfi srfi-1))
 
-(define (find-in-group SIMFUN WA WB EPSILON TIGHTNESS CANDIDATES)
+(define-public (find-in-group SIMFUN WA WB EPSILON TIGHTNESS CANDIDATES)
 "
+  find-in-group SIMFUN WA WB EPSILON TIGHTNESS CANDIDATES
+  Return an ingroup of closely related words.
+
+  Given two words WA and WB with a high similarity score, find a clique
+  an almost-clique (the in-group), such that all similarity scores in
+  that in-group are no less than EPSILON below the similarity score of
+  the initial pair.  A clique is formed if *all* pair-scores meet this
+  requirement. An in-group is formed, if more than TIGHTNESS fraction
+  of the scores to other members in the in-group are above the epsilon
+  threshold. (A TIGHTNESS of 0.5 means the majority of the in-group
+  meets the requirement; a TIGHTNESS of 1.0 means the in-group is a
+  clique.)
+
+  Arguments:
+  WA and WB seed the initial in-group.
+
   SIMFUN is an function that, given two items, returns a similarity
   score for those items.  Similarities are assumed to be symmetric,
   that is, (SIMFUN a b) == (SIMFUN b a). Usually, the similarity is
   a floating point number, but in fact it can be anything that is
   comparable with greater-than.
+
+  EPSILON is a lower bound on the in-group similarities. Most members
+  of the in-group must have similarities that are within EPSILON of the
+  initial pair.  Pairs that are within EPSILON are termed `similar
+  enough`.  Recommended value of 0.5 to 3.
+
+  TIGHTNESS is a number between 0 and 1, specifying the fraction of
+  the in-group pairs that must be similar enough to one-another. A
+  TIGHTNESS of 0.5 means that a majority of the pair-relations must
+  be `similar enough`, while a TIGHTNESS of 1.0 means that all of
+  them will be. Recommended value of 0.7.
+
+  CANDIDATES is a list of individuals to consider adding to the group.
+
+  Experiments show that the size of the group at first grows slowly as
+  a function of increasing EPSILON, followed by a very rapid increase
+  after some threshold is passed. Obviously, EPSILON should be set
+  below that threshold. Unfortunately, this threshold depends strongly
+  on the intial pair, even when worknig within the same dataset.
 "
 	; Given the current ingroup INGRP and the CANDIDATE, return #t
 	; if the candidate has a similarity score above MINSCORE to at
@@ -128,34 +163,18 @@
 	(filter (lambda (SIM) (not (equal? (gar SIM) (gdr SIM)))) all-sim-pairs))
 (length uniq-sims)
 
-; The precomputed scores are word-pair MI's. But what we really want
-; are the common-MI's. We'll have to compute that. I guess we could
-; have cached that ... but didn't.
-
-(define (mi-sim WA WB)
-	(define fmi (sap 'pair-count WA WB))
-	(if fmi (cog-value-ref fmi 0) -1e20))
-
-(define ol2 (/ 1.0 (log 2.0)))
-(define (log2 x)
-	(if (< 0 x) (* (log x) ol2) (- (inf))))
-
-(define trp (add-transpose-api sha))
-(define tot-mmt (trp 'total-mmt-count))
-(define ltot-mmt (log2 tot-mmt))
-(define (marg-mmt WRD)
-	(- (log2 (trp 'mmt-count WRD)) ltot-mmt))
-
-(define (common-MI WA WB)
-	(+ (mi-sim WA WB) (* 0.5 (+ (marg-mmt WA) (marg-mmt WB) ltot-mmt))))
+; Use the "ranked-MI" for ranking
+(define (ranked-mi-sim WA WB)
+	(define miv (sap 'pair-count WA WB))
+	(if miv (cog-value-ref miv 1) -inf.0))
 
 ;; Discard all similarity pairs with low common-MI.
 (define e (make-elapsed-secs))
 (define hi-comi-sims
-	(filter (lambda (SIM) (< 12.0 (common-MI (gar SIM) (gdr SIM))))
+	(filter (lambda (SIM) (< 6.0 (ranked-MI (gar SIM) (gdr SIM))))
 		 uniq-sims))
 (e) ;; 32 seconds
-(length hi-comi-sims)  ;; 1499 pairs
+(length hi-comi-sims)  ;; 1499 pairs in earlier versions
 
 ;; Create a sorted list of ranked pairs.
 ;; We want to find the top-ranked word-pairs
@@ -168,7 +187,7 @@
 ;; Now sort all of the available pairs. (Sorting all of them takes
 ;; 15 minutes. So sort only the high common-MI pairs.)
 (define sorted-pairs
-	(rank-pairs (lambda (SIM) (common-MI (gar SIM) (gdr SIM)))))
+	(rank-pairs (lambda (SIM) (ranked-mi-sim (gar SIM) (gdr SIM)))))
 
 ;; What are the top-ranked pairs?
 (take sorted-pairs 10)
@@ -186,7 +205,7 @@
 (prt-sorted-pairs 0)
 
 ; Go for it
-(define in-group (find-in-group common-MI (Word "is") (Word "was")
+(define in-group (find-in-group ranked-mi-sim (Word "is") (Word "was")
 	0.5  0.7 (take words-with-sims 10)))
 
 ; Given a word, what is it's ranking?

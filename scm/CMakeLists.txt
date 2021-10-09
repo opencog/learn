@@ -3,6 +3,7 @@ ADD_GUILE_MODULE (FILES
 	agglo-loops.scm
 	agglo-rank.scm
 	batch-word-pair.scm
+	cliques.scm
 	common.scm
 	gram-class-api.scm
 	gram-classification.scm
