@@ -266,6 +266,58 @@
 
 ; ---------------------------------------------------------------
 
+(define (recomp-all-sim LLOBJ WX)
+"
+  Recompute all existing similarities to word WX
+"
+	(define e (make-elapsed-secs))
+	(define compute-sim (make-simmer LLOBJ))
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sms (add-pair-stars sap))
+	(define wrd-list (sms 'left-duals WX))
+	(define existing-list
+		(filter (lambda (WRD) (not (nil? (sap 'get-pair WRD WX))))
+			wrd-list))
+
+	(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
+
+	(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
+		(length existing-list) (cog-name WX) (e))
+)
+
+(define (comp-new-sims LLOBJ WX WLI)
+"
+  Compute brand-new sims for brand new clusters.
+"
+	(define e (make-elapsed-secs))
+	(define compute-sim (make-simmer LLOBJ))
+	(for-each (lambda (WRD) (compute-sim WRD WX)) WLI)
+
+	(format #t "Computed ~3D sims for `~A` in ~A secs\n"
+		(length wli) (cog-name WX) (e))
+)
+
+(define (setup-initial-similarities LLOBJ NRANK)
+"
+  Compute a block matrix of similarities between the top-ranked words.
+"
+	(define e (make-elapsed-secs))
+
+	; Start by getting the ranked words.  Note that this may include
+	; WordClass nodes as well as words.
+	(define ranked-words (rank-words LLOBJ))
+	(format #t "Done ranking words in ~A secs\n" (e))
+
+	; Load similarity-pairs; pointless to recompute if we have them!
+	((add-similarity-api LLOBJ #f SIM-ID) 'fetch-pairs)
+
+	; Create similarities for the initial set.
+	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
+	(format #t "Done computing MI similarity in ~A secs\n" (e))
+)
+
+; ---------------------------------------------------------------
+
 (define-public (pair-wise-cluster LLOBJ NRANK LOOP-CNT)
 "
   pair-wise-cluster LLOBJ NRANK LOOP-CNT - perform clustering.
@@ -328,20 +380,6 @@
       (pair-wise-cluster sha 200 500)
   ```
 "
-	(define e (make-elapsed-secs))
-
-	; Start by getting the ranked words.  Note that this may include
-	; WordClass nodes as well as words.
-	(define ranked-words (rank-words LLOBJ))
-	(format #t "Done ranking words in ~A secs\n" (e))
-
-	; Load similarity-pairs; pointless to recompute if we have them!
-	((add-similarity-api LLOBJ #f SIM-ID) 'fetch-pairs)
-
-	; Create similarities for the initial set.
-	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
-	(format #t "Done computing MI similarity in ~A secs\n" (e))
-
 	; Get rid of all MI-similarity scores below this cutoff.
 	(define MI-CUTOFF 4.0)
 
@@ -351,6 +389,8 @@
 	; Range of similarities to compute.
 	(define (diag-start N) (+ N NSIM-OFFSET))
 	(define (diag-end N) (+ NRANK (* 3 N) NSIM-OFFSET))
+
+	(setup-initial-similarities LLOBJ (diag-end 0))
 
 	; ------------------------------
 	; The fraction to merge -- zero.
@@ -365,33 +405,6 @@
 
 	(define mrg (make-merger LLOBJ
 		always none 0 0 store-mmt store-final #t))
-
-	; ------------------------------
-	; Recompute all existing similarities to word WX
-	(define (recomp-all-sim WX)
-		(define e (make-elapsed-secs))
-		(define compute-sim (make-simmer LLOBJ))
-		(define sap (add-similarity-api LLOBJ #f SIM-ID))
-		(define sms (add-pair-stars sap))
-		(define wrd-list (sms 'left-duals WX))
-		(define existing-list
-			(filter (lambda (WRD) (not (nil? (sap 'get-pair WRD WX))))
-				wrd-list))
-
-		(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
-
-		(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
-			(length existing-list) (cog-name WX) (e)))
-
-	; Compute brand-new sims for brand new clusters.
-	(define (comp-new-sims WX)
-		(define e (make-elapsed-secs))
-		(define compute-sim (make-simmer LLOBJ))
-		(define wli (take ranked-words NRANK))
-		(for-each (lambda (WRD) (compute-sim WRD WX)) wli)
-
-		(format #t "Computed ~3D sims for `~A` in ~A secs\n"
-			(length wli) (cog-name WX) (e)))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -416,10 +429,13 @@
 
 		; After merging, recompute similarities for the words
 		; that were touched.
-		(recomp-all-sim WA)
-		(recomp-all-sim WB)
-		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
-			(comp-new-sims wclass))
+		(recomp-all-sim LLOBJ WA)
+		(recomp-all-sim LLOBJ WB)
+
+		(define ranked-words (rank-words LLOBJ))
+		(define top-ranked (take ranked-words (diag-end N)))
+		(when (and (not (equal? wclass WA)) (not (equal? wclass WB)))
+			(comp-new-sims LLOBJ wclass top-ranked))
 
 		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
 			(format #t "------ Computed MI for `~A` `~A` and `~A` in ~A secs\n"
@@ -428,7 +444,6 @@
 				(cog-name WA) (cog-name WB) (e)))
 
 		; Expand the size of the universe
-		(define ranked-words (rank-words LLOBJ))
 ; (format #t "Skipping:")
 ; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
 ; (take ranked-words (diag-start N)))
@@ -463,6 +478,15 @@
 
 Unfinished prototype
 "
+	; Offset on number of simularities to compute
+	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
+
+	; Range of similarities to compute.
+	(define (diag-start N) (+ N NSIM-OFFSET))
+	(define (diag-end N) (+ NRANK (* 3 N) NSIM-OFFSET))
+
+	(setup-initial-similarities LLOBJ (diag-end 0))
+
 )
 
 ; ---------------------------------------------------------------
