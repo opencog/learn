@@ -5711,6 +5711,7 @@ oh no do we need TypeChoice!? I think we do... DONE
 * backwards order in names for clusters. DONE
   add-cluster-gram 'make-cluster
 * fix run files to call add-gram-class-api DONE not needed
+* Need to update instructions. DONE
 
 todo --
 
@@ -5718,7 +5719,6 @@ todo --
 
 * duplicate cluster names how will that work ??
 
-* Need to update instructions.
 
 ====================================================
 link-class.scm ???
@@ -5762,6 +5762,10 @@ TODO/BUGS:
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
 * Set up direct-sum/shape clustering run scripts. (partly done)
+* Cleanup marginals after clustering ... marginals might have zero
+  counts for words, or words might not be in the basis?
+  which means the connector seqs need to be cleaned up too.
+  (as they are now unused/empty)
 * print-matrix-summary-report after MM^T shows nothing. Why?
   because 'mmt-marginals computes only word-pair entropies.
 * Fix count transfer in add-singleton-classes

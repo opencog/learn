@@ -4,36 +4,22 @@
 ; Run everything needed to get ready to start the language-learning
 ; grammatical class clustering pipeline. Starts the CogServer, opens
 ; the database, loads the disjuncts in the database (which can take
-; an hour or more!).
+; minutes, up to an hour ... if it's taking more, your datasets are
+; too big.).
 ;
 (load "cogserver.scm")
 
 ; Load up the disjuncts -- this can take over half an hour!
-; XXX Do we need to actually do this? I think not!?
-(display "Fetch all disjuncts. This may take well over half-an-hour!\n")
+(display "Fetch all disjuncts. This may take 5-10 minutes.\n")
+(display "If this is taking longer, your datasets might be too big!\n")
+(display "In this case, review the README about trimming.\n")
 
 ; The object which will be providing disjunct-counts for us.
 (define cset-obj (make-pseudo-cset-api))
-
-#! -------------
-; This is the non-cross-section variant. It's commented out.
-; This is a temporary historical reference for what to do.
-(when (not do-cross-sections)
-	(define gram-obj (add-cluster-gram cset-obj))
-	(define star-obj (add-pair-stars gram-obj))
-	(cset-obj 'fetch-pairs)
-)
--------- !#
-
-; Add cross-sections to all sections.  This improves the accuracy
-; of the clustering, although it does run 3x or 4x slower, and uses
-; 3x or 5x more RAM.  This should be configurable for easy
-; experimentation.
 (define covr-obj (add-covering-sections cset-obj))
-(define gram-obj (add-cluster-gram covr-obj))
 (covr-obj 'fetch-pairs)
 (covr-obj 'explode-sections)
-(define star-obj gram-obj)
+(define star-obj covr-obj)
 
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.
