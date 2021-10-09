@@ -285,19 +285,6 @@
 		(length existing-list) (cog-name WX) (e))
 )
 
-(define (comp-new-sims LLOBJ WX WLI)
-"
-  Compute brand-new similarities for WX. Typically, this will be
-  a brand new cluster, and we want the sims for it.
-"
-	(define e (make-elapsed-secs))
-	(define compute-sim (make-simmer LLOBJ))
-	(for-each (lambda (WRD) (compute-sim WRD WX)) WLI)
-
-	(format #t "Computed ~3D sims for `~A` in ~A secs\n"
-		(length wli) (cog-name WX) (e))
-)
-
 ; ---------------------------------------------------------------
 (define (setup-initial-similarities LLOBJ NRANK)
 "
@@ -322,7 +309,11 @@
 
 (define (main-loop LLOBJ MERGE-FUN LOOP-CNT)
 "
-	Unleash the fury
+  Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
+  top-ranked word-pair, for LOOP-CNT iterations. After each
+  iteration, the similarities for a few more words are computed,
+  so that, no matte the LOOP-CNT, there is a suitably deep set of
+  word-pair similarities to rank and consider.
 "
 	; Get rid of all MI-similarity scores below this cutoff.
 	(define MI-CUTOFF 4.0)
@@ -492,9 +483,40 @@ Unfinished prototype
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
+	; The ranked MI similarity of two words
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define (ranked-mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 1) -inf.0))
+
+	; Main workhorse function
 	(define (do-merge N WA WB)
-		(format #t "------ Start merge ~D of `~A` and `~A`\n"
+		(define e (make-elapsed-secs))
+		(format #t "------ Start merge ~D with seed pair `~A` and `~A`\n"
 			N (cog-name WA) (cog-name WB))
+
+		(define ranked-words (rank-words LLOBJ))
+		; Approximation to number of words with sims.
+		; This is overkill; NRANK is more than enough!
+		(define n-to-take
+			(min (length ranked-words) (+ NRANK (* 3 N))))
+		(define words-with-sims (take ranked-words n-to-take))
+		(define in-grp
+			(optimal-in-group ranked-mi-sim WA WB words-with-sims))
+		(format #t "In-group size=~A:" (length in-grp))
+		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
+		(format #t "\n")
+
+(define wclass #f)
+
+		(format #t "------ Merged into `~A` in ~A secs\n"
+			(cog-name wclass) (e))
+
+		; After merging, recompute similarities for the words
+		; that were touched.
+		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD)) in-grp)
+
+		(format #t "------ Recomputed MI in ~A secs\n" (e))
 	)
 
 	; --------------------------------------------
