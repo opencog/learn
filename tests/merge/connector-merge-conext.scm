@@ -95,8 +95,7 @@
 ; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
-(define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(merge gsc (Word "e") (Word "j") frac)
 
 ; We expect two section left on "e", the klm section, and
 ; a fraction of the (e, abj) section.

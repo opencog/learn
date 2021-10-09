@@ -38,6 +38,18 @@
 	(length (filter-type wrd atype)))
 
 ; ---------------------------------------------------------------
+
+; Merge words/word-classes WA WB into a cluster.
+(define (merge LLOBJ WA WB FRAC)
+	(define (frac WA WB) FRAC)
+	(define (always WA WB) #t)
+	(define (noop W) #f)
+	(define (final) #f)
+	(define mrg (make-merger LLOBJ always frac 0 0 noop final #t))
+	(mrg 'merge-function WA WB)
+)
+
+; ---------------------------------------------------------------
 ; Detailed balance
 
 (define (check-sections LLOBJ EPSILON)

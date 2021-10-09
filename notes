@@ -5688,6 +5688,23 @@ Not in any sections or crosses any more but ...
 	)
 	(cog-incoming-set cp))
 
+----------------------------------
+
+(define sap (add-similarity-api sha #f "shape-mi"))
+(define (ranked-mi-sim WA WB)
+   (define miv (sap 'pair-count WA WB))
+   (if miv (cog-value-ref miv 1) -inf.0))
+
+(define wli (take ranked-words 200))
+(optimal-in-group ranked-mi-sim (Word "were") (Word "are") 0.7 wli)
+
+on upon
+will may
+had has
+and but
+. ?
+It He
+in of
 
 
 

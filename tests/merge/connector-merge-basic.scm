@@ -92,8 +92,7 @@
 ; --------------------------
 ; Merge two sections together.
 (define frac 0.25)
-(define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(merge gsc (Word "e") (Word "j") frac)
 
 ; We expect just one section remaining on "e", the klm section.
 (test-equal 1 (length (gsc 'right-stars (Word "e"))))

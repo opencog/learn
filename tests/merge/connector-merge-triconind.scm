@@ -110,8 +110,7 @@
 ; --------------------------
 ; Merge the first two sections together.
 (define frac1 0.25)
-(define disc1 (make-fuzz gsc 0 frac1 4 0))
-(disc1 'merge-function (Word "e") (Word "j"))
+(merge gsc (Word "e") (Word "j") frac1)
 
 ; 10 sections as before plus 9 more.
 (test-equal 19 (length (cog-get-atoms 'Section)))
@@ -172,8 +171,7 @@
 ; -------------------------------
 (format #t "Now merging 'f' into 'ej'\n")
 (define frac2 0.35)
-(define disc2 (make-fuzz gsc 0 frac2 4 0))
-(disc2 'merge-function (WordClass "e j") (Word "f"))
+(merge gsc (WordClass "e j") (Word "f") frac2)
 
 ; 2 from before, plus 2 more
 (test-equal 4 (length (filter-type (WordClass "e j") 'CrossSection)))

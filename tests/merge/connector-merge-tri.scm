@@ -97,8 +97,7 @@
 ; Merge three sections together.
 ; Merge the first two sections together.
 (define frac 0.25)
-(define disc (make-fuzz gsc 0 frac 4 0))
-(disc 'merge-function (Word "e") (Word "j"))
+(merge gsc (Word "e") (Word "j") frac)
 
 ; Verify detailed balance
 (define epsilon 1.0e-8)
@@ -108,7 +107,7 @@
 (test-assert (check-crosses gsc epsilon))
 
 ; Merge the third section.
-(disc 'merge-function (WordClass "e j") (Word "f"))
+(merge gsc (WordClass "e j") (Word "f") frac)
 
 ; We expect one section left on "e", the klm section, and two
 ; cross-sections. The two cross-sections should correspond
