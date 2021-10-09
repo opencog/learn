@@ -138,8 +138,11 @@
 	(define epsi-step 0.1)
 
 	; Hard-coded parameter -- the size of the in-group should not jump by
-	; more than this for each epsi-step.
-	(define max-jump 3)
+	; more than this over the moving window.
+	(define max-jump 2.5)
+
+	; Hard-coded parameter -- the window size
+	(define win-size (inexact->exact (round (/ 1.0 epsi-step))))
 
 	; Hard-coded paramter -- the largest espsilon to consider.
 	; The value of 8.5 comes from experiments: the grouping of roman
@@ -150,18 +153,21 @@
 	; larger than this.
 	(define max-size 12)
 
-	; Loop and try to find the knee. A different algo might be to take
-	; a moving average of the size increase, and use that to decide.
+	; Loop and try to find the knee. This uses a moving window to
+	; try to find the knee. (The moving window is independent of the
+	; step size, and so should not suffer if the step is too small or
+	; too large.)
 	(define epsilon #f)
-	(define prevsz 0)
 	(define nsteps (inexact->exact (round (/ max-epsi epsi-step))))
+	(define window (make-list win-size 2))
 	(take-while
 		(lambda (N)
 			(set! epsilon (* N epsi-step))
 			(define ing (find-in-group SIMFUN WA WB epsilon TIGHTNESS CANDIDATES))
 			(define ingsz (length ing))
+			(define prevsz (car window))
+			(set! window (append (drop window 1) (list ingsz)))
 			(define jump (- ingsz prevsz))
-			(set! prevsz ingsz)
 			(and (< jump max-jump) (< ingsz max-size))
 		)
 		(iota nsteps 1))
