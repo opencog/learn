@@ -14,3 +14,4 @@ ADD_GUILE_TEST(ConnectorMergeTriConDbl connector-merge-tricon-dbl.scm)
 
 ADD_GUILE_TEST(ClassMergeBasic         class-merge-basic.scm)
 ADD_GUILE_TEST(ClassMergeCons          class-merge-cons.scm)
+ADD_GUILE_TEST(ClassMergeCother        class-merge-cother.scm)
