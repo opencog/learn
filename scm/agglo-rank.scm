@@ -324,14 +324,44 @@
 "
 	Unleash the fury
 "
+	; Get rid of all MI-similarity scores below this cutoff.
+	(define MI-CUTOFF 4.0)
+
+	; Offset on number of simularities to compute
+	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
+
+	; How many more similarities to compute each step.
+	(define GRO-SIZE 3)
+
+	; Range of similarities to compute.
+	(define (diag-start N) (+ N NSIM-OFFSET))
+	(define (diag-end N) (+ NRANK (* GRO-SIZE N) NSIM-OFFSET))
+
 	(for-each
 		(lambda (N)
+			(define e (make-elapsed-secs))
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 			(format #t "------ Next in line:\n")
 			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 			(define top-pair (car sorted-pairs))
-			(MERGE-FUN N (gar top-pair) (gdr top-pair))
+			(MERGE-FUN (diag-start N) (gar top-pair) (gdr top-pair))
+
+			(format #t "------ Completed merge in ~A secs:\n" (e))
+
+			; Expand the size of the universe
+			(define ranked-words (rank-words LLOBJ))
+; (format #t "Skipping:")
+; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+; (take ranked-words (diag-start N)))
+; (format #t "\n")
+; (format #t "Head of sim-pair list:")
+; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+; (take (drop ranked-words (diag-start N)) 12))
+; (format #t "\n")
+			; (compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
+			(compute-diag-mi-sims LLOBJ ranked-words 0 (diag-end N))
+			(format #t "------ Extended the universe in ~A secs\n" (e))
 		)
 		(iota LOOP-CNT))
 )
@@ -400,20 +430,7 @@
       (pair-wise-cluster sha 200 500)
   ```
 "
-	; Get rid of all MI-similarity scores below this cutoff.
-	(define MI-CUTOFF 4.0)
-
-	; Offset on number of simularities to compute
-	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
-
-	; How many more similarities to compute each step.
-	(define GRO-SIZE 3)
-
-	; Range of similarities to compute.
-	(define (diag-start N) (+ N NSIM-OFFSET))
-	(define (diag-end N) (+ NRANK (* GRO-SIZE N) NSIM-OFFSET))
-
-	(setup-initial-similarities LLOBJ (diag-end 0))
+	(setup-initial-similarities LLOBJ NRANK)
 
 	; ------------------------------
 	; The fraction to merge -- zero.
@@ -433,8 +450,8 @@
 	; The workhorse, the function that does the work.
 
 	(define (do-merge N WA WB)
-		(format #t "Start merge ~D of `~A` and `~A`\n"
-			(+ N NSIM-OFFSET) (cog-name WA) (cog-name WB))
+		(format #t "------ Start merge ~D of `~A` and `~A`\n"
+			N (cog-name WA) (cog-name WB))
 
 		; If we are merging two classes into one, then the
 		; second class will be depopulated. We need to trash
@@ -451,33 +468,13 @@
 			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
 
 		; After merging, recompute similarities for the words
-		; that were touched.
+		; that were touched. We don't need to explicitly handle
+		; the new class, because the grow-universe code will do that.
 		(recomp-all-sim LLOBJ WA)
 		(recomp-all-sim LLOBJ WB)
 
-		(define ranked-words (rank-words LLOBJ))
-		(define top-ranked (take ranked-words (diag-end N)))
-		(when (and (not (equal? wclass WA)) (not (equal? wclass WB)))
-			(comp-new-sims LLOBJ wclass top-ranked))
-
-		(if (and (not (equal? wclass WA)) (not (equal? wclass WB)))
-			(format #t "------ Computed MI for `~A` `~A` and `~A` in ~A secs\n"
-				(cog-name WA) (cog-name WB) (cog-name wclass) (e))
-			(format #t "------ Computed MI for `~A` and `~A` in ~A secs\n"
-				(cog-name WA) (cog-name WB) (e)))
-
-		; Expand the size of the universe
-; (format #t "Skipping:")
-; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-; (take ranked-words (diag-start N)))
-; (format #t "\n")
-; (format #t "Head of sim-pair list:")
-; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-; (take (drop ranked-words (diag-start N)) 12))
-; (format #t "\n")
-		; (compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
-		(compute-diag-mi-sims LLOBJ ranked-words 0 (diag-end N))
-		(format #t "------ Extended the universe in ~A secs\n" (e))
+		(format #t "------ Recomputed MI for `~A` and `~A` in ~A secs\n"
+			(cog-name WA) (cog-name WB) (e))
 	)
 
 	; --------------------------------------------
@@ -493,24 +490,11 @@
 
 Unfinished prototype
 "
-	; Get rid of all MI-similarity scores below this cutoff.
-	(define MI-CUTOFF 4.0)
-
-	; Offset on number of simularities to compute
-	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
-
-	; How many more similarities to compute each step.
-	(define GRO-SIZE 3)
-
-	; Range of similarities to compute.
-	(define (diag-start N) (+ N NSIM-OFFSET))
-	(define (diag-end N) (+ NRANK (* GRO-SIZE N) NSIM-OFFSET))
-
-	(setup-initial-similarities LLOBJ (diag-end 0))
+	(setup-initial-similarities LLOBJ NRANK)
 
 	(define (do-merge N WA WB)
-		(format #t "Start merge ~D of `~A` and `~A`\n"
-			(+ N NSIM-OFFSET) (cog-name WA) (cog-name WB))
+		(format #t "------ Start merge ~D of `~A` and `~A`\n"
+			N (cog-name WA) (cog-name WB))
 	)
 
 	; --------------------------------------------
