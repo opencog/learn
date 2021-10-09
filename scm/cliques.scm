@@ -105,6 +105,40 @@
 )
 
 ; ---------------------------------------------------------------
+
+(define-public (optimal-in-group SIMFUN WA WB TIGHTNESS CANDIDATES)
+"
+  optimal-in-group SIMFUN WA WB TIGHTNESS CANDIDATES
+  Return an ingroup of closely related words.
+
+  Search for the largest in-group possible that is still exclusive.
+  As membership requirements in the in-group are loosened, experiments
+  show that there is a knee in the groups size, in that at first, the
+  sizeof the group grows slowly, and then rapidly. This searches for
+  the largest group below that inflection point.
+
+  Arguments:
+  WA and WB seed the initial in-group.
+
+  SIMFUN is an function that, given two items, returns a similarity
+  score for those items.  Similarities are assumed to be symmetric,
+  that is, (SIMFUN a b) == (SIMFUN b a). Usually, the similarity is
+  a floating point number, but in fact it can be anything that is
+  comparable with greater-than.
+
+  TIGHTNESS is a number between 0 and 1, specifying the fraction of
+  the in-group pairs that must be similar enough to one-another. A
+  TIGHTNESS of 0.5 means that a majority of the pair-relations must
+  be `similar enough`, while a TIGHTNESS of 1.0 means that all of
+  them will be. Recommended value of 0.7.
+
+  CANDIDATES is a list of individuals to consider adding to the group.
+"
+
+
+)
+
+; ---------------------------------------------------------------
 ; Example usage.
 ; Assumes that a suitable number of word similarities have been
 ; previously computed. Assumes that shapes are enabled and being used.
