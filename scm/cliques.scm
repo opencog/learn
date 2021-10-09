@@ -134,8 +134,43 @@
 
   CANDIDATES is a list of individuals to consider adding to the group.
 "
+	; Hard-coded parameter -- size of steps that will be taken in epsilon.
+	(define epsi-step 0.1)
 
+	; Hard-coded parameter -- the size of the in-group should not jump by
+	; more than this for each epsi-step.
+	(define max-jump 3)
 
+	; Hard-coded paramter -- the largest espsilon to consider.
+	; The value of 8.5 comes from experiments: the grouping of roman
+	; numerals were still coherent, despite being this far apart.
+	(define max-epsi 8.5)
+
+	; Hard-coded maximum size of the in-group.  We don't return in-groups
+	; larger than this.
+	(define max-size 12)
+
+	; Loop and try to find the knee. A different algo might be to take
+	; a moving average of the size increase, and use that to decide.
+	(define epsilon #f)
+	(define prevsz 0)
+	(define nsteps (inexact->exact (round (/ max-epsi epsi-step))))
+	(take-while
+		(lambda (N)
+			(set! epsilon (* N epsi-step))
+			(define ing (find-in-group SIMFUN WA WB epsilon TIGHTNESS CANDIDATES))
+			(define ingsz (length ing))
+			(define jump (- ingsz prevsz))
+			(set! prevsz ingsz)
+			(and (< jump max-jump) (< ingsz max-size))
+		)
+		(iota nsteps 1))
+
+	; The above loop halts when we've gone too far. So back off by one
+	; step, and return that. (Maybe we should back off two steps, to be
+	; conservative?)
+
+	(find-in-group SIMFUN WA WB (- epsilon epsi-step) TIGHTNESS CANDIDATES)
 )
 
 ; ---------------------------------------------------------------
