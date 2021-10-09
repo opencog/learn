@@ -669,7 +669,13 @@
 
 	; Delete the old class... But first, let's make sure it is
 	; really is empty!  It should not appear in any connectors!
-	(if (not (equal? 0 (cog-incoming-size CLB)))
+	; It might appear in marginals, and we cannot control that.
+	; So check the types we can control.
+	(if (or
+			(not (equal? 0 (cog-incoming-size-by-type CLB 'Section)))
+			(not (equal? 0 (cog-incoming-size-by-type CLB 'CrossSection)))
+			(not (equal? 0 (cog-incoming-size-by-type CLB 'Shape)))
+			(not (equal? 0 (cog-incoming-size-by-type CLB 'Connector))))
 		(throw 'non-empy-class 'merge-clusters "we expect it to be empty!"))
 
 	(cog-delete! CLB)
