@@ -44,8 +44,18 @@
 ; as the final form
 ;     ({ej}, ab{ej})  + (1-p) * (j, abe)
 ;
-; The cross-sections on e should be as before:
+; One of the cross-sections on e should be as before:
 ;     (1-p) * [e, <j, abv>]
+;
+; -----
+; Untouched from the earlier `connector-merge-cons.scm` logic is
+;     none    + (j, egh) -> p * ({ej}, egh) + (1-p) * (j, egh)  ; setup-j-extra
+;
+; which just as before should reshape into
+;     p * ({ej}, {ej}gh) + (1-p) * (j, egh)
+;
+; and have cross-sections
+;     (1-p) * [e, <j, vgh>]
 ;
 (define t-two-cluster-extend "extended 2-cluster test")
 (test-begin t-two-cluster-extend)
@@ -102,10 +112,12 @@
 ; We expect only one cross-section: [e, <j,vgh>] as all others are
 ; absorbed. This cross-section corresponds to (1-p) * (j, egh)
 (test-equal 2 (len-type (Word "e") 'Section))
+(format #t "duuude excpeted 1 on e got ~A coss\n" (len-type (Word "e") 'CrossSection))
+(format #t "its ~A" (prt-element-list (cog-get-atoms 'CrossSection)))
 (test-equal 1 (len-type (Word "e") 'CrossSection))
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 
-; We expect one sections remaining on j -- (j, egh)
+; We expect one section remaining on j -- (j, egh)
 ; We expect one cross-section: a fraction of (e, abj)
 (test-equal 1 (len-type (Word "j") 'Section))
 (test-equal 1 (len-type (Word "j") 'CrossSection))

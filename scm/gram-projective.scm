@@ -167,6 +167,8 @@
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
+; Debugging prints which print Section Cross-Sections in a short-hand.
+; This short-hand is used extensively in the unit tests.
 
 (define (prt-word W)
 	(define t (cog-type W))
@@ -185,24 +187,31 @@
 )
 
 (define (prt-section SECT)
-	(format #f "(~A, ~A) cnt= ~6F"
+	(format #f "~6,3F * (~A, ~A)"
+		(cog-count SECT)
 		(prt-word (gar SECT))
-		(prt-conseq (cog-outgoing-set (gdr SECT)))
-		(cog-count SECT))
+		(prt-conseq (cog-outgoing-set (gdr SECT))))
 )
 
 (define (prt-cross-section XSECT)
-	(format #f "[~A, <~A, ~A>] cnt = ~6F"
+	(format #f "~6,3F * [~A, <~A, ~A>]"
+		(cog-count XSECT)
 		(prt-word (gar XSECT))
 		(prt-word (gar (gdr XSECT)))
-		(prt-conseq (cdr (cog-outgoing-set (gdr XSECT))))
-		(cog-count XSECT))
+		(prt-conseq (cdr (cog-outgoing-set (gdr XSECT)))))
 )
 
 (define-public (prt-element ELT)
 	(if (equal? (cog-type ELT) 'Section)
 		(prt-section ELT)
 		(prt-cross-section ELT))
+)
+
+(define-public (prt-element-list LST)
+	(string-concatenate
+		(map (lambda (ELT)
+			(format #f "~A\n" (prt-element ELT)))
+			LST))
 )
 
 ; ---------------------------------------------------------------------
@@ -327,10 +336,10 @@
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-(format #t "duude sect before ~A\n" (prt-element PAIR-A))
+(format #t "duude elt before ~A\n" (prt-element PAIR-A))
 			(set! accum-cnt (+ accum-cnt
 				(CLIQUE LLOBJ CLS PAIR-A ACCUMULATE)))
-(format #t "duude sect after ~A\n" (prt-element PAIR-A))
+(format #t "duude elt after  ~A\n" (prt-element PAIR-A))
 		)
 		(LLOBJ 'right-stars WA))
 
@@ -392,10 +401,14 @@
 	(define (reshape OBJ CSECT SECT FRAC)
 		(reshape-merge OBJ CLS CSECT WA SECT FRAC shacc))
 
+(format #t "duuude enter reshapes\n")
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-			(CLIQUE LLOBJ CLS PAIR-A reshape))
+(format #t "duude elt before ~A\n" (prt-element PAIR-A))
+			(CLIQUE LLOBJ CLS PAIR-A reshape)
+(format #t "duude elt after  ~A\n" (prt-element PAIR-A))
+		)
 		(LLOBJ 'right-stars WA))
 
 	(monitor-rate

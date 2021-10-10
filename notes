@@ -5844,6 +5844,30 @@ where accfun is the old counct-acc
 where ACCUMULATE is the old counct-acc
 whose sig is (accumulate-count LLOBJ clustsec secta FRAC NOISE)
 
+-----
+OK, so
+(j,  a- b- e+) cnt=  15.75 is correct,
+But its not knocked down because ...
+
+[e, <j,  $- g- h+>] cnt =  12.75 this should be absent.
+(j,egh) from extra-j
+
+[e, <j,  a- b- $+>] cnt =  15.75 that''s right.
+
+cons: setup-j-extra adds (j,abe) and (j-egh)
+
+setup-e-extra adds : (e, abe) and (e abj) consext
+
+crosses on e should be (1-p) * [e, <j, vgh>] -- this is seen OK
+this one: (1-p) * [e, <j, abv>]  should be absorbed but was not.
+The cross-section merge should have picked this up!
+
+so first past converts
+
+
+the matching sections should be
+   (1-p) * (j, egh)
+   (1-p) * (j, abe) -- no!!
 
 ====================================================
 link-class.scm ???

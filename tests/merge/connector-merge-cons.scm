@@ -33,8 +33,8 @@
 ;    (e, abc) + (j, abc) -> ({ej}, abc)
 ;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
 ;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
-;     none    + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)
-;     none    + (j, egh) -> p * ({ej}, egh) + (1-p) * (j, egh)
+;     none    + (j, abe) -> p * ({ej}, abe) + (1-p) * (j, abe)  ; setup-j-extra
+;     none    + (j, egh) -> p * ({ej}, egh) + (1-p) * (j, egh)  ; setup-j-extra
 ;
 ; However, the last two are not the final form. From the cross-section
 ; merge, one has
@@ -53,6 +53,7 @@
 ; The cross-sections on e should be:
 ;     (1-p) * [e, <j, abv>]
 ;     (1-p) * [e, <j, vgh>]
+;
 ; and nothing more. The motivation for this is described in the diary
 ; entry "April-May 2021 ...Non-Commutivity, Again... Case B".
 ;
