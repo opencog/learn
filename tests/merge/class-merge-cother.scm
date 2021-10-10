@@ -82,8 +82,7 @@
 
 ; --------------------------
 ; Merge two sections together.
-(define disc (make-fuzz gsc 0 0 4 0))
-(disc 'merge-function (WordClass "e j") (WordClass "r s"))
+(merge gsc (WordClass "e j") (WordClass "r s") 0)
 
 ; We expect three sections "ej", and zero on rs.
 (test-equal 3 (len-type (WordClass "e j") 'Section))
