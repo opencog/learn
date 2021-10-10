@@ -10,7 +10,6 @@
 (include-from-path "opencog/nlp/learn/common.scm")
 (include-from-path "opencog/nlp/learn/utilities.scm")
 (include-from-path "opencog/nlp/learn/link-pipeline.scm")
-(include-from-path "opencog/nlp/learn/singletons.scm")
 (include-from-path "opencog/nlp/learn/batch-word-pair.scm")
 (include-from-path "opencog/nlp/learn/mst-parser.scm")
 (include-from-path "opencog/nlp/learn/pseudo-csets.scm")

@@ -17,5 +17,8 @@ Stuff here should be deleted a few years after being declared dead.
     it gives OK results, but the newer clustering code in
     __agglorank.scm__ is better.
 
+* __singletons.scm__: code for working with single words.  Not used
+    anywhere.
+
 * __shape-project.scm__: Failed attempt to merge shapes.  Death by complexity
     and bugginess.
