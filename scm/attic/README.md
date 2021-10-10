@@ -20,5 +20,7 @@ Stuff here should be deleted a few years after being declared dead.
 * __singletons.scm__: code for working with single words.  Not used
     anywhere.
 
-* __shape-project.scm__: Failed attempt to merge shapes.  Death by complexity
-    and bugginess.
+* __shape-project.scm__, __cset-class.scm__, __cset-merge.scm__: Failed
+    attempt to merge shapes.  Death by complexity and bugginess. The
+    variant that does work is in __shape-vec.scm__ in the directory
+    above.

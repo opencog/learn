@@ -5783,6 +5783,39 @@ a small as possible)
 0)
 (define ppr (add-support-compute (add-tuple-math (add-id sha) dum 'ident)))
 
+------------
+and again:
+(`is was`, `had has`)
+(define wc (WordClass "had has"))
+
+Even after second run, there are some shapes with connectors in them
+
+((CrossSection (ctv 1 0 12)
+  (WordNode "always")
+  (ShapeLink
+    (WordClassNode "had has")
+    (Connector
+      (WordNode "She")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))
+    (Connector
+      (WordNode "been")
+      (ConnectorDir "+"))))
+)
+
+Did we fail to scan.. what? What did we forget?
+the passes did not iterate over shapes... and to covert those into
+the orig sections...
+
+Need manual check
+1) for each shape having word/word-class, get all sections they
+   belong to, and verify counts.  Are teh counts still good?
+
+
+make-disinfo make-midisc make-mifuzz make-discrim make-fuzz
+
 
 ====================================================
 link-class.scm ???
