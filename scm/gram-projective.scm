@@ -232,9 +232,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
+(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 "
-  start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
+  start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
      combined row CLS.
 
@@ -256,9 +256,8 @@
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
-  NOISE is the smallest observation count, below which counts will
-     not be divided up, when the merge is performed. (All of the
-     count will be merged, when it is less than NOISE)
+  ACCUMULATE is a function that returns how much of a given disjunct
+     is merged.
   MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of rows WA and WB are performed, using the 'projection
@@ -338,7 +337,7 @@
 
 	; Accumulate counts from the individual words onto the cluster.
 	(define (accum-counts MRG W PR WEI)
-		(define cnt	(accumulate-count LLOBJ MRG PR WEI NOISE))
+		(define cnt	(ACCUMULATE LLOBJ MRG PR WEI))
 		(if (equal? W WA)
 			(set! accum-acnt (+ accum-acnt cnt))
 			(set! accum-bcnt (+ accum-bcnt cnt))))
@@ -364,7 +363,7 @@
 	; manipulate the merged Sections. (There's no obvious way to do
 	; this in a single pass; I tried.)
 	(define (reshape-crosses MRG W PR WEI)
-		(reshape-merge LLOBJ CLS MRG W PR WEI NOISE))
+		(reshape-merge LLOBJ CLS MRG W PR WEI ACCUMULATE))
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
 		(loop-over-disjuncts reshape-crosses)
@@ -397,9 +396,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON)
+(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN ACCUMULATE MRG-CON)
 "
-  merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON --
+  merge-into-cluster LLOBJ CLS WA FRAC-FN ACCUMULATE MRG-CON --
      Merge WA into cluster CLS. These are two rows in LLOBJ,
      the merge is done column-by-column. A MemberLink from
      WA to CLS will be created.
@@ -415,9 +414,8 @@
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
-  NOISE is the smallest observation count, below which counts will
-     not be divided up, when the merge is performed. (All of the
-     count will be merged, when it is less than NOISE)
+  ACCUMULATE is a function that returns how much of a given disjunct
+     is merged.
   MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of row WA into CLS is performed, using the 'projection
@@ -482,7 +480,7 @@
 	(define (accum-sections PAIR-C PAIR-A WEI)
 		(monitor-rate #f)
 		(set! accum-cnt (+ accum-cnt
-			(accumulate-count LLOBJ PAIR-C PAIR-A WEI NOISE))))
+			(ACCUMULATE LLOBJ PAIR-C PAIR-A WEI))))
 
 	(loop-over-disjuncts accum-sections)
 
@@ -497,7 +495,7 @@
 	; Perform the connector merge.
 	(define (reshape-crosses PAIR-C PAIR-A WEI)
 		(monitor-rate #f)
-		(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI NOISE))
+		(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI ACCUMULATE))
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
 		(loop-over-disjuncts reshape-crosses)
@@ -529,9 +527,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-clusters LLOBJ CLA CLB NOISE MRG-CON)
+(define-public (merge-clusters LLOBJ CLA CLB ACCUMULATE MRG-CON)
 "
-  merge-clusters LLOBJ CLA CLB FRAC-FN NOISE MRG-CON --
+  merge-clusters LLOBJ CLA CLB FRAC-FN ACCUMULATE MRG-CON --
      Merge clusters CLA and CLB. These are two rows in LLOBJ,
      the merge is done column-by-column.
 
@@ -566,7 +564,7 @@
 	)
 
 	(define (accum-counts MRG PAIR)
-		(accumulate-count LLOBJ MRG PAIR 1.0 NOISE))
+		(ACCUMULATE LLOBJ MRG PAIR 1.0))
 
 	; Run the main merge loop
 	(loop-over-disjuncts accum-counts)
@@ -605,7 +603,7 @@
 
 	; If merging connectors, then make a second pass.
 	(define (merge-crosses MRG PAIR)
-		(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 NOISE))
+		(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 ACCUMULATE))
 
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
@@ -807,6 +805,10 @@
 	(define pss (add-support-api STARS))
 	(define psu (add-support-compute STARS))
 
+; temp;
+(define (ACCUMULATE LLOBJ CLUST SECT WEIGHT)
+	(accumulate-count CLUST SECT WEIGHT NOISE))
+
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
 		(define wa-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WA))))
@@ -827,15 +829,15 @@
 		; Clobber first, since Sections were probably deleted.
 		(cond
 			((and wa-is-cls wb-is-cls)
-				(merge-clusters STARS WA WB NOISE MRG-CON))
+				(merge-clusters STARS WA WB ACCUMULATE MRG-CON))
 			((and (not wa-is-cls) (not wb-is-cls))
 				(begin
-					(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
+					(start-cluster STARS cls WA WB FRAC-FN ACCUMULATE MRG-CON)
 					(STORE cls)))
 			(wa-is-cls
-				(merge-into-cluster STARS WA WB FRAC-FN NOISE MRG-CON))
+				(merge-into-cluster STARS WA WB FRAC-FN ACCUMULATE MRG-CON))
 			(wb-is-cls
-				(merge-into-cluster STARS WB WA FRAC-FN NOISE MRG-CON))
+				(merge-into-cluster STARS WB WA FRAC-FN ACCUMULATE MRG-CON))
 		)
 
 		(STORE WA)
