@@ -75,6 +75,25 @@
 		(cog-get-atoms 'Section))
 )
 
+(define (check-one-cross LLOBJ CROSS EPSILON)
+"
+  check-one-cross -- Check one CrossSection, verify that the counts
+  on it matches it's corresponding Section.
+
+  Return #t if it matches, else print an error message and return #f.
+"
+	(define sect (LLOBJ 'get-section CROSS))
+	(if (nil? sect)
+		(begin
+			(format #t "Error: no Section for ~A" CROSS)
+			#f)
+		(let ((diff (- (cog-count sect) (cog-count CROSS))))
+			(if (< (abs diff) EPSILON) #t
+				(begin
+					(format #t "Error: Unbalanced at\n~A~A" sect CROSS)
+					#f))))
+)
+
 (define (check-crosses LLOBJ EPSILON)
 "
   check-crosses -- Loop over CrossSections, verify counts match Sections
@@ -88,18 +107,28 @@
   different order.
 "
 	(every
-		(lambda (cross)
-			(define sect (LLOBJ 'get-section cross))
-			(if (nil? sect)
-				(begin
-					(format #t "Error: no Section for ~A" cross)
-					#f)
-				(let ((diff (- (cog-count sect) (cog-count cross))))
-					(if (< (abs diff) EPSILON) #t
-						(begin
-							(format #t "Error: Unbalanced at\n~A~A" sect cross)
-							#f)))))
+		(lambda (cross) (check-one-cross LLOBJ cross EPSILON))
 		(cog-get-atoms 'CrossSection))
+)
+
+(define (check-shapes LLOBJ EPSILON)
+"
+  check-shapes -- Loop over Shapes, verify counts match Sections
+
+  Self-consistent detailed balance requires that counts on CrossSections
+  should be equal to the counts on the Sections from which they came.
+  Return #t if everything balances, else return #f and print the
+  imbalance.
+
+  This performs exactly the same checks as `check-crosses`, but in a
+  different order.
+"
+	(every
+		(lambda (SHAPE)
+			(every
+				(lambda (cross) (check-one-cross LLOBJ cross EPSILON))
+				(cog-incoming-by-type SHAPE 'CrossSection)))
+		(cog-get-atoms 'ShapeLink))
 )
 
 ; ---------------------------------------------------------------

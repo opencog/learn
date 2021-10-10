@@ -549,7 +549,7 @@ Unfinished prototype
 		(for-each
 			(lambda (WRD)
 				(set! wclass (mrg 'merge-function wclass WRD)))
-			(drop-rght in-grp 2))
+			(drop-right in-grp 2))
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
