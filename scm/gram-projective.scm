@@ -358,8 +358,9 @@
 		(define WOTHER (if (equal? WRD WA) WB WA))
 		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
 		(if (nil? OTHSEC)
-			(ACCUMULATE LLOBJ CLUST SECT frac-to-merge)
-			(ACCUMULATE LLOBJ CLUST SECT 1.0)
+			(if (< 0 frac-to-merge)
+				(ACCUMULATE LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(ACCUMULATE LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 		)
 	)
 
