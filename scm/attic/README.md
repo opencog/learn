@@ -17,8 +17,11 @@ Stuff here should be deleted a few years after being declared dead.
     it gives OK results, but the newer clustering code in
     __agglorank.scm__ is better.
 
-* __singletons.scm__: code for working with single words.  Not used
-    anywhere.
+* __singletons.scm__: Code for working with single words.  Not used
+    anywhere. Well, used in the summary reports below.
+
+* __summary.scm__: Stale, boring report printer. The reports are anemic.
+    Other than that, they do work.
 
 * __shape-project.scm__, __cset-class.scm__, __cset-merge.scm__: Failed
     attempt to merge shapes.  Death by complexity and bugginess. The

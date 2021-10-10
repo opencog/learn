@@ -15,7 +15,6 @@ ADD_GUILE_MODULE (FILES
 	pseudo-csets.scm
 	shape-project.scm
 	shape-vec.scm
-	summary.scm
 	utilities.scm
 	vectors.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/learn"

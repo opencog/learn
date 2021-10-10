@@ -14,7 +14,6 @@
 (include-from-path "opencog/nlp/learn/mst-parser.scm")
 (include-from-path "opencog/nlp/learn/pseudo-csets.scm")
 (include-from-path "opencog/nlp/learn/shape-vec.scm")
-(include-from-path "opencog/nlp/learn/summary.scm")
 (include-from-path "opencog/nlp/learn/vectors.scm")
 (include-from-path "opencog/nlp/learn/gram-classification.scm")
 (include-from-path "opencog/nlp/learn/shape-project.scm")
