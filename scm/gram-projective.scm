@@ -347,15 +347,17 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (xstart-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
+(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
 	(define (clique LLOBJ CLUST SECT)
+		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
-		(define BSEC (LLOBJ 'get-pair WB DJ))
-		(if (nil? BSEC)
+		(define WOTHER (if (equal? WRD WA) WB WA))
+		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
+		(if (nil? OTHSEC)
 			(ACCUMULATE LLOBJ CLUST SECT frac-to-merge)
 			(ACCUMULATE LLOBJ CLUST SECT 1.0)
 		)
@@ -367,7 +369,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
+(define-public (xstart-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
