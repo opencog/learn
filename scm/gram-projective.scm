@@ -235,6 +235,118 @@
 
 ; ---------------------------------------------------------------------
 
+(define (assign-to-cluster LLOBJ CLS WA ACCUMULATE MRG-CON)
+"
+  assign-to-cluster LLOBJ CLS WA ACCUMULATE MRG-CON --
+
+  Loop over the disjuncts on WA, and call ACCUMULATE on each,
+  passing CLS and the disjunct to it.
+
+  A MemberLink from WA to CLS will be created, holding the
+  accumulated count returned by ACCUMULATE.
+
+  LLOBJ is used to access pairs.
+  WA should be of `(LLOBJ 'left-type)`
+  CLS should be interpretable as a row in LLOBJ.
+
+  ACCUMULATE is a function that returns how much of a given disjunct
+     is merged.
+  MRG-CON boolean flag; if #t then connectors will be merged.
+
+  The merger of row WA into CLS is performed, using the ACCUMULATE
+  function to make disjunct-by-disjunct merge decisions.
+
+  Accumulated row totals are stored in the MemberLink that attaches
+  WA to CLS.
+
+  This assumes that storage is connected; the updated counts are written
+  to storage.
+"
+	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+
+	(define monitor-rate (make-rate-monitor))
+
+	; Accumulated count on the MemberLink.
+	(define accum-cnt 0)
+
+	; Caution: there's a "feature" bug in assignment when used with
+	; connector merging. The code below will create sections with
+	; dangling connectors that may be unwanted. Easiest to explain by
+	; example. Consider a section (f, abe) being merged into a cluster
+	; {e,j} to form a cluster {e,j,f}. The code below will create a
+	; section ({ej}, abe) as the C-section, and transfer some counts
+	; to it. But, when connector merging is desired, it should have gone
+	; to ({ej}, ab{ej}). There are two possible solutions: have the
+	; connector merging try to detect this, and clean it up, or have
+	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
+	; "natural" way for the tuple object to create this pairing (it is
+	; "naturally" linear, by design) so we must clean up during connector
+	; merging.
+	(for-each
+		(lambda (PAIR-A)
+			(monitor-rate #f)
+			(set! accum-cnt (+ accum-cnt
+				(ACCUMULATE LLOBJ CLS PAIR-A)))
+		)
+		(LLOBJ 'right-stars WA))
+
+	; Create MemberLinks. Do this before the connector-merge step,
+	; as they are examined during that phase.
+	(define memb-a (MemberLink WA CLS))
+
+	(define old-cnt (get-count memb-a))
+	(set-count memb-a (+ old-cnt accum-cnt))
+
+	(monitor-rate
+		"------ Assign: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+
+	; XXX FIXME The arguments to reshape-merge can be simplified.
+	; Perform the connector merge.
+	(define (shacc LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count LLOBJ CLUST SECT WEIGHT 0))
+
+	(when MRG-CON
+		(set! monitor-rate (make-rate-monitor))
+		(for-each
+			(lambda (PAIR-A)
+				(monitor-rate #f)
+				(define DJ (LLOBJ 'right-element PAIR-A))
+				(define PAIR-C (LLOBJ 'get-pair CLS DJ))
+				(if (not (nil? PAIR-C))
+					(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A 1.0 shacc))
+			)
+			(LLOBJ 'right-stars WA))
+		(monitor-rate
+			"------ Assign: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+	)
+
+	(set! monitor-rate (make-rate-monitor))
+	(monitor-rate #f)
+
+	; Track the number of observations moved from WA to the class.
+	; Store the updated count.
+	(store-atom memb-a)
+
+	; Cleanup after merging.
+	; The LLOBJ is assumed to be just a stars object, and so the
+	; intent of this clobber is to force it to recompute it's left
+	; and right basis.
+	(LLOBJ 'clobber)
+	(remove-empty-sections LLOBJ WA)
+	(remove-empty-sections LLOBJ CLS)
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
+	(monitor-rate
+		"------ Assign: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
