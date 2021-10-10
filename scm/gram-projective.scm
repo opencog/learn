@@ -410,7 +410,6 @@
 	; and right basis.
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ CLS)
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -453,6 +452,7 @@ WEIGHT is a float point fraction
 		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
 		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
 	)
+	(remove-empty-sections LLOBJ CLS)
 )
 
 ; ---------------------------------------------------------------------
