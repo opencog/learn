@@ -169,25 +169,33 @@
 ; ---------------------------------------------------------------------
 
 (define (prt-word W)
-	(if (equal? (cog-type W) 'WordClassNode)
-		(format #f "{~A}" (cog-name W))
-		(cog-name W))
+	(define t (cog-type W))
+	(cond
+		((equal? t 'WordClassNode) (format #f "{~A}" (cog-name W)))
+		((equal? t 'WordNode) (cog-name W))
+		((equal? t 'VariableNode) "$")
+	)
+)
+
+(define (prt-conseq LST)
+	(string-concatenate
+		(map (lambda (CON)
+			(format #f " ~A~A" (prt-word (gar CON)) (cog-name (gdr CON))))
+			LST))
 )
 
 (define (prt-section SECT)
-	(define g (format #f "(~A," (prt-word (gar SECT))))
-	(define c
-		(map (lambda (CON)
-			(format #f " ~A~A" (prt-word (gar CON)) (cog-name (gdr CON))))
-			(cog-outgoing-set (gdr SECT))))
-	(define p (format #f ") cnt= ~6F" (cog-count SECT)))
-	(string-append (string-concatenate (cons g c)) p)
+	(format #f "(~A, ~A) cnt= ~6F"
+		(prt-word (gar SECT))
+		(prt-conseq (cog-outgoing-set (gdr SECT)))
+		(cog-count SECT))
 )
 
 (define (prt-cross-section XSECT)
-	(format #f "[~A, <~A, stuff>] cnt = ~6F"
+	(format #f "[~A, <~A, ~A>] cnt = ~6F"
 		(prt-word (gar XSECT))
 		(prt-word (gar (gdr XSECT)))
+		(prt-conseq (cdr (cog-outgoing-set (gdr XSECT))))
 		(cog-count XSECT))
 )
 
