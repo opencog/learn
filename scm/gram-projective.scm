@@ -347,6 +347,26 @@
 
 ; ---------------------------------------------------------------------
 
+(define-public (xstart-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
+
+	; Fraction of non-overlapping disjuncts to merge
+	(define frac-to-merge (FRAC-FN WA WB))
+
+	(define (clique LLOBJ CLUST SECT)
+		(define DJ (LLOBJ 'right-element SECT))
+		(define BSEC (LLOBJ 'get-pair WB DJ))
+		(if (nil? BSEC)
+			(ACCUMULATE LLOBJ CLUST SECT frac-to-merge)
+			(ACCUMULATE LLOBJ CLUST SECT 1.0)
+		)
+	)
+
+	(assign-to-cluster LLOBJ CLS WA clique MRG-CON)
+	(assign-to-cluster LLOBJ CLS WB clique MRG-CON)
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
