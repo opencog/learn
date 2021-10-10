@@ -36,13 +36,6 @@ but the also require, as input, data that was produced by earlier files.
 * __vectors.scm__         Vector arithmetic.
 * __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
-Deprecated files will be disables and moved to attic "real soon now":
-
-* __agglo-loops.scm__     Agglomerative clustering. Loops over all words,
-                          creating clusters. Multiple different ways of
-                          looping over everything are explored here.
-                          Deprecated, use `agglo-rank.scm` instead.
-* __gram-fuzz.scm__       Code that does fuzzy union merging.
 
 Data Structures
 ---------------

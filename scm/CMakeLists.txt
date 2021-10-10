@@ -1,6 +1,5 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
-	agglo-loops.scm
 	agglo-rank.scm
 	batch-word-pair.scm
 	cliques.scm

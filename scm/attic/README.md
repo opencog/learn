@@ -9,5 +9,13 @@ Stuff here should be deleted a few years after being declared dead.
     and the fuzziness did nothing for the merge quality.  I dunno,
     it might be OK, but really not very inspiring, in the end.
 
+* __agglo-loops.scm__ : Top-level routines to do pair-wise clustering.
+    The code works, but doing pair-wise clustering seems not to give
+    the best results.  This file implements thee different algos that
+    assign words to existing clustters, or if there aren't any suitable
+    ones, they create a new cluster. Again, this is OK, the code works,
+    it gives OK results, but the newer clustering code in
+    __agglorank.scm__ is better.
+
 * __shape-project.scm__: Failed attempt to merge shapes.  Death by complexity
     and bugginess.
