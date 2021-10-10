@@ -433,7 +433,7 @@
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
 	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT 0.0))
+		(accumulate-count LLOBJ CLUST SECT WEIGHT 0.0))
 	(define merge-them (make-mergefn LLOBJ
 		none accum store-mmt store-final #t))
 
@@ -529,11 +529,11 @@ Unfinished prototype
 ; xxxxxx not done
 (define (voter LLOBJ CLUST SECT WEIGHT)
 ; This is not the thing yet.
-   (accumulate-count CLUST SECT WEIGHT 0.0))
+   (accumulate-count LLOBJ CLUST SECT WEIGHT 0.0))
 
 		; We need a new merge object per in-group, because the votes
 		; depend on the in-group.
-		(define merge-them (make-merger LLOBJ
+		(define merge-them (make-mergefn LLOBJ
 			none voter store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always

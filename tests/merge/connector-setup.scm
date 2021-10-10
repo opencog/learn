@@ -46,7 +46,7 @@
 	(define (noop W) #f)
 	(define (final) #f)
 	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-counts LLOBJ CLUST SECT WEIGHT 0))
+		(accumulate-count LLOBJ CLUST SECT WEIGHT 0))
 	(define mrg (make-mergefn LLOBJ frac accum noop final #t))
 	(mrg WA WB)
 )

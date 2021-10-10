@@ -290,6 +290,8 @@
 	(define ns 0)
 	(define nx 0)
 
+	(define (is-zero? cnt) (< cnt 1.0e-10))
+
 	; If the count in Section is zero, delete it.
 	; Also scan all of it's crosses. Crosses aren't normally stored in
 	; the DB, so we just extract them.

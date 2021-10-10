@@ -167,7 +167,10 @@
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
-(define (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
+
+;; XXX This should not be public/exported, except that the unit tests
+;; need this.
+(define-public (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 "
   accumulate-count LLOBJ ACC PAIR FRAC NOISE -- Accumulate count
     from PAIR into ACC.
