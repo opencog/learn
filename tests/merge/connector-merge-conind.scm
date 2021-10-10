@@ -178,6 +178,7 @@
 ; Verify detailed balance
 (test-assert (check-sections gsc epsilon))
 (test-assert (check-crosses gsc epsilon))
+(test-assert (check-shapes gsc epsilon))
 
 ; Verify no change in totals
 (test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
