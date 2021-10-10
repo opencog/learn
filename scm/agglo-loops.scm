@@ -3,6 +3,8 @@
 ;
 ; Loop over all words, merging them into grammatical categories.
 ; Agglomerative clustering. Deprecated, use `agglo-ranked.scm` instead.
+; This file will be taken out of service and moved to the attic "any
+; day now".
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
