@@ -5816,6 +5816,34 @@ Need manual check
 
 make-disinfo make-midisc make-mifuzz make-discrim make-fuzz
 
+accum-counts
+
+reshape-merge
+ (ACCUMULATE LLOBJ CLUST SECT WEIGHT)
+
+make-merger
+
+empty cluster, use accum fun that knows the pairs and votes.
+non-empty cluster... use accum fun tailored for that.
+
+
+no xes for the fraction
+
+if one is missing ... then...
+(define (reshape-crosses MRG W PR WEI)
+      (reshape-merge LLOBJ CLS MRG W PR WEI ACCUMULATE))
+
+clustsection is made anyway,
+call
+(reshape-merge LLOBJ CLS clustsect WA SECTA frac accfun)
+where accfun is the old counct-acc
+
+(clique LLOBJ CLUST SECT)  ccalls
+  (ACCUMULATE LLOBJ clustsect SECTA frac)
+
+where ACCUMULATE is the old counct-acc
+whose sig is (accumulate-count LLOBJ clustsec secta FRAC NOISE)
+
 
 ====================================================
 link-class.scm ???

@@ -235,25 +235,25 @@
 
 ; ---------------------------------------------------------------------
 
-(define (assign-to-cluster LLOBJ CLS WA ACCUMULATE MRG-CON)
+(define (assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE MRG-CON)
 "
-  assign-to-cluster LLOBJ CLS WA ACCUMULATE MRG-CON --
+  assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE MRG-CON --
 
-  Loop over the disjuncts on WA, and call ACCUMULATE on each,
+  Loop over the disjuncts on WA, and call CLIQUE on each,
   passing CLS and the disjunct to it.
 
   A MemberLink from WA to CLS will be created, holding the
-  accumulated count returned by ACCUMULATE.
+  accumulated count returned by CLIQUE.
 
   LLOBJ is used to access pairs.
   WA should be of `(LLOBJ 'left-type)`
   CLS should be interpretable as a row in LLOBJ.
 
-  ACCUMULATE is a function that returns how much of a given disjunct
+  CLIQUE is a function that returns how much of a given disjunct
      is merged.
   MRG-CON boolean flag; if #t then connectors will be merged.
 
-  The merger of row WA into CLS is performed, using the ACCUMULATE
+  The merger of row WA into CLS is performed, using the CLIQUE
   function to make disjunct-by-disjunct merge decisions.
 
   Accumulated row totals are stored in the MemberLink that attaches
@@ -289,7 +289,7 @@
 		(lambda (PAIR-A)
 			(monitor-rate #f)
 			(set! accum-cnt (+ accum-cnt
-				(ACCUMULATE LLOBJ CLS PAIR-A)))
+				(CLIQUE LLOBJ CLS PAIR-A ACCUMULATE)))
 		)
 		(LLOBJ 'right-stars WA))
 
@@ -304,19 +304,21 @@
 		"------ Assign: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
 
 	; XXX FIXME The arguments to reshape-merge can be simplified.
+	; This is insanely convoluted right now.
 	; Perform the connector merge.
 	(define (shacc LLOBJ CLUST SECT WEIGHT)
 		(accumulate-count LLOBJ CLUST SECT WEIGHT 0))
+
+	; SECT ends up being PAIR-A in the loop below.
+	(define (reshape OBJ CSECT SECT FRAC)
+		(reshape-merge OBJ CLS CSECT WA SECT FRAC shacc))
 
 	(when MRG-CON
 		(set! monitor-rate (make-rate-monitor))
 		(for-each
 			(lambda (PAIR-A)
 				(monitor-rate #f)
-				(define DJ (LLOBJ 'right-element PAIR-A))
-				(define PAIR-C (LLOBJ 'get-pair CLS DJ))
-				(if (not (nil? PAIR-C))
-					(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A 1.0 shacc))
+				(CLIQUE LLOBJ CLS PAIR-A reshape)
 			)
 			(LLOBJ 'right-stars WA))
 		(monitor-rate
@@ -348,24 +350,32 @@
 ; ---------------------------------------------------------------------
 
 (define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
+"
+expected signature of ACCUMULATE is
+(ACCUMULATE LLOBJ CLUST SECT WEIGHT)
+where CLUST is a WordClass
+SECT is a sdection to maybe pute into CLUST
+WEIGHT is a float point fraction
+
+"
 
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
-	(define (clique LLOBJ CLUST SECT)
+	(define (clique LLOBJ CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
 		(define WOTHER (if (equal? WRD WA) WB WA))
 		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
 		(if (nil? OTHSEC)
 			(if (< 0 frac-to-merge)
-				(ACCUMULATE LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
-			(ACCUMULATE LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 		)
 	)
 
-	(assign-to-cluster LLOBJ CLS WA clique MRG-CON)
-	(assign-to-cluster LLOBJ CLS WB clique MRG-CON)
+	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE MRG-CON)
+	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE MRG-CON)
 )
 
 ; ---------------------------------------------------------------------
