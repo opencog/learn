@@ -437,8 +437,10 @@
 
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT 0.0))
 	(define mrg (make-merger LLOBJ
-		always none NOISE MIN-CNT store-mmt store-final #t))
+		always none accum MIN-CNT store-mmt store-final #t))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -535,10 +537,14 @@ Unfinished prototype
 ; xxxxxx not done
 		(define (votes WA WB) #t)
 
+(define (voter LLOBJ CLUST SECT WEIGHT)
+; This is not the thing yet.
+   (accumulate-count CLUST SECT WEIGHT 0.0))
+
 		; We need a new merge object per in-group, because the votes
 		; depend on the in-group.
 		(define mrg (make-merger LLOBJ
-			votes none NOISE MIN-CNT store-mmt store-final #t))
+			votes none voter MIN-CNT store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always
 		; a WordClass.

@@ -167,10 +167,6 @@
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
-; Return #t if the count is effectively zero.
-; Use an epsilon for rounding errors.
-(define (is-zero? cnt) (< cnt 1.0e-10))
-
 (define (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
 "
   accumulate-count LLOBJ ACC PAIR FRAC NOISE -- Accumulate count
@@ -200,6 +196,10 @@
 	; The counts on the accumulator and the pair to merge.
 	(define mcnt (LLOBJ 'get-count PAIR))
 	(define acnt (LLOBJ 'get-count ACC))
+
+	; Return #t if the count is effectively zero.
+	; Use an epsilon for rounding errors.
+	(define (is-zero? cnt) (< cnt 1.0e-10))
 
 	; If the accumulator count is zero, transfer only a FRAC of
 	; the count into the accumulator.
@@ -746,7 +746,7 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON)
+(define-public (make-merger STARS MPRED FRAC-FN ACCUMULATE MIN-CNT STORE FIN MRG-CON)
 "
   make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
@@ -764,8 +764,8 @@
   number between 0.0 and 1.0 indicating what fraction of a row to merge,
   when the corresponding matrix element in the other row is null.
 
-  NOISE is the smallest observation count, below which counts
-  will not be divided up, if a merge is performed.
+  ACCUMULATE is a function that returns the fraction of the given
+  disjunct that was actually merged into the cluster.
 
   MIN-CNT is the minimum count (l1-norm) of the observations of
   disjuncts that a row is allowed to have, to even be considered for
@@ -804,10 +804,6 @@
 "
 	(define pss (add-support-api STARS))
 	(define psu (add-support-compute STARS))
-
-; temp;
-(define (ACCUMULATE LLOBJ CLUST SECT WEIGHT)
-	(accumulate-count CLUST SECT WEIGHT NOISE))
 
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)

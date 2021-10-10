@@ -127,7 +127,9 @@
 	(define (recomp W) (recompute-support STARS W))
 	(define (noop) #f)
 
-	(make-merger STARS mpred fixed-frac NOISE MIN-CNT recomp noop #t)
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+	(make-merger STARS mpred fixed-frac accum MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -184,7 +186,9 @@
 	(define (recomp W) (recompute-support STARS W))
 	(define (noop) #f)
 
-	(make-merger STARS mpred cos-fraction NOISE MIN-CNT recomp noop #t)
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+	(make-merger STARS mpred cos-fraction accum MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -235,7 +239,9 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(make-merger pmi mpred mi-fract NOISE MIN-CNT redo-mmt finish #t)
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+	(make-merger pmi mpred mi-fract accum MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -311,7 +317,9 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+	(make-merger pmi mpred mi-fraction accum MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -380,7 +388,9 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
+	(define (accum LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+	(make-merger pmi mpred mi-fraction accum MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
