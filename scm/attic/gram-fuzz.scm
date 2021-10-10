@@ -3,7 +3,6 @@
 ;
 ; Fuzzy wrappers for merging words into word-classes by grammatical
 ; similarity. Deprecated. Use the stuff in `agglo-rank.scm` instead.
-; This will be disabled and moved to the attic "real soon now".
 ;
 ; Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
 ;
