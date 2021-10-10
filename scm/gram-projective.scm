@@ -746,19 +746,14 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merger STARS MPRED FRAC-FN ACCUMULATE MIN-CNT STORE FIN MRG-CON)
+(define-public (make-mergefn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
 "
-  make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON --
+  make-merger STARS FRAC-FN NOISE STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
   STARS is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
-
-  MPRED is a predicate that takes two rows in STARS (two Atoms that are
-  left-elements, i.e. row-indicators, in STARS) and returns #t/#f i.e.
-  a yes/no value as to whether the corresponding rows in STARS should
-  be merged or not.
 
   FRAC-FUN is a function that takes two rows in STARS and returns a
   number between 0.0 and 1.0 indicating what fraction of a row to merge,
@@ -766,10 +761,6 @@
 
   ACCUMULATE is a function that returns the fraction of the given
   disjunct that was actually merged into the cluster.
-
-  MIN-CNT is the minimum count (l1-norm) of the observations of
-  disjuncts that a row is allowed to have, to even be considered for
-  merging.
 
   STORE is an extra function called, after the merge is to completed,
   and may be used to compute and store additional needed data that
@@ -784,27 +775,7 @@
   that the STARS object have shapes on it.
 
   This object provides the following methods:
-
-  'merge-predicate -- a wrapper around MPRED above.
-  'merge-function -- the function that actually performs the merge.
-  'discard-margin? -- Return #t if count on word is below MIN-CNT.
-                      Uses the marginal counts for this decision.
-                      Used by `trim-and-rank` to ignore this word.
-                      (`trim-and-rank` prepares the list of words to
-                      cluster.)
-  'discard? --        Same as above, but  count is recomputed, instead
-                      of being pulled from the margin. This is required
-                      when a word has been merged, as then the margin
-                      count will be stale (aka wrong, invalid). Used
-                      by `greedy-grow` to ignore the stub of a word
-                      after merging. That is, if all that remains in a
-                      word after merging is some cruft with a count less
-                      than MIN-CNT, it won't be further merged into
-                      anything; it will be ignored.
 "
-	(define pss (add-support-api STARS))
-	(define psu (add-support-compute STARS))
-
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
 		(define wa-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WA))))
@@ -842,23 +813,8 @@
 		cls
 	)
 
-	(define (is-small-margin? WORD)
-		(< (pss 'right-count WORD) MIN-CNT))
-
-	(define (is-small? WORD)
-		(< (psu 'right-count WORD) MIN-CNT))
-
-	; ------------------
-	; Methods on this class.
-
-	(lambda (message . args)
-		(case message
-			((merge-predicate)  (apply MPRED args))
-			((merge-function)   (apply merge args))
-			((discard-margin?)  (apply is-small-margin? args))
-			((discard?)         (apply is-small? args))
-			(else               (apply STARS (cons message args)))
-		))
+	; Return the above function
+	merge
 )
 
 ; ---------------------------------------------------------------

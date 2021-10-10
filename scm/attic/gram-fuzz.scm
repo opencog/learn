@@ -85,6 +85,126 @@
 
 ; ---------------------------------------------------------------
 
+(define-public (make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON)
+"
+  make-merger STARS MPRED FRAC-FN NOISE MIN-CNT STORE FIN MRG-CON --
+  Return object that implements the `merge-project` merge style
+  (as described at the top of this file).
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
+
+  MPRED is a predicate that takes two rows in STARS (two Atoms that are
+  left-elements, i.e. row-indicators, in STARS) and returns #t/#f i.e.
+  a yes/no value as to whether the corresponding rows in STARS should
+  be merged or not.
+
+  FRAC-FUN is a function that takes two rows in STARS and returns a
+  number between 0.0 and 1.0 indicating what fraction of a row to merge,
+  when the corresponding matrix element in the other row is null.
+
+  NOISE is the smallest observation count, below which counts will
+  not be divided up, when the merge is performed. (All of the count
+  will be merged, when it is less than NOISE)
+
+  MIN-CNT is the minimum count (l1-norm) of the observations of
+  disjuncts that a row is allowed to have, to even be considered for
+  merging.
+
+  STORE is an extra function called, after the merge is to completed,
+  and may be used to compute and store additional needed data that
+  the algo here is unaware of. This include computation of supports,
+  marginal MI and similar. It is called with an argument of the altered
+  row.
+
+  FIN is an extra function called, after the merge is to completed.
+  It is called without an argument.
+
+  MRG-CON is #t if Connectors should also be merged.  This requires
+  that the STARS object have shapes on it.
+
+  This object provides the following methods:
+
+  'merge-predicate -- a wrapper around MPRED above.
+  'merge-function -- the function that actually performs the merge.
+  'discard-margin? -- Return #t if count on word is below MIN-CNT.
+                      Uses the marginal counts for this decision.
+                      Used by `trim-and-rank` to ignore this word.
+                      (`trim-and-rank` prepares the list of words to
+                      cluster.)
+  'discard? --        Same as above, but  count is recomputed, instead
+                      of being pulled from the margin. This is required
+                      when a word has been merged, as then the margin
+                      count will be stale (aka wrong, invalid). Used
+                      by `greedy-grow` to ignore the stub of a word
+                      after merging. That is, if all that remains in a
+                      word after merging is some cruft with a count less
+                      than MIN-CNT, it won't be further merged into
+                      anything; it will be ignored.
+"
+	(define pss (add-support-api STARS))
+	(define psu (add-support-compute STARS))
+
+	(define (ACCUMULATE LLOBJ CLUST SECT WEIGHT)
+		(accumulate-count CLUST SECT WEIGHT NOISE))
+
+	; Return a WordClassNode that is the result of the merge.
+	(define (merge WA WB)
+		(define wa-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WA))))
+		(define wb-is-cls (equal? (STARS 'cluster-type) (Type (cog-type WB))))
+		(define cls (STARS 'make-cluster WA WB))
+
+		; Cluster - either create a new cluster, or add to an existing
+		; one. Afterwards, need to recompute selected marginals. This
+		; is required so that future similarity judgements work correctly.
+		; The mergers altered the counts, and so the marginals on
+		; those words and disjuncts are wrong. Specifically, they're
+		; wrong only for WA, WB and cls. Here, we'll just recompute the
+		; most basic support for WA, WB and cls and thier disjuncts.
+		; The MI similarity also needs MM^T to be recomputed; the STORE
+		; callback provides an opporunity to do that.
+		; The results are stored, so that everything is on disk in
+		; case of a restart.
+		; Clobber first, since Sections were probably deleted.
+		(cond
+			((and wa-is-cls wb-is-cls)
+				(merge-clusters STARS WA WB ACCUMULATE MRG-CON))
+			((and (not wa-is-cls) (not wb-is-cls))
+				(begin
+					(start-cluster STARS cls WA WB FRAC-FN ACCUMULATE MRG-CON)
+					(STORE cls)))
+			(wa-is-cls
+				(merge-into-cluster STARS WA WB FRAC-FN ACCUMULATE MRG-CON))
+			(wb-is-cls
+				(merge-into-cluster STARS WB WA FRAC-FN ACCUMULATE MRG-CON))
+		)
+
+		(STORE WA)
+		(STORE WB)
+		(FIN)
+		cls
+	)
+
+	(define (is-small-margin? WORD)
+		(< (pss 'right-count WORD) MIN-CNT))
+
+	(define (is-small? WORD)
+		(< (psu 'right-count WORD) MIN-CNT))
+
+	; ------------------
+	; Methods on this class.
+
+	(lambda (message . args)
+		(case message
+			((merge-predicate)  (apply MPRED args))
+			((merge-function)   (apply merge args))
+			((discard-margin?)  (apply is-small-margin? args))
+			((discard?)         (apply is-small? args))
+			(else               (apply STARS (cons message args)))
+		))
+)
+; ---------------------------------------------------------------
+
 (define-public (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
   make-fuzz -- Return an object that can perform a cosine-distance
@@ -127,9 +247,7 @@
 	(define (recomp W) (recompute-support STARS W))
 	(define (noop) #f)
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT NOISE))
-	(make-merger STARS mpred fixed-frac accum MIN-CNT recomp noop #t)
+	(make-merger STARS mpred fixed-frac NOISE MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -186,9 +304,7 @@
 	(define (recomp W) (recompute-support STARS W))
 	(define (noop) #f)
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT NOISE))
-	(make-merger STARS mpred cos-fraction accum MIN-CNT recomp noop #t)
+	(make-merger STARS mpred cos-fraction NOISE MIN-CNT recomp noop #t)
 )
 
 ; ---------------------------------------------------------------
@@ -239,9 +355,7 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT NOISE))
-	(make-merger pmi mpred mi-fract accum MIN-CNT redo-mmt finish #t)
+	(make-merger pmi mpred mi-fract NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -317,9 +431,7 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT NOISE))
-	(make-merger pmi mpred mi-fraction accum MIN-CNT redo-mmt finish #t)
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------
@@ -388,9 +500,7 @@
 		(define ptc (add-transpose-compute STARS))
 		(store-atom (ptc 'set-mmt-totals)))
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count CLUST SECT WEIGHT NOISE))
-	(make-merger pmi mpred mi-fraction accum MIN-CNT redo-mmt finish #t)
+	(make-merger pmi mpred mi-fraction NOISE MIN-CNT redo-mmt finish #t)
 )
 
 ; ---------------------------------------------------------------

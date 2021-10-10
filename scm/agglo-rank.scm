@@ -424,14 +424,9 @@
 	(setup-initial-similarities LLOBJ NRANK)
 
 	; ------------------------------
-	(define NOISE 0)
-	(define MIN-CNT 0)
 
 	; The fraction to merge -- zero.
 	(define (none WA WB) 0.0)
-
-	; When to merge -- always.
-	(define (always WA WB) #t)
 
 	(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
 
@@ -439,8 +434,8 @@
 
 	(define (accum LLOBJ CLUST SECT WEIGHT)
 		(accumulate-count CLUST SECT WEIGHT 0.0))
-	(define mrg (make-merger LLOBJ
-		always none accum MIN-CNT store-mmt store-final #t))
+	(define merge-them (make-mergefn LLOBJ
+		none accum store-mmt store-final #t))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -458,7 +453,7 @@
 				(cog-incoming-by-type WB 'SimilarityLink)))
 
 		(define e (make-elapsed-secs))
-		(define wclass (mrg 'merge-function WA WB))
+		(define wclass (merge-them  WA WB))
 
 		(format #t "------ Merged `~A` and `~A` into `~A` in ~A secs\n"
 			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
@@ -486,9 +481,6 @@
 
 Unfinished prototype
 "
-	(define NOISE 0)
-	(define MIN-CNT 0)
-
 	(setup-initial-similarities LLOBJ NRANK)
 
 	; The ranked MI similarity of two words
@@ -535,26 +527,24 @@ Unfinished prototype
 
 		; When to merge -- depends on how the clique voted.
 ; xxxxxx not done
-		(define (votes WA WB) #t)
-
 (define (voter LLOBJ CLUST SECT WEIGHT)
 ; This is not the thing yet.
    (accumulate-count CLUST SECT WEIGHT 0.0))
 
 		; We need a new merge object per in-group, because the votes
 		; depend on the in-group.
-		(define mrg (make-merger LLOBJ
-			votes none voter MIN-CNT store-mmt store-final #t))
+		(define merge-them (make-merger LLOBJ
+			none voter store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always
 		; a WordClass.
-		(define wclass (mrg 'merge-function WA WB))
+		(define wclass (merge-them WA WB))
 
 		; Merge the rest of them. WA an WB are always at the tail
 		; of the in-group list, so drop them.
 		(for-each
 			(lambda (WRD)
-				(set! wclass (mrg 'merge-function wclass WRD)))
+				(set! wclass (merge-them wclass WRD)))
 			(drop-right in-grp 2))
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
