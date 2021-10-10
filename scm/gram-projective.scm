@@ -274,7 +274,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE MRG-CON)
+(define (assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE)
 "
   assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE MRG-CON --
 
@@ -290,7 +290,6 @@
 
   CLIQUE is a function that returns how much of a given disjunct
      is merged.
-  MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of row WA into CLS is performed, using the CLIQUE
   function to make disjunct-by-disjunct merge decisions.
@@ -324,6 +323,7 @@
 	; "natural" way for the tuple object to create this pairing (it is
 	; "naturally" linear, by design) so we must clean up during connector
 	; merging.
+(format #t "duude entry time merge ~A\n" (cog-name WA))
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
@@ -338,11 +338,49 @@
 	; as they are examined during that phase.
 	(define memb-a (MemberLink WA CLS))
 
+	; Track the number of observations moved from WA to the class.
 	(define old-cnt (get-count memb-a))
 	(set-count memb-a (+ old-cnt accum-cnt))
+	(store-atom memb-a)
 
 	(monitor-rate
 		"------ Assign: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+)
+
+; ---------------------------------------------------------------------
+
+(define (merge-connectors LLOBJ CLS WA CLIQUE ACCUMULATE)
+"
+  merge-connectors LLOBJ CLS WA CLIQUE ACCUMULATE --
+
+  Loop over the disjuncts on WA, and call CLIQUE on each,
+  passing CLS and the disjunct to it.
+
+  A MemberLink from WA to CLS will be created, holding the
+  accumulated count returned by CLIQUE.
+
+  LLOBJ is used to access pairs.
+  WA should be of `(LLOBJ 'left-type)`
+  CLS should be interpretable as a row in LLOBJ.
+
+  CLIQUE is a function that returns how much of a given disjunct
+     is merged.
+
+  The merger of row WA into CLS is performed, using the CLIQUE
+  function to make disjunct-by-disjunct merge decisions.
+
+  Accumulated row totals are stored in the MemberLink that attaches
+  WA to CLS.
+
+  This assumes that storage is connected; the updated counts are written
+  to storage.
+"
+	; set-count ATOM CNT - Set the raw observational count on ATOM.
+	; XXX FIXME there should be a set-count on the LLOBJ...
+	; Strange but true, there is no setter, currently!
+	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+
+	(define monitor-rate (make-rate-monitor))
 
 	; XXX FIXME The arguments to reshape-merge can be simplified.
 	; This is insanely convoluted right now.
@@ -354,24 +392,17 @@
 	(define (reshape OBJ CSECT SECT FRAC)
 		(reshape-merge OBJ CLS CSECT WA SECT FRAC shacc))
 
-	(when MRG-CON
-		(set! monitor-rate (make-rate-monitor))
-		(for-each
-			(lambda (PAIR-A)
-				(monitor-rate #f)
-				(CLIQUE LLOBJ CLS PAIR-A reshape)
-			)
-			(LLOBJ 'right-stars WA))
-		(monitor-rate
+	(for-each
+		(lambda (PAIR-A)
+			(monitor-rate #f)
+			(CLIQUE LLOBJ CLS PAIR-A reshape))
+		(LLOBJ 'right-stars WA))
+
+	(monitor-rate
 			"------ Assign: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
-	)
 
 	(set! monitor-rate (make-rate-monitor))
 	(monitor-rate #f)
-
-	; Track the number of observations moved from WA to the class.
-	; Store the updated count.
-	(store-atom memb-a)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
@@ -415,8 +446,13 @@ WEIGHT is a float point fraction
 		)
 	)
 
-	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE MRG-CON)
-	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE MRG-CON)
+	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
+	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE)
+
+	(when MRG-CON
+		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
+		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
+	)
 )
 
 ; ---------------------------------------------------------------------
