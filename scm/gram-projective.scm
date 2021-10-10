@@ -168,6 +168,37 @@
 
 ; ---------------------------------------------------------------------
 
+(define (prt-word W)
+	(if (equal? (cog-type W) 'WordClassNode)
+		(format #f "{~A}" (cog-name W))
+		(cog-name W))
+)
+
+(define (prt-section SECT)
+	(define g (format #f "(~A," (prt-word (gar SECT))))
+	(define c
+		(map (lambda (CON)
+			(format #f " ~A~A" (prt-word (gar CON)) (cog-name (gdr CON))))
+			(cog-outgoing-set (gdr SECT))))
+	(define p (format #f ") cnt= ~6F" (cog-count SECT)))
+	(string-append (string-concatenate (cons g c)) p)
+)
+
+(define (prt-cross-section XSECT)
+	(format #f "[~A, <~A, stuff>] cnt = ~6F"
+		(prt-word (gar XSECT))
+		(prt-word (gar (gdr XSECT)))
+		(cog-count XSECT))
+)
+
+(define-public (prt-element ELT)
+	(if (equal? (cog-type ELT) 'Section)
+		(prt-section ELT)
+		(prt-cross-section ELT))
+)
+
+; ---------------------------------------------------------------------
+
 ;; XXX This should not be public/exported, except that the unit tests
 ;; need this.
 (define-public (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
@@ -288,8 +319,10 @@
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
+(format #t "duude sect before ~A\n" (prt-element PAIR-A))
 			(set! accum-cnt (+ accum-cnt
 				(CLIQUE LLOBJ CLS PAIR-A ACCUMULATE)))
+(format #t "duude sect after ~A\n" (prt-element PAIR-A))
 		)
 		(LLOBJ 'right-stars WA))
 
