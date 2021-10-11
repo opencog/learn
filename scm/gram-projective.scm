@@ -255,23 +255,22 @@
 	(define taper-cnt (* FRAC mcnt))
 
 	; Update the count on the donor pair.
-	; If the count is zero or less, delete the donor pair.
-	; (Actually, it should never be less than zero!)
+	; Avoid touching the database if the count is zero;
+	; the donor will be deleted later on.
 	(define (update-donor-count SECT CNT)
 		(set-count SECT CNT)
 		(unless (is-zero? CNT) (store-atom SECT)))
 
 	; If there is nothing to transfer over, do nothing.
-	(if (not (is-zero? taper-cnt))
-		(begin
+	(when (not (is-zero? taper-cnt))
 
-			; The accumulated count
-			(set-count ACC (+ acnt taper-cnt))
-			(store-atom ACC) ; save to the database.
+		; The accumulated count
+		(set-count ACC (+ acnt taper-cnt))
+		(store-atom ACC) ; save to the database.
 
-			; Decrement the equivalent amount from the donor pair.
-			(update-donor-count PAIR (- mcnt taper-cnt))
-		))
+		; Decrement the equivalent amount from the donor pair.
+		(update-donor-count PAIR (- mcnt taper-cnt))
+	)
 
 	; Return how much was transfered over.
 	taper-cnt
