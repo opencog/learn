@@ -260,16 +260,16 @@
 							(accumulate-count LLOBJ xmr XST FRAC))
 						(LLOBJ 'make-cross-sections DONOR))
 
-						; We can rebalance here, but it does not seem to
-						; affect anything.
-						; (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
+					; We can rebalance here, but it does not seem to
+					; affect anything.
+					; (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 
-						; Special case: donor was already non-flat. We need
-						; to transfer all of the counts over.
-						(when (LLOBJ 'is-nonflat? GLS MRG)
-							(set-count MRG
-								(+ (LLOBJ 'get-count MRG) (LLOBJ 'get-count DONOR)))
-							(rebalance-count LLOBJ DONOR 0)))))
+					; Special case: donor was already non-flat. We need
+					; to transfer all of the counts over.
+					(when (LLOBJ 'is-nonflat? GLS MRG)
+						(set-count MRG
+							(+ (LLOBJ 'get-count MRG) (LLOBJ 'get-count DONOR)))
+						(rebalance-count LLOBJ DONOR 0)))))
 
 		; Always rebalance the merged section.
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
