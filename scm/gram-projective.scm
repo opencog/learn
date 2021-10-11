@@ -586,7 +586,9 @@
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 
+	; Merge the two clusters. Delete the spurious MemberLink!
 	(assign-to-cluster LLOBJ CLA CLB clique)
+	(cog-delete! (Member CLB CLA))
 
 	; Copy all counts from MemberLinks on CLB to CLA.
 	; Delete MemberLinks on CLB.
@@ -727,13 +729,13 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merge-ingroup STARS QUORUM MRG-CON)
+(define-public (make-merge-ingroup LLOBJ QUORUM MRG-CON)
 "
-  make-merger-ingroup STARS QUORUM STORE FIN MRG-CON --
+  make-merger-ingroup LLOBJ QUORUM STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
-  STARS is the object holding the disjuncts. For example, it could
+  LLOBJ is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
 
   QUORUM is a floating point number indicating the fraction of
@@ -741,13 +743,59 @@
   merged. XXX TODO describe this in more detail.
 
   MRG-CON is #t if Connectors should also be merged.  This requires
-  that the STARS object have shapes on it.
+  that the LLOBJ object have shapes on it.
 "
+	(define (frac WA WB) 0.0)
+
+; xxxxxxxxx wrong must vote!
+; XXX also, the sectin was already made so we don't need to make it
+; again! To do that, have to change the signature!
+	(define (clique LLOBJ CLUST SECT ACC-FUN)
+		(define WRD (LLOBJ 'left-element SECT))
+		(define DJ (LLOBJ 'right-element SECT))
+		(define CLS-SECT (LLOBJ 'make-pair CLUST DJ))
+
+		(define (foo . args) 'wtff)
+		(define tupe (add-tuple-math LLOBJ foo 'right-element))
+
+		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
+	)
+
+
 	; WLIST is a list of WordNodes and/or WordClassNodes
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WLIST)
 
-		(define cls #f)
+; xxxxxxx wrong bad name!
+		; (define cls (LLOBJ 'make-cluster WA WB))
+		(define cls (WordClassNode "foo"))
+
+		(for-each
+			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
+			WLIST)
+
+		(when MRG-CON
+			(for-each
+				(lambda (WRD) (merge-connectors LLOBJ cls WRD clique))
+				WLIST)
+		)
+
+		; Cleanup after merging.
+		; The LLOBJ is assumed to be just a stars object, and so the
+		; intent of this clobber is to force it to recompute it's left
+		; and right basis.
+		(define e (make-elapsed-secs))
+		(LLOBJ 'clobber)
+		(for-each
+			(lambda (WRD) (remove-empty-sections LLOBJ WRD))
+			WLIST)
+		(remove-empty-sections LLOBJ cls)
+
+		; Clobber the left and right caches; the cog-delete! changed things.
+		(LLOBJ 'clobber)
+
+		(format #t "------ merge-ingroup: Cleanup ~A in ~5F secs\n"
+			(cog-name cls) (e))
 
 		cls
 	)
