@@ -67,112 +67,120 @@
 ; This minor variation tests a diffferent code branch than the
 ; initial cluster formation code.
 ;
+
+(define (run-test WA WB WC-NAME)
+	; Load some data
+	(setup-e-j-sections)
+	(setup-f-sections)
+
+	; Define matrix API to the data
+	(define pca (make-pseudo-cset-api))
+	(set! gsc (add-covering-sections pca))
+
+	; Verify that the data loaded correctly
+	; We expect 3 sections on "e" and two on "j"
+	(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "j"))))
+	(test-equal 3 (length (gsc 'right-stars (Word "f"))))
+
+	; Get the total count on all Sections
+	(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
+
+	; Create CrossSections and verify that they got created
+	(gsc 'explode-sections)
+	(test-equal 24 (length (cog-get-atoms 'CrossSection)))
+
+	; Verify that direct-sum object is accessing shapes correctly
+	; i.e. the 'explode should have created some CrossSections
+	(test-equal 3 (length (gsc 'right-stars (Word "g"))))
+	(test-equal 3 (length (gsc 'right-stars (Word "h"))))
+
+	; Should not be any CrossSections on e,j; should be same as before.
+	(test-equal 3 (length (gsc 'right-stars (Word "e"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "j"))))
+	(test-equal 3 (length (gsc 'right-stars (Word "f"))))
+
+	; We expect a total of 3+2+3=8 Sections
+	(test-equal 8 (length (cog-get-atoms 'Section)))
+
+	; --------------
+	; Merge the first two sections together.
+	(define frac 0.25)
+	(merge gsc WA WB frac)
+	(define WC-EJ (WordClassNode WC-NAME))
+
+	; Verify detailed balance
+	(define epsilon 1.0e-8)
+	(test-equal 7 (length (cog-get-atoms 'Section)))
+	(test-equal 21 (length (cog-get-atoms 'CrossSection)))
+	(test-assert (check-sections gsc epsilon))
+	(test-assert (check-crosses gsc epsilon))
+
+	; Merge the third section.
+	(merge gsc WC-EJ (Word "f") frac)
+
+	; We expect just one section remaining on "e", the klm section.
+	; We expect no sections remaining on j
+	(test-equal 1 (length (gsc 'right-stars (Word "e"))))
+	(test-equal 0 (length (gsc 'right-stars (Word "j"))))
+	(test-equal 0 (length (gsc 'right-stars (Word "f"))))
+
+	; We expect three merged sections
+	(test-equal 3 (length (gsc 'right-stars WC-EJ)))
+
+	; Of the 8 original Sections, 7 are deleted, and 3 are created,
+	; leaving a grand total of 4. The 3 new ones are all e-j, the
+	; remaining old one is an "e" with a reduced count.  This is just
+	; the sum of the above.
+	(test-equal 4 (length (cog-get-atoms 'Section)))
+
+	; Of the 15 original CrossSections, 12 are deleted outright, and three
+	; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
+	; crosses get created, leaving a grand-total of 12.
+	(test-equal 12 (length (cog-get-atoms 'CrossSection)))
+
+	; --------------
+	; Validate counts.
+	(test-approximate (* cnt-e-klm (- 1.0 frac))
+		(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
+
+	; Validate counts on the Sections...
+	(expected-e-j-sections WC-EJ)
+	(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+		(cog-count sec-ej-abc) epsilon)
+	(test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
+		(cog-count sec-ej-dgh) epsilon)
+	(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+		(cog-count sec-ej-klm) epsilon)
+	(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+
+	; Validate counts on select CrossSections...
+	(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
+		(cog-count xes-b-ej-avc) epsilon)
+	(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
+		 (cog-count xes-k-ej-vlm) epsilon)
+	(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
+
+	; -----------------------
+	; Verify detailed balance
+	(test-assert (check-sections gsc epsilon))
+	(test-assert (check-crosses gsc epsilon))
+	(test-assert (check-shapes gsc epsilon))
+
+	; Verify no change in totals
+	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
+		epsilon)
+)
+
 (define t-merge-into-cluster "simple merge-into-cluster test")
 (test-begin t-merge-into-cluster)
 
-; Open the database
-(setup-database)
+	; Open the database
+	(setup-database)
+	(run-test (Word "e") (Word "j") "e j")
 
-; Load some data
-(setup-e-j-sections)
-(setup-f-sections)
-
-; Define matrix API to the data
-(define pca (make-pseudo-cset-api))
-(define gsc (add-covering-sections pca))
-
-; Verify that the data loaded correctly
-; We expect 3 sections on "e" and two on "j"
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-(test-equal 2 (length (gsc 'right-stars (Word "j"))))
-(test-equal 3 (length (gsc 'right-stars (Word "f"))))
-
-; Get the total count on all Sections
-(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
-
-; Create CrossSections and verify that they got created
-(gsc 'explode-sections)
-(test-equal 24 (length (cog-get-atoms 'CrossSection)))
-
-; Verify that direct-sum object is accessing shapes correctly
-; i.e. the 'explode should have created some CrossSections
-(test-equal 3 (length (gsc 'right-stars (Word "g"))))
-(test-equal 3 (length (gsc 'right-stars (Word "h"))))
-
-; Should not be any CrossSections on e,j; should be same as before.
-(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-(test-equal 2 (length (gsc 'right-stars (Word "j"))))
-(test-equal 3 (length (gsc 'right-stars (Word "f"))))
-
-; We expect a total of 3+2+3=8 Sections
-(test-equal 8 (length (cog-get-atoms 'Section)))
-
-; --------------
-; Merge the first two sections together.
-(define frac 0.25)
-(merge gsc (Word "e") (Word "j") frac)
-
-; Verify detailed balance
-(define epsilon 1.0e-8)
-(test-equal 7 (length (cog-get-atoms 'Section)))
-(test-equal 21 (length (cog-get-atoms 'CrossSection)))
-(test-assert (check-sections gsc epsilon))
-(test-assert (check-crosses gsc epsilon))
-
-; Merge the third section.
-(merge gsc (WordClassNode "e j") (Word "f") frac)
-
-; We expect just one section remaining on "e", the klm section.
-; We expect no sections remaining on j
-(test-equal 1 (length (gsc 'right-stars (Word "e"))))
-(test-equal 0 (length (gsc 'right-stars (Word "j"))))
-(test-equal 0 (length (gsc 'right-stars (Word "f"))))
-
-; We expect three merged sections
-(test-equal 3 (length (gsc 'right-stars (WordClassNode "e j"))))
-
-; Of the 8 original Sections, 7 are deleted, and 3 are created,
-; leaving a grand total of 4. The 3 new ones are all e-j, the
-; remaining old one is an "e" with a reduced count.  This is just
-; the sum of the above.
-(test-equal 4 (length (cog-get-atoms 'Section)))
-
-; Of the 15 original CrossSections, 12 are deleted outright, and three
-; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
-; crosses get created, leaving a grand-total of 12.
-(test-equal 12 (length (cog-get-atoms 'CrossSection)))
-
-; --------------
-; Validate counts.
-(test-approximate (* cnt-e-klm (- 1.0 frac))
-	(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
-
-; Validate counts on the Sections...
-(expected-e-j-sections)
-(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
-	(cog-count sec-ej-abc) epsilon)
-(test-approximate (+ cnt-e-dgh cnt-j-dgh cnt-f-dgh)
-	(cog-count sec-ej-dgh) epsilon)
-(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
-	(cog-count sec-ej-klm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
-
-; Validate counts on select CrossSections...
-(test-approximate (+ cnt-e-abc cnt-j-abc cnt-f-abc)
-	(cog-count xes-b-ej-avc) epsilon)
-(test-approximate (+ cnt-f-klm (* frac cnt-e-klm))
-	 (cog-count xes-k-ej-vlm) epsilon)
-(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
-
-; -----------------------
-; Verify detailed balance
-(test-assert (check-sections gsc epsilon))
-(test-assert (check-crosses gsc epsilon))
-(test-assert (check-shapes gsc epsilon))
-
-; Verify no change in totals
-(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
-	epsilon)
+	(setup-database)
+	(run-test (Word "j") (Word "e") "j e")
 
 (test-end t-merge-into-cluster)
 
