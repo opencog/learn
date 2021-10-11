@@ -394,12 +394,19 @@
 	; XXX FIXME The arguments to reshape-merge can be simplified.
 	; This is insanely convoluted right now.
 	; Perform the connector merge.
-	(define (shacc LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count LLOBJ CLUST SECT WEIGHT 0))
+	(define (shacc LLOBJ MRGECT SECT WEIGHT)
+(format #t "    schacc ~A . ~A\n" (prt-element MRGECT) (prt-element SECT))
+		(accumulate-count LLOBJ MRGECT SECT WEIGHT 0))
 
 	; SECT ends up being PAIR-A in the loop below.
-	(define (reshape OBJ CSECT SECT FRAC)
-		(reshape-merge OBJ CLS CSECT WA SECT FRAC shacc))
+	; MRGECT is the matching merger section
+	(define (reshape OBJ MRGECT SECT FRAC)
+(format #t "  prelique frac=~A on ~A . ~A\n"
+FRAC (prt-element MRGECT) (prt-element SECT))
+		(reshape-merge OBJ CLS MRGECT WA SECT FRAC shacc)
+(format #t "  postique frac=~A on ~A . ~A\n"
+FRAC (prt-element MRGECT) (prt-element SECT))
+	)
 
 (format #t "duuude enter reshapes\n")
 	(for-each
@@ -407,7 +414,7 @@
 			(monitor-rate #f)
 (format #t "duude elt before ~A\n" (prt-element PAIR-A))
 			(CLIQUE LLOBJ CLS PAIR-A reshape)
-(format #t "duude elt after  ~A\n" (prt-element PAIR-A))
+(format #t "duude elt after  ~A\n---\n" (prt-element PAIR-A))
 		)
 		(LLOBJ 'right-stars WA))
 
