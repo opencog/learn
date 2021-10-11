@@ -256,6 +256,20 @@
 
 ; ---------------------------------------------------------------
 
+(define (recompute-support LLOBJ WRD)
+"
+  recompute-support LLOBJ WRD - Recompute support marginals for WRD
+
+  This recomputes the marginals for support and counts, which is
+  what coine distance and Jaccard overlap need to do thier stuff.
+  It is NOT enough for MI/MMT calculations!
+"
+	(define psu (add-support-compute LLOBJ))
+	(store-atom (psu 'set-right-marginals WRD))
+)
+
+; ---------------------------------------------------------------
+
 (define-public (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)
 "
   make-fuzz -- Return an object that can perform a cosine-distance
