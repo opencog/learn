@@ -469,10 +469,8 @@
 
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
-	(define (accum LLOBJ CLUST SECT WEIGHT)
-		(accumulate-count LLOBJ CLUST SECT WEIGHT))
 	(define merge-pair (make-merge-pair LLOBJ
-		none accum store-mmt store-final #t))
+		none store-mmt store-final #t))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -572,7 +570,7 @@ Unfinished prototype
 		; depend on the in-group.
 ;xxx no, we are reinventing the merge-pair logic!
 		(define merge-them (make-merge-pair LLOBJ
-			none voter store-mmt store-final #t))
+			none store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always
 		; a WordClass.

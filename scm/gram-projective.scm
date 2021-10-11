@@ -278,9 +278,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define (assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE)
+(define (assign-to-cluster LLOBJ CLS WA CLIQUE)
 "
-  assign-to-cluster LLOBJ CLS WA CLIQUE ACCUMULATE MRG-CON --
+  assign-to-cluster LLOBJ CLS WA CLIQUE --
 
   Loop over the disjuncts on WA, and call CLIQUE on each,
   passing CLS and the disjunct to it.
@@ -300,14 +300,6 @@
 
   Accumulated row totals are stored in the MemberLink that attaches
   WA to CLS.
-
-  ACCUMULATE is a function that returns how much of a given disjunct
-     is merged. The expected signature is
-     `(ACCUMULATE LLOBJ CLUST SECT WEIGHT)`
-     where
-        CLUST is a WordClass
-        SECT is a section proposed for merger into CLUST
-        WEIGHT is a float point fraction of the count to merge.
 
   This assumes that storage is connected; the updated counts are written
   to storage.
@@ -339,7 +331,7 @@
 		(lambda (PAIR-A)
 			(monitor-rate #f)
 			(set! accum-cnt (+ accum-cnt
-				(CLIQUE LLOBJ CLS PAIR-A ACCUMULATE)))
+				(CLIQUE LLOBJ CLS PAIR-A accumulate-count)))
 		)
 		(LLOBJ 'right-stars WA))
 
@@ -415,9 +407,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
+(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN MRG-CON)
 "
-  start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
+  start-cluster LLOBJ CLS WA WB FRAC-FN MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
      combined row CLS.
 
@@ -439,13 +431,6 @@
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
-  ACCUMULATE is a function that returns how much of a given disjunct
-     is merged. The expected signature is
-     `(ACCUMULATE LLOBJ CLUST SECT WEIGHT)`
-     where
-        CLUST is a WordClass
-        SECT is a section proposed for merger into CLUST
-        WEIGHT is a float point fraction of the count to merge.
 
   MRG-CON boolean flag; if #t then connectors will be merged.
 
@@ -478,8 +463,8 @@
 		)
 	)
 
-	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
-	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE)
+	(assign-to-cluster LLOBJ CLS WA clique)
+	(assign-to-cluster LLOBJ CLS WB clique)
 
 	(when MRG-CON
 		(merge-connectors LLOBJ CLS WA clique)
@@ -505,9 +490,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN ACCUMULATE MRG-CON)
+(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN MRG-CON)
 "
-  merge-into-cluster LLOBJ CLS WA FRAC-FN ACCUMULATE MRG-CON --
+  merge-into-cluster LLOBJ CLS WA FRAC-FN MRG-CON --
      Merge WA into cluster CLS. These are two rows in LLOBJ,
      the merge is done column-by-column. A MemberLink from
      WA to CLS will be created.
@@ -523,8 +508,6 @@
      the fraction of a non-shared count to be used.
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
-  ACCUMULATE is a function that returns how much of a given disjunct
-     is merged.
   MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of row WA into CLS is performed, using the 'projection
@@ -554,7 +537,7 @@
 		)
 	)
 
-	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
+	(assign-to-cluster LLOBJ CLS WA clique)
 
 	(when MRG-CON
 		(merge-connectors LLOBJ CLS WA clique)
@@ -578,9 +561,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-clusters LLOBJ CLA CLB ACCUMULATE MRG-CON)
+(define-public (merge-clusters LLOBJ CLA CLB MRG-CON)
 "
-  merge-clusters LLOBJ CLA CLB FRAC-FN ACCUMULATE MRG-CON --
+  merge-clusters LLOBJ CLA CLB FRAC-FN MRG-CON --
      Merge clusters CLA and CLB. These are two rows in LLOBJ,
      the merge is done column-by-column.
 
@@ -596,7 +579,7 @@
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 
-	(assign-to-cluster LLOBJ CLA CLB clique ACCUMULATE)
+	(assign-to-cluster LLOBJ CLA CLB clique)
 
 	; Copy all counts from MemberLinks on CLB to CLA.
 	; Delete MemberLinks on CLB.
@@ -664,9 +647,9 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merge-pair STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
+(define-public (make-merge-pair STARS FRAC-FN STORE FIN MRG-CON)
 "
-  make-mergerfn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON --
+  make-mergerfn STARS FRAC-FN STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
@@ -676,9 +659,6 @@
   FRAC-FUN is a function that takes two rows in STARS and returns a
   number between 0.0 and 1.0 indicating what fraction of a row to merge,
   when the corresponding matrix element in the other row is null.
-
-  ACCUMULATE is a function that returns the fraction of the given
-  disjunct that was actually merged into the cluster.
 
   STORE is an extra function called, after the merge is to completed,
   and may be used to compute and store additional needed data that
@@ -714,15 +694,15 @@
 		; Clobber first, since Sections were probably deleted.
 		(cond
 			((and wa-is-cls wb-is-cls)
-				(merge-clusters STARS WA WB ACCUMULATE MRG-CON))
+				(merge-clusters STARS WA WB MRG-CON))
 			((and (not wa-is-cls) (not wb-is-cls))
 				(begin
-					(start-cluster STARS cls WA WB FRAC-FN ACCUMULATE MRG-CON)
+					(start-cluster STARS cls WA WB FRAC-FN MRG-CON)
 					(STORE cls)))
 			(wa-is-cls
-				(merge-into-cluster STARS WA WB FRAC-FN ACCUMULATE MRG-CON))
+				(merge-into-cluster STARS WA WB FRAC-FN MRG-CON))
 			(wb-is-cls
-				(merge-into-cluster STARS WB WA FRAC-FN ACCUMULATE MRG-CON))
+				(merge-into-cluster STARS WB WA FRAC-FN MRG-CON))
 		)
 
 		(STORE WA)

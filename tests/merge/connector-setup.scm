@@ -44,10 +44,9 @@
 ; Merge words/word-classes WA WB into a cluster.
 (define (merge LLOBJ WA WB FRAC)
 	(define (frac WA WB) FRAC)
-	(define (always WA WB) #t)
 	(define (noop W) #f)
 	(define (final) #f)
-	(define mrg (make-mergefn LLOBJ frac accumulate-count noop final #t))
+	(define mrg (make-merge-pair LLOBJ frac noop final #t))
 	(mrg WA WB)
 )
 
