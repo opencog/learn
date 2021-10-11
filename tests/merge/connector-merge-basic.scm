@@ -59,7 +59,7 @@
 
 	; Define matrix API to the data
 	(define pca (make-pseudo-cset-api))
-	(define gsc (add-covering-sections pca))
+	(set! gsc (add-covering-sections pca))
 
 	; Verify that the data loaded correctly
 	; We expect 3 sections on "e" and two on "j"

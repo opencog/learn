@@ -29,6 +29,8 @@
 ; ---------------------------------------------------------------
 ; Utilities
 
+(define gsc #f)
+
 (define (filter-type wrd atype)
 	(filter
 		(lambda (atom) (equal? (cog-type atom) atype))
