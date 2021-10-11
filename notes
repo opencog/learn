@@ -5862,7 +5862,27 @@ crosses on e should be (1-p) * [e, <j, vgh>] -- this is seen OK
 this one: (1-p) * [e, <j, abv>]  should be absorbed but was not.
 The cross-section merge should have picked this up!
 
-so first past converts
+so first past converts fine.
+
+Then bad version:
+---
+duude elt before 15.750 * [e, <j,  a- b- $+>]
+  prelique frac=0.25 on  5.250 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
+and accumulate never called!
+  postique frac=0.25 on  0.000 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
+duude elt after  15.750 * [e, <j,  a- b- $+>]
+---
+
+good version:
+duude elt before  0.000 * [e, <j,  a- b- $+>]
+  prelique frac=0.25 on  5.250 * [{e j}, <j,  a- b- $+>] .  0.000 * [e, <j,  a- b- $+>]
+  postique frac=0.25 on  0.000 * [{e j}, <j,  a- b- $+>] .  0.000 * [e, <j,  a- b- $+>]
+duude elt after   0.000 * [e, <j,  a- b- $+>]
+
+In the good version,  [e, <j,abv>] somehow got zeroed... how?
+because  (j, abe) got ...zeroed??? it was zeroed in the first round.
+why not zered in the second round?
+
 
 
 the matching sections should be
