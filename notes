@@ -5864,16 +5864,25 @@ The cross-section merge should have picked this up!
 
 so first past converts fine.
 
-Then bad version:
+The bad version:
 ---
 duude elt before 15.750 * [e, <j,  a- b- $+>]
   prelique frac=0.25 on  5.250 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
-and accumulate never called!
++++ accumulate never called! good version doesn't either.
++++ 
   postique frac=0.25 on  0.000 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
 duude elt after  15.750 * [e, <j,  a- b- $+>]
 ---
+so that ain't geood, but later on,
+
 
 good version:
+duude elt before  0.000 * (j,  a- b- e+)
+  prelique frac=1.0 on  0.000 * ({e j},  a- b- e+) .  0.000 * (j,  a- b- e+)
+  postique frac=1.0 on  0.000 * ({e j},  a- b- e+) .  0.000 * (j,  a- b- e+)
+duude elt after   0.000 * (j,  a- b- e+)
+Does the above do it???
+
 duude elt before  0.000 * [e, <j,  a- b- $+>]
   prelique frac=0.25 on  5.250 * [{e j}, <j,  a- b- $+>] .  0.000 * [e, <j,  a- b- $+>]
   postique frac=0.25 on  0.000 * [{e j}, <j,  a- b- $+>] .  0.000 * [e, <j,  a- b- $+>]
