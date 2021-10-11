@@ -407,6 +407,7 @@
 
 ; ---------------------------------------------------------------------
 
+; XXX TODO this should not be exported, not really.
 (define-public (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
   start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
@@ -492,6 +493,7 @@
 
 ; ---------------------------------------------------------------------
 
+; XXX TODO this should not be exported, not really.
 (define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON)
 "
   merge-into-cluster LLOBJ CLS WA FRAC-FN MRG-CON --
@@ -565,6 +567,7 @@
 
 ; ---------------------------------------------------------------------
 
+; XXX TODO this should not be exported, not really.
 (define-public (merge-clusters LLOBJ CLA CLB MRG-CON)
 "
   merge-clusters LLOBJ CLA CLB FRAC-FN MRG-CON --
@@ -653,7 +656,7 @@
 
 (define-public (make-merge-pair STARS FRAC-FN NOISE STORE FIN MRG-CON)
 "
-  make-mergerfn STARS FRAC-FN STORE FIN MRG-CON --
+  make-merger-pair STARS FRAC-FN NOISE STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
@@ -680,8 +683,6 @@
 
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the STARS object have shapes on it.
-
-  This object provides the following methods:
 "
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WA WB)
@@ -717,6 +718,37 @@
 		(STORE WA)
 		(STORE WB)
 		(FIN)
+		cls
+	)
+
+	; Return the above function
+	merge
+)
+
+; ---------------------------------------------------------------
+
+(define-public (make-merge-ingroup STARS QUORUM MRG-CON)
+"
+  make-merger-ingroup STARS QUORUM STORE FIN MRG-CON --
+  Return object that implements the `merge-project` merge style
+  (as described at the top of this file).
+
+  STARS is the object holding the disjuncts. For example, it could
+  be (add-dynamic-stars (make-pseudo-cset-api))
+
+  QUORUM is a floating point number indicating the fraction of
+  sections that must share a given disjunct, before that disjunct is
+  merged. XXX TODO describe this in more detail.
+
+  MRG-CON is #t if Connectors should also be merged.  This requires
+  that the STARS object have shapes on it.
+"
+	; WLIST is a list of WordNodes and/or WordClassNodes
+	; Return a WordClassNode that is the result of the merge.
+	(define (merge WLIST)
+
+		(define cls #f)
+
 		cls
 	)
 
