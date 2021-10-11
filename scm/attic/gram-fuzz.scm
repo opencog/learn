@@ -203,6 +203,57 @@
 			(else               (apply STARS (cons message args)))
 		))
 )
+
+; ---------------------------------------------------------------
+; Is it OK to merge WORD-A and WORD-B into a common vector?
+;
+; Return #t if the two should be merged, else return #f
+; WORD-A might be a WordClassNode or a WordNode.
+; WORD-B should be a WordNode.
+;
+; SIM-FUNC must be a function that takes two words (or word-classes)
+; and returns the similarity between them.
+;
+; The CUTOFF is used to make the ok-to-merge decision; if the similarity
+; is greater than CUTOFF, then this returns #t else it returns #f.
+;
+; The is effectively the same as saying
+;    (< CUTOFF (SIM-FUNC WORD-A WORD-B))
+; which is only a single trivial line of code ... but ...
+; The below is a mass of print statements to show forward progress.
+; The current infrastructure is sufficiently slow, that the prints are
+; reassuring that the system is not hung.
+;
+(define (is-similar? SIM-FUNC CUTOFF WORD-A WORD-B)
+
+	(define (report-progress)
+		(let* (
+				(start-time (get-internal-real-time))
+				(sim (SIM-FUNC WORD-A WORD-B))
+				(now (get-internal-real-time))
+				(elapsed-time (* 1.0e-9 (- now start-time))))
+
+			; Only print if its time-consuming.
+			(if (< 2.0 elapsed-time)
+				(format #t "Dist=~6F for ~A \"~A\" -- \"~A\" in ~5F secs\n"
+					sim
+					(if (eq? 'WordNode (cog-type WORD-A)) "word" "class")
+					(cog-name WORD-A) (cog-name WORD-B)
+					elapsed-time))
+
+			; Print mergers.
+			(if (< CUTOFF sim)
+				(format #t "---------Bingo! Dist=~6F for ~A \"~A\" -- \"~A\"\n"
+					sim
+					(if (eq? 'WordNode (cog-type WORD-A)) "word" "class")
+					(cog-name WORD-A) (cog-name WORD-B)
+					))
+			sim))
+
+	; True, if similarity is larger than the cutoff.
+	(< CUTOFF (report-progress))
+)
+
 ; ---------------------------------------------------------------
 
 (define-public (make-fuzz STARS CUTOFF UNION-FRAC NOISE MIN-CNT)

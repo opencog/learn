@@ -5897,14 +5897,28 @@ the matching sections should be
    (1-p) * (j, abe) -- no!!
 ====================================================
 
-reshape-merge is called with a FRAC that it pases to
+reshape-merge is called with a FRAC that it passes to
 accumulate-count
-That frac comes from clique ... can we ... wrap it...
+That frac comes from clique ...
+Clique sets it to ffractional if sections don't overlap.
+clique is called with either ACCUMULATE (from higher reaches,
+   the grand desion maker or
+or clique is calle with accumulate-count from reshape.
+Higher fun really should get same args as reshape-merge.
+
+i.e. ACC-FUN/ACCUMULATE should make the if frac decision
+so FRAC_FUN disappears from the signature
+
+
 
 can we change signature on ACC-FUN aka ACCUMULATE to match the
 more comprehensive signature on reshape-merge which is currently
 (reshape-merge OBJ CLS MRGECT WA SECT FRAC)
-that would mean making 
+that would mean making the sginature on  accumulate-count
+match that on reshape-merge
+
+Again:
+
 
 
 
