@@ -664,43 +664,6 @@
 
 ; ---------------------------------------------------------------
 
-(define (recompute-mmt LLOBJ WRD)
-"
-  recompute-mmt LLOBJ WRD - Recompute MMT marginals for WRD
-
-  This recomputes the marginals for support and counts for both
-  the word and the disjuncts on that word. In particular, this
-  recompute N(*,d) which is needed by MM^T.
-"
-	(define psu (add-support-compute LLOBJ))
-	(define atc (add-transpose-compute LLOBJ))
-
-	; This for-each loop accounts for 98% of the CPU time in typical cases.
-	; 'right-duals returns both ConnectorSeqs and Shapes.
-	(for-each
-		(lambda (DJ) (store-atom (psu 'set-left-marginals DJ)))
-		(LLOBJ 'right-duals WRD))
-	(store-atom (psu 'set-right-marginals WRD))
-	(store-atom (atc 'set-mmt-marginals WRD))
-)
-
-(define (recompute-mmt-final LLOBJ)
-"
-  recompute-mmt-final LLOBJ -- recompute grand totals for the MM^T case
-"
-	(define asc (add-support-compute LLOBJ))
-	(define atc (add-transpose-compute LLOBJ))
-
-	; Computing the 'set-left-totals takes about 97% of the total
-	; time in this function, and about 8% of the grand-total time
-	; (of merging words). Yet I suspect that it is not needed...
-	(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
-	(store-atom (asc 'set-right-totals))  ;; is this needed?
-	(store-atom (atc 'set-mmt-totals))
-)
-
-; ---------------------------------------------------------------
-
 (define-public (make-mergefn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
 "
   make-mergerfn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON --
