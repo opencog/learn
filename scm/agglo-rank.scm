@@ -471,7 +471,7 @@
 
 	(define (accum LLOBJ CLUST SECT WEIGHT)
 		(accumulate-count LLOBJ CLUST SECT WEIGHT))
-	(define merge-them (make-mergefn LLOBJ
+	(define merge-pair (make-merge-pair LLOBJ
 		none accum store-mmt store-final #t))
 
 	; ------------------------------
@@ -490,7 +490,7 @@
 				(cog-incoming-by-type WB 'SimilarityLink)))
 
 		(define e (make-elapsed-secs))
-		(define wclass (merge-them  WA WB))
+		(define wclass (merge-pair WA WB))
 
 		(format #t "------ Merged `~A` and `~A` into `~A` in ~A secs\n"
 			(cog-name WA) (cog-name WB) (cog-name wclass) (e))
@@ -570,7 +570,8 @@ Unfinished prototype
 
 		; We need a new merge object per in-group, because the votes
 		; depend on the in-group.
-		(define merge-them (make-mergefn LLOBJ
+;xxx no, we are reinventing the merge-pair logic!
+		(define merge-them (make-merge-pair LLOBJ
 			none voter store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always

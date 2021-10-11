@@ -664,7 +664,7 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-mergefn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
+(define-public (make-merge-pair STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
 "
   make-mergerfn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
