@@ -590,36 +590,14 @@
 
   See start-cluster for additional details.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
-	(define monitor-rate (make-rate-monitor))
-
-	(define (loop-over-disjuncts ACCUM-FUN)
-		(for-each
-			(lambda (PAIR-B)
-
-				; The disjunct on PAIR-B
-				(define DJ (LLOBJ 'right-element PAIR-B))
-
-				; The place where the merge counts should be written
-				(define mrg (LLOBJ 'make-pair CLA DJ))
-
-				; Now perform the merge.
-				(ACCUM-FUN mrg PAIR-B)
-
-				(monitor-rate #f)
-			)
-			(LLOBJ 'right-stars CLB))
+	(define (clique LLOBJ CLUST SECT ACC-FUN)
+		(define WRD (LLOBJ 'left-element SECT))
+		(define DJ (LLOBJ 'right-element SECT))
+		(define CLS-SECT (LLOBJ 'make-pair CLUST DJ))
+		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 
-	(define (accum-counts MRG PAIR)
-		(ACCUMULATE LLOBJ MRG PAIR 1.0))
-
-	; Run the main merge loop
-	(loop-over-disjuncts accum-counts)
+	(assign-to-cluster LLOBJ CLA CLB clique ACCUMULATE)
 
 	; Copy all counts from MemberLinks on CLB to CLA.
 	; Delete MemberLinks on CLB.
@@ -650,28 +628,16 @@
 		)
 		(cog-incoming-by-type CLB 'MemberLink))
 
-	(monitor-rate
-		"------ Combine: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-	; If merging connectors, then make a second pass.
-	(define (merge-crosses MRG PAIR)
-		(reshape-merge LLOBJ CLA MRG CLB PAIR 1.0 ACCUMULATE))
-
+	; Now merge connectors, if that was asked for.
 	(when MRG-CON
-		(set! monitor-rate (make-rate-monitor))
-		; Run the main merge loop and merge the connnectors
-		(loop-over-disjuncts merge-crosses)
-		(monitor-rate
-			"------ Combine: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		(merge-connectors LLOBJ CLA CLB clique ACCUMULATE)
 	)
-
-	(set! monitor-rate (make-rate-monitor))
-	(monitor-rate #f)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
 	; intent of this clobber is to force it to recompute it's left
 	; and right basis.
+	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ CLA)
 	(remove-empty-sections LLOBJ CLB) ; This should remove ALL of them!
@@ -693,8 +659,8 @@
 
 	(cog-delete! CLB)
 
-	(monitor-rate
-		"------ Combine: cleanup ~A in ~5F secs; ~6F ops/sec\n")
+	(format #t "------ Merge-Clusters: Cleanup ~A in ~5F secs\n"
+		(cog-name CLA) (e))
 )
 
 ; ---------------------------------------------------------------
