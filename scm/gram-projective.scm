@@ -418,58 +418,6 @@
 
 (define-public (start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
 "
-expected signature of ACCUMULATE is
-(ACCUMULATE LLOBJ CLUST SECT WEIGHT)
-where CLUST is a WordClass
-SECT is a sdection to maybe pute into CLUST
-WEIGHT is a float point fraction
-
-"
-
-	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN WA WB))
-
-	(define (clique LLOBJ CLUST SECT ACC-FUN)
-		(define WRD (LLOBJ 'left-element SECT))
-		(define DJ (LLOBJ 'right-element SECT))
-		(define WOTHER (if (equal? WRD WA) WB WA))
-		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
-		(if (nil? OTHSEC)
-			(if (< 0 frac-to-merge)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
-			(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
-		)
-	)
-
-	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
-	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE)
-
-	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
-		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
-	)
-
-	(define e (make-elapsed-secs))
-	; Cleanup after merging.
-	; The LLOBJ is assumed to be just a stars object, and so the
-	; intent of this clobber is to force it to recompute it's left
-	; and right basis.
-	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ WB)
-	(remove-empty-sections LLOBJ CLS)
-
-	; Clobber the left and right caches; the cog-delete! changed things.
-	(LLOBJ 'clobber)
-
-	(format #t "------ StartCluster: Cleanup ~A in ~5F secs\n"
-		(cog-name CLS) (e))
-)
-
-; ---------------------------------------------------------------------
-
-(define-public (xstart-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON)
-"
   start-cluster LLOBJ CLS WA WB FRAC-FN ACCUMULATE MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
      combined row CLS.
@@ -493,7 +441,13 @@ WEIGHT is a float point fraction
      Returning 1.0 gives the sum of the union of supports;
      Returning 0.0 gives the sum of the intersection of supports.
   ACCUMULATE is a function that returns how much of a given disjunct
-     is merged.
+     is merged. The expected signature is
+     `(ACCUMULATE LLOBJ CLUST SECT WEIGHT)`
+     where
+        CLUST is a WordClass
+        SECT is a section proposed for merger into CLUST
+        WEIGHT is a float point fraction of the count to merge.
+
   MRG-CON boolean flag; if #t then connectors will be merged.
 
   The merger of rows WA and WB are performed, using the 'projection
@@ -510,114 +464,34 @@ WEIGHT is a float point fraction
   This assumes that storage is connected; the updated counts are written
   to storage.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
-	(define monitor-rate (make-rate-monitor))
-
-	; Perform a loop over all the disjuncts on WA and WB.
-	; Call ACCUM-FUN on these, as they are found.
-	(define (loop-over-disjuncts ACCUM-FUN)
-		; Use the tuple-math object to provide a pair of rows that
-		; are aligned with one-another.
-		(define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-		(define ptu (add-tuple-math LLOBJ bogus))
-
-		; Loop over the sections above, merging them into one cluster.
-		(for-each
-			(lambda (PRL)
-				(define PAIR-A (first PRL))
-				(define PAIR-B (second PRL))
-
-				(define null-a (null? PAIR-A))
-				(define null-b (null? PAIR-B))
-
-				; The target into which to accumulate counts. This is
-				; an entry in the same column that PAIR-A and PAIR-B
-				; are in. (TODO maybe we could check that both PAIR-A
-				; and PAIR-B really are in the same column. They should be.)
-				(define col (if null-a
-						(LLOBJ 'right-element PAIR-B)
-						(LLOBJ 'right-element PAIR-A)))
-
-				; The place where the merge counts should be written
-				(define mrg (LLOBJ 'make-pair CLS col))
-
-				; Now perform the merge. Overlapping entries are
-				; completely merged (frac=1.0). Non-overlapping ones
-				; contribute only FRAC.
-				(cond
-					(null-a (ACCUM-FUN mrg WB PAIR-B frac-to-merge))
-					(null-b (ACCUM-FUN mrg WA PAIR-A frac-to-merge))
-					(else ; AKA (not (or null-a null-b))
-						(begin
-							(ACCUM-FUN mrg WA PAIR-A 1.0)
-							(ACCUM-FUN mrg WB PAIR-B 1.0))))
-
-				(monitor-rate #f)
-			)
-			; A list of pairs of sections to merge.
-			; This is a list of pairs of columns from LLOBJ, where either
-			; one or the other or both rows have non-zero elements in them.
-			(ptu 'right-stars (list WA WB)))
+	(define (clique LLOBJ CLUST SECT ACC-FUN)
+		(define WRD (LLOBJ 'left-element SECT))
+		(define DJ (LLOBJ 'right-element SECT))
+		(define WOTHER (if (equal? WRD WA) WB WA))
+		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
+		(if (nil? OTHSEC)
+			(if (< 0 frac-to-merge)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+		)
 	)
 
-	; Accumulated counts for the two MemberLinks.
-	(define accum-acnt 0)
-	(define accum-bcnt 0)
+	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
+	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE)
 
-	; Accumulate counts from the individual words onto the cluster.
-	(define (accum-counts MRG W PR WEI)
-		(define cnt	(ACCUMULATE LLOBJ MRG PR WEI))
-		(if (equal? W WA)
-			(set! accum-acnt (+ accum-acnt cnt))
-			(set! accum-bcnt (+ accum-bcnt cnt))))
-
-	(loop-over-disjuncts accum-counts)
-
-	(monitor-rate
-		"------ Create: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-	; Create MemberLinks. Do this before the connector-merge step,
-	; as they are examined during that phase.
-	(define memb-a (MemberLink WA CLS))
-	(define memb-b (MemberLink WB CLS))
-
-	; Track the number of observations moved from the two items
-	; into the combined class. This tracks the individual
-	; contributions.
-	(set-count memb-a accum-acnt)
-	(set-count memb-b accum-bcnt)
-
-	; If merging connectors, then make a second pass. We can't do this
-	; in the first pass, because the connector-merge logic needs to
-	; manipulate the merged Sections. (There's no obvious way to do
-	; this in a single pass; I tried.)
-	(define (reshape-crosses MRG W PR WEI)
-		(reshape-merge LLOBJ CLS MRG W PR WEI ACCUMULATE))
 	(when MRG-CON
-		(set! monitor-rate (make-rate-monitor))
-		(loop-over-disjuncts reshape-crosses)
-		(monitor-rate
-			"------ Create: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
+		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
 	)
-
-	(set! monitor-rate (make-rate-monitor))
-	(monitor-rate #f)
-
-	; Store the counts on the MemberLinks.
-	(store-atom memb-a)
-	(store-atom memb-b)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
 	; intent of this clobber is to force it to recompute it's left
 	; and right basis.
+	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ WB)
@@ -626,8 +500,8 @@ WEIGHT is a float point fraction
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(monitor-rate
-		"------ Create: cleanup ~A in ~5F secs; ~6F ops/sec\n")
+	(format #t "------ StartCluster: Cleanup ~A in ~5F secs\n"
+		(cog-name CLS) (e))
 )
 
 ; ---------------------------------------------------------------------
@@ -667,89 +541,31 @@ WEIGHT is a float point fraction
   This assumes that storage is connected; the updated counts are written
   to storage.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN CLS WA))
 
-	; Caution: there's a "feature" bug in projection merging when used
-	; with connector merging. The code below will create sections with
-	; dangling connectors that may be unwanted. Easiest to explain by
-	; example. Consider a section (f, abe) being merged into a cluster
-	; {e,j} to form a cluster {e,j,f}. The code below will create a
-	; section ({ej}, abe) as the C-section, and transfer some counts
-	; to it. But, when connector merging is desired, it should have gone
-	; to ({ej}, ab{ej}). There are two possible solutions: have the
-	; connector merging try to detect this, and clean it up, or have
-	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
-	; "natural" way for the tuple object to create this pairing (it is
-	; "naturally" linear, by design) so we must clean up during connector
-	; merging.
-	(define (loop-over-disjuncts ACCUM-FUN)
-		(for-each
-			(lambda (PAIR-A)
-				(define DJ (LLOBJ 'right-element PAIR-A))
-				(define PAIR-C (LLOBJ 'get-pair CLS DJ))
-
-				; Two different tasks, depending on whether PAIR-C
-				; exists or not - we merge all, or just some.
-				(if (nil? PAIR-C)
-
-					; Accumulate just a fraction into the new column.
-					(ACCUM-FUN (LLOBJ 'make-pair CLS DJ) PAIR-A frac-to-merge)
-
-					; PAIR-C exists already. Merge 100% of A into it.
-					(ACCUM-FUN PAIR-C PAIR-A 1.0))
-			)
-			(LLOBJ 'right-stars WA))
+	(define (clique LLOBJ CLUST SECT ACC-FUN)
+		(define WRD (LLOBJ 'left-element SECT))
+		(define DJ (LLOBJ 'right-element SECT))
+		(define CLS-SECT (LLOBJ 'get-pair CLUST DJ))
+		(if (nil? CLS-SECT)
+			(if (< 0 frac-to-merge)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
+		)
 	)
 
-	(define monitor-rate (make-rate-monitor))
+	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
 
-	; Accumulated count on the MemberLink.
-	(define accum-cnt 0)
-
-	; Accumulate counts from PAIR-A onto PAIR-C
-	(define (accum-sections PAIR-C PAIR-A WEI)
-		(monitor-rate #f)
-		(set! accum-cnt (+ accum-cnt
-			(ACCUMULATE LLOBJ PAIR-C PAIR-A WEI))))
-
-	(loop-over-disjuncts accum-sections)
-
-	; Create MemberLinks. Do this before the connector-merge step,
-	; as they are examined during that phase.
-	(define memb-a (MemberLink WA CLS))
-	(set-count memb-a accum-cnt)
-
-	(monitor-rate
-		"------ Extend: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
-
-	; Perform the connector merge.
-	(define (reshape-crosses PAIR-C PAIR-A WEI)
-		(monitor-rate #f)
-		(reshape-merge LLOBJ CLS PAIR-C WA PAIR-A WEI ACCUMULATE))
 	(when MRG-CON
-		(set! monitor-rate (make-rate-monitor))
-		(loop-over-disjuncts reshape-crosses)
-		(monitor-rate
-			"------ Extend: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
+		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
 	)
-
-	(set! monitor-rate (make-rate-monitor))
-	(monitor-rate #f)
-
-	; Track the number of observations moved from WA to the class.
-	; Store the updated count.
-	(store-atom memb-a)
 
 	; Cleanup after merging.
 	; The LLOBJ is assumed to be just a stars object, and so the
 	; intent of this clobber is to force it to recompute it's left
 	; and right basis.
+	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
 	(remove-empty-sections LLOBJ WA)
 	(remove-empty-sections LLOBJ CLS)
@@ -757,8 +573,8 @@ WEIGHT is a float point fraction
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
 
-	(monitor-rate
-		"------ Extend: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
+	(format #t "------ Merge-Into-Cluster: Cleanup ~A in ~5F secs\n"
+		(cog-name CLS) (e))
 )
 
 ; ---------------------------------------------------------------------
