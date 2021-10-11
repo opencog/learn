@@ -218,9 +218,9 @@
 
 ;; XXX This should not be public/exported, except that the unit tests
 ;; need this.
-(define-public (accumulate-count LLOBJ ACC PAIR FRAC NOISE)
+(define-public (accumulate-count LLOBJ ACC PAIR FRAC)
 "
-  accumulate-count LLOBJ ACC PAIR FRAC NOISE -- Accumulate count
+  accumulate-count LLOBJ ACC PAIR FRAC -- Accumulate count
     from PAIR into ACC.
 
   ACC and PAIR should be two pairs in the matrix LLOBJ. (Usually,
@@ -231,10 +231,8 @@
   If the count on ACC is non-zero, then *all* of the count on PAIR
   will be transfered (and PAIR will be removed from the database).
 
-  If the count on ACC is zero, and the count on PAIR is greater than
-  NOISE (floating-point noise-floor), then only a FRAC of the count
-  will get transfered to ACC. If the count is below the noise floor,
-  then all of it will be transfered over.
+  If the count on ACC is zero, then only a FRAC of the count will
+  get transfered to ACC.
 
   Both Atoms, with updated counts, are stored to the database.
 
@@ -254,9 +252,7 @@
 
 	; If the accumulator count is zero, transfer only a FRAC of
 	; the count into the accumulator.
-	(define taper-cnt (if
-			(and (is-zero? acnt) (< NOISE mcnt))
-			(* FRAC mcnt) mcnt))
+	(define taper-cnt (* FRAC mcnt))
 
 	; Update the count on the donor pair.
 	; If the count is zero or less, delete the donor pair.
@@ -305,6 +301,14 @@
 
   Accumulated row totals are stored in the MemberLink that attaches
   WA to CLS.
+
+  ACCUMULATE is a function that returns how much of a given disjunct
+     is merged. The expected signature is
+     `(ACCUMULATE LLOBJ CLUST SECT WEIGHT)`
+     where
+        CLUST is a WordClass
+        SECT is a section proposed for merger into CLUST
+        WEIGHT is a float point fraction of the count to merge.
 
   This assumes that storage is connected; the updated counts are written
   to storage.
@@ -390,14 +394,11 @@
 
 	; XXX FIXME The arguments to reshape-merge can be simplified.
 	; This is insanely convoluted right now.
-	; Perform the connector merge.
-	(define (shacc LLOBJ MRGECT SECT WEIGHT)
-		(accumulate-count LLOBJ MRGECT SECT WEIGHT 0))
 
 	; SECT ends up being PAIR-A in the loop below.
 	; MRGECT is the matching merger section
 	(define (reshape OBJ MRGECT SECT FRAC)
-		(reshape-merge OBJ CLS MRGECT WA SECT FRAC shacc)
+		(reshape-merge OBJ CLS MRGECT WA SECT FRAC accumulate-count)
 	)
 
 	(for-each
