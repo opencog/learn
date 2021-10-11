@@ -190,7 +190,7 @@
 	(define mgsf (LLOBJ 'flatten GLS resect))
 
 	; This is confusing ... why can't we just call accumulate-count?
-	; (ACCUMULATE LLOBJ mgs donor FRAC)
+	; (accumulate-count LLOBJ mgs donor FRAC)
 	; ???
 	(if (nil? (cog-link 'MemberLink germ GLS))
 		(let ((donor (LLOBJ 'make-section XDON))
@@ -218,9 +218,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define (reshape-merge LLOBJ GLS MRG W DONOR FRAC ACCUMULATE)
+(define (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
 "
-  reshape-merge LLOBJ GLS MRG W DONOR FRAC ACCUMULATE
+  reshape-merge LLOBJ GLS MRG W DONOR FRAC
 
   Merge connectors on the Section/CrossSection MRG.
   This creates a set of 'consistent' Sections/CrossSections such that
@@ -257,7 +257,7 @@
 					(for-each
 						(lambda (XST)
 							(define xmr (LLOBJ 're-cross GLS XST))
-							(ACCUMULATE LLOBJ xmr XST FRAC))
+							(accumulate-count LLOBJ xmr XST FRAC))
 						(LLOBJ 'make-cross-sections DONOR))
 
 						; We can rebalance here, but it does not seem to

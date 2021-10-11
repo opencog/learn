@@ -397,7 +397,7 @@
 	; SECT ends up being PAIR-A in the loop below.
 	; MRGECT is the matching merger section
 	(define (reshape OBJ MRGECT SECT FRAC)
-		(reshape-merge OBJ CLS MRGECT WA SECT FRAC accumulate-count)
+		(reshape-merge OBJ CLS MRGECT WA SECT FRAC)
 	)
 
 	(for-each

@@ -5892,11 +5892,23 @@ In the good version,  [e, <j,abv>] somehow got zeroed... how?
 because  (j, abe) got ...zeroed??? it was zeroed in the first round.
 why not zered in the second round?
 
-
-
 the matching sections should be
    (1-p) * (j, egh)
    (1-p) * (j, abe) -- no!!
+====================================================
+
+reshape-merge is called with a FRAC that it pases to
+accumulate-count
+That frac comes from clique ... can we ... wrap it...
+
+can we change signature on ACC-FUN aka ACCUMULATE to match the
+more comprehensive signature on reshape-merge which is currently
+(reshape-merge OBJ CLS MRGECT WA SECT FRAC)
+that would mean making 
+
+
+
+
 
 ====================================================
 link-class.scm ???
