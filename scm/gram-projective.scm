@@ -332,14 +332,11 @@
 	; "natural" way for the tuple object to create this pairing (it is
 	; "naturally" linear, by design) so we must clean up during connector
 	; merging.
-(format #t "duude entry time merge ~A\n" (cog-name WA))
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-(format #t "duude elt before ~A\n" (prt-element PAIR-A))
 			(set! accum-cnt (+ accum-cnt
 				(CLIQUE LLOBJ CLS PAIR-A ACCUMULATE)))
-(format #t "duude elt after  ~A\n" (prt-element PAIR-A))
 		)
 		(LLOBJ 'right-stars WA))
 
@@ -395,26 +392,18 @@
 	; This is insanely convoluted right now.
 	; Perform the connector merge.
 	(define (shacc LLOBJ MRGECT SECT WEIGHT)
-(format #t "    schacc ~A . ~A\n" (prt-element MRGECT) (prt-element SECT))
 		(accumulate-count LLOBJ MRGECT SECT WEIGHT 0))
 
 	; SECT ends up being PAIR-A in the loop below.
 	; MRGECT is the matching merger section
 	(define (reshape OBJ MRGECT SECT FRAC)
-(format #t "  prelique frac=~A on ~A . ~A\n"
-FRAC (prt-element MRGECT) (prt-element SECT))
 		(reshape-merge OBJ CLS MRGECT WA SECT FRAC shacc)
-(format #t "  postique frac=~A on ~A . ~A\n"
-FRAC (prt-element MRGECT) (prt-element SECT))
 	)
 
-(format #t "duuude enter reshapes\n")
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-(format #t "duude elt before ~A\n" (prt-element PAIR-A))
 			(CLIQUE LLOBJ CLS PAIR-A reshape)
-(format #t "duude elt after  ~A\n---\n" (prt-element PAIR-A))
 		)
 		(LLOBJ 'right-stars WA))
 
@@ -423,19 +412,6 @@ FRAC (prt-element MRGECT) (prt-element SECT))
 
 	(set! monitor-rate (make-rate-monitor))
 	(monitor-rate #f)
-
-	; Cleanup after merging.
-	; The LLOBJ is assumed to be just a stars object, and so the
-	; intent of this clobber is to force it to recompute it's left
-	; and right basis.
-	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-
-	; Clobber the left and right caches; the cog-delete! changed things.
-	(LLOBJ 'clobber)
-
-	(monitor-rate
-		"------ Assign: Cleanup ~A in ~5F secs; ~6F ops/sec\n")
 )
 
 ; ---------------------------------------------------------------------
@@ -472,7 +448,22 @@ WEIGHT is a float point fraction
 		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
 		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
 	)
+
+	(define e (make-elapsed-secs))
+	; Cleanup after merging.
+	; The LLOBJ is assumed to be just a stars object, and so the
+	; intent of this clobber is to force it to recompute it's left
+	; and right basis.
+	(LLOBJ 'clobber)
+	(remove-empty-sections LLOBJ WA)
+	(remove-empty-sections LLOBJ WB)
 	(remove-empty-sections LLOBJ CLS)
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
+	(format #t "------ StartCluster: Cleanup ~A in ~5F secs\n"
+		(cog-name CLS) (e))
 )
 
 ; ---------------------------------------------------------------------

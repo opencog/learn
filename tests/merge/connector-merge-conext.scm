@@ -112,8 +112,6 @@
 ; We expect only one cross-section: [e, <j,vgh>] as all others are
 ; absorbed. This cross-section corresponds to (1-p) * (j, egh)
 (test-equal 2 (len-type (Word "e") 'Section))
-(format #t "duuude excpeted 1 on e got ~A coss\n" (len-type (Word "e") 'CrossSection))
-(format #t "its ~A" (prt-element-list (cog-get-atoms 'CrossSection)))
 (test-equal 1 (len-type (Word "e") 'CrossSection))
 (test-equal 3 (length (gsc 'right-stars (Word "e"))))
 
