@@ -46,7 +46,7 @@
 	(define (frac WA WB) FRAC)
 	(define (noop W) #f)
 	(define (final) #f)
-	(define mrg (make-merge-pair LLOBJ frac noop final #t))
+	(define mrg (make-merge-pair LLOBJ frac 0.0 noop final #t))
 	(mrg WA WB)
 )
 

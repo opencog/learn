@@ -470,7 +470,7 @@
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
 	(define merge-pair (make-merge-pair LLOBJ
-		none store-mmt store-final #t))
+		none 0.0 store-mmt store-final #t))
 
 	; ------------------------------
 	; The workhorse, the function that does the work.
@@ -570,7 +570,7 @@ Unfinished prototype
 		; depend on the in-group.
 ;xxx no, we are reinventing the merge-pair logic!
 		(define merge-them (make-merge-pair LLOBJ
-			none store-mmt store-final #t))
+			none 0.0 store-mmt store-final #t))
 
 		; Merge the first two manually, so that wclass is always
 		; a WordClass.

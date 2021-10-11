@@ -236,6 +236,10 @@
   When this completes, the resulting Sections/CrossSections are fully
   self-consistent. The inconsistent Sections/CrossSections will have
   thier counts set to zero, and need to be deleted in a subsequent pass.
+
+  FRAC is a floating-point numeric value, of the fraction of counts to
+  transfer. This might be a value between zero and one when MRG doesn't
+  exist.
 "
 	(define donor-type (cog-type DONOR))
 

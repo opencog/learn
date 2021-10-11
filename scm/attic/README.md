@@ -8,14 +8,18 @@ Stuff here should be deleted a few years after being declared dead.
     the counts of the rest. This is a kind-of fuzzy-set-like concept,
     and the fuzziness did nothing for the merge quality.  I dunno,
     it might be OK, but really not very inspiring, in the end.
+    This is kept here for now, because it was explored extensively
+    in the Diary Part One
 
 * __agglo-loops.scm__ : Top-level routines to do pair-wise clustering.
     The code works, but doing pair-wise clustering seems not to give
     the best results.  This file implements thee different algos that
-    assign words to existing clustters, or if there aren't any suitable
-    ones, they create a new cluster. Again, this is OK, the code works,
-    it gives OK results, but the newer clustering code in
-    __agglorank.scm__ is better.
+    assign words to existing clusters, or if there aren't any suitable
+    ones, they create a new cluster. This is OK, the code works, it
+    gives OK results. It is kept here because it was explored and
+    characterized extensively in Diary Part One. The newer clustering
+    code in __agglo-rank.scm__ is better. The newer code is explored
+    and characterized in Diary Part Four.
 
 * __singletons.scm__: Code for working with single words.  Not used
     anywhere. Well, used in the summary reports below.

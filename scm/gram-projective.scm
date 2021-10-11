@@ -407,9 +407,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN MRG-CON)
+(define-public (start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON)
 "
-  start-cluster LLOBJ CLS WA WB FRAC-FN MRG-CON --
+  start-cluster LLOBJ CLS WA WB FRAC-FN NOISE MRG-CON --
      Start a new cluster by merging rows WA and WB of LLOBJ into a
      combined row CLS.
 
@@ -457,8 +457,10 @@
 		(define WOTHER (if (equal? WRD WA) WB WA))
 		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
 		(if (nil? OTHSEC)
-			(if (< 0 frac-to-merge)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(if (<= (LLOBJ 'get-count SECT) NOISE)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+				(if (< 0 frac-to-merge)
+					(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge)))
 			(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 		)
 	)
@@ -490,7 +492,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN MRG-CON)
+(define-public (merge-into-cluster LLOBJ CLS WA FRAC-FN NOISE MRG-CON)
 "
   merge-into-cluster LLOBJ CLS WA FRAC-FN MRG-CON --
      Merge WA into cluster CLS. These are two rows in LLOBJ,
@@ -531,8 +533,10 @@
 		(define DJ (LLOBJ 'right-element SECT))
 		(define CLS-SECT (LLOBJ 'get-pair CLUST DJ))
 		(if (nil? CLS-SECT)
-			(if (< 0 frac-to-merge)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge))
+			(if (<= (LLOBJ 'get-count SECT) NOISE)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+				(if (< 0 frac-to-merge)
+					(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge)))
 			(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 		)
 	)
@@ -647,7 +651,7 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-merge-pair STARS FRAC-FN STORE FIN MRG-CON)
+(define-public (make-merge-pair STARS FRAC-FN NOISE STORE FIN MRG-CON)
 "
   make-mergerfn STARS FRAC-FN STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
@@ -659,6 +663,11 @@
   FRAC-FUN is a function that takes two rows in STARS and returns a
   number between 0.0 and 1.0 indicating what fraction of a row to merge,
   when the corresponding matrix element in the other row is null.
+
+  NOISE is a floating-point numeric value indicating a count, below
+  which a merge will always be made. That is, if the count on the
+  donating section is less than this value, then that section will
+  be merged in it's entirety (ignoring the value returned by FRAC-FUN.)
 
   STORE is an extra function called, after the merge is to completed,
   and may be used to compute and store additional needed data that
@@ -697,12 +706,12 @@
 				(merge-clusters STARS WA WB MRG-CON))
 			((and (not wa-is-cls) (not wb-is-cls))
 				(begin
-					(start-cluster STARS cls WA WB FRAC-FN MRG-CON)
+					(start-cluster STARS cls WA WB FRAC-FN NOISE MRG-CON)
 					(STORE cls)))
 			(wa-is-cls
-				(merge-into-cluster STARS WA WB FRAC-FN MRG-CON))
+				(merge-into-cluster STARS WA WB FRAC-FN NOISE MRG-CON))
 			(wb-is-cls
-				(merge-into-cluster STARS WB WA FRAC-FN MRG-CON))
+				(merge-into-cluster STARS WB WA FRAC-FN NOISE MRG-CON))
 		)
 
 		(STORE WA)
