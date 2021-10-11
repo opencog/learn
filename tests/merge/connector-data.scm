@@ -310,7 +310,7 @@
 (define sec-a-klv #f)
 (define sec-f-klv #f)
 
-(define (expected-indirect-sections)
+(define (expected-indirect-sections WC-EJ)
 	(set! sec-a-kle
 	(Section
 		(Word "a")
@@ -382,7 +382,7 @@
 (define xes-ejf-ejf-abv #f)
 (define xes-ejf-ejf-vgh #f)
 
-(define (expected-f-extra-sections)
+(define (expected-f-extra-sections WC-EJ)
 	(set! sec-f-abe
 	(Section
 		(Word "f")
@@ -487,7 +487,7 @@
 (define xes-ej-ej-ebv #f)
 (define xes-ej-ej-veh #f)
 
-(define (expected-j-double-e)
+(define (expected-j-double-e WC-EJ)
 	(set! sec-j-ebe
 	(Section
 		(Word "j")
@@ -595,7 +595,7 @@
 (define xes-ejf-ejf-ejbv #f)
 (define xes-ejf-ejf-vejh #f)
 
-(define (expected-f-double-e)
+(define (expected-f-double-e WC-EJ)
 	(set! sec-f-ebe
 	(Section
 		(Word "f")
