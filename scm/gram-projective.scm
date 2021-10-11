@@ -355,9 +355,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-connectors LLOBJ CLS WA CLIQUE ACCUMULATE)
+(define (merge-connectors LLOBJ CLS WA CLIQUE)
 "
-  merge-connectors LLOBJ CLS WA CLIQUE ACCUMULATE --
+  merge-connectors LLOBJ CLS WA CLIQUE --
 
   Loop over the disjuncts on WA, and call CLIQUE on each,
   passing CLS and the disjunct to it.
@@ -483,8 +483,8 @@
 	(assign-to-cluster LLOBJ CLS WB clique ACCUMULATE)
 
 	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
-		(merge-connectors LLOBJ CLS WB clique ACCUMULATE)
+		(merge-connectors LLOBJ CLS WA clique)
+		(merge-connectors LLOBJ CLS WB clique)
 	)
 
 	; Cleanup after merging.
@@ -558,7 +558,7 @@
 	(assign-to-cluster LLOBJ CLS WA clique ACCUMULATE)
 
 	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA clique ACCUMULATE)
+		(merge-connectors LLOBJ CLS WA clique)
 	)
 
 	; Cleanup after merging.
@@ -630,7 +630,7 @@
 
 	; Now merge connectors, if that was asked for.
 	(when MRG-CON
-		(merge-connectors LLOBJ CLA CLB clique ACCUMULATE)
+		(merge-connectors LLOBJ CLA CLB clique)
 	)
 
 	; Cleanup after merging.
@@ -766,7 +766,7 @@
 
 (define-public (make-mergefn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON)
 "
-  make-merger STARS FRAC-FN NOISE STORE FIN MRG-CON --
+  make-mergerfn STARS FRAC-FN ACCUMULATE STORE FIN MRG-CON --
   Return object that implements the `merge-project` merge style
   (as described at the top of this file).
 
