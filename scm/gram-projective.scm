@@ -656,6 +656,10 @@
 
 ; ---------------------------------------------------------------
 
+; XXX TODO once make-merge-ingroup is done, this can be reimplemented
+; as a special case of that. That means that the above three functions
+; can be discarded. It also means that `gram-class-api` 'make-cluster
+; method can be discarded or refactored.
 (define-public (make-merge-pair STARS FRAC-FN NOISE STORE FIN MRG-CON)
 "
   make-merger-pair STARS FRAC-FN NOISE STORE FIN MRG-CON --

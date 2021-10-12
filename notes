@@ -5925,6 +5925,76 @@ clique is called with reshape-merge during merge step. w/numeric frac
 
 reshape uses FRAC in only one place! ... but it's key.
 
+-----------
+old bug ...
+In opencog/nlp/learn/gram-projective.scm:
+   924:32  2 (merge (WordClassNode "would must")
+ (WordClassNode "had has")
+)
+   736:16  1 (merge-clusters _ _ _ _ _)
+
+(define CLB (WordClassNode "had has"))
+(cog-incoming-size-by-type CLB 'Section) ;10
+(cog-incoming-size-by-type CLB 'CrossSection) ;11
+(cog-incoming-size-by-type CLB 'Shape) ;10
+
+but (check) doesn't complain because these are all balanced!
+TODO:
+checkout branch r9-detailed-balance and halt before the merge is
+started, dump all sections and cross-sections for these guys
+into a file.  Ouch. But I see no other alternative, right now.
+
+
+ohh ... wait..
+the failing sections are all of the form:
+
+(Section (ctv 1 0 113)
+  (WordClassNode "had has")
+  (ConnectorSeq
+    (Connector
+      (WordNode "who")
+      (ConnectorDir "-"))
+    (Connector
+      (WordClassNode "would must")
+      (ConnectorDir "+"))))
+
+
+and bizarrely:
+(CrossSection (ctv 1 0 113)
+  (WordClassNode "had has")
+  (ShapeLink
+    (WordClassNode "would must")
+    (Connector
+      (WordNode "who")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
+
+which is NOT the explosion! so that's .. not right! Note the balanced
+counts!  Also not deleted:
+
+(cog-incoming-set (ShapeLink
+  (WordClassNode "had has")
+  (Connector
+    (VariableNode "$connector-word")
+    (ConnectorDir "-"))
+  (Connector
+    (WordNode "been")
+    (ConnectorDir "+"))))
+$7 = ((CrossSection (ctv 1 0 6)
+  (WordClassNode "would must")
+  (ShapeLink
+    (WordClassNode "had has")
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "been")
+      (ConnectorDir "+"))))
+)
+
+curious ... need to eximine the before state...
 
 
 
