@@ -5918,7 +5918,8 @@ that would mean making the sginature on  accumulate-count
 match that on reshape-merge
 
 Again:
-
+clique does not need the CLS argument, its available externally.
+Maybe clique should get the dj argument?
 clique is called with accumulate-count during assign  w/numeric frac
 clique is called with reshape-merge during merge step. w/numeric frac
 

@@ -298,11 +298,8 @@
   The merger of row WA into CLS is performed, using the CLIQUE
   function to make disjunct-by-disjunct merge decisions.
 
-  Accumulated row totals are stored in the MemberLink that attaches
-  WA to CLS.
-
-  This assumes that storage is connected; the updated counts are written
-  to storage.
+  This assumes that storage is connected; the updated counts are
+  written to storage.
 "
 	; set-count ATOM CNT - Set the raw observational count on ATOM.
 	; XXX FIXME there should be a set-count on the LLOBJ...
@@ -452,6 +449,7 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
+	; CLUST is identical to CLS, always.
 	(define (clique LLOBJ CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
@@ -530,6 +528,7 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN CLS WA))
 
+	; CLUST is identical to CLS, always.
 	(define (clique LLOBJ CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
@@ -579,6 +578,7 @@
 
   See start-cluster for additional details.
 "
+	; CLUST is identical to CLA, always.
 	(define (clique LLOBJ CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
@@ -745,27 +745,44 @@
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the LLOBJ object have shapes on it.
 "
+	; Intersection-merge, always.
 	(define (frac WA WB) 0.0)
-
-; xxxxxxxxx wrong must vote!
-; XXX also, the sectin was already made so we don't need to make it
-; again! To do that, have to change the signature!
-	(define (clique LLOBJ CLUST SECT ACC-FUN)
-		(define WRD (LLOBJ 'left-element SECT))
-		(define DJ (LLOBJ 'right-element SECT))
-		(define CLS-SECT (LLOBJ 'make-pair CLUST DJ))
-
-		(define (foo . args) 'wtff)
-		(define tupe (add-tuple-math LLOBJ foo 'right-element))
-
-		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
-	)
-
 
 	; WLIST is a list of WordNodes and/or WordClassNodes
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WLIST)
 
+		; The minimum number of sections that must exist for
+		; a given disjunct.
+		(define vote-thresh
+			(inexact->exact (round (* QUORUM (length WLIST)))))
+
+		; Return #t if the DJ is shared by the majority of the
+		; sections.
+		(define (vote DJ)
+			(define scnt
+				(fold
+					(lambda (WRD CNT)
+						(if (nil? (LLOBJ 'get-section WRD DJ)) 0 1))
+					0
+					WLIST))
+
+			; Does the count exceed the threshold?
+			(<= vote-thresh scnt))
+
+		; Merge the particular DJ, if it is shared by the majority.
+		(define (clique LLOBJ CLUST SECT ACC-FUN)
+			(define DJ (LLOBJ 'right-element SECT))
+
+			(if (vote DJ)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)))
+
+		(for-each
+			(lambda (WRD)
+				(if (equal? (cog-type WRD 'WordClassNode))
+					(throw 'not-implemented 'make-merge-ingroup
+						"Not done yet")))
+			WLIST)
 ; xxxxxxx wrong bad name!
 		; (define cls (LLOBJ 'make-cluster WA WB))
 		(define cls (WordClassNode "foo"))
