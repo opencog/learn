@@ -75,9 +75,13 @@
 			WLIST)
 
 		; The minimum number of sections that must exist for
-		; a given disjunct.
+		; a given disjunct. For a list of length two, both
+		; must share that disjunct (thus giving the traditional
+		; overlap merge).
+		(define wlen (length WLIST))
 		(define vote-thresh
-			(inexact->exact (round (* QUORUM (length WLIST)))))
+			(if (equal? wlen 2) 2
+				(inexact->exact (round (* QUORUM wlen)))))
 
 		; Return #t if the DJ is shared by the majority of the
 		; sections. Does the count exceed the threshold?
