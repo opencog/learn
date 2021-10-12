@@ -40,6 +40,12 @@
 
 ; ---------------------------------------------------------------------
 
+; TODO: we can very easily re-introduce FRAC here, and thus
+; provide compatibility with the older merge methods. Just
+; modify `clique` below to do this.
+;
+; TODO: maybe reintroduce NOISE as well.
+
 (define-public (make-merge-majority LLOBJ QUORUM MRG-CON)
 "
   make-merger-majority LLOBJ QUORUM MRG-CON --
@@ -79,7 +85,7 @@
 			(<= vote-thresh
 				(fold
 					(lambda (WRD CNT)
-						(if (nil? (LLOBJ 'get-pair WRD DJ)) 0 1))
+						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
 					WLIST)))
 
@@ -90,7 +96,7 @@
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(if (vote-to-accept? DJ)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 				0))
 
 		; We are going to control the name we give it. We could also
