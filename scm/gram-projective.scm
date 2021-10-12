@@ -1,7 +1,7 @@
 ;
 ; gram-projective.scm
 ;
-; Merge words into word-classes by grammatical similarity.
+; Merge items into clusters.
 ; Projective merge strategies.
 ;
 ; Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
@@ -20,18 +20,6 @@
 ; place(s) where its not generic is in some progress-report printing,
 ; and in the general discussion of what this code does. Otherwise, what
 ; to merge, and where to put the merger results are defined by LLOBJ.
-;
-; TODO: This code implements the "projection merge" strategy, but the
-; latest results indicate that this does not improve quality all that
-; much, if at all. So the latest merge style `comi` just disables
-; the projection merge by setting the union-frac to zero.  Thus, the
-; code in this file could be simplified by ripping out all the
-; union-merge stuff.  Anyway, the democratic-vote idea will require
-; explicit lists of disjuncts to merge, so this needs a rewrite, anyway.
-;
-; XXX Unless we decide to union-in anything below the noise-threshold
-; cutoff, in which case we want to continue doing unions, just to handle
-; this particular case.
 ;
 ; Orthogonal merging
 ; ------------------
@@ -72,11 +60,12 @@
 ; -------------------------
 ; The above described what to do to extend an existing grammatical class
 ; with a new candidate word.  It does not describe how to form the
-; initial grammatical class, out of the merger of two words. Several
-; strategies are possible. Given two words `u` and `v`, These are:
+; initial grammatical class, out of the merger of N words. Several
+; strategies are possible. Given words `u`, `v`, `w`, ... one may:
 ;
-; * Simple sum: let `g=u+v`. That's it; nothing more.
+; * Simple sum: let `g=u+v+w+...`. That's it; nothing more.
 ; * Overlap and union merge, given below.
+; * Democratic voting: merge those basis elements shared by a majority.
 ;
 ; Overlap merge
 ; -------------
@@ -122,24 +111,23 @@
 ;
 ;   {e_union} = {e_a} set-union {e_b}
 ;
-; merge-project
-; -------------
-; The above merge methods are implemented in the `merge-project`
-; function. It takes, as an argument, a fractional weight which is
+; accumulate-count, assign-to-cluster
+; -----------------------------------
+; The above merge methods are implemented in the `accumulate-count`
+; and `assign-to-cluster` functions. The first does the math for
+; one basis element, the second loops over the vectors.
+;
+; The first takes, as an argument, a fractional weight which is
 ; used when the disjunct isn't shared between both words. Setting
 ; the weight to zero gives overlap merging; setting it to one gives
 ; union merging. Setting it to fractional values provides a merge
 ; that is intermediate between the two: an overlap, plus a bit more,
-; viz some of the union.  A second parameter serves as a cutoff, so
-; that any observation counts below the cutoff are always merged.
+; viz some of the union.  This is sometimes called "fuzzy merging"
+; in other places.
 ;
 ; That is, the merger is given by the vector
 ;
 ;   v_merged = v_overlap + FRAC * (v_union - v_overlap)
-;
-; for those vector components in v_union that have been observed more
-; than the minimum cutoff; else all of the small v_union components
-; are merged.
 ;
 ; If v_a and v_b are both words, then the counts on v_a and v_b are
 ; adjusted to remove the counts that were added into v_merged. If one
@@ -393,137 +381,4 @@
 )
 
 ; ---------------------------------------------------------------------
-
-(define-public (make-merge-ingroup LLOBJ QUORUM MRG-CON)
-"
-  make-merger-ingroup LLOBJ QUORUM MRG-CON --
-  Return a function that will merge a list of words into one class.
-  The disjuncts that are selected to be merged are those shared by
-  the majority of the given words, where `majority` is defined as
-  a fraction that is greater or equal to QUORUM.
-
-  LLOBJ is the object holding the disjuncts. For example, it could
-  be (add-dynamic-stars (make-pseudo-cset-api))
-
-  QUORUM is a floating point number indicating the fraction of
-  sections that must share a given disjunct, before that disjunct is
-  merged into the cluster.
-
-  MRG-CON is #t if Connectors should also be merged.  This requires
-  that the LLOBJ object have shapes on it.
-"
-	; WLIST is a list of WordNodes and/or WordClassNodes
-	; Return a WordClassNode that is the result of the merge.
-	(define (merge WLIST)
-		(for-each
-			(lambda (WRD)
-				(if (equal? (cog-type WRD) 'WordClassNode)
-					(throw 'not-implemented 'make-merge-ingroup
-						"Not done yet")))
-			WLIST)
-
-		; The minimum number of sections that must exist for
-		; a given disjunct.
-		(define vote-thresh
-			(inexact->exact (round (* QUORUM (length WLIST)))))
-
-		; Return #t if the DJ is shared by the majority of the
-		; sections. Does the count exceed the threshold?
-		(define (vote-to-accept? DJ)
-			(<= vote-thresh
-				(fold
-					(lambda (WRD CNT)
-						(if (nil? (LLOBJ 'get-pair WRD DJ)) 0 1))
-					0
-					WLIST)))
-
-		; Merge the particular DJ, if it is shared by the majority.
-		; CLUST is identical to cls, defined below. Return zero if
-		; there is no merge.
-		(define (clique LLOBJ CLUST SECT ACC-FUN)
-			(define DJ (LLOBJ 'right-element SECT))
-
-			(if (vote-to-accept? DJ)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)
-				0))
-
-		; We are going to control the name we give it. We could also
-		; delegate this to `add-gram-class-api`, but for now, we're
-		; going to punt and do it here. Some day, in a generic framework,
-		; this will need to be cleaned up.
-		(define cls-name (string-join (map cog-name WLIST)))
-		(define cls-type (LLOBJ 'cluster-type))
-		(define cls-typname
-			(if (cog-atom? cls-type) (cog-name cls-type) cls-type))
-		(define cls (cog-new-node cls-typname cls-name))
-
-		(for-each
-			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
-			WLIST)
-
-		(when MRG-CON
-			(for-each
-				(lambda (WRD) (merge-connectors LLOBJ cls WRD clique))
-				WLIST)
-		)
-
-		; Cleanup after merging.
-		; The LLOBJ is assumed to be just a stars object, and so the
-		; intent of this clobber is to force it to recompute it's left
-		; and right basis.
-		(define e (make-elapsed-secs))
-		(LLOBJ 'clobber)
-		(for-each
-			(lambda (WRD) (remove-empty-sections LLOBJ WRD))
-			WLIST)
-		(remove-empty-sections LLOBJ cls)
-
-		; Clobber the left and right caches; the cog-delete! changed things.
-		(LLOBJ 'clobber)
-
-		(format #t "------ merge-ingroup: Cleanup `~A` in ~A secs\n"
-			(cog-name cls) (e))
-
-		cls
-	)
-
-	; Return the above function
-	merge
-)
-
-; ---------------------------------------------------------------
-; Example usage
-;
-; (load-atoms-of-type 'WordNode)          ; Typically about 80 seconds
-; (define pca (make-pseudo-cset-api))
-; (define psa (add-dynamic-stars pca))
-;
-; Verify that support is correctly computed.
-; cit-vil is a vector of pairs for matching sections for "city" "village".
-; Note that the null list '() means 'no such section'
-;
-; (define (bogus a b) (format #t "Its ~A and ~A\n" a b))
-; (define ptu (add-tuple-math psa bogus))
-; (define cit-vil (ptu 'right-stars (list (Word "city") (Word "village"))))
-; (length cit-vil)
-;
-; Show the first three values of the vector:
-; (ptu 'get-count (car cit-vil))
-; (ptu 'get-count (cadr cit-vil))
-; (ptu 'get-count (caddr cit-vil))
-;
-; print the whole vector:
-; (for-each (lambda (pr) (ptu 'get-count pr)) cit-vil)
-;
-; Is it OK to merge?
-; (define pcos (add-similarity-compute psa))
-; (is-cosine-similar? pcos (Word "run") (Word "jump"))
-; (is-cosine-similar? pcos (Word "city") (Word "village"))
-;
-; Perform the actual merge
-; (define (frac WA WB) 0.3)
-; (define cls (WordClass "city-village"))
-; (start-cluster psa cls (Word "city") (Word "village") frac 4.0 #t)
-;
-; Verify presence in the database:
-; select count(*) from atoms where type=22;
+; Example usage (none)
