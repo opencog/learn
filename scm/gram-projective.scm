@@ -209,62 +209,51 @@
 
 ;; XXX This should not be public/exported, except that the unit tests
 ;; need this.
-(define-public (accumulate-count LLOBJ ACC PAIR FRAC)
+(define-public (accumulate-count LLOBJ ACC DONOR FRAC)
 "
-  accumulate-count LLOBJ ACC PAIR FRAC -- Accumulate count
-    from PAIR into ACC.
+  accumulate-count LLOBJ ACC DONOR FRAC -- Accumulate a fraction
+    of the count from DONOR into ACC.
 
-  ACC and PAIR should be two pairs in the matrix LLOBJ. (Usually,
-  they will be in the same row or column, although this code does not
-  assume this.)
+  ACC and DONOR should be two pairs in the matrix LLOBJ. (Usually,
+  they will be in the same row or column, although this code does
+  not assume this.)
 
-  The count on PAIR will be transfered to ACC, with some caveats:
-  If the count on ACC is non-zero, then *all* of the count on PAIR
-  will be transfered (and PAIR will be removed from the database).
+  A fraction FRAC of the count on DONOR will be transfered to ACC.
+  Both Atoms, with updated counts, are stored to the database, with
+  one exception: if the final DONOR count is zero, it is NOT stored
+  in the database. It is assumed that some later step will be deleting
+  it, so we avoid a pointless store.
 
-  If the count on ACC is zero, then only a FRAC of the count will
-  get transfered to ACC.
-
-  Both Atoms, with updated counts, are stored to the database.
-
-  The prototypical use-case has ACC and PAIR being two Sections
+  The prototypical use-case has ACC and DONOR being two Sections
   of (word, disjunct) pairs, having the same disjunct but two different
   words. The goal is to merge the two words together into a single
   word-class.
 "
-
-	; The counts on the accumulator and the pair to merge.
-	(define mcnt (LLOBJ 'get-count PAIR))
-	(define acnt (LLOBJ 'get-count ACC))
-
 	; Return #t if the count is effectively zero.
 	; Use an epsilon for rounding errors.
 	(define (is-zero? cnt) (< cnt 1.0e-10))
 
-	; If the accumulator count is zero, transfer only a FRAC of
-	; the count into the accumulator.
-	(define taper-cnt (* FRAC mcnt))
-
-	; Update the count on the donor pair.
-	; Avoid touching the database if the count is zero;
-	; the donor will be deleted later on.
-	(define (update-donor-count SECT CNT)
-		(set-count SECT CNT)
-		(unless (is-zero? CNT) (store-atom SECT)))
+	; The counts on the accumulator and the pair to merge.
+	(define donor-cnt (LLOBJ 'get-count DONOR))
+	(define frac-cnt (* FRAC donor-cnt))
+	(define rem-cnt (- donor-cnt frac-cnt))
 
 	; If there is nothing to transfer over, do nothing.
-	(when (not (is-zero? taper-cnt))
+	(when (not (is-zero? frac-cnt))
 
 		; The accumulated count
-		(set-count ACC (+ acnt taper-cnt))
+		(set-count ACC (+ frac-cnt (LLOBJ 'get-count ACC)))
 		(store-atom ACC) ; save to the database.
 
-		; Decrement the equivalent amount from the donor pair.
-		(update-donor-count PAIR (- mcnt taper-cnt))
+		; Update the count on the donor pair.
+		; Avoid touching the database if the count is zero;
+		; the donor will be deleted later on.
+		(set-count DONOR rem-cnt)
+		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
 
 	; Return how much was transfered over.
-	taper-cnt
+	frac-cnt
 )
 
 ; ---------------------------------------------------------------------
