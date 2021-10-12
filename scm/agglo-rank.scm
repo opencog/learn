@@ -477,7 +477,7 @@
 
 	(define (do-merge N WA WB)
 		(format #t "------ Start merge ~D of `~A` and `~A`\n"
-			N (cog-name WA) (cog-name WB))
+			(+ N 1) (cog-name WA) (cog-name WB))
 
 		; If we are merging two classes into one, then the
 		; second class will be depopulated. We need to trash
