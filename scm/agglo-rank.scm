@@ -569,6 +569,8 @@ it will throw if this case is hit.
 		(for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
 		(recompute-mmt-final LLOBJ)
 
+		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
+
 		; After merging, recompute similarities for the words
 		; that were touched.
 		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD)) in-grp)
