@@ -5997,7 +5997,49 @@ $7 = ((CrossSection (ctv 1 0 6)
 curious ... need to eximine the before state...
 
 
+Speed:
 
+(define (get-prods LLOBJ WA WB)
+	(define killer (uniquely-named-variable))
+	(define dj-var (uniquely-named-variable))
+	(define a-term (LLOBJ 'make-pair WA dj-var))
+	(define b-term (LLOBJ 'make-pair WB dj-var))
+	(define r-type (LLOBJ 'right-type))
+
+	(define qry
+		(Bind
+			(TypedVariable dj-var r-type)
+			(Present a-term b-term)
+			(List a-term b-term killer)))
+
+	(define e (make-elapsed-secs))
+	(define termlist (cog-value->list (cog-execute! qry)))
+	(format #t "duude got ~A entries in ~A sec\n" (length termlist) (e))
+
+	(define prod
+		(fold
+			(lambda (WPR CNT)
+				(define acnt (LLOBJ 'get-count (gar WPR)))
+				(define bcnt (LLOBJ 'get-count (gdr WPR)))
+				(+ CNT (* acnt bcnt)))
+			0
+			termlist))
+	(format #t "duude got prod ~A in ~A sec\n" prod (e))
+
+	(cog-extract! killer)
+	(format #t "duude extract in ~A sec\n" (e))
+)
+(get-prods covr-obj (Word "the") (Word "his"))
+(olde covr-obj (Word "the") (Word "his"))
+
+vs.
+
+(define SIM-ID "foo")
+(define (olde LLOBJ WA WB)
+	(define sim (make-simmer LLOBJ))
+	(define e (make-elapsed-secs))
+	(sim WA WB)
+	(format #t "duude sim in ~A sec\n" (e)))
 
 ====================================================
 link-class.scm ???
@@ -6037,6 +6079,7 @@ FIXED:
 
 
 TODO/BUGS:
+* compute fmi can be 10x faster by using the query engine as above.
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
