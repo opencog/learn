@@ -6079,6 +6079,9 @@ FIXED:
 
 
 TODO/BUGS:
+* After merging, there will be words paired to the new disjunts.
+  Similarities for those words need to be recomputed. Right now,
+  they are not! (That explains the stability of the candidate list!)
 * compute fmi can be 10x faster by using the query engine as above.
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
