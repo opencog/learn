@@ -510,11 +510,18 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (in-group-cluster LLOBJ NRANK LOOP-CNT)
+(define-public (in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT)
 "
-  in-group-cluster LLOBJ NRANK LOOP-CNT - perform clustering.
+  in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT - perform clustering.
 
-Unfinished prototype
+  Recommended values QUORUM should be 0.7
+  NRANK should be between 100 and 200
+
+TODO: we need to aggressively increase the rank, if big groups get merged.
+
+Prototype - finished, undocumented untested.
+well, not quite finished, multi-class merge is still TBD.
+it will throw if this case is hit.
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
@@ -524,8 +531,7 @@ Unfinished prototype
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
-(define quorum 0.7)
-	(define merge-ingroup (make-merge-ingroup LLOBJ quorum #t))
+	(define merge-ingroup (make-merge-ingroup LLOBJ QUORUM #t))
 
 	; ------------------------------
 	; Main workhorse function
