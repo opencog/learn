@@ -111,18 +111,12 @@
 
 	; Create a word-class out of two words, or just extend an
 	; existing word class. Here, "extend" means "do nothing",
-	; return the existing class.
-	;
-	; XXX FIXME. This is broken in two different ways.
-	; (1) if A and B have been merged before, and now what's
-	;     left of them is being merged again, then some other
-	;     completely new name is needed, as it would be a distinct
-	;     word-sense. Right now, we throw for this case. I guess
-	;     it's easy-to-handle, but still how often does it happen?
-	; (2) If both A and B are WordClasses, then the MemberLinks
-	;     need to be copied over... but maybe thier counts need
-	;     adjusting? Not clear, yet, what should happen. Right now,
-	;     we throw.
+	; return the existing class. If this is called a second time
+	; with the same arguments, then a new, unique name is generated!
+	; Therefore, this should never be called than once!
+	; XXX FIXME the semantics of this thing is ugly, and should be
+	; moved to the caller. We shouldn't have to second-guess the
+	; callers dsired behavior!
 	(define (make-cluster A-ATOM B-ATOM)
 		(define is-a-class (eq? 'WordClassNode (cog-type A-ATOM)))
 		(define is-b-class (eq? 'WordClassNode (cog-type B-ATOM)))

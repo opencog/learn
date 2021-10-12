@@ -731,23 +731,22 @@
 
 (define-public (make-merge-ingroup LLOBJ QUORUM MRG-CON)
 "
-  make-merger-ingroup LLOBJ QUORUM STORE FIN MRG-CON --
-  Return object that implements the `merge-project` merge style
-  (as described at the top of this file).
+  make-merger-ingroup LLOBJ QUORUM MRG-CON --
+  Return a function that will merge a list of words into one class.
+  The disjuncts that are selected to be merged are those shared by
+  the majority of the given words, where `majority` is defined as
+  a fraction that is greater or equal to QUORUM.
 
   LLOBJ is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
 
   QUORUM is a floating point number indicating the fraction of
   sections that must share a given disjunct, before that disjunct is
-  merged. XXX TODO describe this in more detail.
+  merged into the cluster.
 
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the LLOBJ object have shapes on it.
 "
-	; Intersection-merge, always.
-	(define (frac WA WB) 0.0)
-
 	; WLIST is a list of WordNodes and/or WordClassNodes
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WLIST)
