@@ -789,7 +789,7 @@
 		; going to punt and do it here. Some day, in a generic framework,
 		; this will need to be cleaned up.
 		(define cls-name (string-join (map cog-name WLIST)))
-		(define cls-type (cog-type (LLOBJ 'get-cluster-type)))
+		(define cls-type (cog-type (LLOBJ 'cluster-type)))
 		(define cls (cog-new-node cls-type cls-name))
 
 		(for-each
