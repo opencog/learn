@@ -18,6 +18,7 @@
 (include-from-path "opencog/nlp/learn/gram-classification.scm")
 (include-from-path "opencog/nlp/learn/shape-project.scm")
 (include-from-path "opencog/nlp/learn/gram-projective.scm")
+(include-from-path "opencog/nlp/learn/gram-pairwise.scm")
 (include-from-path "opencog/nlp/learn/gram-optim.scm")
 (include-from-path "opencog/nlp/learn/cliques.scm")
 (include-from-path "opencog/nlp/learn/agglo-rank.scm")
