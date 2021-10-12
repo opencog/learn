@@ -1,8 +1,8 @@
 ;
-; gram-vote.scm
+; gram-majority.scm
 ;
 ; Merge N vectors at a time into a new cluster. Merge basis elements by
-; democratic vote.
+; majority democratic vote.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
