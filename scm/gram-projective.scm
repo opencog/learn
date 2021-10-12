@@ -777,12 +777,14 @@
 					WLIST)))
 
 		; Merge the particular DJ, if it is shared by the majority.
-		; CLUST is identical to cls, defined below.
+		; CLUST is identical to cls, defined below. Return zero if
+		; there is no merge.
 		(define (clique LLOBJ CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(if (vote-to-accept? DJ)
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)))
+				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)
+				0))
 
 		; We are going to control the name we give it. We could also
 		; delegate this to `add-gram-class-api`, but for now, we're
