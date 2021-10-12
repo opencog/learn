@@ -332,13 +332,13 @@
 		(lambda (N)
 			(define e (make-elapsed-secs))
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
-			(format #t "------ Round ~A Next in line:\n" (diag-start N))
+			(format #t "------ Round ~A Next in line:\n" (+ 1 (diag-start N)))
 			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 			(define top-pair (car sorted-pairs))
 			(MERGE-FUN (diag-start N) (gar top-pair) (gdr top-pair))
 
-			(format #t "------ Completed merge in ~A secs:\n" (e))
+			(format #t "------ Completed merge in ~A secs\n" (e))
 
 			; Expand the size of the universe
 			(define ranked-words (rank-words LLOBJ))
