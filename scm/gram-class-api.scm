@@ -124,8 +124,8 @@
 			(is-a-class A-ATOM)
 			(is-b-class B-ATOM)
 			(else (let
-					((cluname (string-concatenate
-						(list (cog-name A-ATOM) " " (cog-name B-ATOM)))))
+					((cluname (string-join
+						(list (cog-name A-ATOM) (cog-name B-ATOM)))))
 
 				; If `cluname` already exists, then append "(dup)" to the
 				; end of it, and try again. Keep repeating. In the real

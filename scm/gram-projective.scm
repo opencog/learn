@@ -780,9 +780,13 @@
 			(if (vote-to-accept? DJ)
 				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)))
 
-; xxxxxxx wrong bad name!
-		; (define cls (LLOBJ 'make-cluster WA WB))
-		(define cls (WordClassNode "foo"))
+		; We are going to control the name we give it. We could also
+		; delegate this to `add-gram-class-api`, but for now, we're
+		; going to punt and do it here. Some day, in a generic framework,
+		; this will need to be cleaned up.
+		(define cls-name (string-join (map cog-name WLIST)))
+		(define cls-type (cog-type (LLOBJ 'get-cluster-type)))
+		(define cls (cog-new-node cls-type cls-name))
 
 		(for-each
 			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
