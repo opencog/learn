@@ -172,7 +172,7 @@
 	(take-while
 		(lambda (N)
 			(set! epsilon (* N epsi-step))
-			(define ing (find-in-group SIMFUN WA WB epsilon tightness CANDIDATES))
+			(define ing (find-in-group SIMFUN WB WA epsilon tightness CANDIDATES))
 			(define ingsz (length ing))
 			(define prevsz (car window))
 			(set! window (append (drop window 1) (list ingsz)))
@@ -185,7 +185,13 @@
 	; step, and return that. (Maybe we should back off two steps, to be
 	; conservative?)
 
-	(find-in-group SIMFUN WA WB (- epsilon epsi-step) tightness CANDIDATES)
+	(define in-grp
+		(find-in-group SIMFUN WA WB (- epsilon epsi-step) tightness CANDIDATES))
+
+	; Reverse the list before sending it out. This way, the initial
+	; WA and WB appear first in the list, instead of last. This
+	; improves readability slightly, with trivial impact to performance.
+	(revrse in-grp)
 )
 
 ; ---------------------------------------------------------------

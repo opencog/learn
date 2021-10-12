@@ -517,9 +517,7 @@
   Recommended values QUORUM should be 0.7
   NRANK should be between 100 and 200
 
-TODO: we need to aggressively increase the rank, if big groups get merged.
-
-Prototype - finished, undocumented untested.
+Prototype - partly finished, partly-tested, undocumented.
 well, not quite finished, multi-class merge is still TBD.
 it will throw if this case is hit.
 "
