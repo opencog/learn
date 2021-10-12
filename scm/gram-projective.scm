@@ -789,8 +789,10 @@
 		; going to punt and do it here. Some day, in a generic framework,
 		; this will need to be cleaned up.
 		(define cls-name (string-join (map cog-name WLIST)))
-		(define cls-type (cog-type (LLOBJ 'cluster-type)))
-		(define cls (cog-new-node cls-type cls-name))
+		(define cls-type (LLOBJ 'cluster-type))
+		(define cls-typname
+			(if (cog-atom? cls-type) (cog-name cls-type) cls-type))
+		(define cls (cog-new-node cls-typname cls-name))
 
 		(for-each
 			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
