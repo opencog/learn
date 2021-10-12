@@ -820,7 +820,7 @@
 		; Clobber the left and right caches; the cog-delete! changed things.
 		(LLOBJ 'clobber)
 
-		(format #t "------ merge-ingroup: Cleanup ~A in ~5F secs\n"
+		(format #t "------ merge-ingroup: Cleanup `~A` in ~A secs\n"
 			(cog-name cls) (e))
 
 		cls
