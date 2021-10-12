@@ -27,13 +27,14 @@
 ; Wrapper for above. Returns a function that will merge a pair or
 ; things, whatever they may be.
 ;
-; This is a kind-of special case of `make-merge-ingroup` which will
+; This is a kind-of special case of `make-merge-majority`, which will
 ; merge N items into a cluser, in one go. However, it's a bit different
 ; in that it does support the union-fractional merge (fuzzy merge)
 ; described in `gram-projective.scm` and elsewhere.  The fuzzy merge
 ; idea doesn't seem to be that great, and so is abandoned in the
-; ingroup code base. However, the unit tests explicitly test it, so
-; we're not going to wreck that. It was hard-won functionality.
+; majority-vote code base. However, the unit tests explicitly test it,
+; so we're not going to wreck that. It was hard-won functionality.
+; (Hmm, We could add it easily to the majority-vote code ...)
 ;
 ; ---------------------------------------------------------------------
 
@@ -294,13 +295,13 @@
 
 ; ---------------------------------------------------------------
 
-; XXX TODO once make-merge-ingroup is done, this can be reimplemented
+; XXX TODO once make-merge-majority is done, this can be reimplemented
 ; as a special case of that. That means that the above three functions
 ; can be discarded. It also means that `gram-class-api` 'make-cluster
 ; method can be discarded or refactored.
 ;
-; However, `make-merge-ingroup` does not support FRAC-FUN, and probably
-; shouldn't, so not clear about this...
+; This requires that `make-merge-majority` be modified to support
+; FRAC-FUN.
 (define-public (make-merge-pair STARS FRAC-FN NOISE STORE FIN MRG-CON)
 "
   make-merger-pair STARS FRAC-FN NOISE STORE FIN MRG-CON --

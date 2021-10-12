@@ -531,7 +531,7 @@ it will throw if this case is hit.
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
-	(define merge-ingroup (make-merge-ingroup LLOBJ QUORUM #t))
+	(define merge-majority (make-merge-majority LLOBJ QUORUM #t))
 
 	; ------------------------------
 	; Main workhorse function
@@ -552,7 +552,7 @@ it will throw if this case is hit.
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
 
-		(define wclass (merge-ingroup in-grp))
+		(define wclass (merge-majority in-grp))
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))

@@ -1,7 +1,8 @@
 ;
-; gram-ingroup.scm
+; gram-vote.scm
 ;
-; Merge N items at a time into a new cluster.
+; Merge N vectors at a time into a new cluster. Merge basis elements by
+; democratic vote.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
@@ -10,8 +11,24 @@
 ; --------
 ; See `gram-classification.scm` and `gram-projective.scm` for an overview.
 ;
-; make-merge-ingroup
-; ------------------
+; Given N vectors that have been selected to form a cluster, one can
+; determine what basis elements should be a part of that cluster by
+; looking to see what all the vectors have in common. If the majority
+; of the vectors share a particular basis element, then all of them
+; should contribute that element to the cluster.
+;
+; This is termed "democratic voting" since a majority concept is used,
+; and each vector gets one vote. (Future extensions might consider
+; proportional votes?) This idea really only works if N>2 as voting
+; between two contributors does not make really make sense.
+;
+; TODO:
+; Reintroduce FRAC for those disjuncts not shared by the majority.
+; Maybe reintroduce NOISE for minimum counts, if this cannot be handled
+; in other ways.
+;
+; make-merge-majority
+; -------------------
 ; Merge N items into a brand new cluster.  See also `make-merge-pair`
 ; (not in this file) which merges two items at a time, possibly into
 ; existing clusters.
@@ -23,9 +40,9 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (make-merge-ingroup LLOBJ QUORUM MRG-CON)
+(define-public (make-merge-majority LLOBJ QUORUM MRG-CON)
 "
-  make-merger-ingroup LLOBJ QUORUM MRG-CON --
+  make-merger-majority LLOBJ QUORUM MRG-CON --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -47,7 +64,7 @@
 		(for-each
 			(lambda (WRD)
 				(if (equal? (cog-type WRD) 'WordClassNode)
-					(throw 'not-implemented 'make-merge-ingroup
+					(throw 'not-implemented 'make-merge-majority
 						"Not done yet")))
 			WLIST)
 
@@ -110,7 +127,7 @@
 		; Clobber the left and right caches; the cog-delete! changed things.
 		(LLOBJ 'clobber)
 
-		(format #t "------ merge-ingroup: Cleanup `~A` in ~A secs\n"
+		(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
 			(cog-name cls) (e))
 
 		cls

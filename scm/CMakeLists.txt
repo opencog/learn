@@ -6,7 +6,7 @@ ADD_GUILE_MODULE (FILES
 	common.scm
 	gram-class-api.scm
 	gram-classification.scm
-	gram-ingroup.scm
+	gram-majority.scm
 	gram-optim.scm
 	gram-pairwise.scm
 	gram-projective.scm
