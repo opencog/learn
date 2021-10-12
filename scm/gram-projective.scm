@@ -1,8 +1,8 @@
 ;
 ; gram-projective.scm
 ;
-; Merge items into clusters.
-; Projective merge strategies.
+; Merge vectors into clusters. Basic core tools.
+; Also: detailed description of projective merge.
 ;
 ; Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
 ;
@@ -11,9 +11,22 @@
 ; --------
 ; See `gram-classification.scm` for an overview.
 ;
-; This file implements the orthogonal/union/overlap type merging
-; described in `gram-classification.scm`. See the `gram-optim.scm` file
-; for the entropy-maximizing merge implementation.
+; The notes below descrbe orthogonal/union/overlap type merging in
+; greater detail than what's in `gram-classification.scm`.
+;
+; The tools provided in this file are used by several different merge
+; algorithms. The provided tools, listed in order:
+;
+; * Some debug printers for compact printing of Sections.
+; * `accumulate-count`, for transfering counts from one basis elt to
+;   another.
+; * `assign-to-cluster`, which loops over a vector, and calls a callback
+;   on each basis elt. In most cases, this callback then will
+;   eventually call `accumulate-count` to perform the actual count
+;   transer.
+; * `merge-connectors`, which loops over a vector, and calls the
+;   reshape function on the basis elements, so that the connectors
+;   therein can be adjusted and merged as appropriate.
 ;
 ; Although the code keeps talking about words and word-classes, it is
 ; (almost) entirely generic, and can merge (cluster) anything. The only
@@ -64,7 +77,7 @@
 ; strategies are possible. Given words `u`, `v`, `w`, ... one may:
 ;
 ; * Simple sum: let `g=u+v+w+...`. That's it; nothing more.
-; * Overlap and union merge, given below.
+; * Overlap and union merge, described below.
 ; * Democratic voting: merge those basis elements shared by a majority.
 ;
 ; Overlap merge
@@ -115,7 +128,7 @@
 ; -----------------------------------
 ; The above merge methods are implemented in the `accumulate-count`
 ; and `assign-to-cluster` functions. The first does the math for
-; one basis element, the second loops over the vectors.
+; one basis element, the second loops over the basis elts in a vector.
 ;
 ; The first takes, as an argument, a fractional weight which is
 ; used when the disjunct isn't shared between both words. Setting

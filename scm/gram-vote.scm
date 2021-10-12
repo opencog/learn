@@ -23,9 +23,9 @@
 ; between two contributors does not make really make sense.
 ;
 ; TODO:
-; Reintroduce FRAC for those disjuncts not shared by the majority.
-; Maybe reintroduce NOISE for minimum counts, if this cannot be handled
-; in other ways.
+; * Reintroduce FRAC for those disjuncts not shared by the majority.
+; * Maybe reintroduce NOISE for minimum counts, if this cannot be
+;   handled in other ways.
 ;
 ; make-merge-majority
 ; -------------------
