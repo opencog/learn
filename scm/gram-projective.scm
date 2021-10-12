@@ -751,6 +751,12 @@
 	; WLIST is a list of WordNodes and/or WordClassNodes
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WLIST)
+		(for-each
+			(lambda (WRD)
+				(if (equal? (cog-type WRD) 'WordClassNode)
+					(throw 'not-implemented 'make-merge-ingroup
+						"Not done yet")))
+			WLIST)
 
 		; The minimum number of sections that must exist for
 		; a given disjunct.
@@ -758,31 +764,23 @@
 			(inexact->exact (round (* QUORUM (length WLIST)))))
 
 		; Return #t if the DJ is shared by the majority of the
-		; sections.
-		(define (vote DJ)
-			(define scnt
+		; sections. Does the count exceed the threshold?
+		(define (vote-to-accept? DJ)
+			(<= vote-thresh
 				(fold
 					(lambda (WRD CNT)
 						(if (nil? (LLOBJ 'get-section WRD DJ)) 0 1))
 					0
-					WLIST))
-
-			; Does the count exceed the threshold?
-			(<= vote-thresh scnt))
+					WLIST)))
 
 		; Merge the particular DJ, if it is shared by the majority.
+		; CLUST is identical to cls, defined below.
 		(define (clique LLOBJ CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
-			(if (vote DJ)
+			(if (vote-to-accept? DJ)
 				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ)  SECT 1.0)))
 
-		(for-each
-			(lambda (WRD)
-				(if (equal? (cog-type WRD 'WordClassNode))
-					(throw 'not-implemented 'make-merge-ingroup
-						"Not done yet")))
-			WLIST)
 ; xxxxxxx wrong bad name!
 		; (define cls (LLOBJ 'make-cluster WA WB))
 		(define cls (WordClassNode "foo"))

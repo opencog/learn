@@ -546,7 +546,7 @@ Unfinished prototype
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
 
-		(merge-ingroup in-grp)
+		(define wclass (merge-ingroup in-grp))
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
