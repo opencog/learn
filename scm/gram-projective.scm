@@ -353,14 +353,7 @@
   This assumes that storage is connected; the updated counts are written
   to storage.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
 	(define monitor-rate (make-rate-monitor))
-
-	; XXX FIXME Can we get rid of the FRAC?
 
 	; SECT ends up being PAIR-A in the loop below.
 	; MRGECT is the matching merger section
