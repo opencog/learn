@@ -77,6 +77,16 @@
 
 ; ---------------------------------------------------------------
 
+; XXX FIXME -- Maybe bug (I'm confused about this.) This function
+; computes mmt-q aka Q described in the diary, and uses it as a
+; constant offset. The problem is that it changes dramatically
+; as clusters are created and counts are moved. This means that
+; some of the stored similarity scores have the old Q on them, and
+; some have the new Q, and they are no longer comparable (!?) right?
+; The point is that the MI and the marginal logP in the common-MI
+; defnition are unchanged during merging, but mmt-q is. Thus, the
+; changing mmt-q unfairly bounces around new and old similarity
+; scores in some way that is not obvious and is history dependent. Hmm.
 (define (make-simmer LLOBJ)
 "
   make-simmer LLOBJ -- return function that computes and stores MI's.

@@ -8859,8 +8859,10 @@ In-group Merge Results
 
 \begin_layout Standard
 Some early results.
- There's also some bug.
- This uses quorum=0.7
+ This uses quorum=0.7, so that a disjunct is placed in the cluster of 70%
+ of the in-group shares that disjunct in common.
+ The ingroup is selected according to a bunch of hard-coded parameters in
+ the code, see `cliques.scm` in the 12 Oct 2021 git tree for details.
 \end_layout
 
 \begin_layout Standard
@@ -8881,7 +8883,7 @@ Some early results.
 \begin_inset Text
 
 \begin_layout Plain Layout
-Words
+in-group
 \end_layout
 
 \end_inset
@@ -8908,7 +8910,10 @@ top-rank-MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-mmt-q
+\begin_inset Formula $Q$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -9022,7 +9027,7 @@ mmt-q
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.131
 \end_layout
 
 \end_inset
@@ -9418,6 +9423,58 @@ my this her a the his
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $Q$
+\end_inset
+
+ reports the 
+\begin_inset Formula $Q$
+\end_inset
+
+ value defined up above.
+ (its called `mmt-q` in the code).
+ The 
+\begin_inset Formula $Q$
+\end_inset
+
+ is that after the merge is performed.
+ Thus, the first row is the initial 
+\begin_inset Formula $Q$
+\end_inset
+
+ of the starting dataset.
+\end_layout
+
+\begin_layout Standard
+There's actually a bug in the code w.r.t.
+ 
+\begin_inset Formula $Q$
+\end_inset
+
+ – because it is changing from merge to merge, any cached similarity scores
+ will use the old 
+\begin_inset Formula $Q$
+\end_inset
+
+ from earlier rounds.
+ These will no longer be correct for the new 
+\begin_inset Formula $Q$
+\end_inset
+
+ value, even though the MI is unchanged and the 
+\begin_inset Formula $\log P$
+\end_inset
+
+ marginals are unchanged.
+ So we have to stop adding 
+\begin_inset Formula $Q$
+\end_inset
+
+ into the cached scores.
+ Ooops!
 \end_layout
 
 \begin_layout Section*

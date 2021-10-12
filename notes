@@ -6037,6 +6037,10 @@ FIXED:
 
 
 TODO/BUGS:
+* mmt-q is handled incorrectly. It must not be stored with the
+  similarities; instead, it should be added only at the last stage.
+  Or better yet, left to be zero, and only added during debug
+  printing.
 * Move 'accumulate-count to stars object. Also define a default
   'get-count and 'set-count on the stars object.
 * Bugs: quotes are not being escaped by submit-one.pl!!
