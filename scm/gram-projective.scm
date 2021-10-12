@@ -207,27 +207,27 @@
 
 ; ---------------------------------------------------------------------
 
-;; XXX This should not be public/exported, except that the unit tests
-;; need this.
+; XXX This is a generic function. It should probably be moved over
+; to the core matrix code-base. Along with this should be a creation
+; of an object-specific 'set-count method.
+;
+; XXX TODO: a default 'get-count could be provided by the stars
+; object, so that the base object does not need to provide it!
+;
 (define-public (accumulate-count LLOBJ ACC DONOR FRAC)
 "
   accumulate-count LLOBJ ACC DONOR FRAC -- Accumulate a fraction
-    of the count from DONOR into ACC.
+    FRAC of the count from DONOR into ACC.
 
-  ACC and DONOR should be two pairs in the matrix LLOBJ. (Usually,
-  they will be in the same row or column, although this code does
-  not assume this.)
+  ACC and DONOR should be two pairs in the matrix LLOBJ.
+
+  FRAC should be a numeric fraction, between 0.0 and 1.0.
 
   A fraction FRAC of the count on DONOR will be transfered to ACC.
   Both Atoms, with updated counts, are stored to the database, with
   one exception: if the final DONOR count is zero, it is NOT stored
   in the database. It is assumed that some later step will be deleting
   it, so we avoid a pointless store.
-
-  The prototypical use-case has ACC and DONOR being two Sections
-  of (word, disjunct) pairs, having the same disjunct but two different
-  words. The goal is to merge the two words together into a single
-  word-class.
 "
 	; Return #t if the count is effectively zero.
 	; Use an epsilon for rounding errors.
