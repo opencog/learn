@@ -772,7 +772,7 @@
 			(<= vote-thresh
 				(fold
 					(lambda (WRD CNT)
-						(if (nil? (LLOBJ 'get-section WRD DJ)) 0 1))
+						(if (nil? (LLOBJ 'get-pair WRD DJ)) 0 1))
 					0
 					WLIST)))
 
