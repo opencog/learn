@@ -9191,7 +9191,7 @@ There I It He
 \begin_inset Text
 
 \begin_layout Plain Layout
-No A
+They She He It There
 \end_layout
 
 \end_inset
@@ -9200,7 +9200,7 @@ No A
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+5
 \end_layout
 
 \end_inset
@@ -9209,7 +9209,7 @@ No A
 \begin_inset Text
 
 \begin_layout Plain Layout
-8.1991
+8.6036
 \end_layout
 
 \end_inset
@@ -9218,7 +9218,7 @@ No A
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.675
 \end_layout
 
 \end_inset
@@ -9475,6 +9475,25 @@ There's actually a bug in the code w.r.t.
 
  into the cached scores.
  Ooops!
+\end_layout
+
+\begin_layout Standard
+There's another bug with voting.
+ After an in-group is selected, as judged by MI, it turns out that only
+ a small number of disjuncts are shared by more than 70% of the ingroup.
+ Sometimes less than 5%! These are clustered, but then, out of what's left,
+ a new very similar in-group is created, because the MI is still high.
+ This is seen in the last three lines of the table above, and also in the
+ It-He lines in the table.
+\end_layout
+
+\begin_layout Standard
+Solution would seem to be to kick out the most recent members from the in-group,
+ until at least 20% of the disjuncts of the smallest member are shared by
+ all.
+ The 20% figure allows the smallest member to have five different word-senses
+ (i.e.
+ to belong to five different clusters.)
 \end_layout
 
 \begin_layout Section*

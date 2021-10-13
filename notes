@@ -6026,11 +6026,12 @@ Speed:
 			termlist))
 	(format #t "duude got prod ~A in ~A sec\n" prod (e))
 
-	(cog-extract! killer)
+	(cog-extract-recursive! killer)
 	(format #t "duude extract in ~A sec\n" (e))
 )
 (get-prods covr-obj (Word "the") (Word "his"))
 (olde covr-obj (Word "the") (Word "his"))
+(newe covr-obj (Word "the") (Word "his"))
 
 vs.
 
@@ -6046,6 +6047,41 @@ psu 'set-left-marginals
 psu 'set-right-marginals
 atc 'set-mmt-marginals
 
+(define*-public (add-fast-mi-compute LLOBJ
+   #:optional (GET-CNT 'get-count))
+
+(define (make-faster LLOBJ)
+
+(define (newe LLOBJ WA WB)
+	(define sim (make-faster LLOBJ))
+	(define e (make-elapsed-secs))
+	(sim WA WB)
+	(format #t "duude sim in ~A sec\n" (e)))
+
+(define po  (add-support-compute (add-tuple-math star-obj *)))
+(define pn  (add-support-compute (add-fast-math star-obj *)))
+
+(po 'right-count (list (Word "the") (Word "his"))) ; 12738761.0
+(pn 'right-count (list (Word "the") (Word "his"))) ; 7806378.0
+
+
+(define star-obj sapi)
+(po 'right-count (list (Word "chicken") (Word "dog")))
+(pn 'right-count (list (Word "chicken") (Word "dog")))
+
+(define cosi (add-similarity-compute covr-obj))
+(cosi 'right-product  (Word "the") (Word "his"))  ; 5593136.0
+
+aiee three differrent results! foo
+
+wait:
+(po 'right-count (list (Word "the") (Word "his"))) ; 5593136.0
+(pn 'right-count (list (Word "the") (Word "his"))) ; 4171678.0
+(cosi 'right-product  (Word "the") (Word "his"))  ; 5593136.0
+
+Oh, the make-pair on direct sum was returning incomplete results
+
+==============================================================
 
   'pair-count L R - Returns the total observed count on the pair (L,R)
       L must be an Atom of type 'left-type and likewise for R.
@@ -6138,10 +6174,17 @@ FIXED:
 
 
 TODO/BUGS:
+* Some in-group cluster names get re-generated and resused.
+* Some top-ranked merges have very few (less than 5%) of shared
+  disjuncts. These should not be done, or the in-group should be
+  tightened.  Some in-groups seem too large by one member.
+  Perhaps ingroups should have a minumum of 20% disjuncts shared
+  by all members!?
 * After merging, there will be words paired to the new disjunts.
   Similarities for those words need to be recomputed. Right now,
   they are not! (That explains the stability of the candidate list!)
 * compute fmi can be 10x faster by using the query engine as above.
+  DONE, untested.
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
