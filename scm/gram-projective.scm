@@ -321,7 +321,7 @@
 	(monitor-rate
 		(string-append
 			"------ Assign: Merged ~A sections on `"
-			(get-name WA)
+			(cog-get-name WA)
 			"` in ~5F secs; ~6F scts/sec\n"))
 )
 
