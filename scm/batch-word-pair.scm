@@ -112,6 +112,8 @@
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
+		(define (set-count ATOM CNT)
+			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 		(define any-left (AnyNode "left-word"))
 		(define any-right (AnyNode "right-word"))
@@ -180,6 +182,18 @@
 				(- (current-time) start-time))
 		)
 
+		; Tell the stars object what we provide.
+		(define (provides meth)
+			(case meth
+				((pair-count)     get-pair-count)
+				((get-pair)       get-pair)
+				((get-count)      get-count)
+				((set-count)      set-count)
+				((make-pair)      make-pair)
+				((left-element)   get-left-element)
+				((right-element)  get-right-element)
+				(else             #f)))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -199,7 +213,7 @@
 					((wild-wild) get-wild-wild)
 					((fetch-pairs) fetch-any-pairs)
 					((delete-pairs) delete-any-pairs)
-					((provides) (lambda (symb) #f))
+					((provides) provides)
 					((filters?) (lambda () #f))
 					(else (error "Bad method call on ANY-link:" message)))
 				args)))
@@ -225,6 +239,8 @@
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
+		(define (set-count ATOM CNT)
+			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 		(define any-left (AnyNode "left-word"))
 		(define any-right (AnyNode "right-word"))
@@ -274,6 +290,18 @@
 			(format #t "Elapsed time to load clique pairs: ~A secs\n"
 				(- (current-time) start-time)))
 
+		; Tell the stars object what we provide.
+		(define (provides meth)
+			(case meth
+				((pair-count)     get-pair-count)
+				((get-pair)       get-pair)
+				((get-count)      get-count)
+				((set-count)      set-count)
+				((make-pair)      make-pair)
+				((left-element)   get-left-element)
+				((right-element)  get-right-element)
+				(else             #f)))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -285,6 +313,7 @@
 					((pair-count)     get-pair-count)
 					((get-pair)       get-pair)
 					((get-count)      get-count)
+					((set-count)      set-count)
 					((make-pair)      make-pair)
 					((left-element)   get-left-element)
 					((right-element)  get-right-element)
@@ -292,7 +321,7 @@
 					((right-wildcard) get-right-wildcard)
 					((wild-wild)      get-wild-wild)
 					((fetch-pairs)    fetch-clique-pairs)
-					((provides)       (lambda (symb) #f))
+					((provides)       provides)
 					((filters?)       (lambda () #f))
 					(else (error "Bad method call on clique-pair:" message)))
 				args))))
@@ -330,6 +359,8 @@
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
+		(define (set-count ATOM CNT)
+			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 		; Get the numeric distance from the ExecutionLink
 		(define (get-dist ATOM)
@@ -390,6 +421,18 @@
 			(format #t "Elapsed time to load distance pairs: ~A secs\n"
 				(- (current-time) start-time)))
 
+		; Tell the stars object what we provide.
+		(define (provides meth)
+			(case meth
+				((pair-count)     get-pair-count)
+				((get-pair)       get-pair)
+				((get-count)      get-count)
+				((set-count)      set-count)
+				((make-pair)      make-pair)
+				((left-element)   get-left-element)
+				((right-element)  get-right-element)
+				(else             #f)))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -401,6 +444,7 @@
 					((pair-count) get-pair-count)
 					((get-pair) get-pair)
 					((get-count) get-count)
+					((set-count) set-count)
 					((make-pair) make-pair)
 					((left-element) get-left-element)
 					((right-element) get-right-element)
@@ -408,7 +452,7 @@
 					((right-wildcard) get-right-wildcard)
 					((wild-wild) get-wild-wild)
 					((fetch-pairs) fetch-distance-pairs)
-					((provides) (lambda (symb) #f))
+					((provides) provides)
 					((filters?) (lambda () #f))
 					(else (error "Bad method call on clique-pair:" message)))
 				args))))
