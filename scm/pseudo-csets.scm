@@ -108,6 +108,8 @@
 
 		; Get the observational count on ATOM
 		(define (get-count ATOM) (cog-count ATOM))
+		(define (set-count ATOM CNT)
+			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 		(define any-left (AnyNode "cset-word"))
 		(define any-right (AnyNode "cset-disjunct"))
@@ -157,6 +159,18 @@
 		(define (describe)
 			(display (procedure-property make-pseudo-cset-api 'documentation)))
 
+		; Tell the stars object what we provide.
+		(define (provides meth)
+			(case meth
+				((pair-count)     get-pair-count)
+				((get-pair)       get-pair)
+				((get-count)      get-count)
+				((set-count)      set-count)
+				((make-pair)      make-pair)
+				((left-element)   get-left-element)
+				((right-element)  get-right-element)
+				(else             #f)))
+
 		; Methods on the object
 		(lambda (message . args)
 			(apply (case message
@@ -175,7 +189,7 @@
 				((right-wildcard) get-right-wildcard)
 				((wild-wild)      get-wild-wild)
 				((fetch-pairs)    fetch-pseudo-csets)
-				((provides)       (lambda (meth) #f))
+				((provides)       provides)
 				((filters?)       (lambda () #f))
 				((help)           describe)
 				((describe)       describe)

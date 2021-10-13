@@ -188,6 +188,8 @@
 
 		; Get the observational count on the word-shape pair
 		(define (get-count SHAPE-PR) (cog-count SHAPE-PR))
+		(define (set-count SHAPE-PR CNT)
+			(cog-set-tv! SHAPE-PR (CountTruthValue 1 0 CNT)))
 
 		; L-ATOM is a WordNode or WordClassNode. R-ATOM is a shape.
 		(define (get-pair L-ATOM R-ATOM)
@@ -512,9 +514,16 @@
 		; Explain the non-default provided methods.
 		(define (provides meth)
 			(case meth
-				((right-basis)        get-right-basis)
-				((right-basis-size)   get-right-size)
-				((clobber)            clobber)
+				((right-basis)      get-right-basis)
+				((right-basis-size) get-right-size)
+				((clobber)          clobber)
+
+				((pair-count)       get-pair-count)
+				((get-pair)         get-pair)
+				((get-count)        get-count)
+				((make-pair)        make-pair)
+				((left-element)     get-pair-left)
+				((right-element)    get-pair-right)
 				(else #f)
 		))
 

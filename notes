@@ -6041,6 +6041,43 @@ vs.
 	(sim WA WB)
 	(format #t "duude sim in ~A sec\n" (e)))
 
+
+psu 'set-left-marginals
+psu 'set-right-marginals
+atc 'set-mmt-marginals
+
+
+  'pair-count L R - Returns the total observed count on the pair (L,R)
+      L must be an Atom of type 'left-type and likewise for R.
+
+  'get-pair L R - Returns the Atom holding the pair (L,R). The returned
+      Atom will be of type 'pair-type. All statistics and information
+      about this pair are attached as Values on this Atom.
+
+  'get-count P - Returns the total observed count on the pair P, where
+      P is the Atom returned by 'get-pair.
+
+  'make-pair L R - Create the Atom holding the pair, if it does not
+      already exist.
+  'left-element P - Return the atom on the left of the pair P.
+  'right-element P - Return the atom on the right of the pair P.
+      These two together undo what 'make-pair creates.
+               ((get-pair)         (apply f-get-pair args))
+               ((make-pair)        (apply f-make-pair args))
+               ((left-element)     (apply f-left-element args))
+               ((right-element)    (apply f-right-element args))
+               ((pair-count)       (apply f-pair-count args))
+               ((get-count)        (apply f-get-count args))
+               ((set-count)        (apply f-set-count args))
+               ((move-count)       (apply f-move-count args))
+
+get-pair make-pair get-left-element get-right-element get-all-pairs fetch-all-pairs delete-all-pairs
+
+pair-count get-count set-count
+
+get-pair get-count make-pair get-left-element get-right-element
+
+
 ====================================================
 link-class.scm ???
 ====================================================
@@ -6075,6 +6112,8 @@ FIXED:
 * Similarity object needs to do all-pairs with word-classes and words.
   'get-all-elts in the stars object needs to look at several
   left types. Maybe TypeChoice??  DONE.
+* Move 'accumulate-count to stars object. Also define a default
+  'get-count and 'set-count on the stars object. DONE
 
 
 
@@ -6087,8 +6126,6 @@ TODO/BUGS:
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
   printing.
-* Move 'accumulate-count to stars object. Also define a default
-  'get-count and 'set-count on the stars object.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.

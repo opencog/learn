@@ -207,13 +207,6 @@
 
 ; ---------------------------------------------------------------------
 
-; XXX This is a generic function. It should probably be moved over
-; to the core matrix code-base. Along with this should be a creation
-; of an object-specific 'set-count method.
-;
-; XXX TODO: a default 'get-count could be provided by the stars
-; object, so that the base object does not need to provide it!
-;
 (define-public (accumulate-count LLOBJ ACC DONOR FRAC)
 "
   accumulate-count LLOBJ ACC DONOR FRAC -- Accumulate a fraction
@@ -224,6 +217,10 @@
   FRAC should be a numeric fraction, between 0.0 and 1.0.
 
   A fraction FRAC of the count on DONOR will be transfered to ACC.
+
+  This function is nearly identical to (LLOBJ 'move-count args) except
+  that this also stores (or not) the results in the database.
+
   Both Atoms, with updated counts, are stored to the database, with
   one exception: if the final DONOR count is zero, it is NOT stored
   in the database. It is assumed that some later step will be deleting
@@ -242,13 +239,13 @@
 	(when (not (is-zero? frac-cnt))
 
 		; The accumulated count
-		(set-count ACC (+ frac-cnt (LLOBJ 'get-count ACC)))
+		(LLOBJ 'set-count ACC (+ frac-cnt (LLOBJ 'get-count ACC)))
 		(store-atom ACC) ; save to the database.
 
 		; Update the count on the donor pair.
 		; Avoid touching the database if the count is zero;
 		; the donor will be deleted later on.
-		(set-count DONOR rem-cnt)
+		(LLOBJ 'set-count DONOR rem-cnt)
 		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
 
