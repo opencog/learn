@@ -303,10 +303,10 @@
 	; merging.
 	(for-each
 		(lambda (PAIR-A)
-			(monitor-rate #f)
-			(set! accum-cnt (+ accum-cnt
-				(CLIQUE LLOBJ CLS PAIR-A accumulate-count)))
-		)
+			(define cnt (CLIQUE LLOBJ CLS PAIR-A accumulate-count))
+			(when (< 0 cnt)
+				(monitor-rate #f) ; increment only if counted!
+				(set! accum-cnt (+ accum-cnt cnt))))
 		(LLOBJ 'right-stars WA))
 
 	; Create MemberLinks. Do this before the connector-merge step,
@@ -319,7 +319,10 @@
 	(store-atom memb-a)
 
 	(monitor-rate
-		"------ Assign: Merged ~A sections in ~5F secs; ~6F scts/sec\n")
+		(string-append
+			"------ Assign: Merged ~A sections on `"
+			(get-name WA)
+			"` in ~5F secs; ~6F scts/sec\n"))
 )
 
 ; ---------------------------------------------------------------------
