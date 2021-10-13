@@ -182,6 +182,7 @@
 				((pair-count)     get-pair-count)
 				((get-pair)       get-pair)
 				((get-count)      get-count)
+				((set-count)      set-count)
 				((make-pair)      make-pair)
 				((left-element)   get-left-element)
 				((right-element)  get-right-element)
