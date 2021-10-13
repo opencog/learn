@@ -191,7 +191,7 @@
 	; Reverse the list before sending it out. This way, the initial
 	; WA and WB appear first in the list, instead of last. This
 	; improves readability slightly, with trivial impact to performance.
-	(revrse in-grp)
+	(reverse in-grp)
 )
 
 ; ---------------------------------------------------------------
