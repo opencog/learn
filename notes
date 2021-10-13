@@ -6082,6 +6082,128 @@ wait:
 Oh, the make-pair on direct sum was returning incomplete results
 
 ==============================================================
+(define qrya
+(BindLink
+  (TypedVariableLink
+    (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")
+    (TypeChoice
+      (TypeNode "ConnectorSeq")
+      (TypeNode "ShapeLink")))
+(PresentLink
+    (ChoiceLink
+      (Section
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")))
+    (ChoiceLink
+      (Section
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))))
+(ListLink
+    (ChoiceLink
+      (Section
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")))
+    (ChoiceLink
+      (Section
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))))
+))
+(define qsa (cog-value->list (cog-execute! qrya)))
+
+(define qryb
+(BindLink
+ (VariableList
+  (TypedVariableLink
+    (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")
+    (TypeChoice (TypeNode "ConnectorSeq") (TypeNode "ShapeLink")))
+  (TypedVariableLink (Variable "r1")
+	(Signature
+    (ChoiceLink
+      (Section (WordNode "his") (TypeNode "ConnectorSeq"))
+      (CrossSection (WordNode "his") (TypeNode "ShapeLink")))))
+  (TypedVariableLink (Variable "r2")
+	(Signature
+    (ChoiceLink
+      (Section (WordNode "the") (TypeNode "ConnectorSeq"))
+      (CrossSection (WordNode "the") (TypeNode "ShapeLink"))))))
+(PresentLink
+    (ChoiceLink
+      (Section
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")))
+    (ChoiceLink
+      (Section
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))))
+  (ListLink (Variable "r1") (Variable "r2"))
+))
+(define qsa (cog-value->list (cog-execute! qrya)))
+
+(define qryc
+(BindLink
+ (VariableList
+  (TypedVariableLink
+    (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")
+    (TypeChoice (TypeNode "ConnectorSeq") (TypeNode "ShapeLink")))
+	(Variable "r1") (Variable "r2"))
+(AndLink
+(PresentLink
+    (ChoiceLink
+      (Section
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")))
+    (ChoiceLink
+      (Section
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))))
+(Identical (Variable "r1")
+    (ChoiceLink
+      (Section
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "his")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))))
+(Identical (Variable "r2")
+    (ChoiceLink
+      (Section
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C"))
+      (CrossSection
+        (WordNode "the")
+        (VariableNode "$1159996965843-ukZpW48IhJwb9sl7DZMsIN1C")))))
+
+  (ListLink (Variable "r1") (Variable "r2"))
+))
+(define qsc (cog-value->list (cog-execute! qryc)))
+
+OK, so this needs work.
+
+==============================================================
 
   'pair-count L R - Returns the total observed count on the pair (L,R)
       L must be an Atom of type 'left-type and likewise for R.
@@ -6115,12 +6237,12 @@ get-pair get-count make-pair get-left-element get-right-element
 
 
 OK ... It There are very similar. So they lead a clique.
-The clique is created, but none of the djs that made It There 
+The clique is created, but none of the djs that made It There
 similar are accepted into the clique!  So it's proposed again ... 507
 
 a clque is built, (with She) but again, the rejected djs are rejected.
 a cliqe They He It There   454
-again There It 
+again There It
 again They He It There 369
 
 todo -- wtf
@@ -6174,7 +6296,15 @@ FIXED:
 
 
 TODO/BUGS:
-* Some in-group cluster names get re-generated and resused.
+* The fast-math code works, but returns the incorrect pairs when
+  used with direct-sum. Scheme hackiness seems impossible,
+  because info has been lost. So this requires somehow naming
+  the clauses in the pattern engine, but this is ticky in two ways.
+  First, IdenticalLinks aren't pruned, as they should be.
+  Second, when the top clause is a choice, it's not obvioius
+  that such pruning will recognize the attempt to name the clause.
+  Ugh. Maybe punt on this, there's a better solution, I guess.
+* Some in-group cluster names get re-generated and reused.
 * Some top-ranked merges have very few (less than 5%) of shared
   disjuncts. These should not be done, or the in-group should be
   tightened.  Some in-groups seem too large by one member.
