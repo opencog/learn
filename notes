@@ -6081,6 +6081,16 @@ wait:
 
 Oh, the make-pair on direct sum was returning incomplete results
 
+(define (comp WA WB)
+	(define e (make-elapsed-secs))
+	(define prn (pn 'right-count (list WA WB)))
+	(format #t "new got ~A in ~A\n" prn (e))
+	(define pro (po 'right-count (list WA WB)))
+	(format #t "old got ~A in ~A\n" pro (e)))
+
+(comp (Word "the") (Word "his"))
+
+
 ==============================================================
 (define qrya
 (BindLink

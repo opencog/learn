@@ -9481,10 +9481,15 @@ There's actually a bug in the code w.r.t.
 There's another bug with voting.
  After an in-group is selected, as judged by MI, it turns out that only
  a small number of disjuncts are shared by more than 70% of the ingroup.
- Sometimes less than 5%! These are clustered, but then, out of what's left,
+ Sometimes less than 1%! These are clustered, but then, out of what's left,
  a new very similar in-group is created, because the MI is still high.
  This is seen in the last three lines of the table above, and also in the
  It-He lines in the table.
+\end_layout
+
+\begin_layout Standard
+Heh.
+ Now its stuck in an infinite loop, mergins 0 sections each time around!
 \end_layout
 
 \begin_layout Standard
