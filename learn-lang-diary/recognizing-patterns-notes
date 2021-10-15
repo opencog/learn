@@ -1,6 +1,18 @@
 
 Title page:
 * Hi, My name is linas Vepstas, you can call me Linas.
+* I want to tell you about a theory of grammar that works not only
+  for natural language, but also, I beleive, for audio, video, or
+  any sensory input.  And not just low-level stuff, but also for highlevel
+  functions, such as common-sense reasoning and natural deduction.
+* not only that, but it is possible to write algorithms that learn
+  this grammar in an unsupervised setting: without any prior
+  human-selected inputs.
+* As a bonus, the theory is symbolic, not sub-symbolic, and as such,
+  it provides for explainable, comprehensible patterns, thus offering
+  an answer to the question of understanding how it thinks.
+
+XXX alt text
 * I'm here to talk about the automated, unsupervised learning
   of explainable, comprehendable patterns in language,
   and in a general setting that includes audio and video,
@@ -34,35 +46,35 @@ Everything in the universe is a graph
 
 Graphs are decomposable
 * This should be obvious, but is rarely mentioned in graph theory.
-* You can gut an edge to get two half-edges.
+* You can cut an edge to get two half-edges.
 * After cutting the egde, you need to label the cut ends so that
   you know how to join them again.
-* The metaphor I will us repeatedly is that of the jigsaw puzzle-piece
+* The metaphor I will use repeatedly is that of the jigsaw puzzle-piece
   connector.
 * Jigsaw puzzle pieces are designed so that the mating
   of the pieces is forced.
 * When you cut an edge, attach a connector to it.
 * In this example, polarity is indeterminate; flip a coin.
 
-* In the gran scheme of things, you will discover that connectors
+* In the grand scheme of things, you will discover that connectors
   can be multi-polar, multi-sexual.
 * This is perhaps politically controversial, but biologists have found
   fungi with 43 different types of sex.
-* Some of these can mate, and produce viable offsprint, and some cannot.
+* Some of these can mate, and produce viable offspring, and some cannot.
   Its quite strange.
 
 * I've drawn a picture of a telescope jigsaw-puzzle piece, with
   connectors for looking at the sun and the moon.
-* There are other things that can se the sun and the moon: eyes and
+* There are other things that can see the sun and the moon: eyes and
   lenses.  They have the same jigsaw shape.
-* These shapes define the syntax of the graph..
+* These shapes define the syntax of the graph.
 * The syntax is exactly that collection of shapes that allow connections
   to occur.
 
 * This might not be the defnition of syntax that you are comfortable
   with, or that you have learned.
 * It is, however, entirely equivalent to the more conventional
-  defintions you may know.
+  definitions you may know.
 * This is not a particularly deep claim, it's fairly well-known and
   well-understood, I'm sorry only in not having a good reference for it
   at my fingertips.
@@ -92,14 +104,14 @@ Graphs are Compositional
   looks so simple.
 * It can, in fact be, quite very complex.
 
-* By they way: a type theory typ is the same thing as it is in computer
+* By they way: a type theory type is the same thing as it is in computer
   science.
 * It can be an int a float, a string: these are primitive types.
 * It can be a compound type: a list, an OO class, a function signature.
 
 * I'm drawing a jigsaw connector to represent any and all of these things.
 
-* I told you that this will all be simple, yet confusing at the same
+* I warned told you that this will all be simple, yet confusing at the same
   time.  Perhaps it begins here.
 
 Slide physics:
@@ -114,7 +126,7 @@ Slide physics:
 * Coecke is saying that you can parse natural language quickly and
   easily with quantum algorithms.
 
-* Anyway: Compostion is like contracting tensor indexes.
+* Anyway: Composition is like contracting tensor indexes.
 * Connecting connectors is like contracting tensor indexes.
 
 Chemistry Biology
@@ -122,7 +134,7 @@ Chemistry Biology
  * A chemical reaction has inputs and outputs.
  * These are the "connectors", they must connect, for a reaction to
    happen.
- * Prusinkiewicz has ben developing algorithmic botany for the last
+ * Prusinkiewicz has been developing algorithmic botany for the last
    three decades. It is beautiful and stunning and relevant to AGI.
    You should check it out.
 
@@ -135,7 +147,7 @@ Link Grammar:
   S for the subject-verb linkage
   O for the object-verb linkage
   D for connecting to the dterminer, which English demands.
-* The idagram drawn here is correct for this sentence, but
+* The diagram drawn here is correct for this sentence, but
   as a warning:
 * I'm glossing over some more complex ideas in the connector
   type matching system. As I said earlier, types need not be primitive
@@ -160,12 +172,12 @@ Vision:
 * There are connectors.
 * Some connectors connect north-south directions
 * Some connectors connect to colors
-* Some connector connecto to round shapes.
-* Some connectors connecto to a background.
+* Some connectors connect to round shapes.
+* Some connectors connect to a background.
 * So its not just shape, or just color: some of these connections
   are abstract.
 
-* A key point: it is not about pixels.
+* A key point: it is not about pixels. (!!)
 * Shape grammars really are different than pixel-collections.
 
 Audio:
@@ -235,11 +247,11 @@ Lexical attraction
 * The diagram here is from Yuret's thesis.
 * What he did here is very clever:
   He drew the maximum spanning tree.
-* it is a tree that connects every word in the sentence,
+* It is a tree that connects every word in the sentence,
   and the edges are choosen so that the grand total MI is the largest
   possible.
 
-* Note that the LA/MI for "Norther Ireland" is huge.  That's because
+* Note that the LA/MI for "Northern Ireland" is huge.  That's because
   when these two words occur in a text, they commonly occur together.
 
 * You don't much see "Northern" with that many other things, and
@@ -253,8 +265,8 @@ Lexical entries
 * Here's how.
 * You've drawn the maximum spanning tree.
 * Now cut the egdes, and form the labelled connectors.
-* Here are severa different notations.
-* The graphical one, opf course.
+* Here are several different notations.
+* The graphical one, of course.
 * A text version.
 * The minus signs mean "connect to the left"
 
@@ -286,10 +298,10 @@ Lexical entries
 * Run through your corpus, a million sentences, and count
   how often you see a word-disjunct pair.
 * You get a count N(w,d)
-* Turn the count int a probability.
+* Turn the count into a probability.
 
 * Given a word, write down the counts for that word.
-* The ruslt is something that looks like a vector.
+* The result is something that looks like a vector.
 * I've written it as a vector here.
 
 * There's something a bit clever here: the plus sign can be interpreted
@@ -321,10 +333,10 @@ Similarity scores
 
 * Problem with assuming Euclidean space is that taking orthogonal
   projections can lead to negative probabilities. Its pathological.
-  You can't just take the orthogonal complement, you get nonnsense.
+  You can't just take the orthogonal complement, you get nonsense.
 
 * You need something that works in probability space.
-* Probability stpace is not Euclidean, its a simplex:
+* Probability space is not Euclidean, its a simplex:
   a triangle, a tetrahedron in 3D, a something-gon in 4D...
 
 * Anyway experimental measurements show that cosine distance is low quality
@@ -335,7 +347,7 @@ Similarity scores
   are the vacuum contributions! So you can get quite fancy with the
   theory, here, if you want.
 
-* Now a breif diversion.  I graphs the istribution of MI.
+* Now a breif diversion.  I graphed the distribution of MI.
   This graph is for 2/3rds of a million word pairs.
 * Its on a log scale. Its a parabola.
 * A parabola on a log scale is just a Bell curve. A gaussian. A normal
@@ -419,11 +431,12 @@ Compositionality
   connectors.
 * On the right is an example of anaphora resolution.
 * We have a grammar for the words in the sentences,
-  How about connections between senetences?
+  How about connections between sentences?
 * Repeat the process. Move up the hierarchy.
 * This is hardly a new idea, people have talked about this
   for many decades.
-* I've presented you with an algorithm and a theoretical framwork
+* What's new here:
+* I've presented you with an algorithm and a theoretical framework
   for which software can be written (is being written).
 
 Let me move on. We're near the end here.
@@ -467,9 +480,9 @@ Something from Nothing
 
 Symbol grounding problem
 * This is how we get to interpretability.
-* Any engineer ccan look at that filter tree, and say "oh I know exactly
+* Any engineer can look at that filter tree, and say "oh I know exactly
   what it does. OMG, its even labelled: its a low-pass filter, and a
-  chirp filter. So obvious.
+  chirp filter. So obvious."
 
 * What is a "whistle"? Oh, it is a specific filter sequence.
 * What does the word "whistle" mean?
@@ -480,7 +493,7 @@ Symbol grounding problem
 * The frame problem asks: what parts of the environment are
   important for making decisions?
 * Answer: those parts of the environment that have been filtered
-  out by the currrent active filters.
+  out by the current active filters.
 * But what are those?
 * Answer: they were learned, by applying mutual information to
   extract similarity, and then factorize/generalize into common
