@@ -6263,6 +6263,26 @@ Just looped over.
 
 0.7*4 = 2.8 -> round -> 3
 
+compute-left-product
+(prod-obj 'left-count (list COL-A COL-B)
+
+prod-obj  (add-support-compute
+            (add-fast-math star-obj * GET-CNT)))
+
+#:optional (GET-CNT 'get-count)
+
+'left-support
+'left-count
+
+(define pn  (add-support-compute (add-fast-math star-obj *)))
+(in-group-cluster covr-obj 0.7 200 100)
+
+'left-product
+'right-product
+
+add-support-compute 'left-length if default count ...
+
+GetCount
 
 
 
