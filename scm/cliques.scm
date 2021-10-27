@@ -116,13 +116,24 @@
 (define-public (optimal-in-group SIMFUN WA WB CANDIDATES)
 "
   optimal-in-group SIMFUN WA WB CANDIDATES
-  Return an ingroup of closely related words.
+  Return an ingroup of closely related words. The intial members of the
+  ingroup are WA and WB. Additional potential members are drawn from
+  CANDIDATES if they are similar-enough to the current ingroup, as
+  measured by the similarity function SIMFUN.
 
-  Search for the largest in-group possible that is still exclusive.
-  As membership requirements in the in-group are loosened, experiments
-  show that there is a knee in the groups size, in that at first, the
-  sizeof the group grows slowly, and then rapidly. This searches for
-  the largest group below that inflection point.
+  This searches for the largest ingroup that is still exclusive. The
+  search is performed by admitting individuals from CANDIDATES, one
+  at a time, if they are judged similar-enough by SIMFUN. The membership
+  requirements are slowly loosened (by dropping the lower bound of what
+  is considered 'similar-enough'), until membership explodes. Then
+  the lower bound is backed off a bit, just before the explosion.
+
+  Experiments show that as membership requirements are loosened, there
+  is a knee in the size of the group: the group size suddenly explodes.
+  That is, as the similarity threshold is loosened, the size of the
+  group at first grows slowly, and then, at some point, it takes off,
+  growing rapidly (growing 'explosively'). This searches for the
+  largest group below that inflection point.
 
   Arguments:
   WA and WB seed the initial in-group.
