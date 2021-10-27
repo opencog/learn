@@ -46,6 +46,58 @@
 ;
 ; TODO: maybe reintroduce NOISE as well.
 
+(define-public (make-count-majority-shared LLOBJ QUORUM)
+"
+prototype
+"
+	; WLIST is a list of WordNodes and/or WordClassNodes that are
+	; being proposed for merger. This will count how many disjuncts
+	; these share in common.
+	(define (count WLIST)
+
+		; The minimum number of sections that must exist for
+		; a given disjunct. For a list of length two, both
+		; must share that disjunct (thus giving the traditional
+		; overlap merge).
+		(define wlen (length WLIST))
+		(define vote-thresh
+			(if (equal? wlen 2) 2
+				(inexact->exact (round (* QUORUM wlen)))))
+
+		; Return #t if the DJ is shared by the majority of the
+		; sections. Does the count exceed the threshold?
+		(define (vote-to-accept? DJ)
+			(<= vote-thresh
+				(fold
+					(lambda (WRD CNT)
+						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
+					0
+					WLIST)))
+
+		; Put all of the connector-sets on all of the words int a bag.
+		(define set-of-all-djs (make-atom-set))
+		(for-each
+			(lambda (WRD)
+				(for-each
+					(lambda (DJ) (set-of-all-djs DJ))
+					(LLOBJ 'right-basis WRD)))
+			WLIST)
+
+		(define list-of-all-djs (set-of-all-djs #f))
+
+		; Count the particular DJ, if it is shared by the majority.
+		(fold
+			(lambda (DJ CNT)
+				(if (vote-to-accept? DJ) (+ 1 CNT) CNT))
+			list-of-all-djs)
+
+
+	)
+
+	; Return the above function
+	count
+)
+
 (define-public (make-merge-majority LLOBJ QUORUM MRG-CON)
 "
   make-merger-majority LLOBJ QUORUM MRG-CON --
@@ -64,7 +116,8 @@
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the LLOBJ object have shapes on it.
 "
-	; WLIST is a list of WordNodes and/or WordClassNodes
+	; WLIST is a list of WordNodes and/or WordClassNodes that will be
+	; merged into one WordClass.
 	; Return a WordClassNode that is the result of the merge.
 	(define (merge WLIST)
 		(for-each
