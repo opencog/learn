@@ -6284,6 +6284,24 @@ add-support-compute 'left-length if default count ...
 
 GetCount
 
+in-group-cluster make-merge-majority
+
+assign-to-cluster  no
+(assign-to-cluster LLOBJ CLS WA CLIQUE)
+
+   (for-each
+      (lambda (PAIR-A)
+         (define cnt (CLIQUE LLOBJ CLS PAIR-A accumulate-count))
+         (when (< 0 cnt)
+            (monitor-rate #f) ; increment only if counted!
+            (set! accum-cnt (+ accum-cnt cnt))))
+      (LLOBJ 'right-stars WA))
+
+add group sim
+
+(count-shared-conseq LLOBJ QUORUM WORD-LIST)
+
+
 
 
 ====================================================
