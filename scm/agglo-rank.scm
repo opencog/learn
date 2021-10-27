@@ -520,11 +520,12 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT)
+(define-public (in-group-cluster LLOBJ QUORUM COMMONALITY NRANK LOOP-CNT)
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT - perform clustering.
 
   Recommended values QUORUM should be 0.7
+  COMMONALITY should be 0.2
   NRANK should be between 100 and 200
 
 Prototype - partly finished, partly-tested, undocumented.
@@ -542,6 +543,30 @@ it will throw if this case is hit.
 	(define merge-majority (make-merge-majority LLOBJ QUORUM #t))
 
 	; ------------------------------
+	; Find the largest in-group that also shares more than a
+	; fraction COMMONALITY of disjuncts among a QUORUM of members.
+	; The returned groupd will always have at leastt two members,
+	; the initial two proposed.
+	(define (get-merg-grp WA WB CANDIDATES)
+		(define initial-in-grp
+			(optimal-in-group ranked-mi-sim WA WB CANDIDATES))
+		(format #t "Initial in-group size=~D: ~A\n"
+			(length initial-in-grp) initial-in-grp)
+
+		; tail-recursive trimmer; rejects large groups with little
+		; commonality.
+		(define (trim-group GRP)
+			(define ovlp (count-shared-conseq LLOBJ QUORUM GRP))
+			(format #t "In-group size=~D overlap = ~A of ~A disjuncts\n"
+				(legth GRP) (car ovlp) (cadr ovlp))
+			(define frac (/ (car ovlp) (cadr ovlp)))
+			(if (or (< COMMONALITY frac) (= (length GRP) 2))
+				GRP (trim-group (drop-right GRP 1))))
+
+		(trim-group initial-in-grp)
+	)
+
+	; ------------------------------
 	; Main workhorse function
 	(define (do-merge N WA WB)
 		(define e (make-elapsed-secs))
@@ -555,7 +580,7 @@ it will throw if this case is hit.
 			(min (length ranked-words) (+ NRANK (* 3 N))))
 		(define words-with-sims (take ranked-words n-to-take))
 		(define in-grp
-			(optimal-in-group ranked-mi-sim WA WB words-with-sims))
+			(get-merg-group ranked-mi-sim WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
