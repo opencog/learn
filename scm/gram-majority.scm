@@ -46,13 +46,29 @@
 ;
 ; TODO: maybe reintroduce NOISE as well.
 
-(define-public (make-count-majority-shared LLOBJ QUORUM)
+(define-public (make-majority-jaccard LLOBJ QUORUM)
 "
-prototype
+  make-majority-jaccard LLOBJ QUORUM -- Return a function that
+  counts the number of connector sequences shared by a majority
+  of the words in a word list. The majority is determined by QUORUM,
+  which should be a floating-point number between 0.0 and 1.0.
+
+  When the returned function is invoked on a list of words, it returns
+  a list of two numbers: the number of connector sequences shared by
+  the majority, and the total number number of connector sequences that
+  appear on the words.
+
+  This returns a function that implements a kind-of Jaccard distance
+  between multiple words (two or more).  The conventional Jaccard
+  distance is defined only for pairs of items. The generalization is
+  done by counting to see if a fraction QUORUM is shared. Setting
+  QUORUM to 1.0, and appplying the function to two items returns
+  the conventional Jaccard distance.
 "
 	; WLIST is a list of WordNodes and/or WordClassNodes that are
 	; being proposed for merger. This will count how many disjuncts
-	; these share in common.
+	; these share in common. It returns a pair of numbers: the number
+	; of disjuncts shared, and the total disjuncts.
 	(define (count WLIST)
 
 		; The minimum number of sections that must exist for
@@ -86,12 +102,14 @@ prototype
 		(define list-of-all-djs (set-of-all-djs #f))
 
 		; Count the particular DJ, if it is shared by the majority.
-		(fold
-			(lambda (DJ CNT)
-				(if (vote-to-accept? DJ) (+ 1 CNT) CNT))
-			list-of-all-djs)
+		(define shared-count
+			(fold
+				(lambda (DJ CNT)
+					(if (vote-to-accept? DJ) (+ 1 CNT) CNT))
+				list-of-all-djs))
 
-
+		; Return two numbers: the shared count and the total count.
+		(list shared-count (length list-of-all-djs))
 	)
 
 	; Return the above function
