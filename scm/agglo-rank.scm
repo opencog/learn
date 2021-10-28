@@ -577,7 +577,7 @@ it will throw if this case is hit.
 				((< comality prev-com) prev-grp)
 				(else (trim-group (drop-right GRP 1) comality GRP))))
 
-		(trim-group initial-in-grp -1.0)
+		(trim-group initial-in-grp -1.0 initial-in-grp)
 	)
 
 	; ------------------------------
