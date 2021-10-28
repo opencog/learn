@@ -68,7 +68,7 @@
 	; The threshold, the minimum number of sections that must exist
 	; for a given disjunct. For a list of length two, both must share
 	; that disjunct (thus giving the traditional overlap merge).
-	(define wlen (length WLIST))
+	(define wlen (length WORD-LIST))
 	(define vote-thresh
 		(if (equal? wlen 2) 2
 			(inexact->exact (round (* QUORUM wlen)))))
