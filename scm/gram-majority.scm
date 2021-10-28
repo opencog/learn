@@ -72,7 +72,6 @@
 	(define vote-thresh
 		(if (equal? wlen 2) 2
 			(inexact->exact (round (* QUORUM wlen)))))
-	)
 
 	; The group-similarity function uses a strictly-less-than compare.
 	; So, to be shared by two, its enough to set low-bnd to one.
