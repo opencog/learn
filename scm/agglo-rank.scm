@@ -520,12 +520,13 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (in-group-cluster LLOBJ QUORUM COMMONALITY NRANK LOOP-CNT)
+(define-public (in-group-cluster LLOBJ QUORUM COMMONALITY NOISE NRANK LOOP-CNT)
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT - perform clustering.
 
   Recommended values QUORUM should be 0.7
   COMMONALITY should be 0.2
+  NOISE should be 4
   NRANK should be between 100 and 200
 
 Prototype - partly finished, partly-tested, undocumented.
@@ -560,7 +561,7 @@ it will throw if this case is hit.
 		; the threshold COMMONALITY, or the last grouping before the
 		; commonality decreases.
 		(define (trim-group GRP prev-com prev-grp)
-			(define ovlp (count-shared-conseq LLOBJ QUORUM GRP))
+			(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 			(define comality (/ (car ovlp) (cadr ovlp)))
 			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality=~4,2F %\n"
 				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))

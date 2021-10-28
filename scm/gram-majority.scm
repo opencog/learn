@@ -24,6 +24,8 @@
 ;
 ; TODO:
 ; * Reintroduce FRAC for those disjuncts not shared by the majority.
+;   Overall seems like a bad idea, but the unit tests do test it.
+;   (i.e. its needed to replace `make-merge-pair` code with this code.
 ; * Maybe reintroduce NOISE for minimum counts, if this cannot be
 ;   handled in other ways.
 ;
@@ -43,20 +45,20 @@
 ; TODO: we can very easily re-introduce FRAC here, and thus
 ; provide compatibility with the older merge methods. Just
 ; modify `clique` below to do this.
-;
-; TODO: maybe reintroduce NOISE as well.
 
-(define-public (count-shared-conseq LLOBJ QUORUM WORD-LIST)
+(define-public (count-shared-conseq LLOBJ QUORUM NOISE WORD-LIST)
 "
-  count-shared-conseq LLOBJ QUORUM WORD-LIST -- Return a count of the
-  number of connector sequences which are shared by a majority of the
-  words in WORD-LIST. Actually, return a list of two numbers: this
-  count and the total connector sequences appearing in common in all
-  of the words.  Dividing these two numbers gives a generalized form
+  count-shared-conseq LLOBJ QUORUM NOISE WORD-LIST -- Return a count
+  of the number of connector sequences which are shared by a majority
+  of the words in WORD-LIST. Actually, return a list of two numbers:
+  this count and the total connector sequences appearing in common in
+  all of the words.  Dividing these two numbers gives a generalized form
   of the Jaccard similarity between all of the words in the WORD-LIST.
 
   The majority is determined by QUORUM, which should be a floating-
   point number between 0.0 and 1.0.
+
+  ConnectorSeq's with a count of less than NOISE are ignored.
 
   This function is a kind-of Jaccard distance between multiple words
   (two or more).  The conventional (unweighted) Jaccard distance is
@@ -77,7 +79,8 @@
 	; So, to be shared by two, its enough to set low-bnd to one.
 	(define low-bnd (- vote-thresh 1))
 
-	((make-group-similarity LLOBJ) 'mutual-col-supp low-bnd WORD-LIST)
+	; ((make-group-similarity LLOBJ) 'mutual-col-supp low-bnd WORD-LIST)
+	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
 (define-public (make-merge-majority LLOBJ QUORUM MRG-CON)
