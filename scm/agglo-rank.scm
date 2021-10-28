@@ -556,16 +556,27 @@ it will throw if this case is hit.
 		(format #t "\n")
 
 		; Tail-recursive trimmer; rejects large groups with little
-		; commonality.
-		(define (trim-group GRP)
+		; commonality. Accepts first grouping with commonality above
+		; the threshold COMMONALITY, or the last grouping before the
+		; commonality decreases.
+		(define (trim-group GRP prev-com prev-grp)
 			(define ovlp (count-shared-conseq LLOBJ QUORUM GRP))
 			(define comality (/ (car ovlp) (cadr ovlp)))
 			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality=~4,2F %\n"
 				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
-			(if (or (< COMMONALITY comality) (= (length GRP) 2))
-				GRP (trim-group (drop-right GRP 1))))
 
-		(trim-group initial-in-grp)
+			; In plain English:
+			; If comality is above threshold, accept.
+			; If we are down to two, accept.
+			; If comality dropped, compared to the previous,
+			; accept the previous.
+			; Else trim one word from the end, and try again.
+			(cond
+				((or (< COMMONALITY comality) (= (length GRP) 2)) GRP)
+				((< comality prev-com) prev-grp)
+				(else (trim-group (drop-right GRP 1) comality GRP)))
+
+		(trim-group initial-in-grp -1.0)
 	)
 
 	; ------------------------------
