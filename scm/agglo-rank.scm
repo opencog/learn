@@ -558,7 +558,7 @@ it will throw if this case is hit.
 		(define (trim-group GRP)
 			(define ovlp (count-shared-conseq LLOBJ QUORUM GRP))
 			(format #t "In-group size=~D overlap = ~A of ~A disjuncts\n"
-				(legth GRP) (car ovlp) (cadr ovlp))
+				(length GRP) (car ovlp) (cadr ovlp))
 			(define frac (/ (car ovlp) (cadr ovlp)))
 			(if (or (< COMMONALITY frac) (= (length GRP) 2))
 				GRP (trim-group (drop-right GRP 1))))
