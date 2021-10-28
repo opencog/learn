@@ -2,7 +2,6 @@ ADD_GUILE_MODULE (FILES
 	learn.scm
 	agglo-rank.scm
 	batch-word-pair.scm
-	cliques.scm
 	common.scm
 	gram-class-api.scm
 	gram-classification.scm
@@ -10,6 +9,7 @@ ADD_GUILE_MODULE (FILES
 	gram-optim.scm
 	gram-pairwise.scm
 	gram-projective.scm
+	in-group.scm
 	lg-compare.scm
 	link-class.scm
 	link-pipeline.scm

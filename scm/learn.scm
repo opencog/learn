@@ -21,7 +21,7 @@
 (include-from-path "opencog/nlp/learn/gram-pairwise.scm")
 (include-from-path "opencog/nlp/learn/gram-majority.scm")
 (include-from-path "opencog/nlp/learn/gram-optim.scm")
-(include-from-path "opencog/nlp/learn/cliques.scm")
+(include-from-path "opencog/nlp/learn/in-group.scm")
 (include-from-path "opencog/nlp/learn/agglo-rank.scm")
 (include-from-path "opencog/nlp/learn/gram-class-api.scm")
 ; (include-from-path "opencog/nlp/learn/link-class.scm")

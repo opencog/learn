@@ -1,7 +1,8 @@
 ;
-; cliques.scm
+; in-group.scm
 ;
-; Obtain cliques of similar words. They can be used to form a cluster.
+; Obtain an in-group of similar words. In-groups are those whose members
+; have a lot in common with one-another.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
