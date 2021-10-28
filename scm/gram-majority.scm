@@ -137,7 +137,8 @@
 						; or it should be
 						; (if (< NOISE (LLOBJ 'pair-count WRD DJ)) ...)
 						; to be fully compatible with `count-shared-conseq`
-						; but right now, I'm going to ignore this...
+						; However, simply checking for presence is the most
+						; accepting way of voting, so we allow that.
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
 					WLIST)))
