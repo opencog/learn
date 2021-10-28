@@ -580,7 +580,7 @@ it will throw if this case is hit.
 			(min (length ranked-words) (+ NRANK (* 3 N))))
 		(define words-with-sims (take ranked-words n-to-take))
 		(define in-grp
-			(get-merg-group ranked-mi-sim WA WB words-with-sims))
+			(get-merg-grp ranked-mi-sim WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
