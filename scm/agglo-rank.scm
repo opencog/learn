@@ -550,17 +550,19 @@ it will throw if this case is hit.
 	(define (get-merg-grp WA WB CANDIDATES)
 		(define initial-in-grp
 			(optimal-in-group ranked-mi-sim WA WB CANDIDATES))
-		(format #t "Initial in-group size=~D: ~A\n"
-			(length initial-in-grp) initial-in-grp)
+		(format #t "Initial in-group size=~D:" (length initial-in-grp))
+		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+			initial-in-grp)
+		(format #t "\n")
 
-		; tail-recursive trimmer; rejects large groups with little
+		; Tail-recursive trimmer; rejects large groups with little
 		; commonality.
 		(define (trim-group GRP)
 			(define ovlp (count-shared-conseq LLOBJ QUORUM GRP))
-			(format #t "In-group size=~D overlap = ~A of ~A disjuncts\n"
-				(length GRP) (car ovlp) (cadr ovlp))
-			(define frac (/ (car ovlp) (cadr ovlp)))
-			(if (or (< COMMONALITY frac) (= (length GRP) 2))
+			(define comality (/ (car ovlp) (cadr ovlp)))
+			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality=~4,2F %\n"
+				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
+			(if (or (< COMMONALITY comality) (= (length GRP) 2))
 				GRP (trim-group (drop-right GRP 1))))
 
 		(trim-group initial-in-grp)
