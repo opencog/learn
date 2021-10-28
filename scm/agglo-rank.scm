@@ -541,7 +541,7 @@ it will throw if this case is hit.
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
-	(define merge-majority (make-merge-majority LLOBJ QUORUM #t))
+	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a

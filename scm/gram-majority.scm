@@ -83,7 +83,7 @@
 	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
-(define-public (make-merge-majority LLOBJ QUORUM MRG-CON)
+(define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)
 "
   make-merger-majority LLOBJ QUORUM MRG-CON --
   Return a function that will merge a list of words into one class.
@@ -97,6 +97,11 @@
   QUORUM is a floating point number indicating the fraction of
   sections that must share a given disjunct, before that disjunct is
   merged into the cluster.
+
+  NOISE is a count, such that if a ConnectorSeq has a count less
+  than or equal to this, it will always be merged, irrespective of
+  the majority vote. In short, small differences between members
+  are ignored, and lumped up into the quirkness of the group.
 
   MRG-CON is #t if Connectors should also be merged.  This requires
   that the LLOBJ object have shapes on it.
@@ -127,6 +132,12 @@
 			(<= vote-thresh
 				(fold
 					(lambda (WRD CNT)
+						; XXX TODO thise should be either
+						; (if (< 0 (LLOBJ 'pair-count WRD DJ)) ...)
+						; or it should be
+						; (if (< NOISE (LLOBJ 'pair-count WRD DJ)) ...)
+						; to be fully compatible with `count-shared-conseq`
+						; but right now, I'm going to ignore this...
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
 					WLIST)))
@@ -137,14 +148,15 @@
 		(define (clique LLOBJ CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
-			(if (vote-to-accept? DJ)
+			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
+					(vote-to-accept? DJ))
 				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 				0))
 
 		; We are going to control the name we give it. We could also
 		; delegate this to `add-gram-class-api`, but for now, we're
 		; going to punt and do it here. Some day, in a generic framework,
-		; this will need to be cleaned up.
+		; this will need to be cleaned up. XXX FIXME.
 		(define cls-name (string-join (map cog-name WLIST)))
 		(define cls-type (LLOBJ 'cluster-type))
 		(define cls-typname
