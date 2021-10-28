@@ -9501,6 +9501,19 @@ Solution would seem to be to kick out the most recent members from the in-group,
  to belong to five different clusters.)
 \end_layout
 
+\begin_layout Standard
+We shall call this number the 
+\begin_inset Quotes eld
+\end_inset
+
+commonality
+\begin_inset Quotes erd
+\end_inset
+
+, and request that the ingroup have a minimal commonality.
+ The code documentation explains this better than here.
+\end_layout
+
 \begin_layout Subsection*
 In-group commonality
 \end_layout
@@ -9508,7 +9521,7 @@ In-group commonality
 \begin_layout Standard
 OK, so this needs further study.
  The failing in-group was `There` `It` `He` `They`.
- Initially, the following MI's are observed: 
+ Initially, the following ranked-MI's are observed: 
 \begin_inset Foot
 status collapsed
 
@@ -9830,18 +9843,24 @@ At round 6, `He` `It` `I` `There` are merged, seeded by `It` and `He`.
 \end_layout
 
 \begin_layout Standard
-Round 7 does ranked-MI = 8.6036 MI = 10.873 (`It`, `There`).
+Round 7 is seeded by ranked-MI = 8.6036 MI = 10.873 (`It`, `There`) and merges
+ `There` `It` `He` `She` `They`.
  Approx 20 sections each get merged, so this is already a small number.
 \end_layout
 
 \begin_layout Standard
-Round 8 does ranked-MI = 8.6293 MI = 10.875 (`It`, `There`) merge of `There`
- `It` `He` `They` with less than 20 sections each contributing.
+Round 8 is seeded by ranked-MI = 8.6293 MI = 10.875 (`It`, `There`) and merges
+ `There` `It` `He` `They` with less than 20 sections each contributing.
 \end_layout
 
 \begin_layout Standard
-Round 9 does ranked-MI = 8.6296 MI = 10.878 (`It`, `There`) with zero sections
- contributing, If we stop there and look, we get:
+Round 9 starts with ranked-MI = 8.6296 MI = 10.878 (`It`, `There`) and attempts
+ to merge `There` `It` `He` `They`.
+ The result of this attempt is zero sections contributing! How is this possible?
+\end_layout
+
+\begin_layout Standard
+If we stop there and look, we get:
 \end_layout
 
 \begin_layout Standard
@@ -9923,7 +9942,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.099
 \end_layout
 
 \end_inset
@@ -9932,7 +9951,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.630
 \end_layout
 
 \end_inset
@@ -9941,7 +9960,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.696
 \end_layout
 
 \end_inset
@@ -9950,7 +9969,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.897
 \end_layout
 
 \end_inset
@@ -9979,7 +9998,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.830
 \end_layout
 
 \end_inset
@@ -9988,7 +10007,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.202
 \end_layout
 
 \end_inset
@@ -9997,7 +10016,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-3.004
 \end_layout
 
 \end_inset
@@ -10035,7 +10054,7 @@ He
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.292
 \end_layout
 
 \end_inset
@@ -10044,7 +10063,7 @@ He
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.590
 \end_layout
 
 \end_inset
@@ -10091,7 +10110,7 @@ They
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.672
 \end_layout
 
 \end_inset
@@ -10113,8 +10132,32 @@ They
 \end_layout
 
 \begin_layout Standard
-Yet they had exactly zero sections in common.
- How is that?
+The negative ranked MI at `It`, `They` shows the problem.
+ BTW, the regular MI is -2.264 for these two.
+ Recall that the ingroup is determined by stopping the addition of members
+ just before membership explodes.
+ It says nothing about all of the members in the in-group having to have
+ a high MI.
+ Perhaps it should?
+\end_layout
+
+\begin_layout Standard
+Its clear that backing off the one word `They` will resolve the issue.
+ It's the one halting progress.
+ The quorum is set at 0.7, so majority vote requires 
+\begin_inset Formula $\left\lfloor 4\times0.7+0.5\right\rfloor =3$
+\end_inset
+
+ agreements.
+ Obviously, none of these will come from `They`, and so `There` `It` `He`
+ would have to be unanimous.
+ But they can't be: they were already merged in round 7 and 8.
+\end_layout
+
+\begin_layout Standard
+Conclude: we have two solutions: reject ingroup members with a negative
+ MI to other in-group members.
+ Also apply the commonality requirement.
 \end_layout
 
 \begin_layout Section*
