@@ -2,7 +2,8 @@
 ; in-group.scm
 ;
 ; Obtain an in-group of similar words. In-groups are those whose members
-; have a lot in common with one-another.
+; have a lot in common with one-another. In-groups might be cliques,
+; more generrally are almost-clqiues.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
@@ -18,20 +19,21 @@
 
 (use-modules (srfi srfi-1))
 
-(define-public (find-in-group SIMFUN WA WB EPSILON TIGHTNESS CANDIDATES)
+(define-public (find-in-group SIMFUN WA WB
+                              LOWER-BOUND EPSILON TIGHTNESS CANDIDATES)
 "
-  find-in-group SIMFUN WA WB EPSILON TIGHTNESS CANDIDATES
-  Return an ingroup of closely related words.
+  find-in-group SIMFUN WA WB LOWER-BOUND EPSILON TIGHTNESS CANDIDATES
+  Return an in-group of closely related words.
 
   Given two words WA and WB with a high similarity score, find a clique
   an almost-clique (the in-group), such that all similarity scores in
-  that in-group are no less than EPSILON below the similarity score of
-  the initial pair.  A clique is formed if *all* pair-scores meet this
-  requirement. An in-group is formed, if more than TIGHTNESS fraction
-  of the scores to other members in the in-group are above the epsilon
-  threshold. (A TIGHTNESS of 0.5 means the majority of the in-group
-  meets the requirement; a TIGHTNESS of 1.0 means the in-group is a
-  clique.)
+  that in-group are greater than LOWER-BOUND and are also no less than
+  EPSILON below the similarity score of the initial pair.  A clique is
+  formed if *all* pair-scores meet this requirement. An in-group is
+  formed, if more than a TIGHTNESS fraction of the scores to other
+  members in the in-group are above the epsilon threshold. (A TIGHTNESS
+  of 0.5 means that a simple majority of the in-group meets the
+  requirement; a TIGHTNESS of 1.0 means the in-group is a clique.)
 
   Arguments:
   WA and WB seed the initial in-group.
@@ -47,10 +49,14 @@
   should still work for other SIMFUN's, but these have not been
   characterized.
 
-  EPSILON is a lower bound on the in-group similarities. Most members
-  of the in-group must have similarities that are within EPSILON of the
-  initial pair.  Pairs that are within EPSILON are termed `similar
-  enough`.  Recommended value of 0.5 to 3.
+  LOWER-BOUND is an absolute lower bound on the in-group similarities.
+  All members of the in-group must have similarities that are greater
+  than LOWER-BOUND.  Recommended value of 0.0 to 4.0.
+
+  EPSILON is a relative lower bound on the in-group similarities. Most
+  members of the in-group must have similarities that are within EPSILON
+  of the initial pair.  Pairs that are within EPSILON are termed
+  `similar enough`.  Recommended value of 0.5 to 8.0.
 
   TIGHTNESS is a number between 0 and 1, specifying the fraction of
   the in-group pairs that must be similar enough to one-another. A
@@ -66,11 +72,13 @@
   a function of increasing EPSILON, followed by a very rapid increase
   after some threshold is passed. Obviously, EPSILON should be set
   below that threshold. Unfortunately, this threshold depends strongly
-  on the intial pair, even when worknig within the same dataset.
+  on the intial pair, even when working within the same dataset.
 "
 	; Given the current ingroup INGRP and the CANDIDATE, return #t
 	; if the candidate has a similarity score above MINSCORE to at
-	; least TIGHT other members of the ingroup.
+	; least TIGHT other members of the ingroup. Return #f if the
+	; candidate has a score below LOWER-BOUND to any member of the
+	; ingroup.
 	(define (accept INGRP CANDIDATE MINSCORE TIGHT)
 
 		; There can be at most `maxfail` bad scores
@@ -79,6 +87,7 @@
 		(every
 			(lambda (MEMB)
 				(define score (SIMFUN CANDIDATE MEMB))
+				(if (< score LOWER-BOUND) (set! failcnt (+ failcnt maxfail 999)))
 				(if (< score MINSCORE) (set! failcnt (+ failcnt 1)))
 				(<= failcnt maxfail)
 			)
@@ -165,10 +174,16 @@
 	; Hard-coded parameter -- the window size
 	(define win-size (inexact->exact (round (/ 1.0 epsi-step))))
 
-	; Hard-coded paramter -- the largest espsilon to consider.
+	; Hard-coded parameter -- the largest espsilon to consider.
 	; The value of 8.5 comes from experiments: the grouping of roman
 	; numerals were still coherent, despite being this far apart.
 	(define max-epsi 8.5)
+
+	; Hard-coded lower bound on the similarity between members of the
+	; in-group. All members of the in-group must have a pair-wise
+	; similarity greater than this. Ths should be betwen 0.0 and 4.0, I
+	; guess?
+	(define lower-bound 1.0)
 
 	; Hard-coded maximum size of the in-group.  We don't return in-groups
 	; larger than this.
@@ -184,7 +199,8 @@
 	(take-while
 		(lambda (N)
 			(set! epsilon (* N epsi-step))
-			(define ing (find-in-group SIMFUN WB WA epsilon tightness CANDIDATES))
+			(define ing (find-in-group SIMFUN WB WA
+				lower-bound epsilon tightness CANDIDATES))
 			(define ingsz (length ing))
 			(define prevsz (car window))
 			(set! window (append (drop window 1) (list ingsz)))
@@ -198,7 +214,8 @@
 	; conservative?)
 
 	(define in-grp
-		(find-in-group SIMFUN WA WB (- epsilon epsi-step) tightness CANDIDATES))
+		(find-in-group SIMFUN WA WB
+			lower-bound (- epsilon epsi-step) tightness CANDIDATES))
 
 	; Reverse the list before sending it out. This way, the initial
 	; WA and WB appear first in the list, instead of last. This
