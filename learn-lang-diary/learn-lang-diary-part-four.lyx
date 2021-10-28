@@ -9508,7 +9508,46 @@ In-group commonality
 \begin_layout Standard
 OK, so this needs further study.
  The failing in-group was `There` `It` `He` `They`.
- Initially, the following MI's are observed.
+ Initially, the following MI's are observed: 
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Use 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	(load-atoms-of-type 'SimilarityLink) 
+\end_layout
+
+\begin_layout Plain Layout
+
+	(define sap (add-similarity-api covr-obj #f "shape-mi")
+\end_layout
+
+\begin_layout Plain Layout
+
+	(sap 'pair-count (Word "There") (Word "It"))
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+The first number is MI, the second is ranked-MI.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -9590,7 +9629,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.142
 \end_layout
 
 \end_inset
@@ -9599,7 +9638,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.149
 \end_layout
 
 \end_inset
@@ -9608,7 +9647,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+7.246
 \end_layout
 
 \end_inset
@@ -9617,7 +9656,7 @@ There
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.007
 \end_layout
 
 \end_inset
@@ -9646,7 +9685,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.551
 \end_layout
 
 \end_inset
@@ -9655,7 +9694,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.866
 \end_layout
 
 \end_inset
@@ -9664,7 +9703,7 @@ It
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.710
 \end_layout
 
 \end_inset
@@ -9702,7 +9741,7 @@ He
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8.6763
 \end_layout
 
 \end_inset
@@ -9711,7 +9750,7 @@ He
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.969
 \end_layout
 
 \end_inset
@@ -9758,7 +9797,7 @@ They
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.938
 \end_layout
 
 \end_inset
@@ -9780,7 +9819,29 @@ They
 \end_layout
 
 \begin_layout Standard
-After
+After this, there are 5 rounds that merge as documented in the previous
+ section.
+\end_layout
+
+\begin_layout Standard
+At round 6, `He` `It` `I` `There` are merged, seeded by `It` and `He`.
+ At this time, ranked-MI = 8.8665 MI = 4.9165 (`It`, `He`) At this merge,
+ approx 600 out of 6000 sections each are merged.
+\end_layout
+
+\begin_layout Standard
+Round 7 does ranked-MI = 8.6036 MI = 10.873 (`It`, `There`).
+ Approx 20 sections each get merged, so this is already a small number.
+\end_layout
+
+\begin_layout Standard
+Round 8 does ranked-MI = 8.6293 MI = 10.875 (`It`, `There`) merge of `There`
+ `It` `He` `They` with less than 20 sections each contributing.
+\end_layout
+
+\begin_layout Standard
+Round 9 does ranked-MI = 8.6296 MI = 10.878 (`It`, `There`) with zero sections
+ contributing, If we stop there and look, we get:
 \end_layout
 
 \begin_layout Standard

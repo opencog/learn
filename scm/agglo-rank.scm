@@ -571,7 +571,7 @@ it will throw if this case is hit.
 	(define (do-merge N WA WB)
 		(define e (make-elapsed-secs))
 		(format #t "------ Start merge ~D with seed pair `~A` and `~A`\n"
-			N (cog-name WA) (cog-name WB))
+			(+ N 1) (cog-name WA) (cog-name WB))
 
 		(define ranked-words (rank-words LLOBJ))
 		; Approximation to number of words with sims.
