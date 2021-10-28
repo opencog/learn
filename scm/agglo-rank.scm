@@ -575,7 +575,7 @@ it will throw if this case is hit.
 			(cond
 				((or (< COMMONALITY comality) (= (length GRP) 2)) GRP)
 				((< comality prev-com) prev-grp)
-				(else (trim-group (drop-right GRP 1) comality GRP)))
+				(else (trim-group (drop-right GRP 1) comality GRP))))
 
 		(trim-group initial-in-grp -1.0)
 	)
