@@ -563,7 +563,7 @@ it will throw if this case is hit.
 		(define (trim-group GRP prev-com prev-grp)
 			(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 			(define comality (/ (car ovlp) (cadr ovlp)))
-			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality=~4,2F %\n"
+			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
 
 			; In plain English:
