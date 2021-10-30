@@ -641,7 +641,7 @@
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.
-	; The returned groupd will always have at leastt two members,
+	; The returned group will always have at least two members,
 	; the initial two proposed.
 	(define (get-merg-grp WA WB CANDIDATES)
 		(define initial-in-grp
@@ -663,13 +663,14 @@
 
 			; In plain English:
 			; If comality is above threshold, accept.
-			; If we are down to two, accept.
 			; If comality dropped, compared to the previous,
-			; accept the previous.
+			;    accept the previous.
+			; If we are down to two, accept. Do this check last.
 			; Else trim one word from the end, and try again.
 			(cond
-				((or (< COMMONALITY comality) (= (length GRP) 2)) GRP)
+				((< COMMONALITY comality) GRP)
 				((< comality prev-com) prev-grp)
+				((= (length GRP) 2) GRP)
 				(else (trim-group (drop-right GRP 1) comality GRP))))
 
 		(trim-group initial-in-grp -1.0 initial-in-grp)
