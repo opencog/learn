@@ -341,7 +341,7 @@
 
 	; Range of similarities to compute.
 	(define (diag-start N) (+ N NSIM-OFFSET))
-	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET)))
+	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
 
 	(for-each
 		(lambda (N)
