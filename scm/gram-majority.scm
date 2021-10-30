@@ -94,9 +94,9 @@
   LLOBJ is the object holding the disjuncts. For example, it could
   be (add-dynamic-stars (make-pseudo-cset-api))
 
-  QUORUM is a floating point number indicating the fraction of
-  sections that must share a given disjunct, before that disjunct is
-  merged into the cluster.
+  QUORUM is a floating point number indicating the fraction of members
+  that must share a given disjunct, before that disjunct is merged into
+  the cluster.
 
   NOISE is a count, such that if a ConnectorSeq has a count less
   than or equal to this, it will always be merged, irrespective of

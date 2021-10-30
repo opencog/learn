@@ -524,14 +524,84 @@
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT - perform clustering.
 
-  Recommended values QUORUM should be 0.7
-  COMMONALITY should be 0.2
-  NOISE should be 4
+  Loops over a list of the most similar words, and unifies them into a
+  cluster. Multiple words are selected at the same time to create a
+  cluster.  The selection of words is done by selecting an 'in-group'
+  of words that are all similar to one-another. The selection of
+  ConnectorSeq's to be merged is done by majority voting to determine
+  those ConnectorSeq's that the majority of the in-group have in common.
+  The size of the in-group is adjusted to maximize commonality.
+
+  There are three important paramters that determine the operation, and
+  two more that control the overall loop.
+
+  The QUORUM parameter is a floating point number, between 0.0 and 1.0
+  that determines how many of the in-group members must share a
+  ConnectorSeq for it to be considered to be held 'in common'.  (Think
+  of a group of individuals having some trait in common.)
+
+  Recommended values for QUORUM are in the 0.4 to 0.7 range. At the
+  moment, 0.5 or 0.6 seem to work well.
+
+  The algo begins by selecting the largest possible in-group that is
+  still exclusionary. The in-group must have large pair-wise similarity,
+  as measured by the `similarity-api`. It must be exclusive, in that
+  if the similarity threshold was reduced, membership would become
+  explosively large.
+
+  After the formation of the in-group, a poll is taken to see how many
+  ConnectorSeq's the group has in common (as controlled by QUORUM,
+  described above.) The 'commonality' is this frction. If the
+  commonality is less than the COMMONALITY parameter, then the size of
+  the in-group is reduced, by removing the least-similar member, and
+  a poll is taken again. This continues until either the commonality is
+  greater than the COMMONALITY parameter, or until the commonality
+  drops, as compared to the previous group. (The commonality can drop,
+  because in a smaller group, it can be harder to have a quorum.)
+
+  Recommended values for COMMONALITY are in the 0.05 to 0.25 range.
+  At the moment 0.2 seems to work well.
+
+  NOISE is a noise-floor threshold. If a given section has a count equal
+  or less than the NOISE parameter, it gets no vote in determining the
+  commonality.  (Think of a group of individuals, one of whom has a
+  minor quirky trait. One does not wish to have that minor trait to
+  interfer with the group as a whole, thus it is ignored.)
+
+  The NOISE parameter also plays a second role (perhaps it should be
+  split out into a distinct parameter?) All sections with a count equal
+  or below the noise floor are unconditionally merged into the cluster.
+
+  Recommended value for NOISE is 0 to 4.
+
+  All ConnectorSeq's that have been determined to be held in common by
+  the in-group are then merged into the cluster. Note that the process
+  of voting has both a narrowing and a broadening effect. Narrowing, in
+  that once a group of similar words have been selected, not all
+  ConSeq's are added to the cluster. The goal of this narrowing is to
+  explcitly factor out distinct word-senses. Thus, a word like "saw",
+  which can be both noun and verb, will have it's noun-like ConSeq's
+  merged with other nouns, while the verb-like ConSeq's are left behind,
+  to be merged with other verbs.
+
+  This algo also has a broadening effect: By majority vote, once a
+  ConSeq is accepted into the cluster, all of those words will now share
+  that ConSeq, even if some of them had not previously. The goal of this
+  broadening is to generalize from particulars to generalities.
+
+  There are two control parameters, NRANK and LOOP-COUNT.
+
+  LOOP-COUNT is the number of times to run the loop, performing a
+  select-and-merge step each time around.
+
+  NRANK is the number of words to rank, in determining the top
+  most-similar initial word-pair. 
+
   NRANK should be between 100 and 200
 
-Prototype - partly finished, partly-tested, undocumented.
-well, not quite finished, multi-class merge is still TBD.
-it will throw if this case is hit.
+Prototype - mostly finished, mostly-tested.
+Multi-class merge is still TBD.
+it will throw an exception if this case is hit.
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
