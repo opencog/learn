@@ -283,7 +283,7 @@
 	; Strange but true, there is no setter, currently!
 	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
-	(define monitor-rate (make-rate-monitor))
+	(define monitor-count (make-count-monitor))
 
 	; Accumulated count on the MemberLink.
 	(define accum-cnt 0)
@@ -304,8 +304,9 @@
 	(for-each
 		(lambda (PAIR-A)
 			(define cnt (CLIQUE LLOBJ CLS PAIR-A accumulate-count))
+			(monitor-count #f)
 			(when (< 0 cnt)
-				(monitor-rate #f) ; increment only if counted!
+				(monitor-count #t) ; increment only if counted!
 				(set! accum-cnt (+ accum-cnt cnt))))
 		(LLOBJ 'right-stars WA))
 
@@ -318,11 +319,11 @@
 	(set-count memb-a (+ old-cnt accum-cnt))
 	(store-atom memb-a)
 
-	(monitor-rate
+	(monitor-count
 		(string-append
-			"------ Assign: Merged ~A sections on `"
+			"------ Assign: Merged ~D of ~D sections on `"
 			(cog-name WA)
-			"` in ~5F secs; ~6F scts/sec\n"))
+			"` in ~6,1F secs\n"))
 )
 
 ; ---------------------------------------------------------------------
@@ -370,9 +371,6 @@
 
 	(monitor-rate
 			"------ Assign: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
-
-	(set! monitor-rate (make-rate-monitor))
-	(monitor-rate #f)
 )
 
 ; ---------------------------------------------------------------------

@@ -20,6 +20,29 @@
 (use-modules (ice-9 threads))
 
 ; ---------------------------------------------------------------------
+
+; cut-n-paste of what opencog already defines.
+; Thus not define-public.
+(define (atomic-inc ctr)
+"
+  atomic-inc CTR - increment the atomic-box CTR by one.
+
+  This is the atomic version of (set! CTR (+ 1 CTR)).
+  This returns the new, incremented value.
+
+  Example usage:
+     (define cnt (make-atomic-box 0))
+     (atomic-inc cnt)
+     (atomic-inc cnt)
+     (format #t \"Its ~A\n\" (atomic-box-ref cnt))
+"
+	(define old (atomic-box-ref ctr))
+	(define new (+ 1 old))
+	(define swp (atomic-box-compare-and-swap! ctr old new))
+	(if (= old swp) new (atomic-inc ctr))
+)
+
+; ---------------------------------------------------------------------
 ;
 (define (par-find PRED LST)
 "
@@ -200,6 +223,49 @@
 					(format #t msg acnt elapsed rate)
 					(format #t "~A done=~A rate=~5f per sec\n"
 						msg acnt rate)))))
+)
+
+; ---------------------------------------------------------------
+;
+(define-public (make-count-monitor)
+"
+  make-count-monitor - simplistic count monitoring utility.
+
+  Use this to monitor how quickly actions are being performed.
+  It returns a function taking one argument: either #f or #t or
+  a string message. If called with #f, it increments a grand-total
+  count and returns. If called with #t, it increments a subtotal
+  count and returns.  If called with a string message, it will
+  print the two totals and the elapsed time.
+
+  Example usage:
+    (define monitor-count (make-count-monitor))
+    (monitor-count #f)
+    (monitor-count #f)
+    (monitor-count #t)
+    (sleep 1)
+    (monitor-count #t)
+    (monitor-rate #f)
+    (monitor-rate \"Progress: \")
+    (monitor-rate \"Did ~D out of ~D in ~A seconds\")
+"
+	(define totcnt (make-atomic-box 0))
+	(define subcnt (make-atomic-box 0))
+	(define start-time (- (current-time) 0.000001))
+
+	(lambda (msg)
+		(cond
+			((nil? msg) (atomic-inc totcnt))
+			((eq? #t msg) (atomic-inc subcnt))
+			(else
+				(let (
+					(atot (atomic-box-ref totcnt))
+					(asub (atomic-box-ref subcnt))
+					(elapsed (- (current-time) start-time)))
+				(if (string-index msg #\~)
+					(format #t msg asub atot elapsed)
+					(format #t "~A Did ~D of ~D in ~6,1F seconds\n"
+						msg asub atot elapsed))))))
 )
 
 ; ---------------------------------------------------------------
