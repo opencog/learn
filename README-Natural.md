@@ -1339,7 +1339,7 @@ lurking.  The instructions here are provisional and subject to change.
       ; Create 500 grammatical clusters
       ; This many will take days or a week!  You can do less!
       ; This will print lots of diagnostics!
-      (pair-wise-cluster sha 200 500)
+      (in-group-cluster sha 0.5 0.2 4 200 500)
 ```
   The meanings of the parameters are explained in the function
   documentation; See the [agglo-rank.scm](scm/agglo-rank.scm) file.
