@@ -6352,28 +6352,33 @@ FIXED:
 * Move 'accumulate-count to stars object. Also define a default
   'get-count and 'set-count on the stars object. DONE
   Reverted. It was a bad idea.
-
-
-TODO/BUGS:
+* After merging, there will be words paired to the new disjunts.
+  Similarities for those words need to be recomputed. Right now,
+  they are not! (That explains the stability of the candidate list!)
+  DONE early Oct 2021.
 * The fast-math code works, but returns the incorrect pairs when
   used with direct-sum. Scheme hackiness seems impossible,
   because info has been lost. So this requires somehow naming
-  the clauses in the pattern engine, but this is ticky in two ways.
+  the clauses in the pattern engine, but this is tricky in two ways.
   First, IdenticalLinks aren't pruned, as they should be.
   Second, when the top clause is a choice, it's not obvioius
   that such pruning will recognize the attempt to name the clause.
   Ugh. Maybe punt on this, there's a better solution, I guess.
-* Some in-group cluster names get re-generated and reused.
+  DONE during coding spree, 3rd week Oct 2021.
+* compute fmi can be 10x faster by using the query engine as above.
+  DONE. Tested and benchmarked, 3rd week Oct 2021
 * Some top-ranked merges have very few (less than 5%) of shared
   disjuncts. These should not be done, or the in-group should be
   tightened.  Some in-groups seem too large by one member.
   Perhaps ingroups should have a minumum of 20% disjuncts shared
-  by all members!?
-* After merging, there will be words paired to the new disjunts.
-  Similarities for those words need to be recomputed. Right now,
-  they are not! (That explains the stability of the candidate list!)
-* compute fmi can be 10x faster by using the query engine as above.
-  DONE, untested.
+  by all members!? DONE late Oct 2021.
+
+
+TODO/BUGS:
+* Left-right counts are mis-balanced after running in-group clustering
+  for a while. Need to check that counts aren't leaking. in the
+  print-matrix-summary report.
+* Some in-group cluster names get re-generated and reused.
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
