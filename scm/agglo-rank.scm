@@ -543,11 +543,19 @@
   Recommended values for QUORUM are in the 0.4 to 0.7 range. At the
   moment, 0.5 or 0.6 seem to work well.
 
-  The algo begins by selecting the largest possible in-group that is
-  still exclusionary. The in-group must have large pair-wise similarity,
-  as measured by the `similarity-api`. It must be exclusive, in that
-  if the similarity threshold was reduced, membership would become
-  explosively large.
+  The algo begins by selecting the two words that are deemed to be the
+  most similar to one-another, as reported by the `add-similarity` API.
+  These two are the initial members of an 'in-group'. Other similar
+  words are added as members, to create the largest possible in-group
+  that is still exclusionary. The members of the in-group must have
+  large pair-wise similarity.  It must also be exclusive, in that if the
+  similarity threshold was reduced, membership would become explosively
+  large.  (From experiments, it can be seen that as the similarity
+  threshold is lowered, the group stays small, growing slowly, or not
+  at all. Then there is an inflection point, where the group suddenly
+  grows explosively large, gaining many members despite a small change
+  in the similarity threshold. The in-group is selected to be the
+  largest group below that inflection.)
 
   After the formation of the in-group, a poll is taken to see how many
   ConnectorSeq's the group has in common (as controlled by QUORUM,
@@ -594,14 +602,31 @@
   LOOP-COUNT is the number of times to run the loop, performing a
   select-and-merge step each time around.
 
-  NRANK is the number of words to rank, in determining the top
-  most-similar initial word-pair. 
+  NRANK is the number of words to rank, before similarity computations
+  are performed. The words are ranked according to the grand-total
+  observation count on them, most frequent words first. Then the
+  pair-wise similarities are computed for the top NRANK words (thus,
+  a total of NRANK * (NRANK - 1) / 2 similarities are computed.) The
+  goal here is to avoid having to compute simiarities between all words,
+  which is computationaly infeasible. Experimentally, it is unlikely
+  that frequent words are similar to infrequent ones, except in
+  pathological cases. The word-pair with the highest similarity is then
+  used to seed the in-group at the start of each loop.
 
-  NRANK should be between 100 and 200
+  As the loop runs, some additional similarities are computed. The
+  number of words with similarity scores on them is always kept at
+  or larger than NRANK plus the number of loops that have been run.
+  (Actually, the current code uses NRANK + 2x loop count, plus a factor
+  for the number of clusters created. Basically, a comfortable buffer
+  that is not too large and not too small.)
 
-Prototype - mostly finished, mostly-tested.
-Multi-class merge is still TBD.
-it will throw an exception if this case is hit.
+  Recommended value for NRANK is between 100 and 200.
+
+  Status: mostly finished, fairly well-tested. Seems to work as
+  designed.
+
+  TODO: cannot merge two clusters together. (or add words to an existing
+  cluster???) Code will throw an exception if this case is hit.
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
