@@ -587,7 +587,7 @@
   of voting has both a narrowing and a broadening effect. Narrowing, in
   that once a group of similar words have been selected, not all
   ConSeq's are added to the cluster. The goal of this narrowing is to
-  explcitly factor out distinct word-senses. Thus, a word like "saw",
+  explcitly factor out distinct word-senses. Thus, a word like 'saw',
   which can be both noun and verb, will have it's noun-like ConSeq's
   merged with other nouns, while the verb-like ConSeq's are left behind,
   to be merged with other verbs.
