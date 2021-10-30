@@ -84,9 +84,14 @@
 ; some of the stored similarity scores have the old Q on them, and
 ; some have the new Q, and they are no longer comparable (!?) right?
 ; The point is that the MI and the marginal logP in the common-MI
-; defnition are unchanged during merging, but mmt-q is. Thus, the
+; definition are unchanged during merging, but mmt-q is. Thus, the
 ; changing mmt-q unfairly bounces around new and old similarity
 ; scores in some way that is not obvious and is history dependent. Hmm.
+;
+; Well, based on practical experience, the Q bounces dramatically at
+; first, and then, after the first 10-20 steps, converges to a stable
+; value (that is preserved to 3 decimal places.) So maybe it's not a
+; problem...
 (define (make-simmer LLOBJ)
 "
   make-simmer LLOBJ -- return function that computes and stores MI's.
@@ -332,11 +337,11 @@
 	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
 
 	; How many more similarities to compute each step.
-	(define GRO-SIZE 3)
+	(define GRO-SIZE 2)
 
 	; Range of similarities to compute.
 	(define (diag-start N) (+ N NSIM-OFFSET))
-	(define (diag-end N) (+ NRANK (* GRO-SIZE N) NSIM-OFFSET))
+	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET)))
 
 	(for-each
 		(lambda (N)
@@ -613,12 +618,13 @@
   pathological cases. The word-pair with the highest similarity is then
   used to seed the in-group at the start of each loop.
 
-  As the loop runs, some additional similarities are computed. The
-  number of words with similarity scores on them is always kept at
-  or larger than NRANK plus the number of loops that have been run.
-  (Actually, the current code uses NRANK + 2x loop count, plus a factor
-  for the number of clusters created. Basically, a comfortable buffer
-  that is not too large and not too small.)
+  As the loop runs, additional similarities are computed each step. The
+  number of words with similarity scores on them is kept at NRANK plus
+  twice the number of loops that have been run. This provides for a
+  deeper buffer, the rarer the words get. That is, there are many
+  less-common words that are similar to one-another, and these have
+  widly-varying rank; the size of the band of similarities must increase
+  to capture these.
 
   Recommended value for NRANK is between 100 and 200.
 
