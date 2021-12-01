@@ -184,15 +184,17 @@
 	(define (col-range off)   ; reverse, so we go from diagonal outwards
 		(reverse (take (drop WORDLI (col-start off)) (col-end off))))
 
-	(define e (make-elapsed-secs))
 	(define (do-one-row off)
 		(define pone (+ 1 off))
-		(batch-simlist (list-ref row-range off) (col-range pone))
-		(if (equal? 0 (modulo pone 10))
-			(format #t "Diag: Finished ~D rows in ~D secs\n" pone (e))))
+		(batch-simlist (list-ref row-range off) (col-range pone)))
+
+	(define rpt-one-row
+		(make-progress-rpt do-one-row 10 #f
+			"Diag: Finished ~D rows in ~D secs (~D/sec)\n"
+			10))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
-	(for-each (lambda (n) (do-one-row n)) (iota depth))
+	(for-each (lambda (n) (rpt-one-row n)) (iota depth))
 )
 
 ; ---------------------------------------------------------------
