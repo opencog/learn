@@ -1,10 +1,6 @@
 
 Things to read:
 
-* AMR "Parsing with Action-Pointer Transformer" - 24 Nov 2020
-  https://openreview.net/forum?id=X9KK-SCmKWn
-
-
 * Geoffrey Hinton
   "How to represent part-whole hierarchies in a neural network"
   25 Feb 2021
@@ -43,6 +39,9 @@ Things to read:
 
   Jigsaw puzzle pieces! This time, they occur in algebraic topology!
 
+* AMR "Parsing with Action-Pointer Transformer" - 24 Nov 2020
+  https://openreview.net/forum?id=X9KK-SCmKWn
+
 * John Baez
   "Toplogical Crystals"
   2016
@@ -55,6 +54,24 @@ Things to read:
 
 Interesting, but maybe less useful
 ----------------------------------
+* Jerry R. Hobbs "Chapter 6: Word meaning and world knowledge"
+  (2019) in book "Semantics - Theories", de Gruyter
+  https://doi.org/10.1515/9783110589245-006
+
+  A fairly general overview of the relationship between the meaning
+  of words, and world models. Taken as a general overview of the
+  general problem, the text seems adequate.
+
+  I'm worried that it is suggesting perhaps exactly the wrong direction?
+  More precisely, the goal of the unsupervised learning project to
+  "learn common sense", and to "learn logical thinking", and so it
+  is fundamentally wrong to start with a model of semnatics that is
+  trying to jam meaning into a pre-existing logical framework.  Notions
+  such as scalars, magnitudes, causality, changes of state are to be
+  *learned* and *not* programmed in. This includes ontological
+  structure: is-a, has-a relationships: these are to be *learned*,
+  and not hard-coded into the theory.
+
 * Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares, and Jessica Taylor
   "Logical Induction (Abridged)"
   2016
@@ -88,3 +105,4 @@ Interesting, but maybe less useful
   provides a betting pool for mathematical theorems, than it is a means of
   discerning structure in (formal) languages.  Kind of like what this
   project (`opencog/learn`) is trying to do.
+
