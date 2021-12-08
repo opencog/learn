@@ -65,12 +65,22 @@ Interesting, but maybe less useful
   I'm worried that it is suggesting perhaps exactly the wrong direction?
   More precisely, the goal of the unsupervised learning project to
   "learn common sense", and to "learn logical thinking", and so it
-  is fundamentally wrong to start with a model of semnatics that is
+  is fundamentally wrong to start with a model of semantics that is
   trying to jam meaning into a pre-existing logical framework.  Notions
   such as scalars, magnitudes, causality, changes of state are to be
   *learned* and *not* programmed in. This includes ontological
   structure: is-a, has-a relationships: these are to be *learned*,
   and not hard-coded into the theory.
+
+* Mati Kilp, Ulrich Knauer, Alexander V. Mikhalev.
+  "Monoids, acts, and categories : with applications to wreath products
+  and graphs : a handbook for students and researchers"
+  (2000) W. de Gruyter,
+
+  Provides a handbook on the basic defintions of state machines, and
+  how one talks about them in a category-teheroetic language.  Useful,
+  in that it provides a general background in category theory to core
+  concepts regarding monoids.
 
 * Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares, and Jessica Taylor
   "Logical Induction (Abridged)"
