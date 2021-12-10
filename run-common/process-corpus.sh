@@ -5,8 +5,8 @@
 # Batch process a collection of corpora files.
 #
 # Loop over all of the corpora files (all the files in $CORPORA_DIR),
-# and then (optionally) sentence-split them and submit them for
-# processing by the cogserver.
+# and then (optionally) pre-process them and submit them for counting
+# by the cogserver. Pre-processing usually means sentence-splitting.
 #
 # As files are processed, them will be moved from $CORP to the directory
 # `submitted` in the current working dir.

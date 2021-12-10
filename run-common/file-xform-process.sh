@@ -1,29 +1,26 @@
 #!/bin/bash
 #
-# file-split-process.sh <lang> <file> <base-path>
+# file-xform-process.sh <file> <base-path> <xform-cmd>
 #
-# Support script for processing of files containing paragraphs of text.
+# Support script for processing of files that need to be transformed
+# in some way before they can be submitted for counting.
 #
-# Sentence-split each paragraph into individual files, and submit it,
-# via perl script, to the cogserver. When done, move the file over to
-# the $COMPLETED_DIR directory.
+# The <xform-cmd> executable command is applied to each file, the
+# output of which is submitted to the cogserver.  When done, the file
+# is moved over to the $COMPLETED_DIR directory.
 #
-# This script is handles the case for text files that are organized into
-# conventional paragraphs, with multiple sentences per paragraph. Such
-# paragraphs have to be split into distinct sentences before further
-# processing. If the text file already has one sentence per line, then
-# sentence-splitting is not needed, and `file-nosplit-process.sh` can be
-# used.
+# If the files do not need any transformation or pre-processing, then
+# the `file-nosplit-process.sh` script can be used.
 #
-# <lang> is the language to use for determining sentence boundaries.
 # <file> is the file to process
-# <base-path> is the directory in which the text corpora are located.
+# <base-path> is the directory in which the corpora are located.
+# <xform-cmd> is an executable command that takes the <file> as
+#   input, and generates white-space separated UTF-8 text as output.
 #
 # Example usage:
-#    ./file-split-process.sh en foo.txt
-#    ./file-split-process.sh en /home/data/dir/foo.txt /home/data/
+#    ./file-xform-process.sh /home/data/dir/foo.txt /home/data/ bar.sh
 #
-# This code is almost identical to `file-xform-process.sh`
+# This code is almost identical to `file-split-process.sh`
 
 # Some versions of netcat require the -N flag, and some versions
 # of netcat do not know about the -N flag. This is mega-annoying.
@@ -31,11 +28,9 @@
 netcat="nc -N"
 
 # Set up assorted constants needed to run.
-lang=$1
-filename="$2"
-basepath="$3"
-
-splitter=$COMMON_DIR/split-sentences.pl
+filename="$1"
+basepath="$2"
+xformer="$3"
 
 coghost=$HOSTNAME
 cogport=$PORT
@@ -64,10 +59,10 @@ subdir=${base}/${COMPLETED_DIR}
 mkdir -p $(dirname "$splitdir/$rest")
 mkdir -p $(dirname "$subdir/$rest")
 
-# Sentence split the article itself
-cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
+# Apply the transform to the corpus file.
+cat "$filename" | $xformer >  "$splitdir/$rest"
 
-# Submit the split article
+# Submit the transformed result.
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport $observe
 
@@ -79,6 +74,6 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-# Move article to the done-queue
+# Move the corpus object to the done-queue
 mv "$splitdir/$rest" "$subdir/$rest"
 rm "$basepath/$rest"

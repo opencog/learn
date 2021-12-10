@@ -49,6 +49,11 @@ directory.  A quick overview:
 * `file-nosplit-process.sh`: similar to above, but assumes that the
   text-file contains one sentence per line - i.e. has been pre-split.
 
+* `file-xform-process.sh`: similar to above, but does not assume
+  that the corpus file is text; rather, it applies a user-specified
+  command to transform the input file into text, and then delivers
+  that text to the cogserver.
+
 * `cogserver.scm`: Guile scheme script to load needed guile modules,
   start the cogserver, and open the database storage backend.
 

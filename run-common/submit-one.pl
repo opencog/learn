@@ -10,8 +10,8 @@
 #   (do-thing "some test")\n
 #
 # Note that the trailing newline is chopped off the end of the line,
-# and "do-thing" is assumed to be a scheme function that has been
-# defined.
+# and "do-thing" is assumed to be a scheme function that the cogserver
+# is able to execute.
 #
 # By convention, each line is assumed to be a single sentence. If
 # sentence-splitting is needed, it must be done at an earlier stage.
@@ -34,7 +34,7 @@ die "Wrong number of args!" if ($#ARGV != 2);
 die "Netcat failed! Bad host or port?" if (0 != $?);
 
 # Use plain-old TCP sockets.
-# (An earlier vrsion of this file used netcat. This was OK but...
+# (An earlier version of this file used netcat. This was OK but...
 # it bottlnecked and lead to poor performance, especially when the
 # cogserver could respond quickly. Forking a new netcat each time
 # was inefficient.)
@@ -130,4 +130,4 @@ while (<STDIN>)
 ping_flush();
 
 my $elapsed = time() - $start_time;
-print "Sent out article of $nsent sentences in $elapsed seconds\n";
+print "Sent out file of $nsent sentences in $elapsed seconds\n";
