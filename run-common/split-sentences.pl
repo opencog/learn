@@ -6,6 +6,7 @@
 #
 # Example usage:
 #    echo "This is a test. This is more." | ./split-sentences.pl -l en
+#
 # Expected output is one sentence per line. That is, newlines are
 # inserted after the end of each sentence. The -l en flag uses English
 # language period-punctuation rules.
@@ -62,7 +63,7 @@ if (!$QUIET) {
 
 my $prefixfile = "$mydir/nonbreaking_prefix.$language";
 
-#default back to English if we don't have a language-specific prefix file
+# Default to English if we don't have a language-specific prefix file.
 if (!(-e $prefixfile)) {
 	$prefixfile = "$mydir/nonbreaking_prefix.en";
 	print STDERR "WARNING: No known abbreviations for language '$language', attempting fall-back to English version...\n";
