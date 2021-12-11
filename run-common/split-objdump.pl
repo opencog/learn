@@ -39,9 +39,9 @@ while(<DISM>) {
 
 	# When a new routine is reached, dump the completed line to STDOUT
 	# Preface it by the routine name.
-	if (/^\d+ /) {
-		s/^\d+\s+//;
-		s/>:$/> :/;
+	if (/^\w+\s+</) {
+		s/^\w+\s+</</;
+		s/>:\s*$/> :/;
 		if (not $accum =~ /^$/) {
 			$accum =~ s/\s*$//;
 			print "Line: >>$accum<<\n";
@@ -52,10 +52,12 @@ while(<DISM>) {
 		next;
 	}
 
-	# Cut off the leading address
+	# Cut off the leading address; hex followed by colon e.g. 251d0:
 	s/^\s*\w+:\s*//;
 
 	# Some intel x96-specific stuff.
+	# ------------------------------
+
 	# OK, we're going to give the system a leg up, and convert
 	# addresses into smoething slightly more meaningful.  The
 	# case being handled here looks like this:
@@ -66,6 +68,14 @@ while(<DISM>) {
 	if (/#/)
 	{
 		s/0x\w+\(%rip\)\s+#\s+\w+/ /;
+		goto ACCUM;
+	}
+
+	# Another address massage: get rid of a relative address,
+	# keep only the symbolic address.
+	if (/</)
+	{
+		s/\d+\s+</</;
 		goto ACCUM;
 	}
 
