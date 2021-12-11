@@ -40,6 +40,8 @@ directory.  A quick overview:
 * `submit-one.pl`: Script to send single sentences to the cogserver.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
+* `socket-send.pl`: Network interface to the cogserver. Used by above.
+
 * `file-split-process.sh`: helper script. This is used when the text
   appears in conventional paragraphs; it will split the paragraphs into
   individual sentences.  It handles each text file, moving the file to
