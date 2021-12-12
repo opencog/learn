@@ -22,7 +22,7 @@ export SENTENCE_SPLIT=false
 
 # Enable disassembly
 export XFORM_SPLIT=true
-export XFORM_CMD=./split-objdump.pl
+export XFORM_CMD=${COMMON_DIR}/split-objdump.pl
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost

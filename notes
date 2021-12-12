@@ -6328,12 +6328,15 @@ run-config/2-cogserver/cogserver-pairs-en.conf
 run-config/2-pair-conf-objdump.sh
 run-common/file-xform-process.sh
 run-common/split-objdump.pl
+run-common/submit-plain.pl
 
 HOWTO:
 cd run/2-word-pairs
 . ../run-config/0-pipeline.sh
 . ../run-config/2-pair-conf-objdump.sh
+./pair-submit.sh
 
+------
 pair-submit.sh calls:
 ${COMMON_DIR}/process-corpus.sh
 
