@@ -6,7 +6,7 @@
 ; uses the Link Grammar (LG) parser "any" language to generate random trees.
 ; Also handy, as the "any" parser does split off basic punctuation, and is
 ; thus suitable for almost all IndoEuropean languages, and possibly some
-; Asian langauges.
+; Asian languages.
 ;
 ; If you are not working with natural-language sentences, don't use this code!
 ; This was designed to counts words, several kinds of word-pairs (links,
@@ -454,7 +454,7 @@
 	; -------------------------------------------------------
 #! ====
 As of guile-3.0, the RAM usage issues seem to have gone away,
-and so manual garbage colection is not needed any more.
+and so manual garbage collection is not needed any more.
 (I don't know if this is due to changes in guile, or due to
 how we run the pipeline, in general.)
 
@@ -493,7 +493,7 @@ how we run the pipeline, in general.)
 		; be created for both calls.  The extract at the end will remove
 		; this, even while these atoms are being accessed by the second
 		; call.  Thus, `lgn` might throw because `phr` doesn't exist, or
-		; `cog-execute!` might throw because lgn does't exist. Either of
+		; `cog-execute!` might throw because lgn doesn't exist. Either of
 		; the cog-extracts might also throw. Hide this messiness.
 		(catch #t
 			(lambda ()

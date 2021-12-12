@@ -16,7 +16,7 @@
 ; section, the "vertex". The rest of the Section is a ConnectorSeq.
 ; A "vector" is a single germ, and all of the Sections on it.
 ; Linear (projective) merging refers to the idea that, to merge two
-; vectors, one need only merge thier germs into a common class
+; vectors, one need only merge their germs into a common class
 ; (cluster). A new vector is created, having that cluster as the germ,
 ; and including parts of the vectors of the two donor germs. The
 ; mechanical process of creating the new vector is implemented in
@@ -51,7 +51,7 @@
 ; {ej} is short for (WordClassNode "e j") (a set of two words)
 ; "p" is the fraction of the count on the original donor section
 ; that should be moved to the merged vector. Note that this is where
-; the "linearily" comes in: counts are additive, and p + (1-p) = 1
+; the "linearity" comes in: counts are additive, and p + (1-p) = 1
 ; i.e. the total count is preserved; it is only redistributed between
 ; the vectors.
 ;
@@ -176,7 +176,7 @@
 
   XMR is assumed to be a cross-section having GLS as it's germ,
   XDON is assumed to be a cross-section having W as it's germ, and
-  counts have already been transfered approprately from XDON to XMR.
+  counts have already been transferred approprately from XDON to XMR.
   That is, its assumed the node W has been merged into the cluster
   node GLS already.
 
@@ -235,7 +235,7 @@
 
   When this completes, the resulting Sections/CrossSections are fully
   self-consistent. The inconsistent Sections/CrossSections will have
-  thier counts set to zero, and need to be deleted in a subsequent pass.
+  their counts set to zero, and need to be deleted in a subsequent pass.
 
   FRAC is a floating-point numeric value, of the fraction of counts to
   transfer. This might be a value between zero and one when MRG doesn't

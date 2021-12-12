@@ -72,7 +72,7 @@
   a function of increasing EPSILON, followed by a very rapid increase
   after some threshold is passed. Obviously, EPSILON should be set
   below that threshold. Unfortunately, this threshold depends strongly
-  on the intial pair, even when working within the same dataset.
+  on the initial pair, even when working within the same dataset.
 "
 	; Given the current ingroup INGRP and the CANDIDATE, return #t
 	; if the candidate has a similarity score above MINSCORE to at
@@ -126,7 +126,7 @@
 (define-public (optimal-in-group SIMFUN WA WB CANDIDATES)
 "
   optimal-in-group SIMFUN WA WB CANDIDATES
-  Return an ingroup of closely related words. The intial members of the
+  Return an ingroup of closely related words. The initial members of the
   ingroup are WA and WB. Additional potential members are drawn from
   CANDIDATES if they are similar-enough to the current ingroup, as
   measured by the similarity function SIMFUN.
@@ -159,7 +159,7 @@
 
   CANDIDATES is a list of individuals to consider adding to the group.
 "
-	; Hard-coded paramter -- tightness. Experiments show that the results
+	; Hard-coded parameter -- tightness. Experiments show that the results
 	; are insensitive of this, with values ranging from 0.3 to 1.0 giving
 	; identical results in many cases.
 	(define tightness 0.7)
@@ -181,7 +181,7 @@
 
 	; Hard-coded lower bound on the similarity between members of the
 	; in-group. All members of the in-group must have a pair-wise
-	; similarity greater than this. Ths should be betwen 0.0 and 4.0, I
+	; similarity greater than this. This should be between 0.0 and 4.0, I
 	; guess?
 	(define lower-bound 1.0)
 

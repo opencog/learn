@@ -64,7 +64,7 @@
   (two or more).  The conventional (unweighted) Jaccard distance is
   defined only for pairs of items. The generalization is done by
   counting to see if a fraction QUORUM is shared. Setting QUORUM to
-  1.0, and appplying the function to two items returns the conventional
+  1.0, and applying the function to two items returns the conventional
   Jaccard distance.
 "
 	; The threshold, the minimum number of sections that must exist
@@ -132,7 +132,7 @@
 			(<= vote-thresh
 				(fold
 					(lambda (WRD CNT)
-						; XXX TODO thise should be either
+						; XXX TODO this should be either
 						; (if (< 0 (LLOBJ 'pair-count WRD DJ)) ...)
 						; or it should be
 						; (if (< NOISE (LLOBJ 'pair-count WRD DJ)) ...)

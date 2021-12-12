@@ -442,7 +442,7 @@
 		; in that section, and so we can weight all of these equally.
 		; A case can be made for an alternative: the obsservation of
 		; connectors. In this case, the count on the shapes (and the
-		; count on the sections!) should be devided by the arity of the
+		; count on the sections!) should be divided by the arity of the
 		; disjunct. But that would not alter the counts here.
 		;
 		; Note that the shapes will hold marginal counts.

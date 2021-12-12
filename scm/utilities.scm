@@ -4,7 +4,7 @@
 ; Generic utilities.
 ; These do NOT assume opencog; they'll work outside of opencog.
 ;
-; Utilites include:
+; Utilities include:
 ; * A parallel version of the srfi-1 find function
 ; * A for-all-pairs function
 ; * A fold-over-all-pairs function

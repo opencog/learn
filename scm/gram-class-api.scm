@@ -87,7 +87,7 @@
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
 
-	; Store into the database the "auxilliary" MemberLinks between
+	; Store into the database the "auxiliary" MemberLinks between
 	; WordClassNodes and WordNodes. Without this, the dataset is
 	; incomplete.
 	(define (store-aux)
@@ -190,7 +190,7 @@
    * The clustering algo has not gotten around to it yet.
    * It is rare, infrequently-observed junk.
   This object provides management callbacks to place some words into
-  singleton WordClassNodes, based on thier count or relative rank.
+  singleton WordClassNodes, based on their count or relative rank.
 
   Note that using this object will cause the MI values between
   word-classes and disjuncts to become invalid; thse will need to be
@@ -215,11 +215,11 @@
            counts.  As above, Sections and values are copied.
 
   Known bugs:
-  * Other code expects that all of the counts are transfered from the
+  * Other code expects that all of the counts are transferred from the
     word to the word-class, when generating the word-class. This is not
     being done here; the counts are only being copied. Also, it is
     expected that the MemberLink holds the total of the counts that
-    were transfered. This is also not set up. This is a bug, and should
+    were transferred. This is also not set up. This is a bug, and should
     be fixed. (Obviously, when desolving single-member classes, the
     counts should be moved back).
 "

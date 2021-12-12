@@ -203,7 +203,7 @@
 
 ; This returns a function that can store a Section to a database.
 ;
-; DB-NAME is the databse name to write to.
+; DB-NAME is the database name to write to.
 ; LOCALE is the locale to use; e.g EN_us or ZH_cn
 ; COST-FN is a function that assigns a link-parser cost to each disjunct.
 ;
@@ -369,7 +369,7 @@
 					(dbi-close db-obj))))
 
 		; Close the DB if an exception is thrown. But otherwise,
-		; let the excpetion pass through to the user.
+		; let the exception pass through to the user.
 		(define (raii-add-section SECTION)
 			(with-throw-handler #t
 				(lambda () (add-section SECTION))
@@ -478,7 +478,7 @@
 
   Write connector sets to a Link Grammar-compatible sqlite3 file.
   CSETS is a matrix containing the connector sets to be written.
-  DB-NAME is the databse name to write to.
+  DB-NAME is the database name to write to.
   LOCALE is the locale to use; e.g EN_us or ZH_cn
 
   Optional keyword: #:INCLUDE-UNKNOWN If set to #t, then each word class

@@ -107,7 +107,7 @@
 	(define mmt-q (smi 'mmt-q))
 (format #t ">>>> Make-simmer mmt-q = ~9F\n" mmt-q)
 
-	; Compute ans save both the fmi and the ranked-MI.
+	; Compute and save both the fmi and the ranked-MI.
 	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
 	; The mmt-q is sum_d P(*,d)P(*,d) =
 	;              sum_d N(*,d)N(*,d) / [ sum_d N(*,d) ]^2
@@ -539,7 +539,7 @@
   those ConnectorSeq's that the majority of the in-group have in common.
   The size of the in-group is adjusted to maximize commonality.
 
-  There are three important paramters that determine the operation, and
+  There are three important parameters that determine the operation, and
   two more that control the overall loop.
 
   The QUORUM parameter is a floating point number, between 0.0 and 1.0

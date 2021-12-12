@@ -87,7 +87,7 @@
 
 	(define (get-info-sim wa wb) (MIOBJ 'mmt-fmi wa wb))
 
-	; To print an ad hoc progresss report, call is-similar?
+	; To print an ad hoc progress report, call is-similar?
 	; (is-similar? get-info-sim CUTOFF WORD-A WORD-B)
 	(define sim (get-info-sim WORD-A WORD-B))
 	(< CUTOFF sim)

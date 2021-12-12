@@ -19,14 +19,14 @@
 ; or not? The code here implements some vector-like operations, but
 ; with some strange twists.
 ;
-; Currently, just one routine: vector addtion.
+; Currently, just one routine: vector addition.
 ; XXX FIXME This should probably be moved to the atomspace/matrix
 ; directory.
 ;
 ;
 ; Combining vectors
 ; -----------------
-; One way to "combine" two vectors is to perform simple vector addtion,
+; One way to "combine" two vectors is to perform simple vector addition,
 ; summing them together component by component.
 ;
 ; Another plausbile combination strategy is to sum them, but only on the
@@ -39,7 +39,7 @@
 ;
 ; Definitions
 ; -----------
-; This section provides some formal defintions for computing the
+; This section provides some formal definitions for computing the
 ; intersection of basis elements of vectors.
 ; Let
 ;

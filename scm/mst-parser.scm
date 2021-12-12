@@ -24,7 +24,7 @@
 ; boundaries. Leading and trailing punctuation is stripped from each
 ; word, and is treated as a distinct "word".
 ;
-; The set of words is treated as the set of vertexes of a complete graph
+; The set of words is treated as the set of vertices of a complete graph
 ; or "clique", with the edges being word-pairs. The MST parser obtains
 ; the spanning tree that maximizes the sum of the mutual information (or
 ; other additive quantity) associated with the edges. This tree is the
@@ -42,7 +42,7 @@
 ; combination thus provides a local, lexical description of the parse
 ; graph.
 ;
-; The desciption is "lexical" in the sense that knowing the germ or
+; The description is "lexical" in the sense that knowing the germ or
 ; root is enough to find the assocciated connector list (and then
 ; reassemble the original graph from these pieces).
 ;
@@ -291,7 +291,7 @@
 		; NOOOO! This last step goes exponentially as the size of the
 		; graph. Its 2 seconds for 50-word sentences; it's 30 seconds
 		; for 90-word sentences and its 300 for 100-word sentences!
-		; Yes, long sentences are fundamentally borken (e.g. tables
+		; Yes, long sentences are fundamentally broken (e.g. tables
 		; of contents, indexes, price-lists, etc.) but still...
 		; Are bridges even important? Or is this a feel-good attempt?
 		; Screw it, decide some other day. For right now, just clamp.
@@ -357,10 +357,10 @@
 ; (fetch-all-words)
 ; (fetch-any-pairs)
 ; (mst-parse-text "faire un test")
-; (mst-parse-text "Elle jouit notamment du monopole de la restauration ferroviaire")
+; (mst-parse-text "Elle jouit notamment du monopole de la restoration ferroviaire")
 ;
 ; (define my-word-list (atom-list->numa-list
-;      (tokenize-text "Elle jouit notamment du monopole de la restauration ferroviaire")))
+;      (tokenize-text "Elle jouit notamment du monopole de la restoration ferroviaire")))
 ; answer: du monopole 5.786411762237549
 ;      (tokenize-text "faire un test entre quelques mots")))
 ; answer: faire quelques 12.62707805633545

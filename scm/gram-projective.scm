@@ -18,12 +18,12 @@
 ; algorithms. The provided tools, listed in order:
 ;
 ; * Some debug printers for compact printing of Sections.
-; * `accumulate-count`, for transfering counts from one basis elt to
+; * `accumulate-count`, for transferring counts from one basis elt to
 ;   another.
 ; * `assign-to-cluster`, which loops over a vector, and calls a callback
 ;   on each basis elt. In most cases, this callback then will
 ;   eventually call `accumulate-count` to perform the actual count
-;   transer.
+;   transfer.
 ; * `merge-connectors`, which loops over a vector, and calls the
 ;   reshape function on the basis elements, so that the connectors
 ;   therein can be adjusted and merged as appropriate.
@@ -216,7 +216,7 @@
 
   FRAC should be a numeric fraction, between 0.0 and 1.0.
 
-  A fraction FRAC of the count on DONOR will be transfered to ACC.
+  A fraction FRAC of the count on DONOR will be transferred to ACC.
 
   This function is nearly identical to (LLOBJ 'move-count args) except
   that this also stores (or not) the results in the database.
@@ -249,7 +249,7 @@
 		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
 
-	; Return how much was transfered over.
+	; Return how much was transferred over.
 	frac-cnt
 )
 

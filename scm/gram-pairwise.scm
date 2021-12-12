@@ -28,7 +28,7 @@
 ; things, whatever they may be.
 ;
 ; This is a kind-of special case of `make-merge-majority`, which will
-; merge N items into a cluser, in one go. However, it's a bit different
+; merge N items into a cluster, in one go. However, it's a bit different
 ; in that it does support the union-fractional merge (fuzzy merge)
 ; described in `gram-projective.scm` and elsewhere.  The fuzzy merge
 ; idea doesn't seem to be that great, and so is abandoned in the
@@ -75,9 +75,9 @@
   merge' strategy described above. To recap, this is done as follows.
   If counts on a given column of both WA and WB are non-zero, they are
   summed, and the total is placed on the matching column of CLS. The
-  contributing columns are removed (as thier count is now zero).
+  contributing columns are removed (as their count is now zero).
   If one is zero, and the other is not, then only a FRAC of the count
-  is transfered.
+  is transferred.
 
   Accumulated row totals are stored in the two MemberLinks that attach
   WA and WB to CLS.
@@ -154,9 +154,9 @@
   The merger of row WA into CLS is performed, using the 'projection
   merge' strategy described above. To recap, this is done as follows.
   If counts on a given column of both CLS and WA are non-zero, then
-  all of the count from WA is transfered to CLS. That column in WA
+  all of the count from WA is transferred to CLS. That column in WA
   is removed (as it's count is now zero). If the count on CLS is zero,
-  then only a FRAC of WA's count is transfered.
+  then only a FRAC of WA's count is transferred.
 
   Accumulated row totals are stored in the MemberLink that attaches
   WA to CLS.
@@ -213,7 +213,7 @@
      the merge is done column-by-column.
 
   This will perform a \"union merge\" -- all disjuncts on CLB will
-  be transfered to CLA, and CLB will be removed.
+  be transferred to CLA, and CLB will be removed.
 
   See start-cluster for additional details.
 "
@@ -344,7 +344,7 @@
 		; The mergers altered the counts, and so the marginals on
 		; those words and disjuncts are wrong. Specifically, they're
 		; wrong only for WA, WB and cls. Here, we'll just recompute the
-		; most basic support for WA, WB and cls and thier disjuncts.
+		; most basic support for WA, WB and cls and their disjuncts.
 		; The MI similarity also needs MM^T to be recomputed; the STORE
 		; callback provides an opporunity to do that.
 		; The results are stored, so that everything is on disk in

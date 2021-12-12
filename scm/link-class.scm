@@ -108,7 +108,7 @@
 ; defined, so that the collection of (Section (LinkClass "FOO") ...)
 ; can be compared to (Section (LinkClass "BAR") ...) as vectors, with
 ; a merge/don't-merge decision made in the usual way (preferably with
-; Kulback-Liebler divergence, i.e. symmetric-MI driving that decission.)
+; Kulback-Liebler divergence, i.e. symmetric-MI driving that decision.)
 ;
 ; A practical problem is that the creation of such LinkClass sections
 ; threatens to explode the RAM usage on the machine by a factor of five

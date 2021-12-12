@@ -71,7 +71,7 @@
 			(link-deficit 0)
 
 			; Counts of missing/present link types.
-			; The last entry is fo "none of the above".
+			; The last entry is for "none of the above".
 			(nclasses (length classes))
 			(present (make-vector (+ 1 nclasses) 0))
 			(missing (make-vector (+ 1 nclasses) 0))
