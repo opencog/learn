@@ -414,7 +414,7 @@
    parse rate; that is, how quickly `observe-text-mode` is progressing.
 ")
 
-(define-public (observe-text-mode plain-text observe-mode count-reach)
+(define-public (observe-text-mode observe-mode count-reach plain-text)
 "
  observe-text-mode -- update word and word-pair counts by observing raw text.
 
@@ -529,20 +529,17 @@ how we run the pipeline, in general.)
  sampled will be at least N pairs per parse, where N is the length
  of the sentence.
 "
-	(observe-text-mode plain-text "any" 24)
+	(observe-text-mode "any" 24 plain-text)
 )
 
-(define-public (observe-window-24 plain-text)
+(define-public (observe-window winsz plain-text)
 "
  Wrapper to allow shell scripts to have a simple form.
  Passes default parameters to observe-text-mode.
 
- Uses the window counting technique, to examine all possible
- pairs. Uses a window size of 24. Why 24? Because we'll be
- using this for the `objdump` experiment, and 24 is a window
- that is approximately 4-6 insns wide. Roughly.
+ Uses the window counting technique, to examine all possible pairs.
 "
-	(observe-text-mode plain-text "clique" 24)
+	(observe-text-mode "clique" winsz plain-text)
 )
 
 ; ---------------------------------------------------------------------

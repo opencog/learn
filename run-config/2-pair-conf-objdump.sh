@@ -30,8 +30,13 @@ export PORT=17009
 export PROMPT="scheme@(objdump)"
 export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-objdump.conf
 
-# Scheme function name for word-pair counting
-export OBSERVE="observe-window-24"
+# Scheme function name for pair counting.
+# Uses a window size of 30. Why 30? Because each insn splits into 2-6
+# tokens after running through the `split-objdump.pl` script, and so
+# this window size is about 4-7 insns long. Which seems like a
+# reasonable size for assembly correlations. (Maybe it should be
+# smaller? Maybe larger? Why?)
+export OBSERVE="observe-window 30"
 
 # Location of the database where pair counts will be accumulated
 export PAIRS_DB=${ROCKS_DATA_DIR}/objdump_pairs.rdb

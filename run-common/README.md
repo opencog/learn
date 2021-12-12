@@ -37,8 +37,12 @@ directory.  A quick overview:
 * `nonbreaking_prefixes` Used by the sentence-splitter to avoid
   breaking on abbreviations.
 
-* `submit-one.pl`: Script to send single sentences to the cogserver.
+* `submit-plain.pl`: Script to send text strings to the cogserver.
   Used for pair-counting, MST-parsing and MPG-parsing.
+
+* `submit-one.pl`: Script to send single sentences to the cogserver.
+  Similar to above, but strips out stray HTML markup, and comment
+  cards.  Used for pair-counting, MST-parsing and MPG-parsing.
 
 * `socket-send.pl`: Network interface to the cogserver. Used by above.
 
