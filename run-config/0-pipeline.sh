@@ -47,3 +47,10 @@ export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh
 
 # File containing dictionary export configuration
 export EXPORT_CONF_FILE=$CONFIG_DIR/5-export-conf.sh
+
+# ------------------------------------------------------
+# Don't change these; change them in the individual config files.
+# These just provide defaults, in case the other config files fail to.
+
+export SENTENCE_SPLIT=false
+export XFORM_SPLIT=false
