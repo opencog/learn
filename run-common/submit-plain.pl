@@ -34,7 +34,9 @@ my $port = $ARGV[1];
 die "Netcat failed! Bad host or port?" if (0 != $?);
 
 # This is easier than `use` or `require`, which want perl modules.
-do "./socket-send.pl";
+use File::Basename;
+my $dirname = dirname(__FILE__);
+do $dirname . "/socket-send.pl";
 
 my $start_time = time();
 my $nsent = 0;
