@@ -31,13 +31,13 @@ export PROMPT="scheme@(objdump)"
 export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-objdump.conf
 
 # Scheme function name for word-pair counting
-export OBSERVE="observe-text"
+export OBSERVE="observe-window-24"
 
 # Location of the database where pair counts will be accumulated
 export PAIRS_DB=${ROCKS_DATA_DIR}/objdump_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # File processing grunge
-export MSG="Splitting and word-pair counting"
+export MSG="Objdump and pair counting"
 export IN_PROCESS_DIR=pair-split
 export COMPLETED_DIR=pair-counted

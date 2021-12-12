@@ -422,9 +422,9 @@
  an integer parameter:
  - any: counts pairs of words linked by the LG parser in 'any' language.
  	   'count-reach' specifies how many linkages from LG-parser to use.
- - clique: itearates over each word in the sentence and pairs it with
+ - clique: iterates over each word in the sentence and pairs it with
            every word located within distance 'count-reach' to its right.
-           Distance is defined as the difference between words positions
+           Distance is defined as the difference between word positions
            in the sentence, so neighboring words have distance of 1.
 
  This is the first part of the learning algo: simply count the words
@@ -452,7 +452,7 @@
 		(monitor-parse-rate #f))
 
 	; -------------------------------------------------------
-#!
+#! ====
 As of guile-3.0, the RAM usage issues seem to have gone away,
 and so manual garbage colection is not needed any more.
 (I don't know if this is due to changes in guile, or due to
@@ -483,7 +483,7 @@ how we run the pipeline, in general.)
 						(set! cnt (+ cnt 1))
 						;(report-avg-gc-cpu-time)
 					)))))
-!#
+==== !#
 	; -------------------------------------------------------
 	; Process the text locally (in RAM), with the LG API link or clique-count.
 	(define (local-process TXT obs-mode cnt-reach)
@@ -520,7 +520,7 @@ how we run the pipeline, in general.)
 
 (define-public (observe-text plain-text)
 "
- Wrapper to maintain backwards compatibility in NLP pipeline.
+ Wrapper to allow shell scripts to have a simple form.
  Passes default parameters to observe-text-mode.
 
  Uses the LG parser to create 24 different planar tree parses per
@@ -530,6 +530,19 @@ how we run the pipeline, in general.)
  of the sentence.
 "
 	(observe-text-mode plain-text "any" 24)
+)
+
+(define-public (observe-window-24 plain-text)
+"
+ Wrapper to allow shell scripts to have a simple form.
+ Passes default parameters to observe-text-mode.
+
+ Uses the window counting technique, to examine all possible
+ pairs. Uses a window size of 24. Why 24? Because we'll be
+ using this for the `objdump` experiment, and 24 is a window
+ that is approximately 4-6 insns wide. Roughly.
+"
+	(observe-text-mode plain-text "clique" 24)
 )
 
 ; ---------------------------------------------------------------------
