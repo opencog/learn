@@ -6,7 +6,7 @@
 # items in that text: these will be instructions, opcode, register
 # names, and memory addresses. This is "interesting" because it makes no
 # a priori assumptions about what this assembly code means, or how to
-# interpret it.  Of course, one could tune the pipeline, and build-in
+# interpret it.  Of course, one could tune the pipeline, and built-in
 # (by hand) base knowledge about assembly, instructions, registers, etc.
 # But that would miss the point: we want to see how much this system can
 # figure out on it's own, without human help and guidance.

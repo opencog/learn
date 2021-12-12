@@ -108,7 +108,7 @@ while(<DISM>) {
 	#    jne    27ee8 <__gconv_get_alias_db@@GLIBC_PRIVATE+0x658>
 	#    callq  25308 <malloc@plt>
 	#    callq  25130 <*ABS*+0x8e110@plt>
-	# should be convereted into some kind of ... reference.
+	# should be converted into some kind of ... reference.
 
 ACCUM:
 	# Debug print

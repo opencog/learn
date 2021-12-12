@@ -5,7 +5,7 @@
 (use-modules (opencog) (opencog nlp))
 
 ; ---------------------------------------------------------------
-; Define sections on two words, that should be mergable.
+; Define sections on two words, that should be mergeable.
 
 (define cnt-e-abc 13)
 (define cnt-e-dgh 61)

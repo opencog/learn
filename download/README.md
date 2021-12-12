@@ -3,7 +3,7 @@ Download tools
 ==============
 Assorted scripts to download text files/corpora from the net.  This
 includes tools to download and pre-process Wikipedia articles in
-multiple langauges, and likewise for Project Gutenberg texts, and
+multiple languages, and likewise for Project Gutenberg texts, and
 also for "Archive of Our Own" fan-fiction titles.
 
 Pre-processing for wikipedia means stripping out wiki markup, as
@@ -24,7 +24,7 @@ database dumps. The goal here is reproducibility of processing.
 Directories
 ===========
 * en-tranche-* -- download five batches of books, mostly Gutenberg,
-  but also some fanfic.  Prep for processing, including spiltting
+  but also some fanfic.  Prep for processing, including splitting
   into smaller files. the tranche-5 scripts are the most mature.
 
 * wikipedia -- download and prep wikipedia

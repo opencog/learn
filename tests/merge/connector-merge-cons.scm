@@ -45,7 +45,7 @@
 ;     p * (j, ab{ej}) + (1-p) * (j, abe)
 ;     p * (j, {ej}gh) + (1-p) * (j, egh)
 ;
-; The two reshapes are combined with the two merged sections, to yeild
+; The two reshapes are combined with the two merged sections, to yield
 ; as the final form
 ;     p * ({ej}, ab{ej}) + (1-p) * (j, abe)
 ;     p * ({ej}, {ej}gh) + (1-p) * (j, egh)

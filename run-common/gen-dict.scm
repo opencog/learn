@@ -5,7 +5,7 @@
 ;
 ; Usage: `./gen-dict.scm <paramaters-file.scm> <output-dir>`
 ;
-; This expects two arguments: a file containing configuration paramters
+; This expects two arguments: a file containing configuration parameters
 ; and the directory where the generated files should be written.
 ;
 (use-modules (opencog) (opencog nlp fake))
@@ -14,7 +14,7 @@
 (define param-file (cadr (program-arguments)))
 (define dict-dir (caddr (program-arguments)))
 
-; Program paramters. Define these so that guile compilation
+; Program parameters. Define these so that guile compilation
 ; does not spew errors. (Maybe these should be #<unspecified>?)
 (define num-link-types #f)
 (define link-type-exp #f)

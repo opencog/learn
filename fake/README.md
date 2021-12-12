@@ -159,7 +159,7 @@ sentence generation tool. Given a dictionary, it can generate all
 possible sentences of a fixed length.
 
 Note: version 5.9.0 has not yet been released. Until then, `git clone`
-the repo, and `git checkout generate` to get teh correct branch.
+the repo, and `git checkout generate` to get the correct branch.
 
 ### Method 2 "The fancy way"
 The "fancy way" to generate a corpus is to use a properly designed

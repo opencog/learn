@@ -216,11 +216,11 @@ sub preprocess
 	# Add trailing break.
 	$text .= "\n" unless $text =~ /\n$/;
 
-	# Escape back-slashes.  This is neded to prevent guile from messing
+	# Escape back-slashes.  This is needed to prevent guile from messing
 	# with them.
 	$text =~ s/\\/\\\\/g;
 
-	# Escape double-quotes. This is neded to prevent guile from messing
+	# Escape double-quotes. This is needed to prevent guile from messing
 	# with them.
 	$text =~ s/\"/\\\"/g;
 

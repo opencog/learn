@@ -107,7 +107,7 @@
 	(test-equal 4 (length (cog-get-atoms 'Section)))
 
 	; Of the 15 original CrossSections, 12 are deleted outright, and three
-	; get thier counts reduced (the e-klm crosses). A total of 3x3=9 new
+	; get their counts reduced (the e-klm crosses). A total of 3x3=9 new
 	; crosses get created, leaving a grand-total of 12.
 	(test-equal 12 (length (cog-get-atoms 'CrossSection)))
 

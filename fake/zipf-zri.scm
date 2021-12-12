@@ -13,7 +13,7 @@
 ; ACM TOMACS 6.3 (1996): 169-184
 ;
 ; Hörmann and Derflinger use "q" everywhere, when they really mean "s".
-; Thier "q" is not the standard q-series deformation. Its just "s".
+; Their "q" is not the standard q-series deformation. Its just "s".
 ; The notation in the code below differs from the article to reflect
 ; conventional usage.
 ;

@@ -10,7 +10,7 @@
 #
 # ---------
 
-# Load config paramters
+# Load config parameters
 if [ -z $MASTER_CONFIG_FILE ]; then
 	echo "MASTER_CONFIG_FILE not defined!"
 	exit -1

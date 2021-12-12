@@ -322,7 +322,7 @@ The general form is then
    ...)
 ```
 Such trees would be constructed randomly, with preference given to
-simple trees, at first. Paramaters can also be chosen randomly, with
+simple trees, at first. Parameters can also be chosen randomly, with
 either uniform weightings, or some other distribution.
 
 A preliminary collection of such filters to be developed at
@@ -345,7 +345,7 @@ learn automatically:
 
 * It should be able to learn the Cascade Classifier. For example:
   https://docs.opencv.org/4.5.3/db/d28/tutorial_cascade_classifier.html
-  That is, intead of using the OpenCV cascade classifier, it should
+  That is, instead of using the OpenCV cascade classifier, it should
   be able to learn the cascde classifier algo, on it's own.
 
 
@@ -387,7 +387,7 @@ The conventional setting for AI these days is the deep-learning, neural
 net industry. Competition, as such, seems absurd: these systems have
 billions of CPU-hours behind them, computed with well-written,
 well-debugged, highly optimized software, created by armies of salaried
-PhD's working at the big tech companies. Any results acheived here will
+PhD's working at the big tech companies. Any results achieved here will
 look pathetic by comparison.
 
 What is being proposed here is very different. Roughly speaking, neural
@@ -477,7 +477,7 @@ net picks out a stoplight from an image, no one is quite sure how it is
 doing that.  Perhaps somewhere in there are some weight vectors for red,
 yellow, green, but  where are they? Where are they hiding? How do neural
 nets handle part-whole relationships?  There is a paper (from Hinton?
-XXX find and refernce this) stating that the part-whole relationship for
+XXX find and reference this) stating that the part-whole relationship for
 neural nets is the grand challenge of the upcoming decades.
 
 By contrast, the part-whole relationship for grammars is "obvious".
@@ -491,7 +491,7 @@ Well, for starters, if the system recognizes a stop light, you can ask
 it: _"how do you know its a stop light?"_ and get an answer: _"because
 red above yellow above green."_ This ansswer is obtained by direct
 examination of the primary structure of the filter set, which has
-explict red, yellow, green filters in it, and the examination of the
+explicit red, yellow, green filters in it, and the examination of the
 explicit image grammar, with above-below connectors explicitly present.
 
 You can ask _"and what else?"_ and get the answer _"on a painted black
@@ -703,7 +703,7 @@ At no point does this require that some neural net be trained to perform
 image segmentation. A simpler example might be a filter that recognizes
 the upper half of an image is blue. This is composed of two subfilters:
 a vertical gradiant filter, and a color filter. It is the composition of
-such primitive filters that yeilds more complex inputs for the detection
+such primitive filters that yields more complex inputs for the detection
 of features having greater complexities. The example is illustrative; in
 the end, feature detection is performed by complicated assemblages of
 primitive filters.
@@ -727,16 +727,16 @@ Bibliography
 
   The MONet algorithm describes images in terms of "attention networks"
   and "attention masks".  Roughly speaking, these masks are a set of 2D
-  spatial filters identifying a region of pixels, and thier color. The
+  spatial filters identifying a region of pixels, and their color. The
   goal of training is to learn a collection of these masks. Each object
   in an image corresponds to a mask (the mask picks out the pixels that
   belong to the object). More precisely, each pixel is assigned a
   probability of belonging to a given object.
 
-  This project is differrent: there is no desire to classify every pixel;
+  This project is different: there is no desire to classify every pixel;
   for the most part this is irrelevant. To obtain a grammar, one need
   only assign the relative orientations and sizes and colors of objects,
-  and not thier absolute locations in the image. Furthermore, the
+  and not their absolute locations in the image. Furthermore, the
   grammar leverages abstract properties, such as texture and shininess,
   not just hue and saturation.
 

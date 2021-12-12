@@ -40,7 +40,7 @@
 ;     (e, ab{ej})
 ;     p * (j, ab{ej}) + (1-p) * (j, abe)
 ;
-; The two reshapes are combined with the two merged sections, to yeild
+; The two reshapes are combined with the two merged sections, to yield
 ; as the final form
 ;     ({ej}, ab{ej})  + (1-p) * (j, abe)
 ;

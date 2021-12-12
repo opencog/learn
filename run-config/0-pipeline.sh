@@ -2,7 +2,7 @@
 #
 # 0-pipeline.sh
 #
-# Master file for configuration parameters for langugage learning.
+# Master file for configuration parameters for language learning.
 # This particular file is aimed at artificial-language/corpus
 # generation and processing.
 # ----------

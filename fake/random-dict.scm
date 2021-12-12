@@ -15,7 +15,7 @@
 ;
 ; Issues:
 ; -------
-; This will generate grammers parts of which are "impossible".
+; This will generate grammars parts of which are "impossible".
 ; That is, it will generate grammars that have disjuncts that may be
 ; impossible to use in a sentence, because there is no way of using
 ; that disjunct during sentence generation.  The sentence generator
@@ -123,7 +123,7 @@
   Return a generator for random disjuncts. Each disjunct is a
   sequence of randomly chosen connectors. Connectors are chosen
   out of a pool of NLINK different link types. The LINK-EXP is the
-  Zipf exponent for chosing link types; a value of 0 gives a uniform
+  Zipf exponent for choosing link types; a value of 0 gives a uniform
   distribution, a value of 1 makes the first link types more likely.
 
   The length of the sequence of connectors will be chosen randomly,
@@ -211,7 +211,7 @@
   The slope of the distribution is controlled by EXP, with EXP=1
   giving the classic Zipf distribution, and EXP=0 giving the uniform
   distribution. A negative EXP will cause most word-classes to have
-  CSIZE memebrs in them.
+  CSIZE members in them.
 
   Return an association list of class-tags and the pos-tags in them.
 "

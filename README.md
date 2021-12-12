@@ -32,7 +32,7 @@ participating in the complex grammatical network of the English
 language.  The word "chair" is not so much a "symbol" as it is a bridge
 between these complex networks. Reasoning can be done "sub-symbolically",
 on the network of relationship; the result of reasoning can be
-articulated verbally, adhereing to the rules of grammer. Reasoning itself
+articulated verbally, adhereing to the rules of grammar. Reasoning itself
 is not (inherently) logical; rather, reasoning is powered by a set of
 "valid" manipulations applied to the network, the validity of which is
 also learned and encoded in a complex network. Thus, the goal of this
@@ -197,7 +197,7 @@ The general process is as follows:
   a spanning tree or spanning graph. The only edges allowed in this
   graph are those with high MI (i.e. small distance, those that are
   close to one-another.)
-* Factor the graph into vertexes and their nearest neighbors. This
+* Factor the graph into vertices and their nearest neighbors. This
   factorization resembles an N-gram or skip-gram: the list of neighbors
   is that skip-gram.
 * Just as skip-grams can be interpreted as vectors, the same is possible
@@ -319,14 +319,14 @@ a "word", or more generically "some time-series event observed in
 nature".)
 
 **Second:** it is not the raw MI-proximity that counts, but rather, the
-spanning tree or spanning graph that connects vertexes (words). That
+spanning tree or spanning graph that connects vertices (words). That
 is, in formulating this "graphical skip-gram", one does not just grab
 the nearest neighbors as measured by the distance function. One instead
 attempts to minimize/maximize the distance measure (the entropy) for
 the entire local graph.  This has the effect of discarding (not forming)
 some edges despite those edges being short: it is more important to
 minimize/maximize the local, collective graph, the local connectivity of
-all vertexes, and not just pairs of them.
+all vertices, and not just pairs of them.
 
 **Third:** the use of "graphical skip-grams", as described here, provides
 a natural bridge to the concept of syntax and grammar. That is, a

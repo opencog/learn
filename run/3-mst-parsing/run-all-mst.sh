@@ -60,7 +60,7 @@ fi
 # Run the MST cogserver
 guile -l ${COMMON_DIR}/cogserver-mst.scm -c "(sleep 150000000)" &
 
-# Wait for the cogserver to intialize.
+# Wait for the cogserver to initialize.
 sleep 3
 echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 

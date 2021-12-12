@@ -30,7 +30,7 @@ Project Summary
 This README describes the overall process flow for "open" natural
 language learning. It is more-or-less identical to the "closed-loop"
 or "calibrated" artificial-language learning, except that the input
-corpus is a sample of natural language text, instead of an artifical
+corpus is a sample of natural language text, instead of an artificial
 corpus.
 
 To get good results, you need to use a calibrated learner.  That is,
@@ -62,7 +62,7 @@ The basic algorithmic steps, as implemented so far, are as follows:
 
 * **D)** Extract linkage disjuncts from the parses, and count their
          frequency. Linkage disjuncts capture how words connect to
-         thier neighbors.  By counting the frequencies, errors in
+         their neighbors.  By counting the frequencies, errors in
          the MST parses get washed out by the law of averages, while
          the likely-correct disjuncts accumulate large counts. The
          resulting dictionary is *more* accurate than any single
@@ -347,7 +347,7 @@ of two: RocksDB and PostgreSQL. Pick one.
   instructions to read and follow. If you are new to Postgres, this
   will be confusing and error-prone.
 
-The instructions below desribe both databases; skip the parts that
+The instructions below describe both databases; skip the parts that
 don't apply to you.
 
 These instructions go through a basic "sniff test" to make sure
@@ -657,7 +657,7 @@ Do this.
     ++ `F3` -- move left
     ++ `F4` -- move right
     ++ `F7` -- enable the page-up and page-down keys for scrolling.
-    ++ `F6` -- dettach from byobu. Reattach by saying `tmux attach`.
+    ++ `F6` -- detach from byobu. Reattach by saying `tmux attach`.
     ++ `F2` -- create new terminal
     ++ `F8` -- change terminal title
 
@@ -681,7 +681,7 @@ Do this.
 
     At this time, it is not known how big a sample should be taken to
     get accurate results. It seems like a few days of processing for
-    natural langauge (English) seems to be OK, while a few weeks is
+    natural language (English) seems to be OK, while a few weeks is
     better. Too-large a sample will slow down some of the later stages,
     however, and the databases might get unmanagebly large.
     Experimentation is needed.
@@ -784,7 +784,7 @@ Do this by running the `run/2-word-pairs/compute-marginals.sh` script.
 Batch-counting might take hours or longer (maybe over a day), depending
 on your dataset size. Small trial-run datasets should take no more than
 5-10 minutes... or seconds, for small artificial languages. This script
-prints a lot of output, including a techical summary at the end.
+prints a lot of output, including a technical summary at the end.
 
 The above might double the size of the database, as it sits on disk --
 adding frequencies and mutual-information values to word pairs will
@@ -798,7 +798,7 @@ Thus, you may want to:
 * Make a copy of the word-pair-only database, so that you can return
   to it, if you decide that you need to return to it for some reason.
   RocksDB databases can be copied with the `cp -pr` command. Postgres
-  databses can be copied with the `createdb -T` command.
+  databases can be copied with the `createdb -T` command.
 
 It appears that trimming the word-pair database may have a small but
 positive effect. Trimming to remove all words that have been observed
@@ -873,8 +873,8 @@ Working from a guile shell that has the pair-count database open:
 ```
 (define ala (make-any-link-api))
 (define asa (add-pair-stars ala))
-(define als (add-support-api asa))
-(define alf (add-pair-freq-api als))
+(define also (add-support-api asa))
+(define alf (add-pair-freq-api also))
 
 (ala 'fetch-pairs)
 ```
@@ -992,7 +992,7 @@ The steps are as follows:
   Run it.  It will start a tmux/byobu session. One of the tmux terminals
   will start a cogserver. This may stall for a while, as it loads
   word-pairs into RAM. This may take from seconds to over an hour,
-  depending on the number of word-pairs and the databse backend.
+  depending on the number of word-pairs and the database backend.
 
 * If you don't want to run byobu/tmux, just start the cogserver with
   `run-mst-cogserver.sh`.
@@ -1061,7 +1061,7 @@ in Part Two, starting in June 2021, continuing into Part Three, Sept.
 2021.)
 
 ```
-; Utility to perform timming.
+; Utility to perform trimming.
 (define (iter-trim a b c)
    (define pca (make-pseudo-cset-api))
    (define psa (add-pair-stars pca))
@@ -1366,7 +1366,7 @@ Grammar. This can be done as follows:
   for far longer than you will ever care to wait.  Clustering is slow.
 
 * Make sure that frequently-occuring words that have not been assigned
-  to any cluster will be included in a WordClass of thier own
+  to any cluster will be included in a WordClass of their own
   (singleton word classes).  The following includes all words observed
   more than 500 times:
 ```
@@ -1504,7 +1504,7 @@ against linguist-created corpora and grammars is problematic: the
 child-directed speech corpora is too small, and newspaper-English
 grammars do not correctly describe children's speech. Full corpora
 with complex grammars are hard to evaluate, as issues with synonyms,
-synonymous phrases, word-sense disambiguation, quoted speach, and
+synonymous phrases, word-sense disambiguation, quoted speech, and
 reference resolution arise. How can the quality of the results be
 assessed? Linguist-created grammars are insufficient to control and
 evaluate results.

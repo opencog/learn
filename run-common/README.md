@@ -12,7 +12,7 @@ Several files common to several of these steps are located in this
 directory.  A quick overview:
 
 * `gen-dict.scm` -- Generates a random artificial ("fake") grammar.
-  Requires configuration paramters to be declared; see
+  Requires configuration parameters to be declared; see
   `../0-config/dict-conf.scm` for an example configuration file.
 
    Once the parameters are configured as desired, the grammar can
@@ -85,7 +85,7 @@ Management scripts
 ------------------
 Several files are used for overall process management:
 
-* `renice.sh`: Make the Postgres server run under a nice priorty.
+* `renice.sh`: Make the Postgres server run under a nice priority.
 
 * `halt-all.sh`: Stop all running LXC containers.
 

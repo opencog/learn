@@ -102,7 +102,7 @@
 (test-equal 3 (length (cog-get-atoms 'Section)))
 
 ; Of the 12 original CrossSections, 6 are deleted outright, three
-; get thier counts incremented, and three get created.
+; get their counts incremented, and three get created.
 (test-equal 9 (length (cog-get-atoms 'CrossSection)))
 
 ; --------------

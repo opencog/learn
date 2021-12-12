@@ -1,5 +1,5 @@
 ;
-; dict-conf.scm - Configuration paramters for a random artificial grammar.
+; dict-conf.scm - Configuration parameters for a random artificial grammar.
 ;
 ; Copy and edit this file and adjust the parameters as desired.
 ; Then create the dictionary by running `../1-gen-dict/gen-dict.sh`.
@@ -68,7 +68,7 @@
 ; -----------------
 ; Number of different types of LEFT-WALL connectors. Each wall
 ; connector type corresponds to a root of a dependency parse, so that
-; if there is just one, it it would be the root-verb conector (if this
+; if there is just one, it it would be the root-verb connector (if this
 ; was English). If two, then there would be connectors to the root-noun
 ; (the root-subject) as well as the root-verb. Every generated sentence
 ; will always have one of each of these connectors to the LEFT-WALL.

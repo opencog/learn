@@ -5,7 +5,7 @@
 (use-modules (opencog) (opencog nlp))
 
 ; ---------------------------------------------------------------
-; Define sections on two WordClasses, that should be mergable.
+; Define sections on two WordClasses, that should be mergeable.
 
 (define cnt-ej-abc 13)
 (define cnt-ej-klm 44)

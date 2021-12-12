@@ -22,7 +22,7 @@ they are needed to run the processing.
 ```
    Skip this, if not working with artificial languages.
 
-* `1-corpus-conf.sh` -- This contains paramaters that control the size
+* `1-corpus-conf.sh` -- This contains parameters that control the size
    of the generated corpus.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.

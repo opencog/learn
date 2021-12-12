@@ -4,22 +4,22 @@ Extracting Meaning
 This text sketches an algorithm for extracting meaning from natural
 language text. The intended sense of "meaning" here is the conventional
 one: what you might find in a dictionary or encyclopaedia, albeit
-in machine-readable format. A more precise defintion will become clear
+in machine-readable format. A more precise definition will become clear
 as the algorithm is sketched out.
 
 It seems to be time to start this: there's been fair success with
-learning grammar, and that code seems to be debugged enough and genric
+learning grammar, and that code seems to be debugged enough and generic
 enough that it should be able to support the next level, namely, this
 project.
 
 The rough idea is to apply the same algorithm as before: of finding
 pairs, and then creating disjuncts, except this time, the pairs will be
-pairs of Sections, instead of Words. I beleive that such pairs of
+pairs of Sections, instead of Words. I believe that such pairs of
 Sections will be able to capture idioms, instititional phrases, and the
-like with ease. I beleive the corresponding MetaSections will be able to
-capture conceptual information, such as "intensional" properties of
+like with ease. I believe the corresponding MetaSections will be able to
+capture conceptual information, such as "intentional" properties of
 objects (e.g. animals are furry, have a tail, have for feet, can run,
-have babies, and need to eat.) I beleive MetaSections will also be
+have babies, and need to eat.) I believe MetaSections will also be
 capable of performing anaphora resolution.
 
 Details
@@ -63,7 +63,7 @@ cost-window, then all the places where the parses agree will be
 recounted, giving them a strong weight (good!) and all the places where
 they disagree get a low weight (also good.)  The problem here is that
 if one sentence has 10 parses in the cost-window, and another has only
-two, then the first sentences will outweight the second by 10/2 = 5 and
+two, then the first sentences will outweigh the second by 10/2 = 5 and
 clearly that's wrong. But if we fix N, say, at 8, then the second
 sentence will still have 2 good parses, and 6=8-2 crummy ones that get
 counted. So apparently the correct answer is to use a cost-window, but
@@ -108,11 +108,11 @@ the pair-counting. The only reason we're getting into this mess is
 because the LG parser prefers to work with sentences, and its not clear
 what will happen if we just feed it 30 contiguous words...
 
-Perhaps we need an explicit ellipses marker, to indicate the begining
+Perhaps we need an explicit ellipses marker, to indicate the beginning
 and end of the window to the parser. The explicit ellipsis will act as a
 source or sink for all unconnected disjuncts near the window edge.
 
-With ellipsis markers, we can then add a gaurd window, say 3 or 5 words
+With ellipsis markers, we can then add a guard window, say 3 or 5 words
 before/after the ellipsis, where pairs won't be counted, because the
 chosen disjuncts are nasty because they're disturbed by the ellipses.
 This seems like the best idea!  Except we need to ... code this up.

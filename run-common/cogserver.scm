@@ -6,7 +6,7 @@
 ; Perform language-learning pipeline module loading and CogServer setup.
 ; Loads all needed modules, starts the CogServer, opens the database.
 ;
-; Configurable paramters are pulled from the shell environment.
+; Configurable parameters are pulled from the shell environment.
 ;
 (use-modules (system repl common))
 (use-modules (opencog) (opencog logger))

@@ -46,7 +46,7 @@
 ;     p * (j, {ej}eh) + (1-p) * (j, eeh)
 ;     p * (j, e{ej}h) + (1-p) * (j, eeh)
 ;
-; The four reshapes are combined with the two merged sections, to yeild
+; The four reshapes are combined with the two merged sections, to yield
 ; as the final form
 ;     p * ({ej}, {ej}b{ej}) + (1-p) * (j, ebe)
 ;     p * ({ej}, {ej}{ej}h) + (1-p) * (j, eeh)

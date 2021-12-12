@@ -239,7 +239,7 @@
 	(test-approximate (* (- 1 frac1) (- 1 frac2) cnt-f-egh)
 		(cog-count sec-f-egh) epsilon)
 
-	; The remainder got transfered ... these two tests are "TEST F2"
+	; The remainder got transferred ... these two tests are "TEST F2"
 	; as described up top.
 	(define expected-sec-ej-abv-count
 		(+ (* frac1 (+ cnt-j-abe cnt-f-abe))  ; from linear merge
