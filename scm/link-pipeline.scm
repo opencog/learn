@@ -50,8 +50,8 @@
 ; of N, a given word-pair might be observed with every possible
 ; distance between them, i.e. up to N times.
 ;
-; XXX FIXME we shold probably not stor this way. We should probably
-; have just one wod-pair, and hold teh counts in different values,
+; XXX FIXME we should probably not store this way. We should probably
+; have just one word-pair, and hold the counts in different values,
 ; instead. This needs a code redesign. XXX
 ;
 ; Word-pairs are also designated by means of Link Grammar parses of a
@@ -144,14 +144,7 @@
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
 
-	; Due to a RelEx bug in parenthesis handling, the `word-inst-get-word`
-	; function can throw an exception. See documentation. Catch the
-	; exception, avoid counting if its thrown.
-	(define (try-count-one-word word-inst)
-		(catch 'wrong-type-arg
-			(lambda () (count-one-atom (word-inst-get-word word-inst)))
-			(lambda (key . args) #f)))
-
+	(count-one-atom (word-inst-get-word word-inst))
 	(count-one-atom any-sent)
 	(for-each
 		(lambda (parse)
@@ -510,9 +503,6 @@ how we run the pipeline, in general.)
 				))
 			(lambda (key . args) #f))
 	)
-
-	;; Send plain-text to the relex server
-	; (relex-process plain-text)
 
 	; Handle the plain-text locally
 	(local-process plain-text observe-mode count-reach)
