@@ -63,11 +63,24 @@ while(<DISM>) {
 	# case being handled here looks like this:
 	#    jmpq  *0x198f22(%rip)  # 1be0f8 <h_errlist@@GLIBC_2.2.5+0xfd8>
 	# which will be converted into
-	#    jmpq <h_errlist@@GLIBC_2.2.5+0xfd8>
+	#    jmpq * <h_errlist@@GLIBC_2.2.5+0xfd8>
+	# Similarly,
+	#    mov 0x19b277(%rip),%rax # 1c0630 <_IO_file_jumps@@GLIBC_2.2.5+0x190>
+	# is converted to
+	#    mov <_IO_file_jumps@@GLIBC_2.2.5+0x190> , %rax
+	#
+	# I think that's all the cases; are there more?
 	#
 	if (/#/)
 	{
-		s/0x\w+\(%rip\)\s+#\s+\w+/ /;
+		/(0x\w+)\(%rip\)/;
+		my $rip = $1;
+		/(<.+>)/;
+		my $saddr = $1;
+		s/,/ , /;
+		s/${rip}\(%rip\)/ ${saddr} /;
+		s/#.+/ /;
+		s/\s+$//;
 		goto ACCUM;
 	}
 
@@ -75,7 +88,7 @@ while(<DISM>) {
 	# keep only the symbolic address.
 	if (/</)
 	{
-		s/\d+\s+</</;
+		s/\w+\s+</</;
 		goto ACCUM;
 	}
 
