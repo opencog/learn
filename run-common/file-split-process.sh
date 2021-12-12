@@ -69,7 +69,7 @@ cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
 
 # Submit the split article
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport $observe
+cat "$splitdir/$rest" | $cwd/submit-one.pl $coghost $cogport "$observe"
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)
