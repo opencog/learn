@@ -52,6 +52,22 @@ Things to read:
   perhaps the exchange of synonymous phrases can be treated as a deck
   transformation.
 
+* Russ Harmer and Eugenia Oshurko "Reversibility and composition of
+  rewriting in hierarchies", (2020)
+  https://hal.archives-ouvertes.fr/hal-02869865
+
+  The idea here is that sequences of rules can be applied, and then they
+  can be reversed. This enableds back-tracking on a rule system.
+
+* Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares,
+  Jessica Taylor "Logical Induction" (2016)
+  https://arxiv.org/abs/1609.03543
+
+  "We present a computable algorithm that assigns probabilities to
+  every logical statement in a given formal language, and refines
+  those probabilities over time."
+
+
 Interesting, but maybe less useful
 ----------------------------------
 * Jerry R. Hobbs "Chapter 6: Word meaning and world knowledge"
