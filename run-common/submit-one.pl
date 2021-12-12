@@ -2,6 +2,10 @@
 #
 # submit-one.pl <cogserver-host> <cogserver-port> <observe-cmd>
 #
+# XXX FIXME This is mostly identical to `submit-plain.pl` except that
+# it strips out some stray HTML and some comments. It should be
+# refactored, sot that we don't have two nearly identical scripts.
+#
 # Read lines from `stdin` and submit them to the cogserver for
 # processing. Each line is quoted and then wrapped by the <observe-cmd>
 # before being sent. For example, if the line is "some text\n", and
