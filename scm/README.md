@@ -8,7 +8,7 @@ but the also require, as input, data that was produced by earlier files.
 * __learn.scm__           This is the main guile module.
 * __common.scm__          Common code
 * __utilities.scm__       Utilities, e.g. for looping.
-* __link-pipeline.scm__   Word-pair counting. Given raw input text, this
+* __word-pair-count.scm__ Word-pair counting. Given raw input text, this
                           accumulates frequencies of word-pairs.
 * __batch-word-pair.scm__ Batch-compute the marginals and mutual
                           information of word-pairs.

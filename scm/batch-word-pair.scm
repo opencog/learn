@@ -38,7 +38,7 @@
 ; routines, below.  The value for N(*,*) can be gotten by calling
 ; `total-pair-observations`.
 ;
-; The counting done in `link-pipeline.scm` keeps track of several
+; The counting done in `word-pair-count.scm` keeps track of several
 ; different types of pair information.  Besides the above, it also
 ; counts these things:
 ;

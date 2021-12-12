@@ -12,13 +12,13 @@ ADD_GUILE_MODULE (FILES
 	in-group.scm
 	lg-compare.scm
 	link-class.scm
-	link-pipeline.scm
 	mst-parser.scm
 	pseudo-csets.scm
 	shape-project.scm
 	shape-vec.scm
 	utilities.scm
 	vectors.scm
+	word-pair-count.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/learn"
 )
 

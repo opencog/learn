@@ -1,9 +1,16 @@
 ;
-; link-pipeline.scm
+; word-pair-count.scm
 ;
-; Link-grammar word and link-counting pipeline.  Currently counts
-; words, several kinds of word-pairs (links, and order-relations),
-; and also disjuncts, parses and sentences.
+; Word-pair counting via random planar trees. Planar trees provide subtly
+; different word-pair statistics from windowed counting techniques. This
+; uses the Link Grammar (LG) parser "any" language to generate random trees.
+; Also handy, as the "any" parser does split off basic punctuation, and is
+; thus suitable for almost all IndoEuropean languages, and possibly some
+; Asian langauges.
+;
+; If you are not working with natural-language sentences, don't use this code!
+; This was designed to counts words, several kinds of word-pairs (links,
+; distances), as well (random) disjuncts, parses and sentences.
 ;
 ; Copyright (c) 2013, 2017 Linas Vepstas <linasvepstas@gmail.com>
 ;
@@ -14,9 +21,9 @@
 ; Main entry point: `(observe-text plain-text)`
 ;
 ; Call this entry point with exactly one sentence as a plain text
-; string. It will be parsed, and the resulting link-grammar link usage
+; string. It will be parsed, and the resulting Link Grammar link usage
 ; counts will be updated in the atomspace. The counts are flushed to
-; the SQL database so that they're not forgotten.
+; the database so that they're not forgotten.
 ;
 ; Several different kinds of counts are maintained, depending on the
 ; mode. Usually, not all of these are maintained at the same time, as

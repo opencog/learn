@@ -14,7 +14,7 @@
 ; Define locations where statistics will be stored.
 
 ; These are used to store/maintain counts for clique-pair counting.
-; See `link-pipeline.scm` for usage.
+; See `word-pair-count.scm` for usage.
 (define pair-pred (PredicateNode "*-Sentence Word Pair-*"))
 (define pair-dist (SchemaNode "*-Pair Distance-*"))
 
