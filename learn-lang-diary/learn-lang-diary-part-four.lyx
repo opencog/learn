@@ -16100,6 +16100,60 @@ To be clear: the noise-floor says that any section with a count of equal
 \end_layout
 
 \begin_layout Section*
+Objdump (Dec 2021)
+\end_layout
+
+\begin_layout Standard
+And now for something 
+\emph on
+completely
+\emph default
+ different.
+ So, this is a learning system.
+ It should be able to learn 
+\begin_inset Quotes eld
+\end_inset
+
+anything
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This section describes a wild-n-crazy idea of pumping disassembly through
+ the system.
+ Just to see what will happen.
+ This might seem irrational, and I don't have any great hopes for it, but
+ I'm curious to see ...
+ what will pop out.
+ 
+\end_layout
+
+\begin_layout Standard
+We'll pump disassembled elf64 binaries through the system.
+ Disassembly to be done by 
+\family sans
+objdump
+\family default
+.
+ It's cleaned up a bit with 
+\family sans
+split-objdump.pl
+\family default
+ in the 
+\family sans
+run-common
+\family default
+ directory.
+ Yes, one could develop a very sophisticated graph of the control flow.
+ This won't be done, as the short-term goal here is to see what's possible
+ with very little effort, instead of building in complex 
+\emph on
+a priori
+\emph default
+ knowledge about what assembly is.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
