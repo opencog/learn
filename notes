@@ -6323,8 +6323,13 @@ what's up with that?
 
 objdump -d --no-show-raw-insn
 
+Files:
 run-config/2-cogserver/cogserver-pairs-en.conf
+run-config/2-pair-conf-objdump.sh
+run-common/file-xform-process.sh
+run-common/split-objdump.pl
 
+HOWTO:
 cd run/2-word-pairs
 . ../run-config/0-pipeline.sh
 
@@ -6337,6 +6342,7 @@ file-xform-process.sh
 
 socket-send.pl
 
+replace observe-text
 
 
 

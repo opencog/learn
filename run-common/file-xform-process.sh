@@ -60,7 +60,7 @@ mkdir -p $(dirname "$splitdir/$rest")
 mkdir -p $(dirname "$subdir/$rest")
 
 # Apply the transform to the corpus file.
-cat "$filename" | $xformer >  "$splitdir/$rest"
+$xformer "$filename" >  "$splitdir/$rest"
 
 # Submit the transformed result.
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )

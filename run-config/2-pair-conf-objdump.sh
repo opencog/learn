@@ -17,8 +17,12 @@
 # Directory where binaries can be found
 export CORPORA_DIR=$TEXT_DIR/binaries
 
-# Disable splitting.
+# Disable sentence splitting.
 export SENTENCE_SPLIT=false
+
+# Enable disassembly
+export XFORM_SPLIT=true
+export XFORM_CMD=./split-objdump.pl
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost

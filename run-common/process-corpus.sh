@@ -37,6 +37,10 @@ if $SENTENCE_SPLIT; then
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-split-process.sh $SPLIT_LANG {} $CORPORA_DIR \;
 else
+if $XFORM_SPLIT; then
+	time find $CORPORA_DIR -type f \
+		-exec $cwd/file-xform-process.sh {} $CORPORA_DIR $XFORM_CMD \;
+else
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-nosplit-process.sh {} $CORPORA_DIR \;
 fi
