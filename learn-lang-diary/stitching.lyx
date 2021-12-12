@@ -123,7 +123,7 @@ stitched together
 \begin_inset Quotes erd
 \end_inset
 
- in a consistent fasion; this consistency condition is exactly the syntax
+ in a consistent fashion; this consistency condition is exactly the syntax
  of the grammar.
  The stitching obeys a certain set of axioms, which are the sheaf axioms.
  The best possible stitching together can be found by minimizing an overall
@@ -151,7 +151,7 @@ Meaning
 So here's one approach to meaning.
  It is already clear that disjuncts are correlated with meaning, so one
  provisional approach might be to assign each disjunct a unique meaning.
- Alternately, this can be used as a doorway to the intensional meaning of
+ Alternately, this can be used as a doorway to the intentional meaning of
  a word.
  
 \end_layout
@@ -210,7 +210,7 @@ the- small-
  Examining this connector-by-connector, we expect that the MI for the word
  pair (the, balloon) to be small, while the MI for the word-pairs (big,
  balloon), (red, balloon) and (small, balloon) to be large(r).
- Its thus tempting to identify the set {big, red, small} as the set of intension
+ Its thus tempting to identify the set {big, red, small} as the set of intention
 al attributes associated with 
 \begin_inset Quotes eld
 \end_inset
@@ -243,7 +243,7 @@ balloon
 \end_inset
 
  will also connect to a verb.
- These verb connectors may be taken as another set of intensional attributes,
+ These verb connectors may be taken as another set of intentional attributes,
  for example {floats, drifts, rose, popped}.
  It should be possible to distinguish these as an orthogonal set of attributes,
  in that one might observe 
@@ -628,7 +628,7 @@ crow
 \begin_inset Quotes erd
 \end_inset
 
- should be merged: they are grammatically similar, given thier vectors.
+ should be merged: they are grammatically similar, given their vectors.
  So lets merge them into a class of 
 \begin_inset Quotes eld
 \end_inset
@@ -673,7 +673,7 @@ THINGS
 \begin_inset Quotes erd
 \end_inset
 
-? If so, then how? One way is to compute the cosine similiarity 
+? If so, then how? One way is to compute the cosine similarity 
 \begin_inset Formula $\cos\left(\overrightarrow{book},\overrightarrow{bird}\right)$
 \end_inset
 
@@ -746,7 +746,7 @@ Comparing these two, directly like this, suggests that other merge strategies
  on it, maybe these don't belong on the merged class: perhaps an intersection
  of the basis vectors should be used, so that the combined vector is non-zero
  only on the intersection of the basis elements.
- Thus, perhaps a better defintion would be
+ Thus, perhaps a better definition would be
 \begin_inset Formula 
 \[
 \overrightarrow{THINGS}_{intersect}=4\left|the\negthinspace-\;\&\;.\negthinspace+\right\rangle 
@@ -770,7 +770,7 @@ and so clearly the cosine between
 \begin_inset Formula $\overrightarrow{book}$
 \end_inset
 
- is one, and they're mergable.
+ is one, and they're mergeable.
  By contrast, the cosine between 
 \begin_inset Formula $\overrightarrow{THINGS}_{sum}$
 \end_inset
@@ -784,7 +784,7 @@ and so clearly the cosine between
 \end_layout
 
 \begin_layout Standard
-Another possiblity is to combine some fraction 
+Another possibility is to combine some fraction 
 \begin_inset Formula $0\le\alpha\le1$
 \end_inset
 
@@ -884,7 +884,7 @@ saw
 \end_inset
 
 .
- After observing a sufficent amount of text, one will find a vector 
+ After observing a sufficient amount of text, one will find a vector 
 \begin_inset Formula $\overrightarrow{saw}$
 \end_inset
 
@@ -903,7 +903,7 @@ saw
 \end_inset
 
  are similar.
- Clearly, a merge strategy of expanding an existing cluster by linear addtion
+ Clearly, a merge strategy of expanding an existing cluster by linear addition
  is incorrect.
  The expanded class
 \begin_inset Formula 
@@ -990,7 +990,7 @@ The best merge strategy is hardly obvious.
 \end_inset
 
  are not orthogonal (or rather, in general, won't be), so even if there
- were pre-existing grammatical classes for these three, an orthogonal decomposit
+ were pre-existing grammatical classes for these three, an orthogonal decompose
 ion of 
 \begin_inset Formula $\overrightarrow{saw}$
 \end_inset
@@ -1063,7 +1063,7 @@ Suppose
 \begin_inset Quotes eld
 \end_inset
 
-mergable
+mergeable
 \begin_inset Quotes erd
 \end_inset
 
@@ -1119,7 +1119,7 @@ with
 \begin_inset Formula $\cup$
 \end_inset
 
- denoting set-intersection and set-union, resepectively.
+ denoting set-intersection and set-union, respectively.
  A plausible merge strategy for 
 \begin_inset Formula $\vec{v}=a_{1}\widehat{e}_{1}+\cdots+a_{n}\widehat{e}_{n}$
 \end_inset
@@ -1225,7 +1225,7 @@ g set.
 
 \begin_layout Standard
 To avoid expanding the support in unwise ways, perhaps it would be best
- to assemble a set of mergable words, first, and only then merge them all
+ to assemble a set of mergeable words, first, and only then merge them all
  together, in one shot, rather than merging pair-wise.
 \end_layout
 
@@ -1233,7 +1233,7 @@ To avoid expanding the support in unwise ways, perhaps it would be best
 The merge strategy here seems OK, but probably not great.
  A better merge strategy is proposed below.
  The point here is that merge strategies that do perform word-sense disambiguati
-on (tht is, semantic extraction) are in principle possible.
+on (that is, semantic extraction) are in principle possible.
 \end_layout
 
 \begin_layout Subsection*
@@ -1423,7 +1423,7 @@ Susan saw the crow
 \end_layout
 
 \begin_layout Subsection*
-Pase Ranking
+Parse Ranking
 \end_layout
 
 \begin_layout Standard
@@ -1824,7 +1824,7 @@ n for the structure of language.
  They're reasonably OK concepts, for a first pass, giving OK results.
  Clearly, word2vec and it's cousins have made a big impression on the industry.
  That counts for something and should not be dismissed.
- But (I beleive that) one can do better by not ignoring the structure of
+ But (I believe that) one can do better by not ignoring the structure of
  the basis vectors.
  These ideas are developed next.
 \end_layout
@@ -1857,7 +1857,7 @@ which makes it perhaps a bit more clear that
 
  consists of several parts.
  When the 'naive' word-vectors were constructed, these parts were ignored.
- In particular, thier contribution to the similarity was ignored.
+ In particular, their contribution to the similarity was ignored.
  The can be remedied by defining a different kind of vector, the cross-connector
  vector.
 \end_layout
@@ -2075,7 +2075,7 @@ where the wild-card is now in the first position, not the second.
 \end_inset
 
  distinct locations in the disjunct.
- The wild-card can also occur with a + attachment, or a - attachement, so
+ The wild-card can also occur with a + attachment, or a - attachment, so
  there are at least 
 \begin_inset Formula $2N$
 \end_inset
@@ -2181,7 +2181,7 @@ Replacing Cosines by Entropy?
 
 \begin_layout Standard
 Cosines are not additive.
- And thats a big problem when trying to add together contributions from
+ And that's a big problem when trying to add together contributions from
  cross-connectors.
 \end_layout
 

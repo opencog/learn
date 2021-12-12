@@ -147,8 +147,8 @@ literal "true"
 .
  This document contains supplementary notes and a loosely-organized semi-chronol
 ogical diary of results.
- Its not actully chronological: in general, it is organized so that theory
- preceeds data analysis.
+ Its not actually chronological: in general, it is organized so that theory
+ precedes data analysis.
  Usually.
 \end_layout
 
@@ -177,7 +177,7 @@ literal "true"
 \begin_layout Standard
 Later stages further extend beyond what is possible with Link Grammar by
  inducing synonymous words and phrases.
- The goal here is to unifiy into a consistent framework various techniques
+ The goal here is to unify into a consistent framework various techniques
  for unsupervised semantic discovery that have already been proven in narrower
  contexts
 \begin_inset CommandInset citation
@@ -191,8 +191,8 @@ literal "true"
 \end_layout
 
 \begin_layout Standard
-The first section of this document is a review of various defintions of
- probabilites that can be obtained from natural langauge text.
+The first section of this document is a review of various definitions of
+ probabilities that can be obtained from natural language text.
  This is followed by a roughly chronological diary of further observaions
  and results.
  Many revisions are made out of chronological order.
@@ -228,7 +228,7 @@ literal "false"
 ).
  These formulas are vitally important, because they provide a strong tool
  when working with text; this has been shown by Yuret in his thesis, as
- well as by many others, as well as by my own practical exprience with using
+ well as by many others, as well as by my own practical experience with using
  them.
 \end_layout
 
@@ -250,7 +250,7 @@ lexical attraction
 \begin_inset Quotes erd
 \end_inset
 
- are being used interchangably.
+ are being used interchangeably.
  This formula states the 
 \begin_inset Formula $MI(x,y)$
 \end_inset
@@ -280,13 +280,13 @@ lexical attraction
 \end_inset
 
  is the word on the right.
- By constrast, textbook (wikipedia) definitions of MI are symmetric in thier
+ By contrast, textbook (wikipedia) definitions of MI are symmetric in their
  variables.
  Below I try to dis-entangle the resulting confusion a bit, and give a more
  correct derivation of the formula.
  The key is to observe that the formula contains an implicit pair-wise relations
 hip between two words, and that there are actually three variables: two
- words, and thier relationship.
+ words, and their relationship.
  If this implicit relationship is made explicit, then the confusion evaporates.
  It also opens the door to talking about the MI (or the interaction information
  InI) of more complex relationships, not just pair-wise ones.
@@ -371,7 +371,7 @@ Let
 \begin_inset Formula $R$
 \end_inset
 
- is a word-pair occuring in a single sentence.
+ is a word-pair occurring in a single sentence.
 \end_layout
 
 \begin_layout Standard
@@ -381,7 +381,7 @@ The simplest dependency grammar language model has only one type
 
 , the ANY type.
  This is the type that Yuret uses: it makes no distinction at all between
- subject, object relations (that is, all depdencies are unlabelled), and
+ subject, object relations (that is, all dependencies are unlabelled), and
  it does not make a head-dependent distinction (all dependencies are bi-directio
 nal).
  Thus, in what follows, we do the same: initially, the relation 
@@ -549,8 +549,8 @@ This is the probability of observing the relationship
 \begin_inset Formula $R$
 \end_inset
 
- includes all correlations between the two words: thier ordering as well
- as thier co-occurance in a sentence.
+ includes all correlations between the two words: their ordering as well
+ as their co-occurance in a sentence.
  
 \end_layout
 
@@ -627,7 +627,7 @@ N(*)=\sum_{w}N(w)
 
 \end_inset
 
-How to count words is not entirely obvious, so even these defintions need
+How to count words is not entirely obvious, so even these definitions need
  care.
  There are several ways in which one can count words.
  One way is to simply count how many times a word occurs in the block of
@@ -639,9 +639,9 @@ How to count words is not entirely obvious, so even these defintions need
  each time that it occurs at the end of an edge.
  In this counting, the word-count is exactly double the word-pair count.
  A word is then counted multiple times, if it participates in multiple edges.
- If the sample text is parsed multiple times, then addtional counts can
+ If the sample text is parsed multiple times, then additional counts can
  result that way.
- To maintain consistency with the defintions given in the previous section,
+ To maintain consistency with the definitions given in the previous section,
  
 \begin_inset Formula $N(w)$
 \end_inset
@@ -1153,7 +1153,7 @@ lexical attraction
 \end_inset
 
 .
- It is reviewed breifly, here.
+ It is reviewed briefly, here.
  He defines a probability 
 \begin_inset Formula $\mathcal{P}(w_{l},w_{r})$
 \end_inset
@@ -1177,7 +1177,7 @@ which indicates the relation explicitly, as well as noting that the order
 \begin_inset Formula $P$
 \end_inset
 
- which is reserved for the defintions above.
+ which is reserved for the definitions above.
 \end_layout
 
 \begin_layout Standard
@@ -1286,7 +1286,7 @@ It is worth reviewing Yuret's example, at this point.
 
 .
  What these numbers mean is that although either word alone occurs at a
- rate of roughtly once in ten-thousand words, the word-pair together occurs
+ rate of roughly once in ten-thousand words, the word-pair together occurs
  at the rate of one in thirty-thousand or so: the word pair occurs almost
  as often as either word alone.
  Thus, the resulting MI is very large: 
@@ -1303,7 +1303,7 @@ reference "eq:Yuret's MI"
 
  is such that words that co-occur have a large positive value.
  In practice, the distribution of the MI for word-pairs runs from about
- -15 to about +35, and, when ranked accoring to MI, the probabilites form
+ -15 to about +35, and, when ranked according to MI, the probabilities form
  a rounded mountain-peak, two-sided, each side being linear (Zipfian) with
  the peak at about MI=4 or 6.
  (See my other notes for a graph.)
@@ -1408,7 +1408,7 @@ Consider a sentence with
 \begin_inset Formula $P(R(w_{1},w_{2},\cdots,w_{n}))>0$
 \end_inset
 
- when the sentence is gramatically valid (
+ when the sentence is grammatically valid (
 \emph on
 i.e.
 
@@ -1430,7 +1430,7 @@ i.e.
 i.e.
 
 \emph default
- the sentence is not gramatically valid.) The first and most obvious simplificati
+ the sentence is not grammatically valid.) The first and most obvious simplificati
 on rule is to observe that 
 \begin_inset Formula $R$
 \end_inset
@@ -1450,7 +1450,7 @@ on rule is to observe that
 \begin_inset Formula $R(w_{1},w_{2},\cdots,w_{n})$
 \end_inset
 
- are in one-to-one correspondance with a list of grammatical sentences 
+ are in one-to-one correspondence with a list of grammatical sentences 
 \begin_inset Formula $(w_{1},w_{2},\cdots,w_{n})$
 \end_inset
 
@@ -1643,7 +1643,7 @@ OK, so the space of word-sequences is very concrete, and easy to describe
 \end_inset
 
 ), so this seems paradoxical, and begs the questions 'did we count correctly?'
- and 'did we actually simplify anything by making the above change of descriptio
+ and 'did we actually simplify anything by making the above change of description
 n?' Hmm.
  The correct answer seems to be 'no' and 'no'.
  
@@ -1742,7 +1742,7 @@ where
 \begin_inset Formula $|W|=N$
 \end_inset
 
-, thus yeilding a total of 
+, thus yielding a total of 
 \begin_inset Formula $K=\log_{2}N$
 \end_inset
 
@@ -1777,8 +1777,8 @@ with
 \emph on
 a priori
 \emph default
- defintion for this.
- The defintion of this complexity would seem to depend on the particular
+ definition for this.
+ The definition of this complexity would seem to depend on the particular
  algorithm machinery of the grammar; that is, on the 'programming language'
  used to represent the relation.
  This is the traditional ambiguity attached to the Kolmogorov complexity.
@@ -1790,7 +1790,7 @@ Method 5 (corpus distribution):
 
 \begin_layout Standard
 Instead of measuring the complexity of a grammatical expression (in an as-yet
- unkown grammar), instead, use the corpus frequency ass a proxy.
+ unknown grammar), instead, use the corpus frequency as a proxy.
  For the above example, if the 
 \begin_inset Formula $N$
 \end_inset
@@ -1876,7 +1876,7 @@ where
 \begin_inset Formula $w$
 \end_inset
 
- in the corpus, conditioned on its appearence in the corpus having to do
+ in the corpus, conditioned on its appearance in the corpus having to do
  with it belonging to the word-class 
 \begin_inset Formula $W$
 \end_inset
@@ -1966,7 +1966,7 @@ literal "true"
 \end_inset
 
 .
- Viz, specifically, that such connectors are in 1-1 correspondance with
+ Viz, specifically, that such connectors are in 1-1 correspondence with
  word-pairs.
  (I don't think he's aware of this assumption; I don't think anyone has
  ever before realized that he's making such an assumption; certainly, I
@@ -1997,7 +1997,7 @@ These two concepts give rise to the idea of minimum-spanning-tree parsers.
  To parse, one first creates a graph clique, with every word connected to
  every other.
  One uses the gathered MI to define graph edge lengths.
- Finally, the corrrect parse is then the maximum spanning tree of the graph
+ Finally, the correct parse is then the maximum spanning tree of the graph
  (maximizing the MI, summed over the tree edges in the graph).
 \end_layout
 
@@ -2032,7 +2032,7 @@ No-crossing Minimum Spanning Trees
 
 \begin_layout Standard
 It turns out that writing an algorithm for a no-crossing minimum spanning
- tree is surprisingly painful; enforcing the no-crossing constraint requies
+ tree is surprisingly painful; enforcing the no-crossing constraint requires
  treatment of a number of special cases.
  But perhaps this is not actually required! R.
  Ferrer i Cancho in 
@@ -2084,7 +2084,7 @@ Hubiness, length, crossings and their relationships in dependency trees
 , ArXiv 1304.4086 — also states: maximum number of crossings is bounded above
  by mean dependency length.
  Also, mean dependency length is bounded below by variance of degrees of
- vertexes (i.e.
+ vertices (i.e.
  variance in number of connectors a word can have).
 \end_layout
 
@@ -2167,7 +2167,7 @@ Sentences with long dependencies are rarely spoken: Hawkins, J.
 \end_layout
 
 \begin_layout Itemize
-Dependency-length minimzation is universal: Richard Futrell, Kyle Mahowald,
+Dependency-length minimization is universal: Richard Futrell, Kyle Mahowald,
  and Edward Gibson, 
 \begin_inset Quotes eld
 \end_inset
@@ -2328,8 +2328,8 @@ g! Interesting, eh?
 The real question, the major question is: what happens to pair-wise MI?
  What would that show? It seems unlikely that MI(dog, black) is going to
  be all that high.
- But what about MI(physical oject, color)? What is the correct way to compute
- MI(physical oject, color)?
+ But what about MI(physical object, color)? What is the correct way to compute
+ MI(physical object, color)?
 \end_layout
 
 \begin_layout Standard
@@ -3201,7 +3201,7 @@ Given this corpus, we wish to deduce the following answer: there is a cluster
 \begin_inset Formula $R(D,E)$
 \end_inset
 
- occuring with probabilities 
+ occurring with probabilities 
 \begin_inset Formula $p(\gamma,B)=p(A,B)+p(C,B)=2/3$
 \end_inset
 
@@ -3410,7 +3410,7 @@ h_{PAIR}^{red}-h_{PAIR}^{rr}=0\ngtr0.830075=h_{PR-RAND}^{red}-h_{PR-RAND}^{rr}
 
 Here, nothing is gained, so the pair inequality blocks the inappropriate
  reduction.
- Consider a differnt inappropraite reduction to 
+ Consider a different inappropraite reduction to 
 \begin_inset Formula $N=3$
 \end_inset
 
@@ -3629,13 +3629,13 @@ literal "true"
  The syntax of the language (that is, the order in which the words can appear
  in a sentence) is very strict: the verb must be followed by a subject,
  optionally followed by the object, and then a prepositional phrase.
- Similarly adjectives must always preceed the noun.
+ Similarly adjectives must always precede the noun.
  The language also has a rich morphology: words are assembled from stems
  and suffixes.
- The rules for assembling a word out of stems and affixes is refered to
+ The rules for assembling a word out of stems and affixes is referred to
  as the 'morphotactics'.
  In Kwakw’ala, it would appear that the morphotactics is utterly distinct
- from the syntax: here, object-denoting prefixes can preceed verbs, adjective-de
+ from the syntax: here, object-denoting prefixes can precede verbs, adjective-de
 noting suffixes follow a noun.
  Anderson finds this quite remarkable: the language has two distinct kinds
  of structure-imposing systems: the syntax and the morphtactics, and they
@@ -3661,7 +3661,7 @@ The part that struck me with Anderson's analysis is the similarity of the
  and lips).
  Curiously, Lithuanian is almost devoid of syntactic constraint: word-order
  can be chosen freely (in the mathemaitcal sense!), and the meaning of the
- resulting sentences are esentially the same (if I am allowed to gloss over
+ resulting sentences are essentially the same (if I am allowed to gloss over
  the notion that different word orders can serve to highlight or emphasize
  different themes and rhemes).
  So again: a language with very distinct syntax and morphtactics; in this
@@ -3679,9 +3679,9 @@ I used the theory of Link Grammar for performing structural linguistic analysis.
  another theory of syntax', being a kind of dependency grammar.
  From the point of view of a mathematician, the situation is entirely more
  remarkable.
- It appears that the mathematical defintion of what constitutes a 'link
+ It appears that the mathematical definition of what constitutes a 'link
  grammar' is isomorphic to that of a 'categorical grammar', and that the
- correspondance is immediate and direct.
+ correspondence is immediate and direct.
  Categorical grammars are interesting because they have a direct, formal
  mathematical definition that is studied and classified by mathematicians:
  roughly speaking, categorical grammars are 'non-symmetric compact closed
@@ -3744,8 +3744,8 @@ This thing is a thing that is a thing that is ...
 \begin_inset Quotes erd
 \end_inset
 
-, with the heirarchical arrangement emphsized.
- Dependency grammars can also parse such sentences, but here, the arrangment
+, with the hierarchical arrangement emphsized.
+ Dependency grammars can also parse such sentences, but here, the arrangement
  of dependencies are in the form of arrows that point from head word to
  dependent word; the arrows are only rarely long-range, and usually point
  to the immediately-surrounding words.
@@ -3753,7 +3753,7 @@ This thing is a thing that is a thing that is ...
  language, see for example [xxxx].
  That is, the workings of the human mind is not recursive in nature, pushing
  and popping an arbitrarily deep stack as each new noun-phrase or verb-phrase
- is enountered.
+ is encountered.
  Indeed, psychological studies with constructed sentences similar to the
  above, but varying the 'thing' and 'house' at each depth, show that humans
  quickly loose track after just two or three nestings [need ref].
@@ -3768,7 +3768,7 @@ This thing is a thing that is a thing that is ...
 \end_layout
 
 \begin_layout Standard
-Which theories of langauge are mathematically isomorphic? That is, Link
+Which theories of language are mathematically isomorphic? That is, Link
  Grammar and categorical grammars seem to be isomorphic because there is
  a simple way of translating the one into the other, and vice-versa (although
  no formal mathematical proof of this has been written down).
@@ -3812,7 +3812,7 @@ Anyway, the point here was to clarify the boundaries between freedom and
 Another curious and interesting language-constraint structure emerges with
  the study of idioms and institutionalized, set phrases.
  Because these are 'phrases', built of 'words', it would naively seem that
- tese lie in the domain of syntax.
+ these lie in the domain of syntax.
  But this is misleading.
  Institutionalized utterances are those where neither the word-choice nor
  the word-order are directly governed by syntax alone, but instead seem
@@ -3901,14 +3901,14 @@ So, perhaps, the correct approach is not to marry maximum entropy with first-ord
 er logic, but to marry maximum entropy to dependency grammars (or, equivalently,
  to appropriate monoidal categories).
  The question then becomes: what is the appropriate monoidal category? Picking
- the wrong one will lead to disasterous machine learning performance (this,
+ the wrong one will lead to disastrous machine learning performance (this,
  I think, is the lesson from neural networks).
  Picking something too easy doesn't get you far enough (the lesson of HMM's
  – excellent for certain classes of problems, but lacking in scale).
  There are more choices than that: but the chices, and their inter-connectedness
 , and trade-offs, seem to be unarticulated.
  For any given monoidal category, there would seem to be some probabilistic
- model corresponding to that category's internal langauge.
+ model corresponding to that category's internal language.
  That is, there is a way of describing the transition probabilities from
  state to state.
  Indeeded, (finite) monoidal categories, in the form of acts, can be partly
@@ -4031,7 +4031,7 @@ Note that the above definition of link-grammar rules results in a very simple,
  Link grammar allows richer, more complex linkage diagrams, and so the question
  arises: can a given FST be compactified into a smaller system by making
  use of the richer possibilities that link-grammar offers? How can this
- compactification be acheived?
+ compactification be achieved?
 \end_layout
 
 \begin_layout Standard
@@ -4253,7 +4253,7 @@ water
 \end_inset
 
  re-inforcing one-another.
- But this is eactly what the Mihalcea WSD algo does, eh? 
+ But this is exactly what the Mihalcea WSD algo does, eh? 
 \end_layout
 
 \begin_layout Section*
@@ -4300,7 +4300,7 @@ Tree-edit distance: many variants proposed, all high cpu/memory intensive.
 \end_layout
 
 \begin_layout Itemize
-convert tre to pre or post-oerder, and use string edit distance.
+convert tree to pre or post-order, and use string edit distance.
 \end_layout
 
 \begin_layout Itemize
@@ -4323,7 +4323,7 @@ Morphology Basic Claims
 \end_layout
 
 \begin_layout Standard
-We have two tasks to adress: the automated discovery of morpheme boundaries,
+We have two tasks to address: the automated discovery of morpheme boundaries,
  and the automated discovery of 
 \begin_inset Quotes eld
 \end_inset
@@ -8174,7 +8174,7 @@ Unsupervised Morpheme Segmentation and Morphology Induction from Text Corpora
 That algorithm works only for concatenative languages, and does not provide
  a morphotactic structure; that is, it cannot learn the grammar governing
  the morphemes.
- It also requires several (plausable) assumptions about Bayesian priors.
+ It also requires several (plausible) assumptions about Bayesian priors.
  One assumption is that morpheme frequency follows a modified Zipfian distributi
 on, this is used to make estimates for morphemes that are observed only
  once in the corpus.
@@ -8192,9 +8192,9 @@ Link-type discovery, worked example
 
 \begin_layout Standard
 In keeping with the previous, lets look at a super-simplified version of
- link-type discovery, continuing imediately from the previous morpheme-discovery
+ link-type discovery, continuing immediately from the previous morpheme-discovery
  example.
- We begin with the intial observations, given in the table below:
+ We begin with the initial observations, given in the table below:
 \begin_inset Newline newline
 \end_inset
 
@@ -9028,7 +9028,7 @@ Note that the equi-distributed link-types is the same as having each of
 Link type reductions can be many ways.
  In each case, we look to see if adding a new word to a category improves
  the score.
- The possibilites are:
+ The possibilities are:
 \end_layout
 
 \begin_layout Enumerate
@@ -10512,7 +10512,7 @@ In the previous, the unified link-type discovery is inevitable, so a more
  complex version is needed, with a less-obvious outcome.
  So lets take the original example of link-type discovery, and add some
  confounding link types.
- We begin with the intial observations, plus some extras, given in the table
+ We begin with the initial observations, plus some extras, given in the table
  below:
 \begin_inset Newline newline
 \end_inset
@@ -10959,10 +10959,10 @@ A more complex grammar showing morpheme linkages.
 
 \begin_layout Standard
 From the above initial dictionary, we hope to deduce one word class that
- contains gif.= and tes.= and another that contains =t and =ter; eactly how
+ contains gif.= and tes.= and another that contains =t and =ter; exactly how
  the rest plays out is unclear.
  Lets begin by starting with the un-clustered entropy, and then see what
- hapens if we try various different clusters.
+ happens if we try various different clusters.
  So, as before, let 
 \begin_inset Formula $\beta=\{GA,GB,GC,TA,TB,TC,BB,BF\}$
 \end_inset
@@ -11543,7 +11543,7 @@ Curiously, this entropy is identical to the completely different case 2.
  This is perhaps surprising ...
  First, this grammar did not generate any new unobserved words; thus, it
  is a faithful grammar.
- Also, it suceeds in reducing the total number of link-types, and thus is
+ Also, it succeeds in reducing the total number of link-types, and thus is
  naively acceptable for that reason.
  However, the frequency distribution of th generated grammar move away from
  the observed frequency distribution, leading to the rejection.
@@ -11719,7 +11719,7 @@ Case 1a.
 
 \begin_layout Standard
 Group =t and =ty.
- The link merges are T={A,B}; the resulting gramar is:
+ The link merges are T={A,B}; the resulting grammar is:
 \end_layout
 
 \begin_layout Standard
@@ -12187,7 +12187,7 @@ common
  The grammar for quite rare cases should indeed be handled distinctly.
  To avoid this seemingly perverse outcome, perhaps the grammar should contain
  frequency information, which is to be consolidated appropriately.
- This is truly tedious, but seems to be neccessary.
+ This is truly tedious, but seems to be necessary.
  So we have to start from scratch.
 \end_layout
 
@@ -12204,7 +12204,7 @@ Worked Link Consolidation Example, with Frequencies (XXX Fail)
 
 \begin_layout Standard
 (XXX The below fails, don't bother reading it).
- So we start all over again, using the same corpus frequences as before,
+ So we start all over again, using the same corpus frequencies as before,
  namely, those of table 
 \begin_inset CommandInset ref
 LatexCommand ref
@@ -14866,7 +14866,7 @@ information
 \begin_inset Quotes erd
 \end_inset
 
- the above actualy is ...
+ the above actually is ...
  
 \end_layout
 
@@ -15471,7 +15471,7 @@ Notation: there are N nodes, so voltages live in
 \end_inset
 
 .
- The black-box principle of equvalent resistor networks is that any two
+ The black-box principle of equivalent resistor networks is that any two
  resistor networks are black-box equivalent when they have the same Q.
  
 \end_layout
@@ -15533,7 +15533,7 @@ The set of Lagrangian subspaces is an algebraic variety, the Lagrangian
 \end_layout
 
 \begin_layout Standard
-Baez primary result on impedence networks is that the black box is describable
+Baez primary result on impedance networks is that the black box is describable
  by the symplecitification of ..
  OK I don't get it.
 \end_layout
@@ -15903,8 +15903,8 @@ This leaves the ME+, MF+,
 etc
 \emph default
 .
- connector dangling: thus, we need to search for all occurances of ME+ and
- replace it by MA+, and likewise all occurances of MF+ need to be replaced
+ connector dangling: thus, we need to search for all occurrences of ME+ and
+ replace it by MA+, and likewise all occurrences of MF+ need to be replaced
  by MB+, and so on.
 \end_layout
 
@@ -16028,7 +16028,7 @@ tree
 \family typewriter
 ($a$- & $green$-)
 \family default
- was observed with frequncy 
+ was observed with frequency 
 \begin_inset Formula $p_{2}$
 \end_inset
 
@@ -16129,7 +16129,7 @@ tree=e_{1}m_{1}p_{1}+e_{2}m_{2}p_{2}
 \end_inset
 
 The above seems to be the most entropic-like in its expression.
- However, the probabilites might weight the terms too strongly, and so a
+ However, the probabilities might weight the terms too strongly, and so a
  weaker weighting would be the below.
  It is not yet clear to me which of these expressions are the most 
 \begin_inset Quotes eld
@@ -16193,7 +16193,7 @@ The above section makes explicit use of the frequency and the mutual information
 \family typewriter
 (*- & *-)
 \family default
- be the numer of times that any two-connector disjunct has been observed,
+ be the number of times that any two-connector disjunct has been observed,
  as long as both connectors point in the - direction.
  That is,
 \begin_inset Formula 
@@ -16235,7 +16235,7 @@ Semantics
 
 \begin_layout Standard
 There is another interesting issue that arises in the above discussion:
- the problem of syntax-semantics correspondance.
+ the problem of syntax-semantics correspondence.
  Consider, for example, the sentence 
 \emph on
 
@@ -17570,7 +17570,7 @@ Here, the star represents some planar tree connecting all of the words of
  Tree diagrams of of Type A are assembled by placing two adjacent smaller
  trees next to each other.
  Naively, one can then count how many such pairs there are; the issue is
- that the Type B diagram will occur mutiple times in this pairing; we would
+ that the Type B diagram will occur multiple times in this pairing; we would
  rather NOT count it with this mutiplicity.
  To avoid this problem, we should only allow pairs, such as Type A, to be
  assembled of sub-parts of the shapes C and D.
@@ -19255,7 +19255,7 @@ golden corpus
 \end_layout
 
 \begin_layout Standard
-There are two rather suprising results here:
+There are two rather surprising results here:
 \end_layout
 
 \begin_layout Enumerate
@@ -19268,7 +19268,7 @@ tree
 \end_inset
 
 , when compared against the golden parse tree.
- The reson for this is not currently understood.
+ The reason for this is not currently understood.
 \end_layout
 
 \begin_layout Enumerate
@@ -20417,7 +20417,7 @@ en_mpg_53
 en_pairs_cfive_mst
 \series default
 \noun default
- and its not clear if this shold be surprising or not...
+ and its not clear if this should be surprising or not...
  Both
 \series bold
 \noun on
@@ -20664,7 +20664,7 @@ weight
 
  gives the magnitude of the vector component.
  The other two columns are the support for the word, and the number of observati
-ons, and are shown for comparison.
+owns, and are shown for comparison.
  
 \end_layout
 
@@ -22262,11 +22262,11 @@ I recently realized that much of what is being discussed here can be anchored
 \end_layout
 
 \begin_layout Standard
-A standard way of expressing a graph is to list all of the vertexes in the
+A standard way of expressing a graph is to list all of the vertices in the
  graph, and to list all of the edges.
  Knowing these, one knows the graph.
  However, this is a global description: One does not know the local structure
- until one looks at specific vertexes, and what they attach to.
+ until one looks at specific vertices, and what they attach to.
 \end_layout
 
 \begin_layout Standard
@@ -22437,7 +22437,7 @@ Disjuncts are compositional
 One reason that a disjunct representation of a graph is important is that
  disjuncts can be composed, so that the product is again a disjunct.
  This is in contrast to the vertex-edge model.
- where neither vertexes nor edges can be composed to obtain a new vertex
+ where neither vertices nor edges can be composed to obtain a new vertex
  or edge.
  That is, disjuncts form a monoidal category, and, specifically, a compact-close
 d category.
@@ -24546,7 +24546,7 @@ Grammatical categories: By grouping multiple words into categories, we hope
 
 \begin_layout Itemize
 Compression: By grouping multiple words into categories, we hope to compress
- the size of the overall dataset of connector-sets, without loosing much
+ the size of the overall dataset of connector-sets, without losing much
  fidelity.
 \end_layout
 
@@ -24966,7 +24966,7 @@ grammatical class
 \end_inset
 
 , rather, it was presented in general terms.
- Here, likewise, but a stricter defintion is proposed for a 
+ Here, likewise, but a stricter definition is proposed for a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -25343,7 +25343,7 @@ Linear merging
 \end_layout
 
 \begin_layout Standard
-Linear merging treats words as vectors, computing thier sum to define the
+Linear merging treats words as vectors, computing their sum to define the
  new merged class, and then computing the perpendicular components as the
  left-over, un-accounted-for remainders.
  More precisely, the disjuncts are considered to be the basis elements of
@@ -25686,7 +25686,7 @@ Worked example
 \end_layout
 
 \begin_layout Standard
-Bothe the cosine similarity and the overlap similarity suggested that the
+Both the cosine similarity and the overlap similarity suggested that the
  words 
 \begin_inset Quotes eld
 \end_inset
@@ -26140,7 +26140,7 @@ Meaning
 So here's one approach to meaning.
  It is already clear that disjuncts are correlated with meaning, so one
  provisional approach might be to assign each disjunct a unique meaning.
- Alternately, this can be used as a doorway to the intensional meaning of
+ Alternately, this can be used as a doorway to the intentional meaning of
  a word.
  
 \end_layout
@@ -26199,7 +26199,7 @@ the- small-
  Examining this connector-by-connector, we expect that the MI for the word
  pair (the, balloon) to be small, while the MI for the word-pairs (big,
  balloon), (red, balloon) and (small, balloon) to be large(r).
- Its thus tempting to identify the set {big, red, small} as the set of intension
+ Its thus tempting to identify the set {big, red, small} as the set of intention
 al attributes associated with 
 \begin_inset Quotes eld
 \end_inset
@@ -26232,7 +26232,7 @@ balloon
 \end_inset
 
  will also connect to a verb.
- These verb connectors may be taken as another set of intensional attributes,
+ These verb connectors may be taken as another set of intentional attributes,
  for example {floats, drifts, rose, popped}.
  It should be possible to distinguish these as an orthogonal set of attributes,
  in that one might observe 
@@ -26673,7 +26673,7 @@ gram-class.scm
 en_pairs_cfive_class
 \family default
 '.
- The merge paramters are: cosine-similarity-accept cutoff = 0.65; union-merge-fra
+ The merge parameters are: cosine-similarity-accept cutoff = 0.65; union-merge-fra
 ction = 0.3.
 \end_layout
 
@@ -26692,7 +26692,7 @@ mother father
 
 .
  Some words are clearly mis-classified, but there are not many of those.
- Some classes are a bit confusing as to thier content, but most seem very
+ Some classes are a bit confusing as to their content, but most seem very
  clear.
  The classes are clearly semantic in nature; for example, there are two
  distinct classes of prepositions.
@@ -26739,7 +26739,7 @@ arm mouth
 \end_inset
 
  are not.
- Perhaps the arm and mouth have a mind of thier own, functioning a bit independe
+ Perhaps the arm and mouth have a mind of their own, functioning a bit independe
 ntly from the true self?
 \end_layout
 
@@ -26752,12 +26752,12 @@ I'll try to run this a few more days, and present a newer report.
 \end_layout
 
 \begin_layout Standard
-Meanwhile, you shuld be able to get similar results, by applying the code
+Meanwhile, you should be able to get similar results, by applying the code
  in '
 \family typewriter
 gram-class.scm
 \family default
-' to a dataset that contains disjuncts dervied from MST parses.
+' to a dataset that contains disjuncts derived from MST parses.
 \end_layout
 
 \begin_layout Standard
@@ -27307,7 +27307,7 @@ kept held called made found
 \begin_inset Text
 
 \begin_layout Plain Layout
-Possesive verbs
+Possessive verbs
 \end_layout
 
 \end_inset
@@ -28059,7 +28059,7 @@ length
 \end_layout
 
 \begin_layout Standard
-Conclusion: Looks good, more proccessing needed; comparison of experiments
+Conclusion: Looks good, more processing needed; comparison of experiments
  needed.
 \end_layout
 
@@ -29779,8 +29779,8 @@ Fuzz-5x2
 
 \begin_layout Standard
 Below are distribution graphs for the word-clases obtained using the two
- differrent datasets, and three different classification schemes.
- The general similarity of the graphs is immedately apparent.
+ different datasets, and three different classification schemes.
+ The general similarity of the graphs is immediately apparent.
  One can conclude: 
 \begin_inset Foot
 status collapsed
@@ -29926,7 +29926,7 @@ real
 
  linnguistic data, we expect a much much sharper falloff.
  Determiners (the, a this, that ...) should have one connector.
- There are few of these, and that is what the chart above sugests.
+ There are few of these, and that is what the chart above suggests.
  (This chart shows 30K such connectors: since this is pre-clustering, those
  30K correspond to some determiner, connecting to some specific word.)
 \end_layout
@@ -29982,7 +29982,7 @@ Block-5x5
  Note that, to obtain these 700 words, the top-most-frequent 1300 words
  were examined: so the 700 words are among the most frequent.
  Note that, due to the orthogonalization algorithm, not all of the counts
- are transfered from the words to the clusters; only some are.
+ are transferred from the words to the clusters; only some are.
 \end_layout
 
 \begin_layout Section*
@@ -31254,7 +31254,7 @@ The word-disjunct dataset, containing counts
 , is far too large to be used as a practical dictionary for parsing.
  It also fails to provide sufficient coverage to parse most sentences.
  Thus, it needs to be simultaneously be compressed and also generalized.
- This is partly acheived by clustering words 
+ This is partly achieved by clustering words 
 \begin_inset Formula $w$
 \end_inset
 
@@ -31349,7 +31349,7 @@ e.g.
 
 \emph default
  a word can be both a verb and a noun.
- The correct partitioning is then neccessarily given by 
+ The correct partitioning is then necessarily given by 
 \begin_inset Formula $p\left(g|w,d\right)$
 \end_inset
 
@@ -31746,7 +31746,7 @@ after dropping a constant factor of
 \end_inset
 
 .
- To maintain the contraint that 
+ To maintain the constraint that 
 \begin_inset Formula $\vec{w}=\vec{s}+\vec{t}$
 \end_inset
 
@@ -32394,7 +32394,7 @@ The word-disjunct dataset, containing counts
 , is far too large to be used as a practical dictionary for parsing.
  It also fails to provide sufficient coverage to parse most sentences.
  Thus, it needs to be simultaneously be compressed and also generalized.
- This is partly acheived by clustering words into word-classes.
+ This is partly achieved by clustering words into word-classes.
  However, the current system leaves the connectors un-clustered.
  That is, each disjunct is an ordered sequence of (pseudo-)connectors: 
 \begin_inset Formula 

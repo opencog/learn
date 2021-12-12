@@ -6349,6 +6349,10 @@ replace submit-one.pl by ... submit-plain.pl
 
 replace observe-text -> observe-window-24
 
+ (observe-text-mode "clique" winsz plain-text)
+
+(local-process plain-text observe-mode count-reach)
+
 
 
 ====================================================

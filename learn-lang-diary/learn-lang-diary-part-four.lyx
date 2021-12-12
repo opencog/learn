@@ -182,7 +182,7 @@ Length of disjuncts
 For a given length of disjunct, how many sections have a disjunct of that
  length? (Counted with multiplicity) Previously, in Diary Part Two page
  14 this was a Gaussian, centered at 8.
- But this was for a fake langauge, not for English.
+ But this was for a fake language, not for English.
  Based on what we expect for English, 8 is an alarmingly large number.
  So, some graphs:
 \begin_inset Foot
@@ -623,7 +623,7 @@ There are
 
  words that do NOT have disjuncts of length two.
  Looking over the list, they are junk.
- Here's the top-10, thier observation count and thier rank in the list of
+ Here's the top-10, their observation count and their rank in the list of
  all words.
 \begin_inset VSpace defskip
 \end_inset
@@ -2460,7 +2460,7 @@ Perhaps the most interesting result is that more than 3/4ths of the count
 \begin_layout Standard
 Mystery result: Total number of disjuncts dropped from 205003 to 202922
  (as measured by `(pcs 'right-basis-size)`) ..
- how can this happen? This suggests some bug!? Thats a difference of 2081
+ how can this happen? This suggests some bug!? That's a difference of 2081
  ...
  oh, I see.
  The basis shrank, because pcs is NOT looking at WordClassNodes...
@@ -2478,7 +2478,7 @@ Merge is-was and connectors too
 Merging connectors requires using shapes.
  This is, in fact, the right thing to do, and was hard-won.
  But this changes everything.
- So lets track whats going on.
+ So lets track what's going on.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -2742,7 +2742,7 @@ was
 \begin_inset Quotes erd
 \end_inset
 
- appear in? What are thier counts?
+ appear in? What are their counts?
 \begin_inset VSpace defskip
 \end_inset
 
@@ -5271,7 +5271,7 @@ The above list of similar words defines the initial peer group.
 \end_layout
 
 \begin_layout Enumerate
-Given the peer group, determin which disjuncts belong to it by voting: if
+Given the peer group, determine which disjuncts belong to it by voting: if
  more than half the words share some common disjunct, then this disjunct
  will be admitted into the merged cluster.
 \end_layout
@@ -5285,7 +5285,7 @@ Perform the merge, merging all of the words into the cluster, and accepting
 The above would seem to create a more balanced cluster, as opposed to the
  agglomerative merge.
  The problem with agglomeration was demonstrated above: what was left on
- She–He and on It–There was relly quite a lot, and probably should have
+ She–He and on It–There was really quite a lot, and probably should have
  been a part of the main cluster.
  It wasn't, because agglomeration threw these away, when forming the initial
  He–It cluster.
@@ -5408,7 +5408,7 @@ correctly
 \end_layout
 
 \begin_layout Standard
-In particular, that means that the corrent connector merge code automatically
+In particular, that means that the correct connector merge code automatically
  handles word-sense disambiguation: whatever has not been merged, including
  unmerged connectors, MUST be understood to belong to a word-sense that
  is distinct from the WordClass.
@@ -5515,7 +5515,7 @@ Consider some given initial word-pair, and a threshold
 \begin_inset Formula $\varepsilon$
 \end_inset
 
-, a tight-knit groupd might be formed.
+, a tight-knit grouped might be formed.
  As 
 \begin_inset Formula $\varepsilon$
 \end_inset
@@ -6460,7 +6460,7 @@ In-group ranking spread
 
 \begin_layout Standard
 Words are added to the in-group one at a time, starting with the most-frequently
- occuring words.
+ occurring words.
  By the time that the construction of the in-group is done, what is the
  difference between the highest-ranked word in the in-group, and the lowest-reak
 ed? This is graphed below.
@@ -6481,7 +6481,7 @@ ed? This is graphed below.
 \begin_layout Standard
 What this chart shows is that when the in-group has fewer than 10 members,
  all of those members are within 100 of each other in the word-frequency
- ranking (with exceptions as visibile in the graph.) Note this is 
+ ranking (with exceptions as visible in the graph.) Note this is 
 \emph on
 not
 \emph default
@@ -6490,7 +6490,7 @@ not
 \end_layout
 
 \begin_layout Standard
-Recomendations: if we're going to compute similarity, do so in a band of
+Recommendations: if we're going to compute similarity, do so in a band of
  about 200 from the diagonal.
 \end_layout
 
@@ -6546,7 +6546,7 @@ is-was
 \end_layout
 
 \begin_layout Standard
-Let's assess thier health.
+Let's assess their health.
  
 \end_layout
 
@@ -8629,7 +8629,7 @@ So, at round 27, we get ranked-MI = 7.0566 MI = 6.5282 for `###LEFT-WALL###`,
 
 \begin_layout Standard
 The confusion: the overlap merge should have clobbered the dot product,
- and left the dregs completely orthognal to the cluster.
+ and left the dregs completely orthogonal to the cluster.
  Because overlap merge means to sum over all basis elements that are non-zero
  in common, which are the *only* basis elements contributing to the dot
  product.
@@ -8832,7 +8832,7 @@ So some of the overlaps are tiny, but the cosine is huge! The nly way this
 \end_layout
 
 \begin_layout Standard
-And indeed that is what happend! There are 56 entries in the overlap of
+And indeed that is what happened! There are 56 entries in the overlap of
  left-wall and colon, out of about 46K.
  All 56 of these are CrossSections.
  All have large counts.
@@ -10179,7 +10179,7 @@ kick
 
  in the in-group column means the last member is being kicked out.
  That is, in-groups start large, and then members are kicked out until a
- sutable commonality is reached.
+ suitable commonality is reached.
 \end_layout
 
 \begin_layout Standard
@@ -14829,7 +14829,7 @@ number
  But the MI is computed by weighting high-count disjuncts highly, and low-count
  disjuncts low.
  Is there a way to weight the commonality score likewise? But how, exactly?
- How do we turn this into a scale-free number? The problem is that, by definitio
+ How do we turn this into a scale-free number? The problem is that, by definition
 n, the count will be zero for some (this is how generalization happens.)
  I can't think of a worthy alternate variant of commonality.
 \end_layout
@@ -16086,7 +16086,7 @@ kick
 
 \begin_layout Standard
 Clearly visible are two effects: the climb-back-up because commonality dropped,
- and the much smaller total dj nuber, which means most dj's really had a
+ and the much smaller total dj number, which means most dj's really had a
  count of 4 or less.
  And we're taking the vote away from them.
 \end_layout

@@ -568,7 +568,7 @@ P_{s}\left(E\right)=const.
 
 \end_inset
 
- This enables practical calulations on distributions (next section).
+ This enables practical calculations on distributions (next section).
 \end_layout
 
 \begin_layout Itemize
@@ -911,7 +911,7 @@ key "Aitchison2016"
 \end_layout
 
 \begin_layout Section
-Graph Factorization and Beleif Propagation
+Graph Factorization and Belief Propagation
 \end_layout
 
 \begin_layout Standard
@@ -921,7 +921,7 @@ The graph factorization problem can be posed as a constraint problem.
 \begin_inset Formula $\mathcal{O}\left(N\right)$
 \end_inset
 
- time by beleif propagation or message passing.
+ time by belief propagation or message passing.
  The general setting is outlined by Mezard and Mora in a very readable paper,
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1001,7 +1001,7 @@ Here, the vector
 \end_layout
 
 \begin_layout Standard
-Mezard describes how beleif propagation can be used to quickly solve graph
+Mezard describes how belief propagation can be used to quickly solve graph
  factorization problems.
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1013,10 +1013,10 @@ key "Mezard2008"
 \end_layout
 
 \begin_layout Standard
-I'm confused; beleif propagation can also solve problems that don't have
+I'm confused; belief propagation can also solve problems that don't have
  a factorization, e.g.
  single-layer perceptrons.
- So, really, the point is that beleif propagation can be used to solve for
+ So, really, the point is that belief propagation can be used to solve for
  probability distributions, and it works well on factorizable distributions,
  too.
  Which is kind-of the only point of the quoted paper.
@@ -1099,7 +1099,7 @@ and write
 \begin_inset Formula $i$
 \end_inset
 
- in a sentence, an amino acid in postion 
+ in a sentence, an amino acid in position 
 \begin_inset Formula $i$
 \end_inset
 
@@ -1147,7 +1147,7 @@ etc
 \end_layout
 
 \begin_layout Standard
-The goal is to create a model such that the singleton contraints
+The goal is to create a model such that the singleton constraints
 \begin_inset Formula 
 \[
 f_{a}\left(i\right)=\sum_{\sigma_{1}}\sum_{\sigma_{2}}\cdots\sum_{\sigma_{N}}p\left(\sigma_{1},\sigma_{2},\cdots,\sigma_{N}\right)\delta_{\sigma_{i},a}
@@ -1234,7 +1234,7 @@ f_{a}\left(i\right)=\sum_{j,b}f_{ab}\left(i,j\right)
 \end_inset
 
 which means that there's ambiguity in how the Hamiltonian is split up, i.e.
- there is guage invariance; and so one needs gauge fixing.
+ there is gauge invariance; and so one needs gauge fixing.
  This is usually done by forcing 
 \begin_inset Formula 
 \[

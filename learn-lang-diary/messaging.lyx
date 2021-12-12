@@ -111,7 +111,7 @@ Lets start with an obvious observation: natural language is used to transmit
 \end_layout
 
 \begin_layout Subsection*
-Grammar via Beleif Propagation
+Grammar via Belief Propagation
 \end_layout
 
 \begin_layout Standard
@@ -120,7 +120,7 @@ This is a reprise of a recurring theme.
  extracting meaning from natural language.
  The current work concerns itself with a very basic layer, that of extracting
  a lexical grammar, describing the syntax of the language, and a crude level
- of semantics that follows therefrom.
+ of semantics that follows there from.
  By a 
 \begin_inset Quotes eld
 \end_inset
@@ -182,11 +182,11 @@ y vanishing probability.
 \end_layout
 
 \begin_layout Standard
-It is a theorem of Boltzmann that paritition functions can be written as
+It is a theorem of Boltzmann that partition functions can be written as
  sums over exponentials, and that the most likely possibility is given by
  maximizing the entropy.
  This is not an assumption that has to be artificially forced onto the system;
- rather, it is the factual statement that, if you beleive in probability,
+ rather, it is the factual statement that, if you believe in probability,
  then there is no other way: it is a theorem.
  Combining natural language with probability then suggests that it is fruitful
  to articulate the statistical mechanics thereof.
@@ -237,7 +237,7 @@ The next section articulates the statistical mechanics Link Grammar.
  This presents Link Grammar as both a constraint-statistfaction problem
  as well as a maximum entropy problem.
  This is followed by a section looking at the belief-propagation aglorithm,
- inspired by and devloped along the lines described by Mézard and Mora
+ inspired by and developed along the lines described by Mézard and Mora
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008"
@@ -271,7 +271,7 @@ Consider first a word sequence
 
  words long; it need not be grammatical; that is, it need not be a valid
  sentence.
- One possible way of defining the statistics of langauge is to claim that
+ One possible way of defining the statistics of language is to claim that
  the probability of this word sequence is 
 \end_layout
 
@@ -287,13 +287,13 @@ where
 \begin_inset Formula $N$
 \end_inset
 
- is the number of sentences in a sample corpus representative of the langauge,
+ is the number of sentences in a sample corpus representative of the language,
  so that each 
 \begin_inset Formula $\underbar{w}_{i}$
 \end_inset
 
  is a grammatically valid sentence.
- The above states that, basicly, a word sequence 
+ The above states that, basically, a word sequence 
 \begin_inset Formula $\underbar{w}$
 \end_inset
 
@@ -331,11 +331,11 @@ Semantic structure on a scale larger than one sentence is ignored.
 
 \begin_layout Itemize
 Corpora are assumed to be finite in size.
- This is naturally the case for natural langauge, but it can cause difficulties
+ This is naturally the case for natural language, but it can cause difficulties
  for certain mathematical approaches, which are more naturally expressed
  in the continuum limit.
  This is also glossed over, as it rarely presents any practical difficulties.
- By contrast, formal langauges with generative grammars are capable of producing
+ By contrast, formal languages with generative grammars are capable of producing
  infinite corpora, and so the distinction between finite and infinite can
  be blurred.
 \end_layout
@@ -345,7 +345,7 @@ The above definition completely ignores the obvious fact that language is
  compositional: one can form sentences from sentence fragments; phrases
  can have meanings; language is a collection of recurring word-patterns
  plainly visible at a sub-sentence level.
- Yet, one of the goals of research into linguistics is to elucidate teh
+ Yet, one of the goals of research into linguistics is to elucidate the
  compositional structure of language.
 \end_layout
 
@@ -367,11 +367,11 @@ reference "eq:frequentist"
 
 \begin_layout Standard
 For the remainder of this section, the assumption is made that the compostional
- nature of langauge can be adequately captured by means of a lexis.
+ nature of language can be adequately captured by means of a lexis.
  This is closely related too the assumption that language is syntactic,
  but is, in some sense, strictly weaker, or, at least, should be interpreted
  in a broader setting.
- A lexical description of langauge is one where each word is associated
+ A lexical description of language is one where each word is associated
  with a collection of properties and relations that specify how that word
  can occur in grammatical contexts, and how rough, basic meaning can be
  pinned down.
@@ -383,9 +383,9 @@ syntax
 \begin_inset Quotes erd
 \end_inset
 
-, which is usally taken to be synonym for the existence of a (planar) parse
+, which is usually taken to be synonym for the existence of a (planar) parse
  tree.
- The point here is that the graphical structure of languge need not be tree-like
+ The point here is that the graphical structure of language need not be tree-like
 : the parse may contain loops; it may contain non-planar edges between words,
  and it may contain relations operating at different conceptual levels.
  For example, graphical relations enforcing phonetic agreement might typically
@@ -407,7 +407,7 @@ Link Grammar
 \end_layout
 
 \begin_layout Standard
-The remainder of this paper asumes that Link Grammar is well suited to capture
+The remainder of this paper assumes that Link Grammar is well suited to capture
  most of the lexical, syntactic properties of language.
  There are multiple reasons that this assumption seems justified.
  These include:
@@ -495,7 +495,7 @@ disjunct
 \end_inset
 
  will be given shortly; the next few paragraphs do not rely on a precise
- defintion, and hold true generally for any lexical formulation.
+ definition, and hold true generally for any lexical formulation.
  In particular, one can imagine that a disjunct is an n-gram or a skip-gram;
  this is useful, as it makes contact with nueral-net/deep-learning approaches
  to language.
@@ -535,7 +535,7 @@ A single word might be associated with multiple disjuncts.
 
  as only the lowest cost is meaningful, and it does not make sense for a
  given disjunct to have more than one cost.
- Impossible word-disjunct pairs have infinite cost, rendering thier probability
+ Impossible word-disjunct pairs have infinite cost, rendering their probability
  zero.
  That is, the probability of a word-disjunct pair, up to an overall normalizatio
 n, can be taken as
@@ -609,7 +609,7 @@ The probabilistic aspects, that some parses are more likely than others,
 \end_inset
 
 .
- Replacing probabilities by thier logs, one can equivalently write
+ Replacing probabilities by their logs, one can equivalently write
 \end_layout
 
 \begin_layout Standard
@@ -723,7 +723,7 @@ As the cost
 \end_inset
 
  is infinite for those words-disjunct pairs that do not occur in the lexis,
- this sum excludes impossible pairings; no addtional effort is needed to
+ this sum excludes impossible pairings; no additional effort is needed to
  otherwise exclude them.
  
 \end_layout
@@ -751,7 +751,7 @@ disjunct
  elements.
  In the Link Grammar formulation, the lexical elements are explicitly graphical:
  a vertex surrounded by half-edges or connectors, with two half-edges required
- to make a full edge (link) connecting two vertexes.
+ to make a full edge (link) connecting two vertices.
  Algebraically, a disjunct is a list of connectors, which either can connect,
  or not.
  That is, an arity-
@@ -793,7 +793,7 @@ status collapsed
 
 \begin_layout Plain Layout
 In standard link grammar, these direction indicators point to the left and
- right, respecively, and encode the directional dependence of word order.
+ right, respectively, and encode the directional dependence of word order.
  For languages with free word-order, it is convenient to use symbols for
  head and tail instead of, or in addition to the direction indicators.
  Head/tail markings are also useful for indicating dependency directions,
@@ -970,7 +970,7 @@ The intended reading of the above expression is that it is a summation over
 \begin_inset Formula $\Xi$
 \end_inset
 
- terms corresponding to propagators connecting vertexes.
+ terms corresponding to propagators connecting vertices.
  The propagators are exactly the Link Grammar links, weighted in such a
  way that they contribute zero to the action, when the link is allowed,
  and otherwise contributing infinity.
@@ -1034,7 +1034,7 @@ current
 
  is just an algebraic device, a trick, used to single out one particular
  word-sequence out of the infinite sum.
- It is conventient to also introduce other currents coupling to other parts
+ It is convenient to also introduce other currents coupling to other parts
  of the action, so that the variational principle can be used to extract
  other quantities of interest.
  The logarithm of the partition function 
@@ -1055,7 +1055,7 @@ thermodynamic
 \end_layout
 
 \begin_layout Subsection*
-Grammar via Beleif Propagation
+Grammar via Belief Propagation
 \end_layout
 
 \begin_layout Standard
@@ -1101,7 +1101,7 @@ reference "eq:factor-graph"
 \end_inset
 
  corresponds to a vertex, and, of course, links are always arity-2.
- To be precise, the vertexes of the factor graph are taken from 
+ To be precise, the vertices of the factor graph are taken from 
 \begin_inset Formula $V=D\cup L$
 \end_inset
 
@@ -1173,7 +1173,7 @@ x
 
 \begin_layout Standard
 The other thing to point out is due to loops, etc.
- it won't be naive beleif propagation, but it will be Survey Propagation,
+ it won't be naive belief propagation, but it will be Survey Propagation,
  as mentioned there...
  
 \end_layout
