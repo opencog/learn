@@ -42,13 +42,15 @@ while(<DISM>) {
 	if (/^\w+\s+</) {
 		s/^\w+\s+</</;
 		s/>:\s*$/> :/;
-		if (not $accum =~ /^$/) {
+
+		# This if triggers every time, except the first time.
+		if (not $accum eq "") {
 			$accum =~ s/\s*$//;
-			print "Line: >>$accum<<\n";
+
+			# print "Line: >>$accum<<\n";
+			print "$accum\n";
 		}
-		else {
-			$accum = $_ . " NL ";
-		}
+		$accum = $_ . " NL ";
 		next;
 	}
 
@@ -109,7 +111,8 @@ while(<DISM>) {
 	# should be convereted into some kind of ... reference.
 
 ACCUM:
-	print "Statement >>$_<<\n";
+	# Debug print
+	# print "Statement >>$_<<\n";
 
 	# Cut off trailing whitespace
 	s/\s*$//;
