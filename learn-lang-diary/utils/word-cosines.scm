@@ -449,7 +449,7 @@
 ; Example usage:
 ;
 ; (use-modules (opencog) (opencog persist) (opencog persist-sql))
-; (use-modules (opencog nlp) (opencog nlp learn))
+; (use-modules (opencog nlp) (opencog learn))
 ; (sql-open "postgres:///en_pairs_mst?user=linas")
 ; (sql-open "postgres:///en_pairs_sim?user=linas")
 ; (fetch-all-words)  <<< 21 secs

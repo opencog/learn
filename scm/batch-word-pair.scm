@@ -543,7 +543,7 @@
 ; misc unit-test-by-hand stuff
 ;
 ; (use-modules (opencog) (opencog persist) (opencog persist-sql))
-; (use-modules (opencog nlp) (opencog nlp learn))
+; (use-modules (opencog nlp) (opencog learn))
 ; (sql-open "postgres:///en_pairs_tone_mst?user=linas")
 ; (use-modules (opencog cogserver))
 ; (start-cogserver "opencog2.conf")

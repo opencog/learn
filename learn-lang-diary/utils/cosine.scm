@@ -8,7 +8,7 @@
 ; instead. The cosine calcs got moved into generic (opencog matrix) module.
 
 (use-modules (opencog) (opencog persist) (opencog persist-sql))
-(use-modules (opencog nlp) (opencog nlp learn))
+(use-modules (opencog nlp) (opencog learn))
 (use-modules (opencog matrix))
 (use-modules (srfi srfi-1))
 (use-modules (opencog cogserver))

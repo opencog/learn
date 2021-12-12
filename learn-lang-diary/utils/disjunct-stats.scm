@@ -27,7 +27,7 @@
 ; ---------------------------------------------------------------------
 ; Load the dataset that is analyzed throughout.
 (use-modules (opencog) (opencog persist) (opencog persist-sql))
-(use-modules (opencog nlp) (opencog nlp learn))
+(use-modules (opencog nlp) (opencog learn))
 (use-modules (opencog matrix))
 (use-modules (opencog cogserver))
 (start-cogserver)

@@ -1,7 +1,7 @@
 ;
 ; Export-to-Link-Grammar module.
 ;
-; This is distinct from (opencog nlp learn) because it depends on `dbi`
+; This is distinct from (opencog learn) because it depends on `dbi`
 ; which not everyone has installed, and so loading this module might
 ; trigger an error.
 ;

@@ -19,7 +19,7 @@ ADD_GUILE_MODULE (FILES
 	utilities.scm
 	vectors.scm
 	word-pair-count.scm
-	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/learn"
+	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/learn"
 )
 
 # A distinct module for export-to-link-grammar

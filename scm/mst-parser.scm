@@ -351,7 +351,7 @@
 ; ---------------------------------------------------------------------
 ;
 ; (use-modules (opencog) (opencog persist) (opencog persist-sql))
-; (use-modules (opencog nlp) (opencog nlp learn))
+; (use-modules (opencog nlp) (opencog learn))
 ; (sql-open "postgres:///en_pairs?user=linas")
 ;
 ; (fetch-all-words)
