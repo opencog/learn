@@ -43,11 +43,38 @@
 
    The counts will be held in EvaluationLinks of the form
       (EvaluationLink
-          (Pre )
+          (PredicateNode \"*-Item pairs-*\")
           left-atom
           right-atom)
 "
+	; The tag under which all counts are to be stored.
+	(define pair-tag (PredicateNode "*-Item pairs-*"))
 
+	; Count the item pair.
+	(define (count-pair litem ritem)
+		(define evl (EvaluationLink pair-tag (List litem ritem)))
+		(cog-inc-count! evl 1)
+		(store-atom evl))
+
+	; Loop, making pairs between the head of the list,
+	; and a window after the head.
+	(define (window-pairs atli)
+		(define litem (car atli))
+		(define rest (cdr atli))
+		(define rlen (length rest))
+		(define winm1 (- winsz 1))
+		(define tlen (if (< rlen winm1) rlen winm1))
+		(define windo (take rest tlen))
+		(for-each (lambda (ritem) (count-pair litem ritem)) windo))
+
+	; Loop over the item-list, truncating list by one
+	(define (head-pairs atli)
+		(define rest (cdr atli))
+		(when (not (null? rest))
+			(window-pairs atli)
+			(head-pairs rest)))
+
+	(head-pairs atom-list)
    *unspecified*
 )
 
