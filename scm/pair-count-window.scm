@@ -29,6 +29,28 @@
 		(string-split plain-text char-set:whitespace))
 )
 
+(define-public (observe-pairs winsz atom-list)
+"
+   observe-pairs WINSIZE ATOM-LIST - count atom pairs in a window.
+
+   WINSIZE is the window width.
+   ATOM-LIST is a list of Atoms.
+
+   All possible pairs of Atoms within a sliding window of width
+   WINSIZE will be considered, and the count on each pair will be
+   incremented. This implies that ever Atom will participate in
+   exactly WINSIZE-1 pairs.
+
+   The counts will be held in EvaluationLinks of the form
+      (EvaluationLink
+          (Pre )
+          left-atom
+          right-atom)
+"
+
+   *unspecified*
+)
+
 (define-public (observe-window winsz plain-text)
 "
    observe-window WINSIZE PLAIN-TEXT - count text-item pairs in a window.
@@ -46,6 +68,7 @@
 "
 	(define item-list (map ItemNode (split-text plain-text)))
 
+	(observe-pairs item-list)
    *unspecified*
 )
 
