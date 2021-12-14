@@ -10,6 +10,8 @@ but the also require, as input, data that was produced by earlier files.
 * __utilities.scm__       Utilities, e.g. for looping.
 * __word-pair-count.scm__ Word-pair counting. Given raw input text, this
                           accumulates frequencies of word-pairs.
+* __pair-count-window.scm__ Generic pair counting. Given a list of items,
+                          this accumulates frequencies of item-pairs.
 * __batch-word-pair.scm__ Batch-compute the marginals and mutual
                           information of word-pairs.
 * __mst-parser.scm__      MST Parser. Uses word-pair MI to generate

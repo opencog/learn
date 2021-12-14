@@ -88,6 +88,9 @@
   any kind of affixes, and not just punctuation.  So its kind of
   pointless to try to replace the code below by something better,
   unless the better thing is full morphology support.
+
+  See also: `split-text`, which tokenizes only according to whitespace,
+     and completely ignores punctuation.
 "
 	; Prefix and suffix lists taken from the link-grammar ANY
 	; language 4.0.affix file.

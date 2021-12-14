@@ -7,6 +7,27 @@
 ; of fixed width.
 ;
 ; Copyright (C) 2021 Linas Vepstas
+;
+
+(use-modules (opencog))
+(use-modules (srfi srfi-1))
+
+(define-public (split-text plain-text)
+"
+   split-text PLAIN-TEXT - split a text-string into text-items.
+
+   This splits the utf8 string PLAIN-TEXT into text-items ('words')
+   when they are separated by whitespace. Returns a list of the
+   resulting text-items. Does not provide any special treatment for
+   punctuation.
+
+   See also: `tokenize-text`, which splits out punctuation as well.
+"
+
+	(filter!
+		(lambda (s) (not (= 0 (string-length s))))
+		(string-split plain-text char-set:whitespace))
+)
 
 (define-public (observe-window winsz plain-text)
 "
@@ -23,7 +44,9 @@
    incremented. This implies that ever text-item will participate in
    exactly WINSIZE-1 pairs.
 "
-   ; (observe-text-mode "clique" winsz plain-text)
+	(define item-list (map ItemNode (split-text plain-text)))
+
+   *unspecified*
 )
 
 ; ---------------------------------------------------------------------
