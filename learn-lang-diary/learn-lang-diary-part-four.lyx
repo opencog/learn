@@ -5271,8 +5271,8 @@ The above list of similar words defines the initial peer group.
 \end_layout
 
 \begin_layout Enumerate
-Given the peer group, determine which disjuncts belong to it by voting: if
- more than half the words share some common disjunct, then this disjunct
+Given the peer group, determine which disjuncts belong to it by voting:
+ if more than half the words share some common disjunct, then this disjunct
  will be admitted into the merged cluster.
 \end_layout
 
@@ -14829,8 +14829,8 @@ number
  But the MI is computed by weighting high-count disjuncts highly, and low-count
  disjuncts low.
  Is there a way to weight the commonality score likewise? But how, exactly?
- How do we turn this into a scale-free number? The problem is that, by definition
-n, the count will be zero for some (this is how generalization happens.)
+ How do we turn this into a scale-free number? The problem is that, by definitio
+nn, the count will be zero for some (this is how generalization happens.)
  I can't think of a worthy alternate variant of commonality.
 \end_layout
 
@@ -16086,8 +16086,8 @@ kick
 
 \begin_layout Standard
 Clearly visible are two effects: the climb-back-up because commonality dropped,
- and the much smaller total dj number, which means most dj's really had a
- count of 4 or less.
+ and the much smaller total dj number, which means most dj's really had
+ a count of 4 or less.
  And we're taking the vote away from them.
 \end_layout
 
@@ -16097,6 +16097,463 @@ To be clear: the noise-floor says that any section with a count of equal
  no matter what the outcome of voting.
  (Perhaps we should have two distinct noise-floors: one for adjusting counting,
  the other for merging?)
+\end_layout
+
+\begin_layout Subsection*
+The Big Merge
+\end_layout
+
+\begin_layout Standard
+Ran a long-running merge.
+ Some stats:
+\end_layout
+
+\begin_layout Itemize
+Data file: r9-merge-h.rdb there's also an earlier one with about 2/3rds the
+ total merges: r9-merge-h-save1.rdb
+\end_layout
+
+\begin_layout Itemize
+18977 minutes total CPU (= 316 hours = 13 days) Of this time, 1988 minutes
+ spent in gc, or about 10.5%.
+ 
+\end_layout
+
+\begin_layout Itemize
+126 GB RAM resident (this grew slowly).
+ The guile heap size is 7GB of which 6.7GB is free, so 387 MB in actual use.
+ 
+\end_layout
+
+\begin_layout Itemize
+Total of 124820805 atoms (thats 125M).
+ RAM is 131717108 KB so thats 1.05KB/Atom
+\end_layout
+
+\begin_layout Itemize
+Most of the atoms are search queries that were not deleted! So that's a
+ bug.
+ After deleting the junk, have 7129235 atoms (that's 7M), so very tolerable.
+ 
+\end_layout
+
+\begin_layout Itemize
+5190946 SimilarityLinks, so similarities between approx 3222 words 
+\end_layout
+
+\begin_layout Itemize
+4467 MemberLinks and 1393 WordClassNodes
+\end_layout
+
+\begin_layout Standard
+General impressions: Glancing at output during run, can see just a handful
+ of disjuncts being peeled of each word, and getting merged.
+ Often just one percent.
+ Sometimes see merges where 2/3rds of the disjunct of one word are merged
+ with just a few percent of the other words.
+ Neither word class seems to be very desireable.
+ 
+\end_layout
+
+\begin_layout Standard
+The last few dozen merges were ...
+ curious.
+ They were:
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="14" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+merged class
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Comments
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+line series
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+synonyms
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+S Ap
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+stray markup ?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+$ 1.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tables?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+P 1.00
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+stray markup ?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1 1.00 B
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.50 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+numbers
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+† 12mo
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tables?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+
+\backslash
+"that --
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+garbage punctuation
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+S Ag O
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Periodic table?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+S R C 2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tables?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+S 1 4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+S No W
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+compass rose points?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Leewit captain
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+fiction character title?
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So these are not bad, but involve a lot of undue attention on stray markup.
+ For the 'line series' merge, the print says:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+In-group size=2 overlap = 1 of 87 disjuncts, commonality= 1.15%
+\end_layout
+
+\begin_layout Plain Layout
+
+------ Assign: Merged 3 of 73 sections on `line` in    0.0 secs
+\end_layout
+
+\begin_layout Plain Layout
+
+------ Assign: Merged 1 of 17 sections on `series` in    1.0 secs     
+\end_layout
+
+\end_inset
+
+So although 'line series' seems like a reasonable pair of synonyms, just
+ a small handful of sections are being peeled off of each one.
+ The 'Leewit captain' situation is a little better:
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+In-group size=2 overlap = 3 of 37 disjuncts, commonality= 8.11%
+\end_layout
+
+\begin_layout Plain Layout
+
+------ Assign: Merged 19 of 25 sections on `Leewit` in    0.0 secs
+\end_layout
+
+\begin_layout Plain Layout
+
+------ Assign: Merged 3 of 31 sections on `captain` in    0.0 secs 
+\end_layout
+
+\end_inset
+
+This has the 
+\begin_inset Quotes eld
+\end_inset
+
+unbalanced
+\begin_inset Quotes erd
+\end_inset
+
+ feel to it: most of 'Leewit' gets merged into a handful of sections on
+ 'captain', so that's not very impressive.
 \end_layout
 
 \begin_layout Section*
