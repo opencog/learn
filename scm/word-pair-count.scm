@@ -416,24 +416,34 @@
 
 (define-public (observe-text-mode observe-mode count-reach plain-text)
 "
- observe-text-mode -- update word and word-pair counts by observing raw text.
+   observe-text-mode OBSERVE-MODE COUNT-REACH PLAIN-TEXT --
+      update word and word-pair counts by observing raw text.
 
- There are currently two observing modes, set by observe-mode, both taking
- an integer parameter:
- - any: counts pairs of words linked by the LG parser in 'any' language.
- 	   'count-reach' specifies how many linkages from LG-parser to use.
- - clique: iterates over each word in the sentence and pairs it with
-           every word located within distance 'count-reach' to its right.
-           Distance is defined as the difference between word positions
-           in the sentence, so neighboring words have distance of 1.
+   OBSERVE-MODE is either the string 'any' or the string 'clique'.
+   COUNT-REACH is parameter whose interpretation depends on OBSERVE-MODE.
+   PLAIN-TEXT is a utf8 string of text.
 
- This is the first part of the learning algo: simply count the words
- and word-pairs observed in incoming text. This takes in raw text, gets
- it parsed, and then updates the counts for the observed words and word
- pairs.
+   There are currently two observing modes:
+   - 'any': creates random planar parse trees, using the LG parser
+         'any' language.  All word-pairs linked in a linkage will be
+         counted. The COUNT-REACH specifies the number of linkages
+         (the number of random trees) to create and count. Thus, any
+         given word will participate in at least COUNT-REACH word-pairs,
+         of usually in at least twice as many. The 'any' language
+         tokenizes the sentence string according to white space, and
+         also separates out punctuation.
+   - 'clique': Tokenizes the sentence string into words, according to
+         white-space, separating punctuation as well. Uses the LG parser
+         to perform this splitting. It then forms all word-pairs within
+         a sliding window of width COUNT-REACH, and updates counts on
+         those pairs. Thus, each word will participate in exactly
+         COUNT-REACH-1 word pairs.
 
- The parse rate can be monitored by calling, by hand, the guile function
- `(monitor-parse-rate MSG)` for some string MSG.
+   Distance is defined as the difference between word positions in the
+   sentence, so neighboring words have distance of 1.
+
+   The parse rate can be monitored by calling, by hand, the guile function
+    `(monitor-parse-rate MSG)` for some string MSG.
 "
 	; Count the atoms in the sentence, according to the counting method
 	; passed as argument, then delete the sentence.
@@ -520,8 +530,8 @@ how we run the pipeline, in general.)
  Wrapper to allow shell scripts to have a simple form.
  Passes default parameters to observe-text-mode.
 
- Uses the LG parser to create 24 different planar tree parses per
- sentence. Why 24? No particular reason; it provides a reasonable
+ Uses the LG parser to create 24 different random planar tree parses
+ per sentence. Why 24? No particular reason; it provides a reasonable
  sample of all possible planar parses. The number of word-pairs
  sampled will be at least N pairs per parse, where N is the length
  of the sentence.
@@ -529,7 +539,7 @@ how we run the pipeline, in general.)
 	(observe-text-mode "any" 24 plain-text)
 )
 
-(define-public (observe-window winsz plain-text)
+(define-public (observe-clique winsz plain-text)
 "
  Wrapper to allow shell scripts to have a simple form.
  Passes default parameters to observe-text-mode.
