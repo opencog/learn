@@ -13,6 +13,7 @@ ADD_GUILE_MODULE (FILES
 	lg-compare.scm
 	link-class.scm
 	mst-parser.scm
+	pair-count-window.scm
 	pseudo-csets.scm
 	shape-project.scm
 	shape-vec.scm

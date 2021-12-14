@@ -95,7 +95,7 @@
 "
 	(define item-list (map ItemNode (split-text plain-text)))
 
-	(observe-pairs item-list)
+	(observe-pairs winsz item-list)
    *unspecified*
 )
 
