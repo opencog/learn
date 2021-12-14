@@ -59,14 +59,6 @@ Things to read:
   The idea here is that sequences of rules can be applied, and then they
   can be reversed. This enableds back-tracking on a rule system.
 
-* Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares,
-  Jessica Taylor "Logical Induction" (2016)
-  https://arxiv.org/abs/1609.03543
-
-  "We present a computable algorithm that assigns probabilities to
-  every logical statement in a given formal language, and refines
-  those probabilities over time."
-
 
 Interesting, but maybe less useful
 ----------------------------------
@@ -99,17 +91,23 @@ Interesting, but maybe less useful
   concepts regarding monoids.
 
 * Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares, and Jessica Taylor
-  "Logical Induction (Abridged)"
-  2016
+  "Logical Induction" (2016)
+  https://arxiv.org/abs/1609.03543
+  "Logical Induction (Abridged)" (2016)
   https://intelligence.org/files/LogicalInductionAbridged.pdf
+
+  "We present a computable algorithm that assigns probabilities to
+  every logical statement in a given formal language, and refines
+  those probabilities over time."
+
   Interesting, but some of the claims appear to be false.  Page 12 states
-  (seems to state, when I read it) that theorems can be efficiently
+  (seems to state, when I read it) that theorems that can be efficiently
   enumerated will be assigned a high price in relatively short order.
   But surely this cannot be the case, or I misunderstand? If I can
   efficiently enumerate a sequence of sentences `S`, then for any given
   sentence `s` I can propose that `s is true` and `s is false` at the same
   time. But both of these cannot be simultaneously assigned a high price.
-  Do I misunderstand something?
+  Do I misunderstand something? (Probably.)
 
   The example of Ramanujan and Hardy clarifies the intent: We now
   understand that Ramanujan could do long division in his head, and thus
@@ -131,4 +129,3 @@ Interesting, but maybe less useful
   provides a betting pool for mathematical theorems, than it is a means of
   discerning structure in (formal) languages.  Kind of like what this
   project (`opencog/learn`) is trying to do.
-
