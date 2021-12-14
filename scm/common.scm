@@ -11,12 +11,6 @@
 (use-modules (opencog) (opencog persist))
 
 ; ---------------------------------------------------------------------
-; Define locations where statistics will be stored.
-
-; These are used to store/maintain counts for clique-pair counting.
-; See `word-pair-count.scm` for usage.
-(define pair-pred (PredicateNode "*-Sentence Word Pair-*"))
-(define pair-dist (SchemaNode "*-Pair Distance-*"))
 
 ; get-count ATOM - return the raw observational count on ATOM.
 (define-public (get-count ATOM) (cog-count ATOM))

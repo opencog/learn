@@ -108,115 +108,14 @@
   Finally, the 'left-type and 'right-type methods return the type
   of the the two sides of the pair.
 "
-	(let ((unused '()))
-
-		; Get the observational count on ATOM.
-		(define (get-count ATOM) (cog-count ATOM))
-		(define (set-count ATOM CNT)
-			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
-		(define any-left (AnyNode "left-word"))
-		(define any-right (AnyNode "right-word"))
-		(define any-pair-pred (LgLinkNode "ANY"))
-
-		(define (get-left-type) 'WordNode)
-		(define (get-right-type) 'WordNode)
-		(define (get-pair-type) 'EvaluationLink)
-
-		; Return the atom holding the count, if it exists, else
-		; return nil.
-		(define (get-pair L-ATOM R-ATOM)
-			(define maybe-list (cog-link 'ListLink L-ATOM R-ATOM))
-			(if (null? maybe-list) '()
-				(cog-link 'EvaluationLink any-pair-pred maybe-list)))
-
-		; Create an atom to hold the count (if it doesn't exist already).
-		(define (make-pair L-ATOM R-ATOM)
-			(EvaluationLink any-pair-pred (List L-ATOM R-ATOM)))
-
-		; Return the left member of the pair. Given the pair-atom,
-		; locate the left-side atom.
-		(define (get-left-element PAIR)
-			(gadr PAIR))
-		(define (get-right-element PAIR)
-			(gddr PAIR))
-
-		; Return the raw observational count on PAIR. If the counter for
-		; PAIR does not exist (was not observed), then return 0.
-		(define (get-pair-count L-ATOM R-ATOM)
-			(define pr (get-pair L-ATOM R-ATOM))
-			(if (null? pr) 0 (get-count pr)))
-
-		; Caution: this unconditionally creates the wildcard pair!
-		(define (get-left-wildcard WORD)
-			(make-pair any-left WORD))
-
-		; Caution: this unconditionally creates the wildcard pair!
-		(define (get-right-wildcard WORD)
-			(make-pair WORD any-right))
-
-		(define (get-wild-wild)
-			(make-pair any-left any-right))
-
-		; fetch-any-pairs -- fetch all counts for link-grammar
-		; ANY links from the database.
-		(define (fetch-any-pairs)
-			(define start-time (current-time))
-			(fetch-incoming-set any-pair-pred)
-			(format #t "Elapsed time to load ANY-link pairs: ~A secs\n"
-				(- (current-time) start-time))
-		)
-
-		; Delete the pairs from the atomspace AND the database.
-		; But only those that are currently in the atomspace are
-		; deleted; if any are hiding in the database, they will not be
-		; touched.
-		(define (delete-any-pairs)
-			(define start-time (current-time))
-			(for-each (lambda (PAIR) (cog-delete-recursive! (gdr PAIR)))
-				(cog-incoming-set any-pair-pred))
-			(cog-delete! any-pair-pred)
-			(cog-delete! any-left)
-			(cog-delete! any-right)
-			(format #t "Elapsed time to delete ANY-link pairs: ~A secs\n"
-				(- (current-time) start-time))
-		)
-
-		; Tell the stars object what we provide.
-		(define (provides meth)
-			(case meth
-				((pair-count)     get-pair-count)
-				((get-pair)       get-pair)
-				((get-count)      get-count)
-				((set-count)      set-count)
-				((make-pair)      make-pair)
-				((left-element)   get-left-element)
-				((right-element)  get-right-element)
-				(else             #f)))
-
-		; Methods on the object
-		(lambda (message . args)
-			(apply (case message
-					((name) (lambda () "Link Grammar ANY link Word Pairs"))
-					((id)   (lambda () "ANY"))
-					((left-type) get-left-type)
-					((right-type) get-right-type)
-					((pair-type) get-pair-type)
-					((pair-count) get-pair-count)
-					((get-pair) get-pair)
-					((get-count) get-count)
-					((make-pair) make-pair)
-					((left-element) get-left-element)
-					((right-element) get-right-element)
-					((left-wildcard) get-left-wildcard)
-					((right-wildcard) get-right-wildcard)
-					((wild-wild) get-wild-wild)
-					((fetch-pairs) fetch-any-pairs)
-					((delete-pairs) delete-any-pairs)
-					((provides) provides)
-					((filters?) (lambda () #f))
-					(else (error "Bad method call on ANY-link:" message)))
-				args)))
+	(make-evaluation-pair-api
+		(LgLinkNode "ANY")
+		'WordNode
+		'WordNode
+		(AnyNode "left-word")
+		(AnyNode "right-word")
+		"ANY"
+		"Link Grammar ANY link Word Pairs")
 )
 
 
@@ -235,97 +134,15 @@
   The counts are stored on EvaluationLinks with the predicate
   (PredicateNode \"*-Sentence Word Pair-*\")
 "
-	(let ((unused '()))
-
-		; Get the observational count on ATOM.
-		(define (get-count ATOM) (cog-count ATOM))
-		(define (set-count ATOM CNT)
-			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
-		(define any-left (AnyNode "left-word"))
-		(define any-right (AnyNode "right-word"))
-
-		(define (get-left-type) 'WordNode)
-		(define (get-right-type) 'WordNode)
-		(define (get-pair-type) 'EvaluationLink)
-
-		; Return the atom holding the count, if it exists, else
-		; return nil.
-		(define (get-pair L-ATOM R-ATOM)
-			(define maybe-list (cog-link 'ListLink L-ATOM R-ATOM))
-			(if (null? maybe-list) '()
-				(cog-link 'EvaluationLink pair-pred maybe-list)))
-
-		; Create an atom to hold the count (if it doesn't exist already).
-		(define (make-pair L-ATOM R-ATOM)
-			(EvaluationLink pair-pred (List L-ATOM R-ATOM)))
-
-		; Return the left member of the pair. Given the pair-atom,
-		; locate the left-side atom.
-		(define (get-left-element PAIR)
-			(gadr PAIR))
-		(define (get-right-element PAIR)
-			(gddr PAIR))
-
-		; Return the raw observational count on PAIR.
-		; If the PAIR does not exist (was not observed) return 0.
-		(define (get-pair-count L-ATOM R-ATOM)
-			(define pr (get-pair L-ATOM R-ATOM))
-			(if (null? pr) 0 (get-count pr)))
-
-		(define (get-left-wildcard WORD)
-			(make-pair any-left WORD))
-
-		(define (get-right-wildcard WORD)
-			(make-pair WORD any-right))
-
-		(define (get-wild-wild)
-			(make-pair any-left any-right))
-
-		; fetch-clique-pairs -- fetch all counts for clique-pairs
-		; from the database.
-		(define (fetch-clique-pairs)
-			(define start-time (current-time))
-			(fetch-incoming-set pair-pred)
-			(format #t "Elapsed time to load clique pairs: ~A secs\n"
-				(- (current-time) start-time)))
-
-		; Tell the stars object what we provide.
-		(define (provides meth)
-			(case meth
-				((pair-count)     get-pair-count)
-				((get-pair)       get-pair)
-				((get-count)      get-count)
-				((set-count)      set-count)
-				((make-pair)      make-pair)
-				((left-element)   get-left-element)
-				((right-element)  get-right-element)
-				(else             #f)))
-
-		; Methods on the object
-		(lambda (message . args)
-			(apply (case message
-					((name) (lambda () "Sentence Clique Word Pairs"))
-					((id)   (lambda () "cliq"))
-					((left-type)      get-left-type)
-					((right-type)     get-right-type)
-					((pair-type)      get-pair-type)
-					((pair-count)     get-pair-count)
-					((get-pair)       get-pair)
-					((get-count)      get-count)
-					((set-count)      set-count)
-					((make-pair)      make-pair)
-					((left-element)   get-left-element)
-					((right-element)  get-right-element)
-					((left-wildcard)  get-left-wildcard)
-					((right-wildcard) get-right-wildcard)
-					((wild-wild)      get-wild-wild)
-					((fetch-pairs)    fetch-clique-pairs)
-					((provides)       provides)
-					((filters?)       (lambda () #f))
-					(else (error "Bad method call on clique-pair:" message)))
-				args))))
-
+	(make-evaluation-pair-api
+		(PredicateNode "*-Sentence Word Pair-*")
+		'WordNode
+		'WordNode
+		(AnyNode "left-word")
+		(AnyNode "right-word")
+		"cliq"
+		"Sentence Clique Word Pairs")
+)
 
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
@@ -356,6 +173,8 @@
 	(let* ((max-dist MAX-DIST)
 			(dist-name (format #f "*-Pair Max Dist ~A-*" max-dist))
 			(pair-max (PredicateNode dist-name)))
+
+		(define pair-dist (SchemaNode "*-Pair Distance-*"))
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))

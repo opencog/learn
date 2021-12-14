@@ -233,6 +233,9 @@
 ;
 (define (update-pair-counts-once PARSE MAX-LEN RECORD-LEN)
 
+	(define pair-pred (PredicateNode "*-Sentence Word Pair-*"))
+	(define pair-dist (SchemaNode "*-Pair Distance-*"))
+
 	; Get the scheme-number of the word-sequence number
 	(define (get-no seq-lnk)
 		(cog-number (gdr seq-lnk)))
