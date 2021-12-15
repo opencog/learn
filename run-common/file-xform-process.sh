@@ -55,7 +55,7 @@ base=`echo ${basepath%/*}`
 splitdir=${base}/${IN_PROCESS_DIR}
 subdir=${base}/${COMPLETED_DIR}
 
-# Create directories if missing
+# Create directories if missing.
 mkdir -p $(dirname "$splitdir/$rest")
 mkdir -p $(dirname "$subdir/$rest")
 
@@ -74,6 +74,10 @@ if [[ $? -ne 0 ]] ; then
 	exit 1
 fi
 
-# Move the corpus object to the done-queue
-mv "$splitdir/$rest" "$subdir/$rest"
-rm "$basepath/$rest"
+# Move the corpus object to the done-queue.
+# We move the original non-xformed file to the done queue,
+# and remove the xformed file. If the splitdir is non-empty,
+# that means the above crashed somehow, and manual cleanup
+# or recovery is needed.
+mv "$basepath/$rest" "$subdir/$rest"
+rm "$splitdir/$rest"

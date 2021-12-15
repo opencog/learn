@@ -2,11 +2,11 @@
 #
 # pair-submit.sh
 #
-# Batch word-pair counting script.
+# Batch pair counting script.
 #
 # Loop over all of the corpora files (all the files in $CORPORA_DIR),
 # and then (optionally) sentence-split them and submit them for
-# word-pair counting.
+# pair counting.
 #
 # ---------
 
