@@ -1415,8 +1415,8 @@ Grammar. This can be done as follows:
 Here's some games you can play with a clean dataset (before being
 altered by the clustering code):
 ```
-      (fetch-all-words)
-      (length (get-all-words))
+      (load-atoms-of-type 'WordNode)  ; Load words from database.
+      (length (cog-get-atoms 'WordNode))  ; How many words are there?
 
       (define pca (make-pseudo-cset-api))
       (define pss (add-pair-stars pca))

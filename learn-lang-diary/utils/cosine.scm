@@ -17,7 +17,7 @@
 
 ; The database:
 (sql-open "postgres:///en_pairs_ttwo_sim?user=linas")
-(fetch-all-words)
+(load-atoms-of-type 'WordNode) ; was (fetch-all-words)
 
 ; psedo-csets aka sectons.
 (define pca (make-pseudo-cset-api))

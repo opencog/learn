@@ -6354,6 +6354,8 @@ replace observe-text -> observe-window-24
 (local-process plain-text observe-mode count-reach)
 
 (extract-type 'VariableNode)
+(load-atoms-of-type 'WordNode)
+(cog-get-atoms 'WordNode)
 
 ====================================================
 link-class.scm ???

@@ -452,8 +452,8 @@
 ; (use-modules (opencog nlp) (opencog learn))
 ; (sql-open "postgres:///en_pairs_mst?user=linas")
 ; (sql-open "postgres:///en_pairs_sim?user=linas")
-; (fetch-all-words)  <<< 21 secs
-; (length (get-all-words))
+; (load-atoms-of-type 'WordNode)  <<< 21 secs
+; (length (cog-get-atoms 'WordNode))
 ; 396262
 ; (define pca (make-pseudo-cset-api))
 ; (pca 'fetch-pairs)  <<< 295 secs

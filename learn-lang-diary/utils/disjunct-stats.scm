@@ -45,8 +45,8 @@
 (print-matrix-summary-report psa)
 
 
-; (fetch-all-words)
-; (length (get-all-words))  ; 
+; (load-atoms-of-type 'WordNode)
+; (length (cog-get-atoms 'WordNode))  ;
 
 (define ac (psa 'left-basis))
 (length ac)               ; 137078

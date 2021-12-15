@@ -63,15 +63,3 @@
 )
 
 ; ---------------------------------------------------------------------
-
-(define-public (get-all-words)
-"
-  get-all-words - return a list holding all of the observed words
-  This does NOT fetch the words from the backing store.
-
-  OBSOLETE -- lets try not to use this any more.
-"
-	(cog-get-atoms 'WordNode)
-)
-
-; ---------------------------------------------------------------------

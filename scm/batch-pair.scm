@@ -1,5 +1,5 @@
 ;
-; batch-word-pair.scm
+; batch-pair.scm
 ;
 ; Define item-pair and word-pair access API objects.
 ; Batch-compute the mutual information of pairs of items, such as
@@ -317,19 +317,6 @@
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 
-(define-public (fetch-all-words)
-"
-  fetch-all-words - fetch all WordNodes from the database backend.
-
-  XXX OBSOLETE; use the fetch methods in the objects.
-  XXX DO NOT USE IN NEW CODE.
-"
-	(define start-time (current-time))
-	(load-atoms-of-type 'WordNode)
-	(format #t "Elapsed time to load words: ~A secs\n"
-		(- (current-time) start-time))
-)
-
 ;; Call the function only once, ever.
 ;; The SQL loads are slow, so don't repeat them, if they are
 ;; not needed.
@@ -346,14 +333,7 @@
 
 (define-public (batch-pairs LLOBJ)
 
-	; Make sure all words are in the atomspace
-	; This is not really needed, except that it makes the
-	; fetching of pairs below faster!?
-	(display "Start loading words ...\n")
-	(call-only-once fetch-all-words)
-	(display "Done loading words, now loading pairs\n")
-
-	; Make sure all word-pairs are in the atomspace.
+	; Make sure all item-pairs are in the atomspace.
 	(call-only-once (lambda() (LLOBJ 'fetch-pairs)))
 	(display "Finished loading sparse matrix pairs\n")
 
@@ -378,7 +358,7 @@
 ; (sql-open "postgres:///en_pairs_tone_mst?user=linas")
 ; (use-modules (opencog cogserver))
 ; (start-cogserver "opencog2.conf")
-; (fetch-all-words)
+; (load-atoms-of-type 'WordNode)
 ;
 ; (define wc (cog-count-atoms 'WordNode))
 ; (length (cog-get-atoms 'WordNode))

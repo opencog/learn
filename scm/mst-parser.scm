@@ -357,7 +357,7 @@
 ; (use-modules (opencog nlp) (opencog learn))
 ; (sql-open "postgres:///en_pairs?user=linas")
 ;
-; (fetch-all-words)
+; (load-atoms-of-type 'WordNode)
 ; (fetch-any-pairs)
 ; (mst-parse-text "faire un test")
 ; (mst-parse-text "Elle jouit notamment du monopole de la restoration ferroviaire")

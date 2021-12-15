@@ -17,7 +17,7 @@
 
 ; Load up the words
 (display "Fetch all words from database. This may take several minutes.\n")
-(fetch-all-words)
+(load-atoms-of-type 'WordNode)
 
 ; Load up the word-pairs -- this can take over half an hour!
 (display "Fetch all word-pairs. This may take well over half-an-hour!\n")
