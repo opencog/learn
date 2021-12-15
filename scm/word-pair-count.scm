@@ -233,9 +233,6 @@
 ;
 (define (update-pair-counts-once PARSE MAX-LEN RECORD-LEN)
 
-	(define pair-pred (PredicateNode "*-Sentence Word Pair-*"))
-	(define pair-dist (SchemaNode "*-Pair Distance-*"))
-
 	; Get the scheme-number of the word-sequence number
 	(define (get-no seq-lnk)
 		(cog-number (gdr seq-lnk)))
@@ -247,10 +244,10 @@
 		; Only count if the distance is less than the cap.
 		(if (<= dist MAX-LEN)
 			(let ((pare (ListLink (gar left-seq) (gar right-seq))))
-				(count-one-atom (EvaluationLink pair-pred pare))
+				(count-one-atom (EvaluationLink *-word-pair-pred-* pare))
 				(if RECORD-LEN
 					(count-one-atom
-						(ExecutionLink pair-dist pare (NumberNode dist)))))))
+						(ExecutionLink *-word-pair-dist-* pare (NumberNode dist)))))))
 
 	; Create pairs from `first`, and each word in the list in `rest`,
 	; and increment counts on these pairs.

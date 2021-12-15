@@ -11,6 +11,11 @@
 (use-modules (opencog) (opencog persist))
 
 ; ---------------------------------------------------------------------
+; Globals, used in definining pair-counting objects.
+(define *-word-pair-pred-* (PredicateNode "*-Sentence Word Pair-*"))
+(define *-word-pair-dist-* (SchemaNode "*-Pair Distance-*"))
+
+; ---------------------------------------------------------------------
 
 ; get-count ATOM - return the raw observational count on ATOM.
 (define-public (get-count ATOM) (cog-count ATOM))
@@ -62,6 +67,8 @@
 "
   get-all-words - return a list holding all of the observed words
   This does NOT fetch the words from the backing store.
+
+  OBSOLETE -- lets try not to use this any more.
 "
 	(cog-get-atoms 'WordNode)
 )

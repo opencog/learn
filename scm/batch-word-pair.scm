@@ -132,10 +132,10 @@
 
   Object for getting word-pair counts, obtained from clique counting.
   The counts are stored on EvaluationLinks with the predicate
-  (PredicateNode \"*-Sentence Word Pair-*\")
+  (PredicateNode \"*-Sentence Word Pair-*\").
 "
 	(make-evaluation-pair-api
-		(PredicateNode "*-Sentence Word Pair-*")
+		*-word-pair-pred-* ;; defined as (Predicate "*-Sentence Word Pair-*")
 		'WordNode
 		'WordNode
 		(AnyNode "left-word")
@@ -173,8 +173,6 @@
 	(let* ((max-dist MAX-DIST)
 			(dist-name (format #f "*-Pair Max Dist ~A-*" max-dist))
 			(pair-max (PredicateNode dist-name)))
-
-		(define pair-dist (SchemaNode "*-Pair Distance-*"))
 
 		; Get the observational count on ATOM.
 		(define (get-count ATOM) (cog-count ATOM))
@@ -236,7 +234,7 @@
 		; from the database.
 		(define (fetch-distance-pairs)
 			(define start-time (current-time))
-			(fetch-incoming-set pair-dist)
+			(fetch-incoming-set *-word-pair-dist-*)
 			(format #t "Elapsed time to load distance pairs: ~A secs\n"
 				(- (current-time) start-time)))
 
