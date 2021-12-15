@@ -43,16 +43,12 @@
 
    The counts will be held in EvaluationLinks of the form
       (EvaluationLink
-          (PredicateNode \"*-Item pairs-*\")
-          left-atom
-          right-atom)
+          (PredicateNode \"*-Item Pair-*\")
+          (List left-atom right-atom))
 "
-	; The tag under which all counts are to be stored.
-	(define pair-tag (PredicateNode "*-Item pairs-*"))
-
 	; Count the item pair.
 	(define (count-pair litem ritem)
-		(define evl (EvaluationLink pair-tag (List litem ritem)))
+		(define evl (EvaluationLink *-item-pair-tag-* (List litem ritem)))
 		(cog-inc-count! evl 1)
 		(store-atom evl))
 

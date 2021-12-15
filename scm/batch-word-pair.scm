@@ -1,22 +1,23 @@
 ;
 ; batch-word-pair.scm
 ;
-; Define word-pair access API objects.
-; Batch-compute the mutual information of pairs of natural-language words.
+; Define item-pair and word-pair access API objects.
+; Batch-compute the mutual information of pairs of items, such as
+; natural-language words.
 ;
 ; Copyright (c) 2013, 2014, 2017 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; The objects below define API's to access natural language word-pairs,
-; stored in the AtomSpace, as a rank-2 matrix, i.e. as a matrix of
-; (left, right) word-pairs.  This provides exactly the API needed for
-; use with the `(use-modules (opencog matrix))` statistical analysis
-; subsystem.
+; The objects below define API's to access pairs of items, such as
+; natural language word-pairs, stored in the AtomSpace, as a rank-2
+; matrix, i.e. as a matrix of (left, right) pairs.  This provides
+; exactly the API needed for use with the `(use-modules (opencog matrix))`
+; statistical analysis subsystem.
 ;
 ; Given a generic API, the `(opencog matrix)` can do things such as
-; computing the Yuret-style lexical attraction between pairs of words.
+; computing the Yuret-style lexical attraction between pairs of items.
 ; (See `compute-mi.scm` for more detail about what is computed, and how.)
 ;
 ; Given the generic API, there is a handful of small scripts, at the
@@ -24,36 +25,23 @@
 ; job.  As a batch job, and may take hours to complete. The results are
 ; stored in the currently-open database, for future reference.
 ;
-; One structure, among several, in which the pair counts are held,
-; is of the form
+; An example of this is the structure used to store word-pair counts.
+; This is used in `word-pair-count.scm` to accumulate counts:
 ;
 ;     EvaluationLink
 ;         LgLinkNode "ANY"
 ;         ListLink
-;             WordNode "some-word"
-;             WordNode "other-word"
+;             WordNode "left-word"
+;             WordNode "right-word"
 ;
-; After they've been computed, the values for N(w,*) and N(*,w) can be
-; fetched with the `get-left-count-str` and `get-right-count-str`
-; routines, below.  The value for N(*,*) can be gotten by calling
-; `total-pair-observations`.
-;
-; The counting done in `word-pair-count.scm` keeps track of several
-; different types of pair information.  Besides the above, it also
-; counts these things:
+; An example of generic item pairs is used by `pair-count-window.scm`
+; and has the structure
 ;
 ;     EvaluationLink
-;         PredicateNode "*-Sentence Word Pair-*"
+;         PredicateNode "*-Item pairs-*"
 ;         ListLink
-;             WordNode "lefty"
-;             WordNode "righty"
-;
-;     ExecutionLink
-;         SchemaNode "*-Pair Distance-*"
-;         ListLink
-;             WordNode "lefty"
-;             WordNode "righty"
-;         NumberNode 3
+;             ItemNode "left item"
+;             ItemNode "right item"
 ;
 ; ---------------------------------------------------------------------
 ;
@@ -63,10 +51,31 @@
 (use-modules (opencog matrix))
 
 ; ---------------------------------------------------------------------
+(define-public (make-item-pair-api)
+"
+  make-item-pair-api -- Item-pair access methods for generic item pairs.
+
+   The counts are obtained from EvaluationLinks of the form
+      (EvaluationLink
+          (PredicateNode \"*-Item Pair-*\")
+          (List left-atom right-atom))
+"
+	; Just use the generic code to implement the above.
+	(make-evaluation-pair-api
+		*-item-pair-tag-* ; defined as (PredicateNode "*-Item Pair-*")
+		'ItemNode
+		'ItemNode
+		(AnyNode "left-item")
+		(AnyNode "right-item")
+		"item-pairs"
+		"Generic ItemNode Pairs")
+)
+
+; ---------------------------------------------------------------------
 
 (define-public (make-any-link-api)
 "
-  make-any-link-api -- Word-pair access methods from random parse.
+  make-any-link-api -- Word-pair access methods from random planar parse.
 
   This implements a word-pair object, where the two words are connected
   with an LG link-type of \"ANY\", in an EvaluationLink.
@@ -108,6 +117,7 @@
   Finally, the 'left-type and 'right-type methods return the type
   of the the two sides of the pair.
 "
+	; Just use the generic code to implement the above.
 	(make-evaluation-pair-api
 		(LgLinkNode "ANY")
 		'WordNode
@@ -134,8 +144,9 @@
   The counts are stored on EvaluationLinks with the predicate
   (PredicateNode \"*-Sentence Word Pair-*\").
 "
+	; Just use the generic code to implement the above.
 	(make-evaluation-pair-api
-		*-word-pair-pred-* ;; defined as (Predicate "*-Sentence Word Pair-*")
+		*-word-pair-tag-* ;; defined as (Predicate "*-Sentence Word Pair-*")
 		'WordNode
 		'WordNode
 		(AnyNode "left-word")
@@ -309,6 +320,9 @@
 (define-public (fetch-all-words)
 "
   fetch-all-words - fetch all WordNodes from the database backend.
+
+  XXX OBSOLETE; use the fetch methods in the objects.
+  XXX DO NOT USE IN NEW CODE.
 "
 	(define start-time (current-time))
 	(load-atoms-of-type 'WordNode)

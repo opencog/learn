@@ -244,7 +244,7 @@
 		; Only count if the distance is less than the cap.
 		(if (<= dist MAX-LEN)
 			(let ((pare (ListLink (gar left-seq) (gar right-seq))))
-				(count-one-atom (EvaluationLink *-word-pair-pred-* pare))
+				(count-one-atom (EvaluationLink *-word-pair-tag-* pare))
 				(if RECORD-LEN
 					(count-one-atom
 						(ExecutionLink *-word-pair-dist-* pare (NumberNode dist)))))))
