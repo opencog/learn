@@ -1,7 +1,7 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
 	agglo-rank.scm
-	batch-word-pair.scm
+	batch-pair.scm
 	common.scm
 	gram-class-api.scm
 	gram-classification.scm

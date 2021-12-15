@@ -11,7 +11,7 @@
 (include-from-path "opencog/learn/utilities.scm")
 (include-from-path "opencog/learn/pair-count-window.scm")
 (include-from-path "opencog/learn/word-pair-count.scm")
-(include-from-path "opencog/learn/batch-word-pair.scm")
+(include-from-path "opencog/learn/batch-pair.scm")
 (include-from-path "opencog/learn/mst-parser.scm")
 (include-from-path "opencog/learn/pseudo-csets.scm")
 (include-from-path "opencog/learn/shape-vec.scm")
