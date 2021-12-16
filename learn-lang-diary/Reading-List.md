@@ -59,6 +59,26 @@ Things to read:
   The idea here is that sequences of rules can be applied, and then they
   can be reversed. This enableds back-tracking on a rule system.
 
+* D. A Turner, "Functional programs as executable specifications"
+  (1984) Phil. Trans R. Soc. Lond. A 312, pp. 363-388.
+
+  Functional programming languages as a collection of rewrite rules
+  applied to program expressions. Background theory for the Clean
+  programming langauge. See
+  https://en.wikipedia.org/wiki/Clean_(programming_language)
+  See also the Wikipedia description of the ABC machine.
+
+  The relevance for the AtomSpace is this: Deep inside a query, we
+  need to be able to call out to functions, passing arguments. For
+  opaque, black-box functions, we need to eager-evaluate all arguments.
+  There are two alternatives to eager evaluation. One is to do a $vau
+  trick, and eager-evaluate only the first arg, and pass the rest
+  unevaluated. The other is to evaluate none of them, and pass a context
+  which contains all necessary symbol groundings are present, so that
+  the callee can evaluate, as needed.
+
+  I dunno. Feels like we're reinventing... Hmm.
+
 
 Interesting, but maybe less useful
 ----------------------------------
