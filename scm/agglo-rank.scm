@@ -406,6 +406,8 @@
 	; Computing the 'set-left-totals takes about 97% of the total
 	; time in this function, and about 8% of the grand-total time
 	; (of merging words). Yet I suspect that it is not needed...
+	; If the totals are not recomputed, then the matrix-summary-report
+	; is borken.
 	(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
 	(store-atom (asc 'set-right-totals))  ;; is this needed?
 	(store-atom (atc 'set-mmt-totals))
@@ -709,6 +711,7 @@
 
 		; Recompute marginals after merge.
 		(for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
+		(recompute-mmt wclass)
 		(recompute-mmt-final LLOBJ)
 
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))

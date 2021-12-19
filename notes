@@ -6369,6 +6369,83 @@ make-central-compute
 (define star-obj
 compute-mst-marginals.sh
 
+================================================================
+Bug with left-right imbalance
+(setup-initial-similarities
+
+(in-group-cluster covr-obj 0.5 0.2 4 200 1)
+(print-matrix-summary-report star-obj)
+Error: left and right total pairs not equal! 74313.0 2746974.0
+Error: left and right total counts not equal! 1339120.0 22637313.0
+
+ (define sup-obj (add-support-api star-obj))
+
+ (lsize (sup-obj 'total-support-left))
+ (rsize (sup-obj 'total-support-right))
+
+(cog-keys (sup-obj 'wild-wild))
+
+set-left-totals set-right-totals  values have to be given
+(define asc (add-support-compute star-obj))
+(asc 'set-left-totals)  ; no change after doing this
+(asc 'set-right-totals) ; no change.
+
+above called from
+recompute-mmt-final
+
+ ; Recompute marginals after merge.
+      (for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
+      (recompute-mmt-final LLOBJ)
+
+So we looped over the words in the in-group, and since some
+of thier counts were xfered, of course the remaining support
+changes.
+
+We failed to compute the support on the new word-class. ?
+
+(star-obj 'left-basis-size) ; 15084
+(define lb (star-obj 'left-basis))
+(define wc (car
+(filter (lambda (wrd)
+		(equal? 'WordClassNode (cog-type wrd))) lb)))
+(cog-keys wc)  ; empy set Yikes! err ... no that's normal !
+
+(star-obj 'right-wildcard wc)
+(cog-keys (star-obj 'right-wildcard wc)) ; empty set .. yikes!
+expected:
+(PredicateNode "*-MM^T Product Key cover-section-*")
+(PredicateNode "*-Norm Key cover-section")   ; from add-support-api
+
+from set-right-norms in support-obj
+from set-right-marginals in support-compute ...
+
+(length (star-obj 'right-duals wc))
+
+
+initially
+(print-matrix-summary-report star-obj)
+Error: left and right total pairs not equal! 74313.0 2746974.0
+Error: left and right total counts not equal! 1339120.0 22637313.0
+
+after (asc 'set-left-totals) get
+Error: left and right total pairs not equal! 353652.0 2746974.0
+Error: left and right total counts not equal! 5995073.0 22637313.0
+
+after (asc 'set-right-totals) get
+Error: left and right total pairs not equal! 353652.0 2774209.0
+Error: left and right total counts not equal! 5995073.0 22925622.0
+
+So that is better but still not good. What's going wrong here????
+
+before:
+MM^T support=201433561.0     count=132179898227.0     entropy=18.228
+after:
+MM^T support=201712900.0     count=133473840444.0     entropy=18.218
+
+
+Even pair-wise: make-merge-pair
+
+
 
 
 ====================================================
