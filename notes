@@ -6442,11 +6442,51 @@ MM^T support=201433561.0     count=132179898227.0     entropy=18.228
 after:
 MM^T support=201712900.0     count=133473840444.0     entropy=18.218
 
+ (define sup-obj (add-support-api star-obj))
+OK, so what are the counts?
+
+post-merge:
+(sup-obj 'right-support wc) ; 27235.0
+
+(define mgl (list
+	(WordClassNode "+ — “ ” _")
+	(Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(for-each (lambda (w)
+	(format #t "yo ~A sup= ~D cnt= ~D\n"
+		(cog-name w) (sup-obj 'right-support w) (sup-obj 'right-count w)))
+	mgl)
+
+(fold (lambda (itm tot)
+	(+ tot (sup-obj 'right-support itm)))
+	0 mgl)
+
+yo + — “ ” _ sup=27235.0 cnt=288309.0
+yo + sup=142.0 cnt=5875.0
+yo — sup=284.0 cnt=4276.0
+yo “ sup=3826.0 cnt=78305.0
+yo ” sup=5089.0 cnt=160301.0
+yo _ sup=1689.0 cnt=42831.0
+fold: 38265.0
+
+pre-merge:
+yo + sup= 910.0 cnt= 21572.0
+yo — sup= 4225.0 cnt= 24464.0
+yo “ sup= 13758.0 cnt= 238994.0
+yo ” sup= 13498.0 cnt= 217805.0
+yo _ sup= 9633.0 cnt= 94084.0
+
+fold: 42024.0
+
+so ... counts are leaking.
+
 
 Even pair-wise: make-merge-pair
 
-
-
+------------------
+leak of meet-links:
+(run-query f-right-star-pat itm f-right-star-var)
+ Need instrumentation
+line 483 of object-api.scm
 
 ====================================================
 link-class.scm ???

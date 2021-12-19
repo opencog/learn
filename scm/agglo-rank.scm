@@ -711,7 +711,7 @@
 
 		; Recompute marginals after merge.
 		(for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
-		(recompute-mmt wclass)
+		(recompute-mmt LLOBJ wclass)
 		(recompute-mmt-final LLOBJ)
 
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
