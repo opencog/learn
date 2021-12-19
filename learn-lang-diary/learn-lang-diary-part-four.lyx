@@ -16099,18 +16099,53 @@ To be clear: the noise-floor says that any section with a count of equal
  the other for merging?)
 \end_layout
 
-\begin_layout Subsection*
-The Big Merge
+\begin_layout Section*
+Nov-Dec 2021: The Big Merge
 \end_layout
 
 \begin_layout Standard
 Ran a long-running merge.
- Some stats:
+ Working with Expt-9 as above, with the 
+\begin_inset Quotes eld
+\end_inset
+
+final
+\begin_inset Quotes erd
+\end_inset
+
+ merge algo fully implemented and 
+\begin_inset Quotes eld
+\end_inset
+
+debugged
+\begin_inset Quotes erd
+\end_inset
+
+, started a long-running merge sometime in Oct, Nov and back-burnered it,
+ kicking it along every now and then, monitoring progress.
+ Now its time to examine it and see what we got.
+\end_layout
+
+\begin_layout Standard
+Some stats:
 \end_layout
 
 \begin_layout Itemize
 Data file: r9-merge-h.rdb there's also an earlier one with about 2/3rds the
  total merges: r9-merge-h-save1.rdb
+\end_layout
+
+\begin_layout Itemize
+As above, paramters were quorum=0.5, commonality=20% and noise-floor = 4.
+ AKA `
+\family sans
+(in-group-cluster covr-obj 0.5 0.2 4 200 100)
+\family default
+` in the current code-base per late-Oct mid-Nov git repo contents.
+ This command was run maybe 20 or 30 times (??) by hand; each run was maybe
+ 12 hours (??), I'd scan it, look for obvious failures (there weren't any),
+ and then run it again.
+ Each run picked up where the last left off, and would run deeper.
 \end_layout
 
 \begin_layout Itemize
@@ -16122,12 +16157,13 @@ Data file: r9-merge-h.rdb there's also an earlier one with about 2/3rds the
 \begin_layout Itemize
 126 GB RAM resident (this grew slowly).
  The guile heap size is 7GB of which 6.7GB is free, so 387 MB in actual use.
- 
+ The RAM blowup is due to pattern queries not being erased.
+ (See below)
 \end_layout
 
 \begin_layout Itemize
 Total of 124820805 atoms (thats 125M).
- RAM is 131717108 KB so thats 1.05KB/Atom
+ RAM is 131717108 KB so thats 1.05KB/Atom so that's utterly normal.
 \end_layout
 
 \begin_layout Itemize
@@ -16138,11 +16174,12 @@ Most of the atoms are search queries that were not deleted! So that's a
 \end_layout
 
 \begin_layout Itemize
-5190946 SimilarityLinks, so similarities between approx 3222 words 
+5190946 SimilarityLinks, (that's more than 5M of them) so similarities between
+ approx 3222 words.
 \end_layout
 
 \begin_layout Itemize
-4467 MemberLinks and 1393 WordClassNodes
+4467 MemberLinks and 1393 WordClassNodes.
 \end_layout
 
 \begin_layout Standard
@@ -16151,7 +16188,7 @@ General impressions: Glancing at output during run, can see just a handful
  Often just one percent.
  Sometimes see merges where 2/3rds of the disjunct of one word are merged
  with just a few percent of the other words.
- Neither word class seems to be very desireable.
+ Neither word class seems to be very desirable.
  
 \end_layout
 
@@ -16554,6 +16591,110 @@ unbalanced
 
  feel to it: most of 'Leewit' gets merged into a handful of sections on
  'captain', so that's not very impressive.
+\end_layout
+
+\begin_layout Subsection*
+Questions about the results.
+\end_layout
+
+\begin_layout Standard
+Great.
+ So what have we actually got? Some questions about the dataset:
+\end_layout
+
+\begin_layout Itemize
+Distribution: size of word-class vs.
+ rank.
+ This was previously examined in 
+\begin_inset Quotes eld
+\end_inset
+
+diary part one
+\begin_inset Quotes erd
+\end_inset
+
+, page 99, for a different collection of merge algorithms (and earlier,
+ different datasets).
+ Do we still get something similar?
+\end_layout
+
+\begin_layout Itemize
+Above, 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+ might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of words in the word-class
+\begin_inset Quotes erd
+\end_inset
+
+ or it might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of disjuncts in word-class
+\begin_inset Quotes erd
+\end_inset
+
+ or it might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of disjuncts in word-class with count weighting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Oof.
+ It would be nice to have a dashboard for this, instead of lots of manual
+ work.
+\end_layout
+
+\begin_layout Itemize
+Distribution of word-senses.
+ That is, how many words participate in more than one word-class? If they
+ do participate in more than one word-class, what is the weight in each
+ class?
+\end_layout
+
+\begin_layout Itemize
+For words that belong to word-classes, what fraction of thier weight remains
+ unassigned to any word-class?
+\end_layout
+
+\begin_layout Itemize
+Distribution of MI of pairs of word-classes.
+ We might hope that this is low, so that different word-classes are different
+ from one another.
+\end_layout
+
+\begin_layout Itemize
+Distribution of self-MI of word-classes.
+ One might hope that this is high, so that the word-classes do not share
+ much in common with other words or word-classes.
+\end_layout
+
+\begin_layout Itemize
+As above, but distribution of MI of pairs consisting of a word-class, and
+ a word.
+\end_layout
+
+\begin_layout Itemize
+Prior to starting the merge, there's an MI between words and disjuncts.
+ I don't recall examining that in detail, before.
+ Then, after the merge, how does this change?
+\end_layout
+
+\begin_layout Standard
+Thats a lot of questions.
+ Not clear which ones should be answered first.
 \end_layout
 
 \begin_layout Section*
