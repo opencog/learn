@@ -6457,7 +6457,7 @@ post-merge:
 	mgl)
 
 (fold (lambda (itm tot)
-	(+ tot (sup-obj 'right-support itm)))
+	(+ tot (sup-obj 'right-count itm)))
 	0 mgl)
 
 yo + — “ ” _ sup=27235.0 cnt=288309.0
@@ -6466,7 +6466,9 @@ yo — sup=284.0 cnt=4276.0
 yo “ sup=3826.0 cnt=78305.0
 yo ” sup=5089.0 cnt=160301.0
 yo _ sup=1689.0 cnt=42831.0
-fold: 38265.0
+fold: support 38265.0
+(fold support only of words: 11030.0)
+count post-merge: 579897.0
 
 pre-merge:
 yo + sup= 910.0 cnt= 21572.0
@@ -6475,9 +6477,24 @@ yo “ sup= 13758.0 cnt= 238994.0
 yo ” sup= 13498.0 cnt= 217805.0
 yo _ sup= 9633.0 cnt= 94084.0
 
-fold: 42024.0
+fold: support pre-merge 42024.0
+count pre-merge: 596919.0
 
 so ... counts are leaking.
+More manual checking:
+(length (star-obj 'right-stars (Word "+")))  ; 910
+So obviously, the support before an after will differ.
+The counts should not. ... but the counts do.
+
+
+(in-group-cluster covr-obj 0.5 0.2 4 200 1)
+
+(define merge-majority (make-merge-majority
+
+(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+line 153 of gram-majority.scm
+
+(sup-obj 'right-count
 
 
 Even pair-wise: make-merge-pair
@@ -6487,6 +6504,24 @@ leak of meet-links:
 (run-query f-right-star-pat itm f-right-star-var)
  Need instrumentation
 line 483 of object-api.scm
+
+that's not it... wtf...
+
+(define mls (cog-get-atoms 'MeetLink))
+
+Oh, they are the dot-poduct mets. in fold-api
+
+
+------------------
+word-inst
+try-count-one-word xxx
+
+(define (try-count-one-word word-inst)
+      (catch 'wrong-type-arg
+         (lambda () (count-one-atom (word-inst-get-word word-inst)))
+         (lambda (key . args) #f)))
+
+
 
 ====================================================
 link-class.scm ???
@@ -6545,14 +6580,17 @@ FIXED:
   tightened.  Some in-groups seem too large by one member.
   Perhaps ingroups should have a minumum of 20% disjuncts shared
   by all members!? DONE late Oct 2021.
+* Figure out why query patterns are not being cleared.
+  DONE 19 Dec 2021 fold-api was making queries and not clearing them.
 
 
 TODO/BUGS:
-* Figure out why query patterns are not being cleared.
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report.
 * Some in-group cluster names get re-generated and reused.
+  See line 159 of gram-majority.scm
+  (define cls-name (string-join (map cog-name WLIST)))
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
