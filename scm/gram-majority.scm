@@ -26,8 +26,6 @@
 ; * Reintroduce FRAC for those disjuncts not shared by the majority.
 ;   Overall seems like a bad idea, but the unit tests do test it.
 ;   (i.e. its needed to replace `make-merge-pair` code with this code.
-; * Maybe reintroduce NOISE for minimum counts, if this cannot be
-;   handled in other ways.
 ;
 ; make-merge-majority
 ; -------------------
@@ -85,7 +83,7 @@
 
 (define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)
 "
-  make-merger-majority LLOBJ QUORUM MRG-CON --
+  make-merger-majority LLOBJ QUORUM NOISE MRG-CON --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -138,12 +136,13 @@
 						; (if (< NOISE (LLOBJ 'pair-count WRD DJ)) ...)
 						; to be fully compatible with `count-shared-conseq`
 						; However, simply checking for presence is the most
-						; accepting way of voting, so we allow that.
+						; tolerant, accepting way of voting, so we allow that.
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
 					WLIST)))
 
-		; Merge the particular DJ, if it is shared by the majority.
+		; Merge the particular DJ, if it is shared by the majority,
+		; or if the count on it is below the noise floor.
 		; CLUST is identical to cls, defined below. Return zero if
 		; there is no merge.
 		(define (clique LLOBJ CLUST SECT ACC-FUN)
