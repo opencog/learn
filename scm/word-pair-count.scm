@@ -151,12 +151,14 @@
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
 
-	(count-one-atom (word-inst-get-word word-inst))
+	(define (count-one-word word-inst)
+		(count-one-atom (word-inst-get-word word-inst)))
+
 	(count-one-atom any-sent)
 	(for-each
 		(lambda (parse)
 			(count-one-atom any-parse)
-			(for-each try-count-one-word (parse-get-words parse)))
+			(for-each count-one-word (parse-get-words parse)))
 		(sentence-get-parses single-sent))
 )
 
