@@ -6359,6 +6359,18 @@ replace observe-text -> observe-window-24
 
 batch-all-pair-mi in compute-mi.scm:
 
+make-central-compute
+(define ccg (make-central-compute covr-obj))
+(ccg 'cache-all)
+
+(load "cogserver.scm")
+(define cset-obj (make-pseudo-cset-api))
+(cset-obj 'fetch-pairs)
+(define star-obj
+compute-mst-marginals.sh
+
+
+
 ====================================================
 link-class.scm ???
 ====================================================
@@ -6419,6 +6431,7 @@ FIXED:
 
 
 TODO/BUGS:
+* Figure out why query patterns are not being cleared.
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report.
