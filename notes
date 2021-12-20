@@ -6593,9 +6593,130 @@ From scratch by hand.
 
 (cog-value ww rtkey)  ; still good .
 
+----- -----------------============= ---------------- =========
+(define WRD (Word "+"))
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (LLOBJ 'right-duals WRD))
+(length (LLOBJ 'right-duals WRD)) ; 910 correct
+
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (LLOBJ 'right-duals cls))
+(length (LLOBJ 'right-duals cls)) ; 1  right.
+
+(psu 'set-left-totals)
+; report is now borken.   has 3704 total number of pairs. wtf. <<<<<<<<
+
+(define ltkey (PredicateNode "*-Left Total Key cover-section"))
+(cog-value ww ltkey)
+; (FloatValue 3704 90475)  -- clearly wrong. But how?
+
+; suppo line 600 compute-total-support-from-left line 539
+
+(length (star-obj 'right-basis)) ; 1043583
+(define sobj (add-pair-stars star-obj))
+(length (sobj 'right-basis))
+(define api (add-support-api sobj))
+
+ (fold
+    (lambda (item sum) (+ sum (api 'left-support item)))
+    0
+    (sobj 'right-basis))
+; 3704.0 wtf ....
+
+(define rb (sobj 'right-basis))
+
+(api 'left-support (list-ref rb 3)) ; 0
+
+(length (cog-incoming-set (list-ref rb 3))) ; 4 two sects and two margs
+; the two margs have no counts on them....
+; one is (AnyNode "cset-word")
+; other is (AnyNode "gram-class")
+
+(define csm (list-ref (cog-incoming-set (list-ref rb 3)) 3))
+(cog-keys csm) ; just one: (PredicateNode "*-Norm Key-*")
+
+ah hah, this is not (PredicateNode "*-Norm Key cover-section")
+
+(ID (LLOBJ 'id))
+(define is-filtered? (and ID (LLOBJ 'filters?)))
+
+(api 'filters?) ; #t
+
+Who used the wrong key?      ?????????????????????????????????????????
+
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))  <<<< wrong should be right.
+   (LLOBJ 'right-duals cls))
+(length (LLOBJ 'right-duals cls)) ; 1  right.
+
+(cog-keys (car (LLOBJ 'right-duals cls)))
+ ; has a key on it but should not!!!!!!!!!!!!!!!!!!!
+; the key is (PredicateNode "*-Norm Key cover-section")
+
+(define dj (car (LLOBJ 'right-duals cls))) ; correct the dual is a dj.
+; dj is on the right.
+
+psu is add-support-compute.
+
+set-left-marginals calls api 'set-left-norms
+api is add-support-api and set-left-norms sets on 'left-wildcard
+
+but (psu 'left-wildcard dj) is still dj...
+
+XXXXXXXXXXXX
+(psu 'set-right-marginals WRD)
+calls
+calls (psu 'right-wildcard WRD) which is (wrd,*)  so that's correct.
+
+But (psu 'left-wildcard dj) is junk (missing) and
+(psu 'right-wildcard dj) is wrong and is not complaining.
+
+So -- direct sum is just wrong for left wilds.  line 308
+
+(direct-sum stars-obj shape-stars) in shape-vec line 612
+
+; (define cset-obj (make-pseudo-cset-api))  ;already done
+(define gram-obj (add-gram-class-api cset-obj))
+(define stobj (add-pair-stars gram-obj))
+(define shape-obj (add-shape-vec-api stobj))
+(define shape-stars (add-pair-stars shape-obj))
+(define cover-obj (direct-sum stobj shape-stars))
+(define cover-stars (add-pair-stars cover-obj))
+
+(stobj 'left-type)  ; choice wor or wordclass
+(shape-stars 'left-type) ; same, so
+
+(define LLA stobj)
+(define LLB shape-stars)
+disjoint-left is #f
+disjoint-right is #t
+distinct-type is #t
+
+(define a-stars LLA)
+(define in-base? (make-aset-predicate (a-stars 'right-basis)))
+
+; so in-base is a list of all dj's but not shapes.
+
+(define (type-a? L-ATOM R-ATOM) (in-base?  R-ATOM))
+
+; so far so good, this is correctly id'ing plain dj's
+;So onto left-wildcard ...
+
+and shapes reports:
+... junk!
+(LLB 'left-wildcard dj)
+(shape-stars 'left-wildcard dj) ; junk
+(shape-obj 'left-wildcard dj) ; junk
+
+; Well, except that is what shape told us to do. Confusing but true.
+; So backtrack....
 
 
-------------------
+
+
+==================
 leak of meet-links:
 (run-query f-right-star-pat itm f-right-star-var)
  Need instrumentation
@@ -6686,6 +6807,8 @@ TODO/BUGS:
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report.
+* recompute-mmt will be more efficient if we union all the right duals
+  for all the words, instead of doing them one at a time.
 * Some in-group cluster names get re-generated and reused.
   See line 159 of gram-majority.scm
   (define cls-name (string-join (map cog-name WLIST)))
