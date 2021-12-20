@@ -6626,8 +6626,25 @@ From scratch by hand.
 ; 3704.0 wtf ....
 
 (define rb (sobj 'right-basis))
+(length rb)  ; 1043583 -- disjuncts and shapes
 
 (api 'left-support (list-ref rb 3)) ; 0
+
+(define dj3 (list-ref rb 3)) ; a conseq
+(define dj2 (list-ref rb 2)) ; a shape
+
+(api 'id)  ; cover-section hang on, why is this not the direct sum ?
+It is (add-covering-sections cset-obj) whcih gives that id. So OK, again.
+
+(cog-keys dj)  shows as expected.
+(cog-keys dj2) does not
+
+; perhaps we computed marginals incorectly, to begin with?
+Heck, yeah, wild-wild is
+(PredicateNode "*-Direct Sum Wild (gram-class⊕cross-section)")
+and it should be cover-section.
+
+YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
 
 (length (cog-incoming-set (list-ref rb 3))) ; 4 two sects and two margs
 ; the two margs have no counts on them....
@@ -6647,12 +6664,14 @@ ah hah, this is not (PredicateNode "*-Norm Key cover-section")
 Who used the wrong key?      ?????????????????????????????????????????
 
 (for-each
-   (lambda (DJ) (psu 'set-left-marginals DJ))  <<<< wrong should be right.
+   (lambda (DJ) (psu 'set-left-marginals DJ))  <<<<  ummmm
    (LLOBJ 'right-duals cls))
 (length (LLOBJ 'right-duals cls)) ; 1  right.
 
 (cog-keys (car (LLOBJ 'right-duals cls)))
  ; has a key on it but should not!!!!!!!!!!!!!!!!!!!
+ ; ............... backtracking from below, that is OK. Confusing but OK.
+ ; ................ and the key is correct.  So backtrack some more.
 ; the key is (PredicateNode "*-Norm Key cover-section")
 
 (define dj (car (LLOBJ 'right-duals cls))) ; correct the dual is a dj.
@@ -6663,7 +6682,8 @@ psu is add-support-compute.
 set-left-marginals calls api 'set-left-norms
 api is add-support-api and set-left-norms sets on 'left-wildcard
 
-but (psu 'left-wildcard dj) is still dj...
+; but (psu 'left-wildcard dj) is still dj...
+; .... which after below is correct. So backtrack to here.
 
 XXXXXXXXXXXX
 (psu 'set-right-marginals WRD)
