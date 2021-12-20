@@ -6496,8 +6496,104 @@ line 153 of gram-majority.scm
 
 (sup-obj 'right-count
 
-
 Even pair-wise: make-merge-pair
+
+gram-majority.scm line 153 calls
+accumulate-count at gram-projective.scm line 306
+
+which is impl at line 210
+
+should use 'move-count ... or not.
+
+Two places where count shuffles:
+1) the orig merge
+2) the connectors merge. -- merge-connectors which calls
+   reshape, line 364 calls reshape-merge  which returns "unspecified."
+
+------------------
+From scratch by hand.
+
+(define cls (WordClassNode "+ — “ ” _"))
+
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+
+; assign-to-cluster (for-each ... rstars)
+(define rstars (star-obj 'right-stars (Word "+")))
+
+(define QUORUM 0.5)
+(define wlen (length WLIST))
+(define vote-thresh (if (equal? wlen 2) 2 (inexact->exact (round (* QUORUM wlen)))))
+(define (vote-to-accept? DJ)
+   (<= vote-thresh
+      (fold
+         (lambda (WRD CNT)
+            (if (nil? (star-obj 'get-pair WRD DJ)) CNT (+ 1 CNT)))
+         0
+         WLIST)))
+
+
+; (clique star-obj cls rstar accumulate-count)
+
+(define NOISE 4)
+(define (clique LLOBJ CLUST SECT ACC-FUN)
+   (define DJ (LLOBJ 'right-element SECT))
+   (when (or (<= (LLOBJ 'get-count SECT) NOISE)
+         (vote-to-accept? DJ))
+      (ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+(format #t "Yes, merged into ~A\n" (LLOBJ 'make-pair CLUST DJ))
+      ))
+
+(clique star-obj cls (list-ref rstars 0) accumulate-count)
+(print-matrix-summary-report star-obj)
+(recompute-mmt star-obj (Word "+"))
+(recompute-mmt star-obj (WordClassNode "+ — “ ” _"))
+(recompute-mmt-final star-obj)
+(print-matrix-summary-report star-obj)
+
+; Wow. insta-breakage!
+(define LLOBJ star-obj)
+(define psu (add-support-compute star-obj))
+
+; (define sup (add-support-api star-obj))
+
+(define plus-marg (star-obj 'right-wildcard (Word "+")))
+(cog-keys plus-marg)
+(define nkey (PredicateNode "*-Norm Key cover-section"))
+(cog-value plus-marg nkey)
+; (FloatValue 910 21572 3314.388329692222 8610390.908307077)
+
+(psu 'set-right-marginals (Word "+"))
+(cog-value plus-marg nkey)
+; (FloatValue 909 21570 3314.387726262575 8602093.322337482)
+; yes: one less dj, 2 less count.
+
+(define cls-marg (star-obj 'right-wildcard cls))
+(cog-value cls-marg nkey)
+(psu 'set-right-marginals cls)
+(cog-value cls-marg nkey)
+; (FloatValue 1 2 2 2)
+; yes: one dj, count of 2
+
+(define ww (star-obj 'wild-wild))
+; Set in the support obj
+(define rtkey (PredicateNode "*-Right Total Key cover-section"))
+; set in the report obj
+(define rnkey (PredicateNode "*-Right Norm Key cover-section"))
+
+(cog-value ww rtkey)
+; (FloatValue 2777968 22942644)
+; above is number of pairs grand total, and total counts.
+
+(cog-value ww rnkey)
+; (FloatValue 32439.90696333866 321782.1216717655 8093.262183027697 7966.527548438474)
+; above is .. the wacky averges that report reports.
+
+(psu 'set-right-totals)
+; report is still good.
+
+(cog-value ww rtkey)  ; still good .
+
+
 
 ------------------
 leak of meet-links:
@@ -6510,7 +6606,7 @@ that's not it... wtf...
 (define mls (cog-get-atoms 'MeetLink))
 
 Oh, they are the dot-poduct mets. in fold-api
-
+FIXED
 
 ------------------
 word-inst
@@ -6520,6 +6616,8 @@ try-count-one-word xxx
       (catch 'wrong-type-arg
          (lambda () (count-one-atom (word-inst-get-word word-inst)))
          (lambda (key . args) #f)))
+
+FIXED
 
 
 

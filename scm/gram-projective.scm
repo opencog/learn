@@ -207,6 +207,7 @@
 
 ; ---------------------------------------------------------------------
 
+; XXX TODO: figure out how to replace this by (LLOBJ 'move-count args)
 (define-public (accumulate-count LLOBJ ACC DONOR FRAC)
 "
   accumulate-count LLOBJ ACC DONOR FRAC -- Accumulate a fraction
@@ -220,6 +221,7 @@
 
   This function is nearly identical to (LLOBJ 'move-count args) except
   that this also stores (or not) the results in the database.
+  XXX FIXME: figure out how to replace this by (LLOBJ 'move-count args)
 
   Both Atoms, with updated counts, are stored to the database, with
   one exception: if the final DONOR count is zero, it is NOT stored

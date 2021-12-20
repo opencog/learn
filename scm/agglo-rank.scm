@@ -719,6 +719,7 @@
 		; After merging, recompute similarities for the words
 		; that were touched.
 		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD)) in-grp)
+		(recomp-all-sim LLOBJ wclass)
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
 	)
