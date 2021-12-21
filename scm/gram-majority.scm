@@ -96,7 +96,14 @@
 	(define cls-type (LLOBJ 'cluster-type))
 	(define cls-typname
 		(if (cog-atom? cls-type) (cog-name cls-type) cls-type))
-	(cog-new-node cls-typname cls-name)
+
+	; Make sure we've never created this name before.
+	(define (mknode cname)
+		(if (nil? (cog-node cls-typname cname))
+			(cog-new-node cls-typname cname)
+			(mknode (string-append cname ".i"))
+		))
+	(mknode cls-name)
 )
 
 (define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)

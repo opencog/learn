@@ -6958,6 +6958,10 @@ FIXED:
   by all members!? DONE late Oct 2021.
 * Figure out why query patterns are not being cleared.
   DONE 19 Dec 2021 fold-api was making queries and not clearing them.
+* Some in-group cluster names get re-generated and reused.
+  See line 159 of gram-majority.scm
+  (define cls-name (string-join (map cog-name WLIST)))
+  FIXED 21 Dec 2021
 
 
 TODO/BUGS:
@@ -6966,9 +6970,6 @@ TODO/BUGS:
   print-matrix-summary report.
 * recompute-mmt will be more efficient if we union all the right duals
   for all the words, instead of doing them one at a time.
-* Some in-group cluster names get re-generated and reused.
-  See line 159 of gram-majority.scm
-  (define cls-name (string-join (map cog-name WLIST)))
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
