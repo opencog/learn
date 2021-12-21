@@ -75,15 +75,20 @@
 		; Let the base object do the heavy lifting.
 		(LLOBJ 'fetch-pairs)
 
+		(define start-time (current-time))
+
 		; Fetch all MemberLinks, as these indicate which Words
 		; belong to which WordClasses. Sections have already been
 		; fetched by the LLOBJ, so we won't do anything more, here.
-		(define start-time (current-time))
 		(load-atoms-of-type 'WordClassNode)
 		(for-each
 			(lambda (wcl)
 				(fetch-incoming-by-type wcl 'MemberLink))
 			(cog-get-atoms 'WordClassNode))
+
+		; Load marginals, too. These are specific to this class.
+		(fetch-incoming-set any-left)
+
 		(format #t "Elapsed time to load grammatical classes: ~A secs\n"
 			(- (current-time) start-time)))
 

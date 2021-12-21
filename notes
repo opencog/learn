@@ -6828,7 +6828,49 @@ and shapes reports:
 ; Well, except that is what shape told us to do. Confusing but true.
 ; So backtrack....
 
+AAAAAAAAAAAAAAAAAAAAAAAAAAA
+What if one has a fresh remargin?
+recompute-mmt-final
 
+(define asc (add-support-compute star-obj))
+(asc 'set-left-totals)
+(print-matrix-summary-report star-obj)
+Wham! It's borken!
+(asc 'set-right-totals)
+(print-matrix-summary-report star-obj)
+Does not restore the balance.
+
+Error: left and right total pairs not equal! 1922250.0 2777968.0
+Error: left and right total counts not equal! 15629513.0 22942644.0
+
+and specifically, its the left totals that are broken.
+The left total is a loop over disjuncts...
+
+(define lb (star-obj 'left-basis)) ; words, 15083
+(define rb (star-obj 'right-basis)) ; djs, 1043583
+
+(define nkey (PredicateNode "*-Norm Key cover-section"))
+
+(fold (lambda (atm cnt)
+	(if (equal? 'ShapeLink (cog-type atm))
+		(+ cnt (cog-value-ref (cog-value atm nkey) 0))
+		cnt)) 0 rb)
+
+Above gives 1922250.0 which is ... as expected.
+
+(star-obj 'left-wildcard (list-ref rb 0))
+(cog-keys (star-obj 'left-wildcard (list-ref rb 3)))
+Ahh Hah!
+
+No marginals on these!  They were not loaded!
+Who loads these? (AnyNode "gram-class")
+
+(fetch-incoming-set (AnyNode "gram-class"))
+Wow. That seems to fix it. Phew.
+
+
+BBBBBBBBBBBBBBBBBBBBBBBBBBBB
+Rerun one at a time from line 6514 above.
 
 
 ==================
