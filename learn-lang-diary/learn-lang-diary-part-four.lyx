@@ -17383,7 +17383,7 @@ Observations per pair is probably just wrong.
 \end_layout
 
 \begin_layout Standard
-How does one recmopute the reported stats, again? ...
+How does one recompute the reported stats, again? ...
  by running `
 \family sans
 marginals-mst-shape.scm
@@ -17393,6 +17393,25 @@ marginals-mst-shape.scm
 run/3-mst-parsing/compute-mst-marginals.sh
 \family default
 `
+\end_layout
+
+\begin_layout Section*
+Expt-10 Merge exploration (Dec 2021)
+\end_layout
+
+\begin_layout Standard
+After a lot of confusion ...
+ Conclude that expt-9 dataset has funky issues with the marginals that are
+ not resolvable without great confusion.
+ So restart by copying `
+\family sans
+run-1-t1234-tsup-1-1-1.rdb
+\family default
+` and recomputing marginals, and then recomputing similarities.
+\end_layout
+
+\begin_layout Standard
+XXX Except this solves nothing.
 \end_layout
 
 \begin_layout Section*

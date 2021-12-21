@@ -502,6 +502,14 @@
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
 			(load-atoms-of-type 'CrossSection)
+
+			; OK, so (fetch-incoming-set any-left) actually fails, because
+			; get-left-wildcard up above is not actually using it. The
+			; actual margins are stored on the right-basis elements
+			; themselves, and so we need to explicitly fetch those to
+			; get the marginals attahed to them.
+			(for-each fetch-atom (LLOBJ 'right-basis))
+
 			(format #t "Elapsed time to load cross-sections: ~A seconds\n"
 				(- (current-time) start-time))
 		)

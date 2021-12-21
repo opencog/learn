@@ -5180,7 +5180,7 @@ computed by (add-support-api LLOBJ) 'total-support-left
 Crap. There's no simple efficient way to count.
 What about fetch-pairs !?
 
-Hang on. 
+Hang on.
 (define sup (add-support-api psa))
 (sup 'total-support-left) is the total pairs.
 (sup 'total-count-left) is the wild-wild
@@ -5304,7 +5304,7 @@ after trimming words:
 71610887
 (ListLink . 35561670)
 (Connector . 487523)
-(ConnectorSeq . 35315198) 
+(ConnectorSeq . 35315198)
 (WordNode . 246471)
 
 after trimming connseqs:
@@ -5354,10 +5354,10 @@ Happened again... and a third time:
     stop_func=0x7ffff7a1c2d0 <GC_never_stop_func>) at ../extra/../alloc.c:553
 #8  GC_try_to_collect_inner (stop_func=0x7ffff7a1c2d0 <GC_never_stop_func>)
     at ../extra/../alloc.c:485
-#9  0x00007ffff7a2f69c in GC_collect_or_expand (needed_blocks=needed_blocks@entry=220, 
+#9  0x00007ffff7a2f69c in GC_collect_or_expand (needed_blocks=needed_blocks@entry=220,
     ignore_off_page=ignore_off_page@entry=0, retry=<optimized out>)
     at ../extra/../alloc.c:1443
-#10 0x00007ffff7a2fbcf in GC_alloc_large (lb=<optimized out>, lb@entry=898912, 
+#10 0x00007ffff7a2fbcf in GC_alloc_large (lb=<optimized out>, lb@entry=898912,
     k=k@entry=1, flags=flags@entry=0) at ../extra/../malloc.c:66
 #11 0x00007ffff7a33bb9 in GC_generic_malloc (lb=898912, k=1) at ../extra/../malloc.c:264
 #12 0x00007ffff7a33e12 in GC_malloc_kind_global (lb=898912, k=1)
@@ -5376,7 +5376,7 @@ Happened again... and a third time:
 
 
 if (GC_n_heap_sects >= MAX_HEAP_SECTS
-printf("duude aeeiiie sects=%ld\n", GC_n_heap_sects); 
+printf("duude aeeiiie sects=%ld\n", GC_n_heap_sects);
 1343
 
 commit d3dede3ce4462cd82a15f161af797ca51654546a (HEAD, tag: v8.0.4, release-8_0_4)
@@ -5869,7 +5869,7 @@ The bad version:
 duude elt before 15.750 * [e, <j,  a- b- $+>]
   prelique frac=0.25 on  5.250 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
 +++ accumulate never called! good version doesn't either.
-+++ 
++++
   postique frac=0.25 on  0.000 * [{e j}, <j,  a- b- $+>] . 15.750 * [e, <j,  a- b- $+>]
 duude elt after  15.750 * [e, <j,  a- b- $+>]
 ---
@@ -6595,6 +6595,68 @@ From scratch by hand.
 
 ----- -----------------============= ---------------- =========
 (define WRD (Word "+"))
+(define LLOBJ star-obj)
+(define rduals (LLOBJ 'right-duals WRD))
+(length rduals) ; 910 correct
+
+(define gms star-obj)
+(gms 'wild-wild)
+(gms 'left-wildcard (list-ref rduals 0)) ; as expected
+There are no marginals on this.
+
+because ... I guess they were not computed ??
+Because (batch-transpose 'mmt-marginals doesn't do it!? Lets see:
+(setup-supports)
+(batch-left-support)
+(batch-right-support)
+
+print statement says:
+Finished left norm marginals in 3232 secs
+Finished left totals in 71 secs
+...
+Finished right norm marginals in 130 secs
+Finished right totals in 2 secs
+
+so they are computed ... so where are they stored ???
+(scomp-obj     (add-support-compute star-obj))
+(scomp-obj 'all-left-marginals)
+(store-obj     (make-store star-obj))
+(store-obj 'store-left-marginals)
+
+Crap.
+(fetch-atom (list-ref rduals 0))
+(cog-keys (list-ref rduals 0))
+and now we have a key.
+
+They were computed and stored but not fetched. Oooops.
+(covr-obj 'fetch-pairs)
+delegates to direct-sum
+which calls fetch on both parts. ...
+XXX does ot fetch wild wild!???
+
+add-gram-class-api 'fetch-pairs
+delegates to pseudo-csets.scm which does fetch marginals
+add-shape-vec-api 'fetch-pairs
+calls ...
+ (fetch-incoming-set any-left)
+ (fetch-incoming-set any-right)
+but doesn't do the disjuncts correctly
+line 504
+; The left-wildcard really should be
+      ; (ListLink any-left R-ATOM) but we've already
+      ; blown too much storage creating atoms, so keep
+      ; it simple, here.
+      (define (get-left-wildcard R-ATOM) R-ATOM)
+
+
+ZZZZZZZZZZZZZZZZZZZZZZZZZZZZ Found it at last.
+
+
+did
+((make-store LLOBJ) 'store-wildcards) work correctly?
+yes, it stores (llobj 'right-wildcard x)) looped over left basis, etc.
+
+
 (for-each
    (lambda (DJ) (psu 'set-left-marginals DJ))
    (LLOBJ 'right-duals WRD))
