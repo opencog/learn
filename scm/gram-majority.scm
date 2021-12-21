@@ -81,6 +81,24 @@
 	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
+(define (make-class-node LLOBJ WLIST)
+"
+  make-class-node LLOBJ WLIST - create a node suitable for merging WLIST
+
+  The WLIST is assumed to be a list of Nodes (i.e. Atoms having string
+  names) which will be merged to form a class. This function creates a
+  unique name for that merge class, and then uses the LLOBJ to create
+  that class node.
+
+  XXX TODO: move this so its a method on `add-gram-class-api`.
+"
+	(define cls-name (string-join (map cog-name WLIST)))
+	(define cls-type (LLOBJ 'cluster-type))
+	(define cls-typname
+		(if (cog-atom? cls-type) (cog-name cls-type) cls-type))
+	(cog-new-node cls-typname cls-name)
+)
+
 (define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)
 "
   make-merger-majority LLOBJ QUORUM NOISE MRG-CON --
@@ -153,15 +171,8 @@
 				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
 				0))
 
-		; We are going to control the name we give it. We could also
-		; delegate this to `add-gram-class-api`, but for now, we're
-		; going to punt and do it here. Some day, in a generic framework,
-		; this will need to be cleaned up. XXX FIXME.
-		(define cls-name (string-join (map cog-name WLIST)))
-		(define cls-type (LLOBJ 'cluster-type))
-		(define cls-typname
-			(if (cog-atom? cls-type) (cog-name cls-type) cls-type))
-		(define cls (cog-new-node cls-typname cls-name))
+		; Get a Node that will anchor everything merged from WLIST
+		(define cls (make-class-node LLOBJ WLIST))
 
 		(for-each
 			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
