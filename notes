@@ -6602,6 +6602,7 @@ From scratch by hand.
 (define gms star-obj)
 (gms 'wild-wild)
 (gms 'left-wildcard (list-ref rduals 0)) ; as expected
+(cog-keys (gms 'left-wildcard (list-ref rduals 0)))
 There are no marginals on this.
 
 because ... I guess they were not computed ??
@@ -6650,6 +6651,38 @@ line 504
 
 
 ZZZZZZZZZZZZZZZZZZZZZZZZZZZZ Found it at last.
+
+Or maybe not. wtf.
+(define nkey (PredicateNode "*-Norm Key cover-section"))
+(cog-value (gms 'left-wildcard (list-ref rduals 4)) nkey)
+Problems:
+1) lots of these have a support of 1, which means they were not
+   trimmed correctly. so wtf.
+
+(fetch-atom (list-ref rduals 0))
+; --- OK,, so was not fetched. Again. Why?
+
+add-shape-vec-api
+; (define cset-obj (make-pseudo-cset-api))  ;already done
+(define gram-obj (add-gram-class-api cset-obj))
+(define stobj (add-pair-stars gram-obj))
+(define shape-obj (add-shape-vec-api stobj))
+(define shape-stars (add-pair-stars shape-obj))
+(define rb
+(define rb (shape-stars 'right-basis))
+length is 838580
+(cog-keys (list-ref rb 0)) ... empty set! WTF!?
+
+Is it because I have to fetch after explode!?
+
+In shapely, llobjid=gram-class
+In shapely, right basis size= 205003 -- these are the connector seqs only,
+ ---- and thus useless.
+keys at 42=()
+
+(define cover-obj (direct-sum stobj shape-stars))
+(define cover-stars (add-pair-stars cover-obj))
+
 
 
 did

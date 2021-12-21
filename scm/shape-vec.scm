@@ -449,7 +449,7 @@
 		;
 		; This does not need to be done, if restoring from the database;
 		; viz if the pairs were previously stored, and now have been
-		; fetched with 'fetch-pairs above.
+		; fetched with 'fetch-sections below.
 		;
 		(define (explode-sections)
 
@@ -498,17 +498,19 @@
 		; as well as all the marginals for the cross-sections.
 		(define (fetch-sections)
 			(define start-time (current-time))
+
 			; marginals are located on any-left, any-right
 			(fetch-incoming-set any-left)
 			(fetch-incoming-set any-right)
-			(load-atoms-of-type 'CrossSection)
 
 			; OK, so (fetch-incoming-set any-left) actually fails, because
 			; get-left-wildcard up above is not actually using it. The
-			; actual margins are stored on the right-basis elements
-			; themselves, and so we need to explicitly fetch those to
-			; get the marginals attahed to them.
-			(for-each fetch-atom (LLOBJ 'right-basis))
+			; actual margins are stored on Shape links, and so we need to
+			; explicitly fetch those to get the marginals attahed to them.
+			(load-atoms-of-type 'Shape)
+
+			; Get the actual pairs (if any)
+			(load-atoms-of-type 'CrossSection)
 
 			(format #t "Elapsed time to load cross-sections: ~A seconds\n"
 				(- (current-time) start-time))
