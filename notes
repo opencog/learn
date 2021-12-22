@@ -5384,7 +5384,7 @@ Author: Ivan Maidanski <ivmai@mail.ru>
 Date:   Sat Mar 2 10:09:42 2019 +0300
 
     [8.0.4]
-    
+
     Bump gc version to 8.0.4
 
 ../configure --enable-large-config
@@ -5407,7 +5407,7 @@ Database contents:
   Keys/Incoming/Hash k@: 37241924 i@: 50417644 h@: 0
 Unix max open files rlimit= 1024 1048576
 
-(WordNode . 22899) 
+(WordNode . 22899)
 
 (WordNode . 19606)
 Database contents:
@@ -5750,7 +5750,7 @@ cosine
 (get-ovlap (Word "###LEFT-WALL###") (Word ":")) ; 8.74631e-4
 
 Wow. So overlap is tiny! but cosine is huge! That means almost all
-disjuncts have a small count (so as to keep the cosine denominator 
+disjuncts have a small count (so as to keep the cosine denominator
 a small as possible)
 
 (define ecnt 0)
@@ -5759,7 +5759,7 @@ a small as possible)
 (define (prt DJA DJB) (format #t "duude ~A" DJ) 0)
 (define opr (add-support-compute (add-tuple-math sha prt 'right-element)))
 
-(define (dct x y) 
+(define (dct x y)
 (if (or (< 0 x) (< 0 y)) (set! ecnt (+ 1 ecnt)))
 (if (and (< 0 x) (< 0 y)) (set! bcnt (+ 1 bcnt))) 0)
 (define dpr (add-support-compute (add-tuple-math sha dct 'get-count)))
@@ -5773,7 +5773,7 @@ a small as possible)
 			(else (apply OBJ (cons message args))))))
 
 
-(define (dum SXA SXB) 
+(define (dum SXA SXB)
 (define x (if (equal? 0 SXA) 0 (get-count (car SXA))))
 (define y (if (equal? 0 SXB) 0 (get-count (car SXB))))
 (if (or (< 0 x) (< 0 y)) (set! ecnt (+ 1 ecnt)))
@@ -6868,9 +6868,148 @@ Who loads these? (AnyNode "gram-class")
 (fetch-incoming-set (AnyNode "gram-class"))
 Wow. That seems to fix it. Phew.
 
+Well, not quite. Almost:
+Error: left and right total pairs not equal! 2745455.0 2774209.0
+Error: left and right total counts not equal! 23046531.0 22925622.0
+
+pre-merge, had Size: 2777968.0  observations: 22942644.0
+So ... getting close now.
 
 BBBBBBBBBBBBBBBBBBBBBBBBBBBB
 Rerun one at a time from line 6514 above.
+
+(define cls (WordClassNode "+ — “ ” _"))
+
+(define (clique LLOBJ CLUST SECT ACC-FUN)
+	(define DJ (LLOBJ 'right-element SECT))
+	(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0))
+
+(define rstars (star-obj 'right-stars (Word "+")))
+
+(length rstars) ; 910
+(define sex (filter (lambda (sec) (equal? 'Section (cog-type sec))) rstars))
+(define xes (filter (lambda (sec) (equal? 'CrossSection (cog-type sec))) rstars))
+(length sex) ; 66
+(length xes) ; 844 ... wow
+
+(define sexy (list-ref sex 0))
+
+(cog-count sexy)  ; 11
+
+(star-obj 'left-element sexy)
+(star-obj 'right-element sexy)
+(star-obj 'right-wildcard (star-obj 'left-element sexy))
+
+(define sup (add-support-api star-obj))
+(sup 'right-support (star-obj 'left-element sexy)) ; 910
+(sup 'right-count (star-obj 'left-element sexy)) ; 21572
+
+(sup 'left-support (star-obj 'right-element sexy)) ; 31
+(sup 'left-count (star-obj 'right-element sexy)) ; 2345
+
+; ------
+; Merge
+(clique star-obj cls sexy accumulate-count)
+(cog-count sexy)  ; 0
+
+; ----
+; Recompute supports
+(define psu (add-support-compute star-obj))
+(psu 'set-right-marginals (star-obj 'left-element sexy))
+
+(sup 'right-support (star-obj 'left-element sexy)) ; 909 OK
+(sup 'right-count (star-obj 'left-element sexy)) ; 21561  is 11 less OK
+
+(psu 'set-right-marginals cls)
+(sup 'right-support cls) ; 1 OK
+(sup 'right-count cls) ;; 11 OK.
+
+; ----
+(psu 'set-left-marginals (star-obj 'right-element sexy))
+(sup 'left-support (star-obj 'right-element sexy)) ; 31 no change OK, just moved
+(sup 'left-count (star-obj 'right-element sexy)) ; 2345 no change OK.
+
+; ----
+(sup 'total-support-left) ; 2777968.0
+(sup 'total-support-right) ; 2777968.0
+(sup 'total-count-left) ; 22942644.0
+(sup 'total-count-right) ; 22942644.0
+
+(psu 'set-left-totals)
+(sup 'total-support-left) ; 2777968.0  no change
+(sup 'total-count-left) ; 22942644.0 no change
+
+(psu 'set-right-totals)
+(sup 'total-support-right) ; 2777968.0 no change
+(sup 'total-count-right) ; 22942644.0 no change
+
+; So .. that worked.
+; ----
+; Verify bulk recompute is OK
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (star-obj 'right-duals cls))
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (star-obj 'right-duals (WordNode "+")))
+(psu 'set-left-totals)
+(psu 'set-right-totals)
+; Still good
+
+; -------
+; Verify merging all sections is not a problem.
+; (define sex (filter (lambda (sec) (equal? 'Section (cog-type sec))) rstars))
+
+(for-each (lambda (sexy)
+	(clique star-obj cls sexy accumulate-count)) sex)
+
+(psu 'set-right-marginals (WordNode "+"))
+(psu 'set-right-marginals cls)
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (star-obj 'right-duals cls))
+(for-each
+   (lambda (DJ) (psu 'set-left-marginals DJ))
+   (star-obj 'right-duals (WordNode "+")))
+(psu 'set-left-totals)
+(print-matrix-summary-report star-obj)
+; Still good
+
+(psu 'set-right-totals)
+(print-matrix-summary-report star-obj) ; <<<<<<< bad!!
+
+(sup 'total-support-left) ; 2777968.0  no change
+(sup 'total-count-left) ; 22942644.0 no change
+
+(sup 'total-support-right) ; 2777903.0 << shrank by 65 (one less than sections
+(sup 'total-count-right) ; 22938337.0 << shrank by 4307.0
+
+(sup 'right-count cls) ; 11 WTF <<<<<<<<<<<<
+(sup 'right-count (WordNode "+")) ; 17254.0  Maybe be seems wrong.
+
+(fold (lambda (sexy cnt)
+	(+ cnt
+		(cog-count (star-obj 'get-pair cls (star-obj 'right-element sexy)))))
+	0 sex)
+; 4318
+; 4307.0 = 4318 - 11 which is what's mssing on cls ... why?
+
+(define cls-mrg (psu 'set-right-marginals cls))
+(cog-keys cls-mrg)
+(define pkey (PredicateNode "*-Norm Key cover-section"))
+(cog-value cls-mrg pkey) ; <<<<<<<<<< wrong
+
+; XXX So (psu 'set-right-marginals cls) is borken ... why?
+(psu 'clobber)
+(psu 'set-right-marginals cls)
+(sup 'right-count cls) ; 4318.0 Yay!!!
+(psu 'set-right-totals)
+(print-matrix-summary-report star-obj) <<<<<<< Yay!!!
+
+So the fix is ... be sure to clobber!  Really?
+
+(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
+make-merge-pair
 
 
 ==================
@@ -6967,7 +7106,9 @@ FIXED:
 TODO/BUGS:
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
-  print-matrix-summary report.
+  print-matrix-summary report. 3 days hard work, partly fixed, issue
+  was that marginals were not being loaded.
+
 * recompute-mmt will be more efficient if we union all the right duals
   for all the words, instead of doing them one at a time.
 * mmt-q is handled incorrectly. It must not be stored with the

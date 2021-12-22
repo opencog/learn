@@ -709,7 +709,9 @@
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
 
-		; Recompute marginals after merge.
+		; Recompute marginals after merge. Clobber first; else the
+		; duals and stars are wrong, which ruins the support calculations.
+		(LLOBJ 'clobber)
 		(for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
 		(recompute-mmt LLOBJ wclass)
 		(recompute-mmt-final LLOBJ)

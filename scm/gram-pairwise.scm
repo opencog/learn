@@ -349,7 +349,10 @@
 		; callback provides an opporunity to do that.
 		; The results are stored, so that everything is on disk in
 		; case of a restart.
-		; Clobber first, since Sections were probably deleted.
+		;
+		; Clobber first, since the STORE callback need correct stars
+		; and duals in order to recompute marginals correctly.
+		(STARS 'clobber)
 		(cond
 			((and wa-is-cls wb-is-cls)
 				(merge-clusters STARS WA WB MRG-CON))
