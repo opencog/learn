@@ -1,10 +1,9 @@
 ;
-; connector-balance.scm
+; connector-balance-several.scm
 ; Unit test for merging of Connectors - detailed balance.
 ;
-; Tests merging of several words into a single word-class.
-; The focus here is to make sure that detailed balance of the counts
-; across the merged Sections and CrossSections are preserved (obeyed).
+; Same as connector-balance.scm, except that one of the connectors
+; gets counts from multiple sources.
 ;
 ; Created Dec 2021
 
@@ -27,34 +26,17 @@
 ;
 ;    (a, gh) + (b, gh) -> ({ab}, gh)
 ;    (c, kaaam)        -> (c, k{ab}{ab}{ab}m)
+;    (c, kaabm)        -> (c, k{ab}{ab}{ab}m)
 ;
-; In this diagram, (e,abc) is abbreviated notation for
-; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))
-; and so on.
-; {ej} is short for (WordClassNode "e j") (a set of two words)
+; The first two lines are exactly like connector-balance.scm
+; The third line adds a contribution to the count from an "unexpected"
+; source, potentially throwing off the counts.
 ;
-; What about the CrossSections?
-; We expect 9 to be created, 2 each for the first two, and 5 for the last.
-; For example, (a, gh) explodes to
-;    [g, <a, vh>] and  [h, <a, gv>]
-; where [] denotes the CrossSection, and <> denotes the Shape. The "v"
-; is the variable node in the Shape (that the germ of the cross-section
-; plugs into).
-;
-; The (c, kaaam) explodes to
-;    [k, <c, vaaam>]
-;    [a, <c, kvaam>]
-;    [a, <c, kavam>]
-;    [a, <c, kaavm>]
-;    [m, <c, kaaav>]
-;
-; These should stay consistent with the merged sections. i.e. these
-; should reduce to 2 grand-total sections, with appropriate counts.
 
 (define (run-balance WA WB WAB-NAME)
 
 	; Load some data
-	(setup-a-b-sections)
+	(setup-aab-sections)
 
 	; Define matrix API to the data
 	(define pca (make-pseudo-cset-api))
@@ -64,8 +46,9 @@
 	; We expect 1 sections each on "a" and "b"
 	(test-equal 1 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
-	(test-equal 1 (length (gsc 'right-stars (Word "c"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "c"))))
 
+#! ===========
 	; Get the total count on all Sections
 	(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
@@ -93,7 +76,6 @@
 	; We expect no sections remaining on "a" or "b".
 	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
-	(test-equal 1 (length (gsc 'right-stars (Word "c"))))
 
 	; We expect one merged section, three crosses
 	(test-equal 4 (length (gsc 'right-stars WC-AB)))
@@ -137,6 +119,7 @@
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 		epsilon)
+=========== !#
 )
 
 (define t-start-cluster "connector balance test")

@@ -235,5 +235,31 @@
 )
 
 ; ---------------------------------------------------------------
+; Similar to the first case, but merged connectors.
+
+(define cnt-c-aab 23)
+
+(define (setup-aab-sections)
+	(setup-a-b-sections)
+
+	(Section (ctv 1 0 cnt-c-aab)
+		(Word "c")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "a") (ConnectorDir "+"))
+			(Connector (Word "a") (ConnectorDir "+"))
+			(Connector (Word "b") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; Expected results from the above.
+; Exactly the same as the first case.
+(define (expected-aab-sections WC-AB)
+	(expected-a-b-sections WC-AB)
+)
+
+; ---------------------------------------------------------------
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------

@@ -7171,34 +7171,46 @@ FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
 count: 22942644.0  unchanged. Good
 
 
-;merge-connectors in gram-projective.scm
+; manual merge-connectors in gram-projective.scm
 (define wa (Word "+"))
 (define rstars (star-obj 'right-stars wa))
 (define pra (list-ref rstars 0))
+
+; pra is a x-section in the form
+; [a, <c, kavam>] unit tested.
+; It has a count of zero, because `a` has been merged.
 ;
-; in clique, this:
+; In clique, do this:
 (define dj (star-obj 'right-element pra)) ; its a shape link
 ; (define cls (WordClassNode "+ — “ ” _"))
 (define msec (star-obj 'make-pair cls dj))
-; msec already has count of 2.0
+; msec already has count of 2.0 from the plain merge.
 
-; Above is in r10-dbg-b.rdb XXX except the zer'ed sections were
-; never stored, because, duh. Crap.
-
-; (reshape-merge star-obj cls msec wa pra 1.0)
+; manual (reshape-merge star-obj cls msec wa pra 1.0)
 (define donor-type (cog-type pra)) ; So CrossSec
-; calls (merge-resects star-obj cls wa msec pra)
 
+; manual (merge-resects star-obj cls wa msec pra)
 ; line 187 ff shape-project.scm
 (define resect (star-obj 'make-section msec)) ; moves cls into connector
+; resect has count of 0; its garbage because its partial.
+; resect is (c, ka{g}am)
+; the original is (c, kaaam) which still has a count of 2 on it.
+; (define origd .... is donor below.
 (define germ (star-obj  'left-element resect)) ; (WordNode "=Lit")
 (define mgsf (star-obj 'flatten cls resect)) ; cls in all connectors.
+; mgsf is (c, k{g}{g}{g}m) which is right, and it has no counts on it
 
 (define donor (star-obj 'make-section pra))
+; donor is (c, kaaam) and has count of 2 exactly as expected.
 (define d-cnt 2)  donors count
-(define x-cnt 2)  xsect count
+(define x-cnt 2)  xsect count; this is msec, and already has count of 2.
 
-(rebalance-count star-obj resect 0) zeros count on sect (its already zero)
+; pra is [a, <c, kavam>] has count of 0
+; [{g}, <c, kavam>] has count of 2
+; [{g}, <c, kvaam>] has count of 2
+; [{g}, <c, kaavm>] has count of 4  ... whoa
+
+(rebalance-count star-obj resect 0) ; zeros count on sect (its already zero)
 ; (star-obj 'get-cross-sections resect)
 ; and also zeros count on one xsections.
 ; XXX??? resect has only one existing xsect, which is the original xsect.
