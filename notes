@@ -7011,6 +7011,230 @@ So the fix is ... be sure to clobber!  Really?
 (define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
 make-merge-pair
 
+Nope. That still doesn't fix it. WTF.
+Is it the cross sections?
+
+CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+(in-group-cluster covr-obj 0.5 0.2 4 200 1)
+
+
+(define psu (add-support-compute star-obj))
+(define sup (add-support-api star-obj))
+
+(sup 'total-support-left) ; 2745455.0 got smaller from 2777968.0
+(sup 'total-count-left) ; 23046531.0 got larger from 22942644.0
+
+(sup 'total-support-right) ; 2774209.0 smaller from 2777968.0
+(sup 'total-count-right) ; 22925622.0 smaller from 22942644.0 no change
+
+(define (recomp WRD)
+	(psu 'set-right-marginals WRD)
+	(for-each
+		(lambda (DJ) (psu 'set-left-marginals DJ))
+		(star-obj 'right-duals WRD)))
+
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(define cls (WordClassNode "+ — “ ” _"))
+(for-each recomp WLIST)
+(recomp cls)
+
+(psu 'set-left-totals)
+(psu 'set-right-totals)
+; No change from above.
+
+(psu 'clobber) and do it again,
+(sup 'total-support-left)  ; 353652.0  huge change
+(sup 'total-count-left)  ; 5995073.0 huge change
+(sup 'total-support-right) ; 38265.0
+(sup 'total-count-right) ; 579897.0 huge change... wtf
+
+(sup 'clobber) ; wipes out everything!
+OK, so that was a bad idea...
+
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+(in-group-cluster covr-obj 0.5 0.2 4 200 1)
+(print-matrix-summary-report star-obj)
+
+(star-obj 'clobber)
+(define psu (add-support-compute star-obj))
+(define sup (add-support-api star-obj))
+
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(define cls (WordClassNode "+ — “ ” _"))
+(define (recomp WRD)
+	(psu 'set-right-marginals WRD)
+	(for-each
+		(lambda (DJ) (psu 'set-left-marginals DJ))
+		(star-obj 'right-duals WRD)))
+
+(for-each recomp WLIST)
+(recomp cls)
+(psu 'set-left-totals)
+(psu 'set-right-totals)
+(print-matrix-summary-report star-obj)
+
+EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+
+; Initial count: 22942644.0
+; merge everything now...
+(define mrg (make-merge-majority star-obj 0.5 4 #f))
+
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(define cls (mrg WLIST))
+; (define cls (WordClassNode "+ — “ ” _"))
+(star-obj 'clobber)
+(for-each (lambda (WRD) (recompute-mmt star-obj WRD)) WLIST)
+(recompute-mmt star-obj cls)
+(recompute-mmt-final star-obj)
+(print-matrix-summary-report star-obj)
+; All good.
+count: 22942644.0  unchanged. Good
+
+
+;merge-connectors in gram-projective.scm
+(define wa (Word "+"))
+
+(define (clik LLOBJ CLUST SECT ACC-FUN)
+	(define DJ (LLOBJ 'right-element SECT))
+	(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0))
+
+; (merge-connectors star-obj cls wa clik)
+
+(define (reshape OBJ MRGECT SECT FRAC)
+   (reshape-merge OBJ cls MRGECT wa SECT FRAC)
+)
+(define rstars (star-obj 'right-stars wa))
+(define pra (list-ref rstars 0))
+(clik star-obj cls pra reshape)
+(star-obj 'clobber)
+(recompute-mmt star-obj pra)
+(recompute-mmt star-obj cls)
+(recompute-mmt-final star-obj)
+; XXX above merged connectors on just one x-section with zero count.
+Total counts are balanced, but count is 22942648.0 so it's larger by 4
+XXX
+
+(define pra (list-ref rstars 1)) ; xsect with cnt of 63
+(print-matrix-summary-report star-obj)
+; Counts still balanced, but totla count is 22942648.0 so unchanged
+
+(define (mgcon pra)
+	(clik star-obj cls pra reshape)
+	(star-obj 'clobber)
+	(recompute-mmt star-obj pra)
+	(recompute-mmt star-obj cls)
+	(recompute-mmt-final star-obj))
+
+(define sex (filter (lambda (sec) (equal? 'Section (cog-type sec))) rstars))
+(length sex) ; 66
+(define sexy (list-ref sex 0))
+(mgcon sexy)
+; Now it's borken.
+Error: left and right total pairs not equal! 2774930.0 2774929.0
+Error: left and right total counts not equal! 22942659.0 22942648.0
+
+ 2774930.0 2774929.0 -- off by 1
+ 22942659.0 22942648.0 -- off by 11, the count of the section
+
+Hmm 22942659.0 = sum of counts over all djs, right? too large by 11
+22942648.0 = sum of counts over all words... right?
+
+(define all-elts (star-obj 'get-all-elts))
+(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0 all-elts)
+22942659.0 so that's the larger number. and its too big
+
+(define asa (add-support-api star-obj))
+(define rall (star-obj 'right-basis))  ;;; this is all dj's
+(fold (lambda (atm cnt) (+ cnt (asa 'left-count atm))) 0 rall)
+22942659.0 s that's .. the larger number ...
+
+(define lall (star-obj 'left-basis))  ;; this is all words.
+(fold (lambda (atm cnt) (+ cnt (asa 'right-count atm))) 0 lall)
+22942648.0 ... that's the orig number
+(length lall) ; 15084  so one more than before...
+
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+; Initial count: 22942644.0
+; merge everything now...
+(define mrg (make-merge-majority star-obj 0.5 4 #f))
+
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(define cls (mrg WLIST))
+; (define cls (WordClassNode "+ — “ ” _"))
+(star-obj 'clobber)
+(for-each (lambda (WRD) (recompute-mmt star-obj WRD)) WLIST)
+(recompute-mmt star-obj cls)
+(recompute-mmt-final star-obj)
+(print-matrix-summary-report star-obj)
+; All good.
+count: 22942644.0  unchanged. Good
+
+
+;merge-connectors in gram-projective.scm
+(define wa (Word "+"))
+(define rstars (star-obj 'right-stars wa))
+(define pra (list-ref rstars 0))
+;
+; in clique, this:
+(define dj (star-obj 'right-element pra)) ; its a shape link
+; (define cls (WordClassNode "+ — “ ” _"))
+(define msec (star-obj 'make-pair cls dj))
+; msec already has count of 2.0
+
+; Above is in r10-dbg-b.rdb XXX except the zer'ed sections were
+; never stored, because, duh. Crap.
+
+; (reshape-merge star-obj cls msec wa pra 1.0)
+(define donor-type (cog-type pra)) ; So CrossSec
+; calls (merge-resects star-obj cls wa msec pra)
+
+; line 187 ff shape-project.scm
+(define resect (star-obj 'make-section msec)) ; moves cls into connector
+(define germ (star-obj  'left-element resect)) ; (WordNode "=Lit")
+(define mgsf (star-obj 'flatten cls resect)) ; cls in all connectors.
+
+(define donor (star-obj 'make-section pra))
+(define d-cnt 2)  donors count
+(define x-cnt 2)  xsect count
+
+(rebalance-count star-obj resect 0) zeros count on sect (its already zero)
+; (star-obj 'get-cross-sections resect)
+; and also zeros count on one xsections.
+; XXX??? resect has only one existing xsect, which is the original xsect.
+; None of the others exist. So above reduces count by 4 grand total.
+
+(star-obj 'make-cross-sections mgsf)  ; line 203
+; the above makes 5 xsects total (there were 5 connectors)
+
+(rebalance-count star-obj mgsf 2) ; puts 2 on the above 5 plus on mgsf
+; so above increases total count by 12.
+; so far that is 12 - 4 = count increase of +8
+
+(rebalance-count star-obj donor 2)
+; donor already has count of 2.
+; (star-obj 'get-cross-sections donor)
+; above shows 5 xsections. two have counts The other three don't .. why not?
+; so above adds +6 tot total count.
+; XXX but this is wrong, the count on the donor should be zeroed.
+; so wtf !??
+
+
+
+
+;;;;;;
+(star-obj 'clobber)
+(recompute-mmt star-obj pra)
+(recompute-mmt star-obj cls)
+(recompute-mmt-final star-obj)
+; XXX above merged connectors on just one x-section with zero count.
+Total counts are balanced, but count is 22942648.0 so it's larger by 4
+XXX
+
+
+
+
+
 
 ==================
 leak of meet-links:
@@ -7108,7 +7332,9 @@ TODO/BUGS:
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report. 3 days hard work, partly fixed, issue
   was that marginals were not being loaded.
+  Maybe clobber in gram-agglo not needed?
 
+* Add increment-count to everything.
 * recompute-mmt will be more efficient if we union all the right duals
   for all the words, instead of doing them one at a time.
 * mmt-q is handled incorrectly. It must not be stored with the

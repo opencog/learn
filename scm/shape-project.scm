@@ -200,7 +200,7 @@
 
 			(when mgsf
 				(rebalance-count LLOBJ resect 0)
-				(LLOBJ 'make-cross-sections mgs))
+				(LLOBJ 'make-cross-sections mgsf))
 			(rebalance-count LLOBJ mgs x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
@@ -229,7 +229,7 @@
   the ordinary linear projective merge does correctly create the merged
   Sections/CrossSections with GLS as the germ, but leaves behind a
   mish-mash of the raw unmerged word W to appear in various Shapes (as
-  the point) and in various Connectors. These need to be harmonzed so
+  the point) and in various Connectors. These need to be harmonized so
   that W is replaced by GLS in all the right places, with counts updated
   appropriately.
 
