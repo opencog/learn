@@ -77,6 +77,7 @@
 	; i.e. the 'explode should have created some CrossSections
 	(test-equal 4 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
+	(test-equal 1 (length (gsc 'right-stars (Word "c"))))
 
 	; Should not be any Sections on k,m.
 	(test-equal 1 (length (gsc 'right-stars (Word "k"))))

@@ -48,25 +48,25 @@
 	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
 	(test-equal 2 (length (gsc 'right-stars (Word "c"))))
 
-#! ===========
 	; Get the total count on all Sections
 	(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
 	; Create CrossSections and verify that they got created
 	(gsc 'explode-sections)
-	(test-equal 9 (length (cog-get-atoms 'CrossSection)))
+	(test-equal 14 (length (cog-get-atoms 'CrossSection)))
 
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
-	(test-equal 4 (length (gsc 'right-stars (Word "a"))))
-	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
+	(test-equal 6 (length (gsc 'right-stars (Word "a"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "b"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "c"))))
 
 	; Should not be any Sections on k,m.
-	(test-equal 1 (length (gsc 'right-stars (Word "k"))))
-	(test-equal 1 (length (gsc 'right-stars (Word "m"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "k"))))
+	(test-equal 2 (length (gsc 'right-stars (Word "m"))))
 
-	; We expect a total of 3 Sections
-	(test-equal 3 (length (cog-get-atoms 'Section)))
+	; We expect a total of 4 Sections
+	(test-equal 4 (length (cog-get-atoms 'Section)))
 
 	; --------------------------
 	; Merge two sections together.
@@ -77,13 +77,15 @@
 	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
 
+(format #t "duuude ~A\n" (gsc 'right-stars WC-AB))
 	; We expect one merged section, three crosses
 	(test-equal 4 (length (gsc 'right-stars WC-AB)))
 
-	; Of the 3 original Sections, 3 are deleted, and 2 are created,
+	; Of the 4 original Sections, 4 are deleted, and 2 are created,
 	; leaving a grand total of 2.
 	(test-equal 2 (length (cog-get-atoms 'Section)))
 
+#! ===========
 	; Of the 9 original CrossSections, all are deleted outright, and 
 	; seven are created to replace them.
 	(test-equal 7 (length (cog-get-atoms 'CrossSection)))
