@@ -72,11 +72,10 @@
 	; Create CrossSections and verify that they got created
 	(gsc 'explode-sections)
 	(test-equal 9 (length (cog-get-atoms 'CrossSection)))
-#! ========
 
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
-	(test-equal 4 (length (gsc 'right-stars (Word "a"))))
+	(test-equal 5 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
 
 	; Should not be any Sections on k,m.
@@ -95,8 +94,8 @@
 	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
 
-	; We expect one merged sections, three crosses
-	(test-equal 4 (length (gsc 'right-stars WC-AB)))
+	; We expect two merged section, three crosses
+	(test-equal 5 (length (gsc 'right-stars WC-AB)))
 
 	; Of the 3 original Sections, 3 are deleted, and 2 are created,
 	; leaving a grand total of 2.
@@ -112,21 +111,21 @@
 		(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0
 		(gsc 'right-stars WC-AB)))
 	(define epsilon 1.0e-8)
-	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa)) tot-ab epsilon)
+	(test-approximate (+ cnt-a-gh cnt-b-gh (* 4 cnt-a-aaa)) tot-ab epsilon)
 
 	; -----------------------
 	; To gain access to the counts, load them by name.
-	(expected-a-b-sections WC-AB)
+	(expected-aaa-sections WC-AB)
 
 	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
-	(test-approximate cnt-c-aaa (cog-count sec-c-aaa) epsilon)
+	(test-approximate cnt-a-aaa (cog-count sec-a-aaa) epsilon)
 
 	; Validate counts on CrossSections...
-	(test-approximate cnt-c-aaa (cog-count xes-k-c-vaaam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kvaam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kavam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kaavm) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-m-c-kaaav) epsilon)
+	(test-approximate cnt-a-aaa (cog-count xes-k-a-vaaam) epsilon)
+	(test-approximate cnt-a-aaa (cog-count xes-a-a-kvaam) epsilon)
+	(test-approximate cnt-a-aaa (cog-count xes-a-a-kavam) epsilon)
+	(test-approximate cnt-a-aaa (cog-count xes-a-a-kaavm) epsilon)
+	(test-approximate cnt-a-aaa (cog-count xes-m-a-kaaav) epsilon)
 
 	; -----------------------
 	; Verify detailed balance
@@ -137,10 +136,9 @@
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 		epsilon)
-==========!#
 )
 
-(define t-start-cluster "connector balance test")
+(define t-start-cluster "connector balance-both test")
 (test-begin t-start-cluster)
 
 	; Check both merge orders. Results should be independent of the order.

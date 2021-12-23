@@ -93,7 +93,7 @@
 	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
 
-	; We expect one merged sections, three crosses
+	; We expect one merged section, three crosses
 	(test-equal 4 (length (gsc 'right-stars WC-AB)))
 
 	; Of the 3 original Sections, 3 are deleted, and 2 are created,

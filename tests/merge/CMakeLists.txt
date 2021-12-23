@@ -17,3 +17,4 @@ ADD_GUILE_TEST(ClassMergeCons          class-merge-cons.scm)
 ADD_GUILE_TEST(ClassMergeCother        class-merge-cother.scm)
 
 ADD_GUILE_TEST(ConnectorBalance        connector-balance.scm)
+ADD_GUILE_TEST(ConnectorBalanceBoth    connector-balance-both.scm)
