@@ -7243,7 +7243,14 @@ count: 22942644.0  unchanged. Good
 Total counts are balanced, but count is 22942648.0 so it's larger by 4
 XXX
 
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+Unit test is now bonking.
 
+
+; manual merge-connectors in gram-projective.scm
+(define wa (Word "+"))
+(define rstars (star-obj 'right-stars wa))
+(define pra (list-ref rstars 0))
 
 
 

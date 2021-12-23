@@ -54,6 +54,7 @@
 	; Create CrossSections and verify that they got created
 	(gsc 'explode-sections)
 	(test-equal 14 (length (cog-get-atoms 'CrossSection)))
+	(define totcross (fold + 0 (map cog-count (cog-get-atoms 'CrossSection))))
 
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
@@ -120,6 +121,8 @@
 
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
+		epsilon)
+	(test-approximate totcross (fold + 0 (map cog-count (cog-get-atoms 'CrossSection)))
 		epsilon)
 =========== !#
 )
