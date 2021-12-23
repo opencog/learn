@@ -35,73 +35,89 @@
 	*unspecified*
 )
 
-#! ===================
 ; Expected results from the above.
-(define sec-ej-abc #f)
-(define sec-ej-dgh #f)
-(define sec-ej-klm #f)
-(define sec-e-klm #f)
+(define sec-ab-gh #f)
+(define sec-c-aaa #f)
 
-(define xes-b-ej-avc #f)
-(define xes-k-ej-vlm #f)
-(define xes-k-e-vlm #f)
+(define xes-k-c-vaaam #f)
+(define xes-a-c-kvaam #f)
+(define xes-a-c-kavam #f)
+(define xes-a-c-kaavm #f)
+(define xes-m-c-kaaav #f)
 
-(define (expected-e-j-sections WC-EJ)
-	(set! sec-ej-abc
+(define (expected-a-b-sections WC-AB)
+	(set! sec-ab-gh
 	(Section
-		WC-EJ
+		WC-AB
 		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+")))))
-	(set! sec-ej-dgh
-	(Section
-		WC-EJ
-		(ConnectorSeq
-			(Connector (Word "d") (ConnectorDir "-"))
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+")))))
-	(set! sec-ej-klm
+
+	(set! sec-c-aaa
 	(Section
-		WC-EJ
+		(Word "c")
 		(ConnectorSeq
 			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+")))))
-	(set! sec-e-klm
-	(Section
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
 
-	(set! xes-b-ej-avc
-	(CrossSection
-		(Word "b")
-		(Shape
-			WC-EJ
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+")))))
-	(set! xes-k-ej-vlm
+	(set! xes-k-c-vaaam
 	(CrossSection
 		(Word "k")
 		(Shape
-			WC-EJ
+			(Word "c")
 			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
-	(set! xes-k-e-vlm
+
+	(set! xes-a-c-kvaam
 	(CrossSection
-		(Word "k")
+		WC-AB
 		(Shape
-			(Word "e")
-			(Connector (VariableNode "$connector-word") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
+			(Word "c")
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+")))))
+
+	(set! xes-a-c-kavam
+	(CrossSection
+		WC-AB
+		(Shape
+			(Word "c")
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
+
+	(set! xes-a-c-kaavm
+	(CrossSection
+		WC-AB
+		(Shape
+			(Word "c")
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+")))))
+
+	(set! xes-m-c-kaaav
+	(CrossSection
+		(Word "m")
+		(Shape
+			(Word "c")
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector WC-AB (ConnectorDir "+"))
+			(Connector (VariableNode "$connector-word") (ConnectorDir "+")))))
 )
-============= !#
 
 ; ---------------------------------------------------------------
 ; ---------------------------------------------------------------

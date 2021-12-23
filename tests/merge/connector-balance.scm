@@ -104,25 +104,27 @@
 	; seven are created to replace them.
 	(test-equal 7 (length (cog-get-atoms 'CrossSection)))
 
-#! ===========
 	; --------------
 	; Validate counts.
-	; For example:
+	(define tot-ab
+		(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0
+		(gsc 'right-stars WC-AB)))
 	(define epsilon 1.0e-8)
-	(test-approximate (* cnt-e-klm (- 1.0 frac))
-		(cog-count (car (gsc 'right-stars (Word "e")))) epsilon)
+	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa)) tot-ab epsilon)
 
+	; -----------------------
 	; To gain access to the counts, load them by name.
-	(expected-e-j-sections WC-EJ)
-	(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count sec-ej-abc) epsilon)
-	(test-approximate (+ cnt-e-dgh cnt-j-dgh) (cog-count sec-ej-dgh) epsilon)
-	(test-approximate (* frac cnt-e-klm) (cog-count sec-ej-klm) epsilon)
-	(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count sec-e-klm) epsilon)
+	(expected-a-b-sections WC-AB)
 
-	; Validate counts on select CrossSections...
-	(test-approximate (+ cnt-e-abc cnt-j-abc) (cog-count xes-b-ej-avc) epsilon)
-	(test-approximate (* frac cnt-e-klm) (cog-count xes-k-ej-vlm) epsilon)
-	(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
+	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
+	(test-approximate cnt-c-aaa (cog-count sec-c-aaa) epsilon)
+
+	; Validate counts on CrossSections...
+	(test-approximate cnt-c-aaa (cog-count xes-k-c-vaaam) epsilon)
+	(test-approximate cnt-c-aaa (cog-count xes-a-c-kvaam) epsilon)
+	(test-approximate cnt-c-aaa (cog-count xes-a-c-kavam) epsilon)
+	(test-approximate cnt-c-aaa (cog-count xes-a-c-kaavm) epsilon)
+	(test-approximate cnt-c-aaa (cog-count xes-m-c-kaaav) epsilon)
 
 	; -----------------------
 	; Verify detailed balance
@@ -133,7 +135,6 @@
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 		epsilon)
-============ !#
 )
 
 (define t-start-cluster "connector balance test")
