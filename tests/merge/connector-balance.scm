@@ -51,7 +51,7 @@
 ; These should stay consistent with the merged sections. i.e. these
 ; should reduce to 2 grand-total sections, with appropriate counts.
 
-(define (run-balance WA WB WC-NAME)
+(define (run-balance WA WB WAB-NAME)
 
 	; Load some data
 	(setup-a-b-sections)
@@ -72,45 +72,39 @@
 	(gsc 'explode-sections)
 	(test-equal 9 (length (cog-get-atoms 'CrossSection)))
 
-#! ===========
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
-	(test-equal 2 (length (gsc 'right-stars (Word "g"))))
-	(test-equal 2 (length (gsc 'right-stars (Word "h"))))
+	(test-equal 4 (length (gsc 'right-stars (Word "a"))))
+	(test-equal 1 (length (gsc 'right-stars (Word "b"))))
 
-	; Should not be any CrossSections on e,j; should be same as before.
-	(test-equal 3 (length (gsc 'right-stars (Word "e"))))
-	(test-equal 2 (length (gsc 'right-stars (Word "j"))))
+	; Should not be any Sections on k,m.
+	(test-equal 1 (length (gsc 'right-stars (Word "k"))))
+	(test-equal 1 (length (gsc 'right-stars (Word "m"))))
 
-	; We expect a total of 3+2=5 Sections
-	(test-equal 5 (length (cog-get-atoms 'Section)))
+	; We expect a total of 3 Sections
+	(test-equal 3 (length (cog-get-atoms 'Section)))
 
 	; --------------------------
 	; Merge two sections together.
-	(define frac 0.25)
-	(merge gsc WA WB frac)
-	(define WC-EJ (WordClassNode WC-NAME))
+	(merge gsc WA WB 1)
+	(define WC-AB (WordClassNode WAB-NAME))
 
-	; We expect just one section remaining on "e", the klm section.
-	(test-equal 1 (length (gsc 'right-stars (Word "e"))))
+	; We expect no sections remaining on "a" or "b".
+	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
+	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
 
-	; We expect no sections remaining on j
-	(test-equal 0 (length (gsc 'right-stars (Word "j"))))
+	; We expect one merged sections, three crosses
+	(test-equal 4 (length (gsc 'right-stars WC-AB)))
 
-	; We expect three merged sections
-	(test-equal 3 (length (gsc 'right-stars WC-EJ)))
+	; Of the 3 original Sections, 3 are deleted, and 2 are created,
+	; leaving a grand total of 2.
+	(test-equal 2 (length (cog-get-atoms 'Section)))
 
-	; Of the 5 original Sections, 4 are deleted, and 3 are created,
-	; leaving a grand total of 4. The 3 new ones are all e-j, the
-	; remaining old one is an "e" with a reduced count.  This is just
-	; the sum of the above.
-	(test-equal 4 (length (cog-get-atoms 'Section)))
+	; Of the 9 original CrossSections, all are deleted outright, and 
+	; seven are created to replace them.
+	(test-equal 7 (length (cog-get-atoms 'CrossSection)))
 
-	; Of the 15 original CrossSections, 12 are deleted outright, and three
-	; get their counts reduced (the e-klm crosses). A total of 3x3=9 new
-	; crosses get created, leaving a grand-total of 12.
-	(test-equal 12 (length (cog-get-atoms 'CrossSection)))
-
+#! ===========
 	; --------------
 	; Validate counts.
 	; For example:
