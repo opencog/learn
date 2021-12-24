@@ -97,27 +97,25 @@
 	(define epsilon 1.0e-8)
 	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa) (* 3 cnt-c-aab)) tot-ab epsilon)
 
-#! ===========
 	; -----------------------
 	; To gain access to the counts, load them by name.
-	(expected-a-b-sections WC-AB)
+	(expected-aab-sections WC-AB)
 
 	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
-	(test-approximate cnt-c-aaa (cog-count sec-c-aaa) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count sec-c-aaa) epsilon)
 
 	; Validate counts on CrossSections...
-	(test-approximate cnt-c-aaa (cog-count xes-k-c-vaaam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kvaam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kavam) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-a-c-kaavm) epsilon)
-	(test-approximate cnt-c-aaa (cog-count xes-m-c-kaaav) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-k-c-vaaam) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kvaam) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kavam) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kaavm) epsilon)
+	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-m-c-kaaav) epsilon)
 
 	; -----------------------
 	; Verify detailed balance
 	(test-assert (check-sections gsc epsilon))
 	(test-assert (check-crosses gsc epsilon))
 	(test-assert (check-shapes gsc epsilon))
-=========== !#
 
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
@@ -126,7 +124,7 @@
 		epsilon)
 )
 
-(define t-start-cluster "connector balance test")
+(define t-start-cluster "balance-several test")
 (test-begin t-start-cluster)
 
 	; Check both merge orders. Results should be independent of the order.
