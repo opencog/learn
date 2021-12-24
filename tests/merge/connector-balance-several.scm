@@ -78,7 +78,6 @@
 	(test-equal 0 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 0 (length (gsc 'right-stars (Word "b"))))
 
-(format #t "duuude ~A\n" (gsc 'right-stars WC-AB))
 	; We expect one merged section, three crosses
 	(test-equal 4 (length (gsc 'right-stars WC-AB)))
 
@@ -86,8 +85,7 @@
 	; leaving a grand total of 2.
 	(test-equal 2 (length (cog-get-atoms 'Section)))
 
-#! ===========
-	; Of the 9 original CrossSections, all are deleted outright, and 
+	; Of the 14 original CrossSections, all are deleted outright, and
 	; seven are created to replace them.
 	(test-equal 7 (length (cog-get-atoms 'CrossSection)))
 
@@ -97,8 +95,9 @@
 		(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0
 		(gsc 'right-stars WC-AB)))
 	(define epsilon 1.0e-8)
-	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa)) tot-ab epsilon)
+	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa) (* 3 cnt-c-aab)) tot-ab epsilon)
 
+#! ===========
 	; -----------------------
 	; To gain access to the counts, load them by name.
 	(expected-a-b-sections WC-AB)
@@ -118,13 +117,13 @@
 	(test-assert (check-sections gsc epsilon))
 	(test-assert (check-crosses gsc epsilon))
 	(test-assert (check-shapes gsc epsilon))
+=========== !#
 
 	; Verify no change in totals
 	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 		epsilon)
 	(test-approximate totcross (fold + 0 (map cog-count (cog-get-atoms 'CrossSection)))
 		epsilon)
-=========== !#
 )
 
 (define t-start-cluster "connector balance test")

@@ -7316,25 +7316,107 @@ Unit test is now bonking.
 ; and also counts on all xsects from it.
 
 ; ------- Done.  Move on to the next one.
-(define pra (list-ref rstars 1))
-; pra is <a, [c, kaavm]> count of 0
+(define pra (list-ref rstars 1)) ; <a, [c, kaavm]> count of 0
 
 ; call clique at line 370 of gram-projective.scm
 ; clique is line 92 of gram-pairwise.scm
 (define dj (gsc 'right-element pra)) ; [c, kaavm]
 (define wot (Word "b"))
 (define osc (gsc 'get-pair wot dj)) ; not nil, count of zero.
-; not nil because came from (c, kaabm)
+; not nil because came from (c, kaabm)  "other"
 ; Then this call
 ; (ACC-FUN gsc (gsc 'make-pair cls dj) pra 1.0)
-; This is
+; This is line 222 of shape-project.scm vi line 363 of gram-projective.scm
 ; (reshape-merge gsc cls (gsc 'make-pair cls dj) wa pra 1.0)
 ; (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
+; (merge-resects gsc cls W MRG=make-pair DONOR=pra)
+; (merge-resects LLOBJ GLS W XMR XDON)
+(define xmr (gsc 'make-pair cls dj)) ; <{ab}, [c, kaavm]> count 67
+(define resect (gsc 'make-section xmr)) ; (c, kaa{ab}m) null count junk
+(define mgsf (gsc 'flatten cls resect)) ; (c, k{ab}{ab}{ab}m) count 23
+(define donor (gsc 'make-section pra))  ;  (c, kaaam) count 44
+(define d-cnt 0)
+(define x-cnt 67)
+(rebalance-count gsc mgsf x-cnt)
+(rebalance-count gsc donor d-cnt) ; kills (c, kaaam) to zero yes.
+
+; ------- Done.  Move on to the next one.
+(define pra (list-ref rstars 2))  ; (a, gh) count 0
+(define dj (gsc 'right-element pra))
+(define wot (Word "b"))
+(define osc (gsc 'get-pair wot dj)) ; (b, gh) not nil, count of zero.
+; reshape-merge gsc cls (gsc 'make-pair cls dj) wa pra 1.0)
+; (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
+(define mrg (gsc 'make-pair cls dj))  ; ({ab}, gh) count 99
+(define flat (gsc 'flatten cls mrg))  ; #f line 247
+(define donor pra)
+(gsc 'make-cross-sections pra) ; both had count of 61
+(for-each
+   (lambda (XST)
+       (define xmr (gsc 're-cross cls XST))  ; <g, [{ab}, vh]>
+       (accumulate-count gsc xmr XST 1))   ; sets these to 61
+   (gsc 'make-cross-sections pra))
+; above looks good
+(gsc 'make-cross-sections pra) ; both now zeroed. <g, [a, vh]> etc.
+(gsc 'is-nonflat? cls mrg) #f    line 271
+(rebalance-count gsc mrg (gsc 'get-count mrg)) ; set to 99, over-riding earlier work!
+
+; ------- Done.  Move on to the next one.
+(define pra (list-ref rstars 3))  ; <a, [c, kvaam]> count 0
+(define dj (gsc 'right-element pra))
+(define wot (Word "b"))
+(gsc 'get-pair wot dj) ; its nil
+(define xmr (gsc 'make-pair cls dj)) ; <{ab}, [c,kvaam]> count 44
+(define resect (gsc 'make-section xmr)) ; junk (c, k{ab}aam)
+(define mgsf (gsc 'flatten cls resect))
+(define donor (gsc 'make-section pra)) (c, kaaam)
+(define d-cnt 0)
+(define x-cnt 44)
+(rebalance-count gsc mgsf 44) ; whoa ...  should this accumulate? XXX Bad
+(rebalance-count gsc donor 0)
+
+; ------- Done.  Move on to the next one.
+(define pra (list-ref rstars 4))  ; <a, [c, kvabm]> count 0
+(define dj (gsc 'right-element pra))
+(define xmr (gsc 'make-pair cls dj)) ; <{ab}, [c,kvabm]> count 23
+(define resect (gsc 'make-section xmr))
+(define mgsf (gsc 'flatten cls resect)) ; now has 44 on it from above.
+(define d-cnt 0)
+(define x-cnt 23)
+(define donor (gsc 'make-section pra)) ; (c, kaabm)
+(rebalance-count gsc mgsf 23)  ; even worse... XXX
+(rebalance-count gsc donor 0)
+
+; ------- Done.  Move on to the next one.
+(define pra (list-ref rstars 5)) ; <a, [c, kavam]> count 0
+(define dj (gsc 'right-element pra))
+(define xmr (gsc 'make-pair cls dj)) ; <{ab}, [c, kavam]> 44
+(define resect (gsc 'make-section xmr))
+(define mgsf (gsc 'flatten cls resect)) ; now has 23 from above
+(define d-cnt 0)
+(define x-cnt 44)
+(define donor (gsc 'make-section pra)) ; (c, kaaam)
+(rebalance-count gsc mgsf 44)
+(rebalance-count gsc donor 0)
 
 
+so
+0 was <{ab}, [c, kavbm]> 23 from (c, kaabm) 23 -so mgsf=<c, k{ab}{ab}{ab}m>=23
+1 was <{ab}, [c, kaavm]> 67 from (c, kaa*m)    -so mgsf=<c, k{ab}{ab}{ab}m>=67=44+23
+2 skip
+3 was <{ab}, [c, kvaam]> 44 from (c, kaaam) so should not drop Bummer
+4 was <{ab}, [c, kvabm]> 23 from (c, kaabm) 23 -so droped even lower. piss.
+5 was <{ab}, [c, kavam]> 44 from (c, kaaam)
 
+prt-section
+prt-cross-section
+prt-element
 
-
+connector-merge-tricon-dbl.scm:265: FAIL
+connector-merge-tricon-dbl.scm:271: FAIL
+connector-merge-tricon-dbl.scm:283: FAIL
+connector-merge-tricon-dbl.scm:285: FAIL
+connector-merge-tricon-dbl.scm:295: FAIL
 
 
 ==================
