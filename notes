@@ -7246,11 +7246,93 @@ XXX
 GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 Unit test is now bonking.
 
+; gram-pairwise.scm line 305
+; calls start-cluster
+; calls merge-connectors line 110 with clik:
 
-; manual merge-connectors in gram-projective.scm
-(define wa (Word "+"))
-(define rstars (star-obj 'right-stars wa))
+   (define (clique LLOBJ CLUST SECT ACC-FUN)
+      (define WRD (LLOBJ 'left-element SECT))
+      (define DJ (LLOBJ 'right-element SECT))
+      (define WOTHER (if (equal? WRD WA) WB WA))
+      (define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
+      (if (nil? OTHSEC)
+         (if (<= (LLOBJ 'get-count SECT) NOISE)
+            (ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+            (if (< 0 frac-to-merge)
+               (ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge)))
+         (ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+      )
+   )
+
+; manual merge-connectors in gram-projective.scm line 333
+(define wa (Word "a"))
+(define rstars (gsc 'right-stars wa))   ; there are 6
 (define pra (list-ref rstars 0))
+(define cls (WordClass "a b"))
+
+; pra is <a, [c, kavbm]> count of 0
+; calls clique: line 370
+(define dj (gsc 'right-element pra)) ; [c, kavbm]
+(define wot (Word "b"))
+(define osc (gsc 'get-pair wot dj)) ; nil
+;  (ACC-FUN gsc (gsc 'make-pair cls dj) pra 1.0)
+; (reshape-merge gsc cls (gsc 'make-pair cls dj) wa pra 1.0)
+; (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
+
+; reshape-merge in shape-project.scm line 221
+; calls merge-resects line 283
+; (merge-resects  gsc cls wa (gsc 'make-pair cls dj) pra)
+; (merge-resects LLOBJ GLS W XMR XDON)
+(define xmr (gsc 'make-pair cls dj))
+; xmr is <{ab}, [c, kavbm]> count of 23
+
+(define resect (gsc 'make-section xmr))
+; resect is junky  (c,ka{ab}bm) with no count
+
+(define mgsf (gsc 'flatten cls resect))
+; mgsf is nice <c, k{ab}{ab}{ab}m> with no count.
+
+; next: line 196
+(define donor (gsc 'make-section pra))
+; donor is (c, kaabm) with count 23 looks good
+
+(define d-cnt 0)
+(define x-cnt 23)
+
+; set resect count to 0 OK was none
+(gsc 'make-cross-sections mgsf)  ; cool. None have counts yet.
+
+; (rebalance-count gsc mgsf x-cnt)
+; sets count on mgsf and all crosses. Looks AOK
+(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
+(define (rebalance-count LLOBJ SECTION CNT)
+	(set-count SECTION CNT)
+	(for-each
+      (lambda (XST) (set-count XST CNT))
+      (LLOBJ 'get-cross-sections SECTION)))
+(rebalance-count gsc mgsf x-cnt)
+(rebalance-count gsc donor d-cnt)
+; sets count on (c, kaabm) to zero.
+; and also counts on all xsects from it.
+
+; ------- Done.  Move on to the next one.
+(define pra (list-ref rstars 1))
+; pra is <a, [c, kaavm]> count of 0
+
+; call clique at line 370 of gram-projective.scm
+; clique is line 92 of gram-pairwise.scm
+(define dj (gsc 'right-element pra)) ; [c, kaavm]
+(define wot (Word "b"))
+(define osc (gsc 'get-pair wot dj)) ; not nil, count of zero.
+; not nil because came from (c, kaabm)
+; Then this call
+; (ACC-FUN gsc (gsc 'make-pair cls dj) pra 1.0)
+; This is
+; (reshape-merge gsc cls (gsc 'make-pair cls dj) wa pra 1.0)
+; (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
+
+
+
 
 
 

@@ -94,6 +94,9 @@
 		(define DJ (LLOBJ 'right-element SECT))
 		(define WOTHER (if (equal? WRD WA) WB WA))
 		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
+
+		; If OTHSEC is nill, then it is the non-overlap case, and
+		; only a fraction is merged.  Otherwise, all is merged.
 		(if (nil? OTHSEC)
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
 				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
