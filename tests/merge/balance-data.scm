@@ -235,7 +235,7 @@
 )
 
 ; ---------------------------------------------------------------
-; Similar to the first case, but merged connectors.
+; Similar to the first case, but a second donor for the connectors.
 
 (define cnt-c-aab 23)
 
@@ -258,6 +258,32 @@
 ; Exactly the same as the first case.
 (define (expected-aab-sections WC-AB)
 	(expected-a-b-sections WC-AB)
+)
+
+; ---------------------------------------------------------------
+; Similar to the first case, but a third donor for the connectors.
+
+(define cnt-c-aba 30)
+
+(define (setup-aba-sections)
+	(setup-aab-sections)
+
+	(Section (ctv 1 0 cnt-c-aba)
+		(Word "c")
+		(ConnectorSeq
+			(Connector (Word "k") (ConnectorDir "-"))
+			(Connector (Word "a") (ConnectorDir "+"))
+			(Connector (Word "b") (ConnectorDir "+"))
+			(Connector (Word "a") (ConnectorDir "+"))
+			(Connector (Word "m") (ConnectorDir "+"))))
+
+	*unspecified*
+)
+
+; Expected results from the above.
+; Exactly the same as the first case.
+(define (expected-aba-sections WC-AB)
+	(expected-aab-sections WC-AB)
 )
 
 ; ---------------------------------------------------------------
