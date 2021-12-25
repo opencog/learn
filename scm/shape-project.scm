@@ -194,16 +194,16 @@
 	; ???
 	(if (nil? (cog-link 'MemberLink germ GLS))
 		(let* ((donor (LLOBJ 'make-section XDON))
-				(d-cnt (LLOBJ 'get-count XDON)))
+				(d-cnt (LLOBJ 'get-count XDON))
+				(x-cnt (LLOBJ 'get-count XMR)))
+
 			(if mgsf
-				(let ((a-cnt (+ (LLOBJ 'get-count donor) (LLOBJ 'get-count mgsf))))
+				(let ((a-cnt (max x-cnt (LLOBJ 'get-count mgsf))))
 					(rebalance-count LLOBJ resect 0)
 					(LLOBJ 'make-cross-sections mgsf)
 					(rebalance-count LLOBJ mgsf a-cnt)
 				)
-				(let ((x-cnt (LLOBJ 'get-count XMR)))
-					(rebalance-count LLOBJ resect x-cnt)
-				))
+				(rebalance-count LLOBJ resect x-cnt))
 			(rebalance-count LLOBJ donor d-cnt)
 		)
 		(let* ((reg (if mgsf mgsf

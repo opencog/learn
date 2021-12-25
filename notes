@@ -7412,11 +7412,60 @@ prt-section
 prt-cross-section
 prt-element
 
+expected-f-double-e
+(f,  {e j}- b- {e j}+)
+
+duuude xmr= 8.500 * [{e j}, <f,  $- b- e+>]
+duuude donor=34.000 * (f,  e- b- e+)
+duuude mgs=34.000 * (f,  {e j}- b- {e j}+)
+
+connector-merge-tricon-dbl.scm:173: FAIL
+connector-merge-tricon-dbl.scm:175: FAIL
+connector-merge-tricon-dbl.scm:178: FAIL
+connector-merge-tricon-dbl.scm:180: FAIL
+connector-merge-tricon-dbl.scm:188: FAIL
+
+
 connector-merge-tricon-dbl.scm:265: FAIL
 connector-merge-tricon-dbl.scm:271: FAIL
 connector-merge-tricon-dbl.scm:283: FAIL
 connector-merge-tricon-dbl.scm:285: FAIL
 connector-merge-tricon-dbl.scm:295: FAIL
+
+balance:
+two distinct donors contrbute
+   mgs=67.000 * (c,  k- {b a}+ {b a}+ {b a}+ m+)
+
+   xmr=44.000 * [{a b}, <c,  k- $+ a+ a+ m+>]
+ donor=44.000 * (c,  k- a+ a+ a+ m+)
+
+   xmr=23.000 * [{a b}, <c,  k- $+ a+ b+ m+>]
+ donor=23.000 * (c,  k- a+ a+ b+ m+)
+
+   xmr=44.000 * [{a b}, <c,  k- a+ $+ a+ m+>]
+ donor=44.000 * (c,  k- a+ a+ a+ m+)
+
+   xmr=23.000 * [{a b}, <c,  k- a+ $+ b+ m+>]
+ donor=23.000 * (c,  k- a+ a+ b+ m+)
+
+   xmr=67.000 * [{a b}, <c,  k- a+ a+ $+ m+>]
+ donor=44.000 * (c,  k- a+ a+ a+ m+)
+ donor=23.000 * (c,  k- a+ a+ b+ m+)
+
+algo: take max xmr of all of these.
+But this won't work in general :-(
+
+tricon-dbl:
+just one donor
+   mgs= 8.500 * (f,  {e j}- b- {e j}+)
+
+ donor=34.000 * (f,  e- b- e+)
+   xmr= 8.500 * [{e j}, <f,  $- b- e+>]
+   xmr= 8.500 * [{e j}, <f,  e- b- $+>]
+  xdon=25.500 * [e, <f,  $- b- e+>]
+  xdon=25.500 * [e, <f,  e- b- $+>]
+
+
 
 
 ==================
