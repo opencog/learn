@@ -5,7 +5,8 @@
 ; Tests merging of several words into a single word-class.
 ; The focus here is to make sure that detailed balance of the counts
 ; across the merged Sections and CrossSections are preserved (obeyed).
-; A more complex variant of connector-balance.scm
+; A variant of connector-balance.scm, where both the germ and the
+; connectors are merged.
 ;
 ; Created Dec 2021
 
@@ -27,6 +28,9 @@
 ;
 ;    (a, gh) + (b, gh) -> ({ab}, gh)
 ;    (a, kaaam)        -> ({ab}, k{ab}{ab}{ab}m)
+;
+; This differs from `connector-balance.scm` in that the second term has
+; a merged seed, vs. being `(c, kaaam)` in the simpler test.
 ;
 ; In this diagram, (e,abc) is abbreviated notation for
 ; (Section (Word e) (ConnectorList (Connector a) (Connector b) (Connector c)))

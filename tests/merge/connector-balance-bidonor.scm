@@ -1,9 +1,9 @@
 ;
-; connector-balance-several.scm
+; connector-balance-bidonor.scm
 ; Unit test for merging of Connectors - detailed balance.
 ;
 ; Same as connector-balance.scm, except that one of the connectors
-; gets counts from multiple sources.
+; gets counts from two donors sources.
 ;
 ; Created Dec 2021
 
@@ -124,7 +124,7 @@
 		epsilon)
 )
 
-(define t-start-cluster "balance-several test")
+(define t-start-cluster "balance-bidonor test")
 (test-begin t-start-cluster)
 
 	; Check both merge orders. Results should be independent of the order.
