@@ -96,24 +96,26 @@
 		(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0
 		(gsc 'right-stars WC-AB)))
 	(define epsilon 1.0e-8)
-#! ====
-	(test-approximate (+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa) (* 3 cnt-c-aab)) tot-ab epsilon)
+	(test-approximate
+		(+ cnt-a-gh cnt-b-gh (* 3 cnt-c-aaa) (* 3 cnt-c-aab) (* 3 cnt-c-aba))
+		tot-ab epsilon)
 
 	; -----------------------
 	; To gain access to the counts, load them by name.
-	(expected-aab-sections WC-AB)
+	(expected-aba-sections WC-AB)
 
 	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count sec-c-aaa) epsilon)
+
+	(define cnt-c-tot (+ cnt-c-aaa cnt-c-aab cnt-c-aba))
+	(test-approximate cnt-c-tot (cog-count sec-c-aaa) epsilon)
 
 	; Validate counts on CrossSections...
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-k-c-vaaam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kvaam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kavam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kaavm) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-m-c-kaaav) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-k-c-vaaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kvaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kavam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kaavm) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-m-c-kaaav) epsilon)
 
-=== !#
 	; -----------------------
 	; Verify detailed balance
 	(test-assert (check-sections gsc epsilon))

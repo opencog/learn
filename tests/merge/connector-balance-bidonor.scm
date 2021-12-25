@@ -102,14 +102,16 @@
 	(expected-aab-sections WC-AB)
 
 	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count sec-c-aaa) epsilon)
+
+	(define cnt-c-tot (+ cnt-c-aaa cnt-c-aab))
+	(test-approximate cnt-c-tot (cog-count sec-c-aaa) epsilon)
 
 	; Validate counts on CrossSections...
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-k-c-vaaam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kvaam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kavam) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-a-c-kaavm) epsilon)
-	(test-approximate (+ cnt-c-aaa cnt-c-aab) (cog-count xes-m-c-kaaav) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-k-c-vaaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kvaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kavam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kaavm) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-m-c-kaaav) epsilon)
 
 	; -----------------------
 	; Verify detailed balance
