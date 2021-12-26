@@ -7500,6 +7500,11 @@ reshape-merge
       (let ((flat (LLOBJ 'flatten GLS MRG)))
          (if flat
 
+   (define resect (LLOBJ 'make-section XMR))
+   (define germ (LLOBJ 'left-element resect))
+   (define mgsf (LLOBJ 'flatten GLS resect))
+
+
 merge-connectors
 
 instead in assign-to-cluster
@@ -7508,6 +7513,11 @@ assign-to-cluster loops can calls CLIQUE passing accumulate-count
 
 clique votes and based on vote, moves count to (LLOBJ 'make-pair CLUST DJ)
 replace this by flatten...
+
+
+(define cnt-c-aaa 44)
+(define cnt-c-aab 23)
+(define cnt-c-aba 30)
 
 
 
