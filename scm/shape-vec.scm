@@ -164,8 +164,14 @@
        the creation of sections.)
 
   'flatten CLS SECT -- Rewrite SECT, replacing the germ by CLS, and also
-       and connectors that belong to CLS by the corresponding connector
+       any connectors that belong to CLS by the corresponding connector
        for CLS. If no connectors belong to CLS, then return #f.
+
+  'flatten-cross CLS XROS -- Rewrite XROS, replacing the germ by CLS.
+       If the 'point' belong to CLS, it is replaced by CLS. If any
+       connectors belong to CLS, they are replaced by the corresponding
+       connector for CLS. If neither the point, nor the connectors belong
+       to CLS, then return #f.
 "
 	(let ((l-basis #f)
 			(r-basis #f)
@@ -305,6 +311,42 @@
 			; Are any of the connectors in the cluster? If so, then
 			; return the rewritten section; else return false.
 			(if non-flat (LLOBJ 'make-pair newgerm (ConnectorSeq newseq)) #f))
+
+		; --------------------------------------------------
+
+		; Replace Connectors in XSECT belonging to CLS by CLS.
+		(define (flatten-cross CLS XSECT)
+			(define SHAPE-PR (cog-outgoing-set XSECT))
+			(define germ (first SHAPE-PR))
+			(define SHAPE (second SHAPE-PR))
+			(define tmpl (cog-outgoing-set SHAPE))
+			(define point (car tmpl))
+			(define conseq (cdr tmpl))
+
+			(define non-flat #f)
+			(define newpoint
+				(if (nil? (cog-link 'MemberLink point CLS)) point
+					(begin (set! non-flat #t) CLS)))
+
+			; Walk through the connector sequence. If any of them
+			; appear in the cluster, create a new connector sequence
+			; with the cluster replacing that particular connector.
+			(define newseq
+				(map (lambda (con)
+					(define clist (cog-outgoing-set con))
+					(if (nil? (cog-link 'MemberLink (car clist) CLS))
+						con
+						(begin (set! non-flat #t)
+							(Connector CLS (cdr clist)))))
+					conseq))
+
+			(define newgerm
+				(if (nil? (cog-link 'MemberLink germ CLS)) germ CLS))
+
+			; Was the point, or any of the connectors rewritten? If so, then
+			; return the rewritten cross section; else return false.
+			(if non-flat (LLOBJ 'make-pair newgerm
+				(Shape newpoint (ConnectorSeq newseq))) #f))
 
 		; --------------------------------------------------
 
@@ -569,6 +611,7 @@
 				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
 				((flatten)          flatten-section)
+				((flatten-cross)    flatten-cross)
 				((is-nonflat?)      is-nonflat-section?)
 
 				((provides)         provides)
