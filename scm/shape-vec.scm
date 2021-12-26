@@ -349,8 +349,8 @@
 
 			; Was the point, or any of the connectors rewritten? If so, then
 			; return the rewritten cross section; else return false.
-			(if non-flat (LLOBJ 'make-pair newgerm
-				(Shape newpoint (ConnectorSeq newseq))) #f))
+			(if non-flat (CrossSection newgerm
+				(Shape newpoint newseq)) #f))
 
 		; --------------------------------------------------
 
