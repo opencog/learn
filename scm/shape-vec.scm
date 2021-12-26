@@ -290,7 +290,8 @@
 
 		; --------------------------------------------------
 
-		; Replace Connectors in SECT belonging to CLS by CLS.
+		; Rewrite SECT by replacing Connectors in the ConnectorSeq
+		; that belong to CLS by CLS itself.
 		(define (flatten-section CLS SECT)
 			; conseq is the connector sequence
 			(define conseq (cog-outgoing-set (get-pair-right SECT)))
@@ -318,7 +319,8 @@
 
 		; --------------------------------------------------
 
-		; Replace Connectors in XSECT belonging to CLS by CLS.
+		; Rewrite XSECT by replacing Connectors in the Shape
+		; that belong to CLS by CLS itself.
 		(define (flatten-cross CLS XSECT)
 			(define SHAPE-PR (cog-outgoing-set XSECT))
 			(define germ (first SHAPE-PR))
@@ -359,6 +361,26 @@
 			(if (equal? 'Section (cog-type PNT))
 				(flatten-section CLS PNT)
 				(flatten-cross CLS PNT)))
+
+		; --------------------------------------------------
+
+		; Like `flatten` but always returns something.
+		; This has an API similar to 'make-pair in that it takes
+		; the left and right sides of the pair, and returns the pair.
+		; XXX TODO This may need some redesign.  Right now, its a retro-fit
+		(define (make-flat CLS DJ MRG-CON)
+			(define mrg
+				(if (equal? 'ConnectorSeq (cog-type DJ))
+					(Section CLS DJ)
+					(CrossSection CLS DJ)))
+			mrg
+#! ====
+; Stub out until we're ready.
+			(if (not MRG-CON) mrg
+				(let ((flat (flatten CLS mrg)))
+					(if flat flat mrg)))
+==== !#
+		)
 
 		; --------------------------------------------------
 
@@ -623,6 +645,7 @@
 				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
 
+				((make-flat)        make-flat)
 				((flatten)          flatten)
 				((flatten-section)  flatten-section)
 				((flatten-cross)    flatten-cross)
@@ -704,6 +727,7 @@
 			((make-cross-sections) (apply shape-obj (cons message args)))
 			((get-cross-sections)  (apply shape-obj (cons message args)))
 			((re-cross)            (apply shape-obj (cons message args)))
+			((make-flat)           (apply shape-obj (cons message args)))
 			((flatten)             (apply shape-obj (cons message args)))
 			((is-nonflat?)         (apply shape-obj (cons message args)))
 
