@@ -163,11 +163,15 @@
        way to handle counts, if one wants clustering to commute with
        the creation of sections.)
 
-  'flatten CLS SECT -- Rewrite SECT, replacing the germ by CLS, and also
-       any connectors that belong to CLS by the corresponding connector
-       for CLS. If no connectors belong to CLS, then return #f.
+  'flatten CLS PNT -- Rewrite PNT, replacing occurances of any atoms
+       belonging to CLS by CLS.  If none, then return #f. This just calls
+       one of the two methods below, basecd on the type of PNT.
 
-  'flatten-cross CLS XROS -- Rewrite XROS, replacing the germ by CLS.
+  'flatten-section CLS SECT -- Rewrite SECT, replacing the germ by CLS,
+       and also any connectors that belong to CLS by the corresponding
+       connector for CLS. If no connectors belong to CLS, then return #f.
+
+  'flatten-cross CLS CROSS -- Rewrite CROSS, replacing the germ by CLS.
        If the 'point' belong to CLS, it is replaced by CLS. If any
        connectors belong to CLS, they are replaced by the corresponding
        connector for CLS. If neither the point, nor the connectors belong
@@ -347,6 +351,14 @@
 			; return the rewritten cross section; else return false.
 			(if non-flat (LLOBJ 'make-pair newgerm
 				(Shape newpoint (ConnectorSeq newseq))) #f))
+
+		; --------------------------------------------------
+
+		; Dispatch to one of the two cases above.
+		(define (flatten CLS PNT)
+			(if (equal? 'Section (cog-type PNT))
+				(flatten-section CLS PNT)
+				(flatten-cross CLS PNT)))
 
 		; --------------------------------------------------
 
@@ -610,7 +622,9 @@
 				((make-cross-sections) make-cross-sections)
 				((get-cross-sections)  get-cross-sections)
 				((re-cross)         re-cross)
-				((flatten)          flatten-section)
+
+				((flatten)          flatten)
+				((flatten-section)  flatten-section)
 				((flatten-cross)    flatten-cross)
 				((is-nonflat?)      is-nonflat-section?)
 
