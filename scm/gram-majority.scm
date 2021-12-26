@@ -170,12 +170,12 @@
 		; or if the count on it is below the noise floor.
 		; CLUST is identical to cls, defined below. Return zero if
 		; there is no merge.
-		(define (clique LLOBJ CLUST SECT ACC-FUN)
+		(define (clique xLLOBJ CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
 					(vote-to-accept? DJ))
-				(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
 				0))
 
 		; Get a Node that will anchor everything merged from WLIST
