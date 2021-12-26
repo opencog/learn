@@ -59,13 +59,13 @@
 
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
-	(test-equal 9 (length (gsc 'right-stars (Word "a"))))
+	(test-equal 8 (length (gsc 'right-stars (Word "a"))))
 	(test-equal 3 (length (gsc 'right-stars (Word "b"))))
 	(test-equal 3 (length (gsc 'right-stars (Word "c"))))
 
 	; Should not be any Sections on k,m.
-	(test-equal 2 (length (gsc 'right-stars (Word "k"))))
-	(test-equal 2 (length (gsc 'right-stars (Word "m"))))
+	(test-equal 3 (length (gsc 'right-stars (Word "k"))))
+	(test-equal 3 (length (gsc 'right-stars (Word "m"))))
 
 	; We expect a total of 4 Sections
 	(test-equal 5 (length (cog-get-atoms 'Section)))
@@ -129,7 +129,7 @@
 		epsilon)
 )
 
-(define t-start-cluster "balance-bidonor test")
+(define t-start-cluster "balance-tridonor test")
 (test-begin t-start-cluster)
 
 	; Check both merge orders. Results should be independent of the order.
