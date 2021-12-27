@@ -181,6 +181,9 @@
 		; Get a Node that will anchor everything merged from WLIST
 		(define cls (make-class-node LLOBJ WLIST))
 
+		; Add words to cluster *before* starting merge!
+		(for-each (lambda (WRD) (MemberLink WRD cls)) WLIST)
+
 		(for-each
 			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
 			WLIST)

@@ -106,6 +106,9 @@
 		)
 	)
 
+	; Create MemberLinks *before* starting merge!
+	(MemberLink WA CLS)
+	(MemberLink WB CLS)
 	(assign-to-cluster LLOBJ CLS WA clique)
 	(assign-to-cluster LLOBJ CLS WB clique)
 
@@ -184,6 +187,8 @@
 		)
 	)
 
+	; Create MemberLink *before* starting merge!
+	(MemberLink WA CLS)
 	(assign-to-cluster LLOBJ CLS WA clique)
 
 	(when MRG-CON
@@ -227,6 +232,11 @@
 		(define CLS-SECT (LLOBJ 'make-flat CLUST DJ MRG-CON))
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
+
+	; Create MemberLink *before* starting merge!
+	(for-each
+		(lambda (MEMB-B) (MemberLink (gar MEMB-B) CLA))
+		(cog-incoming-by-type CLB 'MemberLink))
 
 	; Merge the two clusters. Delete the spurious MemberLink!
 	(assign-to-cluster LLOBJ CLA CLB clique)
