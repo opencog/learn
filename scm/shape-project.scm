@@ -208,15 +208,19 @@
 				)
 				(rebalance-count LLOBJ resect x-cnt))
 ========= !#
+			(LLOBJ 'make-cross-sections resect)
 			(rebalance-count LLOBJ resect x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
+(begin
+(format #t "duude alternater ~A\n" (prt-element XMR))
+		;	(rebalance-count LLOBJ resect x-cnt)
+)
 #!=============
 		(let* ((reg (if mgsf mgsf
 					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect))))
 				(r-cnt (LLOBJ 'get-count reg)))
 
-(format #t "duude clobber ~A\n" (prt-element XMR))
 			(set-count XMR 0)
 			; Create the cross-sections corresponding to `regs`
 			(for-each
