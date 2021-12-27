@@ -373,13 +373,16 @@
 				(if (equal? 'ConnectorSeq (cog-type DJ))
 					(Section CLS DJ)
 					(CrossSection CLS DJ)))
-			mrg
 #! ====
+			mrg
 ; Stub out until we're ready.
+==== !#
+(define x
 			(if (not MRG-CON) mrg
 				(let ((flat (flatten CLS mrg)))
 					(if flat flat mrg)))
-==== !#
+) (format #t "make-flat: ~A\n" (prt-element x))
+x
 		)
 
 		; --------------------------------------------------
