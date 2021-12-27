@@ -101,7 +101,7 @@
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
 				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
 				(if (< 0 frac-to-merge)
-					(ACC-FUN LLOBJ (LLOBJ 'make-pair CLUST DJ) SECT frac-to-merge)))
+					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT frac-to-merge)))
 			(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
 		)
 	)
