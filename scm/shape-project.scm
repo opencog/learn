@@ -188,7 +188,7 @@
 "
 	(define resect (LLOBJ 'make-section XMR))
 	(define germ (LLOBJ 'left-element resect))
-	(define mgsf (LLOBJ 'flatten GLS resect))
+;	(define mgsf (LLOBJ 'flatten GLS resect))
 (format #t "duuude enter resects for\n  xmr=~A\n  don=~A\n"
 (prt-element XMR) (prt-element XDON))
 	; This is confusing ... why can't we just call accumulate-count?
@@ -208,8 +208,10 @@
 				)
 				(rebalance-count LLOBJ resect x-cnt))
 ========= !#
+			(rebalance-count LLOBJ resect x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
+#!=============
 		(let* ((reg (if mgsf mgsf
 					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect))))
 				(r-cnt (LLOBJ 'get-count reg)))
@@ -220,7 +222,9 @@
 			(for-each
 				(lambda (xfin) (set-count xfin r-cnt))
 				(LLOBJ 'make-cross-sections reg))
-	))
+		)
+========= !#
+	)
 )
 
 ; ---------------------------------------------------------------------
