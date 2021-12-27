@@ -161,6 +161,7 @@
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to SECTION have the same count.
 "
+(format #t "duude rebalance count for ~A\n" (prt-element SECTION))
 	(set-count SECTION CNT)
 	(store-atom SECTION)
 	(for-each
@@ -188,7 +189,8 @@
 	(define resect (LLOBJ 'make-section XMR))
 	(define germ (LLOBJ 'left-element resect))
 	(define mgsf (LLOBJ 'flatten GLS resect))
-
+(format #t "duuude enter resects for\n  xmr=~A\n  don=~A\n"
+(prt-element XMR) (prt-element XDON))
 	; This is confusing ... why can't we just call accumulate-count?
 	; (accumulate-count LLOBJ mgs donor FRAC)
 	; ???
@@ -197,6 +199,7 @@
 				(d-cnt (LLOBJ 'get-count XDON))
 				(x-cnt (LLOBJ 'get-count XMR)))
 
+#!=============
 			(if mgsf
 				(let ((a-cnt (max x-cnt (LLOBJ 'get-count mgsf))))
 					(rebalance-count LLOBJ resect 0)
@@ -204,12 +207,14 @@
 					(rebalance-count LLOBJ mgsf a-cnt)
 				)
 				(rebalance-count LLOBJ resect x-cnt))
+========= !#
 			(rebalance-count LLOBJ donor d-cnt)
 		)
 		(let* ((reg (if mgsf mgsf
 					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect))))
 				(r-cnt (LLOBJ 'get-count reg)))
 
+(format #t "duude clobber ~A\n" (prt-element XMR))
 			(set-count XMR 0)
 			; Create the cross-sections corresponding to `regs`
 			(for-each
@@ -245,7 +250,10 @@
 "
 	(define donor-type (cog-type DONOR))
 
+(format #t "duuude enter reshape-merge for\n  mrg=~A\n  don=~A\n"
+(prt-element MRG) (prt-element DONOR))
 	(when (equal? 'Section donor-type)
+#!====
 		(let ((flat (LLOBJ 'flatten GLS MRG)))
 			(if flat
 				; If MRG can be flattened, then transfer all counts
@@ -275,9 +283,13 @@
 					(when (LLOBJ 'is-nonflat? GLS MRG)
 						(set-count MRG
 							(+ (LLOBJ 'get-count MRG) (LLOBJ 'get-count DONOR)))
-						(rebalance-count LLOBJ DONOR 0)))))
+						(rebalance-count LLOBJ DONOR 0))
+				)))
+=== !#
 
 		; Always rebalance the merged section.
+		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
+		(LLOBJ 'make-cross-sections MRG)
 		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
 	)
 
