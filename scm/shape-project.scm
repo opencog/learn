@@ -161,7 +161,7 @@
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to SECTION have the same count.
 "
-(format #t "duude rebalance count for ~A\n" (prt-element SECTION))
+(format #t "duude rebalance count for ~A newcnt=~A\n" (prt-element SECTION) CNT)
 	(set-count SECTION CNT)
 	(store-atom SECTION)
 	(for-each
@@ -199,15 +199,6 @@
 				(d-cnt (LLOBJ 'get-count XDON))
 				(x-cnt (LLOBJ 'get-count XMR)))
 
-#!=============
-			(if mgsf
-				(let ((a-cnt (max x-cnt (LLOBJ 'get-count mgsf))))
-					(rebalance-count LLOBJ resect 0)
-					(LLOBJ 'make-cross-sections mgsf)
-					(rebalance-count LLOBJ mgsf a-cnt)
-				)
-				(rebalance-count LLOBJ resect x-cnt))
-========= !#
 			(LLOBJ 'make-cross-sections resect)
 			(rebalance-count LLOBJ resect x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
@@ -216,18 +207,6 @@
 (format #t "duude alternater ~A\n" (prt-element XMR))
 		;	(rebalance-count LLOBJ resect x-cnt)
 )
-#!=============
-		(let* ((reg (if mgsf mgsf
-					(LLOBJ 'make-pair GLS (LLOBJ 'right-element resect))))
-				(r-cnt (LLOBJ 'get-count reg)))
-
-			(set-count XMR 0)
-			; Create the cross-sections corresponding to `regs`
-			(for-each
-				(lambda (xfin) (set-count xfin r-cnt))
-				(LLOBJ 'make-cross-sections reg))
-		)
-========= !#
 	)
 )
 
@@ -261,40 +240,6 @@
 (format #t "duuude enter reshape-merge for\n  mrg=~A\n  don=~A\n"
 (prt-element MRG) (prt-element DONOR))
 	(when (equal? 'Section donor-type)
-#!====
-		(let ((flat (LLOBJ 'flatten GLS MRG)))
-			(if flat
-				; If MRG can be flattened, then transfer all counts
-				; from MRG to the flattened variant thereof.
-				(begin
-					(rebalance-count LLOBJ flat
-						(+ (LLOBJ 'get-count flat) (LLOBJ 'get-count MRG)))
-					(rebalance-count LLOBJ MRG 0)
-					(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
-				)
-
-				; If MRG does not need flattening, then ...
-				; Loop over donating cross-sections.
-				(begin
-					(for-each
-						(lambda (XST)
-							(define xmr (LLOBJ 're-cross GLS XST))
-							(accumulate-count LLOBJ xmr XST FRAC))
-						(LLOBJ 'make-cross-sections DONOR))
-
-					; We can rebalance here, but it does not seem to
-					; affect anything.
-					; (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
-
-					; Special case: donor was already non-flat. We need
-					; to transfer all of the counts over.
-					(when (LLOBJ 'is-nonflat? GLS MRG)
-						(set-count MRG
-							(+ (LLOBJ 'get-count MRG) (LLOBJ 'get-count DONOR)))
-						(rebalance-count LLOBJ DONOR 0))
-				)))
-=== !#
-
 		; Always rebalance the merged section.
 		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 		(LLOBJ 'make-cross-sections MRG)
