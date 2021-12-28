@@ -50,6 +50,13 @@
 ;    p * (a, kl{ej}) + (1-p) * (a, kle)
 ;    p * (f, kl{ej}) + (1-p) * (f, kle)
 ;
+; These two new Sections give four new CrossSections:
+;
+;   p * [k, <a,  $- l- {e j}+>]
+;   p * [l, <a,  k- $- {e j}+>]
+;   p * [k, <f,  $- l- {e j}+>]
+;   p * [l, <f,  k- $- {e j}+>]
+;
 
 (define (run-test WA WB WC-NAME)
 
@@ -142,8 +149,8 @@
 	(test-approximate (* (- 1 frac) cnt-e-klm) (cog-count xes-k-e-vlm) epsilon)
 
 	; --------------------------
-	; Expect 32 CrossSections as described above.
-	(test-equal 32 (length (cog-get-atoms 'CrossSection)))
+	; Expect 36 CrossSections as described above.
+	(test-equal 36 (length (cog-get-atoms 'CrossSection)))
 
 	; Validate counts on various Sections and CrossSections...
 	; This is identical to the tests in `connector-merge-cons.scm` and so
