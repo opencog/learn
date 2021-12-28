@@ -170,37 +170,26 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-resects LLOBJ GLS W XMR XDON)
+(define (rebalance-resects LLOBJ XMR XDON)
 "
-  merge-resects - Merge Sections corresponding to CrossSection XMR
+  merge-resects - Readjust counts on CrossSections
 
-  XMR is assumed to be a cross-section having GLS as it's germ,
-  XDON is assumed to be a cross-section having W as it's germ, and
-  counts have already been transferred approprately from XDON to XMR.
-  That is, its assumed the node W has been merged into the cluster
-  node GLS already.
-
-  This function adjusts counts on the corresponding sections that
-  arise from XDON and XMR. If the germ of the Section arising from
-  XMR belongs to GLS, then a revised Section is created, having GLS
-  as the germ.
+  XMR is the cross-section that is being merged into,
+  XDON is the donor cross-section.
+  This assumes that counts have already been transferred appropriately
+  from XDON to XMR.
 "
-	(define resect (LLOBJ 'make-section XMR))
-	(define germ (LLOBJ 'left-element resect))
-
 	; This is confusing ... why can't we just call accumulate-count?
 	; (accumulate-count LLOBJ mgs donor FRAC)
 	; ???
-	(if (is-member? germ GLS)
-		(let* ((donor (LLOBJ 'make-section XDON))
-				(d-cnt (LLOBJ 'get-count XDON))
-				(x-cnt (LLOBJ 'get-count XMR)))
+	(define resect (LLOBJ 'make-section XMR))
+	(define x-cnt (LLOBJ 'get-count XMR))
+	(define donor (LLOBJ 'make-section XDON))
+	(define d-cnt (LLOBJ 'get-count XDON))
 
-			(LLOBJ 'make-cross-sections resect)
-			(rebalance-count LLOBJ resect x-cnt)
-			(rebalance-count LLOBJ donor d-cnt)
-		)
-	)
+	(LLOBJ 'make-cross-sections resect)
+	(rebalance-count LLOBJ resect x-cnt)
+	(rebalance-count LLOBJ donor d-cnt)
 )
 
 ; ---------------------------------------------------------------------
@@ -238,7 +227,7 @@
 	)
 
 	(when (equal? 'CrossSection donor-type)
-		(merge-resects LLOBJ GLS W MRG DONOR))
+		(rebalance-resects LLOBJ MRG DONOR))
 )
 
 ; ---------------------------------------------------------------
