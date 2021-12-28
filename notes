@@ -7520,8 +7520,6 @@ replace this by flatten...
 (define cnt-c-aba 30)
 
 
-
-
 ==================
 leak of meet-links:
 (run-query f-right-star-pat itm f-right-star-var)
@@ -7545,6 +7543,154 @@ try-count-one-word xxx
          (lambda (key . args) #f)))
 
 FIXED
+----------
+connector-merge-conext.scm
+We expect only one cross-section: [e, <j,vgh>]
+
+   (setup-e-j-sections)
+   (setup-j-extra)
+   (setup-e-extra)
+(MemberLink WA CLS)
+;    (e, abc) + (j, abc) -> ({ej}, abc)
+;    (e, dgh) + (j, dgh) -> ({ej}, dgh)
+;    (e, klm) +  none    -> p * ({ej}, klm) + (1-p) * (e, klm)
+
+----------
+conind.scm
+-bad vs +good:
+- 5.250 * [{e j}, <{e j},  a- b- $+>]
++ 5.250 * [{e j}, <{e j},  a- b- $+>]
+
++final xsec= 4.250 * [{e j}, <{e j},  $- g- h+>]
+
+-44.000 * [b, <{e j},  a- $- c+>]
++44.000 * [b, <{e j},  a- $- c+>]
+-44.000 * [c, <{e j},  a- b- $+>]
++44.000 * [c, <{e j},  a- b- $+>]
+
+- 5.750 * [k, <a,  $- l- {e j}+>]
+- 4.250 * [k, <f,  $- l- {e j}+>]
+- 5.750 * [l, <a,  k- $- {e j}+>]
+- 4.250 * [l, <f,  k- $- {e j}+>]
+
+from
+ 5.750 * (a,  k- l- {e j}+)
+ 4.250 * (f,  k- l- {e j}+)
+
++12.750 * [k, <f,  $- l- e+>]
+from 12.750 * (f,  k- l- e+) so OK...
+
+----------
+conext.scm description is misleading
+pre merge:
+11.000 * (e,  a- b- e+)
+21.000 * (j,  a- b- e+)
+ 9.000 * (e,  a- b- j+)
+
+61.000 * (e,  d- g- h+)
+16.000 * (j,  d- g- h+)
+
+13.000 * (e,  a- b- c+)
+44.000 * (e,  k- l+ m+)
+31.000 * (j,  a- b- c+)
+17.000 * (j,  e- g- h+)
+
+
+ 6.750 * (e,  a- b- j+)
+33.000 * (e,  k- l+ m+)
+15.750 * [e, <j,  a- b- $+>] ??? new, from (j,  a- b- e+)
+12.750 * [e, <j,  $- g- h+>]  his cross-section corresponds to (1-p) * (j, egh)
+
+duude post-merge sects:9
+34.250 * ({e j},  a- b- {e j}+) == 32 + 2.25 = 32 + 1/4 or 9 OK
+ 6.750 * (e,  a- b- j+)          == 3/4 of 9 so OK
+15.750 * (j,  a- b- e+)      ... ?? should be gone ... 
+
+(rebalance-count LLOBJ resect x-cnt)
+
+44.000 * ({e j},  a- b- c+)
+77.000 * ({e j},  d- g- h+)
+11.000 * ({e j},  k- l+ m+)
+ 4.250 * ({e j},  {e j}- g- h+)
+33.000 * (e,  k- l+ m+)
+12.750 * (j,  e- g- h+)
+
+
+----------
+-21.000 * [k, <{e j},  $- l+ {e j}+>]   ????
+-21.000 * [l, <{e j},  k- $+ {e j}+>]   ????
+
+13.000 * ({e j},  a- b- c+)
+44.000 * ({e j},  k- l+ m+)
+21.000 * ({e j},  k- l+ {r s}+)
+
+25.000 * ({r s},  a- b- c+)
+61.000 * ({r s},  d- g- h+)
+16.000 * ({r s},  a- b- {e j}+)
+
+make-flat ...
+ITEM_CLASS_NODE
+(cog-subtype? 'ItemClass CLS)
+
+merge-connectors LLOBJ CLA CLB clique)
+
+-------------------
+
+pre F2 merge:
+15.750 * (j,  a- b- e+)
+12.750 * (j,  e- g- h+)
+17.250 * (a,  k- l- e+)
+ 5.750 * (a,  k- l- {e j}+)
+33.000 * (e,  k- l+ m+)
+
+19.000 * (f,  a- b- c+)     + 44.000 * ({e j},  a- b- c+)
+ 7.750 * (f,  a- b- {e j}+) + 5.250 * ({e j},  a- b- {e j}+)
+36.000 * (f,  d- g- h+)     + 77.000 * ({e j},  d- g- h+)
+34.000 * (f,  k- l+ m+)     + 11.000 * ({e j},  k- l+ m+)
+ 6.250 * (f,  {e j}- g- h+) + 4.250 * ({e j},  {e j}- g- h+)
+
+18.750 * (f,  e- g- h+)      --- 0.35 into above...
+23.250 * (f,  a- b- e+)      --- 0.35 into above ...
+ 4.250 * (f,  k- l- {e j}+)  --- 0.35 into ({e j},  k- l- {e j}+) below
+12.750 * (f,  k- l- e+)      --- 0.35 into ({e j},  k- l- {e j}+) below
+
+post F2 sections=15
+15.750 * (j,  a- b- e+) NC
+12.750 * (j,  e- g- h+) NC
+17.250 * (a,  k- l- e+) NC
+ 5.750 * (a,  k- l- {e j}+) NC
+33.000 * (e,  k- l+ m+) NC
+
+63.000 * ({e j},  a- b- c+) Yep   as in master
+21.138 * ({e j},  a- b- {e j}+)  ... 7.75 + 5.25 + 0.35*23.25 =  yep! as in master
+113.000 * ({e j},  d- g- h+) Yep  as in master
+45.000 * ({e j},  k- l+ m+) Yep  as in master
+17.063 * ({e j},  {e j}- g- h+) ... 6.25 + 4.25 + 0.35*18.750 = 17.0625  as in master
+
+ 5.950 * ({e j},  k- l- {e j}+) ... 0.35 * 4.250 + 0.35 * 12.750
+                                ... master shows 8.712
+
+15.113 * (f,  a- b- e+) = 0.65 of orig = (* 0.65 23.25)  as in master
+12.188 * (f,  e- g- h+) = 0.65 or orig. OK  as in master
+ 8.288 * (f,  k- l- e+)                     as in master
+ 2.763 * (f,  k- l- {e j}+)                 new ... XXX and wrong XXX should be folded in
+
+is-nonflat?
+
+
+f stars=4
+15.113 * (f,  a- b- e+)      = 0.65 or orig. OK
+12.188 * (f,  e- g- h+)      = 0.65 or orig. OK
+ 8.288 * (f,  k- l- e+)      OK
+ 2.763 * (f,  k- l- {e j}+)  OK
+
+ ej cross=5
+17.063 * [{e j}, <{e j},  $- g- h+>]
+ 2.763 * [{e j}, <f,  k- l- $+>]
+ 5.750 * [{e j}, <a,  k- l- $+>]
+21.138 * [{e j}, <{e j},  a- b- $+>]
+ 5.950 * [{e j}, <{e j},  k- l- $+>]
+
 
 
 
@@ -7614,6 +7760,8 @@ FIXED:
 
 
 TODO/BUGS:
+* W is not needed in reshape-merge
+
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report. 3 days hard work, partly fixed, issue

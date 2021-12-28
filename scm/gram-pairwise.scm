@@ -171,20 +171,25 @@
   to storage.
 "
 	; Fraction of non-overlapping disjuncts to merge
-	(define frac-to-merge (FRAC-FN CLS WA))
+	(define frac-m (FRAC-FN CLS WA))
 
 	; CLUST is identical to CLS, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
-		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
 		(define CLS-SECT (LLOBJ 'get-pair CLUST DJ))
+
+		; What a mess. If the corresponding cluster section exists,
+		; then merge all of the section into it. Else, create the
+		; flattened cluster, and merge all if the given section is
+		; iteself non-flat, or if its below the noise threshold.
 		(if (nil? CLS-SECT)
-			(if (<= (LLOBJ 'get-count SECT) NOISE)
+			(if (or
+					(<= (LLOBJ 'get-count SECT) NOISE)
+					(LLOBJ 'is-nonflat? CLUST SECT))
 				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
-				(if (< 0 frac-to-merge)
-					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-to-merge)))
-			(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
-		)
+				(if (< 0 frac-m)
+					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-m)))
+			(ACC-FUN LLOBJ CLS-SECT SECT 1.0))
 	)
 
 	; Create MemberLink *before* starting merge!
