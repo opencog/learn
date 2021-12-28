@@ -99,10 +99,10 @@
 		; only a fraction is merged.  Otherwise, all is merged.
 		(if (nil? OTHSEC)
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
 				(if (< 0 frac-to-merge)
-					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT frac-to-merge)))
-			(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
+					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-to-merge)))
+			(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
 		)
 	)
 
@@ -180,9 +180,9 @@
 		(define CLS-SECT (LLOBJ 'get-pair CLUST DJ))
 		(if (nil? CLS-SECT)
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
 				(if (< 0 frac-to-merge)
-					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT frac-to-merge)))
+					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-to-merge)))
 			(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 		)
 	)
@@ -227,9 +227,7 @@
 "
 	; CLUST is identical to CLA, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
-		(define WRD (LLOBJ 'left-element SECT))
-		(define DJ (LLOBJ 'right-element SECT))
-		(define CLS-SECT (LLOBJ 'make-flat CLUST DJ MRG-CON))
+		(define CLS-SECT (LLOBJ 'make-flat CLUST SECT MRG-CON))
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 

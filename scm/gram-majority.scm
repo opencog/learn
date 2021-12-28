@@ -175,7 +175,7 @@
 
 			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
 					(vote-to-accept? DJ))
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST DJ MRG-CON) SECT 1.0)
+				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
 				0))
 
 		; Get a Node that will anchor everything merged from WLIST

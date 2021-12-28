@@ -365,23 +365,14 @@
 		; --------------------------------------------------
 
 		; Like `flatten` but always returns something.
-		; This has an API similar to 'make-pair in that it takes
-		; the left and right sides of the pair, and returns the pair.
-		; XXX TODO This may need some redesign.  Right now, its a retro-fit
-		(define (make-flat CLS DJ MRG-CON)
-			(define mrg
-				(if (equal? 'ConnectorSeq (cog-type DJ))
-					(Section CLS DJ)
-					(CrossSection CLS DJ)))
-#! ====
-			mrg
-; Stub out until we're ready.
-==== !#
+		(define (make-flat CLS PNT MRG-CON)
 (define x
-			(if (not MRG-CON) mrg
-				(let ((flat (flatten CLS mrg)))
-					(if flat flat mrg)))
-) (format #t "make-flat: ~A\n" (prt-element x))
+			(if (not MRG-CON) PNT
+				(let ((flat (flatten CLS PNT)))
+					(if flat flat PNT)))
+)
+(format #t "make-flat: ~A\n" (prt-element x))
+(format #t "make-flat CLS=~A PNT=~A\n" (prt-word CLS) (prt-element PNT))
 x
 		)
 
