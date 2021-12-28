@@ -261,8 +261,11 @@
 		(LLOBJ 'set-count DONOR rem-cnt)
 		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
-	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
-	;	(prt-element ACC) (prt-element DONOR))
+	(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
+		(prt-element ACC) (prt-element DONOR))
+
+	(rebalance-count LLOBJ ACC (get-count ACC))
+	(rebalance-count LLOBJ DONOR (get-count DONOR))
 
 	; Return how much was transferred over.
 	frac-cnt
