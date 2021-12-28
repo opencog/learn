@@ -190,7 +190,7 @@
 
 		(when MRG-CON
 			(for-each
-				(lambda (WRD) (merge-connectors LLOBJ cls WRD clique))
+				(lambda (WRD) (rebalance-shapes LLOBJ cls WRD clique))
 				WLIST)
 		)
 

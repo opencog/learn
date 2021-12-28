@@ -170,13 +170,15 @@
 
 ; ---------------------------------------------------------------------
 
-(define (rebalance-merge LLOBJ MRG DONOR)
+(define (rebalance-merge LLOBJ MRG DONOR FRAC)
 "
   rebalance-merge LLOBJ MRG DONOR - Readjust counts on CrossSections
 
   After a DONOR sectin has been merged into the MRG section, assorted
   CrossSections may be left in inconsistent states. This rebalances all
   counts on both Sections and CrossSections.
+
+  FRAC is ignored; its for API compatilibility.
 "
 	(define is-sect (equal? 'Section (cog-type DONOR)))
 

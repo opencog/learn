@@ -113,8 +113,8 @@
 	(assign-to-cluster LLOBJ CLS WB clique)
 
 	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA clique)
-		(merge-connectors LLOBJ CLS WB clique)
+		(rebalance-shapes LLOBJ CLS WA clique)
+		(rebalance-shapes LLOBJ CLS WB clique)
 	)
 
 	; Cleanup after merging.
@@ -197,7 +197,7 @@
 	(assign-to-cluster LLOBJ CLS WA clique)
 
 	(when MRG-CON
-		(merge-connectors LLOBJ CLS WA clique)
+		(rebalance-shapes LLOBJ CLS WA clique)
 	)
 
 	; Cleanup after merging.
@@ -278,7 +278,7 @@
 
 	; Now merge connectors, if that was asked for.
 	(when MRG-CON
-		(merge-connectors LLOBJ CLA CLB clique)
+		(rebalance-shapes LLOBJ CLA CLB clique)
 	)
 
 	; Cleanup after merging.

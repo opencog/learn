@@ -24,9 +24,8 @@
 ;   on each basis elt. In most cases, this callback then will
 ;   eventually call `accumulate-count` to perform the actual count
 ;   transfer.
-; * `merge-connectors`, which loops over a vector, and calls the
-;   reshape function on the basis elements, so that the connectors
-;   therein can be adjusted and merged as appropriate.
+; * `rebalance-shapes`, which loops over a vector, and makes sure that
+;   counts are on CrossSections are consistent with the counts on Sections.
 ;
 ; Although the code keeps talking about words and word-classes, it is
 ; (almost) entirely generic, and can merge (cluster) anything. The only
@@ -264,7 +263,7 @@
 	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
 	;	(prt-element ACC) (prt-element DONOR))
 
-	(rebalance-count LLOBJ ACC (get-count ACC))
+;	(rebalance-count LLOBJ ACC (get-count ACC))
 	(rebalance-count LLOBJ DONOR (get-count DONOR))
 
 	; Return how much was transferred over.
@@ -331,44 +330,30 @@
 
 ; ---------------------------------------------------------------------
 
-(define (merge-connectors LLOBJ CLS WA CLIQUE)
+(define (rebalance-shapes LLOBJ CLS WA CLIQUE)
 "
-  merge-connectors LLOBJ CLS WA CLIQUE --
+  rebalance-shapes LLOBJ CLS WA CLIQUE --
 
-  Loop over the disjuncts on WA, and call CLIQUE on each,
-  passing CLS and the disjunct to it.
+  Loop over the pairs having WA on the left, and call CLIQUE on each,
+  passing CLS and the pair to it.
 
-  A MemberLink from WA to CLS will be created, holding the
-  accumulated count returned by CLIQUE.
+  LLOBJ is used to access pairs.  WA and CLS should both be 'left-types
+  of `LLOBJ`
 
-  LLOBJ is used to access pairs.
-  WA should be of `(LLOBJ 'left-type)`
-  CLS should be interpretable as a row in LLOBJ.
-
-  CLIQUE is a function that returns how much of a given disjunct
-     is merged.
-
-  The merger of row WA into CLS is performed, using the CLIQUE
-  function to make disjunct-by-disjunct merge decisions.
-
-  Accumulated row totals are stored in the MemberLink that attaches
-  WA to CLS.
+  CLIQUE should be a function that takes the given CLS and donor pair,
+  and uses those to deduce the merge-into pair. The merge-into pair,
+  and the donor pair are then handed to `rebalance-merge`, which makes
+  the counts consistent on both pairs.
 
   This assumes that storage is connected; the updated counts are written
   to storage.
 "
 	(define monitor-rate (make-rate-monitor))
 
-	; SECT ends up being PAIR-A in the loop below.
-	; MRGECT is the matching merger section
-	(define (reshape OBJ MRGECT SECT FRAC)
-		(rebalance-merge OBJ MRGECT SECT)
-	)
-
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-			(CLIQUE LLOBJ CLS PAIR-A reshape)
+			(CLIQUE LLOBJ CLS PAIR-A rebalance-merge)
 		)
 		(LLOBJ 'right-stars WA))
 
