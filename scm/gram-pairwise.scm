@@ -227,7 +227,9 @@
 "
 	; CLUST is identical to CLA, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
-		(define CLS-SECT (LLOBJ 'make-flat CLUST SECT MRG-CON))
+		(define DJ (LLOBJ 'right-element SECT))
+		(define MSECT (LLOBJ 'make-pair CLUST DJ))
+		(define CLS-SECT (LLOBJ 'make-flat CLUST MSECT MRG-CON))
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 
