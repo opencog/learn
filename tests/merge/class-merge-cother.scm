@@ -93,7 +93,7 @@
 ; Of the 7 original Sections, 4 are deleted, and 2 are created,
 ; leaving a grand total of 5.
 (test-equal 5 (length (cog-get-atoms 'Section)))
-(test-equal 13 (length (cog-get-atoms 'CrossSection)))
+(test-equal 15 (length (cog-get-atoms 'CrossSection)))
 
 ; ----------------------------
 ; Validate counts.
@@ -115,8 +115,8 @@
 (test-approximate cnt-rs-dgh (cog-count xes-d-ej-vgh) epsilon)
 
 ; --------------------------
-; Expect 13 CrossSections as described above.
-(test-equal 13 (length (cog-get-atoms 'CrossSection)))
+; Expect 15 CrossSections as described above.
+(test-equal 15 (length (cog-get-atoms 'CrossSection)))
 
 ; Validate counts on various Sections and CrossSections...
 (expected-fg-extra-sections)
