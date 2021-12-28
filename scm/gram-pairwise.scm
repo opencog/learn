@@ -92,13 +92,13 @@
 		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 	; CLUST is identical to CLS, always.
-	(define (clique xLLOBJ CLUST SECT ACC-FUN)
+	(define (clique CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
 		(define DJ (LLOBJ 'right-element SECT))
 		(define WOTHER (if (equal? WRD WA) WB WA))
 		(define OTHSEC (LLOBJ 'get-pair WOTHER DJ))
 
-		; If OTHSEC is nill, then it is the non-overlap case, and
+		; If OTHSEC is nil, then it is the non-overlap case, and
 		; only a fraction is merged.  Otherwise, all is merged.
 		(if (nil? OTHSEC)
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
@@ -180,7 +180,7 @@
 		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 	; CLUST is identical to CLS, always.
-	(define (clique xLLOBJ CLUST SECT ACC-FUN)
+	(define (clique CLUST SECT ACC-FUN)
 		(define DJ (LLOBJ 'right-element SECT))
 		(define CLS-SECT (LLOBJ 'get-pair CLUST DJ))
 
@@ -240,7 +240,7 @@
 		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 	; CLUST is identical to CLA, always.
-	(define (clique xLLOBJ CLUST SECT ACC-FUN)
+	(define (clique CLUST SECT ACC-FUN)
 		(define DJ (LLOBJ 'right-element SECT))
 		(define MSECT (LLOBJ 'make-pair CLUST DJ))
 		(define CLS-SECT (make-flat CLUST MSECT))

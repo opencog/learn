@@ -7761,18 +7761,16 @@ FIXED:
   See line 159 of gram-majority.scm
   (define cls-name (string-join (map cog-name WLIST)))
   FIXED 21 Dec 2021
-
-
-TODO/BUGS:
-* W is not needed in reshape-merge
-
+* W is not needed in reshape-merge DONE
 * Left-right counts are mis-balanced after running in-group clustering
   for a while. Need to check that counts aren't leaking. in the
   print-matrix-summary report. 3 days hard work, partly fixed, issue
   was that marginals were not being loaded.
-  Maybe clobber in gram-agglo not needed?
+  Wow. This took more than a week and a major redesign. DONE 28 Dec 2021
 
-* Add increment-count to everything.
+
+TODO/BUGS:
+* Use increment-count for everything.
 * recompute-mmt will be more efficient if we union all the right duals
   for all the words, instead of doing them one at a time.
 * mmt-q is handled incorrectly. It must not be stored with the

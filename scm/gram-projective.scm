@@ -307,7 +307,7 @@
 
 	(for-each
 		(lambda (PAIR-A)
-			(define cnt (CLIQUE LLOBJ CLS PAIR-A accumulate-count))
+			(define cnt (CLIQUE CLS PAIR-A accumulate-count))
 			(monitor-count #f)
 			(when (< 0 cnt)
 				(monitor-count #t) ; increment only if counted!
@@ -353,7 +353,7 @@
 	(for-each
 		(lambda (PAIR-A)
 			(monitor-rate #f)
-			(CLIQUE LLOBJ CLS PAIR-A rebalance-merge)
+			(CLIQUE CLS PAIR-A rebalance-merge)
 		)
 		(LLOBJ 'right-stars WA))
 

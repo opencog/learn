@@ -173,7 +173,7 @@
 		; or if the count on it is below the noise floor.
 		; CLUST is identical to cls, defined below. Return zero if
 		; there is no merge.
-		(define (clique xLLOBJ CLUST SECT ACC-FUN)
+		(define (clique CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
