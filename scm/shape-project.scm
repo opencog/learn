@@ -194,7 +194,7 @@
 	; This is confusing ... why can't we just call accumulate-count?
 	; (accumulate-count LLOBJ mgs donor FRAC)
 	; ???
-	(if (nil? (cog-link 'MemberLink germ GLS))
+	(if (is-member? germ GLS)
 		(let* ((donor (LLOBJ 'make-section XDON))
 				(d-cnt (LLOBJ 'get-count XDON))
 				(x-cnt (LLOBJ 'get-count XMR)))
