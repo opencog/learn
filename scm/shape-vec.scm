@@ -169,8 +169,12 @@
        way to handle counts, if one wants clustering to commute with
        the creation of sections.)
 
+  'make-flat CLS PNT -- Rewrite PNT, replacing occurances of any atoms
+       belonging to CLS by CLS.
+
   'flatten CLS PNT -- Rewrite PNT, replacing occurances of any atoms
-       belonging to CLS by CLS.  If none, then return #f. This just calls
+       belonging to CLS by CLS.  If PNT is already flat, (i.e. if there
+       is nothing to be rewritten), then return #f. This just calls
        one of the two methods below, basecd on the type of PNT.
 
   'flatten-section CLS SECT -- Rewrite SECT, replacing the germ by CLS,
@@ -372,7 +376,6 @@
 
 		; Like `flatten` but always returns something.
 		(define (make-flat CLS PNT MRG-CON)
-(define x
 			(if (not MRG-CON) PNT
 				(let ((flat (flatten CLS PNT)))
 					(if flat flat
@@ -383,10 +386,6 @@
 							(if (equal? (cog-type PNT) 'CrossSection)
 								(CrossSection newgerm DJ)
 								(LLOBJ 'make-pair newgerm DJ))))))
-)
-(format #t "make-flat: ~A\n" (prt-element x))
-(format #t "make-flat CLS=~A PNT=~A\n" (prt-word CLS) (prt-element PNT))
-x
 		)
 
 		; --------------------------------------------------
