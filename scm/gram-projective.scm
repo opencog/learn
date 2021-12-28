@@ -161,7 +161,7 @@
 ; Debugging prints which print Section Cross-Sections in a short-hand.
 ; This short-hand is used extensively in the unit tests.
 
-(define (prt-word W)
+(define-public (prt-word W)
 	(define t (cog-type W))
 	(cond
 		((equal? t 'WordClassNode) (format #f "{~A}" (cog-name W)))
@@ -177,6 +177,18 @@
 			LST))
 )
 
+(define (prt-shape SHAPE)
+	(format #f "<~A, ~A>"
+		(prt-word (gar SHAPE))
+		(prt-conseq (cdr (cog-outgoing-set SHAPE))))
+)
+
+(define-public (prt-dj DJ)
+	(if (equal? (cog-type DJ) 'ShapeLink)
+		(prt-shape DJ)
+		(prt-conseq (cog-outgoing-set DJ)))
+)
+
 (define (prt-section SECT)
 	(format #f "~6,3F * (~A, ~A)"
 		(cog-count SECT)
@@ -185,11 +197,10 @@
 )
 
 (define (prt-cross-section XSECT)
-	(format #f "~6,3F * [~A, <~A, ~A>]"
+	(format #f "~6,3F * [~A, ~A]"
 		(cog-count XSECT)
 		(prt-word (gar XSECT))
-		(prt-word (gar (gdr XSECT)))
-		(prt-conseq (cdr (cog-outgoing-set (gdr XSECT)))))
+		(prt-shape (gdr XSECT)))
 )
 
 (define-public (prt-element ELT)
@@ -250,6 +261,8 @@
 		(LLOBJ 'set-count DONOR rem-cnt)
 		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
+	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
+	;	(prt-element ACC) (prt-element DONOR))
 
 	; Return how much was transferred over.
 	frac-cnt
