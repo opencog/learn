@@ -28,7 +28,7 @@
 ; the first two, with tweaks to handle the differences.
 ;
 ; After the first merge, which is identical to `connector-merge-conind.scm`
-; one obtains new corss-sections
+; one obtains new cross-sections
 ;
 ;    [e, <a, klv>] + none -> p * [{ej}, <a, klv>] + (1-p) * [e, <a, klv>]
 ;    [e, <f, klv>] + none -> p * [{ej}, <f, klv>] + (1-p) * [e, <f, klv>]
@@ -255,9 +255,8 @@
 		(cog-count sec-ej-vgh) epsilon)
 
 	; --------------------------
-	; Expect 40 CrossSections (?? why not a multiple of three???)
-	; This seems wrong XXX FIXME ...
-	(test-equal 40 (length (cog-get-atoms 'CrossSection)))
+	; Expect 42 CrossSections.
+	(test-equal 42 (length (cog-get-atoms 'CrossSection)))
 
 	; Validate counts on various CrossSections...
 	(test-approximate (* (- 1 frac1) cnt-j-abe) (cog-count xes-e-j-abv) epsilon)
