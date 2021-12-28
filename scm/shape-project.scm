@@ -192,11 +192,11 @@
 
 ; ---------------------------------------------------------------
 
-(define (remove-empty-sections LLOBJ ROW)
+(define (remove-empty-sections LLOBJ ROW RMX)
 "
-  remove-empty-sections LLOBJ ROW -- scan the ROW for Sections &
-  CrossSections and call cog-delete! on those that have an zero count.
-  This will also delete the corresponding CrossSections.
+  remove-empty-sections LLOBJ ROW RMX -- scan the ROW for Sections and
+  call cog-delete! on those that have an zero count. If RMX is #t, then
+  the corresponding CrossSections will also be deleted.
 "
 	(define ns 0)
 	(define nx 0)
@@ -208,7 +208,7 @@
 	; the DB, so we just extract them.
 	(define (del-sect SEC)
 		; Cleanup cross sections, if they are provided.
-		(when (LLOBJ 'provides 'get-cross-sections)
+		(when RMX
 			(for-each (lambda (xst)
 				(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
 					(let ((shp (gdr xst)))

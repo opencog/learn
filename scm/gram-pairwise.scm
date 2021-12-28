@@ -126,9 +126,9 @@
 	; and right basis.
 	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ WB)
-	(remove-empty-sections LLOBJ CLS)
+	(remove-empty-sections LLOBJ WA MRG-CON)
+	(remove-empty-sections LLOBJ WB MRG-CON)
+	(remove-empty-sections LLOBJ CLS MRG-CON)
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -212,8 +212,8 @@
 	; and right basis.
 	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ WA)
-	(remove-empty-sections LLOBJ CLS)
+	(remove-empty-sections LLOBJ WA MRG-CON)
+	(remove-empty-sections LLOBJ CLS MRG-CON)
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)
@@ -296,8 +296,8 @@
 	; and right basis.
 	(define e (make-elapsed-secs))
 	(LLOBJ 'clobber)
-	(remove-empty-sections LLOBJ CLA)
-	(remove-empty-sections LLOBJ CLB) ; This should remove ALL of them!
+	(remove-empty-sections LLOBJ CLA MRG-CON)
+	(remove-empty-sections LLOBJ CLB MRG-CON) ; This should remove ALL of them!
 
 	; Clobber the left and right caches; the cog-delete! changed things.
 	(LLOBJ 'clobber)

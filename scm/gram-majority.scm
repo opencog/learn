@@ -204,9 +204,9 @@
 		(define e (make-elapsed-secs))
 		(LLOBJ 'clobber)
 		(for-each
-			(lambda (WRD) (remove-empty-sections LLOBJ WRD))
+			(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
 			WLIST)
-		(remove-empty-sections LLOBJ cls)
+		(remove-empty-sections LLOBJ cls MRG-CON)
 
 		; Clobber the left and right caches; the cog-delete! changed things.
 		(LLOBJ 'clobber)
