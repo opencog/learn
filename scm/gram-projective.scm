@@ -217,7 +217,6 @@
 
 ; ---------------------------------------------------------------------
 
-; XXX TODO: figure out how to replace this by (LLOBJ 'move-count args)
 (define-public (accumulate-count LLOBJ ACC DONOR FRAC)
 "
   accumulate-count LLOBJ ACC DONOR FRAC -- Accumulate a fraction
@@ -229,10 +228,6 @@
 
   A fraction FRAC of the count on DONOR will be transferred to ACC.
 
-  This function is nearly identical to (LLOBJ 'move-count args) except
-  that this also stores (or not) the results in the database.
-  XXX FIXME: figure out how to replace this by (LLOBJ 'move-count args)
-
   Both Atoms, with updated counts, are stored to the database, with
   one exception: if the final DONOR count is zero, it is NOT stored
   in the database. It is assumed that some later step will be deleting
@@ -242,32 +237,21 @@
 	; Use an epsilon for rounding errors.
 	(define (is-zero? cnt) (< cnt 1.0e-10))
 
-	; The counts on the accumulator and the pair to merge.
-	(define donor-cnt (LLOBJ 'get-count DONOR))
-	(define frac-cnt (* FRAC donor-cnt))
-	(define rem-cnt (- donor-cnt frac-cnt))
+	(define moved (LLOBJ 'move-count ACC DONOR FRAC))
 
-	; If there is nothing to transfer over, do nothing.
-	(when (not (is-zero? frac-cnt))
-
-		; The accumulated count
-		(LLOBJ 'set-count ACC (+ frac-cnt (LLOBJ 'get-count ACC)))
-		(store-atom ACC) ; save to the database.
-
-		; Update the count on the donor pair.
-		; Avoid touching the database if the count is zero;
-		; the donor will be deleted later on.
-		(LLOBJ 'set-count DONOR rem-cnt)
-		(unless (is-zero? rem-cnt) (store-atom DONOR))
+	; If something was transfered, save the updated counts.
+	(when (not (is-zero? moved))
+		(store-atom ACC)
+		(if (not (is-zero? (get-count DONOR)))
+			(store-atom DONOR))
 	)
 	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
 	;	(prt-element ACC) (prt-element DONOR))
 
-;	(rebalance-count LLOBJ ACC (get-count ACC))
 	(rebalance-count LLOBJ DONOR (get-count DONOR))
 
 	; Return how much was transferred over.
-	frac-cnt
+	moved
 )
 
 ; ---------------------------------------------------------------------
