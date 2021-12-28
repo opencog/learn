@@ -160,9 +160,15 @@
   count was adjusted (possibly even set to zero.) This function
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to SECTION have the same count.
+
+  If the count isn't zero, then the SECTION is store to the database.
+  If it is zero, then it's likely that a later stage will delete it,
+  so a pointless store is avoided.
 "
+	(define (is-zero? cnt) (< cnt 1.0e-10))
+
 	(set-count SECTION CNT)
-	(store-atom SECTION)
+	(if (not (is-zero? CNT)) (store-atom SECTION))
 	(for-each
 		(lambda (XST) (set-count XST CNT))
 		(LLOBJ 'get-cross-sections SECTION))
