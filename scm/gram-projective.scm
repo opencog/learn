@@ -227,11 +227,6 @@
   FRAC should be a numeric fraction, between 0.0 and 1.0.
 
   A fraction FRAC of the count on DONOR will be transferred to ACC.
-
-  Both Atoms, with updated counts, are stored to the database, with
-  one exception: if the final DONOR count is zero, it is NOT stored
-  in the database. It is assumed that some later step will be deleting
-  it, so we avoid a pointless store.
 "
 	; Return #t if the count is effectively zero.
 	; Use an epsilon for rounding errors.
@@ -241,14 +236,9 @@
 
 	; If something was transfered, save the updated counts.
 	(when (not (is-zero? moved))
-		(store-atom ACC)
-		(if (not (is-zero? (get-count DONOR)))
-			(store-atom DONOR))
+		(rebalance-count LLOBJ ACC (get-count ACC))
+		(rebalance-count LLOBJ DONOR (get-count DONOR))
 	)
-	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
-	;	(prt-element ACC) (prt-element DONOR))
-
-	(rebalance-count LLOBJ DONOR (get-count DONOR))
 
 	; Return how much was transferred over.
 	moved
