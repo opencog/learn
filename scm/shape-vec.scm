@@ -375,18 +375,16 @@
 		; --------------------------------------------------
 
 		; Like `flatten` but always returns something.
-		(define (make-flat CLS PNT MRG-CON)
-			(if (not MRG-CON) PNT
-				(let ((flat (flatten CLS PNT)))
-					(if flat flat
-						(let* ((germ (get-pair-left PNT))
-								(newgerm
-									(if (is-member? germ CLS) germ CLS))
-								(DJ (get-pair-right PNT)))
-							(if (equal? (cog-type PNT) 'CrossSection)
-								(CrossSection newgerm DJ)
-								(LLOBJ 'make-pair newgerm DJ))))))
-		)
+		(define (make-flat CLS PNT)
+			(define flat (flatten CLS PNT))
+			(if flat flat
+				(let* ((germ (get-pair-left PNT))
+						(newgerm
+							(if (is-member? germ CLS) germ CLS))
+						(DJ (get-pair-right PNT)))
+					(if (equal? (cog-type PNT) 'CrossSection)
+						(CrossSection newgerm DJ)
+						(LLOBJ 'make-pair newgerm DJ)))))
 
 		; --------------------------------------------------
 

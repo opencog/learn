@@ -166,6 +166,9 @@
 					0
 					WLIST)))
 
+		(define (make-flat CLUST SECT)
+			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
+
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
 		; CLUST is identical to cls, defined below. Return zero if
@@ -175,7 +178,7 @@
 
 			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
 					(vote-to-accept? DJ))
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
+				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
 				0))
 
 		; Get a Node that will anchor everything merged from WLIST

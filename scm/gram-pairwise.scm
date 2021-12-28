@@ -88,6 +88,9 @@
 	; Fraction of non-overlapping disjuncts to merge
 	(define frac-to-merge (FRAC-FN WA WB))
 
+	(define (make-flat CLUST SECT)
+		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
+
 	; CLUST is identical to CLS, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
 		(define WRD (LLOBJ 'left-element SECT))
@@ -99,10 +102,10 @@
 		; only a fraction is merged.  Otherwise, all is merged.
 		(if (nil? OTHSEC)
 			(if (<= (LLOBJ 'get-count SECT) NOISE)
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
+				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
 				(if (< 0 frac-to-merge)
-					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-to-merge)))
-			(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
+					(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frac-to-merge)))
+			(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
 		)
 	)
 
@@ -171,7 +174,10 @@
   to storage.
 "
 	; Fraction of non-overlapping disjuncts to merge
-	(define frac-m (FRAC-FN CLS WA))
+	(define frac-to-merge (FRAC-FN CLS WA))
+
+	(define (make-flat CLUST SECT)
+		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 	; CLUST is identical to CLS, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
@@ -186,9 +192,9 @@
 			(if (or
 					(<= (LLOBJ 'get-count SECT) NOISE)
 					(LLOBJ 'is-nonflat? CLUST SECT))
-				(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT 1.0)
-				(if (< 0 frac-m)
-					(ACC-FUN LLOBJ (LLOBJ 'make-flat CLUST SECT MRG-CON) SECT frac-m)))
+				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
+				(if (< 0 frac-to-merge)
+					(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frac-to-merge)))
 			(ACC-FUN LLOBJ CLS-SECT SECT 1.0))
 	)
 
@@ -230,11 +236,14 @@
 
   See start-cluster for additional details.
 "
+	(define (make-flat CLUST SECT)
+		(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
+
 	; CLUST is identical to CLA, always.
 	(define (clique xLLOBJ CLUST SECT ACC-FUN)
 		(define DJ (LLOBJ 'right-element SECT))
 		(define MSECT (LLOBJ 'make-pair CLUST DJ))
-		(define CLS-SECT (LLOBJ 'make-flat CLUST MSECT MRG-CON))
+		(define CLS-SECT (make-flat CLUST MSECT))
 		(ACC-FUN LLOBJ CLS-SECT SECT 1.0)
 	)
 
