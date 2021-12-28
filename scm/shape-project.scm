@@ -161,7 +161,6 @@
   enforces 'detailed balance', making sure that the CrossSections
   corresponding to SECTION have the same count.
 "
-(format #t "duude rebalance count for ~A newcnt=~A\n" (prt-element SECTION) CNT)
 	(set-count SECTION CNT)
 	(store-atom SECTION)
 	(for-each
@@ -231,8 +230,6 @@
 "
 	(define donor-type (cog-type DONOR))
 
-(format #t "duuude enter reshape-merge for\n  mrg=~A\n  don=~A\n"
-(prt-element MRG) (prt-element DONOR))
 	(when (equal? 'Section donor-type)
 		; Always rebalance the merged section.
 		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
