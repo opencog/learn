@@ -303,19 +303,6 @@
 	; Accumulated count on the MemberLink.
 	(define accum-cnt 0)
 
-	; Caution: there's a "feature" bug in assignment when used with
-	; connector merging. The code below will create sections with
-	; dangling connectors that may be unwanted. Easiest to explain by
-	; example. Consider a section (f, abe) being merged into a cluster
-	; {e,j} to form a cluster {e,j,f}. The code below will create a
-	; section ({ej}, abe) as the C-section, and transfer some counts
-	; to it. But, when connector merging is desired, it should have gone
-	; to ({ej}, ab{ej}). There are two possible solutions: have the
-	; connector merging try to detect this, and clean it up, or have
-	; the tuple object pair up (f, abe) to ({ej}, ab{ej}). There is no
-	; "natural" way for the tuple object to create this pairing (it is
-	; "naturally" linear, by design) so we must clean up during connector
-	; merging.
 	(for-each
 		(lambda (PAIR-A)
 			(define cnt (CLIQUE LLOBJ CLS PAIR-A accumulate-count))
@@ -325,11 +312,9 @@
 				(set! accum-cnt (+ accum-cnt cnt))))
 		(LLOBJ 'right-stars WA))
 
-	; Create MemberLinks. Do this before the connector-merge step,
-	; as they are examined during that phase.
-	(define memb-a (MemberLink WA CLS))
-
 	; Track the number of observations moved from WA to the class.
+	; XXX FIXME Use atomic accumulate-count here.
+	(define memb-a (MemberLink WA CLS))
 	(define old-cnt (get-count memb-a))
 	(set-count memb-a (+ old-cnt accum-cnt))
 	(store-atom memb-a)
