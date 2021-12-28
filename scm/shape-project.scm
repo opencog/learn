@@ -188,9 +188,7 @@
 "
 	(define resect (LLOBJ 'make-section XMR))
 	(define germ (LLOBJ 'left-element resect))
-;	(define mgsf (LLOBJ 'flatten GLS resect))
-(format #t "duuude enter resects for\n  xmr=~A\n  don=~A\n"
-(prt-element XMR) (prt-element XDON))
+
 	; This is confusing ... why can't we just call accumulate-count?
 	; (accumulate-count LLOBJ mgs donor FRAC)
 	; ???
@@ -203,10 +201,6 @@
 			(rebalance-count LLOBJ resect x-cnt)
 			(rebalance-count LLOBJ donor d-cnt)
 		)
-(begin
-(format #t "duude alternater ~A\n" (prt-element XMR))
-		;	(rebalance-count LLOBJ resect x-cnt)
-)
 	)
 )
 
