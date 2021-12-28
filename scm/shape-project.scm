@@ -170,28 +170,13 @@
 
 ; ---------------------------------------------------------------------
 
-(define (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
+(define (rebalance-merge LLOBJ MRG DONOR)
 "
-  reshape-merge LLOBJ GLS MRG W DONOR FRAC
+  rebalance-merge LLOBJ MRG DONOR - Readjust counts on CrossSections
 
-  Merge connectors on the Section/CrossSection MRG.
-  This creates a set of 'consistent' Sections/CrossSections such that
-  these contain the merged cluster node GLS in the appropriate places
-  as germs, points or in connectors. The problem addressed here is that
-  the ordinary linear projective merge does correctly create the merged
-  Sections/CrossSections with GLS as the germ, but leaves behind a
-  mish-mash of the raw unmerged word W to appear in various Shapes (as
-  the point) and in various Connectors. These need to be harmonized so
-  that W is replaced by GLS in all the right places, with counts updated
-  appropriately.
-
-  When this completes, the resulting Sections/CrossSections are fully
-  self-consistent. The inconsistent Sections/CrossSections will have
-  their counts set to zero, and need to be deleted in a subsequent pass.
-
-  FRAC is a floating-point numeric value, of the fraction of counts to
-  transfer. This might be a value between zero and one when MRG doesn't
-  exist.
+  After a DONOR sectin has been merged into the MRG section, assorted
+  CrossSections may be left in inconsistent states. This rebalances all
+  counts on both Sections and CrossSections.
 "
 	(define is-sect (equal? 'Section (cog-type DONOR)))
 

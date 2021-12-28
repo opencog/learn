@@ -261,8 +261,8 @@
 		(LLOBJ 'set-count DONOR rem-cnt)
 		(unless (is-zero? rem-cnt) (store-atom DONOR))
 	)
-	(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
-		(prt-element ACC) (prt-element DONOR))
+	;(format #t "accumulate-count:\n  acc: ~A\n  don: ~A\n"
+	;	(prt-element ACC) (prt-element DONOR))
 
 	(rebalance-count LLOBJ ACC (get-count ACC))
 	(rebalance-count LLOBJ DONOR (get-count DONOR))
@@ -362,7 +362,7 @@
 	; SECT ends up being PAIR-A in the loop below.
 	; MRGECT is the matching merger section
 	(define (reshape OBJ MRGECT SECT FRAC)
-		(reshape-merge OBJ CLS MRGECT WA SECT FRAC)
+		(rebalance-merge OBJ MRGECT SECT)
 	)
 
 	(for-each
