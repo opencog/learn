@@ -170,30 +170,6 @@
 
 ; ---------------------------------------------------------------------
 
-(define (rebalance-resects LLOBJ XMR XDON)
-"
-  merge-resects - Readjust counts on CrossSections
-
-  XMR is the cross-section that is being merged into,
-  XDON is the donor cross-section.
-  This assumes that counts have already been transferred appropriately
-  from XDON to XMR.
-"
-	; This is confusing ... why can't we just call accumulate-count?
-	; (accumulate-count LLOBJ mgs donor FRAC)
-	; ???
-	(define resect (LLOBJ 'make-section XMR))
-	(define x-cnt (LLOBJ 'get-count XMR))
-	(define donor (LLOBJ 'make-section XDON))
-	(define d-cnt (LLOBJ 'get-count XDON))
-
-	(LLOBJ 'make-cross-sections resect)
-	(rebalance-count LLOBJ resect x-cnt)
-	(rebalance-count LLOBJ donor d-cnt)
-)
-
-; ---------------------------------------------------------------------
-
 (define (reshape-merge LLOBJ GLS MRG W DONOR FRAC)
 "
   reshape-merge LLOBJ GLS MRG W DONOR FRAC
@@ -217,17 +193,14 @@
   transfer. This might be a value between zero and one when MRG doesn't
   exist.
 "
-	(define donor-type (cog-type DONOR))
+	(define is-sect (equal? 'Section (cog-type DONOR)))
 
-	(when (equal? 'Section donor-type)
-		; Always rebalance the merged section.
-		(rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
-		(LLOBJ 'make-cross-sections MRG)
-		(rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG))
-	)
+	(define mrg (if is-sect MRG (LLOBJ 'make-section MRG)))
+	(define don (if is-sect DONOR (LLOBJ 'make-section DONOR)))
 
-	(when (equal? 'CrossSection donor-type)
-		(rebalance-resects LLOBJ MRG DONOR))
+	(LLOBJ 'make-cross-sections mrg)
+	(rebalance-count LLOBJ mrg (LLOBJ 'get-count MRG))
+	(rebalance-count LLOBJ don (LLOBJ 'get-count DONOR))
 )
 
 ; ---------------------------------------------------------------
