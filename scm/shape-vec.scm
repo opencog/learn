@@ -369,7 +369,14 @@
 (define x
 			(if (not MRG-CON) PNT
 				(let ((flat (flatten CLS PNT)))
-					(if flat flat PNT)))
+					(if flat flat
+						(let* ((germ (get-pair-left PNT))
+								(newgerm
+									(if (nil? (cog-link 'MemberLink germ CLS)) germ CLS))
+								(DJ (get-pair-right PNT)))
+							(if (equal? (cog-type PNT) 'CrossSection)
+								(CrossSection newgerm DJ)
+								(LLOBJ 'make-pair newgerm DJ))))))
 )
 (format #t "make-flat: ~A\n" (prt-element x))
 (format #t "make-flat CLS=~A PNT=~A\n" (prt-word CLS) (prt-element PNT))
