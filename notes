@@ -7697,6 +7697,98 @@ assign-to-cluster called w/ cliq
 merge-connectors
 
 LLOBJ 'provides 'get-cross-sections
+------------
+22942644.0  2777968.0
+23109300.0
+Error: left and right total pairs not equal! 2750827.0 2774339.0
+Error: left and right total counts not equal! 23109300.0 22930795.0
+
+Crap.
+
+HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+Restart where we left off.
+Do one whole word.
+
+Size: 2777968.0  Total observations: 22942644.0
+
+(define cls (WordClassNode "+ — “ ” _"))
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(for-each (lambda (wrd) (Member wrd cls)) WLIST)
+
+(define wa (Word "+"))
+
+(define (clik CLUST SECT ACC-FUN)
+	(define fla (star-obj 'make-flat CLUST SECT))
+	(format #t "Clik: ~A to ~A\n" (prt-element SECT) (prt-element fla))
+	(ACC-FUN star-obj fla SECT 1.0))
+
+(assign-to-cluster star-obj cls wa clik)
+(rebalance-shapes star-obj cls wa clik)
+
+(star-obj 'clobber)
+(recompute-mmt star-obj wa)
+(recompute-mmt star-obj cls)
+(recompute-mmt-final star-obj)
+(print-matrix-summary-report star-obj)
+
+Size: 2777968.0  Total observations: 22942644.0
+Wow! OK, so that worked!  Try again.
+XXX No it didn't. It works only if one memberLink is created.
+If many are created, its borken.
+Error: left and right total pairs not equal! 2778046.0 2778105.0
+Error: left and right total counts not equal! 22940912.0 22942086.0
+
+Maybe this is needed:
+(for-each (lambda (wrd) (recompute-mmt star-obj wrd)) WLIST)
+(recompute-mmt-final star-obj)
+(print-matrix-summary-report star-obj)
+Nope, has no effect.
+
+(define wa (Word "—"))
+
+Error: left and right total pairs not equal! 2777699.0 2777725.0
+Error: left and right total counts not equal! 22943914.0 22941314.0
+
+---------
+(define sup-obj (add-support-api star-obj))
+(define cnt 0)
+(define (assn pra)
+	(clik cls pra accumulate-count)
+	(clik cls pra rebalance-merge)
+	(star-obj 'clobber)
+	(recompute-mmt star-obj wa)
+	(recompute-mmt star-obj cls)
+	(recompute-mmt-final star-obj)
+	(print-matrix-summary-report star-obj)
+	(set! cnt (+ 1 cnt))
+	(format #t "Done ~A ~A\n" cnt pra)
+	(define lobs (sup-obj 'total-count-left))
+	(define robs (sup-obj 'total-count-right))
+	(define nlobs (inexact->exact (round lobs)))
+	(define nrobs (inexact->exact (round robs)))
+	(when (not (equal? nlobs nrobs))
+      (format #t "Bonk: left and right total counts! ~A ~A\n" lobs robs)
+		(foobar))
+	(when (not (equal? nlobs 22942644))
+      (format #t "Bonk: 22942644 counts changed ! ~A ~A\n" lobs robs)
+		(foobar))
+)
+
+(define rstars (star-obj 'right-stars wa))
+(define pra (list-ref rstars 0))
+
+(for-each assn rstars)
+
+very first one gets count wrong.
+...
+each pair has crosses.
+need to recompute marginals for ... each lefty in each cross.
+but only that righty in each cross.
+get-section
+get-cross-sections
+
+
+---------
 
 
 ====================================================
@@ -7768,12 +7860,13 @@ FIXED:
   print-matrix-summary report. 3 days hard work, partly fixed, issue
   was that marginals were not being loaded.
   Wow. This took more than a week and a major redesign. DONE 28 Dec 2021
+* recompute-mmt will be more efficient if we union all the right duals
+  for all the words, instead of doing them one at a time. DONE 29 Dec 2021
 
 
 TODO/BUGS:
 * Use increment-count for everything.
-* recompute-mmt will be more efficient if we union all the right duals
-  for all the words, instead of doing them one at a time.
+  (cog-inc-count! ATOM CNT)
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug

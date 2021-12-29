@@ -376,24 +376,55 @@
 
 ; ---------------------------------------------------------------
 
-(define (recompute-mmt LLOBJ WRD)
+(define (recompute-mmt LLOBJ WRD-LIST)
 "
-  recompute-mmt LLOBJ WRD - Recompute MMT marginals for WRD
+  recompute-mmt LLOBJ WRD-LIST - Recompute MMT for words in WRD-LIST
 
-  This recomputes the marginals for support and counts for both
-  the word and the disjuncts on that word. In particular, this
-  recompute N(*,d) which is needed by MM^T.
+  This recomputes the marginals for support and counts for the words
+  in the WRD-LIST, and also for the disjuncts attached to those words.
+  In particular, this recomputes the N(*,d) which is needed by MM^T.
 "
+	; Gather together all of the DJ's for all the words in the list.
+	; These will, in general, be heavily duplictated.
+	(define dj-set (make-atom-set))
+
+	; Gather together all affected words.
+	(define wrd-set (make-atom-set))
+	(for-each wrd-set WRD-LIST)
+
+	; Add pair to the margin-sets.
+	(define (pair-margins PAIR)
+		(wrd-set (LLOBJ 'left-element PAIR))
+		(dj-set (LLOBJ 'right-element PAIR)))
+
+	; Add pair to the margin-sets, and also the matching sections
+	; and cross-sections.
+	(define (expand-margins PAIR)
+		(dj-set (LLOBJ 'right-element PAIR))
+		(if (equal? 'Section (cog-type PAIR))
+			(for-each pair-margins (LLOBJ 'get-cross-sections PAIR))
+			(pair-margins (LLOBJ 'get-section PAIR))))
+
+	; Populate the margin sets.
+	(for-each
+		(lambda (WRD) (for-each expand-margins (LLOBJ 'right-stars WRD)))
+		WRD-LIST)
+
 	(define psu (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 
 	; This for-each loop accounts for 98% of the CPU time in typical cases.
-	; 'right-duals returns both ConnectorSeqs and Shapes.
 	(for-each
 		(lambda (DJ) (store-atom (psu 'set-left-marginals DJ)))
-		(LLOBJ 'right-duals WRD))
-	(store-atom (psu 'set-right-marginals WRD))
-	(store-atom (atc 'set-mmt-marginals WRD))
+		(dj-set #f))
+
+	(for-each
+		(lambda (WRD) (store-atom (psu 'set-right-marginals WRD)))
+		(wrd-set #f))
+
+	(for-each
+		(lambda (WRD) (store-atom (psu 'set-mmt-marginals WRD)))
+		(wrd-set #f))
 )
 
 (define (recompute-mmt-final LLOBJ)
@@ -484,7 +515,7 @@
 	; The fraction to merge -- zero.
 	(define (none WA WB) 0.0)
 
-	(define (store-mmt WRD) (recompute-mmt LLOBJ WRD))
+	(define (store-mmt WRD) (recompute-mmt LLOBJ (list WRD)))
 
 	(define (store-final) (recompute-mmt-final LLOBJ))
 
@@ -712,8 +743,7 @@
 		; Recompute marginals after merge. Clobber first; else the
 		; duals and stars are wrong, which ruins the support calculations.
 		(LLOBJ 'clobber)
-		(for-each (lambda (WRD) (recompute-mmt LLOBJ WRD)) in-grp)
-		(recompute-mmt LLOBJ wclass)
+		(recompute-mmt LLOBJ (cons wclass in-grp))
 		(recompute-mmt-final LLOBJ)
 
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
