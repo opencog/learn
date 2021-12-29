@@ -423,7 +423,7 @@
 		(wrd-set #f))
 
 	(for-each
-		(lambda (WRD) (store-atom (psu 'set-mmt-marginals WRD)))
+		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
 		(wrd-set #f))
 )
 
