@@ -7726,8 +7726,7 @@ Size: 2777968.0  Total observations: 22942644.0
 (rebalance-shapes star-obj cls wa clik)
 
 (star-obj 'clobber)
-(recompute-mmt star-obj wa)
-(recompute-mmt star-obj cls)
+(recompute-mmt star-obj (list wa cls))
 (recompute-mmt-final star-obj)
 (print-matrix-summary-report star-obj)
 
@@ -7737,6 +7736,11 @@ XXX No it didn't. It works only if one memberLink is created.
 If many are created, its borken.
 Error: left and right total pairs not equal! 2778046.0 2778105.0
 Error: left and right total counts not equal! 22940912.0 22942086.0
+
+after casting a bigger net:
+Error: left and right total pairs not equal! 2777952.0 2777629.0
+Error: left and right total counts not equal! 22936023.0 22928998.0
+
 
 Maybe this is needed:
 (for-each (lambda (wrd) (recompute-mmt star-obj wrd)) WLIST)
@@ -7755,13 +7759,16 @@ Error: left and right total counts not equal! 22943914.0 22941314.0
 (define (assn pra)
 	(clik cls pra accumulate-count)
 	(clik cls pra rebalance-merge)
+	(define then (current-time))
 	(star-obj 'clobber)
-	(recompute-mmt star-obj wa)
-	(recompute-mmt star-obj cls)
+	(recompute-mmt star-obj (list wa cls))
+	(format #t "did mmt in ~A secs\n" (- (current-time) then))
+	(set! then (current-time))
 	(recompute-mmt-final star-obj)
+	(format #t "did mmt final ~A secs\n" (- (current-time) then))
 	(print-matrix-summary-report star-obj)
 	(set! cnt (+ 1 cnt))
-	(format #t "Done ~A ~A\n" cnt pra)
+	(format #t "Done ~A ~A\n" cnt (prt-element pra))
 	(define lobs (sup-obj 'total-count-left))
 	(define robs (sup-obj 'total-count-right))
 	(define nlobs (inexact->exact (round lobs)))
@@ -7786,9 +7793,145 @@ need to recompute marginals for ... each lefty in each cross.
 but only that righty in each cross.
 get-section
 get-cross-sections
-
-
 ---------
+first four:
+ 2.000 * [+, <=Lit,  ###LEFT-WALL###- +- $- +- .+>]
+63.000 * [+, <+,  $- —+ =N+>]
+10.000 * [+, <+,  .- $+ =Lond+ .+>]
+ 2.000 * [+, <*,  .- $+ =Dial.=+ 389+>]
+
+ 2.000 * [{+ — “ ” _}, <=Lit,  ###LEFT-WALL###- {+ — “ ” _}- $- {+ — “ ” _}- .+>]
+63.000 * [{+ — “ ” _}, <{+ — “ ” _},  $- {+ — “ ” _}+ =N+>]
+10.000 * [{+ — “ ” _}, <{+ — “ ” _},  .- $+ =Lond+ .+>]
+ 2.000 * [{+ — “ ” _}, <*,  .- $+ =Dial.=+ 389+>]
+
+fifth one bombs:
+ 4.000 * [+, <246,  .- ”- $- =Outlook.=- 79- :- .+>]
+ 4.000 * [{+ — “ ” _}, <246,  .- {+ — “ ” _}- $- =Outlook.=- 79- :- .+>]
+
+Error: left and right total counts not equal! 22942648.0 22942644.0
+
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+
+(define cls (WordClassNode "+ — “ ” _"))
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(for-each (lambda (wrd) (Member wrd cls)) WLIST)
+
+(define wa (Word "+"))
+
+(define (clik CLUST SECT ACC-FUN)
+	(define fla (star-obj 'make-flat CLUST SECT))
+	(format #t "Clik: ~A to ~A\n" (prt-element SECT) (prt-element fla))
+	(ACC-FUN star-obj fla SECT 1.0))
+
+(define-public (prt-dj-list LST)
+   (string-concatenate
+      (map (lambda (ELT)
+         (format #f "~A\n" (prt-dj ELT)))
+         LST)))
+
+(define sup-obj (add-support-api star-obj))
+(define pcnt 0)
+(define (assn pra)
+	(clik cls pra accumulate-count)
+	(clik cls pra rebalance-merge)
+
+	(set! pcnt (+ 1 pcnt))
+	(format #t "Done ~A ~A\n" pcnt (prt-element pra))
+
+	(define fla (star-obj 'make-flat cls pra))
+	(define dj-set (make-atom-set))
+	(define wrd-set (make-atom-set))
+	(wrd-set cls)
+	(wrd-set (star-obj 'left-element pra))
+
+	(define (pair-margins PAIR)
+		(wrd-set (star-obj 'left-element PAIR))
+      (dj-set (star-obj 'right-element PAIR)))
+
+   (define (expand-margins PAIR)
+      (dj-set (star-obj 'right-element PAIR))
+      (if (equal? 'Section (cog-type PAIR))
+         (for-each pair-margins (star-obj 'get-cross-sections PAIR))
+         (pair-margins (star-obj 'get-section PAIR))))
+
+	(expand-margins pra)
+	(expand-margins fla)
+
+	(define wrds (wrd-set #f))
+	(define djs (dj-set #f))
+	(format #t "words=~A djs=~A\n" (length wrds) (length djs))
+	(format #t "words=~A\n" wrds)
+	(format #t "djs=\n~A\n" (prt-dj-list djs))
+
+	(define sup-obj (add-support-api star-obj))
+
+	(define lobs (sup-obj 'total-count-left))
+	(define robs (sup-obj 'total-count-right))
+	(define nlobs (inexact->exact (round lobs)))
+	(define nrobs (inexact->exact (round robs)))
+   (format #t "Before: left and right total counts! ~A ~A\n" lobs robs)
+
+	(define befw 0)
+	(for-each (lambda (WRD)
+		(define cnt (sup-obj 'right-count WRD))
+		(set! befw (+ befw cnt))
+		(format #t "before count=~A wrd=~A\n" cnt (cog-name WRD))) wrds)
+
+	(define befd 0)
+	(for-each (lambda (DJ)
+		(define cnt (sup-obj 'left-count DJ))
+		(set! befd (+ befd cnt))
+		(format #t "before count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+
+	(star-obj 'clobber)
+	(define psu (add-support-compute star-obj))
+	(for-each
+      (lambda (DJ) (psu 'set-left-marginals DJ)) djs)
+
+	 (for-each
+      (lambda (WRD) (psu 'set-right-marginals WRD)) wrds)
+
+	(define aftw 0)
+	(for-each (lambda (WRD)
+		(define cnt (sup-obj 'right-count WRD))
+		(set! aftw (+ aftw cnt))
+		(format #t "after count=~A wrd=~A\n" cnt (cog-name WRD))) wrds)
+
+	(define aftd 0)
+	(for-each (lambda (DJ)
+		(define cnt (sup-obj 'left-count DJ))
+		(set! aftd (+ aftd cnt))
+		(format #t "after count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+
+	(format #t "wrdcnt bef: ~A aft: ~A\n" befw aftw)
+	(format #t "djcnt bef: ~A aft: ~A\n" befd aftd)
+
+	(define then (current-time))
+	(recompute-mmt-final star-obj)
+	(format #t "did mmt final ~A secs\n" (- (current-time) then))
+
+	(define alobs (sup-obj 'total-count-left))
+	(define arobs (sup-obj 'total-count-right))
+	(define anlobs (inexact->exact (round alobs)))
+	(define anrobs (inexact->exact (round arobs)))
+   (format #t "Before: left and right total counts! ~A ~A\n" lobs robs)
+   (format #t "After: left and right total counts! ~A ~A\n" alobs arobs)
+	(newline) (newline)
+
+	; (print-matrix-summary-report star-obj)
+
+	(when (not (equal? anlobs anrobs))
+      (format #t "Bonk: left and right total counts! ~A ~A\n" alobs arobs)
+		(foobar))
+	(when (not (equal? anlobs 22942644))
+      (format #t "Bonk: 22942644 counts changed ! ~A ~A\n" lobs robs)
+		(foobar))
+)
+
+(define rstars (star-obj 'right-stars wa))
+(for-each assn rstars)
+
 
 
 ====================================================
@@ -7805,7 +7948,7 @@ FIXED:
 * Write unit test for the recent caching fix in the pattern matcher,
   its doable... (fix circa 26 march 2021) #2803 Done in #2812
 * During merging, long class names are printed, is that correct?
-  FIXED, it was wrong, because WrodClass test was wrong
+  FIXED, it was wrong, because WordClass test was wrong
 * Bug: RockDB needs to be compacted on close. closing and reopening
   a DB shrinks disk use by 20x for some workloads.
   Also its chewing up vast amounts of RAM. Bugs #9 and #10

@@ -188,6 +188,13 @@
 		(prt-conseq (cog-outgoing-set DJ)))
 )
 
+(define-public (prt-dj-list LST)
+	(string-concatenate
+		(map (lambda (ELT)
+			(format #f "~A\n" (prt-dj ELT)))
+			LST))
+)
+
 (define (prt-section SECT)
 	(format #f "~6,3F * (~A, ~A)"
 		(cog-count SECT)
