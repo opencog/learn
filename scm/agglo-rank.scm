@@ -397,13 +397,18 @@
 		(wrd-set (LLOBJ 'left-element PAIR))
 		(dj-set (LLOBJ 'right-element PAIR)))
 
+	(define (cross-margins PAIR)
+		(for-each pair-margins (LLOBJ 'get-cross-sections PAIR)))
+
 	; Add pair to the margin-sets, and also the matching sections
 	; and cross-sections.
 	(define (expand-margins PAIR)
 		(dj-set (LLOBJ 'right-element PAIR))
 		(if (equal? 'Section (cog-type PAIR))
-			(for-each pair-margins (LLOBJ 'get-cross-sections PAIR))
-			(pair-margins (LLOBJ 'get-section PAIR))))
+			(cross-margins PAIR)
+			(let ((sect (LLOBJ 'get-section PAIR)))
+				(pair-margins sect)
+				(cross-margins sect))))
 
 	; Populate the margin sets.
 	(for-each

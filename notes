@@ -7870,7 +7870,7 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 	(define robs (sup-obj 'total-count-right))
 	(define nlobs (inexact->exact (round lobs)))
 	(define nrobs (inexact->exact (round robs)))
-   (format #t "Before: left and right total counts! ~A ~A\n" lobs robs)
+   (format #t "Before: left and right total counts: ~A ~A\n" lobs robs)
 
 	(define befw 0)
 	(for-each (lambda (WRD)
@@ -7878,11 +7878,13 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 		(set! befw (+ befw cnt))
 		(format #t "before count=~A wrd=~A\n" cnt (cog-name WRD))) wrds)
 
+	(newline)
 	(define befd 0)
 	(for-each (lambda (DJ)
 		(define cnt (sup-obj 'left-count DJ))
 		(set! befd (+ befd cnt))
 		(format #t "before count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+	(newline)
 
 	(star-obj 'clobber)
 	(define psu (add-support-compute star-obj))
@@ -7897,12 +7899,14 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 		(define cnt (sup-obj 'right-count WRD))
 		(set! aftw (+ aftw cnt))
 		(format #t "after count=~A wrd=~A\n" cnt (cog-name WRD))) wrds)
+	(newline)
 
 	(define aftd 0)
 	(for-each (lambda (DJ)
 		(define cnt (sup-obj 'left-count DJ))
 		(set! aftd (+ aftd cnt))
 		(format #t "after count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+	(newline)
 
 	(format #t "wrdcnt bef: ~A aft: ~A\n" befw aftw)
 	(format #t "djcnt bef: ~A aft: ~A\n" befd aftd)
@@ -7931,6 +7935,40 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 
 (define rstars (star-obj 'right-stars wa))
 (for-each assn rstars)
+
+63.000 * [+, <+,  $- —+ =N+>] to
+63.000 * [{+ — “ ” _}, <{+ — “ ” _},  $- {+ — “ ” _}+ =N+>]
+this is the second one, which was OK last time....
+
+before count=6.0 wrd=+ — “ ” _
+before count=21566.0 wrd=+
+before count=63.0 dj=<+,  $- —+ =N+>
+before count=0 dj=<{+ — “ ” _},  $- {+ — “ ” _}+ =N+>
+before count=65.0 dj= +- —+ =N+
+before count=0 dj= {+ — “ ” _}- {+ — “ ” _}+ =N+
+
+after count=195.0 wrd=+ — “ ” _               --   up by 189 == 3*63
+after count=21440.0 wrd=+                     -- down by 126 == 2*63
+after count=0.0 dj=<+,  $- —+ =N+>            -- down by  63 expected
+after count=63.0 dj=<{+ — “ ” _},  $- {+ — “ ” _}+ =N+> -- up by 63 expected
+after count=2.0 dj= +- —+ =N+                       -- down by 63
+after count=63.0 dj= {+ — “ ” _}- {+ — “ ” _}+ =N+  --   up by 63
+
+wrdcnt bef: 21572.0 aft: 21635.0  change of 63
+djcnt bef: 128.0 aft: 128.0
+
+what are pairs doing? pairs before:
+63.000 * [+, <+,  $- —+ =N+>]
+
+gives to ({}, {}- {}+ =N+)  grows by 63  flat of (+, +- —+ =N+)
+and rebalancing:
+[{}, <+,  {}- $+ =N+>]  grew by 63
+[=N, <+,  {}- {}+ $+]   grew by 63
+
+who shrank? ... should be same.
+Why is =N not on the list?  Because ...
+
+xc->sect -> xc's again.  so we misssed some words!
 
 
 
