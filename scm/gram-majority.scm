@@ -188,14 +188,10 @@
 		(for-each (lambda (WRD) (MemberLink WRD cls)) WLIST)
 
 		(for-each
-			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
+			(lambda (WRD)
+				(assign-to-cluster LLOBJ cls WRD clique)
+				(if MRG-CON (rebalance-shapes LLOBJ cls WRD clique)))
 			WLIST)
-
-		(when MRG-CON
-			(for-each
-				(lambda (WRD) (rebalance-shapes LLOBJ cls WRD clique))
-				WLIST)
-		)
 
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
