@@ -8087,12 +8087,12 @@ FIXED:
   Wow. This took more than a week and a major redesign. DONE 28 Dec 2021
 * recompute-mmt will be more efficient if we union all the right duals
   for all the words, instead of doing them one at a time. DONE 29 Dec 2021
+* Use increment-count for everything.
+  (cog-inc-count! ATOM CNT) and (add-stars-api 'move-count)
+  The move-count is done already!? DONE, I guess.
 
 
 TODO/BUGS:
-* Use increment-count for everything.
-  (cog-inc-count! ATOM CNT) and (add-stars-api 'move-count)
-  The move-count is done already!?
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug

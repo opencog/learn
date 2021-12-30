@@ -276,11 +276,6 @@
   This assumes that storage is connected; the updated counts are
   written to storage.
 "
-	; set-count ATOM CNT - Set the raw observational count on ATOM.
-	; XXX FIXME there should be a set-count on the LLOBJ...
-	; Strange but true, there is no setter, currently!
-	(define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
 	(define monitor-count (make-count-monitor))
 
 	; Accumulated count on the MemberLink.
@@ -296,10 +291,8 @@
 		(LLOBJ 'right-stars WA))
 
 	; Track the number of observations moved from WA to the class.
-	; XXX FIXME Use atomic accumulate-count here.
 	(define memb-a (MemberLink WA CLS))
-	(define old-cnt (get-count memb-a))
-	(set-count memb-a (+ old-cnt accum-cnt))
+	(cog-inc-count! memb-a accum-cnt)
 	(store-atom memb-a)
 
 	(monitor-count
