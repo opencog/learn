@@ -150,7 +150,7 @@ jigsaw pieces
  extracted from maximum planar spanning-graph (MPG) parses of English sentences.
  How many connectors are there on a typical jigsaw piece? Answer: 2.25 on
  average.
- These are closely modelled by a log-normal distribution.
+ These are closely modeled by a log-normal distribution.
  This is good news for English, where we expect nouns to typically have
  1, 2 or 3 connectors, and verbs and prepositions to have 2,3,4.
  Adjectives, adverbs and determiners typically have only 1 connector.
@@ -209,14 +209,14 @@ The above leads to a break-through, an important advance in the theory.
  This is a two-step process: first, an in-group of similar words is selected.
  Then, one looks to see what traits (disjuncts) the members of that in-group
  have in common.
- Only those traits that most groupd memebers share are voted into the group.
+ Only those traits that most group members share are voted into the group.
  This solves an important clustering problem: it generalizes, without generalizi
 ng over-broadly.
  I think this is a major advance in the theory, here.
 \end_layout
 
 \begin_layout Itemize
-I beleive that the result of merging as described above corresponds (strongly)
+I believe that the result of merging as described above corresponds (strongly)
  to word-senses.
  (Or it should correspond.) This remains unexplored.
 \end_layout
@@ -233,10 +233,10 @@ How big should an in-group be? The sizes of a dozen different groups are
 \end_layout
 
 \begin_layout Itemize
-A good judgement of similarity is needed.
+A good judgment of similarity is needed.
  This was explored in great depth in the Diary Part Three.
  The mutual information (MI) survives as a good way of judging similarity.
- Below, it is discovered that an even better judgement is given by the average
+ Below, it is discovered that an even better judgment is given by the average
  of the MI and the log-frequency.
  That is, extremely rare words can have a huge MI, but this is boring, because
  the words are rare.
@@ -301,8 +301,8 @@ minor
 
 \begin_layout Standard
 To recap: two important things are found.
- First, there appears to be a major break-through: the in-group chared-trait
- merge algirithm is discovered, and it seems very promising.
+ First, there appears to be a major break-through: the in-group shared-trait
+ merge algorithm is discovered, and it seems very promising.
  Next, averaging together the MI with the word-frequency gives the rankd-MI
  similarity, which seems to provide an ideal way of ranking frequent similar
  words.
@@ -371,7 +371,7 @@ Data for graphs prepared with `utils/similarity-graphs.scm`
 The above shows the number of disjuncts of a given length.
  That is, fixing the length, just count how many disjuncts there are.
  Also shown is an eyeballed fit using the log-normal distribution.
- As before, this is defnied as
+ As before, this is defined as
 \end_layout
 
 \begin_layout Standard
@@ -401,14 +401,14 @@ In this graph, shown is
  nouns with a length of 2 (determiner, verb-connector) or 3 (determiner,
  adjective, verb connector); both determiners and modifiers (adjectives,
  adverbs) should have a length of 1.
- Punctuation, ditranstive verbs, quotations, etc.
+ Punctuation, ditransitive verbs, quotations, etc.
  have more complex structure.
  So above looks healthy.
  
 \end_layout
 
 \begin_layout Standard
-How about the observation count of the number of words htat have some disjunct
+How about the observation count of the number of words that have some disjunct
  length? Below:
 \end_layout
 
@@ -2618,14 +2618,30 @@ Perhaps the most interesting result is that more than 3/4ths of the count
 
 \begin_layout Standard
 Mystery result: Total number of disjuncts dropped from 205003 to 202922
- (as measured by `(pcs 'right-basis-size)`) ..
+ (as measured by `
+\family sans
+(pcs 'right-basis-size)
+\family default
+`) ..
  how can this happen? This suggests some bug!? That's a difference of 2081
  ...
  oh, I see.
- The basis shrank, because pcs is NOT looking at WordClassNodes...
+ The basis shrank, because 
+\family sans
+pcs
+\family default
+ is NOT looking at WordClassNodes...
  so there are 2081 disjuncts that got moved out of any word, and into the
  new WordClassNode.
- (`pcs` is from `make-pseudo-cset-api`) OK.
+ (`
+\family sans
+pcs
+\family default
+` is from `
+\family sans
+make-pseudo-cset-api
+\family default
+`) OK.
  Unexpected, but OK.
 \end_layout
 
@@ -3214,9 +3230,9 @@ Clustering merges 46967 sects+cross, as expected (this is the union support
 \end_layout
 
 \begin_layout Standard
-Issue: the merge code wishes to recmpute the MMT.
+Issue: the merge code wishes to recompute the MMT.
  The merge code was given shapes to work with so it wants to recompute MMT
- w/ whapes, but this is not what we're using for similarity.
+ w/ shapes, but this is not what we're using for similarity.
  At any rate, the pipeline needs to be redesigned to use common-MI, instead
  of using an MI cutoff.
 \end_layout
@@ -4377,7 +4393,7 @@ there
 \end_layout
 
 \begin_layout Standard
-Interstingly, the remainder of what's left to She-He has the MI shoot way
+Interestingly, the remainder of what's left to She-He has the MI shoot way
  up, and the mergability of this remainder is relatively high.
  The MI between the cluster and There, This is unaffected, or even goes
  up.
@@ -5519,7 +5535,7 @@ obvious
  The only connection between my head and yours is the fact that you are
  reading these words.
  That is both a spin-glass ultra-metric, and also describes there the lest
- creul cut can be made.
+ cruel cut can be made.
  Phew.
  Sorry for the digression, but this seems important.)
 \end_layout
@@ -5550,8 +5566,12 @@ First issue: When the MI's get recomputed, the shape object will be used.
 \begin_layout Standard
 Second issue: When the MI's get recomputed, it might seem that connector
  sequences that should have been comparable are no longer being compared,
- because one connector sequence has a plain word, while another has a WordClass.
- Upon furtherr reflection, this is NOT an issue.
+ because one connector sequence has a plain word, while another has a 
+\family sans
+WordClass
+\family default
+.
+ Upon further reflection, this is NOT an issue.
  Connector merging means that all of the various connector sequences have
  been updated (
 \begin_inset Quotes eld
@@ -5561,7 +5581,11 @@ correctly
 \begin_inset Quotes erd
 \end_inset
 
-) with the new WordClass, so the sequences remain comparable.
+) with the new 
+\family sans
+WordClass
+\family default
+, so the sequences remain comparable.
  Those that have NOT been updated MUST be considered as belonging to a distinct
  word-sense.
 \end_layout
@@ -5570,7 +5594,11 @@ correctly
 In particular, that means that the correct connector merge code automatically
  handles word-sense disambiguation: whatever has not been merged, including
  unmerged connectors, MUST be understood to belong to a word-sense that
- is distinct from the WordClass.
+ is distinct from the 
+\family sans
+WordClass
+\family default
+.
 \end_layout
 
 \begin_layout Standard
@@ -5586,13 +5614,13 @@ Looks like everything works great.
  The functional review provoked a code review, both the functional review
  and the code review pass, it seems that merging works great.
  Caveat: at least the non-connector-merge variant works great.
- The connector-merge code is really complicated, and was developed and dubugged
+ The connector-merge code is really complicated, and was developed and debugged
  during the random-corpus exploration phase.
  It was completed, with no known bugs, but it is just complicated enough
  and squonky enough that perhaps there are issues.
  There is a test-suite of 13 unit tests.
  These pass.
- Soo I guess its pretty tight?
+ So I guess its pretty tight?
 \end_layout
 
 \begin_layout Standard
@@ -5668,9 +5696,9 @@ Consider some given initial word-pair, and a threshold
 \end_inset
 
  gets, the larger the ingroup will be.
- The process is not monotomic, since it depends on the order in which words
+ The process is not monotonic, since it depends on the order in which words
  are added.
- For smalle 
+ For small 
 \begin_inset Formula $\varepsilon$
 \end_inset
 
@@ -5679,7 +5707,7 @@ Consider some given initial word-pair, and a threshold
 \begin_inset Formula $\varepsilon$
 \end_inset
 
- gets larger, one of the early members might be quite different, and becming
+ gets larger, one of the early members might be quite different, and becoming
  a peer to it might be a challenge, thus decreasing the size of the in-group!
  These decreases are visible in the chart below.
  To avoid this effect, the words are ranked by frequency first, so that
@@ -6621,9 +6649,9 @@ In-group ranking spread
 Words are added to the in-group one at a time, starting with the most-frequently
  occurring words.
  By the time that the construction of the in-group is done, what is the
- difference between the highest-ranked word in the in-group, and the lowest-reak
+ difference between the highest-ranked word in the in-group, and the lowest-rank
 ed? This is graphed below.
- It's done with commmon-MI to determine in-group membership.
+ It's done with common-MI to determine in-group membership.
 \end_layout
 
 \begin_layout Standard
@@ -6958,8 +6986,12 @@ y computations are rendered invalid.
 \begin_layout Standard
 Done.
  Fixed some bugs, seems to work well, happy and healthy ...
- code being created in `agglo-rank.scm` based on results and outline.
- Nothing notable pops out, other than it looks great! Yahoo! we're rolling
+ code being created in `
+\family sans
+agglo-rank.scm
+\family default
+` based on results and outline.
+ Nothing notable pops out, other than it looks great! Yahoo! We're rolling
  again!
 \end_layout
 
@@ -7029,7 +7061,7 @@ There's a generic problem here: we've got some kind of graph spectral something-
 or-other here, but I don't know that theory.
  There's a hint that its simple, elegant, and should have some obvious interpret
 ation.
- Fer chris sake, the last figure of Part Three was a Gaussian! There's got
+ Fer Chris sake, the last figure of Part Three was a Gaussian! There's got
  to be some kind of generic theorems on this stuff.
 \end_layout
 
@@ -7094,9 +7126,12 @@ As a practical application, ranking works best if we add cut-offs: reject
 \end_layout
 
 \begin_layout Standard
-There's also another de-facto filter at play: if we compute sims only for
- the top-200 words, any highly similar words that aren't in the top-200
- simply won't appear.
+There's also another 
+\shape italic
+de facto
+\shape default
+ filter at play: if we compute sims only for the top-200 words, any highly
+ similar words that aren't in the top-200 simply won't appear.
  For example, the roman numeral `(Word "i")` is ranked 458'th in the list
  of words, `(Word "ii")` is ranked 701'th.
  They are highly similar: MI=12.52 and a ranked-MI of 9.05 which would have
@@ -7942,7 +7977,7 @@ He
 \end_layout
 
 \begin_layout Standard
-I'm enjoying that both the left-slanting and the right-slanting sngle and
+I'm enjoying that both the left-slanting and the right-slanting single and
  double quotes show up in this list correctly paired with each-other.
  
 \end_layout
@@ -8742,7 +8777,7 @@ might
 \end_layout
 
 \begin_layout Standard
-Yikes! The next four enties are also punctuation.
+Yikes! The next four entitles are also punctuation.
  I think the corpus had a bunch of ASCII-formatted tables in it.
  These are reasonable suggestions, but are actually ..
  boring.
@@ -8777,8 +8812,8 @@ Previous: at round 12, merged`###LEFT-WALL###`, `:` from a start of ranked-MI
 \end_layout
 
 \begin_layout Standard
-At round 26, we merg (`]`, `:`) because they have ranked-MI = 6.9107 MI =
- 8.5029.
+At round 26, we merge (`]`, `:`) because they have ranked-MI = 6.9107 MI
+ = 8.5029.
  This apparently splits off enough of the colon that what is left over is
  now similar to the left-overs from LEFT-WALL.
  (Although I'm confused? Didn't the overlap merge pre-emptively remove all
@@ -8988,7 +9023,7 @@ class
 \end_layout
 
 \begin_layout Standard
-So some of the overlaps are tiny, but the cosine is huge! The nly way this
+So some of the overlaps are tiny, but the cosine is huge! The only way this
  can happen is if most of the disjuncts have very small counts, so that
  the vector length is unaffected by them (these appear in the denominator
  of the cosine), while the overlapping disjuncts are the ones with the high
@@ -9000,7 +9035,11 @@ And indeed that is what happened! There are 56 entries in the overlap of
  left-wall and colon, out of about 46K.
  All 56 of these are CrossSections.
  All have large counts.
- All have Shapes involving a WordClassNode.
+ All have Shapes involving a 
+\family sans
+WordClassNode
+\family default
+.
  Thus, although merger will orthogonalize vectors, later connector merges
  can add back parallel components.
  Again: this is a sheaf, and its got some kind of torsion or curvature.
@@ -9599,7 +9638,11 @@ The
 \end_inset
 
  value defined up above.
- (its called `mmt-q` in the code).
+ (its called `
+\family sans
+mmt-q
+\family default
+` in the code).
  The 
 \begin_inset Formula $Q$
 \end_inset
@@ -11265,7 +11308,7 @@ but and
 \begin_layout Standard
 Here are some merges further down the queue.
  Merge 18 appears to be the first one accepting three items.
- If we had set commanaltiy to 10%, then merge 4 would have been the first.
+ If we had set commonality to 10%, then merge 4 would have been the first.
 \end_layout
 
 \begin_layout Standard
@@ -14987,7 +15030,7 @@ number
  disjuncts low.
  Is there a way to weight the commonality score likewise? But how, exactly?
  How do we turn this into a scale-free number? The problem is that, by definitio
-nn, the count will be zero for some (this is how generalization happens.)
+n, the count will be zero for some (this is how generalization happens.)
  I can't think of a worthy alternate variant of commonality.
 \end_layout
 
@@ -16323,7 +16366,7 @@ r9-merge-h-save1.rdb
 \end_layout
 
 \begin_layout Itemize
-As above, paramters were quorum=0.5, commonality=20% and noise-floor = 4.
+As above, parameters were quorum=0.5, commonality=20% and noise-floor = 4.
  AKA `
 \family sans
 (in-group-cluster covr-obj 0.5 0.2 4 200 100)
@@ -16361,12 +16404,23 @@ Most of the atoms are search queries that were not deleted! So that's a
 \end_layout
 
 \begin_layout Itemize
-5190946 SimilarityLinks, (that's more than 5M of them) so similarities between
- approx 3222 words.
+5190946 
+\family sans
+SimilarityLinks
+\family default
+, (that's more than 5M of them) so similarities between approx 3222 words.
 \end_layout
 
 \begin_layout Itemize
-4467 MemberLinks and 1393 WordClassNodes.
+4467 
+\family sans
+MemberLinks
+\family default
+ and 1393 
+\family sans
+WordClassNodes
+\family default
+.
 \end_layout
 
 \begin_layout Standard
@@ -16852,7 +16906,7 @@ Distribution of word-senses.
 \end_layout
 
 \begin_layout Itemize
-For words that belong to word-classes, what fraction of thier weight remains
+For words that belong to word-classes, what fraction of their weight remains
  unassigned to any word-class?
 \end_layout
 
@@ -16880,7 +16934,7 @@ Prior to starting the merge, there's an MI between words and disjuncts.
 \end_layout
 
 \begin_layout Standard
-Thats a lot of questions.
+That's a lot of questions.
  Not clear which ones should be answered first.
 \end_layout
 
@@ -16892,7 +16946,7 @@ Issues with the dataset
 There are problems.
  Upon halt and reload of the dataset, the left-right partial sums are not
  balanced.
- Ttotal counts are off by a factor of two.
+ Total counts are off by a factor of two.
  This is a bug.
  Is it serious?
 \end_layout
@@ -17532,7 +17586,7 @@ The reported pair count is inconsistent: 793550.0 817444.0
 \end_layout
 
 \begin_layout Itemize
-Sparsity is about the same sas the pre-merge value.
+Sparsity is about the same as the pre-merge value.
 \end_layout
 
 \begin_layout Itemize
@@ -17576,7 +17630,7 @@ run-1-t1234-tsup-1-1-1.rdb
 \family sans
 r9-sim-200.rdb
 \family default
-` for marginals plus the similaries for the top 200 most frequent words.
+` for marginals plus the similarities for the top 200 most frequent words.
  
 \end_layout
 
@@ -17639,7 +17693,8 @@ The End
 \end_layout
 
 \begin_layout Standard
-This is the end of the diary.
+This is the end of Part Four of the diary.
+ The next part is Part Five.
 \end_layout
 
 \end_body
