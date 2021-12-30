@@ -7842,27 +7842,37 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 	(define fla (star-obj 'make-flat cls pra))
 	(define dj-set (make-atom-set))
 	(define wrd-set (make-atom-set))
+	(define pear-set (make-atom-set))
 	(wrd-set cls)
 	(wrd-set (star-obj 'left-element pra))
 
 	(define (pair-margins PAIR)
+		(pear-set PAIR)
 		(wrd-set (star-obj 'left-element PAIR))
       (dj-set (star-obj 'right-element PAIR)))
 
+	(define (cross-margins PAIR)
+      (for-each pair-margins (star-obj 'get-cross-sections PAIR)))
+
    (define (expand-margins PAIR)
+		(pear-set PAIR)
       (dj-set (star-obj 'right-element PAIR))
       (if (equal? 'Section (cog-type PAIR))
-         (for-each pair-margins (star-obj 'get-cross-sections PAIR))
-         (pair-margins (star-obj 'get-section PAIR))))
+         (cross-margins PAIR)
+         (let ((sect (star-obj 'get-section PAIR)))
+            (pair-margins sect)
+            (cross-margins sect))))
 
 	(expand-margins pra)
 	(expand-margins fla)
 
 	(define wrds (wrd-set #f))
 	(define djs (dj-set #f))
-	(format #t "words=~A djs=~A\n" (length wrds) (length djs))
-	(format #t "words=~A\n" wrds)
-	(format #t "djs=\n~A\n" (prt-dj-list djs))
+	(define pears (pear-set #f))
+	(format #t "words=~A djs=~A pairs=~A\n" (length wrds) (length djs) (length pears))
+	(format #t "words: ~A\n" wrds)
+	(format #t "djs:\n~A\n" (prt-dj-list djs))
+	(format #t "pairs (before):\n~A\n" (prt-element-list pears))
 
 	(define sup-obj (add-support-api star-obj))
 
@@ -7910,6 +7920,10 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 
 	(format #t "wrdcnt bef: ~A aft: ~A\n" befw aftw)
 	(format #t "djcnt bef: ~A aft: ~A\n" befd aftd)
+	(newline)
+
+	(format #t "pairs (after):\n~A\n" (prt-element-list pears))
+	(newline)
 
 	(define then (current-time))
 	(recompute-mmt-final star-obj)
@@ -7931,6 +7945,8 @@ JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
 	(when (not (equal? anlobs 22942644))
       (format #t "Bonk: 22942644 counts changed ! ~A ~A\n" lobs robs)
 		(foobar))
+
+   (format #t "=================================\n")
 )
 
 (define rstars (star-obj 'right-stars wa))
@@ -7969,6 +7985,11 @@ who shrank? ... should be same.
 Why is =N not on the list?  Because ...
 
 xc->sect -> xc's again.  so we misssed some words!
+
+After that fix .... it remians balanced, but count went ... down
+to ... 22928994.0
+
+KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
 
 
 

@@ -96,7 +96,7 @@ Language Learning Diary - Part Four
 \end_layout
 
 \begin_layout Date
-Sept 2021-present
+Sept 2021 - Dec 2021
 \end_layout
 
 \begin_layout Author
@@ -127,27 +127,186 @@ Summary Conclusions
 \end_layout
 
 \begin_layout Standard
-A short summary of what is found here:
+A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-write more here ...
-\end_layout
-
-\begin_layout Itemize
-End of expt-7 proposes a technique for creating in-groups or almost-cliques
- of related words, and then using 
+Connector sequences or 
 \begin_inset Quotes eld
 \end_inset
 
-democratic voting
+disjuncts
 \begin_inset Quotes erd
 \end_inset
 
- to determine which disjuncts will be associated with the in-group.
+ are the 
+\begin_inset Quotes eld
+\end_inset
+
+jigsaw pieces
+\begin_inset Quotes erd
+\end_inset
+
+ extracted from maximum planar spanning-graph (MPG) parses of English sentences.
+ How many connectors are there on a typical jigsaw piece? Answer: 2.25 on
+ average.
+ These are closely modelled by a log-normal distribution.
+ This is good news for English, where we expect nouns to typically have
+ 1, 2 or 3 connectors, and verbs and prepositions to have 2,3,4.
+ Adjectives, adverbs and determiners typically have only 1 connector.
+ Thus the observed distribution matches what one would expect to find.
+\end_layout
+
+\begin_layout Itemize
+The number of words having any given number of connector sequences also
+ follows a log-normal distribution.
+\end_layout
+
+\begin_layout Itemize
+The merger of some top-ranked similar words is explored in detail.
+ For example, the merger of 
+\begin_inset Quotes eld
+\end_inset
+
+is
+\begin_inset Quotes erd
+\end_inset
+
+-
+\begin_inset Quotes erd
+\end_inset
+
+was
+\begin_inset Quotes erd
+\end_inset
+
+ into one word-class.
+ It seems to go well.
+\end_layout
+
+\begin_layout Itemize
+It appears that there are cliques or almost-cliques of similar words.
+ That is, not just word pairs, but groups of 3 or 4 or more words that are
+ all similar to one-another.
+ This suggests that such 
+\begin_inset Quotes eld
+\end_inset
+
+in-groups
+\begin_inset Quotes erd
+\end_inset
+
+ of similar words should be merged.
+ A half-dozen different such in-groups are explored in detail.
+ They look pretty good.
+ 
+\end_layout
+
+\begin_layout Itemize
+The above leads to a break-through, an important advance in the theory.
+ One must merge together not only groups of similar words, but only those
+ disjuncts that are shared by a majority of the words in the in-group.
+ This is a two-step process: first, an in-group of similar words is selected.
+ Then, one looks to see what traits (disjuncts) the members of that in-group
+ have in common.
+ Only those traits that most groupd memebers share are voted into the group.
  This solves an important clustering problem: it generalizes, without generalizi
 ng over-broadly.
  I think this is a major advance in the theory, here.
+\end_layout
+
+\begin_layout Itemize
+I beleive that the result of merging as described above corresponds (strongly)
+ to word-senses.
+ (Or it should correspond.) This remains unexplored.
+\end_layout
+
+\begin_layout Itemize
+How big should an in-group be? The sizes of a dozen different groups are
+ explored, as a function of the similarity between group members.
+ It appears that, as one loosens the restrictions on group membership, the
+ size of the group grows at first very slowly (not at all) and then grows
+ explosively.
+ The ideal group size is then the largest group below the explosive-growth
+ threshold.
+ 
+\end_layout
+
+\begin_layout Itemize
+A good judgement of similarity is needed.
+ This was explored in great depth in the Diary Part Three.
+ The mutual information (MI) survives as a good way of judging similarity.
+ Below, it is discovered that an even better judgement is given by the average
+ of the MI and the log-frequency.
+ That is, extremely rare words can have a huge MI, but this is boring, because
+ the words are rare.
+ We want to know what words are common (frequent) and also have a large
+ MI.
+ This is provided by the average.
+ Pulling it all together, this results in a square-root in the expression:
+\begin_inset Formula 
+\[
+\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $f$
+\end_inset
+
+ is effectively a dot-product.
+ See below for details.
+ This is...
+ surprising, unheard-of in the literature (I've never seen it before).
+ Its got some nice properties, including being scale free (thus suggesting
+ it lives on a projective space.
+ Perhaps some information-theoretic analog of the Fubini-Study metric? Mathemati
+cally, its quite intriguing.) Again, this is a pretty big break-through,
+ as compared to earlier efforts.
+\end_layout
+
+\begin_layout Itemize
+The above ranked-MI is explored in considerable detail for the English dataset.
+ It looks pretty good.
+\end_layout
+
+\begin_layout Itemize
+This part of the diary ends with the first mega-merge, where the top two-thousan
+d most similar and most highly ranked words (similarity measured by ranked-MI)
+ are merged together according to the in-group algo above.
+ It 
+\begin_inset Quotes eld
+\end_inset
+
+works
+\begin_inset Quotes erd
+\end_inset
+
+, in that it doesn't crash, and the results still look reasonable after
+ a few thousand merges (and many days of CPU time.) Thus, the time is ripe
+ for exploring in detail the results of this merge.
+ This is done in the next part, Diary Part Five.
+ But first, an assortment of 
+\begin_inset Quotes eld
+\end_inset
+
+minor
+\begin_inset Quotes erd
+\end_inset
+
+ (but difficult) bugs have to be fixed (and mostly have been!? Tune in next
+ week for the continuing adventures...)
+\end_layout
+
+\begin_layout Standard
+To recap: two important things are found.
+ First, there appears to be a major break-through: the in-group chared-trait
+ merge algirithm is discovered, and it seems very promising.
+ Next, averaging together the MI with the word-frequency gives the rankd-MI
+ similarity, which seems to provide an ideal way of ranking frequent similar
+ words.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -211,7 +370,7 @@ Data for graphs prepared with `utils/similarity-graphs.scm`
 \begin_layout Standard
 The above shows the number of disjuncts of a given length.
  That is, fixing the length, just count how many disjuncts there are.
- Also shown is an eyeballed fit usingthe log-normal distribution.
+ Also shown is an eyeballed fit using the log-normal distribution.
  As before, this is defnied as
 \end_layout
 
@@ -238,7 +397,7 @@ In this graph, shown is
 
  and so we can take the average length of a disjunct as 2.25.
  This is really pretty nice for English, I guess – we expect common-sense
- lengths: transiitive verbs with a length of 2 (subject, object); common
+ lengths: transitive verbs with a length of 2 (subject, object); common
  nouns with a length of 2 (determiner, verb-connector) or 3 (determiner,
  adjective, verb connector); both determiners and modifiers (adjectives,
  adverbs) should have a length of 1.
@@ -319,7 +478,7 @@ Looking at that graph, all three have almost the same log-normal distribution,
 \end_layout
 
 \begin_layout Standard
-One last graph: for any given disjunct length, how many unique qords are
+One last graph: for any given disjunct length, how many unique words are
  there that have a disjunct with that length? Shown below.
 \end_layout
 
@@ -6900,6 +7059,11 @@ It's scale invariant in that we can multiply
  So its projective...
 \end_layout
 
+\begin_layout Standard
+Projective suggests that this is some information-theoretic analog of the
+ Fubini-Study metric, or something like that.
+\end_layout
+
 \begin_layout Subsection*
 Ranked MI
 \end_layout
@@ -9526,32 +9690,25 @@ OK, so this needs further study.
 status collapsed
 
 \begin_layout Plain Layout
-Use 
+Use this code:
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset listings
-inline false
-status open
-
-\begin_layout Plain Layout
-
-	(load-atoms-of-type 'SimilarityLink) 
+	
+\family sans
+(load-atoms-of-type 'SimilarityLink) 
 \end_layout
 
 \begin_layout Plain Layout
 
+\family sans
 	(define sap (add-similarity-api covr-obj #f "shape-mi")
 \end_layout
 
 \begin_layout Plain Layout
 
+\family sans
 	(sap 'pair-count (Word "There") (Word "It"))
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Plain Layout
@@ -17400,18 +17557,27 @@ Expt-10 Merge exploration (Dec 2021)
 \end_layout
 
 \begin_layout Standard
-After a lot of confusion ...
- Conclude that expt-9 dataset has funky issues with the marginals that are
- not resolvable without great confusion.
- So restart by copying `
-\family sans
-run-1-t1234-tsup-1-1-1.rdb
-\family default
-` and recomputing marginals, and then recomputing similarities.
+The above generated a lot of confusion ...
+ A number of bugs were found and fixed in the merge code, and debugging
+ continues.
+ Once everything seems fully debugged and stable, analysis of merge results
+ will resume in the next part of the diary.
 \end_layout
 
 \begin_layout Standard
-XXX Except this solves nothing.
+I did try restarting by copying `
+\family sans
+run-1-t1234-tsup-1-1-1.rdb
+\family default
+` and recomputing marginals.
+ This solved nothing; the marginals (and the similarities) appear to be
+ fine.
+ I'm currently using `
+\family sans
+r9-sim-200.rdb
+\family default
+` for marginals plus the similaries for the top 200 most frequent words.
+ 
 \end_layout
 
 \begin_layout Section*
