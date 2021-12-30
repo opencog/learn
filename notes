@@ -8018,6 +8018,13 @@ Doing above does not change the totals.
 After the above, the total counts are the new counts.
 WTF
 
+(rebalance-merge LLOBJ MRG DONOR FRAC)
+(accumulate-count LLOBJ ACC DONOR FRAC
+	(print-matrix-summary-report star-obj)
+
+Now its 22913571.0 .. so this is not even stable under minor perterbations!
+WTF 2x
+
 
 ====================================================
 link-class.scm ???
