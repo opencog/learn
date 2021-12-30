@@ -7991,6 +7991,29 @@ to ... 22928994.0
 
 KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
 
+(star-obj 'clobber)
+(remove-empty-sections star-obj wa #t)
+(recompute-mmt-final star-obj)
+
+removed sections cause basis to change...
+marginals live on shapes directly....
+
+Crap. Not deleting gives Total observations: 22925974.0
+which shrank by 16670 counts (from original 22942644.0)
+
+... but it is balanced!
+
+Now remove:
+(define cls (WordClassNode "+ — “ ” _"))
+(remove-empty-sections star-obj cls #t)
+(define WLIST (list (Word "+") (Word "—") (Word "“") (Word "”") (Word "_")))
+(for-each (lambda (wrd) (remove-empty-sections star-obj wrd #t)) WLIST)
+
+Doing above does not change the totals.
+
+(define asc (add-support-compute star-obj))
+(asc 'clobber)
+(asc 'cache-all)
 
 
 ====================================================
@@ -8068,7 +8091,8 @@ FIXED:
 
 TODO/BUGS:
 * Use increment-count for everything.
-  (cog-inc-count! ATOM CNT)
+  (cog-inc-count! ATOM CNT) and (add-stars-api 'move-count)
+  The move-count is done already!?
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug

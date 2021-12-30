@@ -198,6 +198,9 @@
 
 ; ---------------------------------------------------------------
 
+; XXX TODO -- generic deletion should be moved to a method
+; on the base object -- probably to add-pair-stars. The extra
+; stuff like deleting crosses belongs in the shape-vec API.
 (define (remove-empty-sections LLOBJ ROW RMX)
 "
   remove-empty-sections LLOBJ ROW RMX -- scan the ROW for Sections and
