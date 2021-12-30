@@ -18,7 +18,6 @@ ADD_GUILE_MODULE (FILES
 	shape-project.scm
 	shape-vec.scm
 	utilities.scm
-	vectors.scm
 	word-pair-count.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/learn"
 )
