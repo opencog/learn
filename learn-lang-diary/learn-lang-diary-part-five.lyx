@@ -1,0 +1,283 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{url} 
+\usepackage{slashed}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "cmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\ttfamily},basewidth={0.45em}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Language Learning Diary - Part Five
+\end_layout
+
+\begin_layout Date
+Jan 2022 - present
+\end_layout
+
+\begin_layout Author
+Linas Vepstas
+\end_layout
+
+\begin_layout Abstract
+The language-learning effort involves research and software development
+ to implement the ideas concerning unsupervised learning of grammar, syntax
+ and semantics from corpora.
+ This document contains supplementary notes and a loosely-organized semi-chronol
+ogical diary of results.
+ The notes here might not always makes sense; they are a short-hand for
+ my own benefit, rather than aimed at you, dear reader!
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+Part Five of the diary on the language-learning effort continues work on
+ the English dataset.
+\end_layout
+
+\begin_layout Section*
+Summary Conclusions
+\end_layout
+
+\begin_layout Standard
+A summary of what is found in this part of the diary:
+\end_layout
+
+\begin_layout Itemize
+Nothing yet.
+\end_layout
+
+\begin_layout Section*
+Expt-10 Merge exploration (Jan 2022)
+\end_layout
+
+\begin_layout Standard
+The end of Diary Part Four describes a dataset with several thousand merged
+ words in it.
+ However, that dataset had assorted issues, and recreating it befor investing
+ time in characterizing it seems like a good idea.
+ There were numerous (and ongoing) bugfixes made.
+\end_layout
+
+\begin_layout Standard
+Ocnce these are done, the questions below arise.
+\end_layout
+
+\begin_layout Subsection*
+Things worth exploring.
+\end_layout
+
+\begin_layout Standard
+What have we actually got? Some questions about the dataset:
+\end_layout
+
+\begin_layout Itemize
+Distribution: size of word-class vs.
+ rank.
+ This was previously examined in 
+\begin_inset Quotes eld
+\end_inset
+
+diary part one
+\begin_inset Quotes erd
+\end_inset
+
+, page 99, for a different collection of merge algorithms (and earlier,
+ different datasets).
+ Do we still get something similar?
+\end_layout
+
+\begin_layout Itemize
+Above, 
+\begin_inset Quotes eld
+\end_inset
+
+size
+\begin_inset Quotes erd
+\end_inset
+
+ might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of words in the word-class
+\begin_inset Quotes erd
+\end_inset
+
+ or it might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of disjuncts in word-class
+\begin_inset Quotes erd
+\end_inset
+
+ or it might mean 
+\begin_inset Quotes eld
+\end_inset
+
+number of disjuncts in word-class with count weighting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Oof.
+ It would be nice to have a dashboard for this, instead of lots of manual
+ work.
+\end_layout
+
+\begin_layout Itemize
+Distribution of word-senses.
+ That is, how many words participate in more than one word-class? If they
+ do participate in more than one word-class, what is the weight in each
+ class?
+\end_layout
+
+\begin_layout Itemize
+For words that belong to word-classes, what fraction of their weight remains
+ unassigned to any word-class?
+\end_layout
+
+\begin_layout Itemize
+Distribution of MI of pairs of word-classes.
+ We might hope that this is low, so that different word-classes are different
+ from one another.
+\end_layout
+
+\begin_layout Itemize
+Distribution of self-MI of word-classes.
+ One might hope that this is high, so that the word-classes do not share
+ much in common with other words or word-classes.
+\end_layout
+
+\begin_layout Itemize
+As above, but distribution of MI of pairs consisting of a word-class, and
+ a word.
+\end_layout
+
+\begin_layout Itemize
+Prior to starting the merge, there's an MI between words and disjuncts.
+ I don't recall examining that in detail, before.
+ Then, after the merge, how does this change?
+\end_layout
+
+\begin_layout Standard
+That's a lot of questions.
+ Not clear which ones should be answered first.
+\end_layout
+
+\begin_layout Subsection*
+Status
+\end_layout
+
+\begin_layout Standard
+Bug-fixing is maybe wrapping up ...
+\end_layout
+
+\begin_layout Standard
+I'm currently using `
+\family sans
+r9-sim-200.rdb
+\family default
+` for marginals plus the similarities for the top 200 most frequent words.
+ Then run ...
+\end_layout
+
+\begin_layout Section*
+The End
+\end_layout
+
+\begin_layout Standard
+This is the end of Part Five of the diary.
+ 
+\end_layout
+
+\end_body
+\end_document
