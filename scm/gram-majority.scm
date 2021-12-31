@@ -36,13 +36,10 @@
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs))
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
-
-; TODO: we can very easily re-introduce FRAC here, and thus
-; provide compatibility with the older merge methods. Just
-; modify `clique` below to do this.
 
 (define-public (count-shared-conseq LLOBJ QUORUM NOISE WORD-LIST)
 "
@@ -106,9 +103,10 @@
 	(mknode cls-name)
 )
 
-(define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)
+(define*-public (make-merge-majority LLOBJ QUORUM NOISE
+	#:optional (MRG-CON #t) (FRAC 0))
 "
-  make-merger-majority LLOBJ QUORUM NOISE MRG-CON --
+  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -126,8 +124,13 @@
   the majority vote. In short, small differences between members
   are ignored, and lumped up into the quirkness of the group.
 
-  MRG-CON is #t if Connectors should also be merged.  This requires
-  that the LLOBJ object have shapes on it.
+  MRG-CON is an optional argument, defaulting to #t if not specified.
+  Set this to #t to indicate that Connectors should also be merged.
+  For this to work, the LLOBJ object must have shapes on it.
+
+  FRAC is an optional argument, defaulting to 0. A non-zero argument
+  is the fraction of of a disjunct to merge, if the quorum election
+  fails.  This is used primarily in the unit tests, only.
 "
 	; WLIST is a list of WordNodes and/or WordClassNodes that will be
 	; merged into one WordClass.
@@ -176,9 +179,13 @@
 		(define (clique CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
-			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
-					(vote-to-accept? DJ))
-				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
+			(define frakm
+				(if (or (<= (LLOBJ 'get-count SECT) NOISE)
+						(vote-to-accept? DJ))
+					1.0 FRAC))
+
+			(if (< 0 frakm)
+				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frakm)
 				0))
 
 		; Get a Node that will anchor everything merged from WLIST

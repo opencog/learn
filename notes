@@ -8035,6 +8035,24 @@ Try again: after each word, rebalance, then do next word..
 
 This gives 22913662.0  which is smaller still --  down by 28982
 
+CMAKE_INSTALL_MESSAGE
+
+[e, <j,  $- g- h+>] gets merged ... then rebalanced
+then
+(j,  e- g- h+) gets merged, but the count is wrong cause of the above.
+
+Old Solution: all merges first, and flatten later.
+
+Alt solution:
+-- merge sects only;
+--     do merge crosses at that time.
+--     record these crosses.
+-- rebalance that sect.
+
+-- subtract crosses that don't come from sects
+-- merge and rebalance those.
+
+Nuke the pairwise stuff.
 
 
 ====================================================
