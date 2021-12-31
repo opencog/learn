@@ -8025,6 +8025,17 @@ WTF
 Now its 22913571.0 .. so this is not even stable under minor perterbations!
 WTF 2x
 
+Clobbering before reshaping gives 22925974.0 which goes back to the
+original value. So clobbering does not help.
+
+Balancing the sections first, then the crosses second gives
+22927684.0 which is smaller by 14960.0   Drat.
+
+Try again: after each word, rebalance, then do next word..
+
+This gives 22913662.0  which is smaller still --  down by 28982
+
+
 
 ====================================================
 link-class.scm ???
