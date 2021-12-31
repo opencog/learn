@@ -740,7 +740,8 @@
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
 
-		(define wclass (merge-majority in-grp))
+		(define wclass (make-class-node LLOBJ in-grp))
+		(merge-majority wclass in-grp)
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))

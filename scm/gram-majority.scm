@@ -78,7 +78,7 @@
 	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
-(define (make-class-node LLOBJ WLIST)
+(define-public (make-class-node LLOBJ WLIST)
 "
   make-class-node LLOBJ WLIST - create a node suitable for merging WLIST
 
@@ -106,7 +106,7 @@
 (define*-public (make-merge-majority LLOBJ QUORUM NOISE
 	#:optional (MRG-CON #t) (FRAC 0))
 "
-  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
+  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON CLASS-FUN FRAC] --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -132,10 +132,9 @@
   is the fraction of of a disjunct to merge, if the quorum election
   fails.  This is used primarily in the unit tests, only.
 "
-	; WLIST is a list of WordNodes and/or WordClassNodes that will be
-	; merged into one WordClass.
-	; Return a WordClassNode that is the result of the merge.
-	(define (merge WLIST)
+	; WLIST is a list of ItemNodes and/or ItemClassNodes that will be
+	; merged into CLASS.
+	(define (merge CLASS WLIST)
 		(for-each
 			(lambda (WRD)
 				(if (equal? (cog-type WRD) 'WordClassNode)
@@ -174,7 +173,7 @@
 
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
-		; CLUST is identical to cls, defined below. Return zero if
+		; CLUST is identical to CLASS, defined below. Return zero if
 		; there is no merge.
 		(define (clique CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
@@ -188,19 +187,16 @@
 				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frakm)
 				0))
 
-		; Get a Node that will anchor everything merged from WLIST
-		(define cls (make-class-node LLOBJ WLIST))
-
 		; Add words to cluster *before* starting merge!
-		(for-each (lambda (WRD) (MemberLink WRD cls)) WLIST)
+		(for-each (lambda (WRD) (MemberLink WRD CLASS)) WLIST)
 
 		(for-each
-			(lambda (WRD) (assign-to-cluster LLOBJ cls WRD clique))
+			(lambda (WRD) (assign-to-cluster LLOBJ CLASS WRD clique))
 			WLIST)
 
 		(if MRG-CON
 			(for-each
-				(lambda (WRD) (rebalance-shapes LLOBJ cls WRD clique))
+				(lambda (WRD) (rebalance-shapes LLOBJ CLASS WRD clique))
 				WLIST))
 
 		; Cleanup after merging.
@@ -212,15 +208,13 @@
 		(for-each
 			(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
 			WLIST)
-		(remove-empty-sections LLOBJ cls MRG-CON)
+		(remove-empty-sections LLOBJ CLASS MRG-CON)
 
 		; Clobber the left and right caches; the cog-delete! changed things.
 		(LLOBJ 'clobber)
 
 		(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
-			(cog-name cls) (e))
-
-		cls
+			(cog-name CLASS) (e))
 	)
 
 	; Return the above function
