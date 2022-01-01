@@ -148,8 +148,16 @@
 		; overlap merge).
 		(define wlen (length WLIST))
 		(define vote-thresh
-			(if (equal? wlen 2) 2
+			(if (<= wlen 2) 2
 				(inexact->exact (round (* QUORUM wlen)))))
+
+		; If there is only one word in the word-list, then assume that
+		; the user wants to merge this one word into an existing class.
+		; In this case, the class itself gets a vote as to inclusion.
+		; As of right now, this is used only in the unit tests, and it
+		; is used only with a non-zero FRAC value.
+		(define voter-list
+			(if (equal? 1 wlen) (cons CLASS WLIST) WLIST))
 
 		; Return #t if the DJ is shared by the majority of the
 		; sections. Does the count exceed the threshold?
@@ -166,7 +174,7 @@
 						; tolerant, accepting way of voting, so we allow that.
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
-					WLIST)))
+					voter-list)))
 
 		(define (make-flat CLUST SECT)
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
