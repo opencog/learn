@@ -388,7 +388,8 @@
 
 		; --------------------------------------------------
 
-		; Do any of the Connectors in SECT belonging to CLS?
+		; Do any of the Connectors in SECT have CLS in them?
+		; Return #t if at least one connector has CLS in it.
 		(define (is-nonflat-section? CLS SECT)
 
 			; Walk through the connector sequence. If any of them
