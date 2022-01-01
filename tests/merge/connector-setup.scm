@@ -43,11 +43,22 @@
 
 ; Merge words/word-classes WA WB into a cluster.
 (define (merge LLOBJ WA WB FRAC)
-	(define (frac WA WB) FRAC)
-	(define (noop W) #f)
-	(define (final) #f)
-	(define mrg (make-merge-pair LLOBJ frac 0.0 noop final #t))
-	(mrg WA WB)
+
+	; Uncomment this to get the old pair-wise API.
+	; (define (frac WA WB) FRAC)
+	; (define (noop W) #f)
+	; (define (final) #f)
+	; (define mrg (make-merge-pair LLOBJ frac 0.0 noop final #t))
+	; (mrg WA WB)
+
+	; The new majority API
+	; 1.0 = quorum.
+	; 0.0 = noise.
+	(define mrg (make-merge-majority LLOBJ 1.0 0.0 #t FRAC))
+
+	(define cls (LLOBJ 'make-cluster WA WB))
+	(define wlist (if (equal? WA cls) (list WB) (list WA WB)))
+	(mrg cls wlist)
 )
 
 ; ---------------------------------------------------------------
