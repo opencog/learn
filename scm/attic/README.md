@@ -13,6 +13,10 @@ Dead, unused code that might still be interesting.
     and was passing all unit tests when it was retired. So its good
     code, its just ... the majority style seems like a better idea.
 
+* __agglo-pairwise.scm__ : Main loop for above. Makes calls to above.
+    The code won't stand alone here, it needs helper routines defined
+    in `agglo--rank.scm`.
+
 * __gram-fuzz.scm__ : Assorted styles of doing fuzzy union merging.
     The idea here was that when merging two words, one would always
     merge those disjuncts they had in common, and move a fraction of
