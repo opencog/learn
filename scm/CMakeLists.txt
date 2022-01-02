@@ -7,7 +7,6 @@ ADD_GUILE_MODULE (FILES
 	gram-classification.scm
 	gram-majority.scm
 	gram-optim.scm
-	gram-pairwise.scm
 	gram-projective.scm
 	in-group.scm
 	lg-compare.scm

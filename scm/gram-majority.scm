@@ -22,16 +22,19 @@
 ; proportional votes?) This idea really only works if N>2 as voting
 ; between two contributors does not make really make sense.
 ;
-; TODO:
-; * Reintroduce FRAC for those disjuncts not shared by the majority.
-;   Overall seems like a bad idea, but the unit tests do test it.
-;   (i.e. its needed to replace `make-merge-pair` code with this code.
-;
 ; make-merge-majority
 ; -------------------
-; Merge N items into a brand new cluster.  See also `make-merge-pair`
-; (not in this file) which merges two items at a time, possibly into
-; existing clusters.
+; Merge N items into a brand new cluster.
+;
+; An older implementation which merged items together in a pairwise
+; fashion can be found in the file `attic/gram-pairwise.scm`. That code
+; provided three distinct merge methods: (a) merge two items into a brand
+; new class; (b) merge one item into an existing class (c) merge two
+; existing classes.  That code has been retired because the code below
+; accomplishes the above.  Note, however, that the handling of case
+; (b) and (c) below is a bit ad hoc, and perhaps could be ... modified,
+; or reverted.  All of these cases are tested in the unit tests, so any
+; changes would need to be done so as to not break the unit tests.
 ;
 ; ---------------------------------------------------------------------
 

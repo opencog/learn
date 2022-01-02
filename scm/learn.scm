@@ -18,7 +18,6 @@
 (include-from-path "opencog/learn/gram-classification.scm")
 (include-from-path "opencog/learn/shape-project.scm")
 (include-from-path "opencog/learn/gram-projective.scm")
-(include-from-path "opencog/learn/gram-pairwise.scm")
 (include-from-path "opencog/learn/gram-majority.scm")
 (include-from-path "opencog/learn/gram-optim.scm")
 (include-from-path "opencog/learn/in-group.scm")
