@@ -106,7 +106,7 @@
 (define*-public (make-merge-majority LLOBJ QUORUM NOISE
 	#:optional (MRG-CON #t) (FRAC 0))
 "
-  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON CLASS-FUN FRAC] --
+  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -132,25 +132,30 @@
   is the fraction of of a disjunct to merge, if the quorum election
   fails.  This is used primarily in the unit tests, only.
 
-  Note that the implementation here includes some ad hoc, unmotiviated
-  handling for the merging to two classes, and for the merging of a
-  single word into an existing class. These cases are tested in unit
-  tests originally developed for pair-wise merge. The handling of these
-  two cases seems to be appropriate; however, they're not well motivated.
+  The returned function has the following signature:
+     (merge CLASS WORD-LIST)
+  where the items in WORD-LIST will be merged into the CLASS. The CLASS
+  should be an Atom of type ItemClassNode (or WordClassNode). In the
+  usual case, the WORD-LIST is a list of ItemNodes (or WordNodes). The
+  merge decision is made on a disjunct-by-disjunct basis, using a
+  majority vote mechanism, as described elsewhere.
+
+  In addition to the above case, there are two rather ad hoc special
+  cases handled here. One special cases is the merge of a single item
+  into an existing class. The other special cases is the merge of two
+  classes into one.  These cases are tested in unit tests originally
+  developed for pair-wise merge. The handling of these two cases seems
+  to be appropriate; however, they're not well-motivated. That is, maybe
+  they could be changed?
+
   Anyway, the new clustering code, as currently written, does not attempt
   to merge two existing classes together, nor does it attempt to merge a
   single item into an existing class. So ... these policies can be changed.
-  (Perhaps we need to separate this ad hoc policy from the mechanism.)
+  Perhaps we need to separate this ad hoc policy from the mechanism.
 "
 	; WLIST is a list of ItemNodes and/or ItemClassNodes that will be
 	; merged into CLASS.
 	(define (merge CLASS WLIST)
-		(for-each
-			(lambda (WRD)
-				(if (equal? (cog-type WRD) 'WordClassNode)
-					(throw 'not-implemented 'make-merge-majority
-						"Not done yet")))
-			WLIST)
 
 		; We need to distinguish individual items, from item classes.
 		; Item classes should be of type ItemClassNode, but its easier
