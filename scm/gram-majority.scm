@@ -131,6 +131,16 @@
   FRAC is an optional argument, defaulting to 0. A non-zero argument
   is the fraction of of a disjunct to merge, if the quorum election
   fails.  This is used primarily in the unit tests, only.
+
+  Note that the implementation here includes some ad hoc, unmotiviated
+  handling for the merging to two classes, and for the merging of a
+  single word into an existing class. These cases are tested in unit
+  tests originally developed for pair-wise merge. The handling of these
+  two cases seems to be appropriate; however, they're not well motivated.
+  Anyway, the new clustering code, as currently written, does not attempt
+  to merge two existing classes together, nor does it attempt to merge a
+  single item into an existing class. So ... these policies can be changed.
+  (Perhaps we need to separate this ad hoc policy from the mechanism.)
 "
 	; WLIST is a list of ItemNodes and/or ItemClassNodes that will be
 	; merged into CLASS.
@@ -141,6 +151,11 @@
 					(throw 'not-implemented 'make-merge-majority
 						"Not done yet")))
 			WLIST)
+
+		; We need to distinguish individual items, from item classes.
+		; Item classes should be of type ItemClassNode, but its easier
+		; to just do the below.
+		(define class-type (cog-type CLASS))
 
 		; The minimum number of sections that must exist for
 		; a given disjunct. For a list of length two, both
@@ -183,17 +198,25 @@
 		; or if the count on it is below the noise floor.
 		; CLUST is identical to CLASS, defined below. Return zero if
 		; there is no merge.
+		;
 		; The `is-nonflat?` test is perhaps funny-looking. It returns #t if
 		; any connector in SECT uses CLUST. If so, then CLUST will be used
 		; consistently. This is not obviously "correct", but does seem to
 		; make sense in a way. The unit test `connector-merge-triconind.scm`
 		; does check this with 0 < FRAC < 1.
+		;
+		; When merging two classes into one, just accept all disjuncts on
+		; the class to be merged. This is a kind-of ad-hoc, unmotivated action
+		; that seems to be an OK thing to do, for now. Cause why not? This is
+		; tested in the `class-merge-basic.scm` unit test.
 		(define (clique CLUST SECT ACC-FUN)
+			(define WRD (LLOBJ 'left-element SECT))
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(define frakm
 				(if (or (<= (LLOBJ 'get-count SECT) NOISE)
 						(LLOBJ 'is-nonflat? CLUST SECT)
+						(equal? class-type (cog-type WRD))
 						(vote-to-accept? DJ))
 					1.0 FRAC))
 
@@ -201,8 +224,21 @@
 				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frakm)
 				0))
 
+		; If two classes are being merged, then the counts from one class
+		; must be moved to the other. Thiis utility copies those counts.
+		(define (move-count FROM-CLASS)
+			(for-each (lambda (MEMB)
+				(define new-memb (MemberLink (gar MEMB) CLASS))
+				(cog-inc-count! new-memb (get-count MEMB))
+				(cog-delete! MEMB))
+				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
+
 		; Add words to cluster *before* starting merge!
-		(for-each (lambda (WRD) (MemberLink WRD CLASS)) WLIST)
+		(for-each (lambda (WRD)
+			(if (equal? class-type (cog-type? WRD))
+				(move-count WRD)
+				(MemberLink WRD CLASS)))
+			WLIST)
 
 		(for-each
 			(lambda (WRD) (assign-to-cluster LLOBJ CLASS WRD clique))
