@@ -22,27 +22,27 @@
 ; proportional votes?) This idea really only works if N>2 as voting
 ; between two contributors does not make really make sense.
 ;
-; TODO:
-; * Reintroduce FRAC for those disjuncts not shared by the majority.
-;   Overall seems like a bad idea, but the unit tests do test it.
-;   (i.e. its needed to replace `make-merge-pair` code with this code.
-;
 ; make-merge-majority
 ; -------------------
-; Merge N items into a brand new cluster.  See also `make-merge-pair`
-; (not in this file) which merges two items at a time, possibly into
-; existing clusters.
+; Merge N items into a brand new cluster.
+;
+; An older implementation which merged items together in a pairwise
+; fashion can be found in the file `attic/gram-pairwise.scm`. That code
+; provided three distinct merge methods: (a) merge two items into a brand
+; new class; (b) merge one item into an existing class (c) merge two
+; existing classes.  That code has been retired because the code below
+; accomplishes the above.  Note, however, that the handling of case
+; (b) and (c) below is a bit ad hoc, and perhaps could be ... modified,
+; or reverted.  All of these cases are tested in the unit tests, so any
+; changes would need to be done so as to not break the unit tests.
 ;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs))
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
-
-; TODO: we can very easily re-introduce FRAC here, and thus
-; provide compatibility with the older merge methods. Just
-; modify `clique` below to do this.
 
 (define-public (count-shared-conseq LLOBJ QUORUM NOISE WORD-LIST)
 "
@@ -81,7 +81,7 @@
 	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
-(define (make-class-node LLOBJ WLIST)
+(define-public (make-class-node LLOBJ WLIST)
 "
   make-class-node LLOBJ WLIST - create a node suitable for merging WLIST
 
@@ -106,9 +106,10 @@
 	(mknode cls-name)
 )
 
-(define-public (make-merge-majority LLOBJ QUORUM NOISE MRG-CON)
+(define*-public (make-merge-majority LLOBJ QUORUM NOISE
+	#:optional (MRG-CON #t) (FRAC 0))
 "
-  make-merger-majority LLOBJ QUORUM NOISE MRG-CON --
+  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -126,19 +127,43 @@
   the majority vote. In short, small differences between members
   are ignored, and lumped up into the quirkness of the group.
 
-  MRG-CON is #t if Connectors should also be merged.  This requires
-  that the LLOBJ object have shapes on it.
+  MRG-CON is an optional argument, defaulting to #t if not specified.
+  Set this to #t to indicate that Connectors should also be merged.
+  For this to work, the LLOBJ object must have shapes on it.
+
+  FRAC is an optional argument, defaulting to 0. A non-zero argument
+  is the fraction of of a disjunct to merge, if the quorum election
+  fails.  This is used primarily in the unit tests, only.
+
+  The returned function has the following signature:
+     (merge CLASS WORD-LIST)
+  where the items in WORD-LIST will be merged into the CLASS. The CLASS
+  should be an Atom of type ItemClassNode (or WordClassNode). In the
+  usual case, the WORD-LIST is a list of ItemNodes (or WordNodes). The
+  merge decision is made on a disjunct-by-disjunct basis, using a
+  majority vote mechanism, as described elsewhere.
+
+  In addition to the above case, there are two rather ad hoc special
+  cases handled here. One special cases is the merge of a single item
+  into an existing class. The other special cases is the merge of two
+  classes into one.  These cases are tested in unit tests originally
+  developed for pair-wise merge. The handling of these two cases seems
+  to be appropriate; however, they're not well-motivated. That is, maybe
+  they could be changed?
+
+  Anyway, the new clustering code, as currently written, does not attempt
+  to merge two existing classes together, nor does it attempt to merge a
+  single item into an existing class. So ... these policies can be changed.
+  Perhaps we need to separate this ad hoc policy from the mechanism.
 "
-	; WLIST is a list of WordNodes and/or WordClassNodes that will be
-	; merged into one WordClass.
-	; Return a WordClassNode that is the result of the merge.
-	(define (merge WLIST)
-		(for-each
-			(lambda (WRD)
-				(if (equal? (cog-type WRD) 'WordClassNode)
-					(throw 'not-implemented 'make-merge-majority
-						"Not done yet")))
-			WLIST)
+	; WLIST is a list of ItemNodes and/or ItemClassNodes that will be
+	; merged into CLASS.
+	(define (merge CLASS WLIST)
+
+		; We need to distinguish individual items, from item classes.
+		; Item classes should be of type ItemClassNode, but its easier
+		; to just do the below.
+		(define class-type (cog-type CLASS))
 
 		; The minimum number of sections that must exist for
 		; a given disjunct. For a list of length two, both
@@ -146,8 +171,16 @@
 		; overlap merge).
 		(define wlen (length WLIST))
 		(define vote-thresh
-			(if (equal? wlen 2) 2
+			(if (<= wlen 2) 2
 				(inexact->exact (round (* QUORUM wlen)))))
+
+		; If there is only one word in the word-list, then assume that
+		; the user wants to merge this one word into an existing class.
+		; In this case, the class itself gets a vote as to inclusion.
+		; As of right now, this is used only in the unit tests, and it
+		; is used only with a non-zero FRAC value.
+		(define voter-list
+			(if (equal? 1 wlen) (cons CLASS WLIST) WLIST))
 
 		; Return #t if the DJ is shared by the majority of the
 		; sections. Does the count exceed the threshold?
@@ -164,34 +197,65 @@
 						; tolerant, accepting way of voting, so we allow that.
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
-					WLIST)))
+					voter-list)))
 
 		(define (make-flat CLUST SECT)
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
-		; CLUST is identical to cls, defined below. Return zero if
+		; CLUST is identical to CLASS, defined below. Return zero if
 		; there is no merge.
+		;
+		; The `is-nonflat?` test is perhaps funny-looking. It returns #t if
+		; any connector in SECT uses CLUST. If so, then CLUST will be used
+		; consistently. This is not obviously "correct", but does seem to
+		; make sense in a way. The unit test `connector-merge-triconind.scm`
+		; does check this with 0 < FRAC < 1.
+		;
+		; When merging two classes into one, just accept all disjuncts on
+		; the class to be merged. This is a kind-of ad-hoc, unmotivated action
+		; that seems to be an OK thing to do, for now. Cause why not? This is
+		; tested in the `class-merge-basic.scm` unit test.
 		(define (clique CLUST SECT ACC-FUN)
+			(define WRD (LLOBJ 'left-element SECT))
 			(define DJ (LLOBJ 'right-element SECT))
 
-			(if (or (<= (LLOBJ 'get-count SECT) NOISE)
-					(vote-to-accept? DJ))
-				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT 1.0)
+			(define frakm
+				(if (or (<= (LLOBJ 'get-count SECT) NOISE)
+						(LLOBJ 'is-nonflat? CLUST SECT)
+						(equal? class-type (cog-type WRD))
+						(vote-to-accept? DJ))
+					1.0 FRAC))
+
+			(if (< 0 frakm)
+				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frakm)
 				0))
 
-		; Get a Node that will anchor everything merged from WLIST
-		(define cls (make-class-node LLOBJ WLIST))
+		; If two classes are being merged, then the counts from one class
+		; must be moved to the other. Thiis utility copies those counts.
+		(define (move-count FROM-CLASS)
+			(for-each (lambda (MEMB)
+				(define new-memb (MemberLink (gar MEMB) CLASS))
+				(cog-inc-count! new-memb (get-count MEMB))
+				(cog-delete! MEMB))
+				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
 
 		; Add words to cluster *before* starting merge!
-		(for-each (lambda (WRD) (MemberLink WRD cls)) WLIST)
+		(for-each (lambda (WRD)
+			(if (equal? class-type (cog-type? WRD))
+				(move-count WRD)
+				(MemberLink WRD CLASS)))
+			WLIST)
 
 		(for-each
-			(lambda (WRD)
-				(assign-to-cluster LLOBJ cls WRD clique)
-				(if MRG-CON (rebalance-shapes LLOBJ cls WRD clique)))
+			(lambda (WRD) (assign-to-cluster LLOBJ CLASS WRD clique))
 			WLIST)
+
+		(if MRG-CON
+			(for-each
+				(lambda (WRD) (rebalance-shapes LLOBJ CLASS WRD clique))
+				WLIST))
 
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
@@ -202,15 +266,13 @@
 		(for-each
 			(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
 			WLIST)
-		(remove-empty-sections LLOBJ cls MRG-CON)
+		(remove-empty-sections LLOBJ CLASS MRG-CON)
 
 		; Clobber the left and right caches; the cog-delete! changed things.
 		(LLOBJ 'clobber)
 
 		(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
-			(cog-name cls) (e))
-
-		cls
+			(cog-name CLASS) (e))
 	)
 
 	; Return the above function
