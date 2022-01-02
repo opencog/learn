@@ -202,36 +202,6 @@
 		(define (make-flat CLUST SECT)
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
-		; Merge the particular DJ, if it is shared by the majority,
-		; or if the count on it is below the noise floor.
-		; CLUST is identical to CLASS, defined below. Return zero if
-		; there is no merge.
-		;
-		; The `is-nonflat?` test is perhaps funny-looking. It returns #t if
-		; any connector in SECT uses CLUST. If so, then CLUST will be used
-		; consistently. This is not obviously "correct", but does seem to
-		; make sense in a way. The unit test `connector-merge-triconind.scm`
-		; does check this with 0 < FRAC < 1.
-		;
-		; When merging two classes into one, just accept all disjuncts on
-		; the class to be merged. This is a kind-of ad-hoc, unmotivated action
-		; that seems to be an OK thing to do, for now. Cause why not? This is
-		; tested in the `class-merge-basic.scm` unit test.
-		(define (clique CLUST SECT ACC-FUN)
-			(define WRD (LLOBJ 'left-element SECT))
-			(define DJ (LLOBJ 'right-element SECT))
-
-			(define frakm
-				(if (or (<= (LLOBJ 'get-count SECT) NOISE)
-						(LLOBJ 'is-nonflat? CLUST SECT)
-						(equal? class-type (cog-type WRD))
-						(vote-to-accept? DJ))
-					1.0 FRAC))
-
-			(if (< 0 frakm)
-				(ACC-FUN LLOBJ (make-flat CLUST SECT) SECT frakm)
-				0))
-
 		; If two classes are being merged, then the counts from one class
 		; must be moved to the other. Thiis utility copies those counts.
 		(define (move-count FROM-CLASS)
@@ -248,14 +218,63 @@
 				(MemberLink WRD CLASS)))
 			WLIST)
 
+		; Collect up all disjuncts into one place.
+		(define dj-set (make-atom-set))
 		(for-each
-			(lambda (WRD) (assign-to-cluster LLOBJ CLASS WRD clique))
+			(lambda (WRD)
+				(for-each
+					(lambda (PAIR) (dj-set (LLOBJ 'right-element PAIR)))
+					(LLOBJ 'right-stars WRD)))
 			WLIST)
+		(define dj-list (dj-set #f))
 
-		(if MRG-CON
-			(for-each
-				(lambda (WRD) (rebalance-shapes LLOBJ CLASS WRD clique))
-				WLIST))
+		; Merge the particular DJ, if it is shared by the majority,
+		; or if the count on it is below the noise floor.
+		; Return zero if there is no merge.
+		;
+		; The `is-nonflat?` test is perhaps funny-looking. It returns #t if
+		; any connector in SECT uses CLASS. If so, then CLASS will be used
+		; consistently. This is not obviously "correct", but does seem to
+		; make sense in a way. The unit test `connector-merge-triconind.scm`
+		; does check this with 0 < FRAC < 1.
+		;
+		; When merging two classes into one, just accept all disjuncts on
+		; the class to be merged. This is a kind-of ad-hoc, unmotivated action
+		; that seems to be an OK thing to do, for now. Cause why not? This is
+		; tested in the `class-merge-basic.scm` unit test.
+		(define (do-merge WRD DJ ACCEPT)
+			(define SECT (LLOBJ 'get-pair WRD DJ))
+			(when (not (nil? SECT))
+				(let* ((merge-full
+							(or ACCEPT
+								(<= (LLOBJ 'get-count SECT) NOISE)
+								(LLOBJ 'is-nonflat? CLASS SECT)
+								(equal? class-type (cog-type WRD))))
+						(frakm (if merge-full 1.0 FRAC)))
+					(when (< 0 frakm)
+						(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))
+			)
+		)
+
+		(define (do-flatten WRD DJ)
+			(define SECT (LLOBJ 'get-pair WRD DJ))
+			(when (not (nil? SECT))
+				(rebalance-merge LLOBJ (make-flat CLASS SECT) SECT)))
+
+		; Loop over disjuncts, merging each, or not.
+		(for-each
+			(lambda (DJ)
+				(define have-majority (vote-to-accept? DJ))
+				(for-each
+					(lambda (WRD) (do-merge WRD DJ have-majority))
+					WLIST)
+
+				(if MRG-CON
+					(for-each
+						(lambda (WRD) (do-flatten WRD DJ))
+						WLIST))
+			)
+			dj-list)
 
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the

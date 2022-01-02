@@ -176,11 +176,11 @@
 
 ; ---------------------------------------------------------------------
 
-(define (rebalance-merge LLOBJ MRG DONOR FRAC)
+(define (rebalance-merge LLOBJ MRG DONOR)
 "
   rebalance-merge LLOBJ MRG DONOR - Readjust counts on CrossSections
 
-  After a DONOR sectin has been merged into the MRG section, assorted
+  After a DONOR section has been merged into the MRG section, assorted
   CrossSections may be left in inconsistent states. This rebalances all
   counts on both Sections and CrossSections.
 
