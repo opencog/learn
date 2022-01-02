@@ -183,11 +183,17 @@
 		; or if the count on it is below the noise floor.
 		; CLUST is identical to CLASS, defined below. Return zero if
 		; there is no merge.
+		; The `is-nonflat?` test is perhaps funny-looking. It returns #t if
+		; any connector in SECT uses CLUST. If so, then CLUST will be used
+		; consistently. This is not obviously "correct", but does seem to
+		; make sense in a way. The unit test `connector-merge-triconind.scm`
+		; does check this with 0 < FRAC < 1.
 		(define (clique CLUST SECT ACC-FUN)
 			(define DJ (LLOBJ 'right-element SECT))
 
 			(define frakm
 				(if (or (<= (LLOBJ 'get-count SECT) NOISE)
+						(LLOBJ 'is-nonflat? CLUST SECT)
 						(vote-to-accept? DJ))
 					1.0 FRAC))
 
