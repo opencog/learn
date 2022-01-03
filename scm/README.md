@@ -31,8 +31,6 @@ but the also require, as input, data that was produced by earlier files.
                           grammatical classes.
 * __agglo-rank.scm__      Agglomerative clustering. Loops over all words,
                           creating clusters.
-* __gram-projective.scm__ Code that merges pairs of words into a new cluster,
-                          or merges a single word into an existing cluster.
 * __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
 
