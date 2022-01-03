@@ -39,7 +39,7 @@
 ;
 ; All of the above is tested in `connector-merge-cons.scm`. This test
 ; also includes two more Sections (a, kle) and (f, kle) which should
-; lead to two several cross-section merges:
+; lead to two more cross-section merges:
 ;
 ;    [e, <a, klv>] + none -> p * [{ej}, <a, klv>] + (1-p) * [e, <a, klv>]
 ;    [e, <f, klv>] + none -> p * [{ej}, <f, klv>] + (1-p) * [e, <f, klv>]

@@ -280,6 +280,33 @@
 					(merge-dj DJ)))
 			dj-list)
 
+		; Record the cross-sections
+		(define done-djs (make-atom-set))
+		(define (do-record WRD DJ)
+			(define SECT (LLOBJ 'get-pair WRD DJ))
+			(when (not (nil? SECT))
+				(for-each (lambda (XRS)
+					(done-djs (LLOBJ 'right-element XRS)))
+					(LLOBJ 'get-cross-sections SECT))))
+
+		(define (record-cross DJ)
+			(for-each
+				(lambda (WRD) (do-record WRD DJ))
+				WLIST))
+
+		; Subtract the ones that are done.
+		(for-each
+			(lambda (DJ)
+				(when (equal? 'ConnectorSeq (cog-type DJ))
+					(done-djs DJ)
+					(record-cross DJ)))
+			dj-list)
+
+		(define left-overs (atoms-subtract
+			dj-list (done-djs #f)))
+
+		(for-each merge-dj left-overs)
+
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
 		; intent of this clobber is to force it to recompute it's left
