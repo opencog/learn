@@ -20,12 +20,6 @@
 ; * Some debug printers for compact printing of Sections.
 ; * `accumulate-count`, for transferring counts from one basis elt to
 ;   another.
-; * `assign-to-cluster`, which loops over a vector, and calls a callback
-;   on each basis elt. In most cases, this callback then will
-;   eventually call `accumulate-count` to perform the actual count
-;   transfer.
-; * `rebalance-shapes`, which loops over a vector, and makes sure that
-;   counts are on CrossSections are consistent with the counts on Sections.
 ;
 ; Although the code keeps talking about words and word-classes, it is
 ; (almost) entirely generic, and can merge (cluster) anything. The only
@@ -123,7 +117,7 @@
 ;
 ;   {e_union} = {e_a} set-union {e_b}
 ;
-; accumulate-count, assign-to-cluster
+; accumulate-count
 ; -----------------------------------
 ; The above merge methods are implemented in the `accumulate-count`
 ; and `assign-to-cluster` functions. The first does the math for
@@ -249,90 +243,6 @@
 
 	; Return how much was transferred over.
 	moved
-)
-
-; ---------------------------------------------------------------------
-
-(define (assign-to-cluster LLOBJ CLS WA CLIQUE)
-"
-  assign-to-cluster LLOBJ CLS WA CLIQUE --
-
-  Loop over the disjuncts on WA, and call CLIQUE on each,
-  passing CLS and the disjunct to it.
-
-  A MemberLink from WA to CLS will be created, holding the
-  accumulated count returned by CLIQUE.
-
-  LLOBJ is used to access pairs.
-  WA should be of `(LLOBJ 'left-type)`
-  CLS should be interpretable as a row in LLOBJ.
-
-  CLIQUE is a function that returns how much of a given disjunct
-     is merged.
-
-  The merger of row WA into CLS is performed, using the CLIQUE
-  function to make disjunct-by-disjunct merge decisions.
-
-  This assumes that storage is connected; the updated counts are
-  written to storage.
-"
-	(define monitor-count (make-count-monitor))
-
-	; Accumulated count on the MemberLink.
-	(define accum-cnt 0)
-
-	(for-each
-		(lambda (PAIR-A)
-			(define cnt (CLIQUE CLS PAIR-A accumulate-count))
-			(monitor-count #f)
-			(when (< 0 cnt)
-				(monitor-count #t) ; increment only if counted!
-				(set! accum-cnt (+ accum-cnt cnt))))
-		(LLOBJ 'right-stars WA))
-
-	; Track the number of observations moved from WA to the class.
-	(define memb-a (MemberLink WA CLS))
-	(cog-inc-count! memb-a accum-cnt)
-	(store-atom memb-a)
-
-	(monitor-count
-		(string-append
-			"------ Assign: Merged ~D of ~D sections on `"
-			(cog-name WA)
-			"` in ~6,1F secs\n"))
-)
-
-; ---------------------------------------------------------------------
-
-(define (rebalance-shapes LLOBJ CLS WA CLIQUE)
-"
-  rebalance-shapes LLOBJ CLS WA CLIQUE --
-
-  Loop over the pairs having WA on the left, and call CLIQUE on each,
-  passing CLS and the pair to it.
-
-  LLOBJ is used to access pairs.  WA and CLS should both be 'left-types
-  of `LLOBJ`
-
-  CLIQUE should be a function that takes the given CLS and donor pair,
-  and uses those to deduce the merge-into pair. The merge-into pair,
-  and the donor pair are then handed to `rebalance-merge`, which makes
-  the counts consistent on both pairs.
-
-  This assumes that storage is connected; the updated counts are written
-  to storage.
-"
-	(define monitor-rate (make-rate-monitor))
-
-	(for-each
-		(lambda (PAIR-A)
-			(monitor-rate #f)
-			(CLIQUE CLS PAIR-A rebalance-merge)
-		)
-		(LLOBJ 'right-stars WA))
-
-	(monitor-rate
-			"------ Assign: Revised ~A shapes in ~5F secs; ~6F scts/sec\n")
 )
 
 ; ---------------------------------------------------------------------
