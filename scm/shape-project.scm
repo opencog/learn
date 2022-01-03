@@ -1,7 +1,7 @@
 ;
 ; shape-project.scm
 ;
-; Merge connectors based on linea shape merges.
+; Merge connectors based on linear shape merges.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;

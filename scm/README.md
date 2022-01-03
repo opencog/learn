@@ -33,8 +33,6 @@ but the also require, as input, data that was produced by earlier files.
                           creating clusters.
 * __gram-projective.scm__ Code that merges pairs of words into a new cluster,
                           or merges a single word into an existing cluster.
-* __cset-class.scm__      Merge connector sets.
-* __vectors.scm__         Vector arithmetic.
 * __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
 
@@ -91,10 +89,6 @@ notable:
 * [shape-vec.scm](shape-vec.scm) Explains the concept of "shapes". These
                           are vectors where one of the connectors has
                           been made the base of the vector.
-
-* [cset-merge.scm](cset-merge.scm) Reviews how connector sets are to be
-                          merged. The merge decision is made elsewhere;
-                          this only goes through the mechanics of merging.
 
 TODO
 ----

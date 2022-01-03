@@ -411,8 +411,21 @@
 ; of the two is already a word-class, then the counts are simply moved
 ; from the word to the class.
 ;
-; Loop order and Majority Voting
-; ------------------------------
+; Majority Voting
+; ---------------
+; Better merge results can be obtained by merging two or more vectors
+; at the same time.
+;
+; Connector merging
+; -----------------
+; When merging  vectors, it is best to merge the connectors that appear
+; in the basis elements of the vectors (the basis elements are connector
+; seqeunces).  Performing this connector merge is easiest if "shapes" are
+; used, (see `shape-project.scm` for details) and if the inner loop is
+; the loop over the words to be merged, for a fixed basis element.
+; Earlier code reversed the inner and outer loops (see the code in the
+; `attic` directory) and doing it the other way creates a number of
+; difficult issues for connector merging.
 ;
 ; ---------------------------------------------------------------------
 ; This file currently contains no code!  It just documents the code!
