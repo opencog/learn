@@ -283,12 +283,17 @@
 		; Loop over disjuncts, handling the Sections only.
 		; Any remaining CrossSections not handled in this loop
 		; are handled out-of-line, below.
+		(define e (make-elapsed-secs))
+		(define scnt 0)
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
 					(merge-dj DJ)
-					(if MRG-CON (rebalance-dj DJ))))
+					(if MRG-CON (rebalance-dj DJ))
+					(set! scnt (+ 1 scnt))))
 			dj-list)
+		(format #t "------ merge-majority: Merge ~D sections in ~A secs\n"
+			scnt (e))
 
 		; ---------------------------------------------------
 		; After the above loop has run, all of the Sections have been
@@ -315,6 +320,7 @@
 
 		; Main loop, to record all the DJ's that have already
 		; been handled.
+		(define d (make-elapsed-secs))
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
@@ -333,13 +339,15 @@
 		; throws off the merging.
 		(for-each merge-dj left-overs)
 		(for-each rebalance-dj left-overs)
+		(format #t "------ merge-majority: Remaining ~A cross in ~A secs\n"
+			(length left-overs) (d))
 
 		; ---------------------------------------------------
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
 		; intent of this clobber is to force it to recompute it's left
 		; and right basis.
-		(define e (make-elapsed-secs))
+		(define c (make-elapsed-secs))
 		(LLOBJ 'clobber)
 		(for-each
 			(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
@@ -350,7 +358,7 @@
 		(LLOBJ 'clobber)
 
 		(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
-			(cog-name CLASS) (e))
+			(cog-name CLASS) (c))
 	)
 
 	; Return the above function
