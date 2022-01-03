@@ -6,6 +6,15 @@
 ; Copyright (c) 2017, 2018, 2019 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
+; META-OVERVIEW
+; -------------
+; Although the below keeps talking about words and word-classes, the
+; actual code is (almost) entirely generic, and can merge (cluster)
+; anything. There are only a handful of places where its not generic;
+; these are being slowly cleaned up. The generic merge is possible
+; because what to merge, and where to put the merger results, are
+; defined by LLOBJ.
+;
 ; OVERVIEW
 ; --------
 ; When a pair of words are judged to be grammatically similar, they can
@@ -286,7 +295,124 @@
 ; Disjunct merging is the second step in creating grammatical classes.
 ; The idea here is to replace individual connectors that specify words
 ; with connectors that specify word-classes. This step is examined in
-; greater detail in `cset-class.scm`.
+; greater detail in `gram-majority.scm`.
 ;
-; ---------------------------------------------------------------
+;
+; Orthogonal merging
+; ------------------
+; In this merge strategy, `w` is decomposed into `s` and `t` by
+; orthogonal decomposition, up to a clamping constraint, so as to keep
+; all counts non-negative. That is, start by taking `s` as the component
+; of `w` that is parallel to `g`, and `t` as the orthogonal complement.
+; In general, this will result in `t` having negative components; this
+; is clearly not allowed in a probability space. Thus, those counts are
+; clamped to zero, and the excess is transferred back to `s` so that the
+; total `w = s + t` is preserved.
+;
+; Note the following properties of this algo:
+; a) The combined vector `g_new` has exactly the same support as `g_old`.
+;    That is, any disjuncts in `w` that are not in `g_old` are already
+;    orthogonal. This may be undesirable, as it prevents the broadening
+;    of the support of `g`, i.e. the learning of new, but compatible
+;    grammatical usage. See discussion of "broadening" below.
+;
+; b) The process is not quite linear, as the final `s` is not actually
+;    parallel to `g_old`.
+;
+;
+; Union merging
+; -------------
+; Here, one decomposes `w` into components that are parallel and
+; perpendicular to `g + w`, instead of `g` as above.  Otherwise, one
+; proceeds as above.
+;
+; Note that the support of `g + w` is the union of the support of `g`
+; and of `w`, whence the name.  This appears to provide a simple
+; solution to the broadening problem, mentioned above.  Conversely, by
+; taking the union of support, the new support may contain elements
+; from `w` that belong to other word-senses, and do NOT belong to `g`
+; (do not belong to the word sense associate with `g`).
+;
+; Initial cluster formation
+; -------------------------
+; The above described what to do to extend an existing grammatical class
+; with a new candidate word.  It does not describe how to form the
+; initial grammatical class, out of the merger of N words. Several
+; strategies are possible. Given words `u`, `v`, `w`, ... one may:
+;
+; * Simple sum: let `g=u+v+w+...`. That's it; nothing more.
+; * Overlap and union merge, described below.
+; * Democratic voting: merge those basis elements shared by a majority.
+;
+; Overlap merge
+; -------------
+; A formal (i.e. mathematically dense) description of overlap merging is
+; given here. One wishes to compute the intersection of basis elements
+; (the intersection of "disjuncts" aka "sections") of the two words, and
+; then sum the counts only on this intersected set. Let
+;
+;   {e_a} = set of basis elements in v_a with non-zero coefficients
+;   {e_b} = set of basis elements in v_b with non-zero coefficients
+;   {e_overlap} = {e_a} set-intersection {e_b}
+;   pi_overlap = unit on diagonal for each e in {e_overlap}
+;              == projection matrix onto the subspace {e_overlap}
+;   v_a^pi = pi_overlap . v_a == projection of v_a onto {e_overlap}
+;   v_b^pi = pi_overlap . v_b == projection of v_b onto {e_overlap}
+;
+;   v_cluster = v_a^pi + v_b^pi
+;   v_a^new = v_a - v_a^pi
+;   v_b^new = v_b - v_b^pi
+;
+; The idea here is that the vector subspace {e_overlap} consists of
+; those grammatical usages that are common for both words a and b,
+; and thus hopefully correspond to how words a and b are used in a
+; common sense. Thus v_cluster is the common word-sense, while v_a^new
+; and v_b^new are everything else, everything left-over.  Note that
+; v_a^new and v_b^new are orthogonal to v_cluster. Note that v_a^new
+; and v_b^new are both exactly zero on {e_overlap} -- the subtraction
+; wipes out those coefficients. Note that the total number of counts
+; is preserved.  That is,
+;
+;   ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
+;
+; where ||v|| == ||v||_1 the l_1 norm aka count aka Manhattan-distance.
+;
+; If v_a and v_b have several word-senses in common, then so will
+; v_cluster.  Since there is no a priori way to force v_a and v_b to
+; encode only one common word sense, there needs to be some distinct
+; mechanism to split v_cluster into multiple word senses, if that is
+; needed.
+;
+; Union merging can be described using almost the same formulas, except
+; that one takes
+;
+;   {e_union} = {e_a} set-union {e_b}
+;
+; accumulate-count, assign-to-cluster
+; -----------------------------------
+; The above merge methods are implemented in the `accumulate-count`
+; and `assign-to-cluster` functions. The first does the math for
+; one basis element, the second loops over the basis elts in a vector.
+;
+; The first takes, as an argument, a fractional weight which is
+; used when the disjunct isn't shared between both words. Setting
+; the weight to zero gives overlap merging; setting it to one gives
+; union merging. Setting it to fractional values provides a merge
+; that is intermediate between the two: an overlap, plus a bit more,
+; viz some of the union.  This is sometimes called "fuzzy merging"
+; in other places.
+;
+; That is, the merger is given by the vector
+;
+;   v_merged = v_overlap + FRAC * (v_union - v_overlap)
+;
+; If v_a and v_b are both words, then the counts on v_a and v_b are
+; adjusted to remove the counts that were added into v_merged. If one
+; of the two is already a word-class, then the counts are simply moved
+; from the word to the class.
+;
+; Loop order and Majority Voting
+; ------------------------------
+;
+; ---------------------------------------------------------------------
 ; This file currently contains no code!  It just documents the code!
