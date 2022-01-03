@@ -165,6 +165,24 @@
 		; to just do the below.
 		(define class-type (cog-type CLASS))
 
+		; If two classes are being merged, then the counts from one class
+		; must be moved to the other. Thiis utility copies those counts.
+		(define (move-count FROM-CLASS)
+			(for-each (lambda (MEMB)
+				(define new-memb (MemberLink (gar MEMB) CLASS))
+				(cog-inc-count! new-memb (get-count MEMB))
+				(cog-delete! MEMB))
+				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
+
+		; Add words to cluster *before* starting merge!
+		; This is needed, as the merge will look for these links.
+		(for-each (lambda (WRD)
+			(if (equal? class-type (cog-type? WRD))
+				(move-count WRD)
+				(MemberLink WRD CLASS)))
+			WLIST)
+
+		; ---------------------------------------------------
 		; The minimum number of sections that must exist for
 		; a given disjunct. For a list of length two, both
 		; must share that disjunct (thus giving the traditional
@@ -199,26 +217,9 @@
 					0
 					voter-list)))
 
-		(define (make-flat CLUST SECT)
-			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
-
-		; If two classes are being merged, then the counts from one class
-		; must be moved to the other. Thiis utility copies those counts.
-		(define (move-count FROM-CLASS)
-			(for-each (lambda (MEMB)
-				(define new-memb (MemberLink (gar MEMB) CLASS))
-				(cog-inc-count! new-memb (get-count MEMB))
-				(cog-delete! MEMB))
-				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
-
-		; Add words to cluster *before* starting merge!
-		(for-each (lambda (WRD)
-			(if (equal? class-type (cog-type? WRD))
-				(move-count WRD)
-				(MemberLink WRD CLASS)))
-			WLIST)
-
+		; ---------------------------------------------------
 		; Collect up all disjuncts into one place.
+		; The main loop will loop over these.
 		(define dj-set (make-atom-set))
 		(for-each
 			(lambda (WRD)
@@ -227,6 +228,10 @@
 					(LLOBJ 'right-stars WRD)))
 			WLIST)
 		(define dj-list (dj-set #f))
+
+		; ---------------------------------------------------
+		(define (make-flat CLUST SECT)
+			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
@@ -254,13 +259,15 @@
 					(when (< 0 frakm)
 						(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))))
 
-		; merge a disjunct or not
+		; Perform the merge a given disjunct, or not
 		(define (merge-dj DJ)
 			(define have-majority (vote-to-accept? DJ))
 			(for-each
 				(lambda (WRD) (do-merge WRD DJ have-majority))
 				WLIST))
 
+		; Given a specific Section, transport the counts on it to
+		; the CrossSections that can be derived from it.
 		(define (do-rebalance WRD DJ)
 			(define SECT (LLOBJ 'get-pair WRD DJ))
 			(when (not (nil? SECT))
@@ -269,7 +276,9 @@
 		(define (rebalance-dj DJ)
 			(for-each (lambda (WRD) (do-rebalance WRD DJ)) WLIST))
 
-		; Loop over disjuncts, merging each, or not.
+		; Loop over disjuncts, handling the Sections only.
+		; Any remaining CrossSections not handled in this loop
+		; are handled out-of-line, below.
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
@@ -277,7 +286,16 @@
 					(if MRG-CON (rebalance-dj DJ))))
 			dj-list)
 
-		; Record the cross-sections
+		; ---------------------------------------------------
+		; After the above loop has run, all of the Sections have been
+		; merged, as well as all of the CrossSections that can be derived
+		; from them. Now, we want to handle all the remaining CrossSections
+		; that were not handled above.
+		;
+		; To do this, we need to perform a set-subtraction: figure out
+		; what's been done, and what remains.
+
+		; First, figure out what DJ's have been done already.
 		(define done-djs (make-atom-set))
 		(define (do-record WRD DJ)
 			(define SECT (LLOBJ 'get-pair WRD DJ))
@@ -291,7 +309,8 @@
 				(lambda (WRD) (do-record WRD DJ))
 				WLIST))
 
-		; Subtract the ones that are done.
+		; Main loop, to record all the DJ's that have already
+		; been handled.
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
@@ -299,12 +318,19 @@
 					(record-cross DJ)))
 			dj-list)
 
+		; Subtract the ones that are done. The list of left-overs
+		; should be a list consisting entirely of CrossSections.
 		(define left-overs (atoms-subtract
 			dj-list (done-djs #f)))
 
+		; Loop over the remaining CrossSections, and merge them.
+		; The loop must be run twice, since there may be multiple
+		; Crosses from a given Section, and rebalancing too soon
+		; throws off the merging.
 		(for-each merge-dj left-overs)
 		(for-each rebalance-dj left-overs)
 
+		; ---------------------------------------------------
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
 		; intent of this clobber is to force it to recompute it's left
