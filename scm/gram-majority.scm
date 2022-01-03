@@ -252,32 +252,29 @@
 								(equal? class-type (cog-type WRD))))
 						(frakm (if merge-full 1.0 FRAC)))
 					(when (< 0 frakm)
-						(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))
-			)
-		)
-
-		(define (do-rebalance WRD DJ)
-			(define SECT (LLOBJ 'get-pair WRD DJ))
-			(when (not (nil? SECT))
-				(rebalance-merge LLOBJ (make-flat CLASS SECT) SECT)))
+						(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))))
 
 		; merge a disjunct or not
 		(define (merge-dj DJ)
 			(define have-majority (vote-to-accept? DJ))
 			(for-each
 				(lambda (WRD) (do-merge WRD DJ have-majority))
-				WLIST)
+				WLIST))
 
-			(if MRG-CON
-				(for-each
-					(lambda (WRD) (do-rebalance WRD DJ))
-					WLIST)))
+		(define (do-rebalance WRD DJ)
+			(define SECT (LLOBJ 'get-pair WRD DJ))
+			(when (not (nil? SECT))
+				(rebalance-merge LLOBJ (make-flat CLASS SECT) SECT)))
+
+		(define (rebalance-dj DJ)
+			(for-each (lambda (WRD) (do-rebalance WRD DJ)) WLIST))
 
 		; Loop over disjuncts, merging each, or not.
 		(for-each
 			(lambda (DJ)
-				(if (equal? 'ConnectorSeq (cog-type DJ))
-					(merge-dj DJ)))
+				(when (equal? 'ConnectorSeq (cog-type DJ))
+					(merge-dj DJ)
+					(if MRG-CON (rebalance-dj DJ))))
 			dj-list)
 
 		; Record the cross-sections
@@ -306,6 +303,7 @@
 			dj-list (done-djs #f)))
 
 		(for-each merge-dj left-overs)
+		(for-each rebalance-dj left-overs)
 
 		; Cleanup after merging.
 		; The LLOBJ is assumed to be just a stars object, and so the
