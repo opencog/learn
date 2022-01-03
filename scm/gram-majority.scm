@@ -233,6 +233,9 @@
 		(define (make-flat CLUST SECT)
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
+		(define (update-memb-count WRD CLS CNT)
+			(cog-inc-count! (MemberLink WRD CLS) CNT))
+
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
 		; Return zero if there is no merge.
@@ -257,7 +260,8 @@
 								(equal? class-type (cog-type WRD))))
 						(frakm (if merge-full 1.0 FRAC)))
 					(when (< 0 frakm)
-						(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))))
+						(update-memb-count WRD CLASS
+							(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm))))))
 
 		; Perform the merge a given disjunct, or not
 		(define (merge-dj DJ)
