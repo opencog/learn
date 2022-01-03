@@ -256,24 +256,28 @@
 			)
 		)
 
-		(define (do-flatten WRD DJ)
+		(define (do-rebalance WRD DJ)
 			(define SECT (LLOBJ 'get-pair WRD DJ))
 			(when (not (nil? SECT))
 				(rebalance-merge LLOBJ (make-flat CLASS SECT) SECT)))
 
+		; merge a disjunct or not
+		(define (merge-dj DJ)
+			(define have-majority (vote-to-accept? DJ))
+			(for-each
+				(lambda (WRD) (do-merge WRD DJ have-majority))
+				WLIST)
+
+			(if MRG-CON
+				(for-each
+					(lambda (WRD) (do-rebalance WRD DJ))
+					WLIST)))
+
 		; Loop over disjuncts, merging each, or not.
 		(for-each
 			(lambda (DJ)
-				(define have-majority (vote-to-accept? DJ))
-				(for-each
-					(lambda (WRD) (do-merge WRD DJ have-majority))
-					WLIST)
-
-				(if MRG-CON
-					(for-each
-						(lambda (WRD) (do-flatten WRD DJ))
-						WLIST))
-			)
+				(if (equal? 'ConnectorSeq (cog-type DJ))
+					(merge-dj DJ)))
 			dj-list)
 
 		; Cleanup after merging.
