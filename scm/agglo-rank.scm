@@ -385,7 +385,7 @@
   In particular, this recomputes the N(*,d) which is needed by MM^T.
 "
 	; Gather together all of the DJ's for all the words in the list.
-	; These will, in general, be heavily duplictated.
+	; These will, in general, be heavily duplicated.
 	(define dj-set (make-atom-set))
 
 	; Gather together all affected words.

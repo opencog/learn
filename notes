@@ -8085,7 +8085,130 @@ counts on member links
 
 gram-projective.scm move into ... shape-project.scm ??
 
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 
+The latest: the greatest:
+22942954.0  vs orig 22942644.0 so +310 larger!
+Welllll .... we are ... getting closer ... Guh.
+
+
+(define pcnt 0)
+(define (check-bal CDJ)
+
+	(set! pcnt (+ 1 pcnt))
+	(format #t "Done ~A ~A\n" pcnt (prt-dj CDJ))
+
+	(define dj-set (make-atom-set))
+	(define pear-set (make-atom-set))
+
+	(define (pair-margins PAIR)
+		(pear-set PAIR)
+      (dj-set (star-obj 'right-element PAIR)))
+
+	(define (cross-margins PAIR)
+      (for-each pair-margins (star-obj 'get-cross-sections PAIR)))
+
+   (define (expand-margins PAIR)
+		(pear-set PAIR)
+      (dj-set (star-obj 'right-element PAIR))
+      (if (equal? 'Section (cog-type PAIR))
+         (cross-margins PAIR)
+         (let ((sect (star-obj 'get-section PAIR)))
+            (pair-margins sect)
+            (cross-margins sect))))
+
+	(for-each
+		(lambda (WRD)
+			(define pra (LLOBJ 'get-pair WRD CDJ))
+			(when (not (nil? pra))
+				(expand-margins (LLOBJ 'make-flat CLASS pra))
+				(expand-margins pra)))
+		WLIST)
+
+	(define djs (dj-set #f))
+	(define pears (pear-set #f))
+	(format #t "words=~A djs=~A pairs=~A\n" (length WLIST) (length djs) (length pears))
+	(format #t "djs:\n~A\n" (prt-dj-list djs))
+	(format #t "pairs (before):\n~A\n" (prt-element-list pears))
+
+	(define sup-obj (add-support-api star-obj))
+
+	(define lobs (sup-obj 'total-count-left))
+	(define robs (sup-obj 'total-count-right))
+	(define nlobs (inexact->exact (round lobs)))
+	(define nrobs (inexact->exact (round robs)))
+   (format #t "Before: left and right total counts: ~A ~A\n" lobs robs)
+
+	(define befw 0)
+	(for-each (lambda (WRD)
+		(define cnt (sup-obj 'right-count WRD))
+		(set! befw (+ befw cnt))
+		(format #t "before count=~A wrd=~A\n" cnt (cog-name WRD))) WLIST)
+
+	(newline)
+	(define befd 0)
+	(for-each (lambda (DJ)
+		(define cnt (sup-obj 'left-count DJ))
+		(set! befd (+ befd cnt))
+		(format #t "before count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+	(newline)
+
+	(star-obj 'clobber)
+	(define psu (add-support-compute star-obj))
+	(for-each
+      (lambda (DJ) (psu 'set-left-marginals DJ)) djs)
+
+	(for-each
+      (lambda (WRD) (psu 'set-right-marginals WRD)) WLIST)
+
+	(define aftw 0)
+	(for-each (lambda (WRD)
+		(define cnt (sup-obj 'right-count WRD))
+		(set! aftw (+ aftw cnt))
+		(format #t "after count=~A wrd=~A\n" cnt (cog-name WRD))) WLIST)
+	(newline)
+
+	(define aftd 0)
+	(for-each (lambda (DJ)
+		(define cnt (sup-obj 'left-count DJ))
+		(set! aftd (+ aftd cnt))
+		(format #t "after count=~A dj=~A\n" cnt (prt-dj DJ))) djs)
+	(newline)
+
+	(format #t "wrdcnt bef: ~A aft: ~A\n" befw aftw)
+	(format #t "djcnt bef: ~A aft: ~A\n" befd aftd)
+	(newline)
+
+	(format #t "pairs (after):\n~A\n" (prt-element-list pears))
+	(newline)
+
+; (recompute-mmt-final star-obj)
+(psu 'set-left-totals)
+(psu 'set-right-totals)
+
+	(define alobs (sup-obj 'total-count-left))
+	(define arobs (sup-obj 'total-count-right))
+	(define anlobs (inexact->exact (round alobs)))
+	(define anrobs (inexact->exact (round arobs)))
+   (format #t "Before: left and right total counts: ~A ~A\n" lobs robs)
+   (format #t "After: left and right total counts: ~A ~A\n" alobs arobs)
+	(newline) (newline)
+
+	; (print-matrix-summary-report star-obj)
+
+	(when (not (equal? anlobs anrobs))
+      (format #t "Bonk: left and right total counts! ~A ~A\n" alobs arobs)
+		(foobar))
+	(when (not (equal? anlobs 22942644))
+      (format #t "Bonk: 22942644 counts changed ! ~A ~A\n" lobs robs)
+		(foobar))
+
+   (format #t "=================================\n")
+)
+
+213
+
+problem after 200 210 at exactly 220
 
 ====================================================
 link-class.scm ???
