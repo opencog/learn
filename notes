@@ -7604,7 +7604,7 @@ pre merge:
 duude post-merge sects:9
 34.250 * ({e j},  a- b- {e j}+) == 32 + 2.25 = 32 + 1/4 or 9 OK
  6.750 * (e,  a- b- j+)          == 3/4 of 9 so OK
-15.750 * (j,  a- b- e+)      ... ?? should be gone ... 
+15.750 * (j,  a- b- e+)      ... ?? should be gone ...
 
 (rebalance-count LLOBJ resect x-cnt)
 
@@ -8090,6 +8090,7 @@ LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
 The latest: the greatest:
 22942954.0  vs orig 22942644.0 so +310 larger!
 Welllll .... we are ... getting closer ... Guh.
+Yep. 22942954.0
 
 
 (define pcnt 0)
@@ -8209,6 +8210,64 @@ Welllll .... we are ... getting closer ... Guh.
 213
 
 problem after 200 210 at exactly 220
+
+=================================
+Done 220 of 8682   R- —+
+report at count=220
+words=3 djs=6 pairs=6
+wrds:
+({+ — “ ” _} — R)
+pairs (before):
+ 0.000 * [R, <{+ — “ ” _},  $- {+ — “ ” _}+>]
+ 0.000 * [{+ — “ ” _}, <{+ — “ ” _},  R- $+>]
+22.000 * (—,  R- —+)
+22.000 * [—, <—,  R- $+>]
+22.000 * [R, <—,  $- —+>]
+ 0.000 * ({+ — “ ” _},  R- {+ — “ ” _}+)
+
+at count=220
+Before: left and right total counts: 22942644.0 22942644.0
+before count=4303.0 wrd=+ — “ ” _
+before count=24343.0 wrd=—
+before count=1895.0 wrd=R
+
+before count=0 dj= R- {+ — “ ” _}+
+before count=985.0 dj=<—,  $- —+>
+before count=0 dj=<{+ — “ ” _},  R- $+>
+before count=24.0 dj=<{+ — “ ” _},  $- {+ — “ ” _}+>
+before count=22.0 dj=<—,  R- $+>
+before count=36.0 dj= R- —+
+
+after count=4359.0 wrd=+ — “ ” _
+after count=24338.0 wrd=—
+after count=1895.0 wrd=R
+
+after count=0.0 dj= R- {+ — “ ” _}+
+after count=985.0 dj=<—,  $- —+>
+after count=0.0 dj=<{+ — “ ” _},  R- $+>
+after count=24.0 dj=<{+ — “ ” _},  $- {+ — “ ” _}+>
+after count=22.0 dj=<—,  R- $+>
+after count=36.0 dj= R- —+
+
+at count=220
+wrdcnt bef: 30541.0 aft: 30592.0
+djcnt bef: 1067.0 aft: 1067.0
+
+pairs (after):
+ 0.000 * [R, <{+ — “ ” _},  $- {+ — “ ” _}+>]
+ 0.000 * [{+ — “ ” _}, <{+ — “ ” _},  R- $+>]
+22.000 * (—,  R- —+)
+22.000 * [—, <—,  R- $+>]
+22.000 * [R, <—,  $- —+>]
+ 0.000 * ({+ — “ ” _},  R- {+ — “ ” _}+)
+
+
+at count=220
+Before: left and right total counts: 22942644.0 22942644.0
+After: left and right total counts: 22942644.0 22942695.0
+
+Nope. Its the cleanup.
+
 
 ====================================================
 link-class.scm ???
