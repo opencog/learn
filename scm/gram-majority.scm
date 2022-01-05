@@ -341,16 +341,12 @@
 		; work right requires one merge and balance at a time, and then
 		; scrubbing the left-over list to remove the ones that have been
 		; handled already.
-		(define (merge-one-shape SHAPE)
+		(define (scrub-shapes SHL)
 
-			; Perform the merge
-			(merge-dj SHAPE)
-			(rebalance-dj SHAPE)
-
-			; All CrossSections for this Shape.
+			; All CrossSections for the first Shape in the list.
 			(define xsect-list
 				(filter-map (lambda (WRD)
-					(define XSECT (LLOBJ 'get-pair WRD SHAPE))
+					(define XSECT (LLOBJ 'get-pair WRD (car SHL)))
 					(if (not (nil? XSECT)) XSECT #f))
 				WLIST))
 
@@ -368,13 +364,18 @@
 			(define allsh
 				(map (lambda (XSE) (LLOBJ 'right-element XSE)) allx))
 
-			; Return all Shapes that should have been handled.
-			(delete-duplicates allsh equal?))
+			; Return everything we haven't done yet.
+			(atoms-subtract (cdr SHL) allsh))
 
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
-			(define done (merge-one-shape (car SHL)))
-			(define rest (lset-difference equal? SHL done))
+
+			; Perform the merge
+			(define shape (car SHL))
+			(merge-dj shape)
+			(rebalance-dj shape)
+
+			(define rest (scrub-shapes SHL))
 			(if (not (nil? rest)) (merge-shapes rest)))
 
 		; Now actually do the merge.
