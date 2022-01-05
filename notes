@@ -8430,6 +8430,13 @@ In-group size=5: `+` `—` `“` `”` `_`
 ------ Merged into `+ — “ ” _` in 701 secs
 ------ Recomputed MMT marginals in 851 secs
 
+In-group size=5: `+` `—` `“` `”` `_`
+------ merge-majority: Merge 8682 sections in 8 secs
+------ merge-majority: Remaining 29586 cross in 1138 secs
+------ merge-majority: Cleanup `+ — “ ” _` in 58 secs
+------ Merged into `+ — “ ” _` in 1252 secs
+
+
 
 ====================================================
 link-class.scm ???
@@ -8505,6 +8512,10 @@ FIXED:
 * Use increment-count for everything.
   (cog-inc-count! ATOM CNT) and (add-stars-api 'move-count)
   The move-count is done already!? DONE, I guess.
+* print-matrix-summary-report after MM^T shows nothing. Why?
+  because 'mmt-marginals computes only word-pair entropies.
+  (NOT A BUG)
+* Fix count transfer in add-singleton-classes (OBSOLETE)
 
 
 TODO/BUGS:
@@ -8515,14 +8526,11 @@ TODO/BUGS:
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
-* Set up direct-sum/shape clustering run scripts. (partly done)
+* Set up direct-sum/shape clustering run scripts. (mostly done ?)
 * Cleanup marginals after clustering ... marginals might have zero
   counts for words, or words might not be in the basis?
   which means the connector seqs need to be cleaned up too.
   (as they are now unused/empty)
-* print-matrix-summary-report after MM^T shows nothing. Why?
-  because 'mmt-marginals computes only word-pair entropies.
-* Fix count transfer in add-singleton-classes
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001

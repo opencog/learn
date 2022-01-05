@@ -365,7 +365,10 @@
 				(map (lambda (XSE) (LLOBJ 'right-element XSE)) allx))
 
 			; Return everything we haven't done yet.
-			(atoms-subtract (cdr SHL) allsh))
+			; (atoms-subtract (cdr SHL) allsh)
+			(lset-difference equal? SHL
+				(delete-duplicates allsh equal?))
+		)
 
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
