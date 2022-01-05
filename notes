@@ -8266,7 +8266,150 @@ at count=220
 Before: left and right total counts: 22942644.0 22942644.0
 After: left and right total counts: 22942644.0 22942695.0
 
-Nope. Its the cleanup.
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMmmm
+
+report at loop=8682
+words=3084 djs=24830 pairs=59650
+
+Nope. Its later.
+Main merge: balanced.
+After: left and right total counts: 22942644.0 22942644.0
+Remain:
+ Remaining 29586 cross
+postmmt post final total counts: 22738908.0 22827276.0
+postclean: left and right total counts: 22942954.0 22942954.0
+
+Ahhh.  So consider:
+
+21: (g, a+ b+ c+)
+13: (g, a+ d+ c+)
+
+we have
+21: [b, <g, a+ $+ c+>]
+13: [d, <g, a+ $+ c+>]
+and say b,d are mergable.
+
+we also have
+21: [a, <g, $+ b+ c+>]
+21: [c, <g, a+ b+ $+>]
+13: [a, <g, $+ d+ c+>]
+13: [c, <g, a+ d+ $+>]
+
+which don't ever show but should merge fine.
+
+
+total djs=38983 sected djs=17618 left-over=29586
+At loop=10000
+remiandiner check: total counts: 22859176.0 22897154.0
+
+At loop=1000
+remiandiner check: total counts: 22934881.0 22938517.0
+
+At loop=100
+remiandiner check: total counts: 22941642.0 22942079.0
+
+At loop=2
+remiandiner check: total counts: 22942636.0 22942642.0
+
+should be 22942644.0 so left is under by 8 right is under by 2
+
+But the merge went well, so wtf !?
+left is 4 crosses of 2.0 each ..
+right is one cross that's preflat(??)
+
+recomp -- know the . ” {+ — “ ” _}
+(list
+	(WordNode "know")
+	(WordNode "the")
+	(WordNode ".")
+	(WordNode "”"))
+
+(define sup-obj (add-support-api star-obj))
+(define psu (add-support-compute star-obj))
+(sup-obj 'right-count (WordNode "know")) ; 50313.0
+(psu 'set-right-marginals (WordNode "know"))
+(sup-obj 'right-count (WordNode "know")) ; 50313.0
+
+(sup-obj 'right-count (WordNode "the")) ; 1263905.0
+(psu 'set-right-marginals (WordNode "the"))
+(sup-obj 'right-count (WordNode "the")) ; 1263905.0
+
+(sup-obj 'total-count-right) 22942642.0
+(psu 'set-right-totals)
+
+(sup-obj 'right-count (WordNode ".")) ; 722575.0
+(psu 'set-right-marginals (WordNode "."))
+(sup-obj 'right-count (WordNode ".")) ; 722575.0 still no change...
+
+(sup-obj 'right-count (WordNode "”")) ; 197793.0
+(psu 'set-right-marginals (WordNode "”"))
+(sup-obj 'right-count (WordNode "”")) ; 197793.0
+
+(star-obj 'clobber)
+(psu 'set-right-marginals (WordNode "know"))
+
+(sup-obj 'right-count (WordNode "truth")) ; 4582.0
+(psu 'set-right-marginals (WordNode "truth"))
+(sup-obj 'right-count (WordNode "truth")) ; no change
+
+(define ae (star-obj 'get-all-elts))
+(length ae)  ; 2805101
+(fold (lambda (X SUM) (+ SUM (get-count X))) 0 ae) ; 22942644.0
+So ... that's correct.
+
+what's missing?
+(define (checkw WRD)
+	(define oc (sup-obj 'right-count WRD))
+	(psu 'set-right-marginals WRD)
+	(define nc (sup-obj 'right-count WRD))
+	(when (not (equal? oc nc))
+		(format #t "fail at ~A for old= ~A new= ~A\n"
+			(cog-name WRD) oc nc)
+		(foobar)))
+
+(for-each checkw (star-obj 'left-basis))
+
+fail at + — “ ” _ for old= 182354.0 new= 182356.0
+
+(psu 'set-right-totals)
+ (sup-obj 'total-count-right) ; 22942644.0
+
+FIXED!  WTF .... how is this possible?
+(recompute-mmt LLOBJ (cons CLASS WLIST))
+(WordClassNode "+ — “ ” _")
+
+(define WRD-LIST
+(cons (WordClassNode "+ — “ ” _")
+(list (WordNode "+") (WordNode "—") (WordNode "“") (WordNode "”") (WordNode "_"))))
+
+(length (wrd-set #f)) ; 5354
+(length (dj-set #f)) ; 84517
+
+(define xx (WordClassNode "+ — “ ” _"))
+(any (lambda (WRD) (equal? xx WRD)) (wrd-set #f))
+
+(define bad #f)
+(define (checkd DJ)
+	(define oc (sup-obj 'left-count DJ))
+	(psu 'set-left-marginals DJ)
+	(define nc (sup-obj 'left-count DJ))
+	(when (not (equal? oc nc))
+		(format #t "fail old= ~A new= ~A for ~A\n"
+			oc nc (prt-dj DJ))
+		(set! bad DJ)
+		(foobar)))
+
+(define djl (dj-set #f))
+(for-each checkd (dj-set #f))
+(for-each checkd (star-obj 'right-basis))
+
+fail old= 0 new= 2.0 for  know- the- .+ {+ — “ ” _}+
+
+
+(sup-obj 'total-count-left) ; 22942636.0
+(psu 'set-left-totals)
+(sup-obj 'total-count-left) ; 22942640.0  so its coming back..
+
 
 
 ====================================================
