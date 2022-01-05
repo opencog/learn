@@ -334,11 +334,52 @@
 			dj-list (done-djs #f)))
 
 		; Loop over the remaining CrossSections, and merge them.
-		; The loop must be run twice, since there may be multiple
-		; Crosses from a given Section, and rebalancing too soon
-		; throws off the merging.
-		(for-each merge-dj left-overs)
-		(for-each rebalance-dj left-overs)
+		; We would like to do this:
+		; (for-each merge-dj left-overs)
+		; (for-each rebalance-dj left-overs)
+		; but the above will mess up detailed balance. Gtting this to
+		; work right requires one merge and balance at a time, and then
+		; scrubbing the left-over list to remove the ones that have been
+		; handled already.
+		(define (merge-one-shape SHAPE)
+
+			; Perform the merge
+			(merge-dj SHAPE)
+			(rebalance-dj SHAPE)
+
+			; All CrossSections for this Shape.
+			(define xsect-list
+				(filter-map (lambda (WRD)
+					(define XSECT (LLOBJ 'get-pair WRD SHAPE))
+					(if (not (nil? XSECT)) XSECT #f))
+				WLIST))
+
+			; All Sections for the Crosses.
+			(define rsect-list
+				(map (lambda (XSE) (LLOBJ 'get-section XSE))
+					xsect-list))
+
+			; All CrossSections for the Sections.
+			(define allx
+				(append-map (lambda (SEC) (LLOBJ 'get-cross-sections SEC))
+					rsect-list))
+
+			; All the shapes that occur in the cross-sections.
+			(define allsh
+				(map (lambda (XSE) (LLOBJ 'right-element XSE)) allx))
+
+			; Return all Shapes that should have been handled.
+			(delete-duplicates allsh equal?))
+
+		; Tail-recursive merge of a list of shapes.
+		(define (merge-shapes SHL)
+			(define done (merge-one-shape (car SHL)))
+			(define rest (lset-difference equal? SHL done))
+			(if (not (nil? rest)) (merge-shapes rest)))
+
+		; Now actually do the merge.
+		(merge-shapes left-overs)
+
 		(format #t "------ merge-majority: Remaining ~A cross in ~A secs\n"
 			(length left-overs) (d))
 
