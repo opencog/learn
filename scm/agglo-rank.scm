@@ -286,7 +286,7 @@
 
 (define (make-logger LLOBJ)
 "
-  make-logger LLOBJ -- crate logger to record assorted info in AtomSpace
+  make-logger LLOBJ -- create logger to record assorted info in AtomSpace
 "
 	(define log-anchor (AnchorNode "data logger"))
 	(define log-mmt-q (make-data-logger log-anchor (Predicate "mmt-q")))
@@ -341,6 +341,52 @@
 		; Total number of non-zero entries
 		(log-size (sup 'total-support-left))
 	)
+)
+
+; ---------------------------------------------------------------
+
+(define-public (print-log PORT)
+"
+  print-log PORT -- Dump log contents as CSV
+  Set PORT to #t to get output to stdout
+"
+	(define log-anchor (AnchorNode "data logger"))
+	(define key-mmt-q (Predicate "mmt-q"))
+	(define key-ranked-mi (Predicate "ranked-mi"))
+	(define key-sparsity (Predicate "sparsity"))
+	(define key-entropy (Predicate "entropy"))
+	(define key-left-dim (Predicate "left dim"))
+	(define key-right-dim (Predicate "right dim"))
+	(define key-left-cnt (Predicate "left-count"))
+	(define key-right-cnt (Predicate "right-count"))
+	(define key-size (Predicate "total entries"))
+
+	(define rows (cog-value->list (cog-value log-anchor key-left-dim)))
+	(define cols (cog-value->list (cog-value log-anchor key-right-dim)))
+	(define lcnt (cog-value->list (cog-value log-anchor key-left-cnt)))
+	(define rcnt (cog-value->list (cog-value log-anchor key-right-cnt)))
+	(define size (cog-value->list (cog-value log-anchor key-size)))
+	(define spar (cog-value->list (cog-value log-anchor key-sparsity)))
+	(define entr (cog-value->list (cog-value log-anchor key-entropy)))
+	(define rami (cog-value->list (cog-value log-anchor key-ranked-mi)))
+	(define mmtq (cog-value->list (cog-value log-anchor key-mmt-q)))
+
+	(define len (length rows))
+
+	(format PORT "#\n# Log of merge statistics\n#\n")
+	(format PORT "# rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
+	(for-each (lambda (N)
+		(format PORT "~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
+			(inexact->exact (list-ref rows N))
+			(inexact->exact (list-ref cols N))
+			(inexact->exact (list-ref lcnt N))
+			(inexact->exact (list-ref rcnt N))
+			(inexact->exact (list-ref size N))
+			(list-ref spar N)
+			(list-ref entr N)
+			(list-ref rami N)
+			(list-ref mmtq N)))
+		(iota len))
 )
 
 ; ---------------------------------------------------------------
