@@ -312,8 +312,8 @@
   database connection.
 
   Example:
-     (define anchor (Concept "anchor"))
-     (define key (Predicate "key"))
+     (define anchor (Concept \"anchor\"))
+     (define key (Predicate \"key\"))
      (define log-foo (make-data-logger anchor key))
      (log-foo 1)
      (log-foo 2)
