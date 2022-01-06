@@ -321,7 +321,7 @@
 		(if miv (cog-value-ref miv 1) -inf.0))
 
 	; Log some maybe-useful data...
-	(lambda (PAIR)
+	(lambda (top-pair)
 		(log-mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
 		(log-ranked-mi (get-ranked-mi top-pair))
 
@@ -331,8 +331,8 @@
 		; The left and right count should be always equal,
 		; and should never change.  This is a sanity check.
 		(define sup (add-support-api LLOBJ))
-		(log-left-count (sup 'total-count-left))
-		(log-right-count (sup 'total-count-right))
+		(log-left-cnt (sup 'total-count-left))
+		(log-right-cnt (sup 'total-count-right))
 
 		; left and right dimensions (number of rows, columns)
 		(log-left-dim (sup 'left-dim))
