@@ -335,12 +335,14 @@
 
 		; Loop over the remaining CrossSections, and merge them.
 		; We would like to do this:
-		; (for-each merge-dj left-overs)
-		; (for-each rebalance-dj left-overs)
-		; but the above will mess up detailed balance. Gtting this to
+		;    (for-each merge-dj left-overs)
+		;    (for-each rebalance-dj left-overs)
+		; but the above will mess up detailed balance. Getting this to
 		; work right requires one merge and balance at a time, and then
 		; scrubbing the left-over list to remove the ones that have been
-		; handled already.
+		; handled already. This is *incredibly slow*, and accounts for
+		; half of the cpu time in the merge (the other half is in
+		; recomputing the margins). XXX FIXME speed this up, somehow.
 		(define (scrub-shapes SHL)
 
 			; All CrossSections for the first Shape in the list.

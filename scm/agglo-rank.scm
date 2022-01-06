@@ -78,8 +78,8 @@
 ; ---------------------------------------------------------------
 
 ; XXX FIXME -- Maybe bug (I'm confused about this.) This function
-; computes mmt-q aka Q described in the diary, and uses it as a
-; constant offset. The problem is that it changes dramatically
+; computes mmt-q aka Q described in the diary Part Four, and uses it
+; as a constant offset. The problem is that it changes dramatically
 ; as clusters are created and counts are moved. This means that
 ; some of the stored similarity scores have the old Q on them, and
 ; some have the new Q, and they are no longer comparable (!?) right?
@@ -115,7 +115,8 @@
 		(define fmi (smi 'mmt-fmi WA WB))
 		(define mwa (smi 'mmt-marginal WA))
 		(define mwb (smi 'mmt-marginal WB))
-		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
+		(define qmi (+ fmi (* 0.5 (log2 (* mwa mwb)))))
+		(define rmi (+ qmi mmt-q))
 
 		; Print something, so user has something to look at.
 		(if (< 4 fmi)
@@ -124,7 +125,7 @@
 		(store-atom
 			(sap 'set-pair-similarity
 				(sap 'make-pair WA WB)
-				(FloatValue fmi rmi))))
+				(FloatValue fmi rmi qmi))))
 
 	; Return the function that computes the MI for pairs.
 	compute-sim
