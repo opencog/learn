@@ -340,6 +340,9 @@
 
 		; Total number of non-zero entries
 		(log-size (sup 'total-support-left))
+
+		; Save to the DB
+		(store-atom log-anchor)
 	)
 )
 

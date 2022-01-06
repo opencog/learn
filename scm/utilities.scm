@@ -340,9 +340,7 @@
 		(define new (append old (list VAL)))
 
 		; FIXME: use a thread-safe test-n-set instead.
-		(cog-set-value! ATOM KEY (cog-new-value typ new))
-		; Save it
-		(store-atom ATOM))
+		(cog-set-value! ATOM KEY (cog-new-value typ new)))
 )
 
 ; ---------------------------------------------------------------

@@ -21,6 +21,9 @@
 (covr-obj 'explode-sections)
 (define star-obj covr-obj)
 
+; Get the logger data, too
+(fetch-atom (AnchorNode "data logger"))
+
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.
 ; So we check, and compute if necessary.
