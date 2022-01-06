@@ -21,29 +21,6 @@
 (use-modules (ice-9 threads))
 
 ; ---------------------------------------------------------------------
-
-; cut-n-paste of what opencog already defines.
-; Thus not define-public.
-(define (atomic-inc ctr)
-"
-  atomic-inc CTR - increment the atomic-box CTR by one.
-
-  This is the atomic version of (set! CTR (+ 1 CTR)).
-  This returns the new, incremented value.
-
-  Example usage:
-     (define cnt (make-atomic-box 0))
-     (atomic-inc cnt)
-     (atomic-inc cnt)
-     (format #t \"Its ~A\n\" (atomic-box-ref cnt))
-"
-	(define old (atomic-box-ref ctr))
-	(define new (+ 1 old))
-	(define swp (atomic-box-compare-and-swap! ctr old new))
-	(if (= old swp) new (atomic-inc ctr))
-)
-
-; ---------------------------------------------------------------------
 ;
 (define (par-find PRED LST)
 "
