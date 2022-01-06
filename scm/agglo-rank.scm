@@ -360,6 +360,7 @@
 	(define key-left-cnt (Predicate "left-count"))
 	(define key-right-cnt (Predicate "right-count"))
 	(define key-size (Predicate "total entries"))
+	(define key-class (Predicate "class"))
 
 	(define rows (cog-value->list (cog-value log-anchor key-left-dim)))
 	(define cols (cog-value->list (cog-value log-anchor key-right-dim)))
@@ -370,6 +371,7 @@
 	(define entr (cog-value->list (cog-value log-anchor key-entropy)))
 	(define rami (cog-value->list (cog-value log-anchor key-ranked-mi)))
 	(define mmtq (cog-value->list (cog-value log-anchor key-mmt-q)))
+	; (define clas (cog-value->list (cog-value log-anchor key-class)))
 
 	(define len (length rows))
 
@@ -679,6 +681,10 @@
 
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
+	; Record the classes as they are created.
+	(define log-anchor (AnchorNode "data logger"))  ; same as above.
+	(define log-class (make-data-logger log-anchor (Predicate "class")))
+
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.
@@ -736,6 +742,7 @@
 		(format #t "\n")
 
 		(define wclass (make-class-node LLOBJ in-grp))
+		(log-class wclass) ; record this in the log
 		(merge-majority wclass in-grp)
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
