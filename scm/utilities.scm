@@ -9,6 +9,7 @@
 ; * A for-all-pairs function
 ; * A fold-over-all-pairs function
 ; * A debug-repl-shell tool
+; * Various kinds of loggers, including loggers that log in the atomspace.
 ;
 ; Copyright (c) 2017, 2018 Linas Vepstas
 ;
@@ -321,6 +322,50 @@
   Resets the stats after each call, so only the stats since the
   previous call are printed.
 "
+)
+
+; ---------------------------------------------------------------
+
+(define-public (make-data-logger ATOM KEY)
+"
+  make-data-logger ATOM KEY -- return function that appends data.
+
+  This returns a function that will append data to a Value located
+  at KEY on ATOM. The ATOM will then be saved to the currently open
+  database connection.
+
+  Example:
+     (define anchor (Concept "anchor"))
+     (define key (Predicate "key"))
+     (define log-foo (make-data-logger anchor key))
+     (log-foo 1)
+     (log-foo 2)
+     (log-foo 3)
+     (cog-value anchor key)
+     ; This will return (FloatValue 1 2 3)
+
+  Currently, only numbers, strings, Atoms and Values are supported.
+  All logged items must be of the same type as the first logged item.
+  The current implementation is not thread-safe.
+"
+	(lambda (VAL)
+		(define v (cog-value ATOM KEY))
+		(define typ (if v (cog-type v)
+			(cond
+				((real? VAL) 'FloatValue)
+				((string? VAL) 'StringValue)
+				((cog-value? VAL) 'LinkValue)
+				(else
+					(throw 'unsupported 'make-data-logger
+						"Don't know how to handle this type")))))
+
+		(define old (if v (cog-value->list v) '()))
+		(define new (append old (list VAL)))
+
+		; FIXME: use a thread-safe test-n-set instead.
+		(cog-set-value! ATOM KEY (cog-new-value typ new))
+		; Save it
+		(store-atom ATOM))
 )
 
 ; ---------------------------------------------------------------

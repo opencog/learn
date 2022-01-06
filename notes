@@ -8436,6 +8436,23 @@ In-group size=5: `+` `—` `“` `”` `_`
 ------ merge-majority: Cleanup `+ — “ ” _` in 58 secs
 ------ Merged into `+ — “ ” _` in 1252 secs
 
+Initial in-group size=2: `,` `;`
+In-group size=2 overlap = 3705 of 48451 disjuncts, commonality= 7.65%
+In-group size=2: `,` `;`
+------ merge-majority: Merge 40041 sections in 37 secs
+------ merge-majority: Remaining 108083 cross in 8599 secs  OUCHHHHH
+------ merge-majority: Cleanup `, ;` in 160 secs
+------ Merged into `, ;` in 8820 secs
+
+
+QueueValue LinkStreamValue
+
+(define (log-number ATOM KEY FLT)
+	(define vect (cog-value ATOM KEY))
+	(define flist (cog-value->list vect))
+	(define nlist (append flist (list FLT)))
+	(cog-set-value! ATOM KEY (FloatValue nlist)))
+
 
 
 ====================================================
