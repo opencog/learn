@@ -8447,11 +8447,11 @@ In-group size=2: `,` `;`
 
 QueueValue LinkStreamValue
 
-(define (log-number ATOM KEY FLT)
-	(define vect (cog-value ATOM KEY))
-	(define flist (cog-value->list vect))
-	(define nlist (append flist (list FLT)))
-	(cog-set-value! ATOM KEY (FloatValue nlist)))
+(make-data-logger ATOM KEY)
+
+(define smi (add-symmetric-mi-compute LLOBJ))
+(define mmt-q (smi 'mmt-q))
+
 
 
 

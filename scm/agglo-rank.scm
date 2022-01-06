@@ -279,7 +279,19 @@
 				(mi-sim (gar PR) (gdr PR))
 				(cog-name (gar PR))
 				(cog-name (gdr PR))))
-		(take (drop LST start)num))
+		(take (drop LST start) num))
+)
+
+; ---------------------------------------------------------------
+
+(define (ranked-mi LLOBJ PAIR)
+"
+  ranked-mi PAIR - return the ranked-MI similarity of PAIR.
+  Handy-dandy debug utility.
+"
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define miv (sap 'get-count PAIR))
+	(if miv (cog-value-ref miv 1) -inf.0)
 )
 
 ; ---------------------------------------------------------------
@@ -346,6 +358,10 @@
 	(define (diag-start N) (+ N NSIM-OFFSET))
 	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
 
+	(define log-anchor (AnchorNode "data logger"))
+	(define log-mmt-q (make-data-logger log-anchor (Predicate "mmt-q")))
+	(define log-ranked-mi (make-data-logger log-anchor (Predicate "ranked-mi")))
+
 	(for-each
 		(lambda (N)
 			(define e (make-elapsed-secs))
@@ -354,20 +370,19 @@
 			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 			(define top-pair (car sorted-pairs))
+
+			; Log some maybe-useful data...
+			(log-mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
+			(log-ranked-mi (ranked-mi LLOBJ top-pair))
+
+			; Do the actual merge
 			(MERGE-FUN (diag-start N) (gar top-pair) (gdr top-pair))
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
 
 			; Expand the size of the universe
 			(define ranked-words (rank-words LLOBJ))
-; (format #t "Skipping:")
-; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-; (take ranked-words (diag-start N)))
-; (format #t "\n")
-; (format #t "Head of sim-pair list:")
-; (for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-; (take (drop ranked-words (diag-start N)) 12))
-; (format #t "\n")
+
 			; (compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
 			(compute-diag-mi-sims LLOBJ ranked-words 0 (diag-end N))
 			(format #t "------ Extended the universe in ~A secs\n" (e))
