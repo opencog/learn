@@ -284,14 +284,63 @@
 
 ; ---------------------------------------------------------------
 
-(define (ranked-mi LLOBJ PAIR)
+(define (make-logger LLOBJ)
 "
-  ranked-mi PAIR - return the ranked-MI similarity of PAIR.
-  Handy-dandy debug utility.
+  make-logger LLOBJ -- crate logger to record assorted info in AtomSpace
 "
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define miv (sap 'get-count PAIR))
-	(if miv (cog-value-ref miv 1) -inf.0)
+	(define log-anchor (AnchorNode "data logger"))
+	(define log-mmt-q (make-data-logger log-anchor (Predicate "mmt-q")))
+	(define log-ranked-mi (make-data-logger log-anchor (Predicate "ranked-mi")))
+	(define log-sparsity (make-data-logger log-anchor (Predicate "sparsity")))
+	(define log-entropy (make-data-logger log-anchor (Predicate "entropy")))
+	(define log-left-dim (make-data-logger log-anchor (Predicate "left dim")))
+	(define log-right-dim (make-data-logger log-anchor (Predicate "right dim")))
+	(define log-left-cnt (make-data-logger log-anchor (Predicate "left-count")))
+	(define log-right-cnt (make-data-logger log-anchor (Predicate "right-count")))
+	(define log-size (make-data-logger log-anchor (Predicate "total entries")))
+
+	(define (log2 x) (if (< 0 x) (/ (log x) (log 2)) -inf.0))
+
+	(define (get-sparsity)
+		(define sup (add-support-api LLOBJ))
+		(define nrows (sup 'left-dim))
+		(define ncols (sup 'right-dim))
+		(define tot (* nrows ncols))
+		(define lsize (sup 'total-support-left)) ; equal to total-support-right
+		(log2 (/ tot lsize)))
+
+	(define (get-mmt-entropy)
+		(define tsr (add-transpose-api LLOBJ))
+		(define mmt-support (tsr 'total-mmt-support))
+		(define mmt-count (tsr 'total-mmt-count))
+		(- (log2 (/ mmt-count (* mmt-support mmt-support)))))
+
+	(define (get-ranked-mi PAIR)
+		(define sap (add-similarity-api LLOBJ #f SIM-ID))
+		(define miv (sap 'get-count PAIR))
+		(if miv (cog-value-ref miv 1) -inf.0))
+
+	; Log some maybe-useful data...
+	(lambda (PAIR)
+		(log-mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
+		(log-ranked-mi (get-ranked-mi top-pair))
+
+		(log-sparsity (get-sparsity))
+		(log-entropy (get-mmt-entropy))
+
+		; The left and right count should be always equal,
+		; and should never change.  This is a sanity check.
+		(define sup (add-support-api LLOBJ))
+		(log-left-count (sup 'total-count-left))
+		(log-right-count (sup 'total-count-right))
+
+		; left and right dimensions (number of rows, columns)
+		(log-left-dim (sup 'left-dim))
+		(log-right-dim (sup 'right-dim))
+
+		; Total number of non-zero entries
+		(log-size (sup 'total-support-left))
+	)
 )
 
 ; ---------------------------------------------------------------
@@ -358,9 +407,7 @@
 	(define (diag-start N) (+ N NSIM-OFFSET))
 	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
 
-	(define log-anchor (AnchorNode "data logger"))
-	(define log-mmt-q (make-data-logger log-anchor (Predicate "mmt-q")))
-	(define log-ranked-mi (make-data-logger log-anchor (Predicate "ranked-mi")))
+	(define log-stuff (make-logger LLOBJ))
 
 	(for-each
 		(lambda (N)
@@ -372,8 +419,7 @@
 			(define top-pair (car sorted-pairs))
 
 			; Log some maybe-useful data...
-			(log-mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
-			(log-ranked-mi (ranked-mi LLOBJ top-pair))
+			(log-stuff top-pair)
 
 			; Do the actual merge
 			(MERGE-FUN (diag-start N) (gar top-pair) (gdr top-pair))
