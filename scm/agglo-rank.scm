@@ -374,9 +374,10 @@
 	(define len (length rows))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
-	(format PORT "# rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
+	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
 	(for-each (lambda (N)
-		(format PORT "~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
+		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
+			(+ N 1)
 			(inexact->exact (list-ref rows N))
 			(inexact->exact (list-ref cols N))
 			(inexact->exact (list-ref lcnt N))
