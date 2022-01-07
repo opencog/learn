@@ -7,7 +7,7 @@
 ; minutes, up to an hour ... if it's taking more, your datasets are
 ; too big.).
 ;
-(load "cogserver.scm")
+(include "cogserver.scm")
 
 ; Load up the disjuncts -- this can take over half an hour!
 (display "Fetch all disjuncts. This may take 5-10 minutes.\n")

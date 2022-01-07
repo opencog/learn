@@ -340,15 +340,16 @@
 		; but the above will mess up detailed balance. Getting this to
 		; work right requires one merge and balance at a time, and then
 		; scrubbing the left-over list to remove the ones that have been
-		; handled already. This is *incredibly slow*, and accounts for
-		; half of the cpu time in the merge (the other half is in
-		; recomputing the margins). XXX FIXME speed this up, somehow.
-		(define (scrub-shapes SHL)
+		; handled already.
+
+		(define shape-done? (make-once-predicate))
+
+		(define (set-shape-done! SHP)
 
 			; All CrossSections for the first Shape in the list.
 			(define xsect-list
 				(filter-map (lambda (WRD)
-					(define XSECT (LLOBJ 'get-pair WRD (car SHL)))
+					(define XSECT (LLOBJ 'get-pair WRD SHP))
 					(if (not (nil? XSECT)) XSECT #f))
 				WLIST))
 
@@ -363,13 +364,8 @@
 					rsect-list))
 
 			; All the shapes that occur in the cross-sections.
-			(define allsh
-				(map (lambda (XSE) (LLOBJ 'right-element XSE)) allx))
-
-			; Return everything we haven't done yet.
-			; (atoms-subtract (cdr SHL) allsh)
-			(lset-difference equal? SHL
-				(delete-duplicates allsh equal?))
+			(for-each (lambda (XSE) (shape-done? (LLOBJ 'right-element XSE)))
+				allx)
 		)
 
 		; Tail-recursive merge of a list of shapes.
@@ -377,10 +373,12 @@
 
 			; Perform the merge
 			(define shape (car SHL))
-			(merge-dj shape)
-			(rebalance-dj shape)
+			(when (not (shape-done? SHL))
+				(merge-dj shape)
+				(rebalance-dj shape)
+				(set-shape-done! shape))
 
-			(define rest (scrub-shapes SHL))
+			(define rest (cdr SHL))
 			(if (not (nil? rest)) (merge-shapes rest)))
 
 		; Now actually do the merge.

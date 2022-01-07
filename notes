@@ -8463,10 +8463,38 @@ Start merge 7 In-group size=4: `He` `It` `I` `There` -- Remaining 27561 cross in
 Start merge 8 In-group size=4: `"` `”` `,` `what` -- Remaining 45696 cross in 1408 secs
 Start merge 9 In-group size=2: `He It I There` `She` -- Remaining 19406 cross in 320 secs
 Start merge 10 In-group size=4: `He` `She` `They` `We` -- Remaining 2552 cross in 9 secs
+Start merge 11 In-group size=4: `A` `No` `He It I There She` `The` -- Remaining 25273 cross in 486 secs
+Start merge 12 In-group size=4: `of` `in` `to` `from`
 
 oops!
 (define log-anchor (AnchorNode "data logger"))
 (fetch-atom (AnchorNode "data logger"))
+
+-l cogserver-gram.scm
+
+(use-modules (opencog))
+(use-modules (opencog learn))
+(define dl (make-data-logger (Concept "foo")(Predicate "bar")))
+(dl (Concept "asdf"))
+(cog-value (Concept "foo")(Predicate "bar"))
+
+(define (zap PRED)
+(define v (cog-value (AnchorNode "data logger") PRED))
+(define vl (cog-value->list v))
+(define t (cog-type v))
+(define l (length vl))
+(define svl (take vl (- l 1)))
+(cog-set-value! (AnchorNode "data logger") PRED (cog-new-value t svl)))
+
+   (zap (Predicate "mmt-q"))
+   (zap (Predicate "ranked-mi"))
+   (zap (Predicate "sparsity"))
+   (zap (Predicate "entropy"))
+   (zap (Predicate "left dim"))
+   (zap (Predicate "right dim"))
+   (zap (Predicate "left-count"))
+   (zap (Predicate "right-count"))
+   (zap (Predicate "total entries"))
 
 
 
