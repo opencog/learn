@@ -8501,6 +8501,15 @@ oops!
 No change....
 
 
+(define wli (list (Word "to") (Word "in") (WordClass "He It I There") (WordClassNode "He It I There to in")))
+
+ (recompute-mmt star-obj wli)
+
+2.000 * [{He It I There}, <would,  $- probably+ be+>]
+does not have a matching section!
+Which means the balance is wrong!
+Thats .... bad!
+
 ====================================================
 link-class.scm ???
 ====================================================

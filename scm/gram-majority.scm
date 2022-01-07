@@ -373,7 +373,7 @@
 
 			; Perform the merge
 			(define shape (car SHL))
-			(when (not (shape-done? SHL))
+			(when (not (shape-done? shape))
 				(merge-dj shape)
 				(rebalance-dj shape)
 				(set-shape-done! shape))
