@@ -8454,16 +8454,23 @@ QueueValue LinkStreamValue
 
 Start merge 1 In-group size=5: `+` `—` `“` `”` `_` Remaining 29586 cross in 600 secs
 Start merge 2 In-group size=2: `,` `;`   --  Remaining 108083 cross in 8650 secs
+Remaining 108083 cross in 159 secs
 Start merge 3 In-group size=2: `was` `is` -- Remaining 35109 cross in 979 secs
+Remaining 35109 cross in 57 secs
 Start merge 4 In-group size=4: `but` `and` `that` `as` -- Remaining 63812 cross in 3081 secs
+------ merge-majority: Remaining 63815 cross in 113 secs
+Hmmm .... counts differ.
 Start merge 5 In-group size=5: `?` `.` `###LEFT-WALL###` `+ — “ ” _` `!`
                                     Remaining 161210 cross in 16100 secs  OUCH
+------ merge-majority: Remaining 161244 cross in 239 secs
+Hmm ....
 Start merge 6 In-group size=2: `?` `!` -- Remaining 2161 cross in 6 secs
 Start merge 7 In-group size=4: `He` `It` `I` `There` -- Remaining 27561 cross in 583 secs
 Start merge 8 In-group size=4: `"` `”` `,` `what` -- Remaining 45696 cross in 1408 secs
 Start merge 9 In-group size=2: `He It I There` `She` -- Remaining 19406 cross in 320 secs
 Start merge 10 In-group size=4: `He` `She` `They` `We` -- Remaining 2552 cross in 9 secs
 Start merge 11 In-group size=4: `A` `No` `He It I There She` `The` -- Remaining 25273 cross in 486 secs
+ vs.  Remaining 25273 cross in 48 secs
 Start merge 12 In-group size=4: `of` `in` `to` `from` -- Remaining 106362 cross in 8923 secs
 Start merge 13 In-group size=3: `He It I There` `to` `in` -- Remaining 32008 cross in 693 secs
 
@@ -8498,7 +8505,8 @@ oops!
    (zap (Predicate "total entries"))
 
 ------ merge-majority: Remaining 29586 cross in 569 secs
-No change....
+------ merge-majority: Remaining 29586 cross in 43 secs
+Whoa!
 
 
 (define wli (list (Word "to") (Word "in") (WordClass "He It I There") (WordClassNode "He It I There to in")))

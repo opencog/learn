@@ -342,31 +342,20 @@
 		; scrubbing the left-over list to remove the ones that have been
 		; handled already.
 
-		(define shape-done? (make-once-predicate))
-
-		(define (set-shape-done! SHP)
-
-			; All CrossSections for the first Shape in the list.
-			(define xsect-list
-				(filter-map (lambda (WRD)
-					(define XSECT (LLOBJ 'get-pair WRD SHP))
-					(if (not (nil? XSECT)) XSECT #f))
+		(define sect-done? (make-once-predicate))
+		(define (shape-done? SHP)
+			(any (lambda (WRD)
+				(define XSECT (LLOBJ 'get-pair WRD SHP))
+				(if (nil? XSECT) #f
+					(sect-done? (LLOBJ 'get-section XSECT))))
 				WLIST))
 
-			; All Sections for the Crosses.
-			(define rsect-list
-				(map (lambda (XSE) (LLOBJ 'get-section XSE))
-					xsect-list))
-
-			; All CrossSections for the Sections.
-			(define allx
-				(append-map (lambda (SEC) (LLOBJ 'get-cross-sections SEC))
-					rsect-list))
-
-			; All the shapes that occur in the cross-sections.
-			(for-each (lambda (XSE) (shape-done? (LLOBJ 'right-element XSE)))
-				allx)
-		)
+		(define (set-shape-done! SHP)
+			(for-each (lambda (WRD)
+				(define XSECT (LLOBJ 'get-pair WRD SHP))
+				(if (not (nil? XSECT))
+					(sect-done? (LLOBJ 'get-section XSECT))))
+				WLIST))
 
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
