@@ -8,12 +8,17 @@ but the also require, as input, data that was produced by earlier files.
 * __learn.scm__           This is the main guile module.
 * __common.scm__          Common code
 * __utilities.scm__       Utilities, e.g. for looping.
+* __summary.scm__         Print a summary report for a dataset.
+
+In the `pair-count` subdirectory:
+
 * __word-pair-count.scm__ Word-pair counting. Given raw input text, this
                           accumulates frequencies of word-pairs.
 * __pair-count-window.scm__ Generic pair counting. Given a list of items,
                           this accumulates frequencies of item-pairs.
 * __batch-word-pair.scm__ Batch-compute the marginals and mutual
                           information of word-pairs.
+
 * __mst-parser.scm__      MST Parser. Uses word-pair MI to generate
                           a spanning tree. Busts up tree into
                           pseudo-csets. Accumulates frequencies of
@@ -21,11 +26,13 @@ but the also require, as input, data that was produced by earlier files.
 * __pseudo-csets.scm__    Provides a matrix API to the csets. Rows
                           (left index) are words, columns (right index)
                           are pseudo-csets.
+
+
+In the `gram-class` subdirectory:
 * __shape-vec.scm__       Provides a matrix API to cset-shapes. These
                           are csets, where the wild-card is one of the
                           connectors (rather than the root-word of the
                           disjunct).
-* __summary.scm__         Print a summary report for a dataset.
 * __gram-classification.scm__  Text file explanation of grammatical similarity.
 * __gram-class-api.scm__  Public API classes for merging words into
                           grammatical classes.
@@ -81,12 +88,12 @@ Documentation
 The above files contain documentation embeded within them. Particularly
 notable:
 
-* [gram-classification.scm](gram-classification.scm) Explains the
-                          process of clustering/classification in detail.
+* [gram-classification.scm](gram-class/gram-classification.scm) Explains
+        the process of clustering/classification in detail.
 
-* [shape-vec.scm](shape-vec.scm) Explains the concept of "shapes". These
-                          are vectors where one of the connectors has
-                          been made the base of the vector.
+* [shape-vec.scm](gram-class/shape-vec.scm) Explains the concept of
+        "shapes". These are vectors where one of the connectors has
+        been made the base of the vector.
 
 TODO
 ----

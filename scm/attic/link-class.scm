@@ -4,6 +4,9 @@
 ; Convert pseudo-connector to real connectors.  Merge real links into
 ; link-classes, by grammatical similarity. Maximum-entropy style merges.
 ;
+; This file describes a link-discovery algorithm that was never
+; explored of implemented; the "shapes" idea took it's place.
+;
 ; Copyright (c) 2019 Linas Vepstas
 ;
 ;; SPDX-License-Identifier: AGPL-3.0-or-later

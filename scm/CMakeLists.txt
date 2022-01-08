@@ -1,21 +1,20 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
+	common.scm
 	pair-count/batch-pair.scm
 	pair-count/pair-count-window.scm
 	pair-count/word-pair-count.scm
-	agglo-rank.scm
-	common.scm
-	gram-class-api.scm
-	gram-classification.scm
-	gram-majority.scm
-	gram-optim.scm
-	in-group.scm
+	gram-class/agglo-rank.scm
+	gram-class/gram-class-api.scm
+	gram-class/gram-classification.scm
+	gram-class/gram-majority.scm
+	gram-class/gram-optim.scm
+	gram-class/in-group.scm
+	gram-class/shape-project.scm
+	gram-class/shape-vec.scm
 	lg-compare.scm
-	link-class.scm
 	mst-parser.scm
 	pseudo-csets.scm
-	shape-project.scm
-	shape-vec.scm
 	utilities.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/learn"
 )

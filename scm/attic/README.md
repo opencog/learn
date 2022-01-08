@@ -1,5 +1,10 @@
 Dead, unused code that might still be interesting.
 
+* __link-class.scm__: Desribes a form of link discovery and
+    classification that was never implemened. The 'shapes' idea took
+    its place. Still, it seems odd and curious; maybe something can
+    be done with this idea?
+
 * __gram-pairwise.scm__ : Code that performs pairwise clustering.
     Three basic functions are provided: (a) merge two words into a
     new cluster. (b) merge one word into an existing cluster.
