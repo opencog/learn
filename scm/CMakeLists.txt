@@ -1,7 +1,9 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
+	pair-count/batch-pair.scm
+	pair-count/pair-count-window.scm
+	pair-count/word-pair-count.scm
 	agglo-rank.scm
-	batch-pair.scm
 	common.scm
 	gram-class-api.scm
 	gram-classification.scm
@@ -11,12 +13,10 @@ ADD_GUILE_MODULE (FILES
 	lg-compare.scm
 	link-class.scm
 	mst-parser.scm
-	pair-count-window.scm
 	pseudo-csets.scm
 	shape-project.scm
 	shape-vec.scm
 	utilities.scm
-	word-pair-count.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/learn"
 )
 
