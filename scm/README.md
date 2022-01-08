@@ -8,8 +8,6 @@ but the also require, as input, data that was produced by earlier files.
 * __learn.scm__           This is the main guile module.
 * __common.scm__          Common code
 * __utilities.scm__       Utilities, e.g. for looping.
-* __summary.scm__         Print a summary report for a dataset.
-* __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
 In the `pair-count` subdirectory:
 
@@ -46,6 +44,9 @@ In the `gram-class` subdirectory:
 * __in-group.scm__        Selection of a group of words to cluster. The
                           group is selected to have many traits in common.
 
+In the `lg-export` subdirectory:
+
+* __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
 Data Structures
 ---------------

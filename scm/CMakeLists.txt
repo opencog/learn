@@ -1,6 +1,7 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
 	common.scm
+	utilities.scm
 
 	pair-count/batch-pair.scm
 	pair-count/pair-count-window.scm
@@ -19,13 +20,14 @@ ADD_GUILE_MODULE (FILES
 	gram-class/shape-vec.scm
 
 	lg-compare.scm
-	utilities.scm
+
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/learn"
 )
 
 # A distinct module for export-to-link-grammar
+# Why? Because it has some ugly LG and sqlite3 dependencies.
 ADD_GUILE_MODULE (FILES
-	lg-export.scm
-	export-disjuncts.scm
+	lg-export/lg-export.scm
+	lg-export/export-disjuncts.scm
 	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/nlp/lg-export"
 )
