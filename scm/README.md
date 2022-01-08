@@ -9,6 +9,7 @@ but the also require, as input, data that was produced by earlier files.
 * __common.scm__          Common code
 * __utilities.scm__       Utilities, e.g. for looping.
 * __summary.scm__         Print a summary report for a dataset.
+* __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
 
 In the `pair-count` subdirectory:
 
@@ -18,6 +19,8 @@ In the `pair-count` subdirectory:
                           this accumulates frequencies of item-pairs.
 * __batch-word-pair.scm__ Batch-compute the marginals and mutual
                           information of word-pairs.
+
+In the `mst-parse` subdirectory:
 
 * __mst-parser.scm__      MST Parser. Uses word-pair MI to generate
                           a spanning tree. Busts up tree into
@@ -29,16 +32,19 @@ In the `pair-count` subdirectory:
 
 
 In the `gram-class` subdirectory:
+
 * __shape-vec.scm__       Provides a matrix API to cset-shapes. These
                           are csets, where the wild-card is one of the
                           connectors (rather than the root-word of the
                           disjunct).
 * __gram-classification.scm__  Text file explanation of grammatical similarity.
+* __shape-project.scm__   Explanation of merging shapes.
 * __gram-class-api.scm__  Public API classes for merging words into
                           grammatical classes.
 * __agglo-rank.scm__      Agglomerative clustering. Loops over all words,
                           creating clusters.
-* __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
+* __in-group.scm__        Selection of a group of words to cluster. The
+                          group is selected to have many traits in common.
 
 
 Data Structures
