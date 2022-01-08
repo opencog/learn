@@ -395,6 +395,27 @@
 		(iota len))
 )
 
+(define-public (print-merges PORT)
+"
+  print-merges PORT -- Dump merge log contents as CSV
+  Set PORT to #t to get output to stdout
+"
+	(define log-anchor (AnchorNode "data logger"))
+	(define key-class (Predicate "class"))
+
+	(define classes (cog-value->list (cog-value log-anchor key-class)))
+
+	(define len (length classes))
+
+	(format PORT "#\n# Log of merge statistics\n#\n")
+	(format PORT "# N,words\n")
+	(for-each (lambda (N)
+		(format PORT "~D\t\"~A\"\n"
+			(+ N 1)
+			(cog-name (list-ref classes N))))
+		(iota len))
+)
+
 ; ---------------------------------------------------------------
 
 (define (recomp-all-sim LLOBJ WX)
