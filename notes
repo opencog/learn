@@ -2651,7 +2651,7 @@ get_uuid
 
 SQLValues.cc:130
 SQLValues.cc:564
-SQLAtomStore.cc:124	
+SQLAtomStore.cc:124
 
 ./tests/persist/sql/multi-driver/MultiDeleteUTest
 again: 50x50 for pg
@@ -8521,9 +8521,163 @@ Thats .... bad!
 ((add-support-compute star-obj) 'cache-all)
 
 19009
+===================================================
+
+(length (star-obj 'right-stars (Word "As")))  ; 237
+(length (star-obj 'right-stars (Word "as")))  ; 2491
+(length (star-obj 'right-stars (WordClass "As as")))  ; 2
+(length (star-obj 'right-stars (WordClass "As as.i")))  ; 0
+(length (star-obj 'right-stars (WordClass "As as.i.i")))  ; 0
+
+------ merge-majority: Merge 928 sections in 0 secs
+------ merge-majority: Remaining 1774 cross in 1 secs
+
+(define smi (add-symmetric-mi-compute star-obj))
+(define fmi (smi 'mmt-fmi (Word "As") (Word "as"))) ; 14.463903917003817
+
+(smi 'mmt-joint-prob (Word "As") (Word "as")) ; 6.589255553333501e-7
+(smi 'mmt-total) ; 869287881406.0
+product of above: 572796.0
+
+(define wclass (WordClass "foo"))
+(define in-grp (list (Word "As") (Word "as")))
+(define merge-majority (make-merge-majority star-obj 0.5 4 #t))
+(merge-majority wclass in-grp)
+(length (star-obj 'right-stars (WordClass "foo")))  ; 0
+
+wlen ; 2
+vote-thesh ; 2
+
+(define voter-list wlist)
+(define (vote-to-accept? DJ)
+   (<= vote-thresh
+    (fold
+       (lambda (WRD CNT)
+          (if (nil? (star-obj 'get-pair WRD DJ)) CNT (+ 1 CNT)))
+       0
+       voter-list)))
+
+(define dj-set (make-atom-set))
+      (for-each
+         (lambda (WRD)
+            (for-each
+               (lambda (PAIR) (dj-set (star-obj 'right-element PAIR)))
+               (star-obj 'right-stars WRD)))
+         WLIST)
+      (define dj-list (dj-set #f))
+
+(length dj-list) ; 2726
+
+BTW,
+(length (star-obj 'right-stars (Word "As")))  ; 237
+(length (star-obj 'right-stars (Word "as")))  ; 2491
+(+ 237 2491) ; 2728
+
+so only two is in common
+1) what are those two?  see below
+2) why are they still there?
+3) how can they give rise to this huge MI?
+
+
+(define all-stars (append
+	(star-obj 'right-stars (Word "As"))
+	(star-obj 'right-stars (Word "as"))))
+
+(define all-djs (map (lambda (PR) (star-obj 'right-element  PR)) all-stars))
+(define common-djs (keep-duplicate-atoms all-djs))
+; As early as   ... As soon as  -- both shapes
+(length common-djs) ; XXX wtf? there should be only one ?
+
+(star-obj 'get-pair (Word "As") (list-ref common-djs 0))  ; OK - 8
+(star-obj 'get-pair (Word "as") (list-ref common-djs 0))  ; OK - 19
+(star-obj 'get-pair (Word "As") (list-ref common-djs 1))  ; OK - 599
+(star-obj 'get-pair (Word "as") (list-ref common-djs 1))  ; OK - 956
+
+dot product is (+ (* 8 19) (* 599 956))  ; 572796
+which agrees with (smi 'mmt-joint-prob from above...
+
+(smi 'mmt-marginal (Word "As"))  ; 2.5444505178451385e-6
+(smi 'mmt-marginal (Word "as"))  ; 1.1459704216614244e-5
+
+(* (smi 'mmt-total) (smi 'mmt-marginal (Word "As"))) ; 2211860.0
+(* (smi 'mmt-total) (smi 'mmt-marginal (Word "as"))) ; 9961782.0
+
+(log2 (/ (smi 'mmt-joint-prob (Word "As") (Word "as"))
+(* (smi 'mmt-marginal (Word "As")) (smi 'mmt-marginal (Word "as")))))
+; 14.463903917003817 so oll korrect
+
+(length (done-djs #f)) ; 2132
+(length left-overs) ; 1774
+
+(star-obj 'get-section
+   (star-obj 'get-pair (Word "As") (list-ref common-djs 0))) ;
+
+Are the commons in the left-overs?  they should be
+
+(define done-djli (done-djs #f))
+(atoms-subtract common-djs done-djli)   ; two of them
+(atoms-subtract common-djs left-overs)  ; none .. good
+
+ (define sect-done? (make-once-predicate))
+
+ (merge-shapes left-overs)
+
+(define (merge-dj DJ)
+   (define have-majority (vote-to-accept? DJ))
+	(if have-majority
+		(format #t "accept DJ= ~A\n" (prt-dj DJ))))
+
+
+Non accepted ... why?
+(vote-to-accept? (list-ref common-djs 0)) ; #t
+
+So .... some other DJ clobbers them!
+
+(define common-cross (list
+(star-obj 'get-pair (Word "As") (list-ref common-djs 0))
+(star-obj 'get-pair (Word "as") (list-ref common-djs 0))
+(star-obj 'get-pair (Word "As") (list-ref common-djs 1))
+(star-obj 'get-pair (Word "as") (list-ref common-djs 1)) ))
+
+(define common-sect (map (lambda (XES) (LLOBJ 'get-section XES)) common-cross))
+(for-each (lambda (SEC) (format #t "Its ~A\n" (prt-element SEC))) common-sect)
+
+      (define (set-shape-done! SHP)
+         (for-each (lambda (WRD)
+            (define XSECT (LLOBJ 'get-pair WRD SHP))
+            (when (not (nil? XSECT))
+(let* ((sect (LLOBJ 'get-section XSECT))
+		(done (sect-done? sect)))
+(if (any (lambda (s) (equal? sect s)) common-sect)
+(format #t "cross=~A gives ~A\n" (prt-element XSECT) (prt-element  sect))))))
+            WLIST))
+
+ (define sect-done? (make-once-predicate))
+ (merge-shapes left-overs)
+
+cross= 8.000 * [as, <early,  As- $+>] gives  8.000 * (early,  As- as+)
+cross=956.000 * [as, <soon,  as- $+>] gives 956.000 * (soon,  as- as+)
+cross=19.000 * [as, <early,  as- $+>] gives 19.000 * (early,  as- as+)
+
+The above were not merged.... but they clobber the mergables
+
+(for-each (lambda (xes) (format #t "commx ~A\n" (prt-element xes))) common-cross)
+commx  8.000 * [As, <early,  $- as+>]
+commx 19.000 * [as, <early,  $- as+>]
+commx 599.000 * [As, <soon,  $- as+>]
+commx 956.000 * [as, <soon,  $- as+>]
+
+So ... for some sect, there is some xes that is mergable, and another
+xes that is not mergable.
+
+
+
+
+
+
 
 ====================================================
-link-class.scm ???
+link-class.scm  -- attic; old unimplemented idea.
 ====================================================
 
 FIXED:

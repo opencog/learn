@@ -1364,6 +1364,34 @@ Subsequent merges look ..
  
 \end_layout
 
+\begin_layout Standard
+At round 88 it goes nuts: it merges a few disjuncts of 
+\begin_inset Quotes eld
+\end_inset
+
+As as
+\begin_inset Quotes erd
+\end_inset
+
+ together.
+ Then it merges zero of them into 
+\begin_inset Quotes eld
+\end_inset
+
+As as.i
+\begin_inset Quotes erd
+\end_inset
+
+, and then hits an inf loop, because what is left after the merge still
+ has a high MI.
+\end_layout
+
+\begin_layout Standard
+Conclude: the majority-voting scheme left behind (left unmerged) too much;
+ enough that the MI between what is left is still high.
+ Can we redefine the voting proceedure to lessen this?
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
