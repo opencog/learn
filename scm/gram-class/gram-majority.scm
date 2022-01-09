@@ -434,7 +434,7 @@
 			(if (not (nil? rest)) (merge-shapes rest)))
 
 		; Now actually do the merge.
-		(merge-shapes left-overs)
+		(if (not (nil? left-overs)) (merge-shapes left-overs))
 
 		(format #t "------ merge-majority: Remaining ~A cross in ~A secs\n"
 			(length left-overs) (d))
