@@ -202,7 +202,7 @@
 				(define SECT (LLOBJ 'get-pair WRD DJ))
 				(when (not (nil? SECT))
 					(for-each (lambda (XRS)
-						(dj-sets (LLOBJ 'right-element XRS)))
+						(dj-set (LLOBJ 'right-element XRS)))
 						(LLOBJ 'get-cross-sections SECT))))
 
 			(for-each do-record wrd-list)
