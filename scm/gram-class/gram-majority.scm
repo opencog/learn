@@ -81,6 +81,8 @@
 	((make-group-similarity LLOBJ) 'noise-col-supp low-bnd NOISE WORD-LIST)
 )
 
+; ---------------------------------------------------------------------
+
 (define-public (make-class-node LLOBJ WLIST)
 "
   make-class-node LLOBJ WLIST - create a node suitable for merging WLIST
@@ -106,6 +108,8 @@
 	(mknode cls-name)
 )
 
+; ---------------------------------------------------------------------
+
 (define*-public (make-merge-majority LLOBJ QUORUM NOISE
 	#:optional (MRG-CON #t) (FRAC 0))
 "
@@ -130,10 +134,12 @@
   MRG-CON is an optional argument, defaulting to #t if not specified.
   Set this to #t to indicate that Connectors should also be merged.
   For this to work, the LLOBJ object must have shapes on it.
+  XXX At this time, setting this to #f does not work.
 
   FRAC is an optional argument, defaulting to 0. A non-zero argument
   is the fraction of of a disjunct to merge, if the quorum election
-  fails.  This is used primarily in the unit tests, only.
+  fails.  This is currently used only in the unit tests, but is
+  extensively tested there.
 
   The returned function has the following signature:
      (merge CLASS WORD-LIST)
@@ -144,17 +150,19 @@
   majority vote mechanism, as described elsewhere.
 
   In addition to the above case, there are two rather ad hoc special
-  cases handled here. One special cases is the merge of a single item
-  into an existing class. The other special cases is the merge of two
+  cases handled here. One special case is the merge of a single item
+  into an existing class. The other special case is the merge of two
   classes into one.  These cases are tested in unit tests originally
   developed for pair-wise merge. The handling of these two cases seems
   to be appropriate; however, they're not well-motivated. That is, maybe
   they could be changed?
 
-  Anyway, the new clustering code, as currently written, does not attempt
-  to merge two existing classes together, nor does it attempt to merge a
-  single item into an existing class. So ... these policies can be changed.
-  Perhaps we need to separate this ad hoc policy from the mechanism.
+  Anyway, the new clustering code (i.e. the code that calls this sub-
+  routine), as currently written, does not attempt to merge two existing
+  classes together, nor does it attempt to merge a single item into an
+  existing class. Thus, the above polcies are tested only in the unit
+  tests, and these policies can be changed.  Perhaps we need to separate
+  this ad hoc policy from the mechanism.
 "
 	; WLIST is a list of ItemNodes and/or ItemClassNodes that will be
 	; merged into CLASS.
@@ -181,6 +189,38 @@
 				(move-count WRD)
 				(MemberLink WRD CLASS)))
 			WLIST)
+
+		; ---------------------------------------------------
+
+		; Given a connector-sequence and a word list, return the set
+		; of all ShapeLink's that occur in CrossSections constructed
+		; from the Sections built form (word,conseq) pairs.
+		(define (get-all-shapes DJ wrd-list)
+			(define dj-set (make-atom-set))
+
+			(define (do-record WRD)
+				(define SECT (LLOBJ 'get-pair WRD DJ))
+				(when (not (nil? SECT))
+					(for-each (lambda (XRS)
+						(dj-sets (LLOBJ 'right-element XRS)))
+						(LLOBJ 'get-cross-sections SECT))))
+
+			(for-each do-record wrd-list)
+			(dj-set #f))
+
+		; As above, but given a ShapeLink, return all of the
+		; corresponding ConnectorSequences.
+		(define (get-all-conseqs SHP wrd-list)
+			(define (get-conseq WRD)
+				(define XROS (LLOBJ 'get-pair WRD SHP))
+				(if (nil? XROS) #f
+					(let ((SECT (LLOBJ 'get-section XROS)))
+						(if (nil? SECT)
+							(throw 'missing-section 'make-merge-majority
+								"Expected to find a Section for cross-section")
+							(LLOBJ 'right-element SECT)))))
+
+			(filter-map get-conseq wrd-list))
 
 		; ---------------------------------------------------
 		; The minimum number of sections that must exist for
@@ -217,17 +257,33 @@
 					0
 					voter-list)))
 
+		; Return #t if the DJ is shared by the majority of the sections,
+		; or, if not, by the majority of any cross-sections. This avoids
+		; an issue where a merge is recommended by a cross-section, but
+		; is not recognized because an earlier check rejects it.
+		(define (accept-conseq? DJ)
+			(or (vote-to-accept? DJ)
+				(any vote-to-accept? (get-all-shapes DJ voter-list))))
+
+		; As above, but for shapes.
+		(define (accept-shape? SHP)
+			(or (vote-to-accept? SHP)
+				(any accept-conseq? (get-all-conseqs SHP voter-list))))
+
 		; ---------------------------------------------------
 		; Collect up all disjuncts into one place.
 		; The main loop will loop over these.
-		(define dj-set (make-atom-set))
-		(for-each
-			(lambda (WRD)
-				(for-each
-					(lambda (PAIR) (dj-set (LLOBJ 'right-element PAIR)))
-					(LLOBJ 'right-stars WRD)))
-			WLIST)
-		(define dj-list (dj-set #f))
+		(define (get-all-djs)
+			(define dj-set (make-atom-set))
+			(for-each
+				(lambda (WRD)
+					(for-each
+						(lambda (PAIR) (dj-set (LLOBJ 'right-element PAIR)))
+						(LLOBJ 'right-stars WRD)))
+				WLIST)
+			(dj-set #f))
+
+		(define dj-list (get-all-djs))
 
 		; ---------------------------------------------------
 		(define (make-flat CLUST SECT)
@@ -265,7 +321,7 @@
 
 		; Perform the merge a given disjunct, or not
 		(define (merge-dj DJ)
-			(define have-majority (vote-to-accept? DJ))
+			(define have-majority (accept-conseq? DJ))
 			(for-each
 				(lambda (WRD) (do-merge WRD DJ have-majority))
 				WLIST))
@@ -306,17 +362,18 @@
 
 		; First, figure out what DJ's have been done already.
 		(define done-djs (make-atom-set))
-		(define (do-record WRD DJ)
-			(define SECT (LLOBJ 'get-pair WRD DJ))
-			(when (not (nil? SECT))
-				(for-each (lambda (XRS)
-					(done-djs (LLOBJ 'right-element XRS)))
-					(LLOBJ 'get-cross-sections SECT))))
-
 		(define (record-cross DJ)
-			(for-each
-				(lambda (WRD) (do-record WRD DJ))
-				WLIST))
+
+			; Record the shapes build from the crosses
+			(define (do-record WRD)
+				(define SECT (LLOBJ 'get-pair WRD DJ))
+				(when (not (nil? SECT))
+					(for-each (lambda (XRS)
+						(done-djs (LLOBJ 'right-element XRS)))
+						(LLOBJ 'get-cross-sections SECT))))
+
+			(done-djs DJ)
+			(for-each do-record WLIST))
 
 		; Main loop, to record all the DJ's that have already
 		; been handled.
@@ -324,7 +381,6 @@
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
-					(done-djs DJ)
 					(record-cross DJ)))
 			dj-list)
 
@@ -357,13 +413,20 @@
 					(sect-done? (LLOBJ 'get-section XSECT))))
 				WLIST))
 
+		; Perform the merge a given shape, or not
+		(define (merge-one-shape SHP)
+			(define have-majority (accept-shape? SHP))
+			(for-each
+				(lambda (WRD) (do-merge WRD SHP have-majority))
+				WLIST))
+
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
 
 			; Perform the merge
 			(define shape (car SHL))
 			(when (not (shape-done? shape))
-				(merge-dj shape)
+				(merge-one-shape shape)
 				(rebalance-dj shape)
 				(set-shape-done! shape))
 
