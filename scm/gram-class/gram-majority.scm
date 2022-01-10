@@ -344,17 +344,36 @@
 		(define left-overs (atoms-subtract
 			dj-list (done-djs #f)))
 
+		; ---------------------------------------------------
 		; Loop over the remaining CrossSections, and merge them.
 		; We would like to do this:
 		;    (for-each merge-dj left-overs)
 		;    (for-each rebalance-dj left-overs)
 		; but the above will mess up detailed balance. Getting this to
-		; work right requires one merge and balance at a time, and then
-		; scrubbing the left-over list to remove the ones that have been
-		; handled already.
+		; work right requires two tricks. The first trick is easy: do one
+		; merge and balance at a time, and then scrub the left-over list
+		; to remove the ones that have been handled already.
+		;
+		; The second trick is harder, because it involves order-dependence.
+		; Also, there is no unit test for the second trick, because we
+		; can't control the order dependence in the unit test.
+		; It goes like this: Start with
+		;    N (f, a- a+)  and  M (f, b- a+)
+		; and merge a & b. The crosses are:
+		;    N [a, <f, $- a+>] + M [b, <f, $- a+>] -- Yes, merge!
+		;    N [a, <f, a- $+>] + 0 [b, <f, a- $+>] -- oh no!
+		;    M [a, <f, b- $+>] + 0 [b, <f, b- $+>] -- oh no!
+		; If we hit the first one, we merge and rebalance, and the merge
+		; knocks out the next two (since the merge rebuilds the sections
+		; and the cross-sections). But if either of the "oh no!"'s are
+		; hit first, the merge is rejected, and the "Yes, merge!" case
+		; is never considered, and so never happens. Hmm.  To fix this,
+		; we reorder shapes so that the mergeable ones are always performed
+		; first (via the `get-alt-shapes` function below).
 
 		(define shape-done? (make-once-predicate))
 
+		; Get all of the other shapes derviable from SHP.
 		(define (get-alt-shapes SHP)
 			(define alt-shp (make-atom-set))
 			(for-each
@@ -370,10 +389,13 @@
 			; Maybe it's been done already?
 			(filter (lambda (SH) (not (shape-done? SH))) (alt-shp #f)))
 
+		; Given SHP, return a related shape, if that related shape is mergable.
 		(define (mergable-shape? SHP)
 			(if (vote-to-accept? SHP) SHP
 				(find vote-to-accept? (get-alt-shapes SHP))))
 
+		; Given SHP, merge it, or one of its related shapes, if any one of
+		; them is mergable.
 		(define (merge-shape SHP)
 			(define alt-shp (mergable-shape? SHP))
 			(define have-majority (not (nil? alt-shp)))

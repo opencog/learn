@@ -8804,11 +8804,38 @@ So: .. for each shape, find others in list, vote them, then mark as done.
 		; Is the alt-shape in the set?
 		(lset-intersection equal? VALID-SHAPES (alt-shp #f)))
 
+rebalance-dj
+
+Yay! Fixed!
+
+commx  8.000 * [As, <early,  $- as+>]
+commx 19.000 * [as, <early,  $- as+>]
+
+<early, as- $+>
+<early, As- $+>
+
+[a, <f, $- a+>]
+[b, <f, $- a+>]
+
+<f, a- $+>  ==> N [a, <f, a- $+>] + 0 [b, <f, a- $+>]
+<f, b- $+>  ==> M [a, <f, b- $+>] + 0 [b, <f, b- $+>]
+
+(f, a- a+)
+(f, b- a+)
+
+
 
 
 
 ====================================================
 link-class.scm  -- attic; old unimplemented idea.
+====================================================
+
+Next: unbalanced after two. How?
+r10-singles.rdb
+
+
+====================================================
 ====================================================
 
 FIXED:
