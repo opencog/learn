@@ -191,38 +191,6 @@
 			WLIST)
 
 		; ---------------------------------------------------
-
-		; Given a connector-sequence and a word list, return the set
-		; of all ShapeLink's that occur in CrossSections constructed
-		; from the Sections built form (word,conseq) pairs.
-		(define (get-all-shapes DJ wrd-list)
-			(define dj-set (make-atom-set))
-
-			(define (do-record WRD)
-				(define SECT (LLOBJ 'get-pair WRD DJ))
-				(when (not (nil? SECT))
-					(for-each (lambda (XRS)
-						(dj-set (LLOBJ 'right-element XRS)))
-						(LLOBJ 'get-cross-sections SECT))))
-
-			(for-each do-record wrd-list)
-			(dj-set #f))
-
-		; As above, but given a ShapeLink, return all of the
-		; corresponding ConnectorSequences.
-		(define (get-all-conseqs SHP wrd-list)
-			(define (get-conseq WRD)
-				(define XROS (LLOBJ 'get-pair WRD SHP))
-				(if (nil? XROS) #f
-					(let ((SECT (LLOBJ 'get-section XROS)))
-						(if (nil? SECT)
-							(throw 'missing-section 'make-merge-majority
-								"Expected to find a Section for cross-section")
-							(LLOBJ 'right-element SECT)))))
-
-			(filter-map get-conseq wrd-list))
-
-		; ---------------------------------------------------
 		; The minimum number of sections that must exist for
 		; a given disjunct. For a list of length two, both
 		; must share that disjunct (thus giving the traditional
@@ -256,19 +224,6 @@
 						(if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
 					0
 					voter-list)))
-
-		; Return #t if the DJ is shared by the majority of the sections,
-		; or, if not, by the majority of any cross-sections. This avoids
-		; an issue where a merge is recommended by a cross-section, but
-		; is not recognized because an earlier check rejects it.
-		(define (accept-conseq? DJ)
-			(or (vote-to-accept? DJ)
-				(any vote-to-accept? (get-all-shapes DJ voter-list))))
-
-		; As above, but for shapes.
-		(define (accept-shape? SHP)
-			(or (vote-to-accept? SHP)
-				(any accept-conseq? (get-all-conseqs SHP voter-list))))
 
 		; ---------------------------------------------------
 		; Collect up all disjuncts into one place.
@@ -321,7 +276,7 @@
 
 		; Perform the merge a given disjunct, or not
 		(define (merge-dj DJ)
-			(define have-majority (accept-conseq? DJ))
+			(define have-majority (vote-to-accept? DJ))
 			(for-each
 				(lambda (WRD) (do-merge WRD DJ have-majority))
 				WLIST))
@@ -413,20 +368,13 @@
 					(sect-done? (LLOBJ 'get-section XSECT))))
 				WLIST))
 
-		; Perform the merge a given shape, or not
-		(define (merge-one-shape SHP)
-			(define have-majority (accept-shape? SHP))
-			(for-each
-				(lambda (WRD) (do-merge WRD SHP have-majority))
-				WLIST))
-
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
 
 			; Perform the merge
 			(define shape (car SHL))
 			(when (not (shape-done? shape))
-				(merge-one-shape shape)
+				(merge-dj shape)
 				(rebalance-dj shape)
 				(set-shape-done! shape))
 

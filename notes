@@ -8586,7 +8586,7 @@ so only two is in common
 (define all-djs (map (lambda (PR) (star-obj 'right-element  PR)) all-stars))
 (define common-djs (keep-duplicate-atoms all-djs))
 ; As early as   ... As soon as  -- both shapes
-(length common-djs) ; XXX wtf? there should be only one ?
+(length common-djs) ; 2
 
 (star-obj 'get-pair (Word "As") (list-ref common-djs 0))  ; OK - 8
 (star-obj 'get-pair (Word "as") (list-ref common-djs 0))  ; OK - 19
@@ -8671,6 +8671,98 @@ So ... for some sect, there is some xes that is mergable, and another
 xes that is not mergable.
 
 (merge-dj DJ) -- accept-section?
+
+(define wclass (WordClass "foo"))
+(define in-grp (list (Word "As") (Word "as")))
+(define merge-majority (make-merge-majority star-obj 0.5 4 #t))
+(merge-majority wclass in-grp)
+(length (star-obj 'right-stars (WordClass "foo")))  ; 0
+
+WTF... still not fixed!?
+
+(define all-stars (append
+	(star-obj 'right-stars (Word "As"))
+	(star-obj 'right-stars (Word "as"))))
+
+(define all-djs (map (lambda (PR) (star-obj 'right-element  PR)) all-stars))
+(define common-djs (keep-duplicate-atoms all-djs))
+(length common-djs) ; 2
+
+(accept-shape? (list-ref common-djs 0)) ; #t
+(accept-shape? (list-ref common-djs 1)) ; #t
+
+(define (merge-dj DJ)
+   (define have-majority (accept-conseq? DJ))
+	(if have-majority (format #t "Yes merge ~A\n" (prt-dj DJ))))
+
+(define (rebalance-dj DJ) #f)
+
+(define (merge-one-shape SHP)
+   (define have-majority (accept-shape? SHP))
+	(if have-majority (format #t "Yes merge shape ~A\n" (prt-dj SHP))))
+
+(define (shape-done? SHP)
+(define prt #f)
+(when (any (lambda (S) (equal? S SHP)) common-djs)
+(set! prt #t)
+(format #t "duude check on ~A\n" (prt-dj SHP)))
+         (any (lambda (WRD)
+            (define XSECT (LLOBJ 'get-pair WRD SHP))
+            (if (nil? XSECT) #f
+(begin
+(when prt
+	(format #t "duude sect=~A\n" (prt-element (LLOBJ 'get-section XSECT)))
+)
+               (sect-done? (LLOBJ 'get-section XSECT))))
+)
+            WLIST))
+
+
+(define (shape-done? SHP)
+(if (accept-shape? SHP)
+(format #t "duude accept ~A\n" (prt-dj SHP)))
+         (any (lambda (WRD)
+            (define XSECT (LLOBJ 'get-pair WRD SHP))
+            (if (nil? XSECT) #f
+               (sect-done? (LLOBJ 'get-section XSECT))))
+            WLIST))
+
+(define alt0
+(ShapeLink
+  (WordNode "early")
+  (Connector (WordNode "as") (ConnectorDir "-"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+"))))
+
+(define alt1
+(ShapeLink
+  (WordNode "early")
+  (Connector (WordNode "As") (ConnectorDir "-"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+"))))
+
+(accept-shape? alt0) #f ... why?
+
+
+(LLOBJ 'get-pair (Word "as") alt0)  ; 19
+(LLOBJ 'get-pair (Word "As") alt0)  ; '()
+(LLOBJ 'get-pair (Word "as") alt1)  ; 8
+(LLOBJ 'get-pair (Word "As") alt1)  ; '()
+
+
+(get-all-conseqs alt0 voter-list)
+
+The acceptrs are mis-designed!
+XXX get-all-conseqs
+
+(define (get-x WRD)
+	(define XROS (LLOBJ 'get-pair WRD SHP))
+	(if (nil? XROS) #f
+		(let* ((SECT (LLOBJ 'get-section XROS))
+			    (all-cros (LLOBJ 'get-cross-sections SECT)))
+
+
+(define XROS (LLOBJ 'get-pair (Word "as") alt0))
+
+
 
 
 ====================================================
