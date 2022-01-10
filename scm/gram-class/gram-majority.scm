@@ -370,24 +370,25 @@
 			; Maybe it's been done already?
 			(filter (lambda (SH) (not (shape-done? SH))) (alt-shp #f)))
 
-		(define (accept-shape? SHP)
-			(or (vote-to-accept? SHP)
-				(any vote-to-accept? (get-alt-shapes SHP))))
+		(define (mergable-shape? SHP)
+			(if (vote-to-accept? SHP) SHP
+				(find vote-to-accept? (get-alt-shapes SHP))))
 
 		(define (merge-shape SHP)
-			(define have-majority (accept-shape? SHP))
+			(define alt-shp (mergable-shape? SHP))
+			(define have-majority (not (nil? alt-shp)))
+			(define mrg-shp (if (nil? alt-shp) SHP alt-shp))
 			(for-each
-				(lambda (WRD) (do-merge WRD SHP have-majority))
-				WLIST))
+				(lambda (WRD) (do-merge WRD mrg-shp have-majority))
+				WLIST)
+			(rebalance-dj mrg-shp))
 
 		; Tail-recursive merge of a list of shapes.
 		(define (merge-shapes SHL)
 
 			; Perform the merge
 			(define shape (car SHL))
-			(when (not (shape-done? shape))
-				(merge-shape shape)
-				(rebalance-dj shape))
+			(if (not (shape-done? shape)) (merge-shape shape))
 
 			(define rest (cdr SHL))
 			(if (not (nil? rest)) (merge-shapes rest)))
