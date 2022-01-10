@@ -353,19 +353,31 @@
 		; scrubbing the left-over list to remove the ones that have been
 		; handled already.
 
-		(define sect-done? (make-once-predicate))
-		(define (shape-done? SHP)
-			(any (lambda (WRD)
-				(define XSECT (LLOBJ 'get-pair WRD SHP))
-				(if (nil? XSECT) #f
-					(sect-done? (LLOBJ 'get-section XSECT))))
-				WLIST))
+		(define shape-done? (make-once-predicate))
 
-		(define (set-shape-done! SHP)
-			(for-each (lambda (WRD)
-				(define XSECT (LLOBJ 'get-pair WRD SHP))
-				(if (not (nil? XSECT))
-					(sect-done? (LLOBJ 'get-section XSECT))))
+		(define (get-alt-shapes SHP)
+			(define alt-shp (make-atom-set))
+			(for-each
+				(lambda (WRD)
+					(define XROS (LLOBJ 'get-pair WRD SHP))
+					(if (not (nil? XROS))
+						(let* ((SECT (LLOBJ 'get-section XROS))
+								(ALL-X (LLOBJ 'get-cross-sections SECT)))
+							(for-each (lambda (CRS)
+								(alt-shp (LLOBJ 'right-element CRS))) ALL-X))))
+				WLIST)
+
+			; Maybe it's been done already?
+			(filter (lambda (SH) (not (shape-done? SH))) (alt-shp #f)))
+
+		(define (accept-shape? SHP)
+			(or (vote-to-accept? SHP)
+				(any vote-to-accept? (get-alt-shapes SHP))))
+
+		(define (merge-shape SHP)
+			(define have-majority (accept-shape? SHP))
+			(for-each
+				(lambda (WRD) (do-merge WRD SHP have-majority))
 				WLIST))
 
 		; Tail-recursive merge of a list of shapes.
@@ -374,9 +386,8 @@
 			; Perform the merge
 			(define shape (car SHL))
 			(when (not (shape-done? shape))
-				(merge-dj shape)
-				(rebalance-dj shape)
-				(set-shape-done! shape))
+				(merge-shape shape)
+				(rebalance-dj shape))
 
 			(define rest (cdr SHL))
 			(if (not (nil? rest)) (merge-shapes rest)))
