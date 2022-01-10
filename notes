@@ -8834,6 +8834,80 @@ link-class.scm  -- attic; old unimplemented idea.
 Next: unbalanced after two. How?
 r10-singles.rdb
 
+In-group size=2: `,` `;`
+------ merge-majority: Merge 40028 sections in 36 secs
+------ merge-majority: Remaining 108083 cross in 159 secs
+------ merge-majority: Cleanup `, ;` in 154 secs
+------ Merged into `, ;` in 401 secs
+------ Recomputed MMT marginals in 1816 secs
+
+Error: left and right total pairs not equal! 2758433.0 2723864.0
+Error: left and right total counts not equal! 23114818.0 22942644.0
+
+left tot is (sup-obj 'total-count-left)
+It is sum_x N(x,*)
+
+(define asc (add-support-compute star-obj))
+(asc 'total-count-left) ; 23114818.0 -- no change
+
+N(x,*) is (asc 'right-count x)
+
+(define sup (add-support-api star-obj))
+(define sumo 0)
+(for-each (lambda (WRD)
+	(define rc (sup 'right-count WRD))
+	(define rn (asc 'right-count WRD))
+	(define erc (inexact->exact rc))
+	(define ern (inexact->exact rn))
+	(set! sumo (+ sumo erc))
+	(when (not (equal? erc ern))
+		(format #t "mismatch at ~A pre=~D new=~D\n"
+			(cog-name WRD) erc ern)
+		(foobar)))
+	(star-obj 'left-basis))
+
+ sumo
+$4 = 22942644
+
+wtf...
+
+      (define (sum-right-count ITEM)
+         (sum-count (star-obj 'right-stars ITEM)))
+===================
+
+total-coutn left documented as sum_x N(x,*)
+where N(x,*) is (asc 'right-count x)
+and
+
+      (define (compute-total-count-from-left)
+         (fold
+            ;;; (lambda (item sum) (+ sum (sum-left-count item)))
+            (lambda (item sum) (+ sum (api-obj 'left-count item)))
+            0
+            (star-obj 'right-basis)))
+
+so it is implemented opposite of documentation
+
+(define sumo 0)
+(define fail 0)
+(for-each (lambda (DJ)
+	(define rc (sup 'left-count DJ))
+	(define rn (asc 'left-count DJ))
+	(define erc (inexact->exact rc))
+	(define ern (inexact->exact rn))
+	(set! sumo (+ sumo erc))
+	(when (and (not (equal? erc ern)) (not (equal? 0 ern)))
+		(format #t "not zero at ~A pre=~D new=~D\n"
+			(prt-dj DJ) erc ern)
+		(set! fail (+ fail 1))))
+	(star-obj 'right-basis))
+
+insta-fail:
+mismatch at <What’s,  ###LEFT-WALL###- “- she+ ?+ $+> pre=2 new=0
+
+So these are all ... zero and should have been deleted!
+
+
 
 ====================================================
 ====================================================

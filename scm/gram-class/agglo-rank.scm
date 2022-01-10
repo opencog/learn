@@ -567,6 +567,26 @@
 		(wrd-set #f))
 )
 
+(define (remove-all-empties LLOBJ WRD-LIST)
+"
+  remove-all-empties LLOBJ WRD-LIST -- Cleanup after merging.
+
+  Remove all Sections and CrossSections with a zero count.  Remove
+  all mariginals with a zero count.
+"
+	(define MRG-CON #t)
+	(define c (make-elapsed-secs))
+	(for-each
+		(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
+		WRD-LIST)
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+
+	(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
+		(cog-name CLASS) (c))
+)
+
 (define (recompute-mmt-final LLOBJ)
 "
   recompute-mmt-final LLOBJ -- recompute grand totals for the MM^T case
@@ -776,6 +796,7 @@
 		; duals and stars are wrong, which ruins the support calculations.
 		(LLOBJ 'clobber)
 		(recompute-mmt LLOBJ (cons wclass in-grp))
+		(remove-all-empties LLOBJ (cons wclass in-grp))
 		(recompute-mmt-final LLOBJ)
 
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))

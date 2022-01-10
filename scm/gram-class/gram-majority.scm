@@ -421,23 +421,7 @@
 		(format #t "------ merge-majority: Remaining ~A cross in ~A secs\n"
 			(length left-overs) (d))
 
-		; ---------------------------------------------------
-		; Cleanup after merging.
-		; The LLOBJ is assumed to be just a stars object, and so the
-		; intent of this clobber is to force it to recompute it's left
-		; and right basis.
-		(define c (make-elapsed-secs))
-		(LLOBJ 'clobber)
-		(for-each
-			(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
-			WLIST)
-		(remove-empty-sections LLOBJ CLASS MRG-CON)
-
-		; Clobber the left and right caches; the cog-delete! changed things.
-		(LLOBJ 'clobber)
-
-		(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
-			(cog-name CLASS) (c))
+		*unspecified*
 	)
 
 	; Return the above function
@@ -445,4 +429,13 @@
 )
 
 ; ---------------------------------------------------------------
-; Example usage  (none)
+; Example usage:
+; Merge two words into one class:
+;
+;    (define wclass (WordClass "foo"))
+;    (define in-grp (list (Word "As") (Word "as")))
+;    (define merge-majority (make-merge-majority star-obj 0.5 4 #t))
+;    (merge-majority wclass in-grp)
+;    (length (star-obj 'right-stars (WordClass "foo")))
+;
+; where star-obj includes shapes.
