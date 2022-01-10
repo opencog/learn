@@ -20,3 +20,5 @@ ADD_GUILE_TEST(ConnectorBalance        connector-balance.scm)
 ADD_GUILE_TEST(ConnectorBalanceBoth    connector-balance-both.scm)
 ADD_GUILE_TEST(BalanceBidonor          connector-balance-bidonor.scm)
 ADD_GUILE_TEST(BalanceTridonor         connector-balance-tridonor.scm)
+
+ADD_GUILE_TEST(ShapeMerge              shape-merge.scm)
