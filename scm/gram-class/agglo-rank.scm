@@ -554,7 +554,12 @@
 	(define psu (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 
+	(define dj-orphan (make-atom-set))
+
 	; This for-each loop accounts for 98% of the CPU time in typical cases.
+	; We recompute the marginals for this DJ. If the marginal is zero,
+	; then we can delete the DJ and everything it's a part of. But we
+	; defer deletion until later, after the word marginals are computed.
 	(for-each
 		(lambda (DJ)
 			(define marg (psu 'set-left-marginals DJ))
@@ -563,13 +568,14 @@
 				(if cnt (store-atom marg)
 					(begin
 						(cog-delete! marg)
-						(cog-delete-recursive! DJ)))
+						(dj-orphan DJ)))
 				(when (not cnt)
 					; If we are here, its a Shape. It's never stored.
 					(cog-extract! marg)
-					(cog-extract-recursive! DJ))))
+					(dj-orphan DJ))))
 		(dj-set #f))
 
+	; Same as above, but for the rows.
 	(for-each
 		(lambda (WRD)
 			(define marg (psu 'set-right-marginals WRD))
@@ -580,14 +586,21 @@
 					(cog-delete-recursive! WRD))))
 		(wrd-set #f))
 
+	; Now it's finally safe to delete the orphaned DJ's.
+	; The delete-recursive of words above may have whacked
+	; the DJ already.
+	(for-each (lambda (DJ)
+			(if (not (nil? DJ)) (cog-delete-recursive! DJ)))
+		(dj-orphan #f))
+
+	; All the deletes will have messed up the bases. So start
+	; fresh. (The basis is accessed in set-mmt-marginals.)
+	(LLOBJ 'clobber)
 	(for-each
 		(lambda (WRD)
 			(if (not (nil? WRD))
 				(store-atom (atc 'set-mmt-marginals WRD))))
 		(wrd-set #f))
-
-	; The above delete's will have changed the basis.
-	(LLOBJ 'clobber)
 )
 
 (define (recompute-mmt-final LLOBJ)
