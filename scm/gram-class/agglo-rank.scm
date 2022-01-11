@@ -584,7 +584,7 @@
 	(LLOBJ 'clobber)
 
 	(format #t "------ merge-majority: Cleanup `~A` in ~A secs\n"
-		(cog-name CLASS) (c))
+		(cog-name (car WRD-LIST)) (c))
 )
 
 (define (recompute-mmt-final LLOBJ)
