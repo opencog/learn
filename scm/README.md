@@ -4,6 +4,8 @@ Language Processing Code
 A short description of each file. Listed roughly in pipeline order.
 As a general rule, later files not only depend on earlier files,
 but the also require, as input, data that was produced by earlier files.
+Some of these files contain extensive documentation. Those are linked
+below.
 
 * __learn.scm__           This is the main guile module.
 * __common.scm__          Common code
@@ -28,25 +30,44 @@ In the `mst-parse` subdirectory:
                           (left index) are words, columns (right index)
                           are pseudo-csets.
 
-
 In the `gram-class` subdirectory:
 
-* __shape-vec.scm__       Provides a matrix API to cset-shapes. These
-                          are csets, where the wild-card is one of the
-                          connectors (rather than the root-word of the
-                          disjunct).
-* __gram-classification.scm__  Text file explanation of grammatical similarity.
-* __shape-project.scm__   Explanation of merging shapes.
+* [__gram-classification.scm__](gram-class/gram-classification.scm) Provides
+                          a general overview of the idea of clustering,
+                          classification. This includes a discussion of
+                          "grammatical similarity" and other relevant topics.
+
+* [__shape-vec.scm__](gram-class/shape-vec.scm) Provides a matrix API
+                          to cset-shapes. These are csets (connector
+                          sequences), where the wild-card is one of the
+                          connectors, rather than being the root-word
+                          of the disjunct. These "shapes" allow vectors
+                          to have specific connectors in their basis.
+                          Shapes are a central concept used to simplify
+                          the "flattening" (projection) of sheaves down
+                          the base space.
+
+* [__shape-project.scm__](gram-class/shape-project.scm) Provides a
+                          detailed explanation of how vectors that have
+                          shapes in them are merged. That is, how sheaves
+                          are projected down to thier base space.
+
 * __gram-class-api.scm__  Public API classes for merging words into
                           grammatical classes.
 * __agglo-rank.scm__      Agglomerative clustering. Loops over all words,
                           creating clusters.
 * __in-group.scm__        Selection of a group of words to cluster. The
                           group is selected to have many traits in common.
+* __gram-majority.scm__   Implementation of the actuall merge of sections
+                          into a cluster.
 
 In the `lg-export` subdirectory:
 
 * __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
+
+In the `concepts` subdirectory:
+
+* Code for the automatic discovery of concepts and thier attributes.
 
 Data Structures
 ---------------
@@ -88,22 +109,3 @@ different github repo, in the
 directory, and the various PDF's in the
 [sheaf/docs](https://github.com/opencog/atomspace/tree/master/opencog/sheaf/docs)
 directory.
-
-
-Documentation
--------------
-The above files contain documentation embeded within them. Particularly
-notable:
-
-* [gram-classification.scm](gram-class/gram-classification.scm) Explains
-        the process of clustering/classification in detail.
-
-* [shape-vec.scm](gram-class/shape-vec.scm) Explains the concept of
-        "shapes". These are vectors where one of the connectors has
-        been made the base of the vector.
-
-TODO
-----
-Review and probably delete:
-
-* singletons.scm - stale rancid unfinished code.

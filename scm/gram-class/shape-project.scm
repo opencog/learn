@@ -9,7 +9,7 @@
 ; OVERVIEW
 ; --------
 ; The creation of clusters is done via a "linear" projective merge of
-; vectors that encode Sections. See top of `gram-projective.scm` for
+; vectors that encode Sections. See top of `gram-classification.scm` for
 ; an overview of the general idea of linear projective merging.
 ;
 ; Recall that the "germ" of a Section is the first element of the
@@ -20,7 +20,19 @@
 ; (cluster). A new vector is created, having that cluster as the germ,
 ; and including parts of the vectors of the two donor germs. The
 ; mechanical process of creating the new vector is implemented in
-; `gram-projective.scm`.
+; `gram-majority.scm`. An older variant is in `attic/gram-pairwise.scm`.
+;
+; In more abstract, formal mathematical terms, projective merging is
+; the projection of a sheaf to a base-space; or rather, the projection
+; of a local collection of sheaf sections down to a single base-point.
+; Informally, it is a kind of "flattening" of the covering space to a
+; linearized vector space at the base point. Rather than attempting to
+; develop a formal definition of this flattening, the rest of the
+; documentation tries to stay informal and hand-wavey. However, if
+; you know what a fiber bundle is, or if you know what a covering space
+; is, try to keep that in mind: the projection described here is a kind
+; of oddball variation on that. It would be an excellent exercise to
+; write down the formalities for this, some rainy day.
 ;
 ; A problem arises when Sections contain Connectors in which the
 ; donating germs appear. How should this be handled? There is certainly
