@@ -8888,17 +8888,25 @@ and
 
 so it is implemented opposite of documentation
 
+(define sup (add-support-api star-obj))
+(define asc (add-support-compute star-obj))
 (define sumo 0)
+(define sumn 0)
 (define fail 0)
 (for-each (lambda (DJ)
 	(define rc (sup 'left-count DJ))
-	(define rn (asc 'left-count DJ))
 	(define erc (inexact->exact rc))
+	(define rn (asc 'left-count DJ))
 	(define ern (inexact->exact rn))
 	(set! sumo (+ sumo erc))
-	(when (and (not (equal? erc ern)) (not (equal? 0 ern)))
+	(set! sumn (+ sumn ern))
+	(when ; (and (not (equal? erc ern)) (not (equal? 0 ern)))
+		; (equal? 0 erc)
+		(and (not (equal? erc ern)) (not (equal? 'ShapeLink (cog-type DJ))))
 		(format #t "not zero at ~A pre=~D new=~D\n"
 			(prt-dj DJ) erc ern)
+	;	(format #t "zero at ~A pre=~D \n"
+	;		(prt-dj DJ) erc)
 		(set! fail (+ fail 1))))
 	(star-obj 'right-basis))
 
@@ -8913,6 +8921,10 @@ remove-empty-sections
 (define sup (add-support-api LLOBJ))
 (define (remove-all-empties LLOBJ WRD-LIST)
 
+Crapp. Still not working right.
+
+Even after one:
+23114818 so first merge is already bad.
 
 
 ====================================================

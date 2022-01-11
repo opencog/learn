@@ -327,13 +327,13 @@
 		(when RMX
 			(for-each (lambda (xst)
 				(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
-					(let ((shp (gdr xst)))
+					(let ((shp (LLOBJ 'right-element xst)))
 						(cog-extract! xst)
 						(cog-extract! shp)  ;; Safe, its not recursive.
 						(set! nx (+ 1 nx)))))
 				(LLOBJ 'get-cross-sections SEC)))
 		(when (is-zero? (LLOBJ 'get-count SEC))
-			(let ((csq (gdr SEC)))
+			(let ((csq (LLOBJ 'right-element SEC)))
 				(cog-delete! SEC)
 				(cog-delete! csq)  ;; Safe; because its not recursive.
 				(set! ns (+ 1 ns)))))
@@ -343,7 +343,7 @@
 		(when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
 			(del-sect sct))
 		(when (and (cog-atom? XST) (is-zero? (LLOBJ 'get-count XST)))
-			(let ((shp (gdr XST)))
+			(let ((shp (LLOBJ 'right-element XST)))
 				(cog-extract! XST)
 				(cog-extract! shp)  ;; Safe; because its not recursive.
 				(set! nx (+ 1 nx)))))
