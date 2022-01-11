@@ -550,21 +550,44 @@
 		(lambda (WRD) (for-each expand-margins (LLOBJ 'right-stars WRD)))
 		WRD-LIST)
 
+	(define sup (add-support-api LLOBJ))
 	(define psu (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 
 	; This for-each loop accounts for 98% of the CPU time in typical cases.
 	(for-each
-		(lambda (DJ) (store-atom (psu 'set-left-marginals DJ)))
+		(lambda (DJ)
+			(define marg (psu 'set-left-marginals DJ))
+			(define cnt (< 0 (sup 'left-count DJ)))
+			(if (equal? 'ConnectorSeq (cog-type DJ))
+				(if cnt (store-atom marg)
+					(begin
+						(cog-delete! marg)
+						(cog-delete-recursive! DJ)))
+				(when (not cnt)
+					; If we are here, its a Shape. It's never stored.
+					(cog-extract! marg)
+					(cog-extract-recursive! DJ))))
 		(dj-set #f))
 
 	(for-each
-		(lambda (WRD) (store-atom (psu 'set-right-marginals WRD)))
+		(lambda (WRD)
+			(define marg (psu 'set-right-marginals WRD))
+			(define cnt (< 0 (sup 'right-count WRD)))
+			(if cnt (store-atom marg)
+				(begin
+					(cog-delete! marg)
+					(cog-delete-recursive! WRD))))
 		(wrd-set #f))
 
 	(for-each
-		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
+		(lambda (WRD)
+			(if (not (nil? WRD))
+				(store-atom (atc 'set-mmt-marginals WRD))))
 		(wrd-set #f))
+
+	; The above delete's will have changed the basis.
+	(LLOBJ 'clobber)
 )
 
 (define (recompute-mmt-final LLOBJ)

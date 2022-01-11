@@ -8906,6 +8906,12 @@ insta-fail:
 mismatch at <What’s,  ###LEFT-WALL###- “- she+ ?+ $+> pre=2 new=0
 
 So these are all ... zero and should have been deleted!
+fail ; 29323
+
+remove-empty-sections
+
+(define sup (add-support-api LLOBJ))
+(define (remove-all-empties LLOBJ WRD-LIST)
 
 
 
@@ -8986,6 +8992,11 @@ FIXED:
   because 'mmt-marginals computes only word-pair entropies.
   (NOT A BUG)
 * Fix count transfer in add-singleton-classes (OBSOLETE)
+* Cleanup marginals after clustering ... marginals might have zero
+  counts for words, or words might not be in the basis?
+  which means the connector seqs need to be cleaned up too.
+  (as they are now unused/empty)
+  they were screwing up counts! DONE
 
 
 TODO/BUGS:
@@ -8993,14 +9004,11 @@ TODO/BUGS:
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
   printing.
+* Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
 * Set up direct-sum/shape clustering run scripts. (mostly done ?)
-* Cleanup marginals after clustering ... marginals might have zero
-  counts for words, or words might not be in the basis?
-  which means the connector seqs need to be cleaned up too.
-  (as they are now unused/empty)
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
