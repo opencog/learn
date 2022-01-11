@@ -360,6 +360,21 @@
 	; (format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
 )
 
+(define-public (remove-all-empty-sections LLOBJ WRD-LIST)
+"
+  remove-all-empty-sections LLOBJ WRD-LIST -- Cleanup after merging.
+
+  Remove all Sections and CrossSections with a zero count.
+"
+	(define MRG-CON #t)
+	(for-each
+		(lambda (WRD) (remove-empty-sections LLOBJ WRD MRG-CON))
+		WRD-LIST)
+
+	; Clobber the left and right caches; the cog-delete! changed things.
+	(LLOBJ 'clobber)
+)
+
 ; ---------------------------------------------------------------------
 ; Example usage (none)
 ; ---------------------------------------------------------------------

@@ -59,6 +59,7 @@
 	(define cls (LLOBJ 'make-cluster WA WB))
 	(define wlist (if (equal? WA cls) (list WB) (list WA WB)))
 	(mrg cls wlist)
+	(remove-all-empty-sections LLOBJ (cons cls wlist))
 )
 
 ; ---------------------------------------------------------------
