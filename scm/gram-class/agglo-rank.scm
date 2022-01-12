@@ -564,18 +564,7 @@
 		(lambda (DJ)
 			(define marg (psu 'set-left-marginals DJ))
 			(define cnt (< 0 (sup 'left-count DJ)))
-			(if (equal? 'ConnectorSeq (cog-type DJ))
-				(if cnt (store-atom marg)
-					(begin
-						(cog-delete! marg)
-						(dj-orphan DJ)))
-				(when (not cnt)
-					; If we are here, its a Shape. It's never stored.
-					(for-each cog-extract! (cog-incoming-by-type marg 'CrossSection))
-					; marg is the same as DJ, actually
-					; (because that's where we store the marginals)
-					; (cog-extract! marg)
-					(dj-orphan DJ))))
+			(if cnt (store-atom marg) (dj-orphan DJ)))
 		(dj-set #f))
 
 	; Same as above, but for the rows.
