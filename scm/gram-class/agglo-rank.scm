@@ -590,7 +590,7 @@
 	; The delete-recursive of words above may have whacked
 	; the DJ already.
 	(for-each (lambda (DJ)
-			(if (not (nil? DJ)) (cog-delete-recursive! DJ)))
+			(if (cog-atom? DJ) (cog-delete-recursive! DJ)))
 		(dj-orphan #f))
 
 	; All the deletes will have messed up the bases. So start
@@ -598,7 +598,7 @@
 	(LLOBJ 'clobber)
 	(for-each
 		(lambda (WRD)
-			(if (not (nil? WRD))
+			(if (cog-atom? WRD)
 				(store-atom (atc 'set-mmt-marginals WRD))))
 		(wrd-set #f))
 )

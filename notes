@@ -8902,8 +8902,9 @@ so it is implemented opposite of documentation
 	(set! sumn (+ sumn ern))
 	(when ; (and (not (equal? erc ern)) (not (equal? 0 ern)))
 		; (equal? 0 erc)
-		(and (not (equal? erc ern)) (not (equal? 'ShapeLink (cog-type DJ))))
-		(format #t "not zero at ~A pre=~D new=~D\n"
+		; (and (not (equal? erc ern)) (not (equal? 'ShapeLink (cog-type DJ))))
+		(not (equal? erc ern))
+		(format #t "not equal at ~A pre=~D new=~D\n"
 			(prt-dj DJ) erc ern)
 	;	(format #t "zero at ~A pre=~D \n"
 	;		(prt-dj DJ) erc)
@@ -8926,6 +8927,62 @@ Crapp. Still not working right.
 Even after one:
 23114818 so first merge is already bad.
 
+apparently, its only shapes ...
+<work,  _- $+>
+
+[something, <work,  _- $+>]
+(work, _- something+)
+[_, <work, $- something+>]
+
+(define sup (add-support-api star-obj))
+(define dc 0)
+(for-each (lambda (DJ)
+	(define rc (sup 'left-count DJ))
+	(define erc (inexact->exact rc))
+	(when (equal? 0 erc)
+		(set! dc (+ dc 1)) (cog-delete-recursive! DJ)))
+	(star-obj 'right-basis))
+
+(define sup (add-support-api star-obj))
+(define asc (add-support-compute star-obj))
+(define sumo 0)
+(define sumn 0)
+(define fail 0)
+(define newzero 0)
+(define nonz 0)
+(for-each (lambda (DJ)
+	(define rc (sup 'left-count DJ))
+	(define erc (inexact->exact rc))
+	(define rn (asc 'left-count DJ))
+	(define ern (inexact->exact rn))
+	(set! sumo (+ sumo erc))
+	(set! sumn (+ sumn ern))
+	(when (equal? 0 ern)
+		(set! newzero (+ 1 newzero))
+		(cog-delete-recursive! DJ))
+	(when (not (equal? erc ern))
+		(when (not (equal? 0 ern))
+			(set! nonz (+ 1 nonz))
+			(store-atom (asc 'set-left-marginals DJ))
+			(let ((newc (inexact->exact (sup 'left-count DJ))))
+				(when (not (equal? newc ern))
+					(format #t "meta fail ~A ~A ~A for ~A\n"
+						erc ern newc (prt-dj DJ))
+					(foobar)))
+		)
+		(set! fail (+ fail 1)))
+	)
+	(star-obj 'right-basis))
+
+no failures...
+
+So .. first pass left RAM in a good state, but left DB in a bad state...
+
+Try again:
+do merge,
+check balances
+load-all-from-storage,
+check-balances.
 
 ====================================================
 ====================================================
