@@ -571,7 +571,10 @@
 						(dj-orphan DJ)))
 				(when (not cnt)
 					; If we are here, its a Shape. It's never stored.
-					(cog-extract! marg)
+					(for-each cog-extract! (cog-incoming-by-type marg 'CrossSection))
+					; marg is the same as DJ, actually
+					; (because that's where we store the marginals)
+					; (cog-extract! marg)
 					(dj-orphan DJ))))
 		(dj-set #f))
 
@@ -810,6 +813,10 @@
 
 		; Recompute marginals after merge. Clobber first; else the
 		; duals and stars are wrong, which ruins the support calculations.
+		; We want to redo marginals before deleting empty sections, as
+		; otherwise the empties get lost from the basis. That's because
+		; the marginals code cleans up empty marginals. The flow of
+		; control here is definitely hacky, and needs to be fixed.
 		(LLOBJ 'clobber)
 		(recompute-mmt LLOBJ (cons wclass in-grp))
 		(remove-all-empty-sections LLOBJ (cons wclass in-grp))
