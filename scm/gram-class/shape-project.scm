@@ -345,7 +345,8 @@
 		(when (and (cog-atom? XST) (is-zero? (LLOBJ 'get-count XST)))
 			(let ((shp (LLOBJ 'right-element XST)))
 				(cog-extract! XST)
-				(cog-extract! shp)  ;; Safe; because its not recursive.
+				; Shapes store marginals, so if they are deleteable, delete them.
+				(cog-delete! shp)  ;; Safe; because its not recursive.
 				(set! nx (+ 1 nx)))))
 
 	; Cleanup after merging.

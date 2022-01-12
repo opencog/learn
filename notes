@@ -8909,6 +8909,7 @@ so it is implemented opposite of documentation
 	;	(format #t "zero at ~A pre=~D \n"
 	;		(prt-dj DJ) erc)
 		(set! fail (+ fail 1))))
+(foobar)
 	(star-obj 'right-basis))
 
 insta-fail:
@@ -8985,6 +8986,112 @@ do merge,
 check balances
 load-all-from-storage,
 check-balances.
+
+(define shapes (cog-get-atoms 'ShapeLink))
+(define shp (car shapes))
+(define miss 0)
+(define bad #f)
+(for-each (lambda (shp)
+	(when (not (equal? 1 (length (cog-keys shp))))
+		(format #t "oops ~A has ~A\n" (prt-dj shp) (cog-keys shp))
+		(set! bad shp)
+		(foobar)
+		(set! miss (+ 1 miss))
+	))
+	shapes)
+miss ;5850
+
+(ShapeLink . 844157)
+
+(load-atoms-of-type 'ShapeLink)
+
+((CrossSection (ctv 1 0 2)
+  (WordNode "###LEFT-WALL###")
+
+(define badm
+  (ShapeLink
+    (WordNode "-")
+    (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+    (Connector (WordNode "me") (ConnectorDir "-"))
+    (Connector (WordNode "”") (ConnectorDir "+"))
+    (Connector (WordNode "“") (ConnectorDir "+"))))
+
+fresh:
+(ShapeLink . 838580)
+none are empty
+
+(define chk
+  (cog-link 'ShapeLink
+    (WordNode "-")
+    (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+    (Connector (WordNode "me") (ConnectorDir "-"))
+    (Connector (WordNode "”") (ConnectorDir "+"))
+    (Connector (WordNode "“") (ConnectorDir "+"))))
+
+The keys got wiped out. How?
+
+(define (have-key? atm)
+	(define nk (PredicateNode "*-Norm Key cover-section"))
+	(define ov (cog-value atm nk))
+	(cog-set-value! atm nk #f)
+	(fetch-atom atm)
+	(when (not (equal? 1 (length (cog-keys atm))))
+		(format #t "no keys in storage!\n")
+		(foobar))
+
+	(define nv (cog-value atm nk))
+	(when (not (equal? nv ov))
+		(format #t "value changed: ~A vs ~A\n" ov nv)
+		(foobar)))
+
+OK, cross-section get zeroed ...
+(cog-set-value! atm nk ov)
+
+(cog-value sbad  (PredicateNode "*-Norm Key cover-section"))
+(cog-set-value! sbad (PredicateNode "*-Norm Key cover-section") (FloatValue 0 0 0 0))
+
+(define b (make-sbad))
+(define c (CrossSection (WordNode "###LEFT-WALL###") b))
+(define s (star-obj 'get-section c))
+
+no keys in storage! msg=after orpha erasure
+
+(have-keys? c)
+
+(star-obj 'clobber)
+(define WRD-LIST
+(cons (WordClassNode "+ — “ ” _")
+(list (WordNode "+") (WordNode "—") (WordNode "“") (WordNode "”") (WordNode "_"))))
+
+(remove-all-empty-sections star-obj WRD-LIST)
+
+   (define (del-sect SEC)
+      ; Cleanup cross sections, if they are provided.
+         (for-each (lambda (xst)
+(format #t "duuude looper ~A\n" (prt-element xst))
+            (when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+(format #t "duuude delete ~A\n" (prt-element xst))
+               (let ((shp (LLOBJ 'right-element xst)))
+                  (cog-extract! xst)
+(format #t "duuude extract ~A\n" (prt-dj shp))
+                  (cog-extract! shp)  ;; Safe, its not recursive.
+					)))
+            (LLOBJ 'get-cross-sections SEC))
+      (when (is-zero? (LLOBJ 'get-count SEC))
+(format #t "duuude delete sect ~A\n" (prt-element SEC))
+         (let ((csq (LLOBJ 'right-element SEC)))
+            (cog-delete! SEC)
+            (cog-delete! csq)  ;; Safe; because its not recursive.
+            )))
+
+
+(for-each (lambda (ITEM)
+	(when (is-zero? (cog-count ITEM))
+		(format #t "fail ~A\n" ITEM)
+		(foobar)))
+	(LLOBJ 'right-stars (WordNode "”")))
+
+
 
 ====================================================
 ====================================================
