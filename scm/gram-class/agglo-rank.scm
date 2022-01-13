@@ -591,7 +591,7 @@
 		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
 		wrd-list)
 
-	(list (wrd-orphan #t) (dj-orphan #t))
+	(list (wrd-orphan #f) (dj-orphan #f))
 )
 
 (define (delete-orphans LLOBJ left-marg right-marg)
