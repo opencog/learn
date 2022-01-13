@@ -328,8 +328,10 @@
 			(for-each (lambda (xst)
 				(when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
 					(let ((shp (LLOBJ 'right-element xst)))
+						; Cross-sections are never stored, so extract is enough.
 						(cog-extract! xst)
-						(cog-extract! shp)  ;; Safe, its not recursive.
+						; Shapes store marginals, so if they are deleteable, delete them.
+						(cog-delete! shp)  ;; Safe, its not recursive.
 						(set! nx (+ 1 nx)))))
 				(LLOBJ 'get-cross-sections SEC)))
 		(when (is-zero? (LLOBJ 'get-count SEC))
@@ -370,7 +372,7 @@
 	; too, except we don't know what the marginals are. Alas!
 	; FIXME but how?
 
-	; (format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
+	(format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
 )
 
 (define-public (remove-all-empty-sections LLOBJ WRD-LIST)

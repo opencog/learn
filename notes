@@ -8993,9 +8993,9 @@ check-balances.
 (define bad #f)
 (for-each (lambda (shp)
 	(when (not (equal? 1 (length (cog-keys shp))))
-		(format #t "oops ~A has ~A\n" (prt-dj shp) (cog-keys shp))
+		; (format #t "oops ~A has ~A\n" (prt-dj shp) (cog-keys shp))
 		(set! bad shp)
-		(foobar)
+		(if (< 1 (cog-incoming-size shp)) (foobar))
 		(set! miss (+ 1 miss))
 	))
 	shapes)
@@ -9090,6 +9090,37 @@ no keys in storage! msg=after orpha erasure
 		(format #t "fail ~A\n" ITEM)
 		(foobar)))
 	(LLOBJ 'right-stars (WordNode "”")))
+
+(define bad
+(ShapeLink
+  (WordNode "J")
+  (Connector (WordNode "_") (ConnectorDir "-"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+"))))
+
+(define c (car (cog-incoming-set bad)))
+(define s (star-obj 'get-section c))
+
+(define s (Section
+  (WordNode "J")
+  (ConnectorSeq
+    (Connector (WordNode "_") (ConnectorDir "-"))
+    (Connector (WordNode "_") (ConnectorDir "+")))))
+
+(define bad2
+(ShapeLink
+  (WordNode "Hm")
+  (Connector (WordNode "###LEFT-WALL###") (ConnectorDir "-"))
+  (Connector (WordNode "“") (ConnectorDir "-"))
+  (Connector (WordNode ".") (ConnectorDir "+"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+"))))
+
+(define bad-two
+(ShapeLink
+  (WordNode "added")
+  (Connector (WordNode "”") (ConnectorDir "-"))
+  (Connector (WordNode "she") (ConnectorDir "-"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+"))
+  (Connector (WordNode "“") (ConnectorDir "+")))
 
 
 
