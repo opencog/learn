@@ -511,13 +511,12 @@
 
 ; ---------------------------------------------------------------
 
-(define (recompute-mmt LLOBJ WRD-LIST)
+(define (get-affected-basis LLOBJ WRD-LIST)
 "
-  recompute-mmt LLOBJ WRD-LIST - Recompute MMT for words in WRD-LIST
+  get-affected-basis LLOBJ WRD-LIST - Return two lists of basis
+  elements affected by the merge.
 
-  This recomputes the marginals for support and counts for the words
-  in the WRD-LIST, and also for the disjuncts attached to those words.
-  In particular, this recomputes the N(*,d) which is needed by MM^T.
+  The first list is the left bais, the second list is the right-basis.
 "
 	; Gather together all of the DJ's for all the words in the list.
 	; These will, in general, be heavily duplicated.
@@ -550,11 +549,24 @@
 		(lambda (WRD) (for-each expand-margins (LLOBJ 'right-stars WRD)))
 		WRD-LIST)
 
+	(list (wrd-set #f) (dj-set #f))
+)
+
+(define (recompute-mmt LLOBJ wrd-list dj-list)
+"
+  recompute-mmt LLOBJ wrd-list dj-list - Recompute MMT for for the
+  basis elements in wrd-list dj-list.
+
+  This recomputes the marginals for support and counts for the words
+  in the WRD-LIST, and also for the disjuncts attached to those words.
+  In particular, this recomputes the N(*,d) which is needed by MM^T.
+"
 	(define sup (add-support-api LLOBJ))
 	(define psu (add-support-compute LLOBJ))
 	(define atc (add-transpose-compute LLOBJ))
 
 	(define dj-orphan (make-atom-set))
+	(define wrd-orphan (make-atom-set))
 
 	; This for-each loop accounts for 98% of the CPU time in typical cases.
 	; We recompute the marginals for this DJ. If the marginal is zero,
@@ -563,36 +575,41 @@
 	(for-each
 		(lambda (DJ)
 			(define marg (psu 'set-left-marginals DJ))
-			(define cnt (< 0 (sup 'left-count DJ)))
-			(if cnt (store-atom marg) (dj-orphan DJ)))
-		(dj-set #f))
+			(if (< 0 (sup 'left-count DJ))
+				(store-atom marg) (dj-orphan marg)))
+		dj-list)
 
 	; Same as above, but for the rows.
 	(for-each
 		(lambda (WRD)
 			(define marg (psu 'set-right-marginals WRD))
-			(define cnt (< 0 (sup 'right-count WRD)))
-			(if cnt (store-atom marg)
-				(begin
-					(cog-delete! marg)
-					(cog-delete-recursive! WRD))))
-		(wrd-set #f))
+			(if (< 0 (sup 'right-count WRD))
+				(store-atom marg) (wrd-orphan marg)))
+		wrd-list)
 
-	; Now it's finally safe to delete the orphaned DJ's.
-	; The delete-recursive of words above may have whacked
-	; the DJ already.
+	(for-each
+		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
+		wrd-list)
+
+	(list (wrd-orphan #t) (dj-orphan #t))
+)
+
+(define (delete-orphans LLOBJ left-marg right-marg)
+"
+  delete-orphans left-marg right-marg -- delete marginals.
+"
+	; Get rid of word-marginals
+	(for-each (lambda (WMARG)
+		(when (cog-atom? WMARG)
+			(let ((WRD (LLOBJ 'left-element WMARG)))
+				(cog-delete! WMARG)
+				(cog-delete-recursive! WRD))))
+		left-marg)
+
+	; Get rid of disjuncts.
 	(for-each (lambda (DJ)
 			(if (cog-atom? DJ) (cog-delete-recursive! DJ)))
-		(dj-orphan #f))
-
-	; All the deletes will have messed up the bases. So start
-	; fresh. (The basis is accessed in set-mmt-marginals.)
-	(LLOBJ 'clobber)
-	(for-each
-		(lambda (WRD)
-			(if (cog-atom? WRD)
-				(store-atom (atc 'set-mmt-marginals WRD))))
-		(wrd-set #f))
+		right-marg)
 )
 
 (define (recompute-mmt-final LLOBJ)
@@ -610,6 +627,41 @@
 	(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
 	(store-atom (asc 'set-right-totals))  ;; is this needed?
 	(store-atom (atc 'set-mmt-totals))
+)
+
+(define (recompute-marginals LLOBJ WRD-LIST)
+"
+  recompute-marginals LLOBJ WRD-LIST - Recompute marginals after merge.
+
+  Recomputes all marginals for all Sections and CrossSections touched
+  by WRD-LIST. Deletes those which have zero counts left. Also
+  recomputes the MMT values, needed by the similarity calculations.
+"
+	; Clobber first; else the ; duals and stars are wrong, which ruins
+	; the support calculations.
+	(LLOBJ 'clobber)
+
+	; Get all of the words and dj's touched by WRD-LIST
+	(define affected-basis (get-affected-basis LLOBJ WRD-LIST))
+	(define wrd-list (first affected-basis))
+	(define dj-list (second affected-basis))
+
+	; Redo marginals before deleting empty sections, as otherwise
+	; the empties fail to show up in the basis.
+	(define orphans (recompute-mmt LLOBJ wrd-list dj-list))
+
+	; Now clobber all the empty sections and cross-sections.
+	(remove-all-empty-sections LLOBJ WRD-LIST)
+
+	; The orphans are the orphaned marginals, i.e. the marginals
+	; with zero counts. Get rid of them too.
+	(define left-marg (first orphans))
+	(define right-marg (second orphans))
+	(delete-orphans LLOBJ left-marg right-marg)
+
+	; Recompute the grand-totals
+	(LLOBJ 'clobber)
+	(recompute-mmt-final LLOBJ)
 )
 
 ; ---------------------------------------------------------------
@@ -800,17 +852,8 @@
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
 
-		; Recompute marginals after merge. Clobber first; else the
-		; duals and stars are wrong, which ruins the support calculations.
-		; We want to redo marginals before deleting empty sections, as
-		; otherwise the empties get lost from the basis. That's because
-		; the marginals code cleans up empty marginals. The flow of
-		; control here is definitely hacky, and needs to be fixed.
-		(LLOBJ 'clobber)
-		(recompute-mmt LLOBJ (cons wclass in-grp))
-		(remove-all-empty-sections LLOBJ (cons wclass in-grp))
-		(recompute-mmt-final LLOBJ)
-
+		; Recompute marginals after merge.
+		(recompute-marginals LLOBJ (cons wclass in-grp))
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
 		; After merging, recompute similarities for the words

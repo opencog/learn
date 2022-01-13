@@ -372,7 +372,7 @@
 	; too, except we don't know what the marginals are. Alas!
 	; FIXME but how?
 
-	(format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
+	; (format #t "Deleted ~A secs, ~A crosses for ~A" ns nx ROW)
 )
 
 (define-public (remove-all-empty-sections LLOBJ WRD-LIST)

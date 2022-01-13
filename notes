@@ -9123,6 +9123,80 @@ no keys in storage! msg=after orpha erasure
   (Connector (WordNode "“") (ConnectorDir "+")))
 
 
+(define b (make-sbad))
+(cog-incoming-set b)
+
+(define WRD-LIST
+(cons (WordClassNode "+ — “ ” _")
+(list (WordNode "+") (WordNode "—") (WordNode "“") (WordNode "”") (WordNode "_"))))
+
+(define rs (star-obj 'right-stars (WordNode "“")))
+(length rs) ; 3849
+
+(define (is-zero? cnt) (< cnt 1.0e-10))
+
+   (define (del-sect SEC)
+      ; Cleanup cross sections, if they are provided.
+         (for-each (lambda (xst)
+(format #t "duuude looper ~A\n" (prt-element xst))
+            (when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+(format #t "duuude delete ~A\n" (prt-element xst))
+               (let ((shp (LLOBJ 'right-element xst)))
+                  ;(cog-extract! xst)
+(format #t "duuude extract ~A\n" (prt-dj shp))
+                  ;(cog-extract! shp)  ;; Safe, its not recursive.
+					)))
+            (LLOBJ 'get-cross-sections SEC))
+      (when (is-zero? (LLOBJ 'get-count SEC))
+(format #t "duuude delete sect ~A\n" (prt-element SEC))
+         ;(let ((csq (LLOBJ 'right-element SEC)))
+            ;(cog-delete! SEC)
+            ;(cog-delete! csq)  ;; Safe; because its not recursive.
+         ;)
+		))
+
+   (define (del-sect SEC)
+         (for-each (lambda (xst)
+            (when (and (cog-atom? xst) (is-zero? (LLOBJ 'get-count xst)))
+               (let ((shp (LLOBJ 'right-element xst)))
+(if (equal? shp b)
+(format #t "duuude extract ~A\n" (prt-dj shp)))
+					)))
+            (LLOBJ 'get-cross-sections SEC))
+      (when (is-zero? (LLOBJ 'get-count SEC))
+(format #t "duuude delete sect ~A\n" (prt-element SEC))
+		))
+
+   (define (del-xes XST)
+      (define sct (LLOBJ 'get-section XST))
+      (when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
+         (del-sect sct))
+      (when (and (cog-atom? XST) (is-zero? (LLOBJ 'get-count XST)))
+         (let ((shp (LLOBJ 'right-element XST)))
+(if (equal? shp b)
+(format #t "FOunt it!!\n"))
+			)))
+
+(define c (car (cog-incoming-set b)))
+(define s (star-obj 'get-section c))
+
+(any (lambda (SECT) (equal? SECT c)) rs)   ; #f
+(any (lambda (SECT) (equal? SECT s)) rs)   ; #f
+
+(define xes (star-obj 'get-cross-sections s))
+
+.... apparently, the needed cross sections have been deleted earlier.
+And thus never matrialize.
+
+So the remove of marginals can't be done this way.
+
+ (EvaluationLink
+  (PredicateNode "*-Direct Sum Wild (gram-class⊕cross-section)")
+  (WordNode "“")
+  (AnyNode "right-wild-direct-sum"))
+
+
+
 
 ====================================================
 ====================================================
