@@ -295,8 +295,7 @@
 
 	; If something was transfered, save the updated counts.
 	(when (not (is-zero? moved))
-		(rebalance-count LLOBJ ACC (get-count ACC))
-		(rebalance-count LLOBJ DONOR (get-count DONOR))
+		(rebalance-merge LLOBJ ACC DONOR)
 	)
 
 	; Return how much was transferred over.
