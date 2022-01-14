@@ -352,7 +352,7 @@
 	; Cleanup after merging.
 	(for-each
 		(lambda (ITEM)
-			(if (cog-atom? ITEM)
+			(if (and (cog-atom? ITEM) (is-zero? (LLOBJ 'get-count ITEM)))
 				(cond
 					((eq? 'Section (cog-type ITEM)) (del-sect ITEM))
 					((eq? 'CrossSection (cog-type ITEM)) (del-xes ITEM))
