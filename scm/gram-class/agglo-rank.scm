@@ -532,7 +532,7 @@
 		(dj-set (LLOBJ 'right-element PAIR)))
 
 	(define (cross-margins PAIR)
-		(for-each pair-margins (LLOBJ 'get-cross-sections PAIR)))
+		(for-each pair-margins (LLOBJ 'make-cross-sections PAIR)))
 
 	; Add pair to the margin-sets, and also the matching sections
 	; and cross-sections.

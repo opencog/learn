@@ -9196,6 +9196,117 @@ So the remove of marginals can't be done this way.
   (AnyNode "right-wild-direct-sum"))
 
 
+(define sup (add-support-api star-obj))
+(define asc (add-support-compute star-obj))
+(define sumo 0)
+(define sumn 0)
+(define fail 0)
+(for-each (lambda (DJ)
+	(define rc (sup 'left-count DJ))
+	(define erc (inexact->exact rc))
+	(define rn (asc 'left-count DJ))
+	(define ern (inexact->exact rn))
+	(set! sumo (+ sumo erc))
+	(set! sumn (+ sumn ern))
+	(when ; (and (not (equal? erc ern)) (not (equal? 0 ern)))
+		; (equal? 0 erc)
+		; (and (not (equal? erc ern)) (not (equal? 'ShapeLink (cog-type DJ))))
+		(not (equal? erc ern))
+;		 (format #t "not equal at ~A pre=~D new=~D\n"
+;			(prt-dj DJ) erc ern)
+; (foobar)
+	;	(format #t "zero at ~A pre=~D \n"
+	;		(prt-dj DJ) erc)
+		(set! fail (+ fail 1))))
+	(star-obj 'right-basis))
+
+not equal at <Really,  ###LEFT-WALL###- {+ — “ ” _}- $+ {+ — “ ” _}+> pre=0 new=3
+
+fail ; 12596  wow. Last time, it was 29K ....
+
+(define sumo 0)
+(define sumn 0)
+(define noteq 0)
+(define zold 0)
+(define znew 0)
+(define nzo 0)
+(define ns 0)
+(for-each (lambda (DJ)
+	(define rc (sup 'left-count DJ))
+	(define erc (inexact->exact rc))
+	(define rn (asc 'left-count DJ))
+	(define ern (inexact->exact rn))
+	(set! sumo (+ sumo erc))
+	(set! sumn (+ sumn ern))
+	(if (not (equal? erc ern)) (set! noteq (+ noteq 1)))
+	(if (equal? 0 erc) (set! zold (+ 1 zold)))
+	(if (equal? 0 ern) (set! znew (+ 1 znew)))
+	(if (and (not (equal? erc ern)) (not (equal? 0 erc))) (set! nzo (+ 1 nzo)))
+	(if (and (not (equal? erc ern)) (not (equal? 'ShapeLink (cog-type DJ)))) (set! ns (+ 1 ns)))
+	)
+	(star-obj 'right-basis))
+
+noteq ; 12596
+zold ; 12596
+znew ; 0
+nzo ; 0
+ns ; 0
+
+(define cset-obj (make-pseudo-cset-api))
+(define covr-obj (add-covering-sections cset-obj))
+(covr-obj 'fetch-pairs)
+Elapsed time to load cross-sections: 105 seconds
+(ShapeLink . 825711)
+(CrossSection . 17758)  ?????
+
+(define sup (add-support-api star-obj))
+(define nk 0)
+(define zold 0)
+(for-each (lambda (SH)
+	(define rc (sup 'left-count SH))
+	(define erc (inexact->exact rc))
+	(if (equal? 0 erc) (set! zold (+ 1 zold)))
+	(when (not (equal? 1 (length (cog-keys SH))))
+		(set! nk (+ 1 nk))))
+	(cog-get-atoms 'ShapeLink))
+
+(define badl
+(filter (lambda (SH)
+	(not (equal? 1 (length (cog-keys SH)))))  (cog-get-atoms 'ShapeLink)))
+
+nk ;0
+(length (cog-get-atoms 'ShapeLink)) ; 825711
+zold ; 0
+
+so all shpes got loaded, an they all have marginals on them
+
+Some CrossSections are stored!! WTF!?
+(for-each cog-delete! (cog-get-atoms 'CrossSection))
+
+(covr-obj 'explode-sections)  ; (ShapeLink . 838307)
+
+(- 838307 825711) ; 12596  same as the missing ones.
+
+(define bad (car badl))
+(define c (car (cog-incoming-set bad)))
+(define s (star-obj 'get-section c))
+(define cs (star-obj 'get-cross-sections s))
+
+They're all there. How did they not get stored?
+
+--------
+Fresh: (ShapeLink . 838580)
+all have keys and non-zero margins
+There are no saved crosses.
+
+after blowup: (ShapeLink . 838580)
+so nothing new added.
+
+agglo-rank.scm:
+gram-majority.scm:
+shape-project.scm:
+
+
 
 
 ====================================================

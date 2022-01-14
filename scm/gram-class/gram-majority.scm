@@ -319,13 +319,13 @@
 		(define done-djs (make-atom-set))
 		(define (record-cross DJ)
 
-			; Record the shapes build from the crosses
+			; Record the shapes built from the crosses
 			(define (do-record WRD)
 				(define SECT (LLOBJ 'get-pair WRD DJ))
 				(when (not (nil? SECT))
 					(for-each (lambda (XRS)
 						(done-djs (LLOBJ 'right-element XRS)))
-						(LLOBJ 'get-cross-sections SECT))))
+						(LLOBJ 'make-cross-sections SECT))))
 
 			(done-djs DJ)
 			(for-each do-record WLIST))
@@ -381,7 +381,7 @@
 					(define XROS (LLOBJ 'get-pair WRD SHP))
 					(if (not (nil? XROS))
 						(let* ((SECT (LLOBJ 'get-section XROS))
-								(ALL-X (LLOBJ 'get-cross-sections SECT)))
+								(ALL-X (LLOBJ 'make-cross-sections SECT)))
 							(for-each (lambda (CRS)
 								(alt-shp (LLOBJ 'right-element CRS))) ALL-X))))
 				WLIST)
