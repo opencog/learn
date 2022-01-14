@@ -323,20 +323,19 @@
 	; the DB, so we just extract them.
 	(define (del-sect SEC)
 		; Cleanup cross sections, if they are provided.
-		(when (is-zero? (LLOBJ 'get-count SEC))
-			(when RMX
-				(for-each (lambda (xst)
-					(let ((shp (LLOBJ 'right-element xst)))
-						; Cross-sections are never stored, so extract is enough.
-						(cog-extract! xst)
-						; Shapes store marginals, so if they are deleteable, delete them.
-						(cog-delete! shp)  ;; Safe, its not recursive.
-						(set! nx (+ 1 nx))))
-				(LLOBJ 'get-cross-sections SEC)))
-			(let ((csq (LLOBJ 'right-element SEC)))
-				(cog-delete! SEC)
-				(cog-delete! csq)  ;; Safe; because its not recursive.
-				(set! ns (+ 1 ns)))))
+		(when RMX
+			(for-each (lambda (xst)
+				(let ((shp (LLOBJ 'right-element xst)))
+					; Cross-sections are never stored, so extract is enough.
+					(cog-extract! xst)
+					; Shapes store marginals, so if they are deleteable, delete them.
+					(cog-delete! shp)  ;; Safe, its not recursive.
+					(set! nx (+ 1 nx))))
+			(LLOBJ 'get-cross-sections SEC)))
+		(define csq (LLOBJ 'right-element SEC))
+		(cog-delete! SEC)
+		(cog-delete! csq)  ;; Safe; because its not recursive.
+		(set! ns (+ 1 ns)))
 
 	(define (del-xes XST)
 		(del-sect (LLOBJ 'get-section XST))
