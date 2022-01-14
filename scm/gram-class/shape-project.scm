@@ -339,15 +339,8 @@
 				(set! ns (+ 1 ns)))))
 
 	(define (del-xes XST)
-		(define sct (LLOBJ 'get-section XST))
-		(when (and (cog-atom? sct) (is-zero? (LLOBJ 'get-count sct)))
-			(del-sect sct))
-		(when (and (cog-atom? XST) (is-zero? (LLOBJ 'get-count XST)))
-			(let ((shp (LLOBJ 'right-element XST)))
-				(cog-extract! XST)
-				; Shapes store marginals, so if they are deleteable, delete them.
-				(cog-delete! shp)  ;; Safe; because its not recursive.
-				(set! nx (+ 1 nx)))))
+		(del-sect (LLOBJ 'get-section XST))
+		(set! nx (+ 1 nx)))
 
 	; Cleanup after merging.
 	(for-each
