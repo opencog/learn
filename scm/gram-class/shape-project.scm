@@ -249,7 +249,7 @@
 	(if (not (is-zero? CNT)) (store-atom SECTION))
 	(for-each
 		(lambda (XST) (set-count XST CNT))
-		(LLOBJ 'get-cross-sections SECTION))
+		(LLOBJ 'make-cross-sections SECTION))
 )
 
 ; ---------------------------------------------------------------------
