@@ -5116,7 +5116,7 @@ Fixed in #2834. Yay!
 
 -------------------
 (define (dump A)
-	(format FH "(~A 
+	(format FH "(~A
 	#f)
 (cog-map-type dump 'Atom)
 
@@ -7492,7 +7492,7 @@ tridonor
    xmr=30.000 * [{a b}, <c,  k- a+ b+ $+ m+>]
  donor=30.000 * (c,  k- a+ b+ a+ m+)
 
-flatten 
+flatten
 
 reshape-merge
 
@@ -9307,6 +9307,252 @@ gram-majority.scm:
 shape-project.scm:
 
 shape-project.scm is causing trouble.
+-------------
+Fixed !? again?
+
+(ShapeLink . 810773) So that's less than before
+nk    ;  0
+zold  ;  0
+
+excellent!   No more stores Crosses, too
+
+crap
+noteq ; 27534
+zold  ; 27534
+znew  ; 0
+nzo   ; 0
+ns    ; 0
+
+Refix again,
+Now its (ShapeLink . 838307) OK, good same as before
+
+No change in the bad stats
+
+(ShapeLink . 810773)
+(define oshp (cog-get-atoms 'ShapeLink))
+(define nshp (cog-get-atoms 'ShapeLink))
+(define no (atoms-subtract nshp oshp))
+
+(for-each (lambda (dj)
+	(for-each (lambda (xs)
+		(format #t "yo ~A\n" (prt-element xs)))
+	(cog-incoming-set dj)))
+	(take no 20))
+
+(for-each (lambda (dj)
+	(for-each (lambda (xs)
+		(define sc (star-obj 'get-section xs))
+		(when (not (equal? (star-obj 'get-count sc) (star-obj 'get-count xs)))
+			(format #t "wtf ~A\n ~A\n" (prt-element xs) (prt-element sc))
+(FOOBAR)
+		))
+	(cog-incoming-set dj)))
+	no)
+
+(cog-close (RocksStorageNode "rocks:///home/ubuntu/data//r10-singles.rdb"))
+(cog-open (RocksStorageNode "rocks:///home/ubuntu/data//r10-bad-shapes.rdb"))
+(define bsh (Anchor "bad shape"))
+(define bxs (Anchor "bad cross"))
+(for-each (lambda (dj)
+	(store-atom (Member dj bsh))
+	(for-each (lambda (xs) (store-atom (Member xs bxs)))
+		(cog-incoming-set dj)))
+	no)
+
+duuude size of affected=120354
+duuude size of orphasn=40751
+
+Before deletion of empties:
+(ShapeLink . 875448)
+
+(define sup (add-support-api star-obj))
+(define nk 0)
+(define zer 0)
+(for-each (lambda (SH)
+	(define rc (sup 'left-count SH))
+	(define erc (inexact->exact rc))
+	(if (equal? 0 erc) (set! zer (+ 1 zer)))
+	(when (not (equal? 1 (length (cog-keys SH))))
+		(set! nk (+ 1 nk))))
+	(cog-get-atoms 'ShapeLink))
+
+zer ; 37141  so (- 875448 37141)  is 838307 -- which is the correct number.
+
+(define nonzer-set (make-atom-set))
+(for-each (lambda (SH)
+	(define rc (sup 'left-count SH))
+	(define erc (inexact->exact rc))
+	(if (not (equal? 0 erc)) (nonzer-set SH)))
+	(cog-get-atoms 'ShapeLink))
+
+(define nonzer (nonzer-set #f))
+(length nonzer) ; 838307
+
+(cog-close (RocksStorageNode "rocks:///home/ubuntu/data//r10-singles.rdb"))
+(cog-open (RocksStorageNode "rocks:///home/ubuntu/data//r10-bad-shapes.rdb"))
+(define bsh (Anchor "bad shape"))
+(define bxs (Anchor "bad cross"))
+(fetch-incoming-set bsh)
+
+(define bad-set (make-atom-set))
+(for-each (lambda (MEM) (bad-set (gar MEM)))
+	(cog-incoming-set bsh))
+(define baddies (bad-set #f))
+(length baddies) ; 27534   -- yes OK.
+
+(define bb (atoms-subtract baddies nonzer))
+(length bb) ; 0  so all the baddies are non-zero, this is correct.
+
+(define afa (Anchor "affected"))
+(define affect (make-atom-set))
+(for-each (lambda (MEM) (affect (gar MEM)))
+	(cog-incoming-set afa))
+(define afd (affect #f))
+(length afd) ; 120354
+
+(define ba (atoms-subtract baddies afd))
+(length ba) ; 0 so all baddies should have been stored ...
+
+(define orp (Anchor "orphan"))
+(define orphans (make-atom-set))
+(for-each (lambda (MEM) (orphans (gar MEM)))
+	(cog-incoming-set orp))
+(define ors (orphans #f))
+(length ors) ; 40751
+
+(define bo (atoms-subtract baddies ors))
+(length bo)  ; 27534 -- none of the baddies are orphans
+
+(define gone 0)
+(for-each (lambda (badj)
+	(if (not (cog-atom? badj)) (set! gone (+ 1 gone)))) baddies)
+
+(define WRD-LIST
+(cons (WordClassNode "+ — “ ” _")
+(list (WordNode "+") (WordNode "—") (WordNode "“") (WordNode "”") (WordNode "_"))))
+
+(remove-all-empty-sections star-obj WRD-LIST)
+(for-each (lambda (badj)
+	(if (not (cog-atom? badj)) (set! gone (+ 1 gone)))) baddies)
+
+gone is zero...
+
+(delete-orphans star-obj '() ors)
+
+gone is still zero...
+
+(define zer 0)
+(for-each (lambda (SH)
+	(define rc (sup 'left-count SH))
+	(define erc (inexact->exact rc))
+	(if (equal? 0 erc) (set! zer (+ 1 zer)))
+	)
+	baddies)
+
+zer ; 0
+So why aren't baddies .... stored ???
+(cog-open (RocksStorageNode "rocks:///home/ubuntu/data//r10-singles.rdb"))
+
+Is it the same set each time?
+
+(define nk (PredicateNode "*-Norm Key cover-section"))
+(define nkc 0)
+(define miss 0)
+(define zk 0)
+(define (check-key atm)
+   (when (not (cog-atom? atm))
+       (format #f "No more atom\n")
+   )
+   (define ov (cog-value atm nk))
+
+   (cog-set-value! atm nk #f)
+   (fetch-atom atm)
+   (when (equal? 0 (length (cog-keys atm)))
+		(set! zk (+ 1 zk)))
+   (when (not (equal? 1 (length (cog-keys atm))))
+		(set! nkc (+ 1 nkc))
+      ; (format #t "no keys in storage!\n")
+   )
+
+   (define nv (cog-value atm nk))
+	(if (not (equal? ov nv)) (set! miss (+ 1 miss)))
+   (cog-set-value! atm nk ov)
+)
+
+(for-each check-key baddies)
+nkc ; 27534
+miss ; 27534
+
+and they're still all bad...
+
+(for-each store-atom baddies)
+(for-each check-key baddies)
+
+now its good. So what's going on?
+
+(define std (story #f))
+(length std) ; 79603
+
+affected: 120354
+orphans: 40751
+should be stored: 79603
+
+(for-each check-key std)
+nkc ; 27534
+miss ; 27534
+zk ; 27534
+
+so the key is missing!  ... in storage ...
+
+(define sup (add-support-api star-obj))
+(define nk 0)
+(define zer 0)
+(for-each (lambda (SH)
+	(define rc (sup 'left-count SH))
+	(define erc (inexact->exact rc))
+	(if (equal? 0 erc) (set! zer (+ 1 zer)))
+	(when (not (equal? 1 (length (cog-keys SH))))
+		(set! nk (+ 1 nk))))
+	std)
+
+nk   ; 0
+zer  ; 0
+
+backend bug: store is being called, key is not being stored. !?
+
+all zero:
+notone
+miscomp
+zerok
+
+but (for-each check-key std) still shows fails.
+
+duuu post-mmt check len 79603 not-one 0 miscomp 0 zoer-key 0
+duuu post-remove emtpies len 79603 not-one 27534 miscomp 27534 zoer-key 27534
+(recheck "post-remove emtpies")
+
+QueryLink
+TypedVariableLink
+
+car is VariableNode
+
+duuu rmx xst len 79603 not-one 1 miscomp 1 zoer-key 1
+duuude ins=42 fail at  0.000 * [You, <!,  {+ — “ ” _}- $- {+ — “ ” _}+>]
+
+dflt-delete    scm/opencog/persist.scm
+_sn->remove_atom(h, false);  api/StorageNode.cc
+removeAtom followed by
+getAtomSpace()->extract_atom(h, recursive)   in AtomTable.cc
+
+removeAtom in backing store.
+
+rocks does this unconditionally. w/o checking.
+
+if (handle->markForRemoval()) return false; should be true ?
+
+Wow.
+Fixed at last!?
+
 
 ====================================================
 ====================================================
