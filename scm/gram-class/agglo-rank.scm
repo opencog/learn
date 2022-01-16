@@ -862,6 +862,9 @@
 		(recomp-all-sim LLOBJ wclass)
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
+
+		; Belt and suspenders. Make sure everything is saved.
+		(store-atom log-anchor)
 	)
 
 	; --------------------------------------------

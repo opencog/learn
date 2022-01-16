@@ -259,7 +259,7 @@ That's a lot of questions.
 \end_layout
 
 \begin_layout Subsection*
-Status
+Round 43
 \end_layout
 
 \begin_layout Standard
@@ -350,17 +350,73 @@ The next 10 highest ranked-MI merges look great! So maybe somehow the ranked
 \end_layout
 
 \end_deeper
+\begin_layout Standard
+\begin_inset Separator plain
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection*
-Round 43
+Round 88 - Majority voting bug?
 \end_layout
 
 \begin_layout Standard
-What lead up to this? Here are the merges from the beginning: 
+Subsequent merges look ..
+ pretty good, except when they don't, and then they look ugly.
+\end_layout
+
+\begin_layout Standard
+At round 88 it goes nuts: it merges a few disjuncts of 
+\begin_inset Quotes eld
+\end_inset
+
+As as
+\begin_inset Quotes erd
+\end_inset
+
+ together.
+ Then it merges zero of them into 
+\begin_inset Quotes eld
+\end_inset
+
+As as.i
+\begin_inset Quotes erd
+\end_inset
+
+, and then hits an inf loop, because what is left after the merge still
+ has a high MI.
+\end_layout
+
+\begin_layout Standard
+Conclude: the majority-voting scheme left behind (left unmerged) too much;
+ enough that the MI between what is left is still high.
+ Can we redefine the voting proceedure to lessen this?
+\end_layout
+
+\begin_layout Subsection*
+Bug Fixes
+\end_layout
+
+\begin_layout Standard
+There were multiple bugs, difficult to locate.
+ Some cross-section merges were being done wrong.
+ A bug in cog-delete! was erasing data in DB, thus restarts loaded missing/corru
+pt data.
+ As of 15 Jan all seems to be fixed.
+\end_layout
+
+\begin_layout Subsection*
+Round 31
+\end_layout
+
+\begin_layout Standard
+After fixes, the first 31 rounds merge the following words.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Tabular
-<lyxtabular version="3" rows="32" columns="3">
+<lyxtabular version="3" rows="34" columns="3">
 <features islongtable="true" headTopDL="true" headBottomDL="true" longtabularalignment="center">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top" width="0pt">
@@ -577,7 +633,7 @@ OK
 
 \begin_layout Plain Layout
 ? .
- ###LEFT-WALL### + — “ ” _ !
+ !
 \end_layout
 
 \end_inset
@@ -586,8 +642,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-merge of N=1 with extra stuff ..
- ugly
+OK
 \end_layout
 
 \end_inset
@@ -599,35 +654,6 @@ merge of N=1 with extra stuff ..
 
 \begin_layout Plain Layout
 6
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-? !
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-merge leftovers from above!
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-7
 \end_layout
 
 \end_inset
@@ -656,7 +682,7 @@ OK, sentence starters
 \begin_inset Text
 
 \begin_layout Plain Layout
-8
+7
 \end_layout
 
 \end_inset
@@ -665,7 +691,8 @@ OK, sentence starters
 \begin_inset Text
 
 \begin_layout Plain Layout
-" ” , what
+" ” , ? .
+ ! what
 \end_layout
 
 \end_inset
@@ -674,7 +701,36 @@ OK, sentence starters
 \begin_inset Text
 
 \begin_layout Plain Layout
-Odd, but OK
+Expand group N=5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+He It I There She This
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Expansion of group N=6
 \end_layout
 
 \end_inset
@@ -690,40 +746,11 @@ Odd, but OK
 
 \end_inset
 </cell>
-<cell multirow="3" alignment="center" valignment="middle" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-He It I There She
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Expansion of group N=7
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-10
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-A No He It I There She The
+A No He It I There She This The
 \end_layout
 
 \end_inset
@@ -743,7 +770,7 @@ Expansion of group above!
 \begin_inset Text
 
 \begin_layout Plain Layout
-11
+10
 \end_layout
 
 \end_inset
@@ -772,67 +799,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-12
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-of .
- , ; , and
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-odd ...
- left-overs from above
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-13
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-He She They We
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-He She left-overs OK
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-14
+11
 \end_layout
 
 \end_inset
@@ -856,12 +823,12 @@ odd but plausible
 \end_inset
 </cell>
 </row>
-<row endhead="true">
+<row>
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-15
+12
 \end_layout
 
 \end_inset
@@ -870,8 +837,8 @@ odd but plausible
 \begin_inset Text
 
 \begin_layout Plain Layout
-' -- ? .
- ###LEFT-WALL### + — “ ” _ ! 
+' -- but and that as " ” , ? .
+ ! what + — “ ” _
 \end_layout
 
 \end_inset
@@ -880,36 +847,7 @@ odd but plausible
 \begin_inset Text
 
 \begin_layout Plain Layout
-Oh no! 
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-but and that as " ” , what for so when
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+Yuck! Merge N=4,7,1
 \end_layout
 
 \end_inset
@@ -920,7 +858,37 @@ but and that as " ” , what for so when
 \begin_inset Text
 
 \begin_layout Plain Layout
-16
+13
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+: ###LEFT-WALL### , ; me
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yuck.
+ Expand N=2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14
 \end_layout
 
 \end_inset
@@ -938,18 +906,18 @@ has was is had could
 \begin_inset Text
 
 \begin_layout Plain Layout
-OK
+Expand N=3
 \end_layout
 
 \end_inset
 </cell>
 </row>
-<row>
+<row endhead="true">
 <cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-17
+15
 \end_layout
 
 \end_inset
@@ -978,7 +946,7 @@ OK-ish
 \begin_inset Text
 
 \begin_layout Plain Layout
-18
+16
 \end_layout
 
 \end_inset
@@ -1007,7 +975,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-19
+17
 \end_layout
 
 \end_inset
@@ -1036,7 +1004,7 @@ OK-ish
 \begin_inset Text
 
 \begin_layout Plain Layout
-20
+18
 \end_layout
 
 \end_inset
@@ -1065,7 +1033,36 @@ OK-ish
 \begin_inset Text
 
 \begin_layout Plain Layout
-21
+19
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+: ] , .
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OK
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20
 \end_layout
 
 \end_inset
@@ -1094,7 +1091,7 @@ great!
 \begin_inset Text
 
 \begin_layout Plain Layout
-22
+21
 \end_layout
 
 \end_inset
@@ -1123,7 +1120,7 @@ great!
 \begin_inset Text
 
 \begin_layout Plain Layout
-23
+22
 \end_layout
 
 \end_inset
@@ -1132,65 +1129,7 @@ great!
 \begin_inset Text
 
 \begin_layout Plain Layout
-into of in to from on at
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-great!
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-24
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-could must would should may
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-great!
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-25
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-much well good little long
+It This this what
 \end_layout
 
 \end_inset
@@ -1210,6 +1149,124 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
+23
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Well You ' -- but and that as 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Yuck.
+ Expand 12
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+" ” , ? .
+ ! what + — “ ” _ you Oh
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+“ Oh
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Left-overs from above.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+might should will may
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+great!
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 26
 \end_layout
 
@@ -1219,7 +1276,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-###LEFT-WALL### “
+much well good little long
 \end_layout
 
 \end_inset
@@ -1228,7 +1285,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-OK, odd leftover from before
+good
 \end_layout
 
 \end_inset
@@ -1248,8 +1305,7 @@ OK, odd leftover from before
 \begin_inset Text
 
 \begin_layout Plain Layout
-? .
- ###LEFT-WALL### + — “ ” _ !
+could must would might 
 \end_layout
 
 \end_inset
@@ -1258,7 +1314,7 @@ OK, odd leftover from before
 \begin_inset Text
 
 \begin_layout Plain Layout
-left-overs from before!
+great! Merge 16, 25
 \end_layout
 
 \end_inset
@@ -1278,7 +1334,7 @@ left-overs from before!
 \begin_inset Text
 
 \begin_layout Plain Layout
-but and that as
+should will may can shall
 \end_layout
 
 \end_inset
@@ -1307,7 +1363,7 @@ but and that as
 \begin_inset Text
 
 \begin_layout Plain Layout
-' ” ’
+into of in to from
 \end_layout
 
 \end_inset
@@ -1316,7 +1372,66 @@ but and that as
 \begin_inset Text
 
 \begin_layout Plain Layout
-OK
+great! Expand 10
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+He She
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+great!
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+30
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+no nothing his the a he I an
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Meh.
+ Expand 11
 \end_layout
 
 \end_inset
@@ -1327,7 +1442,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-29
+31
 \end_layout
 
 \end_inset
@@ -1336,7 +1451,7 @@ OK
 \begin_inset Text
 
 \begin_layout Plain Layout
-no nothing his the a he I an
+on upon
 \end_layout
 
 \end_inset
@@ -1345,7 +1460,7 @@ no nothing his the a he I an
 \begin_inset Text
 
 \begin_layout Plain Layout
-ugly/bad
+great!
 \end_layout
 
 \end_inset
@@ -1359,37 +1474,38 @@ ugly/bad
 \end_layout
 
 \begin_layout Standard
-Subsequent merges look ..
- pretty good, except when they don't, and then they look ugly.
- 
+Notable is that a fairly large number of merges are expanding or merging
+ prior classes.
+ This is curious.
 \end_layout
 
 \begin_layout Standard
-At round 88 it goes nuts: it merges a few disjuncts of 
-\begin_inset Quotes eld
-\end_inset
-
-As as
-\begin_inset Quotes erd
-\end_inset
-
- together.
- Then it merges zero of them into 
-\begin_inset Quotes eld
-\end_inset
-
-As as.i
-\begin_inset Quotes erd
-\end_inset
-
-, and then hits an inf loop, because what is left after the merge still
- has a high MI.
+Also being tracked, per merge: rows, cols, lcnt, rcnt, size, sparsity, entropy,
+ ranked-mi, mmt-q.
+ These look good, up to round 28, when lcnt=0, size=0 and some divide-by-zero
+ garbage up the other stats! After that point, the lcnt off by a little
+ bit.
 \end_layout
 
 \begin_layout Standard
-Conclude: the majority-voting scheme left behind (left unmerged) too much;
- enough that the MI between what is left is still high.
- Can we redefine the voting proceedure to lessen this?
+At the conclusion of round 27, mmt-q=+inf.0 is already wrong.
+ But this value gets recorded as part of round 28.
+ During extension of round 27, some occasional garbage:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+MI(`in`, `into`) = +inf.0  rank-MI = +nan.0
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
