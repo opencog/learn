@@ -822,7 +822,7 @@
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
 	; Record the classes as they are created.
-	(define log-class (make-class-logger LLOBJ)
+	(define log-class (make-class-logger LLOBJ))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
