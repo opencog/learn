@@ -346,6 +346,36 @@
 	)
 )
 
+(define (make-class-logger LLOBJ)
+"
+  make-class-logger LLOBJ -- create logger to record merge details.
+"
+	; Record the classes as they are created.
+	(define log-anchor (AnchorNode "data logger"))  ; same as above.
+	(define log-class (make-data-logger log-anchor (Predicate "class")))
+	(define log-self-mi (make-data-logger log-anchor (Predicate "self-mi")))
+	(define log-self-rmi (make-data-logger log-anchor (Predicate "self-ranked-mi")))
+
+	; General setup of things we need
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+
+	; The MI similarity of two words
+	(define (mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
+	; The ranked MI similarity of two words
+	(define (ranked-mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 1) -inf.0))
+
+	(lambda (WCLASS)
+		(log-class WCLASS)
+		(log-self-mi (mi-sim WCLASS WCLASS))
+		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
+	)
+)
+
 ; ---------------------------------------------------------------
 
 (define-public (print-log PORT)
@@ -402,17 +432,23 @@
 "
 	(define log-anchor (AnchorNode "data logger"))
 	(define key-class (Predicate "class"))
+	(define key-self-mi (Predicate "self-mi"))
+	(define key-self-rmi (Predicate "self-ranked-mi"))
 
 	(define classes (cog-value->list (cog-value log-anchor key-class)))
+	(define self-mi (cog-value->list (cog-value log-anchor key-self-mi)))
+	(define self-rmi (cog-value->list (cog-value log-anchor key-self-rmi)))
 
 	(define len (length classes))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
-	(format PORT "# N,words\n")
+	(format PORT "# N,words,self-mi,self-rmi\n")
 	(for-each (lambda (N)
-		(format PORT "~D\t\"~A\"\n"
+		(format PORT "~D\t\"~A\"\t~9F\t~9F\n"
 			(+ N 1)
-			(cog-name (list-ref classes N))))
+			(cog-name (list-ref classes N))
+			(list-ref self-mi N)
+			(list-ref self-rmi N)))
 		(iota len))
 )
 
@@ -786,8 +822,7 @@
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
 	; Record the classes as they are created.
-	(define log-anchor (AnchorNode "data logger"))  ; same as above.
-	(define log-class (make-data-logger log-anchor (Predicate "class")))
+	(define log-class (make-class-logger LLOBJ)
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
@@ -846,7 +881,6 @@
 		(format #t "\n")
 
 		(define wclass (make-class-node LLOBJ in-grp))
-		(log-class wclass) ; record this in the log
 		(merge-majority wclass in-grp)
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
@@ -860,6 +894,7 @@
 		; that were touched.
 		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD)) in-grp)
 		(recomp-all-sim LLOBJ wclass)
+		(log-class wclass) ; record this in the log
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
 
