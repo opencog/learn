@@ -9553,6 +9553,110 @@ if (handle->markForRemoval()) return false; should be true ?
 Wow.
 Fixed at last!?
 ----------------------------------------------------------
+1 + — “ ” _
+25      "much well good little long"
+
+(define sup (add-support-api star-obj))
+(sup 'total-count-left) ; 0.0
+(define asc (add-support-compute star-obj))
+(asc 'set-left-totals)
+still borken
+(star-obj 'clobber)
+(asc 'set-left-totals)
+still borken
+
+(define lb (star-obj 'left-basis))
+
+(define lc (map (lambda (itm) (sup 'right-count itm)) lb))
+
+(asc 'cache-all)
+Finished left norm marginals in 2187 secs
+(sup 'total-support-left) ; still zero !
+
+(define w (car lb))
+(star-obj 'right-stars w)
+(for-each (lambda (s) (format #t "~A\n" (prt-element s))) (star-obj 'right-stars w))
+
+(sup 'right-count w) ; 2855.0 well, that seems plausible, so wtf.
+so cache-all fixed the marginals....
+
+(asc 'total-support-left) ; 2196945.0 .. well wrong but at least not zero.
+(asc 'set-left-totals)
+(sup 'total-support-left)  ; 2196945.0
+
+wtf so why did cache-all not work?
+all-left-marginals
+
+set-left-marginals (right-basis) ... right-basis==DJ
+do-left-totals ...
+
+(set-left-marginals COL)  ; COL==DJ
+   (sum-left-norms COL)
+       (star-obj 'left-stars COL) ; left-stars = (*, DJ)
+   api-obj 'set-left-norms COL
+
+left-count --> for DJ
+right-count -- for W
+
+do-left-totals ...
+   compute-total-support-from-left
+       loop over 'left-basis  (i.e. words)
+
+... fixed.
+----------------
+(define in-grp (list
+	(Word "could")
+	(WordClass "must would")
+	(WordClass "might should will may")
+	(Word "can")
+	(Word "shall")))
+
+(define wclass (WordClass "could must would might should will may can shall"))
+(define merge-majority (make-merge-majority star-obj 0.5 4 #t))
+(merge-majority wclass in-grp)
+
+;;;; (recompute-marginals LLOBJ (cons wclass in-grp))
+(star-obj 'clobber)
+(define LLOBJ star-obj)
+(define WRD-LIST (cons wclass in-grp))
+(define affected-basis (get-affected-basis LLOBJ WRD-LIST))
+   (define wrd-list (first affected-basis))
+   (define dj-list (second affected-basis))
+(length dj-list) ; 53367
+(length wrd-list) ; 2021
+
+;;;; (define orphans (recompute-mmt LLOBJ wrd-list dj-list))
+
+(length (dj-orphan #f)) ; 21667
+(length (wrd-orphan #f)) ; 2
+ ;; (WordClass "might should will may") (WordClassNode "must would")
+
+(remove-all-empty-sections LLOBJ WRD-LIST)
+
+;;; (delete-orphans LLOBJ (dj-orphan #f) (wrd-orphan #f))
+
+(define wm (car (wrd-orphan #f)))
+
+; this is right-wild for l-atom
+(EvaluationLink
+  (PredicateNode "*-Direct Sum Wild (gram-class⊕cross-section)")
+  (WordClassNode "might should will may")
+  (AnyNode "right-wild-direct-sum"))
+
+(LLOBJ 'left-element wm)
+(PredicateNode "*-Direct Sum Wild (gram-class⊕cross-section)") Oh no!!!!
+
+(EvaluationLink pred-node left-wnode R-ATOM)
+
+(if (and (not disjoint-left) (equal? 'EvaluationLink (cog-type pair))
+		(equal? pred-node (gar pair)))
+	(gdr pair)
+
+'
+left-element --> get-pair-left
+
+FIXED!  Yayyy! fix direct sum wildcard handling
+--------------------------------------
 
 
 
