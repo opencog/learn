@@ -888,8 +888,10 @@
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
 		; After merging, recompute similarities for the words
-		; that were touched.
-		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD)) in-grp)
+		; that were touched. Note that the merge might end up deleting
+		; some words in the in-grp.
+		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD))
+			(filter cog-atom? in-grp))
 		(recomp-all-sim LLOBJ wclass)
 		(log-class wclass) ; record this in the log
 
