@@ -821,6 +821,9 @@
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 
+	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
+		(FloatValue QUORUM COMMONALITY NOISE NRANK))
+
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.

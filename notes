@@ -9658,6 +9658,17 @@ left-element --> get-pair-left
 FIXED!  Yayyy! fix direct sum wildcard handling
 --------------------------------------
 
+(recomp-all-sim LLOBJ WX)
+
+0.5-0.2 -- 19008
+0.6-0.3 -- 19009
+0.7-0.4 -- 19006
+0.8-0.5 -- 19012
+COGSERVER_CONF=/home/ubuntu/experiments/run-6/4-cogserver/cogserver-gram-en.conf
+
+(cog-set-value! (AnchorNode "data logger") (Predicate "quorum-comm-noise")
+	(FloatValue 0.8 0.5 4 200))
+
 
 
 
