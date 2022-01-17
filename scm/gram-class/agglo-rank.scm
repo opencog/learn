@@ -283,21 +283,21 @@
 )
 
 ; ---------------------------------------------------------------
+(define *-log-anchor-* (AnchorNode "data logger"))
 
 (define (make-logger LLOBJ)
 "
   make-logger LLOBJ -- create logger to record assorted info in AtomSpace
 "
-	(define log-anchor (AnchorNode "data logger"))
-	(define log-mmt-q (make-data-logger log-anchor (Predicate "mmt-q")))
-	(define log-ranked-mi (make-data-logger log-anchor (Predicate "ranked-mi")))
-	(define log-sparsity (make-data-logger log-anchor (Predicate "sparsity")))
-	(define log-entropy (make-data-logger log-anchor (Predicate "entropy")))
-	(define log-left-dim (make-data-logger log-anchor (Predicate "left dim")))
-	(define log-right-dim (make-data-logger log-anchor (Predicate "right dim")))
-	(define log-left-cnt (make-data-logger log-anchor (Predicate "left-count")))
-	(define log-right-cnt (make-data-logger log-anchor (Predicate "right-count")))
-	(define log-size (make-data-logger log-anchor (Predicate "total entries")))
+	(define log-mmt-q (make-data-logger *-log-anchor-* (Predicate "mmt-q")))
+	(define log-ranked-mi (make-data-logger *-log-anchor-* (Predicate "ranked-mi")))
+	(define log-sparsity (make-data-logger *-log-anchor-* (Predicate "sparsity")))
+	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "entropy")))
+	(define log-left-dim (make-data-logger *-log-anchor-* (Predicate "left dim")))
+	(define log-right-dim (make-data-logger *-log-anchor-* (Predicate "right dim")))
+	(define log-left-cnt (make-data-logger *-log-anchor-* (Predicate "left-count")))
+	(define log-right-cnt (make-data-logger *-log-anchor-* (Predicate "right-count")))
+	(define log-size (make-data-logger *-log-anchor-* (Predicate "total entries")))
 
 	(define (log2 x) (if (< 0 x) (/ (log x) (log 2)) -inf.0))
 
@@ -342,7 +342,7 @@
 		(log-size (sup 'total-support-left))
 
 		; Save to the DB
-		(store-atom log-anchor)
+		(store-atom *-log-anchor-*)
 	)
 )
 
@@ -351,10 +351,9 @@
   make-class-logger LLOBJ -- create logger to record merge details.
 "
 	; Record the classes as they are created.
-	(define log-anchor (AnchorNode "data logger"))  ; same as above.
-	(define log-class (make-data-logger log-anchor (Predicate "class")))
-	(define log-self-mi (make-data-logger log-anchor (Predicate "self-mi")))
-	(define log-self-rmi (make-data-logger log-anchor (Predicate "self-ranked-mi")))
+	(define log-class (make-data-logger *-log-anchor-* (Predicate "class")))
+	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "self-mi")))
+	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "self-ranked-mi")))
 
 	; General setup of things we need
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -383,7 +382,6 @@
   print-log PORT -- Dump log contents as CSV
   Set PORT to #t to get output to stdout
 "
-	(define log-anchor (AnchorNode "data logger"))
 	(define key-mmt-q (Predicate "mmt-q"))
 	(define key-ranked-mi (Predicate "ranked-mi"))
 	(define key-sparsity (Predicate "sparsity"))
@@ -395,16 +393,16 @@
 	(define key-size (Predicate "total entries"))
 	(define key-class (Predicate "class"))
 
-	(define rows (cog-value->list (cog-value log-anchor key-left-dim)))
-	(define cols (cog-value->list (cog-value log-anchor key-right-dim)))
-	(define lcnt (cog-value->list (cog-value log-anchor key-left-cnt)))
-	(define rcnt (cog-value->list (cog-value log-anchor key-right-cnt)))
-	(define size (cog-value->list (cog-value log-anchor key-size)))
-	(define spar (cog-value->list (cog-value log-anchor key-sparsity)))
-	(define entr (cog-value->list (cog-value log-anchor key-entropy)))
-	(define rami (cog-value->list (cog-value log-anchor key-ranked-mi)))
-	(define mmtq (cog-value->list (cog-value log-anchor key-mmt-q)))
-	; (define clas (cog-value->list (cog-value log-anchor key-class)))
+	(define rows (cog-value->list (cog-value *-log-anchor-* key-left-dim)))
+	(define cols (cog-value->list (cog-value *-log-anchor-* key-right-dim)))
+	(define lcnt (cog-value->list (cog-value *-log-anchor-* key-left-cnt)))
+	(define rcnt (cog-value->list (cog-value *-log-anchor-* key-right-cnt)))
+	(define size (cog-value->list (cog-value *-log-anchor-* key-size)))
+	(define spar (cog-value->list (cog-value *-log-anchor-* key-sparsity)))
+	(define entr (cog-value->list (cog-value *-log-anchor-* key-entropy)))
+	(define rami (cog-value->list (cog-value *-log-anchor-* key-ranked-mi)))
+	(define mmtq (cog-value->list (cog-value *-log-anchor-* key-mmt-q)))
+	; (define clas (cog-value->list (cog-value *-log-anchor-* key-class)))
 
 	(define len (length rows))
 
@@ -430,14 +428,13 @@
   print-merges PORT -- Dump merge log contents as CSV
   Set PORT to #t to get output to stdout
 "
-	(define log-anchor (AnchorNode "data logger"))
 	(define key-class (Predicate "class"))
 	(define key-self-mi (Predicate "self-mi"))
 	(define key-self-rmi (Predicate "self-ranked-mi"))
 
-	(define classes (cog-value->list (cog-value log-anchor key-class)))
-	(define self-mi (cog-value->list (cog-value log-anchor key-self-mi)))
-	(define self-rmi (cog-value->list (cog-value log-anchor key-self-rmi)))
+	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
+	(define self-mi (cog-value->list (cog-value *-log-anchor-* key-self-mi)))
+	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
 
 	(define len (length classes))
 
@@ -899,7 +896,7 @@
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
 
 		; Belt and suspenders. Make sure everything is saved.
-		(store-atom log-anchor)
+		(store-atom *-log-anchor-*)
 	)
 
 	; --------------------------------------------
