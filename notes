@@ -9670,6 +9670,11 @@ COGSERVER_CONF=/home/ubuntu/experiments/run-6/4-cogserver/cogserver-gram-en.conf
 	(FloatValue 0.8 0.5 4 200))
 
 
+(define port (open "/tmp/log-0.5-0.2.dat" (logior O_CREAT O_WRONLY)))
+(print-log port)
+(close port)
+
+
 
 
 ====================================================

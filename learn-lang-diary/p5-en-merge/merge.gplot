@@ -1,0 +1,19 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'log-0.5-0.2.png'
+# set term postscript eps enhanced color 20
+# set out 'log-0.5-0.2.eps'
+set key right top
+set title "Stats for Quorum=0.5 Commonality=0.2"
+set xlabel "Merge ordinal"
+set ylabel "bits"
+set yrange [:20]
+# set format y "10^{%L}"
+
+plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "Sparsity", \
+     "log-0.5-0.2.dat" using 1:8 with lines lw 2 title "Entropy", \
+     "log-0.5-0.2.dat" using 1:9 with lines lw 2 title "Ranked MI", \
+     "log-0.5-0.2.dat" using 1:10 with lines lw 2 title "MM^T-Q"
