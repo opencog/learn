@@ -20,6 +20,7 @@
 (include-from-path "opencog/learn/gram-majority.scm")
 (include-from-path "opencog/learn/gram-optim.scm")
 (include-from-path "opencog/learn/in-group.scm")
+(include-from-path "opencog/learn/log-merge.scm")
 (include-from-path "opencog/learn/agglo-rank.scm")
 (include-from-path "opencog/learn/gram-class-api.scm")
 ; (include-from-path "opencog/learn/link-class.scm")
