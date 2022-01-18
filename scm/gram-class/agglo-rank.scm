@@ -377,6 +377,21 @@
 
 ; ---------------------------------------------------------------
 
+(define (print-params PORT)
+"
+  print-params PORT -- print parameters header.
+"
+	(define params (cog-value->list
+		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
+	(define quorum (list-ref params 0))
+	(define commonality (list-ref params 1))
+	(define noise (list-ref params 2))
+	(define nrank (list-ref params 3))
+
+	(format PORT "# quorum=~6F commonality=~6F noise=~D nrank=~A\n#\n"
+		quorum commonality noise nrank)
+)
+
 (define-public (print-log PORT)
 "
   print-log PORT -- Dump log contents as CSV
@@ -407,6 +422,7 @@
 	(define len (length rows))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
+	(print-params PORT)
 	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
@@ -439,6 +455,7 @@
 	(define len (length classes))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
+	(print-params PORT)
 	(format PORT "# N,words,self-mi,self-rmi\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t\"~A\"\t~9F\t~9F\n"
