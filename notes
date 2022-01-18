@@ -9671,11 +9671,21 @@ COGSERVER_CONF=/home/ubuntu/experiments/run-6/4-cogserver/cogserver-gram-en.conf
 
 
 (define port (open "/tmp/log-0.5-0.2.dat" (logior O_CREAT O_WRONLY)))
+(define port (open "/tmp/log-0.6-0.3.dat" (logior O_CREAT O_WRONLY)))
+(define port (open "/tmp/log-0.7-0.4.dat" (logior O_CREAT O_WRONLY)))
 (print-log port)
 (close port)
 
 
+frqobj 'pair-entropy
+set-left-wild-entropy
 
+(define frq (add-pair-freq-api star-obj))
+(frq 'right-wild-fentropy (Word "the"))
+
+cache-right-entropy
+
+no pair entropties available...
 
 ====================================================
 ====================================================

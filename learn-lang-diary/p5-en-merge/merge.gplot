@@ -17,3 +17,71 @@ plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "Sparsity", \
      "log-0.5-0.2.dat" using 1:8 with lines lw 2 title "Entropy", \
      "log-0.5-0.2.dat" using 1:9 with lines lw 2 title "Ranked MI", \
      "log-0.5-0.2.dat" using 1:10 with lines lw 2 title "MM^T-Q"
+
+#################################################
+#
+set term png
+set out 'sparsity.png'
+# set term postscript eps enhanced color 20
+# set out 'sparsity.eps'
+set key left top
+set title "Sparsity vs. Time"
+set xlabel "Merge ordinal"
+set ylabel "Sparsity, in bits"
+unset yrange
+
+plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "qu=0.5 com=0.2", \
+     "log-0.6-0.3.dat" using 1:7 with lines lw 2 title "qu=0.6 com=0.3", \
+     "log-0.7-0.4.dat" using 1:7 with lines lw 2 title "qu=0.7 com=0.4", \
+     "log-0.8-0.5.dat" using 1:7 with lines lw 2 title "qu=0.8 com=0.5"
+
+#################################################
+#
+set term png
+set out 'entropy.png'
+# set term postscript eps enhanced color 20
+# set out 'entropy.eps'
+set key right top
+set title "Entropy vs. Time"
+set xlabel "Merge ordinal"
+set ylabel "Entropy, in bits"
+unset yrange
+
+plot "log-0.5-0.2.dat" using 1:8 with lines lw 2 title "qu=0.5 com=0.2", \
+     "log-0.6-0.3.dat" using 1:8 with lines lw 2 title "qu=0.6 com=0.3", \
+     "log-0.7-0.4.dat" using 1:8 with lines lw 2 title "qu=0.7 com=0.4", \
+     "log-0.8-0.5.dat" using 1:8 with lines lw 2 title "qu=0.8 com=0.5"
+
+#################################################
+#
+set term png
+set out 'ranked-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'ranked-mi.eps'
+set key right top
+set title "Ranked-MI of top-ranked pair"
+set xlabel "Merge ordinal"
+set ylabel "Ranked-MI, in bits"
+unset yrange
+
+plot "log-0.5-0.2.dat" using 1:9 with lines lw 2 title "qu=0.5 com=0.2", \
+     "log-0.6-0.3.dat" using 1:9 with lines lw 2 title "qu=0.6 com=0.3", \
+     "log-0.7-0.4.dat" using 1:9 with lines lw 2 title "qu=0.7 com=0.4", \
+     "log-0.8-0.5.dat" using 1:9 with lines lw 2 title "qu=0.8 com=0.5"
+
+#################################################
+#
+set term png
+set out 'mmtq.png'
+# set term postscript eps enhanced color 20
+# set out 'mmtq.eps'
+set key right top
+set title "MM^T-Q vs. Time"
+set xlabel "Merge ordinal"
+set ylabel "MM^T-Q, in bits"
+unset yrange
+
+plot "log-0.5-0.2.dat" using 1:10 with lines lw 2 title "qu=0.5 com=0.2", \
+     "log-0.6-0.3.dat" using 1:10 with lines lw 2 title "qu=0.6 com=0.3", \
+     "log-0.7-0.4.dat" using 1:10 with lines lw 2 title "qu=0.7 com=0.4", \
+     "log-0.8-0.5.dat" using 1:10 with lines lw 2 title "qu=0.8 com=0.5"
