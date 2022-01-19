@@ -196,6 +196,42 @@
 )
 
 ; ---------------------------------------------------------------
+
+(define-public (dump-log DIR)
+"
+  dump-log DIR -- print log file to DIR.
+  Example: (dump-log \"/tmp\")
+  Result: \"/tmp/log-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
+  the commonality.
+"
+	(define params (cog-value->list
+		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
+	(define quorum (list-ref params 0))
+	(define commonality (list-ref params 1))
+	(define FILENAME (format #f "~A/log-~A-~A.dat" DIR quorum commonality))
+	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
+	(print-log port)
+	(close port)
+)
+
+(define-public (dump-merges DIR)
+"
+  dump-merges DIR -- print merge file to DIR.
+  Example: (dump-merges \"/tmp\")
+  Result: \"/tmp/merge-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
+  the commonality.
+"
+	(define params (cog-value->list
+		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
+	(define quorum (list-ref params 0))
+	(define commonality (list-ref params 1))
+	(define FILENAME (format #f "~A/merges-~A-~A.dat" DIR quorum commonality))
+	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
+	(print-merges port)
+	(close port)
+)
+
+; ---------------------------------------------------------------
 #! ========
 ;
 ; Example usage
