@@ -9673,6 +9673,7 @@ COGSERVER_CONF=/home/ubuntu/experiments/run-6/4-cogserver/cogserver-gram-en.conf
 (define port (open "/tmp/log-0.5-0.2.dat" (logior O_CREAT O_WRONLY)))
 (define port (open "/tmp/log-0.6-0.3.dat" (logior O_CREAT O_WRONLY)))
 (define port (open "/tmp/log-0.7-0.4.dat" (logior O_CREAT O_WRONLY)))
+(define port (open "/tmp/log-0.8-0.5.dat" (logior O_CREAT O_WRONLY)))
 (print-log port)
 (close port)
 
@@ -9685,7 +9686,43 @@ set-left-wild-entropy
 
 cache-right-entropy
 
-no pair entropties available...
+no pair entropies available...
+(WordNode "king")
+(define cfr (make-compute-freq star-obj))
+(cfr 'init-freq)
+(cfr 'cache-all)
+2777968 -- correct
+(define ent-obj (add-entropy-compute star-obj))
+(ent-obj 'cache-all-right-entropy)
+(ent-obj 'right-entropy) ; 8.514785640953038
+(define rpt-obj (add-report-api star-obj))
+(rpt-obj 'left-entropy)
+
+wtf.... report says left-entropy     -- The sum H_left = -sum_x P(x,*) log_2 P(x,*)
+that's wrong .. .fixed.
+
+but ent says
+ H_left = sum_y P(*,y) log_2 P(*,y)
+
+left-sum = sum_y f(y)
+sum_y  'left-wild-freq y where y==right side of pair. and left-wild=(*,y)
+
+Hang on ...
+right-support = sum_x P(x,*) |(x,*)|
+right-count = sum_x P(x,*) N(x,*)
+
+
+
+ h_left(y) = -sum_x P(x,y) log_2 P(x,y)
+ h_right(x) = -sum_y P(x,y) log_2 P(x,y)
+
+-32     15112   970910  22942644        22942644        2144763 12.739998       16.073733
+       6.5032292 10.610815
+-33     15113   970112  22942644        22942644        2136119 12.744734       16.063484
+       6.4864505       10.606281
+
+wtf ... older vs newer code ...
+
 
 ====================================================
 ====================================================
