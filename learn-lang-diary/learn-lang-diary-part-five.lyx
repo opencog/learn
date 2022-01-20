@@ -131,11 +131,27 @@ A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-Nothing yet.
+No summary yet.
 \end_layout
 
 \begin_layout Section*
-Distributions (Jan 2022)
+Marginal Entropy Distributions (Jan 2022)
+\end_layout
+
+\begin_layout Standard
+In the paper 
+\begin_inset Quotes eld
+\end_inset
+
+Connector Set Distributions
+\begin_inset Quotes erd
+\end_inset
+
+, an extensive examination of various relationships between word distributions,
+ entropy, mutual information and rank is explored.
+ Below, we explore a bit more in that vein, that apparently was not previously
+ explored.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -143,9 +159,8 @@ In Diary Part Three we looked at the word-rank vs.
  support (page 10).
  Here, we look at rank vs.
  right-entropy and rank vs.
- right-MI as well as rank vs log-probability (how is it that we haven't
- looked at this before? Or did we and I forgot?) The goal of asking these
- questions is two-fold.
+ right-MI as well as rank vs log-probability.
+ The goal of asking these questions is two-fold.
  
 \end_layout
 
@@ -1557,11 +1572,12 @@ Turns out is was a bad wild-card derefernce that clobbered the wildcard
 \end_layout
 
 \begin_layout Subsection*
-Datasets
+Merge Datasets
 \end_layout
 
 \begin_layout Standard
-The following datasets are being pursued: 
+The following merge parameters are being pursued in the following datasets:
+ 
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1630,7 +1646,7 @@ N
 \begin_inset Text
 
 \begin_layout Plain Layout
-r10-merge.rdb
+r10-mrg-q0.5-c0.2.rdb
 \end_layout
 
 \end_inset
@@ -1828,7 +1844,161 @@ r10-mrg-q0.8-c0.5.rdb
 \end_layout
 
 \begin_layout Standard
-And so we have...
+Spot sampling of the merges looks much like the above: some pretty good-looking
+ merges interspersed with some head-scratchers.
+ This continues deeply into the merge stream.
+ 
+\end_layout
+
+\begin_layout Standard
+What does come clear from the spot inspection is that ranked-MI is starting
+ to make some pretty poor recommendations.
+ Basically, the clusters get an 
+\begin_inset Quotes eld
+\end_inset
+
+un-naturally
+\begin_inset Quotes erd
+\end_inset
+
+ large ranked-MI, because they are so large, even though the raw MI to what
+ is being suggested is relatively low.
+ That is, the use of ranked-MI is the reason why the clusters grow preferentiall
+y.
+\end_layout
+
+\begin_layout Standard
+For this round, four stats are tracked: the dataset sparsity, the dataset
+ entropy, the ranked MI of the next pair to be selected, and the 
+\begin_inset Formula $MM^{T}Q$
+\end_inset
+
+ as defined in the previous diary.
+ 
+\end_layout
+
+\begin_layout Standard
+Here's all four of these on one graph: 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-en-merge/log-0.5-0.2.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here's just sparsity, for all four merge parameters.
+ Although it is increasing, it is increasing by very small amounts.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-en-merge/sparsity.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The total dataset entropy.
+ It is dropping because the merges are 
+\begin_inset Quotes eld
+\end_inset
+
+bringing order to the chaos
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-en-merge/entropy.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The ranked-MI of the next pair to merge drops, because, naturally, the highest-r
+anked pairs are merged.
+ It spiked whenever a large cluster is created: the shear size of this cluster
+ guarantees that it will have a large ranked-MI, irrespective of the absolute-MI.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-en-merge/ranked-mi.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The value 
+\begin_inset Formula $Q$
+\end_inset
+
+ is being used as a 
+\begin_inset Quotes eld
+\end_inset
+
+constant
+\begin_inset Quotes erd
+\end_inset
+
+ to offset the common-MI to a non-negative range.
+ The defintion was the log of the sum-squared marginals:
+\begin_inset Formula 
+\[
+Q=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
+\]
+
+\end_inset
+
+This is 
+\begin_inset Quotes eld
+\end_inset
+
+constant
+\begin_inset Quotes erd
+\end_inset
+
+ for a fixed dataset, in that it is independent of the word and disjunct.
+ As merges proceed, it changes.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-en-merge/mmtq.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above
 \end_layout
 
 \begin_layout Section*
