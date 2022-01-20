@@ -299,6 +299,9 @@
 
 	(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
 
+	; Self-sim too, this is logged.
+	(compute-sim WX WX)
+
 	(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
 		(length existing-list) (cog-name WX) (e))
 )
