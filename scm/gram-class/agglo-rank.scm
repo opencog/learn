@@ -421,9 +421,42 @@
 	(list (wrd-set #f) (dj-set #f))
 )
 
+(define (recompute-entropies LLOBJ wrd-list dj-list)
+"
+  recompute-entropies LLOBJ wrd-list dj-list -- Recompute marginal entropy
+
+  The marginal entropies and the marginal MI for MI(w,d) appears to be
+  interesting. So keep these up to date.
+"
+	(define freq-obj (make-compute-freq LLOBJ))
+	(define ent-obj (add-entropy-compute LLOBJ))
+
+	(freq-obj 'init)
+
+	; The freq-obj 'cache-left-freq is a trivial divide of the marginal
+	; count by the total count, and nothing more. The 'cache-left-entropy
+	; just takes some logs, and nothing more.
+	(for-each
+		(lambda (DJ)
+			(when (< 0 (sup 'left-count DJ))
+				(freq-obj 'cache-left-freq DJ)
+				(store-atom (ent-obj 'cache-left-entropy DJ))))
+		dj-list)
+
+	(for-each
+		(lambda (WRD)
+			(when (< 0 (sup 'right-count WRD))
+				(freq-obj 'cache-right-freq WRD)
+				(store-atom (ent-obj 'cache-right-entropy WRD))))
+		wrd-list)
+
+	; Recompute the grand-total
+	(ent-obj 'cache-entropy)
+)
+
 (define (recompute-mmt LLOBJ wrd-list dj-list)
 "
-  recompute-mmt LLOBJ wrd-list dj-list - Recompute MMT for for the
+  recompute-mmt LLOBJ wrd-list dj-list -- Recompute MMT for for the
   basis elements in wrd-list dj-list.
 
   This recomputes the marginals for support and counts for the words
@@ -459,6 +492,12 @@
 	(for-each
 		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
 		wrd-list)
+
+	; (Optional) Recompute entropies
+	; Optional, cause ts not strictly needed (at this time)
+	; but it does seem to offer some interesting data.
+	; This incurs a hefty compute cost, though.
+	(recompute-entropies LLOBJ wrd-list dj-list)
 
 	(list (wrd-orphan #f) (dj-orphan #f))
 )
