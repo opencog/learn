@@ -1,7 +1,9 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass article
 \use_default_options true
 \maintain_unincluded_children false
@@ -9,16 +11,18 @@
 \language_package default
 \inputencoding auto
 \fontencoding global
-\font_roman default
-\font_sans default
-\font_typewriter default
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
-
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -28,16 +32,26 @@
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
 \suppress_date false
+\justification true
 \use_refstyle 1
+\use_minted 0
 \index Index
 \shortcut idx
 \color #008000
@@ -46,7 +60,10 @@
 \tocdepth 3
 \paragraph_separation indent
 \paragraph_indentation default
-\quotes_language english
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
@@ -78,7 +95,15 @@ Fast Overview
 
 \begin_layout Standard
 A generic fast overview.
- See Wikipedia 
+ The rest of this text is organized as ...
+\end_layout
+
+\begin_layout Subsection
+Partition Function
+\end_layout
+
+\begin_layout Standard
+See Wikipedia 
 \begin_inset Quotes eld
 \end_inset
 
@@ -90,6 +115,7 @@ Partition function
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-Partition"
+literal "true"
 
 \end_inset
 
@@ -340,10 +366,147 @@ pure state
  are fixed constants.
 \end_layout
 
+\begin_layout Subsection
+Fisher Information Metric
+\end_layout
+
+\begin_layout Standard
+See Wikipedia, 
+\begin_inset Quotes eld
+\end_inset
+
+Fisher Information Metric: for details.
+ For a finite set of probabilities, we have 
+\end_layout
+
+\begin_layout Itemize
+Normalization: 
+\begin_inset Formula $\sum_{i}p_{i}=1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H=\sum_{i}p_{i}\log p_{i}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Metric: write 
+\begin_inset Formula $\psi_{i}=\sqrt{p_{i}}$
+\end_inset
+
+ Then the normalization becomes 
+\begin_inset Formula $\sum_{i}\psi_{i}^{2}=1$
+\end_inset
+
+ is an octant of a sphere.
+ The flat space Eucliden metric, projected onto the sphere, is the Fisher
+ information metric.
+\end_layout
+
+\begin_layout Section
+Various definitions of entropy
+\end_layout
+
 \begin_layout Standard
 XXX TODO there are other entropies, e.g.
  microcanonincal, etc.
  define them too.
+\end_layout
+
+\begin_layout Subsection
+From Banach norms
+\end_layout
+
+\begin_layout Standard
+I've never seen the below set into writing before.
+ I'm not sure what it means.
+ Given a set of probabilities 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+, define the sum 
+\begin_inset Formula 
+\[
+s_{q}=\sum_{i}p_{i}^{q}
+\]
+
+\end_inset
+
+for some number 
+\begin_inset Formula $q$
+\end_inset
+
+.
+ The first derivative is
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{d}{dq}s_{q}\right|_{q=1}= & \left.\frac{d}{dq}\sum_{i}\exp q\log p_{i}\right|_{q=1}\\
+= & \left.\sum_{i}p_{i}^{q}\log p_{i}\right|_{q=1}\\
+= & \sum_{i}p_{i}\log p_{i}
+\end{align*}
+
+\end_inset
+
+which is the conventional entropy.
+ The Banach space 
+\begin_inset Formula $\ell_{q}$
+\end_inset
+
+ norm is
+\begin_inset Formula 
+\[
+\ell_{q}=\left[s_{q}\right]^{1/q}
+\]
+
+\end_inset
+
+and so 
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dq}\ell_{q}= & \frac{d}{dq}\exp\frac{1}{q}s_{q}\\
+= & \ell_{q}\frac{d}{dq}\frac{s_{q}}{q}\\
+= & \ell_{q}\left(\frac{-s_{q}}{q^{2}}+\frac{1}{q}\frac{ds_{q}}{dq}\right)
+\end{align*}
+
+\end_inset
+
+Then evaluating at 
+\begin_inset Formula $q=1$
+\end_inset
+
+ one gets 
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{d}{dq}\ell_{q}\right|_{q=1}= & -\left(\sum_{i}p_{i}\right)^{2}+\sum_{i}p_{i}\log p_{i}\\
+= & -1+\sum_{i}p_{i}\log p_{i}
+\end{align*}
+
+\end_inset
+
+assuming that 
+\begin_inset Formula $\sum_{i}p_{i}=1$
+\end_inset
+
+ for conventional probabilities.
+\end_layout
+
+\begin_layout Standard
+This reinterprets the entropy as a kind of tangent vector.
+ What is the interpretation of that tangent vector? What does it 
+\begin_inset Quotes eld
+\end_inset
+
+mean
+\begin_inset Quotes erd
+\end_inset
+
+?
 \end_layout
 
 \begin_layout Section
@@ -401,6 +564,7 @@ Zipf’s law and criticality in multivariate data without fine-tuning
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Schwab2014"
+literal "true"
 
 \end_inset
 
@@ -420,6 +584,7 @@ Zipf's Law Arises Naturally When There Are Underlying, Unobserved Variables
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Aitchison2016"
+literal "true"
 
 \end_inset
 
@@ -444,6 +609,7 @@ Are biological systems poised at criticality?
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mora2011"
+literal "true"
 
 \end_inset
 
@@ -459,6 +625,7 @@ A quick articulation of Zipf's law, based on
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Aitchison2016"
+literal "true"
 
 \end_inset
 
@@ -466,6 +633,7 @@ key "Aitchison2016"
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mora2011"
+literal "true"
 
 \end_inset
 
@@ -600,6 +768,7 @@ etal
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Schwab2014"
+literal "true"
 
 \end_inset
 
@@ -612,6 +781,7 @@ etal
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Aitchison2016"
+literal "true"
 
 \end_inset
 
@@ -639,7 +809,7 @@ latent variable
  that 
 \begin_inset Formula 
 \[
-p\left(\sigma\right)=\int d\theta\, p\left(\sigma|\theta\right)p\left(\theta\right)
+p\left(\sigma\right)=\int d\theta\,p\left(\sigma|\theta\right)p\left(\theta\right)
 \]
 
 \end_inset
@@ -690,7 +860,7 @@ mixed state
  and must write
 \begin_inset Formula 
 \[
-p\left(\sigma\right)=\int d\theta\, p\left(\theta\right)e^{-N\mathcal{H}\left(\sigma,\beta\right)}
+p\left(\sigma\right)=\int d\theta\,p\left(\theta\right)e^{-N\mathcal{H}\left(\sigma,\beta\right)}
 \]
 
 \end_inset
@@ -814,6 +984,7 @@ multi-dimensional form of the Gartner-Ellis theorem
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Schwab2014"
+literal "true"
 
 \end_inset
 
@@ -904,6 +1075,7 @@ etal
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Aitchison2016"
+literal "true"
 
 \end_inset
 
@@ -926,6 +1098,7 @@ The graph factorization problem can be posed as a constraint problem.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008"
+literal "true"
 
 \end_inset
 
@@ -1006,6 +1179,7 @@ Mezard describes how belief propagation can be used to quickly solve graph
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mezard2008"
+literal "true"
 
 \end_inset
 
@@ -1271,6 +1445,7 @@ Markov Random Field
 \begin_inset CommandInset citation
 LatexCommand cite
 key "WP-MarkovField"
+literal "true"
 
 \end_inset
 

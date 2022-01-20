@@ -135,93 +135,34 @@ Nothing yet.
 \end_layout
 
 \begin_layout Section*
-Entropy - Notes
+Distributions (Jan 2022)
 \end_layout
 
 \begin_layout Standard
-I've never seen the below set into writing before.
- I'm not sure what it means.
- Given a set of probabilities 
-\begin_inset Formula $p_{i}$
-\end_inset
+In Diary Part Three we looked at the word-rank vs.
+ support (page 10).
+ Here, we look at rank vs.
+ right-entropy and rank vs.
+ right-MI as well as rank vs log-probability (how is it that we haven't
+ looked at this before? Or did we and I forgot?) The goal of asking these
+ questions is two-fold.
+ 
+\end_layout
 
- define the sum 
-\begin_inset Formula 
-\[
-s_{q}=\sum_{i}p_{i}^{q}
-\]
+\begin_layout Itemize
+The current merge algo uses ranked-MI to select the next word-pair to anchor
+ a merge.
+ Perhaps some other linear combination of MI and, say, right-entropy might
+ be better?
+\end_layout
 
-\end_inset
-
-for some number 
-\begin_inset Formula $q$
-\end_inset
-
-.
- The first derivative is
-\begin_inset Formula 
-\begin{align*}
-\left.\frac{d}{dq}s_{q}\right|_{q=1}= & \left.\frac{d}{dq}\sum_{i}\exp q\log p_{i}\right|_{q=1}\\
-= & \left.\sum_{i}p_{i}^{q}\log p_{i}\right|_{q=1}\\
-= & \sum_{i}p_{i}\log p_{i}
-\end{align*}
-
-\end_inset
-
-which is the conventional entropy.
- The Banach space 
-\begin_inset Formula $\ell_{q}$
-\end_inset
-
- norm is
-\begin_inset Formula 
-\[
-\ell_{q}=\left[s_{q}\right]^{1/q}
-\]
-
-\end_inset
-
-and so 
-\begin_inset Formula 
-\begin{align*}
-\frac{d}{dq}\ell_{q}= & \frac{d}{dq}\exp\frac{1}{q}s_{q}\\
-= & \ell_{q}\frac{d}{dq}\frac{s_{q}}{q}\\
-= & \ell_{q}\left(\frac{-s_{q}}{q^{2}}+\frac{1}{q}\frac{ds_{q}}{dq}\right)
-\end{align*}
-
-\end_inset
-
-Then evaluating at 
-\begin_inset Formula $q=1$
-\end_inset
-
- one gets 
-\begin_inset Formula 
-\begin{align*}
-\left.\frac{d}{dq}\ell_{q}\right|_{q=1}= & -\left(\sum_{i}p_{i}\right)^{2}+\sum_{i}p_{i}\log p_{i}\\
-= & -1+\sum_{i}p_{i}\log p_{i}
-\end{align*}
-
-\end_inset
-
-assuming that 
-\begin_inset Formula $\sum_{i}p_{i}=1$
-\end_inset
-
- for conventional probabilities.
+\begin_layout Itemize
+The current merge algo uses a majority-voting scheme, by computing an overlap.
+ Perhaps some log-overlap, of some word-disjunct MI would be better?
 \end_layout
 
 \begin_layout Standard
-This reinterprets the entropy as a kind of tangent vector.
- What is the interpretation of that tangent vector? What does it 
-\begin_inset Quotes eld
-\end_inset
-
-mean
-\begin_inset Quotes erd
-\end_inset
-
-?
+Anyway, these relationships seem interesting.
 \end_layout
 
 \begin_layout Section*
