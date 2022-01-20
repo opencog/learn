@@ -2355,6 +2355,163 @@ r9-sim-200+mi.rdb
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{\mbox{words}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{\mbox{dj}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{\mbox{pairs}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r9-sim-200+mi.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15083
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1043583
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2777968
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22942644
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, 
+\begin_inset Formula $N_{\mbox{pairs}}$
+\end_inset
+
+ is the total number of pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ that were observed (i.e.
+ pairs with non-zero counts).
+ The total number of observations of these pairs is 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+.
+ The sparsity is 
+\begin_inset Formula $-\log_{2}N_{\mbox{pairs}}/\left(N_{\mbox{words}}\times N_{\mbox{dj}}\right)=12.468$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Subsection*
 Entropy Distributions
 \end_layout
@@ -2362,7 +2519,7 @@ Entropy Distributions
 \begin_layout Standard
 Some graphs.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The data was processed with the `utils/entropy-marginals.scm` scripts in
@@ -2372,6 +2529,50 @@ The data was processed with the `utils/entropy-marginals.scm` scripts in
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+First up: a histogram of 
+\begin_inset Formula $H_{\mbox{right}}\left(w\right)$
+\end_inset
+
+ for the 15083 words 
+\begin_inset Formula $w$
+\end_inset
+
+ in the dataset.
+ These are placed into 200 bins and counted with a weight of 1.0 per word.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/bin-went.eps
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The smooth curve marked G is the Gaussian distribution
+\begin_inset Formula 
+\[
+G\left(x;\mu,\sigma\right)=\frac{1}{\sigma\sqrt{2\pi}}\exp-\frac{\left(x-\mu\right)^{2}}{2\sigma^{2}}
+\]
+
+\end_inset
+
+This fit is not particularly convincing; there's a sharp drop-off to the
+ right that is not being fit.
+\end_layout
+
+\begin_layout Standard
+The data is fairly noisey.
+ My guess is that the spikey bits on the right are from infrequently-observed
+ word-disjunct pairs.
+ This suggests redoing the bin-counts, weighting each word by it's probability.
 \end_layout
 
 \begin_layout Section*

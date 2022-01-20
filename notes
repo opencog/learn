@@ -9726,6 +9726,11 @@ wtf ... older vs newer code ...
 
 self-sim is missing make-class-logger log-class
 
+mu=2.3
+sigma=0.55
+
+     "self-mi-hist.dat" using 2:(exp(-(log($2)-mu)**2/(2*sigma**2))/($2 * sigma * sqrt(2*3.14159))) with lines lw 2 title "N(2.3,0.55)", \
+
 
 ====================================================
 ====================================================

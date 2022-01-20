@@ -1,0 +1,27 @@
+# set term png small color
+
+#################################################
+#
+# set term png
+# set out 'bin-went.png'
+set term postscript eps enhanced color 20
+set out 'bin-went.eps'
+set key left top
+set title "Word Marginal Entropy H_{right}"
+set xlabel "Entropy (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [1.0e-3:2]
+
+nbins = 200.0
+width = 24 - 17
+nwords = 15083
+scale = nbins/(width*nwords)
+
+# Normal distribution
+mu=22.5
+sigma= 1.75
+
+plot "bin-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "bin-went.dat" using 2:(exp(-(($2)-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))) with lines lw 2 title "G(22.5,1.75)"
