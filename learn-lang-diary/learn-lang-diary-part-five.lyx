@@ -135,52 +135,6 @@ No summary yet.
 \end_layout
 
 \begin_layout Section*
-Marginal Entropy Distributions (Jan 2022)
-\end_layout
-
-\begin_layout Standard
-In the paper 
-\begin_inset Quotes eld
-\end_inset
-
-Connector Set Distributions
-\begin_inset Quotes erd
-\end_inset
-
-, an extensive examination of various relationships between word distributions,
- entropy, mutual information and rank is explored.
- Below, we explore a bit more in that vein, that apparently was not previously
- explored.
- 
-\end_layout
-
-\begin_layout Standard
-In Diary Part Three we looked at the word-rank vs.
- support (page 10).
- Here, we look at rank vs.
- right-entropy and rank vs.
- right-MI as well as rank vs log-probability.
- The goal of asking these questions is two-fold.
- 
-\end_layout
-
-\begin_layout Itemize
-The current merge algo uses ranked-MI to select the next word-pair to anchor
- a merge.
- Perhaps some other linear combination of MI and, say, right-entropy might
- be better?
-\end_layout
-
-\begin_layout Itemize
-The current merge algo uses a majority-voting scheme, by computing an overlap.
- Perhaps some log-overlap, of some word-disjunct MI would be better?
-\end_layout
-
-\begin_layout Standard
-Anyway, these relationships seem interesting.
-\end_layout
-
-\begin_layout Section*
 Expt-10 Merge exploration (Jan 2022)
 \end_layout
 
@@ -1999,6 +1953,389 @@ constant
 
 \begin_layout Standard
 The above
+\end_layout
+
+\begin_layout Section*
+Marginal Entropy Distributions (Jan 2022)
+\end_layout
+
+\begin_layout Standard
+In the paper 
+\begin_inset Quotes eld
+\end_inset
+
+Connector Set Distributions
+\begin_inset Quotes erd
+\end_inset
+
+, an extensive examination of various relationships between word distributions,
+ entropy, mutual information and rank is explored.
+ Below, we explore a bit more in that vein, that apparently was not previously
+ explored.
+ 
+\end_layout
+
+\begin_layout Standard
+In Diary Part Three we looked at the word-rank vs.
+ support (page 10).
+ Here, we look at rank vs.
+ right-entropy and rank vs.
+ right-MI as well as rank vs log-probability.
+ The goal of asking these questions is two-fold.
+ 
+\end_layout
+
+\begin_layout Itemize
+The current merge algo uses ranked-MI to select the next word-pair to anchor
+ a merge.
+ Perhaps some other linear combination of MI and, say, right-entropy might
+ be better?
+\end_layout
+
+\begin_layout Itemize
+The current merge algo uses a majority-voting scheme, by computing an overlap.
+ Perhaps some log-overlap, of some word-disjunct MI would be better?
+\end_layout
+
+\begin_layout Standard
+Anyway, these relationships seem interesting.
+\end_layout
+
+\begin_layout Subsection*
+Definitions
+\end_layout
+
+\begin_layout Standard
+Some defintions are in order.
+ This repeats defintions given earlier.
+ For a word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ the frequentist probability is 
+\begin_inset Formula $P\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Total and Marginal Entropies
+\end_layout
+
+\begin_layout Standard
+The total entropy is
+\begin_inset Formula 
+\[
+H=H_{\mbox{tot}}=-\sum_{w,d}P\left(w,d\right)\log_{2}P\left(w,d\right)
+\]
+
+\end_inset
+
+The right-marginal entropy for a given word 
+\begin_inset Formula $w$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+h_{\mbox{right}}\left(w\right)=-\sum_{d}P\left(w,d\right)\log_{2}P\left(w,d\right)
+\]
+
+\end_inset
+
+The fractional right-marginal entropy for a given word 
+\begin_inset Formula $w$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+H_{\mbox{right}}\left(w\right)=\frac{h_{\mbox{right}}\left(w\right)}{P\left(w,*\right)}
+\]
+
+\end_inset
+
+The goal of the division by the marginal probability 
+\begin_inset Formula $P\left(w,*\right)$
+\end_inset
+
+ of the word 
+\begin_inset Formula $w$
+\end_inset
+
+ is to rescale the entropy into a sensible range.
+ For the current dataset, this is in the range of 5 to 25, as graphed below.
+ The 
+\begin_inset Formula $h_{\mbox{left}}\left(d\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{\mbox{left}}\left(d\right)$
+\end_inset
+
+ for disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+are defined likewise.
+ Note that 
+\begin_inset Formula 
+\[
+H_{\mbox{tot}}=\sum_{w}P\left(w,*\right)H_{\mbox{right}}\left(w\right)=\sum_{d}P\left(*,d\right)H_{\mbox{left}}\left(d\right)
+\]
+
+\end_inset
+
+can be used as a consistency check on the numerical results.
+ 
+\end_layout
+
+\begin_layout Standard
+The marginal probabilities also allow two more kinds of entropies to be
+ defined.
+ These are the left and right entropies of the left and right marginal probabili
+ties: 
+\begin_inset Formula 
+\[
+S_{\mbox{right}}=\sum_{w}P\left(w,*\right)\log_{2}P\left(w,*\right)
+\]
+
+\end_inset
+
+and likewise 
+\begin_inset Formula 
+\[
+S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
+\]
+
+\end_inset
+
+These two are related to the total mutual information (as defined below)
+ as
+\begin_inset Formula 
+\[
+MI_{\mbox{tot}}=S_{\mbox{right}}+S_{\mbox{left}}-H_{\mbox{tot}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Total and Marginal Mutual Information
+\end_layout
+
+\begin_layout Standard
+The mutual information for a word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+mi\left(w,d\right)=P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P\left(*,d\right)P\left(w,*\right)}
+\]
+
+\end_inset
+
+As always, the fractional MI is
+\begin_inset Formula 
+\[
+MI\left(w,d\right)=\frac{mi\left(w,d\right)}{P\left(w,d\right)}
+\]
+
+\end_inset
+
+thus scaling it into a sensible range of -5 to +20, as shown below.
+ The marginals proceed likewise, as above, so that the right marginal 
+\begin_inset Formula $mi$
+\end_inset
+
+ for word 
+\begin_inset Formula $w$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+mi_{\mbox{right}}\left(w\right)=mi\left(w,*\right)=\sum_{d}mi\left(w,d\right)
+\]
+
+\end_inset
+
+and the fractional right marginal mutual information is 
+\begin_inset Formula 
+\[
+MI_{\mbox{right}}\left(w\right)=\frac{mi_{\mbox{right}}\left(w\right)}{P\left(w,*\right)}
+\]
+
+\end_inset
+
+The grand-total MI for the dataset is
+\begin_inset Formula 
+\[
+MI=MI_{\mbox{tot}}=\sum_{w,d}mi\left(w,d\right)=\sum_{w}P\left(w,*\right)MI_{\mbox{right}}\left(w\right)=\sum_{d}P\left(*,d\right)MI_{\mbox{left}}\left(d\right)
+\]
+
+\end_inset
+
+As noted earlier, the mutual information is minus the total entropy, up
+ to entropies of the marginal probabilities:
+\begin_inset Formula 
+\[
+MI_{\mbox{tot}}=S_{\mbox{right}}+S_{\mbox{left}}-H_{\mbox{tot}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Dataset Summary
+\end_layout
+
+\begin_layout Standard
+Starting point: the dataset `r9-sim-200.rdb` after running `compute-mi` on
+ it, to get the full collection of stats on (w,d) pairs.
+ The stat summary is:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $H_{\mbox{tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{\mbox{left}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $S_{\mbox{right}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $MI_{\mbox{tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r9-sim-200+mi.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.463
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.535
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8.5148
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.5865
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Entropy Distributions
 \end_layout
 
 \begin_layout Section*
