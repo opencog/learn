@@ -2007,6 +2007,27 @@ Definitions
 
 \begin_layout Standard
 Some defintions are in order.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The defintions here are the same as given in earlier texts.
+ The code that implements these was developed primarily in 2017, and can
+ be found in the `opencoog/matrix` subdirectory of the git repo at 
+\begin_inset CommandInset href
+LatexCommand href
+name "AtomSpace"
+target "https://github.com/opencog/atomspace/tree/master/opencog/matrix"
+literal "false"
+
+\end_inset
+
+.
+ See, in particular, `frequency.scm` and `entropy.scm`.
+\end_layout
+
+\end_inset
+
  This repeats defintions given earlier.
  For a word-disjunct pair 
 \begin_inset Formula $\left(w,d\right)$
@@ -2336,6 +2357,21 @@ r9-sim-200+mi.rdb
 
 \begin_layout Subsection*
 Entropy Distributions
+\end_layout
+
+\begin_layout Standard
+Some graphs.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The data was processed with the `utils/entropy-marginals.scm` scripts in
+ this directory.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
