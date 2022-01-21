@@ -9750,6 +9750,54 @@ sigma=0.55
 
 8.5148  19.463
 
+(define SIM-ID "shape-mi")
+(define sap (add-similarity-api LLOBJ #f SIM-ID))
+
+ (define smi (add-symmetric-mi-compute LLOBJ))
+   (define ol2 (/ 1.0 (log 2.0)))
+   (define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
+   (define mmt-q (smi 'mmt-q))
+
+
+   (define (compute-sim WA WB)
+      (define fmi (smi 'mmt-fmi WA WB))
+      (define mwa (smi 'mmt-marginal WA))
+      (define mwb (smi 'mmt-marginal WB))
+      (define qmi (+ fmi (* 0.5 (log2 (* mwa mwb)))))
+      (define rmi (+ qmi mmt-q))
+
+      (store-atom
+         (sap 'set-pair-similarity
+            (sap 'make-pair WA WB)
+            (FloatValue fmi rmi qmi))))
+
+(define WA (Word "dog"))
+(define WB (Word "cat"))
+
+fmi = 3.947147405113547
+mwa = 1.1695792378830594e-4
+(log2 mwa) -13.061722773328585
+(log2 mwb) -14.876559284766689
+mmt-q 11.945777087600217
+
+(+ fmi (* 0.5 (+ (log2 mwa) (log2 mwb)))) = -10.02199362393409
+(+ mmt-q = 1.9237834636661262
+
+mmt-total = (trans-obj 'total-mmt-count)
+mmt-q =  (- (log2 mmt-total (* tcl tcl)) tcl = (sup-obj 'total-count-left)
+
+right-product = sum_d N(w,d) N(u,d)
+
+
+
+
+------ Start merge 282 with seed pair `had` and `been`
+Initial in-group size=2: `been` `had`
+In-group size=2 overlap = 1 of 3178 disjuncts, commonality= 0.03%
+------ merge-majority: Merge 1107 sections in 0 secs
+------ merge-majority: Remaining 1864 cross in 2 secs
+
+
 ====================================================
 ====================================================
 

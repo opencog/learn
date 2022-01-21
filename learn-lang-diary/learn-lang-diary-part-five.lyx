@@ -2833,14 +2833,31 @@ Ranked-MI
 \begin_layout Standard
 The following is a quick recap of the ranked-MI, as discovered and developed
  in Parts Three and Four of the Diary.
- The ranked-MI was built out of the common-MI plus Q, as follws.
- Repeating the content of Parth Three, pages 18-19, as well as Diary Part
- Four, page 19.
- Start by defining a joint frequency of two words 
+ The ranked-MI was built out of the common-MI plus Q, as follows.
+ Specifically, this repeats and condenses the content of Part Three, pages
+ 18-19, as well as Diary Part Four, page 19.
+ Start by defining 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+ as the observation count on the word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+.
+ From this, the observation frequency follows as 
+\begin_inset Formula 
+\[
+P\left(w,d\right)=\frac{N\left(w,d\right)}{N\left(*,*\right)}
+\]
+
+\end_inset
+
+The joint frequency of two words 
 \begin_inset Formula $w,u$
 \end_inset
 
- as the matrix product
+ is then defined as the matrix product
 \end_layout
 
 \begin_layout Standard
@@ -2851,14 +2868,6 @@ f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 
 \end_inset
 
-where 
-\begin_inset Formula $P\left(w,d\right)$
-\end_inset
-
- is the joint word-disjunct probability, as defined above.
-\end_layout
-
-\begin_layout Standard
 This is not normalized, in that 
 \begin_inset Formula $f\left(*,*\right)\ne1$
 \end_inset
@@ -2869,12 +2878,22 @@ This is not normalized, in that
 \begin_layout Standard
 \begin_inset Formula 
 \[
-Q=\log_{2}f\left(*,*\right)=\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
+Q=-\log_{2}f\left(*,*\right)=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
 \]
 
 \end_inset
 
-which has a value of about 12.48 for this dataset.
+which has a value of 
+\begin_inset Formula $Q=11.945777$
+\end_inset
+
+ for this dataset.
+ Note the minus sign.
+ This means 
+\begin_inset Formula $1\gg f\left(*,*\right)$
+\end_inset
+
+.
  The marginals can then be derived as
 \end_layout
 
@@ -2894,43 +2913,97 @@ MI\left(u,w\right)=\log_{2}\frac{f\left(w,u\right)f\left(*,*\right)}{f\left(w\ri
 
 \end_inset
 
-The word-pair partial-MI is defined as 
+Note the definition above is 
+\begin_inset Quotes eld
+\end_inset
+
+projective
+\begin_inset Quotes erd
+\end_inset
+
+, in that it is independent of the overall normalization of 
+\begin_inset Formula $f$
+\end_inset
+
+.
+ This is seen explicitly, by expanding out:
 \begin_inset Formula 
-\[
-\mbox{partial}MI\left(u,w\right)=MI\left(u,w\right)-Q=\log_{2}\frac{f\left(w,u\right)}{f\left(w\right)f\left(u\right)}
-\]
+\begin{align*}
+MI\left(u,w\right)= & \log_{2}\frac{\left[\sum_{d}P\left(u,d\right)P\left(w,d\right)\right]\left[\sum_{d}P\left(*,d\right)P\left(*,d\right)\right]}{\left[\sum_{d}P\left(u,d\right)P\left(*,d\right)\right]\left[\sum_{d}P\left(w,d\right)P\left(*,d\right)\right]}\\
+= & \log_{2}\frac{\left[\sum_{d}N\left(u,d\right)N\left(w,d\right)\right]\left[\sum_{d}N\left(*,d\right)N\left(*,d\right)\right]}{\left[\sum_{d}N\left(u,d\right)N\left(*,d\right)\right]\left[\sum_{d}N\left(w,d\right)N\left(*,d\right)\right]}
+\end{align*}
 
 \end_inset
 
-The common-MI is defined as 
+The ranked-MI is defined as 
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \begin{align*}
-\mbox{common}MI\left(w,u\right)= & \mbox{partial}MI\left(u,w\right)-\frac{1}{2}\log_{2}f\left(u\right)-\frac{1}{2}\log_{2}f\left(w\right)\\
+\mbox{ranked}MI\left(w,u\right)= & MI\left(u,w\right)+\frac{1}{2}\log_{2}f\left(u\right)+\frac{1}{2}\log_{2}f\left(w\right)+Q\\
 = & \log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
 \end{align*}
 
 \end_inset
 
-Then, adding 
-\begin_inset Formula $Q$
-\end_inset
+Just like the MI, the ranked-MI is scale invariant; its projective.
+ This suggests that it has some interesting theory behind it.
+ Graphs for the ranked-MI for this dataset can be found at the end of Part
+ Three.
+ They are pretty Gaussians.
+\end_layout
 
-back in, the ranked-MI is defined as
+\begin_layout Subsection*
+Probabilities over Word Pairs
+\end_layout
+
+\begin_layout Standard
+The ratio
 \begin_inset Formula 
 \[
-\mbox{ranked}MI\left(w,u\right)=\mbox{common}MI\left(w,u\right)+Q
+\pi\left(u,w\right)=\frac{f\left(w,u\right)}{f\left(*,*\right)}
 \]
 
 \end_inset
 
-Graphs for the common-MI for this dataset can be found at the end of Part
- Three.
- They are pretty Gaussians.
- The common-MI is interesting, because it is scale invariant; its projective.
- This suggests that it has some interesting theory behind it.
+is a probability.
+ Thus, we can play the game again, this time with 
+\begin_inset Formula $\pi$
+\end_inset
+
+ and ask about conditional probabilites, mutual information and entropies.
+ For example, what is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+RMI_{\mbox{tot}}=\sum_{w,u}\pi\left(w,u\right)\log_{2}\frac{\pi\left(w,u\right)}{\sqrt{\pi\left(w\right)\pi\left(u\right)}}
+\]
+
+\end_inset
+
+This and related questions have to stay out of reach, however, since computing
+ 
+\begin_inset Formula $\pi\left(u,w\right)$
+\end_inset
+
+ for all word-pairs 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+ is computationally infeasible at this time.
+ (Well, it could be done 
+\begin_inset Quotes eld
+\end_inset
+
+easily
+\begin_inset Quotes erd
+\end_inset
+
+ on a cloud instance with a few hundred CPU's, but I don't have that, or
+ even the code to leverage that.)
 \end_layout
 
 \begin_layout Subsubsection*
@@ -2941,7 +3014,7 @@ Alternative Rankings
 Following the above, several variations suggest themselves: 
 \begin_inset Formula 
 \[
-HMI\left(u,w\right)=MI\left(u,w\right)-\frac{1}{2}H_{\mbox{right}}\left(u\right)-\frac{1}{2}H_{\mbox{right}}\left(w\right)
+HMI\left(u,w\right)=MI\left(u,w\right)+\frac{1}{2}H_{\mbox{right}}\left(u\right)+\frac{1}{2}H_{\mbox{right}}\left(w\right)
 \]
 
 \end_inset
@@ -2949,7 +3022,7 @@ HMI\left(u,w\right)=MI\left(u,w\right)-\frac{1}{2}H_{\mbox{right}}\left(u\right)
 and 
 \begin_inset Formula 
 \[
-MMI\left(u,w\right)=MI\left(u,w\right)-\frac{1}{2}MI_{\mbox{right}}\left(u\right)-\frac{1}{2}MI_{\mbox{right}}\left(w\right)
+MMI\left(u,w\right)=MI\left(u,w\right)+\frac{1}{2}MI_{\mbox{right}}\left(u\right)+\frac{1}{2}MI_{\mbox{right}}\left(w\right)
 \]
 
 \end_inset
@@ -2961,7 +3034,39 @@ y, ranked-MI is proving to be less than reliable for merge determinations.
 \begin_inset Formula $\frac{1}{2}\log_{2}f\left(w\right)$
 \end_inset
 
- is not large enough?
+ gets larger and larger as the clusters grow.
+\end_layout
+
+\begin_layout Standard
+Neither of the above have 
+\begin_inset Quotes eld
+\end_inset
+
+pretty
+\begin_inset Quotes erd
+\end_inset
+
+ interpretations, which can be seen by recalling the defintions above:
+\begin_inset Formula 
+\[
+H_{\mbox{right}}\left(w\right)=-\frac{\sum_{d}P\left(w,d\right)\log_{2}P\left(w,d\right)}{P\left(w,*\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and
+\begin_inset Formula 
+\[
+MI_{\mbox{right}}\left(w\right)=\frac{1}{P\left(w,*\right)}\sum_{d}P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P\left(*,d\right)P\left(w,*\right)}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
