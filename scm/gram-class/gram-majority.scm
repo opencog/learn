@@ -261,9 +261,12 @@
 		; the class to be merged. This is a kind-of ad-hoc, unmotivated action
 		; that seems to be an OK thing to do, for now. Cause why not? This is
 		; tested in the `class-merge-basic.scm` unit test.
+		;
+		; This returns the fraction actually merged, so that the caller can
+		; find out if anything was actually done. This is for reporting stats.
 		(define (do-merge WRD DJ ACCEPT)
 			(define SECT (LLOBJ 'get-pair WRD DJ))
-			(when (not (nil? SECT))
+			(if (not (nil? SECT))
 				(let* ((merge-full
 							(or ACCEPT
 								(<= (LLOBJ 'get-count SECT) NOISE)
@@ -272,13 +275,20 @@
 						(frakm (if merge-full 1.0 FRAC)))
 					(when (< 0 frakm)
 						(update-memb-count WRD CLASS
-							(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm))))))
+							(accumulate-count LLOBJ (make-flat CLASS SECT) SECT frakm)))
+					; Return fraction actually merged.
+					frakm)
+				; Return zero if no section.
+				0))
 
 		; Perform the merge a given disjunct, or not
+		; Return a total count of how much was merged. The return value
+		; is only of interest for reporting stats, and nothing more.
 		(define (merge-dj DJ)
 			(define have-majority (vote-to-accept? DJ))
-			(for-each
-				(lambda (WRD) (do-merge WRD DJ have-majority))
+			(fold
+				(lambda (WRD SUM) (+ SUM (do-merge WRD DJ have-majority)))
+				0
 				WLIST))
 
 		; Given a specific Section, transport the counts on it to
@@ -296,15 +306,16 @@
 		; are handled out-of-line, below.
 		(define e (make-elapsed-secs))
 		(define scnt 0)
+		(define mscnt 0)
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
-					(merge-dj DJ)
+					(if (< 0 (merge-dj DJ)) (set! mscnt (+ 1 mscnt)))
 					(if MRG-CON (rebalance-dj DJ))
 					(set! scnt (+ 1 scnt))))
 			dj-list)
-		(format #t "------ merge-majority: Merge ~D sections in ~A secs\n"
-			scnt (e))
+		(format #t "------ merge-majority: Merge ~D of ~D sections in ~A secs\n"
+			mscnt scnt (e))
 
 		; ---------------------------------------------------
 		; After the above loop has run, all of the Sections have been

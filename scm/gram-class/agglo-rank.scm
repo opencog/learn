@@ -739,7 +739,7 @@
 
 	; ------------------------------
 	; Main workhorse function
-	(define (do-merge N WA WB)
+	(define (perform-merge N WA WB)
 		(define e (make-elapsed-secs))
 		(format #t "------ Start merge ~D with seed pair `~A` and `~A`\n"
 			(+ N 1) (cog-name WA) (cog-name WB))
@@ -781,7 +781,7 @@
 
 	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ do-merge NRANK LOOP-CNT)
+	(main-loop LLOBJ perform-merge NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------
