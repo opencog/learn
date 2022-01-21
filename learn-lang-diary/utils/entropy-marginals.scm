@@ -164,15 +164,34 @@
 
 (define (get-mi PR) (cog-value-ref (sap 'get-count PR) 0))
 (define (get-rmi PR) (cog-value-ref (sap 'get-count PR) 1))
+(define (get-hmi PR)
+	(define WA (gar PR))
+	(define WB (gdr PR))
+	(+ (get-mi PR) (* 0.5 (+ 
+		(frq-obj 'right-wild-fentropy WA)
+		(frq-obj 'right-wild-fentropy WB)))))
+
+(define (get-mmi PR)
+	(define WA (gar PR))
+	(define WB (gdr PR))
+	(+ (get-mi PR) (* 0.5 (+ 
+		(frq-obj 'right-wild-fmi WA)
+		(frq-obj 'right-wild-fmi WB)))))
 
 (define scored-mi (score-and-rank get-mi all-sims))
 (define scored-rmi (score-and-rank get-rmi all-sims))
+(define scored-hmi (score-and-rank get-hmi all-sims))
+(define scored-mmi (score-and-rank get-mmi all-sims))
 
 (define sim-mi (bin-count-simple scored-mi 200 -15.0 15.0))
 (define sim-rmi (bin-count-simple scored-rmi 200 -15.0 15.0))
+(define sim-hmi (bin-count-simple scored-hmi 200 0 30.0))
+(define sim-mmi (bin-count-simple scored-mmi 200 -15.0 15.0))
 
 (print-histo "/tmp/sim-mi.dat" sim-mi)
 (print-histo "/tmp/sim-rmi.dat" sim-rmi)
+(print-histo "/tmp/sim-hmi.dat" sim-hmi)
+(print-histo "/tmp/sim-mmi.dat" sim-mmi)
 
 
 ; ---------------------------------------------------------------------
