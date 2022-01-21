@@ -288,8 +288,7 @@
 			(define have-majority (vote-to-accept? DJ))
 			(fold
 				(lambda (WRD SUM) (+ SUM (do-merge WRD DJ have-majority)))
-				0
-				WLIST))
+				0 WLIST))
 
 		; Given a specific Section, transport the counts on it to
 		; the CrossSections that can be derived from it.
@@ -405,23 +404,27 @@
 			(if (vote-to-accept? SHP) SHP
 				(find vote-to-accept? (get-alt-shapes SHP))))
 
-		; Given SHP, merge it, or one of its related shapes, if any one of
-		; them is mergable.
+		; Given SHP, merge it, or one of its related shapes, if any one
+		; of them is mergable. Return count of how much was merged. The
+		; return value is currently used only for stats reporting.
 		(define (merge-shape SHP)
 			(define alt-shp (mergable-shape? SHP))
 			(define have-majority (not (nil? alt-shp)))
 			(define mrg-shp (if (nil? alt-shp) SHP alt-shp))
-			(for-each
-				(lambda (WRD) (do-merge WRD mrg-shp have-majority))
-				WLIST)
-			(rebalance-dj mrg-shp))
+			(define mcnt (fold
+				(lambda (WRD SUM) (+ SUM (do-merge WRD mrg-shp have-majority)))
+				0 WLIST))
+			(rebalance-dj mrg-shp)
+			mcnt)
 
 		; Tail-recursive merge of a list of shapes.
+		(define mshcnt 0)
 		(define (merge-shapes SHL)
 
-			; Perform the merge
+			; Perform the merge (if it hasn't been done yet)
 			(define shape (car SHL))
-			(if (not (shape-done? shape)) (merge-shape shape))
+			(if (not (shape-done? shape))
+				(if (< 0 (merge-shape shape)) (set! mshcnt (+ 1 mshcnt))))
 
 			(define rest (cdr SHL))
 			(if (not (nil? rest)) (merge-shapes rest)))
@@ -429,8 +432,8 @@
 		; Now actually do the merge.
 		(if (not (nil? left-overs)) (merge-shapes left-overs))
 
-		(format #t "------ merge-majority: Remaining ~A cross in ~A secs\n"
-			(length left-overs) (d))
+		(format #t "------ merge-majority: Remaining ~A of ~A cross in ~A secs\n"
+			mshcnt (length left-overs) (d))
 
 		*unspecified*
 	)
