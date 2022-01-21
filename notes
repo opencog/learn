@@ -9810,10 +9810,14 @@ In-group size=2 overlap = 1 of 3178 disjuncts, commonality= 0.03%
 198 for 0.7  >>C —.i<<
 
 update-memb-count
-change do-erge to return non-zero.. and fold it?  in merge-dj
+change do-erge to return non-zero.. and fold it?  in merge-dj DONE
 
 find-in-group
-optimal-in-group
+optimal-in-group  -- change to use plain MI.
+
+How about voting?  vote-to-accept? accepted is DJ is shared by majority.
+
+recompute-entropies
 
 ====================================================
 ====================================================

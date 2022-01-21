@@ -430,6 +430,7 @@
 "
 	(define freq-obj (make-compute-freq LLOBJ))
 	(define ent-obj (add-entropy-compute LLOBJ))
+	(define sup-obj (add-support-api LLOBJ))
 
 	(freq-obj 'init)
 
@@ -438,14 +439,14 @@
 	; just takes some logs, and nothing more.
 	(for-each
 		(lambda (DJ)
-			(when (< 0 (sup 'left-count DJ))
+			(when (< 0 (sup-obj 'left-count DJ))
 				(freq-obj 'cache-left-freq DJ)
 				(store-atom (ent-obj 'cache-left-entropy DJ))))
 		dj-list)
 
 	(for-each
 		(lambda (WRD)
-			(when (< 0 (sup 'right-count WRD))
+			(when (< 0 (sup-obj 'right-count WRD))
 				(freq-obj 'cache-right-freq WRD)
 				(store-atom (ent-obj 'cache-right-entropy WRD))))
 		wrd-list)
@@ -497,7 +498,7 @@
 	; Optional, cause ts not strictly needed (at this time)
 	; but it does seem to offer some interesting data.
 	; This incurs a hefty compute cost, though.
-	(recompute-entropies LLOBJ wrd-list dj-list)
+	; (recompute-entropies LLOBJ wrd-list dj-list)
 
 	(list (wrd-orphan #f) (dj-orphan #f))
 )
