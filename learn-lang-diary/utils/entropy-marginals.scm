@@ -193,5 +193,36 @@
 (print-histo "/tmp/sim-hmi.dat" sim-hmi)
 (print-histo "/tmp/sim-mmi.dat" sim-mmi)
 
+; ---------------------------------------------------------------------
+; Top-twenty list, ignore self-MI.
+
+(define (prt-top LST)
+	(define top #f)
+	(for-each (lambda (SCPR)
+		(if top (format #t "~5F\t" (- (car SCPR) top))
+			(begin (set! top (car SCPR)) (format #t "~5F\t" top)))
+		(format #t "~A ~A\n"
+			(cog-name (gar (cdr SCPR)))
+			(cog-name (gdr (cdr SCPR)))))
+		LST))
+
+(define (self? SCPR) (not (equal? (gar (cdr SCPR)) (gdr (cdr SCPR)))))
+
+(prt-top (filter self? (take scored-mi 90)))
+
+(define (prt-r LST)
+	(define top #f)
+	(for-each (lambda (SCPR)
+		(if top (format #t "~5F\n" (- (car SCPR) top))
+			(begin (set! top (car SCPR)) (format #t "~5F\n" top))))
+		LST))
+
+(define (prt-w LST)
+	(define top #f)
+	(for-each (lambda (SCPR)
+		(format #t "~A ~A\n"
+			(cog-name (gar (cdr SCPR)))
+			(cog-name (gdr (cdr SCPR)))))
+		LST))
 
 ; ---------------------------------------------------------------------
