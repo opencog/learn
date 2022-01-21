@@ -10333,10 +10333,10 @@ Why the average, instead of the geometric mean? Well, MI has a logarithm
  in it, and it gives the geometric mean after consolidation:
 \begin_inset Formula 
 \begin{align*}
-\Delta\left(w,u\right)= & \log_{2}\frac{p\left(w,u\right)}{p\left(w\right)p\left(u\right)}-\frac{1}{2}\log_{2}\frac{p\left(w,w\right)}{p\left(w\right)p\left(w\right)}-\frac{1}{2}\log_{2}\frac{p\left(u,u\right)}{p\left(u\right)p\left(u\right)}\\
-= & \log_{2}\frac{p\left(w,u\right)}{p\left(w\right)p\left(u\right)}-\frac{1}{2}\log_{2}\frac{p\left(w,w\right)}{p\left(w\right)p\left(w\right)}\frac{p\left(u,u\right)}{p\left(u\right)p\left(u\right)}\\
-= & \log_{2}\frac{p\left(w,u\right)}{p\left(w\right)p\left(u\right)}-\log_{2}\frac{\sqrt{p\left(w,w\right)p\left(u,u\right)}}{p\left(w\right)p\left(u\right)}\\
-= & \log_{2}\frac{p\left(w,u\right)}{\sqrt{p\left(w,w\right)p\left(u,u\right)}}
+\Delta\left(w,u\right)= & \log_{2}\frac{f\left(w,u\right)}{f\left(w\right)f\left(u\right)}-\frac{1}{2}\log_{2}\frac{f\left(w,w\right)}{f\left(w\right)f\left(w\right)}-\frac{1}{2}\log_{2}\frac{f\left(u,u\right)}{f\left(u\right)f\left(u\right)}\\
+= & \log_{2}\frac{f\left(w,u\right)}{f\left(w\right)f\left(u\right)}-\frac{1}{2}\log_{2}\frac{f\left(w,w\right)}{f\left(w\right)f\left(w\right)}\frac{f\left(u,u\right)}{f\left(u\right)f\left(u\right)}\\
+= & \log_{2}\frac{f\left(w,u\right)}{f\left(w\right)f\left(u\right)}-\log_{2}\frac{\sqrt{f\left(w,w\right)f\left(u,u\right)}}{f\left(w\right)f\left(u\right)}\\
+= & \log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w,w\right)f\left(u,u\right)}}
 \end{align*}
 
 \end_inset
@@ -10349,7 +10349,7 @@ Well, that's ..
  probabilities:
 \begin_inset Formula 
 \[
-p\left(w,u\right)=\sum_{d}p\left(w,d\right)p\left(u,d\right)
+f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 \]
 
 \end_inset
@@ -10357,7 +10357,7 @@ p\left(w,u\right)=\sum_{d}p\left(w,d\right)p\left(u,d\right)
 and that, in the above, 
 \begin_inset Formula 
 \[
-p\left(w\right)=\sum_{d}p\left(w,d\right)p\left(*,d\right)=p\left(w,*\right)
+f\left(w\right)=\sum_{d}P\left(w,d\right)P\left(*,d\right)=f\left(w,*\right)
 \]
 
 \end_inset
@@ -11469,7 +11469,7 @@ Lets look at some top-ten lists of word pairs.
  Let 
 \begin_inset Formula 
 \[
-\mbox{common}sim\left(w,u\right)=sim\left(w,u\right)+\frac{1}{2}\log_{2}p\left(w\right)+\frac{1}{2}\log_{2}p\left(u\right)
+\mbox{common}sim\left(w,u\right)=sim\left(w,u\right)+\frac{1}{2}\log_{2}f\left(w\right)+\frac{1}{2}\log_{2}f\left(u\right)
 \]
 
 \end_inset
@@ -11481,7 +11481,7 @@ For the
  this leads to
 \begin_inset Formula 
 \[
-\mbox{common}MI\left(w,u\right)=\log_{2}\frac{p\left(w,u\right)}{\sqrt{p\left(w\right)p\left(u\right)}}
+\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
 \]
 
 \end_inset
@@ -11490,13 +11490,13 @@ which is ..
  also curious.
  Oh, hang on...
  what do we mean by 
-\begin_inset Formula $p\left(w\right)$
+\begin_inset Formula $f\left(w\right)$
 \end_inset
 
 ? Because this can be interpreted two different ways:
 \begin_inset Formula 
 \[
-p\left(w\right)=p\left(w,*\right)=\sum_{d}p\left(w,d\right)p\left(*,d\right)
+f\left(w\right)=f\left(w,*\right)=\sum_{d}P\left(w,d\right)P\left(*,d\right)
 \]
 
 \end_inset
@@ -11505,19 +11505,23 @@ which is appropriate for MI.
  But there is also the plain-old marginal
 \begin_inset Formula 
 \[
-f\left(w\right)=\sum_{d}p\left(w,d\right)
+p\left(w\right)=\sum_{d}P\left(w,d\right)
 \]
 
 \end_inset
 
 which is ...
  a direct count of how often a word is observed.
- From here on out, we'll try to use 
-\begin_inset Formula $f$
+ From here on out, we'll try to use lower-case 
+\begin_inset Formula $p$
 \end_inset
 
  for the word-disjunct marginal.
- 
+ (This is OK, since it's normalized: 
+\begin_inset Formula $p\left(*\right)=1$
+\end_inset
+
+.)
 \end_layout
 
 \begin_layout Standard
@@ -11525,7 +11529,7 @@ This raises yet more questions.
  Define 
 \begin_inset Formula 
 \[
-\mbox{marg}sim\left(w,u\right)=sim\left(w,u\right)+\frac{1}{2}\log_{2}f\left(w\right)+\frac{1}{2}\log_{2}f\left(u\right)
+\mbox{marg}sim\left(w,u\right)=sim\left(w,u\right)+\frac{1}{2}\log_{2}p\left(w\right)+\frac{1}{2}\log_{2}p\left(u\right)
 \]
 
 \end_inset
