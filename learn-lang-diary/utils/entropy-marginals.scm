@@ -63,6 +63,7 @@
 (define (right-freq WRD) (frq-obj 'right-wild-freq WRD))
 (define (right-ent WRD) (frq-obj 'right-wild-entropy WRD))
 (define (right-fent WRD) (frq-obj 'right-wild-fentropy WRD))
+(define (right-fmi WRD) (frq-obj 'right-wild-fmi WRD))
 
 ; ---------------------------------------------------------------------
 ; Zipf ranking
@@ -72,6 +73,23 @@
 
 (let ((outport (open-file "/tmp/rank-wfreq.dat" "w")))
 	(print-ts-rank word-freq outport)
+	(close outport))
+
+; Print to port a tab-separated table of rankings
+(define (print-ts-rank-scat scrs port)
+	(define cnt 0)
+	(for-each
+		(lambda (pr)
+			(define wrd (cdr pr))
+			(set! cnt (+ cnt 1))
+			(format port "~A\t~10G\t~7F\t~7F\t\"~A\"\n" cnt (car pr)
+				(right-fent wrd)
+				(right-fmi wrd)
+				(cog-name wrd)))
+		scrs))
+
+(let ((outport (open-file "/tmp/rank-wfreq.dat" "w")))
+	(print-ts-rank-scat word-freq outport)
 	(close outport))
 
 (define word-entropy
@@ -132,5 +150,7 @@
 (let ((outport (open-file "/tmp/bin-wei-wmi.dat" "w")))
 	(print-bincounts-tsv bin-wei-wmi outport)
 	(close outport))
+
+; ---------------------------------------------------------------------
 
 ; ---------------------------------------------------------------------

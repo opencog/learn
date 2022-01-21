@@ -1,0 +1,54 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'scat-wfreq-went.png'
+# set term postscript eps enhanced color 20
+# set out 'scat-wfreq-went.eps'
+set key left top
+set title "Scatter P(w,*) vs. H_{right}(w)"
+set xlabel "Log_{2} Frequency"
+set ylabel "Entropy (bits)"
+set xrange [4:24]
+set yrange [12:24]
+
+plot "rank-wfreq.dat" using (-log($2)/0.69315):3 with points title "", \
+	x with lines lw 2, \
+	x/3 + 17.5 with lines lw 2
+
+#################################################
+#
+set term png
+set out 'scat-wfreq-wmi.png'
+# set term postscript eps enhanced color 20
+# set out 'scat-wfreq-wmi.eps'
+set key left top
+set title "Scatter P(w,*) vs. MI_{right}(w)"
+set xlabel "Log_{2} Frequency"
+set ylabel "MI (bits)"
+set xrange [4:24]
+set yrange [2:22]
+
+plot "rank-wfreq.dat" using (-log($2)/0.69315):4 with points title "", \
+	x with lines lw 2, \
+	x/4 + 3 with lines lw 2
+
+#################################################
+#
+set term png
+set out 'scat-went-wmi.png'
+# set term postscript eps enhanced color 20
+# set out 'scat-went-wmi.eps'
+set key left top
+set title "Scatter H_{right}(w) vs. MI_{right}(w)"
+set xlabel "Entrop(bits)"
+set ylabel "MI (bits)"
+set xrange [12:24]
+set yrange [2:22]
+
+plot "rank-wfreq.dat" using 3:4 with points title "", \
+	x-12 with lines lw 2, \
+	4*x-78 with lines lw 2, \
+
+#################################################
