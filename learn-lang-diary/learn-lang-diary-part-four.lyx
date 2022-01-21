@@ -246,7 +246,7 @@ A good judgment of similarity is needed.
  Pulling it all together, this results in a square-root in the expression:
 \begin_inset Formula 
 \[
-\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\mbox{ranked}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
 \]
 
 \end_inset
@@ -7030,7 +7030,7 @@ What is the value of
  ? I think we want to add this as a constant to common-MI.
  As a constant, it changes nothing, but it prevents common-MI from being
  always negative.
- We don't have it handy because we are not storing P's we are storing N's;
+ We don't have it handy because we are not storing P's, we are storing N's;
  we need to compute it.
  It is
 \begin_inset Formula 
@@ -7066,11 +7066,11 @@ ation.
 \end_layout
 
 \begin_layout Standard
-Note the common-MI was scale invariant.
+Note the common-MI was not scale invariant.
  It was defined as
 \begin_inset Formula 
 \[
-\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\mbox{common}MI\left(w,u\right)=\log_{2}\frac{f\left(w,u\right)f\left(*,*\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
 \]
 
 \end_inset
@@ -7083,17 +7083,11 @@ f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 
 \end_inset
 
-It's scale invariant in that we can multiply 
-\begin_inset Formula $f$
+This suggests that scale invariance can be restored by adding 
+\begin_inset Formula $Q$
 \end_inset
 
- by any constant, and the common-MI is unchanged.
- So its projective...
-\end_layout
-
-\begin_layout Standard
-Projective suggests that this is some information-theoretic analog of the
- Fubini-Study metric, or something like that.
+...
 \end_layout
 
 \begin_layout Subsection*
@@ -7105,13 +7099,23 @@ OK, so the above ruminations suggest that using ranked-MI is better than
  using common MI.
  We define this as
 \begin_inset Formula 
-\[
-\mbox{ranked}MI\left(w,u\right)=\mbox{common}MI\left(w,u\right)+Q
-\]
+\begin{align*}
+\mbox{ranked}MI\left(w,u\right)= & \mbox{common}MI\left(w,u\right)+Q\\
+= & \log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\end{align*}
 
 \end_inset
 
+This is now scale invariant, in that we can multiply 
+\begin_inset Formula $f$
+\end_inset
 
+ by any constant, and the ranked-MI is unchanged.
+ So its projective...
+ Projective suggests that this is some information-theoretic analog of the
+ Fubini-Study metric, or something like that.
+ What is the mathematics of this? What is the physical interpretation of
+ it?
 \end_layout
 
 \begin_layout Subsection*
