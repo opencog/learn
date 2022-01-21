@@ -3066,7 +3066,7 @@ MI_{\mbox{right}}\left(w\right)=\frac{1}{P\left(w,*\right)}\sum_{d}P\left(w,d\ri
 
 \end_inset
 
-
+These are less compelling because of this complexity.
 \end_layout
 
 \begin_layout Subsection*
@@ -3076,6 +3076,21 @@ Alternative Similarity Distributions
 \begin_layout Standard
 We previously saw that common-MI had a nice Gaussian distribution.
  Is this still the case for HMI and MMI? Lets find out ...
+\end_layout
+
+\begin_layout Standard
+In Part Three, the graphs were done with a set of similarities for the top
+ 1200 words, computed without shapes.
+ What I have handy for the current dataset is much smaller: just the top
+ 200 most frequent words; however, this time, similarities were computed
+ using shapes.
+ So its ..
+ different.
+ Anyway, there's a total of 
+\begin_inset Formula $N\left(N+1\right)/2=20100$
+\end_inset
+
+ similarities handy.
 \end_layout
 
 \begin_layout Section*

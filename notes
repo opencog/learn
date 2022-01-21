@@ -9783,12 +9783,21 @@ mmt-q 11.945777087600217
 (+ fmi (* 0.5 (+ (log2 mwa) (log2 mwb)))) = -10.02199362393409
 (+ mmt-q = 1.9237834636661262
 
+(define frq-obj (add-pair-freq-api star-obj))
+(frq-obj 'right-wild-fentropy WA) ; 21.17375559818631
+(frq-obj 'right-wild-fentropy WB) ; 21.36729919924388
+
+(frq-obj 'right-wild-fmi WA) ; 7.035118871435061
+(frq-obj 'right-wild-fmi WB) ; 8.800124255097883
+
+
+
+
+-----------------
 mmt-total = (trans-obj 'total-mmt-count)
 mmt-q =  (- (log2 mmt-total (* tcl tcl)) tcl = (sup-obj 'total-count-left)
 
 right-product = sum_d N(w,d) N(u,d)
-
-
 
 
 ------ Start merge 282 with seed pair `had` and `been`

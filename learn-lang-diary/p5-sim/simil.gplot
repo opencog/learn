@@ -1,0 +1,59 @@
+# set term png small color
+
+#################################################
+# This config used to generate the figure shown in Diary Part Five
+#
+set term png
+set out 'sim-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'sim-mi.eps'
+set key right top
+set title "MI Similarity"
+set xlabel "MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [1.0e-4:0.3]
+
+nbins = 200.0
+width = 30
+nwords = 19925.
+scale = nbins/(width*nwords)
+
+# Normal distribution
+mu = 0
+sigma=2.5
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "sim-mi.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "sim-mi.dat" using 2:(g($2)) with lines lw 2 title "G(0,2.5)"
+
+#################################################
+# This config used to generate the figure shown in Diary Part Five
+#
+set term png
+set out 'sim-rmi.png'
+# set term postscript eps enhanced color 20
+# set out 'sim-rmi.eps'
+set key right top
+set title "Ranked-MI Similarity"
+set xlabel "MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [1.0e-4:0.3]
+
+nbins = 200.0
+width = 30
+nwords = 19925.
+scale = nbins/(width*nwords)
+
+# Normal distribution
+mu = 1.5
+sigma=2.5
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "sim-rmi.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "sim-rmi.dat" using 2:(g($2)) with lines lw 2 title "G(1.5,2.5)"
+
+#################################################

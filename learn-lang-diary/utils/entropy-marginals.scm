@@ -54,6 +54,12 @@
 (define (print-ts-rank scrs port)
 	(print-ts-rank-fn scrs port cog-name))
 
+; Print histogram
+(define (print-histo FILENAME HISTO)
+	(define outport (open-file FILENAME "w"))
+	(print-bincounts-tsv HISTO outport)
+	(close outport))
+
 ; ---------------------------------------------------------------------
 
 (define all-words (star-obj 'left-basis))
@@ -107,10 +113,7 @@
 
 (define binned-went (bin-count-simple word-fentropy 200 17.0 24.0))
 
-(let ((outport (open-file "/tmp/bin-went.dat" "w")))
-	(print-bincounts-tsv binned-went outport)
-	(close outport))
-
+(print-histo "/tmp/bin-went.dat" binned-went)
 
 ; ---------------------------------------------------------------------
 ; Weighted entropy
@@ -121,9 +124,7 @@
 		(lambda (WRD) (frq-obj 'right-wild-freq WRD))
 		16 24))
 
-(let ((outport (open-file "/tmp/bin-wei-went.dat" "w")))
-	(print-bincounts-tsv bin-wei-went outport)
-	(close outport))
+(print-histo "/tmp/bin-wei-went.dat" bin-wei-went)
 
 ; ---------------------------------------------------------------------
 ; Unweighted MI
@@ -134,9 +135,7 @@
 		(lambda (WRD) 1.0)
 		2 22))
 
-(let ((outport (open-file "/tmp/bin-wmi.dat" "w")))
-	(print-bincounts-tsv bin-wmi outport)
-	(close outport))
+(print-histo "/tmp/bin-wmi.dat" bin-wmi)
 
 ; ---------------------------------------------------------------------
 ; Weighted MI
@@ -147,10 +146,33 @@
 		(lambda (WRD) (frq-obj 'right-wild-freq WRD))
 		2 22))
 
-(let ((outport (open-file "/tmp/bin-wei-wmi.dat" "w")))
-	(print-bincounts-tsv bin-wei-wmi outport)
-	(close outport))
+(print-histo "/tmp/bin-wei-wmi.dat" bin-wei-wmi)
 
 ; ---------------------------------------------------------------------
+; Similarity distributions
+
+(define SIM-ID "shape-mi")
+(define sap (add-similarity-api LLOBJ #f SIM-ID))
+(define smi (add-symmetric-mi-compute LLOBJ))
+(define mmt-q (smi 'mmt-q))
+
+(load-atoms-of-type 'Similarity)
+(define all-sims (cog-get-atoms 'Similarity))
+
+; There are 20100 similarity pairs. Of these, 175 have no MI
+; at all on them.
+
+(define (get-mi PR) (cog-value-ref (sap 'get-count PR) 0))
+(define (get-rmi PR) (cog-value-ref (sap 'get-count PR) 1))
+
+(define scored-mi (score-and-rank get-mi all-sims))
+(define scored-rmi (score-and-rank get-rmi all-sims))
+
+(define sim-mi (bin-count-simple scored-mi 200 -15.0 15.0))
+(define sim-rmi (bin-count-simple scored-rmi 200 -15.0 15.0))
+
+(print-histo "/tmp/sim-mi.dat" sim-mi)
+(print-histo "/tmp/sim-rmi.dat" sim-rmi)
+
 
 ; ---------------------------------------------------------------------
