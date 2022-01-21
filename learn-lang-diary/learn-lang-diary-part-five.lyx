@@ -2664,7 +2664,7 @@ Same as above, but for the word-disjunct mutual information.
 
 \begin_layout Standard
 It seems reasonable to expect a Gaussian distribution here, also, but it
- appear to not be the case.
+ appears to not be the case.
  A log-linear fit seems better.
  It's not clear whether this should be dismissed as 
 \begin_inset Quotes eld
@@ -2675,6 +2675,153 @@ bad data
 \end_inset
 
  or not.
+ Note that the Gaussian is centered on 
+\begin_inset Formula $MI_{\mbox{tot}}=5.5865$
+\end_inset
+
+.
+ The histogram has been manually checked, and integrates to this same value.
+ That is might be the case is not obvious in this semi-log plot, but the
+ very high frequency of values 
+\begin_inset Formula $MI<5$
+\end_inset
+
+ is enough to balance the long tail on the right.
+\end_layout
+
+\begin_layout Subsection*
+Scatterplots
+\end_layout
+
+\begin_layout Standard
+How does the MI correlate with the entropy and the frequency? Three scatterplots
+ reveal this relationship.
+ The first scatterplot shows the entropy 
+\begin_inset Formula $H_{\mbox{right}}\left(w\right)$
+\end_inset
+
+ vs.
+ the log of the marginal frequency 
+\begin_inset Formula $-\log_{2}P\left(w,*\right)$
+\end_inset
+
+.
+ The two straight lines have the slopes as indicated, and apprximately bound
+ the distribution.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/scat-wfreq-went.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The graph below shows the mutual information 
+\begin_inset Formula $MI_{\mbox{right}}\left(w\right)$
+\end_inset
+
+ vs.
+ the log of the marginal frequency 
+\begin_inset Formula $-\log_{2}P\left(w,*\right)$
+\end_inset
+
+.
+ Again, two lines approximately bound the distribution.
+ Note that the average MI of this distribution is 
+\begin_inset Formula $MI_{\mbox{tot}}=5.5865$
+\end_inset
+
+.
+ Thus, we have a very long tail offsetting a very heavy low-MI, high-frequency
+ stub.
+ Similarly, the average of 
+\begin_inset Formula $-\log_{2}P\left(w,*\right)$
+\end_inset
+
+ is 
+\begin_inset Formula $S_{\mbox{right}}=8.5148$
+\end_inset
+
+.
+ Thus, the centroid of this scaterplot is in the lower-left, and not where
+ one might visually expect it.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/scat-wfreq-wmi.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, the the entropy 
+\begin_inset Formula $H_{\mbox{right}}\left(w\right)$
+\end_inset
+
+ vs.
+ he mutual information 
+\begin_inset Formula $MI_{\mbox{right}}\left(w\right)$
+\end_inset
+
+.
+ Rather than attempting to bound this distribution, the two lines attempt
+ to bisect it.
+ This is an 
+\begin_inset Quotes eld
+\end_inset
+
+unweighted
+\begin_inset Quotes erd
+\end_inset
+
+ bisection.
+ The actual centroid of this figure is at 
+\begin_inset Formula $H_{\mbox{tot}}=19.463$
+\end_inset
+
+ and 
+\begin_inset Formula $MI_{\mbox{tot}}=5.5865$
+\end_inset
+
+, at the lower middle of this scatterplot.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/scat-went-wmi.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In conclusion: there is an obvious correlation btween frequency and entropy,
+ and frequency and MI.
+ However, the correlation between entropy and MI is considerably weaker.
+\end_layout
+
+\begin_layout Subsection*
+Alternative Rankings
+\end_layout
+
+\begin_layout Standard
+The Diary Part Three proposes that two words should form the seed of a cluster,
+ if they have the largest ranked-MI of all word-pairs.
+ The ranked MI was defined as
 \end_layout
 
 \begin_layout Section*
