@@ -9731,6 +9731,11 @@ sigma=0.55
 
      "self-mi-hist.dat" using 2:(exp(-(log($2)-mu)**2/(2*sigma**2))/($2 * sigma * sqrt(2*3.14159))) with lines lw 2 title "N(2.3,0.55)", \
 
+wtf something somewhere is off by factor of 2
+(fold (lambda (W S)
+	(+ S (frq-obj 'right-wild-freq W))) 0 all-words) correct ...
+
+(fold (lambda (C S) (+ S C)) 0 (array->list (list-ref bin-wei-went 1)))
 
 ====================================================
 ====================================================

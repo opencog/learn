@@ -1,27 +1,63 @@
 # set term png small color
 
 #################################################
+## This config used to generate the figure shown in Diary Part Five
+##
+## set term png
+## set out 'bin-went.png'
+#set term postscript eps enhanced color 20
+#set out 'bin-went.eps'
+#set key left top
+#set title "Word Marginal Entropy H_{right}"
+#set xlabel "Entropy (bits)"
+#set ylabel "Frequency"
+#set logscale y
+#set format y "10^{%L}"
+#set yrange [1.0e-3:2]
+#
+#nbins = 200.0
+#width = 24 - 17
+#nwords = 15083
+#scale = nbins/(width*nwords)
+#
+## Normal distribution
+#mu=22.5
+#sigma= 1.75
+#
+#plot "bin-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
+#     "bin-went.dat" using 2:(exp(-(($2)-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))) with lines lw 2 title "G(22.5,1.75)"
+#
+#################################################
 #
 # set term png
-# set out 'bin-went.png'
+# set out 'bin-wei-went.png'
 set term postscript eps enhanced color 20
-set out 'bin-went.eps'
-set key left top
-set title "Word Marginal Entropy H_{right}"
+set out 'bin-wei-went.eps'
+set key right top
+set title "Word Marginal Weighted Entropy H_{right}"
 set xlabel "Entropy (bits)"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
-set yrange [1.0e-3:2]
+set yrange [1.0e-4:5]
 
 nbins = 200.0
-width = 24 - 17
-nwords = 15083
+width = 24 - 16
+width = 8.0
+nwords = 1.0
 scale = nbins/(width*nwords)
 
-# Normal distribution
-mu=22.5
-sigma= 1.75
+# WTF ???
+# I quadruple-checked all factors. The 2.0 should not be needed.
+# But apparently, the noisey bits between 19 and 20 integrate to
+# a factor of two, thus killing the tail by a factor of two.
+# Bizarre but true!?  And totally confusing.
+scale = 2.0 * scale
 
-plot "bin-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
-     "bin-went.dat" using 2:(exp(-(($2)-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))) with lines lw 2 title "G(22.5,1.75)"
+# Normal distribution
+mu=20
+sigma=1.1
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "bin-wei-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "bin-wei-went.dat" using 2:(g($2)) with lines lw 2 title "G(20,1.1)"

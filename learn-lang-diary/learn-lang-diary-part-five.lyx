@@ -2573,6 +2573,50 @@ The data is fairly noisey.
  My guess is that the spikey bits on the right are from infrequently-observed
  word-disjunct pairs.
  This suggests redoing the bin-counts, weighting each word by it's probability.
+ This is shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/bin-wei-went.eps
+	width 50page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This shows the same data, with each word weighted by the probability of
+ that word.
+ That is, this is a graph of 
+\begin_inset Formula $H_{\mbox{right}}\left(w\right)$
+\end_inset
+
+ with each point weighted by 
+\begin_inset Formula $P\left(w,*\right)$
+\end_inset
+
+.
+ This makes it clear that the right side of the picture, the high entropy
+ side, is associated with infrequent words.
+ 
+\end_layout
+
+\begin_layout Standard
+Also, this time, the Gaussian is an excellent fit...
+ sort-of.
+ Sort-of, because there is a bizarre cheat in this picture: the raw data
+ is multiplied by a factor of two.
+ From what I can tell, there is no factor-of-two error anywhere; rather,
+ the noisey peaks, the words in the range 
+\begin_inset Formula $18.8<H<20.4$
+\end_inset
+
+ integrate to 0.5, more-or-less exactly, throwing off the tails by a factor
+ of two.
+ This is hard to beleive and utterly bizarre, but it seems to be the case.
 \end_layout
 
 \begin_layout Section*
