@@ -65,6 +65,23 @@
 (define (right-fent WRD) (frq-obj 'right-wild-fentropy WRD))
 
 ; ---------------------------------------------------------------------
+; Zipf ranking
+
+(define word-freq
+	(score-and-rank right-freq all-words))
+
+(let ((outport (open-file "/tmp/rank-wfreq.dat" "w")))
+	(print-ts-rank word-freq outport)
+	(close outport))
+
+(define word-entropy
+	(score-and-rank right-ent all-words))
+
+(let ((outport (open-file "/tmp/rank-went.dat" "w")))
+	(print-ts-rank word-entropy outport)
+	(close outport))
+
+; ---------------------------------------------------------------------
 ; Unweighted entropy
 
 (define word-fentropy
@@ -91,18 +108,29 @@
 	(close outport))
 
 ; ---------------------------------------------------------------------
-; Zipf ranking
+; Unweighted MI
 
-(define word-freq
-	(score-and-rank right-freq all-words))
+(define bin-wmi
+	(bin-count all-words 200
+		(lambda (WRD) (frq-obj 'right-wild-fmi WRD))
+		(lambda (WRD) 1.0)
+		2 22))
 
-(let ((outport (open-file "/tmp/rank-wfreq.dat" "w")))
-	(print-ts-rank word-freq outport)
+(let ((outport (open-file "/tmp/bin-wmi.dat" "w")))
+	(print-bincounts-tsv bin-wmi outport)
 	(close outport))
 
-(define word-entropy
-	(score-and-rank right-ent all-words))
+; ---------------------------------------------------------------------
+; Weighted MI
 
-(let ((outport (open-file "/tmp/rank-went.dat" "w")))
-	(print-ts-rank word-entropy outport)
+(define bin-wei-wmi
+	(bin-count all-words 200
+		(lambda (WRD) (frq-obj 'right-wild-fmi WRD))
+		(lambda (WRD) (frq-obj 'right-wild-freq WRD))
+		2 22))
+
+(let ((outport (open-file "/tmp/bin-wei-wmi.dat" "w")))
+	(print-bincounts-tsv bin-wei-wmi outport)
 	(close outport))
+
+; ---------------------------------------------------------------------

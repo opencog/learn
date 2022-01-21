@@ -1,57 +1,113 @@
 # set term png small color
 
 #################################################
-## This config used to generate the figure shown in Diary Part Five
-##
-## set term png
-## set out 'bin-went.png'
-#set term postscript eps enhanced color 20
-#set out 'bin-went.eps'
-#set key left top
-#set title "Word Marginal Entropy H_{right}"
-#set xlabel "Entropy (bits)"
-#set ylabel "Frequency"
-#set logscale y
-#set format y "10^{%L}"
-#set yrange [1.0e-3:2]
-#
-#nbins = 200.0
-#width = 24 - 17
-#nwords = 15083
-#scale = nbins/(width*nwords)
-#
-## Normal distribution
-#mu=22.5
-#sigma= 1.75
-#
-#plot "bin-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
-#     "bin-went.dat" using 2:(exp(-(($2)-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))) with lines lw 2 title "G(22.5,1.75)"
-#
+## # This config used to generate the figure shown in Diary Part Five
+## #
+## # set term png
+## # set out 'bin-went.png'
+## set term postscript eps enhanced color 20
+## set out 'bin-went.eps'
+## set key left top
+## set title "Word Marginal Entropy H_{right}"
+## set xlabel "Entropy (bits)"
+## set ylabel "Frequency"
+## set logscale y
+## set format y "10^{%L}"
+## set yrange [1.0e-3:2]
+## 
+## nbins = 200.0
+## width = 24 - 17
+## nwords = 15083
+## scale = nbins/(width*nwords)
+## 
+## # Normal distribution
+## mu=22.5
+## sigma= 1.75
+## 
+## plot "bin-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
+##      "bin-went.dat" using 2:(exp(-(($2)-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))) with lines lw 2 title "G(22.5,1.75)"
+## 
+#################################################
+## #
+## # set term png
+## # set out 'bin-wei-went.png'
+## set term postscript eps enhanced color 20
+## set out 'bin-wei-went.eps'
+## set key right top
+## set title "Word Marginal Weighted Entropy H_{right}"
+## set xlabel "(Fractional) Entropy (bits)"
+## set ylabel "Frequency"
+## set logscale y
+## set format y "10^{%L}"
+## set yrange [1.0e-4:5]
+## 
+## nbins = 200.0
+## width = 24 - 16
+## nwords = 1.0
+## scale = nbins/(width*nwords)
+## 
+## # Normal distribution
+## mu = 19.463
+## sigma=1.2
+## g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+## 
+## plot "bin-wei-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
+##      "bin-wei-went.dat" using 2:(g($2)) with lines lw 2 title "G(19.463,1.2)"
+## 
 #################################################
 #
-# set term png
-# set out 'bin-wei-went.png'
-set term postscript eps enhanced color 20
-set out 'bin-wei-went.eps'
+set term png
+set out 'bin-wmi.png'
+# set term postscript eps enhanced color 20
+# set out 'bin-wmi.eps'
 set key right top
-set title "Word Marginal Weighted Entropy H_{right}"
-set xlabel "(Fractional) Entropy (bits)"
+set title "Word Marginal MI_{right}"
+set xlabel "(Fractional) MI (bits)"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
-set yrange [1.0e-4:5]
+# set yrange [1.0e-6:1]
 
 nbins = 200.0
-width = 24 - 16
-width = 8.0
+width = 22 - 2
+nwords = 15083
+scale = nbins/(width*nwords)
+
+# Normal distribution
+mu = 10
+sigma=4.3
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "bin-wmi.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "bin-wmi.dat" using 2:(g($2)) with lines lw 2 title "G(9,4.3)"
+
+#################################################
+#
+# set term png
+# set out 'bin-wei-wmi.png'
+set term postscript eps enhanced color 20
+set out 'bin-wei-wmi.eps'
+set key right top
+set title "Word Marginal Weighted MI_{right}"
+set xlabel "(Fractional) MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [1.0e-6:1]
+
+nbins = 200.0
+width = 22 - 2
 nwords = 1.0
 scale = nbins/(width*nwords)
 
 # Normal distribution
-mu=20
-mu = 19.463
-sigma=1.2
+mu = 5.5865
+sigma=3.2
 g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+l(x) = 2**(-(x-2)/1.25)
 
-plot "bin-wei-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
-     "bin-wei-went.dat" using 2:(g($2)) with lines lw 2 title "G(19.463,1.2)"
+plot "bin-wei-wmi.dat" using 2:($3*scale) with lines lw 2 title "data", \
+     "bin-wei-wmi.dat" using 2:(g($2)) with lines lw 2 title "G(5.586,3.2)", \
+     "bin-wei-wmi.dat" using 2:(l($2)) with lines lw 2 title "2^{(x-2)/1.25}"
+
+#################################################
