@@ -2513,11 +2513,11 @@ Here,
 \end_layout
 
 \begin_layout Subsection*
-Entropy Distributions
+Zipf Distribution
 \end_layout
 
 \begin_layout Standard
-Some graphs.
+Some graphs follow.
 \begin_inset Foot
 status collapsed
 
@@ -2528,11 +2528,39 @@ The data was processed with the `utils/entropy-marginals.scm` scripts in
 
 \end_inset
 
+ We begin with a very conventioal graph, and a very conventional result.
+ This shows the marginal frequency 
+\begin_inset Formula $P\left(w,*\right)$
+\end_inset
+
+ as a function of the rank.
+ The distribution is almost Zipfian, with a classical Zipf slope.
+ It's a bit noiser than hoped for; the noise may be due to the somewhat
+ imperfect dataset (it contains a lot of words with escaped backslashes
+ in them, due to a very early parsing bug.)
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/rank-wfreq.eps
+	width 50text%
+
+\end_inset
+
 
 \end_layout
 
 \begin_layout Standard
-First up: a histogram of 
+A similar figure can be drawn for the entropy; it is very nearly identical.
+\end_layout
+
+\begin_layout Subsection*
+Entropy Distributions
+\end_layout
+
+\begin_layout Standard
+Next: a histogram of 
 \begin_inset Formula $H_{\mbox{right}}\left(w\right)$
 \end_inset
 
@@ -2566,13 +2594,14 @@ G\left(x;\mu,\sigma\right)=\frac{1}{\sigma\sqrt{2\pi}}\exp-\frac{\left(x-\mu\rig
 
 This fit is not particularly convincing; there's a sharp drop-off to the
  right that is not being fit.
+ The data is fairly noisey.
+ My guess is that the spikey bits on the right are from infrequently-observed
+ word-disjunct pairs.
+ 
 \end_layout
 
 \begin_layout Standard
-The data is fairly noisey.
- My guess is that the spikey bits on the right are from infrequently-observed
- word-disjunct pairs.
- This suggests redoing the bin-counts, weighting each word by it's probability.
+This suggests redoing the bin-counts, weighting each word by it's probability.
  This is shown below.
 \end_layout
 
@@ -2612,25 +2641,6 @@ Also, this time, the Gaussian is an excellent fit.
 
  for the dataset.
  This is as it should be: the total entropy is the average of this distribution.
-\end_layout
-
-\begin_layout Standard
-The next figure shows ...
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename p5-entropy/rank-went.eps
-	width 50text%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-So ...
 \end_layout
 
 \begin_layout Section*
