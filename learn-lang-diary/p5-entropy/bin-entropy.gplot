@@ -35,7 +35,7 @@ set term postscript eps enhanced color 20
 set out 'bin-wei-went.eps'
 set key right top
 set title "Word Marginal Weighted Entropy H_{right}"
-set xlabel "Entropy (bits)"
+set xlabel "(Fractional) Entropy (bits)"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
@@ -47,17 +47,11 @@ width = 8.0
 nwords = 1.0
 scale = nbins/(width*nwords)
 
-# WTF ???
-# I quadruple-checked all factors. The 2.0 should not be needed.
-# But apparently, the noisey bits between 19 and 20 integrate to
-# a factor of two, thus killing the tail by a factor of two.
-# Bizarre but true!?  And totally confusing.
-scale = 2.0 * scale
-
 # Normal distribution
 mu=20
-sigma=1.1
+mu = 19.463
+sigma=1.2
 g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
 
 plot "bin-wei-went.dat" using 2:($3*scale) with lines lw 2 title "data", \
-     "bin-wei-went.dat" using 2:(g($2)) with lines lw 2 title "G(20,1.1)"
+     "bin-wei-went.dat" using 2:(g($2)) with lines lw 2 title "G(19.463,1.2)"

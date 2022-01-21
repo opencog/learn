@@ -2605,18 +2605,32 @@ This shows the same data, with each word weighted by the probability of
 \end_layout
 
 \begin_layout Standard
-Also, this time, the Gaussian is an excellent fit...
- sort-of.
- Sort-of, because there is a bizarre cheat in this picture: the raw data
- is multiplied by a factor of two.
- From what I can tell, there is no factor-of-two error anywhere; rather,
- the noisey peaks, the words in the range 
-\begin_inset Formula $18.8<H<20.4$
+Also, this time, the Gaussian is an excellent fit.
+ Note that the Gaussian is centered on 
+\begin_inset Formula $H_{\mbox{tot}}=19.463$
 \end_inset
 
- integrate to 0.5, more-or-less exactly, throwing off the tails by a factor
- of two.
- This is hard to beleive and utterly bizarre, but it seems to be the case.
+ for the dataset.
+ This is as it should be: the total entropy is the average of this distribution.
+\end_layout
+
+\begin_layout Standard
+The next figure shows ...
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-entropy/rank-went.eps
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So ...
 \end_layout
 
 \begin_layout Section*

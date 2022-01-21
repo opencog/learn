@@ -42,25 +42,40 @@
 		(map (lambda (wrd) (cons (SCORE-FN wrd) wrd)) WORD-LIST)
 		(lambda (a b) (> (car a) (car b)))))
 
+; Print to port a tab-separated table of rankings
+(define (print-ts-rank-fn scrs port fn-str)
+	(define cnt 0)
+	(for-each
+		(lambda (pr)
+			(set! cnt (+ cnt 1))
+			(format port "~A  ~A \"~A\"\n" cnt (car pr) (fn-str (cdr pr))))
+		scrs))
+
+(define (print-ts-rank scrs port)
+	(print-ts-rank-fn scrs port cog-name))
+
 ; ---------------------------------------------------------------------
 
 (define all-words (star-obj 'left-basis))
 (length all-words)  ; 15083
 
 (define frq-obj (add-pair-freq-api star-obj))
-(define (right-ent WRD) (frq-obj 'right-wild-fentropy WRD))
+(define (right-freq WRD) (frq-obj 'right-wild-freq WRD))
+(define (right-ent WRD) (frq-obj 'right-wild-entropy WRD))
+(define (right-fent WRD) (frq-obj 'right-wild-fentropy WRD))
 
 ; ---------------------------------------------------------------------
 ; Unweighted entropy
 
-(define word-entropy
-	(score-and-rank right-ent all-words))
+(define word-fentropy
+	(score-and-rank right-fent all-words))
 
-(define binned-went (bin-count-simple word-entropy 200 17.0 24.0))
+(define binned-went (bin-count-simple word-fentropy 200 17.0 24.0))
 
 (let ((outport (open-file "/tmp/bin-went.dat" "w")))
 	(print-bincounts-tsv binned-went outport)
 	(close outport))
+
 
 ; ---------------------------------------------------------------------
 ; Weighted entropy
@@ -75,3 +90,19 @@
 	(print-bincounts-tsv bin-wei-went outport)
 	(close outport))
 
+; ---------------------------------------------------------------------
+; Zipf ranking
+
+(define word-freq
+	(score-and-rank right-freq all-words))
+
+(let ((outport (open-file "/tmp/rank-wfreq.dat" "w")))
+	(print-ts-rank word-freq outport)
+	(close outport))
+
+(define word-entropy
+	(score-and-rank right-ent all-words))
+
+(let ((outport (open-file "/tmp/rank-went.dat" "w")))
+	(print-ts-rank word-entropy outport)
+	(close outport))
