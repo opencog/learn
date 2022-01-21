@@ -2038,7 +2038,8 @@ literal "false"
 \end_inset
 
 .
- 
+ Since it has two arguments, this can be called the 'joint probability'
+ or 'joint frequency'.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -2821,7 +2822,155 @@ Alternative Rankings
 \begin_layout Standard
 The Diary Part Three proposes that two words should form the seed of a cluster,
  if they have the largest ranked-MI of all word-pairs.
- The ranked MI was defined as
+ Can the above provide some alternative rankings? First, rcall the defintion
+ of the ranked-MI.
+\end_layout
+
+\begin_layout Subsubsection*
+Ranked-MI
+\end_layout
+
+\begin_layout Standard
+The following is a quick recap of the ranked-MI, as discovered and developed
+ in Parts Three and Four of the Diary.
+ The ranked-MI was built out of the common-MI plus Q, as follws.
+ Repeating the content of Parth Three, pages 18-19, as well as Diary Part
+ Four, page 19.
+ Start by defining a joint frequency of two words 
+\begin_inset Formula $w,u$
+\end_inset
+
+ as the matrix product
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $P\left(w,d\right)$
+\end_inset
+
+ is the joint word-disjunct probability, as defined above.
+\end_layout
+
+\begin_layout Standard
+This is not normalized, in that 
+\begin_inset Formula $f\left(*,*\right)\ne1$
+\end_inset
+
+ which leads to the definition of
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q=\log_{2}f\left(*,*\right)=\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
+\]
+
+\end_inset
+
+which has a value of about 12.48 for this dataset.
+ The marginals can then be derived as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f\left(w\right)=f\left(w,*\right)=\sum_{d}P\left(w,d\right)P\left(*,d\right)
+\]
+
+\end_inset
+
+The word-pair MI is defined as 
+\begin_inset Formula 
+\[
+MI\left(u,w\right)=\log_{2}\frac{f\left(w,u\right)f\left(*,*\right)}{f\left(w\right)f\left(u\right)}
+\]
+
+\end_inset
+
+The word-pair partial-MI is defined as 
+\begin_inset Formula 
+\[
+\mbox{partial}MI\left(u,w\right)=MI\left(u,w\right)-Q=\log_{2}\frac{f\left(w,u\right)}{f\left(w\right)f\left(u\right)}
+\]
+
+\end_inset
+
+The common-MI is defined as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\mbox{common}MI\left(w,u\right)= & \mbox{partial}MI\left(u,w\right)-\frac{1}{2}\log_{2}f\left(u\right)-\frac{1}{2}\log_{2}f\left(w\right)\\
+= & \log_{2}\frac{f\left(w,u\right)}{\sqrt{f\left(w\right)f\left(u\right)}}
+\end{align*}
+
+\end_inset
+
+Then, adding 
+\begin_inset Formula $Q$
+\end_inset
+
+back in, the ranked-MI is defined as
+\begin_inset Formula 
+\[
+\mbox{ranked}MI\left(w,u\right)=\mbox{common}MI\left(w,u\right)+Q
+\]
+
+\end_inset
+
+Graphs for the common-MI for this dataset can be found at the end of Part
+ Three.
+ They are pretty Gaussians.
+ The common-MI is interesting, because it is scale invariant; its projective.
+ This suggests that it has some interesting theory behind it.
+\end_layout
+
+\begin_layout Subsubsection*
+Alternative Rankings
+\end_layout
+
+\begin_layout Standard
+Following the above, several variations suggest themselves: 
+\begin_inset Formula 
+\[
+HMI\left(u,w\right)=MI\left(u,w\right)-\frac{1}{2}H_{\mbox{right}}\left(u\right)-\frac{1}{2}H_{\mbox{right}}\left(w\right)
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+MMI\left(u,w\right)=MI\left(u,w\right)-\frac{1}{2}MI_{\mbox{right}}\left(u\right)-\frac{1}{2}MI_{\mbox{right}}\left(w\right)
+\]
+
+\end_inset
+
+Either of these feel like promising improvements to ranked-MI, as, experimentall
+y, ranked-MI is proving to be less than reliable for merge determinations.
+ As mentioned earlier, the core problem is that ranked-MI seems to be suggesting
+ that clusters should be merged far too often, presumably because 
+\begin_inset Formula $\frac{1}{2}\log_{2}f\left(w\right)$
+\end_inset
+
+ is not large enough?
+\end_layout
+
+\begin_layout Subsection*
+Alternative Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+We previously saw that common-MI had a nice Gaussian distribution.
+ Is this still the case for HMI and MMI? Lets find out ...
 \end_layout
 
 \begin_layout Section*
