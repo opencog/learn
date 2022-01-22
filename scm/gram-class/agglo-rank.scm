@@ -77,21 +77,6 @@
 
 ; ---------------------------------------------------------------
 
-; XXX FIXME -- Maybe bug (I'm confused about this.) This function
-; computes mmt-q aka Q described in the diary Part Four, and uses it
-; as a constant offset. The problem is that it changes dramatically
-; as clusters are created and counts are moved. This means that
-; some of the stored similarity scores have the old Q on them, and
-; some have the new Q, and they are no longer comparable (!?) right?
-; The point is that the MI and the marginal logP in the common-MI
-; definition are unchanged during merging, but mmt-q is. Thus, the
-; changing mmt-q unfairly bounces around new and old similarity
-; scores in some way that is not obvious and is history dependent. Hmm.
-;
-; Well, based on practical experience, the Q bounces dramatically at
-; first, and then, after the first 10-20 steps, converges to a stable
-; value (that is preserved to 3 decimal places.) So maybe it's not a
-; problem...
 (define (make-simmer LLOBJ)
 "
   make-simmer LLOBJ -- return function that computes and stores MI's.
@@ -105,7 +90,6 @@
 	(define (log2 x) (if (< 0 x) (* (log x) ol2) -inf.0))
 
 	(define mmt-q (smi 'mmt-q))
-(format #t ">>>> Make-simmer mmt-q = ~9F\n" mmt-q)
 
 	; Compute and save both the fmi and the ranked-MI.
 	; The marginal is sum_d P(w,d)P(*,d) / sum_d P(*,d)P(*,d)
@@ -115,8 +99,7 @@
 		(define fmi (smi 'mmt-fmi WA WB))
 		(define mwa (smi 'mmt-marginal WA))
 		(define mwb (smi 'mmt-marginal WB))
-		(define qmi (+ fmi (* 0.5 (log2 (* mwa mwb)))))
-		(define rmi (+ qmi mmt-q))
+		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
 
 		; Print something, so user has something to look at.
 		(if (< 4 fmi)
@@ -125,7 +108,7 @@
 		(store-atom
 			(sap 'set-pair-similarity
 				(sap 'make-pair WA WB)
-				(FloatValue fmi rmi qmi))))
+				(FloatValue fmi rmi))))
 
 	; Return the function that computes the MI for pairs.
 	compute-sim

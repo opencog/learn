@@ -9901,13 +9901,12 @@ FIXED:
   which means the connector seqs need to be cleaned up too.
   (as they are now unused/empty)
   they were screwing up counts! DONE
-
-
-TODO/BUGS:
 * mmt-q is handled incorrectly. It must not be stored with the
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
-  printing.
+  printing.  Actually, this is not a bug. its a confusion. so FIXED.
+
+TODO/BUGS:
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
