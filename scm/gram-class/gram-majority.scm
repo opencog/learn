@@ -327,6 +327,7 @@
 						(record-done DJ)
 						(set! mscnt (+ 1 mscnt)))
 					(if MRG-CON (rebalance-dj DJ))
+					(done-djs DJ) ; Record unconditionaly.
 					(set! scnt (+ 1 scnt))))
 			dj-list)
 		(format #t "------ merge-majority: Merge ~D of ~D sections in ~A secs\n"
