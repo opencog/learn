@@ -9845,9 +9845,11 @@ recompute-entropies -- defer ...
 num-classes (length (cog-get-atoms 'WordClassNode))
 self-mi of new class  DONE
 size of class DONE
-number of disjuncts on class
-number of disjuncts  merged
-entropy of class
+number of disjuncts on class (support) DONE
+count via marginal count. DONE
+count on class via member link, and merge entropy
+number of disjuncts  merged ? fraction?
+entropy of class and logli
 diag extension size. (num simil)
 
 use count

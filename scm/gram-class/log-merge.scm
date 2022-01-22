@@ -87,8 +87,11 @@
 	(define log-class-size (make-data-logger *-log-anchor-* (Predicate "class-size")))
 	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "self-mi")))
 	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "self-ranked-mi")))
+	(define log-support (make-data-logger *-log-anchor-* (Predicate "support")))
+	(define log-count (make-data-logger *-log-anchor-* (Predicate "count")))
 
 	; General setup of things we need
+	(define sup (add-support-api LLOBJ))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 
 	; The MI similarity of two words
@@ -106,6 +109,8 @@
 		(log-class-size (cog-incoming-size-by-type WCLASS 'MemberLink))
 		(log-self-mi (mi-sim WCLASS WCLASS))
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
+		(log-support (sup 'right-support WCLASS))
+		(log-count (sup 'right-count WCLASS))
 		(store-atom *-log-anchor-*)
 	)
 )
@@ -186,25 +191,32 @@
 	(define key-class-size (Predicate "class-size"))
 	(define key-self-mi (Predicate "self-mi"))
 	(define key-self-rmi (Predicate "self-ranked-mi"))
+	(define key-support (Predicate "support"))
+	(define key-count (Predicate "count"))
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
 	(define class-size (cog-value->list (cog-value *-log-anchor-* key-class-size)))
 	(define self-mi (cog-value->list (cog-value *-log-anchor-* key-self-mi)))
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
+	(define support (cog-value->list (cog-value *-log-anchor-* key-support)))
+	(define count (cog-value->list (cog-value *-log-anchor-* key-count)))
 
 	(define len (length classes))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
 	(print-params LLOBJ PORT)
-	(format PORT "# N,words,class-size,self-mi,self-rmi\n")
+	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\n"
 			(+ N 1)
 			(cog-name (list-ref classes N))
 			(list-ref class-size N)
 			(list-ref self-mi N)
-			(list-ref self-rmi N)))
+			(list-ref self-rmi N)
+			(list-ref support N)
+			(list-ref count N)
+		))
 		(iota len))
 )
 
