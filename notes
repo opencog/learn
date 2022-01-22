@@ -9842,7 +9842,8 @@ How about voting?  vote-to-accept? accepted is DJ is shared by majority.
 
 recompute-entropies -- defer ...
 
-num-classes (length (cog-get-atoms 'WordClassNode))
+num-classes (cog-count-atoms 'WordClassNode)) DONE
+diag extension size. (num simil) (cog-count-atoms 'Sim) DONE
 total left, right entropy via report-obj
 
 self-mi of new class  DONE
@@ -9853,7 +9854,6 @@ entropy of class and logli DONE
 count on class via member link, and merge entropy
 
 number of disjuncts  merged ? fraction?
-diag extension size. (num simil)
 
 use count
 avoid 

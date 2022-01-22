@@ -22,12 +22,14 @@
 	(define log-mmt-q (make-data-logger *-log-anchor-* (Predicate "mmt-q")))
 	(define log-ranked-mi (make-data-logger *-log-anchor-* (Predicate "ranked-mi")))
 	(define log-sparsity (make-data-logger *-log-anchor-* (Predicate "sparsity")))
-	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "entropy")))
+	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "mmt-entropy")))
 	(define log-left-dim (make-data-logger *-log-anchor-* (Predicate "left dim")))
 	(define log-right-dim (make-data-logger *-log-anchor-* (Predicate "right dim")))
 	(define log-left-cnt (make-data-logger *-log-anchor-* (Predicate "left-count")))
 	(define log-right-cnt (make-data-logger *-log-anchor-* (Predicate "right-count")))
 	(define log-size (make-data-logger *-log-anchor-* (Predicate "total entries")))
+	(define log-nclasses (make-data-logger *-log-anchor-* (Predicate "num classes")))
+	(define log-nsimil (make-data-logger *-log-anchor-* (Predicate "num sim pairs")))
 
 	(define (log2 x) (if (< 0 x) (/ (log x) (log 2)) -inf.0))
 
@@ -70,6 +72,9 @@
 
 		; Total number of non-zero entries
 		(log-size (sup 'total-support-left))
+
+		(log-nclasses (cog-count-atoms 'WordClassNode))
+		(log-nsimil (cog-count-atoms 'SimilarityLink))
 
 		; Save to the DB
 		(store-atom *-log-anchor-*)
@@ -147,13 +152,14 @@
 	(define key-mmt-q (Predicate "mmt-q"))
 	(define key-ranked-mi (Predicate "ranked-mi"))
 	(define key-sparsity (Predicate "sparsity"))
-	(define key-entropy (Predicate "entropy"))
+	(define key-entropy (Predicate "mmt-entropy"))
 	(define key-left-dim (Predicate "left dim"))
 	(define key-right-dim (Predicate "right dim"))
 	(define key-left-cnt (Predicate "left-count"))
 	(define key-right-cnt (Predicate "right-count"))
 	(define key-size (Predicate "total entries"))
-	(define key-class (Predicate "class"))
+	(define key-nclasses (Predicate "num classes"))
+	(define key-nsimil (Predicate "num sim pairs"))
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define rows (cog-value->list (cog-value *-log-anchor-* key-left-dim)))
@@ -165,15 +171,16 @@
 	(define entr (cog-value->list (cog-value *-log-anchor-* key-entropy)))
 	(define rami (cog-value->list (cog-value *-log-anchor-* key-ranked-mi)))
 	(define mmtq (cog-value->list (cog-value *-log-anchor-* key-mmt-q)))
-	; (define clas (cog-value->list (cog-value *-log-anchor-* key-class)))
+	(define ncla (cog-value->list (cog-value *-log-anchor-* key-nclasses)))
+	(define nsim (cog-value->list (cog-value *-log-anchor-* key-nsimil)))
 
 	(define len (length rows))
 
-	(format PORT "#\n# Log of merge statistics\n#\n")
+	(format PORT "#\n# Log of dataset merge statistics\n#\n")
 	(print-params LLOBJ PORT)
-	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
+	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,mmt-entropy,ranked-mi,mmt-q\n")
 	(for-each (lambda (N)
-		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
+		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\t~D\t~D\n"
 			(+ N 1)
 			(inexact->exact (list-ref rows N))
 			(inexact->exact (list-ref cols N))
@@ -183,7 +190,10 @@
 			(list-ref spar N)
 			(list-ref entr N)
 			(list-ref rami N)
-			(list-ref mmtq N)))
+			(list-ref mmtq N)
+			(list-ref ncla N)
+			(list-ref nsim N)
+		))
 		(iota len))
 )
 
@@ -217,7 +227,7 @@
 	(print-params LLOBJ PORT)
 	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy\n")
 	(for-each (lambda (N)
-		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\n"
+		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\n"
 			(+ N 1)
 			(cog-name (list-ref classes N))
 			(list-ref class-size N)
@@ -274,7 +284,7 @@
 ;
 ; Example usage
 
-(print-log #t)
-(print-merges #t)
+(print-log star-obj #t)
+(print-merges star-obj #t)
 
 ==== !#
