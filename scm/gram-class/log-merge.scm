@@ -9,13 +9,16 @@
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; Data is recorded in the AtomSpace, so that it doesn't get lost.
+; Logged data is attached to the wild-card on the indicated matrix.
+; Thus, it will travel with the matrix, if it is ever copied.
 ;
 ; ---------------------------------------------------------------
 
-(define (make-logger LLOBJ)
+(define (make-merge-logger LLOBJ)
 "
-  make-logger LLOBJ -- create logger to record assorted info in AtomSpace
+  make-merge-logger LLOBJ -- create logger to record assorted dataset info
+     as the merge progresses. The data is anchored on the wild-card of the
+     LLOBJ.
 "
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 

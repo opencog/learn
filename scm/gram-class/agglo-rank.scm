@@ -342,7 +342,7 @@
 	(define (diag-start N) (+ N NSIM-OFFSET))
 	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
 
-	(define log-stuff (make-logger LLOBJ))
+	(define log-dataset-stuff (make-merge-logger LLOBJ))
 
 	(for-each
 		(lambda (N)
@@ -354,7 +354,7 @@
 			(define top-pair (car sorted-pairs))
 
 			; Log some maybe-useful data...
-			(log-stuff top-pair)
+			(log-dataset-stuff top-pair)
 
 			; Do the actual merge
 			(MERGE-FUN (current-count N) (gar top-pair) (gdr top-pair))
