@@ -12,12 +12,13 @@
 ; Data is recorded in the AtomSpace, so that it doesn't get lost.
 ;
 ; ---------------------------------------------------------------
-(define *-log-anchor-* (AnchorNode "data logger"))
 
 (define (make-logger LLOBJ)
 "
   make-logger LLOBJ -- create logger to record assorted info in AtomSpace
 "
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+
 	(define log-mmt-q (make-data-logger *-log-anchor-* (Predicate "mmt-q")))
 	(define log-ranked-mi (make-data-logger *-log-anchor-* (Predicate "ranked-mi")))
 	(define log-sparsity (make-data-logger *-log-anchor-* (Predicate "sparsity")))
@@ -79,6 +80,8 @@
 "
   make-class-logger LLOBJ -- create logger to record merge details.
 "
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+
 	; Record the classes as they are created.
 	(define log-class (make-data-logger *-log-anchor-* (Predicate "class")))
 	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "self-mi")))
@@ -106,10 +109,12 @@
 
 ; ---------------------------------------------------------------
 
-(define (print-params PORT)
+(define (print-params LLOBJ PORT)
 "
-  print-params PORT -- print parameters header.
+  print-params LLOBJ PORT -- print parameters header.
 "
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+
 	(define params (cog-value->list
 		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
 	(define quorum (list-ref params 0))
@@ -121,9 +126,9 @@
 		quorum commonality noise nrank)
 )
 
-(define-public (print-log PORT)
+(define-public (print-log LLOBJ PORT)
 "
-  print-log PORT -- Dump log contents as CSV
+  print-log LLOBJ PORT -- Dump log contents as CSV
   Set PORT to #t to get output to stdout
 "
 	(define key-mmt-q (Predicate "mmt-q"))
@@ -137,6 +142,7 @@
 	(define key-size (Predicate "total entries"))
 	(define key-class (Predicate "class"))
 
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define rows (cog-value->list (cog-value *-log-anchor-* key-left-dim)))
 	(define cols (cog-value->list (cog-value *-log-anchor-* key-right-dim)))
 	(define lcnt (cog-value->list (cog-value *-log-anchor-* key-left-cnt)))
@@ -151,7 +157,7 @@
 	(define len (length rows))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
-	(print-params PORT)
+	(print-params LLOBJ PORT)
 	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,entropy,ranked-mi,mmt-q\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\n"
@@ -168,15 +174,16 @@
 		(iota len))
 )
 
-(define-public (print-merges PORT)
+(define-public (print-merges LLOBJ PORT)
 "
-  print-merges PORT -- Dump merge log contents as CSV
+  print-merges LLOBJ PORT -- Dump merge log contents as CSV
   Set PORT to #t to get output to stdout
 "
 	(define key-class (Predicate "class"))
 	(define key-self-mi (Predicate "self-mi"))
 	(define key-self-rmi (Predicate "self-ranked-mi"))
 
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
 	(define self-mi (cog-value->list (cog-value *-log-anchor-* key-self-mi)))
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
@@ -184,7 +191,7 @@
 	(define len (length classes))
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
-	(print-params PORT)
+	(print-params LLOBJ PORT)
 	(format PORT "# N,words,self-mi,self-rmi\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t\"~A\"\t~9F\t~9F\n"
@@ -197,13 +204,14 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (dump-log DIR)
+(define-public (dump-log LLOBJ DIR)
 "
-  dump-log DIR -- print log file to DIR.
+  dump-log LLOBJ DIR -- print log file to DIR.
   Example: (dump-log \"/tmp\")
   Result: \"/tmp/log-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
   the commonality.
 "
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define params (cog-value->list
 		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
 	(define quorum (list-ref params 0))
@@ -214,13 +222,14 @@
 	(close port)
 )
 
-(define-public (dump-merges DIR)
+(define-public (dump-merges LLOBJ DIR)
 "
-  dump-merges DIR -- print merge file to DIR.
+  dump-merges LLOBJ DIR -- print merge file to DIR.
   Example: (dump-merges \"/tmp\")
   Result: \"/tmp/merge-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
   the commonality.
 "
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define params (cog-value->list
 		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
 	(define quorum (list-ref params 0))
