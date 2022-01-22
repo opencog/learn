@@ -84,14 +84,17 @@
 
 	; Record the classes as they are created.
 	(define log-class (make-data-logger *-log-anchor-* (Predicate "class")))
-	(define log-class-size (make-data-logger *-log-anchor-* (Predicate "class-size")))
-	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "self-mi")))
-	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "self-ranked-mi")))
-	(define log-support (make-data-logger *-log-anchor-* (Predicate "support")))
-	(define log-count (make-data-logger *-log-anchor-* (Predicate "count")))
+	(define log-class-size (make-data-logger *-log-anchor-* (Predicate "class size")))
+	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "class self-mi")))
+	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "class self-ranked-mi")))
+	(define log-support (make-data-logger *-log-anchor-* (Predicate "class support")))
+	(define log-count (make-data-logger *-log-anchor-* (Predicate "class count")))
+	(define log-logli (make-data-logger *-log-anchor-* (Predicate "class logli")))
+	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "class entropy")))
 
 	; General setup of things we need
 	(define sup (add-support-api LLOBJ))
+	(define frq (add-pair-freq-api LLOBJ))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 
 	; The MI similarity of two words
@@ -111,6 +114,8 @@
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
 		(log-support (sup 'right-support WCLASS))
 		(log-count (sup 'right-count WCLASS))
+		(log-logli (frq 'right-wild-logli WCLASS))
+		(log-entropy (frq 'right-wild-fentropy WCLASS))
 		(store-atom *-log-anchor-*)
 	)
 )
@@ -188,11 +193,13 @@
   Set PORT to #t to get output to stdout
 "
 	(define key-class (Predicate "class"))
-	(define key-class-size (Predicate "class-size"))
-	(define key-self-mi (Predicate "self-mi"))
-	(define key-self-rmi (Predicate "self-ranked-mi"))
-	(define key-support (Predicate "support"))
-	(define key-count (Predicate "count"))
+	(define key-class-size (Predicate "class size"))
+	(define key-self-mi (Predicate "class self-mi"))
+	(define key-self-rmi (Predicate "class self-ranked-mi"))
+	(define key-support (Predicate "class support"))
+	(define key-count (Predicate "class count"))
+	(define key-logli (Predicate "class logli"))
+	(define key-entropy (Predicate "class entropy"))
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
@@ -201,12 +208,14 @@
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
 	(define support (cog-value->list (cog-value *-log-anchor-* key-support)))
 	(define count (cog-value->list (cog-value *-log-anchor-* key-count)))
+	(define logli (cog-value->list (cog-value *-log-anchor-* key-logli)))
+	(define entropy (cog-value->list (cog-value *-log-anchor-* key-entropy)))
 
 	(define len (length classes))
 
-	(format PORT "#\n# Log of merge statistics\n#\n")
+	(format PORT "#\n# Log of class-related merge statistics\n#\n")
 	(print-params LLOBJ PORT)
-	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count\n")
+	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy\n")
 	(for-each (lambda (N)
 		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\n"
 			(+ N 1)
@@ -216,6 +225,8 @@
 			(list-ref self-rmi N)
 			(list-ref support N)
 			(list-ref count N)
+			(list-ref logli N)
+			(list-ref entropy N)
 		))
 		(iota len))
 )

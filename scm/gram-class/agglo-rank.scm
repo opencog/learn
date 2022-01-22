@@ -446,7 +446,7 @@
 		wrd-list)
 
 	; Recompute the grand-total
-	(ent-obj 'cache-entropy)
+	(store-atom (ent-obj 'cache-entropy))
 )
 
 (define (recompute-mmt LLOBJ wrd-list dj-list)
@@ -491,8 +491,8 @@
 	; (Optional) Recompute entropies
 	; Optional, cause ts not strictly needed (at this time)
 	; but it does seem to offer some interesting data.
-	; This incurs a hefty compute cost, though.
-	; (recompute-entropies LLOBJ wrd-list dj-list)
+	; This incurs additional compute cost, though.
+	(recompute-entropies LLOBJ wrd-list dj-list)
 
 	(list (wrd-orphan #f) (dj-orphan #f))
 )
