@@ -680,6 +680,7 @@
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
 		(FloatValue QUORUM COMMONALITY NOISE NRANK))
 
@@ -758,9 +759,6 @@
 		(log-class wclass) ; record this in the log
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
-
-		; Belt and suspenders. Make sure everything is saved.
-		(store-atom *-log-anchor-*)
 	)
 
 	; --------------------------------------------

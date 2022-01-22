@@ -104,6 +104,7 @@
 		(log-class WCLASS)
 		(log-self-mi (mi-sim WCLASS WCLASS))
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
+		(store-atom *-log-anchor-*)
 	)
 )
 
@@ -218,7 +219,7 @@
 	(define commonality (list-ref params 1))
 	(define FILENAME (format #f "~A/log-~A-~A.dat" DIR quorum commonality))
 	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
-	(print-log port)
+	(print-log LLOBJ port)
 	(close port)
 )
 
@@ -236,7 +237,7 @@
 	(define commonality (list-ref params 1))
 	(define FILENAME (format #f "~A/merges-~A-~A.dat" DIR quorum commonality))
 	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
-	(print-merges port)
+	(print-merges LLOBJ port)
 	(close port)
 )
 

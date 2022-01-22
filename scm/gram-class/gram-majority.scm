@@ -174,7 +174,7 @@
 		(define class-type (cog-type CLASS))
 
 		; If two classes are being merged, then the counts from one class
-		; must be moved to the other. Thiis utility copies those counts.
+		; must be moved to the other. This utility copies those counts.
 		(define (move-count FROM-CLASS)
 			(for-each (lambda (MEMB)
 				(define new-memb (MemberLink (gar MEMB) CLASS))
