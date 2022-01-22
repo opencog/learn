@@ -23,7 +23,8 @@
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 
 	(define log-mmt-q (make-data-logger *-log-anchor-* (Predicate "mmt-q")))
-	(define log-ranked-mi (make-data-logger *-log-anchor-* (Predicate "ranked-mi")))
+	(define log-mi (make-data-logger *-log-anchor-* (Predicate "top-pair mi")))
+	(define log-ranked-mi (make-data-logger *-log-anchor-* (Predicate "top-pair ranked-mi")))
 	(define log-sparsity (make-data-logger *-log-anchor-* (Predicate "sparsity")))
 	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "mmt-entropy")))
 	(define log-left-dim (make-data-logger *-log-anchor-* (Predicate "left dim")))
@@ -31,13 +32,19 @@
 	(define log-left-cnt (make-data-logger *-log-anchor-* (Predicate "left-count")))
 	(define log-right-cnt (make-data-logger *-log-anchor-* (Predicate "right-count")))
 	(define log-size (make-data-logger *-log-anchor-* (Predicate "total entries")))
+	(define log-left-entropy (make-data-logger *-log-anchor-* (Predicate "left-entropy")))
+	(define log-right-entropy (make-data-logger *-log-anchor-* (Predicate "right-entropy")))
+	(define log-total-entropy (make-data-logger *-log-anchor-* (Predicate "total-entropy")))
 	(define log-nclasses (make-data-logger *-log-anchor-* (Predicate "num classes")))
 	(define log-nsimil (make-data-logger *-log-anchor-* (Predicate "num sim pairs")))
 
 	(define (log2 x) (if (< 0 x) (/ (log x) (log 2)) -inf.0))
 
+	(define sup (add-support-api LLOBJ))
+	(define tsr (add-transpose-api LLOBJ))
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+
 	(define (get-sparsity)
-		(define sup (add-support-api LLOBJ))
 		(define nrows (sup 'left-dim))
 		(define ncols (sup 'right-dim))
 		(define tot (* nrows ncols))
@@ -45,13 +52,15 @@
 		(log2 (/ tot lsize)))
 
 	(define (get-mmt-entropy)
-		(define tsr (add-transpose-api LLOBJ))
 		(define mmt-support (tsr 'total-mmt-support))
 		(define mmt-count (tsr 'total-mmt-count))
 		(- (log2 (/ mmt-count (* mmt-support mmt-support)))))
 
+	(define (get-mi PAIR)
+		(define miv (sap 'get-count PAIR))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
 	(define (get-ranked-mi PAIR)
-		(define sap (add-similarity-api LLOBJ #f SIM-ID))
 		(define miv (sap 'get-count PAIR))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
@@ -59,13 +68,13 @@
 	(lambda (top-pair)
 		(log-mmt-q ((add-symmetric-mi-compute LLOBJ) 'mmt-q))
 		(log-ranked-mi (get-ranked-mi top-pair))
+		(log-mi (get-mi top-pair))
 
 		(log-sparsity (get-sparsity))
 		(log-entropy (get-mmt-entropy))
 
 		; The left and right count should be always equal,
 		; and should never change.  This is a sanity check.
-		(define sup (add-support-api LLOBJ))
 		(log-left-cnt (sup 'total-count-left))
 		(log-right-cnt (sup 'total-count-right))
 
@@ -153,7 +162,8 @@
   Set PORT to #t to get output to stdout
 "
 	(define key-mmt-q (Predicate "mmt-q"))
-	(define key-ranked-mi (Predicate "ranked-mi"))
+	(define key-top-ranked-mi (Predicate "top-pair ranked-mi"))
+	(define key-top-mi (Predicate "top-pair mi"))
 	(define key-sparsity (Predicate "sparsity"))
 	(define key-entropy (Predicate "mmt-entropy"))
 	(define key-left-dim (Predicate "left dim"))
@@ -172,7 +182,8 @@
 	(define size (cog-value->list (cog-value *-log-anchor-* key-size)))
 	(define spar (cog-value->list (cog-value *-log-anchor-* key-sparsity)))
 	(define entr (cog-value->list (cog-value *-log-anchor-* key-entropy)))
-	(define rami (cog-value->list (cog-value *-log-anchor-* key-ranked-mi)))
+	(define rami (cog-value->list (cog-value *-log-anchor-* key-top-ranked-mi)))
+	(define tomi (cog-value->list (cog-value *-log-anchor-* key-top-mi)))
 	(define mmtq (cog-value->list (cog-value *-log-anchor-* key-mmt-q)))
 	(define ncla (cog-value->list (cog-value *-log-anchor-* key-nclasses)))
 	(define nsim (cog-value->list (cog-value *-log-anchor-* key-nsimil)))
@@ -183,7 +194,7 @@
 	(print-params LLOBJ PORT)
 	(format PORT "# N,rows,cols,lcnt,rcnt,size,sparsity,mmt-entropy,ranked-mi,mmt-q\n")
 	(for-each (lambda (N)
-		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\t~D\t~D\n"
+		(format PORT "~D\t~A\t~A\t~A\t~A\t~A\t~9F\t~9F\t~9F\t~9F\t~9F\t~D\t~D\n"
 			(+ N 1)
 			(inexact->exact (list-ref rows N))
 			(inexact->exact (list-ref cols N))
@@ -193,6 +204,7 @@
 			(list-ref spar N)
 			(list-ref entr N)
 			(list-ref rami N)
+			(list-ref tomi N)
 			(list-ref mmtq N)
 			(list-ref ncla N)
 			(list-ref nsim N)
