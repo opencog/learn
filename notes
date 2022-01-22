@@ -9842,12 +9842,13 @@ How about voting?  vote-to-accept? accepted is DJ is shared by majority.
 
 recompute-entropies -- defer ...
 
-num-classes
-self-mi of new class
-size of class
+num-classes (length (cog-get-atoms 'WordClassNode))
+self-mi of new class  DONE
+size of class DONE
 number of disjuncts on class
 number of disjuncts  merged
 entropy of class
+diag extension size. (num simil)
 
 use count
 avoid 

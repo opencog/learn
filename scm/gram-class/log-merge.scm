@@ -84,6 +84,7 @@
 
 	; Record the classes as they are created.
 	(define log-class (make-data-logger *-log-anchor-* (Predicate "class")))
+	(define log-class-size (make-data-logger *-log-anchor-* (Predicate "class-size")))
 	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "self-mi")))
 	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "self-ranked-mi")))
 
@@ -102,6 +103,7 @@
 
 	(lambda (WCLASS)
 		(log-class WCLASS)
+		(log-class-size (cog-incoming-size-by-type WCLASS 'MemberLink))
 		(log-self-mi (mi-sim WCLASS WCLASS))
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
 		(store-atom *-log-anchor-*)
@@ -181,11 +183,13 @@
   Set PORT to #t to get output to stdout
 "
 	(define key-class (Predicate "class"))
+	(define key-class-size (Predicate "class-size"))
 	(define key-self-mi (Predicate "self-mi"))
 	(define key-self-rmi (Predicate "self-ranked-mi"))
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
+	(define class-size (cog-value->list (cog-value *-log-anchor-* key-class-size)))
 	(define self-mi (cog-value->list (cog-value *-log-anchor-* key-self-mi)))
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
 
@@ -193,11 +197,12 @@
 
 	(format PORT "#\n# Log of merge statistics\n#\n")
 	(print-params LLOBJ PORT)
-	(format PORT "# N,words,self-mi,self-rmi\n")
+	(format PORT "# N,words,class-size,self-mi,self-rmi\n")
 	(for-each (lambda (N)
-		(format PORT "~D\t\"~A\"\t~9F\t~9F\n"
+		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\n"
 			(+ N 1)
 			(cog-name (list-ref classes N))
+			(list-ref class-size N)
 			(list-ref self-mi N)
 			(list-ref self-rmi N)))
 		(iota len))
