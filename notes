@@ -9809,6 +9809,27 @@ In-group size=2 overlap = 1 of 3178 disjuncts, commonality= 0.03%
 
 198 for 0.7  >>C —.i<<
 
+
+vote-thresh == 2.
+There must be ... something, cause MI so high!
+(define vote-thresh 2)
+(define WLIST (list (Word "C") (Word "—")))
+(define LLOBJ star-obj)
+ (define (vote-to-accept? DJ)
+         (<= vote-thresh
+            (fold
+               (lambda (WRD CNT) (if (nil? (LLOBJ 'get-pair WRD DJ)) CNT (+ 1 CNT)))
+               0 WLIST)))
+(define cseq
+	(filter (lambda (SEC) (equal? (cog-type SEC) 'ConnectorSeq)) dj-list))
+
+(any (lambda (DJ) (vote-to-accept? DJ)) cseq) #f
+(any (lambda (DJ) (vote-to-accept? DJ)) dj-list) #f
+(define okl (filter vote-to-accept? dj-list))
+(length okl) ; 1 !!
+
+left-over calc is wrong.  It knocked out unvoted sections...
+
 update-memb-count
 change do-erge to return non-zero.. and fold it?  in merge-dj DONE
 
@@ -9817,7 +9838,7 @@ optimal-in-group  -- change to use plain MI.
 
 How about voting?  vote-to-accept? accepted is DJ is shared by majority.
 
-recompute-entropies
+recompute-entropies -- defer ...
 
 ====================================================
 ====================================================

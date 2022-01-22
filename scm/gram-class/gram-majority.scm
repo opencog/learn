@@ -263,7 +263,7 @@
 		; tested in the `class-merge-basic.scm` unit test.
 		;
 		; This returns the fraction actually merged, so that the caller can
-		; find out if anything was actually done. This is for reporting stats.
+		; find out if anything was actually done.
 		(define (do-merge WRD DJ ACCEPT)
 			(define SECT (LLOBJ 'get-pair WRD DJ))
 			(if (not (nil? SECT))
@@ -282,8 +282,7 @@
 				0))
 
 		; Perform the merge a given disjunct, or not
-		; Return a total count of how much was merged. The return value
-		; is only of interest for reporting stats, and nothing more.
+		; Return a total count of how much was merged.
 		(define (merge-dj DJ)
 			(define have-majority (vote-to-accept? DJ))
 			(fold
@@ -300,34 +299,9 @@
 		(define (rebalance-dj DJ)
 			(for-each (lambda (WRD) (do-rebalance WRD DJ)) WLIST))
 
-		; Loop over disjuncts, handling the Sections only.
-		; Any remaining CrossSections not handled in this loop
-		; are handled out-of-line, below.
-		(define e (make-elapsed-secs))
-		(define scnt 0)
-		(define mscnt 0)
-		(for-each
-			(lambda (DJ)
-				(when (equal? 'ConnectorSeq (cog-type DJ))
-					(if (< 0 (merge-dj DJ)) (set! mscnt (+ 1 mscnt)))
-					(if MRG-CON (rebalance-dj DJ))
-					(set! scnt (+ 1 scnt))))
-			dj-list)
-		(format #t "------ merge-majority: Merge ~D of ~D sections in ~A secs\n"
-			mscnt scnt (e))
-
-		; ---------------------------------------------------
-		; After the above loop has run, all of the Sections have been
-		; merged, as well as all of the CrossSections that can be derived
-		; from them. Now, we want to handle all the remaining CrossSections
-		; that were not handled above.
-		;
-		; To do this, we need to perform a set-subtraction: figure out
-		; what's been done, and what remains.
-
-		; First, figure out what DJ's have been done already.
+		; Keep track of what DJ's have been handled already.
 		(define done-djs (make-atom-set))
-		(define (record-cross DJ)
+		(define (record-done DJ)
 
 			; Record the shapes built from the crosses
 			(define (do-record WRD)
@@ -340,21 +314,36 @@
 			(done-djs DJ)
 			(for-each do-record WLIST))
 
-		; Main loop, to record all the DJ's that have already
-		; been handled.
-		(define d (make-elapsed-secs))
+		; Loop over disjuncts, handling the Sections only.
+		; Any remaining CrossSections not handled in this loop
+		; are handled out-of-line, below.
+		(define e (make-elapsed-secs))
+		(define scnt 0)
+		(define mscnt 0)
 		(for-each
 			(lambda (DJ)
 				(when (equal? 'ConnectorSeq (cog-type DJ))
-					(record-cross DJ)))
+					(when (< 0 (merge-dj DJ))
+						(record-done DJ)
+						(set! mscnt (+ 1 mscnt)))
+					(if MRG-CON (rebalance-dj DJ))
+					(set! scnt (+ 1 scnt))))
 			dj-list)
+		(format #t "------ merge-majority: Merge ~D of ~D sections in ~A secs\n"
+			mscnt scnt (e))
 
-		; Subtract the ones that are done. The list of left-overs
-		; should be a list consisting entirely of CrossSections.
+		; ---------------------------------------------------
+		; After the above loop has run, all of the Sections have been
+		; merged, as well as all of the CrossSections that can be derived
+		; from them. Now, we want to handle all the remaining CrossSections
+		; that were not handled above.
+		(define d (make-elapsed-secs))
+		;
+		; To do this, we need to perform a set-subtraction. The list of
+		; left-overs should consist entirely of CrossSections.
 		(define left-overs (atoms-subtract
 			dj-list (done-djs #f)))
 
-		; ---------------------------------------------------
 		; Loop over the remaining CrossSections, and merge them.
 		; We would like to do this:
 		;    (for-each merge-dj left-overs)
