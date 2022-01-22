@@ -322,8 +322,18 @@
 	; Get rid of all MI-similarity scores below this cutoff.
 	(define MI-CUTOFF 4.0)
 
+	; Logging of the number of merges perfomed so far.
+	(define log-anchor (LLOBJ 'wild-wild))
+	(define count-location (Predicate "merge-count"))
+	(define count-log (cog-value log-anchor count-location))
+	(define base-done-count
+		(if (nil? count-log) 0 (cog-value-ref count-log 0)))
+	(define (current-count N) (+ 1 N base-done-count))
+	(define (update-done-count N)
+		(cog-set-value! log-anchor count-location (FloatValue N)))
+
 	; Offset on number of simularities to compute
-	(define NSIM-OFFSET (length (cog-get-atoms 'WordClassNode)))
+	(define NSIM-OFFSET base-done-count)
 
 	; How many more similarities to compute each step.
 	(define GRO-SIZE 2)
@@ -338,7 +348,7 @@
 		(lambda (N)
 			(define e (make-elapsed-secs))
 			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
-			(format #t "------ Round ~A Next in line:\n" (+ 1 (diag-start N)))
+			(format #t "------ Round ~A Next in line:\n" (current-count N))
 			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 			(define top-pair (car sorted-pairs))
@@ -347,7 +357,8 @@
 			(log-stuff top-pair)
 
 			; Do the actual merge
-			(MERGE-FUN (diag-start N) (gar top-pair) (gdr top-pair))
+			(MERGE-FUN (current-count N) (gar top-pair) (gdr top-pair))
+			(update-done-count (current-count N))
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
 
@@ -727,7 +738,7 @@
 	(define (perform-merge N WA WB)
 		(define e (make-elapsed-secs))
 		(format #t "------ Start merge ~D with seed pair `~A` and `~A`\n"
-			(+ N 1) (cog-name WA) (cog-name WB))
+			N (cog-name WA) (cog-name WB))
 
 		(define ranked-words (rank-words LLOBJ))
 		; Approximation to number of words with sims.
