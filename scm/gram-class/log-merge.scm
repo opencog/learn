@@ -227,9 +227,13 @@
 	(print-params LLOBJ PORT)
 	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy\n")
 	(for-each (lambda (N)
+		(define cls (list-ref classes N))
 		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\n"
 			(+ N 1)
-			(cog-name (list-ref classes N))
+
+			; In extremely rare circumstances, the class may have
+			; been deleted, if it was fully merged into another class.
+			(if (cog-atom? cls) (cog-name cls) "#f")
 			(list-ref class-size N)
 			(list-ref self-mi N)
 			(list-ref self-rmi N)
