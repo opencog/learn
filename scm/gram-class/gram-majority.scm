@@ -175,11 +175,14 @@
 
 		; If two classes are being merged, then the counts from one class
 		; must be moved to the other. This utility copies those counts.
+		; XXX FIXME. This is just plain wrong. Only a fraction of the
+		; counts should be moved, not all of them.
 		(define (move-count FROM-CLASS)
 			(for-each (lambda (MEMB)
-				(define new-memb (MemberLink (gar MEMB) CLASS))
-				(cog-inc-count! new-memb (get-count MEMB))
-				(cog-delete! MEMB))
+					(define new-memb (MemberLink (gar MEMB) CLASS))
+					(cog-inc-count! new-memb (get-count MEMB))
+					; (cog-delete! MEMB)
+				)
 				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
 
 		; Add words to cluster *before* starting merge!
