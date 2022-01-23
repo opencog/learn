@@ -173,25 +173,10 @@
 		; to just do the below.
 		(define class-type (cog-type CLASS))
 
-		; If two classes are being merged, then the counts from one class
-		; must be moved to the other. This utility copies those counts.
-		; XXX FIXME. This is just plain wrong. Only a fraction of the
-		; counts should be moved, not all of them.
-		(define (move-count FROM-CLASS)
-			(for-each (lambda (MEMB)
-					(define new-memb (MemberLink (gar MEMB) CLASS))
-					(cog-inc-count! new-memb (get-count MEMB))
-					; (cog-delete! MEMB)
-				)
-				(cog-incoming-by-type FROM-CLASS 'MemberLink)))
-
-		; Add words to cluster *before* starting merge!
-		; This is needed, as the merge will look for these links.
-		(for-each (lambda (WRD)
-			(if (equal? class-type (cog-type? WRD))
-				(move-count WRD)
-				(MemberLink WRD CLASS)))
-			WLIST)
+		; Add words to cluster *before* starting merge! This is needed,
+		; as the merge will look for these links. The case where one of
+		; the words is a class is handled at the very end.
+		(for-each (lambda (WRD) (MemberLink WRD CLASS)) WLIST)
 
 		; ---------------------------------------------------
 		; The minimum number of sections that must exist for
@@ -427,6 +412,44 @@
 
 		(format #t "------ merge-majority: Remaining ~A of ~A cross in ~A secs\n"
 			mshcnt (length left-overs) (d))
+
+		; If any of the merged items was a class, then transfer a
+		; proportionate amount of the counts to new class.
+		; XXX FIXME -- Why are we doing this? This can always be
+		; done later, post-merge, e.g. when creating dictionaries.
+		; This has the effect of erasing the history of the merge.
+		; So maybe this should be done ... later; outside the merge
+		; cycle. I dunno. For now, I'm leaving as-is.
+		(define (move-count FROM-CLASS)
+			; Get the total count on FROM-CLASS. This should be equal to
+			; the marginal count. That is, it should equal
+			;   ((add-support-api LLOBJ) 'right-count FROM-CLASS)
+			(define old-count
+				(fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB)))
+					0 (cog-incoming-by-type FROM-CLASS 'MemberLink)))
+
+			; Get the total count transfered.
+			(define dmemb (Member FROM-CLASS CLASS))
+			(define new-count (cog-count dmemb))
+
+			; How much of the old count was transfered.
+			(define fract (/ new-count old-count))
+
+			; Move a proportion of the counts from old to new.
+			(for-each (lambda (FMEMB)
+					(define fcnt (cog-count FMEMB))
+					(define xfer (* fcnt fract))
+					(cog-inc-count! (MemberLink (gar FMEMB) CLASS) xfer)
+					(cog-inc-count! FMEMB (- xfer)))
+				(cog-incoming-by-type FROM-CLASS 'MemberLink))
+
+			; Get rid of the class-membership.  This erases the history.
+			; XXX Why are we doing this? Can't we do this later?
+			(cog-delete! dmemb))
+
+		(for-each (lambda (WRD)
+				(if (equal? class-type (cog-type? WRD)) (move-count WRD)))
+			WLIST)
 
 		*unspecified*
 	)
