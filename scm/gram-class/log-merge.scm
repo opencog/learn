@@ -175,6 +175,11 @@
 
 	(format PORT "# quorum=~6F commonality=~6F noise=~D nrank=~A\n#\n"
 		quorum commonality noise nrank)
+
+	(define in-grp-sim (cog-value-ref
+		(cog-value *-log-anchor-* (Predicate "in-group-sim")) 0))
+
+	(format PORT "# in-group-sim=~A\n" in-grp-sim)
 )
 
 (define-public (print-log LLOBJ PORT)
@@ -295,39 +300,30 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (dump-log LLOBJ DIR)
+(define-public (dump-log LLOBJ PREFIX-DIR PRINTER)
 "
-  dump-log LLOBJ DIR -- print log file to DIR.
-  Example: (dump-log \"/tmp\")
-  Result: \"/tmp/log-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
-  the commonality.
-"
-	(define *-log-anchor-* (LLOBJ 'wild-wild))
-	(define params (cog-value->list
-		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
-	(define quorum (list-ref params 0))
-	(define commonality (list-ref params 1))
-	(define FILENAME (format #f "~A/log-~A-~A.dat" DIR quorum commonality))
-	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
-	(print-log LLOBJ port)
-	(close port)
-)
+  dump-log LLOBJ PREFIX-DIR PRINTER -- print log file to PREFIX-DIR.
 
-(define-public (dump-merges LLOBJ DIR)
-"
-  dump-merges LLOBJ DIR -- print merge file to DIR.
-  Example: (dump-merges \"/tmp\")
-  Result: \"/tmp/merge-0.5-0.2.dat\" where 0.5 is the quorum, and 0.2
-  the commonality.
+  The PREFIX-DIR is used to specify the directory and also the file
+  prefix.  Appended to this will be a string recording the quorum,
+  commonality and noise for the run.
+
+  The PRINTER must be either `print-log` or `print-merges`.
+
+  Example: (dump-log star-obj \"/tmp/foo\" print-log)
+  Result: \"/tmp/foo-q0.5-c0.2-n4.dat\" where 0.5 is the quorum,
+  0.2 the commonality and 4 is the noise.
 "
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define params (cog-value->list
 		(cog-value *-log-anchor-* (Predicate "quorum-comm-noise"))))
 	(define quorum (list-ref params 0))
 	(define commonality (list-ref params 1))
-	(define FILENAME (format #f "~A/merges-~A-~A.dat" DIR quorum commonality))
+	(define noise (list-ref params 2))
+	(define FILENAME (format #f "~A-q~A-c~A-n~A.dat"
+		PREFIX-DIR quorum commonality noise))
 	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
-	(print-merges LLOBJ port)
+	(PRINTER LLOBJ port)
 	(close port)
 )
 
