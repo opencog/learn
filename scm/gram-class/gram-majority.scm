@@ -70,7 +70,7 @@
 	; that disjunct (thus giving the traditional overlap merge).
 	(define wlen (length WORD-LIST))
 	(define vote-thresh
-		(if (equal? wlen 2) 2
+		(if (<= wlen 2) 2
 			(inexact->exact (round (* QUORUM wlen)))))
 
 	; The group-similarity function uses a strictly-less-than compare.

@@ -9858,9 +9858,50 @@ number of disjuncts  merged ? fraction? -- available as class support minus delt
 size of matrix.
 
 use count
-avoid 
+avoid
 
 rename log-stuff DONE
+
+why is overlap tiny, but num actually merged huge?
+count-shared-conseq ... whuy isn't this same as vote?
+make-group-similarity 'noise-col-supp
+
+(define wlist (list (Word "little") (Word "young")))
+(count-shared-conseq star-obj 0.5 4 wlist) ; (107 1311)
+(count-shared-conseq star-obj 0.5 0 wlist) ; (355 4109)
+
+(define vote-thresh 2)
+(define LLOBJ star-obj)
+
+(define wlist (list (Word "greatest") (Word "south")))
+(define voter-list wlist)
+(define WLIST wlist)
+
+(length dj-list) ; 4109 ... that agrees.
+
+(fold (lambda (DJ SUM) (if (vote-to-accept? DJ) (+ SUM  1) SUM)) 0 dj-list)
+355 OK so that's right too.
+
+Initial in-group size=2: `greatest` `South`
+In-group size=2 overlap = 2 of 100 disjuncts, commonality= 2.00%
+In-group size=2: `greatest` `South`
+------ merge-majority: Merge 40 of 91 sections in 0 secs
+------ merge-majority: Remaining 42 of 91 cross in 0 secs
+
+(define wlist (list (Word "greatest") (Word "south")))
+(count-shared-conseq star-obj 0.5 4 wlist) ; (1 100)
+(count-shared-conseq star-obj 0.5 0 wlist) ; (3 387)
+(length dj-list) ; 387 correct
+(fold (lambda (DJ SUM) (if (vote-to-accept? DJ) (+ SUM  1) SUM)) 0 dj-list) ; 3 expected
+
+(define (below-floor? DJ)
+	(any (lambda (WRD)
+		(define SEC (star-obj 'get-pair WRD DJ))
+		(and (not (nil? SEC)) (< (cog-count SEC) 4))) wlist))
+
+(fold (lambda (DJ SUM) (if
+	(or (vote-to-accept? DJ)  (below-floor? DJ))
+	(+ SUM  1) SUM)) 0 dj-list) ; 243 wow that's a lot of noisey bits.
 
 
 ====================================================
