@@ -102,7 +102,7 @@
 		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
 
 		; Print something, so user has something to look at.
-		(if (< 4 fmi)
+		(if (< 6 fmi)
 			(format #t "\tMI(`~A`, `~A`) = ~6F  rank-MI = ~6F\n"
 				(cog-name WA) (cog-name WB) fmi rmi))
 		(store-atom
@@ -175,7 +175,7 @@
 	(define rpt-one-row
 		(make-progress-rpt do-one-row 10 #f
 			"Diag: Finished ~D rows in ~D secs (~D/sec)\n"
-			10))
+			30))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
 	(for-each (lambda (n) (rpt-one-row n)) (iota depth))
