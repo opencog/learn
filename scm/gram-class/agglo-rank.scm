@@ -680,8 +680,13 @@
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
-	; The ranked MI similarity of two words
+	; The ordinary MI similarity of two words
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define (mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
+	; The ranked MI similarity of two words
 	(define (ranked-mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
@@ -702,7 +707,9 @@
 	; the initial two proposed.
 	(define (get-merg-grp WA WB CANDIDATES)
 		(define initial-in-grp
-			(optimal-in-group ranked-mi-sim WA WB CANDIDATES))
+			; Hypothesis: ordinary MI creates better clusters.
+			; (optimal-in-group ranked-mi-sim WA WB CANDIDATES)
+			(optimal-in-group mi-sim WA WB CANDIDATES))
 		(format #t "Initial in-group size=~D:" (length initial-in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
 			initial-in-grp)

@@ -6333,7 +6333,7 @@ A tempting conclusion, perhaps a bit ad-hoc, is to use ranked-MI to suggest
  the initial pair to seed a cluster, but then to use either MI, HMI or MMI
  to expand the actual in-group.
  So, MMI looks pretty slick, but is computationally the heaviest to recompute.
- HMI should be fairly fast, as it's just soe logs.
+ HMI should be fairly fast, as it's just some logs.
  And MI is computationally 
 \begin_inset Quotes eld
 \end_inset
@@ -6343,6 +6343,11 @@ free
 \end_inset
 
 , it has to be computed anyway.
+\end_layout
+
+\begin_layout Standard
+Where to change this: search code for `optimal-in-group` and specify the
+ desired similarity function.
 \end_layout
 
 \begin_layout Section*
