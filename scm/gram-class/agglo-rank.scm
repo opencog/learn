@@ -691,12 +691,19 @@
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
-	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
+	; The similarity function to use for the in-group formation.
+	; Hypothesis: ordinary MI creates better clusters.
+	; (define IN-GRP-SIM ranked-mi-sim)
+	(define IN-GRP-SIM mi-sim)
+
+	; Log what we actually used.
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
+		(StringValue "mi-sim"))
 
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 
-	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
 		(FloatValue QUORUM COMMONALITY NOISE NRANK))
 
@@ -707,9 +714,8 @@
 	; the initial two proposed.
 	(define (get-merg-grp WA WB CANDIDATES)
 		(define initial-in-grp
-			; Hypothesis: ordinary MI creates better clusters.
-			; (optimal-in-group ranked-mi-sim WA WB CANDIDATES)
-			(optimal-in-group mi-sim WA WB CANDIDATES))
+			(optimal-in-group IN-GRP-SIM WA WB CANDIDATES))
+
 		(format #t "Initial in-group size=~D:" (length initial-in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
 			initial-in-grp)
@@ -741,6 +747,8 @@
 	)
 
 	; ------------------------------
+	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
+
 	; Main workhorse function
 	(define (perform-merge N WA WB)
 		(define e (make-elapsed-secs))
