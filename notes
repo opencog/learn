@@ -9852,7 +9852,7 @@ number of disjuncts on class (support) DONE
 count via marginal count. DONE
 entropy of class and logli DONE
 
-count on class via member link, and merge entropy
+count on class via member link, and merge entropy DONE
 
 number of disjuncts  merged ? fraction? -- available as class support minus delta
 size of matrix.
@@ -9903,6 +9903,9 @@ In-group size=2: `greatest` `South`
 	(or (vote-to-accept? DJ)  (below-floor? DJ))
 	(+ SUM  1) SUM)) 0 dj-list) ; 243 wow that's a lot of noisey bits.
 
+sum_i n_i/N log n_i/N = (1/N) sum_i n_i (log n_i - log N)
+= (1/N) sum_i n_i log n_i - ((log N) /N) sum_i n_i
+= (1/N) sum_i n_i log n_i -  log N
 
 ====================================================
 ====================================================

@@ -114,6 +114,7 @@
 	(define log-count (make-data-logger *-log-anchor-* (Predicate "class count")))
 	(define log-logli (make-data-logger *-log-anchor-* (Predicate "class logli")))
 	(define log-entropy (make-data-logger *-log-anchor-* (Predicate "class entropy")))
+	(define log-cluster (make-data-logger *-log-anchor-* (Predicate "class cluster entropy")))
 
 	; General setup of things we need
 	(define sup (add-support-api LLOBJ))
@@ -130,6 +131,19 @@
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 1) -inf.0))
 
+	; sum_i p_i log p_i = sum_i n_i/N log n_i/N
+	; = (1/N) sum_i n_i (log n_i - log N)
+	; = (1/N) sum_i n_i log n_i - ((log N) /N) sum_i n_i
+	; = (1/N) sum_i n_i log n_i -  log N
+	(define (cluster-entropy)
+		(define tot (fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB))) 0
+			(cog-incoming-by-type WCLASS 'MemberLink)))
+		(define nlg (fold (lambda (MEMB SUM)
+				(define cnt (cog-count MEMB))
+				(+ SUM (* cnt (log cnt)))) 0
+			(cog-incoming-by-type WCLASS 'MemberLink)))
+		(/ (- (/ nlg tot) (log tot)) (log 2)))
+
 	(lambda (WCLASS)
 		(log-class WCLASS)
 		(log-class-size (cog-incoming-size-by-type WCLASS 'MemberLink))
@@ -139,6 +153,7 @@
 		(log-count (sup 'right-count WCLASS))
 		(log-logli (frq 'right-wild-logli WCLASS))
 		(log-entropy (frq 'right-wild-fentropy WCLASS))
+		(log-cluster (cluster-entropy))
 		(store-atom *-log-anchor-*)
 	)
 )
@@ -240,6 +255,7 @@
 	(define key-count (Predicate "class count"))
 	(define key-logli (Predicate "class logli"))
 	(define key-entropy (Predicate "class entropy"))
+	(define key-cluster (Predicate "class cluster entropy"))
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
@@ -250,15 +266,16 @@
 	(define count (cog-value->list (cog-value *-log-anchor-* key-count)))
 	(define logli (cog-value->list (cog-value *-log-anchor-* key-logli)))
 	(define entropy (cog-value->list (cog-value *-log-anchor-* key-entropy)))
+	(define cluster (cog-value->list (cog-value *-log-anchor-* key-cluster)))
 
 	(define len (length classes))
 
 	(format PORT "#\n# Log of class-related merge statistics\n#\n")
 	(print-params LLOBJ PORT)
-	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy\n")
+	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy,cluster\n")
 	(for-each (lambda (N)
 		(define cls (list-ref classes N))
-		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\n"
+		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\t~9F\n"
 			(+ N 1)
 
 			; In extremely rare circumstances, the class may have
@@ -271,6 +288,7 @@
 			(list-ref count N)
 			(list-ref logli N)
 			(list-ref entropy N)
+			(list-ref cluster N)
 		))
 		(iota len))
 )
