@@ -426,7 +426,7 @@
 	(define ent-obj (add-entropy-compute LLOBJ))
 	(define sup-obj (add-support-api LLOBJ))
 
-	(freq-obj 'init)
+	(freq-obj 'init-freq)
 
 	; The freq-obj 'cache-left-freq is a trivial divide of the marginal
 	; count by the total count, and nothing more. The 'cache-left-entropy
