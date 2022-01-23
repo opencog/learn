@@ -135,7 +135,7 @@
 	; = (1/N) sum_i n_i (log n_i - log N)
 	; = (1/N) sum_i n_i log n_i - ((log N) /N) sum_i n_i
 	; = (1/N) sum_i n_i log n_i -  log N
-	(define (cluster-entropy)
+	(define (cluster-entropy WCLASS)
 		(define tot (fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB))) 0
 			(cog-incoming-by-type WCLASS 'MemberLink)))
 		(define nlg (fold (lambda (MEMB SUM)
@@ -153,7 +153,7 @@
 		(log-count (sup 'right-count WCLASS))
 		(log-logli (frq 'right-wild-logli WCLASS))
 		(log-entropy (frq 'right-wild-fentropy WCLASS))
-		(log-cluster (cluster-entropy))
+		(log-cluster (cluster-entropy WCLASS))
 		(store-atom *-log-anchor-*)
 	)
 )
