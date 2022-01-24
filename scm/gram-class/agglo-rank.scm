@@ -434,6 +434,12 @@
 	(for-each
 		(lambda (DJ)
 			(when (< 0 (sup-obj 'left-count DJ))
+				; Entropies need the frequencies recomputed on the pairs
+				(for-each (lambda (WRD)
+						(define PR (LLOBJ 'get-pair WRD DJ))
+						(when (not (nil? PR))
+							(freq-obj 'cache-pair-freq PR)))
+					wrd-list)
 				(freq-obj 'cache-left-freq DJ)
 				(store-atom (ent-obj 'cache-left-entropy DJ))))
 		dj-list)
