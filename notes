@@ -9921,33 +9921,96 @@ Dong apirs: 19.607278945916782 19.687849944789978
 
 (define fra (add-pair-freq-api star-obj))
 (define frc (make-compute-freq star-obj))
+(frc 'init-freq)
 (define ol2 (- (/ 1 (log 2))))
+
+(define (neq A B) (< 1.0e-12 (abs (- A B))))
 
 (define ftot 0)
 (define htot 0)
+(define nelt 0)
 (for-each (lambda (PR)
+	(set! nelt (+ 1 nelt))
 	(define ofrq (fra 'pair-freq PR))
 	(define nfrq (frc 'compute-pair-freq PR))
-	(when (not (equal? ofrq nfrq))
-		(format #t "frq foo not ~A ~A ~A\n" ofrq nfrq (prt-element PR))
+	(when (neq ofrq nfrq)
+		(format #t "frq foo not ~A ~A ~A ~A\n" nelt ofrq nfrq (prt-element PR))
 		(foobar))
 	(set! ftot (+ ftot ofrq))
 	(define oli (fra 'pair-logli PR))
 	(define nli (* ol2 (log ofrq)))
-	(when (not (equal? oli nli))
-		(format #t "badli not ~A ~A ~A\n" oli nli (prt-element PR))
+	(when (neq oli nli)
+		(format #t "badli not ~A ~A ~A ~A\n" nelt oli nli (prt-element PR))
 		(foobar))
 	(define oen (fra 'pair-entropy PR))
 	(define nen (* oli ofrq))
-	(when (not (equal? oen nen))
-		(format #t "badent not ~A ~A ~A\n" oen nen (prt-element PR))
+	(when (neq oen nen)
+		(format #t "badent not ~A ~A ~A ~A\n" nelt oen nen (prt-element PR))
 		(foobar))
 	(set! htot (+ htot oen))
 	)
 	(star-obj 'get-all-elts))
 
+nelt ; 2774729
+ftot ; 1.0000000000298555
+htot ; 19.45924890334887   vs initial Entropy Total: 19.463
+conclude: pairs are good.
 
-(define ent-obj (add-entropy-compute LLOBJ))
+(define enc (add-entropy-compute star-obj))
+
+(define ndj 0)
+(define hdj 0)
+(for-each (lambda (DJ)
+	(set! ndj (+ 1 ndj))
+	(define ofr (fra 'left-wild-freq DJ))
+	(define nfr (frc 'compute-left-freq DJ))
+	(when (neq ofr nfr)
+		(format #t "bad freq ~A ~A ~A ~A\n" ndj ofr nfr (prt-dj DJ))
+		(foobar))
+	(define ohm (fra 'left-wild-entropy DJ))
+	(define nhm (enc 'compute-left-entropy DJ))
+	(when (neq ohm nhm)
+		(format #t "bad marg ent ~A ~A ~A ~A\n" ndj ohm nhm (prt-dj DJ))
+		(format #t "the freq=~A\n" ofr)
+		(format #t "the pairs: ~A\n" (prt-element-list (star-obj 'left-stars DJ)))
+		(format #t "dj ~A\n" DJ)
+		(foobar))
+	(set! hdj (+ hdj ohm))
+	)
+	(star-obj 'right-basis))
+
+Merged into `+ — ” _ ) [` in 108 secs
+
+bad marg ent 25 4.088722873782772e-6 2.0443614368913863e-6 <What’s,  ###LEFT-WALL###- “- she+ ?+ $+>
+the freq=8.717391073147455e-8
+the pairs:  2.000 * [{+ — ” _ ) [}, <What’s,  ###LEFT-WALL###- “- she+ ?+ $+>]
+
+So old is exactly 2x too big ...
+(/ 2.0 22942644.0) ; 8.717391073147455e-8 OK
+(/ (log 8.717391073147455e-8) (log 2)) ; 23.451528326963775
+(* 23.451528326963775 8.717391073147455e-8) ; 2.0443614368913867e-6 OK
+
+Who calls set-freq on the dj? because its' misleading.
+It's cache-left-freq calls set-left-wild-freq calls set-freq which is wrong-ish.
+using the freq-key ... whatever no harm.
+
+set-entropy uses entr-name entropy-key
+called by set-left-wild-entropy
+
+(define fdj
+(ShapeLink
+  (WordNode "What’s")
+  (Connector (WordNode "###LEFT-WALL###") (ConnectorDir "-"))
+  (Connector (WordNode "“") (ConnectorDir "-"))
+  (Connector (WordNode "she") (ConnectorDir "+"))
+  (Connector (WordNode "?") (ConnectorDir "+"))
+  (Connector (VariableNode "$connector-word") (ConnectorDir "+")))
+)
+
+ah hah!
+
+
+TODO: what if requency is zero?
 --------------------------------------------------------
 
 log noise - done before DONE
