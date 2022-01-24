@@ -6351,6 +6351,215 @@ Where to change this: search code for `optimal-in-group` and specify the
 \end_layout
 
 \begin_layout Section*
+Experiment-11 – Deep Merge
+\end_layout
+
+\begin_layout Standard
+Given the above results, it seems time for a deeper-merge experiment.
+ Unlike experiment-10, this one focuses on:
+\end_layout
+
+\begin_layout Itemize
+Using plain-MI instead of rank-MI for determining the in-group.
+\end_layout
+
+\begin_layout Itemize
+Fixes quorum=0.7 and commonality=0.2 and vairies the noise: noise= 4,3,2
+\end_layout
+
+\begin_layout Standard
+Based on expt-10 it looks like quorum=0.7 or 0.8 would give better results.
+ Also, it seems like commonality has almost no effect: the chosen grouping
+ pretty much always is arrived at with the back-off strategy, rather than
+ with commonality exceeding the threshold.
+ By contrast, the noise-threshold appears to have a huge effect on what
+ gets merged.
+ Here's an example.
+ For the very first merge, we see
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+------ Round 1 Next in line:
+\end_layout
+
+\begin_layout Plain Layout
+
+ranked-MI = 9.1671 MI = 9.3888 (`—`, `+`)
+\end_layout
+
+\begin_layout Plain Layout
+
+------ Start merge 1 with seed pair `—` and `+` Initial in-group size=8:
+ `+` `—` `”` `_` `)` `[` `(` `]` 
+\end_layout
+
+\begin_layout Plain Layout
+
+In-group size=8 overlap = 9 of 10975 disjuncts, commonality= 0.08%
+\end_layout
+
+\begin_layout Plain Layout
+
+In-group size=7 overlap = 17 of 10530 disjuncts, commonality= 0.16%
+\end_layout
+
+\begin_layout Plain Layout
+
+In-group size=6 overlap = 33 of 10107 disjuncts, commonality= 0.33%
+\end_layout
+
+\begin_layout Plain Layout
+
+In-group size=5 overlap = 29 of 9433 disjuncts, commonality= 0.31%
+\end_layout
+
+\begin_layout Plain Layout
+
+In-group size=6: `+` `—` `”` `_` `)` `[`
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+Notable is just how pathetically low the commonality is.
+ However, when the merge is actually performed, we see something quite different.
+ For noise=4, we get
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+------ merge-majority: Merge 5550 of 7957 sections in 12 secs
+\end_layout
+
+\begin_layout Plain Layout
+
+------ merge-majority: Remaining 14284 of 22825 cross in 43 secs  
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+which tells us that almost all of the merged sections had an observation
+ count of less than or equal to 4! (That is, 5550+14284 were merged, whereas
+ we expected only 33 to get merged! Yowie!)
+\end_layout
+
+\begin_layout Standard
+For noise=3, we see that the number of merged sections drops:
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+------ merge-majority: Merge 4884 of 7957 sections in 11 secs
+\end_layout
+
+\begin_layout Plain Layout
+
+------ merge-majority: Remaining 12502 of 22863 cross in 37 secs
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For noise=2, the number of merged sections drops again.
+ It's tempting to say that it's 
+\begin_inset Quotes eld
+\end_inset
+
+surprisingly high
+\begin_inset Quotes erd
+\end_inset
+
+, but its not: The Zipfian distribution tells us that there's an incredibly
+ fat tail at these low counts.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+------ merge-majority: Merge 3586 of 7957 sections in 10 secs
+\end_layout
+
+\begin_layout Plain Layout
+
+------ merge-majority: Remaining 9135 of 22963 cross in 35 secs
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How much harm is there in merging of these low-count tails? My current guess
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+none
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These low-count tails contribute very little, or nothing to the word-pair
+ MI.
+ Right? Or are they nickel-n-dimeing us to death? (Hmm.
+ If they contribute nothing, then they could have been trimmed away from
+ the get-go...) Mostly, they hang around, chewing up space...
+ Later on, when a dictionary is created, these can be trimmed away, to arrive
+ at a more compact dictionary.
+ I don't have insight here.
+ It's confusing.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
