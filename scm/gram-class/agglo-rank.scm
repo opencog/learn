@@ -444,9 +444,6 @@
 				(freq-obj 'cache-right-freq WRD)
 				(store-atom (ent-obj 'cache-right-entropy WRD))))
 		wrd-list)
-
-	; Recompute the grand-total
-	(store-atom (ent-obj 'cache-entropy))
 )
 
 (define (recompute-mmt LLOBJ wrd-list dj-list)
@@ -530,6 +527,10 @@
 	(store-atom (asc 'set-left-totals))   ;; is this needed? Its slow.
 	(store-atom (asc 'set-right-totals))  ;; is this needed?
 	(store-atom (atc 'set-mmt-totals))
+
+	; (Optional) Recompute the grand-total entropy
+	; Do this if the entropy marginals are being done.
+	(store-atom (ent-obj 'cache-entropy))
 )
 
 (define (recompute-marginals LLOBJ WRD-LIST)
@@ -562,7 +563,8 @@
 	(define right-marg (second orphans))
 	(delete-orphans LLOBJ left-marg right-marg)
 
-	; Recompute the grand-totals
+	; Recompute the grand-totals. Do this only after deleting the
+	; zero-count entries, as otherwise these get messed up.
 	(LLOBJ 'clobber)
 	(recompute-mmt-final LLOBJ)
 )
