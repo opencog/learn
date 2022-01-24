@@ -9915,6 +9915,39 @@ and this time, hits on the first one. WTF.
 
 oh, need to do pairs, too
 
+Really? Cause a global recompute was enough to fix it.
+
+Dong apirs: 19.607278945916782 19.687849944789978
+
+(define fra (add-pair-freq-api star-obj))
+(define frc (make-compute-freq star-obj))
+(define ol2 (- (/ 1 (log 2))))
+
+(define ftot 0)
+(define htot 0)
+(for-each (lambda (PR)
+	(define ofrq (fra 'pair-freq PR))
+	(define nfrq (frc 'compute-pair-freq PR))
+	(when (not (equal? ofrq nfrq))
+		(format #t "frq foo not ~A ~A ~A\n" ofrq nfrq (prt-element PR))
+		(foobar))
+	(set! ftot (+ ftot ofrq))
+	(define oli (fra 'pair-logli PR))
+	(define nli (* ol2 (log ofrq)))
+	(when (not (equal? oli nli))
+		(format #t "badli not ~A ~A ~A\n" oli nli (prt-element PR))
+		(foobar))
+	(define oen (fra 'pair-entropy PR))
+	(define nen (* oli ofrq))
+	(when (not (equal? oen nen))
+		(format #t "badent not ~A ~A ~A\n" oen nen (prt-element PR))
+		(foobar))
+	(set! htot (+ htot oen))
+	)
+	(star-obj 'get-all-elts))
+
+
+(define ent-obj (add-entropy-compute LLOBJ))
 --------------------------------------------------------
 
 log noise - done before DONE

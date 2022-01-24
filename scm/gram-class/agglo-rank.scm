@@ -428,6 +428,7 @@
 
 	(freq-obj 'init-freq)
 
+	(define e (make-elapsed-secs))
 	; The freq-obj 'cache-left-freq is a trivial divide of the marginal
 	; count by the total count, and nothing more. The 'cache-left-entropy
 	; just takes some logs, and nothing more.
@@ -450,6 +451,7 @@
 				(freq-obj 'cache-right-freq WRD)
 				(store-atom (ent-obj 'cache-right-entropy WRD))))
 		wrd-list)
+	(format #t "------ Recomputed entropies in ~A secs\n" (e))
 )
 
 (define (recompute-mmt LLOBJ wrd-list dj-list)
