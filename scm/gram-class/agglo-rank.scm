@@ -530,6 +530,7 @@
 
 	; (Optional) Recompute the grand-total entropy
 	; Do this if the entropy marginals are being done.
+	(define ent-obj (add-entropy-compute LLOBJ))
 	(store-atom (ent-obj 'cache-entropy))
 )
 
