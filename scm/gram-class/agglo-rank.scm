@@ -434,15 +434,20 @@
 	(freq-obj 'init-freq)
 
 	(define e (make-elapsed-secs))
+
+	; Entropies need the frequencies recomputed on the pairs
+	(for-each
+		(lambda (WRD)
+			(for-each (lambda (PR) (freq-obj 'cache-pair-freq PR))
+				(LLOBJ 'right-stars WRD)))
+		wrd-list)
+
 	; The freq-obj 'cache-left-freq is a trivial divide of the marginal
 	; count by the total count, and nothing more. The 'cache-left-entropy
 	; just takes some logs, and nothing more.
 	(for-each
 		(lambda (DJ)
 			(when (< 0 (sup-obj 'left-count DJ))
-				; Entropies need the frequencies recomputed on the pairs
-				(for-each (lambda (PR) (freq-obj 'cache-pair-freq PR))
-					(LLOBJ 'left-stars DJ))
 				(freq-obj 'cache-left-freq DJ)
 				(store-atom (ent-obj 'cache-left-entropy DJ))))
 		dj-list)

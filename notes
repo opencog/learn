@@ -10041,6 +10041,7 @@ error was:
 ums fail to be equal: 19.459248903090117 19.539819901963327\n")'.
 So left checks out.
 
+(define (neq A B) (< 1.0e-12 (abs (- A B))))
 (define nwr 0)
 (define hwr 0)
 (for-each (lambda (WR)
@@ -10080,6 +10081,30 @@ TODO: what if requency is zero? FIXED
 (define wl (list
 (Word "+") (Word "—") (Word "”") (Word "_") (Word ")") (Word "[")
 (WordClass "+ — ” _ ) [")))
+
+(define e (make-elapsed-secs))
+(define affected-basis (get-affected-basis star-obj wl))
+   (define wrd-list (first affected-basis))
+   (define dj-list (second affected-basis))
+   (format #t "------ Find affected basis of (~A, ~A) in ~A secs\n"
+      (length wrd-list) (length dj-list) (e))
+
+(define kin (Word "King"))
+(any (lambda (WR) (equal? WR kin)) wrd-list)
+#t
+so it should have been found....
+
+(define fra (add-pair-freq-api star-obj))
+(define frc (make-compute-freq star-obj))
+(define enc (add-entropy-compute star-obj))
+(frc 'init-freq)
+
+(define kin (Word "King"))
+	(fra 'right-wild-entropy kin)
+	(enc 'compute-right-entropy kin)
+
+before: 0.0032419551623822907
+should be: 0.0032298633415824055
 
 
 --------------------------------------------------------
