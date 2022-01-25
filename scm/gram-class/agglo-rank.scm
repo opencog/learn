@@ -298,8 +298,8 @@
 
 	; Compute only the triangle of N(N-1)/2 similarities.
 	(define (redo-list WX WLI WDONE)
+		(recomp-one WX WDONE)
 		(when (not (nil? WLI))
-			(for-each (lambda (WRD) (recomp-one WX WDONE)) WLI)
 			(redo-list (car WLI) (cdr WLI) (cons WX WDONE))))
 
 	; all-words are all the words that have similarities.
@@ -410,7 +410,7 @@
   get-affected-basis LLOBJ WRD-LIST - Return two lists of basis
   elements affected by the merge.
 
-  The first list is the left bais, the second list is the right-basis.
+  The first list is the left basis, the second list is the right-basis.
 "
 	; Gather together all of the DJ's for all the words in the list.
 	; These will, in general, be heavily duplicated.
