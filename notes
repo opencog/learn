@@ -9956,6 +9956,11 @@ ftot ; 1.0000000000298555
 htot ; 19.45924890334887   vs initial Entropy Total: 19.463
 conclude: pairs are good.
 
+do it again:
+nelt ; 2774729
+ftot ; 1.0000000000298555 Heh no change.
+htot ; 19.45924890334887 no change
+
 (define enc (add-entropy-compute star-obj))
 
 (define ndj 0)
@@ -10008,9 +10013,70 @@ called by set-left-wild-entropy
 )
 
 ah hah!
+(define ca (first (star-obj 'left-stars fdj)))
+(define cb (second (star-obj 'left-stars fdj)))
+(for-each (lambda (PR) (frc 'cache-pair-freq PR)) (star-obj 'left-stars fdj))
 
+(fra 'pair-freq ca) is 8.717391073147455e-8 good
+(fra 'pair-freq cb) is not zero .. bad!
+(frc 'compute-pair-freq cb)  ; gives zero... goood.
+(frc 'cache-pair-freq cb) ; gives #f
+(fra 'pair-freq cb) ; is not set. Ah hah!
 
-TODO: what if requency is zero?
+*) cache-pair-freq doesn't set the freq if its zero.
+   if it did, then log would be nan  FIXED
+
+*) compute-left-freq does not neeed pair freq so OK.
+
+*) compute-left-entropy need pair entropy and doesn't check for nan
+
+finite?
+
+----------
+Now it passes:
+ndj 1045828
+hdj 19.459248903090117 -- equals htot, good.
+
+error was:
+ums fail to be equal: 19.459248903090117 19.539819901963327\n")'.
+So left checks out.
+
+(define nwr 0)
+(define hwr 0)
+(for-each (lambda (WR)
+	(set! nwr (+ 1 nwr))
+	(define ofr (fra 'right-wild-freq WR))
+	(define nfr (frc 'compute-right-freq WR))
+	(when (neq ofr nfr)
+		(format #t "bad freq ~A ~A ~A ~A\n" nwr ofr nfr (cog-name WR))
+		(foobar))
+	(define ohm (fra 'right-wild-entropy WR))
+	(define nhm (enc 'compute-right-entropy WR))
+	(when (neq ohm nhm)
+		(format #t "bad marg ent ~A ~A ~A ~A\n" nwr ohm nhm (cog-name WR))
+		(format #t "the freq=~A\n" ofr)
+		; (format #t "the pairs: ~A\n" (prt-element-list (star-obj 'right-stars WR)))
+		(format #t "word ~A\n" WR)
+		(foobar))
+	(set! hwr (+ hwr ohm))
+	)
+	(star-obj 'left-basis))
+
+(WordNode "king")
+bad marg ent 1 0.0025159878286492524 0.00250798473072315 king
+(length (star-obj 'right-stars (WordNode "king"))) ; 380
+
+(define wrd (WordNode "king"))
+(enc 'compute-right-entropy wrd) ; 0.00250798473072315 as printed.
+(fra 'right-wild-freq wrd) ; 1.244407575691799e-4
+fent ; 20.154045826415793
+
+Maybe wrd is not in the list?
+ Seems like that's why.... so ... in short:
+every affected dj has a word that needs recomputation. Ouch.
+
+TODO: what if requency is zero? FIXED
+
 --------------------------------------------------------
 
 log noise - done before DONE

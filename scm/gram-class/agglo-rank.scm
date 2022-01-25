@@ -412,7 +412,12 @@
 		(lambda (WRD) (for-each expand-margins (LLOBJ 'right-stars WRD)))
 		WRD-LIST)
 
-	(list (wrd-set #f) (dj-set #f))
+	; Margins are battered by individual pair changes, too.
+	(define affected-djs (dj-set #f))
+	(for-each (lambda (DJ) (for-each wrd-set (LLOBJ 'left-duals DJ)))
+		affected-djs)
+
+	(list (wrd-set #f) affected-djs)
 )
 
 (define (recompute-entropies LLOBJ wrd-list dj-list)
@@ -448,6 +453,7 @@
 				(freq-obj 'cache-right-freq WRD)
 				(store-atom (ent-obj 'cache-right-entropy WRD))))
 		wrd-list)
+
 	(format #t "------ Recomputed entropies in ~A secs\n" (e))
 )
 
