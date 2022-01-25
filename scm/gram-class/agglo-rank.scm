@@ -267,7 +267,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (recomp-all-sim LLOBJ WX)
+(define (recomp-sims-for-item LLOBJ WX)
 "
   Recompute all existing similarities to word WX
 "
@@ -282,11 +282,30 @@
 
 	(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
 
-	; Self-sim too, this is logged.
-	(compute-sim WX WX)
-
 	(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
 		(length existing-list) (cog-name WX) (e))
+)
+
+(define (recomp-all-sim LLOBJ WLIST)
+"
+  Recompute all existing similarities for all words in WLIST
+"
+	(define e (make-elapsed-secs))
+	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sms (add-pair-stars sap))
+
+	; all-words are all the words that have similarities.
+	(define all-wrds (sms 'left-basis))
+
+	; unaff are all the unaffected words
+	(define unaff (atoms-subtract all-wrds WLIST))
+
+	; aff are the affected words.
+	(define aff (atoms-subtract all-wrds unaff))
+	(for-each (lambda (WRD) (recomp-sims-for-item LLOBJ WRD)) aff)
+
+	(format #t "Recomputed sims for ~3D words in ~A secs\n"
+		(length aff) (e))
 )
 
 ; ---------------------------------------------------------------
@@ -587,6 +606,9 @@
 	; zero-count entries, as otherwise these get messed up.
 	(LLOBJ 'clobber)
 	(recompute-mmt-final LLOBJ)
+
+	; Return the list of all words that were touched.
+	wrd-list
 )
 
 ; ---------------------------------------------------------------
@@ -795,15 +817,12 @@
 			(cog-name wclass) (e))
 
 		; Recompute marginals after merge.
-		(recompute-marginals LLOBJ (cons wclass in-grp))
+		(define touched-words (recompute-marginals LLOBJ (cons wclass in-grp)))
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
 		; After merging, recompute similarities for the words
-		; that were touched. Note that the merge might end up deleting
-		; some words in the in-grp.
-		(for-each (lambda (WRD) (recomp-all-sim LLOBJ WRD))
-			(filter cog-atom? in-grp))
-		(recomp-all-sim LLOBJ wclass)
+		; that were touched.
+		(recomp-all-sim LLOBJ touched-words)
 		(log-class wclass) ; record this in the log
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
