@@ -267,25 +267,6 @@
 
 ; ---------------------------------------------------------------
 
-(define (recomp-sims-for-item LLOBJ WX)
-"
-  Recompute all existing similarities to word WX
-"
-	(define e (make-elapsed-secs))
-	(define compute-sim (make-simmer LLOBJ))
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define sms (add-pair-stars sap))
-	(define wrd-list (sms 'left-duals WX))
-	(define existing-list
-		(filter (lambda (WRD) (not (nil? (sap 'get-pair WRD WX))))
-			wrd-list))
-
-	(for-each (lambda (WRD) (compute-sim WRD WX)) existing-list)
-
-	(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
-		(length existing-list) (cog-name WX) (e))
-)
-
 (define (recomp-all-sim LLOBJ WLIST)
 "
   Recompute all existing similarities for all words in WLIST
@@ -293,19 +274,48 @@
 	(define e (make-elapsed-secs))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define sms (add-pair-stars sap))
+	(define compute-sim (make-simmer LLOBJ))
+
+	(define (recomp-one WX LIGNORE)
+		(define t (make-elapsed-secs))
+
+		; Loop over all pairs, except the ones we've done already.
+		; (as otherwise, each similarity pair gets computed twice)
+		(define todo-list (atoms-subtract (sms 'left-duals WX) LIGNORE))
+		(define cnt 1)
+		(compute-sim WX WX) ; Always compute self-similarity.
+		(for-each (lambda (WRD)
+				(when (not (nil? (sap 'get-pair WRD WX)))
+					(set! cnt (+ 1 cnt))
+					(compute-sim WRD WX)))
+			todo-list)
+
+		(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
+			cnt (cog-name WX) (t))
+	)
+
+	; Compute only the triangle of N(N-1)/2 similarities.
+	(define (redo-list WX WLI WDONE)
+		(when (not (nil? WLI))
+			(for-each (lambda (WRD) (recomp-one LLOBJ WX WDONE)) WLI)
+			(redo-list (car WLI) (cdr WLI) (cons WX WDONE))))
 
 	; all-words are all the words that have similarities.
 	(define all-wrds (sms 'left-basis))
 
-	; unaff are all the unaffected words
+	; unaff are all the unaffected words.
 	(define unaff (atoms-subtract all-wrds WLIST))
 
 	; aff are the affected words.
 	(define aff (atoms-subtract all-wrds unaff))
-	(for-each (lambda (WRD) (recomp-sims-for-item LLOBJ WRD)) aff)
 
-	(format #t "Recomputed sims for ~3D words in ~A secs\n"
-		(length aff) (e))
+	(format #t "Will recompute sims for ~3D words (~A unaffected) out of ~3D\n"
+		(length aff) (length unaff) (length all-wrds))
+
+	(redo-list (car aff) (cdr aff) '())
+
+	(format #t "Recomputed sims for ~3D words out of ~3D in ~A secs\n"
+		(length aff) (length all-wrds) (e))
 )
 
 ; ---------------------------------------------------------------
