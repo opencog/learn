@@ -175,7 +175,7 @@
 	(define rpt-one-row
 		(make-progress-rpt do-one-row 10 #f
 			"Diag: Finished ~D rows in ~D secs (~D/sec)\n"
-			30))
+			60))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
 	(for-each (lambda (n) (rpt-one-row n)) (iota depth))
@@ -553,6 +553,7 @@
   by WRD-LIST. Deletes those which have zero counts left. Also
   recomputes the MMT values, needed by the similarity calculations.
 "
+	(define e (make-elapsed-secs))
 	; Clobber first; else the ; duals and stars are wrong, which ruins
 	; the support calculations.
 	(LLOBJ 'clobber)
@@ -561,6 +562,8 @@
 	(define affected-basis (get-affected-basis LLOBJ WRD-LIST))
 	(define wrd-list (first affected-basis))
 	(define dj-list (second affected-basis))
+	(format #t "------ Find affected basis of (~A, ~A) in ~A secs\n"
+		(length wrd-list) (length dj-list) (e))
 
 	; Redo marginals before deleting empty sections, as otherwise
 	; the empties fail to show up in the basis.
