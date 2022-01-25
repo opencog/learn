@@ -1952,7 +1952,17 @@ constant
 \end_layout
 
 \begin_layout Standard
-The above
+There seems to be a big changles in the quorum=0.7 curve, just before the
+ 800'th merge.
+ Unfortunately, this code failed to track the merged words, so unclear what
+ that's about.
+\end_layout
+
+\begin_layout Standard
+Other issues: the above run fails to compute the marginals correctly, and
+ thus some of the similarities could easily be off.
+ This particular bug is fixed, and a newer run is presented further below.
+ 
 \end_layout
 
 \begin_layout Section*
