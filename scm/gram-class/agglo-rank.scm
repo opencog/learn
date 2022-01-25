@@ -45,6 +45,7 @@
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; Where the simiarity scores will be stored
@@ -129,7 +130,7 @@
   Think of a tri-diagonal matrix, but instead of three, its N-diagonal
   with N given by DEPTH.
 
-  WORDLI is a list of word, presumed sorted by rank.
+  WORDLI is a list of words, presumed sorted by rank.
 
   Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
   block matrix of similarities will be computed. Since similarities
@@ -269,7 +270,8 @@
 
 (define (recomp-all-sim LLOBJ WLIST)
 "
-  Recompute all existing similarities for all words in WLIST
+  recomp-all-sim LLOBJ WLIST - Recompute all existing similarities for
+  all words in WLIST.
 "
 	(define e (make-elapsed-secs))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -297,7 +299,7 @@
 	; Compute only the triangle of N(N-1)/2 similarities.
 	(define (redo-list WX WLI WDONE)
 		(when (not (nil? WLI))
-			(for-each (lambda (WRD) (recomp-one LLOBJ WX WDONE)) WLI)
+			(for-each (lambda (WRD) (recomp-one WX WDONE)) WLI)
 			(redo-list (car WLI) (cdr WLI) (cons WX WDONE))))
 
 	; all-words are all the words that have similarities.
@@ -623,9 +625,11 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (in-group-cluster LLOBJ QUORUM COMMONALITY NOISE NRANK LOOP-CNT)
+(define*-public (in-group-cluster LLOBJ
+	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
+	#:optional (PRECISE-SIM #f))
 "
-  in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT - perform clustering.
+  in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
 
   Loops over a list of the most similar words, and unifies them into a
   cluster. Multiple words are selected at the same time to create a
@@ -643,8 +647,8 @@
   ConnectorSeq for it to be considered to be held 'in common'.  (Think
   of a group of individuals having some trait in common.)
 
-  Recommended values for QUORUM are in the 0.4 to 0.7 range. At the
-  moment, 0.5 or 0.6 seem to work well.
+  Recommended values for QUORUM are in the 0.4 to 0.9 range. At the
+  moment, 0.7 seems to work best.
 
   The algo begins by selecting the two words that are deemed to be the
   most similar to one-another, as reported by the `add-similarity` API.
@@ -662,7 +666,7 @@
 
   After the formation of the in-group, a poll is taken to see how many
   ConnectorSeq's the group has in common (as controlled by QUORUM,
-  described above.) The 'commonality' is this frction. If the
+  described above.) The 'commonality' is this fraction. If the
   commonality is less than the COMMONALITY parameter, then the size of
   the in-group is reduced, by removing the least-similar member, and
   a poll is taken again. This continues until either the commonality is
@@ -671,7 +675,9 @@
   because in a smaller group, it can be harder to have a quorum.)
 
   Recommended values for COMMONALITY are in the 0.05 to 0.25 range.
-  At the moment 0.2 seems to work well.
+  At the moment 0.2 seems to work well. In general, the 'commonality'
+  is usually very low, and so this fraction is almost enever exceeded.
+  In other words, this parameter has almost no effect on results.
 
   NOISE is a noise-floor threshold. If a given section has a count equal
   or less than the NOISE parameter, it gets no vote in determining the
@@ -683,7 +689,10 @@
   split out into a distinct parameter?) All sections with a count equal
   or below the noise floor are unconditionally merged into the cluster.
 
-  Recommended value for NOISE is 0 to 4.
+  Recommended value for NOISE is 0 to 4.  Note that, due to Zipfian
+  distributions, almost all sections have extremely low counts. Thus,
+  the (vast) majority of merged sections will be those below this noise
+  floor. In other words, results are sharply dependent on this parameter.
 
   All ConnectorSeq's that have been determined to be held in common by
   the in-group are then merged into the cluster. Note that the process
@@ -700,7 +709,7 @@
   that ConSeq, even if some of them had not previously. The goal of this
   broadening is to generalize from particulars to generalities.
 
-  There are two control parameters, NRANK and LOOP-COUNT.
+  There are three control parameters, NRANK, LOOP-COUNT and PRECISE-SIM.
 
   LOOP-COUNT is the number of times to run the loop, performing a
   select-and-merge step each time around.
@@ -726,11 +735,15 @@
 
   Recommended value for NRANK is between 100 and 200.
 
-  Status: mostly finished, fairly well-tested. Seems to work as
-  designed.
+  PRECISE-SIM is an optional parameter; it defaults to #f. If set to #t,
+  then all similarities between all words affected by the merge, even if
+  they are affected indirectly, are recomputed. If set to #f, then the
+  only similarities recomputed are those for the words that were merged.
+  This recomputation can take up most of the CPU time, and so it defaults
+  to #f.  It is not yet clear how much this affects results. Probably not
+  much, or not at all.
 
-  TODO: cannot merge two clusters together. (or add words to an existing
-  cluster???) Code will throw an exception if this case is hit.
+  Status: This code is complete, fully-debugged, stable, well-tested.
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
@@ -831,8 +844,17 @@
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
 		; After merging, recompute similarities for the words
-		; that were touched.
-		(recomp-all-sim LLOBJ touched-words)
+		; that were touched. We have two choices here: recompute
+		; sims only for the words that were directly merged, as these
+		; are clearly directly affected. Or we rcompute the entire
+		; universe of words that were just peripherally affected.
+		(if PRECISE-SIM
+			(recomp-all-sim LLOBJ touched-words)
+			(recomp-all-sim LLOBJ (filter cog-atom? in-grp)))
+
+		; Always compute self-similarity of the new word-class.
+		((make-simmer LLOBJ) wclass wclass)
+
 		(log-class wclass) ; record this in the log
 
 		(format #t "------ Recomputed MI in ~A secs\n" (e))
