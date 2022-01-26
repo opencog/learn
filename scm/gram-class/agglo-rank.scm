@@ -127,21 +127,23 @@
   DEPTH.  If the Similarity has already been recorded, it will not
   be recomputed.
 
-  Think of a tri-diagonal matrix, but instead of three, its N-diagonal
+  Think of a tri-diagonal matrix, but instead of three, it is N-diagonal,
   with N given by DEPTH.
 
-  WORDLI is a list of words, presumed sorted by rank.
+  WORDLI is a list of words, presumed sorted by rank, defining the
+  diagonal.
 
   Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
   block matrix of similarities will be computed. Since similarities
   are symmetric, this is a symmetric matrix, and so 200 x 201 / 2
-  grand total similarities are computed.
+  grand total similarities are computed. (This is a "triangle number")
 
   If START-RANK is 300 and DEPTH is 200, then computations start at
-  the 300'th ranked word. This results in a total of 200x200
-  similarities, as 200 rows are computed, out to 200 places away from
-  the diagonal.
-
+  the 300'th ranked word and continue through the 500'th ranked word.
+  This results in a total of 200x200 similarities, as 200 rows are
+  computed, out to 200 places away from the diagonal. Visually, this is
+  a rhombus, one side lying along the diagonal (a rhombus is a
+  parellelogram with all sides equal length.)
 "
 	; Create a new simmer each time, so we get the updated
 	; mmt-q value for this session.

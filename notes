@@ -10106,6 +10106,34 @@ so it should have been found....
 before: 0.0032419551623822907
 should be: 0.0032298633415824055
 
+------ Start merge 5 with seed pair `and` and `but`
+In-group size=6: `but` `and` `as` `for` `or` `than`
+------ merge-majority: Merge 19166 of 26705 sections in 40 secs
+------ merge-majority: Remaining 43890 of 60278 cross in 118 secs
+
+------ Start merge 12 with seed pair `and` and `but`
+In-group size=6: `but` `and` `for` `by` `from` `upon`
+------ merge-majority: Merge 5515 of 13776 sections in 17 secs
+------ merge-majority: Remaining 9448 of 25904 cross in 41 secs
+
+------ Start merge 14 with seed pair `and` and `but`
+In-group size=3: `but` `and` `for`
+------ merge-majority: Merge 533 of 7425 sections in 5 secs
+------ merge-majority: Remaining 1490 of 14731 cross in 17 secs
+
+
+And the old code crashes with this:
+------ Round 830 Next in line:
+ranked-MI = 2.9873 MI = 7.8775 (`Notes`, `“`)
+------ Start merge 830 with seed pair `Notes` and `“`
+Initial in-group size=2: `“` `Notes`
+In-group size=2 overlap = 0 of 3222 disjuncts, commonality= 0.00%
+In-group size=2: `“` `Notes`
+------ merge-majority: Merge 0 of 828 sections in 1 secs
+------ merge-majority: Remaining 0 of 2394 cross in 2 secs
+(recomp-all-sim _ #<Invalid handle>)
+
+conclude: The sime need to be redone
 
 --------------------------------------------------------
 
