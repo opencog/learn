@@ -2,6 +2,8 @@
 ; fibers-sim.scm
 ;
 ; Experimental code to parallelize similarity computations using fibers.
+; It's kind-of-ish works, but not reliably. Has wild swings in performance
+; and also crashes with bug https://github.com/wingo/fibers/issues/52
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
@@ -43,7 +45,7 @@
 		(define rmi (+ fmi (* 0.5 (log2 (* mwa mwb))) mmt-q))
 
 		; Print something, so user has something to look at.
-		(if (< 6 fmi)
+		(if (< -6 fmi)
 			(format #t "\tMI(`~A`, `~A`) = ~6F  rank-MI = ~6F\n"
 				(cog-name WA) (cog-name WB) fmi rmi))
 		(store-atom
@@ -55,6 +57,8 @@
 	(define reply-chan #f)
 
 	(define (mi-request-handler)
+		(define (wait-for-chan)
+			(when (not reply-chan) (yield) (sleep 0.1) (wait-for-chan)))
 		(define pr (get-message request-chan))
 		(define sim (do-compute-sim (car pr) (cdr pr)))
 		(put-message reply-chan sim)
@@ -64,12 +68,23 @@
 		(run-fibers (lambda ()
 			(set! request-chan (make-channel))
 			(set! reply-chan (make-channel))
+			(spawn-fiber (mi-request-handler))
+			(spawn-fiber (mi-request-handler))
+			(spawn-fiber (mi-request-handler))
+			(spawn-fiber (mi-request-handler))
+			(spawn-fiber (mi-request-handler))
 			(mi-request-handler)))))
+
+	; Try to force the above to complete, before returning to caller.
+	; Yield is not enough to do it; the sleep from module fibers is.
+	(yield)
+	(sleep 0.1)
 
 	(define (compute-sim WA WB)
 		(put-message request-chan (cons WA WB))
 		(get-message reply-chan)
 	)
+
 
 	; Return the function that computes the MI for pairs.
 	compute-sim
@@ -139,7 +154,10 @@
 			60))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
+(define e (make-elapsed-secs))
 	(for-each (lambda (n) (rpt-one-row n)) (iota depth))
+(format #t "done in ~A secs\n" (e))
+
 )
 
 ; ---------------------------------------------------------------
@@ -153,11 +171,10 @@
 (sha 'fetch-pairs)
 (sha 'explode-sections)
 
-; If this hasn't been done, then it needs to be!
-(define bat (batch-transpose sha))
-(bat 'mmt-marginals)
+; Do aove with `guile -l cogserver-gram.scm`
 
-(define sap (add-similarity-api sha #f "shape-mi"))
-(define asm (add-symmetric-mi-compute sha))
+(define wli (list (Word "the") (Word "a") (Word "this")))
+(for-each cog-delete! (cog-get-atoms 'Similarity))
+(fcompute-diag-mi-sims star-obj wli 0 5)
 
 ==== !#

@@ -10135,6 +10135,22 @@ In-group size=2: `“` `Notes`
 
 conclude: The sime need to be redone
 
+installed into /usr/local/share/guile/site/3.0/
+
+(define wli (list (Word "the") (Word "a") (Word "this")))
+(for-each cog-delete! (cog-get-atoms 'Similarity))
+(fcompute-diag-mi-sims star-obj wli 0 5)
+
+done in 28 secs done in 29 secs
+done in 89 secs ; wtf
+done in 55 secs ; ?????
+done in 164 secs ; ???
+
+two fibers:
+done in 34 secs
+done in 33 secs
+
+
 --------------------------------------------------------
 
 log noise - done before DONE
