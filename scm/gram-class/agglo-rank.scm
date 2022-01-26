@@ -279,26 +279,18 @@
 	(define compute-sim (make-simmer LLOBJ))
 
 	(define (recomp-one WX LIGNORE)
-		(define t (make-elapsed-secs))
-
 		; Loop over all pairs, except the ones we've done already.
 		; (as otherwise, each similarity pair gets computed twice)
 		(define todo-list (atoms-subtract (sms 'left-duals WX) LIGNORE))
-		(define cnt 1)
 		(compute-sim WX WX) ; Always compute self-similarity.
 		(for-each (lambda (WRD)
 				(when (not (nil? (sap 'get-pair WRD WX)))
-					(set! cnt (+ 1 cnt))
 					(compute-sim WRD WX)))
-			todo-list)
-
-		(format #t "Recomputed ~3D sims for `~A` in ~A secs\n"
-			cnt (cog-name WX) (t))
-	)
+			todo-list))
 
 	; Compute only the triangle of N(N-1)/2 similarities.
 	(define (redo-list WX WLI WDONE)
-		(recomp-one WX WDONE)
+		(recomp-one WX (cons WX WDONE))
 		(when (not (nil? WLI))
 			(redo-list (car WLI) (cdr WLI) (cons WX WDONE))))
 
