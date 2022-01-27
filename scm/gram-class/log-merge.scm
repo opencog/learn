@@ -107,6 +107,7 @@
 
 	; Record the classes as they are created.
 	(define log-class (make-data-logger *-log-anchor-* (Predicate "class")))
+	(define log-class-name (make-data-logger *-log-anchor-* (Predicate "class name")))
 	(define log-class-size (make-data-logger *-log-anchor-* (Predicate "class size")))
 	(define log-self-mi (make-data-logger *-log-anchor-* (Predicate "class self-mi")))
 	(define log-self-rmi (make-data-logger *-log-anchor-* (Predicate "class self-ranked-mi")))
@@ -142,10 +143,11 @@
 				(define cnt (cog-count MEMB))
 				(+ SUM (* cnt (log cnt)))) 0
 			(cog-incoming-by-type WCLASS 'MemberLink)))
-		(/ (- (/ nlg tot) (log tot)) (log 2)))
+		(/ (- (log tot) (/ nlg tot)) (log 2)))
 
 	(lambda (WCLASS)
 		(log-class WCLASS)
+		(log-class-name (cog-name WCLASS))
 		(log-class-size (cog-incoming-size-by-type WCLASS 'MemberLink))
 		(log-self-mi (mi-sim WCLASS WCLASS))
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
@@ -253,6 +255,7 @@
   Set PORT to #t to get output to stdout
 "
 	(define key-class (Predicate "class"))
+	(define key-class-name (Predicate "class name"))
 	(define key-class-size (Predicate "class size"))
 	(define key-self-mi (Predicate "class self-mi"))
 	(define key-self-rmi (Predicate "class self-ranked-mi"))
@@ -264,6 +267,7 @@
 
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(define classes (cog-value->list (cog-value *-log-anchor-* key-class)))
+	(define class-name (cog-value->list (cog-value *-log-anchor-* key-class-name)))
 	(define class-size (cog-value->list (cog-value *-log-anchor-* key-class-size)))
 	(define self-mi (cog-value->list (cog-value *-log-anchor-* key-self-mi)))
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
@@ -285,7 +289,9 @@
 
 			; In extremely rare circumstances, the class may have
 			; been deleted, if it was fully merged into another class.
-			(if (cog-atom? cls) (cog-name cls) "#f")
+			; Well, not so rare ...
+			; (if (cog-atom? cls) (cog-name cls) "#f")
+			(list-ref class-name N)
 			(list-ref class-size N)
 			(list-ref self-mi N)
 			(list-ref self-rmi N)
