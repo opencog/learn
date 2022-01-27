@@ -414,19 +414,23 @@
 			mshcnt (length left-overs) (d))
 
 		; If any of the merged items was a class, then transfer a
-		; proportionate amount of the counts to new class.
-		; XXX FIXME -- Why are we doing this? This can always be
-		; done later, post-merge, e.g. when creating dictionaries.
-		; This has the effect of erasing the history of the merge.
-		; So maybe this should be done ... later; outside the merge
-		; cycle. I dunno. For now, I'm leaving as-is.
+		; proportionate amount of the counts to new class. We do this
+		; now, and not later, because the merged class may change later
+		; on (it may grow or shrink). Unfortunately, this erases the
+		; history of the merge.
 		(define (move-count FROM-CLASS)
+
+			; A list of all members of FROM-CLASS.
+			(define sublist
+				(filter (lambda (MEMB) (equal? (gdr MEMB) FROM-CLASS))
+					(cog-incoming-by-type FROM-CLASS 'MemberLink)))
+
 			; Get the total count on FROM-CLASS. This should be equal to
 			; the marginal count. That is, it should equal
 			;   ((add-support-api LLOBJ) 'right-count FROM-CLASS)
 			(define old-count
 				(fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB)))
-					0 (cog-incoming-by-type FROM-CLASS 'MemberLink)))
+					0 sublist))
 
 			; Get the total count transfered.
 			(define dmemb (Member FROM-CLASS CLASS))
@@ -441,14 +445,14 @@
 					(define xfer (* fcnt fract))
 					(cog-inc-count! (MemberLink (gar FMEMB) CLASS) xfer)
 					(cog-inc-count! FMEMB (- xfer)))
-				(cog-incoming-by-type FROM-CLASS 'MemberLink))
+				sublist)
 
 			; Get rid of the class-membership.  This erases the history.
-			; XXX Why are we doing this? Can't we do this later?
+			; XXX It would be nice to preserve history somehow, but how?
 			(cog-delete! dmemb))
 
 		(for-each (lambda (WRD)
-				(if (equal? class-type (cog-type? WRD)) (move-count WRD)))
+				(if (equal? class-type (cog-type WRD)) (move-count WRD)))
 			WLIST)
 
 		*unspecified*
