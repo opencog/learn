@@ -10215,9 +10215,14 @@ use git branch r10-mrg-fix for above
 
 Start up
 noise 4,3,2
-19411
-19311
-19211
+precise n4 -- 19011
+(dump-log star-obj "/tmp/r11-p-log" print-log)
+(dump-log star-obj "/tmp/r11-p-cls" print-merges)
+
+imprecise
+imp-n4 -- 20411
+imp-n2 -- 20211
+imp-n1 -- 20111
 (dump-log star-obj "/tmp/r11-log" print-log)
 (dump-log star-obj "/tmp/r11-cls" print-merges)
 
