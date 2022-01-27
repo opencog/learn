@@ -42,9 +42,9 @@ set out 'entropy.png'
 # set term postscript eps enhanced color 20
 # set out 'entropy.eps'
 set key right top
-set title "Entropy vs. Time"
+set title "MM^T Entropy vs. Time"
 set xlabel "Merge ordinal"
-set ylabel "Entropy, in bits"
+set ylabel "MM^T Entropy, in bits"
 unset yrange
 
 plot "log-0.5-0.2.dat" using 1:8 with lines lw 2 title "qu=0.5 com=0.2", \
