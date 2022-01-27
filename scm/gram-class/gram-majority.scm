@@ -425,12 +425,18 @@
 				(filter (lambda (MEMB) (equal? (gdr MEMB) FROM-CLASS))
 					(cog-incoming-by-type FROM-CLASS 'MemberLink)))
 
+			(if (nil? sublist)
+				(throw 'bad-membership 'merge-majority "Empty word class!"))
+
 			; Get the total count on FROM-CLASS. This should be equal to
 			; the marginal count. That is, it should equal
 			;   ((add-support-api LLOBJ) 'right-count FROM-CLASS)
 			(define old-count
 				(fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB)))
 					0 sublist))
+
+			(if (not (< 0 old-count))
+				(throw 'bad-membership 'merge-majority "No counts on word class!"))
 
 			; Get the total count transfered.
 			(define dmemb (Member FROM-CLASS CLASS))
