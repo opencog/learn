@@ -185,7 +185,7 @@
 (sha 'fetch-pairs)
 (sha 'explode-sections)
 
-; Do aove with `guile -l cogserver-gram.scm`
+; Do above with `guile -l cogserver-gram.scm`
 
 (define wli (list (Word "the") (Word "a") (Word "this")))
 (for-each cog-delete! (cog-get-atoms 'Similarity))

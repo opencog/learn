@@ -136,7 +136,7 @@
   Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
   block matrix of similarities will be computed. Since similarities
   are symmetric, this is a symmetric matrix, and so 200 x 201 / 2
-  grand total similarities are computed. (This is a "triangle number")
+  grand total similarities are computed. (This is a 'triangle number')
 
   If START-RANK is 300 and DEPTH is 200, then computations start at
   the 300'th ranked word and continue through the 500'th ranked word.

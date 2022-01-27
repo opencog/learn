@@ -10177,6 +10177,26 @@ two fibers:
 done in 34 secs
 done in 33 secs
 
+Cheesy-thread:
+
+(define (cheese)
+	(for-each cog-delete! (cog-get-atoms 'Similarity))
+	(define e (make-elapsed-secs))
+	(tcompute-diag-mi-sims star-obj wli 0 5)
+	(pool-join)
+	(format #t "done cheese in ~A secs\n" (e)))
+
+done cheese in 14 secs
+done cheese in 13 secs
+done cheese in 14 secs
+done cheese in 13 secs
+Simple thread pool is a winner. At least 2x speedup.
+
+(define wli (list (Word "the") (Word "a") (Word "this") (Word "that")))
+done cheese in 18 secs
+vs
+done serial in 37 secs
+
 
 --------------------------------------------------------
 
