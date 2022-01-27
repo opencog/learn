@@ -10140,11 +10140,38 @@ installed into /usr/local/share/guile/site/3.0/
 (define wli (list (Word "the") (Word "a") (Word "this")))
 (for-each cog-delete! (cog-get-atoms 'Similarity))
 (fcompute-diag-mi-sims star-obj wli 0 5)
+(define (blah)
+	(for-each cog-delete! (cog-get-atoms 'Similarity))
+	(define e (make-elapsed-secs))
+	(compute-diag-mi-sims star-obj wli 0 5)
+	(format #t "done serial in ~A secs\n" (e)))
 
-done in 28 secs done in 29 secs
+no fibers:
+done serial in 84 secs ; 50 seconds lost in getting the basis
+done serial in 29 secs
+done serial in 23 secs
+done serial in 31 secs
+done serial in 28 secs
+done serial in 30 secs
+done serial in 29 secs
+
+
+w 6 fibers: -- conclude -- zero parallelism improvements
+done in 54 secs
+done in 35 secs
+done in 32 secs
+done in 37 secs
+done in 36 secs
+
+
+w 1 fibers 3x CPU use but no speedup.
+done in 28 secs
+done in 29 secs
 done in 89 secs ; wtf
 done in 55 secs ; ?????
 done in 164 secs ; ???
+done in 51 secs
+done in 35 secs
 
 two fibers:
 done in 34 secs

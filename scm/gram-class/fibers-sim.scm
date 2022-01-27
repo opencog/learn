@@ -5,6 +5,20 @@
 ; It's kind-of-ish works, but not reliably. Has wild swings in performance
 ; and also crashes with bug https://github.com/wingo/fibers/issues/52
 ;
+; Running one fiber gives:
+; done in 28 secs
+; done in 29 secs
+; done in 89 secs
+; done in 55 secs
+; done in 164 secs
+; done in 51 secs
+; done in 51 secs
+; compared to baseline (no fibers) of 29 seconds.
+; Also, above requires 3x more grand total CPU.
+;
+; Six fibers runs consistently (more or less) at 37 seconds, so
+; no actual perallelism improvements.
+;
 ; Copyright (c) 2021 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
@@ -68,11 +82,11 @@
 		(run-fibers (lambda ()
 			(set! request-chan (make-channel))
 			(set! reply-chan (make-channel))
-			(spawn-fiber (mi-request-handler))
-			(spawn-fiber (mi-request-handler))
-			(spawn-fiber (mi-request-handler))
-			(spawn-fiber (mi-request-handler))
-			(spawn-fiber (mi-request-handler))
+		;	(spawn-fiber (mi-request-handler))
+		;	(spawn-fiber (mi-request-handler))
+		;	(spawn-fiber (mi-request-handler))
+		;	(spawn-fiber (mi-request-handler))
+		;	(spawn-fiber (mi-request-handler))
 			(mi-request-handler)))))
 
 	; Try to force the above to complete, before returning to caller.
