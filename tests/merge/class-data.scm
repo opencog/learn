@@ -12,6 +12,11 @@
 (define cnt-rs-abc 25)
 (define cnt-rs-dgh 61)
 
+(define mem-e-ej 10)
+(define mem-j-ej 11)
+(define mem-r-rs 12)
+(define mem-s-rs 13)
+
 (define (setup-ej-sections)
 	(Section (ctv 1 0 cnt-ej-abc)
 		(WordClass "e j")
@@ -25,6 +30,9 @@
 			(Connector (Word "k") (ConnectorDir "-"))
 			(Connector (Word "l") (ConnectorDir "+"))
 			(Connector (Word "m") (ConnectorDir "+"))))
+
+	(Member (Word "e") (WordClass "e j") (ctv 1 0 mem-e-ej))
+	(Member (Word "j") (WordClass "e j") (ctv 1 0 mem-j-ej))
 
 	; Similar to above.
 	(Section (ctv 1 0 cnt-rs-abc)
@@ -40,6 +48,9 @@
 			(Connector (Word "g") (ConnectorDir "-"))
 			(Connector (Word "h") (ConnectorDir "+"))))
 	; (Section k l m) intintionally absent.
+
+	(Member (Word "r") (WordClass "r s") (ctv 1 0 mem-r-rs))
+	(Member (Word "s") (WordClass "r s") (ctv 1 0 mem-s-rs))
 
 	*unspecified*
 )

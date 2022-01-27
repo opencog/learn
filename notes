@@ -10238,7 +10238,12 @@ In-group size=2: `Mr` `A No`
 
 So miscounting class contents
 
-n=2
+(define mrg (make-merge-majority star-obj 0.7 4))
+(mrg (WordClass "A No") (list (Word "A") (Word "No")))
+(cog-incoming-by-type (WordClass "A No") 'MemberLink)
+
+(mrg (WordClass "Mr A No") (list (Word "Mr") (WordClass "A No")))
+(cog-incoming-by-type (WordClass "Mr A No") 'MemberLink)
 
 --------------------------------------------------------
 0.5-0.2 -- 19008
