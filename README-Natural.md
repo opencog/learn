@@ -1337,21 +1337,27 @@ lurking.  The instructions here are provisional and subject to change.
       )
 
       ; Create 500 grammatical clusters
-      ; This many will take days or more!  You can do less!
+      ; This many will take days or more!  You don't have to do this many!
       ; This will print lots of diagnostics!
       (in-group-cluster sha 0.7 0.2 3 200 500)
 ```
   The meanings of the parameters are explained in the function
   documentation; See the [agglo-rank.scm](scm/agglo-rank.scm) file.
 
+  To automate the above, configure the paramters in the `run-config`
+  directory, and then run `cd run-common; guile -l cogserver-gram.scm`.
+
   This will take days to run. You can start poking at the results
   earlier, though. The file `learn-lang-diary/word-classes/word-classes.scm`
   contains an ad-hoc assortment of tools that can be used to examine
-  the word-classes discovered so far.  Read it for details.
+  the word-classes discovered so far.  Read it for details. See also
+  Diary Part Five; there's a large number of statistics collected during
+  the merge; logs of these stats can be dumped with the code in
+  `scm/gram-class/log-merge.scm`.
 
   Note that, because the above alters word-vectors on the fly, the
   MI between words will change over time, and thus might not actually
-  be what you expect. The clusering step splits words up into distinct
+  be what you expect. The clustering step splits words up into distinct
   word-senses based on the grammatical category to which disjuncts are
   assigned. Thus, words that can be both nouns and verbs are typically
   split into two or more clusters, at this stage, and what remains of
@@ -1364,6 +1370,8 @@ Grammar. This can be done as follows:
 
 * Stop the cluster process. As currently designed above, it will run
   for far longer than you will ever care to wait.  Clustering is slow.
+  Copy the database, so the steps below do not accidentally corrupt
+  the original.
 
 * Make sure that frequently-occuring words that have not been assigned
   to any cluster will be included in a WordClass of their own
@@ -1372,6 +1380,7 @@ Grammar. This can be done as follows:
 ```
        (define pca (make-pseudo-cset-api))
        (define psa (add-pair-stars pca))
+       (psa 'fetch-pairs)
        (define asc (add-singleton-classes psa))
        (asc 'create-hi-count-singles 500)
 ```

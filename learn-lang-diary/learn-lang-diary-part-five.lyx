@@ -1964,7 +1964,16 @@ There seems to be a big changles in the quorum=0.7 curve, just before the
 Other issues: the above run fails to compute the marginals correctly, and
  thus some of the similarities could easily be off.
  This particular bug is fixed, and a newer run is presented further below.
- 
+\end_layout
+
+\begin_layout Standard
+Notes:
+\end_layout
+
+\begin_layout Itemize
+The quorum=0.8 run died prematurely, after performing 986 merges.
+ Atthe conclusion, it only had 502 word-classes, so clearly, many classes
+ are being recombined and expanded.
 \end_layout
 
 \begin_layout Section*
