@@ -1389,9 +1389,9 @@ Grammar. This can be done as follows:
   any given disjunct is. Link Grammar ranks it's parses by liklihood.
   Compute the costs as follows:
 ```
-       (define gca (make-gram-class-api))
+       (define gca (add-gram-class-api psa))
        (define gcs (add-pair-stars gca))
-       (define gcf (add-wordclass-filter gcs))
+       (define gcf (add-wordclass-filter gcs #t))
        (batch-all-pair-mi gcf)
 ```
   The above may take (many) hours or more to run, depending linearly
@@ -1402,7 +1402,7 @@ Grammar. This can be done as follows:
   The `dbi` module provides guile with database interfaces for popular
   databases.  It is needed to write out the Link Grammar dataset.
 ```
-	apt install libsqlite3-dev
+	sudo apt install libsqlite3-dev
    git clone https://github.com/opencog/guile-dbi
 ```
   Follow the instructions in the README. It's easy and fast. Build the
@@ -1420,9 +1420,12 @@ Grammar. This can be done as follows:
        link-parser ./some-place
 ```
 
-
-Here's some games you can play with a clean dataset (before being
-altered by the clustering code):
+### Unclustered Dictionaries
+It's vaguely entertaining to create a dictionary from the results of
+the spanning-graph parses, before clustering is done. All this needs
+is to rerun the export steps, on a copy of the dataset that has not
+been altered by the clustering code.  Some suggestions for playing
+around:
 ```
       (load-atoms-of-type 'WordNode)  ; Load words from database.
       (length (cog-get-atoms 'WordNode))  ; How many words are there?
