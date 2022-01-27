@@ -10205,6 +10205,42 @@ log merge style DONE
 stop printing MI  DONE
 change Diag: cycle to 30 s DONE
 
+--------------------------------------------------------
+
+n=4 impr
+7       "? . , !"       2.0
+8       "#f"    3.0
+9       "#f"    2.0
+10      "They There"    2.0
+
+27      "be have"       2.0
+28      "has had have"  1.0
+29      "Mr A No"       1.0
+30      ": ###LEFT-WALL### _"   3.0
+
+------ Start merge 8 with seed pair `It` and `He`
+In-group size=3: `He` `It` `There`
+------ Merged into `He It There` in 23 secs
+
+WTF why is class node not reported!?
+
+------ Start merge 9 with seed pair `She` and `He It There`
+In-group size=3: `He It There` `She` `They`
+------ Merged into `He It There She They` in 28 secs
+
+Ingroup off-by-one.... worse, off by miscounted size of class.
+
+------ Start merge 28 with seed pair `have` and `has had`
+In-group size=2: `has had` `have`
+
+------ Start merge 29 with seed pair `A No` and `Mr`
+In-group size=2: `Mr` `A No`
+
+So miscounting class contents
+
+n=2
+
+--------------------------------------------------------
 0.5-0.2 -- 19008
 0.6-0.3 -- 19009
 0.7-0.4 -- 19006
