@@ -308,7 +308,7 @@
 	(format #t "Will recompute sims for ~3D words (~A unaffected) out of ~3D\n"
 		(length aff) (length unaff) (length all-wrds))
 
-	(redo-list (car aff) (cdr aff) '())
+	(if (not (nil? aff)) (redo-list (car aff) (cdr aff) '()))
 
 	(format #t "Recomputed sims for ~3D words out of ~3D in ~A secs\n"
 		(length aff) (length all-wrds) (e))
