@@ -10244,6 +10244,21 @@ So miscounting class contents
 
 (mrg (WordClass "Mr A No") (list (Word "Mr") (WordClass "A No")))
 (cog-incoming-by-type (WordClass "Mr A No") 'MemberLink)
+--------------------------------------------------------
+
+300000 done in 8 secs; inserting into <dear>: TITDE- & TITFM+;
+Finished inserting 319740 records
+Throw to key `fail-insert' with args `(make-db-adder "UNIQUE constraint failed: Morphemes.subscript")'.
+
+INSERT INTO Morphemes VALUES ('LEFT-WALL', 'LEFT-WALL', '<###LEFT-WALL###>');
+
+(define dbo (dbi-open "sqlite3" "/tmp/dict.db"))
+(dbi-query dbo "SELECT * FROM Morphemes WHERE morpheme='LEFT-WALL';")
+
+sqlite> SELECT * FROM Morphemes WHERE morpheme='LEFT-WALL';
+LEFT-WALL|LEFT-WALL|<###LEFT-WALL####uni>
+
+(WordClassNode "###LEFT-WALL####uni")
 
 --------------------------------------------------------
 0.5-0.2 -- 19008

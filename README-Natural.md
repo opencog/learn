@@ -1411,12 +1411,12 @@ Grammar. This can be done as follows:
 * Run the following:
 ```
       (use-modules (opencog nlp lg-export))
-      (export-csets gcf "dict.db" "EN_us")
+      (export-csets gcf "/tmp/dict.db" "EN_us")
 ```
   Then, in bash:
 ```
        cp -pr /usr/local/share/link-grammar/demo-sql ./some-place
-       cp dict.db ./some-place
+       cp /tmp/dict.db ./some-place
        link-parser ./some-place
 ```
 
