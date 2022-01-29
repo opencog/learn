@@ -1,6 +1,6 @@
 # set term png small color
 
-set xrange [0:150]
+set xrange [0:170]
 
 #################################################
 #
@@ -118,9 +118,9 @@ set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
 
-plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:(-$10) with lines lw 2 title "n=4 precise", \
-     "r11-cls-q0.7-c0.2-n4.0.dat" using 1:(-$10) with lines lw 2 title "n=4 imprecise", \
-     "r11-cls-q0.7-c0.2-n2.0.dat" using 1:(-$10) with lines lw 2 title "n=2 imprecise", \
-     "r11-cls-q0.7-c0.2-n1.0.dat" using 1:(-$10) with lines lw 2 title "n=1 imprecise"
+plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:(abs($10)) with lines lw 2 title "n=4 precise", \
+     "r11-cls-q0.7-c0.2-n4.0.dat" using 1:(abs($10)) with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n2.0.dat" using 1:(abs($10)) with lines lw 2 title "n=2 imprecise", \
+     "r11-cls-q0.7-c0.2-n1.0.dat" using 1:(abs($10)) with lines lw 2 title "n=1 imprecise"
 
 #################################################
