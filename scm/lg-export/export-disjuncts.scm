@@ -223,252 +223,250 @@
 			(format #f
 				"Error: file '~A' exists; will not over-write.\n\tMaybe you should move it out of the way?" DB-NAME)))
 
-	(let ((db-obj (dbi-open "sqlite3" DB-NAME))
-			(wrd-id 0)
-			(nprt 0)
-			(is-open #t)
-			(start (current-time))
-			(secs (current-time))
-			(word-cache (make-atom-set))
-			(warn-cnt 0)
-		)
+	(define db-obj (dbi-open "sqlite3" DB-NAME))
+	(define wrd-id 0)
+	(define nprt 0)
+	(define is-open #t)
+	(define start (current-time))
+	(define secs (current-time))
+	(define word-cache (make-atom-set))
+	(define warn-cnt 0)
 
-		; Escape quotes -- replace single quotes by two successive
-		; single-quotes. Example: (escquote "fo'sis'a'blort" 0)
-		(define (escquote STR BEG)
-			(define pos (string-index STR (lambda (C) (equal? C #\')) BEG))
-			(if pos
-				(escquote
-					(string-replace STR "''" pos pos 1 2)
-					(+ pos 2))
-				STR))
+	; Escape quotes -- replace single quotes by two successive
+	; single-quotes. Example: (escquote "fo'sis'a'blort" 0)
+	(define (escquote STR BEG)
+		(define pos (string-index STR (lambda (C) (equal? C #\')) BEG))
+		(if pos
+			(escquote
+				(string-replace STR "''" pos pos 1 2)
+				(+ pos 2))
+			STR))
 
-		; ---------------
-		; Insert a single word, with a grammatical class that
-		; it belongs to into the dict.
-		(define (add-one-word WORD-STR CLASS-STR)
+	; ---------------
+	; Insert a single word, with a grammatical class that
+	; it belongs to into the dict.
+	(define (add-one-word WORD-STR CLASS-STR)
 
-			(define word-str (escquote WORD-STR 0))
-			(define class-str (escquote CLASS-STR 0))
+		(define word-str (escquote WORD-STR 0))
+		(define class-str (escquote CLASS-STR 0))
 
-			; Oh no!!! Need to fix LEFT-WALL!
-			(if (string=? word-str "###LEFT-WALL###")
-				(set! word-str "LEFT-WALL"))
+		; Oh no!!! Need to fix LEFT-WALL!
+		(if (string=? word-str "###LEFT-WALL###")
+			(set! word-str "LEFT-WALL"))
 
-			(define query-str
-				; Link-grammar SUBSCRIPT_MARK is hex 0x3 aka ASCII #\etx
-				(format #f
-					"INSERT INTO Morphemes VALUES ('~A', '~A~C~D', '~A');"
-					word-str word-str #\etx wrd-id class-str))
+		(define query-str
+			; Link-grammar SUBSCRIPT_MARK is hex 0x3 aka ASCII #\etx
+			(format #f
+				"INSERT INTO Morphemes VALUES ('~A', '~A~C~D', '~A');"
+				word-str word-str #\etx wrd-id class-str))
 
-			(dbi-query db-obj query-str)
+		(dbi-query db-obj query-str)
 
-			(when (not (equal? 0 (car (dbi-get_status db-obj))))
-				(format #t "sqlite3 failure on query=~A\n" query-str)
+		(when (not (equal? 0 (car (dbi-get_status db-obj))))
+			(format #t "sqlite3 failure on query=~A\n" query-str)
+			(throw 'fail-insert 'make-db-adder
+				(cdr (dbi-get_status db-obj))))
+	)
+
+	; ---------------
+	; Return a string identifying a word-class
+	(define (mk-cls-str STR)
+		(format #f "<~A>" (escquote STR 0)))
+
+	; ---------------
+	; Insert either a word, or a word-class, into the dict
+	; CLASS-NODE is either a WordNode or a WordClass
+	(define (add-word-class CLASS-NODE)
+		(define cls-type (cog-type CLASS-NODE))
+
+		; wrd-id serves as a unique ID.
+		(set! wrd-id (+ wrd-id 1))
+
+		(cond
+
+			; If we have a word, just invent a word-class for it.
+			((eq? cls-type 'WordNode)
+				(let ((word-str (cog-name CLASS-NODE)))
+					(add-one-word word-str (mk-cls-str word-str))))
+
+			; Loop over all words in the word-class
+			((eq? cls-type 'WordClassNode)
+				(let ((cls-str (mk-cls-str (cog-name CLASS-NODE))))
+					(for-each
+						(lambda (memb)
+							(add-one-word (cog-name (gar memb)) cls-str))
+						(cog-incoming-by-type CLASS-NODE 'MemberLink))))
+
+			; Must be either a WordNode or a WordClassNode
+			(else
 				(throw 'fail-insert 'make-db-adder
-					(cdr (dbi-get_status db-obj))))
-		)
+					"Must be either a WordNode or a WordClassNode")))
+	)
 
-		; ---------------
-		; Return a string identifying a word-class
-		(define (mk-cls-str STR)
-			(format #f "<~A>" (escquote STR 0)))
+	; Add connector sets to the database
+	(define (add-germ-cset-pair GERM CSET COST)
+		(define germ-str (cog-name GERM))
+		(define dj-str (cset-to-lg-dj GERM CSET))
 
-		; ---------------
-		; Insert either a word, or a word-class, into the dict
-		; CLASS-NODE is either a WordNode or a WordClass
-		(define (add-word-class CLASS-NODE)
-			(define cls-type (cog-type CLASS-NODE))
-
-			; wrd-id serves as a unique ID.
-			(set! wrd-id (+ wrd-id 1))
-
-			(cond
-
-				; If we have a word, just invent a word-class for it.
-				((eq? cls-type 'WordNode)
-					(let ((word-str (cog-name CLASS-NODE)))
-						(add-one-word word-str (mk-cls-str word-str))))
-
-				; Loop over all words in the word-class
-				((eq? cls-type 'WordClassNode)
-					(let ((cls-str (mk-cls-str (cog-name CLASS-NODE))))
-						(for-each
-							(lambda (memb)
-								(add-one-word (cog-name (gar memb)) cls-str))
-							(cog-incoming-by-type CLASS-NODE 'MemberLink))))
-
-				; Must be either a WordNode or a WordClassNode
-				(else
-					(throw 'fail-insert 'make-db-adder
-						"Must be either a WordNode or a WordClassNode")))
-		)
-
-		; Add connector sets to the database
-		(define (add-germ-cset-pair GERM CSET COST)
-			(define germ-str (cog-name GERM))
-			(define dj-str (cset-to-lg-dj GERM CSET))
-
-			; (format #t "Germ <~A> gets dj=~A\n" germ-str dj-str)
-			; Flush periodically
-			(set! nprt (+ nprt 1))
-			(if (equal? 0 (remainder nprt 5000))
-				(begin
-					(dbi-query db-obj "END TRANSACTION;")
-					(dbi-query db-obj "BEGIN TRANSACTION;")
-				))
-
-			; Print progress report
-			(if (equal? 0 (remainder nprt 25000))
-				(begin
-					(format #t "~D done in ~D secs; inserting into <~A>: ~A;\n"
-						nprt (- (current-time) secs) germ-str dj-str)
-					(set! secs (current-time))
-				))
-
-			; Insert the word/word-class (but only if we haven't
-			; done so previously.)
-			(if (not (word-cache GERM))
-				(add-word-class GERM))
-
-			; Insert the disjunct, assigning a cost according
-			; to the float-point value returned by the function
-			(dbi-query db-obj (format #f
-				"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
-				(mk-cls-str germ-str) dj-str COST))
-
-			; Might fail with "UNIQUE constraint failed:" so just warn.
-			; XXX This is a temp hack, because the classification code
-			; is not yet written.
-			(let ((err-code (car (dbi-get_status db-obj)))
-					(err-msg (cdr (dbi-get_status db-obj))))
-				(if (not (equal? 0 err-code))
-					(if (string-prefix? "UNIQUE" err-msg)
-						(if (< warn-cnt 10)
-							(begin
-								(set! warn-cnt (+ 1 warn-cnt))
-								(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
-									err-msg)))
-						(throw 'fail-insert 'make-db-adder err-msg))))
-		)
-
-		; Add a section to the database
-		(define (add-section SECTION)
-			(define germ (gar SECTION))
-			(define cset (gdr SECTION))
-			(define cost (COST-FN SECTION))
-			; Cost will be +inf.0 for sections that have no MI on them.
-			; This .. uhh, might be due to a bug in earlier code!?
-			(if (< cost 1.0e3)
-				(add-germ-cset-pair germ cset cost)))
-
-		; Write to disk, and close the database.
-		(define (shutdown)
-			(when is-open
-				(set! is-open #f)
+		; (format #t "Germ <~A> gets dj=~A\n" germ-str dj-str)
+		; Flush periodically
+		(set! nprt (+ nprt 1))
+		(if (equal? 0 (remainder nprt 5000))
+			(begin
 				(dbi-query db-obj "END TRANSACTION;")
-				(dbi-close db-obj)
-				(format #t "Finished inserting ~D records in ~D secs (~6F/sec)\n"
-					nprt (- (current-time) start)
-					(/ nprt (- (current-time) start)))))
+				(dbi-query db-obj "BEGIN TRANSACTION;")
+			))
 
-		; Close the DB if an exception is thrown. But otherwise,
-		; let the exception pass through to the user.
-		(define (raii-add-section SECTION)
-			(with-throw-handler #t
-				(lambda () (add-section SECTION))
-				(lambda (key . args) (shutdown))))
+		; Print progress report
+		(if (equal? 0 (remainder nprt 25000))
+			(begin
+				(format #t "~D done in ~D secs; inserting into <~A>: ~A;\n"
+					nprt (- (current-time) secs) germ-str dj-str)
+				(set! secs (current-time))
+			))
 
-		; Add CLASS as disjunct-collection for unknown words.
-		; Typically, CLASS will be a WordClassNode with a lot
-		; of sections attached to it.
-		(define (add-unknown-word-handler CLASS)
+		; Insert the word/word-class (but only if we haven't
+		; done so previously.)
+		(if (not (word-cache GERM))
+			(add-word-class GERM))
 
-			; wrd-id serves as a unique ID.
-			(set! wrd-id (+ wrd-id 1))
+		; Insert the disjunct, assigning a cost according
+		; to the float-point value returned by the function
+		(dbi-query db-obj (format #f
+			"INSERT INTO Disjuncts VALUES ('~A', '~A', ~F);"
+			(mk-cls-str germ-str) dj-str COST))
 
-			(dbi-query db-obj (format #f
-				"INSERT INTO Morphemes VALUES ('<UNKNOWN-WORD>', '<UNKNOWN-WORD.~D>', '~A');"
-				wrd-id (mk-cls-str (cog-name CLASS))))
+		; Might fail with "UNIQUE constraint failed:" so just warn.
+		; XXX This is a temp hack, because the classification code
+		; is not yet written.
+		(let ((err-code (car (dbi-get_status db-obj)))
+				(err-msg (cdr (dbi-get_status db-obj))))
+			(if (not (equal? 0 err-code))
+				(if (string-prefix? "UNIQUE" err-msg)
+					(if (< warn-cnt 10)
+						(begin
+							(set! warn-cnt (+ 1 warn-cnt))
+							(format #t "Warning: ~A: Did you forget to classify the connectors?\n"
+								err-msg)))
+					(throw 'fail-insert 'make-db-adder err-msg))))
+	)
 
-			(if (not (equal? 0 (car (dbi-get_status db-obj))))
-				(throw 'fail-insert 'make-db-adder
-					(cdr (dbi-get_status db-obj))))
-		)
+	; Add a section to the database
+	(define (add-section SECTION)
+		(define germ (gar SECTION))
+		(define cset (gdr SECTION))
+		(define cost (COST-FN SECTION))
+		; Cost will be +inf.0 for sections that have no MI on them.
+		; This .. uhh, might be due to a bug in earlier code!?
+		(if (< cost 1.0e3)
+			(add-germ-cset-pair germ cset cost)))
 
-		; Create the tables for words and disjuncts.
-		; Refer to the Link Grammar documentation to see a
-		; description of this table format. Specifically,
-		; take a look at `dict.sql`.
-		(dbi-query db-obj (string-append
-			"CREATE TABLE Morphemes ( "
-			"morpheme TEXT NOT NULL, "
-			"subscript TEXT UNIQUE NOT NULL, "
-			"classname TEXT NOT NULL);" ))
+	; Write to disk, and close the database.
+	(define (shutdown)
+		(when is-open
+			(set! is-open #f)
+			(dbi-query db-obj "END TRANSACTION;")
+			(dbi-close db-obj)
+			(format #t "Finished inserting ~D records in ~D secs (~6F/sec)\n"
+				nprt (- (current-time) start)
+				(/ nprt (- (current-time) start)))))
+
+	; Close the DB if an exception is thrown. But otherwise,
+	; let the exception pass through to the user.
+	(define (raii-add-section SECTION)
+		(with-throw-handler #t
+			(lambda () (add-section SECTION))
+			(lambda (key . args) (shutdown))))
+
+	; Add CLASS as disjunct-collection for unknown words.
+	; Typically, CLASS will be a WordClassNode with a lot
+	; of sections attached to it.
+	(define (add-unknown-word-handler CLASS)
+
+		; wrd-id serves as a unique ID.
+		(set! wrd-id (+ wrd-id 1))
+
+		(dbi-query db-obj (format #f
+			"INSERT INTO Morphemes VALUES ('<UNKNOWN-WORD>', '<UNKNOWN-WORD.~D>', '~A');"
+			wrd-id (mk-cls-str (cog-name CLASS))))
 
 		(if (not (equal? 0 (car (dbi-get_status db-obj))))
-			(throw 'fail-create 'make-db-adder
+			(throw 'fail-insert 'make-db-adder
 				(cdr (dbi-get_status db-obj))))
+	)
 
-		(dbi-query db-obj
-			"CREATE INDEX morph_idx ON Morphemes(morpheme);")
+	; Create the tables for words and disjuncts.
+	; Refer to the Link Grammar documentation to see a
+	; description of this table format. Specifically,
+	; take a look at `dict.sql`.
+	(dbi-query db-obj (string-append
+		"CREATE TABLE Morphemes ( "
+		"morpheme TEXT NOT NULL, "
+		"subscript TEXT UNIQUE NOT NULL, "
+		"classname TEXT NOT NULL);" ))
 
-		(dbi-query db-obj (string-append
-			"CREATE TABLE Disjuncts ("
-			"classname TEXT NOT NULL, "
-			"disjunct TEXT NOT NULL, "
-			"cost REAL, "
-			"UNIQUE(classname,disjunct) );"))
+	(if (not (equal? 0 (car (dbi-get_status db-obj))))
+		(throw 'fail-create 'make-db-adder
+			(cdr (dbi-get_status db-obj))))
 
-		(dbi-query db-obj
-			"CREATE INDEX class_idx ON Disjuncts(classname);")
+	(dbi-query db-obj
+		"CREATE INDEX morph_idx ON Morphemes(morpheme);")
 
-		(dbi-query db-obj (string-append
-			"INSERT INTO Morphemes VALUES ("
-			"'<dictionary-version-number>', "
-			"'<dictionary-version-number>', "
-			"'<dictionary-version-number>');"))
+	(dbi-query db-obj (string-append
+		"CREATE TABLE Disjuncts ("
+		"classname TEXT NOT NULL, "
+		"disjunct TEXT NOT NULL, "
+		"cost REAL, "
+		"UNIQUE(classname,disjunct) );"))
 
-		(dbi-query db-obj (string-append
-			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-version-number>', 'V5v9v0+', 0.0);"))
+	(dbi-query db-obj
+		"CREATE INDEX class_idx ON Disjuncts(classname);")
 
-		(dbi-query db-obj (string-append
-			"INSERT INTO Morphemes VALUES ("
-			"'<dictionary-locale>', "
-			"'<dictionary-locale>', "
-			"'<dictionary-locale>');"))
+	(dbi-query db-obj (string-append
+		"INSERT INTO Morphemes VALUES ("
+		"'<dictionary-version-number>', "
+		"'<dictionary-version-number>', "
+		"'<dictionary-version-number>');"))
 
-		(dbi-query db-obj (string-append
-			"INSERT INTO Disjuncts VALUES ("
-			"'<dictionary-locale>', '"
-			(string-map (lambda (c) (if (equal? c #\_) #\4 c)) LOCALE)
-			"+', 0.0);"))
+	(dbi-query db-obj (string-append
+		"INSERT INTO Disjuncts VALUES ("
+		"'<dictionary-version-number>', 'V5v9v0+', 0.0);"))
 
-		; The UNKNOWN-WORD device is needed to make wild-card searches
-		; work (when dict debugging). The XXXBOGUS+ will not link to
-		; anything. XXX FIXME is this really needed ??
-		(dbi-query db-obj (string-append
-			"INSERT INTO Morphemes VALUES ("
-			"'<UNKNOWN-WORD>', "
-			"'<UNKNOWN-WORD>', "
-			"'<UNKNOWN-WORD>');"))
+	(dbi-query db-obj (string-append
+		"INSERT INTO Morphemes VALUES ("
+		"'<dictionary-locale>', "
+		"'<dictionary-locale>', "
+		"'<dictionary-locale>');"))
 
-		(dbi-query db-obj (string-append
-			"INSERT INTO Disjuncts VALUES ("
-			"'<UNKNOWN-WORD>', 'XXXBOGUS+', 0.0);"))
+	(dbi-query db-obj (string-append
+		"INSERT INTO Disjuncts VALUES ("
+		"'<dictionary-locale>', '"
+		(string-map (lambda (c) (if (equal? c #\_) #\4 c)) LOCALE)
+		"+', 0.0);"))
 
-		(dbi-query db-obj "PRAGMA synchronous = OFF;")
-		(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
-		(dbi-query db-obj "BEGIN TRANSACTION;")
+	; The UNKNOWN-WORD device is needed to make wild-card searches
+	; work (when dict debugging). The XXXBOGUS+ will not link to
+	; anything. XXX FIXME is this really needed ??
+	(dbi-query db-obj (string-append
+		"INSERT INTO Morphemes VALUES ("
+		"'<UNKNOWN-WORD>', "
+		"'<UNKNOWN-WORD>', "
+		"'<UNKNOWN-WORD>');"))
 
-		; Methods on the object
-		(lambda (message . args)
-			(case message
-				((add-section)     (apply raii-add-section args))
-				((add-unknown)     (apply add-unknown-word-handler args))
-				((shutdown)        (shutdown))
-			)
+	(dbi-query db-obj (string-append
+		"INSERT INTO Disjuncts VALUES ("
+		"'<UNKNOWN-WORD>', 'XXXBOGUS+', 0.0);"))
+
+	(dbi-query db-obj "PRAGMA synchronous = OFF;")
+	(dbi-query db-obj "PRAGMA journal_mode = MEMORY;")
+	(dbi-query db-obj "BEGIN TRANSACTION;")
+
+	; Methods on the object
+	(lambda (message . args)
+		(case message
+			((add-section)     (apply raii-add-section args))
+			((add-unknown)     (apply add-unknown-word-handler args))
+			((shutdown)        (shutdown))
 		)
 	)
 )
