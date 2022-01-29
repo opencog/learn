@@ -234,7 +234,6 @@
 			; make a list of word-classes containing only one word...
 			(filter
 				(lambda (WRDCLS)
-					; (eq? 1 (length (cog-incoming-by-type WRDCLS 'MemberLink)))
 					(eq? 1 (cog-incoming-size-by-type WRDCLS 'MemberLink)))
 				(LLOBJ 'left-basis))))
 
@@ -247,25 +246,6 @@
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
 
-		; Remove words already in word-classes. XXX This is not
-		; necessarily the correct action to take, depending on the
-		; type of clustering, but this whole object is a kind of
-		; temporary hack till the clustering algos settle down a
-		; bit more. XXX review and FIXME at some later time.
-		;
-		; XXX specifically, if there are words with non-trivial
-		; counts still left on them, they belong in singletons.
-		; The problem is that the margnals are probably corrupt.
-		; so we are confused about the counts left on them...
-		; (The merge routines did not adjust marginals...!?)
-		;
-		(define unclassed-words
-			(filter (lambda (wrd)
-				(not (any (lambda (memb)
-					(eq? 'WordClassNode (cog-type (gdr memb))))
-					(cog-incoming-by-type wrd 'MemberLink))))
-				WORD-LIST))
-
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
@@ -275,10 +255,10 @@
 				(for-each
 					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
 					(cog-incoming-by-type WRD 'Section)))
-			unclassed-words)
+			WORD-LIST)
 
 		(format #t "Created ~A singleton word classes\n"
-			(length unclassed-words))
+			(length WORD-LIST))
 	)
 
 	; Need to fetch the count from the margin.
