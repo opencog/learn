@@ -1379,9 +1379,10 @@ Grammar. This can be done as follows:
   more than 500 times:
 ```
        (define pca (make-pseudo-cset-api))
-       (define psa (add-pair-stars pca))
-       (psa 'fetch-pairs)
-       (define asc (add-singleton-classes psa))
+       (define gca (add-gram-class-api pca))
+       (define gcs (add-pair-stars gca))
+       (gcs 'fetch-pairs)
+       (define asc (add-singleton-classes gcs))
        (asc 'create-hi-count-singles 500)
 ```
 
@@ -1389,8 +1390,6 @@ Grammar. This can be done as follows:
   any given disjunct is. Link Grammar ranks it's parses by liklihood.
   Compute the costs as follows:
 ```
-       (define gca (add-gram-class-api psa))
-       (define gcs (add-pair-stars gca))
        (define gcf (add-wordclass-filter gcs #t))
        (batch-all-pair-mi gcf)
 ```
