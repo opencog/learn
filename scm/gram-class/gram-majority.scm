@@ -318,6 +318,10 @@
 					(done-djs DJ) ; Record unconditionaly.
 					(set! scnt (+ 1 scnt))))
 			dj-list)
+
+		; At the conclusion, store the counts on the MemberLinks
+		(for-each (lambda (WRD) (store-atom (MemberLink WRD CLASS))) WLIST)
+
 		(format #t "------ merge-majority: Merge ~D of ~D sections in ~A secs\n"
 			mscnt scnt (e))
 
@@ -449,8 +453,8 @@
 			(for-each (lambda (FMEMB)
 					(define fcnt (cog-count FMEMB))
 					(define xfer (* fcnt fract))
-					(cog-inc-count! (MemberLink (gar FMEMB) CLASS) xfer)
-					(cog-inc-count! FMEMB (- xfer)))
+					(store-atom (cog-inc-count! (MemberLink (gar FMEMB) CLASS) xfer))
+					(store-atom (cog-inc-count! FMEMB (- xfer))))
 				sublist)
 
 			; Get rid of the class-membership.  This erases the history.
