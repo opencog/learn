@@ -2,15 +2,15 @@
 
 #################################################
 #
-set term png
-set out 'log-0.5-0.2.png'
-# set term postscript eps enhanced color 20
-# set out 'log-0.5-0.2.eps'
+# set term png
+# set out 'log-0.5-0.2.png'
+set term postscript eps enhanced color 20
+set out 'log-0.5-0.2.eps'
 set key right top
 set title "Stats for Quorum=0.5 Commonality=0.2"
 set xlabel "Merge ordinal"
 set ylabel "bits"
-set yrange [:20]
+set yrange [-1:20]
 # set format y "10^{%L}"
 
 plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "Sparsity", \
@@ -20,11 +20,11 @@ plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "Sparsity", \
 
 #################################################
 #
-set term png
-set out 'sparsity.png'
-# set term postscript eps enhanced color 20
-# set out 'sparsity.eps'
-set key left top
+# set term png
+# set out 'sparsity.png'
+set term postscript eps enhanced color 20
+set out 'sparsity.eps'
+set key right bottom
 set title "Sparsity vs. Time"
 set xlabel "Merge ordinal"
 set ylabel "Sparsity, in bits"
@@ -37,10 +37,10 @@ plot "log-0.5-0.2.dat" using 1:7 with lines lw 2 title "qu=0.5 com=0.2", \
 
 #################################################
 #
-set term png
-set out 'entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'entropy.eps'
+# set term png
+# set out 'entropy.png'
+set term postscript eps enhanced color 20
+set out 'entropy.eps'
 set key right top
 set title "MM^T Entropy vs. Time"
 set xlabel "Merge ordinal"
@@ -54,10 +54,10 @@ plot "log-0.5-0.2.dat" using 1:8 with lines lw 2 title "qu=0.5 com=0.2", \
 
 #################################################
 #
-set term png
-set out 'ranked-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'ranked-mi.eps'
+# set term png
+# set out 'ranked-mi.png'
+set term postscript eps enhanced color 20
+set out 'ranked-mi.eps'
 set key right top
 set title "Ranked-MI of top-ranked pair"
 set xlabel "Merge ordinal"
@@ -71,10 +71,10 @@ plot "log-0.5-0.2.dat" using 1:9 with lines lw 2 title "qu=0.5 com=0.2", \
 
 #################################################
 #
-set term png
-set out 'mmtq.png'
-# set term postscript eps enhanced color 20
-# set out 'mmtq.eps'
+# set term png
+# set out 'mmtq.png'
+set term postscript eps enhanced color 20
+set out 'mmtq.eps'
 set key right top
 set title "MM^T-Q vs. Time"
 set xlabel "Merge ordinal"

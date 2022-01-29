@@ -1800,8 +1800,17 @@ r10-mrg-q0.8-c0.5.rdb
 \begin_layout Standard
 Spot sampling of the merges looks much like the above: some pretty good-looking
  merges interspersed with some head-scratchers.
- This continues deeply into the merge stream.
- 
+ This occasional ugliness continues deeply into the merge stream.
+ What is not clear is how many disjuncts are involved in the uglies, and,
+ if they occur early, exactly how much 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ they carry away.
 \end_layout
 
 \begin_layout Standard
@@ -1838,7 +1847,7 @@ Here's all four of these on one graph:
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p5-en-merge/log-0.5-0.2.png
+	filename p5-en-merge/log-0.5-0.2.eps
 	width 50text%
 
 \end_inset
@@ -1856,7 +1865,7 @@ Here's just sparsity, for all four merge parameters.
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p5-en-merge/sparsity.png
+	filename p5-en-merge/sparsity.eps
 	width 50text%
 
 \end_inset
@@ -1881,7 +1890,7 @@ bringing order to the chaos
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p5-en-merge/entropy.png
+	filename p5-en-merge/entropy.eps
 	width 50text%
 
 \end_inset
@@ -1900,7 +1909,7 @@ anked pairs are merged.
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p5-en-merge/ranked-mi.png
+	filename p5-en-merge/ranked-mi.eps
 	width 50text%
 
 \end_inset
@@ -1945,7 +1954,7 @@ constant
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p5-en-merge/mmtq.png
+	filename p5-en-merge/mmtq.eps
 	width 50text%
 
 \end_inset
@@ -1974,6 +1983,11 @@ Notes:
 The quorum=0.8 run died prematurely, after performing 986 merges.
  Atthe conclusion, it only had 502 word-classes, so clearly, many classes
  are being recombined and expanded.
+\end_layout
+
+\begin_layout Itemize
+Failed to write out the MemberLinks on all four datasets, and so these are
+ useless for creating dictionaries.
 \end_layout
 
 \begin_layout Section*
