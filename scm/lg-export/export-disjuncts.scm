@@ -227,6 +227,7 @@
 			(wrd-id 0)
 			(nprt 0)
 			(is-open #t)
+			(start (current-time))
 			(secs (current-time))
 			(word-cache (make-atom-set))
 			(warn-cnt 0)
@@ -363,12 +364,13 @@
 
 		; Write to disk, and close the database.
 		(define (shutdown)
-			(if is-open
-				(begin
-					(set! is-open #f)
-					(format #t "Finished inserting ~D records\n" nprt)
-					(dbi-query db-obj "END TRANSACTION;")
-					(dbi-close db-obj))))
+			(when is-open
+				(set! is-open #f)
+				(dbi-query db-obj "END TRANSACTION;")
+				(dbi-close db-obj)
+				(format #t "Finished inserting ~D records in ~D secs (~6F/sec)\n"
+					nprt (- (current-time) start)
+					(/ nprt (- (current-time) start)))))
 
 		; Close the DB if an exception is thrown. But otherwise,
 		; let the exception pass through to the user.
