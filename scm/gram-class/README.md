@@ -10,7 +10,8 @@ actual code is (almost) entirely generic, and can merge (cluster)
 anything. There are only a handful of places where its not generic;
 these are slowly being cleaned up. The generic merge is possible
 because what to merge, and where to put the merger results, are
-defined by `LLOBJ`.
+defined by the `LLOBJ` object, passed as an argument to the assorted
+functions and methods.
 
 OVERVIEW
 --------
@@ -47,11 +48,48 @@ For merging:
 * In-group cliques with majority voting.
 * Binary optimization (integer programming).
 
-For theoretical reasons, the binary-optimization strategy should
-provide the best results. This is because the merge decision is
-determined by maximum entropy principles. This has not yet been
-verified experimentally, and the code has not yet been written.
-In fact, it might be a mirage. (See `gram-optim.scm` for more.)
+Orthogonal decomposition, and union, overlap merging were explored
+experimentally in detail; see the 'Diary Part One' and 'Part Two'.
+They worked OK, but not great, and the code that implements them has
+been moved to the `attic` directory (its obsolete and not used any
+more.)  They are still explained below, as understanding these helps
+with the understanding of general principles.
+
+The current merge algo forms in-groups or 'private clubs' of closely
+related words, and uses a majority voting scheme to determine which
+disjuncts are admitted into the club. The code for this can be found in
+`gram-majority.scm`. This algo seems to work well, and is being explored
+experimentally.
+
+There is a vague idea that some kind of binary optimization merge
+algorithm might be "even better", especially if it is well-founded on
+priciples of information theory. At this time, it remains a bit of a
+daydream, and maybe a mirage.  See `gram-optim.scm` for more.
+
+
+Broadening
+----------
+Prior to the start of the merge, the collection of word-disjunct pairs
+corresponds precisely to what was observed in the training corpus. When
+word-classes are formed, they inevitably broaden the allowed use of words
+beyond what was observed in the text.
+
+That is, when word `a` and word `b` are merged to form class `c`, there
+will be, in general, disjuncts `d` and `e` such that the pair `(a,d)` was
+observed, and `(b,e)` was observed, but not `(a,e)` and not `(b,d)`. If
+the merge result contains both `(c,d)` and `(c,e)`, then effectively the
+grammatical usage of `a` and `b` has been broadened into a bigger context.
+
+The entire goal of merging is to perform this broadening, but not too
+much of it. One wishes to extrapolate from the particular to the general,
+but not so much that one loses the ability to discriminate between
+important particulars. Exactly how this can be done best is the grand
+mystery, the grand question, quest of the code here.
+
+As noted above, something called 'union and overlap' merging were aleady
+explored, and found wanting. An 'in-group, private club' algo is being
+currently explored.  The generic information-theoretic foundations of
+merging remain opaque and unknown (but I'm trying to figure them out.)
 
 
 Representation
@@ -64,7 +102,7 @@ A grammatical class is represented as
 
 Word classes have a designated grammatical behavior, using Sections,
 behaving just like the pseudo-connectors on single words. Thus, either
-a WordNode or a WordClassNode can appear in a Connector link, as
+a `WordNode` or a `WordClassNode` can appear in a `Connector` link, as
 shown below.
 
     Section
@@ -76,14 +114,46 @@ shown below.
             Connector
                ....
 
-The TV on the MemberLink holds a count value; that count equals the
+The TV on the `MemberLink` holds a count value; that count equals the
 total number of section-counts that were transferred from the word, to
 the word-class, when the word was merged into the class. The sum over
-all of these counts (on the MemberLinks) should exactly equal the sum
-over the counts on all Sections for that WordClassNode.  Thus, it can
+all of these counts (on the `MemberLink`s) should exactly equal the sum
+over the counts on all `Section`s for that `WordClassNode`.  Thus, it can
 be used to determine what fraction the word contributed to the class.
 Since merge strategies are generally non-linear, this value is at best
 a crude indicator, rather than a way of reconstructing the components.
+
+
+Terminology
+-----------
+The `LLOBJ` or matrix of word-disjunct pairs appears in the AtomSpace in
+the form of
+
+    Section
+        WordNode "foo"
+        ConnectorSeq
+            Connector
+               WordNode "bar"
+               ConnectorDir "+"
+            Connector
+               ....
+
+which can be shortened to `(foo, bar+ & ...)` or even further to a pair
+`(w,d)` for word `w` and disjunct `d`.  Here, the disjunct `d` is taken as
+a synonym for `ConnectorSeq`. Further below, the concept of `Shape` is
+introduced; Shapes are built from `ConnectorSeq` by substituting a
+variable for a `Connector`. That is, disjuncts may also be Shapes, but
+this detail can be safely ignored for the remainder of the text below.
+
+Associated to each Section is a count, stored as a `CountTruthValue`
+on the `Section`. Abstractly, this is written as `N(w,d)`.  This
+abstraction is thus the matrix: the count matrix `N` having rows
+and columns `(w,d)`. Each row and each column is a vector.
+
+Holding the word constant, the row vector `N(w,*)` is written simply
+as `w` below. In this case, the `d` are the basis elements of that
+vector.
+
 
 Basic assumptions
 -----------------
@@ -111,6 +181,7 @@ the sets of disjuncts defining those classes are not necessarily
 disjoint; there may be significant overlap. That is, different
 grammatical classes are not orthogonal, in general.
 
+
 A Note about "Vectors"
 ----------------------
 Unfortunately, the word "vector" is not quite the correct term, as it
@@ -128,6 +199,7 @@ a wild-card): these are called "Shapes" below, and elsewhere, and
 provide basis elements for a different, but related, vector space.
 These subtleties regarding vectors and shapes are ignored here; the
 word "vector" will be used only because of the lack of a better word.
+
 
 Semantic disambiguation
 -----------------------
@@ -344,39 +416,32 @@ also contain a lot of "signal", and disentangling this signal from the
 noise remains profoundly confusing.
 
 
-Broadening
-----------
-Prior to the start of the merge, the collection of word-disjunct pairs
-corresponds precisely to what was observed in the training corpus. When
-word-classes are formed, they inevitably broaden the allowed use of words
-beyond what was observed in the text.
-
-That is, when word `a` and word `b` are merged to form class `c`, there
-will be, in general, disjuncts `d` and `e` such that the pair `(a,d)` was
-observed, and `(b,e)` was observed, but not `(a,e)` and not `(b,d)`. If
-the merge result contains both `(c,d)` and `(c,e)`, then effectively the
-grammatical usage of `a` and `b` has been broadened into a bigger context.
-
-
+Simple Merge Strategies
+=======================
+A few of the simplest merge strategies are described below. They give
+a general sense of what is being done, and provide a language and
+terminology for the more complex merge algos.
 
 
 Orthogonal merging
 ------------------
-In this merge strategy, `w` is decomposed into `s` and `t` by
-orthogonal decomposition, up to a clamping constraint, so as to keep
-all counts non-negative. That is, start by taking `s` as the component
-of `w` that is parallel to `g`, and `t` as the orthogonal complement.
-In general, this will result in `t` having negative components; this
-is clearly not allowed in a probability space. Thus, those counts are
-clamped to zero, and the excess is transferred back to `s` so that the
-total `w = s + t` is preserved.
+In this merge strategy, a vector `w` is decomposed into `s` and `t` by
+orthogonal decomposition. A clamping constraint is then applied, so as
+to keep all counts non-negative.
+
+Start by taking `s` as the component of `w` that is parallel to `g`,
+and `t` as the orthogonal complement.  In general, this will result in
+`t` having negative components; this is clearly not allowed in a
+probability space. Thus, those counts are clamped to zero, and the
+excess is transferred back to `s` so that the total `w = s + t` is
+preserved (so that detailed balance holds).
 
 Note the following properties of this algo:
 a) The combined vector `g_new` has exactly the same support as `g_old`.
    That is, any disjuncts in `w` that are not in `g_old` are already
    orthogonal. This may be undesirable, as it prevents the broadening
    of the support of `g`, i.e. the learning of new, but compatible
-   grammatical usage. See discussion of "broadening" below.
+   grammatical usage. See discussion of "broadening" at above.
 
 b) The process is not quite linear, as the final `s` is not actually
    parallel to `g_old`.
@@ -395,9 +460,10 @@ taking the union of support, the new support may contain elements
 from `w` that belong to other word-senses, and do NOT belong to `g`
 (do not belong to the word sense associate with `g`).
 
+
 Initial cluster formation
 -------------------------
-The above described what to do to extend an existing grammatical class
+The above describe what to do to extend an existing grammatical class
 with a new candidate word.  It does not describe how to form the
 initial grammatical class, out of the merger of N words. Several
 strategies are possible. Given words `u`, `v`, `w`, ... one may:
@@ -406,11 +472,12 @@ strategies are possible. Given words `u`, `v`, `w`, ... one may:
 * Overlap and union merge, described below.
 * Democratic voting: merge those basis elements shared by a majority.
 
+
 Overlap merge
 -------------
 A formal (i.e. mathematically dense) description of overlap merging is
 given here. One wishes to compute the intersection of basis elements
-(the intersection of "disjuncts" aka "sections") of the two words, and
+(the intersection of "disjuncts" via "sections") of the two words, and
 then sum the counts only on this intersected set. Let
 
   {e_a} = set of basis elements in v_a with non-zero coefficients
@@ -425,30 +492,32 @@ then sum the counts only on this intersected set. Let
   v_a^new = v_a - v_a^pi
   v_b^new = v_b - v_b^pi
 
-The idea here is that the vector subspace {e_overlap} consists of
-those grammatical usages that are common for both words a and b,
-and thus hopefully correspond to how words a and b are used in a
-common sense. Thus v_cluster is the common word-sense, while v_a^new
-and v_b^new are everything else, everything left-over.  Note that
-v_a^new and v_b^new are orthogonal to v_cluster. Note that v_a^new
-and v_b^new are both exactly zero on {e_overlap} -- the subtraction
+The idea here is that the vector subspace `{e_overlap}` consists of
+those grammatical usages that are common for both words `a` and `b`,
+and thus hopefully correspond to how words `a` and `b` are used in a
+common sense. Thus `v_cluster` is the common word-sense, while `v_a^new`
+and `v_b^new` are everything else, everything left-over.  Note that
+`v_a^new` and `v_b^new` are orthogonal to `v_cluster`. Note that `v_a^new`
+and `v_b^new` are both exactly zero on `{e_overlap}` -- the subtraction
 wipes out those coefficients. Note that the total number of counts
 is preserved.  That is,
 
   ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
 
-where ||v|| == ||v||_1 the l_1 norm aka count aka Manhattan-distance.
+where `||v|| == ||v||_1` the `l_1` Banach norm aka count aka
+Manhattan-distance.
 
-If v_a and v_b have several word-senses in common, then so will
-v_cluster.  Since there is no a priori way to force v_a and v_b to
+If `v_a` and `v_b` have several word-senses in common, then so will
+`v_cluster`.  Since there is no a priori way to force `v_a` and `v_b` to
 encode only one common word sense, there needs to be some distinct
-mechanism to split v_cluster into multiple word senses, if that is
+mechanism to split `v_cluster` into multiple word senses, if that is
 needed.
 
 Union merging can be described using almost the same formulas, except
 that one takes
 
   {e_union} = {e_a} set-union {e_b}
+
 
 accumulate-count, assign-to-cluster
 -----------------------------------
@@ -468,35 +537,83 @@ That is, the merger is given by the vector
 
   v_merged = v_overlap + FRAC * (v_union - v_overlap)
 
-If v_a and v_b are both words, then the counts on v_a and v_b are
-adjusted to remove the counts that were added into v_merged. If one
+If `v_a` and `v_b` are both words, then the counts on `v_a` and `v_b` are
+adjusted to remove the counts that were added into `v_merged`. If one
 of the two is already a word-class, then the counts are simply moved
 from the word to the class.
+
 
 Majority Voting
 ---------------
 Better merge results can be obtained by merging two or more vectors
-at the same time.
+at the same time. See `gram-majority.scm` for details.
+
 
 Connector merging
 -----------------
-When merging  vectors, it is best to merge the connectors that appear
-in the basis elements of the vectors (the basis elements are connector
-seqeunces).  Performing this connector merge is easiest if "shapes" are
-used, (see `shape-project.scm` for details) and if the inner loop is
+Words appear not only as vectors, but also in the connectors that form
+a disjunct. When words are merged into a class, care must be taken to
+handle the connectors as well.
+
+A given disjunct has the general form:
+
+        ConnectorSeq
+            Connector
+               WordNode "a"
+               ConnectorDir "+"
+            Connector
+               ....
+
+If a word `a` is merged into a class `c`, the above connector sequence
+(disjunct) must be replaced by
+
+        ConnectorSeq
+            Connector
+               WordClassNode "c"
+               ConnectorDir "+"
+            Connector
+               ....
+
+whereever it appears.  This makes the merging algorithm 'non-linear', in
+that the number of disjuncts is not constant: the number of basis elements
+are changing, the dimension of the space is changing. The basis elements
+themselves mutate. The overall process does remain linear in that detailed
+balance must still be maintained; failure to maintain detailed balance
+would prevent the ability to interpret the entire process in terms of
+probabilities.
+
+The term 'detailed balance' is meant to invoke the same idea from
+chemistry. During a chemical reaction, the total number of atoms remains
+the same, even as the total number of molecules is changing.
+
+There are a number of analogies that can be made to chemistry: a
+`ConnectorSeq` is a list of the chemical bonds bonds that can be
+formed.  Thus, a pair `(w,d)` is a listing of an atom `w` and the
+bonds `d` it can form. Because any given atom can form bonds in
+several different ways, there are several different `d` that can
+be associated with `w`. The act of classification is like saying
+that chlorine, flourine and bromine are all very similar in the
+bonds that they form. The act of connector merging is like saying
+that the halides all bond similarly to the alkalis.
+
+As a practical matter for tracking the merge of connectors, the
+concept of a `Shape` is introduced, together with the concept of
+a `CrossSection`. This is described in detail in `shape-project.scm`.
+
+As a quick example:
+
+Given a set of `Section`s, the set of `CrossSection`s and `Shape`s
+can be uniquely and unambiguously determined. The counts on the
+`CrossSection`s are exactly equal to the counts on the corresponding
+`Section`s.
+
+Performing this connector merge is easiest if "shapes" are used,
+(see `shape-project.scm` for details) and if the inner loop is
 the loop over the words to be merged, for a fixed basis element.
 Earlier code reversed the inner and outer loops (see the code in the
 `attic` directory) and doing it the other way creates a number of
 difficult issues for connector merging.
 
-Disjunct merging
-----------------
-Disjunct merging is the second step in creating grammatical classes.
-The idea here is to replace individual connectors that specify words
-with connectors that specify word-classes. This step is examined in
-greater detail in `gram-majority.scm`.
+-------------------------------------------------------------------
 
-
----------------------------------------------------------------------
-This file currently contains no code!  It just documents the code!
-Copyright (c) 2017, 2018, 2019 Linas Vepstas
+Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
