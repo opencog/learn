@@ -254,6 +254,10 @@
 				; Copy the sections
 				(for-each
 					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
+
+					; Delete the original section, as otherwise they
+					; will disrupt the marginals.
+					(cog-delete! SEC)
 					(cog-incoming-by-type WRD 'Section)))
 			WORD-LIST)
 

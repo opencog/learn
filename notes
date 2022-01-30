@@ -10265,7 +10265,18 @@ to spinnig disk: slowww -- 10846 secs or (/ 378937 10846.) 35 recs/sec
 to SSD: Finished inserting 378937 records in 34699 secs (10.921/sec)
 wtf  even slower.
 
+--------------------------------------------------------
+(nobs (WordNode "the")) 548680.0
 
+where are the memberlinks? holy cow completely forgot to do this.
+
+add-gram-class-api
+
+(WordClassNode . 502)
+
+(add-wordclass-filter
+
+singletons is just .. broken.
 
 --------------------------------------------------------
 0.5-0.2 -- 19008
@@ -10276,14 +10287,17 @@ wtf  even slower.
 (dump-log "/tmp")
 use git branch r10-mrg-fix for above
 
+Maybe 0.7-0.4 has enough members?
+
 Start up
-noise 4,3,2
-precise n4 -- 19011
+noise 0.6 0.7 0.8
+precise n4 -- 19611  19711 19811 21811
 (dump-log star-obj "/tmp/r11-p-log" print-log)
 (dump-log star-obj "/tmp/r11-p-cls" print-merges)
 
 imprecise
 imp-n4 -- 20411
+imp-n3 -- 20311
 imp-n2 -- 20211
 imp-n1 -- 20111
 (dump-log star-obj "/tmp/r11-log" print-log)
