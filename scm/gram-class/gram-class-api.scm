@@ -198,8 +198,8 @@
   singleton WordClassNodes, based on their count or relative rank.
 
   Note that using this object will cause the MI values between
-  word-classes and disjuncts to become invalid; thse will need to be
-  recomputed.
+  word-classes and disjuncts to become invalid; if these are needed,
+  then they will need to be recomputed.
 
   Provided methods:
      'delete-singles -- Remove all WordClassNodes that have only a
