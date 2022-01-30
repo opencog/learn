@@ -115,7 +115,7 @@ A Note about "Vectors"
 ----------------------
 Unfortunately, the word "vector" is not quite the correct term, as it
 suggests a vector space with rotational symmetry and basis independence.
-This is very much NOT the case: the space has NOT rotational symmetry
+This is very much NOT the case: the space has NO rotational symmetry
 at all, and is very basis-dependent.  The concept of a "matroid" moves
 in the right direction, but does not quite capture the idea. The space
 is actually a probability space; the preservation of counts is the
@@ -125,7 +125,7 @@ A different problem is that the bases of the vectors are not actually
 "independent"; they contain words, themselves. One can consider
 Sections where each word in a Connector is replaced by a variable (by
 a wild-card): these are called "Shapes" below, and elsewhere, and
-provide basis elements for a different, but related vector space.
+provide basis elements for a different, but related, vector space.
 These subtleties regarding vectors and shapes are ignored here; the
 word "vector" will be used only because of the lack of a better word.
 
@@ -142,11 +142,13 @@ at how the word was used: nouns are used differently than verbs.
 The different usage is reflected in the collection of sections
 ("disjuncts") that are associated with the word-sense.
 
-Thus, the vector associated to the word "saw" is the (linear) sum
-for a noun-vector (the cutting tool) and two different verb-vector
-(observing; cutting).  This section describes how the cosine-distance
-can be used to distinguish between these different forms, how to
-factor the vector of observation counts into distinct classes.
+Thus, prior to classification/categorization, the vector associated to
+the word "saw" is the (linear) sum for a noun-vector (the cutting tool)
+and two different verb-vectors (observing; cutting).  The next few
+paragraphs describe how the cosine-distance (or mutual information,
+or another kind of distance metric) can be used to distinguish between
+these different forms, how to factor the vector of observation counts
+into distinct classes.
 
 
 Word Similarity
@@ -165,9 +167,6 @@ If N(w,d) is the count of the number of observations of word w with
 disjunct d, the dot product is
 
    dot(w_a, w_b) = v_a . v_b = sum_d N(w_a,d) N(w_b,d)
-
-The minimum-allowed cosine-distance is a user-tunable parameter in
-the code below; it is currently hard-coded to 0.65.
 
 A fundamental problem with cosine distance is that it is built on an
 assumption of the rotational invariance of Euclidean space. However,
@@ -191,6 +190,11 @@ N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
 in the definition. This and other considerations are covered in much
 greater detail in the supporting PDF's.)
 
+The code in this directory has completely abandoned the use of the
+cosine distance, and has MI hard-wired more-or-less everywhere. An
+experimental examination of cosine vs. various different Jaccard
+and overlap distances vs. MI can be found in the 'Diary Part Three'.
+
 
 Merge Algos
 -----------
@@ -198,33 +202,60 @@ There are several ways in which two words might be merged into a
 word-class, or a word added to a word-class.  All of these involve
 the transfer of counts from individual word-vectors to the word-class
 vector.  One generic style of merging uses concepts from Eucliden
-geometry, and involve taking parallel and perpendicular components
-of vectors. This is implemented in `gram-projective.scm`.  Another
-style suggests that information-theoretic techniques are primal, and
-a merge strategy based on MI/entropy maximization is best. This is
-implemented in the `gram-optim.scm` file.
+geometry, and involves taking parallel and perpendicular components
+of vectors. This is implemented in `gram-projective.scm` (in the `attic`
+directory. It has been moved to the attic because it is not used any
+more.) Another style suggests that information-theoretic techniques are
+primal, and a merge strategy based on MI/entropy maximization is best.
+A general idea for this is sketched in the `gram-optim.scm` file, but
+remains vague, unformed, unimplemented: it is just a sketch.
 
+The merge code that is in current use can be found in `gram-majority.scm`.
+It forms "in-groups" (or "clubs" or "cliques": exclusive groups whose
+memebers share common traits.) The in-groups are formed by nominating a
+set of similar words (per the similarity metric) and then determining
+the membership of specific disjuncts by majority voting (so that the
+majoriy of the club members have that disjunct in common.) This algorithm
+is not based on information theory principles, but is relatively easy to
+implement, and seems to work well.
+
+
+Detailed Balance
+----------------
 Given a word (a word-vector) `w`, we wish to decompose it into a
-component `s` that will be merged into the grammatical class `g`,
-and a component `t` that will be left over. The preservation of
-counts (the preservation of probabilities) requires that
-`w = s + t`; that is, that N(w,d) = N(s,d) + N(t,d) for fixed d.
+component `s` that will be merged into the grammatical class `g`, and
+a component `t` that will be left over. The preservation of counts
+(the preservation of probabilities) requires that (before merging)
+the vector `w` decomposes as `w = s + t`, so that
+```
+    N(w,d) = N(s,d) + N(t,d)
+```
+for each 'basis element' (disjunct) `d`.
 
-Merging means that `g_new = g_old + s`; that is,
-
+Merging is performed so that 'detailed balance' is preserved. That means
+that, in forming the new class `g_new` from `g_old` and `s`, one has that
+`g_new = g_old + s`, and this holds on component-by-component
+```
      N(g_new, d) = N(g_old, d) + N(s,d)
+```
+for each disjunct `d`.
 
-for each disjunct `d`. To keep the number of vectors that need to be
-track small, the vector `g_old` is immediately discarded. Likewise,
-the vector `s` is also immediately discarded. The remainder-vector `t`
-is relabelled as the new `w`; that is, `w_new = t` and `w_old` is
-discarded. (This is a subtraction that preserves the total counts:
-if `w_old = w`, then `w_new = w_old - s`.)
+Note that this second equation is not so much an equation, as it is a
+directive to transfer the counts from `s` and `g_old` to `g_new`. Thus,
+before the transfer, `N(g_new, d)` was zero, and becomes non-zero during
+the transfer. Similarly, both `N(g_old, d)` and `N(s,d)` are set to zero.
 
-This is what is meant by "merging" in what follows. The different
-algos are all about different ways of figuring out what the vector
-`s` should be.
+As a practical matter, to avoid exploding the size of the dataset, all
+matrix entries for which `N(x,d)` becomes zero after the count transfer
+are then deleted.
 
+The different merge algos differ in how they decompose the vector `w`
+into the part `s` to be transfered, and the part `t` to be kept. However,
+they all obey the detailed-balance requirement.
+
+
+Properties of merging
+---------------------
 All of these different merge algos suffer from a certain set of
 problems. These are:
 
@@ -273,13 +304,21 @@ all 4 of these observation counts should be merged into the word-class.
 Only high-frequency disjuncts can be considered to be well-known
 enough to be distinct, and thus suitable for fractional merging.
 
+More generally, the correct way to treat these tails remains rather
+mysterious. Despite the fact that each individual count is small, almost
+all of the grand-total count is in the tail: the tail itself is bigger
+than the body itself. Although it feels like "noise", it appears to
+also contain a lot of "signal", and disentangling this signal from the
+noise remains profoundly confusing.
+
 
 Broadening
 ----------
-The issue described in a) is an issue of broadening the known usages
-of a word, beyond what has been strictly observed in the text.  There
-are two distinct opportunities to broaden: first, in the union vs.
-overlap merging above, and second, in the merging of disjuncts. That
+The issue described in A) above is an issue of broadening the known
+usages of a word, beyond what has been strictly observed in the text.
+There are two distinct opportunities to broaden: first, in the union vs.
+overlap merging (described below, but now obsolete and moved to the attic)
+and second, in the merging of disjuncts. That
 is, the above merging did not alter the number of disjuncts in use:
 the disjuncts on the merged class are still disjuncts with single-word
 connectors. At some point, disjuncts should also be merged, i.e. by
