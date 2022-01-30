@@ -600,7 +600,49 @@ As a practical matter for tracking the merge of connectors, the
 concept of a `Shape` is introduced, together with the concept of
 a `CrossSection`. This is described in detail in `shape-project.scm`.
 
-As a quick example:
+A quick example. Given a `Section`
+
+    Section
+        WordNode "foo"
+        ConnectorSeq
+            Connector
+               WordNode "bar"
+               ConnectorDir "+"
+            Connector
+               WordNode "nim"
+               ConnectorDir "-"
+
+one can define two `CrossSection`s and two `Shape`s, one for each of the
+`Connector`s. One of them is
+
+    CrossSection
+        WordNode "bar"
+        Shape
+            WordNode "foo"
+            Connector
+               VariableNode "$x"
+               ConnectorDir "+"
+            Connector
+               WordNode "nim"
+               ConnectorDir "-"
+
+The other one is analogous, replacing 'nim' by the variable. The original
+`Section` can be uniquely and unambiguously reconstructed by plugging the
+word 'bar' in for the variable, and movig the head of the shape to the
+head of the `Section`.  Thus, the `CrossSection`s are just `Section`s
+rotated around, to place each of the words in the `Connector`s into the
+head position. This rotation of the `Connector`s into head position
+makes it easier to apply the assorted vector-space concepts described
+above, to maintain detailed balance, to compute word-similarity and
+in general, to track what needs to be merged with what.
+
+Note that a word vector with `CrossSection`s in it really is a different
+vector than one without it; thus, including `CrossSections really does
+alter the similarty between word-vectors. The similarities between
+word-vectors with `CrossSection`s on them does appear to be more
+accurate than those without, but this has noot been firmly established
+experimentally, nor is there any theoretical foundation for supporting
+this.
 
 Given a set of `Section`s, the set of `CrossSection`s and `Shape`s
 can be uniquely and unambiguously determined. The counts on the
@@ -616,4 +658,4 @@ difficult issues for connector merging.
 
 -------------------------------------------------------------------
 
-Copyright (c) 2017, 2018, 2019, 2021 Linas Vepstas
+Copyright (c) 2017, 2018, 2019, 2022 Linas Vepstas
