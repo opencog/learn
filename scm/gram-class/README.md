@@ -231,14 +231,14 @@ word-vectors is greater than a threshold, they should be merged.
 
 The cosine distance between the two words w_a, w_b is
 
-   cos(w_a, w_b) = v_a . v_b / |v_a||v_b|
+    cos(w_a, w_b) = v_a . v_b / |v_a||v_b|
 
 Where, as usual, v_a . v_b is the dot product, and |v| is the length.
 
 If N(w,d) is the count of the number of observations of word w with
 disjunct d, the dot product is
 
-   dot(w_a, w_b) = v_a . v_b = sum_d N(w_a,d) N(w_b,d)
+    dot(w_a, w_b) = v_a . v_b = sum_d N(w_a,d) N(w_b,d)
 
 A fundamental problem with cosine distance is that it is built on an
 assumption of the rotational invariance of Euclidean space. However,
@@ -251,11 +251,11 @@ between the vectors (the Kullback-Lielber divergence). If N(w,d) is
 the count of the number of observations of word w with disjunct d,
 the divergence is:
 
-   MI(w_a, w_b) = log_2 [dot(w_a, w_b) dot(*,*) / ent(w_a) ent(w_b)]
+    MI(w_a, w_b) = log_2 [dot(w_a, w_b) dot(*,*) / ent(w_a) ent(w_b)]
 
 where
 
-   ent(w) = sum_d N(w,d) N(*,d) = dot(w, *)
+    ent(w) = sum_d N(w,d) N(*,d) = dot(w, *)
 
 so that log_2 ent(w) is the entropy of word w (Up to a factor of
 N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
@@ -437,6 +437,7 @@ excess is transferred back to `s` so that the total `w = s + t` is
 preserved (so that detailed balance holds).
 
 Note the following properties of this algo:
+
 a) The combined vector `g_new` has exactly the same support as `g_old`.
    That is, any disjuncts in `w` that are not in `g_old` are already
    orthogonal. This may be undesirable, as it prevents the broadening
@@ -480,17 +481,17 @@ given here. One wishes to compute the intersection of basis elements
 (the intersection of "disjuncts" via "sections") of the two words, and
 then sum the counts only on this intersected set. Let
 
-  {e_a} = set of basis elements in v_a with non-zero coefficients
-  {e_b} = set of basis elements in v_b with non-zero coefficients
-  {e_overlap} = {e_a} set-intersection {e_b}
-  pi_overlap = unit on diagonal for each e in {e_overlap}
-             == projection matrix onto the subspace {e_overlap}
-  v_a^pi = pi_overlap . v_a == projection of v_a onto {e_overlap}
-  v_b^pi = pi_overlap . v_b == projection of v_b onto {e_overlap}
+    {e_a} = set of basis elements in v_a with non-zero coefficients
+    {e_b} = set of basis elements in v_b with non-zero coefficients
+    {e_overlap} = {e_a} set-intersection {e_b}
+    pi_overlap = unit on diagonal for each e in {e_overlap}
+               == projection matrix onto the subspace {e_overlap}
+    v_a^pi = pi_overlap . v_a == projection of v_a onto {e_overlap}
+    v_b^pi = pi_overlap . v_b == projection of v_b onto {e_overlap}
 
-  v_cluster = v_a^pi + v_b^pi
-  v_a^new = v_a - v_a^pi
-  v_b^new = v_b - v_b^pi
+    v_cluster = v_a^pi + v_b^pi
+    v_a^new = v_a - v_a^pi
+    v_b^new = v_b - v_b^pi
 
 The idea here is that the vector subspace `{e_overlap}` consists of
 those grammatical usages that are common for both words `a` and `b`,
@@ -502,7 +503,7 @@ and `v_b^new` are both exactly zero on `{e_overlap}` -- the subtraction
 wipes out those coefficients. Note that the total number of counts
 is preserved.  That is,
 
-  ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
+    ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
 
 where `||v|| == ||v||_1` the `l_1` Banach norm aka count aka
 Manhattan-distance.
@@ -516,7 +517,7 @@ needed.
 Union merging can be described using almost the same formulas, except
 that one takes
 
-  {e_union} = {e_a} set-union {e_b}
+    {e_union} = {e_a} set-union {e_b}
 
 
 accumulate-count, assign-to-cluster
@@ -535,7 +536,7 @@ in other places.
 
 That is, the merger is given by the vector
 
-  v_merged = v_overlap + FRAC * (v_union - v_overlap)
+    v_merged = v_overlap + FRAC * (v_union - v_overlap)
 
 If `v_a` and `v_b` are both words, then the counts on `v_a` and `v_b` are
 adjusted to remove the counts that were added into `v_merged`. If one
