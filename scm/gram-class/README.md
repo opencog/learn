@@ -253,34 +253,66 @@ The different merge algos differ in how they decompose the vector `w`
 into the part `s` to be transfered, and the part `t` to be kept. However,
 they all obey the detailed-balance requirement.
 
+Detailed Balance, Part Two
+--------------------------
+The above describes detailed balance for merging words, while holding
+the set of disjunct constant. In fact, the merge algos also create new
+disjuncts, and destroy old ones. Detailed balance must be preserved here,
+as well.
 
-Properties of merging
----------------------
-All of these different merge algos suffer from a certain set of
-problems. These are:
+A given disjunct has the general form:
 
-A) The number of vectors being tracked in the system is increasing:
-   merge decisions include the decision to combine two words to form
-   a new grammatical class. The `t` remnants of each word remain in
-   the system, available for further classification into other
-   word-senses.  At some point, the remainders `t` are likely to get
-   small, and consist entirely of noise, and so require pruning.
+        ConnectorSeq
+            Connector
+               WordNode "a"
+               ConnectorDir "+"
+            Connector
+               ....
 
-B) There is a hysteresis effect: when `g_new` is obtained, it is in
-   general no longer parallel to `g_old`, and future merge decisions
-   will be based on `g_new` rather than on `g_old`. Furthermore, the
-   earlier merge decisions are not recomputed, and so there is a
-   gradual drift of each grammatical class `g` as words are assigned
-   to it. The drift is history-dependent: it depends on the sequence
-   by which words are added in.
+which can be written in short-hand as `(a+ & ...)`.  Suppose one wishes
+to merge the words `a` and `b` into a wordclass `c`.  If these appear
+in a disjunct (ConnectorSeq), they must be merged as well. For example,
+`(a+ & g+ & h-)` together with `(b+ & g+ & h-)` are merged to create
+`(c+ & g+ & h-)`.
 
-C) The replacement of `w` by `w_new` means that the original word
-   vectors are "lost", and not available for some other alternative
-   processing. This could be avoided by caching the original
-   word-vectors somewhere. However, doing this would increase the
-   size of the dataset (which is already unmanageably large), and
-   at this time, there does not seem to be any reason to access the
-   original counts.
+Counts on these three must remain balanced, as well. Thus, if disjuct
+`d_a` and `d_b` are merged to form `d_c`, then, for any fixed word `w`,
+one must have
+```
+       N(w, d_c) = N(w, d_a) + N(w, d_b)
+```
+
+
+Merge Issues
+------------
+The generic process of merging raises some issues that must be dealt
+with (or ignored, or explained away) These are:
+
+#### Dust
+As portions of word vectors are merged into classes, other portions
+remain unassigned, ready for later merge decisions. These remaining
+portions may get small, and risk becoming 'dust' that need to be swept
+up. Some of the merge algos deal with this by automatically merging
+all disjuncts with counts below a given threshold, thus avoiding the
+creation of dust.
+
+#### Hysteresis
+There is a hysteresis effect: when `g_new` is obtained, it is in
+general no longer parallel to `g_old`, and future merge decisions
+will be based on `g_new` rather than on `g_old`. Furthermore, the
+earlier merge decisions are not recomputed, and so there is a
+gradual drift of each grammatical class `g` as words are assigned
+to it. The drift is history-dependent: it depends on the sequence
+by which words are added in.
+
+#### Loss of History
+The replacement of `w` by `w_new` means that the original word
+vectors are "lost", and not available for some other alternative
+processing. This could be avoided by caching the original
+word-vectors somewhere. However, doing this would increase the
+size of the dataset (which is already unmanageably large), and
+at this time, there does not seem to be any reason to access the
+original counts.
 
 
 Zipf Tails
@@ -314,28 +346,18 @@ noise remains profoundly confusing.
 
 Broadening
 ----------
-The issue described in A) above is an issue of broadening the known
-usages of a word, beyond what has been strictly observed in the text.
-There are two distinct opportunities to broaden: first, in the union vs.
-overlap merging (described below, but now obsolete and moved to the attic)
-and second, in the merging of disjuncts. That
-is, the above merging did not alter the number of disjuncts in use:
-the disjuncts on the merged class are still disjuncts with single-word
-connectors. At some point, disjuncts should also be merged, i.e. by
-merging the connectors on them.
+Prior to the start of the merge, the collection of word-disjunct pairs
+corresponds precisely to what was observed in the training corpus. When
+word-classes are formed, they inevitably broaden the allowed use of words
+beyond what was observed in the text.
 
-If disjunct merging is performed after a series of word mergers have
-been done, then when a connector-word is replaced by a connector
-word-class, that class may be larger than the number of connectors
-originally witnessed. Again, the known usage of the word is broadened.
+That is, when word `a` and word `b` are merged to form class `c`, there
+will be, in general, disjuncts `d` and `e` such that the pair `(a,d)` was
+observed, and `(b,e)` was observed, but not `(a,e)` and not `(b,d)`. If
+the merge result contains both `(c,d)` and `(c,e)`, then effectively the
+grammatical usage of `a` and `b` has been broadened into a bigger context.
 
 
-Disjunct merging
-----------------
-Disjunct merging is the second step in creating grammatical classes.
-The idea here is to replace individual connectors that specify words
-with connectors that specify word-classes. This step is examined in
-greater detail in `gram-majority.scm`.
 
 
 Orthogonal merging
@@ -466,6 +488,14 @@ the loop over the words to be merged, for a fixed basis element.
 Earlier code reversed the inner and outer loops (see the code in the
 `attic` directory) and doing it the other way creates a number of
 difficult issues for connector merging.
+
+Disjunct merging
+----------------
+Disjunct merging is the second step in creating grammatical classes.
+The idea here is to replace individual connectors that specify words
+with connectors that specify word-classes. This step is examined in
+greater detail in `gram-majority.scm`.
+
 
 ---------------------------------------------------------------------
 This file currently contains no code!  It just documents the code!
