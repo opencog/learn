@@ -63,6 +63,26 @@ script.  The configuration file for this is
 [`run-config/1-corpus-conf.sh`](../run-config/1-corpus-conf.sh).
 
 
+Meta-Status
+-----------
+Although the code 'works', its practical use is fraught with theoretical
+and practical difficulties. Although a grammar generates a unique
+language, and given language can be described by more than one grammar.
+Thus, the process is not strictly invertible. To asses the accuracy
+of the learned grammars, one must once-again generate a corpus, and
+compare that. Easier said than done.
+
+There is also the practical difficulty of debugging algorithms, when
+the dataset looks like random garbage.  The grammar of English can be
+eyeballed: things look right or wrong, the deduction of synonymous
+words can be trivially verified. Spotting grammatical errors or incorrect
+synonyms in random datasets is not possible by casual inspection. A whole
+new set of tools would need to be written to do this.
+
+Thus, the work here is temporarily paused.  It will need to be done,
+eventually, but does not seem like the most fruitful avenue right now.
+
+
 Theory
 ------
 The language-learning code attempts to untangle synonyms, multiple
