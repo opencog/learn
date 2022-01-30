@@ -32,7 +32,7 @@ In the `mst-parse` subdirectory:
 
 In the `gram-class` subdirectory:
 
-* [__gram-classification.scm__](gram-class/gram-classification.scm) Provides
+* [__README.md__](gram-class/README.md) Provides
                           a general overview of the idea of clustering,
                           classification. This includes a discussion of
                           "grammatical similarity" and other relevant topics.
