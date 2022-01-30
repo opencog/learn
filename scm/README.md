@@ -69,6 +69,15 @@ In the `concepts` subdirectory:
 
 * Code for the automatic discovery of concepts and thier attributes.
 
+The `attic` subdirectory contains code that is obsolete and is no longer
+used. It is kept as a reference, because the code therein is described
+and experimentally measured in the 'Diary', and it did seem at one time
+to be important, or was the best way to do something. That is, it did
+have some kind of appealing theory behind it, or at least the appearance
+of a coherent theory. The code there should mostly work, but may be
+bit-rotted.
+
+
 Data Structures
 ---------------
 All code uses a repetitive set of data structures called "vectors",
