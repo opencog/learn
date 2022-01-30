@@ -50,7 +50,7 @@ In the `gram-class` subdirectory:
 * [__shape-project.scm__](gram-class/shape-project.scm) Provides a
                           detailed explanation of how vectors that have
                           shapes in them are merged. That is, how sheaves
-                          are projected down to thier base space.
+                          are projected down to their base space.
 
 * __gram-class-api.scm__  Public API classes for merging words into
                           grammatical classes.
@@ -58,7 +58,7 @@ In the `gram-class` subdirectory:
                           creating clusters.
 * __in-group.scm__        Selection of a group of words to cluster. The
                           group is selected to have many traits in common.
-* __gram-majority.scm__   Implementation of the actuall merge of sections
+* __gram-majority.scm__   Implementation of the actual merge of sections
                           into a cluster.
 
 In the `lg-export` subdirectory:
@@ -67,7 +67,7 @@ In the `lg-export` subdirectory:
 
 In the `concepts` subdirectory:
 
-* Code for the automatic discovery of concepts and thier attributes.
+* Code for the automatic discovery of concepts and their attributes.
 
 The `attic` subdirectory contains code that is obsolete and is no longer
 used. It is kept as a reference, because the code therein is described
@@ -96,8 +96,8 @@ sparse, which is why they are stored as pairs - it is much more memory
 called "objects" or `LLOBJ` or "low-level objects": the matrix API is
 an object-oriented class providing methods to obtain marginal sums,
 conditional probabilities, mutual information and many other quantities
-that can be obtained from a matrix.  The full documentation for teh API
-can be found in a different github repo, the
+that can be obtained from a matrix.  The full documentation for the API
+can be found in a different GitHub repo, the
 [matrix](https://github.com/opencog/atomspace/tree/master/opencog/matrix)
 directory in the AtomSpace repo.
 
