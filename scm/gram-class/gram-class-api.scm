@@ -350,20 +350,28 @@
 ;-----------------------------
 (define (make-conseq-predicate STAR-OBJ WORD-LIST-FUNC)
 "
-  Create a predicate that returns true if a given ConnectorSeq
-  consists of WordNodes entirely in some WordClass.  That is,
-  this returns that predicate. This may take a few minutes to
-  run, if there are millions of ConnectorSeq's.
+  make-conseq-predicate STAR-OBJ WORD-LIST-FUNC - connector predicate
 
-  XXX FIXME: shouldn't this be relative to the left-basis of
-  STAR-OBJ, rather than *all words*?  Under the theory that maybe
-  there are words in the AtomSpace which are ... outside of the
-  domain we are supposed to be working on.
+  Create a predicate that returns true when a given ConnectorSeq
+  consists of WordNodes entirely in teh given word-list returned from
+  WORD-LIST-FUNC.
+
+  That is, WORD-LIST-FUNC, when called, should return a list of words.
+  This function will then return a predicate for identifying connector
+  sequences consisting entirely of words in that word-list.
+
+  This may take a few minutes to run, if there are millions of
+  ConnectorSeq's.
+
+  XXX Fixme: what about connector seqs containing WordClases?
 "
+	(define all-words
+		(filter (lambda (ITEM) (equal? (cog-type ITEM) 'WordNode))
+			(STAR-OBJ 'left-basis)))
+
 	; Unwanted words are not part of the matrix.
 	(define unwanted-words
-		(atoms-subtract
-			(cog-get-atoms 'WordNode) (WORD-LIST-FUNC)))
+		(atoms-subtract all-words (WORD-LIST-FUNC)))
 
 	(define unwanted-cnctrs
 		(get-connectors unwanted-words))
