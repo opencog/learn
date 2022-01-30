@@ -327,8 +327,9 @@
 	(define commonality (list-ref params 1))
 	(define noise (list-ref params 2))
 	(define FILENAME (format #f "~A-q~A-c~A-n~D.dat"
-		PREFIX-DIR quorum commonality noise))
-	(define port (open FILENAME (logior O_CREAT O_WRONLY)))
+		PREFIX-DIR quorum commonality (inexact->exact noise)))
+	; (define port (open FILENAME (logior O_CREAT O_WRONLY O_TRUNC)))
+	(define port (open-output-file FILENAME))
 	(PRINTER LLOBJ port)
 	(close port)
 )
