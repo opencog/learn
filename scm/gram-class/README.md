@@ -63,7 +63,7 @@ experimentally.
 
 There is a vague idea that some kind of binary optimization merge
 algorithm might be "even better", especially if it is well-founded on
-priciples of information theory. At this time, it remains a bit of a
+principles of information theory. At this time, it remains a bit of a
 daydream, and maybe a mirage.  See `gram-optim.scm` for more.
 
 
@@ -86,7 +86,7 @@ but not so much that one loses the ability to discriminate between
 important particulars. Exactly how this can be done best is the grand
 mystery, the grand question, quest of the code here.
 
-As noted above, something called 'union and overlap' merging were aleady
+As noted above, something called 'union and overlap' merging were already
 explored, and found wanting. An 'in-group, private club' algo is being
 currently explored.  The generic information-theoretic foundations of
 merging remain opaque and unknown (but I'm trying to figure them out.)
@@ -273,7 +273,7 @@ Merge Algos
 There are several ways in which two words might be merged into a
 word-class, or a word added to a word-class.  All of these involve
 the transfer of counts from individual word-vectors to the word-class
-vector.  One generic style of merging uses concepts from Eucliden
+vector.  One generic style of merging uses concepts from Euclidean
 geometry, and involves taking parallel and perpendicular components
 of vectors. This is implemented in `gram-projective.scm` (in the `attic`
 directory. It has been moved to the attic because it is not used any
@@ -284,10 +284,10 @@ remains vague, unformed, unimplemented: it is just a sketch.
 
 The merge code that is in current use can be found in `gram-majority.scm`.
 It forms "in-groups" (or "clubs" or "cliques": exclusive groups whose
-memebers share common traits.) The in-groups are formed by nominating a
+members share common traits.) The in-groups are formed by nominating a
 set of similar words (per the similarity metric) and then determining
 the membership of specific disjuncts by majority voting (so that the
-majoriy of the club members have that disjunct in common.) This algorithm
+majority of the club members have that disjunct in common.) This algorithm
 is not based on information theory principles, but is relatively easy to
 implement, and seems to work well.
 
@@ -322,7 +322,7 @@ matrix entries for which `N(x,d)` becomes zero after the count transfer
 are then deleted.
 
 The different merge algos differ in how they decompose the vector `w`
-into the part `s` to be transfered, and the part `t` to be kept. However,
+into the part `s` to be transferred, and the part `t` to be kept. However,
 they all obey the detailed-balance requirement.
 
 Detailed Balance, Part Two
@@ -347,7 +347,7 @@ in a disjunct (ConnectorSeq), they must be merged as well. For example,
 `(a+ & g+ & h-)` together with `(b+ & g+ & h-)` are merged to create
 `(c+ & g+ & h-)`.
 
-Counts on these three must remain balanced, as well. Thus, if disjuct
+Counts on these three must remain balanced, as well. Thus, if disjunct
 `d_a` and `d_b` are merged to form `d_c`, then, for any fixed word `w`,
 one must have
 ```
@@ -574,7 +574,7 @@ If a word `a` is merged into a class `c`, the above connector sequence
             Connector
                ....
 
-whereever it appears.  This makes the merging algorithm 'non-linear', in
+wherever it appears.  This makes the merging algorithm 'non-linear', in
 that the number of disjuncts is not constant: the number of basis elements
 are changing, the dimension of the space is changing. The basis elements
 themselves mutate. The overall process does remain linear in that detailed
@@ -592,7 +592,7 @@ formed.  Thus, a pair `(w,d)` is a listing of an atom `w` and the
 bonds `d` it can form. Because any given atom can form bonds in
 several different ways, there are several different `d` that can
 be associated with `w`. The act of classification is like saying
-that chlorine, flourine and bromine are all very similar in the
+that chlorine, fluorine and bromine are all very similar in the
 bonds that they form. The act of connector merging is like saying
 that the halides all bond similarly to the alkalis.
 
@@ -628,7 +628,7 @@ one can define two `CrossSection`s and two `Shape`s, one for each of the
 
 The other one is analogous, replacing 'nim' by the variable. The original
 `Section` can be uniquely and unambiguously reconstructed by plugging the
-word 'bar' in for the variable, and movig the head of the shape to the
+word 'bar' in for the variable, and moving the head of the shape to the
 head of the `Section`.  Thus, the `CrossSection`s are just `Section`s
 rotated around, to place each of the words in the `Connector`s into the
 head position. This rotation of the `Connector`s into head position
@@ -637,10 +637,10 @@ above, to maintain detailed balance, to compute word-similarity and
 in general, to track what needs to be merged with what.
 
 Note that a word vector with `CrossSection`s in it really is a different
-vector than one without it; thus, including `CrossSections really does
-alter the similarty between word-vectors. The similarities between
+vector than one without it; thus, including `CrossSection`s really does
+alter the similarity between word-vectors. The similarities between
 word-vectors with `CrossSection`s on them does appear to be more
-accurate than those without, but this has noot been firmly established
+accurate than those without, but this has not been firmly established
 experimentally, nor is there any theoretical foundation for supporting
 this.
 
