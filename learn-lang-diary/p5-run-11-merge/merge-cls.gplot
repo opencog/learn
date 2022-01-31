@@ -16,6 +16,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:3 with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:3 with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:3 with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:3 with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:3 with lines lw 2 title "n=1 imprecise"
 
@@ -33,6 +34,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:4 with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:4 with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:4 with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:4 with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:4 with lines lw 2 title "n=1 imprecise"
 
@@ -50,6 +52,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:5 with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:5 with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:5 with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:5 with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:5 with lines lw 2 title "n=1 imprecise"
 
@@ -69,6 +72,7 @@ log2(x) = log(x) / log(2)
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:(log2($6)) with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:(log2($6)) with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:(log2($6)) with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:(log2($6)) with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:(log2($6)) with lines lw 2 title "n=1 imprecise"
 
@@ -86,6 +90,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:8 with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:8 with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:8 with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:8 with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:8 with lines lw 2 title "n=1 imprecise"
 
@@ -103,6 +108,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:9 with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:9 with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:9 with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:9 with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:9 with lines lw 2 title "n=1 imprecise"
 
@@ -120,6 +126,7 @@ unset yrange
 
 plot "r11-p-cls-q0.7-c0.2-n4.0.dat" using 1:(abs($10)) with lines lw 2 title "n=4 precise", \
      "r11-cls-q0.7-c0.2-n4.0.dat" using 1:(abs($10)) with lines lw 2 title "n=4 imprecise", \
+     "r11-cls-q0.7-c0.2-n3.0.dat" using 1:(abs($10)) with lines lw 2 title "n=3 imprecise", \
      "r11-cls-q0.7-c0.2-n2.0.dat" using 1:(abs($10)) with lines lw 2 title "n=2 imprecise", \
      "r11-cls-q0.7-c0.2-n1.0.dat" using 1:(abs($10)) with lines lw 2 title "n=1 imprecise"
 
