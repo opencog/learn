@@ -279,6 +279,16 @@
 
 	(define len (length classes))
 
+	; Frick-n-frack adjust for stumbles with quotes
+	(define (esc-q STR)
+		(string-concatenate
+			(map (lambda (CHAR)
+				(cond
+					((equal? CHAR #\") "U+0022")
+					((equal? CHAR #\\) "U+005C")
+					(else (list->string (list CHAR)))))
+				(string->list STR))))
+
 	(format PORT "#\n# Log of class-related merge statistics\n#\n")
 	(print-params LLOBJ PORT)
 	(format PORT "# N,words,class-size,self-mi,self-rmi,support,count,logli,entropy,cluster\n")
@@ -287,11 +297,11 @@
 		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\t~9F\n"
 			(+ N 1)
 
-			; In extremely rare circumstances, the class may have
+			; In somewhat common circumstances, the class may have
 			; been deleted, if it was fully merged into another class.
-			; Well, not so rare ...
+			; Thus, we cannot rely on it being threre.
 			; (if (cog-atom? cls) (cog-name cls) "#f")
-			(list-ref class-name N)
+			(esc-q (list-ref class-name N))
 			(list-ref class-size N)
 			(list-ref self-mi N)
 			(list-ref self-rmi N)

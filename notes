@@ -10284,6 +10284,15 @@ add-section
 
 export-csets - everything in the object
 
+(define (esc-q STR)
+	(string-concatenate
+		(map (lambda (CHAR)
+			(cond
+				((equal? CHAR #\") "U+0022")
+				((equal? CHAR #\\) "U+005C")
+				(else (list->string (list CHAR)))))
+			(string->list STR))))
+
 --------------------------------------------------------
 0.5-0.2 -- 19008
 0.6-0.3 -- 19009
