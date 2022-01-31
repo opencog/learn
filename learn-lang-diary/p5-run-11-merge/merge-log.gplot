@@ -8,7 +8,7 @@ set out 'r11-sparsity.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-sparsity.eps'
 set key left top
-set title "Sparsity vs. Time (run-11)"
+set title "Sparsity vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Sparsity, in bits"
 unset yrange
@@ -27,7 +27,7 @@ set out 'r11-entropy.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-entropy.eps'
 set key right top
-set title "MM^T Entropy vs. Time (run-11)"
+set title "MM^T Entropy vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MM^T Entropy, in bits"
 unset yrange
@@ -46,7 +46,7 @@ set out 'r11-ranked-mi.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-ranked-mi.eps'
 set key right top
-set title "Ranked-MI of top-ranked pair (run-11)"
+set title "Ranked-MI of top-ranked pair (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Ranked-MI, in bits"
 unset yrange
@@ -65,7 +65,7 @@ set out 'r11-mmtq.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-mmtq.eps'
 set key right top
-set title "MM^T-Q vs. Time (run-11)"
+set title "MM^T-Q vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MM^T-Q, in bits"
 unset yrange
@@ -84,7 +84,7 @@ set out 'r11-plain-mi.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-plain-mi.eps'
 set key right top
-set title "MI of top-ranked pair (run-11)"
+set title "MI of top-ranked pair (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
 unset yrange
@@ -102,7 +102,7 @@ set out 'r11-left-dj-entropy.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-left-dj-entropy.eps'
 set key right top
-set title "Marginal Disjunct Entropy (run-11)"
+set title "Marginal Disjunct Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
@@ -120,7 +120,7 @@ set out 'r11-right-dj-entropy.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-right-dj-entropy.eps'
 set key right top
-set title "Marginal Word Entropy (run-11)"
+set title "Marginal Word Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
@@ -138,7 +138,7 @@ set out 'r11-word-dj-entropy.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-word-dj-entropy.eps'
 set key right top
-set title "Total Word+Disjunct Entropy (run-11)"
+set title "Total Word+Disjunct Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
@@ -156,7 +156,7 @@ set out 'r11-word-dj-mi.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-word-dj-mi.eps'
 set key right top
-set title "Total Word+Disjunct MI (run-11)"
+set title "Total Word+Disjunct MI (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
 unset yrange
