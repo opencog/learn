@@ -2169,6 +2169,29 @@ S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
 
 \end_inset
 
+One might argue that the names 
+\begin_inset Quotes eld
+\end_inset
+
+left
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+right
+\begin_inset Quotes erd
+\end_inset
+
+ are incorrectly interchanged in the above, but this is the naming convention
+ used in the implementation, and changing it risks introducing bugs and
+ confusion.
+ 
+\end_layout
+
+\begin_layout Standard
 These two are related to the total mutual information (as defined below)
  as
 \begin_inset Formula 
@@ -3008,7 +3031,7 @@ is a probability.
 \end_inset
 
  and ask about conditional probabilites, mutual information and entropies.
- For example, what is
+ For example, what is the value of
 \end_layout
 
 \begin_layout Standard
@@ -6606,11 +6629,63 @@ Progress graphs
 
 \begin_layout Standard
 Far more graphs from this run.
+ All of these graphs are for datasets for which quorum=0.7 and commonality=0.2.
+ They differ in the noise setting, varying from 4 to 1.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+older
+\begin_inset Quotes erd
+\end_inset
+
+ dataset is from the previous run, way up above, which had quorum=0.7, commonalit
+y=0.4 and noise=4.
+ Note that assorted buglets were fixed since that older run.
  
 \end_layout
 
 \begin_layout Standard
-Sparsity:
+The 
+\begin_inset Quotes eld
+\end_inset
+
+precise
+\begin_inset Quotes erd
+\end_inset
+
+ dataset recomputes all word-pair MI for every possible word that was affected
+ by the merge.
+ This can be hundreds of words, thousands of word-pairs (and is thus slow
+ to compute).
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+imprecise
+\begin_inset Quotes erd
+\end_inset
+
+ datasets recompute the MI only for the words directly involved in the merge
+ (so, for only a handful of words, and so much faster to compute.) Thus,
+ one of the questions is whether the 
+\begin_inset Quotes eld
+\end_inset
+
+precise
+\begin_inset Quotes erd
+\end_inset
+
+ datasets provide materially better classifications, or not.
+\end_layout
+
+\begin_layout Subsubsection*
+Sparsity
+\end_layout
+
+\begin_layout Standard
+Sparsity is defined as always: it is log2 of the fraction of non-zero matrix
+ entries to total possible matrix entries.
 \end_layout
 
 \begin_layout Standard
@@ -6624,8 +6699,36 @@ Sparsity:
 
 \end_layout
 
+\begin_layout Subsubsection*
+MMT Entropy
+\end_layout
+
 \begin_layout Standard
-MMT entropy:
+The 
+\begin_inset Formula $MM^{T}$
+\end_inset
+
+-entropy is as defined before; it is 
+\begin_inset Formula 
+\[
+H=\log_{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula 
+\[
+f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6639,8 +6742,33 @@ MMT entropy:
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Subsubsection*
 MMT-q
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $MM^{T}q$
+\end_inset
+
+ is the 
+\begin_inset Formula $Q$
+\end_inset
+
+ value as defined before, above, and in 'Diary Part Four':
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+Q=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
+\]
+
+\end_inset
+
+It varies over time, as both new disjuncts are created, old disjuncts have
+ counts drop to zero, and similarly, come words have counts drop to zero
+ as they are transfered to the word-classes.
 \end_layout
 
 \begin_layout Standard
@@ -6654,8 +6782,23 @@ MMT-q
 
 \end_layout
 
+\begin_layout Subsubsection*
+Ranked-MI
+\end_layout
+
 \begin_layout Standard
-ranked-MI of top pair:
+The next graph shows the ranked-MI of the top-ranked word-pair that triggers
+ the merge.
+ Were it not for the recomputations of word-pair MI's, this should trend
+ downwards, monotonically.
+ The recomputation of MI exposes new fragements/remainders of merged classes
+ that elevate this MI, breifly, until undisturbed word-pairs are encountered
+ again.
+\end_layout
+
+\begin_layout Standard
+Ranked-MI is defined as in 'Diary Part Four', and restated earlier, above.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -6669,6 +6812,18 @@ ranked-MI of top pair:
 
 \end_layout
 
+\begin_layout Subsubsection*
+MI
+\end_layout
+
+\begin_layout Standard
+The ranked-MI is build as a linear combination of the word-pair MI, plus
+ the log of teh frequencies, plus Q.
+ It seems reasonable to ask what the MI was of the pair that initiated the
+ merge.
+ This is shown below.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
@@ -6680,11 +6835,51 @@ ranked-MI of top pair:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Marginal Word Entropy
+\end_layout
+
+\begin_layout Standard
+The right-marginal or word entropy is as defined above:
+\begin_inset Formula 
+\[
+S_{\mbox{right}}=\sum_{w}P\left(w,*\right)\log_{2}P\left(w,*\right)
+\]
+
+\end_inset
+
+Yes, this probably should have been called 
+\begin_inset Quotes eld
+\end_inset
+
+left
+\begin_inset Quotes erd
+\end_inset
+
+, but that introduces new confusions.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-right-dj-entropy.png
 	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Marginal disjunct entropy
+\end_layout
+
+\begin_layout Standard
+As defined above: 
+\begin_inset Formula 
+\[
+S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
+\]
 
 \end_inset
 
@@ -6702,11 +6897,44 @@ ranked-MI of top pair:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Total Entropy
+\end_layout
+
+\begin_layout Standard
+The total entropy is as defined above
+\begin_inset Formula 
+\[
+H_{\mbox{tot}}=-\sum_{w,d}P\left(w,d\right)\log_{2}P\left(w,d\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-word-dj-entropy.png
 	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
+Total MI
+\end_layout
+
+\begin_layout Standard
+The total MI is as defined above:
+\begin_inset Formula 
+\begin{align*}
+MI_{\mbox{tot}}= & \sum_{w,d}P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P\left(*,d\right)P\left(w,*\right)}\\
+= & S_{\mbox{right}}+S_{\mbox{left}}-H_{\mbox{tot}}
+\end{align*}
 
 \end_inset
 
@@ -6724,8 +6952,16 @@ ranked-MI of top pair:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Number of Words per Class
+\end_layout
+
 \begin_layout Standard
-Class stuff:
+As mergers proceed, it is not uncommon to lump additional words into an
+ existing class (possibly splitting that class into two).
+ Thus, over time, one expects the size of classes to grow.
+ This is charted below.
+ It shows the size of the word-class created at that time-step.
 \end_layout
 
 \begin_layout Standard
@@ -6739,6 +6975,39 @@ Class stuff:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Self-MI of a Class
+\end_layout
+
+\begin_layout Standard
+The MI of two words is as defined above:
+\begin_inset Formula 
+\[
+MI\left(u,w\right)=\log_{2}\frac{f\left(w,u\right)f\left(*,*\right)}{f\left(w\right)f\left(u\right)}
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
+\]
+
+\end_inset
+
+The self-MI of a word 
+\begin_inset Formula $w$
+\end_inset
+
+ is them 
+\begin_inset Formula $MI\left(w,w\right)$
+\end_inset
+
+.
+ The graph below shows the self-MI of the class created at that time-step.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
@@ -6748,6 +7017,14 @@ Class stuff:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection*
+Self-ranked-MI
+\end_layout
+
+\begin_layout Standard
+As above, but this is the ranked-MI of the class against itself.
 \end_layout
 
 \begin_layout Standard
@@ -6761,6 +7038,63 @@ Class stuff:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Support of the Class
+\end_layout
+
+\begin_layout Standard
+The support of a word is the grand-total number of disjuncts assigned to
+ that word; likewise for a word-class.
+ In formulas, the support is 
+\begin_inset Formula 
+\[
+\Delta\left(w\right)=\sum_{d}\delta\left(w,d\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\delta\left(w,d\right)=\begin{cases}
+1 & \mbox{if }N\left(w,d\right)>0\\
+0 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+Shown below is 
+\begin_inset Formula $\log_{2}\Delta\left(w\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $w$
+\end_inset
+
+the recently created class.
+ Thus, the larger this is, the greter the support.
+\end_layout
+
+\begin_layout Standard
+It might be more edifying to subtract this from the total number of disjuncts:
+ this is mildly variable, approximately equal to 
+\begin_inset Formula $1.05\times10^{6}$
+\end_inset
+
+ – that is, a little over a million disjuncts, or about 
+\begin_inset Formula $\log_{2}1.05\times10^{6}\approx20$
+\end_inset
+
+.
+ This would then give the fraction of all possible disjuncts appearing in
+ the given word-class.
+\end_layout
+
+\begin_layout Standard
+It might be interesting to relate this to the size of the word-class.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
@@ -6770,6 +7104,27 @@ Class stuff:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection*
+Marginal Probability of the Class
+\end_layout
+
+\begin_layout Standard
+The marginal probability of the class is as defined above:
+\begin_inset Formula 
+\[
+P\left(w\right)=P\left(w,*\right)=\sum_{d}P\left(w,d\right)
+\]
+
+\end_inset
+
+The graph below shows 
+\begin_inset Formula $\log_{2}P\left(w\right)$
+\end_inset
+
+.
+ It might be interesting to look at how this correlates with the support.
 \end_layout
 
 \begin_layout Standard
@@ -6783,6 +7138,30 @@ Class stuff:
 
 \end_layout
 
+\begin_layout Subsubsection*
+Class Fractional Entropy
+\end_layout
+
+\begin_layout Standard
+The entropy of a word is as defined earlier: 
+\begin_inset Formula 
+\[
+h\left(w\right)=-\sum_{d}P\left(w,d\right)\log_{2}P\left(w,d\right)
+\]
+
+\end_inset
+
+The fractional entropy is 
+\begin_inset Formula 
+\[
+H\left(w\right)=\frac{h\left(w\right)}{P\left(w,*\right)}
+\]
+
+\end_inset
+
+This is graphed below.
+\end_layout
+
 \begin_layout Standard
 \align center
 \begin_inset Graphics
@@ -6792,6 +7171,60 @@ Class stuff:
 \end_inset
 
 
+\end_layout
+
+\begin_layout Subsubsection*
+Compositional Entropy
+\end_layout
+
+\begin_layout Standard
+The compositional entropy is a brand-new concept not discussed earlier in
+ this diary.
+ It is the entropy of the of the words that went in to form the class.
+\end_layout
+
+\begin_layout Standard
+When a class is formed out of the words 
+\begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
+\end_inset
+
+, the total counts of each of these contriibutions 
+\begin_inset Formula $N\left(w_{1},*\right),N\left(w_{2},*\right),\cdots,N\left(w_{n},*\right)$
+\end_inset
+
+ is tracked on the 
+\family sans
+MemberLink
+\family default
+ for that class.
+ Define the total observation count on this class as 
+\begin_inset Formula 
+\[
+N_{C}=\sum_{k}N\left(w_{k},*\right)
+\]
+
+\end_inset
+
+This can be used to define a class-relative fraction of how much each word
+ contributed to the class:
+\begin_inset Formula 
+\[
+P_{C}\left(w_{k},*\right)=\frac{N\left(w_{k},*\right)}{N_{C}}
+\]
+
+\end_inset
+
+The compositional entropy is then the ordinary entropy with regards to this
+ compositional probability.
+ It is defined as
+\begin_inset Formula 
+\[
+CH=-\sum_{k}P_{C}\left(w_{k},*\right)\log_{2}P_{C}\left(w_{k},*\right)
+\]
+
+\end_inset
+
+It is shown in the graph below.
 \end_layout
 
 \begin_layout Standard
