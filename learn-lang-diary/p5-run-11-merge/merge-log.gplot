@@ -14,11 +14,11 @@ set ylabel "Sparsity, in bits"
 unset yrange
 
 plot "../p5-en-merge/log-0.7-0.4.dat" using 1:7 with lines lw 2 title "n=4 (older)", \
-     "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:10 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:10 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:10 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:10 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:10 with lines lw 2 title "n=1 imprecise"
+     "r11-p-log-q0.7-c0.2-n4.dat" using 1:10 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:10 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:10 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:10 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:10 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -33,11 +33,11 @@ set ylabel "MM^T Entropy, in bits"
 unset yrange
 
 plot "../p5-en-merge/log-0.7-0.4.dat" using 1:8 with lines lw 2 title "n=4 (older)", \
-     "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:11 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:11 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:11 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:11 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:11 with lines lw 2 title "n=1 imprecise"
+     "r11-p-log-q0.7-c0.2-n4.dat" using 1:11 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:11 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:11 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:11 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:11 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -52,11 +52,11 @@ set ylabel "Ranked-MI, in bits"
 unset yrange
 
 plot "../p5-en-merge/log-0.7-0.4.dat" using 1:9 with lines lw 2 title "n=4 (older)", \
-     "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:12 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:12 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:12 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:12 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:12 with lines lw 2 title "n=1 imprecise"
+     "r11-p-log-q0.7-c0.2-n4.dat" using 1:12 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:12 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:12 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:12 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:12 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -71,11 +71,11 @@ set ylabel "MM^T-Q, in bits"
 unset yrange
 
 plot "../p5-en-merge/log-0.7-0.4.dat" using 1:10 with lines lw 2 title "n=4 (older)", \
-     "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:14 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:14 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:14 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:14 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:14 with lines lw 2 title "n=1 imprecise"
+     "r11-p-log-q0.7-c0.2-n4.dat" using 1:14 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:14 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:14 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:14 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:14 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -89,11 +89,11 @@ set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
 unset yrange
 
-plot "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:13 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:13 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:13 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:13 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:13 with lines lw 2 title "n=1 imprecise"
+plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:13 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:13 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:13 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:13 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:13 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -107,11 +107,11 @@ set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
 
-plot "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:7 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:7 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:7 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:7 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:7 with lines lw 2 title "n=1 imprecise"
+plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:7 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:7 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:7 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:7 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:7 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -125,11 +125,11 @@ set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
 
-plot "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:8 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:8 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:8 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:8 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:8 with lines lw 2 title "n=1 imprecise"
+plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:8 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:8 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:8 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -143,11 +143,11 @@ set xlabel "Merge ordinal"
 set ylabel "Entropy, in bits"
 unset yrange
 
-plot "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:9 with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:9 with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:9 with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:9 with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:9 with lines lw 2 title "n=1 imprecise"
+plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:9 with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:9 with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:9 with lines lw 2 title "n=1 imprecise"
 
 #################################################
 #
@@ -161,10 +161,10 @@ set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
 unset yrange
 
-plot "r11-p-log-q0.7-c0.2-n4.0.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 precise", \
-     "r11-log-q0.7-c0.2-n4.0.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 imprecise", \
-     "r11-log-q0.7-c0.2-n3.0.dat" using 1:($7+$8-$9) with lines lw 2 title "n=3 imprecise", \
-     "r11-log-q0.7-c0.2-n2.0.dat" using 1:($7+$8-$9) with lines lw 2 title "n=2 imprecise", \
-     "r11-log-q0.7-c0.2-n1.0.dat" using 1:($7+$8-$9) with lines lw 2 title "n=1 imprecise"
+plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 precise", \
+     "r11-log-q0.7-c0.2-n4.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 imprecise", \
+     "r11-log-q0.7-c0.2-n3.dat" using 1:($7+$8-$9) with lines lw 2 title "n=3 imprecise", \
+     "r11-log-q0.7-c0.2-n2.dat" using 1:($7+$8-$9) with lines lw 2 title "n=2 imprecise", \
+     "r11-log-q0.7-c0.2-n1.dat" using 1:($7+$8-$9) with lines lw 2 title "n=1 imprecise"
 
 #################################################
