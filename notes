@@ -10293,6 +10293,22 @@ export-csets - everything in the object
 				(else (list->string (list CHAR)))))
 			(string->list STR))))
 
+(add-shape-vec-api
+'flatten-section CLS SECT
+Ugh.
+
+(define cset-obj (make-pseudo-cset-api))
+(define covr-obj (add-covering-sections cset-obj))
+(define gram-obj (add-gram-class-api covr-obj))
+(gram-obj 'fetch-pairs)
+(gram-obj 'explode-sections)
+(define sgl-obj (add-singleton-classes gram-obj))
+
+
+explode
+for each sigleton in right-stars(singleton) flatten
+
+
 --------------------------------------------------------
 0.5-0.2 -- 19008
 0.6-0.3 -- 19009

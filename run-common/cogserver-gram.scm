@@ -17,9 +17,10 @@
 ; The object which will be providing disjunct-counts for us.
 (define cset-obj (make-pseudo-cset-api))
 (define covr-obj (add-covering-sections cset-obj))
-(covr-obj 'fetch-pairs)
-(covr-obj 'explode-sections)
-(define star-obj covr-obj)
+(define gram-obj (add-gram-class-api covr-obj))
+(gram-obj 'fetch-pairs)
+(gram-obj 'explode-sections)
+(define star-obj gram-obj)
 
 ; Get the logger data, too
 (fetch-atom (AnchorNode "data logger"))
