@@ -124,7 +124,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (is-member? WRD CLS)
+(define (not-is-member? WRD CLS)
 	(nil? (cog-link 'MemberLink WRD CLS))
 )
 
@@ -313,7 +313,7 @@
 			(define newseq
 				(map (lambda (con)
 					(define clist (cog-outgoing-set con))
-					(if (is-member? (car clist) CLS)
+					(if (not-is-member? (car clist) CLS)
 						con
 						(begin (set! non-flat #t)
 							(Connector CLS (cdr clist)))))
@@ -321,7 +321,8 @@
 
 			(define germ (get-pair-left SECT))
 			(define newgerm
-				(if (is-member? germ CLS) germ CLS))
+				(if (not-is-member? germ CLS) germ
+					(begin (set! non-flat #t) CLS)))
 
 			; Are any of the connectors in the cluster? If so, then
 			; return the rewritten section; else return false.
@@ -341,7 +342,7 @@
 
 			(define non-flat #f)
 			(define newpoint
-				(if (is-member? point CLS) point
+				(if (not-is-member? point CLS) point
 					(begin (set! non-flat #t) CLS)))
 
 			; Walk through the connector sequence. If any of them
@@ -350,14 +351,15 @@
 			(define newseq
 				(map (lambda (con)
 					(define clist (cog-outgoing-set con))
-					(if (is-member? (car clist) CLS)
+					(if (not-is-member? (car clist) CLS)
 						con
 						(begin (set! non-flat #t)
 							(Connector CLS (cdr clist)))))
 					conseq))
 
 			(define newgerm
-				(if (is-member? germ CLS) germ CLS))
+				(if (not-is-member? germ CLS) germ
+					(begin (set! non-flat #t) CLS)))
 
 			; Was the point, or any of the connectors rewritten? If so, then
 			; return the rewritten cross section; else return false.
@@ -380,7 +382,7 @@
 			(if flat flat
 				(let* ((germ (get-pair-left PNT))
 						(newgerm
-							(if (is-member? germ CLS) germ CLS))
+							(if (not-is-member? germ CLS) germ CLS))
 						(DJ (get-pair-right PNT)))
 					(if (equal? (cog-type PNT) 'CrossSection)
 						(CrossSection newgerm DJ)
