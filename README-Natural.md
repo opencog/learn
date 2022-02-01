@@ -1384,6 +1384,7 @@ Grammar. This can be done as follows:
        (cvs 'explode-sections)
        (define asc (add-singleton-classes cvs))
        (asc 'create-hi-count-singles 500)
+       (cvs 'implode-sections)
 ```
 
 * Compute costs. The costs are needed to tell Link Grammar how likely

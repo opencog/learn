@@ -165,9 +165,12 @@
 
   'explode-sections -- create all possible CrossSections that correspond
        to existing Sections (on LLOBJ).  The count on each cross-section
-       will the set to the count on the section. (This is the correct
+       will be set to the count on the section. (This is the correct
        way to handle counts, if one wants clustering to commute with
        the creation of sections.)
+
+  'implode-sections -- remove CrossSections so that they no longer appear
+       in the basis.
 
   'make-flat CLS PNT -- Rewrite PNT, replacing occurances of any atoms
        belonging to CLS by CLS.
@@ -577,6 +580,28 @@
 		)
 
 		;-------------------------------------------
+		; Undo the work of the above.
+		(define (implode-sections)
+			(define (extract-cross PNT)
+				(when (equal? 'CrossSection (cog-type PNT))
+					; Get rid of the ShapeLink
+					(cog-extract (gdr PNT))
+					(cog-extract! PNT)))
+
+			; The extract-recursive clobbers everything.
+			; (for-each extract-cross (LLOBJ 'get-all-elts))
+
+			; Extracting the star-wild will clobber all CrossSections.
+			; XXX FIXME: we should give the star-wild a unique name,
+			; so we don't accidentally clobber CrossSections in other
+			; objects.
+			(cog-extract-recursive! star-wild)
+
+			; Invalidate any caches that might be holding things.
+			(clobber)
+		)
+
+		;-------------------------------------------
 		; Fetch (from the database) the cross-sections (only),
 		; as well as all the marginals for the cross-sections.
 		(define (fetch-sections)
@@ -609,7 +634,9 @@
 			(case meth
 				((right-basis)      get-right-basis)
 				((right-basis-size) get-right-size)
+				((provides)         provides)
 				((clobber)          clobber)
+				((flatten)          flatten)
 
 				((pair-count)       get-pair-count)
 				((get-pair)         get-pair)
@@ -646,6 +673,7 @@
 
 				; Custom calls.
 				((explode-sections) explode-sections)
+				((implode-sections) implode-sections)
 				((make-section)     make-section)
 				((get-section)      get-section)
 				((make-cross-sections) make-cross-sections)
