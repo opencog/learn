@@ -60,6 +60,8 @@ In the `gram-class` subdirectory:
                           group is selected to have many traits in common.
 * __gram-majority.scm__   Implementation of the actual merge of sections
                           into a cluster.
+* __gram-filters.scm__    Assorted filters for picking subsets of the full
+                          grammatical matrix.
 
 In the `lg-export` subdirectory:
 

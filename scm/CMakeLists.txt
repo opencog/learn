@@ -12,6 +12,7 @@ ADD_GUILE_MODULE (FILES
 
 	gram-class/agglo-rank.scm
 	gram-class/gram-class-api.scm
+	gram-class/gram-filters.scm
 	gram-class/gram-majority.scm
 	gram-class/gram-optim.scm
 	gram-class/in-group.scm

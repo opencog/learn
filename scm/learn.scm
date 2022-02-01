@@ -23,5 +23,6 @@
 (include-from-path "opencog/learn/log-merge.scm")
 (include-from-path "opencog/learn/agglo-rank.scm")
 (include-from-path "opencog/learn/gram-class-api.scm")
+(include-from-path "opencog/learn/gram-filters.scm")
 ; (include-from-path "opencog/learn/link-class.scm")
 (include-from-path "opencog/learn/lg-compare.scm")
