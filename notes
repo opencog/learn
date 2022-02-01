@@ -10304,6 +10304,8 @@ Ugh.
 (gram-obj 'explode-sections)
 (define sgl-obj (add-singleton-classes gram-obj))
 
+if (not (LLOBJ 'provides 'flatten))
+
 
 explode
 for each sigleton in right-stars(singleton) flatten

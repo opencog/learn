@@ -1379,10 +1379,11 @@ Grammar. This can be done as follows:
   more than 500 times:
 ```
        (define pca (make-pseudo-cset-api))
-       (define gca (add-gram-class-api pca))
-       (define gcs (add-pair-stars gca))
-       (gcs 'fetch-pairs)
-       (define asc (add-singleton-classes gcs))
+       (define cvs (add-covering-sections pca))
+       (define gca (add-gram-class-api cvs))
+       (gca 'fetch-pairs)
+       (gca 'explode-sections)
+       (define asc (add-singleton-classes gca))
        (asc 'create-hi-count-singles 500)
 ```
 
