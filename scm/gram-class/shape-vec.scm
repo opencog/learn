@@ -755,6 +755,7 @@
 			((make-cluster)        (apply gram-obj (cons message args)))
 			((store-aux)           (apply gram-obj (cons message args)))
 
+			((provides)            (apply provides args))
 			((describe)            describe)
 			((help)                describe)
 			((obj)                 "add-covering-sections")

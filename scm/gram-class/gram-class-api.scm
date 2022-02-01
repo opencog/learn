@@ -230,7 +230,7 @@
 "
 	(if (not (LLOBJ 'provides 'flatten))
 		(throw 'missing-method 'add-singleton-classes
-			"The 'flatten method is needed to create singltons"))
+			"The 'flatten method is needed to create singletons"))
 
 	; XXX this is broken
 	(define (delete-singles)
