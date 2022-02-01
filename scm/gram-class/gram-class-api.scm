@@ -228,8 +228,15 @@
     be fixed. (Obviously, when desolving single-member classes, the
     counts should be moved back).
 "
+	(if (not (LLOBJ 'provides 'flatten))
+		(throw 'missing-method 'add-singleton-classes
+			"The 'flatten method is needed to create singltons"))
+
+	; XXX this is broken
 	(define (delete-singles)
 		; delete each word-class node..
+		(throw 'not-implemented 'add-singleton-classes
+			"This method is borken and don't work right!")
 		(for-each cog-delete-recursive!
 			; make a list of word-classes containing only one word...
 			(filter
@@ -253,12 +260,14 @@
 				(MemberLink WRD wcl)
 				; Copy the sections
 				(for-each
-					(lambda (SEC) (copy-values (Section wcl (gdr SEC)) SEC))
+					(lambda (PNT)
+						(copy-values (LLOBJ 'flatten wcl PNT))
 
-					; Delete the original section, as otherwise they
-					; will disrupt the marginals.
-					(cog-delete! SEC)
-					(cog-incoming-by-type WRD 'Section)))
+						; Delete the original section, as otherwise they
+						; will disrupt the marginals.
+						(cog-delete! PNT)
+					)
+					(LLOBJ 'right-stars WRD)))
 			WORD-LIST)
 
 		(format #t "Created ~A singleton word classes\n"
