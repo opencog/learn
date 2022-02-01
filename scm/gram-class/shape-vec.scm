@@ -742,6 +742,10 @@
 		(shape-obj 'explode-sections)
 		(cover-stars 'clobber))
 
+	(define (implode-sections)
+		(shape-obj 'implode-sections)
+		(cover-stars 'clobber))
+
 	;-------------------------------------------
 	(define (describe)
 		(display (procedure-property add-gram-class-api 'documentation)))
@@ -771,6 +775,7 @@
 			; pass-through
 			((fetch-pairs)         (cover-obj 'fetch-pairs))
 			((explode-sections)    (explode-sections))
+			((implode-sections)    (implode-sections))
 
 			((make-section)        (apply shape-obj (cons message args)))
 			((get-section)         (apply shape-obj (cons message args)))
