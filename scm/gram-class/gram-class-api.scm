@@ -250,6 +250,8 @@
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
 
+		(define start-time (current-time))
+
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
@@ -270,8 +272,8 @@
 					(LLOBJ 'right-stars WRD)))
 			WORD-LIST)
 
-		(format #t "Created ~A singleton word classes\n"
-			(length WORD-LIST))
+		(format #t "Created ~A singleton word classes in ~A secs\n"
+			(length WORD-LIST) (- (current-time) start-time))
 
 		(LLOBJ 'clobber)
 	)
