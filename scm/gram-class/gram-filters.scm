@@ -245,35 +245,32 @@
 
 ;-----------------------------
 
-(define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR RENAME)
+(define (add-linking-filter LLOBJ ACCEPT-ITEM? ID-STR RENAME)
 "
   add-linking-filter LLOBJ - Filter the word-disjunct LLOBJ so that
-  the only connector sequences appearing on the right consist entirely
-  of connectors that have words appearing in the WORD-LIST. This is
-  not a public function; it is used to build several public functions.
+  the left-basis consistes entirely of items acceptable to ACCEPT-ITEM?
+  and the right-basis consists only of connector sequences having
+  connectors linking to items that are acceptable to ACCEPT-ITEM?
+
+  This is not (currently) a public function; it is used to build several
+  public functions. It's not public mostly cause of the ID-STR thing
+  for handling marginals.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; Always keep any WordNode or WordClassNode we are presented with.
-	(define (left-basis-pred WRDCLS) #t)
-
-	(define ok-conseq? #f)
-
-	; Only accept a ConnectorSeq if every word in every connector
-	; is in some word-class.
-	(define (right-basis-pred CONSEQ)
-		(if (not ok-conseq?)
-			(set! ok-conseq? (make-conseq-predicate star-obj WORD-LIST-FUNC)))
-		(ok-conseq? CONSEQ)
-	)
+	; Accept a ConnectorSeq only if every word in every connector
+	; is acceptable.
+	(define ok-conseq? (make-conseq-predicate star-obj ACCEPT-ITEM?))
 
 	; Input arg is a Section. The gdr (right hand side of it) is a
 	; conseq. Keep the section if the conseq passes.
-	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
+	(define (pair-pred SECT)
+		(and (ACCEPT-ITEM? (LLOBJ 'left-element SECT))
+			(ok-conseq? (LLOBJ 'right-element SECT))))
 
 	; ---------------
 	(add-generic-filter LLOBJ
-		left-basis-pred right-basis-pred pair-pred ID-STR RENAME)
+		ACCEPT-ITEM? ok-conseq? pair-pred ID-STR RENAME)
 )
 
 ;-----------------------------
