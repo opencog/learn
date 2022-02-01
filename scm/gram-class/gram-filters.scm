@@ -280,8 +280,10 @@
   linking-trim LLOBJ ACCEPT-ITEM? - Trim the word-disjunct LLOBJ by
   deleting (with `cog-delete!`) items and connector sequences and
   sections which contain items (words) other than those accepted by
-  the ACCEPT-ITEM? predicate. This is like `add-linking-filter`
-  above, except that it doesn't filter, it just deletes.
+  the ACCEPT-ITEM? predicate.
+
+  This is like `add-linking-filter` above, except that it doesn't
+  filter, it just deletes.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -315,15 +317,12 @@
   Set RENAME to #t if marginals should be stored under a filter-specific
   name. Otherwise, set to #f to use the default marginal locations.
 "
-	; Return a list of words in word-classes
-	(define (get-classes)
-		(filter
-			(lambda (ITEM) (eq? 'WordClassNode (cog-type ITEM)))
-			(LLOBJ 'left-basis)))
+	; Accept WordClasses only.
+	(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
 
 	(define id-str "word-remover")
 
-	(add-linking-filter LLOBJ get-classes id-str RENAME)
+	(add-linking-filter LLOBJ is-word-class? id-str RENAME)
 )
 
 ; ---------------------------------------------------------------------
@@ -346,21 +345,26 @@
   Set RENAME to #t if marginals should be stored under a filter-specific
   name. Otherwise, set to #f to use the default marginal locations.
 "
-	; Return a list of words in word-classes
-	(define (get-wordclass-words)
-		(define word-set (make-atom-set))
-		(for-each
-			(lambda (wcls)
-				(for-each word-set
-					(map gar (cog-incoming-by-type wcls 'MemberLink))))
 
-			; XXX FIXME: ask LLOBJ for the classes.
-			(cog-get-atoms 'WordClassNode))
-		(word-set #f))
+	; Word-classes only
+	(define classes
+		(filter (lambda (ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+			(LLOBJ 'left-basis)))
+
+	; Collect up all items that belong to classes.
+	(define acceptable-set (make-atom-set))
+	(for-each
+		(lambda (wcls)
+			(acceptable-set wcls)
+			(for-each acceptable-set
+				(map gar (cog-incoming-by-type wcls 'MemberLink))))
+		classes)
+
+	(define linkable? (make-aset-predicate (acceptable-set #f)))
 
 	(define id-str "wordclass-filter")
 
-	(add-linking-filter LLOBJ get-wordclass-words id-str RENAME)
+	(add-linking-filter LLOBJ linkable? id-str RENAME)
 )
 
 ; ---------------------------------------------------------------------
@@ -380,12 +384,12 @@
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; Return a list of words
-	(define (get-words) (star-obj 'left-basis))
+	; A predicate that returns OK only for left-basis items.
+	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
 
 	(define id-str "linkage-filter")
 
-	(add-linking-filter LLOBJ get-words id-str RENAME)
+	(add-linking-filter LLOBJ is-in-left? id-str RENAME)
 )
 
 ; ---------------------------------------------------------------------
