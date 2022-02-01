@@ -304,7 +304,7 @@
 		(define words-only
 			(remove
 				(lambda (WRD) (equal? 'WordClassNode (cog-type WRD)))
-				(LLOBJ 'left-basis))
+				(LLOBJ 'left-basis)))
 
 		(define ranked-words
 			(sort! words-only
