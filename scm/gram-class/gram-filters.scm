@@ -190,6 +190,7 @@
 )
 
 ;-----------------------------
+
 (define (get-con-seqs CON-LST)
 "
   Return a list of ConnectorSeq containing one or more
@@ -205,33 +206,29 @@
 )
 
 ;-----------------------------
-(define (make-conseq-predicate STAR-OBJ WORD-LIST-FUNC)
+
+(define (make-conseq-predicate STAR-OBJ ACCEPT-ITEM?)
 "
-  make-conseq-predicate STAR-OBJ WORD-LIST-FUNC - connector predicate
+  make-conseq-predicate STAR-OBJ ACCEPT-ITEM? - connector predicate
 
   Create a predicate that returns true when a given ConnectorSeq
-  consists of WordNodes entirely in teh given word-list returned from
-  WORD-LIST-FUNC.
+  consists of items (WordNodes or WordClassNodes) accepted by the
+  predicate ACCEPT-ITEM?.
 
-  That is, WORD-LIST-FUNC, when called, should return a list of words.
-  This function will then return a predicate for identifying connector
-  sequences consisting entirely of words in that word-list.
+  That is, ACCEPT-ITEM? should return #t if the word in a connector is
+  acceptable for connecting; else return #f.  This function will then
+  return a predicate for identifying connector sequences consisting
+  entirely of acceptable connectors.
 
-  This may take a few minutes to run, if there are millions of
+  This may take a few minutes to get set up, if there are millions of
   ConnectorSeq's.
-
-  XXX Fixme: what about connector seqs containing WordClases?
 "
-	(define all-words
-		(filter (lambda (ITEM) (equal? (cog-type ITEM) 'WordNode))
-			(STAR-OBJ 'left-basis)))
-
-	; Unwanted words are not part of the matrix.
-	(define unwanted-words
-		(atoms-subtract all-words (WORD-LIST-FUNC)))
+	; Unwanted words are those to be removed.
+	(define unwanted-items
+		(remove ACCEPT-ITEM? (STAR-OBJ 'left-basis)))
 
 	(define unwanted-cnctrs
-		(get-connectors unwanted-words))
+		(get-connectors unwanted-items))
 
 	(define unwanted-conseqs
 		(get-con-seqs unwanted-cnctrs))
@@ -239,7 +236,6 @@
 	(define good-conseqs
 		(atoms-subtract
 			; Take all connector-sequences, and subtract the bad ones.
-			; (cog-get-atoms 'ConnectorSeq)
 			(STAR-OBJ 'right-basis)
 			unwanted-conseqs))
 
@@ -248,6 +244,7 @@
 )
 
 ;-----------------------------
+
 (define (add-linking-filter LLOBJ WORD-LIST-FUNC ID-STR RENAME)
 "
   add-linking-filter LLOBJ - Filter the word-disjunct LLOBJ so that
@@ -280,6 +277,7 @@
 )
 
 ;-----------------------------
+
 (define (linking-trim LLOBJ WORD-LIST-FUNC)
 "
   linking-trim LLOBJ - Trim the word-disjunct LLOBJ by deleting words
