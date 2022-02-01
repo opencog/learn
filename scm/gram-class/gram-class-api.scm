@@ -261,7 +261,7 @@
 				; Copy the sections
 				(for-each
 					(lambda (PNT)
-						(copy-values (LLOBJ 'flatten wcl PNT))
+						(copy-values (LLOBJ 'flatten wcl PNT) PNT)
 
 						; Delete the original section, as otherwise they
 						; will disrupt the marginals.
