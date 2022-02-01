@@ -220,13 +220,7 @@
            counts.  As above, Sections and values are copied.
 
   Known bugs:
-  * Other code expects that all of the counts are transferred from the
-    word to the word-class, when generating the word-class. This is not
-    being done here; the counts are only being copied. Also, it is
-    expected that the MemberLink holds the total of the counts that
-    were transferred. This is also not set up. This is a bug, and should
-    be fixed. (Obviously, when desolving single-member classes, the
-    counts should be moved back).
+  * delete-singles is broken
 "
 	(if (not (LLOBJ 'provides 'flatten))
 		(throw 'missing-method 'add-singleton-classes
@@ -253,11 +247,16 @@
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
 
+		(define sup (add-support-api LLOBJ))
+
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
 				; Add the word to the new word-class (obviously)
-				(MemberLink WRD wcl)
+				(define memb (MemberLink WRD wcl))
+				(cog-set-count! memb (sup 'right-count WRD))
+				(store-atom memb)
+
 				; Copy the sections
 				(for-each
 					(lambda (PNT)
