@@ -238,6 +238,9 @@
 					(eq? 1 (cog-incoming-size-by-type WRDCLS 'MemberLink)))
 				(LLOBJ 'left-basis))))
 
+	; Need to fetch the count from the margin.
+	(define pss (add-support-api LLOBJ))
+
 	; Create singletons
 	(define (create-singles WORD-LIST)
 		; Copy the count-value, and anything else.
@@ -247,14 +250,12 @@
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
 
-		(define sup (add-support-api LLOBJ))
-
 		(for-each
 			(lambda (WRD)
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
 				; Add the word to the new word-class (obviously)
 				(define memb (MemberLink WRD wcl))
-				(cog-set-count! memb (sup 'right-count WRD))
+				(cog-set-count! memb (pss 'right-count WRD))
 				(store-atom memb)
 
 				; Copy the sections
@@ -271,10 +272,9 @@
 
 		(format #t "Created ~A singleton word classes\n"
 			(length WORD-LIST))
-	)
 
-	; Need to fetch the count from the margin.
-	(define pss (add-support-api LLOBJ))
+		(LLOBJ 'clobber)
+	)
 
 	; Create singletons for those words with more than MIN-CNT
 	; observations.
