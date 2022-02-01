@@ -10310,6 +10310,10 @@ if (not (LLOBJ 'provides 'flatten))
 explode
 for each sigleton in right-stars(singleton) flatten
 
+cp -pr r10-mrg-q0.7-c0.4.rdb r10-export.rdb
+
+cog-inc-count! (sup 'right-count WRD)
+(define sup (add-support-api LLOBJ))
 
 --------------------------------------------------------
 0.5-0.2 -- 19008
