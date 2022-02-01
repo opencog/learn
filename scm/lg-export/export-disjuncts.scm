@@ -153,8 +153,7 @@
 						(string-append STR " or " (cword-to-lg-con WRD DIR)))
 					(cword-to-lg-con (car WRDLI) DIR)
 					(cdr WRDLI))
-				")")
-		)
+				")"))
 	)
 
 	; Get a connector, by finding the link that connects WRD-OR-CLA
@@ -172,10 +171,11 @@
 			; ... else fold together all classes that the word belongs
 			; to into a string. So, if the word belongs to two classes,
 			; the resulting string will be an or-list of those two classes.
-			(cword-list-to-lg-con-list
-				(map gdr (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
-				DIR)
-		)
+			(let ((cls-list (cog-incoming-by-type WRD-OR-CLA 'MemberLink)))
+				(when (eq? 0 (length cls-list))
+					(format #t "Error: Word ~A not in any class\n" WRD-OR-CLA)
+					(throw 'bad-membership 'cset-to-lg-dj "Word not in class"))
+				(cword-list-to-lg-con-list (map gdr cls-list) DIR)))
 	)
 
 	; Link Grammar expects: near- & far- & near+ & far+
@@ -536,7 +536,7 @@
 	(define cnt 0)
 	(define (cntr x) (set! cnt (+ cnt 1)))
 	(looper 'for-each-pair cntr)
-	(format #t "Will store ~D csets\n" cnt)
+	(format #t "Will store ~D sections\n" cnt)
 
 	; Dump all the connector sets into the database
 	(looper 'for-each-pair sectioner)
