@@ -1380,10 +1380,9 @@ Grammar. This can be done as follows:
 ```
        (define pca (make-pseudo-cset-api))
        (define cvs (add-covering-sections pca))
-       (define gca (add-gram-class-api cvs))
-       (gca 'fetch-pairs)
-       (gca 'explode-sections)
-       (define asc (add-singleton-classes gca))
+       (cvs 'fetch-pairs)
+       (cvs 'explode-sections)
+       (define asc (add-singleton-classes cvs))
        (asc 'create-hi-count-singles 500)
 ```
 
