@@ -262,8 +262,8 @@
 	; is acceptable.
 	(define ok-conseq? (make-conseq-predicate star-obj ACCEPT-ITEM?))
 
-	; Input arg is a Section. The gdr (right hand side of it) is a
-	; conseq. Keep the section if the conseq passes.
+	; Input arg is a Section. Keep the section if the two predicates
+	; accept both sides.
 	(define (pair-pred SECT)
 		(and (ACCEPT-ITEM? (LLOBJ 'left-element SECT))
 			(ok-conseq? (LLOBJ 'right-element SECT))))
@@ -275,36 +275,29 @@
 
 ;-----------------------------
 
-(define (linking-trim LLOBJ WORD-LIST-FUNC)
+(define-public (linking-trim LLOBJ ACCEPT-ITEM?)
 "
-  linking-trim LLOBJ - Trim the word-disjunct LLOBJ by deleting words
-  and connector sequences and sections which contain words other than
-  those provided by the WORD-LIST-FUNC. This is like `add-linking-filter`
-  above, except that it doesn't filter, it just deletes.  This is
-  not a public function; it is used to build several public functions.
+  linking-trim LLOBJ ACCEPT-ITEM? - Trim the word-disjunct LLOBJ by
+  deleting (with `cog-delete!`) items and connector sequences and
+  sections which contain items (words) other than those accepted by
+  the ACCEPT-ITEM? predicate. This is like `add-linking-filter`
+  above, except that it doesn't filter, it just deletes.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; Always keep any WordNode or WordClassNode we are presented with.
-	(define (left-basis-pred WRDCLS) #t)
+	; Accept a ConnectorSeq only if every word in every connector
+	; is acceptable.
+	(define ok-conseq? (make-conseq-predicate star-obj ACCEPT-ITEM?))
 
-	(define ok-conseq? #f)
-
-	; Only accept a ConnectorSeq if every word in every connector
-	; is in some word-class.
-	(define (right-basis-pred CONSEQ)
-		(if (not ok-conseq?)
-			(set! ok-conseq? (make-conseq-predicate star-obj WORD-LIST-FUNC)))
-		(ok-conseq? CONSEQ)
-	)
-
-	; Input arg is a Section. The gdr (right hand side of it) is a
-	; conseq. Keep the section if the conseq passes.
-	(define (pair-pred SECT) (right-basis-pred (gdr SECT)))
+	; Input arg is a Section. Keep the section if the two predicates
+	; accept both sides.
+	(define (pair-pred SECT)
+		(and (ACCEPT-ITEM? (LLOBJ 'left-element SECT))
+			(ok-conseq? (LLOBJ 'right-element SECT))))
 
 	; ---------------
 	(define trim-mtrx (add-trimmer LLOBJ))
-	(trim-mtrx 'generic-trim left-basis-pred right-basis-pred pair-pred)
+	(trim-mtrx 'generic-trim ACCEPT-ITEM? ok-conseq? pair-pred)
 )
 
 ; ---------------------------------------------------------------------
