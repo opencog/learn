@@ -255,7 +255,7 @@
 				(define wcl (WordClass (string-append (cog-name WRD) "#uni")))
 				; Add the word to the new word-class (obviously)
 				(define memb (MemberLink WRD wcl))
-				(cog-set-count! memb (pss 'right-count WRD))
+				(cog-inc-count! memb (pss 'right-count WRD))
 				(store-atom memb)
 
 				; Copy the sections
