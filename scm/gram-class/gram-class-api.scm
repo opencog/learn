@@ -475,6 +475,32 @@
 
 ; ---------------------------------------------------------------------
 
+(define-public (add-word-remover LLOBJ RENAME)
+"
+  add-word-remover LLOBJ - Modify the grammatical-class LLOBJ so that
+  there are no WordNodes in either the left basis, nor in any Connectors
+  in the ConnectorSeqs in the right basis.
+
+  Not only are the WordNodes removed, but the remaining left and right
+  basis are scrubbed, so that there are no connectors unable to form a
+  connection.
+
+  Set RENAME to #t if marginals should be stored under a filter-specific
+  name. Otherwise, set to #f to use the default marginal locations.
+"
+	; Return a list of words in word-classes
+	(define (get-classes)
+		(filter
+			(lambda (ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+			(LLOBJ 'left-basis)))
+
+	(define id-str "word-remover")
+
+	(add-linking-filter LLOBJ get-classes id-str RENAME)
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (add-wordclass-filter LLOBJ RENAME)
 "
   add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
@@ -484,6 +510,12 @@
   then self-consistent, and does not contain any connectors unable to
   form a connection to some word-class.
 
+  CAUTION: THIS FILTER IS CURRENTLY USELESS (OBSOLETE)! It assumes that
+  WordClasses never appear in the connectors themselves; i.e. that the
+  dataset has been created without using Shapes. At this time, it is
+  imossible to create such datasets any more... So anyway, this code
+  will do things that aren't meaningful.
+
   Set RENAME to #t if marginals should be stored under a filter-specific
   name. Otherwise, set to #f to use the default marginal locations.
 "
@@ -492,7 +524,6 @@
 		(define word-set (make-atom-set))
 		(for-each
 			(lambda (wcls)
-				(word-set wcls)
 				(for-each word-set
 					(map gar (cog-incoming-by-type wcls 'MemberLink))))
 
