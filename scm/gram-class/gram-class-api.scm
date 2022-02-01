@@ -281,7 +281,10 @@
 	(define (trim-low-counts MIN-CNT)
 
 		(define trimmed-words
-			(remove (lambda (WRD) (< (pss 'right-count WRD) MIN-CNT))
+			(remove (lambda (WRD)
+				(or
+					(equal? 'WordClassNode (cog-type WRD))
+					(< (pss 'right-count WRD) MIN-CNT)))
 				(LLOBJ 'left-basis)))
 
 		(format #t "After trimming, ~A words left, out of ~A\n"
@@ -296,8 +299,13 @@
 		; nobs == number of observations
 		(define (nobs WRD) (pss 'right-count WRD))
 
+		(define words-only
+			(remove
+				(lambda (WRD) (equal? 'WordClassNode (cog-type WRD)))
+				(LLOBJ 'left-basis))
+
 		(define ranked-words
-			(sort! (LLOBJ 'left-basis)
+			(sort! words-only
 				(lambda (ATOM-A ATOM-B) (> (nobs ATOM-A) (nobs ATOM-B)))))
 
 		(define short-list (take ranked-words NUM-TOP))
