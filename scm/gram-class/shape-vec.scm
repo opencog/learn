@@ -716,6 +716,21 @@
 	(define (describe)
 		(display (procedure-property add-gram-class-api 'documentation)))
 
+	(define (flatten CLS PNT)
+		(shape-obj 'flatten CLS PNT))
+
+	;-------------------------------------------
+	; Explain the non-default provided methods.
+	(define (provides meth)
+		(case meth
+			((provides)         provides)
+			((flatten)          flatten)
+
+			; cover-stars is the direct product, and it handles the rest.
+			(else               (cover-stars 'provides meth))
+			; (else               #f)
+		))
+
 	;-------------------------------------------
 	; Methods on the object
 	(lambda (message . args)
