@@ -482,11 +482,13 @@
 		(define word-set (make-atom-set))
 		(for-each
 			(lambda (wcls)
+				(word-set wcls)
 				(for-each word-set
 					(map gar (cog-incoming-by-type wcls 'MemberLink))))
+
+			; XXX FIXME: ask LLOBJ for the classes.
 			(cog-get-atoms 'WordClassNode))
-		(word-set #f)
-	)
+		(word-set #f))
 
 	(define id-str "wordclass-filter")
 
