@@ -396,22 +396,21 @@
 
 (define-public (trim-linkage LLOBJ)
 "
-  trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting words
-  and connector sequences and sections which contain words other than
-  those appearing in the left-basis.  This is like `add-linkage-filter`,
-  except that it doesn't filter, it just deletes.  The resulting
-  collection of word-disjunct pairs is then self-consistent,
-  in that it does not contain any connectors unable to form a
-  connection to some word.
+  trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting (using
+  `cog-delete!`) words and connector sequences and sections which contain
+  words other than those appearing in the left-basis.  This is like
+  `add-linkage-filter`, except that it doesn't filter, it just deletes.
+
+  The resulting collection of word-disjunct pairs is then self-consistent,
+  in that it does not contain any connectors unable to form a connection
+  to some word.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; Return a list of words
-	(define (get-words) (star-obj 'left-basis))
+	; A predicate that returns OK only for left-basis items.
+	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
 
-	(define id-str "linkage-filter")
-
-	(linking-trim LLOBJ get-words)
+	(linking-trim LLOBJ is-in-left?)
 )
 
 ; ---------------------------------------------------------------------
