@@ -245,16 +245,18 @@
 
 ;-----------------------------
 
-(define (add-linking-filter LLOBJ ACCEPT-ITEM? ID-STR RENAME)
+(define-public (add-linking-filter LLOBJ ACCEPT-ITEM? ID-STR)
 "
-  add-linking-filter LLOBJ - Filter the word-disjunct LLOBJ so that
-  the left-basis consistes entirely of items acceptable to ACCEPT-ITEM?
-  and the right-basis consists only of connector sequences having
-  connectors linking to items that are acceptable to ACCEPT-ITEM?
+  add-linking-filter LLOBJ ACCEPT-ITEM? ID-STR - Filter the
+  word-disjunct LLOBJ so that the left-basis consistes entirely of
+  items acceptable to ACCEPT-ITEM?  and the right-basis consists only
+  of connector sequences having connectors linking to items that are
+  acceptable to ACCEPT-ITEM?
 
-  This is not (currently) a public function; it is used to build several
-  public functions. It's not public mostly cause of the ID-STR thing
-  for handling marginals.
+  If ID-STR is a string (and not `#f`), then the marginals for this
+  filtered matrix will be stored at keyed to the string ID-STR. If
+  ID-STR is #f, then marginals will appear at default locations (which
+  will clobber existing values there, and is probably not what you want!)
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -270,7 +272,7 @@
 
 	; ---------------
 	(add-generic-filter LLOBJ
-		ACCEPT-ITEM? ok-conseq? pair-pred ID-STR RENAME)
+		ACCEPT-ITEM? ok-conseq? pair-pred ID-STR ID-STR)
 )
 
 ;-----------------------------
@@ -320,9 +322,9 @@
 	; Accept WordClasses only.
 	(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
 
-	(define id-str "word-remover")
+	(define id-str (if RENAME "word-remover" #f))
 
-	(add-linking-filter LLOBJ is-word-class? id-str RENAME)
+	(add-linking-filter LLOBJ is-word-class? id-str)
 )
 
 ; ---------------------------------------------------------------------
@@ -362,9 +364,9 @@
 
 	(define linkable? (make-aset-predicate (acceptable-set #f)))
 
-	(define id-str "wordclass-filter")
+	(define id-str (if RENAME "wordclass-filter" #f))
 
-	(add-linking-filter LLOBJ linkable? id-str RENAME)
+	(add-linking-filter LLOBJ linkable? id-str)
 )
 
 ; ---------------------------------------------------------------------
@@ -387,9 +389,9 @@
 	; A predicate that returns OK only for left-basis items.
 	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
 
-	(define id-str "linkage-filter")
+	(define id-str (if RENAME "linkage-filter" #f))
 
-	(add-linking-filter LLOBJ is-in-left? id-str RENAME)
+	(add-linking-filter LLOBJ is-in-left? id-str)
 )
 
 ; ---------------------------------------------------------------------
