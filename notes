@@ -10407,6 +10407,26 @@ Finished inserting 59352 records in 1156 secs (51.343/sec)
 	(if (eq? 'WordNode (cog-type WC))
 		(foobar))) (star-obj 'left-basis))
 
+((PredicateNode . 39) (ListLink . 58667) (MemberLink . 3184) (AnyNode . 7) (Connector . 665) (ConnectorDir . 2) (ConnectorSeq . 6790) (Section . 67564) (EvaluationLink . 2760) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 2406) (WordClassNode . 3172))
+
+(for-each (lambda (WRD)
+	(when (eq? 1 (cog-incoming-size WRD))
+		(cog-delete! (star-obj 'right-wildcard WRD))
+		(cog-delete! WRD)))
+	(cog-get-atoms 'WordNode))
+
+((PredicateNode . 39) (ListLink . 58667) (MemberLink . 3184) (AnyNode . 7) (Connector . 665) (ConnectorDir . 2) (ConnectorSeq . 6790) (Section . 67564) (EvaluationLink . 2756) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 2402) (WordClassNode . 3172))
+
+(batch-all-pair-mi star-obj)
+Total count N(*,*) = 2455128.0 = 2455128.0
+Done storing 6790 left-wilds in 2 secs
+Done storing 2363 right-wilds in 1 secs
+Done computing 67564 pair MI's in 28 secs
+Finished with MI computations; this took 0.021 hours.
+
+
+singleton 500 == 67564 sections
+
 
 --------------------------------------------------------
 0.5-0.2 -- 19008

@@ -171,11 +171,12 @@
 			; ... else fold together all classes that the word belongs
 			; to into a string. So, if the word belongs to two classes,
 			; the resulting string will be an or-list of those two classes.
-			(let ((cls-list (cog-incoming-by-type WRD-OR-CLA 'MemberLink)))
+			(let* ((memb-list (cog-incoming-by-type WRD-OR-CLA 'MemberLink))
+					(cls-list (map gdr memb-list)))
 				(when (eq? 0 (length cls-list))
 					(format #t "Error: Word ~A not in any class\n" WRD-OR-CLA)
 					(throw 'bad-membership 'cset-to-lg-dj "Word not in class"))
-				(cword-list-to-lg-con-list (map gdr cls-list) DIR)))
+				(cword-list-to-lg-con-list cls-list DIR)))
 	)
 
 	; Link Grammar expects: near- & far- & near+ & far+
