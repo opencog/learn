@@ -10336,6 +10336,22 @@ make-conseq-predicate - DONE
 add-linking-filter - DONE
 linking-trim - DONE
 
+Support: found num left= 2622 num right= 136044 in 0 secs
+Total count N(*,*) = 7779650.0 = 7779650.0
+
+
+(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+
+(linking-trim star-obj is-word-class?)
+
+(cog-report-counts)
+$13 = ((PredicateNode . 60) (ListLink . 447271) (MemberLink . 3184) (AnyNode . 7) (Connector . 18662) (ConnectorDir . 2) (ConnectorSeq . 321820) (Section . 570890) (VariableNode . 2) (VariableList . 1) (QueryLink . 1) (EvaluationLink . 18028) (TypeNode . 6) (TypeChoice . 3) (TypedVariableLink . 2) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 15082) (WordClassNode . 3172))
+
+cog-incoming-size-by-type atom (TypeChoice
+
+generic-trim pred return T to delete
+
+
 
 --------------------------------------------------------
 0.5-0.2 -- 19008

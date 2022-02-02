@@ -295,13 +295,16 @@
 
 	; Input arg is a Section. Keep the section if the two predicates
 	; accept both sides.
-	(define (pair-pred SECT)
+	(define (good-elt? SECT)
 		(and (ACCEPT-ITEM? (LLOBJ 'left-element SECT))
 			(ok-conseq? (LLOBJ 'right-element SECT))))
 
+	; Always keep.
+	(define (keep ITM) #t)
+
 	; ---------------
 	(define trim-mtrx (add-trimmer LLOBJ))
-	(trim-mtrx 'generic-trim ACCEPT-ITEM? ok-conseq? pair-pred)
+	(trim-mtrx 'generic-trim keep keep good-elt?)
 )
 
 ; ---------------------------------------------------------------------
