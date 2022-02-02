@@ -1397,6 +1397,21 @@ Grammar. This can be done as follows:
   The above may take (many) hours or more to run, depending linearly
   on the number of observed disjuncts.
 
+* Compute costs (alternate version). Filtering keeps the entire word-
+  disjunct matrix, exposing only a subset of it through a window
+  defined by the filter. An alternative is to just remove the unwanted
+  matrix entries outright. This results in a smaller dataset, on which
+  computations can be much faster.  Be sure to make a copy of the
+  original dataset first!
+
+  The below will delete (with `cog-delete!`) all matrix entries that
+  are not word-classes.
+```
+       (define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+       (linking-trim cvs is-word-class?)
+       (batch-all-pair-mi cvs)
+```
+
 * Make sure you have `libsqlite3-dev` and `dbi` installed. The `sqlite3`
   database provides a fast file format for Link Grammar dictionaries.
   The `dbi` module provides guile with database interfaces for popular
