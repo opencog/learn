@@ -249,7 +249,7 @@
 "
   add-linking-filter LLOBJ ACCEPT-ITEM? ID-STR - Filter the
   word-disjunct LLOBJ so that the left-basis consistes entirely of
-  items acceptable to ACCEPT-ITEM?  and the right-basis consists only
+  items acceptable to ACCEPT-ITEM? and the right-basis consists only
   of connector sequences having connectors linking to items that are
   acceptable to ACCEPT-ITEM?
 
@@ -284,8 +284,8 @@
   sections which contain items (words) other than those accepted by
   the ACCEPT-ITEM? predicate.
 
-  This is like `add-linking-filter` above, except that it doesn't
-  filter, it just deletes.
+  This is similar to `add-linking-filter` above, except that it doesn't
+  create a filter object; it performs the deletes when invoked.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -299,12 +299,18 @@
 		(and (ACCEPT-ITEM? (LLOBJ 'left-element SECT))
 			(ok-conseq? (LLOBJ 'right-element SECT))))
 
-	; Always keep.
-	(define (keep ITM) #t)
-
-	; ---------------
+	; Trim the matrix
 	(define trim-mtrx (add-trimmer LLOBJ))
-	(trim-mtrx 'generic-trim keep keep good-elt?)
+	(trim-mtrx 'generic-trim ACCEPT-ITEM? ok-conseq? good-elt?)
+
+	; At the conclusion of the above, there might be items in
+	; orphaned connectors. Get rid of those manually. Those deleted
+	; Connectors may have left orphaned words, so delete those next.
+	(for-each cog-delete! (cog-get-atoms 'Connector))
+	(for-each cog-delete! (star-obj 'left-basis))
+
+	(if (LLOBJ 'provides 'clobber) (LLOBJ 'clobber))
+	*unspecified*
 )
 
 ; ---------------------------------------------------------------------
