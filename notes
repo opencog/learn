@@ -10386,6 +10386,28 @@ Finally
 ((PredicateNode . 36) (MemberLink . 3184) (AnyNode . 7) (Connector . 5150) (ConnectorDir . 2) (ConnectorSeq . 63384) (Section . 297783) (EvaluationLink . 3105) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode
  . 2406) (WordClassNode . 3172))
 
+Total count N(*,*) = 6521715.0 = 6521715.0
+Done computing 297783 pair frequencies in 219 secs
+Done computing 63384 left-wild log frequencies in 36 secs.
+Done computing 2587 right-wild log frequencies in 1 secs.
+Done computing 297783 pair MI's in 985 secs
+Finished left entropy subtotals in 3241 secs   ; wtf ?????
+Finished right entropy subtotals in 250 secs
+Finished with MI computations; this took 2.438 hours.
+
+
+Will store 297783 csets
+Finished inserting 59352 records in 1156 secs (51.343/sec)
+
+(WordNode "pp")
+(Connector (WordNode "pp") (ConnectorDir "-"))
+ (Connector (WordNode "pp") (ConnectorDir "+"))
+
+(for-each (lambda (WC)
+	(if (eq? 'WordNode (cog-type WC))
+		(foobar))) (star-obj 'left-basis))
+
+
 --------------------------------------------------------
 0.5-0.2 -- 19008
 0.6-0.3 -- 19009

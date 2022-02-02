@@ -168,43 +168,6 @@
 		))
 )
 
-; ---------------------------------------------------------------------
-; The next three routines are used to build a cached set of valid
-; connector-seqs, for the right-basis-pred.
-; We need to know if every connector in a connector sequence is
-; a member of some word in WORD-LIST. Verifying this directly is
-; very inefficient. It is much faster to precompute the set of
-; known-good connector sequences, and refer to that.
-
-(define (get-connectors WRD-LST)
-"
-  Return a list of connectors containing a word in the list
-"
-	(define con-set (make-atom-set))
-	(for-each
-		(lambda (word)
-			(for-each con-set
-				(cog-incoming-by-type word 'Connector)))
-		WRD-LST)
-	(con-set #f)
-)
-
-;-----------------------------
-
-(define (get-con-seqs CON-LST)
-"
-  Return a list of ConnectorSeq containing one or more
-  connectors from the CON-LST
-"
-	(define seq-set (make-atom-set))
-	(for-each
-		(lambda (ctr)
-			(for-each seq-set
-				(cog-incoming-by-type ctr 'ConnectorSeq)))
-		CON-LST)
-	(seq-set #f)
-)
-
 ;-----------------------------
 
 (define (make-conseq-predicate STAR-OBJ ACCEPT-ITEM?)
@@ -223,15 +186,32 @@
   This may take a few minutes to get set up, if there are millions of
   ConnectorSeq's.
 "
-	; Unwanted words are those to be removed.
-	(define unwanted-items
-		(remove ACCEPT-ITEM? (STAR-OBJ 'left-basis)))
+	; General design: it is inefficient to check each disjunct to see if
+	; all of the connectors in it pass the test. So instead, we precompute
+	; a list of Connectors that will fail, and then precompute the list
+	; of ConnectorSeqs that contains at least one failing Connector, and
+	; then finally subtract, to obtain a list of good ConnectorSeqs.
 
+	; First, get a list of all Connectors appearing in some ConnectorSeq
+	(define conn-set (make-atom-set))
+	(for-each
+		(lambda (CSQ) (for-each conn-set (cog-outgoing-set CSQ)))
+		(STAR-OBJ 'right-basis))
+	(define all-connectors (conn-set #f))
+
+	; Unwanted connectors are those to be removed.
 	(define unwanted-cnctrs
-		(get-connectors unwanted-items))
+		(remove (lambda (CON) (ACCEPT-ITEM? (gar CON))) all-connectors))
 
-	(define unwanted-conseqs
-		(get-con-seqs unwanted-cnctrs))
+	; Create a list of ConnectorSeq containing one or more of the
+	; unwanted connectors.
+	(define seq-set (make-atom-set))
+	(for-each
+		(lambda (ctr)
+			(for-each seq-set (cog-incoming-by-type ctr 'ConnectorSeq)))
+		unwanted-cnctrs)
+
+	(define unwanted-conseqs (seq-set #f))
 
 	(define good-conseqs
 		(atoms-subtract
