@@ -6702,6 +6702,9 @@ Sparsity
 \begin_layout Standard
 Sparsity is defined as always: it is log2 of the fraction of non-zero matrix
  entries to total possible matrix entries.
+ Gut instinct says 'slower sparsity growth is better'.
+ From the first graph, though, we find a very non-linear growth rate depending
+ on the noise threshold.
 \end_layout
 
 \begin_layout Standard
@@ -7308,6 +7311,16 @@ It is shown in the graph below.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The compositional entropy is interesting because it gives a hint of how
+ different words are contributing to form the class: it's a weighted average
+ of the contributions.
+ For example, for two words, the compositional entropy is maximized when
+ both words contribute equally (and is equal to 1.0).
+ Given how the above is scaling, it might be interesting to redo this graph,
+ dividing by (the log of) the number of words in the class.
 \end_layout
 
 \begin_layout Section*
