@@ -89,14 +89,61 @@
 	*unspecified*
 )
 
+; ------------------------------------------------------------------
+
+(define (check-word-marginals LLOBJ)
+"
+  Use cog-delete! on any WordNodes's that are not in the right basis.
+"
+	(define words (make-aset-predicate (LLOBJ 'left-basis)))
+
+	(define cnt 0)
+	(for-each (lambda (WRD)
+		(when (not (words WRD))
+			(set! cnt (+ 1 cnt))
+			(format #t "Unexpected Word ~A\n" WRD) (foobar)
+		))
+		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A unexpected WordNodes!\n" cnt)
+		(format #t "Checked Words and WordClasses, all OK.\n"))
+	*unspecified*
+)
+
+(define (zap-word-marginals LLOBJ)
+"
+  Use cog-delete! on any WordNodes that are not in the left basis.
+
+  These conventionally show up as marginals, of the form
+     (ListLink (WordNode ...) (AnyNode \"cset-disjunct\"))
+  or
+     (Evaluation (Predicate ...) (Word ...) (Any \"right-wild-direct-sum\"))
+"
+	(define words (make-aset-predicate (LLOBJ 'left-basis)))
+
+	(for-each (lambda (WRD) (when (not (djs WRD))
+			(for-each (lambda (IW)
+				(cond
+					((eq? (cog-type IW) 'Connector) (cog-delete IW))
+					((eq? (cog-type IW) 'ListLink) (cog-delete IW))
+					((eq? (cog-type IW) 'EvaluationLink) (cog-delete IW))))
+				(cog-incoming-set WRD))
+			(cog-delete! WRD)))
+		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
+)
+
+; -------------------------------------------------------------------
 ; -------------------------------------------------------------------
 
 (define (check-gram-dataset LLOBJ)
 	(check-conseq-marginals LLOBJ)
+	(check-word-marginals LLOBJ)
 	(check-connectors LLOBJ)
 )
 
 (define (cleanup-gram-dataset LLOBJ)
 	(zap-conseq-marginals LLOBJ)
+	(zap-word-marginals LLOBJ)
 	(zap-connectors LLOBJ)
 )
