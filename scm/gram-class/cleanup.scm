@@ -9,6 +9,8 @@
 ; containing stuff that they should not. The scripts below are a curated
 ; set of ad hoc tools to clean up stuff that has gone wrong. 
 
+; ------------------------------------------------------------------
+
 (define (check-conseq-marginals LLOBJ)
 "
   Use cog-delete! on any ConnectorSeq's that are not in the right basis.
@@ -52,6 +54,49 @@
 		(cog-get-atoms 'ConnectorSeq))
 )
 
+; -------------------------------------------------------------------
+
+(define (check-connectors LLOBJ)
+"
+  Verify that Connectors are used sanely.
+"
+	(define cnt 0)
+	(for-each (lambda (CON)
+		(when (not (equal?
+				(cog-incoming-size CON)
+				(cog-incoming-size-by-type CON 'ConnectorSeq)))
+			(set! cnt (+ 1 cnt))
+			; (format #t "Unexpected Connector usage ~A\n" CON) (foobar)
+		))
+		(cog-get-atoms 'Connector))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A unexpected Connector usages!\n" cnt)
+		(format #t "Checked Connectors, all OK.\n"))
+	*unspecified*
+)
+
+(define (zap-connectors LLOBJ)
+"
+  cog-delete orphaned Connectors
+"
+	(for-each (lambda (CON)
+		(when (equal? 0 (cog-incoming-size CON))
+			(cog-delete! CON)
+		))
+		(cog-get-atoms 'Connector))
+
+	*unspecified*
+)
+
+; -------------------------------------------------------------------
+
 (define (check-gram-dataset LLOBJ)
 	(check-conseq-marginals LLOBJ)
+	(check-connectors LLOBJ)
+)
+
+(define (cleanup-gram-dataset LLOBJ)
+	(zap-conseq-marginals LLOBJ)
+	(zap-connectors LLOBJ)
 )
