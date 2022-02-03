@@ -32,14 +32,19 @@
 (define (zap-conseq-marginals LLOBJ)
 "
   Use cog-delete! on any ConnectorSeq's that are not in the right basis.
+
+  These conventionally show up as marginals, of the form
+     (ListLink (AnyNode \"cset-word\") (ConnectorSeq...))
+  or
+     (ListLink (AnyNode \"gram-class\") (ConnectorSeq...))
 "
 	(define djs (make-aset-predicate (LLOBJ 'right-basis)))
 
 	(for-each (lambda (CSQ) (when (not (djs CSQ))
 		(let ((iset (cog-incoming-set CSQ)))
-			(if (and (eq? 1 (length iset)) (eq? 'ListLink (cog-type (car iset))))
+			(if (eq? (length iset) (cog-incoming-size-by-type CSQ 'ListLink))
 				(begin
-					(cog-delete! (car iset))
+					(for-each cog-delete! iset)
 					(cog-delete! CSQ))
 				(begin
 					(format #t "Unexpected ConnectorSeq ~A\n" CSQ))
