@@ -170,7 +170,7 @@
 
 ;-----------------------------
 
-(define (make-conseq-predicate STAR-OBJ ACCEPT-ITEM?)
+(define-public (make-conseq-predicate STAR-OBJ ACCEPT-ITEM?)
 "
   make-conseq-predicate STAR-OBJ ACCEPT-ITEM? - connector predicate
 

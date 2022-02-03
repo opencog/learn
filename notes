@@ -10459,8 +10459,13 @@ Many conseqs appear only in marginals!
 
 Gah.... dataset is not even self-consistent!
 
+/home2/linas/src/novamente/data/rocks-archive/run-1-t1234-tsup-1-1-1.rdb
+time cp -r run-1-t1234-tsup-1-1-1.rdb r12-trim.rdb
 
-
+(define cset-obj (make-pseudo-cset-api))
+(cset-obj 'fetch-pairs)
+(define stars-obj (add-pair-stars cset-obj))
+(check-linkability stars-obj)
 --------------------------------------------------------
 singleton 500 == 67564 sections
 

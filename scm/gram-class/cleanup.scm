@@ -7,7 +7,7 @@
 ;
 ; Due to code bugs and operational errors, assorted datasets end up
 ; containing stuff that they should not. The scripts below are a curated
-; set of ad hoc tools to clean up stuff that has gone wrong. 
+; set of ad hoc tools to clean up stuff that has gone wrong.
 
 ; ------------------------------------------------------------------
 
@@ -134,6 +134,29 @@
 )
 
 ; -------------------------------------------------------------------
+
+(define (check-linkability LLOBJ)
+"
+  Check to see ot connectors on the right can connect to words on left
+"
+	; First, we check to see if every disjunct consists of words
+	; in the left basis.
+	(define is-in-left? (make-aset-predicate (LLOBJ 'left-basis)))
+	(define is-in-right? (make-conseq-predicate LLOBJ is-in-left?))
+
+	(define cnt 0)
+	(for-each (lambda (CSQ)
+		(when (not (is-in-right? CSQ))
+			; (format #t "This is unconnectale: ~A\n" CSQ) (foobar)
+			(set! cnt (+ 1 cnt))))
+		(LLOBJ 'right-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A ConnectorSeqs that cannot connect!\n" cnt)
+		(format #t "Checked ConnectorSeq for connectivity, all OK.\n"))
+	*unspecified*
+)
+
 ; -------------------------------------------------------------------
 
 (define (check-gram-dataset LLOBJ)
