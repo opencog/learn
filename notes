@@ -10424,9 +10424,43 @@ Done storing 2363 right-wilds in 1 secs
 Done computing 67564 pair MI's in 28 secs
 Finished with MI computations; this took 0.021 hours.
 
+(ConnectorSeq . 232935)  ... wtf
 
+(star-obj 'left-basis-size) ; 15447
+(star-obj 'right-basis-size) ; 197666
+(ConnectorSeq . 321849) ... wtf ...
+(- 321849 197666)  ; 124183
+
+(define djs (make-aset-predicate (star-obj 'right-basis)))
+
+(for-each (lambda (CS)
+	(when ;(eq? 1 (cog-incoming-size CS))
+		(not (djs CS))
+		(format #t "foo ~A" CS)
+		(foobar)))
+	(cog-get-atoms 'ConnectorSeq))
+	(star-obj 'right-basis))
+
+.. the CS is in a ListLink ... (AnyNode "cset-word") so its a marginal ...
+but it's not in any sections?? Huh?
+
+Pre-explode:
+(star-obj 'left-basis-size) ; 15447
+(star-obj 'right-basis-size) ; 873323 ... because this includes shapes!
+that somehow ended up begin stored!!!???
+(ConnectorSeq . 321467)
+(ShapeLink . 675839)
+(+ 321467 675839) ; 997306 so bigger than then the basis.
+(- 997306 873323) ; 123983 similr to above ... wtf ...
+(Section . 570889) (ShapeLink . 675839)
+
+Many conseqs appear only in marginals!
+
+
+
+
+--------------------------------------------------------
 singleton 500 == 67564 sections
-
 
 --------------------------------------------------------
 0.5-0.2 -- 19008
