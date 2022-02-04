@@ -390,34 +390,35 @@
   trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting (using
   `cog-delete!`) words and connector sequences that cannot connect.
 
-  This handles two cases: it removes connector sequences that contain
-  words that do not appear in the left basis. After this, it removes
-  words in the left-basis that do not appear in any connectors.
-
-  The resulting collection of word-disjunct pairs is then self-consistent,
-  in that it does not contain any connectors unable to form a connection
-  to some word.
+  This computes the intersection of the words that appear in connectors,
+  and the words that appea in the left basis, and removes everything
+  that is not in this intersection. The goal is to create a collection
+  of word-disjunct pairs is then self-consistent, in that it does not
+  contain any connectors unable to form a connection to some word.
+  However, the act of this removal may create more unconnectable
+  words or connectors, and so this may have to be run several times,
+  till things settle down.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
-	; A predicate that returns OK only for left-basis items.
-	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
-
-	; Trim away COnnectorSeqs that cannot connect.
-	(linking-trim LLOBJ is-in-left?)
-
-	; ----------
-	; Next, go in the opposite direction: make sure every word
-	; appears in some connector.
-	(define word-set (make-atom-set))
+	; Make a list of all words that appear in connectors.
+	(define conword-set (make-atom-set))
 	(for-each (lambda (DJ)
 		(when (eq? 'ConnectorSeq (cog-type DJ))
 			(for-each
-				(lambda (CON) (word-set (gar CON)))
+				(lambda (CON) (conword-set (gar CON)))
 				(cog-outgoing-set DJ))))
 		(star-obj 'right-basis))
 
-	(define is-in-connector? (make-aset-predicate (word-set #f)))
+	; Remove all words that appear on the left.
+	(define missing-cwords
+		(atoms-subtract (conword-set #f) (star-obj 'left-basis)))
+
+	; Subtract again to get intersection
+	(define wrds-in-cons
+		(atoms-subtract (conword-set #f) missing-cwords))
+
+	(define is-in-connector? (make-aset-predicate wrds-in-cons))
 	(linking-trim LLOBJ is-in-connector?)
 
 	*unspecified*
