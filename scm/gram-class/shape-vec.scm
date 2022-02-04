@@ -759,6 +759,7 @@
 		(case meth
 			((provides)         provides)
 			((flatten)          flatten)
+			((cover-base)       cover-base)
 
 			; cover-stars is the direct product, and it handles the rest.
 			(else               (cover-stars 'provides meth))
@@ -795,6 +796,7 @@
 			((help)                describe)
 			((obj)                 "add-covering-sections")
 			((base)                LLOBJ)
+			((cover-base)          LLOBJ)
 
 			; cover-stars is the direct product, and it handles the rest.
 			(else             (apply cover-stars (cons message args)))))

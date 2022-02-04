@@ -10481,6 +10481,13 @@ Repeated (add-support-api "There isn't any cached data on `cset`
 
 do-left-totals called by 
 
+(define marg (psu 'set-left-marginals DJ))
+
+delete-orphans
+
+(star-obj 'left-wildcard cs) is ... cs. But
+make-pseudo-cset-api
+
 --------------------------------------------------------
 singleton 500 == 67564 sections
 
@@ -10603,6 +10610,8 @@ TODO/BUGS:
 * When ConnectorSeq's no longer occur in any sections, they still
   have marginals with non-zero counts, and are thus never removed.
   (PredicateNode "*-Norm Key-*") .. so support-obj
+  I don't get it. I looked at the code, and this should be happening
+  already. Maybe this was a hang-over from before?
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of

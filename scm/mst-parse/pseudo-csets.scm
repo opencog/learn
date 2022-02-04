@@ -133,6 +133,9 @@
 		(define (get-left-element PAIR) (gar PAIR))
 		(define (get-right-element PAIR) (gdr PAIR))
 
+		; XXX FIXME. We do not actually need to use a ListLink, here.
+		; We can just store the marginals directly on the DJ itself.
+		; Thus, we could save a bit of storage this way.
 		(define (get-left-wildcard DJ)
 			(ListLink any-left DJ))
 

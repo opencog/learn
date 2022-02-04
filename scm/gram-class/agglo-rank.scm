@@ -539,6 +539,13 @@
 "
   delete-orphans left-marg right-marg -- delete marginals.
 "
+	; In the current design, LLOBJ will always be a covering object.
+	; The base is what is covered with shapes. Currently not needed.
+	; See the delete-recursive! below.
+	; (define base-obj
+	;	(if (LLOBJ 'provides 'cover-base)
+	;		(LLOBJ 'cover-base) #f))
+
 	; Get rid of word-marginals
 	(for-each (lambda (WMARG)
 		(when (cog-atom? WMARG)
@@ -547,9 +554,17 @@
 				(cog-delete-recursive! WRD))))
 		left-marg)
 
-	; Get rid of disjuncts.
+	; Get rid of disjunct marginals. This works, because,
+	; for the covering sections, the disjunct wild-cards
+	; are the disjuncts themselves.
+	;
+	; When LLOBJ is a covering-object (which, currently, it always is:
+	; a direct-sum of Sections and CrossSections), then the base object
+	; (the object providing the Sections) is going to have it's own
+	; marginals. We need to be deleting those, too. The delete-recursive
+	; does this automatically for us.
 	(for-each (lambda (DJ)
-			(if (cog-atom? DJ) (cog-delete-recursive! DJ)))
+			(when (cog-atom? DJ) (cog-delete-recursive! DJ)))
 		right-marg)
 )
 

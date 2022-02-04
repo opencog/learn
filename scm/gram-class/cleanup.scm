@@ -145,6 +145,9 @@
   This checks in both directions: first, that every disjunct contains
   only words that appear in the left basis, and second, that every word
   in the left basis appears in some connector.
+
+  This checks words and connectors individually, instead of using
+  `make-linkable-pred` which would do both at once.
 "
 	; First, we check to see if every disjunct consists of words
 	; in the left basis.
