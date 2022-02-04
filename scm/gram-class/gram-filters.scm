@@ -388,9 +388,11 @@
 (define-public (trim-linkage LLOBJ)
 "
   trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting (using
-  `cog-delete!`) words and connector sequences and sections which contain
-  words other than those appearing in the left-basis.  This is like
-  `add-linkage-filter`, except that it doesn't filter, it just deletes.
+  `cog-delete!`) words and connector sequences that cannot connect.
+
+  This handles two cases: it removes connector sequences that contain
+  words that do not appear in the left basis. After this, it removes
+  words in the left-basis that do not appear in any connectors.
 
   The resulting collection of word-disjunct pairs is then self-consistent,
   in that it does not contain any connectors unable to form a connection
@@ -401,7 +403,24 @@
 	; A predicate that returns OK only for left-basis items.
 	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
 
+	; Trim away COnnectorSeqs that cannot connect.
 	(linking-trim LLOBJ is-in-left?)
+
+	; ----------
+	; Next, go in the opposite direction: make sure every word
+	; appears in some connector.
+	(define word-set (make-atom-set))
+	(for-each (lambda (DJ)
+		(when (eq? 'ConnectorSeq (cog-type DJ))
+			(for-each
+				(lambda (CON) (word-set (gar CON)))
+				(cog-outgoing-set DJ))))
+		(star-obj 'right-basis))
+
+	(define is-in-connector? (make-aset-predicate (word-set #f)))
+	(linking-trim LLOBJ is-in-connector?)
+
+	*unspecified*
 )
 
 ; ---------------------------------------------------------------------

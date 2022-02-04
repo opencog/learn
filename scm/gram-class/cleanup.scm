@@ -159,7 +159,7 @@
 		(format #t "All Connectors can connect to some word; all OK.\n"))
 
 	; ----------
-	; Next, got in the opposite direction: make sure every word
+	; Next, go in the opposite direction: make sure every word
 	; appears in some connector.
 	(define word-set (make-atom-set))
 	(for-each (lambda (DJ)
@@ -190,6 +190,7 @@
 	(check-conseq-marginals LLOBJ)
 	(check-word-marginals LLOBJ)
 	(check-connectors LLOBJ)
+	(check-linkability LLOBJ)
 )
 
 (define (cleanup-gram-dataset LLOBJ)
