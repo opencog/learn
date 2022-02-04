@@ -1076,6 +1076,11 @@ in Part Two, starting in June 2021, continuing into Part Three, Sept.
    (inexact->exact (round ((add-support-api psa) 'total-support-left)))
 )
 ```
+The above can leave unwanted cruft in the database, such as Connectors
+that are not in any connector sequences, or WordNodes that aren't in
+the matrix. These can be removed with the scripts in
+`scm/gram-class/cleanup.scm`. Use at your disgression.
+
 The following sequence will perform the trim, as well as removing
 connectors that cannot connect to anything. Running this is slow:
 it may take hours for mid-size datasets.
