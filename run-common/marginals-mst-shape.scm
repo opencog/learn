@@ -31,5 +31,11 @@
 
 (print-matrix-summary-report csc)
 
+; XXX The current merge code tracks stats that requires the MI
+; for word-disjunct pairs to be computed. These stats are not
+; required, but are interesting to observe. To get these, the
+; MI needs to be computed, as below:
+; (batch-all-pair-mi csc)
+
 (barrier storage-node)
 ; (cog-close storage-node)
