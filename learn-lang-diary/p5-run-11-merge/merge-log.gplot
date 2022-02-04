@@ -1,5 +1,5 @@
 # set term png small color
-set xrange [0:170]
+set xrange [0:250]
 
 #################################################
 #
@@ -45,7 +45,7 @@ set term png
 set out 'r11-ranked-mi.png'
 # set term postscript eps enhanced color 20
 # set out 'r11-ranked-mi.eps'
-set key right top
+set key bottom left
 set title "Ranked-MI of top-ranked pair (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Ranked-MI, in bits"
