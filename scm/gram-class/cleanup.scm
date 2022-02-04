@@ -13,7 +13,7 @@
 
 (define (check-conseq-marginals LLOBJ)
 "
-  Use cog-delete! on any ConnectorSeq's that are not in the right basis.
+  Look for any ConnectorSeq's that are not in the right basis.
 "
 	(define djs (make-aset-predicate (LLOBJ 'right-basis)))
 
@@ -21,7 +21,7 @@
 	(for-each (lambda (CSQ)
 		(when (not (djs CSQ))
 			(set! cnt (+ 1 cnt))
-			; (format #t "Unexpected ConnectorSeq ~A\n" CSQ)
+			; (format #t "Unexpected ConnectorSeq ~A\n" CSQ) (foobar)
 		))
 		(cog-get-atoms 'ConnectorSeq))
 
@@ -39,6 +39,8 @@
      (ListLink (AnyNode \"cset-word\") (ConnectorSeq...))
   or
      (ListLink (AnyNode \"gram-class\") (ConnectorSeq...))
+
+  This will delete the merginals, and then the ConnectorSeq.
 "
 	(define djs (make-aset-predicate (LLOBJ 'right-basis)))
 
@@ -95,7 +97,7 @@
 
 (define (check-word-marginals LLOBJ)
 "
-  Use cog-delete! on any WordNodes's that are not in the right basis.
+  Look for any WordNodes's that are not in the right basis.
 "
 	(define words (make-aset-predicate (LLOBJ 'left-basis)))
 
@@ -103,7 +105,7 @@
 	(for-each (lambda (WRD)
 		(when (not (words WRD))
 			(set! cnt (+ 1 cnt))
-			; (format #t "Unexpected Word ~A\n" WRD) (foobar)
+			; (format #t "Unexpected Word ~A\n" WRD) ; (foobar)
 		))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
 
@@ -175,7 +177,7 @@
 	(define is-in-connector? (make-aset-predicate (word-set #f)))
 	(for-each (lambda (WRD)
 		(when (not (is-in-connector? WRD))
-			; (format #t "This word is unconnectale: ~A\n" WRD) (foobar)
+			; (format #t "This word is unconnectale: ~A" WRD) ; (foobar)
 			(set! cnt (+ 1 cnt))))
 		(LLOBJ 'left-basis))
 

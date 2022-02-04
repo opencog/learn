@@ -360,44 +360,17 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-linkage-filter LLOBJ RENAME)
+(define-public (make-linkable-pred LLOBJ)
 "
-  add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
-  the only connector sequences appearing on the right consist entirely
-  of connectors that have words appearing on the left. The resulting
-  collection of word-disjunct pairs is then mostly self-consistent,
-  in that it does not contain any connectors unable to form a
-  connection to some word.  However, it may still contain words on
-  the left that do not appear in any connectors!
-
-  Set RENAME to #t if marginals should be stored under a filter-specific
-  name. Otherwise, set to #f to use the default marginal locations.
-"
-	(define star-obj (add-pair-stars LLOBJ))
-
-	; A predicate that returns OK only for left-basis items.
-	(define is-in-left? (make-aset-predicate (star-obj 'left-basis)))
-
-	(define id-str (if RENAME "linkage-filter" #f))
-
-	(add-linking-filter LLOBJ is-in-left? id-str)
-)
-
-; ---------------------------------------------------------------------
-
-(define-public (trim-linkage LLOBJ)
-"
-  trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting (using
-  `cog-delete!`) words and connector sequences that cannot connect.
+  make-linkable-pred LLOBJ - Create a predicate that returns #t only
+  for those words that can connect to connector sequences (and the
+  reverse -- words that appear in connectors that are in the left-basis
+  of LLOBJ.)
 
   This computes the intersection of the words that appear in connectors,
-  and the words that appea in the left basis, and removes everything
-  that is not in this intersection. The goal is to create a collection
-  of word-disjunct pairs is then self-consistent, in that it does not
-  contain any connectors unable to form a connection to some word.
-  However, the act of this removal may create more unconnectable
-  words or connectors, and so this may have to be run several times,
-  till things settle down.
+  and the words that appea in the left basis.  The goal is to identify
+  those words (and thus connectors) that are unable to form a connection
+  to some word.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -418,7 +391,48 @@
 	(define wrds-in-cons
 		(atoms-subtract (conword-set #f) missing-cwords))
 
-	(define is-in-connector? (make-aset-predicate wrds-in-cons))
+	(make-aset-predicate wrds-in-cons)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (add-linkage-filter LLOBJ RENAME)
+"
+  add-linkage-filter LLOBJ - Modify the word-disjunct LLOBJ so that
+  the only connector sequences appearing on the right consist entirely
+  of connectors that have words appearing on the left. The resulting
+  collection of word-disjunct pairs is then mostly self-consistent,
+  in that it does not contain any connectors unable to form a
+  connection to some word.  However, it may still contain words on
+  the left that do not appear in any connectors!
+
+  Set RENAME to #t if marginals should be stored under a filter-specific
+  name. Otherwise, set to #f to use the default marginal locations.
+"
+	(define is-in-connector? (make-linakble-pred LLOBJ))
+
+	(define id-str (if RENAME "linkage-filter" #f))
+
+	(add-linking-filter LLOBJ is-in-connector? id-str)
+)
+
+; ---------------------------------------------------------------------
+
+(define-public (trim-linkage LLOBJ)
+"
+  trim-linkage LLOBJ - Trim the word-disjunct LLOBJ by deleting (using
+  `cog-delete!`) words and connector sequences that cannot connect.
+
+  This computes the intersection of the words that appear in connectors,
+  and the words that appea in the left basis, and removes everything
+  that is not in this intersection. The goal is to create a collection
+  of word-disjunct pairs is then self-consistent, in that it does not
+  contain any connectors unable to form a connection to some word.
+  However, the act of this removal may create more unconnectable
+  words or connectors, and so this may have to be run several times,
+  till things settle down.
+"
+	(define is-in-connector? (make-linakble-pred LLOBJ))
 	(linking-trim LLOBJ is-in-connector?)
 
 	*unspecified*

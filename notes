@@ -10596,13 +10596,18 @@ FIXED:
   similarities; instead, it should be added only at the last stage.
   Or better yet, left to be zero, and only added during debug
   printing.  Actually, this is not a bug. its a confusion. so FIXED.
+* Expt-11 -- optimal-in-group  -- change to use plain MI. DONE
 
 TODO/BUGS:
-* Expt-11 -- optimal-in-group  -- change to use plain MI.
+* When WordClassNodes are fully merged, they are not deleted.
+* When ConnectorSeq's no longer occur in any sections, they still
+  have marginals with non-zero counts, and are thus never removed.
+  (PredicateNode "*-Norm Key-*") .. so support-obj
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
+  Ending quotes also hide punctuation so punct is not split.
 * Set up direct-sum/shape clustering run scripts. (mostly done ?)
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
