@@ -137,7 +137,10 @@
 
 (define (check-linkability LLOBJ)
 "
-  Check to see ot connectors on the right can connect to words on left
+  Check to see if connectors on the right can connect to words on left
+  This checks in both directions: first, that every disjunct contains
+  only words that appear in the left basis, and second, that every word
+  in the left basis appears in some connector.
 "
 	; First, we check to see if every disjunct consists of words
 	; in the left basis.
@@ -153,7 +156,31 @@
 
 	(if (< 0 cnt)
 		(format #t "Found ~A ConnectorSeqs that cannot connect!\n" cnt)
-		(format #t "Checked ConnectorSeq for connectivity, all OK.\n"))
+		(format #t "All Connectors can connect to some word; all OK.\n"))
+
+	; ----------
+	; Next, got in the opposite direction: make sure every word
+	; appears in some connector.
+	(define word-set (make-atom-set))
+	(for-each (lambda (DJ)
+		(when (eq? 'ConnectorSeq (cog-type DJ))
+			(for-each
+				(lambda (CON) (word-set (gar CON)))
+				(cog-outgoing-set DJ))))
+		(LLOBJ 'right-basis))
+
+	(set! cnt 0)
+	(define is-in-connector? (make-aset-predicate (word-set #f)))
+	(for-each (lambda (WRD)
+		(when (not (is-in-connector? WRD))
+			; (format #t "This word is unconnectale: ~A\n" WRD) (foobar)
+			(set! cnt (+ 1 cnt))))
+		(LLOBJ 'left-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A Words that are not in Connectors!\n" cnt)
+		(format #t "All words appear in some Connector; all OK.\n"))
+
 	*unspecified*
 )
 
