@@ -64,7 +64,9 @@
 	(for-each (lambda (CON)
 		(when (not (equal?
 				(cog-incoming-size CON)
-				(cog-incoming-size-by-type CON 'ConnectorSeq)))
+				(+
+					(cog-incoming-size-by-type CON 'ConnectorSeq)
+					(cog-incoming-size-by-type CON 'ShapeLink))))
 			(set! cnt (+ 1 cnt))
 			; (format #t "Unexpected Connector usage ~A\n" CON) (foobar)
 		))
