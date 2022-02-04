@@ -101,7 +101,7 @@
 	(for-each (lambda (WRD)
 		(when (not (words WRD))
 			(set! cnt (+ 1 cnt))
-			(format #t "Unexpected Word ~A\n" WRD) (foobar)
+			; (format #t "Unexpected Word ~A\n" WRD) (foobar)
 		))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
 
@@ -122,7 +122,7 @@
 "
 	(define words (make-aset-predicate (LLOBJ 'left-basis)))
 
-	(for-each (lambda (WRD) (when (not (djs WRD))
+	(for-each (lambda (WRD) (when (not (words WRD))
 			(for-each (lambda (IW)
 				(cond
 					((eq? (cog-type IW) 'Connector) (cog-delete IW))
@@ -184,17 +184,35 @@
 	*unspecified*
 )
 
-; -------------------------------------------------------------------
-
-(define (check-gram-dataset LLOBJ)
-	(check-conseq-marginals LLOBJ)
-	(check-word-marginals LLOBJ)
-	(check-connectors LLOBJ)
-	(check-linkability LLOBJ)
-)
-
-(define (cleanup-gram-dataset LLOBJ)
+(define (zap-unlinkables LLOBJ)
+"
+  Use cog-delete! to remove any words& conseq that cannot connect.
+"
+	(trim-linkage LLOBJ)
 	(zap-conseq-marginals LLOBJ)
 	(zap-word-marginals LLOBJ)
 	(zap-connectors LLOBJ)
+)
+
+; -------------------------------------------------------------------
+
+(define (check-gram-dataset LLOBJ)
+"
+  check everything
+"
+	(define stars-obj (add-pair-stars LLOBJ))
+
+	(check-conseq-marginals stars-obj)
+	(check-word-marginals stars-obj)
+	(check-connectors stars-obj)
+	(check-linkability stars-obj)
+)
+
+(define (cleanup-gram-dataset LLOBJ)
+	(define stars-obj (add-pair-stars LLOBJ))
+
+	(zap-conseq-marginals stars-obj)
+	(zap-word-marginals stars-obj)
+	(zap-connectors stars-obj)
+	(zap-unlinkables stars-obj)
 )
