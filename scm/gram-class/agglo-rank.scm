@@ -60,7 +60,7 @@
   minute to run.  Assumes that supports have been computed and are
   available.
 
-  Here, a "word" is any item appearing in the left-basis of LLOBJ.
+  Here, a 'word' is any item appearing in the left-basis of LLOBJ.
 "
 	(define sup (add-support-api LLOBJ))
 
