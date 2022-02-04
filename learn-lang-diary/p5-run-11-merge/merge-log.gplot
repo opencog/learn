@@ -3,10 +3,10 @@ set xrange [0:250]
 
 #################################################
 #
-set term png
-set out 'r11-sparsity.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-sparsity.eps'
+# set term png
+# set out 'r11-sparsity.png'
+set term postscript eps enhanced color 20
+set out 'r11-sparsity.eps'
 set key left top
 set title "Sparsity vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -22,10 +22,10 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:7 with lines lw 2 title "n=4 (olde
 
 #################################################
 #
-set term png
-set out 'r11-entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-entropy.eps'
+# set term png
+# set out 'r11-entropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-entropy.eps'
 set key left bottom
 set title "MM^T Entropy vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -41,10 +41,10 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:8 with lines lw 2 title "n=4 (olde
 
 #################################################
 #
-set term png
-set out 'r11-ranked-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-ranked-mi.eps'
+# set term png
+# set out 'r11-ranked-mi.png'
+set term postscript eps enhanced color 20
+set out 'r11-ranked-mi.eps'
 set key bottom left
 set title "Ranked-MI of top-ranked pair (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -60,10 +60,10 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:9 with lines lw 2 title "n=4 (olde
 
 #################################################
 #
-set term png
-set out 'r11-mmtq.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-mmtq.eps'
+# set term png
+# set out 'r11-mmtq.png'
+set term postscript eps enhanced color 20
+set out 'r11-mmtq.eps'
 set key right top
 set title "MM^T-Q vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -79,10 +79,10 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:10 with lines lw 2 title "n=4 (old
 
 #################################################
 #
-set term png
-set out 'r11-plain-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-plain-mi.eps'
+# set term png
+# set out 'r11-plain-mi.png'
+set term postscript eps enhanced color 20
+set out 'r11-plain-mi.eps'
 set key right top
 set title "MI of top-ranked pair (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -97,10 +97,10 @@ plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:13 with lines lw 2 title "n=4 precise"
 
 #################################################
 #
-set term png
-set out 'r11-left-dj-entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-left-dj-entropy.eps'
+# set term png
+# set out 'r11-left-dj-entropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-left-dj-entropy.eps'
 set key right top
 set title "Marginal Disjunct Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -115,10 +115,10 @@ plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:7 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-right-dj-entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-right-dj-entropy.eps'
+# set term png
+# set out 'r11-right-dj-entropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-right-dj-entropy.eps'
 set key right top
 set title "Marginal Word Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -133,10 +133,10 @@ plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-word-dj-entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-word-dj-entropy.eps'
+# set term png
+# set out 'r11-word-dj-entropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-word-dj-entropy.eps'
 set key right top
 set title "Total Word+Disjunct Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -151,10 +151,10 @@ plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-word-dj-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-word-dj-mi.eps'
+# set term png
+# set out 'r11-word-dj-mi.png'
+set term postscript eps enhanced color 20
+set out 'r11-word-dj-mi.eps'
 set key right top
 set title "Total Word+Disjunct MI (run-11; q=0.7)"
 set xlabel "Merge ordinal"

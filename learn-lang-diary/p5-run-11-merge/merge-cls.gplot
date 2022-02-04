@@ -4,10 +4,10 @@ set xrange [0:250]
 
 #################################################
 #
-set term png
-set out 'r11-cls-nwords.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-nwords.eps'
+# set term png
+# set out 'r11-cls-nwords.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-nwords.eps'
 set key right top
 set title "Number of Words in Class (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -22,10 +22,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:3 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-cls-self-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-self-mi.eps'
+# set term png
+# set out 'r11-cls-self-mi.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-self-mi.eps'
 set key right top
 set title "Self-MI of Class (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -40,10 +40,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:4 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-cls-self-rmi.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-self-rmi.eps'
+# set term png
+# set out 'r11-cls-self-rmi.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-self-rmi.eps'
 set key right top
 set title "Self-Ranked-MI of Class (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -58,10 +58,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:5 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-cls-support.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-support.eps'
+# set term png
+# set out 'r11-cls-support.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-support.eps'
 set key right top
 set title "Log2 Support of Class (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -78,10 +78,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:(log2($6)) with lines lw 2 title "n=4 
 
 #################################################
 #
-set term png
-set out 'r11-cls-logli.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-logli.eps'
+# set term png
+# set out 'r11-cls-logli.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-logli.eps'
 set key right top
 set title "Class Log Probability (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -96,10 +96,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-cls-fentropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-fentropy.eps'
+# set term png
+# set out 'r11-cls-fentropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-fentropy.eps'
 set key right top
 set title "Class Fractional Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
@@ -114,10 +114,10 @@ plot "r11-p-cls-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 precise",
 
 #################################################
 #
-set term png
-set out 'r11-cls-compo-entropy.png'
-# set term postscript eps enhanced color 20
-# set out 'r11-cls-compo-entropy.eps'
+# set term png
+# set out 'r11-cls-compo-entropy.png'
+set term postscript eps enhanced color 20
+set out 'r11-cls-compo-entropy.eps'
 set key right top
 set title "Class Compositional Entropy (run-11; q=0.7)"
 set xlabel "Merge ordinal"
