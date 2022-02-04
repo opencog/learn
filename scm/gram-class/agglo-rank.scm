@@ -53,12 +53,14 @@
 
 ; ---------------------------------------------------------------
 
-(define (rank-words LLOBJ)
+(define-public (rank-words LLOBJ)
 "
   rank-words LLOBJ -- Return a list of all words, ranked by count.
   If counts are equal, then rank by support. This may take half-a-
   minute to run.  Assumes that supports have been computed and are
   available.
+
+  Here, a "word" is any item appearing in the left-basis of LLOBJ.
 "
 	(define sup (add-support-api LLOBJ))
 
@@ -315,9 +317,14 @@
 )
 
 ; ---------------------------------------------------------------
-(define (setup-initial-similarities LLOBJ NRANK)
+(define-public (setup-initial-similarities LLOBJ NRANK)
 "
-  Compute a block matrix of similarities between the top-ranked words.
+  setup-initial-similarities LLOBJ NRANK -- Compute a block matrix
+  of similarities for the top-ranked words.
+
+  All of the words appearing in the left-basis of LLOBJ are ranked
+  by the total observation count on them. Then the top NRANK of them
+  are taken, and the similarities between them are computed.
 "
 	(define e (make-elapsed-secs))
 
