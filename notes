@@ -10547,7 +10547,7 @@ rebuilt cross-section??
 		(format #t "its ~A" MRG) (foobar)))
 	dors)
 
-
+Ta dah!
 
 --------------------------------------------------------
 0.5-0.2 -- 19008
@@ -10581,8 +10581,67 @@ export COGSERVER_CONF=${CONFIG_DIR}/4-cogserver/cogserver-gram-i1.conf
 export MST_DB=${ROCKS_DATA_DIR}/r12-imp-q0.7-c0.2-n1.rdb
 
 
+HUGETLB_MORECORE=yes LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libhugetlbfs.so.0
+
+AnonHugePages:   1228800 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+
+HugePages_Total:   32768
+HugePages_Free:    28468
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+
+After loading and start of computation:
+
+AnonHugePages:   4624384 kB
+HugePages_Total:   32768
+HugePages_Free:     7103
+HugePages_Rsvd:        3
+
+sudo sysctl vm.nr_hugepages=49152
+
+AnonHugePages:   4745216 kB
+HugePages_Total:   49152
+HugePages_Free:    22724
+HugePages_Rsvd:       14
+
+AnonHugePages:   9336832 kB   ... 9211904
+HugePages_Total:   49152
+HugePages_Free:    21199      ... 21187
+HugePages_Rsvd:        6
+
 --------------------------------------------------------
-singleton 500 == 67564 sections
+r10-export-500.rdb  built from junk dataset...
+singleton 500 == 67564 sections, 2524 WordClasses 2402 Words
+665 connectors oh no!
+
+    this.759                        53  disjuncts
+    is.1125                          1  disjuncts
+    a.979                            6  disjuncts
+    cup.2268                         9  disjuncts
+
+(define cset-obj (make-pseudo-cset-api))
+(define gram-obj (add-gram-class-api cset-obj))
+(define star-obj (add-pair-stars gram-obj))
+(star-obj 'fetch-pairs)
+
+(cog-incoming-size (Word "is")) ;  1
+(cog-incoming-size (WordClassNode "is#uni")) ; 2
+
+r11-imp-q0.7-c0.2-n1.rdb had 250 merges
+cp -pr r11-imp-q0.7-c0.2-n1.rdb r11-export-2000.rdb
+(MemberLink . 1215)
+(WordClassNode . 144)
+
+(check-gram-dataset star-obj)
+(cleanup-gram-dataset star-obj)
+
+
+
 
 ====================================================
 ====================================================
@@ -10671,14 +10730,14 @@ FIXED:
   Or better yet, left to be zero, and only added during debug
   printing.  Actually, this is not a bug. its a confusion. so FIXED.
 * Expt-11 -- optimal-in-group  -- change to use plain MI. DONE
-
-TODO/BUGS:
-* When WordClassNodes are fully merged, they are not deleted.
 * When ConnectorSeq's no longer occur in any sections, they still
   have marginals with non-zero counts, and are thus never removed.
   (PredicateNode "*-Norm Key-*") .. so support-obj
   I don't get it. I looked at the code, and this should be happening
-  already. Maybe this was a hang-over from before?
+  already. Maybe this was a hang-over from before? DONE. It was a bug.
+
+TODO/BUGS:
+* When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of

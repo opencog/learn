@@ -97,7 +97,7 @@
 
 ; ------------------------------------------------------------------
 
-(define (check-word-marginals LLOBJ)
+(define* (check-word-marginals LLOBJ #:optional (PRT #f))
 "
   Look for any WordNodes's that are not in the right basis.
 "
@@ -107,7 +107,8 @@
 	(for-each (lambda (WRD)
 		(when (not (words WRD))
 			(set! cnt (+ 1 cnt))
-			; (format #t "Unexpected Word ~A\n" WRD) ; (foobar)
+			(when PRT
+				(format #t "Unexpected Word ~A\n" WRD) (foobar))
 		))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
 
@@ -131,12 +132,22 @@
 	(for-each (lambda (WRD) (when (not (words WRD))
 			(for-each (lambda (IW)
 				(cond
-					((eq? (cog-type IW) 'Connector) (cog-delete IW))
-					((eq? (cog-type IW) 'ListLink) (cog-delete IW))
-					((eq? (cog-type IW) 'EvaluationLink) (cog-delete IW))))
+					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
+					((eq? (cog-type IW) 'ListLink) (cog-delete! IW))
+					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))))
 				(cog-incoming-set WRD))
 			(cog-delete! WRD)))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
+
+	; The merge code currently leaves behind some orphaned WordClasses
+	; Clean those up. All they have is MemberLinks, and nothing else.
+	(for-each (lambda (WRD)
+		(when
+			(and (not (words WRD))
+				(eq? (cog-incoming-size WRD)
+					(cog-incoming-size-by-type WRD 'MemberLink)))
+			(cog-delete-recursive! WRD)))
+		(cog-get-atoms 'WordClassNode))
 )
 
 ; -------------------------------------------------------------------
