@@ -10633,14 +10633,28 @@ singleton 500 == 67564 sections, 2524 WordClasses 2402 Words
 (cog-incoming-size (WordClassNode "is#uni")) ; 2
 
 r11-imp-q0.7-c0.2-n1.rdb had 250 merges
-cp -pr r11-imp-q0.7-c0.2-n1.rdb r11-export-2000.rdb
+cp -pr r11-imp-q0.7-c0.2-n1.rdb r11-export-100.rdb
 (MemberLink . 1215)
 (WordClassNode . 144)
 
 (check-gram-dataset star-obj)
 (cleanup-gram-dataset star-obj)
+(MemberLink . 581)   ; wow. Big drop.  66 orphan word classes
+(WordClassNode . 78)
+
+(define cov (add-covering-sections cset-obj))
+(define sin (add-singleton-classes cov))
+(cov 'fetch-pairs)
+(sin 'create-hi-count-singles 100)
+After trimming, 5866 words left, out of 9573
+
+So that's a pretty big sample.
 
 
+
+(define pss (add-support-api LLOBJ))
+
+.. wild-cards not fetched!
 
 
 ====================================================

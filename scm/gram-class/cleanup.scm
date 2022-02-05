@@ -13,7 +13,7 @@
 ; Thus, they are not a part of the module itself.
 ; ------------------------------------------------------------------
 
-(define (check-conseq-marginals LLOBJ)
+(define* (check-conseq-marginals LLOBJ #:optional (PRT #f))
 "
   Look for any ConnectorSeq's that are not in the right basis.
 "
@@ -23,7 +23,7 @@
 	(for-each (lambda (CSQ)
 		(when (not (djs CSQ))
 			(set! cnt (+ 1 cnt))
-			; (format #t "Unexpected ConnectorSeq ~A\n" CSQ) (foobar)
+			(when PRT (format #t "Unexpected ConnectorSeq:\n~A" CSQ) (foobar))
 		))
 		(cog-get-atoms 'ConnectorSeq))
 
@@ -42,7 +42,7 @@
   or
      (ListLink (AnyNode \"gram-class\") (ConnectorSeq...))
 
-  This will delete the merginals, and then the ConnectorSeq.
+  This will delete the marginals, and then the ConnectorSeq.
 "
 	(define djs (make-aset-predicate (LLOBJ 'right-basis)))
 
@@ -53,14 +53,14 @@
 					(for-each cog-delete! iset)
 					(cog-delete! CSQ))
 				(begin
-					(format #t "Unexpected ConnectorSeq ~A\n" CSQ))
+					(format #t "During trimming, unexpected ConnectorSeq:\n~A" CSQ))
 			))))
 		(cog-get-atoms 'ConnectorSeq))
 )
 
 ; -------------------------------------------------------------------
 
-(define (check-connectors LLOBJ)
+(define* (check-connectors LLOBJ #:optional (PRT #f))
 "
   Verify that Connectors are used sanely.
 "
@@ -72,7 +72,7 @@
 					(cog-incoming-size-by-type CON 'ConnectorSeq)
 					(cog-incoming-size-by-type CON 'ShapeLink))))
 			(set! cnt (+ 1 cnt))
-			; (format #t "Unexpected Connector usage ~A\n" CON) (foobar)
+			(when PRT (format #t "Unexpected Connector usage:\n~A" CON) (foobar))
 		))
 		(cog-get-atoms 'Connector))
 
@@ -108,7 +108,7 @@
 		(when (not (words WRD))
 			(set! cnt (+ 1 cnt))
 			(when PRT
-				(format #t "Unexpected Word ~A\n" WRD) (foobar))
+				(format #t "Unexpected Word: ~A" WRD) (foobar))
 		))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
 
@@ -134,7 +134,8 @@
 				(cond
 					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
 					((eq? (cog-type IW) 'ListLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))))
+					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))
+					((eq? (cog-type IW) 'ShapeLink) (cog-delete! IW))))
 				(cog-incoming-set WRD))
 			(cog-delete! WRD)))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
