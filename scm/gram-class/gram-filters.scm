@@ -409,7 +409,7 @@
   Set RENAME to #t if marginals should be stored under a filter-specific
   name. Otherwise, set to #f to use the default marginal locations.
 "
-	(define is-in-connector? (make-linakble-pred LLOBJ))
+	(define is-in-connector? (make-linkable-pred LLOBJ))
 
 	(define id-str (if RENAME "linkage-filter" #f))
 
@@ -432,7 +432,7 @@
   words or connectors, and so this may have to be run several times,
   till things settle down.
 "
-	(define is-in-connector? (make-linakble-pred LLOBJ))
+	(define is-in-connector? (make-linkable-pred LLOBJ))
 	(linking-trim LLOBJ is-in-connector?)
 
 	*unspecified*

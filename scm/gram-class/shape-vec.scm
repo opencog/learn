@@ -759,7 +759,7 @@
 		(case meth
 			((provides)         provides)
 			((flatten)          flatten)
-			((cover-base)       cover-base)
+			((cover-base)       (lambda () LLOBJ))
 
 			; cover-stars is the direct product, and it handles the rest.
 			(else               (cover-stars 'provides meth))

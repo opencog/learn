@@ -8,7 +8,9 @@
 ; Due to code bugs and operational errors, assorted datasets end up
 ; containing stuff that they should not. The scripts below are a curated
 ; set of ad hoc tools to clean up stuff that has gone wrong.
-
+;
+; These are meant to be run by hand, on an as-needed basis.
+; Thus, they are not a part of the module itself.
 ; ------------------------------------------------------------------
 
 (define (check-conseq-marginals LLOBJ)
