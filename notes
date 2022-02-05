@@ -10497,6 +10497,58 @@ rebuilt cross-section??
     (Connector (WordNode "His") (ConnectorDir "-"))
     (Connector (WordNode "—") (ConnectorDir "+"))))
 
+(define csq
+  (ConnectorSeq
+    (Connector (WordNode "His") (ConnectorDir "-"))
+    (Connector (WordNode "—") (ConnectorDir "+"))))
+
+(define wl (list (Word "+") (Word "—")))
+
+(define merge-majority (make-merge-majority star-obj 0.8 4 #t))
+(define wclass (make-class-node star-obj wl))
+(merge-majority wclass  wl)
+(define cwl (cons wclass wl))
+
+(define affected-basis (get-affected-basis star-obj cwl))
+(define adj (second affected-basis))
+(length adj)
+(any (lambda (DJ) (equal? csq DJ)) adj) ; #t
+
+(define psu (add-support-compute star-obj))
+(define sup (add-support-api star-obj))
+(sup 'left-count csq)  ; 20
+(psu 'set-left-marginals csq)
+(sup 'left-count csq) ; 0.0
+(< 0 (sup 'left-count csq)) ; #f
+
+(define dj-orphan (make-atom-set))
+(define dj-store (make-atom-set))
+ (for-each
+      (lambda (DJ)
+         (define marg (psu 'set-left-marginals DJ))
+         (if (< 0 (sup 'left-count DJ))
+            (dj-store marg) (dj-orphan marg)))
+      adj)
+
+(any (lambda (DJ) (equal? csq DJ)) (dj-orphan #f))  ; #f ... wtf
+(any (lambda (DJ) (equal? csq DJ)) (dj-store #f))  ; #f ... wtf
+
+(define dors (dj-orphan #f))
+(length dors) ; 4939
+
+(define cnt 0)
+(for-each (lambda (MRG)
+	(if (eq? 'ShapeLink (cog-type MRG)) (set! cnt (+ 1 cnt))))
+	dors)
+; 4471
+
+(for-each (lambda (MRG)
+	(when (not (eq? 'ShapeLink (cog-type MRG)))
+		(format #t "its ~A" MRG) (foobar)))
+	dors)
+
+
+
 --------------------------------------------------------
 0.5-0.2 -- 19008
 0.6-0.3 -- 19009

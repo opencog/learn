@@ -547,11 +547,10 @@
   delete-orphans left-marg right-marg -- delete marginals.
 "
 	; In the current design, LLOBJ will always be a covering object.
-	; The base is what is covered with shapes. Currently not needed.
-	; See the delete-recursive! below.
-	; (define base-obj
-	;	(if (LLOBJ 'provides 'cover-base)
-	;		(LLOBJ 'cover-base) #f))
+	; The base is what is covered with shapes.
+	(define base-obj
+		(if (LLOBJ 'provides 'cover-base)
+			(LLOBJ 'cover-base) #f))
 
 	; Get rid of word-marginals
 	(for-each (lambda (WMARG)
@@ -561,17 +560,19 @@
 				(cog-delete-recursive! WRD))))
 		left-marg)
 
-	; Get rid of disjunct marginals. This works, because,
-	; for the covering sections, the disjunct wild-cards
-	; are the disjuncts themselves.
+	; Get rid of disjunct marginals. These are one of two types:
+	; either they are ShapeLinks, created by the covering object,
+	; or they are something else, from the base object. For example,
+	; the gram-class-api uses a ListLink, of which the 'right-elt
+	; is a ConnectorSeq.  We want to delete that ConnectorSeq.
 	;
-	; When LLOBJ is a covering-object (which, currently, it always is:
-	; a direct-sum of Sections and CrossSections), then the base object
-	; (the object providing the Sections) is going to have it's own
-	; marginals. We need to be deleting those, too. The delete-recursive
-	; does this automatically for us.
-	(for-each (lambda (DJ)
-			(when (cog-atom? DJ) (cog-delete-recursive! DJ)))
+	(for-each (lambda (DJMARG)
+			(when (cog-atom? DJMARG)
+				(if (eq? 'ShapeLink (cog-type DJMARG))
+					(cog-delete! DJMARG)
+					(let ((DJ (base-obj 'right-element DJMARG)))
+						(cog-delete! DJMARG)
+						(cog-delete-recursive! DJ)))))
 		right-marg)
 )
 
