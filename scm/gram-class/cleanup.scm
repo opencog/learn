@@ -161,6 +161,9 @@
 					(cog-incoming-size-by-type WRD 'MemberLink)))
 			(cog-delete-recursive! WRD)))
 		(cog-get-atoms 'WordClassNode))
+
+	; If Shapes were removed, then the right-basis is bad.
+	(LLOBJ 'clobber)
 )
 
 ; -------------------------------------------------------------------
