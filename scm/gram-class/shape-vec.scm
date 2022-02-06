@@ -542,31 +542,12 @@
 			; Walk over a section, and create the matching cross-sections.
 			; Copy the count from the section to each of the cross-secions.
 			(define (explode-section SEC)
-				; The root-point of the seed
-				(define point (gar SEC))
-				; The list of connectors
-				(define cncts (cog-outgoing-set (gdr SEC)))
-				(define num-cncts (length cncts))
 
-				; Copy the count. All shapes have the same count as
-				; the section itself. XXX should use getter on section.
-				; (define weight (CountTruthValue 1 0 (cog-count SEC)))
-				(define weight (cog-tv SEC))
-
-				; Place the wild-card into the N'th location of the section.
-				(define (insert-wild N)
-					(define front (take cncts N))
-					(define back (drop cncts N))
-					(define ctr (car back)) ; the connector being exploded
-					(define wrd (gar ctr))  ; the word being exploded
-					(define dir (gdr ctr))  ; the direction being exploded
-					(define wild (Connector star-wild dir))
-					(CrossSection wrd
-						(Shape point front wild (cdr back))
-						weight))
-
-				; Create all the cross-sections for this section.
-				(for-each insert-wild (iota num-cncts))
+				; Copy the count. All shapes must have the same
+				; count as the section itself.
+				(define weight (get-count SEC))
+				(define (copy-weight XES) (set-count XES weight))
+				(for-each copy-weight (make-cross-sections SEC))
 			)
 
 			; Ask the LLOBJ for all Sections.
