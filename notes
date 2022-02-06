@@ -10479,7 +10479,7 @@ After:
 Repeated (add-support-api "There isn't any cached data on `cset`
 (len-obj 'total-support-left)
 
-do-left-totals called by 
+do-left-totals called by
 
 (define marg (psu 'set-left-marginals DJ))
 
@@ -10645,16 +10645,176 @@ cp -pr r11-imp-q0.7-c0.2-n1.rdb r11-export-100.rdb
 (define cov (add-covering-sections cset-obj))
 (define sin (add-singleton-classes cov))
 (cov 'fetch-pairs)
+(cov 'implode-sections)
 (sin 'create-hi-count-singles 100)
 After trimming, 5866 words left, out of 9573
+Created 5866 singleton word classes in 1428 secs
+
 
 So that's a pretty big sample.
-
 
 
 (define pss (add-support-api LLOBJ))
 
 .. wild-cards not fetched!
+
+(define cset-obj (make-pseudo-cset-api))
+(define gram-obj (add-gram-class-api cset-obj))
+(gram-obj 'fetch-pairs)
+
+(define cov (add-covering-sections cset-obj))
+(cov 'fetch-pairs)
+(cov 'implode-sections)
+(check-gram-dataset cov)
+(cleanup-gram-dataset cov)
+
+; above failed to load marginals! Again!? wtf?
+(cog-keys (cov 'right-wildcard (Word "is")))
+
+(fetch-incoming-by-type pred-node 'EvaluationLink)
+Does NOT get the keys
+... because there aren't any. So where are they?
+(EvaluationLink
+  (PredicateNode "*-Direct Sum Wild (gram-class⊕cross-section)")
+  (WordNode "is")
+  (AnyNode "right-wild-direct-sum"))
+Not in the above...
+
+(cog-keys (gram-obj 'right-wildcard (Word "is")))
+(ListLink
+  (WordNode "is")
+  (AnyNode "cset-disjunct"))
+
+Does have keys ...
+(define pss (add-support-api gram-obj))
+ (pss 'right-count (Word "is"))
+Does work.  Why are we so confused, then?
+
+
+(MemberLink . 581)
+(WordClassNode . 78)
+
+(define sin (add-singleton-classes cov))
+(sin 'create-hi-count-singles 100)
+
+---------------
+(define cset-obj (make-pseudo-cset-api))
+(define gram-obj (add-gram-class-api cset-obj))
+(gram-obj 'fetch-pairs)
+(cog-keys (gram-obj 'right-wildcard (Word "is")))
+(define pss (add-support-api gram-obj))
+ (pss 'right-count (Word "is"))
+
+OK, that looks good ...
+
+(check-gram-dataset gram-obj)
+(cleanup-gram-dataset gram-obj)
+
+OK, so that ... deleted the keys. Whoops!
+
+Calling (gram-obj 'fetch-pairs) doe NOT restore the keys!
+(fetch-atom (gram-obj 'right-wildcard (Word "is")))
+also does not restore them ... because teh've been deleted
+from the DB already.
+
+(define star-obj (add-pair-stars gram-obj))
+(define words (make-aset-predicate (star-obj 'left-basis)))
+(words (Word "is")) #t
+
+(define (have-keys)
+	(not (nil?  (cog-keys (gram-obj 'right-wildcard (Word "is"))))))
+
+(zap-word-marginals star-obj)
+(have-keys) ; stil OK
+(zap-conseq-marginals star-obj)
+(have-keys) ; stil OK
+(zap-word-marginals star-obj)
+(have-keys) ; stil OK
+
+(trim-linkage star-obj)
+(have-keys) ; #f   ... so it was trimmed as unlinkable!
+?really?
+
+(define is-in-connector? (make-linkable-pred star-obj))
+(is-in-connector? (Word "is")) ; #t correct ...
+
+(define ok-conseq? (make-conseq-predicate star-obj is-in-connector?))
+
+ (define (good-elt? SECT)
+      (and (is-in-connector? (star-obj 'left-element SECT))
+         (ok-conseq? (star-obj 'right-element SECT))))
+
+(define cnt 0)
+(for-each (lambda (SCT)
+	(when (not (good-elt? SCT)) (set! cnt (+ 1 cnt))))
+	(star-obj 'right-stars (Word "is")))
+OK ...
+
+So what's hammering it?
+.... bug in add-trimmer. FIXED.
+--------------------
+(define cset-obj (make-pseudo-cset-api))
+(define gram-obj (add-gram-class-api cset-obj))
+(gram-obj 'fetch-pairs)
+(cleanup-gram-dataset gram-obj)
+(cleanup-gram-dataset gram-obj)
+(check-gram-dataset gram-obj)
+
+(define cov (add-covering-sections gram-obj))
+(define sin (add-singleton-classes cov))
+(sin 'create-hi-count-singles 100)
+
+Now waht?
+(define pss (add-support-api gram-obj))
+(pss 'right-count (Word "is"))  ; 71894
+
+(define pss (add-support-api cov))
+(pss 'right-count (Word "is")) ; 0
+
+(fetch-atom (cov 'right-wildcard (Word "is")))
+(pss 'right-count (Word "is")) ; 52069
+
+... Oi.
+
+(define cset-obj (make-pseudo-cset-api))
+(define cov (add-covering-sections cset-obj))
+(cov 'fetch-pairs)
+(cov 'implode-sections)
+(check-gram-dataset cov)
+(cleanup-gram-dataset cov)
+
+(define sin (add-singleton-classes cov))
+(sin 'create-hi-count-singles 100)
+After trimming, 5866 words left, out of 9573
+Created 5866 singleton word classes in 287 secs
+
+(ListLink . 412454)
+(Connector . 17413)
+(ConnectorSeq . 216882)
+(Section . 615868)
+(MemberLink . 6447)
+(EvaluationLink . 9574)
+(WordNode . 9495)
+(WordClassNode . 5944)
+
+(define gcf (add-word-remover cov #t))
+(batch-all-pair-mi gcf)
+
+Wrong!
+(gcf 'left-basis-size) ; 5944
+(gcf 'right-basis-size) ; 618  wtf wrong
+
+(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+(define ok-conseq? (make-conseq-predicate cov is-word-class?))
+
+(define cnt 0)
+(for-each (lambda (DJ)
+	(when (ok-conseq? DJ) (set! cnt (+ 1 cnt))))
+	(cov 'right-basis))
+
+cnt ; 618 argh.
+
+
 
 
 ====================================================
