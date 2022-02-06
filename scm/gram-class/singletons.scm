@@ -72,12 +72,36 @@
 
 	; Create singletons
 	(define (create-singles WORD-LIST)
+
 		; Copy the count-value, and anything else.
 		(define (copy-values NEW OLD)
 			(for-each
 				(lambda (KEY)
 					(cog-set-value! NEW KEY (cog-value OLD KEY)))
 				(cog-keys OLD)))
+
+		; Create matching sections/cross-sections.
+		; Copy count to sections, and store sections.
+		; Delete the original section, as otherwise it
+		; will disrupt the marginals.
+		(define (flatten WCL PNT)
+			(define flat (LLOBJ 'flatten WCL PNT))
+			(if (eq? 'Section (cog-type PNT))
+				(begin
+					(copy-values flat PNT)
+					(store-atom flat)
+					(LLOBJ 'make-cross-sections flat)
+
+					(for-each cog-delete! (LLOBJ 'get-cross-sections PNT))
+					(cog-delete! PNT)
+				)
+				(let ((SEC (LLOBJ 'make-section flat)))
+					(LLOBJ 'set-count SEC (LLOBJ 'get-count flat))
+					(store-atom SEC)
+					(LLOBJ 'make-cross-sections SEC)
+					(cog-delete! (LLOBJ 'get-section PNT))
+				))
+		)
 
 		(define start-time (current-time))
 
@@ -89,17 +113,9 @@
 				(cog-inc-count! memb (pss 'right-count WRD))
 				(store-atom memb)
 
-				; Copy the sections
+				; Copy the sections.
 				(for-each
-					(lambda (PNT)
-						(define flat (LLOBJ 'flatten wcl PNT))
-						(copy-values flat PNT)
-						(store-atom flat)
-
-						; Delete the original section, as otherwise they
-						; will disrupt the marginals.
-						(cog-delete! PNT)
-					)
+					(lambda (PNT) (flatten wcl PNT))
 					(LLOBJ 'right-stars WRD)))
 			WORD-LIST)
 
