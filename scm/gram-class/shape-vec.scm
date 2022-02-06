@@ -583,7 +583,7 @@
 			; XXX FIXME: we should give the star-wild a unique name,
 			; so we don't accidentally clobber CrossSections in other
 			; objects.
-			(cog-extract-recursive! star-wild)
+			(for-each cog-extract-recursive! (cog-incoming-set star-wild))
 
 			; Invalidate any caches that might be holding things.
 			(clobber)

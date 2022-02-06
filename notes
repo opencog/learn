@@ -10848,6 +10848,21 @@ get-section
 
 weight
 
+(CrossSection (ctv 1 0 7)
+  (WordNode "calculated")
+  (ShapeLink
+    (WordNode "for")
+    (Connector ----------------- wtf
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "the")
+      (ConnectorDir "+"))))
+
+(define s (Section (WordNode "for")
+(ConnectorSeq
+	(Connector (WordNode "calculated") (ConnectorDir "-"))
+	(Connector (WordNode "the") (ConnectorDir "+")))))
+
 
 
 ====================================================
