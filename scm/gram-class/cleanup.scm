@@ -153,7 +153,7 @@
 	; Clean those up. All they have is MemberLinks, and nothing else.
 	(for-each (lambda (WRD)
 		(when
-			(and (not (words WRD))
+			(and (not (basis-word? WRD))
 				(eq? (cog-incoming-size WRD)
 					(cog-incoming-size-by-type WRD 'MemberLink)))
 			(cog-delete-recursive! WRD)))
