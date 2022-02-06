@@ -102,7 +102,9 @@
 				; Copy the sections
 				(for-each
 					(lambda (PNT)
-						(copy-values (LLOBJ 'flatten wcl PNT) PNT)
+						(define flat (LLOBJ 'flatten wcl PNT))
+						(copy-values flat PNT)
+						(store-atom flat)
 
 						; Delete the original section, as otherwise they
 						; will disrupt the marginals.
