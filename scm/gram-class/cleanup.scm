@@ -144,7 +144,10 @@
 					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
 					((eq? (cog-type IW) 'ListLink) (cog-delete! IW))
 					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'ShapeLink) (cog-delete! IW))))
+					((eq? (cog-type IW) 'ShapeLink)
+						(for-each cog-delete!
+							(cog-incoming-by-type IW 'CrossSection))
+						(cog-delete! IW))))
 				(cog-incoming-set WRD))
 			(cog-delete! WRD)))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
