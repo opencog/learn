@@ -101,11 +101,18 @@
 "
   Look for any WordNodes's that are not in the right basis.
 "
-	(define words (make-aset-predicate (LLOBJ 'left-basis)))
+	; Does the word belong to the basis?
+	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
+
+	; It might not be a part of the basis, but it's still OK
+	; if its just a MemberLink to a WordClass
+	(define (word-ok? WRD) (or (basis-word? WRD)
+		(eq? (cog-incoming-size WRD)
+			(cog-incoming-size-by-type WRD 'MemberLink))))
 
 	(define cnt 0)
 	(for-each (lambda (WRD)
-		(when (not (words WRD))
+		(when (not (word-ok? WRD))
 			(set! cnt (+ 1 cnt))
 			(when PRT
 				(format #t "Unexpected Word: ~A" WRD) (foobar))
@@ -127,9 +134,11 @@
   or
      (Evaluation (Predicate ...) (Word ...) (Any \"right-wild-direct-sum\"))
 "
-	(define words (make-aset-predicate (LLOBJ 'left-basis)))
+	; Does the word belong to the basis?
+	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
 
-	(for-each (lambda (WRD) (when (not (words WRD))
+	; Delete everything except MemberLinks.
+	(for-each (lambda (WRD) (when (not (basis-word? WRD))
 			(for-each (lambda (IW)
 				(cond
 					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
