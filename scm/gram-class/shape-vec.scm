@@ -259,13 +259,11 @@
 		; (A projecting from the covering space to the base space).
 		;
 		; Disassemble the SHAPE, insert GERM into the variable
-		; location, and return the Section. Note that a Section
-		; always exists, because it was impossible to make a Shape,
-		; without having had the underlying Section that it reduces to.
+		; location, and return the Section.
 		;
-		; XXX "a Section always exists": currently, this is not true,
-		; presumably due to bugs in the merging code. Unclear what's
-		; going on, at the present time. XXX FIXME.
+		; This code is typically used after flattening a CrossSection,
+		; in order to make the Section that corresponds to the flattend
+		; cross.
 		(define (make-section XSECT)
 			(define parts (analyze-xsection XSECT))
 			(define GERM  (list-ref parts 0))
@@ -305,6 +303,10 @@
 
 		; Rewrite SECT by replacing Connectors in the ConnectorSeq
 		; that belong to CLS by CLS itself.
+		;
+		; Caution: after using this method, it is advisable that
+		; the matching CrossSections should be created, with the
+		; `make-cross-sections` method.
 		(define (flatten-section CLS SECT)
 			; conseq is the connector sequence
 			(define conseq (cog-outgoing-set (get-pair-right SECT)))
@@ -335,6 +337,11 @@
 
 		; Rewrite XSECT by replacing Connectors in the Shape
 		; that belong to CLS by CLS itself.
+		;
+		; Caution: after using this method, it is advisable that the
+		; matching Section should be created, with the `make-section`
+		; method. And then, potentially one more step: to create the
+		; other, matching cross-sections with `make-cross-sections`.
 		(define (flatten-cross CLS XSECT)
 			(define SHAPE-PR (cog-outgoing-set XSECT))
 			(define germ (first SHAPE-PR))
