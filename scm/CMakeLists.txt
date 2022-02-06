@@ -19,6 +19,7 @@ ADD_GUILE_MODULE (FILES
 	gram-class/log-merge.scm
 	gram-class/shape-project.scm
 	gram-class/shape-vec.scm
+	gram-class/singletons.scm
 
 	lg-compare.scm
 

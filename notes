@@ -10813,6 +10813,31 @@ Wrong!
 	(cov 'right-basis))
 
 cnt ; 618 argh.
+before starting flattening this is 570
+
+(cog-incoming-size (WordClassNode "is#uni"))
+
+(define basis-word? (make-aset-predicate (cov 'left-basis)))
+(basis-word? (WordClassNode "is#uni") ; #t
+
+didn't get flattened...
+(Section (ctv 1 0 4)
+  (WordClassNode "is#uni")
+  (ConnectorSeq
+    (Connector
+      (WordNode "story")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "the")
+      (ConnectorDir "+"))))
+
+
+Choices:
+1) flatten everything every time
+
+2)
+-- work with shapes
+-- if flatten returns not #f then cross/recross.
 
 
 
