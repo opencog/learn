@@ -86,20 +86,26 @@
 		; will disrupt the marginals.
 		(define (flatten WCL PNT)
 			(define flat (LLOBJ 'flatten WCL PNT))
+			(define cnt (LLOBJ 'get-count PNT))
 			(if (eq? 'Section (cog-type PNT))
 				(begin
 					(copy-values flat PNT)
 					(store-atom flat)
-					(LLOBJ 'make-cross-sections flat)
+					(for-each
+						(lambda (XES) (LLOBJ 'set-count XES cnt))
+						(LLOBJ 'make-cross-sections flat))
 
 					(for-each cog-delete! (LLOBJ 'get-cross-sections PNT))
 					(cog-delete! PNT)
 				)
-				(let ((SEC (LLOBJ 'make-section flat)))
-					(LLOBJ 'set-count SEC (LLOBJ 'get-count flat))
+				(let ((SEC (LLOBJ 'make-section flat))
+						(OSC (LLOBJ 'get-section PNT)))
+					(LLOBJ 'set-count SEC cnt)
 					(store-atom SEC)
-					(LLOBJ 'make-cross-sections SEC)
-					(cog-delete! (LLOBJ 'get-section PNT))
+					(for-each
+						(lambda (XES) (LLOBJ 'set-count XES cnt))
+						(LLOBJ 'make-cross-sections SEC))
+					(if (cog-atom? OSC) (cog-delete! OSC))
 				))
 		)
 
@@ -115,7 +121,7 @@
 
 				; Copy the sections.
 				(for-each
-					(lambda (PNT) (flatten wcl PNT))
+					(lambda (PNT) (if (cog-atom? PNT) (flatten wcl PNT)))
 					(LLOBJ 'right-stars WRD)))
 			WORD-LIST)
 
