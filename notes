@@ -10609,9 +10609,9 @@ HugePages_Total:   49152
 HugePages_Free:    22724
 HugePages_Rsvd:       14
 
-AnonHugePages:   9336832 kB   ... 9211904
+AnonHugePages:   9336832 kB   ... 9211904 ... 22102016
 HugePages_Total:   49152
-HugePages_Free:    21199      ... 21187
+HugePages_Free:    21199      ... 21187   ... 20905
 HugePages_Rsvd:        6
 
 --------------------------------------------------------
@@ -10863,6 +10863,16 @@ weight
 	(Connector (WordNode "calculated") (ConnectorDir "-"))
 	(Connector (WordNode "the") (ConnectorDir "+")))))
 
+(define cset-obj (make-pseudo-cset-api))
+(define cov (add-covering-sections cset-obj))
+(cov 'fetch-pairs)
+(check-gram-dataset cov)
+; (cleanup-gram-dataset cov)
+
+(define sin (add-singleton-classes cov))
+(sin 'create-hi-count-singles 100)
+Created 5866 singleton word classes in 5687 secs
+
 
 
 ====================================================
@@ -10959,6 +10969,8 @@ FIXED:
   already. Maybe this was a hang-over from before? DONE. It was a bug.
 
 TODO/BUGS:
+* Alter dict export to not require creation of singletons.
+  They are way too slow and not really a needed step.
 * When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!

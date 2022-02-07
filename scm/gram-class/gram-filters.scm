@@ -49,7 +49,9 @@
 	; First, get a list of all Connectors appearing in some ConnectorSeq
 	(define conn-set (make-atom-set))
 	(for-each
-		(lambda (CSQ) (for-each conn-set (cog-outgoing-set CSQ)))
+		(lambda (CSQ)
+			(if (eq? 'ConnectorSeq CSQ)
+				(for-each conn-set (cog-outgoing-set CSQ))))
 		(STAR-OBJ 'right-basis))
 	(define all-connectors (conn-set #f))
 
