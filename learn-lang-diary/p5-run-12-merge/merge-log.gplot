@@ -1,0 +1,170 @@
+# set term png small color
+set xrange [0:250]
+
+#################################################
+#
+set term png
+set out 'r12-sparsity.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-sparsity.eps'
+set key left top
+set title "Sparsity vs. Time (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "Sparsity, in bits"
+unset yrange
+
+plot "../p5-en-merge/log-0.7-0.4.dat" using 1:7 with lines lw 2 title "n=4 (older)", \
+     "r12-p-log-q0.7-c0.2-n4.dat" using 1:10 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:10 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:10 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:10 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:10 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-entropy.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-entropy.eps'
+set key left bottom
+set title "MM^T Entropy vs. Time (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "MM^T Entropy, in bits"
+unset yrange
+
+plot "../p5-en-merge/log-0.7-0.4.dat" using 1:8 with lines lw 2 title "n=4 (older)", \
+     "r12-p-log-q0.7-c0.2-n4.dat" using 1:11 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:11 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:11 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:11 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:11 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-ranked-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-ranked-mi.eps'
+set key bottom left
+set title "Ranked-MI of top-ranked pair (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "Ranked-MI, in bits"
+unset yrange
+
+plot "../p5-en-merge/log-0.7-0.4.dat" using 1:9 with lines lw 2 title "n=4 (older)", \
+     "r12-p-log-q0.7-c0.2-n4.dat" using 1:12 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:12 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:12 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:12 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:12 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-mmtq.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-mmtq.eps'
+set key right top
+set title "MM^T-Q vs. Time (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "MM^T-Q, in bits"
+unset yrange
+
+plot "../p5-en-merge/log-0.7-0.4.dat" using 1:10 with lines lw 2 title "n=4 (older)", \
+     "r12-p-log-q0.7-c0.2-n4.dat" using 1:14 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:14 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:14 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:14 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:14 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-plain-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-plain-mi.eps'
+set key right top
+set title "MI of top-ranked pair (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "MI, in bits"
+unset yrange
+
+plot "r12-p-log-q0.7-c0.2-n4.dat" using 1:13 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:13 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:13 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:13 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:13 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-left-dj-entropy.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-left-dj-entropy.eps'
+set key right top
+set title "Marginal Disjunct Entropy (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "Entropy, in bits"
+unset yrange
+
+plot "r12-p-log-q0.7-c0.2-n4.dat" using 1:7 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:7 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:7 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:7 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:7 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-right-dj-entropy.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-right-dj-entropy.eps'
+set key right top
+set title "Marginal Word Entropy (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "Entropy, in bits"
+unset yrange
+
+plot "r12-p-log-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:8 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:8 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:8 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:8 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-word-dj-entropy.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-word-dj-entropy.eps'
+set key right top
+set title "Total Word+Disjunct Entropy (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "Entropy, in bits"
+unset yrange
+
+plot "r12-p-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:9 with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:9 with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:9 with lines lw 2 title "n=1 imprecise"
+
+#################################################
+#
+set term png
+set out 'r12-word-dj-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'r12-word-dj-mi.eps'
+set key right top
+set title "Total Word+Disjunct MI (run-12; q=0.7)"
+set xlabel "Merge ordinal"
+set ylabel "MI, in bits"
+unset yrange
+
+plot "r12-p-log-q0.7-c0.2-n4.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 precise", \
+     "r12-log-q0.7-c0.2-n4.dat" using 1:($7+$8-$9) with lines lw 2 title "n=4 imprecise", \
+     "r12-log-q0.7-c0.2-n3.dat" using 1:($7+$8-$9) with lines lw 2 title "n=3 imprecise", \
+     "r12-log-q0.7-c0.2-n2.dat" using 1:($7+$8-$9) with lines lw 2 title "n=2 imprecise", \
+     "r12-log-q0.7-c0.2-n1.dat" using 1:($7+$8-$9) with lines lw 2 title "n=1 imprecise"
+
+#################################################
