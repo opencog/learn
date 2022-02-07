@@ -6416,7 +6416,7 @@ Where to change this: search code for `optimal-in-group` and specify the
 \end_layout
 
 \begin_layout Section*
-Experiment-11 – Deep Merge
+Experiment-11 – Deep Merge (also Expt 12 graphs)
 \end_layout
 
 \begin_layout Standard
@@ -6686,6 +6686,24 @@ precise
  datasets provide materially better classifications, or not.
 \end_layout
 
+\begin_layout Standard
+Computation of these datasets was terminated with a snowstorm power outage.
+ Rather than resuming where these left off, a fresh computation was started,
+ with a slightly cleaned up dataset, Experiment 12.
+ As can be seen, there are no substantial changes arising from this.
+\end_layout
+
+\begin_layout Standard
+Shown for comparison are the Experiment-12 graphs.
+ These are based on the same underlying dataset as Experiment-11, but are
+ cleaned up to remove unconnectable words and disjuncts.
+ That is, the dataset is scrubbed to remove all connectors that cannot connect
+ to words, and vice-versa.
+ This has a minor effect on the graphs, but reduces the amount of annoyance
+ and cunfusion during inspection and debugging.
+ 
+\end_layout
+
 \begin_layout Subsubsection*
 Sparsity
 \end_layout
@@ -6714,6 +6732,24 @@ Sparsity is defined as always: it is log2 of the fraction of non-zero matrix
 \end_inset
 
 
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-sparsity.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-sparsity.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the new improved cleaned-up dataset, the initial sparsity is lower.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -6764,6 +6800,25 @@ f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 \end_inset
 
 
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-entropy.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-entropy.png
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the cleanup has almost no impact on the MMT Entropy.
+ It is slightly different, but not by much.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -6811,6 +6866,20 @@ It varies over time, as both new disjuncts are created, old disjuncts have
 \end_inset
 
 
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-mmtq.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-mmtq.png
+	width 50text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -6843,6 +6912,20 @@ Ranked-MI is defined as in 'Diary Part Four', and restated earlier, above.
 
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-p-ranked-mi.eps
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-ranked-mi.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-ranked-mi.png
 	width 50text%
 
 \end_inset
@@ -6913,6 +6996,20 @@ left
 \end_inset
 
 
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-right-dj-entropy.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-right-dj-entropy.png
+	width 50text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -6942,6 +7039,20 @@ S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
 
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-p-left-dj-entropy.eps
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-left-dj-entropy.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-left-dj-entropy.png
 	width 50text%
 
 \end_inset
@@ -6981,6 +7092,20 @@ H_{\mbox{tot}}=-\sum_{w,d}P\left(w,d\right)\log_{2}P\left(w,d\right)
 \end_inset
 
 
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-word-dj-entropy.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-word-dj-entropy.png
+	width 50text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -7011,6 +7136,20 @@ MI_{\mbox{tot}}= & \sum_{w,d}P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P
 
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-p-word-dj-mi.eps
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-word-dj-mi.png
+	width 50text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p5-run-12-merge/r12-p-word-dj-mi.png
 	width 50text%
 
 \end_inset

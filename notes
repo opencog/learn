@@ -10609,9 +10609,9 @@ HugePages_Total:   49152
 HugePages_Free:    22724
 HugePages_Rsvd:       14
 
-AnonHugePages:   9336832 kB   ... 9211904 ... 22102016
+AnonHugePages:   9336832 kB ... 9211904 ... 22102016 ... 17385472
 HugePages_Total:   49152
-HugePages_Free:    21199      ... 21187   ... 20905
+HugePages_Free:    21199    ... 21187   ... 20905    ... 20644
 HugePages_Rsvd:        6
 
 --------------------------------------------------------
@@ -10877,6 +10877,23 @@ Created 5866 singleton word classes in 5687 secs
 
 Found 494190 unexpected ConnectorSeq!
 Found 129 Words that are not in Connectors!
+
+(ListLink . 120485)
+(MemberLink . 6447)
+(Connector . 26723)
+(ConnectorSeq . 629192)
+(Section . 2208614)
+(EvaluationLink . 8726)
+(WordNode . 9495)
+(WordClassNode . 5944)
+
+(define gcf (add-word-remover cov #t))
+(gcf 'left-basis-size) ; 5944
+(gcf 'right-basis-size) ; 206202 OK, I guess
+
+(batch-all-pair-mi gcf)
+Finished with MI computations; this took 0.269 hours.
+
 
 
 ====================================================

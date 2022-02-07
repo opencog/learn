@@ -7,7 +7,7 @@ set xrange [0:250]
 # set out 'r11-sparsity.png'
 set term postscript eps enhanced color 20
 set out 'r11-sparsity.eps'
-set key left top
+set key bottom right
 set title "Sparsity vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "Sparsity, in bits"
@@ -26,7 +26,7 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:7 with lines lw 2 title "n=4 (olde
 # set out 'r11-entropy.png'
 set term postscript eps enhanced color 20
 set out 'r11-entropy.eps'
-set key left bottom
+set key right top
 set title "MM^T Entropy vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MM^T Entropy, in bits"
@@ -64,7 +64,7 @@ plot "../p5-en-merge/log-0.7-0.4.dat" using 1:9 with lines lw 2 title "n=4 (olde
 # set out 'r11-mmtq.png'
 set term postscript eps enhanced color 20
 set out 'r11-mmtq.eps'
-set key right top
+set key bottom left
 set title "MM^T-Q vs. Time (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MM^T-Q, in bits"
@@ -155,7 +155,7 @@ plot "r11-p-log-q0.7-c0.2-n4.dat" using 1:9 with lines lw 2 title "n=4 precise",
 # set out 'r11-word-dj-mi.png'
 set term postscript eps enhanced color 20
 set out 'r11-word-dj-mi.eps'
-set key right top
+set key right bottom
 set title "Total Word+Disjunct MI (run-11; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MI, in bits"

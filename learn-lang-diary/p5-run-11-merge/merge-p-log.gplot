@@ -143,7 +143,7 @@ plot "r11-p-log-q0.8-c0.2-n1.dat" using 1:9 with lines lw 2 title "q=0.8 n=1", \
 # set out 'r11-p-word-dj-mi.png'
 set term postscript eps enhanced color 20
 set out 'r11-p-word-dj-mi.eps'
-set key right top
+set key right bottom
 set title "Total Word+Disjunct MI (run-11; precise)"
 set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
