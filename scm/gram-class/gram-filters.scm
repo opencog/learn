@@ -151,11 +151,11 @@
 
 ; ---------------------------------------------------------------------
 
-(define-public (add-word-remover LLOBJ RENAME)
+(define-public (add-class-filter LLOBJ RENAME)
 "
-  add-word-remover LLOBJ - Modify the grammatical-class LLOBJ so that
-  there are no WordNodes in either the left basis, nor in any Connectors
-  in the ConnectorSeqs in the right basis.
+  add-class-filter LLOBJ RENAME - Add a filter to the grammatical-class
+  LLOBJ so that WordNodes do not appear in either the left basis, nor in
+  any Connectors in the ConnectorSeqs in the right basis.
 
   Not only are the WordNodes removed, but the remaining left and right
   basis are scrubbed, so that there are no connectors unable to form a
@@ -174,6 +174,25 @@
 
 ; ---------------------------------------------------------------------
 
+(define-public (non-class-trim LLOBJ)
+"
+  non-class-trim LLOBJ - Delete (with cog-delete!) all words that do
+  not belong to some grammatical-class. The result is an LLOBJ in which
+  WordNodes do not appear in either the left basis, nor in any Connectors
+  in the ConnectorSeqs in the right basis.
+
+  Not only are the WordNodes removed, but the remaining left and right
+  basis are scrubbed, so that there are no connectors unable to form a
+  connection.
+"
+	; Accept WordClasses only.
+	(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+
+	(linking-trim LLOBJ is-word-class? )
+)
+
+; ---------------------------------------------------------------------
+
 (define-public (add-wordclass-filter LLOBJ RENAME)
 "
   add-wordclass-filter LLOBJ - Modify the wordclass-disjunct LLOBJ so
@@ -186,7 +205,7 @@
   CAUTION: THIS FILTER IS CURRENTLY USELESS (OBSOLETE)! It assumes that
   WordClasses never appear in the connectors themselves; i.e. that the
   dataset has been created without using Shapes. At this time, it is
-  imossible to create such datasets any more... So anyway, this code
+  impossible to create such datasets any more... So anyway, this code
   will do things that aren't meaningful.
 
   Set RENAME to #t if marginals should be stored under a filter-specific

@@ -1396,7 +1396,7 @@ Grammar. This can be done as follows:
   any given disjunct is. Link Grammar ranks it's parses by liklihood.
   Compute the costs as follows:
 ```
-       (define gcf (add-word-remover cvs #t))
+       (define gcf (add-class-filter cvs #t))
        (batch-all-pair-mi gcf)
 ```
   The above may take (many) hours or more to run, depending linearly
