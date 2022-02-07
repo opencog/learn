@@ -250,5 +250,6 @@
 	(zap-conseq-marginals stars-obj)
 	(zap-word-marginals stars-obj)
 	(zap-connectors stars-obj)
+	(stars-obj 'clobber)
 	(zap-unlinkables stars-obj)
 )
