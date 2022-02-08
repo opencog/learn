@@ -11050,15 +11050,53 @@ ad during` `I’m` `of` `are` `were` `others`
   (Connector (WordNode "vision") (ConnectorDir "+")))))
 
 (define SIM-ID "shape-mi")
+(load "/home/ubuntu/src/learn/scm/common.scm")
+(load "/home/ubuntu/src/learn/scm/utilities.scm")
 (load "/home/ubuntu/src/learn/scm/gram-class/log-merge.scm")
 (load "/home/ubuntu/src/learn/scm/gram-class/shape-vec.scm")
 (load "/home/ubuntu/src/learn/scm/gram-class/shape-project.scm")
 (load "/home/ubuntu/src/learn/scm/gram-class/gram-majority.scm")
 (load "/home/ubuntu/src/learn/scm/gram-class/agglo-rank.scm")
-(load "/home/ubuntu/src/learn/scm/utilities.scm")
-
 
 (define na (list-ref (cog-value->list (show (Predicate "left dim"))) 175))
+
+(define wl (list
+(WordClass "perhaps by where no after without with each from since these
+had during")
+(Word "I’m") (Word "of") (Word "are") (Word "were") (Word "others")))
+
+(define (ga LLOBJ WRD-LIST)
+(define dj-set (make-atom-set))
+   (define wrd-set (make-atom-set))
+   (for-each wrd-set WRD-LIST)
+   (define (pair-margins PAIR)
+      (wrd-set (LLOBJ 'left-element PAIR))
+      (dj-set (LLOBJ 'right-element PAIR)))
+
+   (define (cross-margins PAIR)
+      (for-each pair-margins (LLOBJ 'make-cross-sections PAIR)))
+
+   (define (expand-margins PAIR)
+(format #t "yo ~A" PAIR)
+
+      (dj-set (LLOBJ 'right-element PAIR))
+      (if (equal? 'Section (cog-type PAIR))
+         (cross-margins PAIR)
+         (let ((sect (LLOBJ 'get-section PAIR)))
+
+            (pair-margins sect)
+            (cross-margins sect))))
+
+   (for-each
+      (lambda (WRD) (for-each expand-margins (LLOBJ 'right-stars WRD)))
+      WRD-LIST)
+   (define affected-djs (dj-set #f))
+   (for-each (lambda (DJ) (for-each wrd-set (LLOBJ 'left-duals DJ)))
+      affected-djs)
+
+   (list (wrd-set #f) affected-djs)
+)
+
 
 ====================================================
 ====================================================

@@ -435,7 +435,12 @@
 		(dj-set (LLOBJ 'right-element PAIR))
 		(if (equal? 'Section (cog-type PAIR))
 			(cross-margins PAIR)
-			(let ((sect (LLOBJ 'get-section PAIR)))
+
+			; So 'get-section should have worked, except sometimes
+			; on restart after a crash, the section might be absent.
+			; So that's weird. Fixed a variant of this bug just a
+			; few commits earlier.
+			(let ((sect (LLOBJ 'make-section PAIR)))
 				(pair-margins sect)
 				(cross-margins sect))))
 
