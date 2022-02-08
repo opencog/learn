@@ -336,8 +336,14 @@
 					(throw 'unsupported 'make-data-logger
 						"Don't know how to handle this type")))))
 
+		; It can still happen that the value we are passed is the
+		; complex number +nan.0+0.0i -- I think this arises whenever
+		; log2 of zero is computed. cog-new-value will puke on this,
+		; so convert it to a real-valued NaN.
+		(define val (if (complex? VAL) +nan.0 VAL))
+
 		(define old (if v (cog-value->list v) '()))
-		(define new (append old (list VAL)))
+		(define new (append old (list val)))
 
 		; FIXME: use a thread-safe test-n-set instead.
 		(cog-set-value! ATOM KEY (cog-new-value typ new)))
