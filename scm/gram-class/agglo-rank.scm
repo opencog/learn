@@ -358,8 +358,8 @@
 	(define log-anchor (LLOBJ 'wild-wild))
 	(define count-location (Predicate "merge-count"))
 	(define count-log (cog-value log-anchor count-location))
-	(define base-done-count
-		(if (nil? count-log) 0 (cog-value-ref count-log 0)))
+	(define base-done-count (inexact->exact
+		(if (nil? count-log) 0 (cog-value-ref count-log 0))))
 	(define (current-count N) (+ 1 N base-done-count))
 	(define (update-done-count N)
 		(cog-set-value! log-anchor count-location (FloatValue N)))
@@ -842,8 +842,8 @@
 		(define ranked-words (rank-words LLOBJ))
 		; Approximation to number of words with sims.
 		; This is overkill; NRANK is more than enough!
-		(define n-to-take
-			(min (length ranked-words) (+ NRANK (* 3 N))))
+		(define n-to-take (inexact->exact
+			(min (length ranked-words) (+ NRANK (* 3 N)))))
 		(define words-with-sims (take ranked-words n-to-take))
 		(define in-grp (get-merg-grp WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
