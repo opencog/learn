@@ -10971,6 +10971,15 @@ Program received signal SIGSEGV, Segmentation fault.
 3012            dn[dict->num_categories-1].right = NULL;
 print dict->num_categories
 
+cset-to-lg-dj
+called by add-germ-cset-pair
+
+Number of categories: 6
+
+(define wallu (WordClassNode "###LEFT-WALL####uni"))
+(define wam (Connector wallu (ConnectorDir "-")))
+
+(cog-incoming-size wam) ; 15317  OK
 
 ====================================================
 ====================================================
