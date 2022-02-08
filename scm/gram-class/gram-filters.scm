@@ -39,6 +39,8 @@
 
   This may take a few minutes to get set up, if there are millions of
   ConnectorSeq's.
+
+  Note that this will return #f for ShapeLinks.
 "
 	; General design: it is inefficient to check each disjunct to see if
 	; all of the connectors in it pass the test. So instead, we precompute
@@ -93,6 +95,8 @@
   filtered matrix will be stored at keyed to the string ID-STR. If
   ID-STR is #f, then marginals will appear at default locations (which
   will clobber existing values there, and is probably not what you want!)
+
+  Note that this will filter out all ShapeLinks and CrossSections.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -122,6 +126,8 @@
 
   This is similar to `add-linking-filter` above, except that it doesn't
   create a filter object; it performs the deletes when invoked.
+
+  Note that this will trim all ShapeLinks and CrossSections.
 "
 	(define star-obj (add-pair-stars LLOBJ))
 
@@ -163,9 +169,12 @@
 
   Set RENAME to #t if marginals should be stored under a filter-specific
   name. Otherwise, set to #f to use the default marginal locations.
+
+  Note that this will filter out all ShapeLinks and CrossSections.
 "
 	; Accept WordClasses only.
-	(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))
+	(define (is-word-class? ITEM)
+		(and (cog-atom? ITEM) (eq? 'WordClassNode (cog-type ITEM))))
 
 	(define id-str (if RENAME "word-remover" #f))
 
@@ -184,6 +193,8 @@
   Not only are the WordNodes removed, but the remaining left and right
   basis are scrubbed, so that there are no connectors unable to form a
   connection.
+
+  Note that this will delete all ShapeLinks and CrossSections.
 "
 	; Accept WordClasses only.
 	(define (is-word-class? ITEM) (eq? 'WordClassNode (cog-type ITEM)))

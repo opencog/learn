@@ -124,7 +124,8 @@
   cset-to-lg-dj GERM CSET
   Return a link-grammar compatible disjunct string for CSET,
   in such a way that it can connect to GERM. Here, GERM should
-  be a WordNode or a WordClassNode.
+  be a WordNode or a WordClassNode, and CSET should be a
+  ConnectorSeq.
 "
 	; Get a link-name string identifying this word-pair.
 	; The link joins together WORD and GERM.
@@ -270,9 +271,10 @@
 	)
 
 	; ---------------
-	; Return a string identifying a word-class
+	; Return a string identifying a word-class.
 	(define (mk-cls-str STR)
-		(format #f "<~A>" (escquote STR 0)))
+		; (format #f "<~A>" (escquote STR 0))
+		(format #f "{{~A}}" (escquote STR 0)))
 
 	; ---------------
 	; Insert either a word, or a word-class, into the dict
@@ -352,15 +354,17 @@
 					(throw 'fail-insert 'make-db-adder err-msg))))
 	)
 
-	; Add a section to the database
+	; Add a section to the database.
 	(define (add-section SECTION)
-		(define germ (gar SECTION))
-		(define cset (gdr SECTION))
-		(define cost (COST-FN SECTION))
-		; Cost will be +inf.0 for sections that have no MI on them.
-		; This .. uhh, might be due to a bug in earlier code!?
-		(if (< cost 1.0e3)
-			(add-germ-cset-pair germ cset cost)))
+		; Ignore CrossSections and other stray markup.
+		(if (eq? 'Section (cog-type SECTION))
+			(let ((germ (gar SECTION))
+					(cset (gdr SECTION))
+					(cost (COST-FN SECTION)))
+				; Cost will be +inf.0 for sections that have no MI on them.
+				; This .. uhh, might be due to a bug in earlier code!?
+				(if (< cost 1.0e3)
+					(add-germ-cset-pair germ cset cost)))))
 
 	; Write to disk, and close the database.
 	(define (shutdown)

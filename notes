@@ -10894,6 +10894,82 @@ Found 129 Words that are not in Connectors!
 (batch-all-pair-mi gcf)
 Finished with MI computations; this took 0.269 hours.
 
+(define (is-word-class? ITEM)
+	(and (cog-atom? ITEM) (eq? 'WordClassNode (cog-type ITEM))))
+(linking-trim cov is-word-class?)
+Trimmed all pairs in 1604 seconds.
+Trimmed marginals+basis in 628 seconds.
+
+(Section . 720999)
+(ConnectorSeq . 252294)
+(WordNode . 9495)
+(WordClassNode . 5944)
+(MemberLink . 6447)
+
+(cleanup-gram-dataset cov)
+(Section . 717481)
+(ConnectorSeq . 199077)
+(WordNode . 5866)
+(WordClassNode . 5881)
+(MemberLink . 6249)
+
+again ...
+(cleanup-gram-dataset cov)
+(Section . 717035)
+(ConnectorSeq . 198772)
+(WordNode . 5837)
+(WordClassNode . 5877)
+(MemberLink . 6232)
+
+(print-matrix-summary-report cov)
+Rows: 15226 Columns: 998203
+Size: 2076009.0
+Total observations: 22942644.0
+Entropy Total: 18.271   Left: 16.273   Right: 8.6970
+Total MI: 5.5865
+
+(cov 'explode-sections)
+
+(batch-all-pair-mi cov)
+Finished with MI computations; this took 2.549 hours.
+
+Rows: 5877 Columns: 933026
+Size: 2348063.0
+Total observations: 21856976.0
+Entropy Total: 18.680   Left: 16.229   Right: 8.5677
+Total MI: 6.1172
+
+
+
+add-word-remover -> add-class-filter
+--------------------------------------
+(define wall (WordNode "###LEFT-WALL###"))
+
+(define wallu (WordClassNode "###LEFT-WALL####uni"))
+(define wallc (WordClassNode ": ###LEFT-WALL### \""))
+
+(first (cog-incoming-by-type wallu 'Section))
+(Section (ctv 1 0 6)
+  (WordClassNode "###LEFT-WALL####uni")
+  (ConnectorSeq
+    (Connector
+      (WordClassNode "V#uni")
+      (ConnectorDir "+"))))
+
+V parses
+
+V
+VI
+VI .
+
+(prt-element (list-ref (cog-incoming-by-type wallu 'Section) 0))
+
+link-generator --count=2 --language=dict-en
+
+Program received signal SIGSEGV, Segmentation fault.
+../../link-grammar/tokenize/tokenize.c:3012
+3012            dn[dict->num_categories-1].right = NULL;
+print dict->num_categories
 
 
 ====================================================
