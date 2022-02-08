@@ -354,9 +354,9 @@
 (use-modules (ice-9 local-eval))
 (use-modules (ice-9 readline))
 
-(define-public (break env)
+(define-public (debug-break env)
 "
-  break ENV - debug repl shell.
+  debug-break ENV - debug repl shell.
 
   This can be inserted into arbitrary points in scheme code, and will
   provide a debug prompt there.  Example usage:
@@ -364,7 +364,7 @@
      (define (do-stuff)
         (define x 42)
         (format #t \"starting x=~A\n\" x)
-        (break (the-environment))
+        (debug-break (the-environment))
         (format #t \"ending x=~A\n\" x))
 
   At the prompt, `x` will print `42` and `(set! x 43)` will change it's
