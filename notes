@@ -10984,6 +10984,70 @@ Number of categories: 6
 175
 
 (log-cluster (cluster-entropy WCLASS))
+(define log-dataset-stuff (make-merge-logger LLOBJ)) covr-obj
+
+nan in mmtq
+nan in top-pair mi
+
+(define *-log-anchor-* (covr-obj 'wild-wild))
+(define (chop p)
+	(define vl (cog-value *-log-anchor-* p))
+	(define vs (take (cog-value->list vl) 175))
+	(define vt (cog-type vl))
+	(cog-set-value! *-log-anchor-* p (cog-new-value vt vs))
+	*unspecified*)
+
+(define (show p) (cog-value *-log-anchor-* p))
+
+(show (Predicate "mmt-q"))
+
+(show (Predicate "top-pair mi"))
+(show (Predicate "top-pair ranked-mi"))
+(show (Predicate "sparsity"))
+(show (Predicate "mmt-entropy"))
+(show (Predicate "left dim"))
+(show (Predicate "right dim"))
+(show (Predicate "left-count"))
+(show (Predicate "right-count"))
+(show (Predicate "total entries"))
+(show (Predicate "left-entropy"))
+(show (Predicate "right-entropy"))
+(show (Predicate "total-entropy"))
+(show (Predicate "num classes"))
+
+
+(chop (Predicate "mmt-q"))
+(chop (Predicate "top-pair mi"))
+(chop (Predicate "top-pair ranked-mi"))
+(chop (Predicate "sparsity"))
+(chop (Predicate "mmt-entropy"))
+(chop (Predicate "left dim"))
+(chop (Predicate "right dim"))
+(chop (Predicate "left-count"))
+(chop (Predicate "right-count"))
+(chop (Predicate "total entries"))
+(chop (Predicate "left-entropy"))
+(chop (Predicate "right-entropy"))
+(chop (Predicate "total-entropy"))
+(chop (Predicate "num classes"))
+
+------ Round 175.0 Next in line:
+ranked-MI = 7.1101 MI = 6.6435 (`I’m`, `perhaps by where no after without with each from since these had during`)
+ranked-MI = 7.0304 MI = 6.0500 (`I’m Not It’s`, `Then`)
+------ Start merge 175.0 with seed pair `I’m` and `perhaps by where no after wit
+hout with each from since these had during`
+
+In-group size=6: `perhaps by where no after without with each from since these h
+ad during` `I’m` `of` `are` `were` `others`
+------ merge-majority: Merge 4327 of 11013 sections in 10 secs
+
+ (WordNode "I’m")
+ (WordNode "of")
+
+(define XROS (covr-obj 'get-pair (WordNode "of")
+(ShapeLink (WordNode "this")
+  (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+  (Connector (WordNode "vision") (ConnectorDir "+")))))
 
 
 ====================================================

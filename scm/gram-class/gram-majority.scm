@@ -113,7 +113,7 @@
 (define*-public (make-merge-majority LLOBJ QUORUM NOISE
 	#:optional (MRG-CON #t) (FRAC 0))
 "
-  make-merger-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
+  make-merge-majority LLOBJ QUORUM NOISE [MRG-CON FRAC] --
   Return a function that will merge a list of words into one class.
   The disjuncts that are selected to be merged are those shared by
   the majority of the given words, where `majority` is defined as
@@ -372,10 +372,14 @@
 				(lambda (WRD)
 					(define XROS (LLOBJ 'get-pair WRD SHP))
 					(if (not (nil? XROS))
-						(let* ((SECT (LLOBJ 'get-section XROS))
-								(ALL-X (LLOBJ 'make-cross-sections SECT)))
-							(for-each (lambda (CRS)
-								(alt-shp (LLOBJ 'right-element CRS))) ALL-X))))
+						(let ((SECT (LLOBJ 'get-section XROS)))
+							; Usually SECT should never be nil, but,
+							; apparently, after some crashes & restarts,
+							; it can be. Boooo.
+							(if (not (nil? SECT))
+								(let ((ALL-X (LLOBJ 'make-cross-sections SECT)))
+									(for-each (lambda (CRS)
+										(alt-shp (LLOBJ 'right-element CRS))) ALL-X))))))
 				WLIST)
 
 			; Maybe it's been done already?
