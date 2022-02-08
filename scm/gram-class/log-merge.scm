@@ -249,6 +249,9 @@
 			(inexact->exact (list-ref nsim N))
 		))
 		(iota len))
+
+	; Flush port to disk
+	(force-output PORT)
 )
 
 (define-public (print-merges LLOBJ PORT)
@@ -314,6 +317,9 @@
 			(list-ref cluster N)
 		))
 		(iota len))
+
+	; Flush port to disk
+	(force-output PORT)
 )
 
 ; ---------------------------------------------------------------
