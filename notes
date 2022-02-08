@@ -11049,6 +11049,16 @@ ad during` `I’m` `of` `are` `were` `others`
   (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
   (Connector (WordNode "vision") (ConnectorDir "+")))))
 
+(define SIM-ID "shape-mi")
+(load "/home/ubuntu/src/learn/scm/gram-class/log-merge.scm")
+(load "/home/ubuntu/src/learn/scm/gram-class/shape-vec.scm")
+(load "/home/ubuntu/src/learn/scm/gram-class/shape-project.scm")
+(load "/home/ubuntu/src/learn/scm/gram-class/gram-majority.scm")
+(load "/home/ubuntu/src/learn/scm/gram-class/agglo-rank.scm")
+(load "/home/ubuntu/src/learn/scm/utilities.scm")
+
+
+(define na (list-ref (cog-value->list (show (Predicate "left dim"))) 175))
 
 ====================================================
 ====================================================

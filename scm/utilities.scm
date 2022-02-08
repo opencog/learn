@@ -340,7 +340,7 @@
 		; complex number +nan.0+0.0i -- I think this arises whenever
 		; log2 of zero is computed. cog-new-value will puke on this,
 		; so convert it to a real-valued NaN.
-		(define val (if (complex? VAL) +nan.0 VAL))
+		(define val (if (not (real? VAL)) +nan.0 VAL))
 
 		(define old (if v (cog-value->list v) '()))
 		(define new (append old (list val)))
