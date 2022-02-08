@@ -364,7 +364,7 @@
 	(define (update-done-count N)
 		(cog-set-value! log-anchor count-location (FloatValue N)))
 
-	; Offset on number of simularities to compute
+	; Offset on number of similarities to compute
 	(define NSIM-OFFSET base-done-count)
 
 	; How many more similarities to compute each step.
