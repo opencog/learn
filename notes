@@ -11105,6 +11105,21 @@ port 20212
 ((make-simmer covr-obj) wc wc)
 (log-class wclass)
 
+(define (show p) (cog-value *-log-anchor-* p))
+(define (pln p) (length (cog-value->list (show p))))
+
+(pln (Predicate "mmt-q"))
+(pln (Predicate "class"))
+
+(batch-all-pair-mi covr-obj)
+Finished with MI computations; this took 4.449 hours.
+
+(define wc (WordClassNode "perhaps by where no after without with each from since these had during I’m of are were others"))
+
+ (smi 'mmt-marginal wc) ; 0.0
+
+(define psu (add-support-compute covr-obj))
+
 
 ====================================================
 ====================================================
