@@ -8157,7 +8157,19 @@ run-1-marg-tranche-1234.rdb
 \family default
 ` which contains the marginals.
  This dataset is painfully large, taking too long to load.
- Config files are in `
+ Using 50 GB and swapping like mad after loading 29M of the total 38M pairs.
+ Ouch.
+ Try again with `
+\family sans
+run-1-en_pairs-tranche-123.rdb
+\family default
+` which should not have any marginals, just the raw counts ...
+ Hopefully, it takes less to load (?).
+ The dataset stats appear in Diary Part Two, at the very end.
+\end_layout
+
+\begin_layout Standard
+Config files are in `
 \family sans
 Experiment-13
 \family default
@@ -8179,7 +8191,7 @@ Summary:
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="7" columns="2">
+<lyxtabular version="3" rows="9" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -8208,7 +8220,7 @@ Value
 \begin_inset Text
 
 \begin_layout Plain Layout
-Dimensions
+Filename
 \end_layout
 
 \end_inset
@@ -8218,6 +8230,32 @@ Dimensions
 
 \begin_layout Plain Layout
 
+\family sans
+run-1-en_pairs-tranche-123.rdb
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+304085 
+\begin_inset Formula $\times$
+\end_inset
+
+ 306920
 \end_layout
 
 \end_inset
@@ -8237,7 +8275,30 @@ Num Pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
+28184319
+\end_layout
 
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+ Num Pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.7484
 \end_layout
 
 \end_inset
@@ -8257,7 +8318,7 @@ Total Count
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+985483375
 \end_layout
 
 \end_inset
@@ -8268,7 +8329,7 @@ Total Count
 \begin_inset Text
 
 \begin_layout Plain Layout
-RAM Usage
+RAM Usage to Load
 \end_layout
 
 \end_inset
@@ -8277,7 +8338,7 @@ RAM Usage
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+49.7 GB
 \end_layout
 
 \end_inset
@@ -8288,7 +8349,7 @@ RAM Usage
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+RAM Usage to Run
 \end_layout
 
 \end_inset
@@ -8297,7 +8358,7 @@ RAM Usage
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+61.3 GB
 \end_layout
 
 \end_inset
@@ -8340,6 +8401,20 @@ To generate the histogram, simply create N bins, say N=200, and count
 \end_inset
 
  whenever it fits in a bin.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Use the script in `utils/densidty-of-states.scm`
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Lo = 7.5 Hi = 30
 \end_layout
 
 \begin_layout Section*

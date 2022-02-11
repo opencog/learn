@@ -1,0 +1,47 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'density.png'
+# set term postscript eps enhanced color 20
+# set out 'density.eps'
+set key left top
+set title "Density of States"
+set xlabel "E"
+set ylabel "Rho"
+set logscale y
+set format y "10^{%L}"
+# set yrange [1e-7:0.3]
+
+c = 11
+a=1
+z(x) = 2**(a*(x-35))
+
+norm = (23/200.0) / 28184319
+
+plot "density.dat" using 2:(norm * $3) with lines lw 2 title "data", \
+     "density.dat" using 2:(z($2)) with lines lw 2 title "2^{(E-35)}"
+
+#################################################
+## #
+## # set term png
+## # set out 'rank-went.png'
+## set term postscript eps enhanced color 20
+## set out 'rank-went.eps'
+## set key right top
+## set title "Ranked Word Marginal Entropy H_{right}"
+## set xlabel "Rank"
+## set ylabel "Entropy (bits)"
+## set logscale x
+## set logscale y
+## set format x "10^{%L}"
+## set format y "10^{%L}"
+## set yrange [3e-6:5]
+## 
+## p=1.2
+## a=4
+## z(x) = a*x**(-p)
+## 
+## plot "rank-went.dat" using 1:2 with lines lw 2 title "data", \
+##      "rank-went.dat" using 1:(z($1)) with lines lw 2 title "rank^{-1.1}"
