@@ -309,24 +309,186 @@ I honestly do not recall if any of the prior diary entries ever supplied
 \end_layout
 
 \begin_layout Subsection*
+Interpretation
+\end_layout
+
+\begin_layout Standard
+The above defintion of the density of states is motivated by the Boltzmann
+ distribution 
+\begin_inset Formula $p=e^{-\beta E}$
+\end_inset
+
+.
+ Taking the log of both sides and setting 
+\begin_inset Formula $\beta=1$
+\end_inset
+
+ gives 
+\begin_inset Formula $E=-\log p$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
 Density of States - Experimental Result
 \end_layout
 
 \begin_layout Standard
 Working with the Run-1 dataset `
 \family sans
+run-1-en_pairs-tranche-123.rdb
+\family default
+`.
+ This dataset is characterized in the subsection below.
+ To generate the histogram, simply create N bins, and increment by one whenever
+ 
+\begin_inset Formula $-\log_{2}p\left(w_{i},w_{j}\right)$
+\end_inset
+
+ lies within the bin boundaries.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Use the script in `utils/densidty-of-states.scm`
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The graph below uses 200 bins, runnning between a lower bound of 7.0 and
+ upper bound of 30.0.
+ Thus, the width of each bin is 
+\begin_inset Formula $dh=23/200$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/density.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This graph can be understood as a kind-of upside-down Zipfian distribution.
+ The scatter of dots at the top-right are the pairs that were seen only
+ a handful of times.
+ The topmost, rightmost dot corresponds to the word-pairs that were observed
+ only once, and thus have a very high 
+\begin_inset Formula $E$
+\end_inset
+
+.
+ Specifically, 
+\begin_inset Formula $E_{1}=\log_{2}985483375\approx29.8763$
+\end_inset
+
+ for this point, as there was a grand total of 985 million pairs observed.
+ The density here is a Dirac delta spike, since there were 9215082 distinct,
+ unique word-pairs observed exactly once; thus 
+\begin_inset Formula $\rho\left(E_{1}\right)$
+\end_inset
+
+ is normalized to 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+985483375/
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+9215082 / dh.
+ The next dots correspond to the number of distinct word-pairs that were
+ observed only twice, then three times, etc.
+ until they run together into common bins in the histogram.
+ The dots at the bottom-left correspond to word-pairs there are extremely
+ common (typically involving the words 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+a
+\begin_inset Quotes erd
+\end_inset
+
+, punctutation.) These would be ranked first in a Zipfian distribution, thus
+ the bottom-left of this graph corresponds to the top-left of a Zipf graph.)
+\end_layout
+
+\begin_layout Subsubsection*
+Interpretation
+\end_layout
+
+\begin_layout Standard
+Clearly, this graph suggests that the total energy
+\begin_inset Formula 
+\[
+\int E\rho\left(E\right)dE
+\]
+
+\end_inset
+
+is unbounded.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Dataset Notes
+\end_layout
+
+\begin_layout Standard
+This part is too big to fit in a footnote, so I put it here.
+ At first, attempted to work with the Run-1 dataset `
+\family sans
 run-1-marg-tranche-1234.rdb
 \family default
 ` which contains the marginals.
  This dataset is painfully large, taking too long to load.
- Using 50 GB and swapping like mad after loading 29M of the total 38M pairs.
+ It was using 50 GB and swapping like mad after loading 29M of the total
+ 38M pairs.
  Ouch.
  Try again with `
 \family sans
 run-1-en_pairs-tranche-123.rdb
 \family default
 ` which should not have any marginals, just the raw counts ...
- Hopefully, it takes less to load (?).
+ Hopefully, skipping the marginals takes less time to load (?).
  The dataset stats appear in Diary Part Two, at the very end.
 \end_layout
 
@@ -340,7 +502,7 @@ Experiment-13
 \end_layout
 
 \begin_layout Standard
-Summary:
+Dataset summary:
 \end_layout
 
 \begin_layout Standard
@@ -353,7 +515,7 @@ Summary:
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="2">
+<lyxtabular version="3" rows="10" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -491,6 +653,29 @@ Total Count
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+ Total Count
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+29.8763
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 RAM Usage to Load
 \end_layout
 
@@ -531,7 +716,7 @@ RAM Usage to Run
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+Entropy Total
 \end_layout
 
 \end_inset
@@ -540,7 +725,7 @@ RAM Usage to Run
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.378
 \end_layout
 
 \end_inset
@@ -558,25 +743,29 @@ RAM Usage to Run
 \end_layout
 
 \begin_layout Standard
-To generate the histogram, simply create N bins, say N=200, and count 
-\begin_inset Formula $-\log_{2}p\left(w_{i},w_{j}\right)$
+The above dataset summary agrees with what is reported at the very end of
+ Diary Part Two (
+\emph on
+i.e.
+
+\emph default
+ during load, the same numbers are reported.) The 
+\begin_inset Quotes eld
 \end_inset
 
- whenever it fits in a bin.
-\begin_inset Foot
-status collapsed
+Entropy Total
+\begin_inset Quotes erd
+\end_inset
 
-\begin_layout Plain Layout
-Use the script in `utils/densidty-of-states.scm`
-\end_layout
+ is the same as defined in earlier diaries: 
+\begin_inset Formula 
+\[
+\mbox{Entropy Total}=-\sum_{i,j}p\left(w_{i},w_{j}\right)\log_{2}p\left(w_{i},w_{j}\right)
+\]
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-Lo = 7.5 Hi = 30
+ 
 \end_layout
 
 \begin_layout Section*
