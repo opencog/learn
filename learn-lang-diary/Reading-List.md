@@ -57,7 +57,7 @@ Things to read:
   https://hal.archives-ouvertes.fr/hal-02869865
 
   The idea here is that sequences of rules can be applied, and then they
-  can be reversed. This enableds back-tracking on a rule system.
+  can be reversed. This enables back-tracking on a rule system.
 
 * D. A Turner, "Functional programs as executable specifications"
   (1984) Phil. Trans R. Soc. Lond. A 312, pp. 363-388.
@@ -78,6 +78,9 @@ Things to read:
   the callee can evaluate, as needed.
 
   I dunno. Feels like we're reinventing... Hmm.
+
+* HodgeNet -- Justin Solomon -- learning of the Hodge star operator
+  via neural nets.  Specifically, for dealing with sparse matrices.
 
 
 Interesting, but maybe less useful

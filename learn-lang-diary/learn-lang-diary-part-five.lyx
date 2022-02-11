@@ -7975,6 +7975,374 @@ What's done:
 \end_layout
 
 \begin_layout Section*
+Mutual Information as Laplacian
+\end_layout
+
+\begin_layout Standard
+This is a random half-baked suggestive idea that dead-ends immediately.
+\end_layout
+
+\begin_layout Standard
+The discrete Laplacian on a 1-dimensional grid is a tri-diagonal matrix
+ of the form
+\begin_inset Formula 
+\[
+\Delta x_{i}=2x_{i}-x_{i-1}-x_{i+1}
+\]
+
+\end_inset
+
+The pair-wise mutual information 
+\begin_inset Formula 
+\[
+MI\left(u,v\right)=\log_{2}p\left(u,v\right)-\log_{2}p\left(u,*\right)-\log_{2}p\left(*,v\right)
+\]
+
+\end_inset
+
+Inserting a factor of 1/2 gives the ranked-MI
+\begin_inset Formula 
+\[
+MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left(u,*\right)p\left(*,v\right)}}
+\]
+
+\end_inset
+
+These two someohow feel 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+ but I cannot connect the dots.
+\end_layout
+
+\begin_layout Standard
+The MI 
+\begin_inset Quotes eld
+\end_inset
+
+feels like
+\begin_inset Quotes erd
+\end_inset
+
+ some kind of renormalized propagator where the 
+\begin_inset Formula $\log_{2}p\left(u,*\right)$
+\end_inset
+
+ feel like 
+\begin_inset Quotes eld
+\end_inset
+
+vacuum contributions
+\begin_inset Quotes erd
+\end_inset
+
+, but the details remain opaque.
+\end_layout
+
+\begin_layout Section*
+Field Theory Models
+\end_layout
+
+\begin_layout Standard
+Field theory models applied to statistics and language have surely been
+ thrashed to death in the literature (of which I am only dimly aware).
+ The below is an attempted recap of some basic ideas, recast into the notation
+ uised locally in this diary.
+\end_layout
+
+\begin_layout Subsection*
+Density of States
+\end_layout
+
+\begin_layout Standard
+Starting point is a discrete linear lattice of words in a sentence.
+ Associated to each sentence is a probability 
+\begin_inset Formula $p\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+ for words 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+ and a sentence of length 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ We do not know that probability; we just assume it exists 
+\emph on
+a priori
+\emph default
+.
+ We can make experimental pair-wise observations of word-pairs as 
+\begin_inset Formula $\left(*,*,\cdots,*,w_{i},*,\cdots,*,w_{j},*,\cdots,*\right)$
+\end_inset
+
+ of pairs of words 
+\begin_inset Formula $\left(w_{i},w_{j}\right)$
+\end_inset
+
+ within the full sentence.
+ Note the former is a cylinder set, i.e.
+ an element of the product topology on strings.
+ 
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\sigma=\left(w_{1},\cdots,w_{n}\right)$
+\end_inset
+
+ be a string (the sentence).
+ Define the energy of a string as 
+\begin_inset Formula $E\left(\sigma\right)=-\log_{2}p\left(\sigma\right)$
+\end_inset
+
+ and define the energy density as 
+\begin_inset Formula 
+\begin{align*}
+\rho\left(E\right)= & \sum_{\sigma}\delta\left(E-E\left(\sigma\right)\right)\\
+=C & \sum_{w_{i},w_{j}}\delta\left(E+\log_{2}p\left(w_{i},w_{j}\right)\right)
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\delta\left(x\right)$
+\end_inset
+
+ is the Dirac delta function (in principle) or just a finite–width, but
+ thin Gaussian in practice, or, more plainly, just a box filter, so that
+ we can do histogram counting.
+ The constant 
+\begin_inset Formula $C$
+\end_inset
+
+ appears because the sum over pairs is a multiple of the sum over all states;
+ it over-counts.
+ A formal derivation of the value of 
+\begin_inset Formula $C$
+\end_inset
+
+ from first principles seems tedious and unenlightening.
+ Not to worry, we can force it experimentally simply by requiring that 
+\begin_inset Formula 
+\[
+\int\rho\left(E\right)dE=1
+\]
+
+\end_inset
+
+I honestly do not recall if any of the prior diary entries ever supplied
+ a graph of 
+\begin_inset Formula $\rho\left(E\right)$
+\end_inset
+
+.
+ Better late than never?
+\end_layout
+
+\begin_layout Subsection*
+Density of States - Experimental Result
+\end_layout
+
+\begin_layout Standard
+Working with the Run-1 dataset `
+\family sans
+run-1-marg-tranche-1234.rdb
+\family default
+` which contains the marginals.
+ This dataset is painfully large, taking too long to load.
+ Config files are in `
+\family sans
+Experiment-13
+\family default
+`.
+ Don't really need the marginals, to graph the density of states.
+\end_layout
+
+\begin_layout Standard
+Summary:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="7" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Property
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Value
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Num Pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total Count
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RAM Usage
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To generate the histogram, simply create N bins, say N=200, and count 
+\begin_inset Formula $-\log_{2}p\left(w_{i},w_{j}\right)$
+\end_inset
+
+ whenever it fits in a bin.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
