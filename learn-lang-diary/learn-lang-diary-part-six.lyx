@@ -328,6 +328,25 @@ The above defintion of the density of states is motivated by the Boltzmann
 \end_inset
 
 .
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Wikipedia, 
+\begin_inset CommandInset href
+LatexCommand href
+name "Boltzmann distribution"
+target "https://en.wikipedia.org/wiki/Boltzmann_distribution"
+literal "false"
+
+\end_inset
+
+ for additional details.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
@@ -367,6 +386,15 @@ The graph below uses 200 bins, runnning between a lower bound of 7.0 and
 \end_inset
 
 .
+ The data is as marked, and, to provide a sense of scale, the line 
+\begin_inset Formula $2^{E-30}$
+\end_inset
+
+ is graphed.
+ Note that there is a scattering of dots at the upper-right and lower left.
+ Dots correspond to non-empty bins in the histogram, with empty neighbors.
+ These dots have a special significance.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -451,8 +479,20 @@ a
  the bottom-left of this graph corresponds to the top-left of a Zipf graph.)
 \end_layout
 
-\begin_layout Subsubsection*
-Interpretation
+\begin_layout Standard
+Note that if the counts in the right-most bins are smeared, so that they
+ are not delta functions, but smooth, then the right side of the graph would
+ twist down sharply.
+ It appears that it could be approximated by 
+\begin_inset Formula $(30-E)2^{E-30}$
+\end_inset
+
+.
+ Not shown; it would be nice to show this graph.
+\end_layout
+
+\begin_layout Subsection*
+Physical Interpretation
 \end_layout
 
 \begin_layout Standard
@@ -465,7 +505,180 @@ Clearly, this graph suggests that the total energy
 \end_inset
 
 is unbounded.
+ Of course, it is finite for this particular dataset, but the trend suggests
+ that if a trillion word-pairs were observed, then the high-end of the graph
+ would be at 
+\begin_inset Formula $E=40$
+\end_inset
+
+ instead of at 
+\begin_inset Formula $E=30$
+\end_inset
+
+.
+ Thus, this is not a 
+\begin_inset Quotes eld
+\end_inset
+
+physical
+\begin_inset Quotes erd
+\end_inset
+
+ system of finite energy, in the conventional sense.
  
+\end_layout
+
+\begin_layout Standard
+The root cause of this is that the vocabulary is unbounded.
+ As more and more text is observed, more and more vocabulary words are encounter
+ed, and there appears to be no upper limit (geographical place-names, foreign
+ loan-words, given names, imaginative sales terms, childrens nonsense words,
+ portmanteaus, ...) As a result, the number of distinct word pairs also grows,
+ in an unbounded fashion, as the number of observations increase.
+ 
+\end_layout
+
+\begin_layout Standard
+Thus we take the size of the vocabulary to be countable infinity and denote
+ it as 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+ the natural numbers.
+ The space of all strings (sentences) of length 
+\begin_inset Formula $n$
+\end_inset
+
+ is then the Cartesian product 
+\begin_inset Formula 
+\[
+\mathbb{N}\times\cdots\times\mathbb{N}=\mathbb{N}^{n}
+\]
+
+\end_inset
+
+It would be nice to be able to assign a measure 
+\begin_inset Formula $\mu$
+\end_inset
+
+ to this space, but even this is problematic.
+ Consider the cylinder set 
+\begin_inset Formula $\left(*,\cdots,*,w_{k},*,\cdots,*\right)$
+\end_inset
+
+ of a word 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+ at location 
+\begin_inset Formula $j$
+\end_inset
+
+ in the middle of all sentences of length 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ Denote the probability as 
+\begin_inset Formula $\mu_{j}\left(w_{k}\right)$
+\end_inset
+
+.
+ For English, and for many langauges, the probability of observing a word
+ is mostly independent of it's location in the sentence, so drop the subscript
+ 
+\begin_inset Formula $j$
+\end_inset
+
+ and just write 
+\begin_inset Formula $\mu\left(w_{k}\right)$
+\end_inset
+
+ as the probability of observing a word (or just define 
+\begin_inset Formula $\mu\left(w_{k}\right)$
+\end_inset
+
+ as the average over 
+\begin_inset Formula $j$
+\end_inset
+
+.) This is the measure of the cylnder set 
+\begin_inset Formula $\left(*,\cdots,*,w_{k},*,\cdots,*\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For this to be a proper probability, we expect that we should be able to
+ write 
+\begin_inset Formula 
+\[
+1=\sum_{k}\mu\left(w_{k}\right)
+\]
+
+\end_inset
+
+which is an eminently desirable property of any measure.
+ But we are not so lucky: the distribution of words is Zipfian, with exponent
+ 1, and so this sum is logarithmically divergent.
+ That is, the Zipfian distribution of individual words tells us that 
+\begin_inset Formula 
+\[
+\mu\left(w_{k}\right)\approx\frac{1}{k^{s}}
+\]
+
+\end_inset
+
+for exponent 
+\begin_inset Formula $s$
+\end_inset
+
+, and experimentally, it is well-known that for natural language, 
+\begin_inset Formula $s\approx1$
+\end_inset
+
+ and is typically measured to be 1.01 to 1.05 for datasets with millions or
+ billions of words.
+ For the infinite vocabulary 
+\begin_inset Formula $\mathbb{N}$
+\end_inset
+
+, we are forced to take the value of 
+\begin_inset Formula $s=1$
+\end_inset
+
+ and thus end up with a topological space without a conventional measure
+ on it.
+\end_layout
+
+\begin_layout Standard
+The only good news here is that it is only weakly divergent.
+ 
+\end_layout
+
+\begin_layout Standard
+The above desnity-of-states results for word-pairs indicates that the same
+ applies for 
+\begin_inset Formula $\mu\left(w_{i},w_{j}\right)$
+\end_inset
+
+.
+ This is the same as 
+\begin_inset Formula $p\left(w_{i},w_{j}\right)$
+\end_inset
+
+, we're just bouncing around in notation, so that 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is the formal measure on the Cartesian product space, for given cylinder
+ sets, while 
+\begin_inset Formula $p$
+\end_inset
+
+ is the experimentally observed frequentist probability (the Bayesian probabilit
+y with the trivial prior.)
 \end_layout
 
 \begin_layout Subsubsection*
