@@ -1,5 +1,5 @@
 ;
-; Entropy-merginals.scm
+; Entropy-marginals.scm
 ;
 ; Assorted ad-hoc scripts for exploring marginal entropy distributions
 ; for word-disjunct pairs.  These are used to create the graphs and
