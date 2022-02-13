@@ -9,7 +9,7 @@
 \usepackage{url} 
 \usepackage{slashed}
 \end_preamble
-\use_default_options false
+\use_default_options true
 \maintain_unincluded_children false
 \language english
 \language_package default
@@ -45,7 +45,7 @@
 \pdf_backref false
 \pdf_pdfusetitle true
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 2
 \use_package amssymb 2
 \use_package cancel 1
@@ -70,6 +70,7 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 10page%
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -246,25 +247,11 @@ Assuming that sensory data can be categorized into entities and relationships,
 \end_layout
 
 \begin_layout Standard
-\begin_inset VSpace defskip
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename ../reco-image/sparse-cut.eps
 	width 50col%
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset VSpace defskip
 \end_inset
 
 
@@ -299,6 +286,13 @@ monoidal category
  These last three statements arise from a relatively well-known generalization
  of Curry–Howard correspondance: for every category, there is a type theory,
  a grammar and a logic; from each, the others can be determined.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Baez2009"
+literal "false"
+
+\end_inset
+
  The mathematics of these relationships is foundational and quite challenging
  to the uninitiated.
 \end_layout
@@ -333,7 +327,7 @@ etc.
 \begin_inset Graphics
 	filename ../reco-image/link-grammar.png
 	lyxscale 60
-	width 100col%
+	width 85col%
 
 \end_inset
 
@@ -343,35 +337,30 @@ etc.
 \begin_layout Standard
 A recent rediscovery of the jigsaw-puzzle paradigm can be found in the work
  of Bob Coecke.
- The figure below is taken from a paper describing a linear-time quantum
- algorithm for parsing natural language.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Coecke2016,Coecke2010"
+key "Coecke2010"
+literal "false"
+
+\end_inset
+
+ Notable results include a linear-time quantum algorithm for parsing natural
+ language.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2016"
 literal "false"
 
 \end_inset
 
  This work is notable in that it provides a good bridge between concepts
  in linguistics and the hard science of mathematics.
- It is not the first; perhaps one of the earliest formal algebraic treaments
- of linguistics can be found in Marcus.
+ It is not the first such; perhaps one of the earliest formal algebraic
+ treaments of linguistics can be found in Marcus.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Marcus1967"
 literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename ../reco-image/quantum.png
-	lyxscale 30
-	width 42col%
 
 \end_inset
 
@@ -529,6 +518,254 @@ physics
  the role of philosophy in suggesting where to look remains invaluable.
  In this particular case, the ideas of mereology provide the requisite bridge
  from the abstract to the concrete.
+\end_layout
+
+\begin_layout Subsection*
+Pervasiveness
+\end_layout
+
+\begin_layout Standard
+After becoming familiar with the jigsaw paradigm, it becomes evident that
+ it is absolutely pervasive.
+ This is illustrated in the two figures below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/citric-acid-cycle.png
+	lyxscale 50
+	width 28col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/puzzle.eps
+	lyxscale 50
+	width 30col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The figure on the left is the Krebs cycle (the citric acid cycle in biochemistry
+).
+ It has an obvious graphical structure, and it is not difficult to see how
+ it is to be decomposed into jigsaw pieces.
+ What is notable here is that some of the jigsaw pieces find a literal embodimen
+t in the three-dimensional shape of molecules.
+ Diagrams of DNA are often shown with jigsaw connectors standing in for
+ the amino acids ATGC.
+\end_layout
+
+\begin_layout Standard
+The diagram on the left is more abstract, and is meant to illustrate composition
+ or beta reduction in term algebra.
+ A term is 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ or an 
+\begin_inset Formula $n$
+\end_inset
+
+-ary function symbol 
+\begin_inset Formula $f\left(x_{1},x_{2},\cdots,x_{n}\right)$
+\end_inset
+
+.
+ Variables are denoted as 
+\begin_inset Formula $x,y,z,\cdots$
+\end_inset
+
+ while constants are type instances, such as 
+\begin_inset Formula $42$
+\end_inset
+
+ or the string 
+\begin_inset Quotes eld
+\end_inset
+
+foobar
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Beta reduction is the act of 
+\begin_inset Quotes eld
+\end_inset
+
+pluging in
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\begin_inset Formula $f\left(x\right):42\mapsto f\left(42\right)$
+\end_inset
+
+.
+ Re-interpreted as jigsaw connectors, the term 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ is the jigsaw on the left, and 42 is the jigsaw on the right.
+ In order to connect, the two types must match.
+ The type-theoretical type of the variable 
+\begin_inset Formula $x$
+\end_inset
+
+ must match the type of of what is plugged in.
+ This kind of plugging-in or composition is rampant throughout mathematics.
+ Prime examples can be found in proof theory,
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Troelstra1996"
+literal "false"
+
+\end_inset
+
+ lambda calculus,
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Barendregt1981"
+literal "false"
+
+\end_inset
+
+ term algebras
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Baader1998"
+literal "false"
+
+\end_inset
+
+ and model theory.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hodges1997"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Vision and Sound
+\end_layout
+
+\begin_layout Standard
+Shapes have a structural grammar, too.
+ The connectors can specify location, color, shape, texture.
+ The key point of this structural ddecomposition is that it is 
+\emph on
+not about pixels
+\emph default
+! The structural decomposition is scale-invariant (more or less, unless
+ some connector fixes the scale) and rotationally invariant (unless some
+ connector fixes direction).
+ The structural grammar captures the morophology of the shape, it's general
+ properties, omitting details when they are impertinent, and capturing them
+ when they are important.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/traffic-lights.jpg
+	width 10col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/traffic-light-grammar.eps
+	width 30col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Not only do two-dimensional photographs have a structure grammar, but so
+ do sounds.
+ On the left is a spectrogram of a whale song.
+ It is ostensibly 
+\begin_inset Quotes eld
+\end_inset
+
+one-dimensional
+\begin_inset Quotes erd
+\end_inset
+
+, with time as the primary dimension, but is more accurately multi-dimensional:
+ the vertical axis shows frequency, the colors encode a third dimension,
+ the intensity.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/noaa-fisheries-humpback.jpg
+	width 55col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/audio-graph.eps
+	width 20col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On the right is a graphical representation of the midsection of the song.
+ It shows the number of repetitions (six), as well as the shape of the frequency
+ distribution (its a chirp, which can be discovered with a chirp filter,
+ a certain kind of digitial signal processing filter.) Individual repetitions
+ ccan be spotted with a finite impulse response filter.
+ The point here is that basic sensory information can also be described
+ in grammatical terms.
+\end_layout
+
+\begin_layout Section*
+Learning
+\end_layout
+
+\begin_layout Standard
+So...
 \end_layout
 
 \begin_layout Section*
