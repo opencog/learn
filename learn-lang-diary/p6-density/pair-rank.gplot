@@ -1,0 +1,55 @@
+# set term png small color
+
+#################################################
+#
+# set term png
+# set out 'pair-rank.png'
+set term postscript eps enhanced color 20
+set out 'pair-rank.eps'
+set key right top
+set title "Zipf of word pairs"
+set xlabel "Rank"
+set ylabel "Observation Count"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set yrange [1:1e7]
+
+z(x) = 5e7/x
+
+plot "pair-rank.dat" using 1:2 with lines lw 2 title "data", \
+     "pair-rank.dat" using 1:(z($1)) with lines lw 2 title "1/rank"
+
+#################################################
+#
+# set term png
+# set out 'pair-rank-flip.png'
+set term postscript eps enhanced color 20
+set out 'pair-rank-flip.eps'
+set key left top
+set title "Flipped Zipf of Word Pairs"
+set xlabel "E = -log_2 p(w_i, w_j)"
+set ylabel "Rank"
+unset logscale x
+unset format x
+set logscale y
+set format y "10^{%L}"
+# set yrange [1e-7:0.3]
+
+set y2label "{/Symbol r}(E)"
+set format y2 "10^{%L}"
+set y2range [1e-7:1]
+set y2tics
+set logscale y2
+
+norm = 1.0 / 985483375
+
+log2(x) = log(x) / log(2)
+
+dnorm = (200.0/23) / 28184319
+
+plot "pair-rank.dat" using (-log2(norm * $2)):1 with lines lw 2 title "ranking", \
+     "density.dat" using 2:(dnorm * $3) with lines axes x1y2 lw 2 title "{/Symbol r}(E)"
+
+#################################################
