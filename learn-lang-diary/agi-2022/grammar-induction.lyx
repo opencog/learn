@@ -241,7 +241,114 @@ Assuming that sensory data can be categorized into entities and relationships,
  an edge.
  In the most simplistic terms, vertexes are labelled with symbols, and edges
  with symbol pairs.
- There do arise problems of well-foundedness: if an entity is made of parts,
+ An example of this kind of naive symbolic graphical relationship is illustrated
+ below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/sparse-cut.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The figure on the left shows a graph-theoretic sparse graph of relationships
+ between entities.
+ On the right is the same graph, with some of the edges cut into half-edges,
+ with the half-edge connectors labelled with what they can connect to.
+ The connectors are drawn with distinct shapes, intentended to convey what
+ they are allowed to connect to.
+ Such vertices, together with a collection of connectors, can be imagined
+ to be jigsaw puzzle pieces, waiting to be connected.
+\end_layout
+
+\begin_layout Standard
+The simplicity of the above diagram is deceptive.
+ In fact, there is a deep and broad mathematical foundation for them.
+ Such jigsaw pieces are the elements of a category-theoretic 
+\begin_inset Quotes eld
+\end_inset
+
+monoidal category
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The connectors themselves are type-theoretic types.
+ The puzzle pieces themselves are the syntactical elements of a grammar,
+ formally defined.
+ These last three statements arise from a relatively well-known generalization
+ of Curry-Howard correspondance: for every category, there is a type theory,
+ a grammar and a logic; from each, the others can be determined.
+ The mathematics of these relationships is foundational and quite challenging
+ to the uninitiated.
+\end_layout
+
+\begin_layout Standard
+The paradigm of jigsaw pieces has long been known in linguistics, and has
+ been repeatedly rediscovered.
+ The diagram below is taken from the first paper describing Link Grammar,
+ a kind of dependency grammar.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991"
+literal "false"
+
+\end_inset
+
+ Grammatically-valid (syntactically valid) sentences are formed whenever
+ jigsaw connectors can be mated, leaving non unconnected.
+ This fashion of specifying a syntax and a grammar may feel a bit foreign
+ and unusual; be aware that such grammars can be automaticallly (i.e.
+ algorithmically) transformed into equivalent HPSG, DG, CG, FG, 
+\emph on
+etc.
+
+\emph default
+ style grammars.
+ 
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/link-grammar.png
+	lyxscale 60
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A recent rediscovery of the jigsaw-puzzle paradigm can be found in the work
+ of Bob Coecke.
+ The figure below is taken from a paper describing a linear-time quantum
+ algorithm for parsing natural language.
+\end_layout
+
+\begin_layout Standard
+There do arise problems of well-foundedness: if an entity is made of parts,
  does this mean that a vertex is made of parts? This question will be addressed
  shortly; 
 \end_layout
@@ -253,6 +360,18 @@ The End
 \begin_layout Standard
 This is the end.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "/home/linas/src/novamente/src/learn-git/learn-lang-diary/lang"
+options "tufte"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
