@@ -52,7 +52,7 @@
 		" <<>> " (cog-name (star-obj 'right-element ITEM))))
 
 (let ((outport (open-file "/tmp/pair-rank.dat" "w")))
-	(print-ts-rank pair-list outport)
+	(print-ts-rank-fn pair-list outport prt-pair)
 	(close outport))
 
 ; ---------------------------------------------------------------------

@@ -125,7 +125,125 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Stuff.
+The symbolic approach to cognition is founded on the idea that observed
+ nature can be categorized into distinct entities which are involved in
+ relationships with one another.
+ In this approach, the primary challenges are to recognize entities, and
+ to discover what relationships there are between them.
+ 
+\end_layout
+
+\begin_layout Standard
+The recognition problem is to be applied to sensory input.
+ That is, we cannot know nature directly, as it is, but only by means of
+ observation and sensing.
+ Conventionally, this can be taken to be the classical five senses: hearing,
+ touch, smell, vision, taste; or, more generally, scientific instruments
+ and engineered detectors.
+ Such sensors generate collections of data; this may be time-ordered, or
+ simply a jumbled bag of datapoints.
+ 
+\end_layout
+
+\begin_layout Standard
+Out of this jumble of data, the goal of entity detection is to recognize
+ groupings of data that 
+\emph on
+always
+\emph default
+ occur together.
+ The adverb 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+always
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ here is key: entities are those things that are not events: they have existence
+ over extended periods of time (Heidegger's 
+\begin_inset Quotes eld
+\end_inset
+
+Dasein
+\begin_inset Quotes erd
+\end_inset
+
+).
+ The goal of relationship detection is to determine both the structure of
+ entities (part-whole relationships) as well as events (statistical co-occurance
+s and causation).
+\end_layout
+
+\begin_layout Standard
+If one is somehow able to detect and discern entities, and observe frequent
+ relationships between them, then the path to symbolic processing becomes
+ accessible.
+ Each entity can be assigned a symbol (thus resolving the famous 
+\begin_inset Quotes eld
+\end_inset
+
+symbol grounding problem
+\begin_inset Quotes erd
+\end_inset
+
+), and conventional ideas about information theory can be applied to perform
+ reasoning, inference and deduction.
+ Here, the words 
+\begin_inset Quotes eld
+\end_inset
+
+information theory
+\begin_inset Quotes erd
+\end_inset
+
+ are taken in the broadest sense: not just signal processing and finite
+ state transducers, but also Bayesian nets, theorem provers and Turing machines;
+ the whole of what is computationally accessible in the current era.
+\end_layout
+
+\begin_layout Standard
+The goal of this paper is to develop a general theory for the conversion
+ of sensory data into symbolic relationships.
+ It is founded both on a collection of mathematical formalisms and also
+ on a collection of experimental results.
+ The experimental results are presented in a companion text; this text focuses
+ on presenting the mathematical foundations in as simple and direct a fashion
+ as possible.
+\end_layout
+
+\begin_layout Standard
+The organization is as follows.
+ First, the general relationship between graphs and grammars is sketched
+ out, attempting to illustrate just how broad, general and all-encompassing
+ this is.
+ Next, it is shown how this symbolic structure can be extended to visual
+ and auditory perception.
+ After this comes a mathematical deep-dive, reviewing how statistical principles
+ can be used to discern relationships between entities.
+ Working backwards, a practical algorithm is presented for extracting entities
+ themselves.
+ To conclude, a collection of hypothesis and wild speculations are presented.
+\end_layout
+
+\begin_layout Section*
+From Graphs to Grammar
+\end_layout
+
+\begin_layout Standard
+Assuming that sensory data can be categorized into entities and relationships,
+ the natural information-theoretic setting would seem to be graphs: each
+ entity is represented by a vertex, each relationship is represented by
+ an edge.
+ In the most simplistic terms, vertexes are labelled with symbols, and edges
+ with symbol pairs.
+ There do arise problems of well-foundedness: if an entity is made of parts,
+ does this mean that a vertex is made of parts? This question will be addressed
+ shortly; 
 \end_layout
 
 \begin_layout Section*
