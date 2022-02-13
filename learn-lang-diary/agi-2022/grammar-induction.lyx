@@ -838,7 +838,7 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection*
-Grammatical induction
+Grammatical Induction
 \end_layout
 
 \begin_layout Standard
@@ -866,6 +866,10 @@ i.e.
  is symbolic.) It is not obvious if deep-learning techniques can be applied
  to obtain these lexical vectors; what is described below is a simpler,
  plainer approach.
+\end_layout
+
+\begin_layout Subsubsection*
+Maximum Planar Graph Parsing
 \end_layout
 
 \begin_layout Standard
@@ -930,7 +934,20 @@ This lexical attraction is just the mutual information; it has a somewhat
 
  and concentional texts on probability theory usually do not address this
  non-symmetric situation.
- Given a table of 
+ Note that the MI may be negative! The range of values depends on the size
+ of the corpus; for a 
+\begin_inset Quotes eld
+\end_inset
+
+typical
+\begin_inset Quotes erd
+\end_inset
+
+ corpus, it ranges frm -10 to +30.
+\end_layout
+
+\begin_layout Standard
+Given a table of 
 \begin_inset Formula $MI\left(u,w\right)$
 \end_inset
 
@@ -960,8 +977,8 @@ This lexical attraction is just the mutual information; it has a somewhat
 There exist a number of fast algorithms for obtaining maximal spanning trees.
  Variants include those that generate only planar trees, or even planar
  graphs (graphs with loops, but no intersecting links).
- Planar graphs appear to offer experimentally-observable advantages over
- trees, as they appear to constrain the grammar more tightly.
+ Maximal planar graphs (MPG) appear to offer experimentally-observable advantage
+s over trees, as they appear to constrain the grammar more tightly.
  In this sense, they offer some of the advantages seen in catena-based lingustic
  theory.
 \begin_inset CommandInset citation
@@ -972,6 +989,301 @@ literal "false"
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+At any rate, the point here is that the MST parses are linguistically plausible:
+ it is fairly straightforward to verify that they correspond, more or less,
+ to what trained linguists would write down for a parse.
+ The accuracy is reasonably high.
+ For the present algorithms, perfect accuracy is not needed, as later stages
+ make up for this.
+ Yuret indicates that the best results are obtained when one accumulates
+ at least a million sentences.
+ This is not outrageous: work in child psychology indicates that human babies
+ hear several million sentences by the age of two years.
+\end_layout
+
+\begin_layout Subsubsection*
+Lexical Entries
+\end_layout
+
+\begin_layout Standard
+Given an MST or MPG parse, the lexis is constructed by chopping up the parse
+ into jigsaw pieces, and then accumulating the counts on the jigsaw pieces.
+ This is shown below.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/disjunct-cut.eps
+	lyxscale 60
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are multiple diferent notations possible for the above.
+ There is a tensorial notation, popular in quantum approaches; the lexical
+ entry would be written as 
+\begin_inset Formula $\mbox{ball}:\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+ while in Link Grammar, it is denoted as 
+\begin_inset Formula $\mathtt{ball:the-\&\;throw-}$
+\end_inset
+
+ where the minus signs indicate connections to the left.
+ The ampersand is the conjunction operator from a framgment of linear logic;
+ it demands that both connector be present.
+ Linear logic is the logic of tensor algebras (by the aforementioned Curry–Howar
+d correspondance.) Unlike tensor algebras, natural language has a distinct
+ left-right asymmetry, and so the corresponding logic (of the monoidal category
+ of natural language) is just a fragment of linear logic.
+ Note that all of quantum mechanics lies inside of the tensor algebra; this
+ explains why assorted quantum concepts seem to recur in natural language
+ discussions.
+ 
+\end_layout
+
+\begin_layout Standard
+The connector sequences 
+\begin_inset Formula $\mathtt{the-\&\;throw-}$
+\end_inset
+
+ or 
+\begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+ often called 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+: different connector sequences 
+\begin_inset Formula $d$
+\end_inset
+
+ are disjoined from one-another.
+ Given a word 
+\begin_inset Formula $w$
+\end_inset
+
+, a lexical entry consists of all word-disjunct pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ together with thier observed count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+.
+ Given this count, one may define a frequency 
+\begin_inset Formula $p\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
+\end_inset
+
+ where this time, 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ is the sum over all word-disjunct pairs.
+ A lexical entry is thus a sparse skip-gram-like vector:
+\begin_inset Formula 
+\[
+\overrightarrow{w}=p\left(w,d_{1}\right)\widehat{e_{1}}+\cdots+p\left(w,d_{n}\right)\widehat{e_{n}}
+\]
+
+\end_inset
+
+One can use the logical disjunction 
+\begin_inset Quotes eld
+\end_inset
+
+or
+\begin_inset Quotes erd
+\end_inset
+
+ in place of the plus sign; this would be the 
+\begin_inset Quotes eld
+\end_inset
+
+choice
+\begin_inset Quotes erd
+\end_inset
+
+ operator in linear logic (as in 
+\begin_inset Quotes eld
+\end_inset
+
+menu choice
+\begin_inset Quotes erd
+\end_inset
+
+: pick one or another).
+ The basis vectors 
+\begin_inset Formula $\widehat{e_{k}}$
+\end_inset
+
+ are one and the same thing as the skip-gram disjuncts 
+\begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+, just offering a short-hand notation.
+\end_layout
+
+\begin_layout Subsubsection*
+Similarity
+\end_layout
+
+\begin_layout Standard
+The lexis generated above contains individual words with connectors to other,
+ specific words.
+ Although each vector is sparse, and the lexis, as a whole, taken as a matrix
+ is sparse, it is still quite large.
+ By contrast, conventional linguistic grammars talk about nouns and verbs
+ and adjectives.
+ Part of the learning process is then to automatically find similar categories:
+ to organize words into groups based on similarities.
+ A very conventional similarity metric is the cosine distance, given as
+ 
+\begin_inset Formula 
+\[
+\cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}p\left(w,d\right)p\left(v,d\right)
+\]
+
+\end_inset
+
+This similarity metric fails.
+ The space spanned by these vectors is 
+\emph on
+not Euclidean space
+\emph default
+! It does not have rotational symmetry! Properly, it is a probability space,
+ a simplex, as one must preserve unit-length probability vectors: 
+\begin_inset Formula $1=\sum_{w,d}p\left(w,d\right)$
+\end_inset
+
+.
+ The correct information-theoretic similarity is the mutual information:
+\begin_inset Formula 
+\[
+MI\left(w,v\right)=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}p\left(w,d\right)p\left(*,d\right)
+\]
+
+\end_inset
+
+Unlike the MI for word-pairs, this MI is symmetric: 
+\begin_inset Formula $MI\left(w,v\right)=MI\left(v,w\right)$
+\end_inset
+
+.
+ Experimentally, the distribution of the MI for word pairs appears to be
+ Gaussian, as shown below.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../en-sims-p3/mi-dist-tsup.eps
+	width 35col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above is obtained from MPG parsing and statistics gathering as described
+ above.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the Language Learning Diary Part Three, 
+\emph on
+op.
+ cit.
+\end_layout
+
+\end_inset
+
+ Note the graph is on a semi-log scale: normal distributions become parabolas
+ when graphed this way.
+ 
+\end_layout
+
+\begin_layout Subsubsection*
+Classification
+\end_layout
+
+\begin_layout Standard
+Clustering words into grammatical categories based on similarity may seem
+ straight-forward, but can founder on several different details.
+ First, the MI, as defined above, has the property that words with the very
+ highest MI tend to be very infrequent, rare.
+ As a practical detail, one wishes to first cluster the most frequent words.
+ To do this, one must add some kind of offset, so as to recommend common
+ words first.
+ Such an offset is provided by the average of the logarithm of the frequency
+ of the two words.
+ This leads to the definition of 
+\begin_inset Formula 
+\begin{align*}
+MI_{\mbox{ranked}}\left(w,v\right)= & MI\left(w,v\right)+\frac{1}{2}\left[\log_{2}p\left(w,*\right)+\log_{2}p\left(v,*\right)\right]\\
+= & \log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\sqrt{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}}
+\end{align*}
+
+\end_inset
+
+The shape of the Gaussian above is unaffected, although it is shifted to
+ the right; clearly, the ranking is completely different.
+ 
+\end_layout
+
+\begin_layout Standard
+A second practical difficulty is that it is not enough just to cluster some
+ words toegther; one must also re-write the connectors to make use of the
+ set of words in the cluster.
+ This prevents the use of off-the-shelf clustering algorithms that can be
+ found on the Internet.
+ The rewriting of connector sequences is subtle and non-trivial, and easily
+ error-prone.
+ The primary constraint is that one must preserve 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+: the grand total counts must remain the same both before and after.
+ This is much the same as detailed balance in chemistry, where the grand-total
+ number of atoms (and thier types) in a chemical reaction is preserved.
+ Again, this is a place where the sheaf axioms make an appearance.
+\end_layout
+
+\begin_layout Subsubsection*
+Factorization
+\end_layout
+
+\begin_layout Standard
+The clustering described above can be understood to be a form of matrix
+ factorization.
 \end_layout
 
 \begin_layout Subsection*
