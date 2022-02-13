@@ -256,7 +256,7 @@ Assuming that sensory data can be categorized into entities and relationships,
 \align center
 \begin_inset Graphics
 	filename ../reco-image/sparse-cut.eps
-	width 80col%
+	width 50col%
 
 \end_inset
 
@@ -297,7 +297,7 @@ monoidal category
  The puzzle pieces themselves are the syntactical elements of a grammar,
  formally defined.
  These last three statements arise from a relatively well-known generalization
- of Curry-Howard correspondance: for every category, there is a type theory,
+ of Curry–Howard correspondance: for every category, there is a type theory,
  a grammar and a logic; from each, the others can be determined.
  The mathematics of these relationships is foundational and quite challenging
  to the uninitiated.
@@ -345,12 +345,190 @@ A recent rediscovery of the jigsaw-puzzle paradigm can be found in the work
  of Bob Coecke.
  The figure below is taken from a paper describing a linear-time quantum
  algorithm for parsing natural language.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2016,Coecke2010"
+literal "false"
+
+\end_inset
+
+ This work is notable in that it provides a good bridge between concepts
+ in linguistics and the hard science of mathematics.
+ It is not the first; perhaps one of the earliest formal algebraic treaments
+ of linguistics can be found in Marcus.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Marcus1967"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-There do arise problems of well-foundedness: if an entity is made of parts,
- does this mean that a vertex is made of parts? This question will be addressed
- shortly; 
+\align center
+\begin_inset Graphics
+	filename ../reco-image/quantum.png
+	lyxscale 30
+	width 42col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Compositionality and Sheaves
+\end_layout
+
+\begin_layout Standard
+The naive replacement of entitites by vertexes and relationships by edges
+ seems to itself have a problem with well-foundedness.
+ If an entity is made of parts, does this mean that a vertex is made of
+ parts? What are those parts made of? Is there an infinite regress? How
+ might one indicate the fact that some entity has a composite structure?
+ The answers to these questions are resolved by observing that a partially-assem
+bled jigsaw puzzle resembles a singular jigsaw price: it externalizes some
+ number of unconnected connectors, while also describing the connectivty
+ of the fully-asssembled territory.
+ This is how the part-whole relationship is established: the 
+\begin_inset Quotes eld
+\end_inset
+
+whole
+\begin_inset Quotes erd
+\end_inset
+
+ entity is a partialliy assembled jigsaw; the parts are the individual pieces,
+ and the way that the entity can interact with other entities is through
+ the as-yet unconnected connectors.
+\end_layout
+
+\begin_layout Standard
+Sheaf theory is the branch of axioms that explores how such part-whole structure
+s behave.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+sheaf axioms
+\begin_inset Quotes erd
+\end_inset
+
+ provide a handful of simple rules that describe how a valid sheaf can be
+ created.
+ In simplistic terms, the sheaf axioms describe how jigsaw pieces connect.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2017sheaves,Spivak2018"
+literal "false"
+
+\end_inset
+
+ When sheaf theory is taken in it's full glory, it has been offered up as
+ an alternative to sset theory as a foundation for all of mathematics.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MacLane1992"
+literal "false"
+
+\end_inset
+
+ This is because the sheaf axioms suffice not only to be a foundation for
+ topology (as a generalization of frames and locales), but also for logic
+ (via the extended Curry–Howard correspondance mentioned above).
+ These are formidable claims with an impeccable mathematical pedigree; the
+ general mathemaitcal theory seems entirely adequate as a foundation for
+ AGI.
+ Armed with this, one can move forward.
+\end_layout
+
+\begin_layout Standard
+In philosophy, the question of part-whole relationships, identity, existance
+ and thing-ness is studied under the name of mereology.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Varzi2003"
+literal "false"
+
+\end_inset
+
+ Some of the key concepts of mereology include ideas such as 
+\begin_inset Quotes eld
+\end_inset
+
+contact
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+fastentation
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+cohesion
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+fusion
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+brutal composition
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A shallow understanding of these concepts is enough to convince one that
+ jigsaw pieces fit the bill.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2020mere"
+literal "false"
+
+\end_inset
+
+ Why mention philosophy in the same breath as mathematics? The function
+ of philosophy is to wrestle with vague, phantasmic questions, to thrash
+ about in the fog, hoping to find a purchase on something solid.
+ Whenever such contact can be made, the scientists take over: this is how
+ 
+\begin_inset Quotes eld
+\end_inset
+
+natural philosophy
+\begin_inset Quotes erd
+\end_inset
+
+ morphed into 
+\begin_inset Quotes eld
+\end_inset
+
+physics
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Insofar as AGI wishes to be a foundational theory of cognitive-everything,
+ the role of philosophy in suggesting where to look remains invaluable.
+ In this particular case, the ideas of mereology provide the requisite bridge
+ from the abstract to the concrete.
 \end_layout
 
 \begin_layout Section*
