@@ -316,7 +316,7 @@ literal "false"
  jigsaw connectors can be mated, leaving non unconnected.
  This fashion of specifying a syntax and a grammar may feel a bit foreign
  and unusual; be aware that such grammars can be automaticallly (i.e.
- algorithmically) transformed into equivalent HPSG, DG, CG, FG, 
+ algorithmically) transformed into equivalent HPSG, DG, CG, LFG, 
 \emph on
 etc.
 
@@ -768,7 +768,254 @@ Learning
 \end_layout
 
 \begin_layout Standard
-So...
+In order for a graphical, sheaf-theoretic, grammatical theory of structure
+ to serve as a foundation stone for AGI, there most be a practical algorithm
+ for extracting such structure from sensory data.
+ Such an algorithm is sketched below.
+ It consists of three interacting parts.
+ The first step is chunking, the division of sensory data into candidate
+ entities and candidate interactions that might possibly be identified as
+ entities or inteeractions by the second step.
+ The second step takes a collection of candidate graphs, splits them into
+ jigsaw pieces, and then attepts to classify jigsaw pieces into common categorie
+s, based on thier commonalities.
+ The third step is a recursive step, tto repeat the process again, but this
+ time taking the discovered structure as the sensory input.
+ It is meant to be a hierarchical crawl up the semantic ladder.
+\end_layout
+
+\begin_layout Standard
+Experimentally, the second step has been the most thoroughly explored.
+ An implementation exists within the OpenCog system,
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "learn project"
+target "https://github.com/opencog/learn"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ in github.
+\end_layout
+
+\end_inset
+
+ with extensive research diaries logging results.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "diaries"
+target "https://github.com/opencog/learn/tree/master/learn-lang-diary"
+literal "false"
+
+\end_inset
+
+ in the afrementioned project.
+\end_layout
+
+\end_inset
+
+ A summary of these results is presented as a companion paper to this one.
+ Explorations of the first and third steps have hardly begun.
+ It is easiest to describe the second step first.
+\end_layout
+
+\begin_layout Subsection*
+Grammatical induction
+\end_layout
+
+\begin_layout Standard
+In linguistics, one is presented with a pre-chunked sequence of words; the
+ conversion of raw sound into phonemes and then words is presumed to have
+ already occurred.
+ The task is to extract a more-or-less conventional grammar given a corpus
+ of text.
+ The first step is to perform a Maximum Spanning Trees (MST) parse; the
+ second step is to split the MST parse into jigsaw pieces, and classify
+ those pieces into lexical vectors.
+ The generation of the MST parse requires collecting statistics on a corpus,
+ based on maximum entropy principles; this has a long and deep tradition
+ in Corpus Linguistics, going as far back as Biblical Concordances in earlier
+ centuries, before linguistics was a distinct field of study.
+ Lexical semantics also a deep and broad research literature, much more
+ modern.
+ Of note here is that this vector-based description has more than a few
+ similarities to the theory of neural-nets, and yet is fundamentally different,
+ because it is ultimately lexical (
+\emph on
+i.e.
+
+\emph default
+ is symbolic.) It is not obvious if deep-learning techniques can be applied
+ to obtain these lexical vectors; what is described below is a simpler,
+ plainer approach.
+\end_layout
+
+\begin_layout Standard
+The MST parsing algorithm is described by Yuret, as follows.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ Starting with a corpus, maintain a count 
+\begin_inset Formula $N\left(u,w\right)$
+\end_inset
+
+ of nearby word-pairs 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+.
+ Here, 
+\begin_inset Quotes eld
+\end_inset
+
+nearby
+\begin_inset Quotes erd
+\end_inset
+
+ usually means 
+\begin_inset Quotes eld
+\end_inset
+
+in a window of width six
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A frequentist probability 
+\begin_inset Formula $p\left(u,w\right)=N\left(u,w\right)/N\left(*,*\right)$
+\end_inset
+
+ is just the count of a given word-pair divided by the total count of all
+ word-pairs.
+ The star indicates a marginal sum or marginal probability, so that 
+\begin_inset Formula $p\left(u,*\right)=\sum_{w}p\left(u,w\right)=\sum_{w}N\left(u,w\right)/N\left(*,*\right)=N\left(u,*\right)/N\left(*,*\right)$
+\end_inset
+
+.
+ Given these frequencies, defines the Lexical Attraction between word-pairs
+ as
+\begin_inset Formula 
+\[
+MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u,*\right)p\left(*,w\right)}
+\]
+
+\end_inset
+
+This lexical attraction is just the mutual information; it has a somewhat
+ unusual form, as word-pairs are necessarily not symmetric: 
+\begin_inset Formula $\left(u,w\right)\ne\left(w,u\right)$
+\end_inset
+
+ and concentional texts on probability theory usually do not address this
+ non-symmetric situation.
+ Given a table of 
+\begin_inset Formula $MI\left(u,w\right)$
+\end_inset
+
+ obtained by counting, one obtains an MST parse of a sentence by considering
+ all possible trees that connect all of the words, and selecting the one
+ tree that has the largest possible total 
+\begin_inset Formula $MI$
+\end_inset
+
+.
+ An example of such a tree is shown below, taken from Yuret's thesis.
+ The numbers in the links are the MI between the indicated words.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/Yuret.png
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There exist a number of fast algorithms for obtaining maximal spanning trees.
+ Variants include those that generate only planar trees, or even planar
+ graphs (graphs with loops, but no intersecting links).
+ Planar graphs appear to offer experimentally-observable advantages over
+ trees, as they appear to constrain the grammar more tightly.
+ In this sense, they offer some of the advantages seen in catena-based lingustic
+ theory.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborne2012"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Chunking
+\end_layout
+
+\begin_layout Subsection*
+Recursion
+\end_layout
+
+\begin_layout Subsection*
+Lexical Semantics
+\end_layout
+
+\begin_layout Itemize
+Lexical Implication Rules
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ostler1991"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+WordNet 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mihalcea2005"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Catena Osbourne
+\end_layout
+
+\begin_layout Standard
+*
 \end_layout
 
 \begin_layout Section*
