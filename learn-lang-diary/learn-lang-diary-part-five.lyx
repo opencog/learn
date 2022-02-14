@@ -100,7 +100,7 @@ Jan 2022 - present
 \end_layout
 
 \begin_layout Author
-Linas Vepstas
+Linas Vepštas
 \end_layout
 
 \begin_layout Abstract
@@ -144,7 +144,7 @@ A list of things to do, here or later:
 
 \begin_layout Itemize
 In population genetics, a neutral evolutionary model with a static population
- size resuts in a power-law distribution of alleles in the population.
+ size results in a power-law distribution of alleles in the population.
  Can this process model also explain the power-law (Zipfian, square-root-Zipfian
 ) distributions seen elsewhere? There is a similar set of results in ecology,
  with regards to species distribution in an ecological niche.
@@ -279,7 +279,7 @@ Round 43
 \end_layout
 
 \begin_layout Standard
-Done wih bug-fixing.
+Done with bug-fixing.
 \end_layout
 
 \begin_layout Standard
@@ -345,7 +345,7 @@ So that looks like a bug.
 \end_layout
 
 \begin_layout Itemize
-Hard to beleive that this is the top ranked-MI pair.
+Hard to believe that this is the top ranked-MI pair.
  
 \end_layout
 
@@ -407,7 +407,7 @@ As as.i
 \begin_layout Standard
 Conclude: the majority-voting scheme left behind (left unmerged) too much;
  enough that the MI between what is left is still high.
- Can we redefine the voting proceedure to lessen this?
+ Can we redefine the voting procedure to lessen this?
 \end_layout
 
 \begin_layout Subsection*
@@ -1537,7 +1537,7 @@ MI(`in`, `into`) = +inf.0  rank-MI = +nan.0
 \end_layout
 
 \begin_layout Standard
-Turns out is was a bad wild-card derefernce that clobbered the wildcard
+Turns out is was a bad wild-card de-reference that clobbered the wildcard
  anchor.
 \end_layout
 
@@ -1836,7 +1836,7 @@ What does come clear from the spot inspection is that ranked-MI is starting
 \begin_inset Quotes eld
 \end_inset
 
-un-naturally
+unnaturally
 \begin_inset Quotes erd
 \end_inset
 
@@ -1947,7 +1947,7 @@ constant
 \end_inset
 
  to offset the common-MI to a non-negative range.
- The defintion was the log of the sum-squared marginals:
+ The definition was the log of the sum-squared marginals:
 \begin_inset Formula 
 \[
 Q=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
@@ -1979,7 +1979,7 @@ constant
 \end_layout
 
 \begin_layout Standard
-There seems to be a big changles in the quorum=0.7 curve, just before the
+There seems to be a big changes in the quorum=0.7 curve, just before the
  800'th merge.
  Unfortunately, this code failed to track the merged words, so unclear what
  that's about.
@@ -2057,12 +2057,12 @@ Definitions
 \end_layout
 
 \begin_layout Standard
-Some defintions are in order.
+Some definitions are in order.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-The defintions here are the same as given in earlier texts.
+The definitions here are the same as given in earlier texts.
  The code that implements these was developed primarily in 2017, and can
  be found in the `opencoog/matrix` subdirectory of the git repo at 
 \begin_inset CommandInset href
@@ -2079,7 +2079,7 @@ literal "false"
 
 \end_inset
 
- This repeats defintions given earlier.
+ This repeats definitions given earlier.
  For a word-disjunct pair 
 \begin_inset Formula $\left(w,d\right)$
 \end_inset
@@ -2594,7 +2594,7 @@ Zipf Distribution
 \begin_layout Standard
 Some graphs follow.
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 The data was processed with the `utils/entropy-marginals.scm` scripts in
@@ -2603,14 +2603,14 @@ The data was processed with the `utils/entropy-marginals.scm` scripts in
 
 \end_inset
 
- We begin with a very conventioal graph, and a very conventional result.
+ We begin with a very conventional graph, and a very conventional result.
  This shows the marginal frequency 
 \begin_inset Formula $P\left(w,*\right)$
 \end_inset
 
  as a function of the rank.
  The distribution is almost Zipfian, with a classical Zipf slope.
- It's a bit noiser than hoped for; the noise may be due to the somewhat
+ It's a bit noisier than hoped for; the noise may be due to the somewhat
  imperfect dataset (it contains a lot of words with escaped backslashes
  in them, due to a very early parsing bug.)
 \end_layout
@@ -2669,8 +2669,8 @@ G\left(x;\mu,\sigma\right)=\frac{1}{\sigma\sqrt{2\pi}}\exp-\frac{\left(x-\mu\rig
 
 This fit is not particularly convincing; there's a sharp drop-off to the
  right that is not being fit.
- The data is fairly noisey.
- My guess is that the spikey bits on the right are from infrequently-observed
+ The data is fairly noisy.
+ My guess is that the spiky bits on the right are from infrequently-observed
  word-disjunct pairs.
  
 \end_layout
@@ -2781,8 +2781,8 @@ How does the MI correlate with the entropy and the frequency? Three scatterplots
 \end_inset
 
 .
- The two straight lines have the slopes as indicated, and apprximately bound
- the distribution.
+ The two straight lines have the slopes as indicated, and approximately
+ bound the distribution.
 \end_layout
 
 \begin_layout Standard
@@ -2824,7 +2824,7 @@ The graph below shows the mutual information
 \end_inset
 
 .
- Thus, the centroid of this scaterplot is in the lower-left, and not where
+ Thus, the centroid of this scatterplot is in the lower-left, and not where
  one might visually expect it.
 \end_layout
 
@@ -2884,7 +2884,7 @@ unweighted
 \end_layout
 
 \begin_layout Standard
-In conclusion: there is an obvious correlation btween frequency and entropy,
+In conclusion: there is an obvious correlation between frequency and entropy,
  and frequency and MI.
  However, the correlation between entropy and MI is considerably weaker.
 \end_layout
@@ -2896,7 +2896,7 @@ Alternative Rankings
 \begin_layout Standard
 The Diary Part Three proposes that two words should form the seed of a cluster,
  if they have the largest ranked-MI of all word-pairs.
- Can the above provide some alternative rankings? First, rcall the defintion
+ Can the above provide some alternative rankings? First, recall the definition
  of the ranked-MI.
 \end_layout
 
@@ -3046,7 +3046,7 @@ is a probability.
 \begin_inset Formula $\pi$
 \end_inset
 
- and ask about conditional probabilites, mutual information and entropies.
+ and ask about conditional probabilities, mutual information and entropies.
  For example, what is the value of
 \end_layout
 
@@ -3120,7 +3120,7 @@ pretty
 \begin_inset Quotes erd
 \end_inset
 
- interpretations, which can be seen by recalling the defintions above:
+ interpretations, which can be seen by recalling the definitions above:
 \begin_inset Formula 
 \[
 H_{\mbox{right}}\left(w\right)=-\frac{\sum_{d}P\left(w,d\right)\log_{2}P\left(w,d\right)}{P\left(w,*\right)}
@@ -3216,7 +3216,7 @@ Four nearly identical graphs, differing only in the horizontal offset:
 
 \begin_layout Standard
 The Gaussians are an eyeballed fit.
- How similar are tehse graphs? All four are replotted below, with the horizontal
+ How similar are these graphs? All four are replotted below, with the horizontal
  offset adjusted by the eyeballed fits, above.
 \end_layout
 
@@ -6382,7 +6382,7 @@ What can we conclude? Clearly, the naked MI score is exploring all pairings
 \begin_inset Quotes eld
 \end_inset
 
-thier our its your his my
+their our its your his my
 \begin_inset Quotes erd
 \end_inset
 
@@ -6394,9 +6394,12 @@ Hard to figure out what to make of this.
 \end_layout
 
 \begin_layout Standard
-A tempting conclusion, perhaps a bit ad-hoc, is to use ranked-MI to suggest
- the initial pair to seed a cluster, but then to use either MI, HMI or MMI
- to expand the actual in-group.
+A tempting conclusion, perhaps a bit 
+\emph on
+ad hoc
+\emph default
+, is to use ranked-MI to suggest the initial pair to seed a cluster, but
+ then to use either MI, HMI or MMI to expand the actual in-group.
  So, MMI looks pretty slick, but is computationally the heaviest to recompute.
  HMI should be fairly fast, as it's just some logs.
  And MI is computationally 
@@ -6615,7 +6618,7 @@ none
 .
  These low-count tails contribute very little, or nothing to the word-pair
  MI.
- Right? Or are they nickel-n-dimeing us to death? (Hmm.
+ Right? Or are they nickel-n-diming us to death? (Hmm.
  If they contribute nothing, then they could have been trimmed away from
  the get-go...) Mostly, they hang around, chewing up space...
  Later on, when a dictionary is created, these can be trimmed away, to arrive
@@ -6700,7 +6703,7 @@ Shown for comparison are the Experiment-12 graphs.
  That is, the dataset is scrubbed to remove all connectors that cannot connect
  to words, and vice-versa.
  This has a minor effect on the graphs, but reduces the amount of annoyance
- and cunfusion during inspection and debugging.
+ and confusion during inspection and debugging.
  
 \end_layout
 
@@ -6847,7 +6850,7 @@ Q=-\log_{2}\sum_{d}P\left(*,d\right)P\left(*,d\right)
 
 It varies over time, as both new disjuncts are created, old disjuncts have
  counts drop to zero, and similarly, come words have counts drop to zero
- as they are transfered to the word-classes.
+ as they are transferred to the word-classes.
 \end_layout
 
 \begin_layout Standard
@@ -6891,8 +6894,8 @@ The next graph shows the ranked-MI of the top-ranked word-pair that triggers
  the merge.
  Were it not for the recomputations of word-pair MI's, this should trend
  downwards, monotonically.
- The recomputation of MI exposes new fragements/remainders of merged classes
- that elevate this MI, breifly, until undisturbed word-pairs are encountered
+ The recomputation of MI exposes new fragments/remainders of merged classes
+ that elevate this MI, briefly, until undisturbed word-pairs are encountered
  again.
 \end_layout
 
@@ -6939,7 +6942,7 @@ MI
 
 \begin_layout Standard
 The ranked-MI is build as a linear combination of the word-pair MI, plus
- the log of teh frequencies, plus Q.
+ the log of the frequencies, plus Q.
  It seems reasonable to ask what the MI was of the pair that initiated the
  merge.
  This is shown below.
@@ -7278,7 +7281,7 @@ Shown below is
 \end_inset
 
 the recently created class.
- Thus, the larger this is, the greter the support.
+ Thus, the larger this is, the greater the support.
 \end_layout
 
 \begin_layout Standard
@@ -7393,7 +7396,7 @@ When a class is formed out of the words
 \begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
 \end_inset
 
-, the total counts of each of these contriibutions 
+, the total counts of each of these contributions 
 \begin_inset Formula $N\left(w_{1},*\right),N\left(w_{2},*\right),\cdots,N\left(w_{n},*\right)$
 \end_inset
 

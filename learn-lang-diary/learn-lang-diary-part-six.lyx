@@ -100,7 +100,7 @@ Feb 2022 - present
 \end_layout
 
 \begin_layout Author
-Linas Vepstas
+Linas Vepštas
 \end_layout
 
 \begin_layout Abstract
@@ -170,7 +170,7 @@ MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left
 
 \end_inset
 
-These two someohow feel 
+These two somehow feel 
 \begin_inset Quotes eld
 \end_inset
 
@@ -190,7 +190,7 @@ feels like
 \begin_inset Quotes erd
 \end_inset
 
- some kind of renormalized propagator where the 
+ some kind of re-normalized propagator where the 
 \begin_inset Formula $\log_{2}p\left(u,*\right)$
 \end_inset
 
@@ -213,7 +213,7 @@ Field Theory Models
 Field theory models applied to statistics and language have surely been
  thrashed to death in the literature (of which I am only dimly aware).
  The below is an attempted recap of some basic ideas, recast into the notation
- uised locally in this diary.
+ used locally in this diary.
 \end_layout
 
 \begin_layout Subsection*
@@ -313,7 +313,7 @@ Interpretation
 \end_layout
 
 \begin_layout Standard
-The above defintion of the density of states is motivated by the Boltzmann
+The above definition of the density of states is motivated by the Boltzmann
  distribution 
 \begin_inset Formula $p=e^{-\beta E}$
 \end_inset
@@ -379,8 +379,8 @@ Use the script in `utils/densidty-of-states.scm`
 \end_layout
 
 \begin_layout Standard
-The graph below uses 200 bins, runnning between a lower bound of 7.0 and
- upper bound of 30.0.
+The graph below uses 200 bins, running between a lower bound of 7.0 and upper
+ bound of 30.0.
  Thus, the width of each bin is 
 \begin_inset Formula $dh=23/200$
 \end_inset
@@ -475,7 +475,7 @@ a
 \begin_inset Quotes erd
 \end_inset
 
-, punctutation.) These would be ranked first in a Zipfian distribution, thus
+, punctuation.) These would be ranked first in a Zipfian distribution, thus
  the bottom-left of this graph corresponds to the top-left of a Zipf graph.)
 \end_layout
 
@@ -948,7 +948,7 @@ physical
 The root cause of this is that the vocabulary is unbounded.
  As more and more text is observed, more and more vocabulary words are encounter
 ed, and there appears to be no upper limit (geographical place-names, foreign
- loan-words, given names, imaginative sales terms, childrens nonsense words,
+ loan-words, given names, imaginative sales terms, children's nonsense words,
  portmanteaus, ...) As a result, the number of distinct word pairs also grows,
  in an unbounded fashion, as the number of observations increase.
  
@@ -1000,7 +1000,7 @@ It would be nice to be able to assign a measure
 \end_inset
 
 .
- For English, and for many langauges, the probability of observing a word
+ For English, and for many languages, the probability of observing a word
  is mostly independent of it's location in the sentence, so drop the subscript
  
 \begin_inset Formula $j$
@@ -1018,7 +1018,7 @@ It would be nice to be able to assign a measure
 \begin_inset Formula $j$
 \end_inset
 
-.) This is the measure of the cylnder set 
+.) This is the measure of the cylinder set 
 \begin_inset Formula $\left(*,\cdots,*,w_{k},*,\cdots,*\right)$
 \end_inset
 
@@ -1074,7 +1074,7 @@ The only good news here is that it is only weakly divergent.
 \end_layout
 
 \begin_layout Standard
-The above desnity-of-states results for word-pairs indicates that the same
+The above density-of-states results for word-pairs indicates that the same
  applies for 
 \begin_inset Formula $\mu\left(w_{i},w_{j}\right)$
 \end_inset
