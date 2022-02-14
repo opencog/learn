@@ -71,9 +71,9 @@
 \color #008000
 \end_index
 \leftmargin 11page%
-\topmargin 12pheight%
+\topmargin 8pheight%
 \rightmargin 11page%
-\bottommargin 12pheight%
+\bottommargin 10pheight%
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -253,7 +253,8 @@ Assuming that sensory data can be categorized into entities and relationships,
 \align center
 \begin_inset Graphics
 	filename ../reco-image/sparse-cut.eps
-	width 50col%
+	lyxscale 70
+	width 40col%
 
 \end_inset
 
@@ -765,7 +766,7 @@ On the right is a graphical representation of the midsection of the song.
 \end_layout
 
 \begin_layout Section*
-Learning
+Symbolic Learning
 \end_layout
 
 \begin_layout Standard
@@ -780,7 +781,7 @@ In order for a graphical, sheaf-theoretic, grammatical theory of structure
  The second step takes a collection of candidate graphs, splits them into
  jigsaw pieces, and then attepts to classify jigsaw pieces into common categorie
 s, based on thier commonalities.
- The third step is a recursive step, tto repeat the process again, but this
+ The third step is a recursive step, to repeat the process again, but this
  time taking the discovered structure as the sensory input.
  It is meant to be a hierarchical crawl up the semantic ladder.
 \end_layout
@@ -963,7 +964,7 @@ Given a table of
  The numbers in the links are the MI between the indicated words.
 \end_layout
 
-\begin_layout Frame
+\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename ../reco-image/Yuret.png
@@ -1015,7 +1016,7 @@ Given an MST or MPG parse, the lexis is constructed by chopping up the parse
  This is shown below.
 \end_layout
 
-\begin_layout Frame
+\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename ../reco-image/disjunct-cut.eps
@@ -1197,7 +1198,7 @@ Unlike the MI for word-pairs, this MI is symmetric:
  Gaussian, as shown below.
 \end_layout
 
-\begin_layout Frame
+\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename ../en-sims-p3/mi-dist-tsup.eps
@@ -1256,15 +1257,52 @@ The shape of the Gaussian above is unaffected, although it is shifted to
  
 \end_layout
 
+\begin_layout Subsubsection*
+Word-sense disambiguation
+\end_layout
+
 \begin_layout Standard
-A second practical difficulty is that it is not enough just to cluster some
- words toegther; one must also re-write the connectors to make use of the
- set of words in the cluster.
- This prevents the use of off-the-shelf clustering algorithms that can be
- found on the Internet.
- The rewriting of connector sequences is subtle and non-trivial, and easily
- error-prone.
- The primary constraint is that one must preserve 
+A second practical difficulty arusing during clustering is that of word-sense
+ dismbiguation.
+ Once two words have been judged similar enough to be merged into a common
+ class, this does not imply that all disjuncts are to be dumped into that
+ common class, as well.
+ Instead, a given vector is to be decomposed into two: a part to be merged,
+ and a part that is left over.
+ The part to be merged will share disjuncts in common with the other word-vector
+ being merged.
+ The parts that are not shared presumably belong to distinct word-senses.
+ For example, parts of the word-vector for 
+\begin_inset Quotes eld
+\end_inset
+
+saw
+\begin_inset Quotes erd
+\end_inset
+
+ can be clustered with other cutting tools, while the remainder can be clustered
+ with viewing verbs.
+\end_layout
+
+\begin_layout Standard
+Splitting the word-vectors in this way prevents the use of off-the-shelf
+ clustering algorithms that can be found on the Internet (as these in general
+ perform an all-or-nothing merge.) 
+\end_layout
+
+\begin_layout Standard
+A further difficulty is that connectors must also be merged.
+ The rewriting of connector sequences is subtle, as it affects word-vectors
+ outside of those being merged (the merged connectors might appear 
+\begin_inset Quotes eld
+\end_inset
+
+anywhere
+\begin_inset Quotes erd
+\end_inset
+
+).
+ To maintain coherency, 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1272,9 +1310,11 @@ detailed balance
 \begin_inset Quotes erd
 \end_inset
 
-: the grand total counts must remain the same both before and after.
+ must be preserved: the grand total counts must remain the same both before
+ and after.
  This is much the same as detailed balance in chemistry, where the grand-total
- number of atoms (and thier types) in a chemical reaction is preserved.
+ number of atoms (and thier specific types) in a chemical reaction is preserved,
+ even as the number of mulecules, and the connections change.
  Again, this is a place where the sheaf axioms make an appearance.
 \end_layout
 
@@ -1285,14 +1325,393 @@ Factorization
 \begin_layout Standard
 The clustering described above can be understood to be a form of matrix
  factorization.
+ The word-disjunct matrix 
+\begin_inset Formula $p\left(wd\right)$
+\end_inset
+
+ is factorized into threee matrices 
+\begin_inset Formula $LCR$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+p\left(w,d\right)=\sum_{g,g^{\prime}}p_{L}\left(w,g\right)p_{C}\left(g,g^{\prime}\right)p_{R}\left(g^{\prime},d\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+word class
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $g^{\prime}$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical relation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These two are commonly conflated in linguistic theory; here, they will
+ be distinguished.
+ The reason for this is that this is the 
+\emph on
+de facto
+\emph default
+ organization of the Link Grammar dictionaries for English, Russian and
+ other languages.
+ Examples of grammaitcal relations are 
+\begin_inset Quotes eld
+\end_inset
+
+subject
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+object
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+modifier
+\begin_inset Quotes erd
+\end_inset
+
+; examples of word classes are 
+\begin_inset Quotes eld
+\end_inset
+
+common noun
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+preposition
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The matrices 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $R$
+\end_inset
+
+ are very sparse, which 
+\begin_inset Formula $C$
+\end_inset
+
+ is compact, dense and highly connected.
+ This sparse-dense factorization is visualized below.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../skimage/factor.eps
+	lyxscale 50
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the current Link Grammar English dictionary, there are about 100K words,
+ 2K word classes, several hundred grammatical relations (LG 
+\begin_inset Quotes eld
+\end_inset
+
+macros
+\begin_inset Quotes erd
+\end_inset
+
+) and 30 million disjuncts.
+ This dictionary is hand-curated; it is an example of what can be accomplished
+ 
+\begin_inset Quotes eld
+\end_inset
+
+by hand
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Neural networks acccurately capture the dense, interconnected central region;
+ this is 
+\emph on
+why
+\emph default
+ they work.
+ They necessarily perform dimensional reduction on the sparse left and right
+ factors.
+ By erasing/collapsing the sparse factors, neural net become uninterpretable;
+ an opaque mass of wight vectors.
+ Interpretability is all about regaining (factoring back out) the sparse
+ factors! This is exactly what the symbolic learning algorithm does.
+ 
+\end_layout
+
+\begin_layout Section*
 Chunking
 \end_layout
 
+\begin_layout Standard
+By working with text, we got lucky.
+ Sounds have been pre-chunked into words.
+ The vocabulary of words is relatively small.
+ Working with raw audio or raw video does not provide such chunked data.
+ How can it be arrived at? One possibility is to carefully engineer hand-crafted
+ transducers, from sounds to phonemes and syllables and words.
+ Another is to automate the creation of such transducers.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/filters.eps
+	lyxscale 50
+	width 35col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above illustrates a pair of transducers in block-diagram form.
+ Each block corresponds to a digital signal processing (DSP) function.
+ The automation of thier discovery can proceed as follows.
+ Randomly generate a collection of a few hundred filter sequences.
+ Each takes audio-in, and generates a single-bit output.
+ Each such filter sequence can be thought of as a 
+\begin_inset Quotes eld
+\end_inset
+
+feature recognizer
+\begin_inset Quotes erd
+\end_inset
+
+: it detects certain features in the input, responding with a one if the
+ feature is present, else responding with a zero.
+ To join up with the symbolic learning algorithm described above, each such
+ filter sequence can be thought of as a 
+\begin_inset Quotes eld
+\end_inset
+
+candidate word
+\begin_inset Quotes erd
+\end_inset
+
+.
+ As it was a randomly generated filter, it probably does not correspond
+ to anything meaningful.
+ However, by applying all of these filters on a corpus of sounds, correlations
+ in thier output can be observed.
+ Large correlations have a high MI, otherwise not.
+\end_layout
+
+\begin_layout Standard
+To obtain better filter sequences, more meaningful, random perturbations
+ and extensions of teh most highly correlated filters can be explored.
+ This is a form of genetic program learning.
+ Each block in the block diagram corresponds to a DSP function, plus it's
+ parameters.
+ Random genetic mutations are those that alter parameters.
+ Genetic cross-overs are those that re-arrange blocks and reconnect parameters.
+ The OpenCog system has already explored this kind of genetic program learning
+ system; it is called MOSES.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Looks2006,Looks2007"
+literal "false"
+
+\end_inset
+
+ That particular system is designed for supervised training on a table of
+ inputs; the blocks in that system are logical and arithmetic operators,
+ and a handful of simple functions.
+ The proposal here is to apply a similar training schedule, but one for
+ which the blocks are audo (or video) DSP units, and the table of inputs
+ is replaced by a corpus of audio snippets (or of photographs), and the
+ reinforcement learning aspect is replaced by an entropy-maximization function.
+\end_layout
+
+\begin_layout Standard
+The above is a research proposal; it has not been implemented.
+ There is considerable experience with the genetic program learning subsystem,
+ and it works quite well.
+ The software would have to be completey redesigned to be able to manipulate
+ program trees representing DSP functions.
+\end_layout
+
+\begin_layout Standard
+An unresolved theoretical issue is that of common mode rejection.
+ That is, it is quite possible to learn two very different filter sequences,
+ yet these both detect exactly the same features.
+ For audio, this is less of a problem, as one can compare time-shifted outputs.
+ For still photographs, such as of the stop-light, the goal is to learn
+ three filters, for red, yellow and green disks, and not three different
+ filters all detecting a red disk.
+ Resolving this issue, and doubtlessly many more, is effectively impossible
+ without hands-on experimentation.
+\end_layout
+
 \begin_layout Subsection*
-Recursion
+The Symbol Grounding Problem and the Frame Problem
+\end_layout
+
+\begin_layout Standard
+An old problem in philosophy (dating back to Socrates) is the symbol grounding
+ problem.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the Stanford Encyclopedia of Philosophy, 
+\begin_inset Quotes eld
+\end_inset
+
+Frame Problem
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Embodied Cognition
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ When one says the word 
+\begin_inset Quotes eld
+\end_inset
+
+chair
+\begin_inset Quotes erd
+\end_inset
+
+, what does that mean? One can attempt to make extensional lists of things
+ one can sit on, butthat list can never be complete.
+ One can make intensional lists of the properties of a chair; such a list
+ invariably fails to encompass all the possibilities.
+ There is in fact a third, commonly overlooked possibility: that of discovering
+ affordances.
+ What must an object be like, to be sit-on-able? The filter sequence is
+ precisely an affordance-detector.
+ 
+\end_layout
+
+\begin_layout Standard
+Lets take a simpler example.
+ If someone says 
+\begin_inset Quotes eld
+\end_inset
+
+I hear whistling in the distance
+\begin_inset Quotes erd
+\end_inset
+
+, what does the word 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+ actually mean? How to describe it? What is the grounding for the symbol
+ 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+? Well, in the above, the grounding is explicitly manifest: it is a certain
+ kind of hi-pass filter attached to a chirp filter with a certain finite
+ impulse response time.
+ That is what 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+ is.
+ What else could it possibly be? Is the filter sequence an infallible detector
+ of whistling? Well, no.
+ Obviously, birds are taken in by fake bird calls; doing better requires
+ higher intelligence and better hearing.
+\end_layout
+
+\begin_layout Standard
+Might there be an affordance-detector for chairs? That is, a certain filter
+ that examines photos, and responds with a yes/no answer to 
+\begin_inset Quotes eld
+\end_inset
+
+can I sit on that
+\begin_inset Quotes erd
+\end_inset
+
+? Sure.
+ How can it be learned? Direct, embodied experience: one looks at things,
+ and then tries to sit on them.
+ One learns.
+ But what about the Frame Problem? That is, of all the stumuli, all the
+ things going on around, which ones are relevant to actually sitting? Well,
+ but this is precisely what the entropy-maximizing training of filter sequences
+ is doing: it is using constructs like mutual information to focus on what
+ is important, and discard what is irrelevant.
+ At this stage of research, this is but hand-waving.
+ What is new here is that the above describes an algorithm that can actually
+ be implemented, and is well-founded on known mathematics and existing,
+ practical software design principles.
+\end_layout
+
+\begin_layout Section*
+Abstraction and Recursion
 \end_layout
 
 \begin_layout Subsection*
