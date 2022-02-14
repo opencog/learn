@@ -104,7 +104,7 @@ February 2022
 \end_layout
 
 \begin_layout Author
-Linas Vepstas
+Linas Vepštas
 \end_layout
 
 \begin_layout Abstract
@@ -145,7 +145,7 @@ The recognition problem is to be applied to sensory input.
  touch, smell, vision, taste; or, more generally, scientific instruments
  and engineered detectors.
  Such sensors generate collections of data; this may be time-ordered, or
- simply a jumbled bag of datapoints.
+ simply a jumbled bag of data-points.
  
 \end_layout
 
@@ -179,8 +179,8 @@ Dasein
 
 ).
  The goal of relationship detection is to determine both the structure of
- entities (part-whole relationships) as well as events (statistical co-occurance
-s and causation).
+ entities (part-whole relationships) as well as events (statistical co-occurrenc
+es and causation).
 \end_layout
 
 \begin_layout Standard
@@ -243,7 +243,7 @@ Assuming that sensory data can be categorized into entities and relationships,
  the natural information-theoretic setting would seem to be graphs: each
  entity is represented by a vertex, each relationship is represented by
  an edge.
- In the most simplistic terms, vertexes are labelled with symbols, and edges
+ In the most simplistic terms, vertexes are labeled with symbols, and edges
  with symbol pairs.
  An example of this kind of naive symbolic graphical relationship is illustrated
  below.
@@ -265,8 +265,8 @@ Assuming that sensory data can be categorized into entities and relationships,
 The figure on the left shows a graph-theoretic sparse graph of relationships
  between entities.
  On the right is the same graph, with some of the edges cut into half-edges,
- with the half-edge connectors labelled with what they can connect to.
- The connectors are drawn with distinct shapes, intentended to convey what
+ with the half-edge connectors labeled with what they can connect to.
+ The connectors are drawn with distinct shapes, intended to convey what
  they are allowed to connect to.
  Such vertices, together with a collection of connectors, can be imagined
  to be jigsaw puzzle pieces, waiting to be connected.
@@ -288,7 +288,7 @@ monoidal category
  The puzzle pieces themselves are the syntactical elements of a grammar,
  formally defined.
  These last three statements arise from a relatively well-known generalization
- of Curry–Howard correspondance: for every category, there is a type theory,
+ of Curry–Howard correspondence: for every category, there is a type theory,
  a grammar and a logic; from each, the others can be determined.
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -316,7 +316,7 @@ literal "false"
  Grammatically-valid (syntactically valid) sentences are formed whenever
  jigsaw connectors can be mated, leaving non unconnected.
  This fashion of specifying a syntax and a grammar may feel a bit foreign
- and unusual; be aware that such grammars can be automaticallly (i.e.
+ and unusual; be aware that such grammars can be automatically (i.e.
  algorithmically) transformed into equivalent HPSG, DG, CG, LFG, 
 \emph on
 etc.
@@ -360,7 +360,7 @@ literal "false"
  This work is notable in that it provides a good bridge between concepts
  in linguistics and the hard science of mathematics.
  It is not the first such; perhaps one of the earliest formal algebraic
- treaments of linguistics can be found in Marcus.
+ treatments of linguistics can be found in Marcus.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Marcus1967"
@@ -376,15 +376,15 @@ Compositionality and Sheaves
 \end_layout
 
 \begin_layout Standard
-The naive replacement of entitites by vertexes and relationships by edges
+The naive replacement of entities by vertexes and relationships by edges
  seems to itself have a problem with well-foundedness.
  If an entity is made of parts, does this mean that a vertex is made of
  parts? What are those parts made of? Is there an infinite regress? How
  might one indicate the fact that some entity has a composite structure?
  The answers to these questions are resolved by observing that a partially-assem
 bled jigsaw puzzle resembles a singular jigsaw price: it externalizes some
- number of unconnected connectors, while also describing the connectivty
- of the fully-asssembled territory.
+ number of unconnected connectors, while also describing the connectivity
+ of the fully-assembled territory.
  This is how the part-whole relationship is established: the 
 \begin_inset Quotes eld
 \end_inset
@@ -393,7 +393,7 @@ whole
 \begin_inset Quotes erd
 \end_inset
 
- entity is a partialliy assembled jigsaw; the parts are the individual pieces,
+ entity is a partially assembled jigsaw; the parts are the individual pieces,
  and the way that the entity can interact with other entities is through
  the as-yet unconnected connectors.
 \end_layout
@@ -420,7 +420,7 @@ literal "false"
 \end_inset
 
  When sheaf theory is taken in it's full glory, it has been offered up as
- an alternative to sset theory as a foundation for all of mathematics.
+ an alternative to set theory as a foundation for all of mathematics.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "MacLane1992"
@@ -430,15 +430,15 @@ literal "false"
 
  This is because the sheaf axioms suffice not only to be a foundation for
  topology (as a generalization of frames and locales), but also for logic
- (via the extended Curry–Howard correspondance mentioned above).
+ (via the extended Curry–Howard correspondence mentioned above).
  These are formidable claims with an impeccable mathematical pedigree; the
- general mathemaitcal theory seems entirely adequate as a foundation for
+ general mathematical theory seems entirely adequate as a foundation for
  AGI.
  Armed with this, one can move forward.
 \end_layout
 
 \begin_layout Standard
-In philosophy, the question of part-whole relationships, identity, existance
+In philosophy, the question of part-whole relationships, identity, existence
  and thing-ness is studied under the name of mereology.
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -610,7 +610,7 @@ foobar
 \begin_inset Quotes eld
 \end_inset
 
-pluging in
+plugging in
 \begin_inset Quotes erd
 \end_inset
 
@@ -673,14 +673,14 @@ Vision and Sound
 \begin_layout Standard
 Shapes have a structural grammar, too.
  The connectors can specify location, color, shape, texture.
- The key point of this structural ddecomposition is that it is 
+ The key point of this structural decomposition is that it is 
 \emph on
 not about pixels
 \emph default
 ! The structural decomposition is scale-invariant (more or less, unless
  some connector fixes the scale) and rotationally invariant (unless some
  connector fixes direction).
- The structural grammar captures the morophology of the shape, it's general
+ The structural grammar captures the morphology of the shape, it's general
  properties, omitting details when they are impertinent, and capturing them
  when they are important.
 \end_layout
@@ -759,8 +759,8 @@ one-dimensional
 On the right is a graphical representation of the midsection of the song.
  It shows the number of repetitions (six), as well as the shape of the frequency
  distribution (its a chirp, which can be discovered with a chirp filter,
- a certain kind of digitial signal processing filter.) Individual repetitions
- ccan be spotted with a finite impulse response filter.
+ a certain kind of digital signal processing filter.) Individual repetitions
+ can be spotted with a finite impulse response filter.
  The point here is that basic sensory information can also be described
  in grammatical terms.
 \end_layout
@@ -777,10 +777,10 @@ In order for a graphical, sheaf-theoretic, grammatical theory of structure
  It consists of three interacting parts.
  The first step is chunking, the division of sensory data into candidate
  entities and candidate interactions that might possibly be identified as
- entities or inteeractions by the second step.
+ entities or interactions by the second step.
  The second step takes a collection of candidate graphs, splits them into
- jigsaw pieces, and then attepts to classify jigsaw pieces into common categorie
-s, based on thier commonalities.
+ jigsaw pieces, and then attempts to classify jigsaw pieces into common
+ categories, based on their commonalities.
  The third step is a recursive step, to repeat the process again, but this
  time taking the discovered structure as the sensory input.
  It is meant to be a hierarchical crawl up the semantic ladder.
@@ -829,7 +829,7 @@ literal "false"
 
 \end_inset
 
- in the afrementioned project.
+ in the aforementioned project.
 \end_layout
 
 \end_inset
@@ -934,7 +934,7 @@ This lexical attraction is just the mutual information; it has a somewhat
 \begin_inset Formula $\left(u,w\right)\ne\left(w,u\right)$
 \end_inset
 
- and concentional texts on probability theory usually do not address this
+ and conventional texts on probability theory usually do not address this
  non-symmetric situation.
  Note that the MI may be negative! The range of values depends on the size
  of the corpus; for a 
@@ -945,7 +945,7 @@ typical
 \begin_inset Quotes erd
 \end_inset
 
- corpus, it ranges frm -10 to +30.
+ corpus, it ranges from -10 to +30.
 \end_layout
 
 \begin_layout Standard
@@ -981,8 +981,8 @@ There exist a number of fast algorithms for obtaining maximal spanning trees.
  graphs (graphs with loops, but no intersecting links).
  Maximal planar graphs (MPG) appear to offer experimentally-observable advantage
 s over trees, as they appear to constrain the grammar more tightly.
- In this sense, they offer some of the advantages seen in catena-based lingustic
- theory.
+ In this sense, they offer some of the advantages seen in catena-based linguisti
+c theory.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Osborne2012"
@@ -1029,7 +1029,7 @@ Given an MST or MPG parse, the lexis is constructed by chopping up the parse
 \end_layout
 
 \begin_layout Standard
-There are multiple diferent notations possible for the above.
+There are multiple different notations possible for the above.
  There is a tensorial notation, popular in quantum approaches; the lexical
  entry would be written as 
 \begin_inset Formula $\mbox{ball}:\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
@@ -1040,10 +1040,10 @@ There are multiple diferent notations possible for the above.
 \end_inset
 
  where the minus signs indicate connections to the left.
- The ampersand is the conjunction operator from a framgment of linear logic;
+ The ampersand is the conjunction operator from a fragment of linear logic;
  it demands that both connector be present.
  Linear logic is the logic of tensor algebras (by the aforementioned Curry–Howar
-d correspondance.) Unlike tensor algebras, natural language has a distinct
+d correspondence.) Unlike tensor algebras, natural language has a distinct
  left-right asymmetry, and so the corresponding logic (of the monoidal category
  of natural language) is just a fragment of linear logic.
  Note that all of quantum mechanics lies inside of the tensor algebra; this
@@ -1082,7 +1082,7 @@ disjuncts
 \begin_inset Formula $\left(w,d\right)$
 \end_inset
 
- together with thier observed count 
+ together with their observed count 
 \begin_inset Formula $N\left(w,d\right)$
 \end_inset
 
@@ -1262,8 +1262,8 @@ Word-sense disambiguation
 \end_layout
 
 \begin_layout Standard
-A second practical difficulty arusing during clustering is that of word-sense
- dismbiguation.
+A second practical difficulty arising during clustering is that of word-sense
+ disambiguation.
  Once two words have been judged similar enough to be merged into a common
  class, this does not imply that all disjuncts are to be dumped into that
  common class, as well.
@@ -1313,8 +1313,8 @@ detailed balance
  must be preserved: the grand total counts must remain the same both before
  and after.
  This is much the same as detailed balance in chemistry, where the grand-total
- number of atoms (and thier specific types) in a chemical reaction is preserved,
- even as the number of mulecules, and the connections change.
+ number of atoms (and their specific types) in a chemical reaction is preserved,
+ even as the number of molecules, and the connections change.
  Again, this is a place where the sheaf axioms make an appearance.
 \end_layout
 
@@ -1329,7 +1329,7 @@ The clustering described above can be understood to be a form of matrix
 \begin_inset Formula $p\left(wd\right)$
 \end_inset
 
- is factorized into threee matrices 
+ is factorized into three matrices 
 \begin_inset Formula $LCR$
 \end_inset
 
@@ -1374,7 +1374,7 @@ de facto
 \emph default
  organization of the Link Grammar dictionaries for English, Russian and
  other languages.
- Examples of grammaitcal relations are 
+ Examples of grammatical relations are 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1468,7 +1468,7 @@ by hand
 \end_layout
 
 \begin_layout Standard
-Neural networks acccurately capture the dense, interconnected central region;
+Neural networks accurately capture the dense, interconnected central region;
  this is 
 \emph on
 why
@@ -1513,7 +1513,7 @@ By working with text, we got lucky.
 \begin_layout Standard
 The above illustrates a pair of transducers in block-diagram form.
  Each block corresponds to a digital signal processing (DSP) function.
- The automation of thier discovery can proceed as follows.
+ The automation of their discovery can proceed as follows.
  Randomly generate a collection of a few hundred filter sequences.
  Each takes audio-in, and generates a single-bit output.
  Each such filter sequence can be thought of as a 
@@ -1539,13 +1539,13 @@ candidate word
  As it was a randomly generated filter, it probably does not correspond
  to anything meaningful.
  However, by applying all of these filters on a corpus of sounds, correlations
- in thier output can be observed.
+ in their output can be observed.
  Large correlations have a high MI, otherwise not.
 \end_layout
 
 \begin_layout Standard
 To obtain better filter sequences, more meaningful, random perturbations
- and extensions of teh most highly correlated filters can be explored.
+ and extensions of the most highly correlated filters can be explored.
  This is a form of genetic program learning.
  Each block in the block diagram corresponds to a DSP function, plus it's
  parameters.
@@ -1564,7 +1564,7 @@ literal "false"
  inputs; the blocks in that system are logical and arithmetic operators,
  and a handful of simple functions.
  The proposal here is to apply a similar training schedule, but one for
- which the blocks are audo (or video) DSP units, and the table of inputs
+ which the blocks are audio (or video) DSP units, and the table of inputs
  is replaced by a corpus of audio snippets (or of photographs), and the
  reinforcement learning aspect is replaced by an entropy-maximization function.
 \end_layout
@@ -1573,7 +1573,7 @@ literal "false"
 The above is a research proposal; it has not been implemented.
  There is considerable experience with the genetic program learning subsystem,
  and it works quite well.
- The software would have to be completey redesigned to be able to manipulate
+ The software would have to be completely redesigned to be able to manipulate
  program trees representing DSP functions.
 \end_layout
 
@@ -1630,7 +1630,7 @@ chair
 \end_inset
 
 , what does that mean? One can attempt to make extensional lists of things
- one can sit on, butthat list can never be complete.
+ one can sit on, but that list can never be complete.
  One can make intensional lists of the properties of a chair; such a list
  invariably fails to encompass all the possibilities.
  There is in fact a third, commonly overlooked possibility: that of discovering
@@ -1699,7 +1699,7 @@ can I sit on that
  How can it be learned? Direct, embodied experience: one looks at things,
  and then tries to sit on them.
  One learns.
- But what about the Frame Problem? That is, of all the stumuli, all the
+ But what about the Frame Problem? That is, of all the stimuli, all the
  things going on around, which ones are relevant to actually sitting? Well,
  but this is precisely what the entropy-maximizing training of filter sequences
  is doing: it is using constructs like mutual information to focus on what
@@ -1727,7 +1727,7 @@ The development above has focused on a very low level: either parsing in
 
 \begin_layout Standard
 To get a feeling for the next few rungs of the ladder, it is easiest to
- return to the domain of lingustics.
+ return to the domain of linguistics.
  In lexical semantics, there is an idea of 
 \begin_inset Quotes eld
 \end_inset
@@ -1757,7 +1757,7 @@ literal "false"
 \begin_layout Standard
 This works because rules (in the sense of a rule-engine) can be interpreted
  as jigsaw pieces.
- Of course, a single rule is just olde-fashioned stimulous-response AI (SRAI).
+ Of course, a single rule is just olde-fashioned stimulus-response AI (SRAI).
  The difference here is that we have a practical mechanism for learning
  rules (out of 
 \begin_inset Quotes eld
@@ -1767,8 +1767,8 @@ nothing at all
 \begin_inset Quotes erd
 \end_inset
 
-) as well as a practical mechanism for assmebling them.
- Jigsaw assembly is parsing: given a set of contraints (a sequence of words)
+) as well as a practical mechanism for assembling them.
+ Jigsaw assembly is parsing: given a set of constraints (a sequence of words)
  parsing is the act of finding jigsaw pieces that fit the word-sequence.
  Parsing technologies are well-understood.
  If a sequence of jigsaw pieces need to be stacked deeper, there are relatively
@@ -1781,7 +1781,7 @@ L\vee\frac{A,\Gamma\Rightarrow C\quad B,\Gamma\Rightarrow C}{A\vee B,\Gamma\Righ
 
 \end_inset
 
-can be understod as certain specific jigsaw pieces, with the premises above
+can be understood as certain specific jigsaw pieces, with the premises above
  the line being 
 \begin_inset Quotes eld
 \end_inset
@@ -1849,11 +1849,11 @@ literal "false"
 \end_inset
 
 .
- Thier algorithm learns synonymous phrases.
- it is not unlike what is described above; the nly issue there is that they
- make the disasterous choice of using lambda-calculus notation for describing
- jigsaw pieces! This appears to lead to pointless complexity and confusion;
- a tensorial, type-theoretic funcation would have been more appropriate.
+ Their algorithm learns synonymous phrases.
+ it is not unlike what is described above; the only issue there is that
+ they make the disastrous choice of using lambda-calculus notation for describin
+g jigsaw pieces! This appears to lead to pointless complexity and confusion;
+ a tensorial, type-theoretic function would have been more appropriate.
  
 \end_layout
 
@@ -1885,7 +1885,7 @@ unconnectable
 \end_layout
 
 \begin_layout Standard
-Texts are not single senteces: texts are paragraphs and pages.
+Texts are not single sentences: texts are paragraphs and pages.
  To navigate through a text, one must perform anaphora resolution, or, more
  generally, reference resolution, determining when two words in a text refer
  to the same entity.
@@ -1903,7 +1903,7 @@ Common Sense
 \end_layout
 
 \begin_layout Standard
-Can this be used to learn common sense? I beleive so.
+Can this be used to learn common sense? I believe so.
  How might this work? Let me illustrate by explaining an old joke: 
 \begin_inset Quotes eld
 \end_inset
@@ -1915,12 +1915,21 @@ Doctor Doctor, it hurts when I do this! Well, don't do that!
 .
  The explanation is in the form of a rule, such as those drawn in proof-theory.
  The thick horizontal bar separates the premises from the conclusions.
+ It is labeled as 
+\begin_inset Quotes eld
+\end_inset
+
+Joke
+\begin_inset Quotes erd
+\end_inset
+
+ to indicate what kind of rule it is.
 \end_layout
 
 \begin_layout Frame
 \align center
 \begin_inset Graphics
-	filename ../reco-image/reasoning.eps
+	filename ../reco-image/reasoning-joke.eps
 	lyxscale 60
 	width 30page%
 
@@ -1938,7 +1947,7 @@ sequent
 \begin_inset Quotes erd
 \end_inset
 
- here is the anaphora coonnector, which connects the word 
+ here is the anaphora connector, which connects the word 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1947,11 +1956,11 @@ this
 \end_inset
 
  the a specific motor sequence.
- Which motor sequence? Well, presumably one that was learned, by autiomatic
+ Which motor sequence? Well, presumably one that was learned, by automatic
  process, to move a limb.
  All of the components of this diagram are jigsaw pieces.
  All of the pieces can be discovered probabilistically.
- All of the connectors can be connected probilistically.
+ All of the connectors can be connected probabilistically.
  The learning algorithm shows how to discern structure from what is superficiall
 y seems like a chaotic stream of sensory input.
  Common sense can be learned.
