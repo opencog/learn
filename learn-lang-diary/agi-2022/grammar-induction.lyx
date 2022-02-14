@@ -1714,12 +1714,29 @@ can I sit on that
 Abstraction and Recursion
 \end_layout
 
-\begin_layout Subsection*
-Lexical Semantics
+\begin_layout Standard
+The development above has focused on a very low level: either parsing in
+ natural language, or sensory input.
+ What about common-sense reasoning, one of the Holy Grails of AGI? It is
+ easily argued that additional methods and techniques are needed to reach
+ such heights.
+ But is that actually the case? The author wishes to argue that the techniques
+ described so far are essentially all that is needed to reach up into the
+ highest levels of abstraction and general intelligence.
 \end_layout
 
-\begin_layout Itemize
-Lexical Implication Rules
+\begin_layout Standard
+To get a feeling for the next few rungs of the ladder, it is easiest to
+ return to the domain of lingustics.
+ In lexical semantics, there is an idea of 
+\begin_inset Quotes eld
+\end_inset
+
+lexical implication rules
+\begin_inset Quotes erd
+\end_inset
+
+
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Ostler1991"
@@ -1727,11 +1744,123 @@ literal "false"
 
 \end_inset
 
-
+.
+ These are rules that control how words used in one context can be used
+ in a different context.
+ Can the discovery of these rules be automated? It would seem so: each rule
+ can be described as a jigsaw-piece; if a certain set of connectors match
+ the conditions on the input of the rule, then the rule fires, producing
+ or controlling output.
+ 
 \end_layout
 
-\begin_layout Itemize
-WordNet 
+\begin_layout Standard
+This works because rules (in the sense of a rule-engine) can be interpreted
+ as jigsaw pieces.
+ Of course, a single rule is just olde-fashioned stimulous-response AI (SRAI).
+ The difference here is that we have a practical mechanism for learning
+ rules (out of 
+\begin_inset Quotes eld
+\end_inset
+
+nothing at all
+\begin_inset Quotes erd
+\end_inset
+
+) as well as a practical mechanism for assmebling them.
+ Jigsaw assembly is parsing: given a set of contraints (a sequence of words)
+ parsing is the act of finding jigsaw pieces that fit the word-sequence.
+ Parsing technologies are well-understood.
+ If a sequence of jigsaw pieces need to be stacked deeper, there are relatively
+ well-understood technologies for that as well: automated theorem-proving.
+ A collection of sequents, such as
+\begin_inset Formula 
+\[
+L\vee\frac{A,\Gamma\Rightarrow C\quad B,\Gamma\Rightarrow C}{A\vee B,\Gamma\Rightarrow C}\quad\quad R\forall\frac{\Gamma\Rightarrow A\left[x/y\right]}{\Gamma\Rightarrow\forall xA}
+\]
+
+\end_inset
+
+can be understod as certain specific jigsaw pieces, with the premises above
+ the line being 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+ connectors, conclusions below the line being connectors as well, and theorem-pr
+oving (and all of its subtleties, such as cut elimination and efficiency
+ in general) is the assembly of these jigsaw pieces in a syntactically valid
+ fashion.
+\end_layout
+
+\begin_layout Standard
+The concept of lexical implication rules generalizes to that of 
+\begin_inset Quotes eld
+\end_inset
+
+lexical functions
+\begin_inset Quotes erd
+\end_inset
+
+ (LF) of Meaning-Text Theory (MTT).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kahane2003"
+literal "false"
+
+\end_inset
+
+ The MTT is a very well-developed theory of the 
+\begin_inset Quotes eld
+\end_inset
+
+semantic
+\begin_inset Quotes erd
+\end_inset
+
+ layer of linguistics, sitting atop the syntactic layer described above.
+ What makes it 
+\begin_inset Quotes eld
+\end_inset
+
+semantic
+\begin_inset Quotes erd
+\end_inset
+
+, and how might it be learned? MTT describes the 
+\begin_inset Quotes eld
+\end_inset
+
+semantic
+\begin_inset Quotes erd
+\end_inset
+
+ layer as a collection of concepts which can be expressed through various
+ alternative word-choices.
+ How might these be learned? Such an algorithm is described by Poon & Domingos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Poon2009"
+literal "false"
+
+\end_inset
+
+.
+ Thier algorithm learns synonymous phrases.
+ it is not unlike what is described above; the nly issue there is that they
+ make the disasterous choice of using lambda-calculus notation for describing
+ jigsaw pieces! This appears to lead to pointless complexity and confusion;
+ a tensorial, type-theoretic funcation would have been more appropriate.
+ 
+\end_layout
+
+\begin_layout Standard
+Another example for deriving meaning based on connectivity can be found
+ in the Mihalcea algorithm for associating WordNet word senses to individual
+ words in a given sentence.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Mihalcea2005"
@@ -1739,20 +1868,97 @@ literal "false"
 
 \end_inset
 
+ Her algorithm is phrased in terms of the Page-Rank algorithm, to flow weights
+ along edges along a fully connected graph.
+ Looked at more carefully, this is a probabilistic parsing algorithm: discoverin
+g what is connected to what by altering weights on the matrix, until certain
+ edges are ruled out, are deemed 
+\begin_inset Quotes eld
+\end_inset
 
-\end_layout
+unconnectable
+\begin_inset Quotes erd
+\end_inset
 
-\begin_layout Standard
-*
-\end_layout
-
-\begin_layout Section*
-The End
-\end_layout
-
-\begin_layout Standard
-This is the end.
+.
  
+\end_layout
+
+\begin_layout Standard
+Texts are not single senteces: texts are paragraphs and pages.
+ To navigate through a text, one must perform anaphora resolution, or, more
+ generally, reference resolution, determining when two words in a text refer
+ to the same entity.
+ But, in a certain sense, we already have that: the pair-MI algorithm given
+ earlier can provide a rough cut for how related two things are.
+ The relation can be sharped by discovering context via MST parsing (although
+ at this level, it more closely resembles the Michalcea algorithm).
+ Specificity can is then further heightened in the clustering step.
+ Rinse, repeat.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Common Sense
+\end_layout
+
+\begin_layout Standard
+Can this be used to learn common sense? I beleive so.
+ How might this work? Let me illustrate by explaining an old joke: 
+\begin_inset Quotes eld
+\end_inset
+
+Doctor Doctor, it hurts when I do this! Well, don't do that!
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The explanation is in the form of a rule, such as those drawn in proof-theory.
+ The thick horizontal bar separates the premises from the conclusions.
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename ../reco-image/reasoning.eps
+	lyxscale 60
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+sequent
+\begin_inset Quotes erd
+\end_inset
+
+ here is the anaphora coonnector, which connects the word 
+\begin_inset Quotes eld
+\end_inset
+
+this
+\begin_inset Quotes erd
+\end_inset
+
+ the a specific motor sequence.
+ Which motor sequence? Well, presumably one that was learned, by autiomatic
+ process, to move a limb.
+ All of the components of this diagram are jigsaw pieces.
+ All of the pieces can be discovered probabilistically.
+ All of the connectors can be connected probilistically.
+ The learning algorithm shows how to discern structure from what is superficiall
+y seems like a chaotic stream of sensory input.
+ Common sense can be learned.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Standard
