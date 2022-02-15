@@ -1,6 +1,10 @@
 
 Things to read:
 
+* Mark Newman, Albert-László Barabási, and Duncan J Watts.
+  "The structure and dynamics of networks."
+  Princeton University Press, 2006.
+
 * Geoffrey Hinton
   "How to represent part-whole hierarchies in a neural network"
   25 Feb 2021
