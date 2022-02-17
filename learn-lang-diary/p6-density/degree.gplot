@@ -14,6 +14,7 @@ set logscale x
 set logscale y
 set format x "10^{%L}"
 set format y "10^{%L}"
+set xrange [100:]
 set yrange [1e-8:1e-2]
 
 gam=2.3
@@ -24,6 +25,33 @@ norm = (200.0/50000) / 304085
 
 plot "degree.dat" using 2:(norm * $3) with lines lw 2 title "data", \
      "degree.dat" using 2:(z($2)) with lines lw 2 title "degree^{-2.3}"
+
+#################################################
+#
+set term png
+set out 'degree-fine.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-fine.eps'
+set key right top
+set title "Degree of Word"
+set xlabel "Degree"
+set ylabel "Frequency"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [4e-6:0.11]
+
+gam=1.6
+b = 1.1
+z(x) = (b/x)**gam
+
+norm = 1.0 / 304085
+
+plot "degree-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
+     "degree-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
 
 #################################################
 #
@@ -39,6 +67,7 @@ unset logscale x
 set logscale y
 unset format x
 set format y "10^{%L}"
+unset xrange
 unset yrange
 set yrange [1e-6:]
 

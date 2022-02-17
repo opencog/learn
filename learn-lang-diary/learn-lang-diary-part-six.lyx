@@ -1431,6 +1431,60 @@ weighted, counting MI for each connection.
 
 \end_deeper
 \begin_layout Section*
+Word-Pair Graph Properties
+\end_layout
+
+\begin_layout Standard
+Oddly enough, I never really characterized the word-pair sets using more
+ conventional graph-theoretic concepts.
+ Time to make amends.
+ The collection of word-pairs can be taken to define a set of edges, thus
+ defining a graph.
+ This is a directed graph, but I think this doesn't matter, so will mostly
+ pretend it is undirected.
+ The collection of verteces will be taken as the left-element of each pair.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Vertex Degree
+\end_layout
+
+\begin_layout Standard
+The first conventional question is 
+\begin_inset Quotes eld
+\end_inset
+
+what is the vertex degree distribution?
+\begin_inset Quotes erd
+\end_inset
+
+ This is shown below, a graph of the normalized frequency of a word, and
+ it's out-degree.
+ The degree ranges as high as 300K with significant counts up to 50K.
+ The graph only shows degree up to 1200.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-fine.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The eyeballed fit has 
+\begin_inset Formula $\mbox{frequency}=\left(1.1/\mbox{degree}\right)^{1.6}$
+\end_inset
+
+ and so that exponent is well below typical scale-free networks.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 

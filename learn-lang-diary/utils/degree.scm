@@ -28,6 +28,7 @@
 (define (pval WRD) (sup-obj 'right-support WRD))
 (define (pcnt WRD) 1)
 (degree-plot star-obj 200 0 50000 "/tmp/degree.dat" pval pcnt)
+(degree-plot star-obj 1200 0 1200 "/tmp/degree-fine.dat" pval pcnt)
 
 ; Same as above, but uniform x-scale
 (define (pval WRD) (log2 (sup-obj 'right-support WRD)))
