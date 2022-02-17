@@ -18,7 +18,7 @@
 ;
 (define (density LLOBJ NBINS LO HI)
 "
-  density LLOBJ - bin count
+  density LLOBJ - create histogram of density of states.
 
   Example:
   (density star-obj 200 0 30)
@@ -59,6 +59,7 @@
 	(format #t "Total count = ~A bin-width = ~A\n"
 		bin-total bwid)
 
+	; Dump to bogus file.
 	(define oport (open-file "/tmp/foo.dat" "w"))
 	(format oport "#\n# Total count = ~A bin-width = ~A\n"
 		bin-total bwid)
