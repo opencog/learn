@@ -26,3 +26,29 @@ plot "degree.dat" using 2:(norm * $3) with lines lw 2 title "data", \
      "degree.dat" using 2:(z($2)) with lines lw 2 title "degree^{-2.3}"
 
 #################################################
+#
+set term png
+set out 'log2-degree.png'
+# set term postscript eps enhanced color 20
+# set out 'log2-degree.eps'
+set key right top
+set title "Degree of Word"
+set xlabel "Log_2 Degree"
+set ylabel "Frequency"
+unset logscale x
+set logscale y
+unset format x
+set format y "10^{%L}"
+unset yrange
+set yrange [1e-6:]
+
+gam=1.0
+b = 10
+z(x) = 0.3 * 2**(-gam*x)
+
+norm = 1.0 / 304085
+
+plot "log2-degree.dat" using 2:(norm * $3) with lines lw 2 title "data", \
+     "log2-degree.dat" using 2:(z($2)) with lines lw 2 title "1/degree"
+
+#################################################
