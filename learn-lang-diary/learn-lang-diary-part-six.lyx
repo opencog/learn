@@ -1463,6 +1463,8 @@ what is the vertex degree distribution?
  it's out-degree.
  The degree ranges as high as 300K with significant counts up to 50K.
  The graph only shows degree up to 1200.
+ There are 1200 bins in this graph, so each different degree gets it's own
+ bin.
 \end_layout
 
 \begin_layout Standard
@@ -1482,6 +1484,83 @@ The eyeballed fit has
 \end_inset
 
  and so that exponent is well below typical scale-free networks.
+\end_layout
+
+\begin_layout Standard
+Something unexpected happens if we go deeper.
+ There are so few counts, that it seems like it should be reasonable to
+ bin them together.
+ The graph below shows degree out to 50K, collected into 200 bins.
+ Thus, each bin is 250 degrees wide.
+ The slope is remarkably different:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I think this is purely an under-sampling effect.
+ In principle, the slope should not have changed.
+ Here's a quick sketch.
+ If the original distribution is 
+\begin_inset Formula 
+\[
+f_{n}=\left(\frac{a}{n}\right)^{\gamma}
+\]
+
+\end_inset
+
+ then a re-binning into const-ant-sized bins of size 
+\begin_inset Formula $k$
+\end_inset
+
+ is given by 
+\begin_inset Formula 
+\begin{align*}
+g_{m}= & \sum_{m\left(k-1\right)<n\le mk}f_{n}\\
+= & \left(\frac{a}{k\left(m-1\right)+1}\right)^{\gamma}+\cdots+\left(\frac{a}{k\left(m-1\right)+k}\right)^{\gamma}\\
+= & \left(\frac{a}{k\left(m-1\right)}\right)^{\gamma}\left[\frac{1}{\left(1+\frac{1}{k\left(m-1\right)}\right)^{\gamma}}+\frac{1}{\left(1+\frac{2}{k\left(m-1\right)}\right)^{\gamma}}+\cdots+\frac{1}{\left(1+\frac{k}{k\left(m-1\right)}\right)^{\gamma}}\right]\\
+\approx & \left(\frac{a}{k\left(m-1\right)}\right)^{\gamma}\left[k-\frac{\gamma}{k\left(m-1\right)}\left[1+2+\cdots+k\right]\right]\\
+\approx & \left(\frac{a}{k\left(m-1\right)}\right)^{\gamma}k\left[1-\frac{\gamma}{2\left(m-1\right)}\right]\\
+\approx & Cm^{-\gamma}
+\end{align*}
+
+\end_inset
+
+where the approximations 
+\begin_inset Formula $k\gg1,m\gg1$
+\end_inset
+
+ are made.
+ That is, there is a change in the overall normalization, and the early
+ part of the slope, for small 
+\begin_inset Formula $m$
+\end_inset
+
+ is reduced, but the overall exponent is not affected.
+ Yet this is ggiven lie to by the figure above.
+ So what goes wrong? I think it is an under-sampling effect.
+ For large 
+\begin_inset Formula $n$
+\end_inset
+
+, the 
+\begin_inset Formula $f_{n}$
+\end_inset
+
+are not as given above, but are zero.
+ The fraction of the time that they are zero is determined by the sample
+ size, and they are zero often enough that the overall slope is changed.
+ The net efect of sample size could be computed; it does not seem to be
+ a worthwhile exercise just right now.
 \end_layout
 
 \begin_layout Section*

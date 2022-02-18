@@ -20,11 +20,13 @@ set yrange [1e-8:1e-2]
 gam=2.3
 b = 9
 z(x) = (b/x)**gam
+zb(x) = (0.3/x)**1.6
 
 norm = (200.0/50000) / 304085
 
 plot "degree.dat" using 2:(norm * $3) with lines lw 2 title "data", \
-     "degree.dat" using 2:(z($2)) with lines lw 2 title "degree^{-2.3}"
+     "degree.dat" using 2:(z($2)) with lines lw 2 title "degree^{-2.3}", \
+     "degree.dat" using 2:(zb($2)) with lines lw 2 title "degree^{-1.6}"
 
 #################################################
 #
