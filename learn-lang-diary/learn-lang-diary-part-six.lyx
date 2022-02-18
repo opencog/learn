@@ -515,6 +515,10 @@ For comparison, below left is the conventional Zipf distribution graph,
 
 \end_layout
 
+\begin_layout Subsubsection*
+Under-sampling
+\end_layout
+
 \begin_layout Standard
 The humpback shape appears to be due to an under-sampling effect.
  This is exposed and explained in the next few sections.
@@ -526,6 +530,55 @@ ly sampled are those up to a rank of about 1200.
  This suggests that the eyeballed fit is incorrect, and that the Rank distributi
 on shoud be considered only up to 1200.
  This is shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/pair-rank-cut.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This time, the slope is different: it is 0.75, which is, umm, err, I guess
+ its a 
+\begin_inset Quotes eld
+\end_inset
+
+small world
+\begin_inset Quotes erd
+\end_inset
+
+ slope.
+ This is no longer the canonical Zipf slope of 1.0.
+ This raises the question: how many of the graphs in the earlier parts of
+ the diary are compromised, as being mixtures of under-sampling and 
+\begin_inset Quotes eld
+\end_inset
+
+actual effects
+\begin_inset Quotes erd
+\end_inset
+
+? This also raises the question: aren't all learning effects always driven
+ by an under-sampling? That is, isn't one always doomed to under-sample?
+ How can one know this, and how can one take this into account? 
+\end_layout
+
+\begin_layout Subsubsection*
+Top-ten Word Pairs
+\end_layout
+
+\begin_layout Standard
+Given the above discussion about under-sampling, it is hard to avoid noticing
+ that the top-ten word-pairs appear to follow an eve flatter slope.
+ What does this mean? Clearly, they are not undersampled, and so the flatter
+ slope nees to have some more sophisticated explanation.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -914,6 +967,26 @@ in <<>> the
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+more sophisticated
+\begin_inset Quotes erd
+\end_inset
+
+ explanation might be this: this is a finite-sentence-length effect.
+ That is, the nature of human understanding is that we have a limited attention
+ span, and a limited short-term memory.
+ Sentence lengths, and the use of punctuation must accomadate these limits.
+ Thus, sentence starters and sentence enders, and commas, for phrase identificat
+ion, sould appear at a constant rate, rather than at a Zipfian rate.
+ And that is indeed what the above seems to confirm.
+ OK, so that's an interesting discovery, its new to me.
+ 
 \end_layout
 
 \begin_layout Subsection*

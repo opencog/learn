@@ -2,10 +2,10 @@
 
 #################################################
 #
-# set term png
-# set out 'pair-rank.png'
-set term postscript eps enhanced color 20
-set out 'pair-rank.eps'
+set term png
+set out 'pair-rank.png'
+# set term postscript eps enhanced color 20
+# set out 'pair-rank.eps'
 set key right top
 set title "Zipf of word pairs"
 set xlabel "Rank"
@@ -24,9 +24,31 @@ plot "pair-rank.dat" using 1:2 with lines lw 2 title "data", \
 #################################################
 #
 # set term png
-# set out 'pair-rank-flip.png'
+# set out 'pair-rank-cut.png'
 set term postscript eps enhanced color 20
-set out 'pair-rank-flip.eps'
+set out 'pair-rank-cut.eps'
+set key right top
+set title "Zipf of word pairs"
+set xlabel "Rank"
+set ylabel "Observation Count"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:2e3]
+set yrange [1e4:1e7]
+
+z(x) = 1.3e7/x**0.75
+
+plot "pair-rank.dat" using 1:2 with lines lw 2 title "data_{ }", \
+     "pair-rank.dat" using 1:(z($1)) with lines lw 2 title "rank^{-0.75}"
+
+#################################################
+#
+set term png
+set out 'pair-rank-flip.png'
+# set term postscript eps enhanced color 20
+# set out 'pair-rank-flip.eps'
 set key left top
 set title "Flipped Zipf of Word Pairs"
 set xlabel "E = -log_2 p(w_i, w_j)"
