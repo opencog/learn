@@ -76,10 +76,12 @@ set yrange [1e-6:]
 gam=1.0
 b = 10
 z(x) = 0.3 * 2**(-gam*x)
+z2(x) = 0.09 * 2**(-0.6*x)
 
 norm = 1.0 / 304085
 
 plot "log2-degree.dat" using 2:(norm * $3) with lines lw 2 title "data", \
-     "log2-degree.dat" using 2:(z($2)) with lines lw 2 title "1/degree"
+     "log2-degree.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1}", \
+     "log2-degree.dat" using 2:(z2($2)) with lines lw 2 title "degree^{-0.6}"
 
 #################################################

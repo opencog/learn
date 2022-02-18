@@ -516,6 +516,19 @@ For comparison, below left is the conventional Zipf distribution graph,
 \end_layout
 
 \begin_layout Standard
+The humpback shape appears to be due to an under-sampling effect.
+ This is exposed and explained in the next few sections.
+ Due to a finite sample size, it appears that the only pairs that are sufficient
+ly sampled are those up to a rank of about 1200.
+ After that, pairs are under-sampled.
+ The result of that under-sampling is a humpback shape, as seen above; the
+ top of the hump is where the undersampling begins.
+ This suggests that the eyeballed fit is incorrect, and that the Rank distributi
+on shoud be considered only up to 1200.
+ This is shown below.
+\end_layout
+
+\begin_layout Standard
 The top-ten most frequently observed word-pairs are shown in the table below:
 \end_layout
 
@@ -1561,6 +1574,58 @@ are not as given above, but are zero.
  size, and they are zero often enough that the overall slope is changed.
  The net efect of sample size could be computed; it does not seem to be
  a worthwhile exercise just right now.
+\end_layout
+
+\begin_layout Standard
+Let's repeat the calculation above with an explicit log scale.
+ This gives
+\begin_inset Formula 
+\begin{align*}
+g_{m}= & \sum_{m\le\log_{2}n<m+1}f_{n}\\
+= & \sum_{2^{m}\le n<2^{m}}\left(\frac{a}{n}\right)^{\gamma}\\
+= & a^{\gamma}\sum_{1\le j<2^{m}}\frac{1}{\left(2^{m}+j\right)^{\gamma}}\\
+\approx & \frac{a^{\gamma}}{2^{m\gamma}}\cdot2^{m}\left(1-\frac{\gamma}{2}\right)\\
+= & C2^{m\left(1-\gamma\right)}
+\end{align*}
+
+\end_inset
+
+Thus, since we saw 
+\begin_inset Formula $\gamma\approx1.6$
+\end_inset
+
+ in the earlierst figure, we expect a slope of 
+\begin_inset Formula $\gamma=1\approx0.6$
+\end_inset
+
+ in the equivalent log figure.
+ This is shown below.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/log2-degree.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That initial slop is validup to 
+\begin_inset Formula $n\approx1200$
+\end_inset
+
+ or 
+\begin_inset Formula $\log_{2}n\approx10$
+\end_inset
+
+, after which a sharper slope sets in due to the finite-sample-size effect.
+ This gives the figure an overall hump-back shape.
+ 
 \end_layout
 
 \begin_layout Section*
