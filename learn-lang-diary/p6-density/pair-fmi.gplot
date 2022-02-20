@@ -1,0 +1,27 @@
+# set term png small color
+
+#################################################
+#
+set term png
+# set out 'pair-fmi.png'
+set term postscript eps enhanced color 20
+set out 'pair-fmi.eps'
+set key right top
+set title "MI Distribution of word pairs"
+set xlabel "MI"
+set ylabel "Frequency"
+set xrange [-12:27]
+set logscale y
+set format y "10^{%L}"
+set yrange [4e-8:5e-2]
+
+g(x,m,s) = (1/sqrt(2*3.14159*s)) * exp(- (x-m)**2 / (2*s**2)) 
+
+norm = 1.0 / 28184319 
+
+plot "pair-fmi.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
+     "pair-fmi.dat" using 2:(0.017*2**(-0.35*$2)) with lines lw 2 title "2^{-0.35 MI}", \
+     "pair-fmi.dat" using 2:(0.2*2**(2.0*$2)) with lines lw 2 title "4^{MI}"
+
+#     "pair-fmi.dat" using 2:(0.04*g($2,0.4,2)) with lines lw 2 title "Gauss(0.4,2)", \
+#################################################

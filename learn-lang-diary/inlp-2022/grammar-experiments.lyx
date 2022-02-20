@@ -1265,19 +1265,125 @@ the
 \end_layout
 
 \begin_layout Subsection*
-Graphs
+MI Distribution
 \end_layout
 
 \begin_layout Standard
-MI distribution
+The distribution of word-pair MI is shown below.
+ As before, this is for dataset 3, which contains 28 million pairs.
+ The MI is sorted into 500 histogram bins.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p6-density/pair-fmi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution is clearly not symmetric.
+ The two sides appear to be bounded by straight lines, with slopes as in
+ the legend.
+ Pairs with the highest MI are observed very infrequently.
 \end_layout
 
 \begin_layout Section*
 MST Parsing
 \end_layout
 
+\begin_layout Standard
+Armed with word-pair data, one can proceed to perform Maximum Spanning Tree
+ (MST) parsing, as described by Yuret.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ One considers all possible trees connecting all of the words in a sentence,
+ and, out of all of these trees, the one with the greatest sum-total MI
+ of the edges is selected.
+ A number of different algorithms for finding this tree exist; they all
+ give reasonable results, and do not appear to affect overall results.
+ A variation is the Maximum Planar Graph (MPG), which takes the above tree,
+ and adds edges for high-MI pairs, as long as edges don't cross and the
+ MI is above a threshold.
+ Experience with Link Grammar (LG) suggests that MPG parses offer a significant
+ advantage over trees.
+ In LG, the necessity for grammatical agreement between nearby words introduces
+ a stringency and rigidness to the resulting parses, resulting in a greater
+ rejection of bad parses.
+ This result should carry over to the present case, and should help constrain
+ the learned grammar.
+\end_layout
+
+\begin_layout Standard
+Given an MST or MPG parse, each edge is cut in half, and the half-edge is
+ labelled with the word it used to connect to.
+ This results in a connector sequence for each word, some connectors connecting
+ to the left, some to the right.
+ Following the LG convention, these connector sequences are called disjuncts
+ (for short), as they are disjoined when considering an LG parse.
+ Denoting the word as 
+\begin_inset Formula $w$
+\end_inset
+
+ and the disjunct as 
+\begin_inset Formula $d$
+\end_inset
+
+, this results in word-disjunct pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+.
+ Parsing a large corpus this way, the counts are accumulated in the database,
+ to give a count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+.
+ In the current codebase, the counting is done without weighting; one could
+ consider also counting with weighting, giving higher weight to those disjuncts
+ that seem confident.
+ Anyway, given the counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, one can again play the matrix game, and examine marginal and conditional
+ probabilities, and the word-disjunct MI.
+ This is summarized in the table below.
+\end_layout
+
+\begin_layout Standard
+Outline:
+\end_layout
+
+\begin_layout Itemize
+Triming
+\end_layout
+
+\begin_layout Itemize
+Dataset summary
+\end_layout
+
+\begin_layout Itemize
+Graphs
+\end_layout
+
 \begin_layout Section*
 Similarities
+\end_layout
+
+\begin_layout Standard
+MMT and definitions
 \end_layout
 
 \begin_layout Standard
