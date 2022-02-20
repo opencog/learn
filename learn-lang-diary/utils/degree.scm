@@ -2,10 +2,11 @@
 ; degree.scm
 ;
 ; Scripts for graphing the degree.
-; Used in diary part six
+; Used in diary part six.
 ;
 ; Loop over left-basis, and bincount:
 ; support (this is the degree)
+; count (this is the "weighted" degree, the degree "with multiplicity")
 ;
 
 (define (degree-plot LLOBJ NBINS LO HI FILE VALFN WEIFN)
@@ -35,8 +36,14 @@
 (define (pcnt WRD) 1)
 (degree-plot star-obj 200 0 20 "/tmp/log2-degree.dat" pval pcnt)
 
-; Same as above, but the weighted degree (i.e. "with multiplicity")
+; Same as above, but the counted degree (i.e. "with multiplicity")
 (define (pval WRD) (sup-obj 'right-count WRD))
 (define (pcnt WRD) 1)
-(degree-plot star-obj 2000 0 2000 "/tmp/degree-w-fine.dat" pval pcnt)
+(degree-plot star-obj 5000 0 5000 "/tmp/degree-m-fine.dat" pval pcnt)
+
+; Same as above, but the weighted degree
+; This produces a strange and confusing graph of uncertain significance.
+(define (pval WRD) (sup-obj 'right-support WRD))
+(define (pcnt WRD) (sup-obj 'right-count WRD))
+(degree-plot star-obj 5000 0 5000 "/tmp/degree-w-fine.dat" pval pcnt)
 
