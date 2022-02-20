@@ -1615,6 +1615,28 @@ The eyeballed fit has
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above is the same graph, but with raw counts on the y-axis,
+\emph on
+ i.e.
+
+\emph default
+ un-normalized.
+ The point of drawing it this way is that we see on the right where the
+ count drops to one (and to zero).
+\end_layout
+
+\begin_layout Standard
 Something unexpected happens if we go deeper.
  There are so few counts, that it seems like it should be reasonable to
  bin them together.
@@ -1635,14 +1657,7 @@ Something unexpected happens if we go deeper.
 \end_layout
 
 \begin_layout Standard
-I think this
-\begin_inset Graphics
-	filename p6-density/degree-fine.eps
-	width 60col%
-
-\end_inset
-
- is purely an under-sampling effect.
+I think this is purely an under-sampling effect.
  In principle, the slope should not have changed.
  Here's a quick sketch.
  If the original distribution is 
@@ -1793,6 +1808,39 @@ There is a distinct oscillatory behavior at the center-left.
  It is perhaps some strange artifact, having to do with the fact that 24
  parse-trees are sampled, given that the first, most prominant peak occurs
  at 24, and later peaks are perhaps at multiples of 24.
+\end_layout
+
+\begin_layout Standard
+The next graph is kind-of meaningless junk, but worth taking a look at anyway,
+ just so that we can say we covered all the bases.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-w-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, the horizontal axis is the degree of the word (without multiplicity)
+ but the vertical axis totals the marginal count for that word.
+ That is, instead of adding 1 for each observed edge (the support), it adds
+ N (the count).
+ So, for example, consider a vertex of degree 5.
+ There might be 10K such vertexes in this dataset.
+ However, each such vertex might be observed 30 or 50 times, and so we see
+ 300K or 500K on the y-axis here.
+ It's as if each word-pair was distinct, except its not, because that would
+ have changed the degree.
+ This graph is hard to interpret, and its hard to see what it's physical
+ significance is.
+ But ..
+ whatever.
 \end_layout
 
 \begin_layout Section*
