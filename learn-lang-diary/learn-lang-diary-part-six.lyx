@@ -1635,7 +1635,14 @@ Something unexpected happens if we go deeper.
 \end_layout
 
 \begin_layout Standard
-I think this is purely an under-sampling effect.
+I think this
+\begin_inset Graphics
+	filename p6-density/degree-fine.eps
+	width 60col%
+
+\end_inset
+
+ is purely an under-sampling effect.
  In principle, the slope should not have changed.
  Here's a quick sketch.
  If the original distribution is 
@@ -1741,6 +1748,51 @@ That initial slop is validup to
 , after which a sharper slope sets in due to the finite-sample-size effect.
  This gives the figure an overall hump-back shape.
  
+\end_layout
+
+\begin_layout Subsection*
+Weighted Vertex Degree
+\end_layout
+
+\begin_layout Standard
+Same as above, but showing te weighted vertex degree, i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+with multiplicity
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That is, if each edge was observed 
+\begin_inset Formula $N$
+\end_inset
+
+ times, then it is treated as if there were 
+\begin_inset Formula $N$
+\end_inset
+
+ distinct edges.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-w-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is a distinct oscillatory behavior at the center-left.
+ It is perhaps some strange artifact, having to do with the fact that 24
+ parse-trees are sampled, given that the first, most prominant peak occurs
+ at 24, and later peaks are perhaps at multiples of 24.
 \end_layout
 
 \begin_layout Section*
