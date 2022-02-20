@@ -119,7 +119,157 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Stuff.
+The goal of the OpenCog Learning project is to induce structure from raw
+ observational data.
+ In the most naive sense, this would be visual or auditory data.
+ In a more sophisticated sense, 
+\begin_inset Quotes eld
+\end_inset
+
+observational data
+\begin_inset Quotes erd
+\end_inset
+
+ should be taken to be data that might already have some structure in it,
+ as the goal of learning is to do so hierarchically, recursively: to deduce
+ structure in structure inside of structure...
+ If this can be made to work, then, 
+\begin_inset Quotes eld
+\end_inset
+
+starting in the middle
+\begin_inset Quotes erd
+\end_inset
+
+ is not a bad place to start.
+ In the present case, 
+\begin_inset Quotes eld
+\end_inset
+
+the middle
+\begin_inset Quotes erd
+\end_inset
+
+ is a corpus of English text, and the goal is to extract grammatical structure.
+ The words 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical structure
+\begin_inset Quotes erd
+\end_inset
+
+ are meant to encompass morphological structure, syntactic structure, and
+ lower reaches of semantic understanding, as far as this can be pushed.
+ 
+\end_layout
+
+\begin_layout Standard
+The general theory of how this is to be done is sketched out in a companian
+ article.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2022symbolic"
+literal "false"
+
+\end_inset
+
+ The overall process is as follows: first, one computes the mutual information
+ (MI) between word-pairs occurring in the corpus.
+ The MI assigns a numerical score to how often a pair of words occur near
+ each-other.
+ This can be used to generate a maximum spanning tree (MST) parse of the
+ text, which appears to capture the syntactic structure of the text reasonably
+ well.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ This parse tree can be disassembled into individual 
+\begin_inset Quotes eld
+\end_inset
+
+jigsaw puzzle pieces
+\begin_inset Quotes erd
+\end_inset
+
+ which encode the syntactic structure of the parse.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991,Sleator1993"
+literal "false"
+
+\end_inset
+
+ Individual jigsaw pieces encode the local syntactic environment of a given
+ word.
+ Collections of such jigsaw pieces can be understood to be vectors: each
+ word is endowed with a lexis of all of the syntactic contexts in which
+ it was observed.
+ But this is too fine-grained; one whishes to generalize from the particular
+ to the general.
+ The vectors can be used both to discover words that have similar syntactic
+ contexts (based on the similarity of the local environments) and also to
+ factor out different word-senses, since different syntactic contexts associate
+ strongly with distinct word-senses.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mihalcea2004,Mihalcea2005"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This text reports on the algorithms developed to perform the above, and
+ on the statistical properties of the resulting graphical networks.
+ The focus is narrow.
+ There are obvious directions in which both the theory and the experiment
+ could be taken, be haven't been.
+ In the 
+\begin_inset Quotes eld
+\end_inset
+
+downwards
+\begin_inset Quotes erd
+\end_inset
+
+ direction, work on morphology, needed for Indo-European languages, and
+ segmentation, needed for Chinese.
+ Further down, the implementation of similar ideas for phontetics and general
+ audio processing.
+ In the upwards direction, one could could search for high-MI pairs across
+ sentences, both to resolve references and to detect entities.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+syntatactic
+\begin_inset Quotes erd
+\end_inset
+
+ relationships between entities presumably encodes thier semantic properties;
+ the author beleives the basic algorithm can be ratcheted upwards, to arbitraril
+y high reaches.
+ The current limitations are those of software develpment and infrastructure
+ needed to carry out such experiments.
+\end_layout
+
+\begin_layout Itemize
+not WP, because verbs, action verbs
+\end_layout
+
+\begin_layout Itemize
+matrix api for atomspace.
+\end_layout
+
+\begin_layout Standard
+vector similarities allow similar w
 \end_layout
 
 \begin_layout Section*
@@ -129,6 +279,18 @@ The End
 \begin_layout Standard
 This is the end.
  
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "/home/ubuntu/src/learn/learn-lang-diary/lang"
+options "tufte"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
