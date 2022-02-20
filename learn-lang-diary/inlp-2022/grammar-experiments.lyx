@@ -100,7 +100,7 @@ February 2022
 \end_layout
 
 \begin_layout Author
-Linas Vepstas
+Linas Vepštas
 \end_layout
 
 \begin_layout Abstract
@@ -226,11 +226,32 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-This text reports on the algorithms developed to perform the above, and
- on the statistical properties of the resulting graphical networks.
- The focus is narrow.
+This text provides reports on the algorithms developed to perform the above,
+ and on the statistical properties of the resulting graphical networks.
+ This report is a summary, encompassing more than a decade of research and
+ development.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A detailed diary of results, spanning a many hundreds of pages, can be found
+ in the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dairy"
+target "https://github.com/opencog/learn/tree/master/learn-lang--diary"
+literal "false"
+
+\end_inset
+
+, Parts One-Six, and the adjunct reports.
+ 
+\end_layout
+
+\end_inset
+
  There are obvious directions in which both the theory and the experiment
- could be taken, be haven't been.
+ could be taken, but so far haven't been.
  In the 
 \begin_inset Quotes eld
 \end_inset
@@ -241,8 +262,8 @@ downwards
 
  direction, work on morphology, needed for Indo-European languages, and
  segmentation, needed for Chinese.
- Further down, the implementation of similar ideas for phontetics and general
- audio processing.
+ Further down, the implementation of the same ideas to extract phonetic
+ structure and perform general audio processing.
  In the upwards direction, one could could search for high-MI pairs across
  sentences, both to resolve references and to detect entities.
  The 
@@ -253,11 +274,136 @@ syntatactic
 \begin_inset Quotes erd
 \end_inset
 
- relationships between entities presumably encodes thier semantic properties;
- the author beleives the basic algorithm can be ratcheted upwards, to arbitraril
-y high reaches.
- The current limitations are those of software develpment and infrastructure
- needed to carry out such experiments.
+ relationships between entities presumably encodes thier semantic properties.
+ Such syntactic relations can also be extracted between different sense
+ streams, say, between words and blueprints/diagrams, or words and photographs,
+ or even perhaps big-data settings such as computer vulnerability databases,
+ or financial news and stock prices.
+ The author beleives the basic algorithm is generic, and can be ratcheted
+ upwards, to arbitrarily high reaches.
+ Whether this proves to be true cannot be known without actual experiments;
+ the current limitation to carrying these out is the develpment of a sutiable
+ software infrastructure.
+\end_layout
+
+\begin_layout Standard
+The remainder of this paper focuses on the narrow tasks defined above, in
+ the same order as given.
+ The computation of word-pairs results in a graph, whose vertexes are words,
+ and whose edges are word-pairs.
+ What are the statistical properties of this graph? MST parsing and the
+ creating of jigsaw pieces results in a matrix of word, connector-sequence
+ pairs.
+ What asre the statistical properties of this matrix? The similarity between
+ words can be judged with assorted different measures; how do these behave,
+ and how does clustering and word-sense disambiguation proceed, in practice?
+\end_layout
+
+\begin_layout Subsection*
+Software Infrastructure
+\end_layout
+
+\begin_layout Standard
+The software infrastructure used to perform the above can be found in the
+ GitHub repo for the OpenCog Learn project.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "GitHub opencog/learn"
+target "https://github.com/opencog/learn"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ It is built on top of the OpenCog AtomSpace
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "GitHub opencog/atomspace"
+target "https://github.com/opencog/atomspace"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ as a foundational layer.
+ The AtomSpace is an in-RAM graph database with powerful graph query capabilitie
+s, tuned for performance.
+ It has shims that allow data to be stored in conventional disk databases
+ and to be distributed across the network.
+ 
+\end_layout
+
+\begin_layout Standard
+Most notable for the present task is the 
+\begin_inset Quotes eld
+\end_inset
+
+matrix API
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "AtomSpace Matrix API"
+target "https://github.com/opencog/atomspace/tree/master/opencog/matrix"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ it allows arbitary collections of subgraphs to be used as the basis elements
+ of a vector space.
+ If one has two such vector spaces, then pairs of elements form a matrix
+ of rows and columns.
+ Given a matrix, it is then straight-forward to compute marginal probabilites,
+ conditional probabilities, and other typical statistical quantities.
+ This is, of course, quite ordinary: what is new here is that the AtomSpace
+ allows extremely sparse matricies to be represented: say, 100K 
+\begin_inset Formula $\times$
+\end_inset
+
+ 100K entires, of which all but a few million are zero.
+ Conventional mathematics and statistics packages do not provide such tools
+ for sparse data.
+ The other difference between the AtomSpace and conventional statistical
+ tools is that the rows and columns are themselves distinct collections
+ of subgraphs of some larger graph.
+ Given some large graph of data, one can slice-n-dice it in any number of
+ ways, and ask how portions of it correlate, by imposing a matrix structure
+ on the parts of interest.
+ To put those parts under a microscope.
+\end_layout
+
+\begin_layout Section*
+Pair Counting
 \end_layout
 
 \begin_layout Itemize
