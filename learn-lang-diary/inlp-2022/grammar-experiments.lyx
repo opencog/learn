@@ -517,7 +517,7 @@ See Diary Part Three, page 7.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="5">
+<lyxtabular version="3" rows="11" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -763,6 +763,53 @@ Sparsity
 
 \begin_layout Plain Layout
 12.040
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rarity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.540
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.690
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.527
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.570
 \end_layout
 
 \end_inset
@@ -1038,12 +1085,27 @@ In the table above,
 \end_inset
 
 .
- The sparsity is 
+ 
+\end_layout
+
+\begin_layout Standard
+The sparsity is 
 \begin_inset Formula $\log_{2}D_{\mbox{Tot}}/N_{L}\times N_{R}$
 \end_inset
 
 , and so is expressed in bits.
- The total entropy is
+ It indicates what fraction of all possible word-pairs are actually observed.
+ Note that the sparsity increased by two bits, as the dimensions of the
+ matrix increased by two bits (a factor of four; non-trivial in terms of
+ compute-time, corpus size and RAM usage.) Thus, rarity is defined as 
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+, and is seen to be approximately constant, independent of dataset size.
+\end_layout
+
+\begin_layout Standard
+The total entropy is
 \end_layout
 
 \begin_layout Standard
@@ -1104,6 +1166,10 @@ t of the possible number of pairs.
  the size of the dataset! The low value of the MI, one and a half bits,
  indicates the paucity of word-pairs.
  They convey some information, but not very much.
+ On the other hand, the sparsity is quite high: of all possible word pairs
+ that could have been observed, only miniscule fractions of a percent are
+ actually observed.
+ Language is very highly structured.
  The goal of the learning project is to amplify the information content;
  to extract information, to data-mine it.
 \end_layout
@@ -1199,14 +1265,6 @@ the
 
 \begin_layout Subsection*
 Graphs
-\end_layout
-
-\begin_layout Standard
-A typical Zipfian distribution is shown below.
-\end_layout
-
-\begin_layout Standard
-Typical degree frequency
 \end_layout
 
 \begin_layout Standard
