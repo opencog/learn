@@ -402,20 +402,731 @@ literal "false"
  To put those parts under a microscope.
 \end_layout
 
+\begin_layout Standard
+During the pair-counting stage, the rows and columns of the matrix are words,
+ the left and right words, respectively, of an ordered word pair; the matrix
+ is approximately square.
+ During the word-sense disambiguation and syntactic clustering stage, the
+ rows are individal words, and the columns are the connector sequences witnesed
+ for those words.
+ The conector sequence is thus an example of a non-trivial subgraph.
+ The matrix is rectangular; there is typically an order of magnitude more
+ connector sequences than there are words: this is simply because each connector
+ sequence is a context for a word: it resembles a skip-gram in many ways.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 Pair Counting
 \end_layout
 
-\begin_layout Itemize
-not WP, because verbs, action verbs
+\begin_layout Standard
+Obtaining a suitable corpus for exploring the English language is not as
+ simple as it seems: it is not enough to train on a dump of Wikipedia articles.
+ This is because Wikipedia is descriptive, and has a paucity of verbs, and
+ a surfiet of proper nouns and techical terms.
+ Verbs such as run, jump, catch: the verbs of everyday outdoor adventure
+ are missing.
+ This can be remedied by working with a corpus of young adult adventure
+ literature.
+ Such a corpus is not readily available, but can be pieced together by working
+ with Project Gutenberg publications and publicly licensed fan fiction.
+ 
 \end_layout
 
-\begin_layout Itemize
-matrix api for atomspace.
+\begin_layout Standard
+Some minimal amount of cleanup can be useful, but it doesn't seem to be
+ critical: if some specialized markup (say, HTML markup) or the occasional
+ table, figure caption or index squeezes through, it should not matter much:
+ after all these also have structure, and the goal of the project is to
+ discern structure.
+\end_layout
+
+\begin_layout Standard
+The size of the vocabulary increases as the size of the corpus increases.
+ This is because of the Zipfian distribution of words: it will always be
+ the case that about half of the vocabulary is observed only once: unusual
+ given names, obscure geographical place names, foreign language loan words.
+ 
+\end_layout
+
+\begin_layout Standard
+Word-pair counting can be done in several different ways: one is to count
+ each word-pair occuring within a window of a fixed width, say, of width
+ six.
+ Another possibility is to count the word-pairs occuring in a completely
+ random planar parse of a sentence.
+ There does not appear to be much difference between these two syles of
+ ounting, although the second style seems more appealing on theoretical
+ grounds.
+\end_layout
+
+\begin_layout Standard
+A good way to characterize the number of observed word-pairs is by means
+ of the sparsity: the 
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+ of the fraction of observed word-pairs vs.
+ all possible word-pairs.
+ Hewing to an information-theoretic foundation, other characterisitcs include
+ the left and right entropies, and the total mutual information.
+ This is somewhat more interesting than the more conventional statements
+ about the average degree of a vertex in a graph, or the average 
+\begin_inset Quotes eld
+\end_inset
+
+hubbiness
+\begin_inset Quotes erd
+\end_inset
+
+ (root-mean-square of the degree).
+ This is because of the Zipfian distribution of words: given this, most
+ of the graph statistics follow.
+ The mutual information is more interesting, as it is a key ingredient to
+ an information-theoretic foundation.
+ A summary and some graphs follow.
+\end_layout
+
+\begin_layout Subsection*
+Data sets
+\end_layout
+
+\begin_layout Standard
+Five snapshots of an increasingly larger corpus were taken.
+ These are summarized below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="9" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Corpus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Unique pairs
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total observations
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Left Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Right Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the table above, 
+\begin_inset Formula $N_{L}\times N_{R}$
+\end_inset
+
+ refers to the height and width of the matrix (the number of unique words
+ occuring on the left and rightt of observed word-pairs).
+ The 
+\begin_inset Formula $\mbox{sparsity}=\log_{2}\mbox{unique pairs}/N_{L}\times N_{R}$
+\end_inset
+
+, so it is expressed in bits.
+ The total entropy is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+H_{\mbox{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)
+\]
+
+\end_inset
+
+with the sum ranging over all word-pairs 
+\begin_inset Formula $\left(w,v\right)$
+\end_inset
+
+ and the frequency 
+\begin_inset Formula $p\left(w,v\right)=N\left(w,v\right)/N\left(*,*\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(w,v\right)$
+\end_inset
+
+ is the oservation count of a pair, and 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ is the total count over all word-pairs.
+ The left entropy is 
+\begin_inset Formula 
+\[
+H_{\mbox{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p\left(w,*\right)=\sum_{v}p\left(w,v\right)$
+\end_inset
+
+ is the left-marginal sum; likewise for the right entropy.
+ The mutual information is
+\begin_inset Formula 
+\[
+MI=H_{\mbox{Tot}}-H_{\mbox{Left}}-H_{\mbox{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Graphs
+\end_layout
+
+\begin_layout Standard
+A typical Zipfian distribution is shown below.
+\end_layout
+
+\begin_layout Standard
+Typical degree frequency
+\end_layout
+
+\begin_layout Standard
+MI distribution
+\end_layout
+
+\begin_layout Section*
+MST Parsing
+\end_layout
+
+\begin_layout Section*
+Similarities
 \end_layout
 
 \begin_layout Standard
 vector similarities allow similar w
+\end_layout
+
+\begin_layout Section*
+Culstering
+\end_layout
+
+\begin_layout Standard
+v
 \end_layout
 
 \begin_layout Section*
