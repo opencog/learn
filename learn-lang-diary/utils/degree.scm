@@ -35,4 +35,8 @@
 (define (pcnt WRD) 1)
 (degree-plot star-obj 200 0 20 "/tmp/log2-degree.dat" pval pcnt)
 
+; Same as above, but the weighted degree (i.e. "with multiplicity")
+(define (pval WRD) (sup-obj 'right-count WRD))
+(define (pcnt WRD) 1)
+(degree-plot star-obj 2000 0 2000 "/tmp/degree-w-fine.dat" pval pcnt)
 
