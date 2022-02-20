@@ -500,16 +500,15 @@ Data sets
 \end_layout
 
 \begin_layout Standard
-Five snapshots of an increasingly larger corpus were taken.
+Four snapshots of an increasingly larger corpus were taken.
  These are summarized below.
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="6">
+<lyxtabular version="3" rows="10" columns="5">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -552,7 +551,7 @@ Corpus
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -561,11 +560,52 @@ Corpus
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+\begin_inset Formula $N_{L}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+104879
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+140140
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+304085
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+397229
 \end_layout
 
 \end_inset
@@ -576,7 +616,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $N_{L}\times N_{R}$
+\begin_inset Formula $N_{R}$
 \end_inset
 
 
@@ -588,7 +628,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+105701
 \end_layout
 
 \end_inset
@@ -597,7 +637,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+142101
 \end_layout
 
 \end_inset
@@ -606,16 +646,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+306920
 \end_layout
 
 \end_inset
@@ -624,7 +655,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+402896
 \end_layout
 
 \end_inset
@@ -635,24 +666,9 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-Unique pairs
-\end_layout
-
+\begin_inset Formula $D_{\mbox{Tot}}$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -662,7 +678,7 @@ Unique pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+9.8M
 \end_layout
 
 \end_inset
@@ -671,7 +687,16 @@ Unique pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
+14.6M
+\end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+28.2M
 \end_layout
 
 \end_inset
@@ -680,7 +705,7 @@ Unique pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+38.0M
 \end_layout
 
 \end_inset
@@ -700,7 +725,7 @@ Sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.144
 \end_layout
 
 \end_inset
@@ -709,7 +734,7 @@ Sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.416
 \end_layout
 
 \end_inset
@@ -718,16 +743,7 @@ Sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+11.693
 \end_layout
 
 \end_inset
@@ -736,7 +752,7 @@ Sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+12.040
 \end_layout
 
 \end_inset
@@ -747,24 +763,9 @@ Sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-Total observations
-\end_layout
-
+\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
 \end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
 
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -774,7 +775,7 @@ Total observations
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.779
 \end_layout
 
 \end_inset
@@ -783,7 +784,16 @@ Total observations
 \begin_inset Text
 
 \begin_layout Plain Layout
+5.079
+\end_layout
 
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.128
 \end_layout
 
 \end_inset
@@ -792,7 +802,7 @@ Total observations
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+5.235
 \end_layout
 
 \end_inset
@@ -812,7 +822,7 @@ Total Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.827
 \end_layout
 
 \end_inset
@@ -821,7 +831,7 @@ Total Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.889
 \end_layout
 
 \end_inset
@@ -830,16 +840,7 @@ Total Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+18.378
 \end_layout
 
 \end_inset
@@ -848,7 +849,7 @@ Total Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+18.503
 \end_layout
 
 \end_inset
@@ -886,16 +887,7 @@ Left Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+10.069
 \end_layout
 
 \end_inset
@@ -942,16 +934,7 @@ Right Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+9.8321
 \end_layout
 
 \end_inset
@@ -980,7 +963,7 @@ MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.5572
 \end_layout
 
 \end_inset
@@ -989,7 +972,7 @@ MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.4677
 \end_layout
 
 \end_inset
@@ -998,16 +981,7 @@ MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+1.5227
 \end_layout
 
 \end_inset
@@ -1016,7 +990,7 @@ MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.4863
 \end_layout
 
 \end_inset
@@ -1035,12 +1009,21 @@ In the table above,
 \end_inset
 
  refers to the height and width of the matrix (the number of unique words
- occuring on the left and rightt of observed word-pairs).
- The 
-\begin_inset Formula $\mbox{sparsity}=\log_{2}\mbox{unique pairs}/N_{L}\times N_{R}$
+ occuring on the left and right of observed word-pairs).
+ The total number of unique pairs is 
+\begin_inset Formula $D_{\mbox{Tot}}$
 \end_inset
 
-, so it is expressed in bits.
+ while the total number of observations of these pairs is 
+\begin_inset Formula $N_{\mbox{Tot}}$
+\end_inset
+
+.
+ The sparsity is 
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+, and so is expressed in bits.
  The total entropy is
 \end_layout
 
@@ -1091,6 +1074,19 @@ MI=H_{\mbox{Tot}}-H_{\mbox{Left}}-H_{\mbox{Right}}=\sum_{w,v}p\left(w,v\right)\l
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+Notable trends are that the number of distinct pairs increases as the square-roo
+t of the possible number of pairs.
+ The total number of observations per pair is very nearly constant, increasing
+ only slowly with the size of the dataset.
+ Notable is that the MI really does appear to be constant, independent of
+ the size of the dataset! The low value of the MI, one and a half bits,
+ indicates the paucity of word-pairs.
+ They convey some information, but not very much.
+ The goal of the learning project is to amplify the information content;
+ to extract information, to data-mine it.
 \end_layout
 
 \begin_layout Subsection*
