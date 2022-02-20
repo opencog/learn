@@ -502,6 +502,16 @@ Data sets
 \begin_layout Standard
 Four snapshots of an increasingly larger corpus were taken.
  These are summarized below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Three, page 7.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -566,7 +576,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $N_{L}$
+\begin_inset Formula $\log_{2}N_{L}$
 \end_inset
 
 
@@ -578,7 +588,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-104879
+16.678
 \end_layout
 
 \end_inset
@@ -587,7 +597,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-140140
+17.097
 \end_layout
 
 \end_inset
@@ -596,7 +606,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-304085
+18.214
 \end_layout
 
 \end_inset
@@ -605,7 +615,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-397229
+18.600
 \end_layout
 
 \end_inset
@@ -616,7 +626,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $N_{R}$
+\begin_inset Formula $\log_{2}N_{R}$
 \end_inset
 
 
@@ -628,7 +638,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-105701
+16.690
 \end_layout
 
 \end_inset
@@ -637,7 +647,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-142101
+17.117
 \end_layout
 
 \end_inset
@@ -646,7 +656,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-306920
+18.228
 \end_layout
 
 \end_inset
@@ -655,7 +665,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-402896
+18.620
 \end_layout
 
 \end_inset
@@ -666,7 +676,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $D_{\mbox{Tot}}$
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
 \end_inset
 
 
@@ -678,7 +688,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-9.8M
+23.224
 \end_layout
 
 \end_inset
@@ -687,7 +697,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-14.6M
+23.797
 \end_layout
 
 \end_inset
@@ -696,7 +706,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-28.2M
+24.748
 \end_layout
 
 \end_inset
@@ -705,7 +715,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-38.0M
+25.180
 \end_layout
 
 \end_inset
@@ -1005,11 +1015,20 @@ MI
 
 \begin_layout Standard
 In the table above, 
-\begin_inset Formula $N_{L}\times N_{R}$
+\begin_inset Formula $N_{L}$
 \end_inset
 
- refers to the height and width of the matrix (the number of unique words
- occuring on the left and right of observed word-pairs).
+ and 
+\begin_inset Formula $N_{R}$
+\end_inset
+
+ are the height and width of the matrix (the number of unique words occuring
+ on the left and right of observed word-pairs).
+ They are almost the same, but not quite: for example, the period never
+ occurs at the start of a sentence; capitalized words rarely appear ath
+ the end.
+ The sizes are given as logarithms, as this makes comparison to entropies
+ more immediate.
  The total number of unique pairs is 
 \begin_inset Formula $D_{\mbox{Tot}}$
 \end_inset
@@ -1087,6 +1106,95 @@ t of the possible number of pairs.
  They convey some information, but not very much.
  The goal of the learning project is to amplify the information content;
  to extract information, to data-mine it.
+\end_layout
+
+\begin_layout Subsection*
+Sample-size Effects
+\end_layout
+
+\begin_layout Standard
+The distribution of word-pairs is conventionally Zipfian, with an exponent
+ of 
+\begin_inset Formula $\gamma\approx1.0$
+\end_inset
+
+, and is not shown.
+ The focus here is on sample-size effects.
+ The graph below shows the observation count for vertex degrees, for dataset
+ 3 above.
+ Consider each word to be a vertex, and each observed word-pair an edge.
+ This forms a graph.
+ The degree of a vertex is the number of edges attached to it.
+ What is the distribution of degrees in the graph?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p6-density/degree-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Clearly, the distribution is Zipfian, with exponent 
+\begin_inset Formula $\gamma\approx1.6$
+\end_inset
+
+.
+ There are two notable sample-size effects.
+ At the left-hand side of this graph are words that participate in only
+ a handful of word-pairs.
+ This dataset has 142K words in it; the graph shows that more than 100K
+ of them participate in ten or fewer word-pairs.
+ The flattening on the left hand side indicates that these are wildly under-samp
+led.
+ What are these words? Sample inspection shows that many of these are junk:
+ bad punctuation, badly-escaped quotes, typos, stray markup mixed in together
+ with foreign-language words, obscure place-names and other rarities.
+ It is reasonable, before proceeding to later stages of grammatical induction,
+ to label these words as 
+\begin_inset Quotes eld
+\end_inset
+
+junk
+\begin_inset Quotes erd
+\end_inset
+
+ and trim them away.
+ The result is a dramatically smaller dataset.
+ This is a good thing: it occupies less RAM and storage; later algorithmic
+ processing runs faster.
+ But does trimming damage information? Appearently not; trimming to remove
+ more than half the words changes the sparsity not at all, lowers the entropy
+ by five percent, and lowers the MI by about a percent.
+ 
+\end_layout
+
+\begin_layout Standard
+At the right-hand side of the graph, a risk to histogramming is exposed.
+ These are words that appear in thousands of distinct pairs.
+ Yet, for any given, fixed degree, there are only a small handful of words
+ having exactly that degree, and sometimes even zero words.
+ The higher the degree, the more likely that there are zero words having
+ that degree.
+ This also is a kind-of undersampling: when generating histograms of distributio
+ns, the lack of data in this range will also affect slopes and with it the
+ conclusions about the nature of the dataset.
+ Words with the very highest degree are punctuation: the period, comma and
+ dash, and the determiner 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+: these appear in pairs with more than 2/3rds of the other words in the
+ dataset.
 \end_layout
 
 \begin_layout Subsection*
