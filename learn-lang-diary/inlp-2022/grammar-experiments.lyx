@@ -2402,6 +2402,48 @@ See Diary Part Five.
 
 \end_layout
 
+\begin_layout Standard
+The graph below shows the distribution of MI similarities for the top-ranked
+ (most frequent) 1200 words.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Three, page 14; see also Diary Part Five.
+\end_layout
+
+\end_inset
+
+ In principle, there are 
+\begin_inset Formula $N\left(N+1\right)/2=720600$
+\end_inset
+
+ such pairs.
+ In practice, 386380 pairs are observed; the remaining pairs have no overlap!
+ (and thus a 
+\begin_inset Formula $-\infty$
+\end_inset
+
+ for the MI.)
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../en-sims-p3/mi-dist.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The curve marked G is a Gaussian, with the indicated mean and standard deviation.
+ The graph for the VI is nearly identical, having the same deviation, but
+ with the mean shifted to 1.5.
+\end_layout
+
 \begin_layout Section*
 Clustering
 \end_layout
@@ -2609,15 +2651,57 @@ might should will may
 
 The clusters above are sets of words, all of which have a high pairwise-VI
  amongst themselves.
- 
-\end_layout
+ One can form such clusters quite naively, by searching for cliques of similar
+ words.
+ However, to get adequate word-sense disambiguation, one must be more sophistica
+ted.
+ This is, because when one forms a cluster, one should include only this
+ disjuncts which all fo the words share in common, and exclude those that
+ do not.
+ A canonical example of this is the word 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Section*
-Clustering
+saw
+\begin_inset Quotes erd
+\end_inset
+
+, which can be the past tense of the verb 
+\begin_inset Quotes eld
+\end_inset
+
+to see
+\begin_inset Quotes erd
+\end_inset
+
+, and a cutting implement.
+ In forming a cluster with other viewing (or listening) verbs, one wishes
+ to accept only the disjuncts pertinent to such verbs.
+ Excluding the others leaves behind the disjuncts for the other verb senses,
+ in this case, those for cutting tools.
 \end_layout
 
 \begin_layout Standard
-v
+An algorithm that appears to accomplish this can be understood as implementing
+ 
+\begin_inset Quotes eld
+\end_inset
+
+exclusive club – common-interests
+\begin_inset Quotes erd
+\end_inset
+
+ membership.
+ Starting with the pair of words having currently the highest possible VI,
+ one searches for additional words with a high VI.
+ These form the candidate members to the club.
+ It is useful to have a reasonably large club, and so one can set a threshold,
+ admitting as candidates all those above the threshold.
+ As the threshold is lowered, the candidate list increases, until suddenly
+ it explodes.
+ The exclusive club is no longer exclusive, but is inviting everyone to
+ join.
+ 
 \end_layout
 
 \begin_layout Section*
