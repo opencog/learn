@@ -2053,9 +2053,7 @@ common-mode noise
  These two, summed together, model the observed distribution almost perfectly.
  Perhaps a formal expression for the common-mode noise is easily derived,
  given a fixed vocabulary size and number of samples.
- XXX TODO.
- We really should do this.
- I'm certain it will provide a great fit.
+ Attempt to get this is made further below.
 \end_layout
 
 \begin_layout Standard
@@ -2145,6 +2143,212 @@ variation of information
  OK, so I have to go back into the diary, and amend all of the entries to
  reflect this conventional name.
  Yow!
+\end_layout
+
+\begin_layout Subsection*
+Neutral MI Distribution
+\end_layout
+
+\begin_layout Standard
+Attempted theoretical calculation of the MI distribution that would result
+ if word pairs wer chosen at completely at random.
+ There are two distributions of interest.
+ One uses a uniform distribution of the vocabulary words, the other a Zipfian
+ distribution.
+ 
+\end_layout
+
+\begin_layout Standard
+XXX FIXME Everything below is incomplete, incorrect, wrong.
+ I'm too lazy to figure out why.
+\end_layout
+
+\begin_layout Subsubsection*
+Uniform distribution
+\end_layout
+
+\begin_layout Standard
+Assume a vocabulary size of 
+\begin_inset Formula $N$
+\end_inset
+
+.
+ A random word-pair consists of two random, uniformly-weighted draws from
+ this vocabulary.
+ We take the order of the draws as being important; thus, any given word-pair
+ has a chance of 
+\begin_inset Formula $1/N^{2}$
+\end_inset
+
+ of being drawn.
+ Consider 
+\begin_inset Formula $M$
+\end_inset
+
+ pair draws, with 
+\begin_inset Formula $N\ll M\ll N^{2}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The chance of a given pair being drawn once is 
+\begin_inset Formula $CM/N^{2}$
+\end_inset
+
+ with 
+\begin_inset Formula $C$
+\end_inset
+
+ a normalization constant to be determined.
+ Basically, it can be drawn the first time, or the second time, or the third
+ time ...
+ etc.
+ but never twice.
+ The chance of it being drawn twice is 
+\begin_inset Formula $CM\left(M-1\right)/2N^{4}$
+\end_inset
+
+ and so now we have the usual combinatorics.
+ The chance of observing a word-pair 
+\begin_inset Formula $\left(a,b\right)$
+\end_inset
+
+ a total of 
+\begin_inset Formula $K$
+\end_inset
+
+ times is
+\begin_inset Formula 
+\[
+p\left(K\vert a,b\right)=\frac{C}{N^{2K}}{M \choose K}
+\]
+
+\end_inset
+
+Right(?) 
+\end_layout
+
+\begin_layout Subsubsection*
+Zipfian distribution
+\end_layout
+
+\begin_layout Standard
+Repeat the above, with a non-uniform distribution.
+ Each word is distingusied by it's ordinal 
+\begin_inset Formula $k$
+\end_inset
+
+ so that we have words 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+ for 
+\begin_inset Formula $1\le k\le N$
+\end_inset
+
+.
+ The probability of drawing word 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+ is then 
+\begin_inset Formula $p\left(w_{k}\right)=Ak^{-\gamma}$
+\end_inset
+
+ for 
+\begin_inset Formula $\gamma\approx1$
+\end_inset
+
+ and 
+\begin_inset Formula $A$
+\end_inset
+
+ a normalization constant, so that 
+\begin_inset Formula $1=\sum_{k=1}^{\infty}p\left(w_{k}\right)$
+\end_inset
+
+.
+ The probability of drawing a pair 
+\begin_inset Formula $\left(w_{i},w_{j}\right)$
+\end_inset
+
+ is then 
+\begin_inset Formula $p\left(w_{i},w_{j}\right)=p\left(w_{i}\right)p\left(w_{j}\right)$
+\end_inset
+
+ since the probabilities are completely independent of one-another.
+\end_layout
+
+\begin_layout Standard
+Now we have to iterate this experiment 
+\begin_inset Formula $M$
+\end_inset
+
+ times.
+ The probability of drawing a given pair 
+\begin_inset Formula $K$
+\end_inset
+
+ times is then 
+\begin_inset Formula 
+\[
+p\left(K\vert j,k\right)=C\left(p\left(w_{i},w_{j}\right)\right)^{K}{M \choose K}
+\]
+
+\end_inset
+
+Write 
+\begin_inset Formula $x=p\left(w_{i},w_{j}\right)$
+\end_inset
+
+ for short, then the normalization is 
+\begin_inset Formula 
+\[
+f\left(w_{i},w_{j}\right)=C\sum_{K=0}^{M}x^{K}{M \choose K}=C\left(1+x\right)^{M}
+\]
+
+\end_inset
+
+Right??? I'm confused.
+ Now, since 
+\begin_inset Formula $\epsilon=Mx\ll1$
+\end_inset
+
+ we can write
+\begin_inset Formula 
+\[
+f\left(w_{i},w_{j}\right)=C\left(1+Mp_{i}p_{j}+\mathcal{O}\left(\epsilon^{2}\right)\right)\approx C\left(1+Mp_{i}p_{j}\right)
+\]
+
+\end_inset
+
+and so the marginal is 
+\begin_inset Formula 
+\[
+f\left(w_{i},*\right)=\sum_{j}f\left(w_{i},w_{j}\right)\approx CN+CMp_{i}
+\]
+
+\end_inset
+
+but 
+\begin_inset Formula $N\gg Mp_{i}$
+\end_inset
+
+ by assumption, so 
+\begin_inset Formula $f\left(*,*\right)=1\approx CN^{2}$
+\end_inset
+
+ and so 
+\begin_inset Formula 
+\[
+f\left(w_{i},*\right)=\frac{1}{N}
+\]
+
+\end_inset
+
+which seems wrong, so I made a mistake above!?
 \end_layout
 
 \begin_layout Section*
