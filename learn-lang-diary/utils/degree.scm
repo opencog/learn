@@ -73,4 +73,10 @@
 (define (pcnt WRD) (freq-obj 'right-wild-logli WRD))
 (wdegree-plot 5000 0 5000 "/tmp/degree-rlogp-fine.dat" pval pcnt)
 
+(define (pcnt WRD) (freq-obj 'right-wild-fentropy WRD))
+(wdegree-plot 5000 0 5000 "/tmp/degree-rfent-fine.dat" pval pcnt)
+
+(define (pcnt WRD) (freq-obj 'right-wild-fmi WRD))
+(wdegree-plot 5000 0 5000 "/tmp/degree-rfmi-fine.dat" pval pcnt)
+
 ; ---------
