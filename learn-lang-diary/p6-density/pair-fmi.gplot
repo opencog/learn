@@ -52,8 +52,9 @@ plot "pair-fmi.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
 #
 set term png
 set out 'pair-rmi.png'
-# set term postscript eps enhanced color 20
-# set out 'pair-rmi.eps'
+# 
+set term postscript eps enhanced color 20
+set out 'pair-rmi.eps'
 set key right top
 set title "Ranked-MI Distribution of word pairs"
 set xlabel "Ranked-MI"
