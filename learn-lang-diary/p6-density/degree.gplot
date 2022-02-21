@@ -38,13 +38,17 @@ set key right top
 set title "Degree of Word"
 set xlabel "Degree"
 set ylabel "Frequency"
+set y2label "Count of Words"
 set logscale x
 set logscale y
+set logscale y2
 set format x "10^{%L}"
 set format y "10^{%L}"
+set format y2 "10^{%L}"
 set xrange [1:]
-unset yrange
-set yrange [4e-6:0.11]
+set yrange [1.0/304085:1e5/304085.0]
+set y2range [1:1e5]
+set y2tics
 
 gam=1.6
 b = 1.1
@@ -52,42 +56,19 @@ z(x) = (b/x)**gam
 
 norm = 1.0 / 304085
 
-plot "degree-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
-     "degree-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+plot "degree-fine.dat" using 2:($3) axes x1y2 with lines lw 2 title "data_{ }", \
+     "degree-fine.dat" using 2:(z($2)) axes x1y1 with lines lw 2 title "degree^{-1.6}"
+
+unset y2label
+unset y2range
+unset y2tics
 
 #################################################
 #
 set term png
-set out 'degree-fine-raw.png'
+set out 'degree-w-fine-raw.png'
 # set term postscript eps enhanced color 20
-# set out 'degree-fine-raw.eps'
-set key right top
-set title "Observation Count of Vertex Degrees"
-set xlabel "Degree of Word"
-set ylabel "Count of Words"
-set logscale x
-set logscale y
-set format x "10^{%L}"
-set format y "10^{%L}"
-set xrange [1:]
-unset yrange
-set yrange [1:1e5]
-
-gam=1.6
-b = 3e3
-z(x) = (b/x)**gam
-
-norm = 1.0
-
-plot "degree-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
-     "degree-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
-
-#################################################
-#
-set term png
-#set out 'degree-w-fine-raw.png'
-set term postscript eps enhanced color 20
-set out 'degree-w-fine-raw.eps'
+# set out 'degree-w-fine-raw.eps'
 set key right top
 set title "Weighted Observation Count of Vertex Degrees"
 set xlabel "Degree of Word"
