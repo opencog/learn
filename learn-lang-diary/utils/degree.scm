@@ -2,7 +2,7 @@
 ; degree.scm
 ;
 ; Scripts for graphing the degree.
-; Used in diary part six.
+; Used in Diary Part Six.
 ;
 ; Loop over left-basis, and bincount:
 ; support (this is the degree)
@@ -46,4 +46,13 @@
 (define (pval WRD) (sup-obj 'right-support WRD))
 (define (pcnt WRD) (sup-obj 'right-count WRD))
 (degree-plot star-obj 5000 0 5000 "/tmp/degree-w-fine.dat" pval pcnt)
+
+; Same as above, but rescaled
+(define freq-obj (add-pair-freq-api star-obj))
+(define (pcnt WRD) (freq-obj 'right-wild-freq WRD))
+(define (pcnt WRD) (catch #t
+	(lambda () (freq-obj 'right-wild-freq WRD))
+	(lambda (key . args)  0.0)))
+(degree-plot star-obj 5000 0 5000 "/tmp/degree-lp-fine.dat" pval pcnt)
+
 
