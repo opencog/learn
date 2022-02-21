@@ -25,9 +25,23 @@
 	(if (< 0 x) (/ (log x) (log 2)) 0.0))
 
 ; For each left-word, the right-support is the "degree" of that node.
-(define (pval WRD) (freq-obj 'pair-fmi WRD))
-(define (pcnt WRD) 1)
-(pair-plot 500 -10 10 "/tmp/pair-fmi.dat" pval pcnt)
+(define (pval PAIR) (freq-obj 'pair-fmi PAIR))
+(define (pcnt PAIR) 1)
+(pair-plot 500 -12 27 "/tmp/pair-fmi.dat" pval pcnt)
+
+(define (common-mi PAIR)
+	(+ (freq-obj 'pair-fmi PAIR) (* 0.5 (+
+		(freq-obj 'left-wild-logli (star-obj 'right-element PAIR))
+		(freq-obj 'right-wild-logli (star-obj 'left-element PAIR))
+	))))
+
+
+(define q (log2 (sup-obj 'total-support-right)))
+(define (ranked-mi PAIR) (- (common-mi PAIR) q))
+
+(define (pval PAIR) (ranked-mi PAIR))
+(define (pcnt PAIR) 1)
+(pair-plot 500 -35 28 "/tmp/pair-rmi.dat" pval pcnt)
 
 
 ; -----
