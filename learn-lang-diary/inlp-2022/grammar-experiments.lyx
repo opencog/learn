@@ -92,7 +92,7 @@
 \begin_body
 
 \begin_layout Title
-Unsupervised Grammar Induction - Experimental Results
+Grammar Induction - Experimental Results
 \end_layout
 
 \begin_layout Date
@@ -2249,7 +2249,11 @@ Notable in this data is that even modest trimming removes the vast majority
  of words and disjuncts in the dataset.
  The total entropy is strongly dependent on the trim; the sparsity and rarity
  a good bit less so.
- 
+ It will later become apparent that heavy trimming is perhaps not a good
+ idea: there is a considerable amount of information held in the infrequently-ob
+served disjuncts.
+ Characaterizing this precisely, undersstanding what it means remains an
+ ongoing task.
 \end_layout
 
 \begin_layout Standard
@@ -2261,19 +2265,355 @@ Graph of (w,d) MI distribution
 \end_layout
 
 \begin_layout Section*
-Similarities
+Grammatically Similar Words
 \end_layout
 
 \begin_layout Standard
-MMT and definitions
+The machinery above brings us to the first interesting grammatical application:
+ determining what words are grammatically similar.
+ Each row in the above matrix is a vector; it corresponds to a word with
+ a collection of disjuncts associated with it.
+ Each disjunct is a context for that word: it is very much like a skip-gram,
+ familiar from corpus linguistics.
+ Unlike conventional skip-grams, it is determined by MST/MPG parsing, rather
+ than simple observation frequency.
+ This should result in much higher quality data, although this hasn't been
+ directly demonstrated, yet.
+ The interpretation is also different than a conventional skip-gram: the
+ context of the word is re-interpreted as jigsaw connectors; and connectors
+ must connect to form a valid parse of a sentence.
+ This is very unlike conventional neural net approaches, where there is
+ no explicit appearance of any grammar, and the application is limited to
+ predicting the next words in a sentence.
 \end_layout
 
 \begin_layout Standard
-vector similarities allow similar w
+How should similarity be compared? The workhorse of conventional neural
+ net approaches is the cosine distance.
+ Experimentally, this appears to be the worst-possible way of determining
+ similarity.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Two, pages 55-74.
+\end_layout
+
+\end_inset
+
+ Other possibilities include the Jaccard distance, and several weighted
+ variants of the Jaccard distance.
+ One of these has been shown to be optimal, in that it maximizes all possible
+ similarites.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Moulton2018"
+literal "false"
+
+\end_inset
+
+ All of these do quite well.
+ In keeping with the information-theoretic theme, using the mutual information
+ betweeen two vectors seems quite appropriate.
+ This needs to be defined afresh, as it is not simply a restatement of that
+ given above.
+ Let the joint probability 
+\begin_inset Formula $p\left(w,d\right)$
+\end_inset
+
+ of a word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ be as before: 
+\begin_inset Formula $p\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
+\end_inset
+
+.
+ Define a vector inner product of two words 
+\begin_inset Formula $w,v$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+i\left(w,v\right)=\sum_{d}p\left(w,d\right)p\left(v,d\right)
+\]
+
+\end_inset
+
+The corresponding MI is then 
+\begin_inset Formula 
+\[
+MI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)i\left(*,*\right)}{i\left(w,*\right)i\left(v,*\right)}
+\]
+
+\end_inset
+
+Note that this MI is symmetric: 
+\begin_inset Formula $MI\left(w,v\right)=MI\left(v,w\right)$
+\end_inset
+
+, which follows from the symmetry of the inner product.
+ 
+\end_layout
+
+\begin_layout Standard
+How well does this work? Fantastically well; creating a list of the top-100
+ most similar words, as ranked by MI, provides excellent results, excellent
+ in the sense that just looking at the list really are either synonyms,
+ or are obviously grammatically similar.
+ But then a problem becomes evident: all of the high-MI word pairs involve
+ rare, infrequent words.
+ If one is to build a syntactical lexis, one really wants to begin by looking
+ at common, frequent words.
+ A weighting that brings frequent words to the forefront is desirable.
+\end_layout
+
+\begin_layout Standard
+Such a weighting is given by the 
+\begin_inset Quotes eld
+\end_inset
+
+variation of information
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The variation of information is given by 
+\begin_inset Formula 
+\[
+VI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)}{\sqrt{i\left(w,*\right)i\left(v,*\right)}}
+\]
+
+\end_inset
+
+There are also other possiblities, which look even more promising; the above,
+ however, is the cheapest and easiest to compute.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Five.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
-Culstering
+Clustering
+\end_layout
+
+\begin_layout Standard
+How well does this work? Some of the top-most similar groups of words are
+ shown in the table below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Five.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="13" columns="1">
+<features islongtable="true" headTopDL="true" headBottomDL="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Cluster
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
++ — “ ” _
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, ;
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+was is
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+but and that as
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+? .
+ !
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+He It I There
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of in to from
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+has was is had could
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+must would
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+he she
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+are were
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+might should will may
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+The clusters above are sets of words, all of which have a high pairwise-VI
+ amongst themselves.
+ 
+\end_layout
+
+\begin_layout Section*
+Clustering
 \end_layout
 
 \begin_layout Standard
