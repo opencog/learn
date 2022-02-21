@@ -41,7 +41,7 @@
 
 (define (pval PAIR) (ranked-mi PAIR))
 (define (pcnt PAIR) 1)
-(pair-plot 500 -35 28 "/tmp/pair-rmi.dat" pval pcnt)
+(pair-plot 500 -30 29 "/tmp/pair-rmi.dat" pval pcnt)
 
 
 ; -----
