@@ -58,6 +58,87 @@ plot "degree-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
 #################################################
 #
 set term png
+set out 'degree-fine-raw.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-fine-raw.eps'
+set key right top
+set title "Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1:1e5]
+
+gam=1.6
+b = 3e3
+z(x) = (b/x)**gam
+
+norm = 1.0
+
+plot "degree-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
+     "degree-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
+#set out 'degree-w-fine-raw.png'
+set term postscript eps enhanced color 20
+set out 'degree-w-fine-raw.eps'
+set key right top
+set title "Weighted Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "Weighted Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1e4:1e6]
+
+gam=1.6
+b = 5e3
+z(x) = (b/x)**gam
+
+norm = 1.0
+
+plot "degree-w-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
+#     "degree-w-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
+set out 'degree-m-fine-raw.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-m-fine-raw.eps'
+set key right top
+set title "Count of Vertex Degrees with Multiplicity"
+set xlabel "Degree of Word, with Multiplicity"
+set ylabel "Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1:1.2e4]
+
+gam=1.6
+b = 5e3
+z(x) = (b/x)**gam
+
+norm = 1.0
+
+plot "degree-m-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
+     "degree-m-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
 set out 'log2-degree.png'
 # set term postscript eps enhanced color 20
 # set out 'log2-degree.eps'

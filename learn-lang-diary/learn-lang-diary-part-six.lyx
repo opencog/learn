@@ -1615,6 +1615,28 @@ The eyeballed fit has
 \end_layout
 
 \begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above is the same graph, but with raw counts on the y-axis,
+\emph on
+ i.e.
+
+\emph default
+ un-normalized.
+ The point of drawing it this way is that we see on the right where the
+ count drops to one (and to zero).
+\end_layout
+
+\begin_layout Standard
 Something unexpected happens if we go deeper.
  There are so few counts, that it seems like it should be reasonable to
  bin them together.
@@ -1709,7 +1731,7 @@ Thus, since we saw
 \begin_inset Formula $\gamma\approx1.6$
 \end_inset
 
- in the earlierst figure, we expect a slope of 
+ in the earliest figure, we expect a slope of 
 \begin_inset Formula $\gamma=1\approx0.6$
 \end_inset
 
@@ -1741,6 +1763,255 @@ That initial slop is validup to
 , after which a sharper slope sets in due to the finite-sample-size effect.
  This gives the figure an overall hump-back shape.
  
+\end_layout
+
+\begin_layout Subsection*
+Weighted Vertex Degree
+\end_layout
+
+\begin_layout Standard
+Same as above, but showing te weighted vertex degree, i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+with multiplicity
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That is, if each edge was observed 
+\begin_inset Formula $N$
+\end_inset
+
+ times, then it is treated as if there were 
+\begin_inset Formula $N$
+\end_inset
+
+ distinct edges.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-m-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There is a distinct oscillatory behavior at the center-left.
+ It is perhaps some strange artifact, having to do with the fact that 24
+ parse-trees are sampled, given that the first, most prominant peak occurs
+ at 24, and later peaks are perhaps at multiples of 24.
+\end_layout
+
+\begin_layout Standard
+The next graph is kind-of meaningless junk, but worth taking a look at anyway,
+ just so that we can say we covered all the bases.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-w-fine-raw.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here, the horizontal axis is the degree of the word (without multiplicity)
+ but the vertical axis totals the marginal count for that word.
+ That is, instead of adding 1 for each observed edge (the support), it adds
+ N (the count).
+ So, for example, consider a vertex of degree 5.
+ There might be 10K such vertexes in this dataset.
+ However, each such vertex might be observed 30 or 50 times, and so we see
+ 300K or 500K on the y-axis here.
+ It's as if each word-pair was distinct, except its not, because that would
+ have changed the degree.
+ This graph is hard to interpret, and its hard to see what it's physical
+ significance is.
+ But ..
+ whatever.
+\end_layout
+
+\begin_layout Subsection*
+MI Distribution
+\end_layout
+
+\begin_layout Standard
+The distribution of word-pair MI is shown below.
+ As before, this is for dataset 3, which contains 28 million pairs.
+ The MI is sorted into 500 histogram bins.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/pair-fmi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution is clearly not symmetric.
+ The two sides appear to be bounded by straight lines, with slopes as in
+ the legend.
+ Pairs with the highest MI are observed very infrequently.
+\end_layout
+
+\begin_layout Standard
+Here's the same data, but with a different fit: 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/pair-fmi-signal.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Why this shape? Here's a guess.
+ If word-pairs are chosen completely at random, and the number of sampled
+ pairs is much smaller than the total possible pairs, then one obtains a
+ Gaussian distribution.
+ Such a distribution is centered on a small but positive MI, due to sample-size
+ effects.
+ For larger samples, the mean tends to zero.
+ Thus, perhaps the left-hand-side of this figure is just a Gaussian.
+ 
+\end_layout
+
+\begin_layout Standard
+Taking this to be 
+\begin_inset Quotes eld
+\end_inset
+
+common-mode noise
+\begin_inset Quotes erd
+\end_inset
+
+, and subtracting it leaves an excess of word pairs with positive MI, having
+ a peak near 
+\begin_inset Formula $MI\sim4$
+\end_inset
+
+.
+ The straight-line slope on the right suggests that the excess can be described
+ by a log-normal distribution.
+ Again, an eye-balled, imprecise fit is shown.
+ These two, summed together, model the observed distribution almost perfectly.
+ Perhaps a formal expression for the common-mode noise is easily derived,
+ given a fixed vocabular size and number of samples.
+ XXX TODO.
+ We really should do this.
+ I'm certain it will provide a great fit.
+\end_layout
+
+\begin_layout Standard
+Theories of why the remainder would be a log-normal distribution are unknown
+ to the author.
+\end_layout
+
+\begin_layout Standard
+Pairs with the highest MI are observed very infrequently.
+ The highest observable MI value is directly related to the sample size:
+ it is a bit below the log of the number of observations.
+ Thus, the sharp drop on the right side is purely a sample-size effect.
+ Trimming does not appreciably change the sahpe of this distribution, other
+ than to eliminate the very highest MI values.
+\end_layout
+
+\begin_layout Standard
+This distribution is not language-specific; a nearly identical distribution
+ is seen for Chinese Mandarin Hanzi pairs.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset Quotes eld
+\end_inset
+
+Word-Pair Distributions
+\begin_inset Quotes erd
+\end_inset
+
+, page 18.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Ranked-MI Distribution
+\end_layout
+
+\begin_layout Standard
+Just for giggles, here's the ranked-MI distribution:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/pair-rmi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Recall the ranked-MI is defined as
+\begin_inset Formula 
+\[
+MI_{\mbox{ranked}}\left(w,v\right)=\log_{2}\frac{p\left(w,v\right)}{\sqrt{p\left(w,*\right)p\left(*,v\right)}}
+\]
+
+\end_inset
+
+Superimposed on this graph is the distribution of the regular MI, multiplied
+ by 1.5 to get the width correct, and shifted by 10 to the left, to get te
+ zero correct.
+ Apparently, ranked-MI does not alter the distribution.
+ I wonder what it does, if it were used for MST/MPG parsing ...
+\end_layout
+
+\begin_layout Standard
+Oh, hang on.
+ the Ranked-MI is just 1/2 of the 
+\begin_inset Quotes eld
+\end_inset
+
+variation of information
+\begin_inset Quotes erd
+\end_inset
+
+, see Diary Part Two, page 54.
+ Oh huh.
+ OK, so I have to go back into the diary, and amend all of the entries to
+ reflect this conventional name.
+ Yow!
 \end_layout
 
 \begin_layout Section*

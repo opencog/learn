@@ -45,7 +45,7 @@
 \pdf_backref false
 \pdf_pdfusetitle true
 \papersize default
-\use_geometry false
+\use_geometry true
 \use_package amsmath 2
 \use_package amssymb 2
 \use_package cancel 1
@@ -70,6 +70,10 @@
 \shortcut idx
 \color #008000
 \end_index
+\leftmargin 10page%
+\topmargin 8pheight%
+\rightmargin 10page%
+\bottommargin 9pheight%
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
@@ -92,7 +96,7 @@
 \begin_body
 
 \begin_layout Title
-Unsupervised Grammar Induction - Experimental Results
+Grammar Induction - Experimental Results
 \end_layout
 
 \begin_layout Date
@@ -100,13 +104,16 @@ February 2022
 \end_layout
 
 \begin_layout Author
-Linas Vepstas
+Linas Vepštas
 \end_layout
 
 \begin_layout Abstract
-The language-learning effort involves research and software development
- to implement the ideas concerning unsupervised learning of grammar, syntax
- and semantics from corpora.
+The OpenCog Learning project explores novel techniques for the induction
+ of symbolic structure from environmental sources.
+ As a first application of these ideas , the automated learning of the grammatic
+al structure of English is explored.The language-learning effort involves
+ research and software development to implement the ideas concerning unsupervise
+d learning of grammar, syntax and semantics from corpora.
  This document provides a summary of results observed to date.
  
 \end_layout
@@ -116,16 +123,2710 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Stuff.
-\end_layout
+The goal of the OpenCog Learning project is to induce structure from raw
+ observational data.
+ In the most naive sense, this would be visual or auditory data.
+ In a more sophisticated sense, 
+\begin_inset Quotes eld
+\end_inset
 
-\begin_layout Section*
-The End
+observational data
+\begin_inset Quotes erd
+\end_inset
+
+ should be taken to be data that might already have some structure in it,
+ as the goal of learning is to do so hierarchically, recursively: to deduce
+ structure in structure inside of structure...
+ If this can be made to work, then, 
+\begin_inset Quotes eld
+\end_inset
+
+starting in the middle
+\begin_inset Quotes erd
+\end_inset
+
+ is not a bad place to start.
+ In the present case, 
+\begin_inset Quotes eld
+\end_inset
+
+the middle
+\begin_inset Quotes erd
+\end_inset
+
+ is a corpus of English text, and the goal is to extract grammatical structure.
+ The words 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical structure
+\begin_inset Quotes erd
+\end_inset
+
+ are meant to encompass morphological structure, syntactic structure, and
+ lower reaches of semantic understanding, as far as this can be pushed.
+ 
 \end_layout
 
 \begin_layout Standard
-This is the end.
+The general theory of how this is to be done is sketched out in a companion
+ article.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2022symbolic"
+literal "false"
+
+\end_inset
+
+ The overall process is as follows: first, one computes the mutual information
+ (MI) between word-pairs occurring in the corpus.
+ The MI assigns a numerical score to how often a pair of words occur near
+ each-other.
+ This can be used to generate a maximum spanning tree (MST) parse of the
+ text, which appears to capture the syntactic structure of the text reasonably
+ well.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ This parse tree can be disassembled into individual 
+\begin_inset Quotes eld
+\end_inset
+
+jigsaw puzzle pieces
+\begin_inset Quotes erd
+\end_inset
+
+ which encode the syntactic structure of the parse.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991,Sleator1993"
+literal "false"
+
+\end_inset
+
+ Individual jigsaw pieces encode the local syntactic environment of a given
+ word.
+ Collections of such jigsaw pieces can be understood to be vectors: each
+ word is endowed with a lexis of all of the syntactic contexts in which
+ it was observed.
+ But this is too fine-grained; one wishes to generalize from the particular
+ to the general.
+ The vectors can be used both to discover words that have similar syntactic
+ contexts (based on the similarity of the local environments) and also to
+ factor out different word-senses, since different syntactic contexts associate
+ strongly with distinct word-senses.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mihalcea2004,Mihalcea2005"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This text provides reports on the algorithms developed to perform the above,
+ and on the statistical properties of the resulting graphical networks.
+ This report is a summary, encompassing more than a decade of research and
+ development.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+A detailed diary of results, spanning a many hundreds of pages, can be found
+ in the 
+\begin_inset CommandInset href
+LatexCommand href
+name "Dairy"
+target "https://github.com/opencog/learn/tree/master/learn-lang--diary"
+literal "false"
+
+\end_inset
+
+, Parts One-Six, and the adjunct reports.
+ Rather than peppering this text with self-citations, footnotes will be
+ used to indicate which to examine.
+\end_layout
+
+\end_inset
+
+ There are obvious directions in which both the theory and the experiment
+ could be taken, but so far haven't been.
+ In the 
+\begin_inset Quotes eld
+\end_inset
+
+downwards
+\begin_inset Quotes erd
+\end_inset
+
+ direction, work on morphology, needed for Indo-European languages, and
+ segmentation, needed for Chinese.
+ Further down, the implementation of the same ideas to extract phonetic
+ structure and perform general audio processing.
+ In the upwards direction, one could could search for high-MI pairs across
+ sentences, both to resolve references and to detect entities.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+syntactic
+\begin_inset Quotes erd
+\end_inset
+
+ relationships between entities presumably encodes their semantic properties.
+ Such syntactic relations can also be extracted between different sense
+ streams, say, between words and blueprints/diagrams, or words and photographs,
+ or even perhaps big-data settings such as computer vulnerability databases,
+ or financial news and stock prices.
+ The author believes the basic algorithm is generic, and can be ratcheted
+ upwards, to arbitrarily high reaches.
+ Whether this proves to be true cannot be known without actual experiments;
+ the current limitation to carrying these out is the development of a suitable
+ software infrastructure.
+\end_layout
+
+\begin_layout Standard
+The remainder of this paper focuses on the narrow tasks defined above, in
+ the same order as given.
+ The computation of word-pairs results in a graph, whose vertexes are words,
+ and whose edges are word-pairs.
+ What are the statistical properties of this graph? MST parsing and the
+ creating of jigsaw pieces results in a matrix of word, connector-sequence
+ pairs.
+ What are the statistical properties of this matrix? The similarity between
+ words can be judged with assorted different measures; how do these behave,
+ and how does clustering and word-sense disambiguation proceed, in practice?
+\end_layout
+
+\begin_layout Subsection*
+Software Infrastructure
+\end_layout
+
+\begin_layout Standard
+The software infrastructure used to perform the above can be found in the
+ GitHub repo for the OpenCog Learn project.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "GitHub opencog/learn"
+target "https://github.com/opencog/learn"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ It is built on top of the OpenCog AtomSpace
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "GitHub opencog/atomspace"
+target "https://github.com/opencog/atomspace"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ as a foundational layer.
+ The AtomSpace is an in-RAM graph database with powerful graph query capabilitie
+s, tuned for performance.
+ It has shims that allow data to be stored in conventional disk databases
+ and to be distributed across the network.
  
+\end_layout
+
+\begin_layout Standard
+Most notable for the present task is the 
+\begin_inset Quotes eld
+\end_inset
+
+matrix API
+\begin_inset Quotes erd
+\end_inset
+
+:
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset href
+LatexCommand href
+name "AtomSpace Matrix API"
+target "https://github.com/opencog/atomspace/tree/master/opencog/matrix"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ it allows arbitrary collections of subgraphs to be used as the basis elements
+ of a vector space.
+ If one has two such vector spaces, then pairs of elements form a matrix
+ of rows and columns.
+ Given a matrix, it is then straight-forward to compute marginal probabilities,
+ conditional probabilities, and other typical statistical quantities.
+ This is, of course, quite ordinary: what is new here is that the AtomSpace
+ allows extremely sparse matrices to be represented: say, 100K 
+\begin_inset Formula $\times$
+\end_inset
+
+ 100K entries, of which all but a few million are zero.
+ Conventional mathematics and statistics packages do not provide such tools
+ for sparse data.
+ The other difference between the AtomSpace and conventional statistical
+ tools is that the rows and columns are themselves distinct collections
+ of subgraphs of some larger graph.
+ Given some large graph of data, one can slice-n-dice it in any number of
+ ways, and ask how portions of it correlate, by imposing a matrix structure
+ on the parts of interest.
+ To put those parts under a microscope.
+\end_layout
+
+\begin_layout Standard
+During the pair-counting stage, the rows and columns of the matrix are words,
+ the left and right words, respectively, of an ordered word pair; the matrix
+ is approximately square.
+ During the word-sense disambiguation and syntactic clustering stage, the
+ rows are individual words, and the columns are the connector sequences
+ witnessed for those words.
+ The connector sequence is thus an example of a non-trivial subgraph.
+ The matrix is rectangular; there is typically an order of magnitude more
+ connector sequences than there are words: this is simply because each connector
+ sequence is a context for a word: it resembles a skip-gram in many ways.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Pair Counting
+\end_layout
+
+\begin_layout Verse
+
+\emph on
+How do I count thee? Let me show the ways I love most.
+\end_layout
+
+\begin_layout Standard
+Obtaining a suitable corpus for exploring the English language is not as
+ simple as it seems: it is not enough to train on a dump of Wikipedia articles.
+ This is because Wikipedia is descriptive, and has a paucity of verbs, and
+ a surfeit of proper nouns and technical terms.
+ Verbs such as run, jump, catch: the verbs of everyday outdoor adventure
+ are missing.
+ This can be remedied by working with a corpus of young adult adventure
+ literature.
+ Such a corpus is not readily available, but can be pieced together by working
+ with Project Gutenberg publications and publicly licensed fan fiction.
+ 
+\end_layout
+
+\begin_layout Standard
+Some minimal amount of cleanup can be useful, but it doesn't seem to be
+ critical: if some specialized markup (say, HTML markup) or the occasional
+ table, figure caption or index squeezes through, it should not matter much:
+ after all these also have structure, and the goal of the project is to
+ discern structure.
+\end_layout
+
+\begin_layout Standard
+The size of the vocabulary increases as the size of the corpus increases.
+ This is because of the Zipfian distribution of words: it will always be
+ the case that about half of the vocabulary is observed only once: unusual
+ given names, obscure geographical place names, foreign language loan words.
+ 
+\end_layout
+
+\begin_layout Standard
+Word-pair counting can be done in several different ways: one is to count
+ each word-pair occurring within a window of a fixed width, say, of width
+ six.
+ Another possibility is to count the word-pairs occurring in a completely
+ random planar parse of a sentence.
+ There does not appear to be much difference between these two styles of
+ counting, although the second style seems more appealing on theoretical
+ grounds.
+\end_layout
+
+\begin_layout Standard
+A good way to characterize the number of observed word-pairs is by means
+ of the sparsity: the 
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+ of the fraction of observed word-pairs vs.
+ all possible word-pairs.
+ Hewing to an information-theoretic foundation, other characteristics include
+ the left and right entropies, and the total mutual information.
+ This is somewhat more interesting than the more conventional statements
+ about the average degree of a vertex in a graph, or the average 
+\begin_inset Quotes eld
+\end_inset
+
+hubbiness
+\begin_inset Quotes erd
+\end_inset
+
+ (root-mean-square of the degree).
+ This is because of the Zipfian distribution of words: given this, most
+ of the graph statistics follow.
+ The mutual information is more interesting, as it is a key ingredient to
+ an information-theoretic foundation.
+ A summary and some graphs follow.
+\end_layout
+
+\begin_layout Subsection*
+Data sets
+\end_layout
+
+\begin_layout Standard
+Five snapshots of an increasingly larger English-language corpus were taken.
+ These are summarized below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Two, page 75 and Diary Part Three, page 7.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Corpus
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.678
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.097
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.214
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.600
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.019
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.690
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.117
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.228
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.620
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.039
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.224
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+23.797
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.748
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.180
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+25.627
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.144
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.416
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.693
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.040
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.431
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rarity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.540
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.690
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.527
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.570
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.598
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.779
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.079
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.128
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.235
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.335
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.827
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.889
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.378
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.503
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.631
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Left Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.7963
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.8102
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.069
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.109
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.148
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Right Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.5884
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.5463
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.8321
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.8801
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.9265
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5572
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4677
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5227
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4863
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4431
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the table above, 
+\begin_inset Formula $N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{R}$
+\end_inset
+
+ are the height and width of the matrix (the number of unique words occurring
+ on the left and right of observed word-pairs).
+ They are almost the same, but not quite: for example, the period never
+ occurs at the start of a sentence; capitalized words rarely appear at the
+ end.
+ The sizes are given as logarithms, as this makes comparison to entropies
+ more immediate.
+ The total number of unique pairs is 
+\begin_inset Formula $D_{\mbox{Tot}}$
+\end_inset
+
+ while the total number of observations of these pairs is 
+\begin_inset Formula $N_{\mbox{Tot}}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The sparsity is 
+\begin_inset Formula $-\log_{2}D_{\mbox{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+, and so is expressed in bits.
+ It indicates what fraction of all possible word-pairs are actually observed.
+ Note that the sparsity increased by two bits, as the dimensions of the
+ matrix increased by two bits (a factor of four; non-trivial in terms of
+ compute-time, corpus size and RAM usage.) Thus, rarity is defined as 
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+, and is seen to be approximately constant, independent of dataset size.
+\end_layout
+
+\begin_layout Standard
+The total entropy is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+H_{\mbox{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)
+\]
+
+\end_inset
+
+with the sum ranging over all word-pairs 
+\begin_inset Formula $\left(w,v\right)$
+\end_inset
+
+ and the frequency 
+\begin_inset Formula $p\left(w,v\right)=N\left(w,v\right)/N\left(*,*\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(w,v\right)$
+\end_inset
+
+ is the observation count of a pair, and 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ is the total count over all word-pairs.
+ The left entropy is 
+\begin_inset Formula 
+\[
+H_{\mbox{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $p\left(w,*\right)=\sum_{v}p\left(w,v\right)$
+\end_inset
+
+ is the left-marginal sum; likewise for the right entropy.
+ The mutual information is
+\begin_inset Formula 
+\[
+MI=H_{\mbox{Tot}}-H_{\mbox{Left}}-H_{\mbox{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notable trends are that the number of distinct pairs increases as the square-roo
+t of the possible number of pairs.
+ The total number of observations per pair is very nearly constant, increasing
+ only slowly with the size of the dataset.
+ Notable is that the MI really does appear to be constant, independent of
+ the size of the dataset! The low value of the MI, one and a half bits,
+ indicates the paucity of word-pairs.
+ They convey some information, but not very much.
+ On the other hand, the sparsity is quite high: of all possible word pairs
+ that could have been observed, only minuscule fractions of a percent are
+ actually observed.
+ Language is very highly structured.
+ The goal of the learning project is to amplify the information content;
+ to extract information, to data-mine it.
+\end_layout
+
+\begin_layout Standard
+Remarkably, the overall numbers appear to be language-independent; almost
+ identical values are seen for Mandarin Chinese text.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the 
+\begin_inset Quotes eld
+\end_inset
+
+Word Pair Distributions
+\begin_inset Quotes erd
+\end_inset
+
+ document.
+\end_layout
+
+\end_inset
+
+ To perform this counting, each Hanzi is taken to be a 
+\begin_inset Quotes eld
+\end_inset
+
+word
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is not technically correct, as Chinese words may consist of one, two,
+ three or more Hanzi.
+ However, segmentation is a challenge, and so at this level, for pair-counting,
+ issues of segmentation are ignored.
+ Presumably, the discovery of Chinese words as set-phrases will occur later
+ in the learning pipeline.
+\end_layout
+
+\begin_layout Subsection*
+Sample-size Effects
+\end_layout
+
+\begin_layout Standard
+The distribution of word-pairs is conventionally Zipfian, with an exponent
+ of 
+\begin_inset Formula $\gamma\approx1.0$
+\end_inset
+
+, and is not shown.
+ The focus here is on sample-size effects.
+ The graph below shows the observation count for vertex degrees, for dataset
+ 3 above.
+ Consider each word to be a vertex, and each observed word-pair an edge.
+ This forms a graph.
+ The degree of a vertex is the number of edges attached to it.
+ What is the distribution of degrees in the graph?
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p6-density/degree-fine-raw.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Clearly, the distribution is Zipfian, with exponent 
+\begin_inset Formula $\gamma\approx1.6$
+\end_inset
+
+.
+ There are two notable sample-size effects.
+ At the left-hand side of this graph are words that participate in only
+ a handful of word-pairs.
+ This dataset has 142K words in it; the graph shows that more than 100K
+ of them participate in ten or fewer word-pairs.
+ The flattening on the left hand side indicates that these are wildly under-samp
+led.
+ What are these words? Sample inspection shows that many of these are junk:
+ bad punctuation, badly-escaped quotes, typos, stray markup mixed in together
+ with foreign-language words, obscure place-names and other rarities.
+ It is reasonable, before proceeding to later stages of grammatical induction,
+ to label these words as 
+\begin_inset Quotes eld
+\end_inset
+
+junk
+\begin_inset Quotes erd
+\end_inset
+
+ and trim them away.
+ The result is a dramatically smaller dataset.
+ This is a good thing: it occupies less RAM and storage; later algorithmic
+ processing runs faster.
+ But does trimming damage information? Apparently not; trimming to remove
+ more than half the words changes the sparsity not at all, lowers the entropy
+ by five percent, and lowers the MI by about a percent.
+ 
+\end_layout
+
+\begin_layout Standard
+At the right-hand side of the graph, a risk to histogramming is exposed.
+ These are words that appear in thousands of distinct pairs.
+ Yet, for any given, fixed degree, there are only a small handful of words
+ having exactly that degree, and sometimes even zero words.
+ The higher the degree, the more likely that there are zero words having
+ that degree.
+ This also is a kind-of under-sampling: when generating histograms of distributi
+ons, the lack of data in this range will also affect slopes and with it
+ the conclusions about the nature of the dataset.
+ Words with the very highest degree are punctuation: the period, comma and
+ dash, and the determiner 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+: these appear in pairs with more than 2/3rds of the other words in the
+ dataset.
+\end_layout
+
+\begin_layout Subsection*
+MI Distribution
+\end_layout
+
+\begin_layout Standard
+The distribution of word-pair MI is shown below.
+ As before, this is for dataset 3, which contains 28 million pairs.
+ The MI is sorted into 500 histogram bins.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p6-density/pair-fmi-signal.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution is clearly not symmetric.
+ The two sides appear to be bounded by straight lines.
+ The author is unaware of any theoretical explanation for this shape.
+ However, the following guess is offered.
+ If word-pairs are chosen completely at random, and the number of sampled
+ pairs is much smaller than the total possible pairs, then one obtains a
+ Gaussian distribution.
+ Such a distribution is centered on a small but positive MI, due to sample-size
+ effects.
+ For larger samples, the mean tends to zero.
+ Thus, perhaps the left-hand-side of this figure is just a Gaussian.
+ An eyeballed, imprecise fit is shown.
+\end_layout
+
+\begin_layout Standard
+Taking this to be 
+\begin_inset Quotes eld
+\end_inset
+
+common-mode noise
+\begin_inset Quotes erd
+\end_inset
+
+, and subtracting it leaves an excess of word pairs with positive MI, having
+ a peak near 
+\begin_inset Formula $MI\sim4$
+\end_inset
+
+.
+ The straight-line slope on the right suggests that the excess can be described
+ by a log-normal distribution.
+ Again, an eye-balled, imprecise fit is shown.
+ These two, summed together, model the observed distribution almost perfectly.
+ Perhaps a formal expression for the common-mode noise is easily derived,
+ given a fixed vocabulary size and number of samples.
+ Theories of why the remainder would be a log-normal distribution are unknown
+ to the author.
+\end_layout
+
+\begin_layout Standard
+Pairs with the highest MI are observed very infrequently.
+ The highest observable MI value is directly related to the sample size:
+ it is a bit below the log of the number of observations.
+ Thus, the sharp drop on the right side is purely a sample-size effect.
+ Trimming does not appreciably change the shape of this distribution, other
+ than to eliminate the very highest MI values.
+\end_layout
+
+\begin_layout Standard
+This distribution is not language-specific; a nearly identical distribution
+ is seen for Chinese Mandarin Hanzi pairs.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset Quotes eld
+\end_inset
+
+Word-Pair Distributions
+\begin_inset Quotes erd
+\end_inset
+
+, page 18.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+MST Parsing
+\end_layout
+
+\begin_layout Standard
+Armed with word-pair data, one can proceed to perform Maximum Spanning Tree
+ (MST) parsing, as described by Yuret.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ One considers all possible trees connecting all of the words in a sentence,
+ and, out of all of these trees, the one with the greatest sum-total MI
+ of the edges is selected.
+ A number of different algorithms for finding this tree exist; they all
+ give reasonable results, and do not appear to affect overall results.
+ A variation is the Maximum Planar Graph (MPG), which takes the above tree,
+ and adds edges for high-MI pairs, as long as edges don't cross and the
+ MI is above a threshold.
+ Experience with Link Grammar (LG) suggests that MPG parses offer a significant
+ advantage over trees.
+ In LG, the necessity for grammatical agreement between nearby words introduces
+ a stringency and rigidness to the resulting parses, resulting in a greater
+ rejection of bad parses.
+ This result should carry over to the present case, and should help constrain
+ the learned grammar.
+\end_layout
+
+\begin_layout Standard
+Given an MST or MPG parse, each edge is cut in half, and the half-edge is
+ labeled with the word it used to connect to.
+ This results in a connector sequence for each word, some connectors connecting
+ to the left, some to the right.
+ Following the LG convention, these connector sequences are called disjuncts
+ (for short), as they are disjoined when considering an LG parse.
+ Denoting the word as 
+\begin_inset Formula $w$
+\end_inset
+
+ and the disjunct as 
+\begin_inset Formula $d$
+\end_inset
+
+, this results in word-disjunct pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+.
+ Parsing a large corpus this way, the counts are accumulated in the database,
+ to give a count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+.
+ In the current codebase, the counting is done without weighting; one could
+ consider also counting with weighting, giving higher weight to those disjuncts
+ that seem confident.
+ Anyway, given the counts 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+, one can again play the matrix game, and examine marginal and conditional
+ probabilities, and the word-disjunct MI.
+\end_layout
+
+\begin_layout Standard
+The first thing one notices is that there are vastly more disjuncts than
+ there are words: two orders of magnitude more! Next, one notices that the
+ vast majority of disjuncts are observed only once.
+ This raises the question: what is signal and what is noise? This can be
+ explored through trimming, by removing words, disjuncts and word-disjunct
+ pairs whenever their observation counts fail to pass a minimal threshold.
+\end_layout
+
+\begin_layout Standard
+Results are summarized in the table below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The raw data is in Diary Part Two page 58.
+\end_layout
+
+\end_inset
+
+ The column labels indicate the trimming thresholds; in the rightmost column,
+ all words with an observation count of less than 160 were removed; all
+ disjuncts with an observation count of less than 32, and all word-disjunct
+ pairs with a count of less than 20.
+ After this initial trimming, an additional consistency trim is performed,
+ to guarantee that all remaining words can connect to some connector in
+ some disjunct, and 
+\emph on
+vice versa
+\emph default
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Trim cuts
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+full set
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20-4-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+40-8-5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+80-16-10
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+160-32-20
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{words}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.526
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.395
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12.405
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.548
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.720
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{disjuncts}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+24.615
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.313
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.065
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.905
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+14.737
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.059
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.705
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+16.517
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+15.301
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.903
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.764
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.937
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+10.156
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Rarity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.205
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.970
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.790
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.572
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Total Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.326
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9.6489
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+6.6372
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.5924
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Left Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Right Entropy
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notable in this data is that even modest trimming removes the vast majority
+ of words and disjuncts in the dataset.
+ The total entropy is strongly dependent on the trim; the sparsity and rarity
+ a good bit less so.
+ It will later become apparent that heavy trimming is perhaps not a good
+ idea: there is a considerable amount of information held in the infrequently-ob
+served disjuncts.
+ Characterizing this precisely, understanding what it means remains an ongoing
+ task.
+\end_layout
+
+\begin_layout Standard
+TODO:
+\end_layout
+
+\begin_layout Itemize
+Graph of (w,d) MI distribution
+\end_layout
+
+\begin_layout Section*
+Grammatically Similar Words
+\end_layout
+
+\begin_layout Standard
+The machinery above brings us to the first interesting grammatical application:
+ determining what words are grammatically similar.
+ Each row in the above matrix is a vector; it corresponds to a word with
+ a collection of disjuncts associated with it.
+ Each disjunct is a context for that word: it is very much like a skip-gram,
+ familiar from corpus linguistics.
+ Unlike conventional skip-grams, it is determined by MST/MPG parsing, rather
+ than simple observation frequency.
+ This should result in much higher quality data, although this hasn't been
+ directly demonstrated, yet.
+ The interpretation is also different than a conventional skip-gram: the
+ context of the word is re-interpreted as jigsaw connectors; and connectors
+ must connect to form a valid parse of a sentence.
+ This is very unlike conventional neural net approaches, where there is
+ no explicit appearance of any grammar, and the application is limited to
+ predicting the next words in a sentence.
+\end_layout
+
+\begin_layout Standard
+How should similarity be compared? The workhorse of conventional neural
+ net approaches is the cosine distance.
+ Experimentally, this appears to be the worst-possible way of determining
+ similarity.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Two, pages 55-74.
+\end_layout
+
+\end_inset
+
+ Other possibilities include the Jaccard distance, and several weighted
+ variants of the Jaccard distance.
+ One of these has been shown to be optimal, in that it maximizes all possible
+ similarities.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Moulton2018"
+literal "false"
+
+\end_inset
+
+ All of these do quite well.
+ In keeping with the information-theoretic theme, using the mutual information
+ between two vectors seems quite appropriate.
+ This needs to be defined afresh, as it is not simply a restatement of that
+ given above.
+ Let the joint probability 
+\begin_inset Formula $p\left(w,d\right)$
+\end_inset
+
+ of a word-disjunct pair 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ be as before: 
+\begin_inset Formula $p\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
+\end_inset
+
+.
+ Define a vector inner product of two words 
+\begin_inset Formula $w,v$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+i\left(w,v\right)=\sum_{d}p\left(w,d\right)p\left(v,d\right)
+\]
+
+\end_inset
+
+The corresponding MI is then 
+\begin_inset Formula 
+\[
+MI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)i\left(*,*\right)}{i\left(w,*\right)i\left(v,*\right)}
+\]
+
+\end_inset
+
+Note that this MI is symmetric: 
+\begin_inset Formula $MI\left(w,v\right)=MI\left(v,w\right)$
+\end_inset
+
+, which follows from the symmetry of the inner product.
+ 
+\end_layout
+
+\begin_layout Standard
+How well does this work? Fantastically well; creating a list of the top-100
+ most similar words, as ranked by MI, provides excellent results, excellent
+ in the sense that just looking at the list really are either synonyms,
+ or are obviously grammatically similar.
+ But then a problem becomes evident: all of the high-MI word pairs involve
+ rare, infrequent words.
+ If one is to build a syntactical lexis, one really wants to begin by looking
+ at common, frequent words.
+ A weighting that brings frequent words to the forefront is desirable.
+\end_layout
+
+\begin_layout Standard
+Such a weighting is given by the 
+\begin_inset Quotes eld
+\end_inset
+
+variation of information
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The variation of information is given by 
+\begin_inset Formula 
+\[
+VI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)}{\sqrt{i\left(w,*\right)i\left(v,*\right)}}
+\]
+
+\end_inset
+
+There are also other possibilities, which look even more promising; the
+ above, however, is the cheapest and easiest to compute.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Five.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The graph below shows the distribution of MI similarities for the top-ranked
+ (most frequent) 1200 words.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Three, page 14; see also Diary Part Five.
+\end_layout
+
+\end_inset
+
+ In principle, there are 
+\begin_inset Formula $N\left(N+1\right)/2=720600$
+\end_inset
+
+ such pairs.
+ In practice, 386380 pairs are observed; the remaining pairs have no overlap!
+ (and thus a 
+\begin_inset Formula $-\infty$
+\end_inset
+
+ for the MI.)
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../en-sims-p3/mi-dist.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The curve marked G is a Gaussian, with the indicated mean and standard deviation.
+ The graph for the VI is nearly identical, having the same deviation, but
+ with the mean shifted to 1.5.
+\end_layout
+
+\begin_layout Section*
+Clustering
+\end_layout
+
+\begin_layout Standard
+How well does this work? Some of the top-most similar groups of words are
+ shown in the table below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Five.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features islongtable="true" headTopDL="true" headBottomDL="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Top-ranked Clusters
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
++ — “ ” _
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+? .
+ !
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+must would
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, ;
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+He It I There
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+he she
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+was is
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of in to from
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+are were
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+but and that as
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+has was is had could
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+might should will may
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+The clusters above are sets of words, all of which have a high pairwise-VI
+ amongst themselves.
+ Most of these are obvious.
+ The cluster of capitalized words is perhaps surprising: but these are all
+ sentence-starters: they are similar because they all start occur first,
+ and start similar sentences.
+\end_layout
+
+\begin_layout Standard
+One can form such clusters quite naively, by searching for cliques of similar
+ words.
+ However, to get adequate word-sense disambiguation, one must be more sophistica
+ted.
+ This is, because when one forms a cluster, one should include only this
+ disjuncts which all of the words share in common, and exclude those that
+ do not.
+ A canonical example of this is the word 
+\begin_inset Quotes eld
+\end_inset
+
+saw
+\begin_inset Quotes erd
+\end_inset
+
+, which can be the past tense of the verb 
+\begin_inset Quotes eld
+\end_inset
+
+to see
+\begin_inset Quotes erd
+\end_inset
+
+, and a cutting implement.
+ In forming a cluster with other viewing (or listening) verbs, one wishes
+ to accept only the disjuncts pertinent to such verbs.
+ Excluding the others leaves behind the disjuncts for the other verb senses,
+ in this case, those for cutting tools.
+\end_layout
+
+\begin_layout Standard
+An algorithm that appears to accomplish this can be understood as implementing
+ 
+\begin_inset Quotes eld
+\end_inset
+
+exclusive club – common-interests
+\begin_inset Quotes erd
+\end_inset
+
+ membership.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Four, pages 13–25.
+\end_layout
+
+\end_inset
+
+ Starting with the pair of words having currently the highest possible VI,
+ one searches for additional words with a high VI.
+ These form the candidate members to the club.
+ It is useful to have a reasonably large club, and so one can set a threshold,
+ admitting as candidates all those above the threshold.
+ As the threshold is lowered, the candidate list increases, until suddenly
+ it explodes.
+ The exclusive club is no longer exclusive, but is inviting everyone to
+ join.
+ The graph below shows the size of the candidate list, as the barrier to
+ entry is lowered.
+ The listed word pairs are the initial seed-words for forming a cluster.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p4-en-clique/in-migrp-size.eps
+	width 47col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../p4-en-clique/ingroup-middle.eps
+	width 47col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On the left, all of the seed-pairs are made of very frequent words.
+ Does this pattern continue to hold for infrequent words? It appears to,
+ as the graph on the right shows.
+\end_layout
+
+\begin_layout Standard
+The above only provides a list of candidate members.
+ Setting a thigh threshold keeps the candidate list small.
+ But which words, exactly, should be admitted to the club? This can be determine
+d by seeing what disjuncts the words share in common.
+ For a given candidate list, one simply counts the fraction of all disjuncts
+ that the words have in common (think of these as common interests in a
+ social club).
+ Next, consider ejecting one of the candidates; does the fraction of shared
+ disjuncts increase, or not? If it increases, then the ejected candidate
+ should be kept out of the club.
+ If it decreases, then that candidate should be kept.
+\end_layout
+
+\begin_layout Standard
+In forming the group, only those disjuncts that the group members have in
+ common are kept as part of the group; the other, non-shared disjuncts presumabl
+y belong to other word-senses.
+ Thus, this algorithm appears to solve the word-sense disambiguation problem.
+ 
+\end_layout
+
+\begin_layout Standard
+If one includes disjuncts shared by a majority, then this algorithm also
+ solves the generalization problem; that is, of moving from particulars
+ to generalities.
+ Some words may have been seen in some contexts; others in different, but
+ generally similar contexts.
+ In admitting these disjuncts into the common group, all of the group members
+ gain the ability to engage in these contexts, thus generalizing.
+\end_layout
+
+\begin_layout Standard
+The majority need not be a strict 50% majority; it can be a plurality, set
+ at any threshold.
+ This can be understood as the Jaccard index for the group.
+ 
+\end_layout
+
+\begin_layout Standard
+To summarize, high MI (or high VI) just indicates general similarity between
+ words.
+ The actual list of shared disjuncts is computed with a Jaccard index.
+ It is this set of shared disjuncts that determine the grammatical behavior
+ of the group.
+\end_layout
+
+\begin_layout Section*
+Conclusion
+\end_layout
+
+\begin_layout Standard
+A collection of research results were described.
+ Research is ongoing.
+ An immediate next step is to evaluate the quality of the resulting grammars.
+ The most important next step is to climb up the hierarchy: to repeat the
+ process, but now looking at multi-sentence, paragraph, and corpus-wide
+ correlations, with the intent of identifying entities and their properties.
+ Equally important, yet equally daunting, is to apply these techniques to
+ vision, sound or other kinds of information streams.
+ The primary limitation to further research is the development of the tools,
+ the software and infrastructure needed to carry out these experiments.
+ Based on the current results, the future looks extremely promising.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "/home/ubuntu/src/learn/learn-lang-diary/lang"
+options "tufte"
+
+\end_inset
+
+
 \end_layout
 
 \end_body
