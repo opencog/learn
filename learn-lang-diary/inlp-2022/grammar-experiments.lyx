@@ -2651,7 +2651,14 @@ might should will may
 
 The clusters above are sets of words, all of which have a high pairwise-VI
  amongst themselves.
- One can form such clusters quite naively, by searching for cliques of similar
+ Most of these are obvious.
+ The cluster of capitalized words is perhaps surprising: but these are all
+ sentence-starters: they are similar because they all start occur first,
+ and start similar sentences.
+\end_layout
+
+\begin_layout Standard
+One can form such clusters quite naively, by searching for cliques of similar
  words.
  However, to get adequate word-sense disambiguation, one must be more sophistica
 ted.
@@ -2692,6 +2699,15 @@ exclusive club – common-interests
 \end_inset
 
  membership.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Diary Part Four, pages 13–25.
+\end_layout
+
+\end_inset
+
  Starting with the pair of words having currently the highest possible VI,
  one searches for additional words with a high VI.
  These form the candidate members to the club.
@@ -2701,11 +2717,88 @@ exclusive club – common-interests
  it explodes.
  The exclusive club is no longer exclusive, but is inviting everyone to
  join.
+ The graph below shows the size of the candidate list, as the barrier to
+ entry is lowered.
+ The listed word pairs are the initial seed-words for forming a cluster.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p4-en-clique/in-migrp-size.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+All of the seed-pairs above are made of very frequent words.
+ Does this pattern continue to hold for infrequent words? It appears to,
+ as the graph below shows.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p4-en-clique/ingroup-middle.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above only provides a list of candidate members.
+ Setting a thigh threshold keeps the candidate list small.
+ But which words, exactly, should be admitted to the club? This can be determine
+d by seeing what disjuncts the words share in common.
+ For a given candidate list, one simply counts the fraction of all disjuncts
+ that the words have in common (think of these as common interests in a
+ social club).
+ Next, consider ejecting one of the candidates; does the fraction of shared
+ disjuncts increase, or not? If it increases, then the ejected candidate
+ should be kept out of the club.
+ If it decreases, then that candidate should be kept.
+\end_layout
+
+\begin_layout Standard
+In forming the group, only those disjuncts that the group members have in
+ common are kept as part of the group; the other, non-shared disjuncts presumabl
+y belong to other word-senses.
+ Thus, this algorithm appears to solve the word-sense disambiguation problem.
  
 \end_layout
 
+\begin_layout Standard
+If one includes disjuncts shared by a majority, then this algorithm also
+ solves the generalization problem; that is, of moving from particulars
+ to generalities.
+ Some wrds may have been seen in some contexts; others in different, but
+ generally similar contexts.
+ In admitting these disjuncts into the common group, all of the group members
+ gain the ability to engage in these contexts, thus generalizing.
+\end_layout
+
+\begin_layout Standard
+The majority need not be a strict 50% majority; it can be a plurality, set
+ at any threshold.
+ This can be understood as the Jaccard index for the group.
+ 
+\end_layout
+
+\begin_layout Standard
+To summarize, high MI (or high VI) just indicates general similarity btween
+ words.
+ The actual list of shared disjuncts is computed with a Jaccard index.
+ It is this set of shared disjuncts that dtermine the grammatical behavior
+ of the group.
+\end_layout
+
 \begin_layout Section*
-The End
+Conclusion
 \end_layout
 
 \begin_layout Standard
