@@ -22,9 +22,9 @@
 
 (define (weighted-density NBINS LO HI WEIFN FILENAM)
 "
-  density LLOBJ - create histogram of density of states.
+  density NBINS LO HI WEIFN FILENAM - create histogram of density of states.
 
-  Example:
+  Example: Density of states just counts 1.0 for each pair.
   (weighted-density 200 7 30 (lambda (PAIR) 1.0) \"/tmp/density.dat\")
 "
 	; 'pair-logli PAIR   -- return -log_2 P(x,y)
@@ -59,5 +59,45 @@
 ; Print density of states, uniform weighting.
 (define (pcnt ITEM) 1)
 (weighted-density 200 7 30 pcnt "/tmp/density.dat")
+
+; ----
+; Left and right marginal probabilites
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-freq LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-leftp.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'right-element PAIR))
+	(freq-obj 'left-wild-freq LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-rightp.dat")
+
+; ----
+; Weights that are other marginals
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-logli LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-logli.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-fentropy LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-fent.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-fmi LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-fmi.dat")
+
+; ----
+; Weights that are pair MI's
+; Well, don't bother with this first one, it's just
+; the fmi times the energy.
+(define (pcnt PAIR) (freq-obj 'pair-mi PAIR))
+(weighted-density 200 7 30 pcnt "/tmp/density-mi.dat")
+
+(define (pcnt PAIR) (freq-obj 'pair-fmi PAIR))
+(weighted-density 200 7 30 pcnt "/tmp/density-fmi.dat")
+
 ;
 ; ----------------------------------------------------------------------
