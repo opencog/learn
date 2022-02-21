@@ -66,33 +66,6 @@ unset y2tics
 #################################################
 #
 set term png
-set out 'degree-w-fine-raw.png'
-# set term postscript eps enhanced color 20
-# set out 'degree-w-fine-raw.eps'
-set key right top
-set title "Weighted Observation Count of Vertex Degrees"
-set xlabel "Degree of Word"
-set ylabel "Weighted Count of Words"
-set logscale x
-set logscale y
-set format x "10^{%L}"
-set format y "10^{%L}"
-set xrange [1:]
-unset yrange
-set yrange [1e4:1e6]
-
-gam=1.6
-b = 5e3
-z(x) = (b/x)**gam
-
-norm = 1.0
-
-plot "degree-w-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
-#     "degree-w-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
-
-#################################################
-#
-set term png
 set out 'degree-m-fine-raw.png'
 # set term postscript eps enhanced color 20
 # set out 'degree-m-fine-raw.eps'
@@ -116,6 +89,50 @@ norm = 1.0
 
 plot "degree-m-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
      "degree-m-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
+set out 'degree-w-fine-raw.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-w-fine-raw.eps'
+set key right top
+set title "Count-Weighted Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "Weighted Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1e4:1e6]
+
+norm = 1.0
+
+plot "degree-w-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
+
+#################################################
+#
+set term png
+#set out 'degree-lp-fine.png'
+set term postscript eps enhanced color 20
+set out 'degree-lp-fine.eps'
+set key right top
+set title "Left-Probability-Weighted Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "Probability-Weighted Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1e-5:1e-3]
+
+norm = 1.0
+
+plot "degree-lp-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
 
 #################################################
 #

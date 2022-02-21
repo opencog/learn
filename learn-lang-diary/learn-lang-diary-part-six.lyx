@@ -1546,7 +1546,7 @@ unweighted i.e.
 \end_layout
 
 \begin_layout Itemize
-weighted, counting p for each connection (the marginal)
+weighted, counting p for each connection (the marginal) DONE-ish
 \end_layout
 
 \begin_layout Itemize
@@ -1796,15 +1796,88 @@ There is a distinct oscillatory behavior at the center-left.
  at 24, and later peaks are perhaps at multiples of 24.
 \end_layout
 
+\begin_layout Subsection*
+Other weighting schemes
+\end_layout
+
 \begin_layout Standard
-The next graph is kind-of meaningless junk, but worth taking a look at anyway,
- just so that we can say we covered all the bases.
+The following sequence of graphs use weighting schemes that are perhaps
+ difficult to understand, but seem worth exploring.
+ Thier physical interpretation is challenging and the significance is unclear.
+ Do it anyway, just to say we covered all the bases.
+\end_layout
+
+\begin_layout Standard
+In all of these, the horizontal axis shows the edge degree of the word,
+ without multiplicity, so, the number of unique word-pairs that a word participa
+tes in.
+ The y-axis, however, uses weighted counting, with different weights.
+ That is, if a word has an edge degree of 42, then instead of counting it
+ exactly once, it is counted with a weight (mass) 
+\begin_inset Formula $m\ne1$
+\end_inset
+
+.
+ Graphs are shown for 
+\end_layout
+
+\begin_layout Itemize
+Mass 
+\begin_inset Formula $m=p\left(w,*\right)$
+\end_inset
+
+ the right marginal probability for word 
+\begin_inset Formula $w$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+Mass 
+\begin_inset Formula $m=p\left(*,w\right)$
+\end_inset
+
+ the left probability for word 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Mass 
+\begin_inset Formula $m=\log_{2}p\left(w,*\right)$
+\end_inset
+
+ the right marginal entropy for word 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Mass 
+\begin_inset Formula $m=MI\left(w,*\right)$
+\end_inset
+
+ the right marginal MI for word 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Weighted by Left Marginal Probability
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p6-density/degree-w-fine-raw.eps
+	filename p6-density/degree-lp-fine.eps
 	width 60col%
 
 \end_inset
@@ -1813,20 +1886,18 @@ The next graph is kind-of meaningless junk, but worth taking a look at anyway,
 \end_layout
 
 \begin_layout Standard
-Here, the horizontal axis is the degree of the word (without multiplicity)
- but the vertical axis totals the marginal count for that word.
+The vertical axis totals the left marginal probability for that word.
  That is, instead of adding 1 for each observed edge (the support), it adds
- N (the count).
+ 
+\begin_inset Formula $p\left(w,*\right)$
+\end_inset
+
+ (the left-marginal probability).
  So, for example, consider a vertex of degree 5.
  There might be 10K such vertexes in this dataset.
- However, each such vertex might be observed 30 or 50 times, and so we see
- 300K or 500K on the y-axis here.
- It's as if each word-pair was distinct, except its not, because that would
- have changed the degree.
- This graph is hard to interpret, and its hard to see what it's physical
- significance is.
- But ..
- whatever.
+ However, each such vertex might be observed 30 or 50 times, and so (for
+ left-marginal counts) we would see 300K or 500K on the y-axis here.
+ 
 \end_layout
 
 \begin_layout Subsection*
