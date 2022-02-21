@@ -1877,7 +1877,7 @@ Weighted by Left Marginal Probability
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p6-density/degree-lp-fine.eps
+	filename p6-density/degree-p-fine.eps
 	width 60col%
 
 \end_inset
@@ -1886,13 +1886,17 @@ Weighted by Left Marginal Probability
 \end_layout
 
 \begin_layout Standard
-The vertical axis totals the left marginal probability for that word.
+The vertical axis totals the marginal probability for that word.
  That is, instead of adding 1 for each observed edge (the support), it adds
  
 \begin_inset Formula $p\left(w,*\right)$
 \end_inset
 
- (the left-marginal probability).
+, the left-marginal probability, or 
+\begin_inset Formula $p\left(*,w\right)$
+\end_inset
+
+, the right marginal probability.
  So, for example, consider a vertex of degree 5.
  There might be 10K such vertexes in this dataset.
  However, each such vertex might be observed 30 or 50 times, and so (for

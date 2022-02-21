@@ -115,11 +115,11 @@ plot "degree-w-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
 #################################################
 #
 set term png
-#set out 'degree-lp-fine.png'
+# set out 'degree-p-fine.png'
 set term postscript eps enhanced color 20
-set out 'degree-lp-fine.eps'
+set out 'degree-p-fine.eps'
 set key right top
-set title "Left-Probability-Weighted Observation Count of Vertex Degrees"
+set title "Probability-Weighted Observation Count of Vertex Degrees"
 set xlabel "Degree of Word"
 set ylabel "Probability-Weighted Count of Words"
 set logscale x
@@ -132,7 +132,8 @@ set yrange [1e-5:1e-3]
 
 norm = 1.0
 
-plot "degree-lp-fine.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }"
+plot "degree-lp-fine.dat" using 2:(norm * $3) with lines lw 2 title "Left", \
+     "degree-rp-fine.dat" using 2:(norm * $3) with lines lw 2 title "Right"
 
 #################################################
 #
