@@ -47,12 +47,30 @@
 (define (pcnt WRD) (sup-obj 'right-count WRD))
 (degree-plot star-obj 5000 0 5000 "/tmp/degree-w-fine.dat" pval pcnt)
 
+
+(define lwords (star-obj 'left-basis))
+(define (wdegree-plot NBINS LO HI FILE VALFN WEIFN)
+
+	(define (catwei WRD) (catch #t
+		(lambda () (WEIFN WRD))
+		(lambda (key . args)  0.0)))
+
+	(define bins (bin-count lwords NBINS VALFN catwei LO HI))
+
+	(define oport (open-file FILE "w"))
+	(print-bincounts-tsv bins oport)
+	(close oport)
+)
+
 ; Same as above, but rescaled
 (define freq-obj (add-pair-freq-api star-obj))
 (define (pcnt WRD) (freq-obj 'right-wild-freq WRD))
-(define (pcnt WRD) (catch #t
-	(lambda () (freq-obj 'right-wild-freq WRD))
-	(lambda (key . args)  0.0)))
-(degree-plot star-obj 5000 0 5000 "/tmp/degree-lp-fine.dat" pval pcnt)
+(wdegree-plot 5000 0 5000 "/tmp/degree-lp-fine.dat" pval pcnt)
 
+(define (pcnt WRD) (freq-obj 'left-wild-freq WRD))
+(wdegree-plot 5000 0 5000 "/tmp/degree-rp-fine.dat" pval pcnt)
 
+(define (pcnt WRD) (freq-obj 'right-wild-logli WRD))
+(wdegree-plot 5000 0 5000 "/tmp/degree-rlogp-fine.dat" pval pcnt)
+
+; ---------
