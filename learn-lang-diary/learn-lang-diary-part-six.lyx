@@ -1839,7 +1839,7 @@ Mass
 \begin_inset Formula $m=p\left(*,w\right)$
 \end_inset
 
- the left probability for word 
+ the left marginal probability for word 
 \begin_inset Formula $w$
 \end_inset
 
@@ -1849,6 +1849,18 @@ Mass
 \begin_layout Itemize
 Mass 
 \begin_inset Formula $m=\log_{2}p\left(w,*\right)$
+\end_inset
+
+ the right marginal log-probability for word 
+\begin_inset Formula $w$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Mass 
+\begin_inset Formula $m=\sum_{v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
 \end_inset
 
  the right marginal entropy for word 
@@ -1871,7 +1883,7 @@ Mass
 \end_layout
 
 \begin_layout Subsubsection*
-Weighted by Left Marginal Probability
+Weighted by Marginal Probability
 \end_layout
 
 \begin_layout Standard
@@ -1902,6 +1914,30 @@ The vertical axis totals the marginal probability for that word.
  However, each such vertex might be observed 30 or 50 times, and so (for
  left-marginal counts) we would see 300K or 500K on the y-axis here.
  
+\end_layout
+
+\begin_layout Subsubsection*
+Weighted by Marginal Log Probability
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-rlogp-fine.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The vertical axis totals the log marginal probability for that word.
+ The weight is 
+\begin_inset Formula $-\log_{2}p\left(w,*\right)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection*
