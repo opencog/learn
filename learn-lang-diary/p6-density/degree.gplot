@@ -165,9 +165,9 @@ plot "degree-rlogp-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
 #################################################
 #
 set term png
-# set out 'degree-rfent-fine.png'
-set term postscript eps enhanced color 20
-set out 'degree-rfent-fine.eps'
+set out 'degree-rfent-fine.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-rfent-fine.eps'
 set key right top
 set title "Entropy-Weighted Observation Count of Vertex Degrees"
 set xlabel "Degree of Word"
@@ -188,6 +188,36 @@ z(x) = (b/x)**gam
 
 plot "degree-rfent-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
      "degree-rfent-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
+set out 'degree-rfmi-fine.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-rfmi-fine.eps'
+set key right top
+set title "MI-Weighted Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "MI-Weighted Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1e0:1e6]
+
+norm = 1.0
+
+gam=1.6
+b = 1e4
+z(x) = (b/x)**gam
+zmi(x) = (5e3/x)**1.8
+zmi(x) = (4e3/x)**1.9
+
+plot "degree-rfmi-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
+     "degree-rfmi-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}", \
+     "degree-rfmi-fine.dat" using 2:(zmi($2)) with lines lw 2 title "degree^{-1.9}"
 
 #################################################
 #

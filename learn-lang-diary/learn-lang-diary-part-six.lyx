@@ -1535,29 +1535,6 @@ OK, apparently we have to bit the bullet.
 Plot density distributions for the marginals, too.
 \end_layout
 
-\begin_layout Itemize
-Plot the vertex degree vs frequency: 
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-unweighted i.e.
- counting 1 for each connection DONE
-\end_layout
-
-\begin_layout Itemize
-weighted, counting p for each connection (the marginal) DONE-ish
-\end_layout
-
-\begin_layout Itemize
-weighted, counting log p for each connection.
-\end_layout
-
-\begin_layout Itemize
-weighted, counting MI for each connection.
-\end_layout
-
-\end_deeper
 \begin_layout Section*
 Word-Pair Graph Properties
 \end_layout
@@ -1917,7 +1894,8 @@ The vertical axis totals the marginal probability for that word.
 \end_layout
 
 \begin_layout Subsubsection*
-Weighted by Marginal Log Probability
+Weighted by Marginal Log Probability is nearly identical to the above; it
+ is shifted ever so slightly upwards.
 \end_layout
 
 \begin_layout Standard
@@ -1967,6 +1945,35 @@ The vertical axis totals the marginal fractional entropy for that word.
 
 Clearly, this graph is nearly identical to the above; it is shifted ever
  so slightly upwards.
+\end_layout
+
+\begin_layout Subsubsection*
+Weighted by Marginal MI
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-rfmi-fine.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The vertical axis totals the marginal fractional MI for that word.
+ The weight is 
+\begin_inset Formula 
+\[
+\frac{1}{p\left(w,*\right)}\sum_{v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+This graph has the same general shape as the earlier ones, but has a distinctly
+ different slope.
 \end_layout
 
 \begin_layout Subsection*
@@ -2045,7 +2052,7 @@ common-mode noise
  Again, an eye-balled, imprecise fit is shown.
  These two, summed together, model the observed distribution almost perfectly.
  Perhaps a formal expression for the common-mode noise is easily derived,
- given a fixed vocabular size and number of samples.
+ given a fixed vocabulary size and number of samples.
  XXX TODO.
  We really should do this.
  I'm certain it will provide a great fit.
