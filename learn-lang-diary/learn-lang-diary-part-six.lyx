@@ -1940,6 +1940,35 @@ The vertical axis totals the log marginal probability for that word.
 .
 \end_layout
 
+\begin_layout Subsubsection*
+Weighted by Marginal Entropy
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/degree-rfent-fine.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The vertical axis totals the marginal fractional entropy for that word.
+ The weight is 
+\begin_inset Formula 
+\[
+-\frac{1}{p\left(w,*\right)}\sum_{v}p\left(w,v\right)\log_{2}p\left(w,v\right)
+\]
+
+\end_inset
+
+Clearly, this graph is nearly identical to the above; it is shifted ever
+ so slightly upwards.
+\end_layout
+
 \begin_layout Subsection*
 MI Distribution
 \end_layout

@@ -138,9 +138,9 @@ plot "degree-lp-fine.dat" using 2:(norm * $3) with lines lw 2 title "Left", \
 #################################################
 #
 set term png
-# set out 'degree-rlogp-fine.png'
-set term postscript eps enhanced color 20
-set out 'degree-rlogp-fine.eps'
+set out 'degree-rlogp-fine.png'
+# set term postscript eps enhanced color 20
+# set out 'degree-rlogp-fine.eps'
 set key right top
 set title "Log-Probability-Weighted Observation Count of Vertex Degrees"
 set xlabel "Degree of Word"
@@ -161,6 +161,33 @@ z(x) = (b/x)**gam
 
 plot "degree-rlogp-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
      "degree-rlogp-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
+
+#################################################
+#
+set term png
+# set out 'degree-rfent-fine.png'
+set term postscript eps enhanced color 20
+set out 'degree-rfent-fine.eps'
+set key right top
+set title "Entropy-Weighted Observation Count of Vertex Degrees"
+set xlabel "Degree of Word"
+set ylabel "Entropy-Weighted Count of Words"
+set logscale x
+set logscale y
+set format x "10^{%L}"
+set format y "10^{%L}"
+set xrange [1:]
+unset yrange
+set yrange [1e1:1e6]
+
+norm = 1.0
+
+gam=1.6
+b = 2.2e4
+z(x) = (b/x)**gam
+
+plot "degree-rfent-fine.dat" using 2:(norm * $3) with lines lw 2 title "data", \
+     "degree-rfent-fine.dat" using 2:(z($2)) with lines lw 2 title "degree^{-1.6}"
 
 #################################################
 #
