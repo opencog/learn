@@ -58,18 +58,15 @@ set key right top
 set title "Ranked-MI Distribution of word pairs"
 set xlabel "Ranked-MI"
 set ylabel "Frequency"
-set xrange [:27]
+set xrange [-30:30]
 set logscale y
 set format y "10^{%L}"
-set yrange [4e-8:5e-2]
-
-g(x,m,s) = (1/sqrt(2*3.14159*s)) * exp(- (x-m)**2 / (2*s**2)) 
+set yrange [4e-8:2e-2]
 
 norm = 1.0 / 28184319 
 
-plot "pair-rmi.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
-     "pair-rmi.dat" using 2:(0.002*2**(-0.24*$2)) with lines lw 2 title "2^{-0.24 MI}"
-#     "pair-rmi.dat" using 2:(0.2*2**(2.0*$2)) with lines lw 2 title "4^{MI}"
+plot "pair-rmi.dat" using 2:(norm * $3) with lines lw 2 title "Ranked-MI data_{ }", \
+     "pair-rmi.dat" using 2:(0.0033*2**(-0.24*$2)) with lines lw 2 title "2^{-0.24 MI}", \
+     "pair-fmi.dat" using (1.5*$2-10):(norm * $3) with lines lw 2 title "MI_{shifted}"
 
-#     "pair-rmi.dat" using 2:(0.04*g($2,0.4,2)) with lines lw 2 title "Gauss(0.4,2)", \
 #################################################
