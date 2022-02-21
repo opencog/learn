@@ -1568,16 +1568,34 @@ Given an MST or MPG parse, each edge is cut in half, and the half-edge is
 The first thing one notices is that there are vastly more disjuncts than
  there are words: two orders of magnitude more! Next, one notices that the
  vast majority of disjuncts are observed only once.
- This raises the question: what is signal and what is noise?
+ This raises the question: what is signal and what is noise? This can be
+ explored through trimming, by removing words, disjuncts and word-disjunct-pairs
+ whenever thier observatin counts fail to pass a minimal threshold.
 \end_layout
 
 \begin_layout Standard
-As before, there is a question of what is signal, and what is noise.
+Results are summarized in the table below.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The raw data is in Diary Part Two page 58.
+\end_layout
+
+\end_inset
+
+ The column labels indicate the trimming thresholds; in the rightmost column,
+ all words with an observation count of less than 160 were removed; all
+ disjuncts with an observation count of less than 32, and all word-disjunct
+ pairs with a count of less than 20.
+ After this initial trimming, an additional consistency trim is performed,
+ to guarantee that all remaining words can connect to some connector in
+ some disjunct, and 
+\emph on
+vice versa
+\emph default
+.
  
-\end_layout
-
-\begin_layout Standard
-This is summarized in the table below.
 \end_layout
 
 \begin_layout Standard
@@ -1596,7 +1614,7 @@ This is summarized in the table below.
 \begin_inset Text
 
 \begin_layout Plain Layout
-Corpus
+Trim cuts
 \end_layout
 
 \end_inset
@@ -1605,7 +1623,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-1
+full set
 \end_layout
 
 \end_inset
@@ -1614,7 +1632,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-2
+20-4-2
 \end_layout
 
 \end_inset
@@ -1623,7 +1641,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-3
+40-8-5
 \end_layout
 
 \end_inset
@@ -1632,7 +1650,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-4
+80-16-10
 \end_layout
 
 \end_inset
@@ -1641,7 +1659,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+160-32-20
 \end_layout
 
 \end_inset
@@ -2227,23 +2245,19 @@ MI
 \end_layout
 
 \begin_layout Standard
-In 
+Notable in this data is that even modest trimming removes the vast majority
+ of words and disjuncts in the dataset.
+ The total entropy is strongly dependent on the trim; the sparsity and rarity
+ a good bit less so.
+ 
 \end_layout
 
 \begin_layout Standard
-Outline:
+TODO:
 \end_layout
 
 \begin_layout Itemize
-Triming
-\end_layout
-
-\begin_layout Itemize
-Dataset summary Diary part 2 page 58 for trimmed
-\end_layout
-
-\begin_layout Itemize
-Graphs
+Graph of (w,d) MI distribution
 \end_layout
 
 \begin_layout Section*
