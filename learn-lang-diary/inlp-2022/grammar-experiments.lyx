@@ -165,7 +165,7 @@ grammatical structure
 \end_layout
 
 \begin_layout Standard
-The general theory of how this is to be done is sketched out in a companian
+The general theory of how this is to be done is sketched out in a companion
  article.
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -209,7 +209,7 @@ literal "false"
  Collections of such jigsaw pieces can be understood to be vectors: each
  word is endowed with a lexis of all of the syntactic contexts in which
  it was observed.
- But this is too fine-grained; one whishes to generalize from the particular
+ But this is too fine-grained; one wishes to generalize from the particular
  to the general.
  The vectors can be used both to discover words that have similar syntactic
  contexts (based on the similarity of the local environments) and also to
@@ -271,19 +271,19 @@ downwards
 \begin_inset Quotes eld
 \end_inset
 
-syntatactic
+syntactic
 \begin_inset Quotes erd
 \end_inset
 
- relationships between entities presumably encodes thier semantic properties.
+ relationships between entities presumably encodes their semantic properties.
  Such syntactic relations can also be extracted between different sense
  streams, say, between words and blueprints/diagrams, or words and photographs,
  or even perhaps big-data settings such as computer vulnerability databases,
  or financial news and stock prices.
- The author beleives the basic algorithm is generic, and can be ratcheted
+ The author believes the basic algorithm is generic, and can be ratcheted
  upwards, to arbitrarily high reaches.
  Whether this proves to be true cannot be known without actual experiments;
- the current limitation to carrying these out is the develpment of a sutiable
+ the current limitation to carrying these out is the development of a suitable
  software infrastructure.
 \end_layout
 
@@ -295,7 +295,7 @@ The remainder of this paper focuses on the narrow tasks defined above, in
  What are the statistical properties of this graph? MST parsing and the
  creating of jigsaw pieces results in a matrix of word, connector-sequence
  pairs.
- What asre the statistical properties of this matrix? The similarity between
+ What are the statistical properties of this matrix? The similarity between
  words can be judged with assorted different measures; how do these behave,
  and how does clustering and word-sense disambiguation proceed, in practice?
 \end_layout
@@ -380,18 +380,18 @@ literal "false"
 
 \end_inset
 
- it allows arbitary collections of subgraphs to be used as the basis elements
+ it allows arbitrary collections of subgraphs to be used as the basis elements
  of a vector space.
  If one has two such vector spaces, then pairs of elements form a matrix
  of rows and columns.
- Given a matrix, it is then straight-forward to compute marginal probabilites,
+ Given a matrix, it is then straight-forward to compute marginal probabilities,
  conditional probabilities, and other typical statistical quantities.
  This is, of course, quite ordinary: what is new here is that the AtomSpace
- allows extremely sparse matricies to be represented: say, 100K 
+ allows extremely sparse matrices to be represented: say, 100K 
 \begin_inset Formula $\times$
 \end_inset
 
- 100K entires, of which all but a few million are zero.
+ 100K entries, of which all but a few million are zero.
  Conventional mathematics and statistics packages do not provide such tools
  for sparse data.
  The other difference between the AtomSpace and conventional statistical
@@ -408,9 +408,9 @@ During the pair-counting stage, the rows and columns of the matrix are words,
  the left and right words, respectively, of an ordered word pair; the matrix
  is approximately square.
  During the word-sense disambiguation and syntactic clustering stage, the
- rows are individal words, and the columns are the connector sequences witnesed
- for those words.
- The conector sequence is thus an example of a non-trivial subgraph.
+ rows are individual words, and the columns are the connector sequences
+ witnessed for those words.
+ The connector sequence is thus an example of a non-trivial subgraph.
  The matrix is rectangular; there is typically an order of magnitude more
  connector sequences than there are words: this is simply because each connector
  sequence is a context for a word: it resembles a skip-gram in many ways.
@@ -432,7 +432,7 @@ Pair Counting
 Obtaining a suitable corpus for exploring the English language is not as
  simple as it seems: it is not enough to train on a dump of Wikipedia articles.
  This is because Wikipedia is descriptive, and has a paucity of verbs, and
- a surfiet of proper nouns and techical terms.
+ a surfeit of proper nouns and technical terms.
  Verbs such as run, jump, catch: the verbs of everyday outdoor adventure
  are missing.
  This can be remedied by working with a corpus of young adult adventure
@@ -460,12 +460,12 @@ The size of the vocabulary increases as the size of the corpus increases.
 
 \begin_layout Standard
 Word-pair counting can be done in several different ways: one is to count
- each word-pair occuring within a window of a fixed width, say, of width
+ each word-pair occurring within a window of a fixed width, say, of width
  six.
- Another possibility is to count the word-pairs occuring in a completely
+ Another possibility is to count the word-pairs occurring in a completely
  random planar parse of a sentence.
- There does not appear to be much difference between these two syles of
- ounting, although the second style seems more appealing on theoretical
+ There does not appear to be much difference between these two styles of
+ counting, although the second style seems more appealing on theoretical
  grounds.
 \end_layout
 
@@ -477,7 +477,7 @@ A good way to characterize the number of observed word-pairs is by means
 
  of the fraction of observed word-pairs vs.
  all possible word-pairs.
- Hewing to an information-theoretic foundation, other characterisitcs include
+ Hewing to an information-theoretic foundation, other characteristics include
  the left and right entropies, and the total mutual information.
  This is somewhat more interesting than the more conventional statements
  about the average degree of a vertex in a graph, or the average 
@@ -1170,11 +1170,11 @@ In the table above,
 \begin_inset Formula $N_{R}$
 \end_inset
 
- are the height and width of the matrix (the number of unique words occuring
+ are the height and width of the matrix (the number of unique words occurring
  on the left and right of observed word-pairs).
  They are almost the same, but not quite: for example, the period never
- occurs at the start of a sentence; capitalized words rarely appear ath
- the end.
+ occurs at the start of a sentence; capitalized words rarely appear at the
+ end.
  The sizes are given as logarithms, as this makes comparison to entropies
  more immediate.
  The total number of unique pairs is 
@@ -1229,7 +1229,7 @@ with the sum ranging over all word-pairs
 \begin_inset Formula $N\left(w,v\right)$
 \end_inset
 
- is the oservation count of a pair, and 
+ is the observation count of a pair, and 
 \begin_inset Formula $N\left(*,*\right)$
 \end_inset
 
@@ -1268,7 +1268,7 @@ t of the possible number of pairs.
  indicates the paucity of word-pairs.
  They convey some information, but not very much.
  On the other hand, the sparsity is quite high: of all possible word pairs
- that could have been observed, only miniscule fractions of a percent are
+ that could have been observed, only minuscule fractions of a percent are
  actually observed.
  Language is very highly structured.
  The goal of the learning project is to amplify the information content;
@@ -1295,7 +1295,7 @@ Word Pair Distributions
 
 \end_inset
 
- To perform this counting, each hanzi is taken to be a 
+ To perform this counting, each Hanzi is taken to be a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1305,7 +1305,7 @@ word
 
 .
  This is not technically correct, as Chinese words may consist of one, two,
- three or more hanzi.
+ three or more Hanzi.
  However, segmentation is a challenge, and so at this level, for pair-counting,
  issues of segmentation are ignored.
  Presumably, the discovery of Chinese words as set-phrases will occur later
@@ -1372,7 +1372,7 @@ junk
  The result is a dramatically smaller dataset.
  This is a good thing: it occupies less RAM and storage; later algorithmic
  processing runs faster.
- But does trimming damage information? Appearently not; trimming to remove
+ But does trimming damage information? Apparently not; trimming to remove
  more than half the words changes the sparsity not at all, lowers the entropy
  by five percent, and lowers the MI by about a percent.
  
@@ -1381,14 +1381,13 @@ junk
 \begin_layout Standard
 At the right-hand side of the graph, a risk to histogramming is exposed.
  These are words that appear in thousands of distinct pairs.
- Yet, for any given,degree-w-fine-raw.eps fixed degree, there are only a
- small handful of words having exactly that degree, and sometimes even zero
- words.
+ Yet, for any given, fixed degree, there are only a small handful of words
+ having exactly that degree, and sometimes even zero words.
  The higher the degree, the more likely that there are zero words having
  that degree.
- This also is a kind-of undersampling: when generating histograms of distributio
-ns, the lack of data in this range will also affect slopes and with it the
- conclusions about the nature of the dataset.
+ This also is a kind-of under-sampling: when generating histograms of distributi
+ons, the lack of data in this range will also affect slopes and with it
+ the conclusions about the nature of the dataset.
  Words with the very highest degree are punctuation: the period, comma and
  dash, and the determiner 
 \begin_inset Quotes eld
@@ -1459,7 +1458,7 @@ common-mode noise
  Again, an eye-balled, imprecise fit is shown.
  These two, summed together, model the observed distribution almost perfectly.
  Perhaps a formal expression for the common-mode noise is easily derived,
- given a fixed vocabular size and number of samples.
+ given a fixed vocabulary size and number of samples.
  Theories of why the remainder would be a log-normal distribution are unknown
  to the author.
 \end_layout
@@ -1469,7 +1468,7 @@ Pairs with the highest MI are observed very infrequently.
  The highest observable MI value is directly related to the sample size:
  it is a bit below the log of the number of observations.
  Thus, the sharp drop on the right side is purely a sample-size effect.
- Trimming does not appreciably change the sahpe of this distribution, other
+ Trimming does not appreciably change the shape of this distribution, other
  than to eliminate the very highest MI values.
 \end_layout
 
@@ -1529,7 +1528,7 @@ literal "false"
 
 \begin_layout Standard
 Given an MST or MPG parse, each edge is cut in half, and the half-edge is
- labelled with the word it used to connect to.
+ labeled with the word it used to connect to.
  This results in a connector sequence for each word, some connectors connecting
  to the left, some to the right.
  Following the LG convention, these connector sequences are called disjuncts
@@ -1569,8 +1568,8 @@ The first thing one notices is that there are vastly more disjuncts than
  there are words: two orders of magnitude more! Next, one notices that the
  vast majority of disjuncts are observed only once.
  This raises the question: what is signal and what is noise? This can be
- explored through trimming, by removing words, disjuncts and word-disjunct-pairs
- whenever thier observatin counts fail to pass a minimal threshold.
+ explored through trimming, by removing words, disjuncts and word-disjunct
+ pairs whenever their observation counts fail to pass a minimal threshold.
 \end_layout
 
 \begin_layout Standard
@@ -2252,8 +2251,8 @@ Notable in this data is that even modest trimming removes the vast majority
  It will later become apparent that heavy trimming is perhaps not a good
  idea: there is a considerable amount of information held in the infrequently-ob
 served disjuncts.
- Characaterizing this precisely, undersstanding what it means remains an
- ongoing task.
+ Characterizing this precisely, understanding what it means remains an ongoing
+ task.
 \end_layout
 
 \begin_layout Standard
@@ -2304,7 +2303,7 @@ See Diary Part Two, pages 55-74.
  Other possibilities include the Jaccard distance, and several weighted
  variants of the Jaccard distance.
  One of these has been shown to be optimal, in that it maximizes all possible
- similarites.
+ similarities.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Moulton2018"
@@ -2314,7 +2313,7 @@ literal "false"
 
  All of these do quite well.
  In keeping with the information-theoretic theme, using the mutual information
- betweeen two vectors seems quite appropriate.
+ between two vectors seems quite appropriate.
  This needs to be defined afresh, as it is not simply a restatement of that
  given above.
  Let the joint probability 
@@ -2388,8 +2387,8 @@ VI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)}{\sqrt{i\left(w,*\right)i\lef
 
 \end_inset
 
-There are also other possiblities, which look even more promising; the above,
- however, is the cheapest and easiest to compute.
+There are also other possibilities, which look even more promising; the
+ above, however, is the cheapest and easiest to compute.
 \begin_inset Foot
 status collapsed
 
@@ -2663,7 +2662,7 @@ One can form such clusters quite naively, by searching for cliques of similar
  However, to get adequate word-sense disambiguation, one must be more sophistica
 ted.
  This is, because when one forms a cluster, one should include only this
- disjuncts which all fo the words share in common, and exclude those that
+ disjuncts which all of the words share in common, and exclude those that
  do not.
  A canonical example of this is the word 
 \begin_inset Quotes eld
@@ -2776,7 +2775,7 @@ y belong to other word-senses.
 If one includes disjuncts shared by a majority, then this algorithm also
  solves the generalization problem; that is, of moving from particulars
  to generalities.
- Some wrds may have been seen in some contexts; others in different, but
+ Some words may have been seen in some contexts; others in different, but
  generally similar contexts.
  In admitting these disjuncts into the common group, all of the group members
  gain the ability to engage in these contexts, thus generalizing.
@@ -2790,10 +2789,10 @@ The majority need not be a strict 50% majority; it can be a plurality, set
 \end_layout
 
 \begin_layout Standard
-To summarize, high MI (or high VI) just indicates general similarity btween
+To summarize, high MI (or high VI) just indicates general similarity between
  words.
  The actual list of shared disjuncts is computed with a Jaccard index.
- It is this set of shared disjuncts that dtermine the grammatical behavior
+ It is this set of shared disjuncts that determine the grammatical behavior
  of the group.
 \end_layout
 
@@ -2807,8 +2806,8 @@ A collection of research results were described.
  An immediate next step is to evaluate the quality of the resulting grammars.
  The most important next step is to climb up the hierarchy: to repeat the
  process, but now looking at multi-sentence, paragraph, and corpus-wide
- correlations, with the intent of identifying entities and thier properties.
- Equally imporant, yet equally daunting, is to apply these techniques to
+ correlations, with the intent of identifying entities and their properties.
+ Equally important, yet equally daunting, is to apply these techniques to
  vision, sound or other kinds of information streams.
  The primary limitation to further research is the development of the tools,
  the software and infrastructure needed to carry out these experiments.
