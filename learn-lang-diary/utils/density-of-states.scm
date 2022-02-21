@@ -16,32 +16,21 @@
 ;
 ; ----------------------------------------------------------------------
 ;
-(define (density LLOBJ NBINS LO HI)
+; Get all pairs up front, avoid the CPU overhead.
+(define all-pairs (star-obj 'get-all-elts))
+(define freq-obj (add-pair-freq-api star-obj))
+
+(define (weighted-density NBINS LO HI WEIFN FILENAM)
 "
   density LLOBJ - create histogram of density of states.
 
   Example:
-  (density star-obj 200 0 30)
+  (weighted-density 200 7 30 (lambda (PAIR) 1.0) \"/tmp/density.dat\")
 "
-	; If frequencies are available, then uncomment below
-	;	(define fra (add-pair-freq-api star-obj))
 	; 'pair-logli PAIR   -- return -log_2 P(x,y)
-	; (define pval (lambda ITEM) (fra 'pair-logli ITEM))
+	(define (pval ITEM) (freq-obj 'pair-logli ITEM))
 
-	; Marginals are not avaialble.  Work with the raw count.
-	; Ugh.
-	(define all-pairs (LLOBJ 'get-all-elts))
-	(define tot-cnt
-		(fold (lambda (ITEM CNT) (+ CNT (LLOBJ 'get-count ITEM)))
-			0 all-pairs))
-	(format #t "Total pair count = ~A\n" tot-cnt)
-	(define ol2 (/ 1 (log 2)))
-	(define olt (* ol2 (log tot-cnt))) 
-
-	(define (pval ITEM) (- olt (* ol2 (log (LLOBJ 'get-count ITEM)))))
-	(define (pcnt ITEM) 1)
-
-	(define bins (bin-count all-pairs NBINS pval pcnt LO HI))
+	(define bins (bin-count all-pairs NBINS pval WEIFN LO HI))
 
 	; The actual bin counts are the second elt.
 	; The first elt is bin centers.
@@ -60,9 +49,15 @@
 		bin-total bwid)
 
 	; Dump to bogus file.
-	(define oport (open-file "/tmp/foo.dat" "w"))
+	(define oport (open-file FILENAM "w"))
 	(format oport "#\n# Total count = ~A bin-width = ~A\n"
 		bin-total bwid)
 	(print-bincounts-tsv bins oport)
 	(close oport)
 )
+
+; Print density of states, uniform weighting.
+(define (pcnt ITEM) 1)
+(weighted-density 200 7 30 pcnt "/tmp/density.dat")
+;
+; ----------------------------------------------------------------------
