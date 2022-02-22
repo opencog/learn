@@ -990,11 +990,82 @@ ion, sould appear at a constant rate, rather than at a Zipfian rate.
 \end_layout
 
 \begin_layout Subsection*
+Relative Density of States
+\end_layout
+
+\begin_layout Standard
+OK, so, due to under-sampling effects, there is a hump.
+ Lets look at the hump more closely.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/density-relative.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above shows 
+\begin_inset Formula $\rho\left(E\right)\times2^{E-26}$
+\end_inset
+
+ and an eyeballed Gaussian.
+ The relative factor of 
+\begin_inset Formula $2^{E-26}$
+\end_inset
+
+ removes the dominant slope.
+ It's 
+\begin_inset Formula $E-26$
+\end_inset
+
+ instead of 
+\begin_inset Formula $E-30$
+\end_inset
+
+ so that we can draw the Gaussian without any normalization.
+ That is, the Gaussian is just 
+\begin_inset Formula 
+\[
+G\left(\mu,\sigma\right)=\frac{1}{\sqrt{2\pi\sigma}}\exp-\frac{\left(E-\mu\right)^{2}}{2\sigma^{2}}
+\]
+
+\end_inset
+
+without any further normalization.
+ It's drawn for 
+\begin_inset Formula $\mu=18$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=6$
+\end_inset
+
+.
+ Ther is no theoretical rason to expect a Gaussian ere, and, in fact, it
+ cannot be right, since 
+\begin_inset Formula $E$
+\end_inset
+
+ is necessarily positive-definite.
+ But whatever, its an OK fit to a bulging, noisy graph.
+ What does it mean? I dunno.
+ It means that we need a theoretical framework for handling the under-counting
+ phenomenon above.
+ 
+\end_layout
+
+\begin_layout Subsection*
 Physical Interpretation
 \end_layout
 
 \begin_layout Standard
-Clearly, this graph suggests that the total energy
+Clearly, the density graph suggests that the total energy
 \begin_inset Formula 
 \[
 \int E\rho\left(E\right)dE
@@ -1155,7 +1226,7 @@ The only good news here is that it is only weakly divergent.
 \end_layout
 
 \begin_layout Standard
-Except this is wrong.
+Except the above conceptualization is wrong.
  Based on the revised results, taking into account the limited sample size
  (as discussed above, and further below) we have to conclude that in the
  limit of large sample size, that 
@@ -1268,7 +1339,7 @@ Dataset summary:
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="2">
+<lyxtabular version="3" rows="11" columns="2">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1343,6 +1414,33 @@ Dimensions
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset Formula $\log_{2}$
+\end_inset
+
+ Dimensions
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+18.214
+\begin_inset Formula $\times$
+\end_inset
+
+18.228
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 Num Pairs
 \end_layout
 
@@ -1352,9 +1450,7 @@ Num Pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-281are muddled.
- Neither here nor there.
- Of course, one has to be slightly less than the other.84319
+28184319
 \end_layout
 
 \end_inset

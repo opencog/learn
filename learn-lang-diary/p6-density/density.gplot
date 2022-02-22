@@ -25,6 +25,31 @@ plot "density.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
 #################################################
 #
 set term png
+# set out 'density-relative.png'
+set term postscript eps enhanced color 20
+set out 'density-relative.eps'
+set key left top
+set title "Relative Density of States {/Symbol r}(E)"
+set xlabel "E"
+set ylabel "{/Symbol r}(E) 2^{E-26}"
+set logscale y
+set format y "10^{%L}"
+# set yrange [1e-7:0.3]
+unset yrange
+
+a=1
+z(x) = 2**(a*(x-26))
+
+norm = (200.0/23) / 28184319
+
+g(x,m,s) = (1/sqrt(2*3.14159*s)) * exp(- (x-m)**2 / (2*s**2))
+
+plot "density.dat" using 2:(norm * $3 / z($2)) with lines lw 2 title "data_{ }", \
+     "density.dat" using 2:(g($2,18,6)) with lines lw 2 title "Gauss(18,6)"
+
+#################################################
+#
+set term png
 set out 'density-marg.png'
 # set term postscript eps enhanced color 20
 # set out 'density-marg.eps'
@@ -49,9 +74,9 @@ plot "density-leftp.dat" using 2:(lnorm * $3) with lines lw 2 title "Left margin
 #################################################
 #
 set term png
-# set out 'density-lmarg-logli.png'
-set term postscript eps enhanced color 20
-set out 'density-lmarg-logli.eps'
+set out 'density-lmarg-logli.png'
+# set term postscript eps enhanced color 20
+# set out 'density-lmarg-logli.eps'
 set key left top
 set title "Density of Marginals"
 set xlabel "E = -log_2 p(i,j)"
