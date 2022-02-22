@@ -1317,12 +1317,22 @@ run-1-en_pairs-tranche-123.rdb
 \end_layout
 
 \begin_layout Standard
+Nope.
+ We really want to have marginals, for assorted reasons.
+ Try again with `
+\family sans
+run-1-marg-tranche-123.rdb
+\family default
+`.
+\end_layout
+
+\begin_layout Standard
 Config files are in `
 \family sans
 Experiment-13
 \family default
 `.
- Don't really need the marginals, to graph the density of states.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1379,7 +1389,7 @@ Filename
 \begin_layout Plain Layout
 
 \family sans
-run-1-en_pairs-tranche-123.rdb
+run-1-marg-tranche-123.rdb
 \end_layout
 
 \end_inset
@@ -1556,7 +1566,7 @@ RAM Usage to Run
 \begin_inset Text
 
 \begin_layout Plain Layout
-61.3 GB
+62.6 GB
 \end_layout
 
 \end_inset
@@ -1972,7 +1982,7 @@ where the approximations
 \end_inset
 
  is reduced, but the overall exponent is not affected.
- Yet this is ggiven lie to by the figure above.
+ Yet this is given lie to by the figure above.
  So what goes wrong? I think it is an under-sampling effect.
  For large 
 \begin_inset Formula $n$
@@ -1987,6 +1997,9 @@ are not as given above, but are zero.
  size, and they are zero often enough that the overall slope is changed.
  The net efect of sample size could be computed; it does not seem to be
  a worthwhile exercise just right now.
+ XXX TODO.
+ This should be done.
+ This seems like a foundational part of the overall theory.
 \end_layout
 
 \begin_layout Standard
@@ -1994,7 +2007,7 @@ Let's repeat the calculation above with an explicit log scale.
  This gives
 \begin_inset Formula 
 \begin{align*}
-g_{m}= & \sum_{m\le\log_{2}n<m+1}GraphPropertiesf_{n}\\
+g_{m}= & \sum_{m\le\log_{2}n<m+1}f_{n}\\
 = & \sum_{2^{m}\le n<2^{m}}\left(\frac{a}{n}\right)^{\gamma}\\
 = & a^{\gamma}\sum_{1\le j<2^{m}}\frac{1}{\left(2^{m}+j\right)^{\gamma}}\\
 \approx & \frac{a^{\gamma}}{2^{m\gamma}}\cdot2^{m}\left(1-\frac{\gamma}{2}\right)\\
@@ -2356,9 +2369,6 @@ Here's the same data, but with a different fit:
 
 \begin_layout Standard
 \align center
-(define (pcnt PAIR) (define LWRD (star-obj 'left-element PAIR)) (freq-obj
- 'right-wild-fentropy LWRD)) (weighted-density 200 7 30 pcnt "/tmp/density-lmarg
--fent.dat") 
 \begin_inset Graphics
 	filename p6-density/pair-fmi-signal.eps
 	width 60col%
