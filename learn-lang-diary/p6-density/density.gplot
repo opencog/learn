@@ -49,9 +49,9 @@ plot "density-leftp.dat" using 2:(lnorm * $3) with lines lw 2 title "Left margin
 #################################################
 #
 set term png
-set out 'density-lmarg-logli.png'
-# set term postscript eps enhanced color 20
-# set out 'density-lmarg-logli.eps'
+# set out 'density-lmarg-logli.png'
+set term postscript eps enhanced color 20
+set out 'density-lmarg-logli.eps'
 set key left top
 set title "Density of Marginals"
 set xlabel "E = -log_2 p(i,j)"
@@ -65,10 +65,13 @@ z(x) = 2**(a*(x-30))
 
 lglnorm = (200.0/23) / 432821575.7291378
 fentnorm = (200.0/23) / 625117539.7084644
+lfminorm = (200.0/23) / 83146762.95191137
 
 plot "density-lmarg-logli.dat" using 2:(lglnorm * $3) with lines lw 2 title "Log Left Marginal Probability", \
      "density-lmarg-fent.dat" using 2:(fentnorm * $3) with lines lw 2 title "Left Fractional Entropy", \
+     "density-lmarg-fmi.dat" using 2:(lfminorm * $3) with lines lw 2 title "Left Marginal MI", \
      "density-lmarg-logli.dat" using 2:(z($2)) with lines lw 2 title "2^{E-30}"
+
 
 #################################################
 #
