@@ -1580,6 +1580,71 @@ The left fractional marginal entropy
 The left fractional marginal MI
 \end_layout
 
+\begin_layout Subsubsection*
+Left and Right Marginal Probabilities
+\end_layout
+
+\begin_layout Standard
+First up: the left and right marginal probabilites 
+\begin_inset Formula $p\left(w_{i},*\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $p\left(*,w_{j}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/density-marg.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Slope is same as before.
+\end_layout
+
+\begin_layout Subsubsection*
+Log Marginal Probability
+\end_layout
+
+\begin_layout Standard
+The left log marginal probability 
+\begin_inset Formula $\log_{2}p\left(w_{i},*\right)$
+\end_inset
+
+.
+ Skip exploring the right, based on the above.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/density-lmarg-logli.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+
+\end_layout
+
+\begin_layout Standard
+Slope is muddled.
+ Niether here nor there.
+\end_layout
+
 \begin_layout Section*
 Word-Pair Vertex Degree Distributions
 \end_layout
@@ -2082,7 +2147,17 @@ Word-Pair Distributions
 \begin_layout Standard
 The big new news for this section is that I think I finally understand the
  nature of this distribution.
- It is ....
+ It is composed of two parts.
+ One part is a Gaussian, centered more or less on an MI of zero.
+ This Gaussian is purely due to random selections of pairs, and contains
+ no information.
+ Subtracting this leave behind the word-pairs with the actual information.
+ That distribution seems to be log-normal, i.e has strictly-positive MI.
+ It can be extracted by forcing a hard-cut at MI=4, which removes most of
+ the zero-mode Gaussian.
+ But we've known for eons that MI=4 is somehow magical; now we finally have
+ insight as to why.
+ Read on for details.
 \end_layout
 
 \begin_layout Standard
@@ -2116,6 +2191,9 @@ Here's the same data, but with a different fit:
 
 \begin_layout Standard
 \align center
+(define (pcnt PAIR) (define LWRD (star-obj 'left-element PAIR)) (freq-obj
+ 'right-wild-fentropy LWRD)) (weighted-density 200 7 30 pcnt "/tmp/density-lmarg
+-fent.dat") 
 \begin_inset Graphics
 	filename p6-density/pair-fmi-signal.eps
 	width 60col%

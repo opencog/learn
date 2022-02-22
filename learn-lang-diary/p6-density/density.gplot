@@ -2,10 +2,10 @@
 
 #################################################
 #
-# set term png
-# set out 'density.png'
-set term postscript eps enhanced color 20
-set out 'density.eps'
+set term png
+set out 'density.png'
+# set term postscript eps enhanced color 20
+# set out 'density.eps'
 set key left top
 set title "Density of States {/Symbol r}(E)"
 set xlabel "E"
@@ -21,5 +21,51 @@ norm = (200.0/23) / 28184319
 
 plot "density.dat" using 2:(norm * $3) with lines lw 2 title "data_{ }", \
      "density.dat" using 2:(z($2)) with lines lw 2 title "2^{E-30}"
+
+#################################################
+#
+set term png
+set out 'density-marg.png'
+# set term postscript eps enhanced color 20
+# set out 'density-marg.eps'
+set key left top
+set title "Density of Marginal Probabilites"
+set xlabel "E = -log_2 p(i,j)"
+set ylabel "{/Symbol r}_p(E)"
+set logscale y
+set format y "10^{%L}"
+set yrange [1e-6:1]
+
+a=1
+z(x) = 2**(a*(x-26))
+
+lnorm = (200.0/23) / 61306.73953973119
+rnorm = (200.0/23) / 50028.07548126771
+
+plot "density-leftp.dat" using 2:(lnorm * $3) with lines lw 2 title "Left marginal", \
+     "density-rightp.dat" using 2:(rnorm * $3) with lines lw 2 title "Right marginal", \
+     "density-rightp.dat" using 2:(z($2)) with lines lw 2 title "2^{E-26}"
+
+#################################################
+#
+set term png
+# set out 'density-lmarg-logli.png'
+set term postscript eps enhanced color 20
+set out 'density-lmarg-logli.eps'
+set key left top
+set title "Density of Log Marginal Probability"
+set xlabel "E = -log_2 p(i,j)"
+set ylabel "log_2 {/Symbol r}_p(E)"
+set logscale y
+set format y "10^{%L}"
+set yrange [1e-7:1]
+
+a=1
+z(x) = 2**(a*(x-30))
+
+norm = (200.0/23) / 432821575.7291378
+
+plot "density-lmarg-logli.dat" using 2:(norm * $3) with lines lw 2 title "Log Left marginal", \
+     "density-lmarg-logli.dat" using 2:(z($2)) with lines lw 2 title "2^{E-30}"
 
 #################################################
