@@ -1612,7 +1612,7 @@ Slope is same as before.
 \end_layout
 
 \begin_layout Subsubsection*
-Log Marginal Probability
+Log Marginal Probability and Entropy
 \end_layout
 
 \begin_layout Standard
@@ -1620,8 +1620,15 @@ The left log marginal probability
 \begin_inset Formula $\log_{2}p\left(w_{i},*\right)$
 \end_inset
 
-.
- Skip exploring the right, based on the above.
+ and the left fractional marginal entropy 
+\begin_inset Formula $-\left[p\left(w_{i},*\right)\right]^{-1}\sum_{v}p\left(w_{i},v\right)\log_{2}p\left(w_{i},v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Skip exploring the right, based on the above.
 \end_layout
 
 \begin_layout Standard
@@ -1641,8 +1648,9 @@ The left log marginal probability
 \end_layout
 
 \begin_layout Standard
-Slope is muddled.
- Niether here nor there.
+Slopes are muddled.
+ Neither here nor there.
+ Of course, one has to be slightly less than the other.
 \end_layout
 
 \begin_layout Section*
