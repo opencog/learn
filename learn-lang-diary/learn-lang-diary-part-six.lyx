@@ -1522,21 +1522,66 @@ Entropy Total
 \end_layout
 
 \begin_layout Subsection*
-TODO
+Other Densities
 \end_layout
 
 \begin_layout Standard
-OK, apparently we have to bit the bullet.
- Argh.
- TODO:
+Well, OK, so we've done Zipf graphs of all kinds before, but somewhat haphazardl
+y.
+ It's worth regoing these as densities: i.e.
+ bin-counting, with the horizontal axis being 
+\begin_inset Formula $E=-\log_{2}p\left(w_{i},w_{j}\right)$
+\end_inset
+
+ and the vertical axis being other assorted quantities.
+ All of these graphs will suffer from the under-sampling issues described
+ above.
+ We don't yet have a good theoretical foundation to deal with the under-sampling.
+ So damn the torpedoes, full speed ahead.
+\end_layout
+
+\begin_layout Standard
+Suitable quantities to plot: 
 \end_layout
 
 \begin_layout Itemize
-Plot density distributions for the marginals, too.
+The pair MI 
+\end_layout
+
+\begin_layout Itemize
+The left and right marginal probabilities 
+\begin_inset Formula $p\left(w_{i},*\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $p\left(*,w_{j}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The log left marginal probability 
+\begin_inset Formula $-\log_{2}p\left(w_{i},*\right)$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+The left fractional marginal entropy 
+\begin_inset Formula $-\frac{1}{p\left(w,*\right)}\sum_{v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+The left fractional marginal MI
 \end_layout
 
 \begin_layout Section*
-Word-Pair Graph Properties
+Word-Pair Vertex Degree Distributions
 \end_layout
 
 \begin_layout Standard
@@ -1548,7 +1593,45 @@ Oddly enough, I never really characterized the word-pair sets using more
  This is a directed graph, but I think this doesn't matter, so will mostly
  pretend it is undirected.
  The collection of verteces will be taken as the left-element of each pair.
- 
+ The edges will be the pairs going from left to right.
+\end_layout
+
+\begin_layout Standard
+The (out-)degree of a vertex is just the number of edges leaving it.
+ We work with out-degrees exclusively, excpet for a few spot-checks.
+ Basically, the word-pair graph should be approximately symmetric, so there
+ should not be much of a difference in distributions.
+\end_layout
+
+\begin_layout Standard
+The results of this section:
+\end_layout
+
+\begin_layout Itemize
+The scaling of frequency vs.
+ degree goes with a power law of 
+\begin_inset Formula $\gamma\approx1.6$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+There is an interesting sample-size effect, which prevents naive scaling
+ of histogram bin-widths!
+\end_layout
+
+\begin_layout Itemize
+There is no theory to guide one through the sample-size effect, and it is
+ clearly pervasive, affecting pretty much every graph ever drawn, ever,
+ in this diary.
+ It's a foundational effect, that cannot be escaped.
+ Its inherent in this kind of data.
+\end_layout
+
+\begin_layout Itemize
+One can graphs all sorts of quantities as functions of the vertex degree.
+ Does not seem to reveal anything noteworthy.
 \end_layout
 
 \begin_layout Subsection*
@@ -1681,7 +1764,7 @@ Let's repeat the calculation above with an explicit log scale.
  This gives
 \begin_inset Formula 
 \begin{align*}
-g_{m}= & \sum_{m\le\log_{2}n<m+1}f_{n}\\
+g_{m}= & \sum_{m\le\log_{2}n<m+1}GraphPropertiesf_{n}\\
 = & \sum_{2^{m}\le n<2^{m}}\left(\frac{a}{n}\right)^{\gamma}\\
 = & a^{\gamma}\sum_{1\le j<2^{m}}\frac{1}{\left(2^{m}+j\right)^{\gamma}}\\
 \approx & \frac{a^{\gamma}}{2^{m\gamma}}\cdot2^{m}\left(1-\frac{\gamma}{2}\right)\\
@@ -1720,7 +1803,7 @@ That initial slop is validup to
 \end_inset
 
  or 
-\begin_inset Formula $\log_{2}n\approx10$
+\begin_inset Formula $\log-\frac{1}{p\left(w,*\right)}\sum_{v}p\left(w,v\right)\log_{2}p\left(w,v\right)_{2}n\approx10$
 \end_inset
 
 , after which a sharper slope sets in due to the finite-sample-size effect.
@@ -1976,8 +2059,30 @@ This graph has the same general shape as the earlier ones, but has a distinctly
  different slope.
 \end_layout
 
-\begin_layout Subsection*
-MI Distribution
+\begin_layout Section*
+Word-Pair MI Distribution
+\end_layout
+
+\begin_layout Standard
+We've graphed the MI distribution many times before.
+ Notably, the 
+\begin_inset Quotes eld
+\end_inset
+
+Word-Pair Distributions
+\begin_inset Quotes erd
+\end_inset
+
+ document details these.
+ But since we're on a roll here, lets redo it with the same dataset as all
+ the other graphs.
+ 
+\end_layout
+
+\begin_layout Standard
+The big new news for this section is that I think I finally understand the
+ nature of this distribution.
+ It is ....
 \end_layout
 
 \begin_layout Standard
