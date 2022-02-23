@@ -7655,8 +7655,15 @@ Experiment-12
 \begin_layout Standard
 Some ongoing confusion motivates an attempt at a cleaner starting point
  for merges.
- Start with `run-1-t1234-tsup-1-1-1.rdb` and build a new, clean file, using
- the scripts in `scm/gram-class/cleanup.scm`.
+ Start with `
+\family sans
+run-1-t1234-tsup-1-1-1.rdb
+\family default
+` and build a new, clean file, using the scripts in `
+\family sans
+scm/gram-class/cleanup.scm
+\family default
+`.
  Here's where it's at:
 \end_layout
 
@@ -7670,11 +7677,8 @@ Some ongoing confusion motivates an attempt at a cleaner starting point
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="7">
+<lyxtabular version="3" rows="12" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -7684,7 +7688,7 @@ Some ongoing confusion motivates an attempt at a cleaner starting point
 \begin_inset Text
 
 \begin_layout Plain Layout
-name
+
 \end_layout
 
 \end_inset
@@ -7693,7 +7697,9 @@ name
 \begin_inset Text
 
 \begin_layout Plain Layout
-words
+
+\family sans
+r1-t1234-tsup-1-1-1
 \end_layout
 
 \end_inset
@@ -7702,34 +7708,9 @@ words
 \begin_inset Text
 
 \begin_layout Plain Layout
-dj
-\end_layout
 
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-size
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-obs
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-sparsity
+\family sans
+r12-mst.rdb
 \end_layout
 
 \end_inset
@@ -7738,7 +7719,9 @@ sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-MMT Entropy
+
+\family sans
+r12-shape.rdb
 \end_layout
 
 \end_inset
@@ -7749,7 +7732,10 @@ MMT Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-run-1-t1234-tsup-1-1-1.rdb
+\begin_inset Formula $N_{L}$
+\end_inset
+
+= words
 \end_layout
 
 \end_inset
@@ -7767,7 +7753,71 @@ run-1-t1234-tsup-1-1-1.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
+9495
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9495
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{R}$
+\end_inset
+
+= dj
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 205003
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+204680
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1015850
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $D_{\mbox{Tot}}$
+\end_inset
+
+= size
 \end_layout
 
 \end_inset
@@ -7785,16 +7835,7 @@ run-1-t1234-tsup-1-1-1.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-7313131
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-11.819
+833833
 \end_layout
 
 \end_inset
@@ -7803,7 +7844,7 @@ run-1-t1234-tsup-1-1-1.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-16.352
+2717117
 \end_layout
 
 \end_inset
@@ -7814,7 +7855,10 @@ run-1-t1234-tsup-1-1-1.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-r12-mst.rdb
+\begin_inset Formula $N_{\mbox{Tot}}$
+\end_inset
+
+= obs
 \end_layout
 
 \end_inset
@@ -7823,25 +7867,7 @@ r12-mst.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-9495
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-204680
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-833833
+7313131
 \end_layout
 
 \end_inset
@@ -7851,6 +7877,158 @@ r12-mst.rdb
 
 \begin_layout Plain Layout
 7202301
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+22643824
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{word}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.881
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.213
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+13.213
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{dj}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.645
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+17.643
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.954
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.707
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+19.669
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+21.374
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sparsity
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+11.819
 \end_layout
 
 \end_inset
@@ -7868,7 +8046,7 @@ r12-mst.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-15.720
+11.794
 \end_layout
 
 \end_inset
@@ -7879,7 +8057,7 @@ r12-mst.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-r12-shape.rdb
+rarity
 \end_layout
 
 \end_inset
@@ -7888,7 +8066,7 @@ r12-shape.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-9495
+3.944
 \end_layout
 
 \end_inset
@@ -7897,34 +8075,7 @@ r12-shape.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-1015850
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2717117
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-22643824
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-11.794
+4.241
 \end_layout
 
 \end_inset
@@ -7933,7 +8084,48 @@ r12-shape.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-18.117
+4.790
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.095
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.111
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.059
 \end_layout
 
 \end_inset
@@ -7944,7 +8136,7 @@ r12-shape.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-r12-mi.rdb
+Entropy
 \end_layout
 
 \end_inset
@@ -7953,7 +8145,7 @@ r12-mi.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-9495
+16.352
 \end_layout
 
 \end_inset
@@ -7962,34 +8154,7 @@ r12-mi.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-1015850
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-2717117
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-22643824
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-11.794
+15.720
 \end_layout
 
 \end_inset
@@ -8009,9 +8174,6 @@ r12-mi.rdb
 \end_inset
 
 
-\end_layout
-
-\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -8019,7 +8181,32 @@ r12-mi.rdb
 \end_layout
 
 \begin_layout Standard
-Here's the word-disjunct entropies and MI's: 
+Recall that 
+\begin_inset Formula 
+\[
+\mbox{Sparsity}=-\log_{2}D_{\mbox{Tot}}/N_{L}\times N_{R}
+\]
+
+\end_inset
+
+while 
+\begin_inset Formula 
+\[
+\mbox{Rarity}=\log_{2}D_{\mbox{Tot}}/\sqrt{N_{L}\times N_{R}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here's the word-disjunct entropies and MI's; its in r12-mi.rdb which is just
+ 
+\family sans
+`r12-shape.rdb
+\family default
+` with the MI scores in it.
 \end_layout
 
 \begin_layout Standard
@@ -8149,24 +8336,53 @@ What's done:
 \end_layout
 
 \begin_layout Itemize
-`r12-mst.rdb` copies `run-1-t1234-tsup-1-1-1.rdb` and forces bi-directional
- linkage symmetry.
- It also recomputes support marginals and MM^T.
- via contents of `run-common/marginals-mst.scm`.
+`
+\family sans
+r12-mst.rdb
+\family default
+` copies `
+\family sans
+run-1-t1234-tsup-1-1-1.rdb
+\family default
+` and forces bi-directional linkage symmetry.
+ It also recomputes support marginals and MM^T via contents of `
+\family sans
+run-common/marginals-mst.scm
+\family default
+`.
 \end_layout
 
 \begin_layout Itemize
-`r12-shape.rdb` adds shapes, and recomputed the MMT marginals for these.
+`
+\family sans
+r12-shape.rdb
+\family default
+` adds shapes, and recomputed the MMT marginals for these.
  The dimensions includes the CrossSections.
 \end_layout
 
 \begin_layout Itemize
-`r12-mi.rdb` batch-computes the word-disjunct MI (with `batch-all-pair-mi`).
+`
+\family sans
+r12-mi.rdb
+\family default
+` batch-computes the word-disjunct MI (with `
+\family sans
+batch-all-pair-mi
+\family default
+`).
 \end_layout
 
 \begin_layout Itemize
-`r12-mi-sim200.rdb` is just `r12-mi.rdb` with word-similarities precomputed
- for the top 200 ranked words.
+`
+\family sans
+r12-mi-sim200.rdb
+\family default
+` is just `
+\family sans
+r12-mi.rdb
+\family default
+` with word-similarities precomputed for the top 200 ranked words.
 \end_layout
 
 \begin_layout Section*
