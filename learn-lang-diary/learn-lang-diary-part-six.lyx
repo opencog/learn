@@ -2509,7 +2509,8 @@ Neutral MI Distribution
 
 \begin_layout Standard
 Attempted theoretical calculation of the MI distribution that would result
- if word pairs wer chosen at completely at random.
+ if word pa/home2/linas/src/novamente/data/rocks-archive/r3-mpg-marg.rdbirs
+ wer chosen at completely at random.
  There are two distributions of interest.
  One uses a uniform distribution of the vocabulary words, the other a Zipfian
  distribution.
@@ -2707,6 +2708,28 @@ f\left(w_{i},*\right)=\frac{1}{N}
 \end_inset
 
 which seems wrong, so I made a mistake above!?
+\end_layout
+
+\begin_layout Section*
+Word-Disjunct MI Distribution
+\end_layout
+
+\begin_layout Standard
+For whatever reason, seems I've misplaced or not bothered to generate graphs
+ for the word-disjunct MI distribution.
+ Why? Because (1) these are time-consuming to compute (they eat RAM) and
+ (2) are not needed for anything.
+ Still, for the sake of completeness, this seems like it should be done.
+ To get comparable results, will work with `
+\family sans
+r4-mpg-marg.rdb
+\family default
+` which appears on page 4 of Diary Part Three.
+ Actually, this is just a copy of `
+\family sans
+run-1-en_mpg-tranche-123.rdb
+\family default
+` with marginals in it.
 \end_layout
 
 \begin_layout Section*
