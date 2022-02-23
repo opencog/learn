@@ -8,7 +8,7 @@ set term png
 set out 'r12-cls-nwords.png'
 # set term postscript eps enhanced color 20
 # set out 'r12-cls-nwords.eps'
-set key right top
+set key left top
 set title "Number of Words in Class (run-12; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "N"
@@ -44,7 +44,7 @@ set term png
 set out 'r12-cls-self-rmi.png'
 # set term postscript eps enhanced color 20
 # set out 'r12-cls-self-rmi.eps'
-set key right top
+set key left bottom
 set title "Self-Ranked-MI of Class (run-12; q=0.7)"
 set xlabel "Merge ordinal"
 set ylabel "MI, in bits"
