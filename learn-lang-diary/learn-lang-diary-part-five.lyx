@@ -6707,6 +6707,149 @@ Shown for comparison are the Experiment-12 graphs.
  
 \end_layout
 
+\begin_layout Standard
+The Experiment-12 
+\begin_inset Quotes eld
+\end_inset
+
+imprecise
+\begin_inset Quotes erd
+\end_inset
+
+ runs all failed when they ran out of hugepage memory.
+ Foo.
+ Unable to recover and pick up where they left off; there is some kind of
+ bug that prevents restarting (the marginals get unbalanced, and recomputing
+ them leaves somethng wrong...) These halted as shown:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nmerges
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n1.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1343
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n2.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+891
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n3.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1062
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n4.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1058
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The last two stopped at almost the same place, and thus allow head-to-head
+ comparisions.
+\end_layout
+
 \begin_layout Subsubsection*
 Sparsity
 \end_layout
@@ -6736,7 +6879,7 @@ Sparsity is defined as always: it is log2 of the fraction of non-zero matrix
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-sparsity.png
+	filename p5-run-12-merge/r12-sparsity.eps
 	width 50text%
 
 \end_inset
@@ -6804,7 +6947,7 @@ f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-entropy.png
+	filename p5-run-12-merge/r12-entropy.eps
 	width 50text%
 
 \end_inset
@@ -6870,7 +7013,7 @@ It varies over time, as both new disjuncts are created, old disjuncts have
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-mmtq.png
+	filename p5-run-12-merge/r12-mmtq.eps
 	width 50text%
 
 \end_inset
@@ -6921,7 +7064,7 @@ Ranked-MI is defined as in 'Diary Part Four', and restated earlier, above.
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-ranked-mi.png
+	filename p5-run-12-merge/r12-ranked-mi.eps
 	width 50text%
 
 \end_inset
@@ -7000,7 +7143,7 @@ left
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-right-dj-entropy.png
+	filename p5-run-12-merge/r12-right-dj-entropy.eps
 	width 50text%
 
 \end_inset
@@ -7048,7 +7191,7 @@ S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-left-dj-entropy.png
+	filename p5-run-12-merge/r12-left-dj-entropy.eps
 	width 50text%
 
 \end_inset
@@ -7096,7 +7239,7 @@ H_{\mbox{tot}}=-\sum_{w,d}P\left(w,d\right)\log_{2}P\left(w,d\right)
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-word-dj-entropy.png
+	filename p5-run-12-merge/r12-word-dj-entropy.eps
 	width 50text%
 
 \end_inset
@@ -7145,7 +7288,7 @@ MI_{\mbox{tot}}= & \sum_{w,d}P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P
 
 
 \begin_inset Graphics
-	filename p5-run-12-merge/r12-word-dj-mi.png
+	filename p5-run-12-merge/r12-word-dj-mi.eps
 	width 50text%
 
 \end_inset
