@@ -16,32 +16,21 @@
 ;
 ; ----------------------------------------------------------------------
 ;
-(define (density LLOBJ NBINS LO HI)
-"
-  density LLOBJ - create histogram of density of states.
+; Get all pairs up front, avoid the CPU overhead.
+(define all-pairs (star-obj 'get-all-elts))
+(define freq-obj (add-pair-freq-api star-obj))
 
-  Example:
-  (density star-obj 200 0 30)
+(define (weighted-density NBINS LO HI WEIFN FILENAM)
 "
-	; If frequencies are available, then uncomment below
-	;	(define fra (add-pair-freq-api star-obj))
+  density NBINS LO HI WEIFN FILENAM - create histogram of density of states.
+
+  Example: Density of states just counts 1.0 for each pair.
+  (weighted-density 200 7 30 (lambda (PAIR) 1.0) \"/tmp/density.dat\")
+"
 	; 'pair-logli PAIR   -- return -log_2 P(x,y)
-	; (define pval (lambda ITEM) (fra 'pair-logli ITEM))
+	(define (pval ITEM) (freq-obj 'pair-logli ITEM))
 
-	; Marginals are not avaialble.  Work with the raw count.
-	; Ugh.
-	(define all-pairs (LLOBJ 'get-all-elts))
-	(define tot-cnt
-		(fold (lambda (ITEM CNT) (+ CNT (LLOBJ 'get-count ITEM)))
-			0 all-pairs))
-	(format #t "Total pair count = ~A\n" tot-cnt)
-	(define ol2 (/ 1 (log 2)))
-	(define olt (* ol2 (log tot-cnt))) 
-
-	(define (pval ITEM) (- olt (* ol2 (log (LLOBJ 'get-count ITEM)))))
-	(define (pcnt ITEM) 1)
-
-	(define bins (bin-count all-pairs NBINS pval pcnt LO HI))
+	(define bins (bin-count all-pairs NBINS pval WEIFN LO HI))
 
 	; The actual bin counts are the second elt.
 	; The first elt is bin centers.
@@ -60,9 +49,55 @@
 		bin-total bwid)
 
 	; Dump to bogus file.
-	(define oport (open-file "/tmp/foo.dat" "w"))
+	(define oport (open-file FILENAM "w"))
 	(format oport "#\n# Total count = ~A bin-width = ~A\n"
 		bin-total bwid)
 	(print-bincounts-tsv bins oport)
 	(close oport)
 )
+
+; Print density of states, uniform weighting.
+(define (pcnt ITEM) 1)
+(weighted-density 200 7 30 pcnt "/tmp/density.dat")
+
+; ----
+; Left and right marginal probabilites
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-freq LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-leftp.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'right-element PAIR))
+	(freq-obj 'left-wild-freq LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-rightp.dat")
+
+; ----
+; Weights that are other marginals
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-logli LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-logli.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-fentropy LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-fent.dat")
+
+(define (pcnt PAIR)
+	(define LWRD (star-obj 'left-element PAIR))
+	(freq-obj 'right-wild-fmi LWRD))
+(weighted-density 200 7 30 pcnt "/tmp/density-lmarg-fmi.dat")
+
+; ----
+; Weights that are pair MI's
+; Well, don't bother with this first one, it's just
+; the fmi times the energy.
+(define (pcnt PAIR) (freq-obj 'pair-mi PAIR))
+(weighted-density 200 7 30 pcnt "/tmp/density-mi.dat")
+
+(define (pcnt PAIR) (freq-obj 'pair-fmi PAIR))
+(weighted-density 200 7 30 pcnt "/tmp/density-fmi.dat")
+
+;
+; ----------------------------------------------------------------------
