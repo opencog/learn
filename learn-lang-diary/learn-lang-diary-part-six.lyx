@@ -3659,7 +3659,107 @@ MI(w,dj)
 \end_layout
 
 \begin_layout Standard
-Yep.
+What do the distributions look like? Here they are, all plotted on a single
+ graph.
+ These are histograms.
+ There are 200 bins grand-total.
+ First graph weights each Section equally.
+ 
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-djmi/r4-djmi.png
+	width 49col%
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A generic Gaussian is superimposed on the image, centered at about the average
+ MI of each of these.
+ Clearly visible is an excess of counts at high MI values.
+ Clearly, the more one trims, the more of these are removed.
+\end_layout
+
+\begin_layout Standard
+Earlier disjunct graphs, namely in the 
+\begin_inset Quotes eld
+\end_inset
+
+Connector Set Distributions
+\begin_inset Quotes erd
+\end_inset
+
+ document.
+ page 22, were pure Gaussian, without the excess.
+ Why? Is the excess due to some of the garbage (the failed quote-escapes)
+ in this dataset? Or is it real? 
+\end_layout
+
+\begin_layout Standard
+Earlier, for the word-pairs graph, the Gaussian was interpreted as the zero-mode
+, and was centered at more-or-less zero.
+ But what is this beast? Is it a zero-mode? Is it meaningful data? Or is
+ just the high-MI stuff 
+\begin_inset Quotes eld
+\end_inset
+
+meaningful
+\begin_inset Quotes erd
+\end_inset
+
+? How can we know?
+\end_layout
+
+\begin_layout Standard
+Earlier disjunct 
+\end_layout
+
+\begin_layout Standard
+Again, below, this time each Section is weighted according to it's frequency.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-djmi/r4-djmi-weighted.png
+	width 49col%
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In what sense is this weighted distribution 
+\begin_inset Quotes eld
+\end_inset
+
+more accurate
+\begin_inset Quotes erd
+\end_inset
+
+ than the unqeighted one?
 \end_layout
 
 \begin_layout Section*
