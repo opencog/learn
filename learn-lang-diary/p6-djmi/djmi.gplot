@@ -1,0 +1,26 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'r4-djmi.png'
+# set term postscript eps enhanced color 20
+# set out 'r4-djmi.eps'
+set key right top
+set title "MI Distribution of word-disjunct"
+set xlabel "MI"
+set ylabel "Frequency"
+# set xrange [-12:27]
+set logscale y
+set format y "10^{%L}"
+# set yrange [4e-8:5e-2]
+
+g(x,m,s) = (1/sqrt(2*3.14159*s)) * exp(- (x-m)**2 / (2*s**2)) 
+
+norm222 = 1.0 / 622378
+
+plot "r4-sect-mi-2-2-2.dat" using 2:(norm222 * $3) with lines lw 2 title "trim-2-2-2"
+
+
+#     "pair-fmi.dat" using 2:(0.04*g($2,0.4,2)) with lines lw 2 title "Gauss(0.4,2)", \
+#################################################
