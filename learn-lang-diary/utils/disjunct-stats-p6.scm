@@ -23,7 +23,12 @@
 ;
 ; Assign each item a score, using SCORE-FN
 (define (score SCORE-FN ITEM-LIST)
-   (map (lambda (wrd) (cons (SCORE-FN wrd) wrd)) ITEM-LIST))
+	(map (lambda (wrd) (cons (SCORE-FN wrd) wrd)) ITEM-LIST))
+
+(define (prt-hist bins fname)
+	(define outport (open-file fname "w"))
+	(print-bincounts-tsv bins outport)
+	(close outport))
 
 ; ---------------------------------------------------------------------
 ; Bin-count word-disjunct pairs according to thier fractional MI.
@@ -36,9 +41,10 @@
 
 (define binned-sect-mi (bin-count-simple scored-sect-mi 200))
 
-(let ((outport (open-file "/tmp/r4-sect-mi-2-2-2.dat" "w")))
-   (print-bincounts-tsv binned-sect-mi outport)
-   (close outport))
+(prt-hist binned-sect-mi "/tmp/r4-sect-mi-10-4-2.dat")
+(prt-hist binned-sect-mi "/tmp/r4-sect-mi-5-2-2.dat")
+(prt-hist binned-sect-mi "/tmp/r4-sect-mi-2-2-2.dat")
+(prt-hist binned-sect-mi "/tmp/r4-sect-mi-1-1-1.dat")
 
 (define (sect-freq SECT) (psf 'pair-freq SECT))
 
@@ -46,8 +52,9 @@
    (bin-count-weighted scored-sect-mi 200
       (lambda (scored-item) (sect-freq (cdr scored-item)))))
 
-(let ((outport (open-file "/tmp/r4-wei-mi-2-2-2.dat" "w")))
-   (print-bincounts-tsv weighted-sect-mi outport)
-   (close outport))
+(prt-hist weighted-sect-mi "/tmp/r4-wei-mi-10-4-2.dat" )
+(prt-hist weighted-sect-mi "/tmp/r4-wei-mi-5-2-2.dat" )
+(prt-hist weighted-sect-mi "/tmp/r4-wei-mi-2-2-2.dat" )
+(prt-hist weighted-sect-mi "/tmp/r4-wei-mi-1-1-1.dat" )
 
 ; -------------
