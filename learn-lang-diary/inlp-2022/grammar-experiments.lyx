@@ -110,12 +110,15 @@ Linas Vepštas
 \begin_layout Abstract
 The OpenCog Learning project explores novel techniques for the induction
  of symbolic structure from environmental sources.
- As a first application of these ideas , the automated learning of the grammatic
-al structure of English is explored.The language-learning effort involves
- research and software development to implement the ideas concerning unsupervise
-d learning of grammar, syntax and semantics from corpora.
+ As a first application of these ideas, the automated learning of the grammatica
+l structure of English is explored.
  This document provides a summary of results observed to date.
- 
+ The symbolic structure manifests itself as large, complex graphs tying
+ together words and grammatical structure.
+ The primary experimental task is to describe and understand the nature
+ of those graphs.
+ The results are presented primarily in a statistical form, as probability
+ distributions on those graphs.
 \end_layout
 
 \begin_layout Section*
@@ -169,7 +172,7 @@ grammatical structure
 \end_layout
 
 \begin_layout Standard
-The general theory of how this is to be done is sketched out in a companion
+The general theory of how this can be done is sketched out in a companion
  article.
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -209,7 +212,7 @@ literal "false"
 \end_inset
 
  Individual jigsaw pieces encode the local syntactic environment of a given
- word.
+ word, not unlike skip-grams.
  Collections of such jigsaw pieces can be understood to be vectors: each
  word is endowed with a lexis of all of the syntactic contexts in which
  it was observed.
@@ -221,7 +224,7 @@ literal "false"
  strongly with distinct word-senses.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Mihalcea2004,Mihalcea2005"
+key "Nida97,Kahane2003,Mihalcea2004,Mihalcea2005,Poon2009"
 literal "false"
 
 \end_inset
@@ -230,8 +233,8 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-This text provides reports on the algorithms developed to perform the above,
- and on the statistical properties of the resulting graphical networks.
+This text reports on the algorithms developed to perform the above, and
+ on the statistical properties of the resulting graphical networks.
  This report is a summary, encompassing more than a decade of research and
  development.
 \begin_inset Foot
@@ -250,7 +253,7 @@ literal "false"
 
 , Parts One-Six, and the adjunct reports.
  Rather than peppering this text with self-citations, footnotes will be
- used to indicate which to examine.
+ used to indicate which of these to examine.
 \end_layout
 
 \end_inset
@@ -265,13 +268,13 @@ downwards
 \begin_inset Quotes erd
 \end_inset
 
- direction, work on morphology, needed for Indo-European languages, and
- segmentation, needed for Chinese.
+ direction, this would be work on morphology, needed for Indo-European languages
+, and segmentation, needed for Chinese.
  Further down, the implementation of the same ideas to extract phonetic
  structure and perform general audio processing.
  In the upwards direction, one could could search for high-MI pairs across
- sentences, both to resolve references and to detect entities.
- The 
+ multiple paragraphs, both to resolve references and to detect entities.
+ Such 
 \begin_inset Quotes eld
 \end_inset
 
@@ -280,28 +283,29 @@ syntactic
 \end_inset
 
  relationships between entities presumably encodes their semantic properties.
- Such syntactic relations can also be extracted between different sense
- streams, say, between words and blueprints/diagrams, or words and photographs,
- or even perhaps big-data settings such as computer vulnerability databases,
+ Syntactic relations can also be extracted between different sense streams,
+ say, between words and blueprints/diagrams, or words and photographs, or
+ even perhaps big-data settings such as computer vulnerability databases,
  or financial news and stock prices.
  The author believes the basic algorithm is generic, and can be ratcheted
  upwards, to arbitrarily high reaches.
  Whether this proves to be true cannot be known without actual experiments;
- the current limitation to carrying these out is the development of a suitable
- software infrastructure.
+ the current limitation to carrying these out is time and money: the development
+ of a suitable software infrastructure, the performance of experiments.
 \end_layout
 
 \begin_layout Standard
 The remainder of this paper focuses on the narrow tasks defined above, in
- the same order as given.
+ the order given.
  The computation of word-pairs results in a graph, whose vertexes are words,
  and whose edges are word-pairs.
  What are the statistical properties of this graph? MST parsing and the
- creating of jigsaw pieces results in a matrix of word, connector-sequence
+ creating of jigsaw pieces results in a matrix of (word, connector-sequence)
  pairs.
- What are the statistical properties of this matrix? The similarity between
- words can be judged with assorted different measures; how do these behave,
- and how does clustering and word-sense disambiguation proceed, in practice?
+ What are the statistical properties of this matrix? Words are vectors in
+ this matrix; the similarity between words can be judged with assorted different
+ vector measures; how do these behave, and how does clustering and word-sense
+ disambiguation proceed, in practice?
 \end_layout
 
 \begin_layout Subsection*
@@ -318,7 +322,7 @@ status collapsed
 See 
 \begin_inset CommandInset href
 LatexCommand href
-name "GitHub opencog/learn"
+name "https://github.com/opencog/learn"
 target "https://github.com/opencog/learn"
 literal "false"
 
@@ -337,7 +341,7 @@ status collapsed
 See 
 \begin_inset CommandInset href
 LatexCommand href
-name "GitHub opencog/atomspace"
+name "https://github.com/opencog/atomspace"
 target "https://github.com/opencog/atomspace"
 literal "false"
 
@@ -373,7 +377,7 @@ status collapsed
 See 
 \begin_inset CommandInset href
 LatexCommand href
-name "AtomSpace Matrix API"
+name "https://github.com/opencog/atomspace/tree/master/opencog/matrix"
 target "https://github.com/opencog/atomspace/tree/master/opencog/matrix"
 literal "false"
 
@@ -398,13 +402,20 @@ literal "false"
  100K entries, of which all but a few million are zero.
  Conventional mathematics and statistics packages do not provide such tools
  for sparse data.
- The other difference between the AtomSpace and conventional statistical
- tools is that the rows and columns are themselves distinct collections
- of subgraphs of some larger graph.
+ Furthermore, the 
+\begin_inset Quotes eld
+\end_inset
+
+base data
+\begin_inset Quotes erd
+\end_inset
+
+ in the AtomSpace are graphs; the matrices themselves are but slices through
+ the graphs.
  Given some large graph of data, one can slice-n-dice it in any number of
- ways, and ask how portions of it correlate, by imposing a matrix structure
- on the parts of interest.
+ ways, and to use the matrix API to ask how portions of it correlate.
  To put those parts under a microscope.
+ This is why the AtomSpace is used, and not some more conventional framework.
 \end_layout
 
 \begin_layout Standard
@@ -436,6 +447,7 @@ Pair Counting
 
 \emph on
 How do I count thee? Let me show the ways I love most.
+ – NYRB
 \end_layout
 
 \begin_layout Standard
@@ -456,7 +468,7 @@ Obtaining a suitable corpus for exploring the English language is not as
 Some minimal amount of cleanup can be useful, but it doesn't seem to be
  critical: if some specialized markup (say, HTML markup) or the occasional
  table, figure caption or index squeezes through, it should not matter much:
- after all these also have structure, and the goal of the project is to
+ after all, these also have structure, and the goal of the project is to
  discern structure.
 \end_layout
 
@@ -464,7 +476,8 @@ Some minimal amount of cleanup can be useful, but it doesn't seem to be
 The size of the vocabulary increases as the size of the corpus increases.
  This is because of the Zipfian distribution of words: it will always be
  the case that about half of the vocabulary is observed only once: unusual
- given names, obscure geographical place names, foreign language loan words.
+ given names, obscure geographical place names, foreign language loan words...
+ and stray markup.
  
 \end_layout
 
@@ -474,9 +487,9 @@ Word-pair counting can be done in several different ways: one is to count
  six.
  Another possibility is to count the word-pairs occurring in a completely
  random planar parse of a sentence.
- There does not appear to be much difference between these two styles of
- counting, although the second style seems more appealing on theoretical
- grounds.
+ Both methods seem to yeild similar results, and differences are not (obvioulsy)
+ discernable.
+ The second style is slightly more appealing on theoretical grounds.
 \end_layout
 
 \begin_layout Standard
@@ -489,7 +502,7 @@ A good way to characterize the number of observed word-pairs is by means
  all possible word-pairs.
  Hewing to an information-theoretic foundation, other characteristics include
  the left and right entropies, and the total mutual information.
- This is somewhat more interesting than the more conventional statements
+ These are somewhat more interesting than the more conventional statements
  about the average degree of a vertex in a graph, or the average 
 \begin_inset Quotes eld
 \end_inset
@@ -501,7 +514,7 @@ hubbiness
  (root-mean-square of the degree).
  This is because of the Zipfian distribution of words: given this, most
  of the graph statistics follow.
- The mutual information is more interesting, as it is a key ingredient to
+ The mutual information is most interesting, as it is a key ingredient to
  an information-theoretic foundation.
  A summary and some graphs follow.
 \end_layout
@@ -518,6 +531,15 @@ status collapsed
 
 \begin_layout Plain Layout
 See Diary Part Two, page 75 and Diary Part Three, page 7.
+ The corpus was divided into five 
+\begin_inset Quotes eld
+\end_inset
+
+tranches
+\begin_inset Quotes erd
+\end_inset
+
+; each dataset includes one more tranche of the corpus.
 \end_layout
 
 \end_inset
@@ -1556,6 +1578,52 @@ Given an MST or MPG parse, each edge is cut in half, and the half-edge is
 \end_inset
 
 .
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+For example, parsing 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+John hit the ball
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ results in a 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ pair 
+\family typewriter
+(hit, John- & ball+)
+\family default
+ for the verb 
+\begin_inset Quotes eld
+\end_inset
+
+hit
+\begin_inset Quotes erd
+\end_inset
+
+: a subject on the left, and an object on the right.
+ Details can be found in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
  Parsing a large corpus this way, the counts are accumulated in the database,
  to give a count 
 \begin_inset Formula $N\left(w,d\right)$
@@ -2307,7 +2375,15 @@ Drawn for comparison is a Gaussian, centered at an MI of 6, with a standard
  a normal distribution; just that it seems not inappropriate.
  Compared to the Gaussian in the earlier figure for word-pairs, this one
  is clearly centered far away from MI=0.
- 
+ A certain 
+\begin_inset Quotes eld
+\end_inset
+
+amplificaion of information
+\begin_inset Quotes erd
+\end_inset
+
+ appears to have occured.
 \end_layout
 
 \begin_layout Standard
@@ -2318,7 +2394,7 @@ Trimming away low-count disjuncts and disjunct-word pairs is clearly removing
 e.g.
 
 \emph default
- high MI pairs from stray html markup) or are potentially meaningful.
+ high MI pairs from stray HTML markup) or are potentially meaningful.
 \end_layout
 
 \begin_layout Section*
@@ -2418,8 +2494,8 @@ Note that this MI is symmetric:
 \begin_layout Standard
 How well does this work? Fantastically well; creating a list of the top-100
  most similar words, as ranked by MI, provides excellent results, excellent
- in the sense that just looking at the list really are either synonyms,
- or are obviously grammatically similar.
+ in the sense that just looking at the list it is clear that they really
+ are synonyms, or are obviously grammatically similar.
  But then a problem becomes evident: all of the high-MI word pairs involve
  rare, infrequent words.
  If one is to build a syntactical lexis, one really wants to begin by looking
@@ -2497,8 +2573,12 @@ See Diary Part Three, page 14; see also Diary Part Five.
 
 \begin_layout Standard
 The curve marked G is a Gaussian, with the indicated mean and standard deviation.
- The graph for the VI is nearly identical, having the same deviation, but
- with the mean shifted to 1.5.
+ The negative mean MI is just saying that most words are 
+\emph on
+not
+\emph default
+ similar to one-another (duhh.) The graph for the VI is nearly identical,
+ having the same deviation, but with the mean shifted to 1.5.
 \end_layout
 
 \begin_layout Section*
@@ -2704,21 +2784,21 @@ might should will may
 \end_inset
 
 The clusters above are sets of words, all of which have a high pairwise-VI
- amongst themselves.
+ amongst one-another.
  Most of these are obvious.
  The cluster of capitalized words is perhaps surprising: but these are all
  sentence-starters: they are similar because they all start occur first,
  and start similar sentences.
+ (Recall, the corpus is adventure literature, with a lot of dialog in it.)
 \end_layout
 
 \begin_layout Standard
 One can form such clusters quite naively, by searching for cliques of similar
  words.
- However, to get adequate word-sense disambiguation, one must be more sophistica
-ted.
- This is, because when one forms a cluster, one should include only this
- disjuncts which all of the words share in common, and exclude those that
- do not.
+ However, to get adequate word-sense disambiguation (WSD), one must be more
+ sophisticated.
+ When one forms a cluster, one should include only those disjuncts which
+ all of the words share in common, and exclude those that are not.
  A canonical example of this is the word 
 \begin_inset Quotes eld
 \end_inset
@@ -2737,9 +2817,9 @@ to see
 
 , and a cutting implement.
  In forming a cluster with other viewing (or listening) verbs, one wishes
- to accept only the disjuncts pertinent to such verbs.
- Excluding the others leaves behind the disjuncts for the other verb senses,
- in this case, those for cutting tools.
+ to accept only the disjuncts pertinent to viewing/listening.
+ Excluding the others leaves behind the disjuncts for cutting tools.
+ Thus WSD is accomplished.
 \end_layout
 
 \begin_layout Standard
@@ -2762,8 +2842,8 @@ See Diary Part Four, pages 13–25.
 
 \end_inset
 
- Starting with the pair of words having currently the highest possible VI,
- one searches for additional words with a high VI.
+ Starting with the pair of words having the highest possible VI, one searches
+ for additional words with a high VI to these two.
  These form the candidate members to the club.
  It is useful to have a reasonably large club, and so one can set a threshold,
  admitting as candidates all those above the threshold.
@@ -2802,7 +2882,7 @@ On the left, all of the seed-pairs are made of very frequent words.
 
 \begin_layout Standard
 The above only provides a list of candidate members.
- Setting a thigh threshold keeps the candidate list small.
+ Setting a high threshold keeps the candidate list small.
  But which words, exactly, should be admitted to the club? This can be determine
 d by seeing what disjuncts the words share in common.
  For a given candidate list, one simply counts the fraction of all disjuncts
