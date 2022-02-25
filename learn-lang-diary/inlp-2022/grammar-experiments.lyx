@@ -1585,7 +1585,7 @@ The first thing one notices is that there are vastly more disjuncts than
 \begin_layout Standard
 Results are summarized in the table below.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The raw data is in Diary Part Six.
@@ -2266,19 +2266,59 @@ served disjuncts.
 \end_layout
 
 \begin_layout Standard
-TODO:
-\end_layout
+The MI between words ad disjuncts can be computed; this forms a distribution,
+ shown below, both for the full datset, and for the trimmed variants.
+\begin_inset Foot
+status collapsed
 
-\begin_layout Itemize
-Graph of (w,d) MI distribution (Earlier version of this is in 
+\begin_layout Plain Layout
+An earlier version of this graph, for a different dataset, can be found
+ in 
 \begin_inset Quotes eld
 \end_inset
 
-ConnectoSet Distributions
+Connector Set Distributions
 \begin_inset Quotes erd
 \end_inset
 
- 2017 dataset results, page 22.
+ (2018) page 22.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../p6-djmi/r4-djmi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Drawn for comparison is a Gaussian, centered at an MI of 6, with a standard
+ deviation of 3.
+ There is no compelling reason to beleive that the distribution should be
+ a normal distribution; just that it seems not inappropriate.
+ Compared to the Gaussian in the earlier figure for word-pairs, this one
+ is clearly centered far away from MI=0.
+ 
+\end_layout
+
+\begin_layout Standard
+Trimming away low-count disjuncts and disjunct-word pairs is clearly removing
+ many of the highest MI pairs.
+ It is not clear if the trimmed pairs are junk (
+\emph on
+e.g.
+
+\emph default
+ high MI pairs from stray html markup) or are potentially meaningful.
 \end_layout
 
 \begin_layout Section*
