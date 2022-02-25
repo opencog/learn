@@ -6,7 +6,7 @@ set term png
 set out 'r4-djmi.png'
 # set term postscript eps enhanced color 20
 # set out 'r4-djmi.eps'
-set key right top
+set key left top
 set title "MI Distribution of word-dj Pairs"
 set xlabel "MI"
 set ylabel "Frequency"
@@ -17,12 +17,14 @@ set yrange [1e-6:1]
 
 g(x,m,s) = (1/sqrt(2*3.14159*s)) * exp(- (x-m)**2 / (2*s**2)) 
 
+norm000 = 1.0 / 28436901
 norm111 = 1.0 / 2049074
 norm222 = 1.0 / 622378
 norm522 = 1.0 / 556413
 norm1042 = 1.0 / 356298
 
-plot "r4-sect-mi-1-1-1.dat" using 2:(norm111 * $3) with lines lw 2 title "trim-1-1-1", \
+plot "r4-sect-mi-0-0-0.dat" using 2:(norm000 * $3) with lines lw 2 title "trim-0-0-0", \
+     "r4-sect-mi-1-1-1.dat" using 2:(norm111 * $3) with lines lw 2 title "trim-1-1-1", \
      "r4-sect-mi-2-2-2.dat" using 2:(norm222 * $3) with lines lw 2 title "trim-2-2-2", \
      "r4-sect-mi-5-2-2.dat" using 2:(norm522 * $3) with lines lw 2 title "trim-5-2-2", \
      "r4-sect-mi-10-4-2.dat" using 2:(norm1042 * $3) with lines lw 2 title "trim-10-4-2", \
@@ -43,7 +45,8 @@ set logscale y
 set format y "10^{%L}"
 # set yrange [4e-8:5e-2]
 
-plot "r4-wei-mi-1-1-1.dat" using 2:3 with lines lw 2 title "trim-1-1-1", \
+plot "r4-wei-mi-0-0-0.dat" using 2:3 with lines lw 2 title "trim-0-0-0", \
+     "r4-wei-mi-1-1-1.dat" using 2:3 with lines lw 2 title "trim-1-1-1", \
      "r4-wei-mi-2-2-2.dat" using 2:3 with lines lw 2 title "trim-2-2-2", \
      "r4-wei-mi-5-2-2.dat" using 2:3 with lines lw 2 title "trim-5-2-2", \
      "r4-wei-mi-10-4-2.dat" using 2:3 with lines lw 2 title "trim-10-4-2"

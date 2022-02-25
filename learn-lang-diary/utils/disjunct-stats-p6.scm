@@ -45,6 +45,7 @@
 (prt-hist binned-sect-mi "/tmp/r4-sect-mi-5-2-2.dat")
 (prt-hist binned-sect-mi "/tmp/r4-sect-mi-2-2-2.dat")
 (prt-hist binned-sect-mi "/tmp/r4-sect-mi-1-1-1.dat")
+(prt-hist binned-sect-mi "/tmp/r4-sect-mi-0-0-0.dat")
 
 (define (sect-freq SECT) (psf 'pair-freq SECT))
 
@@ -56,5 +57,6 @@
 (prt-hist weighted-sect-mi "/tmp/r4-wei-mi-5-2-2.dat" )
 (prt-hist weighted-sect-mi "/tmp/r4-wei-mi-2-2-2.dat" )
 (prt-hist weighted-sect-mi "/tmp/r4-wei-mi-1-1-1.dat" )
+(prt-hist weighted-sect-mi "/tmp/r4-wei-mi-0-0-0.dat" )
 
 ; -------------
