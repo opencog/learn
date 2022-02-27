@@ -11119,6 +11119,159 @@ Finished with MI computations; this took 4.449 hours.
  (smi 'mmt-marginal wc) ; 0.0
 
 (define psu (add-support-compute covr-obj))
+====================================================
+run-12 sanity checks.
+noise=3 ext
+Rows: 10031 Columns: 925134  == log_2 13.2922 x 19.8193
+Size: 1937274.0  log_2 size: 20.8856
+Fraction non-zero: 2.0876E-4 Sparsity: 12.2259  Rarity: 4.32986
+Total obs: 22643824.0  Avg obs/pair: 11.6885  log_2 avg: 3.54702
+Entropy Total: 18.0602   Left: 16.0128   Right: 8.39150
+Total MI: 5.5480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  163.4        3.1862E+4
+Count   (l_1)  5818.        3.1884E+5     35.61        10.01
+Length  (l_2)  917.6        8105.         5.616        .2544
+RMS Count      835.1        7978.         5.111        .2504
+
+MM^T support=87571358.0     count=167020867736.0     entropy=15.487
+
+Now recomp from scratch:
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+
+
+(print-matrix-summary-report star-obj)
+Rows: 10031 Columns: 1447377  == log_2 13.2922 x 20.4650
+Size: 3402228.0  log_2 size: 21.6980
+Fraction non-zero: 2.3434E-4 Sparsity: 12.0591  Rarity: 4.81945
+Total obs: 34051699.0  Avg obs/pair: 10.0086  log_2 avg: 3.32318
+Entropy Total: 18.0602   Left: 16.0128   Right: 8.39150
+Total MI: 5.5480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  161.0        2.9285E+4
+Count   (l_1)  8541.        3.3810E+5     53.05        11.55
+Length  (l_2)  2433.        1.7301E+4     15.11        .5908
+RMS Count      2233.        1.7197E+4     13.87        .5872
+
+
+Crap. That is totally. completly different. WTF.
+
+r12-log-q0.7-c0.2-n3.dat
+# N,rows,cols,lcnt,rcnt,size
+1       9495    1015850 22643824        22643824        2717117
+1062    10031   925134  22643824        22643824        1937274
+
+And so counts are completely violated.
+The report says detailed balance was preserved, but recalculating it
+broke everything. wtf.
+-------------
+Fresh start:
+Rows: 9495 Columns: 1015850  == log_2 13.2130 x 19.9543
+Size: 2717117.0  log_2 size: 21.3736
+Fraction non-zero: 2.8170E-4 Sparsity: 11.7936  Rarity: 4.79004
+Total obs: 22643824.0  Avg obs/pair: 8.33377  log_2 avg: 3.05897
+Entropy Tot: 19.4210  Left: 16.5007  Right: 8.46831  MI: 5.54801
+MM^T support=193557505.0     count=131743839840.0     entropy=18.117
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  163.4        3.1862E+4
+Count   (l_1)  5818.        3.1884E+5     35.61        10.01
+Length  (l_2)  917.6        8105.         5.616        .2544
+RMS Count      835.1        7978.         5.111        .2504
+
+((PredicateNode . 26)
+(ListLink . 418856) (AnyNode . 7)
+(Connector . 17062) (ConnectorDir . 2)
+(ConnectorSeq . 204680)
+(Section . 833833) (ShapeLink . 811170) (CrossSection . 1883284)
+(VariableNode . 1) (EvaluationLink . 9496) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9495))
+
+Above looks consistent with the summary report.
+
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+Looks good. (after recomput of marginals).
+
+Now do:
+(in-group-cluster covr-obj 0.7 0.2 3 200 1)
+
+Rows: 9496 Columns: 1018843  == log_2 13.2131 x 19.9585
+Size: 2714611.0  log_2 size: 21.3723
+Fraction non-zero: 2.8058E-4 Sparsity: 11.7993  Rarity: 4.78651
+Total obs: 22643824.0  Avg obs/pair: 8.34146  log_2 avg: 3.06030
+Entropy Tot: 19.4171  Left: 16.5051  Right: 8.47292  MI: 5.54801
+MM^T support=191289125.0     count=131527914076.0     entropy=18.086
+
+so total observations unchanged, other things changes sligtly,
+seems OK to me.
+
+((PredicateNode . 55)
+(ListLink . 419610) (MemberLink . 6) (AnyNode . 7)
+(Connector . 17064) (ConnectorDir . 2)
+(ConnectorSeq . 206972)
+(Section . 833009)
+(ShapeLink . 811871)
+(CrossSection . 1881602) (VariableNode . 1)
+(EvaluationLink . 9497) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SimilarityLink . 20300) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9495) (WordClassNode . 1))
+
+section+cross= 2714611 agrees w/ reported size.
+conseq+shape = 1018843 agrees w/ numcols
+
+
+(btr 'clobber)
+(btr 'mmt-marginals)
+No change. Cool.
+
+Exit, restart.
+still looks good.
+(cog-reoprt-counts) is same as above, except for:
+(ShapeLink . 831218)  so 20K more shapes...
+(CrossSection . 1925192)  more crosses.
+OK, code needs to delete not purge, yeah!?
+
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+
+Rows: 9496 Columns: 1038190  == log_2 13.2131 x 19.9856
+Size: 2758201.0  log_2 size: 21.3953
+Fraction non-zero: 2.7977E-4 Sparsity: 11.8034  Rarity: 4.79592
+Total obs: 22784833.0  Avg obs/pair: 8.26076  log_2 avg: 3.04627
+Entropy Tot: 19.4171  Left: 16.5051  Right: 8.47292  MI: 5.54801
+MM^T support=194867655.0     count=132418291939.0     entropy=18.130
+
+Whoops, there we go:
+20K more columns, 44K more entries, 143K more observations.
+is ... delete not working?
+
+((PredicateNode . 54) (ListLink . 419610) (MemberLink . 6) (AnyNode . 7)
+(Connector . 17064) (ConnectorDir . 2)
+(ConnectorSeq . 206972)
+(Section . 833009)
+(ShapeLink . 831218)
+ (CrossSection . 1925192) (VariableNode . 1)
+(EvaluationLink . 9497) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1)
+(WordNode . 9495) (WordClassNode . 1))
+
+Section+CrossSection= 2758201 size is in agreement
+ConnectorSeq+Shape = 1038190 is in agreement
+
+(VariableNode "$connector-word")
+(cog-incoming-size (first (cog-incoming-set v)))
+but these are all Shapes.
+
+Cleanup is OK.
+
 
 
 ====================================================
@@ -11213,9 +11366,9 @@ FIXED:
   (PredicateNode "*-Norm Key-*") .. so support-obj
   I don't get it. I looked at the code, and this should be happening
   already. Maybe this was a hang-over from before? DONE. It was a bug.
+* Add rarity and log-sizes to summary report.  DONE
 
 TODO/BUGS:
-* Add rarity and log-sizes to summary report.
 * Finish work in link-grammar bug #1276 -sqlite sanity checks.
 * Alter dict export to not require creation of singletons.
   They are way too slow and not really a needed step.
