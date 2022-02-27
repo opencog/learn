@@ -326,8 +326,9 @@
 		(when RMX
 			(for-each (lambda (xst)
 				(define shp (LLOBJ 'right-element xst))
-				; Cross-sections are never stored, so extract is enough.
-				(cog-extract! xst)
+				; Cross-sections shouldn't have been stored ... and
+				; yet they often are. So cog-extract! is NOT enough.
+				(cog-delete! xst)
 				; Shapes store marginals, so if they are deleteable, delete them.
 				(cog-delete! shp)  ;; Safe, its not recursive.
 				(set! nx (+ 1 nx)))
