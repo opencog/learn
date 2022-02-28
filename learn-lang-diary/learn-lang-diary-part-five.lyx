@@ -6721,6 +6721,10 @@ imprecise
  Unable to recover and pick up where they left off; there is some kind of
  bug that prevents restarting (the marginals get unbalanced, and recomputing
  them leaves somethng wrong...) These halted as shown:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6843,22 +6847,16 @@ r12-log-q0.7-c0.2-n4.dat
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 The last two stopped at almost the same place, and thus allow head-to-head
  comparisions.
-\end_layout
-
-\begin_layout Paragraph*
-Maybe fixable?
-\end_layout
-
-\begin_layout Standard
-The problem might be because the initial file held CrossSection in it that
- were never deleted.
- This might be the root cause failure.
- Retry restarting, again.
+ See much farther below.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -8403,6 +8401,8 @@ The Crash
 \begin_layout Standard
 As noted above, the runs crashed.
  Will try restarting one more time, after nuking invalid CrossSections.
+ Nope.
+ That doesn't work.
 \end_layout
 
 \begin_layout Subsection*

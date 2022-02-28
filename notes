@@ -11423,6 +11423,97 @@ Plow ahead
 
 
 ====================================================
+noise=2
+Entropy Tot: 17.9826
+Left and right entropy sums fail to be equal: 20.173277930295733 17.98237494387546
+
+So lsum seems too big ... lsum is sum over
+(frqobj 'left-wild-entropy x)  where x is right-elt
+
+(define frqobj (add-pair-freq-api star-obj #:nothrow #t))
+
+   (define (left-sum FN)
+      (fold
+         (lambda (right-item sum) (+ sum (FN right-item)))
+         0 (star-obj 'right-basis)))
+
+ (define lsum (left-sum
+            (lambda (x) (frqobj 'left-wild-entropy x))))
+
+clobber does not fix it.  Search for bad ones..?
+
+   (define (cache-left-entropy RIGHT-ITEM)
+      (define ent (compute-left-entropy RIGHT-ITEM))
+      (define fent (/ ent (frqobj 'left-wild-freq RIGHT-ITEM)))
+      (frqobj 'set-left-wild-entropy RIGHT-ITEM ent fent))
+
+   ; Compute the left-wild entropy summation:
+   ;    h_left(y) = -sum_x P(x,y) log_2 P(x,y)
+   (define (compute-left-entropy RIGHT-ITEM)
+      (fold
+         (lambda (PAIR sum) (+ sum (frqobj 'pair-entropy PAIR)))
+         0
+         (star-obj 'left-stars RIGHT-ITEM)))
+
+	(define nok 0)
+	(define bad #f)
+	(define (is-eq? a b) (> 1.0e-10 (abs (- a b))))
+   (define (check-left-entropy RIGHT-ITEM)
+      (define ent (compute-left-entropy RIGHT-ITEM))
+      ; (define fent (/ ent (frqobj 'left-wild-freq RIGHT-ITEM)))
+		(define ment (frqobj 'left-wild-entropy RIGHT-ITEM))
+		; (define mfent (frqobj 'left-wild-fentropy RIGHT-ITEM))
+		(set! nok (+ 1 nok))
+		(when (not (is-eq? ent ment))
+			(set! bad RIGHT-ITEM)
+			(format #t "Not equal ~D ~A ~A for\n~A" nok ent ment RIGHT-ITEM)
+			(foobar))
+		)
+
+	(for-each check-left-entropy (star-obj 'right-basis))
+
+First one fails:
+Not equal 1 0 2.069669352634443e-6 for
+(ShapeLink
+  (WordNode "James")
+  (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+  (Connector (WordNode "replied") (ConnectorDir "+")))
+
+(define bstars (star-obj 'left-stars bad))
+ (length bstars)
+$5 = 0
+
+So ... why was this not deleted?
+Start merge 890 with seed pair `April` and `February October March Decemb
+er January July August September May June an some these each June`
+
+In-group size=2: `February October March December January July August September 
+May June an some these each June` `April`
+
+
+(define nost 0)
+(define nexm 0)
+(define (no-stars RIGHT-ITEM)
+	(define lstars (star-obj 'left-stars RIGHT-ITEM))
+	(set! nexm (+ 1 nexm))
+	(when (equal? 0 (length lstars))
+		(set! nost (+ 1 nost))))
+
+(for-each no-stars (star-obj 'right-basis))
+
+(define nost 0)
+(define nexm 0)
+(define (no-stars LEFT-ITEM)
+	(define rstars (star-obj 'right-stars LEFT-ITEM))
+	(set! nexm (+ 1 nexm))
+	(when (equal? 0 (length rstars))
+		(set! nost (+ 1 nost))))
+
+(for-each no-stars (star-obj 'left-basis))
+
+
+
+====================================================
 ====================================================
 
 FIXED:
