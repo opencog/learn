@@ -102,8 +102,10 @@
 		(LLOBJ 'right-basis))
 
 	(if (< 0 cnt)
-		(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
-			cnt tot)
+		(begin
+			(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
+				cnt tot)
+			(LLOBJ 'clobber))
 		(format #t "Checked right basis of ~A, all are used (all OK).\n"
 			tot))
 	*unspecified*
