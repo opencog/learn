@@ -6850,6 +6850,17 @@ The last two stopped at almost the same place, and thus allow head-to-head
  comparisions.
 \end_layout
 
+\begin_layout Paragraph*
+Maybe fixable?
+\end_layout
+
+\begin_layout Standard
+The problem might be because the initial file held CrossSection in it that
+ were never deleted.
+ This might be the root cause failure.
+ Retry restarting, again.
+\end_layout
+
 \begin_layout Subsubsection*
 Sparsity
 \end_layout
@@ -8383,6 +8394,191 @@ r12-mi-sim200.rdb
 r12-mi.rdb
 \family default
 ` with word-similarities precomputed for the top 200 ranked words.
+\end_layout
+
+\begin_layout Subsection*
+The Crash
+\end_layout
+
+\begin_layout Standard
+As noted above, the runs crashed.
+ Will try restarting one more time, after nuking invalid CrossSections.
+\end_layout
+
+\begin_layout Subsection*
+Similarity between WordClasses vs.
+ Words
+\end_layout
+
+\begin_layout Standard
+Two datasets halted at almost the same place.
+ Perhaps they are comparable.
+ As below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nmerges
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nclasses
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n3.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1062
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+536
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n4.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1058
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+530
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In both cases, the number of word-classes that survived is almost exactly
+ half the number of merges run (why half?) This is because classes get repeatedl
+y merged into, instead of having new classes being created out of the blue.
+ Kind of surprising, this needs to be understood better.
+\end_layout
+
+\begin_layout Standard
+Anyway: One hypothesis: the similarity distributions between word-classes
+ should be low.
+ That should be quite distinct from one another, one might hope.
+ So, three batches of similarity distributions:
+\end_layout
+
+\begin_layout Itemize
+Similarity between all of the 530 (or 536) word-classes.
+ (not counting self-similarity).
+\end_layout
+
+\begin_layout Itemize
+Similarity between the top-ranked 530 words.
+\end_layout
+
+\begin_layout Itemize
+Similarity between the top-ranked words and word-classes.
+\end_layout
+
+\begin_layout Standard
+What will it be like? Can we expect the third bullet to show higher similarity
+ than the second?
+\end_layout
+
+\begin_layout Standard
+All simiarities will be recomputed from scratch, as the existing similarities
+ are tainted by the altered disjuncts – i.e.
+ the old similarities might not have been recomputed, after a change to
+ their disjuncts.
+ Only the 
+\begin_inset Quotes eld
+\end_inset
+
+precise
+\begin_inset Quotes erd
+\end_inset
+
+ merges recompute all similarities.
 \end_layout
 
 \begin_layout Section*
