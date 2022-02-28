@@ -113,6 +113,57 @@
 
 ; -------------------------------------------------------------------
 
+(define (check-empty-left-basis LLOBJ)
+"
+  Verify that every member of the left-basis appears in some matrix
+  element. That is, has non-empty right-stars.
+
+  This has not been observed to happen, and so is unexpected.
+"
+	(define tot (LLOBJ 'left-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'right-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+		))
+		(LLOBJ 'left-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A ConnectorSeqs (out of ~A) that are unused!\n"
+			cnt tot)
+		(format #t "Checked left basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+(define (zap-empty-left-basis LLOBJ)
+"
+  Delete every member of the left-basis that never appears in
+  any matrix elements. That is, if it has non-empty right-stars.
+"
+	(define tot (LLOBJ 'left-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'right-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+			(cog-delete! RIGHT-ITEM)
+		))
+		(LLOBJ 'left-basis))
+
+	(if (< 0 cnt)
+		(begin
+			(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
+				cnt tot)
+			(LLOBJ 'clobber))
+		(format #t "Checked left basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+; -------------------------------------------------------------------
+
 (define* (check-connectors LLOBJ #:optional (PRT #f))
 "
   Verify that Connectors are used sanely.
@@ -292,6 +343,7 @@
 	(define stars-obj (add-pair-stars LLOBJ))
 
 	(check-empty-right-basis stars-obj)
+	(check-empty-left-basis stars-obj)
 	(check-conseq-marginals stars-obj)
 	(check-word-marginals stars-obj)
 	(check-connectors stars-obj)
@@ -302,6 +354,7 @@
 	(define stars-obj (add-pair-stars LLOBJ))
 
 	(zap-empty-right-basis stars-obj)
+	(zap-empty-left-basis stars-obj)
 	(zap-conseq-marginals stars-obj)
 	(zap-word-marginals stars-obj)
 	(zap-connectors stars-obj)
