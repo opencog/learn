@@ -60,6 +60,57 @@
 
 ; -------------------------------------------------------------------
 
+(define (check-empty-right-basis LLOBJ)
+"
+  Verify that every member of the right-basis appears in some matrix
+  element. That is, has non-empty left-stars.
+
+  This will trigger when cleaning up datasets that had inadvertently
+  stored CrossSections, and the CrossSections were deleted because
+  they were merged into classes.
+"
+	(define tot (LLOBJ 'right-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'left-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+		))
+		(LLOBJ 'right-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A ConnectorSeqs (out of ~A) that are unused!\n"
+			cnt tot)
+		(format #t "Checked right basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+(define (zap-empty-right-basis LLOBJ)
+"
+  Delete every member of the right-basis that never appears in
+  any matrix elements. That is, if it has non-empty left-stars.
+"
+	(define tot (LLOBJ 'right-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'left-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+			(cog-delete! RIGHT-ITEM)
+		))
+		(LLOBJ 'right-basis))
+
+	(if (< 0 cnt)
+		(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
+			cnt tot)
+		(format #t "Checked right basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+; -------------------------------------------------------------------
+
 (define* (check-connectors LLOBJ #:optional (PRT #f))
 "
   Verify that Connectors are used sanely.
@@ -238,6 +289,7 @@
 "
 	(define stars-obj (add-pair-stars LLOBJ))
 
+	(check-empty-right-basis stars-obj)
 	(check-conseq-marginals stars-obj)
 	(check-word-marginals stars-obj)
 	(check-connectors stars-obj)
@@ -247,6 +299,7 @@
 (define (cleanup-gram-dataset LLOBJ)
 	(define stars-obj (add-pair-stars LLOBJ))
 
+	(zap-empty-right-basis stars-obj)
 	(zap-conseq-marginals stars-obj)
 	(zap-word-marginals stars-obj)
 	(zap-connectors stars-obj)
