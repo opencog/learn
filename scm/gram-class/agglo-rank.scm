@@ -769,75 +769,17 @@
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
-	; The ordinary MI similarity of two words
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define (mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref miv 0) -inf.0))
-
-	; The ranked MI similarity of two words
-	(define (ranked-mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref miv 1) -inf.0))
-
-	; The similarity function to use for the in-group formation.
-	; Hypothesis: ordinary MI creates better clusters.
-	; (define IN-GRP-SIM ranked-mi-sim)
-	(define IN-GRP-SIM mi-sim)
-
-	; Log what we actually used.
-	(define *-log-anchor-* (LLOBJ 'wild-wild))
-	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
-		(StringValue "mi-sim"))
-
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 
-	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
-		(FloatValue QUORUM COMMONALITY NOISE NRANK))
+	; Create the function that determines group membership.
+	(define get-merg-grp (make-membership-selector LLOBJ
+		QUORUM COMMONALITY NOISE))
 
-	; ------------------------------
-	; Find the largest in-group that also shares more than a
-	; fraction COMMONALITY of disjuncts among a QUORUM of members.
-	; The returned group will always have at least two members,
-	; the initial two proposed.
-	(define (get-merg-grp WA WB CANDIDATES)
-		(define initial-in-grp
-			(optimal-in-group IN-GRP-SIM WA WB CANDIDATES))
-
-		(format #t "Initial in-group size=~D:" (length initial-in-grp))
-		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-			initial-in-grp)
-		(format #t "\n")
-
-		; Tail-recursive trimmer; rejects large groups with little
-		; commonality. Accepts first grouping with commonality above
-		; the threshold COMMONALITY, or the last grouping before the
-		; commonality decreases.
-		(define (trim-group GRP prev-com prev-grp)
-			(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-			(define comality (/ (car ovlp) (cadr ovlp)))
-			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
-
-			; In plain English:
-			; If comality is above threshold, accept.
-			; If comality dropped, compared to the previous,
-			;    accept the previous.
-			; If we are down to two, accept. Do this check last.
-			; Else trim one word from the end, and try again.
-			(cond
-				((< COMMONALITY comality) GRP)
-				((< comality prev-com) prev-grp)
-				((= (length GRP) 2) GRP)
-				(else (trim-group (drop-right GRP 1) comality GRP))))
-
-		(trim-group initial-in-grp -1.0 initial-in-grp)
-	)
-
-	; ------------------------------
+	; Create the function that performs the merge.
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
+	; ------------------------------
 	; Main workhorse function
 	(define (perform-merge N WA WB)
 		(define e (make-elapsed-secs))
@@ -850,6 +792,7 @@
 		(define n-to-take (inexact->exact
 			(min (length ranked-words) (+ NRANK (* 3 N)))))
 		(define words-with-sims (take ranked-words n-to-take))
+
 		(define in-grp (get-merg-grp WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
