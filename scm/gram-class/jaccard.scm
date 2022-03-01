@@ -76,10 +76,14 @@
 	; commonality. Accepts first grouping with commonality above
 	; the threshold COMMONALITY, or the last grouping before the
 	; commonality decreases.
-	(define (trim-group GRP prev-com prev-grp)
+	;
+	; Tail-recursive means that only candidates from the end of
+	; the list are trimmed away.  See the exhaustive-search version,
+	; below, for an alternate approach.
+	(define (trim-tail-rec GRP prev-com prev-grp)
 		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 		(define comality (/ (car ovlp) (cadr ovlp)))
-		(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+		(format #t "Club size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 			(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
 
 		; In plain English:
@@ -92,7 +96,59 @@
 			((< COMMONALITY comality) GRP)
 			((< comality prev-com) prev-grp)
 			((= (length GRP) 2) GRP)
-			(else (trim-group (drop-right GRP 1) comality GRP))))
+			(else (trim-tail-rec (drop-right GRP 1) comality GRP))))
+
+	(define (trim-tail GRP)
+		(trim-tail-rec GRP -1.0 GRP))
+
+	; ------------------------------
+	; mask out the IDX'th enty in the LST. That is, return a
+	; list with the IDX'th entry removed.
+	(define (mask LST IDX)
+		(append (take LST IDX) (drop LST (+ IDX 1))))
+
+	; Exhaustive exploration trimmer; rejects large groups with little
+	; commonality. Accepts first grouping with commonality above
+	; the threshold COMMONALITY, or the last grouping before the
+	; commonality decreases. This performs an exhaustive search
+	; by eliminating candidates one by one.
+	(define (trim-exhaust-rec GRP)
+
+		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
+		(define comality (/ (first ovlp) (second ovlp)))
+		(define glen (length GRP))
+		(define best (append ovlp GRP))
+
+		; If the group has two members, it cannot be shrunk any more.
+		; If the group already exceeds the commonality bound, we are
+		; done. Else, drop one, and see what happens.
+		(when (and (< 2 glen) (< comality COMMONALITY))
+
+			; Loop depth-first until we find something that exceeds
+			; COMMONALITY.
+			(any
+				(lambda (N)
+					(define rslt (trim-exhaust-rec (mask GRP N)))
+					(define cmlty (/ (first rslt) (second rslt)))
+
+					; If its better than what we have, record it.
+					(when (< comality cmlty)
+						(set! comality cmlty)
+						(set! best rslt))
+
+					; If its better than the threshold, we are done.
+					(< COMMONALITY comality))
+				(iota glen 0)))
+
+		; Priint a progress report.
+		(format #t "Club size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(- (length best) 2) (first best) (second best) comality)
+
+		; Return the best result so far.
+		best)
+
+	(define (trim-exhaust GRP)
+		(drop (trim-exhaust-rec GRP) 2))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
@@ -112,7 +168,8 @@
 
 		; Remove members from the group, until either COMMONALITY
 		; is exceeded, or a maximum is hit.
-		(trim-group initial-in-grp -1.0 initial-in-grp)
+		; (trim-tail initial-in-grp)
+		(trim-exhaust initial-in-grp)
 	)
 
 	; Return the function defined above.
