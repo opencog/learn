@@ -48,9 +48,6 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
-; Where the simiarity scores will be stored
-(define SIM-ID "shape-mi")
-
 ; ---------------------------------------------------------------
 
 (define-public (rank-words LLOBJ)
