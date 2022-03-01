@@ -51,9 +51,17 @@
   This in-group is selected by `optimal-in-group`, implemented
   elsewhere.
 
-  Next ...
+  Next, the fraction of disjuncts that all group members have in common
+  is computed. If that shared fraction is greater than COMMONALITY, then
+  the selection process is done. Otherwise, a group member is ejected,
+  and the fraction is recomputed. If it is better, it is accepted; the
+  process is repeated until the either the fraction exceeds COMMONALITY
+  or the highest possible fraction has been found.
 
-
+  There are two ways of ejecting candidates: one is to remove the one
+  at the tail of the initial list. The other way is to loop over all
+  of the members, testing the ejection of each in turn. The second
+  variant is hard-coded. The first variant is stubbed out in the code.
 "
 	; The ordinary MI similarity of two words
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -140,15 +148,19 @@
 					(< COMMONALITY comality))
 				(iota glen 0)))
 
-		; Priint a progress report.
+		; Print a progress report.
 		(format #t "Club size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 			(- (length best) 2) (first best) (second best) comality)
 
 		; Return the best result so far.
 		best)
 
+	; Wrapper for above.
 	(define (trim-exhaust GRP)
-		(drop (trim-exhaust-rec GRP) 2))
+		; Drop the leading overlap numbers before returning.
+		; Start by reversing the list, so that the seed members are
+		; explored last.
+		(drop (trim-exhaust-rec (reverse GRP)) 2))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
