@@ -69,6 +69,7 @@
   stored CrossSections, and the CrossSections were deleted because
   they were merged into classes.
 "
+	(define e (make-elapsed-secs))
 	(define tot (LLOBJ 'right-basis-size))
 	(define cnt 0)
 	(for-each (lambda (RIGHT-ITEM)
@@ -83,6 +84,8 @@
 			cnt tot)
 		(format #t "Checked right basis of ~A, all are used (all OK).\n"
 			tot))
+
+	(format #t "Right basis check took ~A secs\n" (e))
 	*unspecified*
 )
 
@@ -91,6 +94,7 @@
   Delete every member of the right-basis that never appears in
   any matrix elements. That is, if it has non-empty left-stars.
 "
+	(define e (make-elapsed-secs))
 	(define tot (LLOBJ 'right-basis-size))
 	(define cnt 0)
 	(for-each (lambda (RIGHT-ITEM)
@@ -108,6 +112,8 @@
 			(LLOBJ 'clobber))
 		(format #t "Checked right basis of ~A, all are used (all OK).\n"
 			tot))
+
+	(format #t "Right basis cleanup took ~A secs\n" (e))
 	*unspecified*
 )
 
