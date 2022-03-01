@@ -209,7 +209,7 @@
 
 (define* (check-word-marginals LLOBJ #:optional (PRT #f))
 "
-  Look for any WordNodes's that are not in the right basis.
+  Look for any WordNodes that are not in the right basis.
 "
 	; Does the word belong to the basis?
 	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
@@ -250,11 +250,13 @@
 	; Delete everything except MemberLinks.
 	(for-each (lambda (WRD) (when (not (basis-word? WRD))
 			(for-each (lambda (IW)
+				(define typ (cog-type IW))
 				(cond
-					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
-					((eq? (cog-type IW) 'ListLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'ShapeLink)
+					((eq? typ 'Connector) (cog-delete! IW))
+					((eq? typ 'ListLink) (cog-delete! IW))
+					((eq? typ 'EvaluationLink) (cog-delete! IW))
+					((eq? typ 'SimilarityLink) (cog-delete! IW))
+					((eq? typ 'ShapeLink)
 						(for-each cog-delete!
 							(cog-incoming-by-type IW 'CrossSection))
 						(cog-delete! IW))))
