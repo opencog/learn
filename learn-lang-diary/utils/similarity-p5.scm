@@ -153,3 +153,30 @@
 (prt-hist mi-dist "word-mi-n4.dat")
 
 ; ---------------------------------------
+; Look at the similarities between words and classes
+
+(define (get-p-simlinks WLA WLB)
+	(filter-map
+		(lambda (WPR)
+			(define sim (cog-link 'Similarity (car WPR) (cdr WPR)))
+			(if (or (nil? sim) (> -200 (cog-value-ref (smi 'get-count sim) 0)))
+				 #f sim))
+		; A list of all pairs, excluding the self-pairs
+		(concatenate!
+			(map
+				(lambda (WA) (map (lambda (WB) (cons WA WB)) WLB))
+				WLA))))
+
+(define clawrd-sims (get-p-simlinks wli ranked-classes))
+
+(define mi-dist
+	(bin-count clawrd-sims 100
+		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
+		(lambda (SIM) 1)
+		-18 12))
+
+(prt-hist mi-dist "clawrd-mi-n3.dat")
+(prt-hist mi-dist "clawrd-mi-n4.dat")
+
+; ---------------------------------------
+; ---------------------------------------

@@ -8658,7 +8658,7 @@ r12-log-q0.7-c0.2-n4.dat.
 \end_layout
 
 \begin_layout Subsubsection*
-Class Similarity Distributions
+Class–Class Similarity Distributions
 \end_layout
 
 \begin_layout Standard
@@ -8697,11 +8697,12 @@ orthogonal
 
 \begin_layout Standard
 The Gaussian G(-3,3.5) is just an eyeballed fit, as usual.
- 
+ The noise=3 curve seems to be shifted slightly to the left.
+ One would expect that better clustering shifts these curves leftward.
 \end_layout
 
 \begin_layout Subsubsection*
-Word Similarity Distributions
+Word–Word Similarity Distributions
 \end_layout
 
 \begin_layout Standard
@@ -8717,6 +8718,13 @@ The noise=3 dataset had 117218 non-vanishing similarities out of a total
 \end_layout
 
 \begin_layout Standard
+The selected words were the top-ranked ones, out of all possible words.
+ The number of words was limited, with the idea that they would be comparable
+ in number to the classes.
+ 
+\end_layout
+
+\begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/word-mi.eps
@@ -8729,7 +8737,80 @@ The noise=3 dataset had 117218 non-vanishing similarities out of a total
 
 \begin_layout Standard
 The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
- Note that it is shifted to the right, and is narrower.
+ Note that it is shifted to the right, and is narrower, than the Gaussian
+ in the previous figure.
+ The noise=3 curve seems to be shifted slightly to the left.
+ It is not clear why it should be shifted.
+\end_layout
+
+\begin_layout Subsubsection*
+Class–Word Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had 58555 non-vanishing similarities out of a total
+ of 
+\begin_inset Formula $530^{2}=280900$
+\end_inset
+
+ possible pairings of word-classes with one-another (excluding self-similarity).
+ For noise=4, there were 55194 out a possible 
+\begin_inset Formula $536^{2}=287296$
+\end_inset
+
+ pairings.
+ So this is a relatively meek 20% of all possible pairings.
+ Cocnlude that the word-classes have swept up those things that have overlaps.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/clawrd-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
+ This is the same gaussian as used above.
+ The noise=3 curve seems to be shifted slightly to the left.
+ It is not clear why it should be shifted.
+\end_layout
+
+\begin_layout Subsubsection*
+All-in-one Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The below reproduces all of the above curves, in one figure.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/all-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ Graphed this way, it seems that there are no dramatic idfferences.
+ There are subtle differences, already noted.
+\end_layout
+
+\begin_layout Standard
+To conclude: perhaps the most surprising is not the distributions of the
+ similarities, but the fraction of the groupings that have non-zero similarity.
+ This is the dramatic result we were looking for, even if its not evident
+ in these graphs.
 \end_layout
 
 \begin_layout Section*
