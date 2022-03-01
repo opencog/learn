@@ -769,6 +769,11 @@
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
+	; Log what we actually used.
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
+		(FloatValue QUORUM COMMONALITY NOISE NRANK))
+
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 

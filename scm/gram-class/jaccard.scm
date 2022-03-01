@@ -71,9 +71,6 @@
 	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
 		(StringValue "mi-sim"))
 
-	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
-		(FloatValue QUORUM COMMONALITY NOISE NRANK))
-
 	; ------------------------------
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
