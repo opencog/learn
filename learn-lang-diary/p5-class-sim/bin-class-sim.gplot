@@ -2,9 +2,9 @@
 #################################################
 
 set term png
-# set out 'self-mi.png'
-set term postscript eps enhanced color 20
-set out 'self-mi.eps'
+set out 'self-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'self-mi.eps'
 set key right top
 set title "Self MI"
 set xlabel "MI (bits)"
@@ -25,16 +25,38 @@ normw3 = nbins/(width*nwrds3)
 nwrds4 = 9486
 normw4 = nbins/(width*nwrds4)
 
-# Normal distribution
-mu = 10
-sigma=4.3
-g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
-
 plot "self-mi-n3-classes.dat" using 2:($3*normcla3) with lines lw 2 title "classes noise=3", \
      "self-mi-n4-classes.dat" using 2:($3*normcla4) with lines lw 2 title "classes noise=4", \
      "self-mi-n3-words.dat" using 2:($3*normw3) with lines lw 2 title "words noise=3", \
      "self-mi-n4-words.dat" using 2:($3*normw4) with lines lw 2 title "words noise=4"
 
-#      "bin-wmi.dat" using 2:(g($2)) with lines lw 2 title "G(9,4.3)"
+
+#################################################
+
+set term png
+set out 'class-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'class-mi.eps'
+set key right top
+set title "Class-Class MI"
+set xlabel "MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [2.0e-4:0.2]
+
+nbins = 100.0
+width = 40
+ncls3 = 10154
+normcla3 = nbins/(width*ncls3)
+ncls4 = 9988
+normcla4 = nbins/(width*ncls4)
+
+# Normal distribution
+g(x,mu,sigma) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "class-mi-n3.dat" using 2:($3*normcla3) with lines lw 2 title "classes noise=3", \
+     "class-mi-n4.dat" using 2:($3*normcla4) with lines lw 2 title "classes noise=4", \
+     "class-mi-n3.dat" using 2:(g($2,-3,3.5)) with lines lw 2 title "G(-3,3.5)"
 
 #################################################

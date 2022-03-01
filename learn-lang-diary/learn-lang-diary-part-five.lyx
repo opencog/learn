@@ -8566,6 +8566,17 @@ In both cases, the number of word-classes that survived is almost exactly
  half the number of merges run (why half?) This is because classes get repeatedl
 y merged into, instead of having new classes being created out of the blue.
  Kind of surprising, this needs to be understood better.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+The datasets for the below are located in the p5-class-sim directory.
+ The scripts used to build the datasets are in the utils/similarity-p5.scm.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -8610,11 +8621,13 @@ precise
 \end_layout
 
 \begin_layout Subsubsection*
-Self-MI
+Self-similarlity Distributions
 \end_layout
 
 \begin_layout Standard
-Here we go:
+The similarity is given by the (symmetric) word-MI.
+ The self-similarity is the self-MI.
+ Here we go:
 \end_layout
 
 \begin_layout Standard
@@ -8642,6 +8655,49 @@ r12-log-q0.7-c0.2-n4.dat.
 \family default
  Clearly, seems to be quite different.
  What does it mean?
+\end_layout
+
+\begin_layout Subsubsection*
+Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had non-vanishing similarities between only 10154 out
+ of a total of 
+\begin_inset Formula $(530\times531)/2=140715$
+\end_inset
+
+ possible pairings (excluding self-similarity).
+ For noise=4, there were only 9988 out a possible 536 x 537/2 = 143916 pairings.
+ This means that only seven percent (approx.) of the word-classes are similar
+ to each other enough to have at least one disjunct in common.
+ The rest had zero disjuncts in common! So, the word classes are not exactly
+ 
+\begin_inset Quotes eld
+\end_inset
+
+orthogonal
+\begin_inset Quotes erd
+\end_inset
+
+ to one-another, but they are close to it.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/class-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Guassian G(-3,3.5) is just an eyeballed fit, as usual.
+ 
 \end_layout
 
 \begin_layout Section*

@@ -66,10 +66,6 @@
 	short-list
 )
 
-(define wli (top-ranked pcs 530))
-
-(list-ref wli 101)
-
 ; ---------------------------------------
 ; Dump datafile --
 
@@ -105,45 +101,43 @@
 (prt-hist (self-mi-hist ranked-wonly) "self-mi-n4-words.dat")
 
 ; ---------------------------------------
-; Bin-count of word similarities.
+; Tools for bin-counting of class and word similarities.
 
-(define wli (top-ranked pcs 1200))
-
-; Construct long list of simlinks.
-; Huh? Why? Why not just call ((add-pair-stars sap) 'get-all-elts) ?
-; that would have been easier...
-; or even `(cog-get-atoms 'Similarity)`
+; Construct long list of similarity pairs, excluding
+; the self-pairs.
 (define (get-simlinks WLI)
 	(filter-map
 		(lambda (WPR)
 			(define sim (cog-link 'Similarity (car WPR) (cdr WPR)))
-			(if (nil? sim) #f sim))
-		(concatenate!   ; a list of all word-pairs
+			(if (or (nil? sim) (> -200 (cog-value-ref (smi 'get-count sim) 0)))
+				 #f sim))
+		; A list of all pairs, excluding the self-pairs
+		(concatenate!
 			(map
 				(lambda (N)
 					(define tli (drop WLI N))
 					(define head (car tli))
-					(map (lambda (WRD) (cons head WRD)) tli))
-				(iota (length WLI))))))
+					(define rest (cdr tli))
+					(map (lambda (WRD) (cons head WRD)) rest))
+				(iota (- (length WLI) 1))))))
 
-(define all-sims (get-simlinks wli))
-(length all-sims) ; 386380  ; or 384548 when retrimmed
+; ---------------------------------------
+; Look at the similarities between just the word-classes, only.
 
-(define nbins 100)
-(define width 50)
-(define wmi (/ 2.0 (length all-sims)))
-(define wmi (/ 2.0 (length uniq-sims)))
+(define class-sims (get-simlinks ranked-classes))
+
 (define mi-dist
-	(bin-count uniq-sims 100 ;  all-sims 100
+	(bin-count class-sims 100
 		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
-		(lambda (SIM) wmi)
-		-25 25))
+		(lambda (SIM) 1)
+		-20 20))
 
-(define (prt-mi-dist)
-	; (define csv (open "mi-dist.dat" (logior O_WRONLY O_CREAT)))
-	; (define csv (open "mi-dist-tsup.dat" (logior O_WRONLY O_CREAT)))
-	(define csv (open "mi-dist-uniq.dat" (logior O_WRONLY O_CREAT)))
-	(print-bincounts-tsv mi-dist csv)
-	(close csv))
+(prt-hist mi-dist "class-mi-n3.dat")
+(prt-hist mi-dist "class-mi-n4.dat")
+
+; ---------------------------------------
+; Look at the similarities between just the words (no word-classes), only.
+
+(define wli (top-ranked pcs 530))
 
 ; ---------------------------------------
