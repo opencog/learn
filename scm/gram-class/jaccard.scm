@@ -46,7 +46,7 @@
   individuals that have similarity scores precomputed. The selection
   process is as follows:
 
-  An initial group of candidate members, the "in-group", is constructed
+  An initial group of candidate members, the `in-group`, is constructed
   by using MI similarity to each of the two founding members WA, WB.
   This in-group is selected by `optimal-in-group`, implemented
   elsewhere.
