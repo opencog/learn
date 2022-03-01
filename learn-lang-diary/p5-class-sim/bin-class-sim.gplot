@@ -1,0 +1,34 @@
+
+#################################################
+
+set term png
+set out 'self-mi.png'
+# set term postscript eps enhanced color 20
+# set out 'self-miin-wmi.eps'
+set key right top
+set title "Self MI"
+set xlabel "MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+# set yrange [1.0e-6:1]
+
+nbins = 40.0
+width = 40
+ncls = 530
+normcla = nbins/(width*ncls)
+
+nwrds = 9490
+normw = nbins/(width*nwrds)
+
+# Normal distribution
+mu = 10
+sigma=4.3
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "self-mi-classes.dat" using 2:($3*normcla) with lines lw 2 title "classes", \
+     "self-mi-words.dat" using 2:($3*normw) with lines lw 2 title "words"
+
+#      "bin-wmi.dat" using 2:(g($2)) with lines lw 2 title "G(9,4.3)"
+
+#################################################

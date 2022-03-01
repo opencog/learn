@@ -71,12 +71,21 @@
 (list-ref wli 101)
 
 ; ---------------------------------------
-; Dump datafile -- 
+; Dump datafile --
 
 (chdir "/home/ubuntu/experiments/run-12/data")
 
 (define (prt-hist HIST FNAME)
 	(define csv (open FNAME (logior O_WRONLY O_CREAT)))
+	(define binsum (fold + 0 (array->list (second HIST))))
+	(define centers (array->list (first HIST)))
+	(define nbins (length centers))
+	(define width (*
+		(/ nbins (- nbins 1))
+		(- (list-ref centers (- nbins 1)) (first centers))))
+	(format csv "#\n# ~A\n#\n" FNAME)
+	(format csv "# count= ~A bins= ~A width= ~A norm= ~9g\n#\n"
+		binsum nbins width (/ (+ nbins 1e-30) (* width binsum)))
 	(print-bincounts-tsv HIST csv)
 	(close csv))
 
