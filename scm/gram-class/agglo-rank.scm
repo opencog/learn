@@ -773,7 +773,7 @@
 	(define log-class (make-class-logger LLOBJ))
 
 	; Create the function that determines group membership.
-	(define get-merg-grp (make-membership-selector LLOBJ
+	(define get-merg-grp (make-jaccard-selector LLOBJ
 		QUORUM COMMONALITY NOISE))
 
 	; Create the function that performs the merge.

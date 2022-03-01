@@ -1,17 +1,20 @@
 ;
-; membership.scm
+; jaccard.scm
 ;
-; Given a pair of words, determine club membership.
+; Given a pair of words, determine club membership based on common
+; traits (bassed on the jaccard distance between all members of the
+; group).
 ;
 ; Copyright (c) 2021,2022 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
 ; OVERVIEW
 ; --------
-; This file implements the selection of individuals into a group
-; (or "cluster" or "class" or "club" - each of these terms are
-; used synonymously.)  The individuals are NOT merged together;
-; this is done elsewhere. Only the selection is done here.
+; This file implements the selection of individuals into a group (or
+; "cluster" or "class" or "club" - all synonyms.)  The individuals are
+; NOT merged together; this is done elsewhere. Only the selection is
+; done here.  The selection is done by maximizing the Jaccard distance
+; between all members of the group.
 ;
 ; ---------------------------------------------------------------------
 
@@ -24,10 +27,23 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (make-membership-selector LLOBJ
+(define-public (make-jaccard-selector LLOBJ
 	QUORUM COMMONALITY NOISE)
 "
-  make-membership-selector LLOBJ QUORUM COMMONALITY NOISE
+  make-jaccard-selector LLOBJ QUORUM COMMONALITY NOISE
+
+  Return a function that selects the members of a group, based on
+  similarity. Example usage:
+
+     (define select-group
+         (make-membership-selector covr-obj 0.7 0.2 3))
+     (select-group WA WB WLIST)
+
+  The select-group function accepts two individuals WA and WB that will
+  form the core of the group, plus a list WLIST of all individuals that
+  have similarity scores precomputed.
+
+
 "
 
 	; The ordinary MI similarity of two words
