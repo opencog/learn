@@ -138,6 +138,18 @@
 ; ---------------------------------------
 ; Look at the similarities between just the words (no word-classes), only.
 
-(define wli (top-ranked pcs 530))
+(define wli (top-ranked star-obj 530))
+(define wli (top-ranked star-obj 536))
+
+(define word-sims (get-simlinks wli))
+
+(define mi-dist
+	(bin-count word-sims 100
+		(lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
+		(lambda (SIM) 1)
+		-18 12))
+
+(prt-hist mi-dist "word-mi-n3.dat")
+(prt-hist mi-dist "word-mi-n4.dat")
 
 ; ---------------------------------------

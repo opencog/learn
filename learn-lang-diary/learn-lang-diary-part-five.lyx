@@ -8567,7 +8567,7 @@ In both cases, the number of word-classes that survived is almost exactly
 y merged into, instead of having new classes being created out of the blue.
  Kind of surprising, this needs to be understood better.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The datasets for the below are located in the p5-class-sim directory.
@@ -8658,16 +8658,16 @@ r12-log-q0.7-c0.2-n4.dat.
 \end_layout
 
 \begin_layout Subsubsection*
-Similarity Distributions
+Class Similarity Distributions
 \end_layout
 
 \begin_layout Standard
-The noise=3 dataset had non-vanishing similarities between only 10154 out
- of a total of 
+The noise=3 dataset had only 10154 non-vanishing similarities out of a total
+ of 
 \begin_inset Formula $(530\times531)/2=140715$
 \end_inset
 
- possible pairings (excluding self-similarity).
+ possible pairings of word-classes with one-another (excluding self-similarity).
  For noise=4, there were only 9988 out a possible 536 x 537/2 = 143916 pairings.
  This means that only seven percent (approx.) of the word-classes are similar
  to each other enough to have at least one disjunct in common.
@@ -8696,8 +8696,40 @@ orthogonal
 \end_layout
 
 \begin_layout Standard
-The Guassian G(-3,3.5) is just an eyeballed fit, as usual.
+The Gaussian G(-3,3.5) is just an eyeballed fit, as usual.
  
+\end_layout
+
+\begin_layout Subsubsection*
+Word Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had 117218 non-vanishing similarities out of a total
+ of 
+\begin_inset Formula $(530\times531)/2=140715$
+\end_inset
+
+ possible pairings of word-classes with one-another (excluding self-similarity).
+ For noise=4, there were 117023 out a possible 536 x 537/2 = 143916 pairings.
+ So this time, approx 83% of all possible similariy pairs have similarities.
+ A very non-orthogonal situation.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/word-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
+ Note that it is shifted to the right, and is narrower.
 \end_layout
 
 \begin_layout Section*

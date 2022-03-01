@@ -60,3 +60,29 @@ plot "class-mi-n3.dat" using 2:($3*normcla3) with lines lw 2 title "classes nois
      "class-mi-n3.dat" using 2:(g($2,-3,3.5)) with lines lw 2 title "G(-3,3.5)"
 
 #################################################
+
+set term png
+# set out 'word-mi.png'
+set term postscript eps enhanced color 20
+set out 'word-mi.eps'
+set key left top
+set title "Word-Word MI"
+set xlabel "MI (bits)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set yrange [2.0e-5:0.2]
+
+nbins = 100.0
+width = 30
+
+nwrds3 = 117218
+normw3 = nbins/(width*nwrds3)
+nwrds4 = 117023
+normw4 = nbins/(width*nwrds4)
+
+plot "word-mi-n3.dat" using 2:($3*normw3) with lines lw 2 title "words noise=3", \
+     "word-mi-n4.dat" using 2:($3*normw4) with lines lw 2 title "words noise=4", \
+     "word-mi-n3.dat" using 2:(g($2,-1.5,3.1)) with lines lw 2 title "G(-1.5,3.1)"
+
+#################################################
