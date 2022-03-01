@@ -98,8 +98,11 @@
 		(lambda (WRD) 1)
 		0 40))
 
-(prt-hist (self-mi-hist ranked-classes) "self-mi-classes.dat")
-(prt-hist (self-mi-hist ranked-wonly) "self-mi-words.dat")
+(prt-hist (self-mi-hist ranked-classes) "self-mi-n3-classes.dat")
+(prt-hist (self-mi-hist ranked-wonly) "self-mi-n3-words.dat")
+
+(prt-hist (self-mi-hist ranked-classes) "self-mi-n4-classes.dat")
+(prt-hist (self-mi-hist ranked-wonly) "self-mi-n4-words.dat")
 
 ; ---------------------------------------
 ; Bin-count of word similarities.

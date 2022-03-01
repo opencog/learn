@@ -2,9 +2,9 @@
 #################################################
 
 set term png
-set out 'self-mi.png'
-# set term postscript eps enhanced color 20
-# set out 'self-miin-wmi.eps'
+# set out 'self-mi.png'
+set term postscript eps enhanced color 20
+set out 'self-mi.eps'
 set key right top
 set title "Self MI"
 set xlabel "MI (bits)"
@@ -15,19 +15,25 @@ set format y "10^{%L}"
 
 nbins = 40.0
 width = 40
-ncls = 530
-normcla = nbins/(width*ncls)
+ncls3 = 530
+normcla3 = nbins/(width*ncls3)
+ncls4 = 536
+normcla4 = nbins/(width*ncls4)
 
-nwrds = 9490
-normw = nbins/(width*nwrds)
+nwrds3 = 9490
+normw3 = nbins/(width*nwrds3)
+nwrds4 = 9486
+normw4 = nbins/(width*nwrds4)
 
 # Normal distribution
 mu = 10
 sigma=4.3
 g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
 
-plot "self-mi-classes.dat" using 2:($3*normcla) with lines lw 2 title "classes", \
-     "self-mi-words.dat" using 2:($3*normw) with lines lw 2 title "words"
+plot "self-mi-n3-classes.dat" using 2:($3*normcla3) with lines lw 2 title "classes noise=3", \
+     "self-mi-n4-classes.dat" using 2:($3*normcla4) with lines lw 2 title "classes noise=4", \
+     "self-mi-n3-words.dat" using 2:($3*normw3) with lines lw 2 title "words noise=3", \
+     "self-mi-n4-words.dat" using 2:($3*normw4) with lines lw 2 title "words noise=4"
 
 #      "bin-wmi.dat" using 2:(g($2)) with lines lw 2 title "G(9,4.3)"
 

@@ -8426,8 +8426,9 @@ Two datasets halted at almost the same place.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="3" columns="3">
+<lyxtabular version="3" rows="3" columns="4">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -8450,11 +8451,20 @@ nmerges
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 nclasses
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nwords
 \end_layout
 
 \end_inset
@@ -8481,11 +8491,20 @@ r12-log-q0.7-c0.2-n3.dat
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 536
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9490
 \end_layout
 
 \end_inset
@@ -8512,11 +8531,20 @@ r12-log-q0.7-c0.2-n4.dat
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 530
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9486
 \end_layout
 
 \end_inset
@@ -8579,6 +8607,41 @@ precise
 \end_inset
 
  merges recompute all similarities.
+\end_layout
+
+\begin_layout Subsubsection*
+Self-MI
+\end_layout
+
+\begin_layout Standard
+Here we go:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/self-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above is the distribution of the self-MI for the 530 word-classes and the
+ 9490 words in 
+\family sans
+r12-log-q0.7-c0.2-n3.dat.
+
+\family default
+ Also, the 536 classes and 9486 words in 
+\family sans
+r12-log-q0.7-c0.2-n4.dat.
+
+\family default
+ Clearly, seems to be quite different.
+ What does it mean?
 \end_layout
 
 \begin_layout Section*
