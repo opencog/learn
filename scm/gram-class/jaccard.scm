@@ -32,30 +32,34 @@
 "
   make-jaccard-selector LLOBJ QUORUM COMMONALITY NOISE
 
-  Return a function that selects the members of a group, based on
-  similarity. Example usage:
+  Return a function that selects the members of a group, by maximizing
+  the Jaccard similarity between all members of the group.
+
+  Example usage:
 
      (define select-group
-         (make-membership-selector covr-obj 0.7 0.2 3))
+         (make-jaccard-selector covr-obj 0.7 0.2 3))
      (select-group WA WB WLIST)
 
   The select-group function accepts two individuals WA and WB that will
-  form the core of the group, plus a list WLIST of all individuals that
-  have similarity scores precomputed.
+  be the founding members of the group, plus a list WLIST of all
+  individuals that have similarity scores precomputed. The selection
+  process is as follows:
+
+  An initial group of candidate members, the "in-group", is constructed
+  by using MI similarity to each of the two founding members WA, WB.
+  This in-group is selected by `optimal-in-group`, implemented
+  elsewhere.
+
+  Next ...
 
 
 "
-
 	; The ordinary MI similarity of two words
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define (mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
-
-	; The ranked MI similarity of two words
-	;(define (ranked-mi-sim WA WB)
-	;	(define miv (sap 'pair-count WA WB))
-	;	(if miv (cog-value-ref miv 1) -inf.0))
 
 	; The similarity function to use for the in-group formation.
 	; Hypothesis: ordinary MI creates better clusters.
@@ -76,9 +80,11 @@
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.
 	; The returned group will always have at least two members,
 	; the initial two proposed.
-	(define (get-merg-grp WA WB CANDIDATES)
+	(define (max-jaccard-grp WA WB WLIST)
+
+		; Chop down the WLIST to a more manageable size.
 		(define initial-in-grp
-			(optimal-in-group IN-GRP-SIM WA WB CANDIDATES))
+			(optimal-in-group IN-GRP-SIM WA WB WLIST))
 
 		(format #t "Initial in-group size=~D:" (length initial-in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
@@ -110,7 +116,8 @@
 		(trim-group initial-in-grp -1.0 initial-in-grp)
 	)
 
-	get-merg-grp
+	; Return the function defined above.
+	max-jaccard-grp
 )
 
 ; ---------------------------------------------------------------
