@@ -3,7 +3,7 @@
 ;
 ; Ad hoc scripts for greating assorted graphs and datasets comparing
 ; different similarity measures. This is for diary Part Three, Sept
-; 2021.
+; 2021. Also in the Diary Part Four, "Miscellanesous" section.
 ;
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog matrix) (opencog persist))
