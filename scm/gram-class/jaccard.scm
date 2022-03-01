@@ -72,6 +72,28 @@
 		(StringValue "mi-sim"))
 
 	; ------------------------------
+	; Tail-recursive trimmer; rejects large groups with little
+	; commonality. Accepts first grouping with commonality above
+	; the threshold COMMONALITY, or the last grouping before the
+	; commonality decreases.
+	(define (trim-group GRP prev-com prev-grp)
+		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
+		(define comality (/ (car ovlp) (cadr ovlp)))
+		(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
+
+		; In plain English:
+		; If comality is above threshold, accept.
+		; If comality dropped, compared to the previous,
+		;    accept the previous.
+		; If we are down to two, accept. Do this check last.
+		; Else trim one word from the end, and try again.
+		(cond
+			((< COMMONALITY comality) GRP)
+			((< comality prev-com) prev-grp)
+			((= (length GRP) 2) GRP)
+			(else (trim-group (drop-right GRP 1) comality GRP))))
+
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.
@@ -88,28 +110,8 @@
 			initial-in-grp)
 		(format #t "\n")
 
-		; Tail-recursive trimmer; rejects large groups with little
-		; commonality. Accepts first grouping with commonality above
-		; the threshold COMMONALITY, or the last grouping before the
-		; commonality decreases.
-		(define (trim-group GRP prev-com prev-grp)
-			(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-			(define comality (/ (car ovlp) (cadr ovlp)))
-			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
-
-			; In plain English:
-			; If comality is above threshold, accept.
-			; If comality dropped, compared to the previous,
-			;    accept the previous.
-			; If we are down to two, accept. Do this check last.
-			; Else trim one word from the end, and try again.
-			(cond
-				((< COMMONALITY comality) GRP)
-				((< comality prev-com) prev-grp)
-				((= (length GRP) 2) GRP)
-				(else (trim-group (drop-right GRP 1) comality GRP))))
-
+		; Remove members from the group, until either COMMONALITY
+		; is exceeded, or a maximum is hit.
 		(trim-group initial-in-grp -1.0 initial-in-grp)
 	)
 
