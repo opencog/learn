@@ -4030,7 +4030,7 @@ pass. TEST F1 ...
 +++ b/scm/shape-project.scm
 @@ -322,9 +322,11 @@ XXX describe me.
         (define donor-type (cog-type DONOR))
- 
+
         (when (equal? 'Section donor-type)
 -               (if (flatten-section? LLOBJ GLS MRG)
 -                       (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
@@ -4040,7 +4040,7 @@ pass. TEST F1 ...
 +                       (rebalance-count LLOBJ MRG (LLOBJ 'get-count MRG)))
 +               (rebalance-count LLOBJ DONOR (LLOBJ 'get-count DONOR))
 +       )
- 
+
         (when (equal? 'CrossSection donor-type)
                 (merge-resects LLOBJ GLS W MRG DONOR))
 
@@ -11119,6 +11119,398 @@ Finished with MI computations; this took 4.449 hours.
  (smi 'mmt-marginal wc) ; 0.0
 
 (define psu (add-support-compute covr-obj))
+====================================================
+run-12 sanity checks.
+noise=3 ext
+Rows: 10031 Columns: 925134  == log_2 13.2922 x 19.8193
+Size: 1937274.0  log_2 size: 20.8856
+Fraction non-zero: 2.0876E-4 Sparsity: 12.2259  Rarity: 4.32986
+Total obs: 22643824.0  Avg obs/pair: 11.6885  log_2 avg: 3.54702
+Entropy Total: 18.0602   Left: 16.0128   Right: 8.39150
+Total MI: 5.5480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  163.4        3.1862E+4
+Count   (l_1)  5818.        3.1884E+5     35.61        10.01
+Length  (l_2)  917.6        8105.         5.616        .2544
+RMS Count      835.1        7978.         5.111        .2504
+
+MM^T support=87571358.0     count=167020867736.0     entropy=15.487
+
+Now recomp from scratch:
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+
+
+(print-matrix-summary-report star-obj)
+Rows: 10031 Columns: 1447377  == log_2 13.2922 x 20.4650
+Size: 3402228.0  log_2 size: 21.6980
+Fraction non-zero: 2.3434E-4 Sparsity: 12.0591  Rarity: 4.81945
+Total obs: 34051699.0  Avg obs/pair: 10.0086  log_2 avg: 3.32318
+Entropy Total: 18.0602   Left: 16.0128   Right: 8.39150
+Total MI: 5.5480
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  161.0        2.9285E+4
+Count   (l_1)  8541.        3.3810E+5     53.05        11.55
+Length  (l_2)  2433.        1.7301E+4     15.11        .5908
+RMS Count      2233.        1.7197E+4     13.87        .5872
+
+
+Crap. That is totally. completly different. WTF.
+
+r12-log-q0.7-c0.2-n3.dat
+# N,rows,cols,lcnt,rcnt,size
+1       9495    1015850 22643824        22643824        2717117
+1062    10031   925134  22643824        22643824        1937274
+
+And so counts are completely violated.
+The report says detailed balance was preserved, but recalculating it
+broke everything. wtf.
+-------------
+Fresh start:
+Rows: 9495 Columns: 1015850  == log_2 13.2130 x 19.9543
+Size: 2717117.0  log_2 size: 21.3736
+Fraction non-zero: 2.8170E-4 Sparsity: 11.7936  Rarity: 4.79004
+Total obs: 22643824.0  Avg obs/pair: 8.33377  log_2 avg: 3.05897
+Entropy Tot: 19.4210  Left: 16.5007  Right: 8.46831  MI: 5.54801
+MM^T support=193557505.0     count=131743839840.0     entropy=18.117
+
+                 Left         Right     Avg-left     Avg-right
+                 ----         -----     --------     ---------
+Support (l_0)  163.4        3.1862E+4
+Count   (l_1)  5818.        3.1884E+5     35.61        10.01
+Length  (l_2)  917.6        8105.         5.616        .2544
+RMS Count      835.1        7978.         5.111        .2504
+
+((PredicateNode . 26)
+(ListLink . 418856) (AnyNode . 7)
+(Connector . 17062) (ConnectorDir . 2)
+(ConnectorSeq . 204680)
+(Section . 833833) (ShapeLink . 811170) (CrossSection . 1883284)
+(VariableNode . 1) (EvaluationLink . 9496) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9495))
+
+Above looks consistent with the summary report.
+
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+Looks good. (after recomput of marginals).
+
+Now do:
+(in-group-cluster covr-obj 0.7 0.2 3 200 1)
+
+Rows: 9496 Columns: 1018843  == log_2 13.2131 x 19.9585
+Size: 2714611.0  log_2 size: 21.3723
+Fraction non-zero: 2.8058E-4 Sparsity: 11.7993  Rarity: 4.78651
+Total obs: 22643824.0  Avg obs/pair: 8.34146  log_2 avg: 3.06030
+Entropy Tot: 19.4171  Left: 16.5051  Right: 8.47292  MI: 5.54801
+MM^T support=191289125.0     count=131527914076.0     entropy=18.086
+
+so total observations unchanged, other things changes sligtly,
+seems OK to me.
+
+((PredicateNode . 55)
+(ListLink . 419610) (MemberLink . 6) (AnyNode . 7)
+(Connector . 17064) (ConnectorDir . 2)
+(ConnectorSeq . 206972)
+(Section . 833009)
+(ShapeLink . 811871)
+(CrossSection . 1881602) (VariableNode . 1)
+(EvaluationLink . 9497) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SimilarityLink . 20300) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9495) (WordClassNode . 1))
+
+section+cross= 2714611 agrees w/ reported size.
+conseq+shape = 1018843 agrees w/ numcols
+
+
+(btr 'clobber)
+(btr 'mmt-marginals)
+No change. Cool.
+
+Exit, restart.
+still looks good.
+(cog-reoprt-counts) is same as above, except for:
+(ShapeLink . 831218)  so 20K more shapes...
+(CrossSection . 1925192)  more crosses.
+OK, code needs to delete not extract, yeah!?
+
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+
+Rows: 9496 Columns: 1038190  == log_2 13.2131 x 19.9856
+Size: 2758201.0  log_2 size: 21.3953
+Fraction non-zero: 2.7977E-4 Sparsity: 11.8034  Rarity: 4.79592
+Total obs: 22784833.0  Avg obs/pair: 8.26076  log_2 avg: 3.04627
+Entropy Tot: 19.4171  Left: 16.5051  Right: 8.47292  MI: 5.54801
+MM^T support=194867655.0     count=132418291939.0     entropy=18.130
+
+Whoops, there we go:
+20K more columns, 44K more entries, 143K more observations.
+is ... delete not working?
+
+((PredicateNode . 54) (ListLink . 419610) (MemberLink . 6) (AnyNode . 7)
+(Connector . 17064) (ConnectorDir . 2)
+(ConnectorSeq . 206972)
+(Section . 833009)
+(ShapeLink . 831218)
+ (CrossSection . 1925192) (VariableNode . 1)
+(EvaluationLink . 9497) (TypeNode . 6) (TypeChoice . 3) (AnchorNode . 1) (SchemaNode . 1) (RocksStorageNode . 1)
+(WordNode . 9495) (WordClassNode . 1))
+
+Section+CrossSection= 2758201 size is in agreement
+ConnectorSeq+Shape = 1038190 is in agreement
+
+(VariableNode "$connector-word")
+(cog-incoming-size (first (cog-incoming-set v)))
+but these are all Shapes.
+
+Cleanup is OK.
+
+
+So, after one merge, there are 1883284 CrossSections in the file.
+Crap.
+That's exactly how many we started with, too ...
+Are they even balanced?
+
+
+(define (check-bal SECT)
+	(define xes (star-obj 'get-cross-sections SECT))
+	(define exc (cog-count SECT))
+	(for-each (lambda (XS)
+		(when (not (> 1.0e-10 (abs (- (cog-count XS) exc))))
+			(format #t "unbalancedat ~A vs ~A at ~A\n"
+				exc (cog-count XS) XS)
+			(foobar)))
+		xes)
+	(define mes (covr-obj 'make-cross-sections SECT))
+	(when (not (equal? (length xes) (length mes)))
+		(format #t "aiiee missing ~A ~A\n"
+			(length xes) (length mes))
+		(foobar)))
+
+(for-each check-bal (cog-get-atoms 'Section))
+
+Yeah, they are balanced... at least.
+
+(load-atoms-of-type 'CrossSection)
+(for-each cog-delete! (cog-get-atoms 'CrossSection))
+-------------------------------------------------------
+noise-3 intially:
+Rows: 10031 Columns: 925134  == log_2 13.2922 x 19.8193
+Size: 1937274.0  log_2 size: 20.8856
+Fraction non-zero: 2.0876E-4 Sparsity: 12.2259  Rarity: 4.32986
+Total obs: 22643824.0  Avg obs/pair: 11.6885  log_2 avg: 3.54702
+MM^T support=87571358.0     count=167020867736.0     entropy=15.487
+
+but above is as things were, after the crash. How will it fare under MMT
+recompute?
+
+Cleanup removed 11 words...
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+(btr 'mmt-marginals)
+
+Now:
+Rows: 10020 Columns: 925040  == log_2 13.2906 x 19.8192
+Size: 1937115.0  log_2 size: 20.8855
+Fraction non-zero: 2.0899E-4 Sparsity: 12.2243  Rarity: 4.33060
+Total obs: 22638279.0  Avg obs/pair: 11.6866  log_2 avg: 3.54678
+Entropy Tot: 18.0602  Left: 16.0128  Right: 8.39150  MI: 5.54801
+MM^T support=87567779.0     count=167007017237.0     entropy=15.487
+
+Huh. I bet if cleanup didn't run, nothing would have changed.
+
+530 word-classes
+
+
+----------------------
+Noise-4:
+after decrossing:
+Rows: 10039 Columns: 874667  == log_2 13.2933 x 19.7384
+Size: 1878624.0  log_2 size: 20.8412
+Fraction non-zero: 2.1395E-4 Sparsity: 12.1905  Rarity: 4.32539
+Total obs: 22643824.0  Avg obs/pair: 12.0534  log_2 avg: 3.59137
+Entropy Tot: 17.9911  Left: 15.9154  Right: 8.28900  MI: 5.54801
+MM^T support=101954590.0     count=187199529824.0     entropy=15.761
+
+(ListLink . 333411) (MemberLink . 10503)
+(ConnectorSeq . 229612)
+(Section . 627362)
+(ShapeLink . 1279162)
+(CrossSection . 1440465)
+(WordClassNode . 1057))
+
+after cleanup:
+(ListLink . 333338)
+(MemberLink . 10483)
+(ConnectorSeq . 229578)
+(Section . 627159)
+(ShapeLink . 698022)
+(CrossSection . 1440114)
+(WordClassNode . 536) -- wtf- really!?
+
+Rows: 10039 Columns: 874667  == log_2 13.2933 x 19.7384
+Size: 1878624.0  log_2 size: 20.8412
+Fraction non-zero: 2.1395E-4 Sparsity: 12.1905  Rarity: 4.32539
+Total obs: 22643824.0  Avg obs/pair: 12.0534  log_2 avg: 3.59137
+Entropy Tot: 17.9911  Left: 15.9154  Right: 8.28900  MI: 5.54801
+MM^T support=101954590.0     count=187199529824.0     entropy=15.761
+
+(WordClassNode . 1057) --- what?
+so cleanup did not actually remove these ... Hmm.
+Cause of .. memberlinks?
+
+deleted by
+(zap-word-marginals star-obj)
+
+ohhhh .. they are in the logs! But why did load fail?
+They are in values in the logs...
+The load fails, since apparently, atoms in values are
+not stored as atoms... esp if they are in a LinkValue
+ahh, no .. if they are deleted, the associated LinkValue
+is NOT deleted! Ah hah!  and we cannot find these, by
+design, because we do not want to create an index on
+the Values. Ah hah.
+
+(define ewc (filter (lambda (WCL)
+	(equal? 0 (cog-incoming-size-by-type WCL 'Member)))
+	(cog-get-atoms 'WordClass)))
+
+ (length ewc)
+$3 = 521
+
+(car ewc)
+$5 = (WordClassNode "He It There She They")
+
+ (cog-incoming-size (car ewc))
+$6 = 0
+
+(define btr (batch-transpose star-obj))
+(btr 'clobber)
+the clobber changes (ListLink . 333338) into (ListLink . 343924)
+Huh. Wonder what that is about?
+Nothing else chages, except one more EvaluationLink ....
+
+(btr 'mmt-marginals)
+
+Rows: 10022 Columns: 927600  == log_2 13.2909 x 19.8231
+Size: 2067273.0  log_2 size: 20.9793
+Fraction non-zero: 2.2237E-4 Sparsity: 12.1347  Rarity: 4.42228
+Total obs: 24424447.0  Avg obs/pair: 11.8148  log_2 avg: 3.56253
+Entropy Tot: 17.9911  Left: 15.9154  Right: 8.28900  MI: 5.54801
+MM^T support=113249095.0     count=211466542579.0     entropy=15.888
+
+Well, that is substaintially different from before.  But .. whatever.
+Plow ahead
+
+
+====================================================
+
+(define wclasses (cog-get-atoms 'WordClass))
+(compute-diag-mi-sims star-obj wclasses 0 (length wclasses))
+
+
+(define all-words (rank-words star-obj))
+(compute-diag-mi-sims star-obj
+	(take all-words 1100) 0 1100)
+
+
+====================================================
+noise=2
+Entropy Tot: 17.9826
+Left and right entropy sums fail to be equal: 20.173277930295733 17.98237494387546
+
+So lsum seems too big ... lsum is sum over
+(frqobj 'left-wild-entropy x)  where x is right-elt
+
+(define frqobj (add-pair-freq-api star-obj #:nothrow #t))
+
+   (define (left-sum FN)
+      (fold
+         (lambda (right-item sum) (+ sum (FN right-item)))
+         0 (star-obj 'right-basis)))
+
+ (define lsum (left-sum
+            (lambda (x) (frqobj 'left-wild-entropy x))))
+
+clobber does not fix it.  Search for bad ones..?
+
+   (define (cache-left-entropy RIGHT-ITEM)
+      (define ent (compute-left-entropy RIGHT-ITEM))
+      (define fent (/ ent (frqobj 'left-wild-freq RIGHT-ITEM)))
+      (frqobj 'set-left-wild-entropy RIGHT-ITEM ent fent))
+
+   ; Compute the left-wild entropy summation:
+   ;    h_left(y) = -sum_x P(x,y) log_2 P(x,y)
+   (define (compute-left-entropy RIGHT-ITEM)
+      (fold
+         (lambda (PAIR sum) (+ sum (frqobj 'pair-entropy PAIR)))
+         0
+         (star-obj 'left-stars RIGHT-ITEM)))
+
+	(define nok 0)
+	(define bad #f)
+	(define (is-eq? a b) (> 1.0e-10 (abs (- a b))))
+   (define (check-left-entropy RIGHT-ITEM)
+      (define ent (compute-left-entropy RIGHT-ITEM))
+      ; (define fent (/ ent (frqobj 'left-wild-freq RIGHT-ITEM)))
+		(define ment (frqobj 'left-wild-entropy RIGHT-ITEM))
+		; (define mfent (frqobj 'left-wild-fentropy RIGHT-ITEM))
+		(set! nok (+ 1 nok))
+		(when (not (is-eq? ent ment))
+			(set! bad RIGHT-ITEM)
+			(format #t "Not equal ~D ~A ~A for\n~A" nok ent ment RIGHT-ITEM)
+			(foobar))
+		)
+
+	(for-each check-left-entropy (star-obj 'right-basis))
+
+First one fails:
+Not equal 1 0 2.069669352634443e-6 for
+(ShapeLink
+  (WordNode "James")
+  (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+  (Connector (WordNode "replied") (ConnectorDir "+")))
+
+(define bstars (star-obj 'left-stars bad))
+ (length bstars)
+$5 = 0
+
+So ... why was this not deleted?
+Start merge 890 with seed pair `April` and `February October March Decemb
+er January July August September May June an some these each June`
+
+In-group size=2: `February October March December January July August September 
+May June an some these each June` `April`
+
+
+(define nost 0)
+(define nexm 0)
+(define (no-stars RIGHT-ITEM)
+	(define lstars (star-obj 'left-stars RIGHT-ITEM))
+	(set! nexm (+ 1 nexm))
+	(when (equal? 0 (length lstars))
+		(set! nost (+ 1 nost))))
+
+(for-each no-stars (star-obj 'right-basis))
+
+(define nost 0)
+(define nexm 0)
+(define (no-stars LEFT-ITEM)
+	(define rstars (star-obj 'right-stars LEFT-ITEM))
+	(set! nexm (+ 1 nexm))
+	(when (equal? 0 (length rstars))
+		(set! nost (+ 1 nost))))
+
+(for-each no-stars (star-obj 'left-basis))
+
 
 
 ====================================================
@@ -11213,9 +11605,9 @@ FIXED:
   (PredicateNode "*-Norm Key-*") .. so support-obj
   I don't get it. I looked at the code, and this should be happening
   already. Maybe this was a hang-over from before? DONE. It was a bug.
+* Add rarity and log-sizes to summary report.  DONE
 
 TODO/BUGS:
-* Add rarity and log-sizes to summary report.
 * Finish work in link-grammar bug #1276 -sqlite sanity checks.
 * Alter dict export to not require creation of singletons.
   They are way too slow and not really a needed step.

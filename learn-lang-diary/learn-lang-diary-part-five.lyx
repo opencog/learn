@@ -6721,6 +6721,10 @@ imprecise
  Unable to recover and pick up where they left off; there is some kind of
  bug that prevents restarting (the marginals get unbalanced, and recomputing
  them leaves somethng wrong...) These halted as shown:
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -6843,11 +6847,16 @@ r12-log-q0.7-c0.2-n4.dat
 \end_inset
 
 
+\begin_inset VSpace defskip
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 The last two stopped at almost the same place, and thus allow head-to-head
  comparisions.
+ See much farther below.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -8383,6 +8392,490 @@ r12-mi-sim200.rdb
 r12-mi.rdb
 \family default
 ` with word-similarities precomputed for the top 200 ranked words.
+\end_layout
+
+\begin_layout Subsection*
+The Crash
+\end_layout
+
+\begin_layout Standard
+As noted above, the runs crashed.
+ Will try restarting one more time, after nuking invalid CrossSections.
+ Nope.
+ That doesn't work.
+\end_layout
+
+\begin_layout Subsection*
+Similarity between WordClasses vs.
+ Words
+\end_layout
+
+\begin_layout Standard
+Two datasets halted at almost the same place.
+ Perhaps they are comparable.
+ As below.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nmerges
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nclasses
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+nwords
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n3.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1062
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+536
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9490
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family sans
+r12-log-q0.7-c0.2-n4.dat
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1058
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+530
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+9486
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In both cases, the number of word-classes that survived is almost exactly
+ half the number of merges run (why half?) This is because classes get repeatedl
+y merged into, instead of having new classes being created out of the blue.
+ Kind of surprising, this needs to be understood better.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The datasets for the below are located in the p5-class-sim directory.
+ The scripts used to build the datasets are in the utils/similarity-p5.scm.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Anyway: One hypothesis: the similarity distributions between word-classes
+ should be low.
+ That should be quite distinct from one another, one might hope.
+ So, three batches of similarity distributions:
+\end_layout
+
+\begin_layout Itemize
+Similarity between all of the 530 (or 536) word-classes.
+ (not counting self-similarity).
+\end_layout
+
+\begin_layout Itemize
+Similarity between the top-ranked 530 words.
+\end_layout
+
+\begin_layout Itemize
+Similarity between the top-ranked words and word-classes.
+\end_layout
+
+\begin_layout Standard
+What will it be like? Can we expect the third bullet to show higher similarity
+ than the second?
+\end_layout
+
+\begin_layout Standard
+All simiarities will be recomputed from scratch, as the existing similarities
+ are tainted by the altered disjuncts – i.e.
+ the old similarities might not have been recomputed, after a change to
+ their disjuncts.
+ Only the 
+\begin_inset Quotes eld
+\end_inset
+
+precise
+\begin_inset Quotes erd
+\end_inset
+
+ merges recompute all similarities.
+\end_layout
+
+\begin_layout Subsubsection*
+Conclusions – Summary
+\end_layout
+
+\begin_layout Standard
+Lets summarize what was found below.
+ First, the self-similarity distribution for word-classes and other words
+ are dramatically different.
+ Word-classes have a high self-similarity.
+ The shapes of the distributions are different, too.
+\end_layout
+
+\begin_layout Standard
+The distribution of non-zero similarities between classes, and classes and
+ words, and just words, are all more-or-less normal distributions (Gaussians),
+ all quite similar, all centered on a small negative MI (around -3 to -1.5,
+ depnending) and fairly narrow (a standard deviation of about 3).
+ There are no dramatic differences at this level.
+\end_layout
+
+\begin_layout Standard
+There is a very dramatic difference, when looking at the fraction of all
+ possible pairs with zero similarity! Zero similarity corresponds to 
+\begin_inset Formula $-\infty$
+\end_inset
+
+ in the MI value; that is, ther is zero overlap between the disjuncts.
+ They are orthogonal.
+\end_layout
+
+\begin_layout Standard
+Of all of the possible similarities between the word-classes, only 7% are
+ non-zero.
+ The classes are highly orthogonal to one-another; only a few of them are
+ not.
+ By comparision, more than 80% of the words have non-zero similarity between
+ one another.
+ The words are mostly not orthogonal to one-another.
+ In the middle are the similarities between words and classes, coming in
+ at just 20% of all pairings.
+\end_layout
+
+\begin_layout Standard
+Conclude: the classification algorithms is fairly good at 
+\begin_inset Quotes eld
+\end_inset
+
+orthogonalizing
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Post-classification, the classes are fairly distinct from one-another,
+ qute unlike the situation with raw words.
+ During classification, it appears that the algo is 
+\begin_inset Quotes eld
+\end_inset
+
+sweeping up
+\begin_inset Quotes erd
+\end_inset
+
+ words in an effective way: The 20% figure seems to say that classification
+ really is vacuuming up the words.
+\end_layout
+
+\begin_layout Standard
+The above suggests a strong signal for the quality of classification: the
+ orthogonal fraction of pairings.
+ All three of the above figures should be tracked during classification.
+\end_layout
+
+\begin_layout Subsubsection*
+Self-similarlity Distributions
+\end_layout
+
+\begin_layout Standard
+The similarity is given by the (symmetric) word-MI.
+ The self-similarity is the self-MI.
+ Here we go:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/self-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above is the distribution of the self-MI for the 530 word-classes and the
+ 9490 words in 
+\family sans
+r12-log-q0.7-c0.2-n3.dat.
+
+\family default
+ Also, the 536 classes and 9486 words in 
+\family sans
+r12-log-q0.7-c0.2-n4.dat.
+
+\family default
+ Clearly, seems to be quite different.
+ What does it mean?
+\end_layout
+
+\begin_layout Subsubsection*
+Class–Class Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had only 10154 non-vanishing similarities out of a total
+ of 
+\begin_inset Formula $(530\times531)/2=140715$
+\end_inset
+
+ possible pairings of word-classes with one-another (excluding self-similarity).
+ For noise=4, there were only 9988 out a possible 536 x 537/2 = 143916 pairings.
+ This means that only seven percent (approx.) of the word-classes are similar
+ to each other enough to have at least one disjunct in common.
+ The rest had zero disjuncts in common! So, word classes are not perfectly
+ orthogonal to one-another, but most of them are, considered pair-wise.
+ That's a pretty hot result.
+ I like it.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/class-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Gaussian G(-3,3.5) is just an eyeballed fit, as usual.
+ The noise=3 curve seems to be shifted slightly to the left.
+ One would expect that better clustering shifts these curves leftward.
+\end_layout
+
+\begin_layout Subsubsection*
+Word–Word Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had 117218 non-vanishing similarities out of a total
+ of 
+\begin_inset Formula $(530\times531)/2=140715$
+\end_inset
+
+ possible pairings of word-classes with one-another (excluding self-similarity).
+ For noise=4, there were 117023 out a possible 536 x 537/2 = 143916 pairings.
+ So this time, approx 83% of all possible similariy pairs have similarities.
+ A very non-orthogonal situation.
+\end_layout
+
+\begin_layout Standard
+The selected words were the top-ranked ones, out of all possible words.
+ The number of words was limited, with the idea that they would be comparable
+ in number to the classes.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/word-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
+ Note that it is shifted to the right, and is narrower, than the Gaussian
+ in the previous figure.
+ The noise=3 curve seems to be shifted slightly to the left.
+ It is not clear why it should be shifted.
+\end_layout
+
+\begin_layout Subsubsection*
+Class–Word Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The noise=3 dataset had 58555 non-vanishing similarities out of a total
+ of 
+\begin_inset Formula $530^{2}=280900$
+\end_inset
+
+ possible pairings of word-classes with one-another (excluding self-similarity).
+ For noise=4, there were 55194 out a possible 
+\begin_inset Formula $536^{2}=287296$
+\end_inset
+
+ pairings.
+ So this is a relatively meek 20% of all possible pairings.
+ Cocnlude that the word-classes have swept up those things that have overlaps.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/clawrd-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
+ This is the same gaussian as used above.
+ The noise=3 curve seems to be shifted slightly to the left.
+ It is not clear why it should be shifted.
+\end_layout
+
+\begin_layout Subsubsection*
+All-in-one Similarity Distributions
+\end_layout
+
+\begin_layout Standard
+The below reproduces all of the above curves, in one figure.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/all-mi.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ Graphed this way, it seems that there are no dramatic differences.
+ There are subtle differences, already noted.
+\end_layout
+
+\begin_layout Standard
+To conclude: perhaps the most surprising is not the distributions of the
+ similarities, but the fraction of the pairs that have non-zero similarity.
+ This is the dramatic result we were looking for, even if its not evident
+ in these graphs.
 \end_layout
 
 \begin_layout Section*
