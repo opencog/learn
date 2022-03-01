@@ -8621,6 +8621,78 @@ precise
 \end_layout
 
 \begin_layout Subsubsection*
+Conclusions – Summary
+\end_layout
+
+\begin_layout Standard
+Lets summarize what was found below.
+ First, the self-similarity distribution for word-classes and other words
+ are dramatically different.
+ Word-classes have a high self-similarity.
+ The shapes of the distributions are different, too.
+\end_layout
+
+\begin_layout Standard
+The distribution of non-zero similarities between classes, and classes and
+ words, and just words, are all more-or-less normal distributions (Gaussians),
+ all quite similar, all centered on a small negative MI (around -3 to -1.5,
+ depnending) and fairly narrow (a standard deviation of about 3).
+ There are no dramatic differences at this level.
+\end_layout
+
+\begin_layout Standard
+There is a very dramatic difference, when looking at the fraction of all
+ possible pairs with zero similarity! Zero similarity corresponds to 
+\begin_inset Formula $-\infty$
+\end_inset
+
+ in the MI value; that is, ther is zero overlap between the disjuncts.
+ They are orthogonal.
+\end_layout
+
+\begin_layout Standard
+Of all of the possible similarities between the word-classes, only 7% are
+ non-zero.
+ The classes are highly orthogonal to one-another; only a few of them are
+ not.
+ By comparision, more than 80% of the words have non-zero similarity between
+ one another.
+ The words are mostly not orthogonal to one-another.
+ In the middle are the similarities between words and classes, coming in
+ at just 20% of all pairings.
+\end_layout
+
+\begin_layout Standard
+Conclude: the classification algorithms is fairly good at 
+\begin_inset Quotes eld
+\end_inset
+
+orthogonalizing
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Post-classification, the classes are fairly distinct from one-another,
+ qute unlike the situation with raw words.
+ During classification, it appears that the algo is 
+\begin_inset Quotes eld
+\end_inset
+
+sweeping up
+\begin_inset Quotes erd
+\end_inset
+
+ words in an effective way: The 20% figure seems to say that classification
+ really is vacuuming up the words.
+\end_layout
+
+\begin_layout Standard
+The above suggests a strong signal for the quality of classification: the
+ orthogonal fraction of pairings.
+ All three of the above figures should be tracked during classification.
+\end_layout
+
+\begin_layout Subsubsection*
 Self-similarlity Distributions
 \end_layout
 
@@ -8671,17 +8743,10 @@ The noise=3 dataset had only 10154 non-vanishing similarities out of a total
  For noise=4, there were only 9988 out a possible 536 x 537/2 = 143916 pairings.
  This means that only seven percent (approx.) of the word-classes are similar
  to each other enough to have at least one disjunct in common.
- The rest had zero disjuncts in common! So, the word classes are not exactly
- 
-\begin_inset Quotes eld
-\end_inset
-
-orthogonal
-\begin_inset Quotes erd
-\end_inset
-
- to one-another, but they are close to it.
- 
+ The rest had zero disjuncts in common! So, word classes are not perfectly
+ orthogonal to one-another, but most of them are, considered pair-wise.
+ That's a pretty hot result.
+ I like it.
 \end_layout
 
 \begin_layout Standard
@@ -8802,13 +8867,13 @@ The below reproduces all of the above curves, in one figure.
 
 \begin_layout Standard
 Hmm.
- Graphed this way, it seems that there are no dramatic idfferences.
+ Graphed this way, it seems that there are no dramatic differences.
  There are subtle differences, already noted.
 \end_layout
 
 \begin_layout Standard
 To conclude: perhaps the most surprising is not the distributions of the
- similarities, but the fraction of the groupings that have non-zero similarity.
+ similarities, but the fraction of the pairs that have non-zero similarity.
  This is the dramatic result we were looking for, even if its not evident
  in these graphs.
 \end_layout
