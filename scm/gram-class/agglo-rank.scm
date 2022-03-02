@@ -484,7 +484,7 @@
   The marginal entropies and the marginal MI for MI(w,d) appears to be
   interesting. So keep these up to date.
 
-  At this time, these are all just "interesting"; they are not actually
+  At this time, these are all just 'interesting'; they are not actually
   needed for anything, so this computation could be skipped. All that
   would happen is that the logging of data would fail.
 
