@@ -276,7 +276,11 @@
 (define (recomp-all-sim LLOBJ WLIST)
 "
   recomp-all-sim LLOBJ WLIST - Recompute all existing similarities for
-  all words in WLIST.
+  all words in WLIST. The recomputation is unconditional.
+
+  For each word in WLIST, recompute *all* existing similarities between
+  that word and any other word that it already has similarities to. No
+  new pairings are created.
 "
 	(define e (make-elapsed-secs))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -305,7 +309,8 @@
 	; unaff are all the unaffected words.
 	(define unaff (atoms-subtract all-wrds WLIST))
 
-	; aff are the affected words.
+	; aff are the "affected words" - the intersection of provided
+	; word list with the words that already have similarities.
 	(define aff (atoms-subtract all-wrds unaff))
 
 	(format #t "Will recompute sims for ~3D words (~A unaffected) out of ~3D\n"
@@ -340,6 +345,20 @@
 	; Create similarities for the initial set.
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
 	(format #t "Done computing MI similarity in ~A secs\n" (e))
+)
+
+; ---------------------------------------------------------------
+
+(define (compute-class-sim LLOBJ WCLASS)
+"
+  compute-class-sim LLOBJ WCLASS - Compute the similarity between
+  WCLASS and all other existing classes. The computation is
+  unconditional.
+"
+	(define compute-sim (make-simmer LLOBJ))
+
+	(for-each (lambda (WC) (compute-sim WCLASS WC))
+		(LLOBJ 'get-clusters))
 )
 
 ; ---------------------------------------------------------------
@@ -834,7 +853,13 @@
 			(recomp-all-sim LLOBJ (filter cog-atom? in-grp)))
 
 		; Always compute self-similarity of the new word-class.
+		; Optional; this is logged by the logger.
 		((make-simmer LLOBJ) wclass wclass)
+
+		; Optional; compute similarity between this and all other
+		; classes. This is used to compute and log the orthogonality
+		; of the classes. It provides an intersting statistic.
+		(compute-class-sim wclass)
 
 		(log-class wclass) ; record this in the log
 
