@@ -859,7 +859,7 @@
 		; Optional; compute similarity between this and all other
 		; classes. This is used to compute and log the orthogonality
 		; of the classes. It provides an intersting statistic.
-		(compute-class-sim wclass)
+		(compute-class-sim LLOBJ wclass)
 
 		(log-class wclass) ; record this in the log
 
