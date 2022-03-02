@@ -58,6 +58,7 @@
   available.
 
   Here, a 'word' is any item appearing in the left-basis of LLOBJ.
+  Thus, it might include word-classes, not just words.
 "
 	(define sup (add-support-api LLOBJ))
 
@@ -82,6 +83,9 @@
   make-simmer LLOBJ -- return function that computes and stores MI's.
 
   This computes and stores both the MI and the Ranked-MI scores.
+
+  The computation is performed unconditionally; a new MI is computed,
+  even if there is an existing one cached.
 "
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define smi (add-symmetric-mi-compute LLOBJ))
@@ -460,6 +464,13 @@
 
   The marginal entropies and the marginal MI for MI(w,d) appears to be
   interesting. So keep these up to date.
+
+  At this time, these are all just "interesting"; they are not actually
+  needed for anything, so this computation could be skipped. All that
+  would happen is that the logging of data would fail.
+
+  This does take a significant amount of CPU time, and so this could be
+  ditched...
 "
 	(define freq-obj (make-compute-freq LLOBJ))
 	(define ent-obj (add-entropy-compute LLOBJ))
@@ -775,7 +786,7 @@
 	(define log-class (make-class-logger LLOBJ))
 
 	; Create the function that determines group membership.
-	(define get-merg-grp (make-jaccard-selector LLOBJ
+	(define jaccard-select (make-jaccard-selector LLOBJ
 		QUORUM COMMONALITY NOISE))
 
 	; Create the function that performs the merge.
@@ -795,7 +806,7 @@
 			(min (length ranked-words) (+ NRANK (* 3 N)))))
 		(define words-with-sims (take ranked-words n-to-take))
 
-		(define in-grp (get-merg-grp WA WB words-with-sims))
+		(define in-grp (jaccard-select WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
@@ -813,8 +824,11 @@
 		; After merging, recompute similarities for the words
 		; that were touched. We have two choices here: recompute
 		; sims only for the words that were directly merged, as these
-		; are clearly directly affected. Or we rcompute the entire
+		; are clearly directly affected. Or we recompute the entire
 		; universe of words that were just peripherally affected.
+		; Recomputing the univese causes the whole algo to run about
+		; 10x slower. In exchange, we maybe get better results? Or maybe
+		; not? Unclear, unknown at this time, might no matter.
 		(if PRECISE-SIM
 			(recomp-all-sim LLOBJ touched-words)
 			(recomp-all-sim LLOBJ (filter cog-atom? in-grp)))
