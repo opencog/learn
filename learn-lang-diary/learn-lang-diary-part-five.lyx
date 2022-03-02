@@ -122,6 +122,23 @@ Part Five of the diary on the language-learning effort continues work on
  the English dataset.
 \end_layout
 
+\begin_layout Standard
+Good progress was made.
+ It appears that we have a high-quality, stable, debugged clustering algorithm
+ in place, and it is generating good-quality clusters.
+ However, dozens of questions and hypothesis arise, which is a bit overwhelming.
+ The lack of any kind of theoretical foundations for any of this stuff is
+ frustrating.
+ Without theory, it is hard to get insight.
+\end_layout
+
+\begin_layout Standard
+At any rate, results seem solid enough that we can now move on to the next
+ steps of the program.
+ I'm hoping to start work on multi-sentence and cross-paragraph correlations
+ in the coming months.
+\end_layout
+
 \begin_layout Section*
 Summary Conclusions
 \end_layout
@@ -181,6 +198,9 @@ As clustering proceeds, there are several dozen different measurements and
  MMT-Q value, the size of clusters, the ranked-MI of the top-ranked word-pair,
  and so on.
  Many graphs of these indicators are presented.
+ Experiment-10 tracks four of these; experiments 11 and 12 tracks dozens
+ of them.
+ A significant portion of the parameter space is explored.
 \end_layout
 
 \begin_layout Itemize
@@ -228,6 +248,68 @@ i.e.
 
 \emph default
  although the top-ranked pairs differ, the in-grups would not.)
+\end_layout
+
+\begin_layout Itemize
+From Experiment-11: The top ranked-MI pair is used to form the initial seed
+ of a cluster, and then the regular MI is used to nominate additional members.
+ When the Jaccard overlap of the nominees is computed, it is suprisingly
+ low.
+ Why? Is it because MI is pair-wise, and Jaccard is group-wise?
+\end_layout
+
+\begin_layout Itemize
+Desipte the low overlap, the majority of sections get merged, only because
+ thier counts are below the noise-floor.
+ How do low-count disjunct influence the MI?
+\end_layout
+
+\begin_layout Itemize
+Setting the noise-floor causes disjuncts with a count below this floor to
+ be swept up into the group.
+ Later, during the preferential attachment and growth of groups, is it possible
+ that this 
+\begin_inset Quotes eld
+\end_inset
+
+random noise
+\begin_inset Quotes erd
+\end_inset
+
+ hijacks the initial cluster, twisting it in a different direction from
+ where it started? Is it causing the signal to be washed out? What happens
+ if we set the noise-floor to zero?
+\end_layout
+
+\begin_layout Itemize
+After running the algo for about 1060 steps, about 530 word-classes were
+ created (the fact that its about a half is unexplained, but gives a hint
+ of the role of preferential attachement).
+ When comparing the 
+\begin_inset Formula $N\left(N-1\right)/2$
+\end_inset
+
+ class-pairs (for 
+\begin_inset Formula $N=530)$
+\end_inset
+
+, about 93% of them have a similarity of zero: that is, they are completely
+ orthogonal.
+ That's a good thing: we wanted to have classes that are distinct from one-anoth
+er, and that is what we are getting.
+ Of the remaining 7%, the distibution of MI is almost perfectly a Gaussian,
+ centered at about MI of negative 3, and an stddev of 3.5.
+ Negative MI is also good: it means that even if they are not perfectly
+ orthogonal, they are almost-so.
+\end_layout
+
+\begin_layout Itemize
+The above stands in constrast to the word-word orthogonality of the remaining
+ (as yet unmerged) words: more than 80% of them have a non-zero similarity.
+ The distribution of these is almost Gaussian, with a bit of a fat tail
+ towards the low-end.
+ Compared to the premerge MI distribution, the fat tail has been sharply
+ trimmed.
 \end_layout
 
 \begin_layout Section*
@@ -6649,8 +6731,11 @@ status open
 \end_inset
 
 which tells us that almost all of the merged sections had an observation
- count of less than or equal to 4! (That is, 5550+14284 were merged, whereas
- we expected only 33 to get merged! Yowie!)
+ count of less than or equal to 4! That is, 5550+14284 were merged, whereas
+ we expected only 6 x 33 x 70% = 140 to get merged! Yowie! This means that
+ only 140 sections/cross-sections had an observation count of greater than
+ 4; the rest of them had a lesser count, and were merged only because they
+ were swept up as being under the noise floor.
 \end_layout
 
 \begin_layout Standard
@@ -6744,9 +6829,37 @@ none
 \end_layout
 
 \begin_layout Standard
+On the other hand, due to the preferential-attachement phenomenon that is
+ being seen (large clusters getting larger) it might be that these fat tails
+ are wagging the dog: they suck in the noise, and then this noise sucks
+ in other tails.
+ These tails might end up dominating the sense of the cluster? Perhaps we
+ should have a noise=0 run to compare against?
+\end_layout
+
+\begin_layout Standard
 At any rate, its kind of surprising that the MI can be high but the commonality
  is so low.
  This doesn't make sense intuitively.
+\end_layout
+
+\begin_layout Subsection*
+What contributes to the MI?
+\end_layout
+
+\begin_layout Standard
+The last sentence immediately above seems important enough to get it's own
+ subsection.
+ What, exactly, is contributing to the MI? We see high MI values, but a
+ low Jaccard similarity.
+ This seems surprising.
+ Is it because the MI's are pairwise, while the Jaccard is for the group
+ as a whole?
+\end_layout
+
+\begin_layout Standard
+How does the low-count tail influence the MI? When does trimming tails help?
+ When does it hurt? 
 \end_layout
 
 \begin_layout Subsection*
@@ -8922,6 +9035,14 @@ The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
  in the previous figure.
  The noise=3 curve seems to be shifted slightly to the left.
  It is not clear why it should be shifted.
+\end_layout
+
+\begin_layout Standard
+Compare this to the earlier, pre-merge word-word MI distribution graph,
+ about half-way up in this document.
+ Both the mean and the stddev are about the same; they haven't noticably
+ changed.
+ However, the fat tail has been quite sharply tirmmed.
 \end_layout
 
 \begin_layout Subsubsection*
