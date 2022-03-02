@@ -129,7 +129,7 @@ Good progress was made.
  However, dozens of questions and hypothesis arise, which is a bit overwhelming.
  The lack of any kind of theoretical foundations for any of this stuff is
  frustrating.
- Without theory, it is hard to get insight.
+ Without theory, it is hard to get strong insight.
 \end_layout
 
 \begin_layout Standard
@@ -137,6 +137,8 @@ At any rate, results seem solid enough that we can now move on to the next
  steps of the program.
  I'm hoping to start work on multi-sentence and cross-paragraph correlations
  in the coming months.
+ Although, before doing this, perhaps a comparison to the hand-built LG
+ grammars is in order.
 \end_layout
 
 \begin_layout Section*
@@ -308,8 +310,19 @@ The above stands in constrast to the word-word orthogonality of the remaining
  (as yet unmerged) words: more than 80% of them have a non-zero similarity.
  The distribution of these is almost Gaussian, with a bit of a fat tail
  towards the low-end.
- Compared to the premerge MI distribution, the fat tail has been sharply
- trimmed.
+ Compared to the pre-merge MI distribution, there is little change, except
+ perhaps in the fat tail.
+\end_layout
+
+\begin_layout Standard
+That pretty much wraps things up for this chapter.
+ Merge experiments are ongoing, and furthe results will be presented in
+ later diary chapters.
+ I don't expect many changes from the above; just some longer runs with
+ maybe clearer results.
+ A noise=0 run is clearly called for.
+ Examing orthogonality as a function of time is also interesting, to be
+ reported later.
 \end_layout
 
 \begin_layout Section*
@@ -9040,9 +9053,38 @@ The Gaussian G(-1.5,3.1) is just an eyeballed fit, as usual.
 \begin_layout Standard
 Compare this to the earlier, pre-merge word-word MI distribution graph,
  about half-way up in this document.
- Both the mean and the stddev are about the same; they haven't noticably
- changed.
- However, the fat tail has been quite sharply tirmmed.
+ It's the same distribution, but before any merges have been done.
+ This is shown below, relative to the current noise=3 graph.
+ Both the mean and the stddev are about the same; maybe a bit of a shift
+ of the mean.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p5-class-sim/pre-post.eps
+	width 60col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+pre-merge
+\begin_inset Quotes erd
+\end_inset
+
+ curve is the one from half-way up: it shows similarities for only 200 words,
+ and so is noisier.
+ The shape of the fat tail is ambiguous.
+ Earlier, it looked like a well-defined gaussian with a very fat tail; but
+ here, this is not so clear.
+ Clearly, noise=4 suppresses the tail a lot more than noise=3.
 \end_layout
 
 \begin_layout Subsubsection*
