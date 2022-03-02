@@ -83,7 +83,9 @@
 
 		; Loop over all N(N-1)/2 similarities for N classes.
 		; i.e. not counting self-similarities.
-		(define (count-ortho WCL REST)
+		(define (count-ortho WLI)
+			(define WCL (car WLI))
+			(define REST (cdr WLI))
 			(when (not (nil? REST))
 				(for-each
 					(lambda (RC)
@@ -91,10 +93,10 @@
 						(if (< (mi-sim WCL RC) -1000)
 							(set! northo (+ 1 northo))))
 					REST)
-				(count-ortho (car REST) (cdr REST))))
+				(count-ortho REST)))
 
 		(define all-cls (LLOBJ 'get-clusters))
-		(count-ortho (car all-cls) (cdr all-cls))
+		(if (not (nil? all-cls)) (count-ortho all-cls))
 
 		(if (< 0 ntot)
 			(exact->inexact (/ northo ntot))
