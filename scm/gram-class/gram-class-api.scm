@@ -118,8 +118,12 @@
 
 	; Get the clusters appearing in the left-basis.
 	(define (get-clusters)
+		; In current usage, LLOBJ doesn't have stars on it.
+		; At any rate, we want a fresh search for the basis
+		; each time we are called, as the basis may have changed.
+		(define stars (add-pair-stars LLOBJ))
 		(filter (lambda (W) (equal? 'WordClassNode (cog-type W)))
-			(LLOBJ 'left-basis)))
+			(stars 'left-basis)))
 
 	; Create a word-class out of two words, or just extend an
 	; existing word class. Here, "extend" means "do nothing",
