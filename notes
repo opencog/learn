@@ -11487,8 +11487,7 @@ So ... why was this not deleted?
 Start merge 890 with seed pair `April` and `February October March Decemb
 er January July August September May June an some these each June`
 
-In-group size=2: `February October March December January July August September 
-May June an some these each June` `April`
+In-group size=2: `February October March December January July August September May June an some these each June` `April`
 
 
 (define nost 0)
@@ -11511,7 +11510,106 @@ May June an some these each June` `April`
 
 (for-each no-stars (star-obj 'left-basis))
 
+----------------
+Again:
+(for-each check-left-entropy (star-obj 'right-basis))
 
+very first one fails ... its a shape...
+ an some these each
+in one cross-section only...
+Not equal 1 3.963225621536661e-6 3.962690096800633e-6 for
+
+post-merge: Total obs: 22640554.0
+vs Total obs: 22643824.0  << old
+
+(/ 4 (frqobj 'left-wild-freq bad)) << 22643824.0
+
+so, unbalanced because the obs count changed
+
+recompute mmt marginals, then:
+Total obs: 22640554.0
+so lets see if that holds ....
+in-group-cluster covr-obj 0.7 0.2 2 200 1)
+
+after one run:
+Total obs: 22640554.0
+
+`(compute-total-entropy "Left and right e
+ntropy sums fail to be equal: 17.98027186892881 17.981837223401804\n")'
+
+	(define nok 0)
+	(define bad #f)
+	(for-each check-left-entropy (star-obj 'right-basis))
+
+Same fail as before:
+Not equal 1 3.963225621536661e-6 3.962690096800633e-6 for
+
+How is this possible? was it not recomputed?
+Its clearly in the right basis ....
+
+ (btr 'mmt-marginals) -- again
+
+(frqobj 'left-wild-entropy bad)
+$28 = 3.962690096800633e-6
+(compute-left-entropy bad)
+$29 = 3.963225621536661e-6
+
+
+So ... recomputing mmt did not recompute the marginals!
+all-mmt-marginals
+         (setup-supports)
+(batch-left-support)
+         (batch-right-support)
+         (scomp-obj 'all-right-marginals)
+         (scomp-obj     (add-support-compute star-obj))
+
+... in short, entropy is not recomputed. Great. So why do we need the
+entropy?
+
+(define enc (add-entropy-compute star-obj))
+(enc  'cache-all-left-entropy)  -- Loop over all columns.
+  'cache-all-right-entropy
+
+who calls compute-total-entropy ? No one!  O dear.
+
+None of this was ever really needed.
+left-wild-freq
+
+cache-all-left-freqs
+
+Solution:
+(star-obj 'clobber)
+(define cfq (make-compute-freq star-obj))
+(cfq 'init-freq)
+(cfq 'cache-all-left-freqs)
+(cfq 'cache-all-right-freqs)
+(define enc (add-entropy-compute star-obj))
+(enc 'cache-all-left-entropy)
+(enc 'cache-all-right-entropy)
+
+(define btr (batch-transpose star-obj))
+(btr 'mmt-marginals)
+
+
+------------------
+
+878:16  8 (perform-merge _ _ _)
+102:16  7 (compute-sim #<Invalid handle> #<Invalid handle>)
+
+
+------ Start merge 1342 with seed pair `of` and `from`
+Initial in-group size=8: `from` `of` `and` `is` `by` `under` `upon` `through`
+In-group size=8 overlap = 0 of 91448 disjuncts, commonality= 0.00%
+In-group size=7 overlap = 0 of 90667 disjuncts, commonality= 0.00%
+In-group size=6 overlap = 0 of 89727 disjuncts, commonality= 0.00%
+In-group size=5 overlap = 0 of 88880 disjuncts, commonality= 0.00%
+In-group size=4 overlap = 0 of 84496 disjuncts, commonality= 0.00%
+In-group size=3 overlap = 0 of 73777 disjuncts, commonality= 0.00%
+In-group size=2 overlap = 0 of 39114 disjuncts, commonality= 0.00%
+In-group size=2: `from` `of`
+------ merge-majority: Merge 0 of 6660 sections in 3 secs
+------ merge-majority: Remaining 0 of 32454 cross in 25 secs
+OK, so this dataset is just ... broken beyond repair. I give up.
 
 ====================================================
 ====================================================
@@ -11608,6 +11706,7 @@ FIXED:
 * Add rarity and log-sizes to summary report.  DONE
 
 TODO/BUGS:
+* Log the similarity fractions
 * Finish work in link-grammar bug #1276 -sqlite sanity checks.
 * Alter dict export to not require creation of singletons.
   They are way too slow and not really a needed step.
