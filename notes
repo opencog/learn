@@ -11611,6 +11611,18 @@ In-group size=2: `from` `of`
 ------ merge-majority: Remaining 0 of 32454 cross in 25 secs
 OK, so this dataset is just ... broken beyond repair. I give up.
 
+
+And the next one: arg:
+Total obs: 22640554.0
+
+(r12-i2)> (compute-left-entropy bad)
+$35 = 4.882936572523517e-6
+(r12-i2)>  (frqobj 'left-wild-entropy bad)
+$36 = 4.882277433514931e-6
+
+How???
+
+
 ====================================================
 ====================================================
 

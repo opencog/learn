@@ -131,7 +131,103 @@ A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-No summary yet.
+From Experiment-10: Ranked-MI (Variationall MI) seems to mostly make good
+ cluster recommendations, except when it doesn't.
+ Since the actual merge proceeds via a Jaccard-type voting in of disjuncts,
+ it is possible that the poor recommendations results in few contributions.
+ But there is no obvious way to automte a quality measurement.
+\end_layout
+
+\begin_layout Itemize
+From Experiment-10: A list of the first 31 clusters is presented.
+ It seems OK but not great.
+ Hard to say, as the Jaccard-selection mechanism selects membership, and
+ we don't have a window into that.
+ Is there a way of visualizing the 
+\begin_inset Quotes eld
+\end_inset
+
+word-sense
+\begin_inset Quotes erd
+\end_inset
+
+ of a cluster?
+\end_layout
+
+\begin_layout Itemize
+From Experiment-10: A fairly large number of merges are expanding or merging
+ prior classes.
+ This suggests that 
+\begin_inset Quotes eld
+\end_inset
+
+preferential attachement
+\begin_inset Quotes erd
+\end_inset
+
+ is hard at work, and so we should not be surprised to later observe scale-free
+ results.
+\end_layout
+
+\begin_layout Itemize
+This implies that ranked-MI/variational-MI automatically, inherently makes
+ these kind of preferential-attachement suggestions.
+ How does this work? What are the details? Are there alternatives?
+\end_layout
+
+\begin_layout Itemize
+As clustering proceeds, there are several dozen different measurements and
+ indicator values that can be tracked, including the dataset entropy, the
+ MMT-Q value, the size of clusters, the ranked-MI of the top-ranked word-pair,
+ and so on.
+ Many graphs of these indicators are presented.
+\end_layout
+
+\begin_layout Itemize
+Graphs of the word-disjunct marginal entropy distribution is presented.
+ This for the dataset, before clustering is started.
+ It appears to be a normal (Gaussian) distribution.
+\end_layout
+
+\begin_layout Itemize
+Multiple alternatives to the variational-MI (ranked-MI) are proposed and
+ developed.
+ These are computed for the top-200 most common words in the dataset (
+\emph on
+i.e.
+
+\emph default
+ for 
+\begin_inset Formula $N\left(N+1\right)/2$
+\end_inset
+
+ word-pairs, for 
+\begin_inset Formula $N=200$
+\end_inset
+
+.) Although they make different ranking recommendations, the overall distribution
+s are nearly identical.
+ Although roughly Gaussian, these have a very fat tail to the left (
+\emph on
+i.e.
+
+\emph default
+ on the negative side: they find a lot of dis-similarity.) The fat tail is
+ hypothsized to be driven by the number of distinct word-senses (
+\emph on
+i.e.
+
+\emph default
+ word-senses should be dis-similar.) All of these alternatives are more computati
+onally intensive than the ranked-MI, and thus are not really practical to
+ apply.
+ It is hypothesized that all of these might still end up selecting the same
+ in-group (
+\emph on
+i.e.
+
+\emph default
+ although the top-ranked pairs differ, the in-grups would not.)
 \end_layout
 
 \begin_layout Section*
@@ -363,6 +459,11 @@ Should the ranked-MI for a cluster be de-rated, say, by the number of words
 \begin_layout Itemize
 The next 10 highest ranked-MI merges look great! So maybe somehow the ranked
  MI for clusters is wrong?
+\end_layout
+
+\begin_layout Itemize
+Since merging is via a Jaccard-overlap selection mechanism, perhaps most
+ of the contributing disjuncts in the bad recommendations will be ignored?
 \end_layout
 
 \end_deeper
@@ -1505,6 +1606,38 @@ great!
 Notable is that a fairly large number of merges are expanding or merging
  prior classes.
  This is curious.
+ This suggests that 
+\begin_inset Quotes eld
+\end_inset
+
+preferential attachement
+\begin_inset Quotes erd
+\end_inset
+
+ is hard at work, and so we should not be surprised to later observe scale-free
+ results.
+\end_layout
+
+\begin_layout Standard
+This implies that ranked-MI/variational-MI automatically, inherently makes
+ these kind of preferential-attachement suggestions.
+ How does this work? What are the details? Are there alternatives?
+\end_layout
+
+\begin_layout Standard
+Regarding the mediocre merge suggestsions: The Jaccard-selection mechanism
+ selects membership, and we don't have a window into that.
+ Its possible that the mediocre merge recommendations work out so that very
+ few disjuncts get merged into the final cluster.
+ Is there a way of visualizing the 
+\begin_inset Quotes eld
+\end_inset
+
+word-sense
+\begin_inset Quotes erd
+\end_inset
+
+ of a cluster?
 \end_layout
 
 \begin_layout Standard
@@ -1539,6 +1672,7 @@ MI(`in`, `into`) = +inf.0  rank-MI = +nan.0
 \begin_layout Standard
 Turns out is was a bad wild-card de-reference that clobbered the wildcard
  anchor.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -1557,9 +1691,8 @@ The following merge parameters are being pursued in the following datasets:
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="5" columns="5">
+<lyxtabular version="3" rows="5" columns="4">
 <features tabularvalignment="middle">
-<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1592,20 +1725,11 @@ commonality
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-noise
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-N
+noise
 \end_layout
 
 \end_inset
@@ -1639,20 +1763,11 @@ r10-mrg-q0.5-c0.2.rdb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4
 \end_layout
 
 \end_inset
@@ -1686,20 +1801,11 @@ r10-mrg-q0.6-c0.3.rdb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4
 \end_layout
 
 \end_inset
@@ -1733,20 +1839,11 @@ r10-mrg-q0.7-c0.4.rdb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4
 \end_layout
 
 \end_inset
@@ -1780,20 +1877,11 @@ r10-mrg-q0.8-c0.5.rdb
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-4
-\end_layout
-
-\end_inset
-</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4
 \end_layout
 
 \end_inset
@@ -3216,7 +3304,27 @@ Four nearly identical graphs, differing only in the horizontal offset:
 
 \begin_layout Standard
 The Gaussians are an eyeballed fit.
- How similar are these graphs? All four are replotted below, with the horizontal
+ Perhaps there are some popular fat-tailed distributions that would give
+ a better fit? At any rate, the fat-tail is on the left, an excessive of
+ word-pairs judged to be dis-similar.
+ Perhaps this is a good thing? That is, the MPG parsing gave us a bunch
+ of disjuncts that are 
+\begin_inset Quotes eld
+\end_inset
+
+obviously
+\begin_inset Quotes erd
+\end_inset
+
+ dis-similar, which is exactly what we hope to see.
+ Perhaps the fatness of the tail is correlated with the number of distinct
+ word-senses? That is, we expect words with different word-senses to be
+ dis-similar to one-another, and so the more word-senses there are, the
+ fatter the tail? What is the theoretical exposition for this effect?
+\end_layout
+
+\begin_layout Standard
+How similar are these graphs? All four are replotted below, with the horizontal
  offset adjusted by the eyeballed fits, above.
 \end_layout
 
@@ -6416,6 +6524,14 @@ free
 \begin_layout Standard
 Where to change this: search code for `optimal-in-group` and specify the
  desired similarity function.
+\end_layout
+
+\begin_layout Standard
+Hypothesis: it is also possible that these different in-group suggestions
+ won't alter very much.
+ This is because it is not the initial pair that matters, it is the in-group
+ near that initial pair that matters.
+ Perhaps all of these end up suggesting similar, or the same ingroups?
 \end_layout
 
 \begin_layout Section*
