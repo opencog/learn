@@ -60,6 +60,116 @@
 
 ; -------------------------------------------------------------------
 
+(define (check-empty-right-basis LLOBJ)
+"
+  Verify that every member of the right-basis appears in some matrix
+  element. That is, has non-empty left-stars.
+
+  This will trigger when cleaning up datasets that had inadvertently
+  stored CrossSections, and the CrossSections were deleted because
+  they were merged into classes.
+"
+	(define e (make-elapsed-secs))
+	(define tot (LLOBJ 'right-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'left-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+		))
+		(LLOBJ 'right-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A ConnectorSeqs (out of ~A) that are unused!\n"
+			cnt tot)
+		(format #t "Checked right basis of ~A, all are used (all OK).\n"
+			tot))
+
+	(format #t "Right basis check took ~A secs\n" (e))
+	*unspecified*
+)
+
+(define (zap-empty-right-basis LLOBJ)
+"
+  Delete every member of the right-basis that never appears in
+  any matrix elements. That is, if it has non-empty left-stars.
+"
+	(define e (make-elapsed-secs))
+	(define tot (LLOBJ 'right-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'left-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+			(cog-delete! RIGHT-ITEM)
+		))
+		(LLOBJ 'right-basis))
+
+	(if (< 0 cnt)
+		(begin
+			(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
+				cnt tot)
+			(LLOBJ 'clobber))
+		(format #t "Checked right basis of ~A, all are used (all OK).\n"
+			tot))
+
+	(format #t "Right basis cleanup took ~A secs\n" (e))
+	*unspecified*
+)
+
+; -------------------------------------------------------------------
+
+(define (check-empty-left-basis LLOBJ)
+"
+  Verify that every member of the left-basis appears in some matrix
+  element. That is, has non-empty right-stars.
+
+  This has not been observed to happen, and so is unexpected.
+"
+	(define tot (LLOBJ 'left-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'right-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+		))
+		(LLOBJ 'left-basis))
+
+	(if (< 0 cnt)
+		(format #t "Found ~A ConnectorSeqs (out of ~A) that are unused!\n"
+			cnt tot)
+		(format #t "Checked left basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+(define (zap-empty-left-basis LLOBJ)
+"
+  Delete every member of the left-basis that never appears in
+  any matrix elements. That is, if it has non-empty right-stars.
+"
+	(define tot (LLOBJ 'left-basis-size))
+	(define cnt 0)
+	(for-each (lambda (RIGHT-ITEM)
+		(define lstars (LLOBJ 'right-stars RIGHT-ITEM))
+		(when (equal? 0 (length lstars))
+			(set! cnt (+ 1 cnt))
+			(cog-delete! RIGHT-ITEM)
+		))
+		(LLOBJ 'left-basis))
+
+	(if (< 0 cnt)
+		(begin
+			(format #t "Deleted ~A ConnectorSeqs (out of ~A) that are unused!\n"
+				cnt tot)
+			(LLOBJ 'clobber))
+		(format #t "Checked left basis of ~A, all are used (all OK).\n"
+			tot))
+	*unspecified*
+)
+
+; -------------------------------------------------------------------
+
 (define* (check-connectors LLOBJ #:optional (PRT #f))
 "
   Verify that Connectors are used sanely.
@@ -99,7 +209,7 @@
 
 (define* (check-word-marginals LLOBJ #:optional (PRT #f))
 "
-  Look for any WordNodes's that are not in the right basis.
+  Look for any WordNodes that are not in the right basis.
 "
 	; Does the word belong to the basis?
 	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
@@ -140,11 +250,13 @@
 	; Delete everything except MemberLinks.
 	(for-each (lambda (WRD) (when (not (basis-word? WRD))
 			(for-each (lambda (IW)
+				(define typ (cog-type IW))
 				(cond
-					((eq? (cog-type IW) 'Connector) (cog-delete! IW))
-					((eq? (cog-type IW) 'ListLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'EvaluationLink) (cog-delete! IW))
-					((eq? (cog-type IW) 'ShapeLink)
+					((eq? typ 'Connector) (cog-delete! IW))
+					((eq? typ 'ListLink) (cog-delete! IW))
+					((eq? typ 'EvaluationLink) (cog-delete! IW))
+					((eq? typ 'SimilarityLink) (cog-delete! IW))
+					((eq? typ 'ShapeLink)
 						(for-each cog-delete!
 							(cog-incoming-by-type IW 'CrossSection))
 						(cog-delete! IW))))
@@ -238,6 +350,8 @@
 "
 	(define stars-obj (add-pair-stars LLOBJ))
 
+	(check-empty-right-basis stars-obj)
+	(check-empty-left-basis stars-obj)
 	(check-conseq-marginals stars-obj)
 	(check-word-marginals stars-obj)
 	(check-connectors stars-obj)
@@ -247,6 +361,8 @@
 (define (cleanup-gram-dataset LLOBJ)
 	(define stars-obj (add-pair-stars LLOBJ))
 
+	(zap-empty-right-basis stars-obj)
+	(zap-empty-left-basis stars-obj)
 	(zap-conseq-marginals stars-obj)
 	(zap-word-marginals stars-obj)
 	(zap-connectors stars-obj)

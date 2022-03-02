@@ -50,6 +50,8 @@
     'fetch-pairs -- Fetch both WordClassNodes and MemberLinks.
 
     'cluster-type -- returns (Type 'WordClassNode)
+    'get-clusters -- return all left-basis elements that are of
+                     cluster type.
 
     'make-cluster WA WB -- Creates a WordClassNode
 "
@@ -114,6 +116,11 @@
 	; Custom methods specific to this object.
 	(define (get-cluster-type) (Type 'WordClassNode))
 
+	; Get the clusters appearing in the left-basis.
+	(define (get-clusters)
+		(filter (lambda (W) (equal? 'WordClassNode (cog-type W)))
+			(LLOBJ 'left-basis)))
+
 	; Create a word-class out of two words, or just extend an
 	; existing word class. Here, "extend" means "do nothing",
 	; return the existing class. If this is called a second time
@@ -171,6 +178,7 @@
 			((store-aux)      store-aux)
 
 			((cluster-type)   get-cluster-type)
+			((get-clusters)   get-clusters)
 			((make-cluster)   make-cluster)
 
 			((provides)       provides)

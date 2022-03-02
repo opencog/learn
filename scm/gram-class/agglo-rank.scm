@@ -48,9 +48,6 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
-; Where the simiarity scores will be stored
-(define SIM-ID "shape-mi")
-
 ; ---------------------------------------------------------------
 
 (define-public (rank-words LLOBJ)
@@ -61,6 +58,7 @@
   available.
 
   Here, a 'word' is any item appearing in the left-basis of LLOBJ.
+  Thus, it might include word-classes, not just words.
 "
 	(define sup (add-support-api LLOBJ))
 
@@ -85,6 +83,9 @@
   make-simmer LLOBJ -- return function that computes and stores MI's.
 
   This computes and stores both the MI and the Ranked-MI scores.
+
+  The computation is performed unconditionally; a new MI is computed,
+  even if there is an existing one cached.
 "
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
 	(define smi (add-symmetric-mi-compute LLOBJ))
@@ -275,7 +276,11 @@
 (define (recomp-all-sim LLOBJ WLIST)
 "
   recomp-all-sim LLOBJ WLIST - Recompute all existing similarities for
-  all words in WLIST.
+  all words in WLIST. The recomputation is unconditional.
+
+  For each word in WLIST, recompute *all* existing similarities between
+  that word and any other word that it already has similarities to. No
+  new pairings are created.
 "
 	(define e (make-elapsed-secs))
 	(define sap (add-similarity-api LLOBJ #f SIM-ID))
@@ -304,7 +309,8 @@
 	; unaff are all the unaffected words.
 	(define unaff (atoms-subtract all-wrds WLIST))
 
-	; aff are the affected words.
+	; aff are the "affected words" - the intersection of provided
+	; word list with the words that already have similarities.
 	(define aff (atoms-subtract all-wrds unaff))
 
 	(format #t "Will recompute sims for ~3D words (~A unaffected) out of ~3D\n"
@@ -339,6 +345,20 @@
 	; Create similarities for the initial set.
 	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
 	(format #t "Done computing MI similarity in ~A secs\n" (e))
+)
+
+; ---------------------------------------------------------------
+
+(define (compute-class-sim LLOBJ WCLASS)
+"
+  compute-class-sim LLOBJ WCLASS - Compute the similarity between
+  WCLASS and all other existing classes. The computation is
+  unconditional.
+"
+	(define compute-sim (make-simmer LLOBJ))
+
+	(for-each (lambda (WC) (compute-sim WCLASS WC))
+		(LLOBJ 'get-clusters))
 )
 
 ; ---------------------------------------------------------------
@@ -463,6 +483,13 @@
 
   The marginal entropies and the marginal MI for MI(w,d) appears to be
   interesting. So keep these up to date.
+
+  At this time, these are all just 'interesting'; they are not actually
+  needed for anything, so this computation could be skipped. All that
+  would happen is that the logging of data would fail.
+
+  This does take a significant amount of CPU time, and so this could be
+  ditched...
 "
 	(define freq-obj (make-compute-freq LLOBJ))
 	(define ent-obj (add-entropy-compute LLOBJ))
@@ -769,75 +796,22 @@
 "
 	(setup-initial-similarities LLOBJ NRANK)
 
-	; The ordinary MI similarity of two words
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
-	(define (mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref miv 0) -inf.0))
-
-	; The ranked MI similarity of two words
-	(define (ranked-mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref miv 1) -inf.0))
-
-	; The similarity function to use for the in-group formation.
-	; Hypothesis: ordinary MI creates better clusters.
-	; (define IN-GRP-SIM ranked-mi-sim)
-	(define IN-GRP-SIM mi-sim)
-
 	; Log what we actually used.
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
-	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
-		(StringValue "mi-sim"))
+	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
+		(FloatValue QUORUM COMMONALITY NOISE NRANK))
 
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
 
-	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
-		(FloatValue QUORUM COMMONALITY NOISE NRANK))
+	; Create the function that determines group membership.
+	(define jaccard-select (make-jaccard-selector LLOBJ
+		QUORUM COMMONALITY NOISE))
 
-	; ------------------------------
-	; Find the largest in-group that also shares more than a
-	; fraction COMMONALITY of disjuncts among a QUORUM of members.
-	; The returned group will always have at least two members,
-	; the initial two proposed.
-	(define (get-merg-grp WA WB CANDIDATES)
-		(define initial-in-grp
-			(optimal-in-group IN-GRP-SIM WA WB CANDIDATES))
-
-		(format #t "Initial in-group size=~D:" (length initial-in-grp))
-		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-			initial-in-grp)
-		(format #t "\n")
-
-		; Tail-recursive trimmer; rejects large groups with little
-		; commonality. Accepts first grouping with commonality above
-		; the threshold COMMONALITY, or the last grouping before the
-		; commonality decreases.
-		(define (trim-group GRP prev-com prev-grp)
-			(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-			(define comality (/ (car ovlp) (cadr ovlp)))
-			(format #t "In-group size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-				(length GRP) (car ovlp) (cadr ovlp) (* comality 100))
-
-			; In plain English:
-			; If comality is above threshold, accept.
-			; If comality dropped, compared to the previous,
-			;    accept the previous.
-			; If we are down to two, accept. Do this check last.
-			; Else trim one word from the end, and try again.
-			(cond
-				((< COMMONALITY comality) GRP)
-				((< comality prev-com) prev-grp)
-				((= (length GRP) 2) GRP)
-				(else (trim-group (drop-right GRP 1) comality GRP))))
-
-		(trim-group initial-in-grp -1.0 initial-in-grp)
-	)
-
-	; ------------------------------
+	; Create the function that performs the merge.
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
+	; ------------------------------
 	; Main workhorse function
 	(define (perform-merge N WA WB)
 		(define e (make-elapsed-secs))
@@ -850,7 +824,8 @@
 		(define n-to-take (inexact->exact
 			(min (length ranked-words) (+ NRANK (* 3 N)))))
 		(define words-with-sims (take ranked-words n-to-take))
-		(define in-grp (get-merg-grp WA WB words-with-sims))
+
+		(define in-grp (jaccard-select WA WB words-with-sims))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
@@ -868,14 +843,23 @@
 		; After merging, recompute similarities for the words
 		; that were touched. We have two choices here: recompute
 		; sims only for the words that were directly merged, as these
-		; are clearly directly affected. Or we rcompute the entire
+		; are clearly directly affected. Or we recompute the entire
 		; universe of words that were just peripherally affected.
+		; Recomputing the univese causes the whole algo to run about
+		; 10x slower. In exchange, we maybe get better results? Or maybe
+		; not? Unclear, unknown at this time, might no matter.
 		(if PRECISE-SIM
 			(recomp-all-sim LLOBJ touched-words)
 			(recomp-all-sim LLOBJ (filter cog-atom? in-grp)))
 
 		; Always compute self-similarity of the new word-class.
+		; Optional; this is logged by the logger.
 		((make-simmer LLOBJ) wclass wclass)
+
+		; Optional; compute similarity between this and all other
+		; classes. This is used to compute and log the orthogonality
+		; of the classes. It provides an intersting statistic.
+		(compute-class-sim LLOBJ wclass)
 
 		(log-class wclass) ; record this in the log
 

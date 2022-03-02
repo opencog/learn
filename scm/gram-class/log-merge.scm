@@ -19,6 +19,9 @@
   make-merge-logger LLOBJ -- create logger to record assorted dataset info
      as the merge progresses. The data is anchored on the wild-card of the
      LLOBJ.
+
+     This is always called before the merge is performed; it records the
+     state of affairs at that point.
 "
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 
@@ -37,6 +40,7 @@
 	(define log-total-entropy (make-data-logger *-log-anchor-* (Predicate "total-entropy")))
 	(define log-nclasses (make-data-logger *-log-anchor-* (Predicate "num classes")))
 	(define log-nsimil (make-data-logger *-log-anchor-* (Predicate "num sim pairs")))
+	(define log-ortho (make-data-logger *-log-anchor-* (Predicate "orthogonality")))
 
 	(define (log2 x) (if (< 0 x) (/ (log x) (log 2)) -inf.0))
 
@@ -64,6 +68,37 @@
 	(define (get-ranked-mi PAIR)
 		(define miv (sap 'get-count PAIR))
 		(if miv (cog-value-ref miv 1) -inf.0))
+
+	; The MI similarity of two words
+	(define (mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
+	; What fraction of all similarities between all word-classes
+	; are zero? Returns a fraction between zero and one.  The
+	; fraction is one, if all similarities are vanishing.
+	(define (orthogonality)
+		(define northo 0)
+		(define ntot 0)
+
+		; Loop over all N(N-1)/2 similarities for N classes.
+		; i.e. not counting self-similarities.
+		(define (count-ortho WCL REST)
+			(when (not (nil? REST))
+				(for-each
+					(lambda (RC)
+						(set! ntot (+ 1 ntot))
+						(if (< (mi-sim WCL RC) -1000)
+							(set! northo (+ 1 northo))))
+					REST)
+				(count-ortho (car REST) (cdr REST))))
+
+		(define all-cls (LLOBJ 'get-clusters))
+		(count-ortho (car all-cls) (cdr all-cls))
+
+		(if (< 0 ntot)
+			(exact->inexact (/ northo ntot))
+			1.0))
 
 	; Log some maybe-useful data...
 	(lambda (top-pair)
@@ -93,6 +128,7 @@
 
 		(log-nclasses (cog-count-atoms 'WordClassNode))
 		(log-nsimil (cog-count-atoms 'SimilarityLink))
+		(log-ortho (orthogonality))
 
 		; Save to the DB
 		(store-atom *-log-anchor-*)
