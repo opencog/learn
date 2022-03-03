@@ -159,15 +159,16 @@
 						(< COMMONALITY cmlty))
 					(iota glen 0))
 
-					; Print a progress report.
-					(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-						(length best-grp)
-						(first best-ovlp) (second best-ovlp)
-						best-cmlty)
-
 					; If there was an improvement, try again.
 					(if (not (equal? best-grp GRP))
-						(trim-greedy-rec best-cmlty best-ovlp best-grp)
+						(begin
+							; Print a progress report.
+							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+								(length best-grp)
+								(first best-ovlp) (second best-ovlp)
+								best-cmlty)
+
+							(trim-greedy-rec best-cmlty best-ovlp best-grp))
 						(append ovlp GRP)))))
 
 
@@ -177,10 +178,13 @@
 		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 		(define cmlty (/ (first ovlp) (second ovlp)))
 
+		(format #t "Start:  size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(length GRP) (first ovlp) (second ovlp) cmlty)
+
 		(define best (trim-greedy-rec cmlty ovlp GRP))
 		(define comality (/ (first best) (second best)))
 
-		(format #t "Best size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+		(format #t "Best:   size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 			(- (length best) 2) (first best) (second best) comality)
 
 		; Drop the leading overlap numbers before returning.
