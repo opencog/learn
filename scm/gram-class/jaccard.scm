@@ -123,13 +123,15 @@
 	(define (trim-exhaust-rec GRP)
 
 		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-		(define comality (/ (first ovlp) (second ovlp)))
-		(define glen (length GRP))
-		(define best (append ovlp GRP))
+		(define cmlty (/ (first ovlp) (second ovlp)))
+		(when (< comality cmlty)
+			(set! comality cmlty)
+			(set! best (append ovlp GRP)))
 
 		; If the group has two members, it cannot be shrunk any more.
 		; If the group already exceeds the commonality bound, we are
 		; done. Else, drop one, and see what happens.
+		(define glen (length GRP))
 		(when (and (< 2 glen) (< comality COMMONALITY))
 
 			; Loop depth-first until we find something that exceeds
@@ -157,6 +159,9 @@
 
 	; Wrapper for above.
 	(define (trim-exhaust GRP)
+		(define comality 0)
+		(define best (append (list 0 1) GRP))
+
 		; Drop the leading overlap numbers before returning.
 		; Start by reversing the list, so that the seed members are
 		; explored last.
