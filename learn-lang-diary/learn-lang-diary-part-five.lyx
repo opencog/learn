@@ -7354,6 +7354,65 @@ The ranked-MI is build as a linear combination of the word-pair MI, plus
 \end_layout
 
 \begin_layout Subsubsection*
+Marginal Entropies
+\end_layout
+
+\begin_layout Standard
+The next four graphs require the frequencies 
+\begin_inset Formula $P\left(w,d\right)$
+\end_inset
+
+ to be computed.
+ This turns out to be error-prone and challenging, and thus will be reported
+ here, but turned off in future versions of the code (can be re-enabled
+ by setting 
+\family sans
+(define TRACK-ENTROPY #t)
+\family default
+ in the code.).
+ The problems are these:
+\end_layout
+
+\begin_layout Itemize
+The pair-frequencies must be recomputed before starting, and stored.
+ This includes the frequencies on CrossSections, which are not normally
+ stored.
+ After this, the marginal frequencies and the marginal entropies must be
+ computed.
+\end_layout
+
+\begin_layout Itemize
+As the merges proceed, entropies must be recomputed (they are, if the flag
+ is set).
+ This adds approx 5 minutes to each merge cycle, which is a significant
+ overhead.
+\end_layout
+
+\begin_layout Itemize
+The alternative is to create a new matrix API for entropies that always
+ computes what is needed on-the-fly, from the counts (which are always correct).
+ Doing this is ...
+ OK, as it will reduce operational errors, but will add yet more CPU overhead
+ to obtaining these stats.
+\end_layout
+
+\begin_layout Standard
+Given these issues, it seems that tracking entropies is not worth it.
+ I mean, the graphs below are interesting, and all, but they are not Earth-shaki
+ng, and don't seem to offer any new insight, beyond some warm fuzzies that
+ everything is going fine.
+\end_layout
+
+\begin_layout Standard
+These remarks apply to some of the class entropies, much further below.
+ They won't be available because of the dependency on the 
+\family sans
+pair-freq-api
+\family default
+ object.
+\end_layout
+
+\begin_layout Subsubsection*
 Marginal Word Entropy
 \end_layout
 

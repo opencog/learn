@@ -11672,7 +11672,12 @@ Conclude: it is impractical to track entropy, after all.
 
 ... unless the calculations are rejiggered to use raw count, instead of
 frequency. This seems like the only reasonable option.
+This requires expanding the compute-freq api...
+Is this worth it? Not now, it adds overhead, and the stats
+are not that interesting...
 
+* alter matrix code
+* alter agglo to not re-freq.
 
 
 
