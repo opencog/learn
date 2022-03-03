@@ -116,60 +116,72 @@
 		(append (take LST IDX) (drop LST (+ IDX 1))))
 
 	; Greedy hill-climbing trimmer. Explores dropping members of
-	; the group, to see if the commonality improves. If so, it tries
-	; again, else it halts. This assumes a simple landscape; so,
-	; yes, in principle, it can get trapped in local maxima, but
-	; it seems likely that there will always be some direct path
-	; to the top.
+	; the group, to see if the commonality improves. If so, pick
+	; the direction that gave the steepest (best) improvement, and
+	; try again. This assumes a simple landscape, one where the
+	; steepest ascent will lead to the top. This feels like a
+	; reasonable assumption, mostly because the group is quite
+	; small, usually less than ten members, and Jaccard overlaps
+	; seem like they should give a simple landscape. At any rate,
+	; greedy ascent is a lot faster than an exhaustive search,
+	; which would take N-factorial steps for a group of size N.
 	;
 	; Halts early and accepts first grouping with commonality above
 	; the threshold COMMONALITY.
-	(define (trim-greedy-rec GRP)
+	(define (trim-greedy-rec cmlty ovlp GRP)
 
-		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-		(define cmlty (/ (first ovlp) (second ovlp)))
-		(when (< comality cmlty)
-			(set! comality cmlty)
-			(set! best (append ovlp GRP))
+		; If the group has two members, it cannot be shrunk any more.
+		; If the group already exceeds the commonality bound, we are
+		; done.
+		(define glen (length GRP))
+		(if (or (= 2 glen) (<= COMMONALITY cmlty))
 
-			; Now, recurse and try to see if we can do even better.
-			; If the group has two members, it cannot be shrunk any more.
-			; If the group already exceeds the commonality bound, we are
-			; done. Else, drop one, and see what happens.
-			(define glen (length GRP))
-			(when (and (< 2 glen) (< comality COMMONALITY))
+			; We are done. Just return what we have.
+			(append ovlp GRP)
 
-				; Loop depth-first until we find something that exceeds
-				; COMMONALITY.
+			; Loop and try to see if we can do better.
+			; This is a breadth-first loop.
+			(let ((best-cmlty cmlty)
+					(best-ovlp ovlp)
+					(best-grp GRP))
+
+				; Loop until we find something that exceeds COMMONALITY.
 				(any
 					(lambda (N)
-						(define rslt (trim-greedy-rec (mask GRP N)))
-						(define cmlty (/ (first rslt) (second rslt)))
+						(define grp (mask GRP N))
+						(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE grp))
+						(define cmlty (/ (first ovlp) (second ovlp)))
 
 						; If its better than what we have, record it.
-						(when (< comality cmlty)
-							(set! comality cmlty)
-							(set! best rslt))
+						(when (< best-cmlty cmlty)
+							(set! best-cmlty cmlty)
+							(set! best-ovlp ovlp)
+							(set! best-grp grp))
 
 						; If its better than the threshold, we are done.
-						(< COMMONALITY comality))
-					(iota glen 0)))
+						(< COMMONALITY cmlty))
+					(iota glen 0))
 
-			; Print a progress report.
-			(format #t "Best so far size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-				(- (length best) 2) (first best) (second best) comality))
+					; Print a progress report.
+					(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+						(length best-grp)
+						(first best-ovlp) (second best-ovlp)
+						best-cmlty)
 
-		; Return the best result so far.
-		best)
+					; If there was an improvement, try again.
+					(if (not (equal? best-grp GRP))
+						(trim-greedy-rec best-cmlty best-ovlp best-grp)
+						(append ovlp GRP)))))
+
 
 	; Wrapper for above.
 	(define (trim-greedy GRP)
-		(define comality 0)
-		(define best (append (list 0 1) GRP))
 
-		; Start by reversing the list, so that the seed members are
-		; explored last.
-		(trim-greedy-rec (reverse GRP))
+		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
+		(define cmlty (/ (first ovlp) (second ovlp)))
+
+		(define best (trim-greedy-rec cmlty ovlp GRP))
+		(define comality (/ (first best) (second best)))
 
 		(format #t "Best size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 			(- (length best) 2) (first best) (second best) comality)
