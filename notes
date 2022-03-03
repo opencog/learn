@@ -11447,6 +11447,11 @@ clobber does not fix it.  Search for bad ones..?
       (define fent (/ ent (frqobj 'left-wild-freq RIGHT-ITEM)))
       (frqobj 'set-left-wild-entropy RIGHT-ITEM ent fent))
 
+------
+This checks it: <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+(define frqobj (add-pair-freq-api star-obj #:nothrow #t))
+
    ; Compute the left-wild entropy summation:
    ;    h_left(y) = -sum_x P(x,y) log_2 P(x,y)
    (define (compute-left-entropy RIGHT-ITEM)
@@ -11466,7 +11471,7 @@ clobber does not fix it.  Search for bad ones..?
 		(set! nok (+ 1 nok))
 		(when (not (is-eq? ent ment))
 			(set! bad RIGHT-ITEM)
-			(format #t "Not equal ~D ~A ~A for\n~A" nok ent ment RIGHT-ITEM)
+			(format #t "Not equal ~D ~A was=~A for\n~A" nok ent ment RIGHT-ITEM)
 			(foobar))
 		)
 
@@ -11621,6 +11626,54 @@ $35 = 4.882936572523517e-6
 $36 = 4.882277433514931e-6
 
 How???
+--------------------
+Ongoing.
+------ Merged into `] )` in 22717 secs
+Throw to key `bad-summation' with args `(compute-total-entropy "Left and right entropy sums fail to be equal: 7.244230580876298 19.30738867333117\n")'.
+
+Very first marginal fails. WTF.
+
+Yet it's OK in the starting object.
+
+(define j (cog-link 'ShapeLink
+  (WordNode "James")
+  (Connector (VariableNode "$connector-word") (ConnectorDir "-"))
+  (Connector (WordNode "replied") (ConnectorDir "+"))))
+... it exists ...
+
+(define bstars (star-obj 'left-stars bad))
+ (length bstars)
+as always.
+
+(frqobj 'left-wild-entropy j) 0.0 .. that's wrong.
+(compute-left-entropy j) ; gives 0 .. that's wrong too.
+
+Ohh. Pair entropies are missing!
+Because pair freqs never computed...
+
+(also: are left-wild-freq being updated? Yes, they are.)
+
+In-group size=6: `—` `_` `)` `[` `(` `]`
+------ merge-majority: Merge 34 of 6834 sections in 6 secs
+------ merge-majority: Remaining 96 of 12183 cross in 12 secs
+------ Merged into `— _ ) [ ( ]` in 130 secs
+------ Find affected basis of (9201, 51065) in 249 secs
+------ Recomputed entropies in 424 secs
+ice-9/boot-9.scm:1669:16: In procedure raise-exception:
+Throw to key `bad-summation' with args `(compute-total-entropy "Left and right entropy sums fail to be equal: 9.150232146940487 19.412213341952143\n")'.
+
+
+Failure to store!
+* Need to store Shapes, these hold entropy marginals.
+* Argh.... Cross-Sections hold (PredicateNode "*-FrequencyKey cover-section")
+  needed for entropy marginals ... but these are never stored.
+
+Conclude: it is impractical to track entropy, after all.
+
+... unless the calculations are rejiggered to use raw count, instead of
+frequency. This seems like the only reasonable option.
+
+
 
 
 ====================================================
