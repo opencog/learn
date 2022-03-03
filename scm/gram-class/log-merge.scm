@@ -46,7 +46,7 @@
 
 	(define sup (add-support-api LLOBJ))
 	(define tsr (add-transpose-api LLOBJ))
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 	(define rpt (add-report-api LLOBJ))
 
 	(define (get-sparsity)
@@ -158,7 +158,7 @@
 	; General setup of things we need
 	(define sup (add-support-api LLOBJ))
 	(define frq (add-pair-freq-api LLOBJ))
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 
 	; The MI similarity of two words
 	(define (mi-sim WA WB)

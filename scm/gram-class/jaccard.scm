@@ -22,9 +22,6 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
-; Where the simiarity scores will be stored
-(define SIM-ID "shape-mi")
-
 ; ---------------------------------------------------------------
 
 (define-public (make-jaccard-selector LLOBJ
@@ -64,7 +61,7 @@
   variant is hard-coded. The first variant is stubbed out in the code.
 "
 	; The ordinary MI similarity of two words
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 	(define (mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
@@ -230,7 +227,7 @@
 (define bat (batch-transpose sha))
 (bat 'mmt-marginals)
 
-(define sap (add-similarity-api sha #f "shape-mi"))
+(define sap (do-add-similarity-api sha))
 (define asm (add-symmetric-mi-compute sha))
 
 ==== !#
