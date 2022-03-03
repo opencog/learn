@@ -509,6 +509,11 @@
 	; The freq-obj 'cache-left-freq is a trivial divide of the marginal
 	; count by the total count, and nothing more. The 'cache-left-entropy
 	; just takes some logs, and nothing more.
+	;
+	; XXX Is this really needed? Detailed balance means that neither
+	; the marginal counts on the DJ's, nor the marginal frrequency or
+	; entropy should change. Validating that nothing changed could be
+	; a reasonable data-integrity check.
 	(for-each
 		(lambda (DJ)
 			(when (< 0 (sup-obj 'left-count DJ))
@@ -516,6 +521,8 @@
 				(store-atom (ent-obj 'cache-left-entropy DJ))))
 		dj-list)
 
+	; Unlike the above, this is needed, as clustering redistributes
+	; the counts and thus alters marginals.
 	(for-each
 		(lambda (WRD)
 			(when (< 0 (sup-obj 'right-count WRD))
