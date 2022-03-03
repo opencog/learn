@@ -48,6 +48,18 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
+; Compile-time constant -- should we trrack entropies, or not?
+; Setting this to #t requires that not only must the baseline
+; entropies be recomputed, but also that the frequencies for pairs
+; be stored, including the frequencies for CrossSections. This
+; puts a big burden on storage, as normally, CrossSections are
+; not stored. A different alternative would be to use entropies
+; computed on-the-fly from counts on CrossSections, as these are
+; always correct. But this adds yet more CPU overhead just to log
+; some stats that are not  that terribly interesting. See the
+; Diary Part Five for actual values.
+(define TRACK-ENTROPY #f)
+
 ; ---------------------------------------------------------------
 
 (define (main-loop LLOBJ MERGE-FUN NRANK LOOP-CNT)
@@ -175,8 +187,7 @@
   needed for anything, so this computation could be skipped. All that
   would happen is that the logging of data would fail.
 
-  This does take a significant amount of CPU time, and so this could be
-  ditched...
+  This does take a significant amount of CPU time!
 "
 	(define freq-obj (make-compute-freq LLOBJ))
 	(define ent-obj (add-entropy-compute LLOBJ))
@@ -259,11 +270,12 @@
 		(lambda (WRD) (store-atom (atc 'set-mmt-marginals WRD)))
 		wrd-list)
 
-	; (Optional) Recompute entropies
-	; Optional, cause ts not strictly needed (at this time)
+	; (Optional) Recompute entropies.
+	; Optional, cause it's not strictly needed (at this time)
 	; but it does seem to offer some interesting data.
 	; This incurs additional compute cost, though.
-	(recompute-entropies LLOBJ wrd-list dj-list)
+	(if TRACK-ENTROPY
+		(recompute-entropies LLOBJ wrd-list dj-list))
 
 	(list (wrd-orphan #f) (dj-orphan #f))
 )
@@ -320,8 +332,9 @@
 
 	; (Optional) Recompute the grand-total entropy
 	; Do this if the entropy marginals are being done.
-	(define ent-obj (add-entropy-compute LLOBJ))
-	(store-atom (ent-obj 'cache-entropy))
+	(when TRACK-ENTROPY
+		(let ((ent-obj (add-entropy-compute LLOBJ)))
+			(store-atom (ent-obj 'cache-entropy))))
 )
 
 (define (recompute-marginals LLOBJ WRD-LIST)
