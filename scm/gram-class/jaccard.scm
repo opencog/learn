@@ -115,57 +115,67 @@
 	(define (mask LST IDX)
 		(append (take LST IDX) (drop LST (+ IDX 1))))
 
-	; Exhaustive exploration trimmer; rejects large groups with little
-	; commonality. Accepts first grouping with commonality above
-	; the threshold COMMONALITY, or the last grouping before the
-	; commonality decreases. This performs an exhaustive search
-	; by eliminating candidates one by one.
-	(define (trim-exhaust-rec GRP)
+	; Greedy hill-climbing trimmer. Explores dropping members of
+	; the group, to see if the commonality improves. If so, it tries
+	; again, else it halts. This assumes a simple landscape; so,
+	; yes, in principle, it can get trapped in local maxima, but
+	; it seems likely that there will always be some direct path
+	; to the top.
+	;
+	; Halts early and accepts first grouping with commonality above
+	; the threshold COMMONALITY.
+	(define (trim-greedy-rec GRP)
 
 		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 		(define cmlty (/ (first ovlp) (second ovlp)))
 		(when (< comality cmlty)
 			(set! comality cmlty)
-			(set! best (append ovlp GRP)))
+			(set! best (append ovlp GRP))
 
-		; If the group has two members, it cannot be shrunk any more.
-		; If the group already exceeds the commonality bound, we are
-		; done. Else, drop one, and see what happens.
-		(define glen (length GRP))
-		(when (and (< 2 glen) (< comality COMMONALITY))
+			; Now, recurse and try to see if we can do even better.
+			; If the group has two members, it cannot be shrunk any more.
+			; If the group already exceeds the commonality bound, we are
+			; done. Else, drop one, and see what happens.
+			(define glen (length GRP))
+			(when (and (< 2 glen) (< comality COMMONALITY))
 
-			; Loop depth-first until we find something that exceeds
-			; COMMONALITY.
-			(any
-				(lambda (N)
-					(define rslt (trim-exhaust-rec (mask GRP N)))
-					(define cmlty (/ (first rslt) (second rslt)))
+				; Loop depth-first until we find something that exceeds
+				; COMMONALITY.
+				(any
+					(lambda (N)
+						(define rslt (trim-greedy-rec (mask GRP N)))
+						(define cmlty (/ (first rslt) (second rslt)))
 
-					; If its better than what we have, record it.
-					(when (< comality cmlty)
-						(set! comality cmlty)
-						(set! best rslt))
+						; If its better than what we have, record it.
+						(when (< comality cmlty)
+							(set! comality cmlty)
+							(set! best rslt))
 
-					; If its better than the threshold, we are done.
-					(< COMMONALITY comality))
-				(iota glen 0)))
+						; If its better than the threshold, we are done.
+						(< COMMONALITY comality))
+					(iota glen 0)))
 
-		; Print a progress report.
-		(format #t "Club size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-			(- (length best) 2) (first best) (second best) comality)
+			; Print a progress report.
+			(format #t "Best so far size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+				(- (length best) 2) (first best) (second best) comality))
 
 		; Return the best result so far.
 		best)
 
 	; Wrapper for above.
-	(define (trim-exhaust GRP)
+	(define (trim-greedy GRP)
 		(define comality 0)
 		(define best (append (list 0 1) GRP))
 
-		; Drop the leading overlap numbers before returning.
 		; Start by reversing the list, so that the seed members are
 		; explored last.
-		(drop (trim-exhaust-rec (reverse GRP)) 2))
+		(trim-greedy-rec (reverse GRP))
+
+		(format #t "Best size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(- (length best) 2) (first best) (second best) comality)
+
+		; Drop the leading overlap numbers before returning.
+		(drop best 2))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
@@ -186,7 +196,7 @@
 		; Remove members from the group, until either COMMONALITY
 		; is exceeded, or a maximum is hit.
 		; (trim-tail initial-in-grp)
-		(trim-exhaust initial-in-grp)
+		(trim-greedy initial-in-grp)
 	)
 
 	; Return the function defined above.
