@@ -163,10 +163,10 @@
 					(if (not (equal? best-grp GRP))
 						(begin
 							; Print a progress report.
-							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,3F%\n"
+							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2%\n"
 								(length best-grp)
 								(first best-ovlp) (second best-ovlp)
-								best-cmlty)
+								(* 100 best-cmlty))
 
 							(trim-greedy-rec best-cmlty best-ovlp best-grp))
 						(append ovlp GRP)))))
@@ -178,14 +178,14 @@
 		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
 		(define cmlty (/ (first ovlp) (second ovlp)))
 
-		(format #t "Start:  size=~D overlap = ~A of ~A disjuncts, commonality= ~4,3F%\n"
-			(length GRP) (first ovlp) (second ovlp) cmlty)
+		(format #t "Start:  size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(length GRP) (first ovlp) (second ovlp) (* 100 cmlty))
 
 		(define best (trim-greedy-rec cmlty ovlp GRP))
 		(define comality (/ (first best) (second best)))
 
-		(format #t "Best:   size=~D overlap = ~A of ~A disjuncts, commonality= ~4,3F%\n"
-			(- (length best) 2) (first best) (second best) comality)
+		(format #t "Best:   size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(- (length best) 2) (first best) (second best) (* 100 comality))
 
 		; Drop the leading overlap numbers before returning.
 		(drop best 2))
