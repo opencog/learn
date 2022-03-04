@@ -169,6 +169,7 @@ noise
 
  parameter is the most highly explored: but what setting yeilds the best
  results? Comparing to LG should reveal the answer.
+ Estimate a few weeks to a month of sustained effort.
 \end_layout
 
 \begin_layout Itemize
@@ -186,22 +187,13 @@ Data Cleanup.
  and perform a custom merge, just like a word-class merge, but without forming
  a word-class.
  Option (2) is maybe easier and faster, but requires crafting custom code.
- Option (1) is foundationally better but time consuming.
-\end_layout
-
-\begin_layout Itemize
-
-\series bold
-Improve accuracy (by iteration).
-
-\series default
- Given the initial dictionaries, the corpus can be parsed with the LG parser,
- using those dictionaries.
- By maintaining counts of which disjuncts are actually used during parsing,
- we discover what is actually being used.
- These results can be used to cut down the word-classes, by eliminating
- those Sections that are rarely or never actually used during parsing.
- Such a trim helps reduce the dictionary size.
+ Maybe a few weeks to write this code, another few weeks to fully debug
+ it.
+ Option (1) is foundationally better but tedious and time consuming.
+ Estimate a month of keeping a watchful eye on the progress of the data
+ processing.
+ Yuck, either way.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -210,7 +202,72 @@ Improve accuracy (by iteration).
 Morphology.
 
 \series default
- asdfasdf
+ We've ignored the morphological structure of English.
+ Morphology is crucial for most Indoeuropean and Arabic langauges, and so
+ coverage could be vastly improved by putting together code for automatic
+ morphology detection/processing.
+ Diary Part One already sketched how this could be done, including a worked
+ example confirming that the idea will provide good results.
+ Implementing this in code, and then performing the experiments to confirm
+ it, is a relatively straight-forward affair.
+ Time-consuming, but well within reach.
+ Estimate six months of sustained effort; more time if interrupted.
+ A motivated grad student could do this, might take 12-18 months.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Reiterate classification.
+
+\series default
+ Given the initial dictionaries, the corpus can be parsed with the LG parser,
+ using those dictionaries.
+ The result of such parsing is again a collection of disjuncts, much like
+ the ones from MPG parsing, but with different observation counts.
+ After collecting such counts, the classification step can be perfomed again,
+ presumably resulting in a somewhat different classification, perhaps one
+ that is more accurate?
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+This appears to be a technically easy step to take, as it just follows well-trod
+ ground, mostly.
+ A few weeks or a month of close supervision of the training runs.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Refactorization.
+
+\series default
+ The disjuncts from above run provides a dataset that can be compared to
+ the MPG-deived classes, and be used to refactor those, in several different
+ ways.
+ Perhaps some Sections are never used; they could be dropped.
+ Perhaps a block-diagonal structure can be discovered.
+ That is, a word-disjunct pair, the disjunct having N connectors, can be
+ viewed s an N+1-rank tensor.
+ Perhaps the collection of these tensors has some obvious diagonal structure.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Refactoring in this way feels like it might be both theoretically challenging,
+ as well as presenting practical difficulties of discovering high-quality
+ algorithms and then debugging them.
+ This could easily take more than a few months.
+ Compared to just re-iterating, this seems more difficult, more error-prone,
+ and less robust.
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -219,7 +276,7 @@ Morphology.
 Entities.
 
 \series default
- asdfasdf
+ Reparsing with the actua
 \end_layout
 
 \begin_layout Itemize
