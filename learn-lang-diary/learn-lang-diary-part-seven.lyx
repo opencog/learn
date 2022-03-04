@@ -240,6 +240,36 @@ This appears to be a technically easy step to take, as it just follows well-trod
  A few weeks or a month of close supervision of the training runs.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+A variant of the above is to use the initial category assignment of the
+ word as a 
+\begin_inset Quotes eld
+\end_inset
+
+word-sense
+\begin_inset Quotes erd
+\end_inset
+
+, and to tag the new disjunct with that word-sense.
+ One way to do this would be to treat the initial disjunct as a 
+\begin_inset Quotes eld
+\end_inset
+
+subscript
+\begin_inset Quotes erd
+\end_inset
+
+, and so the same text-word, but with two different subscripts, is treated
+ as two distinct words.
+ Counts and further clustering continue to treate these as two different
+ words, until/unless the second round of clustering erases the distinction.
+ Handling this subscript-tagging requires new code; it is perhaps similar
+ to cross-sensory tagging, e.g.
+ if/when correlating with audio, video data.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -267,34 +297,332 @@ Refactoring in this way feels like it might be both theoretically challenging,
  This could easily take more than a few months.
  Compared to just re-iterating, this seems more difficult, more error-prone,
  and less robust.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Entities and References.
+
+\series default
+ A word-vector, for a given word, can be viewed in two ways.
+ One way is to say that the disjunct describes the textual environment of
+ the word: it's N-gram or skip-gram.
+ Anothe This r way is to say is that it captures the semantic embedding
+ of the word; its a list of all of teh 
+\begin_inset Quotes eld
+\end_inset
+
+facts
+\begin_inset Quotes erd
+\end_inset
+
+ known about that word.
+ This is even more powerful, when the word is sense-tagged, i.e.
+ tagged with the initial word-category.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+There are two types of entitites: common entities and text-specific entities.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+I want to write 
+\begin_inset Quotes eld
+\end_inset
+
+common nouns
+\begin_inset Quotes erd
+\end_inset
+
+, but in fact, the entities may be specific events in time, i.e.
+ verbs.
+ It would be awkward to write 
+\begin_inset Quotes eld
+\end_inset
+
+common noun or common verb
+\begin_inset Quotes erd
+\end_inset
+
+, so we'll just call them 
+\begin_inset Quotes eld
+\end_inset
+
+entities
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ Common entites hold across all texts, such as 
+\begin_inset Quotes eld
+\end_inset
+
+cat
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+dog
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+run
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+jump
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Text-specific entities occur in one text but not another: 
+\begin_inset Quotes eld
+\end_inset
+
+John
+\begin_inset Quotes erd
+\end_inset
+
+, which might be a different 
+\begin_inset Quotes eld
+\end_inset
+
+John
+\begin_inset Quotes erd
+\end_inset
+
+ in each text.
  
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The most interesting/valuable task would be reference detection and reference
+ resolution.
+ How could this be done? A naive algo is to gather up a subset of a vector,
+ specific to one text, and look for high-MI transitive relations.
+ For example, 
+\begin_inset Quotes eld
+\end_inset
+
+John ran the engine.
+ It ran fine
+\begin_inset Quotes erd
+\end_inset
+
+ has the relations 
+\begin_inset Quotes eld
+\end_inset
+
+ran engine
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+it ran
+\begin_inset Quotes erd
+\end_inset
+
+, which form a transitive relation between 
+\begin_inset Quotes eld
+\end_inset
+
+it
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+engine
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Of course, the pairing of 
+\begin_inset Quotes eld
+\end_inset
+
+John
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+it
+\begin_inset Quotes erd
+\end_inset
+
+ can also be deduced.
+\end_layout
+
+\end_inset
+
+ For this to work well, though, stems are needed, or, more properly speaking,
+ lexical functions.
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-Entities.
+Lexical Functions.
 
 \series default
- Reparsing with the actua
+ This seems eminently important, but how? 
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-Synonyms.
+Synonymous Phrases.
 
 \series default
- asdfasdf
+ Word-classes are already a form of weak synonymy; how can one form strong
+ synonymy? By appliying more stringent membership requirements? Based on
+ current results, it appears that this would be enough, and that it would
+ work fairly well.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Synonymous phrases require the ability to compare collections of partially-assem
+bled disjuncts, to see how the connectors compare.
+ This risks a combinatorial explosion.
+ It does require new code.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+It might be possible and worthwhile to simultaneously fish for synonyms
+ as well as grammar.
+ Synonyms are already going to behave the same way grammatically, whereas
+ part-of-speech groupings are much looser.
+ This would result in a 
+\begin_inset Quotes eld
+\end_inset
+
+multi-scale
+\begin_inset Quotes erd
+\end_inset
+
+ dictionary, where each part-of-speech grouping can be further subdivided
+ into synonym collections.
+ Implementing this requires altering the 
+\begin_inset Quotes eld
+\end_inset
+
+WordClass
+\begin_inset Quotes erd
+\end_inset
+
+ construction to be marked with a class-type: a loose part-of-speech; a
+ tighter synonym designation.
+ This requires rejiggering the code a little bit; seems like a great idea.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\series bold
+Set Phrases, Institutional Phrases, Idioms.
+
+\series default
+ These are groupings of words that occur more frequently together, then
+ apart.
+ How can these be identified? Why would we be interested in performing such
+ an identification? Is it a stepping stone to something better?
 \end_layout
 
 \begin_layout Itemize
 
 \series bold
-References.
+Antonyms.
 
 \series default
- asdfasdf
+ A famous deficiency in neural net approaches is the inability to identify
+ antonyms.
+ The current code is equally blind to antonyms.
+\end_layout
+
+\begin_layout Itemize
+Sound, video.
+\end_layout
+
+\begin_layout Subsection*
+Favorites
+\end_layout
+
+\begin_layout Standard
+Lets narrow down the above.
+ Favorite next tasks are:
+\end_layout
+
+\begin_layout Itemize
+Reiterate classification.
+ Run it a second time.
+ This includes implementing word-sense tagging.
+ Shouldn't be too hard.
+ Interesting, and teh generalization seems useful, anyway.
+\end_layout
+
+\begin_layout Itemize
+Multi-scale clustering.
+ (aka synonyms) This requires developing multi-scale WordClass infrastructure.
+ Shouldn't bee too hard.
+ Seems useful, anyway.
+\end_layout
+
+\begin_layout Standard
+Favorite theoretical activities:
+\end_layout
+
+\begin_layout Itemize
+Lexical Functions.
+ This seems important, but don't yet have a cler vision on how to do this.
+ This needs to be developed.
+ Perhaps this can be a heavily-abstracted sysnonym thingy? 
+\end_layout
+
+\begin_layout Itemize
+Antonyms.
+ This is important.
 \end_layout
 
 \begin_layout Section*
