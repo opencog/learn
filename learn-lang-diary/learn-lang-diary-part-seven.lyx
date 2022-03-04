@@ -172,27 +172,72 @@ noise
 \end_layout
 
 \begin_layout Itemize
-Slashes
+
+\series bold
+Data Cleanup.
+
+\series default
+ During pair-counting and/or MPG parsing, there is a bug that repeatedly
+ escapes backslashes, leading to a cascade of backslashes in the dataset.
+ This is just junk, and should be fixed.
+ Fixing it will surely improve quality.
+ It's tedious and boring.
+ Two ways to fix: (1) start from scratch (2) hunt out multiple backslashes,
+ and perform a custom merge, just like a word-class merge, but without forming
+ a word-class.
+ Option (2) is maybe easier and faster, but requires crafting custom code.
+ Option (1) is foundationally better but time consuming.
 \end_layout
 
 \begin_layout Itemize
-improve accuracy
+
+\series bold
+Improve accuracy (by iteration).
+
+\series default
+ Given the initial dictionaries, the corpus can be parsed with the LG parser,
+ using those dicttionaries.
+ By maintaining counts of which disjuncts are actually used during parsing,
+ we discover what is actually being used.
+ These results can be used to cut down the word-classes, by eliminating
+ those Sections that are rarely or never actually used during parsing.
+ Such a trim helps reduce the dictionary size.
 \end_layout
 
 \begin_layout Itemize
-morphology
+
+\series bold
+Morphology.
+
+\series default
+ asdfasdf
 \end_layout
 
 \begin_layout Itemize
-entities
+
+\series bold
+Entities.
+
+\series default
+ asdfasdf
 \end_layout
 
 \begin_layout Itemize
-synonyms
+
+\series bold
+Synonyms.
+
+\series default
+ asdfasdf
 \end_layout
 
 \begin_layout Itemize
-referencs
+
+\series bold
+References.
+
+\series default
+ asdfasdf
 \end_layout
 
 \begin_layout Section*
