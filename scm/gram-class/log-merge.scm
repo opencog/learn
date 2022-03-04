@@ -46,7 +46,7 @@
 
 	(define sup (add-support-api LLOBJ))
 	(define tsr (add-transpose-api LLOBJ))
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 	(define rpt (add-report-api LLOBJ))
 
 	(define (get-sparsity)
@@ -83,7 +83,9 @@
 
 		; Loop over all N(N-1)/2 similarities for N classes.
 		; i.e. not counting self-similarities.
-		(define (count-ortho WCL REST)
+		(define (count-ortho WLI)
+			(define WCL (car WLI))
+			(define REST (cdr WLI))
 			(when (not (nil? REST))
 				(for-each
 					(lambda (RC)
@@ -91,10 +93,10 @@
 						(if (< (mi-sim WCL RC) -1000)
 							(set! northo (+ 1 northo))))
 					REST)
-				(count-ortho (car REST) (cdr REST))))
+				(count-ortho REST)))
 
 		(define all-cls (LLOBJ 'get-clusters))
-		(count-ortho (car all-cls) (cdr all-cls))
+		(if (not (nil? all-cls)) (count-ortho all-cls))
 
 		(if (< 0 ntot)
 			(exact->inexact (/ northo ntot))
@@ -121,10 +123,11 @@
 		; Total number of non-zero entries
 		(log-size (sup 'total-support-left))
 
-		; word-dj entropies
-		(log-left-entropy (rpt 'left-entropy))
-		(log-right-entropy (rpt 'right-entropy))
-		(log-total-entropy (rpt 'total-entropy))
+		; word-dj entropies. Logged only when available.
+		(when TRACK-ENTROPY
+			(log-left-entropy (rpt 'left-entropy))
+			(log-right-entropy (rpt 'right-entropy))
+			(log-total-entropy (rpt 'total-entropy)))
 
 		(log-nclasses (cog-count-atoms 'WordClassNode))
 		(log-nsimil (cog-count-atoms 'SimilarityLink))
@@ -156,7 +159,7 @@
 	; General setup of things we need
 	(define sup (add-support-api LLOBJ))
 	(define frq (add-pair-freq-api LLOBJ))
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 
 	; The MI similarity of two words
 	(define (mi-sim WA WB)
@@ -191,8 +194,9 @@
 		(log-self-rmi (ranked-mi-sim WCLASS WCLASS))
 		(log-support (sup 'right-support WCLASS))
 		(log-count (sup 'right-count WCLASS))
-		(log-logli (frq 'right-wild-logli WCLASS))
-		(log-entropy (frq 'right-wild-fentropy WCLASS))
+		(when TRACK-ENTROPY
+			(log-logli (frq 'right-wild-logli WCLASS))
+			(log-entropy (frq 'right-wild-fentropy WCLASS)))
 		(log-cluster (cluster-entropy WCLASS))
 		(store-atom *-log-anchor-*)
 	)
@@ -222,6 +226,10 @@
 	(format PORT "# in-group-sim=~A\n" in-grp-sim)
 )
 
+; If nothing, then print zero.
+(define (zlist-ref LST N) (if LST (list-ref LST N) 0))
+(define (fcog-value->list VAL) (if VAL (cog-value->list VAL) #f))
+
 (define-public (print-log LLOBJ PORT)
 "
   print-log LLOBJ PORT -- Dump log contents as CSV
@@ -249,9 +257,9 @@
 	(define lcnt (cog-value->list (cog-value *-log-anchor-* key-left-cnt)))
 	(define rcnt (cog-value->list (cog-value *-log-anchor-* key-right-cnt)))
 	(define size (cog-value->list (cog-value *-log-anchor-* key-size)))
-	(define lent (cog-value->list (cog-value *-log-anchor-* key-left-entropy)))
-	(define rent (cog-value->list (cog-value *-log-anchor-* key-right-entropy)))
-	(define tent (cog-value->list (cog-value *-log-anchor-* key-total-entropy)))
+	(define lent (fcog-value->list (cog-value *-log-anchor-* key-left-entropy)))
+	(define rent (fcog-value->list (cog-value *-log-anchor-* key-right-entropy)))
+	(define tent (fcog-value->list (cog-value *-log-anchor-* key-total-entropy)))
 	(define spar (cog-value->list (cog-value *-log-anchor-* key-sparsity)))
 	(define ment (cog-value->list (cog-value *-log-anchor-* key-mmt-entropy)))
 	(define rami (cog-value->list (cog-value *-log-anchor-* key-top-ranked-mi)))
@@ -273,9 +281,9 @@
 			(inexact->exact (list-ref lcnt N))
 			(inexact->exact (list-ref rcnt N))
 			(inexact->exact (list-ref size N))
-			(list-ref lent N)
-			(list-ref rent N)
-			(list-ref tent N)
+			(zlist-ref lent N)
+			(zlist-ref rent N)
+			(zlist-ref tent N)
 			(list-ref spar N)
 			(list-ref ment N)
 			(list-ref rami N)
@@ -314,8 +322,8 @@
 	(define self-rmi (cog-value->list (cog-value *-log-anchor-* key-self-rmi)))
 	(define support (cog-value->list (cog-value *-log-anchor-* key-support)))
 	(define count (cog-value->list (cog-value *-log-anchor-* key-count)))
-	(define logli (cog-value->list (cog-value *-log-anchor-* key-logli)))
-	(define entropy (cog-value->list (cog-value *-log-anchor-* key-entropy)))
+	(define logli (fcog-value->list (cog-value *-log-anchor-* key-logli)))
+	(define entropy (fcog-value->list (cog-value *-log-anchor-* key-entropy)))
 	(define cluster (cog-value->list (cog-value *-log-anchor-* key-cluster)))
 
 	(define len (length classes))
@@ -338,9 +346,9 @@
 		(format PORT "~D\t\"~A\"\t~D\t~9F\t~9F\t~D\t~D\t~9F\t~9F\t~9F\n"
 			(+ N 1)
 
-			; In somewhat common circumstances, the class may have
-			; been deleted, if it was fully merged into another class.
-			; Thus, we cannot rely on it being threre.
+			; It commonnly happens that the class has been deleted,
+			; whenever it was fully merged into another class.
+			; Thus, we cannot rely on it being there.
 			; (if (cog-atom? cls) (cog-name cls) "#f")
 			(esc-q (list-ref class-name N))
 			(list-ref class-size N)
@@ -348,8 +356,8 @@
 			(list-ref self-rmi N)
 			(list-ref support N)
 			(list-ref count N)
-			(list-ref logli N)
-			(list-ref entropy N)
+			(zlist-ref logli N)
+			(zlist-ref entropy N)
 			(list-ref cluster N)
 		))
 		(iota len))

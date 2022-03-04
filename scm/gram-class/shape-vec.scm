@@ -777,6 +777,7 @@
 
 			((cluster-type)        (apply gram-obj (cons message args)))
 			((make-cluster)        (apply gram-obj (cons message args)))
+			((get-clusters)        (apply gram-obj (cons message args)))
 			((store-aux)           (apply gram-obj (cons message args)))
 
 			((provides)            (apply provides args))

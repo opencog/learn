@@ -18,6 +18,7 @@ ADD_GUILE_MODULE (FILES
 	gram-class/in-group.scm
 	gram-class/jaccard.scm
 	gram-class/log-merge.scm
+	gram-class/mi-similarity.scm
 	gram-class/shape-project.scm
 	gram-class/shape-vec.scm
 	gram-class/singletons.scm

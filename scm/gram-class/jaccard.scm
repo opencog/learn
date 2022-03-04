@@ -22,9 +22,6 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
-; Where the simiarity scores will be stored
-(define SIM-ID "shape-mi")
-
 ; ---------------------------------------------------------------
 
 (define-public (make-jaccard-selector LLOBJ
@@ -64,7 +61,7 @@
   variant is hard-coded. The first variant is stubbed out in the code.
 "
 	; The ordinary MI similarity of two words
-	(define sap (add-similarity-api LLOBJ #f SIM-ID))
+	(define sap (do-add-similarity-api LLOBJ))
 	(define (mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
@@ -115,52 +112,83 @@
 	(define (mask LST IDX)
 		(append (take LST IDX) (drop LST (+ IDX 1))))
 
-	; Exhaustive exploration trimmer; rejects large groups with little
-	; commonality. Accepts first grouping with commonality above
-	; the threshold COMMONALITY, or the last grouping before the
-	; commonality decreases. This performs an exhaustive search
-	; by eliminating candidates one by one.
-	(define (trim-exhaust-rec GRP)
-
-		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
-		(define comality (/ (first ovlp) (second ovlp)))
-		(define glen (length GRP))
-		(define best (append ovlp GRP))
+	; Greedy hill-climbing trimmer. Explores dropping members of
+	; the group, to see if the commonality improves. If so, pick
+	; the direction that gave the steepest (best) improvement, and
+	; try again. This assumes a simple landscape, one where the
+	; steepest ascent will lead to the top. This feels like a
+	; reasonable assumption, mostly because the group is quite
+	; small, usually less than ten members, and Jaccard overlaps
+	; seem like they should give a simple landscape. At any rate,
+	; greedy ascent is a lot faster than an exhaustive search,
+	; which would take N-factorial steps for a group of size N.
+	;
+	; Halts early and accepts first grouping with commonality above
+	; the threshold COMMONALITY.
+	(define (trim-greedy-rec cmlty ovlp GRP)
 
 		; If the group has two members, it cannot be shrunk any more.
 		; If the group already exceeds the commonality bound, we are
-		; done. Else, drop one, and see what happens.
-		(when (and (< 2 glen) (< comality COMMONALITY))
+		; done.
+		(define glen (length GRP))
+		(if (or (= 2 glen) (<= COMMONALITY cmlty))
 
-			; Loop depth-first until we find something that exceeds
-			; COMMONALITY.
-			(any
-				(lambda (N)
-					(define rslt (trim-exhaust-rec (mask GRP N)))
-					(define cmlty (/ (first rslt) (second rslt)))
+			; We are done. Just return what we have.
+			(append ovlp GRP)
 
-					; If its better than what we have, record it.
-					(when (< comality cmlty)
-						(set! comality cmlty)
-						(set! best rslt))
+			; Loop and try to see if we can do better.
+			; This is a breadth-first loop.
+			(let ((best-cmlty cmlty)
+					(best-ovlp ovlp)
+					(best-grp GRP))
 
-					; If its better than the threshold, we are done.
-					(< COMMONALITY comality))
-				(iota glen 0)))
+				; Loop until we find something that exceeds COMMONALITY.
+				(any
+					(lambda (N)
+						(define grp (mask GRP N))
+						(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE grp))
+						(define cmlty (/ (first ovlp) (second ovlp)))
 
-		; Print a progress report.
-		(format #t "Club size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
-			(- (length best) 2) (first best) (second best) comality)
+						; If its better than what we have, record it.
+						(when (< best-cmlty cmlty)
+							(set! best-cmlty cmlty)
+							(set! best-ovlp ovlp)
+							(set! best-grp grp))
 
-		; Return the best result so far.
-		best)
+						; If its better than the threshold, we are done.
+						(< COMMONALITY cmlty))
+					(iota glen 0))
+
+					; If there was an improvement, try again.
+					(if (not (equal? best-grp GRP))
+						(begin
+							; Print a progress report.
+							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2%\n"
+								(length best-grp)
+								(first best-ovlp) (second best-ovlp)
+								(* 100 best-cmlty))
+
+							(trim-greedy-rec best-cmlty best-ovlp best-grp))
+						(append ovlp GRP)))))
+
 
 	; Wrapper for above.
-	(define (trim-exhaust GRP)
+	(define (trim-greedy GRP)
+
+		(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE GRP))
+		(define cmlty (/ (first ovlp) (second ovlp)))
+
+		(format #t "Start:  size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(length GRP) (first ovlp) (second ovlp) (* 100 cmlty))
+
+		(define best (trim-greedy-rec cmlty ovlp GRP))
+		(define comality (/ (first best) (second best)))
+
+		(format #t "Best:   size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
+			(- (length best) 2) (first best) (second best) (* 100 comality))
+
 		; Drop the leading overlap numbers before returning.
-		; Start by reversing the list, so that the seed members are
-		; explored last.
-		(drop (trim-exhaust-rec (reverse GRP)) 2))
+		(drop best 2))
 
 	; ------------------------------
 	; Find the largest in-group that also shares more than a
@@ -181,7 +209,7 @@
 		; Remove members from the group, until either COMMONALITY
 		; is exceeded, or a maximum is hit.
 		; (trim-tail initial-in-grp)
-		(trim-exhaust initial-in-grp)
+		(trim-greedy initial-in-grp)
 	)
 
 	; Return the function defined above.
@@ -203,7 +231,7 @@
 (define bat (batch-transpose sha))
 (bat 'mmt-marginals)
 
-(define sap (add-similarity-api sha #f "shape-mi"))
+(define sap (do-add-similarity-api sha))
 (define asm (add-symmetric-mi-compute sha))
 
 ==== !#
