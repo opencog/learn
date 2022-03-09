@@ -149,8 +149,10 @@
 						(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE grp))
 						(define cmlty (/ (first ovlp) (second ovlp)))
 
-						; If its better than what we have, record it.
-						(when (< best-cmlty cmlty)
+						; If its equal or better than what we have, record it.
+						; Note that both best-cmlty and cmlty might be zero,
+						; so we want to continue searching, anyway.
+						(when (<= best-cmlty cmlty)
 							(set! best-cmlty cmlty)
 							(set! best-ovlp ovlp)
 							(set! best-grp grp))
