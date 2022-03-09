@@ -165,7 +165,7 @@
 					(if (not (equal? best-grp GRP))
 						(begin
 							; Print a progress report.
-							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2%\n"
+							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 								(length best-grp)
 								(first best-ovlp) (second best-ovlp)
 								(* 100 best-cmlty))
