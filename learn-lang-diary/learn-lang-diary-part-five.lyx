@@ -2047,7 +2047,7 @@ Here's all four of these on one graph:
 \align center
 \begin_inset Graphics
 	filename p5-en-merge/log-0.5-0.2.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2065,7 +2065,7 @@ Here's just sparsity, for all four merge parameters.
 \align center
 \begin_inset Graphics
 	filename p5-en-merge/sparsity.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2090,7 +2090,7 @@ bringing order to the chaos
 \align center
 \begin_inset Graphics
 	filename p5-en-merge/entropy.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2109,7 +2109,7 @@ anked pairs are merged.
 \align center
 \begin_inset Graphics
 	filename p5-en-merge/ranked-mi.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2154,7 +2154,7 @@ constant
 \align center
 \begin_inset Graphics
 	filename p5-en-merge/mmtq.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2777,7 +2777,7 @@ Zipf Distribution
 \begin_layout Standard
 Some graphs follow.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 The data was processed with the `utils/entropy-marginals.scm` scripts in
@@ -2802,7 +2802,7 @@ The data was processed with the `utils/entropy-marginals.scm` scripts in
 \align center
 \begin_inset Graphics
 	filename p5-entropy/rank-wfreq.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2834,7 +2834,7 @@ Next: a histogram of
 \align center
 \begin_inset Graphics
 	filename p5-entropy/bin-went.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2867,7 +2867,7 @@ This suggests redoing the bin-counts, weighting each word by it's probability.
 \align center
 \begin_inset Graphics
 	filename p5-entropy/bin-wei-went.eps
-	width 50page%
+	width 80col%
 
 \end_inset
 
@@ -2913,7 +2913,7 @@ Same as above, but for the word-disjunct mutual information.
 \align center
 \begin_inset Graphics
 	filename p5-entropy/bin-wei-wmi.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -2972,7 +2972,7 @@ s reveal this relationship.
 \align center
 \begin_inset Graphics
 	filename p5-entropy/scat-wfreq-went.eps
-	width 50col%
+	width 80col%
 
 \end_inset
 
@@ -3015,7 +3015,7 @@ The graph below shows the mutual information
 \align center
 \begin_inset Graphics
 	filename p5-entropy/scat-wfreq-wmi.eps
-	width 50col%
+	width 80col%
 
 \end_inset
 
@@ -3059,7 +3059,7 @@ unweighted
 \align center
 \begin_inset Graphics
 	filename p5-entropy/scat-went-wmi.eps
-	width 50col%
+	width 80col%
 
 \end_inset
 
@@ -3365,14 +3365,14 @@ Four nearly identical graphs, differing only in the horizontal offset:
 \align center
 \begin_inset Graphics
 	filename p5-sim/sim-mi.eps
-	width 45text%
+	width 50text%
 
 \end_inset
 
 
 \begin_inset Graphics
 	filename p5-sim/sim-rmi.eps
-	width 45text%
+	width 50text%
 
 \end_inset
 
@@ -3383,14 +3383,14 @@ Four nearly identical graphs, differing only in the horizontal offset:
 \align center
 \begin_inset Graphics
 	filename p5-sim/sim-hmi.eps
-	width 45text%
+	width 50text%
 
 \end_inset
 
 
 \begin_inset Graphics
 	filename p5-sim/sim-mmi.eps
-	width 45text%
+	width 50text%
 
 \end_inset
 
@@ -3427,7 +3427,7 @@ How similar are these graphs? All four are re-plotted below, with the horizontal
 \align center
 \begin_inset Graphics
 	filename p5-sim/simil-all.eps
-	width 60text%
+	width 80text%
 
 \end_inset
 
@@ -7129,6 +7129,10 @@ Sparsity is defined as always: it is log2 of the fraction of non-zero matrix
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-sparsity.eps
 	width 50text%
@@ -7197,6 +7201,10 @@ f\left(w,u\right)=\sum_{d}P\left(w,d\right)P\left(u,d\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-entropy.eps
 	width 50text%
@@ -7263,6 +7271,10 @@ It varies over time, as both new disjuncts are created, old disjuncts have
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-mmtq.eps
 	width 50text%
@@ -7314,6 +7326,10 @@ Ranked-MI is defined as in 'Diary Part Four', and restated earlier, above.
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-ranked-mi.eps
 	width 50text%
@@ -7346,7 +7362,7 @@ The ranked-MI is build as a linear combination of the word-pair MI, plus
 \align center
 \begin_inset Graphics
 	filename p5-run-11-merge/r11-plain-mi.eps
-	width 50text%
+	width 80text%
 
 \end_inset
 
@@ -7452,6 +7468,10 @@ left
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-right-dj-entropy.eps
 	width 50text%
@@ -7500,6 +7520,10 @@ S_{\mbox{left}}=\sum_{d}P\left(*,d\right)\log_{2}P\left(*,d\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-left-dj-entropy.eps
 	width 50text%
@@ -7548,6 +7572,10 @@ H_{\mbox{tot}}=-\sum_{w,d}P\left(w,d\right)\log_{2}P\left(w,d\right)
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-word-dj-entropy.eps
 	width 50text%
@@ -7597,6 +7625,10 @@ MI_{\mbox{tot}}= & \sum_{w,d}P\left(w,d\right)\log_{2}\frac{P\left(w,d\right)}{P
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+\align center
 \begin_inset Graphics
 	filename p5-run-12-merge/r12-word-dj-mi.eps
 	width 50text%
@@ -9007,7 +9039,7 @@ The similarity is given by the (symmetric) word-MI.
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/self-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -9054,7 +9086,7 @@ The noise=3 dataset had only 10154 non-vanishing similarities out of a total
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/class-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -9094,7 +9126,7 @@ The selected words were the top-ranked ones, out of all possible words.
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/word-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -9122,7 +9154,7 @@ Compare this to the earlier, pre-merge word-word MI distribution graph,
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/pre-post.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -9170,7 +9202,7 @@ The noise=3 dataset had 58555 non-vanishing similarities out of a total
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/clawrd-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
@@ -9196,7 +9228,7 @@ The below reproduces all of the above curves, in one figure.
 \align center
 \begin_inset Graphics
 	filename p5-class-sim/all-mi.eps
-	width 60col%
+	width 80col%
 
 \end_inset
 
