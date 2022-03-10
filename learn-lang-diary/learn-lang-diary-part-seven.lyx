@@ -499,6 +499,71 @@ it
 \begin_layout Itemize
 
 \series bold
+Long-distance correlations, Time.
+ 
+\series default
+Entity detection can be simplified if one introduces a time dimension, and,
+ for each input stimulous (word), a decaying 
+\begin_inset Quotes eld
+\end_inset
+
+activation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For example, if a word appears only in one text, but not another, and then
+ reappears in a third text, then perhaps this is a different, unrelated
+ entity? If some word has not been seen in a long time, then the new occurances
+ can be assigned a distinct label.
+ Input processing proceeds as before, accumulating stats for the new occurrrance.
+ Later, during the classification phase, it can be determined if the various
+ entities seem to be the same, of not.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Scenes; Limnal Spaces; Identifying Transitions.
+
+\series default
+ Humans conventionally organize knowledge into contextual groupings (how
+ else could it be?) In theatre, these are scenes; in books, chapters with
+ titles.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Scene detection can be hard-coded, in the processing input stage.
+ It might also be detectable, as a zone where there are many activation
+ changes (as measured in the previous bullet.) Inputs can be classified into
+ 
+\begin_inset Quotes eld
+\end_inset
+
+eras
+\begin_inset Quotes erd
+\end_inset
+
+ in this way, with different pheonmena in different eras presumably belonging
+ to different 
+\begin_inset Quotes eld
+\end_inset
+
+regimes
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
 Lexical Functions.
 
 \series default
@@ -564,7 +629,7 @@ WordClass
 Set Phrases, Institutional Phrases, Idioms.
 
 \series default
- These are groupings of words that occur more frequently together, then
+ These are groupings of words that occur more frequently together, than
  apart.
  How can these be identified? Why would we be interested in performing such
  an identification? Is it a stepping stone to something better?
@@ -652,6 +717,16 @@ Add support for multi-sensory data streams.
  Might fit well with the multi-scale work, above.
 \end_layout
 
+\begin_layout Itemize
+Add time-stamp tagging and decaying activation; start new entitites when
+ needed.
+ This requires an indirection: statistics are to be gathered for the entity
+ in the current era, which needs to be treated as distinct, despite having
+ the same spelling.
+ That is, we need to distinguish between words and word-instances.
+ The code base needs signification modification to handle this.
+\end_layout
+
 \begin_layout Standard
 Favorite theoretical activities:
 \end_layout
@@ -660,13 +735,15 @@ Favorite theoretical activities:
 Lexical Functions.
  This seems important, but don't yet have a cler vision on how to do this.
  This needs to be developed.
- Perhaps this can be a heavily-abstracted sysnonym thingy? 
+ Perhaps this can be a heavily-abstracted synonym thingy? 
 \end_layout
 
 \begin_layout Itemize
 Antonyms.
  This is important.
- But how?
+ But how? Anti-correlations are not the same thing as non-correlations.
+ Words that are antonyms will apper near each other, so naive correlation
+ will not work.
 \end_layout
 
 \begin_layout Subsubsection*
