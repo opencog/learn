@@ -118,10 +118,50 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Part Six of the diary on the language-learning effort focuses on weaving
- together theory with experimental results.
- It is a bit anachronistic with the other diaries, as it explores possible
- theoretical frameworks and tools for earlier experimental results.
+Part Six of the diary on the language-learning effort re-examines some older
+ data from a physical-science, graph-theoretic, information-theoretic viewpoint.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+older data
+\begin_inset Quotes erd
+\end_inset
+
+ here is primarily the data for word-pairs.
+ The first section defines the 
+\begin_inset Quotes eld
+\end_inset
+
+density of states
+\begin_inset Quotes erd
+\end_inset
+
+ in terms of the 
+\begin_inset Quotes eld
+\end_inset
+
+energy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These are fundamental physics concepts appearing in thermodynamics; they're
+ mapped onto the analoguous word-pair statistics concepts.
+ The second section examines a number of other quantities in this same conceptua
+l framework.
+ Some of this repeats results reported earlier; here, a more comprehensive
+ approach is taken.
+ 
+\end_layout
+
+\begin_layout Standard
+There is an implicit meta-goal, which is not acheived: to provide a statistical-
+mechainical, field-theoretic framework for the langauge data.
+ This is explored only at a rather superficial level.
+ It feels like deeper analogies are certainly possible, but it is not clear
+ how these could offfer insight.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -133,76 +173,27 @@ A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-No summary yet.
+Density of states, defintion.
 \end_layout
 
-\begin_layout Section*
-Mutual Information as Laplacian
+\begin_layout Itemize
+Desnity of states, experimental result
 \end_layout
 
-\begin_layout Standard
-This is a random half-baked suggestive idea that dead-ends immediately.
+\begin_layout Itemize
+Sample size effects
 \end_layout
 
-\begin_layout Standard
-The discrete Laplacian on a 1-dimensional grid is a tri-diagonal matrix
- of the form
-\begin_inset Formula 
-\[
-\Delta x_{i}=2x_{i}-x_{i-1}-x_{i+1}
-\]
-
-\end_inset
-
-The pair-wise mutual information 
-\begin_inset Formula 
-\[
-MI\left(u,v\right)=\log_{2}p\left(u,v\right)-\log_{2}p\left(u,*\right)-\log_{2}p\left(*,v\right)
-\]
-
-\end_inset
-
-Inserting a factor of 1/2 gives the ranked-MI
-\begin_inset Formula 
-\[
-MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left(u,*\right)p\left(*,v\right)}}
-\]
-
-\end_inset
-
-These two somehow feel 
-\begin_inset Quotes eld
-\end_inset
-
-similar
-\begin_inset Quotes erd
-\end_inset
-
- but I cannot connect the dots.
+\begin_layout Itemize
+Other densities
 \end_layout
 
-\begin_layout Standard
-The MI 
-\begin_inset Quotes eld
-\end_inset
+\begin_layout Itemize
+Vertex-degree
+\end_layout
 
-feels like
-\begin_inset Quotes erd
-\end_inset
-
- some kind of re-normalized propagator where the 
-\begin_inset Formula $\log_{2}p\left(u,*\right)$
-\end_inset
-
- feel like 
-\begin_inset Quotes eld
-\end_inset
-
-vacuum contributions
-\begin_inset Quotes erd
-\end_inset
-
-, but the details remain opaque.
+\begin_layout Itemize
+Word-pair MI
 \end_layout
 
 \begin_layout Section*
@@ -3763,6 +3754,75 @@ more accurate
 \end_inset
 
  than the unweighted one?
+\end_layout
+
+\begin_layout Section*
+Mutual Information as Laplacian
+\end_layout
+
+\begin_layout Standard
+This is a random half-baked suggestive idea that dead-ends immediately.
+\end_layout
+
+\begin_layout Standard
+The discrete Laplacian on a 1-dimensional grid is a tri-diagonal matrix
+ of the form
+\begin_inset Formula 
+\[
+\Delta x_{i}=2x_{i}-x_{i-1}-x_{i+1}
+\]
+
+\end_inset
+
+The pair-wise mutual information 
+\begin_inset Formula 
+\[
+MI\left(u,v\right)=\log_{2}p\left(u,v\right)-\log_{2}p\left(u,*\right)-\log_{2}p\left(*,v\right)
+\]
+
+\end_inset
+
+Inserting a factor of 1/2 gives the ranked-MI
+\begin_inset Formula 
+\[
+MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left(u,*\right)p\left(*,v\right)}}
+\]
+
+\end_inset
+
+These two somehow feel 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+ but I cannot connect the dots.
+\end_layout
+
+\begin_layout Standard
+The MI 
+\begin_inset Quotes eld
+\end_inset
+
+feels like
+\begin_inset Quotes erd
+\end_inset
+
+ some kind of re-normalized propagator where the 
+\begin_inset Formula $\log_{2}p\left(u,*\right)$
+\end_inset
+
+ feel like 
+\begin_inset Quotes eld
+\end_inset
+
+vacuum contributions
+\begin_inset Quotes erd
+\end_inset
+
+, but the details remain opaque.
 \end_layout
 
 \begin_layout Section*
