@@ -149,8 +149,10 @@
 						(define ovlp (count-shared-conseq LLOBJ QUORUM NOISE grp))
 						(define cmlty (/ (first ovlp) (second ovlp)))
 
-						; If its better than what we have, record it.
-						(when (< best-cmlty cmlty)
+						; If its equal or better than what we have, record it.
+						; Note that both best-cmlty and cmlty might be zero,
+						; so we want to continue searching, anyway.
+						(when (<= best-cmlty cmlty)
 							(set! best-cmlty cmlty)
 							(set! best-ovlp ovlp)
 							(set! best-grp grp))
@@ -163,7 +165,7 @@
 					(if (not (equal? best-grp GRP))
 						(begin
 							; Print a progress report.
-							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2%\n"
+							(format #t "Better: size=~D overlap = ~A of ~A disjuncts, commonality= ~4,2F%\n"
 								(length best-grp)
 								(first best-ovlp) (second best-ovlp)
 								(* 100 best-cmlty))
