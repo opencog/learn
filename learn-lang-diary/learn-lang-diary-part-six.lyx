@@ -173,15 +173,100 @@ A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-Density of states, defintion.
+The product topology.
+ The space of natural-language sentences is simply the collection of ordered
+ strings of words.
+ A 
+\begin_inset Quotes eld
+\end_inset
+
+sentence
+\begin_inset Quotes erd
+\end_inset
+
+ is just the Cartesian product of words in a vocabulary.
+ As a Cartesian-product space, it has a natural 
+\begin_inset Quotes eld
+\end_inset
+
+topology
+\begin_inset Quotes erd
+\end_inset
+
+, the 
+\begin_inset Quotes eld
+\end_inset
+
+product topology
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The basis of product topolgoes are called 
+\begin_inset Quotes eld
+\end_inset
+
+cylinder sets
+\begin_inset Quotes erd
+\end_inset
+
+; these are just sequences of specific words, intersersed with wild-cards.
+ Word-pairs are just specific cylinder sets: two words, with zero or more
+ wild-cards between them, and an arbitrary number of wild-cards before and
+ after them.
 \end_layout
 
 \begin_layout Itemize
-Desnity of states, experimental result
+Density of states, theoretical defintion.
+ A 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ can be identified with a cylinder set in the product topology.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+energy
+\begin_inset Quotes erd
+\end_inset
+
+ of a state can be identified with the log of the probability of that state
+ (equivalently, the log of the measure of the cylinder set).
+ The density of states is then simply the distribution of the states, as
+ a function of thier energy.
+ That is, for a given small but fixed interval of energy, how many states
+ are there in that interval? This is the density of states.
+ In thermodynamics and chemistry, this is a fundamental concept; for natural
+ langauge, it is novel, but worth asking about to see if any analogies hold.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+For example, in chemistry, there are lots of low-energy states at low temperatur
+es; it is hard to have many high-energy states at low temperatures.
+ Typical distributions are the Maxwell-Bolzmann distribution for an ideal
+ gas; the Fermi-Dirac distribution for fermions, and the Bose-Einstien distribut
+ion for supercooled quantum states.
+ The first is conventionally taught in college chemistry.
+ Is there anything analogous in natural language?
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
-Sample size effects
+Density of states, experimental result.
+\end_layout
+
+\begin_layout Itemize
+Sample size effects breakdown of vocab.
 \end_layout
 
 \begin_layout Itemize
@@ -197,7 +282,7 @@ Word-pair MI
 \end_layout
 
 \begin_layout Section*
-Field Theory Models
+Field Theory Models and Statistical Mechanics
 \end_layout
 
 \begin_layout Standard
@@ -205,6 +290,8 @@ Field theory models applied to statistics and language have surely been
  thrashed to death in the literature (of which I am only dimly aware).
  The below is an attempted recap of some basic ideas, recast into the notation
  used locally in this diary.
+ After a few basic initial defintions, it rapidly devolves into a presentation
+ of experimental results (for word-pairs).
 \end_layout
 
 \begin_layout Subsection*
@@ -240,7 +327,11 @@ a priori
 \end_inset
 
  within the full sentence.
- Note the former is a cylinder set, i.e.
+ Note the former is a cylinder set, 
+\emph on
+i.e.
+
+\emph default
  an element of the product topology on strings.
  
 \end_layout
@@ -276,8 +367,12 @@ where
 \end_inset
 
  appears because the sum over pairs is a multiple of the sum over all states;
- it over-counts.
- A formal derivation of the value of 
+ it over-counts (since 
+\begin_inset Formula $\sum_{\sigma}=\sum_{w_{1},w_{2},\cdots,w_{n}}$
+\end_inset
+
+ counts all words at all word-positions.) A formal derivation of the value
+ of 
 \begin_inset Formula $C$
 \end_inset
 
