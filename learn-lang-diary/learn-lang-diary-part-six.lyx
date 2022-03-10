@@ -263,6 +263,70 @@ ion for supercooled quantum states.
 
 \begin_layout Itemize
 Density of states, experimental result.
+ Consider the collection of all observed word-pairs 
+\begin_inset Formula $\left(w_{j},w_{k}\right)$
+\end_inset
+
+.
+ The frequency with which some word-pair is observed is 
+\begin_inset Formula $p\left(w_{j},w_{k}\right)$
+\end_inset
+
+ and the energy is 
+\begin_inset Formula $E=-\log_{2}p$
+\end_inset
+
+.
+ The density of states 
+\begin_inset Formula $\rho\left(E\right)$
+\end_inset
+
+ is then just a histogram: how many word-pairs were observed in a small,
+ finite-sized interval of energy? Making this histogram, one easily finds
+ that, to first order, its a nice straight line (on a semi-log graph), so
+ that the ensity of states is 
+\begin_inset Formula $\rho\left(E\right)\sim2^{E}$
+\end_inset
+
+ over a wide range, dropping off at the low and the high end due to under-sampli
+ng effects.
+ This is, more or less, the 
+\begin_inset Quotes eld
+\end_inset
+
+same
+\begin_inset Quotes erd
+\end_inset
+
+ result as the Zipfian distribution.
+\end_layout
+
+\begin_layout Itemize
+More careful examination does reveal 
+\begin_inset Quotes eld
+\end_inset
+
+new physics
+\begin_inset Quotes erd
+\end_inset
+
+, occurring at both ends of the spectrum.
+ First, the vocabulary size is not fixed, but increases with the sample
+ size.
+ That is, the number of words in the English language is not fixed, but
+ increases the longer you read: foreign loan-words appear; obscure geographical
+ place-names, invented medical drug names, and so on.
+ It is impossible to get a 
+\begin_inset Quotes eld
+\end_inset
+
+large sample
+\begin_inset Quotes erd
+\end_inset
+
+, since, the more one samples, the more rare words one encounters, which,
+ by neccessity are rare and under-sampled.
+ This impacts to slope, the shape of the curve.
 \end_layout
 
 \begin_layout Itemize
@@ -652,7 +716,11 @@ actual effects
 
 ? This also raises the question: aren't all learning effects always driven
  by an under-sampling? That is, isn't one always doomed to under-sample?
- How can one know this, and how can one take this into account? 
+ How can one know this, and how can one take this into account?
+\end_layout
+
+\begin_layout Standard
+Whence this magic number 1200?
 \end_layout
 
 \begin_layout Subsubsection*
@@ -663,7 +731,7 @@ Top-ten Word Pairs
 Given the above discussion about under-sampling, it is hard to avoid noticing
  that the top-ten word-pairs appear to follow an eve flatter slope.
  What does this mean? Clearly, they are not undersampled, and so the flatter
- slope nees to have some more sophisticated explanation.
+ slope needs to have some more sophisticated explanation.
  
 \end_layout
 
@@ -1067,9 +1135,9 @@ more sophisticated
  explanation might be this: this is a finite-sentence-length effect.
  That is, the nature of human understanding is that we have a limited attention
  span, and a limited short-term memory.
- Sentence lengths, and the use of punctuation must accomadate these limits.
+ Sentence lengths, and the use of punctuation must accomodate these limits.
  Thus, sentence starters and sentence enders, and commas, for phrase identificat
-ion, sould appear at a constant rate, rather than at a Zipfian rate.
+ion, should appear at a constant rate, rather than at a Zipfian rate.
  And that is indeed what the above seems to confirm.
  OK, so that's an interesting discovery, its new to me.
  
