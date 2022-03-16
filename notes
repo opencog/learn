@@ -11692,6 +11692,89 @@ data/th/words/words.qf.common
 
 Prachya Boonkwan
 
+tar -cf len.tar --exclude learn-en/rootfs/data --one-file-system learn-en
+
+tar -cf - --exclude learn-en/rootfs/data --one-file-system learn-en | ssh backlot "cd /home/lxc/tmp; cat |  tar xf -"
+
+cp -pr /home2/linas/src/novamente/data/rocks-archive/run-1-t12-tsup-1-1-1.rdb /data/lxc-databases/learn-en/rootfs/data
+
+guile: symbol lookup error: /home/atomspace/src/cogserver/build/opencog/cogserver/shell/libjson-shell.so: undefined symbol: _ZN7opencog8JsonEval13get_evaluatorEPNS_9AtomSpaceE
+
+
+stats:
+* uptime.  NetworkServer::_port, cpu use, mem use.
+* list of connections, uptime of connection, last activity.
+* Number of processed requests per connection.
+
+get_use_count
+ServerConsole
+ConsoleSocket
+ServerSocket
+connection_stats
+../cogserver/server/ServerConsole.h
+    time_t _start_time;
+    virtual std::string connection_header(void);
+    virtual std::string connection_stats(void);
+handle_connectio
+
+    // Most recent activity
+    struct tm tm;
+    gmtime_r(&_last_activity, &tm);
+    char buff[20];
+    strftime(buff, 20, "%d %b %H:%M:%S", &tm);
+
+ServerSocket::display_stats
+
+ ServerConsole* con = req->get_console();
+
+    oss << "Console max-open-sockets = " << ConsoleSocket::get_max_open_sockets() << "\n";
+    oss << "Console curr-open-sockets = " << con->get_num_open_sockets() << "\n";
+    // count open file descs
+    int nfd = 0;
+    for (int j=0; j<4096; j++) {
+       int fd = dup(j);
+       if (fd < 0) continue;
+       close(fd);
+       nfd++;
+    }
+    oss << "Process num-open-fds = " << nfd << "\n
+NetworkServer
+
+cogserver()._networkServer
+
+
+DATE             TID     RUN  TYPE    NREQ      LAST
+12 Mar 05:47:54 12345678   r    scm  87654321 12 Mar 05:47:54
+
+evalque.size()          EQ
+_eval_done              EV  bool
+_pending_output.size()  PEND
+      bool eval_done() const { return _eval_done; }
+      size_t pending() const { return _pending_output.size(); }
+      size_t queued() const { return evalque.size(); }
+
+opencog> stats
+-----
+13 Mar 21:38:10 2022 UTC ---- up-since: 13 Mar 21:06:39 2022
+status: running  last: 13 Mar 21:37:51  tot-cnct:  203  port: 19014
+max-open-socks: 10   cur-open-socks: 3   num-open-fds: 33
+cpu: 535.614 secs  user: 518.073  sys: 17.540
+maxrss: 6859108 KB  majflt: 34  inblk: 2149544  outblk: 132224
+
+DATE             THREAD  STATE U SHEL QZ E PENDG NLINE LAST-ACTIVITY
+13 Mar 21:07:14    21170 iwait 1 cogs                9 13 Mar 21:38:10
+13 Mar 21:32:29    19362 iwait 0 cogs                1 13 Mar 21:32:33
+13 Mar 21:37:51     7811 iwait 0  scm  0 F     0     2 13 Mar 21:38:03
+
+
+setsockopt (SO_KEEPALIVE) inn NetworkServer.cc
+
+ShellUTest.cxxtest:75: Error: Expected (reso.size() <= 265+1), found (267 > 2
+66)
+
+Thread 20 "cogserv:listen" received signal SIG32, Real-time event 32.
+[Switching to Thread 0x7fffdfc5c700 (LWP 884441)]
+
 
 ====================================================
 ====================================================
