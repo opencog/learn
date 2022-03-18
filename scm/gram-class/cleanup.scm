@@ -11,6 +11,10 @@
 ;
 ; These are meant to be run by hand, on an as-needed basis.
 ; Thus, they are not a part of the module itself.
+;
+; In all of the cases below, LLOBJ should be an object created
+; with `(make-pseudo-cset-api)` or with something above that
+; i.e gramclass or shapes.
 ; ------------------------------------------------------------------
 
 (define* (check-conseq-marginals LLOBJ #:optional (PRT #f))
