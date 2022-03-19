@@ -221,8 +221,9 @@
 	; It might not be a part of the basis, but it's still OK
 	; if its just a MemberLink to a WordClass
 	(define (word-ok? WRD) (or (basis-word? WRD)
-		(eq? (cog-incoming-size WRD)
-			(cog-incoming-size-by-type WRD 'MemberLink))))
+		(and (< 0 (cog-incoming-size WRD))
+			(eq? (cog-incoming-size WRD)
+				(cog-incoming-size-by-type WRD 'MemberLink)))))
 
 	(define cnt 0)
 	(for-each (lambda (WRD)
@@ -247,6 +248,10 @@
      (ListLink (WordNode ...) (AnyNode \"cset-disjunct\"))
   or
      (Evaluation (Predicate ...) (Word ...) (Any \"right-wild-direct-sum\"))
+
+
+  This will also zap words in word-pairs, i.e. when RAM contains
+     (Evalauation (Predicate ...) (List (Word ...)))
 "
 	; Does the word belong to the basis?
 	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
@@ -264,6 +269,7 @@
 							(cog-incoming-by-type IW 'CrossSection))
 						(cog-delete! IW))
 					((eq? typ 'ListLink)
+						; If the ListLink belongs to w word-pair, zap it.
 						(for-each cog-delete!
 							(cog-incoming-by-type IW 'EvaluationLink))
 						(cog-delete! IW))
