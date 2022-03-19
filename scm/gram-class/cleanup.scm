@@ -256,14 +256,18 @@
 			(for-each (lambda (IW)
 				(define typ (cog-type IW))
 				(cond
-					((eq? typ 'Connector) (cog-delete! IW))
-					((eq? typ 'ListLink) (cog-delete! IW))
+					((eq? typ 'Connector) (cog-delete-recursive! IW))
 					((eq? typ 'EvaluationLink) (cog-delete! IW))
 					((eq? typ 'SimilarityLink) (cog-delete! IW))
 					((eq? typ 'ShapeLink)
 						(for-each cog-delete!
 							(cog-incoming-by-type IW 'CrossSection))
-						(cog-delete! IW))))
+						(cog-delete! IW))
+					((eq? typ 'ListLink)
+						(for-each cog-delete!
+							(cog-incoming-by-type IW 'EvaluationLink))
+						(cog-delete! IW))
+				))
 				(cog-incoming-set WRD))
 			(cog-delete! WRD)))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
@@ -338,7 +342,7 @@
 
 (define (zap-unlinkables LLOBJ)
 "
-  Use cog-delete! to remove any words& conseq that cannot connect.
+  Use cog-delete! to remove any words & conseq that cannot connect.
 "
 	(trim-linkage LLOBJ)
 	(zap-conseq-marginals LLOBJ)
