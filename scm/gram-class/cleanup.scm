@@ -11,6 +11,10 @@
 ;
 ; These are meant to be run by hand, on an as-needed basis.
 ; Thus, they are not a part of the module itself.
+;
+; In all of the cases below, LLOBJ should be an object created
+; with `(make-pseudo-cset-api)` or with something above that
+; i.e gramclass or shapes.
 ; ------------------------------------------------------------------
 
 (define* (check-conseq-marginals LLOBJ #:optional (PRT #f))
@@ -217,8 +221,9 @@
 	; It might not be a part of the basis, but it's still OK
 	; if its just a MemberLink to a WordClass
 	(define (word-ok? WRD) (or (basis-word? WRD)
-		(eq? (cog-incoming-size WRD)
-			(cog-incoming-size-by-type WRD 'MemberLink))))
+		(and (< 0 (cog-incoming-size WRD))
+			(eq? (cog-incoming-size WRD)
+				(cog-incoming-size-by-type WRD 'MemberLink)))))
 
 	(define cnt 0)
 	(for-each (lambda (WRD)
@@ -243,6 +248,10 @@
      (ListLink (WordNode ...) (AnyNode \"cset-disjunct\"))
   or
      (Evaluation (Predicate ...) (Word ...) (Any \"right-wild-direct-sum\"))
+
+
+  This will also zap words in word-pairs, i.e. when RAM contains
+     (Evalauation (Predicate ...) (List (Word ...)))
 "
 	; Does the word belong to the basis?
 	(define basis-word? (make-aset-predicate (LLOBJ 'left-basis)))
@@ -252,14 +261,19 @@
 			(for-each (lambda (IW)
 				(define typ (cog-type IW))
 				(cond
-					((eq? typ 'Connector) (cog-delete! IW))
-					((eq? typ 'ListLink) (cog-delete! IW))
+					((eq? typ 'Connector) (cog-delete-recursive! IW))
 					((eq? typ 'EvaluationLink) (cog-delete! IW))
 					((eq? typ 'SimilarityLink) (cog-delete! IW))
 					((eq? typ 'ShapeLink)
 						(for-each cog-delete!
 							(cog-incoming-by-type IW 'CrossSection))
-						(cog-delete! IW))))
+						(cog-delete! IW))
+					((eq? typ 'ListLink)
+						; If the ListLink belongs to w word-pair, zap it.
+						(for-each cog-delete!
+							(cog-incoming-by-type IW 'EvaluationLink))
+						(cog-delete! IW))
+				))
 				(cog-incoming-set WRD))
 			(cog-delete! WRD)))
 		(append (cog-get-atoms 'WordNode) (cog-get-atoms 'WordClassNode)))
@@ -334,7 +348,7 @@
 
 (define (zap-unlinkables LLOBJ)
 "
-  Use cog-delete! to remove any words& conseq that cannot connect.
+  Use cog-delete! to remove any words & conseq that cannot connect.
 "
 	(trim-linkage LLOBJ)
 	(zap-conseq-marginals LLOBJ)
