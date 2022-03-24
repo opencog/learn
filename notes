@@ -11775,6 +11775,74 @@ ShellUTest.cxxtest:75: Error: Expected (reso.size() <= 265+1), found (267 > 2
 Thread 20 "cogserv:listen" received signal SIG32, Real-time event 32.
 [Switching to Thread 0x7fffdfc5c700 (LWP 884441)]
 
+terminate called after throwing an instance of 'opencog::SyntaxException'
+  what():  Badly formed alist:  (/home/linas/src/novamente/src/atomspace-git/ope
+ncog/persist/sexpr/ValueSexpr.cc:253)
+
+13.6g 20m
+43719 Columns: 43970
+18544906.0
+
+(check-gram-dataset cset-obj)
+(cleanup-gram-dataset cset-obj)
+
+((PredicateNode . 19) (ListLink . 4113614) (AnyNode . 4) (Connector . 17060) (ConnectorDir . 2) (ConnectorSeq . 204680) (Section . 833833) (EvaluationLink . 3899438) (TypeNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 13206) (LgLinkNode . 1))
+
+(WordNode . 10850)
+(WordNode . 13206)
+
+check-word-marginals
+
+(WordNode "Southwark")
+
+9495, is left basis vs 13166 !???
+
+(load-atoms-of-type 'Word)
+(for-each fetch-incoming-set (cog-get-atoms 'WordNode))
+(for-each fetch-incoming-set (cog-get-atoms 'Connector))
+(for-each fetch-incoming-set (cog-get-atoms 'ConnectorSeq))
+
+(load-atomspace)
+
+ (cog-report-counts)
+$28 = ((PredicateNode . 32) (ListLink . 4110833) (AnyNode . 7) (Connector . 17068) (ConnectorDir . 2) (ConnectorSeq . 204764) (Section . 833919) (ShapeLink . 811170) (VariableNode . 1) (EvaluationLink . 3701473) (TypeNode . 3) (SimilarityLink . 20100) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9497) (SentenceNode . 1) (ParseNode . 1) (LgLinkNode . 1))
+
+
+After pairs:
+((PredicateNode . 15) (ListLink . 3691978) (AnyNode . 2) (EvaluationLink . 3691978) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9280) (LgLinkNode . 1))
+
+After sections
+((PredicateNode . 18) (ListLink . 3906154) (AnyNode . 4) (Connector . 17060) (ConnectorDir . 2) (ConnectorSeq . 204680) (Section . 833833) (EvaluationLink . 3691978) (TypeNode . 1) (SchemaNode . 1) (RocksStorageNode . 1) (WordNode . 9496) (LgLinkNode . 1))
+
+Q: why 204764 - 204680 = 84 conseqs?
+Q: why 833919 - 833833 = 86 sections?
+
+(define msec (cset-stars 'get-all-elts))
+(length msec) ; 833833
+
+(define is-msec? (make-aset-predicate msec))
+
+(load-atoms-of-type 'Section)
+No change! good, but huh? OK ....
+
+(setup-initial-similarities star-obj 1000)
+(setup-initial-similarities star-obj 1500)
+
+She was thinking of ...   J-
+She was thinking about ...
+At first, it seemed like ... (it was going to rain)
+At first, it seemed as if ... (it was going to rain)
+It became clear that ...
+... like it would rain.  LI+ done
+
+11058
+....n: J-;  done
+
+....n Cs- or Ce-; but CV ???  like.p
+ LI- & <subcl-verb>
+C+ & CV+
+
+....v: LI+;  done
 
 ====================================================
 ====================================================

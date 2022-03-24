@@ -20,11 +20,6 @@ Things to read:
   July 7, 2016
   http://www.ru.nl/publish/pages/769526/z_harmen_prins.pdf
 
-* Alberto Speranzon, David I. Spivak, Srivatsan Varadarajan
-  "Abstraction, Composition and Contracts: A Sheaf Theoretic Approach"
-  8 Feb 2018
-  https://arxiv.org/abs/1802.03080
-
 * David I. Spivak, Nelson Niu
   "Polynomial Functors: A General Theory of Interaction"
   2021
@@ -113,9 +108,51 @@ Interesting, but maybe less useful
   (2000) W. de Gruyter,
 
   Provides a handbook on the basic defintions of state machines, and
-  how one talks about them in a category-teheroetic language.  Useful,
+  how one talks about them in a category-theoretic language.  Useful,
   in that it provides a general background in category theory to core
   concepts regarding monoids.
+
+* Alberto Speranzon, David I. Spivak, Srivatsan Varadarajan
+  "Abstraction, Composition and Contracts: A Sheaf Theoretic Approach"
+  8 Feb 2018
+  https://arxiv.org/abs/1802.03080
+
+  The keyword in the title is "contracts". Although the paper uses
+  sheaf theory as the abstact foundation for composition, the primary
+  application of the abstract is to glue together computational models
+  of complex systems-of-systems, with particular attention paid to
+  discrete and continuous (dynamical) systems. This is all very nice, but
+  does not appear to be relevant to the present concerns: that of
+  discerning meaningful structure from probabilistic observations.
+
+  The primary astraction presented in the paper is the sheaf of continuous
+  intervals on the real number line. These are then used to glue together
+  continuous-time dynamical systems and discrete-time decision systems;
+  the primary example is an aircraft collision-avoidance system, where the
+  continous parameters include height, speed and heading, and the discrete
+  decisions to be made include banking left or right, or changing
+  altitidue.
+
+  There is no obvious way to convert that discussion into one that glues
+  together probabilistic relationships to graphical representations. The
+  keyword here is "obvious": clearly, information-theoretic quantities are
+  continuous, and symbolic reprsentations are discrete. How can
+  sheaf-theoretic framing provide insight? Not obvious. Would take
+  significant effort.
+
+  One of the more interesting claims (theorems) is that the sheaf of
+  integer-length intervals is equivalent to the category of graphs.
+  The sheaf axioms instruct how intervals can be glued to one-another in a
+  coherent fashion.  The intervals, so glued, correspond to paths on a
+  graph.  This is an interesting equivalence, and symbolic representations
+  of meaning certainly seem to be kinds of graphs. However, nothing in the
+  symbolic representations seem to correspond to paths on graphs, the
+  linear nature of sentences notwithstanding.  The grammatical structure
+  of a sentence is not overtly a walk of a graph; it is a flattening, a
+  serialzation of a more complex structure.  It is not obvious that the
+  equivalence of the sheaf of intervals and the caegory of graphs offers
+  any articular insight into either grammatical sructure, or into the more
+  general setting of Curry-Howard correspondance.
 
 * Scott Garrabrant, Tsvi Benson-Tilsen, Andrew Critch, Nate Soares, and Jessica Taylor
   "Logical Induction" (2016)
