@@ -208,3 +208,4 @@
 (test-end t-two-connector-two-cluster)
 
 ; ---------------------------------------------------------------
+(opencog-test-end)
