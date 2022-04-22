@@ -681,6 +681,14 @@ generalization, but maybe not a complete rewrite.
 
 Worked example TBD.
 
+3rd party tools
+---------------
+Some 3rd party tools that might be useful.
+
+ * https://acav100m.github.io/ -- ACAV100M
+   Automatic Curation of Large-Scale Datasets
+   for Audio-Visual Video Representation Learning
+
 Footnotes
 =========
 

@@ -1,6 +1,10 @@
 
 Things to read:
 
+* Multimodal Neurons in Artificial Neural Networks
+  https://openai.com/blog/multimodal-neurons/
+  This is an important foot-in-the-door for symbolic reasoning.
+
 * Mark Newman, Albert-László Barabási, and Duncan J Watts.
   "The structure and dynamics of networks."
   Princeton University Press, 2006.
