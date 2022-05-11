@@ -1,23 +1,32 @@
 
 Things to read:
 
+* Tailin Wu, Max Tegmark
+  Toward an AI Physicist for Unsupervised Learning
+  https://arxiv.org/abs/1810.10525
+  Unsupervised learning of theories and their domain of validity.
+
 * Multimodal Neurons in Artificial Neural Networks
   https://openai.com/blog/multimodal-neurons/
   This is an important foot-in-the-door for symbolic reasoning.
-
-* Mark Newman, Albert-László Barabási, and Duncan J Watts.
-  "The structure and dynamics of networks."
-  Princeton University Press, 2006.
 
 * Geoffrey Hinton
   "How to represent part-whole hierarchies in a neural network"
   25 Feb 2021
   https://arxiv.org/abs/2102.12627
 
+* Robert Haas
+  Symbolic regression with Atomese code in OpenCog
+  https://robert-haas.github.io/g3p/media/notebooks/atomese_symbolic_regression.html
+  Python notebook, doing moses-like symbolic regression.
+
 * Henry W. Lin, Max Tegmark, and David Rolnick
   "Why does deep and cheap learning work so well?"
   3 Aug 2017
   https://arxiv.org/pdf/1608.08225.pdf
+  Short answer: they can represent multiplication and addition easily.
+  Making them deep makes the representation more compact and simpler to
+  learn.
 
 * Harmen Prins
   "Matching ontologies with distributed word embeddings"
@@ -44,6 +53,10 @@ Things to read:
 
 * AMR "Parsing with Action-Pointer Transformer" - 24 Nov 2020
   https://openreview.net/forum?id=X9KK-SCmKWn
+
+* Mark Newman, Albert-László Barabási, and Duncan J Watts.
+  "The structure and dynamics of networks."
+  Princeton University Press, 2006.
 
 * John Baez
   "Toplogical Crystals"
