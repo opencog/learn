@@ -4,6 +4,12 @@ Natural Language TODO List
 This is a short list of projects that are "ready to go" but have not
 been started yet.
 
+Tokenization
+------------
+Best results are obtainable with the "freedom models" (freedom at
+character transitions) as described in
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2655800/
+
 Morphology
 ----------
 Most European languages have conjugated verbs, meaning that there is a
