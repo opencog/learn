@@ -356,6 +356,18 @@ vectors", they are also components of a graph, components of a grammar.
 
 
 ### The Small Idea
+
+System Architecture
+===================
+There are many -- many dozens -- of different NLP projects and
+frameworks -- written in Python, Java, Perl, and another half-dozen
+programming ecosystems.  The code here uses none of these. Why?
+
+The answer is illustrated by a a simple, practical problem encountered
+when one tries to perform scientific research withing these frameworks.
+It is illustrated in the [README-Architecture](README-Architecture.md)
+file.
+
 Unsupervised Image Learning and Recognition (Vision)
 ====================================================
 A simple sketch of how the above can be applied to vision (2D images) is
