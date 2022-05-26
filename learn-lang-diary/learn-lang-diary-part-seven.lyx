@@ -882,6 +882,264 @@ Lets start with examples of the kinds of algos we expect to learn, automatically
  First up, transition freedom.
 \end_layout
 
+\begin_layout Subsection*
+Data Stream
+\end_layout
+
+\begin_layout Standard
+How should a stream of tokens be represented in Atomese? Sadly, this is
+ a difficult question.
+ Suggest:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   EvaluationLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       LinkTypeNode 
+\begin_inset Quotes eld
+\end_inset
+
+stream-id-42
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       TokenInstance 
+\begin_inset Quotes eld
+\end_inset
+
+A@uuid-hexadecimal
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       TokenInstance 
+\begin_inset Quotes eld
+\end_inset
+
+B@uuid-hexadecimal
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   TokenLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       TokenInstance 
+\begin_inset Quotes eld
+\end_inset
+
+A@uuid-hexadecimal
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   TokenLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       TokenInstance 
+\begin_inset Quotes eld
+\end_inset
+
+B@uuid-hexadecimal
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+The vocabulary of the stream consists of the TokenNodes.
+ The TokenLinks are required to distinguish multiple occurances of tokens
+ in the stream.
+ The uuid-hexadecimal could be dynamically generated, or they could be timestamp
+s.
+\end_layout
+
+\begin_layout Standard
+The above is the minimum-viable format.
+ It resembles the current word-stream format (viz.
+ WordInstance, etc.) It would be better if instead, Tokens were described
+ as jigsaws, having two connectors: previous, and next.
+ There would be only one link type, 
+\begin_inset Quotes eld
+\end_inset
+
+nearest-neighbor
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For now, we avoid questions of how to generalize to a more generic jigsaw
+ subassembly, and optimize for this special case.
+\end_layout
+
+\begin_layout Subsection*
+Statistics Gathering
+\end_layout
+
+\begin_layout Standard
+Above requires that statstics be gathered.
+ This includes a count of nearest-neighbor token pairs:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   EvaluationLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       LinkTypeNode 
+\begin_inset Quotes eld
+\end_inset
+
+nearest-neighbor
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+After a tokenization is proposed, then a count of token pairs is needed.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Filter Primitives
+\end_layout
+
+\begin_layout Standard
+The above datastream requires a collection of 
+\begin_inset Quotes eld
+\end_inset
+
+filter primitives
+\begin_inset Quotes erd
+\end_inset
+
+ that can be automatically assembled into an abstract syntax tree (AST).
+ A filter primitive is then a lambda, with specific input types, and specific
+ output types, thus providing a grammar from which the AST can be built.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
