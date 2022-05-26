@@ -761,6 +761,128 @@ It is no longer appropriate, under any ciscumstances, to store counts on
 \end_layout
 
 \begin_layout Section*
+Tokenization (Morphology)
+\end_layout
+
+\begin_layout Standard
+Tokenization is the problem of taking a sequence of input symbols (individual
+ letters) and breaking them up into words (and/or morphemes).
+ Kolonin reports that 
+\begin_inset Quotes eld
+\end_inset
+
+transition freedom
+\begin_inset Quotes erd
+\end_inset
+
+ is the best way of doing this:
+\end_layout
+
+\begin_layout Itemize
+Anton Kolonin, 
+\begin_inset Quotes eld
+\end_inset
+
+Unsupervised Tokenization Learning
+\begin_inset Quotes erd
+\end_inset
+
+, (2022)
+\end_layout
+
+\begin_layout Standard
+He cites the following as an 
+\begin_inset Quotes eld
+\end_inset
+
+exhaustive review of different tokenization techniques
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Logan R.
+ Kearsley.
+ 2016.
+ A Hybrid Approach to Cross-Linguistic Tokenization: Morphology with Statistics.
+ Brigham Young University.
+ Theses and Dissertations.
+\end_layout
+
+\begin_layout Standard
+The idea of 
+\begin_inset Quotes eld
+\end_inset
+
+transition freedom
+\begin_inset Quotes erd
+\end_inset
+
+ is introduced in
+\end_layout
+
+\begin_layout Itemize
+Jesse O.
+ Wrenn, Peter D.
+ Stetson, and Stephen B.
+ Johnson.
+ 2007.
+ An Unsupervised Machine Learn- ing Approach to Segmentation of Clinician-Entere
+d Free Text.
+ PubMed Central.
+ AMIA Annu Symp Proc.
+ 2007; 2007: 811–815.
+ PMCID: PMC2655800 PMID: 18693949
+\end_layout
+
+\begin_layout Standard
+Transition freedom is defined as the 
+\begin_inset Quotes eld
+\end_inset
+
+number of symbolic states (characters, letters or N-grams) that can be following
+ after the current state or preceding the current state.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Rather than attempting to manually discover a specific best tokenization
+ algorithm, is there a way of discovering a tokenization algorithm automatically
+? That is, can we explore the space of all possible algorithms, and select
+ a handful of them? How can this be done, without manual supervision (i.e.
+ without comparing the segmented results to a desired outcome or reference
+ corpus?)
+\end_layout
+
+\begin_layout Standard
+We muse on this here.
+ First, a review of the known algos, to give a hint of what we are looking
+ for.
+ Next, a review of the a minimal data strcture needed to represent a sequential
+ time series, so that automated algrotihm exploration (a la MOSES) can be
+ applied.
+ That is, what would the MOSES primitives be, for a time series? Third,
+ some thoughts about what kinds of output one might expect from a segmentation
+ algo.
+ Fourth, how these outputs can be used to obtain a measure of quality or
+ interestingness.
+\end_layout
+
+\begin_layout Subsection*
+Transition Freedom
+\end_layout
+
+\begin_layout Standard
+Lets start with examples of the kinds of algos we expect to learn, automatically.
+ First up, transition freedom.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
