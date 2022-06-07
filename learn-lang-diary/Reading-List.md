@@ -1,6 +1,11 @@
 
 Things to read:
 
+* Tobias Fritz
+  A synthetic approach to Markov kernels, conditional independence
+  and theorems on sufficient statistics.
+  https://arxiv.org/abs/1908.07021v8
+
 * Tailin Wu, Max Tegmark
   Toward an AI Physicist for Unsupervised Learning
   https://arxiv.org/abs/1810.10525
