@@ -175,6 +175,20 @@ noise
 \begin_layout Itemize
 
 \series bold
+Accuracy-Guided Exploration.
+ 
+\series default
+An automated accuracy-comparison system, comparing two different dictionaries,
+ whatever their sources may be, could serve as a guide for exploration.
+ For example, comparing learned dictionaries to the hand-crafted LG dict
+ helps identify parameter regions that are effective.
+ By contrast, comparing two different auto-generated dictionaries can indicate
+ when two dicts diverge, and how sensitive they are to given parameter setttings.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
 Data Cleanup.
 
 \series default
@@ -262,7 +276,7 @@ subscript
 
 , and so the same text-word, but with two different subscripts, is treated
  as two distinct words.
- Counts and further clustering continue to treate these as two different
+ Counts and further clustering continue to treat these as two different
  words, until/unless the second round of clustering erases the distinction.
  Handling this subscript-tagging requires new code; it is perhaps similar
  to cross-sensory tagging, e.g.
@@ -308,8 +322,8 @@ Entities and References.
  A word-vector, for a given word, can be viewed in two ways.
  One way is to say that the disjunct describes the textual environment of
  the word: it's N-gram or skip-gram.
- Anothe This r way is to say is that it captures the semantic embedding
- of the word; its a list of all of teh 
+ Another way to think of it is that it captures the semantic embedding of
+ the word; its a list of all of the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -700,13 +714,13 @@ Reiterate classification.
  Run it a second time.
  This includes implementing word-sense tagging.
  Shouldn't be too hard.
- Interesting, and teh generalization seems useful, anyway.
+ Interesting, and the generalization seems useful, anyway.
 \end_layout
 
 \begin_layout Itemize
 Multi-scale clustering.
  (aka synonyms) This requires developing multi-scale WordClass infrastructure.
- Shouldn't bee too hard.
+ Shouldn't be too hard.
  Seems useful, anyway.
 \end_layout
 
@@ -755,9 +769,10 @@ The following coding tasks lie ahead:
 \end_layout
 
 \begin_layout Itemize
-It is no longer appropriate, under any ciscumstances, to store counts on
+It is no longer appropriate, under any circumstances, to store counts on
  the TV.
  This will churn the code a bit.
+ (Or is it? AtomSpace Frames seem to alleviate the pressure...)
 \end_layout
 
 \begin_layout Section*
@@ -1138,6 +1153,10 @@ filter primitives
  that can be automatically assembled into an abstract syntax tree (AST).
  A filter primitive is then a lambda, with specific input types, and specific
  output types, thus providing a grammar from which the AST can be built.
+\end_layout
+
+\begin_layout Itemize
+Single-token recognizer.
 \end_layout
 
 \begin_layout Section*
