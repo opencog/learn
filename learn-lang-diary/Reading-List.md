@@ -1,6 +1,8 @@
 
 Things to read:
 
+* Paul Cisek - papers on neural evolution.
+
 * Tobias Fritz
   A synthetic approach to Markov kernels, conditional independence
   and theorems on sufficient statistics.
