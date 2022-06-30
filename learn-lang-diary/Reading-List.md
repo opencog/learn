@@ -105,6 +105,53 @@ Things to read:
 * HodgeNet -- Justin Solomon -- learning of the Hodge star operator
   via neural nets.  Specifically, for dealing with sparse matrices.
 
+Actually useful in practical applications
+-----------------------------------------
+* Jesse O. Wrenn, Peter D. Stetson, Stephen B. Johnson
+  An Unsupervised Machine Learning Approach to Segmentation of Clinician-Entered Free Text
+  AMIA Annu Symp Proc. 2007; 2007: 811–815.
+  PMC2655800
+  https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2655800/
+
+  Lists the following prior work:
+  * Zellig Harris (1967) -- Compute conditional probability of transitions
+    from character to character. Minimize entropy to obtain morpeheme boundaries.
+
+  * John Goldsmith (2001) -- Minimum Description Length
+
+  * Mollah & Johnson (2003) -- Use Harris algo to get morphemes, then prune
+    based on MI.
+
+  Current work:
+  * Compute the conditional probablity of observing a character, given a
+    preceeding string.  Cap at length seven. Go forwards and backwards.
+  * "Freedom at character transitions" == number of distinct characters that
+    can follow a given string. There's a forward and backward version of this.
+  * "Peak freedom" is a second difference; its the sum of the increase in
+    freedom of the prior transition, and the decrease in freedom of the
+    subsequent transtion.   There are both forward and backward peak freedoms.
+  * Two paramters control tokenization: substring length (its a priori) and
+    cutoff for peak freedom.
+  * Characterization of results is conventional b.s. mumbo-jumbo tables
+    showing sensitivity, specificity, and area under ROC curve. This is
+    infuriating, because this kind of conventional analysis completely
+    obscures what is actually happening! Argh!
+
+  Suggested clarifications to above work:
+  * Give a precise mathematical, symbolic defintion of peak freedom. The
+    informal definition is imprecise, prone to misunderstanding, and obscures
+    relationships to other similar mathematical formulas.
+  * Show distribution of peak freedom. That is, there are hundreds of
+    thousands of transitions; what's the freedom of each? What's the peak
+    freedom of each?
+  * How do things change, if one considers not just the next character, but
+    the next pair of characters, or the next triple of characters?
+  * Work with log2 of peak freedom.
+  * Define "entropic freedom" as the difference between the log2 of freedoms.
+    This is a minor twist on the original definition. What does it change?
+  * Given above variant, what other variants of freedom are possible, and
+    how are they related to more traditional entrropic defintions?
+
 
 Interesting, but maybe less useful
 ----------------------------------
