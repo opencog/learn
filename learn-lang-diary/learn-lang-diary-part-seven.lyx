@@ -906,7 +906,136 @@ Formal Defintion
 \end_layout
 
 \begin_layout Standard
-Let t be token ...
+Let 
+\begin_inset Formula $t$
+\end_inset
+
+ be a token drawn from a vocabulary 
+\begin_inset Formula $T=\left\{ t\right\} $
+\end_inset
+
+ of size 
+\begin_inset Formula $\left|T\right|$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $w=t_{1}t_{2}\cdots t_{n}$
+\end_inset
+
+ be an 
+\begin_inset Formula $n$
+\end_inset
+
+-gram.
+ Then, given the observed sequence 
+\begin_inset Formula $\left(w,t\right)$
+\end_inset
+
+ of an 
+\begin_inset Formula $n$
+\end_inset
+
+-gram followed by a 
+\begin_inset Formula $1$
+\end_inset
+
+-gram, define the following:
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $N\left(w,t\right)$
+\end_inset
+
+ be the number of times that the sequence 
+\begin_inset Formula $\left(w,t\right)$
+\end_inset
+
+ was observed.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $N\left(w,*\right)=\sum_{t}N\left(w,t\right)$
+\end_inset
+
+ be the sum over counts of all such sequences.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $\Delta\left(w,t\right)=\begin{cases}
+1 & \mbox{if }N\left(w,t\right)>0\\
+0 & \mbox{if }N\left(w,t\right)=0
+\end{cases}$
+\end_inset
+
+ be the 
+\begin_inset Quotes eld
+\end_inset
+
+Dirac delta
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+indicator function
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $\Delta\left(w,*\right)=\sum_{t}\Delta\left(w,t\right)$
+\end_inset
+
+ be called the 
+\begin_inset Quotes eld
+\end_inset
+
+transition freedom
+\begin_inset Quotes erd
+\end_inset
+
+ (I think this is the correct defintion of transition freedom, is that correct?)
+\end_layout
+
+\begin_layout Standard
+The forward 
+\begin_inset Quotes eld
+\end_inset
+
+peak freedom
+\begin_inset Quotes erd
+\end_inset
+
+ is then defined as
+\begin_inset Formula 
+\[
+\Delta\left(t_{1}t_{2}\cdots t_{n},*\right)-\Delta\left(t_{2}t_{3}\cdots t_{n+1},*\right)
+\]
+
+\end_inset
+
+is that correct?
+\end_layout
+
+\begin_layout Standard
+The reverse peak freedom is then 
+\begin_inset Formula 
+\[
+\Delta\left(*,t_{1}t_{2}\cdots t_{n}\right)-\Delta\left(*,t_{2}t_{3}\cdots t_{n+1}\right)
+\]
+
+\end_inset
+
+Is that right, or am I off-by-one in this defintion? 
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1233,7 +1362,7 @@ BC
 
 \end_inset
 
-
+Note that it is *always* binary.
 \end_layout
 
 \begin_layout Subsection*
