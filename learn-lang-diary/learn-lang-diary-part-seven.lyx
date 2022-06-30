@@ -802,7 +802,7 @@ Unsupervised Tokenization Learning
 \begin_inset Quotes erd
 \end_inset
 
-, (2022)
+, (2022) https://arxiv.org/abs/2205.11443
 \end_layout
 
 \begin_layout Standard
@@ -849,7 +849,8 @@ d Free Text.
  PubMed Central.
  AMIA Annu Symp Proc.
  2007; 2007: 811–815.
- PMCID: PMC2655800 PMID: 18693949
+ PMCID: PMC2655800 PMID: 18693949 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC26558
+00/
 \end_layout
 
 \begin_layout Standard
@@ -895,6 +896,344 @@ Transition Freedom
 \begin_layout Standard
 Lets start with examples of the kinds of algos we expect to learn, automatically.
  First up, transition freedom.
+ Two parts.
+ First, give a precise, formal (mathematical) defintion.
+ Second, give a data representation.
+\end_layout
+
+\begin_layout Subsubsection*
+Formal Defintion
+\end_layout
+
+\begin_layout Standard
+Let t be token ...
+\end_layout
+
+\begin_layout Subsubsection*
+Data representation
+\end_layout
+
+\begin_layout Standard
+To represent the above ideas, something like the following data structure
+ is necessary:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+AB
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+       List
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above is a defintion of a token AB as a sequence of two tokens A and
+ B.
+ In order to find all possible things that can follow A, its enough to look
+ at the incoming set of A (or better yet, for all SequenceLinks with A in
+ the first position.
+ Frequncy counts can be stored in several places on the above.
+\end_layout
+
+\begin_layout Standard
+For alternative splittings, there are several possibilities.
+ This one seems cumbersome:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+ABC
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       ChoiceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+           List
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+AB
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+C
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           List
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+BC
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This one seems better, because it has the same shape as the earlier, simpler
+ example:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+ABC
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       List
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+AB
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+C
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+   SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+ABC
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       List
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+BC
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection*
