@@ -138,19 +138,20 @@ Actually useful in practical applications
     obscures what is actually happening! Argh!
 
   Suggested clarifications to above work:
-  * Give a precise mathematical, symbolic defintion of peak freedom. The
-    informal definition is imprecise, prone to misunderstanding, and obscures
-    relationships to other similar mathematical formulas.
+  * A precise mathematical, symbolic definition of peak freedom is needed.
+    The informal definition is imprecise, prone to misunderstanding, and
+    obscures relationships to other similar mathematical formulas.
+  * Peak freedom appears to be defined as a second difference, as the
+    difference between the prior and the subsequent transition freedom.
+    What if, instead, one worked with log2 of transition freedoms, so
+    that a peak entropic freedom was a ratio instead of a difference?
+  * Given this variant, what other variants of freedom are possible, and
+    how are they related to more traditional entropic definitions?
   * Show distribution of peak freedom. That is, there are hundreds of
     thousands of transitions; what's the freedom of each? What's the peak
     freedom of each?
   * How do things change, if one considers not just the next character, but
     the next pair of characters, or the next triple of characters?
-  * Work with log2 of peak freedom.
-  * Define "entropic freedom" as the difference between the log2 of freedoms.
-    This is a minor twist on the original definition. What does it change?
-  * Given above variant, what other variants of freedom are possible, and
-    how are they related to more traditional entrropic defintions?
 
 
 Interesting, but maybe less useful
