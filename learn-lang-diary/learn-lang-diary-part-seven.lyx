@@ -988,6 +988,7 @@ indicator function
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Itemize
@@ -1036,6 +1037,137 @@ The reverse peak freedom is then
 \end_inset
 
 Is that right, or am I off-by-one in this defintion? 
+\end_layout
+
+\begin_layout Standard
+For a vocabulary 
+\begin_inset Formula $T$
+\end_inset
+
+ of fixed size 
+\begin_inset Formula $\left|T\right|$
+\end_inset
+
+ that is known in advance, one has that 
+\begin_inset Formula $\Delta\left(w,*\right)\le\left|T\right|$
+\end_inset
+
+ always.
+\end_layout
+
+\begin_layout Standard
+Other norms are
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $N_{p}\left(w,*\right)=\sum_{t}N^{p}\left(w,t\right)$
+\end_inset
+
+ be the power norm (like the 
+\begin_inset Formula $\ell_{p}$
+\end_inset
+
+ norm but without the root).
+\end_layout
+
+\begin_layout Itemize
+Clearly 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $\Delta\left(w,*\right)=\left.N_{p}\left(w,*\right)\right|_{p=0}$
+\end_inset
+
+ is just the limit.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $S\left(w,*\right)=\frac{1}{\log2}\cdot\left.\frac{d}{dp}N_{p}\left(w,*\right)\right|_{p=0}=\sum_{t}\log_{2}N\left(w,t\right)$
+\end_inset
+
+ be an entropy.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $H\left(w,*\right)=\frac{1}{\log2}\cdot\left.\frac{d}{dp}N_{p}\left(w,*\right)\right|_{p=1}=\sum_{t}N\left(w,t\right)\log_{2}N\left(w,t\right)$
+\end_inset
+
+ be a weighted entropy.
+\end_layout
+
+\begin_layout Standard
+The two entropy variants 
+\begin_inset Formula $S\left(w,*\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $H\left(w,*\right)$
+\end_inset
+
+ are interesting, as they minimizes the stray, accidental markup from contributi
+ng.
+ That is, if 
+\begin_inset Formula $N\left(w,*\right)$
+\end_inset
+
+ is a million, and there's a stray 
+\begin_inset Formula $t$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Delta\left(w,t\right)=1$
+\end_inset
+
+, then 
+\begin_inset Formula $\Delta\left(w,*\right)$
+\end_inset
+
+ is larger by one, than it would otherwise be.
+ Meanwhile, both 
+\begin_inset Formula $S\left(w,t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $H\left(w,t\right)$
+\end_inset
+
+ are unchanged.
+\end_layout
+
+\begin_layout Standard
+All of the above defintions pass through, if the token 
+\begin_inset Formula $t$
+\end_inset
+
+ on the right is replaced by a token sequence 
+\begin_inset Formula $w_{R}$
+\end_inset
+
+ on the right.
+ The base count is then 
+\begin_inset Formula $N\left(w_{L},w_{R}\right)$
+\end_inset
+
+ of observed counts on pairs 
+\begin_inset Formula $\left(w_{L},w_{R}\right)$
+\end_inset
+
+, from which the conventional probabilities and MI, etc.
+ can be constructed.
+ 
 \end_layout
 
 \begin_layout Subsubsection*
