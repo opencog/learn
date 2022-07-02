@@ -1494,7 +1494,180 @@ BC
 
 \end_inset
 
-Note that it is *always* binary.
+Note that it is *always* binary, and always ordered.
+ Note that the link-type is not specified, which is appropriate if the data
+ really is serial, and really is coming from one source.
+\end_layout
+
+\begin_layout Standard
+If a link-type label were desired, then something like the following would
+ be needed:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   EvaluationLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       LinkType 'SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       List
+\end_layout
+
+\begin_layout Plain Layout
+
+           Token 
+\begin_inset Quotes eld
+\end_inset
+
+ABC
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+           List
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+AB
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+C
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+Or perhaps the following:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+   
+\end_layout
+
+\begin_layout Plain Layout
+
+   NameLink
+\end_layout
+
+\begin_layout Plain Layout
+
+       Token 
+\begin_inset Quotes eld
+\end_inset
+
+ABC
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+       EvaluationLink
+\end_layout
+
+\begin_layout Plain Layout
+
+           LinkType 'SequenceLink
+\end_layout
+
+\begin_layout Plain Layout
+
+           List
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+AB
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+               Token 
+\begin_inset Quotes eld
+\end_inset
+
+C
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Both of these are larger and more complex.
+ They suceed in identifying the link type, but they fail in identifying
+ any jigsaw assembly structure (i.e.
+ the sequence is a linear nearest-neighbor-to-nearest neighbor sequence.)
+ Perhaps that's OK, and we can reserve more complex structures for when
+ they are actually needed.
+ 
 \end_layout
 
 \begin_layout Subsection*
