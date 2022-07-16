@@ -11844,6 +11844,29 @@ C+ & CV+
 
 ....v: LI+;  done
 
+r14-imp-q0.7-c0.9-n6.rdb
+
+_ZTIN7opencog10CogStorageE   libpersist-cog.so
+
+nm 
+
+/usr/local/lib/liblink-grammar.so.5
+
+libpersist-cog.so => not found          
+
+crap sudo ldconfig
+Listening on port 20614
+
+rlwrap telnet 10.0.3.208 20614
+
+(define ss (cog-get-atoms 'Section))
+(define sk (filter (lambda (s) (< 1 (length (cog-keys s)))) ss))
+(length ss) ; 492824
+(length sk) ; 77361
+ (define k (PredicateNode "*-Mutual Info Key cover-section"))
+(cog-value (car sk) k)
+
+
 ====================================================
 ====================================================
 
@@ -11939,6 +11962,8 @@ FIXED:
 * Add rarity and log-sizes to summary report.  DONE
 
 TODO/BUGS:
+* Apparently, r14 has WordClassNodes that never appear in any Sections.
+  This seems .. I'm confused.
 * Log the similarity fractions
 * Finish work in link-grammar bug #1276 -sqlite sanity checks.
 * Alter dict export to not require creation of singletons.

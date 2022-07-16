@@ -902,7 +902,7 @@ Lets start with examples of the kinds of algos we expect to learn, automatically
 \end_layout
 
 \begin_layout Subsubsection*
-Formal Defintion
+Formal Definition
 \end_layout
 
 \begin_layout Standard
@@ -1064,7 +1064,7 @@ Let
 \begin_inset Formula $N_{p}\left(w,*\right)=\sum_{t}N^{p}\left(w,t\right)$
 \end_inset
 
- be the power norm (like the 
+ be the power norm (like the Banach 
 \begin_inset Formula $\ell_{p}$
 \end_inset
 
@@ -1106,6 +1106,14 @@ Let
 \end_inset
 
  be a weighted entropy.
+\end_layout
+
+\begin_layout Itemize
+Let 
+\begin_inset Formula $\left\Vert N\right\Vert _{p}\left(w,*\right)=\left[\sum_{t}N^{p}\left(w,t\right)\right]^{1/p}$
+\end_inset
+
+ be the Banch norm.
 \end_layout
 
 \begin_layout Standard
@@ -1168,6 +1176,68 @@ All of the above defintions pass through, if the token
 , from which the conventional probabilities and MI, etc.
  can be constructed.
  
+\end_layout
+
+\begin_layout Paragraph*
+Banach norms
+\end_layout
+
+\begin_layout Standard
+A rather tedious calculation reveals the derivative of the Banach norm:
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dp}\left\Vert N\right\Vert _{p}= & \frac{d}{dp}\exp\left(\frac{1}{p}\log\left[\sum N^{p}\right]\right)\\
+= & \left\Vert N\right\Vert _{p}\frac{d}{dp}\left(\frac{1}{p}\log\left[\sum N^{p}\right]\right)\\
+= & \left\Vert N\right\Vert _{p}\left(\frac{1}{p\sum N^{p}}\frac{d}{dp}\left[\sum N^{p}\right]-\frac{\log\left[\sum N^{p}\right]}{p^{2}}\right)\\
+= & \left\Vert N\right\Vert _{p}\left(\frac{1}{p\sum N^{p}}\left[\sum N^{p}\log N\right]-\frac{\log\left\Vert N\right\Vert _{p}}{p}\right)\\
+= & \frac{1}{p}\left(\left\Vert N\right\Vert _{p}^{1-p}\left[\sum N^{p}\log N\right]-\left\Vert N\right\Vert _{p}\log\left\Vert N\right\Vert _{p}\right)
+\end{align*}
+
+\end_inset
+
+and so, for 
+\begin_inset Formula $p=1$
+\end_inset
+
+ this becomes
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{d}{dp}\left\Vert N\right\Vert _{p}\right|_{p=1}= & \left[\sum N\log N\right]-\left\Vert N\right\Vert _{1}\log\left\Vert N\right\Vert _{1}\\
+= & \sum N\log\frac{N}{\left\Vert N\right\Vert _{1}}
+\end{align*}
+
+\end_inset
+
+and if we then normalize so that 
+\begin_inset Formula $\left\Vert N\right\Vert _{1}=\sum N=1$
+\end_inset
+
+ then the last term falls away and we just get
+\begin_inset Formula 
+\[
+\left.\frac{d}{dp}\left\Vert N\right\Vert _{p}\right|_{p=1}=\sum N\log N=H\log2
+\]
+
+\end_inset
+
+and so we could have worked with the Banach norms, if desired.
+ But its painful.
+ Note that it's divergent for 
+\begin_inset Formula $p\to0$
+\end_inset
+
+ and that the expressions for 
+\begin_inset Formula $p=1/2$
+\end_inset
+
+ or 
+\begin_inset Formula $p=2$
+\end_inset
+
+ do not seem to be enlightening.
 \end_layout
 
 \begin_layout Subsubsection*
