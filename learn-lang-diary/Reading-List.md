@@ -1,6 +1,14 @@
 
 Things to read:
 
+* https://arxiv.org/pdf/2202.02061.pdf and matcching talk
+  https://www.youtube.com/watch?v=-pxFgjLJ3uM
+
+* Noam Zeilberger: "Parsing as a lifting problem and the
+  Chomsky-Schützenberger representation theorem"
+  Topos Institute
+  https://youtu.be/AX8tpQSi8v8
+
 * Paul Cisek - papers on neural evolution.
 
 * Tobias Fritz
