@@ -271,8 +271,7 @@ Assuming that sensory data can be categorized into entities and relationships,
 \end_layout
 
 \begin_layout Standard
-The figure on the left shows a graph-theoretic sparse graph of relationships
- between entities.
+On the left is a conventional sparse graph of relationships between entities.
  On the right is the same graph, with some of the edges cut into half-edges,
  with the half-edge connectors labeled with what they can connect to.
  The connectors are drawn with distinct shapes, intended to convey what
@@ -283,8 +282,8 @@ The figure on the left shows a graph-theoretic sparse graph of relationships
 
 \begin_layout Standard
 The simplicity of the above diagram is deceptive.
- In fact, there is a deep and broad mathematical foundation for them.
- Such jigsaw pieces are the elements of a category-theoretic 
+ There is a deep and broad mathematical foundation: jigsaw pieces are the
+ elements of a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -293,9 +292,15 @@ monoidal category
 \end_inset
 
 .
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MacLane1978"
+literal "false"
+
+\end_inset
+
  The connectors themselves are type-theoretic types.
- The puzzle pieces themselves are the syntactical elements of a grammar,
- formally defined.
+ The jigsaw pieces are the syntactical elements of a grammar.
  These last three statements arise from a relatively well-known generalization
  of Curry–Howard correspondence: for every category, there is a type theory,
  a grammar and a logic; from each, the others can be determined.
@@ -306,15 +311,43 @@ literal "false"
 
 \end_inset
 
- The mathematics of these relationships is foundational and quite challenging
- to the uninitiated.
+ 
 \end_layout
 
 \begin_layout Standard
-The paradigm of jigsaw pieces has long been known in linguistics, and has
- been repeatedly rediscovered.
- The diagram below is taken from the first paper describing Link Grammar,
- a kind of dependency grammar.
+The jigsaw paradigm in linguistics has been repeatedly rediscovered.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Marcus1967"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nida97"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2016"
+literal "false"
+
+\end_inset
+
+ The diagram below is taken from the first paper on Link Grammar.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Sleator1991"
@@ -322,17 +355,25 @@ literal "false"
 
 \end_inset
 
- Grammatically-valid (syntactically valid) sentences are formed whenever
- jigsaw connectors can be mated, leaving non unconnected.
- This fashion of specifying a syntax and a grammar may feel a bit foreign
- and unusual; be aware that such grammars can be automatically (i.e.
- algorithmically) transformed into equivalent HPSG, DG, CG, LFG, 
+ Syntactically valid sentences are formed whenever all of the jigsaw connectors
+ fully mated.
+ This fashion of specifying a grammar may feel unconventional; such grammars
+ can be automatically (i.e.
+ algorithmically) transformed into equivalent HPSG, DG, LFG, 
 \emph on
 etc.
 
 \emph default
  style grammars.
- 
+ Link Grammar is equivalent to Combinatory Categorial Grammar (CCG).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2022ccg"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -341,47 +382,6 @@ etc.
 	filename ../reco-image/link-grammar.png
 	lyxscale 60
 	width 85col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The jigsaw paradigm is not infrequently rediscovered.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Nida97"
-literal "false"
-
-\end_inset
-
- A recent rediscovery of the jigsaw-puzzle paradigm can be found in the
- work of Bob Coecke.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Coecke2010"
-literal "false"
-
-\end_inset
-
- Notable results include a linear-time quantum algorithm for parsing natural
- language.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Coecke2016"
-literal "false"
-
-\end_inset
-
- This work is notable in that it provides a good bridge between concepts
- in linguistics and the hard science of mathematics.
- It is not the first such; perhaps one of the earliest formal algebraic
- treatments of linguistics can be found in Marcus.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Marcus1967"
-literal "false"
 
 \end_inset
 
