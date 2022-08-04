@@ -394,15 +394,14 @@ Compositionality and Sheaves
 
 \begin_layout Standard
 The naive replacement of entities by vertexes and relationships by edges
- seems to itself have a problem with well-foundedness.
+ seems to have a problem with well-foundedness.
  If an entity is made of parts, does this mean that a vertex is made of
  parts? What are those parts made of? Is there an infinite regress? How
  might one indicate the fact that some entity has a composite structure?
- The answers to these questions are resolved by observing that a partially-assem
-bled jigsaw puzzle resembles a singular jigsaw price: it externalizes some
- number of unconnected connectors, while also describing the connectivity
- of the fully-assembled territory.
- This is how the part-whole relationship is established: the 
+ These questions are resolved by observing that a partially-assembled jigsaw
+ puzzle resembles a singular jigsaw piece: it externalizes as-yet unconnected
+ connectors, while also showing the connectivity of the assembled portions.
+ Jigsaws resolve the the part-whole conundrum: the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -410,34 +409,13 @@ whole
 \begin_inset Quotes erd
 \end_inset
 
- entity is a partially assembled jigsaw; the parts are the individual pieces,
- and the way that the entity can interact with other entities is through
- the as-yet unconnected connectors.
+ is a partially assembled jigsaw; the parts are the individual pieces.
+ The way that an entity can interact with other entities is determined entirely
+ through the as-yet unconnected connectors.
 \end_layout
 
 \begin_layout Standard
-Sheaf theory is the branch of axioms that explores how such part-whole structure
-s behave.
- The 
-\begin_inset Quotes eld
-\end_inset
-
-sheaf axioms
-\begin_inset Quotes erd
-\end_inset
-
- provide a handful of simple rules that describe how a valid sheaf can be
- created.
- In simplistic terms, the sheaf axioms describe how jigsaw pieces connect.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Vepstas2017sheaves"
-literal "false"
-
-\end_inset
-
- When sheaf theory is taken in it's full glory, it has been offered up as
- an alternative to set theory as a foundation for all of mathematics.
+Sheaf theory
 \begin_inset CommandInset citation
 LatexCommand cite
 key "MacLane1992"
@@ -445,13 +423,19 @@ literal "false"
 
 \end_inset
 
- This is because the sheaf axioms suffice not only to be a foundation for
- topology (as a generalization of frames and locales), but also for logic
- (via the extended Curry–Howard correspondence mentioned above).
- These are formidable claims with an impeccable mathematical pedigree; the
- general mathematical theory seems entirely adequate as a foundation for
- AGI.
- Armed with this, one can move forward.
+ provides the formal setting for working with such part-whole relationships.
+ The sheaf axioms describe how jigsaw pieces connect.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2017sheaves"
+literal "false"
+
+\end_inset
+
+ The appeal of sheaf theory is it's broad foundational and descriptive power:
+ the sheaf axioms describe topology and logic (via the extended Curry–Howard
+ correspondence mentioned above).
+ Natural language can be taken in this broader setting.
 \end_layout
 
 \begin_layout Standard
@@ -464,7 +448,7 @@ literal "false"
 
 \end_inset
 
- Some of the key concepts of mereology include ideas such as 
+ Key concepts of mereology include ideas such as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -548,78 +532,34 @@ Pervasiveness
 \begin_layout Standard
 After becoming familiar with the jigsaw paradigm, it becomes evident that
  it is absolutely pervasive.
- This is illustrated in the two figures below.
+ A common depiction of DNA uses jigsaw connectors for the amino acids ATGC.
+ The antibody (immunoglobulin) is conventionally depicted in terms of jigsaws.
+ Chemical reactions can be depecited as the assemply of jigsaw pieces.
+ 
 \end_layout
 
 \begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename ../reco-image/citric-acid-cycle.png
-	lyxscale 50
-	width 28col%
-
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename ../reco-image/puzzle.eps
-	lyxscale 50
-	width 30col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The figure on the left is the Krebs cycle (the citric acid cycle in biochemistry
-).
- It has an obvious graphical structure, and it is not difficult to see how
- it is to be decomposed into jigsaw pieces.
- What is notable here is that some of the jigsaw pieces find a literal embodimen
-t in the three-dimensional shape of molecules.
- Diagrams of DNA are often shown with jigsaw connectors standing in for
- the amino acids ATGC.
-\end_layout
-
-\begin_layout Standard
-The diagram on the left is more abstract, and is meant to illustrate composition
- or beta reduction in term algebra.
- A term is 
-\begin_inset Formula $f\left(x\right)$
-\end_inset
-
- or an 
-\begin_inset Formula $n$
-\end_inset
-
--ary function symbol 
-\begin_inset Formula $f\left(x_{1},x_{2},\cdots,x_{n}\right)$
-\end_inset
-
-.
- Variables are denoted as 
-\begin_inset Formula $x,y,z,\cdots$
-\end_inset
-
- while constants are type instances, such as 
-\begin_inset Formula $42$
-\end_inset
-
- or the string 
+Abstractly, composition or beta reduction in term algebra can be seen as
+ the act of connecting jigsaws.
+ Consider a term (or 
 \begin_inset Quotes eld
 \end_inset
 
-foobar
+funciton symbol
 \begin_inset Quotes erd
+\end_inset
+
+) 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ with typed variable 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Constants are type instances; for example, the integer 
+\begin_inset Formula $42$
 \end_inset
 
 .
@@ -640,14 +580,14 @@ plugging in
 \begin_inset Formula $f\left(x\right)$
 \end_inset
 
- is the jigsaw on the left, and 42 is the jigsaw on the right.
- In order to connect, the two types must match.
- The type-theoretical type of the variable 
+ is a female-coded jigsaw , and 42 is a male-coded jigsaw.
+ In order to connect, the types must match (the variable 
 \begin_inset Formula $x$
 \end_inset
 
- must match the type of of what is plugged in.
- This kind of plugging-in or composition is rampant throughout mathematics.
+ must be typed as integer).
+ This kind of plugging-in or composition (with explicit or implicit type
+ constraints) is rampant throughout mathematics.
  Prime examples can be found in proof theory,
 \begin_inset CommandInset citation
 LatexCommand cite
