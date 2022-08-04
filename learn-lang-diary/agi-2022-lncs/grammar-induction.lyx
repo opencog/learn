@@ -709,23 +709,26 @@ Symbolic Learning
 \begin_layout Standard
 In order for a graphical, sheaf-theoretic, grammatical theory of structure
  to serve as a foundation stone for AGI, there most be a practical algorithm
- for extracting such structure from sensory data.
- Such an algorithm is sketched below.
- It consists of three interacting parts.
- The first step is chunking, the division of sensory data into candidate
- entities and candidate interactions that might possibly be identified as
- entities or interactions by the second step.
+ for extracting structure from sensory data.
+ This can be acheived in three steps.
+ The first step is chunking (tokenization), the division of sensory data
+ into candidate entities and interactions.
  The second step takes a collection of candidate graphs, splits them into
- jigsaw pieces, and then attempts to classify jigsaw pieces into common
- categories, based on their commonalities.
+ jigsaw pieces, and then classifies jigsaw pieces into common categories,
+ based on their commonalities.
  The third step is a recursive step, to repeat the process again, but this
  time taking the discovered structure as the sensory input.
  It is meant to be a hierarchical crawl up the semantic ladder.
 \end_layout
 
 \begin_layout Standard
-Experimentally, the second step has been the most thoroughly explored.
- An implementation exists within the OpenCog system,
+Tokenization, induction of grammar, entity detection and predicate-argument
+ structure have been experimentally explored in linguistics for decades;
+ a review cannot be given here.
+ What has been missing until now is a unified framework in which sensory
+ (visual and audio) data can be processed on the same footing as linguistic
+ structure.
+ The OpenCog system, specifically the AtomSpace and the Learn project,
 \begin_inset Foot
 status collapsed
 
@@ -737,7 +740,24 @@ See the
 
 \begin_inset CommandInset href
 LatexCommand href
-name "learn project"
+name "AtomSpace"
+target "https://github.com/opencog/atomspace"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Learn project"
 target "https://github.com/opencog/learn"
 literal "false"
 
@@ -752,7 +772,9 @@ literal "false"
 
 \end_inset
 
- with extensive research diaries logging results.
+ provide an implementation of that unified framework.
+ Research has focused on the second step of the above algorithm; extensive
+ research diaries log the results.
 \begin_inset Foot
 status collapsed
 
@@ -781,38 +803,23 @@ Grammatical Induction
 \end_layout
 
 \begin_layout Standard
-In linguistics, one is presented with a pre-chunked sequence of words; the
+In linguistics, one is presented with a tokenized sequence of words; the
  conversion of raw sound into phonemes and then words is presumed to have
  already occurred.
- The task is to extract a more-or-less conventional grammar given a corpus
- of text.
- The first step is to perform a Maximum Spanning Trees (MST) parse; the
- second step is to split the MST parse into jigsaw pieces, and classify
- those pieces into lexical vectors.
- The generation of the MST parse requires collecting statistics on a corpus,
- based on maximum entropy principles; this has a long and deep tradition
- in Corpus Linguistics, going as far back as Biblical Concordances in earlier
- centuries, before linguistics was a distinct field of study.
- Lexical semantics also a deep and broad research literature, much more
- modern.
- Of note here is that this vector-based description has more than a few
- similarities to the theory of neural-nets, and yet is fundamentally different,
- because it is ultimately lexical (
-\emph on
-i.e.
-
-\emph default
- is symbolic.) It is not obvious if deep-learning techniques can be applied
- to obtain these lexical vectors; what is described below is a simpler,
- plainer approach.
+ The task is to extract a more-or-less conventional lexical grammar, given
+ a corpus of text.
+ This may be done as follows.
+ First, perform a Maximum Spanning Tree (MST) parse; next, split the MST
+ parse into jigsaw pieces; finally, classify those pieces into lexical vectors.
+ The process is inherently satistical.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Maximum Planar Graph Parsing
 \end_layout
 
 \begin_layout Standard
-The MST parsing algorithm is described by Yuret, as follows.
+MST parsing is described by Yuret.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
@@ -829,36 +836,17 @@ literal "false"
 \end_inset
 
 .
- Here, 
-\begin_inset Quotes eld
-\end_inset
-
-nearby
-\begin_inset Quotes erd
-\end_inset
-
- usually means 
-\begin_inset Quotes eld
-\end_inset
-
-in a window of width six
-\begin_inset Quotes erd
-\end_inset
-
-.
- A frequentist probability 
+ The frequentist probability 
 \begin_inset Formula $p\left(u,w\right)=N\left(u,w\right)/N\left(*,*\right)$
 \end_inset
 
- is just the count of a given word-pair divided by the total count of all
- word-pairs.
- The star indicates a marginal sum or marginal probability, so that 
-\begin_inset Formula $p\left(u,*\right)=\sum_{w}p\left(u,w\right)=\sum_{w}N\left(u,w\right)/N\left(*,*\right)=N\left(u,*\right)/N\left(*,*\right)$
+ is the count of a given word-pair divided by the total count of all word-pairs.
+ The star indicates a marginal sum, so that 
+\begin_inset Formula $p\left(u,*\right)=\sum_{w}p\left(u,w\right)=N\left(u,*\right)/N\left(*,*\right)$
 \end_inset
 
 .
- Given these frequencies, defines the Lexical Attraction between word-pairs
- as
+ The Lexical Attraction between word-pairs is
 \begin_inset Formula 
 \[
 MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u,*\right)p\left(*,w\right)}
@@ -871,10 +859,9 @@ This lexical attraction is just the mutual information; it has a somewhat
 \begin_inset Formula $\left(u,w\right)\ne\left(w,u\right)$
 \end_inset
 
- and conventional texts on probability theory usually do not address this
- non-symmetric situation.
- Note that the MI may be negative! The range of values depends on the size
- of the corpus; for a 
+.
+ The MI may be negative! The range of values depends on the size of the
+ corpus; for a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -886,18 +873,13 @@ typical
 \end_layout
 
 \begin_layout Standard
-Given a table of 
-\begin_inset Formula $MI\left(u,w\right)$
-\end_inset
-
- obtained by counting, one obtains an MST parse of a sentence by considering
- all possible trees that connect all of the words, and selecting the one
- tree that has the largest possible total 
+The MST parse of a sentence is obtained by considering all possible trees,
+ and selecting the one with the largest possible total 
 \begin_inset Formula $MI$
 \end_inset
 
 .
- An example of such a tree is shown below, taken from Yuret's thesis.
+ The example below is, taken from Yuret's thesis.
  The numbers in the links are the MI between the indicated words.
 \end_layout
 
@@ -905,7 +887,7 @@ Given a table of
 \align center
 \begin_inset Graphics
 	filename ../reco-image/Yuret.png
-	width 40col%
+	width 50col%
 
 \end_inset
 
@@ -913,13 +895,10 @@ Given a table of
 \end_layout
 
 \begin_layout Standard
-There exist a number of fast algorithms for obtaining maximal spanning trees.
- Variants include those that generate only planar trees, or even planar
- graphs (graphs with loops, but no intersecting links).
- Maximal planar graphs (MPG) appear to offer experimentally-observable advantage
-s over trees, as they appear to constrain the grammar more tightly.
- In this sense, they offer some of the advantages seen in catena-based linguisti
-c theory.
+Maximal planar graphs (MPG) (graphs with loops, but no intersecting links)
+ appear to offer experimentally-observable advantages over trees, they constrain
+ the grammar more tightly and offer advantages similar to those of catena-based
+ linguistic theory.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Osborne2012"
@@ -958,7 +937,7 @@ Given an MST or MPG parse, the lexis is constructed by chopping up the parse
 \begin_inset Graphics
 	filename ../reco-image/disjunct-cut.eps
 	lyxscale 60
-	width 32col%
+	width 45col%
 
 \end_inset
 
