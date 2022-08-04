@@ -630,7 +630,7 @@ Vision and Sound
 \begin_layout Standard
 Shapes have a structural grammar, too.
  The connectors can specify location, color, shape, texture.
- The key point of this structural decomposition is that it is 
+ The structural decomposition is that it is 
 \emph on
 not about pixels
 \emph default
@@ -638,7 +638,7 @@ not about pixels
  some connector fixes the scale) and rotationally invariant (unless some
  connector fixes direction).
  The structural grammar captures the morphology of the shape, it's general
- properties, omitting details when they are impertinent, and capturing them
+ properties It can omit details when they are impertinent, and capture them
  when they are important.
 \end_layout
 
@@ -656,17 +656,9 @@ not about pixels
 \end_inset
 
 
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
 \begin_inset Graphics
-	filename ../reco-image/traffic-light-grammar.eps
-	width 25col%
+	filename ../reco-image/traffic-grammar-wide.eps
+	width 75col%
 
 \end_inset
 
@@ -674,20 +666,9 @@ not about pixels
 \end_layout
 
 \begin_layout Standard
-Not only do two-dimensional photographs have a structure grammar, but so
- do sounds.
- On the left is a spectrogram of a whale song.
- It is ostensibly 
-\begin_inset Quotes eld
-\end_inset
-
-one-dimensional
-\begin_inset Quotes erd
-\end_inset
-
-, with time as the primary dimension, but is more accurately multi-dimensional:
- the vertical axis shows frequency, the colors encode a third dimension,
- the intensity.
+Audio data can also be given a jigsaw structure.
+ On the left is a spectrogram of a whale song; time along teh horizontal
+ axis, fequency on the vertical, intensity depected as a color.
 \end_layout
 
 \begin_layout Standard
