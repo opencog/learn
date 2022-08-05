@@ -447,33 +447,6 @@ Word-pair counting is done by generating random planar parse trees, and
  obviously discernable.
 \end_layout
 
-\begin_layout Standard
-A good way to characterize the number of observed word-pairs is by means
- of the sparsity: the 
-\begin_inset Formula $\log_{2}$
-\end_inset
-
- of the fraction of observed word-pairs vs.
- all possible word-pairs.
- Hewing to an information-theoretic foundation, other characteristics include
- the left and right entropies, and the total mutual information.
- These are somewhat more interesting than the more conventional statements
- about the average degree of a vertex in a graph, or the average 
-\begin_inset Quotes eld
-\end_inset
-
-hubbiness
-\begin_inset Quotes erd
-\end_inset
-
- (root-mean-square of the degree).
- This is because of the Zipfian distribution of words: given this, most
- of the graph statistics follow.
- The mutual information is most interesting, as it is a key ingredient to
- an information-theoretic foundation.
- A summary and some graphs follow.
-\end_layout
-
 \begin_layout Subsubsection*
 Data sets
 \end_layout
@@ -499,7 +472,9 @@ tranches
 
 \end_inset
 
-
+ Conventional graph statistics, such as the average degree of a vertex,
+ are not reported here; these follow directly from the Zipfian distribution,
+ and are well-charaterized in the litterature.
 \end_layout
 
 \begin_layout Standard
@@ -1159,8 +1134,8 @@ In the table above,
 
  are the height and width of the matrix (the number of unique words occurring
  on the left and right of observed word-pairs).
- They are almost the same, but not quite: for example, the period never
- occurs at the start of a sentence; capitalized words rarely appear at the
+ They are almost the same, but not quite: periods and question marks never
+ occur at the start of sentences; capitalized words rarely appear at the
  end.
  The sizes are given as logarithms, as this makes comparison to entropies
  more immediate.
