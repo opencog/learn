@@ -141,10 +141,9 @@ l structure of English is explored.
  This document provides a summary of results observed to date.
  The symbolic structure manifests itself as large, complex graphs tying
  together words and grammatical structure.
- The primary experimental task is to describe and understand the nature
- of those graphs.
- The results are presented primarily in a statistical form, as probability
- distributions on those graphs.
+ The induction process provides probability distributions on the graphs.
+ The primary task is to describe and understand the nature of those graphs.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -154,7 +153,7 @@ Introduction
 \begin_layout Standard
 The goal of the OpenCog Learning project is to induce structure from raw
  observational data.
- In the most naive sense, this would be visual or auditory data.
+ In the most direct sense, this would be visual or auditory data.
  In a more sophisticated sense, 
 \begin_inset Quotes eld
 \end_inset
@@ -163,7 +162,7 @@ observational data
 \begin_inset Quotes erd
 \end_inset
 
- should be taken to be data that might already have some structure in it,
+ will already have been processed by other information extraction layers,
  as the goal of learning is to do so hierarchically, recursively: to deduce
  structure in structure inside of structure...
  If this can be made to work, then, 
@@ -183,17 +182,8 @@ the middle
 \begin_inset Quotes erd
 \end_inset
 
- is a corpus of English text, and the goal is to extract grammatical structure.
- The words 
-\begin_inset Quotes eld
-\end_inset
-
-grammatical structure
-\begin_inset Quotes erd
-\end_inset
-
- are meant to encompass morphological structure, syntactic structure, and
- lower reaches of semantic understanding, as far as this can be pushed.
+ is a corpus of English text, and the goal is to extract grammatical structure,
+ including morphology, syntax and the lower reaches of semantics.
  
 \end_layout
 
@@ -212,8 +202,7 @@ literal "false"
  The MI assigns a numerical score to how often a pair of words occur near
  each-other.
  This can be used to generate a maximum spanning tree (MST) parse of the
- text, which appears to capture the syntactic structure of the text reasonably
- well.
+ text, which captures the syntactic structure of the text.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
@@ -225,7 +214,7 @@ literal "false"
 \begin_inset Quotes eld
 \end_inset
 
-jigsaw puzzle pieces
+jigsaw pieces
 \begin_inset Quotes erd
 \end_inset
 
@@ -237,11 +226,11 @@ literal "false"
 
 \end_inset
 
- Individual jigsaw pieces encode the local syntactic environment of a given
- word, not unlike skip-grams.
- Collections of such jigsaw pieces can be understood to be vectors: each
- word is endowed with a lexis of all of the syntactic contexts in which
- it was observed.
+ Individual jigsaws encode the local syntactic environment of a given word,
+ not unlike skip-grams.
+ Collections of such jigsaws can be understood to be vectors: each word
+ is endowed with a lexis of all of the syntactic contexts in which it was
+ observed.
  But this is too fine-grained; one wishes to generalize from the particular
  to the general.
  The vectors can be used both to discover words that have similar syntactic
@@ -261,7 +250,7 @@ literal "false"
 \begin_layout Standard
 This text reports on the algorithms developed to perform the above, and
  on the statistical properties of the resulting graphical networks.
- This report is a summary, encompassing more than a decade of research and
+ The report is summary, encompassing more than a decade of research and
  development.
 \begin_inset Foot
 status collapsed
@@ -285,7 +274,7 @@ literal "false"
 \end_inset
 
  There are obvious directions in which both the theory and the experiment
- could be taken, but so far haven't been.
+ could be taken, but haven't been so far.
  In the 
 \begin_inset Quotes eld
 \end_inset
@@ -294,30 +283,18 @@ downwards
 \begin_inset Quotes erd
 \end_inset
 
- direction, this would be work on morphology, needed for Indo-European languages
-, and segmentation, needed for Chinese.
- Further down, the implementation of the same ideas to extract phonetic
- structure and perform general audio processing.
- In the upwards direction, one could could search for high-MI pairs across
+ direction lies morphology, needed for Indo-European languages, and segmentation
+, needed for Chinese.
+ Further down, the extraction of phonetic structure and general audio processing.
+ Levering the same toolset upwards, one can search for high-MI pairs across
  multiple paragraphs, both to resolve references and to detect entities.
- Such 
-\begin_inset Quotes eld
-\end_inset
-
-syntactic
-\begin_inset Quotes erd
-\end_inset
-
- relationships between entities presumably encodes their semantic properties.
  Syntactic relations can also be extracted between different sense streams,
  say, between words and blueprints/diagrams, or words and photographs, or
- even perhaps big-data settings such as computer vulnerability databases,
- or financial news and stock prices.
+ other hi-tech sensory data.
  The author believes the basic algorithm is generic, and can be ratcheted
  upwards, to arbitrarily high reaches.
- Whether this proves to be true cannot be known without actual experiments;
- the current limitation to carrying these out is time and money: the development
- of a suitable software infrastructure, the performance of experiments.
+ Whether this proves to be true cannot be known without conducting actual
+ experiments.
 \end_layout
 
 \begin_layout Standard
@@ -339,8 +316,8 @@ Software Infrastructure
 \end_layout
 
 \begin_layout Standard
-The software infrastructure used to perform the above can be found in the
- GitHub repo for the OpenCog Learn project.
+All results were obtained by using the software found in the GitHub repo
+ for the OpenCog Learn project.
 \begin_inset Foot
 status collapsed
 
@@ -383,11 +360,7 @@ literal "false"
 s, tuned for performance.
  It has shims that allow data to be stored in conventional disk databases
  and to be distributed across the network.
- 
-\end_layout
-
-\begin_layout Standard
-Most notable for the present task is the 
+ Most notable for the present task is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -418,16 +391,15 @@ literal "false"
  of a vector space.
  If one has two such vector spaces, then pairs of elements form a matrix
  of rows and columns.
- Given a matrix, it is then straight-forward to compute marginal probabilities,
- conditional probabilities, and other typical statistical quantities.
- This is, of course, quite ordinary: what is new here is that the AtomSpace
- allows extremely sparse matrices to be represented: say, 100K 
+ Given a matrix, one may compute marginal and conditional probabilities.
+ This is, of course, quite ordinary.
+ What is new is that the AtomSpace allows extremely sparse matrices to be
+ represented: say, 100K 
 \begin_inset Formula $\times$
 \end_inset
 
  100K entries, of which all but a few million are zero.
- Conventional mathematics and statistics packages do not provide such tools
- for sparse data.
+ Conventional software packages do not provide tools for sparse data.
  Furthermore, the 
 \begin_inset Quotes eld
 \end_inset
@@ -438,84 +410,41 @@ base data
 
  in the AtomSpace are graphs; the matrices themselves are but slices through
  the graphs.
- Given some large graph of data, one can slice-n-dice it in any number of
- ways, and to use the matrix API to ask how portions of it correlate.
- To put those parts under a microscope.
- This is why the AtomSpace is used, and not some more conventional framework.
-\end_layout
-
-\begin_layout Standard
-During the pair-counting stage, the rows and columns of the matrix are words,
- the left and right words, respectively, of an ordered word pair; the matrix
- is approximately square.
- During the word-sense disambiguation and syntactic clustering stage, the
- rows are individual words, and the columns are the connector sequences
- witnessed for those words.
- The connector sequence is thus an example of a non-trivial subgraph.
- The matrix is rectangular; there is typically an order of magnitude more
- connector sequences than there are words: this is simply because each connector
- sequence is a context for a word: it resembles a skip-gram in many ways.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Vepstas2018skippy"
-literal "false"
-
-\end_inset
-
-
+ For example, during word-sense disambiguation, columns correspond to connector
+ sequences; these are selected subgraphs taken from the total parse graph.
 \end_layout
 
 \begin_layout Section*
 Pair Counting
 \end_layout
 
-\begin_layout Verse
-
-\emph on
-How do I count thee? Let me show the ways I love most.
- – NYRB
-\end_layout
-
 \begin_layout Standard
-Obtaining a suitable corpus for exploring the English language is not as
- simple as it seems: it is not enough to train on a dump of Wikipedia articles.
- This is because Wikipedia is descriptive, and has a paucity of verbs, and
- a surfeit of proper nouns and technical terms.
- Verbs such as run, jump, catch: the verbs of everyday outdoor adventure
- are missing.
- This can be remedied by working with a corpus of young adult adventure
- literature.
- Such a corpus is not readily available, but can be pieced together by working
- with Project Gutenberg publications and publicly licensed fan fiction.
+Obtaining a suitable corpus for the English language is not as simple as
+ it seems: it is not enough to train on a dump of Wikipedia articles.
+ Wikipedia is descriptive, having a paucity of verbs and a surfeit of proper
+ nouns and technical terms.
+ The verbs of everyday outdoor adventure: run, jump, catch, are missing.
+ This was remedied by working with a corpus of young adult adventure literature
+ taken from Project Gutenberg and publicly licensed fan fiction.
  
 \end_layout
 
 \begin_layout Standard
-Some minimal amount of cleanup can be useful, but it doesn't seem to be
- critical: if some specialized markup (say, HTML markup) or the occasional
- table, figure caption or index squeezes through, it should not matter much:
- after all, these also have structure, and the goal of the project is to
- discern structure.
-\end_layout
-
-\begin_layout Standard
-The size of the vocabulary increases as the size of the corpus increases.
- This is because of the Zipfian distribution of words: it will always be
- the case that about half of the vocabulary is observed only once: unusual
- given names, obscure geographical place names, foreign language loan words...
+The size of the vocabulary increases linearly with the size of the corpus.
+ This is due to the Zipfian distribution.
+ Half of the vocabulary is observed only once: unusual given names, obscure
+ geographical place names, foreign language loan words...
  and stray markup.
- 
+ This is always the case: it persists, independent of corpus size.
 \end_layout
 
 \begin_layout Standard
-Word-pair counting can be done in several different ways: one is to count
- each word-pair occurring within a window of a fixed width, say, of width
- six.
- Another possibility is to count the word-pairs occurring in a completely
- random planar parse of a sentence.
- Both methods seem to yield similar results, and differences are not (obviously)
- discernible.
- The second style is slightly more appealing on theoretical grounds.
+Word-pair counting is done by generating random planar parse trees, and
+ counting the connected pairs.
+ This provides a uniform sampling over the space of all possible parse trees,
+ eliminating edge effects from conventional finite-sized window sampling.
+ Overall, though, the difference between this and window sampling are not
+ obviously discernable.
 \end_layout
 
 \begin_layout Standard
@@ -545,7 +474,7 @@ hubbiness
  A summary and some graphs follow.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Data sets
 \end_layout
 
@@ -1370,7 +1299,7 @@ word
  in the learning pipeline.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Sample-size Effects
 \end_layout
 
@@ -1459,7 +1388,7 @@ the
  dataset.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 MI Distribution
 \end_layout
 
@@ -1555,6 +1484,20 @@ Word-Pair Distributions
 
 \begin_layout Section*
 MST Parsing
+\end_layout
+
+\begin_layout Standard
+XXXThe matrix is rectangular; there is typically an order of magnitude more
+ connector sequences than there are words: this is simply because each connector
+ sequence is a context for a word: it resembles a skip-gram in many ways.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
