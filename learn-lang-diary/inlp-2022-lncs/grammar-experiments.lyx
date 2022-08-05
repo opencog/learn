@@ -66,6 +66,11 @@
 \justification true
 \use_refstyle 0
 \use_minted 0
+\branch long-text
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -239,7 +244,7 @@ literal "false"
  strongly with distinct word-senses.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Nida97,Kahane2003,Mihalcea2004,Mihalcea2005,Poon2009"
+key "Nida97,Kahane2003,Mihalcea2004"
 literal "false"
 
 \end_inset
@@ -430,15 +435,6 @@ Obtaining a suitable corpus for the English language is not as simple as
 \end_layout
 
 \begin_layout Standard
-The size of the vocabulary increases linearly with the size of the corpus.
- This is due to the Zipfian distribution.
- Half of the vocabulary is observed only once: unusual given names, obscure
- geographical place names, foreign language loan words...
- and stray markup.
- This is always the case: it persists, independent of corpus size.
-\end_layout
-
-\begin_layout Standard
 Word-pair counting is done by generating random planar parse trees, and
  counting the connected pairs.
  This provides a uniform sampling over the space of all possible parse trees,
@@ -472,9 +468,13 @@ tranches
 
 \end_inset
 
- Conventional graph statistics, such as the average degree of a vertex,
- are not reported here; these follow directly from the Zipfian distribution,
- and are well-charaterized in the litterature.
+ It is well-known that word-distributions are Zipfian, but what this means
+ is not always appreciated.
+ No mater the corpus size, half of the vocabulary is observed only once:
+ unusual given names, obscure geographical place names, foreign language
+ loan words...
+ and stray markup.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -561,7 +561,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 16.678
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -570,7 +593,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 17.097
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -579,7 +625,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.214
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -588,7 +657,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.600
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -597,7 +689,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 19.019
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -838,7 +953,31 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
 \end_inset
 
 
@@ -1231,10 +1370,13 @@ t of the possible number of pairs.
  On the other hand, the sparsity is quite high: of all possible word pairs
  that could have been observed, only minuscule fractions of a percent are
  actually observed.
- Language is very highly structured.
- The goal of the learning project is to amplify the information content;
- to extract information, to data-mine it.
+ 
 \end_layout
+
+\begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
 
 \begin_layout Standard
 Remarkably, the overall numbers appear to be language-independent; almost
@@ -1272,6 +1414,16 @@ word
  Presumably, the discovery of Chinese words as set-phrases will occur later
  in the learning pipeline.
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
 
 \begin_layout Subsubsection*
 Sample-size Effects
@@ -1362,13 +1514,18 @@ the
  dataset.
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsubsection*
 MI Distribution
 \end_layout
 
 \begin_layout Standard
 The distribution of word-pair MI is shown below.
- As before, this is for dataset 3, which contains 28 million pairs.
+ This is for dataset 3, which contains 28 million pairs.
  The MI is sorted into 500 histogram bins.
  
 \end_layout
@@ -1418,10 +1575,7 @@ common-mode noise
  by a log-normal distribution.
  Again, an eye-balled, imprecise fit is shown.
  These two, summed together, model the observed distribution almost perfectly.
- Perhaps a formal expression for the common-mode noise is easily derived,
- given a fixed vocabulary size and number of samples.
- Theories of why the remainder would be a log-normal distribution are unknown
- to the author.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1432,6 +1586,11 @@ Pairs with the highest MI are observed very infrequently.
  Trimming does not appreciably change the shape of this distribution, other
  than to eliminate the very highest MI values.
 \end_layout
+
+\begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
 
 \begin_layout Standard
 This distribution is not language-specific; a nearly identical distribution
@@ -1456,22 +1615,13 @@ Word-Pair Distributions
 
 \end_layout
 
-\begin_layout Section*
-MST Parsing
-\end_layout
-
-\begin_layout Standard
-XXXThe matrix is rectangular; there is typically an order of magnitude more
- connector sequences than there are words: this is simply because each connector
- sequence is a context for a word: it resembles a skip-gram in many ways.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Vepstas2018skippy"
-literal "false"
-
 \end_inset
 
 
+\end_layout
+
+\begin_layout Section*
+MST Parsing
 \end_layout
 
 \begin_layout Standard
@@ -1484,21 +1634,18 @@ literal "false"
 
 \end_inset
 
- One considers all possible trees connecting all of the words in a sentence,
- and, out of all of these trees, the one with the greatest sum-total MI
- of the edges is selected.
- A number of different algorithms for finding this tree exist; they all
- give reasonable results, and do not appear to affect overall results.
+ One considers all possible planar trees connecting all of the words in
+ a sentence, and, out of all of these trees, the one with the greatest sum-total
+ MI of the edges is selected.
  A variation is the Maximum Planar Graph (MPG), which takes the above tree,
  and adds edges for high-MI pairs, as long as edges don't cross and the
  MI is above a threshold.
  Experience with Link Grammar (LG) suggests that MPG parses offer a significant
  advantage over trees.
- In LG, the necessity for grammatical agreement between nearby words introduces
- a stringency and rigidness to the resulting parses, resulting in a greater
- rejection of bad parses.
- This result should carry over to the present case, and should help constrain
- the learned grammar.
+ There, cycles force grammatical agreement between nearby words, which introduce
+s a rigidness, resulting in a greater rejection of bad parses.
+ This result should carry over to the present case, and help constrain the
+ learned grammar.
 \end_layout
 
 \begin_layout Standard
@@ -1506,17 +1653,15 @@ Given an MST or MPG parse, each edge is cut in half, and the half-edge is
  labeled with the word it used to connect to.
  This results in a connector sequence for each word, some connectors connecting
  to the left, some to the right.
- Following the LG convention, these connector sequences are called disjuncts
- (for short), as they are disjoined when considering an LG parse.
- Denoting the word as 
-\begin_inset Formula $w$
-\end_inset
-
- and the disjunct as 
+ Every connector sequence 
 \begin_inset Formula $d$
 \end_inset
 
-, this results in word-disjunct pairs 
+, or disjunct for short, is paired with a word 
+\begin_inset Formula $w$
+\end_inset
+
+ to form a word-disjunct pair 
 \begin_inset Formula $\left(w,d\right)$
 \end_inset
 
@@ -1573,21 +1718,23 @@ literal "false"
 \end_inset
 
 .
- In the current codebase, the counting is done without weighting; one could
- consider also counting with weighting, giving higher weight to those disjuncts
- that seem confident.
- Anyway, given the counts 
-\begin_inset Formula $N\left(w,d\right)$
-\end_inset
-
-, one can again play the matrix game, and examine marginal and conditional
- probabilities, and the word-disjunct MI.
+ 
 \end_layout
 
 \begin_layout Standard
 The first thing one notices is that there are vastly more disjuncts than
- there are words: two orders of magnitude more! Next, one notices that the
- vast majority of disjuncts are observed only once.
+ there are words: two orders of magnitude more! This is easily explained:
+ each disjunct is a context for a word: it resembles a skip-gram in many
+ ways.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+ Next, one notices that the vast majority of disjuncts are observed only
+ once.
  This raises the question: what is signal and what is noise? This can be
  explored through trimming, by removing words, disjuncts and word-disjunct
  pairs whenever their observation counts fail to pass a minimal threshold.
@@ -1702,7 +1849,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.526
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1711,7 +1881,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 15.542
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1720,7 +1913,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 13.644
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1729,7 +1945,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 12.889
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1738,7 +1977,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 12.249
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1979,7 +2241,31 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
 \end_inset
 
 
