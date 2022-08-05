@@ -1,0 +1,1622 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass llncs
+\begin_preamble
+\usepackage{url} 
+\usepackage{slashed}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding utf8
+\fontencoding global
+\font_roman "times" "default"
+\font_sans "helvet" "default"
+\font_typewriter "cmtt" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 0
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 0
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\branch long-version
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 11page%
+\topmargin 8pheight%
+\rightmargin 11page%
+\bottommargin 10pheight%
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\listings_params "basicstyle={\ttfamily},basewidth={0.45em}"
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Purely Symbolic Induction of Structure
+\end_layout
+
+\begin_layout Author
+Linas Vepštas
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+orcidID{0000-0002-2557-740X}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+OpenCog Foundation
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+email{<linasvepstas@gmail.com>}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+Techniques honed for the induction of grammar from text corpora can be extended
+ to visual, auditory and other sensory domains, providing a structure for
+ such senses that can be understood in terms of symbols and grammars.
+ This simultaneously solves the classical 
+\begin_inset Quotes eld
+\end_inset
+
+symbol grounding problem
+\begin_inset Quotes erd
+\end_inset
+
+ while also providing a pragmatic approach to developing practical software
+ systems that can articulate the world around us in a symbolic, communicable
+ fashion.
+\end_layout
+
+\begin_layout Section*
+Introduction
+\end_layout
+
+\begin_layout Standard
+The symbolic approach to cognition is founded on the idea that observed
+ nature can be categorized into distinct entities which are involved in
+ relationships with one another.
+ In this approach, the primary challenges are to recognize entities, and
+ to discover what relationships there are between them.
+ 
+\end_layout
+
+\begin_layout Standard
+The recognition problem is to be applied to sensory input.
+ That is, we cannot know nature directly, as it is, but only by means of
+ observation and sensing.
+ Conventionally, this can be taken to be the classical five senses: hearing,
+ touch, smell, vision, taste; or, more generally, scientific instruments
+ and engineered detectors.
+ Such sensors generate collections of data; this may be time-ordered, or
+ simply a jumbled bag of data-points.
+ 
+\end_layout
+
+\begin_layout Standard
+Out of this jumble of data, the goal of entity detection is to recognize
+ groupings of data that 
+\emph on
+always
+\emph default
+ occur together.
+ The adverb 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+always
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ here is key: entities are those things that are not events: they have existence
+ over extended periods of time (Heidegger's 
+\begin_inset Quotes eld
+\end_inset
+
+Dasein
+\begin_inset Quotes erd
+\end_inset
+
+).
+ The goal of relationship detection is to determine both the structure of
+ entities (part-whole relationships) as well as events (statistical co-occurrenc
+es and causation).
+ If one is somehow able to detect and discern entities, and observe frequent
+ relationships between them, then the path to symbolic processing becomes
+ accessible.
+ Each entity can be assigned a symbol (thus resolving the famous 
+\begin_inset Quotes eld
+\end_inset
+
+symbol grounding problem
+\begin_inset Quotes erd
+\end_inset
+
+), and conventional ideas about information theory can be applied to perform
+ reasoning, inference and deduction.
+ 
+\end_layout
+
+\begin_layout Standard
+The goal of this paper is to develop a general theory for the conversion
+ of sensory data into symbolic relationships.
+ It is founded both on a collection of mathematical formalisms and also
+ on a collection of experimental results.
+ The experimental results are presented in a companion text; this text focuses
+ on presenting the mathematical foundations in as simple and direct a fashion
+ as possible.
+\end_layout
+
+\begin_layout Standard
+In the first section, the general relationship between graphs and grammars
+ is sketched out, attempting to illustrate just how broad, general and all-encom
+passing this is.
+ Next, it is shown how this symbolic structure can be extended to visual
+ and auditory perception.
+ After this comes a mathematical deep-dive, reviewing how statistical principles
+ can be used to discern relationships between entities.
+ Working backwards, a practical algorithm is presented for extracting entities
+ themselves.
+ To conclude, a collection of hypothesis and wild speculations are presented.
+\end_layout
+
+\begin_layout Section*
+From Graphs to Grammar
+\end_layout
+
+\begin_layout Standard
+Assuming that sensory data can be categorized into entities and relationships,
+ the natural representation is that of graphs: each entity is represented
+ by a vertex, each relationship is represented by an edge.
+ Vertexes are labeled with symbols, edges with symbol pairs.
+ An example is illustrated below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/sparse-cut-wide.eps
+	lyxscale 70
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+On the left is a conventional sparse graph of relationships between entities.
+ On the right is the same graph, with some of the edges cut into half-edges,
+ with the half-edge connectors labeled with what they can connect to.
+ The connectors are drawn with distinct shapes, intended to convey what
+ they are allowed to connect to.
+ Such vertices, together with a collection of connectors, can be imagined
+ to be jigsaw puzzle pieces, waiting to be connected.
+\end_layout
+
+\begin_layout Standard
+The simplicity of the above diagram is deceptive.
+ There is a deep and broad mathematical foundation: jigsaw pieces are the
+ elements of a 
+\begin_inset Quotes eld
+\end_inset
+
+monoidal category
+\begin_inset Quotes erd
+\end_inset
+
+.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MacLane1978"
+literal "false"
+
+\end_inset
+
+ The connectors themselves are type-theoretic types.
+ The jigsaw pieces are the syntactical elements of a grammar.
+ These last three statements arise from a relatively well-known generalization
+ of Curry–Howard correspondence: for every category, there is a type theory,
+ a grammar and a logic; from each, the others can be determined.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Baez2009"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+The jigsaw paradigm in linguistics has been repeatedly rediscovered.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Marcus1967"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nida97"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Coecke2016"
+literal "false"
+
+\end_inset
+
+ The diagram below is taken from the first paper on Link Grammar.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Sleator1991"
+literal "false"
+
+\end_inset
+
+ Syntactically valid sentences are formed whenever all of the jigsaw connectors
+ fully mated.
+ This fashion of specifying a grammar may feel unconventional; such grammars
+ can be automatically (i.e.
+ algorithmically) transformed into equivalent HPSG, DG, LFG, 
+\emph on
+etc.
+
+\emph default
+ style grammars.
+ Link Grammar is equivalent to Combinatory Categorial Grammar (CCG).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2022ccg"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/link-grammar.png
+	lyxscale 60
+	width 85col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Compositionality and Sheaves
+\end_layout
+
+\begin_layout Standard
+The naive replacement of entities by vertexes and relationships by edges
+ seems to have a problem with well-foundedness.
+ If an entity is made of parts, does this mean that a vertex is made of
+ parts? What are those parts made of? Is there an infinite regress? How
+ might one indicate the fact that some entity has a composite structure?
+ These questions are resolved by observing that a partially-assembled jigsaw
+ puzzle resembles a singular jigsaw piece: it externalizes as-yet unconnected
+ connectors, while also showing the connectivity of the assembled portions.
+ Jigsaws resolve the the part-whole conundrum: the 
+\begin_inset Quotes eld
+\end_inset
+
+whole
+\begin_inset Quotes erd
+\end_inset
+
+ is a partially assembled jigsaw; the parts are the individual pieces.
+ The way that an entity can interact with other entities is determined entirely
+ through the as-yet unconnected connectors.
+\end_layout
+
+\begin_layout Standard
+Sheaf theory
+\begin_inset CommandInset citation
+LatexCommand cite
+key "MacLane1992"
+literal "false"
+
+\end_inset
+
+ provides the formal setting for working with such part-whole relationships.
+ The sheaf axioms describe how jigsaw pieces connect.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2017sheaves"
+literal "false"
+
+\end_inset
+
+ The appeal of sheaf theory is it's broad foundational and descriptive power:
+ the sheaf axioms describe topology and logic (via the extended Curry–Howard
+ correspondence mentioned above).
+ Natural language can be taken in this broader setting.
+\end_layout
+
+\begin_layout Subsection*
+Pervasiveness
+\end_layout
+
+\begin_layout Standard
+After becoming familiar with the jigsaw paradigm, it becomes evident that
+ it is absolutely pervasive.
+ A common depiction of DNA uses jigsaw connectors for the amino acids ATGC.
+ The antibody (immunoglobulin) is conventionally depicted in terms of jigsaws.
+ Chemical reactions can be depicted as the assembly of jigsaw pieces.
+ 
+\end_layout
+
+\begin_layout Standard
+Composition (beta reduction) in term algebra can be seen as the act of connectin
+g jigsaws.
+ Consider a term (or 
+\begin_inset Quotes eld
+\end_inset
+
+function symbol
+\begin_inset Quotes erd
+\end_inset
+
+) 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ with typed variable 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Constants are type instances; for example, the integer 
+\begin_inset Formula $42$
+\end_inset
+
+.
+ Beta reduction is the act of 
+\begin_inset Quotes eld
+\end_inset
+
+plugging in
+\begin_inset Quotes erd
+\end_inset
+
+: 
+\begin_inset Formula $f\left(x\right):42\mapsto f\left(42\right)$
+\end_inset
+
+.
+ Re-interpreted as jigsaw connectors, the term 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ is a female-coded jigsaw , and 42 is a male-coded jigsaw.
+ To connect, the types must match (the variable 
+\begin_inset Formula $x$
+\end_inset
+
+ must be typed as integer).
+ This kind of plugging-in or composition (with explicit or implicit type
+ constraints) is rampant throughout mathematics.
+ Examples can be found in proof theory,
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Troelstra1996"
+literal "false"
+
+\end_inset
+
+ lambda calculus,
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Barendregt1981"
+literal "false"
+
+\end_inset
+
+ term algebras
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Baader1998"
+literal "false"
+
+\end_inset
+
+ and model theory.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Hodges1997"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Vision and Sound
+\end_layout
+
+\begin_layout Standard
+Shapes have a structural grammar, too.
+ The connectors can specify location, color, shape, texture.
+ The structural decomposition is that it is 
+\emph on
+not about pixels
+\emph default
+! The structural decomposition is scale-invariant (more or less, unless
+ some connector fixes the scale) and rotationally invariant (unless some
+ connector fixes direction).
+ The structural grammar captures the morphology of the shape, it's general
+ properties It can omit details when they are impertinent, and capture them
+ when they are important.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/traffic-lights.jpg
+	lyxscale 80
+	width 5col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/traffic-grammar-wide.eps
+	width 75col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Audio data can also be given a jigsaw structure.
+ On the left is a spectrogram of a whale song; time along the horizontal
+ axis, frequency on the vertical, intensity depicted as a color.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/noaa-fisheries-humpback.jpg
+	lyxscale 80
+	width 40col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/audio-graph-wide.eps
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A midsection of the song is shown as jigsaws: the number of repetitions
+ (six), the frequency distribution (its a chirp, which can be discovered
+ with a chirp filter.) Individual repetitions can be spotted with a finite
+ impulse response filter.
+ Sensory information can be described in grammatical terms.
+\end_layout
+
+\begin_layout Section*
+Symbolic Learning
+\end_layout
+
+\begin_layout Standard
+In order for a graphical, sheaf-theoretic, grammatical theory of structure
+ to serve as a foundation stone for AGI, there most be a practical algorithm
+ for extracting structure from sensory data.
+ This can be achieved in three steps.
+ The first step is chunking (tokenization), the division of sensory data
+ into candidate entities and interactions.
+ The second step takes a collection of candidate graphs, splits them into
+ jigsaw pieces, and then classifies jigsaw pieces into common categories,
+ based on their commonalities.
+ The third step is a recursive step, to repeat the process again, but this
+ time taking the discovered structure as the sensory input.
+ It is meant to be a hierarchical crawl up the semantic ladder.
+\end_layout
+
+\begin_layout Standard
+Tokenization, induction of grammar, entity detection and predicate-argument
+ structure have been experimentally explored in linguistics for decades;
+ a review cannot be given here.
+ What has been missing until now is a unified framework in which sensory
+ (visual and audio) data can be processed on the same footing as linguistic
+ structure.
+ The OpenCog system, specifically the AtomSpace and the Learn project,
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "AtomSpace"
+target "https://github.com/opencog/atomspace"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset CommandInset href
+LatexCommand href
+name "Learn project"
+target "https://github.com/opencog/learn"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ in github.
+\end_layout
+
+\end_inset
+
+ provide an implementation of that unified framework.
+ Research has focused on the second step of the above algorithm; extensive
+ research diaries log the results.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the 
+\begin_inset CommandInset href
+LatexCommand href
+name "diaries"
+target "https://github.com/opencog/learn/tree/master/learn-lang-diary"
+literal "false"
+
+\end_inset
+
+ in the aforementioned project.
+\end_layout
+
+\end_inset
+
+ A summary of these results is presented as a companion paper to this one.
+ Explorations of the first and third steps have hardly begun.
+ It is easiest to describe the second step first.
+\end_layout
+
+\begin_layout Subsection*
+Grammatical Induction
+\end_layout
+
+\begin_layout Standard
+In linguistics, one is presented with a tokenized sequence of words; the
+ conversion of raw sound into phonemes and then words is presumed to have
+ already occurred.
+ The task is to extract a more-or-less conventional lexical grammar, given
+ a corpus of text.
+ This may be done as follows.
+ First, perform a Maximum Spanning Tree (MST) parse; next, split the MST
+ parse into jigsaw pieces; finally, classify those pieces into lexical vectors.
+ The process is inherently statistical.
+\end_layout
+
+\begin_layout Subsection*
+Maximum Planar Graph Parsing
+\end_layout
+
+\begin_layout Standard
+MST parsing is described by Yuret.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Yuret1998"
+literal "false"
+
+\end_inset
+
+ Starting with a corpus, maintain a count 
+\begin_inset Formula $N\left(u,w\right)$
+\end_inset
+
+ of nearby word-pairs 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+.
+ The frequentist probability 
+\begin_inset Formula $p\left(u,w\right)=N\left(u,w\right)/N\left(*,*\right)$
+\end_inset
+
+ is the count of a given word-pair divided by the total count of all word-pairs.
+ The star indicates a marginal sum, so that 
+\begin_inset Formula $p\left(u,*\right)=\sum_{w}p\left(u,w\right)=N\left(u,*\right)/N\left(*,*\right)$
+\end_inset
+
+.
+ The Lexical Attraction between word-pairs is
+\begin_inset Formula 
+\[
+MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u,*\right)p\left(*,w\right)}
+\]
+
+\end_inset
+
+This lexical attraction is just the mutual information; it has a somewhat
+ unusual form, as word-pairs are necessarily not symmetric: 
+\begin_inset Formula $\left(u,w\right)\ne\left(w,u\right)$
+\end_inset
+
+.
+ The MI may be negative! The range of values depends on the size of the
+ corpus; for a 
+\begin_inset Quotes eld
+\end_inset
+
+typical
+\begin_inset Quotes erd
+\end_inset
+
+ corpus, it ranges from -10 to +30.
+\end_layout
+
+\begin_layout Standard
+The MST parse of a sentence is obtained by considering all possible trees,
+ and selecting the one with the largest possible total 
+\begin_inset Formula $MI$
+\end_inset
+
+.
+ The example below is, taken from Yuret's thesis.
+ The numbers in the links are the MI between the indicated words.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/Yuret.png
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Maximal planar graphs (MPG) (graphs with loops, but no intersecting links)
+ appear to offer experimentally-observable advantages over trees, they constrain
+ the grammar more tightly and offer advantages similar to those of catena-based
+ linguistic theory.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Osborne2012"
+literal "false"
+
+\end_inset
+
+ MST parses are linguistically plausible: they correspond, more or less,
+ to what trained linguists would write down for a parse.
+ The accuracy is reasonably high.
+ Perfect accuracy is not needed, as later stages make up for this.
+ Yuret indicates that the best results are obtained when one accumulates
+ at least a million sentences.
+ This is not outrageous: work in child psychology indicates that human babies
+ hear several million sentences by the age of two years.
+\end_layout
+
+\begin_layout Subsubsection*
+Lexical Entries
+\end_layout
+
+\begin_layout Standard
+Given an MST or MPG parse, the lexis is constructed by chopping up the parse
+ into jigsaw pieces, and then accumulating the counts on the jigsaw pieces.
+ This is shown below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/disjunct-cut.eps
+	lyxscale 60
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Several kinds of notation are in common use such lexical entries.
+ In tensorial notation, 
+\begin_inset Formula $\mbox{ball}:\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+.
+ In Link Grammar, 
+\begin_inset Formula $\mathtt{ball:the-\&\;throw-}$
+\end_inset
+
+; the minus signs indicate connections to the left.
+ The ampersand is the conjunction operator from a fragment of linear logic;
+ it demands that both connectors be present.
+ Linear logic is the logic of tensor algebras (by the aforementioned Curry–Howar
+d correspondence.) Unlike tensor algebras, natural language has a distinct
+ left-right asymmetry, and so the corresponding logic (of the monoidal category
+ of natural language) is just a fragment of linear logic.
+ Note that all of quantum mechanics lies inside of the tensor algebra; this
+ explains why assorted quantum concepts seem to recur in natural language
+ discussions.
+ 
+\end_layout
+
+\begin_layout Standard
+Connector sequences such as 
+\begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+ are disjoined in the lexis; each such sequence is called a disjunct.
+ Given a word 
+\begin_inset Formula $w$
+\end_inset
+
+, a lexical entry consists of all word-disjunct pairs 
+\begin_inset Formula $\left(w,d\right)$
+\end_inset
+
+ together with their observed count 
+\begin_inset Formula $N\left(w,d\right)$
+\end_inset
+
+.
+ The normalized frequency is 
+\begin_inset Formula $p\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $N\left(*,*\right)$
+\end_inset
+
+ is the sum over all word-disjunct pairs.
+ A lexical entry is thus a sparse skip-gram-like vector:
+\begin_inset Formula 
+\[
+\overrightarrow{w}=p\left(w,d_{1}\right)\widehat{e_{1}}+\cdots+p\left(w,d_{n}\right)\widehat{e_{n}}
+\]
+
+\end_inset
+
+The logical disjunction 
+\begin_inset Quotes eld
+\end_inset
+
+or
+\begin_inset Quotes erd
+\end_inset
+
+ can be used in place of the plus sign; this would be the 
+\begin_inset Quotes eld
+\end_inset
+
+choice
+\begin_inset Quotes erd
+\end_inset
+
+ operator in linear logic (as in 
+\begin_inset Quotes eld
+\end_inset
+
+menu choice
+\begin_inset Quotes erd
+\end_inset
+
+: pick one or another).
+ The basis vectors 
+\begin_inset Formula $\widehat{e_{k}}$
+\end_inset
+
+ are short-hand for the skip-gram disjuncts 
+\begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsubsection*
+Similarity
+\end_layout
+
+\begin_layout Standard
+The lexis generated above contains individual words with connectors to other,
+ specific words.
+ Taken as a matrix, the lexis is sparse but still quite large.
+ To obtain a conventional grammar in terms of nouns, verbs and adjectives,
+ dimensional reduction must be performed.
+ This can be achieved by clustering with respect to a similarity metric.
+ A conventional similarity metric is the cosine distance 
+\begin_inset Formula 
+\[
+\cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}p\left(w,d\right)p\left(v,d\right)
+\]
+
+\end_inset
+
+As a metric, it fails, because the space spanned by these vectors is 
+\emph on
+not Euclidean space
+\emph default
+! It is a probability space, with unit-length probability vectors: 
+\begin_inset Formula $1=\sum_{w,d}p\left(w,d\right)$
+\end_inset
+
+.
+ The correct similarity is the mutual information:
+\begin_inset Formula 
+\[
+MI\left(w,v\right)=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}\qquad\mbox{where}\qquad\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}p\left(w,d\right)p\left(*,d\right)
+\]
+
+\end_inset
+
+Experimentally, the distribution of the MI for word pairs is Gaussian.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the Language Learning Diary Part Three, 
+\emph on
+op.
+ cit.
+\end_layout
+
+\end_inset
+
+ This is remarkable: it implies that the word vectors are uniformly distributed
+ on the surface of a (high-dimensional) sphere: a Gaussian Orthogonal Ensemble
+ (a spin glass).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Talagrand2010"
+literal "false"
+
+\end_inset
+
+ In this sense, one can see that natural language is maximally disambiguating.
+\end_layout
+
+\begin_layout Standard
+In this way, after transforming to a sphere, a plain cosine distance be
+ used.
+ The sphere vectors are given by 
+\begin_inset Formula $\overset{\Rightarrow}{w}=\sum_{v}MI(w,v)\widehat{v}$
+\end_inset
+
+.
+ The center of the sphere must be subtracted, and the vectors normalized
+ to unit length before taking a dot product.
+\end_layout
+
+\begin_layout Subsubsection*
+Classification
+\end_layout
+
+\begin_layout Standard
+In practice, clustering is not straightforward.
+ One wishes to first cluster the most frequent words first, whereas the
+ highest MI pairs are very rare.
+ This suggests defining a ranked-MI, adjusted by the average log frequency:
+\begin_inset Formula 
+\[
+MI_{\mbox{rank}}\left(w,v\right)=MI\left(w,v\right)+\frac{\log_{2}p\left(w,*\right)+\log_{2}p\left(v,*\right)}{2}=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\sqrt{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}}
+\]
+
+\end_inset
+
+Experimentally, this does not affect the shape of the Gaussian; it only
+ shifts it to the right; one still has an orthogonal ensemble.
+\end_layout
+
+\begin_layout Subsubsection*
+Word-sense disambiguation
+\end_layout
+
+\begin_layout Standard
+Words can have multiple meanings.
+ Two words may be deemed to be similar, but not all of the disjuncts can
+ be dumped into a common class; some of the disjuncts may belong to other
+ word-senses.
+ For example, a portion of the word-vector for 
+\begin_inset Quotes eld
+\end_inset
+
+saw
+\begin_inset Quotes erd
+\end_inset
+
+ can be clustered with other cutting tools, while the remainder can be clustered
+ with viewing verbs.
+ This presents a practical difficulty: off-the-shelf clustering algorithms
+ cannot perform word-sense disambiguation
+\end_layout
+
+\begin_layout Standard
+A further difficulty is that connectors must also be merged.
+ The rewriting of connector sequences is subtle, as it affects word-vectors
+ outside of those being merged (the merged connectors might appear anywhere).
+ To maintain coherency, 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+ must be preserved: the grand total counts must remain the same both before
+ and after merge.
+ The details of 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+ can be found in the diary, 
+\emph on
+op cit.
+\end_layout
+
+\begin_layout Subsubsection*
+Factorization
+\end_layout
+
+\begin_layout Standard
+The clustering described above can be understood to be a form of matrix
+ factorization.
+ The word-disjunct matrix 
+\begin_inset Formula $p\left(w,d\right)$
+\end_inset
+
+ is factorized into three matrices 
+\begin_inset Formula $LCR$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+p\left(w,d\right)=\sum_{g,g^{\prime}}p_{L}\left(w,g\right)p_{C}\left(g,g^{\prime}\right)p_{R}\left(g^{\prime},d\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $g$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+word class
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Formula $g^{\prime}$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+grammatical relation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These two are commonly conflated in linguistic theory; here, they will
+ be distinguished.
+ The reason for this is that this is the 
+\emph on
+de facto
+\emph default
+ organization of the Link Grammar dictionaries for English, Russian and
+ other languages.
+ Examples of grammatical relations are 
+\begin_inset Quotes eld
+\end_inset
+
+subject
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+object
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+modifier
+\begin_inset Quotes erd
+\end_inset
+
+; examples of word classes are 
+\begin_inset Quotes eld
+\end_inset
+
+common noun
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+preposition
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The matrices 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $R$
+\end_inset
+
+ are very sparse, which 
+\begin_inset Formula $C$
+\end_inset
+
+ is compact, dense and highly connected.
+ A sense of the scale of factorization can be obtained from the hand-curated
+ English-language dictionary.
+ It consists of about 100K words, 2K word classes, several hundred grammatical
+ relations (LG 
+\begin_inset Quotes eld
+\end_inset
+
+macros
+\begin_inset Quotes erd
+\end_inset
+
+) and 30 million disjuncts.
+ In other words, the central component is quite small.
+\end_layout
+
+\begin_layout Standard
+Factorization provides an aid to interpretability.
+ Instead of a morass of matrix elements, word-classes (nouns, verbs) are
+ recognizable as such.
+ So are relationships (subjects, objects).
+ This is the power of a symbolic, lexical approach.
+\end_layout
+
+\begin_layout Section*
+Chunking/Tokenization
+\end_layout
+
+\begin_layout Standard
+The relatively straightforward tokenization of written English hides the
+ difficulty of chunking in general.
+ How can one obtain a comparable chunking of raw audio or visual data? The
+ goal is to obtain, by automatic means, a sequence of transducers, from
+ sounds to phonemes and syllables and words.
+ 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/filters-wide.eps
+	lyxscale 50
+	width 95col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A pair of transducers in block-diagram form is shown.
+ Each block corresponds to a digital signal processing (DSP) function.
+ The generation of such sequences can be managed through genetic program
+ (GP) learning techniques.
+ An example of a GP system is provided by MOSES.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Looks2006,Looks2007"
+literal "false"
+
+\end_inset
+
+ Given a collection of 
+\begin_inset Quotes eld
+\end_inset
+
+okay
+\begin_inset Quotes erd
+\end_inset
+
+ filter sequences, GP can explore both the parameter space to provide a
+ better tuning, and, by means of mutation and cross-over, generate other
+ filter sequences.
+ The goal is to find high-quality 
+\begin_inset Quotes eld
+\end_inset
+
+feature recognizers
+\begin_inset Quotes erd
+\end_inset
+
+, indicating the presence/absence of a salient feature in the sensory environmen
+t.
+\end_layout
+
+\begin_layout Standard
+Learning in GP systems is guided by maximizing a utility (scoring) function.
+ But what should that function be, in an unsupervised setting? Just as one
+ discovered structure in language through entropy maximization, one can
+ use the same ideas here.
+ For all features (filter sets) currently under consideration, one looks
+ for high-MI correlations.
+ Features that are poorly detected have poor correlation and low information
+ content; crisp recognizers should be sharply correlated.
+ 
+\end_layout
+
+\begin_layout Subsection*
+The Symbol Grounding Problem and the Frame Problem
+\end_layout
+
+\begin_layout Standard
+An old problem in philosophy (dating back to Socrates) is the symbol grounding
+ problem.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See the Stanford Encyclopedia of Philosophy, 
+\begin_inset Quotes eld
+\end_inset
+
+Frame Problem
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Embodied Cognition
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ When one says the word 
+\begin_inset Quotes eld
+\end_inset
+
+chair
+\begin_inset Quotes erd
+\end_inset
+
+, what does that mean? One can attempt to make extensional lists of things
+ one can sit on, but that list can never be complete.
+ One can make intensional lists of the properties of a chair; such a list
+ invariably fails to encompass all the possibilities.
+ A third possibility is that of affordances: what must an object be like,
+ to be sit-on-able? The DSP filter sequence presented above is precisely
+ an affordance-detector.
+ 
+\end_layout
+
+\begin_layout Standard
+Consider a simpler example.
+ If someone says 
+\begin_inset Quotes eld
+\end_inset
+
+I hear whistling in the distance
+\begin_inset Quotes erd
+\end_inset
+
+, what does the word 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+ actually mean? How to describe it? What is the grounding for the symbol
+ 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+? Filter sequences explicitly manifest the grounding.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Whistling
+\begin_inset Quotes erd
+\end_inset
+
+ is a certain kind of hi-pass filter attached to a chirp filter with a certain
+ finite impulse response time.
+ That is what 
+\begin_inset Quotes eld
+\end_inset
+
+whistling
+\begin_inset Quotes erd
+\end_inset
+
+ is.
+ What else could it possibly have been? 
+\end_layout
+
+\begin_layout Standard
+The Frame Problem posits that there are too many objects, features and events
+ in the environment to be able to pay attention to all of them, especially
+ as almost all are irrelevant to the current focus.
+ This is precisely the problem that the entropy-maximizing training of filter
+ sequences is doing: mutual information tells you what things 
+\begin_inset Quotes eld
+\end_inset
+
+go together
+\begin_inset Quotes erd
+\end_inset
+
+, what things are relevant.
+ The grammatical structure reveals 
+\emph on
+how
+\emph default
+ those things depend on one-another.
+ The vast ocean of sensory stimulus is reduced to a trickle of symbolic
+ relationships, arriving either in a regular, expected pattern (and thus
+ perhaps unimportant), or arriving in unexpected, surprising ways.
+ The surprise is what demands attention; the rest is but background noise.
+\end_layout
+
+\begin_layout Section*
+Abstraction and Recursion
+\end_layout
+
+\begin_layout Standard
+The above presented techniques for moving from sensory input to the lower
+ reaches of semantics.
+ Can one go farther, and arrive at common-sense reasoning, one of the Holy
+ Grails of AGI? The author wishes to argue that the techniques described
+ above are sufficient to reach up into the highest levels of abstraction
+ and general intelligence.
+ It is a ladder to be climbed, repeating the same operations on each new
+ layer of abstraction.
+\end_layout
+
+\begin_layout Standard
+The next few rungs of the ladder can be found in linguistics.
+ The MST parsing algorithm given above was presented at the word-pair level.
+ When applied at the semantic level, it becomes the Mihalcea algorithm.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mihalcea2005"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+In lexical semantics, there is an idea of 
+\begin_inset Quotes eld
+\end_inset
+
+lexical implication rules
+\begin_inset Quotes erd
+\end_inset
+
+
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Ostler1991"
+literal "false"
+
+\end_inset
+
+.
+ These are rules that control how words used in one context can be used
+ in a different context.
+ The discovery of these rules be automated: each rule has the form of a
+ jigsaw, and the algorithm for inferring jigsaws has already been presented.
+ Jigsaw assembly is parsing: given a set of constraints (for example, a
+ sequence of words) parsing is the act of finding jigsaw pieces that fit
+ the word-sequence.
+ Parsing technologies, and their more general cousins, the theorem-provers,
+ are well-understood.
+ 
+\end_layout
+
+\begin_layout Standard
+Lexical implication rules generalize to the 
+\begin_inset Quotes eld
+\end_inset
+
+lexical functions
+\begin_inset Quotes erd
+\end_inset
+
+ (LF) of Meaning-Text Theory (MTT).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kahane2003"
+literal "false"
+
+\end_inset
+
+ The MTT is a well-developed theory of the 
+\begin_inset Quotes eld
+\end_inset
+
+semantic
+\begin_inset Quotes erd
+\end_inset
+
+ layer of linguistics, sitting atop surface syntax.
+ An algorithm for learning LF's is described by Poon & Domingos
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Poon2009"
+literal "false"
+
+\end_inset
+
+.
+ The relationship to the current work is obscured by their use of jigsaws
+ written as lambdas; rephrasing as jigsaws makes it clear that it is just
+ a hunt for equivalent jigsaw sub-assemblies (synonymous phrases).
+ Anaphora resolution, reference resolution and entity detection are well-explore
+d topics in computational linguistics.
+ The jigsaw metaphor demonstrates precisely how one can climb the rungs
+ of the ladder: from pair-wise correlations up to grammars.
+ In the presence of a grammar, we once again know what is ordinary, and
+ can then renew the search for surprising pair-wise correlations, this time
+ at the next layer of abstraction
+\end_layout
+
+\begin_layout Subsection*
+Common Sense
+\end_layout
+
+\begin_layout Standard
+Can this be used to learn common sense? I believe so.
+ How might this work? Let me illustrate by explaining an old joke: 
+\begin_inset Quotes eld
+\end_inset
+
+Doctor Doctor, it hurts when I do this! Well, don't do that!
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The explanation is shown below, in the form of a rule, using the notation
+ from proof theory.
+ The thick horizontal bar separates the premises from the conclusions.
+ It is labeled as 
+\begin_inset Quotes eld
+\end_inset
+
+Joke
+\begin_inset Quotes erd
+\end_inset
+
+ to indicate what kind of rule it is.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename ../reco-image/reasoning-joke.eps
+	lyxscale 60
+	width 30page%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+sequent
+\begin_inset Quotes erd
+\end_inset
+
+ is the anaphora connector, which connects the word 
+\begin_inset Quotes eld
+\end_inset
+
+this
+\begin_inset Quotes erd
+\end_inset
+
+ the a specific motor sequence.
+ Which motor sequence? Well, presumably one that was learned, by automatic
+ process (perhaps GP), to move a limb.
+ All of the components of this diagram are jigsaw pieces.
+ All of the pieces can be discovered probabilistically.
+ All of the connectors can be connected probabilistically.
+ The learning algorithm shows how to discern structure from what is superficiall
+y seems like a chaotic stream of sensory input.
+ Common sense can be learned.
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "../lang"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
