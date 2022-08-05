@@ -226,7 +226,7 @@ jigsaw pieces
  which encode the syntactic structure of the parse.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Sleator1991,Sleator1993"
+key "Sleator1991"
 literal "false"
 
 \end_inset
@@ -468,13 +468,24 @@ tranches
 
 \end_inset
 
- It is well-known that word-distributions are Zipfian, but what this means
+ 
+\begin_inset Branch long-text
+inverted 0
+status open
+
+\begin_layout Standard
+It is well-known that word-distributions are Zipfian, but what this means
  is not always appreciated.
  No mater the corpus size, half of the vocabulary is observed only once:
  unusual given names, obscure geographical place names, foreign language
  loan words...
  and stray markup.
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1374,11 +1385,6 @@ t of the possible number of pairs.
 \end_layout
 
 \begin_layout Standard
-\begin_inset Branch long-text
-inverted 0
-status open
-
-\begin_layout Standard
 Remarkably, the overall numbers appear to be language-independent; almost
  identical values are seen for Mandarin Chinese text.
 \begin_inset Foot
@@ -1413,11 +1419,6 @@ word
  issues of segmentation are ignored.
  Presumably, the discovery of Chinese words as set-phrases will occur later
  in the learning pipeline.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -1585,15 +1586,7 @@ Pairs with the highest MI are observed very infrequently.
  Thus, the sharp drop on the right side is purely a sample-size effect.
  Trimming does not appreciably change the shape of this distribution, other
  than to eliminate the very highest MI values.
-\end_layout
-
-\begin_layout Standard
-\begin_inset Branch long-text
-inverted 0
-status open
-
-\begin_layout Standard
-This distribution is not language-specific; a nearly identical distribution
+ This distribution is not language-specific; a nearly identical distribution
  is seen for Chinese Mandarin Hanzi pairs.
 \begin_inset Foot
 status collapsed
@@ -1608,11 +1601,6 @@ Word-Pair Distributions
 \end_inset
 
 , page 18.
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \end_inset
@@ -2616,6 +2604,11 @@ amplification of information
 \end_layout
 
 \begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
+
+\begin_layout Standard
 Trimming away low-count disjuncts and disjunct-word pairs is clearly removing
  many of the highest MI pairs.
  It is not clear if the trimmed pairs are junk (
@@ -2624,6 +2617,11 @@ e.g.
 
 \emph default
  high MI pairs from stray HTML markup) or are potentially meaningful.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -2645,13 +2643,12 @@ The machinery above brings us to the first interesting grammatical application:
  context of the word is re-interpreted as jigsaw connectors; and connectors
  must connect to form a valid parse of a sentence.
  This is very unlike conventional neural net approaches, where there is
- no explicit appearance of any grammar, and the application is limited to
- predicting the next words in a sentence.
+ no explicit appearance of any grammar.
 \end_layout
 
 \begin_layout Standard
-How should similarity be compared? The workhorse of conventional neural
- net approaches is the cosine distance.
+How should similarity be compared? Conventional approaches employ the cosine
+ distance.
  Experimentally, this appears to be the worst-possible way of determining
  similarity.
 \begin_inset Foot
@@ -2663,10 +2660,9 @@ See Diary Part Two, pages 55-74.
 
 \end_inset
 
- Other possibilities include the Jaccard distance, and several weighted
- variants of the Jaccard distance.
- One of these has been shown to be optimal, in that it maximizes all possible
- similarities.
+ Other possibilities include the Jaccard distance, and weighted variants
+ thereof.
+ One of these is optimal, in that it maximizes all possible similarities.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Moulton2018"
@@ -2674,9 +2670,9 @@ literal "false"
 
 \end_inset
 
- All of these do quite well.
- In keeping with the information-theoretic theme, using the mutual information
- between two vectors seems quite appropriate.
+ Any of these do quite well.
+ Keeping with the information-theoretic theme, using the mutual information
+ between two vectors seems appropriate.
  This needs to be defined afresh, as it is not simply a restatement of that
  given above.
  Let the joint probability 
@@ -3022,13 +3018,11 @@ The clusters above are sets of words, all of which have a high pairwise-VI
 \end_layout
 
 \begin_layout Standard
-One can form such clusters quite naively, by searching for cliques of similar
- words.
- However, to get adequate word-sense disambiguation (WSD), one must be more
- sophisticated.
- When one forms a cluster, one should include only those disjuncts which
- all of the words share in common, and exclude those that are not.
- A canonical example of this is the word 
+To get adequate word-sense disambiguation (WSD), one must be more sophisticated
+ in clustering.
+ A cluster should include only those disjuncts which are shared by the majority,
+ excluding those that are not.
+ An example of this is the word 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3036,7 +3030,7 @@ saw
 \begin_inset Quotes erd
 \end_inset
 
-, which can be the past tense of the verb 
+, which can be the past tense of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3044,7 +3038,7 @@ to see
 \begin_inset Quotes erd
 \end_inset
 
-, and a cutting implement.
+, or a cutting implement.
  In forming a cluster with other viewing (or listening) verbs, one wishes
  to accept only the disjuncts pertinent to viewing/listening.
  Excluding the others leaves behind the disjuncts for cutting tools.
@@ -3052,8 +3046,7 @@ to see
 \end_layout
 
 \begin_layout Standard
-An algorithm that appears to accomplish this can be understood as implementing
- 
+This can be accomplished with 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3072,12 +3065,12 @@ See Diary Part Four, pages 13–25.
 \end_inset
 
  Starting with the pair of words having the highest possible VI, one searches
- for additional words with a high VI to these two.
+ for additional words having a high VI to these two.
  These form the candidate members to the club.
- It is useful to have a reasonably large club, and so one can set a threshold,
- admitting as candidates all those above the threshold.
- As the threshold is lowered, the candidate list increases, until suddenly
- it explodes.
+ Candidates are accepted if they pass a threshold.
+ It is useful to have a reasonably large club, which can be expanded by
+ gradually lowering the threshold.
+ As it is lowered, the candidate list increases, until suddenly it explodes.
  The exclusive club is no longer exclusive, but is inviting everyone to
  join.
  The graph below shows the size of the candidate list, as the barrier to
@@ -3119,31 +3112,23 @@ d by seeing what disjuncts the words share in common.
  social club).
  Next, consider ejecting one of the candidates; does the fraction of shared
  disjuncts increase, or not? If it increases, then the ejected candidate
- should be kept out of the club.
- If it decreases, then that candidate should be kept.
+ should be thrown out of the club.
+ If it decreases, then that candidate should be kept in.
 \end_layout
 
 \begin_layout Standard
 In forming the group, only those disjuncts that the group members have in
  common are kept as part of the group; the other, non-shared disjuncts presumabl
 y belong to other word-senses.
- Thus, this algorithm appears to solve the word-sense disambiguation problem.
- 
-\end_layout
-
-\begin_layout Standard
-If one includes disjuncts shared by a majority, then this algorithm also
- solves the generalization problem; that is, of moving from particulars
- to generalities.
+ This algorithm performs word-sense disambiguation.
+ If one includes disjuncts shared by a majority, then this algorithm also
+ performs generalization: it moves from particulars to generalities.
  Some words may have been seen in some contexts; others in different, but
  generally similar contexts.
  In admitting these disjuncts into the common group, all of the group members
  gain the ability to engage in these contexts, thus generalizing.
-\end_layout
-
-\begin_layout Standard
-The majority need not be a strict 50% majority; it can be a plurality, set
- at any threshold.
+ The majority need not be a strict 50% majority; it can be a plurality,
+ set at any threshold.
  This can be understood as the Jaccard index for the group.
  
 \end_layout
