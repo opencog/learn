@@ -1443,20 +1443,32 @@ Abstraction and Recursion
 \end_layout
 
 \begin_layout Standard
-The development above has focused on a very low level: either parsing in
- natural language, or sensory input.
- What about common-sense reasoning, one of the Holy Grails of AGI? It is
- easily argued that additional methods and techniques are needed to reach
- such heights.
- But is that actually the case? The author wishes to argue that the techniques
- described so far are essentially all that is needed to reach up into the
- highest levels of abstraction and general intelligence.
+The above presented techniques for moving from sensory input to the lower
+ reaches of semantics.
+ Can one go farther, and arrive at common-sense reasoning, one of the Holy
+ Grails of AGI? The author wishes to argue that the techniques described
+ above are sufficient to reach up into the highest levels of abstraction
+ and general intelligence.
+ It is a ladder to be climbed, repeating the same operations on each new
+ layer of abstraction.
 \end_layout
 
 \begin_layout Standard
-To get a feeling for the next few rungs of the ladder, it is easiest to
- return to the domain of linguistics.
- In lexical semantics, there is an idea of 
+The next few rungs of the ladder can be found in linguistics.
+ The MST parsing algorithm given above was presented at the word-pair level.
+ When applied at the semantic level, it becomes the Mihalcea algorithm.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Mihalcea2005"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+In lexical semantics, there is an idea of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1475,57 +1487,18 @@ literal "false"
 .
  These are rules that control how words used in one context can be used
  in a different context.
- Can the discovery of these rules be automated? It would seem so: each rule
- can be described as a jigsaw-piece; if a certain set of connectors match
- the conditions on the input of the rule, then the rule fires, producing
- or controlling output.
+ The discovery of these rules be automated: each rule has the form of a
+ jigsaw, and the algorithm for infering jigsaws has already been presented.
+ Jigsaw assembly is parsing: given a set of constraints (for example, a
+ sequence of words) parsing is the act of finding jigsaw pieces that fit
+ the word-sequence.
+ Parsing technologies, and their more general cousins, the theorem-provers,
+ are well-understood.
  
 \end_layout
 
 \begin_layout Standard
-This works because rules (in the sense of a rule-engine) can be interpreted
- as jigsaw pieces.
- Of course, a single rule is just olde-fashioned stimulus-response AI (SRAI).
- The difference here is that we have a practical mechanism for learning
- rules (out of 
-\begin_inset Quotes eld
-\end_inset
-
-nothing at all
-\begin_inset Quotes erd
-\end_inset
-
-) as well as a practical mechanism for assembling them.
- Jigsaw assembly is parsing: given a set of constraints (a sequence of words)
- parsing is the act of finding jigsaw pieces that fit the word-sequence.
- Parsing technologies are well-understood.
- If a sequence of jigsaw pieces need to be stacked deeper, there are relatively
- well-understood technologies for that as well: automated theorem-proving.
- A collection of sequents, such as
-\begin_inset Formula 
-\[
-L\vee\frac{A,\Gamma\Rightarrow C\quad B,\Gamma\Rightarrow C}{A\vee B,\Gamma\Rightarrow C}\quad\quad R\forall\frac{\Gamma\Rightarrow A\left[x/y\right]}{\Gamma\Rightarrow\forall xA}
-\]
-
-\end_inset
-
-can be understood as certain specific jigsaw pieces, with the premises above
- the line being 
-\begin_inset Quotes eld
-\end_inset
-
-input
-\begin_inset Quotes erd
-\end_inset
-
- connectors, conclusions below the line being connectors as well, and theorem-pr
-oving (and all of its subtleties, such as cut elimination and efficiency
- in general) is the assembly of these jigsaw pieces in a syntactically valid
- fashion.
-\end_layout
-
-\begin_layout Standard
-The concept of lexical implication rules generalizes to that of 
+Lexical implication rules generalize to the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1541,7 +1514,7 @@ literal "false"
 
 \end_inset
 
- The MTT is a very well-developed theory of the 
+ The MTT is a well-developed theory of the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1549,26 +1522,8 @@ semantic
 \begin_inset Quotes erd
 \end_inset
 
- layer of linguistics, sitting atop the syntactic layer described above.
- What makes it 
-\begin_inset Quotes eld
-\end_inset
-
-semantic
-\begin_inset Quotes erd
-\end_inset
-
-, and how might it be learned? MTT describes the 
-\begin_inset Quotes eld
-\end_inset
-
-semantic
-\begin_inset Quotes erd
-\end_inset
-
- layer as a collection of concepts which can be expressed through various
- alternative word-choices.
- How might these be learned? Such an algorithm is described by Poon & Domingos
+ layer of linguistics, sitting atop surface syntax.
+ An algorithm for learning LF's is described by Poon & Domingos
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Poon2009"
@@ -1577,53 +1532,16 @@ literal "false"
 \end_inset
 
 .
- Their algorithm learns synonymous phrases.
- it is not unlike what is described above; the only issue there is that
- they make the disastrous choice of using lambda-calculus notation for describin
-g jigsaw pieces! This appears to lead to pointless complexity and confusion;
- a tensorial, type-theoretic function would have been more appropriate.
- 
-\end_layout
-
-\begin_layout Standard
-Another example for deriving meaning based on connectivity can be found
- in the Mihalcea algorithm for associating WordNet word senses to individual
- words in a given sentence.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Mihalcea2005"
-literal "false"
-
-\end_inset
-
- Her algorithm is phrased in terms of the Page-Rank algorithm, to flow weights
- along edges along a fully connected graph.
- Looked at more carefully, this is a probabilistic parsing algorithm: discoverin
-g what is connected to what by altering weights on the matrix, until certain
- edges are ruled out, are deemed 
-\begin_inset Quotes eld
-\end_inset
-
-unconnectable
-\begin_inset Quotes erd
-\end_inset
-
-.
- 
-\end_layout
-
-\begin_layout Standard
-Texts are not single sentences: texts are paragraphs and pages.
- To navigate through a text, one must perform anaphora resolution, or, more
- generally, reference resolution, determining when two words in a text refer
- to the same entity.
- But, in a certain sense, we already have that: the pair-MI algorithm given
- earlier can provide a rough cut for how related two things are.
- The relation can be sharped by discovering context via MST parsing (although
- at this level, it more closely resembles the Michalcea algorithm).
- Specificity can is then further heightened in the clustering step.
- Rinse, repeat.
- 
+ The relationship to the current work is obscured by their use of jigsaws
+ writen as lambdas; rephrasing as jigsaws makes it clear that it is just
+ a hunt for equivalet jigsaw sub-assemblies (synonymous phrases).
+ Anaphora resolution, reference resolution and entity detection are well-explore
+d topics in computational linguistics.
+ The jigsaw metaphor demonstrates precisely how one can climb the rungs
+ of the ladder: from pair-wise correlations up to grammars.
+ In the presence of a grammar, we once again know what is ordinary, and
+ can then renew the search for surprising pari-wsise correlations, this
+ time at the next layer of abstraction
 \end_layout
 
 \begin_layout Subsection*
