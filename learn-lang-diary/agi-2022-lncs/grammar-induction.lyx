@@ -1245,13 +1245,11 @@ Chunking/Tokenization
 \end_layout
 
 \begin_layout Standard
-By working with text, we got lucky.
- Sounds have been pre-chunked into words.
- The vocabulary of words is relatively small.
- Working with raw audio or raw video does not provide such chunked data.
- How can it be arrived at? One possibility is to carefully engineer hand-crafted
- transducers, from sounds to phonemes and syllables and words.
- Another is to automate the creation of such transducers.
+The relatively straightforward tokenization of written English hides the
+ difficulty of chunking in general.
+ How can one obtain a comparable chunking of raw audio or visual data? The
+ goal is to obtain, by automatic means, a sequence of transducers, from
+ sounds to phonemes and syllables and words.
  
 \end_layout
 
@@ -1268,48 +1266,11 @@ By working with text, we got lucky.
 \end_layout
 
 \begin_layout Standard
-The above illustrates a pair of transducers in block-diagram form.
+A pair of transducers in block-diagram form is shown.
  Each block corresponds to a digital signal processing (DSP) function.
- The automation of their discovery can proceed as follows.
- Randomly generate a collection of a few hundred filter sequences.
- Each takes audio-in, and generates a single-bit output.
- Each such filter sequence can be thought of as a 
-\begin_inset Quotes eld
-\end_inset
-
-feature recognizer
-\begin_inset Quotes erd
-\end_inset
-
-: it detects certain features in the input, responding with a one if the
- feature is present, else responding with a zero.
- To join up with the symbolic learning algorithm described above, each such
- filter sequence can be thought of as a 
-\begin_inset Quotes eld
-\end_inset
-
-candidate word
-\begin_inset Quotes erd
-\end_inset
-
-.
- As it was a randomly generated filter, it probably does not correspond
- to anything meaningful.
- However, by applying all of these filters on a corpus of sounds, correlations
- in their output can be observed.
- Large correlations have a high MI, otherwise not.
-\end_layout
-
-\begin_layout Standard
-To obtain better filter sequences, more meaningful, random perturbations
- and extensions of the most highly correlated filters can be explored.
- This is a form of genetic program learning.
- Each block in the block diagram corresponds to a DSP function, plus it's
- parameters.
- Random genetic mutations are those that alter parameters.
- Genetic cross-overs are those that re-arrange blocks and reconnect parameters.
- The OpenCog system has already explored this kind of genetic program learning
- system; it is called MOSES.
+ The generation of such sequences can be managed through genetic program
+ (GP) learning techniques.
+ An example of a GP system is provided by MOSES.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Looks2006,Looks2007"
@@ -1317,33 +1278,39 @@ literal "false"
 
 \end_inset
 
- That particular system is designed for supervised training on a table of
- inputs; the blocks in that system are logical and arithmetic operators,
- and a handful of simple functions.
- The proposal here is to apply a similar training schedule, but one for
- which the blocks are audio (or video) DSP units, and the table of inputs
- is replaced by a corpus of audio snippets (or of photographs), and the
- reinforcement learning aspect is replaced by an entropy-maximization function.
+ Given a collection of 
+\begin_inset Quotes eld
+\end_inset
+
+okay
+\begin_inset Quotes erd
+\end_inset
+
+ filter sequences, GP can explore both the parameter space to provide a
+ better tuning, and, by means of mutation and cross-over, generate other
+ filter sequences.
+ The goal is to find high-quality 
+\begin_inset Quotes eld
+\end_inset
+
+feature recognizers
+\begin_inset Quotes erd
+\end_inset
+
+, indicating the presence/absence of a salient feature in the sensory environmen
+t.
 \end_layout
 
 \begin_layout Standard
-The above is a research proposal; it has not been implemented.
- There is considerable experience with the genetic program learning subsystem,
- and it works quite well.
- The software would have to be completely redesigned to be able to manipulate
- program trees representing DSP functions.
-\end_layout
-
-\begin_layout Standard
-An unresolved theoretical issue is that of common mode rejection.
- That is, it is quite possible to learn two very different filter sequences,
- yet these both detect exactly the same features.
- For audio, this is less of a problem, as one can compare time-shifted outputs.
- For still photographs, such as of the stop-light, the goal is to learn
- three filters, for red, yellow and green disks, and not three different
- filters all detecting a red disk.
- Resolving this issue, and doubtlessly many more, is effectively impossible
- without hands-on experimentation.
+Learning in GP systems is guided by maximizing a utility (scoring) function.
+ But what should that function be, in an unsupervised setting? Just as one
+ discovered structure in language through entropy maximization, one can
+ use the same ideas here.
+ For all features (filter sets) currently under consideration, one looks
+ for high-MI correlations.
+ Features that are poorly detected have poor correlation and low information
+ content; crisp recognizers should be sharply correlated.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -1390,15 +1357,14 @@ chair
  one can sit on, but that list can never be complete.
  One can make intensional lists of the properties of a chair; such a list
  invariably fails to encompass all the possibilities.
- There is in fact a third, commonly overlooked possibility: that of discovering
- affordances.
- What must an object be like, to be sit-on-able? The filter sequence is
- precisely an affordance-detector.
+ A third possibility is that of affordances: what must an object be like,
+ to be sit-on-able? The DSP filter sequence presented above is precisely
+ an affordance-detector.
  
 \end_layout
 
 \begin_layout Standard
-Lets take a simpler example.
+Consider a simpler example.
  If someone says 
 \begin_inset Quotes eld
 \end_inset
@@ -1424,9 +1390,17 @@ whistling
 \begin_inset Quotes erd
 \end_inset
 
-? Well, in the above, the grounding is explicitly manifest: it is a certain
- kind of hi-pass filter attached to a chirp filter with a certain finite
- impulse response time.
+? Filter sequences explicitly manifest the grounding.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Whistling
+\begin_inset Quotes erd
+\end_inset
+
+ is a certain kind of hi-pass filter attached to a chirp filter with a certain
+ finite impulse response time.
  That is what 
 \begin_inset Quotes eld
 \end_inset
@@ -1436,35 +1410,32 @@ whistling
 \end_inset
 
  is.
- What else could it possibly be? Is the filter sequence an infallible detector
- of whistling? Well, no.
- Obviously, birds are taken in by fake bird calls; doing better requires
- higher intelligence and better hearing.
+ What else could it possibly have been? 
 \end_layout
 
 \begin_layout Standard
-Might there be an affordance-detector for chairs? That is, a certain filter
- that examines photos, and responds with a yes/no answer to 
+The Frame Problem posits that there are too many objects, features and events
+ in the environment to be able to pay attention to all of them, espcially
+ as almost all are irrelevant to the current focus.
+ This is precisely the problem that the entropy-maximizing training of filter
+ sequences is doing: mutual information tells you what things 
 \begin_inset Quotes eld
 \end_inset
 
-can I sit on that
+go together
 \begin_inset Quotes erd
 \end_inset
 
-? Sure.
- How can it be learned? Direct, embodied experience: one looks at things,
- and then tries to sit on them.
- One learns.
- But what about the Frame Problem? That is, of all the stimuli, all the
- things going on around, which ones are relevant to actually sitting? Well,
- but this is precisely what the entropy-maximizing training of filter sequences
- is doing: it is using constructs like mutual information to focus on what
- is important, and discard what is irrelevant.
- At this stage of research, this is but hand-waving.
- What is new here is that the above describes an algorithm that can actually
- be implemented, and is well-founded on known mathematics and existing,
- practical software design principles.
+, what things are relevant.
+ The grammatical structure reveals 
+\emph on
+how
+\emph default
+ those things depend on one-another.
+ The vast ocean of sensory stimulus is reduced to a trickle of symbolic
+ relationships, arriving either in a regular, expected pattern (and thus
+ perhaps unimportant), or arriving in unexpected, surprising ways.
+ The surprise is what demands attention; the rest is but background noise.
 \end_layout
 
 \begin_layout Section*
