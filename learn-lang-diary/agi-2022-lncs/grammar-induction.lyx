@@ -973,8 +973,8 @@ The lexis generated above contains individual words with connectors to other,
  Taken as a matrix, the lexis is sparse but still quite large.
  To obtain a conventional grammar in terms of nouns, verbs and adjectives,
  dimensional reduction must be performed.
-  A very conventional similarity metric is the cosine distance, given as
- 
+ This can be acheived by clustering with respect to a similarity metric.
+ A conventional similarity metric is the cosine distance 
 \begin_inset Formula 
 \[
 \cos\theta=\overrightarrow{w}\cdot\overrightarrow{v}=\sum_{d}p\left(w,d\right)p\left(v,d\right)
@@ -982,56 +982,24 @@ The lexis generated above contains individual words with connectors to other,
 
 \end_inset
 
-This similarity metric fails.
- The space spanned by these vectors is 
+As a metric, it fails, because the space spanned by these vectors is 
 \emph on
 not Euclidean space
 \emph default
-! It does not have rotational symmetry! Properly, it is a probability space,
- a simplex, as one must preserve unit-length probability vectors: 
+! It is a probability space, with unit-length probability vectors: 
 \begin_inset Formula $1=\sum_{w,d}p\left(w,d\right)$
 \end_inset
 
 .
- The correct information-theoretic similarity is the mutual information:
+ The correct similarity is the mutual information:
 \begin_inset Formula 
 \[
-MI\left(w,v\right)=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}
+MI\left(w,v\right)=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}\qquad\mbox{where}\qquad\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}p\left(w,d\right)p\left(*,d\right)
 \]
 
 \end_inset
 
-where 
-\begin_inset Formula 
-\[
-\overrightarrow{w}\cdot\overrightarrow{*}=\sum_{d}p\left(w,d\right)p\left(*,d\right)
-\]
-
-\end_inset
-
-Unlike the MI for word-pairs, this MI is symmetric: 
-\begin_inset Formula $MI\left(w,v\right)=MI\left(v,w\right)$
-\end_inset
-
-.
- Experimentally, the distribution of the MI for word pairs appears to be
- Gaussian, as shown below.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename ../en-sims-p3/mi-dist-tsup.eps
-	width 30col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The above is obtained from MPG parsing and statistics gathering as described
- above.
+Experimentally, the distribution of the MI for word pairs is Gaussian.
 \begin_inset Foot
 status collapsed
 
@@ -1044,9 +1012,29 @@ op.
 
 \end_inset
 
- Note the graph is on a semi-log scale: normal distributions become parabolas
- when graphed this way.
- 
+ This is remarkable: it implies that the word vectors are uniformly distributed
+ on the surface of a (high-dimensional) sphere: a Gaussian Orthogonal Ensemble
+ (a spin glass).
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Talagrand2010"
+literal "false"
+
+\end_inset
+
+ In this sense, one can see that natural language is maximally disambiguating.
+\end_layout
+
+\begin_layout Standard
+In this way, after transforming to a sphere, a plain cosine distance be
+ used.
+ The sphere vectors are given by 
+\begin_inset Formula $\overset{\Rightarrow}{w}=\sum_{v}MI(w,v)\widehat{v}$
+\end_inset
+
+.
+ The center of the sphere must be subtracted, and the vectors normalized
+ to unit length before taking a dot product.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1054,27 +1042,19 @@ Classification
 \end_layout
 
 \begin_layout Standard
-Clustering words into grammatical categories based on similarity may seem
- straight-forward, but can founder on several different details.
- First, the MI, as defined above, has the property that words with the very
- highest MI tend to be very infrequent, rare.
- As a practical detail, one wishes to first cluster the most frequent words.
- To do this, one must add some kind of offset, so as to recommend common
- words first.
- Such an offset is provided by the average of the logarithm of the frequency
- of the two words.
- This leads to the definition of 
+In practice, clustering is not straight-forward.
+ One wishes to first cluster the most frequent words first, whereas the
+ highest MI pairs are very rare.
+ This suggests defining a ranked-MI, adjusted by the average log frequency:
 \begin_inset Formula 
-\begin{align*}
-MI_{\mbox{ranked}}\left(w,v\right)= & MI\left(w,v\right)+\frac{1}{2}\left[\log_{2}p\left(w,*\right)+\log_{2}p\left(v,*\right)\right]\\
-= & \log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\sqrt{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}}
-\end{align*}
+\[
+MI_{\mbox{rank}}\left(w,v\right)=MI\left(w,v\right)+\frac{\log_{2}p\left(w,*\right)+\log_{2}p\left(v,*\right)}{2}=\log_{2}\frac{\overrightarrow{w}\cdot\overrightarrow{v}}{\sqrt{\left(\overrightarrow{w}\cdot\overrightarrow{*}\right)\left(\overrightarrow{*}\cdot\overrightarrow{v}\right)}}
+\]
 
 \end_inset
 
-The shape of the Gaussian above is unaffected, although it is shifted to
- the right; clearly, the ranking is completely different.
- 
+Experimentally, this does not affect the shape of the Gaussian; it only
+ shifts it to the right; one still has an orthogonal ensemble.
 \end_layout
 
 \begin_layout Subsubsection*
