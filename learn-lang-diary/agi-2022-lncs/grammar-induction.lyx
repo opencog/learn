@@ -452,7 +452,7 @@ After becoming familiar with the jigsaw paradigm, it becomes evident that
  it is absolutely pervasive.
  A common depiction of DNA uses jigsaw connectors for the amino acids ATGC.
  The antibody (immunoglobulin) is conventionally depicted in terms of jigsaws.
- Chemical reactions can be depecited as the assemply of jigsaw pieces.
+ Chemical reactions can be depicted as the assembly of jigsaw pieces.
  
 \end_layout
 
@@ -463,7 +463,7 @@ g jigsaws.
 \begin_inset Quotes eld
 \end_inset
 
-funciton symbol
+function symbol
 \begin_inset Quotes erd
 \end_inset
 
@@ -585,8 +585,8 @@ not about pixels
 
 \begin_layout Standard
 Audio data can also be given a jigsaw structure.
- On the left is a spectrogram of a whale song; time along teh horizontal
- axis, fequency on the vertical, intensity depected as a color.
+ On the left is a spectrogram of a whale song; time along the horizontal
+ axis, frequency on the vertical, intensity depicted as a color.
 \end_layout
 
 \begin_layout Standard
@@ -628,7 +628,7 @@ Symbolic Learning
 In order for a graphical, sheaf-theoretic, grammatical theory of structure
  to serve as a foundation stone for AGI, there most be a practical algorithm
  for extracting structure from sensory data.
- This can be acheived in three steps.
+ This can be achieved in three steps.
  The first step is chunking (tokenization), the division of sensory data
  into candidate entities and interactions.
  The second step takes a collection of candidate graphs, splits them into
@@ -729,7 +729,7 @@ In linguistics, one is presented with a tokenized sequence of words; the
  This may be done as follows.
  First, perform a Maximum Spanning Tree (MST) parse; next, split the MST
  parse into jigsaw pieces; finally, classify those pieces into lexical vectors.
- The process is inherently satistical.
+ The process is inherently statistical.
 \end_layout
 
 \begin_layout Subsection*
@@ -962,7 +962,7 @@ The lexis generated above contains individual words with connectors to other,
  Taken as a matrix, the lexis is sparse but still quite large.
  To obtain a conventional grammar in terms of nouns, verbs and adjectives,
  dimensional reduction must be performed.
- This can be acheived by clustering with respect to a similarity metric.
+ This can be achieved by clustering with respect to a similarity metric.
  A conventional similarity metric is the cosine distance 
 \begin_inset Formula 
 \[
@@ -1031,7 +1031,7 @@ Classification
 \end_layout
 
 \begin_layout Standard
-In practice, clustering is not straight-forward.
+In practice, clustering is not straightforward.
  One wishes to first cluster the most frequent words first, whereas the
  highest MI pairs are very rare.
  This suggests defining a ranked-MI, adjusted by the average log frequency:
@@ -1053,7 +1053,7 @@ Word-sense disambiguation
 \begin_layout Standard
 Words can have multiple meanings.
  Two words may be deemed to be similar, but not all of the disjuncts can
- be dumped into a common class; some of teh disjuncts may belong to other
+ be dumped into a common class; some of the disjuncts may belong to other
  word-senses.
  For example, a portion of the word-vector for 
 \begin_inset Quotes eld
@@ -1404,7 +1404,7 @@ whistling
 
 \begin_layout Standard
 The Frame Problem posits that there are too many objects, features and events
- in the environment to be able to pay attention to all of them, espcially
+ in the environment to be able to pay attention to all of them, especially
  as almost all are irrelevant to the current focus.
  This is precisely the problem that the entropy-maximizing training of filter
  sequences is doing: mutual information tells you what things 
@@ -1477,7 +1477,7 @@ literal "false"
  These are rules that control how words used in one context can be used
  in a different context.
  The discovery of these rules be automated: each rule has the form of a
- jigsaw, and the algorithm for infering jigsaws has already been presented.
+ jigsaw, and the algorithm for inferring jigsaws has already been presented.
  Jigsaw assembly is parsing: given a set of constraints (for example, a
  sequence of words) parsing is the act of finding jigsaw pieces that fit
  the word-sequence.
@@ -1522,15 +1522,15 @@ literal "false"
 
 .
  The relationship to the current work is obscured by their use of jigsaws
- writen as lambdas; rephrasing as jigsaws makes it clear that it is just
- a hunt for equivalet jigsaw sub-assemblies (synonymous phrases).
+ written as lambdas; rephrasing as jigsaws makes it clear that it is just
+ a hunt for equivalent jigsaw sub-assemblies (synonymous phrases).
  Anaphora resolution, reference resolution and entity detection are well-explore
 d topics in computational linguistics.
  The jigsaw metaphor demonstrates precisely how one can climb the rungs
  of the ladder: from pair-wise correlations up to grammars.
  In the presence of a grammar, we once again know what is ordinary, and
- can then renew the search for surprising pari-wsise correlations, this
- time at the next layer of abstraction
+ can then renew the search for surprising pair-wise correlations, this time
+ at the next layer of abstraction
 \end_layout
 
 \begin_layout Subsection*
@@ -1549,7 +1549,7 @@ Doctor Doctor, it hurts when I do this! Well, don't do that!
 
 .
  The explanation is shown below, in the form of a rule, using the notation
- from proof-theory.
+ from proof theory.
  The thick horizontal bar separates the premises from the conclusions.
  It is labeled as 
 \begin_inset Quotes eld
