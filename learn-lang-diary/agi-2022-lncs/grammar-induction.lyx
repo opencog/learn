@@ -1062,17 +1062,11 @@ Word-sense disambiguation
 \end_layout
 
 \begin_layout Standard
-A second practical difficulty arising during clustering is that of word-sense
- disambiguation.
- Once two words have been judged similar enough to be merged into a common
- class, this does not imply that all disjuncts are to be dumped into that
- common class, as well.
- Instead, a given vector is to be decomposed into two: a part to be merged,
- and a part that is left over.
- The part to be merged will share disjuncts in common with the other word-vector
- being merged.
- The parts that are not shared presumably belong to distinct word-senses.
- For example, parts of the word-vector for 
+Words can have multiple meanings.
+ Two words may be deemed to be similar, but not all of the disjuncts can
+ be dumped into a common class; some of teh disjuncts may belong to other
+ word-senses.
+ For example, a portion of the word-vector for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1082,26 +1076,14 @@ saw
 
  can be clustered with other cutting tools, while the remainder can be clustered
  with viewing verbs.
-\end_layout
-
-\begin_layout Standard
-Splitting the word-vectors in this way prevents the use of off-the-shelf
- clustering algorithms that can be found on the Internet (as these in general
- perform an all-or-nothing merge.) 
+ This presents a practical difficulty: off-the-shelf clustering algorithms
+ cannot perform word-sense disambiguation
 \end_layout
 
 \begin_layout Standard
 A further difficulty is that connectors must also be merged.
  The rewriting of connector sequences is subtle, as it affects word-vectors
- outside of those being merged (the merged connectors might appear 
-\begin_inset Quotes eld
-\end_inset
-
-anywhere
-\begin_inset Quotes erd
-\end_inset
-
-).
+ outside of those being merged (the merged connectors might appear anywhere).
  To maintain coherency, 
 \begin_inset Quotes eld
 \end_inset
@@ -1111,11 +1093,18 @@ detailed balance
 \end_inset
 
  must be preserved: the grand total counts must remain the same both before
- and after.
- This is much the same as detailed balance in chemistry, where the grand-total
- number of atoms (and their specific types) in a chemical reaction is preserved,
- even as the number of molecules, and the connections change.
- Again, this is a place where the sheaf axioms make an appearance.
+ and after merge.
+ The details of 
+\begin_inset Quotes eld
+\end_inset
+
+detailed balance
+\begin_inset Quotes erd
+\end_inset
+
+ can be found in the diary, 
+\emph on
+op cit.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1126,7 +1115,7 @@ Factorization
 The clustering described above can be understood to be a form of matrix
  factorization.
  The word-disjunct matrix 
-\begin_inset Formula $p\left(wd\right)$
+\begin_inset Formula $p\left(w,d\right)$
 \end_inset
 
  is factorized into three matrices 
@@ -1228,24 +1217,10 @@ preposition
 \end_inset
 
  is compact, dense and highly connected.
- This sparse-dense factorization is visualized below.
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename ../skimage/factor.eps
-	lyxscale 50
-	width 40col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-For the current Link Grammar English dictionary, there are about 100K words,
- 2K word classes, several hundred grammatical relations (LG 
+ A sense of the scale of factorization can be obtained from the hand-curated
+ English-language dictionary.
+ It consists of about 100K words, 2K word classes, several hundred grammatical
+ relations (LG 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1254,33 +1229,15 @@ macros
 \end_inset
 
 ) and 30 million disjuncts.
- This dictionary is hand-curated; it is an example of what can be accomplished
- 
-\begin_inset Quotes eld
-\end_inset
-
-by hand
-\begin_inset Quotes erd
-\end_inset
-
-.
- 
+ In other words, the central component is quite small.
 \end_layout
 
 \begin_layout Standard
-Neural networks accurately capture the dense, interconnected central region;
- this is 
-\emph on
-why
-\emph default
- they work.
- They necessarily perform dimensional reduction on the sparse left and right
- factors.
- By erasing/collapsing the sparse factors, neural net become uninterpretable;
- an opaque mass of wight vectors.
- Interpretability is all about regaining (factoring back out) the sparse
- factors! This is exactly what the symbolic learning algorithm does.
- 
+Factorization provides an aid to interpretability.
+ Instead of a morass of matrix elements, word-classes (nouns, verbs) are
+ recognizable as such.
+ So are relationships (subjects, objects).
+ This is the power of a symbolic, lexical approach.
 \end_layout
 
 \begin_layout Section*
