@@ -291,7 +291,7 @@ downwards
  direction lies morphology, needed for Indo-European languages, and segmentation
 , needed for Chinese.
  Further down, the extraction of phonetic structure and general audio processing.
- Levering the same toolset upwards, one can search for high-MI pairs across
+ Levering the same tool-set upwards, one can search for high-MI pairs across
  multiple paragraphs, both to resolve references and to detect entities.
  Syntactic relations can also be extracted between different sense streams,
  say, between words and blueprints/diagrams, or words and photographs, or
@@ -440,7 +440,7 @@ Word-pair counting is done by generating random planar parse trees, and
  This provides a uniform sampling over the space of all possible parse trees,
  eliminating edge effects from conventional finite-sized window sampling.
  Overall, though, the difference between this and window sampling are not
- obviously discernable.
+ obviously discernible.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1308,7 +1308,7 @@ The sparsity is
 , and is expressed in bits.
  It indicates what fraction of all possible word-pairs are actually observed.
  Observe how the sparsity increased by two bits, as the dimensions of the
- matrix increased by two bits (a factor of four; non-trivial in terms of
+ matrix increased by two bits (a factor of four; nontrivial in terms of
  compute-time, corpus size and RAM usage.) Thus, rarity is defined as 
 \begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
 \end_inset
