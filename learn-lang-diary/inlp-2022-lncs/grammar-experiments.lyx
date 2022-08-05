@@ -667,7 +667,7 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
 \end_inset
 
 
@@ -838,7 +838,7 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
+\begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
 \end_inset
 
 
@@ -1140,28 +1140,27 @@ In the table above,
  The sizes are given as logarithms, as this makes comparison to entropies
  more immediate.
  The total number of unique pairs is 
-\begin_inset Formula $D_{\mbox{Tot}}$
+\begin_inset Formula $D_{\mathrm{Tot}}$
 \end_inset
 
  while the total number of observations of these pairs is 
-\begin_inset Formula $N_{\mbox{Tot}}$
+\begin_inset Formula $N_{\mathrm{Tot}}$
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
 The sparsity is 
-\begin_inset Formula $-\log_{2}D_{\mbox{Tot}}/N_{L}\times N_{R}$
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
 \end_inset
 
-, and so is expressed in bits.
+, and is expressed in bits.
  It indicates what fraction of all possible word-pairs are actually observed.
- Note that the sparsity increased by two bits, as the dimensions of the
+ Observe how the sparsity increased by two bits, as the dimensions of the
  matrix increased by two bits (a factor of four; non-trivial in terms of
  compute-time, corpus size and RAM usage.) Thus, rarity is defined as 
-\begin_inset Formula $\log_{2}D_{\mbox{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
 \end_inset
 
 , and is seen to be approximately constant, independent of dataset size.
@@ -1174,7 +1173,7 @@ The total entropy is
 \begin_layout Standard
 \begin_inset Formula 
 \[
-H_{\mbox{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)
+H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)
 \]
 
 \end_inset
@@ -1199,7 +1198,7 @@ with the sum ranging over all word-pairs
  The left entropy is 
 \begin_inset Formula 
 \[
-H_{\mbox{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)
+H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)
 \]
 
 \end_inset
@@ -1212,7 +1211,7 @@ where
  The mutual information is
 \begin_inset Formula 
 \[
-MI=H_{\mbox{Tot}}-H_{\mbox{Left}}-H_{\mbox{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
 \]
 
 \end_inset
@@ -1691,7 +1690,7 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}N_{\mbox{words}}$
+\begin_inset Formula $\log_{2}N_{\mathrm{words}}$
 \end_inset
 
 
@@ -1750,7 +1749,7 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}N_{\mbox{disjuncts}}$
+\begin_inset Formula $\log_{2}N_{\mathrm{disjuncts}}$
 \end_inset
 
 
@@ -1809,7 +1808,7 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}D_{\mbox{Tot}}$
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
 \end_inset
 
 
@@ -1980,7 +1979,7 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\log_{2}N_{\mbox{Tot}}/D_{\mbox{Tot}}$
+\begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
 \end_inset
 
 
