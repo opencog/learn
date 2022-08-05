@@ -66,6 +66,11 @@
 \justification true
 \use_refstyle 0
 \use_minted 0
+\branch long-version
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -819,16 +824,10 @@ literal "false"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-At any rate, the point here is that the MST parses are linguistically plausible:
- it is fairly straightforward to verify that they correspond, more or less,
+ MST parses are linguistically plausible: they correspond, more or less,
  to what trained linguists would write down for a parse.
  The accuracy is reasonably high.
- For the present algorithms, perfect accuracy is not needed, as later stages
- make up for this.
+ Perfect accuracy is not needed, as later stages make up for this.
  Yuret indicates that the best results are obtained when one accumulates
  at least a million sentences.
  This is not outrageous: work in child psychology indicates that human babies
@@ -858,51 +857,46 @@ Given an MST or MPG parse, the lexis is constructed by chopping up the parse
 \end_layout
 
 \begin_layout Standard
-There are multiple different notations possible for the above.
- There is a tensorial notation, popular in quantum approaches; the lexical
- entry would be written as 
+Several kinds of notation are in common use such lexical entries.
+ In tensorial notation, 
 \begin_inset Formula $\mbox{ball}:\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
 \end_inset
 
- while in Link Grammar, it is denoted as 
+.
+ In Link Grammar, 
 \begin_inset Formula $\mathtt{ball:the-\&\;throw-}$
 \end_inset
 
- where the minus signs indicate connections to the left.
+; the minus signs indicate connections to the left.
  The ampersand is the conjunction operator from a fragment of linear logic;
- it demands that both connector be present.
+ it demands that both connectors be present.
  Linear logic is the logic of tensor algebras (by the aforementioned Curry–Howar
 d correspondence.) Unlike tensor algebras, natural language has a distinct
  left-right asymmetry, and so the corresponding logic (of the monoidal category
  of natural language) is just a fragment of linear logic.
- Note that all of quantum mechanics lies inside of the tensor algebra; this
+ 
+\begin_inset Branch long-version
+inverted 0
+status open
+
+\begin_layout Standard
+Note that all of quantum mechanics lies inside of the tensor algebra; this
  explains why assorted quantum concepts seem to recur in natural language
  discussions.
  
 \end_layout
 
-\begin_layout Standard
-The connector sequences 
-\begin_inset Formula $\mathtt{the-\&\;throw-}$
 \end_inset
 
- or 
+
+\end_layout
+
+\begin_layout Standard
+Connector sequences such as 
 \begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
 \end_inset
 
- often called 
-\begin_inset Quotes eld
-\end_inset
-
-disjuncts
-\begin_inset Quotes erd
-\end_inset
-
-: different connector sequences 
-\begin_inset Formula $d$
-\end_inset
-
- are disjoined from one-another.
+ are disjoined in the lexis; each such sequence is called a disjunct.
  Given a word 
 \begin_inset Formula $w$
 \end_inset
@@ -916,11 +910,11 @@ disjuncts
 \end_inset
 
 .
- Given this count, one may define a frequency 
+ The normalized frequency is 
 \begin_inset Formula $p\left(w,d\right)=N\left(w,d\right)/N\left(*,*\right)$
 \end_inset
 
- where this time, 
+ where 
 \begin_inset Formula $N\left(*,*\right)$
 \end_inset
 
@@ -933,7 +927,7 @@ disjuncts
 
 \end_inset
 
-One can use the logical disjunction 
+The logical disjunction 
 \begin_inset Quotes eld
 \end_inset
 
@@ -941,7 +935,7 @@ or
 \begin_inset Quotes erd
 \end_inset
 
- in place of the plus sign; this would be the 
+ can be used in place of the plus sign; this would be the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -962,11 +956,11 @@ menu choice
 \begin_inset Formula $\widehat{e_{k}}$
 \end_inset
 
- are one and the same thing as the skip-gram disjuncts 
+ are short-hand for the skip-gram disjuncts 
 \begin_inset Formula $\left|\overleftarrow{\mbox{the}}\right\rangle \otimes\left|\overleftarrow{\mbox{throw}}\right\rangle $
 \end_inset
 
-, just offering a short-hand notation.
+.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -976,13 +970,10 @@ Similarity
 \begin_layout Standard
 The lexis generated above contains individual words with connectors to other,
  specific words.
- Although each vector is sparse, and the lexis, as a whole, taken as a matrix
- is sparse, it is still quite large.
- By contrast, conventional linguistic grammars talk about nouns and verbs
- and adjectives.
- Part of the learning process is then to automatically find similar categories:
- to organize words into groups based on similarities.
- A very conventional similarity metric is the cosine distance, given as
+ Taken as a matrix, the lexis is sparse but still quite large.
+ To obtain a conventional grammar in terms of nouns, verbs and adjectives,
+ dimensional reduction must be performed.
+  A very conventional similarity metric is the cosine distance, given as
  
 \begin_inset Formula 
 \[
