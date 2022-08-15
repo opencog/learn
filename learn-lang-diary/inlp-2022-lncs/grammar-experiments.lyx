@@ -4,7 +4,7 @@
 \begin_header
 \save_transient_properties true
 \origin unavailable
-\textclass article
+\textclass llncs
 \begin_preamble
 \usepackage{url} 
 \usepackage{slashed}
@@ -45,7 +45,7 @@
 \pdf_backref false
 \pdf_pdfusetitle true
 \papersize default
-\use_geometry true
+\use_geometry false
 \use_package amsmath 2
 \use_package amssymb 2
 \use_package cancel 1
@@ -58,7 +58,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
-\biblio_style plain
+\biblio_style splncs04
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -66,6 +66,11 @@
 \justification true
 \use_refstyle 0
 \use_minted 0
+\branch long-text
+\selected 0
+\filename_suffix 0
+\color #faf0e6
+\end_branch
 \index Index
 \shortcut idx
 \color #008000
@@ -99,12 +104,38 @@
 Grammar Induction - Experimental Results
 \end_layout
 
-\begin_layout Date
-February 2022
+\begin_layout Author
+Linas Vepštas 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+orcidID{0000-0002-2557-740X}
 \end_layout
 
-\begin_layout Author
-Linas Vepštas
+\end_inset
+
+
+\end_layout
+
+\begin_layout Institute
+OpenCog Foundation 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+email{<linasvepstas@gmail.com>}
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -115,10 +146,9 @@ l structure of English is explored.
  This document provides a summary of results observed to date.
  The symbolic structure manifests itself as large, complex graphs tying
  together words and grammatical structure.
- The primary experimental task is to describe and understand the nature
- of those graphs.
- The results are presented primarily in a statistical form, as probability
- distributions on those graphs.
+ The induction process provides probability distributions on the graphs.
+ The primary task is to describe and understand the nature of those graphs.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -128,7 +158,7 @@ Introduction
 \begin_layout Standard
 The goal of the OpenCog Learning project is to induce structure from raw
  observational data.
- In the most naive sense, this would be visual or auditory data.
+ In the most direct sense, this would be visual or auditory data.
  In a more sophisticated sense, 
 \begin_inset Quotes eld
 \end_inset
@@ -137,7 +167,7 @@ observational data
 \begin_inset Quotes erd
 \end_inset
 
- should be taken to be data that might already have some structure in it,
+ will already have been processed by other information extraction layers,
  as the goal of learning is to do so hierarchically, recursively: to deduce
  structure in structure inside of structure...
  If this can be made to work, then, 
@@ -157,17 +187,8 @@ the middle
 \begin_inset Quotes erd
 \end_inset
 
- is a corpus of English text, and the goal is to extract grammatical structure.
- The words 
-\begin_inset Quotes eld
-\end_inset
-
-grammatical structure
-\begin_inset Quotes erd
-\end_inset
-
- are meant to encompass morphological structure, syntactic structure, and
- lower reaches of semantic understanding, as far as this can be pushed.
+ is a corpus of English text, and the goal is to extract grammatical structure,
+ including morphology, syntax and the lower reaches of semantics.
  
 \end_layout
 
@@ -186,8 +207,7 @@ literal "false"
  The MI assigns a numerical score to how often a pair of words occur near
  each-other.
  This can be used to generate a maximum spanning tree (MST) parse of the
- text, which appears to capture the syntactic structure of the text reasonably
- well.
+ text, which captures the syntactic structure of the text.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Yuret1998"
@@ -199,23 +219,23 @@ literal "false"
 \begin_inset Quotes eld
 \end_inset
 
-jigsaw puzzle pieces
+jigsaw pieces
 \begin_inset Quotes erd
 \end_inset
 
  which encode the syntactic structure of the parse.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Sleator1991,Sleator1993"
+key "Sleator1991"
 literal "false"
 
 \end_inset
 
- Individual jigsaw pieces encode the local syntactic environment of a given
- word, not unlike skip-grams.
- Collections of such jigsaw pieces can be understood to be vectors: each
- word is endowed with a lexis of all of the syntactic contexts in which
- it was observed.
+ Individual jigsaws encode the local syntactic environment of a given word,
+ not unlike skip-grams.
+ Collections of such jigsaws can be understood to be vectors: each word
+ is endowed with a lexis of all of the syntactic contexts in which it was
+ observed.
  But this is too fine-grained; one wishes to generalize from the particular
  to the general.
  The vectors can be used both to discover words that have similar syntactic
@@ -224,7 +244,7 @@ literal "false"
  strongly with distinct word-senses.
 \begin_inset CommandInset citation
 LatexCommand cite
-key "Nida97,Kahane2003,Mihalcea2004,Mihalcea2005,Poon2009"
+key "Kahane2003,Mihalcea2004"
 literal "false"
 
 \end_inset
@@ -235,7 +255,7 @@ literal "false"
 \begin_layout Standard
 This text reports on the algorithms developed to perform the above, and
  on the statistical properties of the resulting graphical networks.
- This report is a summary, encompassing more than a decade of research and
+ The report is summary, encompassing more than a decade of research and
  development.
 \begin_inset Foot
 status collapsed
@@ -259,7 +279,7 @@ literal "false"
 \end_inset
 
  There are obvious directions in which both the theory and the experiment
- could be taken, but so far haven't been.
+ could be taken, but haven't been so far.
  In the 
 \begin_inset Quotes eld
 \end_inset
@@ -268,30 +288,18 @@ downwards
 \begin_inset Quotes erd
 \end_inset
 
- direction, this would be work on morphology, needed for Indo-European languages
-, and segmentation, needed for Chinese.
- Further down, the implementation of the same ideas to extract phonetic
- structure and perform general audio processing.
- In the upwards direction, one could could search for high-MI pairs across
+ direction lies morphology, needed for Indo-European languages, and segmentation
+, needed for Chinese.
+ Further down, the extraction of phonetic structure and general audio processing.
+ Levering the same tool-set upwards, one can search for high-MI pairs across
  multiple paragraphs, both to resolve references and to detect entities.
- Such 
-\begin_inset Quotes eld
-\end_inset
-
-syntactic
-\begin_inset Quotes erd
-\end_inset
-
- relationships between entities presumably encodes their semantic properties.
  Syntactic relations can also be extracted between different sense streams,
  say, between words and blueprints/diagrams, or words and photographs, or
- even perhaps big-data settings such as computer vulnerability databases,
- or financial news and stock prices.
+ other hi-tech sensory data.
  The author believes the basic algorithm is generic, and can be ratcheted
  upwards, to arbitrarily high reaches.
- Whether this proves to be true cannot be known without actual experiments;
- the current limitation to carrying these out is time and money: the development
- of a suitable software infrastructure, the performance of experiments.
+ Whether this proves to be true cannot be known without conducting actual
+ experiments.
 \end_layout
 
 \begin_layout Standard
@@ -313,8 +321,8 @@ Software Infrastructure
 \end_layout
 
 \begin_layout Standard
-The software infrastructure used to perform the above can be found in the
- GitHub repo for the OpenCog Learn project.
+All results were obtained by using the software found in the GitHub repo
+ for the OpenCog Learn project.
 \begin_inset Foot
 status collapsed
 
@@ -357,11 +365,7 @@ literal "false"
 s, tuned for performance.
  It has shims that allow data to be stored in conventional disk databases
  and to be distributed across the network.
- 
-\end_layout
-
-\begin_layout Standard
-Most notable for the present task is the 
+ Most notable for the present task is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -392,16 +396,15 @@ literal "false"
  of a vector space.
  If one has two such vector spaces, then pairs of elements form a matrix
  of rows and columns.
- Given a matrix, it is then straight-forward to compute marginal probabilities,
- conditional probabilities, and other typical statistical quantities.
- This is, of course, quite ordinary: what is new here is that the AtomSpace
- allows extremely sparse matrices to be represented: say, 100K 
+ Given a matrix, one may compute marginal and conditional probabilities.
+ This is, of course, quite ordinary.
+ What is new is that the AtomSpace allows extremely sparse matrices to be
+ represented: say, 100K 
 \begin_inset Formula $\times$
 \end_inset
 
  100K entries, of which all but a few million are zero.
- Conventional mathematics and statistics packages do not provide such tools
- for sparse data.
+ Conventional software packages do not provide tools for sparse data.
  Furthermore, the 
 \begin_inset Quotes eld
 \end_inset
@@ -412,114 +415,35 @@ base data
 
  in the AtomSpace are graphs; the matrices themselves are but slices through
  the graphs.
- Given some large graph of data, one can slice-n-dice it in any number of
- ways, and to use the matrix API to ask how portions of it correlate.
- To put those parts under a microscope.
- This is why the AtomSpace is used, and not some more conventional framework.
-\end_layout
-
-\begin_layout Standard
-During the pair-counting stage, the rows and columns of the matrix are words,
- the left and right words, respectively, of an ordered word pair; the matrix
- is approximately square.
- During the word-sense disambiguation and syntactic clustering stage, the
- rows are individual words, and the columns are the connector sequences
- witnessed for those words.
- The connector sequence is thus an example of a non-trivial subgraph.
- The matrix is rectangular; there is typically an order of magnitude more
- connector sequences than there are words: this is simply because each connector
- sequence is a context for a word: it resembles a skip-gram in many ways.
-\begin_inset CommandInset citation
-LatexCommand cite
-key "Vepstas2018skippy"
-literal "false"
-
-\end_inset
-
-
+ For example, during word-sense disambiguation, columns correspond to connector
+ sequences; these are selected subgraphs taken from the total parse graph.
 \end_layout
 
 \begin_layout Section*
 Pair Counting
 \end_layout
 
-\begin_layout Verse
-
-\emph on
-How do I count thee? Let me show the ways I love most.
- – NYRB
-\end_layout
-
 \begin_layout Standard
-Obtaining a suitable corpus for exploring the English language is not as
- simple as it seems: it is not enough to train on a dump of Wikipedia articles.
- This is because Wikipedia is descriptive, and has a paucity of verbs, and
- a surfeit of proper nouns and technical terms.
- Verbs such as run, jump, catch: the verbs of everyday outdoor adventure
- are missing.
- This can be remedied by working with a corpus of young adult adventure
- literature.
- Such a corpus is not readily available, but can be pieced together by working
- with Project Gutenberg publications and publicly licensed fan fiction.
+Obtaining a suitable corpus for the English language is not as simple as
+ it seems: it is not enough to train on a dump of Wikipedia articles.
+ Wikipedia is descriptive, having a paucity of verbs and a surfeit of proper
+ nouns and technical terms.
+ The verbs of everyday outdoor adventure: run, jump, catch, are missing.
+ This was remedied by working with a corpus of young adult adventure literature
+ taken from Project Gutenberg and publicly licensed fan fiction.
  
 \end_layout
 
 \begin_layout Standard
-Some minimal amount of cleanup can be useful, but it doesn't seem to be
- critical: if some specialized markup (say, HTML markup) or the occasional
- table, figure caption or index squeezes through, it should not matter much:
- after all, these also have structure, and the goal of the project is to
- discern structure.
+Word-pair counting is done by generating random planar parse trees, and
+ counting the connected pairs.
+ This provides a uniform sampling over the space of all possible parse trees,
+ eliminating edge effects from conventional finite-sized window sampling.
+ Overall, though, the difference between this and window sampling are not
+ obviously discernible.
 \end_layout
 
-\begin_layout Standard
-The size of the vocabulary increases as the size of the corpus increases.
- This is because of the Zipfian distribution of words: it will always be
- the case that about half of the vocabulary is observed only once: unusual
- given names, obscure geographical place names, foreign language loan words...
- and stray markup.
- 
-\end_layout
-
-\begin_layout Standard
-Word-pair counting can be done in several different ways: one is to count
- each word-pair occurring within a window of a fixed width, say, of width
- six.
- Another possibility is to count the word-pairs occurring in a completely
- random planar parse of a sentence.
- Both methods seem to yield similar results, and differences are not (obviously)
- discernible.
- The second style is slightly more appealing on theoretical grounds.
-\end_layout
-
-\begin_layout Standard
-A good way to characterize the number of observed word-pairs is by means
- of the sparsity: the 
-\begin_inset Formula $\log_{2}$
-\end_inset
-
- of the fraction of observed word-pairs vs.
- all possible word-pairs.
- Hewing to an information-theoretic foundation, other characteristics include
- the left and right entropies, and the total mutual information.
- These are somewhat more interesting than the more conventional statements
- about the average degree of a vertex in a graph, or the average 
-\begin_inset Quotes eld
-\end_inset
-
-hubbiness
-\begin_inset Quotes erd
-\end_inset
-
- (root-mean-square of the degree).
- This is because of the Zipfian distribution of words: given this, most
- of the graph statistics follow.
- The mutual information is most interesting, as it is a key ingredient to
- an information-theoretic foundation.
- A summary and some graphs follow.
-\end_layout
-
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Data sets
 \end_layout
 
@@ -540,6 +464,23 @@ tranches
 \end_inset
 
 ; each dataset includes one more tranche of the corpus.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Branch long-text
+inverted 0
+status open
+
+\begin_layout Standard
+It is well-known that word-distributions are Zipfian, but what this means
+ is not always appreciated.
+ No mater the corpus size, half of the vocabulary is observed only once:
+ unusual given names, obscure geographical place names, foreign language
+ loan words...
+ and stray markup.
+ 
 \end_layout
 
 \end_inset
@@ -631,7 +572,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 16.678
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -640,7 +604,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 17.097
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -649,7 +636,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.214
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -658,7 +668,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.600
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -667,7 +700,30 @@ Corpus
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 19.019
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -908,7 +964,31 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
 \end_inset
 
 
@@ -1204,8 +1284,8 @@ In the table above,
 
  are the height and width of the matrix (the number of unique words occurring
  on the left and right of observed word-pairs).
- They are almost the same, but not quite: for example, the period never
- occurs at the start of a sentence; capitalized words rarely appear at the
+ They are almost the same, but not quite: periods and question marks never
+ occur at the start of sentences; capitalized words rarely appear at the
  end.
  The sizes are given as logarithms, as this makes comparison to entropies
  more immediate.
@@ -1218,7 +1298,6 @@ In the table above,
 \end_inset
 
 .
- 
 \end_layout
 
 \begin_layout Standard
@@ -1226,10 +1305,10 @@ The sparsity is
 \begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
 \end_inset
 
-, and so is expressed in bits.
+, and is expressed in bits.
  It indicates what fraction of all possible word-pairs are actually observed.
- Note that the sparsity increased by two bits, as the dimensions of the
- matrix increased by two bits (a factor of four; non-trivial in terms of
+ Observe how the sparsity increased by two bits, as the dimensions of the
+ matrix increased by two bits (a factor of four; nontrivial in terms of
  compute-time, corpus size and RAM usage.) Thus, rarity is defined as 
 \begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
 \end_inset
@@ -1302,9 +1381,7 @@ t of the possible number of pairs.
  On the other hand, the sparsity is quite high: of all possible word pairs
  that could have been observed, only minuscule fractions of a percent are
  actually observed.
- Language is very highly structured.
- The goal of the learning project is to amplify the information content;
- to extract information, to data-mine it.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1344,7 +1421,12 @@ word
  in the learning pipeline.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
+
+\begin_layout Subsubsection*
 Sample-size Effects
 \end_layout
 
@@ -1433,13 +1515,18 @@ the
  dataset.
 \end_layout
 
-\begin_layout Subsection*
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection*
 MI Distribution
 \end_layout
 
 \begin_layout Standard
 The distribution of word-pair MI is shown below.
- As before, this is for dataset 3, which contains 28 million pairs.
+ This is for dataset 3, which contains 28 million pairs.
  The MI is sorted into 500 histogram bins.
  
 \end_layout
@@ -1489,10 +1576,7 @@ common-mode noise
  by a log-normal distribution.
  Again, an eye-balled, imprecise fit is shown.
  These two, summed together, model the observed distribution almost perfectly.
- Perhaps a formal expression for the common-mode noise is easily derived,
- given a fixed vocabulary size and number of samples.
- Theories of why the remainder would be a log-normal distribution are unknown
- to the author.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1502,10 +1586,7 @@ Pairs with the highest MI are observed very infrequently.
  Thus, the sharp drop on the right side is purely a sample-size effect.
  Trimming does not appreciably change the shape of this distribution, other
  than to eliminate the very highest MI values.
-\end_layout
-
-\begin_layout Standard
-This distribution is not language-specific; a nearly identical distribution
+ This distribution is not language-specific; a nearly identical distribution
  is seen for Chinese Mandarin Hanzi pairs.
 \begin_inset Foot
 status collapsed
@@ -1541,21 +1622,18 @@ literal "false"
 
 \end_inset
 
- One considers all possible trees connecting all of the words in a sentence,
- and, out of all of these trees, the one with the greatest sum-total MI
- of the edges is selected.
- A number of different algorithms for finding this tree exist; they all
- give reasonable results, and do not appear to affect overall results.
+ One considers all possible planar trees connecting all of the words in
+ a sentence, and, out of all of these trees, the one with the greatest sum-total
+ MI of the edges is selected.
  A variation is the Maximum Planar Graph (MPG), which takes the above tree,
  and adds edges for high-MI pairs, as long as edges don't cross and the
  MI is above a threshold.
  Experience with Link Grammar (LG) suggests that MPG parses offer a significant
  advantage over trees.
- In LG, the necessity for grammatical agreement between nearby words introduces
- a stringency and rigidness to the resulting parses, resulting in a greater
- rejection of bad parses.
- This result should carry over to the present case, and should help constrain
- the learned grammar.
+ There, cycles force grammatical agreement between nearby words, which introduce
+s a rigidness, resulting in a greater rejection of bad parses.
+ This result should carry over to the present case, and help constrain the
+ learned grammar.
 \end_layout
 
 \begin_layout Standard
@@ -1563,17 +1641,15 @@ Given an MST or MPG parse, each edge is cut in half, and the half-edge is
  labeled with the word it used to connect to.
  This results in a connector sequence for each word, some connectors connecting
  to the left, some to the right.
- Following the LG convention, these connector sequences are called disjuncts
- (for short), as they are disjoined when considering an LG parse.
- Denoting the word as 
-\begin_inset Formula $w$
-\end_inset
-
- and the disjunct as 
+ Every connector sequence 
 \begin_inset Formula $d$
 \end_inset
 
-, this results in word-disjunct pairs 
+, or disjunct for short, is paired with a word 
+\begin_inset Formula $w$
+\end_inset
+
+ to form a word-disjunct pair 
 \begin_inset Formula $\left(w,d\right)$
 \end_inset
 
@@ -1630,21 +1706,23 @@ literal "false"
 \end_inset
 
 .
- In the current codebase, the counting is done without weighting; one could
- consider also counting with weighting, giving higher weight to those disjuncts
- that seem confident.
- Anyway, given the counts 
-\begin_inset Formula $N\left(w,d\right)$
-\end_inset
-
-, one can again play the matrix game, and examine marginal and conditional
- probabilities, and the word-disjunct MI.
+ 
 \end_layout
 
 \begin_layout Standard
 The first thing one notices is that there are vastly more disjuncts than
- there are words: two orders of magnitude more! Next, one notices that the
- vast majority of disjuncts are observed only once.
+ there are words: two orders of magnitude more! This is easily explained:
+ each disjunct is a context for a word: it resembles a skip-gram in many
+ ways.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Vepstas2018skippy"
+literal "false"
+
+\end_inset
+
+ Next, one notices that the vast majority of disjuncts are observed only
+ once.
  This raises the question: what is signal and what is noise? This can be
  explored through trimming, by removing words, disjuncts and word-disjunct
  pairs whenever their observation counts fail to pass a minimal threshold.
@@ -1759,7 +1837,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 18.526
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1768,7 +1869,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 15.542
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1777,7 +1901,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 13.644
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1786,7 +1933,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 12.889
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1795,7 +1965,30 @@ full set
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
 12.249
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2036,7 +2229,31 @@ Rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
 \begin_inset Formula $\log_{2}N_{\mathrm{Tot}}/D_{\mathrm{Tot}}$
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset space \space{}
 \end_inset
 
 
@@ -2387,6 +2604,11 @@ amplification of information
 \end_layout
 
 \begin_layout Standard
+\begin_inset Branch long-text
+inverted 0
+status open
+
+\begin_layout Standard
 Trimming away low-count disjuncts and disjunct-word pairs is clearly removing
  many of the highest MI pairs.
  It is not clear if the trimmed pairs are junk (
@@ -2395,6 +2617,11 @@ e.g.
 
 \emph default
  high MI pairs from stray HTML markup) or are potentially meaningful.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -2416,13 +2643,12 @@ The machinery above brings us to the first interesting grammatical application:
  context of the word is re-interpreted as jigsaw connectors; and connectors
  must connect to form a valid parse of a sentence.
  This is very unlike conventional neural net approaches, where there is
- no explicit appearance of any grammar, and the application is limited to
- predicting the next words in a sentence.
+ no explicit appearance of any grammar.
 \end_layout
 
 \begin_layout Standard
-How should similarity be compared? The workhorse of conventional neural
- net approaches is the cosine distance.
+How should similarity be compared? Conventional approaches employ the cosine
+ distance.
  Experimentally, this appears to be the worst-possible way of determining
  similarity.
 \begin_inset Foot
@@ -2434,10 +2660,9 @@ See Diary Part Two, pages 55-74.
 
 \end_inset
 
- Other possibilities include the Jaccard distance, and several weighted
- variants of the Jaccard distance.
- One of these has been shown to be optimal, in that it maximizes all possible
- similarities.
+ Other possibilities include the Jaccard distance, and weighted variants
+ thereof.
+ One of these is optimal, in that it maximizes all possible similarities.
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Moulton2018"
@@ -2445,9 +2670,9 @@ literal "false"
 
 \end_inset
 
- All of these do quite well.
- In keeping with the information-theoretic theme, using the mutual information
- between two vectors seems quite appropriate.
+ Any of these do quite well.
+ Keeping with the information-theoretic theme, using the mutual information
+ between two vectors seems appropriate.
  This needs to be defined afresh, as it is not simply a restatement of that
  given above.
  Let the joint probability 
@@ -2793,13 +3018,11 @@ The clusters above are sets of words, all of which have a high pairwise-VI
 \end_layout
 
 \begin_layout Standard
-One can form such clusters quite naively, by searching for cliques of similar
- words.
- However, to get adequate word-sense disambiguation (WSD), one must be more
- sophisticated.
- When one forms a cluster, one should include only those disjuncts which
- all of the words share in common, and exclude those that are not.
- A canonical example of this is the word 
+To get adequate word-sense disambiguation (WSD), one must be more sophisticated
+ in clustering.
+ A cluster should include only those disjuncts which are shared by the majority,
+ excluding those that are not.
+ An example of this is the word 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2807,7 +3030,7 @@ saw
 \begin_inset Quotes erd
 \end_inset
 
-, which can be the past tense of the verb 
+, which can be the past tense of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2815,7 +3038,7 @@ to see
 \begin_inset Quotes erd
 \end_inset
 
-, and a cutting implement.
+, or a cutting implement.
  In forming a cluster with other viewing (or listening) verbs, one wishes
  to accept only the disjuncts pertinent to viewing/listening.
  Excluding the others leaves behind the disjuncts for cutting tools.
@@ -2823,8 +3046,7 @@ to see
 \end_layout
 
 \begin_layout Standard
-An algorithm that appears to accomplish this can be understood as implementing
- 
+This can be accomplished with 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2843,12 +3065,12 @@ See Diary Part Four, pages 13–25.
 \end_inset
 
  Starting with the pair of words having the highest possible VI, one searches
- for additional words with a high VI to these two.
+ for additional words having a high VI to these two.
  These form the candidate members to the club.
- It is useful to have a reasonably large club, and so one can set a threshold,
- admitting as candidates all those above the threshold.
- As the threshold is lowered, the candidate list increases, until suddenly
- it explodes.
+ Candidates are accepted if they pass a threshold.
+ It is useful to have a reasonably large club, which can be expanded by
+ gradually lowering the threshold.
+ As it is lowered, the candidate list increases, until suddenly it explodes.
  The exclusive club is no longer exclusive, but is inviting everyone to
  join.
  The graph below shows the size of the candidate list, as the barrier to
@@ -2890,31 +3112,23 @@ d by seeing what disjuncts the words share in common.
  social club).
  Next, consider ejecting one of the candidates; does the fraction of shared
  disjuncts increase, or not? If it increases, then the ejected candidate
- should be kept out of the club.
- If it decreases, then that candidate should be kept.
+ should be thrown out of the club.
+ If it decreases, then that candidate should be kept in.
 \end_layout
 
 \begin_layout Standard
 In forming the group, only those disjuncts that the group members have in
  common are kept as part of the group; the other, non-shared disjuncts presumabl
 y belong to other word-senses.
- Thus, this algorithm appears to solve the word-sense disambiguation problem.
- 
-\end_layout
-
-\begin_layout Standard
-If one includes disjuncts shared by a majority, then this algorithm also
- solves the generalization problem; that is, of moving from particulars
- to generalities.
+ This algorithm performs word-sense disambiguation.
+ If one includes disjuncts shared by a majority, then this algorithm also
+ performs generalization: it moves from particulars to generalities.
  Some words may have been seen in some contexts; others in different, but
  generally similar contexts.
  In admitting these disjuncts into the common group, all of the group members
  gain the ability to engage in these contexts, thus generalizing.
-\end_layout
-
-\begin_layout Standard
-The majority need not be a strict 50% majority; it can be a plurality, set
- at any threshold.
+ The majority need not be a strict 50% majority; it can be a plurality,
+ set at any threshold.
  This can be understood as the Jaccard index for the group.
  
 \end_layout
@@ -2949,8 +3163,8 @@ A collection of research results were described.
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 btprint "btPrintCited"
-bibfiles "/home/ubuntu/src/learn/learn-lang-diary/lang"
-options "tufte"
+bibfiles "../lang"
+options "splncs04"
 
 \end_inset
 

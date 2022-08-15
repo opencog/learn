@@ -58,7 +58,7 @@
 \use_package undertilde 1
 \cite_engine basic
 \cite_engine_type default
-\biblio_style plain
+\biblio_style splncs04
 \use_bibtopic false
 \use_indices false
 \paperorientation portrait
@@ -105,7 +105,7 @@ Purely Symbolic Induction of Structure
 \end_layout
 
 \begin_layout Author
-Linas Vepštas
+Linas Vepštas 
 \begin_inset ERT
 status open
 
@@ -122,7 +122,7 @@ orcidID{0000-0002-2557-740X}
 \end_layout
 
 \begin_layout Institute
-OpenCog Foundation
+OpenCog Foundation 
 \begin_inset ERT
 status open
 
@@ -393,7 +393,7 @@ literal "false"
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Compositionality and Sheaves
 \end_layout
 
@@ -443,7 +443,7 @@ literal "false"
  Natural language can be taken in this broader setting.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Pervasiveness
 \end_layout
 
@@ -541,7 +541,7 @@ literal "false"
 
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Vision and Sound
 \end_layout
 
@@ -563,20 +563,8 @@ not about pixels
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../reco-image/traffic-lights.jpg
-	lyxscale 80
-	width 5col%
-
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset Graphics
 	filename ../reco-image/traffic-grammar-wide.eps
-	width 75col%
+	width 90col%
 
 \end_inset
 
@@ -592,20 +580,8 @@ Audio data can also be given a jigsaw structure.
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename ../reco-image/noaa-fisheries-humpback.jpg
-	lyxscale 80
-	width 40col%
-
-\end_inset
-
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset Graphics
 	filename ../reco-image/audio-graph-wide.eps
-	width 40col%
+	width 90col%
 
 \end_inset
 
@@ -716,7 +692,7 @@ literal "false"
  It is easiest to describe the second step first.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Grammatical Induction
 \end_layout
 
@@ -732,7 +708,7 @@ In linguistics, one is presented with a tokenized sequence of words; the
  The process is inherently statistical.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 Maximum Planar Graph Parsing
 \end_layout
 
@@ -1042,8 +1018,8 @@ MI_{\mbox{rank}}\left(w,v\right)=MI\left(w,v\right)+\frac{\log_{2}p\left(w,*\rig
 
 \end_inset
 
-Experimentally, this does not affect the shape of the Gaussian; it only
- shifts it to the right; one still has an orthogonal ensemble.
+Experimentally, this just shifts the Gaussian to the right.
+ 
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1066,11 +1042,11 @@ saw
  can be clustered with other cutting tools, while the remainder can be clustered
  with viewing verbs.
  This presents a practical difficulty: off-the-shelf clustering algorithms
- cannot perform word-sense disambiguation
+ cannot perform word-sense disambiguation.
 \end_layout
 
 \begin_layout Standard
-A further difficulty is that connectors must also be merged.
+Connectors must also be merged.
  The rewriting of connector sequences is subtle, as it affects word-vectors
  outside of those being merged (the merged connectors might appear anywhere).
  To maintain coherency, 
@@ -1083,17 +1059,7 @@ detailed balance
 
  must be preserved: the grand total counts must remain the same both before
  and after merge.
- The details of 
-\begin_inset Quotes eld
-\end_inset
-
-detailed balance
-\begin_inset Quotes erd
-\end_inset
-
- can be found in the diary, 
-\emph on
-op cit.
+ 
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1131,7 +1097,12 @@ word class
 \begin_inset Quotes erd
 \end_inset
 
- and 
+ (
+\emph on
+e.g.
+
+\emph default
+ common noun, transitive verb) and 
 \begin_inset Formula $g^{\prime}$
 \end_inset
 
@@ -1143,56 +1114,12 @@ grammatical relation
 \begin_inset Quotes erd
 \end_inset
 
-.
- These two are commonly conflated in linguistic theory; here, they will
- be distinguished.
- The reason for this is that this is the 
+ (
 \emph on
-de facto
+e.g.
+
 \emph default
- organization of the Link Grammar dictionaries for English, Russian and
- other languages.
- Examples of grammatical relations are 
-\begin_inset Quotes eld
-\end_inset
-
-subject
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-object
-\begin_inset Quotes erd
-\end_inset
-
-, 
-\begin_inset Quotes eld
-\end_inset
-
-modifier
-\begin_inset Quotes erd
-\end_inset
-
-; examples of word classes are 
-\begin_inset Quotes eld
-\end_inset
-
-common noun
-\begin_inset Quotes erd
-\end_inset
-
- or 
-\begin_inset Quotes eld
-\end_inset
-
-preposition
-\begin_inset Quotes erd
-\end_inset
-
-.
+ subject, object, modifier).
  The matrices 
 \begin_inset Formula $L$
 \end_inset
@@ -1219,13 +1146,9 @@ macros
 
 ) and 30 million disjuncts.
  In other words, the central component is quite small.
-\end_layout
-
-\begin_layout Standard
-Factorization provides an aid to interpretability.
- Instead of a morass of matrix elements, word-classes (nouns, verbs) are
- recognizable as such.
- So are relationships (subjects, objects).
+ Factorization provides an aid to interpretability.
+ Instead of a morass of matrix elements, word-classes are recognizable as
+ such, as is the predicate-argument structure.
  This is the power of a symbolic, lexical approach.
 \end_layout
 
@@ -1256,7 +1179,6 @@ The relatively straightforward tokenization of written English hides the
 
 \begin_layout Standard
 A pair of transducers in block-diagram form is shown.
- Each block corresponds to a digital signal processing (DSP) function.
  The generation of such sequences can be managed through genetic program
  (GP) learning techniques.
  An example of a GP system is provided by MOSES.
@@ -1286,8 +1208,7 @@ feature recognizers
 \begin_inset Quotes erd
 \end_inset
 
-, indicating the presence/absence of a salient feature in the sensory environmen
-t.
+, indicating the presence of a salient feature in the sensory environment.
 \end_layout
 
 \begin_layout Standard
@@ -1302,7 +1223,7 @@ Learning in GP systems is guided by maximizing a utility (scoring) function.
  
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Subsubsection*
 The Symbol Grounding Problem and the Frame Problem
 \end_layout
 
@@ -1342,18 +1263,15 @@ chair
 \begin_inset Quotes erd
 \end_inset
 
-, what does that mean? One can attempt to make extensional lists of things
- one can sit on, but that list can never be complete.
- One can make intensional lists of the properties of a chair; such a list
- invariably fails to encompass all the possibilities.
- A third possibility is that of affordances: what must an object be like,
- to be sit-on-able? The DSP filter sequence presented above is precisely
- an affordance-detector.
+, what does that mean? Both extensional lists of things one can sit and
+ intensional lists of properties fail; they are never complete.
+ Affordances provide the answer: to be a chair, an object must be sit-on-able.
+ The DSP filter sequence is precisely an affordance-detector.
  
 \end_layout
 
 \begin_layout Standard
-Consider a simpler example.
+A simpler example.
  If someone says 
 \begin_inset Quotes eld
 \end_inset
@@ -1403,11 +1321,10 @@ whistling
 \end_layout
 
 \begin_layout Standard
-The Frame Problem posits that there are too many objects, features and events
- in the environment to be able to pay attention to all of them, especially
- as almost all are irrelevant to the current focus.
- This is precisely the problem that the entropy-maximizing training of filter
- sequences is doing: mutual information tells you what things 
+The Frame Problem posits that the number of objects and events overwhelms
+ the current focus.
+ Entropy-maximizing training of filter sequences solves this.
+ Mutual information tells you what things 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1415,16 +1332,15 @@ go together
 \begin_inset Quotes erd
 \end_inset
 
-, what things are relevant.
+.
  The grammatical structure reveals 
 \emph on
 how
 \emph default
- those things depend on one-another.
+ those things go together.
  The vast ocean of sensory stimulus is reduced to a trickle of symbolic
  relationships, arriving either in a regular, expected pattern (and thus
- perhaps unimportant), or arriving in unexpected, surprising ways.
- The surprise is what demands attention; the rest is but background noise.
+ ignorable), or arriving in unexpected, surprising ways, demanding attention.
 \end_layout
 
 \begin_layout Section*
@@ -1611,7 +1527,7 @@ y seems like a chaotic stream of sensory input.
 LatexCommand bibtex
 btprint "btPrintCited"
 bibfiles "../lang"
-options "plain"
+options "splncs04"
 
 \end_inset
 
