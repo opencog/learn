@@ -1,5 +1,7 @@
 
 
+#Learning Topology and Geometry
+
 
 * Topology and stucture of 3D objects is a challenge for DL/NN
   Found on twitter recently:
