@@ -180,7 +180,7 @@ Conventional Simplical, Cellular Homology
 
 \end_deeper
 \begin_layout Frame
-Trangulations, cycles, cocycles, universal covering groups, metrics
+Triangulations, cycles, cocycles, universal covering groups, metrics
 \end_layout
 
 \begin_layout Frame
@@ -202,6 +202,10 @@ Trangulations, cycles, cocycles, universal covering groups, metrics
 \end_inset
 
 
+\end_layout
+
+\begin_layout Frame
+Deep and broad mathemaical foundations to draw on.
 \end_layout
 
 \begin_layout Frame
@@ -230,12 +234,20 @@ Learning Topology and Geometry
 
 \begin_deeper
 \begin_layout FrameSubtitle
-A Edge Lists -> Jigsaws with Connectors
+Reframe: Edge Lists -> Jigsaws with Connectors
 \end_layout
 
 \end_deeper
 \begin_layout Frame
-Plus constraints such as must-form-a-cycle 
+Jigsaws, plus 
+\begin_inset Quotes eld
+\end_inset
+
+global
+\begin_inset Quotes erd
+\end_inset
+
+ constraints such as must-form-a-cycle 
 \end_layout
 
 \begin_deeper
@@ -250,6 +262,19 @@ Plus constraints such as must-form-a-cycle
 \end_layout
 
 \end_deeper
+\begin_layout Frame
+Not quite graph theory.
+\end_layout
+
+\begin_layout Frame
+Not quite relational algebra.
+\end_layout
+
+\begin_layout Frame
+...
+ but almost so.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -283,7 +308,7 @@ Image segmentation as labelled geometric relationships
 \begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/traffic-lights.jpg
+	filename ../reco-image/traffic-lights.jpg
 	width 14col%
 
 \end_inset
@@ -294,7 +319,7 @@ Image segmentation as labelled geometric relationships
 
 
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/traffic-light-grammar.eps
+	filename ../reco-image/traffic-light-grammar.eps
 	width 55col%
 
 \end_inset
@@ -304,7 +329,7 @@ Image segmentation as labelled geometric relationships
 
 \end_deeper
 \begin_layout Frame
-Part–whole relationships!
+Geometric syntax encodes part–whole relationships!
 \end_layout
 
 \begin_layout Standard
@@ -334,13 +359,13 @@ Jigsaw Paradigm Established in Linguistics
 
 \end_deeper
 \begin_layout Frame
-Syntax in Link Grammar, (1991) and earlier (1960's) 
+Syntax in Link Grammar (1991) and earlier (Marcus, 1967) 
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/link-grammar.png
+	filename ../reco-image/link-grammar.png
 	lyxscale 50
 	width 90col%
 
@@ -355,7 +380,7 @@ Syntax in Link Grammar, (1991) and earlier (1960's)
 
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/Yuret.png
+	filename ../reco-image/Yuret.png
 	width 90col%
 
 \end_inset
@@ -364,6 +389,10 @@ Syntax in Link Grammar, (1991) and earlier (1960's)
 \end_layout
 
 \end_deeper
+\begin_layout Frame
+Maximum Spanning Tree parse from Word-Pair MI (1998)
+\end_layout
+
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -397,7 +426,7 @@ Abstract (GOFAI) domains can be re-expressed this way too
 \begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/sparse-cut-wide.eps
+	filename ../reco-image/sparse-cut-wide.eps
 	lyxscale 50
 	width 107col%
 
@@ -408,7 +437,7 @@ Abstract (GOFAI) domains can be re-expressed this way too
 
 \end_deeper
 \begin_layout Frame
-Syntax, shallow semantics
+Syntax extending into shallow semantics
 \end_layout
 
 \begin_layout Standard
@@ -438,13 +467,13 @@ Not Just 1D, 2D, 3D, but also Abstract Sensory Domains
 
 \end_deeper
 \begin_layout Frame
-Audio: frequency, intensity, time, shape, modulation
+Audio: frequency, intensity, time, shape, chirp modulation, wavelets
 \end_layout
 
 \begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/audio-graph-wide.eps
+	filename ../reco-image/audio-graph-wide.eps
 	width 90col%
 
 \end_inset
@@ -490,7 +519,7 @@ Conventional ML/AI can explore DSP filter sequences
 \begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
-	filename /home/linas/src/learn/learn-lang-diary/reco-image/filters-wide.eps
+	filename ../reco-image/filters-wide.eps
 	lyxscale 50
 	width 103col%
 
@@ -501,9 +530,31 @@ Conventional ML/AI can explore DSP filter sequences
 
 \end_deeper
 \begin_layout Frame
-Can DL/NN be used to generate these? Possibly ...
+Can DL/NN be used to generate these? 
+\end_layout
+
+\begin_layout Frame
+Possibly ...
  probably.
  Not been done.
+\end_layout
+
+\begin_layout Frame
+Recursive...
+ (model->syntax->model->syntax...)
+\end_layout
+
+\begin_layout Frame
+...
+ and deep (
+\begin_inset Quotes eld
+\end_inset
+
+cheap
+\begin_inset Quotes erd
+\end_inset
+
+).
 \end_layout
 
 \begin_layout Standard
@@ -549,11 +600,11 @@ Gaussian Orthogonal Ensemble (Spin Glass)
 
 \end_deeper
 \begin_layout Frame
-Uniform distribution of English word similarities in high dimensions
+Uniform distribution of English word similarities in high dimensions.
 \end_layout
 
 \begin_layout Frame
-Conventional (information-theoretical) metrics apply
+Conventional (information-theoretical) metrics apply.
 \end_layout
 
 \begin_layout Standard
@@ -613,7 +664,17 @@ deeply
 
 \end_deeper
 \begin_layout Frame
-GOFAI failed because it depended on human-curated datasets
+GOFAI failed because it depended on human-curated datasets.
+\end_layout
+
+\begin_layout Frame
+This proposal doesnt.
+\end_layout
+
+\begin_layout Frame
+...
+ and it was shallow.
+ Shallow==hard-to-learn.
 \end_layout
 
 \begin_layout Standard
