@@ -91,3 +91,29 @@ It eats up RAM! Stoarage! Yow!
 
 # Slide 5: MI Distribution
 
+That is, consider a vocabulary of 100K words, and then randomly,
+uniformly sample 1M word-pairs.  This strongly under-samples all
+possible word pairs. The result would be a Gaussian centered at MI=0.
+
+The rest is presumably "meaningful English Langauge correlation",
+but how do you tell which is which?
+
+Well, above an MI of 10, it really is "English".
+
+Between 2 and 10, its ... random junk? English?
+
+------------
+
+# Slide 6: MST parsing
+
+------------
+
+# Slide 7: Disjunct Dataset
+
+Skip this slide.
+
+------------
+
+# Slide 8: Disjunct MI
+
+
