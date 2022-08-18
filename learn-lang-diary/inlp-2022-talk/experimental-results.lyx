@@ -125,15 +125,20 @@ Word-pair Mutual Information
 \end_layout
 
 \end_deeper
+\begin_layout Frame
+Basic definitions:
+\end_layout
+
+\begin_deeper
 \begin_layout Itemize
 Word Pair: 
 \begin_inset Formula $\left(u,w\right)$
 \end_inset
 
- 
-\begin_inset space \qquad{}
-\end_inset
 
+\end_layout
+
+\begin_layout Itemize
 Count: 
 \begin_inset Formula $N\left(u,w\right)$
 \end_inset
@@ -146,7 +151,11 @@ Frequentist probability:
 \begin_inset Formula $p\left(u,w\right)=N\left(u,w\right)/N\left(*,*\right)$
 \end_inset
 
- 
+
+\end_layout
+
+\begin_layout Itemize
+Star == wild-card sum over all
 \end_layout
 
 \begin_layout Itemize
@@ -161,6 +170,15 @@ MI\left(u,w\right)=\log_{2}\frac{p\left(u,w\right)}{p\left(u,*\right)p\left(*,w\
 
 \end_layout
 
+\begin_layout Itemize
+Not symmetric: 
+\begin_inset Formula $\left(u,w\right)\ne\left(w,u\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
