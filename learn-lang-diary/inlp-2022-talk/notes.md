@@ -162,3 +162,8 @@ The space of probability is not Euclidean!  Its a Simplex!
 
 # Slide 13: Word-sense Disambiguation
 
+------------
+
+# Slide 14: Conclusion
+
+------------
