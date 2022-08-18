@@ -141,6 +141,24 @@ Wow!
 
 ------------
 
-# Slide 10: Distribution of Similarity
+# Slide 10: Similarity Metrics
 
+VI just shifts the curve over to the right. Curve does not change.
+
+Cosine distance is terrible (worst possible)
+
+Why? Cosine distance only makes sense on Euclidean spaces.
+The space of probability is not Euclidean!  Its a Simplex!
+
+------------
+
+# Slide 11: Spin Glasses
+
+------------
+
+# Slide 12: Similarity and Clustering
+
+------------
+
+# Slide 13: Word-sense Disambiguation
 

@@ -1030,7 +1030,7 @@ Vertex degree: For word
 \begin_layout Frame
 \begin_inset Graphics
 	filename ../p6-density/degree-fine.eps
-	width 50col%
+	width 65col%
 
 \end_inset
 
@@ -1085,7 +1085,7 @@ MI Distribution
 \begin_layout Frame
 \begin_inset Graphics
 	filename ../p6-density/pair-fmi-signal.eps
-	width 50col%
+	width 65col%
 
 \end_inset
 
@@ -1151,7 +1151,7 @@ Maximum Spanning Tree Parse of English.
 \begin_layout Frame
 \begin_inset Graphics
 	filename ../reco-image/Yuret.png
-	width 90col%
+	width 95col%
 
 \end_inset
 
@@ -1990,7 +1990,7 @@ Distribution of Similarity
 \begin_layout Frame
 \begin_inset Graphics
 	filename ../en-sims-p3/mi-dist.eps
-	width 70col%
+	width 75col%
 
 \end_inset
 
@@ -2067,9 +2067,13 @@ VI\left(w,v\right)=\log_{2}\frac{i\left(w,v\right)}{\sqrt{i\left(w,*\right)i\lef
 \end_layout
 
 \begin_layout Itemize
+Various Jaccard distances...
+\end_layout
+
+\begin_layout Itemize
 
 \emph on
-Not the cosine distance!!!
+Not the cosine distance!!! Its terrible!
 \end_layout
 
 \end_deeper
@@ -2095,7 +2099,7 @@ Experimental Results
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Stuff
+Spin Glasses
 \end_layout
 
 \end_deeper
@@ -2104,8 +2108,40 @@ Stuff
 \end_layout
 
 \begin_deeper
+\begin_layout Standard
+Gaussian Orthogonal Ensemble
+\end_layout
+
 \begin_layout Itemize
-This is 
+A high-dimensional sphere
+\end_layout
+
+\begin_layout Itemize
+With a uniform random distribution on it.
+\end_layout
+
+\begin_layout Itemize
+Each axis of space is a jigsaw (disjunct)
+\end_layout
+
+\begin_layout Itemize
+Dimension of space == # of jigsaws == 50 million
+\end_layout
+
+\begin_layout Itemize
+Each vector is a word with direction 
+\begin_inset Formula $p\left(w,d\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Gaussian == vectors are 
+\emph on
+uniformly
+\emph default
+ distributed!
 \end_layout
 
 \end_deeper
@@ -2131,7 +2167,221 @@ Experimental Results
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Stuff
+Similarity and Clustering
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Clustering generalizes from specifics
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="3">
+<features islongtable="true" headTopDL="true" headBottomDL="true" longtabularalignment="center">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Top-ranked Clusters
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
++ — “ ” _
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+? .
+ !
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+must would
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+, ;
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+He It I There
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+he she
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+was is
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+of in to from
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+are were
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+but and that as
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+has was is had could
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+might should will may
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+Not 
+\begin_inset Quotes eld
+\end_inset
+
+just
+\begin_inset Quotes erd
+\end_inset
+
+ similar words, but also:
+\end_layout
+
+\begin_layout Itemize
+Similar grammatical behavior.
+\end_layout
+
+\begin_layout Itemize
+Similar structure.
+ 
+\end_layout
+
+\begin_layout Itemize
+Similar semantics.
 \end_layout
 
 \end_deeper
@@ -2139,12 +2389,10 @@ Stuff
 
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-This is 
+\begin_layout Frame
+
 \end_layout
 
-\end_deeper
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
@@ -2167,17 +2415,34 @@ Experimental Results
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Stuff
+Word-sense Disambiguation
 \end_layout
 
 \end_deeper
 \begin_layout Frame
+Each word-vector is a linear sum of multiple word-senses
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename ../p4-en-clique/in-migrp-size.eps
+	width 47col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../p4-en-clique/ingroup-middle.eps
+	width 47col%
+
+\end_inset
+
 
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-This is 
+Each word-vector is a linear sum of multiple word-senses
 \end_layout
 
 \end_deeper
