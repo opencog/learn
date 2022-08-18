@@ -1016,72 +1016,39 @@ Sample Size Effects
 
 \end_deeper
 \begin_layout Frame
-Sparse matrix with global propertes
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Log width and height: 
-\begin_inset Formula $\log_{2}N_{L}$
+Vertex degree: For word 
+\begin_inset Formula $w$
 \end_inset
 
- and 
-\begin_inset Formula $\log_{2}N_{R}$
+, how many pairs 
+\begin_inset Formula $\left(u,w\right)$
 \end_inset
 
-
+ is it in?
 \end_layout
 
-\begin_layout Itemize
-Log total number of observations: 
-\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
-\end_inset
+\begin_layout Frame
+\begin_inset Graphics
+	filename ../p6-density/degree-fine.eps
+	width 50col%
 
-
-\end_layout
-
-\begin_layout Itemize
-Sparsity: 
-\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-Rarity: 
-\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+Zipfian, with exponent 
+\begin_inset Formula $\gamma\approx1.6$
 \end_inset
 
- is independent of data-set size!
+.
 \end_layout
 
 \begin_layout Itemize
-Entropy: 
-\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Marginal Entropy: 
-\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Total MI:
-\begin_inset Formula 
-\[
-MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
-\]
-
-\end_inset
-
-
+Left side: 2/3rds of the dataset contains junk: bad punctuation, typos,
+ bad quote segmentation, stray markup.
 \end_layout
 
 \end_deeper
@@ -1107,7 +1074,7 @@ Experimental Results
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Characterizing Word-Pair DataSets
+MI Distribution
 \end_layout
 
 \end_deeper
@@ -1115,72 +1082,6 @@ Characterizing Word-Pair DataSets
 Sparse matrix with global propertes
 \end_layout
 
-\begin_deeper
-\begin_layout Itemize
-Log width and height: 
-\begin_inset Formula $\log_{2}N_{L}$
-\end_inset
-
- and 
-\begin_inset Formula $\log_{2}N_{R}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Log total number of observations: 
-\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Sparsity: 
-\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Rarity: 
-\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
-\end_inset
-
- is independent of data-set size!
-\end_layout
-
-\begin_layout Itemize
-Entropy: 
-\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Marginal Entropy: 
-\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Itemize
-Total MI:
-\begin_inset Formula 
-\[
-MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset

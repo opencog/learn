@@ -65,4 +65,29 @@ I'm going to waste some time reviewing the rows and columns here.
 
 ------------
 
-# Slide 4:
+# Slide 4: Sample Size Effects
+
+Vertex degree is a classical statistic from the early days of the study
+of large graphs, scale-free graphs and preferential attachement. 
+
+I don't think its useful, but reviewers clamor for this stuff.
+
+It's Zipfian.
+
+I have no intuition or theoretical explanation for why the exponent is -1.6
+
+One the left side are "words" that occur in only a handful of pairs.
+Dataset inspection reveals that it is junk.
+Bad punctuation, typos, bad quote segmentation, stray markup.
+
+If a typo occurs only once, then yes, it will be in very very few
+word-pairs.
+
+Amazingly, almost 2/3rds of the dataset consists of this kind of junk!
+
+It eats up RAM! Stoarage! Yow!
+
+------------
+
+# Slide 5: MI Distribution
+
