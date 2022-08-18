@@ -112,8 +112,35 @@ Between 2 and 10, its ... random junk? English?
 
 Skip this slide.
 
+Notable: trim away pairs that are seen only once or twice,
+Trim away words that are seen 2 or 5 or 10 or fewer times.
+
+Strongly shrinks the dataset size.
+
+Beside typos, these can also be meaningful:
+* Geographical place names, used only a few times.
+* Product names, given names used only a few times.
+* Foreign-language loan words used only a few times.
+
+Trimming is dangerous.
+
 ------------
 
 # Slide 8: Disjunct MI
+
+Opaque.
+Gets closder to being a Gaussian, the more strong trimmed it is.
+
+But not close enough to be "satsifying" in any way.
+
+------------
+
+# Slide 9: Distribution of Similarity
+
+Wow!
+
+------------
+
+# Slide 10: Distribution of Similarity
 
 
