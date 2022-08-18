@@ -191,7 +191,7 @@ Not symmetric:
 status open
 
 \begin_layout Plain Layout
-Learning Topology and Geometry
+Experimental Results
 \end_layout
 
 \end_inset
@@ -201,47 +201,664 @@ Learning Topology and Geometry
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Conventional Simplical, Cellular Homology
+Characterizing Word-Pair DataSets
 \end_layout
 
 \end_deeper
 \begin_layout Frame
-Triangulations, cycles, cocycles, universal covering groups, metrics
+Sparse matrix with global propertes
 \end_layout
 
-\begin_layout Frame
-\begin_inset Graphics
-	filename ../agi-2022-talk/Torus-triang.svg.png
-	width 45col%
-
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
 \end_inset
 
-
-\begin_inset space \qquad{}
-\end_inset
-
-
-\begin_inset Graphics
-	filename ../agi-2022-talk/Triangulation-of-a-mechanical-part.png
-	width 35col%
-
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
 \end_inset
 
 
 \end_layout
 
-\begin_layout Frame
-Deep and broad mathemaical foundations to draw on.
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
 \end_layout
 
-\begin_layout Frame
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
 
 \end_layout
 
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
 \begin_layout Standard
 \begin_inset Newpage newpage
 \end_inset
 
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Experimental Results
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Characterizing Word-Pair DataSets
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Sparse matrix with global propertes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Log width and height: 
+\begin_inset Formula $\log_{2}N_{L}$
+\end_inset
+
+ and 
+\begin_inset Formula $\log_{2}N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Log total number of observations: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Sparsity: 
+\begin_inset Formula $-\log_{2}D_{\mathrm{Tot}}/N_{L}\times N_{R}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Rarity: 
+\begin_inset Formula $\log_{2}D_{\mathrm{Tot}}/\sqrt{N_{L}\times N_{R}}$
+\end_inset
+
+ is independent of data-set size!
+\end_layout
+
+\begin_layout Itemize
+Entropy: 
+\begin_inset Formula $H_{\mathrm{Tot}}=\sum_{w,v}p\left(w,v\right)\log_{2}p\left(w,v\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Marginal Entropy: 
+\begin_inset Formula $H_{\mathrm{Left}}=\sum_{w}p\left(w,*\right)\log_{2}p\left(w,*\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Total MI:
+\begin_inset Formula 
+\[
+MI=H_{\mathrm{Tot}}-H_{\mathrm{Left}}-H_{\mathrm{Right}}=\sum_{w,v}p\left(w,v\right)\log_{2}\frac{p\left(w,v\right)}{p\left(w,*\right)p\left(*,v\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
