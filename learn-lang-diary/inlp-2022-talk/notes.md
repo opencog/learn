@@ -59,7 +59,9 @@ this is obligatory to report.
 Smallest on the left: 100K x 100K  vs. 500K x 500K
 
 This is NOT a "large" language model. This fits on conventional
-desktops.
+desktops. It is approx 1 million times smaller than the Google LLM's.
+Six orders of magnitude. Let that sink in.
+
 
 I'm going to waste some time reviewing the rows and columns here.
 

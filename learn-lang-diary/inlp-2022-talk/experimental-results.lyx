@@ -2121,16 +2121,20 @@ With a uniform random distribution on it.
 \end_layout
 
 \begin_layout Itemize
-Each axis of space is a jigsaw (disjunct)
+Each axis of space is a word
 \end_layout
 
 \begin_layout Itemize
-Dimension of space == # of jigsaws == 50 million
+Dimension of space == size of vocabulary
 \end_layout
 
 \begin_layout Itemize
-Each vector is a word with direction 
-\begin_inset Formula $p\left(w,d\right)$
+Each vector is a word 
+\begin_inset Formula $w$
+\end_inset
+
+ with direction 
+\begin_inset Formula $MI\left(w,u\right)$
 \end_inset
 
 
@@ -2498,19 +2502,19 @@ We've learned:
 
 \begin_deeper
 \begin_layout Itemize
-Information–theoretic foundations explaining experiment are central
+Information–theoretic foundations explaining experiment are central.
 \end_layout
 
 \begin_layout Itemize
-Structure can be extracted from samples taken from nature
+Structure can be extracted from samples taken from nature.
 \end_layout
 
 \begin_layout Itemize
-Structure expresses itself as grammar
+Structure expresses itself as grammar.
 \end_layout
 
 \begin_layout Itemize
-Recursion: once the grammar is seen, do it again on the new landscape
+Recursion: once the grammar is seen, do it again on the new landscape.
 \end_layout
 
 \end_deeper
