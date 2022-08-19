@@ -6,6 +6,10 @@ Hello.
 
 I've come today to talk about a symbolic approach to AGI.
 
+This talk will be a two parter, the first part will be the lightning
+talk I will be delivering on Monday; I'm practicing it today, because
+the main presentation won't make sense without it.
+
 ---------------
 
 ## Slide 1: A Lack of Topological and Geometric Awareness.
@@ -73,8 +77,8 @@ relationships in DL/NN.  (Geoff Hinton?)
 ## Slide 5: Jigsaw Paradigm Established in Linguistics
 
 This idea of assembly from parts is not new; it appears explicitly in a
-figure in a paper from 1991, and implcitly in earlier work (once you
-know what to look for).
+figure in a paper on linguistics from 1991, the original Link Grammar
+paper, and implcitly in earlier work (once you know what to look for).
 
 The paradigm has been repeatedly rediscovered by linguists.
 
@@ -155,7 +159,8 @@ Perhaps the most remarkable result is this Gaussian.
 My apolgies, if you were hoping for a LaMDA-like large language model.
 
 This Guassian, a "Bell Curve", shows the distribution of the MI
-between pairs of jigsaw pieces.
+between pairs of jigsaw pieces. Recall, tehse jigsaw pieces encode the
+grammatical relationships, they encode the syntax of the language.
 
 It's remarkable because Gaussians indicate that the underlying data is
 uniformly distributed on the surface of a high-dimensional
@@ -171,14 +176,14 @@ college textbooks. It really is a brand-new world and it shows in
 the publications.
 
 I find it remarkable that this is a kind of experimental demonstration
-that the English language is maximially efficient in it's use of
+that the syntax of the English language is maximially efficient in it's use of
 grammatical relationships.
 
 ---------------
 
 ## Slide 10: Common Sense as Inference over Symbolic Domains
 
-I'd like to conclude with a conjecture, a bit of science-ficition,
+I'd like to conclude with a conjecture, a bit of science-fiction,
 as it were.
 
 The roadway I've sketched appears to be recursive. The tricks can be
