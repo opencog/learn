@@ -332,16 +332,121 @@ that they are not.
 
 ## Slide 11: Spin Glasses
 
+I want to talk abut spin glasses.
+
+What is a Gaussian? One way to understand a Gaussian is as a
+high-dimensional sphere, with a uniform random sprinking of points on
+it.  In fact, this is how you actually compute uniform distributions on
+a sphere in N dimensions: you sample a Gaussian N+1 times, and use those
+to get a vector on the surface of a sphere.
+
+Here, each axis of the space is a word.  The dimension of the space is
+the size of the vocabulary.
+
+The vectors here have coefficients given by the MI.
+
+This is actually rather remarkable: it says the grammatical use
+of words in the English language, the structure, the syntax and grammar
+of the English language, is uniformly distributed in the space of
+syntactic relationships.
+
+The English language leverages syntax to the highest possible degree,
+maximizing the utility of syntax.
+
+We, as speakers, use grammar, syntax to communicate ideas, and English
+uses syntax in a maximal way.  Of all possible ways it could be used,
+all possibilities are used equally.
+
+I dont want to bias this towards English; I suspect all human languages
+behave this way; I just have results for English right now.
+
 ------------
 
 ## Slide 12: Similarity and Clustering
+
+I'll descend a bit from the atmosphereic heights, and look at some more
+mundane results.
+
+Here we have a table of some top-ranked clusters, ranked by VI similarity.
+I canot "measure" this scientifically, but the gut-sense feel of this
+table is that the results look pretty good. This si what you'd expect.
+
+To emphasize: the similarity here is the similarity in grammatical
+usage, similarity in the way these words appear in grammatical conext.
+That's what the jigsaws do.
+
+Jigsaws are kind-of-like N-grams, or kind-oflike skip-grams, except that
+they provide an explicit grammatical relationship.  They go out not only
+to the neighboring words, but the neighboring words return that favor.
+
+In skig-grams, the relationship is one-way, word into context. In
+grammar, the relationship is two-way: the subject of a verb is
+symmetrically the verbs subject; both agree as to what their role is in
+a sentence.  One is not ignorant of the other.
 
 ------------
 
 ## Slide 13: Word-sense Disambiguation
 
+Some quick remarks about word-sense disambiguation. Any given word can
+have multiple senses. One has to be able to tell them apart.
+
+Grammatically, different word senses appear to be associated with
+different grammatical patterns.  Here, since we are dealing with linear
+algebra, these are just linear combinations.
+
+I've been experimenting with algorithms to pull these apart. Note that
+conventional clustering algos, such as agglomerative clustering, K-means
+clustering utterly fail in this task.  It's not that it is a hard task,
+its just that the researchers have never had to face disentangling
+high-dimensional linear combinations before.  There doesn't seem to be
+any literature on this topic, so I've had to roll-my-own.
+
+One effective technique seems to involve a kind of democratic voting
+to admit members into an exclusive club of shared interests.
+
+Each existing member of a club gets a vote. The vote is based on how
+similar the existing member is to the candidate. Vector similarity.
+
+How exclusive should the club be? As you lower the barriers to entry,
+the club grows, at first slowly, but then explosively.  The ideal size
+would seem to be the knee of that curve: just before the explosive
+growth.
+
+What defines the club? The shared comon interests.  In this case, the
+jigsaw connector sequences that all club members have in common. If a
+club member has interests outside of that club, those correspond to
+different word-senses. Those jigsaw connector sequences should be
+assigned to some other clubs.
+
+This algo accomplishes two things at once: it generalizes from the
+specific to the general (by clustering) but also filters out the
+exceptions: It can cleanly distinguish and disambiguate different
+grammatical roles.
+
+Nothing fancy here, just not siomething that you can find off-the-shelf
+software for.
+
 ------------
 
 ## Slide 14: Conclusion
+
+Some conclusionts then.
+
+* Information-theoretic explanations are paramouunt.
+* Assume nothing, if experiment doesn't support it.
+* Structure can be extracted from undifferentiated samples taken from
+  nature.
+* Structure is expressed as grammar
+* Recursiion: once one can spot a uniformaly-distributed pattern,
+  one can then then ask how the present case differs from the uniform
+  distribution. This is an act of searching for differences from the
+  mean, extracting the symbolic structure of those differences, using
+  that to define a new uniformity, so the process can be repeated.
+
+This is a combined theoretical plus experimental program. I invite the
+audence to participate.
+
+Thank you.
 
 ------------
