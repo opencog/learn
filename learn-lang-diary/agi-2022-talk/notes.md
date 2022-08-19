@@ -6,18 +6,21 @@ Hello.
 
 I've come today to talk about a symbolic approach to AGI.
 
+---------------
+
 ## Slide 1: A Lack of Topological and Geometric Awareness.
 
-Topology and stucture of 3D objects is a challenge for DL/NN
-Found on twitter recently:
+Topology and stucture of 3D objects is a challenge for DL/NN.
+I found these on twitter recently:
 
 * Someone asked DALL-E for a "coffee cup with hole" and got this image.
 * Another unspecified AI measured a 5.2-meter-long cow.
 
-Conclude: AI can "see", it just doesn't "understand" what it sees.
+I can only conclude: AI can "see", it just doesn't "understand"
+what it sees.
 
 This talk proposes the next step on the way to "understanding":
-tokenization + grammar.
+a combination of tokenization and grammar.
 
 ---------------
 
@@ -29,7 +32,7 @@ Its provided by conventional mathematical and engineering thinking.
 
 The images show triangular meshes: vertex-edge lists AKA "graphs".
 
-The domain already offers a broad and deep menu of concepts to apply.
+This domain already offers a broad and deep menu of concepts to apply.
 
 ---------------
 
@@ -43,9 +46,7 @@ Jigsaw puzzle pieces can mate only when the connectors can mate.
 The mating types are type-theory types.
 
 The result is an unconventional graph theory, and unconventional
-algebra.
-
-But it's well known and commonplace in linguistics.
+algebra.  It's well known and commonplace in linguistics.
 
 But first, another example.
 
@@ -115,7 +116,7 @@ conectors.
 
 Note that there are at least five dimensions here:
 frequency, intensity, time, envelope, chirp modulation.
-More generally, wavelet-style decomposition is handy
+More generally, wavelet-style decomposition is handy for
 high-dimensional fractal spaces.
 
 I've oversimplified the segmentation to make it fit in this chart.
@@ -136,8 +137,10 @@ theory.  There are practical algorithms that can extract this structure.
 
 They are old-school. Conventional machine learning.
 
-Can DL/NN be adpated to this? Maybe. I've got some wild ideas on how to
-do this.  No one has explored the topic.
+Can DL/NN be adpated to this?
+
+Maybe. I've got some wild ideas on how to do this.  No one has
+explored the topic.
 
 ---------------
 
@@ -152,19 +155,20 @@ Perhaps the most remarkable result is this Gaussian.
 My apolgies, if you were hoping for a LaMDA-like large language model.
 
 This Guassian, a "Bell Curve", shows the distribution of the MI
-between pairs of jigsaw puzzles.
+between pairs of jigsaw pieces.
 
 It's remarkable because Gaussians indicate that the underlying data is
 uniformly distributed on the surface of a high-dimensional
 (projective) sphere.
 
 In physics, this is called a "spin glass".  The study of spin glasses
-is a brand new; its a very young branch of mathematics.
+is brand new; its a very young branch of mathematics.
 
 It studies probability in high dimensions.
 
 It's nothing at all like the low-dimensional probability theory of
-college textbooks. It's a brand-new world and it shows in publications.
+college textbooks. It really is a brand-new world and it shows in
+the publications.
 
 I find it remarkable that this is a kind of experimental demonstration
 that the English language is maximially efficient in it's use of
