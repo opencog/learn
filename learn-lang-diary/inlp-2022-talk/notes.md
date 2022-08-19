@@ -277,8 +277,10 @@ But not close enough to be "satsifying" in any way.
 
 ## Slide 9: Distribution of Similarity
 
-Lets try again for the similarity betwen words, with similarity being
+Lets try again for the similarity between words, with similarity being
 computed from the dot product of vectors.
+
+The word-vectors are the word-disjunct pairs.
 
 Wow! What a world of difference! A nearly perfect Bell curve!
 It's stunning!
@@ -289,13 +291,42 @@ It's stunning!
 
 OK, what did I just show?
 
+The inner product is the dot product. It's not entirely appropriae
+because probability space is not Euclidean space.  Euclidean space is
+invariant under rotations.  Probability space is invariant 9or rather
+covarient) under Markov chains.  Two different beasts.
 
-VI just shifts the curve over to the right. Curve does not change.
+So we take the mutual information of the inner product.  This time,the
+mutual information is symmetrix, and it does correspond to the
+conventional textbook definition.
 
-Cosine distance is terrible (worst possible)
+There's a problem with high-MI: the highest MI pairs are also
+infrequent.  It would be much nicer to have something that weights
+frequent pairs more heavily, so that commonly-observed pairs rise to the
+top.
+
+This is given by the VI, the Variation of information.  It seems to
+strike a happy medium.
+
+For the Gaussian curve, it leaves it more or less untouched.  It just
+shifts it to the right. This is perhaps remarkable, because the rankings
+are now completely different. The correlation between MI and VI is low.
+Huh.
+
+One can play the similarity game with other kinds of metrics; there are
+various kinds of Jacquard distances one can define.  These work quite
+well, and maybe better than MI or VI.
+
+By the way: Cosine distance is terrible. Absolutely terrible.
+Its the worst possible matric!
 
 Why? Cosine distance only makes sense on Euclidean spaces.
 The space of probability is not Euclidean!  Its a Simplex!
+
+Footnote: This is a subjective claim, made by eyeballing what kinds of
+words are judged to be similar by the various metrics. But it is easy to
+replicate. Cosine distance says things are similar when its pretty clear
+that they are not.
 
 ------------
 
