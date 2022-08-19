@@ -128,69 +128,148 @@ But it is positive, and greater than zero.
 
 ## Slide 4: Sample Size Effects
 
-Vertex degree is a classical statistic from the early days of the study
-of large graphs, scale-free graphs and preferential attachement.
+A short detour on sample size effects.
 
-I don't think its useful, but reviewers clamor for this stuff.
+The vertex degree is a classical statistic from the early days of the study
+of large graphs, which tended to be scale-free graphs with preferential
+attachement.
 
-It's Zipfian.
+I don't think its useful in the present case, but reviewers clamor for
+this stuff because all the classical papers talk about it.
 
-I have no intuition or theoretical explanation for why the exponent is -1.6
+You can see the graph is Zipfian.
 
-One the left side are "words" that occur in only a handful of pairs.
+I have no intuition or theoretical explanation for why the exponent,
+the slope, is -1.6
+
+One the left side, at te top of the chart, are "words" that occur
+in only a handful of pairs.
+
 Dataset inspection reveals that it is junk.
-Bad punctuation, typos, bad quote segmentation, stray markup.
+Bad punctuation, typos, bad quote segmentation, stray HTML markup.
 
-If a typo occurs only once, then yes, it will be in very very few
-word-pairs.
+Basically, if a typo occurs only once, then yes, it will be in very
+very few word-pairs, which translates to having a vertex with a very
+low degree. Degree is just the number of other vertexes connected to it.
 
 Amazingly, almost 2/3rds of the dataset consists of this kind of junk!
 
-It eats up RAM! Stoarage! Yow!
+It eats up RAM! Storage! Yow!  Data set trimming is not a bad idea.
+
+By comparison, the word "the", and punctuation, occur on the right
+right-hand side of this graph.  The word "the", and punctuation, occur
+in a vast number of word pairs, and so have a very large degree.
 
 ------------
 
 ## Slide 5: MI Distribution
 
-That is, consider a vocabulary of 100K words, and then randomly,
-uniformly sample 1M word-pairs.  This strongly under-samples all
-possible word pairs. The result would be a Gaussian centered at MI=0.
+The distribution of the mutual information is far more interesting.
+That is shown here.
 
-The rest is presumably "meaningful English Langauge correlation",
-but how do you tell which is which?
+28 Million word pairs were observed. Agin, this is microscopic, compared
+to present-day large-language models.
+
+The distribution breaks down perfectly into the sum of two curves, and I
+do ean perfectly, its actually quite amazing.
+
+One is a gaussian, centered roughly at zero. The other is a log-normal
+curve.
+
+I've never seen this sort of data discussed before, so I don't know of
+any theory for it. However, I can offer a simple explanation.
+
+The gaussian centered at zero is entirely due to random sampling
+effects.  it is what you would get if you had a bag of words, and
+randomly sampled two (with replacement) out of that bag. Classic
+analytic combinatorics.  The result is a Gaussian centered at MI=0.
+
+The rest, the log-normal curve, is presumably "meaningful English
+Langauge correlation".
+
+But how do you tell which is which?
 
 Well, above an MI of 10, it really is "English".
 
-Between 2 and 10, its ... random junk? English?
+Between 2 and 10, its ... what? Maybe random junk? Maybe English?
+
+By the way, if you repeat this for Madarin Chinese, you get a
+more-or-less identical figure.
 
 ------------
 
 ## Slide 6: MST parsing
 
+So ... how to proceed. The next step was sketched out 25 years ago,
+Maximum Spanning Tree Parsing.  Here, you take a sentence, consider all
+possible spanning trees on that sentence, and then pick the one with the
+highest total MI.
+
+The new thing, the innovation I am focused on is the jigsaws.
+
+Cut each edge in half, and label the endpoints. This results in a word
+with some connectors on it.  This is the jigsaw.
+
+Elsewhere, these get called disjunts, because they are "disjoined" from
+other occurances. I'm still fishing for a good vocabulary for this
+stuff. My favorite today is "jigsaws".
+
+Anyway, count these. Do an MST parse of a large number of sentences, and
+count how often each jigsaw is observed.
+
+This gives you another set of pairs, another matrix.  The columns of the
+matrix are words, the rows are connector-sequences.
+
+The matrix is rectangular, there are about 10 times more connector
+sequences than there are words.
+
 ------------
 
 ## Slide 7: Disjunct Dataset
 
-Skip this slide.
+I'm not going to talk about this slide. I'm going to skip it.
 
-Notable: trim away pairs that are seen only once or twice,
-Trim away words that are seen 2 or 5 or 10 or fewer times.
+It shows what happens when you trim away infrequent pairs.
+So, for example, trim away words that are seen only twice,
+or less than 5 or 10 times.  Trim away matrix entries that
+are seen only once of twice.
 
-Strongly shrinks the dataset size.
+This strongly shrinks the dataset size.
 
-Beside typos, these can also be meaningful:
+This trims away junk, typos in the dataset.But you have to be careful,
+as some of teh low-frequency stuff can be meainingful:
+
+They can be
 * Geographical place names, used only a few times.
 * Product names, given names used only a few times.
 * Foreign-language loan words used only a few times.
 
 Trimming is dangerous.
 
+It reduces dataset size, but looking at the last row, timming lowers the
+overall MI gain.
+
+Perhaps the main thing to mote here is that the total MI is much much
+larger than that for word pairs. An MI of 9 or even 6 is much larger
+than the 1.5 seen for word pairs. We've acheived significant
+amplification gain.
+
+In radio electronics, the very first transistor after the antenna has a
+gain of about 2 to 3, this is comparable to the MI for word-pairs.
+The nex stage of a radio amplified can have a gain of 100 or 1000.
+That is what we are seeing here.  There seems to be a real information
+amplification gain.
+
 ------------
 
 ## Slide 8: Disjunct MI
 
-Opaque.
-Gets closder to being a Gaussian, the more strong trimmed it is.
+Here, I've raps the MI for the jigsaws, just as before.
+
+I don't see what what's going on here. The meaning is opaque. it's a
+bit of a mess. The various curves are for the different trim levels.
+
+Gets closder to being a Gaussian, the more strongly trimmed it is.
 
 But not close enough to be "satsifying" in any way.
 
@@ -198,11 +277,18 @@ But not close enough to be "satsifying" in any way.
 
 ## Slide 9: Distribution of Similarity
 
-Wow!
+Lets try again for the similarity betwen words, with similarity being
+computed from the dot product of vectors.
+
+Wow! What a world of difference! A nearly perfect Bell curve!
+It's stunning!
 
 ------------
 
 ## Slide 10: Similarity Metrics
+
+OK, what did I just show?
+
 
 VI just shifts the curve over to the right. Curve does not change.
 
