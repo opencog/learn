@@ -1,6 +1,17 @@
 
 Things to read:
 
+* Gao et al,
+  The Pile: An 800GB Dataset of Diverse Text for Language Modeling
+  https://arxiv.org/abs/2101.00027
+
+* Leo Gao,
+  An Empirical Exploration in Quality Filtering of Text Data
+  https://arxiv.org/abs/2109.00698
+  We find that aggressive filtering can in fact lead to a decrease
+  in model quality on a wide array of downstream tasks for a
+  GPT-like language model.
+
 * Paul Cisek - papers on neural evolution.
 
 * Tobias Fritz
