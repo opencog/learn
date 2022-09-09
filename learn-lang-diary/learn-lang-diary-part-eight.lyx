@@ -524,6 +524,54 @@ So again, we seem to approach the case of a Gaussian Orthogonal Ensemble.
 \end_layout
 
 \begin_layout Subsection*
+Efficient Dimensional Oxidation
+\end_layout
+
+\begin_layout Standard
+A way to encode low-dimensional classification problems into hypervectors
+ that sharply improves on the naive uniform feature-space digitization is
+ described in Basaklar, 
+\emph on
+et al.
+
+\emph default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Hypervector Design for Efficient Hyperdimensional Computing on Edge Devices
+\begin_inset Quotes erd
+\end_inset
+
+ https://arxiv.org/pdf/2103.06709.pdf 
+\end_layout
+
+\begin_layout Standard
+The presumption is that there is a pre-existing training dataset, the parameter
+ space is low dimensional, and the number of clusters is fixed.
+\end_layout
+
+\begin_layout Standard
+The solution is to divide up the parameter space in a non-uniform kind of
+ way, devoting lots of extra hypervector bit-flips to the boundary zones
+ between clusters, so that the boundaries of the clusters can be cleanly
+ distinguished.
+ This is done by specifying an integer optimization problem.
+ The trick is to (i) maximize the training accuracy and (ii) minimize the
+ similarity between class encoders, subject to (iii) orthogonalization of
+ parameter endpoints.
+ Because this is an integer optimizatin problem, a genetic algorithm is
+ used to perform the search.
+ The paper provides details.
+\end_layout
+
+\begin_layout Standard
+This is not directly relevanyt for us, because we don't have a training
+ set, nor do we know a priori how many clusters there will be.
+ 
+\end_layout
+
+\begin_layout Subsection*
 Factoids
 \end_layout
 
