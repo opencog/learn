@@ -1,6 +1,13 @@
 
 Things to read:
 
+* Michel TALAGRAND, Mean Field Models for Spin Glasses Volume I:
+  Basic Examples (2010) Book, 490 pages, Springer-Verlag
+
+  Provides overview of high-dimensional statstics from a mathematicians
+  viewpoint. Sherrington-Kirkpatrick model, Perceptron, Hopfield,
+  and more.
+
 * Gao et al,
   The Pile: An 800GB Dataset of Diverse Text for Language Modeling
   https://arxiv.org/abs/2101.00027
@@ -42,6 +49,7 @@ Things to read:
   "Why does deep and cheap learning work so well?"
   3 Aug 2017
   https://arxiv.org/pdf/1608.08225.pdf
+
   Short answer: they can represent multiplication and addition easily.
   Making them deep makes the representation more compact and simpler to
   learn.
