@@ -215,7 +215,8 @@ Let
 \begin_inset Formula $\left[p_{0},\cdots,p_{N}\right]$
 \end_inset
 
- be a totally ordered sequence of points, that is, 
+ be a totally ordered sequence of points.
+ The total order is just 
 \begin_inset Formula $p_{i}<p_{j}$
 \end_inset
 
@@ -228,7 +229,7 @@ Let
 \end_inset
 
 .
- This can be metrizied with a metric 
+ This order can be metrizied with a metric 
 \begin_inset Formula $g$
 \end_inset
 
@@ -300,6 +301,27 @@ because these differ in
 \end_inset
 
  bit locations.
+ (The Hamming distance is 
+\begin_inset Formula $D/2N$
+\end_inset
+
+; so 
+\begin_inset Formula $D/2N$
+\end_inset
+
+ bit positions that are 
+\begin_inset Formula $+$
+\end_inset
+
+ are replaced by 
+\begin_inset Formula $-$
+\end_inset
+
+, and so that total sum decreases by 
+\begin_inset Formula $N$
+\end_inset
+
+.
  In general, 
 \begin_inset Formula 
 \[
@@ -344,12 +366,40 @@ Of course, all this machination is pointless for one-dimensional point sequences
  for the more complex case.
 \end_layout
 
+\begin_layout Standard
+Notes:
+\end_layout
+
+\begin_layout Itemize
+Given two corners on a hypercube differeing by 
+\begin_inset Formula $d$
+\end_inset
+
+ bits, there are 
+\begin_inset Formula $2^{d}$
+\end_inset
+
+ shortest paths between them.
+\end_layout
+
+\begin_layout Itemize
+If the vectors are normalized, they can be seen to live on the surface of
+ a sphere (of the same dimension).
+\end_layout
+
 \begin_layout Subsection*
-Parameter Classification Problems
+Dimensional Oxidation
 \end_layout
 
 \begin_layout Standard
-One conventinal machine learning problem is the classification of regions
+In chemistry, oxidation is the opposite of reduction.
+ If dimensional reduction is the reduction of the number of dimensions to
+ describe a dataset, then playing on this, dimensional oxidation is the
+ act of increasing dimensions.
+\end_layout
+
+\begin_layout Standard
+One conventional machine learning problem is the classification of regions
  of some 
 \begin_inset Formula $M$
 \end_inset
@@ -368,19 +418,98 @@ One conventinal machine learning problem is the classification of regions
 \begin_inset Formula $f_{m}^{\mathrm{min}}\le f_{m}\le f_{m}^{\mathrm{max}}$
 \end_inset
 
- so taht these can be normalized to the unit cube 
+ so that these can be normalized to the unit cube 
 \begin_inset Formula $\left[0,1\right]^{M}$
 \end_inset
 
  by writing 
-\begin_inset Formula $x_{m}=\left(f_{m}-f_{m}^{\mathrm{min}}\right)/\left(f_{m}^{\mathrm{max}}-f_{m}^{\mathrm{min}}\right)$
+\begin_inset Formula 
+\[
+x_{m}=\frac{f_{m}-f_{m}^{\mathrm{min}}}{f_{m}^{\mathrm{max}}-f_{m}^{\mathrm{min}}}
+\]
+
 \end_inset
 
- 
+Each unit interval may be digitized (partitioned) into 
+\begin_inset Formula $N+1$
+\end_inset
+
+ distinct subintervals.
+ This partitioning 
+\begin_inset Formula $\left[p_{0},\cdots,p_{N}\right]$
+\end_inset
+
+ then provides a totally ordered points sequence that can be mapped to bipolar
+ hypervectors.
+ A given point 
+\begin_inset Formula $x\in\left[0,1\right]^{M}$
+\end_inset
+
+ is thus mapped to 
+\begin_inset Formula $M$
+\end_inset
+
+ vectors 
+\begin_inset Formula $v_{m}$
+\end_inset
+
+.
+ Summing these provides a mapping of the unit cube to 
+\begin_inset Formula $\mathbb{Z}^{D}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+w=w\left(x\right)=\sum_{m}v_{m}
+\]
+
+\end_inset
+
+Since the sum is bounded between 
+\begin_inset Formula $-M$
+\end_inset
+
+ and 
+\begin_inset Formula $M$
+\end_inset
+
+ in each direction, this vector lies on the hypercube lattice 
+\begin_inset Formula $\left(2M\right)^{D}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+If these vectors are normalized to unit length, then they live on the surface
+ of the hypersphere 
+\begin_inset Formula $S_{D-1}$
+\end_inset
+
+.
+ In general, these points are not random, ly distributed on the hypersphere.
+ In a narrow sense, we can offer a theorm: the points are randomly distributed
+ on the hypersphere if and only if they are randomly distributed in the
+ unit cube 
+\begin_inset Formula $\left[0,1\right]^{M}$
+\end_inset
+
+.
+ However, in a broader sense, when 
+\begin_inset Formula $N\ll D$
+\end_inset
+
+, points are increasingly scattered on the unit sphere, becoming increasingly
+ uniformly distributed.
+ This is effectively because the start and end points of the unit interval
+ are mapped to random hypervectors.
+ So again, we seem to approach the case of a Gaussian Orthogonal Ensemble.
+ Kind of...
 \end_layout
 
 \begin_layout Section*
-The Endof 
+The End
 \end_layout
 
 \begin_layout Standard
