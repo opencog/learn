@@ -164,6 +164,31 @@ Actually useful in practical applications
   * How do things change, if one considers not just the next character, but
     the next pair of characters, or the next triple of characters?
 
+Suggestive but Important
+------------------------
+Don't quite provide what is immediately needed, but is very interesting
+anyways:
+
+* Pentti Kanerva, "Hyperdimensional Computing: An Introduction to Computing
+  in Distributed Representation with High-Dimensional Random Vectors"
+  Cognitvie Compututing (2009) 1:139–159 DOI 10.1007/s12559-009-9009-8
+
+  Provides a good, general description of hypervector memory and
+  hypervector ALU operations. Informal (few formulas) but mostly
+  accurate (I spotted a few mistakes).
+
+  Basic ideas: high-dimensional binary vectors (hypervectors), general
+  stochastic properties of hyperspace, content-addressable memory, ALU
+  ops as XOR and vector addition. Collision-avoidance via permutations.
+
+  Examples: encoding sets as hypervectors, encoding pairs, encoding
+  tables, encoding sequences. (and reconstructing these, given the
+  hypervectors)
+
+  Practical examples: hypervectors as alternative to LSA (Latent
+  Semantic Anslysis) overcomes difficulties of PCA (Principle Component
+  Analysis). Also, document-vectors look like context vectors, i.e.
+  the two approaches become unified with hypervectors.
 
 Interesting, but maybe less useful
 ----------------------------------
