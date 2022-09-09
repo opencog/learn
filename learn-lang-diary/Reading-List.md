@@ -190,6 +190,29 @@ anyways:
   Analysis). Also, document-vectors look like context vectors, i.e.
   the two approaches become unified with hypervectors.
 
+  Author recognizes the role of grammar, without saying the word
+  "grammar" and suggests word contexts are impoverished. (and this is
+  correct; so he punts.)
+
+  Practical example: encoding of logical inference. Appears to be a
+  variant of encoding a table. Points out that naive representations
+  struggle with certain kinds of relationships (transitivity,
+  membership.) Implies more complicated representations can over come this?
+  (without showing how).
+
+  Practical example: learning by example.  Not this is actually
+  interesting.  Shows how basic relationships can be infered from
+  a handful(?) of examples.  Given the difficulty of inferencing
+  described above, this is a crude approximation to a more fully
+  formal, symbolic relational description. However, I'm thinking
+  that this is enough to get started, to provide the needed rough
+  draft that other kinds of systems can take over and elaborate.
+  Wow! That's actually pretty cool! I'm psyched!
+
+  Concludes with a nice summary of historical developments of
+  various vector-encoding schemes.
+
+
 Interesting, but maybe less useful
 ----------------------------------
 * Jerry R. Hobbs "Chapter 6: Word meaning and world knowledge"
