@@ -388,77 +388,6 @@ g\left(p_{i},p_{j}\right)=\frac{\left|i-j\right|}{N}=1-\frac{v_{i}\cdot v_{j}}{D
 \end_layout
 
 \begin_layout Standard
-Some notes:
-\end_layout
-
-\begin_layout Itemize
-Almost all random vectors are orthogonal to one another (or nearly so).
- This follows from binomial coefficents being approximations for Gaussians.
- There are 
-\begin_inset Formula 
-\[
-{D \choose D/2}=\frac{D!}{\left(D/2\right)!^{2}}\approx\sqrt{2/\pi D}\,2^{D}
-\]
-
-\end_inset
-
-orthogonal vectors, which follows from Stirling's law 
-\begin_inset Formula $n!\approx\sqrt{2\pi n}e^{-n}n^{n}$
-\end_inset
-
-.
- There are 
-\begin_inset Formula 
-\[
-{D \choose \frac{D}{2}+1}=\frac{D!}{\left(\frac{D}{2}-1\right)!\left(\frac{D}{2}+1\right)!}\approx\sqrt{2/\pi D}\,2^{D}xxx
-\]
-
-\end_inset
-
-almost orthogonal vectors, that differ by one bit.
- More generally, for 
-\begin_inset Formula $n\ll D$
-\end_inset
-
- there are 
-\begin_inset Formula 
-\[
-{D \choose \frac{D}{2}+n}=\frac{D!}{\left(\frac{D}{2}-n\right)!\left(\frac{D}{2}+n\right)!}\approx\sqrt{2/\pi D}\,2^{Dxxx}xxx
-\]
-
-\end_inset
-
-vectors that differ by 
-\begin_inset Formula $n$
-\end_inset
-
- bits.
-\end_layout
-
-\begin_layout Itemize
-Given two corners on a hypercube differeing by 
-\begin_inset Formula $d$
-\end_inset
-
- bits, there are 
-\begin_inset Formula $2^{d}$
-\end_inset
-
- shortest paths between them.
-\end_layout
-
-\begin_layout Itemize
-The midway points on such paths can have larger Jaccard (Hamming) distances
- to each other, than to either endpoint.
- In fact, this will almost always be the case.
-\end_layout
-
-\begin_layout Itemize
-If the vectors are normalized, they can be seen to live on the surface of
- a sphere (of the same dimension).
-\end_layout
-
-\begin_layout Standard
 Of course, all this machination is pointless for one-dimensional point sequences.
  So ...
  for the more complex case.
@@ -592,6 +521,123 @@ If these vectors are normalized to unit length, then they live on the surface
 \begin_layout Standard
 So again, we seem to approach the case of a Gaussian Orthogonal Ensemble.
  Kind of...
+\end_layout
+
+\begin_layout Subsection*
+Factoids
+\end_layout
+
+\begin_layout Standard
+Assorted notes:
+\end_layout
+
+\begin_layout Itemize
+Almost all random vectors are orthogonal to one another (or nearly so).
+ This follows from binomial coefficents being approximations for Gaussians.
+ There are 
+\begin_inset Formula 
+\[
+{D \choose D/2}=\frac{D!}{\left(D/2\right)!^{2}}\approx\sqrt{\frac{2}{\pi D}}\,2^{D}
+\]
+
+\end_inset
+
+orthogonal vectors, which follows from Stirling's law 
+\begin_inset Formula $n!\approx\sqrt{2\pi n}e^{-n}n^{n}$
+\end_inset
+
+.
+ There are 
+\begin_inset Formula 
+\[
+{D \choose \frac{D}{2}+1}=\frac{D!}{\left(\frac{D}{2}-1\right)!\left(\frac{D}{2}+1\right)!}\approx\sqrt{2/\pi D}\,2^{D}xxx
+\]
+
+\end_inset
+
+almost orthogonal vectors, that differ by one bit.
+ More generally, for 
+\begin_inset Formula $n\ll D$
+\end_inset
+
+ there are 
+\begin_inset Formula 
+\[
+{D \choose \frac{D}{2}+n}=\frac{D!}{\left(\frac{D}{2}-n\right)!\left(\frac{D}{2}+n\right)!}\approx\sqrt{2/\pi D}\,2^{D}\left(1-\frac{2n^{2}}{D}\right)
+\]
+
+\end_inset
+
+vectors that differ by 
+\begin_inset Formula $n$
+\end_inset
+
+ bits.
+ (Need to double check this, might be errors).
+\end_layout
+
+\begin_layout Itemize
+Given two corners on a hypercube differeing by 
+\begin_inset Formula $d$
+\end_inset
+
+ bits, there are 
+\begin_inset Formula $2^{d}$
+\end_inset
+
+ shortest paths between them.
+\end_layout
+
+\begin_layout Itemize
+The midway points on such paths can have larger Jaccard (Hamming) distances
+ to each other, than to either endpoint.
+ In fact, this will almost always be the case.
+\end_layout
+
+\begin_layout Itemize
+If the vectors are normalized, they can be seen to live on the surface of
+ a sphere (of the same dimension).
+\end_layout
+
+\begin_layout Itemize
+Ternary hypervectors i.e.
+ elements of 
+\begin_inset Formula $\left\{ -1,0,1\right\} ^{D}$
+\end_inset
+
+ form a field under pointwise multiplication and sgn applied to arithmetic
+ addition.
+\end_layout
+
+\begin_layout Itemize
+The projection of lattice points in 
+\begin_inset Formula $\mathbb{Z}^{D}$
+\end_inset
+
+ to the unit sphere 
+\begin_inset Formula $S_{D-1}$
+\end_inset
+
+ is presumably dense.
+ No clue if its 
+\begin_inset Quotes eld
+\end_inset
+
+uniformly
+\begin_inset Quotes erd
+\end_inset
+
+ distributed; presumably its not, much like the rationals in the unit interval.
+\end_layout
+
+\begin_layout Itemize
+No clue what the analogs of the modular group or the fundamental domain
+ are.
+ 
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Section*
