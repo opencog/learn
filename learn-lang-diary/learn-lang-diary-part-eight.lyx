@@ -197,7 +197,131 @@ curves
 
 \begin_layout Standard
 Let 
-\begin_inset Formula $\left\{ p_{1},\cdots,p_{n}\right\} $
+\begin_inset Formula $\left[p_{0},\cdots,p_{N}\right]$
+\end_inset
+
+ be a totally ordered sequence of points, that is, 
+\begin_inset Formula $p_{i}<p_{j}$
+\end_inset
+
+ for 
+\begin_inset Formula $i<j$
+\end_inset
+
+ for integer index 
+\begin_inset Formula $i,j$
+\end_inset
+
+.
+ This can be metrizied with a metric 
+\begin_inset Formula $g$
+\end_inset
+
+ such that 
+\begin_inset Formula $g\left(p_{i},p_{j}\right)=\left|i-j\right|/N$
+\end_inset
+
+.
+ The metric is normalized written so that the maximum distance is 1.
+ Pick a dimension 
+\begin_inset Formula $D>2N$
+\end_inset
+
+ and conventionally 
+\begin_inset Formula $D\gg2N$
+\end_inset
+
+ and an arbitrary initial (random) vector 
+\begin_inset Formula $v_{0}$
+\end_inset
+
+ that will correspond to 
+\begin_inset Formula $p_{0}$
+\end_inset
+
+.
+ Generate a sequence of bipolar hypervectors 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ as follows.
+ Given 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+, select (randomly) 
+\begin_inset Formula $D/2N$
+\end_inset
+
+ bits that have not been selected before, and flip them, to obtain 
+\begin_inset Formula $v_{i+1}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The above generates a sequece of (bipolar hyperdimensional) vectors with
+ the following properties.
+ The dot product is 
+\begin_inset Formula 
+\[
+v_{k}\cdot v_{k}=D
+\]
+
+\end_inset
+
+ neighboring points, the dot product is 
+\begin_inset Formula 
+\[
+v_{k}\cdot v_{k+1}=D\left(1-\frac{1}{N}\right)
+\]
+
+\end_inset
+
+because these differ in 
+\begin_inset Formula $D/2N$
+\end_inset
+
+ bit locations.
+ In general, 
+\begin_inset Formula 
+\[
+v_{k}\cdot v_{k+m}=D\left(1-\frac{m}{N}\right)
+\]
+
+\end_inset
+
+or equivalently
+\begin_inset Formula 
+\[
+v_{i}\cdot v_{j}=D\left(1-\frac{\left|i-j\right|}{N}\right)
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula 
+\[
+v_{0}\cdot v_{N}=0
+\]
+
+\end_inset
+
+are orthogonal.
+ Normalizing by 
+\begin_inset Formula $D$
+\end_inset
+
+ and subtracting from 1 reproduces the original metric on the point sequence:
+ i.e.
+ 
+\begin_inset Formula 
+\[
+g\left(p_{i},p_{j}\right)=\frac{\left|i-j\right|}{N}=1-\frac{v_{i}\cdot v_{j}}{D}
+\]
+
 \end_inset
 
 
