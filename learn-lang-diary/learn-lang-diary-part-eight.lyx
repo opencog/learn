@@ -153,6 +153,12 @@ A bipolar hypervector is a vector in a
 \begin_inset Formula $\left\{ -1,1\right\} ^{D}.$
 \end_inset
 
+ Every hypervector corresponds to a vertex of a hypercube centered at the
+ origin of a 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional space.
  Bipolar hypervectors have the interestng property that, for 
 \begin_inset Formula $D$
 \end_inset
@@ -188,11 +194,20 @@ curves
 ) to sequences of bipolar hypervectors such that the endpoints of the point
  sequence are orthogonal, and intermediate points have increasingly larger
  cosine distances.
- That is, there is a homomorphism of point sequences to hypervectors that
- preserves the metric on the point sequence.
+ Geometrically, this maps the point sequence to a sequence of corners on
+ the hypercube that are increasingly distant from the starting point.
+ of point sequences to hypervectors
+\end_layout
+
+\begin_layout Standard
+This map is a homomorphism that preserves the metric on the point sequence.
  This metric property can then be deployed to simplify classification problems,
  by mapping the space to be classified to vector arithmetic and cosine distances.
- This proceeds as follows.
+ These two ideas are developed below.
+\end_layout
+
+\begin_layout Subsection*
+Metric properties
 \end_layout
 
 \begin_layout Standard
@@ -272,7 +287,7 @@ v_{k}\cdot v_{k}=D
 
 \end_inset
 
- neighboring points, the dot product is 
+For neighboring points, the dot product is 
 \begin_inset Formula 
 \[
 v_{k}\cdot v_{k+1}=D\left(1-\frac{1}{N}\right)
@@ -288,7 +303,7 @@ because these differ in
  In general, 
 \begin_inset Formula 
 \[
-v_{k}\cdot v_{k+m}=D\left(1-\frac{m}{N}\right)
+v_{k}\cdot v_{k+n}=D\left(1-\frac{n}{N}\right)
 \]
 
 \end_inset
@@ -324,11 +339,48 @@ g\left(p_{i},p_{j}\right)=\frac{\left|i-j\right|}{N}=1-\frac{v_{i}\cdot v_{j}}{D
 
 \end_inset
 
+Of course, all this machination is pointless for one-dimensional point sequences.
+ So ...
+ for the more complex case.
+\end_layout
 
+\begin_layout Subsection*
+Parameter Classification Problems
+\end_layout
+
+\begin_layout Standard
+One conventinal machine learning problem is the classification of regions
+ of some 
+\begin_inset Formula $M$
+\end_inset
+
+-dimensional space features.
+ That is, there are a set of real-valued features 
+\begin_inset Formula $f_{m}\in\mathbb{R}$
+\end_inset
+
+ for 
+\begin_inset Formula $1\le m\le M$
+\end_inset
+
+.
+ These are presumed to be bounded, so that 
+\begin_inset Formula $f_{m}^{\mathrm{min}}\le f_{m}\le f_{m}^{\mathrm{max}}$
+\end_inset
+
+ so taht these can be normalized to the unit cube 
+\begin_inset Formula $\left[0,1\right]^{M}$
+\end_inset
+
+ by writing 
+\begin_inset Formula $x_{m}=\left(f_{m}-f_{m}^{\mathrm{min}}\right)/\left(f_{m}^{\mathrm{max}}-f_{m}^{\mathrm{min}}\right)$
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Section*
-The End
+The Endof 
 \end_layout
 
 \begin_layout Standard
