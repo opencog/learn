@@ -140,6 +140,69 @@ No summary yet.
 Mapping Paramters to Bipolar Hypervectors
 \end_layout
 
+\begin_layout Standard
+A bipolar hypervector is a vector in a 
+\begin_inset Formula $D$
+\end_inset
+
+-dimensional space having values in the set 
+\begin_inset Formula $\mathbb{Z}_{2}=\left\{ -1,1\right\} $
+\end_inset
+
+; that is, a vector in 
+\begin_inset Formula $\left\{ -1,1\right\} ^{D}.$
+\end_inset
+
+ Bipolar hypervectors have the interestng property that, for 
+\begin_inset Formula $D$
+\end_inset
+
+ even, given any (random) vector 
+\begin_inset Formula $v$
+\end_inset
+
+, if one flips half the bits to get a vector 
+\begin_inset Formula $w$
+\end_inset
+
+, then 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ are orthogonal!
+\end_layout
+
+\begin_layout Standard
+This interesting property can be used to map point sequences (
+\begin_inset Quotes eld
+\end_inset
+
+curves
+\begin_inset Quotes erd
+\end_inset
+
+) to sequences of bipolar hypervectors such that the endpoints of the point
+ sequence are orthogonal, and intermediate points have increasingly larger
+ cosine distances.
+ That is, there is a homomorphism of point sequences to hypervectors that
+ preserves the metric on the point sequence.
+ This metric property can then be deployed to simplify classification problems,
+ by mapping the space to be classified to vector arithmetic and cosine distances.
+ This proceeds as follows.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $\left\{ p_{1},\cdots,p_{n}\right\} $
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
