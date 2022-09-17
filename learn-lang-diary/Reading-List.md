@@ -1,6 +1,17 @@
 
 Things to read:
 
+* Elena Di Lavore, Giovanni de Felice, Mario Román,
+  Monoidal Streams for Dataflow Programming
+  https://arxiv.org/pdf/2202.02061.pdf
+  Appendix contains strong description of monoidal categories.
+
+* Noam Zeilberger:
+  "Parsing as a lifting problem and the Chomsky-Schützenberger representation theorem"
+  https://www.youtube.com/watch?v=AX8tpQSi8v8
+
+  Colloquim.
+
 * Michel TALAGRAND, Mean Field Models for Spin Glasses Volume I:
   Basic Examples (2010) Book, 490 pages, Springer-Verlag
 
