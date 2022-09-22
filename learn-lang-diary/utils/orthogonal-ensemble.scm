@@ -6,9 +6,7 @@
 ;
 ; Sept 2022
 ; -------------------------------------
-; Graphs, verify it still looks gaussian.
-; See similarity-graphs.scm -- this is a cut-n-paste from there.
-
+; Ingest data
 (define pca (make-pseudo-cset-api)) ; shapes not needed to fetch sims.
 (define pcs (add-pair-stars pca))
 (define smi (add-similarity-api pcs #f "shape-mi"))
@@ -17,7 +15,11 @@
 ; automate this.
 (smi 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
 
+; -------------------------------------
+; Graphs, verify it still looks gaussian.
+; See similarity-graphs.scm -- this is a cut-n-paste from there.
 ; See line 196ff of similarity-graphs.scm
+
 (define all-sims ((add-pair-stars smi) 'get-all-elts))
 
 (define wmi (/ 2.0 (length all-sims)))
@@ -56,9 +58,30 @@
 ; Counts on smi are FloatValues of two floats.
 ; First float is mi-sim
 ; Second float is ranked-mi-sim
-(define (get-mi SIM) (cog-value-ref (smi 'get-count SIM) 0))
-(define (get-rmi SIM) (cog-value-ref (smi 'get-count SIM) 1))
+; That is, (smi 'get-count PR) returns a FloatValue.
+; So, unwrap it.
+(define (add-mi-sim LLOBJ)
+	(lambda (message . args)
+		(case message
+			((get-mi)  (cog-value-ref (LLOBJ 'get-count (car args)) 0))
+			((get-rmi) (cog-value-ref (LLOBJ 'get-count (car args)) 1))
+			(else      (apply LLOBJ (cons message args))))
+	))
 
-; Compute vector norms
-(define ssc (add-support-compute sob))
+(define ami (add-mi-sim sob))
+
+; Compute vector norms. Use plain MI, for now.
+(define ssc (add-support-compute ami 'get-mi))
 (ssc 'all-left-marginals)
+
+; Actually, its fast enough (5 secons) so lets to both, to avoid
+; confusion.
+(ssc 'cache-all)
+
+; The support API will provide access to the vectors and lengths.
+(define gmi (add-support-api sob))
+
+((make-central-compute sob) 'cache-all)
+
+(print-matrix-summary-report sob)
+

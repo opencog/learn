@@ -819,6 +819,45 @@ The experimental goal is to obtain these vectors, on the actual datasets,
 \end_layout
 
 \begin_layout Subsection*
+Ranking
+\end_layout
+
+\begin_layout Standard
+The ranked MI has the form 
+\begin_inset Formula $f\left(w,u\right)=s\left(w,u\right)-r\left(w\right)-r\left(u\right)$
+\end_inset
+
+.
+ How does this change the above?
+\begin_inset Formula 
+\begin{align*}
+\mu= & \frac{1}{N^{2}}\sum_{u,w}f\left(u,w\right)\\
+= & \frac{1}{N^{2}}\sum_{u,w}s\left(u,w\right)-\frac{2}{N}\sum_{w}r\left(w\right)\\
+= & \left\langle s\right\rangle -2\left\langle r\right\rangle 
+\end{align*}
+
+\end_inset
+
+and next
+\begin_inset Formula 
+\begin{align*}
+\sigma^{2}= & \frac{1}{N^{2}}\sum_{u,w}f^{2}\left(u,w\right)-\mu^{2}\\
+= & \frac{1}{N^{2}}\sum_{u,w}\left[s\left(u,w\right)-r\left(w\right)-r\left(u\right)\right]^{2}-\left[\left\langle s\right\rangle -2\left\langle r\right\rangle \right]^{2}\\
+= & \frac{1}{N^{2}}\sum_{u,w}\left[s^{2}\left(u,w\right)-4s\left(w,u\right)r\left(w\right)+4r^{2}\left(w\right)\right]-\left[\left\langle s\right\rangle ^{2}-4\left\langle s\right\rangle \left\langle r\right\rangle +4\left\langle r\right\rangle ^{2}\right]\\
+= & \left\langle s^{2}\right\rangle -4\left\langle sr\right\rangle +4\left\langle r^{2}\right\rangle -\left\langle s\right\rangle ^{2}+4\left\langle s\right\rangle \left\langle r\right\rangle -4\left\langle r\right\rangle ^{2}\\
+= & \left[\left\langle s^{2}\right\rangle -\left\langle s\right\rangle ^{2}\right]-4\left[\left\langle sr\right\rangle -\left\langle s\right\rangle \left\langle r\right\rangle \right]+4\left[\left\langle r^{2}\right\rangle -\left\langle r\right\rangle ^{2}\right]
+\end{align*}
+
+\end_inset
+
+and so in general we see this is not equivalent to plain 
+\begin_inset Formula $f$
+\end_inset
+
+ and so we need to keep track of both, separetly.
+\end_layout
+
+\begin_layout Subsection*
 Experiment-15 (21 Sept 2022)
 \end_layout
 
@@ -1115,7 +1154,7 @@ dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\mu$
+\begin_inset Formula $\mu_{\mbox{MI}}$
 \end_inset
 
 
@@ -1127,7 +1166,7 @@ dataset
 \begin_inset Text
 
 \begin_layout Plain Layout
-\begin_inset Formula $\sigma$
+\begin_inset Formula $\sigma_{\mbox{MI}}$
 \end_inset
 
 
