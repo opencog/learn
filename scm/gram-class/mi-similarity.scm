@@ -154,7 +154,7 @@
 
 	(define rpt-one-row
 		(make-progress-rpt do-one-row 10 #f
-			"Diag: Finished ~D rows in ~D secs (~D/sec)\n"
+			"Diag: Finished ~D rows in ~D secs (~5F/sec)\n"
 			60))
 
 	; Perform the similarity calculations, looping over the fat diagonal.
