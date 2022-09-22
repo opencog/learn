@@ -15,6 +15,7 @@ set yrange [5e-6:0.2]
 set format y "10^{%L}"
 sigma=3.7
 off=-0.5
-plot "sim-mi-dist.dat" using 2:3 with lines lw 2 title "now", \
+plot "sim-mi-dist.dat" using 2:3 with lines lw 2 title "MI", \
+     "sim-rmi-dist.dat" using 2:3 with lines lw 2 title "ranked-MI", \
      "sim-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-0.5,3.7)"
 #################################################
