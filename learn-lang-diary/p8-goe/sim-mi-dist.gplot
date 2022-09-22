@@ -1,0 +1,20 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'sim-mi-dist.png'
+# set term postscript eps enhanced color 24
+# set out 'sim-mi-dist.eps'
+set key right top
+set logscale y
+set title "Distribution of MI"
+set xlabel "MI"
+set ylabel "Probability"
+set yrange [5e-6:0.2]
+set format y "10^{%L}"
+sigma=3.7
+off=-0.5
+plot "sim-mi-dist.dat" using 2:3 with lines lw 2 title "now", \
+     "sim-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-0.5,3.7)"
+#################################################

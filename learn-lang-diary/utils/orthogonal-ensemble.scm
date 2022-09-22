@@ -2,6 +2,7 @@
 ; orthogonal-ensemble.scm
 ;
 ; Experiments with gaussian orthogonal ensembles.
+; Part of experiments/run-15, described in diary part eight.
 ;
 ; Sept 2022
 ; -------------------------------------
