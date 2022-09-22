@@ -705,6 +705,567 @@ Mean Field Models for Spin Glasses Volume I: Basic Examples
 \end_layout
 
 \begin_layout Section*
+Gaussian Orthogonal Ensembles
+\end_layout
+
+\begin_layout Standard
+Well, not really; that's just the working title.
+ The thing to explore is this: suppose there's an index 
+\begin_inset Formula $w,u\in\left\{ 1,\cdots,N\right\} $
+\end_inset
+
+ i.e.
+ 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional.
+ Suppose there are numbers 
+\begin_inset Formula $f\left(w,u\right)=f\left(u,w\right)$
+\end_inset
+
+ which are distributed with a normal distribution with mean 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and stddev 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ Experimentally, we compute 
+\begin_inset Formula 
+\[
+\mu=\frac{1}{N^{2}}\sum_{u,w}f\left(u,w\right)=\left\langle f\right\rangle 
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+\sigma^{2}= & \frac{1}{N^{2}}\sum_{u,w}\left(f\left(u,w\right)-\mu\right)^{2}\\
+= & \frac{1}{N^{2}}\sum_{u,w}f^{2}\left(u,w\right)-\mu^{2}\\
+= & \left\langle f^{2}\right\rangle -\left\langle f\right\rangle ^{2}
+\end{align*}
+
+\end_inset
+
+as usual.
+ Define 
+\begin_inset Formula $g\left(u,w\right)=\left(f\left(u,w\right)-\mu\right)/\sigma$
+\end_inset
+
+ and then 
+\begin_inset Formula $g\left(u,w\right)$
+\end_inset
+
+ is normally distributed about zero with unit stddev.
+\end_layout
+
+\begin_layout Standard
+Fix 
+\begin_inset Formula $w$
+\end_inset
+
+ and define an 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional vector 
+\begin_inset Formula $\vec{w}\in\mathbb{R}^{N}$
+\end_inset
+
+ whose vector components are 
+\begin_inset Formula $w_{u}=g\left(w,u\right)$
+\end_inset
+
+.
+ Normalize them to unit length, so that 
+\begin_inset Formula $\hat{w}=\vec{w}/\left\Vert \vec{w}\right\Vert $
+\end_inset
+
+ where 
+\begin_inset Formula $\left\Vert \vec{w}\right\Vert =\left\Vert \vec{w}\right\Vert _{2}$
+\end_inset
+
+ is the Euclidean norm.
+ This is the gaussian orthogonal ensemble.
+ There are 
+\begin_inset Formula $N$
+\end_inset
+
+ of these vectors, they are uniformly disttributed on the 
+\begin_inset Formula $N-1$
+\end_inset
+
+ sphere 
+\begin_inset Formula $S_{N-1}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The experimental goal is to obtain these vectors, on the actual datasets,
+ were 
+\begin_inset Formula $f\left(w,u\right)$
+\end_inset
+
+ is the MI for two words, the MI being given via the disjunct+shape formulas
+ explored in earlier chapters.
+ So lets see what we get.
+\end_layout
+
+\begin_layout Subsection*
+Experiment-15 (21 Sept 2022)
+\end_layout
+
+\begin_layout Standard
+The data is in experiment-15.
+ MI's are computed for the 
+\begin_inset Formula $N$
+\end_inset
+
+ top-ranked words.
+ Datasets containing MI-similarities:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="5">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N_{pairs}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RAM
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+load time
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r14-sim200.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+20116(?)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r15-sim500.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+125250
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.6GB
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+12 min
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r15-sim2500.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each larger dataset is built from the smaller one; this allows experiments
+ to be run in parallel; otherwise, its the same data.
+ The 
+\begin_inset Formula $N_{pairs}$
+\end_inset
+
+ is just the number of SimilarityLinks in the dataset.
+ I don't know why it's not exactly 
+\begin_inset Formula $N\left(N-1\right)/2$
+\end_inset
+
+ ..
+ I guess some cruft? Or maybe marginals? The similarities computed as described
+ earlier, using the cross-sections and shapes as a part of the vectors.
+\end_layout
+
+\begin_layout Standard
+Here are the means and variations, for various different values of 
+\begin_inset Formula $N$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dataset
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $N$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\sigma$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r14-sim200.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+200
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r15-sim500.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+r15-sim2500.rdb
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2500
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and so ...
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
