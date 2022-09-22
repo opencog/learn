@@ -37,7 +37,7 @@
 (repl-default-prompt-set! cog-prompt)
 
 ; Start the cogserver using the indicated config file.
-(start-cogserver (getenv "COGSERVER_CONF"))
+(start-cogserver (getenv "COGSERVER_CONF") #:web 0)
 
 ; Open the database.
 (define sns (getenv "STORAGE_NODE"))
