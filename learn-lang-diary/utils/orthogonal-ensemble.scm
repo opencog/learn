@@ -61,10 +61,15 @@
 ; That is, (smi 'get-count PR) returns a FloatValue.
 ; So, unwrap it.
 (define (add-mi-sim LLOBJ)
+	(define (get-ref PR IDX)
+		; Expect either a FloatValue or #f if absent.
+		(define flov (LLOBJ 'get-count PR))
+		(if flov (cog-value-ref flov IDX) -inf.0))
+
 	(lambda (message . args)
 		(case message
-			((get-mi)  (cog-value-ref (LLOBJ 'get-count (car args)) 0))
-			((get-rmi) (cog-value-ref (LLOBJ 'get-count (car args)) 1))
+			((get-mi)  (get-ref (car args) 0))
+			((get-rmi) (get-ref (car args) 1))
 			(else      (apply LLOBJ (cons message args))))
 	))
 
@@ -95,29 +100,79 @@
 ; -------------------------------------
 ; Look at dot products
 (define goe (add-gaussian-ortho-api ami 'get-mi))
+(goe 'mean-rms)
 
 ; Make sure things work as expected.
-(define gos (add-support-compute goe))
-(gos 'all-left-marginals)
+(define gsu (add-support-compute goe))
+(gsu 'all-left-marginals)
 
-(define w (first (gos 'left-basis)))
-(define u (second (gos 'left-basis)))
+(define w (first (goe 'left-basis)))
+(define u (second (goe 'left-basis)))
 
-(gos 'left-support w)
-(gos 'left-count w)
-(gos 'left-length w)
+(gsu 'left-support w)
+(gsu 'left-count w)
+(gsu 'left-length w)
 
-(define god (add-similarity-compute gos))
+(define god (add-similarity-compute gsu))
 (god 'left-cosine w u)
 
 (god 'left-cosine (Word "the") (Word "a"))
+
+(god 'left-product (Word "the") (Word "the"))
+
+(gsu 'left-length (Word "the"))
+
+; WTF why is it wrong?
+      (define (valid? VAL) (and (not (eqv? 0 VAL)) (< -inf.0 VAL)))
+
+         (prod-obj  (add-support-compute
+            (add-fast-math star-obj * GET-CNT)))
+
+(goe 'mean-rms)
+;  (-1.4053400751699667 2.898486631855367)
+(define self (Similarity (Word "the") (Word "the")))
+
+(cog-value self (PredicateNode "*-SimKey shape-mi"))
+; (FloatValue 4.892396662694156 10.02792661666408)
+; first should be just (ami 'get-mi) ... and it is. Good.
+(ami 'get-mi self)
+
+; Verify this too -- looks OK
+(goe 'get-count self)
+; 2.1727672188133718
+
+; wtf is this??
+(cog-value self (PredicateNode "*-SimKey goe"))
+
+(define bas (take allwo 2500))
+
+; WTF why is it wrong?
+(fold
+	(lambda (wrd sum)
+		(define sl (Similarity wrd (Word "the")))
+(format #t "wrd=~A<<\n" (cog-name wrd))
+(format #t "sim=~A\n" sl)
+(format #t "mi=~A\n" (ami 'get-mi sl))
+		(define cmp (goe 'get-count sl))
+(format #t "cmp=~A\n" cmp)
+		(+ sum (* cmp cmp))
+	)
+	0 bas)
+
+(define wtf (Similarity (Word "the") (Word "-")))
+(define wtf (Similarity (Word "-") (Word "the")))
+(cog-keys wtf)
+(ami 'get-mi wtf)
 
 ; -------------------------------------
 ; Compute a bunch of them.
 (define allwo (rank-words pcs))
 (smi 'fetch-pairs)
 
+; goe provides the 'get-count method that returns a renormalized
+; version of whatever 'get-mi returns.
 (define goe (add-gaussian-ortho-api ami 'get-mi))
+(goe 'mean-rms)
 (define gos (add-similarity-api ami #f "goe"))
 (define god (add-similarity-compute goe))
 
