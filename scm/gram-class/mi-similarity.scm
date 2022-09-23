@@ -133,7 +133,7 @@
 		(if (not miv) (do-compute-sim WA WB)))
 
 	; Provided by loop-api.scm in matrix module.
-	(loop-upper-diagonal LLOBJ compute-sim WORDLI START-RANK DEPTH)
+	(loop-upper-diagonal compute-sim WORDLI START-RANK DEPTH)
 )
 
 ; ---------------------------------------------------------------

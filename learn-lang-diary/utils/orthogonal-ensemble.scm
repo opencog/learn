@@ -114,8 +114,26 @@
 
 ; -------------------------------------
 ; Compute a bunch of them.
-(define allw (rank-words pcs))
+(define allwo (rank-words pcs))
 (smi 'fetch-pairs)
-(loop-upper-diagonal LLOBJ FUN ITEMLI START-RANK DEPTH)
 
+(define goe (add-gaussian-ortho-api ami 'get-mi))
+(define gos (add-similarity-api ami #f "goe"))
+(define god (add-similarity-compute goe))
+
+(define (do-compute A B)
+	(define sim (god 'left-cosine A B))
+	(format #t "cos=~7F for (\"~A\", \"~A\")\n" sim (cog-name A) (cog-name B))
+	; (store-atom ...)
+	(gos 'set-pair-similarity
+		(gos 'make-pair A B)
+		(FloatValue sim)))
+
+(define (dot-prod A B)
+	(define have-it (gos 'pair-count A B))
+	(if (not have-it) (do-compute A B)))
+
+(loop-upper-diagonal dot-prod allwo 0 50)
+
+; add-similarity-api ??
 ; -------------------------------------
