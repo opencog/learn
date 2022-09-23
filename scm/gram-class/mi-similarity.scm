@@ -132,33 +132,8 @@
 		(define miv (sap 'pair-count WA WB))
 		(if (not miv) (do-compute-sim WA WB)))
 
-	; Perform similarity computations for one row.
-	(define (batch-simlist ITEM ITEM-LIST)
-		(for-each
-			(lambda (item) (compute-sim ITEM item))
-			ITEM-LIST))
-
-	; Take the word list and trim it down.
-	(define nwords (length WORDLI))
-	(define start (min START-RANK nwords))   ; avoid overflow
-	(define depth (min DEPTH (- nwords start)))  ; avoid overflow
-	(define row-range (take (drop WORDLI start) depth)) ; list of words to do
-	(define (col-start off) (max 0 (- (+ start off) depth))) ;  column start
-	(define (col-end off) (min (+ start off) depth)) ;  column end
-	(define (col-range off)   ; reverse, so we go from diagonal outwards
-		(reverse (take (drop WORDLI (col-start off)) (col-end off))))
-
-	(define (do-one-row off)
-		(define pone (+ 1 off))
-		(batch-simlist (list-ref row-range off) (col-range pone)))
-
-	(define rpt-one-row
-		(make-progress-rpt do-one-row 10 #f
-			"Diag: Finished ~D rows in ~D secs (~5F/sec)\n"
-			60))
-
-	; Perform the similarity calculations, looping over the fat diagonal.
-	(for-each (lambda (n) (rpt-one-row n)) (iota depth))
+	; Provided by loop-api.scm in matrix module.
+	(loop-upper-diagonal LLOBJ compute-sim WORDLI START-RANK DEPTH)
 )
 
 ; ---------------------------------------------------------------

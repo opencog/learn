@@ -94,6 +94,28 @@
 
 ; -------------------------------------
 ; Look at dot products
-(define goe (add-similarity-compute ami 'get-mi))
+(define goe (add-gaussian-ortho-api ami 'get-mi))
+
+; Make sure things work as expected.
+(define gos (add-support-compute goe))
+(gos 'all-left-marginals)
+
+(define w (first (gos 'left-basis)))
+(define u (second (gos 'left-basis)))
+
+(gos 'left-support w)
+(gos 'left-count w)
+(gos 'left-length w)
+
+(define god (add-similarity-compute gos))
+(god 'left-cosine w u)
+
+(god 'left-cosine (Word "the") (Word "a"))
+
+; -------------------------------------
+; Compute a bunch of them.
+(define allw (rank-words pcs))
+(smi 'fetch-pairs)
+(loop-upper-diagonal LLOBJ FUN ITEMLI START-RANK DEPTH)
 
 ; -------------------------------------
