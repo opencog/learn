@@ -11866,6 +11866,16 @@ rlwrap telnet 10.0.3.208 20614
  (define k (PredicateNode "*-Mutual Info Key cover-section"))
 (cog-value (car sk) k)
 
+--------------------------------------
+
+(define (sum-count LIST) (fold
+    (lambda (lopr sum)
+(format #t "duuude ~A and ~A and ~A\n" lopr (get-cnt lopr) sum)
+ (+ sum (get-cnt lopr)))
+            0
+            LIST))
+
+
 
 ====================================================
 ====================================================

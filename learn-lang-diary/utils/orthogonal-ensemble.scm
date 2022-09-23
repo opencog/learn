@@ -70,18 +70,30 @@
 
 (define ami (add-mi-sim sob))
 
+; -------------------------------------
 ; Compute vector norms. Use plain MI, for now.
+; Its fast, (5 seconds) so do both left and right, to avoid confusion.
+; Except we don't actually need this for anything ...
 (define ssc (add-support-compute ami 'get-mi))
-(ssc 'all-left-marginals)
-
-; Actually, its fast enough (5 secons) so lets to both, to avoid
-; confusion.
+; (ssc 'all-left-marginals)
 (ssc 'cache-all)
 
-; The support API will provide access to the vectors and lengths.
+; Verify that values are not insane.
+(define w (car (ssc 'left-basis)))
+(ssc 'left-support w)
+(ssc 'left-count w)
+
+; The support API will provide access to the vector lengths.
 (define gmi (add-support-api sob))
+(gmi 'left-support w)
+(gmi 'left-count w)
 
-((make-central-compute sob) 'cache-all)
+; The summary report is convoluted and ugly. Oh well.
+; ((make-central-compute sob) 'cache-all)
+; (print-matrix-summary-report sob)
 
-(print-matrix-summary-report sob)
+; -------------------------------------
+; Look at dot products
+(define goe (add-similarity-compute ami 'get-mi))
 
+; -------------------------------------
