@@ -76,6 +76,7 @@
 (define ami (add-mi-sim sob))
 
 ; -------------------------------------
+; SKIP THIS. Its not needed.
 ; Compute vector norms. Use plain MI, for now.
 ; Its fast, (5 seconds) so do both left and right, to avoid confusion.
 ; Except we don't actually need this for anything ...
@@ -122,7 +123,8 @@
 
 (gsu 'left-length (Word "the"))
 
-;-----------
+; =================================================
+; Below is a LONG debugging session. Ignore it.
 ; WTF why is it wrong?
 (goe 'mean-rms)
 ;  (-1.4053400751699667 2.898486631855367)
@@ -212,6 +214,10 @@
 	allwo)
 ; 4360.614619250912
 
+(define fas (add-support-compute fma))
+(fas 'left-sum (list (Word "the") (Word "the")))
+4365.3355366380665
+
 add-support-compute 'left-sum
 (length (fma 'left-stars (list (Word "the") (Word "the"))))
 ; 9496
@@ -233,19 +239,63 @@ add-support-compute 'left-sum
 
 (atoms-subtract faswo allwo)
 
-(define fas (add-support-compute fma))
-(fas 'left-sum (list (Word "the") (Word "the")))
-4365.3355366380665
+(define wl '())
+(for-each
+	(lambda (prs)
+		(define sl (car prs))
+		(define fw (gar sl))
+		(define sw (gdr sl))
+		(define ow (if (equal? (Word "the") fw) sw fw))
+		(when (equal? (Word "the") ow)
+			(format #t "yo its ~A" sl))
+		(set! wl (cons ow wl)))
+	(fma 'left-stars (list (Word "the") (Word "the"))))
+(length wl)
+; 2501
+(length (delete-dup-atoms wl))
+; 2500
+(keep-duplicate-atoms wl)
+; (WordNode "the")
 
-xxx
+(goe 'get-count (Similarity (Word "the") (Word "the")))
+; 2.1727672188133718
 
-      (define (valid? VAL) (and (not (eqv? 0 VAL)) (< -inf.0 VAL)))
+(* 2.1727672188133718 2.1727672188133718)
+; 4.720917387149995
+(- 4365.335536638053 4360.614619250912)
+; 4.7209173871406165
+
+Holy cow.
+So (fma 'left-stars (list (Word "the") (Word "the"))))
+has a duplicate entry! Sheesh, that took a long time.
+
+; Confirm.
+(keep-duplicate-atoms
+	(map car (fma 'left-stars (list (Word "the") (Word "the")))))
+
+(define row-var (uniquely-named-variable))
+(define LLOBJ goe)
+(define (thunk-type TY) (if (symbol? TY) (TypeNode TY) TY))
+(define row-type (thunk-type (LLOBJ 'left-type)))
+; (TypeNode "WordNode")
+(define COL-TUPLE (list (Word "the") (Word "the")))
+(define term-list
+    (map (lambda (COL) (LLOBJ 'make-pair row-var COL)) COL-TUPLE))
+
+(define qry
+   (Meet
+     (TypedVariable row-var row-type)
+     (Present term-list)))
+(define rowset (cog-value->list (cog-execute! qry)))
+(length rowset)
+; 2501
+
+Got it. Must deduplicate.
+Fixed in 4d4c7fe854208798e36c76fb8d740d89b54aa949
+; =================================================
+
 ; wtf is this??
 (cog-value self (PredicateNode "*-SimKey goe"))
-
-Also check -- total sum shoudl be goe.
-
-total-count-left
 
 
 ; This is not the minus sign, its some utf8 dash
@@ -253,6 +303,7 @@ total-count-left
 (cog-keys wtf)
 (ami 'get-mi wtf)
 
+; =================================================
 ; -------------------------------------
 ; Compute a bunch of them.
 (define allwo (rank-words pcs))
@@ -263,7 +314,7 @@ total-count-left
 (define goe (add-gaussian-ortho-api ami 'get-mi))
 (goe 'mean-rms)
 (define gos (add-similarity-api ami #f "goe"))
-(define god (add-similarity-compute goe))
+(define god (add-similarity-compute goe #f "goe")))
 
 (define (do-compute A B)
 	(define sim (god 'left-cosine A B))
