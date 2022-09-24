@@ -104,7 +104,7 @@
 (goe 'mean-rms)
 
 ; Make sure things work as expected.
-(define gsu (add-support-compute goe))
+(define gsu (add-support-compute goe #f "goe"))
 (gsu 'all-left-marginals)
 
 (define w (first (goe 'left-basis)))
@@ -304,9 +304,18 @@ Fixed in 4d4c7fe854208798e36c76fb8d740d89b54aa949
 (ami 'get-mi wtf)
 
 ; =================================================
+
+(god 'left-cosine (Word "the") (Word "a"))
+
+(god 'left-product (Word "the") (Word "the"))
+; 4360.614619250908
+(god 'left-cosine (Word "the") (Word "the"))
+; 0.999999999999999
+
+Yayyy!
+
 ; -------------------------------------
 ; Compute a bunch of them.
-(define allwo (rank-words pcs))
 (smi 'fetch-pairs)
 
 ; goe provides the 'get-count method that returns a renormalized
@@ -314,7 +323,7 @@ Fixed in 4d4c7fe854208798e36c76fb8d740d89b54aa949
 (define goe (add-gaussian-ortho-api ami 'get-mi))
 (goe 'mean-rms)
 (define gos (add-similarity-api ami #f "goe"))
-(define god (add-similarity-compute goe #f "goe")))
+(define god (add-similarity-compute goe))
 
 (define (do-compute A B)
 	(define sim (god 'left-cosine A B))
@@ -328,7 +337,13 @@ Fixed in 4d4c7fe854208798e36c76fb8d740d89b54aa949
 	(define have-it (gos 'pair-count A B))
 	(if (not have-it) (do-compute A B)))
 
+(define allwo (rank-words pcs))
 (loop-upper-diagonal dot-prod allwo 0 50)
 
-; add-similarity-api ??
+cos=0.33705 for ("by", ".")
+(define sl (Similarity (Word "by") (Word ".")))
+(cog-keys sl)
+(cog-value sl (PredicateNode "*-SimKey goe"))
+; Yayyy!
+
 ; -------------------------------------
