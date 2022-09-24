@@ -122,12 +122,8 @@
 
 (gsu 'left-length (Word "the"))
 
+;-----------
 ; WTF why is it wrong?
-      (define (valid? VAL) (and (not (eqv? 0 VAL)) (< -inf.0 VAL)))
-
-         (prod-obj  (add-support-compute
-            (add-fast-math star-obj * GET-CNT)))
-
 (goe 'mean-rms)
 ;  (-1.4053400751699667 2.898486631855367)
 (define self (Similarity (Word "the") (Word "the")))
@@ -141,26 +137,119 @@
 (goe 'get-count self)
 ; 2.1727672188133718
 
+; So this is OK...
+(define allwo (rank-words pcs))
+(define nwrd 0)
+(define nzwords '())
+(fold
+	(lambda (wrd sum)
+; (format #t "wrd=~A<<\n" (cog-name wrd))
+		(define sl (Similarity wrd (Word "the")))
+; (format #t "sim=~A\n" sl)
+; (format #t "mi=~A sum=~A\n" (ami 'get-mi sl) sum)
+		(define cmp (goe 'get-count sl))
+		; (define cmp (ami 'get-mi sl))
+; (format #t "cmp=~A\n" cmp)
+		(if (and (not (eqv? cmp 0)) (< -inf.0 cmp))
+			(begin
+;(format #t "cmp=~A old sum=~A wrd=~A<<\n" cmp sum (cog-name wrd))
+;(format #t "wtf new sum=~A\n" (+ sum (* cmp cmp)))
+				(set! nwrd (+ 1 nwrd))
+				(set! nzwords (cons wrd nzwords))
+				(+ sum (* cmp cmp)))
+			sum)
+	)
+	0 allwo)
+; 4360.614619250912
+(sqrt 4360.614619250912)
+; 66.03494998295155
+2460 words participated.
+
+(define gsu (add-support-compute goe))
+(gsu 'left-length (Word "the"))
+; 66.03494998295147
+
+(define god (add-similarity-compute gsu))
+(god 'left-product (Word "the") (Word "the"))
+; 4365.335536638053
+
+(define prod-obj (add-support-compute
+    (add-fast-math goe * 'get-count)))
+(define prod-obj (add-support-compute (add-fast-math goe *)))
+(prod-obj 'left-count (list (Word "the") (Word "the")))
+; 4365.335536638053
+(prod-obj 'left-sum (list (Word "the") (Word "the")))
+; 4365.335536638053
+
+(define tup (add-support-compute (add-tuple-math goe *)))
+(tup 'left-sum (list (Word "the") (Word "the")))
+; 4360.614619250912
+
+(define fma (add-fast-math goe * 'get-count))
+
+(goe 'get-count (Similarity (Word "the") (Word "o'clock")))
+-1.9411586964140686
+
+(define sl (Similarity (Word "the") (Word "o'clock")))
+(fma 'get-count (list sl sl))
+; 3.768097084663966  OK.
+
+(define df 0)
+(define sm 0)
+(for-each
+	(lambda (wrd)
+		(define sl (Similarity (Word "the") wrd))
+		(define fpr (fma 'get-count (list sl sl)))
+		(define cor (goe 'get-count sl))
+		(define cors (* cor cor))
+		(set! df (+ df (- cors fpr)))
+		(set! sm (+ sm cors))
+		(format #t "~6f ~6f dif=~6f sum=~6f ~A\n" fpr cors df sm (cog-name wrd))
+	)
+	nzwords)
+; 4360.614619250919
+
+	allwo)
+; 4360.614619250912
+
+add-support-compute 'left-sum
+(length (fma 'left-stars (list (Word "the") (Word "the"))))
+; 9496
+; 2501 ... wtf ..
+
+(length allwo)
+; 9495
+
+(define fwo
+	(append
+	(map (lambda (prs) (gar (car prs)))
+		(fma 'left-stars (list (Word "the") (Word "the"))))
+	(map (lambda (prs) (gdr (car prs)))
+		(fma 'left-stars (list (Word "the") (Word "the"))))))
+
+(define faswo (delete-dup-atoms fwo))
+(length faswo)
+2500
+
+(atoms-subtract faswo allwo)
+
+(define fas (add-support-compute fma))
+(fas 'left-sum (list (Word "the") (Word "the")))
+4365.3355366380665
+
+xxx
+
+      (define (valid? VAL) (and (not (eqv? 0 VAL)) (< -inf.0 VAL)))
 ; wtf is this??
 (cog-value self (PredicateNode "*-SimKey goe"))
 
-(define bas (take allwo 2500))
+Also check -- total sum shoudl be goe.
 
-; WTF why is it wrong?
-(fold
-	(lambda (wrd sum)
-		(define sl (Similarity wrd (Word "the")))
-(format #t "wrd=~A<<\n" (cog-name wrd))
-(format #t "sim=~A\n" sl)
-(format #t "mi=~A\n" (ami 'get-mi sl))
-		(define cmp (goe 'get-count sl))
-(format #t "cmp=~A\n" cmp)
-		(+ sum (* cmp cmp))
-	)
-	0 bas)
+total-count-left
 
-(define wtf (Similarity (Word "the") (Word "-")))
-(define wtf (Similarity (Word "-") (Word "the")))
+
+; This is not the minus sign, its some utf8 dash
+(define wtf (Similarity (Word "the") (Word "‑")))
 (cog-keys wtf)
 (ami 'get-mi wtf)
 
