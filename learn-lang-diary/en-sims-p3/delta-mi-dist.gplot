@@ -16,6 +16,9 @@ set yrange [5e-6:0.2]
 set format y "10^{%L}"
 sigma=3.7
 off=-2.1
+mu=-7.77
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
 plot "delta-mi-dist.dat" using 2:3 with lines lw 2 title "", \
-     "delta-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-2.1,3.7)"
+     "delta-mi-dist.dat" using 2:(g($2)) with lines lw 2 title "G(-7.8, 3.7)"
 #################################################
