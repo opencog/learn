@@ -387,21 +387,22 @@ cos=0.33705 for ("by", ".")
 
 (chdir "/home/ubuntu/experiments/run-15/data")
 
-(define (scatter DOT-LIST F1 F2 T1 T2 TITLE FILENAME)
+(define (scatter-goe DOT-LIST FILENAME)
 	(define csv (open FILENAME (logior O_WRONLY O_CREAT)))
 	(define cnt 0)
-	(format csv "#\n# ~A\n#\n" TITLE)
-	(format csv "#\n# ~A\t~A\n" T1 T2)
+	(format csv "#\n# MI and Cosines\n#\n")
+	(format csv "#\n# mi\trmi\tcos-mi\tcos-rmi\n")
 	(for-each
-		(lambda (SL) (format csv "~8F\t~8F\n" (F1 SL) (F2 SL)))
+		(lambda (SL)
+			(format csv "~8F\t~8F\t~8F\t~8F\n"
+				(cog-value-ref (smi 'get-count SL) 0)
+				(cog-value-ref (smi 'get-count SL) 1)
+				(cog-value-ref (gos 'get-count SL) 0)
+				(cog-value-ref (gos 'get-count SL) 1)))
 		DOT-LIST)
 	(close csv)
 )
 
-(scatter all-cosi
-	(lambda (SL) (cog-value-ref (gos 'get-count SL) 0))
-	(lambda (SL) (cog-value-ref (smi 'get-count SL) 0))
-	"goe" "mi" "Gaussian-cosines vs MI" "scatter-goe-mi.dat")
-
+(scatter-goe all-cosi "scatter-goe.dat")
 
 ; ---------------------------------------

@@ -2,10 +2,10 @@
 
 #################################################
 #
-# set term png
-# set out 'scatter-goe-mi.png'
-set term postscript eps enhanced color 24
-set out 'scatter-goe-mi.eps'
+set term png
+set out 'scatter-goe-mi.png'
+# set term postscript eps enhanced color 24
+# set out 'scatter-goe-mi.eps'
 set key right bottom
 set title "Scatterplot MI vs cosine-MI"
 set xlabel "MI"
@@ -13,4 +13,4 @@ set ylabel "Cosine"
 set xrange [-15:10]
 set yrange [-1:1]
 
-plot "scatter-goe-mi.dat" using 2:1 with points pointtype 5 pointsize 0.1 title ""
+plot "scatter-goe.dat" using 1:3 with points pointtype 5 pointsize 0.1 title ""

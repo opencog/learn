@@ -1,0 +1,16 @@
+# set term png small color
+
+#################################################
+#
+#set term png
+#set out 'scatter-goe-mi-rmi.png'
+set term postscript eps enhanced color 24
+set out 'scatter-goe-mi-rmi.eps'
+set key right bottom
+set title "Scatterplot cosine-MI vs cosine-RMI"
+set xlabel "Cosine-MI"
+set ylabel "Cosine-RMI"
+set xrange [-1:1]
+set yrange [-1:1]
+
+plot "scatter-goe.dat" using 3:4 with points pointtype 5 pointsize 0.1 title ""
