@@ -382,4 +382,26 @@ cos=0.33705 for ("by", ".")
 	(print-bincounts-tsv cos-rmi-dist csv)
 	(close csv))
 
-; -------------------------------------
+; ---------------------------------------
+; Dump datafile -- goe cos-MI vs MI scatterplot
+
+(chdir "/home/ubuntu/experiments/run-15/data")
+
+(define (scatter DOT-LIST F1 F2 T1 T2 TITLE FILENAME)
+	(define csv (open FILENAME (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# ~A\n#\n" TITLE)
+	(format csv "#\n# ~A\t~A\n" T1 T2)
+	(for-each
+		(lambda (SL) (format csv "~8F\t~8F\n" (F1 SL) (F2 SL)))
+		DOT-LIST)
+	(close csv)
+)
+
+(scatter all-cosi
+	(lambda (SL) (cog-value-ref (gos 'get-count SL) 0))
+	(lambda (SL) (cog-value-ref (smi 'get-count SL) 0))
+	"goe" "mi" "Gaussian-cosines vs MI" "scatter-goe-mi.dat")
+
+
+; ---------------------------------------

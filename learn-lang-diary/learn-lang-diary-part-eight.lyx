@@ -1524,7 +1524,158 @@ GOE Distributions
 \end_layout
 
 \begin_layout Standard
-So, using 
+So, using MI and RMI, define the Gaussian vectors as described at the begining
+ of this section.
+ The base space has dimension 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ – i.e.
+ we've computed MI and RMI for the top-ranked 2500 words, for a total of
+ 
+\begin_inset Formula $N\left(N+1\right)/2=3126250$
+\end_inset
+
+ word-pairs.
+ That is, we have 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ vectors 
+\begin_inset Formula $\vec{w}$
+\end_inset
+
+.
+ Out of these, take the 
+\begin_inset Formula $M$
+\end_inset
+
+ top-ranked words, and compute the cosines
+\begin_inset Formula 
+\[
+\cos\left(\theta_{wu}\right)=\hat{w}\cdot\hat{u}=\frac{\vec{w}\cdot\vec{u}}{\left\Vert \vec{w}\right\Vert \left\Vert \vec{u}\right\Vert }
+\]
+
+\end_inset
+
+The grah below shows the cosine distribution for the top 
+\begin_inset Formula $M=250$
+\end_inset
+
+ words, or 
+\begin_inset Formula $M\left(M+1\right)/2=31375$
+\end_inset
+
+ pairs.
+ There are two graphs, actually, one for vectors built from MI and another
+ from RMI.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/cos-mi-dist-250.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution is flat-topped.
+ This is exactly what we'd expect, if the initial distribution was perfectly
+ Gaussian.
+ But its not, so there's a fall-off.
+ The peak at 
+\begin_inset Formula $\cos\theta=1$
+\end_inset
+
+ is for the self-similarlty.
+ Very curious is the notch right below 
+\begin_inset Formula $\cos\theta=1$
+\end_inset
+
+.
+ This notch indicates an actual repulsion.
+ Word are actually being repelled – there is a minimum cosine distance!
+ That is, the word-vectors are uniformly distributed across the sphere 
+\begin_inset Formula $S_{N-1}$
+\end_inset
+
+ except for two things: there is a repulsive force, that prevents vectors
+ from getting close to each-other, and depopulates near 
+\begin_inset Formula $\cos\theta=1$
+\end_inset
+
+.
+ There is also an 
+\begin_inset Quotes eld
+\end_inset
+
+inverted
+\begin_inset Quotes erd
+\end_inset
+
+ force, depopulating a much larger region around 
+\begin_inset Formula $\cos\theta=-1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The depopulated region around 
+\begin_inset Formula $\cos\theta=-1$
+\end_inset
+
+ seems like it should be 
+\begin_inset Quotes eld
+\end_inset
+
+less interesting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It seems to be saying that there are no words which are truly 
+\begin_inset Quotes eld
+\end_inset
+
+different
+\begin_inset Quotes erd
+\end_inset
+
+ from all other words.
+ 
+\end_layout
+
+\begin_layout Standard
+Perhaps the notches can be parameterized by a repulsive force...
+ how?
+\end_layout
+
+\begin_layout Subsubsection*
+Correlations
+\end_layout
+
+\begin_layout Standard
+The scatterplot below shows how the cosines and the MI are correlated.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/scatter-goe-mi.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So...
 \end_layout
 
 \begin_layout Section*
