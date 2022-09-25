@@ -16,6 +16,9 @@ set yrange [1e-5:0.2]
 set format y "10^{%L}"
 sigma=3.2
 off=-4.3
+mu=-13.76
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
 plot "marg-mi-dist.dat" using 2:3 with lines lw 2 title "", \
-     "marg-mi-dist.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -(($2/sigma - off) * ($2/sigma -off))/2)) with lines lw 2 title "G(-4.3,3.2)"
+     "marg-mi-dist.dat" using 2:(g($2)) with lines lw 2 title "G(-13.8, 3.2)"
 #################################################
