@@ -35,11 +35,33 @@ set ylabel "Probability"
 set xrange [-20:15]
 set yrange [5e-6:0.2]
 set format y "10^{%L}"
-sigma=2.95
-mu=-2.15
+sigma=3.1
+mu=-3
 g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
 
+sdev=2.95
+mean=-2.15
+h(x) = exp(-(x-mean)**2/(2*sdev**2))/(sdev * sqrt(2*3.14159))
+
 plot "sim-mi-dist-2500.dat" using 2:3 with lines lw 2 title "MI", \
-     "sim-rmi-dist-2500.dat" using 2:3 with lines lw 2 title "ranked-MI", \
-     "sim-mi-dist-2500.dat" using 2:(g($2)) with lines lw 2 title "G(-2.15, 2.95)"
+     "sim-mi-dist-2500.dat" using 2:(g($2)) with lines lw 2 title "G(-3, 3.1)", \
+     "sim-mi-dist-2500.dat" using 2:(h($2)) with lines lw 2 title "G(-2.15, 2.95)"
+
+#################################################
+#
+set term png
+set out 'sim-mi-rmi-2500.png'
+# set term postscript eps enhanced color 24
+# set out 'sim-mi-dist.eps'
+set key right top
+set logscale y
+set title "Distribution of MI (N=2500)"
+set xlabel "MI"
+set ylabel "Probability"
+set xrange [-20:15]
+set yrange [5e-6:0.2]
+set format y "10^{%L}"
+
+plot "sim-mi-dist-2500.dat" using 2:3 with lines lw 2 title "MI", \
+     "sim-rmi-dist-2500.dat" using 2:3 with lines lw 2 title "ranked-MI"
 #################################################
