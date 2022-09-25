@@ -18,7 +18,7 @@ sigma=3.7
 off=-1.8
 plot "sim-mi-dist-500.dat" using 2:3 with lines lw 2 title "MI", \
      "sim-rmi-dist-500.dat" using 2:3 with lines lw 2 title "ranked-MI", \
-     "sim-mi-dist-2500.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -((($2-off)/sigma) * (($2-off)/sigma))/2)) with lines lw 2 title "G(-1.8, 3.7)"
+     "sim-mi-dist-2500.dat" using 2:((1 / (sigma * sqrt(2 * 3.14159))) * exp(-0.5 * (($2-off)/sigma)**2)) with lines lw 2 title "G(-1.8, 3.7)"
 #################################################
 #
 set term png
@@ -37,5 +37,5 @@ sigma=2.95
 off=-2.15
 plot "sim-mi-dist-2500.dat" using 2:3 with lines lw 2 title "MI", \
      "sim-rmi-dist-2500.dat" using 2:3 with lines lw 2 title "ranked-MI", \
-     "sim-mi-dist-2500.dat" using 2:(( 1 / (sigma * sqrt(2 * 3.14159)))*exp( -((($2-off)/sigma) * (($2-off)/sigma))/2)) with lines lw 2 title "G(-2.15, 2.95)"
+     "sim-mi-dist-2500.dat" using 2:((1 / (sigma * sqrt(2 * 3.14159))) * exp(-0.5 * (($2-off)/sigma)**2)) with lines lw 2 title "G(-2.15, 2.95)"
 #################################################
