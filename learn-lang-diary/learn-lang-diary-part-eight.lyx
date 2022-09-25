@@ -1430,9 +1430,88 @@ r15-sim2500.rdb
 \begin_layout Standard
 Below are some graphs showing this dataset.
  It's not as pretty as some of the earlier graphs.
- Why? See, for example, page 14 and page 25 of chapter three.
- But it is comparable to those in the second half of the diary chapter five,
- so I guess that's OK.
+ Why? See, for example, page 14 and page 25 of chapter three (ranked-MI
+ here is called common-MI there).
+ But it is comparable to those in the second half of the diary chapter five
+ (pages 19, 20, 38-40), so I guess that's OK.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/sim-mi-dist-500.eps
+	width 48text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p8-goe/sim-mi-dist-2500.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above left: the Gaussian shown has the same parameters as the earlier ones,
+ in chapter three.
+ Here N=500 pairs vs N=1200 in chapter three.
+ Also shown is ranked-MI, which shifts slightly to the right.
+ Above right: just the MI, with two gaussians.
+ One is an 
+\begin_inset Quotes eld
+\end_inset
+
+eyeballed fit
+\begin_inset Quotes erd
+\end_inset
+
+, adjusting the gaussian to match the tail of the distribution.
+ This is the G(-3,3.1) gaussian.
+ The other shows the results of computing the mean and stddev of data: 
+\begin_inset Formula $\mu=-2.1492$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma=2.9518$
+\end_inset
+
+ as reported in the table above.
+ The mean is clearly influenced by the blip in the data just above the mean.
+ The tails have very little influence on the calculation of the mean and
+ stddev ...
+ and yet...
+ maybe they should? Maybe we should be fitting to the tails with equal weight
+ as the center? 
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/sim-mi-rmi-2500.eps
+	width 48text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p8-goe/sim-mi-500-2500.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above left: compare MI to rnaked MI without the visual distraction of the
+ gaussian.
+ The right hand side looks a lot more linear.
+ This linear-like right-hand-side can also be seen in graphs in chapters
+ three, five, but not as pronounced as here.
+ Above right: compare distributions for varying N.
 \end_layout
 
 \begin_layout Section*
