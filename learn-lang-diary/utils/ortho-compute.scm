@@ -53,6 +53,8 @@
 (goe 'mean-rms)
 (gor 'mean-rms)
 
+; XXX todo store mean-rms on any-node.
+
 (define gos (add-similarity-api ami #f "goe"))
 
 (define goec (add-similarity-compute goe))
@@ -73,6 +75,6 @@
 	(if (not have-it) (do-compute A B)))
 
 (define allwo (rank-words pcs))
-(loop-upper-diagonal dot-prod allwo 0 50)
+(loop-upper-diagonal dot-prod allwo 0 250)
 
 ; -------------------------------------
