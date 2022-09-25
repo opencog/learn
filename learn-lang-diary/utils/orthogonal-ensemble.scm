@@ -24,7 +24,7 @@
 
 (define wmi (/ 2.0 (length all-sims)))
 
-; Plain MI distrsibution
+; Plain MI distribution
 (define mi-dist
    (bin-count all-sims 100
       (lambda (SIM) (cog-value-ref (smi 'get-count SIM) 0))
@@ -345,5 +345,41 @@ cos=0.33705 for ("by", ".")
 (cog-keys sl)
 (cog-value sl (PredicateNode "*-SimKey goe"))
 ; Yayyy!
+
+; -------------------------------------
+; Graphs of cosine distance distributions.
+
+(gos 'pair-count (Word "house") (Word "the"))
+(gos 'get-count (Similarity (Word "house") (Word "the")))
+
+(define all-sims ((add-pair-stars smi) 'get-all-elts))
+(length all-sims) ; 3126250
+(define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
+(length all-cosi) ; 31375 = (251 * 250) / 2
+
+(define wmi (/ 2.0 (length all-cosi)))
+
+; Plain cosine-MI distribution
+(define cos-mi-dist
+   (bin-count all-cosi 100
+      (lambda (SIM) (cog-value-ref (gos 'get-count SIM) 0))
+      (lambda (SIM) wmi)
+      -1 1))
+
+(define cos-rmi-dist
+   (bin-count all-cosi 100
+      (lambda (SIM) (cog-value-ref (gos 'get-count SIM) 1))
+      (lambda (SIM) wmi)
+      -1 1))
+
+(define (prt-cos-mi-dist)
+	(define csv (open "/tmp/cos-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv cos-mi-dist csv)
+	(close csv))
+
+(define (prt-cos-rmi-dist)
+	(define csv (open "/tmp/cos-rmi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv cos-rmi-dist csv)
+	(close csv))
 
 ; -------------------------------------

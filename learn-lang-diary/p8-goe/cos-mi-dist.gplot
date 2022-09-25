@@ -1,0 +1,22 @@
+# set term png small color
+
+#################################################
+#
+set term png
+set out 'cos-mi-dist-250.png'
+# set term postscript eps enhanced color 24
+# set out 'cos-mi-dist-250.eps'
+set key right top
+set logscale y
+set title "Ortho Distribution (M=250 N=2500)"
+set xlabel "Cosine"
+set ylabel "Probability"
+set xrange [-1:1]
+set yrange [5e-5:0.1]
+set format y "10^{%L}"
+sigma=3.7
+mu=-1.8
+g(x) = exp(-(x-mu)**2/(2*sigma**2))/(sigma * sqrt(2*3.14159))
+
+plot "cos-mi-dist-250.dat" using 2:3 with lines lw 2 title "cos MI", \
+     "cos-rmi-dist-250.dat" using 2:3 with lines lw 2 title "cos ranked-MI"
