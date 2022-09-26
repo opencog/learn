@@ -937,7 +937,7 @@ RAM
 \begin_inset Text
 
 \begin_layout Plain Layout
-load time
+cpu to load
 \end_layout
 
 \end_inset
@@ -966,7 +966,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-20116(?)
+20100
 \end_layout
 
 \end_inset
@@ -975,7 +975,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+4.3GB
 \end_layout
 
 \end_inset
@@ -984,7 +984,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11 min
 \end_layout
 
 \end_inset
@@ -1069,7 +1069,7 @@ r15-sim2500.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-6.4g
+6.4GB
 \end_layout
 
 \end_inset
@@ -1116,7 +1116,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-17.1g
+20.8GB
 \end_layout
 
 \end_inset
@@ -1125,7 +1125,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+45 min
 \end_layout
 
 \end_inset
@@ -1157,6 +1157,10 @@ Each larger dataset is built from the smaller one; this allows experiments
 .
  The similarities computed as described earlier, using the cross-sections
  and shapes as a part of the vectors.
+ RAM consumption includes that for shapes/cross-sections as well as similarities.
+ The CPU-time-to-load includes the cpu-time to load shapes and cross-sections.
+ These are needed for computing MI, but are not needed for the GOE computations
+ (however, they are needed to get a list of ranked words.) 
 \end_layout
 
 \begin_layout Standard
@@ -1276,7 +1280,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-1.6966
 \end_layout
 
 \end_inset
@@ -1285,7 +1289,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.2703
 \end_layout
 
 \end_inset
@@ -1294,7 +1298,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.5947
 \end_layout
 
 \end_inset
@@ -1303,7 +1307,7 @@ r14-sim200.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.3151
 \end_layout
 
 \end_inset
@@ -1332,7 +1336,7 @@ r15-sim500.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-1.8062
 \end_layout
 
 \end_inset
@@ -1341,7 +1345,7 @@ r15-sim500.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.1579
 \end_layout
 
 \end_inset
@@ -1350,7 +1354,7 @@ r15-sim500.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.4925
 \end_layout
 
 \end_inset
@@ -1359,7 +1363,7 @@ r15-sim500.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+3.2165
 \end_layout
 
 \end_inset
@@ -1444,7 +1448,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.7240
 \end_layout
 
 \end_inset
@@ -1453,7 +1457,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.6398
 \end_layout
 
 \end_inset
@@ -1462,7 +1466,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-2.7543
 \end_layout
 
 \end_inset
@@ -1471,7 +1475,7 @@ r15-sim6000.rdb
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+2.6019
 \end_layout
 
 \end_inset
@@ -1490,6 +1494,24 @@ r15-sim6000.rdb
 
 \begin_layout Standard
 Below are some graphs showing this dataset.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Data collected with first 50 lines of 
+\family sans
+utils/orthogonal-ensemble.scm
+\family default
+ from data in experiment-15.
+ Plotted by 
+\family sans
+p8-goe/sim-mi-dist.gplot
+\family default
+.
+\end_layout
+
+\end_inset
+
  It's not as pretty as some of the earlier graphs.
  Why? See, for example, page 14 and page 25 of chapter three (ranked-MI
  here is called common-MI there).
@@ -1567,12 +1589,46 @@ eyeballed fit
 \end_layout
 
 \begin_layout Standard
-Above left: compare MI to rnaked MI without the visual distraction of the
+Above left: compare MI to ranked-MI without the visual distraction of the
  gaussian.
  The right hand side looks a lot more linear.
  This linear-like right-hand-side can also be seen in graphs in chapters
  three, five, but not as pronounced as here.
  Above right: compare distributions for varying N.
+ 
+\end_layout
+
+\begin_layout Standard
+Below, do it again, up to 
+\begin_inset Formula $N=6000$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/sim-mi-6k.eps
+	width 70text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above extends the distribution to 
+\begin_inset Formula $N\left(N+1\right)/2=18003000$
+\end_inset
+
+ or 18 million pairs.
+ The linearity on the right is maintained, and seems to have the particularly
+ simple form of 
+\begin_inset Formula $e^{-MI}/2$
+\end_inset
+
+ while the left side is imperfectly Gaussian (seems to drop off even faster).
 \end_layout
 
 \begin_layout Subsection*
