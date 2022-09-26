@@ -416,7 +416,7 @@ cos=0.33705 for ("by", ".")
 (define all-cosi-ord (sort all-cosi lessi))
 
 (define distinct-cosi-ord
-	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-cosi-ord)) 
+	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-cosi-ord))
 
 (define (top-pairs LST N)
 	(for-each (lambda (SL)
@@ -428,6 +428,26 @@ cos=0.33705 for ("by", ".")
 
 (top-pairs (drop distinct-cosi-ord 200) 20)
 
+; --------------
+Di is again but for old RMI
+(define (lessr A B)
+	(> (cog-value-ref (smi 'get-count A) 1)
+		(cog-value-ref (smi 'get-count B) 1)))
+
+(define all-rmi-ord (sort all-cosi lessr))
+
+(define distinct-rmi-ord
+	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-rmi-ord))
+
+(top-pairs distinct-rmi-ord 20)
+
+(define (top-pairs LST N)
+	(for-each (lambda (SL)
+		(format #t "~6F, ~6F, ~A, ~A\n"
+			(cog-value-ref (gos 'get-count SL) 0)
+			(cog-value-ref (smi 'get-count SL) 1)
+			(cog-name (gar SL)) (cog-name (gdr SL))))
+		(take LST N)))
 
 
 ; ---------------------------------------
