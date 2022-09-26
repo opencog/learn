@@ -384,6 +384,7 @@ cos=0.33705 for ("by", ".")
 
 ; ---------------------------------------
 ; Dump datafile -- goe cos-MI vs MI scatterplot
+; Graphed with p8-goe/scatter-goe-mi-rmi.gplot and related.
 
 (chdir "/home/ubuntu/experiments/run-15/data")
 
@@ -404,5 +405,29 @@ cos=0.33705 for ("by", ".")
 )
 
 (scatter-goe all-cosi "scatter-goe.dat")
+
+; ---------------------------------------
+; Top most similar words
+
+(define (lessi A B)
+	(> (cog-value-ref (gos 'get-count A) 0)
+		(cog-value-ref (gos 'get-count B) 0)))
+
+(define all-cosi-ord (sort all-cosi lessi))
+
+(define distinct-cosi-ord
+	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-cosi-ord)) 
+
+(define (top-pairs LST N)
+	(for-each (lambda (SL)
+		(format #t "~6F ~A ~A\n" (cog-value-ref (gos 'get-count SL) 0)
+			(cog-name (gar SL)) (cog-name (gdr SL))))
+		(take LST N)))
+
+(top-pairs distinct-cosi-ord 20)
+
+(top-pairs (drop distinct-cosi-ord 200) 20)
+
+
 
 ; ---------------------------------------
