@@ -1629,6 +1629,34 @@ The above extends the distribution to
 \end_inset
 
  while the left side is imperfectly Gaussian (seems to drop off even faster).
+ Recall that this dataset has some fair amount of garbage in it (due to
+ bad escaping of quotes) and also has been trimmed; so its not clear whether
+ the linear right is 
+\begin_inset Quotes eld
+\end_inset
+
+real data
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+garbage
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+artifact of trimming
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -1681,6 +1709,24 @@ The grah below shows the cosine distribution for the top
  pairs.
  There are two graphs, actually, one for vectors built from MI and another
  from RMI.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Graphs built with code in 
+\family sans
+util/orthogonal-ensemble.scm
+\family default
+ lines 350-380 and 
+\family sans
+p8-goe/cos-mi-dist.gplot
+\family default
+.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1765,6 +1811,36 @@ different
 \begin_layout Standard
 Perhaps the notches can be parameterized by a repulsive force...
  how?
+\end_layout
+
+\begin_layout Standard
+Again, this time showing the distributions for the top top 
+\begin_inset Formula $M=250$
+\end_inset
+
+ words (as before) and the top 
+\begin_inset Formula $M=500$
+\end_inset
+
+ words.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/cos-mi-dist-500.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Much as before; slightly less flat.
+ Notch on the right is slightly larger; the notch on the left is slightly
+ smaller.
+ 
 \end_layout
 
 \begin_layout Subsubsection*

@@ -357,7 +357,8 @@ cos=0.33705 for ("by", ".")
 (define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
 (length all-cosi) ; 31375 = (251 * 250) / 2
 
-(define wmi (/ 2.0 (length all-cosi)))
+; 100 because 100 bins, and 2.0 because of width
+(define wmi (/ 100 (* 2.0 (length all-cosi))))
 
 ; Plain cosine-MI distribution
 (define cos-mi-dist
@@ -373,13 +374,33 @@ cos=0.33705 for ("by", ".")
       -1 1))
 
 (define (prt-cos-mi-dist)
-	(define csv (open "/tmp/cos-mi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "/tmp/cos-mi-dist-250.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv cos-mi-dist csv)
 	(close csv))
 
 (define (prt-cos-rmi-dist)
-	(define csv (open "/tmp/cos-rmi-dist.dat" (logior O_WRONLY O_CREAT)))
+	(define csv (open "/tmp/cos-rmi-dist-250.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv cos-rmi-dist csv)
+	(close csv))
+
+; ----------
+; Again same as above out to M=500 insead of 250
+
+(define cosi-500 (filter (lambda (sl) (gos 'get-count sl)) all-sims))
+(length cosi-500) ; 125250 = 500*501 / 2
+
+(define (cos-dist LST)
+	(define wnc (/ 100 (* 2.0 (length LST))))
+   (bin-count LST 100
+      (lambda (SIM) (cog-value-ref (gos 'get-count SIM) 0))
+      (lambda (SIM) wnc)
+      -1 1))
+
+(define cos-mi-dist-500 (cos-dist cosi-500))
+
+(define (prt-cos-mi-500-dist)
+	(define csv (open "/tmp/cos-mi-dist-500.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv cos-mi-dist-500 csv)
 	(close csv))
 
 ; ---------------------------------------
