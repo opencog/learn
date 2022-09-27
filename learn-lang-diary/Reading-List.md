@@ -1,6 +1,12 @@
 
 Things to read:
 
+* Nick McKenna Mark Steedman,
+  Smoothing Entailment Graphs with Language Models
+  https://arxiv.org/pdf/2208.00318.pdf
+
+* https://openai.com/api/ the GPT-3 language model
+
 * Elena Di Lavore, Giovanni de Felice, Mario Román,
   Monoidal Streams for Dataflow Programming
   https://arxiv.org/pdf/2202.02061.pdf
