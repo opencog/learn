@@ -428,7 +428,7 @@ cos=0.33705 for ("by", ".")
 (scatter-goe all-cosi "scatter-goe.dat")
 
 ; ---------------------------------------
-; Top most similar words
+; Top most similar words (according to goe)
 
 (define (lessi A B)
 	(> (cog-value-ref (gos 'get-count A) 0)
@@ -450,7 +450,7 @@ cos=0.33705 for ("by", ".")
 (top-pairs (drop distinct-cosi-ord 200) 20)
 
 ; --------------
-Di is again but for old RMI
+; Do it again, but for old RMI -- the top-20 RMI-associated words.
 (define (lessr A B)
 	(> (cog-value-ref (smi 'get-count A) 1)
 		(cog-value-ref (smi 'get-count B) 1)))
@@ -470,5 +470,9 @@ Di is again but for old RMI
 			(cog-name (gar SL)) (cog-name (gdr SL))))
 		(take LST N)))
 
-
+; ---------------------------------------
+; How many have we done so far?
+;
+(length (filter (lambda (sl) (gos 'get-count sl))
+	((add-pair-stars smi) 'get-all-elts)))
 ; ---------------------------------------
