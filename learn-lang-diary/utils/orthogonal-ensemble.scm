@@ -353,6 +353,7 @@ cos=0.33705 for ("by", ".")
 (gos 'get-count (Similarity (Word "house") (Word "the")))
 
 (define all-sims ((add-pair-stars smi) 'get-all-elts))
+(define all-sims (cog-get-atoms 'Similarity))
 (length all-sims) ; 3126250
 (define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
 (length all-cosi) ; 31375 = (251 * 250) / 2
@@ -475,4 +476,6 @@ cos=0.33705 for ("by", ".")
 ;
 (length (filter (lambda (sl) (gos 'get-count sl))
 	((add-pair-stars smi) 'get-all-elts)))
+
+; 131735
 ; ---------------------------------------
