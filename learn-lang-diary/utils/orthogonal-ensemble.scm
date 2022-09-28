@@ -483,10 +483,68 @@ cos=0.33705 for ("by", ".")
 		(take LST N)))
 
 ; ---------------------------------------
-; How many have we done so far?
-;
-(length (filter (lambda (sl) (gos 'get-count sl))
-	((add-pair-stars smi) 'get-all-elts)))
+; Vector addititivity
 
-; 131735
+(define gos (add-similarity-api ami #f "goe"))
+
+(define (most-sim A B C WLIST)
+	(define wa (cog-node 'WordNode A))
+	(define wb (cog-node 'WordNode B))
+	(define wc (cog-node 'WordNode C))
+	(if (not (and wa wb wc))
+		(throw 'bad-word 'most-sim "a word doesnt exist"))
+
+	(define (get-sim wp wq)
+		; (define OFF 1)
+		(define OFF 1)
+		(define fa (gos 'pair-count wp wq))
+		(if fa (cog-value-ref fa OFF) 0.0))
+
+	(define sims (map
+		(lambda (W)
+			(define sa (get-sim W wa))
+			(define sb (get-sim W wb))
+			(define sc (get-sim W wc))
+			(define vs (+ (- sa sb) sc))
+			(cons W vs))
+		WLIST))
+
+	(define sosi
+		(sort sims (lambda (L R) (> (cdr L) (cdr R)))))
+
+	(for-each (lambda (ITM)
+		(format #t "~A, ~6F\n" (cog-name (car ITM)) (cdr ITM)))
+		(take sosi 10))
+)
+
+(most-sim "husband" "man" "woman" (take allwo 1000))
+(most-sim "brother" "man" "woman" (take allwo 1000))
+(most-sim "boy" "man" "woman" (take allwo 1000))
+
+(most-sim "Paris" "France" "Spain" (take allwo 1000))
+(most-sim "Paris" "France" "Germany" (take allwo 1000))
+(most-sim "London" "England" "Germany" (take allwo 1000))
+
+(most-sim "tree" "leaf" "flower" (take allwo 1000))
+(most-sim "dog" "puppy" "cat" (take allwo 1000))
+(most-sim "kitten" "cat" "puppy" (take allwo 1000))
+
+(most-sim "hammer" "nail" "comb" (take allwo 1000))
+
+(most-sim "black" "white" "up" (take allwo 1000))
+(most-sim "black" "white" "good" (take allwo 1000))
+(most-sim "black" "white" "smile" (take allwo 1000))
+(most-sim "black" "white" "love" (take allwo 1000))
+
+(most-sim "short" "light" "long" (take allwo 1000))
+(most-sim "speak" "sing" "walk" (take allwo 1000))
+(most-sim "like" "love" "dislike" (take allwo 1000))
+(most-sim "left" "right" "north" (take allwo 1000))
+
+(most-sim "flood" "rain" "drought" (take allwo 1000))
+(most-sim "giggle" "laugh" "sniffle" (take allwo 1000))
+
+(most-sim "blue" "sky" "green" (take allwo 1000))
+
+
 ; ---------------------------------------
