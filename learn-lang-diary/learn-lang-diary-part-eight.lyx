@@ -1818,8 +1818,12 @@ Again, this time showing the distributions for the top top
 \begin_inset Formula $M=250$
 \end_inset
 
- words (as before) and the top 
+ words (as before), the top 
 \begin_inset Formula $M=500$
+\end_inset
+
+ words and the top 
+\begin_inset Formula $M=1000$
 \end_inset
 
  words.
@@ -1831,7 +1835,7 @@ Graphs built with code in
 \family sans
 util/orthogonal-ensemble.scm
 \family default
- lines 387-405 and 
+ lines 387-417 and 
 \family sans
 p8-goe/cos-mi-dist-500.gplot
 \family default
@@ -1858,16 +1862,32 @@ p8-goe/cos-mi-dist-500.gplot
 Much as before; slightly less flat.
  Notch on the right is slightly larger; the notch on the left is slightly
  smaller.
+ The 
+\begin_inset Formula $M=1000$
+\end_inset
+
+ has a spike at precisely cosine=0.
+ This is due to the appearance of word-pairs that have nothing in common:
+ either one or the other has a zero vector component, thus the dot product
+ is zero.
+ A zero vector component corresponds to 
+\begin_inset Formula $MI=-\infty$
+\end_inset
+
+ i.e.
+ a pair of words which have no disjuncts in common.
+ The appearance of this spike suggests we've reached the limit of the utility
+ of the vectors: longer vectors are needed.
  
 \end_layout
 
 \begin_layout Standard
 Again, this time showing what happens when the vector lengths are varied.
- This holds the top top 
+ One the left, the distribution of dot products for the top-ranked 
 \begin_inset Formula $M=250$
 \end_inset
 
- words (as before) but compares vectors of length 
+ words (as before), but compares vectors of length 
 \begin_inset Formula $N=2500$
 \end_inset
 
@@ -1877,12 +1897,36 @@ Again, this time showing what happens when the vector lengths are varied.
 
 .
  The plateau is narrower.
+ On the right, same, but the distribution of dot products for the top-ranked
+ 
+\begin_inset Formula $M=500$
+\end_inset
+
+ words.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Made with cos-mi-dN.gplot from scripts as above.
+ 
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename p8-goe/cos-mi-dN.eps
+	width 48text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p8-goe/cos-mi-500-dN.eps
 	width 48text%
 
 \end_inset

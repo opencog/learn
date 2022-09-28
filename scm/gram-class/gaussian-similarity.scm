@@ -1,13 +1,11 @@
 ;
-; ortho-compute.scm
+; gaussian-similarity.scm
 ;
-; Bulk computation of gaussian orthogonal ensembles.
-; Streamlined version of `orthogonal-ensemble.scm`
-; Part of experiments/run-15, described in diary part eight.
-; Copied over and formalized at `scm/gram-class/gaussian-similarity.scm`
-;
+; Bulk computation of gaussian orthogonal vector similarities.
 ; Sept 2022
 ; -------------------------------------
+xxxxxxxx
+
 ; Ingest data
 (define pca (make-pseudo-cset-api)) ; shapes not needed to fetch sims.
 (define pcs (add-pair-stars pca))
@@ -18,11 +16,22 @@
 (smi 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
 
 ; -------------------------------------
-; TODO filter the top lists
-; (define (filter the top list...
 
-; Wrap similarity, to create a new base object.
-(define sob (add-pair-stars smi))
+(define*-public (compute-goe-similarity LLOBJ)
+"
+  compute-goe-similarity LLOBJ -- provide methods for working with
+  Gaussian Orthogonal vectors.
+
+  LLOBJ
+
+"
+	; TODO filter the top lists
+	; (define (filter the top list...
+
+	; TODO check if LLOBJ is a similrity object
+
+	; Wrap similarity, to create a new base object.
+	(define sob (add-pair-stars LLOBJ))
 
 ; Counts on smi are FloatValues of two floats.
 ; First float is mi-sim

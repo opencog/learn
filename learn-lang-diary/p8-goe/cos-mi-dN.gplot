@@ -1,20 +1,39 @@
 # set term png small color
 
 #################################################
+##
+##set term png
+##set out 'cos-mi-dN.png'
+#set term postscript eps enhanced color 24
+#set out 'cos-mi-dN.eps'
+#set key right bottom
+#set logscale y
+#set title "Ortho Cosine Distribution (M=250)"
+#set xlabel "Cosine"
+#set ylabel "Probability"
+#set xrange [-1:1]
+#set yrange [1e-3:2]
+#set format y "10^{%L}"
+#
+#plot "cos-mi-dist-250.dat" using 2:3 with lines lw 2 title "N=2500", \
+#     "cos-mi-d6k-250.dat" using 2:3 with lines lw 2 title "N=6000", \
+#     "cos-mi-dist-250.dat" using 2:(1.0) with lines lw 2 title ""
+#
+#################################################
 #
 #set term png
-#set out 'cos-mi-dN.png'
+#set out 'cos-mi-500-dN.png'
 set term postscript eps enhanced color 24
-set out 'cos-mi-dN.eps'
+set out 'cos-mi-500-dN.eps'
 set key right bottom
 set logscale y
-set title "Ortho Cosine Distribution (M=250)"
+set title "Ortho Cosine Distribution (M=500)"
 set xlabel "Cosine"
 set ylabel "Probability"
 set xrange [-1:1]
 set yrange [1e-3:2]
 set format y "10^{%L}"
 
-plot "cos-mi-dist-250.dat" using 2:3 with lines lw 2 title "N=2500", \
-     "cos-mi-d6k-250.dat" using 2:3 with lines lw 2 title "N=6000", \
-     "cos-mi-dist-250.dat" using 2:(1.0) with lines lw 2 title ""
+plot "cos-mi-dist-500.dat" using 2:3 with lines lw 2 title "N=2500", \
+     "cos-mi-d6k-500.dat" using 2:3 with lines lw 2 title "N=6000", \
+     "cos-mi-dist-500.dat" using 2:(1.0) with lines lw 2 title ""

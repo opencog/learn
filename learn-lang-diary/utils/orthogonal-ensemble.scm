@@ -390,6 +390,11 @@ cos=0.33705 for ("by", ".")
 (define cosi-500 (filter (lambda (sl) (gos 'get-count sl)) all-sims))
 (length cosi-500) ; 125250 = 500*501 / 2
 
+(define cosi-1k (filter (lambda (sl) (gos 'get-count sl))
+	(cog-get-atoms 'SimilarityLink)))
+(length cosi-1k) ; 500500 = 1000 * 1001 / 2
+
+
 (define (cos-dist LST)
 	(define wnc (/ 100 (* 2.0 (length LST))))
    (bin-count LST 100
@@ -398,10 +403,16 @@ cos=0.33705 for ("by", ".")
       -1 1))
 
 (define cos-mi-dist-500 (cos-dist cosi-500))
+(define cos-mi-dist-1k (cos-dist cosi-1k))
 
 (define (prt-cos-mi-500-dist)
 	(define csv (open "/tmp/cos-mi-dist-500.dat" (logior O_WRONLY O_CREAT)))
 	(print-bincounts-tsv cos-mi-dist-500 csv)
+	(close csv))
+
+(define (prt-cos-mi-1k-dist)
+	(define csv (open "/tmp/cos-mi-dist-1k.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv cos-mi-dist-1k csv)
 	(close csv))
 
 ; ---------------------------------------
