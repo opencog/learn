@@ -1935,6 +1935,19 @@ Made with cos-mi-dN.gplot from scripts as above.
 \end_layout
 
 \begin_layout Subsubsection*
+Repulsion estimate
+\end_layout
+
+\begin_layout Standard
+Consider two vectors that point at the corners of an 
+\begin_inset Formula $N$
+\end_inset
+
+-cube.
+ Nearest-neighbor corners 
+\end_layout
+
+\begin_layout Subsubsection*
 Correlations
 \end_layout
 
@@ -5414,7 +5427,7 @@ After some effort, I couldn't find any more.
 \end_layout
 
 \begin_layout Section*
-Vector Layers
+Vector Layers and Hypervectors
 \end_layout
 
 \begin_layout Standard
@@ -5473,7 +5486,24 @@ The matrix elements
 
  centered at the origin.
  They are no longer Gaussian.
- However, we can iterate on the construction process, and obtain 
+ For high-dimensional 
+\begin_inset Formula $N$
+\end_inset
+
+, this implies that the (row or column) vectors of 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ are clustered along the diagonals.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Vector Layers
+\end_layout
+
+\begin_layout Standard
+We can iterate on the construction process, and obtain 
 \begin_inset Formula $G_{2}$
 \end_inset
 
@@ -5601,6 +5631,58 @@ Note that
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Subsection*
+Hypervectors
+\end_layout
+
+\begin_layout Standard
+For high-dimensional 
+\begin_inset Formula $N$
+\end_inset
+
+, this implies that the (row or column) vectors of 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ are naturally clustered along the diagonals.
+ Because they already have this clustering, we can project onto a hypervector
+ 
+\begin_inset Formula $J$
+\end_inset
+
+ in 
+\begin_inset Formula $\left\{ -1,1\right\} ^{N}$
+\end_inset
+
+.
+ Define 
+\begin_inset Formula $J$
+\end_inset
+
+ as 
+\begin_inset Formula 
+\[
+J\left(u,v\right)=\Theta\left(F_{2}\left(u,v\right)\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\Theta\left(x\right)=\begin{cases}
++1 & \mbox{for }0<x\\
+-1 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+is the Heaviside step function.
+ This provides an encoding of words as hypervectors.
+ How good is it? Is it useful?
 \end_layout
 
 \begin_layout Section*
