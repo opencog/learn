@@ -33,56 +33,50 @@ xxxxxxxx
 	; Wrap similarity, to create a new base object.
 	(define sob (add-pair-stars LLOBJ))
 
-; Counts on smi are FloatValues of two floats.
-; First float is mi-sim
-; Second float is ranked-mi-sim
-; That is, (smi 'get-count PR) returns a FloatValue.
-; So, unwrap it.
-(define (add-mi-sim LLOBJ)
-	(define (get-ref PR IDX)
-		; Expect either a FloatValue or #f if absent.
-		(define flov (LLOBJ 'get-count PR))
-		(if flov (cog-value-ref flov IDX) -inf.0))
+	; Counts on smi are FloatValues of two floats.
+	; First float is mi-sim
+	; Second float is ranked-mi-sim
+	; That is, (smi 'get-count PR) returns a FloatValue.
+	; So, unwrap it.
+	(define (add-mi-sim LLOBJ IDX)
+		(define (get-ref PR IDX)
+			; Expect either a FloatValue or #f if absent.
+			(define flov (LLOBJ 'get-count PR))
+			(if flov (cog-value-ref flov IDX) -inf.0))
 
-	(lambda (message . args)
-		(case message
-			((get-mi)  (get-ref (car args) 0))
-			((get-rmi) (get-ref (car args) 1))
-			(else      (apply LLOBJ (cons message args))))
-	))
+		(lambda (message . args)
+			(case message
+				((get-count)  (get-ref (car args) IDX))
+				(else      (apply LLOBJ (cons message args))))
+		))
 
-(define ami (add-mi-sim sob))
+	(define ami (add-mi-sim sob 0))
 
-; -------------------------------------
-; Look at dot products
+	; -------------------------------------
+	; Look at dot products
 
-; goe provides the 'get-count method that returns a renormalized
-; version of whatever 'get-mi returns.
-(define goe (add-gaussian-ortho-api ami 'get-mi))
-(define gor (add-gaussian-ortho-api ami 'get-rmi))
-(goe 'mean-rms)
-(gor 'mean-rms)
+	; goe provides the 'get-count method that returns a renormalized
+	; version of whatever the underlying 'get-count returns.
+	(define goe (add-gaussian-ortho-api ami))
+	(goe 'mean-rms)
 
 ; XXX todo store mean-rms on any-node.
 
-(define gos (add-similarity-api ami #f "goe"))
+	(define gos (add-similarity-api ami #f "goe"))
+	(define goec (add-similarity-compute goe))
 
-(define goec (add-similarity-compute goe))
-(define gorc (add-similarity-compute gor))
+	(define (do-compute A B)
+		(define simc (goec 'left-cosine A B))
+		(format #t "cos=~7F for (\"~A\", \"~A\")\n"
+			simc (cog-name A) (cog-name B))
+		(store-atom
+			(gos 'set-pair-similarity
+				(gos 'make-pair A B)
+				(FloatValue simc))))
 
-(define (do-compute A B)
-	(define simc (goec 'left-cosine A B))
-	(define simr (gorc 'left-cosine A B))
-	(format #t "cos=~7F rcos=~7F for (\"~A\", \"~A\")\n"
-		simc simr (cog-name A) (cog-name B))
-	(store-atom
-		(gos 'set-pair-similarity
-			(gos 'make-pair A B)
-			(FloatValue simc simr))))
-
-(define (dot-prod A B)
-	(define have-it (gos 'pair-count A B))
-	(if (not have-it) (do-compute A B)))
+	(define (dot-prod A B)
+		(define have-it (gos 'pair-count A B))
+		(if (not have-it) (do-compute A B)))
 
 (define allwo (rank-words pcs))
 (loop-upper-diagonal dot-prod allwo 0 250)

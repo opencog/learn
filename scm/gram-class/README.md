@@ -33,14 +33,24 @@ For comparison:
 * Cosine similarity
 * MI similarity
 * Ranked-MI similarity
+* Gaussian Orthogonal Ensemble similarity
 
-Ranked-MI works best for merging; it has the best properties of MI but also
-includes the word frequency as part of the similarity score.  Otherwise,
-MI works great, as long as one merges high-frequency word pairs first.
-Cosine similarity is popular in the machine-learning industry, but works
-poorly, based on  experimental results. This is no surprise: cosine
-distance is a Casimir invariant for Euclidean space, but probability
-space is not Euclidean! Its a simplex!
+The first three work with word-disjunct vectors; the Gaussian similarity
+works with word-word vectors, where the vector components are given by
+the MI similarity.
+
+Gaussian similarity works best for merging; it measures not only the
+local syntactic environment for two words, but also how similar they
+are in relation to other (3rd party) words. It resembles a layer "one
+deeper", than the original vectors from which it is built. The downside
+is that Gaussian similarity is expensive to compute.
+
+Ranked-MI works second-best for merging; it has the best properties of
+MI but also includes the word frequency as part of the similarity score.
+Otherwise, MI works great, as long as one merges high-frequency word
+pairs first.  Cosine similarity works poorly, based on  experimental
+results. This is no surprise: cosine distance is a Casimir invariant
+for Euclidean space, but probability space is not Euclidean! Its a simplex!
 
 For merging:
 * Orthogonal decomposition into parallel & perpendicular components.
@@ -266,6 +276,8 @@ The code in this directory has completely abandoned the use of the
 cosine distance, and has MI hard-wired more-or-less everywhere. An
 experimental examination of cosine vs. various different Jaccard
 and overlap distances vs. MI can be found in the 'Diary Part Three'.
+
+Given vectors
 
 
 Merge Algos
