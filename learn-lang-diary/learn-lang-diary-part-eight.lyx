@@ -5418,7 +5418,189 @@ Vector Layers
 \end_layout
 
 \begin_layout Standard
-Given vectors
+In the prior section, we took an 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ matrix 
+\begin_inset Formula $F\left(u,w\right)$
+\end_inset
+
+ whose matrix elements were distributed approximately as a Gaussian, and
+ rescaled it to obtain a new matrix 
+\begin_inset Formula $G\left(u,w\right)$
+\end_inset
+
+, having the same distribution, but now having a mean of zero and an stddev
+ of 1.
+ Such Gaussains can be interpreted as vectors unformly randomly distributed
+ on an 
+\begin_inset Formula $N-1$
+\end_inset
+
+ sphere.
+\end_layout
+
+\begin_layout Standard
+The cosine products of these vectors give a new matrix 
+\begin_inset Formula $F_{2}\left(u,w\right)$
+\end_inset
+
+.
+ The matrix entries are given by the cosines:
+\begin_inset Formula 
+\[
+F_{2}\left(u,w\right)=\frac{\sum_{v}G\left(u,v\right)G\left(w,v\right)}{\sqrt{G^{2}\left(u,*\right)G^{2}\left(v,*\right)}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+G^{2}\left(u,*\right)=\sum_{v}G^{2}\left(u,v\right)=\left\Vert G\left(u\right)\right\Vert _{2}^{2}
+\]
+
+\end_inset
+
+The matrix elements 
+\begin_inset Formula $F_{2}\left(u,w\right)$
+\end_inset
+
+ are now uniformly distributed on the unit cube 
+\begin_inset Formula $\left[-1,1\right]^{N}$
+\end_inset
+
+ centered at the origin.
+ They are no longer Gaussian.
+ However, we can iterate on the construction process, and obtain 
+\begin_inset Formula $G_{2}$
+\end_inset
+
+ and then 
+\begin_inset Formula $F_{3}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{3}$
+\end_inset
+
+ and then 
+\begin_inset Formula $F_{4}$
+\end_inset
+
+ and so on.
+ So, 
+\begin_inset Quotes eld
+\end_inset
+
+layers
+\begin_inset Quotes erd
+\end_inset
+
+.
+ What are these layers?
+\end_layout
+
+\begin_layout Standard
+Some algebra might shed light.
+ Let 
+\begin_inset Formula $B$
+\end_inset
+
+ be the matrix all of whose entries are one: i.e.
+ 
+\begin_inset Formula $B\left(u,v\right)=1$
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $B^{2}=NB$
+\end_inset
+
+ so its idempotent up to a constant.
+ Alternately, 
+\begin_inset Formula $C\left(u,v\right)=1/N$
+\end_inset
+
+ so that 
+\begin_inset Formula $C^{2}=C$
+\end_inset
+
+ is idempotent.
+ Then, given 
+\begin_inset Formula $F$
+\end_inset
+
+, we had 
+\begin_inset Formula 
+\[
+G=\frac{1}{\sigma_{F}}\left(F-\mu_{F}B\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mu_{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{F}$
+\end_inset
+
+ are scalars.
+ Define a unitized matrix 
+\begin_inset Formula $H$
+\end_inset
+
+ by
+\begin_inset Formula 
+\[
+H\left(u,v\right)=\frac{G\left(u,v\right)}{\left\Vert G\left(u\right)\right\Vert _{2}}
+\]
+
+\end_inset
+
+so that all of the row-vectors of 
+\begin_inset Formula $H$
+\end_inset
+
+ are unit-length.
+ Then
+\begin_inset Formula 
+\[
+F_{2}=HH^{T}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $H^{T}$
+\end_inset
+
+ is the transpose of 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ Hmm.
+ Plugging through provides no insight or simplification.
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $BF$
+\end_inset
+
+ is a matrix whose rows are all identical, and the 
+\begin_inset Formula $\ell_{1}$
+\end_inset
+
+ norm of each row is 
+\begin_inset Formula $N\mu_{F}$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
