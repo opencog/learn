@@ -556,7 +556,7 @@ cos=0.33705 for ("by", ".")
 ; 2516
 
 (define five-oh (take allwo 500))
-(define gob (add-keep-filter goe five-oh five-oh #t)) 
+(define gob (add-keep-filter goe five-oh five-oh #t))
 (gob 'left-basis-size)
 ; 500 OK
 
@@ -564,18 +564,89 @@ cos=0.33705 for ("by", ".")
 (eft 'mean-rms)
 ;  (-0.25555738133716827 1.1584385596852502)
 ; That seems wrong; from histogram, it should be positive!?
+; Well, it is wrong: goe is just returning normalized MI see below.
 
 (define kay-oh (take allwo 1000))
-(define gob (add-keep-filter goe kay-oh kay-oh #t)) 
+(define gob (add-keep-filter goe kay-oh kay-oh #t))
 (gob 'left-basis-size)
 ; 1000 OK
 
 (define eft (add-gaussian-ortho-api gob))
 (eft 'mean-rms)
-; 
+; (-0.2180147305050371 1.1366521583220763)
 
-(define eft (add-gaussian-ortho-api gob))
+(define ba (take allwo 1))
+(define gob (add-keep-filter goe ba ba #t))
+; (2.172767218813379 0.0)
+(goe 'get-count (SimilarityLink (WordNode "the") (WordNode "the")))
+; 2.172767218813379
+(define ba (take allwo 2))
+;  (1.414824560307269 1.0428797257092879)
+(define ba (take allwo 3))
+; (1.2329852733998437 0.9772158839540837)
+(define ba (take allwo 30))
+; (0.390644117360052 0.9305769758909003)
+(define ba (take allwo 130))
+; (0.0020365579834682895 1.085450691694644)
+(define ba (take allwo 250))
+(-0.1952801391684226 1.1732756963984179)
+
+; WTF double check above
+(define alle (gob 'get-all-elts))
+(define wmi (/ 0.5 (length alle)))
+(define wtf-dist
+   (bin-count alle 100
+      (lambda (SIM) (goe 'get-count SIM))
+      (lambda (SIM) wmi)
+      -1 1))
+
+(define (prt-wtf-dist)
+	(define csv (open "/tmp/wtf-dist.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv wtf-dist csv)
+	(close csv))
+
+; Hang on, what are we doing?
+(define goe (add-gaussian-ortho-api ami 'get-mi))
+(goe 'mean-rms)
+
+; So (goe 'get-count) just returns the MI's after renormalization
+; the actual similarity vectors are in gos:
+(define gos (add-similarity-api ami #f "goe"))
+
+; Well, wtf, This is confusing.... what's with the graph?
+; why is it spiked?
+; Clearly the spikes affect the mean and rms...
+; I'm confused.
+
+; ------
+; So the correct flow is this:
+(define ba (take allwo 1))
+(define gob (add-keep-filter gos ba ba #t))
+(gob 'left-basis-size)
+(gob 'get-all-elts)
+(gob 'get-count (car (gob 'get-all-elts)))
+
+(define five-oh (take allwo 500))
+(define gob (add-keep-filter gos five-oh five-oh #t))
+
+(define (add-goe-sim LLOBJ)
+	(define (get-ref PR IDX)
+		; Expect FloatValue always IDX=0 is the MI sims, and 1 is the RMI
+		(cog-value-ref (LLOBJ 'get-count PR) IDX))
+
+	(lambda (message . args)
+		(case message
+			((get-count)  (get-ref (car args) 0))
+			(else      (apply LLOBJ (cons message args))))
+	))
+
+(define goc (add-goe-sim gob))
+(goc 'get-count (car (goc 'get-all-elts)))
+
+(define eft (add-gaussian-ortho-api goc))
 (eft 'mean-rms)
+; (0.3370672938409221 0.33866241211790027)
+
 (define efc (add-similarity-compute eft))
 
 ; ---------------------------------------
