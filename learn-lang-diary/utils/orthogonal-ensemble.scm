@@ -592,13 +592,17 @@ cos=0.33705 for ("by", ".")
 (-0.1952801391684226 1.1732756963984179)
 
 ; WTF double check above
+(define goe (add-gaussian-ortho-api ami 'get-mi))
+(define ba (take allwo 1000))
+(define gob (add-keep-filter goe ba ba #t))
 (define alle (gob 'get-all-elts))
-(define wmi (/ 0.5 (length alle)))
+(define wmi (/ 20.0 (length alle)))
 (define wtf-dist
    (bin-count alle 100
       (lambda (SIM) (goe 'get-count SIM))
+      ; (lambda (SIM) (ami 'get-mi SIM))
       (lambda (SIM) wmi)
-      -1 1))
+      -20 20))
 
 (define (prt-wtf-dist)
 	(define csv (open "/tmp/wtf-dist.dat" (logior O_WRONLY O_CREAT)))
