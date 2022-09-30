@@ -562,6 +562,7 @@ cos=0.33705 for ("by", ".")
 (define (add-goe-sim LLOBJ)
 	(define (get-ref PR IDX)
 		; Expect FloatValue always IDX=0 is the MI sims, and 1 is the RMI
+(if (not (LLOBJ 'get-count PR)) (format #t "duuude fail for ~A\n" PR))
 		(cog-value-ref (LLOBJ 'get-count PR) IDX))
 
 	(lambda (message . args)
@@ -579,9 +580,88 @@ cos=0.33705 for ("by", ".")
 
 (define efc (add-similarity-compute eft))
 
-(define efs (add-similarity-api gob #f "eff-2"))
+(define efs (add-similarity-api gob #f "goe f-2"))
+
+(define (f2-compute A B)
+   (define f2 (efc 'left-cosine A B))
+   (format #t "F2=~7F for (\"~A\", \"~A\")\n"
+      f2 (cog-name A) (cog-name B))
+   (store-atom
+      (efs 'set-pair-similarity
+         (efs 'make-pair A B)
+         (FloatValue f2))))
+
+(define (f2-dot-prod A B)
+   (define have-it (efs 'pair-count A B))
+   (if (not have-it) (f2-compute A B)))
+
+; (define allwo (rank-words pcs))
+(loop-upper-diagonal f2-dot-prod allwo 0 50)
+(loop-upper-diagonal f2-dot-prod allwo 0 250)
+
+;;  -------- This fails ... why?
+(SimilarityLink
+  (WordNode "interests")
+  (WordNode "the"))
+
+(list-index (lambda (x) (equal? x (Word "interests"))) allwo)
+; 2105
+
+(list-index (lambda (x) (equal? x (SimilarityLink
+  (WordNode "interests") (WordNode "the"))))
+	(goc 'get-all-elts))
+; #f
+
+(efc 'left-cosine (WordNode "the") (WordNode "the"))
+
+(efc 'left-basis-size)
+; 1000
+(efc 'right-basis-size)
+; 1000
+
+(efc 'left-product (WordNode "the") (WordNode "the"))
+
+(define so (add-pair-stars eft))
+(so 'left-basis-size)
+; 1000
+
+(define fo (add-fast-math so *))
+(fo 'left-basis-size)
+; 1000
+
+(define po (add-support-compute fo))
+(po 'left-basis-size)
+; 1000
+
+(po 'left-sum (list (WordNode "the") (WordNode "the")))
+
+(length (po 'left-stars (list (WordNode "the") (WordNode "the"))))
+; 2516 ooops
+
+(length (fo 'left-stars (list (WordNode "the") (WordNode "the"))))
+; 2516 oops
+
+(length (eft 'left-stars (WordNode "the")))
+; 1001 uhhh  -- the the appears twice...
+
+(keep-duplicate-atoms (eft 'left-stars (WordNode "the")))
+
+(length (goc 'left-stars (WordNode "the")))
+(length (gob 'left-stars (WordNode "the")))
+; 1001
+
+(length (gob 'left-duals (WordNode "the")))
+; 1001
+
+So, two bugs:
+minor: filter has duplicates in left stars and duals
+
+major: fast-math does not respect the basis.
 
 
+(define to (add-tuple-math so *))
+(length (to 'left-stars (list (WordNode "the") (WordNode "the"))))
+; 1000 OK! Yay!
 
 
 ; ---------------------------------------
