@@ -1944,7 +1944,115 @@ Consider two vectors that point at the corners of an
 \end_inset
 
 -cube.
- Nearest-neighbor corners 
+ Nearest-neighbor corners are then a distance 
+\begin_inset Formula $\cos\theta=\left(N-2\right)/N$
+\end_inset
+
+ apart, or 
+\begin_inset Formula $1-\cos\theta=2/N$
+\end_inset
+
+ For 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ this is 
+\begin_inset Formula $2/2500=0.0008=8\times10^{-4}$
+\end_inset
+
+.
+ By comparison, the right-hand gap above is about 0.9 in width, so this is
+ over 100 nearest neighbors apart.
+ For 
+\begin_inset Formula $N=6000$
+\end_inset
+
+ this is even farther apart.
+\end_layout
+
+\begin_layout Standard
+If one selects 
+\begin_inset Formula $N$
+\end_inset
+
+random corners ot the 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional hypercube, what is the average distance between them? Here,
+ the hypercube is 
+\begin_inset Formula $\left\{ -1,+1\right\} ^{N}$
+\end_inset
+
+.
+ That is, select 
+\begin_inset Formula $N$
+\end_inset
+
+ random bitstrings of length 
+\begin_inset Formula $N$
+\end_inset
+
+ – what is the average Hamming distance between them? In the limit, this
+ is famously a Gaussian.
+ In the non-limit, what is it? This is a combinatoric question.
+ There are a total of 
+\begin_inset Formula $2^{N}$
+\end_inset
+
+ such vectors.
+ For a fixed initial vector, there are 
+\begin_inset Formula $N$
+\end_inset
+
+ vectors that differ by one position, and 
+\begin_inset Formula $N\left(N-1\right)/2$
+\end_inset
+
+ that differ by two bits, and the general case is given by the binomial
+ coefficient 
+\begin_inset Formula ${N \choose k}$
+\end_inset
+
+ for 
+\begin_inset Formula $k$
+\end_inset
+
+ bit differences.
+ Note that 
+\begin_inset Formula 
+\[
+\sum_{k=0}^{N}{N \choose k}=2^{N}
+\]
+
+\end_inset
+
+so we've counted them all.
+ The average Hamming distance is then
+\begin_inset Formula 
+\[
+\left\langle k\right\rangle =\frac{1}{2^{N}}\sum_{k=0}^{N}k{N \choose k}=\frac{N}{2}
+\]
+
+\end_inset
+
+and the mean-square distance is
+\begin_inset Formula 
+\[
+\left\langle k^{2}\right\rangle =\frac{1}{2^{N}}\sum_{k=0}^{N}k^{2}{N \choose k}=\frac{N^{2}+N}{4}
+\]
+
+\end_inset
+
+and so the rms is 
+\begin_inset Formula 
+\[
+\sigma_{k}=\sqrt{\left\langle k^{2}\right\rangle -\left\langle k\right\rangle ^{2}}=\frac{\sqrt{N}}{2}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsubsection*
@@ -5529,7 +5637,16 @@ layers
 \end_inset
 
 .
- What are these layers?
+ What are these layers? I asked this question at 
+\begin_inset CommandInset href
+LatexCommand href
+name "MathOverflow"
+target "https://mathoverflow.net/questions/431491/iterated-gaussian-ensembles-hypervectors"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard

@@ -546,5 +546,36 @@ cos=0.33705 for ("by", ".")
 
 (most-sim "blue" "sky" "green" (take allwo 1000))
 
+; ---------------------------------------
+; Recursion and hypervectors
+
+(define gob (add-pair-stars goe))
+(gob 'left-basis-size)
+; 2516 which is ...too big...
+(gob 'right-basis-size)
+; 2516
+
+(define five-oh (take allwo 500))
+(define gob (add-keep-filter goe five-oh five-oh #t)) 
+(gob 'left-basis-size)
+; 500 OK
+
+(define eft (add-gaussian-ortho-api gob))
+(eft 'mean-rms)
+;  (-0.25555738133716827 1.1584385596852502)
+; That seems wrong; from histogram, it should be positive!?
+
+(define kay-oh (take allwo 1000))
+(define gob (add-keep-filter goe kay-oh kay-oh #t)) 
+(gob 'left-basis-size)
+; 1000 OK
+
+(define eft (add-gaussian-ortho-api gob))
+(eft 'mean-rms)
+; 
+
+(define eft (add-gaussian-ortho-api gob))
+(eft 'mean-rms)
+(define efc (add-similarity-compute eft))
 
 ; ---------------------------------------
