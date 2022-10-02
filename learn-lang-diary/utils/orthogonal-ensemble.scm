@@ -453,7 +453,7 @@ cos=0.33705 for ("by", ".")
 
 (define (top-pairs LST N)
 	(for-each (lambda (SL)
-		(format #t "~6F ~A ~A\n" (cog-value-ref (gos 'get-count SL) 0)
+		(format #t "~6F, ~A, ~A\n" (cog-value-ref (gos 'get-count SL) 0)
 			(cog-name (gar SL)) (cog-name (gdr SL))))
 		(take LST N)))
 
@@ -483,6 +483,25 @@ cos=0.33705 for ("by", ".")
 		(take LST N)))
 
 ; ---------------------------------------
+; WTF. Seems the top-20 results are strongly rank-dependent.
+; Here's how to explore that.
+
+(define all-sims (cog-get-atoms 'Similarity)) 
+(define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
+(define all-cosi-ord (sort all-cosi lessi))
+(define distinct-cosi-ord               
+   (filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-cosi-ord))
+
+(define in-set? (make-aset-predicate (take allwo 250)))
+
+(define in-wordlist
+	(filter (lambda (SL) (and (in-set? (gar SL)) (in-set? (gdr SL))))
+		distinct-cosi-ord))
+
+(top-pairs distinct-cosi-ord 20)
+(top-pairs in-wordlist 20)
+
+; =================================================================
 ; Vector addititivity
 
 (define gos (add-similarity-api ami #f "goe"))
