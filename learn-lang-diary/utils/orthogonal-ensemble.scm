@@ -621,5 +621,26 @@ cos=0.33705 for ("by", ".")
 	(print-bincounts-tsv f2-dist csv)
 	(close csv))
 
+; ---------------------------------------
+; Top most similar words (according to f2)
+
+(define (fessi A B)
+	(> (cog-value-ref (efs 'get-count A) 0)
+		(cog-value-ref (efs 'get-count B) 0)))
+
+(define all-f2-ord (sort all-f2 fessi))
+
+(define distinct-f2-ord
+	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) all-f2-ord))
+
+(define (top-pairs LST N)
+	(for-each (lambda (SL)
+		(format #t "~6F, ~A, ~A\n" (cog-value-ref (efs 'get-count SL) 0)
+			(cog-name (gar SL)) (cog-name (gdr SL))))
+		(take LST N)))
+
+(top-pairs distinct-f2-ord 20)
+
+(top-pairs (drop distinct-f2-ord 100) 20)
 
 ; ---------------------------------------

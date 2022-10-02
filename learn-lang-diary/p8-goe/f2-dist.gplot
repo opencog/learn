@@ -2,10 +2,10 @@
 
 #################################################
 #
-#set term png
-#set out 'f2-dist-250.png'
-set term postscript eps enhanced color 24
-set out 'f2-dist-250.eps'
+set term png
+set out 'f2-dist-250.png'
+#set term postscript eps enhanced color 24
+#set out 'f2-dist-250.eps'
 set key left top
 set logscale y
 set title "Distribution of F_2 (N=250)"
@@ -15,5 +15,6 @@ set xrange [-1:1]
 set yrange [0.01:4]
 set format y "10^{%L}"
 
-plot "f2-dist-250.dat" using 2:3 with lines lw 2 title "F_2"
+plot "f2-dist-250.dat" using 2:3 with lines lw 2 title "F_2", \
+     "f2-dist-250.dat" using 2:(0.3 + 1.5*$2**6) with lines lw 2 title "1.5x^6 + 0.3"
 #################################################
