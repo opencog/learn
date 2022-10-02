@@ -1,0 +1,21 @@
+# set term png small color
+
+#################################################
+#
+#set term png
+#set out 'cos-mi-d6k.png'
+set term postscript eps enhanced color 24
+set out 'cos-mi-d6k.eps'
+set key left top
+set logscale y
+set title "Ortho Cosine Distribution (N=6000)"
+set xlabel "Cosine"
+set ylabel "Probability"
+set xrange [-1:1]
+set yrange [1e-3:3]
+set format y "10^{%L}"
+
+plot "cos-mi-d6k-250.dat" using 2:3 with lines lw 2 title "M=250", \
+     "cos-mi-d6k-500.dat" using 2:3 with lines lw 2 title "M=500", \
+     "cos-mi-d6k-1k.dat" using 2:3 with lines lw 2 title "M=1000", \
+     "cos-mi-d6k-1k.dat" using 2:(1.0) with lines lw 2 title ""

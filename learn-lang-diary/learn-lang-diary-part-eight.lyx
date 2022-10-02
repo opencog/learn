@@ -1814,7 +1814,7 @@ Perhaps the notches can be parameterized by a repulsive force...
 \end_layout
 
 \begin_layout Standard
-Again, this time showing the distributions for the top top 
+Again, below-left, this time showing the distributions for the top top 
 \begin_inset Formula $M=250$
 \end_inset
 
@@ -1844,13 +1844,26 @@ p8-goe/cos-mi-dist-500.gplot
 
 \end_inset
 
+ Below right are the same three curves, except this time the vector length
+ was 
+\begin_inset Formula $N=6000$
+\end_inset
 
+.
+ 
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename p8-goe/cos-mi-dist-500.eps
+	width 48text%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename p8-goe/cos-mi-d6k.eps
 	width 48text%
 
 \end_inset
@@ -1986,8 +1999,8 @@ Consider two vectors that point at the corners of an
 \end_inset
 
 .
- By comparison, the right-hand gap above is about 0.9 in width, so this is
- over 100 nearest neighbors apart.
+ By comparison, the right-hand gap above is at about 0.9, so this is over
+ 100 nearest neighbors apart.
  For 
 \begin_inset Formula $N=6000$
 \end_inset
@@ -1997,10 +2010,10 @@ Consider two vectors that point at the corners of an
 
 \begin_layout Standard
 If one selects 
-\begin_inset Formula $N$
+\begin_inset Formula $J$
 \end_inset
 
-random corners ot the 
+ random corners ot the 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2011,15 +2024,18 @@ random corners ot the
 
 .
  That is, select 
-\begin_inset Formula $N$
+\begin_inset Formula $J$
 \end_inset
 
  random bitstrings of length 
 \begin_inset Formula $N$
 \end_inset
 
- – what is the average Hamming distance between them? In the limit, this
- is famously a Gaussian.
+ – what is the average Hamming distance between them? In the limit 
+\begin_inset Formula $N\to\infty$
+\end_inset
+
+, this is famously a Gaussian.
  In the non-limit, what is it? This is a combinatoric question.
  There are a total of 
 \begin_inset Formula $2^{N}$
