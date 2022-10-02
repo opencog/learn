@@ -1,0 +1,18 @@
+# set term png small color
+
+#################################################
+#
+# set term png
+# set out 'scatter-f2.png'
+set term postscript eps enhanced color 24
+set out 'scatter-f2.eps'
+set key right bottom
+set title "Scatterplot F_2 vs F_1 (aka ortho cosine-MI)"
+set xlabel "Cosine"
+set ylabel "F_2"
+set xrange [-1:1]
+set yrange [-1:1]
+
+plot "scatter-f2.dat" using 1:2 with points pointtype 5 pointsize 0.1 title ""
+
+#     "scatter-f2.dat" using 1:(sin(3.1416*0.5*($1-0.1))) with points pointtype 5 pointsize 0.3 title ""

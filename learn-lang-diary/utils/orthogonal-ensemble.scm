@@ -644,3 +644,23 @@ cos=0.33705 for ("by", ".")
 (top-pairs (drop distinct-f2-ord 100) 20)
 
 ; ---------------------------------------
+; Dump datafile -- F2 vs f1 (aka goe cos-MI) scatterplot
+; Graphed with p8-goe/scatter-f2.gplot
+
+(define (scatter-f2 DOT-LIST FILENAME)
+	(define csv (open FILENAME (logior O_WRONLY O_CREAT)))
+	(define cnt 0)
+	(format csv "#\n# f1 and f2\n#\n")
+	(format csv "#\n# f1\tf2\n")
+	(for-each
+		(lambda (SL)
+			(format csv "~8F\t~8F\n"
+				(cog-value-ref (gos 'get-count SL) 0)
+				(cog-value-ref (efs 'get-count SL) 0)))
+		DOT-LIST)
+	(close csv)
+)
+
+(scatter-f2 all-f2 "/tmp/scatter-f2.dat")
+
+; ---------------------------------------

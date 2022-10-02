@@ -1882,6 +1882,31 @@ Much as before; slightly less flat.
 \end_layout
 
 \begin_layout Standard
+The mean and stddev of the 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ and 
+\begin_inset Formula $M=1000$
+\end_inset
+
+ graph is 
+\begin_inset Formula $\mu_{F}=0.09075$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{F}=0.3389$
+\end_inset
+
+.
+ This is used to construct 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ described several sections below.
+\end_layout
+
+\begin_layout Standard
 Again, this time showing what happens when the vector lengths are varied.
  One the left, the distribution of dot products for the top-ranked 
 \begin_inset Formula $M=250$
@@ -5799,7 +5824,7 @@ where
 
 is the Heaviside step function.
  This provides an encoding of words as hypervectors.
- How good is it? Is it useful?
+ Is it useful for anything? How good is it?
 \end_layout
 
 \begin_layout Subsection*
@@ -5810,8 +5835,68 @@ is the Heaviside step function.
 \end_layout
 
 \begin_layout Standard
-Below is a graph of the actual distribution of 
-\begin_inset Formula $F_{2}\left(w.u\right)$
+The mean and stddev for 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ are 
+\begin_inset Formula $\mu_{F}=0.09075$
+\end_inset
+
+ and 
+\begin_inset Formula $\sigma_{F}=0.3389$
+\end_inset
+
+ – this is the mean and stddev for the top 1000 pairs 
+\begin_inset Formula $\left(w,u\right)$
+\end_inset
+
+ in the graphs called 
+\begin_inset Quotes eld
+\end_inset
+
+ortho cosine
+\begin_inset Quotes erd
+\end_inset
+
+, up above, for 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ and 
+\begin_inset Formula $M=1000$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Notation: Here, 
+\begin_inset Formula $F\left(w,u\right)=F_{1}\left(w,u\right)=\hat{w}\cdot\hat{u}$
+\end_inset
+
+ where 
+\begin_inset Formula $\hat{w}\cdot\hat{u}$
+\end_inset
+
+ was called the 
+\begin_inset Quotes eld
+\end_inset
+
+ortho cosine
+\begin_inset Quotes erd
+\end_inset
+
+ above, and 
+\begin_inset Formula $\hat{w}$
+\end_inset
+
+ is the normalized unit vector constructed from MI.
+\end_layout
+
+\begin_layout Standard
+Below left is a graph of the actual distribution of 
+\begin_inset Formula $F_{2}\left(w,u\right)$
 \end_inset
 
  for 
@@ -5819,7 +5904,7 @@ Below is a graph of the actual distribution of
 \end_inset
 
  word pairs 
-\begin_inset Formula $\left(u,w\right)$
+\begin_inset Formula $\left(w,u\right)$
 \end_inset
 
 .
@@ -5835,12 +5920,35 @@ Below is a graph of the actual distribution of
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p8-goe/f2-dist-250.png
+	filename p8-goe/f2-dist-250.eps
 	width 48text%
 
 \end_inset
 
 
+\begin_inset Graphics
+	filename p8-goe/scatter-f2.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Above right is the correlation between 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+.
+ It looks sinusoidal; the sine (shifted and compressed) seems to be a decent
+ separitrix between the two lobes.
+ I have no idea why it's correlated by that.
+ It could have been anything, but it wasn't.
 \end_layout
 
 \begin_layout Standard
@@ -7229,6 +7337,22 @@ more than bad
 \end_inset
 
 , they look random, randomly unrelated.
+\end_layout
+
+\begin_layout Standard
+Conclusion: 
+\begin_inset Formula $F_{2}$
+\end_inset
+
+ takes consideraly more CPU resources to compute, and does not appear to
+ offer any benefits.
+ It's interesting, it's curious how it correlates with 
+\begin_inset Formula $F_{1}$
+\end_inset
+
+ and has the potential of being turned into a hypervector ...
+ but ...
+ it does not seem to be useful in practice.
 \end_layout
 
 \begin_layout Section*
