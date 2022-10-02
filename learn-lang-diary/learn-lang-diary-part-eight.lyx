@@ -2093,7 +2093,101 @@ and so the rms is
 
 \end_inset
 
-The average cosine distance is then clearly zero; what is stddev?
+Given two bit-vectors of length 
+\begin_inset Formula $N$
+\end_inset
+
+ differing in 
+\begin_inset Formula $k$
+\end_inset
+
+ bits, the cosine between then is 
+\begin_inset Formula $\cos\theta=1-2k/N$
+\end_inset
+
+.
+ We thus immediately conclude that 
+\begin_inset Formula 
+\[
+\left\langle \cos\theta\right\rangle =0
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{align*}
+\left\langle \cos^{2}\theta\right\rangle = & \left\langle 1-\frac{4k}{N}+\frac{4k^{2}}{N^{2}}\right\rangle \\
+= & 1-\frac{4\left\langle k\right\rangle }{N}+\frac{4\left\langle k^{2}\right\rangle }{N^{2}}\\
+= & 1-2+\frac{N^{2}+N}{N^{2}}\\
+= & \frac{1}{N}
+\end{align*}
+
+\end_inset
+
+and so the rms is 
+\begin_inset Formula $\sqrt{\left\langle \cos^{2}\theta\right\rangle }=1/\sqrt{N}$
+\end_inset
+
+.
+ For 
+\begin_inset Formula $N=2500$
+\end_inset
+
+ and 
+\begin_inset Formula $6000$
+\end_inset
+
+, we have 
+\begin_inset Formula $\sqrt{\left\langle \cos^{2}\theta\right\rangle }=0.02$
+\end_inset
+
+ and 
+\begin_inset Formula $0.013$
+\end_inset
+
+.
+ Again, the right-hand gap widens, not narrows, as the vector-length increases.
+ The stddev does not provide a natural scale.
+\end_layout
+
+\begin_layout Standard
+Anyway, this whole approach is just-plain wrong.
+ Selecting random hypervectors gives us the Gaussian distribution in the
+ limit, yet we're seeing a flat-topped distribution.
+ That's because the MI was Gaussian; the flat-top is coming from that.
+ In other words, for 
+\begin_inset Formula $x$
+\end_inset
+
+ uniformly distributed in 
+\begin_inset Formula $\left[-1,1\right]$
+\end_inset
+
+ we should be considering 
+\begin_inset Formula $\left\langle x^{2}\right\rangle =2/3$
+\end_inset
+
+.
+ The natural scale is 
+\begin_inset Formula $\sqrt{\left\langle x^{2}\right\rangle }=\sqrt{2/3}=0.8165$
+\end_inset
+
+.
+ Hmmm.
+ What does this mean?
+\end_layout
+
+\begin_layout Standard
+None of this is getting us any closer to 
+\begin_inset Quotes eld
+\end_inset
+
+estimating the repulsion between vectors
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsubsection*
