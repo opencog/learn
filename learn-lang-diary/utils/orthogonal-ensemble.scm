@@ -599,92 +599,27 @@ cos=0.33705 for ("by", ".")
 (loop-upper-diagonal f2-dot-prod allwo 0 50)
 (loop-upper-diagonal f2-dot-prod allwo 0 250)
 
-;;  -------- This fails ... why?
-; Debugging session below; ignore it.
+; ========================================
+; Above worked great. Now some graphs.
 
-(SimilarityLink
-  (WordNode "interests")
-  (WordNode "the"))
+; We've computed only top 250 so far, so ...
+(define topwo (take allwo 250))
+(define tof (add-keep-filter efs topwo topwo #t))
 
-(list-index (lambda (x) (equal? x (Word "interests"))) allwo)
-; 2105
+(define all-f2 (tof 'get-all-elts))
+(define wmi (/ (* 0.5 100) (length all-f2)))
 
-(list-index (lambda (x) (equal? x (SimilarityLink
-  (WordNode "interests") (WordNode "the"))))
-	(goc 'get-all-elts))
-; #f
+; F2 distribution
+(define f2-dist
+   (bin-count all-f2 100
+      (lambda (SIM) (cog-value-ref (efs 'get-count SIM) 0))
+      (lambda (SIM) wmi)
+      -1 1))
 
-(efc 'left-cosine (WordNode "the") (WordNode "the"))
-
-(efc 'left-basis-size)
-; 1000
-(efc 'right-basis-size)
-; 1000
-
-(efc 'left-product (WordNode "the") (WordNode "the"))
-
-(define so (add-pair-stars eft))
-(so 'left-basis-size)
-; 1000
-
-(define fo (add-fast-math so *))
-(fo 'left-basis-size)
-; 1000
-
-(define po (add-support-compute fo))
-(po 'left-basis-size)
-; 1000
-
-(po 'left-sum (list (WordNode "the") (WordNode "the")))
-
-(length (po 'left-stars (list (WordNode "the") (WordNode "the"))))
-; 2516 ooops
-
-(length (fo 'left-stars (list (WordNode "the") (WordNode "the"))))
-; 2516 oops
-
-(length (eft 'left-stars (WordNode "the")))
-; 1001 uhhh  -- the the appears twice...
-
-(keep-duplicate-atoms (eft 'left-stars (WordNode "the")))
-
-(length (goc 'left-stars (WordNode "the")))
-(length (gob 'left-stars (WordNode "the")))
-; 1001
-
-(length (gob 'left-duals (WordNode "the")))
-; 1001
-
-So, two bugs:
-minor: filter has duplicates in left stars and duals
-FIXED in 581341802a01cb8cdf0465d6aface96fd183e96c
-
-major: fast-math does not respect the basis.
-FIXED in 5f8803bb3f50732c1d8403afaa7d78d327a6673a
-
-
-(define to (add-tuple-math so *))
-(length (to 'left-stars (list (WordNode "the") (WordNode "the"))))
-; 1000 OK! Yay!
-
-cache-left-stars make-afunc-cache do-left-stars
-do-left-duals
-(stars-obj 'left-duals RITEM)
-(keep-duplicate-atoms (gob 'left-duals (WordNode "the")))
-
-(keep-duplicate-atoms ((add-pair-stars gos) 'left-duals (WordNode "the")))
-
-(define pca (make-pseudo-cset-api)) ; shapes not needed to fetch sims.
-(define pcs (add-pair-stars pca))
-(keep-duplicate-atoms (pcs 'left-duals (WordNode "the")))
-; '()
-(define smi (add-similarity-api pcs #f "shape-mi"))
-(keep-duplicate-atoms ((add-pair-stars smi) 'left-duals (WordNode "the")))
-; ((WordNode "the"))
-
-(atoms-subtract LIST-A LIST-B)
-
-(make-aset-predicate ATOM-LIST) cache-right-pred
+(define (prt-f2-dist)
+	(define csv (open "/tmp/f2-dist-250.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv f2-dist csv)
+	(close csv))
 
 
 ; ---------------------------------------
