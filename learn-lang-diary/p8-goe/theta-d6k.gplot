@@ -1,0 +1,20 @@
+
+#################################################
+#
+#set term png
+#set out 'theta-d6k.png'
+set term postscript eps enhanced color 24
+set out 'theta-d6k.eps'
+set key left top
+set logscale y
+set title "Angular Distribution (N=6000)"
+set xlabel "Theta"
+set ylabel "Probability"
+set xrange [0:3.1416]
+set yrange [1e-3:3]
+set format y "10^{%L}"
+
+plot "cos-mi-d6k-250.dat" using (acos($2)):3 with lines lw 2 title "M=250", \
+     "cos-mi-d6k-500.dat" using (acos($2)):3 with lines lw 2 title "M=500", \
+     "cos-mi-d6k-1k.dat" using (acos($2)):3 with lines lw 2 title "M=1000", \
+     "cos-mi-d6k-1k.dat" using (acos($2)):(1.0) with lines lw 2 title ""

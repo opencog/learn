@@ -118,9 +118,14 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Part Eight of the diary is a collection of notes from the literature, collected
- here as a handy reference (because adequate articles on some of these ideas
- do not yet exist).
+Part Eight of the diary consists of two parts.
+ First, a very short collection of notes on hypervectors and gaussian ensembles.
+ Collected here as a handy reference, because adequate articles on some
+ of these ideas do not yet exist.
+ The second part is an exploration of applying the idea of Gaussian ensembles
+ to a current dataset.
+ Overall, a tremendous success! This appears to provide an excellent metric
+ of word-similarity.
  
 \end_layout
 
@@ -133,7 +138,87 @@ A summary of what is found in this part of the diary:
 \end_layout
 
 \begin_layout Itemize
-No summary yet.
+The first few sections discuss hypervectors.
+ These are interesting, but do not appear to be directly useful in the current
+ situation.
+\end_layout
+
+\begin_layout Itemize
+The next section is titled 
+\begin_inset Quotes eld
+\end_inset
+
+Gaussian Orthogonal Ensemble
+\begin_inset Quotes erd
+\end_inset
+
+ (but this name is misleading and incorrect.
+ I don't have a better name yet).
+ In Chapters Three and Five, it was noted that the symmetric-MI of word
+ pairs (built up out of disjuncts) is distributed as a Gaussian.
+ Whenever one has such a situation, the points can be understood to be vectors
+ on a high-dimensional unit sphere.
+ In this case, associaed to each word 
+\begin_inset Formula $w$
+\end_inset
+
+ is a unit-length word-vectors 
+\begin_inset Formula $\hat{w}$
+\end_inset
+
+ which is uniformly distributed on the unit sphere 
+\begin_inset Formula $S_{N-1}$
+\end_inset
+
+ where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the size of the vocabulary.
+\end_layout
+
+\begin_layout Itemize
+Such a distribution is perfectly uniform, whenever the sampling is taken
+ from a perfect Gaussian; this is how uniform distributions on spheres are
+ defined.
+\end_layout
+
+\begin_layout Itemize
+Given two vectors 
+\begin_inset Formula $\hat{w}$
+\end_inset
+
+ and 
+\begin_inset Formula $\hat{u}$
+\end_inset
+
+ drawn from a uniform distribution, we expect the angle between them: 
+\begin_inset Formula $\theta=\arccos\left(\hat{w}\cdot\hat{u}\right)$
+\end_inset
+
+ to be uniformly distributed on the interval 
+\begin_inset Formula $\left[0,\pi\right]$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The actual word-data is approximately uniform.
+ The current favorite dataset is explored.
+ We find that the word-vectors 
+\begin_inset Formula $\hat{w}$
+\end_inset
+
+ are 
+\begin_inset Quotes eld
+\end_inset
+
+almost
+\begin_inset Quotes erd
+\end_inset
+
+ uniformly distributed, except that there
 \end_layout
 
 \begin_layout Section*
@@ -710,7 +795,12 @@ Gaussian Orthogonal Ensembles
 
 \begin_layout Standard
 Well, not really; that's just the working title.
- The thing to explore is this: suppose there's an index 
+ There's no actual ensemble.
+ 
+\end_layout
+
+\begin_layout Standard
+The thing to explore is this: suppose there's an index 
 \begin_inset Formula $w,u\in\left\{ 1,\cdots,N\right\} $
 \end_inset
 
@@ -857,7 +947,7 @@ and so in general we see this is not equivalent to plain
  and so we need to keep track of both, separetly.
 \end_layout
 
-\begin_layout Subsection*
+\begin_layout Section*
 Experiment-15 (21 Sept 2022)
 \end_layout
 
@@ -2185,6 +2275,41 @@ None of this is getting us any closer to
 
 estimating the repulsion between vectors
 \begin_inset Quotes erd
+\end_inset
+
+.
+ Lets try again.
+ Here's the same data, except this time, the x-axis is given by 
+\begin_inset Formula $\theta=\arccos\left(\hat{w}\cdot\hat{u}\right)$
+\end_inset
+
+.
+ For a perfect uniform distribution, we should see 
+\begin_inset Formula $\theta$
+\end_inset
+
+ uniformly distributed over 
+\begin_inset Formula $\left[0,\pi\right]$
+\end_inset
+
+.
+ Instead, we get this:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p8-goe/theta-d6k.eps
+	width 48text%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So the repulsive region is for 
+\begin_inset Formula $\theta\apprle0.5\approx\pi/6$
 \end_inset
 
 .
