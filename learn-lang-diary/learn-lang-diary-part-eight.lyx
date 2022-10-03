@@ -119,14 +119,14 @@ Introduction
 
 \begin_layout Standard
 Part Eight of the diary consists of two parts.
- First, a very short collection of notes on hypervectors and gaussian ensembles.
+ First, a very short collection of notes on hypervectors and gaussian orthogonal
+ ensembles.
  Collected here as a handy reference, because adequate articles on some
  of these ideas do not yet exist.
- The second part is an exploration of applying the idea of Gaussian ensembles
- to a current dataset.
+ The second part is an exploration of applying the idea of Gaussian orthogonal
+ ensembles to a current dataset.
  Overall, a tremendous success! This appears to provide an excellent metric
- of word-similarity.
- 
+ of word-similarity! Victory!
 \end_layout
 
 \begin_layout Section*
@@ -218,7 +218,74 @@ almost
 \begin_inset Quotes erd
 \end_inset
 
- uniformly distributed, except that there
+ uniformly distributed, except that:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+There are very few word-pairs for which 
+\begin_inset Formula $\theta\apprle\pi/6$
+\end_inset
+
+ and that those which do lie in this region are strongly similar, grammatically.
+ By visual inspection, the similarity is excellent.
+ This is the primary, most important result of this diary chapter.
+\end_layout
+
+\begin_layout Itemize
+There are few or no word-pairs for which 
+\begin_inset Formula $\theta\gtrsim3\pi/4$
+\end_inset
+
+.
+ This means that there aren't any words which are 
+\begin_inset Quotes eld
+\end_inset
+
+truly grammatically dissimilar from one-another
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This result does not seem to be important or usable; just curious.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Given the collection of values 
+\begin_inset Formula $\theta\left(w,u\right)$
+\end_inset
+
+ over pairs 
+\begin_inset Formula $\left(u,w\right)$
+\end_inset
+
+, the trick of projecting to a sphere can be repeated, giving another set
+ of vectors.
+ This can again be repeated, 
+\emph on
+ad infinitum
+\emph default
+.
+ The first repetition is explored.
+ It looks OK; it provides similarities that seem to be just about as good
+ as the original sphere set, maybe every so slightly worse.
+ This second recomputation of similarities requires additional CPU time,
+ which is considerable, and so does not seem worth the effort.
+ It's measuring some hard-to-comprehend second-order effect in the distribution
+ of grammatical similarity.
+ That is to say, it's physical interpretation is unclear.
+\end_layout
+
+\begin_layout Standard
+That's it.
+ Moving forward, it is clear that 
+\begin_inset Formula $\theta=\arccos\left(\hat{w}\cdot\hat{u}\right)$
+\end_inset
+
+ is the superior metric for measuring word grammatical similarity.
+ And BTW, it is a true metric, satisfying the triangle inequality.
+ It should form the foundation for future clustering work.
 \end_layout
 
 \begin_layout Section*
@@ -2313,6 +2380,50 @@ So the repulsive region is for
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+There are few or no word-pairs for which 
+\begin_inset Formula $\theta\gtrsim3\pi/4$
+\end_inset
+
+.
+ This means that there aren't any words which are 
+\begin_inset Quotes eld
+\end_inset
+
+truly grammatically dissimilar from one-another
+\begin_inset Quotes erd
+\end_inset
+
+, but its unclear just how 
+\begin_inset Quotes eld
+\end_inset
+
+deep
+\begin_inset Quotes erd
+\end_inset
+
+ this insight is.
+ Is this saying that the English grammar is not 
+\begin_inset Quotes eld
+\end_inset
+
+random
+\begin_inset Quotes erd
+\end_inset
+
+? That it's impossible to be 
+\begin_inset Quotes eld
+\end_inset
+
+grammatically dissimlar
+\begin_inset Quotes erd
+\end_inset
+
+ in general? The meaning of this is unclear.
+ It does not appear to be important, though; wheveter insight might be offered
+ here, it does not seem worth the effort just right now.
 \end_layout
 
 \begin_layout Subsubsection*
