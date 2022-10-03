@@ -96,7 +96,7 @@ Language Learning Diary - Part Eight
 \end_layout
 
 \begin_layout Date
-Sept 2022 - present
+Sept 2022
 \end_layout
 
 \begin_layout Author
@@ -119,7 +119,7 @@ Introduction
 
 \begin_layout Standard
 Part Eight of the diary consists of two parts.
- First, a very short collection of notes on hypervectors and gaussian orthogonal
+ First, a very short collection of notes on hypervectors and Gaussian orthogonal
  ensembles.
  Collected here as a handy reference, because adequate articles on some
  of these ideas do not yet exist.
@@ -158,7 +158,7 @@ Gaussian Orthogonal Ensemble
  pairs (built up out of disjuncts) is distributed as a Gaussian.
  Whenever one has such a situation, the points can be understood to be vectors
  on a high-dimensional unit sphere.
- In this case, associaed to each word 
+ In this case, associated to each word 
 \begin_inset Formula $w$
 \end_inset
 
@@ -311,7 +311,7 @@ A bipolar hypervector is a vector in a
 \end_inset
 
 -dimensional space.
- Bipolar hypervectors have the interestng property that, for 
+ Bipolar hypervectors have the interesting property that, for 
 \begin_inset Formula $D$
 \end_inset
 
@@ -381,7 +381,7 @@ Let
 \end_inset
 
 .
- This order can be metrizied with a metric 
+ This order can be metricized with a metric 
 \begin_inset Formula $g$
 \end_inset
 
@@ -430,7 +430,7 @@ Let
 \end_layout
 
 \begin_layout Standard
-The above generates a sequece of (bipolar hyperdimensional) vectors with
+The above generates a sequence of (bipolar hyperdimensional) vectors with
  the following properties.
  The dot product is 
 \begin_inset Formula 
@@ -592,7 +592,7 @@ Each unit interval may be digitized (partitioned) into
 \begin_inset Formula $N+1$
 \end_inset
 
- distinct subintervals.
+ distinct sub-intervals.
  This partitioning 
 \begin_inset Formula $\left[p_{0},\cdots,p_{N}\right]$
 \end_inset
@@ -641,14 +641,14 @@ Since the sum is bounded between
 
 \begin_layout Standard
 If these vectors are normalized to unit length, then they live on the surface
- of the hypersphere 
+ of the hyper-sphere 
 \begin_inset Formula $S_{D-1}$
 \end_inset
 
 .
- In general, these points are not random, ly distributed on the hypersphere.
- In a narrow sense, we can offer a theorm: the points are randomly distributed
- on the hypersphere if and only if they are randomly distributed in the
+ In general, these points are not random, evenly distributed on the hyper-sphere.
+ In a narrow sense, we can offer a theorem: the points are randomly distributed
+ on the hyper-sphere if and only if they are randomly distributed in the
  unit cube 
 \begin_inset Formula $\left[0,1\right]^{M}$
 \end_inset
@@ -699,7 +699,7 @@ Hypervector Design for Efficient Hyperdimensional Computing on Edge Devices
 \end_layout
 
 \begin_layout Standard
-The presumption is that there is a pre-existing training dataset, the parameter
+The presumption is that there is a preexisting training dataset, the parameter
  space is low dimensional, and the number of clusters is fixed.
 \end_layout
 
@@ -712,14 +712,18 @@ The solution is to divide up the parameter space in a non-uniform kind of
  The trick is to (i) maximize the training accuracy and (ii) minimize the
  similarity between class encoders, subject to (iii) orthogonalization of
  parameter endpoints.
- Because this is an integer optimizatin problem, a genetic algorithm is
+ Because this is an integer optimization problem, a genetic algorithm is
  used to perform the search.
  The paper provides details.
 \end_layout
 
 \begin_layout Standard
-This is not directly relevanyt for us, because we don't have a training
- set, nor do we know a priori how many clusters there will be.
+This is not directly relevant for us, because we don't have a training set,
+ nor do we know 
+\emph on
+a priori
+\emph default
+ how many clusters there will be.
  
 \end_layout
 
@@ -733,7 +737,7 @@ Assorted notes:
 
 \begin_layout Itemize
 Almost all random vectors are orthogonal to one another (or nearly so).
- This follows from binomial coefficents being approximations for Gaussians.
+ This follows from binomial coefficients being approximations for Gaussians.
  There are 
 \begin_inset Formula 
 \[
@@ -777,7 +781,7 @@ vectors that differ by
 \end_layout
 
 \begin_layout Itemize
-Given two corners on a hypercube differeing by 
+Given two corners on a hypercube differing by 
 \begin_inset Formula $d$
 \end_inset
 
@@ -789,7 +793,7 @@ Given two corners on a hypercube differeing by
 \end_layout
 
 \begin_layout Itemize
-The midway points on such paths can have larger Jaccard (Hamming) distances
+The midway points on such paths can have larger Jacquard (Hamming) distances
  to each other, than to either endpoint.
  In fact, this will almost always be the case.
 \end_layout
@@ -805,7 +809,7 @@ Ternary hypervectors i.e.
 \begin_inset Formula $\left\{ -1,0,1\right\} ^{D}$
 \end_inset
 
- form a field under pointwise multiplication and sgn applied to arithmetic
+ form a field under point-wise multiplication and sgn applied to arithmetic
  addition.
 \end_layout
 
@@ -947,12 +951,12 @@ Fix
 \end_inset
 
  is the Euclidean norm.
- This is the gaussian orthogonal ensemble.
+ This is the Gaussian orthogonal ensemble.
  There are 
 \begin_inset Formula $N$
 \end_inset
 
- of these vectors, they are uniformly disttributed on the 
+ of these vectors, they are uniformly distributed on the 
 \begin_inset Formula $N-1$
 \end_inset
 
@@ -1011,7 +1015,7 @@ and so in general we see this is not equivalent to plain
 \begin_inset Formula $f$
 \end_inset
 
- and so we need to keep track of both, separetly.
+ and so we need to keep track of both, separately.
 \end_layout
 
 \begin_layout Section*
@@ -1315,7 +1319,7 @@ Each larger dataset is built from the smaller one; this allows experiments
  The similarities computed as described earlier, using the cross-sections
  and shapes as a part of the vectors.
  RAM consumption includes that for shapes/cross-sections as well as similarities.
- The CPU-time-to-load includes the cpu-time to load shapes and cross-sections.
+ The CPU-time-to-load includes the CPU-time to load shapes and cross-sections.
  These are needed for computing MI, but are not needed for the GOE computations
  (however, they are needed to get a list of ranked words.) 
 \end_layout
@@ -1699,7 +1703,7 @@ Above left: the Gaussian shown has the same parameters as the earlier ones,
  in chapter three.
  Here N=500 pairs vs N=1200 in chapter three.
  Also shown is ranked-MI, which shifts slightly to the right.
- Above right: just the MI, with two gaussians.
+ Above right: just the MI, with two Gaussians.
  One is an 
 \begin_inset Quotes eld
 \end_inset
@@ -1708,8 +1712,8 @@ eyeballed fit
 \begin_inset Quotes erd
 \end_inset
 
-, adjusting the gaussian to match the tail of the distribution.
- This is the G(-3,3.1) gaussian.
+, adjusting the Gaussian to match the tail of the distribution.
+ This is the G(-3,3.1) Gaussian.
  The other shows the results of computing the mean and stddev of data: 
 \begin_inset Formula $\mu=-2.1492$
 \end_inset
@@ -1747,7 +1751,7 @@ eyeballed fit
 
 \begin_layout Standard
 Above left: compare MI to ranked-MI without the visual distraction of the
- gaussian.
+ Gaussian.
  The right hand side looks a lot more linear.
  This linear-like right-hand-side can also be seen in graphs in chapters
  three, five, but not as pronounced as here.
@@ -1821,7 +1825,7 @@ GOE Distributions
 \end_layout
 
 \begin_layout Standard
-So, using MI and RMI, define the Gaussian vectors as described at the begining
+So, using MI and RMI, define the Gaussian vectors as described at the beginning
  of this section.
  The base space has dimension 
 \begin_inset Formula $N=2500$
@@ -1855,7 +1859,7 @@ So, using MI and RMI, define the Gaussian vectors as described at the begining
 
 \end_inset
 
-The grah below shows the cosine distribution for the top 
+The graph below shows the cosine distribution for the top 
 \begin_inset Formula $M=250$
 \end_inset
 
@@ -1906,7 +1910,7 @@ The distribution is flat-topped.
 \begin_inset Formula $\cos\theta=1$
 \end_inset
 
- is for the self-similarlty.
+ is for the self-similarity.
  Very curious is the notch right below 
 \begin_inset Formula $\cos\theta=1$
 \end_inset
@@ -2102,7 +2106,11 @@ Again, this time showing what happens when the vector lengths are varied.
 status collapsed
 
 \begin_layout Plain Layout
-Made with cos-mi-dN.gplot from scripts as above.
+Made with 
+\family sans
+cos-mi-dN.gplot
+\family default
+ from scripts as above.
  
 \end_layout
 
@@ -2170,7 +2178,7 @@ If one selects
 \begin_inset Formula $J$
 \end_inset
 
- random corners ot the 
+ random corners of the 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2184,7 +2192,7 @@ If one selects
 \begin_inset Formula $J$
 \end_inset
 
- random bitstrings of length 
+ random bit-strings of length 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2417,12 +2425,12 @@ random
 \begin_inset Quotes eld
 \end_inset
 
-grammatically dissimlar
+grammatically dissimilar
 \begin_inset Quotes erd
 \end_inset
 
  in general? The meaning of this is unclear.
- It does not appear to be important, though; wheveter insight might be offered
+ It does not appear to be important, though; whatever insight might be offered
  here, it does not seem worth the effort just right now.
 \end_layout
 
@@ -2431,7 +2439,7 @@ Correlations
 \end_layout
 
 \begin_layout Standard
-The scatterplot below left shows how the cosine-MI and the MI are correlated.
+The scatter plot below left shows how the cosine-MI and the MI are correlated.
  The graphs for the other correlations (between cosine-RMI and MI, cosine-MI
  and RMI, and cosine-RMI vs RMI) look similar, with offsets and slightly
  different shapes.
@@ -3872,8 +3880,8 @@ was
 \end_inset
 
  which has both high RMI and high cosine.
- But the abysmall cosine for the —, + and [, + pairs just says that the
- ranking factor is a better, more accurate measure of similarity.
+ But the abysmal cosine for the —, + and [, + pairs just says that the ranking
+ factor is a better, more accurate measure of similarity.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -4790,13 +4798,13 @@ his
 \end_layout
 
 \begin_layout Standard
-Comparing these two, it suggests that the GOE similarity proivides a much
+Comparing these two, it suggests that the GOE similarity provides a much
  healthier concept of similarity.
 \end_layout
 
 \begin_layout Standard
 However, the results are strongly dependent on word frequency.
- The tables above condidered only the top-ranked 250 words.
+ The tables above considered only the top-ranked 250 words.
  Here's the similarity for the top-ranked 400 and 700 words.
 \end_layout
 
@@ -7608,7 +7616,7 @@ In the prior section, we took an
 
 , having the same distribution, but now having a mean of zero and an stddev
  of 1.
- Such Gaussains can be interpreted as vectors unformly randomly distributed
+ Such Gaussians can be interpreted as vectors uniformly randomly distributed
  on an 
 \begin_inset Formula $N-1$
 \end_inset
@@ -7975,7 +7983,7 @@ Above right is the correlation between
 
 .
  It looks sinusoidal; the sine (shifted and compressed) seems to be a decent
- separitrix between the two lobes.
+ separatrix between the two lobes.
  I have no idea why it's correlated by that.
  It could have been anything, but it wasn't.
 \end_layout
@@ -9342,7 +9350,7 @@ Several things to observe.
 \end_inset
 
  has the quite reasonable (when, if).
- Things still look reasonable 100 or 200 words down, but medicre at 1000
+ Things still look reasonable 100 or 200 words down, but mediocre at 1000
  and bad at 5000, even thought 
 \begin_inset Formula $F_{2}=0.883$
 \end_inset
@@ -9352,7 +9360,7 @@ Several things to observe.
 \begin_inset Formula $F_{2}$
 \end_inset
 
- is very compressed at the cornders ot the hypercube.
+ is very compressed at the corners of the hypercube.
  At the other end, near 
 \begin_inset Formula $F_{2}\approx-1$
 \end_inset
@@ -9373,7 +9381,7 @@ Conclusion:
 \begin_inset Formula $F_{2}$
 \end_inset
 
- takes consideraly more CPU resources to compute, and does not appear to
+ takes considerably more CPU resources to compute, and does not appear to
  offer any benefits.
  It's interesting, it's curious how it correlates with 
 \begin_inset Formula $F_{1}$
