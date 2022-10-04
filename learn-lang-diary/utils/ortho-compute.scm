@@ -146,9 +146,7 @@
 (f2-dot-prod (WordNode "the") (WordNode "the"))
 
 (loop-upper-diagonal f2-dot-prod allwo 0 50)
-
-
-
+(loop-upper-diagonal f2-dot-prod allwo 0 250)
 
 
 ; -------------------------------------
