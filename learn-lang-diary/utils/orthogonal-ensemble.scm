@@ -229,6 +229,28 @@ cos=0.33705 for ("by", ".")
 	(print-bincounts-tsv cos-mi-dist-1k csv)
 	(close csv))
 
+; -------
+; Remove diagonal entries; they have cosine of exactly 1.0
+; also explicitly bin-count theta.
+
+(define off-diags
+	(filter (lambda (SL) (not (equal? (gar SL) (gdr SL)))) cosi-1k))
+
+(define (theta-dist LST)
+	(define wnc (/ 200 (* 3.14159 (length LST))))
+   (bin-count LST 200
+      (lambda (SIM) (acos (cog-value-ref (gos 'get-count SIM) 0)))
+      (lambda (SIM) wnc)
+      0 3.14159))
+
+(define theta-bin (theta-dist off-diags))
+
+(define (prt-theta-1k-dist)
+	(define csv (open "/tmp/theta-dist-1k.dat" (logior O_WRONLY O_CREAT)))
+	(print-bincounts-tsv theta-bin csv)
+	(close csv))
+
+
 ; ---------------------------------------
 ; Dump datafile -- goe cos-MI vs MI scatterplot
 ; Graphed with p8-goe/scatter-goe-mi-rmi.gplot and related.
