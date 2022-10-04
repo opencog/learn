@@ -2003,7 +2003,7 @@ Again, below-left, this time showing the distributions for the top top
 
  words.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 Graphs built with code in 
@@ -2382,7 +2382,7 @@ estimating the repulsion between vectors
 \end_inset
 
 .
- Instead, we get this:
+ Instead, we get the below left:
 \end_layout
 
 \begin_layout Standard
@@ -2394,11 +2394,30 @@ estimating the repulsion between vectors
 \end_inset
 
 
+\begin_inset Graphics
+	filename p8-goe/theta-dist-1k.eps
+	width 48text%
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
 So the repulsive region is for 
 \begin_inset Formula $\theta\apprle0.5\approx\pi/6$
+\end_inset
+
+.
+ The above right is the 
+\begin_inset Formula $M=1000$
+\end_inset
+
+ curve only, after removing the diagonal entries (which all have a cosine
+ of exactly 1.) The arccosine is taken before binning, and 200 bins are used
+ instead of 100, so that we can get a better view of what is happening near
+ 
+\begin_inset Formula $\theta\approx0$
 \end_inset
 
 .

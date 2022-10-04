@@ -1,0 +1,18 @@
+
+#################################################
+#
+#set term png
+#set out 'theta-dist-1k.png'
+set term postscript eps enhanced color 24
+set out 'theta-dist-1k.eps'
+set key left top
+set logscale y
+set title "Angular Distribution (N=6000)"
+set xlabel "Theta"
+set ylabel "Probability"
+set xrange [0:3.1416]
+set yrange [1e-4:3]
+set format y "10^{%L}"
+
+plot "theta-dist-1k.dat" using 2:3 with lines lw 2 title "M=1000", \
+     "theta-dist-1k.dat" using 2:(1.0) with lines lw 2 title ""
