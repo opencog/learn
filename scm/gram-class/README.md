@@ -374,16 +374,17 @@ the normal Gaussian distribution as
 
 $$ G(w_a, w_b) = \frac {MI(w_a, w_b) - \mu} {\sigma} $$
 
-This allows the unit word-vector $\hat{w_a}$ to be defined: this is the
+This allows the unit word-vector $\widehat{w_a}$ to be defined: this is the
 vector whose coordinates are $G(w_a, w_b)$.  By construction, it is of
-unit length: $|\hat{w_a}|=1$ and thus lies on the (high-dimensional)
+unit length: $|\widehat{w_a}|=1$ and thus lies on the (high-dimensional)
 unit sphere.
 
-The GOE Similarity between two words is then just the dot product:
+The GOE Similarity between two words $u$ and $w$ is then just the dot
+product:
 
-$$ \mbox{GOE-sim}(w_a, w_b) = \cos\theta(w_a, w_b) = \hat{w_a} \cdot \hat{w_b} $$
+$$ \mbox{GOE-sim}(u, w) = \cos\theta(u, w) = \widehat{u} \cdot \widehat{w} = \sum_{z} G(u, z) G(w, z)$$
 
-Experimentally, it appears that words with $\theta(w_a, w_b) \simeq 0.5$
+Experimentally, it appears that words with $\theta(w, u) \simless 0.5$
 are (very) grammmatically similar, and otherwise not.
 
 
