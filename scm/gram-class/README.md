@@ -324,22 +324,23 @@ between the vectors (the Kullback-Lielber divergence). If $N(w,d)$ is
 the count of the number of observations of word $w$ with disjunct $d$,
 the divergence is:
 
-$$   MI(w_a, w_b) = \log_2 \frac {\mbox{dot}(w_a, w_b)\; \mbox{dot}(\*,\*)}{\mbox{ent}(w_a) \; \mbox{ent}(w_b)} $$
+$$   MI(w_a, w_b) = \log_2 \frac {\mbox{dot}(w_a, w_b)\ \mbox{dot}(\*,\*)}{\mbox{ent}(w_a) \, \mbox{ent}(w_b)} $$
 
 
 where
 
 $$   \mbox{ent}(w) = \sum_d N(w,d) N(\*,d) = \operatorname{dot}(w, \*) $$
 
-so that $log_2 ent(w)$ is the entropy of word $w$ (Up to a factor of
-$N(\*,\*)$ squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
-in the definition. This and other considerations are covered in much
-greater detail in the supporting PDF's.)
+so that $\log_2 \operatorname{ent}(w)$ is the entropy of word $w$
+(Up to a factor of $N(\*,\*)$ squared. That is, we should be using
+$p(w,d) = N(w,d) / N(*,*)$ in the definition. This and other
+considerations are covered in much greater detail in the supporting
+PDF's and Diaries.)
 
 An experimental examination of cosine vs. various different Jaccard
 and overlap distances vs. MI can be found in the 'Diary Part Three'.
 
-Note that this MI is symmetric: $ MI(w_a, w_b) = MI(w_b, w_a) $. Here
+Note that this MI is symmetric: $MI(w_a, w_b) = MI(w_b, w_a)$. Here
 and elsewhere, it is sometimes called the "symmetric-MI", although
 "grammatical-MI" is a better name for it.  These terms are meant to
 distinguish it from the word-pair-correlation MI (which is not
@@ -350,15 +351,15 @@ GOE Similarity
 --------------
 The grammatical-MI is roughly distributed as a Gaussian (both for
 English and Chinese, see Diary Part Three and Part Five). Thus, the
-values $ MI(w_a, w_b) $ can be taken as the coordinates of a vector
-$ w_a $. For a perfect Gaussian, these vectors would be uniformly
+values $MI(w_a, w_b)$ can be taken as the coordinates of a vector
+$w_a$. For a perfect Gaussian, these vectors would be uniformly
 randomly scattered on the surface of an $N-1$-sphere, where $N$ is the
 size of the vocabulary (the dimension of the vector space).  That this
 is so, experimentally, is explored and confirmed in Diary Part Eight.
 
 This allows the definition and use of GOE vectors.  Let
 
-$$ \mu = \frac{M(\*,\*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
+$$ \mu = \frac{MI(\*,\*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
 
 
 Merge Algos
