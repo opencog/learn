@@ -302,13 +302,13 @@ There are several different means of comparing similarity between
 two words.  A traditional one is cosine distance: if the cosine of two
 word-vectors is greater than a threshold, they should be merged.
 
-The cosine distance between the two words w_a, w_b is
+The cosine distance between the two words $w_a$, $w_b$ is
 
-    cos(w_a, w_b) = v_a . v_b / |v_a||v_b|
+$$  \cos(w_a, w_b) = v_a \cdot v_b / |v_a||v_b| $$
 
-Where, as usual, v_a . v_b is the dot product, and |v| is the length.
+Where, as usual, $v_a \cdot v_b$ is the dot product, and $|v|$ is the length.
 
-If N(w,d) is the count of the number of observations of word w with
+If $N(w,d)$ is the count of the number of observations of word w with
 disjunct d, the dot product is
 
     dot(w_a, w_b) = v_a . v_b = sum_d N(w_a,d) N(w_b,d)
