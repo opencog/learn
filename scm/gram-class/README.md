@@ -169,19 +169,19 @@ the form of
                ....
 
 which can be shortened to `(foo, bar+ & ...)` or even further to a pair
-`(w,d)` for word `w` and disjunct `d`.  Here, the disjunct `d` is taken as
+$(w,d)$ for word $w$ and disjunct $d$.  Here, the disjunct $d$ is taken as
 a synonym for `ConnectorSeq`. Further below, the concept of `Shape` is
 introduced; Shapes are built from `ConnectorSeq` by substituting a
 variable for a `Connector`. That is, disjuncts may also be Shapes, but
 this detail can be safely ignored for the remainder of the text below.
 
 Associated to each Section is a count, stored as a `CountTruthValue`
-on the `Section`. Abstractly, this is written as `N(w,d)`.  This
-abstraction is thus the matrix: the count matrix `N` having rows
-and columns `(w,d)`. Each row and each column is a vector.
+on the `Section`. Abstractly, this is written as $N(w,d)$.  This
+abstraction is thus the matrix: the count matrix $N$ having rows
+and columns $(w,d)$. Each row and each column is a vector.
 
-Holding the word constant, the row vector `N(w,*)` is written simply
-as `w` below. In this case, the `d` are the basis elements of that
+Holding the word constant, the row vector $N(w,\*)$ is written simply
+as $w$ below. In this case, the $d$ are the basis elements of that
 vector.
 
 
@@ -210,6 +210,7 @@ It is assumed that when a word belongs to several grammatical classes,
 the sets of disjuncts defining those classes are not necessarily
 disjoint; there may be significant overlap. That is, different
 grammatical classes are not orthogonal, in general.
+
 
 Goals
 -----
@@ -352,10 +353,13 @@ GOE Similarity
 The grammatical-MI is roughly distributed as a Gaussian (both for
 English and Chinese, see Diary Part Three and Part Five). Thus, the
 values $MI(w_a, w_b)$ can be taken as the coordinates of a vector
-$w_a$. For a perfect Gaussian, these vectors would be uniformly
-randomly scattered on the surface of an $N-1$-sphere, where $N$ is the
-size of the vocabulary (the dimension of the vector space).  That this
-is so, experimentally, is explored and confirmed in Diary Part Eight.
+$\vec{w}_a$. For a perfect Gaussian with mean zero, these vectors
+would be uniformly randomly scattered around the origin of
+$N$-dimensional space, where $N$ is the size of the vocabulary (the
+dimension of the vector space).  That this is so, experimentally,
+is explored and confirmed in Diary Part Eight. When normalized to unit
+length, these vectors are uniformly distributed on the unit sphere
+$S_{N-1}$.
 
 This allows the definition and use of GOE vectors.  Let
 
@@ -374,9 +378,9 @@ the normal Gaussian distribution as
 
 $$ G(w_a, w_b) = \frac {MI(w_a, w_b) - \mu} {\sigma} $$
 
-This allows the unit word-vector $\widehat{w_a}$ to be defined: this is the
+This allows the unit word-vector $\widehat{w}_a$ to be defined: this is the
 vector whose coordinates are $G(w_a, w_b)$.  By construction, it is of
-unit length: $|\widehat{w_a}|=1$ and thus lies on the (high-dimensional)
+unit length: $|\widehat{w}_a|=1$ and thus lies on the (high-dimensional)
 unit sphere.
 
 The GOE Similarity between two words $u$ and $w$ is then just the dot
@@ -385,7 +389,8 @@ product:
 $$ \mbox{GOE-sim}(u, w) = \cos\theta(u, w) = \widehat{u} \cdot \widehat{w} = \sum_{z} G(u, z) G(w, z)$$
 
 Experimentally, it appears that words with $\theta(w, u) \lesssim 0.5$
-are (very) grammmatically similar, and otherwise not.
+or $\cos\theta(w, u) \gtrsim 0.88$ are (very) grammmatically similar,
+and otherwise not.
 
 
 Merge Algos
@@ -414,41 +419,42 @@ implement, and seems to work well.
 
 Detailed Balance
 ----------------
-Given a word (a word-vector) `w`, we wish to decompose it into a
-component `s` that will be merged into the grammatical class `g`, and
-a component `t` that will be left over. The preservation of counts
+Given a word (a word-disjunct vector) $w$, we wish to decompose it into
+a component $s$ that will be merged into the grammatical class $g$, and
+a component $t$ that will be left over. The preservation of counts
 (the preservation of probabilities) requires that (before merging)
-the vector `w` decomposes as `w = s + t`, so that
-```
-    N(w,d) = N(s,d) + N(t,d)
-```
-for each 'basis element' (disjunct) `d`.
+the vector $w$ decomposes as $w = s + t$, so that
+
+$$   N(w,d) = N(s,d) + N(t,d) $$
+
+for each 'basis element' (disjunct) $d$.
 
 Merging is performed so that 'detailed balance' is preserved. That means
-that, in forming the new class `g_new` from `g_old` and `s`, one has that
-`g_new = g_old + s`, and this holds on component-by-component
-```
-     N(g_new, d) = N(g_old, d) + N(s,d)
-```
-for each disjunct `d`.
+that, in forming the new class $g_{new}$ from $g_{old}$ and $s$, one has
+that $g_{new} = g_{old} + s$, and this holds on component-by-component
+
+$$   N(g_{new}, d) = N(g_{old}, d) + N(s,d) $$
+
+for each disjunct $d$.
 
 Note that this second equation is not so much an equation, as it is a
-directive to transfer the counts from `s` and `g_old` to `g_new`. Thus,
-before the transfer, `N(g_new, d)` was zero, and becomes non-zero during
-the transfer. Similarly, both `N(g_old, d)` and `N(s,d)` are set to zero.
+directive to transfer the counts from $s$ and $g_{old}$ to $g_{new}$. Thus,
+before the transfer, $N(g_{new}, d)$ was zero, and becomes non-zero during
+the transfer. Similarly, both $N(g_{old}, d)$ and $N(s,d)$ are set to zero.
 
 As a practical matter, to avoid exploding the size of the dataset, all
-matrix entries for which `N(x,d)` becomes zero after the count transfer
+matrix entries for which $N(x,d)$ becomes zero after the count transfer
 are then deleted.
 
-The different merge algos differ in how they decompose the vector `w`
-into the part `s` to be transferred, and the part `t` to be kept. However,
+The different merge algos differ in how they decompose the vector $w$
+into the part $s$ to be transferred, and the part $t$ to be kept. However,
 they all obey the detailed-balance requirement.
+
 
 Detailed Balance, Part Two
 --------------------------
 The above describes detailed balance for merging words, while holding
-the set of disjunct constant. In fact, the merge algos also create new
+the set of disjuncts constant. In fact, the merge algos also create new
 disjuncts, and destroy old ones. Detailed balance must be preserved here,
 as well.
 
@@ -462,17 +468,16 @@ A given disjunct has the general form:
                ....
 
 which can be written in short-hand as `(a+ & ...)`.  Suppose one wishes
-to merge the words `a` and `b` into a wordclass `c`.  If these appear
+to merge the words `a` and `b` into a wordclass `g`.  If these appear
 in a disjunct (ConnectorSeq), they must be merged as well. For example,
-`(a+ & g+ & h-)` together with `(b+ & g+ & h-)` are merged to create
-`(c+ & g+ & h-)`.
+`(a+ & f+ & h-)` together with `(b+ & f+ & h-)` are merged to create
+`(g+ & f+ & h-)`.
 
 Counts on these three must remain balanced, as well. Thus, if disjunct
-`d_a` and `d_b` are merged to form `d_c`, then, for any fixed word `w`,
+$d_a$ and $d_b$ are merged to form $d_g$, then, for any fixed word $w$,
 one must have
-```
-       N(w, d_c) = N(w, d_a) + N(w, d_b)
-```
+
+$$   N(w, d_g) = N(w, d_a) + N(w, d_b) $$
 
 
 Merge Issues
@@ -489,22 +494,33 @@ all disjuncts with counts below a given threshold, thus avoiding the
 creation of dust.
 
 #### Hysteresis
-There is a hysteresis effect: when `g_new` is obtained, it is in
-general no longer parallel to `g_old`, and future merge decisions
-will be based on `g_new` rather than on `g_old`. Furthermore, the
+There is a hysteresis effect: when $g_{new}$ is obtained, it is in
+general no longer parallel to $g_{old}$, and future merge decisions
+should be based on $g_{new}$ rather than on $g_{old}$. Furthermore, the
 earlier merge decisions are not recomputed, and so there is a
-gradual drift of each grammatical class `g` as words are assigned
+gradual drift of each grammatical class $g$ as words are assigned
 to it. The drift is history-dependent: it depends on the sequence
 by which words are added in.
 
+When merge decisions are based on the grammatical-MI, then it is
+feasible to recompute, after each merge, the MI between all of the words
+that were affected by the merge. This is not practical for the
+GOE-similarity, and so batching is required: the top GOE-similar words
+can be merged; but then there must be a full-stop, and the GOE
+similarities must be recomputed across the board. It's currently unclear
+if this can be somehow optimized.
+
 #### Loss of History
-The replacement of `w` by `w_new` means that the original word
+The replacement of $w$ by $w_{new}$ means that the original word
 vectors are "lost", and not available for some other alternative
-processing. This could be avoided by caching the original
-word-vectors somewhere. However, doing this would increase the
-size of the dataset (which is already unmanageably large), and
-at this time, there does not seem to be any reason to access the
-original counts.
+processing. This can be avoided by using AtomSpace "frames". That is,
+at each merge step, a new AtomSpace layer is created; it holds all of
+the deltas (differrences) between this and the AtomSpace underneath.
+This allows for pre-merge counts and statistics to be accessed. It seems
+that this is (will be) useful for "lifelong learning", to get access to
+earlier data as new vocabulary is encountered. "Will be", as this is not
+implemented yet, and the need for this remains to be experimentally
+determined.
 
 
 Zipf Tails
