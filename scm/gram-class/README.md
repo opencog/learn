@@ -311,7 +311,7 @@ Where, as usual, $v_a \cdot v_b$ is the dot product, and $|v|$ is the length.
 If $N(w,d)$ is the count of the number of observations of word $w$ with
 disjunct $d$, the dot product is
 
-$$    dot(w_a, w_b) = v_a \cdot v_b = sum_d N(w_a,d) N(w_b,d) $$
+$$    \mbox{dot}(w_a, w_b) = v_a \cdot v_b = \sum_d N(w_a,d) N(w_b,d) $$
 
 A fundamental problem with cosine distance is that it is built on an
 assumption of the rotational invariance of Euclidean space. However,
@@ -324,11 +324,12 @@ between the vectors (the Kullback-Lielber divergence). If $N(w,d)$ is
 the count of the number of observations of word $w$ with disjunct $d$,
 the divergence is:
 
-$$   MI(w_a, w_b) = log_2 \frac {dot(w_a, w_b) dot(\*,\*)}{ent(w_a) ent(w_b)} $$
+$$   MI(w_a, w_b) = \log_2 \frac {\mbox{dot}(w_a, w_b)\; \mbox{dot}(\*,\*)}{\mbox{ent}(w_a) \; \mbox{ent}(w_b)} $$
+
 
 where
 
-$$   ent(w) = sum_d N(w,d) N(\*,d) = dot(w, \*) $$
+$$   \mbox{ent}(w) = \sum_d N(w,d) N(\*,d) = \operatorname{dot}(w, \*) $$
 
 so that $log_2 ent(w)$ is the entropy of word $w$ (Up to a factor of
 $N(\*,\*)$ squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
