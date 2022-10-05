@@ -347,8 +347,17 @@ symmetric).
 
 GOE Similarity
 --------------
-The
-Given vectors
+The grammatical-MI is roughly distributed as a Gaussian (both for
+English and Chinese, see Diary Part Three and Part Five). Thus, the
+values $ MI(w_a, w_b) $ can be taken as the coordinates of a vector
+$ w_a $. For a perfect Gaussian, these vectors would be uniformly
+randomly scattered on the surface of an $N-1$-sphere, where $N$ is the
+size of the vocabulary (the dimension of the vector space).  That this
+is so, experimentally, is explored and confirmed in Diary Part Eight.
+
+This allows the definition and use of GOE vectors.  Let
+
+$$ \mu = \frac{M(*,*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
 
 
 Merge Algos
