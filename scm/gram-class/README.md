@@ -1,5 +1,5 @@
 
-Grammatical similarity, and how it's computed
+Grammatical Similarity, and how it's computed
 =============================================
 The code in this directory can be used to form "grammatical classes", based
 on "grammatical similarity". This file explains what these are, and how the
@@ -32,9 +32,9 @@ different kinds of word-vector representations being used:
   word-disjunct pair counts were obtained by MST parsing, in an earlier
   stage.
 
-* Vector components are given by symmetric-MI, summing over disjuncts.
-  The symmetric-MI between a pair of words indicates how grammatically
-  similar they are.  The symmetric-MI is distributed rouoghly as a
+* Vector components are given by grammatical-MI, summing over disjuncts.
+  The grammatical-MI between a pair of words indicates how grammatically
+  similar they are.  The grammatical-MI is distributed roughly as a
   Gaussian; thus, these vectors belong to a Gaussian Orthogonal Ensemble
   (GOE). The dot-product of two GOE vectors is an even stronger indicator
   of grammatical similarity.
@@ -50,13 +50,13 @@ merge strategies:
 
 For comparison:
 * Cosine similarity
-* Symmetric-MI similarity
+* Grammatical-MI similarity
 * Ranked-MI similarity
 * GOE similarity
 
 The first three work with word-disjunct vectors; the GOE similarity
 works with word-word vectors, where the vector components are given by
-the symmetric-MI similarity.
+the grammatical-MI similarity.
 
 GOE similarity works best for merging; it measures not only the local
 syntactic environment for two words, but also how similar they are in
@@ -233,7 +233,7 @@ code base.  The two primary ones in this directory is the word-disjunct
 vector (where the vector basis consists of disjuncts, and the vector
 coordinates are the frequency counts of word-disjunct pairs) and the GOE
 vector (where the basis consists of other words, and the coordinates are
-the symmetric-MI to those words.)
+the grammatical-MI to those words.)
 
 In the word-disjunct case, the term "vector" is misleading, and does not
 convey the correct idea. The word "vector" suggests a vector space with
@@ -265,6 +265,14 @@ analogy to the concept of detailed balance in chemistry and
 thermodynamics. The total number of connectors, the total number of
 words and the total number of disjuncts are all preserved.
 
+It is tempting to think of "shapes" as being kind-of-like "moieties" in
+chemistry, but the analogy is misleading and fails at multiple levels.
+The only commonality is that detailed balance remains: no matter how one
+splits and rearranges a collection of molecules, the total number of
+atoms remains unchanged. So also here: the observation counts on
+connectors are preserved, no matter how they are re-arranged for form
+vector spaces.
+
 
 Semantic disambiguation
 -----------------------
@@ -288,8 +296,8 @@ these different forms, how to factor the vector of observation counts
 into distinct classes.
 
 
-Word Similarity
----------------
+Grammatical-MI Similarity
+-----------------------
 There are several different means of comparing similarity between
 two words.  A traditional one is cosine distance: if the cosine of two
 word-vectors is greater than a threshold, they should be merged.
@@ -327,11 +335,19 @@ N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
 in the definition. This and other considerations are covered in much
 greater detail in the supporting PDF's.)
 
-The code in this directory has completely abandoned the use of the
-cosine distance, and has MI hard-wired more-or-less everywhere. An
-experimental examination of cosine vs. various different Jaccard
+An experimental examination of cosine vs. various different Jaccard
 and overlap distances vs. MI can be found in the 'Diary Part Three'.
 
+Note that this MI is symmetric: $ MI(w_a, w_b) = MI(w_b, w_a) $. Here
+and elsewhere, it is sometimes called the "symmetric-MI", although
+"grammatical-MI" is a better name for it.  These terms are meant to
+distinguish it from the word-pair-correlation MI (which is not
+symmetric).
+
+
+GOE Similarity
+--------------
+The
 Given vectors
 
 
