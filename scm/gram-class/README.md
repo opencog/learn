@@ -324,7 +324,7 @@ between the vectors (the Kullback-Lielber divergence). If $N(w,d)$ is
 the count of the number of observations of word $w$ with disjunct $d$,
 the divergence is:
 
-$$   MI(w_a, w_b) = \log_2 \frac {\mbox{dot}(w_a, w_b)\ \mbox{dot}(\*,\*)}{\mbox{ent}(w_a) \, \mbox{ent}(w_b)} $$
+$$   MI(w_a, w_b) = \log_2 \frac {\mbox{dot}(w_a, w_b)\ \mbox{dot}(\*,\*)}{\mbox{ent}(w_a) \ \mbox{ent}(w_b)} $$
 
 
 where
@@ -333,7 +333,7 @@ $$   \mbox{ent}(w) = \sum_d N(w,d) N(\*,d) = \operatorname{dot}(w, \*) $$
 
 so that $\log_2 \operatorname{ent}(w)$ is the entropy of word $w$
 (Up to a factor of $N(\*,\*)$ squared. That is, we should be using
-$p(w,d) = N(w,d) / N(*,*)$ in the definition. This and other
+$p(w,d) = N(w,d) / N(\*,\*)$ in the definition. This and other
 considerations are covered in much greater detail in the supporting
 PDF's and Diaries.)
 
