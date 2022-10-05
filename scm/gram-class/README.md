@@ -353,7 +353,7 @@ GOE Similarity
 The grammatical-MI is roughly distributed as a Gaussian (both for
 English and Chinese, see Diary Part Three and Part Five). Thus, the
 values $MI(w_a, w_b)$ can be taken as the coordinates of a vector
-$\vec{w}_a$. For a perfect Gaussian with mean zero, these vectors
+$\vec{w}_a$ . For a perfect Gaussian with mean zero, these vectors
 would be uniformly randomly scattered around the origin of
 $N$-dimensional space, where $N$ is the size of the vocabulary (the
 dimension of the vector space).  That this is so, experimentally,
