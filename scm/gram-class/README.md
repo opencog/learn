@@ -526,9 +526,9 @@ determined.
 Zipf Tails
 ----------
 The distribution of disjuncts on words is necessarily Zipfian. That
-is, the vectors could be called "Zipf vectors", in that the vector
-coefficients follow a Zipfian distribution.  There are many reasons
-why this is so, and multiple effects feed into this.
+is, the word-disjunct vectors could be called "Zipf vectors", in that
+the vector coefficients follow a Zipfian distribution.  There are many
+reasons why this is so, and multiple effects feed into this.
 
 It seems plausible to treat extremely-low frequency observations as
 a kind of noise, but which might also contain some signal. Thus,
@@ -539,7 +539,7 @@ additive.
 That is, during merge, low-frequency observation counts should be
 merged in their entirety, rather than split in parts, with one part
 remaining unmerged.  For example, if a word is to be merged into a
-word-class, and disjunct d has been observed 4 times or less, then
+word-class, and disjunct $d$ has been observed 4 times or less, then
 all 4 of these observation counts should be merged into the word-class.
 Only high-frequency disjuncts can be considered to be well-known
 enough to be distinct, and thus suitable for fractional merging.
@@ -561,41 +561,41 @@ terminology for the more complex merge algos.
 
 Orthogonal merging
 ------------------
-In this merge strategy, a vector `w` is decomposed into `s` and `t` by
+In this merge strategy, a vector $w$ is decomposed into $s$ and $t$ by
 orthogonal decomposition. A clamping constraint is then applied, so as
 to keep all counts non-negative.
 
-Start by taking `s` as the component of `w` that is parallel to `g`,
-and `t` as the orthogonal complement.  In general, this will result in
-`t` having negative components; this is clearly not allowed in a
+Start by taking $s$ as the component of $w$ that is parallel to $g$,
+and $t$ as the orthogonal complement.  In general, this will result in
+$t$ having negative components; this is clearly not allowed in a
 probability space. Thus, those counts are clamped to zero, and the
-excess is transferred back to `s` so that the total `w = s + t` is
+excess is transferred back to $s$ so that the total $w = s + t$ is
 preserved (so that detailed balance holds).
 
 Note the following properties of this algo:
 
-a) The combined vector `g_new` has exactly the same support as `g_old`.
-   That is, any disjuncts in `w` that are not in `g_old` are already
-   orthogonal. This may be undesirable, as it prevents the broadening
-   of the support of `g`, i.e. the learning of new, but compatible
-   grammatical usage. See discussion of "broadening" at above.
+1) The combined vector $g_{new}$ has exactly the same support as
+   $g_{old}$.  That is, any disjuncts in $w$ that are not in $g_{old}$
+   are already orthogonal. This may be undesirable, as it prevents the
+   broadening of the support of $g$, i.e. the learning of new, but
+   compatible grammatical usage. See discussion of "broadening" at above.
 
-b) The process is not quite linear, as the final `s` is not actually
-   parallel to `g_old`.
+2) The process is not quite linear, as the final $s$ is not actually
+   parallel to $g_{old}$.
 
 
 Union merging
 -------------
-Here, one decomposes `w` into components that are parallel and
-perpendicular to `g + w`, instead of `g` as above.  Otherwise, one
+Here, one decomposes $w$ into components that are parallel and
+perpendicular to $g + w$, instead of $g$ as above.  Otherwise, one
 proceeds as above.
 
-Note that the support of `g + w` is the union of the support of `g`
-and of `w`, whence the name.  This appears to provide a simple
+Note that the support of $g + w$ is the union of the support of $g$
+and of $w$, whence the name.  This appears to provide a simple
 solution to the broadening problem, mentioned above.  Conversely, by
 taking the union of support, the new support may contain elements
-from `w` that belong to other word-senses, and do NOT belong to `g`
-(do not belong to the word sense associate with `g`).
+from $w$ that belong to other word-senses, and do NOT belong to $g$
+(do not belong to the word sense associate with $g$).
 
 
 Initial cluster formation
@@ -603,11 +603,16 @@ Initial cluster formation
 The above describe what to do to extend an existing grammatical class
 with a new candidate word.  It does not describe how to form the
 initial grammatical class, out of the merger of N words. Several
-strategies are possible. Given words `u`, `v`, `w`, ... one may:
+strategies are possible. Given words $u$, $v$, $w$, ... one may:
 
-* Simple sum: let `g=u+v+w+...`. That's it; nothing more.
+* Simple sum: let $g=u+v+w+...$. That's it; nothing more.
 * Overlap and union merge, described below.
 * Democratic voting: merge those basis elements shared by a majority.
+
+Democratic voting appears to work the best, so much so that the other
+methods have been removed from the code-base (and moved to the `attic`
+directory, when possible.) They are still explained, so as to orient the
+concepts.
 
 
 Overlap merge
@@ -617,43 +622,48 @@ given here. One wishes to compute the intersection of basis elements
 (the intersection of "disjuncts" via "sections") of the two words, and
 then sum the counts only on this intersected set. Let
 
-    {e_a} = set of basis elements in v_a with non-zero coefficients
-    {e_b} = set of basis elements in v_b with non-zero coefficients
-    {e_overlap} = {e_a} set-intersection {e_b}
-    pi_overlap = unit on diagonal for each e in {e_overlap}
-               == projection matrix onto the subspace {e_overlap}
-    v_a^pi = pi_overlap . v_a == projection of v_a onto {e_overlap}
-    v_b^pi = pi_overlap . v_b == projection of v_b onto {e_overlap}
+* $\{e_a\}$ = set of basis elements in $v_a$ with non-zero coefficients
+* $\{e_b\}$ = set of basis elements in $v_b$ with non-zero coefficients
+* $\{e_{overlap}\} = \{e_a\} \cap \{e_b\}$ where $\cap$ is
+  set-intersection.
+* $\pi_{overlap} = unit on diagonal for each $e \in \{e_{overlap}\}$
+  This is the projection matrix onto the subspace $\{e_{overlap}\}$
+* $v_a^\pi = \pi_{overlap} \cdot v_a$ is the projection of $v_a$ onto
+  $\{e_{overlap}\}$.
+* $v_b^\pi = \pi_{overlap} \cdot v_b$ is the projection of $v_b$ onto
+  $\{e_{overlap}\}$.
 
-    v_cluster = v_a^pi + v_b^pi
-    v_a^new = v_a - v_a^pi
-    v_b^new = v_b - v_b^pi
+* $v_{cluster} = v_a^\pi + v_b^\pi$
+* $v_a^{new} = v_a - v_a^\pi$
+* $v_b^{new} = v_b - v_b^\pi$
 
-The idea here is that the vector subspace `{e_overlap}` consists of
-those grammatical usages that are common for both words `a` and `b`,
-and thus hopefully correspond to how words `a` and `b` are used in a
-common sense. Thus `v_cluster` is the common word-sense, while `v_a^new`
-and `v_b^new` are everything else, everything left-over.  Note that
-`v_a^new` and `v_b^new` are orthogonal to `v_cluster`. Note that `v_a^new`
-and `v_b^new` are both exactly zero on `{e_overlap}` -- the subtraction
-wipes out those coefficients. Note that the total number of counts
-is preserved.  That is,
+The idea here is that the vector subspace $\{e_{overlap}\}$ consists of
+those grammatical usages that are common for both words $a$ and $b$,
+and thus hopefully correspond to how words $a$ and $b$ are used in a
+common sense. Thus $v_{cluster}$ is the common word-sense, while
+$v_a^{new}$ and $v_b^{new}$ are everything else, everything left-over.
+Note that $v_a^{new}$ and $v_b^{new}$ are orthogonal to $v_{cluster}$.
+Note that $v_a^{new}$ and $v_b^{new}$ are both exactly zero on
+$\{e_{overlap}\}$ -- the subtraction wipes out those coefficients. Note
+that the total number of counts is preserved.  That is,
 
-    ||v_a|| + ||v_b|| = ||v_cluster|| + ||v_a^new|| + ||v_b^new||
+$$    ||v_a|| + ||v_b|| = ||v_{cluster}|| + ||v_a^{new}|| + ||v_b^{new}|| $$
 
-where `||v|| == ||v||_1` the `l_1` Banach norm aka count aka
+where $||v|| = ||v||_1$ the $l_1$ Banach norm aka count aka
 Manhattan-distance.
 
-If `v_a` and `v_b` have several word-senses in common, then so will
-`v_cluster`.  Since there is no a priori way to force `v_a` and `v_b` to
+If $v_a$ and $v_b$ have several word-senses in common, then so will
+$v_{cluster}$.  Since there is no a priori way to force $v_a$ and $v_b$ to
 encode only one common word sense, there needs to be some distinct
-mechanism to split `v_cluster` into multiple word senses, if that is
+mechanism to split $v_{cluster}$ into multiple word senses, if that is
 needed.
 
 Union merging can be described using almost the same formulas, except
 that one takes
 
-    {e_union} = {e_a} set-union {e_b}
+$$  \{e_{union}\} = \{e_a\} \cup \{e_b\} $$
+
+where $\cup$ is set-union.
 
 
 accumulate-count, assign-to-cluster
