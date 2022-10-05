@@ -20,30 +20,49 @@ be combined to create a "grammatical class", containing both the words,
 and behaving as their "average".  Similarly, a word can be compared to
 an existing grammatical class, to see if it belongs to that class.
 
-Recall that words are represented as vectors, so that comparison is a
-comparison of vectors, and merging merges vectors. Although the word
-"vector" is used, many of the operations are **NOT** linear; this is
-not just some linear algebra, and there are some rather complicated
-non-linear operations involved!
+Words are represented as vectors. There are at least three completely
+different kinds of word-vector representations being used:
+
+* Vector components are given by pair-MI to other words.  The pair-MI
+  was obtained by pair counting. This is mostly NOT used in this
+  directory; this was obtained in erlier processing stages. Word pairs
+  with high pair-MI are words that commonly occur together.
+
+* Vector components are given by frequency of word-disjunct pairs. The
+  word-disjunct pair counts were obtained by MST parsing, in an earlier
+  stage.
+
+* Vector components are given by symmetric-MI, summing over disjuncts.
+  The symmetric-MI between a pair of words indicates how grammatically
+  similar they are.  The symmetric-MI is distributed rouoghly as a
+  Gaussian; thus, these vectors belong to a Gaussian Orthogonal Ensemble
+  (GOE). The dot-product of two GOE vectors is an even stronger indicator
+  of grammatical similarity.
+
+Although words are represented as vectors, the merge operations are
+highly non-linear. This is because disjuncts are composed of
+"half-words" (connectors), and when words are merged into a class, the
+connectors must be merged as well ("detailed balance"), resulting in
+a very non-linear transformation on the vectors.
 
 The code in this directory implements several different comparison and
 merge strategies:
 
 For comparison:
 * Cosine similarity
-* MI similarity
+* Symmetric-MI similarity
 * Ranked-MI similarity
-* Gaussian Orthogonal Ensemble similarity
+* GOE similarity
 
-The first three work with word-disjunct vectors; the Gaussian similarity
+The first three work with word-disjunct vectors; the GOE similarity
 works with word-word vectors, where the vector components are given by
-the MI similarity.
+the symmetric-MI similarity.
 
-Gaussian similarity works best for merging; it measures not only the
-local syntactic environment for two words, but also how similar they
-are in relation to other (3rd party) words. It resembles a layer "one
-deeper", than the original vectors from which it is built. The downside
-is that Gaussian similarity is expensive to compute.
+GOE similarity works best for merging; it measures not only the local
+syntactic environment for two words, but also how similar they are in
+relation to other (3rd party) words. It resembles a layer "one deeper",
+than the original vectors from which it is built. The downside is that
+GOE similarity is expensive to compute.
 
 Ranked-MI works second-best for merging; it has the best properties of
 MI but also includes the word frequency as part of the similarity score.
@@ -96,10 +115,11 @@ but not so much that one loses the ability to discriminate between
 important particulars. Exactly how this can be done best is the grand
 mystery, the grand question, quest of the code here.
 
-As noted above, something called 'union and overlap' merging were already
-explored, and found wanting. An 'in-group, private club' algo is being
-currently explored.  The generic information-theoretic foundations of
-merging remain opaque and unknown (but I'm trying to figure them out.)
+As noted above, something called 'union and overlap' merging was already
+explored, and found wanting. An 'in-group, private club' algo seems to
+work quite well, and is the primary merge algo implemented here, in this
+directory.  The generic information-theoretic foundations of merging
+remain opaque and unknown (but I'm trying to figure them out.)
 
 
 Representation
@@ -191,24 +211,59 @@ the sets of disjuncts defining those classes are not necessarily
 disjoint; there may be significant overlap. That is, different
 grammatical classes are not orthogonal, in general.
 
+Goals
+-----
+The goal of obtaining grammatical classes is to enable grammatical
+parsing of sentences. It is hoped/beleived that such parsing will be
+more accurate than MST parsing.  Thus, after determining grammatical
+classes, a second round of parsing becomes possible. This second round
+can then provide the foundation for discerning entities, and the
+properties of entities (e.g. that dogs have tails, legs, eyes; that IBM
+is a specific, named corporation) In this second round, there will be
+correlations across sentences. In this second round, there will again be
+similarities, but this time, the similarities will not be grammatical,
+but similarities in properties (e.g. that dogs, cats and squirrels have
+tails, legs, eyes.).
+
 
 A Note about "Vectors"
 ----------------------
-Unfortunately, the word "vector" is not quite the correct term, as it
-suggests a vector space with rotational symmetry and basis independence.
-This is very much NOT the case: the space has NO rotational symmetry
-at all, and is very basis-dependent.  The concept of a "matroid" moves
-in the right direction, but does not quite capture the idea. The space
-is actually a probability space; the preservation of counts is the
-same as the preservation of probability.
+As noted earlier, there are multiple kinds of vectors appearing in this
+code base.  The two primary ones in this directory is the word-disjunct
+vector (where the vector basis consists of disjuncts, and the vector
+coordinates are the frequency counts of word-disjunct pairs) and the GOE
+vector (where the basis consists of other words, and the coordinates are
+the symmetric-MI to those words.)
 
-A different problem is that the bases of the vectors are not actually
-"independent"; they contain words, themselves. One can consider
-Sections where each word in a Connector is replaced by a variable (by
-a wild-card): these are called "Shapes" below, and elsewhere, and
-provide basis elements for a different, but related, vector space.
-These subtleties regarding vectors and shapes are ignored here; the
-word "vector" will be used only because of the lack of a better word.
+In the word-disjunct case, the term "vector" is misleading, and does not
+convey the correct idea. The word "vector" suggests a vector space with
+rotational symmetry and basis independence.  This is very much NOT the
+case: the word-disjunct space has NO rotational symmetry at all, and is
+strongly basis-dependent.  The concept of a "matroid" moves in the right
+direction, but still does not quite capture the idea. The word-disjunct
+"vectors" live in a probability space: that is, the coordinates are
+probabilities; the sum of the probabilities must equal one. The
+word-disjunct "vectors" are actually just points on the face of a
+very high-dimensional simplex.
+
+A different problem is that the basis elements of the word-disjunct
+vectors are not actually "independent" of one-another. The basis
+elements are disjuncts, which are composed of "half-words" (connectors).
+
+Singling out any one connector, one can ask what other disjuncts have
+that connector on it, and then ask what words have those disjuncts. This
+give a different "vector": it is the "shape" of the connector, and
+these vectors are called "Shapes". Again, these shapes are probability
+vectors. Since they are constructed from the word-disjunct "vectors",
+the are not independent of them. The construction is very highly
+non-linear *in the space of disjuncts*, as it tangles in *all* other
+disjuncts having that connector, and all other words having that
+disjunct. Yet, this construction must necessarily preserve the
+grand-total counts; it is linear in a certain "covering space" of
+fragmentary connectors. This idea is called "detailed balance", in
+analogy to the concept of detailed balance in chemistry and
+thermodynamics. The total number of connectors, the total number of
+words and the total number of disjuncts are all preserved.
 
 
 Semantic disambiguation
