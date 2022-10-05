@@ -359,7 +359,7 @@ $N$-dimensional space, where $N$ is the size of the vocabulary (the
 dimension of the vector space).  That this is so, experimentally,
 is explored and confirmed in Diary Part Eight. When normalized to unit
 length, these vectors are uniformly distributed on the unit sphere
-$S_{N-1}$.
+$S_{N-1}$ .
 
 This allows the definition and use of GOE vectors.  Let
 
