@@ -304,14 +304,14 @@ word-vectors is greater than a threshold, they should be merged.
 
 The cosine distance between the two words $w_a$, $w_b$ is
 
-$$  \cos(w_a, w_b) = v_a \cdot v_b / |v_a||v_b| $$
+$$  \cos(w_a, w_b) = \frac{v_a \cdot v_b}{|v_a||v_b|} $$
 
 Where, as usual, $v_a \cdot v_b$ is the dot product, and $|v|$ is the length.
 
-If $N(w,d)$ is the count of the number of observations of word w with
-disjunct d, the dot product is
+If $N(w,d)$ is the count of the number of observations of word $w$ with
+disjunct $d$, the dot product is
 
-    dot(w_a, w_b) = v_a . v_b = sum_d N(w_a,d) N(w_b,d)
+$$    dot(w_a, w_b) = v_a \cdot v_b = sum_d N(w_a,d) N(w_b,d) $$
 
 A fundamental problem with cosine distance is that it is built on an
 assumption of the rotational invariance of Euclidean space. However,
@@ -320,18 +320,18 @@ probability space that has no rotational symmetry. Acknowledging this
 leads to the contemplation of probabilistic distance functions.
 
 A better judge of similarity is the information-theoretic divergence
-between the vectors (the Kullback-Lielber divergence). If N(w,d) is
-the count of the number of observations of word w with disjunct d,
+between the vectors (the Kullback-Lielber divergence). If $N(w,d)$ is
+the count of the number of observations of word $w$ with disjunct $d$,
 the divergence is:
 
-    MI(w_a, w_b) = log_2 [dot(w_a, w_b) dot(*,*) / ent(w_a) ent(w_b)]
+$$   MI(w_a, w_b) = log_2 \frac {dot(w_a, w_b) dot(\*,\*)}{ent(w_a) ent(w_b)} $$
 
 where
 
-    ent(w) = sum_d N(w,d) N(*,d) = dot(w, *)
+$$   ent(w) = sum_d N(w,d) N(\*,d) = dot(w, \*) $$
 
-so that log_2 ent(w) is the entropy of word w (Up to a factor of
-N(*,*) squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
+so that $log_2 ent(w)$ is the entropy of word $w$ (Up to a factor of
+$N(\*,\*)$ squared. That is, we should be using p(w,d) = N(w,d) / N(*,*)
 in the definition. This and other considerations are covered in much
 greater detail in the supporting PDF's.)
 
@@ -357,7 +357,7 @@ is so, experimentally, is explored and confirmed in Diary Part Eight.
 
 This allows the definition and use of GOE vectors.  Let
 
-$$ \mu = \frac{M(*,*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
+$$ \mu = \frac{M(\*,\*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
 
 
 Merge Algos
