@@ -605,7 +605,7 @@ with a new candidate word.  It does not describe how to form the
 initial grammatical class, out of the merger of N words. Several
 strategies are possible. Given words $u$, $v$, $w$, ... one may:
 
-* Simple sum: let $g=u+v+w+...$. That's it; nothing more.
+* Simple sum: let $g=u+v+w+\ldots$ . That's it; nothing more.
 * Overlap and union merge, described below.
 * Democratic voting: merge those basis elements shared by a majority.
 
@@ -626,25 +626,25 @@ then sum the counts only on this intersected set. Let
 * $\\{e_b\\}$ = set of basis elements in $v_b$ with non-zero coefficients
 * $\\{e_{overlap}\\} = \\{e_a\\} \cap \\{e_b\\}$ where $\cap$ is
   set-intersection.
-* $\pi_{overlap} = unit on diagonal for each $e \in \{e_{overlap}\}$
-  This is the projection matrix onto the subspace $\{e_{overlap}\}$
+* $\pi_{overlap}$ = unit on diagonal for each $e \in \\{e_{overlap}\\}$
+  This is the projection matrix onto the subspace $\\{e_{overlap}\\}$
 * $v_a^\pi = \pi_{overlap} \cdot v_a$ is the projection of $v_a$ onto
-  $\{e_{overlap}\}$.
+  $\\{e_{overlap}\\}$.
 * $v_b^\pi = \pi_{overlap} \cdot v_b$ is the projection of $v_b$ onto
-  $\{e_{overlap}\}$.
+  $\\{e_{overlap}\\}$.
 
 * $v_{cluster} = v_a^\pi + v_b^\pi$
 * $v_a^{new} = v_a - v_a^\pi$
 * $v_b^{new} = v_b - v_b^\pi$
 
-The idea here is that the vector subspace $\{e_{overlap}\}$ consists of
+The idea here is that the vector subspace $\\{e_{overlap}\\}$ consists of
 those grammatical usages that are common for both words $a$ and $b$,
 and thus hopefully correspond to how words $a$ and $b$ are used in a
 common sense. Thus $v_{cluster}$ is the common word-sense, while
 $v_a^{new}$ and $v_b^{new}$ are everything else, everything left-over.
 Note that $v_a^{new}$ and $v_b^{new}$ are orthogonal to $v_{cluster}$.
 Note that $v_a^{new}$ and $v_b^{new}$ are both exactly zero on
-$\{e_{overlap}\}$ -- the subtraction wipes out those coefficients. Note
+$\\{e_{overlap}\\}$ -- the subtraction wipes out those coefficients. Note
 that the total number of counts is preserved.  That is,
 
 $$    ||v_a|| + ||v_b|| = ||v_{cluster}|| + ||v_a^{new}|| + ||v_b^{new}|| $$
@@ -661,7 +661,7 @@ needed.
 Union merging can be described using almost the same formulas, except
 that one takes
 
-$$  \{e_{union}\} = \{e_a\} \cup \{e_b\} $$
+$$  \\{e_{union}\\} = \\{e_a\\} \cup \\{e_b\\} $$
 
 where $\cup$ is set-union.
 
@@ -682,10 +682,10 @@ in other places.
 
 That is, the merger is given by the vector
 
-    v_merged = v_overlap + FRAC * (v_union - v_overlap)
+$$   v_{merged} = v_{overlap} + FRAC * (v_{union} - v_{overlap}) $$
 
-If `v_a` and `v_b` are both words, then the counts on `v_a` and `v_b` are
-adjusted to remove the counts that were added into `v_merged`. If one
+If $v_a$ and $v_b$ are both words, then the counts on $v_a$ and $v_b$ are
+adjusted to remove the counts that were added into $v_{merged}$. If one
 of the two is already a word-class, then the counts are simply moved
 from the word to the class.
 
@@ -735,10 +735,10 @@ the same, even as the total number of molecules is changing.
 
 There are a number of analogies that can be made to chemistry: a
 `ConnectorSeq` is a list of the chemical bonds bonds that can be
-formed.  Thus, a pair `(w,d)` is a listing of an atom `w` and the
-bonds `d` it can form. Because any given atom can form bonds in
-several different ways, there are several different `d` that can
-be associated with `w`. The act of classification is like saying
+formed.  Thus, a pair $(w,d)$ is a listing of an atom $w$ and the
+bonds $d$ it can form. Because any given atom can form bonds in
+several different ways, there are several different $d$ that can
+be associated with $w$. The act of classification is like saying
 that chlorine, fluorine and bromine are all very similar in the
 bonds that they form. The act of connector merging is like saying
 that the halides all bond similarly to the alkalis.
