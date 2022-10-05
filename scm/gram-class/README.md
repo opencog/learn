@@ -384,7 +384,7 @@ product:
 
 $$ \mbox{GOE-sim}(u, w) = \cos\theta(u, w) = \widehat{u} \cdot \widehat{w} = \sum_{z} G(u, z) G(w, z)$$
 
-Experimentally, it appears that words with $\theta(w, u) \simless 0.5$
+Experimentally, it appears that words with $\theta(w, u) \lesssim 0.5$
 are (very) grammmatically similar, and otherwise not.
 
 
