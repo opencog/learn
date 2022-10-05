@@ -622,9 +622,9 @@ given here. One wishes to compute the intersection of basis elements
 (the intersection of "disjuncts" via "sections") of the two words, and
 then sum the counts only on this intersected set. Let
 
-* $\{e_a\}$ = set of basis elements in $v_a$ with non-zero coefficients
-* $\{e_b\}$ = set of basis elements in $v_b$ with non-zero coefficients
-* $\{e_{overlap}\} = \{e_a\} \cap \{e_b\}$ where $\cap$ is
+* $\\{e_a\\}$ = set of basis elements in $v_a$ with non-zero coefficients
+* $\\{e_b\\}$ = set of basis elements in $v_b$ with non-zero coefficients
+* $\\{e_{overlap}\\} = \\{e_a\\} \cap \\{e_b\\}$ where $\cap$ is
   set-intersection.
 * $\pi_{overlap} = unit on diagonal for each $e \in \{e_{overlap}\}$
   This is the projection matrix onto the subspace $\{e_{overlap}\}$
