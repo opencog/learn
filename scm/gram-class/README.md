@@ -359,7 +359,32 @@ is so, experimentally, is explored and confirmed in Diary Part Eight.
 
 This allows the definition and use of GOE vectors.  Let
 
-$$ \mu = \frac{MI(\*,\*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} M(w_a, w_b) $$
+$$ \mu = \langle MI \rangle = \frac{MI(\*,\*)} {N^2} = \frac{1}{N^2} \sum_{w_a,w_b} MI(w_a, w_b) $$
+
+and
+
+$$ \langle MI^2 \rangle = \frac{1}{N^2} \sum_{w_a,w_b} MI^2(w_a, w_b) $$
+
+so that
+
+$$ \sigma = \sqrt{\langle MI^2 \rangle - \langle MI \rangle^2} $$
+
+is the standard deviation of the distribution of grammatical-MI. Define
+the normal Gaussian distribution as
+
+$$ G(w_a, w_b) = \frac {MI(w_a, w_b) - \mu} {\sigma} $$
+
+This allows the unit word-vector $\hat{w_a}$ to be defined: this is the
+vector whose coordinates are $G(w_a, w_b)$.  By construction, it is of
+unit length: $|\hat{w_a}|=1$ and thus lies on the (high-dimensional)
+unit sphere.
+
+The GOE Similarity between two words is then just the dot product:
+
+$$ \mbox{GOE-sim}(w_a, w_b) = \cos\theta(w_a, w_b) = \hat{w_a} \cdot \hat{w_b} $$
+
+Experimentally, it appears that words with $\theta(w_a, w_b) \simeq 0.5$
+are (very) grammmatically similar, and otherwise not.
 
 
 Merge Algos
