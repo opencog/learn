@@ -116,8 +116,9 @@
 			; Expand the size of the universe
 			(define ranked-words (rank-words LLOBJ))
 
-			; (compute-diag-mi-sims LLOBJ ranked-words (diag-start N) (diag-end N))
-			(compute-diag-mi-sims LLOBJ ranked-words 0 (diag-end N))
+			; Ummm ... ranked-words (diag-start N) (diag-end N))
+			(loop-upper-diagonal (make-gram-mi-extender LLOBJ)
+				 ranked-words 0 (diag-end N))
 			(format #t "------ Extended the universe in ~A secs\n" (e))
 		)
 		(iota LOOP-CNT))

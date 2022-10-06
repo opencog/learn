@@ -94,34 +94,13 @@
 )
 
 ; ---------------------------------------------------------------
+; XXX temp hack...
 
-(define-public (compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH)
+(define (make-gram-mi-extender LLOBJ)
 "
-  compute-diag-mi-sims LLOBJ WORDLI START-RANK DEPTH - compute MI.
-
-  This will compute the MI similarity of words lying around a diagonal.
-  The width of the diagonal is DEPTH. The diagonal is defined by the
-  the ranked words. Computations start at START-RANK and proceed to
-  DEPTH.  If the Similarity has already been recorded, it will not
-  be recomputed.
-
-  Think of a tri-diagonal matrix, but instead of three, it is N-diagonal,
-  with N given by DEPTH.
-
-  WORDLI is a list of words, presumed sorted by rank, defining the
-  diagonal.
-
-  Examples: If START-RANK is 0 and DEPTH is 200, then the 200x200
-  block matrix of similarities will be computed. Since similarities
-  are symmetric, this is a symmetric matrix, and so 200 x 201 / 2
-  grand total similarities are computed. (This is a 'triangle number')
-
-  If START-RANK is 300 and DEPTH is 200, then computations start at
-  the 300'th ranked word and continue through the 500'th ranked word.
-  This results in a total of 200x200 similarities, as 200 rows are
-  computed, out to 200 places away from the diagonal. Visually, this is
-  a rhombus, one side lying along the diagonal (a rhombus is a
-  parellelogram with all sides equal length.)
+  make-gram-mi-extender LLOBJ -- return function that computes and stores
+  grammatical-MI's between words, but only if those MI's are absent. If
+  they're already there, it does nothing.
 "
 	; Create a new simmer each time, so we get the updated
 	; mmt-q value for this session.
@@ -133,8 +112,8 @@
 		(define miv (sap 'pair-count WA WB))
 		(if (not miv) (do-compute-sim WA WB)))
 
-	; Provided by loop-api.scm in matrix module.
-	(loop-upper-diagonal compute-sim WORDLI START-RANK DEPTH)
+	; Return the wrapped function.
+	compute-sim
 )
 
 ; ---------------------------------------------------------------
@@ -297,8 +276,8 @@
 	((do-add-similarity-api LLOBJ) 'fetch-pairs)
 
 	; Create similarities for the initial set.
-	(compute-diag-mi-sims LLOBJ ranked-words 0 NRANK)
-	(format #t "Done computing MI similarity in ~A secs\n" (e))
+	(loop-upper-diagonal (make-gram-mi-extender LLOBJ) ranked-words 0 NRANK)
+	(format #t "Done computing grammatical MI similarity in ~A secs\n" (e))
 )
 
 ; ---------------------------------------------------------------
