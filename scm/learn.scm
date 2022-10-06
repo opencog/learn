@@ -19,6 +19,7 @@
 (include-from-path "opencog/learn/gram-majority.scm")
 (include-from-path "opencog/learn/gram-optim.scm")
 (include-from-path "opencog/learn/in-group.scm")
+(include-from-path "opencog/learn/similarity.scm")
 (include-from-path "opencog/learn/mi-similarity.scm")
 (include-from-path "opencog/learn/jaccard.scm")
 (include-from-path "opencog/learn/log-merge.scm")

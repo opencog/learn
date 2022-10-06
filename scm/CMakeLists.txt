@@ -21,6 +21,7 @@ ADD_GUILE_MODULE (FILES
 	gram-class/mi-similarity.scm
 	gram-class/shape-project.scm
 	gram-class/shape-vec.scm
+	gram-class/similarity.scm
 	gram-class/singletons.scm
 
 	lg-compare.scm
