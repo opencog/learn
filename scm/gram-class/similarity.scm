@@ -92,34 +92,3 @@
 )
 
 ; ---------------------------------------------------------------
-
-(define-public (setup-initial-similarities LLOBJ
-	SIM-API SIM-EXTENDER NRANK
-)
-"
-  setup-initial-similarities LLOBJ SIM-API SIM-EXTENDER NRANK -- Compute
-  a block matrix of similarities for the top-ranked words.
-
-  All of the words appearing in the left-basis of LLOBJ are ranked
-  by the total observation count on them. Then the top NRANK of them
-  are taken, and the similarities between them are computed.
-
-  If similarity values have already been recorded for any given
-  word-pair, they will NOT bet recomputed.
-"
-	(define e (make-elapsed-secs))
-
-	; Start by getting the ranked words.  Note that this may include
-	; WordClass nodes as well as words.
-	(define ranked-words (rank-words LLOBJ))
-	(format #t "Done ranking words in ~A secs\n" (e))
-
-	; Load similarity-pairs; pointless to recompute if we have them!
-	(SIM-API 'fetch-pairs)
-
-	; Create similarities for the initial set.
-	(loop-upper-diagonal SIM-EXTENDER ranked-words 0 NRANK)
-	(format #t "Done setting up similarity to ~A in ~A secs\n" NRANK (e))
-)
-
-; ---------------------------------------------------------------

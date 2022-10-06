@@ -506,9 +506,21 @@
 
   Status: This code is complete, fully-debugged, stable, well-tested.
 "
-	(setup-initial-similarities LLOBJ SIM-API SIM-EXTENDER NRANK)
+	(define e (make-elapsed-secs))
 
-	; Log what we actually used.
+	; Start by getting the ranked words.  Note that this may include
+	; WordClass nodes as well as words.
+	(define ranked-words (rank-words LLOBJ))
+
+	; Load similarity-pairs; pointless to recompute if we have them!
+	(SIM-API 'fetch-pairs)
+	(format #t "Done fetching pairs in ~A secs\n" (e))
+
+	; Create similarities for the initial set.
+	(loop-upper-diagonal SIM-EXTENDER ranked-words 0 NRANK)
+	(format #t "Done setting up similarity to ~A in ~A secs\n" NRANK (e))
+
+	; Log the paramters that were supplied.
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
 		(FloatValue QUORUM COMMONALITY NOISE NRANK))
