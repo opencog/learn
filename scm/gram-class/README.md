@@ -803,6 +803,14 @@ Earlier code reversed the inner and outer loops (see the code in the
 `attic` directory) and doing it the other way creates a number of
 difficult issues for connector merging.
 
+
+Code Overview
+=============
+A quick sketch of which files implement what.
+
+* `agglo-rank.scm` -- Contains the main entry point `in-group-cluster`.
+* `mi-similarity.scm` -- Compute grammatical MI similarities between words.
+
 -------------------------------------------------------------------
 
 Copyright (c) 2017, 2018, 2019, 2022 Linas Vepstas

@@ -1,7 +1,7 @@
 ;
 ; mi-similarity.scm
 ;
-; Compute MI similarities between word-pairs. Provide lists of
+; Compute grammatical-MI similarities between words. Provide lists of
 ; top-ranked words and word-pairs.
 ;
 ; Copyright (c) 2021 Linas Vepstas
@@ -52,11 +52,12 @@
 
 ; ---------------------------------------------------------------
 
-(define (make-simmer LLOBJ)
+(define (make-gram-mi-simmer LLOBJ)
 "
-  make-simmer LLOBJ -- return function that computes and stores MI's.
+  make-gram-mi-simmer LLOBJ -- return function that computes and stores
+  grammatical-MI's between words.
 
-  This computes and stores both the MI and the Ranked-MI scores.
+  This computes and stores both the grammatical-MI and the Ranked-MI scores.
 
   The computation is performed unconditionally; a new MI is computed,
   even if there is an existing one cached.
@@ -124,7 +125,7 @@
 "
 	; Create a new simmer each time, so we get the updated
 	; mmt-q value for this session.
-	(define do-compute-sim (make-simmer LLOBJ))
+	(define do-compute-sim (make-gram-mi-simmer LLOBJ))
 
 	; Don't recompute similarity, if we've already got it.
 	(define sap (do-add-similarity-api LLOBJ))
@@ -234,7 +235,7 @@
 	(define e (make-elapsed-secs))
 	(define sap (do-add-similarity-api LLOBJ))
 	(define sms (add-pair-stars sap))
-	(define compute-sim (make-simmer LLOBJ))
+	(define compute-sim (make-gram-mi-simmer LLOBJ))
 
 	(define (recomp-one WX LIGNORE)
 		; Loop over all pairs, except the ones we've done already.
@@ -308,7 +309,7 @@
   WCLASS and all other existing classes. The computation is
   unconditional.
 "
-	(define compute-sim (make-simmer LLOBJ))
+	(define compute-sim (make-gram-mi-simmer LLOBJ))
 
 	(for-each (lambda (WC) (compute-sim WCLASS WC))
 		(LLOBJ 'get-clusters))
