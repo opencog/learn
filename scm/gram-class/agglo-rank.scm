@@ -383,7 +383,8 @@
 
 (define*-public (in-group-cluster LLOBJ
 	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
-	#:optional (PRECISE-SIM #f))
+	#:optional (PRECISE-SIM #f)
+	#:key (MAKE-SIMMER make-gram-mi-simmer))
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
 
@@ -561,7 +562,7 @@
 
 		; Always compute self-similarity of the new word-class.
 		; Optional; this is logged by the logger.
-		((make-gram-mi-simmer LLOBJ) wclass wclass)
+		((MAKE-SIMMER LLOBJ) wclass wclass)
 
 		; Optional; compute similarity between this and all other
 		; classes. This is used to compute and log the orthogonality
