@@ -62,7 +62,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (main-loop LLOBJ MERGE-FUN NRANK LOOP-CNT)
+(define (main-loop LLOBJ SIM-API MAKE-SIMMER MERGE-FUN NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
@@ -116,9 +116,12 @@
 			; Expand the size of the universe
 			(define ranked-words (rank-words LLOBJ))
 
-			; Ummm ... ranked-words (diag-start N) (diag-end N))
-			(loop-upper-diagonal (make-gram-mi-extender LLOBJ)
-				 ranked-words 0 (diag-end N))
+			(define simmer (MAKE-SIMMER LLOBJ))
+			(define (compute-sim WA WB)
+				(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
+
+			; Ummm ... compute-sim ranked-words (diag-start N) (diag-end N))
+			(loop-upper-diagonal compute-sim ranked-words 0 (diag-end N))
 			(format #t "------ Extended the universe in ~A secs\n" (e))
 		)
 		(iota LOOP-CNT))
@@ -597,12 +600,12 @@
 
 		(log-class wclass) ; record this in the log
 
-		(format #t "------ Recomputed MI in ~A secs\n" (e))
+		(format #t "------ Recomputed similarity in ~A secs\n" (e))
 	)
 
 	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ perform-merge NRANK LOOP-CNT)
+	(main-loop LLOBJ SIM-API MAKE-SIMMER perform-merge NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------
