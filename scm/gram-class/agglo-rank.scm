@@ -385,7 +385,10 @@
 (define*-public (in-group-cluster LLOBJ
 	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
 	#:optional (PRECISE-SIM #f)
-	#:key (MAKE-SIMMER make-gram-mi-simmer))
+	#:key
+		(SIM-API (add-gram-mi-sim-api LLOBJ))
+		(SIM-EXTENDER (make-gram-mi-extender LLOBJ))
+	)
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
 
@@ -503,7 +506,7 @@
 
   Status: This code is complete, fully-debugged, stable, well-tested.
 "
-	(setup-initial-similarities LLOBJ NRANK)
+	(setup-initial-similarities LLOBJ SIM-API SIM-EXTENDER NRANK)
 
 	; Log what we actually used.
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
@@ -563,7 +566,7 @@
 
 		; Always compute self-similarity of the new word-class.
 		; Optional; this is logged by the logger.
-		((MAKE-SIMMER LLOBJ) wclass wclass)
+		(SIM-EXTENDER wclass wclass)
 
 		; Optional; compute similarity between this and all other
 		; classes. This is used to compute and log the orthogonality

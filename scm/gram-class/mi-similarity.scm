@@ -253,10 +253,12 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (setup-initial-similarities LLOBJ NRANK)
+(define-public (setup-initial-similarities LLOBJ
+	SIM-API SIM-EXTENDER NRANK
+)
 "
-  setup-initial-similarities LLOBJ NRANK -- Compute a block matrix
-  of similarities for the top-ranked words.
+  setup-initial-similarities LLOBJ SIM-API SIM-EXTENDER NRANK -- Compute
+  a block matrix of similarities for the top-ranked words.
 
   All of the words appearing in the left-basis of LLOBJ are ranked
   by the total observation count on them. Then the top NRANK of them
@@ -273,11 +275,11 @@
 	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Load similarity-pairs; pointless to recompute if we have them!
-	((add-gram-mi-sim-api LLOBJ) 'fetch-pairs)
+	(SIM-API 'fetch-pairs)
 
 	; Create similarities for the initial set.
-	(loop-upper-diagonal (make-gram-mi-extender LLOBJ) ranked-words 0 NRANK)
-	(format #t "Done computing grammatical MI similarity in ~A secs\n" (e))
+	(loop-upper-diagonal SIM-EXTENDER ranked-words 0 NRANK)
+	(format #t "Done setting up similarity to ~A in ~A secs\n" NRANK (e))
 )
 
 ; ---------------------------------------------------------------
