@@ -61,7 +61,7 @@
   variant is hard-coded. The first variant is stubbed out in the code.
 "
 	; The ordinary MI similarity of two words
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 	(define (mi-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
@@ -233,7 +233,7 @@
 (define bat (batch-transpose sha))
 (bat 'mmt-marginals)
 
-(define sap (do-add-similarity-api sha))
+(define sap (add-gram-mi-sim-api sha))
 (define asm (add-symmetric-mi-compute sha))
 
 ==== !#

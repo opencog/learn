@@ -14,9 +14,9 @@
 
 ; ---------------------------------------------------------------
 
-(define (do-add-similarity-api LLOBJ)
+(define (add-gram-mi-sim-api LLOBJ)
 "
-	do-add-similarity-api LLOBJ -- Return the correct similarity API.
+	add-gram-mi-sim-api LLOBJ -- Return the correct similarity API.
 "
 	; The SIM-ID is the key under which the actual values are stored.
 	(define SIM-ID "shape-mi")
@@ -62,7 +62,7 @@
   The computation is performed unconditionally; a new MI is computed,
   even if there is an existing one cached.
 "
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 	(define smi (add-symmetric-mi-compute LLOBJ))
 
 	(define ol2 (/ 1.0 (log 2.0)))
@@ -107,7 +107,7 @@
 	(define do-compute-sim (make-gram-mi-simmer LLOBJ))
 
 	; Don't recompute similarity, if we've already got it.
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 	(define (compute-sim WA WB)
 		(define miv (sap 'pair-count WA WB))
 		(if (not miv) (do-compute-sim WA WB)))
@@ -130,7 +130,7 @@
   pairs, which take more time to sort.)
 "
 	; General setup of things we need
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 
 	; The MI similarity of two words
 	(define (mi-sim WA WB)
@@ -174,7 +174,7 @@
 
   Handy-dandy debug utility.
 "
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 
 	; The MI similarity of two words
 	(define (mi-sim WA WB)
@@ -212,7 +212,7 @@
   new pairings are created.
 "
 	(define e (make-elapsed-secs))
-	(define sap (do-add-similarity-api LLOBJ))
+	(define sap (add-gram-mi-sim-api LLOBJ))
 	(define sms (add-pair-stars sap))
 	(define compute-sim (make-gram-mi-simmer LLOBJ))
 
@@ -273,7 +273,7 @@
 	(format #t "Done ranking words in ~A secs\n" (e))
 
 	; Load similarity-pairs; pointless to recompute if we have them!
-	((do-add-similarity-api LLOBJ) 'fetch-pairs)
+	((add-gram-mi-sim-api LLOBJ) 'fetch-pairs)
 
 	; Create similarities for the initial set.
 	(loop-upper-diagonal (make-gram-mi-extender LLOBJ) ranked-words 0 NRANK)
