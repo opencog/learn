@@ -42,28 +42,27 @@
 
 ; ---------------------------------------------------------------
 
-(define (recomp-all-sim LLOBJ WLIST)
+(define (recomp-all-sim SIM-API SIMMER WLIST)
 "
-  recomp-all-sim LLOBJ WLIST - Recompute all existing similarities for
-  all words in WLIST. The recomputation is unconditional.
+  recomp-all-sim SIM-API SIMMER WLIST - Recompute (all) similarities
+  for all words in WLIST. The SIMMER function will be called on all
+  word-pairs provided by the SIM-API.
 
-  For each word in WLIST, recompute *all* existing similarities between
-  that word and any other word that it already has similarities to. No
-  new pairings are created.
+  For each pair of words in WLIST, determine if there is an existing
+  similarity between them, according to SIM-API. If so, then call the
+  SIMMER function on that pair. New pairings are not created.
 "
 	(define e (make-elapsed-secs))
-	(define sap (add-gram-mi-sim-api LLOBJ))
-	(define sms (add-pair-stars sap))
-	(define compute-sim (make-gram-mi-simmer LLOBJ))
+	(define sms (add-pair-stars SIM-API))
 
 	(define (recomp-one WX LIGNORE)
 		; Loop over all pairs, except the ones we've done already.
 		; (as otherwise, each similarity pair gets computed twice)
 		(define todo-list (atoms-subtract (sms 'left-duals WX) LIGNORE))
-		(compute-sim WX WX) ; Always compute self-similarity.
+		(SIMMER WX WX) ; Always compute self-similarity.
 		(for-each (lambda (WRD)
-				(when (not (nil? (sap 'get-pair WRD WX)))
-					(compute-sim WRD WX)))
+				(when (not (nil? (SIM-API 'get-pair WRD WX)))
+					(SIMMER WRD WX)))
 			todo-list))
 
 	; Compute only the triangle of N(N-1)/2 similarities.

@@ -66,29 +66,6 @@
 )
 
 ; ---------------------------------------------------------------
-; XXX temp hack...
-
-(define (make-gram-mi-extender LLOBJ)
-"
-  make-gram-mi-extender LLOBJ -- return function that computes and stores
-  grammatical-MI's between words, but only if those MI's are absent. If
-  they're already there, it does nothing.
-"
-	; Create a new simmer each time, so we get the updated
-	; mmt-q value for this session.
-	(define do-compute-sim (make-gram-mi-simmer LLOBJ))
-
-	; Don't recompute similarity, if we've already got it.
-	(define sap (add-gram-mi-sim-api LLOBJ))
-	(define (compute-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if (not miv) (do-compute-sim WA WB)))
-
-	; Return the wrapped function.
-	compute-sim
-)
-
-; ---------------------------------------------------------------
 
 (define (get-ranked-pairs LLOBJ MI-CUTOFF)
 "
@@ -170,20 +147,6 @@
 				(cog-name (gar PR))
 				(cog-name (gdr PR))))
 		(take (drop LST start) num))
-)
-
-; ---------------------------------------------------------------
-
-(define (compute-class-sim LLOBJ WCLASS)
-"
-  compute-class-sim LLOBJ WCLASS - Compute the similarity between
-  WCLASS and all other existing classes. The computation is
-  unconditional.
-"
-	(define compute-sim (make-gram-mi-simmer LLOBJ))
-
-	(for-each (lambda (WC) (compute-sim WCLASS WC))
-		(LLOBJ 'get-clusters))
 )
 
 ; ---------------------------------------------------------------

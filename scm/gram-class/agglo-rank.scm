@@ -387,7 +387,7 @@
 	#:optional (PRECISE-SIM #f)
 	#:key
 		(SIM-API (add-gram-mi-sim-api LLOBJ))
-		(SIM-EXTENDER (make-gram-mi-extender LLOBJ))
+		(MAKE-SIMMMER make-gram-mi-simmer)
 	)
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
@@ -517,7 +517,10 @@
 	(format #t "Done fetching pairs in ~A secs\n" (e))
 
 	; Create similarities for the initial set.
-	(loop-upper-diagonal SIM-EXTENDER ranked-words 0 NRANK)
+	(define simmer (MAKE-SIMMER LLOBJ))
+	(define (compute-sim WA WB)
+		(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
+	(loop-upper-diagonal compute-sim ranked-words 0 NRANK)
 	(format #t "Done setting up similarity to ~A in ~A secs\n" NRANK (e))
 
 	; Log the paramters that were supplied.
@@ -564,6 +567,12 @@
 		(define touched-words (recompute-marginals LLOBJ (cons wclass in-grp)))
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
+		; Create a new simmer each timke through the loop. That's
+		; because it might contain cached info, e.g. mmt-q.
+		(define simmer (MAKE-SIMMER LLOBJ))
+		(define (compute-sim WA WB)
+			(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
+
 		; After merging, recompute similarities for the words
 		; that were touched. We have two choices here: recompute
 		; sims only for the words that were directly merged, as these
@@ -573,17 +582,18 @@
 		; 10x slower. In exchange, we maybe get better results? Or maybe
 		; not? Unclear, unknown at this time, might no matter.
 		(if PRECISE-SIM
-			(recomp-all-sim LLOBJ touched-words)
-			(recomp-all-sim LLOBJ (filter cog-atom? in-grp)))
+			(recomp-all-sim SIM-API compute-sim touched-words)
+			(recomp-all-sim SIM-API compute-sim (filter cog-atom? in-grp)))
 
 		; Always compute self-similarity of the new word-class.
 		; Optional; this is logged by the logger.
-		(SIM-EXTENDER wclass wclass)
+		(simmer wclass wclass)
 
 		; Optional; compute similarity between this and all other
 		; classes. This is used to compute and log the orthogonality
 		; of the classes. It provides an intersting statistic.
-		(compute-class-sim LLOBJ wclass)
+		(for-each (lambda (WC) (simmer wclass WC))
+			(LLOBJ 'get-clusters))
 
 		(log-class wclass) ; record this in the log
 
