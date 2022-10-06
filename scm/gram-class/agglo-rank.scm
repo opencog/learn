@@ -62,7 +62,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (main-loop LLOBJ SIM-API MAKE-SIMMER MERGE-FUN NRANK LOOP-CNT)
+(define (main-loop LLOBJ SIM-API MAKE-SIMMER SORT-PAIRS MERGE-FUN NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
@@ -70,9 +70,6 @@
   so that, no matter the LOOP-CNT, there is a suitably deep set of
   word-pair similarities to rank and consider.
 "
-	; Get rid of all MI-similarity scores below this cutoff.
-	(define MI-CUTOFF 4.0)
-
 	; Logging of the number of merges perfomed so far.
 	(define log-anchor (LLOBJ 'wild-wild))
 	(define count-location (Predicate "merge-count"))
@@ -98,10 +95,8 @@
 	(for-each
 		(lambda (N)
 			(define e (make-elapsed-secs))
-			(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
 			(format #t "------ Round ~A Next in line:\n" (current-count N))
-			(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
-
+			(define sorted-pairs (SORT-PAIRS LLOBJ))
 			(define top-pair (car sorted-pairs))
 
 			; Log some maybe-useful data...
@@ -604,8 +599,23 @@
 	)
 
 	; --------------------------------------------
+	; XXX temp hack -- get the sorted word-pairs
+	(define (top-ranked-mi-pairs LLOBJ)
+		; Get rid of all MI-similarity scores below this cutoff.
+		(define MI-CUTOFF 4.0)
+
+		(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
+		(format #t "------ Round ~A Next in line:\n" (current-count N))
+		(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
+
+		; Return the list of sorted pairs.
+		sorted-pairs
+	)
+
+	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ SIM-API MAKE-SIMMER perform-merge NRANK LOOP-CNT)
+	(main-loop LLOBJ SIM-API MAKE-SIMMER
+		top-ranked-mi-pairs perform-merge NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------

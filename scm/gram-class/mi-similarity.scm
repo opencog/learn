@@ -119,9 +119,11 @@
 
 (define (prt-sorted-pairs LLOBJ LST START N)
 "
-  prt-sorted-pairs START NUM - print list of word pairs and similarities
+  prt-sorted-pairs LLOBJ PAIR-LST START NUM - print list of word pairs
+  and thier grammatical-MI and ranked-MI similarities.
 
-  Handy-dandy debug utility.
+  Handy-dandy debug utility. Starting at START positions deep into the
+  PAIR-LST, print the next NUM similarities.
 "
 	(define sap (add-gram-mi-sim-api LLOBJ))
 
