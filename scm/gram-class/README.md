@@ -808,8 +808,10 @@ Code Overview
 =============
 A quick sketch of which files implement what.
 
-* `agglo-rank.scm` -- Contains the main entry point `in-group-cluster`.
+* `agglo-mi-rank.scm` -- Contains the main entry point `in-group-mi-cluster`.
+* xxx -- same but for GOE
 * `mi-similarity.scm` -- Compute grammatical MI similarities between words.
+* `similarity.scm` -- Generic similarity tools.
 
 -------------------------------------------------------------------
 

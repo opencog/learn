@@ -1,8 +1,9 @@
 ;
-; agglo-rank.scm
+; agglo-mi-rank.scm
 ;
 ; Loop over all words, merging them into grammatical categories.
-; Agglomerative clustering.
+; Agglomerative clustering, using grammatical-MI to determine
+; membership.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;
@@ -10,17 +11,22 @@
 ; OVERVIEW
 ; --------
 ; This file manages the top-most loop for traversing over all words,
-; and assigning them to grammatical clusters. This file does not
-; provide tools for judging similarity, nor does it provide the
-; low-level merge code.  It only manages the top loop.
+; and assigning them to grammatical clusters using grammatical-MI
+; similarity. This file does not provide tools for judging similarity,
+; nor does it provide the low-level merge code.  It only manages the
+; top loop.
 ;
 ; This is basically the general concept of "agglomerative clustering",
-; which is what is (in effect) implemented in this file.
+; which is what is (in effect) implemented in this file. Due to the
+; need to recompute the grammatical-MI after each mere step, the
+; assumption that grammatical-MI is being used is hard-wired into this
+; code.
 ;
 ; There are other styles of doing agglomerative clustering, implemented
 ; in `attic/agglo-loops.scm` and `attic/agglo-pairwise.scm`. They work,
-; but are more complicated and don't work as well.  (I think they don't
-; work as well, but this has not been double-checked experimentally.)
+; but are more complicated and don't work as well.  (I'm prettu sure
+; that they don't work as well, but this has not been double-checked
+; experimentally.)
 ;
 ; Agglomerative clustering
 ; ------------------------
@@ -37,11 +43,15 @@
 ;   requirement for performing connector merges, so we are not going
 ;   to try to pretend to support anything else.
 ; * This assumes that support marginals have been computed, and have
-;   been loaded into RAM. it will keep support marginals updated, as
-;   words are merged.
+;   been loaded into RAM. The code here will keep support marginals
+;   updated, as words are merged.
 ;
 ; Notes:
-; * make sure WordClassNodes and the MemberLinks are loaded
+; * Before use, make sure WordClassNodes and the MemberLinks are loaded!
+;
+; Main entry point:
+; * Call `in-group-cluster`, below.
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (srfi srfi-1))
@@ -379,15 +389,11 @@
 
 ; ---------------------------------------------------------------
 
-(define*-public (in-group-cluster LLOBJ
+(define*-public (in-group-mi-cluster LLOBJ
 	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
-	#:optional (PRECISE-SIM #f)
-	#:key
-		(SIM-API (add-gram-mi-sim-api LLOBJ))
-		(MAKE-SIMMER make-gram-mi-simmer)
-	)
+	#:optional (PRECISE-SIM #f))
 "
-  in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
+  in-group-mi-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
 
   Loops over a list of the most similar words, and unifies them into a
   cluster. Multiple words are selected at the same time to create a
@@ -396,6 +402,10 @@
   ConnectorSeq's to be merged is done by majority voting to determine
   those ConnectorSeq's that the majority of the in-group have in common.
   The size of the in-group is adjusted to maximize commonality.
+
+  Similarity is judged by means of `ranked-MI`, which is the
+  grammatical-MI similarity of a pair of words, adjusted by the sqrt of
+  the frequency, so that more frequent words are ranked higher.
 
   There are three important parameters that determine the operation, and
   two more that control the overall loop.
@@ -503,6 +513,14 @@
 
   Status: This code is complete, fully-debugged, stable, well-tested.
 "
+	; These could be passed as #:keys arguments, the work needed to
+	; make this code truly independent of assuming that gram-MI is
+	; being used is overwhelming. It's just too hard-coded in too many
+	; places. By the time all those places got abstracted away, almost
+	; nothing would be left.
+	(define SIM-API (add-gram-mi-sim-api LLOBJ))
+	(sefine MAKE-SIMMER make-gram-mi-simmer)
+
 	(define e (make-elapsed-secs))
 
 	; Start by getting the ranked words.  Note that this may include
@@ -598,7 +616,7 @@
 	)
 
 	; --------------------------------------------
-	; XXX temp hack -- get the sorted word-pairs
+	; Get the sorted word-pairs
 	(define (top-ranked-mi-pairs LLOBJ)
 		; Get rid of all MI-similarity scores below this cutoff.
 		(define MI-CUTOFF 4.0)

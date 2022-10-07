@@ -23,7 +23,7 @@
 (include-from-path "opencog/learn/mi-similarity.scm")
 (include-from-path "opencog/learn/jaccard.scm")
 (include-from-path "opencog/learn/log-merge.scm")
-(include-from-path "opencog/learn/agglo-rank.scm")
+(include-from-path "opencog/learn/agglo-mi-rank.scm")
 (include-from-path "opencog/learn/gram-class-api.scm")
 (include-from-path "opencog/learn/singletons.scm")
 (include-from-path "opencog/learn/gram-filters.scm")

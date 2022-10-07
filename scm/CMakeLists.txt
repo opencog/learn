@@ -10,7 +10,7 @@ ADD_GUILE_MODULE (FILES
 	mst-parse/mst-parser.scm
 	mst-parse/pseudo-csets.scm
 
-	gram-class/agglo-rank.scm
+	gram-class/agglo-mi-rank.scm
 	gram-class/gram-class-api.scm
 	gram-class/gram-filters.scm
 	gram-class/gram-majority.scm
