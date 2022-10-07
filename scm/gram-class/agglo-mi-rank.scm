@@ -50,7 +50,7 @@
 ; * Before use, make sure WordClassNodes and the MemberLinks are loaded!
 ;
 ; Main entry point:
-; * Call `in-group-cluster`, below.
+; * Call `in-group-mi-cluster`, below.
 ;
 ; ---------------------------------------------------------------------
 
@@ -58,16 +58,20 @@
 (use-modules (ice-9 optargs)) ; for define*-public
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
-; Compile-time constant -- should we trrack entropies, or not?
+; Compile-time constant -- should we track entropies, or not?
 ; Setting this to #t requires that not only must the baseline
 ; entropies be recomputed, but also that the frequencies for pairs
 ; be stored, including the frequencies for CrossSections. This
 ; puts a big burden on storage, as normally, CrossSections are
 ; not stored. A different alternative would be to use entropies
 ; computed on-the-fly from counts on CrossSections, as these are
-; always correct. But this adds yet more CPU overhead just to log
-; some stats that are not  that terribly interesting. See the
-; Diary Part Five for actual values.
+; always correct.
+;
+; At this time, the entropies are not needed, except for logging, so
+; that merge progress can be tracked and some theoretical insight can
+; be gained.  But these stats just aren't very interesting, whereas
+; this adds rather large CPU overhead. So disable, by default. See the
+; Diary Part Five for actual values from actual runs.
 (define TRACK-ENTROPY #f)
 
 ; ---------------------------------------------------------------
@@ -101,9 +105,10 @@
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
-  iteration, the similarities for a few more words are computed,
-  so that, no matter the LOOP-CNT, there is a suitably deep set of
-  word-pair similarities to rank and consider.
+  iteration, the the EXPAND-UNIVERSE function is called. The default
+  expansion computes the similarities for a few more words, so that,
+  no matter the LOOP-CNT, there is a suitably deep set of word-pair
+  similarities to rank and consider.
 "
 	; Logging of the number of merges perfomed so far.
 	(define base-done-count (get-merge-iteration LLOBJ))
@@ -291,6 +296,9 @@
 (define (delete-orphans LLOBJ left-marg right-marg)
 "
   delete-orphans left-marg right-marg -- delete marginals.
+
+  These are the marginals associated with words or disjuncts that
+  have zero count -- i.e. do not appear in the dataset any longer.
 "
 	; In the current design, LLOBJ will always be a covering object.
 	; The base is what is covered with shapes.
