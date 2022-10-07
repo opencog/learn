@@ -24,6 +24,70 @@
 (use-modules (opencog) (opencog matrix) (opencog persist))
 
 ; ---------------------------------------------------------------------
+;
+(define (add-goe-sim LLOBJ)
+"
+  add-goe-sim LLOBJ -- add wrapper that returns GOE similarity with the
+  'get-count and 'pair-count methods. Specifically, these two methods
+  will return floating point numbers (and NOT a FloatValue!)
+"
+	(define (get-ref PR IDX)
+		; Expect FloatValue always. IDX=0 is the MI sims, and 1 is the RMI
+		(cog-value-ref (LLOBJ 'get-count PR) IDX))
+
+	(define (get-pair-count WA WB)
+		(get-ref (Similarity WA WB) 0))
+
+	(lambda (message . args)
+		(case message
+			((get-count)   (get-ref (car args) 0))
+			((pair-count)  (apply get-pair-count args))
+			(else          (apply LLOBJ (cons message args))))
+	))
+
+; ---------------------------------------------------------------------
+
+(define (goe-cluster LLOBJ
+	#:key
+		(QUORUM 0.7)
+		(COMMONALITY 0.2)
+		(NOISE 4)
+)
+"
+  goe-cluster LLOBJ -- perform GOE-based clustering.
+
+  Under construction.
+"
+
+	; Does the same thing:
+	; (define gram-mi-api (add-similarity-api LLOBJ #f "shape-mi"))
+	(define gram-mi-api (add-gram-mi-sim-api LLOBJ))
+	(define goe-api (add-similarity-api gram-mi-api #f "goe"))
+	(define goe-sim (add-goe-sim goe-api))
+
+	(define e (make-elapsed-secs))
+
+	; Log the parameters that were supplied.
+	(define *-log-anchor-* (LLOBJ 'wild-wild))
+	(cog-set-value! *-log-anchor-* (Predicate "goe-quorum-comm-noise")
+		(FloatValue QUORUM COMMONALITY NOISE))
+
+	; Record the classes as they are created.
+	(define log-class (make-class-logger LLOBJ))
+
+	; Create the function that determines group membership.
+	(define jaccard-select (make-jaccard-selector LLOBJ
+		QUORUM COMMONALITY NOISE))
+
+	; Create the function that performs the merge.
+	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
+
+	; Start by getting the ranked words.  Note that this may include
+	; WordClass nodes as well as words.
+	(define ranked-words (rank-words LLOBJ))
+
+)
+
 ; ---------------------------------------------------------------------
 #! ========
 ;
@@ -52,5 +116,10 @@
 (define gos (add-similarity-api smi #f "goe"))
 (gos 'pair-count (Word "she") (Word "he"))
 (gos 'get-count (Similarity (Word "she") (Word "he")))
+
+(define layer-one (cog-new-atomspace "layer one" (cog-atomspace)))
+(cog-set-atomspace! layer-one)
+
+(goe-merge pcs)
 
 ==== !#

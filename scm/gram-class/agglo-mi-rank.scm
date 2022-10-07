@@ -392,11 +392,14 @@
 
 ; ---------------------------------------------------------------------
 
-(define*-public (in-group-mi-cluster LLOBJ
-	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
-	#:optional (PRECISE-SIM #f))
+(define*-public (in-group-mi-cluster LLOBJ NRANK LOOP-CNT
+	#:key
+		(QUORUM 0.7)
+		(COMMONALITY 0.2)
+		(NOISE 4)
+		(PRECISE-SIM #f))
 "
-  in-group-mi-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
+  in-group-mi-cluster LLOBJ NRANK LOOP-CNT - grammatical-MI clustering.
 
   Loops over a list of the most similar words, and unifies them into a
   cluster. Multiple words are selected at the same time to create a
@@ -541,7 +544,7 @@
 	(loop-upper-diagonal compute-sim ranked-words 0 NRANK)
 	(format #t "Done setting up similarity to ~A in ~A secs\n" NRANK (e))
 
-	; Log the paramters that were supplied.
+	; Log the parameters that were supplied.
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
 		(FloatValue QUORUM COMMONALITY NOISE NRANK))
@@ -688,6 +691,9 @@
 (smi 'get-count (Similarity (Word "she") (Word "he")))
 
 ; Perform actual clustering, using recommended parameters.
-(in-group-mi-cluster sha 0.7 0.2 4 200 100)
+(in-group-mi-cluster sha 200 100
+	#:QUORUM 0.7
+	#:COMMONALITY 0.2
+	#:NOISE 4)
 
 ==== !#
