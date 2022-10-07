@@ -47,7 +47,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (goe-cluster LLOBJ
+(define (goe-cluster LLOBJ NRANK
 	#:key
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
@@ -55,6 +55,8 @@
 )
 "
   goe-cluster LLOBJ -- perform GOE-based clustering.
+
+  NRANK is the number of words for which we have GOE similarities.
 
   Under construction.
 "
@@ -86,6 +88,44 @@
 	; WordClass nodes as well as words.
 	(define ranked-words (rank-words LLOBJ))
 
+	; Words with GOE sims
+	(define words-with-sims (take ranked-words NRANK))
+
+	; ------------------------------
+	; Main workhorse function
+	(define (perform-merge N WA WB)
+		(define e (make-elapsed-secs))
+		(format #t "------ Start GOE merge ~D with seed pair `~A` and `~A`\n"
+			N (cog-name WA) (cog-name WB))
+
+		(define in-grp (jaccard-select WA WB words-with-sims))
+		(format #t "In-group size=~A:" (length in-grp))
+		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
+		(format #t "\n")
+
+		(define wclass (make-class-node LLOBJ in-grp))
+		(merge-majority wclass in-grp)
+
+		(format #t "------ Merged into `~A` in ~A secs\n"
+			(cog-name wclass) (e))
+	)
+
+	; --------------------------------------------
+	; Get the sorted word-pairs
+	(define (get-sorted-goe-pairs LLOBJ)
+		(define all-sims ((add-pair-stars gos) 'get-all-elts))
+		(define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
+	)
+	(define (top-ranked-goe-pairs LLOBJ)
+		(define sorted-pairs
+
+		(format #t "------ Round ~A Next in line:\n"
+			(get-merge-iteration LLOBJ))
+		(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
+
+		; Return the list of sorted pairs.
+		sorted-pairs
+	)
 )
 
 ; ---------------------------------------------------------------------
