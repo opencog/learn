@@ -112,11 +112,10 @@
 			(log-dataset-stuff top-pair)
 
 			; Do the actual merge
-			(MERGE-FUN (current-count N) (gar top-pair) (gdr top-pair))
+			(MERGE-FUN iter-count (gar top-pair) (gdr top-pair))
 			(update-merge-iteration LLOBJ iter-count)
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
-
 			(EXPAND-UNIVERSE LLOBJ iter-count NRANK)
 		)
 		(iota LOOP-CNT))
@@ -385,7 +384,7 @@
 	#:optional (PRECISE-SIM #f)
 	#:key
 		(SIM-API (add-gram-mi-sim-api LLOBJ))
-		(MAKE-SIMMMER make-gram-mi-simmer)
+		(MAKE-SIMMER make-gram-mi-simmer)
 	)
 "
   in-group-cluster LLOBJ QUORUM NRANK LOOP-CNT PRECISE-SIM - clustering.
@@ -619,7 +618,7 @@
 		(define GRO-SIZE 2)
 
 		; Range of similarities to compute.
-		(define (diag-end N) (+ NRANK (* GRO-SIZE N))))
+		(define (diag-end N) (+ NRANK (* GRO-SIZE N)))
 
 		; Expand the size of the universe
 		(define ranked-words (rank-words LLOBJ))
