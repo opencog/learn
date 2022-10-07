@@ -62,6 +62,31 @@
 
 ; ---------------------------------------------------------------
 
+(define (get-merge-iteration LLOBJ)
+"
+  get-merge-iteration LLOBJ -- return the number of merges done so far.
+"
+	(define log-anchor (LLOBJ 'wild-wild))
+	(define count-location (Predicate "merge-count"))
+	(define count-log (cog-value log-anchor count-location))
+
+	; Return the logged value.
+	(inexact->exact
+		(if (nil? count-log) 0 (cog-value-ref count-log 0)))
+)
+
+(define (update-merge-iteration LLOBJ N)
+"
+  update-merge-iteration LLOBJ N -- Set the number of merges to N.
+"
+	(define log-anchor (LLOBJ 'wild-wild))
+	(define count-location (Predicate "merge-count"))
+
+	(cog-set-value! log-anchor count-location (FloatValue N))
+)
+
+; ---------------------------------------------------------------
+
 (define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
@@ -71,21 +96,15 @@
   word-pair similarities to rank and consider.
 "
 	; Logging of the number of merges perfomed so far.
-	(define log-anchor (LLOBJ 'wild-wild))
-	(define count-location (Predicate "merge-count"))
-	(define count-log (cog-value log-anchor count-location))
-	(define base-done-count (inexact->exact
-		(if (nil? count-log) 0 (cog-value-ref count-log 0))))
-	(define (current-count N) (+ 1 N base-done-count))
-	(define (update-done-count N)
-		(cog-set-value! log-anchor count-location (FloatValue N)))
+	(define base-done-count (get-merge-iteration LLOBJ))
 
 	(define log-dataset-stuff (make-merge-logger LLOBJ))
 
 	(for-each
 		(lambda (N)
+			(define iter-count (+ 1 N base-done-count))
 			(define e (make-elapsed-secs))
-			(format #t "------ Round ~A Next in line:\n" (current-count N))
+			(format #t "------ Round ~A Next in line:\n" iter-count)
 			(define sorted-pairs (SORT-PAIRS LLOBJ))
 			(define top-pair (car sorted-pairs))
 
@@ -94,11 +113,11 @@
 
 			; Do the actual merge
 			(MERGE-FUN (current-count N) (gar top-pair) (gdr top-pair))
-			(update-done-count (current-count N))
+			(update-merge-iteration LLOBJ iter-count)
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
 
-			(EXPAND-UNIVERSE LLOBJ N)
+			(EXPAND-UNIVERSE LLOBJ iter-count NRANK)
 		)
 		(iota LOOP-CNT))
 )
@@ -586,28 +605,21 @@
 		(define MI-CUTOFF 4.0)
 
 		(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
-		(format #t "------ Round ~A Next in line:\n" (current-count N))
+		(format #t "------ Round ~A Next in line:\n"
+			(get-merge-iteration LLOBJ))
 		(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 		; Return the list of sorted pairs.
 		sorted-pairs
 	)
 
-	(define (expand-universe LLOBJ N)
-
-		;; Pick up where we last left off. XXX FIXME, got borken.
-		;; This value is stored and logged, but we're not grabbing it.
-		(define base-done-count 0)
-
-		; Offset on number of similarities to compute
-		(define NSIM-OFFSET base-done-count)
+	(define (expand-universe LLOBJ N NRANK)
 
 		; How many more similarities to compute each step.
 		(define GRO-SIZE 2)
 
 		; Range of similarities to compute.
-		(define (diag-start N) (+ N NSIM-OFFSET))
-		(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
+		(define (diag-end N) (+ NRANK (* GRO-SIZE N))))
 
 		; Expand the size of the universe
 		(define ranked-words (rank-words LLOBJ))
@@ -616,7 +628,6 @@
 		(define (compute-sim WA WB)
 			(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
 
-		; Ummm ... compute-sim ranked-words (diag-start N) (diag-end N))
 		(loop-upper-diagonal compute-sim ranked-words 0 (diag-end N))
 		(format #t "------ Extended the universe in ~A secs\n" (e))
 	)
