@@ -62,7 +62,7 @@
 
 ; ---------------------------------------------------------------
 
-(define (main-loop LLOBJ SIM-API MAKE-SIMMER SORT-PAIRS MERGE-FUN NRANK LOOP-CNT)
+(define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
@@ -79,16 +79,6 @@
 	(define (current-count N) (+ 1 N base-done-count))
 	(define (update-done-count N)
 		(cog-set-value! log-anchor count-location (FloatValue N)))
-
-	; Offset on number of similarities to compute
-	(define NSIM-OFFSET base-done-count)
-
-	; How many more similarities to compute each step.
-	(define GRO-SIZE 2)
-
-	; Range of similarities to compute.
-	(define (diag-start N) (+ N NSIM-OFFSET))
-	(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
 
 	(define log-dataset-stuff (make-merge-logger LLOBJ))
 
@@ -108,16 +98,7 @@
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
 
-			; Expand the size of the universe
-			(define ranked-words (rank-words LLOBJ))
-
-			(define simmer (MAKE-SIMMER LLOBJ))
-			(define (compute-sim WA WB)
-				(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
-
-			; Ummm ... compute-sim ranked-words (diag-start N) (diag-end N))
-			(loop-upper-diagonal compute-sim ranked-words 0 (diag-end N))
-			(format #t "------ Extended the universe in ~A secs\n" (e))
+			(EXPAND-UNIVERSE LLOBJ N)
 		)
 		(iota LOOP-CNT))
 )
@@ -612,10 +593,38 @@
 		sorted-pairs
 	)
 
+	(define (expand-universe LLOBJ N)
+
+		;; Pick up where we last left off. XXX FIXME, got borken.
+		;; This value is stored and logged, but we're not grabbing it.
+		(define base-done-count 0)
+
+		; Offset on number of similarities to compute
+		(define NSIM-OFFSET base-done-count)
+
+		; How many more similarities to compute each step.
+		(define GRO-SIZE 2)
+
+		; Range of similarities to compute.
+		(define (diag-start N) (+ N NSIM-OFFSET))
+		(define (diag-end N) (+ NRANK (* GRO-SIZE (+ N NSIM-OFFSET))))
+
+		; Expand the size of the universe
+		(define ranked-words (rank-words LLOBJ))
+
+		(define simmer (MAKE-SIMMER LLOBJ))
+		(define (compute-sim WA WB)
+			(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
+
+		; Ummm ... compute-sim ranked-words (diag-start N) (diag-end N))
+		(loop-upper-diagonal compute-sim ranked-words 0 (diag-end N))
+		(format #t "------ Extended the universe in ~A secs\n" (e))
+	)
+
 	; --------------------------------------------
 	; Unleash the fury
-	(main-loop LLOBJ SIM-API MAKE-SIMMER
-		top-ranked-mi-pairs perform-merge NRANK LOOP-CNT)
+	(main-loop LLOBJ
+		top-ranked-mi-pairs perform-merge expand-universe NRANK LOOP-CNT)
 )
 
 ; ---------------------------------------------------------------
