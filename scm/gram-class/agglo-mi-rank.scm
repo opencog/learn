@@ -627,10 +627,10 @@
 		; Get rid of all MI-similarity scores below this cutoff.
 		(define MI-CUTOFF 4.0)
 
-		(define sorted-pairs (get-ranked-pairs LLOBJ MI-CUTOFF))
+		(define sorted-pairs (get-mi-ranked-pairs LLOBJ MI-CUTOFF))
 		(format #t "------ Round ~A Next in line:\n"
 			(get-merge-iteration LLOBJ))
-		(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
+		(prt-mi-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 		; Return the list of sorted pairs.
 		sorted-pairs

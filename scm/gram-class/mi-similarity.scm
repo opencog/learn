@@ -67,9 +67,9 @@
 
 ; ---------------------------------------------------------------
 
-(define (get-ranked-pairs LLOBJ MI-CUTOFF)
+(define (get-mi-ranked-pairs LLOBJ MI-CUTOFF)
 "
-  get-ranked-pairs LLOBJ MI-CUTOFF - get a ranked list of word pairs
+  get-mi-ranked-pairs LLOBJ MI-CUTOFF - get a ranked list of word pairs
 
   This returns a list of word-pairs sorted by rank-MI, from greatest
   to least.  All pairs in the list will have an MI of greater than
@@ -117,9 +117,9 @@
 
 ; ---------------------------------------------------------------
 
-(define (prt-sorted-pairs LLOBJ LST START N)
+(define (prt-mi-sorted-pairs LLOBJ LST START N)
 "
-  prt-sorted-pairs LLOBJ PAIR-LST START NUM - print list of word pairs
+  prt-mi-sorted-pairs LLOBJ PAIR-LST START NUM - print list of word pairs
   and thier grammatical-MI and ranked-MI similarities.
 
   Handy-dandy debug utility. Starting at START positions deep into the

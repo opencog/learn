@@ -111,17 +111,34 @@
 	)
 
 	; --------------------------------------------
-	; Get the sorted word-pairs
-	(define (get-sorted-goe-pairs LLOBJ)
-		(define all-sims ((add-pair-stars gos) 'get-all-elts))
-		(define all-cosi (filter (lambda (sl) (gos 'get-count sl)) all-sims))
+	; Get the word-pairs sorted by GOE cosine.
+	(define (get-sorted-goe-pairs)
+		(define all-cosi (goe-api 'get-all-elts))
+		(define uniq-cosi
+			(remove (lambda (PR) (equal? (gar PR) (gdr PR))) all-cosi))
+		(define (lessi A B)
+			(> (cog-value-ref (gos 'get-count A) 0)
+				(cog-value-ref (gos 'get-count B) 0)))
+		; return the sort.
+		(sort uniq-cosi lessi)
 	)
-	(define (top-ranked-goe-pairs LLOBJ)
-		(define sorted-pairs
+
+	(define (prt-sorted-pairs LST)
+		(for-each
+			(lambda (PR)
+				(define gcos (goe-sim 'get-count PR))
+				(format #t "goe-theta = ~6F cos=~6F (`~A`, `~A`)\n"
+					(acos gcos) gcos
+					(cog-name (gar PR))
+					(cog-name (gdr PR))))
+			LST))
+
+	(define (top-ranked-goe-pairs)
+		(define sorted-pairs (get-sorted-goe-pairs))
 
 		(format #t "------ Round ~A Next in line:\n"
 			(get-merge-iteration LLOBJ))
-		(prt-sorted-pairs LLOBJ sorted-pairs 0 12)
+		(prt-sorted-pairs (take sorted-pairs 12))
 
 		; Return the list of sorted pairs.
 		sorted-pairs
