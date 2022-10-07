@@ -18,25 +18,15 @@
 ;
 ; This is basically the general concept of "agglomerative clustering",
 ; which is what is (in effect) implemented in this file. Due to the
-; need to recompute the grammatical-MI after each mere step, the
+; need to recompute the grammatical-MI after each merge step, the
 ; assumption that grammatical-MI is being used is hard-wired into this
 ; code.
 ;
 ; There are other styles of doing agglomerative clustering, implemented
 ; in `attic/agglo-loops.scm` and `attic/agglo-pairwise.scm`. They work,
-; but are more complicated and don't work as well.  (I'm prettu sure
+; but are more complicated and don't work as well.  (I'm pretty sure
 ; that they don't work as well, but this has not been double-checked
 ; experimentally.)
-;
-; Agglomerative clustering
-; ------------------------
-; This file implements a form of ranked clustering. It assumes that
-; there is a pair-ranking function that will report the next pair to
-; be merged together. That pair may be a  pair of words, a word and
-; an existing cluster, or a pair of clusters.
-;
-; This is basic, the `cliques/democratic voting` thing is next, but its
-; more complicated, so we do this first.
 ;
 ; Assumptions:
 ; * This assumes that shapes are being used. This is a fundamental
@@ -51,6 +41,11 @@
 ;
 ; Main entry point:
 ; * Call `in-group-mi-cluster`, below.
+;
+; TODO:
+; * Before each merge step, a new AtomSpace frame should be created, so
+;   that the pre-merge data remains available.  This is not being done.
+;   It's really easy to add, but ... nothing needs this yet.
 ;
 ; ---------------------------------------------------------------------
 
@@ -74,7 +69,7 @@
 ; Diary Part Five for actual values from actual runs.
 (define TRACK-ENTROPY #f)
 
-; ---------------------------------------------------------------
+; ---------------------------------------------------------------------
 
 (define (get-merge-iteration LLOBJ)
 "
@@ -99,7 +94,7 @@
 	(cog-set-value! log-anchor count-location (FloatValue N))
 )
 
-; ---------------------------------------------------------------
+; ---------------------------------------------------------------------
 
 (define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE NRANK LOOP-CNT)
 "
@@ -136,7 +131,7 @@
 		(iota LOOP-CNT))
 )
 
-; ---------------------------------------------------------------
+; ---------------------------------------------------------------------
 
 (define (get-affected-basis LLOBJ WRD-LIST)
 "
@@ -395,7 +390,7 @@
 	wrd-list
 )
 
-; ---------------------------------------------------------------
+; ---------------------------------------------------------------------
 
 (define*-public (in-group-mi-cluster LLOBJ
 	QUORUM COMMONALITY NOISE NRANK LOOP-CNT
@@ -638,6 +633,8 @@
 		sorted-pairs
 	)
 
+	; --------------------------------------------
+	; Compute more similarities.
 	(define (expand-universe LLOBJ N NRANK)
 
 		; How many more similarities to compute each step.
@@ -663,22 +660,34 @@
 		top-ranked-mi-pairs perform-merge expand-universe NRANK LOOP-CNT)
 )
 
-; ---------------------------------------------------------------
+; ---------------------------------------------------------------------
 #! ========
 ;
-; Example usage
+; Example usage.
 
+; Load disjuncts into RAM, and create the matching shapes.
 (define pca (make-pseudo-cset-api))
 (define pcs (add-pair-stars pca))
 (define sha (add-covering-sections pcs))
 (sha 'fetch-pairs)
 (sha 'explode-sections)
 
-; If this hasn't been done, then it needs to be!
+(fetch-atom (AnchorNode "data logger"))
+
+; This should have been done earlier, and stored!
+; It's needed for grammatical-MI similarity computations.
 (define bat (batch-transpose sha))
 (bat 'mmt-marginals)
 
-(define sap (add-similarity-api sha #f "shape-mi"))
+; Use these to access individual grammatical-MI's
+(define smi (add-similarity-api sha #f "shape-mi"))
 (define asm (add-symmetric-mi-compute sha))
+
+; Fetch similarities
+(smi 'pair-count (Word "she") (Word "he"))
+(smi 'get-count (Similarity (Word "she") (Word "he")))
+
+; Perform actual clustering, using recommended parameters.
+(in-group-mi-cluster sha 0.7 0.2 4 200 100)
 
 ==== !#
