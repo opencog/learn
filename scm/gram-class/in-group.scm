@@ -3,7 +3,7 @@
 ;
 ; Obtain an in-group of similar words. In-groups are those whose members
 ; have a lot in common with one-another. In-groups might be cliques,
-; more generrally are almost-clqiues.
+; more generally are almost-cliques.
 ;
 ; Copyright (c) 2021 Linas Vepstas
 ;

@@ -124,11 +124,17 @@
 	)
 
 	(define (prt-sorted-pairs LST)
+		(define sap (add-gram-mi-sim-api LLOBJ))
+		(define (mi-sim PR)
+			(define miv (sap 'get-count PR))
+			(if miv (cog-value-ref miv 0) -inf.0))
+
 		(for-each
 			(lambda (PR)
 				(define gcos (goe-sim 'get-count PR))
-				(format #t "goe-theta = ~6F cos=~6F (`~A`, `~A`)\n"
+				(format #t "goe-theta= ~6F cos= ~6F mi= ~6F (`~A`, `~A`)\n"
 					(acos gcos) gcos
+					(mi-sim PR)
 					(cog-name (gar PR))
 					(cog-name (gdr PR))))
 			LST))

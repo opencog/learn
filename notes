@@ -11848,11 +11848,11 @@ r14-imp-q0.7-c0.9-n6.rdb
 
 _ZTIN7opencog10CogStorageE   libpersist-cog.so
 
-nm 
+nm
 
 /usr/local/lib/liblink-grammar.so.5
 
-libpersist-cog.so => not found          
+libpersist-cog.so => not found
 
 crap sudo ldconfig
 Listening on port 20614
@@ -11875,6 +11875,34 @@ rlwrap telnet 10.0.3.208 20614
             0
             LIST))
 
+====================================================
+GOE confusion
+ (prt-sorted-pairs (take sorted-pairs 12))
+goe-theta= 0.0183 cos= 0.9998 mi= 7.6915 (`60w`, `50w`)
+goe-theta= 0.0677 cos= 0.9977 mi= 7.0143 (`Ag`, `Ap`)
+goe-theta= 0.1206 cos= 0.9927 mi= 6.8538 (`60w`, `6d`)
+goe-theta= 0.1248 cos= 0.9922 mi= 6.7958 (`6d`, `50w`)
+goe-theta= 0.1468 cos= 0.9892 mi= 6.9751 (`6d`, `Ap`)
+goe-theta= 0.1538 cos= 0.9882 mi= 6.8176 (`60w`, `Ap`)
+goe-theta= 0.1583 cos= 0.9875 mi= 6.7567 (`Ap`, `50w`)
+goe-theta= 0.1586 cos= 0.9875 mi= 7.0401 (`26`, `13`)
+goe-theta= 0.1654 cos= 0.9864 mi= 7.0198 (`Ag`, `Jl`)
+goe-theta= 0.1654 cos= 0.9863 mi= 6.9765 (`6d`, `Ag`)
+goe-theta= 0.1715 cos= 0.9853 mi= 6.8190 (`60w`, `Ag`)
+goe-theta= 0.1757 cos= 0.9846 mi= 6.7582 (`Ag`, `50w`)
+
+(define jaccard-select (make-jaccard-selector LLOBJ 0.7 0.2 4))
+(define in-grp (jaccard-select  (gar x) (gdr x) words-with-sims))
+
+      (define initial-in-grp
+         (optimal-in-group IN-GRP-SIM WA WB WLIST))
+
+
+(define (goe-pr-sim WA WB)
+	(goe-sim 'pair-count WA WB))
+
+(define x
+	(optimal-in-group goe-pr-sim (gar x) (gdr x) words-with-sims))
 
 
 ====================================================
