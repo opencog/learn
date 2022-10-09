@@ -158,9 +158,9 @@
 		; The size of the in-group should not jump by more than this over
 		; the width of moving window. If it does change by more than this,
 		; then we assume that the 'knee' has been found, and the search
-		; is halted. This is additive (not multiplicative).  The default
-		; value of 2.5 means the ingroup should not grow by more than
-		; two members over the width of the window.
+		; is halted. This enforces a max linear growth rate in the size of
+		; the ingroup. The default value of 2.5 means the ingroup will not
+		; add more than two members over the width of the window.
 		(max-jump 2.5)
 
 		; The size of the moving window. The size of the in-group at a
@@ -212,9 +212,12 @@
   CANDIDATES is a list of individuals to consider adding to the group.
 "
 	; Loop and try to find the knee. This uses a moving window to
-	; try to find the knee. (The moving window is independent of the
-	; step size, and so should not suffer if the step is too small or
-	; too large.)
+	; try to find the knee. We record all of the in-group sizes in
+	; the list called `window`. The length of that list is `win-slots`
+	; and is set to `win-size` divided by `epsi-step`. The list is
+	; treated as a queue: pop the old size off one end, push the new
+	; size onto the other end. The change in group size is just the
+	; difference between the two ends of this queue.
 	(define epsilon #f)
 	(define nsteps (inexact->exact (round (/ max-epsi epsi-step))))
 	(define win-slots (inexact->exact (round (/ win-size epsi-step))))
@@ -226,7 +229,9 @@
 				lower-bound epsilon tightness CANDIDATES))
 			(define ingsz (length ing))
 			(define prevsz (car window))
+			; Slide the window over by one slot.
 			(set! window (append (drop window 1) (list ingsz)))
+			; Compare the two ends of the window.
 			(define jump (- ingsz prevsz))
 			(and (< jump max-jump) (< ingsz max-size))
 		)
