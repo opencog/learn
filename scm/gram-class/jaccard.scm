@@ -201,7 +201,7 @@
 
 		; Chop down the WLIST to a more manageable size.
 		(define initial-in-grp
-			(optimal-in-group IN-GRP-SIM WA WB WLIST))
+			(optimal-mi-in-group IN-GRP-SIM WA WB WLIST))
 
 		(format #t "Initial in-group size=~D:" (length initial-in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))

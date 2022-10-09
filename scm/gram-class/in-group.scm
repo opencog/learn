@@ -2,7 +2,7 @@
 ; in-group.scm
 ;
 ; Obtain an in-group of similar words. In-groups are those whose members
-; have a lot in common with one-another. In-groups might be cliques,
+; have a lot in common with one-another. In-groups can be cliques, and
 ; more generally are almost-cliques.
 ;
 ; Copyright (c) 2021 Linas Vepstas
@@ -123,7 +123,38 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (optimal-in-group SIMFUN WA WB CANDIDATES)
+(define-public (optimal-in-group SIMFUN WA WB CANDIDATES
+	#:key
+
+		; The tightness
+		(tightness 0.7)
+
+		; Size of steps (changes in similarity) that will be taken
+		; in epsilon. For MI-similarity, 0.1 is a good step-size.
+		(epsi-step 0.1)
+
+		; The size of the in-group should not jump by
+		; more than this over the moving window.
+		(max-jump 2.5)
+
+		; The window size
+		(win-size (inexact->exact (round (/ 1.0 epsi-step))))
+
+		; The largest espsilon to consider.
+		; The value of 8.5 comes from experiments: the grouping of roman
+		; numerals were still coherent, despite being this far apart.
+		(max-epsi 8.5)
+
+		; Lower bound on the similarity between members of the
+		; in-group. All members of the in-group must have a pair-wise
+		; similarity greater than this. For MI-similarity, we want
+		; similarities greater than about 2.0 or 4.0.
+		(lower-bound 1.0)
+
+		; Hard-coded maximum size of the in-group.  We don't return
+		; in-groups larger than this.
+		(max-size 12)
+	)
 "
   optimal-in-group SIMFUN WA WB CANDIDATES
   Return an ingroup of closely related words. The initial members of the
@@ -159,36 +190,6 @@
 
   CANDIDATES is a list of individuals to consider adding to the group.
 "
-	; Hard-coded parameter -- tightness. Experiments show that the results
-	; are insensitive of this, with values ranging from 0.3 to 1.0 giving
-	; identical results in many cases.
-	(define tightness 0.7)
-
-	; Hard-coded parameter -- size of steps that will be taken in epsilon.
-	(define epsi-step 0.1)
-
-	; Hard-coded parameter -- the size of the in-group should not jump by
-	; more than this over the moving window.
-	(define max-jump 2.5)
-
-	; Hard-coded parameter -- the window size
-	(define win-size (inexact->exact (round (/ 1.0 epsi-step))))
-
-	; Hard-coded parameter -- the largest espsilon to consider.
-	; The value of 8.5 comes from experiments: the grouping of roman
-	; numerals were still coherent, despite being this far apart.
-	(define max-epsi 8.5)
-
-	; Hard-coded lower bound on the similarity between members of the
-	; in-group. All members of the in-group must have a pair-wise
-	; similarity greater than this. This should be between 0.0 and 4.0, I
-	; guess?
-	(define lower-bound 1.0)
-
-	; Hard-coded maximum size of the in-group.  We don't return in-groups
-	; larger than this.
-	(define max-size 12)
-
 	; Loop and try to find the knee. This uses a moving window to
 	; try to find the knee. (The moving window is independent of the
 	; step size, and so should not suffer if the step is too small or
@@ -222,6 +223,47 @@
 	; improves readability slightly, with trivial impact to performance.
 	(reverse in-grp)
 )
+
+; -----
+(define-public (optimal-mi-in-group SIMFUN WA WB CANDIDATES)
+"
+  optimal-mi-in-group - version of optimal-in-group with parameters
+  that work for grammatical-MI similarity. See `optimal-in-group`
+  for documentation.
+"
+	(optimal-in-group SIMFUN WA WB CANDIDATES
+
+		; Tightness. Experiments show that the results are insensitive
+		; of this, with values ranging from 0.3 to 1.0 giving identical
+		; results in many cases.
+		#:tightness 0.7
+
+		; Size of steps (changes in similarity) that will be taken
+		; in epsilon. For MI-similarity, 0.1 is a good step-size.
+		#:epsi-step 0.1
+
+		; The size of the in-group should not jump by more than this
+		; over the moving window.
+		#:max-jump 2.5
+
+		; The window size
+		#:win-size (inexact->exact (round (/ 1.0 epsi-step)))
+
+		; The largest espsilon to consider.
+		; The value of 8.5 comes from experiments: the grouping of roman
+		; numerals were still coherent, despite being this far apart.
+		#:max-epsi 8.5
+
+		; Lower bound on the similarity between members of the in-group.
+		; All members of the in-group must have a pair-wise similarity
+		; greater than this. For grammatical-MI, this obviously has to
+		; be between 0.0 and 4.0.
+		#:lower-bound 1.0
+
+		; Maximum size of the in-group.  We don't return in-groups
+		; larger than this.
+		#:max-size 12
+	))
 
 ; ---------------------------------------------------------------
 ; Example usage.
