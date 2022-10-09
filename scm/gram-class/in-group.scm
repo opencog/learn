@@ -123,7 +123,7 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (optimal-in-group SIMFUN WA WB CANDIDATES
+(define* (optimal-in-group SIMFUN WA WB CANDIDATES
 	#:key
 
 		; The tightness of the almost-clique. This is the fraction of
@@ -204,7 +204,8 @@
   score for those items.  Similarities are assumed to be symmetric,
   that is, (SIMFUN a b) == (SIMFUN b a). Usually, the similarity is
   a floating point number, but in fact it can be anything that is
-  comparable with greater-than.
+  comparable with greater-than. For similarities that are floating point
+  numbers, the larger the value, the more similar they are.
 
   This function has been experimentally tested only for SIMFUN being
   ranked-MI!
@@ -250,6 +251,8 @@
 	; improves readability slightly, with trivial impact to performance.
 	(reverse in-grp)
 )
+
+(export optimal-in-group)
 
 ; -----
 (define-public (optimal-mi-in-group SIMFUN WA WB CANDIDATES)

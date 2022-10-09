@@ -67,6 +67,12 @@
 	(define goe-api (add-similarity-api gram-mi-api #f "goe"))
 	(define goe-sim (add-goe-sim goe-api))
 
+	; Pair-wise simiarity. Use arccosine to get a better spread, to
+	; decompress the area where things are similar.  Flip the sign,
+	; because the clustering code assumes more-positive == more similar.
+	(define (theta-sim WA WB)
+		(- (acos (goe-sim 'pair-count WA WB))))
+
 	(define e (make-elapsed-secs))
 
 	; Log the parameters that were supplied.
