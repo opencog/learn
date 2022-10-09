@@ -126,30 +126,50 @@
 (define-public (optimal-in-group SIMFUN WA WB CANDIDATES
 	#:key
 
-		; The tightness
+		; The tightness of the almost-clique. This is the fraction of
+		; the in-group members that have a similarity above the the
+		; threshold. A tightness of 0.5 means the majority of the in-group
+		; members are similar to one-another; a tightness of 1.0 means that
+		; they all are (and so form a clique.) See `find-in-group` for
+		; more.
 		(tightness 0.7)
 
-		; Size of steps (changes in similarity) that will be taken
-		; in epsilon. For MI-similarity, 0.1 is a good step-size.
+		; Size of steps (changes in the threshold) that will be taken.
+		; The initial threshold is set to the similarity of WA and WB.
+		; The threshold is then lowered by steps of epsi-step, until
+		; stopping conditions are obtained.
+		; For MI-similarity, 0.1 is a good step-size.
 		(epsi-step 0.1)
 
-		; The size of the in-group should not jump by
-		; more than this over the moving window.
-		(max-jump 2.5)
-
-		; The window size
-		(win-size (inexact->exact (round (/ 1.0 epsi-step))))
-
-		; The largest espsilon to consider.
-		; The value of 8.5 comes from experiments: the grouping of roman
-		; numerals were still coherent, despite being this far apart.
+		; The largest change in threshold to consider. The threshold
+		; will never go below (similarity of WA and WB) minus this number.
+		; For grammatical-MI, experiments suggest this should be 8.5.
+		; Specifically, the grouping of roman numerals is still coherent,
+		; despite individual pair-wise MI's being 8.5 apart.
 		(max-epsi 8.5)
 
-		; Lower bound on the similarity between members of the
-		; in-group. All members of the in-group must have a pair-wise
-		; similarity greater than this. For MI-similarity, we want
-		; similarities greater than about 2.0 or 4.0.
+		; Lower bound on the similarity between members of the in-group.
+		; All members of the in-group must have a pair-wise similarity
+		; greater than this.
+		; For MI-similarity, we want similarities greater than about
+		; 2.0 or 4.0. Experiments show 1.0 works OK.
 		(lower-bound 1.0)
+
+		; The size of the in-group should not jump by more than this over
+		; the width of moving window. If it does change by more than this,
+		; then we assume that the 'knee' has been found, and the search
+		; is halted. This is additive (not multiplicative).  The default
+		; value of 2.5 means the ingroup should not grow by more than
+		; two members over the width of the window.
+		(max-jump 2.5)
+
+		; The size of the moving window. The size of the in-group at a
+		; given threshold is compared to the size of the in-group at
+		; (threshold + win-size.) If the change in the in-group size
+		; is more than 'max-jump', then search is halted.
+		; For grammatical-MI, a delta-MI of 1.0 seems like a reasonable
+		; window.
+		(win-size 1.0)
 
 		; Hard-coded maximum size of the in-group.  We don't return
 		; in-groups larger than this.
@@ -157,6 +177,7 @@
 	)
 "
   optimal-in-group SIMFUN WA WB CANDIDATES
+
   Return an ingroup of closely related words. The initial members of the
   ingroup are WA and WB. Additional potential members are drawn from
   CANDIDATES if they are similar-enough to the current ingroup, as
@@ -172,7 +193,7 @@
   Experiments show that as membership requirements are loosened, there
   is a knee in the size of the group: the group size suddenly explodes.
   That is, as the similarity threshold is loosened, the size of the
-  group at first grows slowly, and then, at some point, it takes off,
+  group grows slowly at first, and then, at some point, it takes off,
   growing rapidly (growing 'explosively'). This searches for the
   largest group below that inflection point.
 
@@ -196,7 +217,8 @@
 	; too large.)
 	(define epsilon #f)
 	(define nsteps (inexact->exact (round (/ max-epsi epsi-step))))
-	(define window (make-list win-size 2))
+	(define win-slots (inexact->exact (round (/ win-size epsi-step))))
+	(define window (make-list win-slots 2))
 	(take-while
 		(lambda (N)
 			(set! epsilon (* N epsi-step))
@@ -247,7 +269,7 @@
 		#:max-jump 2.5
 
 		; The window size
-		#:win-size (inexact->exact (round (/ 1.0 epsi-step)))
+		#:win-size 1.0
 
 		; The largest espsilon to consider.
 		; The value of 8.5 comes from experiments: the grouping of roman
