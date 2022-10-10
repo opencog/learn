@@ -111,13 +111,15 @@
 			N (cog-name WA) (cog-name WB))
 
 		; Chop down the list to a more manageable size.
-		; max-epsi and lower-bound should be 0.5 for N=2500 basis
+		; max-epsi is how far below the top pair we want to go.
+		; seems like 0.3 should be OK.
+		; The absolute lower bound should be 0.5 for N=2500 basis
 		; but should be 0.55 for the N=6000 basis...
 		(define initial-in-grp
 			(optimal-in-group theta-sim WA WB AVAILABLE-WORDS
 				#:epsi-step 0.01
 				#:win-size 0.02
-				#:max-epsi 0.55  ; for theta sim
+				#:max-epsi 0.3  ; for theta sim
 				#:lower-bound -0.55  ; for theta sim
 				#:max-jump 2.5))
 
