@@ -150,7 +150,7 @@ TODO:
 			(cog-name wclass) (e))
 
 		; Return the in-group
-		in-grp
+		(cons wclass in-grp)
 	)
 
 	; --------------------------------------------

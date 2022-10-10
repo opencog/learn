@@ -9,7 +9,9 @@ under construction
 
 ; ---------------------------------------------------------------------
 
-(define*-public (compute-goe-similarity LLOBJ)
+; ---------------------------------------------------------------------
+
+(define-public (compute-goe-similarity LLOBJ)
 "
   compute-goe-similarity LLOBJ -- provide methods for working with
   Gaussian Orthogonal vectors.
@@ -69,6 +71,23 @@ under construction
 	(define (dot-prod A B)
 		(define have-it (gos 'pair-count A B))
 		(if (not have-it) (do-compute A B)))
+
+	(define (redo-mi-sims WRDLIST)
+	; Recompute marginals after merge.
+	(define touched-words (recompute-marginals LLOBJ (cons wclass in-grp)))
+	(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
+
+	(recomp-all-sim SIM-API compute-sim touched-words)
+	
+
+		; Optional; compute similarity between this and all other
+		; classes. This is used to compute and log the orthogonality
+		; of the classes. It provides an intersting statistic.
+		(for-each (lambda (WC) (simmer wclass WC))
+			(LLOBJ 'get-clusters))
+
+
+)
 
 (define allwo (rank-words pcs))
 (loop-upper-diagonal dot-prod allwo 0 250)

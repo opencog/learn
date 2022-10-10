@@ -1,6 +1,9 @@
 
 Things to read:
 
+* "Wide Attention Is The Way Forward For Transformers"
+  https://arxiv.org/pdf/2210.00640.pdf
+
 * Nick McKenna Mark Steedman,
   Smoothing Entailment Graphs with Language Models
   https://arxiv.org/pdf/2208.00318.pdf
