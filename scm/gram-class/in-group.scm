@@ -18,6 +18,7 @@
 ; other members in the in-group are above the epsilon threshold.
 
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs)) ; for define*-public
 
 (define-public (find-in-group SIMFUN WA WB
                               LOWER-BOUND EPSILON TIGHTNESS CANDIDATES)
@@ -123,7 +124,7 @@
 
 ; ---------------------------------------------------------------
 
-(define* (optimal-in-group SIMFUN WA WB CANDIDATES
+(define*-public (optimal-in-group SIMFUN WA WB CANDIDATES
 	#:key
 
 		; The tightness of the almost-clique. This is the fraction of
@@ -251,8 +252,6 @@
 	; improves readability slightly, with trivial impact to performance.
 	(reverse in-grp)
 )
-
-(export optimal-in-group)
 
 ; -----
 (define-public (optimal-mi-in-group SIMFUN WA WB CANDIDATES)

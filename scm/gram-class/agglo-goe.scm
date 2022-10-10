@@ -47,7 +47,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define* (goe-cluster LLOBJ NRANK LOOP-CNT
+(define*-public (goe-cluster LLOBJ NRANK LOOP-CNT
 	#:key
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
@@ -218,8 +218,6 @@ TODO:
 
 	(for-each loop-step (iota LOOP-CNT))
 )
-
-(export goe-cluster)
 
 ; ---------------------------------------------------------------------
 #! ========
