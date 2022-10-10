@@ -527,6 +527,10 @@
 	(define SIM-API (add-gram-mi-sim-api LLOBJ))
 	(sefine MAKE-SIMMER make-gram-mi-simmer)
 
+	(define (mi-sim WA WB)
+		(define miv (sap 'pair-count WA WB))
+		(if miv (cog-value-ref miv 0) -inf.0))
+
 	(define e (make-elapsed-secs))
 
 	; Start by getting the ranked words.  Note that this may include
@@ -548,6 +552,10 @@
 	(define *-log-anchor-* (LLOBJ 'wild-wild))
 	(cog-set-value! *-log-anchor-* (Predicate "quorum-comm-noise")
 		(FloatValue QUORUM COMMONALITY NOISE NRANK))
+
+	; Log the type of similarity function
+	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
+		(StringValue "mi-sim"))
 
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
@@ -573,7 +581,16 @@
 			(min (length ranked-words) (+ NRANK (* 3 N)))))
 		(define words-with-sims (take ranked-words n-to-take))
 
-		(define in-grp (jaccard-select WA WB words-with-sims))
+		; Chop down the list to a more manageable size.
+		(define initial-in-grp
+			(optimal-mi-in-group mi-sim WA WB words-with-sims))
+
+		(format #t "Initial in-group size=~D:" (length initial-in-grp))
+		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+			initial-in-grp)
+		(format #t "\n")
+
+		(define in-grp (jaccard-select initial-in-grp))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")

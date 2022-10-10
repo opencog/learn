@@ -36,19 +36,20 @@
 
      (define select-group
          (make-jaccard-selector covr-obj 0.7 0.2 3))
-     (select-group WA WB WLIST)
-
-  The select-group function accepts two individuals WA and WB that will
-  be the founding members of the group, plus a list WLIST of all
-  individuals that have similarity scores precomputed. The selection
-  process is as follows:
+     (define initial-in-grp
+         (optimal-mi-in-group SIM-FUN WA WB WLIST))
+     (select-group initial-in-grp)
 
   An initial group of candidate members, the `in-group`, is constructed
   by using MI similarity to each of the two founding members WA, WB.
   This in-group is selected by `optimal-in-group`, implemented
   elsewhere.
 
-  Next, the fraction of disjuncts that all group members have in common
+  The jaccard-slector begins with this candidate list, and trims it down
+  so that it meets the jaccard similarity criteria. This works as
+  follows:
+
+  The fraction of disjuncts that all group members have in common
   is computed. If that shared fraction is greater than COMMONALITY, then
   the selection process is done. Otherwise, a group member is ejected,
   and the fraction is recomputed. If it is better, it is accepted; the
@@ -60,23 +61,7 @@
   of the members, testing the ejection of each in turn. The second
   variant is hard-coded. The first variant is stubbed out in the code.
 "
-	; The ordinary MI similarity of two words
-	(define sap (add-gram-mi-sim-api LLOBJ))
-	(define (mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
-		(if miv (cog-value-ref miv 0) -inf.0))
 
-	; The similarity function to use for the in-group formation.
-	; Hypothesis: ordinary MI creates better clusters.
-	; (define IN-GRP-SIM ranked-mi-sim)
-	(define IN-GRP-SIM mi-sim)
-
-	; Log what we actually used.
-	(define *-log-anchor-* (LLOBJ 'wild-wild))
-	(cog-set-value! *-log-anchor-* (Predicate "in-group-sim")
-		(StringValue "mi-sim"))
-
-	; ------------------------------
 	; Tail-recursive trimmer; rejects large groups with little
 	; commonality. Accepts first grouping with commonality above
 	; the threshold COMMONALITY, or the last grouping before the
@@ -197,16 +182,7 @@
 	; fraction COMMONALITY of disjuncts among a QUORUM of members.
 	; The returned group will always have at least two members,
 	; the initial two proposed.
-	(define (max-jaccard-grp WA WB WLIST)
-
-		; Chop down the WLIST to a more manageable size.
-		(define initial-in-grp
-			(optimal-mi-in-group IN-GRP-SIM WA WB WLIST))
-
-		(format #t "Initial in-group size=~D:" (length initial-in-grp))
-		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
-			initial-in-grp)
-		(format #t "\n")
+	(define (max-jaccard-grp initial-in-grp)
 
 		; Remove members from the group, until either COMMONALITY
 		; is exceeded, or a maximum is hit.

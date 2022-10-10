@@ -104,7 +104,21 @@
 		(format #t "------ Start GOE merge ~D with seed pair `~A` and `~A`\n"
 			N (cog-name WA) (cog-name WB))
 
-		(define in-grp (jaccard-select WA WB words-with-sims))
+		; Chop down the list to a more manageable size.
+		(define initial-in-grp
+			(optimal-in-group xxxmi-sim WA WB words-with-sims
+				#:epsi-step 0.01
+				#:win-size 0.02
+				#:max-epsi 0.5  ; for theta sim
+				#:lower-bound -0.5  ; for theta sim
+				#:max-jump 2.5))
+
+		(format #t "Initial in-group size=~D:" (length initial-in-grp))
+		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD)))
+			initial-in-grp)
+		(format #t "\n")
+
+		(define in-grp (jaccard-select initial-in-grp))
 		(format #t "In-group size=~A:" (length in-grp))
 		(for-each (lambda (WRD) (format #t " `~A`" (cog-name WRD))) in-grp)
 		(format #t "\n")
