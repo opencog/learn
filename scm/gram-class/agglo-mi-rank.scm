@@ -500,10 +500,10 @@
 	; places. By the time all those places got abstracted away, almost
 	; nothing would be left.
 	(define SIM-API (add-gram-mi-sim-api LLOBJ))
-	(sefine MAKE-SIMMER make-gram-mi-simmer)
+	(define MAKE-SIMMER make-gram-mi-simmer)
 
 	(define (mi-sim WA WB)
-		(define miv (sap 'pair-count WA WB))
+		(define miv (SIM-API 'pair-count WA WB))
 		(if miv (cog-value-ref miv 0) -inf.0))
 
 	(define e (make-elapsed-secs))
