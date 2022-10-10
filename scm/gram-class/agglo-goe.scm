@@ -59,6 +59,7 @@
   LLOBJ needs to have the 'cluster-type method on it.
   LLOBJ should probably be `(add-covering-sections (csets))`
   NRANK is the number of words for which we have GOE similarities.
+    (XXX Can we automate this ?)
 
   LOOP-COUNT is number of times to run the loop.
 
@@ -110,12 +111,14 @@
 			N (cog-name WA) (cog-name WB))
 
 		; Chop down the list to a more manageable size.
+		; max-epsi and lower-bound should be 0.5 for N=2500 basis
+		; but should be 0.55 for the N=6000 basis...
 		(define initial-in-grp
 			(optimal-in-group theta-sim WA WB AVAILABLE-WORDS
 				#:epsi-step 0.01
 				#:win-size 0.02
-				#:max-epsi 0.5  ; for theta sim
-				#:lower-bound -0.5  ; for theta sim
+				#:max-epsi 0.55  ; for theta sim
+				#:lower-bound -0.55  ; for theta sim
 				#:max-jump 2.5))
 
 		(format #t "Initial in-group size=~D:" (length initial-in-grp))
@@ -234,6 +237,6 @@
 (define layer-one (cog-new-atomspace "layer one" (cog-atomspace)))
 (cog-set-atomspace! layer-one)
 
-(goe-merge pcs)
+(goe-merge sha 1000 50)
 
 ==== !#
