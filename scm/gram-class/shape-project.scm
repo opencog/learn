@@ -339,7 +339,9 @@
 		(set! ns (+ 1 ns)))
 
 	(define (del-xes XST)
-		(del-sect (LLOBJ 'get-section XST))
+		; Perhaps its been deleted already?
+		(define sect (LLOBJ 'get-section XST))
+		(if (not (nil? sect)) (del-sect sect))
 		(set! nx (+ 1 nx)))
 
 	; Cleanup after merging.
