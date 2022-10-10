@@ -56,7 +56,11 @@
 "
   goe-cluster LLOBJ -- perform GOE-based clustering.
 
+  LLOBJ needs to have the 'cluster-type method on it.
+  LLOBJ should probably be `(add-covering-sections (csets))`
   NRANK is the number of words for which we have GOE similarities.
+
+  LOOP-COUNT is number of times to run the loop.
 
   Under construction.
 "
@@ -82,6 +86,7 @@
 
 	; Record the classes as they are created.
 	(define log-class (make-class-logger LLOBJ))
+	(define log-dataset-stuff (make-merge-logger LLOBJ))
 
 	; Create the function that determines group membership.
 	(define jaccard-select (make-jaccard-selector LLOBJ
@@ -172,15 +177,13 @@
 		(define e (make-elapsed-secs))
 
 		(format #t "------ Round ~A Next in line:\n"
-			; (get-merge-iteration LLOBJ)
-N
-		)
+			(get-merge-iteration LLOBJ))
 		(prt-sorted-pairs (take sorted-pairs 12))
 
 		(define top-pair (car sorted-pairs))
 
 		; Log some maybe-useful data...
-		; XXX (log-dataset-stuff top-pair)
+		(log-dataset-stuff top-pair)
 
 		(define in-grp (perform-merge N
 			(gar top-pair) (gdr top-pair) wordlist))

@@ -71,31 +71,6 @@
 
 ; ---------------------------------------------------------------------
 
-(define (get-merge-iteration LLOBJ)
-"
-  get-merge-iteration LLOBJ -- return the number of merges done so far.
-"
-	(define log-anchor (LLOBJ 'wild-wild))
-	(define count-location (Predicate "merge-count"))
-	(define count-log (cog-value log-anchor count-location))
-
-	; Return the logged value.
-	(inexact->exact
-		(if (nil? count-log) 0 (cog-value-ref count-log 0)))
-)
-
-(define (update-merge-iteration LLOBJ N)
-"
-  update-merge-iteration LLOBJ N -- Set the number of merges to N.
-"
-	(define log-anchor (LLOBJ 'wild-wild))
-	(define count-location (Predicate "merge-count"))
-
-	(cog-set-value! log-anchor count-location (FloatValue N))
-)
-
-; ---------------------------------------------------------------------
-
 (define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE NRANK LOOP-CNT)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
