@@ -47,7 +47,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (goe-cluster LLOBJ NRANK LOOP-CNT
+(define* (goe-cluster LLOBJ NRANK LOOP-CNT
 	#:key
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
@@ -150,8 +150,8 @@
 		(define uniq-cosi
 			(remove (lambda (PR) (equal? (gar PR) (gdr PR))) all-cosi))
 		(define (lessi A B)
-			(> (cog-value-ref (gos 'get-count A) 0)
-				(cog-value-ref (gos 'get-count B) 0)))
+			(> (cog-value-ref (goe-api 'get-count A) 0)
+				(cog-value-ref (goe-api 'get-count B) 0)))
 		; return the sort.
 		(sort uniq-cosi lessi)
 	)
@@ -206,6 +206,8 @@
 
 	(for-each loop-step (iota LOOP-CNT))
 )
+
+(export goe-cluster)
 
 ; ---------------------------------------------------------------------
 #! ========
