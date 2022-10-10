@@ -372,6 +372,7 @@
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
 		(NOISE 4)
+		(PUSH-FRAMES #t)
 		(PRECISE-SIM #f))
 "
   in-group-mi-cluster LLOBJ NRANK LOOP-CNT - grammatical-MI clustering.
@@ -548,6 +549,13 @@
 		(define e (make-elapsed-secs))
 		(format #t "------ Start MI-based merge ~D with seed pair `~A` and `~A`\n"
 			N (cog-name WA) (cog-name WB))
+
+		(when PUSH-FRAMES
+			(let* ((frame-no (get-merge-iteration LLOBJ))
+					(as-name (format #f "MI-merge layer ~D" frame-no))
+					(as-frame (cog-new-atomspace as-name (cog-atomspace))))
+				(cog-set-atomspace! as-frame)
+				(store-frames as-frame)))
 
 		(define ranked-words (rank-words LLOBJ))
 		; Approximation to number of words with sims.

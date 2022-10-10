@@ -186,6 +186,7 @@ TODO:
 	(define wordlist words-with-sims)
 	(define all-sorted-pairs (get-sorted-goe-pairs))
 	(define sorted-pairs all-sorted-pairs)
+	(define donelist '())
 
 	; Main loop
 	(define (loop-step N)
@@ -211,6 +212,7 @@ TODO:
 				(any (lambda (WRD) (equal? WRD (gdr PR))) in-grp)))
 			sorted-pairs))
 
+		(set! donelist (append in-grp donelist))
 		(format #t "------ Completed merge in ~A secs\n" (e))
 	)
 
