@@ -47,7 +47,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define (goe-cluster LLOBJ NRANK
+(define (goe-cluster LLOBJ NRANK LOOP-CNT
 	#:key
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
@@ -99,14 +99,14 @@
 
 	; ------------------------------
 	; Main workhorse function
-	(define (perform-merge N WA WB)
+	(define (perform-merge N WA WB AVAILABLE-WORDS)
 		(define e (make-elapsed-secs))
 		(format #t "------ Start GOE merge ~D with seed pair `~A` and `~A`\n"
 			N (cog-name WA) (cog-name WB))
 
 		; Chop down the list to a more manageable size.
 		(define initial-in-grp
-			(optimal-in-group theta-sim WA WB words-with-sims
+			(optimal-in-group theta-sim WA WB AVAILABLE-WORDS
 				#:epsi-step 0.01
 				#:win-size 0.02
 				#:max-epsi 0.5  ; for theta sim
@@ -128,6 +128,9 @@
 
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
+
+		; Return the in-group
+		in-grp
 	)
 
 	; --------------------------------------------
@@ -159,16 +162,41 @@
 					(cog-name (gdr PR))))
 			LST))
 
-	(define (top-ranked-goe-pairs)
-		(define sorted-pairs (get-sorted-goe-pairs))
+	; Setup the initial lists
+	(define wordlist words-with-sims)
+	(define all-sorted-pairs (get-sorted-goe-pairs))
+	(define sorted-pairs all-sorted-pairs)
+
+	; Main loop
+	(define (loop-step N)
+		(define e (make-elapsed-secs))
 
 		(format #t "------ Round ~A Next in line:\n"
-			(get-merge-iteration LLOBJ))
+			; (get-merge-iteration LLOBJ)
+N
+		)
 		(prt-sorted-pairs (take sorted-pairs 12))
 
-		; Return the list of sorted pairs.
-		sorted-pairs
+		(define top-pair (car sorted-pairs))
+
+		; Log some maybe-useful data...
+		; XXX (log-dataset-stuff top-pair)
+
+		(define in-grp (perform-merge N
+			(gar top-pair) (gdr top-pair) wordlist))
+
+		; Remove the merged words from further consideration.
+		(set! wordlist (lset-difference equal? wordlist in-grp))
+		(set! sorted-pairs (remove (lambda (PR)
+			(or
+				(any (lambda (WRD) (equal? WRD (gar PR))) in-grp)
+				(any (lambda (WRD) (equal? WRD (gdr PR))) in-grp)))
+			sorted-pairs))
+
+		(format #t "------ Completed merge in ~A secs\n" (e))
 	)
+
+	(for-each loop-step (iota LOOP-CNT))
 )
 
 ; ---------------------------------------------------------------------
