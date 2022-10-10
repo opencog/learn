@@ -106,7 +106,7 @@
 
 		; Chop down the list to a more manageable size.
 		(define initial-in-grp
-			(optimal-in-group xxxmi-sim WA WB words-with-sims
+			(optimal-in-group theta-sim WA WB words-with-sims
 				#:epsi-step 0.01
 				#:win-size 0.02
 				#:max-epsi 0.5  ; for theta sim
