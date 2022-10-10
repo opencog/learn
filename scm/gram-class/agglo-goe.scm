@@ -64,6 +64,16 @@
   LOOP-COUNT is number of times to run the loop.
 
   Under construction.
+TODO:
+-- recompute all similarities every so often.
+   * track all touched words.
+   * recomp all marginals on them & the DJ's.
+   * recomp all MI's for those words.
+   * comp new MI's for the gram classes.
+   * recomp all goe sims, all the way down.  Ugh.
+-- push atomspaces and save space frames each push.
+-- enable poping of space frames in atomspace.
+-- enable flattening of space-frames
 "
 
 	; Does the same thing:

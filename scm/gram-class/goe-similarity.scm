@@ -1,21 +1,13 @@
 ;
-; gaussian-similarity.scm
+; goe-similarity.scm
 ;
 ; Bulk computation of gaussian orthogonal vector similarities.
 ; Sept 2022
-; -------------------------------------
+; ---------------------------------------------------------------------
 xxxxxxxx
+under construction
 
-; Ingest data
-(define pca (make-pseudo-cset-api)) ; shapes not needed to fetch sims.
-(define pcs (add-pair-stars pca))
-(define smi (add-similarity-api pcs #f "shape-mi"))
-
-; Need to fetch all pairs, because the similarity object doesn't
-; automate this.
-(smi 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
-
-; -------------------------------------
+; ---------------------------------------------------------------------
 
 (define*-public (compute-goe-similarity LLOBJ)
 "
@@ -81,4 +73,18 @@ xxxxxxxx
 (define allwo (rank-words pcs))
 (loop-upper-diagonal dot-prod allwo 0 250)
 
-; -------------------------------------
+; ---------------------------------------------------------------------
+#! ========
+;
+; Example usage.
+
+; Ingest data
+(define pca (make-pseudo-cset-api)) ; shapes not needed to fetch sims.
+(define pcs (add-pair-stars pca))
+(define smi (add-similarity-api pcs #f "shape-mi"))
+
+; Need to fetch all pairs, because the similarity object doesn't
+; automate this.
+(smi 'fetch-pairs) ;;; same as (load-atoms-of-type 'Similarity)
+
+==== !#
