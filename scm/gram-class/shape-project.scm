@@ -339,7 +339,10 @@
 		(set! ns (+ 1 ns)))
 
 	(define (del-xes XST)
-		; Perhaps its been deleted already?
+		; Perhaps its been deleted already? This will happen if a
+		; connector occurs twice in a section: it will then have two
+		; cross-sections. The first deletes the section, the second
+		; finds the section is already deleted.
 		(define sect (LLOBJ 'get-section XST))
 		(if (not (nil? sect)) (del-sect sect))
 		(set! nx (+ 1 nx)))
