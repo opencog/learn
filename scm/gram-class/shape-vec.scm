@@ -244,7 +244,7 @@
 			(define tmpl (cog-outgoing-set SHAPE))
 			(define point (car tmpl))
 			(define conseq (cdr tmpl))
-			(define (not-var? ITEM) (not (equal? (gar ITEM) star-wild)))
+			(define (not-var? ITEM) (not (cog-equal? (gar ITEM) star-wild)))
 			(define begn (take-while not-var? conseq))
 			(define rest (drop-while not-var? conseq))
 			(define dir (gdr (car rest)))
@@ -407,7 +407,7 @@
 			; Walk through the connector sequence. If any of them
 			; appear in the cluster, return true.
 			(any
-				(lambda (con) (equal? (gar con) CLS))
+				(lambda (con) (cog-equal? (gar con) CLS))
 				(cog-outgoing-set (get-pair-right SECT))))
 
 		; -----------------------------------------------

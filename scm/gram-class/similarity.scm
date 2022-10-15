@@ -35,7 +35,7 @@
 		(lambda (ATOM-A ATOM-B)
 			(define na (nobs ATOM-A))
 			(define nb (nobs ATOM-B))
-			(if (equal? na nb)
+			(if (cog-equal? na nb)
 				(> (nsup ATOM-A) (nsup ATOM-B))
 				(> na nb))))
 )
