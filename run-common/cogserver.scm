@@ -51,9 +51,12 @@
 (define storage-node (eval-string sns))
 (cog-open storage-node)
 
-; XXX FIXME this fails if no spaces!! XXX
-(define top-space (car (load-frames)))
-(cog-set-atomspace! top-space)
+; If there are multiple frames, then fetch all iof them.
+(define frame-tops (load-frames))
+(if (< 1 (length frame-tops))
+	(throw 'bad-frameset 'too-many-tops
+		(format #f "Found more than one frame top: ~A\n" frame-tops)))
+(if frame-tops (cog-set-atomspace! (car frame-tops)))
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
