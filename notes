@@ -11998,8 +11998,10 @@ FIXED:
   I don't get it. I looked at the code, and this should be happening
   already. Maybe this was a hang-over from before? DONE. It was a bug.
 * Add rarity and log-sizes to summary report.  DONE
+* Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
+* (cog-set-atomspace! borken in cogserver
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
   This seems .. I'm confused.
 * Log the similarity fractions
@@ -12012,7 +12014,6 @@ TODO/BUGS:
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
   Ending quotes also hide punctuation so punct is not split.
-* Set up direct-sum/shape clustering run scripts. (mostly done ?)
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001

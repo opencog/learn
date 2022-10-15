@@ -50,6 +50,8 @@
 
 (define storage-node (eval-string sns))
 (cog-open storage-node)
+
+; XXX FIXME this fails if no spaces!! XXX
 (define top-space (car (load-frames)))
 (cog-set-atomspace! top-space)
 
