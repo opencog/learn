@@ -14,7 +14,7 @@
 ;
 ; ---------------------------------------------------------------------
 
-(define (get-merge-iteration LLOBJ)
+(define-public (get-merge-iteration LLOBJ)
 "
   get-merge-iteration LLOBJ -- return the number of merges done so far.
 "
@@ -27,7 +27,7 @@
 		(if (nil? count-log) 0 (cog-value-ref count-log 0)))
 )
 
-(define (update-merge-iteration LLOBJ N)
+(define-public (update-merge-iteration LLOBJ N)
 "
   update-merge-iteration LLOBJ N -- Set the number of merges to N.
 "
