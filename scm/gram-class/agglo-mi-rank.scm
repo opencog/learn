@@ -71,7 +71,8 @@
 
 ; ---------------------------------------------------------------------
 
-(define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE NRANK LOOP-CNT)
+(define (main-loop LLOBJ SORT-PAIRS MERGE-FUN EXPAND-UNIVERSE
+	NRANK LOOP-CNT PUSH-FRAMES)
 "
   Unleash the fury. Inside of a loop, apply the MERGE-FUN to the
   top-ranked word-pair, for LOOP-CNT iterations. After each
@@ -88,8 +89,14 @@
 	(for-each
 		(lambda (N)
 			(define iter-count (+ 1 N base-done-count))
+
+			(when PUSH-FRAMES
+				(let* ((as-name (format #f "MI-merge layer ~D" iter-count))
+						(as-frame (cog-new-atomspace as-name (cog-atomspace))))
+					(cog-set-atomspace! as-frame)
+					(store-frames as-frame)))
+
 			(define e (make-elapsed-secs))
-			(format #t "------ Round ~A Next in line:\n" iter-count)
 			(define sorted-pairs (SORT-PAIRS LLOBJ))
 			(define top-pair (car sorted-pairs))
 
@@ -98,10 +105,14 @@
 
 			; Do the actual merge
 			(MERGE-FUN iter-count (gar top-pair) (gdr top-pair))
-			(update-merge-iteration LLOBJ iter-count)
 
 			(format #t "------ Completed merge in ~A secs\n" (e))
 			(EXPAND-UNIVERSE LLOBJ iter-count NRANK)
+
+			; Store the new count last. Thus, if something fails,
+			; the atomspace will have the new count, but the log
+			; will not yet have been updated.
+			(update-merge-iteration LLOBJ iter-count)
 		)
 		(iota LOOP-CNT))
 )
@@ -550,13 +561,6 @@
 		(format #t "------ Start MI-based merge ~D with seed pair `~A` and `~A`\n"
 			N (cog-name WA) (cog-name WB))
 
-		(when PUSH-FRAMES
-			(let* ((frame-no (get-merge-iteration LLOBJ))
-					(as-name (format #f "MI-merge layer ~D" frame-no))
-					(as-frame (cog-new-atomspace as-name (cog-atomspace))))
-				(cog-set-atomspace! as-frame)
-				(store-frames as-frame)))
-
 		(define ranked-words (rank-words LLOBJ))
 		; Approximation to number of words with sims.
 		; This is overkill; NRANK is more than enough!
@@ -629,7 +633,7 @@
 
 		(define sorted-pairs (get-mi-ranked-pairs LLOBJ MI-CUTOFF))
 		(format #t "------ Round ~A Next in line:\n"
-			(get-merge-iteration LLOBJ))
+			(+ (get-merge-iteration LLOBJ) 1))
 		(prt-mi-sorted-pairs LLOBJ sorted-pairs 0 12)
 
 		; Return the list of sorted pairs.
@@ -660,7 +664,8 @@
 	; --------------------------------------------
 	; Unleash the fury
 	(main-loop LLOBJ
-		top-ranked-mi-pairs perform-merge expand-universe NRANK LOOP-CNT)
+		top-ranked-mi-pairs perform-merge expand-universe
+		NRANK LOOP-CNT PUSH-FRAMES)
 )
 
 ; ---------------------------------------------------------------------
