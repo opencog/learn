@@ -51,6 +51,7 @@
 (define storage-node (eval-string sns))
 (cog-open storage-node)
 (define top-space (car (load-frames)))
+(cog-set-atomspace! top-space)
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
