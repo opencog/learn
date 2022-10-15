@@ -35,6 +35,7 @@
 	(define count-location (Predicate "merge-count"))
 
 	(cog-set-value! log-anchor count-location (FloatValue N))
+	(store-atom log-anchor)
 )
 
 ; ---------------------------------------------------------------------
