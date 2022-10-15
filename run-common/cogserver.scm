@@ -50,6 +50,7 @@
 
 (define storage-node (eval-string sns))
 (cog-open storage-node)
+(define top-space (car (load-frames)))
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
