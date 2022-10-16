@@ -56,7 +56,7 @@
 (if (< 1 (length frame-tops))
 	(throw 'bad-frameset 'too-many-tops
 		(format #f "Found more than one frame top: ~A\n" frame-tops)))
-(if frame-tops (cog-set-atomspace! (car frame-tops)))
+(if (< 0 (length frame-tops)) (cog-set-atomspace! (car frame-tops)))
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
