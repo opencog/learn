@@ -1,6 +1,10 @@
 
 Things to read:
 
+* COMET : Commonsense Transformers for Automatic Knowledge
+  Graph Construction
+   https://arxiv.org/pdf/1906.05317.pdf
+
 * "Wide Attention Is The Way Forward For Transformers"
   https://arxiv.org/pdf/2210.00640.pdf
 
