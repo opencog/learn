@@ -311,25 +311,6 @@
 
 (define sim (add-pair-stars sap))
 
-;; Return a list of all words, ranked by count.
-;; If counts are equal, then rank by support.
-(define (rank-words LLOBJ)
-	(define sup (add-support-api LLOBJ))
-
-	; nobs == number of observations
-	(define (nobs WRD) (sup 'right-count WRD))
-	(define (nsup WRD) (sup 'right-support WRD))
-
-	(define wrds (LLOBJ 'left-basis))
-	(sort wrds
-		(lambda (ATOM-A ATOM-B)
-			(define na (nobs ATOM-A))
-			(define nb (nobs ATOM-B))
-			(if (equal? na nb)
-				(> (nsup ATOM-A) (nsup ATOM-B))
-				(> na nb))))
-)
-
 ;; Create a list of candidates.
 (define e (make-elapsed-secs))
 (define ranked-words (rank-words pcs))
