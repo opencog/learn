@@ -592,11 +592,9 @@
 		(define touched-words (recompute-marginals LLOBJ (cons wclass in-grp)))
 		(format #t "------ Recomputed MMT marginals in ~A secs\n" (e))
 
-		; Create a new simmer each timke through the loop. That's
+		; Create a new simmer each time through the loop. That's
 		; because it might contain cached info, e.g. mmt-q.
 		(define simmer (MAKE-SIMMER LLOBJ))
-		(define (compute-sim WA WB)
-			(if (not (SIM-API 'pair-count WA WB)) (simmer WA WB)))
 
 		; After merging, recompute similarities for the words
 		; that were touched. We have two choices here: recompute
@@ -607,8 +605,8 @@
 		; 10x slower. In exchange, we maybe get better results? Or maybe
 		; not? Unclear, unknown at this time, might no matter.
 		(if PRECISE-SIM
-			(recomp-all-sim SIM-API compute-sim touched-words)
-			(recomp-all-sim SIM-API compute-sim (filter cog-atom? in-grp)))
+			(recomp-all-sim SIM-API simmer touched-words)
+			(recomp-all-sim SIM-API simmer (filter cog-atom? in-grp)))
 
 		; Always compute self-similarity of the new word-class.
 		; Optional; this is logged by the logger.
