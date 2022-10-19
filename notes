@@ -11905,6 +11905,646 @@ goe-theta= 0.1757 cos= 0.9846 mi= 6.7582 (`Ag`, `50w`)
 	(optimal-in-group goe-pr-sim (gar x) (gdr x) words-with-sims))
 
 
+In opencog/learn/shape-project.scm:
+    378:8  4 (recompute-marginals #<procedure 7f72d73f2e80 at opencog/learn…> …)
+duuude condel fail for word=(WordClassNode "— _ )")
+
+
+duude oh foo test word=(WordClassNode "— _ )")
+ XST=(CrossSection
+  (WordClassNode "— _ )")
+  (ShapeLink
+    (WordNode "have")
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "-"))
+    (Connector
+      (WordClassNode "— _ )")
+      (ConnectorDir "+"))))
+
+ (for-each condel (cog-incoming-by-type ROW 'Connector))
+
+
+ (define ic (cog-incoming-by-type (WordClassNode "— _ )") 'Connector))
+
+((length ic)
+$1 = 18265
+
+(length (filter nil? ic))
+1866
+
+(define cnt 0)
+(length (drop-while (lambda (x) (not (nil? x))) ic))
+
+
+(define l0 (cog-atomspace))
+(define ba (car (cog-atomspace-env l0)))
+
+346 SchemeSmobAtom.cc
+
+   IncomingSet iset = h->getIncomingSetByType(t, asp.get());
+
+duude cow fail for (Section
+  (WordClassNode "— _ )") ; [56cc3144fcda07bc][3]
+  (ConnectorSeq
+    (Connector
+      (WordNode ";") ; [fb5ba36cdca935b][1]
+      (ConnectorDir "-") ; [3089c5fa51ba00b2][1]
+    ) ; [f0927860d2feb45a][1]
+    (Connector
+      (WordNode "d") ; [6def4874cf3c57d9][1]
+      (ConnectorDir "+") ; [73c366f362c6d7cc][1]
+    ) ; [d70971efda6c6572][1]
+  ) ; [9b4006d2c4178076][1]
+) ; [ffbbbebbdf0c79b6][3]
+
+
+duude cow fail for (CrossSection
+  (WordClassNode "— _ )") ; [56cc3144fcda07bc][3]
+  (ShapeLink
+    (WordNode "C") ; [3da1f5f3b52e4906][1]
+    (Connector
+      (VariableNode "$connector-word") ; [61844cb7df69718c][1]
+      (ConnectorDir "-") ; [3089c5fa51ba00b2][1]
+    ) ; [f54cc47e1cb3e1a8][1]
+    (Connector
+      (WordClassNode "— _ )") ; [56cc3144fcda07bc][3]
+      (ConnectorDir "+") ; [73c366f362c6d7cc][1]
+    ) ; [9af8f70a8ccf22af][3]
+  ) ; [aec8aa8cf80d8c25][3]
+) ; [ff417b671f7dd883][3]
+
+
+    mutable std::atomic_bool _absent;
+    mutable std::atomic_bool _marked_for_removal;
+    mutable std::atomic_bool _checked;
+
+    /// Merkle-tree hash of the atom contents. Generically useful
+    /// for indexing and comparison operations.
+    mutable ContentHash _content_hash;
+
+
+
+duuude found absent atom (Section
+  (WordClassNode "— _ )") ; [56cc3144fcda07bc][3]
+  (ConnectorSeq
+    (Connector
+      (WordNode "###LEFT-WALL###") ; [5c1b19cfd8d34571][1]
+      (ConnectorDir "-") ; [3089c5fa51ba00b2][1]
+    ) ; [bb06257872395837][1]             (Connector
+      (WordNode "Paper") ; [773446d6d36221c1][1]
+      (ConnectorDir "+") ; [73c366f362c6d7cc][1]
+    ) ; [9631428c8612c3ed][1]
+  ) ; [a59db2ff237cd491][1]
+) ; [ffdc1450dce2ecf1][3]
+
+
+Atom::setAbsent
+(use-modules (opencog))
+
+(define a (Concept "a"))
+(define b (Concept "b"))
+(define lo (cog-atomspace))
+(define hi (cog-new-atomspace lo))
+(cog-set-atomspace! hi)
+(define li (Link a b))
+
+(cog-set-atomspace! lo)
+(cog-prt-atomspace)
+(cog-extract! a)
+; still there ret #f
+(cog-extract-recursive! a)
+; gone ret #t
+(cog-prt-atomspace)
+(cog-incoming-set b)
+; is empty
+
+(cog-set-atomspace! hi)
+(cog-prt-atomspace)
+; contains only b
+
+above OK
+;-----------------
+do it again
+
+(cog-set-atomspace! lo)
+(define a (Concept "a"))
+(cog-atomspace-ro! lo)
+
+(cog-set-atomspace! hi)
+(cog-atomspace-cow! #t hi)
+(define li (Link a b))
+
+(cog-extract-recursive! a)
+(cog-prt-atomspace) ; should be only one
+
+ (cog-incoming-set b) ; should be empty.
+
+(cog-set-atomspace! lo)
+(cog-prt-atomspace) ; should have an and b
+
+OK above workds
+;-----------------
+do it again
+
+(use-modules (opencog))
+
+(define a (Concept "a"))
+(define b (Concept "b"))
+(define lo (cog-atomspace))
+(define hi (cog-new-atomspace lo))
+
+(cog-atomspace-rw! lo)
+(cog-atomspace-cow! #t lo)
+
+(cog-set-atomspace! hi)
+(cog-atomspace-cow! #t hi)
+(define li (Link a b))
+
+(cog-set-atomspace! lo)
+(cog-extract! a)
+
+(define alo (Concept "a"))
+(cog-set-tv! alo (stv 0.2 0.2))
+(cog-set-atomspace! hi)
+(cog-get-atoms 'Atom #t)
+
+(define ahi (Concept "a"))
+
+ un recreation its not unhidden!
+
+(equal? alo ahi) says y but that is not true!
+
+content-compare...
+bool content_eq(const Handle& lh, const Handle& rh) noexcept
+
+PresentTest
+BoolLibraryUTest
+
+    virtual bool is_atom() const { return true; }
+
+	  8 - DeepSpace (Failed)
+	 11 - CoverBasicDelete (Failed)
+	107 - SCMCopyAtom (Failed)
+
+content-equal?
+
+/home/linas/src/novamente/src/atomspace-git/tests/atomspace/cover-delete-test.scm:137: FAIL mid1-space
+/home/linas/src/novamente/src/atomspace-git/tests/atomspace/cover-delete-test.scm:146: FAIL mid3-space
+
+
+
+Cases:
+in_this have_inc recurs
+   Y       N       -     Delete always
+   Y       Y       N     Do nothing
+   Y       Y       Y     Delete inc first,
+           is any inc left? if so then mark.
+   N       N       -     Add an absent atom
+
+
+======================================================
+Again
+
+duude oh foo test word=(WordNode "—")
+ XST=(CrossSection
+  (WordNode "—")
+  (ShapeLink
+    (WordNode "the")
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode "—")
+      (ConnectorDir "+"))))
+
+duuude condel fail for word=(WordNode "—")
+
+-       (for-each cog-delete! (cog-incoming-by-type ROW 'Connector))
++(define (condel x)
++(when (nil? x)
++(format #t "duuude condel fail for word=~A\n" ROW))
++(cog-delete! x))
++       (for-each condel (cog-incoming-by-type ROW 'Connector))
+
+
+ (define ic (cog-incoming-by-type (Word "—") 'Connector))
+
+(length ic)
+$1 = 4945
+
+(length (filter nil? ic))
+298
+
+
+llin 1076
+
+
+duuude found absent atom (Section
+  (WordNode "—") ; [1570661932f2f0be][1]
+  (ConnectorSeq
+    (Connector
+      (WordNode "_") ; [1d2c06addc2bb3ea][1]
+      (ConnectorDir "-") ; [3089c5fa51ba00b2][1]
+    ) ; [d47d92d87e4de66d][1]
+    (Connector
+      (WordNode "—") ; [1570661932f2f0be][1]
+      (ConnectorDir "+") ; [73c366f362c6d7cc][1]
+    ) ; [9ac58fc1f04a95ed][1]
+  ) ; [f51b9f4d1430f62d][1]
+) ; [d095551d96b4f459][3][absent]
+this space is 3 (AtomSpace "MI-merge layer 0" (AtomSpace "(uuid . 1)"))
+duuude oher =(nil)
+duude oh foo test word=(WordNode "—")
+ XST=(CrossSection
+  (WordNode "—")
+  (ShapeLink
+    (WordNode "—")
+    (Connector
+      (WordNode "_")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
+
+etc.
+
+
+duuuude cow by type as=foo(AtomSpace "MI-merge layer 0" (AtomSpace "(uuid . 1)")
+)
+duuude cow fails nulls=26
+duude inset size=4945
+duuude total num null pointers 26
+
+
+Atom.cc
+575
+iset.push_back(as->lookupHandle(h));
+shoudl check for null
+
+
+Atomspace C++ exception:
+(dflt-delete delete wtf (/home/ubuntu/src/atomspace/opencog/atomspace/AtomTable.
+cc:493)
+
+
+      (define (compute-total-mmt-sum)
+         (fold
+            (lambda (item sum) (+ sum (api-obj 'mmt-sum item))) 0
+            (star-obj 'left-basis)))
+
+
+         (api-obj       (add-transpose-api LLOBJ))
+         ((mmt-sum)            (apply get-mmt-sum args))
+
+   (define (get-mmt-sum ITEM)
+      (get-sum mmt-key (LLOBJ 'right-wildcard ITEM)))
+
+
+(WordNode "do?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")
+
+(define ata (add-transpose-api covr-obj))
+(ata 'mmt-sum (WordNode "do?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"))
+
+
+(define riwi (covr-obj 'right-wildcard (WordNode "do?\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")))
+
+(cog-keys riwi)
+(define mmt-key (PredicateNode "*-MM^T Product Key cover-section-*"))
+
+ (define (get-stuff KEY ATOM REF)
+      (catch 'wrong-type-arg
+         (lambda () (cog-value-ref (cog-value ATOM KEY) REF))
+         (lambda (key . args) 0)))
+
+(catch #t
+    (lambda () (get-stuff mmt-key riwi 4))
+    (lambda (key . args)
+ (format #t "duude key=~A\n" key)))
+
+   ; (define (get-sum ATOM)       (get-thing ATOM 4))
+   ; Backwards-compat for older datasets (pre Spet 2022) that don't
+   ; have sum marginals. For these, sum is the same as count.
+   ; Remove this after year 2027.
+   (define (get-sum ATOM)
+      (catch 'out-of-range (lambda () (get-thing ATOM 4))
+         (lambda (key . args) (get-count ATOM))))
+
+(cog-count-atoms 'AtomSpace)
+
+(cog-report-counts)
+(cog-incoming-set (cog-atomspace))
+
+createAtomSpace(spaces)
+
+keep_incoming_set()
+insert_ato
+
+Link::install()
+
+(use-modules (opencog))
+(define l0 (cog-atomspace))
+(define l1 (cog-new-atomspace l0))
+
+(cog-incoming-size l0)
+(cog-incoming-set l0)
+(define top-space (car (load-frames)))
+
+makeOrder
+
+void RocksStorage::loadTypeAllFrames(AtomSpace* as, Type t)
+
+      const auto& pr = _frame_map.find(hasp);
+      if (_frame_map.end() == pr)
+         throw IOException(TRACE_INFO,
+
+   if (0 == _frame_map.size())
+
+   return stnp->load_frames();
+loadFrameDAG
+
+
+In opencog/learn/agglo-mi-rank.scm:
+   100:24  9 (_ _)
+   582:16  8 (perform-merge _ _ _)
+In opencog/learn/gram-majority.scm:
+   400:24  7 (merge (WordClassNode "and and and")
+ ((WordNode "and")
+ # #))
+In srfi/srfi-1.scm:
+   460:18  6 (fold #<procedure 7f99c1338e10 at opencog/learn/gram-majority.…> …)
+In opencog/learn/gram-majority.scm:
+   401:57  5 (_ (WordNode "and")
+ 0)
+In opencog/learn/shape-project.scm:
+   298:16  4 (do-merge (WordNode "and")
+ _ _)
+   269:36  3 (rebalance-merge #<procedure 7f9a74b91e80 at opencog/learn/sha…> …)
+In opencog/learn/shape-vec.scm:
+   268:24  2 (make-section _)
+   250:41  1 (analyze-xsection _)
+In ice-9/boot-9.scm:
+  1669:16  0 (raise-exception _ #:continuable? _)
+
+
+foof
+$11 = (CrossSection (ctv 1 0 2)
+  (WordClassNode "been seen")
+  (ShapeLink
+    (WordClassNode "been seen")
+    (Connector
+      (WordNode "had")
+      (ConnectorDir "-"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "-"))
+    (Connector
+      (WordClassNode "? . ###LEFT-WALL### ! : ]")
+      (ConnectorDir "+"))))
+
+[1]> foof
+$13 = (CrossSection (ctv 1 0 2)
+  (WordClassNode "don’t am.i")
+  (ShapeLink
+    (WordClassNode "don’t am.i")
+    (Connector
+      (WordNode "I")
+      (ConnectorDir "-"))
+    (Connector
+      (WordNode ",")
+      (ConnectorDir "+"))
+    (Connector
+      (VariableNode "$connector-word")
+      (ConnectorDir "+"))))
+
+ahh!  equal? fails!
+
+--------------------------------------------------------
+
+   HandleSeq all_atoms;
+   table->get_handles_by_type(all_atoms, ATOM, true);
+
+   void get_atoms_in_frame(const AtomSpace* as, HandleSeq& fseq) const
+   Handle add_nocheck(AtomSpace* as, const Handle& h) const
+
+removeSatom  at 860
+
+// "k@" sid:kid . sval -- find the Atomese Value for the Atom,Key
+
+// "k@" sid:fid:kid . sval -- find the Value for the Atom,AtomSpace,Key
+// "z" N@sid . (null) -- record height N of Link at sid
+
+      size_t height = getHeight(h);
+
+
+-------------------------------------------------------
+
+(use-modules (opencog))
+(define space1 (cog-atomspace))
+(define space2 (cog-new-atomspace space1))
+(define space3 (cog-new-atomspace space2))
+(define space4 (cog-new-atomspace space3))
+(define space5a (cog-new-atomspace space4))
+(define space5b (cog-new-atomspace space4))
+(define space5c (cog-new-atomspace space4))
+(define space6 (cog-new-atomspace space5a space5b space5c))
+space6
+
+
+
+
+
+(use-modules (opencog))
+(use-modules (opencog persist))
+(use-modules (opencog persist-rocks))
+(define rsn (RocksStorageNode "rocks:///tmp/foo.rdb"))
+(cog-open rsn)
+(define space1 (cog-atomspace))
+(define space2 (cog-new-atomspace space1))
+(define space3 (cog-new-atomspace space2))
+(store-frames space3)
+(cog-set-atomspace! space1)
+(store-atom (Concept "spa1"))
+(cog-set-atomspace! space2)
+(store-atom (Concept "spa2"))
+(cog-set-atomspace! space3)
+(store-atom (Concept "spa3"))
+(cog-close rsn)
+
+(use-modules (opencog))
+(use-modules (opencog persist))
+(use-modules (opencog persist-rocks))
+(define rsn (RocksStorageNode "rocks:///tmp/foo.rdb"))
+(cog-open rsn)
+(define space1 (cog-atomspace))
+(define space2 (cog-new-atomspace space1))
+(define space3 (cog-new-atomspace space2))
+(store-frames space3)
+(cog-set-atomspace! space1)
+(store-atom (Concept "spa1" (stv 0.1 0.1)))
+(cog-set-atomspace! space2)
+(store-atom (Concept "spa2" (stv 0.2 0.2)))
+(cog-set-atomspace! space3)
+(store-atom (Concept "spa3" (stv 0.3 0.3)))
+(cog-close rsn)
+
+(cog-rocks-open "rocks:///tmp/foo.rdb")
+(cog-rocks-stats)
+(cog-rocks-get "")
+(cog-rocks-close)
+
+(cog-rocks-print rsn "")
+
+(define rsn (RocksStorageNode "rocks:///tmp/foo.rdb"))
+(cog-open rsn)
+(define top-space (car (load-frames)))
+(cog-set-atomspace! top-space)
+(load-atomspace)
+(cog-prt-atomspace)
+
+
+
+(cog-open rsn)
+(define top-space (car (load-frames)))
+(define next-space (gar top-space))
+(delete-frame! top-space)
+
+haveKeys
+-1
+
+CoverBasicDelete
+
+LINK_CTOR(TopType, TOP_TYPE)
+LINK_CTOR(Frame, FRAME)
+
+(use-modules (srfi srfi-1))
+(use-modules (opencog) )
+
+(define (get-val ATOM NAME) (inexact->exact
+   (cog-value-ref (cog-value ATOM (Predicate NAME)) 2)))
+
+(define (prt-val N)
+	(format #t "foo expect ~A got ~A\n" N (get-val (Concept "foo") "gee")))
+
+(define (make-atoms N)
+ (define x (Concept "foo"))
+   (cog-set-value! x (Predicate "gee") (ctv 1 0 N))
+
+   (define y (Concept "bar"))
+   (cog-set-value! y (Predicate "gosh") (ctv 1 0 (+ 1 N)))
+
+   (define z (List x y))
+   (cog-set-value! z (Predicate "bang") (ctv 1 0 (+ 2 N)))
+)
+
+
+(make-atoms 1)
+(prt-val 1)
+(cog-prt-atomspace)
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(make-atoms 2)
+(prt-val 2)
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(make-atoms 3)
+(cog-set-atomspace! (car (cog-outgoing-set (cog-atomspace))))
+(prt-val 2)
+(cog-set-atomspace! (car (cog-outgoing-set (cog-atomspace))))
+(prt-val 1)
+
+
+
+(cog-extract-recursive! (Concept "bar"))
+(cog-prt-atomspace)
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(make-atoms 2)
+(prt-val 2)
+
+(define top-space (cog-atomspace))
+(cog-set-atomspace! (car (cog-outgoing-set (cog-atomspace))))
+ (cog-prt-atomspace)
+
+(prt-val 1)
+
+../atoms/core/UniqueLink.cc:
+
+
+
+ranked-MI = 11.220 MI = 14.400 (`and`, `, ; what`)
+------ Start MI-based merge 8 with seed pair `and` and `, ; what`
+Initial in-group size=4: `, ; what` `and` `and` `and`
+
+remove_atom!???
+
+(get-merge-iteration
+
+=====================================================
+
+------ Start MI-based merge 6 with seed pair `—` and `+`
+Initial in-group size=3: `+` `—` `-`
+Start:  size=3 overlap = 0 of 1597 disjuncts, commonality= 0.00%
+Better: size=2 overlap = 0 of 355 disjuncts, commonality= 0.00%
+Best:   size=2 overlap = 0 of 355 disjuncts, commonality= 0.00%
+In-group size=2: `+` `—`
+------ merge-majority: Merge 0 of 90 sections in 0 secs
+------ merge-majority: Remaining 0 of 265 cross in 0 secs
+------ Merged into `+ —.i.i` in 30 secs
+
+
+(define sap (add-similarity-api covr-obj #f "shape-mi"))
+(define smi (add-symmetric-mi-compute covr-obj))
+
+ranked-MI = 9.1864 MI = 9.4480 (`—`, `+`)
+
+(sap 'pair-similarity (Similarity (Word "—") (Word "+")))
+ (FloatValue 9.448017022950724 9.186428926424735)
+
+(smi 'mmt-fmi (Word "—") (Word "+"))
+-inf.0
+
+
+------ Start MI-based merge 2 with seed pair `—` and `+`
+Initial in-group size=8: `+` `—` `”` `_` `)` `]` `(` `[`
+
+Best:   size=3 overlap = 33 of 1179 disjuncts, commonality= 2.80%
+In-group size=3: `—` `)` `]`
+------ merge-majority: Merge 350 of 574 sections in 1 secs
+------ merge-majority: Remaining 819 of 1650 cross in 3 secs
+------ Merged into `— ) ]` in 24 secs
+Will recompute sims for   3 words (218 unaffected) out of 221
+Recomputed sims for   3 words out of 221 in 1 secs
+        MI(`— ) ]`, `— ) ]`) = 7.8631  rank-MI = 7.7939
+------ Round 3 Next in line:
+ranked-MI = 9.1864 MI = 9.4480 (`—`, `+`)
+Best:   size=2 overlap = 59 of 530 disjuncts, commonality= 11.13%
+In-group size=2: `+` `—`
+------ merge-majority: Merge 47 of 148 sections in 0 secs
+------ merge-majority: Remaining 444 of 808 cross in 1 secs
+------ Merged into `+ —` in 8 secs
+Recomputed sims for   2 words out of 227 in 1 secs
+
+------ Round 4 Next in line:
+ranked-MI = 9.1864 MI = 9.4480 (`—`, `+`)
+
+recomp-all-sim ... added print
+         (recomp-all-sim SIM-API compute-sim touched-words)
+
+
+(optimal-mi-in-group mi-sim WA WB words-with-sims))
+
+===================================================
+------ Merged into `— ” _ ) ( [` in 91 secs
+------ Find affected basis of (9222, 94694) in 1166 secs
+------ Recomputed MMT marginals in 3152 secs
+Will recompute sims for   0 words (214 unaffected) out of 214
+Recomputed sims for   0 words out of 214 in 1 secs
+
+
+
+(in-group-mi-cluster covr-obj 200 5
+   #:QUORUM 0.7 #:COMMONALITY 0.9  #:NOISE 6
+	#:PUSH-FRAMES #f
+)
+
 ====================================================
 ====================================================
 
