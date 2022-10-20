@@ -52,6 +52,7 @@
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
 		(NOISE 4)
+		(PUSH-FRAMES #t)
 )
 "
   goe-cluster LLOBJ -- perform GOE-based clustering.
@@ -66,15 +67,16 @@
   Under construction.
 TODO:
 -- recompute all similarities every so often.
-   * track all touched words.
    * recomp all marginals on them & the DJ's.
    * recomp all MI's for those words.
    * comp new MI's for the gram classes.
    * recomp all goe sims, all the way down.  Ugh.
 -- push atomspaces and save space frames each push.
--- enable poping of space frames in atomspace.
--- enable flattening of space-frames
+-- enable flattening of space-frames (why?)
 "
+	; General structure:
+	; * Run merge loop for N cycles
+	; * Track all words that were touched, this is in `donelist`
 
 	; Does the same thing:
 	; (define gram-mi-api (add-similarity-api LLOBJ #f "shape-mi"))
@@ -188,10 +190,19 @@ TODO:
 	(define sorted-pairs all-sorted-pairs)
 	(define donelist '())
 
+	(define base-done-count (get-merge-iteration LLOBJ))
+
 	; Main loop
 	(define (loop-step N)
-		(define e (make-elapsed-secs))
+		(define iter-count (+ 1 N base-done-count))
 
+		(when PUSH-FRAMES
+			(let* ((as-name (format #f "GOE-merge layer ~D" iter-count))
+					(as-frame (cog-new-atomspace as-name (cog-atomspace))))
+				(cog-set-atomspace! as-frame)
+				(store-frames as-frame)))
+
+		(define e (make-elapsed-secs))
 		(format #t "------ Round ~A Next in line:\n"
 			(get-merge-iteration LLOBJ))
 		(prt-sorted-pairs (take sorted-pairs 12))
@@ -201,6 +212,7 @@ TODO:
 		; Log some maybe-useful data...
 		(log-dataset-stuff top-pair)
 
+		; Perform the actual merge
 		(define in-grp (perform-merge N
 			(gar top-pair) (gdr top-pair) wordlist))
 
@@ -214,6 +226,11 @@ TODO:
 
 		(set! donelist (append in-grp donelist))
 		(format #t "------ Completed merge in ~A secs\n" (e))
+
+		; Store the new count last. Thus, if something fails,
+		; the atomspace will have the new count, but the log
+		; will not yet have been updated.
+		(update-merge-iteration LLOBJ iter-count)
 	)
 
 	(for-each loop-step (iota LOOP-CNT))
@@ -241,7 +258,9 @@ TODO:
 ; Also, grammatical-MI similarities should have been computed and
 ; stored! Fetch these!
 (define smi (add-similarity-api pcs #f "shape-mi"))
+(define e (make-elapsed-secs))
 (smi 'fetch-pairs)
+(format #t "Fetched in ~A secs\n" (e))
 
 ; Here's where the GOE simillarities are stored.
 (define gos (add-similarity-api smi #f "goe"))
@@ -251,6 +270,6 @@ TODO:
 (define layer-one (cog-new-atomspace "layer one" (cog-atomspace)))
 (cog-set-atomspace! layer-one)
 
-(goe-merge sha 1000 50)
+(goe-cluster sha 1000 50)
 
 ==== !#
