@@ -86,35 +86,35 @@
 
 	(define log-dataset-stuff (make-merge-logger LLOBJ))
 
-	(for-each
-		(lambda (N)
-			(define iter-count (+ 1 N base-done-count))
+	(define (loop-step N)
+		(define iter-count (+ 1 N base-done-count))
 
-			(when PUSH-FRAMES
-				(let* ((as-name (format #f "MI-merge layer ~D" iter-count))
-						(as-frame (cog-new-atomspace as-name (cog-atomspace))))
-					(cog-set-atomspace! as-frame)
-					(store-frames as-frame)))
+		(when PUSH-FRAMES
+			(let* ((as-name (format #f "MI-merge layer ~D" iter-count))
+					(as-frame (cog-new-atomspace as-name (cog-atomspace))))
+				(cog-set-atomspace! as-frame)
+				(store-frames as-frame)))
 
-			(define e (make-elapsed-secs))
-			(define sorted-pairs (SORT-PAIRS LLOBJ))
-			(define top-pair (car sorted-pairs))
+		(define e (make-elapsed-secs))
+		(define sorted-pairs (SORT-PAIRS LLOBJ))
+		(define top-pair (car sorted-pairs))
 
-			; Log some maybe-useful data...
-			(log-dataset-stuff top-pair)
+		; Log some maybe-useful data...
+		(log-dataset-stuff top-pair)
 
-			; Do the actual merge
-			(MERGE-FUN iter-count (gar top-pair) (gdr top-pair))
+		; Do the actual merge
+		(MERGE-FUN iter-count (gar top-pair) (gdr top-pair))
 
-			(format #t "------ Completed merge in ~A secs\n" (e))
-			(EXPAND-UNIVERSE LLOBJ iter-count NRANK)
+		(format #t "------ Completed merge in ~A secs\n" (e))
+		(EXPAND-UNIVERSE LLOBJ iter-count NRANK)
 
-			; Store the new count last. Thus, if something fails,
-			; the atomspace will have the new count, but the log
-			; will not yet have been updated.
-			(update-merge-iteration LLOBJ iter-count)
-		)
-		(iota LOOP-CNT))
+		; Store the new count last. Thus, if something fails,
+		; the atomspace will have the new count, but the log
+		; will not yet have been updated.
+		(update-merge-iteration LLOBJ iter-count)
+	)
+
+	(for-each loop-step (iota LOOP-CNT))
 )
 
 ; ---------------------------------------------------------------------
