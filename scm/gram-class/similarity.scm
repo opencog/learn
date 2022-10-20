@@ -14,7 +14,9 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (rank-words LLOBJ)
+(define*-public (rank-words LLOBJ
+	#:optional (WRD-LIST (LLOBJ 'left-basis))
+	)
 "
   rank-words LLOBJ -- Return a list of all words, ranked by count.
   If counts are equal, then rank by support. This may take half-a-
@@ -30,8 +32,7 @@
 	(define (nobs WRD) (sup 'right-count WRD))
 	(define (nsup WRD) (sup 'right-support WRD))
 
-	(define wrds (LLOBJ 'left-basis))
-	(sort wrds
+	(sort WRD-LIST
 		(lambda (ATOM-A ATOM-B)
 			(define na (nobs ATOM-A))
 			(define nb (nobs ATOM-B))

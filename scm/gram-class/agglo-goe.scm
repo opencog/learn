@@ -107,13 +107,6 @@ TODO:
 	; Create the function that performs the merge.
 	(define merge-majority (make-merge-majority LLOBJ QUORUM NOISE #t))
 
-	; Start by getting the ranked words.  Note that this may include
-	; WordClass nodes as well as words.
-	(define ranked-words (rank-words LLOBJ))
-
-	; Words with GOE sims
-	(define words-with-sims (take ranked-words NRANK))
-
 	; ------------------------------
 	; Main workhorse function
 	(define (perform-merge N WA WB AVAILABLE-WORDS)
@@ -187,7 +180,15 @@ TODO:
 					(cog-name (gdr PR))))
 			LST))
 
+	; --------------------------------------------------------
 	; Setup the initial lists
+
+	; Get all words with GOE sims
+	(define words-with-sims (goe-api 'left-basis))
+
+	; Place them in frequency-ranked order.
+	(define ranked-words (rank-words LLOBJ words-with-sims))
+
 	(define wordlist words-with-sims)
 	(define all-sorted-pairs (get-sorted-goe-pairs))
 	(define sorted-pairs all-sorted-pairs)
