@@ -71,7 +71,6 @@ TODO:
    * recomp all MI's for those words.
    * comp new MI's for the gram classes.
    * recomp all goe sims, all the way down.  Ugh.
--- push atomspaces and save space frames each push.
 -- enable flattening of space-frames (why?)
 "
 	; General structure:
@@ -81,7 +80,7 @@ TODO:
 	; Does the same thing:
 	; (define gram-mi-api (add-similarity-api LLOBJ #f "shape-mi"))
 	(define gram-mi-api (add-gram-mi-sim-api LLOBJ))
-	(define goe-api (add-similarity-api gram-mi-api #f "goe"))
+	(define goe-api (add-similarity-api LLOBJ #f "goe"))
 	(define goe-sim (add-goe-sim goe-api))
 
 	; Pair-wise simiarity. Use arccosine to get a better spread, to
@@ -158,14 +157,18 @@ TODO:
 	; --------------------------------------------
 	; Get the word-pairs sorted by GOE cosine.
 	(define (get-sorted-goe-pairs)
+		(define e (make-elapsed-secs))
 		(define all-cosi (goe-api 'get-all-elts))
 		(define uniq-cosi
 			(remove (lambda (PR) (equal? (gar PR) (gdr PR))) all-cosi))
 		(define (lessi A B)
 			(> (cog-value-ref (goe-api 'get-count A) 0)
 				(cog-value-ref (goe-api 'get-count B) 0)))
+
+		(define spr (sort uniq-cosi lessi))
+		(format #t "Sorted ~A GOE pairs in ~A secs\n" (length spr) (e))
 		; return the sort.
-		(sort uniq-cosi lessi)
+		spr
 	)
 
 	(define (prt-sorted-pairs LST)
@@ -260,16 +263,19 @@ TODO:
 (define smi (add-similarity-api pcs #f "shape-mi"))
 (define e (make-elapsed-secs))
 (smi 'fetch-pairs)
+(load-atoms-of-type 'Similarity)
 (format #t "Fetched in ~A secs\n" (e))
 
-; Here's where the GOE simillarities are stored.
+; Here's where the GOE similarities are stored.
 (define gos (add-similarity-api smi #f "goe"))
 (gos 'pair-count (Word "she") (Word "he"))
 (gos 'get-count (Similarity (Word "she") (Word "he")))
 
-(define layer-one (cog-new-atomspace "layer one" (cog-atomspace)))
+(define layer-zero (cog-atomspace))
+(define layer-one (cog-new-atomspace "layer one" layer-zero))
 (cog-set-atomspace! layer-one)
 
 (goe-cluster sha 1000 50)
+(goe-cluster covr-obj 6000 5)
 
 ==== !#
