@@ -180,17 +180,27 @@ TODO:
 					(cog-name (gdr PR))))
 			LST))
 
+	(define (get-words-with-sims PRLIST)
+		(define basis-set (make-atom-set))
+		(for-each (lambda (PR) (basis-set (gar PR)) (basis-set (gdr PR)))
+			PRLIST)
+		(basis-set #f))
+
 	; --------------------------------------------------------
 	; Setup the initial lists
 
+	; Get all similarity pairs that have a goe on them, and sort them.
+	(define all-sorted-pairs (get-sorted-goe-pairs))
+
 	; Get all words with GOE sims
-	(define words-with-sims (goe-api 'left-basis))
+	(define words-with-sims (get-words-with-sims all-sorted-pairs))
 
 	; Place them in frequency-ranked order.
 	(define ranked-words (rank-words LLOBJ words-with-sims))
 
+	(format #t "Found ~D words with GOE sims\n" (length ranked-words))
+
 	(define wordlist words-with-sims)
-	(define all-sorted-pairs (get-sorted-goe-pairs))
 	(define sorted-pairs all-sorted-pairs)
 	(define donelist '())
 
@@ -277,6 +287,6 @@ TODO:
 (cog-set-atomspace! layer-one)
 
 (goe-cluster sha 1000 50)
-(goe-cluster covr-obj 6000 5)
+(goe-cluster covr-obj 1000 5)
 
 ==== !#
