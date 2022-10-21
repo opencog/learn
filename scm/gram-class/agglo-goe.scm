@@ -47,7 +47,7 @@
 
 ; ---------------------------------------------------------------------
 
-(define*-public (goe-cluster LLOBJ NRANK LOOP-CNT
+(define*-public (goe-cluster LLOBJ LOOP-CNT
 	#:key
 		(QUORUM 0.7)
 		(COMMONALITY 0.2)
@@ -55,23 +55,27 @@
 		(PUSH-FRAMES #t)
 )
 "
-  goe-cluster LLOBJ -- perform GOE-based clustering.
+  goe-cluster LLOBJ LOOP-CNT -- perform GOE-based clustering.
 
   LLOBJ needs to have the 'cluster-type method on it.
   LLOBJ should probably be `(add-covering-sections (csets))`
-  NRANK is the number of words for which we have GOE similarities.
-    (XXX Can we automate this ?)
 
   LOOP-COUNT is number of times to run the loop.
 
-  Under construction.
-TODO:
--- recompute all similarities every so often.
-   * recomp all marginals on them & the DJ's.
-   * recomp all MI's for those words.
-   * comp new MI's for the gram classes.
-   * recomp all goe sims, all the way down.  Ugh.
--- enable flattening of space-frames (why?)
+  Keyed paramters are #:QUORUM #:COMMONALITY #:NOISE #:PUSH-FRAMES
+  The first three are the same as described elsewhere; they control the
+  generation of the in-group. The #:PUSH-FRAMES defaults to #t and
+  determines whether frames are used protect earlier data.
+
+  The initial in-group is selected based on GOE similarity. This is done
+  with some hard-coded paramters; these should probably be exposed in the
+  API.
+
+  Upon completion, this returns a list of all words that were touched
+  (merged). The list includes the WordClasses that were created.
+
+  Neither MI similarities, nor GOE similarities are recomputed; these
+  must be done elsewhere, based on the retruned word-list.
 "
 	; General structure:
 	; * Run merge loop for N cycles
@@ -248,6 +252,23 @@ TODO:
 	)
 
 	(for-each loop-step (iota LOOP-CNT))
+
+	; Return the words that were touched.
+	donelist
+)
+
+; ---------------------------------------------------------------------
+
+(define*-public (foo)
+"
+TODO:
+-- recompute all similarities every so often.
+   * recomp all marginals on them & the DJ's.
+   * recomp all MI's for those words.
+   * comp new MI's for the gram classes.
+   * recomp all goe sims, all the way down.  Ugh.
+"
+	#f
 )
 
 ; ---------------------------------------------------------------------
