@@ -74,11 +74,15 @@ directory.  A quick overview:
   MST parsing to proceed.)
 
 * `cogserver-gram.scm`: Same as `cogserver.scm`, but also loads
-  disjuncts from storage. (Disjuncts must be in RAM in order for
-  grammatical classification to proceed.)
+  disjuncts from storage, and creates cross-sections. (Disjuncts
+  must be in RAM in order for grammatical classification to proceed.)
 
 * `export-dictionary.scm`: Export the result of classification as
   a Link Grammar-compatible dictionary.
+
+* `cogserver-lg.scm`: Same as `cogserver.scm`, but also loads
+  disjuncts from storage. Does not create cross-sections. (Disjuncts
+  must be in RAM in order for the LG parser to be able to access them.)
 
 
 Management scripts
