@@ -19,7 +19,7 @@
 ; The object which will be providing disjunct-counts for us.
 (define cset-obj (make-pseudo-cset-api))
 (cset-obj 'fetch-pairs)
-(define star-obj covr-obj)
+(define star-obj cset-obj)
 
 ; Get the logger data, too
 (fetch-atom (AnchorNode "data logger"))
