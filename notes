@@ -12369,6 +12369,7 @@ space6
 (store-atom (Concept "spa2"))
 (cog-set-atomspace! space3)
 (store-atom (Concept "spa3"))
+(store-atom (List (Concept "foo") (List (Concept "bar")) (stv 0.5 0.5)))
 (cog-close rsn)
 
 (use-modules (opencog))

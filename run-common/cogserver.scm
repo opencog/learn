@@ -51,7 +51,7 @@
 (define storage-node (eval-string sns))
 (cog-open storage-node)
 
-; If there are multiple frames, then fetch all iof them.
+; If there are multiple frames, then fetch all of them.
 (define frame-tops (load-frames))
 (if (< 1 (length frame-tops))
 	(throw 'bad-frameset 'too-many-tops
