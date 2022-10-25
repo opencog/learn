@@ -12539,17 +12539,412 @@ recomp-all-sim ... added print
 Will recompute sims for   0 words (214 unaffected) out of 214
 Recomputed sims for   0 words out of 214 in 1 secs
 
+goe ...
 
+rm -r  r16-merge.rdb
+cp -pr r15-goe-6k.rdb r16-merge.rdb
+
+ (for-each loop-step (iota  10))
+
+(goe-cluster covr-obj 6000 5)
+In opencog/learn/agglo-goe.scm:
+   197:34  2 (loop-step 0)
+(define all-cosi (goe-api 'get-all-elts))
+--------------
+
+(define gsi (add-similarity-api covr-obj #f "shape-mi"))
+(define sms (add-pair-stars gsi))
+(define all-wrds (sms 'left-basis))
+(define WLIST (list (Word "?") (Word "!")))
+(define unaff (atoms-subtract all-wrds WLIST))
+
+Ahhh ...
+(define q (Word "?"))
+(cog-incoming-size q)
+$4 = 13249
+(cog-atomspace q)
+$5 = (AtomSpace "(uuid . 1)")
+(cog-incoming-size-by-type q 'Similarity)
+13249
+(define qi (cog-incoming-set q))
+(length qi)
+$8 = 2
+(cog-incoming-by-type q 'Similarity)
+
+h->getIncomingSetByType(t, asp.get());
+
+(use-modules (opencog))
+(List (Concept "a") (Concept "b"))
+(Set (Concept "a") (Concept "s"))
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(List (Concept "a") (Concept "c"))
+(cog-incoming-size (Concept "a") )
+(length (cog-incoming-set (Concept "a")))
+(cog-incoming-size-by-type (Concept "a") 'Set)
+(length (cog-incoming-by-type (Concept "a") 'Set))
+
+h->getIncomingSetByType(t, asp.get());
+
+void Atom::getCoveredInc(const AtomSpace* as, HandleSet& hs) const
+
+ fancier test:
+use hiding links to coverin incomings
+use absents to cover incomings
+
+(smi 'fetch-pairs)
+Elapsed time to load sims: 1675 secs
+
+(define e (make-elapsed-secs))
+(load-atoms-of-type 'Similarity)
+(format #t "Fetched in ~A secs\n" (e))
+Fetched in 1906 secs
+
+
+(define all-cosi (goe-api 'get-all-elts))
+
+WTF ... no goes on (some) sim links!?
+
+(SimilarityLink
+  (WordNode "tomb")
+  (WordNode "release"))
+
+(PredicateNode "*-SimKey goe")
+
+(define ws (make-atom-set))
+(for-each (lambda (PR) (ws (gar PR)) (ws (gdr PR))) (cog-get-atoms 'Similarity))
+
+(length (ws #f))
+
+(define ap ((add-pair-stars LLOBJ) 'get-all-elts))
+(length ap)
+2717117 ... wtf??
+(SimilarityLink . 18003000
+
+(define e (make-elapsed-secs))
+(define ae (get-all-elts))
+(format #t "filtered in ~A secs\n" (e))
+
+(define ns (remove get-sim (cog-get-atoms pair-sim-type)))
+(define (get-sha ATOM)
+         (if (nil? ATOM) #f
+            (cog-value ATOM (Predicate "*-SimKey shape-mi"))))
+(define nh (remove get-sha ns))
+
+OH, OK, we have 6K wth shape MI's but only 1K with goe sims.
+
+(define lb ((add-pair-stars goe-sim) 'left-basis))
+
+(get-all-pairs)
+get-pair
+left-element
+right-element
+
+cog-rocks-stats
+
+------ Start MI-based merge 6 with seed pair `.` and `?`
+Initial in-group size=5: `?` `.` `?` `?` `?`
+In-group size=4: `?` `?` `?` `?`
+
+WTF ????
+
+And then badness:
+
+------ Round 7 Next in line:
+ranked-MI = 8.2707 MI = 5.3147 (`”`, `"`)
+Best:   size=2 overlap = 64 of 3904 disjuncts, commonality= 1.64%
+In-group size=2: `"` `”`
+------ merge-majority: Merge 316 of 496 sections in 1 secs
+------ merge-majority: Remaining 11443 of 15026 cross in 25 secs
+
+------ Round 8 Next in line:
+ranked-MI = 8.2707 MI = 5.3147 (`”`, `"`)
+Best:   size=2 overlap = 120 of 3966 disjuncts, commonality= 3.03%
+In-group size=2: `"` `”`
+------ merge-majority: Merge 310 of 492 sections in 1 secs
+------ merge-majority: Remaining 465 of 4048 cross in 5 secs
+
+------ Round 9 Next in line:
+ranked-MI = 8.2707 MI = 5.3147 (`”`, `"`)
+Initial in-group size=2: `"` `”`
+Start:  size=2 overlap = 12 of 3791 disjuncts, commonality= 0.32%
+Best:   size=2 overlap = 12 of 3791 disjuncts, commonality= 0.32%
+In-group size=2: `"` `”`
+------ merge-majority: Merge 310 of 492 sections in 1 secs
+------ merge-majority: Remaining 16 of 3599 cross in 5 secs
+
+-----------------------------
+goe pop one layer:
+Info: found 12652728 orphaned Atoms!
+Wow! Seems excessive!?
+
+// "z" N@sid
+std::string zfx = "z" + aidtostr(height) + "@";
+
+
+      bool _multi_space;
+      void makeOrder(Handle, std::map<uint64_t, Handle>&);
+
+      std::unordered_map<Handle, const std::string> _frame_map;
+
+"o@" fid:sid
+      std::unordered_map<std::string, Handle> _fid_map;
+a@
+
+1) store keys to errase placehold if it changes almost done, hide: DONE
+2) store atom to write placeholder -- done. DONE
+4) store o@ always almost done DONE
+7) add kaes must erase hiding. DONE
+8) also on single value store.
+   8a) to previously empty
+   8b) to prev deleted  DONE
+9) also single value post placeholder SKIPPED visual insp OK.
+
+3) if promoted to multi-space, empty keys must be written DONE
+
+5) store end-of-sid colon always. maybe not needed NOCHANGE
+6) throw Attempting to store Atoms from multiple AtomSpaces not needed.
+   maybe not wanted/hard. NOCHANGE
+
+
+// "k@" sid:kid . sval -- find the Atomese Value for the Atom,Key
+// "k@" sid:fid:kid . sval -- find the Value for the Atom,AtomSpace,Key
+// "o@" fid:sid . (null) -- find Atoms in a given frame
+// "z" N@sid . (null) -- record height N of Link at sid
+
+
+      // If there are no keys(!!) record a bogus key to mark the frame.
+      if (not h->haveValues())
+         _rfile->Put(rocksdb::WriteOptions(), cid + "+1", "");
+
+ akey[0] = 'k';
+      auto kt = _rfile->NewIterator(rocksdb::ReadOptions());
+      kt->Seek(akey);
+      if (kt->Valid() and kt->key().starts_with(akey))
+        { delete kt; continue; }
+
+9 A B need placeholders, only A got it
+also o@ never written for 9 A B
+
+scm:92: FAIL base-tv
+cm:93: FAIL mid1-tv
+
+wtf ... values were written despite ....
+ modified space-frame  should check...
+
+(use-modules (opencog))
+(use-modules (opencog persist) (opencog persist-mono))
+
+(Concept "foo" (ctv 1 0 3))
+(Concept "bar" (ctv 1 0 4))
+(ListLink (Concept "foo") (Concept "bar") (ctv 1 0 5))
+(define storage (MonoStorageNode "monospace:///tmp/foom"))
+(cog-open storage)
+(store-atom (ListLink (Concept "foo") (Concept "bar")))
+(cog-mono-print storage "")
+(cog-close storage)
+
+(use-modules (opencog))
+(use-modules (opencog persist) (opencog persist-rocks))
+
+(Concept "foo" (ctv 1 0 3))
+(Concept "bar" (ctv 1 0 4))
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(ListLink (Concept "foo") (Concept "bar") (ctv 1 0 5))
+(define storage (RocksStorageNode "rocks:///tmp/foom"))
+(cog-open storage)
+(store-frames (cog-atomspace))
+(store-atom (ListLink (Concept "foo") (Concept "bar")))
+(cog-rocks-print storage "")
+(cog-close storage)
+
+8 is foo goes into 2  base  id=7
+A is bar goes into 3  mid1  id=8
+9 is list bar goes into 4  mid2  (aka uuid 3)  id=9
+
+
+(use-modules (opencog))
+(use-modules (opencog persist) (opencog persist-rocks))
+
+(define storage (RocksStorageNode "rocks:///tmp/foom"))
+(cog-open storage)
+(store-frames (cog-atomspace))
+
+(Concept "foo" (ctv 1 0 3))
+(Concept "bar" (ctv 1 0 4))
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(ListLink (Concept "foo") (Concept "bar") (ctv 1 0 5))
+(store-atom (ListLink (Concept "foo") (Concept "bar")))
+(cog-rocks-print storage "")
+(cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(cog-delete-recursive! (Concept "foo"))
+(cog-rocks-print storage "")
+
+; (cog-set-atomspace! (cog-new-atomspace (cog-atomspace)))
+(Concept "foo" (ctv 1 0 6))
+(store-atom (Concept "foo"))
+(cog-rocks-print storage "")
+
+(use-modules (opencog))
+(use-modules (opencog persist) (opencog persist-rocks))
+
+(define storage (RocksStorageNode "rocks:///tmp/foom"))
+(cog-open storage)
+(cog-set-atomspace! (car (load-frames)))
+(load-atomspace)
+
+base-space is (uuid . 1) id=7  bar here ok
+mid1-space is (uuid . 2) id=8  first list here its good
+mid2-space is (uuid . 3) id=9  foo here OK  list too prob absent
+mid3-space is (uuid . 4) id=10 fid=8 k@4:8:1<< correct for link great!
+ top-space is (uuid . 5) id=11
+
+so loaded up OK, it seems.
+
+
+foofa in mid2
+k@8:7:+1<<    rval: >><<
+
+===================================================
 
 (in-group-mi-cluster covr-obj 200 5
-   #:QUORUM 0.7 #:COMMONALITY 0.9  #:NOISE 6
+   #:QUORUM 0.7 #:COMMONALITY 0.9  #:NOISE 6)
+
 	#:PUSH-FRAMES #f
 )
+
+(define e (make-elapsed-secs))
+(load-atoms-of-type 'Similarity)
+(format #t "Fetched in ~A secs\n" (e))
+Fetched in 1956 secs
+
+(define smi (add-similarity-api covr-obj #f "goe"))
+(smi 'fetch-pairs)
+
+(define level-one (cog-new-atomspace (cog-atomspace)))
+(cog-set-atomspace! level-one)
+(store-frames (cog-atomspace))
+(define touched (goe-cluster covr-obj 100))
+
+====================================================
+(use-modules (opencog) (opencog cogserver) (opencog nlp))
+(start-cogserver)
+(Section (Word "foo") (Concept "bar"))
+
+... wroks fine
+
+(cog-incoming-by-type (Word "this") 'Section)
+even in scm
+
+ahh!! Bad atomspace!!
+
+(cog-set-atomspace! (car frame-tops))
+
+void SchemeEval::eval_expr(const std::string &expr)
+do_eval
+SchemeSmob::ss_set_env_as(saved_as);
+
+
+60% tests passed, 82 tests failed out of 207
+oops
+
+	107 - MultiAtomSpaceUTest (Failed)
+	196 - OrEvalTest (Failed)
+tests/query/or-eval-test.scm
+
+SCMRunner
+./atoms/grounded/SCMRunner.cc
+
+ParallelUTest
+
+SCM_I_CURRENT_THREAD
+
+scheme not inited ...
+void SchemeSmob::init()
+SchemeSmob::SchemeSmob()
+void opencog_guile_init(void)
+
+   AtomSpacePtr saved_as = SchemeSmob::ss_get_env_as("do_scm_eval");
+
+   SchemeSmob::ss_set_env_as(saved_as);
+void SchemeEval::set_scheme_as(AtomSpace* as)
+self->_retas =
+
+Crap
+	 96 - FetchUTest (Failed)
+	105 - BasicSCMUTest (SEGFAULT)
+	106 - SCMPrimitiveUTest (Failed)
+	107 - MultiAtomSpaceUTest (Failed)
+	110 - SCMExecutionOutputUTest (Failed)
+	141 - UnorderedUTest (Failed)
+	142 - SparseUTest (Failed)
+f	143 - StackMoreUTest (Failed)
+	164 - EvaluationUTest (Failed)
+	176 - FiniteStateMachineUTest (SEGFAULT)
+	205 - CythonGuile (Failed)
+
+	 96 - FetchUTest (Failed)
+	107 - MultiAtomSpaceUTest (Failed)
+	131 - DisconnectedUTest (Failed)
+f	141 - UnorderedUTest (Failed)
+	205 - CythonGuile (Failed)
+
+
+	 96 - FetchUTest (Failed)
+	205 - CythonGuile (Failed)
+
+test_unifier
+${NOSETESTS_EXECUTABLE} -vs
+      ${CMAKE_SOURCE_DIR}/tests/cython/guile/)
+PROJECT_SOURCE_DIR=.  nosetests3 -vs tests/cython/guile/
+
+In procedure cog-execute!: Can't execute: current AtomSpace is 3 but atom is in AtomSpace 1 (/home/linas/src/novamente/src/atomspace-git/opencog/atoms/execution/Instantiator.cc:716)
+
+
+Full-kill:
+	104 - GearmanUTest (Failed)
+	133 - QueryUTest (SEGFAULT)
+	150 - AnchorUTest (SEGFAULT)
+	152 - GetStateUTest (SEGFAULT)
+	164 - EvaluationUTest (SEGFAULT)
+
+above w/o et_evaluator patch; full-kill wipatch is
+	107 - MultiAtomSpaceUTest (Failed)
+	127 - ConstantClausesUTest (Failed)
+	149 - GetLinkUTest (Failed)
+	163 - SequenceUTest (Failed)
+	164 - EvaluationUTest (SEGFAULT)
+	178 - PresentUTest (Child terminated)
+	196 - OrEvalTest (Failed)
+
+Fullkil w/ save on the other.
+
+
+
+Alt-fullkill
+	107 - MultiAtomSpaceUTest (Failed)
+	108 - MultiThreadUTest (SEGFAULT)
+	152 - GetStateUTest (SEGFAULT)
+
+
+RecoverStackTest
+
+
+More library linking issues.
+8360ce541376b8275bf1c39426c0b140e4d5ab4f  good
+
+first bad:
+9dd9cdeaaebf308d29186c6c4e2c14912af234ff
+
+
+TODO:
+set cogserver as
+(cog-set-atomspace! borken in cogserver
 
 ====================================================
 ====================================================
 
 FIXED:
+* (cog-set-atomspace! borken in cogserver DONE
 * Implement connector merging. ... half-done... DONE, I think, and unit
   tests too.
 * Alter LG to allow multiple word definitions w/o subscripts.
@@ -12642,7 +13037,6 @@ FIXED:
 * Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
-* (cog-set-atomspace! borken in cogserver
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
   This seems .. I'm confused.
 * Log the similarity fractions

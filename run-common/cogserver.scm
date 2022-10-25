@@ -52,11 +52,14 @@
 (cog-open storage-node)
 
 ; If there are multiple frames, then fetch all of them.
+; Set the cogserver atomspace to the top frame.
 (define frame-tops (load-frames))
 (if (< 1 (length frame-tops))
 	(throw 'bad-frameset 'too-many-tops
 		(format #f "Found more than one frame top: ~A\n" frame-tops)))
-(if (< 0 (length frame-tops)) (cog-set-atomspace! (car frame-tops)))
+(when (< 0 (length frame-tops))
+	(cog-set-atomspace! (car frame-tops))
+	(set-cogserver-atomspace! (cog-atomspace)))
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
