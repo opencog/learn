@@ -12936,9 +12936,178 @@ first bad:
 9dd9cdeaaebf308d29186c6c4e2c14912af234ff
 
 
-TODO:
+DONE:
 set cogserver as
 (cog-set-atomspace! borken in cogserver
+
+-----------
+LG debug:
+
+```
+dict->exists_lookup
+dict-atomese/read-atomese.c:	dict->exists_lookup = as_boolean_lookup;
+
+(cog-incoming-size-by-type (Word "this") 'Section)
+7379
+(define ts (cog-incoming-by-type (Word "this") 'Section))
+(define se (car ts))
+(cog-value se (PredicateNode "*-Mutual Info Key cover-section"))
+
+
+(use-modules (opencog) (opencog persist) (opencog persist-cog))
+(use-modules (opencog nlp))
+(define csn (CogStorageNode "cog://localhost:19017"))
+(define csn (CogStorageNode "cog://localhost:19015"))
+(cog-open csn)
+(fetch-incoming-by-type (Word "this") 'Section)
+(cog-report-counts)
+
+OK
+
+rlwrap telnet localhost 19015
+sexpr
+(cog-node 'WordNode "this")  OK
+(cog-atomspace) -- bad...
+
+link-generator -l test-dict -s0 -u
+link-grammar: Fatal error: dictionary_get_categories() failed
+dict-common/dict-common.c
+return dict->category + 1;
+
+link-grammar: Error: Word '\*': word is unknown
+link-grammar: Error: Sentence not in dictionary
+IS_GENERATION(sent->dict)
+
+sentence_unused_disjuncts
+      if (!sent->disjunct_used[i]) n++;
+mark_used_disjunct
+
+char* exp = disjunct_expression(*d);
+ordinal
+wildcard_word_dc_memblock
+hosen_disjuncts
+
+disjunct-utils.c:		ts->d = malloc(sent->length * sizeof(Disjunct *));
+linkage/freeli.c:	lkg->chosen_disjuncts = (Disjunct **) exalloc(lkg->cdsz * sizeof(Disjunct *));
+sent->word[w].d,
+ack_sentence_for_parsing
+build_sentence_disjuncts
+sent->Disjunct_pool
+build_disjuncts_for_exp
+
+dup_hash
+size_t off = ts->dblock - ts->dblock_base;
+
+parse/extract-links.c
+t->num_disjuncts
+sent->wildcard_word_num_disjuncts
+pack_sentence_for_pruning
+build_sentence_disjuncts
+
+commit 07d674cbadb137d82e65bdf618447db5ba019e4f
+commit 33e8da60d766830e6eca22205cb37c44679888a0
+commit 8d9305637b12f452b6a83ebfd10572527ab62167
+commit 60a53e98016b8af1a06913d07741ec1c61664d5b
+af2e936a19e6ca45c2b16b7674ad842163357569
+
+cherry 129751a8ab8b0b62961df7d25c1e9aa3cb75cb1a
+a86657e73c0e18f43b421c549911be17efc5b49f
+
+dict-sql/read-cats.c
+
+add_categories
+static Dict_node *dictionary_all_categories(Dictionary dict)
+Why is this dict-node weird and no the cat name?
+
+    c_last=0x7fffff81ec58) at ../../link-grammar/prepare/build-disjuncts.c:179
+
+#43660 0x00007ffff7f64636 in build_clause (e=e@entry=0x5555fb469ed0, ct=ct@entry=0x7fffffffd980, c_last=0x0) at ../../link-grammar/prepare/build-disjuncts.c:179
+#43661 0x00007ffff7f64b8c in build_disjuncts_for_exp (sent=sent@entry=0x555567cb4a90, exp=0x5555fb469ed0, word=0x555567ca86a0 " d7d", gs=0x555567cb4d88, cost_cutoff=cost_cutoff@entry=10, opts=opts@entry=0x5555555a5c10) at ../../link-grammar/prepare/build-disjuncts.c:346
+#43662 0x00007ffff7f54ad0 in build_sentence_disjuncts (sent=sent@entry=0x555567cb4a90, cost_cutoff=10, opts=opts@entry=0x5555555a5c10) at ../../link-grammar/parse/preparation.c:118
+#43663 0x00007ffff7f54d83 in create_wildcard_word_disjunct_list (opts=0x5555555a5c10, sent=0x55555562d120) at ../../link-grammar/parse/preparation.c:169
+#43664 prepare_to_parse (sent=sent@entry=0x55555562d120, opts=opts@entry=0x5555555a5c10) at ../../link-grammar/parse/preparation.c:204
+
+" d7d" == 3453
+(unsigned int)i + 1);
+
+duude got 9598 cats
+duude 3453 catwo=>>,<<
+duuude it has 48828 sects
+
+
+         exp = make_or_node(dict->Exp_pool, exp, andex);
+
+n = Exp_create(mp);
+n->operand_first = exp
+exp->operand_next = andex
+return n;
+
+todo -- reorder args
+make_join_node
+
+basic: 89 errors. good   OK
+fixes: 372 errors. fgood  OK
+pandp:  pgood 1834 errors. OK
+
+
+recurse til opfir is not OR amdn make that c.
+then loop over next
+then return c
+
+make_join_node
+make_or_node
+
+e_tail->operand_next = nl;
+e_tail = nl;
+
+if (e_head == NULL)
+e_head = make_join_node(dict->Exp_pool, nl, NULL, OR_type)
+if (e_tail == NULL)
+e_tail = e_head->operand_first;
+
+link-generator -l ../data/baz -s2
+
+   unsigned int num_words = catlist[catnum].num_words;
+
+lookup-atomese.cc:#define MISSING_MI -4.0
+mikp
+MI_KEY_STRING
+MI_OFFSET_STRING
+
+bork:
+         if ('+' == cdir)
+         {
+            /* Link new connectors to the tail */
+            andtail->operand_next = eee;
+            andtail = eee;
+         }
+
+    +-------A-------+
+    |     +----D----+----G---+
+    |     | +---E---+---H--+ |
+    |     | | +--F--+--I-+ | |
+    |     | | |     |    | | |
+LEFT-WALL 1 2 3 fountain 4 5 6
+duuude its F- & E- & D- & A- & I+ & H+ & G+
+
+    fountain                   [[I+ & H+ & G+ & F- & E- & D- & A-]]
+
+duuude germ=fountain connector 4+
+duuude new G for (ListLink
+  (WordNode "fountain") ; [3992e6ce88aeb5a8][1]
+  (WordNode "4") ; [25f693aa3c60d6c][1]
+) ; [a8cac27c3c4a8f83][1]
+if (verbosity_level(+D_AI))
+#define D_AI (D_DICT+1)
+lgdebug(+D_AI, "xxx
+../../link-grammar/error.h
+D_SPEC
+D_USER_FILES
+D_SPEC+5
+
+D_USER_BASIC
+pool_free
+
 
 ====================================================
 ====================================================
