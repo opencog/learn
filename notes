@@ -13109,6 +13109,118 @@ D_USER_BASIC
 pool_free
 
 
+# Sentence length: 10
+# Linkages found: 2147483647
+# Linkages generated: 500
+LEFT-WALL SIR : — DEAR SIR : I am sorry .  # linkage-cost= -19.612
+LEFT-WALL THE END PAGE 1 . ii . 3 ) .  # linkage-cost= -19.094
+LEFT-WALL Princess Mary . 12mo . $ 10 , 17 ) # linkage-cost= -18.536
+LEFT-WALL SIR : — DEAR SIR : I see the effect # linkage-cost= -18.052
+LEFT-WALL THE END PAGE 1 . _ , ” etc .  # linkage-cost= -17.952
+LEFT-WALL THE END PAGE 1 . ’ — _ me .  # linkage-cost= -17.251
+LEFT-WALL A bell rang , the treatment of all that ?  # linkage-cost= -14.803
+LEFT-WALL Jack leaned forward , trying to . ” 2 .  # linkage-cost= -14.764
+LEFT-WALL notes in the time Take me for ever . VII # linkage-cost= -14.004
+LEFT-WALL ###LEFT-WALL### It is one ! He started laughing . NOTES # linkage-cost= -14.003
+LEFT-WALL A blind man , should be successful , as ' # linkage-cost= -13.962
+LEFT-WALL THE PAGE 1 . _ ] It was clear .  # linkage-cost= -13.954
+LEFT-WALL A soft voice , when our men from the two # linkage-cost= -13.759
+
+
+
+LEFT-WALL Winter comes , in good time as I .
+# linkage-cost=-0.929099
+            LEFT-WALL    -0.929  MIAN+
+        <MIAN- JPNH+>     0.000  MIAN- JPNH+
+        <JPNH- LRXF+>     0.000  JPNH- LRXF+
+        <LRXF- SYWF+>     0.000  LRXF- SYWF+
+        <SYWF- BGNK+>     0.000  SYWF- BGNK+
+        <BGNK- ZTNK+>     0.000  BGNK- ZTNK+
+        <ZTNK- JUQT+>     0.000  ZTNK- JUQT+
+        <JUQT- OWLS+>     0.000  JUQT- OWLS+
+        <OWLS- ZULS+>     0.000  OWLS- ZULS+
+              <ZULS->     0.000  ZULS-
+
+	Unique linkage, cost vector = (UNUSED=0 DIS=-8.36 LEN=0)
+
+    +---EF---+--ZG-+-SK+SO+AIO+BQAB+HWBB+RQCB+GLGB+
+    |        |     |   |  |   |    |    |    |    |
+LEFT-WALL Winter comes , in good time  as    I    .
+
+            LEFT-WALL    -0.929  EF+
+               Winter    -2.391  EF- ZG+
+                comes    -2.504  ZG- SK+
+                    ,    -0.322  SK- SO+
+                   in    -0.308  SO- AIO+
+                 good    -1.149  AIO- BQAB+
+                 time    -0.957  BQAB- HWBB+
+                   as    -0.244  HWBB- RQCB+
+                    I     0.064  RQCB- GLGB+
+                    .     0.376  GLGB-
+
+      linkage = linkage_create(i, sent, opts);
+         char *disjuncts = linkage_print_disjuncts(linkage);
+   linkage_disjunct_cost(linkage)
+   return linkage->lifo.disjunct_cost;
+
+if (!IS_GENERATION(sent->dict))
+      compute_chosen_words(sent, linkage, opts);
+
+float linkage_get_disjunct_cost(const Linkage linkage, WordIdx w)
+
+--cost-max=
+
+prepare/build-disjuncts.c:
+
+wtf
+only the wall has a cost??? FIXED
+
+
+linkage_disjunct_cost(linkage),
+print_sentences
+
+#7  0x00007ffff6344445 in disjunct_dup_table_delete (dt=0x341e8d0)
+    at ../../link-grammar/disjunct-utils.c:336
+#8  eliminate_duplicate_disjuncts (dw=0x2c909c0,
+    multi_string=multi_string@entry=true)
+    at ../../link-grammar/disjunct-utils.c:491
+#9  0x00007ffff634ffb4 in create_wildcard_word_disjunct_list (opts=0x31b1840,
+    sent=0x184b080) at ../../link-grammar/parse/preparation.c:173
+
+PYTHONPATH=/usr/local/lib/python3.9/site-packages gdb python3
+
+
+ndis->category[0].cost
+IS_GENERATION(sent->dict)
+
+bool as_open(Dictionary dict)
+Not as_close ...
+as_add_categories
+
+stnp
+
+enqueue
+print_stat
+_msg_buffer
+   _msg_buffer.barrier();
+s._sockfd
+
+	 18 - FetchUTest (Failed)
+fetch-atom
+   // _io_queue.synchro(this, get_keys, pkta, &CogStorage::decode_kvp_list);
+
+
+stall
+nthreads
+
+
+	  4 - FetchUTest (Failed)
+
+Issues:
+repeated sentences because repeated linakges.  #1348
+Not all cogserver socks are used.  OH, OK that's normal
+
+
 ====================================================
 ====================================================
 
@@ -13206,6 +13318,7 @@ FIXED:
 * Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
+* Repeated sentences because repeated linakges.  LG #1348
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
   This seems .. I'm confused.
 * Log the similarity fractions
