@@ -13220,6 +13220,82 @@ Issues:
 repeated sentences because repeated linakges.  #1348
 Not all cogserver socks are used.  OH, OK that's normal
 
+--------
+fetch-atom -> getAtom-> cog-node or cog-link
+-> cog_node
+->cog-keys->alist
+-> cog_keys_alist
+
+fetch->value -> fetch_value -> loadValue -> cog-value
+->cog_value
+load-atoms-of-ty -> fetch_all_atoms_of_type ->loadType -> cog-get-atoms
+load-atomsp -> load_atomspace -> loadAtomSpace -> cog-get-atoms
+-> cog_get_atoms
+
+Open socks: 5  Connected to: cog://10.0.3.208:20017
+Queue size: 1  Busy: 0/4
+Messages: 6944  Duplicates: 0
+Flush count: 11  Drains: 58
+Drain time (msec): 1144  Slowest (msec): 58  Concurrent: 0
+Low/High watermarks: 10/100  Stalled: false
+
+Hit
+
+Open socks: 5  Connected to: cog://10.0.3.208:20017
+Queue size: 104  Busy: 4/4
+Messages: 7098  Duplicates: 0
+Flush count: 11  Drains: 58
+Drain time (msec): 1144  Slowest (msec): 58  Concurrent: 0
+Low/High watermarks: 10/100  Stalled: false
+
+
+flush in same thread,
+drain otherwise
+
+sercv Perfect y
+sercv Fighting  y
+sercv Tony  y
+sercv Nor   y
+  resp Fighting
+  resp Tony
+sercv Armand   y
+sercv Patham   y
+  resp Patham
+  resp Nor
+  resp Perfect
+  resp Armand
+sercv Evidently y
+sercv Do   y
+sercv XXVII y
+sercv 10     <<< got empty rest.
+  resp <<<< empty
+  resp Do
+sercv Could y
+sercv Years  y
+  resp Years
+sercv Often  y
+  resp XXVII
+  resp Often
+  resp Could
+  resp Evidently
+
+(define t (ListLink (WordNode "###LEFT-WALL###") (WordNode "10")))
+(cog-incoming-by-type t 'EvaluationLink)
+
+cli send Perfect 2920748 sent  busy 0/4
+cli send Fighting 2920746 sent bys 2/4
+cli send Tony 2920745  sent
+cli send Nor 2920747 sent       busy 4/4
+
+deadlocked on recv...
+
+duude gonna send 2920745 (cog-incoming-by-type (ListLink (WordNode "###LEFT-WALL###")(WordNode "Patham")) 'EvaluationLink)
+
+
+duuude recv bottom last char=a on tid=3053940
+duude got reply 3053940
+
+      Exp* optex = make_optional_node(dict->Exp_pool, eee);
 
 ====================================================
 ====================================================
