@@ -368,6 +368,22 @@ The effect of human-scale finite sentence lengths on punctuation and determiners
 
 \end_deeper
 \begin_layout Itemize
+The under-sampling effect is foundational, and affects the graphed distributions
+ in all graphs in all chapters of this diary.
+ It's pervasive, and confounding, and makes it difficult to understand 
+\begin_inset Quotes eld
+\end_inset
+
+what's actually happening
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A preliminary sketch is made for how to untangle sample-size effects is
+ given.
+\end_layout
+
+\begin_layout Itemize
 Earlier chapters explored marginal probabilities, fractional entropies,
  mutual information, marginal MI and so on.
  These are re-examined again here, this time as functions of 
@@ -378,7 +394,40 @@ Earlier chapters explored marginal probabilities, fractional entropies,
 \end_layout
 
 \begin_layout Itemize
-Vertex-degree
+Vertex-degree graphs are presented.
+ Vertex-degree graphs are commonplace in network analysis; it seems fitting
+ to do that here.
+ A vertex is a word, and it's degree is the number of (distinct, unique)
+ word-pairs it occurs in.
+ For the range of 
+\begin_inset Formula $10\apprle D\apprle1200$
+\end_inset
+
+, the probability 
+\begin_inset Formula $p\left(D\right)$
+\end_inset
+
+ of observing a word-vertex with degree 
+\begin_inset Formula $D$
+\end_inset
+
+ goes as 
+\begin_inset Formula $p\left(D\right)\sim D^{-1.6}$
+\end_inset
+
+.
+ This is a small-world scaling exponent; it is far away from being a scale-free
+ network exponent.
+ Note that this is a statement about infrequent words; common words, like
+ 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+ will have a degree in the millions.
 \end_layout
 
 \begin_layout Itemize
@@ -2059,10 +2108,15 @@ Word-Pair Vertex Degree Distributions
 \end_layout
 
 \begin_layout Standard
-Oddly enough, I never really characterized the word-pair sets using more
+Vertex-degree graphs are commonplace in network analysis.
+ Oddly enough, I never really characterized the word-pair sets using more
  conventional graph-theoretic concepts.
  Time to make amends.
- The collection of word-pairs can be taken to define a set of edges, thus
+ 
+\end_layout
+
+\begin_layout Standard
+The collection of word-pairs can be taken to define a set of edges, thus
  defining a graph.
  This is a directed graph, but I think this doesn't matter, so will mostly
  pretend it is undirected.
@@ -2087,7 +2141,17 @@ The scaling of frequency vs.
 \begin_inset Formula $\gamma\approx1.6$
 \end_inset
 
+.
+ This is a 
+\begin_inset Quotes eld
+\end_inset
 
+small world
+\begin_inset Quotes erd
+\end_inset
+
+ scaling exponent.
+ Under-sampled, infrequent word-pairs belong to a small world!
 \end_layout
 
 \begin_layout Itemize
@@ -2104,8 +2168,52 @@ There is no theory to guide one through the sample-size effect, and it is
 \end_layout
 
 \begin_layout Itemize
-One can graphs all sorts of quantities as functions of the vertex degree.
+One can graph all sorts of quantities as functions of the vertex degree.
  Does not seem to reveal anything noteworthy.
+\end_layout
+
+\begin_layout Standard
+To recap: A vertex is a word, and it's degree is the number of (distinct,
+ unique) word-pairs it occurs in.
+ For the range of 
+\begin_inset Formula $10\apprle D\apprle1200$
+\end_inset
+
+, the probability 
+\begin_inset Formula $p\left(D\right)$
+\end_inset
+
+ of observing a word-vertex with degree 
+\begin_inset Formula $D$
+\end_inset
+
+ goes as 
+\begin_inset Formula $p\left(D\right)\sim D^{-1.6}$
+\end_inset
+
+.
+ This is a small-world scaling exponent; it is far away from being a scale-free
+ network exponent.
+ 
+\end_layout
+
+\begin_layout Standard
+Note that this is a direct measurement of the under-sampled parts of the
+ graph.
+ That is, a word that has a small degree is necessarily a word that is observed
+ infrequently.
+ It cannot be a word like 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+, which will have a degree of approx 100K (for this dataset).
+ It cannot be a prepostion, as these will also have degrees of 50K or more.
+ Even common verbs and nouns are expected to have a gigantic degree.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -2226,7 +2334,7 @@ where the approximations
 \begin_inset Formula $f_{n}$
 \end_inset
 
-are not as given above, but are zero.
+ are not as given above, but are zero.
  The fraction of the time that they are zero is determined by the sample
  size, and they are zero often enough that the overall slope is changed.
  The net effect of sample size could be computed; it does not seem to be
