@@ -169,8 +169,32 @@ Summary Conclusions
 \end_layout
 
 \begin_layout Standard
-This chapter defines several different abstract concepts.
- A short overview of these definitions and other results:
+The most important result presented here is an analysis of the word-pair
+ MI distribution.
+ For the first time, it becomes clear that it factors into two parts: a
+ Gaussian distribution, arising from randomly-paired words, and a log-normal
+ distribution, arising from word-pairs that carry actual syntactic information.
+ This is obvious, in retrospect, and was always visible; just that now,
+ we have an rough explanation for the shape.
+ Here's the relevant graph, in full glory; it is explained towards the end
+ of the chapter.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/pair-fmi-signal.eps
+	width 50col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This chapter starts with definitons of some abstract concepts, followed
+ by some data analysis.
+ In order of appearance (and not in order of importance):
 \end_layout
 
 \begin_layout Itemize
@@ -431,7 +455,24 @@ the
 \end_layout
 
 \begin_layout Itemize
-Word-pair MI
+The word-pair MI distribution is composed of two parts.
+ One part is a Gaussian, centered more or less on an MI of zero.
+ This Gaussian is purely due to selections of word-pairs having no syntactic
+ relationships, and contains no syntactic information.
+ Subtracting this leaves behind the word-pairs with the actual syntactic
+ information.
+ That distribution seems to be log-normal, i.e has strictly-positive MI.
+\end_layout
+
+\begin_layout Itemize
+Distributions of the word-disjunct MI are presented.
+ They vaguely resemble the word-pair MI graphs, but are dirtier/uglier.
+ No particular insight is gained.
+\end_layout
+
+\begin_layout Standard
+That's it.
+ Now on with the main text.
 \end_layout
 
 \begin_layout Section*
@@ -3970,15 +4011,12 @@ The big new news for this section is that I think I finally understand the
  nature of this distribution.
  It is composed of two parts.
  One part is a Gaussian, centered more or less on an MI of zero.
- This Gaussian is purely due to random selections of pairs, and contains
- no information.
- Subtracting this leave behind the word-pairs with the actual information.
+ This Gaussian is purely due to selections of word-pairs that contain no
+ syntactic information.
+ Subtracting this leaves behind the word-pairs with the actual syntactic
+ information.
  That distribution seems to be log-normal, i.e has strictly-positive MI.
- It can be extracted by forcing a hard-cut at MI=4, which removes most of
- the zero-mode Gaussian.
- But we've known for eons that MI=4 is somehow magical; now we finally have
- insight as to why.
- Read on for details.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -4030,11 +4068,26 @@ Why this shape? Here's a guess.
  effects.
  For larger samples, the mean tends to zero.
  Thus, perhaps the left-hand-side of this figure is just a Gaussian.
- 
 \end_layout
 
 \begin_layout Standard
-Taking this to be 
+Now, we are not selecting word-pairs 
+\begin_inset Quotes eld
+\end_inset
+
+at random
+\begin_inset Quotes erd
+\end_inset
+
+, but we are sampling all possible word-pairs over a short region of text.
+ These are sampled uniformly, by uniform selection of random MST trees.
+ Many of the sampled word pairs will not be linguistically-related, but
+ instead just accidentally near each other; they are near each-other for
+ semantic reasons, not syntactic reasons.
+\end_layout
+
+\begin_layout Standard
+Taking this Gaussian to be 
 \begin_inset Quotes eld
 \end_inset
 
@@ -4042,7 +4095,7 @@ common-mode noise
 \begin_inset Quotes erd
 \end_inset
 
-, and subtracting it leaves an excess of word pairs with positive MI, having
+, and subtracting it, leaves an excess of word pairs with positive MI, having
  a peak near 
 \begin_inset Formula $MI\sim4$
 \end_inset
@@ -4054,7 +4107,7 @@ common-mode noise
  These two, summed together, model the observed distribution almost perfectly.
  Perhaps a formal expression for the common-mode noise is easily derived,
  given a fixed vocabulary size and number of samples.
- Attempt to get this is made further below.
+ An attempt to get this is made further below.
 \end_layout
 
 \begin_layout Standard
@@ -4092,6 +4145,29 @@ Word-Pair Distributions
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+FWIW, note that the left-hand-side slope might be more linear than it is
+ parabolic.
+ In this case, the left-hand side might also be modelled with a log-normal
+ distribution, this time, mirrored.
+ In this case, the whole idea becomes a bit more of a mirage: we have two
+ straight lines, and the interpolation between them is accomplished by combining
+ a pair of offset and mirrored log-normals.
+ This does not change the overall conclusion: the bulk of the low-MI pairs
+ are due to random noise from sampling, while the high-MI pairs encode syntactic
+ information.
+\end_layout
+
+\begin_layout Standard
+In practice, when given any particular word pair, how can we know which
+ groupd it belongs to? Is it synactic, or not? The old rule of thumb was
+ that pairs with MI=4 or greater were meaningful, and those below were junk.
+ The graphs above validate this rule of thumb.
+ Forcing a hard-cut at MI=4 removes most of the zero-mode Gaussian.
+ But we've known for eons that MI=4 is somehow magical; now we finally have
+ insight as to why.
 \end_layout
 
 \begin_layout Subsection*
@@ -4403,7 +4479,11 @@ scm/gram-class/cleanup.scm
 \family default
 ` to get fully consistent results.
  The updated dimensions are in the table below.
- The files are `r4-trim-10-4-2-djmi.rdb`, etc.
+ The files are `
+\family sans
+r4-trim-10-4-2-djmi.rdb
+\family default
+`, etc.
  but are shortened in the column labels.
 \end_layout
 
@@ -4448,6 +4528,8 @@ full
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family sans
 1-1-1-djmi
 \end_layout
 
@@ -4457,6 +4539,8 @@ full
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family sans
 2-2-2-djmi
 \end_layout
 
@@ -4466,6 +4550,8 @@ full
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family sans
 5-2-2-djmi
 \end_layout
 
@@ -4475,6 +4561,8 @@ full
 \begin_inset Text
 
 \begin_layout Plain Layout
+
+\family sans
 10-4-2-djmi
 \end_layout
 
@@ -5366,10 +5454,6 @@ meaningful
 \end_inset
 
 ? How can we know?
-\end_layout
-
-\begin_layout Standard
-Earlier disjunct 
 \end_layout
 
 \begin_layout Standard
