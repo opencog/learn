@@ -147,7 +147,7 @@ energy
 
 .
  These are fundamental physics concepts appearing in thermodynamics; they're
- mapped onto the analoguous word-pair statistics concepts.
+ mapped onto the analogous word-pair statistics concepts.
  The second section examines a number of other quantities in this same conceptua
 l framework.
  Some of this repeats results reported earlier; here, a more comprehensive
@@ -156,11 +156,11 @@ l framework.
 \end_layout
 
 \begin_layout Standard
-There is an implicit meta-goal, which is not acheived: to provide a statistical-
-mechainical, field-theoretic framework for the langauge data.
+There is an implicit meta-goal, which is not achieved: to provide a statistical-
+mechanical, field-theoretic framework for the language data.
  This is explored only at a rather superficial level.
  It feels like deeper analogies are certainly possible, but it is not clear
- how these could offfer insight.
+ how these could offer insight.
  
 \end_layout
 
@@ -202,7 +202,7 @@ product topology
 \end_inset
 
 .
- The basis of product topolgoes are called 
+ The basis of product topologies are called 
 \begin_inset Quotes eld
 \end_inset
 
@@ -210,14 +210,14 @@ cylinder sets
 \begin_inset Quotes erd
 \end_inset
 
-; these are just sequences of specific words, intersersed with wild-cards.
+; these are just sequences of specific words, interspersed with wild-cards.
  Word-pairs are just specific cylinder sets: two words, with zero or more
  wild-cards between them, and an arbitrary number of wild-cards before and
  after them.
 \end_layout
 
 \begin_layout Itemize
-Density of states, theoretical defintion.
+Density of states, theoretical definition.
  A 
 \begin_inset Quotes eld
 \end_inset
@@ -238,19 +238,19 @@ energy
  of a state can be identified with the log of the probability of that state
  (equivalently, the log of the measure of the cylinder set).
  The density of states is then simply the distribution of the states, as
- a function of thier energy.
+ a function of their energy.
  That is, for a given small but fixed interval of energy, how many states
  are there in that interval? This is the density of states.
  In thermodynamics and chemistry, this is a fundamental concept; for natural
- langauge, it is novel, but worth asking about to see if any analogies hold.
+ language, it is novel, but worth asking about to see if any analogies hold.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
 For example, in chemistry, there are lots of low-energy states at low temperatur
 es; it is hard to have many high-energy states at low temperatures.
- Typical distributions are the Maxwell-Bolzmann distribution for an ideal
- gas; the Fermi-Dirac distribution for fermions, and the Bose-Einstien distribut
+ Typical distributions are the Maxwell-Boltzmann distribution for an ideal
+ gas; the Fermi-Dirac distribution for fermions, and the Bose-Einstein distribut
 ion for supercooled quantum states.
  The first is conventionally taught in college chemistry.
  Is there anything analogous in natural language?
@@ -284,7 +284,7 @@ Density of states, experimental result.
  is then just a histogram: how many word-pairs were observed in a small,
  finite-sized interval of energy? Making this histogram, one easily finds
  that, to first order, its a nice straight line (on a semi-log graph), so
- that the ensity of states is 
+ that the density of states is 
 \begin_inset Formula $\rho\left(E\right)\sim2^{E}$
 \end_inset
 
@@ -325,7 +325,7 @@ large sample
 \end_inset
 
 , since, the more one samples, the more rare words one encounters, which,
- by neccessity are rare and under-sampled.
+ by necessity are rare and under-sampled.
  This impacts to slope, the shape of the curve.
 \end_layout
 
@@ -354,7 +354,7 @@ Field theory models applied to statistics and language have surely been
  thrashed to death in the literature (of which I am only dimly aware).
  The below is an attempted recap of some basic ideas, recast into the notation
  used locally in this diary.
- After a few basic initial defintions, it rapidly devolves into a presentation
+ After a few basic initial definitions, it rapidly devolves into a presentation
  of experimental results (for word-pairs).
 \end_layout
 
@@ -520,7 +520,7 @@ run-1-en_pairs-tranche-123.rdb
 status collapsed
 
 \begin_layout Plain Layout
-Use the script in `utils/densidty-of-states.scm`
+Use the script in `utils/density-of-states.scm`
 \end_layout
 
 \end_inset
@@ -676,9 +676,9 @@ The humpback shape appears to be due to an under-sampling effect.
 ly sampled are those up to a rank of about 1200.
  After that, pairs are under-sampled.
  The result of that under-sampling is a humpback shape, as seen above; the
- top of the hump is where the undersampling begins.
+ top of the hump is where the under-sampling begins.
  This suggests that the eyeballed fit is incorrect, and that the Rank distributi
-on shoud be considered only up to 1200.
+on should be considered only up to 1200.
  This is shown below.
 \end_layout
 
@@ -730,7 +730,7 @@ Top-ten Word Pairs
 \begin_layout Standard
 Given the above discussion about under-sampling, it is hard to avoid noticing
  that the top-ten word-pairs appear to follow an eve flatter slope.
- What does this mean? Clearly, they are not undersampled, and so the flatter
+ What does this mean? Clearly, they are not under-sampled, and so the flatter
  slope needs to have some more sophisticated explanation.
  
 \end_layout
@@ -1135,7 +1135,7 @@ more sophisticated
  explanation might be this: this is a finite-sentence-length effect.
  That is, the nature of human understanding is that we have a limited attention
  span, and a limited short-term memory.
- Sentence lengths, and the use of punctuation must accomodate these limits.
+ Sentence lengths, and the use of punctuation must accommodate these limits.
  Thus, sentence starters and sentence enders, and commas, for phrase identificat
 ion, should appear at a constant rate, rather than at a Zipfian rate.
  And that is indeed what the above seems to confirm.
@@ -1201,7 +1201,7 @@ without any further normalization.
 \end_inset
 
 .
- Ther is no theoretical reason to expect a Gaussian here, and, in fact,
+ There is no theoretical reason to expect a Gaussian here, and, in fact,
  it cannot be right, since 
 \begin_inset Formula $E$
 \end_inset
@@ -1790,7 +1790,7 @@ Other Densities
 \begin_layout Standard
 Well, OK, so we've done Zipf graphs of all kinds before, but somewhat haphazardl
 y.
- It's worth regoing these as densities: i.e.
+ It's worth redoing these as densities: i.e.
  bin-counting, with the horizontal axis being 
 \begin_inset Formula $E=-\log_{2}p\left(w_{i},w_{j}\right)$
 \end_inset
@@ -1855,7 +1855,7 @@ Left and Right Marginal Probabilities
 \end_layout
 
 \begin_layout Standard
-First up: the left and right marginal probabilites 
+First up: the left and right marginal probabilities 
 \begin_inset Formula $p\left(w_{i},*\right)$
 \end_inset
 
@@ -1986,13 +1986,13 @@ Oddly enough, I never really characterized the word-pair sets using more
  defining a graph.
  This is a directed graph, but I think this doesn't matter, so will mostly
  pretend it is undirected.
- The collection of verteces will be taken as the left-element of each pair.
+ The collection of vertexes will be taken as the left-element of each pair.
  The edges will be the pairs going from left to right.
 \end_layout
 
 \begin_layout Standard
 The (out-)degree of a vertex is just the number of edges leaving it.
- We work with out-degrees exclusively, excpet for a few spot-checks.
+ We work with out-degrees exclusively, except for a few spot-checks.
  Basically, the word-pair graph should be approximately symmetric, so there
  should not be much of a difference in distributions.
 \end_layout
@@ -2149,7 +2149,7 @@ where the approximations
 are not as given above, but are zero.
  The fraction of the time that they are zero is determined by the sample
  size, and they are zero often enough that the overall slope is changed.
- The net efect of sample size could be computed; it does not seem to be
+ The net effect of sample size could be computed; it does not seem to be
  a worthwhile exercise just right now.
  XXX TODO.
  This should be done.
@@ -2195,7 +2195,7 @@ Thus, since we saw
 \end_layout
 
 \begin_layout Standard
-That initial slop is validup to 
+That initial slope is valid up to 
 \begin_inset Formula $n\approx1200$
 \end_inset
 
@@ -2213,7 +2213,7 @@ Weighted Vertex Degree
 \end_layout
 
 \begin_layout Standard
-Same as above, but showing te weighted vertex degree, i.e.
+Same as above, but showing the weighted vertex degree, i.e.
  
 \begin_inset Quotes eld
 \end_inset
@@ -2249,7 +2249,7 @@ with multiplicity
 \begin_layout Standard
 There is a distinct oscillatory behavior at the center-left.
  It is perhaps some strange artifact, having to do with the fact that 24
- parse-trees are sampled, given that the first, most prominant peak occurs
+ parse-trees are sampled, given that the first, most prominent peak occurs
  at 24, and later peaks are perhaps at multiples of 24.
 \end_layout
 
@@ -2260,7 +2260,7 @@ Other weighting schemes
 \begin_layout Standard
 The following sequence of graphs use weighting schemes that are perhaps
  difficult to understand, but seem worth exploring.
- Thier physical interpretation is challenging and the significance is unclear.
+ Their physical interpretation is challenging and the significance is unclear.
  Do it anyway, just to say we covered all the bases.
 \end_layout
 
@@ -2581,7 +2581,7 @@ Pairs with the highest MI are observed very infrequently.
  The highest observable MI value is directly related to the sample size:
  it is a bit below the log of the number of observations.
  Thus, the sharp drop on the right side is purely a sample-size effect.
- Trimming does not appreciably change the sahpe of this distribution, other
+ Trimming does not appreciably change the shape of this distribution, other
  than to eliminate the very highest MI values.
 \end_layout
 
@@ -2637,7 +2637,7 @@ MI_{\mbox{ranked}}\left(w,v\right)=\log_{2}\frac{p\left(w,v\right)}{\sqrt{p\left
 \end_inset
 
 Superimposed on this graph is the distribution of the regular MI, multiplied
- by 1.5 to get the width correct, and shifted by 10 to the left, to get te
+ by 1.5 to get the width correct, and shifted by 10 to the left, to get the
  zero correct.
  Apparently, ranked-MI does not alter the distribution.
  I wonder what it does, if it were used for MST/MPG parsing ...
@@ -2666,8 +2666,7 @@ Neutral MI Distribution
 
 \begin_layout Standard
 Attempted theoretical calculation of the MI distribution that would result
- if word pa/home2/linas/src/novamente/data/rocks-archive/r3-mpg-marg.rdbirs
- wer chosen at completely at random.
+ if word pairs were chosen at completely at random.
  There are two distributions of interest.
  One uses a uniform distribution of the vocabulary words, the other a Zipfian
  distribution.
@@ -2752,7 +2751,7 @@ Zipfian distribution
 
 \begin_layout Standard
 Repeat the above, with a non-uniform distribution.
- Each word is distingusied by it's ordinal 
+ Each word is distinguished by it's ordinal 
 \begin_inset Formula $k$
 \end_inset
 
@@ -2912,8 +2911,11 @@ trimmed
 \end_inset
 
 , the self-consistency checks were crappier.
- So we re-do the final self-concistency checks, using the code in `scm/gram-clas
-s/cleanup.scm` to get fully consistent results.
+ So we re-do the final self-consistency checks, using the code in `
+\family sans
+scm/gram-class/cleanup.scm
+\family default
+` to get fully consistent results.
  The updated dimensions are in the table below.
  The files are `r4-trim-10-4-2-djmi.rdb`, etc.
  but are shortened in the column labels.
