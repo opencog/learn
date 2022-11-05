@@ -169,7 +169,8 @@ Summary Conclusions
 \end_layout
 
 \begin_layout Standard
-A summary of what is found in this part of the diary:
+This chapter defines several different abstract concepts.
+ A short overview of these definitions and other results:
 \end_layout
 
 \begin_layout Itemize
@@ -290,15 +291,8 @@ Density of states, experimental result.
 
  over a wide range, dropping off at the low and the high end due to under-sampli
 ng effects.
- This is, more or less, the 
-\begin_inset Quotes eld
-\end_inset
-
-same
-\begin_inset Quotes erd
-\end_inset
-
- result as the Zipfian distribution.
+ This is, more or less, with some twists, a rephrasing of the old and well-known
+ result that the Zipfian distribution applies to word-pairs.
 \end_layout
 
 \begin_layout Itemize
@@ -315,7 +309,7 @@ new physics
  size.
  That is, the number of words in the English language is not fixed, but
  increases the longer you read: foreign loan-words appear; obscure geographical
- place-names, invented medical drug names, and so on.
+ place-names, invented medical drug names, slang, patois, and so on.
  It is impossible to get a 
 \begin_inset Quotes eld
 \end_inset
@@ -324,9 +318,18 @@ large sample
 \begin_inset Quotes erd
 \end_inset
 
-, since, the more one samples, the more rare words one encounters, which,
- by necessity are rare and under-sampled.
- This impacts to slope, the shape of the curve.
+, since, the more that one samples, the more rare words one encounters,
+ which, by necessity, are rare and under-sampled.
+ This impacts the slope, the shape of the curve.
+\end_layout
+
+\begin_layout Itemize
+Despite more than 
+\begin_inset Formula $10^{7}$
+\end_inset
+
+ word-pairs being sampled, evidence suggests that all but the top-ranked
+ 1200 are under-sampled!
 \end_layout
 
 \begin_layout Itemize
@@ -351,7 +354,8 @@ Field Theory Models and Statistical Mechanics
 
 \begin_layout Standard
 Field theory models applied to statistics and language have surely been
- thrashed to death in the literature (of which I am only dimly aware).
+ thrashed to death in the literature (of which I am only dimly aware; thus,
+ no bibliography.).
  The below is an attempted recap of some basic ideas, recast into the notation
  used locally in this diary.
  After a few basic initial definitions, it rapidly devolves into a presentation
@@ -520,7 +524,11 @@ run-1-en_pairs-tranche-123.rdb
 status collapsed
 
 \begin_layout Plain Layout
-Use the script in `utils/density-of-states.scm`
+Use the script in `
+\family sans
+utils/density-of-states.scm
+\family default
+`
 \end_layout
 
 \end_inset
@@ -579,34 +587,16 @@ This graph can be understood as a kind-of upside-down Zipfian distribution.
 \end_inset
 
  is normalized to 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-985483375/
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-9215082 / dh.
+\begin_inset Formula $985483375/9215082/dh$
+\end_inset
+
+.
  The next dots correspond to the number of distinct word-pairs that were
- observed only twice, then three times, etc.
+ observed only twice, then three times,
+\emph on
+ etc.
+
+\emph default
  until they run together into common bins in the histogram.
  The dots at the bottom-left correspond to word-pairs there are extremely
  common (typically involving the words 
@@ -1149,7 +1139,21 @@ Relative Density of States
 
 \begin_layout Standard
 OK, so, due to under-sampling effects, there is a hump.
- Lets look at the hump more closely.
+ Let's look at the hump more closely.
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+See `
+\family sans
+p6-density/density.gplot
+\family default
+`.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

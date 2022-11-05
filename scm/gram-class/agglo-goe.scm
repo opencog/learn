@@ -144,6 +144,7 @@
 		(define wclass (make-class-node LLOBJ in-grp))
 		(merge-majority wclass in-grp)
 
+;xxxxxxxxxx
 		(format #t "------ Merged into `~A` in ~A secs\n"
 			(cog-name wclass) (e))
 
@@ -234,6 +235,7 @@
 		(define in-grp (perform-merge N
 			(gar top-pair) (gdr top-pair) wordlist))
 
+;xxxxxxxxxx
 		; Remove the merged words from further consideration.
 		(set! wordlist (lset-difference equal? wordlist in-grp))
 		(set! sorted-pairs (remove (lambda (PR)
