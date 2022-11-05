@@ -286,7 +286,7 @@ Density of states, experimental result.
  finite-sized interval of energy? Making this histogram, one easily finds
  that, to first order, its a nice straight line (on a semi-log graph), so
  that the density of states is 
-\begin_inset Formula $\rho\left(E\right)\sim2^{E}$
+\begin_inset Formula $\rho\left(E\right)\sim2^{-E}$
 \end_inset
 
  over a wide range, dropping off at the low and the high end due to under-sampli
@@ -296,48 +296,85 @@ ng effects.
 \end_layout
 
 \begin_layout Itemize
-More careful examination does reveal 
+The Zipf graph goes very nearly as 1/rank i.e.
+ as the classical Zipf with exponent 1.
+ However, it has a bit of a hump, as does 
+\begin_inset Formula $\rho\left(E\right)$
+\end_inset
+
+.
+ Looking more closely, at the top-1200 ranked pairs, the Zipf exponent is
+ 3/4 (almost exactly) and not 1.
+ This is a so-called 
 \begin_inset Quotes eld
 \end_inset
 
-new physics
+small-world
 \begin_inset Quotes erd
 \end_inset
 
-, occurring at both ends of the spectrum.
- First, the vocabulary size is not fixed, but increases with the sample
- size.
- That is, the number of words in the English language is not fixed, but
- increases the longer you read: foreign loan-words appear; obscure geographical
- place-names, invented medical drug names, slang, patois, and so on.
- It is impossible to get a 
-\begin_inset Quotes eld
-\end_inset
-
-large sample
-\begin_inset Quotes erd
-\end_inset
-
-, since, the more that one samples, the more rare words one encounters,
- which, by necessity, are rare and under-sampled.
- This impacts the slope, the shape of the curve.
-\end_layout
-
-\begin_layout Itemize
-Despite more than 
+ exponent.
+ The open-world exponet of 1 kicks in above 1200.
+ This suggests that all word-pairs above 1200 are under-sampled.
+ This is out of a total of 
 \begin_inset Formula $10^{7}$
 \end_inset
 
- word-pairs being sampled, evidence suggests that all but the top-ranked
- 1200 are under-sampled!
+distinct word-pairs that were observed.
+ The small world is indeed small, the provinces vast.
+ 
 \end_layout
 
 \begin_layout Itemize
-Sample size effects breakdown of vocab.
+The 
+\begin_inset Formula $\rho\left(E\right)$
+\end_inset
+
+ has a similar hump.
+ The constant slope can be removed by rescaling to 
+\begin_inset Formula $2^{E}\rho\left(E\right)$
+\end_inset
+
+ which revels the precise form of the hump: it is exactly a (log-normal)
+ Gaussian! 
 \end_layout
 
 \begin_layout Itemize
-Other densities
+Closer examination reveals that the idea of a measure on a product topology
+ is naive and incorrect.
+ The first problem is that the size of the vocabulary is not fixed; the
+ larger the corpus, the more new words are found (proper names, geographical
+ place-names, slang, merketing terms, technical terms...) In the limit of infinite
+ vocabulary, this would imply that the measure is log-divergent, i.e.
+ is not a measure.
+ 
+\end_layout
+
+\begin_layout Itemize
+A better theoretical foundation is needed.
+ (None is proposed here) Such a foundation would need to explain and characteriz
+e:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+The under-sampling effect, and the location of the large-world to small-world
+ cross-over.
+\end_layout
+
+\begin_layout Itemize
+The effect of human-scale finite sentence lengths on punctuation and determiners.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Earlier chapters explored marginal probabilities, fractional entropies,
+ mutual information, marginal MI and so on.
+ These are re-examined again here, this time as functions of 
+\begin_inset Formula $E$
+\end_inset
+
+
 \end_layout
 
 \begin_layout Itemize
@@ -1141,7 +1178,7 @@ Relative Density of States
 OK, so, due to under-sampling effects, there is a hump.
  Let's look at the hump more closely.
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 See `
@@ -1205,17 +1242,35 @@ without any further normalization.
 \end_inset
 
 .
- There is no theoretical reason to expect a Gaussian here, and, in fact,
- it cannot be right, since 
+ There is no theoretical reason (that I am aware of) to expect a Gaussian
+ here.
+ 
+\end_layout
+
+\begin_layout Standard
+Properly, we should be fitting to a log-normal distribution, since 
 \begin_inset Formula $E$
 \end_inset
 
  is necessarily positive-definite.
- But whatever, its an OK fit to a bulging, noisy graph.
- What does it mean? I dunno.
+ However, this far from the origin, the log-normal and the normal distributions
+ look almost identical.
+ Whatever, its an OK fit to a bulging, noisy graph.
+ 
+\end_layout
+
+\begin_layout Standard
+What does it mean? I dunno.
  It means that we need a theoretical framework for handling the under-counting
  phenomenon above.
  
+\end_layout
+
+\begin_layout Standard
+This Gaussian is probably (almost surely) related to the Gaussian appearing
+ in the MI scores, below.
+ But I do not know how to derive one from the other.
+ (Too lazy to figure it out.)
 \end_layout
 
 \begin_layout Subsection*
@@ -1784,7 +1839,23 @@ Entropy Total
 
 \end_inset
 
- 
+Recall, as always, that 
+\begin_inset Quotes eld
+\end_inset
+
+Num Pairs
+\begin_inset Quotes erd
+\end_inset
+
+ is the number of distinct, unique pairs that were observed, while 
+\begin_inset Quotes eld
+\end_inset
+
+Total Count
+\begin_inset Quotes erd
+\end_inset
+
+ is the how many times those pairs were observed.
 \end_layout
 
 \begin_layout Subsection*
@@ -1976,6 +2047,11 @@ NOT
 Slope seems to be nailed exactly.
  Remarkable.
  None of the fiddle-faddle of before.
+ Recall as always that the 30 comes from 
+\begin_inset Formula $30\approx\log_{2}\mbox{Total Count}$
+\end_inset
+
+ for this dataset.
 \end_layout
 
 \begin_layout Section*
