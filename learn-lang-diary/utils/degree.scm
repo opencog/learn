@@ -47,7 +47,7 @@
 (define (pcnt WRD) (sup-obj 'right-count WRD))
 (degree-plot star-obj 5000 0 5000 "/tmp/degree-w-fine.dat" pval pcnt)
 
-
+;----------
 (define lwords (star-obj 'left-basis))
 (define (wdegree-plot NBINS LO HI FILE VALFN WEIFN)
 
@@ -80,3 +80,28 @@
 (wdegree-plot 5000 0 5000 "/tmp/degree-rfmi-fine.dat" pval pcnt)
 
 ; ---------
+; Print the words with the highest out-degrees
+(define ala (make-any-link-api))
+(define star-obj (add-pair-stars ala))
+
+(define lwords (star-obj 'left-basis))
+(length lwords)
+(define sup-obj (add-support-api star-obj))
+(define (degree WRD) (sup-obj 'right-support WRD))
+
+(define sorted-words
+	(sort lwords (lambda (A B) (> (degree A) (degree B)))))
+
+(for-each (lambda (W)
+	(format #t "~A, ~A\n" (cog-name W) (degree W)))
+	(take sorted-words 30))
+
+; Table of three columns
+(define (pt W) (format #t "~A, ~D, " (cog-name W) (degree W)))
+(define (pn N) (pt (list-ref sorted-words N)))
+(for-each (lambda (N)
+	(pn N) (pn (+ N 20)) (pn (+ N 40))
+	(format #t "\n"))
+	(iota 20))
+
+; -----------------
