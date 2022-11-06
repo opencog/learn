@@ -5638,6 +5638,35 @@ vacuum contributions
 , but the details remain opaque.
 \end_layout
 
+\begin_layout Standard
+Recall that 
+\begin_inset Formula 
+\[
+p\left(u,*\right)=\sum_{w}p\left(u,w\right)
+\]
+
+\end_inset
+
+Consider then the very high-dimensional differrence equation
+\begin_inset Formula 
+\[
+\nabla\left(u,v\right)=2N\log_{2}p\left(u,v\right)-\sum_{w}\log_{2}p\left(u,w\right)-\sum_{w}\log_{2}p\left(w,v\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the size of the vocabulary, viz.
+ 
+\begin_inset Formula $N=\sum_{w}1$
+\end_inset
+
+.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
