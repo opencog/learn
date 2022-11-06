@@ -470,6 +470,14 @@ Distributions of the word-disjunct MI are presented.
  No particular insight is gained.
 \end_layout
 
+\begin_layout Itemize
+The ranked-MI looks vaguely like a Laplacian.
+ Two ideas are developed: a fibered-Laplacian, and a Hamming-Laplacian.
+ Experimental data is shown for the Hamming-Laplacian.
+ It's curious, but provides no particular insight.
+ 
+\end_layout
+
 \begin_layout Standard
 That's it.
  Now on with the main text.
@@ -5576,12 +5584,6 @@ Mutual Information vs.
 \end_layout
 
 \begin_layout Standard
-This is the development of a suggestive idea that first appeared in Chapter
- Six.
- It should be put back there.
-\end_layout
-
-\begin_layout Standard
 The discrete Laplacian on a 1-dimensional grid is a tri-diagonal matrix
  of the form
 \begin_inset Formula 
@@ -5807,8 +5809,26 @@ This is the conventional
 \begin_inset Formula $N$
 \end_inset
 
--dimensional finite-difference Laplacian, where we've taken the liberty
- of dividing by 
+-dimensional finite-difference Laplacian
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Wikipedia, 
+\begin_inset CommandInset href
+LatexCommand href
+name "Discrete Laplace Operator"
+target "https://en.wikipedia.org/wiki/Discrete_Laplace_operator"
+literal "false"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+, where we've taken the liberty of dividing by 
 \begin_inset Formula $N$
 \end_inset
 
@@ -5897,7 +5917,22 @@ Note that nothing specifically calls out for
 \end_inset
 
 .
- 
+ Also, note that this extends to the entire sigma-algebra.
+ The Hamming distance provides a graph structure to the sigma algebra, indicatin
+g which elements of the algebra are nearest-neighbors.
+ I am not aware of any theoretical results on Hamming Laplacians on sigma
+ algebras.
+ Save one, an obvious one: 
+\begin_inset Formula $\Delta\mu=0$
+\end_inset
+
+ where 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is a measure on the sigma-algebra.
+ Now that I see this, this is definitely a very interesting and curious
+ thing to explore!
 \end_layout
 
 \begin_layout Standard

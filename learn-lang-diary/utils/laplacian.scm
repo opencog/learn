@@ -1,8 +1,11 @@
 ;
 ; laplacian.scm
 ;
-; Examine the peculiar difference equation from end of chapter six,
-; start of chapter nine. For word-pairs.
+; Examine the peculiar difference equation from end of chapter six.
+; This is the "Hamming Laplacian"; it is the discrete Laplacian
+; (the graph Laplacian) applied to sigma algebras...
+;
+; For word-pairs.
 ;
 ; Get generic word-pairs
 
