@@ -16,5 +16,26 @@ set yrange [100:3e5]
 plot "rank-degree.dat" using 1:3 with lines lw 2 title "degree", \
      "rank-degree.dat" using 1:(200000/($1)**0.5) with lines lw 2 title "1/{/Symbol \326}rank"
 
+#################################################
+#
+# set term png
+# set out 'count-degree.png'
+set term postscript eps enhanced color 20
+set out 'count-degree.eps'
+set key right top
+set title "Word Observation Count vs. Word-vertex Out-Degree"
+set xlabel "Out-Degree"
+set ylabel "Frequency"
+set logscale x
+set logscale y
+set format y "10^{%L}"
+set xrange [3e5:200]
+set yrange [1e-6:1e-1]
+
+ntot=985483375
+
+plot "rank-degree.dat" using 3:($4/ntot) with lines lw 2 title "data", \
+     "rank-degree.dat" using 3:(($3/1.5e6)**1.5) with lines lw 2 title "D^{3/2}",\
+     "rank-degree.dat" using 3:(($3/1e6)**1.666) with lines lc 4 lw 2 title "D^{5/3}"
 
 #################################################
