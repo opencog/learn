@@ -108,6 +108,11 @@
 
 (for-each cache-lap all-pairs)
 
+(define (fet-lap PR) (cog-value-ref (cog-value PR lap) 0))
+
+(define sorted-pairs
+   (sort all-pairs (lambda (A B) (> (cache-lap A) (cache-lap B)))))
+
 
 (define (lap-hist NBINS LO HI FILENAM PAIR-LIST)
 "
@@ -145,9 +150,11 @@
 ; Print density of states, uniform weighting.
 (lap-hist 200 2 32 "/tmp/laplace-dist.dat" (take all-pairs 40000))
 
-(elapsed)
 (lap-hist 400 2 32 "/tmp/laplace-dist.dat" all-pairs)
-(format #t "Bin count took ~A secs\n" (elapsed))
+
+(elapsed-secs)
+(lap-hist 400 0 30 "/tmp/laplace-dist.dat" all-pairs)
+(format #t "Bin count took ~A secs\n" (elapsed-secs))
 
 
 ; ----------------------------------------------------------------------

@@ -4,19 +4,21 @@ set term png
 set out 'laplace.png'
 # set term postscript eps enhanced color 20
 # set out 'laplace.eps'
-set key right top
-set title "Laplace"
-set xlabel "Laplace"
+set key left top
+set title "Histogram of Laplacian {/Symbol D} E values"
+set xlabel "Laplace {/Symbol D} E"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
 set xrange [0:30]
-# set yrange [1e-6:1e-1]
+set yrange [5e-8:1e-1]
 
 ntot=40000
 ntot=28184319
 
-plot "laplace-dist.dat" using 2:($3/ntot) with lines lw 2 title ""
+plot "laplace-dist.dat" using 2:($3/ntot) with lines lw 2 title "data_{ }", \
+     "laplace-dist.dat" using 2:(2**(0.75*$2) / ntot) with lines lw 2 title "2^{3{/Symbol D}/4}", \
+     "laplace-dist.dat" using 2:(1.618**$2 / ntot) with lines lc 4 lw 2 title "{1.618}^{/Symbol D}"
 
 
 #################################################
