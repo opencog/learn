@@ -105,3 +105,15 @@
 	(iota 20))
 
 ; -----------------
+; degree vs rank, degree vs count.
+
+(define (count WRD) (sup-obj 'right-count WRD))
+
+(define oport (open-file "/tmp/rank-degree.dat" "w"))
+(define (prtn N)
+	(define W (list-ref sorted-words N))
+	(format oport "~D\t~A\t~D\t~D\n" N (cog-name W) (degree W) (count W)))
+(for-each prtn (iota 20000))
+(close oport)
+
+; -----------------

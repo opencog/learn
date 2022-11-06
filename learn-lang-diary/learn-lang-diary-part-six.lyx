@@ -184,7 +184,7 @@ The most important result presented here is an analysis of the word-pair
 \align center
 \begin_inset Graphics
 	filename p6-density/pair-fmi-signal.eps
-	width 50col%
+	width 80col%
 
 \end_inset
 
@@ -192,7 +192,7 @@ The most important result presented here is an analysis of the word-pair
 \end_layout
 
 \begin_layout Standard
-This chapter starts with definitons of some abstract concepts, followed
+This chapter starts with definitions of some abstract concepts, followed
  by some data analysis.
  In order of appearance (and not in order of importance):
 \end_layout
@@ -338,7 +338,7 @@ small-world
 \end_inset
 
  exponent.
- The open-world exponet of 1 kicks in above 1200.
+ The open-world exponent of 1 kicks in above 1200.
  This suggests that all word-pairs above 1200 are under-sampled.
  This is out of a total of 
 \begin_inset Formula $10^{7}$
@@ -368,7 +368,7 @@ Closer examination reveals that the idea of a measure on a product topology
  is naive and incorrect.
  The first problem is that the size of the vocabulary is not fixed; the
  larger the corpus, the more new words are found (proper names, geographical
- place-names, slang, merketing terms, technical terms...) In the limit of infinite
+ place-names, slang, marketing terms, technical terms...) In the limit of infinite
  vocabulary, this would imply that the measure is log-divergent, i.e.
  is not a measure.
  
@@ -2252,7 +2252,7 @@ the
 \end_inset
 
 , which will have a degree of approx 100K (for this dataset).
- It cannot be a prepostion, as these will also have degrees of 50K or more.
+ It cannot be a preposition, as these will also have degrees of 50K or more.
  Even common verbs and nouns are expected to have a gigantic degree.
  
 \end_layout
@@ -2433,7 +2433,7 @@ That initial slope is valid up to
 \begin_inset Formula $\log-\frac{1}{p\left(w,*\right)}\sum_{v}p\left(w,v\right)\log_{2}p\left(w,v\right)_{2}n\approx10$
 \end_inset
 
-, after which a sharper slope sets in due to the finite-sample-size effect.
+, after which a sharper slope sets in due to the sample-size effect.
  This gives the figure an overall hump-back shape.
  
 \end_layout
@@ -3709,7 +3709,7 @@ into
 Clearly, there are large gaps in degree between each of these.
  Clearly, as the size of the corpus is increased, the degree of each of
  these will increase, and the size of the gaps between them will also increase.
- The overall order and distribution should not substrantially change.
+ The overall order and distribution should not substantially change.
 \end_layout
 
 \begin_layout Standard
@@ -3733,6 +3733,33 @@ smoothing
 \end_inset
 
 , its altering the slope.
+\end_layout
+
+\begin_layout Standard
+For completeness, here's a traditional degree vs.
+ rank graph:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/rank-degree.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that initially, the vertex degree falls off as 
+\begin_inset Formula $1/\sqrt{\mbox{rank}}$
+\end_inset
+
+, which seems to be a very traditional slope for this kind of graph of network
+ degrees.
+ I still don't understand why, despite a half-a-decade of seeing this.
+ 
 \end_layout
 
 \begin_layout Subsection*
@@ -4162,7 +4189,7 @@ FWIW, note that the left-hand-side slope might be more linear than it is
 
 \begin_layout Standard
 In practice, when given any particular word pair, how can we know which
- groupd it belongs to? Is it synactic, or not? The old rule of thumb was
+ group it belongs to? Is it syntactic, or not? The old rule of thumb was
  that pairs with MI=4 or greater were meaningful, and those below were junk.
  The graphs above validate this rule of thumb.
  Forcing a hard-cut at MI=4 removes most of the zero-mode Gaussian.

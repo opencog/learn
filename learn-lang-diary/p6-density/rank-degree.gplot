@@ -1,0 +1,20 @@
+#################################################
+#
+# set term png
+# set out 'rank-degree.png'
+set term postscript eps enhanced color 20
+set out 'rank-degree.eps'
+set key right top
+set title "Word-vertex Out-Degree vs Word Rank"
+set xlabel "Word Rank"
+set ylabel "Out-Degree"
+set logscale x
+set logscale y
+set format y "10^{%L}"
+set yrange [100:3e5]
+
+plot "rank-degree.dat" using 1:3 with lines lw 2 title "degree", \
+     "rank-degree.dat" using 1:(200000/($1)**0.5) with lines lw 2 title "1/{/Symbol \326}rank"
+
+
+#################################################
