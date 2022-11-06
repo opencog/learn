@@ -135,11 +135,193 @@ None yet.
 \end_layout
 
 \begin_layout Section*
-Hard lessiMerges
+Mutual Information as Laplacian
 \end_layout
 
 \begin_layout Standard
-Experiment-16 is the thing.
+This is a random half-baked suggestive idea that dead-ends immediately.
+\end_layout
+
+\begin_layout Standard
+The discrete Laplacian on a 1-dimensional grid is a tri-diagonal matrix
+ of the form
+\begin_inset Formula 
+\[
+\Delta x_{i}=2x_{i}-x_{i-1}-x_{i+1}
+\]
+
+\end_inset
+
+The pair-wise mutual information 
+\begin_inset Formula 
+\[
+MI\left(u,v\right)=\log_{2}p\left(u,v\right)-\log_{2}p\left(u,*\right)-\log_{2}p\left(*,v\right)
+\]
+
+\end_inset
+
+Inserting a factor of 1/2 gives the ranked-MI
+\begin_inset Formula 
+\[
+MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left(u,*\right)p\left(*,v\right)}}
+\]
+
+\end_inset
+
+These two somehow feel 
+\begin_inset Quotes eld
+\end_inset
+
+similar
+\begin_inset Quotes erd
+\end_inset
+
+ but I cannot connect the dots.
+\end_layout
+
+\begin_layout Standard
+The MI 
+\begin_inset Quotes eld
+\end_inset
+
+feels like
+\begin_inset Quotes erd
+\end_inset
+
+ some kind of re-normalized propagator where the 
+\begin_inset Formula $\log_{2}p\left(u,*\right)$
+\end_inset
+
+ feel like 
+\begin_inset Quotes eld
+\end_inset
+
+vacuum contributions
+\begin_inset Quotes erd
+\end_inset
+
+, but the details remain opaque.
+\end_layout
+
+\begin_layout Standard
+Recall that 
+\begin_inset Formula 
+\[
+p\left(u,*\right)=\sum_{w}p\left(u,w\right)
+\]
+
+\end_inset
+
+Consider then the very high-dimensional differrence equation
+\begin_inset Formula 
+\[
+\nabla\left(u,v\right)=2N\log_{2}p\left(u,v\right)-\sum_{w}\log_{2}p\left(u,w\right)-\sum_{w}\log_{2}p\left(w,v\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $N$
+\end_inset
+
+ is the size of the vocabulary, viz.
+ 
+\begin_inset Formula $N=\sum_{w}1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Hard lessons learned
+\end_layout
+
+\begin_layout Standard
+Experiment-17 is the thing.
+\end_layout
+
+\begin_layout Itemize
+The disjuncts in `r16-merge.rdb` and `r13-all-in-one.rdb` are insufficient
+ to generate interesting sentences.
+ There are too few of them.
+\end_layout
+
+\begin_layout Itemize
+Apparently, trimming has depleted the ranks.
+ Thus, although they "look good" when examine individually, they're not
+ rich enough to be used.
+ 
+\end_layout
+
+\begin_layout Itemize
+The LG `dict-atomese` backend was extended to use word-pairs and also ANY
+ links.
+ 
+\end_layout
+
+\begin_layout Itemize
+Existing disjuncts can be supplemented with optional single links taken
+ from word-pairs.
+ This explodes the RAM usage in LG, up to 10 GB or 20GB or maybe more, depending.
+ 
+\end_layout
+
+\begin_layout Itemize
+This suggests clustering should be more aggressive.
+ 
+\end_layout
+
+\begin_layout Itemize
+Since the LG atomese dict can now use single word-pairs, that means it can
+ do MST/MPG parsing.
+ Thus, we can get rid of the atomspace MST parser.
+ 
+\end_layout
+
+\begin_layout Itemize
+The LG backend can also suppliment disjuncts with ANY links.
+ 
+\end_layout
+
+\begin_layout Itemize
+The MST/MPG mode can also use ANY links.
+ 
+\end_layout
+
+\begin_layout Itemize
+As a result, the LG parser can do all of it -- random-tree ANY parsing,
+ MST/MPG parsing, and Section/disjunct parsing.
+ 
+\end_layout
+
+\begin_layout Itemize
+This creates a possibility of doing "continuous learning": learning word
+ pairs and disjuncts at the same time.
+ 
+\end_layout
+
+\begin_layout Itemize
+However, the more complex portions cannot run until marginals recomputed.
+ This suggests a natural awake/asleep cycle.
+ During the awake cycle, data is ingested.
+ During the asleep cycle, marginals are (re-) computed, MI is (re-)computed,
+ similarities are updated.
+ This is very nice, it gets rid of the pipeline.
+ 
+\end_layout
+
+\begin_layout Itemize
+So it seems like it's time to abolish the pipeline.
+ 
+\end_layout
+
+\begin_layout Itemize
+BTW, we can do GOE similarity with just word-pair MI.
+ So clustering can begin before disjuncts have been created.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Section*
