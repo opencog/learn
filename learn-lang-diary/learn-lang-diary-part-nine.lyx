@@ -179,11 +179,53 @@ similar
 \begin_inset Quotes erd
 \end_inset
 
- to the ranked-MI, but how? Can this bedeveloped? Let's try.
+ to the ranked-MI, but how? Can this be developed?
+\end_layout
+
+\begin_layout Subsection*
+(Dead-end?) Ideas
 \end_layout
 
 \begin_layout Standard
-Recall that 
+Here are some suggestive ideas that don't sem to quite get traction.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $MI$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+feels like
+\begin_inset Quotes erd
+\end_inset
+
+ some kind of re-normalized propagator, where the 
+\begin_inset Formula $\log_{2}p\left(u,*\right)$
+\end_inset
+
+ feel like vacuum corrections; but how this could be is opaque.
+\end_layout
+
+\begin_layout Standard
+The point 
+\begin_inset Formula $\left(u,v\right)$
+\end_inset
+
+ feels like a point in a base-space, and the 
+\begin_inset Formula $\left(u,*\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(*,v\right)$
+\end_inset
+
+ feel like two diferent fibers above the point in the base space.
+ The summation is happening on the fibers.
+ That is, we've defined 
 \begin_inset Formula 
 \[
 p\left(u,*\right)=\sum_{w}p\left(u,w\right)
@@ -191,7 +233,22 @@ p\left(u,*\right)=\sum_{w}p\left(u,w\right)
 
 \end_inset
 
-Consider then the very high-dimensional difference equation
+so that, first, we take the fiber sum, then the log, and then compare a
+ point in base-space to it's two fiber-sums.
+ That is, the ranked-MI 
+\emph on
+is
+\emph default
+ a kind of discrete Laplacian, but it's over a weird fibered space; its
+ a comparison over fibers.
+\end_layout
+
+\begin_layout Subsection*
+Hamming Laplacian
+\end_layout
+
+\begin_layout Standard
+Consider the very high-dimensional difference equation
 \begin_inset Formula 
 \[
 -\Delta E\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2\left(N-1\right)}\sum_{w\ne v}\log_{2}p\left(u,w\right)-\frac{1}{2\left(N-1\right)}\sum_{w\ne u}\log_{2}p\left(w,v\right)
@@ -397,7 +454,15 @@ run-1-marg-tranche-123.rdb
  It's untrimmed, its got a vocabulary of N=391548 words and a total of 28184319
  unique word pairs.
  These were observed a total of 985483375 times.
- The graph below shows a histogram of the distribution.
+ The graph below shows a histogram of the distribution of 
+\begin_inset Formula $\Delta E\left(u,v\right)$
+\end_inset
+
+ of word-pairs 
+\begin_inset Formula $\left(u,v\right)$
+\end_inset
+
+.
  There are 400 buckets in the histogram.
 \end_layout
 
