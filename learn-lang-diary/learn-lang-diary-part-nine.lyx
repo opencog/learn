@@ -215,7 +215,7 @@ p\left(u,*\right)=\sum_{w}p\left(u,w\right)
 Consider then the very high-dimensional differrence equation
 \begin_inset Formula 
 \[
-\nabla\left(u,v\right)=2N\log_{2}p\left(u,v\right)-\sum_{w}\log_{2}p\left(u,w\right)-\sum_{w}\log_{2}p\left(w,v\right)
+\nabla\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(w,v\right)
 \]
 
 \end_inset
@@ -230,6 +230,17 @@ where
 \end_inset
 
 .
+ We've not looked at this beastie before.
+ Let's take a look now.
+\end_layout
+
+\begin_layout Standard
+The dataset being used is `
+\family sans
+run-1-marg-tranche-123.rdb
+\family default
+` – this is well-decribed elsewhere.
+ It's untrimmed, its got a vocabulary of N=XX words and XX word pairs.
 \end_layout
 
 \begin_layout Section*
