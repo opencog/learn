@@ -194,7 +194,7 @@ p\left(u,*\right)=\sum_{w}p\left(u,w\right)
 Consider then the very high-dimensional difference equation
 \begin_inset Formula 
 \[
--\Delta E\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w\ne v}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w\ne u}\log_{2}p\left(w,v\right)
+-\Delta E\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2\left(N-1\right)}\sum_{w\ne v}\log_{2}p\left(u,w\right)-\frac{1}{2\left(N-1\right)}\sum_{w\ne u}\log_{2}p\left(w,v\right)
 \]
 
 \end_inset
@@ -229,12 +229,18 @@ E\left(u,v\right)=-\log_{2}p\left(u,v\right)
 and so the difference eqn is 
 \begin_inset Formula 
 \[
-\Delta E\left(u,v\right)=E\left(u,v\right)-\frac{1}{2N}\left[\sum_{w\ne v}E\left(u,w\right)+\sum_{w\ne u}E\left(w,v\right)\right]
+\Delta E\left(u,v\right)=E\left(u,v\right)-\frac{1}{2\left(N-1\right)}\left[\sum_{w\ne v}E\left(u,w\right)+\sum_{w\ne u}E\left(w,v\right)\right]
 \]
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+This difference equation is rightfull called a discrete Laplacian on a high-dime
+nsional space.
+ That this is the correct name can be seen as follows.
 \end_layout
 
 \begin_layout Standard
@@ -259,15 +265,33 @@ Basically, we're fixing a point
 .
  Experimentally, we don't track these values (why not? they've never seemed
  useful.
- But perhaps we should revisit.) Anyway, its clear that 
+ But perhaps we should revisit.) A single word 
+\begin_inset Formula $w$
+\end_inset
+
+ can be thought of as a coordinate or direction in a high-dimensional space,
+ so that that 
 \begin_inset Formula $\left(w\right)\in N$
 \end_inset
 
- is a single point in a high-dimensional space.
- In this case, the Laplacian really is clear and unabiguous: it is
+ is a location, a single point in that space.
+ All the other words provide the other coordinates, so that the 
+\begin_inset Formula $\left(u\right)$
+\end_inset
+
+'s are all of the nearest-neighbors of 
+\begin_inset Formula $\left(w\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+In this case, the Laplacian really is clear and unabiguous: it is
 \begin_inset Formula 
 \[
-\Delta E\left(w\right)=E\left(w\right)-\frac{1}{N}\sum_{u\ne w}E\left(u\right)
+\Delta E\left(w\right)=E\left(w\right)-\frac{1}{N-1}\sum_{u\ne w}E\left(u\right)
 \]
 
 \end_inset
@@ -295,7 +319,9 @@ This is the conventional
 \begin_inset Formula $N$
 \end_inset
 
- points are equidistant from all the others (Hamming distance).
+ points are equidistant from all the others.
+ This is just Hamming distance one for a string of symbols that is one symbol
+ long.
 \end_layout
 
 \begin_layout Standard
@@ -313,6 +339,48 @@ For word-pairs, fixing a word-pair
  Should we call this the Hamming-Laplacian? The generalization to N-grams
  is obvious; we don't need this generalization (yet; we'll need something
  like of for the disjuncts! As disjuncts are just skip-grams in disguise.)
+ 
+\end_layout
+
+\begin_layout Standard
+Still, worth formalizing it.
+ Given a 
+\begin_inset Formula $k$
+\end_inset
+
+-gram 
+\begin_inset Formula $\sigma=\left(w_{1},\cdots,w_{k}\right)$
+\end_inset
+
+, define the set of all 
+\begin_inset Formula $k$
+\end_inset
+
+-grams that are Hamming-distance zero or one from 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ as
+\begin_inset Formula 
+\[
+\left\{ s\right\} =\left(*,w_{2},\cdots,w_{k}\right)\cup\left(w_{1},*,w_{3},\cdots,w_{k}\right)\cup\left(w_{1},\cdots,*\right)
+\]
+
+\end_inset
+
+The Hamming-Laplacian is then 
+\begin_inset Formula 
+\[
+\Delta E\left(\sigma\right)=E\left(\sigma\right)-\frac{1}{k\left(N-1\right)}\sum_{\tau\in\left\{ s\right\} ;\tau\ne\sigma}E\left(\tau\right)
+\]
+
+\end_inset
+
+The denominator is simply the number of terms in the summation.
+\end_layout
+
+\begin_layout Subsection*
+Experimental exploration
 \end_layout
 
 \begin_layout Standard
