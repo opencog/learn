@@ -2445,6 +2445,8 @@ High Degree Vertexes
 \begin_layout Standard
 Where is this effect coming from? The table below shows the 60 words with
  the highest out-degree.
+ This offers a glimpse of what is going on at the other end of the vertex-degree
+ scale.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -3714,7 +3716,7 @@ Clearly, there are large gaps in degree between each of these.
 
 \begin_layout Standard
 In short: attempting to bin-count the above leads to misleading confusion.
- Naive;y, bin-counting is about smoothing variation.
+ Naively, bin-counting is about smoothing variation.
  But, as this table makes clear, such 
 \begin_inset Quotes eld
 \end_inset
@@ -3736,34 +3738,7 @@ smoothing
 \end_layout
 
 \begin_layout Standard
-For completeness, here's a traditional degree vs.
- rank graph:
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename p6-density/rank-degree.eps
-	width 80col%
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Notice that initially, the vertex degree falls off as 
-\begin_inset Formula $1/\sqrt{\mbox{rank}}$
-\end_inset
-
-, which seems to be a very traditional slope for this kind of graph of network
- degrees.
- I still don't understand why, despite a half-a-decade of seeing this.
- 
-\end_layout
-
-\begin_layout Standard
-Next, the table above, directly visualized:
+Here is the table above, directly visualized:
 \end_layout
 
 \begin_layout Standard
@@ -3805,6 +3780,36 @@ reversed
  The frequency is, as always, the total number of observations of that particula
 r word, normalized by the total number of observed words.
  The integral under the curve is one.
+ 
+\end_layout
+
+\begin_layout Standard
+For completeness, here's a traditional degree vs.
+ rank graph:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p6-density/rank-degree.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Notice that initially, the vertex degree falls off as 
+\begin_inset Formula $1/\sqrt{\mbox{rank}}$
+\end_inset
+
+, which seems to be a very traditional slope for this kind of graph of network
+ degrees.
+ I still don't understand why, despite a half-a-decade of seeing this one-over-s
+qrt distribution.
+ It's everywhere: see the wikipedia page rank, see the agi-bio genome and
+ reactome distributions I've graphed elsewhere.
  
 \end_layout
 
