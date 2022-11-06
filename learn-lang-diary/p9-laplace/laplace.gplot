@@ -10,9 +10,11 @@ set xlabel "Laplace"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
+set xrange [0:30]
 # set yrange [1e-6:1e-1]
 
 ntot=40000
+ntot=28184319
 
 plot "laplace-dist.dat" using 2:($3/ntot) with lines lw 2 title ""
 

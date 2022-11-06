@@ -100,6 +100,15 @@
 		(+ (get-sum-log-left (ala 'right-element PR))
 			(get-sum-log-right (ala 'left-element PR)))))
 
+; Cache this. For scatter-lots, later on...
+(define (cache-lap PR)
+	(define lapy (get-lap PR))
+	(store-atom (cog-set-value! PR lap (FloatValue lapy)))
+	lapy)
+
+(for-each cache-lap all-pairs)
+
+
 (define (lap-hist NBINS LO HI FILENAM PAIR-LIST)
 "
   lap-hist NBINS LO HI FILENAM - create histogram of laplacian thing.

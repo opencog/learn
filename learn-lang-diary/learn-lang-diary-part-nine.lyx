@@ -135,7 +135,8 @@ None yet.
 \end_layout
 
 \begin_layout Section*
-Mutual Information as Laplacian
+Mutual Information vs.
+ Laplacian
 \end_layout
 
 \begin_layout Standard
@@ -215,7 +216,7 @@ p\left(u,*\right)=\sum_{w}p\left(u,w\right)
 Consider then the very high-dimensional difference equation
 \begin_inset Formula 
 \[
--\nabla\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(w,v\right)
+-\Delta E\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w\ne v}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w\ne u}\log_{2}p\left(w,v\right)
 \]
 
 \end_inset
@@ -230,7 +231,114 @@ where
 \end_inset
 
 .
- We've not looked at this beastie before.
+ Using terminology from Chapter 6, this was being called 
+\begin_inset Quotes eld
+\end_inset
+
+the energy
+\begin_inset Quotes erd
+\end_inset
+
+, via analogy to the Boltzmann distribution.
+ That is, 
+\begin_inset Formula 
+\[
+E\left(u,v\right)=-\log_{2}p\left(u,v\right)
+\]
+
+\end_inset
+
+and so the difference eqn is 
+\begin_inset Formula 
+\[
+\Delta E\left(u,v\right)=E\left(u,v\right)-\frac{1}{2N}\left[\sum_{w\ne v}E\left(u,w\right)+\sum_{w\ne u}E\left(w,v\right)\right]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Basically, we're fixing a point 
+\begin_inset Formula $\left(u,v\right)$
+\end_inset
+
+ in the high-dimensional space 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ and then we are differencing to all of it's nearest neighbors.
+ This is confusing because we really should have started with single words.
+ Consider the observation frequency of a single word 
+\begin_inset Formula $p\left(w\right)$
+\end_inset
+
+ and define 
+\begin_inset Formula $E\left(w\right)=-\log_{2}p\left(w\right)$
+\end_inset
+
+.
+ Experimentally, we don't track these values (why not? they've never seemed
+ useful.
+ But perhaps we should revisit.) Anyway, its clear that 
+\begin_inset Formula $\left(w\right)\in N$
+\end_inset
+
+ is a single point in a high-dimensional space.
+ In this case, the Laplacian really is clear and unabiguous: it is
+\begin_inset Formula 
+\[
+\Delta E\left(w\right)=E\left(w\right)-\frac{1}{N}\sum_{u\ne w}E\left(u\right)
+\]
+
+\end_inset
+
+This is the conventional 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional finite-difference Laplacian, where we've taken the liberty
+ of dividing by 
+\begin_inset Formula $N$
+\end_inset
+
+ because it is so large.
+ If this still feels odd: bear in mind that all points 
+\begin_inset Formula $\left(u\right)$
+\end_inset
+
+ are nearest neighbors of the point 
+\begin_inset Formula $\left(w\right)$
+\end_inset
+
+.
+ The space itself is a simplex: all 
+\begin_inset Formula $N$
+\end_inset
+
+ points are equidistant from all the others (Hamming distance).
+\end_layout
+
+\begin_layout Standard
+For word-pairs, fixing a word-pair 
+\begin_inset Formula $\left(u,v\right)$
+\end_inset
+
+ and then asking what all the Hamming distance-one pairs are, these are
+ precisely 
+\begin_inset Formula $\left\{ \left(u,w\right):w\ne v\right\} \cup\left\{ \left(w,v\right):w\ne u\right\} $
+\end_inset
+
+.
+ That is the set involved in the definition of the pair-Laplacian.
+ Should we call this the Hamming-Laplacian? The generalization to N-grams
+ is obvious; we don't need this generalization (yet; we'll need something
+ like of for the disjuncts! As disjuncts are just skip-grams in disguise.)
+\end_layout
+
+\begin_layout Standard
+We've not looked at this beastie before.
  Let's take a look now.
 \end_layout
 
@@ -259,6 +367,16 @@ run-1-marg-tranche-123.rdb
 
 \begin_layout Standard
 The reason for the cliff at 30 is unclear.
+ Note that 
+\begin_inset Formula $\log_{2}N=18.58$
+\end_inset
+
+ and that 
+\begin_inset Formula $\log_{2}N_{\mbox{pairs}}=24.75$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Section*
