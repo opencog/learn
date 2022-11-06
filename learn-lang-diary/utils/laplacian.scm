@@ -19,6 +19,12 @@
 ; Return -log_2 p(wl, wr)
 (alf 'pair-logli pr)
 
+; ------------------------------
+; Bingo. That's it.
+; Now we need the left and right marginals for this beast.
+; There will be oceans of these, so need to cache them.
+; This will eat a lot of wall-clock time :-(
+
 (define nwords 391548)
 
 ; Perform sums -sum_wl log_2 (wl, wr)
@@ -37,8 +43,12 @@
 
 ; Cache them all.
 (define rwords (als 'right-basis))
-(length rwords)
+(length rwords) ; 306920
+
+(define elapsed-secs (make-elapsed-secs))
+(elapsed-secs)
 (for-each cache-sum-log-left rwords)
+(format #t "It tool ~A secs\n" (elapsed-secs))
 
 ; --------------
 ; Do it again, same as above, but the right wildcards.
@@ -54,8 +64,16 @@
 	(store-atom rwild))
 
 (define lwords (als 'left-basis))
-(length lwords)
+(length lwords) ; 304085
 
+(define lelapse (make-elapsed-secs))
+(lelapse)
+(for-each cache-sum-log-right lwords)
+(format #t "It tool ~A secs\n" (lelapse))
+
+; ------------
+; Next/finally, bin-count
+; Again, this is time-consuming.
 
 (define sup-obj (add-support-api star-obj))
 
