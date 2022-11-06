@@ -171,7 +171,7 @@ MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left
 
 \end_inset
 
-The discrete laplacian somehow feels 
+The discrete Laplacian somehow feels 
 \begin_inset Quotes eld
 \end_inset
 
@@ -223,7 +223,7 @@ The point
 \begin_inset Formula $\left(*,v\right)$
 \end_inset
 
- feel like two diferent fibers above the point in the base space.
+ feel like two different fibers above the point in the base space.
  The summation is happening on the fibers.
  That is, we've defined 
 \begin_inset Formula 
@@ -241,6 +241,20 @@ is
 \emph default
  a kind of discrete Laplacian, but it's over a weird fibered space; its
  a comparison over fibers.
+ The generalization of this would be a funky Hamming-fibered Laplacian,
+ so that, for triples,
+\begin_inset Formula 
+\[
+\nabla\left(u,v,w\right)=\log_{2}p\left(u,v,w\right)-\frac{1}{3}\left[\log_{2}p\left(u,v,*\right)+\log_{2}p\left(u,*,w\right)+\log_{2}p\left(*,v,w\right)\right]
+\]
+
+\end_inset
+
+and so on.
+ (For one-dimensional fibers).
+ So, conceptually, MI and ranked-MI are a kind of difference equation; they
+ are kind of like fibered Laplacians, but ...
+ what can we do with this insight? What can be constructed?
 \end_layout
 
 \begin_layout Subsection*
@@ -345,7 +359,7 @@ Basically, we're fixing a point
 \end_layout
 
 \begin_layout Standard
-In this case, the Laplacian really is clear and unabiguous: it is
+In this case, the Laplacian really is clear and unambiguous: it is
 \begin_inset Formula 
 \[
 \Delta E\left(w\right)=E\left(w\right)-\frac{1}{N-1}\sum_{u\ne w}E\left(u\right)
@@ -437,7 +451,21 @@ The denominator is simply the number of terms in the summation.
 \end_layout
 
 \begin_layout Standard
-Caution about motation.
+Note that nothing specifically calls out for 
+\begin_inset Formula $E$
+\end_inset
+
+ in the above definition: the Hamming-Laplacian can be applied to any function
+ 
+\begin_inset Formula $f\left(\sigma\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Caution about notation.
  Note that
 \begin_inset Formula 
 \[
@@ -458,6 +486,20 @@ Experimental exploration
 \begin_layout Standard
 We've not looked at this beastie before.
  Let's take a look now.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The graphs are constructed from the datasets located in the directory `
+\family sans
+p6-lapalce
+\family default
+`.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -465,7 +507,7 @@ The dataset being used is `
 \family sans
 run-1-marg-tranche-123.rdb
 \family default
-` – this is well-decribed elsewhere.
+` – this is well-described elsewhere.
  It's untrimmed, its got a vocabulary of N=391548 words and a total of 28184319
  unique word pairs.
  These were observed a total of 985483375 times.
@@ -573,7 +615,7 @@ e.g.
 \end_inset
 
  is small.
- Much of this graph is effetively just a reproduction of the earlier 
+ Much of this graph is effectively just a reproduction of the earlier 
 \begin_inset Formula $E\left(u,v\right)$
 \end_inset
 
@@ -624,13 +666,21 @@ That is, most of the differential corrections are small; the vast majority
 \end_layout
 
 \begin_layout Standard
-This graph looks messy, until one notes that it is apprximately self-similar:
+This graph looks messy, until one notes that it is approximately self-similar:
  the right-most limb is repeated on the left, getting progressively smaller;
  the right-most limb recapitulates the entire graph.
  I think the cause for this involves words that are see only once, twice,
  three times.
  Due to the pair sampling, if a word is seen only once, it will still appear
  in many pairs: it will be paired with other nearby words.
+\end_layout
+
+\begin_layout Standard
+Conclusion: what have we learned? Nothing really.
+ Interesting ideas, but they don't seem to offer insight that wasn't already
+ there.
+ Nor can I find any useful application for them.
+ What further can be built from this? 
 \end_layout
 
 \begin_layout Section*
@@ -680,7 +730,7 @@ Since the LG atomese dict can now use single word-pairs, that means it can
 \end_layout
 
 \begin_layout Itemize
-The LG backend can also suppliment disjuncts with ANY links.
+The LG backend can also supplement disjuncts with ANY links.
  
 \end_layout
 
