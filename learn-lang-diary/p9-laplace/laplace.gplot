@@ -1,0 +1,20 @@
+#################################################
+#
+set term png
+set out 'laplace.png'
+# set term postscript eps enhanced color 20
+# set out 'laplace.eps'
+set key right top
+set title "Laplace"
+set xlabel "Laplace"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+# set yrange [1e-6:1e-1]
+
+ntot=40000
+
+plot "laplace-dist.dat" using 2:($3/ntot) with lines lw 2 title ""
+
+
+#################################################

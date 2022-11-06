@@ -48,7 +48,8 @@
 (define elapsed-secs (make-elapsed-secs))
 (elapsed-secs)
 (for-each cache-sum-log-left rwords)
-(format #t "It tool ~A secs\n" (elapsed-secs))
+(format #t "Right took ~A secs\n" (elapsed-secs))
+; Right took 1746 secs
 
 ; --------------
 ; Do it again, same as above, but the right wildcards.
@@ -69,11 +70,79 @@
 (define lelapse (make-elapsed-secs))
 (lelapse)
 (for-each cache-sum-log-right lwords)
-(format #t "It tool ~A secs\n" (lelapse))
+(format #t "Left took ~A secs\n" (lelapse))
+; Left took 1554 secs
+; So 200/second Not bad.
 
-; ------------
+; ----------------------------------------------------------------------
 ; Next/finally, bin-count
 ; Again, this is time-consuming.
+;
+; Get all pairs up front, avoid the CPU overhead.
+(define all-pairs (als 'get-all-elts))
+(length all-pairs)  ; 28184319
+
+; Scope it out.
+(define pr (car all-pairs))
+(ala 'left-element pr)
+(ala 'right-element pr)
+
+(define (get-sum-log-right WL)
+	(define rwild (ala 'right-wildcard WL))
+	(cog-value-ref (cog-value rwild lap) 0))
+
+(define (get-sum-log-left WR)
+	(define lwild (ala 'left-wildcard WR))
+	(cog-value-ref (cog-value lwild lap) 0))
+
+(define (get-lap PR)
+	(- (alf 'pair-logli PR)
+		(+ (get-sum-log-left (ala 'right-element PR))
+			(get-sum-log-right (ala 'left-element PR)))))
+
+(define (lap-hist NBINS LO HI FILENAM PAIR-LIST)
+"
+  lap-hist NBINS LO HI FILENAM - create histogram of laplacian thing.
+
+  (lap-hist 200 7 30 \"/tmp/laplace-dist.dat\")
+"
+	(define WEIFN (lambda (PAIR) 1.0))
+	(define bins (bin-count PAIR-LIST NBINS get-lap WEIFN LO HI))
+
+	; The actual bin counts are the second elt.
+	; The first elt is bin centers.
+	(define counts (array->list (second bins)))
+
+	(define bin-total
+		(fold 
+			(lambda (bin tot) (+ tot bin))
+			0
+			counts))
+
+	; Bin-width dh = (b-a)/nbins
+	(define bwid (/ (- HI LO) NBINS))
+
+	(format #t "Total count = ~A bin-width = ~A\n"
+		bin-total bwid)
+
+	; Dump to bogus file.
+	(define oport (open-file FILENAM "w"))
+	(format oport "#\n# Total count = ~A bin-width = ~A\n"
+		bin-total bwid)
+	(print-bincounts-tsv bins oport)
+	(close oport)
+)
+
+; Print density of states, uniform weighting.
+(lap-hist 200 2 32 "/tmp/laplace-dist.dat" (take all-pairs 40000))
+
+(elapsed)
+(lap-hist 400 2 32 "/tmp/laplace-dist.dat" all-pairs)
+(format #t "Bin count took ~A secs\n" (elapsed))
+
+
+; ----------------------------------------------------------------------
+; ------------
 
 (define sup-obj (add-support-api star-obj))
 

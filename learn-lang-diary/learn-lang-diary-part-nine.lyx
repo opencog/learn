@@ -212,10 +212,10 @@ p\left(u,*\right)=\sum_{w}p\left(u,w\right)
 
 \end_inset
 
-Consider then the very high-dimensional differrence equation
+Consider then the very high-dimensional difference equation
 \begin_inset Formula 
 \[
-\nabla\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(w,v\right)
+-\nabla\left(u,v\right)=\log_{2}p\left(u,v\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(u,w\right)-\frac{1}{2N}\sum_{w}\log_{2}p\left(w,v\right)
 \]
 
 \end_inset
@@ -240,7 +240,25 @@ The dataset being used is `
 run-1-marg-tranche-123.rdb
 \family default
 ` – this is well-decribed elsewhere.
- It's untrimmed, its got a vocabulary of N=XX words and XX word pairs.
+ It's untrimmed, its got a vocabulary of N=391548 words and a total of 28184319
+ word pairs.
+ The graph below shows a historgram of the distribution.
+ There are 400 buckets in the histogram.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p9-laplace/laplace.png
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The reason for the cliff at 30 is unclear.
 \end_layout
 
 \begin_layout Section*
