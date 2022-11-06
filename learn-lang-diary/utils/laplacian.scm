@@ -114,14 +114,14 @@
    (sort all-pairs (lambda (A B) (> (cache-lap A) (cache-lap B)))))
 
 
-(define (lap-hist NBINS LO HI FILENAM PAIR-LIST)
+(define (lap-hist NBINS LO HI FUN FILENAM PAIR-LIST)
 "
   lap-hist NBINS LO HI FILENAM - create histogram of laplacian thing.
 
-  (lap-hist 200 7 30 \"/tmp/laplace-dist.dat\")
+  (lap-hist 200 7 30 get-lap \"/tmp/laplace-dist.dat\")
 "
 	(define WEIFN (lambda (PAIR) 1.0))
-	(define bins (bin-count PAIR-LIST NBINS get-lap WEIFN LO HI))
+	(define bins (bin-count PAIR-LIST NBINS FUN WEIFN LO HI))
 
 	; The actual bin counts are the second elt.
 	; The first elt is bin centers.
@@ -148,17 +148,31 @@
 )
 
 ; Print density of states, uniform weighting.
-(lap-hist 200 2 32 "/tmp/laplace-dist.dat" (take all-pairs 40000))
+(lap-hist 200 2 32 get-lap "/tmp/laplace-dist.dat" (take all-pairs 40000))
 
-(lap-hist 400 2 32 "/tmp/laplace-dist.dat" all-pairs)
+(lap-hist 400 2 32 get-lap "/tmp/laplace-dist.dat" all-pairs)
 
 (elapsed-secs)
-(lap-hist 400 0 30 "/tmp/laplace-dist.dat" all-pairs)
+(lap-hist 400 -2 30 get-lap "/tmp/laplace-dist.dat" all-pairs)
 (format #t "Bin count took ~A secs\n" (elapsed-secs))
 
+; ------------
+; Doubled...
+
+(define (get-dbl PR)
+	(- (alf 'pair-logli PR)
+		(* 2 (+ (get-sum-log-left (ala 'right-element PR))
+			(get-sum-log-right (ala 'left-element PR))))))
+
+(lap-hist 200 0 32 get-dbl "/tmp/dbl-dist.dat" (take all-pairs 140000))
+
+(define (sumo PR)
+	(+ (get-sum-log-left (ala 'right-element PR))
+		(get-sum-log-right (ala 'left-element PR))))
+
+(lap-hist 200 0 12 sumo "/tmp/sum-dist.dat" (take all-pairs 140000))
 
 ; ----------------------------------------------------------------------
-; ------------
 
 (define sup-obj (add-support-api star-obj))
 

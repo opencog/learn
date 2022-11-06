@@ -140,7 +140,9 @@ Mutual Information vs.
 \end_layout
 
 \begin_layout Standard
-This is a random half-baked suggestive idea that dead-ends immediately.
+This is the development of a suggestive idea that first appeared in Chapter
+ Six.
+ It should be put back there.
 \end_layout
 
 \begin_layout Standard
@@ -169,7 +171,7 @@ MI_{\mbox{ranked}}\left(u,v\right)=\log_{2}\frac{p\left(u,v\right)}{\sqrt{p\left
 
 \end_inset
 
-These two somehow feel 
+The discrete laplacian somehow feels 
 \begin_inset Quotes eld
 \end_inset
 
@@ -177,31 +179,7 @@ similar
 \begin_inset Quotes erd
 \end_inset
 
- but I cannot connect the dots.
-\end_layout
-
-\begin_layout Standard
-The MI 
-\begin_inset Quotes eld
-\end_inset
-
-feels like
-\begin_inset Quotes erd
-\end_inset
-
- some kind of re-normalized propagator where the 
-\begin_inset Formula $\log_{2}p\left(u,*\right)$
-\end_inset
-
- feel like 
-\begin_inset Quotes eld
-\end_inset
-
-vacuum contributions
-\begin_inset Quotes erd
-\end_inset
-
-, but the details remain opaque.
+ to the ranked-MI, but how? Can this bedeveloped? Let's try.
 \end_layout
 
 \begin_layout Standard
@@ -349,7 +327,8 @@ run-1-marg-tranche-123.rdb
 \family default
 ` – this is well-decribed elsewhere.
  It's untrimmed, its got a vocabulary of N=391548 words and a total of 28184319
- word pairs.
+ unique word pairs.
+ These were observed a total of 985483375 times.
  The graph below shows a histogram of the distribution.
  There are 400 buckets in the histogram.
 \end_layout
@@ -366,17 +345,7 @@ run-1-marg-tranche-123.rdb
 \end_layout
 
 \begin_layout Standard
-The reason for the cliff at 30 is unclear.
- Note that 
-\begin_inset Formula $\log_{2}N=18.58$
-\end_inset
-
- and that 
-\begin_inset Formula $\log_{2}N_{\mbox{pairs}}=24.75$
-\end_inset
-
-.
- The fit curve is exactly given by 
+The fit curve is exactly given by 
 \begin_inset Formula $2^{3\Delta E/4}/N_{\mbox{pairs}}$
 \end_inset
 
@@ -398,6 +367,64 @@ The reason for the cliff at 30 is unclear.
 
  the golden mean.
  This probably doesn't mean anything, though.
+\end_layout
+
+\begin_layout Standard
+How does the data lead to this graph? Note that 
+\begin_inset Formula $\log_{2}N=18.58$
+\end_inset
+
+ and that 
+\begin_inset Formula $\log_{2}N_{\mbox{pairs}}=24.75$
+\end_inset
+
+ and finally 
+\begin_inset Formula $\log_{2}T=29.88$
+\end_inset
+
+.
+ The far-right hand side tells us that almost all word-pairs are observed
+ once
+\emph on
+ i.e.
+
+\emph default
+ 
+\begin_inset Formula $E=-\log_{2}p=29.88$
+\end_inset
+
+ or maybe twice: 
+\begin_inset Formula $E=29.88-1$
+\end_inset
+
+ or three times: 
+\begin_inset Formula $E=29.88-\log_{2}3$
+\end_inset
+
+.
+ At the same time, these words are observed with a far more frequent neighbor:
+ 
+\emph on
+e.g.
+
+\emph default
+ 
+\begin_inset Formula $\left(\mbox{the},X\right)$
+\end_inset
+
+ for some obscure word 
+\begin_inset Formula $X$
+\end_inset
+
+(maybe a typo?), so that although the pair 
+\begin_inset Formula $\left(\mbox{the},X\right)$
+\end_inset
+
+ is observed only once, the marginal sum 
+\begin_inset Formula $\sum_{w\ne X}E\left(\mbox{the},w\right)$
+\end_inset
+
+ is small.
 \end_layout
 
 \begin_layout Section*
