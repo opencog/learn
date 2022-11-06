@@ -295,8 +295,8 @@ and so the difference eqn is
 \end_layout
 
 \begin_layout Standard
-This difference equation is rightfull called a discrete Laplacian on a high-dime
-nsional space.
+This difference equation is rightfully called a discrete Laplacian on a
+ high-dimensional space.
  That this is the correct name can be seen as follows.
 \end_layout
 
@@ -436,6 +436,21 @@ The Hamming-Laplacian is then
 The denominator is simply the number of terms in the summation.
 \end_layout
 
+\begin_layout Standard
+Caution about motation.
+ Note that
+\begin_inset Formula 
+\[
+E\left(u,*\right)=\sum_{w}E\left(u,w\right)=-\sum_{w}\log_{2}p\left(u,w\right)\ne-\log_{2}\sum_{w}p\left(u,w\right)=-\log_{2}p\left(u,*\right)
+\]
+
+\end_inset
+
+Obviously, the log and the sum cannot be interchanged, but using the star
+ notation for wild-card sums makes it tempting to do so.
+ 
+\end_layout
+
 \begin_layout Subsection*
 Experimental exploration
 \end_layout
@@ -469,7 +484,7 @@ run-1-marg-tranche-123.rdb
 \begin_layout Standard
 \align center
 \begin_inset Graphics
-	filename p9-laplace/laplace.png
+	filename p9-laplace/laplace.eps
 	width 80col%
 
 \end_inset
@@ -558,6 +573,64 @@ e.g.
 \end_inset
 
  is small.
+ Much of this graph is effetively just a reproduction of the earlier 
+\begin_inset Formula $E\left(u,v\right)$
+\end_inset
+
+ graph, including the bow in the middle.
+\end_layout
+
+\begin_layout Standard
+The fiber sums are ..
+ curious.
+ These are (with mild abuse of notation) 
+\begin_inset Formula $E\left(u,*\right)+E\left(*,v\right)$
+\end_inset
+
+ or, more precisely,
+\begin_inset Formula 
+\[
+SE\left(u,v\right)=-\frac{1}{2\left(N-1\right)}\left[\sum_{w\ne v}E\left(u,w\right)+\sum_{w\ne u}E\left(w,v\right)\right]
+\]
+
+\end_inset
+
+This is shown in the figure below.
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename p9-laplace/sum-dist.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+That is, most of the differential corrections are small; the vast majority
+ of them are less than one.
+ So, indeed, we can safely conclude that the distribution of 
+\begin_inset Formula $\Delta E\left(u,v\right)$
+\end_inset
+
+ is indeed very nearly the same as that of 
+\begin_inset Formula $E\left(u,v\right)$
+\end_inset
+
+, as the fiber-sum corrections are small.
+\end_layout
+
+\begin_layout Standard
+This graph looks messy, until one notes that it is apprximately self-similar:
+ the right-most limb is repeated on the left, getting progressively smaller;
+ the right-most limb recapitulates the entire graph.
+ I think the cause for this involves words that are see only once, twice,
+ three times.
+ Due to the pair sampling, if a word is seen only once, it will still appear
+ in many pairs: it will be paired with other nearby words.
 \end_layout
 
 \begin_layout Section*

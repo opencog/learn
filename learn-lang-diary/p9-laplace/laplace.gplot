@@ -1,16 +1,16 @@
 #################################################
 #
-set term png
-set out 'laplace.png'
-# set term postscript eps enhanced color 20
-# set out 'laplace.eps'
+# set term png
+# set out 'laplace.png'
+set term postscript eps enhanced color 20
+set out 'laplace.eps'
 set key left top
 set title "Histogram of Laplacian {/Symbol D} E(u,v) values"
 set xlabel "Laplacian {/Symbol D} E(u,v)"
 set ylabel "Frequency"
 set logscale y
 set format y "10^{%L}"
-set xrange [0:30]
+set xrange [-2:30]
 set yrange [1e-8:1e-1]
 
 ntot=40000

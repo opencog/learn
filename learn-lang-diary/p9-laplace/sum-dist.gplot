@@ -1,0 +1,20 @@
+#################################################
+#
+# set term png
+# set out 'sum-dist.png'
+set term postscript eps enhanced color 20
+set out 'sum-dist.eps'
+set key right top
+set title "Histogram of E(u,*)+E(*,v) values"
+set xlabel "E(u,*) + E(*,v)"
+set ylabel "Frequency"
+set logscale y
+set format y "10^{%L}"
+set xrange [0:12]
+set yrange [1e-8:1]
+
+ntot=28184319
+
+plot "sum-dist.dat" using 2:($3/ntot) with lines lw 2 title ""
+
+#################################################
