@@ -2,11 +2,18 @@
 Calibrating Unsupervised Language Learning
 ==========================================
 * Version of May 2021
+* Mothballed, late 2021
 
-Ongoing project, continuing activity.  See the
+Mothballed project, halted activity. This was a good idea, but it
+foundered on severeal practical and several theoretical issues.
+Cannot move foreward, until these are addressed.  See below, "lessons
+learned". for a summary of these issues.
+
+See also the
 [language learning wiki](http://wiki.opencog.org/w/Language_learning)
-for an alternate overview. See the diary at
-`learn-lang-diary/learn-lang-diary-part-two.lyx` for a progress log.
+for an alternate overview. See
+[Diary Part Two](learn-lang-diary/learn-lang-diary-part-two.pdf)
+for a log of the experimental efforts and results.
 
 Project Summary
 ---------------
@@ -144,6 +151,15 @@ and questions arose fairly quickly.
   adjustable parameters even "aligned" with the axes of human language
   complexity? How does one even judge this?
 
+* A serious, practical impediment is that there is no easy way to just
+  "eyeball" the results. With English, one can just look at the stuff
+  being generated, and its fairly clear when it's good and when its
+  garbage.  But with artificial langauges, it is impossible to glance at
+  it and get any idea of what's going on. In order to track what's
+  happpening, one would need to build a deep, complex and throuogh set
+  of tools, carefully measuring everything at every step, to see if the
+  process is working or has gone off the rails.
+
 Additional details, results, questions and head-scartching can be found
 in the [Language Learning Diary, Part
 Two](learn-lang-diary/learn-lang-diary-part-two.pdf).
@@ -153,7 +169,6 @@ more we learn, the more we don't know, and the things we don't know
 appear to be increasingly basic and simple. It feels like I haven't
 even dented the surface of grammar--corpus correspondence. Onward
 through the fog!
-
 
 That's all for now!
 -------------------

@@ -531,12 +531,17 @@ Processing Overview
 See the [README-Natural](README-Natural.md) file for a description of
 the "open-loop" (un-calibrated) processing system. It describes the
 processing steps in detail.  Getting good results requires tuning
-a variety of parameters, and so calibration needs to be run first.
+a variety of parameters, and so careful monitoring is required.
 
-See the [README-Calibration](README-Calibration.md) file for the "new"
-(next-gen) process of generating artificial languages with bounded
-statistical properties, learning them, and then measuring the accuracy
-of the learned language vs. the generated artificial language.
+See the [README-Natural-v2](README-Natural-v2.md) file for the new
+"integrated", "continuous learning" pipeline. Under development.
+
+The [README-Calibration](README-Calibration.md) proposed a technique
+for calibrating the learning pipeline, by generating artificial languages
+with known, bounded statistical properties, then learning them, and then
+measuring the accuracy of the learned language vs. the generated artificial
+language. This approach is currently abandoned. Its not a bad idea, just
+that naive conception won't work.
 
 Directories
 -----------
