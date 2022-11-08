@@ -2,6 +2,10 @@
 Parse management scripts
 ========================
 
+Under reconstruction.  These scripts are being redesigned *right now*.
+The documentation may be contradictory or incoherent. For an older working
+version, see the [attic](../attic/run-v3).
+
 The scripts here are used to automate the operation of the
 language-learning pipeline. Currently, it consists of five or six
 semi-automated steps. These steps are "semi-automated", in that
@@ -10,11 +14,6 @@ in each directory.
 
 An (almost) "fully automated" script is provided in `all-in-one.sh`.
 Currently, it only automates steps 2 and 3.
-
-* Artificial grammar generation. Automation scripts can be found in the
-  [1-gen-dict](1-gen-dict) directory. This is required for calibration
-  of the learning system. Run `gen-dict.sh` and `gen-corpus.sh` in this
-  directory.
 
 * For natural language learning, a text corpus is needed. Any
   sufficiently large collection of plain-text UTF-8 files will do.

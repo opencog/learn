@@ -13,22 +13,8 @@ they are needed to run the processing.
   that are generic to the entire pipeline. Set the environment variable
   $MASTER_CONFIG_FILE to the location of this file.
 
-* `1-dict-conf.scm` -- This contains the configurable parameters for
-   generating a random artificial ("fake") grammar. Edit this file
-   as desired (or copy it and edit it...). Once the parameters are
-   configured as desired, the grammar can be generated as
-```
-   $ /run/1-gen-dict/gen-dict.scm 1-dict-conf.scm
-```
-   Skip this, if not working with artificial languages.
-
-* `1-corpus-conf.sh` -- This contains parameters that control the size
-   of the generated corpus.
-
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
-  Pre-configured variants for English and artificial languages are in
-  `2-pair-conf-en.sh` and in `2-pair-conf-fake.sh`. A variant for
-  exploring disassembled binaries is in `2-pair-conf-objdump.sh`
+  Pre-configured variants for English are in `2-pair-conf-en.sh`
 
 * `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
   parsing and disjunct counting. The MPG variant is the "Maximum Planar

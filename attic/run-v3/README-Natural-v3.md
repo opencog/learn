@@ -15,7 +15,8 @@ pipeline is no longer tenable, as it has trouble reaching into higher
 stages.  The snapshot is here for reference.  Notable changes include:
 
 * Calibrated AKA "closed" learning is mothballed/abandoned, it's not
-  feasible as envisioned.
+  feasible as envisioned. The scripts for this processing can be found
+  in this directory; they've been removed from the main directory.
 * The Postrgres backend is abandoned; its slow, awkward, inflexible.
 * Link Grammar takes over the MST parsing from the earlier scheme scripts.
 * Many of the TODO items listed below have been done.

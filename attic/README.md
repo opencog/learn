@@ -11,3 +11,4 @@ Contents:
 
 * [run-v3](./run-v3) -- Run scripts from October 2022, from when the
   (natural langauge) pipeline was sequential and not integrated.
+  Includes processing scripts for the "fake" (artificial) languages.
