@@ -9,3 +9,5 @@ Contents:
   by Claudia Castillo. This was from a joint project, working with
   Andres Suarez, overseen by Anton Kolonin.
 
+* [run-v3](./run-v3) -- Run scripts from 2022, from when the (natural
+  langauge) pipeline was sequential and not integrated.
