@@ -9,18 +9,18 @@ Unsupervised Natural Language Learning
 
 This README provides general information needed for setting up the
 natural language learning processing pipeline. It details pre-requisites
-and outlines some general concepts. These are shared by three sub-projects:
+and outlines some general concepts. These are shared by two sub-projects:
 
-* [Integrated Language Learning](./README-Natural-v2.md) -- the current
+* [Integrated Language Learning](./README-Natural-v4.md) -- the current
   focus of activity.
-* [Unsupervised Language Learning](./README-Natural-v1.md) -- an earlier
-  multi-step pipeline. It "works" but the multiple steps are cumbersome.
 * [Calibrated Learning](README-Calibration.md) -- Mothballed. Some good
   (great?) ideas for calibrating the pipeline, but not really workable at
   the present time.
 
 A diary of scientific notes and results is in the
 [learn-lang-diary](learn-lang-diary) subdirectory.
+Earlier versions of the processing scripts can be found in the
+[attic directory](./attic).
 
 Table of Contents
 ------------------

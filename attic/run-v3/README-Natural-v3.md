@@ -7,6 +7,19 @@ Unsupervised Natural Language Learning
 * Updated February 2021
 * Updated November 2022
 
+*** OBSOLETE ***
+
+This is a snapshot of the processing scripts as the were in October 2022.
+This featured a discrete pipeline, with distinct processing steps. This
+pipeline is no longer tenable, as it has trouble reaching into higher
+stages.  The snapshot is here for reference.  Notable changes include:
+
+* Calibrated AKA "closed" learning is mothballed/abandoned, it's not
+  feasible as envisioned.
+* The Postrgres backend is abandoned; its slow, awkward, inflexible.
+* Link Grammar takes over the MST parsing from the earlier scheme scripts.
+* Many of the TODO items listed below have been done.
+
 Table of Contents
 ------------------
 1. [Project Summary](#project-summary)
