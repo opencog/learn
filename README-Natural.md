@@ -99,6 +99,11 @@ The basic algorithmic steps, as implemented so far, are as follows:
 * **L**) Sleep cycle three. Repeat sleep cycles 1 &amp; 2, plus also
          analysis of the next level of pairs.
 
+The distinction between the wake and sleep cycles is because the sleep
+cycles compute marginals and similarities, and these cannot be done at
+the same time that data is being ingested, as all of the counts would be
+thrown off.
+
 Currently, the software implements steps **A**, through **J** but not yet
 in a fully integrated fashion. That is, the second wake cycle does not
 include the counting from the first; and so on, for the sleep cycles.
@@ -159,8 +164,8 @@ limitations.
 All of the statistics gathering is done within the OpenCog AtomSpace,
 where counts and other statistical quantities are associated with various
 different hypergraphs.  The contents of the AtomSpace are saved to an
-SQL (Postgres) server for storage.  The system is fed with raw text
-using assorted ad-hoc scripts, which include link-grammar as a central
+RocksDB database for storage.  The system is fed with raw text using
+assorted ad-hoc scripts, which include link-grammar as a central
 component of the processing pipeline. Most of the data analysis is
 performed with an assortment of scheme scripts.
 
@@ -202,23 +207,15 @@ unhappy, painful experience.
    size, and not very many copies of a 150GB database will fit
    onto a 1TB disk.  2TB is a more comfortable size to work with.
 
-   Databases for the artificial-language pipeline might be
-   smaller, so this is perhaps less of a concern.
-
 * **0.3)** Get a machine with 4 or more CPU cores, and a minimum of
-           64GB RAM.  For English-language learning, it will be less
-           agonizing and infuriating if you have 128 GB RAM or more.
-           Smaller RAM sizes are enough for artificial-language
-           learning experiments.
+           64GB RAM.  128GB or 256GB or more is preferrable.
+           Otherwise one is faced with the agony of struggling
+           with datasets that don't fit.
 
-   For English-langauge work, the datasets do get large, and
-   although many of the scripts are designed to only fetch from
-   disk "on demand", the in-RAM sizes can get large. As I write
-   this, my grammatical-clustering process is using 53GB
-   resident-in-RAM working-set size (57GB virtual size).
-   You need additional RAM for the Postgres server -- 24GB is
-   reasonable -- and so 53+24=78GB is the current bare-minimum.
-   More, if you want to e.g. run a web-browser or something.
+   Many of the scripts are beig modernized to fetch data "on demand",
+   and to flush RAM when that data is no longer needed. However, this
+   has not been acheived in general, and sometimes, especially during
+   the sleep cycles, the entire dataset must be paged in.
 
 * **0.4)** Optional but recommended. If you plan to run the pipeline
            on multiple different languages, it can be convenient, for
@@ -244,7 +241,8 @@ unhappy, painful experience.
    * Do not confuse LXC with Docker! They are similar, but LXC
      is superior for the current task! Why, you ask? Because
      when you reboot a Docker container, you lose all your work!
-     Dohhh!
+     Dohhh! You can probably configure Docker to also work in this
+     way, but this requires more fiddling.
 
 * **0.5)** Optional but strongly recommended. Install system shutdown
            scripts.  This will help protect your data in case of an
@@ -295,12 +293,27 @@ unhappy, painful experience.
       sudo apt install git cmake g++
       sudo apt install libboost-filesystem-dev libboost-system-dev libboost-thread-dev libboost-program-options-dev
       sudo apt install guile-3.0-dev librocksdb-dev libuuid-dev
-      sudo apt install postgresql-client postgresql libpq-dev pgtop
       sudo apt install autoconf-archive flex byobu rlwrap telnet
-      sudo apt install automake libsqlite3-dev libedit-dev
+      sudo apt install automake libpcre2-dev libedit-dev
 ```
 
-* **0.10)** Link-grammar version 5.6.1 or newer is required.
+* **0.10)** The following AtomSpace and OpenCog components are needed:
+            `cogutils`, `atomspace`, `atomspace-rocks`, `cogserver`.
+            Each of these follows this generic pattern:
+```
+      git clone https://github.com/opencog/cogutils
+      cd cogutils; mkdir build; cd build
+      cmake ..
+      make -j
+      sudo make install
+```
+   Repeat the above for each of the other github repos.
+
+* **0.11)** Link-grammar version 5.12.0 or newer is required. It must be
+           built after the AtomSpace, as it has a dependency on it. It must
+           be built before `lg-atomese`, because `lg-atomese requires
+           Link Grammar.
+
            The currently installed version can be displayed by running
 ```
       link-parser --version
@@ -322,43 +335,15 @@ unhappy, painful experience.
       sudo make install
 ```
 
-   The artificial-language-learning code requires an unpublished prototype
-   Get this as
+* **0.12)** The `lg-atomese` component. It follws the same generic
+      pattern as the other OpenCog components:
 ```
-      git clone https://github.com/opencog/link-grammar
-      cd link-grammar
-      git checkout generate
-```
-This will eventually appear in version 5.9.0.
-
-* **0.11)** The following AtomSpace and OpenCog components are needed:
-            `cogutils`, `atomspace`, `atomspace-rocks`, `cogserver`,
-            `lg-atomese`. Each of these follows this generic pattern:
-```
-      git clone https://github.com/opencog/cogutils
-      cd cogutils; mkdir build; cd build
+      git clone https://github.com/opencog/lg-atomese
+      cd lg-atomese; mkdir build; cd build
       cmake ..
       make -j
       sudo make install
 ```
-
-   Repeat the above for each of the other github repos.
-
-* **0.12)** Install the guile bindings for sqlite3. This is needed
-            so as to export the resulting dictionary to Link Grammar.
-```
-      git clone https://github.com/opencog/guile-dbi
-      cd guile-dbi/guile-dbi
-      ./autogen.sh --no-configure
-      mkdir build; cd build; ../configure; make
-      sudo make install
-
-      cd ../guile-dbd-sqlite3
-      ./autogen.sh --no-configure
-      mkdir build; cd build; ../configure; make
-      sudo make install
-```
-
 
 Bulk Pair Counting
 ------------------
@@ -368,16 +353,6 @@ and this is best obtained by processing a large number of text files;
 typically thousands or tens of thousands of them, for run-time of a
 few days to a week or two.  For a practice run, half-an-hour is
 sufficient, but a half-hours worth of data will be quite low-quality.
-
-There are two basic pipelines: "fake" and "natural". "Fake" uses
-artificially generated grammars and text corpora, and is essential for
-calibrating and adjusting the learning algorithms to produce the best
-results. This is a closed-loop process, where the accuracy of the final
-result can be compared to input grammar. "Natural" uses natural-language
-corpora downloaded from the web. Since the algorithms are currently
-uncalibrated (untuned) you ... get what you get: it will be of uncertain
-quality, and there is no practical way to measure the accuracy. There
-are instructions below for both pipelines.
 
 Performance: it takes days/weeks because the processing pipeline has
 been optimized for experimentation, and not for speed. We are playing
@@ -408,7 +383,7 @@ There are various scripts in the `download` directory for downloading
 and pre-processing texts from Project Gutenberg, Wikipedia, and the
 "Archive of Our Own" fan-fiction website.
 
-* **7)** Explore the scripts in the `download` directory. Download or
+*  Explore the scripts in the `download` directory. Download or
    otherwise obtain a collection of texts to process. Put them in
    some master directory, and also copy them to the `beta-pages`
    directory.  The name `beta-pages` is not mandatory, but some of
@@ -471,6 +446,12 @@ only when events are not sequentially ordered. That definition is **not
 the same** as that being used here, although it looks quite similar.
 Failure to make note of this can lead to a lot of confusion!
 
+
+Next Steps
+----------
+The above provided a basic overview. Detailed steps for actually
+running the pipeline are in the [Integrated Language Learning
+README](./README-Natural-v2.md).  Go there next.
 
 That's all for now!
 -------------------
