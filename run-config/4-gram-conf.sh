@@ -6,8 +6,8 @@
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=19008
-export PROMPT="scheme@(gram-class)"
-export OCPROMPT="cogserv@(gram-class)"
+export PROMPT="\x1b[0;34mscheme@(gram-class) \x1b[0m"
+export OCPROMPT="\x1b[0;32mcogserv@(gram-class) \x1b[0m"
 export LOGFILE=/tmp/cogserver-gram-en.log
 
 # Location of the database where grammatical classes will be formed.

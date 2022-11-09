@@ -29,18 +29,12 @@ export CONFIG_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # The master config file, which is this file.  Don't change.
 export MASTER_CONFIG_FILE=${CONFIG_DIR}/$( basename "${BASH_SOURCE[0]}" )
 
-# File containing artificial-language generation configuration.
-# Change this as desired.
-export GEN_CONF_FILE=$CONFIG_DIR/1-corpus-conf.sh
-
 # File containing pair-counting configuration.
 # Change this as desired.
 export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-en.sh
-export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-fake.sh
 
 # File containing MST-parsing configuration.
 export MST_CONF_FILE=$CONFIG_DIR/3-mst-conf.sh
-export MST_CONF_FILE=$CONFIG_DIR/3-mpg-conf-fake.sh
 
 # File containing grammatical-class configuration
 export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh
@@ -54,3 +48,5 @@ export EXPORT_CONF_FILE=$CONFIG_DIR/5-export-conf.sh
 
 export SENTENCE_SPLIT=false
 export XFORM_SPLIT=false
+export OCPROMPT="\x1b[0;32mcogserver> \x1b[0m"
+export LOGFILE=/tmp/cogserver.log

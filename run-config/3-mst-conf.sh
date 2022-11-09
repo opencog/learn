@@ -19,8 +19,8 @@ export SPLIT_LANG=en
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
-export PROMPT="scheme@(mst-parse)"
-export OCPROMPT="cogserv@(mst-parse)"
+export PROMPT="\x1b[0;34mscheme@(mst-parse) \x1b[0m"
+export OCPROMPT="\x1b[0;32mcogserv@(mst-parse) \x1b[0m"
 export LOGFILE=/tmp/cogserver-mst-en.log
 
 # Scheme function name for MST parsing.
