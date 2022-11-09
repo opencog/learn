@@ -6,9 +6,7 @@ The scripts here are used to automate the ingestion of plain-text
 UTF-8 files into the first stage of the language learning pipeline.
 These can be applied to any flat text files from any origin of your
 choice.  Some tools for downloading Wikipedia and Project Gutenberg
-texts can be found in the `../../download` directory.  Tools for
-generating artificial languages are in the
-[`../1-gen-dict`](../1-gen-dict) directory.
+texts can be found in the `../../download` directory.
 
 Processing can be done in a "fully automated" way or in a semi-automated
 way. For full automation, just run `run-all.sh` and move to the next
@@ -19,7 +17,7 @@ days) and if issues arise, it may be easier to run in a semi-automated
 mode.  This is done by starting a cogserver in one terminal with
 `run-cogserver.sh`, and sending text to it in another, with
 `pair-submit.sh`. If counting is interrupted, just re-run
-`pair-submit.sh` again, and it will pick up hwere it left off.
+`pair-submit.sh` again, and it will pick up where it left off.
 
 After counting has completed, marginal statistics must be computed.
 This can be done by hand, by running `compute-marginals.sh`.

@@ -227,6 +227,46 @@ BTW, we can do GOE similarity with just word-pair MI.
 \end_layout
 
 \begin_layout Section*
+The Plan
+\end_layout
+
+\begin_layout Itemize
+Start with pair counting.
+ Do NOT trim until after MST.
+\end_layout
+
+\begin_layout Itemize
+During MST, count the pairs that contributed to the MST.
+ Lets call this 
+\begin_inset Quotes eld
+\end_inset
+
+second counting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Never trim second-counted pairs (at least not for the next few steps.)
+\end_layout
+
+\begin_layout Itemize
+Perform tentative GOE clustering before MST, perform MST with and without
+ clusters, try to see which is betters!? How to tell which is better? I
+ guess higher totla MI.
+ But how to count/trakc which contributed the most, and still maintain detailed
+ balance? I.e.
+ how to 
+\begin_inset Quotes eld
+\end_inset
+
+undo
+\begin_inset Quotes erd
+\end_inset
+
+ clustering? Or will second-counting be sufficinet to track? 
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 

@@ -31,7 +31,8 @@ Currently, it only automates steps 2 and 3.
   [4-gram-class](4-gram-class) directory. The previous step must
   have been completed, before starting this.
 
-* Comparison of the learned grammar to the input grammar in step 0.
+* Comparison of the learned grammar to the input grammar. These are
+  the datasets from the 2019 ULL-POC work.
   Incomplete. Some work in [5-compare](5-compare).
 
 * All-in-one. The `all-in-one.sh` file combines steps 2, 3 and 4 in
