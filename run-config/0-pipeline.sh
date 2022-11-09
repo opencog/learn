@@ -48,5 +48,5 @@ export EXPORT_CONF_FILE=$CONFIG_DIR/5-export-conf.sh
 
 export SENTENCE_SPLIT=false
 export XFORM_SPLIT=false
-export OCPROMPT="\x1b[0;32mcogserver> \x1b[0m"
+export OCPROMPT="[0;32mcogserver> [0m"
 export LOGFILE=/tmp/cogserver.log
