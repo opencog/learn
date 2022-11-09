@@ -24,7 +24,8 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=17001
 export PROMPT="scheme@(count-pairs)"
-export COGSERVER_CONF=""
+export OCPROMPT="cogserv@(count-pairs)"
+export LOGFILE=/tmp/cogserver-pairs-en.log
 
 # Scheme function name for word-pair counting. This is a scheme function
 # that will be called to process each sentence.  For example, if the corpus
@@ -38,8 +39,9 @@ export PAIRS_DB=${ROCKS_DATA_DIR}/word_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # For Postgres, use this. (The quotes are important!)
-export PAIRS_DB=word_pairs
-export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
+# (Except don't use it -- the Postgres Backend is deprecated.)
+# export PAIRS_DB=word_pairs
+# export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 
 # Directories where in-process and completed files will be moved.
 # This avoids double-processing of corpus files, if the pair-processing

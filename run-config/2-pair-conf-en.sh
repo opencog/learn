@@ -22,7 +22,8 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=17005
 export PROMPT="scheme@(en-pairs)"
-export COGSERVER_CONF=${CONFIG_DIR}/2-cogserver/cogserver-pairs-en.conf
+export OCPROMPT="cogserv@(en-pairs)"
+export LOGFILE=/tmp/cogserver-pairs-en.log
 
 # Scheme function name for word-pair counting
 export OBSERVE="observe-text"
@@ -30,8 +31,9 @@ export OBSERVE="observe-text"
 # Location of the database where pair counts will be accumulated
 
 # For Postgres, use this. (The quotes are important!)
-export PAIRS_DB=en_pairs
-export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
+# (Except don't use this: the Postgres backend is deprecated.)
+# export PAIRS_DB=en_pairs
+# export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 
 # For RocksDB, use this.
 export PAIRS_DB=${ROCKS_DATA_DIR}/en_pairs.rdb

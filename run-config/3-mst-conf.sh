@@ -20,7 +20,8 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=17001
 export PROMPT="scheme@(mst-parse)"
-export COGSERVER_CONF=""
+export OCPROMPT="cogserv@(mst-parse)"
+export LOGFILE=/tmp/cogserver-mst-en.log
 
 # Scheme function name for MST parsing.
 export OBSERVE="observe-mst"

@@ -27,7 +27,8 @@ export SPLIT_LANG=en
 export HOSTNAME=localhost
 export PORT=17001
 export PROMPT="scheme@(mpg-parse)"
-export COGSERVER_CONF=""
+export OCPROMPT="cogserv@(mpg-parse)"
+export LOGFILE=/tmp/cogserver-mpg-en.log
 
 # Scheme function name for planar MST parsing. This is a scheme function
 # that will be called to process each sentence.  For example, if the corpus

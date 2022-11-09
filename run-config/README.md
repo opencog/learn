@@ -1,6 +1,6 @@
 
-Artificial grammars and corpora
-===============================
+Configuration Files
+====================
 
 Configuration files for various parts of the processing pipeline.
 

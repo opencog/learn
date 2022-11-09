@@ -26,6 +26,8 @@
 	(exit -1))
 
 ; Prompt magic, copied from `module/system/repl/common.scm`
+; This makes the scheme shell prompt work correctly, even when
+; exceptions are caught.
 (define (cog-prompt)
 	(let ((level (length (cond
 				((fluid-ref *repl-stack*) => cdr)
@@ -37,7 +39,12 @@
 (repl-default-prompt-set! cog-prompt)
 
 ; Start the cogserver using the indicated config file.
-(start-cogserver (getenv "COGSERVER_CONF") #:web 0)
+(start-cogserver
+	#:port (getenv "PORT")
+	#:scmprompt (getenv "PROMPT")
+	#:prompt (getenv "OCPROMPT")
+	#:logfile (getenv "LOGFILE")
+	#:web 0)
 
 ; Open the database.
 (define sns (getenv "STORAGE_NODE"))
