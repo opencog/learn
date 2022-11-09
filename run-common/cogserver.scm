@@ -40,7 +40,7 @@
 
 ; Start the cogserver using the indicated config file.
 (start-cogserver
-	#:port (getenv "PORT")
+	#:port (string->number (getenv "PORT"))
 	#:scmprompt (getenv "PROMPT")
 	#:prompt (getenv "OCPROMPT")
 	#:logfile (getenv "LOGFILE")
