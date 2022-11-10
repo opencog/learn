@@ -14,9 +14,14 @@ export IN_PROCESS_DIR=pair-split
 export COMPLETED_DIR=pair-counted
 export MSG="Splitting and word-pair counting"
 
-# Enable sentence splitting.
+# Enable sentence splitting. The `observe-text` function expects
+# one sentence per line, and splitting is required to feed it
+# sentences.
 export SENTENCE_SPLIT=true
 export SPLIT_LANG=en
+
+# Scheme function name for word-pair counting
+export OBSERVE="observe-text"
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
@@ -24,9 +29,6 @@ export PORT=17005
 export PROMPT="[0;34mscheme@(en-pairs) [0m"
 export OCPROMPT="[0;32mcogserv@(en-pairs) [0m"
 export LOGFILE=/tmp/cogserver-pairs-en.log
-
-# Scheme function name for word-pair counting
-export OBSERVE="observe-text"
 
 # Location of the database where pair counts will be accumulated
 

@@ -13310,6 +13310,13 @@ link-grammar: Error: sentence_split(): Internal error detected
 ====================================================
 
 FIXED:
+* Finish work in link-grammar bug #1276 -sqlite sanity checks.  WONTFIX
+* Alter dict export to not require creation of singletons.
+  They are way too slow and not really a needed step. WONTFIX
+* Some words seem to have a leading blank! Its UTF e2 80 af 
+  aka U+202F NARROW NO-BREAK SPACE
+  also c2 a0  U+00A0 NO-BREAK SPACE FIXED 
+* Pairs ANY language not split: … • ” » · │ .. fixed in ANY
 * (cog-set-atomspace! borken in cogserver DONE
 * Implement connector merging. ... half-done... DONE, I think, and unit
   tests too.
@@ -13407,14 +13414,13 @@ TODO/BUGS:
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
   This seems .. I'm confused.
 * Log the similarity fractions
-* Finish work in link-grammar bug #1276 -sqlite sanity checks.
-* Alter dict export to not require creation of singletons.
-  They are way too slow and not really a needed step.
 * When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
 * Bugs: quotes are not being escaped by submit-one.pl!!
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
+  Original sources do not have them. pair-counts do.
+  Is this failed rdb encoding? No, that's fine...
   Ending quotes also hide punctuation so punct is not split.
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
