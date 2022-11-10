@@ -121,6 +121,9 @@ sub preprocess
 	# This is one paragraph.
 	my($text) = @_;
 
+	# Get rid of stray html markup.
+	$text =~ s/<P>//g;
+
 	# Double-dashes, without spaces! sometimes get used to concatenate
 	# sentences. I see this in Project Gutenberg books a lot.
 	$text =~ s/--/ -- /g;
