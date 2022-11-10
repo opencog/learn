@@ -48,7 +48,7 @@ while (<STDIN>)
 	chop;
 
 	send_nowait($server, $port, "($ARGV[2] \"$_\")\n");
-	# print "submit-one: $_\n";
+	# print "submit-plain: $_\n";
 	$nsent = $nsent + 1;
 }
 

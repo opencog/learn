@@ -40,10 +40,6 @@ directory.  A quick overview:
 * `submit-plain.pl`: Script to send text strings to the cogserver.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
-* `submit-one.pl`: Script to send single sentences to the cogserver.
-  Similar to above, but strips out stray HTML markup, and comment
-  cards.  Used for pair-counting, MST-parsing and MPG-parsing.
-
 * `socket-send.pl`: Network interface to the cogserver. Used by above.
 
 * `file-split-process.sh`: helper script. This is used when the text
