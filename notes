@@ -13352,6 +13352,10 @@ process-corpus.sh
 ====================================================
 
 FIXED:
+* cogserver is not flushing output on 2nd and later connections .. wtf!
+  or just behaving incoherently/inconsistently with netcat.
+  NOT REPRODUCIBLE ... seems to work OK now ...
+  echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
 * Bugs: quotes are not being escaped by submit-one.pl!! FIXED
   ... and worse, these are showing up as words with lots of
   backslashes in them. See issue #31.
@@ -13467,9 +13471,6 @@ TODO/BUGS:
 * Log the similarity fractions
 * When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
-* cogserver is not flushing output on 2nd and later connections .. wtf!
-  or just behaving incoherently/inconsistently with netcat.
-  echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
 * GC during pair counting happens too often.
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.
