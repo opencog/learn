@@ -4,7 +4,7 @@
 #
 # XXX FIXME This is mostly identical to `submit-plain.pl` except that
 # it strips out some stray HTML and some comments. It should be
-# refactored, sot that we don't have two nearly identical scripts.
+# refactored, so that we don't have two nearly identical scripts.
 #
 # Read lines from `stdin` and submit them to the cogserver for
 # processing. Each line is quoted and then wrapped by the <observe-cmd>
