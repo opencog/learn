@@ -222,12 +222,14 @@ sub preprocess
 	$text .= "\n" unless $text =~ /\n$/;
 
 	# Escape back-slashes.  This is needed to prevent guile from messing
-	# with them.  XXX NO 
-	# $text =~ s/\\/\\\\/g;
+	# with them. Guile automatically removes these when the string is
+	# constructed (i.e. goes back to single slashes.)
+	$text =~ s/\\/\\\\/g;
 
 	# Escape double-quotes. This is needed to prevent guile from messing
-	# with them. XXX NO 
-	# $text =~ s/\"/\\\"/g;
+	# with them. Guile automatically removes these when the string is
+	# constructed. (i.e. goes back to just plain quotes).
+	$text =~ s/\"/\\\"/g;
 
 	return $text;
 }
