@@ -464,39 +464,6 @@
 		(monitor-parse-rate #f))
 
 	; -------------------------------------------------------
-#! ====
-As of guile-3.0, the RAM usage issues seem to have gone away,
-and so manual garbage collection is not needed any more.
-(I don't know if this is due to changes in guile, or due to
-how we run the pipeline, in general.)
-
-	; Manually run the garbage collector, every now and then.
-	; This helps keep RAM usage down, which is handy on small-RAM
-	; machines. However, it does cost CPU time, in exchange.
-	; Adjust `how-often` up or down to suit your whims.
-	(define sometimes-gc
-		(let ((cnt 0)
-				(how-often 10)) ; every 10 times.
-			(lambda ()
-				(set! cnt (+ cnt 1))
-				(if (eqv? 0 (modulo cnt how-often)) (gc)))))
-
-	; Perform GC whenever it gets larger than a fixed limit.
-	; Less than one GB should be enough, but the huge strings
-	; from relex seem to cause bad memory fragmentation.
-	(define maybe-gc
-		(let ((cnt 0)
-				(max-size (* 2750 1000 1000)))  ; 2750 MB
-			(lambda ()
-				(if (< max-size (- (assoc-ref (gc-stats) 'heap-size)
-							(assoc-ref (gc-stats) 'heap-free-size)))
-					(begin
-						(gc)
-						(set! cnt (+ cnt 1))
-						;(report-avg-gc-cpu-time)
-					)))))
-==== !#
-	; -------------------------------------------------------
 	; Process the text locally (in RAM), with the LG API link or clique-count.
 	(define (local-process TXT obs-mode cnt-reach)
 		; try-catch wrapper for duplicated text. Here's the problem:
