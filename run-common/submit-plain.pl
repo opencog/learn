@@ -47,8 +47,16 @@ while (<STDIN>)
 
 	chop;
 
+	# Guile will choke on single back-slashes and on unescaped quotes.
+	# Both of these MUST be escaped.  It's all OK, though, because the
+	# string in guile's RAM will have the original quotes and backslashes
+	# as intended. i.e. they get unescaped upon ingestion. The escaping
+	# is only for the guile string constructor.
+	s/\\/\\\\/g;
+	s/\"/\\\"/g;
+
 	send_nowait($server, $port, "($ARGV[2] \"$_\")\n");
-	# print "submit-one: $_\n";
+	# print "submit-plain: $_\n";
 	$nsent = $nsent + 1;
 }
 

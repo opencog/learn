@@ -95,7 +95,7 @@ while(<STDIN>) {
 	if (utf8::valid($_) != 1) { next; }
 
 	if (/^<.+>$/ || /^\s*$/) {
-		#time to process this block, we've hit a blank or <p>
+		# time to process this block, we've hit a blank or <p>
 		&do_it_for($text,$_);
 		# print "<P>\n" if (/^\s*$/ && $text); ##if we have text followed by <P>
 		$text = "";
@@ -121,6 +121,9 @@ sub preprocess
 	# This is one paragraph.
 	my($text) = @_;
 
+	# Get rid of stray html markup.
+	$text =~ s/<P>//g;
+
 	# Double-dashes, without spaces! sometimes get used to concatenate
 	# sentences. I see this in Project Gutenberg books a lot.
 	$text =~ s/--/ -- /g;
@@ -134,7 +137,7 @@ sub preprocess
 	$text =~ s/^ //g;
 	$text =~ s/ $//g;
 
-	#####add sentence breaks as needed#####
+	##### Add sentence breaks as needed. #####
 
 	# Non-period end of sentence markers (?!) followed by sentence starters.
 	$text =~ s/([?!]) +([\'\"\(\[\¿\¡\p{IsPi}]*[\p{IsUpper}])/$1\n$2/g;
@@ -186,11 +189,11 @@ sub preprocess
 			    $NONBREAKING_PREFIX{$prefix} == 1 &&
 			    !$starting_punct)
 			{
-				#not breaking;
+				# Not breaking;
 			}
 			elsif ($words[$i] =~ /(\.)[\p{IsUpper}\-]+(\.+)$/)
 			{
-				#not breaking - upper case acronym
+				# Not breaking - upper case acronym
 			}
 			elsif($words[$i+1] =~ /^([ ]*[\'\"\(\[\¿\¡\p{IsPi}]*[ ]*[\p{IsUpper}0-9])/)
 			{
@@ -203,10 +206,12 @@ sub preprocess
 		$text = $text.$words[$i]." ";
 	}
 
-	# We stopped one token from the end to allow for easy look-ahead. Append it now.
+	# We stopped one token from the end to allow for easy look-ahead.
+	# Append it now.
 	$text = $text.$words[$i];
 
-	# Clean up spaces at head and tail of each line as well as any double-spacing
+	# Clean up spaces at head and tail of each line as well as any
+	# double-spacing
 	$text =~ s/ +/ /g;
 	$text =~ s/\n /\n/g;
 	$text =~ s/ \n/\n/g;
@@ -215,14 +220,6 @@ sub preprocess
 
 	# Add trailing break.
 	$text .= "\n" unless $text =~ /\n$/;
-
-	# Escape back-slashes.  This is needed to prevent guile from messing
-	# with them.
-	$text =~ s/\\/\\\\/g;
-
-	# Escape double-quotes. This is needed to prevent guile from messing
-	# with them.
-	$text =~ s/\"/\\\"/g;
 
 	return $text;
 }

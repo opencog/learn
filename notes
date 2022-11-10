@@ -13305,17 +13305,68 @@ link-grammar: Error: Word 3 'watched': Internal error: NULL X_node
 link-grammar: Error: Word 5 'bird': Internal error: NULL X_node
 link-grammar: Error: sentence_split(): Internal error detected
 
+----------------------
+
+The stupid escape bug...
+\"This \\is \\\\a \\\\\\test, right?\"\\\\
+process-corpus.sh
+file-split-process.sh
+cat sla | split-sentences.pl -l en > x
+its split-sentences.pl
+... it escapes backslashes ....
+
+This \"is\" a "test" \ with slahses.\\
+
+This \\\"is\\\" a \"test\" \\ with slahses.\\\\
+
+(define x "This \\\"is\\\" a \"test\" \\ with slahses.\\\\")
+(for-each (lambda (N) (format #t "duuude >>~A<<\n" (string-ref x N))) (iota 38))
+
+Seems to be OK... so wtf ... where was the bug?
+Says its in submit-one.pl Nooo...
+
+(define phr (Phrase x))
+(format #t "duu ~A\n" (cog-name phr))  ;; so still OK.
+
+(define l (LgParseMinimal phr (LgDict "any") (Number 4)))
+(cog-execute! l)
+(for-each (lambda (WI) (format #t "duuude >>~A<<\n" (cog-name WI)))
+	(cog-get-atoms 'WordInstanceNode))
+
+Looks OK ...
+
+Backslash issue...
+(use-modules (opencog) (opencog persist) (opencog persist-rocks))
+(define rsn (RocksStorage "rocks:///tmp/foo.rdb"))
+(cog-open rsn)
+(store-atom (Concept "\"robber"))
+(store-atom (Concept "\\\"ohh"))
+(store-atom (Concept "\\\\\"gorp"))
+(store-atom (Concept "\\\\\\\"forp"))
+(cog-close rsn)
+ works great.
+
+process-corpus.sh
 
 ====================================================
 ====================================================
 
 FIXED:
+* Bugs: quotes are not being escaped by submit-one.pl!! FIXED
+  ... and worse, these are showing up as words with lots of
+  backslashes in them. See issue #31.
+  Original sources do not have them. pair-counts do.
+  Is this failed rdb encoding? No, that's fine...
+  current observe-text pair-counting code does not appear to have problems...
+  Ending quotes also hide punctuation so punct is not split.
+  Ahh! The file with escaped quotes was moved to pair-counted,
+  and then re-escaped during MST. Ouch.
 * Finish work in link-grammar bug #1276 -sqlite sanity checks.  WONTFIX
 * Alter dict export to not require creation of singletons.
   They are way too slow and not really a needed step. WONTFIX
-* Some words seem to have a leading blank! Its UTF e2 80 af 
+* Some words seem to have a leading blank! Its UTF e2 80 af
   aka U+202F NARROW NO-BREAK SPACE
-  also c2 a0  U+00A0 NO-BREAK SPACE FIXED 
+  also c2 a0  U+00A0 NO-BREAK SPACE FIXED
 * Pairs ANY language not split: … • ” » · │ .. fixed in ANY
 * (cog-set-atomspace! borken in cogserver DONE
 * Implement connector merging. ... half-done... DONE, I think, and unit
@@ -13416,12 +13467,6 @@ TODO/BUGS:
 * Log the similarity fractions
 * When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
-* Bugs: quotes are not being escaped by submit-one.pl!!
-  ... and worse, these are showing up as words with lots of
-  backslashes in them. See issue #31.
-  Original sources do not have them. pair-counts do.
-  Is this failed rdb encoding? No, that's fine...
-  Ending quotes also hide punctuation so punct is not split.
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   echo -e "(for-each (lambda (n) (sleep 1) (format #t \"ping ~A\" n)(newline)) (iota 10 1))\n.\n." | nc localhost 17001
