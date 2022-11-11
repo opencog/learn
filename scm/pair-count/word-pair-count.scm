@@ -198,7 +198,7 @@
     `(monitor-parse-rate MSG)` for some string MSG.
 "
 	(define DANY (LgDict "any"))
-	(define NUML (Number NUM-LINKAGES)))
+	(define NUML (Number NUM-LINKAGES))
 
 	; Do all work in a temp atomspace.  The idea here is that this will
 	; make counting thread-safe, as each sentence get's processed in
