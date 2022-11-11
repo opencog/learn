@@ -151,4 +151,39 @@
 		MAX-LEN RECORD-LEN)
 )
 
+; --------------------------------------------------------------------
+
+(define-public (observe-clique count-reach plain-text)
+"
+   observe-clique COUNT-REACH PLAIN-TEXT --
+      update word and word-pair counts by observing raw text.
+      Uses the window counting technique, to examine all possible pairs.
+
+   COUNT-REACH is the window size.
+   PLAIN-TEXT is a utf8 string of text.
+
+   Tokenizes the sentence string into words, according to white-space.
+   It then forms all word-pairs within a sliding window of width
+   COUNT-REACH, and updates counts on those pairs. Thus, each word will
+   participate in exactly COUNT-REACH-1 word pairs.
+
+   Distance is defined as the difference between word positions in the
+   sentence, so neighboring words have distance of 1.
+
+   The parse rate can be monitored by calling, by hand, the guile function
+    `(monitor-parse-rate MSG)` for some string MSG.
+"
+	; Count the atoms in the sentence.
+	(define (process-sent SENT win-size)
+		(update-word-counts SENT)
+		(update-clique-pair-counts SENT win-size #f)
+		(delete-sentence SENT)
+		(monitor-parse-rate #f))
+
+	; -------------------------------------------------------
+
+	; Handle the plain-text locally
+	(local-process plain-text count-reach)
+)
+
 ; ---------------------------------------------------------------------

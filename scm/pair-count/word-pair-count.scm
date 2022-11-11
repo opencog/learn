@@ -294,33 +294,28 @@
    parse rate; that is, how quickly `observe-text-mode` is progressing.
 ")
 
-(define-public (observe-text-mode observe-mode count-reach plain-text)
+(define-public (observe-text plain-text)
+	NUM-LINKAGES 24
 "
-   observe-text-mode OBSERVE-MODE COUNT-REACH PLAIN-TEXT --
+   observe-text PLAIN-TEXT --
       update word and word-pair counts by observing raw text.
 
-   OBSERVE-MODE is either the string 'any' or the string 'clique'.
-   COUNT-REACH is parameter whose interpretation depends on OBSERVE-MODE.
+ Uses the LG parser to create 24 different random planar tree parses
+ per sentence. Why 24? No particular reason; it provides a reasonable
+ sample of all possible planar parses. The number of word-pairs
+ sampled will be at least N pairs per parse, where N is the length
+ of the sentence.
+
    PLAIN-TEXT is a utf8 string of text.
 
-   There are currently two observing modes:
-   - 'any': creates random planar parse trees, using the LG parser
-         'any' language.  All word-pairs linked in a linkage will be
-         counted. The COUNT-REACH specifies the number of linkages
-         (the number of random trees) to create and count. Thus, any
-         given word will participate in at least COUNT-REACH word-pairs,
-         of usually in at least twice as many. The 'any' language
-         tokenizes the sentence string according to white space, and
-         also separates out punctuation.
-   - 'clique': Tokenizes the sentence string into words, according to
-         white-space, separating punctuation as well. Uses the LG parser
-         to perform this splitting. It then forms all word-pairs within
-         a sliding window of width COUNT-REACH, and updates counts on
-         those pairs. Thus, each word will participate in exactly
-         COUNT-REACH-1 word pairs.
-
-   Distance is defined as the difference between word positions in the
-   sentence, so neighboring words have distance of 1.
+   Creates random planar parse trees, using the LG parser
+   'any' language.  All word-pairs linked in a linkage will be
+   counted. The NUM-LINKAGES specifies the number of linkages
+   (the number of random trees) to create and count. Thus, any
+   given word will participate in at least NUM-LINKAGES word-pairs,
+   and often in at least twice as many. The 'any' language
+   tokenizes the sentence string according to white space, and
+   also separates out punctuation.
 
    The parse rate can be monitored by calling, by hand, the guile function
     `(monitor-parse-rate MSG)` for some string MSG.
@@ -332,9 +327,7 @@
 	; data, but none of it will be interesting to most people.
 	(define (process-sent SENT cnt-mode win-size)
 		(update-word-counts SENT)
-		(if (equal? cnt-mode "any")
-			(update-lg-link-counts SENT)
-			(update-clique-pair-counts SENT win-size #f))
+		(update-lg-link-counts SENT)
 		; If you uncomment this, be sure to also uncomment
 		; LgParseLink below, because LgParseMinimal is not enough.
 		; (update-disjunct-counts sent)
@@ -343,57 +336,30 @@
 
 	; -------------------------------------------------------
 	; Process the text locally (in RAM), with the LG API link or clique-count.
-	(define (local-process TXT obs-mode cnt-reach)
-		; try-catch wrapper for duplicated text. Here's the problem:
-		; If this routine is called in rapid succession with the same
-		; block of text, then only one PhraseNode and LgParseLink will
-		; be created for both calls.  The extract at the end will remove
-		; this, even while these atoms are being accessed by the second
-		; call.  Thus, `lgn` might throw because `phr` doesn't exist, or
-		; `cog-execute!` might throw because lgn doesn't exist. Either of
-		; the cog-extracts might also throw. Hide this messiness.
-		(catch #t
-			(lambda ()
-				(let* ((phr (Phrase TXT))
-						; needs at least one linkage for tokenization
-						(num-parses (if (equal? obs-mode "any") cnt-reach 1))
-						(lgn (LgParseMinimal phr (LgDict "any") (Number num-parses)))
-						(sent (cog-execute! lgn))
-					)
-					(process-sent sent obs-mode cnt-reach)
-					; Remove crud so it doesn't build up.
-					(cog-extract! lgn)
-					(cog-extract! phr)
-				))
-			(lambda (key . args) #f))
+
+	; try-catch wrapper for duplicated text. Here's the problem:
+	; If this routine is called in rapid succession with the same
+	; block of text, then only one PhraseNode and LgParseLink will
+	; be created for both calls.  The extract at the end will remove
+	; this, even while these atoms are being accessed by the second
+	; call.  Thus, `lgn` might throw because `phr` doesn't exist, or
+	; `cog-execute!` might throw because lgn doesn't exist. Either of
+	; the cog-extracts might also throw. Hide this messiness.
+	(catch #t
+		(lambda ()
+			(let* ((phr (Phrase TXT))
+					; needs at least one linkage for tokenization
+					(lgn (LgParseMinimal phr
+						(LgDict "any") (Number NUM-LINKAGES)))
+					(sent (cog-execute! lgn))
+				)
+				(process-sent sent obs-mode cnt-reach)
+				; Remove crud so it doesn't build up.
+				(cog-extract! lgn)
+				(cog-extract! phr)
+			))
+		(lambda (key . args) #f))
 	)
-
-	; Handle the plain-text locally
-	(local-process plain-text observe-mode count-reach)
-)
-
-(define-public (observe-text plain-text)
-"
- Wrapper to allow shell scripts to have a simple form.
- Passes default parameters to observe-text-mode.
-
- Uses the LG parser to create 24 different random planar tree parses
- per sentence. Why 24? No particular reason; it provides a reasonable
- sample of all possible planar parses. The number of word-pairs
- sampled will be at least N pairs per parse, where N is the length
- of the sentence.
-"
-	(observe-text-mode "any" 24 plain-text)
-)
-
-(define-public (observe-clique winsz plain-text)
-"
- Wrapper to allow shell scripts to have a simple form.
- Passes default parameters to observe-text-mode.
-
- Uses the window counting technique, to examine all possible pairs.
-"
-	(observe-text-mode "clique" winsz plain-text)
 )
 
 ; ---------------------------------------------------------------------
