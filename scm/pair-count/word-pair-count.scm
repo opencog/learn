@@ -55,6 +55,7 @@
 (use-modules (opencog) (opencog nlp) (opencog persist))
 (use-modules (opencog exec) (opencog nlp lg-parse))
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs)) ; for define*-public
 
 ; ---------------------------------------------------------------------
 
@@ -65,7 +66,7 @@
 	(define curspace (cog-atomspace))
 	(cog-set-atomspace! (car (cog-atomspace-env)))
 	(count-one-atom ATOM)
-	(cog-set-atomspace! cur-space)
+	(cog-set-atomspace! curspace)
 )
 
 ; ---------------------------------------------------------------------
@@ -171,7 +172,7 @@
 
 ; --------------------------------------------------------------------
 
-(define-public (observe-text PLAIN-TEXT
+(define*-public (observe-text PLAIN-TEXT
 	#:key (NUM-LINKAGES 24))
 "
    observe-text PLAIN-TEXT --
