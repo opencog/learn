@@ -133,32 +133,6 @@
 )
 
 ; ---------------------------------------------------------------------
-; make-word-cset -- create a word-cset from a word-instance cset
-;
-; A cset is a link-grammar connector set. This takes, as input
-; a cset that is attached to a word instance, and creates the
-; corresponding cset attached to a word. Basically, it just strips
-; off the UUID from the word-instance.
-;
-; For example, given this input:
-;
-;   LgWordCset
-;      WordInstanceNode "foobar@1233456"
-;      LgAnd ...
-;
-; this creates and returns this:
-;
-;   LgWordCset
-;      WordNode "foobar"  -- gar
-;      LgAnd ...          -- gdr
-;
-(define (make-word-cset CSET-INST)
-	(LgWordCset
-		(word-inst-get-word (gar CSET-INST))
-		(gdr CSET-INST))
-)
-
-; ---------------------------------------------------------------------
 ; update-lg-link-counts -- Increment link counts
 ;
 ; This routine updates LG link counts in the database. The algo is trite:
@@ -170,25 +144,6 @@
 	(for-each-lg-link
 		(lambda (LINK) (count-one-atom (make-word-link LINK)))
 		(list single-sent))
-)
-
-; ---------------------------------------------------------------------
-; update-disjunct-counts -- Increment disjunct counts
-;
-; Just like the above, but for the disjuncts.
-
-(define (update-disjunct-counts SENT)
-
-	(define (try-count-one-cset CSET)
-		(catch 'wrong-type-arg
-			(lambda () (count-one-atom (make-word-cset CSET)))
-			(lambda (key . args) #f)))
-
-	(for-each
-		(lambda (parse)
-			(for-each (lambda (wi) (try-count-one-cset (word-inst-get-cset wi)))
-				(parse-get-words parse)))
-		(sentence-get-parses SENT))
 )
 
 ; --------------------------------------------------------------------
@@ -231,14 +186,9 @@
 	; Count the atoms in the sentence, according to the counting method
 	; passed as argument, then delete the sentence.
 
-	; Note: update-disjunct-counts commented out. It generates some
-	; data, but none of it will be interesting to most people.
 	(define (process-sent SENT cnt-mode win-size)
 		(update-word-counts SENT)
 		(update-lg-link-counts SENT)
-		; If you uncomment this, be sure to also uncomment
-		; LgParseLink below, because LgParseMinimal is not enough.
-		; (update-disjunct-counts sent)
 		(delete-sentence SENT)
 		(monitor-parse-rate #f))
 
