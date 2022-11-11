@@ -186,34 +186,17 @@
 	(define DANY (LgDict "any"))
 	(define NUML (Number NUM-LINKAGES)))
 
-	; -------------------------------------------------------
-	; Process the text locally (in RAM), with the LG API link or clique-count.
-
-	; try-catch wrapper for duplicated text. Here's the problem:
-	; If this routine is called in rapid succession with the same
-	; block of text, then only one PhraseNode and LgParseLink will
-	; be created for both calls.  The extract at the end will remove
-	; this, even while these atoms are being accessed by the second
-	; call.  Thus, `lgn` might throw because `phr` doesn't exist, or
-	; `cog-execute!` might throw because lgn doesn't exist. Either of
-	; the cog-extracts might also throw. Hide this messiness.
-	(catch #t
-		(lambda ()
-			(let* ((phr (Phrase PLAIN-TEXT))
-					; needs at least one linkage for tokenization
-					(lgn (LgParseMinimal phr DANY NUML))
-					(sent (cog-execute! lgn))
-				)
-				(update-word-counts SENT)
-				(update-lg-link-counts SENT)
-				(delete-sentence SENT)
-				(monitor-parse-rate #f))
-				; Remove crud so it doesn't build up.
-				(cog-extract! lgn)
-				(cog-extract! phr)
-			))
-		(lambda (key . args) #f))
+	; Do all work in a temp atomspace.  The updated counts will be
+	; forced to storage, so all should be good. (Assuming we don't
+	; somehow end up writing that temp space to storage...)
+	(cog-push-atomspace)
+	(let ((SENT (cog-execute!
+				(LgParseMinimal (Phrase PLAIN-TEXT) DANY NUML))))
+		(update-word-counts SENT)
+		(update-lg-link-counts SENT)
 	)
+	(cog-pop-atomspace)
+	(monitor-parse-rate #f)
 )
 
 ; ---------------------------------------------------------------------
