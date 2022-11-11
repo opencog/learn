@@ -57,6 +57,18 @@
 (use-modules (srfi srfi-1))
 
 ; ---------------------------------------------------------------------
+
+; Assume the curr atomspace is some temp space.
+; Navigate to the botton, increment the count,
+; and return to where we were.
+(define (base-count ATOM)
+	(define curspace (cog-atomspace))
+	(cog-set-atomspace! (car (cog-atomspace-env)))
+	(count-one-atom ATOM)
+	(cog-set-atomspace! cur-space)
+)
+
+; ---------------------------------------------------------------------
 ; update-word-counts -- update counts for sentences, parses and words,
 ; for the given list of sentences.
 ;
@@ -68,12 +80,12 @@
 	(define any-parse (ParseNode "ANY"))
 
 	(define (count-one-word word-inst)
-		(count-one-atom (word-inst-get-word word-inst)))
+		(base-count (word-inst-get-word word-inst)))
 
-	(count-one-atom any-sent)
+	(base-count any-sent)
 	(for-each
 		(lambda (parse)
-			(count-one-atom any-parse)
+			(base-count any-parse)
 			(for-each count-one-word (parse-get-words parse)))
 		(sentence-get-parses single-sent))
 )
@@ -142,7 +154,7 @@
 (define (update-lg-link-counts single-sent)
 
 	(for-each-lg-link
-		(lambda (LINK) (count-one-atom (make-word-link LINK)))
+		(lambda (LINK) (base-count (make-word-link LINK)))
 		(list single-sent))
 )
 
@@ -156,6 +168,8 @@
    Call this function with a string MSG to print out the current
    parse rate; that is, how quickly `observe-text-mode` is progressing.
 ")
+
+; --------------------------------------------------------------------
 
 (define-public (observe-text PLAIN-TEXT
 	#:key (NUM-LINKAGES 24))
@@ -186,9 +200,15 @@
 	(define DANY (LgDict "any"))
 	(define NUML (Number NUM-LINKAGES)))
 
-	; Do all work in a temp atomspace.  The updated counts will be
-	; forced to storage, so all should be good. (Assuming we don't
-	; somehow end up writing that temp space to storage...)
+	; Do all work in a temp atomspace.  The idea here is that this will
+	; make counting thread-safe, as each sentence get's processed in
+	; it's own unique per-thread atomspace.
+	;
+	; Because I'm paranoid, the `base-count` function will transition
+	; to the base atomspace, before incrementing the count. I suspect
+	; that this probably not needed, that it's enough that
+	; `count-one-atom` is incrementing and storing.  But I'm slightly
+	; paranoid, here. The performance hit is presumably mnimal.
 	(cog-push-atomspace)
 	(let ((SENT (cog-execute!
 				(LgParseMinimal (Phrase PLAIN-TEXT) DANY NUML))))
