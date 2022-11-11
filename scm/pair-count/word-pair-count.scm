@@ -100,8 +100,10 @@
 ;         (WordInstanceNode "foo@9023e177")
 ;         (NumberNode "4567"))
 ;
-; This returns the corresponding structures, for words, starting with
-; the left-wall at number zero.  Thus, this would return
+; This returns the corresponding links, replacing the WordInstances
+; with WordNodes. The NumberNode is replaced by a new NumberNode,
+; starting at zero with the LEFT-WALL.  ; For example, this would
+; return
 ;
 ;    (WordSequenceLink
 ;         (WordNode "foo")

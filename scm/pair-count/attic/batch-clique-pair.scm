@@ -1,5 +1,5 @@
 ;
-; batch-pair.scm
+; batch-clique-pair.scm
 ;
 ; Define item-pair and word-pair access API objects.
 ; Batch-compute the mutual information of pairs of items, such as
@@ -24,15 +24,6 @@
 ; bottom of this file, that will perform the MI calculations as a batch
 ; job.  As a batch job, and may take hours to complete. The results are
 ; stored in the currently-open database, for future reference.
-;
-; An example of this is the structure used to store word-pair counts.
-; This is used in `word-pair-count.scm` to accumulate counts:
-;
-;     EvaluationLink
-;         LgLinkNode "ANY"
-;         ListLink
-;             WordNode "left-word"
-;             WordNode "right-word"
 ;
 ; An example of generic item pairs is used by `pair-count-window.scm`
 ; and has the structure

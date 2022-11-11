@@ -51,13 +51,6 @@ Stuff below should be deleted a few years after being declared dead.
 * __summary.scm__: Stale, boring report printer. The reports are anemic.
     Other than that, they do work.
 
-* __batch-pair.scm__: Matrix object API's for "clique pairs" and
-    "distance pairs". "Clique pairs" are just counts of pairs in a
-    sliding window; we don't do that, we've never seriously done that.
-    The "distance pairs" are word pairs that are a fixed distance apart.
-    We've never done that.  So its "good code", just unused. Easy to
-    recreate, if/when we'd ever need this.
-
 * __shape-project.scm__, __cset-class.scm__, __cset-merge.scm__: Failed
     attempt to merge shapes.  Death by complexity and bugginess. The
     variant that does work is in __shape-vec.scm__ in the directory
