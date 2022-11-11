@@ -167,15 +167,9 @@
 
 (define (update-lg-link-counts single-sent)
 
-	; Due to a RelEx bug, `make-word-link` can throw an exception.  See
-	; the documentation for `word-inst-get-word` for details. Look for
-	; this exception, and avoid it, if possible.
-	(define (try-count-one-link link)
-		(catch 'wrong-type-arg
-			(lambda () (count-one-atom (make-word-link link)))
-			(lambda (key . args) #f)))
-
-	(for-each-lg-link try-count-one-link (list single-sent))
+	(for-each-lg-link
+		(lambda (LINK) (count-one-atom (make-word-link LINK)))
+		(list single-sent))
 )
 
 ; ---------------------------------------------------------------------
