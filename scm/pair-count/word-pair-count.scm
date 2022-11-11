@@ -57,57 +57,6 @@
 (use-modules (srfi srfi-1))
 
 ; ---------------------------------------------------------------------
-; make-word-sequence -- extract the sequence of words in a parse.
-;
-; The parser proves a numbered sequence of word-instances, for example:
-;
-;    (WordSequenceLink
-;         (WordInstanceNode "foo@9023e177")
-;         (NumberNode "4567"))
-;
-; This returns the corresponding links, replacing the WordInstances
-; with WordNodes. The NumberNode is replaced by a new NumberNode,
-; starting at zero with the LEFT-WALL.  ; For example, this would
-; return
-;
-;    (WordSequenceLink
-;         (WordNode "foo")
-;         (NumberNode "4"))
-;
-; when the sentence was "this is some foo".
-;
-(define (make-word-sequence PARSE)
-
-	; Get the scheme-number of the word-sequence number
-	(define (get-number word-inst)
-		(cog-number (word-inst-get-number word-inst)))
-
-	; A comparison function, for use as kons in fold
-	(define (least word-inst lim)
-		(define no (get-number word-inst))
-		(if (< no lim) no lim))
-
-	; Get the number of the first word in the sentence (the left-wall)
-	(define wall-no (fold least 9e99 (parse-get-words PARSE)))
-
-	; Convert a word-instance sequence number into a word sequence
-	; number, starting with LEFT-WALL at zero.
-	(define (make-ordered-word word-inst)
-		(WordSequenceLink
-			(word-inst-get-word word-inst)
-			(NumberNode (- (get-number word-inst) wall-no))))
-
-	; Ahhh .. later code will be easier, if we return the list in
-	; sequential order. So, define a compare function and sort it.
-	(define (get-no seq-lnk)
-		(cog-number (gdr seq-lnk)))
-
-	(sort (map make-ordered-word (parse-get-words PARSE))
-		(lambda (wa wb)
-			(< (get-no wa) (get-no wb))))
-)
-
-; ---------------------------------------------------------------------
 ; update-word-counts -- update counts for sentences, parses and words,
 ; for the given list of sentences.
 ;
