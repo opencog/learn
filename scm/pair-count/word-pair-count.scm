@@ -1,22 +1,25 @@
 ;
 ; word-pair-count.scm
 ;
-; Word-pair counting via random planar trees. Planar trees provide subtly
-; different word-pair statistics from windowed counting techniques. This
-; uses the Link Grammar (LG) parser "any" language to generate random trees.
-; Also handy, as the "any" parser does split off basic punctuation, and is
-; thus suitable for almost all IndoEuropean languages, and possibly some
-; Asian languages.
+; Word-pair counting via random planar trees. This takes a uniformly
+; distributed random sampling ouut of all possible planar parse trees.
+; The uniform sampling of parse trees produces mildly different
+; word-pair distributions as compared to sliding-window techniques.
+; (The old sliding-window code has been retired. It is called "clique
+; counting" and can be found in the `attic` directory.)
 ;
-; If you are not working with natural-language sentences, don't use this code!
-; This was designed to counts words, several kinds of word-pairs (links,
-; distances), as well (random) disjuncts, parses and sentences.
+; This uses the Link Grammar (LG) parser "any" language to generate
+; random trees. The "any" parser splits off basic punctuation, and is
+; thus suitable for English and many IndoEuropean languages; possibly
+; also some Asian languages. The primary downside here is that the
+; "any" parser peforms only basic tokenization; There's no "first-
+; principles" ML/AI tokenizer available yet.
+;
+; If you are not working with natural-language sentences, don't use
+; this code! This makes various assumptions that are appropriate only
+; for natural language.
 ;
 ; Copyright (c) 2013, 2017 Linas Vepstas <linasvepstas@gmail.com>
-;
-; This code is part of the language-learning effort.  The project
-; requires that a lot of text be observed, with the goal of deducing
-; a grammar from it, using entropy and other basic probability methods.
 ;
 ; Main entry point: `(observe-text plain-text)`
 ;
@@ -33,9 +36,6 @@
 ; *) how many parses were observed (when using parse-driven counting).
 ; *) how many words have been observed (counting once-per-word-per-parse)
 ; *) how many word-order pairs have been observed.
-; *) the distance between words in the above pairs.
-; *) how many link-relationship triples have been observed.
-; *) how many disjuncts have been observed.
 ;
 ; Sentences are counted by updating the count on `(SentenceNode "ANY")`.
 ; Parses are counted by updating the count on `(ParseNode "ANY")`.
@@ -44,48 +44,13 @@
 ; in a parse.  That is, if a word appears twice in a parse, it is counted
 ; twice.
 ;
-; Word-pairs show up, and can be counted in four different ways. One
-; method  is a windowed clique-counter. If two words appear within a
-; fixed distance from each other (the window size), the corresponding
-; word-pair count is incremented. This is a clique-count, because every
-; possible pairing is considered. This count is stored in the CountTV
-; for the EvaluationLink on (PredicateNode "*-Sentence Word Pair-*").
-; A second count is maintained for this same pair, but including the
-; distance between the two words. This is kept on a link identified by
-; (SchemaNode "*-Pair Distance-*"). Please note that the pair-distance
-; counter can lead to very large atomspaces, because for window widths
-; of N, a given word-pair might be observed with every possible
-; distance between them, i.e. up to N times.
-;
-; XXX FIXME we should probably not store this way. We should probably
-; have just one word-pair, and hold the counts in different values,
-; instead. This needs a code redesign. XXX
-;
-; Word-pairs are also designated by means of Link Grammar parses of a
-; sentence. A Link Grammar parse creates a list of typed links between
+; Word-pairs are obtained from Link Grammar parses of a sentence.
+; A Link Grammar parse creates a list of typed links between
 ; pairs of words in the sentence. Each such link is counted once, for
 ; each time that it occurs.  These counts are maintained in the CountTV
-; on the EvaluationLink for the LgLinkNode for that ; word-pair.
-; In addition, a count is maintained of the length of that link.
-; XXX where??? This is not implemented ??? XXX
+; on the EvaluationLink for the LgLinkNode for that word-pair.
 ;
-; For the initial stages of the language-learning project, the parses
-; are produced by the "any" language parser, which produces random planar
-; trees.  This creates a sampling of word-pairs that is different than
-; merely having them show up in the same sentence.  That is, a covering
-; of a sentence by random trees does not produce the same edge statistics
-; as a clique of edges drawn between all words. This is explored further
-; in the diary, in a section devoted to this topic.
-;
-; These different counting modes can be turned on and off with the
-; "mode" flag.
-;
-; The Link Grammar parse also produces and reports the disjuncts that were
-; used for each word. These are useful in and of themselves; they indicate
-; the hubbiness (link-multiplicity) of each word. The disjunct counts are
-; maintained on the LgWordCset for a given word. XXX This is currently
-; disabled in the code, and are not handled by the mode flag. This needs
-; to be (optionally) turned back on. XXX
+; Not implemented: a count is maintained of the length of that link.
 ;
 (use-modules (opencog) (opencog nlp) (opencog persist))
 (use-modules (opencog exec) (opencog nlp lg-parse))
