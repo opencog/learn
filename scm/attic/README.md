@@ -6,6 +6,7 @@ Dead, unused code that might still be interesting.
     be done with this idea?
 
 * __gram-pairwise.scm__ : Code that performs pairwise clustering.
+    (clustering two words, with a vector of disjuncts behind them.)
     Three basic functions are provided: (a) merge two words into a
     new cluster. (b) merge one word into an existing cluster.
     (c) merge two clusters together. This code has been supplanted
@@ -32,6 +33,7 @@ Dead, unused code that might still be interesting.
     in the Diary Part One.
 
 * __agglo-loops.scm__ : Top-level routines to do pair-wise clustering.
+    (Clustering two words, with a vector of disjuncts behind them.)
     The code works, but doing pair-wise clustering seems not to give
     the best results.  This file implements there different algos that
     assign words to existing clusters, or, if there aren't any suitable
@@ -48,6 +50,13 @@ Stuff below should be deleted a few years after being declared dead.
 
 * __summary.scm__: Stale, boring report printer. The reports are anemic.
     Other than that, they do work.
+
+* __batch-pair.scm__: Matrix object API's for "clique pairs" and
+    "distance pairs". "Clique pairs" are just counts of pairs in a
+    sliding window; we don't do that, we've never seriously done that.
+    The "distance pairs" are word pairs that are a fixed distance apart.
+    We've never done that.  So its "good code", just unused. Easy to
+    recreate, if/when we'd ever need this.
 
 * __shape-project.scm__, __cset-class.scm__, __cset-merge.scm__: Failed
     attempt to merge shapes.  Death by complexity and bugginess. The

@@ -6,6 +6,8 @@
 ; of observations of all possible pairs of items within a sliding window
 ; of fixed width.
 ;
+; Text is tokenized by splitting a given utf8 string at whitespace.
+;
 ; Copyright (C) 2021 Linas Vepstas
 ;
 
