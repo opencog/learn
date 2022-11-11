@@ -183,14 +183,8 @@
    The parse rate can be monitored by calling, by hand, the guile function
     `(monitor-parse-rate MSG)` for some string MSG.
 "
-	; Count the atoms in the sentence, according to the counting method
-	; passed as argument, then delete the sentence.
-
-	(define (process-sent SENT cnt-mode win-size)
-		(update-word-counts SENT)
-		(update-lg-link-counts SENT)
-		(delete-sentence SENT)
-		(monitor-parse-rate #f))
+	(define DANY (LgDict "any"))
+	(define NUML (Number NUM-LINKAGES)))
 
 	; -------------------------------------------------------
 	; Process the text locally (in RAM), with the LG API link or clique-count.
@@ -207,11 +201,13 @@
 		(lambda ()
 			(let* ((phr (Phrase PLAIN-TEXT))
 					; needs at least one linkage for tokenization
-					(lgn (LgParseMinimal phr
-						(LgDict "any") (Number NUM-LINKAGES)))
+					(lgn (LgParseMinimal phr DANY NUML))
 					(sent (cog-execute! lgn))
 				)
-				(process-sent sent obs-mode cnt-reach)
+				(update-word-counts SENT)
+				(update-lg-link-counts SENT)
+				(delete-sentence SENT)
+				(monitor-parse-rate #f))
 				; Remove crud so it doesn't build up.
 				(cog-extract! lgn)
 				(cog-extract! phr)
