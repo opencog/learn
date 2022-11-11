@@ -157,8 +157,8 @@
    parse rate; that is, how quickly `observe-text-mode` is progressing.
 ")
 
-(define-public (observe-text plain-text)
-	NUM-LINKAGES 24
+(define-public (observe-text PLAIN-TEXT
+	#:key (NUM-LINKAGES 24))
 "
    observe-text PLAIN-TEXT --
       update word and word-pair counts by observing raw text.
@@ -205,7 +205,7 @@
 	; the cog-extracts might also throw. Hide this messiness.
 	(catch #t
 		(lambda ()
-			(let* ((phr (Phrase TXT))
+			(let* ((phr (Phrase PLAIN-TEXT))
 					; needs at least one linkage for tokenization
 					(lgn (LgParseMinimal phr
 						(LgDict "any") (Number NUM-LINKAGES)))
