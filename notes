@@ -13370,7 +13370,7 @@ update-pair-counts-once MOVED
 observe-clique  UNUSED
 
 make-word-sequence UNUSED ony in cliq
-update-word-counts 
+update-word-counts
    observe-text
 for-each-lg-link
    update-lg-link-counts
@@ -13380,6 +13380,173 @@ make-word-link
 make-word-cset
    update-disjunct-counts DEAD
 
+count-one-atom OK
+
+Should cog-push-atomspace be cow?  (not documented!)
+
+done=14244 rate=8.992 per sec
+done=26851 rate=9.475 per sec
+terminate called after throwing an instance of 'std::system_error'
+  what():  Resource deadlock avoided
+Aborted
+
+
+	107 - MultiAtomSpaceUTest (Failed)
+test_load
+../tests/scm/MultiAtomSpaceUTest.cxxtest:240 259: 275:
+
+ss_get_env_as
+ss_set_env_as(const AtomSpacePtr& nas)
+evaluator->set_scheme_as(asp);
+c_wrap_eval
+
+BoolLibraryTest
+SexprQueryUTest
+
+do_scm_eval
+
+#14 opencog::Frame::scrub_incoming_set (this=0x5555557a5010)
+    at /home/ubuntu/src/atomspace/opencog/atomspace/Frame.cc:74
+#15 0x00007fffede054a0 in opencog::Frame::~Frame (this=0x7fff40a0ba50,
+    __in_chrg=<optimized out>)
+
+
+#21 opencog::Handle::~Handle (this=<synthetic pointer>,
+    __in_chrg=<optimized out>)
+    at /home/ubuntu/src/atomspace/opencog/atoms/base/Handle.h:92
+#22 opencog::Frame::scrub_incoming_set (this=0x5555557a5010)
+--Type <RET> for more, q to quit, c to continue without paging--
+    at /home/ubuntu/src/atomspace/opencog/atomspace/Frame.cc:85
+#23 0x00007fffede054a0 in opencog::Frame::~Frame (this=0x7fff20a87bc0,
+    __in_chrg=<optimized out>)
+
+(monitor-parse-rate "foo")
+foo done=13364 rate=10.58 per sec
+foo done=22981 rate=10.64 per sec
+foo done=34644 rate=10.01 per sec
+foo done=54072 rate=9.620 per sec
+
+
+(define aw (cog-get-atoms 'WordNode))
+(define cnt 0)
+(for-each (lambda (W) (format #t "~A ~A\n" cnt (cog-name W)) (set! cnt
+(+ 1 cnt))) aw)
+(define pw (car (drop aw 296)))
+
+("scm_from_utf8_stringn" "input locale conversion error" 0 #vu8(40 87 111 114 100 78 111 100 101 32 34 226 34 32 40 99 116 118 32 49 32 48 32 49 54 41 41 10))'.
+
+(WordNode "226" (ctv 1 0 16))\n
+
+"Ȧ" U+0226 Latin Capital Letter A with Dot Above Unic
+
+(define aa "Ȧ")
+(use-modules (rnrs bytevectors))
+(string->utf8 aa)
+ = #vu8(200 166)   aka 0xc8 a6
+
+(u8-list->bytevector '(226))
+(utf8->string (u8-list->bytevector '(226)))
+
+ 226 dec is hex 0xe2
+
+(WordNode . 27271)
+(WordNode . 27797))
+
+(define ps (cog-name pw))
+(for-each (lambda (N) (format #t "umm ~A\n" (string-ref ps N))) (iota 30))
+
+(ListLink
+
+),
+!’
+!”
+
+(WordNode . 14612)
+(SentenceNode "ANY" (ctv 1 0 14611))
+(ParseNode "ANY" (ctv 1 0 344289))
+
+wc pair-counted/fanfic 14531
+pair-split/fanfic/flvosyare-aq 80
+so it total exactly for sentences...
+Hmmm
+
+("scm_from_utf8_stringn" "input locale conversion error" 0 #vu8(40 87 111 114 100 78 111 100 101 32 34 128 34 32 40 99 116 118 32 49 32 48 32 50 52 41 41 10))'.
+
+v3.0.8
+guile-2.0
+/usr/share/guile
+/usr/lib/x86_64-linux-gnu/guile/3.0
+
+
+print unsplit_word
+$11 = (Gword *) 0x7fff383e22f0
+
+print word->start
+$4 = 0x7fff382c6d4b " as he saw the figure nearby walking closer to him."
+
+print unsplit_word->subword
+$13 = 0x7fff382c6f10 ""
+oops.
+
+
+assert_failure (cond_str=cond_str@entry=0x7fffecce8be3 "temp_wend>w",
+    func=func@entry=0x7fffecce9108 <__func__.10> "strip_right",
+    src_location=src_location@entry=0x7fffecce7cb0 "../../link-grammar/tokenize
+/tokenize.c:2096",
+    fmt=fmt@entry=0x7fffecce8bc6 "Unexpected empty-string word")
+    at ../../link-grammar/error.c:467
+467                     DEBUG_TRAP;  /* leave stack trace in debugger */
+               \
+(gdb) bt
+#0  assert_failure (cond_str=cond_str@entry=0x7fffecce8be3 "temp_wend>w",
+    func=func@entry=0x7fffecce9108 <__func__.10> "strip_right",
+    src_location=src_location@entry=0x7fffecce7cb0 "../../link-grammar/tokenize
+/tokenize.c:2096",
+    fmt=fmt@entry=0x7fffecce8bc6 "Unexpected empty-string word")
+    at ../../link-grammar/error.c:467
+#1  0x00007fffeccd0f56 in strip_right (sent=sent@entry=0x7fff38411430,
+    w=0x7fff382c6f10 "", wend=wend@entry=0x7fff44ff7c78,
+    stripped=stripped@entry=0x7fff44ff7cd0,
+    n_stripped=n_stripped@entry=0x7fff44ff7c68, p=p@entry=2,
+    rootdigit=<optimized out>, classnum=<optimized out>)
+    at ../../link-grammar/tokenize/tokenize.c:2096
+#2  0x00007fffeccd4ea0 in separate_word (sent=sent@entry=0x7fff38411430,
+    unsplit_word=unsplit_word@entry=0x7fff383e22f0, opts=0x7fff381fce10)
+    at ../../link-grammar/tokenize/tokenize.c:2577
+#3  0x00007fffeccd6155 in separate_sentence (sent=sent@entry=0x7fff38411430,
+    opts=opts@entry=0x7fff381fce10)
+    at ../../link-grammar/tokenize/tokenize.c:3116
+#4  0x00007fffecc810c0 in sentence_split (sent=sent@entry=0x7fff38411430,
+    opts=opts@entry=0x7fff381fce10) at ../../link-grammar/api.c:494
+#5  0x00007fffecc8158f in sentence_parse (sent=sent@entry=0x7fff38411430,
+    opts=opts@entry=0x7fff381fce10) at ../../link-grammar/api.c:679
+
+(gdb) print word
+$3 = (Gword *) 0x7fff383e22f0
+(gdb) print word->start
+$4 = 0x7fff382c6d4b " as he saw the figure nearby walking closer to him."
+(gdb) print word->end
+$5 = 0x7fff382c6d4b " as he saw the figure nearby walking closer to him."
+(gdb) print word->subword
+$6 = 0x7fff382c6f10 ""
+
+
+scheme@(pairs-18)> duuude wtf >>She@a3f815f3-eb9e-40f9-b327-03bbd9d59b06<<
+duuude offset=5  ctxt ffffffe2 ffffff80 >>40<< 61 33
+                                           @   a  3
+
+duuude wtf >>@82c96799-a1d5-4450-a834-7424d16d0023<<a
+duuude offset=1  ctxt 0 ffffffe2 >>40<< 38 32
+duude yo 0 ffffffe2
+duude yo 1 40 @
+duude yo 2 38 8
+duude yo 3 32 2
+
+‘This must stop.
+
+e2 80 98 54 68 69 73
+
+"(observe-text \"‘This must stop.\")\n")
 
 ====================================================
 ====================================================
@@ -13507,3 +13674,5 @@ TODO/BUGS:
 * GC during pair counting happens too often.
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.
+  As of Nov 2022 its 10 sent/sec on fanfic at 600% cpu 10 blocked
+  threads
