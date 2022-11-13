@@ -38,14 +38,6 @@
 
 (repl-default-prompt-set! cog-prompt)
 
-; Start the cogserver using the indicated config file.
-(start-cogserver
-	#:port (string->number (getenv "PORT"))
-	#:scmprompt (getenv "PROMPT")
-	#:prompt (getenv "OCPROMPT")
-	#:logfile (getenv "LOGFILE")
-	#:web 0)
-
 ; Open the database.
 (define sns (getenv "STORAGE_NODE"))
 (cond
@@ -65,7 +57,21 @@
 	(throw 'bad-frameset 'too-many-tops
 		(format #f "Found more than one frame top: ~A\n" frame-tops)))
 (when (< 0 (length frame-tops))
-	(cog-set-atomspace! (car frame-tops))
+	(cog-set-atomspace! (car frame-tops)))
+
+; Start the cogserver using the configured parameters.
+; Start the cogserver *after* opening the DB and setting frames.
+; That way, any remote procs waiting on the socket don't start
+; sending data until *after* the DB is opened.
+(start-cogserver
+	#:port (string->number (getenv "PORT"))
+	#:scmprompt (getenv "PROMPT")
+	#:prompt (getenv "OCPROMPT")
+	#:logfile (getenv "LOGFILE")
+	#:web 0)
+
+; XXX Is this needed? Didn't cogserver already get the top?
+(when (< 0 (length frame-tops))
 	(set-cogserver-atomspace! (cog-atomspace)))
 
 ; -----------------------------------------------------------

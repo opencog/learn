@@ -13546,7 +13546,101 @@ duude yo 3 32 2
 
 e2 80 98 54 68 69 73
 
-"(observe-text \"‘This must stop.\")\n")
+(observe-text "‘This must stop.")
+
+"“She must ride in front, not pillion,” Kaladin said, as he swung himself into his saddle."
+
+‘Get on with it…’ Jack thought.
+
+(gdb) call linkage_get_word_byte_start(lkg,w)
+$4 = 0
+call linkage_get_word_byte_end(lkg,w)
+$5 = 1
+
+ahhhh
+
+(gdb) print phrstr
+$6 = 0x7fff50b3cb70 "‘Get on with it…’ Jack thought."
+(gdb) call linkage_get_word_char_start(lkg,w)
+$7 = 0
+(gdb) call linkage_get_word_char_end(lkg,w)
+$8 = 18446744073709551615
+
+(gdb) print lkg->sent->orig_sentence
+$9 = 0x7fff50c5ba30 "‘Get on with it…’ Jack thought."
+(gdb) print lkg->wg_path_display[w]->end
+$11 = 0x7fff50c5ba31 "\200\230Get on with it…’ Jack thought."
+
+n_lwg_path
+gwordlist_append(&n_lwg_path,
+
+‘We e2 80 98
+
+themz 0 ffffff80
+themz 1 ffffff98
+themz 2 57
+themz 3 65
+
+#0  gwordlist_append (arrp=arrp@entry=0x7ffee5e41cd0,
+    p=p@entry=0x7ffee7f4e1e0) at ../../link-grammar/tokenize/wordgraph.c:104
+#1  0x00007fffeccd1b38 in issue_word_alternative (
+    sent=sent@entry=0x7ffee7e653c0,
+    unsplit_word=unsplit_word@entry=0x7ffee668b3a0,
+    label=label@entry=0x7fffecce8d3e "rL", prefnum=prefnum@entry=0,
+    prefix=prefix@entry=0x0, stemnum=<optimized out>, stem=<optimized out>,
+    suffnum=<optimized out>, suffix=<optimized out>)
+    at ../../link-grammar/tokenize/tokenize.c:947
+
+(gdb) print subword
+$3 = (Gword *) 0x7ffee7f4e1e0
+(gdb) print psubword
+$6 = (Gword *) 0x7ffee5e41cb0
+
+(gdb) print unsplit_word
+$9 = (Gword *) 0x7ffee668b3a0
+
+print strlen_cache
+$12 = <optimized out>
+
+line 827
+
+issue_word_alternative (
+
+duuude empty tok at=1 ai=1 aff=>><< lenc=0
+print *affix
+$6 = 0x7fff21dbd730 ""
+
+(gdb) print affixlist
+$7 = {0x0, 0x7fff22288b90, 0x0, 0x0}
+(gdb) print numlist
+$8 = {0, 2, 0}
+(gdb) print *((char ** ) 0x7fff22288b90)
+$14 = 0x7fff21dbd740 "then"
+(gdb) print *((char ** ) 0x7fff22288b98)
+$17 = 0x7fff21dbd730 ""
+
+length == 1254
+wc counts 208 words,
+link-grammar: Error: sentence too long, contains more than 254 words
+
+sentence_parse
+lg-atomese/opencog/nlp/lg-parse/LGParseLink.cc:274)
+
+print sent->orig_sentence
+print unsplit_word->subword
+
+45 min 120132 lines
+50 min 118385 lines
+
+13 min 35623 lines
+13 min 30839 linees
+
+22 min 58325 lines
+5 min 12971 lines
+matchspan_regex
+
+         PCRE2_NO_UTF_CHECK
+
 
 ====================================================
 ====================================================
