@@ -4,9 +4,15 @@
 ; Implement simple "windowed" pair counting for a single data stream.
 ; This assumes a single data stream of items, and counts the number
 ; of observations of all possible pairs of items within a sliding window
-; of fixed width.
+; of fixed width. This can be called "clique counting" as it counts all
+; edges in a clique that is the size of the window.
 ;
 ; Text is tokenized by splitting a given utf8 string at whitespace.
+;
+; This is currently unused, mostly because it's naive. Text tokenization
+; by splitting w.r.t. whitespace is naive, and just does not work in many
+; cases. Clique counting also seems naive, and has poor statistical
+; properties (its not really "uniform" in a structural sense)/
 ;
 ; Copyright (C) 2021 Linas Vepstas
 ;
