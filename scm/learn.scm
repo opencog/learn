@@ -28,5 +28,4 @@
 (include-from-path "opencog/learn/agglo-goe.scm")
 (include-from-path "opencog/learn/singletons.scm")
 (include-from-path "opencog/learn/gram-filters.scm")
-; (include-from-path "opencog/learn/link-class.scm")
 (include-from-path "opencog/learn/lg-compare.scm")
