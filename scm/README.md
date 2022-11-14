@@ -63,10 +63,6 @@ In the `gram-class` subdirectory:
 * __gram-filters.scm__    Assorted filters for picking subsets of the full
                           grammatical matrix.
 
-In the `lg-export` subdirectory:
-
-* __export-disjuncts.scm__ Export grammatical classes to Link Grammar.
-
 In the `concepts` subdirectory:
 
 * Code for the automatic discovery of concepts and their attributes.
