@@ -13689,6 +13689,28 @@ heap-total-allocated . 943994560112
 so each gc reclaims 1.7 MB
 
 
+-----------
+fanfic
+total cpu time: 4514 minutes
+foo done=547692 rate=9.716 per sec
+(gc-time-taken . 149815788883396)
+ (heap-size . 12095488) 
+ (gc-times . 624593)
+
+(ListLink . 6630619)
+(EvaluationLink . 6630619) 
+(WordNode . 67703) 
+(SentenceNode "ANY" (ctv 1 0 547692))
+(ParseNode "ANY" (ctv 1 0 1.29022e+07))
+tot-lines: 2199812
+tot-cnct: 565697
+cpu: 270893.022 secs  user: 221046.679  sys: 49846.343
+maxrss: 26023264 KB  majflt: 56  inblk: 48  outblk: 178783224
+18.2 G virt 16.1 G resident
+(count-all) ; 13328951 == 13M
+wc pair-counted/fanfic/* == 547703
+
+
 
 ====================================================
 ====================================================

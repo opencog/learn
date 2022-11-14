@@ -14,3 +14,23 @@
 ;
 ; --------------------------------------------------------
 
+(use-modules (opencog))
+(use-modules (srfi srfi-1))
+
+; Anchor for all text buffers in the system
+(define buffer-base (AnchorNode "*-Text Buffers-*"))
+
+; --------------------------------------------------------
+(define-public (buffer-open)
+"
+  buffer-open -- Create a new buffer for reading and writing.
+"
+
+	(define buftag (random-node 'TagNode 16 "text"))
+	(TagLink buftag buffer-base)
+
+	; Return the tag.
+	buftag
+)
+
+; --------------------------------------------------------

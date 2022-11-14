@@ -27,6 +27,8 @@
 (use-modules (opencog exec))
 (use-modules (srfi srfi-1))
 
+(define *-word-pair-dist-* (SchemaNode "*-Pair Distance-*"))
+
 ; ---------------------------------------------------------------------
 ; make-word-sequence -- extract the sequence of words in a parse.
 ;
