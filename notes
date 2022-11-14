@@ -13637,9 +13637,57 @@ print unsplit_word->subword
 
 22 min 58325 lines
 5 min 12971 lines
+20 min 53921 lines
+
+4 hours 8 min 654238 lines
+
+s=all start=3 4 regna=/[[:punct:]]$/\0
+
 matchspan_regex
 
          PCRE2_NO_UTF_CHECK
+
+ int pcre2_match(const pcre2_code *code,  // re_code OK
+ PCRE2_SPTR subject, // s OK
+ PCRE2_SIZE length,   // flag OK
+ PCRE2_SIZE startoffset, // 0 ok
+ uint32_t options,  // set OK
+ pcre2_match_data *match_data,  // re->re_md, OOOOOOOOOOps
+ pcre2_match_context *mcontext); // NULL
+
+
+pcre2_match_data* re_md;
+MAX_CAPTURE_GROUP
+PCRE2_SIZE
+
+after 40 minutes:
+
+(monitor-parse-rate "foo")
+foo done=28837 rate=11.38 per sec
+find pair-counted |wc  238  out of 4500 (exactly) total
+wc pair-counted/fanfic/* 29548
+tot-lines: 119965 /4 = 30K (it overcounts by exactly 4)
+
+cpu 384 mins for 44528 sents = 2 sents per cpu-sec. Ouch!
+Of this, 14926 secs in GC, so 63% of time is spent in GC.
+Ouch.
+heap-size . 10895360 = 10MB so looks fine ...
+Takes 0.2 seconds per gc.  Ick.
+
+Again, out of 70 mins, 47 spent in GC.  so 67% is in GC ...  yuck.
+avg of 0.145 secs per gc
+
+w/o explicit:
+85 mins, of which 55.5 mins gc = 65% in GC, so explcit makes no diff
+
+4000 mins
+foo done=483578 rate=9.779 per sec
+2231 mins in gc = 56% in gc
+555019 gc tot so 0.241 secs per gc
+heap-size . 10641408 = 10MB ... its clearly struggling
+heap-total-allocated . 943994560112
+so each gc reclaims 1.7 MB
+
 
 
 ====================================================
