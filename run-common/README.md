@@ -117,11 +117,13 @@ bringup, but are not uased any more.
 
 Sentence Splitting
 ------------------
-Raw text needs to be split up into sentences.  Some distant future day,
-opencog will do this automatically. For now, we hack it.
+Raw text needs to be split up into sentences.  During bringup, this was
+done with some perl scripts that know about per-language sentence
+segmentation. This is described below. It is deprecated and will be
+removed someday.
 
-Currently, splitting is done with the `split-sentences.pl` perl script
-in the this directory.  It was stolen from the `moses-smt` package.
+Splitting is done with the `split-sentences.pl` perl script in the this
+directory.  It was stolen from the `moses-smt` package.
 https://github.com/moses-smt/mosesdecoder/tree/master/scripts/share/nonbreaking_prefixes
 It splits French, Polish, Lithuanian, and more.  Its LGPL.
 
