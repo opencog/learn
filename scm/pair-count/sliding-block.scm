@@ -20,12 +20,12 @@
 (define*-public (observe-block TEXT-BLOCK
 	#:key
 		(WIN-SIZE 16)
-		(NUM-LINKAGES 12)
+		(NUM-LINKAGES 4)
 		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   observe-block TEXT-BLOCK #:WIN-SIZE 16 #:NUM-LINKAGES 12
+   observe-block TEXT-BLOCK #:WIN-SIZE 16 #:NUM-LINKAGES 4
       Impose a sliding window on the TEXT-BLOCK, and then submit
       everything in that window for processing. The window-size is
       determined by white-space.
@@ -37,7 +37,7 @@
    default is 16.
 
    The optional parameter #:NUM-LINKAGES specifies the number of
-   linkages to process for each block.
+   linkages to process for each block. The default is 4.
 
    The optional parameter #:SPLIT-PRED specifies a predicate that
    defines the white-space along which blocks will be split. The
