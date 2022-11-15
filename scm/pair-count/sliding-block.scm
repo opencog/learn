@@ -21,28 +21,36 @@
 	#:key
 		(WIN-SIZE 16)
 		(NUM-LINKAGES 12)
+		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   observe-block TEXT-BLOCK --
+   observe-block TEXT-BLOCK #:WIN-SIZE 16 #:NUM-LINKAGES 12
       Impose a sliding window on the TEXT-BLOCK, and then submit
       everything in that window for processing. The window-size is
       determined by white-space.
 
    TEXT-BLOCK is a utf8 string of text.
-"
-	; Locations at which to split text.
-	; This can be a char-set or a predicate.
-	(define split-pred char-set:whitespace)
 
+   The optional parameter #:WIN-SIZE specifies the width of the
+   sliding block, in units of white-space separated words. The
+   default is 16.
+
+   The optional parameter #:NUM-LINKAGES specifies the number of
+   linkages to process for each block.
+
+   The optional parameter #:SPLIT-PRED specifies a predicate that
+   defines the white-space along which blocks will be split. The
+   default is `char-set:whitespace`.
+"
 	; Return a list of indexes (numbers) indicating the offset to
 	; the next `word` in STR. Each number is the length of the word.
 	; whitespace (successive series tokens satisfying the whitespace
 	; predicate) is skipped over.
 	(define (get-deltas STR DLIST MORE)
-		(define white (string-index STR split-pred))
+		(define white (string-index STR SPLIT-PRED))
 		(define nonwhite
-			(if white (string-skip STR split-pred white) #f))
+			(if white (string-skip STR SPLIT-PRED white) #f))
 		(define end (if nonwhite nonwhite (string-length STR)))
 		(define next (- end 1))
 		(if MORE
