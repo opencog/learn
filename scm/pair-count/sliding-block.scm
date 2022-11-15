@@ -38,16 +38,17 @@
 	; the next `word` in STR. Each number is the length of the word.
 	; whitespace (successive series tokens satisfying the whitespace
 	; predicate) is skipped over.
-	(define (get-deltas STR DLIST)
+	(define (get-deltas STR DLIST MORE)
 		(define white (string-index STR split-pred))
 		(define nonwhite
 			(if white (string-skip STR split-pred white) #f))
-		(define next (if nonwhite (- nonwhite 1) #f))
-		(if next
-			(get-deltas (substring STR (+ next 1)) (cons next DLIST))
+		(define end (if nonwhite nonwhite (string-length STR)))
+		(define next (- end 1))
+		(if MORE
+			(get-deltas (substring STR (+ next 1)) (cons next DLIST) nonwhite)
 			(reverse! DLIST)))
 
-	(define delta-list (get-deltas TEXT-BLOCK '()))
+	(define delta-list (get-deltas TEXT-BLOCK '() #t))
 
 	; Sum the lengths in the list.
 	(define (sumy LST)
@@ -57,7 +58,7 @@
 	(define (make-segments DLIST SEGLIST)
 		(if (<= WIN-SIZE (length DLIST))
 			(make-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
-			(append (reverse! (cons (car SEGLIST) SEGLIST)))))
+			(reverse! SEGLIST)))
 
 	(define seg-list (make-segments delta-list '()))
 
@@ -68,8 +69,6 @@
 
 	(define start-list (make-starts delta-list 0 '()))
 
-	(define block-size (string-length TEXT-BLOCK))
-
 	; Observe text blocks.
 	; Drop all but every STEP'th text block.
 	; For 1 < STEP, it can happen that the last STEP-1 words
@@ -77,8 +76,7 @@
 	; for this. I guess non-unit steps are a bad idea...!?
 	(define cnt 0)
 	(for-each (lambda (START LEN)
-			(define text-seg (substring TEXT-BLOCK START
-				(min block-size (+ START LEN))))
+			(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 			(when (eq? 0 (modulo cnt STEP))
 				(format #t "text-block: >>~A<<\n" text-seg)
 				; (observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
