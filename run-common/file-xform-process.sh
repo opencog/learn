@@ -6,8 +6,8 @@
 # in some way before they can be submitted for counting.
 #
 # The <xform-cmd> executable command is applied to each file, the
-# output of which is submitted to the cogserver.  When done, the file
-# is moved over to the $COMPLETED_DIR directory.
+# output of which is submitted to the cogserver, line by line.  When
+# done, the file is moved over to the $COMPLETED_DIR directory.
 #
 # If the files do not need any transformation or pre-processing, then
 # the `file-nosplit-process.sh` script can be used.

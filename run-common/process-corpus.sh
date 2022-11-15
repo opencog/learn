@@ -39,7 +39,10 @@ if $SENTENCE_SPLIT; then
 elif $XFORM_SPLIT; then
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-xform-process.sh {} $CORPORA_DIR $XFORM_CMD \;
-else
+elif $LINE_SPLIT; then
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-nosplit-process.sh {} $CORPORA_DIR \;
+else
+	time find $CORPORA_DIR -type f \
+		-exec $cwd/file-block-process.sh {} $CORPORA_DIR \;
 fi
