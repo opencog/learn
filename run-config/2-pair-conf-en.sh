@@ -1,7 +1,14 @@
 #! /bin/bash
 #
-# Configuration parameters for English word-pair counting.
+# Deprecated; example only.
+# Example configuration parameters for English word-pair counting.
 # See `2-pair-conf.sh` for documentation of these parameters.
+#
+# This is deprecated, because it uses external perl scripts for
+# sentence segmentation. That was OK for initial bringup, but doing
+# segmentation externally to the processing generates artifacts,
+# due to .. bad segmentation algos.  Everything is now handled by the
+# pipeline itself.
 # ------------
 
 # Directory where corpora files can be found
