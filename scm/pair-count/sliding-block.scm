@@ -34,8 +34,13 @@
 
 	; Return a list of indexes (numbers) indicating the offset to
 	; the next `word` in STR. Each number is the length of the word.
+	; whitespace (successive series tokens satisfying the whitespace
+	; predicate) is skipped over.
 	(define (get-deltas STR DLIST)
-		(define next (string-index STR split-pred))
+		(define white (string-index STR split-pred))
+		(define nonwhite
+			(if white (string-skip STR split-pred white) #f))
+		(define next (if nonwhite (- nonwhite 1) #f))
 		(if next
 			(get-deltas (substring STR (+ next 1)) (cons next DLIST))
 			(reverse! DLIST)))
@@ -50,7 +55,7 @@
 	(define (make-segments DLIST SEGLIST)
 		(if (<= WIN-SIZE (length DLIST))
 			(make-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
-			(reverse! SEGLIST)))
+			(append (reverse! (cons (car SEGLIST) SEGLIST)))))
 
 	(define seg-list (make-segments delta-list '()))
 
@@ -61,10 +66,12 @@
 
 	(define start-list (make-starts delta-list 0 '()))
 
+	(define block-size (string-length TEXT-BLOCK))
+
 	(for-each (lambda (START LEN)
-			(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
-			; (observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
-(format #t "duuude ~A\n" text-seg))
+			(define text-seg (substring TEXT-BLOCK START
+				(min block-size (+ START LEN))))
+			(observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES))
 		start-list seg-list)
 )
 
