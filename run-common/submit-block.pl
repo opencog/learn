@@ -52,6 +52,8 @@ send_nowait($server, $port, "($ARGV[2] \"$block\")\n");
 
 # Wait until the cogserver is actually done.
 # If we don't wait, then the time printed below is wrong.
+# XXX except this is wrong; this just stalls until some other
+# socket opens up on the cogserver!
 ping_flush($server, $port);
 
 my $elapsed = time() - $start_time;

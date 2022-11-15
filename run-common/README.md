@@ -11,12 +11,13 @@ File overview
 Several files common to several of these steps are located in this
 directory.  A quick overview:
 
-* `submit-block.pl`: Script to send text blocks to the cogserver.
-  Performs one submit for the entire text file, as one big blob.
+* `submit-block.pl`: Script to send UTF-8 text from STDIN, as a single
+  large block, to the cogserver.  Performs only one submit for the
+  entire text input, as one big blob.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
-* `submit-plain.pl`: Script to send text strings to the cogserver.
-  Performs one submit per newline in the text file.
+* `submit-lines.pl`: Script to send UTF-8 text from STDIN to the
+  cogserver, line by line.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
 * `socket-send.pl`: Network interface to the cogserver. Used by above.

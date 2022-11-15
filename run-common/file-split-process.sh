@@ -67,9 +67,9 @@ mkdir -p $(dirname "$subdir/$rest")
 # Sentence split the article itself
 cat "$filename" | $splitter -l $lang >  "$splitdir/$rest"
 
-# Submit the split article
+# Submit the split article, line by line.
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-cat "$splitdir/$rest" | $cwd/submit-plain.pl $coghost $cogport "$observe"
+cat "$splitdir/$rest" | $cwd/submit-lines.pl $coghost $cogport "$observe"
 
 # Punt if the cogserver has crashed (second test,
 # before doing the mv and rm below)

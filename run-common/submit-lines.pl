@@ -1,6 +1,6 @@
 #! /usr/bin/env perl
 #
-# submit-plain.pl <cogserver-host> <cogserver-port> <observe-cmd>
+# submit-lines.pl <cogserver-host> <cogserver-port> <observe-cmd>
 #
 # Read lines from `stdin` and submit them to the cogserver for
 # processing. Each line is quoted and then wrapped by the <observe-cmd>
@@ -18,7 +18,7 @@
 # For planar MST disjunct counting, ARGV[2] is "observe-mpg"
 #
 # Example usage:
-#    cat file | ./submit-plain.pl localhost 17001 "observe-window 24"
+#    cat file | ./submit-lines.pl localhost 17001 "observe-window 24"
 #
 # This script will wait (hang) until the cogserver is idle enough
 # to be able to respond. That is, it waits until the cogserver has
@@ -56,12 +56,14 @@ while (<STDIN>)
 	s/\"/\\\"/g;
 
 	send_nowait($server, $port, "($ARGV[2] \"$_\")\n");
-	# print "submit-plain: $_\n";
+	# print "submit-lines: $_\n";
 	$nsent = $nsent + 1;
 }
 
 # Wait until the cogserver is actually done.
 # If we don't wait, then the time printed below is wrong.
+# XXX except this is wrong; this just stalls until some other
+# socket opens up on the cogserver!
 ping_flush($server, $port);
 
 my $elapsed = time() - $start_time;
