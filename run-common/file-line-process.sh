@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# file-nosplit-process.sh <file> <base-path>
+# file-line-process.sh <file> <base-path>
 #
-# Support script for processing of pre-split UTF-8 plain-text files.
-# The <file> should contain one sentence per line, and words should be
-# delimited by whitespace.
+# Support script for processing of UTF-8 plain-text files, one line
+# at a time. The <file> should contain one sentence per line, and
+# words should be delimited by whitespace.
 #
 # Submit that one file, via perl script, to the parser. When done,
 # move the file over to the $COMPLETED_DIR directory.
@@ -13,8 +13,8 @@
 # <base-path> is the directory in which the test corpora are located.
 #
 # Example usage:
-#    ./file-nosplit-process.sh file.txt
-#    ./file-nosplit-process.sh /home/data/dir/file.txt /home/data
+#    ./file-line-process.sh file.txt
+#    ./file-line-process.sh /home/data/dir/file.txt /home/data
 #
 
 # Some versions of netcat require the -N flag, and some versions
@@ -56,7 +56,7 @@ mkdir -p $(dirname "$subdir/$rest")
 # Move article to temp directory, while processing.
 cp "$filename" "$splitdir/$rest"
 
-# Submit the pre-split article
+# Submit the text, line by line
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 cat "$splitdir/$rest" | $cwd/submit-plain.pl $coghost $cogport "$observe"
 

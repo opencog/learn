@@ -46,7 +46,7 @@ elif $XFORM_SPLIT; then
 		-exec $cwd/file-xform-process.sh {} $CORPORA_DIR $XFORM_CMD \;
 elif $LINE_SPLIT; then
 	time find $CORPORA_DIR -type f \
-		-exec $cwd/file-nosplit-process.sh {} $CORPORA_DIR \;
+		-exec $cwd/file-line-process.sh {} $CORPORA_DIR \;
 else
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-block-process.sh {} $CORPORA_DIR \;

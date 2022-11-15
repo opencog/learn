@@ -26,7 +26,7 @@ directory.  A quick overview:
   and then a final directory when the processing is completed.
   This submits the entire file as one single big block of text.
 
-* `file-nosplit-process.sh`: Submit each text file for processing,
+* `file-line-process.sh`: Submit each text file for processing,
   one line at a time. That is, newlines are assumed to delimit blocks
   of text; each of these is submitted individually to the cogserver.
 
