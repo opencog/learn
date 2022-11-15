@@ -38,6 +38,11 @@ directory.  A quick overview:
   breaking on abbreviations.
 
 * `submit-plain.pl`: Script to send text strings to the cogserver.
+  Performs one submit per newline in the text file.
+  Used for pair-counting, MST-parsing and MPG-parsing.
+
+* `submit-block.pl`: Script to send text blocks to the cogserver.
+  Performs one submit for the entire text file, as one big blob.
   Used for pair-counting, MST-parsing and MPG-parsing.
 
 * `socket-send.pl`: Network interface to the cogserver. Used by above.
