@@ -19,8 +19,10 @@
 
 (define*-public (observe-block TEXT-BLOCK
 	#:key
-	(WIN-SIZE 16)
-	(NUM-LINKAGES 12))
+		(WIN-SIZE 16)
+		(NUM-LINKAGES 12)
+		(STEP 1)
+	)
 "
    observe-block TEXT-BLOCK --
       Impose a sliding window on the TEXT-BLOCK, and then submit
@@ -68,10 +70,20 @@
 
 	(define block-size (string-length TEXT-BLOCK))
 
+	; Observe text blocks.
+	; Drop all but every STEP'th text block.
+	; For 1 < STEP, it can happen that the last STEP-1 words
+	; are never observed... I see no easy/obvious work-around
+	; for this. I guess non-unit steps are a bad idea...!?
+	(define cnt 0)
 	(for-each (lambda (START LEN)
 			(define text-seg (substring TEXT-BLOCK START
 				(min block-size (+ START LEN))))
-			(observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES))
+			(when (eq? 0 (modulo cnt STEP))
+				(format #t "text-block: >>~A<<\n" text-seg)
+				; (observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
+			)
+			(set! cnt (+ cnt 1)))
 		start-list seg-list)
 )
 
