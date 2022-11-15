@@ -19,7 +19,7 @@
 ; this code! This makes various assumptions that are appropriate only
 ; for natural language.
 ;
-; Copyright (c) 2013, 2017 Linas Vepstas <linasvepstas@gmail.com>
+; Copyright (c) 2013, 2017, 2022 Linas Vepstas <linasvepstas@gmail.com>
 ;
 ; Main entry point: `(observe-text plain-text)`
 ;
