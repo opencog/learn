@@ -5,6 +5,7 @@ ADD_GUILE_MODULE (FILES
 
 	pair-count/batch-pair.scm
 	pair-count/pair-count-window.scm
+	pair-count/sliding-block.scm
 	pair-count/word-pair-count.scm
 
 	mst-parse/mst-parser.scm

@@ -32,6 +32,7 @@
    TEXT-BLOCK is a utf8 string of text.
 "
 	; Locations at which to split text.
+	; This can be a char-set or a predicate.
 	(define split-pred char-set:whitespace)
 
 	; Return a list of indexes (numbers) indicating the offset to
@@ -62,6 +63,7 @@
 
 	(define seg-list (make-segments delta-list '()))
 
+	; Create a list of the starting points of each segment.
 	(define (make-starts DLIST SUM STARTL)
 		(if (not (nil? DLIST))
 			(make-starts (cdr DLIST) (+ 1 SUM (car DLIST)) (cons SUM STARTL))
@@ -69,8 +71,9 @@
 
 	(define start-list (make-starts delta-list 0 '()))
 
-	; Observe text blocks.
-	; Drop all but every STEP'th text block.
+	; Observe text blocks. Loops over the list of starting points
+	; crated above, and the corresponding segment lengths.
+	; The loop can be made to drop all but every STEP'th text block.
 	; For 1 < STEP, it can happen that the last STEP-1 words
 	; are never observed... I see no easy/obvious work-around
 	; for this. I guess non-unit steps are a bad idea...!?
@@ -78,8 +81,8 @@
 	(for-each (lambda (START LEN)
 			(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 			(when (eq? 0 (modulo cnt STEP))
-				(format #t "text-block: >>~A<<\n" text-seg)
-				; (observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
+				; (format #t "text-block: >>~A<<\n" text-seg)
+				(observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
 			)
 			(set! cnt (+ cnt 1)))
 		start-list seg-list)
