@@ -6,6 +6,12 @@ The scripts here are obsolete; they were previously used to automate
 the operation of the language-learning pipeline.
 
 
+* `fake-lang` -- Link Grammar boilerplate, required for working with
+   a Link-Grammar file-based dictionary. The `gen-dict.scm` file copies
+   these files to the target dictionary location. For example:
+```
+   $ cp -r fake-lang /home/ubuntu/data/trial-run/fake-lang
+```
 * `gen-dict.scm` -- Generates a random artificial ("fake") grammar.
   Requires configuration parameters to be declared; see
   `../0-config/dict-conf.scm` for an example configuration file.

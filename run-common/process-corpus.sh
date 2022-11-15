@@ -33,7 +33,12 @@ export MSG
 
 cwd=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-if $SENTENCE_SPLIT; then
+# Always do block processing by default. All of the other modes
+# are deprecated, and will be removed eventually.
+if $BLOCK_SUBMIT; then
+	time find $CORPORA_DIR -type f \
+		-exec $cwd/file-block-process.sh {} $CORPORA_DIR \;
+elif $SENTENCE_SPLIT; then
 	time find $CORPORA_DIR -type f \
 		-exec $cwd/file-split-process.sh $SPLIT_LANG {} $CORPORA_DIR \;
 elif $XFORM_SPLIT; then
