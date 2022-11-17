@@ -70,28 +70,6 @@
 )
 
 ; ---------------------------------------------------------------------
-; update-word-counts -- update counts for sentences, parses and words,
-; for the given list of sentences.
-;
-; As explained above, the counts on `(SentenceNode "ANY")` and
-; `(ParseNode "ANY")` and on `(WordNode "foobar")` are updated.
-;
-; At this time, these counts are not used for anything other than
-; as some "nice to know" overall stats.
-;
-(define (update-word-counts single-sent)
-	(define any-sent (SentenceNode "ANY"))
-	(define any-parse (ParseNode "ANY"))
-
-	(base-count any-sent)
-	(for-each
-		(lambda (parse)
-			(base-count any-parse)
-			(for-each base-count
-				(map word-inst-get-word (parse-get-words parse))))
-		(sentence-get-parses single-sent))
-)
-
 ; ---------------------------------------------------------------------
 
 (define-public monitor-parse-rate (make-rate-monitor))
@@ -138,6 +116,23 @@
 	(define base-space (cog-atomspace))
 	(define NUML (Number NUM-LINKAGES))
 	(define wild-wild (LLOBJ 'wild-wild))
+
+	(define any-sent (SentenceNode "ANY"))
+	(define any-parse (ParseNode "ANY"))
+
+	; update-word-counts -- update counts for sentences, parses and
+	; and individual words, given a SentenceNode.
+	; XXX TODO: this should probably be converted to an 1xN matrix
+	; and handled with a matrix API.
+	(define (update-word-counts SENT)
+
+		(base-count any-sent)
+		(for-each
+			(lambda (parse)
+				(base-count any-parse)
+				(for-each base-count
+					(map word-inst-get-word (parse-get-words parse))))
+			(sentence-get-parses SENT)))
 
 	; Increment the count on a word-pair. Also increment the marginal
 	; counts. The `lg-rel-inst` argument is assumed to be ofr the form
