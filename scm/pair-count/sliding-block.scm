@@ -79,6 +79,9 @@
 
 	(define start-list (make-starts delta-list 0 '()))
 
+	(define ala (make-any-link-api))
+	(define observe-text (make-pair-counter ala #:NUM-LINKAGES NUM-LINKAGES))
+
 	; Observe text blocks. Loops over the list of starting points
 	; crated above, and the corresponding segment lengths.
 	; The loop can be made to drop all but every STEP'th text block.
@@ -90,7 +93,7 @@
 			(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 			(when (eq? 0 (modulo cnt STEP))
 				; (format #t "text-block: >>~A<<\n" text-seg)
-				(observe-text text-seg #:NUM-LINKAGES NUM-LINKAGES)
+				(observe-text text-seg)
 			)
 			(set! cnt (+ cnt 1)))
 		start-list seg-list)

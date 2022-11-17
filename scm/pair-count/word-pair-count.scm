@@ -163,33 +163,36 @@
 
 ; --------------------------------------------------------------------
 
-(define*-public (observe-text PLAIN-TEXT
-	#:key (NUM-LINKAGES 24))
+(define*-public (make-pair-counter LLOBJ
+	#:key
+		(NUM-LINKAGES 24)
+		(DICT (LgDict "any"))
+	)
 "
-   observe-text PLAIN-TEXT --
-      update word and word-pair counts by observing raw text.
+  make-observe-text LLOBJ --
+     return a function that will update word-pair counts on LLOBJ
 
- Uses the LG parser to create 24 different random planar tree parses
- per sentence. Why 24? No particular reason; it provides a reasonable
- sample of all possible planar parses. The number of word-pairs
- sampled will be at least N pairs per parse, where N is the length
- of the sentence.
+  The LLOBJ should be a matrix object that can hold a pair of words
+  on the left and right. The `any-link-api` object will do.
 
-   PLAIN-TEXT is a utf8 string of text.
+  This returns a function that takes a single argument, a plain-text
+  UTF-8 string holding a single sentence, and sends it to the
+  Link Grammar parser for parsing. The individual links in the
+  resulting parses are sent to the LLOBJ for pair-counting.
 
-   Creates random planar parse trees, using the LG parser
-   'any' language.  All word-pairs linked in a linkage will be
-   counted. The NUM-LINKAGES specifies the number of linkages
-   (the number of random trees) to create and count. Thus, any
-   given word will participate in at least NUM-LINKAGES word-pairs,
-   and often in at least twice as many. The 'any' language
-   tokenizes the sentence string according to white space, and
-   also separates out punctuation.
+  This takes two optional paramters:
 
-   The parse rate can be monitored by calling, by hand, the guile function
-    `(monitor-parse-rate MSG)` for some string MSG.
+  #:NUM-LINKAGES -- the number of linkkages that the LG parser should
+  generate. Recall that each linkage is a differrent parse of the
+  sentence; these are returned in cost-sorted order. Default is 24.
+
+  #:DICT -- the `LgDictNode` to use. This is the dictionary to use for
+  parsing. By default, this is the `any` dictionary, which creates
+  uniformly-distributed random parse trees.
+
+  The parse rate can be monitored by calling, by hand, the guile function
+   `(monitor-parse-rate MSG)` for some string MSG.
 "
-	(define DANY (LgDict "any"))
 	(define NUML (Number NUM-LINKAGES))
 
 	; Do all work in a temp atomspace.  The idea here is that this will
@@ -201,16 +204,24 @@
 	; that this probably not needed, that it's enough that
 	; `count-one-atom` is incrementing and storing.  But I'm slightly
 	; paranoid, here. The performance hit is presumably mnimal.
-	(cog-push-atomspace)
-	(let ((SENT (cog-execute!
-				(LgParseMinimal (Phrase PLAIN-TEXT) DANY NUML))))
-		(update-word-counts SENT)
+	(define (obs-txt PLAIN-TEXT)
+		(cog-push-atomspace)
+		(let ((SENT (cog-execute!
+					(LgParseMinimal (Phrase PLAIN-TEXT) DICT NUML))))
+			(update-word-counts SENT)
 
-		; Update the pair counts.
-		(for-each-lg-link incr-pair-w-marginals (list SENT))
+			; Update the pair counts.
+			(for-each-lg-link incr-pair-w-marginals (list SENT))
+		)
+		(cog-pop-atomspace)
+		(monitor-parse-rate #f)
 	)
-	(cog-pop-atomspace)
-	(monitor-parse-rate #f)
+
+	; Return the function defined above.
+	obs-txt
 )
+
+; Backards compat
+(define-public observe-text (make-pair-counter any-link-api))
 
 ; ---------------------------------------------------------------------
