@@ -112,54 +112,44 @@
 )
 
 ; ---------------------------------------------------------------------
-; make-word-link -- create a word-link from a word-instance link
-;
-; Get the LG word-link relation corresponding to a word-instance LG link
-; relation. An LG link is simply a single link-grammar link between two
-; words (or two word-instances, when working with a single sentence).
-;
-; This function simply strips off the unique word-ids from each word.
-; For example, given this as input:
+; incr-pair-w-marginals -- update counts on word-pairs, and their
+; marginals. Argument is expected to be this:
 ;
 ;   EvaluationLink
 ;      LgLinkNode "FOO"
 ;      ListLink
-;         WordInstanceNode "word@uuid"
-;         WordInstanceNode "bird@uuid"
+;         WordInstanceNode "word@uuid123"
+;         WordInstanceNode "bird@uuid456"
 ;
-; this creates and returns this:
+; Using the LLOBJ, the counts will be updated on the word-pair
+; (WordNode "word" WordNode "bird") as well on on the marginals
+; (AnyNode "left" WordNode "bird") and (WordNode "word" AnyNode "right")
+; as well as the wild-card (AnyNode "left" AnyNode "right") The
+; actual pairs to update are obtained from LLOBJ.
 ;
-;   EvaluationLink
-;      LgLinkNode "FOO" -- gar
-;      ListLink                          -- gdr
-;         WordNode "word"                -- gadr
-;         WordNode "bird"                -- gddr
+; Currently LLOBJ is hard-coded to `any-link-api`.
 ;
-(define (make-word-link lg-rel-inst)
-	(let (
-			(rel-node (gar lg-rel-inst))
-			(w-left  (word-inst-get-word (gadr lg-rel-inst)))
-			(w-right (word-inst-get-word (gddr lg-rel-inst)))
-		)
-		(EvaluationLink rel-node (ListLink w-left w-right))
-	)
+; Hmmm.
+(define any-link-api (make-any-link-api))
+(define wild-wild (any-link-api 'wild-wild))
+
+(define (incr-pair-w-marginals lg-rel-inst)
+	(define curspace (cog-atomspace))
+
+	; Extract the left and right words.
+	(define w-left  (word-inst-get-word (gadr lg-rel-inst)))
+	(define w-right (word-inst-get-word (gddr lg-rel-inst)))
+
+	; Pop down to the base atomspace.
+	(cog-set-atomspace! (car (cog-atomspace-env)))
+	(count-one-atom (any-link-api 'make-pair w-left w-right))
+	(count-one-atom (any-link-api 'left-wildcard w-right))
+	(count-one-atom (any-link-api 'right-wildcard w-left))
+	(count-one-atom wild-wild)
+	(cog-set-atomspace! curspace)
 )
 
 ; ---------------------------------------------------------------------
-; update-lg-link-counts -- Increment link counts
-;
-; This routine updates LG link counts in the database. The algo is trite:
-; fetch the LG link from storage, increment the attached CountTruthValue,
-; and save back to storage.
-
-(define (update-lg-link-counts single-sent)
-
-	(for-each-lg-link
-		(lambda (LINK) (base-count (make-word-link LINK)))
-		(list single-sent))
-)
-
-; --------------------------------------------------------------------
 
 (define-public monitor-parse-rate (make-rate-monitor))
 (set-procedure-property! monitor-parse-rate 'documentation
@@ -214,7 +204,9 @@
 	(let ((SENT (cog-execute!
 				(LgParseMinimal (Phrase PLAIN-TEXT) DANY NUML))))
 		(update-word-counts SENT)
-		(update-lg-link-counts SENT)
+
+		; Update the pair counts.
+		(for-each-lg-link incr-pair-w-marginals (list SENT))
 	)
 	(cog-pop-atomspace)
 	(monitor-parse-rate #f)
