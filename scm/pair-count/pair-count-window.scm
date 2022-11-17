@@ -12,13 +12,21 @@
 ; This is currently unused, mostly because it's naive. Text tokenization
 ; by splitting w.r.t. whitespace is naive, and just does not work in many
 ; cases. Clique counting also seems naive, and has poor statistical
-; properties (its not really "uniform" in a structural sense)/
+; properties (its not really "uniform" in a structural sense.)
+;
+; Also the code is somewhat olde-fashioned in counting management.
 ;
 ; Copyright (C) 2021 Linas Vepstas
 ;
 
 (use-modules (opencog))
 (use-modules (srfi srfi-1))
+
+; ---------------------------------------------------------------------
+; Globals, used in definining pair-counting objects.
+(define *-item-pair-tag-* (PredicateNode "*-Item Pair-*"))
+
+; ---------------------------------------------------------------------
 
 (define-public (split-text plain-text)
 "

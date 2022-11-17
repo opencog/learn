@@ -11,10 +11,6 @@
 (use-modules (opencog) (opencog persist))
 
 ; ---------------------------------------------------------------------
-; Globals, used in definining pair-counting objects.
-(define *-item-pair-tag-* (PredicateNode "*-Item Pair-*"))
-
-; ---------------------------------------------------------------------
 
 ; get-count ATOM - return the raw observational count on ATOM.
 (define-public (get-count ATOM) (cog-count ATOM))
