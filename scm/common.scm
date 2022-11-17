@@ -24,6 +24,9 @@
 (define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 ; ---------------------------------------------------------------------
+; XXX TODO FIXME
+; This should be implemented as an LLOBJ wrapper around the LLOBJ
+; facilities for get-count, set-count etc.
 
 (define (count-one-atom ATM)
 "
@@ -33,12 +36,6 @@
   This will also automatically fetch the previous count from storage,
   so that counting will work correctly, when picking up from a previous
   point.
-
-  Warning: this is NOT THREAD SAFE! during rapid startup of multiple
-  threads, each thread could fetch the same count, and increment
-  that, leading to a loss of counts!  Once the system is up and running,
-  things should be fine (i.e. it is \"eventually thread-safe\"); but
-  there's a race-window during startup.
 
   Warning: this is NOT SAFE for distributed processing! That is
   because this does NOT grab the count from the database every time,
