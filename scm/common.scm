@@ -13,7 +13,6 @@
 ; ---------------------------------------------------------------------
 ; Globals, used in definining pair-counting objects.
 (define *-item-pair-tag-* (PredicateNode "*-Item Pair-*"))
-(define *-word-pair-tag-* (PredicateNode "*-Sentence Word Pair-*"))
 
 ; ---------------------------------------------------------------------
 
