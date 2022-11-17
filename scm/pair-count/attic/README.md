@@ -10,3 +10,5 @@ Dead, unused code that might still be interesting.
     The "distance pairs" are word pairs that are a fixed distance apart.
     We've never done that.  So its "good code", just unused. Easy to
     recreate, if/when we'd ever need this.
+
+* __utils.scm__: minor pair-construction utilities.
