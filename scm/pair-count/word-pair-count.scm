@@ -113,44 +113,6 @@
 )
 
 ; ---------------------------------------------------------------------
-; incr-pair-w-marginals -- update counts on word-pairs, and their
-; marginals. Argument is expected to be this:
-;
-;   EvaluationLink
-;      LgLinkNode "FOO"
-;      ListLink
-;         WordInstanceNode "word@uuid123"
-;         WordInstanceNode "bird@uuid456"
-;
-; Using the LLOBJ, the counts will be updated on the word-pair
-; (WordNode "word" WordNode "bird") as well on on the marginals
-; (AnyNode "left" WordNode "bird") and (WordNode "word" AnyNode "right")
-; as well as the wild-card (AnyNode "left" AnyNode "right") The
-; actual pairs to update are obtained from LLOBJ.
-;
-; Currently LLOBJ is hard-coded to `any-link-api`.
-;
-; Hmmm.
-(define any-link-api (make-any-link-api))
-(define wild-wild (any-link-api 'wild-wild))
-
-(define (incr-pair-w-marginals lg-rel-inst)
-	(define curspace (cog-atomspace))
-
-	; Extract the left and right words.
-	(define w-left  (word-inst-get-word (gadr lg-rel-inst)))
-	(define w-right (word-inst-get-word (gddr lg-rel-inst)))
-
-	; Pop down to the base atomspace.
-	(cog-set-atomspace! (car (cog-atomspace-env)))
-	(count-one-atom (any-link-api 'make-pair w-left w-right))
-	(count-one-atom (any-link-api 'left-wildcard w-right))
-	(count-one-atom (any-link-api 'right-wildcard w-left))
-	(count-one-atom wild-wild)
-	(cog-set-atomspace! curspace)
-)
-
-; ---------------------------------------------------------------------
 
 (define-public monitor-parse-rate (make-rate-monitor))
 (set-procedure-property! monitor-parse-rate 'documentation
@@ -193,7 +155,30 @@
   The parse rate can be monitored by calling, by hand, the guile function
    `(monitor-parse-rate MSG)` for some string MSG.
 "
+	(define base-space (cog-atomspace))
 	(define NUML (Number NUM-LINKAGES))
+	(define wild-wild (LLOBJ 'wild-wild))
+
+	; Increment the count on a word-pair. Also increment the marginal
+	; counts. The `lg-rel-inst` argument is assumed to be ofr the form
+	;   (Evaluation (LgLinkNode "FOO") (ListLink
+	;       (WordInstance "surfin@uuid123")
+	;       (WordInstance "bird@uuid456")))
+	; and the corresponding WordNodes are located and passed to LLOBJ
+	; for pair-handling.
+	(define (incr-pair lg-rel-inst)
+		; Extract the left and right words.
+		(define w-left  (word-inst-get-word (gadr lg-rel-inst)))
+		(define w-right (word-inst-get-word (gddr lg-rel-inst)))
+
+		; Pop down to the base atomspace.
+		(define curspace (cog-atomspace))
+		(cog-set-atomspace! base-space)
+		(count-one-atom (LLOBJ 'make-pair w-left w-right))
+		(count-one-atom (LLOBJ 'left-wildcard w-right))
+		(count-one-atom (LLOBJ 'right-wildcard w-left))
+		(count-one-atom wild-wild)
+		(cog-set-atomspace! curspace))
 
 	; Do all work in a temp atomspace.  The idea here is that this will
 	; make counting thread-safe, as each sentence get's processed in
@@ -211,7 +196,7 @@
 			(update-word-counts SENT)
 
 			; Update the pair counts.
-			(for-each-lg-link incr-pair-w-marginals (list SENT))
+			(for-each-lg-link incr-pair (list SENT))
 		)
 		(cog-pop-atomspace)
 		(monitor-parse-rate #f)
@@ -222,6 +207,6 @@
 )
 
 ; Backards compat
-(define-public observe-text (make-pair-counter any-link-api))
+(define-public observe-text (make-pair-counter (make-any-link-api)))
 
 ; ---------------------------------------------------------------------
