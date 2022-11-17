@@ -76,18 +76,19 @@
 ; As explained above, the counts on `(SentenceNode "ANY")` and
 ; `(ParseNode "ANY")` and on `(WordNode "foobar")` are updated.
 ;
+; At this time, these counts are not used for anything other than
+; as some "nice to know" overall stats.
+;
 (define (update-word-counts single-sent)
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
-
-	(define (count-one-word word-inst)
-		(base-count (word-inst-get-word word-inst)))
 
 	(base-count any-sent)
 	(for-each
 		(lambda (parse)
 			(base-count any-parse)
-			(for-each count-one-word (parse-get-words parse)))
+			(for-each base-count
+				(map word-inst-get-word (parse-get-words parse))))
 		(sentence-get-parses single-sent))
 )
 
@@ -99,8 +100,8 @@
 ;   EvaluationLink
 ;      LgLinkNode "FOO"
 ;      ListLink
-;         WordInstanceNode "word@uuid"
-;         WordInstanceNode "bird@uuid"
+;         WordInstanceNode "word@uuid123"
+;         WordInstanceNode "bird@uuid456"
 ;
 ; The PROC is a function to be invoked on each of these.
 ;
