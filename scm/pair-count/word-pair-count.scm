@@ -2,7 +2,7 @@
 ; word-pair-count.scm
 ;
 ; Word-pair counting via random planar trees. This takes a uniformly
-; distributed random sampling ouut of all possible planar parse trees.
+; distributed random sampling out of all possible planar parse trees.
 ; The uniform sampling of parse trees produces mildly different
 ; word-pair distributions as compared to sliding-window techniques.
 ; (The old sliding-window code has been retired. It is called "clique
@@ -59,19 +59,6 @@
 
 ; ---------------------------------------------------------------------
 
-; Assume the curr atomspace is some temp space.
-; Navigate to the botton, increment the count,
-; and return to where we were.
-(define (base-count ATOM)
-	(define curspace (cog-atomspace))
-	(cog-set-atomspace! (car (cog-atomspace-env)))
-	(count-one-atom ATOM)
-	(cog-set-atomspace! curspace)
-)
-
-; ---------------------------------------------------------------------
-; ---------------------------------------------------------------------
-
 (define-public monitor-parse-rate (make-rate-monitor))
 (set-procedure-property! monitor-parse-rate 'documentation
 "
@@ -125,13 +112,23 @@
 	; XXX TODO: this should probably be converted to an 1xN matrix
 	; and handled with a matrix API.
 	(define (update-word-counts SENT)
-
-		(base-count any-sent)
+		; Pop down to the base space for counting.
+		(define curspace (cog-atomspace))
+		(cog-set-atomspace! base-space)
+			(count-one-atom any-sent)
+		(cog-set-atomspace! curspace)
 		(for-each
 			(lambda (parse)
-				(base-count any-parse)
-				(for-each base-count
-					(map word-inst-get-word (parse-get-words parse))))
+				; A list of all the words in the sentence
+				(define wlst (map word-inst-get-word (parse-get-words parse)))
+
+				; Pop down to the base space for counting.
+				(define curspace (cog-atomspace))
+				(cog-set-atomspace! base-space)
+					(count-one-atom any-parse)
+					(for-each count-one-atom wlst)
+				(cog-set-atomspace! curspace)
+			)
 			(sentence-get-parses SENT)))
 
 	; Increment the count on a word-pair. Also increment the marginal
@@ -160,8 +157,7 @@
 		(for-each
 			(lambda (parse)
 				(for-each PROC (parse-get-links parse)))
-			(sentence-get-parses (list SENT)))
-	)
+			(sentence-get-parses SENT)))
 
 	; Do all work in a temp atomspace.  The idea here is that this will
 	; make counting thread-safe, as each sentence get's processed in
