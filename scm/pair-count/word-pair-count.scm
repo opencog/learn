@@ -93,26 +93,6 @@
 )
 
 ; ---------------------------------------------------------------------
-; for-each-lg-link -- loop over all link-grammar links in a sentence.
-;
-; Each link-grammar link is of the general form:
-;
-;   EvaluationLink
-;      LgLinkNode "FOO"
-;      ListLink
-;         WordInstanceNode "word@uuid123"
-;         WordInstanceNode "bird@uuid456"
-;
-; The PROC is a function to be invoked on each of these.
-;
-(define (for-each-lg-link PROC SENT)
-	(for-each
-		(lambda (parse)
-			(for-each PROC (parse-get-links parse)))
-		(sentence-get-parses SENT))
-)
-
-; ---------------------------------------------------------------------
 
 (define-public monitor-parse-rate (make-rate-monitor))
 (set-procedure-property! monitor-parse-rate 'documentation
@@ -180,6 +160,14 @@
 		(count-one-atom wild-wild)
 		(cog-set-atomspace! curspace))
 
+	; Call PROC on every LG link on every parse for SENT
+	(define (for-each-lg-link PROC SENT)
+		(for-each
+			(lambda (parse)
+				(for-each PROC (parse-get-links parse)))
+			(sentence-get-parses (list SENT)))
+	)
+
 	; Do all work in a temp atomspace.  The idea here is that this will
 	; make counting thread-safe, as each sentence get's processed in
 	; it's own unique per-thread atomspace.
@@ -196,7 +184,7 @@
 			(update-word-counts SENT)
 
 			; Update the pair counts.
-			(for-each-lg-link incr-pair (list SENT))
+			(for-each-lg-link incr-pair SENT)
 		)
 		(cog-pop-atomspace)
 		(monitor-parse-rate #f)
