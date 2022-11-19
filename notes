@@ -13694,12 +13694,12 @@ fanfic
 total cpu time: 4514 minutes
 foo done=547692 rate=9.716 per sec
 (gc-time-taken . 149815788883396)
- (heap-size . 12095488) 
+ (heap-size . 12095488)
  (gc-times . 624593)
 
 (ListLink . 6630619)
-(EvaluationLink . 6630619) 
-(WordNode . 67703) 
+(EvaluationLink . 6630619)
+(WordNode . 67703)
 (SentenceNode "ANY" (ctv 1 0 547692))
 (ParseNode "ANY" (ctv 1 0 1.29022e+07))
 tot-lines: 2199812
@@ -13710,6 +13710,35 @@ maxrss: 26023264 KB  majflt: 56  inblk: 48  outblk: 178783224
 (count-all) ; 13328951 == 13M
 wc pair-counted/fanfic/* == 547703
 
+------------------
+SUMMARY: ThreadSanitizer: data race /home/linas/src/novamente/src/atomspace-git/opencog/guile/SchemeEval.cc:284 in immortal_thread
+
+opencog::TOP_TYPE = opencog::nameserver().declType(opencog::TOP_TYPE, "TopType");
+decltType at 109 calls
+   getType at 238
+      locks type_mutex
+
+
+opencog::TypeIndex::findAtom(opencog::Handle const&) const /home/linas/src/novamente/src/atomspace-git/opencog/atomspace/TypeIndex.h:112
+#3 opencog::AtomSpace::lookupHide(opencog::Handle const&, bool) const /home/linas/src/novamente/src/atomspace-git/opencog/atomspace/AtomTable.cc:212
+
+#7 opencog::Atom::getIncomingSetByType(unsigned short, opencog::AtomSpace const*) const /home/linas/src/novamente/src/atomspace-git/opencog/atoms/base/Atom.cc:660
+
+
+vs
+Atom::remove_atom at line 458
+   grabs INCOMING_UNIQUE_LOCK
+while opencog::TypeIndex::clear() hold typeindex lock
+/home/linas/src/novamente/src/atomspace-git/opencog/atomspace/TypeIndex.h:160
+is running
+
+    void insert_atom(const Handle&);
+    void remove_atom(const Handle&);
+    virtual void install();
+    virtual void remove();
+
+
+Tell ASAN to ignore homebrew semphore.
 
 
 ====================================================

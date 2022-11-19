@@ -104,6 +104,11 @@
 	(define NUML (Number NUM-LINKAGES))
 	(define wild-wild (LLOBJ 'wild-wild))
 
+	; XXX should we do this here, or at a higher layer?
+	(define count-obj (add-count-api LLOBJ))
+	(define store-obj (add-storage-count count-obj))
+	(define marg-obj (add-marginal-count store-obj))
+
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
 
@@ -143,13 +148,10 @@
 		(define w-left  (word-inst-get-word (gadr lg-rel-inst)))
 		(define w-right (word-inst-get-word (gddr lg-rel-inst)))
 
-		; Pop down to the base atomspace.
+		; Pop down to the base atomspace before counting.
 		(define curspace (cog-atomspace))
 		(cog-set-atomspace! base-space)
-		(count-one-atom (LLOBJ 'make-pair w-left w-right))
-		(count-one-atom (LLOBJ 'left-wildcard w-right))
-		(count-one-atom (LLOBJ 'right-wildcard w-left))
-		(count-one-atom wild-wild)
+		(marg-obj 'pair-inc w-left w-right)
 		(cog-set-atomspace! curspace))
 
 	; Call PROC on every LG link on every parse for SENT
