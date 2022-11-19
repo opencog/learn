@@ -151,7 +151,7 @@
 		; Pop down to the base atomspace before counting.
 		(define curspace (cog-atomspace))
 		(cog-set-atomspace! base-space)
-		(marg-obj 'pair-inc w-left w-right)
+		(marg-obj 'pair-inc w-left w-right 1.0)
 		(cog-set-atomspace! curspace))
 
 	; Call PROC on every LG link on every parse for SENT

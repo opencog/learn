@@ -10,6 +10,10 @@
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog persist))
 
+; XXX TODO FIXME All users of the three functions below need to be
+; converted into users of the add-count-api, add-storage-count and
+; add-marginal-count API's. The three functions below are
+; deprecated/obsolete.
 ; ---------------------------------------------------------------------
 
 ; get-count ATOM - return the raw observational count on ATOM.
@@ -19,9 +23,6 @@
 (define (set-count ATOM CNT) (cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
 
 ; ---------------------------------------------------------------------
-; XXX TODO FIXME
-; This should be implemented as an LLOBJ wrapper around the LLOBJ
-; facilities for get-count, set-count etc.
 
 (define (count-one-atom ATM)
 "
