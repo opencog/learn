@@ -13740,11 +13740,118 @@ is running
 
 Tell ASAN to ignore homebrew semphore.
 
+---------------------
+(define base-space (cog-atomspace))
+(cog-push-atomspace)
+
+(define ala (make-any-link-api))
+(define als (add-pair-stars ala))
+
+(define tvp (PredicateNode "*-TruthValueKey-*"))
+(define w (ala 'wild-wild))
+
+(FormulaStream (Log2 (FloatValueOf w tvp)))
+
+(cog-extract-recursive! (DefinedSchemaNode "dynamic MI"))
+(DefineLink
+   (DefinedSchema "dynamic MI")
+   (Lambda
+		(Log2
+			(FloatValueOf (Variable "$X") tvp))))
+
+(FormulaStream (DefinedSchema "dynamic MI") w) XXX NO why not?
+^^^ this is what we want...
+
+(FormulaStream (Put (DefinedSchema "dynamic MI") w))
+... it reduced OK but didn't eval a second time after reduction
+... we don't want to use Put because we don't want the result
+    in the AS and also we want to exec after reduction...
+... but also support: if execute returns not-a-float-value,
+    execute a second time. But only if its executable...
+
+EvaluationLink::reduce_formula(defn, cargs);
+needs to be a scope link for reduction!?
+
+
+
+(cog-execute!
+(SetValue (Concept "foo") (Predicate "some key")
+	(StreamValue
+		(DefinedSchema "dynamic MI") w))
+
+(SetValue (Concept "foo") (Predicate "some key")
+	(DefinedSchema "dynamic MI")
+	 w))
+
+
+(define j-implies-k (Implication (Concept "J") (Concept "K")))
+(cog-set-tv!
+   (Implication (Concept "J") (Concept "K"))
+; xx no this is insane.
+   (FormulaTruthValue
+      (DefinedPredicate "dynamic example")
+      (List (Concept "A") (Concept "B"))))
+
+   (FormulaPredicate
+      (Minus
+         (Number 1)
+         (Times
+            (StrengthOf (Variable "$X"))
+            (StrengthOf (Variable "$Y"))))
+      (Times
+         (ConfidenceOf (Variable "$X"))
+         (ConfidenceOf (Variable "$Y")))))
+
+
+In FTV, when does the binding happen?  prior to the ctor.
+if its a formula pred, look for args..
+
+
+TODO
+* Fix FormulaStream so that it takes 2 or more args,!?
+* Create DynamicFormulaLink to be like DynamicPredicateLink ?
+* Fix FormulaTruthValue so it handles lambdas et al correctly. -
+  No, this does not make sense.
+
+* Fix SetTV so that it creates a FormulaTruthValue when it
+  sees a Defined predicate w/ args. or a FormulaPredicate w args
+
+./tests/atoms/flow/DynamicUTest
+./tests/atoms/flow/FormulaUTest
+reduce_formula( unused
+
+Arghhh
+
+
+
+------------
+kill wires
+
+The Art of the Propagator
+Alexey Radul; Gerald Jay Sussman
+local: MIT-CSAIL-TR-2009-002
+http://dspace.mit.edu/handle/1721.1/44215
+
+Implement a constraint-type wiring system, inspired by SICP sections
+3.3 (constraints) and 3.5 (streams), where SICP is "Structure and
+Interpretation of Computer Programs", Abelson & Sussman. Note that
+  September 2008
+opencog/scm/wires
 
 ====================================================
 ====================================================
 
 FIXED:
+* Is DynamicPredicateLink  really needed?
+  Why isn't PredicateFormula enough?? GET RID OF IT
+
+* rename PREDICATE_FORMULA to FORMULA_PREDCATE DONE
+* rename DynamicFormulaLink to DynamicPredicateLink  (there's not class,
+  its just in EvaluationLink.cc and causes a run when evaluated)
+  perhad name DynamicPredicate DONE
+* rename PredicateFormula to PredicateSTVFormula DON'T
+* Create FormulaValue (this is what FormulaStream is!?) NOT NEEDED
+* FormulaTruthValue is not using short string.... FIXED
 * cogserver is not flushing output on 2nd and later connections .. wtf!
   or just behaving incoherently/inconsistently with netcat.
   NOT REPRODUCIBLE ... seems to work OK now ...
@@ -13868,4 +13975,5 @@ TODO/BUGS:
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.
   As of Nov 2022 its 10 sent/sec on fanfic at 600% cpu 10 blocked
-  threads
+  threads ... 2/3rds f this time is in guile gc desperately trying
+  to limit mem to 10MBytes...
