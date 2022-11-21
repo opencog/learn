@@ -13759,8 +13759,8 @@ Tell ASAN to ignore homebrew semphore.
 		(Log2
 			(FloatValueOf (Variable "$X") tvp))))
 
-(FormulaStream (DefinedSchema "dynamic MI") w) XXX NO why not?
-^^^ this is what we want...
+(FormulaStream (DefinedSchema "dynamic MI") w) ; this bonks ... why? ooh.
+^^^ this is what we want... but wrapped
 
 (FormulaStream (Put (DefinedSchema "dynamic MI") w))
 ... it reduced OK but didn't eval a second time after reduction
@@ -13769,20 +13769,27 @@ Tell ASAN to ignore homebrew semphore.
 ... but also support: if execute returns not-a-float-value,
     execute a second time. But only if its executable...
 
-EvaluationLink::reduce_formula(defn, cargs);
-needs to be a scope link for reduction!?
+(cog-execute! (ExecutionOutput (DefinedSchema "dynamic MI") w))
+
+(cog-set-value! (Concept "foo") (Predicate "some key")
+	(FormulaStream (ExecutionOutput (DefinedSchema "dynamic MI") w)))
+
+(cog-value (Concept "foo") (Predicate "some key"))
+This all works.
 
 
+(use-modules (opencog) (opencog-exec))
 
 (cog-execute!
 (SetValue (Concept "foo") (Predicate "some key")
-	(StreamValue
-		(DefinedSchema "dynamic MI") w))
+	(PromiseLink  ; creates a FormulaStream and not something else.
+		(TypeNode 'FormulaStream)
+		(ExecutionOutput (DefinedSchema "dynamic MI") w)))
 
-(SetValue (Concept "foo") (Predicate "some key")
-	(DefinedSchema "dynamic MI")
-	 w))
+Also a Decimate
 
+
+------------------------
 
 (define j-implies-k (Implication (Concept "J") (Concept "K")))
 (cog-set-tv!
