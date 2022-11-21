@@ -13787,7 +13787,8 @@ needs to be a scope link for reduction!?
 (define j-implies-k (Implication (Concept "J") (Concept "K")))
 (cog-set-tv!
    (Implication (Concept "J") (Concept "K"))
-; xx no this is insane.
+; xx no this is insane. It needs to have been reduced already.
+; e.g. with a PutLink
    (FormulaTruthValue
       (DefinedPredicate "dynamic example")
       (List (Concept "A") (Concept "B"))))
@@ -13804,23 +13805,44 @@ needs to be a scope link for reduction!?
 
 
 In FTV, when does the binding happen?  prior to the ctor.
-if its a formula pred, look for args..
 
+In SetTV, do what DYN does....
 
-TODO
-* Fix FormulaStream so that it takes 2 or more args,!?
-* Create DynamicFormulaLink to be like DynamicPredicateLink ?
-* Fix FormulaTruthValue so it handles lambdas et al correctly. -
-  No, this does not make sense.
+In SetTV, allow N arguments. instead of a forced ListLink
 
-* Fix SetTV so that it creates a FormulaTruthValue when it
-  sees a Defined predicate w/ args. or a FormulaPredicate w args
+No,
+SetTV with something that returns a FormulaTV
+... but what returns a FormulaTV? ... DynamicFormula does...
+
+rename DynamicFormula to DynamicPredicateLink...
+
+DynPred->PromisePred  or DelayPred
+
+FormulaTV -> FutureTV
+
+FormulaStream ??? FutureStream
 
 ./tests/atoms/flow/DynamicUTest
 ./tests/atoms/flow/FormulaUTest
 reduce_formula( unused
 
-Arghhh
+
+
+TODO
+* FormulaStream is a PromiseStream for Float -- rname to FloatStream NO
+* Fix FormulaStream so that it takes 2 or more args,!? Why? NO
+* Create DynamicFormulaLink to be like DynamicPredicateLink ? NO
+
+* Create PromiseSchemaLink like PromisePredicateLink
+* Wiki for FutureTruthValue and PromisePredicate
+
+So that
+(cog-evaluate! (Eval (PromisePredLink (Pred...)) args))
+returns (FutureTV (Eval (Pred...) args))
+
+Also DONE except for wiki and examples
+(SetTV (Foo) (Pred) args) does
+   (set-tv (Foo) (FutureTV (Eval (Pred) args) ))
 
 
 
