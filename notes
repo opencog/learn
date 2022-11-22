@@ -13747,46 +13747,59 @@ Tell ASAN to ignore homebrew semphore.
 (define ala (make-any-link-api))
 (define als (add-pair-stars ala))
 
-(define tvp (PredicateNode "*-TruthValueKey-*"))
 (define w (ala 'wild-wild))
+
+(define tvp (PredicateNode "*-TruthValueKey-*"))
+(define w  (Concept "wild"))
+(Concept "wild" (ctv 1 0 42))
 
 (FormulaStream (Log2 (FloatValueOf w tvp)))
 
-(cog-extract-recursive! (DefinedSchemaNode "dynamic MI"))
+(cog-extract-recursive! (DefinedProcedureNode "dynamic MI"))
 (DefineLink
-   (DefinedSchema "dynamic MI")
+   (DefinedProcedure "dynamic MI")
    (Lambda
 		(Log2
 			(FloatValueOf (Variable "$X") tvp))))
 
-(FormulaStream (DefinedSchema "dynamic MI") w) ; this bonks ... why? ooh.
+(FormulaStream (DefinedProcedure "dynamic MI") w) ; this bonks ... why? ooh.
 ^^^ this is what we want... but wrapped
 
-(FormulaStream (Put (DefinedSchema "dynamic MI") w))
+(FormulaStream (Put (DefinedProcedure "dynamic MI") w))
 ... it reduced OK but didn't eval a second time after reduction
 ... we don't want to use Put because we don't want the result
     in the AS and also we want to exec after reduction...
 ... but also support: if execute returns not-a-float-value,
     execute a second time. But only if its executable...
 
-(cog-execute! (ExecutionOutput (DefinedSchema "dynamic MI") w))
+(cog-execute! (ExecutionOutput (DefinedProcedure "dynamic MI") w))
 
 (cog-set-value! (Concept "foo") (Predicate "some key")
-	(FormulaStream (ExecutionOutput (DefinedSchema "dynamic MI") w)))
+	(FormulaStream (ExecutionOutput (DefinedProcedure "dynamic MI") w)))
 
 (cog-value (Concept "foo") (Predicate "some key"))
 This all works.
 
 
-(use-modules (opencog) (opencog-exec))
+(use-modules (opencog) (opencog exec))
 
 (cog-execute!
-(SetValue (Concept "foo") (Predicate "some key")
+(SetValue (Concept "foo") (Predicate "other key")
 	(PromiseLink  ; creates a FormulaStream and not something else.
-		(TypeNode 'FormulaStream)
-		(ExecutionOutput (DefinedSchema "dynamic MI") w)))
+		(ExecutionOutput (DefinedProcedure "dynamic MI") w)
+		(TypeNode 'FormulaStream))))
+
+(cog-value (Concept "foo") (Predicate "other key"))
+
+	 78 - SetValueUTest (Failed)
 
 Also a Decimate
+h->is_type()
+LinkStreamValue.h
+classserver().getValidator(result->get_type());
+opencog::TimesLink::kons TimesLink.cc
+core/NumberNode.cc:289
+educt/TimesLink.cc:111
 
 
 ------------------------
@@ -13842,6 +13855,8 @@ TODO
 
 * Create PromiseSchemaLink like PromisePredicateLink
 * Wiki for FutureTruthValue and PromisePredicate
+  PromisteLink
+  DecimateLink
 
 So that
 (cog-evaluate! (Eval (PromisePredLink (Pred...)) args))
@@ -13851,6 +13866,17 @@ Also DONE except for wiki and examples
 (SetTV (Foo) (Pred) args) does
    (set-tv (Foo) (FutureTV (Eval (Pred) args) ))
 
+(use-modules (opencog) (opencog exec)
+
+(define c (CountTruthValue 1 0 3))
+(define b (BoolValue 0 0 1))
+(define a (Concept "a" c))
+(define m (Concept "mask"))
+(define k (Predicate "key"))
+(cog-set-value! m k b)
+(define p (car (cog-keys a)))
+
+(cog-execute! (Decimate (ValueOf m k) (ValueOf a p)))
 
 
 ------------
