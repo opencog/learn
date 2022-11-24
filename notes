@@ -13846,6 +13846,154 @@ FormulaStream ??? FutureStream
 ./tests/atoms/flow/FormulaUTest
 reduce_formula( unused
 
+(BoolValue (Number 1 2 3 ))
+
+(use-modules (opencog) (opencog exec))
+
+(cog-execute!
+	(Heaviside (Number -1 3 -1 3 3))
+
+(cog-execute!
+(Decimate
+	(Number -1 3 -1 3 3)
+	(List (Concept "A") (Concept "B") (Concept "C") (Concept "D") (Concept "E"))))
+
+Instantiator(AtomSpace* as)
+ValuePtr execute(const Handle& expr,
+   ValuePtr instantiate(const Handle& expr,
+                        const GroundingMap& vars,
+                        bool silent=false) const;
+
+How to plug in for vars?
+ const FreeVariables& get_vars() const
+
+FunctionLink->get_vars().substitute_nocheck9defn, seq sil
+
+
+(use-modules (opencog) (opencog exec))
+
+(Define
+	(DefinedProcedure "remainder")
+	(Minus (Variable "X") (Floor (Variable "X"))))
+
+(cog-execute!
+	(ExecutionOutput
+		(DefinedProcedure "remainder")
+		(Number 1.57 3.14 6.28)))
+
+
+(Define
+	(DefinedProcedure "modulo")
+	(Minus (Variable "X")
+		(Times (Variable "MOD")
+			(Floor (Divide (Variable "X") (Variable "MOD"))))))
+
+(cog-execute!
+	(ExecutionOutput
+		(DefinedProcedure "modulo")
+		(List (Number 1 2 3 4 5 6 7 8)
+		(Number 3))))
+
+
+Hamming dist
+(use-modules (opencog) (opencog exec))
+(cog-set-value! (Concept "abc") (Predicate "key")  (BoolValue 1 1 1 1))
+
+(cog-execute! (Accumulate (BoolValueOf (Concept "abc") (Predicate "key"))))
+(Define
+	(DefinedProcedure "hamming dist")
+	(Lambda
+		(VariableList (Variable "X") (Variable "Y") (Variable "key"))
+		(Accumulate
+			(BoolOr
+				(BoolAnd
+					(BoolValueOf (Variable "X") (Variable "key"))
+					(BoolNot (BoolValueOf (Variable "Y") (Variable "key"))))
+				(BoolAnd
+					(BoolNot (BoolValueOf (Variable "X") (Variable "key")))
+					(BoolValueOf (Variable "Y") (Variable "key")))))))
+
+(cog-set-value! (Concept "abc") (Predicate "key")  (BoolValue 1 1 1 1 0))
+(cog-set-value! (Concept "def") (Predicate "key")  (BoolValue 0 1 0 1 0))
+(cog-execute!
+	(ExecutionOutput
+		(DefinedProcedure "hamming dist")
+		(List (Concept "abc") (Concept "def") (Predicate "key"))))
+
+(cog-execute!
+	(Accumulate (Number 1 1 1 1)))
+
+(cog-execute!
+	(BoolOr (Number 1 1 1 1) (Number 1 1 1 1)))
+
+(Define
+	(DefinedProcedure "XOR")
+	(Lambda
+		(VariableList (Variable "X") (Variable "Y"))
+		(BoolOr
+			(BoolAnd (Variable "X") (BoolNot (Variable "Y")))
+			(BoolAnd (BoolNot (Variable "X")) (Variable "Y")))))
+
+(cog-execute!
+	(ExecutionOutput
+		(DefinedProcedure "XOR")
+		(List
+			(BoolValueOf (Concept "abc") (Predicate "key"))
+			(BoolValueOf (Concept "def") (Predicate "key")))))
+
+(Define
+	(DefinedProcedure "hamming dist")
+	(Lambda
+		(VariableList (Variable "X") (Variable "Y"))
+		(Accumulate
+			(ExecutionOutput
+				(DefinedProcedure "XOR")
+				(List (Variable "X") (Variable "Y"))))))
+
+(Define
+	(DefinedProcedure "hamming too")
+	(Accumulate
+		(ExecutionOutput
+			(DefinedProcedure "XOR")
+			(List (Variable "X") (Variable "Y")))))
+
+(cog-execute!
+	(ExecutionOutput
+		(DefinedProcedure "hamming too")
+		(List
+			(BoolValueOf (Concept "abc") (Predicate "key"))
+			(BoolValueOf (Concept "def") (Predicate "key")))))
+
+	 41 - CheckersUTest (Failed)
+	 71 - AccumulateUTest (Failed)
+	187 - DotProductTest (Failed)
+	188 - DotIdenticalTest (Failed)
+	189 - DotChoiceTest (Failed)
+	190 - DotLambdaTest (Failed)
+	191 - DotMashupTest (Failed)
+
+FormulaUTest
+
+(cog-set-value! (Concept "foo") (Predicate "key")
+	(FutureStream (TimeLink)))
+
+(ValueOf (Concept "foo") (Predicate "key"))
+
+ ValuePtr vi(NumericFunctionLink::get_value(as, silent, arg));
+
+(define time-window
+	(FormulaStream
+(List
+		(Minus (Time) (Number 30))
+		(Time)
+		(Plus (Time) (Number 30))))
+
+(define trange (cog-execute! prom))
+(cog-value->list trange)
+
+
+acog-execute!
+
 
 
 TODO
@@ -13853,20 +14001,89 @@ TODO
 * Fix FormulaStream so that it takes 2 or more args,!? Why? NO
 * Create DynamicFormulaLink to be like DynamicPredicateLink ? NO
 
-* Create PromiseSchemaLink like PromisePredicateLink
+* Create PromiseSchemaLink like PromisePredicateLink DONE
+* Fix ExecutionOutput to not require List of args. HARD TO DO
 * Wiki for FutureTruthValue and PromisePredicate
-  PromisteLink
-  DecimateLink
+
+  PromisePredicateLink DONE
+  FormulaTruthValue DONE
+  FormulaPredicateLink  computes TV, as does FormulaTV...
+  FutureTruthValue NONESUCH, DONE
+  FutureStream DONE
+  PromiseLink DONE
+  FormulaStream DONE a few years ago.
+  ArityLink ->SizeOfLink DONE
+  DecimateLink DONE
+
+
+Hang on .. FurmulaTV and FutureTV are the same thing ...
+EVALUATABLE_LINK,
+
+ Category:Executable Atom Types
+
+
+(Define
+	(DefinedProcedure "remainder")
+	(Minus (Variable "X") (Floor (Variable "X"))))
+
+(Define
+	(DefinedPredicate "seconds")
+	(FormulaPredicate
+		(ExecutionOutput (DefinedProcedure "remainder") (Time))
+		(ExecutionOutput (DefinedProcedure "remainder") (Time))))
+
+(cog-evaluate!
+	(Evaluation
+		(DefinedPredicate "seconds") (List)))
+
+(Define
+	(DefinedPredicate "remain-pair")
+	(FormulaPredicate
+		(ExecutionOutput (DefinedProcedure "remainder") (Variable "Y"))
+		(ExecutionOutput (DefinedProcedure "remainder") (Variable "Z"))))
+
+(cog-evaluate!
+	(Evaluation
+		(DefinedPredicate "remain-pair") (Number 6.28)))
+
+(define time-pred
+	(Evaluation
+		(DefinedPredicate "remain-pair") (Time)))
+
+(define dynamic-time-formula
+	(cog-evaluate!
+		(Evaluation
+			(PromisePredicate time-pred)
+			(List))))
+
+
+(cog-execute!
+	(SetTV (Concept "bar")
+		(DefinedPredicate "remain-pair") (Time)))
+
+(Define
+    (DefinedPredicate "spair")
+    (FormulaPredicate
+		(VariableList (Variable "$strength") (Variable "$confidence"))
+(List
+        (ExecutionOutput (DefinedProcedure "remainder")
+            (Variable "$strength"))
+        (ExecutionOutput (DefinedProcedure "remainder")
+            (Variable "$confidence")))))
+
+(cog-evaluate!
+	(Evaluation  (DefinedPredicate "rpair") (Number 1.1) (Number 2.2)))
+
 
 So that
 (cog-evaluate! (Eval (PromisePredLink (Pred...)) args))
-returns (FutureTV (Eval (Pred...) args))
+returns (FormulaTV (Eval (Pred...) args))
 
 Also DONE except for wiki and examples
 (SetTV (Foo) (Pred) args) does
    (set-tv (Foo) (FutureTV (Eval (Pred) args) ))
 
-(use-modules (opencog) (opencog exec)
+(use-modules (opencog) (opencog exec))
 
 (define c (CountTruthValue 1 0 3))
 (define b (BoolValue 0 0 1))
@@ -13877,6 +14094,66 @@ Also DONE except for wiki and examples
 (define p (car (cog-keys a)))
 
 (cog-execute! (Decimate (ValueOf m k) (ValueOf a p)))
+am->beta_reduce(cargs)
+
+(use-modules (opencog) (opencog exec))
+(Define
+	(DefinedPredicate "tv")
+	(FormulaPredicate
+		(VariableList (Variable "X")(Variable "Y") (Variable "Z"))
+		(Plus (Variable "X")(Variable "Y"))
+		(Plus (Variable "X")(Variable "Z"))))
+
+(cog-evaluate! (Evaluation
+	(DefinedPredicate "tv")
+	(List (Number 1)(Number 2) (Number 3))))
+
+
+------------------
+TODO:
+How about a formula vector...!? oh wait that's FormulaStream... but
+its ... need to be assembled from bits ...
+
+why isn't this a normal lambda with a list/vector output?
+Because.. it doesn't know how.
+
+(use-modules (opencog) (opencog exec))
+(Define
+	(DefinedPredicate "ltv")
+	(Lambda
+		(VariableList (Variable "X")(Variable "Y") (Variable "Z"))
+		; (Plus (Variable "X")(Variable "Y"))
+		(Plus (Variable "X")(Variable "Z"))))
+
+(cog-evaluate! (Evaluation
+	(DefinedPredicate "ltv")
+	(List (Number 1)(Number 2) (Number 3))))
+
+tye it
+
+---------------------------
+A non-list version of execute test case:
+
+(use-modules (opencog) (opencog exec))
+(Define
+	(DefinedProcedure "ptv")
+	(Lambda
+		(VariableList (Variable "X")(Variable "Y") (Variable "Z"))
+(List
+		(Plus (Variable "X")(Variable "Y"))
+		(Plus (Variable "X")(Variable "Z")))))
+
+(cog-execute! (ExecutionOutput
+	(DefinedProcedure "ptv")
+	(List (Number 1)(Number 2) (Number 3))))
+
+(cog-execute! (ExecutionOutput
+	(DefinedProcedure "ptv")
+	(Number 1)(Number 2) (Number 3)))
+
+
+TODO:
+* non-list version of execute
 
 
 ------------
@@ -13897,6 +14174,10 @@ opencog/scm/wires
 ====================================================
 
 FIXED:
+* Create PromiseSchemaLink like PromisePredicateLink DONE
+* FormulaStream is a PromiseStream for Float -- rname to FloatStream NO
+* Fix FormulaStream so that it takes 2 or more args,!? Why? NO
+* Create DynamicFormulaLink to be like DynamicPredicateLink ? NO
 * Is DynamicPredicateLink  really needed?
   Why isn't PredicateFormula enough?? GET RID OF IT
 
@@ -14020,6 +14301,7 @@ FIXED:
 * Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
+* Fix ExecutionOutput to not require List of args. HARD TO DO
 * Repeated sentences because repeated linakges.  LG #1348
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
   This seems .. I'm confused.
