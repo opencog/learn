@@ -14170,6 +14170,125 @@ Interpretation of Computer Programs", Abelson & Sussman. Note that
   September 2008
 opencog/scm/wires
 
+-------------------------------------
+(define rw (LLOBJ 'right-wildcard (WordNode "the")))
+
+(WordNode "horse")
+
+In LG:
+-- fetch_incoming_by_type(germ, LIST_LINK);
+So we know for sure about the pairs.
+
+ const ValuePtr& mivp = evpr->getValue(local->mikp);
+
+
+StorageStream
+FetchValueOf
+
+in LG,
+Handle evpr = asp->get_link(EVALUATION_LINK, ...)
+Handle fet = createFetchValueOf(evpr, key);
+fet->execute();
+but this dosn't do anything that stnp->fetch_value(evpr, key)
+doesn't already do...
+
+However,
+Handle evpr = asp->get_link(EVALUATION_LINK, ...)
+Handle exo = createExecutionOutput(definedproc, evpr);
+exo->execute();
+evpr->getValue(key);
+
+will work, if:
+* definedproc was configured in the config file,
+* definedproc is this:
+
+(DefineLink
+   dyn-proc
+   (Lambda
+      (VariableList (Variable "$L") (Variable "$R"))
+      (Log2
+         (Divide
+            (Times
+               (FetchValueOf lrp cnt-key cnt-ref)
+               (FetchValueOf wwp cnt-key cnt-ref))
+            (Times
+               (FetchValueOf lwp cnt-key cnt-ref)
+               (FetchValueOf rwp cnt-key cnt-ref)))))))
+
+(DefineLink
+   dyn-proc
+   (Lambda
+      (VariableList (Variable "$L") (Variable "$R"))
+      (Log2
+         (Divide
+            (Times
+               (FetchValueOf (Eval (Pred "any")
+						(List (Variable "$L") (Variable "$R"))
+						cnt-key cnt-ref)
+               (FetchValueOf
+						(List (Any "left-wild") (Any "right-wild"))
+						cnt-key cnt-ref))
+            (Times
+               (FetchValueOf
+						(List (Any "left-wild") (Variable "$R"))
+						cnt-key cnt-ref)
+               (FetchValueOf
+						(List (Variable "$L") (Any "right-wild"))
+						cnt-key cnt-ref)))))))
+
+which is built by calling
+((add-dynamic-mi LLOBJ) 'make-formula)
+
+
+Alternately, the count count be stored as
+(StorageStream (CountTruthValue ...))
+
+so every increment fetches first, increments then stores.
+CPU wasteful, but ...
+
+Umm, needs to be
+(StorageStream
+   Atom
+   Key
+   StorageNode ; optional - is current if absent
+   NumberNode ; optional index
+)
+
+no .. that works but breaks the paradigm.
+Not needed because (FutureStream (FetchValueOf ...)) does the trick.
+for floats, (FormulaStream (FetchValueOf ...))
+
+But what about inc?
+
+Atom::incrementCount() calls
+   createFloatValue(type, newvect)
+
+which
+ 1) breaks the ctor for FormulaStream
+ 2) no access to the storage...
+
+To "fix" part 1), allow mutability:
+
+virtual FloatValue::incrementCount(size_t idx, double)
+{
+      if (base class) return createFloatValue(newvect);
+      if (derived class) return this;
+}
+
+To fix part2, really do need StorageStream...
+* FloatStorageStream inherits from FloatValue
+  -- which stores in ::incrementCount()
+  -- else fetches...
+
+Alternately:
+* Um icky change FormulaStream to implement incrementCount() yuck.
+
+So: TODO:
+* Implement FetchValueOf
+* Implement StoreValueOf it returns current value like ValueOf
+* Implement FloatValue::incrementCount()
+
+
 ====================================================
 ====================================================
 
