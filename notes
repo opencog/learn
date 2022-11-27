@@ -14171,6 +14171,27 @@ Interpretation of Computer Programs", Abelson & Sussman. Note that
 opencog/scm/wires
 
 -------------------------------------
+65 checking build system type... x86_64-pc-linux-gnu
+is actually line 3548
+
+works:
+72 checking for suffix of object files... o
+73 checking whether we are using the GNU C compiler... yes
+   above is at 4193
+
+75 checking for /home/runner/work/link-grammar/link-grammar/bindings/js/emsdk/fastcomp/emscripten/emcc option to accept ISO C89... none needed
+
+fails:
+72 checking for suffix of object files... o
+73 checking whether the compiler supports GNU C... yes
+
+75 checking for /home/runner/work/link-grammar/link-grammar/bindings/js/emsdk/fastcomp/emscripten/emcc option to enable C11 features... none needed
+
+also line 79 is different
+
+line 4193
+
+-------------------------------------
 (define rw (LLOBJ 'right-wildcard (WordNode "the")))
 
 (WordNode "horse")
@@ -14239,6 +14260,17 @@ will work, if:
 which is built by calling
 ((add-dynamic-mi LLOBJ) 'make-formula)
 
+Where does above come from?
+1) hard-coded into LG. Yuck.
+2) all MI precomputed as before. It works just awkward.
+3) It's sucked in over the wire. But who installs it on that "as-needed"
+basis?
+
+3a) There could be a StorageNode that adds decorators "on demand". Tghis
+is kind-of what the matrix subsystem is ... adds on demand. But there's
+no way to insert it as an intermediary in the storage-node chaining
+system.  No way to chain it in over the cogserver.
+
 
 Alternately, the count count be stored as
 (StorageStream (CountTruthValue ...))
@@ -14250,7 +14282,7 @@ Umm, needs to be
 (StorageStream
    Atom
    Key
-   StorageNode ; optional - is current if absent
+   StorageNode
    NumberNode ; optional index
 )
 
@@ -14284,10 +14316,37 @@ Alternately:
 * Um icky change FormulaStream to implement incrementCount() yuck.
 
 So: TODO:
-* Implement FetchValueOf
-* Implement StoreValueOf it returns current value like ValueOf
-* Implement FloatValue::incrementCount()
+* Implement FetchValueOf DONE
+* Implement StoreValueOf it returns current value like ValueOf DONE
+* Implement FloatValue::incrementCount() DONE
 
+(use-modules (opencog))
+(use-modules (opencog persist))
+(use-modules (opencog persist-rocks))
+(use-modules (opencog exec))
+(define sto (RocksStorageNode "rocks:///tmp/foo.rdb"))
+(define fvof (FetchValueOf (Concept "a") (Predicate "foo") sto))
+(cog-execute! fvof)
+(cog-open sto)
+(cog-set-value! (Concept "a") (Predicate "foo")  (StringValue "a" "b" "c"))
+
+why is rocks not removing it? Because it isn't ... Hmm Interesting.
+(fetch-value (Concept "a") (Predicate "foo"))
+
+(define svof (StoreValueOf (Concept "a") (Predicate "foo") sto))
+(cog-execute! svof)
+
+(cog-set-value! (Concept "a") (Predicate "foo")  (FloatValue 1 2 3))
+
+MapLinkUTest !!
+local-quote-map
+
+	 53 - MapLinkUTest (Failed)
+	120 - MarginalTest (SEGFAULT)
+
+
+TODO: alter futures.scm to have
+(LLOBJ 'make-formula) return the actual MI formula.
 
 ====================================================
 ====================================================
