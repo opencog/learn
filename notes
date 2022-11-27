@@ -14262,6 +14262,8 @@ which is built by calling
 
 Where does above come from?
 1) hard-coded into LG. Yuck.
+1b) ask for dyn-proc "by name" and instal it locally in LG.
+    Yay, this works!
 2) all MI precomputed as before. It works just awkward.
 3) It's sucked in over the wire. But who installs it on that "as-needed"
 basis?
@@ -14347,6 +14349,21 @@ local-quote-map
 
 TODO: alter futures.scm to have
 (LLOBJ 'make-formula) return the actual MI formula.
+
+Modify LG to ask for the dynamic formlua by name;
+it comes over the wire, LG installs it case-by-case as needed.
+Yes! This will work!
+
+More generally: create a ProxyStorageNode that,
+whenever something is asked for, it can compute it on the fly.
+e.g. if a value asked for at a certain key, that value is
+recomputed then and there, using e.g. matrix code.  This would work great
+for cogserver proxy users, cause the proxies go straight from the wire
+to the storage nodes.  Works poorly for native atomspace users.
+ Unless we create a "dynamic atomspace" supporting teh full
+atomspace API but layering in extra processing in the middle.
+
+what's the API for this?
 
 ====================================================
 ====================================================
