@@ -33,7 +33,9 @@ export OBSERVE="observe-text"
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17005
-export PROMPT="[0;34mscheme@(en-pairs) [0m"
+# Colorized prompt. Sadly, this command-line editing.
+# export PROMPT="[0;34mscheme@(en-pairs) [0m"
+export PROMPT="scheme@(en-pairs)"
 export OCPROMPT="[0;32mcogserv@(en-pairs) [0m"
 export LOGFILE=/tmp/cogserver-pairs-en.log
 

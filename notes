@@ -14346,14 +14346,41 @@ local-quote-map
 	 53 - MapLinkUTest (Failed)
 	120 - MarginalTest (SEGFAULT)
 
+what():  No factory found for Value type 10 and arguments St6vectorIdSaIdEE
+opencog/atoms/value/ValueFactory.h:132
+ (FormulaStream 2.140541606848144)
+opencog::CogStorage::ro_decode_alist (
+alist="(((PredicateNode \"*-Dynamic MI Key-*\") . (FormulaStream 2.140541606848144))
+
+ (cog-set-value! PAIR mi-key (FormulaStream
+         (ExecutionOutput dyn-proc (List L R)))))
+
+(cog-keys->alist (EvaluationLink  (LgLinkNode "ANY") (ListLink (WordNode "the") (WordNode "horse"))))
+
+Commands::cog_keys_alist(
+Sexpr::encode_value(h->getValue(key))
+
+if (nameserver().isA(v->get_type(), FLOAT_VALUE))
+FloatValuePtr fv(FloatValueCast(v));
+ooops!
+
+opencog/persist/sexpr/ValueSexpr.cc:184
+FormulaStream is NOT a list fo floats! doh
+
+Create a new LIST_VALUE for deserialization
+
+local->stnp->fetch_incoming_by_type(germ, DEFINE_LINK)
+
+TODO: FormulaSteam do NOT inint in ctor
 
 TODO: alter futures.scm to have
-(LLOBJ 'make-formula) return the actual MI formula.
+(LLOBJ 'make-formula) return the actual MI formula. DONE
 
 Modify LG to ask for the dynamic formlua by name;
 it comes over the wire, LG installs it case-by-case as needed.
-Yes! This will work!
+Yes! This will work! DONE
 
+--------------------------------------
 More generally: create a ProxyStorageNode that,
 whenever something is asked for, it can compute it on the fly.
 e.g. if a value asked for at a certain key, that value is
@@ -14364,6 +14391,16 @@ to the storage nodes.  Works poorly for native atomspace users.
 atomspace API but layering in extra processing in the middle.
 
 what's the API for this?
+opencog/persist/sexpr/Commands.h looks for configured
+StorageNode and uses it.
+
+ValueStorageNode
+-- any request for key-value is replaced by key-value on the
+   storage node itself; otherwise it's pass on.
+
+ReadThruStorageNode
+-- how to specify what it wraps???
+   with DefineLink
 
 ====================================================
 ====================================================

@@ -19,7 +19,9 @@ export SPLIT_LANG=en
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
-export PROMPT="[0;34mscheme@(mst-parse) [0m"
+# Colorized prompt. Sadly, this command-line editing.
+# export PROMPT="[0;34mscheme@(mst-parse) [0m"
+export PROMPT="scheme@(mst-parse) "
 export OCPROMPT="[0;32mcogserv@(mst-parse) [0m"
 export LOGFILE=/tmp/cogserver-mst-en.log
 
