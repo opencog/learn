@@ -14371,7 +14371,7 @@ Create a new LIST_VALUE for deserialization
 
 local->stnp->fetch_incoming_by_type(germ, DEFINE_LINK)
 
-TODO: FormulaSteam do NOT inint in ctor
+TODO: FormulaSteam do NOT inint in ctor DONE
 
 TODO: alter futures.scm to have
 (LLOBJ 'make-formula) return the actual MI formula. DONE
@@ -14380,6 +14380,105 @@ Modify LG to ask for the dynamic formlua by name;
 it comes over the wire, LG installs it case-by-case as needed.
 Yes! This will work! DONE
 
+wtf factory ctor runs before name decl issuance.
+Ouch.
+ATOMSPACE_LIBS
+
+FetchUTest
+In procedure load-foreign-library:
+In procedure load-foreign-library: file: "/home/linas/src/novamente/src/atomspace-git/build/opencog/persist/api/libpersist-flow", message: "file not found"
+
+cog_atomspace
+cog_atomspace_clear
+cog_execute_cache
+
+ReadThru:
+cog_get_atoms -> fetch_all_atoms_of_type+barrier =>> loadType
+cog_incoming_by_type -> fetch_incoming_by_type+barrier =>> fetchIncomingByType
+cog_incoming_set -> fetch_incoming_set+barrier =>> fetchIncomingSet
+cog_keys_alist -> fetch_atom+barrier =>> getAtom
+cog_node -> ??? fetch_atom+barrier
+cog_link -> ??? fetch_atom+barrier
+cog_value -> fetch_value+barrier =>> loadValue
+
+WriteThru:
+cog_extract -> remove_atom =>> removeAtom
+cog_extract_recursive -> remove_atom
+cog_set_value -> store_value =>> storeValue
+cog_set_values -> store_atom =>> storeAtom
+cog_set_tv -> store_value =>> storeValue
+cog_update_value -> update_value =>> updateValue
+
+cog_define
+
+_initial_conn_pool_size = 0;
+close_conn_pool(
+
+CommandsUTest
+DispatchUTest
+	 99 - FetchUTest (Failed)
+	101 - MultiUserUTest (Failed)
+	122 - VectorAPIUTest (Failed)
+
+(cog-set-proxy! (ProxyParameters (ProxyNode "foo") ...
+
+(use-modules (opencog) (opencog persist))
+(use-modules (opencog persist-rocks))
+(use-modules (opencog cogserver))
+(start-cogserver)
+
+rlwrap telnet localhost 17001
+sexpr
+(use-modules (opencog) (opencog persist))
+
+(use-modules (opencog persist-cog))
+(define sto (CogStorageNode "cog://localhost:17001"))
+
+(cog-open sto)
+
+(cog-set-proxy! (ProxyParameters (WriteThruProxy "wthru") (List (RocksStorageNode "rocks:///tmp/foo.rdb"))))
+(cog-proxy-open)
+
+(store-atom (Concept "foo" (stv 0.3 0.6)))
+(cog-set-value! (Concept "foo") (Predicate "bar") (FloatValue 1 2 3))
+(store-value (Concept "foo") (Predicate "bar"))
+(cog-set-value! (Concept "foo") (Predicate "fizz") (FloatValue 4 5 6))
+(store-atom (Concept "foo"))
+(cog-close sto)
+
+(use-modules (opencog) (opencog persist))
+(use-modules (opencog persist-cog-simple))
+(define sto (CogSimpleStorageNode "cog://localhost:17001"))
+
+(cog-open sto)
+(cog-set-proxy! (ProxyParameters (ReadThruProxy "rthru") (List (RocksStorageNode "rocks:///tmp/foo.rdb"))))
+
+(cog-proxy-open)
+(fetch-atom (Concept "foo"))
+
+ahhh need cog-proxy-open and cog-proxy-close in the commands
+these exliciptly open and close the proxy only
+CgStoreageNode::open() needs to send the prox opens
+
+(cog-set-proxy! exported by CogPersistSCM:
+
+TODO: remove proxy URL;s in atomspace-cog DONE
+
+cog-simple-clear-stats WTF
+
+f8a5b2e1831931e20a9000f7af155be9e1405ae4
+efba7f7f420c49572e149f90dbbe609e07a8a9ba
+
+	 87 - FetchValueOfTest (Failed)
+	 91 - FileStorageTest (Failed)
+	 97 - FetchUTest (Failed)
+	120 - VectorAPIUTest (Failed)
+	121 - MarginalTest (Failed)
+
+
+check set-prox is open etc etc. DONE
+
+Sequentional -- todo DONE
 --------------------------------------
 More generally: create a ProxyStorageNode that,
 whenever something is asked for, it can compute it on the fly.
@@ -14401,6 +14500,8 @@ ValueStorageNode
 ReadThruStorageNode
 -- how to specify what it wraps???
    with DefineLink
+
+Dynamic: do it only for specific types... TODO
 
 ====================================================
 ====================================================
@@ -14533,6 +14634,7 @@ FIXED:
 * Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
+* LG should ask for costs from dict only after parse!
 * Fix ExecutionOutput to not require List of args. HARD TO DO
 * Repeated sentences because repeated linakges.  LG #1348
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
