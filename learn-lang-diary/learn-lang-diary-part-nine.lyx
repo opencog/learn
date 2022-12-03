@@ -236,6 +236,10 @@ Start with pair counting.
 \end_layout
 
 \begin_layout Itemize
+Use uniform sentence lengths.
+\end_layout
+
+\begin_layout Itemize
 During MST, count the pairs that contributed to the MST.
  Lets call this 
 \begin_inset Quotes eld
@@ -276,6 +280,51 @@ Try restarting with `run-1-marg-tranche-123.rdb` which is not trimmed.
  300K x 300K and *lots* of the words have backslashes in them Yuck! 52GB
  to load ...
  Need to start over.
+\end_layout
+
+\begin_layout Section*
+Hypervector ruminations
+\end_layout
+
+\begin_layout Standard
+Some questions:
+\end_layout
+
+\begin_layout Itemize
+Given a vector in the GOE (say, a particular word, with coordinates measured
+ via MI, offset and normalized to unit length), which is the nearest cube-corner
+ (bipolar hypervector)? I assume it's the one with with all coordinated
+ rounded to either +1 or -1.
+ But this needs proof.
+\end_layout
+
+\begin_layout Itemize
+What is the angular distance to that corner?
+\end_layout
+
+\begin_layout Itemize
+Given a corner in the cube, what is the nearest actual vector?
+\end_layout
+
+\begin_layout Itemize
+What is the distribution of Hamming distance vs.
+ actual distance? That is, pick two actual vectors from the dataset.
+ Their dot product is the 
+\begin_inset Quotes eld
+\end_inset
+
+actual
+\begin_inset Quotes erd
+\end_inset
+
+ distance.
+ The Hamming distance between them is the Hamming distance between their
+ nearest cub corners.
+\end_layout
+
+\begin_layout Itemize
+Given a random cube corner, what is the most efficient way of finding the
+ nearest element in the dataset?
 \end_layout
 
 \begin_layout Section*
