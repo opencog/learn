@@ -14501,13 +14501,50 @@ ReadThruStorageNode
 -- how to specify what it wraps???
    with DefineLink
 
+-----------------------------------------------
 
-Dynamic: do it only for specific types... TODO
+(DefinedProcedure \"*-dynamic MI ANY\")
 
+ opencog::StorageNode::fetch_value
+atomspace/opencog/persist/api/StorageNode.cc:155
+
+non-virtual thunk to opencog::ReadThruProxy::loadValue
+persist/proxy/ReadThruProxy.cc:39
+
+opencog::StorageNode::fetch_value (
+atomspace/opencog/persist/api/StorageNode.cc:157
+
+opencog::Commands::cog_value (
+persist/sexcom/Commands.cc:400
+
+sn-set-proxy sn_set_proxy
+stnp->set_proxy(h);
+
+store-referrers ...
+but no store-incoming-set-by-type
+
+-----------
+opencog::Value::to_string
+opencog::FutureStream::to_string
+opencog::LinkValue::to_string
+opencog::FutureStream::update << try-catch!!
+opencog::ExecutionOutputLink::execute
+opencog::FetchValueOfLink::execute
+
+----------
+(((PredicateNode \"*-TruthValueKey-*\") . (FutureStream  (ctv 1 0 1.69979e+07))))
+
+
+TODO
+ * DynamicDataProxy: do it only for specific types... TODO
+
+Bugs:
+* bug: store of DefineLink to cogserver hangs the  connection.
 ====================================================
 ====================================================
 
 FIXED:
+* rocks needs to normalize and remove multi-slashed in URL
 * Create PromiseSchemaLink like PromisePredicateLink DONE
 * FormulaStream is a PromiseStream for Float -- rname to FloatStream NO
 * Fix FormulaStream so that it takes 2 or more args,!? Why? NO
