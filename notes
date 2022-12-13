@@ -14534,6 +14534,30 @@ opencog::FetchValueOfLink::execute
 ----------
 (((PredicateNode \"*-TruthValueKey-*\") . (FutureStream  (ctv 1 0 1.69979e+07))))
 
+(Define
+	(DefinedProcedure "dodo")
+	(Lambda (Variable "vtx")
+		(ExecutionOutput
+			(DefinedProcedureNode "*-dynamic MI ANY")
+			(Variable "vtx"))))
+
+(cog-execute!
+	(ExecutionOutput (DefinedProcedure "dodo")
+		(List (Word "the") (Word "house"))))
+
+
+(cog-execute!
+	(ExecutionOutput (DefinedProcedure "*-dynamic MI ANY")
+		(List (Word "the") (Word "house"))))
+
+crashes
+but so does
+(ady 'make-pair (Word "the") (Word "horse"))
+(ady 'pair-count (Word "the") (Word "horse"))
+
+
+
+
 
 TODO
  * DynamicDataProxy: do it only for specific types... TODO
@@ -14544,7 +14568,9 @@ Bugs:
 ====================================================
 
 FIXED:
-* rocks needs to normalize and remove multi-slashed in URL
+* Rename MapLink to FilterLink DONE
+* RuleLink is the same thing as ImplicationScope DONE
+* rocks needs to normalize and remove multi-slashed in URL DONE
 * Create PromiseSchemaLink like PromisePredicateLink DONE
 * FormulaStream is a PromiseStream for Float -- rname to FloatStream NO
 * Fix FormulaStream so that it takes 2 or more args,!? Why? NO
