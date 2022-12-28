@@ -15,7 +15,8 @@
 
 ; Init the statistics objects.
 (define ala (make-any-link-api))
-(define asa (add-pair-stars ala))
+(define aca (add-count-api ala))
+(define asa (add-pair-stars aca))
 
 ; Compute the statistics
 (batch-pairs asa)

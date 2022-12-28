@@ -11,7 +11,8 @@
 
 ; Init the statistics objects.
 (define ala (make-any-link-api))
-(define asa (add-pair-stars ala))
+(define aca (add-count-api ala))
+(define asa (add-pair-stars aca))
 (define trm (add-trimmer asa))
 
 ; Compute the statistics; these are needed for trimming.
@@ -27,7 +28,8 @@
 
 ; Re-init the stats.
 (set! ala (make-any-link-api))
-(set! asa (add-pair-stars ala))
+(set! aca (add-count-api ala))
+(set! asa (add-pair-stars aca))
 (batch-all-pair-mi asa)
 (barrier storage-node)
 

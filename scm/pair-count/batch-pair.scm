@@ -156,7 +156,7 @@
 ; AND typecodes.typename='WordNode';
 ;
 ; If it all looks good, then:
-; (batch-pairs (make-any-link-api))
+; (batch-pairs (add-count-api (make-any-link-api)))
 ;
 ; (define wtfl  (EvaluationLink  (LgLinkNode "ANY")
 ;   (ListLink (AnyNode "left-word") (WordNode "famille"))))

@@ -26,7 +26,8 @@
 ; We can also do MST parsing with other kinds of pair-count objects,
 ; for example, the clique-pairs, or the distance-pairs.
 (define pair-obj (make-any-link-api))
-(define star-obj (add-pair-stars pair-obj))
+(define cnt-obj (add-count-api pair-obj))
+(define star-obj (add-pair-stars cnt-obj))
 (pair-obj 'fetch-pairs)
 
 ; Check to see if the marginals have been computed.

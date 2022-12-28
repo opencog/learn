@@ -14555,7 +14555,13 @@ but so does
 (ady 'make-pair (Word "the") (Word "horse"))
 (ady 'pair-count (Word "the") (Word "horse"))
 
+-------------------------------------------------
+Bad method call on evaluation-api: get-count
 
+In opencog/matrix/eval-pairs.scm:
+   230:46  1 (_ _ #)
+
+(add-count-api (make-any-link-api)
 
 
 
