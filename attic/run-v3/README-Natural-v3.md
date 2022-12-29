@@ -21,6 +21,9 @@ stages.  The snapshot is here for reference.  Notable changes include:
 * Link Grammar takes over the MST parsing from the earlier scheme scripts.
 * Many of the TODO items listed below have been done.
 
+See the directory containing this README file for the assorted scripts
+and tools that were part of this process.
+
 Table of Contents
 ------------------
 1. [Project Summary](#project-summary)

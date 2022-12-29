@@ -15,6 +15,10 @@ they are needed to run the processing.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
 
+* `3-mpg-dict` -- Directory containing a Link Grammar dictionary that
+  (when properly configured) allows Link Grammar to use word-pair data
+  to perform Maximum Planar Graph (MPG) parsing.
+
 * `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
   parsing and disjunct counting. The MPG variant is the "Maximum Planar
   Graph" variation of MST, as ordinary MST parsing may result in

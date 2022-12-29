@@ -1,0 +1,79 @@
+%
+% Example configuration file for an Atomspace-based dictionary.
+%
+
+% -----------------------
+% But first, begin with boilerplate: The dictionary is for English,
+% the English locale should be used, and a version number.
+
+#define dictionary-lang           en;
+#define dictionary-locale         en_US.UTF-8;
+#define dictionary-version-number 5.12.1;
+
+% -----------------------
+% CogStorageNode
+%
+% This will access an AtomSpace over the network, via a CogServer. The
+% CogServer must be running, and must be loaded with language data.
+%
+% The default port for CogServers is 17001
+% Here `localhost` is just 127.0.0.1
+% Replace `localhost` by `example.com` or a dotted IPv4 address.
+% #define storage-node "(CogStorageNode "cog://localhost:17001")";
+% #define storage-node "(CogStorageNode "cog://10.0.3.208:19015")";
+#define storage-node "(CogStorageNode "cog://10.0.3.208:20018")";
+
+% -----------------------
+% RocksStorageNode
+%
+% This will access an AtomSpace on a local hard drive, stored in a
+% RocksDB database. The database must hold appropriate language data.
+%
+% The URL is just a path into the local filesystem.
+%
+% Uncomment this, and provide a correct file-path.
+% #define storage-node "(RocksStorageNode "rocks:///home2/linas/x13-all-in-one.rdb")";
+
+% -----------------------
+% Additional configuration parameters.
+
+% Sections with missing MI default to an MI=-4 and costs are minus MI.
+#define max-disjunct-cost 10;
+
+% Location where costs are stored. The cost will be taken to be
+% minus the mutual info (or other additive value) located at the
+% the `mi-key` on the Sections. It's assumed that this is a FloatValue,
+% which is a vector; the offset is the index into this vector.
+#define cost-key "(Predicate "*-Mutual Info Key cover-section")";
+#define cost-index 1;
+
+#define cost-scale -0.2;
+#define cost-offset 0.0;
+#define cost-cutoff 8.0;
+#define cost-default -2.0;
+
+#define pair-predicate "(LgLinkNode "ANY")";
+#define pair-key "(Predicate "*-Mutual Info Key-*")";
+#define pair-index 1;
+#define pair-scale -0.2;
+#define pair-offset 0.0;
+#define pair-cutoff 8.0;
+#define pair-default 2.0;
+
+#define any-default 2.6;
+
+#define enable-sections 1;
+#define extra-pairs 1;
+#define extra-any 1;
+
+#define pair-disjuncts 4;
+#define pair-with-any 1;
+#define any-disjuncts 0;
+
+#define enable-unknown-word 1;
+
+% -----------------------
+% For this file to be read, at least one bogus entry is needed. It is
+% meaningless; we only need to trick the code into reading this file.
+% This file is read as an affix file, so only affix names are allowed.
+foo: UNITS+;
