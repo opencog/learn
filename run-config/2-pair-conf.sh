@@ -16,13 +16,13 @@ export OBSERVE="observe-block"
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
-# Colorized prompt. Sadly, this command-line editing.
+# Colorized prompt. Sadly, this breaks command-line editing.
 # export PROMPT="[0;34mscheme@(count-pairs) [0m"
 export PROMPT="scheme@(count-pairs) "
 export OCPROMPT="[0;32mcogserv@(count-pairs) [0m"
 export LOGFILE=/tmp/cogserver-pairs-en.log
 
-# Location of the database where pair counts will be accumulated
+# Location of the database where pair counts will be accumulated.
 export PAIRS_DB=${ROCKS_DATA_DIR}/word_pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 

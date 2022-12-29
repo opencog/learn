@@ -451,7 +451,7 @@ Next Steps
 ----------
 The above provided a basic overview. Detailed steps for actually
 running the pipeline are in the [Integrated Language Learning
-README](./README-Natural-v2.md).  Go there next.
+README](./README-Natural-v4.md).  Go there next.
 
 That's all for now!
 -------------------

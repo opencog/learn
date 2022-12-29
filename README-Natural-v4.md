@@ -11,6 +11,7 @@ A general overview, including pre-requistes, is provided by the
 [Unsupervised Natural Language Learning README](./README-Natural.md) file.
 
 This integration is in development; the instructions below are incomplete.
+Look at the older version for general guidance.
 
 
 Table of Contents
@@ -35,6 +36,26 @@ preliminaries. These are given in the earlier
 13. [Exporting a Lexis](#exporting-a-lexis)
 14. [Clustering](#clustering)
 16. [Precomputed LXC containers](#precomputed-lxc-containers)
+
+Mutual Information of Word Pairs
+--------------------------------
+The goal is to have MI be computed dynamically, on the fly. The code
+to get this working is half written, but incomplete. So, for now, do
+it as before, as a batch process. Run the code in
+`run-common/marginals-pair.scm`. It works.
+
+MST Disjunct Counting
+---------------------
+As a demo of what is about to happen, aim the `link-parser` at a
+running instance of the cogserver, containing word-pairs (and
+word-pair MI data.) Type in any sentence, and then patiently
+await (about 5-10 seconds) for data to fly over the net. The resulting
+parses will be maximal planar graphs (MPG), which are similar to
+maximal spanning trees (MST), but contain loops. What's being
+maximized is the sum-total of all of the MI of the links between
+words.
+
+Use
 
 
 That's all for now!
