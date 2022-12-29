@@ -14,9 +14,6 @@ they are needed to run the processing.
   $MASTER_CONFIG_FILE to the location of this file.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
-  An example of the older, deprecated English-language configuration is
-  in `2-pair-conf-en.sh`. It is deprecated, because we no longer do
-  segmentation externally.
 
 * `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
   parsing and disjunct counting. The MPG variant is the "Maximum Planar
