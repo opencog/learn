@@ -15,9 +15,13 @@ they are needed to run the processing.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
 
-* `3-mpg-dict` -- Directory containing a Link Grammar dictionary that
-  (when properly configured) allows Link Grammar to use word-pair data
-  to perform Maximum Planar Graph (MPG) parsing.
+* `dict-combined` -- Directory containing a Link Grammar dictionary
+  that allows Link Grammar to use grammatical info held in the
+  AtomSpace. This includes both word-pair MI data, as well as disjunct
+  data. If the AtomSpace contains only word-pair data, then the reulting
+  parses will be Maximum Planar Graph (MPG) parses. If it also contains
+  disjunct data, then those will be used preferentially, with word-pair
+  data making up for missing disjuncts.
 
 * `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
   parsing and disjunct counting. The MPG variant is the "Maximum Planar

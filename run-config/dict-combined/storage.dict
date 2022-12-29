@@ -1,0 +1,140 @@
+%
+% Configuration file for an Atomspace-based dictionary. It will use
+% any available data in the AtomSpace to perform parsing. Disjunct
+% data is prefered, if it is available; else word-pair data is used.
+% if even that is not available, random planar parsing will be done.
+%
+% The only thing that really needs to be set here is the StorageNode
+% Everything else can be left as-is.
+%
+% See the `demo-atomese/storage.dict` file in the main Link Grammar
+% distribution for detailed documentation.
+
+% -----------------------
+% But first, begin with boilerplate: The dictionary is for English,
+% the English locale should be used, and a version number.
+
+#define dictionary-lang           en;
+#define dictionary-locale         en_US.UTF-8;
+#define dictionary-version-number 5.12.1;
+
+% -----------------------
+% CogStorageNode
+%
+% This will access an AtomSpace over the network, via a CogServer. The
+% CogServer must be running, and must be loaded with language data.
+%
+% The default port for CogServers is 17001
+% Here `localhost` is just 127.0.0.1
+% Replace `localhost` by `example.com` or a dotted IPv4 address.
+% #define storage-node "(CogStorageNode "cog://localhost:17001")";
+% #define storage-node "(CogStorageNode "cog://10.0.3.208:19015")";
+#define storage-node "(CogStorageNode "cog://10.0.3.208:20018")";
+
+% -----------------------
+% RocksStorageNode
+%
+% This will access an AtomSpace on a local hard drive, stored in a
+% RocksDB database. The database must hold appropriate language data.
+%
+% The URL is just a path into the local filesystem.
+%
+% Uncomment this, and provide a correct file-path.
+% #define storage-node "(RocksStorageNode "rocks:///home2/linas/x13-all-in-one.rdb")";
+
+% -----------------------
+% Additional configuration parameters.
+
+% Disjuncts with a cost larger than this will not be used during
+% parsing. This can be over-ridden with the !cost-max parser option.
+% This applies both to the available disjuncts, and the ones created
+% dynamically, from pairs.
+%
+% Sections with missing MI default to an MI=-4 and costs are minus MI.
+% So, uhhh, lets see. Hmmm...
+#define max-disjunct-cost 10;
+
+% Location where disjunct costs are stored. The cost will be obtained
+% from the floating point value located at the `cost-key` Value on the
+% Sections. It's assumed that this is a FloatValue, which is a vector;
+% the index specifies the location in this vector.
+#define cost-key "(Predicate "*-Mutual Info Key cover-section")";
+#define cost-index 1;
+
+% Linear scale and offset.
+% The cost will be y=mx+b where m==`cost-scale` and b==`cost-offset`
+% and x== the value fished out of the vector above.
+% The minus sign because the MI is better, the more positive it is,
+% while LG costs are better, the less positive they are.
+#define cost-scale -0.2;
+#define cost-offset 0.0;
+
+% Sections whose computed cost is greater than this will not be added
+% to the local dictionary.
+#define cost-cutoff 8.0;
+
+% Sections with a missing cost will be assigned this default. To ignore
+% sections with a missing cost, set it to some value greater than
+% `cost-max`.
+#define cost-default -2.0;
+
+% -----------------------
+% If disjuncts are not directly available, they can be created on the
+% fly, from word-pairs. The settings below are analogous to those above,
+% but are for word-pairs.
+
+#define pair-predicate "(LgLinkNode "ANY")";
+#define pair-key "(Predicate "*-Mutual Info Key-*")";
+#define pair-index 1;
+#define pair-scale -0.2;
+#define pair-offset 0.0;
+#define pair-cutoff 8.0;
+#define pair-default 2.0;
+
+% Keep in mind that the parser ranks parses from lowest to highest cost.
+% If word-pair links have a negative cost, the parser is incentivized to
+% add as many of these as possible, while still resulting in a planar
+% graph with many loops. Viz, "Maximal Planar Graphs" (MPG). Conversely,
+% if word-pair links have a positive cost, Minimal Spanning Trees (MST)
+% will be created (minimizing the total cost.)
+
+% Default cost for `ANY` link types. The `ANY` link type is meant to
+% provide a desperate, last-chance opportunity to link to a word that
+% does not appear in any disjuncts or word-pairs.  Thus, its given some
+% high cost, so that it is not used when other links are available.
+#define any-default 2.6;
+
+% -----------------------
+% Config settings. Bool flags.
+
+% Use sections (disjuncts), if they are available.
+#define enable-sections 1;
+
+% Supplement existing sections with optional links.
+% If set to 2 or more, then that many extra optional links will be used.
+% If sections are not enabled, then this parameter has no effect
+#define extra-pairs 1;
+
+% Same as above, but add an optional `ANY` link.
+#define extra-any 1;
+
+% Create expressions that consist entirely of word-pair relationships.
+% Default of up to four connectors.
+#define pair-disjuncts 4;
+
+% Supplement the above with additional connectors of type "ANY".
+% This has no effect, if `pair-disjuncts` is set to zero.
+#define pair-with-any 1;
+
+% Create expressions that consist entirely of "ANY" link-types.
+#define any-disjuncts 0;
+
+% Enble the automatic generation of <UNKNOWN-WORD>. It will be
+% automatically added to the dictionary, with multi-ANY connectors
+% on it. The ANY connectors will be used, irresepctive of the other
+% `any` setting above.
+#define enable-unknown-word 1;
+
+% -----------------------
+% Bogus entry. Cannot be empty.
+foo: UNITS+;
