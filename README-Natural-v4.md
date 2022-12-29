@@ -48,14 +48,18 @@ MST Disjunct Counting
 ---------------------
 As a demo of what is about to happen, aim the `link-parser` at a
 running instance of the cogserver, containing word-pairs (and
-word-pair MI data.) Type in any sentence, and then patiently
-await (about 5-10 seconds) for data to fly over the net. The resulting
+word-pair MI data.) Type in any sentence, and then patiently wait
+(about 5-10 seconds) for data to fly over the net. The resulting
 parses will be maximal planar graphs (MPG), which are similar to
 maximal spanning trees (MST), but contain loops. What's being
 maximized is the sum-total of all of the MI of the links between
 words.
 
-Use
+Use the dictionary in `run-config/dict-combined` after adjusting
+the URL in it. Like so:
+```
+link-parser run-config/dict-combined
+```
 
 
 That's all for now!
