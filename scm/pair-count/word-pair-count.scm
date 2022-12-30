@@ -52,8 +52,8 @@
 ;
 ; Not implemented: a count is maintained of the length of that link.
 ;
-(use-modules (opencog) (opencog nlp) (opencog persist))
-(use-modules (opencog exec) (opencog nlp lg-parse))
+(use-modules (opencog) (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog exec) (opencog persist))
 (use-modules (srfi srfi-1))
 (use-modules (ice-9 optargs)) ; for define*-public
 
@@ -70,14 +70,16 @@
 
 ; --------------------------------------------------------------------
 
+; This is similar to `make-disjunct-counter`, and perhaps could be
+; unified with that?
 (define*-public (make-pair-counter LLOBJ
 	#:key
 		(NUM-LINKAGES 24)
 		(DICT (LgDict "any"))
 	)
 "
-  make-observe-text LLOBJ --
-     return a function that will update word-pair counts on LLOBJ
+  make-pair-counter LLOBJ --
+     Return a function that will update word-pair counts on LLOBJ.
 
   The LLOBJ should be a matrix object that can hold a pair of words
   on the left and right. The `any-link-api` object will do.
@@ -87,10 +89,10 @@
   Link Grammar parser for parsing. The individual links in the
   resulting parses are sent to the LLOBJ for pair-counting.
 
-  This takes two optional paramters:
+  This takes two optional parameters:
 
-  #:NUM-LINKAGES -- the number of linkkages that the LG parser should
-  generate. Recall that each linkage is a differrent parse of the
+  #:NUM-LINKAGES -- the number of linkages that the LG parser should
+  generate. Recall that each linkage is a different parse of the
   sentence; these are returned in cost-sorted order. Default is 24.
 
   #:DICT -- the `LgDictNode` to use. This is the dictionary to use for
@@ -162,14 +164,14 @@
 			(sentence-get-parses SENT)))
 
 	; Do all work in a temp atomspace.  The idea here is that this will
-	; make counting thread-safe, as each sentence get's processed in
+	; make counting thread-safe, as each sentence gets processed in
 	; it's own unique per-thread atomspace.
 	;
 	; Because I'm paranoid, the `base-count` function will transition
 	; to the base atomspace, before incrementing the count. I suspect
-	; that this probably not needed, that it's enough that
+	; that this probably is not needed, and that it's enough that
 	; `count-one-atom` is incrementing and storing.  But I'm slightly
-	; paranoid, here. The performance hit is presumably mnimal.
+	; paranoid, here. The performance hit is presumably minimal.
 	(define (obs-txt PLAIN-TEXT)
 		(cog-push-atomspace)
 		(let ((SENT (cog-execute!
@@ -187,7 +189,7 @@
 	obs-txt
 )
 
-; Backards compat
+; Backwards compat
 (define-public observe-text (make-pair-counter (make-any-link-api)))
 
 ; ---------------------------------------------------------------------

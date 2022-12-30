@@ -3,6 +3,10 @@
 ;
 ; Wrappers for Maximum Spanning Tree and Maximum Planar Graph parsers.
 ;
+; DEPRECATED/OBSOLETE. This is in the process of being replaced by
+; code that does MST/MPG parsing using the LG framework. The goal is
+; a more integrated approach.
+;
 ; Copyright (c) 2014, 2017 Linas Vepstas
 ;
 ; ---------------------------------------------------------------------
