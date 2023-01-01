@@ -119,7 +119,7 @@
 	; XXX TODO: this should probably be converted to an 1xN matrix
 	; and handled with a matrix API.
 	(define (update-word-counts WRD-LIST)
-		(for-each count-one-atom WRD-LIST))
+		(for-each count-one-atom (cog-value->list WRD-LIST)))
 
 	; Increment the count on a word-pair. Also increment the marginal
 	; counts. The `EVLINK` argument is assumed to be of the form
@@ -158,7 +158,7 @@
 				(count-one-atom any-parse)
 				(update-word-counts (cog-value-ref PARSE 0))
 				(update-pair-counts (cog-value-ref PARSE 1)))
-			parses)
+			(cog-value->list parses))
 		(monitor-parse-rate #f)
 	)
 
