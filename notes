@@ -14563,6 +14563,44 @@ In opencog/matrix/eval-pairs.scm:
 
 (add-count-api (make-any-link-api)
 
+Throw to key `wrong-atom-type' with args `(cog-map-chase-links "Error: expecting atom:" (LinkValue
+  (LgDisjunct (ctv 1 0 1)
+SENT
+$1 = (LinkValue
+  (LgDisjunct (ctv 1 0 1)
+
+(LgParseDisjuncts  returns a LinkValue of disjuncts ...
+
+ParseNode vs ParseLink
+(LinkValue
+  (LgDisjunct (ctv 1 0 1)
+    (Word "a")
+    (LgAnd
+      (LgConnector
+        (LgConn "ANY")
+        (LgConnDir "-")
+        (LgConnMulti "@"))
+      (LgConnector
+        (LgConn "MOYB")
+        (LgConnDir "-"))
+      (LgConnector
+        (LgConn "ANY")
+        (LgConnDir "+")
+        (LgConnMulti "@"))))
+
+link_public_api(const char *)
+     linkage_get_disjunct_str(const Linkage linkage, WordIdx word_num);
+
+link_public_api(size_t)
+	linkage_get_disjunct_size(const Linkage linkage, WordIdx word_num);
+
+link_public_api(LinkIdx)
+	linkage_get_disjunct_link(const Linkage linkage, WordIdx word_num, DjIdx con_idx);
+
+Disjunct **cdjp = linkage->chosen_disjuncts;
+Disjunct *cdj = cdjp[w];
+assert (cdj->is_category == 0)
+
 
 
 TODO

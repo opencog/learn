@@ -1,6 +1,10 @@
 
 Things to read:
 
+* The Hyperbolic Geometry of Networks
+  Prof. Dr. Tobias Friedrich
+  https://hpi.de/friedrich/research/hyperbolic-networks/
+
 * COMET : Commonsense Transformers for Automatic Knowledge
   Graph Construction
    https://arxiv.org/pdf/1906.05317.pdf

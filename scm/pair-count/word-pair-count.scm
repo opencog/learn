@@ -114,74 +114,46 @@
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
 
-	; update-word-counts -- update counts for sentences, parses and
-	; and individual words, given a SentenceNode.
+	; update-word-counts -- update the count of the individual words
+	; in a parse.
 	; XXX TODO: this should probably be converted to an 1xN matrix
 	; and handled with a matrix API.
-	(define (update-word-counts SENT)
-		; Pop down to the base space for counting.
-		(define curspace (cog-atomspace))
-		(cog-set-atomspace! base-space)
-			(count-one-atom any-sent)
-		(cog-set-atomspace! curspace)
-		(for-each
-			(lambda (parse)
-				; A list of all the words in the sentence
-				(define wlst (map word-inst-get-word (parse-get-words parse)))
-
-				; Pop down to the base space for counting.
-				(define curspace (cog-atomspace))
-				(cog-set-atomspace! base-space)
-					(count-one-atom any-parse)
-					(for-each count-one-atom wlst)
-				(cog-set-atomspace! curspace)
-			)
-			(sentence-get-parses SENT)))
+	(define (update-word-counts WRD-LIST)
+		(for-each count-one-atom WRD-LIST))
 
 	; Increment the count on a word-pair. Also increment the marginal
-	; counts. The `lg-rel-inst` argument is assumed to be ofr the form
-	;   (Evaluation (LgLinkNode "FOO") (ListLink
-	;       (WordInstance "surfin@uuid123")
-	;       (WordInstance "bird@uuid456")))
-	; and the corresponding WordNodes are located and passed to LLOBJ
-	; for pair-handling.
-	(define (incr-pair lg-rel-inst)
-		; Extract the left and right words.
-		(define w-left  (word-inst-get-word (gadr lg-rel-inst)))
-		(define w-right (word-inst-get-word (gddr lg-rel-inst)))
-
-		; Pop down to the base atomspace before counting.
-		(define curspace (cog-atomspace))
-		(cog-set-atomspace! base-space)
-		(marg-obj 'pair-inc w-left w-right 1.0)
-		(cog-set-atomspace! curspace))
-
-	; Call PROC on every LG link on every parse for SENT
-	(define (for-each-lg-link PROC SENT)
-		(for-each
-			(lambda (parse)
-				(for-each PROC (parse-get-links parse)))
-			(sentence-get-parses SENT)))
-
-	; Do all work in a temp atomspace.  The idea here is that this will
-	; make counting thread-safe, as each sentence gets processed in
-	; it's own unique per-thread atomspace.
+	; counts. The `EVLINK` argument is assumed to be of the form
 	;
-	; Because I'm paranoid, the `base-count` function will transition
-	; to the base atomspace, before incrementing the count. I suspect
-	; that this probably is not needed, and that it's enough that
-	; `count-one-atom` is incrementing and storing.  But I'm slightly
-	; paranoid, here. The performance hit is presumably minimal.
-	(define (obs-txt PLAIN-TEXT)
-		(cog-push-atomspace)
-		(let ((SENT (cog-execute!
-					(LgParseMinimal (Phrase PLAIN-TEXT) DICT NUML))))
-			(update-word-counts SENT)
+	;   (Evaluation (BondNode "FOO")
+	;       (ListLink (Word "surfin") (Word "bird")))
+	;
+	; The corresponding WordNodes are located and passed to LLOBJ
+	; for pair-handling.
+	(define (incr-pair EVLINK)
+		; Extract the left and right words.
+		(define w-left  (gadr EVLINK))
+		(define w-right (gddr EVLINK))
+		(marg-obj 'pair-inc w-left w-right 1.0)
 
-			; Update the pair counts.
-			(for-each-lg-link incr-pair SENT)
-		)
-		(cog-pop-atomspace)
+	; Loop over the list of word-pairs.
+	(define (update-pair-counts PAIR-LIST)
+		(for-each incr-pair (cog-value->list PAIR-LIST)))
+
+	(define (obs-txt PLAIN-TEXT)
+		(define parses (cog-execute!
+			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
+
+		(count-one-atom any-sent)
+
+		; `parses` is a LinkValue of parses.
+		; Each parse is two LinkValues: a list of words,
+		; and a list of links.
+		(for-each
+			(lambda (PARSE)
+				(count-one-atom any-parse)
+				(update-word-counts (cog-value-ref PARSE 0))
+				(update-pair-counts (cog-value-ref PARSE 1)))
+			parses)
 		(monitor-parse-rate #f)
 	)
 

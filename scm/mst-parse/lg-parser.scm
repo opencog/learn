@@ -41,12 +41,25 @@
 "
 	(define NUML (Number NUM-LINKAGES))
 
+	(define (update-section-counts SENT)
+		(format #t "duuude yo ~A\n" SENT)
+	)
+
 	(define (obs-txt PLAIN-TEXT)
 		(let ((SENT (cog-execute!
-			(LgParseMinimal (Phrase PLAIN-TEXT) DICT NUML))))
-			(format #t "hola duuude\n")
+			(LgParseSections (Phrase PLAIN-TEXT) DICT NUML))))
+		(update-section-counts SENT)
+		(monitor-parse-rate #f)
 	))
 
 	; Return the function defined above.
 	obs-txt
 )
+
+; ---------------------------------------------------------------------
+; Example:
+; (define dict (LgDictNode "run-config/dict-combined"))
+;
+; (define parser (make-disjunct-counter foo #:DICT dict))
+; (parser "this is a test")
+; ---------------------------------------------------------------------
