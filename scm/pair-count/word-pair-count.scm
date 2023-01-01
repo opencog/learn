@@ -143,10 +143,10 @@
 		(define parses #f)
 
 		; Create the parse in a scratch AtomSpace.
-		(push-atomspace)
+		(cog-push-atomspace)
 		(set! parses (cog-execute!
 			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
-		(pop-atomspace)
+		(cog-pop-atomspace)
 
 		(count-one-atom any-sent)
 
