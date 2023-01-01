@@ -148,20 +148,11 @@
 	(define (describe)
 		(display (procedure-property make-pseudo-cset-api 'documentation)))
 
-	; Tell the stars object what we provide.
-	(define (provides meth)
-		(case meth
-			((get-pair)       get-pair)
-			((make-pair)      make-pair)
-			((left-element)   get-left-element)
-			((right-element)  get-right-element)
-			(else             #f)))
-
 	; Methods on the object
 	(lambda (message . args)
 		(apply (case message
 			((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
-			((id)   (lambda () "cset"))
+			((id)             (lambda () "cset"))
 			((left-type)      get-left-type)
 			((right-type)     get-right-type)
 			((pair-type)      get-pair-type)
@@ -173,7 +164,7 @@
 			((right-wildcard) get-right-wildcard)
 			((wild-wild)      get-wild-wild)
 			((fetch-pairs)    fetch-pseudo-csets)
-			((provides)       provides)
+			((provides)       (lambda (symb) #f))
 			((filters?)       (lambda () #f))
 			((help)           describe)
 			((describe)       describe)
