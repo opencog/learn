@@ -20,9 +20,10 @@
 ; vector (such as compute cosines, perform other similarity measures,
 ; filter out unwanted/bad components, etc.)
 ;
-; Here and below, "connector set", "connector sequence", "disjunct"
-; and "Section" all mean the same thing. They are synonyms. The
-; multiple names are a "historical accident".
+; Here and below, "connector set" and "connector sequence" mean the same
+; thing. The word "disjunct" alternately refers to either a connector
+; sequence, or a "Section", the difference being that a Section
+; indicates what word the connector sequence is attached to.
 ;
 ; A vector can be decomposed into a sum over "basis elements", as
 ; follows:
@@ -106,11 +107,6 @@
 "
 	(let ((all-csets '()))
 
-		; Get the observational count on ATOM
-		(define (get-count ATOM) (cog-count ATOM))
-		(define (set-count ATOM CNT)
-			(cog-set-tv! ATOM (CountTruthValue 1 0 CNT)))
-
 		(define any-left (AnyNode "cset-word"))
 		(define any-right (AnyNode "cset-disjunct"))
 
@@ -167,8 +163,6 @@
 			(case meth
 				((pair-count)     get-pair-count)
 				((get-pair)       get-pair)
-				((get-count)      get-count)
-				((set-count)      set-count)
 				((make-pair)      make-pair)
 				((left-element)   get-left-element)
 				((right-element)  get-right-element)
@@ -184,8 +178,6 @@
 				((pair-type)      get-pair-type)
 				((pair-count)     get-pair-count)
 				((get-pair)       get-pair)
-				((get-count)      get-count)
-				((set-count)      set-count)
 				((make-pair)      make-pair)
 				((left-element)   get-left-element)
 				((right-element)  get-right-element)
