@@ -1,4 +1,7 @@
-Dead, unused code that might still be interesting.
+Attic
+-----
+Dead, unused code that might still be interesting. A museum of old
+stuff.
 
 * __lg-export__: Export AtomSpace contents into Link Grammar SQLite3
     dictionaries. It "works" but is pointless; it's just an extra
@@ -12,6 +15,11 @@ Dead, unused code that might still be interesting.
     opencog sheaf code. The LG parser can now do MST and MPG parsing,
     and so provides a better platform. So, this older parser is now
     obsolete. BTW, so is the sheaf code.
+
+* __pair-count__: older pair-counting code. It tried to do too much,
+    was too general. Thus, too complex. We now know exacly how to do
+    pair-counting: simply and directly. The older proof-of-concept
+    code used this.
 
 * __fibers-sim.scm__: Attempt to use scheme/guile fibers to obtain
     parallelism in the similarity calculations. Fails to improve
