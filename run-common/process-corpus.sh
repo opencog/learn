@@ -12,7 +12,10 @@
 # `submitted` in the current working dir.
 #
 # Assorted environment variables will be fetched from the <config> file.
+# An example config file is in `~/run-config/2-pair-conf.sh`
 #
+# XXX TODO Why are we using a config file here? Why aren't we just
+# grabbing everything we need from the env?
 # ---------
 
 CONF_FILE=$1

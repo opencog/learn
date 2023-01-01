@@ -46,9 +46,9 @@
 	)
 
 	(define (obs-txt PLAIN-TEXT)
-		(let ((SENT (cog-execute!
+		(define sect-list (cog-execute!
 			(LgParseSections (Phrase PLAIN-TEXT) DICT NUML))))
-		(update-section-counts SENT)
+		(update-section-counts sect-list)
 		(monitor-parse-rate #f)
 	))
 
