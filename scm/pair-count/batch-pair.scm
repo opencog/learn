@@ -29,7 +29,7 @@
 ; This is used in `word-pair-count.scm` to accumulate counts:
 ;
 ;     EvaluationLink
-;         LgLinkNode "ANY"
+;         BondNode "ANY"
 ;         ListLink
 ;             WordNode "left-word"
 ;             WordNode "right-word"
@@ -57,12 +57,12 @@
   make-any-link-api -- Word-pair access methods from random planar parse.
 
   This implements a word-pair object, where the two words are connected
-  with an LG link-type of \"ANY\", in an EvaluationLink.
+  with a BondNode \"ANY\", in an EvaluationLink.
 
   That is, a word pair is represented as:
 
     EvaluationLink
-       LgLinkNode \"ANY\"
+       BondNode \"ANY\"
        ListLink
           WordNode \"word\"
           WordNode \"bird\"
@@ -79,7 +79,7 @@
   by the 'left-wildcard method:
 
     EvaluationLink
-       LgLinkNode \"ANY\"
+       BondNode \"ANY\"
        ListLink
           AnyNode \"left-word\"
           WordNode \"bird\"
@@ -88,7 +88,7 @@
   by the 'right-wildcard method:
 
     EvaluationLink
-       LgLinkNode \"ANY\"
+       BondNode \"ANY\"
        ListLink
           WordNode \"word\"
           AnyNode \"right-word\"
@@ -98,7 +98,7 @@
 "
 	; Just use the generic code to implement the above.
 	(make-evaluation-pair-api
-		(LgLinkNode "ANY")
+		(BondNode "ANY")
 		'WordNode
 		'WordNode
 		(AnyNode "left-word")
@@ -158,10 +158,10 @@
 ; If it all looks good, then:
 ; (batch-pairs (add-count-api (make-any-link-api)))
 ;
-; (define wtfl  (EvaluationLink  (LgLinkNode "ANY")
+; (define wtfl  (EvaluationLink  (BondNode "ANY")
 ;   (ListLink (AnyNode "left-word") (WordNode "famille"))))
 ;
-; (define wtfr  (EvaluationLink  (LgLinkNode "ANY")
+; (define wtfr  (EvaluationLink  (BondNode "ANY")
 ;     (ListLink (WordNode "famille") (AnyNode "right-word"))))
 ;
 ; anynode is type 105
