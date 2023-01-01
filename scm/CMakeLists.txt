@@ -8,7 +8,7 @@ ADD_GUILE_MODULE (FILES
 	pair-count/sliding-block.scm
 	pair-count/word-pair-count.scm
 
-	mst-parse/mst-parser.scm
+	mst-parse/lg-parser.scm
 	mst-parse/pseudo-csets.scm
 
 	gram-class/agglo-goe.scm

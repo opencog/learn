@@ -8,6 +8,11 @@ Dead, unused code that might still be interesting.
     None worked out, due to complexity, bugs, mis-design,
     mis-understanding what the actual problem was.
 
+* __mst-parse__: The older, scheme-based MST parser built with the
+    opencog sheaf code. The LG parser can now do MST and MPG parsing,
+    and so provides a better platform. So, this older parser is now
+    obsolete. BTW, so is the sheaf code.
+
 * __fibers-sim.scm__: Attempt to use scheme/guile fibers to obtain
     parallelism in the similarity calculations. Fails to improve
     performance. Plus fibers are buggy, somehow.
