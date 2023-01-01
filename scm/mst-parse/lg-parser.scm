@@ -41,16 +41,25 @@
 "
 	(define NUML (Number NUM-LINKAGES))
 
-	(define (update-section-counts SENT)
-		(format #t "duuude yo ~A\n" SENT)
+	(define (update-section-counts SECTL)
+		(format #t "duuude yo ~A\n" SECTL)
 	)
 
 	(define (obs-txt PLAIN-TEXT)
-		(define sect-list (cog-execute!
-			(LgParseSections (Phrase PLAIN-TEXT) DICT NUML))))
-		(update-section-counts sect-list)
+		; Do the parsing in a temp atomspace, and the counting in
+		; the base space. The temp space must remain until we are
+		; done counting, else the atoms will disappear.
+		(define base-as (cog-push-atomspace))
+		(define parses (cog-execute!
+			(LgParseSections (Phrase PLAIN-TEXT) DICT NUML)))
+		(define temp-as (cog-set-atomspace! base-as))
+
+		(for-each update-section-counts (cog-value->list parses))
+		(cog-set-atomspace! temp-as)
+		(cog-pop-atomspace)
+
 		(monitor-parse-rate #f)
-	))
+	)
 
 	; Return the function defined above.
 	obs-txt
