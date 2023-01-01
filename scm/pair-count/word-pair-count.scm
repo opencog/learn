@@ -133,7 +133,7 @@
 		; Extract the left and right words.
 		(define w-left  (gadr EVLINK))
 		(define w-right (gddr EVLINK))
-		(marg-obj 'pair-inc w-left w-right 1.0)
+		(marg-obj 'pair-inc w-left w-right 1.0))
 
 	; Loop over the list of word-pairs.
 	(define (update-pair-counts PAIR-LIST)
