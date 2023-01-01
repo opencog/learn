@@ -70,8 +70,6 @@
 
 ; --------------------------------------------------------------------
 
-; This is similar to `make-disjunct-counter`, and perhaps could be
-; unified with that?
 (define*-public (make-pair-counter LLOBJ
 	#:key
 		(NUM-LINKAGES 24)

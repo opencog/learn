@@ -14600,6 +14600,12 @@ link_public_api(LinkIdx)
 Disjunct **cdjp = linkage->chosen_disjuncts;
 Disjunct *cdj = cdjp[w];
 assert (cdj->is_category == 0)
+   (define count-obj (add-count-api LLOBJ))
+   (define store-obj (add-storage-count count-obj))
+   (define marg-obj (add-marginal-count store-obj))
+
+  (marg-obj 'pair-inc w-left w-right 1.0))
+ 'inc-count
 
 
 
