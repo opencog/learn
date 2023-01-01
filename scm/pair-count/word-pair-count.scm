@@ -140,13 +140,14 @@
 		(for-each incr-pair (cog-value->list PAIR-LIST)))
 
 	(define (obs-txt PLAIN-TEXT)
+		(define temp-as #f)
 		(define parses #f)
 
 		; Create the parse in a scratch AtomSpace.
-		(cog-push-atomspace)
+		(define base-as (cog-push-atomspace))
 		(set! parses (cog-execute!
 			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
-		(cog-pop-atomspace)
+		(set! temp-as (cog-set-atomspace! base-as))
 
 		(count-one-atom any-sent)
 
@@ -160,6 +161,8 @@
 				(update-pair-counts (cog-value-ref PARSE 1)))
 			(cog-value->list parses))
 		(monitor-parse-rate #f)
+		(cog-set-atomspace! temp-as)
+		(cog-pop-atomspace)
 	)
 
 	; Return the function defined above.
