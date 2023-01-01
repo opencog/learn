@@ -30,7 +30,9 @@
       everything in that window for processing. The window-size is
       determined by white-space.
 
-   TEXT-BLOCK is a utf8 string of text.
+   TEXT-BLOCK is a utf8 string of text. The 'processing' consists
+   of counting all pairs in the block, updating the associated
+   marginal counts, and storing the counts in storage.
 
    The optional parameter #:WIN-SIZE specifies the width of the
    sliding block, in units of white-space separated words. The
@@ -79,8 +81,15 @@
 
 	(define start-list (make-starts delta-list 0 '()))
 
+	; `ala` is the basic pair API.
+	; `alc` adds a default counting API.
+	; `als` adds an API that stores the updated counts to storage.
+	; `alm` adds an API that maintains marginal counts dynamcially.
 	(define ala (make-any-link-api))
-	(define observe-text (make-pair-counter ala #:NUM-LINKAGES NUM-LINKAGES))
+	(define alc (add-count-api ala))
+	(define als (add-storage-count alc))
+	(define alm (add-marginal-count als))
+	(define observe-text (make-pair-counter alm #:NUM-LINKAGES NUM-LINKAGES))
 
 	; Observe text blocks. Loops over the list of starting points
 	; crated above, and the corresponding segment lengths.

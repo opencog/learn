@@ -100,14 +100,8 @@
   The parse rate can be monitored by calling, by hand, the guile function
    `(monitor-parse-rate MSG)` for some string MSG.
 "
-	(define base-space (cog-atomspace))
 	(define NUML (Number NUM-LINKAGES))
 	(define wild-wild (LLOBJ 'wild-wild))
-
-	; XXX should we do this here, or at a higher layer?
-	(define count-obj (add-count-api LLOBJ))
-	(define store-obj (add-storage-count count-obj))
-	(define marg-obj (add-marginal-count store-obj))
 
 	(define any-sent (SentenceNode "ANY"))
 	(define any-parse (ParseNode "ANY"))
@@ -115,7 +109,8 @@
 	; update-word-counts -- update the count of the individual words
 	; in a parse.
 	; XXX TODO: this should probably be converted to an 1xN matrix
-	; and handled with a matrix API.
+	; and handled with a matrix API. The sentence count and parse
+	; count should be marginals on this thing.
 	(define (update-word-counts WRD-LIST)
 		(for-each count-one-atom (cog-value->list WRD-LIST)))
 
@@ -131,7 +126,7 @@
 		; Extract the left and right words.
 		(define w-left  (gadr EVLINK))
 		(define w-right (gddr EVLINK))
-		(marg-obj 'pair-inc w-left w-right 1.0))
+		(LLOBJ 'pair-inc w-left w-right 1.0))
 
 	; Loop over the list of word-pairs.
 	(define (update-pair-counts PAIR-LIST)
