@@ -50,7 +50,8 @@
 ; each time that it occurs.  These counts are maintained in the CountTV
 ; on the EvaluationLink for the LgLinkNode for that word-pair.
 ;
-; Not implemented: a count is maintained of the length of that link.
+; Not implemented: a count of the length of a link. This could be
+; interesting, maybe.
 ;
 (use-modules (opencog) (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog exec) (opencog persist))
