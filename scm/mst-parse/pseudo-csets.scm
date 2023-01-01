@@ -105,94 +105,82 @@
 
   For a detailed description, see the `pseudo-csets.scm` file.
 "
-	(let ((all-csets '()))
+	(define any-left (AnyNode "cset-word"))
+	(define any-right (AnyNode "cset-disjunct"))
 
-		(define any-left (AnyNode "cset-word"))
-		(define any-right (AnyNode "cset-disjunct"))
+	(define (get-left-type) (Type 'WordNode))
+	(define (get-right-type) (Type 'ConnectorSeq))
+	(define (get-pair-type) (Type 'Section))
 
-		(define (get-left-type) (Type 'WordNode))
-		(define (get-right-type) (Type 'ConnectorSeq))
-		(define (get-pair-type) (Type 'Section))
+	; Get the pair, if it exists.
+	(define (get-pair L-ATOM R-ATOM)
+		(cog-link 'Section L-ATOM R-ATOM))
 
-		; Get the pair, if it exists.
-		(define (get-pair L-ATOM R-ATOM)
-			(cog-link 'Section L-ATOM R-ATOM))
+	(define (make-pair L-ATOM R-ATOM)
+		(Section L-ATOM R-ATOM))
 
-		; Get the count, if the pair exists.
-		(define (get-pair-count L-ATOM R-ATOM)
-			(define stats-atom (get-pair L-ATOM R-ATOM))
-			(if (null? stats-atom) 0 (get-count stats-atom)))
+	(define (get-left-element PAIR) (gar PAIR))
+	(define (get-right-element PAIR) (gdr PAIR))
 
-		(define (make-pair L-ATOM R-ATOM)
-			(Section L-ATOM R-ATOM))
+	(define (get-left-wildcard DJ)
+		(ListLink any-left DJ))
 
-		(define (get-left-element PAIR) (gar PAIR))
-		(define (get-right-element PAIR) (gdr PAIR))
+	(define (get-right-wildcard WORD)
+		(ListLink WORD any-right))
 
-		; XXX FIXME. We do not actually need to use a ListLink, here.
-		; We can just store the marginals directly on the DJ itself.
-		; Thus, we could save a bit of storage this way.
-		(define (get-left-wildcard DJ)
-			(ListLink any-left DJ))
+	(define (get-wild-wild)
+		(ListLink any-left any-right))
 
-		(define (get-right-wildcard WORD)
-			(ListLink WORD any-right))
+	; Fetch (from the database) all pseudo-csets
+	(define (fetch-pseudo-csets)
+		(define start-time (current-time))
 
-		(define (get-wild-wild)
-			(ListLink any-left any-right))
+		; Marginals are located on a ListLink on any-left, any-right
+		(fetch-incoming-by-type any-left 'ListLink)
+		(fetch-incoming-by-type any-right 'ListLink)
 
-		; Fetch (from the database) all pseudo-csets
-		(define (fetch-pseudo-csets)
-			(define start-time (current-time))
+		; Loading Sections is a bit too much, as that will also
+		; pick up WordClassNodes. But I guess that is OK for now.
+		(load-atoms-of-type 'Section)
+		(format #t "Elapsed time to load csets: ~A secs\n"
+			(- (current-time) start-time)))
 
-			; Marginals are located on a ListLink on any-left, any-right
-			(fetch-incoming-by-type any-left 'ListLink)
-			(fetch-incoming-by-type any-right 'ListLink)
+	(define (describe)
+		(display (procedure-property make-pseudo-cset-api 'documentation)))
 
-			; Loading Sections is a bit too much, as that will also
-			; pick up WordClassNodes. But I guess that is OK for now.
-			(load-atoms-of-type 'Section)
-			(format #t "Elapsed time to load csets: ~A secs\n"
-				(- (current-time) start-time)))
+	; Tell the stars object what we provide.
+	(define (provides meth)
+		(case meth
+			((get-pair)       get-pair)
+			((make-pair)      make-pair)
+			((left-element)   get-left-element)
+			((right-element)  get-right-element)
+			(else             #f)))
 
-		(define (describe)
-			(display (procedure-property make-pseudo-cset-api 'documentation)))
-
-		; Tell the stars object what we provide.
-		(define (provides meth)
-			(case meth
-				((pair-count)     get-pair-count)
-				((get-pair)       get-pair)
-				((make-pair)      make-pair)
-				((left-element)   get-left-element)
-				((right-element)  get-right-element)
-				(else             #f)))
-
-		; Methods on the object
-		(lambda (message . args)
-			(apply (case message
-				((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
-				((id)   (lambda () "cset"))
-				((left-type)      get-left-type)
-				((right-type)     get-right-type)
-				((pair-type)      get-pair-type)
-				((pair-count)     get-pair-count)
-				((get-pair)       get-pair)
-				((make-pair)      make-pair)
-				((left-element)   get-left-element)
-				((right-element)  get-right-element)
-				((left-wildcard)  get-left-wildcard)
-				((right-wildcard) get-right-wildcard)
-				((wild-wild)      get-wild-wild)
-				((fetch-pairs)    fetch-pseudo-csets)
-				((provides)       provides)
-				((filters?)       (lambda () #f))
-				((help)           describe)
-				((describe)       describe)
-				((obj)            (lambda () "make-pseudo-cset-api"))
-				((base)           (lambda () #f))
-				(else (error "Bad method call on pseudo-cset:" message)))
-			args)))
+	; Methods on the object
+	(lambda (message . args)
+		(apply (case message
+			((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
+			((id)   (lambda () "cset"))
+			((left-type)      get-left-type)
+			((right-type)     get-right-type)
+			((pair-type)      get-pair-type)
+			((get-pair)       get-pair)
+			((make-pair)      make-pair)
+			((left-element)   get-left-element)
+			((right-element)  get-right-element)
+			((left-wildcard)  get-left-wildcard)
+			((right-wildcard) get-right-wildcard)
+			((wild-wild)      get-wild-wild)
+			((fetch-pairs)    fetch-pseudo-csets)
+			((provides)       provides)
+			((filters?)       (lambda () #f))
+			((help)           describe)
+			((describe)       describe)
+			((obj)            (lambda () "make-pseudo-cset-api"))
+			((base)           (lambda () #f))
+			(else (error "Bad method call on pseudo-cset:" message)))
+		args))
 )
 
 ; ---------------------------------------------------------------------
