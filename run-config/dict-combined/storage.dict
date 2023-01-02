@@ -4,46 +4,27 @@
 % data is prefered, if it is available; else word-pair data is used.
 % if even that is not available, random planar parsing will be done.
 %
-% The only thing that really needs to be set here is the StorageNode
-% Everything else can be left as-is.
+% All config values can be left as-is; nothing here needs tweaking.
+%
+% No StorageNode is used; the config here assumes that we will be
+% working within an AtomSpace where everything needed has already
+% been loaded. The Link Parser works great with dynamically loaded
+% atoms; i.e. it will pull them from Storage if Storage is given.
+% What is missing/cinomplete is on-the-fly computation of MI.
 %
 % See the `demo-atomese/storage.dict` file in the main Link Grammar
 % distribution for detailed documentation.
 
 % -----------------------
-% But first, begin with boilerplate: The dictionary is for English,
-% the English locale should be used, and a version number.
+% Boilerplate: The dictionary is for English, the English locale
+% should be used, and a version number.
 
 #define dictionary-lang           en;
 #define dictionary-locale         en_US.UTF-8;
 #define dictionary-version-number 5.12.1;
 
 % -----------------------
-% CogStorageNode
-%
-% This will access an AtomSpace over the network, via a CogServer. The
-% CogServer must be running, and must be loaded with language data.
-%
-% The default port for CogServers is 17001
-% Here `localhost` is just 127.0.0.1
-% Replace `localhost` by `example.com` or a dotted IPv4 address.
-% #define storage-node "(CogStorageNode "cog://localhost:17001")";
-% #define storage-node "(CogStorageNode "cog://10.0.3.208:19015")";
-#define storage-node "(CogStorageNode "cog://10.0.3.208:20018")";
-
-% -----------------------
-% RocksStorageNode
-%
-% This will access an AtomSpace on a local hard drive, stored in a
-% RocksDB database. The database must hold appropriate language data.
-%
-% The URL is just a path into the local filesystem.
-%
-% Uncomment this, and provide a correct file-path.
-% #define storage-node "(RocksStorageNode "rocks:///home2/linas/x13-all-in-one.rdb")";
-
-% -----------------------
-% Additional configuration parameters.
+% Disjunct config.
 
 % Disjuncts with a cost larger than this will not be used during
 % parsing. This can be over-ridden with the !cost-max parser option.
@@ -79,6 +60,8 @@
 #define cost-default -2.0;
 
 % -----------------------
+% Pair config.
+%
 % If disjuncts are not directly available, they can be created on the
 % fly, from word-pairs. The settings below are analogous to those above,
 % but are for word-pairs.
@@ -105,7 +88,7 @@
 #define any-default 2.6;
 
 % -----------------------
-% Config settings. Bool flags.
+% Bool flags to enable/disable disjuncts, pairs, and random links.
 
 % Use sections (disjuncts), if they are available.
 #define enable-sections 1;
