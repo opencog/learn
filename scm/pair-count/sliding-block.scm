@@ -59,8 +59,6 @@
 			(get-deltas (substring STR (+ next 1)) (cons next DLIST) nonwhite)
 			(reverse! DLIST)))
 
-	(define delta-list (get-deltas TEXT-BLOCK '() #t))
-
 	; Sum the lengths in the list.
 	(define (sumy LST)
 		(fold (lambda (SUM ITM) (+ SUM ITM 1)) 0 (take LST WIN-SIZE)))
@@ -71,15 +69,11 @@
 			(make-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
 			(reverse! SEGLIST)))
 
-	(define seg-list (make-segments delta-list '()))
-
 	; Create a list of the starting points of each segment.
 	(define (make-starts DLIST SUM STARTL)
 		(if (not (nil? DLIST))
 			(make-starts (cdr DLIST) (+ 1 SUM (car DLIST)) (cons SUM STARTL))
 			(reverse! STARTL)))
-
-	(define start-list (make-starts delta-list 0 '()))
 
 	; `ala` is the basic pair API.
 	; `alc` adds a default counting API.
@@ -90,6 +84,10 @@
 	(define als (add-storage-count alc))
 	(define alm (add-marginal-count als))
 	(define observe-text (make-pair-counter alm #:NUM-LINKAGES NUM-LINKAGES))
+
+	(define delta-list (get-deltas TEXT-BLOCK '() #t))
+	(define seg-list (make-segments delta-list '()))
+	(define start-list (make-starts delta-list 0 '()))
 
 	; Observe text blocks. Loops over the list of starting points
 	; crated above, and the corresponding segment lengths.
