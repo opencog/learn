@@ -12,7 +12,7 @@
 	#:key
 		(NUM-LINKAGES 6)
 		(ATOMSPACE #t)
-		(STORAGE #f))
+		(STORAGE #f)
 	)
 "
   make-disjunct-counter LLOBJ DICT -- Parse text using DICT.
