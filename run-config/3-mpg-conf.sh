@@ -26,8 +26,7 @@ export LOGFILE=/tmp/cogserver-mpg-en.log
 # contains "Some sentence." then the cogserver will receive
 #   (observe-mpg "Some sentence.")
 #
-# Use `observe-mpg` to get planar MST parsing.
-# XXX
+# Use `observe-mpg` to get planar MST/MPG parsing.
 export OBSERVE="observe-mpg"
 
 # Location of the database where disjunct counts will be accumulated

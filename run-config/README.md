@@ -15,6 +15,9 @@ they are needed to run the processing.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
 
+The following two directories should be compied (by hand) to
+`/usr/local/share/link-grammar` so that Link Grammar can find them.
+
 * `dict-pair` -- Directory containing a Link Grammar dictionary
   that allows Link Grammar to use word-pair data held in the
   AtomSpace. The resulting parses will be Maximum Planar Graph (MPG)
@@ -28,10 +31,8 @@ they are needed to run the processing.
   disjunct data, then those will be used preferentially, with word-pair
   data making up for missing disjuncts.
 
-* `3-mst-conf.sh` and `3-mpg-conf.sh` -- Parameters that control MST
-  parsing and disjunct counting. The MPG variant is the "Maximum Planar
-  Graph" variation of MST, as ordinary MST parsing may result in
-  non-planar trees.
+* `3-mpg-conf.sh` -- Parameters that control MST/MPG parsing and
+  disjunct counting.
 
 * `4-gram-conf.sh` -- Grammatical clustering.
 
