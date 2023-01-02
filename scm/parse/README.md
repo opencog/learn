@@ -31,3 +31,10 @@ intermixed in an ongoing process.
                           (left index) are words, columns (right index)
                           are connector sequences (pseudo-csets.)
 * __lg-parser.scm__       Generic, mixed-mode parser.
+
+###TODO
+The parser currently increments counts by 1.0 for each observed section,
+but perhaps the weighting should be some function of the MI. If we
+really, truly beleive the MI, then the weighting should be 2^-MI, and
+we should look at as many parses as needed until this gets "negligable".
+Hmm. This begs a question: does this ever get negligable?
