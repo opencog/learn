@@ -17,7 +17,7 @@
 
 ; --------------------------------------------------------------------
 
-(define*-public (observe-block TEXT-BLOCK
+(define*-public (make-observe-block LLOBJ
 	#:key
 		(WIN-SIZE 16)
 		(NUM-LINKAGES 4)
@@ -25,14 +25,15 @@
 		(STEP 1)
 	)
 "
-   observe-block TEXT-BLOCK #:WIN-SIZE 16 #:NUM-LINKAGES 4
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for processing. The window-size is
-      determined by white-space.
+   make-observe-block LLOBJ #:WIN-SIZE 16 #:NUM-LINKAGES 4
+      Return a function that will count word-pairs in a block of text.
 
-   TEXT-BLOCK is a utf8 string of text. The 'processing' consists
-   of counting all pairs in the block, updating the associated
-   marginal counts, and storing the counts in storage.
+   This counting is performed by defining a sliding window, of the
+   given size. All text within that window will be processed; then
+   the window will slide over by #:STEP 1 steps, and the processing
+   will be repeated, until the end of the block is reached. The window
+   size is determined with respect to whitespace (which can be set with
+   #:SPLIT-PRED, defaulting to `char-set:whitespace`)
 
    The optional parameter #:WIN-SIZE specifies the width of the
    sliding block, in units of white-space separated words. The
@@ -44,6 +45,11 @@
    The optional parameter #:SPLIT-PRED specifies a predicate that
    defines the white-space along which blocks will be split. The
    default is `char-set:whitespace`.
+
+   The optional parameter #:STEP specifies how far the window should
+   slide by each iteration. Defaults to 1. Setting it to a value greater
+   than 1 will cause the last few words of the block to possibly remain
+   uncounted.
 "
 	; Return a list of indexes (numbers) indicating the offset to
 	; the next `word` in STR. Each number is the length of the word.
@@ -75,6 +81,46 @@
 			(make-starts (cdr DLIST) (+ 1 SUM (car DLIST)) (cons SUM STARTL))
 			(reverse! STARTL)))
 
+	; The counter for the window itself.
+	(define observe-text (make-pair-counter LLOBJ #:NUM-LINKAGES NUM-LINKAGES))
+
+	(define (observe-block TEXT-BLOCK)
+		(define delta-list (get-deltas TEXT-BLOCK '() #t))
+		(define seg-list (make-segments delta-list '()))
+		(define start-list (make-starts delta-list 0 '()))
+
+		; Observe text blocks. Loops over the list of starting points
+		; crated above, and the corresponding segment lengths.
+		; The loop can be made to drop all but every STEP'th text block.
+		; For 1 < STEP, it can happen that the last STEP-1 words
+		; are never observed... I see no easy/obvious work-around
+		; for this. I guess non-unit steps are a bad idea...!?
+		(define cnt 0)
+		(for-each (lambda (START LEN)
+				(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
+				(when (eq? 0 (modulo cnt STEP))
+					; (format #t "text-block: >>~A<<\n" text-seg)
+					(observe-text text-seg)
+				)
+				(set! cnt (+ cnt 1)))
+			start-list seg-list))
+
+	; Return the above function
+	observe-block
+)
+
+; --------------------------------------------------------------------
+
+(define*-public (observe-block TEXT-BLOCK)
+"
+   observe-block TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for processing.
+
+   TEXT-BLOCK is a utf8 string of text. The 'processing' consists
+   of counting all pairs in the block, updating the associated
+   marginal counts, and storing the counts in storage.
+"
 	; `ala` is the basic pair API.
 	; `alc` adds a default counting API.
 	; `als` adds an API that stores the updated counts to storage.
@@ -82,28 +128,16 @@
 	(define ala (make-any-link-api))
 	(define alc (add-count-api ala))
 	(define als (add-storage-count alc))
-	(define alm (add-marginal-count als))
-	(define observe-text (make-pair-counter alm #:NUM-LINKAGES NUM-LINKAGES))
+	; (define alm (add-marginal-count als))
 
-	(define delta-list (get-deltas TEXT-BLOCK '() #t))
-	(define seg-list (make-segments delta-list '()))
-	(define start-list (make-starts delta-list 0 '()))
+	; Skip performing the marginal counts for just right now, until
+	; the rest of the dynamic-MI infrastructure is in place. Dynamic
+	; marginal counts just add overhead to the counting process, if
+	; we are not actually using the results.
 
-	; Observe text blocks. Loops over the list of starting points
-	; crated above, and the corresponding segment lengths.
-	; The loop can be made to drop all but every STEP'th text block.
-	; For 1 < STEP, it can happen that the last STEP-1 words
-	; are never observed... I see no easy/obvious work-around
-	; for this. I guess non-unit steps are a bad idea...!?
-	(define cnt 0)
-	(for-each (lambda (START LEN)
-			(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
-			(when (eq? 0 (modulo cnt STEP))
-				; (format #t "text-block: >>~A<<\n" text-seg)
-				(observe-text text-seg)
-			)
-			(set! cnt (+ cnt 1)))
-		start-list seg-list)
+	(define observer (make-observe-block als))
+
+	(observer TEXT-BLOCK)
 )
 
 ; ---------------------------------------------------------------------
