@@ -15,10 +15,15 @@ they are needed to run the processing.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
 
+* `dict-pair` -- Directory containing a Link Grammar dictionary
+  that allows Link Grammar to use word-pair data held in the
+  AtomSpace. The resulting parses will be Maximum Planar Graph (MPG)
+  parses.
+
 * `dict-combined` -- Directory containing a Link Grammar dictionary
   that allows Link Grammar to use grammatical info held in the
   AtomSpace. This includes both word-pair MI data, as well as disjunct
-  data. If the AtomSpace contains only word-pair data, then the reulting
+  data. If the AtomSpace contains only word-pair data, then the resulting
   parses will be Maximum Planar Graph (MPG) parses. If it also contains
   disjunct data, then those will be used preferentially, with word-pair
   data making up for missing disjuncts.
