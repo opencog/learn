@@ -22,12 +22,10 @@
 
 ; ---------------------------------------------------------------------
 
+;  call-only-once THUNK -- Call the function only once, ever.
+;  Handy for database loads, which are slow, and don't need to be
+;  repeated.
 (define call-only-once
-"
-  call-only-once THUNK -- Call the function only once, ever.
-  Handy for database loads, which are slow, and don't need to be
-  repeated.
-"
 	(let ((called '()))
 		(lambda (func)
 			(if (not (member func called))
