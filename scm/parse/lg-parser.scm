@@ -50,21 +50,16 @@
   AtomSpace has been specified, then this parameter can be any
   StorageNode (including ProxyNodes) that will be used to access
   dictionary data. This can be used to specify a ProxyNode that
-  computes MI or other statistics on-th-fly, for the accessed
+  computes MI or other statistics on-the-fly, for the accessed
   dictionary definitions.
 "
 	(define NUML (Number NUM-LINKAGES))
-
-	; TODO: These should be moved elsewhere...
-	(define count-obj (add-count-api LLOBJ))
-	(define store-obj (add-storage-count count-obj))
-	(define marg-obj (add-marginal-count store-obj))
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
 	(define (update-section-counts SECTL)
 		(for-each
-			(lambda (SECT) (marg-obj 'inc-count SECT 1.0))
+			(lambda (SECT) (LLOBJ 'inc-count SECT 1.0))
 			(cog-value->list SECTL)))
 
 	(define (obs-txt PLAIN-TEXT)
@@ -97,8 +92,11 @@
 ; ---------------------------------------------------------------------
 ; Example:
 ; (define dict (LgDictNode "run-config/dict-combined"))
-; (define pca (make-pseudo-cset-api))
+; (define psa (make-pseudo-cset-api))
+; (define psc (add-count-api psa))
+; (define pst (add-storage-count psc))
+; (define psm (add-marginal-count pst))
 ;
-; (define parser (make-disjunct-counter pca dict))
+; (define parser (make-disjunct-counter psm dict))
 ; (parser "this is a test")
 ; ---------------------------------------------------------------------
