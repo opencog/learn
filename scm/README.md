@@ -8,27 +8,18 @@ Some of these files contain extensive documentation. Those are linked
 below.
 
 * __learn.scm__           This is the main guile module.
-* __common.scm__          Common code
+* __common.scm__          Common code.
 * __utilities.scm__       Utilities, e.g. for looping.
 
-In the `pair-count` subdirectory:
+* [__pair-count__](pair-count) Count word pairs extracted from large
+                          blocks of natural language text.
 
-* __word-pair-count.scm__ Word-pair counting. Given raw input text, this
-                          accumulates frequencies of word-pairs.
-* __pair-count-window.scm__ Generic pair counting. Given a list of items,
-                          this accumulates frequencies of item-pairs.
-* __batch-word-pair.scm__ Batch-compute the marginals and mutual
-                          information of word-pairs.
+* [__parse__](parse)      Perform "unified", "mixed-mode" generic
+                          parsing that combines MST/MPG parsing with
+                          LG parsing. The parse results are used to
+                          update counts on the Sections that were used
+                          (observed).
 
-In the `mst-parse` subdirectory:
-
-* __mst-parser.scm__      MST Parser. Uses word-pair MI to generate
-                          a spanning tree. Busts up tree into
-                          pseudo-csets. Accumulates frequencies of
-                          pseudo-csets.
-* __pseudo-csets.scm__    Provides a matrix API to the csets. Rows
-                          (left index) are words, columns (right index)
-                          are pseudo-csets.
 
 In the `gram-class` subdirectory:
 

@@ -4,7 +4,7 @@
 ; Provide a simple queue for tagged text streams.
 ;
 ; The goal here is for the network to provide one or more streams of
-; text to process, which accumulate in a queue, and the rpocessing code
+; text to process, which accumulate in a queue, and the processing code
 ; to dequeue and analyze it in the way that it wants to.  This way, the
 ; sender does not need to make any assumptions about how the receiver
 ; will process the data. This includes assumptions about sentence 
