@@ -46,3 +46,40 @@ INSTALL(FILES
 	DESTINATION ${COGUTIL_DATA_DIR}/../link-grammar/dict-pair
 )
 
+INSTALL(FILES
+	../run/all-in-one.sh
+	../run/README.md
+	../run/run-tmux.sh
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run
+)
+
+INSTALL(FILES
+	../run/2-word-pairs/pair-submit.sh
+	../run/2-word-pairs/trim-dataset.sh
+	../run/2-word-pairs/compute-marginals.sh
+	../run/2-word-pairs/README.md
+	../run/2-word-pairs/run-shells.sh
+	../run/2-word-pairs/halt.sh
+	../run/2-word-pairs/run-all.sh
+	../run/2-word-pairs/run-cogserver.sh
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/2-word-pairs
+)
+
+INSTALL(FILES
+	../run/3-mst-parsing/README.md
+	../run/3-mst-parsing/run-mst-shells.sh
+	../run/3-mst-parsing/run-mst-cogserver.sh
+	../run/3-mst-parsing/mst-submit.sh
+	../run/3-mst-parsing/run-all-mst.sh
+	../run/3-mst-parsing/compute-mst-marginals.sh
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/3-mst-parsing
+)
+
+INSTALL(FILES
+	../run/4-gram-class/run-all-gram.sh
+	../run/4-gram-class/README.md
+	../run/4-gram-class/run-gram-cogserver.sh
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/4-gram-class
+)
+
+# ----------- the end -----------
