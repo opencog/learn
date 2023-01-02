@@ -163,7 +163,9 @@
 	obs-txt
 )
 
-; Backwards compat
-(define-public observe-text (make-pair-counter (make-any-link-api)))
+; Backwards compat API for single-sentence word-pair counting.
+(define-public observe-text
+	(make-pair-counter
+		(add-storage-count (add-count-api (make-any-link-api)))))
 
 ; ---------------------------------------------------------------------

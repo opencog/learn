@@ -84,7 +84,7 @@
 	; `ala` is the basic pair API.
 	; `alc` adds a default counting API.
 	; `als` adds an API that stores the updated counts to storage.
-	; `alm` adds an API that maintains marginal counts dynamcially.
+	; `alm` adds an API that maintains marginal counts dynamically.
 	(define ala (make-any-link-api))
 	(define alc (add-count-api ala))
 	(define als (add-storage-count alc))

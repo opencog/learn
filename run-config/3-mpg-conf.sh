@@ -3,7 +3,7 @@
 # Configuration parameters for MPG (Max Planar Graph) parsing.
 #
 # This is an example config file; you might want to use one of the
-# preconfigured files, e.g. `3-mpg-conf-fake.sh` or `3-mpg-conf-en.sh`
+# preconfigured files, e.g. `3-mpg-conf-en.sh`
 # --------------
 #
 # Directory where corpora files can be found. This can be anywhere;
@@ -11,17 +11,6 @@
 # directory configured in the previous (pair-counting) stage. This is
 # the setting of the `$COMPLETED_DIR` of the earlier stage.
 export CORPORA_DIR=$TEXT_DIR/pair-counted
-
-# Enable or disable sentence splitting.
-# If the text corpora have one sentence per line, then splitting is not
-# needed. If the corpora are arranged into paragraphs (as conventional
-# for natural language), then the paragraphs must be split into distinct
-# sentences.
-export SENTENCE_SPLIT=false
-
-# If splitting is enabled, then specify the splitting language. Choices
-# include `en`, `fr`, `pl` and many more; see the splitter directory for more.
-export SPLIT_LANG=en
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
@@ -38,9 +27,7 @@ export LOGFILE=/tmp/cogserver-mpg-en.log
 #   (observe-mpg "Some sentence.")
 #
 # Use `observe-mpg` to get planar MST parsing.
-# Use `observe-mst` to get generic MST parsing.
-# The trees created by the generic parser might not be planar.
-#
+# XXX
 export OBSERVE="observe-mpg"
 
 # Location of the database where disjunct counts will be accumulated

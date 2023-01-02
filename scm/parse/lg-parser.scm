@@ -91,9 +91,18 @@
 	obs-txt
 )
 
+
+; Backwards compat API for single-sentence MPG parsing.
+; Caution: this will bomb if the default file search path
+; is not set up, because LG will not be able to find the dict.
+(define-public observe-mpg
+	(make-disjunct-counter
+		(add-storage-count (add-count-api (make-any-link-api)))
+		(LgDictNode "run-config/dict-pair")))
+
 ; ---------------------------------------------------------------------
 ; Example:
-; (define dict (LgDictNode "run-config/dict-combined"))
+; (define dict (LgDictNode "run-config/dict-pair"))
 ; (define psa (make-pseudo-cset-api))
 ; (define psc (add-count-api psa))
 ; (define pst (add-storage-count psc))
