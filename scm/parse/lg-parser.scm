@@ -53,7 +53,16 @@
   computes MI or other statistics on-the-fly, for the accessed
   dictionary definitions.
 "
-	(define NUML (Number NUM-LINKAGES))
+	(define stol (if STORAGE (list STORAGE) '()))
+	(define atml
+		; Where is the dictionary? If #t, use the local AS.
+		(if ATOMSPACE
+			(cons
+				(if (cog-atom? ATOMSPACE) ATOMSPACE (cog-atomspace))
+				stol))
+		'())
+
+	(define args (list DICT (Number NUM-LINKAGES) atl))
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
@@ -63,19 +72,12 @@
 			(cog-value->list SECTL)))
 
 	(define (obs-txt PLAIN-TEXT)
-		; Where is the dictionary? If #t, use the local AS.
-		(define dict-as
-			(if ATOMSPACE
-				(if (cog-atom? ATOMSPACE) ATOMSPACE (cog-atomspace))))
-
 		; Do the parsing in a temp atomspace, and the counting in
 		; the base space. The temp space must remain until we are
 		; done counting, else the atoms will disappear.
 		(define base-as (cog-push-atomspace))
 		(define parses (cog-execute!
-			(LgParseSections (Phrase PLAIN-TEXT) DICT NUML
-				(if dict-as dict-as)
-				(if STORAGE STORAGE))))
+			(LgParseSections (Phrase PLAIN-TEXT) args)))
 		(define temp-as (cog-set-atomspace! base-as))
 
 		(for-each update-section-counts (cog-value->list parses))
