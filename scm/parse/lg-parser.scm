@@ -59,10 +59,10 @@
 		(if ATOMSPACE
 			(cons
 				(if (cog-atom? ATOMSPACE) ATOMSPACE (cog-atomspace))
-				stol))
-		'())
+				stol)
+		'()))
 
-	(define args (list DICT (Number NUM-LINKAGES) atl))
+	(define args (list DICT (Number NUM-LINKAGES) atml))
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
