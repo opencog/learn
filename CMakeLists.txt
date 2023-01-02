@@ -44,6 +44,7 @@ ENDIF()
 
 ADD_SUBDIRECTORY (fake)
 ADD_SUBDIRECTORY (scm)
+ADD_SUBDIRECTORY (run-common)
 
 # Unit tests
 ADD_CUSTOM_TARGET(tests)
