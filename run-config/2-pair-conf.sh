@@ -6,7 +6,8 @@
 # ------------
 #
 # Directory where corpora files can be found
-export CORPORA_DIR=$TEXT_DIR/beta-pages
+# export CORPORA_DIR=$TEXT_DIR/beta-pages
+export CORPORA_DIR=$TEXT_DIR/input-pages
 
 # Submit each file as a single large block to the cogserver.
 # The pipeline code will deal with all segmentation issues.
