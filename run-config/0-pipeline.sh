@@ -31,7 +31,7 @@ export MASTER_CONFIG_FILE=${CONFIG_DIR}/$( basename "${BASH_SOURCE[0]}" )
 
 # File containing pair-counting configuration.
 # Change this as desired.
-export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf-en.sh
+export PAIR_CONF_FILE=$CONFIG_DIR/2-pair-conf.sh
 
 # File containing MST-parsing configuration.
 export MST_CONF_FILE=$CONFIG_DIR/3-mst-conf.sh
