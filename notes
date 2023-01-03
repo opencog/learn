@@ -14640,7 +14640,7 @@ test 1 2 1 2
       (for-each (lambda (START LEN)
             (define text-seg (substring TEXT-BLOCK START (+ START LEN)))
             (when (eq? 0 (modulo cnt STEP))
-               (format #t "text-block: >>~A<<\n" text-seg)
+               (format #t "text-block: ~A >>~A<<\n" cnt text-seg)
                ; (observe-text text-seg)
             )
             (set! cnt (+ cnt 1)))
@@ -14673,9 +14673,35 @@ $block =~ s/\\/\\\\/g;
 $block =~ s/\"/\\\"/g;
 print "(define bb \"$block\")\n";
 
-(define bg (open "/tmp/foo" (logior O_WRONLY O_CREAT)))
-(define (ob TXT) (format bg "~A" TXT))
+SO_LINGER
+371
 
+10734265
+
+241
+
+(define (obr TXT)
+(define sg (open "/tmp/st" (logior O_WRONLY O_CREAT)))
+(format sg "start call me ~A \n" (current-time))
+(close sg)
+(define bf (open "/tmp/foob" (logior O_WRONLY O_CREAT)))
+(format bf "~A" TXT)
+(close bf)
+(define eg (open "/tmp/et" (logior O_WRONLY O_CREAT)))
+(format eg "end call me ~A \n" (current-time))
+(close eg)
+)
+
+(define (wtf)
+(define sg (open "/tmp/stx" (logior O_WRONLY O_CREAT)))
+(format sg "start call me ~A \n" (current-time))
+(close sg))
+
+
+duuude posteval lin=7393932 st=(obr "It takes a lot end=and somewhat arbitr
+
+vs expected 10734207 bytes...
+sent messg of leng=10734265
 
 
 

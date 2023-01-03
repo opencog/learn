@@ -21,6 +21,11 @@ sub send_nowait
 	socket(SOCKET, PF_INET, SOCK_STREAM, (getprotobyname('tcp'))[2])
 		or die "Can't create a socket $!\n";
 
+	# We want to linger, if the message being sent is huge. But this
+	# does not seem to actually work (it doesn't actually linger). WTF.
+	setsockopt(SOCKET, SOL_SOCKET, SO_LINGER, pack("II",1,120))
+		or die "Can't set SO_LINGER: $!\n";
+
 	# If the cogserver is really slow (e.g. if it is being debugged)
 	# the connet will fail (a max of 140 pending connects are possible
 	# without changing ulimit). This is very rare. If it fails, we retry.
@@ -44,6 +49,13 @@ sub send_nowait
 
 	# Two dots: one to exit scheme, one to exit cogserver prompt.
 	print SOCKET "$msg\n.\n.\n";
+
+	# Perl appears to truncate messages longer than 7 megabytes if
+	# we close immediately. The SO_LINGER above doesn't work, and
+	# flushing doesn't work. We we attempt a really ugly hack, and
+	# sleep 1 second for every megabyte.
+	my $msgln = length($msg);
+	sleep ($msglen / 1e6);
 
 	# Close socket immediately.  Do NOT wait for any replies!!
 	close SOCKET;

@@ -109,7 +109,7 @@
 		(for-each (lambda (START LEN)
 				(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 				(when (eq? 0 (modulo cnt STEP))
-					; (format #t "text-block: >>~A<<\n" text-seg)
+					; (format #t "text-block: ~A >>~A<<\n" cnt text-seg)
 					(observe-text text-seg)
 				)
 				(set! cnt (+ cnt 1)))
