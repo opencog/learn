@@ -387,6 +387,185 @@ The GOE vectors form a de facto vierbein.
 MST/MPG Distributions
 \end_layout
 
+\begin_layout Standard
+When MST/MPG parses are created, how should the disjuncts in them be weighted,
+ during counting? We can weight several different ways:
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight of 1.0
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight proportional to the total sentence MI.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight that is a sum of the MI's of the word-pairs
+ in that disjunct.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight that is the average of the MI's of the pairs
+ in that disjunct.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with the weighted average of the MI's of the pairs in the
+ disjunct.
+ 
+\end_layout
+
+\begin_layout Itemize
+The weighting is adjusted in some way by the number of connectors in the
+ disjunct.
+\end_layout
+
+\begin_layout Standard
+The last option seems to be the most appealing, the most 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+ to me.
+ There are several variants for that.
+ Lets define these clearly.
+ Let 
+\begin_inset Formula $w$
+\end_inset
+
+ be the germ of the section, and 
+\begin_inset Formula $c$
+\end_inset
+
+ be the other connecting words in the section.
+ Let 
+\begin_inset Formula $MI\left(w,c\right)$
+\end_inset
+
+ be the MI, with the understanding that the order is reversed, when the
+ word order is reversed (
+\emph on
+i.e.
+
+\emph default
+ connecting to left instead of right.) Let 
+\begin_inset Formula $p\left(w,c\right)$
+\end_inset
+
+ be the corresponding frequency.
+ Let 
+\begin_inset Formula $\left|C\right|$
+\end_inset
+
+ be the total number of connectors in the section.
+ Then the unweighted average is
+\begin_inset Formula 
+\[
+\mbox{avg}\left(w\right)=\frac{1}{\left|C\right|}\sum_{c\in C}MI\left(w,c\right)
+\]
+
+\end_inset
+
+The weighted average is
+\begin_inset Formula 
+\[
+E\left(w\right)=\frac{\sum_{c\in C}p\left(w,c\right)MI\left(w,c\right)}{\sum_{c\in C}p\left(w,c\right)}
+\]
+
+\end_inset
+
+This weighted average is problematic because common words drown out rare
+ words in the summation.
+ This is because 
+\begin_inset Formula $p\left(w,c\right)$
+\end_inset
+
+ is huge, if 
+\begin_inset Formula $c$
+\end_inset
+
+ is a word like 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We don't really want such pairs to drown out the average, since the link
+ to 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+ is likely the least important contribution to this average.
+\end_layout
+
+\begin_layout Standard
+Thus, perhaps the MI itself can provide a weight:
+\begin_inset Formula 
+\[
+WI\left(w\right)=\frac{\sum_{c\in C}2^{MI\left(w,c\right)}MI\left(w,c\right)}{\sum_{c\in C}2^{MI\left(w,c\right)}}
+\]
+
+\end_inset
+
+This uses 2 not exp because we measure MI in bits not nats.
+ Moving forward, WI will be used, mostly because it seems like the best
+ candidate, and I can't think of anything that feels more suitable.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+I find this very annoying.
+ A decade later, I am still flying blind, with no theoretical foundations
+ for any of the decisions being made here; just a bunch of gut-feels.
+ I admit that perhaps I am not reading enough papers.
+ But I do read a lot of paper abstracts, and none of the abstracts mention
+ any work along these lines.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, we have the question: how many MST parses should be sampled? If it's
+ only a few, then weighting probably doesn't matter.
+ If its a lot, then we want to make sure that the top parses contribute
+ the most, and are NOT drowned out by the large number of mediocre parses.
+ So we're back again, asking old questions:
+\end_layout
+
+\begin_layout Itemize
+For a fixed sentence, with parses ranked by MST, how does the sentence total
+ MI decrease as a function of rank?
+\end_layout
+
+\begin_layout Itemize
+What is the integral of the above? i.e.
+ what happens when we weight according to the total sentence MI?
+\end_layout
+
+\begin_layout Itemize
+What is the distribution of the total MI of the disjuncts, (given as the
+ sum of MI for the pairs)? How does this vary as a function of the number
+ of parses that are accepted?
+\end_layout
+
+\begin_layout Itemize
+Should we assign
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
