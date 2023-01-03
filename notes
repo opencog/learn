@@ -14647,10 +14647,21 @@ test 1 2 1 2
          start-list seg-list)
 
 
-(define (make-full-segments DLIST SEGLIST)
-   (if (<= WIN-SIZE (length DLIST))
-      (make-full-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
+(define mr (make-rate-monitor))
+(define (mks CNT DLIST SEGLIST)
+(when (eq? 0 (modulo CNT 100000))
+(format #t "yo its ~A\n" (length DLIST))
+(mr "foo"))
+   (if (<= WIN-SIZE CNT)
+      (mks (- CNT 1) (cdr DLIST) (cons (sumy DLIST) SEGLIST))
       (reverse! SEGLIST)))
+
+(define sl (mks (length delta-list) delta-list '()))
+
+(length delta-list)
+ 1875582
+
+21:56
 
 
 #! /usr/bin/env perl
@@ -14664,12 +14675,6 @@ print "(define bb \"$block\")\n";
 
 (define bg (open "/tmp/foo" (logior O_WRONLY O_CREAT)))
 (define (ob TXT) (format bg "~A" TXT))
-
-
-(length delta-list)
- 1875582
-
-21:56
 
 
 

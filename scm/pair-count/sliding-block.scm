@@ -71,17 +71,18 @@
 
 	; Create a list of windows, each window starting after one word.
 	; This works only if DLIST is longer than the window size.
-	(define (make-full-segments DLIST SEGLIST)
-		(if (<= WIN-SIZE (length DLIST))
-			(make-full-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
+	(define (make-full-segments CNT DLIST SEGLIST)
+		(if (<= WIN-SIZE CNT)
+			(make-full-segments (- CNT 1) (cdr DLIST) (cons (sumy DLIST) SEGLIST))
 			(reverse! SEGLIST)))
 
 	; Create a list of windows, each window starting after one word.
 	; If there are fewer words then the window size, then the final
 	; window will be the whole block.
 	(define (make-segments DLIST)
-		(if (<= WIN-SIZE (length DLIST))
-			(make-full-segments DLIST '())
+		(define dlen (length DLIST))
+		(if (<= WIN-SIZE dlen)
+			(make-full-segments dlen DLIST '())
 			(list (fold (lambda (SUM ITM) (+ SUM ITM 1)) 0 DLIST))))
 
 	; Create a list of the starting points of each segment.
