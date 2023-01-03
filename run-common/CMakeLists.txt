@@ -47,17 +47,25 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
-	../run/all-in-one.sh
 	../run/README.md
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run
+)
+
+INSTALL(PROGRAMS
+	../run/all-in-one.sh
 	../run/run-tmux.sh
 	DESTINATION ${COGUTIL_DATA_DIR}/learn/run
 )
 
 INSTALL(FILES
+	../run/2-word-pairs/README.md
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/2-word-pairs
+)
+
+INSTALL(PROGRAMS
 	../run/2-word-pairs/pair-submit.sh
 	../run/2-word-pairs/trim-dataset.sh
 	../run/2-word-pairs/compute-marginals.sh
-	../run/2-word-pairs/README.md
 	../run/2-word-pairs/run-shells.sh
 	../run/2-word-pairs/halt.sh
 	../run/2-word-pairs/run-all.sh
@@ -67,6 +75,10 @@ INSTALL(FILES
 
 INSTALL(FILES
 	../run/3-mst-parsing/README.md
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/3-mst-parsing
+)
+
+INSTALL(PROGRAMS
 	../run/3-mst-parsing/run-mst-shells.sh
 	../run/3-mst-parsing/run-mst-cogserver.sh
 	../run/3-mst-parsing/mst-submit.sh
@@ -76,8 +88,12 @@ INSTALL(FILES
 )
 
 INSTALL(FILES
-	../run/4-gram-class/run-all-gram.sh
 	../run/4-gram-class/README.md
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/4-gram-class
+)
+
+INSTALL(PROGRAMS
+	../run/4-gram-class/run-all-gram.sh
 	../run/4-gram-class/run-gram-cogserver.sh
 	DESTINATION ${COGUTIL_DATA_DIR}/learn/run/4-gram-class
 )
