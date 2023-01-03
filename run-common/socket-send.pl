@@ -54,7 +54,7 @@ sub send_nowait
 	# we close immediately. The SO_LINGER above doesn't work, and
 	# flushing doesn't work. We we attempt a really ugly hack, and
 	# sleep 1 second for every megabyte.
-	my $msgln = length($msg);
+	my $msglen = length($msg);
 	sleep ($msglen / 1e6);
 
 	# Close socket immediately.  Do NOT wait for any replies!!
