@@ -70,10 +70,19 @@
 		(fold (lambda (SUM ITM) (+ SUM ITM 1)) 0 (take LST WIN-SIZE)))
 
 	; Create a list of windows, each window starting after one word.
+	; This works only if DLIST is longer than the window size.
+	(define (make-full-segments DLIST SEGLIST)
+		(if (<= WIN-SIZE (length DLIST))
+			(make-full-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
+			(reverse! SEGLIST)))
+
+	; Create a list of windows, each window starting after one word.
+	; If there are fewer words then the window size, then the final
+	; window will be the whole block.
 	(define (make-segments DLIST SEGLIST)
 		(if (<= WIN-SIZE (length DLIST))
-			(make-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
-			(reverse! SEGLIST)))
+			(make-full-segments DLIST SEGLIST)
+			(list (fold (lambda (SUM ITM) (+ SUM ITM 1)) 0 DLIST))))
 
 	; Create a list of the starting points of each segment.
 	(define (make-starts DLIST SUM STARTL)
@@ -90,7 +99,7 @@
 		(define start-list (make-starts delta-list 0 '()))
 
 		; Observe text blocks. Loops over the list of starting points
-		; crated above, and the corresponding segment lengths.
+		; created above, and the corresponding segment lengths.
 		; The loop can be made to drop all but every STEP'th text block.
 		; For 1 < STEP, it can happen that the last STEP-1 words
 		; are never observed... I see no easy/obvious work-around
