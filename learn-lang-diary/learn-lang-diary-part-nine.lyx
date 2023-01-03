@@ -139,7 +139,8 @@ Hard lessons learned
 \end_layout
 
 \begin_layout Standard
-Experiment-17 is the thing.
+Experiment-17 is the teacher.
+ Here is what we learned:
 \end_layout
 
 \begin_layout Itemize
@@ -155,39 +156,44 @@ Apparently, trimming has depleted the ranks.
  
 \end_layout
 
-\begin_layout Itemize
-The LG `dict-atomese` backend was extended to use word-pairs and also ANY
- links.
- 
+\begin_layout Standard
+Here is what we can do differently, going forwards:
 \end_layout
 
 \begin_layout Itemize
-Existing disjuncts can be supplemented with optional single links taken
- from word-pairs.
+This suggests clustering should be more aggressive.
+ Clustering enriches the number of available disjuncts on any given word.
+\end_layout
+
+\begin_layout Itemize
+A solution to not having enough disjuncts of the right shape is to supplements
+ existing disjuncts with optional single links taken from word-pairs.
  This explodes the RAM usage in LG, up to 10 GB or 20GB or maybe more, depending.
  
 \end_layout
 
 \begin_layout Itemize
-This suggests clustering should be more aggressive.
- 
+The LG `dict-atomese` backend was extended to use word-pairs and also ANY
+ links.
+ Disjuncts can now have optional word-pair connectors on them.
+ (Done, Nov 2022)
 \end_layout
 
 \begin_layout Itemize
 Since the LG atomese dict can now use single word-pairs, that means it can
  do MST/MPG parsing.
  Thus, we can get rid of the atomspace MST parser.
- 
+ (Done, Jan 2023)
 \end_layout
 
 \begin_layout Itemize
 The LG backend can also supplement disjuncts with ANY links.
- 
+ (Done, Nov 2022)
 \end_layout
 
 \begin_layout Itemize
 The MST/MPG mode can also use ANY links.
- 
+ (Done, Nov 2022)
 \end_layout
 
 \begin_layout Itemize
@@ -214,7 +220,19 @@ However, the more complex portions cannot run until marginals recomputed.
 
 \begin_layout Itemize
 So it seems like it's time to abolish the pipeline.
- 
+\end_layout
+
+\begin_layout Itemize
+Easier said than done (Dec 2022) Computing MI on the fly raises issues with
+ caching, stale data, write-back to the DB, read from the DB, general data
+ flow.
+ It's a bit messy.
+ So this has to be a back-burner project.
+\end_layout
+
+\begin_layout Itemize
+For example, a caching ProxyNode can be created.
+ This would effectively be the old ECAN idea, this time done right.
 \end_layout
 
 \begin_layout Itemize
@@ -275,11 +293,16 @@ Notes
 \end_layout
 
 \begin_layout Standard
-Try restarting with `run-1-marg-tranche-123.rdb` which is not trimmed.
+Nov 2022 – Tried restarting with `run-1-marg-tranche-123.rdb` which is not
+ trimmed.
  But it's huge.
  300K x 300K and *lots* of the words have backslashes in them Yuck! 52GB
  to load ...
  Need to start over.
+\end_layout
+
+\begin_layout Standard
+Bringup of the above ideas is in Expt-18.
 \end_layout
 
 \begin_layout Section*
@@ -358,6 +381,10 @@ The GOE vectors form a de facto vierbein.
  What happens when I move from word to word? Can I define a connection?
  a curvature? a torsion? Even if it's flat, when I travel around a loop,
  is there a holonomy?
+\end_layout
+
+\begin_layout Section*
+MST/MPG Distributions
 \end_layout
 
 \begin_layout Section*

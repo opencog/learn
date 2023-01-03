@@ -14704,6 +14704,22 @@ vs expected 10734207 bytes...
 sent messg of leng=10734265
 
 
+#define max-disjunct-cost
+parse_options_set_linkage_limit
+!limit=4
+
+DIS=-12.76 1000
+DIS=-5.52 4
+DIS=-13.09 4000
+linkage_limit
+num_linkages_alloced
+linkage_array_new Linkage_s 15*8 bytes = 120 bytes
+-- qsort
+disjunct_cost Linkage_info_struct
+link_cost
+
+compare N_violations unused_word_cost
+compare disjunct_cost if equal compare link_cost
 
 
 
