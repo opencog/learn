@@ -79,9 +79,9 @@
 	; Create a list of windows, each window starting after one word.
 	; If there are fewer words then the window size, then the final
 	; window will be the whole block.
-	(define (make-segments DLIST SEGLIST)
+	(define (make-segments DLIST)
 		(if (<= WIN-SIZE (length DLIST))
-			(make-full-segments DLIST SEGLIST)
+			(make-full-segments DLIST '())
 			(list (fold (lambda (SUM ITM) (+ SUM ITM 1)) 0 DLIST))))
 
 	; Create a list of the starting points of each segment.
@@ -95,7 +95,7 @@
 
 	(define (observe-block TEXT-BLOCK)
 		(define delta-list (get-deltas TEXT-BLOCK '() #t))
-		(define seg-list (make-segments delta-list '()))
+		(define seg-list (make-segments delta-list))
 		(define start-list (make-starts delta-list 0 '()))
 
 		; Observe text blocks. Loops over the list of starting points

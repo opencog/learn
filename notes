@@ -14647,6 +14647,32 @@ test 1 2 1 2
          start-list seg-list)
 
 
+(define (make-full-segments DLIST SEGLIST)
+   (if (<= WIN-SIZE (length DLIST))
+      (make-full-segments (cdr DLIST) (cons (sumy DLIST) SEGLIST))
+      (reverse! SEGLIST)))
+
+
+#! /usr/bin/env perl
+my $block = "";
+while (<STDIN>) {
+   $block = $block . $_;
+}
+$block =~ s/\\/\\\\/g;
+$block =~ s/\"/\\\"/g;
+print "(define bb \"$block\")\n";
+
+(define bg (open "/tmp/foo" (logior O_WRONLY O_CREAT)))
+(define (ob TXT) (format bg "~A" TXT))
+
+
+(length delta-list)
+ 1875582
+
+21:56
+
+
+
 
 
 
