@@ -14,6 +14,9 @@ export CORPORA_DIR=$TEXT_DIR/input-pages
 export BLOCK_SUBMIT=true
 export OBSERVE="observe-block"
 
+# Message printed for each processed file.
+export MSG="Block word-pair counting"
+
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17001
@@ -37,9 +40,6 @@ export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 # scripts are interrupted and restarted.
 export IN_PROCESS_DIR=pair-split
 export COMPLETED_DIR=pair-counted
-
-# Message printed for each processed file.
-export MSG="Splitting and word-pair counting"
 
 # =================================================================
 # Deprecated settings. These settngs allow the text to be processed
