@@ -563,10 +563,6 @@ What is the distribution of the total MI of the disjuncts, (given as the
  of parses that are accepted?
 \end_layout
 
-\begin_layout Itemize
-Should we assign
-\end_layout
-
 \begin_layout Standard
 To make the above more precise: Let 
 \begin_inset Formula $L$
@@ -750,6 +746,57 @@ with the factor of 1/2 coming from the double-counting of links by connectors
 \begin_layout Standard
 So, from now on, lets track WI and Z in the code-base, as well as the usual
  averages.
+ That sounds like a plan.
+ Lets go with it.
+\end_layout
+
+\begin_layout Subsection*
+Distributions
+\end_layout
+
+\begin_layout Standard
+The above provides plenty of material to chew on.
+ Lets look ata real dataset, and create some graphs.
+ The dataset will be r18-bond.rdb, created from a block-parse of the fanfic-tranc
+he-2 dataset (only).
+ The block parse was with a window-size of 16 and 4 parses per sample, resulting
+ in an sampling of 15*4=60 edge samples containing a fixed word (as a lower
+ bound on the average; each word participates in an average of two edges
+ per parse, but these edges are counted only once per word-pair.
+ The average may be higher, when parses have fundamental cycles in them.)
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+A window of size 16 has a clique size of 
+\begin_inset Formula $16\times15/2=120$
+\end_inset
+
+ edges, so this is an under-sampling compared to a sliding clique sampling.
+ Since the samples are from random planar trees, I'm guessing that the shorter
+ links are sampled much more often than the longer ones.
+ Hmm.
+ So this is yet another distributional question we don't understand.
+ Future versions will be changed to a window-size of 9 and 6 parses, which
+ results in 
+\begin_inset Formula $\left(9-1\right)\times6=48$
+\end_inset
+
+ edge samples per word, which is more than the 
+\begin_inset Formula $9\times8/2=36$
+\end_inset
+
+ edges that a sliding clique would have ...
+ unless the parse has cycles in it, and then ...
+ Hmm.
+ This is confusing.
+ Again, we are running on gut-feels rather than hard evidence.
+ 
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Section*

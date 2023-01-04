@@ -19,13 +19,13 @@
 
 (define*-public (make-observe-block LLOBJ
 	#:key
-		(WIN-SIZE 16)
-		(NUM-LINKAGES 4)
+		(WIN-SIZE 9)
+		(NUM-LINKAGES 6)
 		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   make-observe-block LLOBJ #:WIN-SIZE 16 #:NUM-LINKAGES 4
+   make-observe-block LLOBJ #:WIN-SIZE 9 #:NUM-LINKAGES 6
       Return a function that will count word-pairs in a block of text.
 
    This counting is performed by defining a sliding window, of the
@@ -37,10 +37,10 @@
 
    The optional parameter #:WIN-SIZE specifies the width of the
    sliding block, in units of white-space separated words. The
-   default is 16.
+   default is 9.
 
    The optional parameter #:NUM-LINKAGES specifies the number of
-   linkages to process for each block. The default is 4.
+   linkages to process for each block. The default is 6.
 
    The optional parameter #:SPLIT-PRED specifies a predicate that
    defines the white-space along which blocks will be split. The
@@ -50,6 +50,12 @@
    slide by each iteration. Defaults to 1. Setting it to a value greater
    than 1 will cause the last few words of the block to possibly remain
    uncounted.
+
+   With these defaults, each word in the middle of a block will
+   participate in (9-1)*6=48 edges, on average; more if the parse has
+   cycles in it. This is more than the 9*8/2=36 edges that a sliding
+   clique would count. The random planar tree probably undersamples
+   longer edgess!? This distribution is poorly understood.
 "
 	; Return a list of indexes (numbers) indicating the offset to
 	; the next `word` in STR. Each number is the length of the word.
