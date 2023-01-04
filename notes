@@ -14721,6 +14721,13 @@ link_cost
 compare N_violations unused_word_cost
 compare disjunct_cost if equal compare link_cost
 
+cog-update-value!
+MarginalTest
+-       ; Return default, only if LLOBJ does not provide symbol
+-       (define (overload symbol default)
+                (define fp (LLOBJ 'provides symbol))
+-               (if fp fp default))
+
 
 
 TODO

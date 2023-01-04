@@ -751,6 +751,97 @@ So, from now on, lets track WI and Z in the code-base, as well as the usual
 \end_layout
 
 \begin_layout Subsection*
+Theoretical foundations (attempt)
+\end_layout
+
+\begin_layout Standard
+What can be said from first principles? Well, pair-wise MI is an indicator
+ of how correlated to variables 
+\begin_inset Formula $a,b$
+\end_inset
+
+ are.
+ That is, if 
+\begin_inset Formula $a,b$
+\end_inset
+
+ are statistically independent, then the probability factorizes: 
+\begin_inset Formula $p\left(a,b\right)=p\left(a\right)p\left(b\right)$
+\end_inset
+
+ and so the ratio 
+\begin_inset Formula $p\left(a,b\right)/p\left(a\right)p\left(b\right)$
+\end_inset
+
+ deviates from 1.0 if 
+\begin_inset Formula $a,b$
+\end_inset
+
+ are correlated.
+ Likewise for three variables: 
+\begin_inset Formula $p\left(a,b,c\right)/p\left(a\right)p\left(b\right)p\left(c\right)$
+\end_inset
+
+ indicates the degree to which 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+ are not independent.
+\end_layout
+
+\begin_layout Standard
+But what if we know, a priori, that 
+\begin_inset Formula $a,b,c$
+\end_inset
+
+ are pair-wise dependent on one another.
+ What additional information does 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+ reveal, above and beyond the pair-wise information? In this case, the pointwise
+ MI is
+\begin_inset Formula 
+\[
+MI\left(a,b,c\right)=\log_{2}\frac{p\left(a,b,*\right)p\left(a,*,c\right)p\left(*,b,c\right)}{p\left(a,b,c\right)p\left(a,*,*\right)p\left(*,b,*\right)p\left(*,*,c\right)}
+\]
+
+\end_inset
+
+This factors:
+\begin_inset Formula 
+\begin{align*}
+MI\left(a,b,c\right)= & \log_{2}\frac{p\left(a,b,*\right)}{p\left(a,*,*\right)p\left(*,b,*\right)}+\log_{2}\frac{p\left(a,*,c\right)p\left(*,b,c\right)}{p\left(a,b,c\right)p\left(*,*,c\right)}\\
+= & MI\left(a,b\right)+\log_{2}\frac{p\left(a,*,c\right)}{p\left(a,*,*\right)p\left(*,*,c\right)}+\log_{2}\frac{p\left(a,*,*\right)p\left(*,b,c\right)}{p\left(a,b,c\right)}\\
+= & MI\left(a,b\right)+MI\left(a,c\right)+\log_{2}\frac{p\left(*,b,c\right)}{p\left(*,b,*\right)p\left(*,*,c\right)}+\log_{2}\frac{p\left(a,*,*\right)p\left(*,b,*\right)p\left(*,*,c\right)}{p\left(a,b,c\right)}\\
+= & MI\left(a,b\right)+MI\left(a,c\right)+MI\left(b,c\right)-\log_{2}\frac{p\left(a,b,c\right)}{p\left(a,*,*\right)p\left(*,b,*\right)p\left(*,*,c\right)}
+\end{align*}
+
+\end_inset
+
+So we see that MI really is (should be) additive (as the above follows from
+ Bayes rule).
+ The last term is clearly how much 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+ fails to be an independent product.
+\end_layout
+
+\begin_layout Standard
+The technical problem here is that this third term can be huge, in practice,
+ because it needs to make up for 
+\begin_inset Quotes eld
+\end_inset
+
+over-counting
+\begin_inset Quotes erd
+\end_inset
+
+ in the sum of the pair-wise terms.
+\end_layout
+
+\begin_layout Subsection*
 Distributions
 \end_layout
 
