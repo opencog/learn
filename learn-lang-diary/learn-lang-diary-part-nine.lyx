@@ -465,7 +465,7 @@ i.e.
  Then the unweighted average is
 \begin_inset Formula 
 \[
-\mbox{avg}\left(w\right)=\frac{1}{\left|C\right|}\sum_{c\in C}MI\left(w,c\right)
+\mbox{avg}_{C}\left(w\right)=\frac{1}{\left|C\right|}\sum_{c\in C}MI\left(w,c\right)
 \]
 
 \end_inset
@@ -473,7 +473,7 @@ i.e.
 The weighted average is
 \begin_inset Formula 
 \[
-E\left(w\right)=\frac{\sum_{c\in C}p\left(w,c\right)MI\left(w,c\right)}{\sum_{c\in C}p\left(w,c\right)}
+E_{C}\left(w\right)=\frac{\sum_{c\in C}p\left(w,c\right)MI\left(w,c\right)}{\sum_{c\in C}p\left(w,c\right)}
 \]
 
 \end_inset
@@ -513,7 +513,7 @@ the
 Thus, perhaps the MI itself can provide a weight:
 \begin_inset Formula 
 \[
-WI\left(w\right)=\frac{\sum_{c\in C}2^{MI\left(w,c\right)}MI\left(w,c\right)}{\sum_{c\in C}2^{MI\left(w,c\right)}}
+WI_{C}\left(w\right)=\frac{\sum_{c\in C}2^{MI\left(w,c\right)}MI\left(w,c\right)}{\sum_{c\in C}2^{MI\left(w,c\right)}}
 \]
 
 \end_inset
@@ -548,12 +548,13 @@ Next, we have the question: how many MST parses should be sampled? If it's
 
 \begin_layout Itemize
 For a fixed sentence, with parses ranked by MST, how does the sentence total
- MI decrease as a function of rank?
+ MI decrease as a function of rank? (Relative to the parse with the highest
+ MI?)
 \end_layout
 
 \begin_layout Itemize
 What is the integral of the above? i.e.
- what happens when we weight according to the total sentence MI?
+ for a fixed sentence, what is the average sentence total MI? 
 \end_layout
 
 \begin_layout Itemize
@@ -564,6 +565,191 @@ What is the distribution of the total MI of the disjuncts, (given as the
 
 \begin_layout Itemize
 Should we assign
+\end_layout
+
+\begin_layout Standard
+To make the above more precise: Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be the set of links in a sentence.
+ The total MI for that sentence is then
+\begin_inset Formula 
+\[
+MI_{\mbox{Tot}}=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)
+\]
+
+\end_inset
+
+This is naturally larger for longer sentences, which would seem to give
+ undue weight to long sentences.
+ How to rectify this? One available average is to divide by the number of
+ words in the sentence.
+ This then encourages parses with more links in them, 
+\emph on
+i.e.
+
+\emph default
+ maximizes for parses which have lots of loops.
+ Again, perhaps undesirable? Another average is to divide by the total number
+ of links in the sentence.
+ This seems the most fair, although it does seem to (mildly) discourage
+ parses with loops: Adding one more link, to form a loop, will 
+\emph on
+always
+\emph default
+ decrease this average, since the added link must necessarily have a lower
+ MI than the others that were chosen.
+\end_layout
+
+\begin_layout Standard
+A spanning tree with 
+\begin_inset Formula $W$
+\end_inset
+
+ vertices will consist of 
+\begin_inset Formula $W-1$
+\end_inset
+
+ edges.
+ Thus, a sentence of length 
+\begin_inset Formula $\left|W\right|$
+\end_inset
+
+ connected by 
+\begin_inset Formula $\left|L\right|$
+\end_inset
+
+ links will have 
+\begin_inset Formula $\left|L\right|-\left|W\right|+1$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+fundamental cycles
+\begin_inset Quotes erd
+\end_inset
+
+ in it.
+ Hmm.
+ Is there a middle ground? Can we mildly encourage parses with cycles in
+ them, without over-connecting everything to everything? So perhaps divide
+ by 
+\begin_inset Formula $\left|W\right|+0.5\left(\left|L\right|-\left|W\right|+1\right)$
+\end_inset
+
+? 
+\end_layout
+
+\begin_layout Standard
+Planar graphs already limit the number of possible cycles...
+ Assuming that neighboring words are always 
+\begin_inset Quotes eld
+\end_inset
+
+related
+\begin_inset Quotes erd
+\end_inset
+
+ to each other is a reasonable default, usually.
+ But long-distance links are important, too.
+ Finding the best long-distance links is a good thing.
+ Should we weight in a way that encourages long-distance links? How? The
+ number of alternatives available here is starting to be overwhelming here.
+ There's no obvious clear-cut 
+\begin_inset Quotes eld
+\end_inset
+
+best answer.
+\begin_inset Quotes erd
+\end_inset
+
+ I don't know of any theoretical foundations that can point at a best answer.
+\end_layout
+
+\begin_layout Standard
+Is MI actually 
+\begin_inset Quotes eld
+\end_inset
+
+additive
+\begin_inset Quotes erd
+\end_inset
+
+? I've always been assuming that, yes, it is, its foundational.
+ That's a foundational assumption.
+ The example above with disjuncts suggests otherwise.
+ Thus, we also have a non-additive possibility for sentence MI, the WI analog
+ for sentences:
+\begin_inset Formula 
+\[
+WI\left(L\right)=\frac{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}MI\left(u,w\right)}{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}}
+\]
+
+\end_inset
+
+Hmm.
+ I kind-of like that.
+ It seems to have OK properties.
+ It is NOT additive: 
+\begin_inset Formula $WI\left(L\right)\ne\sum_{w\in W}WI\left(w\right)$
+\end_inset
+
+ but it IS weighted-additive:
+\begin_inset Formula 
+\[
+WI\left(L\right)=\frac{1}{2Z\left(L\right)}\sum_{w\in W}Z_{C}\left(w\right)WI_{C}\left(w\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+Z_{C}\left(w\right)=\sum_{c\in C}2^{MI\left(w,c\right)}
+\]
+
+\end_inset
+
+is the normalizing denominator for a disjunct, and 
+\begin_inset Formula 
+\[
+Z\left(L\right)=\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}
+\]
+
+\end_inset
+
+is the normalizing denominator for 
+\begin_inset Formula $WI\left(L\right)$
+\end_inset
+
+.
+ We call it 
+\begin_inset Formula $Z$
+\end_inset
+
+ because its like a thermodynamic partition function.
+ There's an extra factor of 2 because the connectors are double-counted.
+\end_layout
+
+\begin_layout Standard
+BTW, note also that the averages are plain-additive:
+\begin_inset Formula 
+\[
+MI_{\mbox{Tot}}\left(L\right)=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)=\frac{1}{2}\sum_{w\in W}\left|C\right|\mbox{avg}_{C}\left(w\right)
+\]
+
+\end_inset
+
+with the factor of 1/2 coming from the double-counting of links by connectors
+ (since each connector is a half-link.)
+\end_layout
+
+\begin_layout Standard
+So, from now on, lets track WI and Z in the code-base, as well as the usual
+ averages.
 \end_layout
 
 \begin_layout Section*
