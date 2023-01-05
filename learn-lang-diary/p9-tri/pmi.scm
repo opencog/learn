@@ -146,8 +146,8 @@
 (format #t "zfff=~A and wifff=~A\n" zfff wifff)
 
 ; =========================================================
-(define misft (log2 (/ psff (* psst psfs))))
-(define mifst (log2 (/ pfsf (* psst pfss))))
+(define misft (log2 (/ psft (* psst psfs))))
+(define mifst (log2 (/ pfst (* psst pfss))))
 
 (define zsft (expt 2 misft))
 (define zfst (expt 2 mifst))
@@ -158,8 +158,8 @@
 (format #t "zfft=~A and wifft=~A\n" zfft wifft)
 
 ; =========================================================
-(define mistf (log2 (/ pstf (* pssf psfs))))
-(define mifts (log2 (/ pfts (* pfss psfs))))
+(define mistf (log2 (/ pstf (* psts pssf))))
+(define mifts (log2 (/ pfts (* pfss psts))))
 
 (define zstf (expt 2 mistf))
 (define zfts (expt 2 mifts))
@@ -183,7 +183,7 @@
 
 (define mitfs (log2 (/ ptfs (* ptss psfs))))
 (define mitsf (log2 (/ ptsf (* ptss pssf))))
-(define mistf (log2 (/ pstf (* psts pssf))))
+; (define mistf (log2 (/ pstf (* psts pssf))))
 
 ; =========================================================
 (format #t "miffs = ~A\n" miffs)
@@ -203,3 +203,39 @@
 (format #t "mistf = ~A\n" mistf)
 (format #t "mistt = ~A\n" mistt)
 (format #t "----\n")
+
+; =========================================================
+; Disjuncts, by hand. Ugh.  Accurate only for the given parse.
+
+(define p-sunny-calm (* 0.5 (+ pfff pfft)))
+(define p-sunny-dry (* 0.5 pfff))
+(define p-sunny-calm-wet (* 0.5 pfft))
+(define p-sunny-wet pftt)
+(define p-sunny-rain-dry pftf)
+
+(define p-cloudy-calm ptff)
+(define p-cloudy-dry (* 0.5 ptff))
+(define p-cloudy-wet ptft)
+(define p-cloudy-rain-dry pttf)
+
+(define p-sunny (+ p-sunny-calm p-sunny-dry p-sunny-calm-wet p-sunny-wet p-sunny-rain-dry))
+(define p-calm+ (+ p-sunny-calm p-cloudy-calm))
+(define p-dry+ (+ p-sunny-dry p-cloudy-dry))
+(define p-wet+ (+ p-sunny-wet p-cloudy-wet))
+(define p-calm+wet+ p-sunny-calm-wet)
+(define p-rain+dry+ (+ p-sunny-rain-dry p-cloudy-rain-dry))
+
+(define mi-sunny-calm (log2 (/ p-sunny-calm (* p-calm+ p-sunny))))
+(format #t "mi-sunny-calm = ~A\n" mi-sunny-calm)
+
+(define mi-sunny-dry (log2 (/ p-sunny-dry (* p-dry+ p-sunny))))
+(format #t "mi-sunny-dry = ~A\n" mi-sunny-dry)
+
+(define mi-sunny-calm-wet (log2 (/ p-sunny-calm-wet (* p-calm+wet+ p-sunny))))
+(format #t "mi-sunny-calm-wet = ~A\n" mi-sunny-calm-wet)
+
+(define mi-sunny-wet (log2 (/ p-sunny-wet (* p-wet+ p-sunny))))
+(format #t "mi-sunny-wet = ~A\n" mi-sunny-wet)
+
+(define mi-sunny-rain-dry (log2 (/ p-sunny-rain-dry (* p-rain+dry+ p-sunny))))
+(format #t "mi-sunny-rain-dry = ~A\n" mi-sunny-rain-dry)
