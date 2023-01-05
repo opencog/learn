@@ -1,13 +1,15 @@
+;
+; pmi.scm - pointwise MI for three word sentences.
+; Hackery for the demo
 
-
-(define fff 10)       ; sunny calm dry
-(define fft 10)       ; sunny calm wet
-(define ftf 0.000041)   ; sunny rain dry
+(define fff 10)        ; sunny calm dry
+(define fft 10)        ; sunny calm wet
+(define ftf 0.000041)  ; sunny rain dry
 (define ftt 0.0041)    ; sunny rain wet
-(define tff 5)        ; cloud calm dry
-(define tft 5)        ; cloud calm wet
+(define tff 5)         ; cloud calm dry
+(define tft 5)         ; cloud calm wet
 (define ttf 0.0000041) ; cloud rain dry
-(define ttt 10)       ; cloud rain wet
+(define ttt 10)        ; cloud rain wet
 
 (define N (+ fff fft ftf ftt tff tft ttf ttt)) 
 
@@ -33,6 +35,11 @@
 (define pfts (+ pftf pftt))
 (define ptfs (+ ptff ptft))
 (define ptts (+ pttf pttt))
+(format #t "pffs = ~A\n" pffs)
+(format #t "pfts = ~A\n" pfts)
+(format #t "ptfs = ~A\n" ptfs)
+(format #t "ptts = ~A\n" ptts)
+(format #t "----\n")
 
 (define pfsf (+ pfff pftf))
 (define pfst (+ pfft pftt))
@@ -167,4 +174,32 @@
 
 (define wiftt (/ (+ (* zsff misff) (* zfst mifst) (* zfts mifts)) zftt))
 (format #t "zftt=~A and wiftt=~A\n" zftt wiftt)
+(format #t "----\n")
 
+; =========================================================
+(define mistt (log2 (/ pstt (* psst psts))))
+(define mitst (log2 (/ ptst (* ptss psst))))
+(define mitts (log2 (/ ptts (* ptss psts))))
+
+(define mitfs (log2 (/ ptfs (* ptss psfs))))
+(define mitsf (log2 (/ ptsf (* ptss pssf))))
+(define mistf (log2 (/ pstf (* psts pssf))))
+
+; =========================================================
+(format #t "miffs = ~A\n" miffs)
+(format #t "mifts = ~A\n" mifts)
+(format #t "mitfs = ~A\n" mitfs)
+(format #t "mitts = ~A\n" mitts)
+(format #t "----\n")
+
+(format #t "mifsf = ~A\n" mifsf)
+(format #t "mifst = ~A\n" mifst)
+(format #t "mitsf = ~A\n" mitsf)
+(format #t "mitst = ~A\n" mitst)
+(format #t "----\n")
+
+(format #t "misff = ~A\n" misff)
+(format #t "misft = ~A\n" misft)
+(format #t "mistf = ~A\n" mistf)
+(format #t "mistt = ~A\n" mistt)
+(format #t "----\n")
