@@ -1,0 +1,170 @@
+
+
+(define fff 10)       ; sunny calm dry
+(define fft 10)       ; sunny calm wet
+(define ftf 0.000041)   ; sunny rain dry
+(define ftt 0.0041)    ; sunny rain wet
+(define tff 5)        ; cloud calm dry
+(define tft 5)        ; cloud calm wet
+(define ttf 0.0000041) ; cloud rain dry
+(define ttt 10)       ; cloud rain wet
+
+(define N (+ fff fft ftf ftt tff tft ttf ttt)) 
+
+(define pfff (/ fff N))
+(define pfft (/ fft N))
+(define pftf (/ ftf N))
+(define pftt (/ ftt N))
+(define ptff (/ tff N))
+(define ptft (/ tft N))
+(define pttf (/ ttf N))
+(define pttt (/ ttt N))
+(format #t "pfff = ~A\n" pfff)
+(format #t "pfft = ~A\n" pfft)
+(format #t "pftf = ~A\n" pftf)
+(format #t "pftt = ~A\n" pftt)
+(format #t "ptff = ~A\n" ptff)
+(format #t "ptft = ~A\n" ptft)
+(format #t "pttf = ~A\n" pttf)
+(format #t "pttt = ~A\n" pttt)
+(format #t "----\n")
+
+(define pffs (+ pfff pfft))
+(define pfts (+ pftf pftt))
+(define ptfs (+ ptff ptft))
+(define ptts (+ pttf pttt))
+
+(define pfsf (+ pfff pftf))
+(define pfst (+ pfft pftt))
+(define ptsf (+ ptff pttf))
+(define ptst (+ ptft pttt))
+
+(define psff (+ pfff ptff))
+(define psft (+ pfft ptft))
+(define pstf (+ pftf pttf))
+(define pstt (+ pftt pttt))
+
+(define pfss (+ pffs pfts))
+(define ptss (+ ptfs ptts))
+(format #t "check ~A\n" (+ pfss ptss))
+
+(define psfs (+ pffs ptfs))
+(define psts (+ pfts ptts))
+(format #t "check ~A\n" (+ psfs psts))
+
+(define pssf (+ pfsf ptsf))
+(define psst (+ pfst ptst))
+(format #t "check ~A\n" (+ pssf psst))
+
+(define (log2 x) (/ (log x) (log 2)))
+
+(define mifff (log2 (/ (* psff pfsf pffs) (* pfff pfss psfs pssf))))
+(format #t "mifff = ~A\n" mifff)
+
+(define mifft (log2 (/ (* psft pfst pffs) (* pfft pfss psfs psst))))
+(format #t "mifft = ~A\n" mifft)
+
+(define miftf (log2 (/ (* pstf pfsf pfts) (* pftf pfss psts pssf))))
+(format #t "miftf = ~A\n" miftf)
+
+(define miftt (log2 (/ (* pstt pfst pfts) (* pftt pfss psts psst))))
+(format #t "miftt = ~A\n" miftt)
+(format #t "----\n")
+
+(define mitff (log2 (/ (* psff ptsf ptfs) (* ptff ptss psfs pssf))))
+(format #t "mitff = ~A\n" mitff)
+
+(define mitft (log2 (/ (* psft ptst ptfs) (* ptft ptss psfs psst))))
+(format #t "mitft = ~A\n" mitft)
+
+(define mittf (log2 (/ (* pstf ptsf ptts) (* pttf ptss psts pssf))))
+(format #t "mittf = ~A\n" mittf)
+
+(define mittt (log2 (/ (* pstt ptst ptts) (* pttt ptss psts psst))))
+(format #t "mittt = ~A\n" mittt)
+(format #t "----\n")
+
+
+(define tot (+
+	(* pfff mifff)
+	(* pfft mifft)
+	(* pftf miftf)
+	(* pftt miftt)
+	(* ptff mitff)
+	(* ptft mitft)
+	(* pttf mittf)
+	(* pttt mittt)))
+
+(format #t "tot mi ~A\n" tot)
+(format #t "----\n")
+
+(define imfff (log2 (/ pfff (* pfss psfs pssf))))
+(format #t "imfff = ~A\n" imfff)
+
+(define imfft (log2 (/ pfft (* pfss psfs psst))))
+(format #t "imfft = ~A\n" imfft)
+
+(define imftf (log2 (/ pftf (* pfss psts pssf))))
+(format #t "imftf = ~A\n" imftf)
+
+(define imftt (log2 (/ pftt (* pfss psts psst))))
+(format #t "imftt = ~A\n" imftt)
+(format #t "----\n")
+
+(define imtff (log2 (/ ptff (* ptss psfs pssf))))
+(format #t "imtff = ~A\n" imtff)
+
+(define imtft (log2 (/ ptft (* ptss psfs psst))))
+(format #t "imtft = ~A\n" imtft)
+
+(define imttf (log2 (/ pttf (* ptss psts pssf))))
+(format #t "imttf = ~A\n" imttf)
+
+(define imttt (log2 (/ pttt (* ptss psts psst))))
+(format #t "imttt = ~A\n" imttt)
+(format #t "----\n")
+
+; =========================================================
+(define misff (log2 (/ psff (* pssf psfs))))
+(define mifsf (log2 (/ pfsf (* pssf pfss))))
+(define miffs (log2 (/ pffs (* pfss psfs))))
+
+(define zsff (expt 2 misff))
+(define zfsf (expt 2 mifsf))
+(define zffs (expt 2 miffs))
+
+(define zfff (+ zsff zfsf zffs))
+
+(define wifff (/ (+ (* zsff misff) (* zfsf mifsf) (* zffs miffs)) zfff))
+(format #t "zfff=~A and wifff=~A\n" zfff wifff)
+
+; =========================================================
+(define misft (log2 (/ psff (* psst psfs))))
+(define mifst (log2 (/ pfsf (* psst pfss))))
+
+(define zsft (expt 2 misft))
+(define zfst (expt 2 mifst))
+
+(define zfft (+ zsft zfst zffs))
+
+(define wifft (/ (+ (* zsft misft) (* zfst mifst) (* zffs miffs)) zfft))
+(format #t "zfft=~A and wifft=~A\n" zfft wifft)
+
+; =========================================================
+(define mistf (log2 (/ pstf (* pssf psfs))))
+(define mifts (log2 (/ pfts (* pfss psfs))))
+
+(define zstf (expt 2 mistf))
+(define zfts (expt 2 mifts))
+
+(define zftf (+ zstf zfsf zfts))
+
+(define wiftf (/ (+ (* zstf mistf) (* zfsf mifsf) (* zfts mifts)) zftf))
+(format #t "zftf=~A and wiftf=~A\n" zftf wiftf)
+
+; =========================================================
+(define zftt (+ zsff zfst zfts))
+
+(define wiftt (/ (+ (* zsff misff) (* zfst mifst) (* zfts mifts)) zftt))
+(format #t "zftt=~A and wiftt=~A\n" zftt wiftt)
+
