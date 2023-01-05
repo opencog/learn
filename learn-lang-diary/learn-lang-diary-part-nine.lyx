@@ -859,7 +859,7 @@ Demo
 
 \begin_layout Standard
 Can we gain insight from a classic demo? The classic three-word sentences:
- {sunny/cloudy} x {clear/raining} x {dry/wet}.
+ {sunny/cloudy} x {calm/rain} x {dry/wet}.
  There are 8 possible sentences, each with different probabilities.
  The conventional interpretation is that sunshowers are rare, and that there's
  a hidden process: the law might be wet because it is being sprinkled.
@@ -1026,7 +1026,7 @@ F
 \begin_inset Text
 
 \begin_layout Plain Layout
-Sunny, clear and dry
+Sunny, calm and dry
 \end_layout
 
 \end_inset
@@ -1500,7 +1500,7 @@ Cloudy and raining
 
 \begin_layout Standard
 So lets crunch the numbers for pairwise MI.
- There are some almost-ties, due to the waterin schedule; these ties are
+ There are some almost-ties, due to the watering schedule; these ties are
  broken only by the freak events.
  The MST column shows the parse that maximizes the sentence MI, and the
  trie colum shows the tied alternate parse.
@@ -2313,8 +2313,8 @@ Developing a gut-sense understanding the table above is ...
  We have the biggest MI(cloudy, rain) = 1.0 and second-biggest MI(rain, wet)
  = 0.68 which satisfies our common-sense but seems preposterious, given the
  use of the lawn sprinkler.
- We have a 3-way tie for 3rd-place: MI(sunny, clear) = MI(sunny, dry) =
- MI(clear, dry) = 0.415 which also fits the 
+ We have a 3-way tie for 3rd-place: MI(sunny, calm) = MI(sunny, dry) = MI(calm,
+ dry) = 0.415 which also fits the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2329,13 +2329,14 @@ common-sense
 
 \begin_layout Standard
 The sentences ranked by MI, highest to lowerst, are TOT(cloudy rain wet)
- = 1.678 and TOT(sunny clear dry) = 0.83 and TOT (cloudy rain dry) = 0.415
- although this third sentence is extremely rare.
+ = 1.678 and TOT(sunny calm dry) = 0.83 and TOT (cloudy rain dry) = 0.415 although
+ this third sentence is extremely rare.
  
 \end_layout
 
 \begin_layout Standard
 Let look at the disjuncts from these parses.
+ Ties given in a second row.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -2345,7 +2346,7 @@ Let look at the disjuncts from these parses.
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="7">
+<lyxtabular version="3" rows="12" columns="7">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -2398,7 +2399,7 @@ tie
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+a
 \end_layout
 
 \end_inset
@@ -2407,7 +2408,7 @@ tie
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+b
 \end_layout
 
 \end_inset
@@ -2416,7 +2417,7 @@ tie
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+c
 \end_layout
 
 \end_inset
@@ -2454,6 +2455,71 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
+v
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sunny: dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+calm: dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dry: sunny-&calm-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 (ab)(bc)
 \end_layout
 
@@ -2463,7 +2529,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+sunny: calm+
 \end_layout
 
 \end_inset
@@ -2472,7 +2538,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+calm: sunny-&dry+
 \end_layout
 
 \end_inset
@@ -2481,7 +2547,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+dry: calm-
 \end_layout
 
 \end_inset
@@ -2519,6 +2585,71 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
+v
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sunny: calm+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+calm: sunny-&wet+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+wet: calm-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 (ab)(ac)
 \end_layout
 
@@ -2528,7 +2659,7 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+sunny: calm+&wet+
 \end_layout
 
 \end_inset
@@ -2537,7 +2668,7 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+calm: sunny-
 \end_layout
 
 \end_inset
@@ -2546,7 +2677,7 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+wet: sunny-
 \end_layout
 
 \end_inset
@@ -2593,7 +2724,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+sunny: rain+&dry+
 \end_layout
 
 \end_inset
@@ -2602,7 +2733,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+rain: sunny-
 \end_layout
 
 \end_inset
@@ -2611,7 +2742,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+dry: sunny-
 \end_layout
 
 \end_inset
@@ -2658,7 +2789,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+sunny: wet+
 \end_layout
 
 \end_inset
@@ -2667,7 +2798,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+rain: wet+
 \end_layout
 
 \end_inset
@@ -2676,7 +2807,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+wet: sunny-&rain-
 \end_layout
 
 \end_inset
@@ -2714,6 +2845,71 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
+v
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cloudy: calm+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+calm: cloudy-&dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dry: calm-
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 (ac)(bc)
 \end_layout
 
@@ -2723,7 +2919,7 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+cloudy: dry+
 \end_layout
 
 \end_inset
@@ -2732,7 +2928,7 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+calm: dry+
 \end_layout
 
 \end_inset
@@ -2741,7 +2937,7 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+dry: cloudy-&calm-
 \end_layout
 
 \end_inset
@@ -2788,7 +2984,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+cloudy: wet+
 \end_layout
 
 \end_inset
@@ -2797,7 +2993,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+calm: wet+
 \end_layout
 
 \end_inset
@@ -2806,7 +3002,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+wet: cloudy-&calm-
 \end_layout
 
 \end_inset
@@ -2853,7 +3049,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+cloudy: rain+&dry+
 \end_layout
 
 \end_inset
@@ -2862,7 +3058,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+rain: cloudy-
 \end_layout
 
 \end_inset
@@ -2871,7 +3067,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+dry: cloudy-
 \end_layout
 
 \end_inset
@@ -2918,7 +3114,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+cloudy: rain+
 \end_layout
 
 \end_inset
@@ -2927,7 +3123,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+rain: cloudy-&wet+
 \end_layout
 
 \end_inset
@@ -2936,7 +3132,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+wet: rain-
 \end_layout
 
 \end_inset
