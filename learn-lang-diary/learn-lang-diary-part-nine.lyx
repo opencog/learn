@@ -829,9 +829,9 @@ Of particular interest is
  (especially in the face of smaller data sets).
  It is defined as
 \begin_inset Formula 
-\[
-MI\left(w_{1},w_{2},\cdots,w_{n}\right)=\sum_{k=0}^{n-1}\left(-1\right)^{n-k}\sum_{w\backslash k}\log_{2}p\left(\left\{ w\backslash k\right\} \right)
-\]
+\begin{equation}
+MI\left(w_{1},w_{2},\cdots,w_{n}\right)=\sum_{k=0}^{n-1}\left(-1\right)^{n-k}\sum_{w\backslash k}\log_{2}p\left(\left\{ w\backslash k\right\} \right)\label{eq:binomial-MI}
+\end{equation}
 
 \end_inset
 
@@ -883,6 +883,90 @@ The size of the set
 \end_inset
 
 Note the resemblence of the formula for MI to the binomial theorem.
+\end_layout
+
+\begin_layout Standard
+The MST factorization is effectively the presumption that
+\begin_inset Formula 
+\[
+MI\left(w_{1},w_{2},\cdots,w_{n}\right)\approx\sum_{\left(w_{i},w_{j}\right)\in MST}MI\left(w_{i},w_{j}\right)
+\]
+
+\end_inset
+
+This sum runs only over the maximum spanning tree, and contains only 
+\begin_inset Formula $n-1$
+\end_inset
+
+ links.
+ The complete graph would have 
+\begin_inset Formula $n\left(n-1\right)/2$
+\end_inset
+
+ links in it, and so most of these are ignored.
+ Specifically, the presumption is that these ignored links actually cancel
+ higher-order terms in the full MI expansion.
+\end_layout
+
+\begin_layout Standard
+Put more plainly, it appears that
+\begin_inset Formula 
+\[
+\log_{2}\frac{p\left(w_{1},w_{2},\cdots,w_{n}\right)}{p\left(w_{1}\right)p\left(w_{2}\right)\cdots p\left(w_{n}\right)}
+\]
+
+\end_inset
+
+is, in general, 
+\begin_inset Quotes eld
+\end_inset
+
+freakishly high
+\begin_inset Quotes erd
+\end_inset
+
+, and that much of it can be 
+\begin_inset Quotes eld
+\end_inset
+
+knocked down to size
+\begin_inset Quotes erd
+\end_inset
+
+ by using the MST, instead.
+ 
+\end_layout
+
+\begin_layout Standard
+What appears to be lacking is a coherent theoretical argument as to 
+\emph on
+why
+\emph default
+ an MST parse provides a reasonable approximation to the factorization.
+ The next step is, of course, to use disjuncts, but again, without any clear
+ argument about why the disjuncts provide a good approximation to the higher
+ order terms in the sum of binomial-MI equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:binomial-MI"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+More precisely, the binomial-MI equation is correct, but unweildy, because
+ it contains large cancelling terms.
+ What is unclear is why these terms cancel, and how to best obtain a diagonalize
+d, factorized perturbative expansion.
+ The MST->disjunct path is just a gut-feel approach to obtaining that perturbati
+ve expansion.
+ It lacks formal justification for why it works.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -4139,7 +4223,7 @@ Distributions
 
 \begin_layout Standard
 The above provides plenty of material to chew on.
- Lets look ata real dataset, and create some graphs.
+ Lets look at a real dataset, and create some graphs.
  The dataset will be r18-bond.rdb, created from a block-parse of the fanfic-tranc
 he-2 dataset (only).
  The block parse was with a window-size of 16 and 4 parses per sample, resulting
