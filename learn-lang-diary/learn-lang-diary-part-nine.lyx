@@ -289,6 +289,25 @@ undo
 \end_layout
 
 \begin_layout Section*
+TODO List
+\end_layout
+
+\begin_layout Standard
+To-do items that are NOT covered in this chapter, but should be done someday,
+ some-how:
+\end_layout
+
+\begin_layout Itemize
+How does the number of word-pairs scale as a function of vocabulary size?
+\end_layout
+
+\begin_layout Itemize
+How does vocabulary size scale as a function of corpus size? We've monitored
+ the above quantities repeatedly, but never really worked out the scaling
+ relationships.
+\end_layout
+
+\begin_layout Section*
 Notes
 \end_layout
 
@@ -461,6 +480,253 @@ The factorization is successful if
 At this time, I've not been tracking the probabilities of n-grams, and so
  evaluating the above experimentally is not currently possible, not currently
  performed.
+\end_layout
+
+\begin_layout Subsubsection*
+Factorization as change of variable
+\end_layout
+
+\begin_layout Standard
+Of course, syntax is not enough to convey the meaning in an expression,
+ so the above approximations are necessarily mediocre.
+ The factorization we are groping for should more properly be written as
+ a change of variable
+\begin_inset Formula 
+\[
+p\left(w_{1},w_{2},\cdots,w_{n}\right)\approx p\left(r_{1},r_{2},\cdots,r_{k}\right)
+\]
+
+\end_inset
+
+where the variables 
+\begin_inset Formula $r_{1},r_{2},\cdots,r_{k}$
+\end_inset
+
+ are in some sense 
+\begin_inset Quotes eld
+\end_inset
+
+more independent
+\begin_inset Quotes erd
+\end_inset
+
+ than the word-sequence 
+\begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Note that in general, 
+\begin_inset Formula $k\ne n$
+\end_inset
+
+.
+ For spanning tree parses, the 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+ are understood to be links between word-pairs, and so 
+\begin_inset Formula $k$
+\end_inset
+
+ is counting the number of links in the parse.
+ Thus 
+\begin_inset Formula $k=n-1$
+\end_inset
+
+ for word-pair relationships.
+ If the parse has fundamental cycles (loops), then 
+\begin_inset Formula $k=n-1+\ell$
+\end_inset
+
+ where 
+\begin_inset Formula $\ell$
+\end_inset
+
+ is the number of fundamental cycles (
+\emph on
+e.g.
+
+\emph default
+ in an MPG parse).
+\end_layout
+
+\begin_layout Standard
+Note that parsing performs a 
+\begin_inset Quotes eld
+\end_inset
+
+dimensional oxidation
+\begin_inset Quotes erd
+\end_inset
+
+: there are far more 
+\begin_inset Formula $r_{i}$
+\end_inset
+
+'s than there are 
+\begin_inset Formula $w_{i}$
+\end_inset
+
+'s.
+ If the size of the base vocabulary is 
+\begin_inset Formula $\mathcal{O}\left(\left|w\right|\right)\sim N$
+\end_inset
+
+ then 
+\begin_inset Formula $\mathcal{O}\left(\left|r\right|\right)\sim N^{2}$
+\end_inset
+
+ where I'm using 
+\begin_inset Formula $\mathcal{O}$
+\end_inset
+
+ notation because counting the size of the vocabulary is hard, when vocabulary
+ words have a Zipfian distribution.
+ Also, the claim that 
+\begin_inset Formula $\mathcal{O}\left(\left|r\right|\right)\sim N^{2}$
+\end_inset
+
+ is somewhat misleading.
+ Its actually more like 
+\begin_inset Formula $\mathcal{O}\left(\left|r\right|\right)\sim N^{\gamma}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\gamma<2$
+\end_inset
+
+ because this is what the Zipfian distributions do to us.
+ We've seen this experimentally, when we measure the sparsity and rarity,
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See e.g.
+ page 34 or Diary Part Five for rarity.
+ I could have sworn I had this in othr tables, but I can't find it right
+ now.
+\end_layout
+
+\end_inset
+
+ but we haven't explicitly measured this.
+\end_layout
+
+\begin_layout Standard
+Thus, MST parsing is a form of dimensional embedding, where the strings
+ living in the relatively low-dimensional space 
+\begin_inset Formula $\mathcal{O}\left(\left|\left(w_{1},w_{2},\cdots,w_{n}\right)\right|\right)\sim N^{n}$
+\end_inset
+
+ are embeded into the vastly larger space 
+\begin_inset Formula $\mathcal{O}\left(\left|r_{1},r_{2},\cdots,r_{k}\right|\right)\sim N^{2k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+In Link Grammar parsing, the embedding is not into a word-pair space, but
+ into a disjunct space, which is explosively larger.
+ That is, the relations 
+\begin_inset Formula $r$
+\end_inset
+
+ are actually disjuncts 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ I assume its 
+\begin_inset Formula $\mathcal{O}\left(\left|d\right|\right)\sim N^{\gamma}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\gamma>2$
+\end_inset
+
+, but again, we've monitored this size without actually ever emasuring it's
+ scaling dependence.
+ Got to fix that.
+\end_layout
+
+\begin_layout Subsubsection*
+Paths in hyperspace
+\end_layout
+
+\begin_layout Standard
+Lets try to paint a mental image of this.
+ Consider a vector space of dimension 
+\begin_inset Formula $N$
+\end_inset
+
+, with 
+\begin_inset Formula $N$
+\end_inset
+
+ the size of the vocabulary.
+ Each 
+\begin_inset Formula $w_{k}$
+\end_inset
+
+ is then a unit vector 
+\begin_inset Formula $e_{k}$
+\end_inset
+
+ in this space.
+ The word-sequence 
+\begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
+\end_inset
+
+ is a path in this space.
+ The probabilities 
+\begin_inset Formula $p\left(w_{1},w_{2},\cdots,w_{n}\right)$
+\end_inset
+
+ are hard to factorize, because there are many of these paths, and they
+ overlap a lot.
+\end_layout
+
+\begin_layout Standard
+Consider now a vector space of dimension 
+\begin_inset Formula $D$
+\end_inset
+
+, with 
+\begin_inset Formula $D$
+\end_inset
+
+ being the number of disjuncts.
+ Very roughly, 
+\begin_inset Formula $D\sim N^{\gamma}$
+\end_inset
+
+ for some 
+\begin_inset Formula $\gamma>2$
+\end_inset
+
+ or somethig like that.
+ So this is a much larger space.
+ A single Link Grammar parse of a sentence 
+\begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
+\end_inset
+
+ provides a unique sequence of disjuncts 
+\begin_inset Formula $d_{1},d_{2},\cdots,d_{n}$
+\end_inset
+
+ fixed by that parse.
+ As before, 
+\begin_inset Formula $d_{1},d_{2},\cdots,d_{n}$
+\end_inset
+
+ specifies a path through the disjunct space.
+ However, this time, the space is much larger, and so the accidental intersectio
+n of two different paths is much less likely.
+ There's disambiguation.
 \end_layout
 
 \begin_layout Subsubsection*
