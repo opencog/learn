@@ -602,7 +602,7 @@ ve expansion.
  It lacks formal justification for why it works.
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 Three-way relationships
 \end_layout
 
@@ -705,8 +705,8 @@ over-counting
  in the sum of the pair-wise terms.
 \end_layout
 
-\begin_layout Subsubsection*
-Tri-part test demo
+\begin_layout Subsection*
+Tri-part experiment/demo
 \end_layout
 
 \begin_layout Standard
@@ -1566,6 +1566,10 @@ An issue with the above demo is that there are two hidden variables: the
  lawn sprinkler, and the painters tarp over the lawn that keeps the lawn
  sometimes dry.
  How would this demo change, if these weren't hidden? Next section...
+\end_layout
+
+\begin_layout Subsubsection*
+Pairwise-MI
 \end_layout
 
 \begin_layout Standard
@@ -2783,6 +2787,10 @@ somewhat, but not terribly well
  word-pairs unduly important, when they should not be.
 \end_layout
 
+\begin_layout Subsubsection*
+Disjuncts
+\end_layout
+
 \begin_layout Standard
 Let look at the disjuncts from these parses.
  Ties given in a second row.
@@ -3625,7 +3633,7 @@ The task is to weight these, either by observation count, or by a observation
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="5">
+<lyxtabular version="3" rows="20" columns="5">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3764,7 +3772,7 @@ dry+
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.4148883
+-1.0001
 \end_layout
 
 \end_inset
@@ -3811,7 +3819,7 @@ calm+&wet+
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.000
+0.9998
 \end_layout
 
 \end_inset
@@ -3858,7 +3866,7 @@ wet+
 \begin_inset Text
 
 \begin_layout Plain Layout
--9.25
+-10.25
 \end_layout
 
 \end_inset
@@ -3952,7 +3960,7 @@ rain+
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.8302
 \end_layout
 
 \end_inset
@@ -3999,7 +4007,7 @@ wet+
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.1710
 \end_layout
 
 \end_inset
@@ -4046,7 +4054,7 @@ calm+
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.7547
 \end_layout
 
 \end_inset
@@ -4093,7 +4101,7 @@ dry+
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-2.1698
 \end_layout
 
 \end_inset
@@ -4140,7 +4148,7 @@ rain+&dry+
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-2.6292
 \end_layout
 
 \end_inset
@@ -4169,6 +4177,44 @@ calm
 \begin_inset Text
 
 \begin_layout Plain Layout
+3/16
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 
 \end_layout
 
@@ -4179,6 +4225,203 @@ calm
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+wet+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sunny-&dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sunny-&wet+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+calm: sunny-
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+cloudy-&dry+
 \end_layout
 
 \end_inset
@@ -4225,7 +4468,7 @@ rain
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+wet+
 \end_layout
 
 \end_inset
