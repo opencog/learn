@@ -21,14 +21,17 @@
 (define ptft (/ tft N))
 (define pttf (/ ttf N))
 (define pttt (/ ttt N))
-(format #t "pfff = ~A\n" pfff)
-(format #t "pfft = ~A\n" pfft)
-(format #t "pftf = ~A\n" pftf)
-(format #t "pftt = ~A\n" pftt)
-(format #t "ptff = ~A\n" ptff)
-(format #t "ptft = ~A\n" ptft)
-(format #t "pttf = ~A\n" pttf)
-(format #t "pttt = ~A\n" pttt)
+
+(define (log2 x) (/ (log x) (log 2)))
+
+(format #t "pfff = ~A ~A\n" pfff (log2 pfff))
+(format #t "pfft = ~A ~A\n" pfft (log2 pfft))
+(format #t "pftf = ~A ~A\n" pftf (log2 pftf))
+(format #t "pftt = ~A ~A\n" pftt (log2 pftt))
+(format #t "ptff = ~A ~A\n" ptff (log2 ptff))
+(format #t "ptft = ~A ~A\n" ptft (log2 ptft))
+(format #t "pttf = ~A ~A\n" pttf (log2 pttf))
+(format #t "pttt = ~A ~A\n" pttt (log2 pttt))
 (format #t "----\n")
 
 (define pffs (+ pfff pfft))
@@ -62,8 +65,6 @@
 (define pssf (+ pfsf ptsf))
 (define psst (+ pfst ptst))
 (format #t "check ~A\n" (+ pssf psst))
-
-(define (log2 x) (/ (log x) (log 2)))
 
 (define mifff (log2 (/ (* psff pfsf pffs) (* pfff pfss psfs pssf))))
 (format #t "mifff = ~A\n" mifff)
@@ -216,6 +217,40 @@
 (format #t "mistf = ~A\n" mistf)
 (format #t "mistt = ~A\n" mistt)
 (format #t "----\n")
+
+; =========================================================
+; MST parses, by hand
+
+(define tree-fff (+ mifsf misff))
+(define tree-fft (+ miffs misft))
+(define tree-ftf (+ mifts mifsf))
+(define tree-ftt (+ mifst mistt))
+
+(define tree-tff (+ mitfs mitfs))
+(define tree-tft (+ mitst misft))
+(define tree-ttf (+ mitts mitsf))
+(define tree-ttt (+ mitts mistt))
+
+(format #t "mst-fff = ~A\n" tree-fff)
+(format #t "mst-fft = ~A\n" tree-fft)
+(format #t "mst-ftf = ~A\n" tree-ftf)
+(format #t "mst-ftt = ~A\n" tree-ftt)
+(format #t "----\n")
+(format #t "mst-tff = ~A\n" tree-tff)
+(format #t "mst-tft = ~A\n" tree-tft)
+(format #t "mst-ttf = ~A\n" tree-ttf)
+(format #t "mst-ttt = ~A\n" tree-ttt)
+(format #t "----\n")
+
+(define wtree-fff (+ (* pfsf mifsf) (* psff misff)))
+(define wtree-fft (+ (* pffs miffs) (* psft misft)))
+(define wtree-ftf (+ (* pfts mifts) (* pfsf mifsf)))
+(define wtree-ftt (+ (* pfst mifst) (* pstt mistt)))
+
+(define wtree-tff (+ (* ptfs mitfs) (* ptfs mitfs)))
+(define wtree-tft (+ (* ptst mitst) (* psft misft)))
+(define wtree-ttf (+ (* ptts mitts) (* ptsf mitsf)))
+(define wtree-ttt (+ (* ptts mitts) (* pstt mistt)))
 
 ; =========================================================
 ; Disjuncts, by hand. Ugh.  Accurate only for the given parse.

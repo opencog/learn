@@ -1109,8 +1109,9 @@ plausible
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="7">
+<lyxtabular version="3" rows="10" columns="8">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1151,6 +1152,18 @@ Wet
 
 \begin_layout Plain Layout
 \begin_inset Formula $p$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\log_{2}p$
 \end_inset
 
 
@@ -1227,6 +1240,15 @@ F
 \begin_inset Text
 
 \begin_layout Plain Layout
+-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.415
 \end_layout
 
@@ -1284,6 +1306,15 @@ T
 
 \begin_layout Plain Layout
 1/4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-2
 \end_layout
 
 \end_inset
@@ -1357,6 +1388,15 @@ F
 \begin_inset Text
 
 \begin_layout Plain Layout
+-19.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 -10.686
 \end_layout
 
@@ -1414,6 +1454,15 @@ T
 
 \begin_layout Plain Layout
 1e-4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-13.25
 \end_layout
 
 \end_inset
@@ -1487,6 +1536,15 @@ F
 \begin_inset Text
 
 \begin_layout Plain Layout
+-3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 -0.585
 \end_layout
 
@@ -1544,6 +1602,15 @@ T
 
 \begin_layout Plain Layout
 1/8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-3
 \end_layout
 
 \end_inset
@@ -1617,6 +1684,15 @@ F
 \begin_inset Text
 
 \begin_layout Plain Layout
+-23.21
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 2.874
 \end_layout
 
@@ -1682,6 +1758,15 @@ T
 \begin_inset Text
 
 \begin_layout Plain Layout
+-2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
 0.263
 \end_layout
 
@@ -1739,6 +1824,15 @@ Cloudy and raining
 
 \begin_layout Plain Layout
 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
 \end_layout
 
 \end_inset
@@ -1820,6 +1914,25 @@ MI_{\mbox{Tot}}=\sum_{a,b,c}p\left(a,b,c\right)MI\left(a,b,c\right)
 \end_inset
 
 and likewise of IC.
+ Changing around the probabilities will make 
+\begin_inset Formula $MI_{\mbox{Tot}}$
+\end_inset
+
+ go more positive or negative, but not dramatically so – bounded to 
+\begin_inset Formula $\pm0.5$
+\end_inset
+
+ roughly.
+ Seems that IC is non-negative, going to zero only when all vars are independent.
+ An obvious proof that IC is non-negative is not popping into my head right
+ now.
+\end_layout
+
+\begin_layout Standard
+An issue with the above demo is that there are two hidden variables: the
+ lawn sprinkler, and the painters tarp over the lawn that keeps the lawn
+ sometimes dry.
+ How would this demo change, if these weren't hidden? Next section...
 \end_layout
 
 \begin_layout Standard
@@ -1833,19 +1946,63 @@ Scripts for this are in `p9-tri/pmi.scm`.
 
 \end_inset
 
- There are some almost-ties, due to the watering schedule; these ties are
- broken only by the freak events.
- The MST column shows the parse that maximizes the sentence MI, and the
- 'tie' column shows the tied alternate parse.
- The 
+ There are some almost-ties, due to the watering schedule being exactly
+ 50-50 on any day that's not raining.
+ These ties are broken only by the freak events.
+\end_layout
+
+\begin_layout Standard
+The MST column shows the parse that maximizes the sentence MI.
+ Due to nearly-identical pair-wise MI's in some cases, there are plausible
+ alternate parses; these are listed as second rows.
+\end_layout
+
+\begin_layout Standard
+Due to nearly-identical pair-wise MI's in some cases, there are plausible
+ alternate parses; these are listed as second rows.
+ This entire section started out with the question: 
 \begin_inset Quotes eld
 \end_inset
 
-Sent MI
+how should such almost-as-good parses be weighted?
 \begin_inset Quotes erd
 \end_inset
 
- is the sum of the MI on the two links of the parse.
+ and we still don't have an answer for that, nor is one forthcoming with
+ the present example.
+\end_layout
+
+\begin_layout Standard
+There are two MI columns.
+ The 
+\begin_inset Formula $MI_{s}$
+\end_inset
+
+ column shows the sum of the two MI's of the two links in the MST parse.
+ The 
+\begin_inset Formula $MI_{w}$
+\end_inset
+
+ column shows the weighted sum:
+\begin_inset Formula 
+\[
+MI_{w}=\frac{p_{r_{1}}MI_{r_{1}}+p_{r_{2}}MI_{r_{2}}}{p_{r_{1}}+p_{r_{2}}}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $r_{2}$
+\end_inset
+
+ are the two links in the MST parse.
+\end_layout
+
+\begin_layout Standard
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1855,7 +2012,7 @@ Sent MI
 \begin_layout Standard
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="9" columns="9">
+<lyxtabular version="3" rows="12" columns="9">
 <features tabularvalignment="middle">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -1937,7 +2094,10 @@ MST
 \begin_inset Text
 
 \begin_layout Plain Layout
-tie
+\begin_inset Formula $MI_{s}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -1946,7 +2106,10 @@ tie
 \begin_inset Text
 
 \begin_layout Plain Layout
-Sent MI
+\begin_inset Formula $MI_{w}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -2020,7 +2183,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-(ab)(bc)
+0.830
 \end_layout
 
 \end_inset
@@ -2029,7 +2192,93 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.830
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(ab)(bc)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -2106,7 +2355,7 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-(ab)(ac)
+0.093
 \end_layout
 
 \end_inset
@@ -2115,7 +2364,93 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.093
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(ab)(ac)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -2189,7 +2524,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+-9.824
 \end_layout
 
 \end_inset
@@ -2198,7 +2533,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
--15.93
+
 \end_layout
 
 \end_inset
@@ -2275,7 +2610,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+0.356
 \end_layout
 
 \end_inset
@@ -2284,7 +2619,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.356
+
 \end_layout
 
 \end_inset
@@ -2358,7 +2693,7 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-(ac)(bc)
+-0.170
 \end_layout
 
 \end_inset
@@ -2367,7 +2702,93 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.170
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(ac)(bc)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -2444,7 +2865,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+-0.059
 \end_layout
 
 \end_inset
@@ -2453,7 +2874,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
--0.059
+
 \end_layout
 
 \end_inset
@@ -2527,7 +2948,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+0.415
 \end_layout
 
 \end_inset
@@ -2536,7 +2957,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.415
+
 \end_layout
 
 \end_inset
@@ -2613,7 +3034,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
--
+1.678
 \end_layout
 
 \end_inset
@@ -2622,7 +3043,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-1.678
+
 \end_layout
 
 \end_inset
@@ -2668,6 +3089,10 @@ The large negative value MI(rain,dry) correctly reflects that its almost
 \end_layout
 
 \begin_layout Standard
+Tw
+\end_layout
+
+\begin_layout Standard
 The sentences ranked by MI, highest to lowerst, are TOT(cloudy rain wet)
  = 1.678 and TOT(sunny calm dry) = 0.83 and TOT (cloudy rain dry) = 0.415 although
  this third sentence is extremely rare.
@@ -2699,6 +3124,11 @@ these things should not go together, so if they are showing up nearby, we
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The right-most column reveals an answer to our earlier hypothesis: can the
+ MST parse into pair-wise
 \end_layout
 
 \begin_layout Standard
