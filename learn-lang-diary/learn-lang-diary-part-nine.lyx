@@ -384,373 +384,6 @@ The GOE vectors form a de facto vierbein.
 \end_layout
 
 \begin_layout Section*
-MST/MPG Distributions
-\end_layout
-
-\begin_layout Standard
-When MST/MPG parses are created, how should the disjuncts in them be weighted,
- during counting? We can weight several different ways:
-\end_layout
-
-\begin_layout Itemize
-Each is counted with a weight of 1.0
-\end_layout
-
-\begin_layout Itemize
-Each is counted with a weight proportional to the total sentence MI.
-\end_layout
-
-\begin_layout Itemize
-Each is counted with a weight that is a sum of the MI's of the word-pairs
- in that disjunct.
-\end_layout
-
-\begin_layout Itemize
-Each is counted with a weight that is the average of the MI's of the pairs
- in that disjunct.
-\end_layout
-
-\begin_layout Itemize
-Each is counted with the weighted average of the MI's of the pairs in the
- disjunct.
- 
-\end_layout
-
-\begin_layout Itemize
-The weighting is adjusted in some way by the number of connectors in the
- disjunct.
-\end_layout
-
-\begin_layout Standard
-The last option seems to be the most appealing, the most 
-\begin_inset Quotes eld
-\end_inset
-
-natural
-\begin_inset Quotes erd
-\end_inset
-
- to me.
- There are several variants for that.
- Lets define these clearly.
- Let 
-\begin_inset Formula $w$
-\end_inset
-
- be the germ of the section, and 
-\begin_inset Formula $c$
-\end_inset
-
- be the other connecting words in the section.
- Let 
-\begin_inset Formula $MI\left(w,c\right)$
-\end_inset
-
- be the MI, with the understanding that the order is reversed, when the
- word order is reversed (
-\emph on
-i.e.
-
-\emph default
- connecting to left instead of right.) Let 
-\begin_inset Formula $p\left(w,c\right)$
-\end_inset
-
- be the corresponding frequency.
- Let 
-\begin_inset Formula $\left|C\right|$
-\end_inset
-
- be the total number of connectors in the section.
- Then the unweighted average is
-\begin_inset Formula 
-\[
-\mbox{avg}_{C}\left(w\right)=\frac{1}{\left|C\right|}\sum_{c\in C}MI\left(w,c\right)
-\]
-
-\end_inset
-
-The weighted average is
-\begin_inset Formula 
-\[
-E_{C}\left(w\right)=\frac{\sum_{c\in C}p\left(w,c\right)MI\left(w,c\right)}{\sum_{c\in C}p\left(w,c\right)}
-\]
-
-\end_inset
-
-This weighted average is problematic because common words drown out rare
- words in the summation.
- This is because 
-\begin_inset Formula $p\left(w,c\right)$
-\end_inset
-
- is huge, if 
-\begin_inset Formula $c$
-\end_inset
-
- is a word like 
-\begin_inset Quotes eld
-\end_inset
-
-the
-\begin_inset Quotes erd
-\end_inset
-
-.
- We don't really want such pairs to drown out the average, since the link
- to 
-\begin_inset Quotes eld
-\end_inset
-
-the
-\begin_inset Quotes erd
-\end_inset
-
- is likely the least important contribution to this average.
-\end_layout
-
-\begin_layout Standard
-Thus, perhaps the MI itself can provide a weight:
-\begin_inset Formula 
-\[
-WI_{C}\left(w\right)=\frac{\sum_{c\in C}2^{MI\left(w,c\right)}MI\left(w,c\right)}{\sum_{c\in C}2^{MI\left(w,c\right)}}
-\]
-
-\end_inset
-
-This uses 2 not exp because we measure MI in bits not nats.
- Moving forward, WI will be used, mostly because it seems like the best
- candidate, and I can't think of anything that feels more suitable.
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-I find this very annoying.
- A decade later, I am still flying blind, with no theoretical foundations
- for any of the decisions being made here; just a bunch of gut-feels.
- I admit that perhaps I am not reading enough papers.
- But I do read a lot of paper abstracts, and none of the abstracts mention
- any work along these lines.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-Next, we have the question: how many MST parses should be sampled? If it's
- only a few, then weighting probably doesn't matter.
- If its a lot, then we want to make sure that the top parses contribute
- the most, and are NOT drowned out by the large number of mediocre parses.
- So we're back again, asking old questions:
-\end_layout
-
-\begin_layout Itemize
-For a fixed sentence, with parses ranked by MST, how does the sentence total
- MI decrease as a function of rank? (Relative to the parse with the highest
- MI?)
-\end_layout
-
-\begin_layout Itemize
-What is the integral of the above? i.e.
- for a fixed sentence, what is the average sentence total MI? 
-\end_layout
-
-\begin_layout Itemize
-What is the distribution of the total MI of the disjuncts, (given as the
- sum of MI for the pairs)? How does this vary as a function of the number
- of parses that are accepted?
-\end_layout
-
-\begin_layout Standard
-To make the above more precise: Let 
-\begin_inset Formula $L$
-\end_inset
-
- be the set of links in a sentence.
- The total MI for that sentence is then
-\begin_inset Formula 
-\[
-MI_{\mbox{Tot}}=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)
-\]
-
-\end_inset
-
-This is naturally larger for longer sentences, which would seem to give
- undue weight to long sentences.
- How to rectify this? One available average is to divide by the number of
- words in the sentence.
- This then encourages parses with more links in them, 
-\emph on
-i.e.
-
-\emph default
- maximizes for parses which have lots of loops.
- Again, perhaps undesirable? Another average is to divide by the total number
- of links in the sentence.
- This seems the most fair, although it does seem to (mildly) discourage
- parses with loops: Adding one more link, to form a loop, will 
-\emph on
-always
-\emph default
- decrease this average, since the added link must necessarily have a lower
- MI than the others that were chosen.
-\end_layout
-
-\begin_layout Standard
-A spanning tree with 
-\begin_inset Formula $W$
-\end_inset
-
- vertices will consist of 
-\begin_inset Formula $W-1$
-\end_inset
-
- edges.
- Thus, a sentence of length 
-\begin_inset Formula $\left|W\right|$
-\end_inset
-
- connected by 
-\begin_inset Formula $\left|L\right|$
-\end_inset
-
- links will have 
-\begin_inset Formula $\left|L\right|-\left|W\right|+1$
-\end_inset
-
- 
-\begin_inset Quotes eld
-\end_inset
-
-fundamental cycles
-\begin_inset Quotes erd
-\end_inset
-
- in it.
- Hmm.
- Is there a middle ground? Can we mildly encourage parses with cycles in
- them, without over-connecting everything to everything? So perhaps divide
- by 
-\begin_inset Formula $\left|W\right|+0.5\left(\left|L\right|-\left|W\right|+1\right)$
-\end_inset
-
-? 
-\end_layout
-
-\begin_layout Standard
-Planar graphs already limit the number of possible cycles...
- Assuming that neighboring words are always 
-\begin_inset Quotes eld
-\end_inset
-
-related
-\begin_inset Quotes erd
-\end_inset
-
- to each other is a reasonable default, usually.
- But long-distance links are important, too.
- Finding the best long-distance links is a good thing.
- Should we weight in a way that encourages long-distance links? How? The
- number of alternatives available here is starting to be overwhelming here.
- There's no obvious clear-cut 
-\begin_inset Quotes eld
-\end_inset
-
-best answer.
-\begin_inset Quotes erd
-\end_inset
-
- I don't know of any theoretical foundations that can point at a best answer.
-\end_layout
-
-\begin_layout Standard
-Is MI actually 
-\begin_inset Quotes eld
-\end_inset
-
-additive
-\begin_inset Quotes erd
-\end_inset
-
-? I've always been assuming that, yes, it is, its foundational.
- That's a foundational assumption; it follows from Bayes rule.
- The example above with disjuncts suggests otherwise.
- Thus, we also have a non-additive possibility for sentence MI, the WI analog
- for sentences:
-\begin_inset Formula 
-\[
-WI\left(L\right)=\frac{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}MI\left(u,w\right)}{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}}
-\]
-
-\end_inset
-
-Hmm.
- I kind-of like that.
- It seems to have OK properties.
- It is NOT additive: 
-\begin_inset Formula $WI\left(L\right)\ne\sum_{w\in W}WI\left(w\right)$
-\end_inset
-
- but it IS weighted-additive:
-\begin_inset Formula 
-\[
-WI\left(L\right)=\frac{1}{2Z\left(L\right)}\sum_{w\in W}Z_{C}\left(w\right)WI_{C}\left(w\right)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula 
-\[
-Z_{C}\left(w\right)=\sum_{c\in C}2^{MI\left(w,c\right)}
-\]
-
-\end_inset
-
-is the normalizing denominator for a disjunct, and 
-\begin_inset Formula 
-\[
-Z\left(L\right)=\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}
-\]
-
-\end_inset
-
-is the normalizing denominator for 
-\begin_inset Formula $WI\left(L\right)$
-\end_inset
-
-.
- We call it 
-\begin_inset Formula $Z$
-\end_inset
-
- because its like a thermodynamic partition function.
- There's an extra factor of 2 because the connectors are double-counted.
-\end_layout
-
-\begin_layout Standard
-BTW, note also that the averages are plain-additive:
-\begin_inset Formula 
-\[
-MI_{\mbox{Tot}}\left(L\right)=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)=\frac{1}{2}\sum_{w\in W}\left|C\right|\mbox{avg}_{C}\left(w\right)
-\]
-
-\end_inset
-
-with the factor of 1/2 coming from the double-counting of links by connectors
- (since each connector is a half-link.)
-\end_layout
-
-\begin_layout Standard
-So, from now on, lets track WI and Z in the code-base, as well as the usual
- averages.
- That sounds like a plan.
- Lets go with it.
-\end_layout
-
-\begin_layout Subsection*
 Factorization
 \end_layout
 
@@ -1073,7 +706,7 @@ over-counting
 \end_layout
 
 \begin_layout Subsubsection*
-Demo
+Tri-part test demo
 \end_layout
 
 \begin_layout Standard
@@ -2192,7 +1825,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.41506
 \end_layout
 
 \end_inset
@@ -2364,7 +1997,7 @@ FFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.099
 \end_layout
 
 \end_inset
@@ -2533,7 +2166,7 @@ FTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.410
 \end_layout
 
 \end_inset
@@ -2619,7 +2252,7 @@ FTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.178
 \end_layout
 
 \end_inset
@@ -2702,7 +2335,7 @@ TFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.5848
 \end_layout
 
 \end_inset
@@ -2874,7 +2507,7 @@ TFT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+-0.0295
 \end_layout
 
 \end_inset
@@ -2957,7 +2590,7 @@ TTF
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.4714
 \end_layout
 
 \end_inset
@@ -3043,7 +2676,7 @@ TTT
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+0.8387
 \end_layout
 
 \end_inset
@@ -3089,13 +2722,13 @@ The large negative value MI(rain,dry) correctly reflects that its almost
 \end_layout
 
 \begin_layout Standard
-Tw
-\end_layout
+The sentences ranked by total 
+\begin_inset Formula $MI_{s}$
+\end_inset
 
-\begin_layout Standard
-The sentences ranked by MI, highest to lowerst, are TOT(cloudy rain wet)
- = 1.678 and TOT(sunny calm dry) = 0.83 and TOT (cloudy rain dry) = 0.415 although
- this third sentence is extremely rare.
+, highest to lowerst, are TOT(cloudy rain wet) = 1.678 and TOT(sunny calm
+ dry) = 0.83 and TOT (cloudy rain dry) = 0.415 although this third sentence
+ is extremely rare.
  The MI on this third sentence fails to capture the surprise represented
  by MI(rain,dry) because MST parsing says 
 \begin_inset Quotes eld
@@ -3127,8 +2760,27 @@ these things should not go together, so if they are showing up nearby, we
 \end_layout
 
 \begin_layout Standard
-The right-most column reveals an answer to our earlier hypothesis: can the
- MST parse into pair-wise
+The 
+\begin_inset Formula $MI_{s}$
+\end_inset
+
+ column reveals an answer to our earlier hypothesis: can the MST parse into
+ pair-wise links approximate the tri-part MI? The answer seems to be 
+\begin_inset Quotes eld
+\end_inset
+
+somewhat, but not terribly well
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The FTF value is the only one that gives us hope.
+ BTW, its clear that 
+\begin_inset Formula $MI_{w}$
+\end_inset
+
+ is a failure at this: again, the weighting by probability makes common
+ word-pairs unduly important, when they should not be.
 \end_layout
 
 \begin_layout Standard
@@ -4724,6 +4376,373 @@ The rest of the table above is blank, because I'm creating it by hand and
  is.
 \end_layout
 
+\begin_layout Section*
+MST/MPG Distributions
+\end_layout
+
+\begin_layout Standard
+When MST/MPG parses are created, how should the disjuncts in them be weighted,
+ during counting? We can weight several different ways:
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight of 1.0
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight proportional to the total sentence MI.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight that is a sum of the MI's of the word-pairs
+ in that disjunct.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with a weight that is the average of the MI's of the pairs
+ in that disjunct.
+\end_layout
+
+\begin_layout Itemize
+Each is counted with the weighted average of the MI's of the pairs in the
+ disjunct.
+ 
+\end_layout
+
+\begin_layout Itemize
+The weighting is adjusted in some way by the number of connectors in the
+ disjunct.
+\end_layout
+
+\begin_layout Standard
+The last option seems to be the most appealing, the most 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+ to me.
+ There are several variants for that.
+ Lets define these clearly.
+ Let 
+\begin_inset Formula $w$
+\end_inset
+
+ be the germ of the section, and 
+\begin_inset Formula $c$
+\end_inset
+
+ be the other connecting words in the section.
+ Let 
+\begin_inset Formula $MI\left(w,c\right)$
+\end_inset
+
+ be the MI, with the understanding that the order is reversed, when the
+ word order is reversed (
+\emph on
+i.e.
+
+\emph default
+ connecting to left instead of right.) Let 
+\begin_inset Formula $p\left(w,c\right)$
+\end_inset
+
+ be the corresponding frequency.
+ Let 
+\begin_inset Formula $\left|C\right|$
+\end_inset
+
+ be the total number of connectors in the section.
+ Then the unweighted average is
+\begin_inset Formula 
+\[
+\mbox{avg}_{C}\left(w\right)=\frac{1}{\left|C\right|}\sum_{c\in C}MI\left(w,c\right)
+\]
+
+\end_inset
+
+The weighted average is
+\begin_inset Formula 
+\[
+E_{C}\left(w\right)=\frac{\sum_{c\in C}p\left(w,c\right)MI\left(w,c\right)}{\sum_{c\in C}p\left(w,c\right)}
+\]
+
+\end_inset
+
+This weighted average is problematic because common words drown out rare
+ words in the summation.
+ This is because 
+\begin_inset Formula $p\left(w,c\right)$
+\end_inset
+
+ is huge, if 
+\begin_inset Formula $c$
+\end_inset
+
+ is a word like 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We don't really want such pairs to drown out the average, since the link
+ to 
+\begin_inset Quotes eld
+\end_inset
+
+the
+\begin_inset Quotes erd
+\end_inset
+
+ is likely the least important contribution to this average.
+\end_layout
+
+\begin_layout Standard
+Thus, perhaps the MI itself can provide a weight:
+\begin_inset Formula 
+\[
+WI_{C}\left(w\right)=\frac{\sum_{c\in C}2^{MI\left(w,c\right)}MI\left(w,c\right)}{\sum_{c\in C}2^{MI\left(w,c\right)}}
+\]
+
+\end_inset
+
+This uses 2 not exp because we measure MI in bits not nats.
+ Moving forward, WI will be used, mostly because it seems like the best
+ candidate, and I can't think of anything that feels more suitable.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+I find this very annoying.
+ A decade later, I am still flying blind, with no theoretical foundations
+ for any of the decisions being made here; just a bunch of gut-feels.
+ I admit that perhaps I am not reading enough papers.
+ But I do read a lot of paper abstracts, and none of the abstracts mention
+ any work along these lines.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, we have the question: how many MST parses should be sampled? If it's
+ only a few, then weighting probably doesn't matter.
+ If its a lot, then we want to make sure that the top parses contribute
+ the most, and are NOT drowned out by the large number of mediocre parses.
+ So we're back again, asking old questions:
+\end_layout
+
+\begin_layout Itemize
+For a fixed sentence, with parses ranked by MST, how does the sentence total
+ MI decrease as a function of rank? (Relative to the parse with the highest
+ MI?)
+\end_layout
+
+\begin_layout Itemize
+What is the integral of the above? i.e.
+ for a fixed sentence, what is the average sentence total MI? 
+\end_layout
+
+\begin_layout Itemize
+What is the distribution of the total MI of the disjuncts, (given as the
+ sum of MI for the pairs)? How does this vary as a function of the number
+ of parses that are accepted?
+\end_layout
+
+\begin_layout Standard
+To make the above more precise: Let 
+\begin_inset Formula $L$
+\end_inset
+
+ be the set of links in a sentence.
+ The total MI for that sentence is then
+\begin_inset Formula 
+\[
+MI_{\mbox{Tot}}=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)
+\]
+
+\end_inset
+
+This is naturally larger for longer sentences, which would seem to give
+ undue weight to long sentences.
+ How to rectify this? One available average is to divide by the number of
+ words in the sentence.
+ This then encourages parses with more links in them, 
+\emph on
+i.e.
+
+\emph default
+ maximizes for parses which have lots of loops.
+ Again, perhaps undesirable? Another average is to divide by the total number
+ of links in the sentence.
+ This seems the most fair, although it does seem to (mildly) discourage
+ parses with loops: Adding one more link, to form a loop, will 
+\emph on
+always
+\emph default
+ decrease this average, since the added link must necessarily have a lower
+ MI than the others that were chosen.
+\end_layout
+
+\begin_layout Standard
+A spanning tree with 
+\begin_inset Formula $W$
+\end_inset
+
+ vertices will consist of 
+\begin_inset Formula $W-1$
+\end_inset
+
+ edges.
+ Thus, a sentence of length 
+\begin_inset Formula $\left|W\right|$
+\end_inset
+
+ connected by 
+\begin_inset Formula $\left|L\right|$
+\end_inset
+
+ links will have 
+\begin_inset Formula $\left|L\right|-\left|W\right|+1$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+fundamental cycles
+\begin_inset Quotes erd
+\end_inset
+
+ in it.
+ Hmm.
+ Is there a middle ground? Can we mildly encourage parses with cycles in
+ them, without over-connecting everything to everything? So perhaps divide
+ by 
+\begin_inset Formula $\left|W\right|+0.5\left(\left|L\right|-\left|W\right|+1\right)$
+\end_inset
+
+? 
+\end_layout
+
+\begin_layout Standard
+Planar graphs already limit the number of possible cycles...
+ Assuming that neighboring words are always 
+\begin_inset Quotes eld
+\end_inset
+
+related
+\begin_inset Quotes erd
+\end_inset
+
+ to each other is a reasonable default, usually.
+ But long-distance links are important, too.
+ Finding the best long-distance links is a good thing.
+ Should we weight in a way that encourages long-distance links? How? The
+ number of alternatives available here is starting to be overwhelming here.
+ There's no obvious clear-cut 
+\begin_inset Quotes eld
+\end_inset
+
+best answer.
+\begin_inset Quotes erd
+\end_inset
+
+ I don't know of any theoretical foundations that can point at a best answer.
+\end_layout
+
+\begin_layout Standard
+Is MI actually 
+\begin_inset Quotes eld
+\end_inset
+
+additive
+\begin_inset Quotes erd
+\end_inset
+
+? I've always been assuming that, yes, it is, its foundational.
+ That's a foundational assumption; it follows from Bayes rule.
+ The example above with disjuncts suggests otherwise.
+ Thus, we also have a non-additive possibility for sentence MI, the WI analog
+ for sentences:
+\begin_inset Formula 
+\[
+WI\left(L\right)=\frac{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}MI\left(u,w\right)}{\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}}
+\]
+
+\end_inset
+
+Hmm.
+ I kind-of like that.
+ It seems to have OK properties.
+ It is NOT additive: 
+\begin_inset Formula $WI\left(L\right)\ne\sum_{w\in W}WI\left(w\right)$
+\end_inset
+
+ but it IS weighted-additive:
+\begin_inset Formula 
+\[
+WI\left(L\right)=\frac{1}{2Z\left(L\right)}\sum_{w\in W}Z_{C}\left(w\right)WI_{C}\left(w\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+Z_{C}\left(w\right)=\sum_{c\in C}2^{MI\left(w,c\right)}
+\]
+
+\end_inset
+
+is the normalizing denominator for a disjunct, and 
+\begin_inset Formula 
+\[
+Z\left(L\right)=\sum_{\left(u,w\right)\in L}2^{MI\left(u,w\right)}
+\]
+
+\end_inset
+
+is the normalizing denominator for 
+\begin_inset Formula $WI\left(L\right)$
+\end_inset
+
+.
+ We call it 
+\begin_inset Formula $Z$
+\end_inset
+
+ because its like a thermodynamic partition function.
+ There's an extra factor of 2 because the connectors are double-counted.
+\end_layout
+
+\begin_layout Standard
+BTW, note also that the averages are plain-additive:
+\begin_inset Formula 
+\[
+MI_{\mbox{Tot}}\left(L\right)=\sum_{\left(u,w\right)\in L}MI\left(u,w\right)=\frac{1}{2}\sum_{w\in W}\left|C\right|\mbox{avg}_{C}\left(w\right)
+\]
+
+\end_inset
+
+with the factor of 1/2 coming from the double-counting of links by connectors
+ (since each connector is a half-link.)
+\end_layout
+
+\begin_layout Standard
+So, from now on, lets track WI and Z in the code-base, as well as the usual
+ averages.
+ That sounds like a plan.
+ Lets go with it.
+\end_layout
+
 \begin_layout Subsection*
 Distributions
 \end_layout
@@ -4739,7 +4758,7 @@ he-2 dataset (only).
  per parse, but these edges are counted only once per word-pair.
  The average may be higher, when parses have fundamental cycles in them.)
 \begin_inset Foot
-status open
+status collapsed
 
 \begin_layout Plain Layout
 A window of size 16 has a clique size of 

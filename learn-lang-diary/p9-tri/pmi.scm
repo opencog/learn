@@ -242,15 +242,36 @@
 (format #t "mst-ttt = ~A\n" tree-ttt)
 (format #t "----\n")
 
-(define wtree-fff (+ (* pfsf mifsf) (* psff misff)))
-(define wtree-fft (+ (* pffs miffs) (* psft misft)))
-(define wtree-ftf (+ (* pfts mifts) (* pfsf mifsf)))
-(define wtree-ftt (+ (* pfst mifst) (* pstt mistt)))
+(define norm-fff (+ pfsf psff))
+(define norm-fft (+ pffs psft))
+(define norm-ftf (+ pfts pfsf))
+(define norm-ftt (+ pfst pstt))
 
-(define wtree-tff (+ (* ptfs mitfs) (* ptfs mitfs)))
-(define wtree-tft (+ (* ptst mitst) (* psft misft)))
-(define wtree-ttf (+ (* ptts mitts) (* ptsf mitsf)))
-(define wtree-ttt (+ (* ptts mitts) (* pstt mistt)))
+(define norm-tff (+ ptfs ptfs))
+(define norm-tft (+ ptst psft))
+(define norm-ttf (+ ptts ptsf))
+(define norm-ttt (+ ptts pstt))
+
+(define wtree-fff (/ (+ (* pfsf mifsf) (* psff misff)) norm-fff))
+(define wtree-fft (/ (+ (* pffs miffs) (* psft misft)) norm-fft))
+(define wtree-ftf (/ (+ (* pfts mifts) (* pfsf mifsf)) norm-ftf))
+(define wtree-ftt (/ (+ (* pfst mifst) (* pstt mistt)) norm-ftt))
+
+(define wtree-tff (/ (+ (* ptfs mitfs) (* ptfs mitfs)) norm-tff))
+(define wtree-tft (/ (+ (* ptst mitst) (* psft misft)) norm-tft))
+(define wtree-ttf (/ (+ (* ptts mitts) (* ptsf mitsf)) norm-ttf))
+(define wtree-ttt (/ (+ (* ptts mitts) (* pstt mistt)) norm-ttt))
+
+(format #t "wmst-fff = ~A\n" wtree-fff)
+(format #t "wmst-fft = ~A\n" wtree-fft)
+(format #t "wmst-ftf = ~A\n" wtree-ftf)
+(format #t "wmst-ftt = ~A\n" wtree-ftt)
+(format #t "----\n")
+(format #t "wmst-tff = ~A\n" wtree-tff)
+(format #t "wmst-tft = ~A\n" wtree-tft)
+(format #t "wmst-ttf = ~A\n" wtree-ttf)
+(format #t "wmst-ttt = ~A\n" wtree-ttt)
+(format #t "----\n")
 
 ; =========================================================
 ; Disjuncts, by hand. Ugh.  Accurate only for the given parse.
