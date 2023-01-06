@@ -675,7 +675,7 @@ additive
 \end_inset
 
 ? I've always been assuming that, yes, it is, its foundational.
- That's a foundational assumption.
+ That's a foundational assumption; it follows from Bayes rule.
  The example above with disjuncts suggests otherwise.
  Thus, we also have a non-additive possibility for sentence MI, the WI analog
  for sentences:
@@ -751,7 +751,142 @@ So, from now on, lets track WI and Z in the code-base, as well as the usual
 \end_layout
 
 \begin_layout Subsection*
-Theoretical foundations (attempt)
+Factorization
+\end_layout
+
+\begin_layout Standard
+The goal of parsing into pairs, and then building up disjuncts is to factorize
+ a complex relationship graph into block factors.
+ The factorization is necessarily approximate: we are using word-pairs only
+ as a first order approximation, and then using MST/MPG to attempt to identify
+ larger blocks or 
+\begin_inset Quotes eld
+\end_inset
+
+almost-cliques
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I'm using words here, because developing an adequate mathematical notation
+ is daunting.
+ But to recap: Let 
+\begin_inset Formula $p\left(w_{1},w_{2},\cdots,w_{n}\right)$
+\end_inset
+
+ be the probability of observing 
+\begin_inset Formula $n$
+\end_inset
+
+ words in a sentence (or block of text).
+ Rather than maintaining tables of such probabilities, we chose to approximate
+ this by parsing via conventional linguistic theory.
+ That is,
+\begin_inset Formula 
+\[
+p\left(w_{1},w_{2},\cdots,w_{n}\right)\approx p\left(r_{1}\left\{ w_{j}\right\} \right)p\left(r_{2}\left\{ w_{j}\right\} \right)\cdots p\left(r_{k}\left\{ w_{j}\right\} \right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $r_{1},r_{2},\cdots,r_{k}$
+\end_inset
+
+ are syntactic relations (subject, verb, object...) and the 
+\begin_inset Formula $\left\{ w_{j}\right\} $
+\end_inset
+
+ is the set of words taking part in that relationship.
+\end_layout
+
+\begin_layout Standard
+The factorization is successful if 
+\begin_inset Formula 
+\[
+\log_{2}\frac{p\left(w_{1},w_{2},\cdots,w_{n}\right)}{p\left(r_{1}\right)p\left(r_{2}\right)\cdots p\left(r_{k}\right)}\approx0
+\]
+
+\end_inset
+
+At this time, I've not been tracking the probabilities of n-grams, and so
+ evaluating the above is not currently possible, not currently performed.
+\end_layout
+
+\begin_layout Standard
+Of particular interest is 
+\begin_inset Formula $MI\left(w_{1},w_{2},\cdots,w_{n}\right)$
+\end_inset
+
+ and it's interpretation for large 
+\begin_inset Formula $n$
+\end_inset
+
+, the practtical and theoretical limits to computing it, and it's interpretation
+ (especially in the face of smaller data sets).
+ It is defined as
+\begin_inset Formula 
+\[
+MI\left(w_{1},w_{2},\cdots,w_{n}\right)=\sum_{k=0}^{n-1}\left(-1\right)^{n-k}\sum_{w\backslash k}\log_{2}p\left(\left\{ w\backslash k\right\} \right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left\{ w\backslash k\right\} $
+\end_inset
+
+ is the set of words 
+\begin_inset Formula $\left\{ w\right\} =\left\{ w_{1},w_{2},\cdots,w_{n}\right\} $
+\end_inset
+
+ with 
+\begin_inset Formula $k$
+\end_inset
+
+ of them removed.
+ Note that the alternating sign is such that, when expresed as a fraction,
+ the singletons 
+\begin_inset Formula $p\left(w_{j}\right)$
+\end_inset
+
+ are always in the denominator.
+ Alternately, defining the probability of the empty set as 
+\begin_inset Formula $p\left(\varnothing\right)=1$
+\end_inset
+
+ then the sum can run all the way to 
+\begin_inset Formula $n$
+\end_inset
+
+ and always has 
+\begin_inset Formula $p\left(\varnothing\right)$
+\end_inset
+
+ in the numerator.
+\end_layout
+
+\begin_layout Standard
+The size of the set 
+\begin_inset Formula $\left\{ w\backslash k\right\} $
+\end_inset
+
+ is given by the binomial coefficient:
+\begin_inset Formula 
+\[
+\left|\left\{ w\backslash k\right\} \right|={n \choose k}
+\]
+
+\end_inset
+
+Note the resemblence of the formula for MI to the binomial theorem.
+\end_layout
+
+\begin_layout Subsubsection*
+Three-way relationships
 \end_layout
 
 \begin_layout Standard
@@ -1706,7 +1841,7 @@ FFF
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.4152
+0.4151826
 \end_layout
 
 \end_inset
@@ -3247,8 +3382,9 @@ The task is to weight these, either by observation count, or by a observation
 
 
 \begin_inset Tabular
-<lyxtabular version="3" rows="15" columns="4">
+<lyxtabular version="3" rows="15" columns="5">
 <features tabularvalignment="middle">
+<column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
 <column alignment="center" valignment="top">
@@ -3284,11 +3420,23 @@ disjunct
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MI(w,d)
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-MI
+\begin_inset Formula $MI_{L}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3322,11 +3470,20 @@ calm+
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4148883
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.4152
+0.4148883
 \end_layout
 
 \end_inset
@@ -3360,11 +3517,20 @@ dry+
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.4148883
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
-0.4152
+0.41488989
 \end_layout
 
 \end_inset
@@ -3398,11 +3564,20 @@ calm+&wet+
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 1.000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.04629
 \end_layout
 
 \end_inset
@@ -3436,11 +3611,20 @@ wet+
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 -9.25
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.3223
 \end_layout
 
 \end_inset
@@ -3474,11 +3658,20 @@ rain+&dry+
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 0.862
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-5.704
 \end_layout
 
 \end_inset
@@ -3508,6 +3701,15 @@ cloudy
 
 \begin_layout Plain Layout
 rain+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -3546,6 +3748,15 @@ rain+
 
 \begin_layout Plain Layout
 wet+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -3588,6 +3799,15 @@ calm+
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3622,6 +3842,15 @@ calm+
 
 \begin_layout Plain Layout
 dry+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -3664,6 +3893,15 @@ rain+&dry+
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3680,6 +3918,15 @@ rain+&dry+
 
 \begin_layout Plain Layout
 calm
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -3740,6 +3987,15 @@ rain
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3756,6 +4012,15 @@ rain
 
 \begin_layout Plain Layout
 dry
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \end_inset
@@ -3816,6 +4081,15 @@ wet
 
 \end_inset
 </cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
 \begin_inset Text
 
@@ -3835,6 +4109,28 @@ wet
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+The MI(w,d) column shows the word-disjunct MI.
+ The 
+\begin_inset Formula $MI_{L}$
+\end_inset
+
+ column shows the average MI of all the links in the disjunct.
+ Above it was proposed that 
+\begin_inset Formula $MI_{L}$
+\end_inset
+
+ could be used as a weighting during counting.
+ But this can't really work: weights should be non-negative.
+ Perhaps we are getting ahead of ourselves.
+\end_layout
+
+\begin_layout Standard
+The rest of the table above is blank, because I'm creating it by hand and
+ it's tedious, and I don't see, off-hand, what the point of finishing it
+ is.
 \end_layout
 
 \begin_layout Subsection*
