@@ -318,6 +318,10 @@
 (define p-wet:cloudy-calm ptft)
 (define p-wet:sunny (* 0.5 pfft))
 (define p-wet:calm (* 0.5 pfft))
+(define p-wet:rain pttt)
+(define p-wet:sunny-rain pftt)
+
+(define p-wet (+ p-wet:cloudy-calm p-wet:sunny p-wet:calm p-wet:rain p-wet:sunny-rain))
 
 ; -----------------------------------------
 (define p-calm+ (+ p-sunny:calm p-cloudy:calm))
@@ -340,6 +344,8 @@
 (define p-sunny-calm- p-dry:sunny)
 (define p-cloudy-calm- (+ p-dry:cloudy-calm p-wet:cloudy-calm))
 
+(define p-rain- p-wet:rain)
+(define p-sunny-rain- p-wet:sunny-rain)
 
 ;===================
 
@@ -430,3 +436,20 @@
 (format #t "----\n")
 ;===================
 
+(define mi-wet:sunny (log2 (/ p-wet:sunny (* p-wet p-sunny-))))
+(format #t "mi-wet:sunny = ~A\n" mi-wet:sunny)
+
+(define mi-wet:calm (log2 (/ p-wet:calm (* p-wet p-calm-))))
+(format #t "mi-wet:calm = ~A\n" mi-wet:calm)
+
+(define mi-wet:rain (log2 (/ p-wet:rain (* p-wet p-rain-))))
+(format #t "mi-wet:rain = ~A\n" mi-wet:rain)
+
+(define mi-wet:sunny-rain (log2 (/ p-wet:sunny-rain (* p-wet p-sunny-rain-))))
+(format #t "mi-wet:sunny-rain = ~A\n" mi-wet:sunny-rain)
+
+(define mi-wet:cloudy-calm (log2 (/ p-wet:cloudy-calm (* p-wet p-cloudy-calm-))))
+(format #t "mi-wet:cloudy-calm = ~A\n" mi-wet:cloudy-calm)
+
+(format #t "----\n")
+;===================
