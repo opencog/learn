@@ -308,7 +308,17 @@
 (define p-rain (+ p-rain:sunny p-rain:cloudy p-rain:wet p-rain:cloudy-wet))
 
 (define p-dry:cloudy pttf)
+(define p-dry:calm (+ (* 0.5 pfff) (* 0.5 ptff)))
+(define p-dry:sunny-calm (* 0.5 pfff))
+(define p-dry:cloudy-calm (* 0.5 ptff))
+(define p-dry:sunny pftf)
 
+(define p-dry (+ p-dry:cloudy p-dry:calm p-dry:sunny-calm p-dry:cloudy-calm p-dry:sunny))
+
+(define p-wet:cloudy-calm ptft)
+(define p-wet:sunny (* 0.5 pfft))
+
+; -----------------------------------------
 (define p-calm+ (+ p-sunny:calm p-cloudy:calm))
 (define p-dry+ (+ p-sunny:dry p-cloudy:dry p-calm:dry))
 (define p-wet+ (+ p-sunny:wet p-cloudy:wet p-calm:wet p-rain:wet))
@@ -317,13 +327,15 @@
 (define p-rain+ p-cloudy:rain)
 (define p-rain+dry+ (+ p-sunny:rain-dry p-cloudy:rain-dry))
 
-(define p-sunny- (+ p-calm:sunny p-rain:sunny))
+(define p-sunny- (+ p-calm:sunny p-rain:sunny p-dry:sunny p-wet:sunny))
 (define p-sunny-dry+ p-calm:sunny-dry)
 (define p-sunny-wet+ p-calm:sunny-wet)
 (define p-cloudy-dry+ p-calm:cloudy-dry)
 
 (define p-cloudy- (+ p-rain:cloudy p-dry:cloudy))
 (define p-cloudy-wet+ p-rain:cloudy-wet)
+
+; (define p-calm-
 
 ;===================
 
