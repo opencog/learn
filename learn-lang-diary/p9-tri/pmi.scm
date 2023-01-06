@@ -1,6 +1,6 @@
 ;
 ; pmi.scm - pointwise MI for three word sentences.
-; Hackery for the demo
+; Hackery for Chapter 9 exploration.
 
 (define fff 10)        ; sunny calm dry
 (define fft 10)        ; sunny calm wet
@@ -129,6 +129,19 @@
 
 (define imttt (log2 (/ pttt (* ptss psts psst))))
 (format #t "imttt = ~A\n" imttt)
+(format #t "----\n")
+
+(define imtot (+
+	(* pfff imfff)
+	(* pfft imfft)
+	(* pftf imftf)
+	(* pftt imftt)
+	(* ptff imtff)
+	(* ptft imtft)
+	(* pttf imttf)
+	(* pttt imttt)))
+
+(format #t "tot ic ~A\n" imtot)
 (format #t "----\n")
 
 ; =========================================================
