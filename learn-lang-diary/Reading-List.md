@@ -1,5 +1,7 @@
 
 Things to read:
+* In general: backprop, relu, dropout, multi-head attention mixup,
+  serperable conv, batch norm layer norm ...
 
 * The Hyperbolic Geometry of Networks
   Prof. Dr. Tobias Friedrich
