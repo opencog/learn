@@ -1,7 +1,10 @@
 
 Things to read:
+* https://deeplearningtheory.com/
+  https://arxiv.org/abs/2106.10165
+
 * In general: backprop, relu, dropout, multi-head attention mixup,
-  serperable conv, batch norm layer norm ...
+  seperable conv, batch norm layer norm ...
 
 * The Hyperbolic Geometry of Networks
   Prof. Dr. Tobias Friedrich

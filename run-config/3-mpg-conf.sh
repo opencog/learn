@@ -14,7 +14,7 @@ export CORPORA_DIR=$TEXT_DIR/pair-counted
 
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
-export PORT=17001
+export PORT=17003
 # Colorized prompt. Sadly, this command-line editing.
 # export PROMPT="[0;34mscheme@(mpg-parse) [0m"
 export PROMPT="scheme@(mpg-parse) "
