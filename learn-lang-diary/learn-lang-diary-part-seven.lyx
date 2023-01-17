@@ -145,6 +145,7 @@ The Possibilities
 The last round of experiments appear to be successful, and there do not
  seem to be any nagging unresolved issues.
  What comes next? Here's a list of possbilities.
+ (The list below was written in March 2022 and got updates in Jan 2023.)
 \end_layout
 
 \begin_layout Itemize
@@ -172,6 +173,28 @@ noise
  Estimate a few weeks to a month of sustained effort.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+Jan 2023 update
+\emph default
+: I am no longer convinced that the MPG dicts are learning 
+\begin_inset Quotes eld
+\end_inset
+
+conventional
+\begin_inset Quotes erd
+\end_inset
+
+ syntax, as defined in linguistics.
+ And that's OK.
+ There is some overlap, and perhaps something might be learned from a direct
+ comparison, but this now seems to be a lower priority.
+ 
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -186,6 +209,56 @@ An automated accuracy-comparison system, comparing two different dictionaries,
  when two dicts diverge, and how sensitive they are to given parameter setttings.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+Jan 2023 update
+\emph default
+: This is grappling with the fact that the word-class merge code uses a
+ number of parameters (majority voting, in-group membership, etc.) and there's
+ a concern that we need to find 
+\begin_inset Quotes eld
+\end_inset
+
+the best paramters
+\begin_inset Quotes erd
+\end_inset
+
+ to give 
+\begin_inset Quotes eld
+\end_inset
+
+the most accurate results
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'm no longer sure this is the correct mindset.
+ Think of these parameters as the analogous of ferromagnetic couplings in
+ an Ising model: It's not really the specific values that should matter,
+ but the overall landscape of 
+\begin_inset Quotes eld
+\end_inset
+
+how things work
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Tuning parameters is perhaps premature.
+ Of course, we want 
+\begin_inset Quotes eld
+\end_inset
+
+quality results
+\begin_inset Quotes erd
+\end_inset
+
+, but this task might lead astray?
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -210,6 +283,16 @@ Data Cleanup.
  
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+Jan 2023 update
+\emph default
+: option 1 is the correct path and we are on it.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -229,6 +312,39 @@ Morphology.
  A motivated grad student could do this, might take 12-18 months.
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+
+\emph on
+Jan 2023 update
+\emph default
+: Morphology is important; what I wrote above is wrong.
+ There is a more general problem of segmentation: finding word boundaries,
+ finding sentence boundaries, finding morphological boundaries.
+ This can be lumped into a more general boundary problem in vision and audio
+ processing.
+ Morphoology is a 
+\begin_inset Quotes eld
+\end_inset
+
+special case
+\begin_inset Quotes erd
+\end_inset
+
+ of boundary finding.
+ So, no, it is not something that can be just 
+\begin_inset Quotes eld
+\end_inset
+
+knocked off by a grad student in short order
+\begin_inset Quotes erd
+\end_inset
+
+; its a fundamental line of research.
+ This needs to become a high-priority activity.
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 
 \series bold
@@ -281,6 +397,15 @@ subscript
  Handling this subscript-tagging requires new code; it is perhaps similar
  to cross-sensory tagging, e.g.
  if/when correlating with audio, video data.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Jan 2023 update
+\emph default
+: Yes, this is the correct path forwards.
+ Its the current target.
 \end_layout
 
 \end_deeper
@@ -538,6 +663,37 @@ activation
 \begin_layout Itemize
 
 \series bold
+Contexts; Neighborhoods.
+
+\series default
+ There is no absolute contextual reference frame,
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See Graeme Hirst, 
+\begin_inset Quotes eld
+\end_inset
+
+Context as a Spurious Concept
+\begin_inset Quotes eld
+\end_inset
+
+ (1997) arXiv:cmp-lg/9712003v1.
+\end_layout
+
+\end_inset
+
+ but there is a general neighborhood of activations around sentences, paragraphs
+, longer texts.
+ How does this meighborhood change, mutate, flow with the text? I think
+ we can look at this with the conventional MI and high-dimensional similarity
+ tools we've been developing...
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
 Scenes; Limnal Spaces; Identifying Transitions.
 
 \series default
@@ -698,6 +854,66 @@ System Interaction.
  Currently, only I can perceive results within the knowledge graph.
  How can it be exposed so that it can be viewed by outsiders? Even shallow
  perusal would help build interst and support.
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+Performance and scalability
+\series default
+.
+ Currently, the MI between word-pairs is computed in a bulk batch process.
+ Computing it on the fly, per request, will improve the useability of the
+ MST parsing code.
+ However, sometimes we need 
+\begin_inset Quotes eld
+\end_inset
+
+all
+\begin_inset Quotes erd
+\end_inset
+
+ of the MI's.
+ For example, the cosine distance in the high-dimensional spheres requires
+ each of the vetor components to be computed.
+ Fine: this requires 
+\begin_inset Formula $2N$
+\end_inset
+
+ MI's to be computed.
+ But if we are given a single word, and want to find the *nearest* other
+ word, we need to (potentially) look at all 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+ MI's.
+ This scales badly as 
+\begin_inset Formula $N$
+\end_inset
+
+ increases.
+ One idea is to implement the page-rank algorithm, so that we can do the
+ computations locally and in a distributed fashion.
+ Another idea is to search for 
+\begin_inset Quotes eld
+\end_inset
+
+most-likely-nearest
+\begin_inset Quotes erd
+\end_inset
+
+ by computing only a portion of a dot-product, the part that 
+\begin_inset Quotes eld
+\end_inset
+
+should be the largest
+\begin_inset Quotes erd
+\end_inset
+
+, and then exploring only from this base.
+ This requires more code-monkey work.
+ Ugh.
+ But its important, as otherwise, we've got scaling problems.
 \end_layout
 
 \begin_layout Subsection*
