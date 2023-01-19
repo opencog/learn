@@ -15,13 +15,12 @@ they are needed to run the processing.
 
 * `2-pair-conf.sh` -- Parameters that control (word-)pair counting.
 
-The following two directories should be compied (by hand) to
-`/usr/local/share/link-grammar` so that Link Grammar can find them.
+The following two directories are copied (by `make install`) to
+`/usr/local/share/link-grammar`, so that Link Grammar can find them.
 
 * `dict-pair` -- Directory containing a Link Grammar dictionary
-  that allows Link Grammar to use word-pair data held in the
-  AtomSpace. The resulting parses will be Maximum Planar Graph (MPG)
-  parses.
+  that allows Link Grammar to use word-pair data held in the AtomSpace.
+  The resulting parses will be Maximum Planar Graph (MPG) parses.
 
 * `dict-combined` -- Directory containing a Link Grammar dictionary
   that allows Link Grammar to use grammatical info held in the

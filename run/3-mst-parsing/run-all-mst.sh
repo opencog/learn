@@ -14,7 +14,7 @@ if [ -z $MASTER_CONFIG_FILE ]; then
 fi
 
 if [ -r $MASTER_CONFIG_FILE ]; then
-	. $MASTER_CONFIG_FILE
+	source $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file!"
 	exit -1
@@ -23,7 +23,7 @@ fi
 # ----------------------
 # The pair-conf file holds the pairs DB name.
 if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
-	. ${PAIR_CONF_FILE}
+	source ${PAIR_CONF_FILE}
 else
 	echo "Cannot find pair-counting configuration file!"
 	exit -1
@@ -32,7 +32,7 @@ fi
 # ------------------------
 # Step three - MST parsing and disjunct counting
 if ! [ -z ${MST_CONF_FILE} ] && [ -r ${MST_CONF_FILE} ]; then
-	. ${MST_CONF_FILE}
+	source ${MST_CONF_FILE}
 else
 	echo "Cannot find MST configuration file!"
 	exit -1

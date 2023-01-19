@@ -91,7 +91,6 @@
 	obs-txt
 )
 
-
 ; Backwards compat API for single-sentence MPG parsing.
 ; Caution: this will bomb if the contents of `run-config/dict-pair`
 ; have not been copied to `/usr/local/share/link-grammar`. Sorry.

@@ -14,7 +14,7 @@ if [ -z $MASTER_CONFIG_FILE ]; then
 fi
 
 if [ -r $MASTER_CONFIG_FILE ]; then
-	. $MASTER_CONFIG_FILE
+	source $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file at MASTER_CONFIG_FILE"
 	env |grep CONF
@@ -22,7 +22,7 @@ else
 fi
 
 if [ -r ${MST_CONF_FILE} ]; then
-	. ${MST_CONF_FILE}
+	source ${MST_CONF_FILE}
 else
 	echo "Cannot find MST configuration file at MST_CONF_FILE"
 	env |grep CONF

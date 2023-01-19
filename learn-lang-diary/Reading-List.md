@@ -1,5 +1,9 @@
 
 Things to read:
+* Peter Norvig, Stuart Jonathan Russell,
+  Artificial Intelligence: A Modern Approach
+  https://libgen.li/edition.php?id=138615766
+
 * https://deeplearningtheory.com/
   https://arxiv.org/abs/2106.10165
 

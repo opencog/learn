@@ -13,6 +13,10 @@ A general overview, including pre-requistes, is provided by the
 This integration is in development; the instructions below are incomplete.
 Look at the older version for general guidance.
 
+There are technical challenges to fully implementing continuous learning.
+The instructions below will be a hybrid of the older-style batch process,
+and the newer style.
+
 
 Table of Contents
 ------------------
@@ -44,10 +48,10 @@ to get this working is half written, but incomplete. So, for now, do
 it as before, as a batch process. Run the code in
 `run-common/marginals-pair.scm`. It works.
 
-MST Disjunct Counting
----------------------
+MST Parsing Demo
+----------------
 As a demo of what is about to happen, aim the `link-parser` at a
-running instance of the cogserver, containing word-pairs (and
+running instance of the CogServer, containing word-pairs (and
 word-pair MI data.) Type in any sentence, and then patiently wait
 (about 5-10 seconds) for data to fly over the net. The resulting
 parses will be maximal planar graphs (MPG), which are similar to
@@ -61,6 +65,16 @@ the URL in it. Like so:
 link-parser run-config/dict-combined
 ```
 
+MST Disjunct Counting
+---------------------
+As before, but with modernized infrastucture.
+(This is not yet the "continuous learning" design...)
+
+* Edit `run-config/3-mpg-conf.sh` and modify as needed,
+* Start CogServer with `run/3-mst-parsing/run-mst-cogserver.sh`
+  or simply `guile -l run-common/cogserver-mst.scm`.
+* Place text data into `$CORPORA_DIR` as configured in `3-mpg-conf.sh`
+* Run `./run/3-mst-parsing/mst-submit.sh`
 
 That's all for now!
 -------------------

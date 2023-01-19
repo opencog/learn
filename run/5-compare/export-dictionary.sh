@@ -15,14 +15,14 @@ if [ -z $MASTER_CONFIG_FILE ]; then
 fi
 
 if [ -r $MASTER_CONFIG_FILE ]; then
-	. $MASTER_CONFIG_FILE
+	source $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file!"
 	exit -1
 fi
 
 if ! [ -z ${EXPORT_CONF_FILE} ] && [ -r ${EXPORT_CONF_FILE} ]; then
-	. ${EXPORT_CONF_FILE}
+	source ${EXPORT_CONF_FILE}
 else
 	echo "Cannot find grammatical class export configuration file!"
 	exit -1
