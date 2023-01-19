@@ -26,13 +26,14 @@
 % -----------------------
 % Disjunct config. Not used; bogus values.
 
-#define max-disjunct-cost 10;
-#define cost-key "foo";
+% Although its unused, the cost-key still needs to be a valid Atom
+#define cost-key "(Predicate "foo")";
 #define cost-index 0;
 #define cost-scale 0.0;
 #define cost-offset 0.0;
 #define cost-cutoff 0.0;
 #define cost-default 0.0;
+#define max-disjunct-cost 10;
 
 % -----------------------
 % Pair config.
