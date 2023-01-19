@@ -96,7 +96,7 @@
 ; have not been copied to `/usr/local/share/link-grammar`. Sorry.
 (define-public observe-mpg
 	(make-disjunct-counter
-		(add-storage-count (add-count-api (make-any-link-api)))
+		(add-storage-count (add-count-api (make-pseudo-cset-api)))
 		(LgDictNode "dict-pair")))
 
 ; ---------------------------------------------------------------------
