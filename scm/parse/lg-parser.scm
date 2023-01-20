@@ -115,6 +115,10 @@
 
    The LG parser creates MST/MPG parses using that dictionary.
    Then the count on each disjunct in the parse is incremented.
+
+   This is a block observer, because, at this point, we do not yet know
+   where the sentence boundaries might be, and so a sliding window is
+   used to examine everything in the general vicinity.
 "
 	; `pca` is the basic disjunct API.
 	; `pcc` adds a default counting API.

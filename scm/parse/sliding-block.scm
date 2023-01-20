@@ -26,7 +26,7 @@
       of the given width within a larger block of text.
 
    Given a large block of text, this defines a window, of width
-   #:WIN-SIZE, that starts at the begining of the block, and then
+   #:WIN-SIZE, that starts at the beginning of the block, and then
    slides along, with steps of size #:STEP to the next location. At
    each location, the OBSERVE-TEXT function will be called on the
    window contents.
