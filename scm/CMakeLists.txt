@@ -3,8 +3,8 @@ ADD_GUILE_MODULE (FILES
 	common.scm
 	utilities.scm
 
+	pair-count/clique-pair-count.scm
 	pair-count/pair-api.scm
-	pair-count/pair-count-window.scm
 	pair-count/word-pair-count.scm
 
 	parse/lg-parser.scm

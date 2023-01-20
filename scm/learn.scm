@@ -12,7 +12,7 @@
 
 ; pair stuff.
 (include-from-path "opencog/learn/pair-api.scm")
-(include-from-path "opencog/learn/pair-count-window.scm")
+(include-from-path "opencog/learn/clique-pair-count.scm")
 (include-from-path "opencog/learn/word-pair-count.scm")
 
 ; parsing stuff
