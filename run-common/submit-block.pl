@@ -9,10 +9,11 @@
 # The entire string <observe-cmd> is sent; thus it can contain
 # arguments.
 #
-# For pair counting, ARGV[2] is "observe-block".
+# For pair counting, ARGV[2] is "observe-block-pairs".
+# For MST/MPG counting, ARGV[2] is "observe-block-mpg".
 #
 # Example usage:
-#    cat file | ./submit-block.pl localhost 17001 "observe-block"
+#    cat file | ./submit-block.pl localhost 17001 "observe-block-pairs"
 #
 # This script will wait (hang) until the cogserver is idle enough
 # to be able to respond. That is, it waits until the cogserver has

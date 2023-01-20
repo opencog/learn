@@ -12,7 +12,7 @@ export CORPORA_DIR=$TEXT_DIR/input-pages
 # Submit each file as a single large block to the cogserver.
 # The pipeline code will deal with all segmentation issues.
 export BLOCK_SUBMIT=true
-export OBSERVE="observe-block"
+export OBSERVE="observe-block-pairs"
 
 # Message printed for each processed file.
 export MSG="Block word-pair counting"

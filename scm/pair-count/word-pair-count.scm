@@ -168,4 +168,39 @@
 	(make-pair-counter
 		(add-storage-count (add-count-api (make-any-link-api)))))
 
+; --------------------------------------------------------------------
+
+(define*-public (observe-block-pairs TEXT-BLOCK)
+"
+   observe-block-pairs TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for word-pair counting.
+
+   TEXT-BLOCK is a utf8 string of text. The 'processing' consists
+   of counting all pairs in the block, updating the associated
+   marginal counts, and storing the counts in storage.
+"
+	; `ala` is the basic pair API.
+	; `alc` adds a default counting API.
+	; `als` adds an API that stores the updated counts to storage.
+	; `alm` adds an API that maintains marginal counts dynamically.
+	(define ala (make-any-link-api))
+	(define alc (add-count-api ala))
+	(define als (add-storage-count alc))
+
+	; Skip performing the marginal counts for just right now, until
+	; the rest of the dynamic-MI infrastructure is in place. Dynamic
+	; marginal counts just add overhead to the counting process, if
+	; we are not actually using the results.
+	; (define alm (add-marginal-count als))
+
+	; The counter for the window itself.
+	(define observe-text (make-pair-counter als #:NUM-LINKAGES 6))
+
+	(define observer (make-observe-block als observe-text))
+
+	(observer TEXT-BLOCK)
+)
+
+; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------

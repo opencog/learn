@@ -14,9 +14,9 @@
 (include-from-path "opencog/learn/pair-api.scm")
 (include-from-path "opencog/learn/pair-count-window.scm")
 (include-from-path "opencog/learn/word-pair-count.scm")
-(include-from-path "opencog/learn/sliding-block.scm")
 
 ; parsing stuff
+(include-from-path "opencog/learn/sliding-block.scm")
 (include-from-path "opencog/learn/pseudo-csets.scm")
 (include-from-path "opencog/learn/lg-parser.scm")
 

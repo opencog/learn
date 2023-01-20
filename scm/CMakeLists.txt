@@ -5,11 +5,11 @@ ADD_GUILE_MODULE (FILES
 
 	pair-count/pair-api.scm
 	pair-count/pair-count-window.scm
-	pair-count/sliding-block.scm
 	pair-count/word-pair-count.scm
 
 	parse/lg-parser.scm
 	parse/pseudo-csets.scm
+	parse/sliding-block.scm
 
 	gram-class/agglo-goe.scm
 	gram-class/agglo-mi-rank.scm

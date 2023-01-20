@@ -27,10 +27,14 @@ dictionary does not contain the data.
 The goal here is to allow pair counting and more general parsing to be
 intermixed in an ongoing process.
 
-* __pseudo-csets.scm__    Provides a matrix API to the Sections. Rows
-                          (left index) are words, columns (right index)
-                          are connector sequences (pseudo-csets.)
-* __lg-parser.scm__       Generic, mixed-mode parser.
+* __pseudo-csets.scm__  -- Provides a matrix API to the Sections. Rows
+                           (left index) are words, columns (right index)
+                           are connector sequences (pseudo-csets.)
+* __lg-parser.scm__     -- Generic, mixed-mode parser.
+
+* __sliding-block.scm__ -- Define a function that takes a large (huge)
+                           text string block, and scans it with a rather
+                           smaller sliding window.
 
 ###TODO
 The parser currently increments counts by 1.0 for each observed section,

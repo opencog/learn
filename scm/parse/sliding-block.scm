@@ -1,15 +1,12 @@
 ;
 ; sliding-block.scm
 ;
-; Word-pair counting via random planar trees. This takes a large block
-; of UTF-8 text, places a window onto it, and then submits the window
-; contents to the `observe-text` function for planar-tree parsing.
-; The window emulates a "sentence", except that actual sentence
-; boundaries are unknown. (These are determined at later stages).
+; Create a sliding window inside a block of lerger text. The window
+; contents are submitted to an observer function for processing.
 ;
-; Copyright (c) 2022 Linas Vepstas <linasvepstas@gmail.com>
+; Copyright (c) 2022,2023 Linas Vepstas <linasvepstas@gmail.com>
 ;
-; Main entry point: `(observe-block plain-text)`
+; Main entry point: `(make-observe-block LLOBJ OBSERVER)`
 ;
 (use-modules (opencog))
 (use-modules (srfi srfi-1))
@@ -119,40 +116,6 @@
 
 	; Return the above function
 	observe-block
-)
-
-; --------------------------------------------------------------------
-
-(define*-public (observe-block TEXT-BLOCK)
-"
-   observe-block TEXT-BLOCK
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for processing.
-
-   TEXT-BLOCK is a utf8 string of text. The 'processing' consists
-   of counting all pairs in the block, updating the associated
-   marginal counts, and storing the counts in storage.
-"
-	; `ala` is the basic pair API.
-	; `alc` adds a default counting API.
-	; `als` adds an API that stores the updated counts to storage.
-	; `alm` adds an API that maintains marginal counts dynamically.
-	(define ala (make-any-link-api))
-	(define alc (add-count-api ala))
-	(define als (add-storage-count alc))
-
-	; Skip performing the marginal counts for just right now, until
-	; the rest of the dynamic-MI infrastructure is in place. Dynamic
-	; marginal counts just add overhead to the counting process, if
-	; we are not actually using the results.
-	; (define alm (add-marginal-count als))
-
-	; The counter for the window itself.
-	(define observe-text (make-pair-counter als #:NUM-LINKAGES 6))
-
-	(define observer (make-observe-block als observe-text))
-
-	(observer TEXT-BLOCK)
 )
 
 ; ---------------------------------------------------------------------
