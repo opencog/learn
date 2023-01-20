@@ -11,7 +11,7 @@
 
 (define*-public (make-disjunct-counter LLOBJ DICT
 	#:key
-		(NUM-LINKAGES 6)
+		(NUM-LINKAGES 3)
 		(ATOMSPACE #t)
 		(STORAGE #f)
 	)
@@ -38,7 +38,7 @@
 
   #:NUM-LINKAGES -- The number of linkages that the LG parser should
   generate. Recall that each linkage is a different parse of the
-  sentence; these are returned in cost-sorted order. Default is 6.
+  sentence; these are returned in cost-sorted order. Default is 3.
 
   #:ATOMSPACE -- Use the provided AtomSpace for dictionary contents.
   If not specified, use the current AtomSpace in the current thread.
@@ -91,14 +91,57 @@
 	obs-txt
 )
 
-; Backwards compat API for single-sentence MPG parsing.
-; Caution: this will bomb if the contents of `run-config/dict-pair`
-; have not been copied to `/usr/local/share/link-grammar`. Sorry.
+; Backwards compat API for single-sentence MPG parsing. This accepts
+; single sentences, and updates the resulting disjunct counts.
 (define-public observe-mpg
 	(make-disjunct-counter
 		(add-storage-count (add-count-api (make-pseudo-cset-api)))
 		(LgDictNode "dict-pair")))
 
+; --------------------------------------------------------------------
+
+(define*-public (observe-block-mpg TEXT-BLOCK)
+"
+   observe-block-mpg TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for MPG/MST parsing.
+
+   TEXT-BLOCK is a utf8 string of text. A sliding window is created
+   on that text block, of default width 12. The words within the
+   window are then sent to the LG parser, using the 'dict-pair'
+   dictionary.  This dictionary is presumed to hold word-pairs
+   with valid word-MI on them, accessible via the `BondNode ANY`
+   EvaluationLinks.
+
+   The LG parser creates MST/MPG parses using that dictionary.
+   Then the count on each disjunct in the parse is incremented.
+"
+	; `pca` is the basic disjunct API.
+	; `pcc` adds a default counting API.
+	; `pcs` adds an API that stores the updated counts to storage.
+	; `pcm` adds an API that maintains marginal counts dynamically.
+	(define pca (make-pseudo-cset-api))
+	(define pcc (add-count-api pca))
+	(define pcs (add-storage-count pcc))
+
+	; Skip performing the marginal counts for just right now, until
+	; the rest of the dynamic-MI infrastructure is in place. Dynamic
+	; marginal counts just add overhead to the counting process, if
+	; we are not actually using the results.
+	; (define pcm (add-marginal-count pcs))
+
+	; The dict to use
+	(define dict (LgDictNode "dict-pair"))
+
+	; The counter for the window itself.
+	(define obs-mpg (make-disjunct-counter pcs dict #:NUM-LINKAGES 3))
+
+	(define observer (make-observe-block pcs obs-mpg #:WIN-SIZE 12))
+
+	(observer TEXT-BLOCK)
+)
+
+; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ; Example:
 ; (define dict (LgDictNode "dict-pair"))

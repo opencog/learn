@@ -14728,6 +14728,16 @@ MarginalTest
                 (define fp (LLOBJ 'provides symbol))
 -               (if fp fp default))
 
+---------------------------------------------
+during pair counting we use observe-block which runs block
+but during mpg... Ooops...
+
+pair-count/sliding-block.scm
+which ... uses (make-any-link-api)
+
+then calls observe-text
+which is a (make-pair-counter
+
 
 
 TODO
