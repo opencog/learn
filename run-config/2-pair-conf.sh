@@ -9,9 +9,14 @@
 # export CORPORA_DIR=$TEXT_DIR/beta-pages
 export CORPORA_DIR=$TEXT_DIR/input-pages
 
+# Directories where in-process and completed files will be moved.
+# This avoids double-processing of corpus files, if the pair-processing
+# scripts are interrupted and restarted.
+export IN_PROCESS_DIR=pair-split
+export COMPLETED_DIR=pair-counted
+
 # Submit each file as a single large block to the cogserver.
 # The pipeline code will deal with all segmentation issues.
-export BLOCK_SUBMIT=true
 export OBSERVE="observe-block-pairs"
 
 # Message printed for each processed file.
@@ -34,12 +39,6 @@ export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 # (Except don't use it -- the Postgres Backend is deprecated.)
 # export PAIRS_DB=word_pairs
 # export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
-
-# Directories where in-process and completed files will be moved.
-# This avoids double-processing of corpus files, if the pair-processing
-# scripts are interrupted and restarted.
-export IN_PROCESS_DIR=pair-split
-export COMPLETED_DIR=pair-counted
 
 # =================================================================
 # Deprecated settings. These settngs allow the text to be processed

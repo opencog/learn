@@ -46,7 +46,5 @@ export GRAM_CONF_FILE=$CONFIG_DIR/4-gram-conf.sh
 # Don't change these; change them in the individual config files.
 # These just provide defaults, in case the other config files fail to.
 
-export SENTENCE_SPLIT=false
-export XFORM_SPLIT=false
 export OCPROMPT="[0;32mcogserver> [0m"
 export LOGFILE=/tmp/cogserver.log
