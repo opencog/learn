@@ -100,25 +100,10 @@
 
 ; --------------------------------------------------------------------
 
-(define*-public (observe-block-mpg TEXT-BLOCK)
+(define (make-block-mpg-observer)
 "
-   observe-block-mpg TEXT-BLOCK
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for MPG/MST parsing.
-
-   TEXT-BLOCK is a utf8 string of text. A sliding window is created
-   on that text block, of default width 12. The words within the
-   window are then sent to the LG parser, using the 'dict-pair'
-   dictionary.  This dictionary is presumed to hold word-pairs
-   with valid word-MI on them, accessible via the `BondNode ANY`
-   EvaluationLinks.
-
-   The LG parser creates MST/MPG parses using that dictionary.
-   Then the count on each disjunct in the parse is incremented.
-
-   This is a block observer, because, at this point, we do not yet know
-   where the sentence boundaries might be, and so a sliding window is
-   used to examine everything in the general vicinity.
+	Make an observer for counting MST/MPG disjuncts in text blocks.
+   See above and below.
 "
 	; `pca` is the basic disjunct API.
 	; `pcc` adds a default counting API.
@@ -140,9 +125,31 @@
 	; The counter for the window itself.
 	(define obs-mpg (make-disjunct-counter pcs dict #:NUM-LINKAGES 3))
 
-	(define observer (make-observe-block pcs obs-mpg #:WIN-SIZE 12))
+	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
+)
 
-	(observer TEXT-BLOCK)
+(define*-public observe-block-mpg (make-block-mpg-observer))
+
+(set-procedure-property! observe-block-mpg 'documentation
+"
+   observe-block-mpg TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for MPG/MST parsing.
+
+   TEXT-BLOCK is a utf8 string of text. A sliding window is created
+   on that text block, of default width 12. The words within the
+   window are then sent to the LG parser, using the 'dict-pair'
+   dictionary.  This dictionary is presumed to hold word-pairs
+   with valid word-MI on them, accessible via the `BondNode ANY`
+   EvaluationLinks.
+
+   The LG parser creates MST/MPG parses using that dictionary.
+   Then the count on each disjunct in the parse is incremented.
+
+   This is a block observer, because, at this point, we do not yet know
+   where the sentence boundaries might be, and so a sliding window is
+   used to examine everything in the general vicinity.
+"
 )
 
 ; ---------------------------------------------------------------------

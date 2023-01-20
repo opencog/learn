@@ -14738,6 +14738,26 @@ which ... uses (make-any-link-api)
 then calls observe-text
 which is a (make-pair-counter
 
+; Sentences are counted by updating the count on `(SentenceNode "ANY")`.
+; Parses are counted by updating the count on `(ParseNode "ANY")`.
+   (define any-sent (SentenceNode "ANY"))
+   (define any-parse (ParseNode "ANY"))
+      (count-one-atom any-sent)
+            (count-one-atom any-parse)
+
+
+(define (doit thing)
+	(define x (format #t "foo\n"))
+	(define y (format #t "bar\n"))
+
+)
+(define (make-doot)
+	(define x (format #t "foo\n"))
+	(define y (format #t "bar\n"))
+	(lambda (thing)
+		(format #t "I got ~A ~A ~A\n" x y thing)))
+
+(define doit (make-doot))
 
 
 TODO
