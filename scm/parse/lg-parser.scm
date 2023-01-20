@@ -54,11 +54,11 @@
   dictionary definitions.
 
   In addition to counting disjuncts, this will keep a running total
-  of the numer of times this was called (aka "the number of sentences")
+  of the numer of times this was called (aka 'the number of sentences')
   and the number of parses.
 
-  Sentences are counted by updating the count on `(SentenceNode "MST")`.
-  Parses are counted by updating the count on `(ParseNode "MST")`.
+  Sentences are counted by updating the count on `(SentenceNode \"MST\")`.
+  Parses are counted by updating the count on `(ParseNode \"MST\")`.
   XXX TODO Make above configurable.
 "
 	(define stol (if STORAGE (list STORAGE) '()))
