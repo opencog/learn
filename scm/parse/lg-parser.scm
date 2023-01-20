@@ -52,6 +52,14 @@
   dictionary data. This can be used to specify a ProxyNode that
   computes MI or other statistics on-the-fly, for the accessed
   dictionary definitions.
+
+  In addition to counting disjuncts, this will keep a running total
+  of the numer of times this was called (aka "the number of sentences")
+  and the number of parses.
+
+  Sentences are counted by updating the count on `(SentenceNode "MST")`.
+  Parses are counted by updating the count on `(ParseNode "MST")`.
+  XXX TODO Make above configurable.
 "
 	(define stol (if STORAGE (list STORAGE) '()))
 	(define atml
@@ -64,9 +72,13 @@
 
 	(define args (list DICT (Number NUM-LINKAGES) atml))
 
+	(define mst-sent (SentenceNode "MST"))
+	(define mst-parse (ParseNode "MST"))
+
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
 	(define (update-section-counts SECTL)
+		(count-one-atom mst-parse)
 		(for-each
 			(lambda (SECT) (LLOBJ 'inc-count SECT 1.0))
 			(cog-value->list SECTL)))
@@ -80,6 +92,7 @@
 			(LgParseSections (Phrase PLAIN-TEXT) args)))
 		(define temp-as (cog-set-atomspace! base-as))
 
+		(count-one-atom mst-sent)
 		(for-each update-section-counts (cog-value->list parses))
 		(cog-set-atomspace! temp-as)
 		(cog-pop-atomspace)
