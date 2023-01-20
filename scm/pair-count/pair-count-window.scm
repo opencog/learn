@@ -23,7 +23,7 @@
 (use-modules (srfi srfi-1))
 
 ; ---------------------------------------------------------------------
-; Globals, used in definining pair-counting objects.
+; Globals, used in defining pair-counting objects.
 (define *-item-pair-tag-* (PredicateNode "*-Item Pair-*"))
 
 ; ---------------------------------------------------------------------

@@ -1,7 +1,7 @@
 Counting of Pairs
 -----------------
-The code here provides functions for counting word pairs occuring in
-natural langauge text.  The primary goal is to avoid any assumptions
+The code here provides functions for counting word pairs occurring in
+natural language text.  The primary goal is to avoid any assumptions
 about the locations of sentence boundaries. It does assume that words
 can be split according to white-space (this is mildly configurable).
 The sampling is uniform over parse trees (and NOT uniform over pairs!)
