@@ -1,5 +1,19 @@
 
 Things to read:
+* Logical Decision Theory
+  An Introduction to Logical Decision Theory for Everyone Else
+  https://arbital.com/p/logical_dt/?l=5kv
+  Attempts to provide a foundation for why voting in elections is important.
+  As best as I can tell the argument is this:
+   -- It is impossible to know the entire light-cone of history of an agent.
+   -- Yet such a history would be required to estimate a probability
+      P(x|history) of making decision x.
+   -- Approximate `history` by a model of an agent of a specific type.
+   -- Assume all agents of a specific type react in the same way to
+      some new, novel situation.
+   -- Any agent with imperfect knowledge should create such estimates or
+      'models' of other agents, and base decisions on those models.
+
 * Peter Norvig, Stuart Jonathan Russell,
   Artificial Intelligence: A Modern Approach
   https://libgen.li/edition.php?id=138615766

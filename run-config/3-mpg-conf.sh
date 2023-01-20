@@ -12,6 +12,22 @@
 # the setting of the `$COMPLETED_DIR` of the earlier stage.
 export CORPORA_DIR=$TEXT_DIR/pair-counted
 
+# Scheme function name for planar MST parsing. This is a scheme function
+# that will be called to process each sentence.  For example, if the corpus
+# contains "Some sentence." then the cogserver will receive
+#   (observe-mpg "Some sentence.")
+#
+# Use `observe-mpg` to get planar MST/MPG parsing.
+export OBSERVE="observe-mpg"
+
+# Directories where in-process and completed files will be moved.
+export IN_PROCESS_DIR=mpg-split
+export COMPLETED_DIR=mpg-done
+
+# Message printed for each processed file
+export MSG="MPG-Processing"
+
+# --------------
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17003
@@ -21,21 +37,8 @@ export PROMPT="scheme@(mpg-parse) "
 export OCPROMPT="[0;32mcogserv@(mpg-parse) [0m"
 export LOGFILE=/tmp/cogserver-mpg-en.log
 
-# Scheme function name for planar MST parsing. This is a scheme function
-# that will be called to process each sentence.  For example, if the corpus
-# contains "Some sentence." then the cogserver will receive
-#   (observe-mpg "Some sentence.")
-#
-# Use `observe-mpg` to get planar MST/MPG parsing.
-export OBSERVE="observe-mpg"
-
 # Location of the database where disjunct counts will be accumulated
 export MST_DB=rocks://${ROCKS_DATA_DIR}/mpg_parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${MST_DB}\")"
 
-# Directories where in-process and completed files will be moved.
-export IN_PROCESS_DIR=mpg-split
-export COMPLETED_DIR=mpg-done
-
-# Message printed for each processed file
-export MSG="MPG-Processing"
+# --------------

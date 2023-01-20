@@ -17,30 +17,29 @@
 
 ; --------------------------------------------------------------------
 
-(define*-public (make-observe-block LLOBJ
+(define*-public (make-observe-block LLOBJ OBSERVE-TEXT
 	#:key
 		(WIN-SIZE 9)
-		(NUM-LINKAGES 6)
 		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   make-observe-block LLOBJ #:WIN-SIZE 9 #:NUM-LINKAGES 6
-      Return a function that will count word-pairs in a block of text.
+   make-observe-block LLOBJ OBSERVE-TEXT #:WIN-SIZE 9
+      Return a function that will call OBSERVE-TEXT on a sliding window
+      of the given width within a larger block of text.
 
-   This counting is performed by defining a sliding window, of the
-   given size. All text within that window will be processed; then
-   the window will slide over by #:STEP 1 steps, and the processing
-   will be repeated, until the end of the block is reached. The window
-   size is determined with respect to whitespace (which can be set with
-   #:SPLIT-PRED, defaulting to `char-set:whitespace`)
+   Given a large block of text, this defines a window, of width
+   #:WIN-SIZE, that starts at the begining of the block, and then
+   slides along, with steps of size #:STEP to the next location. At
+   each location, the OBSERVE-TEXT function will be called on the
+   window contents.
+
+   The window size is measured with respect to 'words' that, by
+   default, are separated by whitespace.
 
    The optional parameter #:WIN-SIZE specifies the width of the
    sliding block, in units of white-space separated words. The
    default is 9.
-
-   The optional parameter #:NUM-LINKAGES specifies the number of
-   linkages to process for each block. The default is 6.
 
    The optional parameter #:SPLIT-PRED specifies a predicate that
    defines the white-space along which blocks will be split. The
@@ -51,11 +50,11 @@
    than 1 will cause the last few words of the block to possibly remain
    uncounted.
 
-   With these defaults, each word in the middle of a block will
-   participate in (9-1)*6=48 edges, on average; more if the parse has
-   cycles in it. This is more than the 9*8/2=36 edges that a sliding
-   clique would count. The random planar tree probably undersamples
-   longer edgess!? This distribution is poorly understood.
+   Note that there are edge-effects: the first window will be a
+   full-sized window, starting at the beginning of the block; likewise
+   for the last window. This means that the first few words, and the
+   last few words, will appear in a smaller number of windows, than
+   those words in the middle of the block.
 "
 	; Return a list of indexes (numbers) indicating the offset to
 	; the next `word` in STR. Each number is the length of the word.
@@ -97,9 +96,6 @@
 			(make-starts (cdr DLIST) (+ 1 SUM (car DLIST)) (cons SUM STARTL))
 			(reverse! STARTL)))
 
-	; The counter for the window itself.
-	(define observe-text (make-pair-counter LLOBJ #:NUM-LINKAGES NUM-LINKAGES))
-
 	(define (observe-block TEXT-BLOCK)
 		(define delta-list (get-deltas TEXT-BLOCK '() #t))
 		(define seg-list (make-segments delta-list))
@@ -116,7 +112,7 @@
 				(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 				(when (eq? 0 (modulo cnt STEP))
 					; (format #t "text-block: ~A >>~A<<\n" cnt text-seg)
-					(observe-text text-seg)
+					(OBSERVE-TEXT text-seg)
 				)
 				(set! cnt (+ cnt 1)))
 			start-list seg-list))
@@ -144,14 +140,17 @@
 	(define ala (make-any-link-api))
 	(define alc (add-count-api ala))
 	(define als (add-storage-count alc))
-	; (define alm (add-marginal-count als))
 
 	; Skip performing the marginal counts for just right now, until
 	; the rest of the dynamic-MI infrastructure is in place. Dynamic
 	; marginal counts just add overhead to the counting process, if
 	; we are not actually using the results.
+	; (define alm (add-marginal-count als))
 
-	(define observer (make-observe-block als))
+	; The counter for the window itself.
+	(define observe-text (make-pair-counter als #:NUM-LINKAGES 6))
+
+	(define observer (make-observe-block als observe-text))
 
 	(observer TEXT-BLOCK)
 )
