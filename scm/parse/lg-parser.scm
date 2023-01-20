@@ -128,7 +128,7 @@
 	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
 )
 
-(define*-public observe-block-mpg (make-block-mpg-observer))
+(define-public observe-block-mpg (make-block-mpg-observer))
 
 (set-procedure-property! observe-block-mpg 'documentation
 "

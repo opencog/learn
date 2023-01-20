@@ -194,7 +194,7 @@
 	(make-observe-block als obs-text #:WIN-SIZE 9)
 )
 
-(define*-public observe-block-pairs (make-block-pair-observer))
+(define-public observe-block-pairs (make-block-pair-observer))
 
 (set-procedure-property! observe-block-pairs 'documentation
 "
