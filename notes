@@ -14745,7 +14745,6 @@ which is a (make-pair-counter
       (count-one-atom any-sent)
             (count-one-atom any-parse)
 
-
 (define (doit thing)
 	(define x (format #t "foo\n"))
 	(define y (format #t "bar\n"))
@@ -14758,6 +14757,69 @@ which is a (make-pair-counter
 		(format #t "I got ~A ~A ~A\n" x y thing)))
 
 (define doit (make-doot))
+
+--------
+(define-public om
+   (make-disjunct-counter
+      (add-count-api (make-pseudo-cset-api))
+      (LgDictNode "dict-pair")))
+(define (me TXT)
+	(define st (current-time))
+	(om TXT)
+	(format #t "In ~A sec\n" (- (current-time) st)))
+
+(define (mel TXT)
+	(define lps
+         (LgParseSections (Phrase TXT) (LgDictNode "dict-pair") (Number 3)))
+	(define st (current-time))
+	(cog-execute! lps)
+	(format #t "PIn ~A sec\n" (- (current-time) st)))
+
+When he arrived there, though, he saw that he and Anna appeared
+to have miscalculated the time, for supper had clearly already started. Richard was sitting in his usual place on his and Anne`s small dais in the middle of it, surrounded by his men. He looked up when he saw Francis come towards him. “Nice of you to join us too”, he said, his tone slightly sarcastic, as he motioned to a chair next to him. “I thought you were not hungry.”
+
+
+9
+16
+17
+21
+22
+29 30
+39 33 47
+list_random_links
+
+sentence_num_valid_linkages
+sentence_num_linkages_post_processed
+
+      if (sentence_num_linkages_found(sent) >
+         parse_options_get_linkage_limit(opts))
+printf("duuude duplicate at %d of %d\n", i, nl); 323
+
+7.52
+6.47 12431
+6.45 12436
+6.47 12426
+
+valid_dialect_name
+nl->tag_id = exptag_dialect_add(
+nl->tag_type = Exptag_dialect
+
+create_external_exp
+lg_exp_resolve
+   Dict_node* (*lookup_list)(Dictionary, const char*);
+   Dict_node* (*lookup_wild)(Dictionary, const char*);
+   void (*free_lookup)(Dictionary, Dict_node*);
+   bool (*exists_lookup)(Dictionary, const char*);
+
+prune_lookup_list not used any more
+
+prk  linkp
+(cog-incoming-size (Predicate "*-LG link string-*"))
+(cog-incoming-size (Predicate "*-fetched-pair-*"))
+
+lg_config_atomspace(AtomSpacePtr asp, StorageNodePtr sto)
+
+(LgDictNode "dict-pair")
 
 
 TODO

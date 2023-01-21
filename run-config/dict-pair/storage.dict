@@ -27,7 +27,7 @@
 % Disjunct config. Not used; bogus values.
 
 % Although its unused, the cost-key still needs to be a valid Atom
-#define cost-key "(Predicate "foo")";
+#define cost-key "(Predicate "Bogus Cost Key in Pair Dictionary")";
 #define cost-index 0;
 #define cost-scale 0.0;
 #define cost-offset 0.0;
@@ -42,7 +42,7 @@
 % fly, from word-pairs. The settings below are analogous to those above,
 % but are for word-pairs.
 
-#define pair-predicate "(LgLinkNode "ANY")";
+#define pair-predicate "(BondNode "ANY")";
 #define pair-key "(Predicate "*-Mutual Info Key-*")";
 #define pair-index 1;
 #define pair-scale -0.2;
