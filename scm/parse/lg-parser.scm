@@ -138,7 +138,10 @@
 	; The counter for the window itself.
 	(define obs-mpg (make-disjunct-counter pcs dict #:NUM-LINKAGES 3))
 
-	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
+	; Large #:WIN-SIZE results in terrible LG parse-times (parse time
+	; overflows) because there are just too many word-pairs, and they
+	; suck up power-pruning. In particular, 12 is too large. So we try 9.
+	(make-observe-block pcs obs-mpg #:WIN-SIZE 9)
 )
 
 (define-public observe-block-mpg (make-block-mpg-observer))

@@ -14768,16 +14768,26 @@ which is a (make-pair-counter
 	(om TXT)
 	(format #t "In ~A sec\n" (- (current-time) st)))
 
-(define (mel TXT)
+(define base (cog-atomspace))
+(cog-push-atomspace)
+(define (pod AS TXT)
 	(define lps
-         (LgParseSections (Phrase TXT) (LgDictNode "dict-pair") (Number 3)))
+         (LgParseSections (Phrase TXT) (LgDictNode "dict-pair") (Number 3) AS))
 	(define st (current-time))
 	(cog-execute! lps)
 	(format #t "PIn ~A sec\n" (- (current-time) st)))
 
+(cog-incoming-size (Predicate "*-LG link string-*"))
+
 When he arrived there, though, he saw that he and Anna appeared
 to have miscalculated the time, for supper had clearly already started. Richard was sitting in his usual place on his and Anne`s small dais in the middle of it, surrounded by his men. He looked up when he saw Francis come towards him. “Nice of you to join us too”, he said, his tone slightly sarcastic, as he motioned to a chair next to him. “I thought you were not hungry.”
 
+null_count
+prt_error
+sent->num_valid_linkages  int
+error_handler
+   lg_error_set_handler(error_handler, nullptr);
+resources_exhausted
 
 9
 16
@@ -14819,11 +14829,64 @@ prk  linkp
 
 lg_config_atomspace(AtomSpacePtr asp, StorageNodePtr sto)
 
-(LgDictNode "dict-pair")
+(LgDictNode "dict-pair") .. no indication of atomspace...
+(LgParseSections (Phrase PLAIN-TEXT)
+#:ATOMSPACE Must be set!!!  ... or not ...
+ldn->get_dictionary();
+
+dict->num_entries
+
+condesc_add
+sort_condesc_by_uc_constring
+condesc_setup
+
+pool_alloc connector_pool -- not protected... but OK cause per-sent.
+make_connector_node dict->Exp_pool
+place_found
+dict->string_set
+s=0x7fff43498910 "“",
+rdictionary_lookup
+rdictionary_lookup(NULL, dict->root, s, false, dict_order_bare);
+
+(cog-incoming-size (Word "“")) 42394
+(cog-incoming-size (Word "“")) 41179 .. wtf ...
+
+dict_node_insert is not safe
+
+#130933 0x00007fffecba4127 in rdictionary_lookup (llist=<optimized out>,
+    dn=0x7fff4a0ede80, s=0x7fff43498910 "“",
+    boolean_lookup=<optimized out>,
+    dict_order=0x7fffecba3d50 <dict_order_bare>)
+    at ../../link-grammar/dict-ram/dict-ram.c:274
+#130934 0x00007fffecba4d73 in rdictionary_lookup (
+    dict_order=0x7fffecba3d50 <dict_order_bare>, boolean_lookup=false,
+    s=<optimized out>, dn=<optimized out>, llist=<optimized out>)
+    at ../../link-grammar/dict-ram/dict-ram.c:287
+#130935 dict_node_lookup (dict=<optimized out>, s=<optimized out>)
+    at ../../link-grammar/dict-ram/dict-ram.c:304
+#130936 0x00007fff3e5b99d0 in ?? ()
+#130937 0x00007fff46ffbda0 in ?? ()
+
+Dict_node * dnr = dn->right;
+if (dnr != null) {
+	int mr = dict_order(s, dnr);
+	if (mr > 0) {
+		dnr = dnr->right;
+
+
+> (monitor-parse-rate "foo")
+foo done=21 rate=0.010 per sec
+wtf???
+(Sentence "MST") doe snot match parse rate.
+(Sentence "MST" (ctv 1 0 4900)) but (Section . 1039)
+foo done=79
+(ConnectorSeq . 1868) (Section . 2168)
 
 
 TODO
  * DynamicDataProxy: do it only for specific types... TODO
+ * (cog-incoming-size (Word "“")) for telent is weird..
+   is telnet not utf8-clean?
 
 Bugs:
 * bug: store of DefineLink to cogserver hangs the  connection.
