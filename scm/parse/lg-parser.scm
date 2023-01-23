@@ -87,14 +87,18 @@
 		; Do the parsing in a temp atomspace, and the counting in
 		; the base space. The temp space must remain until we are
 		; done counting, else the atoms will disappear.
+		;
+		; The counting is done in a thunk, as the parser can throw
+		; a C++ exception if the parser times out. We avoid count
+		; increments if the exception is thrown.
 		(define base-as (cog-push-atomspace))
-		(define parses (cog-execute!
-			(LgParseSections (Phrase PLAIN-TEXT) args)))
-		(define temp-as (cog-set-atomspace! base-as))
-
-		(count-one-atom mst-sent)
-		(for-each update-section-counts (cog-value->list parses))
-		(cog-set-atomspace! temp-as)
+		(define (pthunk)
+			(define parses	(cog-value->list
+				(cog-execute! (LgParseSections (Phrase PLAIN-TEXT) args))))
+			(cog-set-atomspace! base-as)
+			(count-one-atom mst-sent)
+			(for-each update-section-counts parses))
+		(with-throw-handler #t pthunk (lambda (key . args) #f))
 		(cog-pop-atomspace)
 
 		(monitor-parse-rate #f)
