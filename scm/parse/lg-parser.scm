@@ -74,6 +74,8 @@
 
 	(define mst-sent (SentenceNode "MST"))
 	(define mst-parse (ParseNode "MST"))
+	(define mst-start (SentenceNode "MST Starts")) ; This is a hack for now.
+	(define mst-elaps (SentenceNode "MST Elapsed Time Secs")) ; This is a hack for now.
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
@@ -91,8 +93,10 @@
 		; The counting is done in a thunk, as the parser can throw
 		; a C++ exception if the parser times out. We avoid count
 		; increments if the exception is thrown.
+		(define start (current-time))  ; XXXX temp hack
 		(define base-as (cog-push-atomspace))
 		(define (pthunk)
+			(count-one-atom mst-start)   ;; XXX tmp hack
 			(define parses	(cog-value->list
 				(cog-execute! (LgParseSections (Phrase PLAIN-TEXT) args))))
 			(cog-set-atomspace! base-as)
@@ -101,6 +105,7 @@
 		(with-throw-handler #t pthunk (lambda (key . args) #f))
 		(cog-pop-atomspace)
 
+		(count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
 		(monitor-parse-rate #f)
 	)
 
