@@ -14783,8 +14783,30 @@ When he arrived there, though, he saw that he and Anna appeared
 to have miscalculated the time, for supper had clearly already started. Richard was sitting in his usual place on his and Anne`s small dais in the middle of it, surrounded by his men. He looked up when he saw Francis come towards him. “Nice of you to join us too”, he said, his tone slightly sarcastic, as he motioned to a chair next to him. “I thought you were not hungry.”
 
 (define st (current-time))
-(observe-block-mpg "When he arrived there, though, he saw that he and Anna appeared")
+(observe-block-mpg "When he arrived there, though, he saw that he")
 (format #t "In ~A sec\n" (- (current-time) st))
+
+17.2
+20.3
+d85ba3b4b9e0d589c99a46250b7a83bb6e59c149
+326803
+-> 4.8K /atom ouch for new
+vs 1K/atom existing.   Hmm. Is it LG?
+20591035 (count-all) for 20.3GB
+
+17.1 GB w/ 19937423 atoms = 900 byte4s/atom.
+60.0 GB w/ 26489486 atoms = 2.38 KB/atoms avg
+delta = 6.87 KB/atom for new atoms. Include LG structs...
+gc remaions low...
+ (cog-incoming-size (cog-atomspace))  19 ...
+ == 1x per htread and 1x per LgParseSections
+RSS and VIRT sometimes shrink ... why!?
+WTF
+(monitor-parse-rate "foo")
+foo done=334 rate=0.052 per sec
+(cog-get-atoms 'SentenceNode) ... 1
+zero sections ...
+
 
 (define (raii-count SECTION)
 	(with-throw-handler #t
@@ -14962,6 +14984,33 @@ Unbound variable: c-stop-cogserver
 rlwrap nc localhost 17001
 ctrl-v ctrl-c to send ctrl-c
 
+---------------------------------------------------------------------
+Boom.
+sort_condesc_by_uc_constring
+condesc_setup
+IS_DYNAMIC_DICT
+flatten_wordgraph
+sentence_split
+
+start/end lookup
+
+catenate_X_nodes
+
+free-refactor
+
+free_lookup_list
+
+void (*free_lookup)(Dictionary, Dict_node*);
++void dict_free_lookup(Dictionary, Dict_node*);
+db_free_llist
+dictionary_generation_request
+
+dict_node_free_list
+
+dict_node_free_lookup
+#1394
+morph_cb
+---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
 TODO
