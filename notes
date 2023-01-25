@@ -14786,6 +14786,49 @@ to have miscalculated the time, for supper had clearly already started. Richard 
 (observe-block-mpg "When he arrived there, though, he saw that he")
 (format #t "In ~A sec\n" (- (current-time) st))
 
+(define (blah TXT)
+	(define st (current-time))
+	(observe-block-mpg TXT)
+	(format #t "In ~A sec\n" (- (current-time) st)))
+
+2 42 sec but sent not incremented wtf.
+3 41
+
+2 5, 0
+3 0
+4 1, 2
+5 5,1
+6 2
+7 2
+8 3, 2
+9 7, 6
+10 12, 10
+11 14, 15, 23, 22 -- splitter costs!
+
+20591543 new atoms 20.3 GB
+(define (delta GB)
+	(/ (* (- GB 17.1) 1024 1024) (- (count-all) 19937423)))
+
+20.3g delta - 5.3 KB/atom
+38.8g delta - 5.43
+40.4 - 4.94
+42.1 - 5.26
+46.4 - 5.57
+57.9 - 6.90
+51.9 - 5.54 -- RSS drop !??
+51.9 - 5.20
+53.9 - 5.15
+
+predict: +20M -> 100g
+
+compute_chosen_words
+Disjunct **cdjp = linkage->chosen_disjuncts
+Disjunct *cdj = cdjp[i];
+cdj->word_string
+VDAL_compare_parse
+
+1378
+
 17.2
 20.3
 d85ba3b4b9e0d589c99a46250b7a83bb6e59c149

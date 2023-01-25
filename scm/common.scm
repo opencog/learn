@@ -49,7 +49,7 @@
 		; there is only one process updating the counts.
 		(if (not (cog-ctv? (cog-tv atom)))
 			(fetch-atom atom)) ; get from storage
-		(cog-inc-count! atom INC) ; increment
+		(cog-inc-count! atom CNT) ; increment
 	)
 	(begin
 		(incr-one ATM) ; increment the count on ATM
