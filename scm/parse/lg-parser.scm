@@ -96,7 +96,6 @@
 		(define start (current-time))  ; XXXX temp hack
 		(define base-as (cog-push-atomspace))
 		(define (pthunk)
-			(count-one-atom mst-start)   ;; XXX tmp hack
 			(define parses	(cog-value->list
 				(cog-execute! (LgParseSections (Phrase PLAIN-TEXT) args))))
 			(cog-set-atomspace! base-as)
@@ -104,6 +103,7 @@
 			(for-each update-section-counts parses))
 		(with-throw-handler #t pthunk (lambda (key . args) #f))
 		(cog-pop-atomspace)
+		(count-one-atom mst-start)   ;; XXX tmp hack
 
 		(count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
 		(monitor-parse-rate #f)
