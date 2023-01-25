@@ -74,8 +74,8 @@
 
 	(define mst-sent (SentenceNode "MST"))
 	(define mst-parse (ParseNode "MST"))
-	(define mst-start (SentenceNode "MST Starts")) ; This is a hack for now.
-	(define mst-elaps (SentenceNode "MST Elapsed Time Secs")) ; This is a hack for now.
+	(define mst-start (AnchorNode "MST Starts")) ; This is a hack for now.
+	(define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; This is a hack for now.
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.

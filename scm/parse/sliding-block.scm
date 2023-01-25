@@ -97,6 +97,11 @@
 		(define delta-list (get-deltas TEXT-BLOCK '() #t))
 		(define seg-list (make-segments delta-list))
 		(define start-list (make-starts delta-list 0 '()))
+(define nblocks (Anchor "Num blocks"))
+(define slides (Anchor "Slides"))
+(define eslides (Anchor "Expected Slides"))
+(count-one-atom nblocks)
+(count-inc-atom eslides (length start-list))
 
 		; Observe text blocks. Loops over the list of starting points
 		; created above, and the corresponding segment lengths.
@@ -105,11 +110,13 @@
 		; are never observed... I see no easy/obvious work-around
 		; for this. I guess non-unit steps are a bad idea...!?
 		(define cnt 0)
-		(for-each (lambda (START LEN)
+		(for-each
+			(lambda (START LEN)
 				(define text-seg (substring TEXT-BLOCK START (+ START LEN)))
 				(when (eq? 0 (modulo cnt STEP))
 					; (format #t "text-block: ~A >>~A<<\n" cnt text-seg)
 					(OBSERVE-TEXT text-seg)
+(count-one-atom slides)
 				)
 				(set! cnt (+ cnt 1)))
 			start-list seg-list))
