@@ -74,8 +74,9 @@
 
 	(define mst-sent (SentenceNode "MST"))
 	(define mst-parse (ParseNode "MST"))
-	(define mst-start (AnchorNode "MST Starts")) ; This is a hack for now.
-	(define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; This is a hack for now.
+(define mst-start (AnchorNode "MST Starts")) ; This is a hack for now.
+(define mst-timeo (AnchorNode "MST Timeouts")) ; This is a hack for now.
+(define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; This is a hack for now.
 
 	; Each section arrives already in the correct format
 	; Thus, counting is trivial.
@@ -93,7 +94,9 @@
 		; The counting is done in a thunk, as the parser can throw
 		; a C++ exception if the parser times out. We avoid count
 		; increments if the exception is thrown.
-		(define start (current-time))  ; XXXX temp hack
+(define start (current-time))  ; XXXX temp hack
+(define timeo #f) ; XXXX temp hack
+
 		(define base-as (cog-push-atomspace))
 		(define (pthunk)
 			(define parses	(cog-value->list
@@ -101,11 +104,11 @@
 			(cog-set-atomspace! base-as)
 			(count-one-atom mst-sent)
 			(for-each update-section-counts parses))
-		(catch #t pthunk (lambda (key . args) #f))
+		(catch #t pthunk (lambda (key . args) (set! timeo #t)))
 		(cog-pop-atomspace)
-		(count-one-atom mst-start)   ;; XXX tmp hack
-
-		(count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
+(count-one-atom mst-start)   ;; XXX tmp hack
+(count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
+(if timeo (count-one-atom mst-timeo)) ; XXX temp hack
 		(monitor-parse-rate #f)
 	)
 
