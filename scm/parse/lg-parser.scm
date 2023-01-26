@@ -101,7 +101,7 @@
 			(cog-set-atomspace! base-as)
 			(count-one-atom mst-sent)
 			(for-each update-section-counts parses))
-		(with-throw-handler #t pthunk (lambda (key . args) #f))
+		(catch #t pthunk (lambda (key . args) #f))
 		(cog-pop-atomspace)
 		(count-one-atom mst-start)   ;; XXX tmp hack
 

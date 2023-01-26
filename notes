@@ -14869,15 +14869,29 @@ scheme@(mpg-18) > (rpt 65.9)
 scheme@(mpg-18) > (rpt 70.9)
  4.69 KB/A 45 blk 61937 exp 2127 slid 2127 start 2127 done 124.47 secs/parse
 
-((LgParseSections
+(define t
+(LgParseSections
   (Phrase "Rapunzel ever listen to her? Well, maybe seeing the ")
   (LgDict "dict-pair")
   (Number "3")
-  (AtomSpace "(uuid . 1)"))
-)
+  base))
+
 insane. England will know it. As mad as Henry,
+Jack with a tone that clearly indicated how “good”
+back, and if you do not? Have you prepared
 
+(use-modules (opencog exec))
 
+(define (to TXT)
+	(define st (current-time))
+	(define t (LgParseSections (Phrase TXT) (LgDict "dict-pair") (Number "3")))
+	(define (pthunk) (cog-execute! t) (format #t "done pasnig\n"))
+	(catch #t pthunk (lambda (key . args)
+		(format #t "xaught execption ~A ~A\n" key args)))
+	(format #t "In ~A sec\n" (- (current-time) st)))
+
+ice-9/boot-9.scm:1685:16: In procedure raise-exception:
+Atomspace C++ exception:
 
 
 
