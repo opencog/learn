@@ -14829,7 +14829,56 @@ predict: +20M -> 100g
 (delta 52) 5.94
 (delta 54.3) 5.91
 (delta 58.3) 6.00
-(delta 61.7)
+(delta 61.7) 6.11
+(delta 75.7) 6.40
+
+38 secs per sentence
+
+(define (delta GB)
+	(/ (* (- GB 17.2) 1024 1024) (- (count-all) 19937426)))
+(define (rpt GB)
+	(define d (delta GB))
+	(define nb (inexact->exact (cog-count (Anchor "Num blocks"))))
+	(define ns (inexact->exact (cog-count (Anchor "Slides"))))
+	(define nt (inexact->exact (cog-count (Anchor "MST Starts"))))
+	(define es (inexact->exact (cog-count (Anchor "Expected Slides"))))
+	(define ms (inexact->exact (cog-count (SentenceNode "MST"))))
+	(define el (inexact->exact (cog-count (Anchor "MST Elapsed Time Secs"))))
+	(format #t "~5,2F KB/A ~A blk ~A exp ~A slid ~A start ~A done ~6,2F secs/parse\n"
+		d nb es ns nt ms (/ el ms))
+	*unspecified*)
+
+scheme@(mpg-18) > (rpt 45.9)
+ 6.40 KB/A 10 blk 12014 exp 128 slid 128 start 128 done  48.28 secs/parse
+scheme@(mpg-18) > (rpt 47.2)
+ 6.32 KB/A 11 blk 13078 exp 145 slid 145 start 145 done  47.97 secs/parse
+scheme@(mpg-18) > (rpt 49.0)
+ 5.01 KB/A 18 blk 21700 exp 266 slid 266 start 266 done  61.87 secs/parse
+scheme@(mpg-18) > (rpt 53.1)
+ 4.63 KB/A 21 blk 25630 exp 599 slid 599 start 599 done  80.38 secs/parse
+scheme@(mpg-18) > (rpt 58.3)
+ 4.60 KB/A 26 blk 33224 exp 859 slid 859 start 859 done  91.38 secs/parse
+scheme@(mpg-18) > (rpt 58.5)
+ 4.48 KB/A 27 blk 34063 exp 1007 slid 1007 start 1007 done  96.88 secs/parse
+scheme@(mpg-18) > (rpt 62.7)
+ 4.68 KB/A 29 blk 37903 exp 1213 slid 1213 start 1213 done 103.08 secs/parse
+scheme@(mpg-18) > (rpt 63.6)
+ 4.58 KB/A 31 blk 41689 exp 1346 slid 1346 start 1346 done 106.12 secs/parse
+scheme@(mpg-18) > (rpt 65.9)
+ 4.50 KB/A 38 blk 51381 exp 1807 slid 1807 start 1807 done 118.27 secs/parse
+scheme@(mpg-18) > (rpt 70.9)
+ 4.69 KB/A 45 blk 61937 exp 2127 slid 2127 start 2127 done 124.47 secs/parse
+
+((LgParseSections
+  (Phrase "Rapunzel ever listen to her? Well, maybe seeing the ")
+  (LgDict "dict-pair")
+  (Number "3")
+  (AtomSpace "(uuid . 1)"))
+)
+insane. England will know it. As mad as Henry,
+
+
+
 
 
 compute_chosen_words
@@ -15065,6 +15114,63 @@ dict_node_free_lookup
 #1394
 morph_cb
 ---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+Found 232 linkages (72 had no P.P. violations)
+Found 224 linkages (64 had no P.P. violations)
+
+"tests/pln/rules/simple-contraposition.scm"
+no code for module (opencog query)
+
+Thread 44 "cogserv:connect" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7fff81ffb700 (LWP 2046488)]
+0x00007fffe88011d1 in opencog::GenericShell::user_interrupt (
+    this=0x7fff6c000e40)
+    at /home/ubuntu/src/cogserver/opencog/network/GenericShell.cc:235
+235             _evaluator->interrupt();
+
+wtf...
+
+top
+q
+^C
+
+#0  0x00007fffebd041d1 in opencog::GenericShell::user_interrupt (
+    this=0x7fff78000e40)
+    at /home/ubuntu/src/cogserver/opencog/network/GenericShell.cc:235
+#1  0x00007fffebd051d9 in opencog::GenericShell::eval (this=0x7fff78000e40,
+    expr="\377\364\377\375\006")
+    at /home/ubuntu/src/cogserver/opencog/network/GenericShell.cc:205
+#2  0x00007fffebd14c8a in opencog::ServerSocket::handle_connection (
+    this=0x7fff80000c80)
+    at /home/ubuntu/src/cogserver/opencog/network/ServerSocket.cc:442
+
+GenericShell::eval_loop
+(use-modules (opencog logger))
+(cog-logger-set-level! "fine")
+
+  // Must send TIMING-MARK first, as otherwise telnet
+         // keeps resending us the stuff before the ctrl-C.
+         unsigned char ok[] = {IAC, WILL, TIMING_MARK, '\n', 0};
+         put_output((const char *) ok);
+
+
+.^c
+
+class ServerConsole : public ConsoleSocket
+
+ move displine to ConsoleSocket ... ? which is used by GenericShell
+
+Create ConsoleShell which inherits from GenericShell ... ??
+
+
+[2023-01-21 20:42:55:871] [ERROR] While handling storage-node
+  "dict-pair":
+Ignoring word which has been multiply defined: "LEFT-WALL"
+
+LGParseLink: Parser timeout
+
+
 ---------------------------------------------------------------------
 
 TODO

@@ -1,7 +1,7 @@
 #
 # socket-send.pl -- network utility to send stuff to the CogServer.
 #
-# Implements simplistic `netcat` type functionality in plain-old TCP
+# Implements simple `netcat` type functionality in plain-old TCP
 # sockets. Earlier versions just used netcat directly; this was OK but...
 # it bottlnecked and lead to poor performance, especially when the
 # cogserver could respond quickly. Forking a new netcat each time
@@ -10,6 +10,7 @@
 #
 
 use Socket;
+use utf8;
 
 # Takes three arguments: server, port and string to send.
 sub send_nowait
@@ -26,8 +27,8 @@ sub send_nowait
 	setsockopt(SOCKET, SOL_SOCKET, SO_LINGER, pack("II",1,120))
 		or die "Can't set SO_LINGER: $!\n";
 
-	# If the cogserver is really slow (e.g. if it is being debugged)
-	# the connet will fail (a max of 140 pending connects are possible
+	# If the CogServer is really slow (e.g. if it is being debugged)
+	# the connect will fail (a max of 140 pending connects are possible
 	# without changing ulimit). This is very rare. If it fails, we retry.
 	my $rc = connect(SOCKET, pack_sockaddr_in($port, inet_aton($server)));
 	if (not $rc) {

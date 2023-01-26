@@ -19,6 +19,8 @@
 # to be able to respond. That is, it waits until the cogserver has
 # (mostly) finished running the command.
 
+use utf8;
+
 die "Wrong number of args!" if ($#ARGV != 2);
 
 my $server = $ARGV[0];
