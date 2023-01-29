@@ -14832,6 +14832,56 @@ predict: +20M -> 100g
 (delta 61.7) 6.11
 (delta 75.7) 6.40
 
+(cog-count-atoms type
+asp->get_num_atoms_of_type(t);
+(cog-atomspace-cow? (cog-atomspace))
+shadow_by_type
+HandleSet
+../atoms/base/Handle.h:typedef std::unordered_set<Handle> UnorderedHandleSet;
+
+(define (caa)
+	(define st (current-time))
+	(cog-push-atomspace)
+	(define cnt (count-all))
+	(cog-pop-atomspace)
+	(format #t "Counted ~A in ~A sec\n" cnt (- (current-time) st)))
+
+(define (cad)
+	(define st (current-time))
+
+   (define base-as (cog-atomspace))
+   (fluid-set! cog-atomspace-stack
+      (cons base-as (fluid-ref cog-atomspace-stack)))
+	(format #t "flue ~A sec\n" (- (current-time) st))
+   (cog-set-atomspace! (cog-new-atomspace base-as))
+   (fluid-set! cog-atomspace-stack-top (cog-atomspace))
+	(format #t "flue2 ~A sec\n" (- (current-time) st))
+	(count-all)
+	(format #t "cnt ~A sec\n" (- (current-time) st))
+	; (count-all)
+	; (format #t "cnt more ~A sec\n" (- (current-time) st))
+	; (format #t "got ~A atoms\n" cnt)
+
+	(define stk-top (fluid-ref cog-atomspace-stack-top))
+	(define stk-nxt (fluid-ref cog-atomspace-stack))
+	(cog-set-atomspace! stk-top)
+	(format #t "poptop ~A sec\n" (- (current-time) st))
+	(cog-atomspace-clear)
+	(format #t "clear ~A sec\n" (- (current-time) st))
+      (cog-set-atomspace! (car stk-nxt))
+      (fluid-set! cog-atomspace-stack-top (car stk-nxt))
+      (fluid-set! cog-atomspace-stack (cdr stk-nxt))
+	(format #t "fluido ~A sec\n" (- (current-time) st))
+      (set-car! stk-nxt '()) (set-cdr! stk-nxt '()) (gc)
+(format #t "gcido ~A sec\n" (- (current-time) st))
+)
+
+_vptr.Value = 0x7fffe86aa1b8 <vtable for opencog::RocksStorageNode+16>
+_atom_space = 0x0,
+
+
+
+
 38 secs per sentence
 
 (define (delta GB)
@@ -14841,12 +14891,81 @@ predict: +20M -> 100g
 	(define nb (inexact->exact (cog-count (Anchor "Num blocks"))))
 	(define ns (inexact->exact (cog-count (Anchor "Slides"))))
 	(define nt (inexact->exact (cog-count (Anchor "MST Starts"))))
+	(define to (inexact->exact (cog-count (Anchor "MST Timeouts"))))
 	(define es (inexact->exact (cog-count (Anchor "Expected Slides"))))
 	(define ms (inexact->exact (cog-count (SentenceNode "MST"))))
 	(define el (inexact->exact (cog-count (Anchor "MST Elapsed Time Secs"))))
-	(format #t "~5,2F KB/A ~A blk ~A exp ~A slid ~A start ~A done ~6,2F secs/parse\n"
-		d nb es ns nt ms (/ el ms))
+	(format #t "sz=~4,1FG mem=~5,2F KB/A blk=~A sli=~A strt=~A to=~A done=~A ~6,2F secs/parse\n"
+		GB d nb es nt to ms (/ el ms))
 	*unspecified*)
+
+
+611 slides expected 460 done.
+
+slides: 57 + 58 + 44 = 159 *3 = 477 wtf  ... -9 -9 = 459
+so slide computation is wrong ...!???
+
+well 189*3 = 567
+
+
+scheme@(mpg-18) > (rpt 40.5)
+mem= 6.35 KB/A blk=9 sli=11228 strt=58 to=0 done=58  49.00 secs/parse
+scheme@(mpg-18) > (rpt 60.8)
+mem= 9.07 KB/A blk=9 sli=11228 strt=177 to=1 done=176  58.09 secs/parse
+scheme@(mpg-18) > (rpt 76.2)
+mem=11.43 KB/A blk=9 sli=11228 strt=225 to=2 done=223  63.07 secs/parse
+scheme@(mpg-18) > (rpt 102.5)
+mem=11.45 KB/A blk=10 sli=12014 strt=657 to=12 done=645  87.01 secs/parse
+
+
+(rpt 128.9)
+sz=128.9G mem=12.74 KB/A blk=9 sli=11228 strt=1083 to=19 done=1064  95.33 secs/parse
+
+This is absurd
+(count-all) -- 29155403 vs initial size of 19937426 ... wtf ...
+is this a gc issue?
+ConnectorSeq . 17313)
+(Section . 20474)
+(LgLinkNode . 4587799))
+
+*(SCM_SMOB_VALUE_PTR_LOC(node)) = nullptr;
+
+new: const ValuePtr& pa
+SCM smob = scm_new_double_smob(cog_misc_tag, 0,0,0);
+SCM_SET_SMOB_FLAGS(smob, COG_PROTOM);
+*(SCM_SMOB_VALUE_PTR_LOC(smob)) = pa;  // increments the use count!?
+
+#define SCM_SMOB_VALUE_PTR_LOC(x) ((ValuePtr*) SCM_SMOB_OBJECT_2_LOC(x))
+
+(for-each (lambda (n) (Concept "a")) (iota 100))
+(for-each (lambda (n) (Number n)) (iota 100))
+c++/10/bits/shared_ptr.h:
+c++/10/experimental/bits/shared_ptr.h:
+c++/10/bits/shared_ptr_base.h:
+c++/10/bits/shared_ptr_atomic.h:
+CONFLICT (content): Merge conflict in tests/multi-thread.cc
+CONFLICT (add/add): Merge conflict in link-grammar/tokenize/aspell-memleak.c
+
+dict_node_lookup
+dict_node_insert
+make_dn
+dsw_tree_to_vine
+make_and_node(dict->Exp_pool,
+pool_new
+pool->name
+pool_num_elements_alloced(pool) -- in use, not counting in pool.
+mp->free_list;
+mp->num_elements,  elts per block... dict->Exp_pool
+element_size
+vs.
+block_size / num_elements
+
+_incoming_set ->_iset
+typedef std::set<WinkPtr> WincomingSet
+WinkPtr
+: public std::enable_shared_from_this<Value>
+
+
 
 scheme@(mpg-18) > (rpt 45.9)
  6.40 KB/A 10 blk 12014 exp 128 slid 128 start 128 done  48.28 secs/parse
@@ -15184,11 +15303,276 @@ Ignoring word which has been multiply defined: "LEFT-WALL"
 
 LGParseLink: Parser timeout
 
+(Member (Concept "cola") (Concept "stuff"))
+
+(Member (Concept "foo")
+	(List
+		(Number 42)
+		(Member (Concept "cola") (Concept "stuff"))))
+
+(Member
+	(Concept "foo")
+	(List
+		(Concept "stuff.columna")
+		(Number 42)))
+
+---------------------------------------------------------------------
+thread 854270
+inf loop
+
+48   Thread 0x7f2acbfff700 (LWP 854270) "cogserv:eval"    x_table_pointer (
+    lw=lw@entry=8, rw=rw@entry=12, le=le@entry=0x7f26404b5330,
+    re=re@entry=0x7f26406e99f0, null_count=null_count@entry=0,
+    pex=<optimized out>, pex=<optimized out>)
+    at ../../link-grammar/parse/extract-links.c:262
+
+define ssp
+step
+step
+print t
+end
+
+0x7f24432f8d80
+
+371
+
+
+#0  x_table_pointer (lw=lw@entry=8, rw=rw@entry=12, le=le@entry=0x7f26404b5330,
+    re=re@entry=0x7f26406e99f0, null_count=null_count@entry=0,
+    pex=<optimized out>, pex=<optimized out>)
+    at ../../link-grammar/parse/extract-links.c:262
+
+#1  0x00007f2b38cc2837 in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=8, rw=rw@entry=12,
+    le=0x7f26404b5330, re=0x7f26406e99f0, null_count=0, pex=0x7f2623640d10)
+    at ../../link-grammar/parse/extract-links.c:367
+
+#2  0x00007f2b38cc31de in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=8, rw=rw@entry=15,
+    le=<optimized out>, re=re@entry=0x7f264070e170, null_count=0,
+    pex=<optimized out>) at ../../link-grammar/parse/extract-links.c:527
+
+#3  0x00007f2b38cc34ee in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=7, rw=rw@entry=15,
+    le=<optimized out>, re=re@entry=0x7f264070e170, null_count=0,
+    pex=<optimized out>) at ../../link-grammar/parse/extract-links.c:577
+
+#4  0x00007f2b38cc2db9 in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=0, rw=rw@entry=15,
+    le=<optimized out>, re=0x7f264070e170, null_count=0, pex=<optimized out>)
+    at ../../link-grammar/parse/extract-links.c:540
+
+#5  0x00007f2b38cc31de in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=0, rw=rw@entry=16,
+    le=<optimized out>, re=re@entry=0x0, null_count=0, pex=<optimized out>)
+    at ../../link-grammar/parse/extract-links.c:527
+
+#6  0x00007f2b38cc354f in mk_parse_set (mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, lw=lw@entry=-1, rw=16, le=le@entry=0x0,
+    re=re@entry=0x0, null_count=1, pex=0x7f2623640d10)
+    at ../../link-grammar/parse/extract-links.c:410
+
+#7  0x00007f2b38cc396f in build_parse_set (pex=pex@entry=0x7f2623640d10,
+    sent=sent@entry=0x7f29a0587320, mchxt=mchxt@entry=0x7f27bd538b60,
+    ctxt=ctxt@entry=0x7f29798c9290, null_count=0, opts=opts@entry=0x7f2a072ef240)
+    at ../../link-grammar/parse/extract-links.c:688
+#8  0x00007f2b38cc55e7 in setup_linkages (opts=0x7f2a072ef240,
+    ctxt=0x7f29798c9290, mchxt=0x7f27bd538b60, pex=0x7f2623640d10,
+    sent=0x7f29a0587320) at ../../link-grammar/parse/parse.c:71
+#9  classic_parse (sent=sent@entry=0x7f29a0587320, opts=opts@entry=0x7f2a072ef240)
+    at ../../link-grammar/parse/parse.c:712
+#10 0x00007f2b38c9179c in sentence_parse (sent=sent@entry=0x7f29a0587320,
+    opts=opts@entry=0x7f2a072ef240) at ../../link-grammar/api.c:693
+
+---------------------------------------------------------------------
+leak
+18 GB pool_alloc_vec
+
+printf says
+exp pool is reasonable...
+lrcnt_cache_match_list parse/count.c:
+
+but also
+make sahred ptr EvaluatinoLink ...
+
+try w/o folly
+
+(/ 3.6e9 19870039)
+$1 = 181.17729914873343  181 bytes per shared ptr!!??
+when measured its only 16 bytes so wtf
+ohh...
+
+fucked up with use of evaluationLink... cause free link.
+Ouch. 344 bytes per
+vs 224 for regular link...
+
+Atom:
+24 shared from this
+2 type
+4 bools
+8 hash
+8 asptr
+48 rbtree values
+56 mtx
+48 Inset
+tot = 200 ...
+
+mallopt M_MXFAST fastbins
+
+
+_name = 32 bytes. node tota; 232
+_oset = 24 bytes...
+
+
+
+(/ 1.8e9 30141812)
+$2 = 59.71771040175023     60 bytes per Rbtree node!?
+Plausible it stores two shared ptrs...
+
+---------------------------------------------------------------------
+free_dictionary_root
+dictionary_delete
+
+->string_set  OK
+->dfine; OK ?
+dict->affix_table OK
+dict->Exp_pool
+condesc..  OK
+
+condesc_delete
+pool_delete
+
+---------------------------------------------------------------------
+make_choice
+   pc = pool_alloc(pex->Parse_choice_pool);
+	n = pool_alloc(pex->Pset_bucket_pool);
+
+resources_exhausted
+
+pool_reuse(...
+parse/extract-links.c line 689...
+        pool_reuse(pex->Parse_choice_pool);
++       pool_reuse(pex->Pset_bucket_pool);
+
+build_parse_set
+process_linkages
+line 710 new and free ...
+
+Split sentence -- always 5 secs
+Counted parses -- from 0.5/2 increase 2/20
+Built parse set -- from 1/5 to 40/200
+
+Total disjuncts -- from 15K/26K/45K to 20K/45K  maybe increasing ??
+
+Report: dj vs count time vs build time.
+Report pex->Pset_bucket_pool size
+pex->Parse_choice_pool size each time.
+
+where:?  line 711
+
+
+
+count:
+do_count(ctx lw rw cl cr) -> mk_parse_set
+is_panic 0
+ctxt->checktimer++;
+if (0 == ctxt->checktimer%(1<<18)  && (ctxt->current_resources != NULL) &&
+        //fprintf(stderr, "T") &&
+        resources_exhausted(ctxt->current_resources)))
+
+
+
+---------------------------------------------------------------------
+parse_options_set_verbosity(opts, 6); // powerprune
+parse_options_set_debug(opts, "
+verbosity 3
+102
+
+(observe-mpg "He waited till we were alone before he spoke")
+
+ Before expression_prune():
+LEFT-WALL(1998312837050308785) He(6135436230049173202) waited(121786321347856) till(1156418486161) we(92573082084546001) were(565288046220960000) alone(950162376687616) before(127923353772097536) he(4792642705257091441) spoke(642174187416336)
+Total: 13713891533738114934 disjuncts
+
+After expression_prune():
+LEFT-WALL(14641) He(49297) waited(38416) till(28561) we(38416) were(38416) alone(38416) before(38416) he(28561) spoke(10000)
+Total: 323140 disjuncts
+
+++++ Finished expression pruning                 0.09 seconds
+After duplicate elimination:
+LEFT-WALL(11110) He(22306) waited(13281) till(8485) we(11449) were(11904) alone(13281) before(15616) he(13297) spoke(7380)
+Total: 128109 disjuncts, 540526 (266341+/274185-) connectors
+
+After power_pruning (for 0 nulls, sent->null_count 0):
+LEFT-WALL(942) He(1943) waited(1622) till(1409) we(1869) were(1867) alone(1832) before(1732) he(1144) spoke(686)
+Total: 15046 disjuncts, 60670 (30741+/29929-) connectors
+
+++++ Counted parses (2147483647 w/0 nulls)       2.02 seconds
+++++ Built parse set                             3.70 seconds
+++++ Sorted all linkages                         0.59 seconds
+
+(observe-mpg "waited till we were alone before he spoke again,")
+++++ Counted parses (2147483647 w/0 nulls)       1.58 seconds
+++++ Built parse set                             4.98 seconds
+++++ Sorted all linkages                         0.68 seconds
+
+(define (mpg TXT)
+	(define st (current-time))
+	(observe-mpg TXT)
+	(format #t "In ~A sec\n" (- (current-time) st)))
+
+(mpg "till we were alone before he spoke again, then")
+In 9 sec
+++++ Counted parses (2147483647 w/0 nulls)       1.61 seconds
+++++ Built parse set                             5.29 seconds
+++++ Sorted all linkages                         0.69 seconds
+
+(mpg "we were alone before he spoke again, then his")
+In 11 sec
+++++ Built parse set                             5.03 seconds
+
+(mpg "were alone before he spoke again, then his finger")
+In 9 sec
+
+print_time(opts,
+tokenize/tokenize.c: flatten_wordgraph
+D_USER_BASIC 1
+D_USER_TIMES 2
+lg_errinfo *ei
+
+96 bytes
+
+:1,$ normal 33x
+
+pex->Parse_choice_pool
 
 ---------------------------------------------------------------------
 
+(define (delta GB)
+	(/ (* (- GB 15.6) 1024 1024) (- (count-all) 19937426)))
+(define (rpt GB)
+	(define d (delta GB))
+	(define nb (inexact->exact (cog-count (Anchor "Num blocks"))))
+	(define ns (inexact->exact (cog-count (Anchor "Slides"))))
+	(define nt (inexact->exact (cog-count (Anchor "MST Starts"))))
+	(define to (inexact->exact (cog-count (Anchor "MST Timeouts"))))
+	(define es (inexact->exact (cog-count (Anchor "Expected Slides"))))
+	(define ms (inexact->exact (cog-count (SentenceNode "MST"))))
+	(define el (inexact->exact (cog-count (Anchor "MST Elapsed Time Secs"))))
+	(format #t "sz=~4,1FG mem=~5,2F KB/A blk=~A sli=~A strt=~A to=~A done=~A ~6,2F secs/parse\n"
+		GB d nb es nt to ms (/ el ms))
+	*unspecified*)
+
+
+---------------------------------------------------------------------
+
+
 TODO
  * DynamicDataProxy: do it only for specific types... TODO
+ * Use heaptrack -- DONE
+ * Benchmark https://github.com/microsoft/mimalloc
+   -- might be faster
+   -- might have a larger working set...
 
 Bugs:
 * bug: store of DefineLink to cogserver hangs the  connection.
