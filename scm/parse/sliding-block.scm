@@ -101,7 +101,7 @@
 (define slides (Anchor "Slides"))
 (define eslides (Anchor "Expected Slides"))
 (count-one-atom nblocks)
-(count-inc-atom eslides (- (length seg-list) 1))  ; seg list is shortest of the three.
+(count-inc-atom eslides (length seg-list))  ; seg list is shortest of the three.
 
 		; Observe text blocks. Loops over the list of starting points
 		; created above, and the corresponding segment lengths.
