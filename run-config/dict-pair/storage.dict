@@ -23,6 +23,8 @@
 #define dictionary-locale         en_US.UTF-8;
 #define dictionary-version-number 5.12.1;
 
+#define max-disjunct-cost 4.0;
+
 % -----------------------
 % Disjunct config. Not used; bogus values.
 
@@ -33,7 +35,6 @@
 #define cost-offset 0.0;
 #define cost-cutoff 0.0;
 #define cost-default 0.0;
-#define max-disjunct-cost 10;
 
 % -----------------------
 % Pair config.
@@ -42,13 +43,17 @@
 % fly, from word-pairs. The settings below are analogous to those above,
 % but are for word-pairs.
 
+% Rationale: See the LG example dictionary for additional detail.
+% Only MI of 4 or larger "makes sense". The scale and offset map
+% the MI interval [4,12] to [2,0] and MI greater than 12 to negative
+% costs (thus encouraging cycles in parses).
 #define pair-predicate "(BondNode "ANY")";
 #define pair-key "(Predicate "*-Mutual Info Key-*")";
 #define pair-index 1;
-#define pair-scale -0.2;
-#define pair-offset 0.0;
-#define pair-cutoff 8.0;
-#define pair-default 2.0;
+#define pair-scale -0.25;
+#define pair-offset 3.0;
+#define pair-cutoff 2.0;
+#define pair-default 1.99;
 
 % Keep in mind that the parser ranks parses from lowest to highest cost.
 % If word-pair links have a negative cost, the parser is incentivized to
