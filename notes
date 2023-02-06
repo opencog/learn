@@ -15563,9 +15563,56 @@ ctxt->table_available_count decremented for every empty hash bucket
 
 Table_connector_pool was measured.
 
-sent->wordvec_pool
-mchxt->mld_pool
-mchxt->mlc_pool
+sent->Disjunct_pool   dp= 21 ... its always zero.
+sent->Connector_pool  cp= 23 ... delted in free_sentence_disjuncts
+mchxt->mlc_pool  mlc= 25  either zero of 512K always
+mchxt->mld_pool  mld= 27 either zero or 512K
+
+sent->Match_node_pool mn= 29
+sent->Exp_pool ex= 31
+sent->X_node_pool  xn= 33  always 256 even for MST
+sent->wordvec_pool  wv= 35
+
+sent->Clause_pool  but is deleted in build_sentence_disjuncts
+sent->Tconnector_pool but is deleted in build_sentence_disjuncts
+
+->mempool // this is in the dict.
+
+Pset_bucket *xt = x_table_pointer
+&xt->set returned by mk_parse_set
+
+   } else if (nwords >= 72) {
+      log2_table_size = 15 + nwords / 36;
+   } else if (nwords >= 10) {
+      log2_table_size = 14 + nwords / 24;
+   } else if (nwords >= 4) {
+      log2_table_size = 1 + nwords + nwords / 2;
+   } else {
+      log2_table_size = 5;
+
+build_parse_set
+list_links
+pos-spell
+parses-pos-spell-en.txt
+linkage 5
+linkage = next(linkages, None)
+
+
+
+
+TODO:
+* get rid of tail in extract.c ...
+* Fix x_table_size to be hash load factor times upper Pset bucket limit
+* and lower bound for Pset_bucket_pool
+* Maybe resize dynamic the x_table ?
+* Is Parse_choice * tail; really needed ?
+* the timeouts are still too large due to excessive djs. shorten sent length
+* work with the MI cutoff and reject low MI pairs.
+
+delete Exp_pool earlier  ... pool_delete(sent->Exp_pool); but what about
+panic pasing? would it be needed?
+delete MatchNode pool earlier
+X_node_pool earlier
 
 ---------------------------------------------------------------------
 
