@@ -15613,6 +15613,33 @@ delete Exp_pool earlier  ... pool_delete(sent->Exp_pool); but what about
 panic pasing? would it be needed?
 delete MatchNode pool earlier
 X_node_pool earlier
+---------------------------------------------------------------------
+
+
+TODO:
+* experiment in /home2/linas/boom
+* x_table_size DONE
+* play with load factor on tracon table.  DONE
+* Delete Exp_pool earlier.  #1411 -- not possible
+* comments on #1400 ... (issued & free debate) maybe done? DONE
+* comment on #1401 .. solved by #1408 .. done? DONE
+* pool management in #1406
+* use Exp_pool size as estimator for block sizes of other things
+  -- for parse_choice DONE #1415
+  -- for pset_bucket  DONE $1415
+  -- for x_table_size Done in #1411 but maybe rethink? NO WONT WORK
+  -- for match node pool  blocksize=ndj but not avail and its reused.
+  -- for mlc pool  blksz=1e-4 *numexp**1.5 identical for mld #1414
+* post djm-exp-mlc.png DONE
+  djm-dj-mlc.png DONE
+  exp-both-buck DONE
+  exp-both-cho DONE
+* Set a max num disjuncts limit in master DONE #1416
+* don't use bad MI of less than 4. DONE
+
+* reduce block size in block sampler in learn
+  line 157 of lg-parser.scm
+
 
 ---------------------------------------------------------------------
 

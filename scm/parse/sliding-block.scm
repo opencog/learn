@@ -16,12 +16,12 @@
 
 (define*-public (make-observe-block LLOBJ OBSERVE-TEXT
 	#:key
-		(WIN-SIZE 9)
+		(WIN-SIZE 8)
 		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   make-observe-block LLOBJ OBSERVE-TEXT #:WIN-SIZE 9
+   make-observe-block LLOBJ OBSERVE-TEXT #:WIN-SIZE 8
       Return a function that will call OBSERVE-TEXT on a sliding window
       of the given width within a larger block of text.
 
@@ -36,7 +36,7 @@
 
    The optional parameter #:WIN-SIZE specifies the width of the
    sliding block, in units of white-space separated words. The
-   default is 9.
+   default is 8.
 
    The optional parameter #:SPLIT-PRED specifies a predicate that
    defines the white-space along which blocks will be split. The
