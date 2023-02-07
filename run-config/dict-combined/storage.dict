@@ -23,7 +23,7 @@
 #define dictionary-locale         en_US.UTF-8;
 #define dictionary-version-number 5.12.1;
 
-#define max-disjunct-cost 4.0;
+#define max-disjunct-cost 8.5;
 
 % -----------------------
 % Disjunct config.
@@ -33,12 +33,21 @@
 % This applies both to the available disjuncts, and the ones created
 % dynamically, from pairs.
 %
-% Location where disjunct costs are stored. The cost will be obtained
+% Location where disjunct MI are stored. The cost will be obtained
 % from the floating point value located at the `cost-key` Value on the
 % Sections. It's assumed that this is a FloatValue, which is a vector;
 % the index specifies the location in this vector.
 #define cost-key "(Predicate "*-Mutual Info Key cover-section")";
 #define cost-index 1;
+
+% Sections whose MI is less than the cutoff will not be added
+% to the local dictionary.
+#define cost-cutoff 4.0;
+
+% Sections with a missing MI will be assigned this default. To ignore
+% sections with a missing MIt, set it to some value less than
+% `cost-cutoff`.
+#define cost-default 4.01;
 
 % Linear scale and offset.
 % The cost will be y=mx+b where m==`cost-scale` and b==`cost-offset`
@@ -47,15 +56,6 @@
 % while LG costs are better, the less positive they are.
 #define cost-scale -0.25;
 #define cost-offset 3.0;
-
-% Sections whose computed cost is greater than this will not be added
-% to the local dictionary.
-#define cost-cutoff 2.0;
-
-% Sections with a missing cost will be assigned this default. To ignore
-% sections with a missing cost, set it to some value greater than
-% `cost-max`.
-#define cost-default 1.99;
 
 % -----------------------
 % Pair config.
@@ -67,10 +67,10 @@
 #define pair-predicate "(BondNode "ANY")";
 #define pair-key "(Predicate "*-Mutual Info Key-*")";
 #define pair-index 1;
+#define pair-cutoff 4.0;
+#define pair-default 4.01;
 #define pair-scale -0.25;
 #define pair-offset 3.0;
-#define pair-cutoff 2.0;
-#define pair-default 1.99;
 
 % Keep in mind that the parser ranks parses from lowest to highest cost.
 % If word-pair links have a negative cost, the parser is incentivized to
