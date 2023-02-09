@@ -57,14 +57,14 @@
    incremented. This implies that ever Atom will participate in
    exactly WINSIZE-1 pairs.
 
-   The counts will be held in EvaluationLinks of the form
-      (EvaluationLink
+   The counts will be held in EdgeLinks of the form
+      (EdgeLink
           (PredicateNode \"*-Item Pair-*\")
           (List left-atom right-atom))
 "
 	; Count the item pair.
 	(define (count-pair litem ritem)
-		(define evl (EvaluationLink *-item-pair-tag-* (List litem ritem)))
+		(define evl (EdgeLink *-item-pair-tag-* (List litem ritem)))
 		(cog-inc-count! evl 1)
 		(store-atom evl))
 
