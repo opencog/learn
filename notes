@@ -15664,7 +15664,6 @@ TODO:
 
 TODO
  * DynamicDataProxy: do it only for specific types... TODO
- * Use heaptrack -- DONE
  * Benchmark https://github.com/microsoft/mimalloc
    -- might be faster
    -- might have a larger working set...
@@ -15680,6 +15679,7 @@ rob freeman
 ====================================================
 
 FIXED:
+* Use heaptrack -- (cogserver is clean) DONE
 * (cog-incoming-size (Word "“")) for telent is weird..
   is telnet not utf8-clean?
   try rlwrap telnet -8 ... nope doesn't fix it

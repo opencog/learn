@@ -1,3 +1,5 @@
+#! /usr/bin/env -S guile -l ./cogserver-mst.scm --
+!#
 ;
 ; cogserver-mst.scm
 ;
@@ -34,20 +36,12 @@
 ; Common error is to forget to do them manually.
 ; So we check, and compute if necessary.
 (catch #t
-	(lambda () ((add-report-api star-obj) 'num-pairs))
+	(lambda ()
+		((add-report-api star-obj) 'num-pairs)
+		(print-matrix-summary-report star-obj)
+	)
 	(lambda (key . args)
-		(format #t "Word pair marginals missing; computing them now.\n")
-		(batch-pairs star-obj)
+		(format #t "Warning! Word pair marginals missing!\n")
+		(format #t "MST counting will not work without these!\n")
+		(format #t "Run `(batch-pairs star-obj)` to compute them.\n")
 		#f))
-
-; Print the sql stats
-; (sql-stats)
-; (monitor-storage storage-node)
-
-; Clear the sql cache and the stats counters
-; (sql-clear-cache)
-; (sql-clear-stats)
-
-(print-matrix-summary-report star-obj)
-
-; (cog-close storage-node)
