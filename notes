@@ -15600,7 +15600,7 @@ linkage = next(linkages, None)
 
 
 
-TODO:
+DONE:
 * get rid of tail in extract.c ...
 * Fix x_table_size to be hash load factor times upper Pset bucket limit
 * and lower bound for Pset_bucket_pool
@@ -15639,6 +15639,18 @@ TODO:
 
 * reduce block size in block sampler in learn
   line 157 of lg-parser.scm
+
+
+---------------------------------------------------------------------
+
+(cog-push-atomspace)
+(define PLAIN-TEXT "this is a test")
+(define DICT (LgDictNode "dict-pair"))
+(define args (list DICT (Number 4)))
+(define lgp (LgParseSections (Phrase PLAIN-TEXT) args))
+(define spar (cog-execute! lgp))
+(define parses (cog-value->list (cog-execute! lgp)))
+
 
 
 ---------------------------------------------------------------------
