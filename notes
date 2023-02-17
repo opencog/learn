@@ -15644,13 +15644,16 @@ TODO:
 ---------------------------------------------------------------------
 
 (cog-push-atomspace)
-(define PLAIN-TEXT "this is a test")
+; (define DICT (LgDictNode "/usr/local/share/link-grammar/dict-pair"))
+(use-modules (opencog exec))
 (define DICT (LgDictNode "dict-pair"))
-(define args (list DICT (Number 4)))
+(define args (list DICT (Number 4) (cog-atomspace) storage-node))
+(define PLAIN-TEXT "this is a test")
 (define lgp (LgParseSections (Phrase PLAIN-TEXT) args))
 (define spar (cog-execute! lgp))
 (define parses (cog-value->list (cog-execute! lgp)))
 
+lg-atomese/opencog/nlp/lg-parse/LGParseLink.cc:244
 
 
 ---------------------------------------------------------------------
