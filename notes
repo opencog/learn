@@ -15646,6 +15646,20 @@ TODO:
 (cog-push-atomspace)
 ; (define DICT (LgDictNode "/usr/local/share/link-grammar/dict-pair"))
 (use-modules (opencog exec))
+(define (delta GB)
+   (/ (* (- GB 15.6) 1024 1024) (- (count-all) 19937426)))
+(define (rpt GB)
+   (define d (delta GB))
+   (define nb (inexact->exact (cog-count (Anchor "Num blocks"))))
+   (define ns (inexact->exact (cog-count (Anchor "Slides"))))
+   (define nt (inexact->exact (cog-count (Anchor "MST Starts"))))
+   (define to (inexact->exact (cog-count (Anchor "MST Timeouts"))))
+   (define es (inexact->exact (cog-count (Anchor "Expected Slides"))))
+   (define ms (inexact->exact (cog-count (SentenceNode "MST"))))
+   (define el (inexact->exact (cog-count (Anchor "MST Elapsed Time Secs"))))
+   (format #t "sz=~4,1FG mem=~5,2F KB/A blk=~A sli=~A strt=~A to=~A done=~A ~6,2F secs/parse\n"
+      GB d nb es nt to ms (/ el ms))
+   *unspecified*)
 (define DICT (LgDictNode "dict-pair"))
 (define args (list DICT (Number 4) (cog-atomspace) storage-node))
 (define PLAIN-TEXT "this is a test")
@@ -15655,6 +15669,13 @@ TODO:
 
 lg-atomese/opencog/nlp/lg-parse/LGParseLink.cc:244
 
+
+(use-modules (opencog exec))
+(define DICT (LgDictNode "any"))
+(define PLAIN-TEXT "this is a test")
+(define lgp (LgParseBonds (Phrase PLAIN-TEXT) DICT (Number 4)))
+(define spar (cog-execute! lgp))
+(define parses (cog-value->list spar))
 
 ---------------------------------------------------------------------
 
@@ -15672,6 +15693,44 @@ lg-atomese/opencog/nlp/lg-parse/LGParseLink.cc:244
 	(format #t "sz=~4,1FG mem=~5,2F KB/A blk=~A sli=~A strt=~A to=~A done=~A ~6,2F secs/parse\n"
 		GB d nb es nt to ms (/ el ms))
 	*unspecified*)
+
+sz=22.1G mem= 3.09 KB/A blk=3 sli=3114 strt=183 to=0 done=183   8.79 secs/parse
+sz=23.3G mem= 3.05 KB/A blk=3 sli=3114 strt=288 to=0 done=288   9.89 secs/parse
+sz=23.9G mem= 2.57 KB/A blk=3 sli=3114 strt=488 to=0 done=488  11.89 secs/parse
+sz=23.9G mem= 2.31 KB/A blk=3 sli=3114 strt=711 to=0 done=711  13.50 secs/parse
+sz=26.5G mem= 2.68 KB/A blk=3 sli=3114 strt=939 to=0 done=939  15.06 secs/parse
+crash
+
+sz=17.5G mem= 2.15 KB/A blk=3 sli=3114 strt=7 to=0 done=7  14.43 secs/parse
+
+core dump at 30 GB
+
+/build/gdb-Nav6Es/gdb-10.1/gdb/dwarf2/read.c:10227: internal-error: process_die_scope::process_die_scope(die_info*, dwarf2_cu*): Assertion `!m_die->in_process' failed.
+A problem internal to GDB has been detected,
+further debugging may prove unreliable.
+
+This is a bug, please report it.  For instructions, see:
+<https://www.gnu.org/software/gdb/bugs/>.
+
+
+
+
+(load-atoms-of-type 'WordNode)
+(define pair-obj    (make-edge-pair-api
+      'EvaluationLink
+      (BondNode "ANY")
+      'WordNode
+      'WordNode
+      (AnyNode "left-word")
+      (AnyNode "right-word")
+      "ANY"
+      "Link Grammar ANY link Word Pairs"))
+
+(pair-obj 'fetch-pairs)
+(define cnt-obj (add-count-api pair-obj))
+(define star-obj (add-pair-stars cnt-obj))
+      ((add-report-api star-obj) 'num-pairs)
+      (print-matrix-summary-report star-obj)
 
 
 ---------------------------------------------------------------------
