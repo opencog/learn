@@ -15732,6 +15732,12 @@ This is a bug, please report it.  For instructions, see:
       ((add-report-api star-obj) 'num-pairs)
       (print-matrix-summary-report star-obj)
 
+---------------------------------------------------------------------
+line 126:
+
+(if (equal? (LLOBJ 'id) "ANY")
+
+
 
 ---------------------------------------------------------------------
 
@@ -15753,6 +15759,22 @@ rob freeman
 ====================================================
 
 FIXED:
+* Change Link-grammar to use the GrantLink... NO
+* Change pair-counter to go direct .. DONE
+* merge into master:
+  -- early-alternatives DONE
+  -- editline DONE
+  -- pair-dict DONE
+  -- push lg-atomese too DONE
+  -- push atomspace master DONE
+  -- merge atomspace atomic-grant -- PENDING -- DONE
+  -- merge delete-link-update -- PENDING -- DONE
+  -- push archive delete-link-rework DONE
+  -- Finish delete-link-rework to throw DeleteException. DONE
+  -- push-archive atomspace atomic-link DONE
+  -- push-archive atomspace atomic-edge DONE
+  -- Document GrantLink; -- DONE
+  -- revise docs for DefineLink -- DONE
 * Use heaptrack -- (cogserver is clean) DONE
 * (cog-incoming-size (Word "“")) for telent is weird..
   is telnet not utf8-clean?

@@ -115,23 +115,33 @@
 	(define (update-word-counts WRD-LIST)
 		(for-each count-one-atom (cog-value->list WRD-LIST)))
 
-	; Increment the count on a word-pair. Also increment the marginal
-	; counts. The `EVLINK` argument is assumed to be of the form
+	; Increment the count on a word-pair. A short-cut is taken if
+	; LLOBJ is the ANY api. The short-cut is possible because the
+	; ANY api uses the same pair representation as the parser. Both
+	; use the form
 	;
-	;   (Evaluation (BondNode "FOO")
+	;   (Edge (BondNode "FOO")
 	;       (ListLink (Word "surfin") (Word "bird")))
 	;
-	; The corresponding WordNodes are located and passed to LLOBJ
-	; for pair-handling.
-	(define (incr-pair EVLINK)
+	; and so its enough to increment the count on that; this will save
+	; a fair amount of time spent in scheme/guile alloc and gc. But if
+	; the LLOBJ is something else, we have to let it do the counting.
+	(define is-any-obj (equal? (LLOBJ 'id) "ANY"))
+
+	(define (incr-pair EDGE)
 		; Extract the left and right words.
-		(define w-left  (gadr EVLINK))
-		(define w-right (gddr EVLINK))
+		(define w-left  (gadr EDGE))
+		(define w-right (gddr EDGE))
 		(LLOBJ 'pair-inc w-left w-right 1.0))
+
+	(define (inc-count EDGE)
+		(LLOBJ 'inc-count EDGE 1.0))
 
 	; Loop over the list of word-pairs.
 	(define (update-pair-counts PAIR-LIST)
-		(for-each incr-pair (cog-value->list PAIR-LIST)))
+		(if is-any-obj
+			(for-each inc-count (cog-value->list PAIR-LIST))
+			(for-each incr-pair (cog-value->list PAIR-LIST))))
 
 	(define (obs-txt PLAIN-TEXT)
 		; Do the parsing in a scratch atomspace, and the counting in
