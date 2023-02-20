@@ -212,8 +212,8 @@
 				)
 				(if (string-index msg #\~)
 					(format #t msg acnt elapsed rate)
-					(format #t "~A done=~A rate=~5f per sec\n"
-						msg acnt rate)))))
+					(format #t "~A done= ~A rate= ~5f per sec; avg= ~5f secs each\n"
+						msg acnt rate (/ 1 rate))))))
 )
 
 ; ---------------------------------------------------------------

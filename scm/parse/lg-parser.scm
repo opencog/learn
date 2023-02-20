@@ -147,13 +147,10 @@
 	; The dict to use
 	(define dict (LgDictNode "dict-pair"))
 
-	; The counter for the window itself.
+	; The counter for the window itself. Count the top 3 best ones.
 	(define obs-mpg (make-disjunct-counter pcs dict #:NUM-LINKAGES 3))
 
-	; Large #:WIN-SIZE results in terrible LG parse-times (parse time
-	; overflows) because there are just too many word-pairs, and they
-	; suck up power-pruning. In particular, 12 is too large. So we try 8.
-	; XXX  but is this still true?
+	; Larger window sizes no longer hurt performance.
 	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
 )
 

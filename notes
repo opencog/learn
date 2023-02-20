@@ -15737,7 +15737,27 @@ line 126:
 
 (if (equal? (LLOBJ 'id) "ANY")
 
+is_exp_like_empty_word (dict=dict@entry=0x7fff4c017210, exp=0x0)
+../../link-grammar/dict-common/dict-utils.c:302
 
+we->exp is null...
+print *we
+{string = 0x7ffd4d946920 "george", exp = 0x0,
+George muttered again. John now pushed me back as I went to
+w->status == 192,  == WS_INDICT | WS_FIRSTUPPER
+WS_INDICT == 64
+WS_FIRSTUPPER == 128
+WS_REGEX == 2
+WS_UNKNOWN == 1
+
+(Word "george" (ctv 1 0 162))
+
+---------------------------------------------------------------------
+foo done=2508 rate=0.245 per sec -> 4.081 so should be 10236 secs
+but actually 83039 secs ... wtf...
+cpu times = 20400 secs ... wtf
+
+slides should equal mst starrts ...
 
 ---------------------------------------------------------------------
 
