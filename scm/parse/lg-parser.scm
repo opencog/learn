@@ -78,13 +78,29 @@
 (define mst-timeo (AnchorNode "MST Timeouts")) ; This is a hack for now.
 (define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; This is a hack for now.
 
-	; Each section arrives already in the correct format
-	; Thus, counting is trivial.
-	(define (update-section-counts SECTL)
+	; Each parse consists of two LinkValues: the first is a list
+	; of Sections in the parse, the second is a list of Bonds.
+	(define (update-parse-counts PARSE)
+		(define sect-bond (cog-value->list PARSE))
+		(define sects (first sect-bond))
+		(define bonds (second sect-bond))
+
 		(count-one-atom mst-parse)
+
+		; Each section arrives already in the correct format.
+		; Thus, counting is trivial.
 		(for-each
 			(lambda (SECT) (LLOBJ 'inc-count SECT 1.0))
-			(cog-value->list SECTL)))
+			(cog-value->list sects))
+
+		; Each link arrives already in the correct format.
+		; We are not even going to use a matrix API to count.
+		; This is a cheat I'm not happy with. But I'm also getting
+		; bored of the overhead/complexity of the matrix API.
+		; So we're gonna hang out like this, till ... later.
+		(for-each
+			(lambda (BOND) (cog-inc-count! BOND 1.0) (store-atom BOND))
+			(cog-value->list bonds)))
 
 	(define (obs-txt PLAIN-TEXT)
 		; Do the parsing in a temp atomspace, and the counting in
@@ -99,11 +115,11 @@
 
 		(define base-as (cog-push-atomspace))
 		(define (pthunk)
-			(define parses	(cog-value->list
+			(define parses (cog-value->list
 				(cog-execute! (LgParseSections (Phrase PLAIN-TEXT) args))))
 			(cog-set-atomspace! base-as)
 			(count-one-atom mst-sent)
-			(for-each update-section-counts parses))
+			(for-each update-parse-counts parses))
 		(catch #t pthunk (lambda (key . args) (set! timeo #t)))
 		(cog-pop-atomspace)
 (count-one-atom mst-start)   ;; XXX tmp hack
