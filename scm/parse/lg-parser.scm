@@ -155,10 +155,15 @@
 ; We can cure this with a bit of cleverness... later...)
 ;
 (define-public (load-all-bonds)
+	(define mon (make-rate-monitor))
 	(load-atoms-of-type 'BondNode)
 	(for-each
-		(lambda (BOND) (fetch-incoming-by-type BOND 'EdgeLink))
+		(lambda (BOND)
+			(mon #f)
+			(fetch-incoming-by-type BOND 'EdgeLink))
 		(cog-get-atoms 'BondNode))
+
+	(mon "Loaded ~D edges in ~D secs; rate=~5F\n")
 )
 
 ; --------------------------------------------------------------------

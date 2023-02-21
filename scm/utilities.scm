@@ -206,7 +206,7 @@
 	(define start-time (- (current-time) 0.0001))
 
 	(lambda (msg)
-		(cond msg
+		(cond
 			((nil? msg) (atomic-inc cnt))
 			((eq? #t msg) (set! start-time (- (current-time) 0.0001)))
 			(else

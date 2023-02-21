@@ -34,6 +34,7 @@
 (pair-obj 'fetch-pairs)
 
 ; Also load all link-grammar bond-links.
+(display "Fetch all bonds. This may take a long time as well!\n")
 (load-all-bonds)
 
 ; Check to see if the marginals have been computed.
