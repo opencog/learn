@@ -211,9 +211,9 @@
 					(rate (/ acnt elapsed))
 				)
 				(if (string-index msg #\~)
-					(format #t msg acnt elapsed rate)
-					(format #t "~A done= ~A rate= ~5f per sec; avg= ~5f secs each\n"
-						msg acnt rate (/ 1 rate))))))
+					(format #t msg acnt elapsed rate (/ 1 rate))
+					(format #t "~A done= ~A in ~A secs; rate= ~5f /sec; avg= ~5f secs each\n"
+						msg acnt elapsed rate (/ 1 rate))))))
 )
 
 ; ---------------------------------------------------------------
