@@ -77,7 +77,22 @@
 	; Next unissued ID number
 	(define *-next-id-* 0)
 
-xxxxxxxx
+	; Given integer, return link string. Mapping is
+	; 0 -> A
+	; 1 -> B
+	; 25 -> Z
+	; 26 -> AA
+	; 27 -> AB
+	; This mapping is *identical* to that used in the link-grammar
+	; C++ code base, `link-names.cc` file, and needs to be kept in
+	; sync.  Failure to do so will result in hard-to-debug errors.
+	(define (make-id-str nid lst)
+		; 65 is ASCII capital A
+		(if (> 0 nid)
+			(list->string lst)
+			(make-id-str (- (floor (/ nid 26)) 1)
+				(cons (integer->char (+ 65 (modulo nid 26))) lst))))
+
 	(define (make-pair L-ATOM R-ATOM)
 		(Section L-ATOM R-ATOM))
 
