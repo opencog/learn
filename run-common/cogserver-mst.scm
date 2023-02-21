@@ -35,7 +35,7 @@
 
 ; Also load all link-grammar bond-links.
 (display "Fetch all bonds. This may take a long time as well!\n")
-(load-all-bonds)
+((make-bond-link-api) 'fetch-pairs)
 
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.

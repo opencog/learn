@@ -9,22 +9,26 @@
 (use-modules (opencog) (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog exec))
 
-(define*-public (make-disjunct-counter LLOBJ DICT
+(define*-public (make-disjunct-counter STOBJ BLOBJ DICT
 	#:key
 		(NUM-LINKAGES 3)
 		(ATOMSPACE #t)
 		(STORAGE #f)
 	)
 "
-  make-disjunct-counter LLOBJ DICT -- Parse text using DICT.
+  make-disjunct-counter STOBJ BLOBJ DICT -- Parse text using DICT.
 
   Return a function that will parse text strings, and update Section
-  counts (using LLOBJ) for the parses. The LgDictNode DICT will be
-  used to access the dictionary.
+  counts (using STOBJ) and edge counts (using BLOBJ) for the parses.
+  The LgDictNode DICT will be used to access the dictionary.
 
-  The LLOBJ should be a matrix object that holds Sections. Typically,
+  The STOBJ should be a matrix object that holds Sections. Typically,
   the `make-pseudo-cset-api` object, or something similar, should be
   used.
+
+  The BLOBJ should be a matrix object that holds Edge-Bond links.
+  Typically, the `make-bond-link-api` object, or something similar,
+  should be used.
 
   The DICT should be an `LgDictNode` specifying the dictionary.
   Recommend the one in `run-common/dict-combined`.
@@ -32,7 +36,7 @@
   This returns a function that takes a single argument, a plain-text
   UTF-8 string holding a single sentence, and sends it to the
   Link Grammar parser for parsing. The resulting parses are converted
-  into Sections and given to the LLOBJ for counting.
+  into Sections and given to the STOBJ for counting.
 
   This takes three optional parameters:
 
@@ -76,7 +80,7 @@
 	(define mst-parse (ParseNode "MST"))
 (define mst-start (AnchorNode "MST Starts")) ; This is a hack for now.
 (define mst-timeo (AnchorNode "MST Timeouts")) ; This is a hack for now.
-(define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; This is a hack for now.
+(define mst-elaps (AnchorNode "MST Elapsed Time Secs")) ; hack for now.
 
 	; Each parse consists of two LinkValues: the first is a list
 	; of Sections in the parse, the second is a list of Bonds.
@@ -90,16 +94,12 @@
 		; Each section arrives already in the correct format.
 		; Thus, counting is trivial.
 		(for-each
-			(lambda (SECT) (LLOBJ 'inc-count SECT 1.0))
+			(lambda (SECT) (STOBJ 'inc-count SECT 1.0))
 			(cog-value->list sects))
 
 		; Each link arrives already in the correct format.
-		; We are not going to use a matrix API to count. Why?
-		; Because there is no good way to wrap this in a matrix API -
-		; its a tensor.  There's no way to define some of the matrix
-		; methods for this structure. So, for now, we punt.
 		(for-each
-			(lambda (BOND) (cog-inc-count! BOND 1.0) (store-atom BOND))
+			(lambda (BOND) (BLOBJ 'inc-count BOND 1.0))
 			(cog-value->list bonds)))
 
 	(define (obs-txt PLAIN-TEXT)
@@ -137,34 +137,8 @@
 (define-public observe-mpg
 	(make-disjunct-counter
 		(add-storage-count (add-count-api (make-pseudo-cset-api)))
+		(add-storage-count (add-count-api (make-bond-link-api)))
 		(LgDictNode "dict-pair")))
-
-; --------------------------------------------------------------------
-
-; Load all LG BondNodes. These are all the edges of the form
-; (Edge (Bond "XYZ") (List (Word ...) (Word ...)))
-; where (Bond "XYZ") was used in some LG parse, and the count on
-; the Edge is the number of times it was used in parses. Besides
-; just counting, this also establishes a permanent association
-; between word-pairs and bond names (so that later parses re-use
-; the same bond names.)
-;
-; This is done here, like this, instead of in a matrix API, because
-; there is no particular way to jam this structure into the existing
-; matrix API. It's a tensor, not a matrix. ... (at least, for now.
-; We can cure this with a bit of cleverness... later...)
-;
-(define-public (load-all-bonds)
-	(define mon (make-rate-monitor))
-	(load-atoms-of-type 'BondNode)
-	(for-each
-		(lambda (BOND)
-			(mon #f)
-			(fetch-incoming-by-type BOND 'EdgeLink))
-		(cog-get-atoms 'BondNode))
-
-	(mon "Loaded ~D edges in ~D secs; rate=~5F\n")
-)
 
 ; --------------------------------------------------------------------
 
@@ -181,6 +155,10 @@
 	(define pcc (add-count-api pca))
 	(define pcs (add-storage-count pcc))
 
+	(define bla (make-bond-link-api))
+	(define blc (add-count-api bla))
+	(define bls (add-storage-count blc))
+
 	; Skip performing the marginal counts for just right now, until
 	; the rest of the dynamic-MI infrastructure is in place. Dynamic
 	; marginal counts just add overhead to the counting process, if
@@ -191,7 +169,7 @@
 	(define dict (LgDictNode "dict-pair"))
 
 	; The counter for the window itself. Count the top 3 best ones.
-	(define obs-mpg (make-disjunct-counter pcs dict #:NUM-LINKAGES 3))
+	(define obs-mpg (make-disjunct-counter pcs bls dict #:NUM-LINKAGES 3))
 
 	; Larger window sizes no longer hurt performance.
 	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
