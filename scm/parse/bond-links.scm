@@ -144,8 +144,13 @@
 	(define (describe)
 		(display (procedure-property make-bond-link-api 'documentation)))
 
-xxxxxxxxxx
-store-aux
+	(define (store-aux) (store-atom idanch))
+
+	(define (provides meth)
+		(case meth
+			((store-aux)        store-aux)
+			(else #f)
+	))
 
 	; Methods on the object
 	(lambda (message . args)
@@ -163,7 +168,8 @@ store-aux
 			((right-wildcard) get-right-wildcard)
 			((wild-wild)      get-wild-wild)
 			((fetch-pairs)    load-all-bonds)
-			((provides)       (lambda (symb) #f))
+			((provides)       provides)
+			((store-aux)      store-aux)
 			((filters?)       (lambda () #f))
 			((help)           describe)
 			((describe)       describe)

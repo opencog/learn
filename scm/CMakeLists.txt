@@ -9,6 +9,7 @@ ADD_GUILE_MODULE (FILES
 
 	parse/lg-parser.scm
 	parse/pseudo-csets.scm
+	parse/bond-links.scm
 	parse/sliding-block.scm
 
 	gram-class/agglo-goe.scm

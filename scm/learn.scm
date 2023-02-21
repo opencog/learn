@@ -18,6 +18,7 @@
 ; parsing stuff
 (include-from-path "opencog/learn/sliding-block.scm")
 (include-from-path "opencog/learn/pseudo-csets.scm")
+(include-from-path "opencog/learn/bond-links.scm")
 (include-from-path "opencog/learn/lg-parser.scm")
 
 ; classification stuff
