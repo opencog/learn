@@ -188,9 +188,11 @@
   make-rate-monitor - simplistic rate monitoring utility.
 
   Use this to monitor the rate at which actions are being performed.
-  It returns a function taking one argument: either #f or a string
+  It returns a function taking one argument: either #f, #t or a string
   message. If called with #f, it increments a count and returns.
+  If called with #t, it resets the start time.
   If called with a message, it will print the processing rate.
+  The rate is measured with respect to wall-clock time.
 
   Example usage:
     (define monitor-rate (make-rate-monitor))
@@ -201,19 +203,22 @@
     (monitor-rate \"Did ~A in ~A seconds rate=~5F items/sec\")
 "
 	(define cnt (make-atomic-box 0))
-	(define start-time (- (current-time) 0.000001))
+	(define start-time (- (current-time) 0.0001))
 
 	(lambda (msg)
-		(if (nil? msg)
-			(atomic-inc cnt)
-			(let* ((acnt (atomic-box-ref cnt))
-					(elapsed (- (current-time) start-time))
-					(rate (/ acnt elapsed))
-				)
-				(if (string-index msg #\~)
-					(format #t msg acnt elapsed rate (/ 1 rate))
-					(format #t "~A done= ~A in ~A secs; rate= ~5f /sec; avg= ~5f secs each\n"
-						msg acnt elapsed rate (/ 1 rate))))))
+		(cond msg
+			((nil? msg) (atomic-inc cnt))
+			((eq? #t msg) (set! start-time (- (current-time) 0.0001)))
+			(else
+				(let* ((acnt (atomic-box-ref cnt))
+						(elapsed (inexact->exact (ceiling
+							(- (current-time) start-time))))
+						(rate (/ acnt elapsed))
+					)
+					(if (string-index msg #\~)
+						(format #t msg acnt elapsed rate (/ 1 rate))
+						(format #t "~A done= ~A in ~D secs; rate= ~5f /sec; avg= ~5f secs each\n"
+							msg acnt elapsed rate (/ 1 rate)))))))
 )
 
 ; ---------------------------------------------------------------
