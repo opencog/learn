@@ -116,51 +116,42 @@
 	(define (get-left-element EDGE) (gadr EDGE))
 	(define (get-right-element EDGE) (gddr EDGE))
 
-
-xxxxxxxxx
-   (define (incr-pair EDGE)
-      ; Extract the left and right words.
-      (define w-left  (gadr EDGE))
-      (define w-right (gddr EDGE))
-      (LLOBJ 'pair-inc w-left w-right 1.0))
-
-   (define (inc-count EDGE)
-      (LLOBJ 'inc-count EDGE 1.0))
-
-
-store-aux
-
-	(define (get-left-wildcard DJ)
-		(ListLink any-left DJ))
+	(define (get-left-wildcard WORD)
+		(Edge idanch (ListLink any-left WORD)))
 
 	(define (get-right-wildcard WORD)
-		(ListLink WORD any-right))
+		(Edge idanch (ListLink WORD any-right)))
 
 	(define (get-wild-wild)
-		(ListLink any-left any-right))
+		(Edge idanch (ListLink any-left any-right)))
 
-	; Fetch (from the database) all pseudo-csets
-	(define (fetch-pseudo-csets)
-		(define start-time (current-time))
+	; Fetch (from the database) all labelled edges.
+	(define (load-all-bonds)
+		(define mon (make-rate-monitor))
+		(fetch-atom idanch)
+		(load-atoms-of-type 'BondNode)
+		(for-each
+			(lambda (BOND)
+				(mon #f)
+				(fetch-incoming-by-type BOND 'EdgeLink))
+			(cog-get-atoms 'BondNode))
 
-		; Marginals are located on a ListLink on any-left, any-right
-		(fetch-incoming-by-type any-left 'ListLink)
-		(fetch-incoming-by-type any-right 'ListLink)
+		; Marginals are located on the anchor
+		(fetch-incoming-by-type idanch 'EdgeLink)
 
-		; Loading Sections is a bit too much, as that will also
-		; pick up WordClassNodes. But I guess that is OK for now.
-		(load-atoms-of-type 'Section)
-		(format #t "Elapsed time to load csets: ~A secs\n"
-			(- (current-time) start-time)))
+		(mon "Loaded ~D edges in ~D secs; rate=~5F\n"))
 
 	(define (describe)
-		(display (procedure-property make-pseudo-cset-api 'documentation)))
+		(display (procedure-property make-bond-link-api 'documentation)))
+
+xxxxxxxxxx
+store-aux
 
 	; Methods on the object
 	(lambda (message . args)
 		(apply (case message
-			((name) (lambda () "Word-Disjunct Pairs (Connector Sets)"))
-			((id)             (lambda () "cset"))
+			((name) (lambda () "LG-Link - word-pair Association"))
+			((id)             (lambda () "bond-link"))
 			((left-type)      get-left-type)
 			((right-type)     get-right-type)
 			((pair-type)      get-pair-type)
@@ -171,14 +162,14 @@ store-aux
 			((left-wildcard)  get-left-wildcard)
 			((right-wildcard) get-right-wildcard)
 			((wild-wild)      get-wild-wild)
-			((fetch-pairs)    fetch-pseudo-csets)
+			((fetch-pairs)    load-all-bonds)
 			((provides)       (lambda (symb) #f))
 			((filters?)       (lambda () #f))
 			((help)           describe)
 			((describe)       describe)
-			((obj)            (lambda () "make-pseudo-cset-api"))
+			((obj)            (lambda () "make-bond-link-api"))
 			((base)           (lambda () #f))
-			(else (error "Bad method call on pseudo-cset:" message)))
+			(else (error "Bad method call on bond-link:" message)))
 		args))
 )
 
