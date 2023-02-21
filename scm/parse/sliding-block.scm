@@ -93,13 +93,14 @@
 			(make-starts (cdr DLIST) (+ 1 SUM (car DLIST)) (cons SUM STARTL))
 			(reverse! STARTL)))
 
+(define nblocks (Anchor "Num blocks"))
+(define slides (Anchor "Slides"))
+(define eslides (Anchor "Expected Slides"))
+
 	(define (observe-block TEXT-BLOCK)
 		(define delta-list (get-deltas TEXT-BLOCK '() #t))
 		(define seg-list (make-segments delta-list))
 		(define start-list (make-starts delta-list 0 '()))
-(define nblocks (Anchor "Num blocks"))
-(define slides (Anchor "Slides"))
-(define eslides (Anchor "Expected Slides"))
 (count-one-atom nblocks)
 (count-inc-atom eslides (length seg-list))  ; seg list is shortest of the three.
 
