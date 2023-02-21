@@ -94,10 +94,10 @@
 			(cog-value->list sects))
 
 		; Each link arrives already in the correct format.
-		; We are not even going to use a matrix API to count.
-		; This is a cheat I'm not happy with. But I'm also getting
-		; bored of the overhead/complexity of the matrix API.
-		; So we're gonna hang out like this, till ... later.
+		; We are not going to use a matrix API to count. Why?
+		; Because there is no good way to wrap this in a matrix API -
+		; its a tensor.  There's no way to define some of the matrix
+		; methods for this structure. So, for now, we punt.
 		(for-each
 			(lambda (BOND) (cog-inc-count! BOND 1.0) (store-atom BOND))
 			(cog-value->list bonds)))
@@ -138,6 +138,28 @@
 	(make-disjunct-counter
 		(add-storage-count (add-count-api (make-pseudo-cset-api)))
 		(LgDictNode "dict-pair")))
+
+; --------------------------------------------------------------------
+
+; Load all LG BondNodes. These are all the edges of the form
+; (Edge (Bond "XYZ") (List (Word ...) (Word ...)))
+; where (Bond "XYZ") was used in some LG parse, and the count on
+; the Edge is the number of times it was used in parses. Besides
+; just counting, this also establishes a permanent association
+; between word-pairs and bond names (so that later parses re-use
+; the same bond names.)
+;
+; This is done here, like this, instead of in a matrix API, because
+; there is no particular way to jam this structure into the existing
+; matrix API. It's a tensor, not a matrix. ... (at least, for now.
+; We can cure this with a bit of cleverness... later...)
+;
+(define-public (load-all-bonds)
+	(load-atoms-of-type 'BondNode)
+	(for-each
+		(lambda (BOND) (fetch-incoming-by-type BOND 'EdgeLink))
+		(cog-get-atoms 'BondNode))
+)
 
 ; --------------------------------------------------------------------
 

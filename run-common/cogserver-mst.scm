@@ -25,12 +25,16 @@
 (display "Fetch all word-pairs. This may take well over half-an-hour!\n")
 
 ; The object which will be providing pair-counts for us.
-; We can also do MST parsing with other kinds of pair-count objects,
-; for example, the clique-pairs, or the distance-pairs.
+; One can also do MST parsing with other kinds of pair-count objects,
+; for example, the clique-pairs, or the distance-pairs. But, for now,
+; we're working with planar-parse ANY-link pairs.
 (define pair-obj (make-any-link-api))
 (define cnt-obj (add-count-api pair-obj))
 (define star-obj (add-pair-stars cnt-obj))
 (pair-obj 'fetch-pairs)
+
+; Also load all link-grammar bond-links.
+(load-all-bonds)
 
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.
