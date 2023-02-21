@@ -74,9 +74,6 @@
 				(cog-incoming-by-type wp 'EdgeLink)))
 		pr)
 
-	; Next unissued ID number
-	(define *-next-id-* 0)
-
 	; Given integer, return link string. Mapping is
 	; 0 -> A
 	; 1 -> B
@@ -93,8 +90,28 @@
 			(make-id-str (- (floor (/ nid 26)) 1)
 				(cons (integer->char (+ 65 (modulo nid 26))) lst))))
 
+	; Anchor where next ID is stored. This location must be kept in
+	; sync with the link-grammar C++ code base, `link-names.cc` file.
+	(define idanch (Anchor "*-LG-issued-link-id-*"))
+	(define (issue-link)
+		(define nid (cog-count idanch))
+		(define linkstr (make-id-str nid '()))
+		(set! nid (+ 1 nid))
+		; (make-id-str 1064) is "ANY" and we must avoid that.
+		(if (equal? nid 1064) (set! nid (+ 1 nid)))
+
+		; Save and store. May need it again, some other day.
+		(cog-set-tv! idanch (CountTruthValue 1 0 nid))
+		(store-atom idanch)
+
+		; Return the link string
+		linkstr)
+
+	; Create the pair, if it does not yet exist.
 	(define (make-pair L-ATOM R-ATOM)
-		(Section L-ATOM R-ATOM))
+		(define pr (get-pair L-ATOM R-ATOM))
+		(if (not (nil? pr)) pr
+			(Edge (Bond (issue-link)) (ListLink L-ATOM R-ATOM))))
 
 	(define (get-left-element EDGE) (gadr EDGE))
 	(define (get-right-element EDGE) (gddr EDGE))
