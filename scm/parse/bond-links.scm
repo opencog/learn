@@ -45,9 +45,9 @@
   The matrix consists of (word,word) pairs and the corresponding LG
   connector name. Matrix elements have the form
 
-    (Edge (Bond "XYZ") (List (Word ...) (Word ...)))
+    (Edge (Bond \"XYZ\") (List (Word ...) (Word ...)))
 
-  where XYZ is the Libnk Grammar connector (link) name.
+  where XYZ is the Link Grammar connector (link) name.
 
   For a detailed description, see the `bond-links.scm` file.
 "

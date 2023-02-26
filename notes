@@ -15763,11 +15763,19 @@ and again:
 foo done=1062 rate=0.247 per sec --> 4300 secs elapsed...
 cpu time = 7200 secs
 
-so why is 
+so why is
  (Anchor "MST Elapsed Time Secs" (ctv 1 0 28302))
 
-(cog-logger-info 
+(cog-logger-info
 
+((make-bond-link-api) 'fetch-pairs)
+
+docker create --name foo -it opencog/opencog-dev
+docker start -i foo
+
+docker create --name bar -v /home/linas/src/novamente/src/:/src -it opencog/opencog-dev
+
+double total_usage_time(void)
 
 ---------------------------------------------------------------------
 

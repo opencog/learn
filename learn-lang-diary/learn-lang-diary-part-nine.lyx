@@ -6255,6 +6255,64 @@ A window of size 16 has a clique size of
 \end_layout
 
 \begin_layout Section*
+Compact Dot Products?
+\end_layout
+
+\begin_layout Standard
+Is there a way to partially pre-compute dot products and store them in compact
+ form, balancing between speed and storage? The prototypical example: there
+ are 
+\begin_inset Formula $N=10K$
+\end_inset
+
+ vectors, each vector is D-dimensional, with 
+\begin_inset Formula $D\approx10K$
+\end_inset
+
+ (
+\emph on
+i.e.
+
+\emph default
+ similar to 
+\begin_inset Formula $N$
+\end_inset
+
+), and each vector extremely sparse (the number of non-zero entries in the
+ vector follows a Zipfian or square-root-Zipfian distribution).
+\end_layout
+
+\begin_layout Standard
+The two conventional choices are: 
+\end_layout
+
+\begin_layout Enumerate
+Compute dot-products on the fly, as needed.
+ But this is extremely slow, when a lot of them are needed.
+\end_layout
+
+\begin_layout Enumerate
+Precompute the dot products.
+ But this requires 
+\begin_inset Formula $\mathcal{O}\left(N^{2}\right)$
+\end_inset
+
+ storage which is not tractable for large 
+\begin_inset Formula $N$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Is there a middle ground? Can we pre-compute something the size of 
+\begin_inset Formula $\mathcal{O}\left(N\log N\right)$
+\end_inset
+
+ that makes computing the actual dot-product really fast?
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
