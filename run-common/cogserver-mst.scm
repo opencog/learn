@@ -21,6 +21,11 @@
 (display "Fetch all words from database. This may take several minutes.\n")
 (load-atoms-of-type 'WordNode)
 
+; Total counts are stored here.
+(fetch-atom (Sentence "MST"))
+(fetch-atom (ParseNode "MST"))
+(for-each fetch-atom (cog-get-atoms 'Anchor))
+
 ; Load up the word-pairs -- this can take over half an hour!
 (display "Fetch all word-pairs. This may take well over half-an-hour!\n")
 
