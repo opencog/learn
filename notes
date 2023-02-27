@@ -15777,6 +15777,48 @@ docker create --name bar -v /home/linas/src/novamente/src/:/src -it opencog/open
 
 double total_usage_time(void)
 
+1000 inside= 8667.299258 outside= 53803.048075   r=6.20759
+2000 inside= 20472.853507 outside= 98054.872563  r=4.7895
+3000 inside= 34937.703395 outside= 153629.052230 r= 4.39
+4000 inside= 52691.368851 outside= 220261.212581 r= 4.18
+5000 inside= 70235.853154 outside= 284808.446814 r= 4.05
+8000 inside= 117388.682861 outside= 516526.463381 r= 4.40
+9000 inside= 134328.743793 outside= 713287.174616  r=5.31
+
+... wtf...
+double thread_usage_time(void);
+
+thread_local double
+static double prep
+count
+link
+prt_error
+lgdebug(0,
+
+(define now-words (atoms-subtract new-words all-words))
+(length (now-words)) ; 2900
+(define nti (filter (lambda (W) (< 0 (cog-incoming-size W))) now-words))
+(length nti) ; 328
+
+ (length all-words) ; 68358 w/o the new words ....
+
+(ListLink . 7708497)
+(EdgeLink . 12144388)
+(Connector . 17108)
+(BondNode . 4312068)
+(ConnectorSeq . 837247)
+(Section . 1096114)
+(WordNode . 71258)
+After the new wave ....
+
+(define storage-node
+(RocksStorage "rocks:///home/ubuntu/data/r19-pair.rdb")
+
+75
+del sects -> 58
+del edges -> 42
+
+
 ---------------------------------------------------------------------
 
 

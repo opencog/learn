@@ -175,6 +175,10 @@
 	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
 )
 
+#!----------
+Don't do this. It captures the LgDictNode in themodule context.
+Then it cannot be cleared!
+
 (define-public observe-block-mpg (make-block-mpg-observer))
 
 (set-procedure-property! observe-block-mpg 'documentation
@@ -198,6 +202,7 @@
    used to examine everything in the general vicinity.
 "
 )
+----- !#
 
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------

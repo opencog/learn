@@ -42,6 +42,9 @@
 (display "Fetch all bonds. This may take a long time as well!\n")
 ((make-bond-link-api) 'fetch-pairs)
 
+; This will be used for counting.
+(define observe-block-mpg (make-block-mpg-observer))
+
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.
 ; So we check, and compute if necessary.
