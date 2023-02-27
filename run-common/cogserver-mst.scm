@@ -22,7 +22,7 @@
 (load-atoms-of-type 'WordNode)
 
 ; Total counts are stored here.
-(fetch-atom (Sentence "MST"))
+(fetch-atom (SentenceNode "MST"))
 (fetch-atom (ParseNode "MST"))
 (for-each fetch-atom (cog-get-atoms 'Anchor))
 
