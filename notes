@@ -15819,6 +15819,136 @@ del sects -> 58
 del edges -> 42
 
 
+1000 tok= 3019 inside=2566 prep= 48 count= 536 link=1399.53 tot=5003 wall=5236
+2000 tok= 4158 inside=3701 prep= 42 count= 323 link=952 tot=5476 wall=5698
+3000 tok= 5035 inside=4553 prep= 43 count= 490 link=1456 tot=7027 wall=7258
+4000 tok= 5462 inside=4990 prep= 40 count= 487 link=1641 tot=7632 wall=7856
+5000 tok= 5806 inside=5318 prep= 42 count= 380 link=1126 tot=7356 wall=7581
+6000 tok= 6061 inside=5595 prep= 40 count= 332 link=961 tot=7395 wall=7617
+7000 tok= 6385 inside=5933 prep= 34 count= 222 link=676 tot=7319 wall=7544
+8000 tok= 6803 inside=6325 prep= 40 count= 591 link=3961 tot=11396 wall=11623
+9000 tok= 6776 inside=6317 prep= 40 count= 433 link=1479 tot=8729 wall=8954
+10000 tok= 6992 inside=6523 prep= 44 count= 314 link=924 tot=8275 wall=8504
+11000 tok= 7110 inside=6636 prep= 43 count= 424 link=1265 tot=8843 wall=9071
+12000 tok= 7326 inside=6826 prep= 42 count= 433 link=1399 tot=9202 wall=9430
+
+
+pair_boolean_lookup goes to atomspace no matter what!
+get_pair_exprs seems OK...
+
+500
+42
+400
+1200
+
+45.2 -> 42.2
+
+1000 tok= 2688 inside=2672 prep= 49 count= 568 link=1596 tot=4902 wall=5147
+2000 tok= 3996 inside=3981 prep= 51 count= 604 link=1666 tot=6318 wall=6551
+3000 tok= 4465 inside=4449 prep= 47 count= 623 link=1812 tot=6949 wall=7220
+4000 tok= 5098 inside=5082 prep= 46 count= 505 link=1709 tot=7360 wall=7521
+5000 tok= 5468 inside=5451 prep= 48 count= 809 link=2438 tot=8764 wall=8985
+6000 tok= 6092 inside=6073 prep= 51 count= 872 link=2499 tot=9516 wall=9746
+7000 tok= 6464 inside=6442 prep= 53 count= 813 link=2554 tot=9886 wall=10123
+8000 tok= 6593 inside=6573 prep= 44 count= 389 link=1154 tot=8181 wall=8411
+9000 tok= 6668 inside=6648 prep= 47 count= 603 link=1842 tot=9161 wall=9390
+10000 tok= 6850 inside=6831 prep= 49 count= 508 link=1477 tot=8885 wall=9111
+
+
+
+sents        secs   dict miss     hit   num pair ctor | secsperatom
+1000 totlook= 2676 nato= 588 ndict=14677 npr=15260 perat= 0.042 perdict= 0.000 pctor=0.002
+2000 totlook= 3987 nato= 341 ndict=15122 npr=15464 perat= 0.020 perdict= 0.000 pctor=0.002
+3000 totlook= 4451 nato= 280 ndict=15510 npr=15790 perat= 0.016 perdict= 0.000 pctor=0.002
+4000 totlook= 5082 nato= 232 ndict=15564 npr=15798 perat= 0.013 perdict= 0.000 pctor=0.002
+5000 totlook= 5453 nato= 226 ndict=15878 npr=16104 perat= 0.013 perdict= 0.000 pctor=0.002
+6000 totlook= 6072 nato= 198 ndict=15404 npr=15601 perat= 0.010 perdict= 0.000 pctor=0.002
+7000 totlook= 6446 nato= 189 ndict=15538 npr=15727 perat= 0.012 perdict= 0.000 pctor=0.002
+8000 totlook= 6572 nato= 170 ndict=14844 npr=15014 perat= 0.013 perdict= 0.000 pctor=0.002
+9000 totlook= 6650 nato= 167 ndict=15117 npr=15285 perat= 0.008 perdict= 0.000 pctor=0.002
+10000 totlook= 6830 nato= 152 ndict=15342 npr=15496 perat= 0.010 perdict= 0.000 pctor=0.001
+
+500 tok= 1109 inside=1100 prep= 20 count= 120 link=362 tot=1611 wall=1720 secs
+1000 tok= 1631 inside=1625 prep= 21 count= 159 link=475 tot=2286 wall=2393
+1500 tok= 1985 inside=1978 prep= 22 count= 177 link=48 1 tot=2665 wall=2784
+2000 tok= 2283 inside=2275 prep= 24 count= 347 link=95 8 tot=3612 wall=3720
+2500 tok= 2257 inside=2249 prep= 21 count= 229 link=709 tot=3217 wall=3326
+
+sents 500 / 1100 secs; bool= 11373 / 5 ,cart= 7424 / 33 ;atom= 334 / 19 ;dict=7089 / 1 ;pctor= 7420 / 13 sec
+sents 1000 / 1625 secs; bool= 11633 / 1 ,cart= 7505 / 18 ;atom= 193 / 5 ;dict=7314 / 1 ;pctor= 7506 / 12 sec
+sents 1500 / 1978 secs; bool= 10806 / 1 ,cart= 7352 / 17 ;atom= 176 / 4 ;dict=7181 / 1 ;pctor= 7356 / 12 sec
+sents 2000 / 2279 secs; bool= 13247 / 1 ,cart= 8004 / 16 ;atom= 147 / 3 ;dict=7858 / 1 ;pctor= 8008 / 12 sec
+sents 2500 / 2250 secs; bool= 12495 / 1 ,cart= 7829 / 16 ;atom= 122 / 2 ;dict=7714 / 1 ;pctor= 7836 / 12 sec
+
+ncart++;
+double st = thread_usage_time();
+tsane tbwe tcop
+
+get_lg_conn
+cached_linkname  << inside of tatom/natom
+fetch_link_id  << insdie tpair aka ctor
+
+wex 1000 / 68 ;bwe= 15673 / 68 ;copy= 15668 / 0
+
+sents 500 / 1025 secs; tcond=981 bool= 11324 / 5 ,cart= 7321 / 43 ;atom= 355 / 31 ;dict=6971 / 1 ;pctor= 7321 / 11 sec
+sents 1000 / 1448 secs; tcond=1427 bool= 10876 / 1 ,cart= 7066 / 19
+;atom= 179 / 6 ;dict=6893 / 1 ;pctor= 7074 / 11 sec
+
+condesc_setup(dict);
+	sort_condesc_by_uc_constring(dict);
+	set_all_condesc_length_limit(dict);
+dict->contable.num_con ???
+
+condesc 500 numco=1488292 sort= 955 set= 4
+condesc 500 numco=1508205 sort= 1016 set= 5 ;cinfo= 133 csort= 873 cissu= 10
+
+expect 144/2 x 500 = 36K new conns
+
+ConTabl :: num_last
+
+	make_connector_node
+condesc_add
+	ct->num_con++;
+
+set uc_num to zero it is connector_hash_t which is uint32_t
+calculate_connector_info
+condesc_by_uc_constring
+void calculate_connector_info(condesc_t * c)o
+int condesc_by_uc_constring(const void * a, const void * b)
+lookup-atomese.cc:406
+
+../../link-grammar/tokenize/tokenize.c:2723
+
+wex 500 / 0 41  20 ;bwe= 7615 / 41 ;copy= 7615 / 0
+wex 1000 / 0 20  29 ;bwe= 7646 / 20 ;copy= 7644 / 0
+wex 1500 / 0 16  26 ;bwe= 7550 / 16 ;copy= 7549 / 0
+wex 2000 / 0 16  26 ;bwe= 7632 / 16 ;copy= 7631 / 0
+wex 2500 / 0 15  21 ;bwe= 7798 / 15 ;copy= 7798 / 0
+wex 3000 / 0 14  21 ;bwe= 7806 / 14 ;copy= 7805 / 0
+wex 3500 / 0 14  23 ;bwe= 7574 / 14 ;copy= 7575 / 0
+wex 4000 / 0 14  21 ;bwe= 7832 / 14 ;copy= 7832 / 0
+
+sents 500 / 1002 secs; tcond=959 bool= 12118 / 5 ,cart= 7608 / 42 ;atom= 334 / 28 ;dict=7281 / 1 ;pctor= 7613 / 12 sec
+sents 500 / 1068 secs; tcond=1021 bool= 14203 / 5 ,cart= 7781 / 45 ;atom= 372 / 31 ;dict=7413 / 1 ;pctor= 7781 / 13 sec
+sents 500 / 61 secs; tcond=20 bool= 11118 / 4 ,cart= 7226 / 40 ;atom= 334 / 29 ;dict=6899 / 0 ;pctor= 7233 / 10 sec
+sents 1000 / 49 secs; tcond=29 bool= 11249 / 1 ,cart= 7333 / 20 ;atom= 201 / 9 ;dict=7135 / 0 ;pctor= 7336 / 11 sec
+sents 1500 / 42 secs; tcond=26 bool= 10691 / 1 ,cart= 7124 / 16 ;atom= 151 / 5 ;dict=6977 / 1 ;pctor= 7128 / 10 sec
+sents 2000 / 42 secs; tcond=26 bool= 10931 / 0 ,cart= 7458 / 15 ;atom= 144 / 4 ;dict=7320 / 1 ;pctor= 7464 / 11 sec
+sents 2500 / 36 secs; tcond=21 bool= 11804 / 0 ,cart= 7289 / 14 ;atom= 115 / 4 ;dict=7177 / 0 ;pctor= 7292 / 10 sec
+sents 3000 / 35 secs; tcond=21 bool= 11856 / 0 ,cart= 7263 / 13 ;atom= 107 / 2 ;dict=7159 / 0 ;pctor= 7266 / 10 sec
+sents 3500 / 37 secs; tcond=23 bool= 10933 / 0 ,cart= 7240 / 13 ;atom= 118 / 3 ;dict=7129 / 1 ;pctor= 7247 / 10 sec
+sents 4000 / 35 secs; tcond=21 bool= 12105 / 0 ,cart= 7471 / 14 ;atom= 103 / 2 ;dict=7370 / 0 ;pctor= 7473 / 11 sec
+sents 4500 / 45 secs; tcond=31 bool= 10467 / 0 ,cart= 7265 / 14 ;atom= 149 / 3 ;dict=7118 / 0 ;pctor= 7267 / 10 sec
+
+
+sents 500 / 62 secs; ncond= 1473812 / 20 ,bool= 11569 / 5 ,cart= 7517 / 42 ;atom= 325 / 30 ;dict=7194 / 0 ;pctor= 7519 / 12 sec
+sents 1000 / 47 secs; ncond= 416218 / 25 ,bool= 11314 / 1 ,cart= 7401 / 21 ;atom= 183 / 9 ;dict=7223 / 1 ;pctor= 7406 / 11 sec
+sents 1500 / 41 secs; ncond= 214514 / 23 ,bool= 11924 / 0 ,cart= 7538 / 17 ;atom= 141 / 5 ;dict=7402 / 0 ;pctor= 7543 / 12 sec
+sents 2000 / 40 secs; ncond= 176390 / 23 ,bool= 11739 / 0 ,cart= 7470 / 16 ;atom= 138 / 4 ;dict=7335 / 0 ;pctor= 7473 / 12 sec
+sents 2500 / 40 secs; ncond= 146131 / 24 ,bool= 12154 / 0 ,cart= 7643 / 16 ;atom= 135 / 3 ;dict=7510 / 0 ;pctor= 7645 / 12 sec
+sents 3000 / 37 secs; ncond= 112239 / 22 ,bool= 12312 / 0 ,cart= 7627 / 15 ;atom= 115 / 3 ;dict=7517 / 0 ;pctor= 7632 / 12 sec
+
+
 ---------------------------------------------------------------------
 
 

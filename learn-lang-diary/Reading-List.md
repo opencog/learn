@@ -1,5 +1,29 @@
 
 Things to read:
+* Metagraphs and their applications
+  Amit Basu, Rober Blanning, 2007
+  Springer Integrated Series on Information Systems.
+
+* https://labs.engineering.asu.edu/labv2/2023-aaai-tutorial-advances-in-neuro-symbolic-reasoning/
+
+* https://github.com/varunshenoy/GraphGPT
+
+* Gato:
+  - https://www.youtube.com/watch?v=1lkdWduuN14&t=1577s
+  - A Generalist Neural Algorithmic Learner: https://arxiv.org/abs/2209.11142
+
+* Somethinb about category theory:
+  - https://www.youtube.com/watch?v=1lkdWduuN14
+  - https://cats.for.ai/
+
+* Compositionality
+  - https://twitter.com/GaryMarcus/status/1512647983317151747
+  - https://compositionalintelligence.github.io/
+
+* Assembly Theory quantifies the complexity of a molecule by finding
+  the shortest path to construct the molecule from simple parts. This
+  provides the molecular assembly index (MA).
+
 * Peter Norvig, Stuart Jonathan Russell,
   Artificial Intelligence: A Modern Approach
   https://libgen.li/edition.php?id=138615766
