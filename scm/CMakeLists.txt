@@ -1,7 +1,8 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
 	common.scm
-	utilities.scm
+	utils/utilities.scm
+	utils/waiter.scm
 
 	pair-count/clique-pair-count.scm
 	pair-count/pair-api.scm

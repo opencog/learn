@@ -9,6 +9,7 @@
 ; in the earlier files.
 (include-from-path "opencog/learn/common.scm")
 (include-from-path "opencog/learn/utilities.scm")
+(include-from-path "opencog/learn/waiter.scm")
 
 ; pair stuff.
 (include-from-path "opencog/learn/pair-api.scm")
