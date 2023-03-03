@@ -66,7 +66,7 @@
 		(monitor-parse-rate #t)
 
 		; Release anyone who is waiting on us.
-		(gate-open mst-gate)
+		(open-gate mst-gate)
 	)
 	(lambda (key . args)
 		(format #t "Warning! Word pair marginals missing!\n")

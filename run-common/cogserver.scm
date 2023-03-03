@@ -77,7 +77,7 @@
 	(set-cogserver-atomspace! (cog-atomspace)))
 
 ; Release anyone who is waiting on us.
-(gate-open startup-gate)
+(open-gate startup-gate)
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server
