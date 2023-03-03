@@ -16,6 +16,8 @@
 (use-modules (opencog cogserver))
 (use-modules (srfi srfi-1))
 
+(define startup-gate (make-gate))
+
 (define env-prompt (getenv "PROMPT"))
 
 ; Avoid mystery crash on cold startup.
@@ -73,6 +75,9 @@
 ; XXX Is this needed? Didn't cogserver already get the top?
 (when (< 0 (length frame-tops))
 	(set-cogserver-atomspace! (cog-atomspace)))
+
+; Release anyone who is waiting on us.
+(gate-open startup-gate)
 
 ; -----------------------------------------------------------
 ; Enable automated server shutdown. This waits until the server

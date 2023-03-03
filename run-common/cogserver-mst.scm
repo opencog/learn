@@ -15,6 +15,18 @@
 ; clustering is started, the marginals must be computed, using either
 ; `marginals-mst.scm` or `marginals-mst-shape.scm`.
 ;
+(use-modules (opencog) (opencog learn))
+(define mst-gate (make-gate))
+
+(define observer (make-block-mpg-observer))
+
+; This will be used for counting. Note: it blocks, until the
+; gate is opened. The gate is not opened, until after pairs are
+; loaded.
+(define (observe-block-mpg TXT)
+	(wait-gate mst-gate)
+	(observer TXT))
+
 (load "cogserver.scm")
 
 ; Load up the words
@@ -42,9 +54,6 @@
 (display "Fetch all bonds. This may take a long time as well!\n")
 ((make-bond-link-api) 'fetch-pairs)
 
-; This will be used for counting.
-(define observe-block-mpg (make-block-mpg-observer))
-
 ; Check to see if the marginals have been computed.
 ; Common error is to forget to do them manually.
 ; So we check, and compute if necessary.
@@ -52,6 +61,12 @@
 	(lambda ()
 		((add-report-api star-obj) 'num-pairs)
 		(print-matrix-summary-report star-obj)
+
+		; Reset the parse timer. Yes, this is a hack.
+		(monitor-parse-rate #t)
+
+		; Release anyone who is waiting on us.
+		(gate-open mst-gate)
 	)
 	(lambda (key . args)
 		(format #t "Warning! Word pair marginals missing!\n")
