@@ -43,7 +43,7 @@ fi
 # Use byobu so that the scroll bars actually work
 byobu new-session -d -n 'cntl' 'top; $SHELL'
 
-byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver.scm ; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; $SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.

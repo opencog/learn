@@ -41,7 +41,7 @@ fi
 byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 
-byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver.scm ;   $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ;   $SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.
