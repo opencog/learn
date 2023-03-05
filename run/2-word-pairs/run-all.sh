@@ -45,15 +45,22 @@ byobu new-session -d -n 'cntl' 'top; $SHELL'
 
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver.scm ; $SHELL'
 
-# Wait for the cogserver to initialize.
-sleep 5
-echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+# Wait for the CogServer to initialize.
+# netcat -z returns 1 upon connection.
+while ! nc -z $HOSTNAME $PORT ; do
+   echo "Wating for CogServer at $HOSTNAME $PORT ..."
+   sleep 1
+done
+echo "Found CogServer at $HOSTNAME $PORT"
 
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
 
+# echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+
 # Batch-process the corpus.
-tmux new-window -n 'submit' 'sleep 1; ./pair-submit.sh; $SHELL'
+tmux new-window -n 'submit' './pair-submit.sh; $SHELL'
 
 # Spare
 tmux new-window -n 'spare' 'echo -e "\nSpare-use shell.\n"; $SHELL'

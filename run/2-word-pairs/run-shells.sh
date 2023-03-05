@@ -43,9 +43,16 @@ byobu new-session -d -n 'cntl' \
 
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver.scm ;   $SHELL'
 
-# Wait for the cogserver to initialize.
-sleep 5;
-echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+# Wait for the CogServer to initialize.
+# netcat -z returns 1 upon connection.
+while ! nc -z $HOSTNAME $PORT ; do
+	echo "Wating for cogserver at $HOSTNAME $PORT ..."
+	sleep 1
+done
+echo "Found CogServer at $HOSTNAME $PORT"
+
+# echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
