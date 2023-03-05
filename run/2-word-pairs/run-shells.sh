@@ -42,7 +42,10 @@ byobu new-session -d -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver.scm ;   $SHELL'
-sleep 2;
+
+# Wait for the cogserver to initialize.
+sleep 5;
+echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'

@@ -15954,6 +15954,93 @@ sents 3000 / 37 secs; ncond= 112239 / 22 ,bool= 12312 / 0 ,cart= 7627 / 15 ;atom
 62.0
 61.7
 
+141.5
+141.2
+122.0
+
+Ohh undo cogserver _running DONE
+(cog-atomspace) wtf ... why is it not one?
+
+cog-atomspace-stack-top
+(fluid-ref cog-atomspace-stack-top)
+
+(cog-set-atomspace! needs to.... !?
+
+(define (check)
+	(define base (cog-atomspace))
+	(define p1 (cog-push-atomspace))
+	(define p2 (cog-push-atomspace))
+	(format #t "Post push ~A\n" p2)
+	(format #t "Post top ~A\n" (fluid-ref cog-atomspace-stack-top))
+	(format #t "Post stack ~A\n" (fluid-ref cog-atomspace-stack))
+	(cog-set-atomspace! base)
+	(cog-pop-atomspace)
+	(cog-pop-atomspace)
+)
+
+tot=186000000 numv=46525112 numa=139474888 cumv=23347129 cuma=15639903 size=1247585024
+tot=190000000 numv=47168736 numa=142831264 cumv=23388784 cuma=16755847 size=1284628192
+(count-all)
+17266595
+14.5g
+
+tot=193000000 numv=47616765 numa=145383235 cumv=23393348 cuma=17588461 size=1311417888
+17797445
+17.2g
+
+tot=196000000 numv=48061140 numa=147938860 cumv=23400526 cuma=18393007 size=1337393056
+18427223
+19.3g
+
+tot=198000001 numv=48332410 numa=149667590 cumv=23407986 cuma=18853426 size=1352365184
+18900490
+24.5g
+
+tot=204000000 numv=49087071 numa=154912929 cumv=23438819 cuma=20020377 size=1390694272
+20023185
+27.7
+
+tot=206000000 numv=49303940 numa=156696060 cumv=23452211 cuma=20301939 size=1400132800
+20305810
+42.9
+
+tot=209000000 numv=49626911 numa=159373089 cumv=23473426 cuma=20705970 size=1413740672
+20714570
+61.9
+
+KEEP_BACK_PTRS
+--enable-gc-debug
+0x7f355d7d3900
+
+LD_PRELOAD
+GC_FIND_LEAK
+GC_BACKTRACES
+
+GC_FINDLEAK_DELAY_FREE
+
+heaptrack
+heaptrack_interpret: /build/heaptrack-jcO0xN/heaptrack-1.1.0+20180922.gitf752536/src/util/linewriter.h:84: bool LineWriter::write(const char*, T ...) [with T = {const char*}]: Assertion `false && "message doesn't fit into buffer"' failed.
+
+extractor_new
+
+54.1 at close
+
+pool_alloc_vec
+pool_alloc
+make_choice
+record_choice
+...
+mk_parse_set
+build_parse_set <<<
+setup_linkages
+
+set_node_overflowed
+      n  += (w_count_t)pc->set[0]->count * pc->set[1]->count;
+      if (PARSE_NUM_OVERFLOW < n) return true;
+
+
+
+
 
 ---------------------------------------------------------------------
 
