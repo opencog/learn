@@ -180,9 +180,19 @@
 
 ; --------------------------------------------------------------------
 
-(define (make-block-pair-observer)
+(define-public (make-block-pair-observer)
 "
-	Make an observer for counting pairs in text blocks. See above and below.
+   make-block-pair-observer -- Make an observer for counting pairs in
+   text blocks. Returns a function of the following form:
+
+   func TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for word-pair counting.
+
+   TEXT-BLOCK is a utf8 string of text. A sliding window, of the default
+   width of 9 words, is created on that block. Everything within the
+   window is sent to the LG 'any' random-planar-tree parser. The word
+   pairs in the randome tree are then counted. Counts are stored.
 "
 	; `ala` is the basic pair API.
 	; `alc` adds a default counting API.
@@ -202,21 +212,6 @@
 	(define obs-text (make-pair-counter als #:NUM-LINKAGES 6))
 
 	(make-observe-block als obs-text #:WIN-SIZE 9)
-)
-
-(define-public observe-block-pairs (make-block-pair-observer))
-
-(set-procedure-property! observe-block-pairs 'documentation
-"
-   observe-block-pairs TEXT-BLOCK
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for word-pair counting.
-
-   TEXT-BLOCK is a utf8 string of text. A sliding window, of the default
-   width of 9 words, is created on that block. Everything within the
-   window is sent to the LG 'any' random-planar-tree parser. The word
-   pairs in the randome tree are then counted. Counts are stored.
-"
 )
 
 ; ---------------------------------------------------------------------
