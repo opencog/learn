@@ -41,8 +41,11 @@ if [ 0 -eq `find $CORPORA_DIR -type f |wc -l` ]; then
 	exit -1
 fi
 
+# Let guile know that we're starting with the pairs.
+echo -e "(start-pair-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+
 ${COMMON_DIR}/process-corpus.sh $PAIR_CONF_FILE
 
 # The above won't return until all files have been submitted.
-# Let guile know that it's done.
-echo -e "(finished-pair-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+# Let guile know that we've finished with the submisions.
+echo -e "(finish-pair-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null

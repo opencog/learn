@@ -43,7 +43,8 @@ fi
 # Use byobu so that the scroll bars actually work.
 byobu new-session -d -s 'auto-pair-count' -n 'cntl' 'top; $SHELL'
 
-byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; $SHELL'
+# Start cogserver. When it exits, start marginal computation.
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; compute-marginals.sh ; $SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.
@@ -55,6 +56,9 @@ echo "Found CogServer at $HOSTNAME $PORT"
 
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
+
+# Redefine handler so that the coserver exists when pairs are done.
+echo -e "(define (finish-pair-submit) (exit-server))\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null

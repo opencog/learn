@@ -53,10 +53,16 @@ A quick overview:
 * `compute-marginals.sh`: A bash script that computes marginal statistics
   after pair counting has concluded. This needs to be run by hand.
 
-* `run-all.sh`: Combine all of the above into one step. When this
-  finishes, move to step `3-mst-parsing`.
-
 * `run-shells.sh`: multi-tasking terminal server.  Opens multiple
   terminal sessions with tmux/byobu, and starts the cogserver in one
   of them.  Use F3 and F4 to switch to different terminals. Switch
   to the "submit" terminal, and start `pair-submit.sh` by hand.
+
+* `run-all.sh`: Combine all of the above into one step. Opens the
+  terminal sessions in the same way, but also launches the cogserver,
+  the telnet session, and the marginals recomputation. At this time,
+  this won't auto-exit when it finishes.  That's in order to allow
+  review and confirmation. If satsified, kill the entire session with
+```
+  tmux kill-session -t auto-pair-count
+```
