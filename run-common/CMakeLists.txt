@@ -1,8 +1,14 @@
 
 INSTALL(FILES
+	README.md
+	DESTINATION ${COGUTIL_DATA_DIR}/learn/run-common
+)
+
+INSTALL(PROGRAMS
 	cogserver-gram.scm
 	cogserver-lg.scm
 	cogserver-mst.scm
+	cogserver-pair.scm
 	cogserver.scm
 	file-block-process.sh
 	file-line-process.sh
@@ -13,7 +19,6 @@ INSTALL(FILES
 	marginals-mst-shape.scm
 	marginals-pair.scm
 	process-corpus.sh
-	README.md
 	renice.sh
 	socket-send.pl
 	split-sentences.pl
