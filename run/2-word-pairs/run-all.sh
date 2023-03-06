@@ -40,8 +40,8 @@ else
 fi
 
 # ==================================
-# Use byobu so that the scroll bars actually work
-byobu new-session -d -n 'cntl' 'top; $SHELL'
+# Use byobu so that the scroll bars actually work.
+byobu new-session -d -s 'auto-pair-count' -n 'cntl' 'top; $SHELL'
 
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; $SHELL'
 
@@ -70,19 +70,5 @@ echo "tmux_left=\"session\"" > $HOME/.byobu/status
 echo "tmux_right=\"load_average disk_io date time\"" >> $HOME/.byobu/status
 tmux attach
 
-## Shut down the server.
-#echo Done pair counting
-#echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
-#
-## Wait for the shutdown to complete.
-#sleep 1
-#
-## Compute the pair marginals.
-#echo "Start computing the pair marginals"
-#guile -s ${COMMON_DIR}/marginals-pair.scm
-#echo "Finish computing the pair marginals"
-#echo -e "\n\n\n"
-#
 #echo Done processing word-pairs
 ## ------------------------
-#

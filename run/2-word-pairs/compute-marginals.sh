@@ -2,11 +2,11 @@
 #
 # compute-marginals.sh
 #
-# Start the cogserver, open the database and compute the word-pair
+# Start the CogServer, open the database and compute the word-pair
 # marginal statistics.  It is safe to run this multiple times, but
 # it is wasteful: it will give the same results each time.
 #
-# Instead of running this, `trim-dataset.sh` can be run to trim the
+# As an alternative, `trim-dataset.sh` can be run to trim the
 # dataset, and then compute the marginals for the smaller dataset.
 #
 # ----------------------

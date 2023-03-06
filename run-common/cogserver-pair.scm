@@ -35,12 +35,18 @@
 ;;; (load-atoms-of-type 'AnchorNode)
 
 ; Things to do, after all text files have been submitted.
-; The `pair-submit.sh` shell script will call this. Block until all
-; activity has died down, and then exit.
+; The `pair-submit.sh` shell script will call this.
+; Block until all activity has died down,
+; then compute the marginals, then exit.
 (define (finished-pair-submit)
+	(define ala (make-any-link-api))
+	(define aca (add-count-api ala))
+	(define asa (add-pair-stars aca))
 	(block-until-idle 0.01)
+	(batch-all-pair-mi asa)
 	(cog-close storage-node)
-	(exit))
+	(block-until-idle 0.01)
+	(exit 0))
 
 ; Reset the parse timer. Yes, this is a hack.
 (monitor-parse-rate #t)

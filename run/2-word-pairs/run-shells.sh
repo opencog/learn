@@ -37,8 +37,8 @@ else
 	exit -1
 fi
 
-# Use byobu so that the scroll bars actually work
-byobu new-session -d -n 'cntl' \
+# Use byobu so that the scroll bars actually work.
+byobu new-session -d -s 'pair-count' -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; $SHELL'

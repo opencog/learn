@@ -1,5 +1,10 @@
 
 Things to read:
+* A Scalable, Interpretable, Verifiable & Differentiable Logic Gate
+  Convolutional Neural Network Architecture From Truth Tables
+  Adrien Benamira, Tristan Guérand, Thomas Peyrin, Trevor Yap, Bryan Hooi
+  https://arxiv.org/pdf/2208.08609.pdf
+
 * Metagraphs and their applications
   Amit Basu, Rober Blanning, 2007
   Springer Integrated Series on Information Systems.
@@ -56,7 +61,7 @@ Things to read:
   https://arxiv.org/pdf/2202.02061.pdf
   Appendix contains strong description of monoidal categories.
 
-* https://arxiv.org/pdf/2202.02061.pdf and matcching talk
+* https://arxiv.org/pdf/2202.02061.pdf and matching talk
   https://www.youtube.com/watch?v=-pxFgjLJ3uM
 
 * Noam Zeilberger: "Parsing as a lifting problem and the
