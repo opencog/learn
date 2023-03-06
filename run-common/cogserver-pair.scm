@@ -30,11 +30,17 @@
 ; Load up the words. Not quite needed, but ... OK.
 (display "Fetch all words from database. This may take several minutes.\n")
 (load-atoms-of-type 'WordNode)
+(load-atoms-of-type 'SentenceNode)
+(load-atoms-of-type 'ParseNode)
+;;; (load-atoms-of-type 'AnchorNode)
 
-; Total counts are stored here. !? If restarting counting ....
-; (fetch-atom (SentenceNode "word-pairs"))
-; (fetch-atom (ParseNode "word-pairs"))
-; (for-each fetch-atom (cog-get-atoms 'Anchor))
+; Things to do, after all text files have been submitted.
+; The `pair-submit.sh` shell script will call this. Block until all
+; activity has died down, and then exit.
+(define (finished-pair-submit)
+	(block-until-idle 0.01)
+	(cog-close storage-node)
+	(exit))
 
 ; Reset the parse timer. Yes, this is a hack.
 (monitor-parse-rate #t)
