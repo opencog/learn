@@ -27,4 +27,4 @@ else
 	exit -1
 fi
 
-exec guile -l ${COMMON_DIR}/cogserver-pair.scm
+exec ${COMMON_DIR}/cogserver-pair.scm
