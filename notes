@@ -16038,6 +16038,11 @@ set_node_overflowed
       n  += (w_count_t)pc->set[0]->count * pc->set[1]->count;
       if (PARSE_NUM_OVERFLOW < n) return true;
 
+export OBSERVE="observe-block-pairs"
+in 2-pair-conf.sh
+(define-public observe-block-pairs (make-block-pair-observer))
+
+(exit-server)
 
 
 
