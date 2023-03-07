@@ -12,8 +12,12 @@ semi-automated steps. These steps are "semi-automated", in that
 they are meant to be run by hand, by running the shell scripts
 in each directory.
 
-An (almost) "fully automated" script is provided in `all-in-one.sh`.
-Currently, it only automates steps 2 and 3.
+Full automation is provided by docker containers. These are found in
+the [opencog/docker](https://github.com/opencog/docker) git repo.
+These are designed so that you can just drop off your input text into
+designated diectories, and then just run the containers. The resulting
+datasets are copied out of the docker containers, where you can get at
+them. This simplifies the processing of different kinds of texts.
 
 * For natural language learning, a text corpus is needed. Any
   sufficiently large collection of plain-text UTF-8 files will do.
