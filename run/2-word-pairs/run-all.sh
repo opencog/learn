@@ -44,7 +44,7 @@ fi
 byobu new-session -d -s 'auto-pair-count' -n 'cntl' 'top; $SHELL'
 
 # Start cogserver. When it exits, start marginal computation.
-byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; compute-marginals.sh ; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-pair.scm ; ./compute-marginals.sh ; $SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.
