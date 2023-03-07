@@ -39,7 +39,7 @@ else
 fi
 
 # Use byobu so that the scroll bars actually work
-byobu new-session -d -n 'cntl' \
+byobu new-session -d -s 'mst-counting' -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; $SHELL'
 sleep 2;
