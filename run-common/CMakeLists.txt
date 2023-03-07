@@ -57,7 +57,6 @@ INSTALL(FILES
 )
 
 INSTALL(PROGRAMS
-	../run/all-in-one.sh
 	../run/run-tmux.sh
 	DESTINATION ${COGUTIL_DATA_DIR}/learn/run
 )
