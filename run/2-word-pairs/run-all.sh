@@ -57,7 +57,7 @@ echo "Found CogServer at $HOSTNAME $PORT"
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
 
-# Redefine handler so that the coserver exists when pairs are done.
+# Redefine handler so that the coserver exits when pairs are done.
 echo -e "(define (finish-pair-submit) (exit-server))\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null

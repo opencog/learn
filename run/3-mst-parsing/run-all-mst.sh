@@ -2,12 +2,22 @@
 #
 # run-all-mst.sh
 #
-# Run everything needed for the MST-parsing and disjunct-counting
-# stage of the language-learning pipeline.
+# Run a fully-automated MST parsing session.
+# This will start the same byobu terminal session as the manual mode,
+# so that it can be used for monitoring. However, all the needed work
+# will auto-launch.
 #
-# ----------------------
+# Use F3 and F4 to switch to the other terminals.
+#
 
-# Load master config parameters
+# Work around an lxc-attach bug.
+if [[ `tty` == "not a tty" ]]
+then
+	script -c $0 /dev/null
+	exit 0
+fi
+
+# Load config parameters
 if [ -z $MASTER_CONFIG_FILE ]; then
 	echo "MASTER_CONFIG_FILE not defined!"
 	exit -1
@@ -17,68 +27,44 @@ if [ -r $MASTER_CONFIG_FILE ]; then
 	source $MASTER_CONFIG_FILE
 else
 	echo "Cannot find master configuration file!"
+	env |grep CONF
 	exit -1
 fi
 
-# ----------------------
-# The pair-conf file holds the pairs DB name.
-if ! [ -z ${PAIR_CONF_FILE} ] && [ -r ${PAIR_CONF_FILE} ]; then
-	source ${PAIR_CONF_FILE}
-else
-	echo "Cannot find pair-counting configuration file!"
-	exit -1
-fi
-
-# ------------------------
-# Step three - MST parsing and disjunct counting
-if ! [ -z ${MST_CONF_FILE} ] && [ -r ${MST_CONF_FILE} ]; then
+if [ -r ${MST_CONF_FILE} ]; then
 	source ${MST_CONF_FILE}
 else
 	echo "Cannot find MST configuration file!"
+	env |grep CONF
 	exit -1
 fi
 
-# Copy the database, to provide isolation between stages.
-if [[ $STORAGE_NODE = "(RocksStorageNode"* ]]; then
-	if [ -d ${MST_DB} ]; then
-		echo "The MST database ${MST_DB} already exists; not copying!"
-		exit -1
-	fi
-	cp -pr ${PAIRS_DB} ${MST_DB}
-elif [[ $STORAGE_NODE = "(PostgresStorageNode"* ]]; then
-	createdb -T ${PAIRS_DB} ${MST_DB}
-	retVal=$?
-	if [ $retVal -ne 0 ]; then
-		echo "Postgres database create failed; not continuing!"
-		exit -1
-	fi
-else
-	echo "Unknown storage medium!"
-	exit -1
-fi
+# Use byobu so that the scroll bars actually work
+byobu new-session -d -s 'mst-count-auto' -n 'cntl' \
+	'top; $SHELL'
 
-# Run the MST cogserver
-guile -l ${COMMON_DIR}/cogserver-mst.scm -c "(sleep 150000000)" &
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; $SHELL'
 
-# Wait for the cogserver to initialize.
-sleep 3
-echo -e "(block-until-idle 0.01)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+# Wait for the CogServer to initialize.
+# netcat -z returns 1 upon connection.
+while ! nc -z $HOSTNAME $PORT ; do
+	echo "Wating for cogserver at $HOSTNAME $PORT ..."
+	sleep 1
+done
+echo "Found CogServer at $HOSTNAME $PORT"
 
-# Batch-process the corpus.
-${COMMON_DIR}/process-corpus.sh $MST_CONF_FILE
+# Telnet window
+tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
 
-# Shut down the server.
-echo Done MST parsing
-echo "(exit-server)" | nc $HOSTNAME $PORT >> /dev/null
+echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
-# Wait for the shutdown to complete.
-sleep 1
+# Parse
+tmux new-window -n 'submit' './mst-submit.sh; $SHELL'
 
-# Compute the disjunct marginals.
-echo "Start computing the disjunct marginals"
-guile -s ${COMMON_DIR}/marginals-mst.scm
-echo "Finish computing the disjunct marginals"
-echo -e "\n\n\n"
+# Spare
+tmux new-window -n 'spare' 'echo -e "\nSpare-use shell.\n"; $SHELL'
 
-echo Done MST parsing and disjunct counting
-# ------------------------
+# Fix the annoying byobu display
+echo "tmux_left=\"session\"" > $HOME/.byobu/status
+echo "tmux_right=\"load_average disk_io date time\"" >> $HOME/.byobu/status
+tmux attach

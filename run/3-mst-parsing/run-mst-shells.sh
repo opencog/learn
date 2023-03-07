@@ -42,7 +42,16 @@ fi
 byobu new-session -d -s 'mst-counting' -n 'cntl' \
 	'echo -e "\nControl shell; you might want to run 'top' here.\n"; $SHELL'
 byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; $SHELL'
-sleep 2;
+
+# Wait for the CogServer to initialize.
+# netcat -z returns 1 upon connection.
+while ! nc -z $HOSTNAME $PORT ; do
+	echo "Wating for cogserver at $HOSTNAME $PORT ..."
+	sleep 1
+done
+echo "Found CogServer at $HOSTNAME $PORT"
+
+echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
