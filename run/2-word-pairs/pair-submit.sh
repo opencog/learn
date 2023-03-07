@@ -30,14 +30,20 @@ else
 	exit -1
 fi
 
+notify_done () {
+	echo -e "(finish-pair-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+}
+
 # Verify that the input corpus can be found, and is not empty.
 if [ ! -d $CORPORA_DIR ]; then
 	echo "Cannot find a text corpus at $CORPORA_DIR"
+	notify_done
 	exit -1
 fi
 
 if [ 0 -eq `find $CORPORA_DIR -type f |wc -l` ]; then
 	echo "Empty text corpus directory at $CORPORA_DIR"
+	notify_done
 	exit -1
 fi
 
@@ -48,4 +54,4 @@ ${COMMON_DIR}/process-corpus.sh $PAIR_CONF_FILE
 
 # The above won't return until all files have been submitted.
 # Let guile know that we've finished with the submisions.
-echo -e "(finish-pair-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+notify_done
