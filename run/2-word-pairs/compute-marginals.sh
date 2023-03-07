@@ -32,3 +32,6 @@ else
 fi
 
 guile -s ${COMMON_DIR}/marginals-pair.scm
+
+# Leave evidence behind that we finished.
+touch ~/pair-marginals-done
