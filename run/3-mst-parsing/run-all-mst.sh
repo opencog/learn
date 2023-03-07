@@ -56,6 +56,11 @@ echo "Found CogServer at $HOSTNAME $PORT"
 # Telnet window
 tmux new-window -n 'telnet' 'rlwrap telnet $HOSTNAME $PORT; $SHELL'
 
+# Redefine handler so that the CogServer exits when MST is done.
+echo -e "(define (finish-mst-submit) (exit-server))\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+
+# The gate below is only on the base CogServer.
+# The mst-gate is opened, after all pairs are loaded.
 echo -e "(wait-gate startup-gate)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
 
 # Parse
