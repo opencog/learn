@@ -43,7 +43,7 @@ fi
 byobu new-session -d -s 'mst-count-auto' -n 'cntl' \
 	'top; $SHELL'
 
-byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; $SHELL'
+byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; ./compute-mst-marginals.sh ; $SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.
