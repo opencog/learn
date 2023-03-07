@@ -34,4 +34,6 @@ fi
 guile -s ${COMMON_DIR}/marginals-pair.scm
 
 # Leave evidence behind that we finished.
-touch ~/pair-marginals-done
+# Docker uses this to self-destruct containers when done.
+# Yes, it pollutes the file system and needs a better fix.
+touch /tmp/pair-marginals-done

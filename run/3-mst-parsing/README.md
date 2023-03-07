@@ -76,4 +76,9 @@ Some notes about the automation process.
   when called. By default its a no-op. The fully-automated scripts define
   it so that the CogServer exits.
 
+* When marginals compution finishes, the `/tmp/mst-marginals-done` file
+  is touched. Docker uses this to self-halt the container that's running.
+  Yes, this is a non-unique tag, if not running in docker, and it needs
+  fixing.
+
 ---------
