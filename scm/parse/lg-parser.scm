@@ -195,35 +195,6 @@
 	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
 )
 
-#!----------
-Don't do this. It captures the LgDictNode in themodule context.
-Then it cannot be cleared!
-
-(define-public observe-block-mpg (make-block-mpg-observer))
-
-(set-procedure-property! observe-block-mpg 'documentation
-"
-   observe-block-mpg TEXT-BLOCK
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for MPG/MST parsing.
-
-   TEXT-BLOCK is a utf8 string of text. A sliding window is created
-   on that text block, of default width 12. The words within the
-   window are then sent to the LG parser, using the 'dict-pair'
-   dictionary.  This dictionary is presumed to hold word-pairs
-   with valid word-MI on them, accessible via the `BondNode ANY`
-   EvaluationLinks.
-
-   The LG parser creates MST/MPG parses using that dictionary.
-   Then the count on each disjunct in the parse is incremented.
-
-   This is a block observer, because, at this point, we do not yet know
-   where the sentence boundaries might be, and so a sliding window is
-   used to examine everything in the general vicinity.
-"
-)
------ !#
-
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------
 ; Example:

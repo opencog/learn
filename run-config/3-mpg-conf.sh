@@ -15,10 +15,10 @@ export CORPORA_DIR=$TEXT_DIR/pair-counted
 # Scheme function name for planar MST parsing. This is a scheme function
 # that will be called to process each sentence.  For example, if the corpus
 # contains "Some sentence." then the cogserver will receive
-#   (observe-mpg "Some sentence.")
+#   (observe-block-mpg "Some sentence.")
 #
-# Use `observe-mpg` to get planar MST/MPG parsing.
-export OBSERVE="observe-mpg"
+# Use `observe-block-mpg` to get planar MST/MPG parsing.
+export OBSERVE="observe-block-mpg"
 
 # Directories where in-process and completed files will be moved.
 export IN_PROCESS_DIR=mpg-split
@@ -31,7 +31,7 @@ export MSG="MPG-Processing"
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17003
-# Colorized prompt. Sadly, this command-line editing.
+# Colorized prompt. Sadly, this wrecks command-line editing.
 # export PROMPT="[0;34mscheme@(mpg-parse) [0m"
 export PROMPT="scheme@(mpg-parse) "
 export OCPROMPT="[0;32mcogserv@(mpg-parse) [0m"
