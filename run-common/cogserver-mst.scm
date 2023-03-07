@@ -27,6 +27,12 @@
 	(wait-gate mst-gate)
 	(observer TXT))
 
+; Things to do, after all text files have been submitted.
+; The `mst-submit.sh` shell script will call this.
+; Currently, a no-op.  The automated counters will redefine these.
+(define (start-mst-submit) #f)
+(define (finish-mst-submit) #f)
+
 (load "cogserver.scm")
 
 ; Load up the words

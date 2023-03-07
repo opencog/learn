@@ -31,4 +31,28 @@ else
 	exit -1
 fi
 
+notify_done () {
+   echo -e "(finish-mst-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+}
+
+# Verify that the input corpus can be found, and is not empty.
+if [ ! -d $CORPORA_DIR ]; then
+	echo "Cannot find a text corpus at $CORPORA_DIR"
+	notify_done
+	exit -1
+fi
+
+if [ 0 -eq `find $CORPORA_DIR -type f |wc -l` ]; then
+	echo "Empty text corpus directory at $CORPORA_DIR"
+	notify_done
+	exit -1
+fi
+
+# Let guile know that we're starting with the pairs.
+echo -e "(start-mst-submit)\n.\n." | nc $HOSTNAME $PORT >> /dev/null
+
 ${COMMON_DIR}/process-corpus.sh $MST_CONF_FILE
+
+# The above won't return until all files have been submitted.
+# Let guile know that we've finished with the submisions.
+notify_done

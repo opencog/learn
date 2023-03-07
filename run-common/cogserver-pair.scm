@@ -25,6 +25,12 @@
 	(wait-gate pair-gate)
 	(observer TXT))
 
+; Things to do, after all text files have been submitted.
+; The `pair-submit.sh` shell script will call this.
+; Currently, a no-op.  The automated counters will redefine these.
+(define (start-pair-submit) #f)
+(define (finish-pair-submit) #f)
+
 (load "cogserver.scm")
 
 ; Load up the words. Not quite needed, but ... OK.
@@ -33,12 +39,6 @@
 (load-atoms-of-type 'SentenceNode)
 (load-atoms-of-type 'ParseNode)
 ;;; (load-atoms-of-type 'AnchorNode)
-
-; Things to do, after all text files have been submitted.
-; The `pair-submit.sh` shell script will call this.
-; Currently, a no-op.  The automated counters will redefine these.
-(define (start-pair-submit) #f)
-(define (finish-pair-submit) #f)
 
 ; Reset the parse timer. Yes, this is a hack.
 (monitor-parse-rate #t)
