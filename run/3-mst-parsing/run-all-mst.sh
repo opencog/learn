@@ -39,20 +39,13 @@ else
 	exit -1
 fi
 
-run_guile () {
-	nice guile -l ${COMMON_DIR}/cogserver-mst.scm
-	nice ./compute-mst-marginals.sh
-	# tmux kill-session
-
-	# pkill will halt the docker container by forcing PID 1 to exit.
-	# pkill -9 bash
-}
-
 # Use byobu so that the scroll bars actually work
-byobu new-session -d -s 'mst-count-auto' -n 'cntl' \
-	'top; $SHELL'
+byobu new-session -d -s 'mst-count-auto' -n 'cntl' 'top; $SHELL'
 
-byobu new-window -n 'cogsrv' 'run_guile; $SHELL'
+byobu new-window -n 'cogsrv' ' \
+	nice guile -l ${COMMON_DIR}/cogserver-mst.scm ; \
+	nice ./compute-mst-marginals.sh ; \
+	$SHELL'
 
 # Wait for the CogServer to initialize.
 # netcat -z returns 1 upon connection.
