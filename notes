@@ -16054,7 +16054,8 @@ compute-mst-marginals.sh
 tar -c --zstd <src files> | ssh user@target_host "cd target_dir && tar -x --zstd"
 tar -c --zstd text-master-copy | pv --timer --rate | ssh tripper "tar -x --zstd"
 
-
+start_lookup
+build_sentence_expressions
 
 
 ---------------------------------------------------------------------

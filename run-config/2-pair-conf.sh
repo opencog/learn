@@ -32,7 +32,7 @@ export OCPROMPT="[0;32mcogserv@(count-pairs) [0m"
 export LOGFILE=/tmp/cogserver-pairs-en.log
 
 # Location of the database where pair counts will be accumulated.
-export PAIRS_DB=${ROCKS_DATA_DIR}/word_pairs.rdb
+export PAIRS_DB=${ROCKS_DATA_DIR}/word-pairs.rdb
 export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 
 # For Postgres, use this. (The quotes are important!)
