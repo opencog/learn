@@ -38,7 +38,7 @@ export OCPROMPT="[0;32mcogserv@(mpg-parse) [0m"
 export LOGFILE=/tmp/cogserver-mpg-en.log
 
 # Location of the database where disjunct counts will be accumulated
-export MST_DB=rocks://${ROCKS_DATA_DIR}/mpg_parse.rdb
+export MST_DB=rocks://${ROCKS_DATA_DIR}/mpg-parse.rdb
 export STORAGE_NODE="(RocksStorageNode \"${MST_DB}\")"
 
 # --------------
