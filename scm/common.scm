@@ -7,6 +7,7 @@
 ;
 ; ---------------------------------------------------------------------
 ;
+(use-modules (ice-9 threads))
 (use-modules (srfi srfi-1))
 (use-modules (opencog) (opencog persist))
 
@@ -31,7 +32,7 @@
 
   This will also automatically fetch the previous count from storage,
   so that counting will work correctly, when picking up from a previous
-  point.
+  point. This code is thread-safe.
 
   Warning: this is NOT SAFE for distributed processing! That is
   because this does NOT grab the count from the database every time,
@@ -41,19 +42,27 @@
 
   See also: count-one-atom
 "
+	(define mtx (make-mutex))
+
 	(define (incr-one atom)
 		; If the atom doesn't yet have a count TV attached to it,
-		; then its probably a freshly created atom. Go fetch it
-		; from storage. Otherwise, assume that what we've got here,
-		; in the atomspace, is the current copy.  This works if
-		; there is only one process updating the counts.
+		; then its probably a freshly created atom. Assume that there
+		; is a version in storage; go fetch it. This is thread-safe,
+		; so even if multiple thread increment, there will be only one
+		; fetch. It is not multi-process-safe, e.g. when multiple
+		; writers are using a networked CogStorageNode.
 		(if (not (cog-ctv? (cog-tv atom)))
-			(fetch-atom atom)) ; get from storage
-		(cog-inc-count! atom CNT) ; increment
+			(begin
+				(lock-mutex mtx)
+				(if (not (cog-ctv? (cog-tv atom)))
+					(fetch-atom atom))
+				(cog-inc-count! atom CNT)
+				(unlock-mutex mtx))
+			(cog-inc-count! atom CNT))
 	)
-	(begin
-		(incr-one ATM) ; increment the count on ATM
-		(store-atom ATM)) ; save to storage
+
+	(incr-one ATM) ; increment the count on ATM
+	(store-atom ATM) ; save to storage
 )
 
 (define (count-one-atom ATM)
@@ -63,7 +72,7 @@
 
   This will also automatically fetch the previous count from storage,
   so that counting will work correctly, when picking up from a previous
-  point.
+  point. This code is thread-safe.
 
   Warning: this is NOT SAFE for distributed processing! That is
   because this does NOT grab the count from the database every time,

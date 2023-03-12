@@ -1,4 +1,4 @@
-#! /usr/bin/env -S guile
+#! /usr/bin/env -S guile -l ./marginals-mst-shape.scm --
 !#
 ;
 ; marginals-mst-shape.scm

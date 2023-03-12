@@ -16056,6 +16056,76 @@ tar -c --zstd text-master-copy | pv --timer --rate | ssh tripper "tar -x --zstd"
 
 start_lookup
 build_sentence_expressions
+Fatal error: 
+Assertion (NULL != x) failed in build_word_expressions() (../../link-grammar/tokenize/lookup-exprs.c:126): Word 'LEFT-WALL': NULL X-node
+
+(Word "###LEFT-WALL###" (ctv 1 0 286374))
+
+(cog-incoming-by-type (Word "###LEFT-WALL###") 'Connector)
+(cog-incoming-by-type (Word "###LEFT-WALL###") 'Section)
+
+(for-each (lambda (SECT)
+	(if (nil? (cog-keys SECT)) (set! n (+ n 1)) (set! y (+ y 1))))
+	lwd)
+	(cog-get-atoms 'Section))
+
+scheme@(mpg-parse) > n = 1312708
+> y= 614467
+
+(define s #f)
+(for-each (lambda (SECT)
+   (if (not (nil? (cog-keys SECT))) (set! s SECT)))
+   lwd)
+
+Fuuu
+(1) missing counts.
+(2) missing marginals.
+
+marginals-mst-shape.scm
+
+
+-----------
+Another mystery:
+why is edgeinks != pairs!?
+
+(EdgeLink . 9385993)
+Size: 6939205.0
+
+(define n 0) (define y 0)
+(for-each (lambda (EDGE)
+	(if (nil? (cog-keys EDGE)) (set! n (+ n 1)) (set! y (+ y 1))))
+(cog-get-atoms 'Word))
+	(cog-get-atoms 'Edge))
+
+n 85
+y 9385908
+
+(define ne
+	(filter (lambda (EDGE) (nil? (cog-keys EDGE))) (cog-get-atoms 'Edge)))
+
+(define nw
+	(filter (lambda (EDGE) (nil? (cog-keys EDGE))) (cog-get-atoms 'Word)))
+
+(Predicate "*-FrequencyKey-*")
+ (Predicate "*-TruthValueKey-*")
+ (Predicate "*-Mutual Info Key-*")
+
+(define nc
+	(filter (lambda (EDGE) (not (equal? 3 (length (cog-keys EDGE))))) (cog-get-atoms 'Edge)))
+(length nc) 2446788
+
+((add-report-api star-obj) 'num-pairs)  6939205
+(EdgeLink . 9385993) ==  (+ 6939205 2446788)
+
+(cog-keys (car nc)) (Predicate "*-FrequencyKey-*") ... but no count!
+(cog-value (car nc) (Predicate "*-FrequencyKey-*")) 0 ...
+
+(define pt (Predicate "*-TruthValueKey-*"))
+(define nt
+	(filter (lambda (EDGE) (not (cog-value EDGE pt))) (cog-get-atoms 'Edge)))
+(length nt)  2446787 .. off by one. .. its wild-wild
+
+(star-obj
 
 
 ---------------------------------------------------------------------
