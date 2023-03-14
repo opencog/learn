@@ -44,6 +44,7 @@
 (define sns (getenv "STORAGE_NODE"))
 (cond
 	((string-prefix? "(Rocks" sns) (use-modules (opencog persist-rocks)))
+	((string-prefix? "(Mono" sns) (use-modules (opencog persist-mono)))
 	((string-prefix? "(Postgres" sns) (use-modules (opencog persist-sql)))
 	((string-prefix? "(Cog" sns) (use-modules (opencog persist-cog)))
 	(else (throw 'bad-storage-node 'unknown
@@ -54,12 +55,15 @@
 
 ; If there are multiple frames, then fetch all of them.
 ; Set the cogserver atomspace to the top frame.
-(define frame-tops (load-frames))
-(if (< 1 (length frame-tops))
-	(throw 'bad-frameset 'too-many-tops
-		(format #f "Found more than one frame top: ~A\n" frame-tops)))
-(when (< 0 (length frame-tops))
-	(cog-set-atomspace! (car frame-tops)))
+; Monospace does not have frames
+(define frame-tops '())
+(when (not (string-prefix? "(Mono" sns))
+	(set! frame-tops (load-frames))
+	(if (< 1 (length frame-tops))
+		(throw 'bad-frameset 'too-many-tops
+			(format #f "Found more than one frame top: ~A\n" frame-tops)))
+	(when (< 0 (length frame-tops))
+		(cog-set-atomspace! (car frame-tops))))
 
 ; Start the cogserver using the configured parameters.
 ; Start the cogserver *after* opening the DB and setting frames.

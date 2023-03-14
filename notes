@@ -16127,6 +16127,83 @@ y 9385908
 
 (star-obj
 
+----------
+((add-report-api star-obj) 'num-pairs)
+131458
+(EdgeLink . 185958) 
+(length nt) 54499
+ (+ 131458 54499 1) 185958
+ (make-block-pair-observer)
+observe-block-pairs
+
+(define obs observer)
+
+(LLOBJ 'pair-inc w-left w-right 1.0))
+(LLOBJ 'inc-count EDGE 1.0))
+
+(define (mbpo)
+	(define ala (make-any-link-api))
+   (define alc (add-count-api ala))
+   (define als (add-storage-count alc))
+   (define obs-text (make-pair-counter als #:NUM-LINKAGES 6))
+
+	(define pt (Predicate "*-TruthValueKey-*"))
+	(define (chk-text TXT)
+		(obs-text TXT)
+		(if (< 1 (length
+			(filter (lambda (EDGE) (not (cog-value EDGE pt)))
+				(cog-get-atoms 'Edge))))
+			(begin
+				(cog-logger-info "Fail on >>~A<<\n" TXT)
+				(throw 'fail-count 'mbpo "Y U no happy?"))))
+
+	(make-observe-block als chk-text #:WIN-SIZE 9)
+)
+
+(define obs (mbpo))
+
+(define (chk)
+	(if (< 1 (length
+		(filter (lambda (EDGE) (not (cog-value EDGE pt))) (cog-get-atoms 'Edge))))
+		(format #t "fail\n")))
+
+(define pt (Predicate "*-TruthValueKey-*"))
+(define (bad?) (< 1 (length
+	(filter (lambda (EDGE) (not (cog-value EDGE pt))) (cog-get-atoms 'Edge)))))
+
+(define (stop)
+	(sleep 10)
+	(if (bad?)
+		(begin
+			(set! pair-gate (make-gate))
+			(format #t "failed\n"))
+		(stop)))
+
+(for-each fetch-atom (cog-get-atoms 'Edge))
+
+(define e (Edge (Bond "ANY") (List (Word "foo") (Word "bar"))))
+(cnt-obj 'inc-count e 1)
+(store-value  e (cnt-obj 'count-key))
+
+(observer "this is a test")
+
+(define pair-obj (make-any-link-api))
+(define cnt-obj (add-count-api pair-obj))
+
+(define pt (Predicate "*-TruthValueKey-*"))
+(define base-as (cog-push-atomspace))
+(define f (Edge (Bond "ANY") (List (Word "foo") (Word "boo"))))
+(define temp-as (cog-set-atomspace! base-as))
+(define f1 (cnt-obj 'inc-count f 1))
+(store-value f1 pt)
+(cog-pop-atomspace)
+
+(define pt (Predicate "*-TruthValueKey-*"))
+(length (filter (lambda (EDGE) (not (cog-value EDGE pt))) (cog-get-atoms 'Edge)))
+(length (filter (lambda (EDGE) (= 1 (cog-count EDGE))) (cog-get-atoms 'Edge)))
+(length (filter (lambda (EDGE) (= 2 (cog-count EDGE))) (cog-get-atoms 'Edge)))
+(length (filter (lambda (EDGE) (= 3 (cog-count EDGE))) (cog-get-atoms 'Edge)))
+(length (filter (lambda (EDGE) (= 4 (cog-count EDGE))) (cog-get-atoms 'Edge)))
 
 ---------------------------------------------------------------------
 

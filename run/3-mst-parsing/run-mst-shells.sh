@@ -47,7 +47,7 @@ byobu new-window -n 'cogsrv' 'nice guile -l ${COMMON_DIR}/cogserver-mst.scm; $SH
 # netcat -z returns 1 upon connection.
 while ! nc -z $HOSTNAME $PORT ; do
 	echo "Wating for cogserver at $HOSTNAME $PORT ..."
-	sleep 1
+	sleep 2
 done
 echo "Found CogServer at $HOSTNAME $PORT"
 
