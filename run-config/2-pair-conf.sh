@@ -34,7 +34,7 @@ export LOGFILE=/tmp/cogserver-pairs-en.log
 # Location of the database where pair counts will be accumulated.
 export PAIRS_DB=${ROCKS_DATA_DIR}/word-pairs.rdb
 # export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
-export STORAGE_NODE="(MonoStorageNode \"mono://${PAIRS_DB}\")"
+export STORAGE_NODE="(MonoStorageNode \"monospace://${PAIRS_DB}\")"
 
 # For Postgres, use this. (The quotes are important!)
 # (Except don't use it -- the Postgres Backend is deprecated.)
