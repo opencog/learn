@@ -33,7 +33,8 @@ export LOGFILE=/tmp/cogserver-pairs-en.log
 
 # Location of the database where pair counts will be accumulated.
 export PAIRS_DB=${ROCKS_DATA_DIR}/word-pairs.rdb
-export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
+# export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
+export STORAGE_NODE="(MonoStorageNode \"mono://${PAIRS_DB}\")"
 
 # For Postgres, use this. (The quotes are important!)
 # (Except don't use it -- the Postgres Backend is deprecated.)
@@ -41,10 +42,10 @@ export STORAGE_NODE="(RocksStorageNode \"rocks://${PAIRS_DB}\")"
 # export STORAGE_NODE="(PostgresStorageNode \"postgres:///${PAIRS_DB}\")"
 
 # =================================================================
-# Deprecated settings. These settngs allow the text to be processed
+# Deprecated settings. These settings allow the text to be processed
 # using an older processing model. It suffers from various theoretical
 # issues having to do with segmentation into words and sentences, and
-# is thus not used any more. Segmentation is henceforth handled in the
+# thus is not used any more. Segmentation is henceforth handled in the
 # in the AtomSpace processing pipeline.
 #
 # Enable or disable sentence splitting.

@@ -6,7 +6,7 @@ If disjunct (Section) data is available, then those are used to create
 "classic" Link Grammar style parses. If these are missing or
 insufficient to allow a full parse, then word-pair data is used to
 supplement the missing linkages. If no disjunct data is available at
-all, then the resulting parses are Maximimum Planar Graph parses:
+all, then the resulting parses are Maximum Planar Graph parses:
 parses that draw links between words in such a way as to maximize the
 MI between word-pairs.
 

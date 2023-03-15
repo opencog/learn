@@ -1,7 +1,7 @@
 %
 % Configuration file for an Atomspace-based dictionary. It will use
 % any available data in the AtomSpace to perform parsing. Disjunct
-% data is prefered, if it is available; else word-pair data is used.
+% data is preferred, if it is available; else word-pair data is used.
 % if even that is not available, random planar parsing will be done.
 %
 % All config values can be left as-is; nothing here needs tweaking.
@@ -110,7 +110,7 @@
 % Create expressions that consist entirely of "ANY" link-types.
 #define any-disjuncts 0;
 
-% Enble the automatic generation of <UNKNOWN-WORD>. It will be
+% Enable the automatic generation of <UNKNOWN-WORD>. It will be
 % automatically added to the dictionary, with multi-ANY connectors
 % on it. The ANY connectors will be used, irresepctive of the other
 % `any` setting above.
