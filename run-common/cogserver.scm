@@ -88,9 +88,9 @@
 ; is idle (taken to be a sign that there's no more text to be
 ; processed) and then exits guile.
 (define (exit-server)
-	(block-until-idle 0.01)
+	(block-until-idle)
 	(cog-close storage-node)
-	(block-until-idle 0.01)
+	(block-until-idle)
 	(exit 0))
 
 ; -----------------------------------------------------------

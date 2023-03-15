@@ -266,21 +266,31 @@
 
 ; ---------------------------------------------------------------
 
-(define-public (block-until-idle BUSY-FRAC)
+(define-public (block-until-idle)
 "
-  block-until-idle BUSY-FRAC - Block until CPU usage goes below BUSY-FRAC
+  block-until-idle - Block until the process is idle.
 
-  This function simply won't return until the CPU usage drops below
-  BUSY-FRAC, which must be a number less than 1.0 and greater than
-  0.03. The min value is because this function uses CPU time itself,
-  and so contributes to the business of the system.
+  This function simply won't return until all threads in the process
+  have been idle for at least six seconds. The test is 'statistical',
+  in that CPU consumption is measured. Note that a system blocked on
+  disk I/O appears to be idle; caveat emptor. Note that housekeeping
+  activities by the cogserver may make the system look busy.
 "
-	(define (block cpuuse)
-		(sleep 1)
-		(let ((now (get-internal-run-time)))
-			(if (< BUSY-FRAC (/ (- now cpuuse) 1000000000.0))
-				(block now))))
-	(block (get-internal-run-time))
+	(define BUSY-TIME 0.02)
+	(define SAMPLE-TIME 3)
+	(define CHECK-AGAIN 3)
+
+	; System must consume less that BUSY-TIME seconds of CPU,
+	; over a period of SAMPLE-TIME seconds, for CHECK-AGAIN
+	; periods in a row.
+	(define (block cpuuse cnt)
+		(when (< cnt CHECK-AGAIN)
+			(sleep SAMPLE-TIME)
+			(let ((now (get-internal-run-time)))
+				(if (< BUSY-TIME (* (- now cpuuse) 1e-9))
+					(block now 0)
+					(block now (+ cnt 1)))))
+	(block (get-internal-run-time) 0)
 )
 
 ; ---------------------------------------------------------------------
