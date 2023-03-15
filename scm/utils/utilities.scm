@@ -289,7 +289,7 @@
 			(let ((now (get-internal-run-time)))
 				(if (< BUSY-TIME (* (- now cpuuse) 1e-9))
 					(block now 0)
-					(block now (+ cnt 1)))))
+					(block now (+ cnt 1))))))
 	(block (get-internal-run-time) 0)
 )
 

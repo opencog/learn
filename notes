@@ -16224,6 +16224,28 @@ $3 = 21457
 $4 = 14046
 $5 = 10167
 
+(finish-pair-submit) -> exit-server
+(block-until-idle 0.01)
+
+(for-each (lambda (N)
+	(format #t "~A = ~A\n" N
+		(length (filter (lambda (EDGE) (= N (cog-count EDGE)))
+			(cog-get-atoms 'Edge)))))
+	(iota 10))
+
+wtf below is small sample only
+0 = 1
+1 = 38063
+2 = 21363
+3 = 14238
+4 = 10113
+5 = 7192
+6 = 5433
+7 = 4136
+8 = 3698
+9 = 3586
+
+(filter (lambda (EDGE) (= 0 (length (cog-keys EDGE)))) (cog-get-atoms 'Edge))
 
 ---------------------------------------------------------------------
 
