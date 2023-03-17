@@ -16214,7 +16214,10 @@ $6 = 9875
 
 09:41:18 PM CDT -> 10:05:33 PM = 24:15 min rocks
 11:18:53 PM CDT -> 11:43:08 PM = 24:15 min rocks
+
 01:37:13 -> 02:03:28 = 26:15 mono
+01:50:16 -> 02:16:30 = 26:14
+02:28:32 -> 02:53:47 = 25:15 2nd time.
 
 
 Mono
@@ -16246,6 +16249,40 @@ wtf below is small sample only
 9 = 3586
 
 (filter (lambda (EDGE) (= 0 (length (cog-keys EDGE)))) (cog-get-atoms 'Edge))
+
+---------------------------------------------------------------------
+link-grammar/tokenize/wordgraph.c:31
+   assert(0 != *s, "Empty-string subword");
+
+link-grammar/tokenize/tokenize.c:2999
+orig_sentence = 0x7f7a73871360 "", 
+
+sent->orig_sentence
+make_cart_pairs  
+      Exp* cpr = make_cart_pairs(dict, wrd, sentlo->Exp_pool, sent_words,
+                                 local->pair_disjuncts,
+                                 local->pair_with_any);
+thread_local Sentence sentlo = nullptr;
+thread_local HandleSeq sent_words;
+
+word-pairs.cc:310
+
+66 thr
+
+gc: 2,3 ...14, 19, 20, 24, 39  (total 17)
+rocks: 15,16,17,18, 21,22,23, 25,26,27, 31,32, ...37, 42,43, 45, 46, 49
+(total 22)
+
+logger: 28,29
+immortal: 30
+cogserver: 38,
+while_not_done: 50
+
+jit lock-mutex do_eval: 40,41, 51,52, 55, 57, 59, 65  (total 8)
+join ~GenericShell: 44, 47, 48, 53,54, 56, 58, 60, 63,64 (total 10)
+wait_until poll_output: 61  (top)
+recv hadle_connection: 62
+serverLoop: 66
 
 ---------------------------------------------------------------------
 

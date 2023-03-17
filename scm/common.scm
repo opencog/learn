@@ -25,6 +25,8 @@
 
 ; ---------------------------------------------------------------------
 
+(define *-count-upgrade-mutex-* (make-mutex))
+
 (define (count-inc-atom ATM CNT)
 "
   count-inc-atom ATM CNT -- increment the count by CNT on ATM, and
@@ -42,8 +44,6 @@
 
   See also: count-one-atom
 "
-	(define mtx (make-mutex))
-
 	(define (incr-one atom)
 		; If the atom doesn't yet have a count TV attached to it,
 		; then its probably a freshly created atom. Assume that there
@@ -53,11 +53,11 @@
 		; writers are using a networked CogStorageNode.
 		(if (not (cog-ctv? (cog-tv atom)))
 			(begin
-				(lock-mutex mtx)
+				(lock-mutex *-count-upgrade-mutex-*)
 				(if (not (cog-ctv? (cog-tv atom)))
 					(fetch-atom atom))
 				(cog-inc-count! atom CNT)
-				(unlock-mutex mtx))
+				(unlock-mutex *-count-upgrade-mutex-*))
 			(cog-inc-count! atom CNT))
 	)
 
