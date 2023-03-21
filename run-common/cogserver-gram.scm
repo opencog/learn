@@ -1,3 +1,5 @@
+#! /usr/bin/env -S guile -l ./cogserver-gram.scm --
+!#
 ;
 ; cogserver-gram.scm
 ;

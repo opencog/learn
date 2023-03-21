@@ -1,7 +1,9 @@
+#! /usr/bin/env -S guile -l ./cogserver-lg.scm --
+!#
 ;
 ; cogserver-lg.scm
 ;
-; Run everything needed to get ready to start the link-grammar parsing
+; Run everything needed to get ready to start the Link Grammar parsing
 ; pipeline. Unlike the earlier gram-class startup scripts, this does
 ; NOT create cross-sections, as these are not neede for LG parsing.
 ;

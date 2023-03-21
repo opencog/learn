@@ -16276,10 +16276,14 @@ pair_boolean_lookup
 size_of_expression(exp)
 
 ++++ Encoded for pruning (one-step)            585.62 seconds
+Encoded for pruning                       440.54 seconds
+xxx this is done twice... why?
 
 and_enchain_right(nul nul, eee)
 
-andhead = make_and_node(pool, item, NULL);
+eee = make_and_node(sentlo->Exp_pool, eee, NULL);
+
+sent_words.size(
 
 
 
@@ -16299,6 +16303,65 @@ join ~GenericShell: 44, 47, 48, 53,54, 56, 58, 60, 63,64 (total 10)
 wait_until poll_output: 61  (top)
 recv hadle_connection: 62
 serverLoop: 66
+----------------------
+
+Found 1858 linkages (667 of 667 random linkages had no P.P. violations)
+	Linkage 1, cost vector = (UNUSED=0 DIS=12.62 LEN=1)
+
+       +-------RH------+
+       |          +BLGS+IKF+BNN+ANY+
+       |          |    |   |   |   |
+###LEFT-WALL### this  is   a test  .
+
+      ###LEFT-WALL###     0.984  RH+
+                 this     1.997  BLGS+
+                   is     1.820  BLGS- RH- IKF+
+                    a     2.307  IKF- BNN+
+                 test     2.909  BNN- ANY+
+                    .     2.600  ANY-
+
+Found 410 linkages (410 had no P.P. violations)
+	Linkage 1, cost vector = (UNUSED=0 DIS=10.63 LEN=1)
+
+       +-------RH------+
+       |          +BLGS+AMII+ANY+
+       |          |    |    |   |
+###LEFT-WALL### this  is    a test
+
+      ###LEFT-WALL###     0.984  RH+
+                 this     1.997  BLGS+
+                   is     1.820  BLGS- RH- AMII+
+                    a     3.231  AMII- ANY+
+                 test     2.600  ANY-
+
+lg_exp_stringify
+
+BNS FFE- GEF- HFW- HGD- HGE- HGH- HHO- HHQ- HHU- HHZ- 
+HIS- HIT- HIU- HJC- HJK- HJM- HJX- HKB- HKC-
+plus 54 more ...
+
+(use-modules (opencog))
+ (use-modules (opencog nlp))
+ (use-modules (opencog persist))
+ (use-modules (opencog persist-rocks))
+ (define sto (RocksStorageNode "rocks:///home/linas/src/novamente/src/docker/opencog/lang-mst/data/mpg-parse-copy.rdb"))
+ (cog-open sto)
+
+OOps!
+cog-incoming-set (Bond "GEF"))
+(Edge (ctv 0 0 10) (Bond "GEF") (List (Word "the") (Word "Bound")))
+(Edge (ctv 0 0 328) (Bond "GEF") (List (Word "###LEFT-WALL###") (Word "high")))
+
+(load-atoms-of-type 'Bond)
+(for-each fetch-incoming-set (cog-get-atoms 'Bond))
+
+(define bad
+	(filter (lambda (BOND) (< 1 (cog-incoming-size-by-type BOND 'Edge)))
+		(cog-get-atoms 'Bond)))
+
+(length bad) ; 18953 out of 117630
+
+
 
 ---------------------------------------------------------------------
 
