@@ -194,6 +194,10 @@ Things to read:
 * HodgeNet -- Justin Solomon -- learning of the Hodge star operator
   via neural nets.  Specifically, for dealing with sparse matrices.
 
+* Max Tegmark
+  Consciousness as a state of matter
+  https://www.sciencedirect.com/science/article/abs/pii/S0960077915000958
+
 Actually useful in practical applications
 -----------------------------------------
 * Jesse O. Wrenn, Peter D. Stetson, Stephen B. Johnson

@@ -16056,7 +16056,7 @@ tar -c --zstd text-master-copy | pv --timer --rate | ssh tripper "tar -x --zstd"
 
 start_lookup
 build_sentence_expressions
-Fatal error: 
+Fatal error:
 Assertion (NULL != x) failed in build_word_expressions() (../../link-grammar/tokenize/lookup-exprs.c:126): Word 'LEFT-WALL': NULL X-node
 
 (Word "###LEFT-WALL###" (ctv 1 0 286374))
@@ -16130,7 +16130,7 @@ y 9385908
 ----------
 ((add-report-api star-obj) 'num-pairs)
 131458
-(EdgeLink . 185958) 
+(EdgeLink . 185958)
 (length nt) 54499
  (+ 131458 54499 1) 185958
  (make-block-pair-observer)
@@ -16255,10 +16255,10 @@ link-grammar/tokenize/wordgraph.c:31
    assert(0 != *s, "Empty-string subword");
 
 link-grammar/tokenize/tokenize.c:2999
-orig_sentence = 0x7f7a73871360 "", 
+orig_sentence = 0x7f7a73871360 "",
 
 sent->orig_sentence
-make_cart_pairs  
+make_cart_pairs
       Exp* cpr = make_cart_pairs(dict, wrd, sentlo->Exp_pool, sent_words,
                                  local->pair_disjuncts,
                                  local->pair_with_any);
@@ -16303,6 +16303,8 @@ join ~GenericShell: 44, 47, 48, 53,54, 56, 58, 60, 63,64 (total 10)
 wait_until poll_output: 61  (top)
 recv hadle_connection: 62
 serverLoop: 66
+
+uhhhh... what was the bug?
 ----------------------
 
 Found 1858 linkages (667 of 667 random linkages had no P.P. violations)
@@ -16336,7 +16338,7 @@ Found 410 linkages (410 had no P.P. violations)
 
 lg_exp_stringify
 
-BNS FFE- GEF- HFW- HGD- HGE- HGH- HHO- HHQ- HHU- HHZ- 
+BNS FFE- GEF- HFW- HGD- HGE- HGH- HHO- HHQ- HHU- HHZ-
 HIS- HIT- HIU- HJC- HJK- HJM- HJX- HKB- HKC-
 plus 54 more ...
 
@@ -16360,6 +16362,46 @@ cog-incoming-set (Bond "GEF"))
 		(cog-get-atoms 'Bond)))
 
 (length bad) ; 18953 out of 117630
+
+(define tri
+	(filter (lambda (BOND) (< 2 (cog-incoming-size-by-type BOND 'Edge)))
+		(cog-get-atoms 'Bond)))
+
+(define odd
+	(filter (lambda (BOND) (< 2 (cog-incoming-size-by-type BOND 'Edge)))
+		(cog-get-atoms 'List)))
+
+get_lg_conn
+cached_linkname
+fetch_link_id
+store_link_id
+
+-- use atomic inc for the id.
+   local->asp->inc...(...
+-- store the id post inc every time
+-- who stores the bond nodes?? lg-atomese does when counting.
+
+local->stnp->fetch_incoming_by_type(rawpr, EDGE_LINK);
+
+<UNKNOWN-WORD>
+enable-unknown-word
+
+observe-block-mpg
+
+The most expensive thing about space travel is that most the equipment
+
+Trace: Atomese: Using private Atomspace
+linkage_get_word
+COMMON_ENTITY_MARKER   "<marker-common-entity>"
+is_capitalizable
+<1stCAP>
+#define disable-downcasing true;
+
+
+TODO:
+* pair-with-any fails if no pairs... fixed.
+* any_disjuncts has no effect if other things are set...
+* any_disjuncts not cached...
 
 
 

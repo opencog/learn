@@ -21,7 +21,9 @@
 
 #define dictionary-lang           en;
 #define dictionary-locale         en_US.UTF-8;
-#define dictionary-version-number 5.12.1;
+#define dictionary-version-number 5.12.3;
+
+#define disable-downcasing true;
 
 % -----------------------
 % Disable use sections (disjuncts).
@@ -68,6 +70,7 @@
 
 % Supplement the above with additional connectors of type "ANY".
 % This has no effect, if `pair-disjuncts` is set to zero.
+% This is a bool flag.
 #define pair-with-any 1;
 
 % Default cost for `ANY` link types. The `ANY` link type is meant to
