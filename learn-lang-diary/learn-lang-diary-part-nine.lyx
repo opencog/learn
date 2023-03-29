@@ -6563,7 +6563,7 @@ Files
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+8220
 \end_layout
 
 \end_inset
@@ -6628,7 +6628,7 @@ Words
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+19.38M
 \end_layout
 
 \end_inset
@@ -6648,7 +6648,7 @@ wall-clock
 \begin_inset Text
 
 \begin_layout Plain Layout
-255 min
+6.25h
 \end_layout
 
 \end_inset
@@ -6684,7 +6684,7 @@ wall-clock
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+52.0h
 \end_layout
 
 \end_inset
@@ -6749,7 +6749,7 @@ RSS
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+55.0g
 \end_layout
 
 \end_inset
@@ -6814,7 +6814,7 @@ Load time
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1620s
 \end_layout
 
 \end_inset
@@ -6879,7 +6879,7 @@ rdb size
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+10.16GB
 \end_layout
 
 \end_inset
@@ -6944,7 +6944,7 @@ basis words
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+321K
 \end_layout
 
 \end_inset
@@ -7009,7 +7009,7 @@ pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+35.48M
 \end_layout
 
 \end_inset
@@ -7077,7 +7077,7 @@ pairs
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+25.0804
 \end_layout
 
 \end_inset
@@ -7142,7 +7142,7 @@ sparsity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+11.5071
 \end_layout
 
 \end_inset
@@ -7207,7 +7207,7 @@ rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.78662
 \end_layout
 
 \end_inset
@@ -7275,7 +7275,7 @@ rarity
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+6.34636
 \end_layout
 
 \end_inset
@@ -7340,7 +7340,7 @@ MI
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+1.44263
 \end_layout
 
 \end_inset
@@ -7405,7 +7405,7 @@ Entropy
 \begin_inset Text
 
 \begin_layout Plain Layout
-
+17.8457
 \end_layout
 
 \end_inset
@@ -7437,16 +7437,26 @@ Legend:
 
 \begin_layout Description
 Words Word-count, for the files in that text batch.
+ This is not the cumulative number, this is the delta for that tranche,
+ only.
+ The sfia dataset is not accumulated into any of the tranches; it stands
+ alone.
 \end_layout
 
 \begin_layout Description
-RSS Resident set size, for loading the pairs (reloaded after pair counting,
- not during).
+RSS Resident set size, for loading the pairs.
+ Reloaded after pair counting, not during.
 \end_layout
 
 \begin_layout Description
 Load_time CPU time to load pairs dataset.
  Loading is currently single-threaded, not parallel.
+ Loading is done by running 
+\family sans
+./cogserver-mst.scm
+\family default
+, which load all pairs and prints the summery report for the rest of the
+ row tables...
 \end_layout
 
 \begin_layout Standard
