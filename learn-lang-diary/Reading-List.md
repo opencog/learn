@@ -19,6 +19,15 @@ Things to read:
   viewpoint. Sherrington-Kirkpatrick model, Perceptron, Hopfield,
   and more.
 
+* Kyle Marple, Elmer Salazar, Gopal Gupta,
+  Computing Stable Models of Normal Logic Programs Without Grounding
+  arXiv:1709.00501v1 [cs.LO] 1 Sep 2017
+  https://arxiv.org/pdf/1709.00501.pdf 
+
+  How to get ASP solving without ASP.
+
+* ASP inside of SWI-prolog https://github.com/JanWielemaker/sCASP
+
 * Gao et al,
   The Pile: An 800GB Dataset of Diverse Text for Language Modeling
   https://arxiv.org/abs/2101.00027
