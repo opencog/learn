@@ -19,7 +19,7 @@ Things to read:
   - https://www.youtube.com/watch?v=1lkdWduuN14&t=1577s
   - A Generalist Neural Algorithmic Learner: https://arxiv.org/abs/2209.11142
 
-* Somethinb about category theory:
+* Something about category theory:
   - https://www.youtube.com/watch?v=1lkdWduuN14
   - https://cats.for.ai/
 
