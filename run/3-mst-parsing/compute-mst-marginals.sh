@@ -29,6 +29,8 @@ else
 	exit -1
 fi
 
+rm -f /tmp/mst-marginals-done
+
 # Default to using shapes. I guess this should be configurable.
 # guile -s ${COMMON_DIR}/marginals-mst.scm
 guile -s ${COMMON_DIR}/marginals-mst-shape.scm
@@ -36,4 +38,4 @@ guile -s ${COMMON_DIR}/marginals-mst-shape.scm
 # Leave evidence behind that we finished.
 # Docker uses this to self-destruct containers when done.
 # Yes, it pollutes the file system and needs a better fix.
-touch /tmp/mst-marginals-done
+date > /tmp/mst-marginals-done

@@ -1,5 +1,7 @@
 
 Things to read:
+* https://github.com/HazyResearch/H3 language model
+
 * A Scalable, Interpretable, Verifiable & Differentiable Logic Gate
   Convolutional Neural Network Architecture From Truth Tables
   Adrien Benamira, Tristan Guérand, Thomas Peyrin, Trevor Yap, Bryan Hooi
@@ -17,7 +19,7 @@ Things to read:
   - https://www.youtube.com/watch?v=1lkdWduuN14&t=1577s
   - A Generalist Neural Algorithmic Learner: https://arxiv.org/abs/2209.11142
 
-* Somethinb about category theory:
+* Something about category theory:
   - https://www.youtube.com/watch?v=1lkdWduuN14
   - https://cats.for.ai/
 
@@ -77,6 +79,15 @@ Things to read:
   Provides overview of high-dimensional statstics from a mathematicians
   viewpoint. Sherrington-Kirkpatrick model, Perceptron, Hopfield,
   and more.
+
+* Kyle Marple, Elmer Salazar, Gopal Gupta,
+  Computing Stable Models of Normal Logic Programs Without Grounding
+  arXiv:1709.00501v1 [cs.LO] 1 Sep 2017
+  https://arxiv.org/pdf/1709.00501.pdf 
+
+  How to get ASP solving without ASP.
+
+* ASP inside of SWI-prolog https://github.com/JanWielemaker/sCASP
 
 * Gao et al,
   The Pile: An 800GB Dataset of Diverse Text for Language Modeling
@@ -425,3 +436,64 @@ Interesting, but maybe less useful
   provides a betting pool for mathematical theorems, than it is a means of
   discerning structure in (formal) languages.  Kind of like what this
   project (`opencog/learn`) is trying to do.
+
+* GPT-4 System Card, OpenAI March 15, 2023
+
+  Most interesting thing about this is the dozen-plus extensive examples
+  of prompt programming/prompt-engineering/prompt-coding. The rest of
+  the paper is bizarrely off-kilter. They seem to be remarkably cluelesss
+  about what AI safety is suppose to be, even though that is ostenisibly
+  the topic. Unimaginative, dazed and confused, dettached from reality.
+  What the heck. Beats me. So, two basic remarks, neither of which is
+  covered in the paper; these are my interpretation only.
+
+  Remark 1) Prompt programming. This appears to be a collection of
+  way-points in the GPT hypercube, a directed path, from here to there,
+  with a handful of side branches/tracks. That path, and everything
+  geometrically close to it, is meant to block out some objectionable
+  patch of word-sequences. In short: treat GPT as a metric space;
+  given any word-sequence (e.g. a question), the GPT weights specify all
+  other nearby word sequences For example, "who threw the ball?" and
+  "John threw the ball" have a hamming distance of 1, and thus the
+  question can be trivially answers by just looking for other nearby
+  sequences. Of course, GPT scales this up to Hamming distances of 100's
+  or more not 1; the distances include both grammatical similarity,
+  synonymous phrases, contextual embeddings (last few dozen/hundred
+  words) etc. But, for all intents and purposes, it seems to be an
+  extremely high dimensional metric space with the weights providing an
+  invariant measure (the "ground state", aka the Haar measure.) The
+  prompt code specifies a region of that space, a tube, of the same
+  shape as the prompt. Everything in that tube is marked as
+  objectionable content, and is blocked with a generic "I'm sorry,
+  I can't talk about illegal/immoral/hurtful acitivty X". The prompts
+  are vividly detailed; there a dozen or so. There's absolutely no
+  effort made to demonstrate the corresponding tube, the haar measure,
+  or to measure the width or length of the black-out tube. To
+  characterize its volume, metric properties, curvature, attractivity,
+  nothing whatsoever. Don't they have scientists working there? Why
+  didn't they report any of this? Is it confidential? Big spinning WTF???
+
+  Remark 2) Interacting with GPT-3 is a singularly toxic silicon valley
+  tech bro experience. If GPT was a person and they came to a party I
+  was hosting, I would find a baseball bat, and threaten it until it
+  left. Not only is it as dumb as a rock, but it looks you in the eye
+  as it lies to your face. WTF. I do appreciate that GPT and DL/NN in
+  general is an important fundamental breakthrough in AI, but wow, it
+  has the personality traits of a fucktard shithead. And so suddenly
+  I'm thinking about a Julia Mossbridge/Ben Goertzel production called
+  Loving AI http://lovingai.org/ It takes the Hanson Robotics Sophia
+  Robot and turns it into a meditation guru. Now, this is entirely
+  scripted; there's very little "hard AI" in it; its designed to produce
+  a relaxed, meditative, mildly hypnotic state. Great for mindfulness
+  retreats and gets you the honor of meditating with a robot. Pretty
+  distant from my wheelhouse, but it was .. intesting, anyways. Well,
+  I'll tell you. After that toxic encounter with chatGPT, the system
+  that knows everything and the value of nothing, ... it occurs to
+  me that loving AI is absolutely the correct direction to move in.
+  GPT is fascinating as a technology, and fundamentally evil in it's
+  incarnation. Now, I have no clue at all how to actually, technically
+  make loving AI be a true, "hard" AI system that actually "thinks"
+  (whatever the heck that means) and is "nurturing" (unclear what
+  that is), but as of today, this is what I will be pondering.
+
+----------

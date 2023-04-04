@@ -15,7 +15,8 @@
 
 ; Init the statistics objects.
 (define pca (make-pseudo-cset-api))
-(define csc (add-covering-sections pca))
+(define csa (add-covering-sections pca))
+(define csc (add-count-api csa))
 
 ; Load up the disjuncts -- this can take over half an hour!
 (display "Fetch all sections. This may take a long while!\n")
