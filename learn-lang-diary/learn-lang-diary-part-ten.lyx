@@ -3948,7 +3948,170 @@ I semis-olved some of the quantum issues above, as I slept.
 \end_layout
 
 \begin_layout Standard
-So, here's what I got, so far:
+So, here's what I got, so far: (and it's pitiful, but so it goes)
+\end_layout
+
+\begin_layout Itemize
+I want to work with spin 1/2 because it is easier than working with photons,
+ which have a lot of confusing aspects that cloud reasoning.
+\end_layout
+
+\begin_layout Itemize
+I'm looking for a topological invariant, so that when I have a wave-function
+ for a spin 1/2 particle, and the wave-function collapses, it only collapses
+ down to 
+\begin_inset Quotes eld
+\end_inset
+
+one place
+\begin_inset Quotes erd
+\end_inset
+
+, by topological invariance.
+ That is, it cannot collapse in two places at once, or even zero places
+ at once, because such collapse is topologically invariant.
+ 
+\end_layout
+
+\begin_layout Itemize
+The mechanism must work in 1+3 dimensions, or maybe 1+N for odd N.
+ I'm thinking that it being pseudo-riemannian is somehow essential to the
+ effect, and that this doesn't happen in ordinary reimannian space.
+ But I dunno.
+ It's a gut-sense, at this point.
+\end_layout
+
+\begin_layout Itemize
+I've been calling the topological invariant a 
+\begin_inset Quotes eld
+\end_inset
+
+classical bit
+\begin_inset Quotes erd
+\end_inset
+
+, a piece of information that is here or there, but only in that one place.
+ But given the no-cloning and no-erasing theorems, perhaps I should be imagining
+ the topological invariant as a qubit, since these theorems are already
+ expressing a conserved structure.
+\end_layout
+
+\begin_layout Itemize
+Hmm.
+ So what I am missing is ..
+ a geometric invariant that is a qubit.
+ Is that the issue? Everything I've studied in math so far, all of the topologic
+al invariants are always integer-valued.
+ Loops around poles in the complex plan are integer-valued multiples of
+ 2pi.
+ The number of holes punched in something are counted with integers.
+ All sorts of far more complex topological invariants, from homology or
+ cohomology, are counted with integers, in that, when I have a covering
+ group of some Riemann surface, I still count the sheets of the cover with
+ integers.
+ But now I need a qubit.
+ Whatever.
+ I'm confusing myself.
+ This is a red herring.
+ Moving on...
+\end_layout
+
+\begin_layout Itemize
+Uhm.
+ Blah blah blah, something about interferometer loops always being time-like,
+ in that the surface spanning the loops must have normals that are space-like.
+ And all tangentts to the loop must be time-like, in the light-cone, except
+ for the initial and final critical points.
+ So, an invitation to make things Morse theory-like.
+\end_layout
+
+\begin_layout Standard
+Let me go back to the prior bullet.
+ no-cloning already implies a topological conservation.
+ So how, exactly, do I map this onto Weyl spinors? Well, but a qubit is
+ a Weyl spinor, more or less.
+ So that encoding is already there.
+ I cannot have a Weyl spinor, and 
+\begin_inset Quotes eld
+\end_inset
+
+shrink
+\begin_inset Quotes erd
+\end_inset
+
+ it to zero.
+ And the Dirac eqn is made from a pair of Weyl spinors, so the dynamical
+ aspects are already encoded and properly taken care of.
+ So what's left?
+\end_layout
+
+\begin_layout Standard
+What's left is that, given a Dirac wave function providing a probability
+ distribution, I have to provide a description of how it's interaction with
+ a thermal bath of atoms results in a localization of the wave-function.
+ The no-cloning/no-erasing guarantees that collapse can only occur in one
+ place, ever.
+\end_layout
+
+\begin_layout Standard
+Wow.
+ is that it? Have I just solved the mystery of wave-function collapse? Am
+ I done here? Wave function collapse is indeed astounding, but reformulating
+ it as a topological invariant erases the mystery.
+ Of course, what I have not given here is the full mathematical, algebraic
+ details of all of the above.
+ I'm imagining them, as I know them.
+ I could even teach these details to others, but I am not sure that I can
+ hook together those details into a convincing argument, not fully.
+ The rebellious will rebel.
+ The rebellious will reject the argument, its not quite water-tight.
+ I am asking the reader (and I am asking myself) to imagine certain details,
+ to gloss over them.
+ I guess I still need to write down a Weyl spinor (or two), in such a way
+ that it is spatially distributed, but can be summarized as being just one.
+\end_layout
+
+\begin_layout Standard
+So I guess I don't yet quite have what I want, in the second bullet: an
+ articulated topological invariant of a spinro field.
+ I don't yet know how to write that down.
+ Not quite yet.
+ I need to be able to perform some integral, over some space-like surface,
+ with the result of said integral being a spinor.
+ I mean, this is ...
+ surely this is easy.
+ This should be easy.
+ Just somehow ferakin do this.
+ Blach blah blah 
+\begin_inset Formula $\psi^{a}\left(x\right)$
+\end_inset
+
+ integrated over 
+\begin_inset Formula $x$
+\end_inset
+
+ still leaves the spinor index 
+\begin_inset Formula $a$
+\end_inset
+
+ exposed after integration.
+ And since this spinor index is left exposed, the rsult of the integral
+ is a qubit, and so it has remained uncloned, unerased.
+ And it works no matter what spin connection 
+\begin_inset Formula $\omega_{\mu}^{ab}$
+\end_inset
+
+ that is chosen over the manifold.
+ How hard can it be to write this down? It feels like it's on the tip of
+ my fingers.
+ Tip of my tongue.
+\end_layout
+
+\begin_layout Standard
+Alas.
+ Filling this in might take days or weeks or months.
+ And I have an Easter party to go to.
+ Later.
 \end_layout
 
 \begin_layout Section*
