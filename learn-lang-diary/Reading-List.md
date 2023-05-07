@@ -1,5 +1,19 @@
 
 Things to read:
+* Evans, R., Bošnjak, M., Buesing, L., Ellis, K., Pfau, D., Kohli, P., & Sergot, M. (2021).
+  Making sense of raw input.
+  Artificial Intelligence, 299, 103521. doi:10.1016/j.artint.2021.10352
+
+* https://arxiv.org/abs/2006.10637
+  Temporal Graph Networks for Deep Learning on Dynamic Graphs
+
+* https://distill.pub/2021/gnn-intro/
+  A Gentle Introduction to Graph Neural Networks
+
+* hierarchical message passing: https://arxiv.org/abs/2009.03717 
+
+* hypergraphs: https://arxiv.org/abs/1809.02589
+
 * https://github.com/HazyResearch/H3 language model
 
 * A Scalable, Interpretable, Verifiable & Differentiable Logic Gate
