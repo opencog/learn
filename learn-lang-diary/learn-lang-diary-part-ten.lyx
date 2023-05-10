@@ -6496,11 +6496,23 @@ I am listening to Sean Carroll – Philosophical Issues in Quantum Thermodynamic
  on youtube https://www.youtube.com/watch?v=x9COqqqsFtc (recall, I can't sleep)
  sooo at the 11 minute mark he presents Myrvold's question, which attempts
  to distinguish between Boltzmann Entropy = log of macrostate volume k log
- W vs Gibbs/Shannon entropy S=-sum_i p_i log p_i.
+ W vs Gibbs/Shannon entropy 
+\begin_inset Formula $S=-\sum_{i}p_{i}\log p_{i}$
+\end_inset
+
+.
  Myrvold asks: what if I give you a specific gas in a box, with all atomic
  positions and velocities specified to infinite precision? Does the entropy
  change, or not? Some people apparently beleive the Shannon entropy would
- be zero, because one specific p_i=1 and all others are zero and thus S=0.
+ be zero, because one specific 
+\begin_inset Formula $p_{i}=1$
+\end_inset
+
+ and all others are zero and thus 
+\begin_inset Formula $S=0$
+\end_inset
+
+.
  But this reasoning seems wrong to me, because of ergodicity and mixing.
  Even if all atomic positions and velocities are given to infinite precision,
  the time evolution of the system means that a large number of different
@@ -6539,10 +6551,358 @@ unknowability
  (Hmm, I need to tighten up this statement.
  But it is true, I beleive.) Basically, almost all conventional geometry
  presumes a weak topology, and cannot be coherently stated with a strong
- topology (e.g.
+ topology (
+\emph on
+e.g.
+
+\emph default
  illustrated by the Banach-Tarski paradox.) So Myrvold's paradox is resolved
  the same way as Banach-Tarski: you must use a measure, and if you don't
  then you get paradoxes.
+\end_layout
+
+\begin_layout Standard
+The Sean Carroll video is great! I like it!
+\end_layout
+
+\begin_layout Paragraph*
+Later ...
+\end_layout
+
+\begin_layout Standard
+After a nap...
+ what I wrote above is incorrect/misleading.
+ I can reduce N atoms in a box to N-1 copies of Sinai's billiards.
+ Let N=2, then I have a geodesic; yes, its ergodic, it fills the space,
+ eventually.
+ I can specify the intial conditions to infinite precision; indeed, I have
+ to, in order to have a coherent conception of a geodesic.
+ I must be able to say 
+\begin_inset Quotes eld
+\end_inset
+
+ah hah, here is the initial direction, its 
+\begin_inset Formula $\pi/3$
+\end_inset
+
+ or whatever
+\begin_inset Quotes erd
+\end_inset
+
+.
+ As this geodesic rattles around, each collision is akin to peeling off
+ something off of it's decimal expansion.
+ That is, it has a symbolic dynamics.
+ The symbolic dynamics being encoded in the collisions and wall crossings
+ of the billiard.
+ It is purely deterministic, in that it is determined by the initial real
+ number that specifies the initial direction of motion.
+ But the topology that we use on the symbolic dynamics is the weak topology.
+\end_layout
+
+\begin_layout Standard
+OK, so that then is the ultra-breif sketch of how one gets the arrow of
+ time for a classical system.
+ To recap: you take the classical geodesics, describe themmm in terms of
+ a symbolic dynamics.
+ This necessarily gives them a Cantor set structure, disconnected.
+ The weak topology on the symbolic dynamics allows you to write down the
+ Frobenius–Perron operator.
+ The spectrum of the FP operator gives the arrow of time: the dissipative
+ eigenstates all correspond to eigenvalues less than one.
+ The ground state, the one in 
+\begin_inset Quotes eld
+\end_inset
+
+thermal equilibrium
+\begin_inset Quotes erd
+\end_inset
+
+, is the one with the Fredholm eigenvalue one.
+\end_layout
+
+\begin_layout Standard
+That, at least, is how it works for classical mecahnics.
+ For quantum, there is an apparent issue: the time evolution matrix is unitary,
+ all eigenvalues are on the unit circle, and nothing dissipates.
+ However, there is a way out.
+ We can pull symbolic dynamics out of the hat.
+ One we have symbolic dynamics, then we have FP and the spectrum of the
+ FP operator.
+ There will be dissipative parts of the spectrum of FP, simply because applying
+ a weak topology on symbolic dynamics implies that there is a decaying spectrum.
+ Sot that part is wrapped up with a ribbon on top, not a problem.
+ Where does the symbolic dynamics come from?
+\end_layout
+
+\begin_layout Standard
+Well, consider the quantum finite automaton.
+ There's some initial state 
+\begin_inset Formula $\left|\psi_{0}\right\rangle $
+\end_inset
+
+ and to this is applied a sequence of unitary transformations 
+\begin_inset Formula $U_{1},U_{2},\cdots$
+\end_inset
+
+ where (for the QFA) each 
+\begin_inset Formula $U_{k}$
+\end_inset
+
+ is picked from a finite set specified by the QFA.
+ The index set, the subscripts on these unitary transforms provide the symbolic
+ dynamics! It is quite easy to pick some collection of 
+\begin_inset Formula $U_{k}$
+\end_inset
+
+ such that the resulting mixed state is space-filling.
+ That is, each specific state 
+\begin_inset Formula $\left|\psi_{n}\right\rangle $
+\end_inset
+
+ is just a pure state, a single point, but the mixed state, of all of these
+ different states corresponmding to the different sequences of the 
+\begin_inset Formula $U_{k}$
+\end_inset
+
+ generate pure states that are splattered everywhere over all of the possible
+ state space (and necessarily fractal, since the index set is necessarily
+ Cantorian.)
+\end_layout
+
+\begin_layout Standard
+But where does the selection of 
+\begin_inset Formula $U_{k}$
+\end_inset
+
+ come from? Ah, well, here, I imagine the system in a thermal bath, and
+ each interaction with a thermal photon is a 
+\begin_inset Formula $U_{k}$
+\end_inset
+
+ ...
+ well, there's some infinite regress here.
+ So lets consider a simplified model.
+\end_layout
+
+\begin_layout Standard
+Consider a single qubit in a pure state.
+ Such a pure state is a single vector pointing in some specific, precise
+ direction on the Bloch sphere.
+ A point.
+ Consider two unitary transforms A and B, which rotate this qubit by pi/5
+ along the x axis and the y axis.
+ These correspond to the A and B rotations of Banach-Tarski.
+ Let a grad student in the lab flip a coin, and apply either A or B to the
+ system.
+ After any amount of finite time, the qubit remains in a pure state, since
+ both A and B were unitary.
+ However, if we look at the set of all possible coin-flips, it is a Bernoulli
+ process, isomorphic to the Cantor set.
+ The coin-flips form an ergodic sequence, the resulting pure state of the
+ qubit takes an ergodic walk over the Bloch sphere.
+\end_layout
+
+\begin_layout Standard
+When a classical point state takes an ergodic walk, we say its in a thermally
+ equilibrated microstate.
+ Here, we seem to have constructed a pure quantum state, evolving via unitary
+ transforms, under control of the coin-flipping grad student.
+ The quantum system is taking a random walk, and is ergodic, thanks to the
+ coin flips, but remains in a pure-state always.
+\end_layout
+
+\begin_layout Standard
+The mystery question here is now what? How much time and effort should I
+ expend, making the above example more precise? Should I even publish this
+ example?
+\end_layout
+
+\begin_layout Standard
+Well, let's proceed along the lazy path, of jabbering here instead of trying
+ to construct a carefully argued presentation.
+ So the outline, again:
+\end_layout
+
+\begin_layout Enumerate
+Bloch sphere.
+ This is the sphere 
+\begin_inset Formula $S_{2}$
+\end_inset
+
+ and any point on this sphere is a pure state, a qubit 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Lets take 
+\begin_inset Formula $\left|\psi_{0}\right\rangle =\left|+z\right\rangle $
+\end_inset
+
+ as the initial state.
+ TYhat is, pointing straight up the z axis.
+\end_layout
+
+\begin_layout Enumerate
+Define two unitary transforms 
+\begin_inset Formula $U_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $U_{B}$
+\end_inset
+
+ that rotate by 
+\begin_inset Formula $\pi/5$
+\end_inset
+
+ along the 
+\begin_inset Formula $x$
+\end_inset
+
+ and 
+\begin_inset Formula $y$
+\end_inset
+
+axes, respectively.
+ (Write these out explicitly, just to be clear.)
+\end_layout
+
+\begin_layout Enumerate
+A grad student, who flips a coin, and applies either 
+\begin_inset Formula $U_{A}$
+\end_inset
+
+ or 
+\begin_inset Formula $U_{B}$
+\end_inset
+
+ to the qubit.
+\end_layout
+
+\begin_layout Enumerate
+The result, after 
+\begin_inset Formula $N$
+\end_inset
+
+ coin flips, is still a pure state.
+ However, it has taken a random, ergodic walk on the qubit.
+ (Create a computer simulation of this process, showing that the resulting
+ walk is ergodic.)
+\end_layout
+
+\begin_layout Enumerate
+Using the Cantor set to provide a sequence of indexes 
+\begin_inset Formula $A,B$
+\end_inset
+
+ for a sequence of 
+\begin_inset Formula $U_{A},U_{B}$
+\end_inset
+
+creates a map from the Cantor set to a space-filling curve on the Bloch
+ sphere.
+ Called a Cesaro curve, if I recall correctly.
+ (Todo: Create a simulation, showing this curve.)
+\end_layout
+
+\begin_layout Enumerate
+This curve manifests the ergodic hypothesis, i.e.
+ shows that there is a Frobenius-Perron operator, with a Fredholm eigenvalue
+ of 1.
+ This is the 
+\begin_inset Quotes eld
+\end_inset
+
+thermalized
+\begin_inset Quotes erd
+\end_inset
+
+ state.
+\end_layout
+
+\begin_layout Enumerate
+Write down the FP operator explicitly.
+ Illustrate how it's eignevalue-one ground state is just a uniform distribution
+ on the Bloch sphere.
+ This is just the watchmacallit measure.
+\end_layout
+
+\begin_layout Enumerate
+We can now show that there are mixed states that 
+\begin_inset Quotes eld
+\end_inset
+
+decay
+\begin_inset Quotes erd
+\end_inset
+
+ ergodically to the uniform distribution.
+ For example, consider a mixed state that is spin-up, and a bunch of other
+ nearby states.
+ That is, prepare a mixed state that, if we were to measure it, it would
+ mostly measure spin-up.
+ But we won't measure, we'll just prepare a mostly-spin-up mixed state.
+\end_layout
+
+\begin_layout Enumerate
+Let the grad student do the coin flips.
+ This will, over time, smear the mixed state so that it it is uniformly
+ distributed over the Bloch sphere.
+ That is, if a measurement was perfoemed, we'd se 50-50 spin up/down.
+ (But we are not performing measurements.)
+\end_layout
+
+\begin_layout Enumerate
+What is verbiage that should accompany this? It feels like there was some
+ 
+\begin_inset Quotes eld
+\end_inset
+
+decoherence
+\begin_inset Quotes erd
+\end_inset
+
+...
+\end_layout
+
+\begin_layout Standard
+Now consider this weird knock-off:
+\end_layout
+
+\begin_layout Enumerate
+Prepare a singlet state, of two spins.
+ That is, the usual singlet 
+\begin_inset Formula 
+\[
+\frac{\left|\uparrow\downarrow\right\rangle +\left|\downarrow\uparrow\right\rangle }{\sqrt{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Separate the two spins, send one to grad student Carol, another to grad
+ student David.
+ 
+\begin_inset Formula 
+\[
+\frac{\left|\uparrow_{C}\downarrow_{D}\right\rangle +\left|\downarrow_{C}\uparrow_{D}\right\rangle }{\sqrt{2}}=
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Both Carol 
 \end_layout
 
 \begin_layout Section*
