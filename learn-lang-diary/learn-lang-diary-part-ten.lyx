@@ -7042,7 +7042,7 @@ free
 \end_layout
 
 \begin_layout Itemize
-Show the Klien J-invariant on the disk.
+Show the Klein J-invariant on the disk.
  Note the fractal nature.
 \end_layout
 
@@ -7113,6 +7113,223 @@ Formal definition of oracle.
 Chaitin omega.
  Remainder of Chaitin stuff.
  Classification of algebraic varieties as undecidable.
+\end_layout
+
+\begin_layout Standard
+OK, so I am reading https://www-2.dc.uba.ar/staff/becher/notes/ns.html New Scientist
+ 
+\begin_inset Quotes eld
+\end_inset
+
+The Omega Man
+\begin_inset Quotes erd
+\end_inset
+
+ about Chaitin.
+ In the middle there's some vague/contraditory material: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Quotation
+There could be any number of answers: perhaps 10, 20, or even an infinite
+ number of them.
+ But Chaitin didn't look for specific solutions, he simply looked to see
+ whether there was a finite or an infinite number of them.
+ 
+\end_layout
+
+\end_inset
+
+So above suggests that what is interesting is if there are a finite number
+ of solutions, or countable solutions.
+ Then, later,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Quotation
+if a particular program doesn't ever halt, a particular Diophantine equation
+ will have no solution.
+\end_layout
+
+\end_inset
+
+Above states zero vs non-zero number of solutions.
+ Then later, we're back to finite vs infinite:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Boxed
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Quotation
+he would ask whether there was a finite or infinite number of whole number
+ solutions to the resulting equation.
+ The answer gives the first digit of Omega: a finite number of solutions
+ would make this digit 0, an infinite number of solutions would make it
+ 1.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+This made me think.
+ In my jigsaw puzzle paradigm, I've never had to think about whether my
+ jigsaws could only be assembled in a finite number of ways, or a countable
+ number of ways, or possibly, an uncountable number of ways.
+ Perhaps it is time to think about this.
+\end_layout
+
+\begin_layout Standard
+A pair-of-pants jigsaw, plus a top-cap, allows the formation of an infinite
+ binary tree.
+ But there is only one-such.
+ Add a bottom-cap, then there are a countable number of trees: the bottom-cap
+ is used to cut off or terminate branches.
+ Even with just one bottom cap, there seem to be 
+\begin_inset Formula $\omega$
+\end_inset
+
+ different cuttings.
+ With two caps, there are 
+\begin_inset Formula $\omega^{2}$
+\end_inset
+
+ distinct cuts.
+ With a countable number of caps, there are 
+\begin_inset Formula $\omega^{\omega}$
+\end_inset
+
+ different cuttings.
+ Um.
+ No.
+ There are 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ different cuts.
+ Here's the proof.
+\end_layout
+
+\begin_layout Standard
+Start with the infinite binary tree.
+ Now, prune the right branch.
+ Move down one level, to it again.
+ In fact, given any binary string, interpreting it as cut left or cut right
+ specifies a distinct path down the tree.
+ There are 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ binary strings, there are 
+\begin_inset Formula $2^{\omega}$
+\end_inset
+
+ paths down the tree.
+ QED.
+\end_layout
+
+\begin_layout Standard
+Pruning is just specifying cylinder sets, that's all.
+ Unpruned branches are star, while pruned ones are 0 or 1.
+ So we are just specifyinbg cylinder sets, here.
+ Err, well, we also have nil, wich prunes both left and right branches.
+ So, with nil, we also have cylinder sets 
+\begin_inset Quotes eld
+\end_inset
+
+of finite length
+\begin_inset Quotes erd
+\end_inset
+
+, which are outside of the weak topology of infinite strings.
+ This can be understood as a system of the infinite strings, plus all finite
+ strings.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+Anyway, in terms of jigsaws, this is already a fairly 
+\begin_inset Quotes eld
+\end_inset
+
+rich
+\begin_inset Quotes erd
+\end_inset
+
+ system, considering there are only two or three jigsaw piece types (and
+ an infinite number of instances.
+ Or we could limit to a finite number of instances, only...)
+\end_layout
+
+\begin_layout Standard
+The mapping I am vaguely daydreaming my way through is that of mapping lambda
+ expressions to jigsaws.
+ And then mapping these to Turing machines.
+ I never really explored this, and am already stuck on the basics.
+ Like the good old 
+\begin_inset Formula $\lambda x.xx$
+\end_inset
+
+ replicator.
+ This mapping should not be *hard*, it seems straight-forward enough.
+ Just that it somehow suggests there will be surprising implications, or
+ that I don't really understand the big picture here.
+ And then comes the perennial question: is this worth pursuing, or not?
+ Should I write this out, or not?
 \end_layout
 
 \begin_layout Section*
