@@ -1,5 +1,10 @@
 
 Things to read:
+
+* Ologs: A Categorical Framework for Knowledge Representation
+  David I. Spivak, Robert E. Kent
+  https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0024274
+
 * Evans, R., Bošnjak, M., Buesing, L., Ellis, K., Pfau, D., Kohli, P., & Sergot, M. (2021).
   Making sense of raw input.
   Artificial Intelligence, 299, 103521. doi:10.1016/j.artint.2021.10352
