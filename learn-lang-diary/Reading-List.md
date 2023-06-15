@@ -276,6 +276,25 @@ Actually useful in practical applications
   * How do things change, if one considers not just the next character, but
     the next pair of characters, or the next triple of characters?
 
+The Big Picture
+---------------
+Plant morphogenesis
+ * P. Prusinkiewicz
+   http://algorithmicbotany.org/papers/
+
+Animal morphogenesis
+ * Darwin’s agential materials: evolutionary implications of multiscale
+  competency in developmental biology
+  Michael Levin
+  https://link.springer.com/content/pdf/10.1007/s00018-023-04790-z
+
+Evolution of Brains
+ * "Forced moves or good tricks in design space?  Landmarks in the
+    evolution of neural mechanisms for action selection", Tony J. Prescott
+    (2007) https://www.academia.edu/30717257/Forced_Moves_or_Good_Tricks_in_Design_Space_Landmarks_in_the_Evolution_of_Neural_Mechanisms_for_Action_Selection
+
+
+
 Suggestive but Important
 ------------------------
 Don't quite provide what is immediately needed, but is very interesting
