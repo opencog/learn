@@ -1,6 +1,9 @@
 
 Things to read:
 
+* Miroslav Benda, "Modeloids. I"
+  https://www.ams.org/journals/tran/1979-250-00/S0002-9947-1979-0530044-4/S0002-9947-1979-0530044-4.pdf
+
 * Ologs: A Categorical Framework for Knowledge Representation
   David I. Spivak, Robert E. Kent
   https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0024274
