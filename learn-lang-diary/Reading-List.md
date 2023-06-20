@@ -1,5 +1,15 @@
 
 Things to read:
+* Distilling Singular Learning Theory. Liam Carroll 2023
+  https://www.lesswrong.com/posts/CZHwwDd7t9aYra5HN/dslt-2-why-neural-networks-obey-occam-s-razor
+
+* Alabdulmohsin Ibrahim, 2020, Google,
+  "Towards a unified theory of learning and information"
+  for the data mining tradition of Vapnik-Chervononkis
+
+* Aschenbrenner, Dolich, Haskell, MacPherson, Starchenko
+  "Vapnik Chervonenkis density in some theories without the independence property, I", 2011,
+  for the model theoretic tradition.
 
 * Miroslav Benda, "Modeloids. I"
   https://www.ams.org/journals/tran/1979-250-00/S0002-9947-1979-0530044-4/S0002-9947-1979-0530044-4.pdf
