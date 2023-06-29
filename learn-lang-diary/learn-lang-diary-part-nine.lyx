@@ -658,19 +658,115 @@ Lets assume that
 
  is factored through the likelihood of hypothesis:
 \begin_inset Formula 
+\begin{align*}
+P\left(y\vert x\right)= & \int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(\left.h_{\theta}\right|x\right)\\
+= & \int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
+\end{align*}
+
+\end_inset
+
+As before, I use the non-standard notation 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)=P\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ to indicate that 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is a measure on the space of hypothesis.
+ This is useful for several reasons: first, it avoids a confusing proliferation
+ of 
+\begin_inset Formula $P$
+\end_inset
+
+'s, twisty little passages all alike.
+ Secondly, it helps distinguish likelihood from probability, and makes clear
+ that distributions on hypothesis are very different than probabilities
+ of future, unknown events.
+ The space of hypothesis belongs to the 
+\begin_inset Quotes erd
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+: the model that we keep in our heads, to represent the universe outside
+ of ourselves.
+ The integral over hypothesis makes it clear that the natural interpretation
+ of Bayesian theory is the Many-Worlds Interpretation: we assign each possible
+ world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ a measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ In statistics, this is called the 
+\begin_inset Quotes eld
+\end_inset
+
+belief
+\begin_inset Quotes erd
+\end_inset
+
+ that the possible world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ is the true world in which we live.
+ This talk of 
+\begin_inset Quotes eld
+\end_inset
+
+beleifs
+\begin_inset Quotes erd
+\end_inset
+
+ indicated that we must apply modal logic, and perhaps Kripke semantics
+ or at least some kind of possible-world semantics, when reasoning about
+ Bayesian priors.
+ Last but not least, the factorization across possible worlds can now be
+ written as 
+\begin_inset Formula 
+\begin{align*}
+P\left(y\vert x\right)= & \int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)\\
+= & \int_{\mu}P\left(y\left|h_{\theta}\right.\right)
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\int_{\mu}$
+\end_inset
+
+ is the conventional notation for an integral performed over a measureable
+ space; viz.
+ a Borel set endowed with a topology; presumably the weak topology that
+ allows additive measures and all the other goodness implied by the Kolmogorov
+ equivalence between probability and measure theory.
+ To retain measurability, we require that the set of all possible worlds
+ have a probability of one:
+\begin_inset Formula 
 \[
-P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(\left.h_{\theta}\right|x\right)
+1=\int_{\mu}=\int_{\theta}\mu\left(\left.h_{\theta}\right|x\right)
 \]
 
 \end_inset
 
-Using the a priori assumptions about coins and hypothesis, we've already
- concluded, applying logical inference to the coin-toss problem, that, given
- hypothesis 
+
+\end_layout
+
+\begin_layout Standard
+Using the a priori assumptions about coins and hypothesis, and applying
+ logical inference to the coin-toss problem, we may conclude, in an a priori
+ fashion, that, given hypothesis 
 \begin_inset Formula $h_{\theta}$
 \end_inset
 
- the probability of the coin toss is result is 
+, the probability of the coin toss is result is 
 \begin_inset Formula 
 \[
 P\left(y\left|h_{\theta}\right.\right)=\begin{cases}
@@ -682,27 +778,58 @@ P\left(y\left|h_{\theta}\right.\right)=\begin{cases}
 \end_inset
 
 To obtain an expression for 
-\begin_inset Formula $P\left(\left.h_{\theta}\right|x\right)$
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
-, we need to apply Bayes rule, which relates the likelihood of a hypothesis
- to the probability of prior outcomes:
+, we apply Bayes rule, which relates the likelihood of a hypothesis to the
+ probability of prior outcomes:
 \begin_inset Formula 
 \[
-P\left(\left.h_{\theta}\right|x\right)=P\left(x\left|h_{\theta}\right.\right)\mu\left(h_{\theta}\right)
+\mu\left(\left.h_{\theta}\right|x\right)=P\left(\left.h_{\theta}\right|x\right)=\alpha P\left(x\left|h_{\theta}\right.\right)\mu\left(h_{\theta}\right)
 \]
 
 \end_inset
 
-We already have that 
-\begin_inset Formula $\mu\left(h_{\theta}\right)=1$
+We already have that the prior, before any observations at all have been
+ made, is 
+\begin_inset Formula 
+\[
+\mu\left(h_{\theta}\right)=\mu\left(\left.h_{\theta}\right|\varnothing\right)=1
+\]
+
 \end_inset
 
- and so we need an expression for 
-\begin_inset Formula $P\left(\left.h_{\theta}\right|x\right)$
+The coefficient 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is normalization constant, forced by 
+\begin_inset Formula $1=\int_{\theta}\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ as noted above.
+ To obtain the 
+\begin_inset Quotes eld
+\end_inset
+
+a posteriori prior
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ that holds after measurements 
+\begin_inset Formula $x$
+\end_inset
+
+, we need an expression for 
+\begin_inset Formula $P\left(x\left|h_{\theta}\right.\right)$
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Standard
@@ -746,14 +873,18 @@ P\left(x\left|h_{\theta}\right.\right)=\theta^{N_{H}}\left(1-\theta\right)^{N_{T
 
 \end_inset
 
-At last, we have arrived:
+This provides a closed-form expression for the probability of observing
+ a specific result of a coin toss, given a prior observational history:
 \begin_inset Formula 
-\[
-P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(\left.h_{\theta}\right|x\right)=\begin{cases}
-\beta\left(N_{H}+1,N_{T}\right) & \mbox{if }y=\mbox{heads}\\
-\beta\left(N_{H},N_{T}+1\right) & \mbox{if }y=\mbox{tails}
+\begin{align*}
+P\left(y\vert x\right)= & \int_{\mu}P\left(y\left|h_{\theta}\right.\right)\\
+= & \int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)\\
+= & \alpha\int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(x\left|h_{\theta}\right.\right)\\
+= & \begin{cases}
+\alpha\beta\left(N_{H}+1,N_{T}\right) & \mbox{if }y=\mbox{heads}\\
+\alpha\beta\left(N_{H},N_{T}+1\right) & \mbox{if }y=\mbox{tails}
 \end{cases}
-\]
+\end{align*}
 
 \end_inset
 
@@ -773,7 +904,134 @@ B\left(z_{1},z_{2}\right)=\frac{\Gamma\left(z_{1}\right)\Gamma\left(z_{2}\right)
 
 \end_inset
 
-is the conventional Beta function.
+is the conventional Beta function (the reciprocal of the binomial coefficient).
+\end_layout
+
+\begin_layout Standard
+At last, we have arrived.
+ We've reduced the problem of observing coin tosses into two parts:
+\end_layout
+
+\begin_layout Itemize
+A large, complicated set of a priori assumptions and logical, mathematical,
+ algebraic manipulations, all of which can be done before observing any
+ coin tosses at all.
+\end_layout
+
+\begin_layout Itemize
+A simple and direct counting of the number of times that heads and tails
+ are observed.
+\end_layout
+
+\begin_layout Standard
+The catchphrase 
+\begin_inset Quotes eld
+\end_inset
+
+update your priors
+\begin_inset Quotes erd
+\end_inset
+
+ takes on an explicit form in this framework.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+prior
+\begin_inset Quotes erd
+\end_inset
+
+ is the likelihood of a hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ being true.
+ Prior to any observations, i.e.
+ for 
+\begin_inset Formula $N=0$
+\end_inset
+
+, 
+\begin_inset Formula $x=\varnothing$
+\end_inset
+
+ we had 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|\varnothing\right)=\mu\left(h_{\theta}\right)$
+\end_inset
+
+ and after 
+\begin_inset Formula $N=N_{H}+N_{T}$
+\end_inset
+
+ observations, we got the 
+\begin_inset Quotes eld
+\end_inset
+
+prior
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mu\left(\left.h_{\theta}\right|x\right)=\alpha P\left(x\left|h_{\theta}\right.\right)\mu\left(h_{\theta}\right)=\alpha\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}=f\left(\theta;N_{H},N_{T}\right)
+\]
+
+\end_inset
+
+The normalization constant 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is now clearly 
+\begin_inset Formula $\alpha=1/\beta\left(N_{H},N_{T}\right)$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $f\left(\theta;N_{H},N_{T}\right)$
+\end_inset
+
+ is the so-called 
+\begin_inset Quotes eld
+\end_inset
+
+beta distribution
+\begin_inset Quotes erd
+\end_inset
+
+, although it is off-by-one from the Wikipedia definition (because it's
+ tedious to have to write 
+\begin_inset Formula $N_{H}+1$
+\end_inset
+
+ everywhere).
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+updated prior
+\begin_inset Quotes erd
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+\mu\left(\left.h_{\theta}\right|y,x\right)==\begin{cases}
+f\left(\theta;N_{H}+1,N_{T}\right) & \mbox{if }y=\mbox{heads}\\
+f\left(\theta;N_{H},N_{T}+1\right) & \mbox{if }y=\mbox{tails}
+\end{cases}
+\]
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Section*
