@@ -500,11 +500,188 @@ The GOE vectors form a de facto vierbein.
 \end_layout
 
 \begin_layout Section*
+Counting vs.
+ Bayesian Probability
+\end_layout
+
+\begin_layout Standard
+Open question: how can the methods here be bridged back to Bayesian theory?
+ So, fro example, consider the simplest possible case: A Bernoulli process,
+ a coin toss.
+ The Bayesian prior is given by the beta function, which increments by one
+ with each coin-toss result.
+ One performs counting on coin-toss results, and the beta function provides
+ the correct way to 
+\begin_inset Quotes eld
+\end_inset
+
+update your priors
+\begin_inset Quotes erd
+\end_inset
+
+ with each new toss.
+ So, the question is: what is the analogous description of graph learning?
+\end_layout
+
+\begin_layout Standard
+I think this is a hard question, but lets be naive and try, anyway.
+\end_layout
+
+\begin_layout Standard
+If we know (a priori) that we are dealing with a coin toss (only two outcomes:
+ heads or tails) and if we know (a priori) that the same coin is being used
+ (its a stationary process) and finally, if we know (a priori) that there
+ is no interference with the coin, then, by careful analysis, we can conclude
+ that the Bernoulli process can be described by a single real number 
+\begin_inset Formula $0\le p\le1$
+\end_inset
+
+ giving the probablity that the next coin toss is 
+\begin_inset Formula 
+\begin{align*}
+P\left(\mbox{heads}\right) & =p\\
+P\left(\mbox{tails}\right) & =1-p
+\end{align*}
+
+\end_inset
+
+But we do not have any a priori information about what 
+\begin_inset Formula $p$
+\end_inset
+
+ might be.
+ The task is to try to discover this number, by observation of an actual
+ sequence of coin tesses.
+ How does one do this? Well, the theory of Bayesian probability provides
+ a strict methodology.
+ Let's review this.
+\end_layout
+
+\begin_layout Standard
+Since one does not know what 
+\begin_inset Formula $p$
+\end_inset
+
+ might be, one creates a 
+\begin_inset Quotes eld
+\end_inset
+
+prior
+\begin_inset Quotes erd
+\end_inset
+
+, a reasonable assumption about it.
+ Here, the reasonable assumption would be that the likelihood of 
+\begin_inset Formula $p=\theta$
+\end_inset
+
+ is uniformly distributed over the interval 
+\begin_inset Formula $0\le\theta\le1$
+\end_inset
+
+.
+ That is, a hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ is made that 
+\begin_inset Formula $p=\theta$
+\end_inset
+
+ and the letter 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is acting as a label indicating that we are currently working with hypothesis
+ 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+.
+ In the present case, we have uncountably many hypothesis.
+ We express the idea of zero knowledge by assigning a uniform distribution
+ 
+\begin_inset Formula $\mu\left(h_{\theta}\right)=1$
+\end_inset
+
+ for the hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+.
+ I write 
+\begin_inset Formula $\mu\left(h_{\theta}\right)$
+\end_inset
+
+ instead of 
+\begin_inset Formula $P\left(h_{\theta}\right)$
+\end_inset
+
+ for the prior, to emphasize that 
+\begin_inset Formula $\mu$
+\end_inset
+
+ can be, and should be thought of as a measure-theoretic measure on the
+ unit interval.
+\end_layout
+
+\begin_layout Standard
+Lets assume that 
+\begin_inset Formula $N\ge0$
+\end_inset
+
+ coin tosses have been observed, giving a sequence 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+ with each 
+\begin_inset Formula $x_{k}\in\left\{ \mbox{heads},\mbox{tails}\right\} $
+\end_inset
+
+.
+ The probability of observing the next toss 
+\begin_inset Formula $y=x_{N+1}\in\left\{ \mbox{heads},\mbox{tails}\right\} $
+\end_inset
+
+ is factored through the likelihood of hypothesis:
+\begin_inset Formula 
+\[
+P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(\left.h_{\theta}\right|x\right)
+\]
+
+\end_inset
+
+Using the a priori assumptions about coins and hypothesis, we've already
+ concluded, applying logical inference to the coin-toss problem, that, given
+ hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ the probability of the coin toss is result is 
+\begin_inset Formula 
+\[
+P\left(y\left|h_{\theta}\right.\right)=\begin{cases}
+\theta & \mbox{if }p=\mbox{heads}\\
+1-\theta & \mbox{if }p=\mbox{tails}
+\end{cases}
+\]
+
+\end_inset
+
+To obtain an exprssion for 
+\begin_inset Formula $P\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+, we need Bayes rule.
+ 
+\end_layout
+
+\begin_layout Section*
 Factorization
 \end_layout
 
 \begin_layout Standard
-Thiss entire section has been cut and moved to a new paper called 
+This entire section has been cut and moved to a new paper called 
 \begin_inset Quotes eld
 \end_inset
 
