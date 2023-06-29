@@ -517,7 +517,7 @@ update your priors
 \end_inset
 
 .
- But how can this be doen for structure learning?
+ But how can this be done for structure learning?
 \end_layout
 
 \begin_layout Standard
@@ -1060,11 +1060,70 @@ count the events occuring in the world about you, and update the weightings
 \end_layout
 
 \begin_layout Section*
+Counting Structures
+\end_layout
+
+\begin_layout Standard
+The above section exposes the general structure of Bayesian beleif, and
+ illustrates how counting is used to 
+\begin_inset Quotes eld
+\end_inset
+
+update your priors
+\begin_inset Quotes erd
+\end_inset
+
+, for a very simple system: the Bernoulli process.
+ Of course, we deal with a much more complex system.
+ Can we perform reasoning by analogy, to obtain a realistic description
+ of a many-worlds model of structure? Lets begin by reviewing the stumbling
+ blocks to a generalized theory.
+\end_layout
+
+\begin_layout Standard
+First up is the independence assumption.
+ If we are working with a time-ordered sequence of words, then it is very
+ natural to assume a probability space 
+\begin_inset Formula $\Omega=W^{*}$
+\end_inset
+
+ consisting of finite-length sequences of words 
+\begin_inset Formula $w\in W$
+\end_inset
+
+.
+ This has multiple obvious faults, but lets write them down anyway, even
+ thought I've done this a hundred times before.
+ 
+\end_layout
+
+\begin_layout Itemize
+The vocabulary 
+\begin_inset Formula $W$
+\end_inset
+
+ is not fixed: we encounter new words on a regular basis.
+ Some are newly created, some are simply those that we've not known before.
+\end_layout
+
+\begin_layout Itemize
+The Catesian product topology on the set of strings is misleading, in that
+ it tricks us into thinking about the space of hypothesis as being a space
+ of strings, when, in fact, we wanted our hypothesis to (first) range over
+ grammatical structure, and then (later) overcommon sense.
+\end_layout
+
+\begin_layout Itemize
+The
+\end_layout
+
+\begin_layout Section*
 Factorization
 \end_layout
 
 \begin_layout Standard
-This entire section has been cut and moved to a new paper called 
+What used to be here, this entire section, has been cut and moved to a new
+ paper called 
 \begin_inset Quotes eld
 \end_inset
 
