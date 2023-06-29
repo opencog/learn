@@ -505,11 +505,27 @@ Counting vs.
 \end_layout
 
 \begin_layout Standard
-Open question: how can the methods here be bridged back to Bayesian theory?
- So, fro example, consider the simplest possible case: A Bernoulli process,
- a coin toss.
- The Bayesian prior is given by the beta function, which increments by one
- with each coin-toss result.
+Open question: How can the counting methods that we've been employing so
+ far, be bridged back to Bayesian theory? For the simplest possible case,
+ there is a clear bridge between counting and Bayesian probability.
+ It is summarized by the vapid catch-phrase 
+\begin_inset Quotes eld
+\end_inset
+
+update your priors
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But how can this be doen for structure learning?
+\end_layout
+
+\begin_layout Standard
+Below follows a laborious analysis of the simplest possible case: the Bernoulli
+ process of a coin toss.
+ In this case, there is a very direct relation between counting and Bayesian
+ theory: The Bayesian prior is given by the beta function, which increments
+ by one with each coin-toss result.
  One performs counting on coin-toss results, and the beta function provides
  the correct way to 
 \begin_inset Quotes eld
@@ -520,11 +536,8 @@ update your priors
 \end_inset
 
  with each new toss.
- So, the question is: what is the analogous description of graph learning?
-\end_layout
-
-\begin_layout Standard
-I think this is a hard question, but lets be naive and try, anyway.
+ Lets proceed with this laborious review.
+ It tries to hit on all the key assumptions going into the analysis.
 \end_layout
 
 \begin_layout Standard
@@ -661,19 +674,106 @@ Using the a priori assumptions about coins and hypothesis, we've already
 \begin_inset Formula 
 \[
 P\left(y\left|h_{\theta}\right.\right)=\begin{cases}
-\theta & \mbox{if }p=\mbox{heads}\\
-1-\theta & \mbox{if }p=\mbox{tails}
+\theta & \mbox{if }y=\mbox{heads}\\
+1-\theta & \mbox{if }y=\mbox{tails}
 \end{cases}
 \]
 
 \end_inset
 
-To obtain an exprssion for 
+To obtain an expression for 
 \begin_inset Formula $P\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
-, we need Bayes rule.
- 
+, we need to apply Bayes rule, which relates the likelihood of a hypothesis
+ to the probability of prior outcomes:
+\begin_inset Formula 
+\[
+P\left(\left.h_{\theta}\right|x\right)=P\left(x\left|h_{\theta}\right.\right)\mu\left(h_{\theta}\right)
+\]
+
+\end_inset
+
+We already have that 
+\begin_inset Formula $\mu\left(h_{\theta}\right)=1$
+\end_inset
+
+ and so we need an expression for 
+\begin_inset Formula $P\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The assumption of independence implies that the Cartesian product can be
+ used on the event space.
+ That is, we are working with a Bernoulli process, not a Markov process,
+ or something more complex.
+ Thus, a priori logical inference allows us to conclude that we can work
+ with the cylinder set measure on the weak topology on a Cartesian product
+ space.
+ Cylinder set measures factorize in a 
+\begin_inset Quotes eld
+\end_inset
+
+trivial
+\begin_inset Quotes erd
+\end_inset
+
+ way, which allows the expression
+\begin_inset Formula 
+\[
+P\left(x\left|h_{\theta}\right.\right)=\prod_{k=1}^{N}P\left(x_{k}\left|h_{\theta}\right.\right)
+\]
+
+\end_inset
+
+This reduces the problem to simply counting the number of times 
+\begin_inset Formula $N_{H}$
+\end_inset
+
+ that heads has been observed, and 
+\begin_inset Formula $N_{T}=N-N_{H}$
+\end_inset
+
+ that tails has been observed.
+ Plugging in,
+\begin_inset Formula 
+\[
+P\left(x\left|h_{\theta}\right.\right)=\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
+\]
+
+\end_inset
+
+At last, we have arrived:
+\begin_inset Formula 
+\[
+P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)P\left(\left.h_{\theta}\right|x\right)=\begin{cases}
+\beta\left(N_{H}+1,N_{T}\right) & \mbox{if }y=\mbox{heads}\\
+\beta\left(N_{H},N_{T}+1\right) & \mbox{if }y=\mbox{tails}
+\end{cases}
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+\beta\left(a,b\right)=\int d\theta\;\theta^{a}\left(1-\theta\right)^{b}=B\left(a+1,b+1\right)
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+B\left(z_{1},z_{2}\right)=\frac{\Gamma\left(z_{1}\right)\Gamma\left(z_{2}\right)}{\Gamma\left(z_{1}+z_{2}\right)}
+\]
+
+\end_inset
+
+is the conventional Beta function.
 \end_layout
 
 \begin_layout Section*
