@@ -36,10 +36,25 @@ experimental texts can be found here.
   ("jigsaw pieces") and their connectors, extracted from
   text corpora of varying sizes. (55 pages.)
 
+* [***Meaning as Inverse Interpretation***](interpretation/interpretation.pdf) --
+  (2019) In model theory, an "interpretation" provides the "semantic"
+  content of a "syntactic" model. This essay argues that humans find
+  "meaning" in the inverse direction: by extracting the syntactic
+  structure from the jumbled, disordered stream of sensory input.
+  (6 pages.)
+
 * [***Messaging***](messaging.pdf) --
   (2021) A loose jumble of ideas connecting communications, grammar,
   and the statistical mechanics of Link Grammar. Attempts to write
   down a partition function. (9 pages.)
+
+* [***Grammar Evaluation Results***](grammar-report/grammar-report.pdf) --
+  (2019) Evaluation of the Link Grammar dictionaries obtained from
+  the ULL/Kolonin corpora and learning experiments.  (31 pages.)
+
+* [***Learning a Lexis***](lexical/lexical.pdf) --
+  (2019) Outline of an unwritten paper that was going to describe this
+  project, overall. (5 pages.)
 
 * [Drafts](drafts) -- (2015-2017) A directory containing assorted
   short notes and rough drafts. Some of these are extracts from the
@@ -51,3 +66,16 @@ experimental texts can be found here.
 
 * [***Entropy***](entropy.pdf) -- Collection of basic definitions and
   notation used elsewhere in these texts. (10 pages.)
+
+Data and Figures
+----------------
+The following directories contain figures, illustrations, data,
+graphs supporting the various texts.  See the dirary for a review
+and explanation of what the datasets are illustraing.
+
+* [en-dj](en-dj),
+  [en-sims](en-sims),
+  [en-sims-p3](en-sims-p3),
+  [experiments](experiments),
+  [images](images),
+  [images-diary-two](images-diary-two),
