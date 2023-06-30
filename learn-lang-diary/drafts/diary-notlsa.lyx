@@ -1,41 +1,77 @@
-#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 345
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass article
 \use_default_options true
+\maintain_unincluded_children false
 \language english
+\language_package default
 \inputencoding auto
-\font_roman default
-\font_sans default
-\font_typewriter default
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
+\use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
-
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
 \paperfontsize default
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
+\use_indices false
 \paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
-\defskip medskip
-\quotes_language english
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
 \tracking_changes false
 \output_changes false
-\author "" 
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
 \end_header
 
 \begin_body
@@ -44,12 +80,16 @@
 Not LSA
 \end_layout
 
+\begin_layout Date
+July 2015
+\end_layout
+
 \begin_layout Subsection*
 1 July 2015
 \end_layout
 
 \begin_layout Standard
-NotLSA -- a way to do LSA-like things without actually using LSA (Latent
+NotLSA – a way to do LSA-like things without actually using LSA (Latent
  Semantic Analysis).
  Two very low-brow approaches, maybe well-known in the industry; I have
  no idea.
@@ -74,7 +114,7 @@ Text-keyword correlation
 \end_layout
 
 \begin_layout Standard
-Lets take a text, say -- 1000 pages of ..
+Lets take a text, say – 1000 pages of ..
  something.
  Some corpus.
  We want to compute the mutual information between the page itself, and
@@ -115,8 +155,10 @@ Call the
 
  be the total number of words in the document.
  Then, as usual, define probabilities, so that 
-\begin_inset Formula \[
-p_{m}=P(w_{m})=N_{m}/N\]
+\begin_inset Formula 
+\[
+p_{m}=P(w_{m})=N_{m}/N
+\]
 
 \end_inset
 
@@ -125,8 +167,10 @@ is the frequency of observing word
 \end_inset
 
  in the entire corpus, and 
-\begin_inset Formula \[
-p_{mk}=P(w_{m}|g_{k})=N_{mk}/\sum_{m}N_{mk}\]
+\begin_inset Formula 
+\[
+p_{mk}=P(w_{m}|g_{k})=N_{mk}/\sum_{m}N_{mk}
+\]
 
 \end_inset
 
@@ -142,8 +186,10 @@ be the (relative) frequency of the same word on page
  is independent of the page size.
  Pages do not all have to be of the same size.
  Define the mutual information as 
-\begin_inset Formula \[
-\mbox{MI}(g_{k},w_{m})=-\log_{2}\frac{p_{mk}}{p_{m}}=-\log_{2}\frac{N_{mk}N}{\sum_{m}N_{mk}\sum_{k}N_{mk}}=-\log_{2}\frac{p(m,k)}{p(m,*)p(*,k)}\]
+\begin_inset Formula 
+\[
+\mbox{MI}(g_{k},w_{m})=-\log_{2}\frac{p_{mk}}{p_{m}}=-\log_{2}\frac{N_{mk}N}{\sum_{m}N_{mk}\sum_{k}N_{mk}}=-\log_{2}\frac{p(m,k)}{p(m,*)p(*,k)}
+\]
 
 \end_inset
 
@@ -160,14 +206,18 @@ This is essentially a measure of how much more often the word
  The right-most form introduces a new notation, to make it clear that it
  resembles the traditional pair-MI expression.
  The notation is 
-\begin_inset Formula \[
-p(m,k)=\frac{N_{mk}}{N}\]
+\begin_inset Formula 
+\[
+p(m,k)=\frac{N_{mk}}{N}
+\]
 
 \end_inset
 
 so that 
-\begin_inset Formula \[
-p(m,*)=\sum_{k}p(m,k)\qquad\mbox{and}\qquad p(*,k)=\sum_{m}p(m,k)\]
+\begin_inset Formula 
+\[
+p(m,*)=\sum_{k}p(m,k)\qquad\mbox{and}\qquad p(*,k)=\sum_{m}p(m,k)
+\]
 
 \end_inset
 
@@ -176,7 +226,7 @@ are the traditional-looking pair-MI values.
 \end_layout
 
 \begin_layout Standard
-TODO: -- this does not have the feature-reduction/word-combing aspects of
+TODO: – this does not have the feature-reduction/word-combing aspects of
  LSA...
 \end_layout
 

@@ -1,47 +1,87 @@
-#LyX 1.6.7 created this file. For more info see http://www.lyx.org/
-\lyxformat 345
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
 \begin_document
 \begin_header
+\save_transient_properties true
+\origin unavailable
 \textclass article
 \use_default_options true
+\maintain_unincluded_children false
 \language english
+\language_package default
 \inputencoding auto
-\font_roman default
-\font_sans default
-\font_typewriter default
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
 \font_default_family default
+\use_non_tex_fonts false
 \font_sc false
 \font_osf false
-\font_sf_scale 100
-\font_tt_scale 100
-
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
 \graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
 \paperfontsize default
 \use_hyperref false
 \papersize default
 \use_geometry false
-\use_amsmath 1
-\use_esint 1
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
+\use_indices false
 \paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
 \secnumdepth 3
 \tocdepth 3
 \paragraph_separation indent
-\defskip medskip
-\quotes_language english
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
 \tracking_changes false
 \output_changes false
-\author "" 
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
 \end_header
 
 \begin_body
 
 \begin_layout Title
 Mining Grammatical Categories
+\end_layout
+
+\begin_layout Date
+June 2015
 \end_layout
 
 \begin_layout Subsection*
@@ -591,8 +631,10 @@ bush
  and so on.
  The closer that the cosine is to 1.0, the closer the two words are.
  There are other possibilities: we have the Cartesian distance 
-\begin_inset Formula \[
-dist(tree,bush)=\sqrt{(p_{1}-q_{1})^{2}+(p_{2}-q_{2})^{2}}\]
+\begin_inset Formula 
+\[
+dist(tree,bush)=\sqrt{(p_{1}-q_{1})^{2}+(p_{2}-q_{2})^{2}}
+\]
 
 \end_inset
 
@@ -625,8 +667,10 @@ tree
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula \[
-tree=e_{1}m_{1}p_{1}+e_{2}m_{2}p_{2}\]
+\begin_inset Formula 
+\[
+tree=e_{1}m_{1}p_{1}+e_{2}m_{2}p_{2}
+\]
 
 \end_inset
 
@@ -643,8 +687,10 @@ elegant
 
 , or which work the best...
  
-\begin_inset Formula \[
-tree=e_{1}(m_{1}-\log_{2}p_{1})+e_{2}(m_{2}-\log_{2}p_{2})\]
+\begin_inset Formula 
+\[
+tree=e_{1}(m_{1}-\log_{2}p_{1})+e_{2}(m_{2}-\log_{2}p_{2})
+\]
 
 \end_inset
 
@@ -696,8 +742,10 @@ The above section makes explicit use of the frequency and the mutual information
  be the numer of times that any two-connector disjunct has been observed,
  as long as both connectors point in the - direction.
  That is,
-\begin_inset Formula \[
-N(*-\&*-)=\sum_{c_{1}\in-,c_{2}\in-}N(c_{1}\&c_{2})\]
+\begin_inset Formula 
+\[
+N(*-\&*-)=\sum_{c_{1}\in-,c_{2}\in-}N(c_{1}\&c_{2})
+\]
 
 \end_inset
 
@@ -707,14 +755,18 @@ the summation taking place over all connectors in the - direction.
 (MA- & MB-)
 \family default
  is then
-\begin_inset Formula \[
-p(MA-\&MB-)=\frac{N(MA-\&MB-)}{N(*-\&*-)}\]
+\begin_inset Formula 
+\[
+p(MA-\&MB-)=\frac{N(MA-\&MB-)}{N(*-\&*-)}
+\]
 
 \end_inset
 
 The mutual information associated with the disjunct is then 
-\begin_inset Formula \[
-m(MA-\&MB-)=-\log_{2}\frac{p(MA-\&MB-)}{p(MA-\&*-)p(*-\&MB-)}\]
+\begin_inset Formula 
+\[
+m(MA-\&MB-)=-\log_{2}\frac{p(MA-\&MB-)}{p(MA-\&*-)p(*-\&MB-)}
+\]
 
 \end_inset
 

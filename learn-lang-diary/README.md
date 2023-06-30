@@ -28,7 +28,7 @@ experimental texts can be found here.
   (2018) An explanation of how word-vectors can be "stitched together"
   in a non-linear fashion, so as to extract grammatical (syntactic)
   as well as semantic content in the vectors. Describes one stage
-  of the processing pipline implemented in this git repo.
+  of the processing pipline implemented in this git repo. (13 pages.)
 
 * [***Connector Set Distributions***](connector-sets-revised.pdf) --
   (2017) Report of experimental results, characterizing the
@@ -40,6 +40,10 @@ experimental texts can be found here.
   (2021) A loose jumble of ideas connecting communications, grammar,
   and the statistical mechanics of Link Grammar. Attempts to write
   down a partition function. (9 pages.)
+
+* [Drafts](drafts) -- (2015-2017) A directory containing assorted
+  short notes and rough drafts. Some of these are extracts from the
+  diary that were requested during specific conversations.
 
 * [***Reading List***](Reading-List.md) --
   A bibliography of notable papers that provide background and
