@@ -80,6 +80,29 @@ experimental texts can be found here. In order of importance & relevance.
 * [***Entropy***](entropy.pdf) -- Collection of basic definitions and
   notation used elsewhere in these texts. (10 pages.)
 
+The Diary Itself
+----------------
+The actual diary.  All the good stuff is in here.
+Most of these have a short executive summary of what's in them.
+
+* [Diary Part One](learn-lang-diary-part-one.pdf) --
+  (2014-2020; 113 pages.)
+* [Diary Part Two](learn-lang-diary-part-two.pdf) --
+  (Feb-August 2021; 76 pages.)
+* [Diary Part Three](learn-lang-diary-part-three.pdf) --
+  (Sept 2021; 26 pages.)
+* [Diary Part Four](learn-lang-diary-part-four.pdf) --
+  (Sept-Dec 2021; 33 pages.)
+* [Diary Part Five](learn-lang-diary-part-five.pdf) --
+  (Jan-March 2022; 40 pages.)
+* [Diary Part Six](learn-lang-diary-part-six.pdf) --
+  (Feb-March 2022; 32 pages.)
+* Diary Part Seven
+* [Diary Part Eight](learn-lang-diary-part-eight.pdf) --
+  (Sept 2022; 20 pages.)
+* Diary Part Nine
+* Diary Part Ten
+
 Data and Figures
 ----------------
 The following directories contain figures, illustrations, data,
@@ -93,6 +116,18 @@ and explanation of what the datasets are illustrating.
   [images](images),
   [images-diary-two](images-diary-two),
   [link-type](link-type),
+  [p4-en-clique](p4-en-clique),
+  [p5-class-sim](p5-class-sim),
+  [p5-en-merge](p5-en-merge),
+  [p5-entropy](p5-entropy),
+  [p5-run-11-merge](p5-run-11-merge),
+  [p5-run-12-merge](p5-run-12-merge),
+  [p5-sim](p5-sim),
+  [p6-density](p6-density),
+  [p6-djmi](p6-djmi),
+  [p6-laplace](p6-laplace),
+  [p8-goe](p8-goe),
+  [p9-tri](p9-tri),
   [reco-image](reco-image),
   [scat](scat),
   [skimage](skimage),
