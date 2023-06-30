@@ -2,7 +2,7 @@ Diary and Other Texts
 =====================
 
 A diary of research results, plus an assortment of other theoretical and
-experimental texts can be found here.
+experimental texts can be found here. In order of importance & relevance.
 
 * [***Grammar Induction***](agi-2022/grammar-induction.pdf) --
   AGI 2022 theoretical paper on how to induce grammatical structure
@@ -29,6 +29,19 @@ experimental texts can be found here.
   in a non-linear fashion, so as to extract grammatical (syntactic)
   as well as semantic content in the vectors. Describes one stage
   of the processing pipline implemented in this git repo. (13 pages.)
+
+* [***The Distribution of English Language Word Pairs***](word-pairs-2009/word-pairs.pdf) --
+  (2009) A report on the statistical distribution of word-pairs for
+  English. These experimental results provided the foundational impetus
+  for this project.
+  (13 pages.)
+
+* [***Word Pair Distributions***](word-pairs-redux/word-pairs-redux.pdf) --
+  (2015-2019) A more formal, more complete version of the above. This
+  extracts results and graphs from the diary, placing them in one
+  single paper, in a more-or-less coherent presentation. Attempts
+  to provide "the last word" on this topic, from the point of view of
+  this project.  (31 pages.)
 
 * [***Connector Set Distributions***](connector-sets-revised.pdf) --
   (2017) Report of experimental results, characterizing the
@@ -70,8 +83,8 @@ experimental texts can be found here.
 Data and Figures
 ----------------
 The following directories contain figures, illustrations, data,
-graphs supporting the various texts.  See the dirary for a review
-and explanation of what the datasets are illustraing.
+graphs supporting the various texts.  See the diary for a review
+and explanation of what the datasets are illustrating.
 
 * [en-dj](en-dj),
   [en-sims](en-sims),
@@ -79,3 +92,20 @@ and explanation of what the datasets are illustraing.
   [experiments](experiments),
   [images](images),
   [images-diary-two](images-diary-two),
+  [link-type](link-type),
+  [reco-image](reco-image),
+  [scat](scat),
+  [skimage](skimage),
+  [word-classes](word-classes),
+  [zh-images](zh-images)
+
+Tools
+-----
+Scheme scripts used to process data to create graphs.
+See the diary for a review and explanation of how and when to
+use these tools.  These are very specific to reporting results
+for the diary, and are not otherwise used in the data processing
+pipeline.
+
+* [utils](utils)
+
