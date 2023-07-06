@@ -1462,7 +1462,155 @@ P\left(x_{1},x_{2},x_{3}\left|h_{b}\right.\right)=P\left(x_{1},x_{3}\left|h_{b}\
 
 \end_inset
 
+How should such possible worlds be enumerated?
+\end_layout
 
+\begin_layout Standard
+Given 
+\begin_inset Formula $N\ge0$
+\end_inset
+
+ historical observations, we have 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]\in W^{N}$
+\end_inset
+
+ is a string of 
+\begin_inset Formula $N$
+\end_inset
+
+ symbols chosen from the vocabulary 
+\begin_inset Formula $W$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\pi\left(N\right)$
+\end_inset
+
+ be the power set of 
+\begin_inset Formula $N=\left\{ 1,2,\cdots,N\right\} $
+\end_inset
+
+, that is, the set of all subsets of 
+\begin_inset Formula $N$
+\end_inset
+
+ items.
+ Each element of 
+\begin_inset Formula $I\in\pi\left(N\right)$
+\end_inset
+
+ induces a substring 
+\begin_inset Formula $x_{I}\subset x$
+\end_inset
+
+, so that 
+\begin_inset Formula $x_{I}=\left[x_{a},x_{b},\cdots\right]$
+\end_inset
+
+ with 
+\begin_inset Formula $a,b,\cdots\in I$
+\end_inset
+
+.
+ We call 
+\begin_inset Formula $I$
+\end_inset
+
+ the index set and 
+\begin_inset Formula $x_{I}$
+\end_inset
+
+ the corresponding cylinder set.
+ Let 
+\begin_inset Formula $\pi\left(\pi\left(N\right)\right)$
+\end_inset
+
+ be the power set of index sets.
+ An element 
+\begin_inset Formula $\theta\in\pi\left(\pi\left(N\right)\right)$
+\end_inset
+
+ is a set of index sets, and we define a possible world 
+\begin_inset Formula $\theta$
+\end_inset
+
+ to be such a subset.
+ That is, each possible world 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is a specific factorization of 
+\begin_inset Formula $P\left(x\left|h_{\theta}\right.\right)$
+\end_inset
+
+ into components.
+ That is, 
+\begin_inset Formula 
+\[
+P\left(x\left|h_{\theta}\right.\right)=\prod_{I\in\theta}f_{\theta}\left(x_{I}\right)
+\]
+
+\end_inset
+
+Each factor 
+\begin_inset Formula $f_{\theta}$
+\end_inset
+
+ is a probability, and so again, we could write 
+\begin_inset Formula $f_{\theta}=p_{\theta}$
+\end_inset
+
+ but choose 
+\begin_inset Formula $f$
+\end_inset
+
+ to avoid a confusing proliferation of 
+\begin_inset Formula $p$
+\end_inset
+
+'s.
+ We could also write 
+\begin_inset Formula $f_{\theta}\left(x_{I}\right)=f\left(x_{I}\left|h_{\theta}\right.\right)$
+\end_inset
+
+ but it seems easier to write the former, to make it clear that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a factor that is valid 
+\emph on
+only
+\emph default
+ in the possible world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ and in no other possible worlds.
+ In particular, a given 
+\begin_inset Formula $I$
+\end_inset
+
+ may or may not appear in other possible worlds.
+ Implicit is that 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ is a world-model at time-step 
+\begin_inset Formula $N$
+\end_inset
+
+ and that other world models apply at later time steps.
+ 
+\end_layout
+
+\begin_layout Standard
+xx
+\end_layout
+
+\begin_layout Standard
+this is not quite right.
+ Argh.
 \end_layout
 
 \begin_layout Section*
