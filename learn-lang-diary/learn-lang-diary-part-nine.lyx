@@ -1626,8 +1626,25 @@ The problem with the above is that the factorization
 \end_inset
 
  was purely syntactic, and we forgot to split out the semantic components.
- That is...
+ There should have been some latent 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ associated with the factorization.
+ The other mistake above is that we should have been working with priors
  
+\begin_inset Formula $\mu$
+\end_inset
+
+ instead of posteriors 
+\begin_inset Formula $P$
+\end_inset
+
+ (even though the two are related...)
 \end_layout
 
 \begin_layout Subsubsection*
@@ -1643,7 +1660,7 @@ structure
 \begin_inset Quotes erd
 \end_inset
 
- here is meant to have a model-theoretic flavor.
+ is meant to have a model-theoretic flavor.
  That is, we factorize a possible world 
 \begin_inset Formula $\theta$
 \end_inset
@@ -1716,37 +1733,13 @@ He saw the man with the telescope
 
 .
  This has two distinct syntactic parses, with two distinct meanings; the
- meaning correlates strongly with the parse.
- Thus, as the first step of factorization, write
-\begin_inset Formula 
-\[
-\mu\left(h_{\theta}\left|x\right.\right)=\mu\left(h_{\eta}\left|x\right.\right)\mu\left(h_{\eta}\left|x,\eta\right.\right)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
-\end_inset
-
- captures the likelihood the grammar 
+ meaning correlates strongly with the parse (linkage).
+ At this point, we adopt the terminology of Link Grammar, so that, for a
+ fixed grammar 
 \begin_inset Formula $\eta$
 \end_inset
 
- is correct, given that the sequence 
-\begin_inset Formula $x$
-\end_inset
-
- has been observed described.
- The second term 
-\begin_inset Formula $\mu\left(h_{\eta}\left|l\left(x,\eta\right)\right.\right)$
-\end_inset
-
- captures the idea that the semantic interpretation 
-\begin_inset Formula $h_{\zeta}$
-\end_inset
-
- is correct, given a parse (linkage) 
+, there may be multiple linkages 
 \begin_inset Formula $l\left(x,\eta\right)$
 \end_inset
 
@@ -1754,26 +1747,199 @@ where
 \begin_inset Formula $x$
 \end_inset
 
- by grammar 
-\begin_inset Formula $\eta$
+.
+\end_layout
+
+\begin_layout Standard
+Thus, as the first step of factorization, write
+\begin_inset Formula 
+\begin{align*}
+\mu\left(\left.h_{\theta}\right|x\right)= & \mu\left(\left.h_{\eta}\right|x\right)\mu\left(\left.h_{\zeta}\right|h_{\eta},x\right)\\
+= & \mu\left(\left.h_{\eta}\right|x\right)\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)\mu\left(\left.h_{\zeta}\right|l\left(x,\eta\right)\right)
+\end{align*}
+
+\end_inset
+
+Here, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ reverts back to its 
+\begin_inset Quotes eld
+\end_inset
+
+original
+\begin_inset Quotes erd
+\end_inset
+
+ meaning as an index on a possible world, semantics and all.
+ Thus, 
+\begin_inset Formula $\mu\left(h_{\theta}\left|x\right.\right)$
+\end_inset
+
+ captures the likelihood or 
+\begin_inset Quotes eld
+\end_inset
+
+belief
+\begin_inset Quotes erd
+\end_inset
+
+ that the world model 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ describes the 
+\begin_inset Quotes eld
+\end_inset
+
+real world
+\begin_inset Quotes erd
 \end_inset
 
 .
- Hmm.
- I guess we should also factor 
-\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
+ The first line of the equality above states that the factorization into
+ syntax and semantics is leterally a factorization, a product of two beliefs:
+ first, 
+\begin_inset Formula $\mu\left(\left.h_{\eta}\right|x\right)$
 \end_inset
 
- into all possible lnkages, for a given grammar ...
+ that the structure of the world is described by a syntax 
+\begin_inset Formula $\eta$
+\end_inset
+
+ given that 
+\begin_inset Formula $x$
+\end_inset
+
+ was observed, and second, the likelihood 
+\begin_inset Formula $\mu\left(\left.h_{\zeta}\right|h_{\eta},x\right)$
+\end_inset
+
+ that the world has the 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\zeta$
+\end_inset
+
+ given both the syntax 
+\begin_inset Formula $\eta$
+\end_inset
+
+ and also the observation 
+\begin_inset Formula $x$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-xx
+The second line of the equality atempts to deal with multiple distinct parses.
+ The first term 
+\begin_inset Formula $\mu\left(\left.h_{\eta}\right|x\right)$
+\end_inset
+
+ is unchanged: a syntax is compatible with an observed sequence, or it is
+ not.
+ The second term 
+\begin_inset Formula $\mu\left(l\left(x,\eta\right)\right)$
+\end_inset
+
+ says that certain linkages have certain likelihoods, depending only on
+ the grammar, but not the semantics.
+ The third term 
+\begin_inset Formula $\mu\left(\left.h_{\zeta}\right|l\left(x,\eta\right)\right)$
+\end_inset
+
+ says that the semantics explicitly depends on the linkage.
 \end_layout
 
 \begin_layout Standard
-this is not quite right.
- Argh.
+Thus, for example, 
+\begin_inset Quotes eld
+\end_inset
+
+He saw the man with the telescope
+\begin_inset Quotes erd
+\end_inset
+
+ has two equiprobable linkages: linkage 
+\begin_inset Formula $A$
+\end_inset
+
+ where 
+\begin_inset Quotes eld
+\end_inset
+
+he
+\begin_inset Quotes erd
+\end_inset
+
+ is using 
+\begin_inset Quotes eld
+\end_inset
+
+the telescope
+\begin_inset Quotes erd
+\end_inset
+
+, and linkage 
+\begin_inset Formula $B$
+\end_inset
+
+, where 
+\begin_inset Quotes eld
+\end_inset
+
+the man
+\begin_inset Quotes erd
+\end_inset
+
+ is carrying 
+\begin_inset Quotes eld
+\end_inset
+
+the telescope
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We can assign 
+\begin_inset Formula $\mu\left(l\left(x,\eta\right)\right)=\mu\left(A\right)=\mu\left(B\right)=1/2$
+\end_inset
+
+ to each, as no other parses are possible, but we do not have enough knowledge
+ to disambiguate between the two.
+ Let us now fix 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ and thus 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ so that our world model 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ is that there is a spy, named Joe, whose job responsibility is remote observati
+on with telescopes.
+ Given this world model, we wish to arrive at the conclusion that 
+\begin_inset Formula $\mu\left(\left.h_{\zeta}\right|A\right)\approx1$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu\left(\left.h_{\zeta}\right|B\right)\approx0$
+\end_inset
+
+.
+ But how, exactly, can we conclude this?
 \end_layout
 
 \begin_layout Section*
