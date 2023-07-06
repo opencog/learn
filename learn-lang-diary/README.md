@@ -132,7 +132,7 @@ and explanation of what the datasets are illustrating.
   [scat](scat),
   [skimage](skimage),
   [word-classes](word-classes),
-  [zh-images](zh-images)
+  [zh-images](zh-images).
 
 Tools
 -----

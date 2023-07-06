@@ -520,6 +520,10 @@ update your priors
  But how can this be done for structure learning?
 \end_layout
 
+\begin_layout Subsection*
+The Bernoulli Process
+\end_layout
+
 \begin_layout Standard
 Below follows a laborious analysis of the simplest possible case: the Bernoulli
  process of a coin toss.
@@ -1059,8 +1063,8 @@ count the events occuring in the world about you, and update the weightings
  that we are looking for.
 \end_layout
 
-\begin_layout Section*
-Counting Structures
+\begin_layout Subsection*
+Sensory Processes
 \end_layout
 
 \begin_layout Standard
@@ -1107,14 +1111,128 @@ The vocabulary
 \end_layout
 
 \begin_layout Itemize
-The Catesian product topology on the set of strings is misleading, in that
+The Cartesian product topology on the set of strings is misleading, in that
  it tricks us into thinking about the space of hypothesis as being a space
  of strings, when, in fact, we wanted our hypothesis to (first) range over
- grammatical structure, and then (later) overcommon sense.
+ grammatical structure, and then (later) over fixed, recurring themes, and
+ finally, over common sense.
 \end_layout
 
-\begin_layout Itemize
-The
+\begin_layout Standard
+To conclude: a time-ordered sequence of events is not generally independent,
+ and has both short-range and long range structure.
+ Yet, some events are more strongly correlatated than others, and so factorizati
+on into components is in order.
+\end_layout
+
+\begin_layout Standard
+The next issue is that of multi-sensory input.
+ This means not only that sight and sound might be correlated, but also
+ that senses, like touch, are both multi-modal and also have a spatial structure.
+ The spatial structure of skin/touch sensation is that left foot is distinct
+ from the right foot or the fingers.
+ It comes with some idea of distance: the elbow is close to the fingers,
+ but far from the toes.
+ Sensations have a multi-modal vocabulary: hot, cold, pain, (sharp, sudden,
+ stabbing pain, dull pain, throbbing, burning); headaches (of many different
+ kinds), soft sensations: gentle brush, tickle.
+ The vocabulary is one of degree and magnitude, and not on/off.
+ Although, formally, when we become aware of a sensations, the awareness
+ of degree (the cateorization of degree) arrives after the initial sensation.
+ The vocabulary is only partially orthogonizable: we can feel cold sharp
+ pain, but we cannot feel dull sharp pain.
+ Perhaps at the neuronal level, one can have distinct Cartesian coordinates
+ for one-dimensional sensors (say, for engineered robots) but even this
+ assumption is not obvious: A robotic touch sensor may consist of a pressure
+ sensor and a heat sensor, but, if mashed by a sufficiently strong pressure,
+ the heat sensor may record readings as well.
+ Loss-of-communications to the sensors is a distinct sensory input that
+ is not 
+\begin_inset Quotes eld
+\end_inset
+
+orthogonal
+\begin_inset Quotes erd
+\end_inset
+
+ in the strict Cartesian sense.
+ 
+\end_layout
+
+\begin_layout Standard
+Similar analysis applies to audio input: There's frequency, and there is
+ loudness.
+ There is chirp (frequency shifts).
+ There are bangs, claps, and constant tones.
+ There are limits to the frequency and volume of what can be heard.
+ The sensors may perform some post-processing, rather than feeding us raw
+ point measurements of microphone displacemenets.
+ The point is that even 
+\begin_inset Quotes eld
+\end_inset
+
+raw
+\begin_inset Quotes erd
+\end_inset
+
+ sensory input may have ambiguous semi-structured inter-relationships.
+ To conclude: we can label each multi-modal, multi-sensory inpt as 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+, but the space 
+\begin_inset Formula $X$
+\end_inset
+
+ to which it belongs has an ambiguous morphology.
+\end_layout
+
+\begin_layout Standard
+Next comes the problem of the time dimension.
+ Words come in a strict temporal order, and so a distinct integer label
+ 
+\begin_inset Formula $k\in\mathbb{Z}$
+\end_inset
+
+ can be used to label a word.
+ Multi-sensory data (sight, sound, audio) has no such integer labelling,
+ even when there is a lower bound of temporal resolution.
+ That is, we could 
+\emph on
+try
+\emph default
+ to label sensory data with integer labels applied at the millisecond resolution
+ time-scale, but te reality is most millisecond intervals will be empty
+ or unchanging: most human awareness happens at a slightly coarser scale.
+ So we have a temporal labelling problem as well.
+ For multi-sensory awareness, there may be ambiguity of 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ in the correlation of different senses.
+ We need a way of talking about temporal multi-sensory input that is robust
+ against these assorted effects.
+ 
+\end_layout
+
+\begin_layout Standard
+For now, we dont have an adequate theory of multi-sensory inputs; we only
+ have a hodge-podge of practical engineering solutions.
+ But this is perhaps enough, for now.
+ Onwards through the fog!
+\end_layout
+
+\begin_layout Subsection*
+Counting structures
+\end_layout
+
+\begin_layout Standard
+Having acknowledged the difficulty of structured multi-sensory input, lets
+ now pretend it doesn't exist.
 \end_layout
 
 \begin_layout Section*
