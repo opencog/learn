@@ -1227,12 +1227,242 @@ For now, we dont have an adequate theory of multi-sensory inputs; we only
 \end_layout
 
 \begin_layout Subsection*
-Counting structures
+Factorizing possible worlds
 \end_layout
 
 \begin_layout Standard
 Having acknowledged the difficulty of structured multi-sensory input, lets
  now pretend it doesn't exist.
+ That is, lets assume a sequence of input tokens 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ drawn from some approximately constant vocabulary 
+\begin_inset Formula $W$
+\end_inset
+
+, having a temporal label 
+\begin_inset Formula $k$
+\end_inset
+
+.
+ If the 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ has structure, then assume that it is a tuple: 
+\begin_inset Formula $x_{k}=\left(x_{k}^{1},x_{k}^{2},\cdots\right)$
+\end_inset
+
+ of some limited dimension.
+ The tuple might be a matroid or an independence set, appropriate for that
+ point in time.
+\end_layout
+
+\begin_layout Standard
+One of the atomic (irreducible) conceptual elements is the probability 
+\begin_inset Formula $P\left(y\vert x\right)$
+\end_inset
+
+ of observing an event 
+\begin_inset Formula $y=x_{N+1}$
+\end_inset
+
+ given an already-observed sequence 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+ at time 
+\begin_inset Formula $N\ge0$
+\end_inset
+
+.
+ As in the example of the Bernoulli process, we decompose this with respect
+ to the priors; that is, the strength 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ of the 
+\begin_inset Quotes eld
+\end_inset
+
+beleif
+\begin_inset Quotes erd
+\end_inset
+
+ in the hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+P\left(y\vert x\right)= & \int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)\\
+= & \int_{\mu}P\left(y\left|h_{\theta}\right.\right)
+\end{align*}
+
+\end_inset
+
+As before, the non-standard notation 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)=P\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ is used to indicate that 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is a measure on the space of hypothesis, and to reduce the proliferation
+ of 
+\begin_inset Formula $P$
+\end_inset
+
+ that leads to potential confusion.
+ The label 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is now an abstract label over the 
+\begin_inset Quotes eld
+\end_inset
+
+space of hypothesis
+\begin_inset Quotes erd
+\end_inset
+
+ (whatever that may be).
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+integral
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\int_{\theta}$
+\end_inset
+
+ is a summation over this space of hypothesis, and the notation 
+\begin_inset Formula $\int_{\mu}$
+\end_inset
+
+ stands for an integral performed over a measureable space; viz.
+ a Borel set endowed with some topology.
+ This implies the normalization 
+\begin_inset Formula $1=\int_{\theta}\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ As before, we replace the concept of 
+\begin_inset Quotes eld
+\end_inset
+
+hypothesis
+\begin_inset Quotes erd
+\end_inset
+
+ with the concept of 
+\begin_inset Quotes eld
+\end_inset
+
+possible world
+\begin_inset Quotes erd
+\end_inset
+
+, as we are constructing and maintaining a collection of 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ that possibly model the 
+\begin_inset Quotes eld
+\end_inset
+
+external world as it really is
+\begin_inset Quotes erd
+\end_inset
+
+ (ignoring, for now, that we may be actors in that external world, as well
+ as questions as to what 
+\begin_inset Quotes eld
+\end_inset
+
+really
+\begin_inset Quotes erd
+\end_inset
+
+ really is.)
+\end_layout
+
+\begin_layout Standard
+As before, we seek to obtain an expression for 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+, and we apply Bayes rule to get it:
+\begin_inset Formula 
+\[
+\mu\left(\left.h_{\theta}\right|x\right)=\alpha P\left(x\left|h_{\theta}\right.\right)\mu\left(h_{\theta}\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ is a constant, fixed by normalization, and 
+\begin_inset Formula $\mu\left(h_{\theta}\right)=\mu\left(\left.h_{\theta}\right|\varnothing\right)$
+\end_inset
+
+ is the prior, before any observations have been made (
+\begin_inset Formula $x=\varnothing$
+\end_inset
+
+).
+ As conventional, it seems appropriate to assume the uniform distribution
+ for this prior: 
+\begin_inset Formula 
+\[
+\mu\left(h_{\theta}\right)=\mu\left(\left.h_{\theta}\right|\varnothing\right)=1
+\]
+
+\end_inset
+
+although perhaps there might be some 
+\emph on
+a priori
+\emph default
+ arguments to use a different prior.
+\end_layout
+
+\begin_layout Standard
+The goal of structure factorization is to enumerate the possible structures
+ of the possible worlds.
+ So, for example, in possible world 
+\begin_inset Formula $\theta=a$
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\[
+P\left(x_{1},x_{2},x_{3}\left|h_{a}\right.\right)=P\left(x_{1}\left|h_{a}\right.\right)P\left(x_{2},x_{3}\left|h_{a}\right.\right)
+\]
+
+\end_inset
+
+while in possible world 
+\begin_inset Formula $\theta=b$
+\end_inset
+
+ we have 
+\begin_inset Formula 
+\[
+P\left(x_{1},x_{2},x_{3}\left|h_{b}\right.\right)=P\left(x_{1},x_{3}\left|h_{b}\right.\right)P\left(x_{2},x_{3}\left|h_{b}\right.\right)
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
