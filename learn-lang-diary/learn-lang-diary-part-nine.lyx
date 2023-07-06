@@ -1547,24 +1547,51 @@ He saw the man with the telescope
  Thus, as the first step of factorization, write
 \begin_inset Formula 
 \[
-P\left(x\left|h_{\theta}\right.\right)=P\left(x\left|h_{\eta}\right.\right)P\left(x,h_{\eta}\left|h_{\zeta}\right.\right)
+\mu\left(h_{\theta}\left|x\right.\right)=\mu\left(h_{\eta}\left|x\right.\right)\mu\left(h_{\eta}\left|x,\eta\right.\right)
 \]
 
 \end_inset
 
 where 
-\begin_inset Formula $P\left(x\left|h_{\eta}\right.\right)$
+\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
 \end_inset
 
- captures the likelihood of the sequence 
-\begin_inset Formula $x$
-\end_inset
-
- being described by the grammar 
+ captures the likelihood the grammar 
 \begin_inset Formula $\eta$
 \end_inset
 
-, and 
+ is correct, given that the sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ has been observed described.
+ The second term 
+\begin_inset Formula $\mu\left(h_{\eta}\left|l\left(x,\eta\right)\right.\right)$
+\end_inset
+
+ captures the idea that the semantic interpretation 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ is correct, given a parse (linkage) 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ of sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ by grammar 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Hmm.
+ I guess we should also factor 
+\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
+\end_inset
+
+ into all possible lnkages, for a given grammar ...
 \end_layout
 
 \begin_layout Standard
