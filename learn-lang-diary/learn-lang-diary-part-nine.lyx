@@ -1465,133 +1465,21 @@ P\left(x_{1},x_{2},x_{3}\left|h_{b}\right.\right)=P\left(x_{1},x_{3}\left|h_{b}\
 How should such possible worlds be enumerated?
 \end_layout
 
+\begin_layout Subsubsection*
+Attempt one
+\end_layout
+
 \begin_layout Standard
-The word 
+What follows is not quite right, but is a first attempt at arriving at a
+ workable definition of 
 \begin_inset Quotes eld
 \end_inset
 
-structure
-\begin_inset Quotes erd
-\end_inset
-
- here is meant to have a model-theoretic flavor.
- That is, we factorize a possible world 
-\begin_inset Formula $\theta$
-\end_inset
-
- into a 
-\begin_inset Quotes eld
-\end_inset
-
-sementics
-\begin_inset Quotes erd
-\end_inset
-
- or 
-\begin_inset Quotes eld
-\end_inset
-
-meaning
-\begin_inset Quotes erd
-\end_inset
-
- 
-\begin_inset Formula $\zeta$
-\end_inset
-
- and a 
-\begin_inset Quotes eld
-\end_inset
-
-syntax
-\begin_inset Quotes erd
-\end_inset
-
- 
-\begin_inset Formula $\eta$
-\end_inset
-
-.
- The idea is to apply a syntactic analysis 
-\begin_inset Formula $\eta$
-\end_inset
-
- to the observation 
-\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
-\end_inset
-
-, factorizing the sequence into a structure described by syntax 
-\begin_inset Formula $\zeta$
-\end_inset
-
-, and then ascribing some kind of 
-\begin_inset Quotes eld
-\end_inset
-
-meaning
-\begin_inset Quotes erd
-\end_inset
-
- that goes along with that factorization.
- Ambiguous sentences can illustrate the idea: 
-\begin_inset Quotes eld
-\end_inset
-
-He saw the man with the telescope
+factorization
 \begin_inset Quotes erd
 \end_inset
 
 .
- This has two distinct syntactic parses, with two distinct meanings; the
- meaning correlates strongly with the parse.
- Thus, as the first step of factorization, write
-\begin_inset Formula 
-\[
-\mu\left(h_{\theta}\left|x\right.\right)=\mu\left(h_{\eta}\left|x\right.\right)\mu\left(h_{\eta}\left|x,\eta\right.\right)
-\]
-
-\end_inset
-
-where 
-\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
-\end_inset
-
- captures the likelihood the grammar 
-\begin_inset Formula $\eta$
-\end_inset
-
- is correct, given that the sequence 
-\begin_inset Formula $x$
-\end_inset
-
- has been observed described.
- The second term 
-\begin_inset Formula $\mu\left(h_{\eta}\left|l\left(x,\eta\right)\right.\right)$
-\end_inset
-
- captures the idea that the semantic interpretation 
-\begin_inset Formula $h_{\zeta}$
-\end_inset
-
- is correct, given a parse (linkage) 
-\begin_inset Formula $l\left(x,\eta\right)$
-\end_inset
-
- of sequence 
-\begin_inset Formula $x$
-\end_inset
-
- by grammar 
-\begin_inset Formula $\eta$
-\end_inset
-
-.
- Hmm.
- I guess we should also factor 
-\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
-\end_inset
-
- into all possible lnkages, for a given grammar ...
 \end_layout
 
 \begin_layout Standard
@@ -1730,7 +1618,153 @@ only
 \end_inset
 
  and that other world models apply at later time steps.
+\end_layout
+
+\begin_layout Standard
+The problem with the above is that the factorization 
+\begin_inset Formula $\theta$
+\end_inset
+
+ was purely syntactic, and we forgot to split out the semantic components.
+ That is...
  
+\end_layout
+
+\begin_layout Subsubsection*
+Attempt two
+\end_layout
+
+\begin_layout Standard
+The word 
+\begin_inset Quotes eld
+\end_inset
+
+structure
+\begin_inset Quotes erd
+\end_inset
+
+ here is meant to have a model-theoretic flavor.
+ That is, we factorize a possible world 
+\begin_inset Formula $\theta$
+\end_inset
+
+ into a 
+\begin_inset Quotes eld
+\end_inset
+
+sementics
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\zeta$
+\end_inset
+
+ and a 
+\begin_inset Quotes eld
+\end_inset
+
+syntax
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ The idea is to apply a syntactic analysis 
+\begin_inset Formula $\eta$
+\end_inset
+
+ to the observation 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+, factorizing the sequence into a structure described by syntax 
+\begin_inset Formula $\zeta$
+\end_inset
+
+, and then ascribing some kind of 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ that goes along with that factorization.
+ But what is this idea, exactly?
+\end_layout
+
+\begin_layout Standard
+Ambiguous sentences can illustrate the idea: 
+\begin_inset Quotes eld
+\end_inset
+
+He saw the man with the telescope
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This has two distinct syntactic parses, with two distinct meanings; the
+ meaning correlates strongly with the parse.
+ Thus, as the first step of factorization, write
+\begin_inset Formula 
+\[
+\mu\left(h_{\theta}\left|x\right.\right)=\mu\left(h_{\eta}\left|x\right.\right)\mu\left(h_{\eta}\left|x,\eta\right.\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
+\end_inset
+
+ captures the likelihood the grammar 
+\begin_inset Formula $\eta$
+\end_inset
+
+ is correct, given that the sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ has been observed described.
+ The second term 
+\begin_inset Formula $\mu\left(h_{\eta}\left|l\left(x,\eta\right)\right.\right)$
+\end_inset
+
+ captures the idea that the semantic interpretation 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+ is correct, given a parse (linkage) 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ of sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ by grammar 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Hmm.
+ I guess we should also factor 
+\begin_inset Formula $\mu\left(h_{\eta}\left|x\right.\right)$
+\end_inset
+
+ into all possible lnkages, for a given grammar ...
 \end_layout
 
 \begin_layout Standard
