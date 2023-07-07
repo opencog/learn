@@ -640,6 +640,7 @@ prior
 
  can be, and should be thought of as a measure-theoretic measure on the
  unit interval.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -684,6 +685,8 @@ As before, I use the non-standard notation
 \end_inset
 
 's, twisty little passages all alike.
+ Best if different actors wore different clothes, so that we can tell them
+ apart more easily.
  Secondly, it helps distinguish likelihood from probability, and makes clear
  that distributions on hypothesis are very different than probabilities
  of future, unknown events.
@@ -1969,6 +1972,53 @@ on with telescopes.
 \end_layout
 
 \begin_layout Subsubsection*
+Attempt three
+\end_layout
+
+\begin_layout Standard
+Perhaps the mistake above is that we should have written
+\begin_inset Formula 
+\[
+\mu\left(\left.h_{\theta}\right|x\right)=\mu\left(\left.h_{\eta}\right|x\right)\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)$
+\end_inset
+
+ is the posterior probability that the linkage 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ is correct, given the world model 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+.
+ Does this help in any way? It seems like it should: we can use logical
+ inference: if we beleive in spies with telescopes, then we can infer that
+ 
+\begin_inset Formula $P\left(A\left|h_{\zeta}\right.\right)\approx1$
+\end_inset
+
+ and 
+\begin_inset Formula $P\left(B\left|h_{\zeta}\right.\right)\approx0$
+\end_inset
+
+ through explicit mechanical steps.
+\end_layout
+
+\begin_layout Standard
+This example, however, is not parsing, but is reference resolution, and
+ so that is a distinct process employing a somewhat different set of algorithms.
+ I think it can also can be done with the existing Link Grammar style framework,
+ but requires spilling more words onto the page, Perhaps the simpler case
+ of parsing should be clarified first.
+\end_layout
+
+\begin_layout Subsubsection*
 Sentence tokenization
 \end_layout
 
@@ -2034,32 +2084,115 @@ n.
 \end_layout
 
 \begin_layout Subsubsection*
-Attempt three
+Parallel (high-performance) tokenization
 \end_layout
 
 \begin_layout Standard
-Perhaps the mistake above is that we should have written
-\begin_inset Formula 
-\[
-\mu\left(\left.h_{\theta}\right|x\right)=\mu\left(\left.h_{\eta}\right|x\right)\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)
-\]
-
+Can we use the above kind of sentence-tokenization analysis as a simpler-to-work
+ with example of 
+\begin_inset Quotes eld
 \end_inset
 
-so that 
-\begin_inset Formula $P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)$
+sub-symbolic tokenization
+\begin_inset Quotes erd
 \end_inset
 
- is the posterior probability that the linkage 
-\begin_inset Formula $l\left(x,\eta\right)$
+? So, for example, of converting audio fragments into phonemes or words,
+ or converting visual fragments into recognizable objects?
+\end_layout
+
+\begin_layout Standard
+Conventional parsing involves starting with a grammar 
+\begin_inset Formula $\eta$
 \end_inset
 
- is correct, given the world model 
-\begin_inset Formula $h_{\zeta}$
+ and attempting to parse a sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ with it, which either fails or succeeds.
+ However, we can consider an architecture that constructs a collection of
+ recognizers 
+\begin_inset Formula $\rho$
+\end_inset
+
+, each of which correspond to some specific linkage, and return true/false
+ (or a number 
+\begin_inset Formula $\mu$
+\end_inset
+
+) if that linkage fits.
+ The intent is that the recognizers are kind-of-like perceptrons, except
+ that they are syntactic perceptrons.
+ The outcome of recognition is (exactly) the same as conventional parsing,
+ but the process can be highly parallelized, as each recognizer can run
+ on a distinct CPU and provide its answer 
+\begin_inset Formula $\mu$
 \end_inset
 
 .
- Does this help in any way? 
+ For natural langauge, this is perhaps not so interesting, but for sensory
+ processing, this becomes very important.
+\end_layout
+
+\begin_layout Standard
+So, for example, consider the syntactic elements that describe many European
+ flags: they have three horizontal stripes, of three colors.
+ The structure can be given a grammar, involving the legnth and width of
+ rectangular regions, etc.
+ We can attempt to analyze a collection of pixels to see how well they conform
+ to this syntax, and thus determine the nation from the image.
+ Conversly, we can build perceptrons that trigger only whe resented with
+ horizontal stripes.
+ On this, we layer a perceptron that recognizes exactly three stripes, and
+ not two or four, and then after this, some more perceptrons that recognize
+ specific colors.
+ This can be done by organizing image-processing filters/primitives into
+ a specific hierarchical tree.
+ That tree implements a specific, syntactically-legal arrangement of the
+ grammatical elements of the flag.
+ Each distinct, valid tree can run on a distinct GPU.
+\end_layout
+
+\begin_layout Standard
+By this hand-waving argument, we conclude that each such filter-processing
+ arrangment is in one-to-one correspondance with a valid syntax tree.
+ If we limit ourselves to only one filter-processing element, the classic
+ perceptron, then each deep network is in correspondance with a specific
+ syntactic tree.
+ 
+\end_layout
+
+\begin_layout Standard
+There are two interesting cases, here.
+ One is where there are more then a few distinct image-processing operations,
+ and as these are distinct, then the mapping to syntax is simplfied, as
+ the distinction helps keep the mapping clear.
+ The second case is where the only image-processing operation is the perceptron,
+ and the only form of composition is layering.
+ This architecture results in fairly tightly-bound, non-sparse networks
+ which do not easily decompose into syntactic elements.
+ Instead, there are perhaps some weaker and some stronger connections, but
+ identifying those using formal methods is challenging.
+ Analyzing how they decompose into syntactic elements is harder still.
+ The (only?) saving grace is the 
+\begin_inset Quotes eld
+\end_inset
+
+deep and cheap
+\begin_inset Quotes erd
+\end_inset
+
+ idea, that the deeper networks are easier to decompose into primitives
+ than the shallow networks.
+ 
+\end_layout
+
+\begin_layout Standard
+Lets go through the motions of formalizing this.
+ Firs, lets formalize the notion of parallelism.
+ This seems relatively trivial, but lets do it anyway.
+ 
 \end_layout
 
 \begin_layout Section*
