@@ -2019,6 +2019,42 @@ This example, however, is not parsing, but is reference resolution, and
 \end_layout
 
 \begin_layout Subsubsection*
+Attempt four
+\end_layout
+
+\begin_layout Standard
+The original project of factorization, started above, was to justify the
+ current MST parsing concept, or maybe even to correct it, by formalizing
+ counting.
+ So far, we've not made a dent.
+ So lets try again.
+ Since we are learning from nothing at all, we will not have a world-model
+ yet, and so we set 
+\begin_inset Formula $\zeta=\varnothing$
+\end_inset
+
+ as the prior.
+ The first goal is to learn just the surface syntax 
+\begin_inset Formula $\eta$
+\end_inset
+
+, and nothing deeper.
+ Per attempt three, this implies a uniform distribution 
+\begin_inset Formula $P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)=P\left(l\left(x,\eta\right)\left|\varnothing\right.\right)=1$
+\end_inset
+
+ which in turn implies the normalization 
+\begin_inset Formula 
+\[
+\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)=1
+\]
+
+\end_inset
+
+Hmmm.
+\end_layout
+
+\begin_layout Subsubsection*
 Sentence tokenization
 \end_layout
 
@@ -2124,6 +2160,7 @@ Conventional parsing involves starting with a grammar
 ) if that linkage fits.
  The intent is that the recognizers are kind-of-like perceptrons, except
  that they are syntactic perceptrons.
+ Alternately, each recognizer can be thought of as a decision tree.
  The outcome of recognition is (exactly) the same as conventional parsing,
  but the process can be highly parallelized, as each recognizer can run
  on a distinct CPU and provide its answer 
@@ -2166,9 +2203,29 @@ By this hand-waving argument, we conclude that each such filter-processing
 \begin_layout Standard
 There are two interesting cases, here.
  One is where there are more then a few distinct image-processing operations,
- and as these are distinct, then the mapping to syntax is simplfied, as
+ and as these are distinct, then the mapping to syntax is simplified, as
  the distinction helps keep the mapping clear.
- The second case is where the only image-processing operation is the perceptron,
+ In particular, one can imagine that syntactic trees are randomly generated,
+ and kept only if they appear to be effective, 
+\emph on
+a la
+\emph default
+ 
+\begin_inset Quotes eld
+\end_inset
+
+decision forest
+\begin_inset Quotes erd
+\end_inset
+
+ training.
+ The task is then: given a collection of decision trees, what is the correspondi
+ng syntax that generates those decision trees, and only those trees, and
+ no others?
+\end_layout
+
+\begin_layout Standard
+The second case is where the only image-processing operation is the perceptron,
  and the only form of composition is layering.
  This architecture results in fairly tightly-bound, non-sparse networks
  which do not easily decompose into syntactic elements.
@@ -2185,14 +2242,100 @@ deep and cheap
 
  idea, that the deeper networks are easier to decompose into primitives
  than the shallow networks.
- 
+ That is, the mapping is to decompose a deep layering of perceptrons into
+ a large collection of decision trees, and then, given this collection of
+ decision trees, to infer the syntax that describes them.
 \end_layout
 
 \begin_layout Standard
 Lets go through the motions of formalizing this.
- Firs, lets formalize the notion of parallelism.
+ First, lets formalize the notion of parallelism.
  This seems relatively trivial, but lets do it anyway.
- 
+ Replace the input word 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+ by a variable sequence 
+\begin_inset Formula $v=\left[v_{1},v_{2},\cdots,v_{N}\right]$
+\end_inset
+
+.
+ The difference here is that each of the 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ were previously understood to be actual observed constants, and so one
+ could obtain an explicit linkage 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ and assign to it an explicit real number 
+\begin_inset Formula $\mu\left(l\left(x,\eta\right)\right)$
+\end_inset
+
+.
+ Replacing the concrete values 
+\begin_inset Formula $x$
+\end_inset
+
+ by variables 
+\begin_inset Formula $v$
+\end_inset
+
+ yeilds an unevaluated function 
+\begin_inset Formula 
+\[
+\mu\left(l\left(v,\eta\right)\right):W^{N}\to\mathbb{R}
+\]
+
+\end_inset
+
+and, for shorthand, write 
+\begin_inset Formula $\rho\left(v,\eta\right)=\mu\left(l\left(v,\eta\right)\right)$
+\end_inset
+
+ so that there is one rcognizer 
+\begin_inset Formula $\rho$
+\end_inset
+
+ for each potential linkage 
+\begin_inset Formula $l$
+\end_inset
+
+.
+ So, at this stage, the formation of regonizers is formally trivial.
+ We only need to assume that some given linkage 
+\begin_inset Formula $l$
+\end_inset
+
+ exists and can be wired up, independently of the tokens 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The tokens 
+\begin_inset Formula $x$
+\end_inset
+
+ are only plugged in later, to obtain the actual numberical value for 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ Nothing to see here, folks, move along.
+\end_layout
+
+\begin_layout Standard
+We are now left with the two hard parts:
+\end_layout
+
+\begin_layout Itemize
+How to infer a syntax, given a collection of decision trees?
+\end_layout
+
+\begin_layout Itemize
+How to infer a collection of decision trees, given a deep feed-forward perceptro
+n network?
 \end_layout
 
 \begin_layout Section*
