@@ -1227,6 +1227,32 @@ For now, we dont have an adequate theory of multi-sensory inputs; we only
 \end_layout
 
 \begin_layout Subsection*
+Tokenization
+\end_layout
+
+\begin_layout Standard
+Sensory perception appears to get converted into tokens, immediately, before
+ any further processing can be performed.
+ We perceive spoken language as words, and, under duress, as phonemes.
+ We perceive visual objects as wholes, not parts, and must guess when presented
+ with fractional visual cues.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+sub-symbolic
+\begin_inset Quotes erd
+\end_inset
+
+ level performs this tokenization.
+\end_layout
+
+\begin_layout Standard
+I don't have an adequate theory of sub-symbolic tokenization that I am comfortab
+le with.
+\end_layout
+
+\begin_layout Subsection*
 Factorizing possible worlds
 \end_layout
 
@@ -1940,6 +1966,100 @@ on with telescopes.
 
 .
  But how, exactly, can we conclude this?
+\end_layout
+
+\begin_layout Subsubsection*
+Sentence tokenization
+\end_layout
+
+\begin_layout Standard
+Note that the creation of linkages 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ is a form of tokenization: these can only be meaningfully created when
+ enough tokens have been gathered for a sentence.
+ Thus, we conclude that 
+\begin_inset Formula $\mu\left(l\left(x,\eta\right)\right)\approx0$
+\end_inset
+
+ for 
+\emph on
+all
+\emph default
+ linkages whenever the sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ does not form a full or coherent sentence.
+ This implies that 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)\approx0$
+\end_inset
+
+ when 
+\begin_inset Formula $x$
+\end_inset
+
+ is not coherent.
+ That is, incoherent statements do not support any particular world model.
+\end_layout
+
+\begin_layout Standard
+What does this imply for 
+\begin_inset Quotes eld
+\end_inset
+
+updating ones priors
+\begin_inset Quotes erd
+\end_inset
+
+? Well, obviously, we should not update at all, in this situation.
+ Formally, mathematically, how does this work? Well, as a post-condition,
+ we need to maintain normalization 
+\begin_inset Formula $1=\int_{\theta}\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ But ...
+ Hmm.
+ We're missing some kind of detail, here.
+\end_layout
+
+\begin_layout Standard
+Garden-path sentences provide an interesting test for this notion of tokenizatio
+n.
+ In this case, as more words arrive, we have to back-track our priors back
+ to an earlier state.
+ How, exectly, does this work, mathematically?
+\end_layout
+
+\begin_layout Subsubsection*
+Attempt three
+\end_layout
+
+\begin_layout Standard
+Perhaps the mistake above is that we should have written
+\begin_inset Formula 
+\[
+\mu\left(\left.h_{\theta}\right|x\right)=\mu\left(\left.h_{\eta}\right|x\right)\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)
+\]
+
+\end_inset
+
+so that 
+\begin_inset Formula $P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)$
+\end_inset
+
+ is the posterior probability that the linkage 
+\begin_inset Formula $l\left(x,\eta\right)$
+\end_inset
+
+ is correct, given the world model 
+\begin_inset Formula $h_{\zeta}$
+\end_inset
+
+.
+ Does this help in any way? 
 \end_layout
 
 \begin_layout Section*
