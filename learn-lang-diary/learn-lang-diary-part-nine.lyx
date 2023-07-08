@@ -1495,7 +1495,7 @@ How should such possible worlds be enumerated?
 \end_layout
 
 \begin_layout Subsubsection*
-Attempt one
+Attempt One
 \end_layout
 
 \begin_layout Standard
@@ -1677,7 +1677,7 @@ meaning
 \end_layout
 
 \begin_layout Subsubsection*
-Attempt two
+Attempt Two
 \end_layout
 
 \begin_layout Standard
@@ -1972,11 +1972,14 @@ on with telescopes.
 \end_layout
 
 \begin_layout Subsubsection*
-Attempt three
+Attempt Three
 \end_layout
 
 \begin_layout Standard
 Perhaps the mistake above is that we should have written
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula 
 \[
 \mu\left(\left.h_{\theta}\right|x\right)=\mu\left(\left.h_{\eta}\right|x\right)\sum_{l\left(x,\eta\right)}\mu\left(l\left(x,\eta\right)\right)P\left(l\left(x,\eta\right)\left|h_{\zeta}\right.\right)
@@ -2019,7 +2022,7 @@ This example, however, is not parsing, but is reference resolution, and
 \end_layout
 
 \begin_layout Subsubsection*
-Attempt four
+Attempt Four
 \end_layout
 
 \begin_layout Standard
@@ -2052,6 +2055,10 @@ The original project of factorization, started above, was to justify the
 \end_inset
 
 Hmmm.
+\end_layout
+
+\begin_layout Subsubsection*
+Attempt Five
 \end_layout
 
 \begin_layout Subsubsection*
@@ -2430,7 +2437,7 @@ So we see that MI really is (should be) additive (as the above follows from
 \begin_inset Formula $p\left(a,b,c\right)$
 \end_inset
 
- fails to be an independent product.
+ fails to consist of completely independent terms.
 \end_layout
 
 \begin_layout Standard
@@ -2458,6 +2465,115 @@ over-counting
  in the sum of the pair-wise terms.
 \end_layout
 
+\begin_layout Standard
+This is confusing.
+ What have we really done? Note that 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+ appears on both the left and right above, and thus can be cancelled out.
+ This leaves only
+\begin_inset Formula 
+\begin{align*}
+MI\left(a,b,c\right)+IC\left(a,b,c\right)= & MI\left(a,b\right)+MI\left(a,c\right)+MI\left(b,c\right)\\
+= & \log_{2}\frac{p\left(a,b,*\right)p\left(a,*,c\right)p\left(*,b,c\right)}{\left[p\left(a,*,*\right)p\left(*,b,*\right)p\left(*,*,c\right)\right]^{2}}
+\end{align*}
+
+\end_inset
+
+which is interesting ...
+ except the r.h.s is devoid of the 
+\begin_inset Quotes eld
+\end_inset
+
+interesting value
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+, which is what we wanted to factor.
+ That is, the three pair-wise MI's have nothing to tell us about the 
+\begin_inset Quotes eld
+\end_inset
+
+true nature
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Perhaps instead, we should be writing
+\begin_inset Formula 
+\[
+IC\left(a,b,c\right)=MI\left(a,b\right)+MI\left(a,c\right)+MI\left(b,c\right)-MI\left(a,b,c\right)
+\]
+
+\end_inset
+
+and claim that IC is the 
+\begin_inset Quotes eld
+\end_inset
+
+quantity of interest
+\begin_inset Quotes erd
+\end_inset
+
+ that 
+\begin_inset Quotes eld
+\end_inset
+
+actually describes
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $p\left(a,b,c\right)$
+\end_inset
+
+? Up to 
+\begin_inset Quotes eld
+\end_inset
+
+normalization
+\begin_inset Quotes erd
+\end_inset
+
+ by the 
+\begin_inset Quotes eld
+\end_inset
+
+independent
+\begin_inset Quotes erd
+\end_inset
+
+ individual p's, that is? That way, we can arrive at an independence hypothsis
+ that IC can be approximately described by pair-wise terms, whenever 
+\begin_inset Formula $MI\left(a,b,c\right)\approx0$
+\end_inset
+
+.
+ This is, after all, the ultimate goal: to write a 
+\begin_inset Quotes eld
+\end_inset
+
+perturbative series
+\begin_inset Quotes erd
+\end_inset
+
+ expressing the true joint probability in terms of graphical subcomponents.
+ 
+\end_layout
+
 \begin_layout Subsection*
 Tri-part experiment/demo
 \end_layout
@@ -2483,7 +2599,7 @@ plausible
 \end_inset
 
  probability assignments.
- Halft the time, its sunny, and half the time not.
+ Half the time, its sunny, and half the time not.
  If its not raining, then the lawn is being watered half the time.
  Low probabilites assigned to freak events.
 \begin_inset VSpace defskip
