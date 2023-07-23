@@ -767,9 +767,69 @@ where
 \end_layout
 
 \begin_layout Standard
-Using the a priori assumptions about coins and hypothesis, and applying
- logical inference to the coin-toss problem, we may conclude, in an a priori
- fashion, that, given hypothesis 
+The hypothesis space includes a number of priors that are not updated.
+ These are invariants; they don't change because they are, in a sense, outside
+ of the scope of the problem being observed.
+ The framework being developed here does not provide a machanism for updating
+ these beleifs:
+\end_layout
+
+\begin_layout Itemize
+Assumptions about the physics of coin tosses.
+\end_layout
+
+\begin_layout Itemize
+Assumption that only two outcomes are possible.
+\end_layout
+
+\begin_layout Itemize
+Assumption that the same coin is tossed, each time; that the coin does not
+ change with time.
+\end_layout
+
+\begin_layout Itemize
+Assumption that the outcome of a coin toss is correctly observed, and that
+ there is no observational noise (stocahstic or systemaic).
+\end_layout
+
+\begin_layout Itemize
+Assumption that the tools of Bayesian theory are accessible for use, and
+ that the theory itself is correct.
+\end_layout
+
+\begin_layout Itemize
+Assumption that logical interence can be performed and that the outcome
+ of using logic is trustworthy.
+\end_layout
+
+\begin_layout Itemize
+Assumption that a toolset for algebraic manipulations is accessible and
+ employable.
+\end_layout
+
+\begin_layout Standard
+The first four bullets above seem reasonable, as they can be obviously varied:
+ a wind may be blowing; the coin may be pyramidal; the coin might bend or
+ change shape with each toss.
+ Poor eyesight might result in some of the tails being perceived as heads
+ (a systematic bias).
+ The last bullets are weirder: we normally accept logic and algebra as foundatio
+nal, fixed and always true.
+ In practice, however, it is not so clear-cut: algebraic calculations may
+ be intractable; logical reasoning chains too deep.
+ Mistakes (bugs) in the software and problem setup may occur.
+ This text that you are reading right now, that explains things, may itself
+ explain things incorrectly.
+ Perhaps superior techniques remain undiscovered.
+ All these issues are set aside for this example, although they lurk for
+ the general case.
+\end_layout
+
+\begin_layout Standard
+Using the a priori assumptions about the physics of coin tosses and the
+ mathematical nature of stochastic processes, then applying logical inference
+ to the coin-toss problem, we may conclude, in an a priori fashion, that,
+ given hypothesis 
 \begin_inset Formula $h_{\theta}$
 \end_inset
 
@@ -843,7 +903,7 @@ a posteriori prior
 The assumption of independence implies that the Cartesian product can be
  used on the event space.
  That is, we are working with a Bernoulli process, not a Markov process,
- or something more complex.
+ nor something more complex.
  Thus, a priori logical inference allows us to conclude that we can work
  with the cylinder set measure on the weak topology on a Cartesian product
  space.
@@ -963,7 +1023,7 @@ prior
 \end_inset
 
  we had 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|\varnothing\right)=\mu\left(h_{\theta}\right)$
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|\varnothing\right)=\mu\left(h_{\theta}\right)=1$
 \end_inset
 
  and after 
@@ -1010,12 +1070,13 @@ beta distribution
 \begin_inset Quotes erd
 \end_inset
 
-, although it is off-by-one from the Wikipedia definition (because it's
+.
+ Here, it is off-by-one from the Wikipedia definition only because it's
  tedious to have to write 
 \begin_inset Formula $N_{H}+1$
 \end_inset
 
- everywhere).
+ everywhere.
 \end_layout
 
 \begin_layout Standard
@@ -1030,7 +1091,7 @@ updated prior
  is
 \begin_inset Formula 
 \[
-\mu\left(\left.h_{\theta}\right|y,x\right)==\begin{cases}
+\mu\left(\left.h_{\theta}\right|y,x\right)=\begin{cases}
 f\left(\theta;N_{H}+1,N_{T}\right) & \mbox{if }y=\mbox{heads}\\
 f\left(\theta;N_{H},N_{T}+1\right) & \mbox{if }y=\mbox{tails}
 \end{cases}
