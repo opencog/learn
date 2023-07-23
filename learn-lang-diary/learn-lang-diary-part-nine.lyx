@@ -1625,23 +1625,13 @@ Friston Notation (Markov vs.
 
 \begin_layout Standard
 An important remark about notation.
- It is important because the Friston paper, 
+ It is important because the notation used in the Friston paper, 
 \emph on
 op cit.
 \emph default
-, fails to distinguish between Bayesian theory, frequentist theory and maximum
- likelihood theory.
- It conflates the whole mess into a 
-\begin_inset Quotes eld
-\end_inset
-
-Markov model
-\begin_inset Quotes erd
-\end_inset
-
-.
- This is a dis-service to the reader, but perhaps excusable in an intro
- text?
+, allows some subtle confusions between Bayesian theory, frequentist theory,
+ maximum likelihood theory and Markov models.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1650,7 +1640,8 @@ The variable
 \end_inset
 
 , originally intended to be a string of observations, can also be taken
- interpreted as a summary count or 
+ interpreted as a summary count of observations to date.
+ It is tempting to call this count the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1658,10 +1649,10 @@ state
 \begin_inset Quotes erd
 \end_inset
 
-, collapsing the theory into the Markovian domain.
+, but this would be formally wrong.
  This is a bit subtle.
  In conventional Markovian orthodoxy, one says that an assumption has been
- made that the deep past does not affect the beleif state.
+ made that the deep past does not affect the belief state.
  Rather, all past observations have been condensed to a 
 \begin_inset Quotes eld
 \end_inset
@@ -1747,9 +1738,8 @@ If we discard Bayes, and use the maximum likelihood approach, then we can
 .
  But this relationship holds only in the naive frequentist model, and not
  in the Bayesian model.
- It would appear that Friston has confused these two roles.
- The confusion, though, is intentional: it is the cornerstone of Markov
- theory.
+ Have these two roles been confused? Yes! The confusion, though, seems to
+ be an intentional, central feature of Markov theory.
 \end_layout
 
 \begin_layout Standard
@@ -2123,6 +2113,86 @@ which just says that the ensemble of hypothesis
 \end_inset
 
  is a measure on the space of hypothesis.
+\end_layout
+
+\begin_layout Standard
+Much of the bitch and moan above can be eliminated by writing 
+\begin_inset Formula $p\left(s\left|x\right.\right)$
+\end_inset
+
+ instead of 
+\begin_inset Formula $p\left(s\right)$
+\end_inset
+
+ and then explicitly identifying 
+\begin_inset Formula $s=h_{\theta}$
+\end_inset
+
+.
+ This allows one to write 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)=p\left(s\left|x\right.\right)$
+\end_inset
+
+ and then everything becomes entirely algebraically equivalent.
+ The vocabulary is still a problem.
+ In one case, the word 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ applies to 
+\begin_inset Formula $s$
+\end_inset
+
+ while in the other case, the word 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ applies to the reduced count obtained from the observations 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ We conclude: the terminology 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ is problematic.
+ It is not a synonym for 
+\begin_inset Quotes eld
+\end_inset
+
+reduced count
+\begin_inset Quotes erd
+\end_inset
+
+, no matter how tempting this is.
+\end_layout
+
+\begin_layout Standard
+Where did the word 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ come from, anyway? Well, a Markov chain is more or less formally equivalent
+ to a probabilistic state machine, where states are actually states and
+ state transitions have a computer science interpretation.
+ 
 \end_layout
 
 \begin_layout Subsection*
