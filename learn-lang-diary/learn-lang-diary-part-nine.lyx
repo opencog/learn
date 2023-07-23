@@ -1128,6 +1128,221 @@ count the events occuring in the world about you, and update the weightings
 \end_layout
 
 \begin_layout Subsection*
+Friston stuffs
+\end_layout
+
+\begin_layout Standard
+So Friston is saying, for the above sensory process, we can readily obtain
+ a measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ for a possible-world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ and an inference 
+\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)$
+\end_inset
+
+ of observation 
+\begin_inset Formula $y$
+\end_inset
+
+ given the possible world, but that we cannot perform the integration
+\begin_inset Formula 
+\[
+P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
+\]
+
+\end_inset
+
+as this is 
+\begin_inset Quotes eld
+\end_inset
+
+often intractable
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That seems odd.
+ Perhaps he is saying that it is 
+\begin_inset Quotes eld
+\end_inset
+
+often intractable
+\begin_inset Quotes erd
+\end_inset
+
+ to obtain the measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+? That also seems odd.
+ I don't understand.
+\end_layout
+
+\begin_layout Standard
+The proposed solution is to work with 
+\begin_inset Quotes eld
+\end_inset
+
+surprisal
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+self-information
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The surprisal is defined as 
+\begin_inset Formula $-\log P\left(y\left|h_{\theta}\right.\right)$
+\end_inset
+
+, which measures how 
+\begin_inset Quotes eld
+\end_inset
+
+surprising
+\begin_inset Quotes erd
+\end_inset
+
+ the observation 
+\begin_inset Formula $y$
+\end_inset
+
+ is, in light of the world-model 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+.
+ Accurate world-models are those that minimize suprisal.
+ 
+\end_layout
+
+\begin_layout Standard
+Friston claims that a good update of the world model is one that minimizes
+ the surprisal.
+ But what does this really mean? We don't have a single world-model, we
+ have many: they are a (prior) distribution 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ and we wish to update this distribution to a new (posterior) one 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I think Friston is working with a maximum likelihood model: rather than
+ keeping the full distribution 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ one instead picks a single value for the parameter 
+\begin_inset Formula $\theta$
+\end_inset
+
+, thus isolating a single world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ as the current world-model, and then updating 
+\begin_inset Formula $\theta$
+\end_inset
+
+ with each new observation.
+ In the maximum likelihood model, one solves for the extremum in the prior
+\begin_inset Formula 
+\[
+\frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)=0
+\]
+
+\end_inset
+
+Friston then says that the correct update is one that minimizes suprsingness,
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+maximizes the amount of information extracted from observation 
+\begin_inset Formula $y$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is done by solving 
+\begin_inset Formula 
+\[
+\frac{d}{d\theta}P\left(y\left|h_{\theta}\right.\right)=0
+\]
+
+\end_inset
+
+Next is the claim that the 
+\begin_inset Quotes eld
+\end_inset
+
+variational free energy
+\begin_inset Quotes erd
+\end_inset
+
+ (VFE) is always greater than or equal to the surprisal, and that we can
+ minimize surprisal by minimizing the variational free energy.
+\end_layout
+
+\begin_layout Standard
+How does this work for the Bernoulli process? Suppose we have 
+\begin_inset Formula $N=N_{H}+N_{T}$
+\end_inset
+
+ observations so far.
+ The solution to
+\begin_inset Formula 
+\begin{align*}
+0= & \frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)\\
+= & \frac{d}{d\theta}\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
+= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
+\end{align*}
+
+\end_inset
+
+is given by
+\begin_inset Formula 
+\[
+\theta=\frac{N_{H}}{N_{H}+N_{T}}
+\]
+
+\end_inset
+
+and the posterior update prserves this form, as 
+\begin_inset Formula $N_{H}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+ are updated with new observations.
+ So this keeps things very simple.
+\end_layout
+
+\begin_layout Standard
+This allows Friston to say 
+\end_layout
+
+\begin_layout Subsection*
 Model Building
 \end_layout
 
@@ -1213,10 +1428,7 @@ one must presume that the observation sequence
 
 \begin_layout Standard
 The assumption of structure is the assumption of grammar...
-\end_layout
-
-\begin_layout Standard
-
+ our world model is that everything is grammar.
 \end_layout
 
 \begin_layout Subsection*
