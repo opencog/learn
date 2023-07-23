@@ -1303,7 +1303,7 @@ In the above, an assumption was made that there is only one such maximal
 \end_layout
 
 \begin_layout Subsection*
-Friston Principle
+Friston Principles
 \end_layout
 
 \begin_layout Standard
@@ -1596,7 +1596,7 @@ Starting with an ensemble of priors
  and construct the VFE as 
 \begin_inset Formula 
 \[
-F=\int_{h}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{\theta}\right|y,x\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
+F=\int_{\theta}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{\theta}\right|y,x\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
 \]
 
 \end_inset
@@ -1618,23 +1618,511 @@ The
  descent.
 \end_layout
 
+\begin_layout Subsection*
+Friston Notation (Markov vs.
+ Bayes)
+\end_layout
+
 \begin_layout Standard
-A quick remark about notation.
- The variable 
+An important remark about notation.
+ It is important because the Friston paper, 
+\emph on
+op cit.
+\emph default
+, fails to distinguish between Bayesian theory, frequentist theory and maximum
+ likelihood theory.
+ It conflates the whole mess into a 
+\begin_inset Quotes eld
+\end_inset
+
+Markov model
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is a dis-service to the reader, but perhaps excusable in an intro
+ text?
+\end_layout
+
+\begin_layout Standard
+The variable 
 \begin_inset Formula $x$
 \end_inset
 
 , originally intended to be a string of observations, can also be taken
- interpreted as a 
+ interpreted as a summary count or 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+, collapsing the theory into the Markovian domain.
+ This is a bit subtle.
+ In conventional Markovian orthodoxy, one says that an assumption has been
+ made that the deep past does not affect the beleif state.
+ Rather, all past observations have been condensed to a 
+\begin_inset Quotes eld
+\end_inset
+
+current state
+\begin_inset Quotes erd
+\end_inset
+
+, which, for things like the Bernoulli process, can be taken to be a collection
+ of counts.
+ To avoid saying a 
+\begin_inset Quotes eld
+\end_inset
+
+collection of counts
+\begin_inset Quotes erd
+\end_inset
+
+, Friston calls this 
+\begin_inset Quotes eld
+\end_inset
+
+the state
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is entirely standard in standard Markovian theory.
+ But, in the present case, this is perhaps a poor choice of terminology,
+ and has unfortunate epistemic side effects.
 \end_layout
 
 \begin_layout Standard
-Here, 
+Here's the problem.
+ This terminology appears to blur the relationship between the (Bayesian)
+ model parameter 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and the state/count 
 \begin_inset Formula $x$
 \end_inset
 
- can be taken to be either a string of observations, or as a collapsed Markovian
- state
+.
+ Returning to the Bernoulli example: we had reduced the observation of coin
+ flips to a 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $\left(N_{H},N_{T}\right)$
+\end_inset
+
+ of the number of heads and tails that have been observed so far.
+ By contrast, 
+\begin_inset Formula $\theta$
+\end_inset
+
+ was a formal parameter, used as a coordinate in the space of ensembles
+ (the space of hypothetical priors).
+ This coordinate was needed as a stepping stone to arrive at surprisal.
+ For the coin, the stepping stone is
+\begin_inset Formula 
+\[
+P\left(y\left|h_{\theta}\right.\right)=\begin{cases}
+\theta & \mbox{if }y=\mbox{heads}\\
+1-\theta & \mbox{if }y=\mbox{tails}
+\end{cases}
+\]
+
+\end_inset
+
+If we discard Bayes, and use the maximum likelihood approach, then we can
+ directly relate the state to the parameter: the most likely parameter value
+ is 
+\begin_inset Formula $\theta_{\mbox{max}}=N_{H}/\left(N_{H}+N_{T}\right)$
+\end_inset
+
+.
+ But this relationship holds only in the naive frequentist model, and not
+ in the Bayesian model.
+ It would appear that Friston has confused these two roles.
+ The confusion, though, is intentional: it is the cornerstone of Markov
+ theory.
+\end_layout
+
+\begin_layout Standard
+To untangle the mess, we have the following concordance.
+ The first column presents Bayesian theory, using the local idiosyncratic
+ notation, while the second presents Markov theory, using Friston's notation.
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="3">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Bayes
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Markov (Friston)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Commentary
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(s\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $x$
+\end_inset
+
+ is the reduced observation history (count), while 
+\begin_inset Formula $s$
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(o\left|s\right.\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $y$
+\end_inset
+
+ and 
+\begin_inset Formula $o$
+\end_inset
+
+ are the same thing: the latest observation.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(o,s\right)=p\left(o\left|s\right.\right)p\left(s\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(o,s\right)$
+\end_inset
+
+ is a joint probability.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $P\left(y\left|x\right.\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(o\right)=\sum_{s}p\left(o,s\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\int_{\theta}$
+\end_inset
+
+ is an integral over all possible worlds; 
+\begin_inset Formula $\sum_{s}$
+\end_inset
+
+ is a sum over all states.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $p\left(s\left|o\right.\right)=p\left(o,s\right)/p\left(o\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Both 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and 
+\begin_inset Formula $p\left(s\left|o\right.\right)$
+\end_inset
+
+ are the posterior.
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I hope this table makes it clear why I like my notation better.
+ The very first line makes it clear that 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ is a Bayesian prior, obtained from a history of observations 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ The history can be collapsed to a pair of counts 
+\begin_inset Formula $\left(N_{H},N_{T}\right)$
+\end_inset
+
+ for the Bernoulli process.
+ By misuse of terminology, this could be called a 
+\begin_inset Quotes eld
+\end_inset
+
+state
+\begin_inset Quotes erd
+\end_inset
+
+, and even perhaps a 
+\begin_inset Quotes eld
+\end_inset
+
+Markovian state
+\begin_inset Quotes erd
+\end_inset
+
+, as the actual sequence of 
+\begin_inset Formula $x$
+\end_inset
+
+ does not matter; only the reduced counts do.
+ The Markov/Friston notation gets rid of the beleif ensemble paramter 
+\begin_inset Formula $\theta$
+\end_inset
+
+, perhaps by assuming that 
+\begin_inset Formula $\theta=\theta_{\mbox{max}}$
+\end_inset
+
+, but this is not entirely clear.
+ If so, then Markov/Friston has buried a maximum-likelihood principle in
+ here, that is not made explicit.
+ I think it's unfair to blame Friston for this; I assume it's a property
+ of Markov models.
+\end_layout
+
+\begin_layout Standard
+The third line of the table highlights another quagmire.
+ For a frequentist interpretation of probability, there is nothing at all
+ wrong with calling 
+\begin_inset Formula $p\left(o,s\right)$
+\end_inset
+
+ the joint probability.
+ It's quite fine.
+ Yet we see that the Bayesian parameter 
+\begin_inset Formula $\theta$
+\end_inset
+
+ has gone missing, or rather, has been conflated with the state.
+\end_layout
+
+\begin_layout Standard
+The fifth, last line, Friston writes out Bayes rule explicitly.
+ By contrast, Bayes rule as already come and gone when using the notation
+ 
+\begin_inset Formula $\mu$
+\end_inset
+
+.
+ The noralizing division was subsumed into the overall normalization constant,
+ forced by 
+\begin_inset Formula 
+\[
+1=\int_{\theta}\mu\left(\left.h_{\theta}\right|x\right)=\int_{\theta}\mu\left(\left.h_{\theta}\right|y,x\right)
+\]
+
+\end_inset
+
+which just says that the ensemble of hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+, both prior and posterior, is all that there is, and there is nothing more.
+ That is, 
+\begin_inset Formula $\mu$
+\end_inset
+
+ is a measure on the space of hypothesis.
 \end_layout
 
 \begin_layout Subsection*
