@@ -1128,6 +1128,98 @@ count the events occuring in the world about you, and update the weightings
 \end_layout
 
 \begin_layout Subsection*
+Model Building
+\end_layout
+
+\begin_layout Standard
+The derivation of the beta function above was possible, because an assumption
+ was made about the independence of observations.
+ This assumption is a part of the a priori world model: that we know, in
+ advance, that the same, invariant two-sided coin is being tossed by a perfect
+ observer, with no other physical interference.
+ A more complex analysis results if a different world model is assumed.
+ For example, perhaps the observer may have imperfect vision.
+ In this world-model, the coin is still stable and invariant, but the hypothesis
+ space must now include a model for poor vision.
+ This will again require simplifying assumptions: is vision poor due to
+ an occular defect, or is it due to passing dust-clouds of variable duration?
+ Are heads and tails equally likely to be confused, or is one more likely
+ to be observed than the other? A different example, and a different analysis
+ results if the world model assumes that the coin is malleable: a flake
+ of aluminum foil, or perhaps a soft clay disk, changing shape with each
+ toss.
+ Can we relate world-model building to inference?
+\end_layout
+
+\begin_layout Standard
+It would seem that Bayesian inference requires the a priori assumption of
+ some specific world-model.
+ This world-model is formed before any observations are made; and is factored
+ into two parts: a fixed, unalterable set of assumptions about 
+\begin_inset Quotes eld
+\end_inset
+
+how the world works
+\begin_inset Quotes erd
+\end_inset
+
+, and a set of parameters to be infered via Bayesian update.
+ That is, Bayesian inference, in this narrow sense, is possible only after
+ the physics of the world has been discovered.
+ What if, instead, the goal is to discover the physics of the world? That
+ is, based on a sequence of observations, determine if eyesight is faulty,
+ determine if the coin is made of clay, determine if there are time periods
+ where the physcal properties of the coin, or of vision, change rapidly
+ or remain fixed.
+ What tools do we have then?
+\end_layout
+
+\begin_layout Standard
+If one does not have an a priori world model, what does one do then? A sequence
+ of bits 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+ arrive from some space alien, from some communications channel, from some
+ stellar observatory, from some drug-induced transcendental hallucinatory
+ state involving machine elves.
+ How does one develop a physical model that can explain the sequence of
+ observations?
+\end_layout
+
+\begin_layout Standard
+The standard starting point is an attack on the independence asumption.
+ Rather than factoring
+\begin_inset Formula 
+\[
+P\left(x\left|h_{\theta}\right.\right)=\prod_{k=1}^{N}P\left(x_{k}\left|h_{\theta}\right.\right)=\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
+\]
+
+\end_inset
+
+one must presume that the observation sequence 
+\begin_inset Formula $x=\left[x_{1},x_{2},\cdots,x_{N}\right]$
+\end_inset
+
+ has both short-term and long-term correlations, and has a history, path
+ dependence.
+ The goal is to factor out recurring patterns, of variable length, determine
+ the degree to which these patterns are stationary (i.e.
+ subject to the central limit theorem), and, having extracted such patterns,
+ generate a second stream of bits that appears to be even more random than
+ the initial observation sequence.
+ How is this done?
+\end_layout
+
+\begin_layout Standard
+The assumption of structure is the assumption of grammar...
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\begin_layout Subsection*
 Sensory Processes
 \end_layout
 
