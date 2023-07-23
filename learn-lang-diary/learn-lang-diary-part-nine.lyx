@@ -1285,121 +1285,6 @@ In the above, an assumption was made that there is only one such maximal
  The number of such states is large: Avogadro's number, in chemistry.
 \end_layout
 
-\begin_layout Standard
-The proposed solution is to work with 
-\begin_inset Quotes eld
-\end_inset
-
-surprisal
-\begin_inset Quotes erd
-\end_inset
-
- or 
-\begin_inset Quotes eld
-\end_inset
-
-self-information
-\begin_inset Quotes erd
-\end_inset
-
-.
- The surprisal is defined as 
-\begin_inset Formula $-\log P\left(y\left|h_{\theta}\right.\right)$
-\end_inset
-
-, which measures how 
-\begin_inset Quotes eld
-\end_inset
-
-surprising
-\begin_inset Quotes erd
-\end_inset
-
- the observation 
-\begin_inset Formula $y$
-\end_inset
-
- is, in light of the world-model 
-\begin_inset Formula $h_{\theta}$
-\end_inset
-
-.
- Accurate world-models are those that minimize suprisal.
- 
-\end_layout
-
-\begin_layout Standard
-Friston claims that a good update of the world model is one that minimizes
- the surprisal.
- But what does this really mean? We don't have a single world-model, we
- have many: they are a (prior) distribution 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
-\end_inset
-
- and we wish to update this distribution to a new (posterior) one 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-I think Friston is working with a maximum likelihood model: rather than
- keeping the full distribution 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
-\end_inset
-
- one instead picks a single value for the parameter 
-\begin_inset Formula $\theta$
-\end_inset
-
-, thus isolating a single world 
-\begin_inset Formula $h_{\theta}$
-\end_inset
-
- as the current world-model, and then updating 
-\begin_inset Formula $\theta$
-\end_inset
-
- with each new observation.
- Friston then says that the correct update is one that minimizes suprsingness,
- or 
-\begin_inset Quotes eld
-\end_inset
-
-maximizes the amount of information extracted from observation 
-\begin_inset Formula $y$
-\end_inset
-
-
-\begin_inset Quotes erd
-\end_inset
-
-.
- This is done by solving 
-\begin_inset Formula 
-\[
-\frac{d}{d\theta}P\left(y\left|h_{\theta}\right.\right)=0
-\]
-
-\end_inset
-
-Next is the claim that the 
-\begin_inset Quotes eld
-\end_inset
-
-variational free energy
-\begin_inset Quotes erd
-\end_inset
-
- (VFE) is always greater than or equal to the surprisal, and that we can
- minimize surprisal by minimizing the variational free energy.
-\end_layout
-
-\begin_layout Standard
-How does this work for the Bernoulli process? 
-\end_layout
-
 \begin_layout Subsection*
 Friston Principle
 \end_layout
@@ -1420,8 +1305,24 @@ Friston is saying that, in the general case, maintaining the measure
 \begin_inset Formula $\nu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
- obtained not from Bayes, but from a principle of minimizing a quantity
- terms the 
+ obtained not from Bayes, but from other principles, here termed 
+\begin_inset Quotes eld
+\end_inset
+
+Friston principles
+\begin_inset Quotes erd
+\end_inset
+
+.
+ These are centered around the idea of minimizing the 
+\begin_inset Quotes eld
+\end_inset
+
+surprisal
+\begin_inset Quotes erd
+\end_inset
+
+, which in turn can be approximated by minimizing the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1429,83 +1330,84 @@ variational free energy
 \begin_inset Quotes erd
 \end_inset
 
- (VFE)
+ (VFE).
 \end_layout
 
 \begin_layout Standard
-principles.
-\end_layout
-
-\begin_layout Standard
-some aspect of the above is 
+The surprisal or 
 \begin_inset Quotes eld
 \end_inset
 
-often intractable
+self-information
 \begin_inset Quotes erd
 \end_inset
 
-, but it's not clear just what.
- He seems to say that we can readily obtain a measure 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+ is defined as 
+\begin_inset Formula $-\log P\left(y\left|h_{\theta}\right.\right)$
 \end_inset
 
- for a possible-world 
-\begin_inset Formula $h_{\theta}$
+, which measures how 
+\begin_inset Quotes eld
 \end_inset
 
- and its easy to obtain an inference 
-\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)$
+surprising
+\begin_inset Quotes erd
 \end_inset
 
- of observation 
+ the observation 
 \begin_inset Formula $y$
 \end_inset
 
- given the possible world, but that we cannot perform the integration
-\begin_inset Formula 
-\[
-P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
-\]
-
-\end_inset
-
-as this is 
-\begin_inset Quotes eld
-\end_inset
-
-often intractable
-\begin_inset Quotes erd
+ is, in light of the world-model 
+\begin_inset Formula $h_{\theta}$
 \end_inset
 
 .
- That seems odd.
- Perhaps he is saying that it is 
-\begin_inset Quotes eld
+ The maximum likelihood model (or the microcanonical ensemble) is the one
+ that minimizes the surprisal absolutely.
+ The problem of update is then to maximize the amount of information extracted
+ from observation 
+\begin_inset Formula $y$
 \end_inset
 
-often intractable
-\begin_inset Quotes erd
-\end_inset
-
- to obtain the measure 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
-\end_inset
-
-? Or perhaps to normalize it? That also seems odd.
- I don't understand.
+.
 \end_layout
 
 \begin_layout Standard
-The Friston claim seems to be that obtaining 
+Here we go slightly off the rails, I'm still digesting what Friston actualy
+ says.
+\end_layout
+
+\begin_layout Standard
+Friston claims that the 
+\begin_inset Quotes eld
+\end_inset
+
+variational free energy
+\begin_inset Quotes erd
+\end_inset
+
+ (VFE) is always greater than or equal to the surprisal, and that we can
+ minimize surprisal by minimizing the variational free energy.
+ (Clearly, this cannot be literally true; I guess he means that VFE is a
+ suitable surrogate.)
+\end_layout
+
+\begin_layout Standard
+Starting with an ensemble of priors 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ one wishes to obtain a posterior ensemble 
 \begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
 \end_inset
 
- is difficult, and so we instead start with an approximation 
+.
+ To accomplish this, define an approximation 
 \begin_inset Formula $\nu\left(\left.h_{\theta}\right|y,x\right)$
 \end_inset
 
- and define the VFE as 
+ and construct the VFE as 
 \begin_inset Formula 
 \[
 F=\int_{h}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{\theta}\right|y,x\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
@@ -1513,7 +1415,7 @@ F=\int_{h}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{
 
 \end_inset
 
-and then search for a 
+The 
 \begin_inset Formula $\nu$
 \end_inset
 
@@ -1521,21 +1423,13 @@ and then search for a
 \begin_inset Formula $F$
 \end_inset
 
-.
- This 
-\begin_inset Formula $\nu$
-\end_inset
-
- will then be taken as the best-guess for 
+ can be taken as the best-guess for the posterior 
 \begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
 \end_inset
 
 .
- The method for minimizing 
-\begin_inset Formula $F$
-\end_inset
-
- is gradient descent.
+ As this is all done numerically, the proposed algorithm is that of gradient
+ descent.
 \end_layout
 
 \begin_layout Subsection*
