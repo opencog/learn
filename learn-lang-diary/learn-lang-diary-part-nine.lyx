@@ -1275,6 +1275,23 @@ frequentist
 \end_layout
 
 \begin_layout Standard
+Pay attention to the dramatically different results! In the Bayesian case,
+ we beleive (
+\emph on
+a priori
+\emph default
+) that the Beta function provides the prior distribution, and we count in
+ order to maintain the full canonical ensmble up-to-date.
+ In the frequentist case, we don't know what the distribution is (we do
+ not need to make any 
+\emph on
+a priori
+\emph default
+ assumptions about it), but we do know what the probabilities are for the
+ next coin flip.
+\end_layout
+
+\begin_layout Standard
 In the above, an assumption was made that there is only one such maximal
  world; and it's a valid one for the Bernoulli process.
  More generally, this is not the case.
@@ -1303,7 +1320,99 @@ literal "false"
 
 \end_inset
 
- (April 2022.) 
+ (April 2022.)
+\end_layout
+
+\begin_layout Standard
+Friston offers a surrogate or replacement for Bayesian theory, predicated
+ on the assumption that working directly with Bayes is impossible, for both
+ pratical and formal considerations.
+ Remnants of Bayes remain, in that there are still ensembles of hypotehtical
+ worlds 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+, parameterized by some abstract parameters 
+\begin_inset Formula $\theta$
+\end_inset
+
+, and that certain formal Bayes-like algebraic manipulations are still possible.
+ Certain indistinct tenets of mathematical logic still seem to be taken
+ for granted.
+\end_layout
+
+\begin_layout Standard
+What, exacly, is 
+\begin_inset Quotes eld
+\end_inset
+
+intractable
+\begin_inset Quotes erd
+\end_inset
+
+? Several things, it seems.
+ First, maintaining the 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ is intractable, because no analytic form can be written down in most cases
+ (the Bernoulli process being one obvious exception.) There are also practical
+ difficulties: if the parameter 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is a real number, then there are an unountable number of possible worlds
+ 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+, and so one is driven to use the toolset of finite mathematics to obtain
+ approximations.
+ This is suposed to be 
+\begin_inset Quotes eld
+\end_inset
+
+self-evident
+\begin_inset Quotes erd
+\end_inset
+
+, but is perhaps a bit dangerous if working from first prinsiples.
+ 
+\end_layout
+
+\begin_layout Standard
+The second intractable object is the integral 
+\begin_inset Formula 
+\[
+P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
+\]
+
+\end_inset
+
+There are two distinct issues: one is that of discretizing 
+\begin_inset Formula $\theta$
+\end_inset
+
+, as already mentioned.
+ The other is actually performing the summation, simply because the space
+ (manifold; ensemble) on which 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ lives is much too large.
+ That is, a numerical summation is intractable, because the for-each loop
+ is just too big.
+ Being forced to use numerical techniques like Monte Carlo integration to
+ compute the integral is dumb, if the integral can be avoided in the first
+ place.
 \end_layout
 
 \begin_layout Standard
@@ -1312,7 +1421,7 @@ Friston is saying that, in the general case, maintaining the measure
 \end_inset
 
  in analytic form is intractable.
- Worse, it might not be knowable in principle, and that one must necessarily
+ Worse, it is not knowable in even in principle, and that one must necessarily
  work with approximations 
 \begin_inset Formula $\nu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
@@ -1343,6 +1452,71 @@ variational free energy
 \end_inset
 
  (VFE).
+\end_layout
+
+\begin_layout Standard
+This is a bit subtle.
+ One 
+\begin_inset Quotes eld
+\end_inset
+
+pretends
+\begin_inset Quotes erd
+\end_inset
+
+ to beleive in Bayes, just enough to be able to make abstract statements
+ about the measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ Yet, there is no particular claim of an actual platonic reality for 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+, that it is 
+\begin_inset Quotes eld
+\end_inset
+
+out there somewhere
+\begin_inset Quotes erd
+\end_inset
+
+, even if we 
+\begin_inset Quotes eld
+\end_inset
+
+can't write it down
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It seems to be fine to say that it is formally unknowable, and that we
+ have enough of an algebraic theory to be able to approximate it, using
+ counting and assorted formulas and theorems.
+ These theorems are the 
+\begin_inset Quotes eld
+\end_inset
+
+shadow
+\begin_inset Quotes erd
+\end_inset
+
+ cast by Bayes, the shadow that remains on the wall of the Platonic cave,
+ even if we can't see the true form.
+ The shadow is still more than just 
+\begin_inset Quotes eld
+\end_inset
+
+naive frequentist counting
+\begin_inset Quotes erd
+\end_inset
+
+, even though, epistemologically, counting is all we have.
+\end_layout
+
+\begin_layout Standard
+How is this accmplished? What are the principles?
 \end_layout
 
 \begin_layout Standard
@@ -1442,6 +1616,25 @@ The
 .
  As this is all done numerically, the proposed algorithm is that of gradient
  descent.
+\end_layout
+
+\begin_layout Standard
+A quick remark about notation.
+ The variable 
+\begin_inset Formula $x$
+\end_inset
+
+, originally intended to be a string of observations, can also be taken
+ interpreted as a 
+\end_layout
+
+\begin_layout Standard
+Here, 
+\begin_inset Formula $x$
+\end_inset
+
+ can be taken to be either a string of observations, or as a collapsed Markovian
+ state
 \end_layout
 
 \begin_layout Subsection*
