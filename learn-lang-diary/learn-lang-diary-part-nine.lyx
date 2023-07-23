@@ -763,7 +763,20 @@ where
 
 \end_inset
 
+In the language of statistical mechanics, the set 
+\begin_inset Formula $\left\{ \mu\left(\left.h_{\theta}\right|x\right)\mbox{ s.t. }0\le\theta\le1\right\} $
+\end_inset
 
+ is called a 
+\begin_inset Quotes eld
+\end_inset
+
+canonical ensemble
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -1128,59 +1141,148 @@ count the events occuring in the world about you, and update the weightings
 \end_layout
 
 \begin_layout Subsection*
-Friston stuffs
+Maximum Likelihood
 \end_layout
 
 \begin_layout Standard
-So Friston is saying, for the above sensory process, we can readily obtain
- a measure 
-\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+Out of all possible worlds (that is, out of all elements in the canonical
+ ensemble), there should be one that is 
+\begin_inset Quotes eld
 \end_inset
 
- for a possible-world 
+most likely
+\begin_inset Quotes erd
+\end_inset
+
+, the one with the maximum likelihood.
+ This selects a single model, and the update problem becomes one of updating
+ this model under new observations.
+ 
+\end_layout
+
+\begin_layout Standard
+The driving idea here is that it might be a chore to matain a large collection
+ of possible worlds 
 \begin_inset Formula $h_{\theta}$
 \end_inset
 
- and an inference 
-\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)$
+, each with it's 
+\begin_inset Quotes eld
 \end_inset
 
- of observation 
-\begin_inset Formula $y$
+prior distribution
+\begin_inset Quotes erd
 \end_inset
 
- given the possible world, but that we cannot perform the integration
+ of 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ Thus, the ensemble is discarded, in favor of keeping track of only one
+ element, the most likely one.
+ The update problem is that of selecting a parameter 
+\begin_inset Formula $\theta_{\mbox{max}}$
+\end_inset
+
+ that corresponds to the most likely (aka 
+\begin_inset Quotes eld
+\end_inset
+
+classical
+\begin_inset Quotes erd
+\end_inset
+
+) world 
+\begin_inset Formula $h_{\theta\mbox{max}}$
+\end_inset
+
+, and then updating 
+\begin_inset Formula $\theta_{\mbox{max}}$
+\end_inset
+
+ with each new observation.
+ This is conceptually easy; one solves for the extremum in the prior
 \begin_inset Formula 
 \[
-P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
+\left.\frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)\right|_{\theta=\theta_{\mbox{max}}}=0
 \]
 
 \end_inset
 
-as this is 
-\begin_inset Quotes eld
-\end_inset
-
-often intractable
-\begin_inset Quotes erd
-\end_inset
-
-.
- That seems odd.
- Perhaps he is saying that it is 
-\begin_inset Quotes eld
-\end_inset
-
-often intractable
-\begin_inset Quotes erd
-\end_inset
-
- to obtain the measure 
+In general, computing this directly is not possible, or perhaps intractable,
+ primarily because an analytic expression for 
 \begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
-? That also seems odd.
- I don't understand.
+ is not available.
+ That is, the prior distribution 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ is availble only numerically.
+ The extrememum problem must then be solved numerically as well, typically
+ through gradient descent.
+\end_layout
+
+\begin_layout Standard
+For the case of the Bernoulli process, though, analtic expressions are available
+, and the extremum is directly calculable.
+ Suppose we have 
+\begin_inset Formula $N=N_{H}+N_{T}$
+\end_inset
+
+ observations of coin flips so far.
+ The solution to
+\begin_inset Formula 
+\begin{align*}
+0= & \frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)\\
+= & \frac{d}{d\theta}\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
+= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
+\end{align*}
+
+\end_inset
+
+is given by
+\begin_inset Formula 
+\[
+\theta=\frac{N_{H}}{N_{H}+N_{T}}
+\]
+
+\end_inset
+
+That is, the maximum-likelihood prior is just the fraction of times that
+ heads came up, out of all coinn tosses.
+ Updating, to obtain the posterior, preserves this form: 
+\begin_inset Formula $N_{H}$
+\end_inset
+
+ and 
+\begin_inset Formula $N_{T}$
+\end_inset
+
+ are updated with new observations.
+ This gives direct access to the 
+\begin_inset Quotes eld
+\end_inset
+
+frequentist
+\begin_inset Quotes erd
+\end_inset
+
+ answer.
+ Again, it is just a matter of counting.
+\end_layout
+
+\begin_layout Standard
+In the above, an assumption was made that there is only one such maximal
+ world; and it's a valid one for the Bernoulli process.
+ More generally, this is not the case.
+ For classical thermodynamics, there are many different possible states
+ that are energetically equivalent: this is the microcanonical ensemble.
+ Each state in the microcanonical ensemble is equally likely.
+ Each has the same probability.
+ The number of such states is large: Avogadro's number, in chemistry.
 \end_layout
 
 \begin_layout Standard
@@ -1260,15 +1362,7 @@ I think Friston is working with a maximum likelihood model: rather than
 \end_inset
 
  with each new observation.
- In the maximum likelihood model, one solves for the extremum in the prior
-\begin_inset Formula 
-\[
-\frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)=0
-\]
-
-\end_inset
-
-Friston then says that the correct update is one that minimizes suprsingness,
+ Friston then says that the correct update is one that minimizes suprsingness,
  or 
 \begin_inset Quotes eld
 \end_inset
@@ -1303,43 +1397,145 @@ variational free energy
 \end_layout
 
 \begin_layout Standard
-How does this work for the Bernoulli process? Suppose we have 
-\begin_inset Formula $N=N_{H}+N_{T}$
+How does this work for the Bernoulli process? 
+\end_layout
+
+\begin_layout Subsection*
+Friston Principle
+\end_layout
+
+\begin_layout Standard
+Reading an intro-to-Friston, trying to decode what it says, and recast it
+ into the present vocabulary.
+\end_layout
+
+\begin_layout Standard
+Friston is saying that, in the general case, maintaining the measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
- observations so far.
- The solution to
-\begin_inset Formula 
-\begin{align*}
-0= & \frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)\\
-= & \frac{d}{d\theta}\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
-= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
-\end{align*}
-
+ in analytic form is intractable.
+ Worse, it might not be knowable in principle, and that one must necessarily
+ work with approximations 
+\begin_inset Formula $\nu\left(\left.h_{\theta}\right|x\right)$
 \end_inset
 
-is given by
+ obtained not from Bayes, but from a principle of minimizing a quantity
+ terms the 
+\begin_inset Quotes eld
+\end_inset
+
+variational free energy
+\begin_inset Quotes erd
+\end_inset
+
+ (VFE)
+\end_layout
+
+\begin_layout Standard
+principles.
+\end_layout
+
+\begin_layout Standard
+some aspect of the above is 
+\begin_inset Quotes eld
+\end_inset
+
+often intractable
+\begin_inset Quotes erd
+\end_inset
+
+, but it's not clear just what.
+ He seems to say that we can readily obtain a measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ for a possible-world 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ and its easy to obtain an inference 
+\begin_inset Formula $P\left(y\left|h_{\theta}\right.\right)$
+\end_inset
+
+ of observation 
+\begin_inset Formula $y$
+\end_inset
+
+ given the possible world, but that we cannot perform the integration
 \begin_inset Formula 
 \[
-\theta=\frac{N_{H}}{N_{H}+N_{T}}
+P\left(y\vert x\right)=\int_{\theta}P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
 \]
 
 \end_inset
 
-and the posterior update prserves this form, as 
-\begin_inset Formula $N_{H}$
+as this is 
+\begin_inset Quotes eld
 \end_inset
 
- and 
-\begin_inset Formula $N_{T}$
+often intractable
+\begin_inset Quotes erd
 \end_inset
 
- are updated with new observations.
- So this keeps things very simple.
+.
+ That seems odd.
+ Perhaps he is saying that it is 
+\begin_inset Quotes eld
+\end_inset
+
+often intractable
+\begin_inset Quotes erd
+\end_inset
+
+ to obtain the measure 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+? Or perhaps to normalize it? That also seems odd.
+ I don't understand.
 \end_layout
 
 \begin_layout Standard
-This allows Friston to say 
+The Friston claim seems to be that obtaining 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+ is difficult, and so we instead start with an approximation 
+\begin_inset Formula $\nu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+ and define the VFE as 
+\begin_inset Formula 
+\[
+F=\int_{h}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{\theta}\right|y,x\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
+\]
+
+\end_inset
+
+and then search for a 
+\begin_inset Formula $\nu$
+\end_inset
+
+ that minimizes 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ This 
+\begin_inset Formula $\nu$
+\end_inset
+
+ will then be taken as the best-guess for 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+.
+ The method for minimizing 
+\begin_inset Formula $F$
+\end_inset
+
+ is gradient descent.
 \end_layout
 
 \begin_layout Subsection*
