@@ -1674,12 +1674,11 @@ The resulting
 
 \end_inset
 
-(XXX I'm confused, why aren't we using a Lagrange multiplier here? Or are
- we, and I can't see it? XXX TODO FIXME.)
+This normalization acts as a Lagrange multiplier, which is evidenced by
+ rewriting as
 \end_layout
 
 \begin_layout Standard
-That is,
 \begin_inset Formula 
 \[
 F\left(\nu\right)=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\theta}\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}-\log\alpha\,\int_{\theta}\nu\left(h_{\theta}\right)
@@ -1687,7 +1686,11 @@ F\left(\nu\right)=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\
 
 \end_inset
 
+That is, 
+\begin_inset Formula $\log\alpha$
+\end_inset
 
+ is the Lagrange multiplier.
 \end_layout
 
 \begin_layout Standard
@@ -1702,6 +1705,152 @@ Firston calls
 \begin_layout Standard
 As this is all done numerically, the proposed algorithm is that of gradient
  descent.
+\end_layout
+
+\begin_layout Standard
+Friston makes some claims:
+\end_layout
+
+\begin_layout Itemize
+The minimization of VFE has a de-noising effect, and avoids overfitting.
+\end_layout
+
+\begin_layout Itemize
+VFE measures the (Kolmogorov) complexity of a model minus the accuracy.
+ Thus, minimizing VFE maximizes the accuracy, as balanced by the complexity.
+\end_layout
+
+\begin_layout Standard
+Based on my earlier experience, there should be a scale factor 
+\begin_inset Formula $\beta=1/kT$
+\end_inset
+
+ placed in front of the complexity.
+ It is not yet clear where 
+\begin_inset Formula $\beta$
+\end_inset
+
+ appears in these expressions.
+ Its also not yet clear which term correspondds to the complexity.
+ 
+\end_layout
+
+\begin_layout Standard
+Friston distinguishes 
+\begin_inset Quotes eld
+\end_inset
+
+perception
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+learning
+\begin_inset Quotes erd
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Itemize
+Perception corresponds to an update of the most likely hypothesis 
+\begin_inset Formula $h_{\theta}$
+\end_inset
+
+ (which Friston calls 
+\begin_inset Quotes eld
+\end_inset
+
+the Markov state
+\begin_inset Quotes erd
+\end_inset
+
+, see below), or, more generally, an update of 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+ with each new observation.
+\end_layout
+
+\begin_layout Itemize
+Learning corresponds to an update of the 
+\begin_inset Quotes eld
+\end_inset
+
+empty prior
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\mu\left(h_{\theta}\right)=\mu\left(\left.h_{\theta}\right|\varnothing\right)$
+\end_inset
+
+ that is used before any observations are made.
+ 
+\end_layout
+
+\begin_layout Standard
+The distinction here is subtle.
+ Normally, when the system is 
+\begin_inset Quotes eld
+\end_inset
+
+born
+\begin_inset Quotes erd
+\end_inset
+
+, it really does start out 
+\begin_inset Quotes eld
+\end_inset
+
+empty
+\begin_inset Quotes erd
+\end_inset
+
+, in that one starts with a uniform distrubution 
+\begin_inset Formula $\mu\left(h_{\theta}\right)=\mu\left(\left.h_{\theta}\right|\varnothing\right)=1$
+\end_inset
+
+.
+ One then has bouts of 
+\begin_inset Quotes eld
+\end_inset
+
+learning
+\begin_inset Quotes erd
+\end_inset
+
+, making sequences of observations 
+\begin_inset Formula $x$
+\end_inset
+
+ to obtain 
+\begin_inset Formula $\mu\left(\left.h_{\theta}\right|x\right)$
+\end_inset
+
+.
+ One then concludes a learning session, by 
+\begin_inset Quotes eld
+\end_inset
+
+forgetting
+\begin_inset Quotes erd
+\end_inset
+
+ the observations 
+\begin_inset Formula $x$
+\end_inset
+
+ but keeping the posterior that was learned (and now calling it the prior).
+ At the start of each learning session, the initial 
+\begin_inset Formula $\mu\left(h_{\theta}\right)$
+\end_inset
+
+ is no longer uniform, but is the distribution obtained at the end of the
+ last bout of learning.
 \end_layout
 
 \begin_layout Subsection*
