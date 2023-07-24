@@ -1590,18 +1590,45 @@ Starting with an ensemble of priors
 
 .
  To accomplish this, define an approximation 
-\begin_inset Formula $\nu\left(\left.h_{\theta}\right|y,x\right)$
+\begin_inset Formula $\nu\left(h_{\theta}\right)$
 \end_inset
 
  and construct the VFE as 
 \begin_inset Formula 
 \[
-F=\int_{\theta}\nu\left(\left.h_{\theta}\right|y,x\right)\log\frac{\nu\left(\left.h_{\theta}\right|y,x\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
+F=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\theta}\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
 \]
 
 \end_inset
 
-The 
+Note that 
+\begin_inset Formula $\nu\left(h_{\theta}\right)$
+\end_inset
+
+ is written, instead of 
+\begin_inset Formula $\nu\left(\left.h_{\theta}\right|y,x\right)$
+\end_inset
+
+.
+ The idea is that 
+\begin_inset Formula $\nu$
+\end_inset
+
+ has no explicit dependence on the history, per se, and that rather, it
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+free variable
+\begin_inset Quotes erd
+\end_inset
+
+ which is varied, with the goal of monimizing 
+\begin_inset Formula $F$
+\end_inset
+
+.
+ The 
 \begin_inset Formula $\nu$
 \end_inset
 
