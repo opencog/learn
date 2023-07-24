@@ -1589,46 +1589,70 @@ Starting with an ensemble of priors
 \end_inset
 
 .
- To accomplish this, define an approximation 
-\begin_inset Formula $\nu\left(h_{\theta}\right)$
-\end_inset
-
- and construct the VFE as 
+ Normally, this is done by applying Bayes rule
 \begin_inset Formula 
 \[
-F=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\theta}\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
+\mu\left(\left.h_{\theta}\right|y,x\right)=\alpha P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)
 \]
 
 \end_inset
 
-Note that 
-\begin_inset Formula $\nu\left(h_{\theta}\right)$
+with 
+\begin_inset Formula $\alpha$
 \end_inset
 
- is written, instead of 
-\begin_inset Formula $\nu\left(\left.h_{\theta}\right|y,x\right)$
-\end_inset
-
-.
- The idea is that 
-\begin_inset Formula $\nu$
-\end_inset
-
- has no explicit dependence on the history, per se, and that rather, it
- is a 
+ the 
 \begin_inset Quotes eld
 \end_inset
 
-free variable
+intractable
 \begin_inset Quotes erd
 \end_inset
 
- which is varied, with the goal of monimizing 
-\begin_inset Formula $F$
+ normalization constant.
+ The Friston proposal is to employ a freely-variable distribution 
+\begin_inset Formula $\nu\left(h_{\theta}\right)$
 \end_inset
 
-.
- The 
+, and then define the Kullback-Liebler divergence between it and the desired
+ distribution: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+F\left(\nu\right)=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\theta}\right)}{\alpha P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}
+\]
+
+\end_inset
+
+The notation 
+\begin_inset Formula $F\left(\nu\right)$
+\end_inset
+
+ is used to remind that the denominator of the log is held constant, while
+ a variation on 
+\begin_inset Formula $\nu$
+\end_inset
+
+ is performed.
+ One searches for a 
+\begin_inset Formula $\nu$
+\end_inset
+
+ that minimizes 
+\begin_inset Formula $F\left(\nu\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\frac{\delta F\left(\nu\right)}{\delta\nu}=0
+\]
+
+\end_inset
+
+The resulting 
 \begin_inset Formula $\nu$
 \end_inset
 
@@ -1636,12 +1660,47 @@ free variable
 \begin_inset Formula $F$
 \end_inset
 
- can be taken as the best-guess for the posterior 
+ is interpreted as the best-guess for the posterior 
 \begin_inset Formula $\mu\left(\left.h_{\theta}\right|y,x\right)$
 \end_inset
 
 .
- As this is all done numerically, the proposed algorithm is that of gradient
+ In order to get the normaliztion correct, the variation is performed subject
+ to the constraint 
+\begin_inset Formula 
+\[
+\int_{\theta}\nu\left(h_{\theta}\right)=1
+\]
+
+\end_inset
+
+(XXX I'm confused, why aren't we using a Lagrange multiplier here? Or are
+ we, and I can't see it? XXX TODO FIXME.)
+\end_layout
+
+\begin_layout Standard
+That is,
+\begin_inset Formula 
+\[
+F\left(\nu\right)=\int_{\theta}\nu\left(h_{\theta}\right)\log\frac{\nu\left(h_{\theta}\right)}{P\left(y\left|h_{\theta}\right.\right)\mu\left(\left.h_{\theta}\right|x\right)}-\log\alpha\,\int_{\theta}\nu\left(h_{\theta}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Firston calls 
+\begin_inset Formula $F\left(\nu\right)$
+\end_inset
+
+ the VFE.
+ I'm not sure why.
+\end_layout
+
+\begin_layout Standard
+As this is all done numerically, the proposed algorithm is that of gradient
  descent.
 \end_layout
 
