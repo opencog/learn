@@ -1237,8 +1237,8 @@ For the case of the Bernoulli process, though, analtic expressions are available
 \begin_inset Formula 
 \begin{align*}
 0= & \frac{d}{d\theta}\mu\left(\left.h_{\theta}\right|x\right)\\
-= & \frac{d}{d\theta}\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
-= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
+= & \frac{d}{d\theta}\alpha\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
+= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]\alpha\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}
 \end{align*}
 
 \end_inset
@@ -1300,6 +1300,128 @@ In the above, an assumption was made that there is only one such maximal
  Each state in the microcanonical ensemble is equally likely.
  Each has the same probability.
  The number of such states is large: Avogadro's number, in chemistry.
+\end_layout
+
+\begin_layout Subsection*
+Uncertainty
+\end_layout
+
+\begin_layout Standard
+How certain are we about the maximum likelihood? For this, we need the second
+ derivative.
+ That is, rather than carrying an explicit formulation about beliefs, peraps
+ we can approximate with the maximum likelihood, and it's second derivative?
+ A Taylor's expansion to second order? The goal of this exercise is to develop
+ a 
+\begin_inset Quotes eld
+\end_inset
+
+gut sense
+\begin_inset Quotes erd
+\end_inset
+
+ of this system.
+ Plug and chug:
+\begin_inset Formula 
+\begin{align*}
+\frac{d^{2}}{d\theta^{2}}\mu\left(\left.h_{\theta}\right|x\right)= & \frac{d^{2}}{d\theta^{2}}\mu\left(\theta;N_{H},N_{T}\right)\\
+= & \frac{d^{2}}{d\theta^{2}}\alpha\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
+= & \left[\frac{N_{H}}{\theta}-\frac{N_{T}}{1-\theta}\right]^{2}\mu+\left[-\frac{N_{H}}{\theta^{2}}-\frac{N_{T}}{\left(1-\theta\right)^{2}}\right]\mu
+\end{align*}
+
+\end_inset
+
+where 
+\begin_inset Formula $\mu=\mu\left(\theta;N_{H},N_{T}\right)$
+\end_inset
+
+.
+ Then, plugging in 
+\begin_inset Formula $\theta=N_{H}/\left(N_{H}+N_{T}\right)$
+\end_inset
+
+, the first term vanishes, leaving 
+\begin_inset Formula 
+\[
+\left.\frac{d^{2}}{d\theta^{2}}\mu\left(\left.h_{\theta}\right|x\right)\right|_{\theta=N_{H}/N}=-\frac{N}{\theta\left(1-\theta\right)}\left.\mu\right|_{\theta=N_{H}/N}
+\]
+
+\end_inset
+
+which has the odd form of looking like 
+\begin_inset Quotes eld
+\end_inset
+
+one less count
+\begin_inset Quotes erd
+\end_inset
+
+, on both sides, except for the normalization constant.
+ But what is that doing (just for grins?) Well, lets work this out.
+\begin_inset Formula 
+\begin{align*}
+\alpha\left(N_{H},N_{T}\right)= & \frac{1}{\beta\left(N_{H},N_{T}\right)}\\
+= & \frac{\Gamma\left(N_{H}+N_{T}+2\right)}{\Gamma\left(N_{H}+1\right)\Gamma\left(N_{T}+1\right)}\\
+= & \frac{\left(N_{H}+N_{T}+1\right)\left(N_{H}+N_{T}\right)}{N_{H}N_{T}}\cdot\frac{\Gamma\left(N_{H}+N_{T}\right)}{\Gamma\left(N_{H}\right)\Gamma\left(N_{T}\right)}\\
+= & \frac{N\left(N+1\right)}{N_{H}N_{T}}\alpha\left(N_{H}-1,N_{T}-1\right)\\
+= & \frac{N+1}{N}\cdot\frac{1}{\theta\left(1-\theta\right)}\alpha\left(N_{H}-1,N_{T}-1\right)
+\end{align*}
+
+\end_inset
+
+and so, plugging through,
+\begin_inset Formula 
+\begin{align*}
+\left.\frac{d^{2}}{d\theta^{2}}\mu\left(\left.h_{\theta}\right|x\right)\right|_{\theta=N_{H}/N}= & -\frac{N}{\theta\left(1-\theta\right)}\left.\mu\left(\theta;N_{H},N_{T}\right)\right|_{\theta=N_{H}/N}\\
+= & -\frac{N}{\theta\left(1-\theta\right)}\alpha\left(N_{H},N_{T}\right)\theta^{N_{H}}\left(1-\theta\right)^{N_{T}}\\
+= & -\frac{N+1}{\theta\left(1-\theta\right)}\alpha\left(N_{H}-1,N_{T}-1\right)\theta^{N_{H}-1}\left(1-\theta\right)^{N_{T}-1}\\
+= & -\frac{N+1}{\theta\left(1-\theta\right)}\mu\left(\theta;N_{H}-1,N_{T}-1\right)
+\end{align*}
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+Hmm.
+ Nothing particularly enlightening here.
+ There's a screwball identity:
+\begin_inset Formula 
+\[
+N\left.\mu\left(\theta;N_{H},N_{T}\right)\right|_{\theta=N_{H}/N}=\left(N+1\right)\left.\mu\left(\theta;N_{H}-1,N_{T}-1\right)\right|_{\theta=N_{H}/N}
+\]
+
+\end_inset
+
+which is saying that, with each additional observation, the second derivative
+ goes more negative, by a factor of 
+\begin_inset Formula $\left(N+1\right)/N$
+\end_inset
+
+.
+ I dunno.
+ I can't find anything interesting here.
+ Just to recap, the result is that, nrat the max likelihood peak,
+\begin_inset Formula 
+\[
+\mu\left(\theta;N_{H},N_{T}\right)\approx\left.\mu\left(\theta;N_{H},N_{T}\right)\right|_{\theta=N_{H}/N}\left[1-\frac{N^{3}}{N_{H}N_{T}}\cdot\frac{\theta^{2}}{2}+\mathcal{O}\left(\theta^{3}\right)\right]
+\]
+
+\end_inset
+
+which is..
+ well, I'm not getting any kick, here.
+ Oh well.
 \end_layout
 
 \begin_layout Subsection*
