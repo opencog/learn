@@ -2944,7 +2944,12 @@ P\left(x_{1},x_{2},x_{3}\left|h_{b}\right.\right)=P\left(x_{1},x_{3}\left|h_{b}\
 
 \end_inset
 
-How should such possible worlds be enumerated?
+How should such possible worlds be enumerated? How do we list all the possible
+ 
+\begin_inset Formula $h$
+\end_inset
+
+'s?
 \end_layout
 
 \begin_layout Subsubsection*
@@ -3103,7 +3108,35 @@ only
 \end_layout
 
 \begin_layout Standard
-The problem with the above is that the factorization 
+There are multiple problems with the above.
+\end_layout
+
+\begin_layout Itemize
+We should have been working with priors 
+\begin_inset Formula $\mu$
+\end_inset
+
+ instead of posteriors 
+\begin_inset Formula $P$
+\end_inset
+
+ (even though the two are related...)
+\end_layout
+
+\begin_layout Itemize
+The number of factorizations is explosive: 
+\begin_inset Formula $\left|\pi\left(N\right)\right|=2^{N}$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|\pi\left(\pi\left(N\right)\right)\right|=2^{2^{N}}$
+\end_inset
+
+ and this second number is much arger than astronimical.
+\end_layout
+
+\begin_layout Itemize
+The factorization 
 \begin_inset Formula $\theta$
 \end_inset
 
@@ -3117,16 +3150,27 @@ meaning
 \end_inset
 
  associated with the factorization.
- The other mistake above is that we should have been working with priors
- 
-\begin_inset Formula $\mu$
+ That is, the factorization must depend on the actual values 
+\begin_inset Formula $x_{I}$
 \end_inset
 
- instead of posteriors 
-\begin_inset Formula $P$
+ and not (only) on the index set 
+\begin_inset Formula $I$
 \end_inset
 
- (even though the two are related...)
+.
+ Different sequences 
+\begin_inset Formula $x$
+\end_inset
+
+ must necesaril have different factorizations
+\end_layout
+
+\begin_layout Itemize
+There's no attempt to detect sequences created by finite-state machines,
+ never mind finite-state transducers.
+ The whole point of ideas like HMM's is to infer the structue of a (hidden)
+ state machine.
 \end_layout
 
 \begin_layout Subsubsection*
@@ -3279,9 +3323,13 @@ real world
 \begin_inset Quotes erd
 \end_inset
 
-.
+ (given the observation 
+\begin_inset Formula $x$
+\end_inset
+
+).
  The first line of the equality above states that the factorization into
- syntax and semantics is leterally a factorization, a product of two beliefs:
+ syntax and semantics is literally a factorization, a product of two beliefs:
  first, 
 \begin_inset Formula $\mu\left(\left.h_{\eta}\right|x\right)$
 \end_inset
@@ -3290,11 +3338,11 @@ real world
 \begin_inset Formula $\eta$
 \end_inset
 
- given that 
+ (given that 
 \begin_inset Formula $x$
 \end_inset
 
- was observed, and second, the likelihood 
+ was observed), and second, the likelihood 
 \begin_inset Formula $\mu\left(\left.h_{\zeta}\right|h_{\eta},x\right)$
 \end_inset
 
@@ -3329,17 +3377,52 @@ The second line of the equality atempts to deal with multiple distinct parses.
 
  is unchanged: a syntax is compatible with an observed sequence, or it is
  not.
- The second term 
+ That is, the sequence 
+\begin_inset Formula $x$
+\end_inset
+
+ is parseable by syntax 
+\begin_inset Formula $\eta$
+\end_inset
+
+ or it is not.
+ Strict concepts of syntax imply that this has values of zero or one.
+ Syntax with associated 
+\begin_inset Quotes eld
+\end_inset
+
+costs
+\begin_inset Quotes erd
+\end_inset
+
+ (
+\emph on
+a la
+\emph default
+ Link Grammar) allow fractional values.
+\end_layout
+
+\begin_layout Standard
+The second term 
 \begin_inset Formula $\mu\left(l\left(x,\eta\right)\right)$
 \end_inset
 
  says that certain linkages have certain likelihoods, depending only on
  the grammar, but not the semantics.
- The third term 
+ (This is the Link Grammar 
+\begin_inset Quotes eld
+\end_inset
+
+cost
+\begin_inset Quotes erd
+\end_inset
+
+ subsystem.) The third term 
 \begin_inset Formula $\mu\left(\left.h_{\zeta}\right|l\left(x,\eta\right)\right)$
 \end_inset
 
  says that the semantics explicitly depends on the linkage.
+ 
 \end_layout
 
 \begin_layout Standard
