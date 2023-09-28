@@ -1,5 +1,16 @@
 
 Things to read:
+* Gmytrasiewicz, Piotr (August 2020).
+  https://www.jair.org/index.php/jair/article/view/11951/26599
+  "How to Do Things with Words: A Bayesian Approach".
+  Journal of Artificial Intelligence Research. 68: 753–776.
+  Modern update to J.L Austin's theory of speech acts/performative
+  utterances.
+
+* Bayesian Flow Networks
+  Alex Graves et al
+  https://arxiv.org/abs/2308.07037
+
 * Distilling Singular Learning Theory. Liam Carroll 2023
   https://www.lesswrong.com/posts/CZHwwDd7t9aYra5HN/dslt-2-why-neural-networks-obey-occam-s-razor
 
@@ -28,7 +39,7 @@ Things to read:
 * https://distill.pub/2021/gnn-intro/
   A Gentle Introduction to Graph Neural Networks
 
-* hierarchical message passing: https://arxiv.org/abs/2009.03717 
+* hierarchical message passing: https://arxiv.org/abs/2009.03717
 
 * hypergraphs: https://arxiv.org/abs/1809.02589
 
@@ -115,7 +126,7 @@ Things to read:
 * Kyle Marple, Elmer Salazar, Gopal Gupta,
   Computing Stable Models of Normal Logic Programs Without Grounding
   arXiv:1709.00501v1 [cs.LO] 1 Sep 2017
-  https://arxiv.org/pdf/1709.00501.pdf 
+  https://arxiv.org/pdf/1709.00501.pdf
 
   How to get ASP solving without ASP.
 
