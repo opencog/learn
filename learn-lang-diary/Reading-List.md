@@ -78,6 +78,17 @@ Things to read:
   Artificial Intelligence: A Modern Approach
   https://libgen.li/edition.php?id=138615766
 
+  PDF and TOC pages do not align. Some cross-referencing:
+  Chap 13: TOC page 412 vs PDF page  780 - Probabilistic reasoning
+  Chap 20: TOC page 721 vs PDF page 1329 - Learning Probabilistic Models
+  Chap 21: TOC page 750 vs PDF page 1378 - Deep Learning
+  Chap 22: TOC page 789 vs PDF page 1449 - Reinforcement Learning
+  Chap 23: TOC page 823 vs PDF page 1512 - Natural Language Processing
+  Chap 24: TOC page 856 vs PDF page 1573 - Deep Learning for Natural Language Processing
+  Chap 25: TOC page 881 vs PDF page 1616 - Computer Vision
+  Chap 26: TOC page 925 vs PDF page 1689 - Robotics
+  Chap 27: TOC page 981 vs PDF page 1791 - Conclusions
+
 * https://deeplearningtheory.com/
   https://arxiv.org/abs/2106.10165
 
