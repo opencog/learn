@@ -1,5 +1,14 @@
 
 Things to read:
+* From Conceptual Spaces to Quantum Concepts:
+  Formalising and Learning Structured Conceptual Models
+  Sean Tull, Razin A. Shaikh, Sara Sabrina Zemljiˇc and Stephen Clark
+  https://arxiv.org/abs/2401.08585
+
+* A mathematical perspective on Transformers
+  Borjan Geshkovski, Cyril Letrouit, Yury Polyanskiy, Philippe Rigollet
+  https://arxiv.org/abs/2312.10794
+
 * General topic keyword hits: "good regulator theorem" and
   "perceptual control theory".
 
