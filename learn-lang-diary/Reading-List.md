@@ -1,5 +1,8 @@
 
 Things to read:
+* General topic keyword hits: "good regulator theorem" and
+  "perceptual control theory".
+
 * Gmytrasiewicz, Piotr (August 2020).
   https://www.jair.org/index.php/jair/article/view/11951/26599
   "How to Do Things with Words: A Bayesian Approach".
