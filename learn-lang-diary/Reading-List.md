@@ -1,5 +1,11 @@
 
 Things to read:
+
+* Cerebras CS-3 wafer scale engine. 900,000 cores, 44 GB of on-chip
+  memory, and 21 petabyes/second of memory bandwidth.
+  Announced March 2024
+  https://www.cerebras.net/product-system/
+
 * From Conceptual Spaces to Quantum Concepts:
   Formalising and Learning Structured Conceptual Models
   Sean Tull, Razin A. Shaikh, Sara Sabrina Zemljiˇc and Stephen Clark
