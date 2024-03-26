@@ -1,6 +1,10 @@
 
 Things to read:
 
+* Neurosymbolic AI: The 3rd Wave
+  Artur d'Avila Garcez, Luis C. Lamb
+  https://arxiv.org/abs/2012.05876
+
 * Cerebras CS-3 wafer scale engine. 900,000 cores, 44 GB of on-chip
   memory, and 21 petabyes/second of memory bandwidth.
   Announced March 2024
