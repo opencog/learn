@@ -16397,15 +16397,61 @@ is_capitalizable
 <1stCAP>
 #define disable-downcasing true;
 
+arxiv.org/abs/1403.2152
+Parsing using a grammar of word association vectors
+rob freeman
+
+
+-------------------
+Fix bad username in experimental diary:
+
+git restore *
+git config --global user.name "Linas Vepštas"
+git config --global user.email "<linasvepstas@gmail.com>"
+git -c rebase.instructionFormat='%s%nexec GIT_COMMITTER_DATE="%cD" GIT_AUTHOR_DATE="%aD" git commit --amend --no-edit --reset-author' rebase --committer-date-is-author-date -r --root HEAD
+
+git checkout -b fix-author
+git branch -d master
+git branch
+git checkout -b master
+git remote -v
+git push origin master --force
+
+COPY --chown=opencog:opencog /demo-dict-pair/ demo-dict-pair
+
+---------------
+Link-parser crash
+
+this is some wild-ass test or I don't know what
+
+link-parser demo-dict-mpg -verbosity=3
+
+0x00007fa3b3ce2403 in get_sent_pair_exprs (dict=0x558cfb26cf50, germ=..., pool=0x558e10abdbf0, sent_words=std::vector of length 21, capacity 32 = {...}) at ../../link-grammar/dict-atomese/word-pairs.cc:349
+#1  0x00007fa3b3ce43aa in make_cart_pairs (dict=dict@entry=0x558cfb26cf50, germ=..., 
+    pool=0x558e10abdbf0, sent_words=std::vector of length 21, capacity 32 = {...}, 
+    arity=arity@entry=2, with_any=with_any@entry=true)
+    at ../../link-grammar/dict-atomese/word-pairs.cc:483
+#2  0x00007fa3b3cdb28c in as_lookup_list (dict=0x558cfb26cf50, s=<optimized out>)
+    at ../../link-grammar/dict-atomese/lookup-atomese.cc:710
+print allexp
+$1 = (Exp *) 0x0
+
+print germ->get_name()
+
+docker container cp 1-sfia-mst:/home/opencog/data .
+docker container cp 1-sfia-mst:/home/opencog/text .
+
+docker create --name foo -it opencog/atomspace
+docker start -i foo
+
+
+
+---------------------------------------------------------------------
 
 TODO:
 * pair-with-any fails if no pairs... fixed.
 * any_disjuncts has no effect if other things are set...
 * any_disjuncts not cached...
-
-
-
----------------------------------------------------------------------
 
 
 TODO
@@ -16416,10 +16462,6 @@ TODO
 
 Bugs:
 * bug: store of DefineLink to cogserver hangs the  connection.
-
-arxiv.org/abs/1403.2152
-Parsing using a grammar of word association vectors
-rob freeman
 
 ====================================================
 ====================================================
@@ -16589,5 +16631,5 @@ TODO/BUGS:
   (that is, gc takes up too large a fraction of CPU.)
 * Pair counting disappointingly slow.
   As of Nov 2022 its 10 sent/sec on fanfic at 600% cpu 10 blocked
-  threads ... 2/3rds f this time is in guile gc desperately trying
+  threads ... 2/3rds of this time is in guile gc desperately trying
   to limit mem to 10MBytes...
