@@ -8957,6 +8957,186 @@ stop saying that
  the mechanism for that? Hmmm.
 \end_layout
 
+\begin_layout Standard
+So this is a 
+\begin_inset Quotes eld
+\end_inset
+
+what's the meaning of life?
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+what's the purpose of life?
+\begin_inset Quotes erd
+\end_inset
+
+ question, that would drive the mutation of the system.
+ There's also a mechanical issue: given a drive, how does the mechanics
+ work? The second question seems more important: without mechanics, nothing
+ happens.
+ The first question can be made provisional.
+ (Certainly that's what supervised training does: it imposes an external
+ driver to the system.)
+\end_layout
+
+\begin_layout Standard
+Certainly, could create basic I/O nodes, similar to the StorageNode, that
+ could transform data.
+ The LGNodes already do this.
+ The ProxyNodes already allow processing steps.
+ There aren't any sort of nodes for increasing or decreasing activation
+ (upregulate or downregulate).
+ Such nodes would be needed for controlling activity.
+ Such nodes are relatively straightforward to architect and implement.
+ Should they be? It would allow for ongoing experimentation to clarify thoughts.
+ Should I try to think further ahead, or is this sufficient? Should I be
+ activity based, or thinking-based?
+\end_layout
+
+\begin_layout Standard
+Ideas are easy to generate, especially for software engineering.
+ To weed them out and to pick the best ones is hard.
+ It requires hard thinking (and I'm lazy) or it requires experimentation
+ (which is fun, because its like playing solitaire, just at a more sophisticated
+ level.) Hard thinking allows grandiose plans to be created, without getting
+ closer to the goal.
+ So activity-based activity is desirable.
+\end_layout
+
+\begin_layout Standard
+Goals.
+ The conventional AI idea is to create a world model, sensory infrastructure
+ to update that world model (including the placement of self inside of it)
+ and action subsystems to act upon the world.
+ Action often means generation, at the chatbot level: the world model is
+ a language model, generation spews sentences.
+ However, sentence spew requires a general idea to be given voice to.
+ The LLM's seem to be question-response systems, without autonomy.
+ Statements (questions) are posed to the LLM, they then riff in a linguistically
+ coherent way about the topic that that the question excited.
+ So the question acts as an exicitory stimulus.
+ The prompt-engineering subsystem is a collection of excitatory and inhibitory
+ stimuli, designed to prevent certain expressions.
+ They are engineered, they are not evolved.
+\end_layout
+
+\begin_layout Standard
+Architecture.
+ Conventional software architecture is to build a rigid system.
+ Yes, there are config files, but flexible component structure remained/remains
+ an unfulfilled dream.
+ The above paragraphs evoke the construction of a flexible self-mutable
+ system (which is what the AtomSpace is).
+ The old bugaboo was 
+\begin_inset Quotes eld
+\end_inset
+
+self-modifying code
+\begin_inset Quotes erd
+\end_inset
+
+ this is more of a constrained system of parts that can be rejiggered easily.
+ It's showing up already, certainly TensorFlow is like that, for GPU pipelines,
+ Docker is like that, for OS/application-sized workloads.
+ AtomSpace is like that, but low-level, fine-grained.
+ But also, the containerizatin/cloud stuff is not really self-modifying;
+ its designed for rapid deployment/redeployment by systems operators who
+ know what they are doing.
+ In this text, I want to give autonomy over to higher-order processes.
+\end_layout
+
+\begin_layout Standard
+Now, of course, modern western tech is already evolving towards this; it
+ does not need my vision or action to do this.
+ It will get there.
+ I'm charting a specific path, for my own entertainment.
+ I could just kick back and relax, and wait for someone else to do it, while
+ I admire the spectacle of what's going on.
+ That's one choice.
+ Another choice is to get employment that results in a career path in which
+ I get to create/dictate such work at the organizational level.
+ I'm too old to start that journey; time's up for that.
+ The third choice is to hack on the AtomSpace, and try to leverage the tiny
+ lead I have.
+ Is there a fourth choice?
+\end_layout
+
+\begin_layout Standard
+The current learning pipeline seems to be proven at the low end but has
+ multiple problems.
+ Listing randomly from trite to serious: First, there's some sort of threading
+ bottleneck in scheme that prevents it from running in parallel.
+ Overcoming this would require moving the matrix/vector code to C++.
+ A chore, but doable, as the general idea is fairly clear.
+ Second is combinatorial explosion: the current pipeline is a batch pipeline,
+ and the batch sizes get too large, and then inventing trimming algos is
+ hard.
+ So having an integrated system, where learning at different levels happen
+ simultaneously.
+ Third, the mining of correlations has not been demonstrated out to large
+ sizes.
+ It works for word pairs, and disjuncts, but we've not scaled to anything
+ larger.
+ It would seem that the batch processing is the bottleneck for scaling up,
+ so integration is forced.
+ Fourth, there's no GPU scaling infrastructure.
+ Doing gradient descent on GPU's is blisteringly fast; the counting algorithms
+ are tens of thousands of times slower.
+ That sucks.
+ So these are the short-horizon, immediate issues that have been swirling
+ for a while.
+ Bigger ppicture and more distant is the lack of episodic memory.
+ The lack of motivation loops, or good-regulator loops for world-model construct
+ion and maintenance.
+ The lack of a reward system, akin to food, to drive evolutinoary changes,
+ The lack of a goal, other than paperclip maximization, to drive behavior.
+ At low level, absence of a sensory system.
+ A chatbot just barely cuts it, constrained and low bandwith.
+ Unclear how to even think about the high-level architecture problems until
+ a suitable infrastructure for the low-level stuff exists.
+\end_layout
+
+\begin_layout Standard
+Where does this leave me? One immediate conclusion is to keep plinking on
+ the code.
+ Then continue to ponder motivational structure.
+ Continue reading texts.
+ So, no change from current activities; its like we're on course.
+ Get a paying job.
+ Hah hah.
+ Preach to the void, which is not really working out.
+ Think hard about how to gain power, at the cost of thinking hard about
+ other things.
+ Spend more time thinking about securiting money and income.
+ And health, of course.
+ Minimize social media usage? Its addicitve but not entirely obviously cnstructi
+ve, except that it is an information channel that does provide information;
+ its the primary push-notification system that I use.
+ (In the abstract sense: social media pushes news to me; I don't have to
+ hunt for it.
+ Same way that newspapers and TV of old were push systems, and libraries
+ were pull systems.)
+\end_layout
+
+\begin_layout Standard
+Create a text-reader-node, an IRC-node, a twitter-reader-node.
+ Provide a way of hooking these to the LG parse node.
+ Provide a matrix node, to move the matrix code into C++.
+ I suppose it should be more tensor-like, but maybe the pairs are ok, since
+ disjuncts+shapes seems to be a workable paradigm.
+ The text-reader+LG should overcome the pipeline paralleizability problems?
+ This then opens the possibility for up/down-regulation.
+ And even for configuring the pipeline itself in atomese.
+ In other words, baby steps on the current path.
+ Nothing I've learned yet suggests a need to change direction.
+ Am I just missing some bigger picture? What would be a better direction,
+ a more productive direction?
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
