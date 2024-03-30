@@ -601,4 +601,12 @@ Interesting, but maybe less useful
   (whatever the heck that means) and is "nurturing" (unclear what
   that is), but as of today, this is what I will be pondering.
 
+* Parsing using a grammar of word association vectors
+  Rob Freeman
+  https://arxiv.org/abs/1403.2152
+
+  Word asssociation vectors. A contemporaneous accoount of ideas
+  broadly similar to those in this project; although sharply different
+  in actual details.
+
 ----------
