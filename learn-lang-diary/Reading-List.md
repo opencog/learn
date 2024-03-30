@@ -1,5 +1,8 @@
 
 Things to read:
+* Fundamental Components of Deep Learning: A category-theoretic approach
+  Bruno Gavranović
+  https://arxiv.org/abs/2403.13001
 
 * Neurosymbolic AI: The 3rd Wave
   Artur d'Avila Garcez, Luis C. Lamb
