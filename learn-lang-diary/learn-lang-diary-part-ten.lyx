@@ -9137,8 +9137,12 @@ Create a text-reader-node, an IRC-node, a twitter-reader-node.
  a more productive direction?
 \end_layout
 
+\begin_layout Subsection*
+31 March 2024
+\end_layout
+
 \begin_layout Standard
-Update 31 March 2024: Finished implementing episodic memory in the AtomSpace.
+Update: Finished implementing episodic memory in the AtomSpace.
  By 
 \begin_inset Quotes eld
 \end_inset
@@ -9152,6 +9156,125 @@ episodic memory
  in C++.
  Small, small steps.
  One at a time.
+\end_layout
+
+\begin_layout Standard
+Processing: There are three mechanisms.
+ One is the ValueStream system.
+ It's kind of hard to hook up; its kind of hard to get the triggers running
+ correctly, The basic demos work, the grand vision is OK I guess, but croaked
+ when I tried to use it for LG processing.
+ I forget what went wrong.
+\end_layout
+
+\begin_layout Standard
+Another system is the StorageNode and ProxyNode system.
+ Works great, if your dataflow can be mapped to the provided API.
+ So, great for moving and saving atoms.
+\end_layout
+
+\begin_layout Standard
+The third system is the CogServer.
+ Open a telnet socket, and interact, in arbitrary ways.
+ One of these is to send it Atoms, which then typically trigger processing.
+\end_layout
+
+\begin_layout Standard
+Can we convert the word-pair counting subsystem into a sensory-input subsystem?
+ Where, rather than feeding it data, it pulls data? We could write a C++
+ node to read data, but the bottleneck is the scheme-based matrix API for
+ counting.
+\end_layout
+
+\begin_layout Standard
+The current pipeline is crazy: ./pair-submit.sh calls process-corpus.sh calls
+ file-block-process.sh calls submit-block.pl calls netcat (observe-block-pairs
+ "string") which is (make-block-pair-observer) which accepts TEXT-BLOCK
+ and calls (make-pair-counter matrix-count-api) for a pre-configured matrix
+ api object that counts things into the appropriate locations.
+\end_layout
+
+\begin_layout Standard
+So there are three or four meta-issues, here.
+ 
+\end_layout
+
+\begin_layout Itemize
+The pipeline is a push pipeline (obviously) and we want a pull pipeline,
+ and the bottleneck to that is the matrix API, which prevents onboarding
+ into the AtomSpace proper.
+\end_layout
+
+\begin_layout Itemize
+The complexity of it all.
+ Hard-wired processing.
+ Somehow we want to decrease the complexity.
+ Part of the shell-script complexity was the desire to have it be highly
+ configurable, but this is mostly not needed.
+ It gives the illusion of configurability, but the need to configure is
+ lost in the mists.
+ Almost no options matter.
+ 
+\end_layout
+
+\begin_layout Itemize
+Not entirely clear how that complexity abates, if it is moved to the AtomSpace.
+ It might simply get more encapsulated: C++ code does complex things.
+ Then blobs of atoms do overall control.
+\end_layout
+
+\begin_layout Itemize
+Motivational drives still unclear.
+ The project seems to be a hand-coding of a small agent (or set of agents)
+ capable of ingesting text and processing it.
+ And then what? What makes this better than any other agent framework?
+\end_layout
+
+\begin_layout Standard
+Scaling.
+ Hand coding is wrong.
+ It primes the pump, but its wrong.
+ How do we scale? An older conventional dream (disclaimer: not for an instant
+ did I beleive this) was to build a system that knows how to code, then
+ it would self-code itself.
+ Can LLM's do this? Seems no: they are wordcels, not shape rotators.
+ Mimics understanding, grasps basic syntax, doesn't understand the point
+ of it all.
+ My goal here is to build a shape rotator.
+ So the AGI 2022 paper explains the path to understanding shapes, via disjuncts.
+ But its clear I need to refocus on agentic activity.
+ This provides an opportunity to ask: should I discard current code base
+ and try something else? But I hit the conventional wall there.
+ Sure, deploying docker containers on the cloud is agentic, but the cloud
+ tools are designed for humans so that they can deploy containers.
+ They're not designed for agents to do agent things.
+ So I keep coming back to thinking there's no viable alternative to the
+ AtomSpace.
+\end_layout
+
+\begin_layout Standard
+Except for one thing: mindshare.
+ There are thousands, tens of thousands of people looking at, working on
+ pop AI projects, and zero working on opencog.
+ I'd like to get more mindshare, but I also don't see a path forward with
+ these other projects.
+ So I'm stumped.
+\end_layout
+
+\begin_layout Standard
+One alternative is to stop crafting my own system, and to become an influencer.
+ But there are so many influencers, and the vast majority of them are wrong.
+ Another course of action is to work into a position of being cheif architect
+ or lead reasearcher at a place that has money, but this is hard, and is
+ a multi-decade project, so my time is up, for that.
+\end_layout
+
+\begin_layout Section*
+Twitter Threads
+\end_layout
+
+\begin_layout Standard
+This section out of date order with above.
 \end_layout
 
 \begin_layout Subsection*

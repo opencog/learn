@@ -16427,8 +16427,8 @@ this is some wild-ass test or I don't know what
 link-parser demo-dict-mpg -verbosity=3
 
 0x00007fa3b3ce2403 in get_sent_pair_exprs (dict=0x558cfb26cf50, germ=..., pool=0x558e10abdbf0, sent_words=std::vector of length 21, capacity 32 = {...}) at ../../link-grammar/dict-atomese/word-pairs.cc:349
-#1  0x00007fa3b3ce43aa in make_cart_pairs (dict=dict@entry=0x558cfb26cf50, germ=..., 
-    pool=0x558e10abdbf0, sent_words=std::vector of length 21, capacity 32 = {...}, 
+#1  0x00007fa3b3ce43aa in make_cart_pairs (dict=dict@entry=0x558cfb26cf50, germ=...,
+    pool=0x558e10abdbf0, sent_words=std::vector of length 21, capacity 32 = {...},
     arity=arity@entry=2, with_any=with_any@entry=true)
     at ../../link-grammar/dict-atomese/word-pairs.cc:483
 #2  0x00007fa3b3cdb28c in as_lookup_list (dict=0x558cfb26cf50, s=<optimized out>)
@@ -16443,6 +16443,311 @@ docker container cp 1-sfia-mst:/home/opencog/text .
 
 docker create --name foo -it opencog/atomspace
 docker start -i foo
+
+---------------------------------------------------------
+source ~/experiments/run-1/0-pipeline.sh
+source ~/experiments/run-1/3-mpg-conf.sh
+
+guile -l ${COMMON_DIR}/cogserver-mst.scm ; \
+./compute-mst-marginals.sh ; \
+
+./experiments/run-1/run/3-mst-parsing/compute-mst-marginals.sh
+
+guile -s ${COMMON_DIR}/marginals-mst-shape.scm
+
+./experiments/run-common/marginals-mst-shape.scm
+
+
+Sentence:
+this is some wild-ass test or I don't know what
+
+
+Built disjuncts                           132.87 seconds
+++++ Eliminated duplicate disjuncts             90.75 seconds
+
+erbosity_level(D_PREP))
+-debug=preparation.c
+
+parse/preparation.c
+build_sentence_disjuncts
+build_disjuncts_for_exp
+prepare/build-disjuncts.c
+
+build_clause
+build_disjunct
+
+num disjunct = num clauses (that are below cutoff)
+if (cl->totcost > cost_cutoff) continue;
+int size_of_expression(Exp * e)
+
+Scts: 3426864+0 for >>###LEFT-WALL###<<
+
+duude size of expr=115847 for >>###LEFT-WALL###<<
+duuuuuuuude num clauses=763385597 low-cose=187088524 for >>###LEFT-WALL###<<
+duuuuuuuude num disju=187088523 for >>###LEFT-WALL###<<
+Debug: After expanding expressions into disjuncts:
+LEFT-WALL(187088523)
+Debug: After duplicate elimination:
+LEFT-WALL(85284102)
+
+Scts: 53592+0 for >>this<<
+duude size of expr=1207 for >>this<<
+duuuuuuuude num clauses=520545 low-cose=106011 for >>this<<
+duuuuuuuude num disju=106010 for >>this<<
+Debug: After expanding expressions into disjuncts:
+this(106010)
+Debug: After duplicate elimination:
+this(20003)
+
+
+prepare_to_parse
+parse/parse.c
+
+pack_sentence_for_pruning
+
+this is a test:
+LEFT-WALL(561067) this(17661) is(161222) a(562) test(122)
+Total: 740634 disjuncts, 2900692 (2229318+/671374-) connectors
+num clauses=13884434 low-cose=4339263 for >>###LEFT-WALL###<<
+++++ Encoded for pruning                         1.96 seconds
+++++ Time                                       15.44 seconds (15.44 total)
+740634/1.96 = 377874 disjuncts/sec
+2900692 / 1.96 = 1479944
+
+New: on startup, 4.7G and 3:32 cpu and post sent: 5:03
+++++ Time                                        7.63 seconds (7.63 total)
+
+
+
+
+this is some wild-ass test:
+LEFT-WALL(1939918) this(18503) is(79793) some(6025) wild-ass(2) test(20)
+Total: 2044261 disjuncts, 9121816 (8735087+/386729-) connectors
+num clauses=17269971 low-cose=5397707 for >>###LEFT-WALL###<<
+++++ Encoded for pruning                         6.17 seconds
+++++ Time                                       20.54 seconds (35.98 total)
+2044261/ 6.17 = 331322
+9121816 / 6.17 = 1478414
+
+New:
+++++ Time                                        7.74 seconds (15.37 total)
+New w/ fixed count:
+
+
+
+this is some wild-ass test or I
+num clauses=185033939 low-cose=53075095 for >>###LEFT-WALL###<<
+LEFT-WALL(23269438) this(19761) is(83318) some(6227) wild-ass(2) test(48) or(712
+11) I(1102)
+Total: 23451107 disjuncts, 117142399 (116470807+/671592-) connectors
+++++ Encoded for pruning                       500.52 seconds
+++++ Time                                      621.91 seconds (657.89 total)
+
+23451107 / 500.52 = 46853
+117142399 / 500.52 = 234041
+
+New:
+++++ Time                                       48.42 seconds (48.42 total)
+New w/ fixed count:
+++++ Time                                       48.28 seconds (48.28 total)
+New w/ fixed count but old hash:
+++++ Time                                       49.10 seconds (49.10 total)
+New, with tracon 1/8 instead of 3/8:
+++++ Time                                       48.88 seconds (48.88 total)
+New, with tracon 7/8 instead of 3/8:
+
+
+
+
+
+this is some wild-ass test or I don't know
+num clauses=507805880 low-cose=131210215 for >>###LEFT-WALL###<<
+LEFT-WALL(59380428) this(19861) is(84108) some(6647) wild-ass(2) test(60) or(71646) I(3758) don't(279) know(8322)
+Total: 59575111 disjuncts, 302831514 (302115989+/715525-) connectors
+++++ Encoded for pruning                      4222.75 seconds
+++++ Time                                     4533.27 seconds (5191.16 total)
+59575111/4222.75 = 14108
+302831514 / 4222.75 = 71714
+
+New:
+++++ Time                                      149.36 seconds (197.79 total)
+New w/ fixed count:
+++++ Time                                      150.63 seconds (198.91 total)
+New w/ fixed count but old hash:
+++++ Time                                      150.20 seconds (199.30 total)
+
+
+
+
+this is some wild-ass test or I don't know what
+num clauses=763385597 low-cose=187088524 for >>###LEFT-WALL###<<
+LEFT-WALL(85284102) this(20003) is(167424) some(6697) wild-ass(2) test(61) or(118511) I(4216) don't(283) know(17015) what(7400)
+Total: 85625714 disjuncts, 437906541 (436693108+/1213433-) connectors
+
+++++ Time                                      219.93 seconds (419.23 total)
+
+
+
+tracon_set_add
+
+clause_context ct = { 0 };
+   ct.cost_cutoff = cost_cutoff;
+
+      if (cl->totcost > cost_cutoff) continue;
+
+d = catenate_disjuncts(dx, d);
+
+If there are too many disjuncts, randomly discard some.
+
+    Some badly-formed AtomSpace dicts can generate a billion(!)
+    disjuncts, which is impractical for practical applications.
+
+
+
+local->cost_default = atof(LDEF(COST_DEFAULT_STRING, "4.01"));
+#define LDEF(NAME,DEF) ldef(dict, NAME, DEF)
+#define COST_DEFAULT_STRING "cost-default"
+   const char* str = linkgrammar_get_dict_define(dict, name);
+
+max_disjuncts
+
+parse_options_set_disjunct_cost xxx unused
+dict->default_max_disjunct_cost
+linkgrammar_get_dict_max_disjunct_cost
+
+dict-common/dict-common.h:	float default_max_disjunct_cost;
+linkgrammar_get_dict_max_disjunct_cost -- unused!
+
+ahh:
+sentence.c:		opts->disjunct_cost = dict->default_max_disjunct_cost;
+
+       out = clg.dict_display_word_expr(self.d._obj, 'test//m', self.po._obj)
+        self._obj = clg.parse_options_create()
+
+
+
+dict-common/dict-common.h:static
+parse/parse.h
+resources.h
+connectors.h
+  335 |         if (val) global_rand_state = 0;
+
+static unsigned int global_rand_state = 0;
+prepare/exprune.h
+tokenize/word-structures.h
+post-process/post-process.h
+dict-common/dict-common.h
+tokenize/tokenize.h
+tokenize/lookup-exprs.h
+sat-solver/sat-encoder.h
+
+
+parse/parse.h
+parse/histogram.h
+resources.h
+disjunct-utils.h
+
+tokenize/word-structures.h
+dict-common/dict-utils.h
+post-process/post-process.h
+
+
+linkage/linkage.h
+tokenize/wordgraph.h
+
+bindings/python-examples/lg_testutils.py'>
+............................................s...............sFs.........E.............s.s..............link-grammar: Fatal error:
+Assertion (pc != NULL) failed in list_links() (../../link-grammar/parse/extract-links.c:920): walked off the end in list_links
+
+
+Atomese: Cls: 0 Scts: 3426864+0 for >>###LEFT-WALL###<< 195.17 seconds
+
+
+Before ampli:
+++++ Time                                      228.82 seconds (228.82 total)
+++++ Time                                      231.99 seconds (231.99 total)
+
+
+guile -l ./experiments/run-common/marginals-mst-shape.scm
+Rocks: DB-version=2 multi-space=0 initial aid=118425034
+Elapsed time to load csets: 1274 secs
+Elapsed time to load grammatical classes: 753 secs
+Elapsed time to load cross-sections: 2391 seconds
+Elapsed time to create shapes: 61035 secs
+
+/home/opencog/./experiments/run-common/marginals-mst-shape.scm:
+     30:0  8 (_)
+In opencog/matrix/trans-batch.scm:
+   124:24  7 (_ _ . _)
+In opencog/matrix.scm:
+     31:8  6 (_ _ . _)
+In srfi/srfi-1.scm:
+    634:9  5 (for-each #<procedure set-left-marginals (COL)> _)
+In opencog/matrix/support.scm:
+   625:24  4 (set-left-marginals #)
+   612:24  3 (sum-norms (#))
+In srfi/srfi-1.scm:
+    634:9  2 (for-each #<procedure 7efbe8c3a280 at opencog/matrix/s…> …)
+In opencog/matrix/support.scm:
+   414:45  1 (_ _)
+In opencog/learn/pseudo-csets.scm:
+   173:30  0 (_ get-count #)
+opencog/learn/pseudo-csets.scm:173:30: Bad method call on pseudo-cset: get-count
+
+
+ (LLOBJ GET-CNT
+ #:optional (GET-CNT 'get-count)
+
+missing: add-count-api
+
+In /home/opencog/./experiments/run-common/marginals-mst-shape.scm:
+
+
+somehow add-support-compute compute called directly on pseudo-cset ...
+(batch-transpose
+
+container is stale!!
+
+2-sfia-mst has stale marginals-mst-shape.scm ...
+
+
+Rocks: DB-version=2 multi-space=0 initial aid=118425034
+Telnet Server listening on port 17003
+Fetch all sections. This may take a long while!
+Elapsed time to load csets: 1162 secs
+Elapsed time to load grammatical classes: 670 secs
+Elapsed time to load cross-sections: 2203 seconds
+Create cross-sections. This may take a long while!
+Elapsed time to create shapes: 54629 secs
+
+Still running. 238 GB RAM Ouch
+
+
+./pair-submit.sh
+
+(start-pair-submit)
+process-corpus.sh
+file-block-process.sh
+netcat
+submit-block.pl
+(argv "string") where $observe is applied e.g. observe-block-pairs observe-window observe-mpg
+
+(define observer (make-block-pair-observer))
+make-block-pair-observer
+accepts TEXT-BLOCK
+make-pair-counter matrix
+make-observe-block
+
+
+ (for-each inc-count (cog-value->list PAIR-LIST))
+
+for each parse: `parses` is a LinkValue of parses.
+      ; Each parse is two LinkValues: a list of words,
+      ; and a list of links.
+
+            (update-pair-counts (cog-value-ref PARSE 1)))
+     (for-each incr-pair (cog-value->list PAIR-LIST))))
+
 
 
 
