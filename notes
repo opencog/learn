@@ -16568,9 +16568,6 @@ New, with ((s)-17):
 
 
 
-
-
-
 this is some wild-ass test or I don't know
 num clauses=507805880 low-cose=131210215 for >>###LEFT-WALL###<<
 LEFT-WALL(59380428) this(19861) is(84108) some(6647) wild-ass(2) test(60) or(71646) I(3758) don't(279) know(8322)
@@ -16596,6 +16593,74 @@ LEFT-WALL(85284102) this(20003) is(167424) some(6697) wild-ass(2) test(61) or(11
 Total: 85625714 disjuncts, 437906541 (436693108+/1213433-) connectors
 
 ++++ Time                                      219.93 seconds (419.23 total)
+
+   bool rc = bool_pair_fetch(dict, s);
+
+   HandleSeq rprs = germ->getIncomingSetByType(LIST_LINK);
+      Handle evpr = asp->get_link(EDGE_LINK, hpr, rawpr);
+      local->stnp->fetch_incoming_by_type(rawpr, EDGE_LINK);
+(define rsn (RocksStorage "rocks:////home/opencog/data/mpg-parse-copy.rdb"))
+ (fetch-atom (Word "###LEFT-WALL###"))
+(fetch-incoming-by-type (Word "###LEFT-WALL###") 'ListLink)
+(fetch-incoming-by-type (Word "###LEFT-WALL###") 'Section)
+
+bool section_boolean_lookup(Dictionary dict, const char *s)
+
+Atomese: Cls: 0 Scts: 3426864+0 for >>###LEFT-WALL###<< 193.36 seconds
+So: 3426864 / 193.36 = 17.7K per sec
+
+(use-modules (opencog) (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog exec) (opencog persist) (opencog persist-rocks))
+(use-modules (srfi srfi-1))
+(define rsn (RocksStorage "rocks:////home/opencog/data/mpg-parse-copy.rdb"))
+(cog-open rsn)
+(fetch-incoming-by-type (Word "###LEFT-WALL###") 'Section)
+(define lefts (cog-incoming-by-type (Word "###LEFT-WALL###") 'Section))
+(length lefts)
+(define disc (drop lefts 250000)) ; disc will be evrything except the first 250K
+(for-each cog-delete-recursive! disc)
+(cog-close rsn)
+^D to exit
+
+(fetch-incoming-by-type (Word "###LEFT-WALL###") 'Section)
+(define lefts (cog-incoming-by-type (Word "###LEFT-WALL###") 'Section))
+; Get rid of *all* disjuncts on left wall
+(for-each cog-delete-recursive! lefts)
+
+(fetch-incoming-by-type (Word "###LEFT-WALL###") 'List)
+(define prs (cog-incoming-by-type (Word "###LEFT-WALL###") 'List))
+(length prs)
+; Destroy all pairs on left wall
+(for-each cog-delete-recursive! prs)
+(cog-close rsn)
+^D
+
+
+wtf ... shapes ... really?
+ (Shape
+  (Word "###LEFT-WALL###")
+
+ (load-atoms-of-type 'Shape)
+(define sh (cog-get-atoms 'Shape))
+
+
+ (Variable "$connector-word")
+
+(cog-delete-recursive! (Variable "$connector-word"))
+
+(cog-incoming-set (car prs))
+$9 = ((Edge (ctv 0 0 209)
+  (Bond "ABVR")
+  (List
+    (Word "###LEFT-WALL###")
+    (Word "stockpiles")))
+ (Edge (ctv 0 0 296)
+  (Bond "ANY")
+  (List
+    (Word "###LEFT-WALL###")
+    (Word "stockpiles")))
+)
+What? Huh. OK
 
 
 
