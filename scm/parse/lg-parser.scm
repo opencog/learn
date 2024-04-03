@@ -113,15 +113,12 @@
 (define start (current-time))  ; XXXX temp hack
 (define timeo #f) ; XXXX temp hack
 
-		(define base-as (cog-push-atomspace))
 		(define (pthunk)
 			(define parses (cog-value->list
-				(cog-execute! (LgParseSections (Phrase PLAIN-TEXT) args))))
-			(cog-set-atomspace! base-as)
+				(cog-execute! (PureExec (LgParseSections (Phrase PLAIN-TEXT) args)))))
 			(count-one-atom mst-sent)
 			(for-each update-parse-counts parses))
 		(catch #t pthunk (lambda (key . args) (set! timeo #t)))
-		(cog-pop-atomspace)
 (count-one-atom mst-start)   ;; XXX tmp hack
 (count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
 (if timeo (count-one-atom mst-timeo)) ; XXX temp hack
