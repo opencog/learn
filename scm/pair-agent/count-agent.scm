@@ -10,30 +10,22 @@
 ; Same as always
 
 (define (obs-txt PLAIN-TEXT)
-	(define base-as (cog-push-atomspace))
-	(define parses (cog-execute!
-		(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
-	(define temp-as (cog-set-atomspace! base-as))
-
-
-	(cog-set-atomspace! temp-as)
-	(cog-pop-atomspace)
+	(define parses (cog-execute! (PureExecLink
+		(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML))))
 
 	parses
 )
 
-(define (isolate)
-	(cog-push-atomspace)
-	(define f (LinkValue (Concept "foo")))
-	(cog-pop-atomspace)
-	(define g (cog-new-atom (cog-value-ref f 0)))
-)
+(use-modules (opencog) (opencog exec))
+(use-modules (opencog nlp) (opencog nlp lg-parse))
+
 
 ; Parses arrive as link values. We want to apply a function to each.
 ; How?
 ; Need:
-; 1) execute in subspace
-; 2) decimate w/ accept (for unbounded number of edges)
+; 1) execute in subspace DONE PureExecLink
+; 2) decimate w/ accept (for unbounded number of edges) NO
+; 2a) select
 ; 3) select on Index IndexLink SelectLink
 ; 4) IncrementLinks link cog-inc-value!
 
@@ -51,8 +43,8 @@
 (define (obs-txt PLAIN-TEXT)
 	(define parses (cog-execute!
 		(Decimate
-			(0 1 1 1 1)
-			; (ExecInSubspace
+			(Number 0 1 1 1 1)
+			; (PureExec
 				(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))))
 	(define temp-as (cog-set-atomspace! base-as))
 

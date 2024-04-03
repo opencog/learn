@@ -16622,6 +16622,12 @@ So: 3426864 / 193.36 = 17.7K per sec
 (cog-close rsn)
 ^D to exit
 
++       // During DB Open we'd called OptimizeLevelStyleCompaction()
++       // which suppresses compaction. After a full DB dump, though
++       // we really want to do it, for real. So start it manually.
++       rocksdb::CompactRangeOptions cops;
++       _rfile->CompactRange(cops, nullptr, nullptr);
+
 (fetch-incoming-by-type (Word "###LEFT-WALL###") 'Section)
 (define lefts (cog-incoming-by-type (Word "###LEFT-WALL###") 'Section))
 ; Get rid of *all* disjuncts on left wall
@@ -16639,14 +16645,53 @@ So: 3426864 / 193.36 = 17.7K per sec
 wtf ... shapes ... really?
  (Shape
   (Word "###LEFT-WALL###")
+  (Connector
+    (Variable "$connector-word")
+    (Sex "+"))
+  (Connector
+    (Word "harder")
+    (Sex "+"))
+  (Connector
+    (Word "suspect")
+    (Sex "+")))
 
- (load-atoms-of-type 'Shape)
+(load-atoms-of-type 'Shape)
 (define sh (cog-get-atoms 'Shape))
-
 
  (Variable "$connector-word")
 
 (cog-delete-recursive! (Variable "$connector-word"))
+After this,
+du -s 14527272 so larger
+  Next aid: 118425034  Frame count f@: 0
+  Atom/Link/Node count a@: 70688011 l@: 69148658 n@: 1539353
+  Keys/Incoming/Hash count k@: 53388555 i@: 160597641 h@: 0
+
+Open time was longer! 4:11
+
+But then:
+(load-atoms-of-type 'Shape) .. comes up empy. so OK.
+
+CompactFiles()
+CompactRange(Range{nil, nil})
+rocksdb::CreateDBStatistics(). You can get human-readable RocksDB statistics any time by calling options.statistics.ToString(). S
+db->GetProperty("rocksdb.stats");
+
+
+options.OptimizeForPointLookup
+options.PrepareForBulkLoad call this on store
+then CompactRange(NULL, NULL)
+
+W-Amp
+41821.3 at L1
+83540.1 at Sum
+67583152.0 at Int
+
+This is a hug effing write amplification wtf
+
+8:28.23
+
+
 
 (cog-incoming-set (car prs))
 $9 = ((Edge (ctv 0 0 209)
@@ -16823,6 +16868,136 @@ for each parse: `parses` is a LinkValue of parses.
 
             (update-pair-counts (cog-value-ref PARSE 1)))
      (for-each incr-pair (cog-value->list PAIR-LIST))))
+
+(use-modules (opencog) (opencog exec))
+(use-modules (opencog nlp) (opencog nlp lg-parse))
+(define as (AtomSpace "stuff"))
+(define pe (PureExecLink
+      (LgParseBonds (Phrase "this is a test") (LgDict "en") (Number 1))
+		as))
+(define parses (cog-execute! pe))
+
+
+FORMULA_PREDICATE_LINK
+JOIN_LINK
+SATISFYING_LINK
+457
+
+#5  0x00007ffff7e0bc2c in equal (silent=<optimized out>, h=...,
+    as=0x55555558ad40)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atoms/execution/Evalu--Type <RET> for more, q to quit, c to continue without paging--
+ationLink.cc:276
+
+DefinedSchema \"randy\"
+
+DEFINED_SCHEMA_NODE   line 709 trips
+
+maybe need DefinedSchema::execute()
+
+CondLinkUTest
+Arcana
+
+	 20 - RandomUTest (Failed)
+	 41 - CondLinkUTest (Failed)
+	 44 - PutLinkUTest (Failed)
+	156 - ArcanaUTest (Failed)
+	174 - QuoteUTest (Failed)
+
+./tests/atoms/RandomUTest ok
+./tests/atoms/core/CondLinkUTest
+./tests/atoms/core/PutLinkUTest
+./tests/query/ArcanaUTest
+./tests/query/QuoteUTest ok
+../tests/atoms/core/condlink.scm
+
+
+	 38 - DeleteLinkUTest (Failed)
+	 40 - StateLinkUTest (Failed) OK
+	 44 - PutLinkUTest (Failed)
+	171 - SequenceUTest (Failed) OK
+	173 - DontExecUTest (Failed) fail
+	197 - DotLambdaTest (Failed)
+	198 - DotMashupTest (Failed)
+
+test_define:
+test_nested_2
+/home/linas/src/novamente/src/atomspace-git/build/tests/atoms/core/../../../../tests/atoms/core/PutLinkUTest.cxxtest:1451: Error: Expected (result == expected), found ({ B0 A0 1D 34 1D 56 00 00 ... } != { F0 40 24 34 1D 56 00 00 ... })
+
+./tests/atoms/core/DeleteLinkUTest OK
+
+/home/linas/src/novamente/src/atomspace-git/build/tests/query/../../../tests/query/QuoteUTest.cxxtest:321: Error: Assertion failed: did_throw
+
+QuoteUTest
+tomspace-git/build/tests/query/../../../tests/query/QuoteUTest.cxxtest:321: Error: Assertion failed: did_throw
+
+ArcanaUTest
+$1 = 0x5555555b4950 "(StateLink\n  (Schema \"start-interaction-timestamp\") ; [8a0d6e55479f93f][1]\n  (NumberOfLink\n    (TimeLink\n    ) ; [83b58a05e6328232][1]\n  ) ; [bf46d43eecec7bc4][1]\n) ; [f8eab4b95f69bf88][1]"
+
+#10 0x00007fffebca3572 in opencog::createLink<std::vector<opencog::Handle, std::allocator<opencog::Handle> >, unsigned short&> ()
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atoms/base/Link.h:216
+#11 0x00007fffebb58b2b in opencog::Instantiator::walk_tree (
+    this=this@entry=0x7fffffffd8f8, expr=..., ist=...)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atoms/execution/Instantiator.cc:519
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atoms/execution/Instantiator.cc:695
+#13 0x00007fffebb5d22f in opencog::Instantiator::execute (
+    this=this@entry=0x7fffffffd8f8, expr=..., silent=silent@entry=false)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/atoms/execution/Instantiator.cc:731
+#14 0x00007fffed50d500 in ss_execute (atomspace=0x555555da3bc0, h=...)
+    at /home/linas/src/novamente/src/atomspace-git/opencog/guile/modules/ExecSCM.cc:46
+#15 0x00007fffebd34aa2 in opencog::FunctionWrap::as_wrapper_v_h (
+    this=0x555555d8d4f0, h=...)
+    ast /home/linas/src/novamente/src/atomspace-git/opencog/guile/SchemeModule.cc:87
+
+	 44 - PutLinkUTest (Failed)
+	173 - DontExecUTest (Failed)
+	197 - DotLambdaTest (Failed)
+	198 - DotMashupTest (Failed)
+	206 - RecursiveTest (Failed)
+
+dot-lambda-test.scm
+   QueueValuePtr qv(impl.get_result_queue());
+_result_queue
+
+         ValuePtr v(inst.instantiate(himp, var_soln, true));
+static Handle beta_reduce(const Handle& expr, const GroundingMap& vmap)
+      return beta_reduce(expr, ist._varmap);
+
+./tests/query/AbsentUTest
+
+reddy has another put
+
+	 44 - PutLinkUTest (Failed)
+	189 - IllPutUTest (Failed)
+	206 - RecursiveTest (Failed)
+/home/linas/src/novamente/src/atomspace-git/tests/query/recursive-test.scm:169: FAIL cont-ben-list
+/home/linas/src/novamente/src/atomspace-git/tests/query/recursive-test.scm:194: FAIL cont-inf-loop
+/home/linas/src/novamente/src/atomspace-git/tests/query/recursive-test.scm:130: FAIL ben-list
+/home/linas/src/novamente/src/atomspace-git/tests/query/recursive-test.scm:162: FAIL cont-ben-foo
+/home/linas/src/novamente/src/atomspace-git/tests/query/recursive-test.scm:123: FAIL ben-foo
+
+	 38 - DeleteLinkUTest (SEGFAULT)
+	215 - CythonBindlink (SEGFAULT)
+
+	 38 - DeleteLinkUTest (Failed)
+	 40 - StateLinkUTest (Failed)
+	 44 - PutLinkUTest (Failed)
+
+	 41 - CondLinkUTest (Failed)
+	143 - ExecutionOutputUTest (Failed)
+	156 - ArcanaUTest (Failed)
+	172 - EvaluationUTest (Failed)
+
+	183 - DefineUTest (Failed)
+	184 - FiniteStateMachineUTest (Failed)
+
+
+EXECUTABLE_LINK
+
+; 1) execute in subspace
+; 2) decimate w/ accept (for unbounded number of edges)
+; 3) select on Index IndexLink SelectLink
+; 4) IncrementLinks link cog-inc-value!
+
 
 
 

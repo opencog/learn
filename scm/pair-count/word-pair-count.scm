@@ -145,12 +145,9 @@
 
 	(define (obs-txt PLAIN-TEXT)
 		; Do the parsing in a scratch atomspace, and the counting in
-		; the base space. The temp space must remain until we are
-		; done counting, else the atoms will disappear.
-		(define base-as (cog-push-atomspace))
-		(define parses (cog-execute!
-			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
-		(define temp-as (cog-set-atomspace! base-as))
+		; the base space. Use PureExec to  do this.
+		(define parses (cog-execute! (PureExecLink
+			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML))))
 
 		(count-one-atom any-sent)
 
@@ -163,8 +160,6 @@
 				(update-word-counts (cog-value-ref PARSE 0))
 				(update-pair-counts (cog-value-ref PARSE 1)))
 			(cog-value->list parses))
-		(cog-set-atomspace! temp-as)
-		(cog-pop-atomspace)
 
 		(monitor-parse-rate #f)
 	)
