@@ -36,10 +36,15 @@
 	parses
 )
 
-; Parses arrive as link values. We want to apply a function to each.
+; Parses arrive as LinkValues. We want to apply a function to each.
 ; How? Need:
-; 3) ConcatenateLink like AccumulatLink, but flattens
+; 3) ConcatenateLink like AccumulateLink, but flattens
+;    Is this needed?
 ; 4) IncrementLinks link cog-inc-value!
+; 5) ForkStream to create two streams (so that each can get a
+;    distinct filter.)
+; 5a) Alternately, support RuleLink so that multiple targets are allowed.
+;     Then, ForkStream is a special case of Rule.
 
 
 ; (load "count-agent.scm")
