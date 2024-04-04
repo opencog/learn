@@ -8,26 +8,36 @@
 (define DICT (LgDict "any"))
 
 
+; From inside to out:
+; LGParseBonds tokenizes a sentence, and then parses it.
+; The PureExecLink makes sure that the parsing is done in a sub-AtomSpace
+; so that the main AtomSpace is not garbaged up.
+;
+; The result of parsing is a list of pairs. First item in a pair is
+; the list of words in the sentence; the second is a list of the edges.
+; Thus, each pair has the form
+;     (LinkValue
+;         (LinkValue (Word "this") (Word "is") (Word "a") (Word "test"))
+;         (LinkValue (Edge ...) (Edge ...) ...))
+;
+; The Filter matches this, so that (Variable "$x") is equated with the
+; list of Edges.
+;
 (define (obs-txt PLAIN-TEXT)
 	(define parses (cog-execute!
 		(Filter
-			(Signature
-				(Type 'LinkValue))
+			(Lambda
+				(Variable "$x")
+				(LinkSignature
+					(Type 'LinkValue)
+					(Type 'LinkValue)
+					(Variable "$x")))
 			(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))))
 	parses
 )
 
-;first in pair is wordlist, second is edgelist.
-
-; LinkValueSignatureLink ?
-; (LinkSignatureLink (TypeNode 'blah) contents)
-
 ; Parses arrive as link values. We want to apply a function to each.
-; How?
-; Need:
-; 1) execute in subspace DONE PureExecLink
-; 2) FilterLink with LinkValue signature
-;    Half done. Need to support globs.
+; How? Need:
 ; 3) ConcatenateLink like AccumulatLink, but flattens
 ; 4) IncrementLinks link cog-inc-value!
 
