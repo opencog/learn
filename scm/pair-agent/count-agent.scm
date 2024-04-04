@@ -17,16 +17,20 @@
 	parses
 )
 
-;returns NUML pairs in list equal to SizeOf but SizeOf might be less
 ;first in pair is wordlist, second is edgelist.
 
+; LinkValueSignatureLink ?
+; (LinkSignatureLink (TypeNode 'blah) contents)
 
 ; Parses arrive as link values. We want to apply a function to each.
 ; How?
 ; Need:
 ; 1) execute in subspace DONE PureExecLink
 ; 2) FilterLink with LinkValue signature
-; 3) IncrementLinks link cog-inc-value!
+;    Half done. Need to support globs.
+; 3) ConcatenateLink like AccumulatLink, but flattens
+; 4) IncrementLinks link cog-inc-value!
 
 
+; (load "count-agent.scm")
 ; (obs-txt text-blob)
