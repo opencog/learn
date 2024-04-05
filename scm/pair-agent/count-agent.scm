@@ -24,7 +24,10 @@
 ; list of Edges.
 ;
 (define (obs-txt PLAIN-TEXT)
-	(define parses (cog-execute!
+
+	(define parser
+		(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
+	(define filt
 		(Filter
 			(Lambda
 				(Variable "$x")
@@ -32,7 +35,9 @@
 					(Type 'LinkValue)
 					(Type 'LinkValue)
 					(Variable "$x")))
-			(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))))
+			parser))
+
+	(define parses (cog-execute! filt))
 	parses
 )
 
@@ -40,11 +45,20 @@
 ; How? Need:
 ; 3) ConcatenateLink like AccumulateLink, but flattens
 ;    Is this needed?
-; 4) IncrementLinks link cog-inc-value!
-; 5) ForkStream to create two streams (so that each can get a
-;    distinct filter.)
-; 5a) Alternately, support RuleLink so that multiple targets are allowed.
-;     Then, ForkStream is a special case of Rule.
+; 4) IncrementLink just like cog-inc-value!
+; 5) Support RuleLink so that sttream forking can be done with
+;    multiple targets in the rule.
+
+; Works but non-atomic.
+; Also requires RuleLink to work
+(define ed (Edge (Bond "ANY") (List (Word "words") (Word "know"))))
+(define (doinc)
+	(cog-execute!
+		(SetValue ed (Predicate "count")
+			(Plus (Number 0 0 1)
+				(Cond (FloatValueOf ed (Predicate "count"))
+					(FloatValueOf ed (Predicate "count"))
+					(FloatValueOf (Number 0 0 0)))))))
 
 
 ; (load "count-agent.scm")
