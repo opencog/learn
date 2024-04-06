@@ -25,19 +25,33 @@
 ;
 (define (obs-txt PLAIN-TEXT)
 
-	(define parser
-		(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
-	(define filt
-		(Filter
-			(Lambda
-				(Variable "$x")
-				(LinkSignature
-					(Type 'LinkValue)
-					(Type 'LinkValue)
-					(Variable "$x")))
-			parser))
+	(define (incr-cnt edge)
+		(SetValue edge (Predicate "count")
+			(Plus (Number 0 0 1)
+				(Cond (FloatValueOf edge (Predicate "count"))
+					(FloatValueOf edge (Predicate "count"))
+					(FloatValueOf (Number 0 0 0))))))
 
-	(define parses (cog-execute! filt))
+	(define parseli
+		(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
+	(define filty
+		(Filter
+			(Rule
+				; Type decl
+				(Glob "$x")
+				; Match clause - one per parse.
+				(LinkSignature
+					(Type 'LinkValue) ; the wrapper for the pair
+					(Type 'LinkValue) ; the word-list
+					(LinkSignature    ; the edge-list
+						(Type 'LinkValue)  ; edge-list wrapper
+						(Glob "$x")))      ; all of the edges
+				; Rewrite
+				(incr-cnt (Glob "$x"))
+			)
+			parseli))
+
+	(define parses (cog-execute! filty))
 	parses
 )
 
