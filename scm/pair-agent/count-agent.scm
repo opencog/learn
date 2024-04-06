@@ -32,6 +32,15 @@
 					(FloatValueOf edge (Predicate "count"))
 					(FloatValueOf (Number 0 0 0))))))
 
+	(define (extract stuff)
+		(Filter
+			(Rule
+				(Variable "$edge")
+				; (TypedVariable (Variable "$edge") (Type 'Edge))
+				(Variable "$edge")
+				(incr-cnt (Variable "$edge")))
+			stuff))
+
 	(define parseli
 		(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
 	(define filty
@@ -47,7 +56,7 @@
 						(Type 'LinkValue)  ; edge-list wrapper
 						(Glob "$x")))      ; all of the edges
 				; Rewrite
-				(incr-cnt (Glob "$x"))
+				(extract (Glob "$x"))
 			)
 			parseli))
 
