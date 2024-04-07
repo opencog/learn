@@ -28,9 +28,7 @@
 	(define (incr-cnt edge)
 		(SetValue edge (Predicate "count")
 			(Plus (Number 0 0 1)
-				(Cond (FloatValueOf edge (Predicate "count"))
-					(FloatValueOf edge (Predicate "count"))
-					(FloatValueOf (Number 0 0 0))))))
+				(FloatValueOf edge (Predicate "count") (FloatValueOf (Number 0 0 0))))))
 
 	(define (extract stuff)
 		(Filter
@@ -66,11 +64,11 @@
 
 ; Parses arrive as LinkValues. We want to apply a function to each.
 ; How? Need:
-; 3) ConcatenateLink like AccumulateLink, but flattens
-;    Is this needed?
 ; 4) IncrementLink just like cog-inc-value!
-; 5) Support RuleLink so that sttream forking can be done with
-;    multiple targets in the rule.
+;    or is it enough to do atomic lock? Make SetValue exec under lock.
+;
+; cog-update-value calls
+; asp->increment_count(h, key, fvp->value()));
 
 ; Works but non-atomic.
 ; Also requires RuleLink to work
