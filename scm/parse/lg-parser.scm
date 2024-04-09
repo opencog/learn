@@ -92,14 +92,15 @@
 		(count-one-atom mst-parse)
 
 		; Each section arrives already in the correct format.
-		; Thus, counting is trivial.
+		; Thus, counting is trivial. Call cog-new-atom because
+		; the aprse results might be in a different AtomSpace.
 		(for-each
-			(lambda (SECT) (STOBJ 'inc-count SECT 1.0))
+			(lambda (SECT) (STOBJ 'inc-count (cog-new-atom SECT) 1.0))
 			(cog-value->list sects))
 
 		; Each link arrives already in the correct format.
 		(for-each
-			(lambda (BOND) (BLOBJ 'inc-count BOND 1.0))
+			(lambda (BOND) (BLOBJ 'inc-count (cog-new-atom BOND) 1.0))
 			(cog-value->list bonds)))
 
 	(define (obs-txt PLAIN-TEXT)
