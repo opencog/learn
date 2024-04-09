@@ -23,6 +23,13 @@
 ; The Filter matches this, so that (Variable "$x") is equated with the
 ; list of Edges.
 ;
+; XXX Major design flaw, still needs work: the PhraseLink is placed in
+; the main AtomSpace. Thus, it accumulates there, plus also all of the
+; other Links that wrap it, including LgParseBinds, Rule, Filter etc.
+; Nuking the PhraseLink also nukes those, so lots of churn. Alternative
+; is to pass PhraseLink as a value, but then have threading issues...
+; ugh. let me think a moment.
+;
 (define (obs-txt PLAIN-TEXT)
 
 	(define (incr-cnt edge)
@@ -39,8 +46,11 @@
 				(incr-cnt (Variable "$edge")))
 			stuff))
 
-	(define parseli
-		(PureExecLink (LgParseBonds (Phrase PLAIN-TEXT) DICT NUML)))
+	(define (parseli phrali)
+		(PureExecLink (LgParseBonds phrali DICT NUML)))
+
+	(define phrali (Phrase PLAIN-TEXT))
+
 	(define filty
 		(Filter
 			(Rule
@@ -56,9 +66,12 @@
 				; Rewrite
 				(extract (Glob "$x"))
 			)
-			parseli))
+			(parseli (phrali))))
 
 	(define parses (cog-execute! filty))
+
+	; Remove the phrase-link, too.
+	(cog-extract-recursive! phrali)
 	parses
 )
 

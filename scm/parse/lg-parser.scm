@@ -114,14 +114,17 @@
 (define timeo #f) ; XXXX temp hack
 
 		(define (pthunk)
+			(define phrali (Phrase PLAIN-TEXT))
 			(define parses (cog-value->list
-				(cog-execute! (PureExec (LgParseSections (Phrase PLAIN-TEXT) args)))))
+				(cog-execute! (PureExec (LgParseSections phrali args)))))
 			(count-one-atom mst-sent)
 			(for-each update-parse-counts parses))
 		(catch #t pthunk (lambda (key . args) (set! timeo #t)))
 (count-one-atom mst-start)   ;; XXX tmp hack
 (count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
 (if timeo (count-one-atom mst-timeo)) ; XXX temp hack
+
+		(cog-extract-recursive! phrali)
 		(monitor-parse-rate #f)
 	)
 

@@ -144,10 +144,12 @@
 			(for-each incr-pair (cog-value->list PAIR-LIST))))
 
 	(define (obs-txt PLAIN-TEXT)
+		(define phrali (Phrase PLAIN-TEXT))
+
 		; Do the parsing in a scratch atomspace, and the counting in
 		; the base space. Use PureExec to  do this.
 		(define parses (cog-execute! (PureExecLink
-			(LgParseBonds (Phrase PLAIN-TEXT) DICT NUML))))
+			(LgParseBonds phrali DICT NUML))))
 
 		(count-one-atom any-sent)
 
@@ -161,6 +163,7 @@
 				(update-pair-counts (cog-value-ref PARSE 1)))
 			(cog-value->list parses))
 
+		(cog-extract-recursive! phrali)
 		(monitor-parse-rate #f)
 	)
 
