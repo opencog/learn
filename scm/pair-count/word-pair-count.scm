@@ -114,8 +114,8 @@
 	; count should be marginals on this thing.
 	(define (update-word-counts WRD-LIST)
 		; cog-new-atom to make sure each atom is in the current AtomSpace.
-		(for-each cog-new-atom (cog-value->list WRD-LIST))
-		(for-each count-one-atom (cog-value->list WRD-LIST)))
+		(for-each (lambda (WRD) (count-one-atom (cog-new-atom WRD)))
+			(cog-value->list WRD-LIST)))
 
 	; Increment the count on a word-pair. A short-cut is taken if
 	; LLOBJ is the ANY api. The short-cut is possible because the
@@ -137,8 +137,8 @@
 		(LLOBJ 'pair-inc w-left w-right 1.0))
 
 	(define (inc-count EDGE)
-		(cog-new-atom EDGE) ; Make sure EDGE is in the current AtomSpace
-		(LLOBJ 'inc-count EDGE 1.0))
+		; Make sure EDGE is in the current AtomSpace
+		(LLOBJ 'inc-count (cog-new-atom EDGE) 1.0))
 
 	; Loop over the list of word-pairs.
 	(define (update-pair-counts PAIR-LIST)
