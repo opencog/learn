@@ -3,6 +3,26 @@
 (use-modules (opencog exec) (opencog persist))
 (use-modules (srfi srfi-1))
 
+; Here's the design we want:
+; 1) Some source of text strings; actually a source of PhraseNode's
+;    This source blocks if there's nothing to be read; else it
+;    returns the next PhraseNode. The SRFI's call this a generator.
+; 2) A PromiseLink that wraps (PureExecLink (LgParseBonds ...))
+;    so that, when its executed, it calls the source and parses.
+;    Or perhaps just a (Filter (Rule ...)) combo, instead of a
+;    promise? The promise can be made later.
+;    https://wiki.opencog.org/w/PromiseLink#Multiplex_Example
+; 3) A Filter that takes above and increments pair counts.
+; 4) Execution control. There are two choices:
+;    Pull: infinite loop polls on promise. Source blocks if
+;          no input.
+;    Push: Nothing happens until source triggers; then a cascade
+;          of effects downstream.
+;    Right now, the general infrastructure supports Pull naturally.
+;    There aren't any push demos.
+;    Attention controls is easier with Pull.
+
+
 (define text-blob "this is just a bunch of words you know")
 (define NUML (Number 4))
 (define DICT (LgDict "any"))
