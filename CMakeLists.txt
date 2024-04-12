@@ -21,11 +21,6 @@ IF(COGUTIL_FOUND)
 	include(OpenCogInstallOptions)
 	include(Summary)
 
-	# Load cmake functions defined in cogutil repo that depend on Guile.
-	INCLUDE(OpenCogMacros)
-	INCLUDE(OpenCogGuile)
-	INCLUDE(OpenCogCython)
-
 ENDIF()
 
 # AtomSpace
@@ -52,6 +47,12 @@ ENDIF (ATOMSPACE_ROCKS_FOUND)
 include(OpenCogFindGuile)
 # include(OpenCogFindPython)
 
+# Load cmake functions defined in cogutil repo that depend on Guile.
+INCLUDE(OpenCogMacros)
+INCLUDE(OpenCogGuile)
+INCLUDE(OpenCogCython)
+
+# ----------------------------------------------------------
 ADD_SUBDIRECTORY (opencog)
 ADD_SUBDIRECTORY (fake)
 ADD_SUBDIRECTORY (scm)

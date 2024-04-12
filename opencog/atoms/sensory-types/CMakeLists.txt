@@ -33,13 +33,5 @@ INSTALL (TARGETS sensory-types
 
 INSTALL (FILES
 	${CMAKE_CURRENT_BINARY_DIR}/sensory_types.h
-	DESTINATION "include/opencog/sensory"
+	DESTINATION "include/opencog/atoms/sensory"
 )
-
-# Install the auto-generated atom types as well
-ADD_GUILE_MODULE (FILES
-	${CMAKE_CURRENT_BINARY_DIR}/sensory_types.scm
-	MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/atoms/sensory-types"
-	DEPENDS sensory_atom_types
-)
-ADD_GUILE_EXTENSION(SCM_CONFIG sensory-types "opencog-ext-path-sensory-types")

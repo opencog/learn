@@ -7,7 +7,7 @@ ADD_LIBRARY (sensory
 )
 
 # Without this, parallel make will race and crap up the generated files.
-#ADD_DEPENDENCIES(sensory opencog_atom_types)
+ADD_DEPENDENCIES(sensory sensory_atom_types)
 
 TARGET_LINK_LIBRARIES(sensory
 	${ATOMSPACE_LIBRARIES}
@@ -21,4 +21,13 @@ INSTALL (TARGETS sensory EXPORT AtomSpaceTargets
 INSTALL (FILES
 	FileIO.h
 	DESTINATION "include/opencog/atoms/sensory"
+)
+
+add_guile_extension(SCM_CONFIG sensory "opencog-ext-path-sensory-types")
+
+add_guile_module(FILES
+   sensory.scm
+   ${CMAKE_CURRENT_BINARY_DIR}/../sensory-types/sensory_types.scm
+   MODULE_DESTINATION "${GUILE_SITE_DIR}/opencog/sensory"
+   DEPENDS sensory_atom_types
 )
