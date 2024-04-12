@@ -7,6 +7,6 @@
 (use-modules (opencog sensory-config))
 
 ; Load the C library that calls the nameserver to load the types.
-(load-extension (string-append opencog-ext-path-sensory-types "libsensory") "sensory_types_init")
+(load-extension (string-append opencog-ext-path-sensory-types "libsensory-types") "sensory_types_init")
 
-(load "sensory-types/sensory_types.scm")
+(include-from-path "opencog/sensory/sensory_types.scm")
