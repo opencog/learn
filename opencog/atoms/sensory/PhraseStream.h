@@ -23,6 +23,7 @@
 #ifndef _OPENCOG_PHRASE_STREAM_H
 #define _OPENCOG_PHRASE_STREAM_H
 
+#include <stdio.h>
 #include <opencog/atoms/value/LinkStreamValue.h>
 #include <opencog/atoms/sensory-types/sensory_types.h>
 
@@ -44,12 +45,15 @@ class PhraseStream
 	: public LinkStreamValue
 {
 protected:
-	PhraseStream(Type t) : LinkStreamValue(t) {}
+	PhraseStream(Type t, const std::string&);
+	void init(const std::string&);
 	virtual void update() const;
 
+	FILE* _fh;
+
 public:
-	PhraseStream(void) : LinkStreamValue(PHRASE_STREAM) {}
-	virtual ~PhraseStream() {}
+	PhraseStream(const std::string&);
+	virtual ~PhraseStream();
 	virtual bool operator==(const Value&) const;
 };
 

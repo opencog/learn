@@ -30,24 +30,31 @@ using namespace opencog;
 // ============================================================
 // Constructors
 
+void FileReadNode::init(void)
+{
+	printf("yooooooo\n");
+}
+
 FileReadNode::FileReadNode(Type t, const std::string&& s)
    : Node(t, std::move(s))
 {
    OC_ASSERT(nameserver().isA(_type, FILE_READ_NODE),
       "Bad FileReadNode constructor!");
+	init();
 }
 
 FileReadNode::FileReadNode(const std::string&& s)
    : Node(FILE_READ_NODE, std::move(s))
 {
+	init();
 }
 
 // ============================================================
 
 ValuePtr FileReadNode::execute(AtomSpace* as, bool silent)
 {
-printf("duuuude ola\n");
-	return createPhraseStream();
+	// Pass the URL to the stream; the stream will open it.
+	return createPhraseStream(_name);
 }
 
 DEFINE_NODE_FACTORY(FileReadNode, FILE_READ_NODE)
