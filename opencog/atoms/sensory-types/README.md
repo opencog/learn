@@ -5,11 +5,13 @@ This defines some atom types, currently, just nodes, that indicate
 how to connect to the external-world. Some of the current and
 envisioned types include:
 
-* `FileIONode` -- read and write files and directories.
+* `FileReadNode` -- read and write files and directories.
 * `IRChatNode` -- IRC chatbot connection
 * `TwitterNode` -- Twitterbot Node
 * Vision & sound: see the [opencog/vision](https://github.com/opencog/vision)
   git repo.
+
+Super-experimental. Not sure how this will work out.
 
 Only the first is being implemented.  The second has some useful
 scaffolding code in the old opencog repo that needs to be copied here.
