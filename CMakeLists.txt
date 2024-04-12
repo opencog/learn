@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12.2)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0.1)
 SET(CMAKE_INSTALL_MESSAGE LAZY)
 
 PROJECT(learn)
@@ -10,6 +10,22 @@ IF(COGUTIL_FOUND)
 
 	# Add the 'cmake' directory from cogutil to search path
 	list(APPEND CMAKE_MODULE_PATH  ${COGUTIL_DATA_DIR}/cmake)
+
+	# Needed to set OC_CMAKE_DIR
+	if (NOT DEFINED ATOMSPACE_DATA_DIR)
+		set (ATOMSPACE_DATA_DIR "${COGUTIL_DATA_DIR}")
+	endif (NOT DEFINED ATOMSPACE_DATA_DIR)
+
+	include(OpenCogGccOptions)
+	include(OpenCogLibOptions)
+	include(OpenCogInstallOptions)
+	include(Summary)
+
+	# Load cmake functions defined in cogutil repo that depend on Guile.
+	INCLUDE(OpenCogMacros)
+	INCLUDE(OpenCogGuile)
+	INCLUDE(OpenCogCython)
+
 ENDIF()
 
 # AtomSpace
@@ -24,23 +40,17 @@ IF (COGSERVER_FOUND)
 	SET(HAVE_COGSERVER 1)
 ENDIF (COGSERVER_FOUND)
 
-# Guile
-FIND_PACKAGE(Guile 2.2.2 REQUIRED)
-IF(GUILE_FOUND)
-	SET(HAVE_GUILE 1)
-ENDIF()
-
 # RocksDB
 FIND_PACKAGE(AtomSpaceRocks 1.3.0 CONFIG REQUIRED)
 IF (ATOMSPACE_ROCKS_FOUND)
 	SET(HAVE_ATOMSPACE_ROCKS 1)
 ENDIF (ATOMSPACE_ROCKS_FOUND)
 
-# Load cmake functions defined in cogutil repo that depend on Guile.
-IF(GUILE_FOUND AND COGUTIL_FOUND)
-	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogMacros.cmake")
-	INCLUDE("${COGUTIL_DATA_DIR}/cmake/OpenCogGuile.cmake")
-ENDIF()
+# ----------------------------------------------------------
+# Guile Python and Cython
+
+include(OpenCogFindGuile)
+# include(OpenCogFindPython)
 
 ADD_SUBDIRECTORY (opencog)
 ADD_SUBDIRECTORY (fake)
