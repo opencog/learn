@@ -20,6 +20,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <opencog/atoms/base/Node.h>
 #include <opencog/atoms/value/ValueFactory.h>
 #include "PhraseStream.h"
 
@@ -30,6 +31,7 @@ using namespace opencog;
 // This will ...
 void PhraseStream::update() const
 {
+	_value.emplace_back(createNode(CONCEPT_NODE, "foocon"));
 }
 
 // ==============================================================

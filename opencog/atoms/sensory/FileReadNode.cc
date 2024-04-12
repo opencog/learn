@@ -22,8 +22,8 @@
 
 #include <opencog/util/oc_assert.h>
 #include <opencog/atoms/value/LinkStreamValue.h>
-#include <opencog/atoms/value/StringValue.h>
 #include "FileReadNode.h"
+#include "PhraseStream.h"
 
 using namespace opencog;
 
@@ -47,7 +47,7 @@ FileReadNode::FileReadNode(const std::string&& s)
 ValuePtr FileReadNode::execute(AtomSpace* as, bool silent)
 {
 printf("duuuude ola\n");
-	return createStringValue("foobar");
+	return createPhraseStream();
 }
 
 DEFINE_NODE_FACTORY(FileReadNode, FILE_READ_NODE)
