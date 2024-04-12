@@ -60,4 +60,8 @@ NODE_PTR_DECL(FileReadNode)
 /** @}*/
 }
 
+extern "C" {
+void opencog_sensory_init(void);
+};
+
 #endif // _OPENCOG_FILE_READ_NODE_H

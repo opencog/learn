@@ -51,3 +51,8 @@ printf("duuuude ola\n");
 }
 
 DEFINE_NODE_FACTORY(FileReadNode, FILE_READ_NODE)
+
+void opencog_sensory_init(void)
+{
+	// Force shared lib ctors to run
+};

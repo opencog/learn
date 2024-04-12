@@ -10,6 +10,7 @@ ADD_LIBRARY (sensory SHARED
 ADD_DEPENDENCIES(sensory sensory_atom_types)
 
 TARGET_LINK_LIBRARIES(sensory
+	sensory-types
 	${ATOMSPACE_LIBRARIES}
 	${COGUTIL_LIBRARY}
 )
@@ -23,7 +24,7 @@ INSTALL (FILES
 	DESTINATION "include/opencog/atoms/sensory"
 )
 
-add_guile_extension(SCM_CONFIG sensory "opencog-ext-path-sensory-types")
+add_guile_extension(SCM_CONFIG sensory "opencog-ext-path-sensory")
 
 add_guile_module(FILES
    sensory.scm
