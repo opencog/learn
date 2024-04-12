@@ -78,11 +78,25 @@ void PhraseStream::init(const std::string& url)
 
 // ==============================================================
 
-// This will ...
+// This will read one line from the file stream, and return that line.
+// So, a line-oriented, buffered interface. For now.
 void PhraseStream::update() const
 {
-printf("duude dte\n");
-	_value.emplace_back(createNode(CONCEPT_NODE, "foocon"));
+	if (nullptr == _fh) { _value.clear(); return; }
+
+#define BUFSZ 4080
+	char buff[BUFSZ];
+	char* rd = fgets(buff, BUFSZ, _fh);
+	if (nullptr == rd)
+	{
+		// fclose(_fh);
+		// _fh = nullptr;
+		_value.clear();
+		 return;
+	}
+
+	_value.resize(1);
+	_value[0] = createNode(ITEM_NODE, buff);
 }
 
 // ==============================================================

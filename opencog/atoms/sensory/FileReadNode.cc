@@ -32,7 +32,7 @@ using namespace opencog;
 
 void FileReadNode::init(void)
 {
-	printf("yooooooo\n");
+	// TODO: check if the URL type is supported.
 }
 
 FileReadNode::FileReadNode(Type t, const std::string&& s)
