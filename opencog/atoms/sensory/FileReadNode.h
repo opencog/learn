@@ -37,6 +37,7 @@ namespace opencog
 class FileReadNode : public Node
 {
 protected:
+	void init(void);
 
 public:
 	// Please to NOT use this constructor!
