@@ -9373,6 +9373,705 @@ Randy Evanchuk @evanchuk_randy · Jun 18, 2022 Linas.
 \end_layout
 
 \begin_layout Section*
+Return to regular programming
+\end_layout
+
+\begin_layout Standard
+We now return to our regular show.
+\end_layout
+
+\begin_layout Subsection*
+12 April 2024
+\end_layout
+
+\begin_layout Standard
+I spent the day yesterday editing the wikipedia article 
+\begin_inset Quotes eld
+\end_inset
+
+Quantum speed limits
+\begin_inset Quotes erd
+\end_inset
+
+, fixing a merge, clarifying ideas.
+ Then I took several naps.
+ I am now writing here because I'm very excited by an idea, and I have nowhere
+ else to express it.
+ (Social media is inappropriate for stuff like this, and the idea is too
+ fragmentary to become a paper.
+ So dear diary, here's what I got ...) Hang on to your butt, it sounds crazy.
+\end_layout
+
+\begin_layout Standard
+The future does not exist.
+ Oh well, duh.
+ I suppose there are some people that might agree with that statement.
+ But its not what I mean.
+ Time does not exist.
+ Err, well, future time does not exist.
+ What? OK, so hang on.
+ Let me explain.
+ In the simplest example of the quantum speed limit, it is about an inequality
+ to the effect that 
+\begin_inset Formula $\Delta t\ge\pi\hbar/2\Delta E$
+\end_inset
+
+ as the minimum time for a quantum state to evolve to being orthogonal.
+ Not hard to demonstrate.
+ The formula that caught my attention, though, was the one for mixed states,
+ that required the use of a density matrix formulation.
+ In this formula, one has that 
+\begin_inset Formula $\int_{0}^{\tau}\sigma_{t}dt\ge D\left(\rho_{0},\rho_{\tau}\right)$
+\end_inset
+
+ where 
+\begin_inset Formula $\rho_{t}=|\psi_{t}\rangle\langle\psi_{t}|$
+\end_inset
+
+ is the density matrix, and 
+\begin_inset Formula $D$
+\end_inset
+
+ is the Bures distance (the Fubini–Study distance for mixed states) and
+ 
+\begin_inset Formula $\sigma_{t}$
+\end_inset
+
+ is a length, an infinitessimal line element, a tangent vector that is the
+ rms expectation value of the energy.
+ The Hamiltonian, to be more precise: 
+\begin_inset Formula $\sigma_{t}=\sqrt{\left|\mbox{tr}\rho_{t}H^{2}\right|-\left|\mbox{tr}\rho_{t}H\right|^{2}}$
+\end_inset
+
+ which is clearly a 
+\begin_inset Quotes eld
+\end_inset
+
+Euclidean
+\begin_inset Quotes erd
+\end_inset
+
+ length element.
+ This is a very geometix, Riemannian-geometry kind of statement.
+ The Bures distance 
+\begin_inset Formula $D\left(\rho_{0},\rho_{\tau}\right)$
+\end_inset
+
+ is a geodesic length between to 
+\begin_inset Quotes eld
+\end_inset
+
+points
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\rho_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho_{\tau}$
+\end_inset
+
+ on some (infinite-dimensional) manifold: its the minimal length between
+ these two points (its infinite-dimensional even for a cubit, because the
+ mixture forces this: the Bures distance is defined on the sigma-algebra
+ of classical probabilities on the quantum state, and sigma-algebras are
+ generically infinite dimensional, because there are 
+\begin_inset Formula $\Omega=2^{X}$
+\end_inset
+
+ subsets of a space 
+\begin_inset Formula $X$
+\end_inset
+
+.
+ Whatever, you know what I mean.) The Bures distance is a geodesic length,
+ a minimal length that is stationary under variation (Euler–Lagrange, etc.
+ of Riemannian geometry.) Meanwhile, 
+\begin_inset Formula $\sigma_{t}$
+\end_inset
+
+ is just some tangent vector, parameterized by a parameter 
+\begin_inset Formula $t$
+\end_inset
+
+, along some other curve between 
+\begin_inset Formula $\rho_{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\rho_{\tau}$
+\end_inset
+
+, and so of course, the length 
+\begin_inset Formula $\int_{0}^{\tau}\sigma_{t}dt$
+\end_inset
+
+ of any other curve is going to be longer (duh) than the minimal geodesic
+ length.
+ This is just entirely normal Riemannian geometry.
+ 
+\end_layout
+
+\begin_layout Standard
+But what a doozey this is! The 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $t$
+\end_inset
+
+ here is not 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+, its just a unit-speed curve-tangent parameter.
+ Except it is the time, because by convention, that is what it is called,
+ because this is QM after all, and 
+\begin_inset Formula $H$
+\end_inset
+
+ is the Hamiltonian.
+ But what this is really saying is ...
+ well, if you, dear reader, are a sceptic, you could just say 
+\begin_inset Quotes eld
+\end_inset
+
+duhh this is just textbook physics
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But is you are more interpretive, you could say that the future is open,
+ undetermined, there is an evolving dynamical system, tracing out a geometric
+ path along some manifold, with a future undetermined, except by the governing
+ dynamics of 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ In this sense, the 
+\begin_inset Quotes eld
+\end_inset
+
+future doesn't exist
+\begin_inset Quotes erd
+\end_inset
+
+, and even 
+\begin_inset Quotes eld
+\end_inset
+
+time doesn't exist
+\begin_inset Quotes erd
+\end_inset
+
+: rather one has some point 
+\begin_inset Formula $\rho_{\tau}$
+\end_inset
+
+ and it is dynamically, even kinematically moving about.
+ This was the flash of insight.
+ And it feels like an important break-through.
+ Something I've been trying to grasp, struggling for decades, and there
+ it is, finally laid bare: the key, the missing link, thefinal bit of evidence
+ to tie it all together.
+ it's weird, its hard to communicate the insight, because this is, in some
+ sense 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+: something I could have been told in school, and my reaction would have
+ been 
+\begin_inset Quotes eld
+\end_inset
+
+yeah that's true so what
+\begin_inset Quotes erd
+\end_inset
+
+ and even now if I were to blurt this aloud to some rando physicist, they'd
+ also say 
+\begin_inset Quotes eld
+\end_inset
+
+yeah that's true so what and you oversimplified your equations so they're
+ wrong.
+\begin_inset Quotes erd
+\end_inset
+
+ Still, its a break-through.
+\end_layout
+
+\begin_layout Standard
+An earlier model I've had of time/reality as a kind of wave of crystallization/f
+reezing, moving forward, with the frozen stuff in the past, unalterable,
+ the uture liquid, unwritten, and the present this thing of fat, finite
+ thickness, jelling according to reversible eqns and irreversibile ergodic
+ mixing.
+ The new insight suggests the future is no soe much liquid, as it is non-existan
+t.
+\end_layout
+
+\begin_layout Standard
+The things about the quantum speed limit.
+ First (and I don't quite understand this) but in the XY-model of a thermal
+ bath of spins in a magnetic field, there's apparently a phase transition
+ governed by the magnetic field: below the critical value, the quantum speed
+ is as given above (where the speed is 
+\begin_inset Formula $1/\Delta t$
+\end_inset
+
+ of course), while above the critical point, it is at maybe 1.6 of that value,
+ but as it passes through the transition (this is https://arxiv.org/abs/1705.08023
+ 
+\emph on
+Quantum speed limits: from Heisenberg's uncertainty principle to optimal
+ quantum control
+\emph default
+, Sebastian Deffner, Steve Campbell, figure 4 page 31) where the speed becomes
+ infinite at the critical point.
+ What does this mean? I interpret this (and maybe incorretly) that, at this
+ point, the quantum state can change very rapidly from one configuration
+ to another, and that this can serve as a model of quantum wave-function
+ collapse: a selection of one state out of a superposition of many, because
+ that callapse can happen at infinite speed (because it is at the critical
+ point) and it divorces itself from the superposition (because critical
+ points/phase transitions do exactly that, generically.) In a sense, the
+ state of the thermal bath and the influences 
+\begin_inset Quotes eld
+\end_inset
+
+test particle
+\begin_inset Quotes erd
+\end_inset
+
+ avalanches, from a superposition to a collapsed state.
+ This is novel (for me) because it combines conventional QM with many-particle
+ dynamics in a familiar way to solve what is otherwise an aggrevatingly
+ mysterious problem of 
+\begin_inset Quotes eld
+\end_inset
+
+wave-function collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Wow! Huh! So now we've got a plausible model, a mechanical, dynamical,
+ physical model of 
+\begin_inset Quotes eld
+\end_inset
+
+how/why
+\begin_inset Quotes erd
+\end_inset
+
+ wave function collapse happen: as an 
+\begin_inset Quotes eld
+\end_inset
+
+infinite speed
+\begin_inset Quotes erd
+\end_inset
+
+ evolution of a wave function from a superposition to just one possibility,
+ discontinuous, in the standard sense of a discontinuity in a first-order
+ phase transition.
+ That, and bonus round, because in the XY model, its dealing with spins,
+ not bosons, and we want spins (not bosons) because everythig is spins;
+ in the sense that the spin connection on a Riemannian manifold is the 
+\begin_inset Quotes eld
+\end_inset
+
+origin story
+\begin_inset Quotes erd
+\end_inset
+
+ of why we have fermions in the first place.
+ So it all fits togethe, very nicely.
+ Kinda hard to manifest into formulas and a convincing story, which is why
+ this is a diary entry and not a formal paper.
+ Maybe some other day.
+\end_layout
+
+\begin_layout Standard
+The other thing about the quantum speed limit is the Bremermann–Bekenstein
+ limit.
+ The Bekenstein bound is about the minimal surface area of a blob of entropy.
+ The Bremermann limit is this quantum speed limit, of how quickly that informati
+on can be propagated.
+ Putting these two together, one has a limit for how quicky information
+ can be extracted across a boundary of space.
+ The magic is that Hawking radiation exactly saturates that bound: Hawking
+ radiation is emitted at the maximal rate allowed by the quantum speed limit
+ (across the bounding horizon.) Is that cool, or what?
+\end_layout
+
+\begin_layout Standard
+So now on to the speculative parts...
+ if 
+\begin_inset Quotes eld
+\end_inset
+
+time doesn't exist
+\begin_inset Quotes erd
+\end_inset
+
+ (the future doesn't exist) and if the 
+\begin_inset Quotes eld
+\end_inset
+
+river model of spacetime
+\begin_inset Quotes erd
+\end_inset
+
+ (https://arxiv.org/abs/gr-qc/0411060 
+\emph on
+The river model of black holes,
+\emph default
+ 2004 Andrew J.
+ S.
+ Hamilton and Jason P.
+ Lisle) is correct (and I beleive it really is, its just too simple/obvious
+ to be wrong, its just an algebra trick) then we have that spacetime is
+ infalling at the speed of light at the horizon.
+ But as there's 
+\begin_inset Quotes eld
+\end_inset
+
+no time
+\begin_inset Quotes erd
+\end_inset
+
+, we have instead that there's a density matrix sitting in its own private
+ idaho (its own fierbein) evolving at the horizon, at the quantum speed
+ limit, and thanks to entanglement, that evolving system is entangled with
+ the external world, and the speed/rate of that entanglement is given by
+ the Bremermann–Bekenstein limit.
+ But the point is that it is a mixture, a mixed state, a density matrix
+ ...
+ a sigma algebra of possibilities, each evolving as the usual conventional
+ 
+\begin_inset Formula $\dot{\rho}=-i\left[H,\rho\right]$
+\end_inset
+
+ tangent vector.
+ The point is that the dot is a tangent vector, and 
+\emph on
+*not*
+\emph default
+ a time derivative, even though 
+\begin_inset Quotes eld
+\end_inset
+
+it looks like time
+\begin_inset Quotes erd
+\end_inset
+
+ from the conventional standpoint.
+ That is differentials are not the same thing as derivaitves, although confusion
+ between the two is justified.
+ Differentials are geometrical objects, whereas derivatives are about change
+ in time.
+ So where were we ...
+ at the event horizon, we've got this sigma algebra capable of carrying
+ a (trace-class) density matrix.
+ That density matrix is entangled with the 
+\begin_inset Quotes eld
+\end_inset
+
+external
+\begin_inset Quotes erd
+\end_inset
+
+ world; that entanglement rate is precisely the Hawking radiation, and the
+ dynamical system outside the horizon evolves according to the Mandelstam–Tamm
+ limit-speed, with the occasional 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+ thrown in for good measure, as needed.
+ But there is no time (no future).
+ Because, well, hmm.
+ and its all covariant.
+ Hmm.
+ What happens inside a black hole? Well, the density matrix is evolvig ther
+ as well...
+ its just as entangled there, as anywhere else.
+ And for all of this to make sense, to be coherent, it has to be entangled
+ to the external world, as well.
+ Conclude: there is no firewall.
+\end_layout
+
+\begin_layout Standard
+How would this entanglement work? We have Alice and Bob and their Bell experimen
+t measuring devices and we send Bob across the event horizon and he makes
+ a measurement on the other side, and so what, the information of the measuremen
+t falls into the singularity.
+ It's done for, The evaporation argument is that eventually, that information
+ evaporates back out, even though Bob and his instrument have long been
+ crushed at the singularity.
+ (well, OK, if its rotating then ...
+ whatever.) The density matrix, it was ...
+ always, uhh, hmm.
+ The information was never lost, because...
+ Hmm.
+ OK, well, clearly, this part remains opaque.
+ I don't get it.
+ (The rotating black hole is appropriate, if for no other reason than that
+ the river model implies that the interior of the place hole should be thought
+ of as carrying a spin connection, which is everythwere rotating.
+ which is what we want, anyways...)
+\end_layout
+
+\begin_layout Standard
+At any rate, this now provides enough for a research & development program:
+ first, the 
+\begin_inset Quotes eld
+\end_inset
+
+easy part
+\begin_inset Quotes erd
+\end_inset
+
+ of showing that 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+ can be understood as a sudden discontinuous change in a many-body system,
+ analogous to a first order phase transition, but only for that one degree
+ of freedom that is collapsing (the 
+\begin_inset Quotes eld
+\end_inset
+
+test particle
+\begin_inset Quotes erd
+\end_inset
+
+) the rest of the quantum many-body thingy is still in appropriate superposition.
+ Basically, the wave-function collapses happen piece-meal, willy-nilly,
+ like shot noise, throughout the density matrix.
+ That's the 
+\begin_inset Quotes eld
+\end_inset
+
+easy part
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+hard part
+\begin_inset Quotes erd
+\end_inset
+
+ is now the Alice & Bob on opposite sides of the event horizon, forcing
+ this kind of shot-noise wave-function collapse spanning across the even
+ horizon.
+ Because it was shot noise, it really did happen both inside and also outside
+ the event horizon.
+ The one thing we can't do is to prove that its the same, because poor Bob
+ and his instrument got whacked.
+ So really, this is not about black holes per se, but how wave function
+ collapse works when the entangled states are on opposite sides of an event
+ horizon.
+ To answer that question, we do need a mathematical model of the shot-noise-like
+ collapse, the many-body quantum-speed-limit phase transtion thingy.
+ Once we have that, we can then go look at what happens in each distinct
+ fierbein, even as some of these are on oppisite sides of a horizon ...
+ well ..
+ if there's no time, but spacetime is covariant, then we have issues in
+ what it means to have 
+\begin_inset Quotes eld
+\end_inset
+
+an intertial frame
+\begin_inset Quotes erd
+\end_inset
+
+ because no time means that time is emergent from the dynamics of the dynamical
+ system.
+ So we have to deal with that.
+ What a mess.
+ Let me blather on.
+ So Unruh radiation is the entanglement in the dynamical system we are looking
+ form.
+ The Verlinde thing ...
+ errm.
+ OK.
+ Enough.
+ Need to take more naps, do more thinking.
+ I've spilled enough bytes, here.
+\end_layout
+
+\begin_layout Standard
+p.s.
+ remind me later.
+ All this is happening on a bckground of 
+\begin_inset Quotes eld
+\end_inset
+
+is AGI really here or not?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+if superintelligence is right around the corner, then what's the meaning
+ of life, anyway
+\begin_inset Quotes erd
+\end_inset
+
+, and 
+\begin_inset Quotes eld
+\end_inset
+
+I need more more money
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+what if China starts WWIII or what if Iranian mullahs escalate the fight
+ with Isreal or what if Putin gets Serbia to do something stupid and when
+ the hell will Ukraine get the support it needs?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+what about climate change?
+\begin_inset Quotes erd
+\end_inset
+
+ so this is all very chaotic and turbulent, and its not clear how to prioritize
+ day-to-day activity.
+\end_layout
+
+\begin_layout Standard
+Oh, and for the first time in my life, I'm realizing that, well, I don't
+ have ADHD and I'm not on the autism spectrum, never have never will, but
+ gee, when I read about th=ese things, well perhaps I am.
+ Sometimes I have trouble having a conversation because I have so many different
+ things I could say, such a large direction of choices in conversational
+ gambits, that its hard to pick only one.
+ Its not quite overwhelming or debilitating, but it can be eneergy scking,
+ and its easier to sit quietly and say nothing at all, and relaz, rather
+ then spend the energy and contort and work hard to narrow down, to focus,
+ to collapse the possibilities in front of me to only the one or two things
+ that can be purused in a conversation.
+ This is all very metaphorical, is it not? 
+\begin_inset Quotes erd
+\end_inset
+
+Collapse the wave function
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The hitch-hikers guide had a prescient observation: you have no future
+ when you have no choices.
+ Death is when your range of choices narrows to nothing at all, when you
+ can no longer move, can no longer act.
+ Choiceless mode.
+ So i'm not autistic or ADHD, but its ineresting that I can empathize with
+ the symptoms.
+ I guess I'm in denial, is what that would mean.
+ I wonder what taking ritalin would be like.
+ Fuck.
+ Even now, I have so many thoughts, it is hard to figure out which one to
+ write about, there are just so many things I could writ about here.
+ It's overhwelming.
+ I can't type fast enough, and even if I could type fast-enough, the single-stre
+am-of-conscioiusness precludes tackling all at the same time.
+ So instead, my thoughts are like a one-dimensional curve threading densly
+ through a packed space of ideas, trying to hit on all of them.
+ Playing the piano incoherently, trying to make piano chords as fast as
+ possible, hit every note, ergodically, chaotically.
+ All this is relevant to opencog as well, see the last umpteen commits to
+ this git repo.
+ the fuck.
+ I'm doing too much, to little, spending my time stupidly on dead-end projects
+ and unatainable goals, but itts fun cause its got the psychological flow,
+ and I'm fully vested with the irreponsible, impulsive flighty imagination
+ of the ADHD which allows me to be creative and do anything I feel like
+ without focusing.
+ Impulsivity is the word I was looking for.
+ Impulsive writing in the diary.
+ I vowed to do this much more often, but I haven't because ..
+ because waht? Because writing is a chore, writing is alsow draining, even
+ if I'm writing a word salad as fast as I can type.
+ I mean, it helps to write things down, in a way it helps.
+ These are all ideas I would have anyway (or past tense: ideas I have had;
+ I am only documenting them here, not creating them.) And documentation is
+ immortalization, inscription into the fabric of the universe, and well,
+ honestly, most of the crap Ive written over they years, I've completely
+ forgotten.
+ Sometimes, I find old stuff I wrote and I go 
+\begin_inset Quotes eld
+\end_inset
+
+I wrote that?
+\begin_inset Quotes erd
+\end_inset
+
+ wow I forgot, and (for science topics) 
+\begin_inset Quotes eld
+\end_inset
+
+wow its impressive that I once knew that, because I've forgotten it now
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Which is not humble-bragging, becuase I really have forgotten some of it,
+ even though for the most part my memory and abilities remain in fine working
+ order.
+ Although damn, some of the covid effects on memory and brains and aging
+ and long-term health are fucking scary.
+ God-damned covid.
+ Whatever.
+ Done here.
+ I'm going to waste some time now, and then go to sleep.
+ Later, duude.
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
