@@ -7,6 +7,7 @@
 ; 1) Some source of text strings; actually a source of PhraseNode's
 ;    This source blocks if there's nothing to be read; else it
 ;    returns the next PhraseNode. The SRFI's call this a generator.
+;    See sensory.scm
 ; 2) A PromiseLink that wraps (PureExecLink (LgParseBonds ...))
 ;    so that, when its executed, it calls the source and parses.
 ;    Or perhaps just a (Filter (Rule ...)) combo, instead of a
@@ -98,21 +99,20 @@
 ; Parses arrive as LinkValues. We want to apply a function to each.
 ; How? Need:
 ; 4) IncrementLink just like cog-inc-value!
-;    or is it enough to do atomic lock? Make SetValue exec under lock.
+;    or is it enough to do atomic lock?
+;    Make SetValue exec under lock. ... easier said than done.
+;    risks deadlock.
 ;
 ; cog-update-value calls
 ; asp->increment_count(h, key, fvp->value()));
 
-; Works but non-atomic.
-; Also requires RuleLink to work
+; Below works but is a non-atomic increment.
 (define ed (Edge (Bond "ANY") (List (Word "words") (Word "know"))))
 (define (doinc)
 	(cog-execute!
 		(SetValue ed (Predicate "count")
 			(Plus (Number 0 0 1)
-				(Cond (FloatValueOf ed (Predicate "count"))
-					(FloatValueOf ed (Predicate "count"))
-					(FloatValueOf (Number 0 0 0)))))))
+				(FloatValueOf ed (Predicate "count") (Number 0 0 0))))))
 
 
 ; (load "count-agent.scm")
