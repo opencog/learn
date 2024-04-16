@@ -110,14 +110,32 @@
 	(cog-extract-recursive! phrali)
 )
 
+; Parse contents of a file.
 (define (obs-file FILE-NAME)
 	(define txt-stream (ValueOf (Concept "foo") (Predicate "some place")))
 	(define parser (make-parser txt-stream))
 
 	(define phrali (FileRead (string-append "file://" FILE-NAME)))
-	(cog-set-value! (Concept "foo") (Predicate "some place") phrali)
 
-	(cog-execute! parser)
+	; This will do the trick to set the value. Except it creates an Atom
+	; (cog-execute!
+	;    (SetValue (Concept "foo") (Predicate "some place")
+	;       (FileRead "file:///tmp/demo.txt")))
+	; Same as bove, without creating Atom.
+	(cog-set-value! (Concept "foo") (Predicate "some place")
+		(cog-execute! phrali))
+
+	; Parse only first line of file:
+	; (cog-execute! parser)
+
+	; Loop over all lines.
+	(define (looper) (cog-execute! parser) (looper))
+
+	; At end of file, exception will be thrown. Catch it.
+	(catch #t looper
+		(lambda (key . args) (format #t "The end ~A\n" key)))
+
+	(cog-extract-recursive! phrali)
 )
 
 ; --------------------------
@@ -153,5 +171,6 @@
 
 ; (load "count-agent.scm")
 ; (obs-txt text-blob)
+; (obs-file "/tmp/demo.txt")
 ; (cog-report-counts)
 ; (cog-get-atoms 'WordNode)
