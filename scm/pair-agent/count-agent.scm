@@ -1,6 +1,7 @@
 
-(use-modules (opencog) (opencog nlp) (opencog nlp lg-parse))
-(use-modules (opencog exec) (opencog persist))
+(use-modules (opencog) (opencog exec) (opencog persist))
+(use-modules (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog sensory))
 (use-modules (srfi srfi-1))
 
 ; Here's the design we want:
@@ -118,10 +119,11 @@
    (SetValue (Concept "foo") (Predicate "some place")
       (FileRead "file:///tmp/demo.txt")))
 
-(cog-execute!
-	(LgParseBonds
-		(ValueOf (Concept "foo") (Predicate "some place"))
-		DICT NUML))
+; Wait ...
+(define txt-stream-gen
+	(ValueOf (Concept "foo") (Predicate "some place")))
+
+(cog-execute! (LgParseBonds txt-stream-gen DICT NUML))
 
 ; (load "count-agent.scm")
 ; (obs-txt text-blob)
