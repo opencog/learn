@@ -25,26 +25,32 @@
 
 
 (define text-blob "this is just a bunch of words you know")
-(define NUML (Number 4))
-(define DICT (LgDict "any"))
 
 
-; From inside to out:
-; LGParseBonds tokenizes a sentence, and then parses it.
-; The PureExecLink makes sure that the parsing is done in a sub-AtomSpace
-; so that the main AtomSpace is not garbaged up.
-;
-; The result of parsing is a list of pairs. First item in a pair is
-; the list of words in the sentence; the second is a list of the edges.
-; Thus, each pair has the form
-;     (LinkValue
-;         (LinkValue (Word "this") (Word "is") (Word "a") (Word "test"))
-;         (LinkValue (Edge ...) (Edge ...) ...))
-;
-; The Filter matches this, so that (Variable "$x") is equated with the
-; list of Edges.
-;
-(define (obs-txt PLAIN-TEXT)
+; Return a text parser that counts edges on a stream. The
+; `txt-stream` must be an Atom that can serve as a source of text.
+; Typically, `txt-stream` will be
+;    (ValueOf (Concept "some atom") (Predicate "some key"))
+; and the Value there will be a LinkStream from some file or
+; other text source.
+(define (make-parser txt-stream)
+	; From inside to out:
+	; LGParseBonds tokenizes a sentence, and then parses it.
+	; The PureExecLink makes sure that the parsing is done in a sub-AtomSpace
+	; so that the main AtomSpace is not garbaged up.
+	;
+	; The result of parsing is a list of pairs. First item in a pair is
+	; the list of words in the sentence; the second is a list of the edges.
+	; Thus, each pair has the form
+	;     (LinkValue
+	;         (LinkValue (Word "this") (Word "is") (Word "a") (Word "test"))
+	;         (LinkValue (Edge ...) (Edge ...) ...))
+	;
+	; The Filter matches this, so that (Variable "$x") is equated with the
+	; list of Edges.
+	;
+	(define NUML (Number 4))
+	(define DICT (LgDict "any"))
 
 	; Increment the count on one edge.
 	(define (incr-cnt edge)
@@ -86,13 +92,36 @@
 			)
 			(parseli phrali)))
 
+	; Return the parser.
+	(filty txt-stream)
+)
+
+; Parse a string.
+(define (obs-txt PLAIN-TEXT)
+	(define txt-stream (ValueOf (Concept "foo") (Predicate "some place")))
+	(define parser (make-parser txt-stream))
+
 	(define phrali (Phrase PLAIN-TEXT))
-	(cog-execute! (filty phrali))
+	(cog-set-value! (Concept "foo") (Predicate "some place") phrali)
+
+	(cog-execute! parser)
 
 	; Remove the phrase-link, return the list of edges.
 	(cog-extract-recursive! phrali)
 )
 
+(define (obs-file FILE-NAME)
+	(define txt-stream (ValueOf (Concept "foo") (Predicate "some place")))
+	(define parser (make-parser txt-stream))
+
+	(define phrali (FileRead (string-append "file://" FILE-NAME)))
+	(cog-set-value! (Concept "foo") (Predicate "some place") phrali)
+
+	(cog-execute! parser)
+)
+
+; --------------------------
+; Issues.
 ; Parses arrive as LinkValues. We want to apply a function to each.
 ; How? Need:
 ; 4) IncrementLink just like cog-inc-value!
@@ -124,3 +153,5 @@
 
 ; (load "count-agent.scm")
 ; (obs-txt text-blob)
+; (cog-report-counts)
+; (cog-get-atoms 'WordNode)
