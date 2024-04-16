@@ -9,11 +9,14 @@
 ;    This source blocks if there's nothing to be read; else it
 ;    returns the next PhraseNode. The SRFI's call this a generator.
 ;    For now, see `sensory.scm` module and example.
+;    It uses a FileReadNode to loop voer a text file.
 ; 2) (Optional) Some way to split one source into multiple sources.
 ;    Maybe this:
 ;    https://wiki.opencog.org/w/PromiseLink#Multiplex_Example
 ;    but what happens if the readers don't both read ???
 ; 3) A Filter that takes above and increments pair counts.
+;    Done. Its non-atomic, but so what. Perhaps we can live with
+;    that, given that sampliing is statistical, anyway.
 ; 4) Execution control. There are two choices:
 ;    Pull: infinite loop polls on promise. Source blocks if
 ;          no input.
@@ -22,22 +25,32 @@
 ;    Right now, the general infrastructure supports Pull naturally.
 ;    There aren't any push demos.
 ;    Attention control is easier with Pull.
+;
+; The below demos this design.
+;
+; Open issues:
+; *) Need to call cog-execute! in a loop to loop over whole file.
+;    Would be nicer to not have to do this.
+; *) End-of-file results in a throw from parser. This is a side
+;    effect. We need some proper end-of-file handling.
 
-
-(define text-blob "this is just a bunch of words you know")
-
-
+; --------------------------------------------------------------
 ; Return a text parser that counts edges on a stream. The
 ; `txt-stream` must be an Atom that can serve as a source of text.
 ; Typically, `txt-stream` will be
 ;    (ValueOf (Concept "some atom") (Predicate "some key"))
 ; and the Value there will be a LinkStream from some file or
 ; other text source.
+;
+; These sets up a processing pipeline in Atomese, and returns that
+; pipeline. The actual parsing all happens in C++ code, not in scheme
+; code. The scheme here is just to glue the pipeline together.
 (define (make-parser txt-stream)
-	; From inside to out:
-	; LGParseBonds tokenizes a sentence, and then parses it.
-	; The PureExecLink makes sure that the parsing is done in a sub-AtomSpace
-	; so that the main AtomSpace is not garbaged up.
+	;
+	; Pipeline steps, from inside to out:
+	; * LGParseBonds tokenizes a sentence, and then parses it.
+	; * The PureExecLink makes sure that the parsing is done in a
+	;   sub-AtomSpace so that the main AtomSpace is not garbaged up.
 	;
 	; The result of parsing is a list of pairs. First item in a pair is
 	; the list of words in the sentence; the second is a list of the edges.
@@ -46,8 +59,13 @@
 	;         (LinkValue (Word "this") (Word "is") (Word "a") (Word "test"))
 	;         (LinkValue (Edge ...) (Edge ...) ...))
 	;
-	; The Filter matches this, so that (Variable "$x") is equated with the
-	; list of Edges.
+	; The outer Filter matches this, so that (Glob "$edge-list") is
+	; set to the LinkValue of Edges.
+	;
+	; The inner Filter loops over the list of edges, and invokes a small
+	; pipe to increment the count on each edge.
+	;
+	; The counter is a non-atomic pipe of (SetValue (Plus 1 (GetValue)))
 	;
 	(define NUML (Number 4))
 	(define DICT (LgDict "any"))
@@ -86,9 +104,9 @@
 					(Type 'LinkValue) ; the word-list
 					(LinkSignature    ; the edge-list
 						(Type 'LinkValue)  ; edge-list wrapper
-						(Glob "$x")))      ; all of the edges
-				; Rewrite
-				(count-edges (Glob "$x"))
+						(Glob "$edge-list")))      ; all of the edges
+				; Pipeline to apply to the resulting match.
+				(count-edges (Glob "$edge-list"))
 			)
 			(parseli phrali)))
 
@@ -96,8 +114,10 @@
 	(filty txt-stream)
 )
 
-; Parse a string.
+; Demo wrapper: Parse a string.
 (define (obs-txt PLAIN-TEXT)
+
+	; We don't need to create this over and over; once is enough.
 	(define txt-stream (ValueOf (Concept "foo") (Predicate "some place")))
 	(define parser (make-parser txt-stream))
 
@@ -110,8 +130,10 @@
 	(cog-extract-recursive! phrali)
 )
 
-; Parse contents of a file.
+; Demo wrapper: Parse contents of a file.
 (define (obs-file FILE-NAME)
+
+	; We don't need to create this over and over; once is enough.
 	(define txt-stream (ValueOf (Concept "foo") (Predicate "some place")))
 	(define parser (make-parser txt-stream))
 
@@ -148,7 +170,7 @@
 ;    risks deadlock.
 ;
 ; cog-update-value calls
-; asp->increment_count(h, key, fvp->value()));
+; Ideally, call asp->increment_count(h, key, fvp->value()));
 
 ; Below works but is a non-atomic increment.
 (define ed (Edge (Bond "ANY") (List (Word "words") (Word "know"))))
@@ -158,7 +180,7 @@
 			(Plus (Number 0 0 1)
 				(FloatValueOf ed (Predicate "count") (Number 0 0 0))))))
 
-; Lets work on file-access now.
+; Here's a demo of what file-access looks like.
 (cog-execute!
    (SetValue (Concept "foo") (Predicate "some place")
       (FileRead "file:///tmp/demo.txt")))
@@ -170,7 +192,7 @@
 ; (cog-execute! (LgParseBonds txt-stream-gen DICT NUML))
 
 ; (load "count-agent.scm")
-; (obs-txt text-blob)
+; (obs-txt "Some kind of sentence to process, hell yeah!")
 ; (obs-file "/tmp/demo.txt")
 ; (cog-report-counts)
 ; (cog-get-atoms 'WordNode)
