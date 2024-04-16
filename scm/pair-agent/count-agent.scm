@@ -44,35 +44,32 @@
 ; The Filter matches this, so that (Variable "$x") is equated with the
 ; list of Edges.
 ;
-; XXX Major design flaw, still needs work: the PhraseLink is placed in
-; the main AtomSpace. Thus, it accumulates there, plus also all of the
-; other Links that wrap it, including LgParseBinds, Rule, Filter etc.
-; Nuking the PhraseLink also nukes those, so lots of churn. Alternative
-; is to pass PhraseLink as a value, but then have threading issues...
-; ugh. let me think a moment.
-;
 (define (obs-txt PLAIN-TEXT)
 
+	; Increment the count on one edge.
 	(define (incr-cnt edge)
 		(SetValue edge (Predicate "count")
 			(Plus (Number 0 0 1)
 				(FloatValueOf edge (Predicate "count") (FloatValueOf (Number 0 0 0))))))
 
-	(define (extract stuff)
+	; Given a list (an Atomese LinkValue list) of parse results,
+	; extract the edges and increment the count on them.
+	(define (count-edges parsed-stuff)
 		(Filter
 			(Rule
-				(Variable "$edge")
-				; (TypedVariable (Variable "$edge") (Type 'Edge))
+				; (Variable "$edge")
+				(TypedVariable (Variable "$edge") (Type 'Edge))
 				(Variable "$edge")
 				(incr-cnt (Variable "$edge")))
-			stuff))
+			parsed-stuff))
 
+	; Parse text in a private space.
 	(define (parseli phrali)
 		(PureExecLink (LgParseBonds phrali DICT NUML)))
 
-	(define phrali (Phrase PLAIN-TEXT))
-
-	(define filty
+	; Given an Atom `phrali` hold text to be parsed, get that text,
+	; parse it, and increment the counts on the edges.
+	(define (filty phrali)
 		(Filter
 			(Rule
 				; Type decl
@@ -85,15 +82,15 @@
 						(Type 'LinkValue)  ; edge-list wrapper
 						(Glob "$x")))      ; all of the edges
 				; Rewrite
-				(extract (Glob "$x"))
+				(count-edges (Glob "$x"))
 			)
-			(parseli (phrali))))
+			(parseli phrali)))
 
-	(define parses (cog-execute! filty))
+	(define phrali (Phrase PLAIN-TEXT))
+	(cog-execute! (filty phrali))
 
-	; Remove the phrase-link, too.
+	; Remove the phrase-link, return the list of edges.
 	(cog-extract-recursive! phrali)
-	parses
 )
 
 ; Parses arrive as LinkValues. We want to apply a function to each.
@@ -123,7 +120,7 @@
 (define txt-stream-gen
 	(ValueOf (Concept "foo") (Predicate "some place")))
 
-(cog-execute! (LgParseBonds txt-stream-gen DICT NUML))
+; (cog-execute! (LgParseBonds txt-stream-gen DICT NUML))
 
 ; (load "count-agent.scm")
 ; (obs-txt text-blob)
