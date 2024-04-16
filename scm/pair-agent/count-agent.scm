@@ -7,12 +7,11 @@
 ; 1) Some source of text strings; actually a source of PhraseNode's
 ;    This source blocks if there's nothing to be read; else it
 ;    returns the next PhraseNode. The SRFI's call this a generator.
-;    See sensory.scm
-; 2) A PromiseLink that wraps (PureExecLink (LgParseBonds ...))
-;    so that, when its executed, it calls the source and parses.
-;    Or perhaps just a (Filter (Rule ...)) combo, instead of a
-;    promise? The promise can be made later.
+;    For now, see `sensory.scm` module and example.
+; 2) (Optional) Some way to split one source into multiple sources.
+;    Maybe this:
 ;    https://wiki.opencog.org/w/PromiseLink#Multiplex_Example
+;    but what happens if the readers don't both read ???
 ; 3) A Filter that takes above and increments pair counts.
 ; 4) Execution control. There are two choices:
 ;    Pull: infinite loop polls on promise. Source blocks if
@@ -21,7 +20,7 @@
 ;          of effects downstream.
 ;    Right now, the general infrastructure supports Pull naturally.
 ;    There aren't any push demos.
-;    Attention controls is easier with Pull.
+;    Attention control is easier with Pull.
 
 
 (define text-blob "this is just a bunch of words you know")
@@ -114,6 +113,15 @@
 			(Plus (Number 0 0 1)
 				(FloatValueOf ed (Predicate "count") (Number 0 0 0))))))
 
+; Lets work on file-access now.
+(cog-execute!
+   (SetValue (Concept "foo") (Predicate "some place")
+      (FileRead "file:///tmp/demo.txt")))
+
+(cog-execute!
+	(LgParseBonds
+		(ValueOf (Concept "foo") (Predicate "some place"))
+		DICT NUML))
 
 ; (load "count-agent.scm")
 ; (obs-txt text-blob)
