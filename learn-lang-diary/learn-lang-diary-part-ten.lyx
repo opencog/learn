@@ -10511,7 +10511,307 @@ g framewwork sucks.
 \end_layout
 
 \begin_layout Standard
-I need a generation fast-path
+I need a generation fast-path.
+ I need a system with the following properties:
+\end_layout
+
+\begin_layout Itemize
+Hookup to chatbot, for output.
+ The IRC api will do for now; there are also javascript chat i/o api's that
+ look nicer but are more complex, and won't be prusued.
+\end_layout
+
+\begin_layout Itemize
+The most minimal generator, for the most minimal data.
+ This is clearly the word-pair high-MI crawler.
+ This is written as scheme code stapled into that graphical explorer thingy.
+ Attaching scheme code for high-MI word pairs to IRC seems very counter
+ productive, what I really want is to do this in Atomese.
+ Why Atomese? Because Atomese gives me an API that ...
+ that what, exactly?
+\end_layout
+
+\begin_layout Itemize
+Fuck bullet points.
+ Maybe later.
+\end_layout
+
+\begin_layout Standard
+The issue with scheme code is that it is fragile: fragile engineering, hand-craf
+ted human code, of increasing complexity and bugginess.
+ I want to get away from that.
+ Atomese seems like the way to go, but is it? Well, it has major faults:
+ first, I am stil hand-writing and engineering code that is buggy and fragile.
+ Worse, it is a language that no one knows: only me, and that's kind of
+ it.
+ There's this vague feeling in the back of my mind that the Atomese API's
+ are somethow more fluid and more forgiving and can be mashed about more
+ easily than regular programming lgnagues, but is that bunkum, or not?
+\end_layout
+
+\begin_layout Standard
+So lets work through some example cases: Write (hand-write aka engineer)
+ some Atomese to export chains of word-pairs.
+ Just a very short time later, I want to replace those high-MI chain constraints
+ with jigsaw constraints (when I get some jigsaws available throuugh counting.)
+ As explained, I think writing this in scheme, as engineered code, is wrong,
+ but how do I mount a defense that it is acceptable for writing it in Atomese?
+\end_layout
+
+\begin_layout Standard
+The old hand-waving answer was to use MOSES to perform random sampling of
+ assemblages, and to use evolutionary selection of fitter demes, and to
+ evolve under evolutionary pressure.
+ There are two or three problems here.
+ One is that evolutionary selection is effing slow: that is what the LLM's
+ have taught us: the LLM's are much faster, bettter stronger than the random-for
+est models of MOSES.
+ Why? Because the gradient descent algos provide multiple benefits: scalability
+ to large sizes, locality of gradient descent, through the backprop algo,
+ which maps onto GPU's soo nicely.
+ I have no backprop algo for MOSES trees.
+ I need to have one to get performance.
+ So that's one major huge issue.
+\end_layout
+
+\begin_layout Standard
+Another issue is its not clear what the reinforcement scheme is, what the
+ training regimine is.
+ For LLM's its clearly defined: prediction of long-range word correlations
+ in huge training corpora.
+ But a chatbot has not this.
+ A free agent readding books, however, could train in this way.
+ So by this argument, access to training corpora is not a problem.
+\end_layout
+
+\begin_layout Standard
+Lets return to the core issue: I've written some hand-code in Atomese for
+ stringing together word pairs, now I want to replace it by Atomese for
+ assembling jigsaw pieces.
+ Is there any reasonable way in which I could entrust MOSES to generating
+ that code? Perhaps I should hand write the first iteration, and let MOSES
+ somehow tune it? Since I don't know what the underlying structure is, I
+ don't yet know if MOSES can find tunable parameters in there.
+ I also don't know if the tunability can be recast into backprop style algos.
+ The little voice of reason says: 
+\begin_inset Quotes eld
+\end_inset
+
+you'll never know, until you try it.
+ Stop fucking theorizing, and get back to writing code, and find the answer
+ to your questions.
+\begin_inset Quotes erd
+\end_inset
+
+ The other little voice of reason says: 
+\begin_inset Quotes eld
+\end_inset
+
+you are a moron.
+ You spend way too much time experimenting and writing code, and not enough
+ time theorizing.
+\begin_inset Quotes erd
+\end_inset
+
+ Te third voice says: 
+\begin_inset Quotes eld
+\end_inset
+
+stop fucking theorizing and start reading more.
+ There is this vast treasure trove of great ideas out there, and you are
+ not acquainted with most of them.
+ Brilliant insights await, if you just read more.
+\begin_inset Quotes erd
+\end_inset
+
+ And the fourth voice says: 
+\begin_inset Quotes eld
+\end_inset
+
+insights shminsights, why was time exploring the world for treasure, when
+ it lies right here, at your feet, and you only have to pick it up? Get
+ to ffucking work, already.
+\begin_inset Quotes erd
+\end_inset
+
+ Sheesh.
+ That's what I have to put up with, every day, until I'm exhausted and go
+ to sleep and then do it again, until I'm so exhausted I'm now on youtube
+ or twitter wasting time, while my body ages and I don't get physical exercise.
+ its all a fucking balancing act.
+ Where was I?
+\end_layout
+
+\begin_layout Standard
+Well, I need a word-pair generator, and I need it in Atomese, because that
+ is the setting it will ultimately have to be in.
+ Likewise for a disjunct/expression-generator.
+ Because (1) I need it in atomese, (2) the LG generator does not have the
+ right abstraction level.
+ But also three: 
+\begin_inset Quotes eld
+\end_inset
+
+pure
+\begin_inset Quotes erd
+\end_inset
+
+ Atomese is too slow, I can't affort to reinvent all the code that Amir
+ has optimized, so I kind of need an LG-based assembler.
+ However, the current API's are missing and wrong, so assembly will require
+ work.
+\end_layout
+
+\begin_layout Standard
+What's the level above this? There's a fork in the road, and this is where
+ things are murky.
+ The LLM's predict word sequences, and wahtever inner structure they have,
+ it is murky.
+ I beleive much of that inner structure is explainable as weighted LG expression
+ tensors/disjuncts/connectors, but I'm not prepared to engage in a research
+ program to pursue that.
+ It would be a huge research program.
+\end_layout
+
+\begin_layout Standard
+The current LG language/semantics-as syntax program hits a wall at entity
+ recognition.
+ This is BTW, the same wall that LLM's hit: the LLM's seem not to be able
+ to abstract and obtain the concept of an entity.
+ They hallucinate crazy-ass shit cause they don't have a (strong, coherent)
+ model of entities.
+ My AGI 2022 papers talk about how to obtain visual entities through jigsaws,
+ but the development there is shallow.
+ I've had some naive daydreams about tntity recognition, starting with the
+ observation of recurrance ...
+ and then I put those ideas on hold, because my current software framework
+ is too fragile, insufficiently developed to reach up into there.
+ And so here I am back about talking about pairs.
+\end_layout
+
+\begin_layout Standard
+So let me sketch the vauge idea.
+ When one writes a long essay, a long philosphical tract, one is performing
+ an ergodic, space-filling exploration of a region of conceptual noosphere
+ surrounding some collection of topics.
+ One linearizes this path into a string of words.
+ One uses grammar to get words into agreeement, and then one uses anaphora
+ to stitch things together at the multi-sentence scale.
+ The stitiching together at the multi-paragraph scale comes from coneptual
+ entities, where a word used in one paragraph is meant to refer to the same
+ concept/idea in another paragraph: so not anaphora, cuase its the same
+ word.
+ But sometimes synonymous words are used, synonymous phrasing.
+ For the listener, the slistener must detect that synonymy, and they can
+ do that only if they are well-read and familiar with the Western corpus
+ of literature and writing.
+ Even pop culture: there are things I don't recognize becyase they're pop
+ culture that I missed.
+ So pop culture is constatntly creating and attaching meaning with synonymizing
+ expressions.
+ But I keep returing to one idea here: pairs.
+ Edges.
+ Thing A linked to thing B.
+\end_layout
+
+\begin_layout Standard
+So yes, in some sense, I'm always thinking about pairs.
+ Word pairs with high MI is the staring point.
+ The ergodic crawl over pop culture is an edge walk, a walk from concept
+ to concept to concept, along edges.
+ The expression of an edge might actually be a paragraph or two, instead
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+just a pair of words
+\begin_inset Quotes erd
+\end_inset
+
+, but the exporation is still an edge walk, a pair walk.
+ So the underlying foundation of a graph, of jigsaws, of Bayesian-prioer
+ possible worlds of possible jigsaw assemblies, that all still seems valid
+ and correct, and the thing to work on.
+ 
+\end_layout
+
+\begin_layout Standard
+However, I do not yet have the full software stack to reach what I'm saying
+ here.
+ It seems like I'm close, I'm, on the right track, but fucktons of work
+ remain.
+ And life is short and progress is slow and I need money/income.
+\end_layout
+
+\begin_layout Standard
+So what can I conclude? I need the word-pair generator.
+ I need it in Atomese.
+ And maybe later, someday soon, I can find an appropriate LG-codebase API
+ for disjunct/expression assembly.
+ I can defer that until later.
+\end_layout
+
+\begin_layout Standard
+That leaves two fresh and relatively unexplored topics: the agential viewpoint
+ and the i/o subsystem.
+ For i/o, I need to pump those words out to somehwere, and I don't yet have
+ a clear idea of what that API is.
+ It the high level, I want to take a pair of concepts, and articulate them
+ into paragraphs.
+ At the low level, I was to spew words into bytes that will appear on an
+ IRC channel, or perhaps be sent to a javqascript web-page.
+ What's the commen API for these two? What's the Atomese API for these two?
+\end_layout
+
+\begin_layout Standard
+The agential thing is 
+\begin_inset Quotes eld
+\end_inset
+
+what's the gent?
+\begin_inset Quotes erd
+\end_inset
+
+ aka attention allocation, the meta issue of 
+\begin_inset Quotes eld
+\end_inset
+
+what should I do now, as an agent, as opposed to doing something else
+\begin_inset Quotes erd
+\end_inset
+
+? For now, this is hand-coded: do word-pair counting for a while, then do
+ MPG parsing at the same time, then do abstraction into grammatical categories,
+ all at the same time, and then do entity recogniziton (which is the level
+ I'm at the verge of being able to do, but have gotten knocked back because
+ the lower layers are too fragile and immature for that.
+ At least, when using the batch-processing approach: the batches risk geting
+ fucked.
+ The unified stream approach allows the entity recogniztion code to start,
+ even as word-pairs are being perceived.
+ That basically, entity recogniziton is just MPG parsing at the highly abstracte
+d level.
+ That this is the entire pipeline, that its scalably recursive, and that
+ the thing holding me back is that although diea idea is scalably recursive,
+ the actual code base is not.
+ Round and round we go.
+\end_layout
+
+\begin_layout Standard
+So what have we concluded for the short term? I need output to file, and
+ I need a word-pair generator in Atomese.
+ Maybe I need an IRC interface.
+ maybe for demoes to people.
+ Maybe I need a javascript chat interface because people seem to like browser
+ pages, even though this is harder and clunkier and suckier for the task
+ at hand.
+\end_layout
+
+\begin_layout Standard
+Should the word-pair genrator be pure naive Atomese, or should we start
+ using LG for that? I migh be able to decisde that if I go silent, instead
+ of writing a bunch of text.
+ Hmm...
 \end_layout
 
 \begin_layout Section*
