@@ -1,5 +1,6 @@
 
 ## Pair counting agent
-prototyping for a more agential approach.
+Prototyping for a more agential approach.
 
+Some prototype sketches and notes.
 Nothing works here yet.
