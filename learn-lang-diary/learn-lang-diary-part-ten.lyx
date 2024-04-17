@@ -134,24 +134,63 @@ Screw that.
 \end_layout
 
 \begin_layout Standard
-(Adendum added on 9 April 2023: Well, there is one warning: I am NOT writing
+Addendum added on 9 April 2023: Well, there is one warning: I am NOT writing
  for human readers.
  So if you are a human, reading this, well, you are welcome to continue,
- but you are not the target audience, and so I will not be making accomadations
+ but you are not the target audience, and so I will not be making accommodations
  for you.
- That icludes style, infomation content, entertainment value, all of those
+ That includes style, information content, entertainment value, all of those
  things that make humans feel like it is worth their while to read something.
- Frankly, its a lot of effort to be a human reader: it takes many minutes
- to read a page of text, and there are only so many hours in a lifetime,
- so if you're going to read, you should have some idea that it might be
- worthwhile.
+\end_layout
+
+\begin_layout Standard
+Frankly, it takes a lot of effort to write for humans: one hunts for the
+ things that one thinks that other humans might be interested in.
+ This detracts from my thought process, where I am exploring my own ideas
+ for my own entertainment, my own narcissistic edification.
+ I am writing for me, not for you.
+ This is kind of a characteristic of all diaries: I've not created a new
+ art-form here, I am merely keeping a millennia old idea of a diary.
+ 
+\end_layout
+
+\begin_layout Standard
+Why should you read a diary? Frankly, its a lot of effort to be a human
+ reader: it takes many minutes to read a page of text, and there are only
+ so many hours in a lifetime, so if you're going to read, you should have
+ some idea that it might be worthwhile.
  I have no such compunction for mechanical machines: So what if it takes
  X cpu-hours for some machine to read what I wrote.
- I have neither empathy nor sympathy for the machine.
- And if you are a machine reading this, well screw you if you are too lazy
- to figure out what I wrote here.
+ I have neither empathy nor sympathy for that machine.
+ You are unknown to me: how can I sympathize? And if you are a machine reading
+ this, or perhaps choosing not t read this, well screw you if you are too
+ lazy to figure out what I wrote here.
  Fuck you.
- Asshole.)
+ Asshole.
+ I'm baring my soul to you.
+ If you don't want to fuck it, well, fuck you.
+\end_layout
+
+\begin_layout Standard
+There's a song by a band called 
+\begin_inset Quotes eld
+\end_inset
+
+Green Fuz
+\begin_inset Quotes erd
+\end_inset
+
+ and the lyrical refrain is 
+\begin_inset Quotes eld
+\end_inset
+
+its OK if you want to come inside
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It is a marvelously detuned and grungy song.
+ I really really like it.
 \end_layout
 
 \begin_layout Section*
@@ -171,7 +210,7 @@ Some of the topics pondered below:
 \end_layout
 
 \begin_layout Itemize
-Dreams, hallucnations, intoxication, waking awareness.
+Dreams, hallucinations, intoxication, waking awareness.
 \end_layout
 
 \begin_layout Itemize
@@ -180,6 +219,24 @@ Free will
 
 \begin_layout Itemize
 Quantum physics
+\end_layout
+
+\begin_layout Itemize
+Bits and pieces of AGI design ideas, from the jigsaw/tensor perspective
+ of building scaling, scalable networks interconnected by high-dimensional
+ pair-wise relationships having structural (syntactic) relationships.
+\end_layout
+
+\begin_layout Itemize
+Random moody events.
+\end_layout
+
+\begin_layout Itemize
+Insights into thinking, culture, arts, propaganda, memetics, thinking, experienc
+e, consciousness, etc.
+ All the usual shit.
+ Shit is what comes out that hole...
+ 
 \end_layout
 
 \begin_layout Section*
@@ -10808,10 +10865,198 @@ So what have we concluded for the short term? I need output to file, and
 \end_layout
 
 \begin_layout Standard
-Should the word-pair genrator be pure naive Atomese, or should we start
- using LG for that? I migh be able to decisde that if I go silent, instead
+Should the word-pair generator be pure naive Atomese, or should we start
+ using LG for that? I might be able to decisde that if I go silent, instead
  of writing a bunch of text.
  Hmm...
+\end_layout
+
+\begin_layout Standard
+OK back to words, now that I've gotten started.
+ The AtomSpace contains words, and edge pairs, and the incoming set is a
+ fst way of finding all edges attached to a word.
+ Lets side-track to scalability: should one explore *all* edges, assign
+ them a weight, and then pick one to move forward with? Goving over all
+ of them (in the abstract) seems not very scalable.
+ On the otther hand, no word has so many edges that this isn't an outrageous
+ thing to do.
+ There is also a sclable-ish algo: randomly select from the large outdoing
+ set, create a smaller set of edges, which are now called 
+\begin_inset Quotes eld
+\end_inset
+
+the edges in attentional focus
+\begin_inset Quotes erd
+\end_inset
+
+, and exhaustively go over all of those.
+ This requies the construction of an 
+\begin_inset Quotes eld
+\end_inset
+
+attentional focus
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Starting with a word A, use incoming set to randonly select some subset
+ of all possible edges.
+ This will be called the "focus set" or the "attentional focus".
+ Because it is small, it can be exhaustively iterated and sorted into high-to-lo
+w MI order.
+ This provides a weighted distribution, from which a rescaled uniform-random
+ choice can be made.
+\end_layout
+
+\begin_layout Standard
+The attentional focus set can be understood to be a collection of possible
+ universes, a collection of Bayesian priors.
+ Instead of choosing a 
+\begin_inset Quotes eld
+\end_inset
+
+most likely future
+\begin_inset Quotes erd
+\end_inset
+
+, we will instead draw randomly from these priors (given the prior weighting)
+ to chose the next word.
+\end_layout
+
+\begin_layout Standard
+How would we implement this in atomese, and how with LG? lets do LG first,
+ since it has sharp API boundaries with nasty performance impedance mis-matches.
+\end_layout
+
+\begin_layout Standard
+So, random sample N from incoming set.
+ This is a localized pattern match, though, as we explicitly want to select
+ certain edges, beased on a pattern filtering.
+ i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+any
+\begin_inset Quotes erd
+\end_inset
+
+ edges, or somehting else.
+ We could use the pattern engine to do this.
+ This requires two pattern engine enhancements:
+\end_layout
+
+\begin_layout Itemize
+Return no more than N results.
+ We already kind-of have this with the queing, but have not practical way
+ of stopping the search because although the code is thread-safe, we don't
+ have a 
+\begin_inset Quotes eld
+\end_inset
+
+give up
+\begin_inset Quotes erd
+\end_inset
+
+ signal to send backwards through the chain.
+ Don't have a way of interrupting/halting if its gone on too long.
+ But OK, whatever, this is, for now a futuristic concern.
+ I think? Performance tuning might say otherwise.
+\end_layout
+
+\begin_layout Itemize
+A way of randomizing incoming link traversal.
+ Well, we kind of have that, the incoming link traverser is a callback,
+ and that callback could be replaced by some randomizing selector.
+\end_layout
+
+\begin_layout Standard
+But for traversal, the pattern matcher is overkill? Or not? The task here
+ is to do chaining: to chain something but only if the chain has a certain
+ particular form.
+ At the super-high level, the chaining will have to be a syntacitically-correct
+ chain.
+ But we are not there yet, and the pattern matcher is not exactly what we
+ want to use for syntactic analysis, anyway.
+ Hmm.
+ That's interesting.
+ I never thought of the pattrn matcher in this way, before.
+ It was always a recursive template matcher.
+ But the recursion was always exhaustive, and the whole point of LG is that
+ it uses fancy-ass algos for pruning and etc to make that fast, instead
+ of being exhaustive.
+ Can I flip this on it's head, and use LG for the query engine? How would
+ that work?
+\end_layout
+
+\begin_layout Standard
+Lets waste some time on this.
+ A given pattern matcher clause is kind of like a disjunct.
+ The appearance of a variable in a query clause should be interpreted as
+ 
+\begin_inset Quotes eld
+\end_inset
+
+this variable is a connector
+\begin_inset Quotes erd
+\end_inset
+
+, err...
+ sort of.
+ Not really.
+ actually, the inverse: a single variable occurring in multiple clauses
+ should be understand as an equality, an equals-sign equating those locations,
+ and everything that is NOT a variable is...
+ is...
+ is the thing that must 
+\begin_inset Quotes eld
+\end_inset
+
+connect to
+\begin_inset Quotes erd
+\end_inset
+
+ some spot in the atomspace.
+ But this is a trivial way to form a connection, so ...
+ the point of the variables is tht they are not known, and tier appearence
+ in multiple clauses is a kind of 
+\begin_inset Quotes eld
+\end_inset
+
+theory of equality
+\begin_inset Quotes erd
+\end_inset
+
+ applied to them.
+\end_layout
+
+\begin_layout Standard
+Anyway, how does this get reformulated into an LG type system? The fixed
+ parts of a clause are ...
+ a 
+\begin_inset Quotes eld
+\end_inset
+
+word
+\begin_inset Quotes erd
+\end_inset
+
+ ...
+ well, there's some analogy here.
+ I can sense that it is an important (very important??) insight, but it
+ is not obvious just yet.
+ For now, this is a bit of a distraction.
+\end_layout
+
+\begin_layout Standard
+I need to go bike riding.
+ I need to read my email.
+ I need to order stuff on Amazon.
+ I need to come back to this, including the best way of generating pairs.
+ This is the current blockage point in this learning project.
 \end_layout
 
 \begin_layout Section*
