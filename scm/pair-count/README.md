@@ -16,5 +16,5 @@ It seems that uniform sampling over trees should be superior.
     as input, a (fairly short) text string, performs a random planar
     parse on it, and updates the counts on the resulting word-pairs.
 
-* __pair-count-window.scm__ -- Perform naive clique counting. Currently
+* __clique-pair-count.scm__ -- Perform naive clique counting. Currently
     unused (mostly because it's naive.)
