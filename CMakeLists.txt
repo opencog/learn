@@ -53,7 +53,6 @@ INCLUDE(OpenCogGuile)
 INCLUDE(OpenCogCython)
 
 # ----------------------------------------------------------
-ADD_SUBDIRECTORY (opencog)
 ADD_SUBDIRECTORY (fake)
 ADD_SUBDIRECTORY (scm)
 ADD_SUBDIRECTORY (run-common)
