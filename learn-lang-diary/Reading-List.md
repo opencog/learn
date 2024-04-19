@@ -1,4 +1,7 @@
 
+todo:
+dirbtinio intelekto teorinis pagrindas
+
 Things to read:
 * Fundamental Components of Deep Learning: A category-theoretic approach
   Bruno Gavranović
