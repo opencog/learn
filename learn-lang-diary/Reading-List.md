@@ -3,6 +3,27 @@ todo:
 dirbtinio intelekto teorinis pagrindas
 
 Things to read:
+
+* Basal cognition
+  Collective intelligence: A unifying concept for integrating biology
+  across scales and substrates
+  Patrick McMillen & Michael Levin
+  https://www.nature.com/articles/s42003-024-06037-4
+
+* 30 papers on LLM
+  https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
+  this is:
+  -- The Annotated Transformer
+     https://nlp.seas.harvard.edu/annotated-transformer/
+  -- The First Law of Complexodynamics
+     https://scottaaronson.blog/?p=762
+  -- The Unreasonable Effectiveness of Recurrent Neural Networks
+     https://karpathy.github.io/2015/05/21/rnn-effectiveness/
+  -- Understanding LSTM Networks
+     https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+  -- etc.
+
+
 * Fundamental Components of Deep Learning: A category-theoretic approach
   Bruno Gavranović
   https://arxiv.org/abs/2403.13001
