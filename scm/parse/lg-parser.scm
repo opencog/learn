@@ -119,13 +119,14 @@
 			(define parses (cog-value->list
 				(cog-execute! (PureExec (LgParseSections phrali args)))))
 			(count-one-atom mst-sent)
-			(for-each update-parse-counts parses))
+			(for-each update-parse-counts parses)
+			(cog-extract-recursive! phrali)
+		)
 		(catch #t pthunk (lambda (key . args) (set! timeo #t)))
 (count-one-atom mst-start)   ;; XXX tmp hack
 (count-inc-atom mst-elaps (- (current-time) start)) ; XXX temp hack
 (if timeo (count-one-atom mst-timeo)) ; XXX temp hack
 
-		(cog-extract-recursive! phrali)
 		(monitor-parse-rate #f)
 	)
 

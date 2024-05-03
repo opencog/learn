@@ -7,6 +7,7 @@ ADD_GUILE_MODULE (FILES
 	pair-count/clique-pair-count.scm
 	pair-count/pair-api.scm
 	pair-count/word-pair-count.scm
+	pair-count/pipe-count.scm
 
 	parse/lg-parser.scm
 	parse/pseudo-csets.scm
