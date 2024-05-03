@@ -17,7 +17,8 @@
 
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
-; (use-modules (opencog sensory)) Nothing from sensory being used below.
+(use-modules (opencog matrix))
+; (use-modules (opencog sensory)) ; Nothing from sensory being used below.
 (use-modules (srfi srfi-1))
 (use-modules (ice-9 optargs)) ; for define*-public
 
