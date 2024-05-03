@@ -137,6 +137,7 @@
 ; Example usage:
 #|
 (use-modules (opencog learn))
+(use-modules (opencog persist))
 (use-modules (opencog persist-rocks))
 (load "../common.scm")
 (load "pipe-count.scm")
