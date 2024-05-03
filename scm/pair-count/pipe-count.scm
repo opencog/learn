@@ -12,6 +12,7 @@
 ; * Need a StoreAtom and related. Without this, we are not compaible.
 ;   StoreValue, FetchValue, UpdateValue needed.
 ; * Fix FetchValueOf to take default.
+; * Need 'count-key to replace hard-coded count
 ; * Wire this in.
 ; * Run perf test.
 
@@ -98,7 +99,8 @@
 				(FUNKY (Variable "$word-list"))
 				(FUNKY (Variable "$edge-list"))
 				; Increment by one for each parse
-				(incr-cnt any-parse))
+				(incr-cnt any-parse)
+				(store-cnt any-parse))
 			PASRC))
 
 	(define parser (LgParseBonds txt-stream DICT NUML))
@@ -116,7 +118,7 @@
 	; We don't need to create this over and over; once is enough.
 	(define txt-stream
 		(ValueOf (Anchor "parse pipe") (Predicate "text src")))
-	(define parser (make-parser TXT-STRING (cog-storage-node)))
+	(define parser (make-parser txt-stream (cog-storage-node)))
 
 	(define phrali (Item TXT-STRING))
 
@@ -133,8 +135,21 @@
 )
 
 ; Example usage:
-; (cog-open (RocksStorageNode "rocks:///tmp/foo"))
+; (load "../common.scm")
+; (use-modules (opencog learn))
+; (use-modules (opencog persist-rocks))
+; (load "pipe-count.scm")
+; (define rsn (RocksStorageNode "rocks:///tmp/foo"))
+; (cog-open rsn)
 ; (obs-texty "this is a test")
+; (cog-report-counts)
+; (cog-execute! (ValueOf (ParseNode "ANY") (Predicate "count")))
+; (cog-execute! (ValueOf (WordNode "is") (Predicate "count")))
+; (cog-execute! (ValueOf (Edge (Bond "ANY") (List (Word "is") (Word "a"))) (Predicate "count")))
+; (cog-close rsn)
+; ...
+; (load-atomspace)
+
 
 ; --------------------------------------------------------------------
 
