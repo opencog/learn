@@ -135,20 +135,24 @@
 )
 
 ; Example usage:
-; (load "../common.scm")
-; (use-modules (opencog learn))
-; (use-modules (opencog persist-rocks))
-; (load "pipe-count.scm")
-; (define rsn (RocksStorageNode "rocks:///tmp/foo"))
-; (cog-open rsn)
-; (obs-texty "this is a test")
-; (cog-report-counts)
-; (cog-execute! (ValueOf (ParseNode "ANY") (Predicate "count")))
-; (cog-execute! (ValueOf (WordNode "is") (Predicate "count")))
-; (cog-execute! (ValueOf (Edge (Bond "ANY") (List (Word "is") (Word "a"))) (Predicate "count")))
-; (cog-close rsn)
+#|
+(use-modules (opencog learn))
+(use-modules (opencog persist-rocks))
+(load "../common.scm")
+(load "pipe-count.scm")
+(define rsn (RocksStorageNode "rocks:///tmp/foo"))
+(cog-open rsn)
+(obs-texty "this is a test")
+(cog-report-counts)
+(cog-execute! (ValueOf (ParseNode "ANY") (Predicate "count")))
+(cog-execute! (ValueOf (WordNode "is") (Predicate "count")))
+(cog-execute! (ValueOf
+	(Edge (Bond "ANY") (List (Word "is") (Word "a")))
+	(Predicate "count")))
+(cog-close rsn)
 ; ...
-; (load-atomspace)
+(load-atomspace)
+|#
 
 
 ; --------------------------------------------------------------------
