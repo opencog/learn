@@ -7,11 +7,17 @@
 ;    the backwards-compat to what that does.
 ; 2) It is intened as a quick hack to evaluate performance.
 ; 3) Despite #1, I think i'ts compatible. Trying to be.
+;
+; TODO:
+; * Need a StoreAtom and related. Without this, we are not compaible.
+; * Wire this in.
+; * Run perf test.
 
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog sensory))
 (use-modules (srfi srfi-1))
+(use-modules (ice-9 optargs)) ; for define*-public
 
 ; --------------------------------------------------------------
 ; Return a text parser that counts words and word-pairs obtained from
@@ -46,8 +52,9 @@
 	;
 	; The counter is a non-atomic pipe of (SetValue (Plus 1 (GetValue)))
 	;
-	(define NUML (Number 4))
+	(define NUML (Number 6))
 	(define DICT (LgDict "any"))
+	(define any-parse (ParseNode "ANY"))
 
 	; Increment the count on one atom.
 	(define (incr-cnt atom)
@@ -78,15 +85,14 @@
 					(Type 'LinkValue)
 					(Variable "$word-list")
 					(Variable "$edge-list"))
-				; Apply the function FUNKY to the edge-list
+				; Apply the function FUNKY to the word and edge lists.
 				(FUNKY (Variable "$word-list"))
-				(FUNKY (Variable "$edge-list")))
+				(FUNKY (Variable "$edge-list"))
+				; Increment by one for each parse
+				(incr-cnt any-parse))
 			PASRC))
 
 	(define parser (LgParseBonds txt-stream DICT NUML))
-
-	; Is there any benefit to private parsing?
-	; (edge-filter (PureExecLink parser) edge-counter)
 
 	; Return the assembled counting pipeline.
 	; All that the user needs to do is to call `cog-execute!` on it,
@@ -111,20 +117,27 @@
 	; Run parser once.
 	(cog-execute! parser)
 	(cog-extract-recursive! phrali)
+
+	; Not handled in pipeline above.
+	(define any-sent (SentenceNode "ANY"))
+	(count-one-atom any-sent)
 )
 
-; --------------------------
-; Run the above demo:
-; (obs-file "/tmp/demo.txt")
-;
-; Look at results. Poke around, look at counts.
-; (cog-report-counts)
-; (cog-execute! (ValueOf (Word "is") (Predicate "count")))
-; (cog-execute! (ValueOf
-;     (Edge (Bond "ANY") (List (Word "is") (Word "a")))
-;     (Predicate "count")))
-;
-; Erase all words, so we can try again.
-; (extract-type 'WordNode)
+; --------------------------------------------------------------------
 
-; --------------------------
+; Temp hack for temp hacking
+; XXX when done, copy docs from make-block-pair-observer
+(define-public (make-block-pipe-observer)
+"
+   make-block-pipe-observer -- See make-block-pair-observer for
+   documentation. This is a hack for testing the new pipe code.
+"
+	(define ala (make-any-link-api))
+	(define alc (add-count-api ala))
+	(define als (add-storage-count alc))
+
+	(make-observe-block als obs-texty #:WIN-SIZE 9)
+)
+
+; ---------------------------------------------------------------------
+; ---------------------------------------------------------------------
