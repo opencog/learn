@@ -7,7 +7,7 @@ can be split according to white-space (this is mildly configurable).
 The sampling is uniform over parse trees (and NOT uniform over pairs!)
 It seems that uniform sampling over trees should be superior.
 
-###Quick overview.
+### Quick overview.
 
 * __pair-api.scm__ -- Defines the word-pair API matrix object. This
     object defines how word-pairs are stored in the AtomSpace.
