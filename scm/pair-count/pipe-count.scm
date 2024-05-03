@@ -10,12 +10,14 @@
 ;
 ; TODO:
 ; * Need a StoreAtom and related. Without this, we are not compaible.
+;   StoreValue, FetchValue, UpdateValue needed.
+; * Fix FetchValueOf to take default.
 ; * Wire this in.
 ; * Run perf test.
 
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
-(use-modules (opencog sensory))
+; (use-modules (opencog sensory)) Nothing from sensory being used below.
 (use-modules (srfi srfi-1))
 (use-modules (ice-9 optargs)) ; for define*-public
 
@@ -30,7 +32,7 @@
 ; These sets up a processing pipeline in Atomese, and returns that
 ; pipeline. The actual parsing all happens in C++ code, not in scheme
 ; code. The scheme here is just to glue the pipeline together.
-(define (make-parser txt-stream)
+(define (make-parser txt-stream STORAGE)
 	;
 	; Pipeline steps, from inside to out:
 	; * LGParseBonds tokenizes a sentence, and then parses it.
@@ -57,11 +59,15 @@
 	(define any-parse (ParseNode "ANY"))
 
 	; Increment the count on one atom.
+	; XXX FIXME the defualt should be FetchValueOf and only then...
 	(define (incr-cnt atom)
 		(SetValue atom (Predicate "count")
 			(Plus (Number 0 0 1)
 				(FloatValueOf atom (Predicate "count")
 					(FloatValueOf (Number 0 0 0))))))
+
+	(define (store-cnt atom)
+		(StoreValueOf atom (Predicate "count") STORAGE))
 
 	; Given a list (an Atomese LinkValue list) of Atoms,
 	; increment the count on each Atom.
@@ -73,7 +79,9 @@
 				;       (TypeChoice (Type 'Edge) (Type 'Word)))
 				(Variable "$atom") ; vardecl
 				(Variable "$atom") ; body to match
-				(incr-cnt (Variable "$atom")))
+				(incr-cnt (Variable "$atom"))
+				(store-cnt (Variable "$atom"))
+			)
 			ATOM-LIST))
 
 	; Given PASRC holding a stream of parses, split it into a list of
@@ -107,7 +115,7 @@
 	; We don't need to create this over and over; once is enough.
 	(define txt-stream
 		(ValueOf (Anchor "parse pipe") (Predicate "text src")))
-	(define parser (make-parser txt-stream))
+	(define parser (make-parser TXT-STRING (cog-storage-node)))
 
 	(define phrali (Item TXT-STRING))
 
@@ -122,6 +130,10 @@
 	(define any-sent (SentenceNode "ANY"))
 	(count-one-atom any-sent)
 )
+
+; Example usage:
+; (cog-open (RocksStorageNode "rocks:///tmp/foo"))
+; (obs-texty "this is a test")
 
 ; --------------------------------------------------------------------
 
