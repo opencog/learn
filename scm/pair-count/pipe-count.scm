@@ -60,16 +60,23 @@
 	(define DICT (LgDict "any"))
 	(define any-parse (ParseNode "ANY"))
 
+	; Compatible with opencog/matrix/count-api.scm
+	(define COUNT-PRED (PredicateNode "*-TruthValueKey-*"))
+	(define COUNT-ZERO (Number 0 0 0))
+	(define COUNT-ONE (Number 0 0 1))
+
 	; Increment the count on one atom.
-	; XXX FIXME the defualt should be FetchValueOf and only then...
+	; If the count is not available, it is fetched from storage.
+	; If there is no count in storage, it is set to zero.
 	(define (incr-cnt atom)
-		(SetValue atom (Predicate "count")
-			(Plus (Number 0 0 1)
-				(FloatValueOf atom (Predicate "count")
-					(FloatValueOf (Number 0 0 0))))))
+		(SetValue atom COUNT-PRED
+			(Plus COUNT-ONE
+				(FloatValueOf atom COUNT-PRED
+					(FetchValueOf atom COUNT-PRED
+						(FloatValueOf COUNT-ZERO))))))
 
 	(define (store-cnt atom)
-		(StoreValueOf atom (Predicate "count") STORAGE))
+		(StoreValueOf atom COUNT-PRED STORAGE))
 
 	; Given a list (an Atomese LinkValue list) of Atoms,
 	; increment the count on each Atom.
@@ -150,11 +157,10 @@
 (cog-open rsn)
 (obs-texty "this is a test")
 (cog-report-counts)
-(cog-execute! (ValueOf (ParseNode "ANY") (Predicate "count")))
-(cog-execute! (ValueOf (WordNode "is") (Predicate "count")))
-(cog-execute! (ValueOf
-	(Edge (Bond "ANY") (List (Word "is") (Word "a")))
-	(Predicate "count")))
+(define CNT (PredicateNode "*-TruthValueKey-*"))
+(cog-execute! (ValueOf (ParseNode "ANY") CNT))
+(cog-execute! (ValueOf (WordNode "is") CNT)))
+(cog-execute! (ValueOf (Edge (Bond "ANY") (List (Word "is") (Word "a"))) CNT))
 (cog-close rsn)
 ; ...
 (load-atomspace)
