@@ -112,21 +112,26 @@
 )
 
 ; --------------------------------------------------------------
+; Set the global only once. Hopefully storeage-node never changes.
+(define pipe-parser #f)
+(define (make-pipe-parser)
+	(if (not pipe-parser)
+		(begin
+			(set! pipe-parser
+				(make-parser
+					(ValueOf (Anchor "parse pipe") (Predicate "text src"))
+					(cog-storage-node)))))
+	pipe-parser
+)
+
 ; Demo wrapper: Parse one line of text.
 (define (obs-texty TXT-STRING)
 
-	; We don't need to create this over and over; once is enough.
-	(define txt-stream
-		(ValueOf (Anchor "parse pipe") (Predicate "text src")))
-	(define parser (make-parser txt-stream (cog-storage-node)))
-
 	(define phrali (Item TXT-STRING))
-
-	(cog-execute!
-		(SetValue (Anchor "parse pipe") (Predicate "text src") phrali))
+	(cog-set-value!  (Anchor "parse pipe") (Predicate "text src") phrali)
 
 	; Run parser once.
-	(cog-execute! parser)
+	(cog-execute! (make-pipe-parser))
 	(cog-extract-recursive! phrali)
 
 	; Not handled in pipeline above.

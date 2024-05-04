@@ -17004,6 +17004,14 @@ remainder
 FormulaPredicateLink.cc
 ---------------------------------------------------------------------
 
+run-config/2-pair-conf.sh:export OBSERVE="observe-block-pairs"
+run-common/cogserver-pair.scm:(define (observe-block-pairs TXT)
+(define observer (make-block-pair-observer))
+
+replace by make-block-pipe-observer
+
+---------------------------------------------------------------------
+
 TODO:
 * pair-with-any fails if no pairs... fixed.
 * any_disjuncts has no effect if other things are set...
