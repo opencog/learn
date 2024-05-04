@@ -5,16 +5,20 @@
 ; This is a hack because:
 ; 1) It bypasses the matrix API completely, and thus is unreliable in
 ;    the backwards-compat to what that does.
-; 2) It is intened as a quick hack to evaluate performance.
-; 3) Despite #1, I think i'ts compatible. Trying to be.
+; 2) It is intended as a quick hack to evaluate performance.
+; 3) Despite #1, It's de facto compatible with current usage.
+;
+; It seems to actually work, and runs 3x faster than the older code
+; called (make-block-pair-observer) in word-pair-count.scm And so this
+; version will now be the default version for pair-counting.
+;
+; The default is set in:
+;    run-config/2-pair-conf.sh:export OBSERVE="observe-block-pairs"
+; and
+;    run-common/cogserver-pair.scm:(define (observe-block-pairs TXT)
 ;
 ; TODO:
-; * Need a StoreAtom and related. Without this, we are not compaible.
-;   StoreValue, FetchValue, UpdateValue needed.
-; * Fix FetchValueOf to take default.
-; * Need 'count-key to replace hard-coded count
-; * Wire this in.
-; * Run perf test.
+; * Need ((add-count-api LLOBJ) 'count-key) to replace hard-coded count
 
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
