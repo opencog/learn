@@ -2,15 +2,18 @@
 ; pipe-count.scm -- Hack: word-pair counting via Atomese pipe.
 ;
 ; Quick hack, based on the `count-agent.scm` from the `agents` git repo.
-; This is a hack because:
-; 1) It bypasses the matrix API completely, and thus is unreliable in
-;    the backwards-compat to what that does.
-; 2) It is intended as a quick hack to evaluate performance.
-; 3) Despite #1, It's de facto compatible with current usage.
+; See `word-pair-count.scm` for a general overview of the idea.
 ;
-; It seems to actually work, and runs 3x faster than the older code
-; called (make-block-pair-observer) in word-pair-count.scm And so this
-; version will now be the default version for pair-counting.
+; The stuff here is a hack because:
+; 1) It bypasses the matrix API completely, and is not API-compatible
+;    with that general API.
+; 2) Despite #1, it is de facto functionally compatible with current
+;    usage. The only exported routine, `make-block-pipe-observer`
+;    is functionally compatible with `make-block-pair-observer`
+;    (defined in `word-pair-count.scm`)
+;
+; It seems to actually work, and runs 3x faster than the older code.
+; So this version will now be the default version for pair-counting.
 ;
 ; The default is set in:
 ;    run-config/2-pair-conf.sh:export OBSERVE="observe-block-pairs"
@@ -19,6 +22,7 @@
 ;
 ; TODO:
 ; * Need ((add-count-api LLOBJ) 'count-key) to replace hard-coded count
+;   But this is not urgent, because the count-api itself is hard coded.
 
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
@@ -164,9 +168,12 @@
 (cog-open rsn)
 (obs-one-text-string "this is a test")
 (cog-report-counts)
+(cog-get-atoms 'AnyNode)
+(cog-get-atoms 'WordNode)
 (define CNT (PredicateNode "*-TruthValueKey-*"))
+(cog-execute! (ValueOf (SentenceNode "ANY") CNT))
 (cog-execute! (ValueOf (ParseNode "ANY") CNT))
-(cog-execute! (ValueOf (WordNode "is") CNT)))
+(cog-execute! (ValueOf (WordNode "is") CNT))
 (cog-execute! (ValueOf (Edge (Bond "ANY") (List (Word "is") (Word "a"))) CNT))
 (cog-close rsn)
 ; ...
@@ -177,11 +184,19 @@
 ; --------------------------------------------------------------------
 
 ; Temp hack for temp hacking
-; XXX when done, copy docs from make-block-pair-observer
 (define-public (make-block-pipe-observer)
 "
-   make-block-pipe-observer -- See make-block-pair-observer for
-   documentation. This is a hack for testing the new pipe code.
+   make-block-pipe-observer -- Make an observer for counting pairs in
+   text blocks. Returns a function of the following form:
+
+   func TEXT-BLOCK
+      Impose a sliding window on the TEXT-BLOCK, and then submit
+      everything in that window for word-pair counting.
+
+   TEXT-BLOCK is a utf8 string of text. A sliding window, of the default
+   width of 9 words, is created on that block. Everything within the
+   window is sent to the LG 'any' random-planar-tree parser. The word
+   pairs in the random tree are then counted. Counts are stored.
 "
 	(define ala (make-any-link-api))
 	(define alc (add-count-api ala))

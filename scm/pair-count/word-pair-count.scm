@@ -193,7 +193,7 @@
    TEXT-BLOCK is a utf8 string of text. A sliding window, of the default
    width of 9 words, is created on that block. Everything within the
    window is sent to the LG 'any' random-planar-tree parser. The word
-   pairs in the randome tree are then counted. Counts are stored.
+   pairs in the random tree are then counted. Counts are stored.
 "
 	; `ala` is the basic pair API.
 	; `alc` adds a default counting API.

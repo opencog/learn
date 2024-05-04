@@ -16,5 +16,12 @@ It seems that uniform sampling over trees should be superior.
     as input, a (fairly short) text string, performs a random planar
     parse on it, and updates the counts on the resulting word-pairs.
 
+* __pipe-count.scm__ -- Same as above, but uses an Atomese pipe to do
+    the counting. This is over 3x faster, causes less scheme lock
+    thrashing, and less garbage-collection. It does not use the old
+    matrix API. However, the new matrix replacement API has not yet
+    been designed. So this is a function-compatible replacement, but
+    still a bit experimental.
+
 * __clique-pair-count.scm__ -- Perform naive clique counting. Currently
     unused (mostly because it's naive.)
