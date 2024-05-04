@@ -65,11 +65,17 @@
 	(define NUML (Number 6))
 	(define DICT (LgDict "any"))
 	(define any-parse (ParseNode "ANY"))
+	(define any-sent (SentenceNode "ANY"))
 
 	; Compatible with opencog/matrix/count-api.scm
 	(define COUNT-PRED (PredicateNode "*-TruthValueKey-*"))
 	(define COUNT-ZERO (Number 0 0 0))
 	(define COUNT-ONE (Number 0 0 1))
+
+	; XXX Hack to fetch sentence count from storage. XXX we should not
+	; do it this way, and use a cleaner design but I'm in a hurry so....
+	(cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
+		(FloatValueOf COUNT-ZERO)))
 
 	; Increment the count on one atom.
 	; If the count is not available, it is fetched from storage.
