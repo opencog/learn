@@ -23,9 +23,7 @@
 (use-modules (opencog) (opencog exec) (opencog persist))
 (use-modules (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog matrix))
-; (use-modules (opencog sensory)) ; Nothing from sensory being used below.
 (use-modules (srfi srfi-1))
-(use-modules (ice-9 optargs)) ; for define*-public
 
 ; --------------------------------------------------------------
 ; Return a text parser that counts words and word-pairs obtained from
@@ -76,7 +74,7 @@
 		(SetValue atom COUNT-PRED
 			(Plus COUNT-ONE
 				(FloatValueOf atom COUNT-PRED
-					(FetchValueOf atom COUNT-PRED
+					(FetchValueOf atom COUNT-PRED STORAGE
 						(FloatValueOf COUNT-ZERO))))))
 
 	(define (store-cnt atom)
@@ -123,7 +121,12 @@
 )
 
 ; --------------------------------------------------------------
-; Set the global only once. Hopefully storeage-node never changes.
+; If the current cog-storage-node never changes, then the parser only
+; needs to be created only once. In the long term, there is a reasonable
+; expectation that maybe this should work with multiple different storage
+; nodes, maybe even a different one in each thread? This futre remains
+; uncertain, so for now, assume only one global. FIXME someday, if
+; needed.
 (define pipe-parser #f)
 (define (make-pipe-parser)
 	(if (not pipe-parser)
@@ -135,17 +138,17 @@
 	pipe-parser
 )
 
-; Demo wrapper: Parse one line of text.
-(define (obs-texty TXT-STRING)
+; Parse one line of text. The text string is assumed to be a scheme
+; string
+(define (obs-one-text-string TXT-STRING)
 
-	(define phrali (Item TXT-STRING))
-	(cog-set-value!  (Anchor "parse pipe") (Predicate "text src") phrali)
+	(cog-set-value! (Anchor "parse pipe") (Predicate "text src")
+		(StringValue TXT-STRING))
 
 	; Run parser once.
 	(cog-execute! (make-pipe-parser))
-	(cog-extract-recursive! phrali)
 
-	; Not handled in pipeline above.
+	; Increment sentence count. Not handled in pipeline above.
 	(define any-sent (SentenceNode "ANY"))
 	(count-one-atom any-sent)
 )
@@ -159,7 +162,7 @@
 (load "pipe-count.scm")
 (define rsn (RocksStorageNode "rocks:///tmp/foo"))
 (cog-open rsn)
-(obs-texty "this is a test")
+(obs-one-text-string "this is a test")
 (cog-report-counts)
 (define CNT (PredicateNode "*-TruthValueKey-*"))
 (cog-execute! (ValueOf (ParseNode "ANY") CNT))
@@ -184,7 +187,7 @@
 	(define alc (add-count-api ala))
 	(define als (add-storage-count alc))
 
-	(make-observe-block als obs-texty #:WIN-SIZE 9)
+	(make-observe-block als obs-one-text-string #:WIN-SIZE 9)
 )
 
 ; ---------------------------------------------------------------------
