@@ -80,6 +80,9 @@
   make-pair-counter LLOBJ --
      Return a function that will update word-pair counts on LLOBJ.
 
+  DEPRECATED: This works and is the formally correct solution; however,
+  the (still experimental) code `make-block-pipe-observer` is 3x faster.
+
   The LLOBJ should be a matrix object that can hold a pair of words
   on the left and right. The `any-link-api` object will do.
 

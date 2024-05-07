@@ -17013,24 +17013,25 @@ replace by make-block-pipe-observer
 ---------------------------------------------------------------------
 
 TODO:
-* pair-with-any fails if no pairs... fixed.
 * any_disjuncts has no effect if other things are set...
 * any_disjuncts not cached...
-
-
-TODO
- * DynamicDataProxy: do it only for specific types... TODO
- * Benchmark https://github.com/microsoft/mimalloc
-   -- might be faster
-   -- might have a larger working set...
-
-Bugs:
-* bug: store of DefineLink to cogserver hangs the  connection.
+* DynamicDataProxy: do it only for specific types...
+  See https://wiki.opencog.org/w/DynamicDataProxy
+* WriteBufferProxy: https://github.com/opencog/atomspace/issues/3070
 
 ====================================================
 ====================================================
 
 FIXED:
+* GC during pair counting happens too often.
+  (that is, gc takes up too large a fraction of CPU.)
+  FIXED but moving to atomese pipe.
+* Pair counting disappointingly slow.
+  As of Nov 2022 its 10 sent/sec on fanfic at 600% cpu 10 blocked
+  threads ... 2/3rds of this time is in guile gc desperately trying
+  to limit mem to 10MBytes...
+  FIXED but moving to atomese pipe.
+* pair-with-any fails if no pairs... fixed.
 * Change Link-grammar to use the GrantLink... NO
 * Change pair-counter to go direct .. DONE
 * merge into master:
@@ -17183,7 +17184,7 @@ FIXED:
 * Set up direct-sum/shape clustering run scripts. DONE.
 
 TODO/BUGS:
-* LG should ask for costs from dict only after parse!
+* LG should ask for costs from dict only after parse! (Why??)
 * Fix ExecutionOutput to not require List of args. HARD TO DO
 * Repeated sentences because repeated linakges.  LG #1348
 * Apparently, r14 has WordClassNodes that never appear in any Sections.
@@ -17191,9 +17192,9 @@ TODO/BUGS:
 * Log the similarity fractions
 * When WordClassNodes are fully merged, they are not deleted.
 * Setting MRG-CON to #f fails in at least half-a-dozen places.
-* GC during pair counting happens too often.
-  (that is, gc takes up too large a fraction of CPU.)
-* Pair counting disappointingly slow.
-  As of Nov 2022 its 10 sent/sec on fanfic at 600% cpu 10 blocked
-  threads ... 2/3rds of this time is in guile gc desperately trying
-  to limit mem to 10MBytes...
+* Bug: store of DefineLink to cogserver hangs the connection.
+* Benchmark https://github.com/microsoft/mimalloc
+  -- might be faster
+  -- might have a larger working set...
+
+----------------
