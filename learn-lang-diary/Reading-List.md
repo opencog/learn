@@ -10,13 +10,26 @@ Things to read:
   Patrick McMillen & Michael Levin
   https://www.nature.com/articles/s42003-024-06037-4
 
-* 30 papers on LLM from Ilya Sutskever
+* 27 papers on LLM from Ilya Sutskever
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
   this is:
   -- The Annotated Transformer
      https://nlp.seas.harvard.edu/annotated-transformer/
+     This is big blob of python code, implementing an API to a
+     transformer, and includes descriptive text of what each step does.
+     All the actual work is done under the covers. If you do not already
+     understand how transformers work, you'll learn nothing from this.
+     If you want to see what a typical python API might look like,
+     this offers one (meagre) possibility.
+
   -- The First Law of Complexodynamics
      https://scottaaronson.blog/?p=762
+
+     Entropy is high for random things, and low for simple things.
+     The interesting things are in the middle, but we have no formal
+     description for this, beyond got intuition. This log article
+     provides some intuition, and talks about the problem, withou really
+     offering a solution.
 
      Interesting point here is "complexity" might be "sophistication",
      http://people.cs.uchicago.edu/~fortnow/papers/soph.pdf)
