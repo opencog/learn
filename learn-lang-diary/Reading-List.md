@@ -49,8 +49,37 @@ Things to read:
      https://www.cs.toronto.edu/~hinton/absps/colt93.pdf
   -- Pointer Networks
      https://arxiv.org/pdf/1506.03134.pdf
+
   -- ImageNet Classification with Deep CNNs
      https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf
+
+     ImageNet, 15 million images, 22K categories, labelled
+     ILSVRC is a subset of 1.2 M images, 1K categories of 1K images
+     Cropped to 256x256 pixels
+
+     ReLU Rectified Linear Units sigma(x) = max(0,x)
+     8 layers, of which 5 Convolutional Net and 3 fully connected.
+     1st layer: 224x224x3 input image, 96 kernels, 11x11x3 stride 4 pixels
+     So 224x224x3 = 150528 neurons
+     Pooling: avg neighborhood of zxz pixels, spaced `s` apart.
+     Used s=2, z=3 but s=2, z=2 ok also. Also used normalization.
+     2nd layer: 256 kernels of 5x5x48 for 253440 = 256x11x10x9 (?) neurons
+     3rd,4th,5th layers, no pooling or normalization
+     3rd layer: 384 kernels 3x3x256 for 64896 = 384x12x13 neurons
+     4th layer: 384 kernels of 3x3x192 for 64896 = 384x13x13 neurons
+     5th layer: 256 kernels of 3x3x192 for 43264 = 256x13x13 neurons
+     fully connected layers have 4096 neurons each.
+     Total: 60 million parameters
+     Overfits, since "only" 1.2M training images
+
+     Combat overfitting by:
+      * Translating, reflecting images.
+      * By multiplying RGB space with random multiples of
+        PCA components of the images.
+      * By method of dropouts (killing neurons randomly)
+
+     Gradient descent, weight decay.
+
   -- Order Matters: Sequence to sequence for sets
      https://arxiv.org/pdf/1511.06391.pdf
   -- GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism
