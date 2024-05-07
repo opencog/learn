@@ -68,6 +68,7 @@
 	(define any-sent (SentenceNode "ANY"))
 
 	; Compatible with opencog/matrix/count-api.scm
+	; Due to ancient history, we increment the third location.
 	(define COUNT-PRED (PredicateNode "*-TruthValueKey-*"))
 	(define COUNT-ZERO (Number 0 0 0))
 	(define COUNT-ONE (Number 0 0 1))
