@@ -50,7 +50,11 @@
 	(else (throw 'bad-storage-node 'unknown
 		(format #f "Unknown storage node type ~A\n" sns))))
 
-(define storage-node (eval-string sns))
+; Do write buffering by default. We could also make this configurable
+; from the run config scripts. But we don't. So there.
+(define base-storage-node (eval-string sns))
+(define storage-node (WriteBufferProxy "write buffer"))
+(ProxyParameters storage-node base-storage-node)
 (cog-open storage-node)
 
 ; If there are multiple frames, then fetch all of them.
