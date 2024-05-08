@@ -38,7 +38,10 @@ else
 fi
 
 # Copy the database, to provide isolation between stages.
+# Rocks and Mono are the same thing.
 if [[ $STORAGE_NODE = "(RocksStorageNode"* ]]; then
+	cp -pr ${MST_DB} ${GRAM_DB}
+elif [[ $STORAGE_NODE = "(MonoStorageNode"* ]]; then
 	cp -pr ${MST_DB} ${GRAM_DB}
 elif [[ $STORAGE_NODE = "(PostgresStorageNode"* ]]; then
 	createdb -T ${MST_DB} ${GRAM_DB}
