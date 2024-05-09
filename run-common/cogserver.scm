@@ -52,11 +52,13 @@
 
 ; Do write buffering by default. We could also make this configurable
 ; from the run config scripts. But we don't. So there.
-; Use a five-minute (300-second) time decay. This seems OK to me.
-; Indirect evidennce says this allows for a lot of deduplication.
+; Use a ten-minute (600-second) time decay. This allows the pool
+; to get large, more than half of total edges being counted. That
+; should ensure a very high deduplication rate (buffer hit rate).
+; Steady-state seems to run at inflow that is 14x of outflow.
 (define base-storage-node (eval-string sns))
 (define storage-node (WriteBufferProxy "write buffer"))
-(ProxyParameters storage-node base-storage-node (Number 300))
+(ProxyParameters storage-node base-storage-node (Number 600))
 (cog-open storage-node)
 
 ; If there are multiple frames, then fetch all of them.
