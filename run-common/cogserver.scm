@@ -57,8 +57,13 @@
 ; should ensure a very high deduplication rate (buffer hit rate).
 ; Steady-state seems to run at inflow that is 14x of outflow.
 (define base-storage-node (eval-string sns))
-(define storage-node (WriteBufferProxy "write buffer"))
-(ProxyParameters storage-node base-storage-node (Number 600))
+
+(define write-buff (WriteBufferProxy "write buffer"))
+(ProxyParameters write-buff base-storage-node (Number 600))
+
+(define storage-node (ReadWriteProxy "buffered writer"))
+(ProxyParameters storage-node (List base-storage-node write-buff))
+
 (cog-open storage-node)
 
 ; If there are multiple frames, then fetch all of them.
