@@ -52,10 +52,11 @@
 
 ; Do write buffering by default. We could also make this configurable
 ; from the run config scripts. But we don't. So there.
-; Use a 60-second time decay. This seems OK to me.
+; Use a five-minute (300-second) time decay. This seems OK to me.
+; Indirect evidennce says this allows for a lot of deduplication.
 (define base-storage-node (eval-string sns))
 (define storage-node (WriteBufferProxy "write buffer"))
-(ProxyParameters storage-node base-storage-node (Number 60))
+(ProxyParameters storage-node base-storage-node (Number 300))
 (cog-open storage-node)
 
 ; If there are multiple frames, then fetch all of them.
