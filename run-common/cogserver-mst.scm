@@ -18,7 +18,11 @@
 (use-modules (opencog) (opencog learn))
 (define mst-gate (make-gate))
 
-(define observer (make-block-mpg-observer))
+; The `make-block-mpg-pipe-observer` is an Atomese pipe observer
+; that should be compatible with the older make-block-mpg-observer
+; but should be much faster. Make it the default.
+; (define observer (make-block-mpg-observer))
+(define observer (make-block-mpg-pipe-observer))
 
 ; This will be used for counting. Note: it blocks, until the
 ; gate is opened. The gate is not opened, until after pairs are
