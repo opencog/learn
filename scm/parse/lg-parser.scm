@@ -97,7 +97,7 @@
 		; Each section arrives already in the correct format.
 		; Thus, counting is trivial.
 		(for-each
-			(lambda (SECT) (STOBJ 'inc-count SECT 1.0))
+			(lambda (SECT) (STOBJ 'inc-count (cog-new-atom SECT) 1.0))
 			(cog-value->list sects))
 
 		; Each link arrives already in the correct format.
