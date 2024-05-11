@@ -482,6 +482,15 @@ Foundational texts.
   Chap 27: TOC page 981 vs PDF page 1791 - Conclusions
 
 
+Useful for making specific claims
+----------------------------------
+* Claim: there is no such thing as "context" in natural language;
+  instead, it is constructed by listener and speaker, with both
+  having "considerable disgression" in so doing.
+  Graeme Hirst, "Context as a Spurious Concept", (1998)
+  https://www.academia.edu/49955919/Context_as_a_Spurious_Concept
+
+
 Suggestive but Important
 ------------------------
 Don't quite provide what is immediately needed, but is very interesting
