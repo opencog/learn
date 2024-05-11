@@ -196,7 +196,7 @@
 	(define obs-mpg (make-disjunct-counter pcs bls dict #:NUM-LINKAGES 3))
 
 	; Larger window sizes no longer hurt performance.
-	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
+	(make-observe-block obs-mpg #:WIN-SIZE 12)
 )
 
 ; ---------------------------------------------------------------------

@@ -1,12 +1,12 @@
 ;
 ; sliding-block.scm
 ;
-; Create a sliding window inside a block of lerger text. The window
+; Create a sliding window inside a larger block of text. The window
 ; contents are submitted to an observer function for processing.
 ;
 ; Copyright (c) 2022,2023 Linas Vepstas <linasvepstas@gmail.com>
 ;
-; Main entry point: `(make-observe-block LLOBJ OBSERVER)`
+; Main entry point: `(make-observe-block OBSERVER)`
 ;
 (use-modules (opencog))
 (use-modules (srfi srfi-1))
@@ -14,14 +14,14 @@
 
 ; --------------------------------------------------------------------
 
-(define*-public (make-observe-block LLOBJ OBSERVE-TEXT
+(define*-public (make-observe-block OBSERVE-TEXT
 	#:key
 		(WIN-SIZE 8)
 		(SPLIT-PRED char-set:whitespace)
 		(STEP 1)
 	)
 "
-   make-observe-block LLOBJ OBSERVE-TEXT #:WIN-SIZE 8
+   make-observe-block OBSERVE-TEXT #:WIN-SIZE 8
       Return a function that will call OBSERVE-TEXT on a sliding window
       of the given width within a larger block of text.
 

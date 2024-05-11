@@ -215,7 +215,7 @@
 	; The counter for the window itself.
 	(define obs-text (make-pair-counter als #:NUM-LINKAGES 6))
 
-	(make-observe-block als obs-text #:WIN-SIZE 9)
+	(make-observe-block obs-text #:WIN-SIZE 9)
 )
 
 ; ---------------------------------------------------------------------

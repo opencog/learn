@@ -235,11 +235,7 @@
    window is sent to the LG 'any' random-planar-tree parser. The word
    pairs in the random tree are then counted. Counts are stored.
 "
-	(define ala (make-any-link-api))
-	(define alc (add-count-api ala))
-	(define als (add-storage-count alc))
-
-	(make-observe-block als pair-obs-text #:WIN-SIZE 9)
+	(make-observe-block pair-obs-text #:WIN-SIZE 9)
 )
 
 ; ---------------------------------------------------------------------
