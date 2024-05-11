@@ -144,14 +144,13 @@
 	(define NUML (Number 6))
 	(define DICT (LgDict "any"))
 	(define any-parse (ParseNode "ANY"))
-	(define any-sent (SentenceNode "ANY"))
 
 	; XXX Hack to fetch sentence count from storage. XXX we should not
 	; do it this way, and use a cleaner design but I'm in a hurry so....
-	; XXX What? We're not fetching any-parse from storage, so what
-	; gives?
-	(cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
-		(FloatValueOf COUNT-ZERO)))
+	; XXX Need to fetch any-parse, too.
+	; (define any-sent (SentenceNode "ANY"))
+	; (cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
+	;    (FloatValueOf COUNT-ZERO)))
 
 	(define parser (LgParseBonds txt-stream DICT NUML))
 
