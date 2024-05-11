@@ -10,6 +10,7 @@ ADD_GUILE_MODULE (FILES
 	pair-count/pipe-count.scm
 
 	parse/lg-parser.scm
+	parse/lg-pipe-parser.scm
 	parse/pseudo-csets.scm
 	parse/bond-links.scm
 	parse/sliding-block.scm
