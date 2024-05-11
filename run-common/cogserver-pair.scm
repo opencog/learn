@@ -16,11 +16,11 @@
 (use-modules (opencog) (opencog learn))
 (define pair-gate (make-gate))
 
-; The `make-block-pipe-observer` should be compatible with
-; `make-block-pair-observer` aand runs more than 3x faster.
-; So use that by default.
+; The `make-block-pair-pipe-observer` function is (should be)
+; compatible with the `make-block-pair-observer` function and
+; runs more than 3x faster.  So we now use it by default.
 ; (define observer (make-block-pair-observer))
-(define observer (make-block-pipe-observer))
+(define observer (make-block-pair-pipe-observer))
 
 ; This will be used for counting. Note: it blocks, until the
 ; gate is opened. The gate is not opened, until the StorageNode

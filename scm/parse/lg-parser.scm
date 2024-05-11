@@ -1,6 +1,10 @@
 ;
 ; lg-parser.scm -- Unified LG-based parsing framework.
 ;
+; Deprecated. Replaced in favor of the lg-pipe-parser.scm code.
+; The code here illustrates the general idea, but it has performance
+; problems that are avoided with the Atomese pipeline design.
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (ice-9 optargs)) ; for define*-public
@@ -196,7 +200,7 @@
 	(define obs-mpg (make-disjunct-counter pcs bls dict #:NUM-LINKAGES 3))
 
 	; Larger window sizes no longer hurt performance.
-	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
+	(make-observe-block obs-mpg #:WIN-SIZE 12)
 )
 
 ; ---------------------------------------------------------------------
