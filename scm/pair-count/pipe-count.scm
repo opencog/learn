@@ -139,7 +139,7 @@
 ; These sets up a processing pipeline in Atomese, and returns that
 ; pipeline. The actual parsing all happens in C++ code, not in scheme
 ; code. The scheme here is just to glue the pipeline together.
-(define (make-parser txt-stream STORAGE)
+(define (make-pair-parser txt-stream STORAGE)
 
 	(define NUML (Number 6))
 	(define DICT (LgDict "any"))
@@ -148,6 +148,8 @@
 
 	; XXX Hack to fetch sentence count from storage. XXX we should not
 	; do it this way, and use a cleaner design but I'm in a hurry so....
+	; XXX What? We're not fetching any-parse from storage, so what
+	; gives?
 	(cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
 		(FloatValueOf COUNT-ZERO)))
 
@@ -166,26 +168,26 @@
 ; nodes, maybe even a different one in each thread? This futre remains
 ; uncertain, so for now, assume only one global. FIXME someday, if
 ; needed.
-(define pipe-parser #f)
-(define (make-pipe-parser)
-	(if (not pipe-parser)
+(define pair-pipe-parser #f)
+(define (get-pair-pipe-parser)
+	(if (not pair-pipe-parser)
 		(begin
-			(set! pipe-parser
-				(make-parser
+			(set! pair-pipe-parser
+				(make-pair-parser
 					(ValueOf (Anchor "parse pipe") (Predicate "text src"))
 					(cog-storage-node)))))
-	pipe-parser
+	pair-pipe-parser
 )
 
 ; Parse one line of text. The text string is assumed to be a scheme
-; string
-(define (obs-one-text-string TXT-STRING)
+; string.
+(define (pair-obs-text TXT-STRING)
 
 	(cog-set-value! (Anchor "parse pipe") (Predicate "text src")
 		(StringValue TXT-STRING))
 
 	; Run parser once.
-	(cog-execute! (make-pipe-parser))
+	(cog-execute! (get-pair-pipe-parser))
 
 	; Increment sentence count. Not handled in pipeline above.
 	(define any-sent (SentenceNode "ANY"))
@@ -201,7 +203,7 @@
 (load "pipe-count.scm")
 (define rsn (RocksStorageNode "rocks:///tmp/foo"))
 (cog-open rsn)
-(obs-one-text-string "this is a test")
+(pair-obs-text "this is a test")
 (cog-report-counts)
 (cog-get-atoms 'AnyNode)
 (cog-get-atoms 'WordNode)
@@ -237,7 +239,7 @@
 	(define alc (add-count-api ala))
 	(define als (add-storage-count alc))
 
-	(make-observe-block als obs-one-text-string #:WIN-SIZE 9)
+	(make-observe-block als pair-obs-text #:WIN-SIZE 9)
 )
 
 ; ---------------------------------------------------------------------
