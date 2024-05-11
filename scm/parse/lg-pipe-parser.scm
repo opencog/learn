@@ -16,24 +16,12 @@
 
 (define (make-disjunt-parser txt-stream STORAGE)
 
+	; Top-three MST parses are probably the only good ones.
 	(define NUML (Number 3))
 	(define DICT (LgDict "dict-pair"))
-
-	; XXX FIXME Both of these are global and stateful in LG and
-	; should be a property of the dict. They must not change,
-	; once set.
-	(define atml
-		; Where is the dictionary? If #t, use the local AS.
-		(if ATOMSPACE
-			(if (cog-atom? ATOMSPACE) ATOMSPACE (cog-atomspace))
-		'()))
-
-	(define args (list DICT NUML atml))
-
-	(define mst-sent (SentenceNode "MST"))
 	(define mst-parse (ParseNode "MST"))
 
-	(define parser (LgParsexxxx Bonds txt-stream args))
+	(define parser (LgParseSection txt-stream DICT NUML (cog-atomspace)))
 
 	; Return the assembled counting pipeline.
 	; All that the user needs to do is to call `cog-execute!` on it,
@@ -43,6 +31,11 @@
 
 ; --------------------------------------------------------------------
 ; --------------------------------------------------------------------
+; XXX FIXME. The next 30 lines of code are a cut-n-paste of the
+; pair parsing pipeline code. It is needed because the batch processor
+; force-feeds use text, instead of allowing us to read on our own.
+; It just wires up a pipeline to feed text.
+
 ; If the current cog-storage-node never changes, then the parser only
 ; needs to be created only once. In the long term, there is a reasonable
 ; expectation that maybe this should work with multiple different storage
@@ -71,35 +64,11 @@
 	(cog-execute! (get-disjunct-pipe-parser))
 
 	; Increment sentence count. Not handled in pipeline above.
-	(define any-sent (SentenceNode "ANY"))
-	(count-one-atom any-sent)
+	(define mst-sent (SentenceNode "MST"))
+	(count-one-atom mst-sent)
 )
 
-; Example usage:
-#|
-(use-modules (opencog learn))
-(use-modules (opencog persist))
-(use-modules (opencog persist-rocks))
-(load "../common.scm")
-(load "lg-pipe-parser.scm")
-(define rsn (RocksStorageNode "rocks:///tmp/foo"))
-(cog-open rsn)
-(disjunct-obs-text "this is a test")
-(cog-report-counts)
-(cog-get-atoms 'WordNode)
-(cog-get-atoms 'EdgeLink)
-(cog-get-atoms 'Section)
-(define CNT (PredicateNode "*-TruthValueKey-*"))
-(cog-execute! (ValueOf (SentenceNode "MST") CNT))
-(cog-execute! (ValueOf (ParseNode "MST") CNT))
-(cog-execute! (ValueOf (WordNode "is") CNT))
-(cog-execute! (ValueOf (Edge (Bond "xxxwhatever") (List (Word "is") (Word "a"))) CNT))
-(cog-close rsn)
-; ...
-(load-atomspace)
-|#
-
-
+; ---------------------------------------------------------------------
 ; Backwards-compatible counting API, used for counting disjuncts.
 (define-public (make-block-mpg-pipe-observer)
 "
@@ -126,43 +95,10 @@
    where the sentence boundaries might be, and so a sliding window is
    used to examine everything in the general vicinity.
 "
-	; `pca` is the basic disjunct API.
-	; `pcc` adds a default counting API.
-	; `pcs` adds an API that stores the updated counts to storage.
-	; `pcm` adds an API that maintains marginal counts dynamically.
-	(define pca (make-pseudo-cset-api))
-	(define pcc (add-count-api pca))
-	(define pcs (add-storage-count pcc))
-
 	; Larger window sizes no longer hurt performance.
-	(make-observe-block pcs obs-mpg #:WIN-SIZE 12)
+	(make-observe-block disjunct-obs-text #:WIN-SIZE 12)
 )
 
 ; ---------------------------------------------------------------------
-; ---------------------------------------------------------------------
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx
-
-; --------------------------------------------------------------------
-
-; Backwards-compatible counting API, used for counting pairs.
-(define-public (make-block-pair-pipe-observer)
-"
-   make-block-pair-pipe-observer -- Make an observer for counting pairs in
-   text blocks. Returns a function of the following form:
-
-   func TEXT-BLOCK
-      Impose a sliding window on the TEXT-BLOCK, and then submit
-      everything in that window for word-pair counting.
-
-   TEXT-BLOCK is a utf8 string of text. A sliding window, of the default
-   width of 9 words, is created on that block. Everything within the
-   window is sent to the LG 'any' random-planar-tree parser. The word
-   pairs in the random tree are then counted. Counts are stored.
-"
-	(make-observe-block pair-obs-text #:WIN-SIZE 9)
-)
-
 ; ---------------------------------------------------------------------
 ; ---------------------------------------------------------------------

@@ -1,6 +1,10 @@
 ;
 ; lg-parser.scm -- Unified LG-based parsing framework.
 ;
+; Deprecated. Replaced in favor of the lg-pipe-parser.scm code.
+; The code here illustrates the general idea, but it has performance
+; problems that are avoided with the Atomese pipeline design.
+;
 ; ---------------------------------------------------------------------
 
 (use-modules (ice-9 optargs)) ; for define*-public

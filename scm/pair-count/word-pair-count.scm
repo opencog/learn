@@ -1,6 +1,12 @@
 ;
 ; word-pair-count.scm
 ;
+; Deprecated! The code below has performance issues, and is being
+; replaced with an Atomese pipeline based counting method. The new
+; code is in `pipe-count.scm`. Howwever, the general descriptions and
+; comments immediately below are still 100% correct, and have not yet
+; been copied over to the new code.
+;
 ; Word-pair counting via random planar trees. This takes a uniformly
 ; distributed random sampling out of all possible planar parse trees.
 ; The uniform sampling of parse trees produces mildly different
