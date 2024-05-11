@@ -220,10 +220,10 @@
 
 ; --------------------------------------------------------------------
 
-; Temp hack for temp hacking
-(define-public (make-block-pipe-observer)
+; Backwards-compatible counting API, used for counting pairs.
+(define-public (make-block-pair-pipe-observer)
 "
-   make-block-pipe-observer -- Make an observer for counting pairs in
+   make-block-pair-pipe-observer -- Make an observer for counting pairs in
    text blocks. Returns a function of the following form:
 
    func TEXT-BLOCK
