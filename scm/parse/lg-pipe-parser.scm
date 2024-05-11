@@ -14,14 +14,14 @@
 (use-modules (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog matrix))
 
-(define (make-disjunt-parser txt-stream STORAGE)
+(define (make-disjunct-parser txt-stream STORAGE)
 
 	; Top-three MST parses are probably the only good ones.
 	(define NUML (Number 3))
 	(define DICT (LgDict "dict-pair"))
 	(define mst-parse (ParseNode "MST"))
 
-	(define parser (LgParseSection txt-stream DICT NUML (cog-atomspace)))
+	(define parser (LgParseSections txt-stream DICT NUML (cog-atomspace)))
 
 	; Return the assembled counting pipeline.
 	; All that the user needs to do is to call `cog-execute!` on it,
