@@ -29,29 +29,35 @@
 (use-modules (opencog matrix))
 (use-modules (srfi srfi-1))
 
+; ---------------------------------------------------------------------
 ; --------------------------------------------------------------
-; Return a text parser that counts words and word-pairs obtained from
-; parsing text on a stream. The `txt-stream` must be an Atom that can
-; serve as a source of text. Typically, `txt-stream` will be
-;    (ValueOf (Concept "some atom") (Predicate "some key"))
-; and the Value there will be a LinkStream from some file or
-; other text source.
+; Create and return a parsing pipeline counter. This counter takes
+; the results of parsing, and increments the observation count by
+; one for each observed word, section, edge. The counting is done
+; entirely in Atomese, not scheme. Requires the following arguments:
+;   PARSER should be either (LgParseBonds ...) or (LgParseSections ...)
+;   STORAGE a StorageNode
+;   PARSE-CNT an Atom which is incremented for each parse.
 ;
-; These sets up a processing pipeline in Atomese, and returns that
-; pipeline. The actual parsing all happens in C++ code, not in scheme
-; code. The scheme here is just to glue the pipeline together.
-(define (make-parser txt-stream STORAGE)
+(define (make-parse-pipe PARSER STORAGE PARSE-CNT)
 	;
 	; Pipeline steps, from inside to out:
-	; * LGParseBonds tokenizes a sentence, and then parses it.
+	; * PARSER tokenizes a sentence, and then parses it.
 	; * The PureExecLink makes sure that the parsing is done in a
 	;   sub-AtomSpace so that the main AtomSpace is not garbaged up.
 	;
-	; The result of parsing is a list of pairs. First item in a pair is
-	; the list of words in the sentence; the second is a list of the edges.
-	; Thus, each pair has the form
+	; The result of parsing is a list of pairs. The type of the pairs
+	; depends on the PARSER. For PARSER == LgParseBonds, the first
+	; item in a pair is the list of words in the sentence; the second
+	; is a list of the edges. Thus, each pair has the form
 	;     (LinkValue
 	;         (LinkValue (Word "this") (Word "is") (Word "a") (Word "test"))
+	;         (LinkValue (Edge ...) (Edge ...) ...))
+	; For PARSER == LgParseSections, the first item in a pair is a
+	; list of Sections, the section is a list of Edges. Much as above,
+	; each pair has the form
+	;     (LinkValue
+	;         (LinkValue (Section ...) (Section ...) ...)
 	;         (LinkValue (Edge ...) (Edge ...) ...))
 	;
 	; The outer Filter matches this, so that (Glob "$edge-list") is
@@ -61,22 +67,14 @@
 	; pipe to increment the count on each edge.
 	;
 	; The counter is a non-atomic pipe of (SetValue (Plus 1 (GetValue)))
-	;
-	(define NUML (Number 6))
-	(define DICT (LgDict "any"))
-	(define any-parse (ParseNode "ANY"))
-	(define any-sent (SentenceNode "ANY"))
+	; For now, non-atomic counting seems acceptable. It appears to
+	; reduce hardwre cache-line lock contention!
 
 	; Compatible with opencog/matrix/count-api.scm
 	; Due to ancient history, we increment the third location.
 	(define COUNT-PRED (PredicateNode "*-TruthValueKey-*"))
 	(define COUNT-ZERO (Number 0 0 0))
 	(define COUNT-ONE (Number 0 0 1))
-
-	; XXX Hack to fetch sentence count from storage. XXX we should not
-	; do it this way, and use a cleaner design but I'm in a hurry so....
-	(cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
-		(FloatValueOf COUNT-ZERO)))
 
 	; Increment the count on one atom.
 	; If the count is not available, it is fetched from storage.
@@ -115,20 +113,50 @@
 					(Type 'LinkValue)
 					(Variable "$word-list")
 					(Variable "$edge-list"))
-				; Apply the function FUNKY to the word and edge lists.
+				; Apply the function FUNKY to the word/section and edge lists.
 				(FUNKY (Variable "$word-list"))
 				(FUNKY (Variable "$edge-list"))
 				; Increment by one for each parse
-				(incr-cnt any-parse)
-				(store-cnt any-parse))
+				(incr-cnt PARSE-CNT)
+				(store-cnt PARSE-CNT))
 			PASRC))
+
+	; Return the assembled counting pipeline.
+	; All that the user needs to do is to call `cog-execute!` on it,
+	; until end of file is reached.
+	(stream-splitter PARSER atom-counter)
+)
+
+; ---------------------------------------------------------------------
+; --------------------------------------------------------------
+; Return a text parser that counts words and word-pairs obtained from
+; parsing text on a stream. The `txt-stream` must be an Atom that can
+; serve as a source of text. Typically, `txt-stream` will be
+;    (ValueOf (Concept "some atom") (Predicate "some key"))
+; and the Value there will be a LinkStream from some file or
+; other text source.
+;
+; These sets up a processing pipeline in Atomese, and returns that
+; pipeline. The actual parsing all happens in C++ code, not in scheme
+; code. The scheme here is just to glue the pipeline together.
+(define (make-parser txt-stream STORAGE)
+
+	(define NUML (Number 6))
+	(define DICT (LgDict "any"))
+	(define any-parse (ParseNode "ANY"))
+	(define any-sent (SentenceNode "ANY"))
+
+	; XXX Hack to fetch sentence count from storage. XXX we should not
+	; do it this way, and use a cleaner design but I'm in a hurry so....
+	(cog-execute! (FetchValueOf any-sent COUNT-PRED STORAGE
+		(FloatValueOf COUNT-ZERO)))
 
 	(define parser (LgParseBonds txt-stream DICT NUML))
 
 	; Return the assembled counting pipeline.
 	; All that the user needs to do is to call `cog-execute!` on it,
 	; until end of file is reached.
-	(stream-splitter parser atom-counter)
+	(make-parse-pipe parser STORAGE any-parse)
 )
 
 ; --------------------------------------------------------------
