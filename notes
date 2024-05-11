@@ -17012,6 +17012,18 @@ replace by make-block-pipe-observer
 
 ---------------------------------------------------------------------
 
+(use-modules (system foreign-library))
+(use-modules (system foreign))
+(load-foreign-library)
+; (define glibc (dynamic-link "libc.so.6"))
+(define this (dynamic-link))
+
+(define malostat (pointer->procedure
+	void (dynamic-func "malloc_stats" this) (list 1)))
+(malostat 0)
+
+---------------------------------------------------------------------
+
 TODO:
 * any_disjuncts has no effect if other things are set...
 * any_disjuncts not cached...
