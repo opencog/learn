@@ -174,7 +174,7 @@
 		(begin
 			(set! pair-pipe-parser
 				(make-pair-parser
-					(ValueOf (Anchor "parse pipe") (Predicate "text src"))
+					(ValueOf (Anchor "pair pipe") (Predicate "text src"))
 					(cog-storage-node)))))
 	pair-pipe-parser
 )
@@ -183,7 +183,7 @@
 ; string.
 (define (pair-obs-text TXT-STRING)
 
-	(cog-set-value! (Anchor "parse pipe") (Predicate "text src")
+	(cog-set-value! (Anchor "pair pipe") (Predicate "text src")
 		(StringValue TXT-STRING))
 
 	; Run parser once.
