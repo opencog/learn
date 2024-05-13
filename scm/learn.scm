@@ -16,9 +16,7 @@
 
 ; Pair stuff.
 (include-from-path "opencog/learn/pair-api.scm")
-(include-from-path "opencog/learn/clique-pair-count.scm")
-(include-from-path "opencog/learn/word-pair-count.scm") ; Deprecated
-(include-from-path "opencog/learn/word-pair-pipe.scm") ; Replacement for above.
+(include-from-path "opencog/learn/word-pair-pipe.scm")
 
 ; Setion parsing stuff
 (include-from-path "opencog/learn/sliding-block.scm")

@@ -7,7 +7,6 @@ ADD_GUILE_MODULE (FILES
 	pipe-parse/pipe-count.scm
 
 	pair-count/pair-api.scm
-	pair-count/word-pair-count.scm
 	pair-count/word-pair-pipe.scm
 
 	parse/lg-parser.scm

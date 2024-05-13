@@ -15,3 +15,7 @@ being retired.
 
 * __clique-pair-count.scm__ -- Perform naive clique counting. Currently
     unused (mostly because it's naive.)
+
+* __word-pair-count.scm__ -- Create and return a function that takes,
+    as input, a (fairly short) text string, performs a random planar
+    parse on it, and updates the counts on the resulting word-pairs.
