@@ -140,18 +140,32 @@
 )
 
 ; ---------------------------------------------------------------------
-; Return a text parser that counts words and word-pairs obtained from
-; parsing text on a stream. The `txt-stream` must be an Atom that can
-; serve as a source of text. Typically, `txt-stream` will be
-;    (ValueOf (Concept "some atom") (Predicate "some key"))
-; and the Value there will be a LinkStream from some file or
-; other text source.
 ;
 ; These sets up a processing pipeline in Atomese, and returns that
 ; pipeline. The actual parsing all happens in C++ code, not in scheme
 ; code. The scheme here is just to glue the pipeline together.
-(define (make-pair-parser txt-stream STORAGE)
+;
+; See `attic/pair-count-new/word-pair-count.scm` for a detailed
+; description of the how-and-why of all this.
+(define-public (make-random-pair-parser txt-stream STORAGE)
+"
+  make-random-pair-parser TXT-STREAM STORAGE - Count random word pairs.
 
+  Return a text parser that counts words and random word-pairs obtained
+  from parsing text on TXT-STREAM. The TXT-STREAM must be an Atom that,
+  when executed, delivers a stream of text. In the typical case, the
+  TXT-STREAM atom will be
+     (ValueOf (Concept "some atom") (Predicate "some key"))
+  and the Value there will provide a LinkStream of text to be parssed
+  and counted.
+
+  Counts in the parse stream are incremented, and then written out to
+  STORAGE, which must be a StorageNode.
+
+  The Link Grammar (LgDict "any") is used for parsing. This dict creates
+  random planar graphs. The graph edges are the random word-pairs that
+  get counted.
+"
 	(define NUML (Number 6))
 	(define DICT (LgDict "any"))
 	(define any-parse (ParseNode "ANY"))

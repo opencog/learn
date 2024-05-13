@@ -42,7 +42,7 @@
 	(if (not pair-pipe-parser)
 		(begin
 			(set! pair-pipe-parser
-				(make-pair-parser
+				(make-random-pair-parser
 					(ValueOf (Anchor "pair pipe") (Predicate "text src"))
 					(cog-storage-node)))))
 	pair-pipe-parser
@@ -89,10 +89,11 @@
 ; ---------------------------------------------------------------------
 
 ; Backwards-compatible counting API, used for counting pairs.
-(define-public (make-block-pair-pipe-observer)
+(define-public (make-block-random-pair-observer)
 "
-   make-block-pair-pipe-observer -- Make an observer for counting pairs in
-   text blocks. Returns a function of the following form:
+   make-block-random-pair-observer -- Make an observer for counting
+   random pairs in text blocks. Returns a function of the following
+   form:
 
    func TEXT-BLOCK
       Impose a sliding window on the TEXT-BLOCK, and then submit
