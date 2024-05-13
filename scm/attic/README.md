@@ -21,6 +21,10 @@ stuff.
     pair-counting: simply and directly. The older proof-of-concept
     code used this.
 
+* __pair-count-new__: newer pair-counting code, that replaced the above.
+    Implements `matrix`-API for batch processing. But batch processing
+    turns out to be unwieldy and is being phased out as a compute approach.
+
 * __fibers-sim.scm__: Attempt to use scheme/guile fibers to obtain
     parallelism in the similarity calculations. Fails to improve
     performance. Plus fibers are buggy, somehow.
