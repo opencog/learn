@@ -4,6 +4,9 @@ Dead, unused code that might still be interesting.
     sliding window of some given size. This code used to work, but
     it is not currently interesting. Not used anywhere.
 
+* __clique-pair-count-new.scm__: Some subset of above, worked as a
+    stand-in for a while. Unused.
+
 * __batch-clique-pair.scm__: Matrix object API's for "clique pairs" and
     "distance pairs". "Clique pairs" are just counts of pairs in a
     sliding window; we don't do that, we've never seriously done that.

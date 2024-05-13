@@ -1,19 +1,20 @@
 ;
-; word-pair-pipe.scm -- Hack: word-pair counting via Atomese pipe.
+; word-pair-pipe.scm -- Hack: random word-pair counting via Atomese pipe.
 ;
-; Quick hack, based on the `count-agent.scm` from the `agents` git repo.
-; See `word-pair-count.scm` for a general overview of the idea.
+; Hacked backwards-compat replacement for `word-pair-count.scm` for
+; counting of random word-pairs.
 ;
-; The stuff here is a hack because:
-; 1) It bypasses the matrix API completely, and is not API-compatible
-;    with that general API.
-; 2) Despite #1, it is de facto functionally compatible with current
-;    usage. The only exported routine, `make-block-pipe-observer`
-;    is functionally compatible with `make-block-pair-observer`
-;    (defined in `word-pair-count.scm`)
+; This is a "hack" because it provides a backwards-compat shim between
+; the new way of doing things (with pipes) and the old way (with the
+; matrix API). It's not fully API-compatible, but is good enough to work
+; great with the existing batch processing code.
 ;
-; It seems to actually work, and runs 3x faster than the older code.
-; So this version will now be the default version for pair-counting.
+; The only exported routine is `make-block-pipe-observer`, which is
+; functionally compatible with `make-block-pair-observer` (defined in
+; `word-pair-count.scm`)
+;
+; It works, and it runs 3x faster than the old code. This is now used
+; as the default for pair-counting.
 ;
 ; The default is set in:
 ;    run-config/2-pair-conf.sh:export OBSERVE="observe-block-pairs"

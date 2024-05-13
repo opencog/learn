@@ -1,6 +1,7 @@
 ;
 ; clique-pair-count.scm
 ;
+; Deprecated! Unused in current code!
 ; Implement simple "windowed" pair counting for a single data stream.
 ; This assumes a single data stream of items, and counts the number
 ; of observations of all possible pairs of items within a sliding window
