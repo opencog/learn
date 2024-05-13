@@ -1,7 +1,7 @@
 ;
 ; pair-api.scm
 ;
-; Define an API object for accessing word pairs.
+; Define a matrix-API object for accessing word pairs.
 ;
 ; Copyright (c) 2013, 2014, 2017 Linas Vepstas
 ;

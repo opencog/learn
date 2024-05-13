@@ -15,7 +15,6 @@
 (include-from-path "opencog/learn/pipe-count.scm") ; XXX experimental
 
 ; Pair stuff.
-(include-from-path "opencog/learn/pair-api.scm")
 (include-from-path "opencog/learn/word-pair-pipe.scm")
 
 ; Setion parsing stuff

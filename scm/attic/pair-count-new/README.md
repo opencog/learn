@@ -13,6 +13,9 @@ being retired.
 
 ### Quick overview.
 
+* __pair-api.scm__ -- Defines the word-pair API matrix object. This
+    object defines how word-pairs are stored in the AtomSpace.
+
 * __clique-pair-count.scm__ -- Perform naive clique counting. Currently
     unused (mostly because it's naive.)
 

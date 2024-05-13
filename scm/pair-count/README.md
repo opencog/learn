@@ -9,9 +9,6 @@ It seems that uniform sampling over trees should be superior.
 
 ### Quick overview.
 
-* __pair-api.scm__ -- Defines the word-pair API matrix object. This
-    object defines how word-pairs are stored in the AtomSpace.
-
 * __word-pair-pipe.scm__ -- Create and return a function that takes,
     as input, a (fairly short) text string, performs a random planar
     parse on it, and updates the counts on the resulting word-pairs.
