@@ -157,6 +157,7 @@
 )
 
 ; ---------------------------------------------------------------------
+; ---------------------------------------------------------------------
 ;
 ; These sets up a processing pipeline in Atomese, and returns that
 ; pipeline. The actual parsing all happens in C++ code, not in scheme
@@ -200,6 +201,42 @@
 	; All that the user needs to do is to call `cog-execute!` on it,
 	; until end of file is reached.
 	(make-parse-pipe parser STORAGE any-parse)
+)
+
+; ---------------------------------------------------------------------
+;
+; Exactly like the above. Sadly, the dict is hard-coded, etc. This
+; is a shim, for now.
+(define-public (make-disjunct-parser TXT-STREAM STORAGE)
+"
+  make-disjunct-parser TXT-STREAM STORAGE - Count disjuncts.
+
+  Return a text parser that counts Edges and Sections obtained
+  from MST/MPG parsing text on TXT-STREAM. The TXT-STREAM must be
+  an Atom that, when executed, delivers a stream of text. In the
+  typical case, the TXT-STREAM atom will be
+     (ValueOf (Concept "some atom") (Predicate "some key"))
+  and the Value there will provide a LinkStream of text to be parssed
+  and counted.
+
+  Counts in the parse stream are incremented, and then written out to
+  STORAGE, which must be a StorageNode.
+
+  The Link Grammar (LgDict "dict-pair") is used for parsing. This dict
+  creates MST/MPG planar graphs, maximing the sum of MI of the edges
+  occuring in the parse.
+"
+	; Top-three MST parses are probably the only good ones.
+	(define NUML (Number 3))
+	(define DICT (LgDict "dict-pair"))
+	(define mst-parse (ParseNode "MST"))
+
+	(define parser (LgParseSections TXT-STREAM DICT NUML (cog-atomspace)))
+
+	; Return the assembled counting pipeline.
+	; All that the user needs to do is to call `cog-execute!` on it,
+	; until end of file is reached.
+	(make-parse-pipe parser STORAGE mst-parse)
 )
 
 ; ---------------------------------------------------------------------

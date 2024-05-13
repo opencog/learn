@@ -1,7 +1,7 @@
 ;
 ; lg-pipe-parser.scm -- Atomese LG-based parsing framework.
 ;
-; See ../pair-count/pipe-count.scm for info about Atomese pipe
+; See ../pipe-parse/pipe-count.scm for info about Atomese pipe
 ; counting. This is a new way of counting that avoids the matrix
 ; API. It is backwards-compat, more-or-less, but the design is
 ; is still a bit fluid. It's not yet fully generalized.
@@ -14,23 +14,6 @@
 (use-modules (opencog nlp) (opencog nlp lg-parse))
 (use-modules (opencog matrix))
 
-(define (make-disjunct-parser txt-stream STORAGE)
-
-	; Top-three MST parses are probably the only good ones.
-	(define NUML (Number 3))
-	(define DICT (LgDict "dict-pair"))
-	(define mst-parse (ParseNode "MST"))
-
-	(define parser (LgParseSections txt-stream DICT NUML (cog-atomspace)))
-
-	; Return the assembled counting pipeline.
-	; All that the user needs to do is to call `cog-execute!` on it,
-	; until end of file is reached.
-	(make-parse-pipe parser STORAGE mst-parse)
-)
-
-; --------------------------------------------------------------------
-; --------------------------------------------------------------------
 ; XXX FIXME. The next 30 lines of code are a cut-n-paste of the
 ; pair parsing pipeline code. It is needed because the batch processor
 ; force-feeds use text, instead of allowing us to read on our own.
