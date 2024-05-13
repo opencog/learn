@@ -4,10 +4,12 @@ ADD_GUILE_MODULE (FILES
 	utils/utilities.scm
 	utils/waiter.scm
 
+	pipe-parse/pipe-count.scm
+
 	pair-count/clique-pair-count.scm
 	pair-count/pair-api.scm
 	pair-count/word-pair-count.scm
-	pair-count/pipe-count.scm
+	pair-count/word-pair-pipe.scm
 
 	parse/lg-parser.scm
 	parse/lg-pipe-parser.scm

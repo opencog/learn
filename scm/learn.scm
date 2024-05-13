@@ -11,13 +11,16 @@
 (include-from-path "opencog/learn/utilities.scm")
 (include-from-path "opencog/learn/waiter.scm")
 
-; pair stuff.
+; Pipe stuff
+(include-from-path "opencog/learn/pipe-count.scm") ; XXX experimental
+
+; Pair stuff.
 (include-from-path "opencog/learn/pair-api.scm")
 (include-from-path "opencog/learn/clique-pair-count.scm")
 (include-from-path "opencog/learn/word-pair-count.scm") ; Deprecated
-(include-from-path "opencog/learn/pipe-count.scm") ; XXX experimental
+(include-from-path "opencog/learn/word-pair-pipe.scm") ; Replacement for above.
 
-; parsing stuff
+; Setion parsing stuff
 (include-from-path "opencog/learn/sliding-block.scm")
 (include-from-path "opencog/learn/pseudo-csets.scm")
 (include-from-path "opencog/learn/bond-links.scm")
