@@ -177,14 +177,14 @@
   from parsing text on TXT-STREAM. The TXT-STREAM must be an Atom that,
   when executed, delivers a stream of text. In the typical case, the
   TXT-STREAM atom will be
-     (ValueOf (Concept "some atom") (Predicate "some key"))
+     (ValueOf (Concept \"some atom\") (Predicate \"some key\"))
   and the Value there will provide a LinkStream of text to be parssed
   and counted.
 
   Counts in the parse stream are incremented, and then written out to
   STORAGE, which must be a StorageNode.
 
-  The Link Grammar (LgDict "any") is used for parsing. This dict creates
+  The Link Grammar (LgDict \"any\") is used for parsing. This dict creates
   random planar graphs. The graph edges are the random word-pairs that
   get counted.
 "
@@ -219,14 +219,14 @@
   from MST/MPG parsing text on TXT-STREAM. The TXT-STREAM must be
   an Atom that, when executed, delivers a stream of text. In the
   typical case, the TXT-STREAM atom will be
-     (ValueOf (Concept "some atom") (Predicate "some key"))
+     (ValueOf (Concept \"some atom\") (Predicate \"some key\"))
   and the Value there will provide a LinkStream of text to be parssed
   and counted.
 
   Counts in the parse stream are incremented, and then written out to
   STORAGE, which must be a StorageNode.
 
-  The Link Grammar (LgDict "dict-pair") is used for parsing. This dict
+  The Link Grammar (LgDict \"dict-pair\") is used for parsing. This dict
   creates MST/MPG planar graphs, maximing the sum of MI of the edges
   occuring in the parse.
 "
