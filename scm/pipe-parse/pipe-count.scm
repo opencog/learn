@@ -17,6 +17,10 @@
 ;    incurs very heavy thrashing of the guile GC. It is also not
 ;    Atomese, and cannot be access from within Atomese.
 ;
+; 3) The code here is derived from the example in the agents examples
+;    directory, here:
+;    https://github.com/opencog/agents/tree/master/examples/pair-count.scm
+;
 ; How this works: the main entry point `make-parse-pipe` accepts a
 ; parser, which, when executed, is supposed to generate two streams of
 ; countable Atoms. A count is incremented on each Atom in each stream,
