@@ -557,6 +557,9 @@ A quick overview:
 * [scm](scm) - the code that actually does all the work.
 * [tests](tests) - unit tests. These should pass. Run `make test`.
 
+* [attic](attic) - old datasets and old experimental runs.
+* [scm/attic](scm/attic) - old source code and instruments.
+
 Architecture Overview
 ---------------------
 All the "heavy lifting" is done in the OpenCog
