@@ -8,7 +8,6 @@ ADD_GUILE_MODULE (FILES
 
 	pair-count/word-pair-pipe.scm
 
-	parse/lg-parser.scm
 	parse/lg-pipe-parser.scm
 	parse/pseudo-csets.scm
 	parse/bond-links.scm

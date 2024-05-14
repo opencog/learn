@@ -16,6 +16,12 @@ stuff.
     and so provides a better platform. So, this older parser is now
     obsolete. BTW, so is the sheaf code.
 
+* __mpg-parse__: The newer, matrix-api batch-processing MST/MPG
+    parsing and counting code. The LG parser does all the counting.
+    The problem with this code is it uses the matrix API, which is
+    truly great, but has issues: (1) slow, causes oceans of scheme GC,
+    (2) does not have an Atomese API, and cannot be pipeline processing.
+
 * __pair-count__: older pair-counting code. It tried to do too much,
     was too general. Thus, too complex. We now know exacly how to do
     pair-counting: simply and directly. The older proof-of-concept

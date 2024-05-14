@@ -21,8 +21,7 @@
 (include-from-path "opencog/learn/sliding-block.scm")
 (include-from-path "opencog/learn/pseudo-csets.scm")
 (include-from-path "opencog/learn/bond-links.scm")
-(include-from-path "opencog/learn/lg-parser.scm") ; Deprecated
-(include-from-path "opencog/learn/lg-pipe-parser.scm") ; experimental
+(include-from-path "opencog/learn/lg-pipe-parser.scm")
 
 ; classification stuff
 (include-from-path "opencog/learn/shape-vec.scm")
