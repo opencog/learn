@@ -11856,7 +11856,195 @@ hbar)</math> dynamics, and so have constructive/destructive interference
  sum over states, which (I believe) should be equal to the entropic force.
  But I don't know how to do this calculation.
  [[Special:Contributions/67.198.37.16|67.198.37.16]] ([[User talk:67.198.37.16|talk]])
- 22:16, 18 May 2024 (UTC) 
+ 22:16, 18 May 2024 (UTC)
+\end_layout
+
+\begin_layout Subsection*
+19 May 2024
+\end_layout
+
+\begin_layout Standard
+Thinking about entropy.
+\end_layout
+
+\begin_layout Itemize
+The Sakur-Tetrode equation for the entropy of an ideal gas can be derived
+ from basic principles of information theory.
+ (its incorrect at low temp, need fermi/bose to fix that)
+\end_layout
+
+\begin_layout Itemize
+Gibs free energy, and entropy of mixing.
+\end_layout
+
+\begin_layout Itemize
+Heisenberg wrote the uncertainty as 
+\begin_inset Formula $pq-qp=h/2\pi i$
+\end_inset
+
+ placing the 
+\begin_inset Formula $i$
+\end_inset
+
+ in the denominator.
+ This has the suggestive form that the denominator arises as the residue
+ of a pole in the complex plane.
+ What is that pole, that thing, having this residue? One can say 
+\begin_inset Quotes eld
+\end_inset
+
+blah blah symplectic manifold
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+blah blah almost-complex manifold
+\begin_inset Quotes erd
+\end_inset
+
+: is this it, or is there more? The compex 
+\begin_inset Formula $i$
+\end_inset
+
+ is pervasive, e.g.
+ in the quantum Liouville theorem.
+ 
+\end_layout
+
+\begin_layout Itemize
+Jaynes comment about entropy of mixing: what happens when we mix gasses
+ A and B, but we don't know that A and B are different gasses? (See wikipedia
+ Gibbs paradox)
+\end_layout
+
+\begin_layout Itemize
+Thermodynamic internal energy is a sum of micro-kinetic energy plus micro-potent
+ial energy.
+ Potential include chemical, magnetic, nuclear, plus also stress/strain.
+ Kinetic is about micro-movement (square of momenta).
+ Potential is either about relative location e.g.
+ repulsive/attractive forces that depend on location, ot its about internal
+ degrees of freedom.
+ This assume that there are things, 
+\begin_inset Quotes eld
+\end_inset
+
+atoms
+\begin_inset Quotes erd
+\end_inset
+
+, that move, interact, and have internal degrees of freedom.
+ For the (quantum) vacuum state, we clearly have internal degrees of freedom,
+ but nothing that obviously 
+\begin_inset Quotes eld
+\end_inset
+
+moves
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+interacts
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Some pair-creation process is needed to convert internal degrees of freedom
+ into 
+\begin_inset Quotes eld
+\end_inset
+
+things
+\begin_inset Quotes erd
+\end_inset
+
+, virtual particle-anti-particle pairs, however breifly.
+ Not clear what any of this means.
+ 
+\end_layout
+
+\begin_layout Itemize
+Internal energy is extensive: it depends on size and quantity of stuff.
+\end_layout
+
+\begin_layout Itemize
+At absolute zero, we have zero-point energy...
+ at absolute zero, we have minimum entropy.
+\end_layout
+
+\begin_layout Itemize
+Temperature is entirely due to kinetic movement.
+ Entropy, however, comes from probabilistic distribution in phase space,
+ which has both postion and momentum.
+ Is entropy supposed to be some integral over the tautological two-form
+ 
+\begin_inset Formula $\omega=dp\wedge dq$
+\end_inset
+
+ ??? Lets assume that we can relate entropy to some sum over the symplectic
+ form (not sure how, but lets assume it can be done), then why is it 
+\begin_inset Formula $G=H-TS$
+\end_inset
+
+ for the Gibbs free energy? So, entropy is 
+\begin_inset Quotes eld
+\end_inset
+
+sizeof
+\begin_inset Quotes erd
+\end_inset
+
+/
+\begin_inset Quotes erd
+\end_inset
+
+volume-of
+\begin_inset Quotes erd
+\end_inset
+
+ position times momentum, but kinitic energy is momentum-squared, but the
+ temp 
+\begin_inset Formula $T$
+\end_inset
+
+ is not the kinetic energy, but an intensive variable obtained from the
+ kinetic energy, by means of fermi-dirac or boe-einstein or more simply
+ just plain Boltzman 
+\begin_inset Formula $E=e^{-kT}$
+\end_inset
+
+ ...
+ so 
+\begin_inset Formula $T=-\log E$
+\end_inset
+
+ approximately, while 
+\begin_inset Formula $S=-\sum_{i}\pi_{i}\log\pi_{i}$
+\end_inset
+
+ for probability 
+\begin_inset Formula $\pi_{i}$
+\end_inset
+
+ of pase space volume 
+\begin_inset Formula $\omega_{i}=dp_{i}\wedge dq_{i}$
+\end_inset
+
+ being occupied.
+\end_layout
+
+\begin_layout Itemize
+Liouvilles them says phase space is incompressible or invariant...
+ this is analogous to adiabatic system having total energy as invariant.
+ But Liouville ignores friction ..
+ But then we have Green-Kubo and also the fluctuation theorem.
+ so I'm confused.
 \end_layout
 
 \begin_layout Section*
