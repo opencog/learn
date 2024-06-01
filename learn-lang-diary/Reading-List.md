@@ -88,8 +88,35 @@ Things to read:
      input, so that there's both a pass/no-pass gate with an additional
      modulation to inject newer "adjective" modifiers.
 
+     Conclusion on LSTM architectures: they're al about the same for
+     quality of results. The GRU, Gated Recurrent Unit, seems to be the
+     most refined of the set.
+
   -- Recurrent Neural Network Regularization
+     Wojciech Zaremba, Ilya Suskever, Oriol Vinyals
      https://arxiv.org/pdf/1409.2329.pdf
+
+     RNN's tend to overfit. Dropout is a good way of avoiding
+     overfitting. This explains how to add dropout to RNN's, and
+     specifically, LSTM's.
+
+     Provides a nice, easy summary/intro to the more formal math
+     notation of LSTM's. Clearer than the Wikipedia LSTM article.
+
+     The dropout operator will *randomly* disrupt cell communications
+     between layers (but only the "h" "hidden" path) Ths "c" "cell"
+     pass-thru is not disrupted. Time-steps are not disrupted. Only
+     inter-layer of "h".
+
+     Quoting: "The dropout operator corrupts the information carried by
+     the units, forcing them to perform their intermediate computations
+     more robustly."
+
+     Penn Tree Bank: N=2 layers. Loop-unrolled for 35 steps. Dropout rate
+     of 50% and 65% (!) Size is 650 units for medium, 1500 for large.
+
+     Macine translation: 4 layers, 1000 units, dropout of 20%
+
   -- Keeping Neural Networks Simple by Minimizing the Description Length of the Weights
      https://www.cs.toronto.edu/~hinton/absps/colt93.pdf
   -- Pointer Networks
