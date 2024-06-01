@@ -341,7 +341,6 @@ Hmm.
  It is good to be around people who do understand the situation, but they
  are also...
  rare.
- 
 \end_layout
 
 \begin_layout Standard
@@ -12166,6 +12165,194 @@ This dream came from deep in the night.
  They are also not obviously self-manufactured, like the late-morning dreams,
  where I've caught myself debating plot points, picking one, and then having
  the dream to match the plot that I picked.
+\end_layout
+
+\begin_layout Subsection*
+31 May 2024
+\end_layout
+
+\begin_layout Standard
+I've been prattling on about this for years, and no one ever listens.
+ So screw it.
+ I don't know what formal text to put this into, so its going here.
+ Consider a plain-old single-later neural net.
+ Lets assume it has 
+\begin_inset Formula $N$
+\end_inset
+
+ single-bit inputs, and 
+\begin_inset Formula $N$
+\end_inset
+
+ single-bit outputs.
+ Let's assume that its been pre-trained, somehow, and so has an 
+\begin_inset Formula $N\times N=N^{2}$
+\end_inset
+
+-dimensional weight matrix.
+ Lets compare this to an equivalent RNN.
+\end_layout
+
+\begin_layout Standard
+My basic claim is that an RNN is a 
+\begin_inset Quotes eld
+\end_inset
+
+special case
+\begin_inset Quotes erd
+\end_inset
+
+ of a 
+\begin_inset Quotes eld
+\end_inset
+
+plain
+\begin_inset Quotes erd
+\end_inset
+
+ NN in which almost all weights have been manually trimmed to be exactly
+ zero.
+ That is, the input vector 
+\begin_inset Formula $N$
+\end_inset
+
+ is chunked into 
+\begin_inset Formula $M$
+\end_inset
+
+ chunks, each one of size 
+\begin_inset Formula $K$
+\end_inset
+
+ so that 
+\begin_inset Formula $N=MK$
+\end_inset
+
+.
+ An 
+\begin_inset Quotes eld
+\end_inset
+
+plain
+\begin_inset Quotes erd
+\end_inset
+
+ NN is trained, taking a 
+\begin_inset Formula $K$
+\end_inset
+
+-dimensional input vector, anothr 
+\begin_inset Formula $K$
+\end_inset
+
+-dimensional feedback(feedforward) input, and generates a 
+\begin_inset Formula $K$
+\end_inset
+
+-dimensional output.
+ This requires a 
+\begin_inset Formula $2K^{2}$
+\end_inset
+
+ weight matrix.
+ This is vastly smaller than the starting 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+-dimensional weight matrix, because exactly 
+\begin_inset Formula $N^{2}-2K^{2}=\left(M^{2}-2\right)K^{2}$
+\end_inset
+
+ weights are now necessarily zero.
+ For almost any 
+\begin_inset Formula $M>1$
+\end_inset
+
+ this is a large reduction, and it becomes vast, when 
+\begin_inset Formula $M$
+\end_inset
+
+ is in the thousands or millions.
+\end_layout
+
+\begin_layout Standard
+LSTM's repeat this trick, a second time.
+ There's two ways to think about the LSTM.
+ The conventional description is that 
+\begin_inset Quotes eld
+\end_inset
+
+oh its just an RNN with more stuff, a feed-through path that can pass data
+ through unmolested over long distances (long times).
+ The other way to think about it is to say it is a different kind of surgery,
+ that again starts with the 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+-dimensional weight matrix, chunks the input and output just like the RNN,
+ and (once again) a priori sets almost all of the weights to zero.
+ This time, the way the interconnects are eliminated are more clever, so
+ that a pass-through path between distant parts of the input is preserved.
+ I won't attempt to count the number of weights set to zero, although it
+ is still 
+\begin_inset Formula $\mathcal{O}\left(M^{2}\right)$
+\end_inset
+
+.
+ Roughly speaking, it keeps about three times more wieghts than the naive
+ RNN (i.e.
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+forget-gate
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+input-gate
+\begin_inset Quotes erd
+\end_inset
+
+ in addition to the usual weights.)
+\end_layout
+
+\begin_layout Standard
+LTSM's have two tricks up their sleeve: both the go/no-go (forget/remember)
+ pass-through gate, and also the 
+\begin_inset Quotes eld
+\end_inset
+
+adjectival
+\begin_inset Quotes erd
+\end_inset
+
+ modifier that can alter the data flowing on this long-distance channel.
+ I like the word 
+\begin_inset Quotes eld
+\end_inset
+
+adjectival
+\begin_inset Quotes erd
+\end_inset
+
+ but this is not industry-standard.
+ Perhaps the most intersting aspect is that info gets passed thrrough, unmoleste
+d, until there is a very specific piece of evidence that forces a large
+ update.
+\end_layout
+
+\begin_layout Standard
+What I'm trying to do with OpenCog is to also trim away almost all weights,
+ except that the trimming architecture is 
+\emph on
+completey different
+\emph default
+ (and sadly, much more complex.
+ Alas.)
 \end_layout
 
 \begin_layout Section*

@@ -14,9 +14,13 @@ Things to read:
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
   Posted to twitter in April 2024
 
+  This list is presented in conceptual order, moving from the simplest
+  ideas and descriptions to the most recent and complex.
+
   -- The Annotated Transformer
      Undated (2022?) 8 authors from Google Brain
      https://nlp.seas.harvard.edu/annotated-transformer/
+
      This is big blob of python code, implementing an API to a
      transformer, and includes descriptive text of what each step does.
      All the actual work is done under the covers. If you do not already
@@ -57,6 +61,33 @@ Things to read:
 
   -- Understanding LSTM Networks
      https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+     Colah's blog -- August 2015
+
+     RNN's have trouble with long-distance correlations. LSTM's solve
+     this problem. The blog entry explains, in a direct, detailed and
+     forthright way, how this works. Suitable for all levels of
+     sophistication. Well-done, non-intimidating, clear.
+
+     NN's are "generalized perceptrons", intermediating input from
+     output with a weight matrix. They're a specific kind of function.
+
+     The R in RNN's statnds for "Recurrent": besides just using a
+     single-layer weight-matrix to generate output, there is "feedback"
+     connection, which, when loop-unrolled, looks like a feed-forward
+     from one instance to the next. This feed-forward provides a way for
+     future NN predictions to incorporate info from past inputs. It
+     specifies a specific path through which a form of "memory" can
+     flow. The isolation of this path greatly (vastly!) reduces the
+     the complexity, as compared to an equivalent NN in which all inputs
+     and outputs were concatenated into a giant matrix.
+
+     LSTM's trim down the weight matrix more produntly: they propagate
+     two signals: the base signal of an RNN, plus a pass-through channel
+     that can propagate (or not) older, more distant data. The
+     pass-through channel can furthermore be modulated by the current
+     input, so that there's both a pass/no-pass gate with an additional
+     modulation to inject newer "adjective" modifiers.
+
   -- Recurrent Neural Network Regularization
      https://arxiv.org/pdf/1409.2329.pdf
   -- Keeping Neural Networks Simple by Minimizing the Description Length of the Weights
