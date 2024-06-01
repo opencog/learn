@@ -12,8 +12,10 @@ Things to read:
 
 * 27 papers on LLM from Ilya Sutskever
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
-  this is:
+  Posted to twitter in April 2024
+
   -- The Annotated Transformer
+     Undated (2022?) 8 authors from Google Brain
      https://nlp.seas.harvard.edu/annotated-transformer/
      This is big blob of python code, implementing an API to a
      transformer, and includes descriptive text of what each step does.
@@ -23,6 +25,7 @@ Things to read:
      this offers one (meagre) possibility.
 
   -- The First Law of Complexodynamics
+     Scott Aaronson -- Shtetl-optimized blog -- Sept 2011
      https://scottaaronson.blog/?p=762
 
      Entropy is high for random things, and low for simple things.
@@ -40,7 +43,18 @@ Things to read:
      http://homepages.cwi.nl/~paulv/papers/algorithmicstatistics.pdf
 
   -- The Unreasonable Effectiveness of Recurrent Neural Networks
+     Andrej Karpathy blog  -- May 2015
      https://karpathy.github.io/2015/05/21/rnn-effectiveness/
+
+     This is a programmer-tinkerer's intro to RNN's (LSTM). The claim
+     that RNN/LSTM's are extremely good at predicting "what comes next"
+     is illustrated with everything from Tolstoy to baby names to source
+     code. You won't learn how or why RNN/LSTM's work but you'll be
+     impressed by the results.
+
+     The "Further Reading" section gives an excellent overview of the
+     state of the art, circa 2015.
+
   -- Understanding LSTM Networks
      https://colah.github.io/posts/2015-08-Understanding-LSTMs/
   -- Recurrent Neural Network Regularization
