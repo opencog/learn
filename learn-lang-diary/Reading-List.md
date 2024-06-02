@@ -93,7 +93,7 @@ Things to read:
      most refined of the set.
 
   -- Recurrent Neural Network Regularization
-     Wojciech Zaremba, Ilya Suskever, Oriol Vinyals
+     Wojciech Zaremba, Ilya Suskever, Oriol Vinyals - 2014
      https://arxiv.org/pdf/1409.2329.pdf
 
      RNN's tend to overfit. Dropout is a good way of avoiding
@@ -117,8 +117,30 @@ Things to read:
 
      Macine translation: 4 layers, 1000 units, dropout of 20%
 
-  -- Keeping Neural Networks Simple by Minimizing the Description Length of the Weights
+  -- Keeping Neural Networks Simple by Minimizing the Description
+     Length of the Weights
+     Geoff Honton, Drew van Camp -- 1993
      https://www.cs.toronto.edu/~hinton/absps/colt93.pdf
+
+     Classic paper. Ostensible topic is to avoid overtraining by adding
+     Gaussian noise. Actual topic is a strong formal, physical
+     (mathematical?) explanation of NN algorithms, using info-theortic
+     principles. Training is treated as a compression problem, of 
+     encoding the training set so as to minimize number of bits to
+     describe it. This is a short but hard-to-understand paper.
+
+     Description Length = log(RMS weights) + log(RMS training errors)
+     Minimum Description Length (MDL) minimizes the above.
+
+     Instead of thinking of a weight as a single number, think of it as
+     a gaussian distribution; training ajusts the mean and width of that
+     distribution. In general, the weight distribution is not a single
+     mode (not a single gaussian) but a sum of multiple modes (e.g. a few
+     weights distributed near 1.0, and many more, distributed near 0.0.)
+     In this case, the sum passes over to a Boltzmann distribution.
+
+ Helmholtz free energy
+
   -- Pointer Networks
      https://arxiv.org/pdf/1506.03134.pdf
 
