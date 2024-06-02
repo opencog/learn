@@ -125,7 +125,7 @@ Things to read:
      Classic paper. Ostensible topic is to avoid overtraining by adding
      Gaussian noise. Actual topic is a strong formal, physical
      (mathematical?) explanation of NN algorithms, using info-theortic
-     principles. Training is treated as a compression problem, of 
+     principles. Training is treated as a compression problem, of
      encoding the training set so as to minimize number of bits to
      describe it. This is a short but hard-to-understand paper.
 
@@ -139,9 +139,13 @@ Things to read:
      weights distributed near 1.0, and many more, distributed near 0.0.)
      In this case, the sum passes over to a Boltzmann distribution.
 
- Helmholtz free energy
+     ... Oh I can't recapitulate this. It's an opaque paper. It does end
+     up arguing that the Helmholtz free energy is what matters, but the
+     relationship of this to training errors, weight distributions, and
+     minimum desription length remains opaque.
 
   -- Pointer Networks
+     Oriol Vinyals, Meire Fortunato, Navdeep Jaitly (2017)
      https://arxiv.org/pdf/1506.03134.pdf
 
   -- ImageNet Classification with Deep CNNs
