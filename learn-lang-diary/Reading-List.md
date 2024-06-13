@@ -148,6 +148,30 @@ Things to read:
      Oriol Vinyals, Meire Fortunato, Navdeep Jaitly (2017)
      https://arxiv.org/pdf/1506.03134.pdf
 
+     First, a sequence-to-sequence map is described. This is as follows:
+
+     Use LSTM to train sequence-to-sequence maps. Input is a sequence of
+     N vectors; each vector is assigned an index. The output is a
+     sequence of indexes; thus the output has a vocabulary of exactly
+     size N; thus the output has a vocabulary of exactly size N.
+     (Each distinct size requires distinct training.)
+
+     Two LSTM's are used, an "input" LSTM and an "output" LSTM. The full
+     input sequence is run through the input LSTM to produce a single
+     vector: the hidden-state vector produced at the end of input.
+     This is the encoding of the input; it is handed to the output
+     LSTM, to prime it, to produce the output. (which RNN's on "itself")
+
+     During generation, beam search is used.
+
+     The above basic sequence-to-sequence has trouble and gets "blurry"
+     for long sequences, because the size of the hidden vector is fixed.
+     Thus, an attention model is proposed. This works well, but has
+     trouble restricting to the vocabulary.  Finally, the "ptr-net" is
+     defined as the attention model w/o one path (see paper for
+     formulas.)
+
+
   -- ImageNet Classification with Deep CNNs
      https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf
 

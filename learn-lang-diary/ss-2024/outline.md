@@ -19,7 +19,10 @@ pilna diagrama
 
 ------- 
 chaoso teorija
+fraktalai
 mastelio invariantas -- scale invariant
+Zipf
+kritinai exponentai
 fazių perėjimas
 feromagnetinis perėjimas  (w/ diagrama)
 kraštas fazių perėjimo
