@@ -2437,6 +2437,248 @@ I want to turn this on the side; I still don't have an effective i.e.
 \end_layout
 
 \begin_layout Section*
+Energy Scales
+\end_layout
+
+\begin_layout Standard
+A half-baked thought pursuant to the above.
+ Back in the day, 10-15 years ago, I converted MOSES to hill-climbing.
+ The basic idea of MOSES is that it keeps around 
+\begin_inset Quotes eld
+\end_inset
+
+demes
+\begin_inset Quotes erd
+\end_inset
+
+, a limited number of 
+\begin_inset Quotes eld
+\end_inset
+
+representatives
+\begin_inset Quotes erd
+\end_inset
+
+; it then chooses one to elaborate further, and then re-inserts it into
+ the deme.
+ If only the top N scorers are kept, this can be thought of as a kind of
+ 
+\begin_inset Quotes eld
+\end_inset
+
+beam search
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If the selection of top-scorers is strict, this can be called 
+\begin_inset Quotes eld
+\end_inset
+
+hill-climbing
+\begin_inset Quotes erd
+\end_inset
+
+, as one keeps only the best of the best.
+\end_layout
+
+\begin_layout Standard
+Of course, this allows the deme to get trapped in a local maximum: all top
+ N scorers may be in the maximum, and there's no way out.
+ To avoid this issue, Nil added a probabilistic mechanism, keeping lower-scoring
+ instances with probability 
+\begin_inset Formula $p\sim2^{-\mbox{score}}$
+\end_inset
+
+.
+ Nil provided some argument inspire by Solomonoff-blah-blah or Kolmogorov-blah-b
+lah.
+ I promtly realized that the 2 is too strict, it punishes low scores too
+ strongly, and introduced a free parameter 
+\begin_inset Formula $\beta$
+\end_inset
+
+, so that 
+\begin_inset Formula $p\sim e^{-\beta\mbox{score}}$
+\end_inset
+
+with an obvious thermodynamic (Boltzman) interpretation.
+ Turns out, the system work much muc better, when (typically) 
+\begin_inset Formula $0.01<\beta<0.1$
+\end_inset
+
+ in general (and of course this depends on the problem type, and the method
+ of scoring, sine the 
+\begin_inset Formula $\beta$
+\end_inset
+
+ can obviously be reabsorbed into the score.
+ At any rate, 
+\begin_inset Formula $\beta$
+\end_inset
+
+ was now a free parameter, that the system user could specify on the command-lin
+e, as a part of the configuration.
+\end_layout
+
+\begin_layout Standard
+And that was the end of it; I thought no further of it, as I was busy coding,
+ not theorizing.
+ In retrospect, this was a mistake, for which I now attempt to make the
+ weakest of amends.
+ So, some obsrvations:
+\end_layout
+
+\begin_layout Enumerate
+In physical systems, 
+\begin_inset Formula $\beta$
+\end_inset
+
+ is not a free parameter, but an intensive thermodynamc property.
+\end_layout
+
+\begin_layout Enumerate
+In a physical system, the distribution of particle energies is given by
+ Boltzmann, or Fermi-Dirac or Bose-Einstein statistics.
+\end_layout
+
+\begin_layout Enumerate
+What is the distribution for MOSES, and should we care?
+\end_layout
+
+\begin_layout Standard
+The point of the last question is that we kind of don't care.
+ We're not particularly interested in the entire collection of possible
+ solutions, and their ranking.
+ Perhaps we should be, but the comp-sci task is always to find the best
+ solution, and not to obtain the full spectrum of possibilities.
+ So, for any given learning task, we don't know this distribution; at best,
+ we have access to the high-scoring tail.
+ I now strongly regret, lament that I never took the time & effort to characteri
+ze the shape of that tail.
+\end_layout
+
+\begin_layout Standard
+It must surely be described with some critical exponent; viz, the number
+ of instances 
+\begin_inset Formula $N(s)$
+\end_inset
+
+ having a score larger that 
+\begin_inset Formula $s$
+\end_inset
+
+ must go as 
+\begin_inset Formula $N(s)\sim s^{-\alpha}$
+\end_inset
+
+ for some 
+\begin_inset Quotes eld
+\end_inset
+
+critical exponent
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ (which depends on theproblem type).
+ But what is this 
+\begin_inset Formula $\alpha$
+\end_inset
+
+? Alas.
+\end_layout
+
+\begin_layout Standard
+A second mistake was to not ascribe an information theoretic unit to the
+ proceedings.
+ Thus, when one has 
+\begin_inset Formula $p\sim2^{-\mbox{score}}$
+\end_inset
+
+ then clearly, one can say that 
+\begin_inset Quotes eld
+\end_inset
+
+score
+\begin_inset Quotes erd
+\end_inset
+
+ is measured in units of 
+\begin_inset Quotes eld
+\end_inset
+
+bits
+\begin_inset Quotes erd
+\end_inset
+
+.
+ When intead one has that 
+\begin_inset Formula $p\sim e^{-\beta\mbox{score}}$
+\end_inset
+
+ then a score of 1.0 carries 
+\begin_inset Formula $\beta/\log2$
+\end_inset
+
+ bits of information.
+ A mini-mistake was to not calibrate 
+\begin_inset Formula $\beta$
+\end_inset
+
+ by 
+\begin_inset Formula $\log2$
+\end_inset
+
+ so that the adjustiable parameter could be interpreted not as 
+\begin_inset Quotes eld
+\end_inset
+
+inverse temperature
+\begin_inset Quotes erd
+\end_inset
+
+ but as 
+\begin_inset Quotes eld
+\end_inset
+
+information content associated with an improved score
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Combining these two ideas into one now gives a measure for the complexity
+ of the system: the number of accessible solutions decreases for each bit
+ of improved score.
+ f we look at the number of accpetable solutions as indicating how much
+ we don't know about the system, then we seem to have two measures: directly,
+ there is 
+\begin_inset Formula $\log_{2}N(s)$
+\end_inset
+
+ as a function of the score 
+\begin_inset Formula $s$
+\end_inset
+
+, and the derivative: so if 
+\begin_inset Formula $N(s)\sim s^{-\alpha}$
+\end_inset
+
+ then 
+\begin_inset Formula $\log_{2}N(s)\sim-\alpha\log s/\log2$
+\end_inset
+
+ and ...
+ umm...
+\end_layout
+
+\begin_layout Section*
 The End
 \end_layout
 
