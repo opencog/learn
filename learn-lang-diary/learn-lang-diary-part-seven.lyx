@@ -144,7 +144,7 @@ The Possibilities
 \begin_layout Standard
 The last round of experiments appear to be successful, and there do not
  seem to be any nagging unresolved issues.
- What comes next? Here's a list of possbilities.
+ What comes next? Here's a list of possibilities.
  (The list below was written in March 2022 and got updates in Jan 2023.)
 \end_layout
 
@@ -155,7 +155,7 @@ Accuracy Evaluation.
 
 \series default
  Compare dictionaries to the hand-crafted LG English dict.
- This is a bit tedious and boring, since it seems unlikely to yeild anything
+ This is a bit tedious and boring, since it seems unlikely to yield anything
  interesting.
  It seems inevitable, as its the kind of thing other people want to see.
  The only benefit is that it is a way of perhaps characterizing the the
@@ -168,7 +168,7 @@ noise
 \begin_inset Quotes erd
 \end_inset
 
- parameter is the most highly explored: but what setting yeilds the best
+ parameter is the most highly explored: but what setting yields the best
  results? Comparing to LG should reveal the answer.
  Estimate a few weeks to a month of sustained effort.
 \end_layout
@@ -206,7 +206,7 @@ An automated accuracy-comparison system, comparing two different dictionaries,
  For example, comparing learned dictionaries to the hand-crafted LG dict
  helps identify parameter regions that are effective.
  By contrast, comparing two different auto-generated dictionaries can indicate
- when two dicts diverge, and how sensitive they are to given parameter setttings.
+ when two dicts diverge, and how sensitive they are to given parameter settings.
 \end_layout
 
 \begin_deeper
@@ -221,7 +221,7 @@ Jan 2023 update
 \begin_inset Quotes eld
 \end_inset
 
-the best paramters
+the best parameters
 \begin_inset Quotes erd
 \end_inset
 
@@ -300,7 +300,7 @@ Morphology.
 
 \series default
  We've ignored the morphological structure of English.
- Morphology is crucial for most Indoeuropean and Arabic langauges, and so
+ Morphology is crucial for most Indoeuropean and Arabic languages, and so
  coverage could be vastly improved by putting together code for automatic
  morphology detection/processing.
  Diary Part One already sketched how this could be done, including a worked
@@ -323,7 +323,7 @@ Jan 2023 update
  finding sentence boundaries, finding morphological boundaries.
  This can be lumped into a more general boundary problem in vision and audio
  processing.
- Morphoology is a 
+ Morphology is a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -355,9 +355,9 @@ Reiterate classification.
  using those dictionaries.
  The result of such parsing is again a collection of disjuncts, much like
  the ones from MPG parsing, but with different observation counts.
- After collecting such counts, the classification step can be perfomed again,
- presumably resulting in a somewhat different classification, perhaps one
- that is more accurate?
+ After collecting such counts, the classification step can be performed
+ again, presumably resulting in a somewhat different classification, perhaps
+ one that is more accurate?
 \begin_inset Newline newline
 \end_inset
 
@@ -416,7 +416,7 @@ Refactorization.
 
 \series default
  The disjuncts from above run provides a dataset that can be compared to
- the MPG-deived classes, and be used to refactor those, in several different
+ the MPG-derived classes, and be used to refactor those, in several different
  ways.
  Perhaps some Sections are never used; they could be dropped.
  Perhaps a block-diagonal structure can be discovered.
@@ -466,7 +466,7 @@ facts
 \begin_inset Newline newline
 \end_inset
 
-There are two types of entitites: common entities and text-specific entities.
+There are two types of entities: common entities and text-specific entities.
 \begin_inset Foot
 status collapsed
 
@@ -502,7 +502,7 @@ entities
 
 \end_inset
 
- Common entites hold across all texts, such as 
+ Common entities hold across all texts, such as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -642,7 +642,7 @@ Long-distance correlations, Time.
  
 \series default
 Entity detection can be simplified if one introduces a time dimension, and,
- for each input stimulous (word), a decaying 
+ for each input stimulus (word), a decaying 
 \begin_inset Quotes eld
 \end_inset
 
@@ -653,9 +653,9 @@ activation
 .
  For example, if a word appears only in one text, but not another, and then
  reappears in a third text, then perhaps this is a different, unrelated
- entity? If some word has not been seen in a long time, then the new occurances
+ entity? If some word has not been seen in a long time, then the new occurrences
  can be assigned a distinct label.
- Input processing proceeds as before, accumulating stats for the new occurrrance.
+ Input processing proceeds as before, accumulating stats for the new occurrence.
  Later, during the classification phase, it can be determined if the various
  entities seem to be the same, of not.
 \end_layout
@@ -686,7 +686,7 @@ Context as a Spurious Concept
 
  but there is a general neighborhood of activations around sentences, paragraphs
 , longer texts.
- How does this meighborhood change, mutate, flow with the text? I think
+ How does this neighborhood change, mutate, flow with the text? I think
  we can look at this with the conventional MI and high-dimensional similarity
  tools we've been developing...
  The Hirst paper mentions Dryer and the idea of a sentence topic being a
@@ -726,8 +726,8 @@ surface meaning
 \begin_inset Quotes erd
 \end_inset
 
- knowlege representation of a sentence with the post-modern reading of the
- 
+ knowledge representation of a sentence with the post-modern reading of
+ the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -768,7 +768,7 @@ eras
 \begin_inset Quotes erd
 \end_inset
 
- in this way, with different pheonmena in different eras presumably belonging
+ in this way, with different phenomena in different eras presumably belonging
  to different 
 \begin_inset Quotes eld
 \end_inset
@@ -796,7 +796,7 @@ Synonymous Phrases.
 
 \series default
  Word-classes are already a form of weak synonymy; how can one form strong
- synonymy? By appliying more stringent membership requirements? Based on
+ synonymy? By applying more stringent membership requirements? Based on
  current results, it appears that this would be enough, and that it would
  work fairly well.
 \begin_inset Newline newline
@@ -873,7 +873,7 @@ Sound, Pictures, Blueprints, Video
 \series default
  The approach to this is sketched elsewhere, already.
  This is a huge, multi-year project.
- Intersting, too.
+ Interesting, too.
  Will it impress anyone in the short term? Probably not? Who has time to
  do this? How can I nurture it along? At any rate, code should be altered
  to at least allow multi-sensory data streams, which is not possible right
@@ -902,7 +902,7 @@ System Interaction.
 \series default
  Currently, only I can perceive results within the knowledge graph.
  How can it be exposed so that it can be viewed by outsiders? Even shallow
- perusal would help build interst and support.
+ perusal would help build interest and support.
 \end_layout
 
 \begin_layout Itemize
@@ -912,7 +912,7 @@ Performance and scalability
 \series default
 .
  Currently, the MI between word-pairs is computed in a bulk batch process.
- Computing it on the fly, per request, will improve the useability of the
+ Computing it on the fly, per request, will improve the usability of the
  MST parsing code.
  However, sometimes we need 
 \begin_inset Quotes eld
@@ -924,7 +924,7 @@ all
 
  of the MI's.
  For example, the cosine distance in the high-dimensional spheres requires
- each of the vetor components to be computed.
+ each of the vector components to be computed.
  Fine: this requires 
 \begin_inset Formula $2N$
 \end_inset
@@ -997,7 +997,7 @@ Add support for multi-sensory data streams.
 \end_layout
 
 \begin_layout Itemize
-Add time-stamp tagging and decaying activation; start new entitites when
+Add time-stamp tagging and decaying activation; start new entities when
  needed.
  This requires an indirection: statistics are to be gathered for the entity
  in the current era, which needs to be treated as distinct, despite having
@@ -1012,7 +1012,7 @@ Favorite theoretical activities:
 
 \begin_layout Itemize
 Lexical Functions.
- This seems important, but don't yet have a cler vision on how to do this.
+ This seems important, but don't yet have a clear vision on how to do this.
  This needs to be developed.
  Perhaps this can be a heavily-abstracted synonym thingy? 
 \end_layout
@@ -1021,7 +1021,7 @@ Lexical Functions.
 Antonyms.
  This is important.
  But how? Anti-correlations are not the same thing as non-correlations.
- Words that are antonyms will apper near each other, so naive correlation
+ Words that are antonyms will appear near each other, so naive correlation
  will not work.
 \end_layout
 
@@ -1109,10 +1109,10 @@ Jesse O.
  Stetson, and Stephen B.
  Johnson.
  2007.
- An Unsupervised Machine Learn- ing Approach to Segmentation of Clinician-Entere
-d Free Text.
+ An Unsupervised Machine Learning Approach to Segmentation of Clinician-Entered
+ Free Text.
  PubMed Central.
- AMIA Annu Symp Proc.
+ AMIA Annual Symposium Proc.
  2007; 2007: 811–815.
  PMCID: PMC2655800 PMID: 18693949 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC26558
 00/
@@ -1144,8 +1144,8 @@ Rather than attempting to manually discover a specific best tokenization
 We muse on this here.
  First, a review of the known algos, to give a hint of what we are looking
  for.
- Next, a review of the a minimal data strcture needed to represent a sequential
- time series, so that automated algrotihm exploration (a la MOSES) can be
+ Next, a review of the a minimal data structure needed to represent a sequential
+ time series, so that automated algorithm exploration (a la MOSES) can be
  applied.
  That is, what would the MOSES primitives be, for a time series? Third,
  some thoughts about what kinds of output one might expect from a segmentation
@@ -1162,7 +1162,7 @@ Transition Freedom
 Lets start with examples of the kinds of algos we expect to learn, automatically.
  First up, transition freedom.
  Two parts.
- First, give a precise, formal (mathematical) defintion.
+ First, give a precise, formal (mathematical) definition.
  Second, give a data representation.
 \end_layout
 
@@ -1269,7 +1269,8 @@ transition freedom
 \begin_inset Quotes erd
 \end_inset
 
- (I think this is the correct defintion of transition freedom, is that correct?)
+ (I think this is the correct definition of transition freedom, is that
+ correct?)
 \end_layout
 
 \begin_layout Standard
@@ -1301,7 +1302,7 @@ The reverse peak freedom is then
 
 \end_inset
 
-Is that right, or am I off-by-one in this defintion? 
+Is that right, or am I off-by-one in this definition? 
 \end_layout
 
 \begin_layout Standard
@@ -1378,7 +1379,7 @@ Let
 \begin_inset Formula $\left\Vert N\right\Vert _{p}\left(w,*\right)=\left[\sum_{t}N^{p}\left(w,t\right)\right]^{1/p}$
 \end_inset
 
- be the Banch norm.
+ be the Banach norm.
 \end_layout
 
 \begin_layout Standard
@@ -1390,7 +1391,7 @@ The two entropy variants
 \begin_inset Formula $H\left(w,*\right)$
 \end_inset
 
- are interesting, as they minimze the contribution of stray, accidental
+ are interesting, as they minimize the contribution of stray, accidental
  markup.
  That is, if 
 \begin_inset Formula $N\left(w,*\right)$
@@ -1421,7 +1422,7 @@ The two entropy variants
 \end_layout
 
 \begin_layout Standard
-All of the above defintions pass through, if the token 
+All of the above definitions pass through, if the token 
 \begin_inset Formula $t$
 \end_inset
 
@@ -1587,12 +1588,12 @@ B
 \end_layout
 
 \begin_layout Standard
-The above is a defintion of a token AB as a sequence of two tokens A and
+The above is a definition of a token AB as a sequence of two tokens A and
  B.
  In order to find all possible things that can follow A, its enough to look
  at the incoming set of A (or better yet, for all SequenceLinks with A in
  the first position.
- Frequncy counts can be stored in several places on the above.
+ Frequency counts can be stored in several places on the above.
 \end_layout
 
 \begin_layout Standard
@@ -1997,7 +1998,7 @@ C
 
 \begin_layout Standard
 Both of these are larger and more complex.
- They suceed in identifying the link type, but they fail in identifying
+ They succeed in identifying the link type, but they fail in identifying
  any jigsaw assembly structure (i.e.
  the sequence is a linear nearest-neighbor-to-nearest neighbor sequence.)
  Perhaps that's OK, and we can reserve more complex structures for when
@@ -2145,7 +2146,7 @@ B
 \end_inset
 
 The vocabulary of the stream consists of the TokenNodes.
- The TokenLinks are required to distinguish multiple occurances of tokens
+ The TokenLinks are required to distinguish multiple occurrences of tokens
  in the stream.
  The uuid-hexadecimal could be dynamically generated, or they could be timestamp
 s.
@@ -2174,7 +2175,7 @@ Statistics Gathering
 \end_layout
 
 \begin_layout Standard
-Above requires that statstics be gathered.
+Above requires that statistics be gathered.
  This includes a count of nearest-neighbor token pairs:
 \begin_inset Newline newline
 \end_inset
@@ -2265,6 +2266,174 @@ filter primitives
 
 \begin_layout Itemize
 Single-token recognizer.
+\end_layout
+
+\begin_layout Section*
+Beam Search vs.
+ Syntactic Grammar
+\end_layout
+
+\begin_layout Standard
+Idle ruminations, 13 June 2024.
+\end_layout
+
+\begin_layout Standard
+During all my thinking about symbolic vs.
+ neural net training, I've neglected to exploit the advantage of parsing
+ vs.
+ beam search.
+ So, after training, during generation, it is desired that the NN should
+ generate
+\begin_inset Formula 
+\[
+\widehat{y}=\arg\max_{y}p\left(y;x,\theta\right)
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is the parameter set that has been learned, 
+\begin_inset Formula $x=\left(x_{1},x_{2},\cdots,x_{n}\right)$
+\end_inset
+
+ is the input sequence, and 
+\begin_inset Formula $y=\left(y_{1},y_{2},\cdots,y_{m}\right)$
+\end_inset
+
+ the output sequence, and 
+\begin_inset Formula $p$
+\end_inset
+
+ the probability.
+ Now, the way that LSTM's work is the the output sequences are generated
+ in order: that is, first, 
+\begin_inset Formula $y_{1}$
+\end_inset
+
+ and then 
+\begin_inset Formula $y_{2}$
+\end_inset
+
+ and so on, and there is no guarantee that the final sequence is the actual
+ argmax; all that you get is a selection of 
+\begin_inset Formula $y_{1}$
+\end_inset
+
+ with high values of 
+\begin_inset Formula $p\left(y_{1}|x,\theta\right)$
+\end_inset
+
+ to pick from, and then, only after fixing 
+\begin_inset Formula $y_{1}$
+\end_inset
+
+, can one obtain 
+\begin_inset Formula $p\left(y_{2}|y_{1},x,\theta\right)$
+\end_inset
+
+ and so on.
+ The argmax is intractable when looked at this way, as (for vocabulary of
+ size 
+\begin_inset Formula $N$
+\end_inset
+
+) there are 
+\begin_inset Formula $N$
+\end_inset
+
+ choices for 
+\begin_inset Formula $p\left(y_{1}|x,\theta\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $N^{2}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\left(y_{2}|y_{1},x,\theta\right)$
+\end_inset
+
+ and so on.
+ The standard solution is to use beam search.
+ This is not just 
+\begin_inset Quotes eld
+\end_inset
+
+standard
+\begin_inset Quotes erd
+\end_inset
+
+, but is forced, since RNN/LSTM generation is necessarily sequential.
+ Beam search is the best one can do.
+\end_layout
+
+\begin_layout Standard
+With a link-grammar/sheaf approach, one can pluck out of thin air the 
+\begin_inset Formula $p\left(\cdots,y_{j},\cdots,y_{k},\cdots|x,\theta\right)$
+\end_inset
+
+ for arbitrary 
+\begin_inset Formula $j,k$
+\end_inset
+
+ and thus do maximum-planar-tree parsing, or even more generally, disjunct
+ parsing.
+ So this is a large(?) improvement over sequential-beam-search methods,
+ especially when the distance between elements 
+\begin_inset Formula $j,k$
+\end_inset
+
+ is large, i.e.
+ when 
+\begin_inset Formula $\Delta=k-j$
+\end_inset
+
+ is large.
+\end_layout
+
+\begin_layout Standard
+So ...
+ when is 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ large? Well, for 
+\begin_inset Quotes eld
+\end_inset
+
+most
+\begin_inset Quotes erd
+\end_inset
+
+ English-language sentences, considered at the syntactic level only, it
+ is rare for 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ to be larger than about 3 or 4 or 5, and so a beam search of depth 3 or
+ 4 or 5 is enough to cover those situations.
+ This is for things like determiner-noun agreement, or singular/plural agreement
+, when there are intervening adjectives, etc.
+ For semantic content, one has correlations for 
+\begin_inset Formula $\Delta$
+\end_inset
+
+ in the dozens-to-hundreds type ranges.
+ But, for that, the conventional sequential generation of an RNN/LSTM will
+ resolve the need for long-distance correlates.
+ The beam search was needed only to crawl past the syntactic agreement issues,
+ which are effectively short range, while anything longer-distance is encoded
+ in the weights.
+ Hmm.
+ 
+\end_layout
+
+\begin_layout Standard
+I want to turn this on the side; I still don't have an effective i.e.
+ fast algo for this.
 \end_layout
 
 \begin_layout Section*
