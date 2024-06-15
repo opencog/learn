@@ -2724,7 +2724,217 @@ Well, there was also a second parameter: a complexity penalty.
 \end_layout
 
 \begin_layout Standard
-Should these experiments be repeated?
+Should these experiments be repeated? Upon repetition, what would be learned?
+ I'd rather move on to new things, and if/when/as something similar appears,
+ then the characerization of the density of states should be performed.
+ The search for critical exponents made.
+ I guess I should do this for the word-pairs dataset — I could graph the
+ number of spanning-tree parses vs the total MI of such parses, including
+ the sub-optimal parses: that is, if one considers all possible spanning-tree
+ parses, how is eh MI distributed? Hmm.
+ Good question, why haven't I done this before?
+\end_layout
+
+\begin_layout Section*
+Pointer Nets
+\end_layout
+
+\begin_layout Standard
+I was reading the paper 
+\begin_inset Quotes eld
+\end_inset
+
+Pointer Networks
+\begin_inset Quotes erd
+\end_inset
+
+ Oriol Vinyals, Meire Fortunato, Navdeep Jaitly (2017) arXiv:1506.03134v2
+ [stat.ML] 2 Jan 2017 and got to thinking about how one might give a geometric
+ interpretation to the structure described there.
+ So here goes.
+ I'm flying blind, I've got a few half-baked ideas that I will attempt to
+ string together into an idea-salad, train-of-thought.
+ Train-of-thought is the common expression; its more like a drunkards-walk-of-th
+ought.
+ Lets go for it.
+\end_layout
+
+\begin_layout Standard
+I'm going to use a slghtly different notation from teh original paper, its
+ more convenient for me.
+ The two (really just one, after renomalization) equations for pointer networks
+ are:
+\begin_inset Formula 
+\[
+u_{ij}=\left\langle r,\tanh\left(Ue_{j}+Vd_{i}\right)\right\rangle 
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+p\left(x_{i}=w_{j}\vert x_{1,}\cdots x_{i-1};X\right)=\frac{\exp\left(-\beta u_{ij}\right)}{\sum_{j}\exp\left(-\beta u_{ij}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Pointer networks have the property that the only symbols appearing in the
+ output are taken from the symbols in the input set.
+ Let the input sentence be the words 
+\begin_inset Formula $w_{1},w_{2},\cdots,w_{n}$
+\end_inset
+
+.
+ We could take 
+\begin_inset Formula $w_{j}=j$
+\end_inset
+
+ as the label, but this invites mild confusion, so I'll denote the word
+ in the 
+\begin_inset Formula $j$
+\end_inset
+
+'th position as 
+\begin_inset Formula $w_{j}.$
+\end_inset
+
+ Additional confusion results if the input sentence contains repeated words,
+ so that the vocabulary size is less than 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ I'll get back to that, later; for now, assume that the input words are
+ unique, so that 
+\begin_inset Formula $j$
+\end_inset
+
+ really is a positional indicator, instead of a vocabulary index.
+\end_layout
+
+\begin_layout Standard
+The output to be generated is a string 
+\begin_inset Formula $x_{1},x_{2},\cdots,x_{m}$
+\end_inset
+
+ with each 
+\begin_inset Formula $x_{i}\in\left\{ w_{j}\right\} $
+\end_inset
+
+ 
+\emph on
+i.e.
+
+\emph default
+ the only words appearing in the output are words that appeared in the input.
+ The conditional probability 
+\begin_inset Formula $p\left(x_{i}=w_{j}\vert x_{1,}\cdots x_{i-1};X\right)$
+\end_inset
+
+ indicates the probabilty of choosing 
+\begin_inset Formula $x_{i}=w_{j}$
+\end_inset
+
+, given the earlier selection of output symbols 
+\begin_inset Formula $x_{1,}\cdots x_{i-1}$
+\end_inset
+
+, and the general system priors 
+\begin_inset Formula $X$
+\end_inset
+
+, which includes assorted parameters.
+\end_layout
+
+\begin_layout Standard
+The parameter 
+\begin_inset Formula $\beta$
+\end_inset
+
+ des not appear in the original paper; at any rate, in can be re-absorbed
+ into the vector 
+\begin_inset Formula $r$
+\end_inset
+
+ and so is 
+\begin_inset Quotes eld
+\end_inset
+
+superfluous
+\begin_inset Quotes erd
+\end_inset
+
+; however, thermodynamic convention suggests that we keep it around as a
+ handy-dandy multiplier.
+\end_layout
+
+\begin_layout Standard
+The angle brackets 
+\begin_inset Formula $\left\langle \cdot,\cdot\right\rangle $
+\end_inset
+
+ denote the inner product.
+ The 
+\begin_inset Formula $U$
+\end_inset
+
+ and 
+\begin_inset Formula $V$
+\end_inset
+
+ are the hidden-state weight matricies after training two LSTM neural nets.
+ These are 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ square matrices, with 
+\begin_inset Formula $N=500$
+\end_inset
+
+ for the examples covered in the paper.
+ There are two LSTM's: the 
+\begin_inset Quotes eld
+\end_inset
+
+encoding
+\begin_inset Quotes erd
+\end_inset
+
+ LSTM and the 
+\begin_inset Quotes eld
+\end_inset
+
+decoding
+\begin_inset Quotes erd
+\end_inset
+
+ LSTM, wired up in series.
+ The 
+\begin_inset Formula $e_{j}$
+\end_inset
+
+ is the hidden state vector in the encoder, obtained immediately after observing
+ input word 
+\begin_inset Formula $w_{j}$
+\end_inset
+
+.
+ The 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ is the hidden state vector in the decoder, observed immadiately before
+ generating output 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+.
+ Ummm, Let seee....
 \end_layout
 
 \begin_layout Section*
