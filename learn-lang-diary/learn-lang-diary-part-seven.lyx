@@ -2459,8 +2459,8 @@ representatives
 \begin_inset Quotes erd
 \end_inset
 
-; it then chooses one to elaborate further, and then re-inserts it into
- the deme.
+; it then chooses one to elaborate further, and then reinserts it into the
+ deme.
  If only the top N scorers are kept, this can be thought of as a kind of
  
 \begin_inset Quotes eld
@@ -2491,10 +2491,11 @@ Of course, this allows the deme to get trapped in a local maximum: all top
 \end_inset
 
 .
- Nil provided some argument inspire by Solomonoff-blah-blah or Kolmogorov-blah-b
-lah.
- I promtly realized that the 2 is too strict, it punishes low scores too
- strongly, and introduced a free parameter 
+ Nil provided some argument inspired by Solomonoff-blah-blah or Kolmogorov-compl
+exity-blah-blah, I don't recall.
+ I promptly realized that the 2 is too harsh a penalty, it punishes low
+ scores too strongly.
+ So I introduced a free parameter 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -2502,13 +2503,13 @@ lah.
 \begin_inset Formula $p\sim e^{-\beta\mbox{score}}$
 \end_inset
 
-with an obvious thermodynamic (Boltzman) interpretation.
- Turns out, the system work much muc better, when (typically) 
+ with an obvious thermodynamic (Boltzmann) interpretation.
+ Turns out, the system worked much much better, when (typically) 
 \begin_inset Formula $0.01<\beta<0.1$
 \end_inset
 
  in general (and of course this depends on the problem type, and the method
- of scoring, sine the 
+ of scoring, since the 
 \begin_inset Formula $\beta$
 \end_inset
 
@@ -2526,7 +2527,7 @@ And that was the end of it; I thought no further of it, as I was busy coding,
  not theorizing.
  In retrospect, this was a mistake, for which I now attempt to make the
  weakest of amends.
- So, some obsrvations:
+ So, some observations:
 \end_layout
 
 \begin_layout Enumerate
@@ -2534,12 +2535,12 @@ In physical systems,
 \begin_inset Formula $\beta$
 \end_inset
 
- is not a free parameter, but an intensive thermodynamc property.
+ is not a free parameter, but an intensive thermodynamic property.
 \end_layout
 
 \begin_layout Enumerate
 In a physical system, the distribution of particle energies is given by
- Boltzmann, or Fermi-Dirac or Bose-Einstein statistics.
+ Boltzmann, or Fermi–Dirac or Bose–Einstein statistics.
 \end_layout
 
 \begin_layout Enumerate
@@ -2569,7 +2570,7 @@ It must surely be described with some critical exponent; viz, the number
 \end_inset
 
  must go as 
-\begin_inset Formula $N(s)\sim s^{-\alpha}$
+\begin_inset Formula $N(s)\sim\left(s_{0}-s\right)^{-\alpha}$
 \end_inset
 
  for some 
@@ -2584,12 +2585,41 @@ critical exponent
 \begin_inset Formula $\alpha$
 \end_inset
 
- (which depends on theproblem type).
+ (which depends on the problem type).
  But what is this 
 \begin_inset Formula $\alpha$
 \end_inset
 
 ? Alas.
+ 
+\end_layout
+
+\begin_layout Standard
+Here, I've written 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ as some ambiguous offset: at any given point in time, there is only one
+ top score, and so, at that moment, take 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ to be that top score, so that 
+\begin_inset Formula $N\left(s_{0}\right)=1$
+\end_inset
+
+.
+ As new top scores are discovered, 
+\begin_inset Formula $s_{0}$
+\end_inset
+
+ increases monotonically.
+ Presumably, along the way, one finds plenty of other exemplars that score
+ equally with the previous top score.
+ I did create graphs showing the change in top score over time; just not
+ what the density of states was, below that top score.
+ Alas.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2616,11 +2646,11 @@ bits
 \end_inset
 
 .
- When intead one has that 
-\begin_inset Formula $p\sim e^{-\beta\mbox{score}}$
+ When instead one has that 
+\begin_inset Formula $p\sim e^{-\beta\mbox{score}}=2^{-\beta\mbox{score}/\log2}$
 \end_inset
 
- then a score of 1.0 carries 
+ then a delta-score of 1.0 carries 
 \begin_inset Formula $\beta/\log2$
 \end_inset
 
@@ -2633,7 +2663,7 @@ bits
 \begin_inset Formula $\log2$
 \end_inset
 
- so that the adjustiable parameter could be interpreted not as 
+ so that the adjustable parameter could be interpreted not as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2656,7 +2686,7 @@ information content associated with an improved score
 Combining these two ideas into one now gives a measure for the complexity
  of the system: the number of accessible solutions decreases for each bit
  of improved score.
- f we look at the number of accpetable solutions as indicating how much
+ If we look at the number of acceptable solutions as indicating how much
  we don't know about the system, then we seem to have two measures: directly,
  there is 
 \begin_inset Formula $\log_{2}N(s)$
@@ -2676,6 +2706,25 @@ Combining these two ideas into one now gives a measure for the complexity
 
  and ...
  umm...
+\end_layout
+
+\begin_layout Standard
+Well, there was also a second parameter: a complexity penalty.
+ The system easily found complicated solutions, which were readily recognized
+ as resulting in an over-fit to the training data.
+ The complexity penalty suppressed the overfitting, with the added side
+ benefit of helping performance by avoiding complex evaluations.
+ It also seems that the complexity penalty helped prevent the system from
+ crawling into local maxima.
+ (Once trapped in the local maximum, all that was left was the opportunity
+ to over-fit to the training data.).
+ Presumably, there was a density of states and some critical exponent here
+ as well: I did not collect this data.
+ I'm only guessing that it was exponent-like.
+\end_layout
+
+\begin_layout Standard
+Should these experiments be repeated?
 \end_layout
 
 \begin_layout Section*
