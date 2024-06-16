@@ -2770,7 +2770,7 @@ I'm going to use a slightly different notation from the original paper,
  are:
 \begin_inset Formula 
 \[
-u_{ij}=\left\langle r,\tanh\left(Ue_{j}+Vd_{i}\right)\right\rangle 
+u_{ij}=\left\langle r,\tanh\left(Uc_{j}+Vd_{i}\right)\right\rangle 
 \]
 
 \end_inset
@@ -2919,7 +2919,7 @@ decoding
 
  RNN, wired up in series.
  The 
-\begin_inset Formula $e_{j}$
+\begin_inset Formula $c_{j}$
 \end_inset
 
  is the hidden state vector in the encoder, obtained immediately after observing
@@ -2954,10 +2954,12 @@ At this point, I'm mildly confused.
 \end_inset
 
  matrices supposed to be? I'm imagining a much simpler model is intended:
- The RNN is built so that there really is only one weight matrix, each,
+ the RNN is built so that there really is only one weight matrix, each,
  so grand-total of two, one each for encode and decode.
- Perhaps one can be clever about this, and make each cell be an actually
- LSTM, but the paper just doesn't review this case.
+ Perhaps one can be clever about this, and make each cell be an actual LSTM,
+ but the paper just doesn't review this case.
+ The paper is annoyingly sloppy in several respects; this is one.
+ Oh well.
 \end_layout
 
 \begin_layout Standard
@@ -3005,7 +3007,154 @@ Geometric Interpretation
 \end_layout
 
 \begin_layout Standard
-So first, lets start with ....
+Part of the slop of the paper is that it does not describe how to encode
+ the inputs.
+\end_layout
+
+\begin_layout Standard
+For the simplest case, convex hulls, let's work out from first principles
+ what would be needed, given the generic PtrNet architecture.
+ For the provided example, the input is a collection of 2D points; the paper
+ does not examine the case of 3D, 4D convex hulls, but it seems the same
+ algo would apply in any dimension.
+ The algo would be take each point as a ray, and, at the end of the ray,
+ compute the orthogonal plane.
+ This plane splits n-dim space into two: if all other points are to the
+ same side of the plane, then this point belongs to the convex hull.
+ Rays, orthogonal planes, and the determination of which side a point lies
+ on can all be computed using a recursive set of linear operations, so it
+ makes sense that some sequence of (recursive) linear ops should be able
+ to solve this problem.
+ It also seems reasonable that, after the end-of-data, that a handful of
+ additional 
+\begin_inset Quotes eld
+\end_inset
+
+idle
+\begin_inset Quotes erd
+\end_inset
+
+ steps might be required to complete the computations, instead of immediately
+ moving to the generation mode.
+ The paper does not consider this case, of having 
+\begin_inset Quotes eld
+\end_inset
+
+idler
+\begin_inset Quotes erd
+\end_inset
+
+ steps, to finish the recursive computations: it is not mentioned, and is
+ explicitly hard-coded to one.
+ Curious oversight.
+\end_layout
+
+\begin_layout Standard
+For the 2D case, there is an obvious sequential ordering for the points
+ fixing the convex hull.
+ For three and higher dimensions, there is not: instead, it is enough to
+ provide a yes/no answer to 
+\begin_inset Quotes eld
+\end_inset
+
+is this point part of the convex hull?
+\begin_inset Quotes erd
+\end_inset
+
+ One possible output is to just repeat the input points in the same order,
+ skipping over those that are not a part of the hull.
+\end_layout
+
+\begin_layout Standard
+One possible way of hand-coding (not training!) the convex hull problem
+ would be to divide the total vector space into three parts: 
+\begin_inset Formula $C\oplus D\oplus S$
+\end_inset
+
+ where the subspace 
+\begin_inset Formula $C$
+\end_inset
+
+ holds the explicit coordinates for the input points, the subspace 
+\begin_inset Formula $S$
+\end_inset
+
+ is a scratch space for holding cross-products, and the subspace 
+\begin_inset Formula $D$
+\end_inset
+
+ is just an index, to number the input points in sequential order.
+ Thus, for example, one would issue basis vectors 
+\begin_inset Formula $e_{nk+1},e_{nk+2},\cdots,e_{nk+n}$
+\end_inset
+
+ for the 
+\begin_inset Formula $k$
+\end_inset
+
+'th point in the 
+\begin_inset Formula $n$
+\end_inset
+
+-dimensional convex hull problem.
+ These basis vectors span 
+\begin_inset Formula $C$
+\end_inset
+
+, and are used to explicitly and directly encode the input sequence.
+ In addition, basis vectors from the scratch-space 
+\begin_inset Formula $S$
+\end_inset
+
+ are issued; these would be vectors 
+\begin_inset Formula $e_{mk+1},\cdots,e_{mk+m}$
+\end_inset
+
+ for an 
+\begin_inset Formula $m$
+\end_inset
+
+-dimensional scratch space.
+ With a fair amount of pain, the matrix 
+\begin_inset Formula $U$
+\end_inset
+
+ and the matrix 
+\begin_inset Formula $V$
+\end_inset
+
+ could be explicitly written down, such that they solve this problem: this
+ can be down without training.
+\end_layout
+
+\begin_layout Standard
+For the case of NN via gradient descent, one issues, I guess, random vectors.
+ During gradient descent, a space is learned that must be isomorphic to
+ the above, with a partitioning into 
+\begin_inset Formula $C\oplus D\oplus S$
+\end_inset
+
+ being implicit, 
+\begin_inset Quotes eld
+\end_inset
+
+encrypted
+\begin_inset Quotes erd
+\end_inset
+
+ into the encoding.
+ For this to work, the hidden space must be large enough.
+ The paper states that the dimension of the hidden space was 
+\begin_inset Formula $N=500$
+\end_inset
+
+, which seems like plenty enough space for 50 two-D points: a total of 
+\begin_inset Formula $2\times50=100$
+\end_inset
+
+ dimensions to explicitly store the coordinates, leaving 400 for the scratch
+ space.
+ Plenty of room.
 \end_layout
 
 \begin_layout Section*
