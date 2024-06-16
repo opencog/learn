@@ -2759,9 +2759,13 @@ ought.
  Lets go for it.
 \end_layout
 
+\begin_layout Subsection*
+Review & Notation
+\end_layout
+
 \begin_layout Standard
-I'm going to use a slghtly different notation from teh original paper, its
- more convenient for me.
+I'm going to use a slightly different notation from the original paper,
+ its more convenient for me.
  The two (really just one, after renomalization) equations for pointer networks
  are:
 \begin_inset Formula 
@@ -2833,15 +2837,15 @@ i.e.
 \emph default
  the only words appearing in the output are words that appeared in the input.
  The conditional probability 
-\begin_inset Formula $p\left(x_{i}=w_{j}\vert x_{1,}\cdots x_{i-1};X\right)$
+\begin_inset Formula $p\left(x_{i}=w_{j}\vert x_{1},\cdots,x_{i-1};X\right)$
 \end_inset
 
- indicates the probabilty of choosing 
+ indicates the probability of choosing 
 \begin_inset Formula $x_{i}=w_{j}$
 \end_inset
 
 , given the earlier selection of output symbols 
-\begin_inset Formula $x_{1,}\cdots x_{i-1}$
+\begin_inset Formula $x_{1},\cdots,x_{i-1}$
 \end_inset
 
 , and the general system priors 
@@ -2856,7 +2860,7 @@ The parameter
 \begin_inset Formula $\beta$
 \end_inset
 
- des not appear in the original paper; at any rate, in can be re-absorbed
+ does not appear in the original paper; at any rate, in can be reabsorbed
  into the vector 
 \begin_inset Formula $r$
 \end_inset
@@ -2887,7 +2891,7 @@ The angle brackets
 \begin_inset Formula $V$
 \end_inset
 
- are the hidden-state weight matricies after training two LSTM neural nets.
+ are the hidden-state weight matrices after training two RNN neural nets.
  These are 
 \begin_inset Formula $N\times N$
 \end_inset
@@ -2897,7 +2901,7 @@ The angle brackets
 \end_inset
 
  for the examples covered in the paper.
- There are two LSTM's: the 
+ There are two RNN's: the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2905,7 +2909,7 @@ encoding
 \begin_inset Quotes erd
 \end_inset
 
- LSTM and the 
+ RNN and the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2913,7 +2917,7 @@ decoding
 \begin_inset Quotes erd
 \end_inset
 
- LSTM, wired up in series.
+ RNN, wired up in series.
  The 
 \begin_inset Formula $e_{j}$
 \end_inset
@@ -2928,13 +2932,80 @@ decoding
 \begin_inset Formula $d_{i}$
 \end_inset
 
- is the hidden state vector in the decoder, observed immadiately before
+ is the hidden state vector in the decoder, observed immediately before
  generating output 
 \begin_inset Formula $x_{i}$
 \end_inset
 
 .
- Ummm, Let seee....
+\end_layout
+
+\begin_layout Standard
+At this point, I'm mildly confused.
+ The text implies earlier that the RNN's are implemented as LSTM's, but
+ then does not repeat this assertion when describing the Ptr-Net.
+ The issue is that LSTM's have eight distinct weight matrices, playing different
+ roles: if so, then which of these are the 
+\begin_inset Formula $U$
+\end_inset
+
+ and 
+\begin_inset Formula $V$
+\end_inset
+
+ matrices supposed to be? I'm imagining a much simpler model is intended:
+ The RNN is built so that there really is only one weight matrix, each,
+ so grand-total of two, one each for encode and decode.
+ Perhaps one can be clever about this, and make each cell be an actually
+ LSTM, but the paper just doesn't review this case.
+\end_layout
+
+\begin_layout Standard
+Anyway, last but no least, 
+\begin_inset Formula $r$
+\end_inset
+
+ is an 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional vector, trained up along with 
+\begin_inset Formula $U$
+\end_inset
+
+ and 
+\begin_inset Formula $V$
+\end_inset
+
+.
+ As noted earlier, one may rescale 
+\begin_inset Formula $r\mapsto\beta r$
+\end_inset
+
+ to absorb the extra thermodynamic multiplier 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+ I'm guessing that the vector 
+\begin_inset Formula $r$
+\end_inset
+
+ self-normalizes during training: that is, during training, 
+\begin_inset Formula $\beta=1$
+\end_inset
+
+ is taken, so that training automatically finds the correct scale.
+ I guess.
+ The text is silent on this topic.
+\end_layout
+
+\begin_layout Subsection*
+Geometric Interpretation
+\end_layout
+
+\begin_layout Standard
+So first, lets start with ....
 \end_layout
 
 \begin_layout Section*
