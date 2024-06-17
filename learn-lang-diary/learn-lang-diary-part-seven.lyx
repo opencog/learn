@@ -2918,7 +2918,34 @@ decoding
 \end_inset
 
  RNN, wired up in series.
- The 
+\end_layout
+
+\begin_layout Standard
+At this point, I'm mildly confused.
+ The section immediately prior, titled 
+\begin_inset Quotes eld
+\end_inset
+
+content-based input attention
+\begin_inset Quotes erd
+\end_inset
+
+, explicitly talks of LTSM's (i.e.
+ that the RNN's are implemented as LSTM's).
+ It then states, I quote: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+For the LSTM RNNs, we use the state after the output gate has been component-wis
+e multiplied by the cell activations
+\emph default
+.
+\begin_inset Quotes erd
+\end_inset
+
+ I interpret this as saying that the 
 \begin_inset Formula $c_{j}$
 \end_inset
 
@@ -2927,8 +2954,7 @@ decoding
 \begin_inset Formula $w_{j}$
 \end_inset
 
-.
- The 
+; the 
 \begin_inset Formula $d_{i}$
 \end_inset
 
@@ -2941,11 +2967,8 @@ decoding
 \end_layout
 
 \begin_layout Standard
-At this point, I'm mildly confused.
- The text implies earlier that the RNN's are implemented as LSTM's, but
- then does not repeat this assertion when describing the Ptr-Net.
- The issue is that LSTM's have eight distinct weight matrices, playing different
- roles: if so, then which of these are the 
+The issue here is that LSTM's have eight distinct weight matrices, playing
+ different roles: are the matrices 
 \begin_inset Formula $U$
 \end_inset
 
@@ -2953,17 +2976,40 @@ At this point, I'm mildly confused.
 \begin_inset Formula $V$
 \end_inset
 
- matrices supposed to be? I'm imagining a much simpler model is intended:
- the RNN is built so that there really is only one weight matrix, each,
- so grand-total of two, one each for encode and decode.
- Perhaps one can be clever about this, and make each cell be an actual LSTM,
- but the paper just doesn't review this case.
- The paper is annoyingly sloppy in several respects; this is one.
+ supposed to be one of these? Or are they something else, some matrices
+ in addition to what the LSTM is doing? They say; I quote: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+...
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+, 
+\begin_inset Formula $U$
+\end_inset
+
+, and 
+\begin_inset Formula $V$
+\end_inset
+
+ are learnable parameters of the model.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ So these are in addition to the various weight-matrices in a conventional
+ LSTM? OK, so I'm just an uneducated rube; the paper is annoyingly sloppy
+ in several respects; this is one.
  Oh well.
 \end_layout
 
 \begin_layout Standard
-Anyway, last but no least, 
+Anyway, last but not least, 
 \begin_inset Formula $r$
 \end_inset
 
@@ -3003,7 +3049,7 @@ Anyway, last but no least,
 \end_layout
 
 \begin_layout Subsection*
-Geometric Interpretation
+Algorithmic Interpretation
 \end_layout
 
 \begin_layout Standard
@@ -3115,7 +3161,59 @@ One possible way of hand-coding (not training!) the convex hull problem
 \end_inset
 
 -dimensional scratch space.
- With a fair amount of pain, the matrix 
+ 
+\end_layout
+
+\begin_layout Standard
+The vector 
+\begin_inset Formula $r$
+\end_inset
+
+ then serves as a mask, to mask out the subspaces within which the scratch
+ computations are done: the final answers are copied into that zone from
+ which the vector 
+\begin_inset Formula $r$
+\end_inset
+
+ projects out.
+ Taken as a projection, 
+\begin_inset Formula $r$
+\end_inset
+
+ should act as an idempotent.
+ That is, the dot product with 
+\begin_inset Formula $r$
+\end_inset
+
+ should be understood first as a subspace projection, followed by a trace
+ over that subspace.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Should be understood
+\begin_inset Quotes erd
+\end_inset
+
+ is the operative phrase, here: as, otherwise, vectors and subspace projections
+ are very different things; they behave differently under coordinate transformat
+ions, and are only comparable to one-another under confusing circumstances.
+ Thus, although the original paper writes a dot-product here, the 
+\begin_inset Quotes eld
+\end_inset
+
+intent
+\begin_inset Quotes erd
+\end_inset
+
+ was a read-out projection; that some subspace is meant to be treated as
+ a scratch-space for intermediate results, and that this subspace is to
+ be ignored, when the final result is to be read-out.
+\end_layout
+
+\begin_layout Standard
+At any rate, the point here is that, with a fair amount of pain and effort,
+ the matrix 
 \begin_inset Formula $U$
 \end_inset
 
@@ -3123,8 +3221,25 @@ One possible way of hand-coding (not training!) the convex hull problem
 \begin_inset Formula $V$
 \end_inset
 
- could be explicitly written down, such that they solve this problem: this
- can be down without training.
+ and the vector 
+\begin_inset Formula $r$
+\end_inset
+
+ could be explicitly described and written down, such that they solve the
+ convex hull problem within the framework of the dot-product-tanh + softmax
+ equations: this can be done, without training.
+ Of course, this is not how neural nets actually work; they are trained
+ with gradient descent.
+ The claim is that, whatever it is that the neural net actually learns,
+ that it is 
+\begin_inset Quotes eld
+\end_inset
+
+more or less
+\begin_inset Quotes erd
+\end_inset
+
+ isomorphic to such a hand-crafted algorithm.
 \end_layout
 
 \begin_layout Standard
@@ -3155,6 +3270,231 @@ encrypted
  dimensions to explicitly store the coordinates, leaving 400 for the scratch
  space.
  Plenty of room.
+\end_layout
+
+\begin_layout Subsection*
+Geometric interpretation
+\end_layout
+
+\begin_layout Standard
+Lets daydream about geometry.
+ The tanh is taken componentwise; it compresses the whole of space to a
+ cube.
+ In particular, it pushes a uniform distribution into the corners of a cube.
+ Even more strongly: the corners becomes more heavily occupied, the higher
+ the dimension, approaching a limit of delta functions at the corners.
+ I think...
+ lets check!? (Skip the section below if you already know this.
+ It contains a rough proof.).
+\end_layout
+
+\begin_layout Subsubsection*
+Cube corners
+\end_layout
+
+\begin_layout Standard
+What does the pointwise tanh do to a distribution of vectors? In particular,
+ to a distribution of vectors, centered on the origin, with deviation much
+ greater than one? Lets start with some quasi-uniform distribution.
+ There are three 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ choices: points destributed uniformly on the surface of a sphere, points
+ distributed uniformly in a ball, and points distributed uniformly as a
+ Gaussain.
+ In each case, take the sphere radius 
+\begin_inset Formula $R$
+\end_inset
+
+ to be 
+\begin_inset Formula $R\gg1$
+\end_inset
+
+ and then it seems obvious that, for a vector 
+\begin_inset Formula $\overrightarrow{v}=\left(v_{1},\cdots,v_{n}\right)$
+\end_inset
+
+ that for almost all 
+\begin_inset Formula $k$
+\end_inset
+
+, that 
+\begin_inset Formula $\left|v_{k}\right|\gg1$
+\end_inset
+
+, right? It seems obvious, and there's a simple proof: for normally-distributed
+ points, having a normal distribution with 
+\begin_inset Formula $\sigma\gg1$
+\end_inset
+
+, one has that 
+\begin_inset Formula $\left(1/\sigma\sqrt{2\pi}\right)\int_{-1}^{1}\exp\left(-x^{2}/2\sigma^{2}\right)dx\to0$
+\end_inset
+
+ as 
+\begin_inset Formula $\sigma\to\infty$
+\end_inset
+
+.
+ Thus, 
+\begin_inset Formula $\tanh v_{k}\approx\pm1$
+\end_inset
+
+ almost always, for almost all 
+\begin_inset Formula $k$
+\end_inset
+
+, and so 
+\begin_inset Formula $\tanh\overrightarrow{v}$
+\end_inset
+
+ lives on one (and only one) of the corners of a cube.
+ This holds, independent of the dimension, and requires only that 
+\begin_inset Formula $R\gg1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+What about the case of high dimensions? In this case, lets contrmplate a
+ relatively small 
+\begin_inset Formula $R$
+\end_inset
+
+ corresponding to the case of 
+\begin_inset Formula $\left(1/\sigma\sqrt{2\pi}\right)\int_{-1}^{1}\exp\left(-x^{2}/2\sigma^{2}\right)dx=1/2$
+\end_inset
+
+, so that there is a 50-50 chance that 
+\begin_inset Formula $\left|v_{k}\right|<1$
+\end_inset
+
+.
+ Applying tanh, there is a 50-50 chance that 
+\begin_inset Formula $\left|\tanh v_{k}\right|\approx1$
+\end_inset
+
+.
+ For an 
+\begin_inset Formula $N$
+\end_inset
+
+-dimensional space, the corresponding point will be in the interior of an
+ 
+\begin_inset Formula $N/2$
+\end_inset
+
+-dimensional face of the cube, with the other 
+\begin_inset Formula $N/2$
+\end_inset
+
+ coordinates being 
+\begin_inset Formula $\approx\pm1$
+\end_inset
+
+.
+ The volume of these faces gets very small: the volume goes as 
+\begin_inset Formula $R^{-N/2}$
+\end_inset
+
+ so even if 
+\begin_inset Formula $R$
+\end_inset
+
+ is only slightly larger than 1, almost all points 
+\begin_inset Formula $\overrightarrow{v}$
+\end_inset
+
+ will end up in a very small volume, as 
+\begin_inset Formula $N\gg1$
+\end_inset
+
+.
+ Yes, the faces have a bigger volume than the corners, but still, the interior
+ of the cube is swept clearn as 
+\begin_inset Formula $N\to\infty$
+\end_inset
+
+, even for modest 
+\begin_inset Formula $R$
+\end_inset
+
+.
+ The pointwise application of the tanh function pushes distributions into
+ the corners of a cube.
+\end_layout
+
+\begin_layout Subsubsection*
+Cube distributions
+\end_layout
+
+\begin_layout Standard
+So, for almost any distribution, the tanh function maps vectors to the corners
+ of a cube.
+ In particular, during the gradient descent learning stage, matrices 
+\begin_inset Formula $U$
+\end_inset
+
+ and 
+\begin_inset Formula $V$
+\end_inset
+
+ were learnt, but there was no particular control of their norm.
+ Can we assume that 
+\begin_inset Formula $\left\Vert U\right\Vert \gg1$
+\end_inset
+
+ and likewise 
+\begin_inset Formula $\left\Vert V\right\Vert \gg1$
+\end_inset
+
+? What about the hidden vectors 
+\begin_inset Formula $c_{j}$
+\end_inset
+
+ and 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+? What is their norm? Can we assume that 
+\begin_inset Formula $\left|Uc_{j}+Vd_{i}\right|\gg1$
+\end_inset
+
+ for all 
+\begin_inset Formula $i,j$
+\end_inset
+
+? The original paper makes no mention of this, and I have no clue whether
+ this is supposed to be well-known in the deep-learning NN community.
+ Apparently, I'm a rube.
+\end_layout
+
+\begin_layout Standard
+Lets assume this is the case.
+ Then the vector 
+\begin_inset Formula $\tanh\left(Uc_{j}+Vd_{i}\right)$
+\end_inset
+
+ is just a binary vector (vector components taking values in 
+\begin_inset Formula $\pm1$
+\end_inset
+
+) and the dot product 
+\begin_inset Formula $u_{ij}=\left\langle r,\tanh\left(Uc_{j}+Vd_{i}\right)\right\rangle $
+\end_inset
+
+ appears to be a kind-of Hamming distance to 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Section*
