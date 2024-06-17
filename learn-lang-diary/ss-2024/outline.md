@@ -1,5 +1,17 @@
 
+Aš nesėdžiu nosi prikliaves prie žinių, tai nekartosiu praeitos savaites
+žinias šiandien. Tikiu kad nemaža proporcija kalausytoju galės
+patikslinti mano pasireiškimus. Bandysiu plačiais ir bendrais broužais
+kalbėti, ir gal pasėkti ir susikalbėti su rašytojais ir meno tirininkais,
+daugiau negu su smalsiai sekantys teknologijos gerbėjius.
+
+Aš didžiausia dalia vengsiu daryti tolimos ateites progronozė. Kodėl?
+Per daug subtilus. Per daug dalyku ivyks to pačiu momentu, ir jie visi
+bus svarbus ir įtakingi.
+-----
+
 Struktūra yra viskas (tinklai visur)
+------------------------------------
 
 visi tinklai susideda iš dėlionių
 
@@ -12,6 +24,7 @@ Lingvistika
 Tenzorinė algebra
 Pavz.
 ---------
+Generativinis AI Dirbtinis Intelektas 
 LSTM
 pilna diagrama
 5 layer, 8000 dim vector, 384M weights
@@ -26,6 +39,12 @@ kritinai exponentai
 fazių perėjimas
 feromagnetinis perėjimas  (w/ diagrama)
 kraštas fazių perėjimo
+--------
+2012 - visi jauneiji gave telefonus su apsais
+-- pakilo savižudystė, anxiety
+-- visi ryšiai yra privatus, pakavoti nuo bendrominės žiurosenos 
+-- privačios vietos, nebe viešos.
+-- bus sunkiau išsaugoti demokratija
 --------
 Nagrinėsime toliau:
 Ar gyvas?
