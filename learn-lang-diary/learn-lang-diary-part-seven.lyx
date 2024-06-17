@@ -3278,7 +3278,7 @@ Geometric interpretation
 
 \begin_layout Standard
 Lets daydream about geometry.
- The tanh is taken componentwise; it compresses the whole of space to a
+ The tanh is taken component-wise; it compresses the whole of space to a
  cube.
  In particular, it pushes a uniform distribution into the corners of a cube.
  Even more strongly: the corners becomes more heavily occupied, the higher
@@ -3293,7 +3293,7 @@ Cube corners
 \end_layout
 
 \begin_layout Standard
-What does the pointwise tanh do to a distribution of vectors? In particular,
+What does the point-wise tanh do to a distribution of vectors? In particular,
  to a distribution of vectors, centered on the origin, with deviation much
  greater than one? Lets start with some quasi-uniform distribution.
  There are three 
@@ -3304,9 +3304,9 @@ obvious
 \begin_inset Quotes erd
 \end_inset
 
- choices: points destributed uniformly on the surface of a sphere, points
+ choices: points distributed uniformly on the surface of a sphere, points
  distributed uniformly in a ball, and points distributed uniformly as a
- Gaussain.
+ Gaussian.
  In each case, take the sphere radius 
 \begin_inset Formula $R$
 \end_inset
@@ -3362,7 +3362,7 @@ obvious
 \end_layout
 
 \begin_layout Standard
-What about the case of high dimensions? In this case, lets contrmplate a
+What about the case of high dimensions? In this case, lets contemplate a
  relatively small 
 \begin_inset Formula $R$
 \end_inset
@@ -3417,7 +3417,7 @@ What about the case of high dimensions? In this case, lets contrmplate a
 
 .
  Yes, the faces have a bigger volume than the corners, but still, the interior
- of the cube is swept clearn as 
+ of the cube is swept clean as 
 \begin_inset Formula $N\to\infty$
 \end_inset
 
@@ -3426,7 +3426,7 @@ What about the case of high dimensions? In this case, lets contrmplate a
 \end_inset
 
 .
- The pointwise application of the tanh function pushes distributions into
+ The point-wise application of the tanh function pushes distributions into
  the corners of a cube.
 \end_layout
 
@@ -3494,7 +3494,66 @@ Lets assume this is the case.
 \end_inset
 
 .
+ The softmax then emphasizes the point: the smaller this Hamming distance,
+ the greater larger that 
+\begin_inset Formula $p\left(x_{i}=w_{j}\vert x_{1},\cdots,x_{i-1};X\right)$
+\end_inset
+
+ becomes.
+ Thus we arrive at the final geometric interpretation: the vector 
+\begin_inset Formula $r$
+\end_inset
+
+ is the 
+\begin_inset Quotes eld
+\end_inset
+
+characteristic vector
+\begin_inset Quotes erd
+\end_inset
+
+ encoding the problem, and the solution to the problem is described by an
+ output sequence 
+\begin_inset Formula $x_{1},\cdots,x_{m}$
+\end_inset
+
+ such that the sequence corresponds to a set of corners of the hypercube
+ that never stray very far from the characteristic direction 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ All solutions are never very far from 
+\begin_inset Formula $r$
+\end_inset
+
+, the softmax guarantees this.
+\end_layout
+
+\begin_layout Standard
+Unclear in this geometric interpretation is whether the sequence of outputs
  
+\begin_inset Formula $x_{1},\cdots,x_{m}$
+\end_inset
+
+ can be thought of as being drawn randomly from the hypercube corners near
+ the characteristic vector 
+\begin_inset Formula $r$
+\end_inset
+
+ or whether perhaps the corners of the hypercube are being visited via a
+ random walk amongst nearest-neighbors.
+ There are reasons to suspect that there's a walk to nearest neighbors,
+ but mounting a concrete argument for that is difficult, and seems like
+ a fools errand without at least some experimental evidence.
+ It's possible that all this is well-known to the academic community, and
+ I am simply not broadly-read enough.
+\end_layout
+
+\begin_layout Standard
+Lets wrap this up, for now.
+ Obtaining experimental evidence for this interpretation for pointer nets
+ would be an interesting task.
 \end_layout
 
 \begin_layout Section*
