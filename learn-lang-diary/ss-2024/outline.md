@@ -20,6 +20,8 @@ C2H6O
 krebs cyclas
 Šviesoforas
 Lingvistika
+Logika
+
 -----
 Tenzorinė algebra
 Pavz.
@@ -40,7 +42,7 @@ fazių perėjimas
 feromagnetinis perėjimas  (w/ diagrama)
 kraštas fazių perėjimo
 --------
-2012 - visi jauneiji gave telefonus su apsais
+2012 - visi jauneiji gavo telefonus su apsais
 -- pakilo savižudystė, anxiety
 -- visi ryšiai yra privatus, pakavoti nuo bendrominės žiurosenos 
 -- privačios vietos, nebe viešos.
