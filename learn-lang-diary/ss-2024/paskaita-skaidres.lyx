@@ -1,0 +1,704 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass beamer
+\begin_preamble
+% Uncomment to print out only slides and overlays
+%
+%\onlyslides{\slides}
+
+% Uncomment to print out only notes
+%
+%\onlynotes{\notes}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures false
+\graphics none
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Learning Topology and Geometry
+\end_layout
+
+\begin_layout Subtitle
+Automated Grammar Induction
+\end_layout
+
+\begin_layout Author
+Linas Vepstas
+\end_layout
+
+\begin_layout Institute
+AGI 2022
+\end_layout
+
+\begin_layout Date
+22 August 2022
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+A Lack of Topological and Geometric Awareness
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Critiques of DL/NN recently circulating on social media
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename coffee-cup-with-hole.jpeg
+	width 37col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename five-meter-cow.jpeg
+	lyxscale 55
+	width 45col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Conventional Simplical, Cellular Homology
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Triangulations, cycles, cocycles, universal covering groups, metrics
+\end_layout
+
+\begin_layout Frame
+\begin_inset Graphics
+	filename Torus-triang.svg.png
+	width 45col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename Triangulation-of-a-mechanical-part.png
+	width 35col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+Deep and broad mathemaical foundations to draw on.
+\end_layout
+
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Reframe: Edge Lists -> Jigsaws with Connectors
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Jigsaws, plus 
+\begin_inset Quotes eld
+\end_inset
+
+global
+\begin_inset Quotes erd
+\end_inset
+
+ constraints such as must-form-a-cycle 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename simplex-connectors.eps
+	width 80col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Not quite graph theory.
+\end_layout
+
+\begin_layout Frame
+Not quite relational algebra.
+\end_layout
+
+\begin_layout Frame
+...
+ but almost so.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Connectors Indicate Symbolic Relationships
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Image segmentation as labelled geometric relationships
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/traffic-lights.jpg
+	width 14col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename ../reco-image/traffic-light-grammar.eps
+	width 55col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Geometric syntax encodes part–whole relationships!
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Jigsaw Paradigm Established in Linguistics
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Syntax in Link Grammar (1991) and earlier (Marcus, 1967) 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/link-grammar.png
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/Yuret.png
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Maximum Spanning Tree parse from Word-Pair MI (1998)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Provides Semantics for Symbolic AI
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Abstract (Symbolic AI) 
+\begin_inset Quotes eld
+\end_inset
+
+Things that can be seen
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/sparse-cut-wide.eps
+	lyxscale 50
+	width 107col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Syntax extending into shallow semantics
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Not Just 1D, 2D, 3D, but also Abstract Sensory Domains
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Audio: frequency, intensity, time, envelope, chirp modulation
+\end_layout
+
+\begin_layout Frame
+More generally: wavelet-style decomposition
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/audio-graph-wide.eps
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Syntax and structure of a whale song
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Segmentation and Tokenization as (evolutionary, ML) Program Learning
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Conventional ML/AI can explore DSP filter sequences
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/filters-wide.eps
+	lyxscale 50
+	width 103col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Can DL/NN be used to generate these? 
+\end_layout
+
+\begin_layout Frame
+Possibly ...
+ probably.
+ Not been done.
+\end_layout
+
+\begin_layout Frame
+Recursive...
+ (model->syntax->model->syntax...)
+\end_layout
+
+\begin_layout Frame
+...
+ and deep (
+\begin_inset Quotes eld
+\end_inset
+
+cheap
+\begin_inset Quotes erd
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Experimental results
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Gaussian Orthogonal Ensemble (Spin Glass)
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../en-sims-p3/mi-dist.eps
+	width 70col%
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+Uniform distribution of English word similarities in high dimensions.
+\end_layout
+
+\begin_layout Frame
+Conventional (information-theoretical) metrics apply.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Learning Topology and Geometry
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Common Sense as Inference over Symbolic Domains
+\end_layout
+
+\begin_layout Itemize
+Enactive AI founded on unsupervised symbolic relationships.
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Quotes eld
+\end_inset
+
+Common Sense
+\begin_inset Quotes erd
+\end_inset
+
+ can be learned recursively i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+deeply
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename ../reco-image/reasoning-joke.eps
+	lyxscale 50
+	width 90col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+GOFAI failed because it depended on human-curated datasets.
+\end_layout
+
+\begin_layout Itemize
+This proposal doesn't, but it remains (mostly) symbolic.
+\end_layout
+
+\begin_layout Itemize
+GOFAI was shallow.
+ Shallow==hard-to-learn.
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
