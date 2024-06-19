@@ -42,8 +42,12 @@ fazių perėjimas
 feromagnetinis perėjimas  (w/ diagrama)
 kraštas fazių perėjimo
 --------
+Donelaitis neraše apie ploksčia žeme
+Kaimiečiai gal ir tykėjo visokiu durnysčiu, bet ...
+
+--------
 2012 - visi jauneiji gavo telefonus su apsais
--- pakilo savižudystė, anxiety
+-- pakilo savižudystė, nerimas
 -- visi ryšiai yra privatus, pakavoti nuo bendrominės žiurosenos 
 -- privačios vietos, nebe viešos.
 -- bus sunkiau išsaugoti demokratija
@@ -59,7 +63,7 @@ Ar galima sakyti kad gyvas, jei neturi tokiu pajaučių?
 
 ------
 reakcine kontrole
-Ar tu turi laisva valia?
+Ar tu turi laisvą valią?
 Konformistai? Influenseriai? Prisitaikyti prie kitu?
 Kalbėsime apie kokia tema?
 Jei ne ta, tai gal apie kanors kur aš pats turiu nuomone, ir noriu
