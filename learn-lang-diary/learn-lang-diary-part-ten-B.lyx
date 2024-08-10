@@ -4322,7 +4322,259 @@ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 21m A study of concept simi
 
 \begin_layout Standard
 Authors: Ilievski, Filip; * | Shenoy, Kartik | Chalupsky, Hans | Klein,
- Nicholas | Szekely, Pedro 
+ Nicholas | Szekely, Pedro
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 1h I claim that LLM's seem to do common-sense-like
+ reasoning "by accident", thanks to the "attention is all you need" paradigm.
+ We don't have any good theoretical control over what parts the attention
+ heads are entangling.
+ I claim sheaves can provide that theoretical foundation.
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 It is not an accident, that's like the entire
+ feature, without context, it doesn't work at all.
+ Context is the trick.
+ 8:19 PM · Aug 9, 2024 · 7 Views Most relevant Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 57m Yeah, duh.
+ Linas @linasvepstas · 39m This old gem: Graeme Hirst, "Context as a Spurious
+ Concept", (1998) https://academia.edu/49955919/Context_as_a_Spurious_Concept
+ : No such thing as "context" in natural language; it is constructed by
+ listener and speaker, with both having "considerable disgression" in so
+ doing.
+ academia.edu Context as a Spurious Concept Academia.edu is a platform for
+ academics to share research papers.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 Yeah, that's wrong.
+ 😂 Linas @linasvepstas · 36m Did you read it? Eray Özkural, PhD - OG AI
+ ⏭️🌟 @examachine · 29m I don't have to.
+ I'm quite well versed in linguistics, that's totally wrong, as I said I
+ was very early in understanding the role of context, it's a key to semantic
+ processing if not the only.
+ It's not complete but essential certainly.
+ Classical NLP totally ignored it.
+ Linas @linasvepstas · 9m You haven't read it, but you have the confidence
+ to say it's wrong.
+ And then you have to say things like "classical NLP ignored it" even when
+ "classical NLP" struggled with context, since, what, about the 1950's?
+ Have you read any papers in linguistics at all? Linas @linasvepstas · 6m
+ Have you forgotten the endless, bottomless discussions of the "frame problem"?
+ All the back-and-forth about "affordances"? These date to, I dunno, the
+ 1970's? The magic of attention heads was that killed most of that debate.
+ But the "spuriousness" remains unsolved.
+ Linas @linasvepstas · 3m This is one reason why LLM's have trouble understandin
+g what is being asked of them, and putting together coherent, non-hallucinatory
+ answers.
+ LLM's are not capable of negotiating the context required to have a rational
+ conversation.
+ So, duh, context.
+ And duh, context is spurious.
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 1h Yeah, that's wrong.
+ 😂 Linas @linasvepstas · 1h Did you read it? Eray Özkural, PhD - OG AI ⏭️🌟
+ @examachine · 1h I don't have to.
+ I'm quite well versed in linguistics, that's totally wrong, as I said I
+ was very early in understanding the role of context, it's a key to semantic
+ processing if not the only.
+ It's not complete but essential certainly.
+ Classical NLP totally ignored it.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 1h And unfortunately, classical
+ linguistics theories a la Chomsky and his students are also mostly useless.
+ Chomsky seriously didn't get it, I didn't even try to correct them but
+ we had one exchange where I had to explain...
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 58m their model of the brain,
+ which is also used in GOFAI cog archs, is completely wrong.
+ Of course, it's all based on statistical learning, so it's quite similar
+ to LLMs in that sense, there is no fundamental error there regarding LLMs.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 57m Whereas GOFAI had this
+ context-free models of language right? That's totally wrong, as is their
+ explanation of semantic processing and other cog arch components.
+ So forget all that stuff, just throw everything from GOFAI into the trashcan.
+ Use only DL.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 56m I'm not saying everyone
+ at BICA is retarded, but mostly.
+ 😆 Linas @linasvepstas · 21m Don't confuse GOFAI with cognitive models.
+ GOFAI runs cash registers and petroleum drilling rigs and electric meters.
+ It's not going away.
+ But Cognitive models: yeah, never saw one that I liked.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 18m Brother, there is a cognitive
+ architecture subfield in GOFAI and those are all useless, but you can see
+ they are quite influenced by Chomsky and they all pretty much assumed learning
+ is impossible so ofc they were misguided.
+ I studied all of that stuff, I'm a crazy survey machine Eray Özkural, PhD
+ - OG AI ⏭️🌟 @examachine · 15m So you perhaps assumed link grammar or some
+ other formalism would help, that's actually not warranted.
+ It turns out that Representation Learning can be a more powerful methodology,
+ you can still incorporate such ideas ofc and I already gave a reason why
+ richer representations...
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 13m can be useful, which is
+ sample efficiency.
+ But the standard semantic representations and such in linguistics are not
+ likely to work.
+ That's actually why I had thought we needed multi modal agents and they
+ work much better than anyone has guessed already, so obv that's richer.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine This doesn't mean you can't improve
+ on those things, I think much can be improved.
+ But from your theoretical description we can't just conclude it's better
+ because you aren't considering exactly what a transformer does, and on
+ top what a deep RL agent does...
+ Apples vs oranges.
+ 10:07 PM · Aug 9, 2024 · 2 Views Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 2s Look, that tweet-thread simply pointed out what
+ a vector space is, and how the formal algebraic structure of a vector space
+ fails to encapsulate what a concept is.
+ Then I pointed at an algebraic structure that is capable of encapsulating
+ the concept of a "concept".
+ That's all.
+ 
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 2h I claim that LLM's seem to do common-sense-like
+ reasoning "by accident", thanks to the "attention is all you need" paradigm.
+ We don't have any good theoretical control over what parts the attention
+ heads are entangling.
+ I claim sheaves can provide that theoretical foundation.
+ Linas @linasvepstas · 2h But I'm not gonna bust my balls trying to prove
+ that, unless someone is willing to funnel money into my bank account.
+ I'm not stupid, you know.
+ I've got more important things to do.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 2h That probably wouldn't be
+ the right goal, but as I said, improving on usual IR methods is just fine
+ and valid, and trust me, it's much harder than you would think it is.
+ Linas @linasvepstas · 1h What did I effing say that makes you think that
+ I think this is easy? Jeez, Eray.
+ Gimme a break.
+ Of course this is all hard.
+ There are literally thousands of PhD's working at OpenAI and google and
+ Meta, and I am not going to single-handedly blow them out of the water.
+ FFS.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 59m I think you misunderstood.
+ I said you can't easily do better than best IR methods.
+ So that includes some classical vector based stuff too.
+ LLMs are very expensive to train so they are not necessarily a great solution
+ for IR.
+ But embeddings are really handy ofc.
+ / Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 59m So what you're claiming
+ is you can improve over LLM embeddings which is even harder but I didn't
+ say that.
+ Apples vs.
+ oranges.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 58m But yeah that should be
+ easy to publish in an IR journal that's what I would try first.
+ Linas @linasvepstas · 19m I gave you a 20-tweet thread on sheaves.
+ I've written several 100-page papers on it.
+ Multiple 10-page papers.
+ I've tried explaining with and without formulas.
+ I've implemented it in code.
+ As far as I can tell, no more than about 10 people in the world have read
+ even one of these.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 12m I don't doubt at all that's
+ a useful abstraction, I've seen applications in other areas.
+ Practically, however, computer science research is obsessed with both efficienc
+y and effectiveness.
+ I would try to show it's effective for an NLU task first, maybe a much
+ simpler version.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine So I actually understand your
+ approach and I thought it sounded cool, the thing with LLM embedding is,
+ as you know it's a coding approach right? We're encoding and decoding things,
+ we're calculating representations.
+ If your representation is better it should do a task better.
+ 10:13 PM · Aug 9, 2024 · 3 Views Linas
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 1h Whereas GOFAI had this context-fr
+ee models of language right? That's totally wrong, as is their explanation
+ of semantic processing and other cog arch components.
+ So forget all that stuff, just throw everything from GOFAI into the trashcan.
+ Use only DL.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 1h I'm not saying everyone
+ at BICA is retarded, but mostly.
+ 😆 Linas @linasvepstas · 36m Don't confuse GOFAI with cognitive models.
+ GOFAI runs cash registers and petroleum drilling rigs and electric meters.
+ It's not going away.
+ But Cognitive models: yeah, never saw one that I liked.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 28m Brother, there is a cognitive
+ architecture subfield in GOFAI and those are all useless, but you can see
+ they are quite influenced by Chomsky and they all pretty much assumed learning
+ is impossible so ofc they were misguided.
+ I studied all of that stuff, I'm a crazy survey machine Eray Özkural, PhD
+ - OG AI ⏭️🌟 @examachine · 26m So you perhaps assumed link grammar or some
+ other formalism would help, that's actually not warranted.
+ It turns out that Representation Learning can be a more powerful methodology,
+ you can still incorporate such ideas ofc and I already gave a reason why
+ richer representations...
+ Linas @linasvepstas · 11m I think you are being intellectually lazy.
+ Rather than trying to understand things, you'd rather sit on twitter and
+ argue.
+ Yes, arguing is fun.
+ But its mostly non-constructive.
+ I don't get smarter reading your tweets; I just get tired.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 4m What I explained above is
+ actually deeply insightful.
+ Nothing much from theoretical linguistics has helped, however philosophy
+ of language has helped a lot.
+ That's exactly how I knew we needed context.
+ But it has to be learnt, not programmed.
+ Linas @linasvepstas I think most of the NLP community figured out that
+ machine learning is the only way to do linguistics, since about 1995.
+ That's when you see the first big wave of statistical NLP papers.
+ But Corpus linguistics dates to the 1960's.
+ 10:28 PM · Aug 9, 2024 View post engagements Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 1s The dad of my college housemate helped create SNOBOL,
+ in the 1960's, to do statistical linguistics on the Torah.
+ Basically machine learning before ML was a thing.
+ On 1960's era computers! I got to read papers on "computational hermeneutics"
+ in college.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 35m This doesn't mean you can't
+ improve on those things, I think much can be improved.
+ But from your theoretical description we can't just conclude it's better
+ because you aren't considering exactly what a transformer does, and on
+ top what a deep RL agent does...
+ Apples vs oranges.
+ Linas @linasvepstas · 22m Look, that tweet-thread simply pointed out what
+ a vector space is, and how the formal algebraic structure of a vector space
+ fails to encapsulate what a concept is.
+ Then I pointed at an algebraic structure that is capable of encapsulating
+ the concept of a "concept".
+ That's all.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 17m And I explained how that
+ could be published and how it can help.
+ You probably wanted to build something much bigger, not needed at first.
+ All semantic representations can be used simply if they work.
+ No agent is needed.
+ Linas @linasvepstas · 4m The stuff about "agents" is not about understanding
+ text, but about how systems such as LLM can interact with the external
+ world.
+ I'm interested in creating an abstract algebraic description of an agent.
+ Crudely speaking, it would be "like a vector space, but rigged".
+ Linas @linasvepstas Crudely speaking, take this: https://en.wikipedia.org/wiki/Ri
+gged_Hilbert_space but now rip out the vectors and replace them with sheaves.
+ This allows (1) vector embeddings, and (2) I/O with an external world.
+ A bounded "inside" and an unbounded "outside".
+ en.wikipedia.org Rigged Hilbert space - Wikipedia 10:43 PM · Aug 9, 2024
+ View post engagements Linas
 \end_layout
 
 \begin_layout Standard
