@@ -3941,6 +3941,394 @@ get used to it, get used to nebulosity
  category, and save it for later, ponder it as we move through life.
 \end_layout
 
+\begin_layout Subsection*
+9 August 2024
+\end_layout
+
+\begin_layout Standard
+So its been four days since last diary entry.
+ Why? Well, I kind of wasted my time for four days.
+ Not like I really did anything.
+ So that's weird: the somatic reptillian-brain thing that was driving me
+ bonkers with obsessive thinking about love and sex is subsiding, but int
+ its place is ...
+ not much of anything.
+ The driving urge to write write write, so as to place that other complex
+ of feelings is being replaced by an idleness.
+ Not depression, but a loose, unmoored, purposeless existance.
+ It's not brain-fog, I can think clearly enough.
+ But it's, well, I guess they call it 
+\begin_inset Quotes eld
+\end_inset
+
+down time
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'm not used to down-time.
+ I'm used to being always-on.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+Anway, I've spent too much time on twitter, looking at Kursk, but I did
+ find the chance to write a sort-of-lucid twitter thread on concepts and
+ vector and sheaves.
+ Reproduced here:
+\end_layout
+
+\begin_layout Standard
+Elliot Murphy @ElliotMurphy91 · Aug 8 Piantadosi and colleagues confusing
+ the map for the territory (again).
+\end_layout
+
+\begin_layout Standard
+“Why concepts are (probably) vectors” From cell.com BensenHsu @BensenHsu
+ · 21h The paper offers a unifying view of conceptual representation that
+ can potentially reconcile long-standing debates in cognitive science, such
+ as the tension between symbolic and connectionist approaches.
+ If the vector-based account holds true, it would have significant Show
+ more Image Linas @linasvepstas · 1h OK, so here's a hot take (thx @rob_freeman
+ ): Concepts are almost like vectors, but not quite.
+ Here's why: a 🧵.
+ There are two ways to combine vectors: addition/subtraction ("abelian")
+ and tensor products.
+ ...
+ 1/N Linas @linasvepstas · 1h The famous king minus queen example shows
+ concepts are almost like vectors.
+ But it never really scales: you can't keep adding and subtraction more
+ and more of these, to get a big large complex concept.
+ Abelian operations are commutative: the order does not matter.
+ 2/N Linas @linasvepstas · 1h But for natural language, word-order does
+ matter.
+ So how do we explain the subtraction in the king-queen example? Where else
+ is subtraction used? Its used in defining "metric spaces": distances.
+ No surprise: some concepts are closer than others, and reasoning ...
+ 3/N Linas @linasvepstas · 1h ...
+ and reasoning by analogy shows that distances can be preserved by moving
+ in certain directions.
+ So, yes, concept space does have some directional aspects to it.
+ But its only partial; some analogies yield nonsense: "rock is to tree as
+ house is to (blank)?" ...
+ 4/N Linas @linasvepstas · 1h So we do want a space with some directions
+ to it (because reasoning by analogy sometimes works) and we do want a space
+ with some sort of distance metric (because some concepts are close to each
+ other.) But it can't be uniform, it can't be everywhere.
+ ...
+ 5/N Linas @linasvepstas · 1h So, what kind of math structures are kind-of-like
+ vector spaces, but not quite? The most well-known is the "fiber bundle".
+ Fiber bundles resemble Cartesian spaces, but they're kind-of split/cut
+ along one side, and then re-glued again.
+ ...
+ 6/N Linas @linasvepstas · 1h Locally, they split into two parts: a base
+ space, and a fiber.
+ And you can measure distance, and add/subtract in each of these parts,
+ individually.
+ But you can't do it across the parts.
+ So this starts feeling a little bit like the problem with concepts and
+ vectors: ...
+ 7/N
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 1h You can compare king and queen, and Paris and Berlin,
+ but you'll run into problems comparing queens and Berlin.
+ To recap: fiber bundles are like vector spaces, except they have two parts,
+ not one big global space.
+ ...
+ 8/N Linas @linasvepstas · 1h Well, but concept-space needs more than just
+ two parts.
+ Maybe we need hundreds or thousands of "local areas" where we can "measure
+ similarity" and "reason by analogy".
+ We could do fiber-of-fiber-of-fiber-...
+ but we can do better.
+ 9/N Linas @linasvepstas · 1h There's another thing that has a concept of
+ subtraction, and notions of local distance, and is vector-space-like, and
+ is fiber-fiber-fiber-like: this is a "sheaf".
+ This is nice, because it has more than just two components (it can have
+ arbitrary many).
+ And ...
+ 10/N Linas @linasvepstas · 1h And you can control how local components
+ glue together.
+ So, like gluing fibers, but now you can glue many things together, forming
+ a complex network (or a simple network, if desired...
+ your pick.) ...
+ 11/N Linas @linasvepstas · 1h The gluing is non-abelian, so you can join
+ concepts together in a relational fashion.
+ Examples of relations: X is-a Y.
+ X has-a Y.
+ X is-made-of Y.
+ X is-above Y.
+ So, olde-fashioned stuff like ontologies, WordNet, Relational DB's etc.
+ ...
+ 12/N Linas @linasvepstas · 1h But, before we get into that, lets look at
+ the other way of combining vectors: the tensor product.
+ Tensor products are cool, because they allow complex structures to be built
+ out of vectors.
+ And, amazingly, linguists have known that you can combine words in a way
+ that ...
+ 13/N Linas @linasvepstas · 58m Linguists have known that you can combine
+ words in a way that resembles the tensor product, since the 1960's.
+ Earliest ref I have for this is Marcus Solomon (1967) "Algebraic Linguistics".
+ A more modern explanation can be found in Sleator& Temperley (1991) Link
+ Grammar.
+ ...
+ 14/N Linas @linasvepstas · 53m Even more recent is the 2010-2020 work of
+ @coecke who shows how to use this tensor-product-like structure to create
+ fast quantum algos for parsing.
+ To recap: traditional linguistics looks tensor-product-like, and this has
+ been known for 50+ years.
+ But ...
+ 15/N Linas @linasvepstas · 50m But there's a problem.
+ Tensor products have a symmetry ("dagger-compact") that natural language
+ does not.
+ A fairly simple example can be found in the wikipedia "pre-group grammar"
+ article.
+ It shows how a left-right symmetry is broken.
+ ...
+ 16/N Linas @linasvepstas · 47m To recap: you can combine vectors with tensor
+ products, which is a lot like combining words with syntax ...
+ but, well, not quite.
+ So, my hot take is then: no, concepts are not vectors.
+ Almost, but not quite.
+ And that's almost end-of-thread, but not quite.
+ One more thing.
+ 17/N Linas @linasvepstas · 44m Earlier, I talked about gluing fibers, and
+ then muttered about gluing sheaves.
+ Well, you can glue sheaves in a tensor-like way.
+ But without the forces left-right symmetry.
+ The gluing can be done in a syntactic way (e.g.
+ like that pre-group grammar.) So ...
+ 18/N Linas @linasvepstas · 41m So, my proposal, the one that @rob_freeman
+ remembers, is that concepts are like sheaves: they generalize the desirable
+ vector properties of distance-between-concepts, the distinct "directions"
+ that allow local abelian reasoning-by-analogy shown in the old WordVec
+ results ...
+ 19/N Linas @linasvepstas · 37m ...
+ Except they're better than vectors, because they have a tensor-product-like
+ gluing that is identical to traditional linguistics syntax ideas.
+ i.e.
+ you can glue concepts together to form sentences.
+ Paragraphs.
+ Long texts.
+ And finally, unlike traditional syntax...
+ 20/N Linas @linasvepstas · 34m Unlike traditional syntax, you can create
+ probabilistic collections of sheaf elements.
+ These collections really do resemble old WordVec and modern LLM concepts
+ of vectors, but they *also* have desirable syntactic properties.
+ And so ...
+ 21/N (maybe N=22 ?) Linas @linasvepstas And since the collections are probabili
+stic, we can argue if they're Bayesian or Markovian, or Boltzmann, maybe
+ with some Gibbs free-energy type distribution that Friston likes, but old
+ physicists know is just a so-called "path integral" or "partition function".
+ 22/N (N=23 ???) 7:15 PM · Aug 9, 2024 View post engagements Most relevant
+ Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 27m At any rate, the sheaf framework seems to provide
+ all of the desirable properties that everyone loves to argue about.
+ The End.
+ P.S.
+ What do I work on? A generalization of sheaf-type categories called "perception
+-action agents".
+ So there.
+ 23/N; N=23.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 42m Interesting thank you, that
+ was lucid enough.
+ :) I first tried to formalize an NLU representation in 2004, found out
+ that normal vector spaces were unsuitable, tried some metric spaces, and
+ then got bored of the problem.
+ :) This actually sounds reasonable, I like it for one.
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 40m My representations were
+ close to LLM style representations though, I was concerned with contextual
+ representations and my goal was clustering not question answering.
+ Still, similar problems, even if you had a semantic preprocessing like
+ LSA, it didn't work well, losing order.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 39m The LLM representations
+ are good because they are a good compression scheme.
+ Basically any good compression scheme that knows about context can work
+ well.
+ So, it's surprising that some dumb looking compressors also work very well.
+ :) Linas @linasvepstas · 13m Yeah.
+ Science can be like that.
+ You can make small, incremental steps that are obvious, get frustrated
+ for lack of progress, and get befuddled by the big picture, and give up.
+ But sometimes, you realize you've taken so many small steps, that you're
+ where no one has gone before.
+ Linas @linasvepstas · 11m I'm sort of that with sheaves: it was all trivial
+ stupid and obvious, until I realized that, well, hey I've got something
+ here, and like no one else is even paying attention.
+ I've tried yelling "hey guys come look at this" but its not working.
+ No one hears me.
+ Linas @linasvepstas · 9m They want me to built the entire castle first:
+ formalize all the hand-waving math, create an algo that scales well on
+ GPU's, and finally demonstrate results as good as or better than ChatGPT.
+ All by my lonesome.
+ Sheesh.
+ WTF is wrong with science funding.
+ Linas @linasvepstas · 7m Meanwhile, I've convinced myself that the sheaf-ideas
+ can be eventually formalized, scaled to GPU's and deliver better-than ChatGPT
+ results.
+ But I'm not gonna busy-beaver my way around that.
+ The perception-action agent interacting with outside world is more important.
+ Linas @linasvepstas · 4m It is a further category-theoretic generalization
+ of sheaves, but it now describes how sheaves interact with an external
+ world, both to perceive it, and to act within it.
+ Resembling a history monoid/trace monoid crossed over with sheaves, so
+ that the exterior world looks ...
+ Linas @linasvepstas · 2m ...
+ looks tensor-product-ish with the agents internal world model (yea olde
+ "good regulator theorem") But this remains mumbo-jumbo, even to me, I'm
+ having trouble with the details.
+ I'm also having trouble understanding how to talk about entropy in such
+ a model.
+ But if ...
+ Linas @linasvepstas But if you want a top-to-bottom mathematical, category-theo
+retic framework of an agent/robot acting in a physical world, these are
+ the details you have to hammer out.
+ The insides will resemble some LLM-like vector-like sheaf-of-concepts general
+ ballpark.
+ But the ...
+ 8:03 PM · Aug 9, 2024 View post engagements Most relevant Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 1s But the interaction of that "internal model" of
+ the "exterior world" needs to be described by, well ...
+ perception-action.
+ Which resembles tensor products, I guess, maybe resembles monads (kleisi
+ triples) Maybe resembles "rigged Hilbert spaces".
+ Beats me.
+ That's why its research.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 41m FWIW, a concept is probably
+ something else altogether :P It's more profitable to separate concerns.
+ You do want a rigorous similarity-space, though, which is essential to
+ Information Retrieval, 'duh.
+ So in that sense, it's a goal to improve on Latent Semantic Indexing.
+ Linas @linasvepstas · 2m The word "concept" is vague.
+ And Latent Semantic Indexing is both vector-ish and olde-school, and it's
+ worthwhile as a part of your course curriculum, and maybe one can steal
+ ideas from it, but I claim there's a reason people are excited about LLM's.
+ I also claim that Linas @linasvepstas I claim that LLM's seem to do common-sens
+e-like reasoning "by accident", thanks to the "attention is all you need"
+ paradigm.
+ We don't have any good theoretical control over what parts the attention
+ heads are entangling.
+ I claim sheaves can provide that theoretical foundation.
+ 8:18 PM · Aug 9, 2024 View post engagements Most relevant Linas
+\end_layout
+
+\begin_layout Standard
+Linas @linasvepstas · 1s But I'm not gonna bust my balls trying to prove
+ that, unless someone is willing to funnel money into my bank account.
+ I'm not stupid, you know.
+ I've got more important things to do.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine Look if you're not in the club,
+ they will always make up excuses to not fund you, a lot of grant calls
+ are just rigged :) 7:55 PM · Aug 9, 2024 · 5 Views Linas @linasvepstas
+ · 1s I'm not in the club.
+ And getting hired by industry is hard, too.
+ All these people yelling "labor shortage" are full of it.
+ They want obedient office plankton.
+ My resume looks like a half-exploded bomb, and a hair-cut & nice suit aren't
+ enough to fix that.
+ That's why "successful" academicians spend like 50% of their time writing
+ grant proposals, I'm not kidding :)))))
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine If you aren't super familiar with
+ linguistics / NLP / NLU / IR, it's actually very hard to improve on the
+ best results even using LLMs.
+ :P So, the trouble there is, as you've understood, experiments can be painful.
+ 7:57 PM · Aug 9, 2024 · 5 Views Linas @linasvepstas · 45s Jeez, I've been
+ doing nothing but linguistics / NLP / NLU / IR for fifteen years, and its
+ like ...
+ none of that matters.
+ I can put that on my resume, and recruiters say sh*t like "we want someone
+ with 15 years experience with PyTorch".
+ Get real.
+ I need to log off, I think ...
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 41m It's still usually regarded
+ interesting enough to prove that a completely new representation works,
+ though.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 37m I can't comment on these
+ details, but yeah! Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 31m However,
+ as a general remark, I would agree that "mathematical AI" is still the
+ best methodology.
+ ;) Some research in DL does use very apt formalizations, you should find
+ and read such articles that deal with high-level mathematical abstractions.
+ Linas @linasvepstas I've found them.
+ I've read them.
+ My reading list is impossibly long.
+ More reading and more theorizing is not a solution to any of my current
+ problems.
+ You are saying things that are making me frustrated.
+ Not your fault.
+ I'm just super-isolated, intellectually.
+ Can't plug in.
+ 8:44 PM · Aug 9, 2024
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine That probably wouldn't be the
+ right goal, but as I said, improving on usual IR methods is just fine and
+ valid, and trust me, it's much harder than you would think it is.
+ 8:20 PM · Aug 9, 2024 · 1 View Linas @linasvepstas · 2s What did I effing
+ say that makes you think that I think this is easy? Jeez, Eray.
+ Gimme a break.
+ Of course this is all hard.
+ There are literally thousands of PhD's working at OpenAI and google and
+ Meta, and I am not going to single-handedly blow them out of the water.
+ FFS.
+ 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 22m Here is a recent study on
+ semantic similarity.
+ They're comparing against LLM embeddings.
+\end_layout
+
+\begin_layout Standard
+https://content.iospress.com/articles/semantic-web/sw233520 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 21m A study of concept similarity
+ in Wikidata
+\end_layout
+
+\begin_layout Standard
+Authors: Ilievski, Filip; * | Shenoy, Kartik | Chalupsky, Hans | Klein,
+ Nicholas | Szekely, Pedro 
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
