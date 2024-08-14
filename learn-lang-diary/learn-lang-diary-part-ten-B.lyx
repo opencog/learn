@@ -4992,6 +4992,191 @@ Linas @linasvepstas · 1s ...
  5/N N=5 
 \end_layout
 
+\begin_layout Subsection*
+13 May 2024
+\end_layout
+
+\begin_layout Standard
+Rob Freeman @rob_freeman · Aug 11 I think the LLM "learning" principle is
+ good.
+ Specifically distributional analysis over sequences.
+\end_layout
+
+\begin_layout Standard
+The problem being ignored is abstractions contradict.
+ And that is incompatible with back-prop.
+\end_layout
+
+\begin_layout Standard
+So we dump back-prop.
+ "Collapse" with the some gradient (wave) collapse at run time.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Oh, yes, that could
+ also be considered a major limitation.
+ Rob Freeman @rob_freeman · Aug 11 Can you see how to fix that back-prop
+ "limitation" of LLMs, & "collapse" the most relevant of an infinity of
+ formalizations of text, at run time? Eray Özkural, PhD - OG AI ⏭️🌟 @examachine
+ · Aug 11 That wouldn't be easy, but I would design the LM from scratch
+ in another way, I think another architecture is needed, I probably wouldn't
+ even use a transformer.
+ But yes, keeping it fully differentiable would be a goal I think.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 I don't have a solution
+ to that presently, unfortunately, but it's obviously a very good question
+ thank you.
+ :) Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 I think I should
+ use similar kinds of universal machine learning algorithms that I use for
+ other tasks also at runtime, so "a kind of search", however, I would also
+ change the base model so the setup might be very different and perhaps
+ I wouldn't need to do that much search.
+ Rob Freeman @rob_freeman · Aug 11 The "gradient" back-prop follows is one
+ of shared prediction.
+\end_layout
+
+\begin_layout Standard
+I think to find such symmetries of shared prediction need not be hard.
+\end_layout
+
+\begin_layout Standard
+The idea I'm promoting is that words which share predictions will also tend
+ to synchronize under oscillation.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Hmm, I'm not sure if
+ I follow that! Could be a crazy physicist idea.
+ :) Rob Freeman @rob_freeman · Aug 11 Think about it.
+ If you have a network of language sequences, those which share predictions
+ will form sub-clusters with common beginning & end points.
+ We know those synchronize differently.
+ e.g.
+ I'm looking at this paper: https://ncbi.nlm.nih.gov/pmc/articles/PMC3390386/
+ … Code: https://modeldb.science/144502 Eray Özkural, PhD - OG AI ⏭️🌟 @examachine
+ · Aug 11 Dear Rob, we are not using a spiking neural network, though it
+ has been suggested it could be more efficient.
+ So, an entirely different model might be able to exploit oscillations but
+ in usual DL, well, there aren't too many of them.
+ It's just floating number arithmetic.
+ Rob Freeman @rob_freeman · Aug 11 Oh, you're doing DL.
+ I thought you were doing AI?
+\end_layout
+
+\begin_layout Standard
+So you want a solution that must conform with current DL dogma.
+ But obviously is also implemented in the brain.
+ But not in a DL type way.
+ Thats' clear.
+ But that doesn't matter.
+ That will come later.
+ First you want a DL solution? Eray Özkural, PhD - OG AI ⏭️🌟 @examachine
+ · Aug 11 I'm fine with a DL solution if it's sufficient.
+ :) For language, it looks like a good paradigm.
+ For other things, I do use other approaches, but I could say that most
+ of my methods squarely lie in the "new AI" realm.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Honestly, in the current
+ architecture, I wanted to just use a standard LLM, because I'm not very
+ interested in language, but for the agent, yeah, it makes sense to do your
+ own, it does fit there, because there language is a real concern.
+ Rob Freeman @rob_freeman · Aug 11 You realize you just said you want to
+ use a large language model, because you're not very interested in language.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Yeah, because it's ready
+ and I don't really care if I improve on say llama.
+ I trust LeCun's team, hard working people.
+ :P Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 So whatever works
+ license wise is good, but I might choose an SLM instead.
+ :) It should understand very few things, and definitely not chat with you
+ about poetry or human things like that (in first system).
+ 😂 For the agent, though, it would have a normal life so that's needed.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Then, I'd have to be
+ very interested in language, and at that point my own LLM or equivalent
+ model should prove useful.
+ I'll probably design it from scratch.
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine Then, I'd have to be very interested
+ in language, and at that point my own LLM or equivalent model should prove
+ useful.
+ I'll probably design it from scratch.
+ 11:14 PM · Aug 11, 2024 · 16 Views Most relevant Linas
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 Of course, I have many
+ ideas to apply.
+ However, I'm not going to say, oh, it's the same kind of learning model
+ as chatgpt and it will work great, let's make no assumptions.
+ :) Let's think of a blank page.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · Aug 11 I'm open to all kinds
+ of innovations, including new ANN models, stuff from neuroscience like
+ spiking networks, non-neural models, all of it, bring it on.
+ :) 
+\end_layout
+
+\begin_layout Standard
+Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 8h It's a different subject
+ but I think you will enjoy reading this entry and finding out if you subscribe
+ to a kind of mathematical realism.
+ https://plato.stanford.edu/entries/platonism-mathematics/ Linas @linasvepstas
+ · 8h Stop being an asshole.
+ I know more about this topic than you do.
+ WTF.
+ Seriously.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 7h I honestly don't think so,
+ in particular I'm not sure you knew the exact meaning of the term, so here
+ you go, read and then answer my question, please, but do so seriously,
+ it's actually relevant to your strongly held claims.
+ Linas @linasvepstas · 7h OK, Lets read the Routledge article together.
+ It starts like this: "Mathematical realism is the view that the truths
+ of mathematics are objective, which is to say that they are true independently
+ of any human activities, beliefs or capacities." 1/2 Linas @linasvepstas
+ · 7h For me, that is sophomoric and completely misses the primary problem
+ that you have to define reality first, before you can coherently talk about
+ human activities, beliefs or capacities.
+ So they already get snagged on a recursion problem, straight out of the
+ gate.
+ Linas @linasvepstas · 7h Perhaps the intent was that "human activities,
+ beliefs or capacities" should be understood in some common-sense, blue-collar
+ psychological sense.
+ But that's psychology, not philosophy.
+ If you think that human activities are real, and if math is a human activity,
+ then...
+ whatever.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 4h Object subject distinction
+ is basic philosophy though yes it came from ancient philosophy of psychology
+ (like many standard ideas in phil) Linas @linasvepstas · 4h Sure.
+ And I am trying to tell you that object-subject distinction can be axiomatized
+ and turned into a category-theoretic category, and when I said that, you
+ went ballistic.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 4h I can see why lol 😆 Eray
+ Özkural, PhD - OG AI ⏭️🌟 @examachine · 4h If you have a ToE it has to explain
+ qualia.
+ I have to agree with David Pearce that it requires non-Newtonian physics.
+ So it could certainly be quantum or string theoretic.
+ Linas @linasvepstas · 4h Please stop.
+ What is a "theory"? What is "everything"? What does it mean "to explain"?
+ What do the words "to agree" mean? You keep falling into that same hole,
+ over and over.
+ I keep extending you a hand but you fall right back in, each time.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 22m Just noting this is a nonsensic
+al reaction, I used the terms in exactly the right technical sense.
+ Linas @linasvepstas · 17m I understand what you thought you were saying.
+ I was trying to point out how absurd your demands are.
+ You're in over your head.
+ Eray Özkural, PhD - OG AI ⏭️🌟 @examachine · 15m Absolutely not.
+ That is philosophy of mind, as usual.
+ That is actually based on the analysis I've already done before in publication
+ but whatever suits you.
+ Keep thinking philosophers are over their heads, wouldn't be the first
+ time we've heard that? :) Rob Freeman @rob_freeman Exactly what point do
+ you think you're making Eray? You asked what I meant by "contradiction".
+ I told you.
+ You don't like the analogy with math because math is not language.
+ But you don't like language.
+ You're doing DL.
+ Using language models.
+ Good for DL because they're large :-b 6:57 PM · Aug 13, 2024 · 1 View Linas
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
