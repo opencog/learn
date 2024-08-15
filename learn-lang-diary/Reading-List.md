@@ -860,4 +860,25 @@ Interesting, but maybe less useful
   broadly similar to those in this project; although sharply different
   in actual details.
 
+* A Universal Approach to Self-Referential Paradoxes, Incompleteness
+  and Fixed Points
+  Noson S. Yanofsky
+  arXiv:math/0305282v1 [math.LO] 19 May 2003 
+  https://arxiv.org/pdf/math/0305282
+
+  An intro-level tutorial to diagonal arguments (Cantor slash), 
+  (un-)definability, incompleteness. Includes proofs/proof sketches of
+  Turing halting problem, Godel incompleteness and much more. Clarifies
+  what "self-reference" is, and how/why that leads to paradoxes.
+  Basically, you have a choice: either a paradox (if you allow
+  self-reference) or a "loop unroll", by moving the reference to the
+  next level: an infinite stack of every greater laywers (e.g. the
+  cardinal hierarchy. But I guess also the Borel hierarchy...)
+
+  Huh. As I write the above, I again think of infinite binary trees,
+  And how structures can be mapped into them. e.g. the Borel hierarchy.
+  The point of ZFC was to avoid Russel's paradox, by limiting what can
+  be talked about, to exclude the self-reference. This is effectively a
+  loop-unroll: a stack of ever-larger cardinals.
+
 ----------
