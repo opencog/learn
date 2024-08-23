@@ -5927,7 +5927,983 @@ samprotauti
  It's quite awesome.
  It's like watching neurons fire.
  It's like watching laundry in the washing machine.
+\end_layout
+
+\begin_layout Subsection*
+22 August 2024
+\end_layout
+
+\begin_layout Standard
+A copy of a letter to Phillip Ellis.
+\end_layout
+
+\begin_layout Standard
+Hi Phil,
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Here's a PDF.
+ It's easier to do formulas like this.
  
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is going to be long, and the first part might seem like a bunch of
+ trivialities combined with some bizarre statements, but I wrote it that
+ way to show you where all the gems are, and how to find them.
+ There are some magic tricks involved, and some sleight-of-hand, and I'm
+ trying to show you where they are.
+ Despite it being perhaps trivial, you might want to reread it several times
+ to see why it is the way it is.
+\end_layout
+
+\begin_layout Standard
+This took me three hours to write.
+ I thought I could dash this off in 20 minutes.
+ How wrong I was.
+ But whatever; think of it as ...
+ well, ...
+ how I return freindship? Beats me.
+ 
+\end_layout
+
+\begin_layout Subsection*
+Part the first
+\end_layout
+
+\begin_layout Standard
+Consider the series 
+\begin_inset Formula 
+\[
+u(z)=1+z+z^{2}+z^{3}+z^{4}+...
+\]
+
+\end_inset
+
+This is a "formula", its an infinite series.
+ You can plug things into it.
+ For example, you can plug in 
+\begin_inset Formula $z=0.2$
+\end_inset
+
+ directly, and get a result: 
+\begin_inset Formula 
+\[
+u(0.2)=1+0.2+0.04+0.008+0.0016+...=1.25
+\]
+
+\end_inset
+
+ You can plug in 
+\begin_inset Formula $z=3$
+\end_inset
+
+ and get 
+\begin_inset Formula 
+\[
+u(3)=1+3+9+27+81+...
+\]
+
+\end_inset
+
+Now, it is perfectly legal to write that down (and I did) but if you try
+ to actually sum up the numbers, you can't.
+ It diverges.
+ And, well, that's just a fact of life, and you can't change that.
+ To bad, so sad.
+\end_layout
+
+\begin_layout Standard
+But this is where the fun and games begin.
+ My general thesis is that 
+\end_layout
+
+\begin_layout Enumerate
+math is like poetry, in that you can do anything you want, as long as it
+ rhymes, and
+\end_layout
+
+\begin_layout Enumerate
+math is hallucinatory: the allowed rhyming patterns are mind-bending and
+ cause you to see shimmering contradictions and confusions.
+\end_layout
+
+\begin_layout Standard
+I don't think you are ready for the above, but I'll try anyway.
+ I'll try to sketch support for this thesis now.
+\end_layout
+
+\begin_layout Standard
+Lets start with the old high-school trick, the one you know already.
+ It is a trick, it is a fraudulent trick, its some sleight-of-hand, it's
+ deceitful.
+ It's unjustified, crooked.
+ Yet this fraud is perpetrated in high-schools around the world, so lets
+ look at it.
+ 
+\end_layout
+
+\begin_layout Standard
+The trick start like this: 
+\begin_inset Formula 
+\begin{align*}
+z\,u(z) & =z\left(1+z^{2}+z^{3}+z^{4}+...\right)\\
+ & =z+z^{2}+z^{3}+z^{4}+...
+\end{align*}
+
+\end_inset
+
+ therefore, by pairing off terms, matching them and keeping the order:
+\begin_inset Formula 
+\begin{align*}
+u(z)-z\,u(z) & =1+z+z^{2}+z^{3}+z^{4}+...-\left(z+z^{2}+z^{3}+z^{4}+...\right)\\
+ & =1\\
+ & =\left(1-z\right)u(z)
+\end{align*}
+
+\end_inset
+
+from which we deduce 
+\begin_inset Formula 
+\[
+u(z)=\frac{1}{1-z}
+\]
+
+\end_inset
+
+Re-read the above three times, and make sure you feel comfortable with it,
+ because here's where the trick starts.
+ This 
+\begin_inset Quotes eld
+\end_inset
+
+works
+\begin_inset Quotes erd
+\end_inset
+
+, but it works only when 
+\begin_inset Formula $z$
+\end_inset
+
+ is less than one.
+ The fraud is to pretend that this works for any 
+\begin_inset Formula $z$
+\end_inset
+
+.
+ Let me demonstrate, by trying it for 
+\begin_inset Formula $z=3$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u(3)-3u(3)=1+3+9+27+81+\cdots-3-9-27-81-\cdots
+\]
+
+\end_inset
+
+Rearranging terms, and attempting to cancel by shifting over by one term:
+\begin_inset Formula 
+\begin{align*}
+u(3)-3u(3)= & 1\\
+ & +3\\
+ & +9-3\\
+ & +27-9\\
+ & +81-27\\
+ & +\cdots\\
+= & 1+3+6+18+54+\cdots\\
+= & +\infty
+\end{align*}
+
+\end_inset
+
+which is clearly divergent.
+ Wait, what? Huh???? Earlier, we had that 
+\begin_inset Formula $1=u(z)-z\,u(z)$
+\end_inset
+
+ but now we have 
+\begin_inset Formula $+\infty=u(z)-z\,u(z)$
+\end_inset
+
+ when 
+\begin_inset Formula $z=3$
+\end_inset
+
+.
+ So did I just prove that 
+\begin_inset Formula $1=+\infty$
+\end_inset
+
+ ??? Well, of course not, but this is your first tiny preview of the hallucinato
+ry properties of math: you can get things that seem to be other things,
+ and they are but they aren't, and you have to be careful.
+ This one is perhaps too obvious; it gets more subtle and more confusing
+ when one journeys deeper into math.
+\end_layout
+
+\begin_layout Standard
+Anyway, above, all I did was to shift over the subtraction over by one.
+ All of a sudden, the terms no longer cancel in full; they only partly cancel.
+ Shifting the other way will give 
+\begin_inset Formula $-\infty$
+\end_inset
+
+.
+ With some more cleverness in re-arranging, regrouping and resumming, one
+ can make 
+\begin_inset Formula $u(3)-3u(3)$
+\end_inset
+
+ be finite, and make it equal to any number at all, positive or negative.
+ And this can be done in a mathematically rigorous, provable, exact fashion.
+ You can make such alternating series sum up to anything at all.
+ Anything.
+ This is valid and generally accepted in the math community, and the proof
+ is taught in some undergrad class or another.
+ I won't attempt it here.
+\end_layout
+
+\begin_layout Standard
+A bit more precisely, there is a concept of absolute convergence vs conditional
+ convergence.
+ The terms in the sum
+\begin_inset Formula 
+\[
+u(0.2)=1+0.2+0.04+0.008+0.0016+\cdots
+\]
+
+\end_inset
+
+can be rearranged any way at all, and you always get the same answer.
+ It's 
+\begin_inset Quotes eld
+\end_inset
+
+absolutely convergent
+\begin_inset Quotes erd
+\end_inset
+
+ (always convergent).
+ But if the signs of the terms alternate, and if taking just the positive
+ subseries diverges, then re-ordering allows you to sum to anything at all.
+ Such sums are 
+\begin_inset Quotes eld
+\end_inset
+
+conditionally convergent
+\begin_inset Quotes erd
+\end_inset
+
+, with the 
+\begin_inset Quotes eld
+\end_inset
+
+condition
+\begin_inset Quotes erd
+\end_inset
+
+ being that one or another ordering is forced or chosen or fixed.
+\end_layout
+
+\begin_layout Standard
+Now here's where the 
+\begin_inset Quotes eld
+\end_inset
+
+poetry
+\begin_inset Quotes erd
+\end_inset
+
+ comes in.
+ I could also write:
+\begin_inset Formula 
+\begin{align*}
+u(3)-3u(3)= & 1\\
+ & -3\\
+ & +3-9\\
+ & +9-27\\
+ & +27-81\\
+ & +\cdots\\
+= & 1-3-6-18-54-\cdots\\
+= & -\infty
+\end{align*}
+
+\end_inset
+
+So here, I have chosen a different ordering.
+ There is a freedom of choice here.
+ Pick some order, pick any order.
+ There are no rules for picking the order.
+ This makes the math 
+\begin_inset Quotes eld
+\end_inset
+
+poetic
+\begin_inset Quotes erd
+\end_inset
+
+, in that one is free to invent new orderings, and it is a mattter of taste
+ and style, creativity and panache and audacity in how you chose to reorder.
+ Good poets write good poetry, bad ones write crappy poetry, and whether
+ you like it or not is a matter of taste.
+\end_layout
+
+\begin_layout Standard
+To wrap up this part: this opens a deep and bottomless pit of what it means
+ 
+\begin_inset Quotes eld
+\end_inset
+
+to reorder
+\begin_inset Quotes erd
+\end_inset
+
+, and explorations of exactly what is going on here.
+ There are hundreds (thousands?) of books written on this topic, because
+ its ..
+ well, the freedom of working with infinitely many possibilities is ...
+ very free.
+ Seemingly unlimited amounts of invention and exploration are possible.
+ Banach spaces and Hilbert spaces, Frechet summations and trace-class operators,
+ and on and on.
+ All these arise by considering how to re-order conditionally convergent
+ sums.
+ And the freedom to do as one chooses.
+ All (pretty much all?) of the most brilliant mathematicians have dug into
+ this.
+ 
+\end_layout
+
+\begin_layout Standard
+But I digress.
+\end_layout
+
+\begin_layout Subsection*
+Part the second
+\end_layout
+
+\begin_layout Standard
+One technique for reordering is called 
+\begin_inset Quotes eld
+\end_inset
+
+analytic continuation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ You've already encountered this phrase.
+ Let me try to recap it.
+ Write
+\begin_inset Formula 
+\begin{align*}
+u(z) & =1+z+z^{2}+z^{3}+z^{4}+\cdots\\
+ & =1+\left(z-a+a\right)+\left(z-a+a\right)^{2}+\cdots
+\end{align*}
+
+\end_inset
+
+so that I add and subtract 
+\begin_inset Formula $a$
+\end_inset
+
+ every time.
+ Clearly, um, valid, err.
+ Well.
+ See what I mean about hallucinatory? Seems like the above should be valid,
+ right? How can it not be? What can possibly go wrong? But now, expand this
+ out:
+\begin_inset Formula 
+\begin{align*}
+u\left(z\right)= & 1+\left(z-a\right)+\left(z-a\right)^{2}+\cdots\\
+ & +a\\
+ & +2a\left(z-a\right)+a^{2}\\
+ & +3a^{2}\left(z-a\right)+3a\left(z-a\right)^{2}+a^{3}\\
+ & +4a^{3}\left(z-a\right)+6a^{2}\left(z-a\right)^{2}+\cdots\\
+ & +\cdots
+\end{align*}
+
+\end_inset
+
+What a freakin mess.
+ But here's the deal: as long as you pick 
+\begin_inset Formula $z$
+\end_inset
+
+ and pick 
+\begin_inset Formula $a$
+\end_inset
+
+ such that 
+\begin_inset Formula $\left|z-a\right|<1$
+\end_inset
+
+ and also that 
+\begin_inset Formula $\left|a\right|<1$
+\end_inset
+
+ then you can perform these sums, and they always converge, they are absolutely
+ convergent.
+ Reordering terms does 
+\emph on
+NOT
+\emph default
+ change the value.
+ No hanky-panky.
+ These are 
+\emph on
+NOT
+\emph default
+ conditionally convergent; you can reorder as you wish, you get the same
+ answer.
+ But only when 
+\begin_inset Formula $\left|z-a\right|<1$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|a\right|<1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+And now for the magic trick.
+ Let both 
+\begin_inset Formula $z$
+\end_inset
+
+ and 
+\begin_inset Formula $a$
+\end_inset
+
+ be complex numbers (but still subject to the contraints above).
+ And, to be specific, let 
+\begin_inset Formula $a=0.9i$
+\end_inset
+
+ so that it is on the imaginary axis.
+ Then the sum
+\begin_inset Formula 
+\[
+v\left(z\right)=1+\left(z-a\right)+\left(z-a\right)^{2}+\cdots
+\]
+
+\end_inset
+
+is absolutely convergent when 
+\begin_inset Formula $\left|z-a\right|<1$
+\end_inset
+
+.
+ The region where 
+\begin_inset Formula $\left|z-a\right|<1$
+\end_inset
+
+ is a disk, and this disk is centered at 
+\begin_inset Formula $a$
+\end_inset
+
+ and the radius of this disk is 
+\begin_inset Formula $\left|1-a\right|=\sqrt{x^{2}+y^{2}}$
+\end_inset
+
+ where 
+\begin_inset Formula $x$
+\end_inset
+
+is the real part of 
+\begin_inset Formula $1-a$
+\end_inset
+
+ and y is the imaginary part of 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ So for the demo 
+\begin_inset Formula $a=0.9i$
+\end_inset
+
+ the radius of convergence is 
+\begin_inset Formula $r=\left|1-0.9i\right|=1.34536...$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now, 
+\begin_inset Formula $u\left(z\right)=v\left(z\right)+$
+\end_inset
+
+other stuff, and when you work out what 
+\begin_inset Quotes eld
+\end_inset
+
+other stuff
+\begin_inset Quotes erd
+\end_inset
+
+ is, you get, hold on to your butt, 
+\begin_inset Formula $u\left(z\right)=1/\left(1-z\right)$
+\end_inset
+
+ But only when 
+\begin_inset Formula $\left|z-a\right|<1$
+\end_inset
+
+ and 
+\begin_inset Formula $\left|a\right|<1$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+What's happened here? Well, with a bit of trickery, a bit of reordering,
+ we were able to take the series 
+\begin_inset Formula $u(z)$
+\end_inset
+
+ and write it so that it is absolutely convergent on a 
+\emph on
+**larger**
+\emph default
+ region of the complex plane.
+ In particular, it is convergent for 
+\begin_inset Formula $z=1.3$
+\end_inset
+
+ because 
+\begin_inset Formula $1.3<r=1.34536\cdots$
+\end_inset
+
+ and this is in sharp contrast to the earlier result that
+\begin_inset Formula 
+\[
+1+1.3+\left(1.3\right)^{2}+\left(1.3\right)^{3}+\cdots=\infty
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Now we repeat this trick, but this time with 
+\begin_inset Formula $v(z)$
+\end_inset
+
+, to get a larger circle.
+ The only rule is that the center of the new circle (call it 
+\begin_inset Formula $b$
+\end_inset
+
+) must lie within the old circle, and that 
+\begin_inset Formula $\left|z-b\right|<1$
+\end_inset
+
+ .
+ Do this again, and again, and if you are clever with picking the centers
+ of the circles, you can reach anywhere.
+ In particular, you can get to 
+\begin_inset Formula $z=3$
+\end_inset
+
+ in about 5 or 6 jumps, and when you do, you find that 
+\begin_inset Formula $u\left(z\right)=1/\left(1-z\right)$
+\end_inset
+
+ at 
+\begin_inset Formula $z=3$
+\end_inset
+
+.
+ And repeating, you get 
+\begin_inset Formula $u\left(z\right)=1/\left(1-z\right)$
+\end_inset
+
+ 
+\emph on
+EVERYWHERE.
+\end_layout
+
+\begin_layout Standard
+So it turns out that old high-school fraud 
+\emph on
+*actually gave the right answer*
+\emph default
+.
+ It just gave the right answer for the wrong reason, which is why it was
+ fraudulent.
+ But explaining all this to high-school kids is ...
+ well, that's what college is for, innit?
+\end_layout
+
+\begin_layout Standard
+So (and this is very very important) you get this only if you follow the
+ rules about the location of circle centers, and the allowed circle radii.
+ If you don't follow these rules, you're back to being able to get assorted
+ forms of nonsense.
+\end_layout
+
+\begin_layout Standard
+And so finally, we are back to our hallucinated reality:
+\begin_inset Formula 
+\[
+1+z+z^{2}+z^{3}+z^{4}+\cdots=\frac{1}{1-z}
+\]
+
+\end_inset
+
+which is 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ only when you follow certain complicated rules.
+ Its hallucinatory, since if you plug in 
+\begin_inset Formula $z=3$
+\end_inset
+
+ directly into this 
+\begin_inset Quotes eld
+\end_inset
+
+formula
+\begin_inset Quotes erd
+\end_inset
+
+, you get whack.
+ So this formula is both false and true, and, like radioactive plutonium,
+ you might not like the results if you mishandle it.
+ The safe way of handling this is with analytic continuation, where you
+ deal with absolutely convergent sums at each step.
+ It's the absolute convergence that provides the safety.
+ The high-school trick just happened to work.
+ It doesn't always: you get weird things like Frechet spaces, which are
+ filligreed with these rather unhappy discontinuities, failures where naive
+ approaches blow up in your face.
+ 
+\end_layout
+
+\begin_layout Standard
+This is one reason why math can be so boring.
+ Safety requires rigor, and safety is boring.
+ And its even worse: the boring rigor hides all the fun parts of math.
+ Most math books, with a few, rare, treasured exceptions, are not written
+ in the style I am writing in, here.
+ They carefully hide all the surprises and adventures and wonders under
+ a bushel, so that only the most dedicated and autistic students can find
+ them.
+\end_layout
+
+\begin_layout Standard
+Its like: its more fun to dance up the side of the volcano, but if you don't
+ put your foot down just so, you go over the edge of a cliff and its the
+ end.
+ So the rigor is needed.
+ But if you have that ability, then you can dance: the choices, such as
+ the choices for reordering, are infinite, and how you dance is inventive
+ and creative and a matter of style and taste.
+ And this is also why math is fun: once you know what works, its like making
+ bombs in chem class: look what happens when I mix these two: kaboom! Right
+ over the cliff! Lets do it again!
+\end_layout
+
+\begin_layout Subsection*
+Conclusion
+\end_layout
+
+\begin_layout Standard
+To conclude: I went on and on and on with all this, and never got around
+ to zeta.
+ But all that zeta is, is this:
+\begin_inset Formula 
+\[
+\zeta(s)=1^{-s}+2^{-s}+3^{-s}+4^{-s}+\cdots
+\]
+
+\end_inset
+
+and the right hand side is 
+\emph on
+**absolutely convergent**
+\emph default
+ if and only if the real part of 
+\begin_inset Formula $s$
+\end_inset
+
+ is greater than one; otherwise it blows up.
+\end_layout
+
+\begin_layout Standard
+However, analytic continuation, with the circles, with the rules about the
+ circle centers, and the circle radii, all that logic still goes through,
+ and can be applied to 
+\begin_inset Formula $\zeta\left(s\right)$
+\end_inset
+
+.
+ If you are careful, then you find an answer:
+\begin_inset Formula 
+\[
+\zeta(s)=\frac{1}{1-2^{1-s}}\sum_{n=0}^{\infty}\frac{1}{2^{n+1}}\sum_{k=0}^{n}\binom{n}{k}\frac{(-1)^{k}}{(k+1)^{s}}
+\]
+
+\end_inset
+
+This is valid for *all* values of 
+\begin_inset Formula $s$
+\end_inset
+
+.
+ All of them.
+ Here, 
+\begin_inset Formula ${n \choose k}$
+\end_inset
+
+ is the binomial coefficient, recall Pascal's triangle.
+\end_layout
+
+\begin_layout Standard
+So lets plug in 
+\begin_inset Formula $s=0$
+\end_inset
+
+:
+\begin_inset Formula 
+\begin{align*}
+\zeta(0) & =\frac{1}{1-2}\sum_{n=0}^{\infty}\frac{1}{2^{n+1}}\sum_{k=0}^{n}\binom{n}{k}\frac{(-1)^{k}}{(k+1)^{0}}\\
+ & =-\sum_{n=0}^{\infty}\frac{1}{2^{n+1}}\sum_{k=0}^{n}\binom{n}{k}\left(-1\right)^{k}
+\end{align*}
+
+\end_inset
+
+But
+\begin_inset Formula 
+\[
+\sum_{k=0}^{n}\binom{n}{k}\left(-1\right)^{k}=\begin{cases}
+1 & \mbox{if }n=0\\
+0 & \mbox{if }n>0
+\end{cases}
+\]
+
+\end_inset
+
+so 
+\begin_inset Formula $\zeta\left(0\right)=-1/2$
+\end_inset
+
+ and we have the hallucinatory result
+\begin_inset Formula 
+\begin{align*}
+\zeta(0) & =1^{-0}+2^{-0}+3^{-0}+4^{-0}+\cdots\\
+ & =1+1+1+1+\cdots\\
+ & =-\frac{1}{2}
+\end{align*}
+
+\end_inset
+
+Lets try again for 
+\begin_inset Formula $s=-1$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\zeta(-1)=\frac{1}{1-4}\sum_{n=0}^{\infty}\frac{1}{2^{n+1}}\sum_{k=0}^{n}\binom{n}{k}\left(k+1\right)\left(-1\right)^{k}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\sum_{k=0}^{n}\binom{n}{k}\left(k+1\right)\left(-1\right)^{k}=\begin{cases}
+1 & \mbox{if }n=0\\
+-1 & \mbox{if }n=1\\
+0 & \mbox{if }n>1
+\end{cases}
+\]
+
+\end_inset
+
+and so
+\begin_inset Formula 
+\[
+\zeta(-1)=-\frac{1}{3}\left[\frac{1}{2}-\frac{1}{4}\right]=-\frac{1}{12}
+\]
+
+\end_inset
+
+ and so the hallucinatory result
+\begin_inset Formula 
+\begin{align*}
+\zeta(-1) & =1^{1}+2^{1}+3^{1}+4^{1}+\cdots\\
+ & =1+2+3+4+\cdots\\
+ & =-\frac{1}{12}
+\end{align*}
+
+\end_inset
+
+But, by now we've descended into tedium.
+ This is straight-forward plug-n-play.
+ The magic, the hard part was doing the analytic continuation, and understanding
+ why analytic continuation works, in the first place.
+ It's very ..
+ alchemical.
+\end_layout
+
+\begin_layout Standard
+Well, the Riemann zeta also has lots of other magic, but that's unrelated
+ to the above idea: to the idea that there is a way of writing 
+\begin_inset Formula $\zeta\left(s\right)$
+\end_inset
+
+ so that it gives one and only one value, everywhere, for any 
+\begin_inset Formula $s$
+\end_inset
+
+ in the complex plane.
+\end_layout
+
+\begin_layout Subsection*
+Ramanujan
+\end_layout
+
+\begin_layout Standard
+Ramanujan was a freak.
+ At age 12, he stood in a corner and practiced multiplying and dividing
+ large numbers in his head.
+ This has the effect of training up neural circuitry for these tasks, and
+ making it automatic.
+ In the same way that you don't have to think about how to row, you just
+ 
+\begin_inset Quotes eld
+\end_inset
+
+do it
+\begin_inset Quotes erd
+\end_inset
+
+, he could 
+\begin_inset Quotes eld
+\end_inset
+
+just do it
+\begin_inset Quotes erd
+\end_inset
+
+, as well.
+ It only takes a decade of practice, that's all.
+ You could learn to be like him, too.
+ You'd die of boredom, first, but you could do it if you really wanted to.
+\end_layout
+
+\begin_layout Standard
+So, in grade school, we learn something called 
+\begin_inset Quotes eld
+\end_inset
+
+long division
+\begin_inset Quotes erd
+\end_inset
+
+, and it turns out long division generalizes, easily and trivially, to the
+ division of polynomials.
+ Ramanujan could do long division of polynomials in his head, and 
+\begin_inset Quotes eld
+\end_inset
+
+just see
+\begin_inset Quotes erd
+\end_inset
+
+ the answer.
+ So, its like having a symbolic calculator attached to your brain.
+ I dunno, so like NeuralLink, but the olde-fashioned way.
+ Having this calculator allowed him to perform seemingly magical feats,
+ especially in a world that simply had never seen a calculator before, nothing
+ more than a slide rule.
+\end_layout
+
+\begin_layout Standard
+Now, we can all be like Ramanujan: we don't have NeuralLink but we have
+ eyeballs and fingers, which are almost as good.
+ We all have access to arbitrary-precision symbolic calculators, they're
+ called computers, and if you become adept with using a computer, you can
+ do ...
+ well its up to your imagination, and it is driven by your interests.
+ And these are driven by our social and cultural milleu, so ...
+ well, anything is possible.
+ So what you gonna do?
+\end_layout
+
+\begin_layout Standard
+I mean this in a literal sense on multiple levels.
+ I know one guy: Simon Plouffe.
+ Complete amateur, no formal training in math.
+ Sits around and fucks with symbolic calculators, and just finds relations
+ that he can't prove.
+ He's found a treasure trove.
+ He's in wikipedia: e.g.
+ the Borwein–Bailey–Plouffe formula for pi in hexadecimal.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "https://en.wikipedia.org/wiki/Bailey-Borwein-Plouffe_formula"
+target "https://en.wikipedia.org/wiki/Bailey%E2%80%93Borwein%E2%80%93Plouffe_formula"
+literal "false"
+
+\end_inset
+
+ I think they cheated him a bit putting his name in last place, not first
+ place, but he's also mathematically illiterate, and so that's what happens.
+ Have calculator, will travel.
+ Here: https://link.springer.com/article/10.1007/s11139-011-9335-9 – check
+ out who the author is.
+ You'll be amazed.
+ There's also this: 
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset href
+LatexCommand href
+name "https://www.researchgate.net/publication/356880658_A_simple_proof_of_Linas's_theorem_on_Riemann_zeta_function"
+target "https://www.researchgate.net/publication/356880658_A_simple_proof_of_Linas's_theorem_on_Riemann_zeta_function"
+literal "false"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+So there.
+ Heh.
+\end_layout
+
+\begin_layout Standard
+– Linas – 22 August 2024
 \end_layout
 
 \begin_layout Section*
