@@ -7071,6 +7071,350 @@ Anyway...
  So bedtime.
 \end_layout
 
+\begin_layout Subsection*
+7 Sept 2024
+\end_layout
+
+\begin_layout Standard
+Discord conversation, I copy here because it will be lost otherwise.
+ I'm hoarding memories, here, because there's no good way of doing backups
+ across different media (including social media)
+\end_layout
+
+\begin_layout Standard
+Linas — Today at 12:58 PM Hi Adam, I've been ignoring discord for the last
+ few years; my apologies for being incommunicado; thanks for emails and
+ notices.
+ Adam — Today at 1:02 PM Hi Linas! Your name popping up put a smile on my
+ face.
+ Public Discord servers do not seem too great these days, but I still use
+ the app for some teams 🙂 I'm on the bullet train back from https://aitp-confere
+nce.org/2024/ and would love to hear what you've been up to.
+ Linas — Today at 1:15 PM I've been up to nothing at all.
+ Well, fell in love with a girl in Lithuania, but now I'm in the US and
+ so miserable.
+ Spent some time thinking about the nature of love (something all mammals,
+ probably all animals feel) and language centers.
+ Piddled around with more math.
+ Nothing particular to report.
+ Adam — Today at 1:21 PM Wow! "Love and math" sounds peaceful.
+ I'm sorry to hear you're feeling miserable.
+ Anything you want to share or are looking for in the future? Linas — Today
+ at 1:26 PM Ah, thanks! The immediate love-pangs subsided.
+ Reality and idealized romantic love are not really compatible.
+ White Stripes have a song with the lyrics: "My left brain knows that love
+ is fleeting ..." Sharing: my personal predicament is unchanged since I saw
+ you.
+ I'd like to (1) engage in a certain line of research (and I have some new,
+ interesting, positive ideas I'm excited about.) (2) find someone with whom
+ to talk about about these things (3) get paid for doing this.
+ You can kind-of-ish almost fill the role of (2) but I'm frustrated that
+ you're more or less then only one sharing common interests and willing/able
+ to engage.
+ So, mostly I spin my wheels and waste my own time.
+ Adam — Today at 1:34 PM
+\end_layout
+
+\begin_layout Standard
+and I have some new, interesting, positive ideas I'm excited about
+\end_layout
+
+\begin_layout Standard
+👀 Do you have a one-sentence description or some labels? I may be able to
+ set up a nice group, so you have a couple more interested ears.
+ If it relates to graph rewriting, code synthesis, or symmetry/pattern mining
+ I may be able to help with (3) Linas — Today at 1:45 PM How about one paragraph
+? Perception and action requires a description of the data format (of the
+ sensory data, for the motor-control data) Old-school is to have human engineers
+ write the API.
+ Instead, ask "how can an agent perceive that format? (the format of sensory
+ data)" and "how can an agent discover what it can do? i.e.
+ not just discover it's external environment, but discover how it can act
+ on its environment?" These are somewhat recursive questions (how do I perceive
+ what I perceive what I perceive...) but I think they can be grounded, given
+ an abstract mathematical framework, a la category theory or similar, and
+ incorporated into a general theory of learning.
+ So a general theory of perception, action, learning of agents embedded
+ in an external world.
+ I kind of dislike this last sentence, thought, because its "obvious" and
+ would be something you'd read in the preface of some 1960's textbook on
+ AI.
+ The difference is that now, we're 60 years past the 1960's in sophistication,
+ and so we can do better.
+ Adam — Today at 2:02 PM Interesting.
+ Can you relate this to "discovering what the (causal) consequences of your
+ actions in the environment are"? Linas — Today at 2:11 PM Not in any deep
+ way.
+ Nothing more than "do something and see what happens".
+ Let me backtrack, and provide a narrative on how I got to here.
+ Adam — Today at 2:16 PM A framework modeling the "what happens if you do
+ what" I do know that may be of interest is https://en.wikipedia.org/wiki/Alternat
+ing-time_temporal_logic This obviously doesn't concern learning, but perhaps
+ learning may be framed in a "finding the model which explains what is perceived
+" on top.
+ Alternating-time temporal logic In computer science, alternating-time temporal
+ logic, or ATL, is a branching-time temporal logic that extends computation
+ tree logic (CTL) to multiple players.
+ ATL naturally describes computations of multi-agent systems and concurrent
+ games.
+ Quantification in ATL is over program-paths that are possible outcomes
+ of games.
+ ATL uses alternating-tim...
+ Linas — Today at 2:16 PM So I've got this learning system, and for historical
+ reasons, its batch-based.
+ So I said, gee, I need to redesign it so that it's continuous-learning.
+ OK, So instead of force-feeding it piles of text, as batch input, I'll
+ just leave it out there in the file system, and let it explore on its own.
+ So, lets see, I need an API to walk the file system, and an API to open
+ a file, and to API to read the text (unless its sound or photos..) Obvious
+ boring plain-old engineering stuff.
+ But an "API to walk the filesystem" is a "motor control API": a description
+ -- 'you can do this, its called "change directory", and you can do this
+ its called "list the files" and when you do this or that, here's what you
+ get back, here's the format of what you get back.' So that's what is usually
+ called an "interface definition", and the jump to the abstraction of an
+ IDL (interface definition language) was made in the 1980's maybe earlier.
+ Linas — Today at 2:26 PM And I'm thinking: hey, hang on, I should be describing
+ the interface to the interface, so that's the first recursion step.
+ I'm not really interested in creating yet another API for the file system,
+ and manually wiring it in to my learning system.
+ I'm thinking, instead: describe the interface to the interfaces, and let
+ the system work out on its own how to go from there.
+ But how does one write an "interface to interfaces"? And, given my historical
+ baggage, "how do I do that in Atomese?" and its surprisingly hard.
+ and right around there, I get a glimmer of something deeper: an a ha moment
+ of having an agent that can make choices to do something, but it doesn't
+ yet really know what it can do, so it has to try things out, and it doesn't
+ know what happens ("causally") when it does something, so it has to perceive
+ that, but what exactly is the format of this sensory data that it is streaming
+ in, anyway? What's the interface to the sensory stream? How is the sensory
+ stream navigated and parsed and analyzed? And oh, by the way, how does
+ the agent remember what it tried, and how does it correlate what it's done
+ in the past, with what its perceiving now? Linas — Today at 2:35 PM So
+ all this becomes a tangle of abstractions layered on abstractions, and
+ I realize I don't have any kind of formal theoretical framework for any
+ of it.
+ I can't implement this in software, because I don't quite really know what
+ it means for something to be input or output, or memory.
+ But I'm smart and experienced, so I think that maybe I can figure this
+ out if I try hard enough.
+ But then "real life" got in the way, and so did a bunch of distractions,
+ and so no forward progress.
+ That, plus the fact that if I did make forward progress, no one would know,
+ no one would care, it wouldn't matter to anyone, so its kind of demotivational.
+ It's like one or two abstraction layers too deep, and there is so much
+ going on in the world that my floundering attempts at understanding "what
+ is agency?" is ...
+ well, I'll get around to it eventually.
+ I just have to clear my plate of more mundane concerns.
+ Adam — Today at 3:13 PM It seems like your theory would need to be quite
+ mobile/computational, which is awesome.
+ At AGI24 I talked to David Spivak for a long time, and they have a framework
+ called "Polynomial Functors" for modeling this kind of stuff.
+ It's not plug and play though, and barely computational.
+ Greg Meredith uses the mobile process calculi, which admits to some nice
+ analysis "spatial behavioral types", but it's not widely explored.
+ Simon Peyton Jones raised "self describing interfaces that can evolve over
+ time" as the holy grail for his last "world scale programs" project.
+ I think some folks at Topos may be interested in this, along with Luke
+ (who has been bothering me with "but how does it explore its own interfaces"
+ for years) and Greg (who's looking at different parts of the environment
+ as their own agents with their own modes of communicating).
+ Linas — Today at 3:19 PM My to-do list includes talking to Greg Meredith
+ in much greater detail.
+ I sent him several emails but got no response, gotta try again.
+ I did look at polynomial functors, but did not see any immediate utility
+ for it.
+ People have sent me a lot of links to a lot of different topics, everything
+ from "basal cognition" to "bratelli-vershik diagrams" to "modeloids" to
+ "supersymmetric statistical mechanics" and its all intriguing, but it all
+ takes time and effort to understand, integrate, and figure out what aspects
+ can be used as inspiration, what can be used for something practical, etc.
+ Adam — Today at 3:55 PM Absolutely.
+ It's still interesting to have some "from first principles" run through.
+ You gave the file system example, do you have something written up on this?
+ Adam — Today at 4:16 PM All this Theorem Proving stuff at the conference
+ reminded me of ASP which you once recommended me to look into.
+ So I read this PDF over the course of the conference and I have many questions.
+ I'll limit myself to just one to start with: why are people outside of
+ mathematics interested in theorem provers? It seems like ASP is more general,
+ gives you more information, and is not much slower in the grand scheme
+ of things.
+ Is it just harder (to configure or implement an ASP solver)? Attachment
+ file type: acrobat asp.pdf 5.78 MB Linas — Today at 7:04 PM https://github.com/ope
+ncog/sensory it's an experimental diary, not a formal writeup, so perhaps
+ convoluted, long-winded, informal.
+ Linas — Today at 7:15 PM Re: why do people like theorem proving instead
+ of ASP? Not sure.
+ I can hazard a guess.
+ a combination of history, prejudice, momentum and maybe or maybe not rank
+ ignorance.
+ A long long answer follows below, if you're ready for the long long answer.
+ History: (1) ASP happens to have more-or-less the same syntax as prolog.
+ Completely different algo for solving the expressions.
+ Utterly different performance profiles.
+ But same syntax.
+ So prolog has a strike against it: from the 1980's, its a been-there, done-that
+ idea, people wrote expert systems aka AI in the 1980's; few seem to be
+ keen to revisit that era.
+ It has the stink of "old stuff" surrounding it.
+ Linas — Today at 7:22 PM Now, those old expert systems consisted of thousands
+ of hand-crafted rules, written by experts.
+ I keep thinking that we can now automatically learn those rules, assign
+ probabilities to them, etc.
+ but I don't know that anyone is actually trying to do that.
+ (2) Both prolog and lisp, early AI favorites, predate "type theory".
+ They were both more-or-less untyped.
+ Or loosely typed, or ad-hoc typed, depending on how you think of it.
+ Since then, things have changed.
+ Early concepts of typing lead to the idea of "object oriented", eventually
+ resulting in C++ and Objective-C.
+ But even these two are not entirely rigorous about types, they're a bit
+ loose.
+ After this, two things happened with types.
+ Linas — Today at 7:31 PM One was that the formal type people came up with
+ ML and later, CaML which had explicit strong types and the ability to perform
+ explicit logical reasoning about types.
+ Turns type inference is not turing-complete, and that's a good thing: all
+ type inference terminate in finite time, and quickly! So it splits out
+ part of the programing task into something that can be automated, and runs
+ in finite time, and runs quickly.
+ The other thing that happens is the internet, web, http.
+ Early web pages were static, but scripting was needed.
+ You could do cgi-bin with c/c++ but perl, and later, PHP were more effective.
+ And people started inventing brand new languages, like python.
+ And implementing python (and perl and PHP and 1001 other languages people
+ are creating) results in people thinking hard about types, and trying to
+ do them semi-correctly, as best they can (e.g.
+ duck-typing in perl: the type is hidden from the user, but only because
+ the perl internals are clever about hiding it; they're actually in there.)
+ Anyway, type theory advances.
+ Linas — Today at 7:39 PM So some or most of the theorem provers absorb
+ these typing lessons.
+ For example, agda adds ability for do type inference on union types, something
+ that no other language does.
+ These end up being used as marketing claims: "our system can do something
+ your system cannot", and since we're humans, we're susceptible to marketing
+ claims, and so some of these rather arcane systems gain mind-share.
+ Being hip and trendy and fashionable is not limited to narcissists; even
+ the nerdiest scientists do it.
+ Oh, one other thing, re performance, expressability, syntax, optimization.
+ This is a story of SAT solvers, SMT solvers.
+ Linas — Today at 7:49 PM So, in chip design, formal verification is a big
+ deal, because when you "RIT a chip" (run the compiler) you can only afford
+ to do it twice.
+ Maybe three times, cause its so expensive.
+ Millions of dollars.
+ You know there will be bugs, and so on the second try, you hope to fix
+ all of them, and if you fuck up, either the executives give you a third
+ chance or they lay everyone off.
+ No one wants to be fired, so making damn sure the hardware will work as
+ designed is a huge deal, and you have these huge, complex, arcane, highly
+ proprietary chip verification systems.
+ You run em like crazy before you RIT the chip.
+ The early 1980's systems did forward-chaining and back-chaining, a lot
+ like prolog.
+ And this worked great, as long as your chips had less than 100K or maybe
+ 1M transistors in them.
+ There were alternative algos, e.g.
+ DPLL, but they were slow and klunky, compared to forward/back-chaining.
+ ...
+ until you got to about 1M transistors, at which point, the performance
+ curves crossed over.
+ And not just a little, but a lot.
+ All of the old verification companies went bankrupt when this happened.
+ Like 100% of them.
+ They were not ready, they couldn't retrofit.
+ The mind-set for DPLL is utterly different from forward/back-chaining.
+ Linas — Today at 8:00 PM A different name for DPLL-solving is "boolean
+ SAT solving".
+ So, old prolog was (and still is) based on chaining, and it works great
+ on certain classes of problems.
+ By contrast, ASP, which uses same syntax as prolog, but has SAT under the
+ covers, works great, but for a different class of problems.
+ SAT is better at constraint solving, chaining is better for reasoning.
+ ...
+ but ...
+ there's one more fly in the ointment.
+ Not everything is boolean.
+ Some problems need/want to have arithmetic in them: addition, subtraction,
+ multiplication, inequalities.
+ Classic examples are the so-called "linear programming" (LP) problems from
+ WWII: you have X amount wheat and Y amount of barley and you can brew lager
+ or ale, which sells for $Z and $W, how do you brew to maximize profits?
+ (The WWII example involved tanks and jeeps and ships, I forget the details)
+ Modern versions of LP are used to solve zillions of modern economic problems,
+ e.g.
+ running solar/wind farms, factories for god-knows what, and ...
+ electrical signal delays on chips.
+ Linas — Today at 8:07 PM So how do you couple LP problems to SAT solvers?
+ This is a generic problem, lots of people in the industry have it, they
+ fund academia to solve it, etc.
+ etc.
+ and you get SMT solvers.
+ Satisfiability-modulo-theories.
+ Here, a "theory" is a collection of "axioms", which you can apply in any
+ order you wish.
+ For example, if a>b then a+c>b+c would be an axiom.
+ Linas — Today at 8:15 PM "modulo" is like long division: if you have some
+ large integer, then you can either divide by a prime or you can't, and
+ you have a collection of primes you can divide by.
+ "modulo theory" is like that, but you start with a large complex expression,
+ and you can either simplify it, by "dividing" by an axiom, or you can't.
+ You proceed by reducing the expression as best as you can.
+ If you've reduced your initial expression to true then you've "proved"
+ that your initial expression is true.
+ But what is the best order in which to apply the axioms, to most efficiently
+ reduce the initial expression? well, hard question.
+ Given this description of "module theory", you can see that its more or
+ less the same thing, kind-of-ish as theorem proving.
+ But wait, there's more! Its not just SMT, but its also combining the "modulo
+ theories" part with other boolean expressions (to obtain satisfiability)
+ so e.g.
+ "either door is open, or door is closed and temperature at top of door
+ is > x+y-c then yell fire else open door" and you have to do the modulo-linear-
+programming part to figure out the temperature part of it, and ordinary
+ boolean-SAT to handle the if-then boolean part of it.
+ Turns out SMT was really friggin hard.
+ Linas — Today at 8:26 PM The simplest theory is the "theory of equality"
+ and it has only a handful axioms: x=x is true and if x=y then y=x and if
+ x=y and y=z then x=z and that's it, and it turns out even that is painfully
+ hard to solve.
+ So most SMT solvers would implement the theory of equality and say "ah
+ hah! we did it!" and you'd ask them about inequalties, or god forbid linear
+ algebra, and they'd say things like "were working on it, maybe next year".
+ I assume, I don't really know, most modern theorem-proving systems are
+ outgrowths or updates to the older SMT ideas, but I have not really kept
+ track.
+ So, to recap your question "why theorem proving and not ASP"? the answer
+ would seem to be...
+ theorem provers have baked-in support for handling certain types of axioms
+ that you might have to otherwise "roll your own" in ASP.
+ For example ..
+ linear algebra.
+ And although ASP is blazingly fast for certain classes of problems, it
+ does require exhaustive search for the reduced kernel, and maybe the theorem-pr
+oving people have brand-new, better algos for doing the exhaustive-search
+ corner (this is a corner of the so-called "lambda cube" that everyone hates/ign
+ores because its so hard.) Linas — Today at 8:36 PM I've been ignoring theorem-pr
+oving, because I want to get away from strict axioms that are strictly true/fals
+e, hold/don't-hold, and instead follow probabilistic distributions.
+ I think this is where Ben started 20 or 30 years ago, but it feels like
+ he lost the plot.
+ Meanwhile, LLM's and deep learning and transformers have turned everything
+ sideways, so now there's a whole new set of confusing things to try to
+ work with.
+ So, you know, we all do what we can and ignore the rest.
+ If you read the above, and see parts where I've failed to mention something
+ important, or put the wrong emphasis on something, or god-help said something
+ totally bone-headed, let me know.
+ You went to the conference, which means you should now know more than me
+ about half of these topics.
+ (Heh.
+ OK, I remember going to physics conferences, and understanding maybe 5%
+ of it So ...YMMV, as they say.) 
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
