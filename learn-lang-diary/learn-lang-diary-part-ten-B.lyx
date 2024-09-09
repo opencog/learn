@@ -7412,7 +7412,204 @@ e, hold/don't-hold, and instead follow probabilistic distributions.
  about half of these topics.
  (Heh.
  OK, I remember going to physics conferences, and understanding maybe 5%
- of it So ...YMMV, as they say.) 
+ of it So ...YMMV, as they say.)
+\end_layout
+
+\begin_layout Subsection*
+9 September 2024
+\end_layout
+
+\begin_layout Standard
+So I continue to expand my health plan text, which is now maybe 50 pages
+ long? or longer? that I've been developing since 2007, and of course it
+ has enough material in it that it's hard to keep sorted, and since it contains
+ significant knowledge, requires intellectual effort to retain.
+ Of course, writing is a prosthesis that helps with retention.
+ But what about control? So, of course, one idea is to use LLM's as a reference
+ source.
+ This is intermediate between my personal notes, and search engines: the
+ LLM provides details that may be absent in my notes, but narrows down the
+ flood of text offered by search engines.
+ This is both academic publishing, with lots of niggling science details,
+ and also the repetitive info found in general-health weblogs (which all
+ say the same thing, mostly, and say it without references, and repeat common
+ knowledge, irrespective of whether its factually correct or not.
+ Of course, factual correctnesss is a concern with LLM's.
+\end_layout
+
+\begin_layout Standard
+So, one section of the health plan I was expanding today was on emotional
+ health.
+ So apparently, Vitamin K is metabolized into some neurotransmitte with
+ potentially negative side effects.
+ But I want to take Vitamin K for wound-healing benefits.
+ Something similar for BCAA: negative emotional impacts, but needed to avoid
+ post-exercise muscle pain.
+ What about DHEA? DHEA is a 
+\begin_inset Quotes eld
+\end_inset
+
+neurosteroid
+\begin_inset Quotes erd
+\end_inset
+
+; its production plummets with age.
+ Its pumped by supplement sellers for its (dubious) body-building effects,
+ but its also an anxiolytic and has antidepressive effects.
+ Then of course there are all the nnotropic stacks described alll over the
+ internet.
+\end_layout
+
+\begin_layout Standard
+So, the thing that popped in my head is this: how can I deploy a personalized
+ LLM to help maintain health homeostasis? Right now, I do online research
+ for assorted supplements, I buy them, gobble them, but OMG there is a lot
+ of them and I don't know if they cancel one-another out, if I should take
+ them in the morning or night.
+ I don't have any particular feedback for their effectiveness.
+ Well, BCAA is very distinctively noticable for muscle pain, but the rest,
+ not so much.
+ I took piracetam a few times, a decade ago, and wow, it made me sad.
+ Not exactly depressive, but it made life seem pointless and painful.
+ There I was, nearing the end of a long walk, in bright sunlight on a nice
+ warm day, beautiful weather, thinking about how hopeless it all is.
+ WTF.
+ That was my final experiment with piracetam.
+ Nasty shit.
+\end_layout
+
+\begin_layout Standard
+So a personalized LLM can have several homeostatic effects: one is to help
+ maintain emotional balance.
+ This is perhaps the more interesting one, or more importnt one, because
+ if one loses clarity of thought, one loses all higher regulation function.
+ And so that's the build out.
+ Let's put this into perspective (which I've probably done many times above,
+ but it bears repeating) Basic bodily functions and survival are handled
+ by the mamalian brain.
+ The neocortex, the pre-frontal cortex get involved in higher function,
+ helping provide additional regulation layered on lower neural mechanisms.
+ I'm now asking: 
+\begin_inset Quotes eld
+\end_inset
+
+how do I wire in an LLM to sit on top of that?
+\begin_inset Quotes erd
+\end_inset
+
+ This is not entirely new: writing and diaries are memory prosthesis.
+ Speech, language, communication allows me to offload intellectual processing
+ tasks to other humans.
+ So my prefrontal cortex is already attached to society and civilization,
+ and socity and civilization offer homeostatic effects and health benefits.
+ e.g.
+ if I get sick I can go to a doctor & hospital, and pay for it all via insurance.
+ So me, myself and I, the language-conscious verbal-expressive 
+\begin_inset Quotes eld
+\end_inset
+
+me
+\begin_inset Quotes erd
+\end_inset
+
+ is already integrated into a larger organism.
+ I am now asking for how to correctly introduce and LLM into this mix.
+ So, in this sense, its not all that different than my existing mix of keeping
+ a health-plan text, and keeping a health-diary text, and using the internet
+ as a knowledge source.
+ But an LLM would be presumably more active, less static, having agential
+ degrees.
+ Being digital, it is presumably economically cheaper than consulting a
+ medical doctor; it is somewhat ethically cleaner: like why should a doctor
+ care about me? Why should I burden a doctor with my problems? The answer
+ is easy: because the doctor wants my money.
+ This transactional approach to medicine is problematic.
+ Replacing this transaction with an LLM (or other artifical digital agent)
+ is appealing.
+ (In this text, I will use LLM as a synonym for artificial digital agent,
+ unless otherwise noted.
+ So think 
+\begin_inset Quotes eld
+\end_inset
+
+digital agent in general
+\begin_inset Quotes erd
+\end_inset
+
+ no matter what the underlying tech is.) 
+\end_layout
+
+\begin_layout Standard
+Well, that's it.
+ That's the idea.
+ I guess this idea has been burbling in my head for maybe even a deacde
+ or more, long before LLM's, but well, at least this time I've actively
+ verbalized it, as opposed to this previous bubbling-in-the-background concept.
+ Have I made forward progress? Well, not really.
+ So how could I actually do this?
+\end_layout
+
+\begin_layout Standard
+Lets try a sketch.
+ I could get API keys for one of the existing major systems; or I could
+ beg/borrow/steal weights for some open-source-ish LLM.
+ Next, I would dump my health-plan diary and notes into it, and ask it to
+ double-down train/retrain on medical and bio texts.
+ And then use it as an oracle: dear LLM: what should I do to stay healthy
+ and strong and live forever? And have it regurgitate random bullshit advice
+ from health gurus who happened to publish a blog that appeared in the training
+ set.
+ So this is problematic: LLM's are like photographs; they are only as reliable
+ as the subject that has been photographed.
+ If ther's bullshit in the training set, you get bullshit out.
+ So this is another meta-cognitive effect.
+ How do I know that some particular health advice is bullshit? Several ways.
+ One is delivery: the writer demonstrates poor control over the english
+ language.
+ The writer is writing for a low-IQ audience.
+ The writer has a poorly-disguised hidden agenda.
+ The writer makes claims that are outlandish or absurd.
+ There's a grayzone here: even if the worst offenses are absent, a given
+ blog article or bit of health advice might still smell bad, be off in some
+ hard-to-define way.
+ And LLM's have none of these discernment abilities.
+ They can't really see that something is off, something is broken, incorrect
+ in the advice.
+\end_layout
+
+\begin_layout Standard
+This is only a problem because most of the health cures that I pursue are
+ at the edge of what is known by medical science.
+ I don't need an LLM to nag me to lose weight or get regular exercise; thes
+ are now socially accepted common-sense recommendations, and a high-tech
+ agent is not needed for that.
+ I'm interested in pursuing therapies about which very little is known.
+ Hang on ...
+\end_layout
+
+\begin_layout Standard
+So.
+ Well lets break this down.
+ I want (1) a personalized medical doctor familiar with me, both my verbalizatio
+ns, but also the results of blood tests and other invasive health measures
+ (2) an expert knowledgable in all the ways that regular human MD's are
+ (including sports therapists, psychiatrists, etc.) and (3) a system capable
+ of performing original science research to precisely clarify how some supplemen
+t or therapy interacts with my particular health profile.
+ It seems this would require deep knowledge of biology, biochemistry, genomics,
+ proteomics etc.
+ (4) a user interface between the above and me.
+ How will this interact with me? Will this digital expert be a freind who
+ I chat with daily? A consultant availble on chat? Give me phone calls,
+ reminding me to get off twitter, go outside for a walk, and then get ready
+ for the party tonight? Maybe it will be some neural implant, so that I
+ can hear it the way one might hear voices in one's head.
+ Sheesh.
+ Maybe I surrender volitional control, so that instead of hearing voices,
+ it simply makes me really really want to open the lid of that bottle of
+ AKG and down a few grams with my morning coffee.
+ That is, I hand over a subset of my free will to this digital agent.
+ Sheesh.
 \end_layout
 
 \begin_layout Section*
