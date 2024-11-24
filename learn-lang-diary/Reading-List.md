@@ -306,6 +306,68 @@ Things to read:
 * https://distill.pub/2021/gnn-intro/
   A Gentle Introduction to Graph Neural Networks
 
+* https://pdl.cmu.edu/PDL-FTP/Storage/ceph-exp-sosp19.pdf
+  File Systems Unfit as Distributed Storage Backends: Lessons from 10 Years of Ceph Evolution
+  Abutalib Aghayev, Sage Weil, Michael Kuchnik, Mark Nelson, Gregory R. Ganger, George Amvrosiadis
+
+  Ceph is a distrbuted object store. It is interesting for the general
+  reason that distributed-anything is interesting: resources (in this
+  case, storage) floats "freely" across multiple compute and storage
+  devices, migrating automatically to where it's needed, shedding broken
+  instances, utilizing newly-added instances, and maintaining a general
+  high-availability, fault-tolerance and redundancy protocol. It's not
+  anchored to specific hardware instances; it resident in "the cloud".
+
+  The paper provides a good overview of the generic comp-sci issues
+  surrounding the design of such a system. Four interesting conclusions
+  can be drawn (these are not mentioned in the paper, though):
+
+   * Ceph effectively makes NFS (and CIFS/Samba) obsolete, by providing
+     faster, better, more robust storage (even for small-office, home-
+     office deployments). However, it is missing user management (e.g.
+     mapping of UID/GID across network mountpoints for CephFS) so it's
+     not some drop-in replacement. Yet.
+
+   * Ceph effectively makes mdraid, and RAID in general, kind of obsolete.
+     Even on a single machine, Ceph offers features (scrubbing,
+     checksumming) that RAID does not. When multiple network hosts are
+     available, one gets both high availability, and supperior disk
+     utilization.
+
+   * Ceph calls into question the conventional concept of a file-system
+     in the kernel. One could argue it makes the conventional file systems
+     (ext4, xfs, btrfs) obsolescent, because it does what they do, but
+     faster, better, more efficiently, and outside of the kernel. It
+     offers metadata at 10x performance, and does things regular file
+     systems don't/can't do: live fsck ("data scrubbing"), data
+     checksumming, transparent compression, transparent encryption. The
+     journalling design seems both simpler and better.
+
+   * Ceph prompts a re-examination of what an OS kernel should do. The
+     Linux page cache is designed to support block devices, which are
+     the basic units on which file systems are built. Insofar as a big
+     chunk of the kernel is devoted to file systems, Ceph forces the
+     question: can the page cache and block device layer be removed from
+     the kernel? There's a suggestion that maybe things will be faster
+     & better if they are. Maybe.
+
+   What does any of this have to do with AGI? Well, AGI, as an organism,
+   has to be robust, tolernat, work-in parallel, have efficient
+   utilization of it's substructures. (cpu, net, storage) It's tempting
+   to think that AGI can be fully abstracted away from infrastructure,
+   but this is not true. By analogy, bacteria can't "live on anything",
+   they need atoms, more specifically, high-energy arrangements of carbon
+   atoms. Metabolism is all about the details. Object storage, such as
+   Ceph, is a vital detail.
+
+   Returning back to earth, there are somne things Ceph is missing:
+    * User management (mapping UID's/GID's across nodes)
+    * Security and data compartmentalization. It's conveniant to provide
+      a single key, so that mounts can be done in /etdc/fstab. But then,
+      anyone who has this mount key can pretend to be root, and have full
+      ability to examine or trash data. Per-user mounts are missing.
+      (Maybe this is a systemD thing??)
+
 * hierarchical message passing: https://arxiv.org/abs/2009.03717
 
 * hypergraphs: https://arxiv.org/abs/1809.02589
@@ -863,10 +925,10 @@ Interesting, but maybe less useful
 * A Universal Approach to Self-Referential Paradoxes, Incompleteness
   and Fixed Points
   Noson S. Yanofsky
-  arXiv:math/0305282v1 [math.LO] 19 May 2003 
+  arXiv:math/0305282v1 [math.LO] 19 May 2003
   https://arxiv.org/pdf/math/0305282
 
-  An intro-level tutorial to diagonal arguments (Cantor slash), 
+  An intro-level tutorial to diagonal arguments (Cantor slash),
   (un-)definability, incompleteness. Includes proofs/proof sketches of
   Turing halting problem, Godel incompleteness and much more. Clarifies
   what "self-reference" is, and how/why that leads to paradoxes.
