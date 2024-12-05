@@ -12550,6 +12550,489 @@ Can one do the analog of mixing (or even just ergodicity) with knots? How
  This is fun.
 \end_layout
 
+\begin_layout Subsection*
+5 Dec 2024
+\end_layout
+
+\begin_layout Standard
+Apropos the abve: I am confused about the concept of energy & action.
+ So maybe if I write about it here, I will learn something.
+ Action is measured in units of hbar, and so is angular momentum.
+ Action has dimensions 
+\begin_inset Formula $MT$
+\end_inset
+
+.
+ The energy of a simple harmonic oscillator is 
+\begin_inset Formula $\hbar\omega(n+1/2)$
+\end_inset
+
+ and in units 
+\begin_inset Formula $c=1$
+\end_inset
+
+ gives energy has dimension 
+\begin_inset Formula $M$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Classical momentum is 
+\begin_inset Formula $p=mv$
+\end_inset
+
+ so units of 
+\begin_inset Formula $ML/T=M$
+\end_inset
+
+ if we measure in 
+\begin_inset Formula $T=L$
+\end_inset
+
+ i.e.
+ 
+\begin_inset Formula $c=1$
+\end_inset
+
+ units.
+ So momentum is measured in units of 
+\begin_inset Formula $M$
+\end_inset
+
+.
+ Of course: 
+\begin_inset Formula $E^{2}=p^{2}+m^{2}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Classical angular momentum is a weight on the end of a string being spun
+ around at some given speed, so, momentum times moment-arm, or mass times
+ velocity times length, units of 
+\begin_inset Formula $ML$
+\end_inset
+
+ or equivalently of 
+\begin_inset Formula $\hbar$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The action appears in two different settings.
+ One is in spin, and Jost shows how to set up a Clifford algebra and spinors
+ for Riemannian manifolds of arbitrary dimension.
+ The other place the action appears is in Hamiltons eqns (I almost wrote
+ Euler-Largrange eqns) for obtaining a geodesic on a manifold.
+ In four dimensions, these all end up with the same unit hbar.
+ I don't know how it works out in other dimensions?
+\end_layout
+
+\begin_layout Standard
+I'm also thinking that the simple harmonic oscillator is a 
+\begin_inset Quotes eld
+\end_inset
+
+degenerate
+\begin_inset Quotes erd
+\end_inset
+
+ case of spin.
+ So if we have something rotating in 2D, then we can decompose it into two
+ 1D motions via Euler's eqn 
+\begin_inset Formula $e^{i\theta}=\cos\theta+i\sin\theta$
+\end_inset
+
+.
+ But the other way to think of this is to say, no we don't decompose, with
+ take superpositions, and a superposition of a pair of spinning motions
+ can be used to create a 1D motion (that is the simple harmonic oscillator),
+ and that is why hbar appears in both contexts.
+\end_layout
+
+\begin_layout Standard
+Of course everything I wrote above is infinitely muddled.
+ But I'm confused about something and I don't even know what I'm confused
+ about.
+ Of course I know about representation theory and Casimir invariants and
+ charges and generators and tangent spaces.
+ All these are interconnected and inter-related in well-worn relationships
+ familiar to all grad students.
+ That's not the problem.
+ 
+\end_layout
+
+\begin_layout Standard
+The problem is that hbar is used in these two distinct contexts: in variational
+ principles, where we minimize the action, and in spin manifolds, where
+ we can build up spin structures, which are manifold-like things having
+ a spin connection.
+ Why is hbar in both contexts? Is spin 
+\begin_inset Quotes eld
+\end_inset
+
+more fundamental
+\begin_inset Quotes erd
+\end_inset
+
+, in that any variational principle must first pass through a decomposition
+ into a spin structure, products of which can then be re-assembled to create
+ a tangent space (of vectors, so in representation theory where a product
+ of fundamental representations gives an adjoint representation) and so
+ the tangent space is identified with the adjoint rep.
+ but the fundamental rep was 
+\begin_inset Quotes eld
+\end_inset
+
+more fundamental
+\begin_inset Quotes erd
+\end_inset
+
+.
+ By convention, variational principles are always applied on the tangent
+ space, because that is where Hamiltons eqns do their thing.
+ But, if we wanted to be 
+\begin_inset Quotes eld
+\end_inset
+
+more fundamental
+\begin_inset Quotes erd
+\end_inset
+
+, we should do this on the spin rep, not on the tangent space.
+ So rather than talking about symplectic manifolds and symplectic structures,
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+more fundamental
+\begin_inset Quotes erd
+\end_inset
+
+ view is to work with spin structures.
+ Thus, if we want to obtain a geodesic, or some equations of motion, we
+ should not work directly with the principle of least action applied as
+ a variational principle on a homotopic deformation of some curve or surface,
+ and instead work with the spin structure on that curve or surface, and
+ obtain the variational principle as the product of spin reps, in the same
+ way we obtain the adjoint rep as the product of spin reps.
+\end_layout
+
+\begin_layout Standard
+But how? I'm well-awre that the above sounds more-or-less inoherent and
+ meaningless, and is almost empty of content, if I cannot articulate it
+ with actual formulas.
+ So, sure, you can dismiss it as irritating time-wasting mumbo-jumbo.
+ But I'm confused.
+ I think something like the above should be possible to perform.
+ It can be performed without violating the no-hair theorem, because spin
+ is not 
+\begin_inset Quotes eld
+\end_inset
+
+hair
+\begin_inset Quotes erd
+\end_inset
+
+; spin is already inbuilt in the Kerr solution.
+ We also don't violate the (I forget what its called) theorem, because all
+ the other fields will still appear as fiber products, rather than as cartesian
+ products.
+ So we can fiber in arbitrary other fields/structures, and entangle them
+ with spin, without wrecking the fundamental spin structure that is 
+\begin_inset Quotes eld
+\end_inset
+
+underneath
+\begin_inset Quotes erd
+\end_inset
+
+ the variational principles.
+\end_layout
+
+\begin_layout Standard
+See what the problem is, now? So we have this issue of the 
+\begin_inset Quotes eld
+\end_inset
+
+mystery
+\begin_inset Quotes erd
+\end_inset
+
+ of EPR entanglement, but this is an entanglement of spin structures, and
+ does not seem to require any other addtional fields (electrons, photons,
+ etc.) even though from the engineering side, we have to have actual physical
+ electrons/photons to demonstrate entanglement.
+ But mathematically, it seems like spin is enough.
+ I almost wrote 
+\begin_inset Quotes eld
+\end_inset
+
+massless spin
+\begin_inset Quotes erd
+\end_inset
+
+, but this is one of the futzy corners that also helps cloud the issue.
+ Two issues.
+ First, massless vs massive means in the light cone vs on the null surfaces.
+ Second is using Weyl spinors to construct Majorana vs Dirac.
+ If you dig into the details (BTW, I wrote most of the current Wikipedia
+ article on Majorana, and Weyl spinors, and gamma matrices, and Weyl algebras,
+ etc.
+ so I am aware of their contents cause I wrote the fucking articles.) and
+ so here's the issue that stopped me from finishing those articles: when
+ you start constructing the Weyl spinor products, to get either Majorana
+ or Dirac, you trip over the vector vs.
+ axial vector products.
+ And that's fine, but we know the axial vector symmetry is quantum-broken;
+ this is the anomaly.So, I can do solitons, for example, as harmonic maps
+ on Riemannian manifolds (again, Jost has an excellent chapter on harmonic
+ maps) but the axial product is broken by quantization.
+\end_layout
+
+\begin_layout Standard
+But if you've been paying attention to what I wrote above, quantization
+ is rooted in the variational principle.
+ That is, we take the action 
+\begin_inset Formula $S$
+\end_inset
+
+ and say that the classical eqns of motion are 
+\begin_inset Formula $\delta S=0$
+\end_inset
+
+ the extremum of the action.
+ If we think of this extremum as a single point in an infinite dimensional
+ space, then the variation 
+\begin_inset Formula $\delta$
+\end_inset
+
+ is an (infinitessimal) radial movement away from that single point.
+ So, for example, in computing a geodesic, we consider a small 
+\begin_inset Quotes eld
+\end_inset
+
+bump
+\begin_inset Quotes erd
+\end_inset
+
+ or deformation of the geodesic in some direction 
+\begin_inset Formula $\delta$
+\end_inset
+
+ and note how that increases the total action.
+ Tere are infinitely many different kinds of 
+\begin_inset Quotes eld
+\end_inset
+
+bumps
+\begin_inset Quotes erd
+\end_inset
+
+ that we can make, so this is an infinite-dimensional space.
+ Each bump is (by definition) smooth (differentialble 
+\begin_inset Formula $C^{\infty}$
+\end_inset
+
+) but perhaps we need only differentiability to second order.
+ So above I talked about 
+\begin_inset Quotes eld
+\end_inset
+
+homotopic deformations
+\begin_inset Quotes erd
+\end_inset
+
+ when really it should be 
+\begin_inset Quotes eld
+\end_inset
+
+diffeomorphic deformations
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In a certain sense, this 
+\begin_inset Quotes eld
+\end_inset
+
+doesn't matter
+\begin_inset Quotes erd
+\end_inset
+
+, because if the derivative is infinite, the action will be infinite, and
+ there will be no contribution from 
+\begin_inset Formula $\exp-iS$
+\end_inset
+
+.
+ At any rate, this is how we arrive at 
+\begin_inset Formula $Z=\int[d\phi]\exp-iS$
+\end_inset
+
+ as a weighted sum (measure) over an infinite-demensional space of homotopic
+ deformations away from the classical, minimal action.
+ And, yes, of course, for various simple toy models in 1D and somtimes more
+ dimensions we can actually write down a Hilbert space of a countable infinity
+ of orthogonal polynomials, and apply a weak topology on this space so as
+ to get the convrgence properties that we want in physics.
+ So all this is (self-)consistent and well-explained in textbooks.
+\end_layout
+
+\begin_layout Standard
+The part that I don't understand is th anomaly.
+ We can take the vecor currents, ad quantize those fine, but the axial vector
+ symmetry cannot be promoted to a local symmetry, i.e.
+ cannot be quantized locall, because something is preventing the extension
+ 
+\begin_inset Quotes eld
+\end_inset
+
+in that direction
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And this vector vs.
+ axial-vector construction has a mirror in how Dirac and Majorana spinors
+ are constructed from Weyl spinors.
+ And the Weyl spinors are those things that we construct from the Clifford
+ algebra on a Riemanian manifold.
+ This suggests to me that we should be able to perceive the same vector
+ vs.
+ axial-vector constructions for harmonic maps, in general, where was say
+ that the harmonic maps is the vector part, but there's also an axial counterpar
+t, and the harmonic part is subject to variational principles and can be
+ quantized, but the axial part cannot be done variationally.
+ So somehow, all tese are inter-tangled, but I don't see quite how.
+\end_layout
+
+\begin_layout Standard
+What's more, the axial anomoly is not renormalizabile, this is the famous
+ renormalizability issue in perturbation theory.
+ But with the above paragraphs, perhaps his is less surprising: the axial
+ current is just saying that we cannot do variations (perterbuations) in
+ 
+\begin_inset Quotes eld
+\end_inset
+
+those directions
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So non-renormalizability should not be considered a surprise, *if* we adequatel
+y understand the anomoly.
+ Which I don't.
+\end_layout
+
+\begin_layout Standard
+Lets put it a different way.
+ Contentional textbooks on the intro to differential geometry introduce
+ and articulate the tangent manifold 
+\begin_inset Formula $TM$
+\end_inset
+
+ to a manifold 
+\begin_inset Formula $M$
+\end_inset
+
+ and it has the same (real) dimension as 
+\begin_inset Formula $M,$
+\end_inset
+
+and at a point 
+\begin_inset Formula $p\in M$
+\end_inset
+
+ its a vector space 
+\begin_inset Formula $T_{p}M$
+\end_inset
+
+ of the same dimension, and all of this can be tied together into a symplectic
+ structure, given a solder form (a canonical form), with some geodesics
+ and variational eqns and vector bundle connections which decompose into
+ horizontal and vertical bundles.
+ All that machinery is developed.
+ And here's the odd-ball part that confused the fuck out of me: all of this
+ machinery is for the vector part.
+ There is also an axial vector part, and its completly un-noticed, with
+ exactly zero remarks or statements made about it.
+ You don't see axial vector current until you study friggn nuclear phyics,
+ which as actual protons and neutrons and pions, and then and only then,
+ do you see pions as a vecor gauge particle, and some confusions with other
+ particles that have some oddball quantum numbers, say J/psi, or whatever
+ the fuck, and these couple to an axial current, and then and only then
+ do you start plumbing the depths of the axial current and the anomoly and
+ the broken symmetry and the non-renormalizability.
+ And then if you continue down this path, you can eventually discover the
+ axial currents bobbing up and down in the Majorana vs.
+ Dirac constructions, and continuing to go backwards, you find that spin
+ structures are a generic aspect of Riemannian manifolds.
+ But this journye is never completed.
+ We never go back, and say 
+\begin_inset Quotes eld
+\end_inset
+
+a hah, see, for every tangent manifold there is also an axial-tangent manifold
+ and it is totally fucking different because you can't do variational prinsiples
+ on it, and it has no geodesics, but it is there, because products force
+ it to be there.
+\begin_inset Quotes erd
+\end_inset
+
+ Tis last sentence may be crazy, but some variant of this last sentence
+ has to be true, as otherwise there would be no issues with quantizing the
+ anomoly.
+ But there's ...
+ just ...
+ something I don't understand, in this big heaping mess.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ So here, I wrote a bunch of text, but did *not* learn something I didn't
+ already know.
+ Well, perhaps there is one.
+ I can formulate the anomoly via 
+\begin_inset Formula $SU(2)_{L}\times SU(2)_{R}$
+\end_inset
+
+ but this is done for isospin fields (nucleons and pions).
+ However, I can also formulate the Lorentz group 
+\begin_inset Formula $SO(3,1)$
+\end_inset
+
+ as the adjoint rep of a product of a conjugate pair of 
+\begin_inset Formula $SL(2,\mathbb{C})$
+\end_inset
+
+ so where did that axial product go? I suspect I am being a total moron
+ here, and any practicing physicist can say 
+\begin_inset Quotes eld
+\end_inset
+
+here Linas here's your conceptual error
+\begin_inset Quotes erd
+\end_inset
+
+ but I don't get it.
+ And that's why, I suppose, I'm not a prof at some university.
+ On the other hand, I've spoken to more than a few profs at more than a
+ few universities who would not be able to answer these qestions, either.
+ Steven Weinberg would have scowled at me and called me a moron.
+ But the rest of them kind of don't even understand the issue.
+ Oh well.
+ So it goes.
+ Later.
+ I've got things to do.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
