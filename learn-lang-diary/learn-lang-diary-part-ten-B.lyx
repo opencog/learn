@@ -11832,7 +11832,721 @@ Want to cure gaming addiction? Find the systemic belief system that promotes
 \end_layout
 
 \begin_layout Standard
---linas 
+--linas
+\end_layout
+
+\begin_layout Subsection*
+4 Dec 2024
+\end_layout
+
+\begin_layout Standard
+What I will write below will lead you to think I've spreadmyself too thin.
+ But I'm bored.
+ Boredom makes people do weird things.
+ I'm bored because I just speent all day shopping for replacement parts
+ for all the failing computer shit I have.
+ Agonizing over $400 Whoop de do.
+ If I were rich, I wouldn't blink at this sum.
+ But instead I agonized.
+ Oh well.
+ Three hare drives and two power supplies.
+ Got a good deal on the disks.
+ Bought upscale power supplies because the cheap ones fail ever few years.
+ Also a broken monitor.
+ Also a failing motherboard, will do that tomorrow.
+ Maybe this will allow me to run a semi-stable Ceph cluster, maybe.
+ And maybe minimize data loss.
+ Maybe.
+\end_layout
+
+\begin_layout Standard
+Anyway, I came here not to write about that.
+ So to relax after a strenous day of shopping, I'm reading Tong, General
+ realtivity.
+ It's basic stuff, been there done that, but its modern, so I though I'd
+ glean something new.
+ Well, not really, but the refresher is OK.
+ Read chapter six.
+ Going back to read chapter five, which says something remarkable.
+ Remarkably stupid.
+ Well, remarakbly conventional, but the conventional ordinariness of it
+ has me gob-smacked.
+ So I have to bitch about it here.
+\end_layout
+
+\begin_layout Standard
+So at the start of chapter five, its says the metric tensor can be thought
+ of as a field, and here's the Hilbert-Einstein action, and its second order
+ just like other conventional field actions.
+ And this is true, in the convetinal sense.
+ But I'm like ...
+ wait, what? Surely you must bejoking? And I realize that in fact maybe
+ most physicists think of the metric tensor this way.
+ And that just ...
+ fugnuts insane.
+\end_layout
+
+\begin_layout Standard
+Here's the problem.
+ So, if you study Riemannian geometry, not pseudo-Riemannian, its kind of
+ normal (for me, at least) to think of Riemannian manifolds as being static
+ or fixed.
+ They're some shape, and the metric tensor is just used to describe that
+ shape.
+ These manifolds are static, they don't move, they have no dynamics.
+ The metric tensor is well defined under coordinate transformations, because
+ points on the manifold exist in and of themselves, and are in one-to-one
+ correspondence with the metric-tensor-in-the-abstract, at that point.
+ Redoing the local coordinate charts changes nothing.
+ Well, nothing if you work coordinate-free.
+ Of course, co- and contra-variant things are co and contra- but there's
+ no magic or weirdness there.
+ The shape of the manifold itself does not change under coordinate transforms.
+ So you get this very static mindset.
+\end_layout
+
+\begin_layout Standard
+And if you take that to GR, whoa lordy-mama.
+ So, with that mindset, you kind of start thinking: all past and all future
+ of some spacetime is 
+\emph on
+FIXED
+\emph default
+? Seriously? Is this why a lot of physicists blabber about the future being
+ written? Because if spacetime is like a Riemannian manifold, theyn yes,
+ it would be fixed forever and ever, and of course, you have no free will,
+ you are cndemed to be just some splat on some 4-manifold.
+ And that's fucked up, because somehow obviously the futre is not fixed,
+ in basic human common sense terms.
+\end_layout
+
+\begin_layout Standard
+I mean, I can see the appeal of that.
+ The Schwarzschild spacetime is stationary and static.
+ Nothing happens.
+ The Kerr spacetime is also static in its own certain way, at least up to
+ the Cauchy horizon, which we expect to be unstable, mumble, muble.
+ So here we have the first inkling of a problem: How can a manifold be 
+\begin_inset Quotes eld
+\end_inset
+
+unstable
+\begin_inset Quotes erd
+\end_inset
+
+? Conventional (Riemannian) manifolds are 
+\begin_inset Quotes eld
+\end_inset
+
+stable
+\begin_inset Quotes erd
+\end_inset
+
+, in that they don't 
+\begin_inset Quotes eld
+\end_inset
+
+move
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Perhaps you have trouble writing some convergent analytic expression in
+ some domain, or perhaps you have trouble integrating some differential
+ eqn for some reason, but the convetional mental model is not one where
+ this results in the manifold moving in some 
+\begin_inset Quotes eld
+\end_inset
+
+unstable
+\begin_inset Quotes erd
+\end_inset
+
+ way.
+ So WTF? Just because we took one of the manifold coordinates and flipped
+ the sign on it.
+ So here we see not just a flicker, but perhaps a stark-raving-mad collision
+ between the idea of some manifold that has some fixed shape, no matter
+ how your atlas of maps places coordinates on it, and 
+\begin_inset Quotes eld
+\end_inset
+
+instability
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I mean, for ordinary weak-field gravitation, sure, it makes perfect sense
+ to think of space-time as some static manifold rules with grid-lines from
+ your coord system.
+ That's how we calculate planetary orbits and place satellites and spacecraft
+ where we want them.
+ Not a problem.
+ No problem imagining spacetime to be a conventional manifold meeting all
+ the conveitional defintions/axioms of a manifold.
+ Ditto in the pure Newtonian limit.
+ Also ditto for flat Minkowski space.
+ Accelerator physics works exactly how its expected to, even at 99.999999%
+ the speed of light.
+ And, on the null cone, optics works just as we expect it: both on-shell
+ quantum optics, and off-shell perturbative theory in the eletroweak quantum
+ field theory.
+ No problems there, the conept of a manifold makes perfect sense.
+\end_layout
+
+\begin_layout Standard
+But inside the black hole, we have problems.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+instability
+\begin_inset Quotes erd
+\end_inset
+
+ of the Cauchy horizon.
+ WTF does that even mean? Yes, I know what it means.
+ Minor perturbations in the external universe pile up and becoe infinite,
+ with infiinite flux densities at the Cauchy horizon.
+ Easy search engine searches instantly reveal half-a-dozen papers getting
+ into this, and a masters thesis.
+ So right there, we have a problem.
+ If spacetime is 
+\begin_inset Quotes eld
+\end_inset
+
+just a manifold
+\begin_inset Quotes erd
+\end_inset
+
+, then how am I supposed to think of this instability? Is it supposed to
+ be something that gets infinitely wrinkled as it approaches that limit?
+ Perhaps recusively fractal? Perhaps dynamical chaos? Low-dimensional chaos,
+ or high-dimensioal chaos? Am I supposed to think of the manifold, as it
+ approaches the Cauchy horizon, does it become turbulent? Like burnt jet-fuel
+ coming out of a jet engine, just high-dimensional turbulence? Then, by
+ convetional statistical mechances, doesn't that mean that this turbulence
+ then converts into a perfectly uniform microcanonical ensemble of a perfect
+ mixture, exactly at that Cauchy horizon? A mixture of what? Infinitely-turbulen
+t spacetime? Whoo hoo.
+ How come no one talks about this? Or do they talk, and I haven't been listening
+?
+\end_layout
+
+\begin_layout Standard
+So that'w one.
+ Another is mass inflation.
+ I read not one, not two, but I think three papers on mass inflation.
+ Only one of them was any good.
+ One was a simplified rcap that was boring, and another was, I dunno, wandered
+ off into somethig boring.
+ Anyway, no point in recapping here, other than to note that mass inflation
+ again suggests that thnking of 
+\begin_inset Quotes eld
+\end_inset
+
+static menifolds
+\begin_inset Quotes erd
+\end_inset
+
+ is just wrong.
+ Now, of course, mass inflation requires a small influx of infalling particles,
+ so that right there means we are no longer doing pure(psuedo-)Riemannian
+ geometry.
+ We are doing 
+\begin_inset Quotes eld
+\end_inset
+
+real physics
+\begin_inset Quotes erd
+\end_inset
+
+, where the inflalling particles are not just following geodesics on a static,
+ fixed manifold, but they have a back-reaction on it.
+ They actively change the shape of the manifold as they interact with it.
+ And BTW, mass inflation does not require quantum-anything, as I recall.
+ It just needs fields, but these fields are effectively classical.
+ So, here, perhaps the mental model could be like a Raleigh instability:
+ just like wind blowing over the surface of a lake to create water waves,
+ so here, a 
+\begin_inset Quotes eld
+\end_inset
+
+wind
+\begin_inset Quotes erd
+\end_inset
+
+ of some classical scalar field 
+\begin_inset Quotes eld
+\end_inset
+
+blowing
+\begin_inset Quotes erd
+\end_inset
+
+ over the spacetime manifold, generating an instability.
+ The conceptual problem here is of course that the manifold is now dynamical,
+ and this dynamics is at some meta-level, and not in the time coordinate.
+ That is, in this picture, space-time is still a 4-manifold, a 3+1 manifold,
+ but it's interaction with the scalar field means it twists up (well, inflates)
+ in, uh, certain locations.
+ How should I thinkof that? Should I think of spacetime as a 
+\begin_inset Quotes eld
+\end_inset
+
+static manifold
+\begin_inset Quotes erd
+\end_inset
+
+, just one with a giant aneurysm, ballooned out in some set of locations?
+ Or should I think of it as being 
+\begin_inset Quotes eld
+\end_inset
+
+dynamical
+\begin_inset Quotes erd
+\end_inset
+
+, but in some other dimension that isn't conventional time, but some other
+ dimension of time? Like some 
+\begin_inset Quotes eld
+\end_inset
+
+fifth
+\begin_inset Quotes erd
+\end_inset
+
+ dimension, but clearly it cannot be 
+\begin_inset Quotes eld
+\end_inset
+
+fifth
+\begin_inset Quotes erd
+\end_inset
+
+, that doesn't make sense.
+ So its dynamical how? How can it be 
+\begin_inset Quotes eld
+\end_inset
+
+dynamical
+\begin_inset Quotes erd
+\end_inset
+
+ when we don't have a time dimension to work with? See, its all fucked up.
+ But I guess we can think of mass inflation as a kind-of-like static manifold
+ with a ballooned-up portion.
+ This seems not entirely a happy way of thinking about it, but it will have
+ to do for now.
+ Fine.
+ Whatever.
+ 
+\end_layout
+
+\begin_layout Standard
+And then, to add insult to injury, some physicists want you to think of
+ the metric tensor as a dynamical object? Cause that's what Tong says in
+ the first or second paragraph: think of the metric tensor as a dynamical
+ field, with the dynamics given by this cute little action of the scalar
+ curvature known as the Hilbert-Einstein action.
+ Sure dude.
+ Have your cake, and eat it, too.
+ Its static.
+ Its dynamic.
+ It moves.
+ It does not move.
+ Make up your mind.
+\end_layout
+
+\begin_layout Standard
+The criminality of making the metric into a dynamical field is that I don't
+ know how to do that.
+ I know how to write down a static, non-moving manifold, and how to paint
+ it with a metric.
+ Apply that metric, like a paint job on a car, using maps and atlases and
+ transition functions obeying axioms when two and three maps intersect.
+ I can do that.
+ But when I do that, the metric is pinned down, dead and inanimate, on the
+ manifold.
+ Its not 
+\begin_inset Quotes eld
+\end_inset
+
+dynamical
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Its not 
+\begin_inset Quotes eld
+\end_inset
+
+moving
+\begin_inset Quotes erd
+\end_inset
+
+, its not 
+\begin_inset Quotes eld
+\end_inset
+
+evolving
+\begin_inset Quotes erd
+\end_inset
+
+, or 
+\begin_inset Quotes eld
+\end_inset
+
+changing
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It just 
+\begin_inset Quotes eld
+\end_inset
+
+is
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So where the fuck do you get off saying the metric is a dynamical field?
+ That's fugnuts nonsense.
+ 
+\end_layout
+
+\begin_layout Standard
+Its worse than nonsense, its incoherent.
+ I mean, if the manifold is fixed, I can't just change the metric, without
+ also changing the shape of the manifold itself.
+ But if I change the shape of the manifold (and I can do that!), then which
+ points map to which other points, in the now-changed manifold? This is
+ called a 
+\begin_inset Quotes eld
+\end_inset
+
+homotopy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I can do a smooth, differentiable homotopic deformation of the manifold,
+ and then I can know how some points map to other points, and how the correspond
+ing metric changes as well.
+ But homotopies are characterized by a single real number, usually, on the
+ unit interval [0,1].
+ So this homotopic parameter can now become this 
+\begin_inset Quotes eld
+\end_inset
+
+fifth-dimensional time coordinate
+\begin_inset Quotes erd
+\end_inset
+
+, and that allows me to reintroduce a concept of dynamics into what is otherwise
+ a non-dynamical system.
+\end_layout
+
+\begin_layout Standard
+And I think this works.
+ I think this can be made to work.
+ Tere are only a few issues (but I like them!) One is that there is an infinite
+ number of different kinds of homotopies and deformations that one can have.The
+ other is that some of these homotopies seem to have large 
+\begin_inset Quotes eld
+\end_inset
+
+bends
+\begin_inset Quotes erd
+\end_inset
+
+ in them.
+ But that's OK.
+ I like this because the 
+\begin_inset Quotes eld
+\end_inset
+
+infinite number of homotopeis
+\begin_inset Quotes erd
+\end_inset
+
+ is a kind of 
+\begin_inset Quotes eld
+\end_inset
+
+infinite number of states
+\begin_inset Quotes erd
+\end_inset
+
+ in a quantum system.
+ And I like the idea that 
+\begin_inset Quotes eld
+\end_inset
+
+some bend more than others
+\begin_inset Quotes erd
+\end_inset
+
+, because this now gives you an action.
+ But that action cannot be over the 4D space (the 3+1 D space), but over
+ the space over all homotopic deformations of a 4-manifold.
+ In other words, a functional integral.
+\end_layout
+
+\begin_layout Standard
+Huh.
+ Surely I am not the first to think of this, and perhaps there are hundreds
+ of journal articles on this, and all of the great physics luminaries of
+ my time already know this.
+ But, well, hey, its news to me.
+ But then, it can't be 
+\begin_inset Quotes eld
+\end_inset
+
+well known
+\begin_inset Quotes erd
+\end_inset
+
+, because otherwise a person like Tong, who seems o be a tenure prof and
+ a name-brand school wouldn't be writing idiocies like 
+\begin_inset Quotes eld
+\end_inset
+
+think of the metric as a dynamical field
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I mean, perhaps he thinks he's telling a little whit lie, a fib, for the
+ benefit of his second-year students? But there's no asterisk or footnote
+ that say, 
+\begin_inset Quotes eld
+\end_inset
+
+well, gee, really, the metric can't possibly be dynamical
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And I read and/or skimmed pretty much all of Misner, Torne, Wheeler, and
+ I don't recall seeing that kind of asterisk or footnote.
+ Tere is a rather interesting but hairty and technically complex passage
+ on doing direct numerical integration of the Einstein field eqns, and the
+ kinds of issues that arise, and how to get around them...
+ when doing numerical integration.
+ I don't recall seeing the word 
+\begin_inset Quotes eld
+\end_inset
+
+homotopic deformation
+\begin_inset Quotes erd
+\end_inset
+
+, and sure, one is minimizing some action, but the mnimzation is not over
+ the space of homotopic quivalences.
+ So WTF.
+ Fore sure for sure, Weinberg never mentions this, and I read his book cover
+ to cover.
+ Excellent book.
+ Well, excellent, if you already know GR.
+ Kind of hard to learn GR from it for the first time.
+ But whatever.
+\end_layout
+
+\begin_layout Standard
+I need to think about and read about homotopic deformations of spacetime.
+ I also need to re-read all those places where I've read te word 
+\begin_inset Quotes eld
+\end_inset
+
+deformation
+\begin_inset Quotes erd
+\end_inset
+
+, and maybe layer a new layer on that.
+ Certainly, deformations are rampant in affine Lie algebras and Virasosor
+ algebras and all that, which is why maybe everything I wrote above is 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ to the practitioners versed in the state of the art.
+ But its new to me.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+And then the other problem, of trying to vizualise the Cauchy horizon as
+ a limit, a transition to infinitely turbulent spacetime, perhaps like an
+ infinite filigree of Alexandre horns or something.
+ Unexplored territory.
+ FWIW, I saw an excellent lecture youtube on exotic 4-spheres, from this
+ girl with an awesome mscular back, at Harvard, and for the second time
+ ever, I flt like I really finally got a pretty good grasp on exotic 4-spheres.
+ Which I have now totally forgotten.
+ Alas.
+ But the point there is that these arise as knots, knots that are sometimes
+ pretty big and complicated, but finite, maybe having hundreds of crossings,
+ mabe more, maybe less, Betti numbers of maybe 10 or 20 or maybe 6 or 4
+ or less or something, I don't recall the lectures.
+ And other invariants that are all less than a hundred, in the dozens, I
+ can count with my fingers range.
+ But high-dimensional turbulence, I can't count on my fingers.
+ Now, I could argue that a *single* set of (infinitely-recursive) Alexanders
+ horns are given by a 
+\begin_inset Quotes eld
+\end_inset
+
+single
+\begin_inset Quotes erd
+\end_inset
+
+ invariant, whose value is 
+\begin_inset Quotes eld
+\end_inset
+
+one
+\begin_inset Quotes erd
+\end_inset
+
+, because there's only one set.
+ But infiinite-demensional turbulence in a four-manifold seems to require
+ an, err, uhh, knot with an infinite number of crossings, or something,
+ embeded in that three-space that is cut out from the 
+\begin_inset Quotes eld
+\end_inset
+
+surface
+\begin_inset Quotes erd
+\end_inset
+
+ of that 4-sphere.
+ Except for GR, we need 3+1, and not 4, but whatever.
+ 
+\end_layout
+
+\begin_layout Standard
+I don't (yet) know how to convert any of this into algebraic equations.
+ And I do admit, every time I sit down and try to write this out, I get
+ nowhere fast.
+ But this is now the general meta-level.
+ To recap:
+\end_layout
+
+\begin_layout Itemize
+How do I do a superposition of homotopic deformations of manifolds, with
+ that superosition given by the value of some action (maybe even the Einstein-Hi
+lbert action, I suppose.
+ Why not.
+ Start with the obvious choice) This superposition is of course the functional
+ integral, the path integral, the partition function Z.
+ I can write it down, but how do I articulate it in a meaningfule way? I
+ mean I can write it down now: 
+\begin_inset Formula $Z=\int[dg]\exp-iA$
+\end_inset
+
+ where 
+\begin_inset Formula $A=\int d^{4}x\sqrt{-g}R$
+\end_inset
+
+ is the Hilbert-Einstein action, and 
+\begin_inset Formula $g$
+\end_inset
+
+ is the metric tensor, so that 
+\begin_inset Formula $\int[dg]$
+\end_inset
+
+ is the sum over all homotopic deformations of the 
+\begin_inset Quotes eld
+\end_inset
+
+classical manifold
+\begin_inset Quotes erd
+\end_inset
+
+ which is the minimum (extremum) of the action.
+ Cool.
+ I wrote it down.
+ That was easy.
+ But how does one do calculations with this? How does one articulate this?
+ The conventional articulation for this is to say 
+\begin_inset Quotes eld
+\end_inset
+
+yo duude, that's nothing more (and nothing less) than the functional integral
+ for quantum gravity and you can look up the rest in a book/paper.
+\begin_inset Quotes erd
+\end_inset
+
+ And maybe that is what I should do.
+ But, perhaps, for once, for the first time, I feel like I'm on firm-enough
+ footing to grok what those books/papers might be saying, in the 
+\begin_inset Quotes eld
+\end_inset
+
+yes, jeez, this is actually common-sense physics/math
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Phew.
+ OK.
+ So I learned something.
+ See? By allowing my verbal centers to free-asociate and write inscrutable
+ diary entries, I learn stuff.
+ And there is a certain satisfaction to this, I feel like I understand it
+ better now, than I would have if I just pondered this silently as I was
+ falling asleep in bed.
+ Bravo! Three cheers!
+\end_layout
+
+\begin_layout Itemize
+The second point is I have to study knots, and complicated knots, and Alexander-
+horn-type stuff, and see if there is some kind of infinite-diemnsional-knot,
+ some turbulent know type thing.
+\end_layout
+
+\begin_layout Itemize
+More generally, how does turbulence, e.g.
+ from a jet engine, 
+\begin_inset Quotes eld
+\end_inset
+
+decay
+\begin_inset Quotes erd
+\end_inset
+
+ into a pure mixture? I mean, I wrote the wikipedia article on mixing, so
+ I should kind of know.
+ But the formal definition of mixing, as a kind of 2-ergodic system, doesn't
+ talk about turbulence, and it doesn't talk about manifolds per se.
+ It's more like bakers-map stuff, in my mind: repeated fold and squash and
+ stretch, which is 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ in two dimensions, but weird and confusiong if its 4, and weird and confusing
+ if its 3+1, and if its turbulent-like, and if that turbulence is encoded
+ with a knot-like, infinite dimensional turbulent knot.
+\end_layout
+
+\begin_layout Itemize
+Can one do the analog of mixing (or even just ergodicity) with knots? How
+ does that work? What's the prototype, the stereotypical ergodic knot? Huh.
+ I wish I was younger, and didn't have to worry about money.
+ This is fun.
 \end_layout
 
 \begin_layout Section*
