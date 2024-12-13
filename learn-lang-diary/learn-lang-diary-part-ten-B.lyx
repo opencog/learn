@@ -13033,8 +13033,246 @@ here Linas here's your conceptual error
  I've got things to do.
 \end_layout
 
+\begin_layout Subsection*
+13 December 2024
+\end_layout
+
 \begin_layout Standard
-n
+I spent the last week fighting with my cell phone company, installing Ceph
+ on larger disk drives, replacing failed power supplies, reading Tong's
+ General Relativity and working on Archeo, a system to discover file corruption.
+\end_layout
+
+\begin_layout Standard
+Tong's book is nice.
+ Its simple, easy, written directly.
+ Now, I've already encountered all of teh content in it 2-3-5 times before,
+ so its easy because I'm a know-it-all.
+ But the refresher is nice.
+ OK, I'd never seen the Penrose diagram for the de Sitter universe before,
+ so that was actually an interesting stop-and-think moment.
+ Anyway...
+\end_layout
+
+\begin_layout Standard
+Archeo is arguably a stupid time-wasting project, which makes me wonder
+ again about wasting time.
+ At the same time, I can use it as a proving ground for fundamental research.
+ Here's how.
+ Step one: prototype it in utterly conventional sqlite3+python+flask, just
+ like everyone else.
+ Promptly hit some standard usability limits with SQL.
+\end_layout
+
+\begin_layout Standard
+What's a typical 
+\begin_inset Quotes eld
+\end_inset
+
+SQL usability issue
+\begin_inset Quotes erd
+\end_inset
+
+? Well, say I have a large table, tens of thousands or millions of rows,
+ and I want to know which subsets of rows are similar to other subsets of
+ rows.
+ Well, SQL was never designed to do this.
+ You have to...
+ well, its a solvable problem per domain: does the table contain employee
+ names? Shopping carts? Gene sequences? Movie casts? Depending on the table
+ content, we can solve this 
+\begin_inset Quotes eld
+\end_inset
+
+similarity
+\begin_inset Quotes erd
+\end_inset
+
+ issue in a domain-specific ways: 
+\begin_inset Quotes eld
+\end_inset
+
+show me all movies that Cary Grant acted in
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+show me all reactomes that the BCRA gene upregulates
+\begin_inset Quotes erd
+\end_inset
+
+.
+ For Archeo, it would be 
+\begin_inset Quotes eld
+\end_inset
+
+find all files that have the same file hash, but also the same filename
+ and a different hash, order by date
+\begin_inset Quotes erd
+\end_inset
+
+.
+ If two files have the same name but different contents, this is a strong
+ indicator that one of the files is corrupted.
+ If, out of three files, two have the same content and the third doesn't,
+ then maybe the two that agree are correct.
+ Or maybe the oldest is correct, and the newer one got corrupted.
+\end_layout
+
+\begin_layout Standard
+This similarity thing is a fundamental issue in population genetics, and
+ in human population studies.
+ Genes can jump from one bacterium to another, SNP point mutations can happen
+ anywhere, and humans moving from one geographical region to another can
+ pick up or discard the local language and cultural aspects, or not.
+ A highly mutable, mutating web of inter-relationships.
+\end_layout
+
+\begin_layout Standard
+I do not know of any generic solution.
+ I do not know of any generic (mathematical) theory that adequately describes
+ such mutational networks.
+ I need to ask Razib Khan.
+ Hes here in Austin.
+ BRB.
+ OK, done.
+ I'm back.
+ My peer network sucks.
+ Why am I only tripping over this now?
+\end_layout
+
+\begin_layout Standard
+OK, let me finish writing down the thought sequence.
+ I have attempted to implement a generic 
+\begin_inset Quotes eld
+\end_inset
+
+similarity measure
+\begin_inset Quotes erd
+\end_inset
+
+, this is in the OpenCog Learn project.
+ It was highly focused on language.
+ For the Archeo project, I eventually realized that I needed exactly that,
+ but for file systems.
+ Although it took me a week and a working prototype to get to that point.
+\end_layout
+
+\begin_layout Standard
+So there I was: a week into a prototype written in 100% conventional mainstream
+ tools.
+ This was in the hopes of attracting conventional programmers to help out.
+ Hah.
+ But those people don't exist, just like you don't exist.
+ The problem is that this is a diary, that no human being will ever read.
+ So I am only writing for an imaginary you: the real you doesn't exist.
+ This is a problem faced by all diaries.
+ Consider Ramanujan's diaries.
+ Famous mathematician.
+ His diaries have been published, in book form, and major PMA (physics,
+ math, astronomy) libraries have a copy.
+ But who has read it? Fucking no one.
+ Well, not no one, exactly.
+ I've read mayb 5-10 pages, maybe 20 pages out of this diary, and skimmed
+ a hundred more.
+ But who hes read this end-to-end? There are like maybe seven volumes? They
+ are fat! OK, yes, maybe there's a dozen people in the world who have read
+ *all* of Ramanujan's diaries, end-to-end.
+ So, not no-one.
+ But a dozen is not a large number.
+ Ramanujan was famous.
+ I am not.
+ Dead end.
+ Ergo, you don't exist.
+\end_layout
+
+\begin_layout Standard
+Same deal for the Archeo project: I'm catering to future collaborators,
+ who will almost surely never-ever arrive.
+ A set of measure zero.
+ So, fuck it.
+ Let me write it in OpenCog Atomese and screw em if these non-existant assistant
+s find Atomese too challenging.
+ So here I am developing the Atomese framework, and once-again pondering
+ old Atomese design choices.
+ Why does Atomese do this, but not that? Why does it support this but not
+ that? Why does it have the API that it has?
+\end_layout
+
+\begin_layout Standard
+Well, the obvious answer is 
+\begin_inset Quotes eld
+\end_inset
+
+history
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The other obious answer is 
+\begin_inset Quotes eld
+\end_inset
+
+modular design
+\begin_inset Quotes erd
+\end_inset
+
+: it was designed to solve a spefic class of problems, and that means that
+ it needs certain kinds of functions grouped into modular units, exposing
+ certain data types and API's.
+ Software engineers have the innate ability to create 
+\begin_inset Quotes eld
+\end_inset
+
+good
+\begin_inset Quotes erd
+\end_inset
+
+ API's, and modularize code 
+\begin_inset Quotes eld
+\end_inset
+
+correctly
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But how does one know that its good and appropriate? Why is this design
+ choice good, and that one is bad? This is hotly argued in various forums.
+ And so? What's the answer?
+\end_layout
+
+\begin_layout Standard
+Well, there is something that software engineers 
+\begin_inset Quotes eld
+\end_inset
+
+do
+\begin_inset Quotes erd
+\end_inset
+
+, when they group together functions of a give sort, and don't group other
+ things.
+ Presumably, there is a functional similarity that drives design choices:
+ the engineer imagines a broad network and clusters or groups accordingly.
+ How should we perceive that network, and how do we cluster appropriately?
+\end_layout
+
+\begin_layout Standard
+Well, LLM's do this kind of clustering, but for linear sequences of input
+ data.
+ However ...
+ hmm.
+ I spend too much time writing diary entries and fucking with code, and
+ not enough studying theoretical foundations.
+\end_layout
+
+\begin_layout Standard
+I'm going to the American Diamond Age party tonight.
+ I have to get ready for that.
 \end_layout
 
 \begin_layout Section*
