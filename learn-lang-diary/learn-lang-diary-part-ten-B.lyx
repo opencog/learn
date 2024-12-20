@@ -14024,6 +14024,534 @@ Oh right, that and I need to perform google searchs on terms that relate
 Good-bye diary, I must hibernate now.
 \end_layout
 
+\begin_layout Subsection*
+20 December 2024
+\end_layout
+
+\begin_layout Standard
+Time for another agony session.
+ Wherein I express my doubts, reservations, loss of vision and general dissatisf
+action with the state of things.
+ And ponder the future.
+\end_layout
+
+\begin_layout Standard
+So, the general bundle of thoughts starts with autonomous agents, sensory
+ perception, extraction of structure, theorizing about AGI, and my personal
+ relationship with a world economy and a $100 billion-dollar AI industry.
+ Once again, by writing and spilling random words on the topic, perhaps
+ I'll stumble over an insight.
+ And perhaps arrive at a plan.
+ Where do I begin?
+\end_layout
+
+\begin_layout Standard
+Let me start small.
+ In this particular project, the one containing this diary in a git tree,
+ I have a certain set of research directions I want to pursue.
+ They were going well, until I realized that my main bottleneck to further
+ cpu-cycling was the batch-processing nature of how I was doing things.
+ Trying to move to a continuous-feed pipeline rapidly led me down a path
+ that leaves me in the dire straights I find myself in now.
+\end_layout
+
+\begin_layout Standard
+As I write this, I realize I've tangled together multiple distinct issues.
+ Perhaps I can untangle them.
+ My batch-processing system has very distinct processing stages, where one
+ stage finishes, before the next one starts.
+ I realized that what I really want is some of the advanced processing stages
+ to run as soon as practical, even while flowing new data into the earliest
+ stages.
+ So, a continuous processing system.
+ A modular system, perhaps a multi-agent system.
+ Together with a control system.
+ That is, as later stages run dry, and decide they've done all they can,
+ they need to turn the faucet on in the earlier stages, and get them to
+ do more processing.
+\end_layout
+
+\begin_layout Standard
+The last three sentences already open a vast expanse of technology issues
+ for which the AtomSpace/Opencog has no solution, and for which there is
+ no off-the-shelf, commercial, open-source, industrial solution.
+ The buzzwords: 
+\begin_inset Quotes eld
+\end_inset
+
+continuous processing
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+agents
+\begin_inset Quotes erd
+\end_inset
+
+ have been used by the computer industry for decades.
+ Yet, there's no generic solution.
+ Let's deep dive as to why.
+ I will ponder things that are perhaps 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+, and this is why everything is so difficult: the 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ is like a brick wall, blocking progress.
+ It has to be deconstructed, pounded through, in order to move past.
+\end_layout
+
+\begin_layout Standard
+So lets look at 
+\begin_inset Quotes eld
+\end_inset
+
+agents
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Thanks to Unix in general, Linux in particular, I can associate the concept
+ of an 
+\begin_inset Quotes eld
+\end_inset
+
+agent
+\begin_inset Quotes erd
+\end_inset
+
+ very roughly with the concept of a 
+\begin_inset Quotes eld
+\end_inset
+
+process
+\begin_inset Quotes erd
+\end_inset
+
+ running on a 
+\begin_inset Quotes eld
+\end_inset
+
+kernel
+\begin_inset Quotes erd
+\end_inset
+
+.
+ To do this, I have to buy into the Unix technology stack.
+ If I used some other operating system (e.g.
+ MS-DOS), I might not get multi-processing capabilities.
+ If I used no operating system at all, I simply wouldn't have that, and
+ would need to create some kind of agent system from scratch, writing thousands,
+ maybe tens of thousands of lines of code.
+ The computer industry, as a whole, has come to a general agreement that
+ multiprocessing is good, and has also converged onto a common shared idea
+ of how to do it.
+ In biology, this is called 
+\begin_inset Quotes eld
+\end_inset
+
+convergent evolution
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+But there's more.
+ Different OS'es provide different kernel API's, and I need a C library
+ to hide those diferences.
+ Again, most of the industry has standardized on a common C library standard,
+ although the largest player, Microsoft, had to be dragged, kicking and
+ screaming, to the table.
+ If I have a C/C++ app, I have some guarantee that I can compile it for
+ most modern, popular OS'es, and it will just work.
+ Mostly.
+ Microsoft still sets up roadblocks.
+ The BSD's, Linux, the various unixes, Apple OS'es and Windows are similar
+ enough that system daemons, those that don't open windows or use keyboard/mouse
+ interfaces, that these can just work.
+ Android remains a challenge.
+\end_layout
+
+\begin_layout Standard
+A process running on one Linux machine, and 
+\begin_inset Quotes eld
+\end_inset
+
+agent
+\begin_inset Quotes erd
+\end_inset
+
+, can't really be 
+\begin_inset Quotes eld
+\end_inset
+
+frozen
+\begin_inset Quotes erd
+\end_inset
+
+ on one machine, moved to another, and 
+\begin_inset Quotes eld
+\end_inset
+
+thawed
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well, now it sort of can, if I use LXC or Docker.
+ I still cannot move an LXC container to Windows, Apple or Android.
+ I think VMWare offers something along those lines, if I really, really
+ want it.
+ But as a commercial product, a bit stymied.
+ Great, if I need to deploy some short-term solution.
+ Terrible, if I want to make some long-term strategic technology choice.
+\end_layout
+
+\begin_layout Standard
+How do agents communicate? Well, IPC on one machine.
+ TCP over the net.
+ There are a zillion protocols layered on TCP.
+ That's great.
+ This works only because the entire world has agreed to use TCP, and not
+ IBM SNA or Novell Netware, or DECnet or whatever.
+ The competitors have been pushed aside, allowing one dominant technology
+ to rule provide a generic common infrastructure that is guaranteed to be
+ there.
+\end_layout
+
+\begin_layout Standard
+However, one reaches a limit.
+ For Atomese, for the CogServer, I had to design my own specific network
+ protocol.
+ There was no off-the-shelf system I could use, above and beyond raw TCP/IP.
+ Perhaps, maybe I could have layered on something else.
+ There are several dozen different techs, offering something RPC-like, something
+ mailbox-like, publish-subscribe services that could be used, and its not
+ too late: the CogServer could still be adapted to use one of these services,
+ *if* it solved an actual problem that I had.
+ So far, they solve problems I don't have.
+\end_layout
+
+\begin_layout Standard
+So what problems do I have? Ben wants me to use Hyperon.
+ But Hyperon also doesn't solve my problems.
+ The meta-lesson from the above two-three paragraphs of obvious recaps of
+ obvious tech landscape features is that to build new systems, one must
+ figure out how to leverage the work of others, and that one must make strategic
+ bets on future software & hardware technologies.
+ One has to surf an edge of the mainstream wave with thousands of developers
+ behind it, while also, well, doing the thing you want to do.
+ So again, I ask, what do I want to do?
+\end_layout
+
+\begin_layout Standard
+Well, starting from the extremely narrow idea.
+ Once again, I want a system that crawls over my text input, does the pair
+ counting.
+ So it needs to be autonomous in it's crawl.
+ What does that really mean 
+\begin_inset Quotes eld
+\end_inset
+
+autonomous
+\begin_inset Quotes erd
+\end_inset
+
+? Currently, I have a script.
+ I start it, it runs.
+ It walks the directory tree and shoves the texts through the system.
+ I could call it a daemon, an agent, if I wanted to get fancy.
+ Fundamentally, its shoving data through the system; but what I want is
+ a system that pulls.
+ That makes the deicision 
+\begin_inset Quotes eld
+\end_inset
+
+gee, I recall reading this text before, let me go look at it again, make
+ a second pass
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well, but how?
+\end_layout
+
+\begin_layout Standard
+I need an agent that remembers what it read, where it was found.
+ Stores some meta-data.
+ Where is that meta-data stored? Well, in the AtomSpace, of course.
+ How? Well, I would be forced to, uhh, engineer some data structures to
+ store it in? That would suck.
+ How do I store it? Well, the straight-ahead answer is as pairs-properties.
+ EdgeLinks with PredicateNodes to tag the content.
+ So its all there, all addressable, all searchable.
+ Whoop-de-do.
+ Now what?
+\end_layout
+
+\begin_layout Standard
+There are several issues plagueing my thoughts.
+ Lets do the easier, more obvious one first.
+ This is the library-science, systems-engeineering problem.
+ If I suck in a lot of data: lets say electrical circuit diagrams, I need
+ to store that data somewhere, because it it probably won't fit in RAM.
+ But, just like the deconstructed URL's in Archeo, I don't need to store
+ the deconstructions, just the minimal amounts, which I can then expand
+ as needed.
+ But this requires having some on-demand expander system.
+ How does that work? I also want to avoid having to engineer and re-engineer
+ expanders, I want something generic.
+ All this needs to also be a distributed, multi-agent system.
+ Running on multiple machines.
+ The CogServer/StorgeNode gives me this, sort of.
+ It has a performance hit.
+ It's only the base layer.
+ There's no unified storage model, where I can ask any server, and it knows
+ what all the other servers know.
+\end_layout
+
+\begin_layout Standard
+So I'm fiddling with Ceph, and I like how it's agents work.
+ There's a ceph-mon and a ceph-mgr per machine, and these talk to each other,
+ to all the other deemons in the network, and these all know what each of
+ them know.
+ Could I do that with CogServers? How?
+\end_layout
+
+\begin_layout Standard
+Well, one issue is maintaining a coherent read-modify-write view of the
+ world.
+ Yea old ACID/BASE debate, eventually-consistent, etc.
+ I've layered the AtomSpace on top of RocksDB, because I wanted to handle
+ this consistency issue on my own.
+ But the storage design allows me to also layer on other distributed DB's,
+ but with a performance cost.
+ And the consistency/coherency issue never quite goes away, because the
+ AtomSpace is in-RAM so I would need to keep some current-generation counter,
+ much like Ceph does: a quorum of servers that agree on the current time-slice.
+ And use some blah-blah algorithm to decide who's-got-what when there are
+ netwsplits or systems go down.
+ So again, we are doing systems engineering here.
+ And not AI research.
+ And there's the rub: If I'm doing systems engineering, why not do it for...
+ well fuck if I know.
+\end_layout
+
+\begin_layout Standard
+So let me ignore those issues.
+ They are all solvable using a conventional engineering mindset.
+ The issue is that I don't have an infinite amount of time; someone else
+ needs to solve these, and tehy are not getting solved for the AtomSpace/OpenCog
+, and Ben is not solving them for Hyperon, either.
+ So we're in a hole, here.
+\end_layout
+
+\begin_layout Standard
+Where were we? So, we are ingesting English text, or electronics netlists,
+ one paragraph at a time, one netlist at a time, and either we store a URL
+ to the disk location of the original dataset, or we actually import the
+ raw text or Spice file or whatever, into the AtomSpace.
+ If we import the whole thing, then the mean ugly issue of having enough
+ space raises it's head again.
+ So its better to leave it on disk, and just record the URL.
+\end_layout
+
+\begin_layout Standard
+So, how does this work? Do I have a URL-recording agent? Who engineers it?
+ How does it work? Does it have an Atomese API to it? The problem with having
+ an Atomese API is that no one uses these, because the meta-level stuff
+ isn't working yet.
+ Because ..
+ why? Is the meta-level stuff to vague and cloudy? Doesn't have an approrpriatel
+y articulated deployment scenario? Let me be clear: last week, I wrote a
+ python-Atomese file-system-crawling 
+\begin_inset Quotes eld
+\end_inset
+
+agent
+\begin_inset Quotes erd
+\end_inset
+
+, and so fucking what? I engineered it, I implemented it, it works.
+ Now what? It does have a sub-module that computes the hash of the contents
+ of a file.
+ I could modularize this, so that the function that computes the hash is
+ replaced by a generic module that computes anything at all, and stuffs
+ the results into the AtomSpace, when invoked.
+\end_layout
+
+\begin_layout Standard
+Is this an improvement over the shell-script that I use to shove text through
+ the 'learn' pipeline? Well, I guess it could be.
+ Shell scripts are hard to turn into daemons.
+ Why do I want a daemon? Well, first of all, the file crawler has a config
+ file, that tells it where to crawl.
+ The config file is there for the human user, to edit.
+ That config file should be in the AtomSpace.
+ And it should be editable with a web GUI.
+ And there should be a button that says 
+\begin_inset Quotes eld
+\end_inset
+
+config has changed, reexamine, reload, restart.
+\begin_inset Quotes erd
+\end_inset
+
+ And conversly: what config are you using right now? And, as a daemon, some
+ way of saying 
+\begin_inset Quotes eld
+\end_inset
+
+Are you there? Are you up? What's your status? Are you working?
+\begin_inset Quotes erd
+\end_inset
+
+ Its taken me a while to warm up to SystemD, but I think I get it now.
+ Having a uniformized, common system to do it all is actually a good idea.
+ The analogy here is that I need a generic Atomese system processing daemon,
+ one that can infest input from a file system (or from URL's via crawls,
+ whatever) and apply processing modules to what it has gone over, and keep
+ a general record of what it has done so far.
+ And I guess I will have to engineer this, because it won't just drop into
+ my lap.
+\end_layout
+
+\begin_layout Standard
+The problem that I have with the above is that the system requirements here
+ are so freakin generic that it sounds like 1990's computing buzzword bingo.
+ There are 101 systems that can ingest data, record it, process it.
+ On the cloud, we got OpenStack that specializes in this stuff, so why exactly
+ am I reinventing cloud computing? Well, because the data generated and
+ kept by these other systems is not accessible to me, in Atomese format.
+ And why do I need this data in Atomese format?
+\end_layout
+
+\begin_layout Standard
+Ah, there's the rub.
+ The simple, stupid answer is that this is how the higher processing layers
+ determine what has been done before, and decide how to go back and do it
+ again.
+ But that's the stupid answer because I do not yet posses higher-level layers
+ capable of doing this.
+ And I'm not sure how and when I will possess them.
+ And this is the key issue that I'm trying to work towards, and keep not
+ quite getting to, and now its late, and I want to go for a bike ride before
+ it gets too late, so, dear diary, its coitus interruptus time again.
+ Perhaps we'll do some cognitive fucking around later today, or maybe not.
+\end_layout
+
+\begin_layout Standard
+Well, a few more minutes, a few more missives, before I pull out.
+ My general framework of computing similarities is also incomplete.
+ I've got a working proof-of-concept, its in a semi-generalized format/domain.
+ I've discussd a crawler in the above paragraphs, that could be built in
+ a more generic fashion.
+ And I've got a slightly firmer view of what a web UI might look like.
+ And just talking about this has me stoked to build it.
+\end_layout
+
+\begin_layout Standard
+And that's the next issue: the manic-depression.
+ The mania is that I'm stoked to build this and that.
+ The depression is that I'm the only one who is stoked; I don't have a user-base.
+ I don't have helpers, assisntants, collaborators.
+ The other half of the depression is the feeling of emptiness: I still don't
+ have a well-formed plan for arriving at AGI.
+ Just some obvious steps in front of me, and then everything is obscured
+ by a curtain of trees, clouds, jungle.
+ And this is how explorers do things: one step at a time, erring through
+ the jungle.
+ And I can say 
+\begin_inset Quotes eld
+\end_inset
+
+buck up kiddo, one step at a time, through the jungle, its forward progress,
+ no matter how you think about it!
+\begin_inset Quotes erd
+\end_inset
+
+ And meanwhile, there's some asshole in a fucking biplane flying over the
+ jungle and waving to you and yelling 
+\begin_inset Quotes eld
+\end_inset
+
+cholley ho, old chap, you should see the view from up here
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And I want to be that guy, with the view from above, instead of being stuck
+ in the weeds of system engineering.
+ But he can fly only because he did a different set of system engineering:
+ building an airplane, levergating advances in metalurgy, pistons, motors,
+ propellers and shellac'ed cloth and strong, lightweight wire for the wings.
+ Well, if the goal is to do botany, you get on your hands and knees with
+ a hand-shovel and whatever.
+ And if the goal is to get a survey of the AGI jungle, well, the airplane
+ is the thing.
+ I'm very very worried that the one-step-at-a-time approach of building
+ a configurable crawler and building a generic similarity-analysis infrastructur
+e is ...
+ the wrong thing to be doing.
+ And the reason I worry that it's the wrong thing is the meta-jungle.
+ Fuck-all.
+ There are several metas involved here.
+ One is the socio-economic meta: that airplane pilot has to come to ground,
+ and deal with buying gasoline, eating dinner, and getting roses for his
+ love.
+ And so I have to find money, make bill-pay, obtain collaborators on my
+ project.
+ 
+\end_layout
+
+\begin_layout Standard
+Here's a meta-example from that world: In order to keep some system daemons
+ running autonomously, you need humans to supply that computer with electricity
+ and reboot it when it is down.
+ This is done in one of two ways: the computer software does something useful,
+ e.g.
+ cell phones, or generates money, e.g.
+ crypto-mining.
+ So getting rewarded with crypto for keeping an AtomSpace instance up and
+ running is something that ...
+ Well, singularityNet set out to do this, but they, I dunno...
+ got distracted? FileCoin was/is supposed to do that for IPFS, but IPFS
+ is crap.
+ Compare IPFS to Ceph, and you can instantly see why IPFS is crap.
+ At any rate, being actively coupled into the human economy is how a technology
+ item is guaranteed life.
+ It can be natural, like cellphones, which evolved to fit something humans
+ want, and it can be artificial, like FileCoin, leverage greed and get-rich-quic
+k dreams.
+ I don't have a viable opencog-crypto get-rich-quick scheme, and neither
+ does Ben, after claiming to be working on it for five-plus years.
+ And worse: this angle is not really AGI, its rather a mechanical coupling
+ of technology into the human world.
+ So we know this is one way to couple in, but it does not solve the actual
+ AGI problem.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ There's more.
+ But I gotta go on that bike ride now.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
