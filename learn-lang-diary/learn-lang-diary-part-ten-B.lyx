@@ -14529,7 +14529,7 @@ Here's a meta-example from that world: In order to keep some system daemons
  crypto-mining.
  So getting rewarded with crypto for keeping an AtomSpace instance up and
  running is something that ...
- Well, singularityNet set out to do this, but they, I dunno...
+ Well, SingularityNet set out to do this, but they, I dunno...
  got distracted? FileCoin was/is supposed to do that for IPFS, but IPFS
  is crap.
  Compare IPFS to Ceph, and you can instantly see why IPFS is crap.
@@ -14550,6 +14550,175 @@ k dreams.
 Whatever.
  There's more.
  But I gotta go on that bike ride now.
+\end_layout
+
+\begin_layout Subsection*
+20 Dec 2024 Post ride
+\end_layout
+
+\begin_layout Standard
+Lets continue.
+ Two or three ideas gel in the above.
+ First, I can think of a crawler as a motor, an active agent that 
+\begin_inset Quotes eld
+\end_inset
+
+does things
+\begin_inset Quotes erd
+\end_inset
+
+: it explores.
+ The config file is the 
+\begin_inset Quotes eld
+\end_inset
+
+motor control
+\begin_inset Quotes erd
+\end_inset
+
+ that regulates where it is aimed.
+ During the crawl, data is collected.
+ What data? For Archeo, its hard-coded: the file size, the content hash,
+ the mtime.
+ But this too could (should be) specifiable in the 
+\begin_inset Quotes eld
+\end_inset
+
+collection tool
+\begin_inset Quotes erd
+\end_inset
+
+: the type of data that is gathered during a crawl.
+ 
+\end_layout
+
+\begin_layout Standard
+Coming up with reasonable designs for the motor control and the collection
+ tool specs is ...
+ a challenge, and it seeems like more prototyping and proof-of-concept work
+ is needed.
+ An issue that muddies the water is that these controls probably have to
+ be representable as config files, and then viewable and/or editable with
+ a Web UI.
+ In the long run, we want other parts of the system controlling the motor
+ directly.
+ But for now, it needs to have human oversight.
+\end_layout
+
+\begin_layout Standard
+Next, we have the task of measuring directory similarity.
+ There are two distinct issues.
+ One is that there are many different ways of measuring similarity, each
+ emphasizing different aspects.
+ So, this requires a 
+\begin_inset Quotes eld
+\end_inset
+
+similarity tool
+\begin_inset Quotes erd
+\end_inset
+
+, specifying what it is that should be compared.
+ Given the richness, its again not clear how to specify this.
+\end_layout
+
+\begin_layout Standard
+Clouding the above is that I developed the matrix tool, for measuring similarity
+ for items arranged in a sparse matrix.
+ Directories are, in that sense, not sparse.
+ But then, I don't want to compare 
+\begin_inset Quotes eld
+\end_inset
+
+anything to anything
+\begin_inset Quotes erd
+\end_inset
+
+; I already have blown up directory contents into a specific collection
+ of Atomese, and its really about tracing through incoming sets of Atoms
+ (i.e.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+find all files with the same name
+\begin_inset Quotes erd
+\end_inset
+
+ is really about finding the incoming set of a node with some name, but
+ I already have that incoming set, so finding is trivial.) Some kind of rethinkin
+g is needed for understanding what 
+\begin_inset Quotes eld
+\end_inset
+
+similarity
+\begin_inset Quotes erd
+\end_inset
+
+ means in this context.
+\end_layout
+
+\begin_layout Standard
+Is this doable? Yes.
+ Perhaps even in a 3-6-12 month project.
+ Should it be done? Well, I don't have much else on my plate.
+ Is it silly? It sure feels silly, because it is so low-level and basic.
+ Flip side, no one has done this silly and basic thing before.
+ And if they have, it doesn't matter, because they done it wrong.
+ So the decision is like that of undertaking any new software (or hardware)
+ project: what's out there is no good, and won't do what I want.
+ I'm telling myself this to psych myself up, because otherwise, it feels
+ like I dunno, a stupid project? I can't tell.
+ Is this brilliant? Or dumb? Well, I know I'm smart, so I should learn to
+ trust that little voice in my head that says 
+\begin_inset Quotes eld
+\end_inset
+
+Linas, this is brilliant
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The only real problem I've got with that little voice is that it makes
+ me do things that society finds little or no value in.
+ Its odd that this is a plight shared by both scientists and drug addicts.
+ You don't get rich studying high-redshift galaxies.
+ Actually, you have trouble staying employed.
+ I missed my chance to become a famous and acclaimed scientist.
+ I'm now older and wiser, but senescence is working against me now.
+ I need to be a bit more focused and selective with my time left on Earth,
+ and so I spell out a project like the above, and wonder, 
+\begin_inset Quotes eld
+\end_inset
+
+is it dumb
+\begin_inset Quotes erd
+\end_inset
+
+? and 
+\begin_inset Quotes eld
+\end_inset
+
+should I do it?
+\begin_inset Quotes erd
+\end_inset
+
+ What a fucked existance.
+\end_layout
+
+\begin_layout Standard
+The fact that Ben sucked all the air out of the room, by dropping teh Atomspace
+ in favor of some new, yet to be created system...
+ is this a blessing or a curse? I hate that decision, but then, I've hated
+ many of Ben's decisions.
+ He's so fucking bone-headed, for such a brilliant guy.
+ The silver lininig is that I don't have people clamoring for my time and
+ distracting me.
+ And so I'm free to pursue novel and new ideas.
+ Whatever.
+ Lets do this.
+ Could be interesting.
+ 
 \end_layout
 
 \begin_layout Section*
