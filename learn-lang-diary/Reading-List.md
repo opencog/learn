@@ -307,6 +307,8 @@ Things to read:
   A Gentle Introduction to Graph Neural Networks
 
 * https://pdl.cmu.edu/PDL-FTP/Storage/ceph-exp-sosp19.pdf
+  ACM SOSP ’19, October 27–30, 2019, Huntsville, ON, Canada
+  https://doi.org/10.1145/3341301.3359656
   File Systems Unfit as Distributed Storage Backends: Lessons from 10 Years of Ceph Evolution
   Abutalib Aghayev, Sage Weil, Michael Kuchnik, Mark Nelson, Gregory R. Ganger, George Amvrosiadis
 
