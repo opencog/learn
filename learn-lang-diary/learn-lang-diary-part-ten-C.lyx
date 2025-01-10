@@ -6453,6 +6453,398 @@ illusitrated-word2vec
 Dinner break.
 \end_layout
 
+\begin_layout Standard
+Back from dinner.
+ We are now ready for a kick to the groin.
+ I quote, I am not making this up.
+ Verbatim: 
+\begin_inset Quotes eld
+\end_inset
+
+1.
+ Generate high-quality word embeddings (Don’t worry about next-word prediction).
+ ...
+ We’ll focus on step 1.
+ in this post as we’re focusing on embeddings.
+\begin_inset Quotes eld
+\end_inset
+
+ So, let me get this straight.
+ We are about 3/4ths of the way through the post.
+ We started with word embeddings.
+ Actually did explain them in a passable way, if, that is, you already knew
+ what they were.
+ Never explained how to create them.
+ Spend half the post on a word-prediction black box, which is never explained,
+ either.
+ Confuse skip-grams with word-pairs.
+ And then start our next section with mislabelled black boxes.
+ Well, we were told earlier that it was cosine similarity that did the trick,
+ so why is it a black box this time? Did we forget about cosine similarity?
+ The box is labelled 
+\begin_inset Quotes eld
+\end_inset
+
+untrained model
+\begin_inset Quotes erd
+\end_inset
+
+ but gives an output of 0.9.
+ I would have expected the untrained model to give, I dunno, 0.5 on a scale
+ of 0 to 1, or maybe 0.0 on a scale of -1 to 1.
+ Cosines, after all, go -1 to 1.
+\end_layout
+
+\begin_layout Standard
+OK, so we're going to now simply mark word-pairs that co-occur in a widow
+ with +1, and we'll thorw in random zeros as negative samples.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+This idea is inspired by Noise-contrastive estimation [pdf]
+\begin_inset Quotes erd
+\end_inset
+
+ Uh, duude maybe the correct wording would have been 
+\begin_inset Quotes eld
+\end_inset
+
+Noise-contrastive estimation [pdf] is inspired by this idea
+\begin_inset Quotes erd
+\end_inset
+
+? 
+\end_layout
+
+\begin_layout Standard
+Then we're back to calling word-pairs skip-grams again.
+ For N=2.
+ Duude, it is literally impossible to have a skip-gram with N=2.
+ You have a fucking window of width=6 and you're picking two words out of
+ that window.
+ A fucking pair.
+ That's not what a fucking skip-gram is.
+ That's what a textbook bog-standard bigram is.
+ Fucking everybody in the NLP industry knows this.
+ Why am I reading this shit and getting angry? Because someone linked to
+ this as a 
+\begin_inset Quotes eld
+\end_inset
+
+great explanation that makes everything clear.
+\begin_inset Quotes erd
+\end_inset
+
+ Oh whatever.
+ Lets see this through to the end.
+\end_layout
+
+\begin_layout Standard
+We've got embeddings and contexts.
+ OK, cool.
+ that's clear.
+ Two MxN matrixes.
+ Now we select some rows out of those.
+ OK.
+ Dot prodocts.
+ OK.
+ Sigmoids, OK.
+ He says 
+\begin_inset Quotes eld
+\end_inset
+
+probabilities
+\begin_inset Quotes erd
+\end_inset
+
+ but that's just plain wrong.
+ Probabilites are normalized, and live in a simplex, while he's talking
+ about numbers that live in a unit cube.
+ The shapes are not even remotely similar.
+ Whatever.
+ Lets just ignore that.
+\end_layout
+
+\begin_layout Standard
+We now have an error term.
+ OK.
+ An we use an orange arrow to 
+\begin_inset Quotes eld
+\end_inset
+
+update model paramters
+\begin_inset Quotes erd
+\end_inset
+
+.
+ How? what parameters? I didn't see any paramters.
+ I saw some MxN matrixes with row vectors.
+ Are we updating with, what, some Klaman filter? Clerly can't be that because
+ there's no velocity.
+ Are we adding or multiplying? What are we addint or multiplying? We are
+ given three scalar values, and four rows (six, with multiplicity).
+ Are we ...
+ adding and subtracting scalar multiples of what and what? 
+\end_layout
+
+\begin_layout Standard
+Dot products are Casimir invariants of Euclidean space.
+ More bluntly: have sphere symmetry (that's why we call them 
+\begin_inset Quotes eld
+\end_inset
+
+scalars
+\begin_inset Quotes erd
+\end_inset
+
+) Some of the dot products are negative.
+ Fine.
+ Negative and les than one, which imply that the vectors do not live inside
+ a unit spehere.
+ Perhaps they live in a unit cube centered on the origin? OK.
+ The sigmoid mapped them to a unit cube.
+ but this time a [0,1] cube.
+ OK.
+ Why the gratuitous remapping to [0,1] when we were working with [-1,1]
+ a moment ago? Beats me.
+ Whatever.
+ Fine.
+ Some of the errors are negative.
+ Makes sense, maybe.
+ But I'm pretty sure that a linear combination of vectors in a unit cube
+ will be a vector that is no longer in that unit cube.
+ So, we're going to do, some, uhh, unspecified linear combination, and clamp
+ the resulting vectors to ...
+ what?
+\end_layout
+
+\begin_layout Standard
+Next: 
+\begin_inset Quotes eld
+\end_inset
+
+We now proceed to our next step ...
+ and do the same process again.
+\begin_inset Quotes erd
+\end_inset
+
+ Uhh, did we clamp to a cube or a sphere or a simplex, before repeating
+ the step, or after? Lets pretend I'm a programmar, and I know nothing about
+ cubes or spheres and I go to write a program that does this.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+do it again
+\begin_inset Quotes erd
+\end_inset
+
+ is obviouly in the loop.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+The next sample
+\begin_inset Quotes erd
+\end_inset
+
+ ...
+ any sample? The next one in the text? Randomly drawn? Is there some implied
+ commutativity of these operations? Because clamping is non-commutative,
+ and not in a good way, either.
+ You could maybe whip out stochastic sampling and claim that the central-limit
+ theorem applies, because the central-limit theorem applies to everything.
+ But, uhh, we're trying to find uniformly distributed vectors, I guess in
+ a Gaussian orthogonal ensemble, and he could say 
+\begin_inset Quotes eld
+\end_inset
+
+surprise, you get a gaussian orthogonal ensemble
+\begin_inset Quotes erd
+\end_inset
+
+ but he never says that.
+ And yes, you can normalize GOE's to get actual probablities, that's part
+ of the magic.
+ And if you wanted to get graphical, you could have at least drawn a fucking
+ Bell curve showing the actual fucking distri-fucking-bution of word-pair
+ vectors.
+ An actual diagram of the actual embeddings that result.
+ And maybe text: 
+\begin_inset Quotes eld
+\end_inset
+
+along the 'King' direction, here's the distribution of cosine similarities,
+ and notice how 'queen' is there, six sigma away, and how trees and water
+ and adverbs and propostions are here near the center, and 99.9999% of all
+ words are within six-sigma, except for 'queen' and 'man', which are outliers.
+ Here's another diagram along the 'man' dimension and note how 'women' and
+ 'boys' are six-sigma outliers.
+ So you six-sigma add and subtract vectors for kings men and women on orthogonal
+ directions and so it should not come as a surprise that along the vector
+ for queen, we have a bell curve, king-man+woman is six fucking sigma away
+ from the fucking center of that bell curve and (italics mine) that's why
+ word embeddings work.
+ Because they are uniformly distributed hypervectors in a ultra-high-dimensional
+ space.
+ And now you finally understand what actually happened, and on just about
+ any dimension of the N=10000 vocabulary words, you will have gaussians
+ due to the central-limit theorem, and there will always be a handful of
+ word pairs that are similar, and the vast majority of word pairs will not
+ be similar.
+ Because central-limit theorem, duhh.
+ And it even works for prepositions and articles, and not just nouns.
+ He could have written this.
+ The scales would have fallen from my eyes, and I'd say 
+\begin_inset Quotes eld
+\end_inset
+
+ah now I get it
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Instead, I have an orange arrow, three purple rows, one green row, and I
+ ponder what 
+\begin_inset Quotes eld
+\end_inset
+
+update model parameters
+\begin_inset Quotes erd
+\end_inset
+
+ means, given that he has developed a parameter-free model.
+ Well, window-size would be a parameter.
+ But he's not updating the window size.
+ He calls that a hyperparameter.
+ Where are your paramters, duude? Maybe there's some epsilon in ther that
+ you forgot to tell us about? But no, that would be a hyper-parameter.
+ As would be the sigmoid width.
+ Meme of goose chasing a guy.
+ Where are your parameters? Where are they?
+\end_layout
+
+\begin_layout Standard
+I'm not picking on this poor shmuck who is abso-fucking-lutely cluseless
+ about what he's writing about.
+ Pretty much *all* DL/NN literature is written at this same childish level.
+ And its a fucking hundred-billion-dollar industry with Nobel Prize-winners.
+ Churning out incoherent drivel.
+\end_layout
+
+\begin_layout Standard
+I dunno.
+ Maybe there's crap on cosmology out there.
+ But I read all five papers that announced the Event-Horizon Telescope results.
+ Read them beginning to end.
+ They were clear, well-written, comprehensible.
+ Well, to me.
+ Maybe if I was a radio engineer tasked with building a similar telescope
+ array, I'd be rolling on the floor, screaming 
+\begin_inset Quotes eld
+\end_inset
+
+it can't be done!
+\begin_inset Quotes erd
+\end_inset
+
+ But I'm not a radio engineer.
+ And I walked away feeling enlightened.
+ Even though I think I did spend ten minutes staring at that pair of circles
+ labelled 
+\begin_inset Quotes eld
+\end_inset
+
+Sag A*
+\begin_inset Quotes erd
+\end_inset
+
+ and some angular resolution next to it, wondering 
+\begin_inset Quotes eld
+\end_inset
+
+what does this diagram mean?
+\begin_inset Quotes erd
+\end_inset
+
+ I got it, in the end, I think.
+ I think it was lieterally the angular resolution of the telescope.
+ 
+\end_layout
+
+\begin_layout Standard
+And I would be willing to bet that there was a Quanta Magazine article on
+ the Event Horizon Telescope that was incoherent drivel.
+ I don't recall ever reading a Quanta Magazine article that wasn't incoherent
+ drivel.
+ I miss the old Scientific American.
+ It was a work of art.
+ They actually had the Nobel Prize winners writing the articles, back then,
+ and not 
+\begin_inset Quotes eld
+\end_inset
+
+science writers
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Too little too late.
+ All the science writers will be fired, and replaced by ChatGPT.
+ Which will generate coherent-sounding nonsense.
+ And after STEM replaces the last of the Humanities departments, Georege
+ Elliot will be forgetten, Wilhelm De Kooning will be forgotten, Salvador
+ Dali will be chuckled at, the LBJ library will still stand, imposing the
+ Concrete Brutale Will of the State on the empty sun-baked oven it is centered
+ in.
+ Perhaps a really cool bit of Conceptual Art would be to have some tumbleweeds
+ roll around.
+ Texan, check.
+ Abandoned post-apocalyptic wasteland, check.
+ The decay of Western Civ, check.
+ Shame.
+ I think I would have liked LBJ.
+ The Great Society was a worthy utopian vision.
+ Commisioning a presidential library building designed by Albert Speer acolytes,
+ maybe not so much.
+\end_layout
+
+\begin_layout Standard
+I will die of old age, and what will remain is this text, and some software
+ system providing impressionistic takes of me, based off this text and a
+ few crummy fotographs.
+ You should see me when I'm drunk.
+ A real ball of laughs.
+ Nah.
+ I'm not a mean drunk.
+ Yes, I got heated with that guy on New Years who said Putin is good and
+ Jews are bad and Americans are bad and russians are good.
+ How the fuck we got through that conversation without once saying the words
+ Palestinian or Arab or Islamic, or even having the faintest hint of that,
+ I dunno.
+ I did almost lose it when he said 
+\begin_inset Quotes eld
+\end_inset
+
+You're Lithuanian.
+ Of course you hate russians.
+ They're your brothers.
+\begin_inset Quotes erd
+\end_inset
+
+ Human brains are weird.
+ I have some pop-psychology about human brains.
+ Did I mention that yet? I need a drink.
+ Since I don't drink and there's no alcohol in the house anyway, this won't
+ happen.
+ But I like stereotype dialog line.
+ I need a drink.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
