@@ -5738,6 +5738,721 @@ what is complexity?
  Mother Mary and Joseph.
 \end_layout
 
+\begin_layout Subsection*
+9 January 2025 - Word2Vec
+\end_layout
+
+\begin_layout Standard
+One complaint about deep learning and neural nets was that I was never able
+ to understand what the heck those papers were talking about.
+ They were always vague, cloudy, imprecise, lacking in formulas, specifity,
+ sharpness, clarity.
+ They were just big bundles of confusing non-specific ideas.
+ Yet, there's a half-a-trilllion dollar industry built on that, and Nobel
+ Prizes handed out.
+ So why can't I understand what they are saying? Do I really think that
+ different? Let's find out.
+\end_layout
+
+\begin_layout Standard
+So I stumbled upon an excellent example.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+The Illustrated Word2vec
+\begin_inset Quotes erd
+\end_inset
+
+ by Jay Alammar http://jalammar.github.io/illustrated-word2vec/ It's translated
+ into five languages, discussed on Reddit, Hacker News, and aparantly from
+ a book.
+ Let's get started.
+\end_layout
+
+\begin_layout Standard
+(Caution-footnote.
+ This is a very long and histrionic complaint expressing strong negative
+ emotions.
+ Since I assume that there are no human readers of this text, I assume that's,
+ well.
+ okay, acceptable, passble, since I am not alienating, hurting or insulting
+ anyone's fragile litttle fucking ego.
+ I know you will think less of me after reading this.
+ Well, fuck you too.
+ I mean, I expect AGI to have a grasp of human emotions, and can thus play
+ the role of psychoanalyst, while I play the role of deranged patient on
+ the couch.
+ That's the good news.
+ The bad news is that this text is intended to be used as the raw material
+ for a self-portrait, the portrait emerging from the text below is ...
+ ugly.
+ My excuse is that artists and writers have embraced ugliness in the past,
+ so who am I to hide my anger under makeup-foundation and lipstick? No,
+ this is crinkly me, angry as fuck about the abysmal quality of writing
+ in the, uhh, deep-learning industry.)
+\end_layout
+
+\begin_layout Standard
+First up: three words, king man woman.
+ Three arrows.
+ Dots.
+ An oval, some pink, blue and white squares.
+ I have literally no effing clue what that diagram is trying to communicate.
+ Why are there dots on the arrows? Why is there an oval? I literally do
+ not know.
+ That post never explains.
+ Somehow, people are OK with that.
+ How much time should I spend trying to decode this cryptic diagram, which,
+ by the end of the post, remains unexplained? Fuck if I know.
+ Why the fuck am I irritated? Because other people seem to think this is
+ great content, and derive actual meaning from it.
+ I'm irritated even writing these last few sentences.
+ WTF.
+ So lets punt.
+\end_layout
+
+\begin_layout Standard
+Next, there's an explanation of vectors.
+ I know what vectors are, so lets skip that.
+ Why he uses the great scandal of the decade, the Cambridge Analytica data
+ mining scandal, and then never actually mentions facebook or that it was
+ a scandal, or anything.
+ Its just an illsutration of a fucking vector using Big5 personailty traits.
+ I can already hear the defensive rebuttal: 
+\begin_inset Quotes eld
+\end_inset
+
+It doesn't mean anything; its just illustraging what a vector is.
+ Why are you mad?
+\begin_inset Quotes erd
+\end_inset
+
+ That's just Bart Simpson-esque: 
+\begin_inset Quotes eld
+\end_inset
+
+I didn't do it.
+ Nobody saw me do it.
+ You can't prove anything
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The asshole writing this stuff is the stereoypical silicon valley tech
+ bro, morally lost, inept, out of touch, incompetent, incapable, at the
+ root of many of our social ills.
+ He decided that its OK to use the scandal of the decade to illustrate what
+ a vector is.
+ Like no big deal.
+ Like its harmless.
+ Like everyone does it.
+ (Everyone does do it.) What a fucking asshole.
+ What chutzpah.
+ A pure embodiment of everything wrong with hi-tech, and its in the intro
+ to a popular explanation of Word2Vec.
+ I've got steam coming out my ears, ready to explode.
+ These people do not think like me.
+ This is already clear.
+ 
+\end_layout
+
+\begin_layout Standard
+How do they think? Is this guy autistic? Does his brain simply lack the
+ neural circuitry to know his moral compass is broken? Is he actually being
+ evil and sly, using a scandal to illustrate a modern comp-sci concept?
+ Is he encrouaging others to be equally blind and impervious to the implications
+ of their actions? I talk about AGI, and here we have a shining example
+ of an educated human failing to pass the Turing Test.
+ And he's popular.
+ I'm so angry, my adrenaline levels are so high, I cannot think clearly
+ any more.
+ No wonder I have issues understanding LLM's.
+\end_layout
+
+\begin_layout Standard
+Lets continue.
+\end_layout
+
+\begin_layout Standard
+Cosine similarity.
+ He explains what vectors are, perhaps aiming for high-school students?
+ But then trots out the words 
+\begin_inset Quotes eld
+\end_inset
+
+cosine similarity
+\begin_inset Quotes erd
+\end_inset
+
+ like its self-evident what that is.
+ No formulas.
+ No summations.
+ No multiplications.
+ Not even the classic high-school algebra of a right triangle with sine
+ and cosine inscribed.
+ But the readers ...
+ follow along.
+ Because ...
+ they already know what cosine similarity is?? Why was an explanation of
+ a vector necessary, if you already know what cosines are? These people
+ do not think like me.
+ If I didn't already know what cosines were, I'd be lost, right here.
+\end_layout
+
+\begin_layout Standard
+I am not making progress in figuring out how other people think.
+ I assume the typical reader already knows these concepts, and the author
+ is just trying to jog their memory.
+ He could have written a formula.
+ Like this: 
+\begin_inset Formula $\vec{v}=a_{1}\hat{e_{1}}+\cdots+a_{n}\hat{e_{n}}$
+\end_inset
+
+ and jus said floats 
+\begin_inset Formula $a_{k}$
+\end_inset
+
+ and basis vectors 
+\begin_inset Formula $\hat{e}_{k}$
+\end_inset
+
+ and just said 
+\begin_inset Quotes eld
+\end_inset
+
+remember those from school?
+\begin_inset Quotes erd
+\end_inset
+
+ and instead we get tortured colored squares, without any fucking clue of
+ what the colors are supposed to mean.
+ No, I'm not being autistic.
+ You're using fucking colors, and no clue what those color encodings are
+ supposed to represent.
+ And people ..
+ lap this up.
+ Pretty colors.
+ Like Christmass tree lights or Fourth of July fireworks.
+ Whee! 
+\end_layout
+
+\begin_layout Standard
+Cosine similarity has a formula, too.
+ 
+\begin_inset Formula $\vec{x}\cdot\vec{y}=\left|x\right|\left|y\right|\cos\theta$
+\end_inset
+
+ and he could have written this down, but no.
+ Lets be as vague and confusing as possible, and use fucking colors.
+ Are we there yet? I have visions of a human head surgically switched to
+ monkey body.
+ Where's your head at? Basement Jaxx video.
+\end_layout
+
+\begin_layout Standard
+So we have colors, I have no clue what they mean.
+ Green check marks and red X's.
+ OK, I know what checks and X'es are.
+ He's applying a minimum, here, but being coy about it.
+ The reader concludes...
+ what ...
+ ? Some intuitive guess-work of what a minimum function is? Like some grade-scho
+ol word problem 
+\begin_inset Quotes eld
+\end_inset
+
+find the shortest length that ...
+\begin_inset Quotes erd
+\end_inset
+
+ but here, he never says 
+\begin_inset Quotes eld
+\end_inset
+
+shortest
+\begin_inset Quotes erd
+\end_inset
+
+.
+ He just puts a green checkmark next to some random positive number, and
+ a red X next to some random negative number.
+ What does this mean? How can one even begin to understand this, if you
+ don't already know that the cosine is being minimized? I'm lost.
+\end_layout
+
+\begin_layout Standard
+My head hurts.
+ Now I get s 50-dimensional GloVe vector.
+ Some random numbers.
+ OK.
+ No clue what random numbers are supposed to demonstrate, but, whatever.
+ There are lots of them, Is that the point?
+\end_layout
+
+\begin_layout Standard
+Next, a color coding.
+ This actually makes sense.
+ Red for hot and blue for cool even.
+ That's reasonable.
+ Then the famous result.
+ Cool.
+ Hopefully by the end, we'll learn how to create a word embeding.
+\end_layout
+
+\begin_layout Standard
+Lets keep rolling.
+\end_layout
+
+\begin_layout Standard
+A black box, with 2 inputs and one output.
+ I'm not sure how to visualize this black box.
+ What's inside it? Vectors? The only thing I can think of that is a black
+ box with vectors in it is a tensor, but he never uses the work tensor.
+ So its instead some mystery box.
+ No formula to describe with at does.
+ Not even notation, like 
+\begin_inset Formula $z=f(x,y)$
+\end_inset
+
+ for that balck box.
+ Why is there no notation? How is one supposed to understand black boxes?
+ What are they? WTF is going on? Who, exactly, finds this edifying, and
+ what is in their heads when they see such diagrams? What hypothesis do
+ they create? Is this 
+\begin_inset Quotes eld
+\end_inset
+
+visual thinking
+\begin_inset Quotes erd
+\end_inset
+
+? I understand de Kooning and Jackson Pollack and Mark Rothko.
+ I do not understand boxes with rounded edges and arrows.
+ Well, I do cause I already know what a functin is, but if you did not already
+ know what it is, what do you learn from this? No one in my family would
+ have a clue: not my sister, my mom, my kids, my wife.
+ That box is appealing to a visual coded reference that STEM people already
+ know the allusion to: the 
+\begin_inset Quotes eld
+\end_inset
+
+black box
+\begin_inset Quotes erd
+\end_inset
+
+.
+ As an explanatory text, its just the cart before the horse.
+ He never told us what was in the box: he made it black from the very begining,
+ instead of at the very end.
+ Is this a magic trick, like what magicians do?
+\end_layout
+
+\begin_layout Standard
+Anyway, I'm thinking a tensor of some kind.
+ Whatever the fuck.
+ Who knows.
+ Vectors, tensors.
+ How, exactly, would an AGI go about solving the puzzle of this web page?
+ How would I create an AGI that can process the information content in this
+ diagram? I'm on a tirade.
+ I'm lost.
+ I'm clueless.
+\end_layout
+
+\begin_layout Standard
+Bengio 2003.
+ So after reading this text ..
+ aimed at ...
+ what, high-school students who don't know what a fucking vector is, we
+ are going to ...
+ read Bengio, now? Seriously? Are you off your rocker?
+\end_layout
+
+\begin_layout Standard
+OK, so the curtain is drawn back a bit on the black box.
+ A glimpse of the Wizard of Oz is spotted.
+ Good work, Dorothy! Thou shalt are light green and dark green.
+ I guess that's a table of vectors.
+ Right? Not multi-colored, like before.
+ Not pink and blue, but green this time.
+ Why green? Who the fuck knows.
+ Bend over and take it.
+ You'll like it, and you will emerge enlightened at the end.
+ pale and dark gren next to each other, and an arrow pointing at a voector,
+ one of whose entries is pink.
+\end_layout
+
+\begin_layout Standard
+What's the hypothesis? maybe we take a doct product or a cosine of the vectors
+ for 
+\begin_inset Quotes eld
+\end_inset
+
+thou
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+shalt
+\begin_inset Quotes erd
+\end_inset
+
+, and sure, maybe one gets a single number, 0.4 But on the right hand side
+ is an entire vector, and not a single number.
+ How do I take two vectors ...
+ and get a vector? Am I adding these? If I was a high-school student, I
+ would imagine that the cross-product generalizes from 3D to N dimensions.
+ As an adult, I know it doesn't.
+ 
+\end_layout
+
+\begin_layout Standard
+So lets pretend I'm smart.
+ I've got a box, with colors, and some vetors.
+ Cool.
+ Will I find out what it means? Apparently not, for the very next sentence
+ is 
+\begin_inset Quotes eld
+\end_inset
+
+Let’s now turn to the training process to learn more about how this embedding
+ matrix was developed.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Seriously? Full stop.
+ This is about half-way through the article.
+ I've got a diagram.
+ I don't know what the diagram means.
+ The magician, slowly drawing back the curtains on the diagram ...
+ loses interest.
+ The inlooker is thinking 
+\begin_inset Quotes eld
+\end_inset
+
+well, I guess he sawed here in half and stabbbed here with a sward, but
+ I never saw a sword and she's still alive with her head and feet sticking
+ out the box, so what is the magic trick? 
+\begin_inset Quotes eld
+\end_inset
+
+Thou shalt not revela (the secret of) the magic trick?
+\begin_inset Quotes erd
+\end_inset
+
+ Like so 
+\begin_inset Quotes eld
+\end_inset
+
+Thou shalt not ___ the magic trick
+\begin_inset Quotes erd
+\end_inset
+
+ This is called CBOW, continuous bag of words.
+ I'm lost.
+ Lets plow onwards.
+ I have no clue what he's talking about, but lets ignore all that, and plow
+ onwards.
+\end_layout
+
+\begin_layout Standard
+Datasets.
+ I understand that.
+ I table with two input columns, 
+\begin_inset Quotes eld
+\end_inset
+
+features
+\begin_inset Quotes erd
+\end_inset
+
+ and one output.
+ Check.
+ He shows 3-grams but then uses the word N-gram, without ever saying that
+ N=3.
+ So I guess that the reader already knows what an N-gram is.
+ Then why, exactly, are we explaining vectors, if the reader already knows
+ what the N in an N-gram refers to?
+\end_layout
+
+\begin_layout Standard
+More PDF's.
+ Why are you explaining vectors, which every fucking high-school freshman
+ student in America already knows, and using 1/5th of your blog post to
+ explain this triviality, and using one of Silicon Valley's most famous
+ scandals to explain this triviality, and not using a single splt of algebra
+ to jog anyone's brain, just incomprehensible fucking diagrams with circles
+ and arrows, and then linking to fucking advanced PDF's by the half-way
+ mark? Is this some psy-op? WTF? 
+\end_layout
+
+\begin_layout Standard
+Oh wait.
+ There's more.
+ John was hit by a red bus in, with more ...
+ colors.
+ These are pink.
+ not green or blue.
+ Why not green or blue? Who the fuck knows.
+ Just fucking colors.
+ Use your brain, you'll figure it out.
+ Meanwhile, pull down your pants and bend over.
+ Intellectually, I mean.
+ I'm having fun.
+ Are you?
+\end_layout
+
+\begin_layout Standard
+Lets see.
+ so in one diagram, pale pink and mid pink and white and mid pink and dark.
+ In the next diagram they are sorted by darnkess of color.
+ But the sort order is different, and one of the words is skipped.
+ OK, so skipgram is he sectiion heading.
+ Now, dude, you could have numbered the words 1,2,3,4 but no, you had to
+ use colors? Sorry, you aren't Jasper Johns, here.
+\end_layout
+
+\begin_layout Standard
+I dunnot.
+ he's sliding windows Theres a table.
+ The table has two columns now, not three.
+ One input column, not two.
+ What happened to the block box? The tensor or whatever it was? Dropping
+ down from three to two is cheating, because I know how to multiply a matrix
+ by a vector.
+ I don't know how to combin two vectors to get a vector, unless thre is
+ a tensor in the middle, but the word tensor has not made it's appearence,
+ yet.
+\end_layout
+
+\begin_layout Standard
+The dataset he creates is a bog-standard NLP word-pair dataset.
+ He calls it a skip-gram.
+ Well, that's not what skip-grams are, dude.
+ That's what word-pairs are.
+ Skip-grams are n-grams with holes.
+ Word-pairs are not N-grams, they're bigrams, N=2.
+ Yeah you could say 
+\begin_inset Quotes eld
+\end_inset
+
+well I *did* skip some words in the middle
+\begin_inset Quotes erd
+\end_inset
+
+ but that's weak sauce.
+ Obscurantism.
+ Occult mysticism.
+ Someone translated this shit to five languages and posted on reddit and
+ hacker news.
+ Let's see if we can mention russia, then Alexander Dugin would be proud.
+\end_layout
+
+\begin_layout Standard
+Lets keep going.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Taco
+\begin_inset Quotes erd
+\end_inset
+
+ has a score of 0.4.
+ How did it get a score of 0.4? Who the fuck nows.
+ Its the start of the training session, so maybe we assign random numbers.
+ But aardvark and aarhus get zero, as does zyzzyva, and that's not random.
+ Do words in the middle of the alphabet get higher weights? But 
+\begin_inset Quotes eld
+\end_inset
+
+thou
+\begin_inset Quotes erd
+\end_inset
+
+ has a low weight.
+ So we randomly asgined zero to everything at the start of the traiing session,
+ except 
+\begin_inset Quotes eld
+\end_inset
+
+taco
+\begin_inset Quotes erd
+\end_inset
+
+, which has a mystery large number.
+ I'm fucking lost.
+ What doe it mean?
+\end_layout
+
+\begin_layout Standard
+There's a diagram.
+ A column vector this time, not a row vector.
+ Why? Who knows.
+ labelled 
+\begin_inset Quotes eld
+\end_inset
+
+actual target
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Takes me a while to figure out what an 
+\begin_inset Quotes eld
+\end_inset
+
+actual target
+\begin_inset Quotes erd
+\end_inset
+
+ is, but I think I get it.
+ There's an actual minus sign: the first algebraic symbol in the post.
+ And the word 
+\begin_inset Quotes eld
+\end_inset
+
+subtract
+\begin_inset Quotes erd
+\end_inset
+
+ nearby.
+ Two thirds of the way in.
+ High school students know that vectors can be linearsly combined, and w've
+ gotten links to advanced PDF's but we still got color-coded boxes emplying
+ random color codings.
+ Pink this time.
+ What happened to blue and to negative numbers? Beats me.
+ Lat time, we have minus one to plus one, but now we're going for zero to
+ one.
+ Will minus one come back later? Is there something special about zero (well,
+ of course, zero is special) The error of -0.4 is ..
+ white.
+ Not blue, but ...
+ white OK.
+ In an orange column.
+\end_layout
+
+\begin_layout Standard
+And an orange arrow, pointing to a box labelled 
+\begin_inset Quotes eld
+\end_inset
+
+untrained model
+\begin_inset Quotes erd
+\end_inset
+
+, but this 
+\begin_inset Quotes eld
+\end_inset
+
+untrained model
+\begin_inset Quotes erd
+\end_inset
+
+ is spitting out 0 for aardvark, so clearly it is trained, putting a iie
+ to the label.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+And that concludes the first step of the training.
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We draw an orange arrow to an incorrectly labelled box.
+ How is the model updated with this orange arrow? Who the fuck knows? 
+\begin_inset Quotes eld
+\end_inset
+
+This concludes one epoch of training.
+\begin_inset Quotes erd
+\end_inset
+
+ More accuratey, this concludes one epoch of confusion.
+ I still have no clue how the vectors are initialized, at the start of training,
+ or updated in the course of training.
+ Just black boxes and orange arrows.
+ 
+\end_layout
+
+\begin_layout Standard
+Error signals are not new.
+ Electric guitarists learn about feedback.
+ I get it, feedback.
+ Engineers learn about control cuircuits and Kalman fileters and alpha-beta
+ filters, and resonances on the complex plane.
+ Is that mis-labelled box, 
+\begin_inset Quotes eld
+\end_inset
+
+untrained model
+\begin_inset Quotes erd
+\end_inset
+
+, is that a Kalman filter? Something els? What, exactly, are we doing with
+ this orange arrow carrying that error signal?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+While this extends our understanding of the process...
+\begin_inset Quotes erd
+\end_inset
+
+ Speak for yourself, buddy.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+...it’s still not how word2vec is actually trained.
+ We’re missing a couple of key ideas.
+\begin_inset Quotes erd
+\end_inset
+
+.
+ yes we are.
+ You finally said something I can agree with.
+ But I don't think you were intended to be ironic.
+\end_layout
+
+\begin_layout Standard
+Is this why I do not understand what LLM's are? I understand gravitation
+ and string thoery, but I don't understand this 
+\begin_inset Quotes eld
+\end_inset
+
+illusitrated-word2vec
+\begin_inset Quotes erd
+\end_inset
+
+ text.
+ I do not understand how ordinary humans of average intelligence go about
+ solving the puzzles presented here.
+ I do not understand how to build a vision-processing, diagram-extracting
+ AI that could imbibe this blog post, and form reasonably coherent inferences
+ about how word2vec works.
+ And I'm the guy who has hopes for building an AI that might someday understand
+ Andy Warhol and Claus Oldenberg.
+ Somehow, that's easier and more natural than word2vec.
+ Must be my non-STEM education.
+\end_layout
+
+\begin_layout Standard
+Dinner break.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
