@@ -8074,6 +8074,668 @@ why are we trapped in the here and now? Why can we remember the past, but
 Next on the agenda: quantum.
 \end_layout
 
+\begin_layout Standard
+First, lets recap what quantum is.
+ its a thing with an action, where the action can be minimized with Euler-Lagran
+ge or Hamilton-Jacobi, giving classical equations of motion.
+ Close to these minimizing (or stationary) solutions, within one hbar of
+ distance, are other (differentiable) paths/surfaces.
+ They are necessarily differentiable, since the action has derivatives in
+ it, and so non-differentiable paths/surfaces would result in an infinite
+ (or undefined) action.
+ The partition function is 
+\begin_inset Formula $Z=\int\left[d\phi\right]\exp iA\left(\phi,\partial\phi\right)$
+\end_inset
+
+ so anything with infinite/undefined 
+\begin_inset Formula $\partial\phi$
+\end_inset
+
+ cannot contribute.
+ I belabor this point, because lots of fractals are non-differentiable everywher
+e.
+ Such fractals often have perfectly well-defined measure theory behind then,
+ i.e.
+ are integrable, and so they can show up in measure-preserving dynamical
+ systems.
+ So, there's a bit of unresolved tension, here: clarifying the boundary
+ between measure-preserving dynamical systems and systems having an action.
+ I'm personally a bit confused about where the boundary between these classes
+ is.
+\end_layout
+
+\begin_layout Standard
+Anyway, changing gears.
+ If one imagines replacing derivatives with differentials, thus discretizing
+ the problem, then the differential eqn that gives a stationary point of
+ the action can be imagined to be ..
+ watch for it: a collection of jigsaw puzzle pieces, marked with tabs and
+ connectors, stating how the differentials can be legally combined to given
+ an expression for the action.
+\end_layout
+
+\begin_layout Standard
+Are there two types of these jigsaws? One type, when assembled, giving the
+ stationary solution, while others, with looser assembly standards, that
+ give nearby solutions? There's also a counting problem: the classical solution
+ is a point.
+ How many nearby solutions are there? What's the measure?
+\end_layout
+
+\begin_layout Standard
+The problem here is that we once again take a god-like view: there is a
+ classical action, we know it for all time.
+ We stick it in the quantum partition function, and again know it for all-time.
+ We do not have an adequate theory for the measure of such systems, bu so
+ what: imagine we did: it affords us a god-like view, where we see not just
+ the past, but imagine being able to see the future, too.
+\end_layout
+
+\begin_layout Standard
+Many-words has a curious role here.
+ So, on the one hand, 
+\begin_inset Formula $\int\left[d\phi\right]$
+\end_inset
+
+ is meant to be an integral over all worlds, in the many-worlds interpretation.
+ On the other hand, all of these other worlds are assumed to be like ours:
+ predominantly classical, i.e.
+ given as solutions to the classical action.
+ But there is only one solution to the classical action, not many.
+ So either we are wrong about the action, or we are wrong about 
+\begin_inset Quotes eld
+\end_inset
+
+many
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That is, we either need an action with 
+\begin_inset Quotes eld
+\end_inset
+
+many
+\begin_inset Quotes erd
+\end_inset
+
+ classical solutions, or we are correct about our action (the Standard Model
+ is correct) and we are incorrect about there being 
+\begin_inset Quotes eld
+\end_inset
+
+many
+\begin_inset Quotes erd
+\end_inset
+
+ solutions.
+\end_layout
+
+\begin_layout Standard
+I propose one way out of this dilemma: time.
+ At any given point in time, any 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+, we do not yet know which future will be the one, true, action-minimizing
+ future.
+ So we keep tabs on them all, 
+\begin_inset Quotes eld
+\end_inset
+
+until later
+\begin_inset Quotes erd
+\end_inset
+
+, when we can 
+\begin_inset Quotes eld
+\end_inset
+
+find out
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Think of this as a computer weather simulation: numerical integration results
+ in numerical errors, but we wish to minimize those errors.
+ If course, they can be minimized locally, by picking a finer grid, but
+ better is to minimize them globally: say, minimize the root-mean-square
+ of all numerical errors, across the entire simulation.
+ This would require, at each 
+\begin_inset Quotes eld
+\end_inset
+
+point
+\begin_inset Quotes erd
+\end_inset
+
+ in the simulation, to track 
+\begin_inset Quotes eld
+\end_inset
+
+many different worlds
+\begin_inset Quotes erd
+\end_inset
+
+, and then, at some point, select the one that minimizes the errors, thus
+ 
+\begin_inset Quotes eld
+\end_inset
+
+collapsing
+\begin_inset Quotes erd
+\end_inset
+
+ the many choices to fewer choices.
+ This collapse would probably have a forward-backward nature to it: interferomet
+ric, so different paths are pursued, and welcher-weg cannot be answered
+ until 
+\begin_inset Quotes eld
+\end_inset
+
+later
+\begin_inset Quotes erd
+\end_inset
+
+, when the paths are brought back together and summed.
+\end_layout
+
+\begin_layout Standard
+In this interpretation, the many-worlds aren't some mysterious 
+\begin_inset Quotes eld
+\end_inset
+
+parallel universes, just like our own but different
+\begin_inset Quotes erd
+\end_inset
+
+, but are rather an accounting trick, because we cannot actually minimize
+ the action *right now*, we will have to wait for the future to happen,
+ before that can be done.
+ In the meanwhile, track a giant pile of possible universes.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+past
+\begin_inset Quotes erd
+\end_inset
+
+ then becomes what has been resolved and frozen.
+ The future remains unknown.
+ This has aspects of the 
+\begin_inset Quotes eld
+\end_inset
+
+transaction interpretation of QM
+\begin_inset Quotes erd
+\end_inset
+
+ (TIQM) in that future events (results of interferometric comparisons) finally
+ fix past events (that point where the split along the two arms of the interfero
+meter started).
+\end_layout
+
+\begin_layout Standard
+This, the TIQM or variants thereof, would seem to indicate that 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+ is not an infinitely thin space-time slice, but rather of finite width.
+ And, not a fixed finite width, but multi-scale.
+ Small interferometers can be resolved in femtoseconds, biffer ones in milliseco
+nds.
+ e.g.
+ the Alain Aspect experiments look at phenomena where the collapse is delay
+ for milliseconds.
+ That is, the Aspect experiments probe 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+, where the width of 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+ is milliseconds.
+ The shmucks working on quantum computing are suffering because they want
+ to create complex states that remain entangled for seconds or longer.
+ They talk about 
+\begin_inset Quotes eld
+\end_inset
+
+thermal noise
+\begin_inset Quotes erd
+\end_inset
+
+ collapsing their systems.
+ They are partly right: yes, they need to build systems that are isolated,
+ insulated from the rest of the universe, and all the thermal fiddle-faddle.
+ But the microscopic model needs to be that some 
+\begin_inset Quotes eld
+\end_inset
+
+photon
+\begin_inset Quotes erd
+\end_inset
+
+ from the outside world came in, bonked your superposition, which is bad
+ bu not fatal, but then another photon left your superposition and bonked
+ the external world, which is fatal: you know have the two arms of an interferom
+eter, and one arm of the interferometer is tangled into the universe, the
+ other is tangled into your superposition, and so, kaboom, your state collapses
+ before you get the chance to actually accomplish any meaningful quantum
+ 
+\begin_inset Quotes eld
+\end_inset
+
+computation
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is the engineering problem that is 
+\begin_inset Quotes eld
+\end_inset
+
+well-understood
+\begin_inset Quotes erd
+\end_inset
+
+ that everyone in the industry 
+\begin_inset Quotes eld
+\end_inset
+
+groks
+\begin_inset Quotes erd
+\end_inset
+
+.
+ What I'm trying to do here is to argue that a TIQM type model is actually
+ the correct model.
+ This should be relatively non-controversial: there are many legit physicists
+ who believe in TIQM, even if they are a minority.
+ I'm trying to explicitly rule out the cranks and shysters.
+ I want nothing to do with 
+\begin_inset Quotes eld
+\end_inset
+
+prolific entrepreneurs
+\begin_inset Quotes erd
+\end_inset
+
+ who use ChatGPT to create incoherent 
+\begin_inset Quotes eld
+\end_inset
+
+scientific
+\begin_inset Quotes erd
+\end_inset
+
+ rebuttals to controversy of the day.
+ I read one yesterday, a rebuttal to the Timescape Model in cosmology, and
+ it was shameful.
+ For a little while, I thought it might be a grad student who was going
+ to make a valid point.
+ No.
+ It was a 
+\begin_inset Quotes eld
+\end_inset
+
+prolific entrepreneur
+\begin_inset Quotes erd
+\end_inset
+
+ with a shoddy cut-n-paste job.
+\end_layout
+
+\begin_layout Standard
+My reasoning in the last ten paragraphs may also be incorrect, but its not
+ shoddy.
+ I am taking the utmost care to be clear and direct and accurate.
+ The result may still be a dazed and confused wall of words, but ...
+ I'm trying.
+ This is my best shot.
+ (My best shot in the allotted time.
+ The clock is ticking.
+ The race into the future is on.)
+\end_layout
+
+\begin_layout Standard
+OK.
+ I think that kind of exhausts the quantum side of things.
+ It does sketch why there is a 
+\begin_inset Quotes eld
+\end_inset
+
+here and now
+\begin_inset Quotes erd
+\end_inset
+
+, and it does answer why the future is unknown.
+ The future is unknown because some CMB photon could arrive on Earth, and
+ do the butterfly-effect thing.
+ Or worse: some neutrino.
+ Until those neutrinos pass by, and do their butterly-effect thing, we cannot
+ know the future.
+\end_layout
+
+\begin_layout Standard
+Careful: the standard retort here is that its 
+\begin_inset Quotes eld
+\end_inset
+
+small and negligible
+\begin_inset Quotes erd
+\end_inset
+
+ which is perfectly true for determining if the Flatiron building in New
+ York will fall over and kill some pedestrians.
+ But I'm philosophizing here: the integral 
+\begin_inset Formula $\int\left[d\phi\right]$
+\end_inset
+
+ includes everything, including primordial neutrinos.
+ They may have negligible effects on practical calculations ...
+ they *must* have negligible effect, as otherwise practical calculations
+ are impossible.
+ But from the viewpoint of 
+\begin_inset Quotes eld
+\end_inset
+
+why are we trapped in the here-and-now?
+\begin_inset Quotes erd
+\end_inset
+
+ I cannot ignore their contribution.
+ I don't have some explicit calculation where I can say 
+\begin_inset Quotes eld
+\end_inset
+
+it's negligible
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+The above reduces quantum many-worlds to a book-keeping device, the books
+ for which cannot be closed until 
+\begin_inset Quotes eld
+\end_inset
+
+later
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But it also makes things very mechanistic: some primordial neutrino has
+ some effect.
+ Sure, we use complex numbers, etc.
+ to perform that calculation; the conventional theory is what Kamiokande
+ is built on.
+ Rather, what I'm doing is to reduce many-worlds to a many-body problem,
+ a statistical-mechanics problem.
+ Yes, its 
+\begin_inset Quotes eld
+\end_inset
+
+statistical mechanics with complex numbers aka quantum field theory
+\begin_inset Quotes erd
+\end_inset
+
+, but I'm trying to remove the 
+\begin_inset Quotes eld
+\end_inset
+
+woo
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+parallel universes
+\begin_inset Quotes erd
+\end_inset
+
+ and instead have a kind of boring common-sense 
+\begin_inset Quotes eld
+\end_inset
+
+its just an accounting trick
+\begin_inset Quotes erd
+\end_inset
+
+ that only accountants understand.
+\end_layout
+
+\begin_layout Standard
+I've written before in this diary about how math is hallucinatory.
+ That's plenty, baby.
+ I do not need to also have my physics be hallucinatory.
+ I'm fine with hard-headed common-sense no-nonsense cut-the-crap accounting
+ tricks, instead of 
+\begin_inset Quotes eld
+\end_inset
+
+woo
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+mysterious interdimensional gods playing dice with the universe
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Just had to get that out of the way, didn't I? I'm glad no one is reading
+ this.
+ I can see a lot of thumbs-down icons being clicked right now.
+\end_layout
+
+\begin_layout Standard
+Anyway, all of the above now necessitates getting into the third leg: a
+ review of many-body statistical mechanics.
+ Mostly, in this section, I will recapitulate everything I learned since
+ the day I met Dean Driebe, and how he told me he could explain the arrow
+ of time with the Frobenius-Perron operator.
+ And this is an important insight.
+ And mainstream physics even got a bad case of 
+\begin_inset Quotes eld
+\end_inset
+
+Koopmanitis
+\begin_inset Quotes erd
+\end_inset
+
+, cause everyone saw that this is an important insight.
+ So in my recap, I will try to imagine how Ruelle-Frobenius-Perron can be
+ reconciled with QFT, wave function collapse (a la TIQM) and see if it provides
+ insight into the prison of 
+\begin_inset Quotes eld
+\end_inset
+
+here and now
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But first, I take a break, because (a) its dinner, and (b) there are other
+ things I should be doing, and need to get done.
+ So maybe till tomorrow, or later.
+\end_layout
+
+\begin_layout Standard
+Oh, before I break: there is a rather stark issues that arises with timescape
+ cosmology.
+ So, with conventional Frobenius-Perron (FP), the language is of ergodic
+ theory.
+ The canonical physics model is gas-in-a-box.
+ And that's fine.
+ But what about empty space? How is it that 
+\begin_inset Quotes eld
+\end_inset
+
+time is running
+\begin_inset Quotes erd
+\end_inset
+
+ in 
+\begin_inset Quotes eld
+\end_inset
+
+empty space
+\begin_inset Quotes erd
+\end_inset
+
+, when there's no matter, no atoms in it? Well, two answers: (a) even in
+ cosmic voids, one can expect to find one hydrogen atom every ten cubic
+ meters (ts like one per cubic meter.
+ in cosmology, on average, but most of those are in galaxies, so presumably
+ the cosmic voids are a few orders of magnitude down from that.) So the voids
+ aren't 
+\begin_inset Quotes eld
+\end_inset
+
+really empty
+\begin_inset Quotes erd
+\end_inset
+
+.
+ They also contain thousands(?) of CMB photons per cubic meter, and almost
+ that many (non-interacting) neutrinos, so even these voids aren't truly
+ 
+\begin_inset Quotes eld
+\end_inset
+
+empty
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Is this amount of non-emptiness sufficient to make an argument about ergodcity
+ and Frobenius-Perron? I don't know.
+ Answer (b) is quantum zero-point fluctuations.
+ Given that these are off by 120 orders of magnitude, it's perhaps moot,
+ but it does give an opportunity to head-scratch and wonder 
+\begin_inset Quotes eld
+\end_inset
+
+what is the mechanism that wipes out quantum ZP from cosmological lambda?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The point here was supposed to be 
+\begin_inset Quotes eld
+\end_inset
+
+Is it possible to have a here-and-now in 'empty' space?
+\begin_inset Quotes erd
+\end_inset
+
+ because there's no subject/object in empty space that can perceive time.
+ Because we can zoom out and take the gods-eye view of empty space, slap
+ a coordinate chart on it, and be utterly lacking in the ability of saying
+ 
+\begin_inset Quotes eld
+\end_inset
+
+this is where 'now' is
+\begin_inset Quotes erd
+\end_inset
+
+.
+ What we can do is to define comoving coordinates relative to last-scattering,
+ and use that to define 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Sigh.
+ Shit.
+ Seems I will have to look up and read: David Wiltshire, 2007 New J.
+ Phys.
+ , 9 , 377 and also Phys.
+ Rev.
+ Lett.
+ , 99 , 251101 and then references to Thomas Burchert.
+ This is so fucking far away from answering 
+\begin_inset Quotes eld
+\end_inset
+
+why does the universe contain a combinatorially explosive number of electrical
+ engineering circuit diagrams?
+\begin_inset Quotes erd
+\end_inset
+
+ but then, I am looking for 
+\begin_inset Quotes eld
+\end_inset
+
+an answer
+\begin_inset Quotes erd
+\end_inset
+
+ to 
+\begin_inset Quotes eld
+\end_inset
+
+why does the complexity increase everywhere?
+\begin_inset Quotes erd
+\end_inset
+
+ so if I can't do it for empty voids in cosmology, then, in a sense I've
+ failed.
+ Well, I will fail.
+ I can't imagine this is an easy problem.
+ But why not? I'll throw my hat in the ring.
+ I doubt anyone else is venturing here.
+ May as well be me, to sacrifice myself to the gods of the void.
+ Mixed metaphor: 
+\begin_inset Quotes eld
+\end_inset
+
+when you stare at the void, you may find it staring back at you
+\begin_inset Quotes erd
+\end_inset
+
+?
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
