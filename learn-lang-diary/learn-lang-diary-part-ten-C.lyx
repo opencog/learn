@@ -9701,7 +9701,7 @@ An additional point of confusion: If I'm working with random graphs, I guess
 \begin_inset Formula $M$
 \end_inset
 
-, we instead with 
+, we instead sum with 
 \begin_inset Formula $\sum_{g\in G}$
 \end_inset
 
@@ -9762,7 +9762,26 @@ An additional point of confusion: If I'm working with random graphs, I guess
 Several problems with this idea.
  First, in flat space, all homology groups vanish.
  So this trick doesn't actually tell us what the dimension of the space.
- So that's a big fail.
+ (Unless we redefine the problem to say something like 
+\begin_inset Quotes eld
+\end_inset
+
+we're looking for spheres
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But that would be stupid) So that's a big fail.
+ I fucked up in saying 
+\begin_inset Quotes eld
+\end_inset
+
+homology
+\begin_inset Quotes erd
+\end_inset
+
+, I need some other construction that measures something that looks like
+ dimension.
  Second, to have a meaningful sum there should be some action 
 \begin_inset Formula $A\left(g\right)$
 \end_inset
@@ -9783,6 +9802,61 @@ Several problems with this idea.
 \end_inset
 
  ? Where does it come from? What value does it take? Why?
+\end_layout
+
+\begin_layout Standard
+The weight 
+\begin_inset Formula $\exp iA\left(g\right)$
+\end_inset
+
+ is understood to provide a measure-theoretic-like measure for each 
+\begin_inset Formula $g$
+\end_inset
+
+.
+ But, when doing the transfer operator for the Bernoulli process the sum
+ arose from working the ergodic map backwards, i.e.
+ the root origin of the 
+\begin_inset Formula $\sum_{g\in G}$
+\end_inset
+
+ came instead from a 
+\begin_inset Formula $\sum_{x\in f^{-1}\left(y\right)}\left|\left(f^{-1}\right)^{\prime}\left(x\right)\right|^{-1}$
+\end_inset
+
+ which I wrote wrong, but the weighting is given by a Jacobian.
+ I'm trying to capture the generic ergodic process idea and tie it back
+ to 
+\begin_inset Quotes eld
+\end_inset
+
+where does the action come from
+\begin_inset Quotes erd
+\end_inset
+
+? and reformulate 
+\begin_inset Quotes eld
+\end_inset
+
+the action
+\begin_inset Quotes erd
+\end_inset
+
+ as the 
+\begin_inset Quotes eld
+\end_inset
+
+log of the Jacobian
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'm confused.
+ Why have I not tried this before, in my formal work? Probably because it
+ was unenlightening for those simple cases.
+ Maybe I didn't spend enough time thinking about how and why it could be
+ interesting.
+ I should go back and try some force-fits of this idea and see what happens.
 \end_layout
 
 \begin_layout Standard
