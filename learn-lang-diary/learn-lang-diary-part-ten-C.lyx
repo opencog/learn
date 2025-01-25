@@ -9952,6 +9952,211 @@ I dunno.
  And me being lazy, I'm looking for the silver bullet.
 \end_layout
 
+\begin_layout Subsection*
+24 January 2025
+\end_layout
+
+\begin_layout Standard
+Back to AGI.
+ For the last several days/weeks (month?) I've been trying to reconceptalize
+ similarity measures.
+ I've got jumbled ideas, none of them want to gel, and I can't write them
+ into a project README because they are incoherent.
+ However, this diary is a safe space for incoherent ideas put forth by snowflake
+s who fear public perception when voicing their most private thoughts.
+ Not here, buddy, we love you.
+ You can ramble incoherently all you want.
+ Let it out.
+ Lit it out of your system.
+ Let it all come out.
+ We love you.
+\end_layout
+
+\begin_layout Standard
+So I could jam the basis elements for a sparse vector into some new atom,
+ in some c++ set but why? the atomspace already provides container-like
+ constructions.
+ But we don't want sets, we want membership.
+ But membership is rather fat: millions of new links.
+ Atoms are a bit pudgy: 713 bytes per atom for one recent dataset.
+ Keeping this in a C++ vector could be as little as 24 maybe 48 bytes/atom.
+\end_layout
+
+\begin_layout Standard
+On the fly lookup could that work? Because we maybe we don't need to keep
+ anything? But we do, cause on the fly is slow.
+ Esp if using the query engine to do the on-the-fly stuff.
+\end_layout
+
+\begin_layout Standard
+Whats a vector embedding anyway? For the word-pairs, there were explicit
+ links to left and right, and a wild-card in either gives the vector.
+ For generic patterns, those patterns would need to have exactly two variables.
+ Thence confusion: because we are using the wild-card to define the embedding,
+ and also to fix the other side.
+ These two distinct roles are mashed into one.
+ Can they be detangled?
+\end_layout
+
+\begin_layout Standard
+Sort of.
+ For an embedding to work, all vectors must share the same same basis, as
+ otherwise they are incomparable.
+ Sof ro that a single-variable pattern suffices.
+ Well, no: still two: one variable as wild-card, and the other one fixed
+ to the item, because this is how we guarantee that the vectors have the
+ same basis.
+\end_layout
+
+\begin_layout Standard
+Word-pairs exploited a loophole of left-right conjugacy: instead of having
+ one pattern with two distinguised slots, there were two patterns, with
+ the second just being the symmatric transpose of the first, by accident.
+ This is a happy accident, but cannot be taken to hold in general.
+\end_layout
+
+\begin_layout Standard
+Well, except that it must.
+ Somehow it must be transposable....
+ which brings us back to the start: it must be a pattern with two slots.
+ OK, fine, I guess we can work with that.
+\end_layout
+
+\begin_layout Standard
+So I've got a pattern with two slots.
+ A typical task is the cosine similarity, i.e.
+ dot product, so take two items that are to be compared, stick them in the
+ lefft slot of the pattern, find wildcards, multiply.
+\end_layout
+
+\begin_layout Standard
+Two problems: one where do the weghts come from? (assuming non-uniform eighting)
+ so pattern also has to indicate how to get a single float, or maybe something
+ more complex.
+ So this is not just a pattern, but also a key.
+ And since the thing on the key might be a vector, a vector offset.
+ Since it might be more complex than a vector, it needs to be some generic
+ pattern for accessing something in the value, and then also making it cleary
+ how to multiply the said thing, pair-wise.
+ So a pattern that takes a pair of values and returns a single float.
+\end_layout
+
+\begin_layout Standard
+A single float becuase that's all we can hope for in similarity.
+ We are not asking 
+\begin_inset Quotes eld
+\end_inset
+
+how are they similar
+\begin_inset Quotes erd
+\end_inset
+
+, but instead 
+\begin_inset Quotes eld
+\end_inset
+
+how similar?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A different problem is normalization.
+ We can run the search pattern for A B being two different leftvalues, and
+ find right-value wildcards, but there may be more wilds, both absent in
+ A,B.
+ So we need to run the full search comehow.
+ And this could be horridly cpu-bound.
+ So the result should be cached.
+ But maybe its OK to run this in parallel, and just keep a running queue.
+ Well, two running queues, one for left one for right.
+ And I guess sets woule be ok, it does have to be lists, and deduplication
+ would be nice, since search will hammer lots of duplicates.
+\end_layout
+
+\begin_layout Standard
+So the plan is, start the dual-wild card search.
+ Keep left and right groundings on two distinct but well known locations
+ on the pattern.
+ Allow access to them, even while the pattern is running.
+ Allow multi-threaded access.
+ OK, that all works and is straightforward in the current query engine implement
+ation.
+\end_layout
+
+\begin_layout Standard
+The sets are not atoms, so will not be bloated (will be smaller).
+ That's fine.
+\end_layout
+
+\begin_layout Standard
+So all we need is two well-known keys on the pattern.
+ And a modified pattern traversal that know to put things there.
+ So a new pair-wise query atom.
+ OK fine.
+ easy, not bloated.
+ Acceptable, not paradigm breaking and not slow and not bloated.
+ So green light all around.
+\end_layout
+
+\begin_layout Standard
+That's just part one, though.
+ Part two is the weights.
+ There are other parts, including GPU concnerns, and including stream processing
+ concerns.
+ Those go on back burner.
+ One thing at a time.
+ Lets make sure we've got part one done:
+\end_layout
+
+\begin_layout Standard
+– a new query atom with two slots.
+ The slots could be either well-known names like (Prediate 
+\begin_inset Quotes eld
+\end_inset
+
+left side
+\begin_inset Quotes erd
+\end_inset
+
+) and (Predicate 
+\begin_inset Quotes eld
+\end_inset
+
+right side
+\begin_inset Quotes erd
+\end_inset
+
+) or they could be the left and right variable decles themselves.
+ If left and right variable decls, then either the bare variables, or the
+ variables with the type signatures.
+ With type signatures might be best, because these are easy to find in the
+ pattern: they are necessarily at the top.
+\end_layout
+
+\begin_layout Standard
+– what else? Is that it? did we miss something? Can I prototype this on
+ the file system? Yes, the file system provides a new an unique and different
+ dataset that hints at disclosing new difficulties.
+\end_layout
+
+\begin_layout Standard
+one of these new difficulties is a recursive similarity.
+ Hold that thought.
+ Lets complete the first part.
+\end_layout
+
+\begin_layout Standard
+So, we can do this for all searchs: doesn't have to be two-variable, could
+ be n-variable.
+ The well-known location problem is sovled, as well.
+ Why didn't I do this years ago? Shit, I want to code this *right now*,
+ its clear as a bell.
+ Obvious.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
