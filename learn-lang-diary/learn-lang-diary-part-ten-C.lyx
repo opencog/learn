@@ -10030,19 +10030,19 @@ So I've got a pattern with two slots.
 \end_layout
 
 \begin_layout Standard
-Two problems: one where do the weghts come from? (assuming non-uniform eighting)
- so pattern also has to indicate how to get a single float, or maybe something
- more complex.
+Two problems: one where do the weights come from? (assuming non-uniform
+ weighting) so pattern also has to indicate how to get a single float, or
+ maybe something more complex.
  So this is not just a pattern, but also a key.
  And since the thing on the key might be a vector, a vector offset.
  Since it might be more complex than a vector, it needs to be some generic
- pattern for accessing something in the value, and then also making it cleary
+ pattern for accessing something in the value, and then also making it clear
  how to multiply the said thing, pair-wise.
  So a pattern that takes a pair of values and returns a single float.
 \end_layout
 
 \begin_layout Standard
-A single float becuase that's all we can hope for in similarity.
+A single float because that's all we can hope for in similarity.
  We are not asking 
 \begin_inset Quotes eld
 \end_inset
@@ -10072,7 +10072,7 @@ A different problem is normalization.
  So the result should be cached.
  But maybe its OK to run this in parallel, and just keep a running queue.
  Well, two running queues, one for left one for right.
- And I guess sets woule be ok, it does have to be lists, and deduplication
+ And I guess sets would be ok, it does have to be lists, and deduplication
  would be nice, since search will hammer lots of duplicates.
 \end_layout
 
@@ -10104,7 +10104,7 @@ So all we need is two well-known keys on the pattern.
 \begin_layout Standard
 That's just part one, though.
  Part two is the weights.
- There are other parts, including GPU concnerns, and including stream processing
+ There are other parts, including GPU concerns, and including stream processing
  concerns.
  Those go on back burner.
  One thing at a time.
@@ -10129,7 +10129,7 @@ right side
 \begin_inset Quotes erd
 \end_inset
 
-) or they could be the left and right variable decles themselves.
+) or they could be the left and right variable decls themselves.
  If left and right variable decls, then either the bare variables, or the
  variables with the type signatures.
  With type signatures might be best, because these are easy to find in the
@@ -10149,9 +10149,9 @@ one of these new difficulties is a recursive similarity.
 \end_layout
 
 \begin_layout Standard
-So, we can do this for all searchs: doesn't have to be two-variable, could
+So, we can do this for all searches: doesn't have to be two-variable, could
  be n-variable.
- The well-known location problem is sovled, as well.
+ The well-known location problem is solved, as well.
  Why didn't I do this years ago? Shit, I want to code this *right now*,
  its clear as a bell.
  Obvious.
@@ -10171,6 +10171,11 @@ The hard one will be the gpu step, but that can't impact conventional search.
 
 \begin_layout Subsection*
 31 January 2025
+\end_layout
+
+\begin_layout Standard
+Post script to above: I did go off and do it right away, and it works great.
+ Again, why didn't I do this years ago?
 \end_layout
 
 \begin_layout Standard
