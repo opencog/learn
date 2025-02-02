@@ -10443,6 +10443,96 @@ I should be doing
  I need to just fuck around for a few hours, and then go to bed.
 \end_layout
 
+\begin_layout Subsection*
+1 February 2025 Redux
+\end_layout
+
+\begin_layout Standard
+The above are some vague complaints about mental exhaustion.
+ And I really really want to copy those formulas for the dynamical torsion
+ to my other physics diary, but fuck it.
+ Instead I am going to full-on word-salad stream-of-consciousness here about
+ graph counting.
+ The following won't make sense to you because I will not be making any
+ effort to explain what I'm writing or why I am writing it.
+ Sorry.
+ Sucks to be you.
+ This is for me, only.
+\end_layout
+
+\begin_layout Standard
+So I figured out I can store marginals with patterns, and this is a great
+ idea, and I'm stumped as to why I didn't figure this out years ago.
+ I guess its a process.
+ So one of the processes is counting.
+ How? I can write a filter, I guess, and hook it to an input stream.
+ Maybe I should just do this and see what happens.
+\end_layout
+
+\begin_layout Standard
+But this is irritating because (a) I have to write code, (b) it does not
+ directly tap into LLM ideas.
+ The solution that seems like it would be wanted would be some way of autogenera
+ting code that would do the pipeline counting ...
+ running different variants of it in parallel ...
+ somehow selecting which of these are better, but how? How do we know when
+ one of these auto-gen'ed snippets is better?
+\end_layout
+
+\begin_layout Standard
+Perhaps all this is too low-level.
+ Perhaps there is some phase-transition to general intelligence, and we
+ really do have to build enough basic frameworks before feedback processes
+ can kick in.
+\end_layout
+
+\begin_layout Standard
+So back in the day, I was counting word-pairs and keeping large sparse vectors
+ thereof.
+ But ...
+ here I bonk.
+ I have to consult some references, now.
+ But it's quarter to ten at night I don't feel like it.
+ For performance I was using LG to do pair counting.
+ But this won't go onto GPU's, cause its not SIMD.
+ Great for multi-core, though.
+\end_layout
+
+\begin_layout Standard
+Now that I 
+\begin_inset Quotes eld
+\end_inset
+
+fixed
+\begin_inset Quotes erd
+\end_inset
+
+ marginals, I can maybe redo a big multi-core LG counter.
+ But this takes me back to force-feeding the machine, when I wanted to have
+ it do the exploratory thing.
+ So does that mean I have to hand-code more of the exploratory pipe?
+\end_layout
+
+\begin_layout Standard
+The meta issue is everyone is screaming LLM and GPU, which I ignore at my
+ own peril, and it seems to be quite perilous, indeed.
+ So I have to ...
+ go there.
+ Even though gut intuition says its a big honking waste of time.
+ Maybe my gut intuition is wrong.
+ Certainly, ten thousand engineers say I'm wrong, and a million hangers-on
+ are even more sure I'm wrong.
+ So do I buckle under peer pressure, and buck up and take it like a man?
+ Or do I go full-on non-conformist, just like always? Fuck it.
+ Let me consult that reference.
+\end_layout
+
+\begin_layout Standard
+Done.
+ An hour later, and ...
+ foo.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
