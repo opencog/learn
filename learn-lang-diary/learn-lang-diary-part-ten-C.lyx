@@ -10531,6 +10531,117 @@ The meta issue is everyone is screaming LLM and GPU, which I ignore at my
 Done.
  An hour later, and ...
  foo.
+ Waste of time.
+ Where was I?
+\end_layout
+
+\begin_layout Standard
+I need some system for wandering through a file system, opening and reading
+ files.
+ I need a tokenizer, a word-pair counter.
+ I need a way of storing counts.
+ Where do I store counts? Again, I can use an engineered solution.
+ Don't want that.
+ Lets g back to file system crawling.
+ Step one is 
+\begin_inset Quotes eld
+\end_inset
+
+remember where I've been
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So, log the URL and it seems OK to engineer that.
+ Next, what is the actual memory? Increment a count on each URL? At some
+ 
+\begin_inset Quotes eld
+\end_inset
+
+well-known location
+\begin_inset Quotes erd
+\end_inset
+
+? That's engineered, again, but maybe that's OK.
+ The file corruption project has the idea of witnesses, so that each sensorial
+ visit is tagged with a witness link, associating the URL to a time-stamp.
+ The sensorial device generated a variety of data, those are URL-asscited
+ tags, as well, dictated by the sensorial system.
+ So the sense says, basically: let me do things, and I will fill up the
+ atomspace with observations that include URL's, witnesses, file sizes,
+ file types, and whatever else that sensor conventionally 
+\begin_inset Quotes eld
+\end_inset
+
+wants
+\begin_inset Quotes erd
+\end_inset
+
+ to do.
+ For now, I guess, the sensor is engineered, and I guess that's OK, because
+ the activities are now defined by the sensor itself, as opposed to the
+ user of the sensor.
+\end_layout
+
+\begin_layout Standard
+And this is perhaps the key distinction: the sensor acts as an agent, 
+\begin_inset Quotes eld
+\end_inset
+
+doing stuff
+\begin_inset Quotes erd
+\end_inset
+
+, and leaving a trail of shit aka fermentation products aka 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+ in the atomspace.
+ It behaves autonomously, and not under supervision.
+ A different agent, also acting autonomously, can be a counting agent: it
+ crawls over the ferment, and counts.
+ A third agent can then act as an inhibitory control, telling the first
+ sensory agent: 
+\begin_inset Quotes eld
+\end_inset
+
+now you've visited this place before, don't do it again
+\begin_inset Quotes erd
+\end_inset
+
+.
+ (or maybe do do it again, because this time, we ratchet to some other higher
+ protocol level.)
+\end_layout
+
+\begin_layout Standard
+So the architecture now has three pieces: a crawler, that crawls and generates
+ witness stamps.
+ It also publishes the format of what it is going to generate, as both a
+ pattern and a variable declaration.
+ So that others can look at it and see 
+\begin_inset Quotes eld
+\end_inset
+
+OK, that's the format of what you are generating
+\begin_inset Quotes erd
+\end_inset
+
+ Then there is a generic counter agent, which ...
+ takes any pattern whatsoever, as input, and increments on it, maintaining
+ a count.
+ Where? Anywhere.
+ The counter is also an agent, it can store wherever it wants, and it will
+ publish that location if anyone is interested.
+ It's part of the description.
+ The third part is supervisory, and tries to give suggestions to the crawler
+ to do this or that but not something else.
+ Two things are not clear: what the control interface to the crawler is,
+ and how the supervisor makes decisions.
 \end_layout
 
 \begin_layout Section*
