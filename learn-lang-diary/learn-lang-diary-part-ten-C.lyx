@@ -10644,6 +10644,265 @@ OK, that's the format of what you are generating
  and how the supervisor makes decisions.
 \end_layout
 
+\begin_layout Standard
+So the sensor can dump data into the atomspace, but ...
+ the counter needs to know what 
+\begin_inset Quotes eld
+\end_inset
+
+fresh data
+\begin_inset Quotes erd
+\end_inset
+
+ is.
+ One idea was to have dataflow pipelines, so that the output of the sensor
+ is directly coupled to the input of the counter, and that LG style connectors
+ are used to accomplish this connection.
+ But still, the things in that pipeline are atoms, so they clog up the atomspace
+, and ultimately need a pruning or forgetting agent to go with.
+\end_layout
+
+\begin_layout Standard
+Is there a viable alternative to direct flow? Search is ineffieicent, esp
+ since we need to 
+\begin_inset Quotes eld
+\end_inset
+
+search for what's new
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well, if we know that data is time-stamp-tagged, then the search is for
+ everything newer than the timestamp.
+ which is ugly if 99% of the atomspace pattern contents is older than the
+ timestamp.
+ There's also the old idea of dropping off new content at an anchor point.
+ That anchor point would then obviously be the sensor itself, and a part
+ of the sensor description would then be 
+\begin_inset Quotes eld
+\end_inset
+
+here are my anchor points
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Located at the anchors would be QueueValues or the UnisetVallues, so that
+ part is good to go.
+ So ...
+ there is no alternative to flow, but maybe its not so bad, because things
+ can flow into queues, even if there's no consumer.
+\end_layout
+
+\begin_layout Standard
+Well, that works only till we run out of RAM.
+ So maybe there needs to be ..
+ oh fuck, why didn't I think of this earlier: an Atom dequeue malloc.
+ Today, in the atomspace, you can malloc an atom, and add it to atomspace,
+ without any penalty.
+ But perhaps there needs to be a control system: not more than N atoms allowed
+ inside.
+ Even by type: no more than N atoms of type X allowed inside.
+ Every atom insert then checks to see if its allowed, or not.
+ This does make atom insertion more costly.
+\end_layout
+
+\begin_layout Standard
+So maybe this becomes a new 
+\begin_inset Quotes eld
+\end_inset
+
+motor
+\begin_inset Quotes erd
+\end_inset
+
+ system, layersed on top of the atomspace, that presents the AtomSpace interface
+s, but performs validity checking before accepting inserts.
+ Which is cool, except the atomspace API is C++ and not atomese.
+ 
+\end_layout
+
+\begin_layout Standard
+But QueueValue also does not have an Atomese interface: things get stuffed
+ into it via c++.
+ There's no 
+\begin_inset Quotes eld
+\end_inset
+
+EnqueueValueLink
+\begin_inset Quotes erd
+\end_inset
+
+.
+ There's a SetValueLink that places a value at a key.
+ There's an atomic increment.
+ Perhaps teh atomic increment can be reporposed for non-numeric things to
+ mean 
+\begin_inset Quotes eld
+\end_inset
+
+atomic enqueue
+\begin_inset Quotes erd
+\end_inset
+
+ Wow.
+ OK, so that's a great idea.
+ See? free associating into this diary does work! Again! More than a few
+ times, even if its word salad to you.
+ This is very interesting because in college, I could not type this fast
+ and long-hand-writing didn't work, but maybe that is what the Enlightenment
+ was all about 300 years ago: write long diaries to yourself chewing over
+ ideas, forcing them to be just concrete enough to work, that you can force
+ it to happen, which is more difficult to do, whe not writing.
+ I get ideas when I walk around, but they are difficult to keep coherent,
+ because its like juggling: I have to keep it all live, as I walk around,
+ juggle and not drop the ball, but here, where a I free associate into text,
+ I can drop the ball, and its harmless and so fucking what.
+ Its in words.
+ The words will be there later, so tomorrow morning, if I forget what I
+ thought about today, I just look at this text, and go 
+\begin_inset Quotes eld
+\end_inset
+
+oh yeah, that's what I was thinking
+\begin_inset Quotes erd
+\end_inset
+
+, which is something that I cannot do if I got my bright idea while walking
+ around, and forgot it by the next moring.
+ SO typing is, at a mimimum, a personal memory prosthesis.
+ I mean, it clearly is culturally, but writing to myself in private somehow
+ works better than thinking to myself, without the writing.
+ And this is duh, yeah, that's why people keep diaires, and I'm rediscovering
+ the obvious, but sometimes the obvious is so fucking astounding.
+ The obvious should not be taken for granted.
+ The obvious is sometimes asounding and gobsmacking.
+ But I digress Lets get back on track.
+\end_layout
+
+\begin_layout Standard
+So I have a QueueValye, but no way to enqueue things there, except by C++
+ interfaces.
+ So I guess I need an 'InsertIntoLink' that will insert.
+ The QueueValue is also unbounded in length.
+ So I kind of need to turn it into an genet, which says 
+\begin_inset Quotes eld
+\end_inset
+
+I have a built in length, and here is what my control mechanism is for adjusting
+ that length.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, I have the UniSetValue which is a deduplicating set, which means it
+ is almost like an AtomSpace but not quite ...
+ I mean, it is implemented on top of the cogutils concurrent set, and its
+ NOT implemented on top of the atomspace, but perhaps it could or should
+ be?
+\end_layout
+
+\begin_layout Standard
+So again we deal with historical design snafus.
+ Every atom contains a point that says 
+\begin_inset Quotes eld
+\end_inset
+
+here is the atomspace I belong to
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Is that pointer really needed? For implicit execution, yes, its nice.
+ Neither UniSet nor Queue need to force an atom into belonging.
+ Nether has the additional methods that the AtomSpace does for finding-by-type
+ and so on, but maybe we should put the atomspace on a slimming diet and
+ get rid of some of this crap that was always ugly? Wow.
+ That's actually another great idea, I guess.
+ Remove old and unused atomspace API crap.
+\end_layout
+
+\begin_layout Standard
+Why does an atom need to know what atomspace it belongs to? Why can't the
+ atomspace be more like the uniset?
+\end_layout
+
+\begin_layout Standard
+Another piece of atomspace crap is the get-atoms-by-type API, which feels
+ like a crutch.
+ But that crutch is used by the query engine.
+ So AtomSpace is actually a collection of Unisets, and it was custom-coded
+ that way in the distant past.
+\end_layout
+
+\begin_layout Standard
+Unlike the uniset, the atomspace does not have a blocking remove and block
+ if empty
+\begin_inset Quotes erd
+\end_inset
+
+ and maybe it should? Wow.
+ This is a reasonable long-term evolutionary design to push for.
+\end_layout
+
+\begin_layout Standard
+So we need an insert-into-link, and a dequeue-from-link.
+ And we need motor controls to allow a max-size to be set.
+\end_layout
+
+\begin_layout Standard
+So this means create a new class of values: agent-values, which have sensori-mot
+or interfaces on them, very simple ones, that say 
+\begin_inset Quotes eld
+\end_inset
+
+i can be inserted into, I can be removed from, and I have a size.
+ The atomspace is complex, because it also gets an 
+\begin_inset Quotes eld
+\end_inset
+
+I can be dequed be type.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I need an insert-into-link, a dequeue-from-link, a get-contents-of-without-deque
+ing link (make-a-copy-link), and a get-verything-and-empty-out-link.
+ Wow.
+ OK.
+\end_layout
+
+\begin_layout Standard
+Well, one step at a time.
+ My mind boggles.
+\end_layout
+
+\begin_layout Standard
+I've been here before.
+ I've had any number of great brainstorms, in the decade past, and I have
+ to acknowledge that many of the ideas were not quite right in their first
+ form, and had to be reworked two or three or four times.
+ So this queue/dqueue might not quite work out, but agentizing the infrastructur
+e seems like a good idea.
+ It would certanily make the whole sensorimotor apparatus much easier to
+ implement.
+ Less hacking, more directness.
+ Immediate, concrete.
+ Huh.
+\end_layout
+
+\begin_layout Standard
+It is now exactly midnight.
+ I'm signing off.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
