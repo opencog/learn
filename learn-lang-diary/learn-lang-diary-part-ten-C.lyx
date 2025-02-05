@@ -10663,7 +10663,7 @@ fresh data
 \end_layout
 
 \begin_layout Standard
-Is there a viable alternative to direct flow? Search is ineffieicent, esp
+Is there a viable alternative to direct flow? Search is inefficient, esp
  since we need to 
 \begin_inset Quotes eld
 \end_inset
@@ -10770,8 +10770,8 @@ oh yeah, that's what I was thinking
 \end_inset
 
 , which is something that I cannot do if I got my bright idea while walking
- around, and forgot it by the next moring.
- SO typing is, at a mimimum, a personal memory prosthesis.
+ around, and forgot it by the next morning.
+ SO typing is, at a minimum, a personal memory prosthesis.
  I mean, it clearly is culturally, but writing to myself in private somehow
  works better than thinking to myself, without the writing.
  And this is duh, yeah, that's why people keep diaires, and I'm rediscovering
@@ -10782,11 +10782,11 @@ oh yeah, that's what I was thinking
 \end_layout
 
 \begin_layout Standard
-So I have a QueueValye, but no way to enqueue things there, except by C++
+So I have a QueueValue, but no way to enqueue things there, except by C++
  interfaces.
  So I guess I need an 'InsertIntoLink' that will insert.
  The QueueValue is also unbounded in length.
- So I kind of need to turn it into an genet, which says 
+ So I kind of need to turn it into an agent, which says 
 \begin_inset Quotes eld
 \end_inset
 
@@ -10901,6 +10901,79 @@ e seems like a good idea.
 \begin_layout Standard
 It is now exactly midnight.
  I'm signing off.
+\end_layout
+
+\begin_layout Subsection*
+5 February 2025
+\end_layout
+
+\begin_layout Standard
+OK.
+ So I wrote a bunch of stuff above, and I sat down to do it, but then got
+ interrupted, and then some time elapsed, and now I have no clue what the
+ plan is, so I have to recreate it from scratch.
+ Or I could read what I wrote above.
+ ....
+\end_layout
+
+\begin_layout Standard
+Re-reading above ...
+ there was concern about over-flowing a queue, but this seems immaterial
+ at the moment.
+\end_layout
+
+\begin_layout Standard
+Then I talk about creating atomese that can place things on a queue, and
+ dequeue.
+ This is more interesting.
+\end_layout
+
+\begin_layout Standard
+Related to this is that the atomspace is a big slosh-tank.
+ Kind of like UniSetValue but with extra stuff.
+ It feels like there's some unresolved tension here, but solving this right
+ now also seems lower priority.
+ Well, lets at least spell out what this is.
+ First, every atom as one pointer into the atomspace, which means any given
+ atom can belong to only one atomspace, ever.By contrast, one atom can be
+ placed into many UniSetValues.
+ And I guess this is OK.
+ Basically, it says that the atom has no incoming pointer to the uniset.
+\end_layout
+
+\begin_layout Standard
+Should the atomspace be changed to be nothing more than a mutable link?
+ That is, remove the backpointer from the atom, and instead use the incoming-set
+ mechanism to indicate which atomspaces an atom belongs to.
+ This pointer does not seem to participate in any high-performance corridors,
+ so this change could be made.
+ But this is some nice-to-have theoretical cleanup and cleanliness and design
+ perfection that no one is going to notice or care about.
+ It changes very very little in how any ordinary user would perceive the
+ system.
+ So I'll queue this as a nice to have to-do list for the future.
+ And mostly-ish ignore it for now.
+\end_layout
+
+\begin_layout Standard
+The original task was to compute vector similarity, with the vectors arbitrarily
+ defined, and coming from anywhere.
+ i.e.
+ from a search pattern.
+ So step one is to define a similarity-computing agent.
+ This agent needs to indicate that it can take two columns of data.
+ So it defines two input connectors.
+ For hamming distance, this is enough, because just set overlap is counted.
+ For cosine similarity, the connectors need to indicate that they also need
+ float point data, and the linker needs to link that up.
+\end_layout
+
+\begin_layout Standard
+So now we come to the linker.
+ Hold that thought.
+ I am going to prototype something, right now.
+ The linker is the interesting part, but I want to get the prototype in
+ place, first.
 \end_layout
 
 \begin_layout Section*
