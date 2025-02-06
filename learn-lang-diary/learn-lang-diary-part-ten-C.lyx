@@ -10976,6 +10976,33 @@ So now we come to the linker.
  place, first.
 \end_layout
 
+\begin_layout Subsection*
+5 February 2025 Ongoing
+\end_layout
+
+\begin_layout Standard
+...
+ or not.
+ I'm wildly confused.
+ Let's consider Hamming distance.
+ There are multiple issues biting me.
+ There is an existing SizeOfLink that correctly returns set sizes.
+ There is no SetIntersectionLink to compute set intersections.
+ Should there be? Normally, this would be accomplished with a pattern query.
+ Or is it ...
+ how?
+\end_layout
+
+\begin_layout Standard
+I've got R(x,y) a binary relation.
+ Fixing a, R(a,y) is a vector, and fixing b, R(x,b) is a vector.
+ Now want to find the set intersection: all y in R(a,y) such that they appear
+ in R(y,b).
+ So define an equality relation E(x,y) and compute the pattern R(a,y) and
+ E(x,y) and R(x,b) and the diagonal here is the intersection.
+ OK, that will work.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
