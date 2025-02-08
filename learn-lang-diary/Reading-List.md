@@ -725,6 +725,41 @@ Useful for making specific claims
   https://www.academia.edu/49955919/Context_as_a_Spurious_Concept
 
 
+Inspirational
+-------------
+* Jeff Clune, "AI-GAs: AI-generating algorithms, an alternate
+  paradigm for producing general artiﬁcial intelligence"
+  https://arxiv.org/abs/1905.10985
+
+  Of couorse we should build meta-algorithms that build meta-algorithms.
+  (I've been saying this since forever.) Apparently, so does Jeff Clune,
+  although at a much more sophisticated level. If you want detailed
+  arguments for why automatiing the automation is a good thing, this is
+  the place to look. This is inspirational writing. It is also a
+  tour-de-force of the literature, of the various techniques that have
+  been tried, could be tried, are promising, are unexplored. A trove
+  of ideas.
+
+  After you read it, will you wake, and say "a hah! I know exactly what
+  I will do tonight, tomorrow morning!"? Maybe, but probably not because
+  you read this. He writes the same way as I write to myself in my
+  private diary. It's excellent for me. For you? Maybe not so much.
+
+  At any rate, I think I know how to do this meta-meta-meta thing. The
+  hard part is... building the infrastructure to do it. But that's me.
+
+* Shengran Hu, Cong Lu, Jeff Clune, "Automated Design of Agentic
+  Systems", https://arxiv.org/abs/2408.08435
+
+  Update from Clune, detailing experience with implementing above ideas.
+
+* Jiayi Zhang, et al, "AFlow: Automating Agentic Workflow Generation",
+  https://arxiv.org/abs/2410.10762
+
+  Actual code and results implementing above ideas.
+
+
+
 Suggestive but Important
 ------------------------
 Don't quite provide what is immediately needed, but is very interesting
