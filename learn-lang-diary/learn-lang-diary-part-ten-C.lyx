@@ -13444,6 +13444,194 @@ p morphism forms a category, the category of sets.
  I am going bike-riding now.
 \end_layout
 
+\begin_layout Subsection*
+9 Feb 2025
+\end_layout
+
+\begin_layout Standard
+Quick update.
+ Even as I hopped on the bike, I realized several 
+\begin_inset Quotes eld
+\end_inset
+
+minor
+\begin_inset Quotes erd
+\end_inset
+
+ errors in the text above.
+ First, in the category of sets, it's the subset relation and not the element–of
+ relation that are the morphisms.
+ No matter, my arguments aren't substantially changed by this.
+ Second, there is absolutely no need to pull in category theory; the conventiona
+l definition of continuity is sufficient.
+ There's no particular magic that happens, when changing the vocabulary,
+ and so most of the 
+\begin_inset Quotes eld
+\end_inset
+
+homework problem
+\begin_inset Quotes erd
+\end_inset
+
+ is irrelevant.
+\end_layout
+
+\begin_layout Standard
+Only one part remains relevant.
+ The biggest idea above is to define tangent spaces that have only future
+ and past time–like and null vectors, and have no space–like tangents.
+ These are to be snipped out.
+ Next, the tangent spaces need to be glued appropriately.
+ One of the goals of gluing is to recover something that looks like a space–like
+ derivative, because these are explicitly needed by the Einstein–Hilbert
+ action, or, more generally, by actions in general.
+ The full range of conventional physics uses these, so they had better be
+ provided in some way that is effectively compatible.
+\end_layout
+
+\begin_layout Standard
+I have a different set of plans for the day, so I want to leave it at that.
+ But also as I write this, little itty–bitty lightbulbs keep telling me
+ to write down the trivia that I have so far, because big things are built
+ from trivia.
+ So lets go.
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $p$
+\end_inset
+
+, 
+\begin_inset Formula $q$
+\end_inset
+
+, 
+\begin_inset Formula $r$
+\end_inset
+
+ be points in spacetime, or perhaps small patches, with 
+\begin_inset Formula $p$
+\end_inset
+
+ in the causal past of 
+\begin_inset Formula $q$
+\end_inset
+
+ and 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $F_{p}\subset T_{p}$
+\end_inset
+
+ be the subset of the total tangent space 
+\begin_inset Formula $T_{p}$
+\end_inset
+
+ consisting of only the future–pointing vectors.
+ That is, take 
+\begin_inset Formula $(+---)$
+\end_inset
+
+ to be the metric on 
+\begin_inset Formula $T_{p}$
+\end_inset
+
+ and then define 
+\begin_inset Formula $F_{p}=\left\{ v_{p}\in T_{p}\mbox{ s.t.}\left|v_{p}\right|\ge0,v_{p}\left(0\right)>0\right\} $
+\end_inset
+
+ Likewise, the past-directed tangent space at 
+\begin_inset Formula $q$
+\end_inset
+
+ is 
+\begin_inset Formula $P_{q}\subset T_{q}$
+\end_inset
+
+ with 
+\begin_inset Formula $P_{q}=\left\{ v_{q}\in T_{q}\mbox{ s.t.}\left|v_{q}\right|\ge0,v_{q}\left(0\right)<0\right\} $
+\end_inset
+
+ and likewise for 
+\begin_inset Formula $P_{r}$
+\end_inset
+
+.
+ The gluing is to attach 
+\begin_inset Formula $F_{p}$
+\end_inset
+
+ to 
+\begin_inset Formula $P_{q}$
+\end_inset
+
+ and by assumption, these are close to one another, so a linear gluing is
+ desired.
+ That is, write 
+\begin_inset Formula $v_{q}^{\mbox{past}}=Mv_{p}^{\mbox{future}}$
+\end_inset
+
+.
+ I need better notation.
+ Use 
+\begin_inset Formula $-$
+\end_inset
+
+ for past and 
+\begin_inset Formula $+$
+\end_inset
+
+ for future, so that 
+\begin_inset Formula $v_{q}^{\mbox{past}}=v_{q}^{-}\in P_{q}=T_{q}^{-}$
+\end_inset
+
+ and likewise 
+\begin_inset Formula $v_{p}^{\mbox{future}}=v_{p}^{+}\in F_{p}=T_{p}^{+}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ is supposed to perform this gluing.
+ Is it over–specified, under–specified? It corresponds to the derivative
+ of the metric, so intuitively, 
+\begin_inset Formula $M$
+\end_inset
+
+ is a Christoffel symbol, the connection.
+ And I'm imagining it to be the vertical part of the connection, not the
+ horizontal part.
+ Something like that.
+ But I don't know.
+ The risk here is that this all collapses back down to an entirely conventional
+ treatment, and the hope is that, no, the conventional treatment is obtained
+ only when the full interferometric diamond is specified (closed paths)
+ while 
+\begin_inset Quotes eld
+\end_inset
+
+here–and–now' consists of the open paths.
+ (OMG, is this going to collapse down onto open and close strings??) This
+ is again, still hand–waving.
+ And I really, really have to be doing something else right now, So again
+ I bit adieu, and promise to think about 
+\begin_inset Formula $M$
+\end_inset
+
+ some more, and see if I can find something interesting to be said about
+ it.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
