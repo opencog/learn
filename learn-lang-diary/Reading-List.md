@@ -731,7 +731,7 @@ Inspirational
   paradigm for producing general artiﬁcial intelligence"
   https://arxiv.org/abs/1905.10985
 
-  Of couorse we should build meta-algorithms that build meta-algorithms.
+  Of course we should build meta-algorithms that build meta-algorithms.
   (I've been saying this since forever.) Apparently, so does Jeff Clune,
   although at a much more sophisticated level. If you want detailed
   arguments for why automatiing the automation is a good thing, this is
