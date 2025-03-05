@@ -16622,6 +16622,110 @@ Pale Fire: the airport announcements are driving me nuts.
  Later.
 \end_layout
 
+\begin_layout Subsection*
+5 March 2025
+\end_layout
+
+\begin_layout Standard
+Topic o the day: hierarchical concept models.
+ My mom is on her last legs.
+ I scanned the entire Syrjatowicz photo album, and am trying to align it
+ with the family genealogy.
+ This invokes the concept of jigsaw-piece alignment in it's most direct
+ fashion possible.
+ Reviewing this opens some doors to LLM-symbolic coordination.
+ There's actually three topics: (1) the genealogy (2) face matching (3)
+ script reading.
+\end_layout
+
+\begin_layout Standard
+Genealogy is the most direct.
+ Given person A, with connectors to parents and children, they are to be
+ assembled into a tapestry with person B, matching tabs and connectors.
+ The connector information may be incomplete or inaccurate.
+ It can be simple or complex.
+ (Simple: first, last name.
+ Complex: approximate dates, approximate relations, other approximate info.)
+ Thus, an assembled connection needs to contain not only some evaluation,
+ probabilistic, of the correctness of data, but also of all the supporting
+ evidence lending weight to that connection.
+ The challenge for symbolic AI is (1) how to represent that (2) how to automate
+ the representation so as to minimize the engineering of the design of the
+ connectors.
+ That is, of course, once could design a connector representation that is
+ specifically adapted to the representation of genealogical relationships.
+ This is what software engineers traditionally do.
+\end_layout
+
+\begin_layout Standard
+This suggests that the connector should be a vector – I keep calling them
+ vectors, they are really sets – with each vector element labeled with a
+ certainty (not a probability).
+ And not with a probability of being certain.
+ Thus, a numeric value ranging from unknown to certain.
+ All elements not in the set are to be taken as 
+\begin_inset Quotes eld
+\end_inset
+
+uncertain
+\begin_inset Quotes erd
+\end_inset
+
+.
+ To be concrete, this would be given name, middle name, surname, titles
+ of nobility, herbas, birth, death, siblings, parents, wife, children, etc.
+ A potentially large and a bit amorphous (e.g.
+ Americans don't have titles of nobility, in practice) (Oh, and this can
+ be used in determining linkage: Archduke George Washington is not going
+ to be the same person as the US president.)
+\end_layout
+
+\begin_layout Standard
+There's also a desire for negative inference, but this needs to be local
+ not global.
+ In tagging person A, it can be useful to say 
+\begin_inset Quotes eld
+\end_inset
+
+I am certain it is not person B because I already looked at person B and
+ ruled that out
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is local, because we don't want to make a list of 6 billion people
+ who aren't person A.
+ In the back of my mind is that picture of the visual feature detection
+ in old neuroscience textbooks, of a central plus surrounded by many minuses,
+ indicating a rejection.
+ Further off ar zero, don't–care non–relations.
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ How odd.
+ In all the readings of neural nets, I've never seen any described with
+ negative rejection circuitry.
+ The sigmoids are always zero to one, the weights are zero to one, to indicate
+ connection or not.
+ They're never minus–one to explicitly denote rejection.
+ Huh.
+ Did I sleep through that part of the lecture? Wow.
+ This seems important, and I don't understand how I missed it.
+ In fact its mind–blowing.
+ This seems like a key, fundamental feature.
+ It's everywhere in neuroscience, and also in gene expression, having the
+ form of down–regulation.
+ It's not in conventional Bayesian probability theory.
+ I've never paid much attention to fuzzy logic, but it does not seem to
+ be there, either.
+ It's somewhat visible in ASP answer set programming and intuitionistic
+ logic, where there are three states: unknown vs.
+ true, unknown vs.
+ false, and true as the negation of false.
+ 
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
