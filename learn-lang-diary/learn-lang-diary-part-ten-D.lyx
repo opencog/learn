@@ -1155,8 +1155,8 @@ OK, so the traditional answers have worked to now: we have a natural revulsion
 This reminds me of disregulated chemical cycles.
  Apparently, if someone gets very very cold, and you warm them too quickly,
  you risk killing them.
- Why? Chemical reactions in the body are all up–regulated and down–regulated,
- but this regulatory balance holds only at 98.6.
+ Why? Chemical reactions13,556 in the body are all up–regulated and down–regulat
+ed, but this regulatory balance holds only at 98.6.
  If you warm someone too quickly, one cycle may kick in before the balancing
  cycle starts, and so toxic reactions run out of control.
  Simply because the reaction rates don't match up.
@@ -1242,15 +1242,165 @@ Well, OK, there is more.
  Oh, and my first year at Stony Brook.
  I was pretty lonely then, too.
  So actually, I have had bouts of loneliness.
- I am not some immune superorganism: I too have suffered from human things.
+ I am not some immune super–organism: I too have suffered from human frailties.
  I have been forced to deal with it, I've learned, I've survived.
  I've almost forgotten what its like.
  So, here you go diary: inscribed for all time.
+ My past and almost forgotten suffering.
+ My past and almost forgotten loneliness.
+ Huh.
+ 
 \end_layout
 
 \begin_layout Standard
-Where was I? As I was falling asleep a few nights ago, I ponderred the formula
- above, and realized that what I want to write is
+Where was I? As I was falling asleep a few nights ago, I pondered the formula
+ above, and realized that what I want to write is (recapping) 
+\begin_inset Formula $\det\mathcal{N}=\prod_{t}\mathcal{N}\left(t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula 
+\[
+Z=\int\left[d\phi\right]\exp iS/\hbar=\int\left[d\phi\right]\det\mathcal{N}=\mathcal{P}\int\left[d\phi\right]\mathcal{N}_{t}
+\]
+
+\end_inset
+
+that is to say, although 
+\begin_inset Formula $\int\left[d\phi\right]\prod_{t}\ne\prod_{t}\int\left[d\phi\right]$
+\end_inset
+
+ the integration and the product over time do not commute, cannot commute,
+ we can instead define an operator 
+\begin_inset Formula $\mathcal{P}$
+\end_inset
+
+ to be 
+\begin_inset Formula $\int\left[d\phi\right]\prod_{t}=\mathcal{P}\int\left[d\phi\right]$
+\end_inset
+
+ .
+ This, what is left is that the integral 
+\begin_inset Formula $\int\left[d\phi\right]$
+\end_inset
+
+ really is the integral over all possible quantum states, (over all worlds)
+ but we've written the integrand so that it is only over the here–and–now.
+\end_layout
+
+\begin_layout Standard
+To use the block–chain analogy, the past is everything on the block–chain.
+ The present is 
+\begin_inset Formula $\int\left[d\phi\right]\mathcal{N}_{t}$
+\end_inset
+
+ i.e.
+ everything that does not yet have a closure, an unclosed interferometeric
+ path, and the operator 
+\begin_inset Formula $\mathcal{P}$
+\end_inset
+
+ appends to the block–chain.
+\end_layout
+
+\begin_layout Standard
+Well, except this is awkward.
+ The future is not yet written, but the path integral 
+\begin_inset Formula $Z=\int\left[d\phi\right]\exp iS/\hbar$
+\end_inset
+
+ includes the future, in the form of 
+\begin_inset Formula $S=\int dt\int d^{3}x\mathcal{L}$
+\end_inset
+
+ which includes an integral over future times.
+\end_layout
+
+\begin_layout Standard
+So, what we really need to do is to replace 
+\begin_inset Formula $\int dt$
+\end_inset
+
+ by an integral over the past, the present, and only those future states
+ that will be needed to close the present, and place the present onto the
+ block–chain of the past.
+ The other parts of the future, that are not needed to close the present
+ and convert it into the past, those futures must NOT be included in the
+ definition of the action.
+\end_layout
+
+\begin_layout Standard
+This reminds me of operator–product expansions, the ones written as 
+\begin_inset Formula $:\mathcal{O}_{1}\mathcal{O}_{2}:$
+\end_inset
+
+ where the operators had to be time–ordered and the 
+\begin_inset Formula $:\cdots:$
+\end_inset
+
+ notation denoted time ordering.
+ So this is not what I'm trying to do here, but it is similar.
+ I hope you understand what I'm trying to say.
+ I'm trying to define a different quantity: like so: 
+\begin_inset Formula 
+\[
+\mathcal{Z}_{t}=\int\left[d\phi\right]\exp i/\hbar\int d^{3}x\int dt^{\prime}:\mathcal{L}\left(x,t^{\prime}\right):_{t^{\prime}\le t}
+\]
+
+\end_inset
+
+or something like that.
+ The subscript 
+\begin_inset Formula $t$
+\end_inset
+
+ denotes the present.
+ The integral 
+\begin_inset Formula $\int dt^{\prime}$
+\end_inset
+
+ extends over future times, but only those future times needed to close
+ the present.
+ And 
+\begin_inset Formula $\mathcal{Z}_{t}$
+\end_inset
+
+ is the portion of the Feynman path integral 
+\begin_inset Formula $Z$
+\end_inset
+
+ that contains only the (closed) past, and the (unclosed) present, and only
+ those parts of the future that will be needed to close the present.
+\end_layout
+
+\begin_layout Standard
+Of course, this notation is totally inadequate, and these ideas are still
+ too vague and ill–formed to be able to state and write down cleanly.
+ But somehow, just making the attempt does draw attention to where the problem
+ is.
+\end_layout
+
+\begin_layout Standard
+As noted before, there are two problems.
+ One is that the whole thing needs to be relativistically covariant, so
+ that the present is not a naive time–like Newtonian slice, but includes
+ the clock skews of atomic clocks taken on airplane trips, and are still
+ in the here–and–now when they arrive back home.
+ It's like I can steal some of the formalism from the Ellis–Maartans–MaccCullum
+ book Relativistic Cosmology, to define time–like slices, but I have to
+ also somehow amend that description to include airplane flights.
+ Torsiony little paths.
+ But those are just purely classical: the airplane in being classical.
+ And I also have to modify it to include all possible paths, a la the Feynman
+ path integral.
+ So not just some oddball classical paths, but all paths.
+ How? Alas.
+\end_layout
+
+\begin_layout Standard
+Bed–time, I think.
+ My eyelids are slamming shut.
+ Will have to wait till tomorrow for more.
 \end_layout
 
 \begin_layout Section*
