@@ -1745,6 +1745,84 @@ Heh.
  I think I better stop hyper–venti–writing.
 \end_layout
 
+\begin_layout Subsection*
+12 March 2025 seconds later
+\end_layout
+
+\begin_layout Standard
+I'm inserting a break because I'm shifting gears now.
+\end_layout
+
+\begin_layout Standard
+So I'm reading the Claude docs, and 
+\begin_inset Quotes eld
+\end_inset
+
+tools
+\begin_inset Quotes erd
+\end_inset
+
+ are the thing that gets my interest up the most.
+\end_layout
+
+\begin_layout Standard
+Ohh...
+ here's an interesting one: the prompt–improver example.
+ It includes: 
+\begin_inset Quotes eld
+\end_inset
+
+List the key concepts from the sentence
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Wrap your analysis in <analysis> tags.
+ Include the following: - List of key concepts from the sentence
+\begin_inset Quotes erd
+\end_inset
+
+ – Now this is where LLM rubber can hit GOFAI road.
+ I can use concepts as single-word keys into an ontology, and associate
+ those single–word signifiers to blobs of text, and then use Claude to judge
+ similarity between blobs.
+\end_layout
+
+\begin_layout Standard
+This is my file–system similarity project: I've got a pile of file–system
+ data, and I want to find similar directories by similar content.
+ Or better yet, identical directories, and, in the end, identify corrupted
+ content.
+ So how would this work today, vs in the future?
+\end_layout
+
+\begin_layout Standard
+Today, I would have to feed structured data into Claude, pay $dd.cc / mega-token,
+ write a detailed prompt to get it to judge similarity.
+ Now, I've already hand–written code to do this...
+ but now the idea of performing similarity compares is handed over to Claude.
+ And I already know from prior experience that the detailed form of the
+ similarity metric doesn't much matter.
+ If it were to matter, that can be deferred to some future day, where maybe
+ I could ask Claude to use some more precise form of similarity.
+ What else do I need? A user interface.
+ Can I ask Claude to write that user interface for me? I guess I could try.
+ This could be a worthy experiment.
+ it's a task that is just concrete enough that maybe it can be done.
+\end_layout
+
+\begin_layout Standard
+This is a far cry from what I want in the long run: I want an assistant.
+ One I could direct with a minimum of prompting to perform this task.
+ But I'm not there yet.
+ Well, I also want to create this assistant.
+ And ...
+ well, how to start?
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
