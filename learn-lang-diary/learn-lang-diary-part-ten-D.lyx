@@ -1796,7 +1796,8 @@ This is my file–system similarity project: I've got a pile of file–system
  data, and I want to find similar directories by similar content.
  Or better yet, identical directories, and, in the end, identify corrupted
  content.
- So how would this work today, vs in the future?
+ So how would this work today, vs.
+ in the future?
 \end_layout
 
 \begin_layout Standard
@@ -1811,7 +1812,7 @@ Today, I would have to feed structured data into Claude, pay $dd.cc / mega-token
  What else do I need? A user interface.
  Can I ask Claude to write that user interface for me? I guess I could try.
  This could be a worthy experiment.
- it's a task that is just concrete enough that maybe it can be done.
+ It's a task that is just concrete enough that maybe it can be done.
 \end_layout
 
 \begin_layout Standard
@@ -1821,6 +1822,266 @@ This is a far cry from what I want in the long run: I want an assistant.
  Well, I also want to create this assistant.
  And ...
  well, how to start?
+\end_layout
+
+\begin_layout Standard
+The meta–problem seems to be that writing prompts that get Claude to perform
+ some specific technical task appears to be just about as hard as writing
+ the software myself.
+ I don't see how to use Claude to save myself time.
+ Perhaps in some shallow ways.
+ Maybe like asking questions on stackexchange.
+ Or rather, finding answers on stackexchange: whenever I ask questions,
+ the responses I get are stunningly underwhelming.
+ I think I understand why: my questions are too vague, too unfocused, overbroad,
+ or deeper, beyond the depth and experience of the pool of people answering
+ those questions.
+ So I get terrible replies.
+ Or no replies, to be more precise.
+ A failure for my personal use.
+ But if I have some error message ..
+ wow, stack exchange provides wonderful clues if not answers.
+ So, yes a generic chatbot seems great.
+ But ...
+\end_layout
+
+\begin_layout Standard
+I'm still stumped.
+ I'm still reading Claude docs.
+ All the examples are in the 
+\begin_inset Quotes eld
+\end_inset
+
+pretend you're a lawyer, a CEO, Sherlock Holmes
+\begin_inset Quotes erd
+\end_inset
+
+ class.
+ And ...
+ none of my thinking ever requires these kinds of talents.
+ I understand that parts of the economic sphere do require this.
+ I am far enough away from those spheres that I am confused about the actual
+ utility.
+ Clearly, LLM's are very useful for students cheating on exams.
+ Hmm.
+ I get it but I don't get it.
+ I guess I can stick to my mental image of LLM's as being photorealistic
+ snapshots of language, and as long as you ask 
+\begin_inset Quotes eld
+\end_inset
+
+how would Sherlock Holmes respond to this?
+\begin_inset Quotes erd
+\end_inset
+
+ then you will get a good imitation of that.
+ And since lawyers and CEO's are wordcels, I guess they can be easily imitated.
+ Insofar as this diary is a wordy brain–dump of a shape–rotator, I fear
+ (or rather, I already know, because I tried with Claude) it will get my
+ writing style and verbal personality down just fine, but my underlying
+ thought process remains opaque to Claude.
+ But ..
+ for how long? Five years? Longer?
+\end_layout
+
+\begin_layout Subsection*
+14 March 2025
+\end_layout
+
+\begin_layout Standard
+Heh.
+ I really want to write about hierarchical similarity measures.
+ For over a week.
+ But first, yet another distraction.
+\end_layout
+
+\begin_layout Standard
+High–dimensional space, 
+\begin_inset Formula $\mathbb{R}^{d}$
+\end_inset
+
+ for 
+\begin_inset Formula $d$
+\end_inset
+
+ a million or a billion, with interest in 
+\begin_inset Formula $d\to\infty$
+\end_inset
+
+.
+ This is a Cartesian product, and NOT assumed to be Euclidean.
+ So, a disjoint product.
+ Lots of informal discussions fall into the trap of 
+\begin_inset Formula $\mathbb{R}^{d}$
+\end_inset
+
+ being Euclidean.
+ I want to keep in mind that it could be e.g.
+ a fiber bundle, so that 
+\begin_inset Formula $d=b+f$
+\end_inset
+
+ where 
+\begin_inset Formula $b$
+\end_inset
+
+ is the dimension of the base space, and 
+\begin_inset Formula $f$
+\end_inset
+
+ is the dimension of the fiber, giving the 
+\begin_inset Quotes eld
+\end_inset
+
+trivial
+\begin_inset Quotes erd
+\end_inset
+
+ fiber bundle 
+\begin_inset Formula $B\times F$
+\end_inset
+
+ with 
+\begin_inset Formula $\dim B=b$
+\end_inset
+
+ and 
+\begin_inset Formula $\dim F=f$
+\end_inset
+
+ and so locally isomorphic to 
+\begin_inset Formula $\mathbb{R}^{b}\times\mathbb{R}^{f}$
+\end_inset
+
+.
+ The point here being that dynamics on a fiber bundle is very different
+ than dynamics on a Euclidean space of the same (product) dimension.
+ This is, of course, obvious from conventional physics/math.
+\end_layout
+
+\begin_layout Standard
+The part that I'm struggling with is not that, but rather the case where
+ 
+\begin_inset Formula $d=d_{1}+\cdots+d_{k}$
+\end_inset
+
+ where each subspace 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ is locally Euclidean, and where the different subspaces 
+\begin_inset Formula $E_{i}\simeq\mathbb{R}^{d_{i}}$
+\end_inset
+
+ are related to one–another as fibers.
+ There are several cases to ponder.
+ One is the level–fiber case: declare that 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+ is the base space, and all other 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ are fibers on top of 
+\begin_inset Formula $E_{1}$
+\end_inset
+
+.
+ This is the default for particle physics: the base space is Minkowski spacetime
+, and the various fibers on top are electroweak and color.
+ Also spin can the thought of as a funky fiber.
+ As can vierbeins.
+ The various 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ are fixed; this is just the standard model 
+\begin_inset Formula $SU(3)\times SU(2)\times U(1)$
+\end_inset
+
+, nothing more.
+\end_layout
+
+\begin_layout Standard
+More confusing is the case of hierarchical arrangements: some 
+\begin_inset Formula $E_{j}$
+\end_inset
+
+ are fibers on top of other 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ ...
+ thus, the relationship of fibers to bases is as a tree: the base–space
+ 
+\begin_inset Formula $B=E_{1}$
+\end_inset
+
+ being the root of the tree.
+ Now that we have switched our viewpoint to a graphical representation of
+ the relationships between bases and fibers, we may consider more types
+ of graphs: the DAG, so that there are multiple paths to a subspace 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ and also graphs without a base, i.e.
+ having cycles.
+\end_layout
+
+\begin_layout Standard
+I am not aware of any discussions in math or physics that allows for such
+ hierarchical arrangements.
+ The closest is perhaps the discussion of algebras of Grassmanians and tensor
+ algebras, but these have a very regular structure, whereas I'm talking
+ about blocks of subspaces (and no anti–symmetry.)
+\end_layout
+
+\begin_layout Standard
+Last but not least is having the decomposition into 
+\begin_inset Formula $k$
+\end_inset
+
+ pieces vary from patch to patch (patch, in the sense of coordinate patch
+ from an atlas, as conventionally defined for a manifold.) Thus, 
+\begin_inset Formula $k$
+\end_inset
+
+ might vary from patch to patch, as might each 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+.
+ This is a bit ...
+ crazier, so I will tiptoe and muddle.
+ 
+\end_layout
+
+\begin_layout Standard
+So anyway, the conventional structure of a fiber bundle includes the creation
+ of a connection, and the decomposition of that connection into vertical
+ and horizontal pieces.
+ With appropriate consistency conditions applied to each piece, as required
+ by projections down to the base space, and by symmetries on each fiber.
+ The proposal above is, I guess, that such relationships should be applied
+ along each edge of the relational graph.
+ That is, draw a graph, with directed edges, and then ask that each edge
+ represent a fiber product, with one vertex standing for the base space,
+ and the other the fiber space.
+\end_layout
+
+\begin_layout Standard
+What would be the point of this? Well, the thoughts above were inspired
+ by reading something about neural–net transformers and attention heads.
+ And I'm imagining that local regions correspond to grains in some lattice.
+ Or perhaps even appropriate for some other physics thoughts I've had.
+ But doing the work is hard, and progress would be slow.
+ So ...
+ its not obvious that this idea should be pursued.
+ Like all ideas I write here: its shallow, and making progress would be
+ hard.
+ Later.
+ 
 \end_layout
 
 \begin_layout Section*
