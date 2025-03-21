@@ -2836,6 +2836,83 @@ ed by a dust of points.
  am the slime from your cranium, oozin along on your livin room floor.
 \end_layout
 
+\begin_layout Subsection*
+20 March 2025 How late is it?
+\end_layout
+
+\begin_layout Standard
+So now I stumble into section 3.3.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+A Wasserstein gradient flow proxy.
+\begin_inset Quotes erd
+\end_inset
+
+ where they notice that constraining dynamics to the surface of a sphere
+ causes unwanted issues.
+ My knee-jerk reaction is that this shows that constraint was flawed, and
+ that they should be working in projective space, instead.
+ That is 
+\begin_inset Formula $\mathbb{RP}^{n}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $S_{n}$
+\end_inset
+
+ ...
+ woof.
+ But we don't want that either, because projective space identifies +1 and
+ -1.
+ So maybe instead, just work in Euclidean space, and treat the normalization
+ as a gauge condition or Lagrange multiplier? Alternately, treat each ray
+ from the origin as a fiber, treat the whole thing as a fiber bundle, a
+ line bundle, glue up the atlas for the fibers so its a sphere? That way,
+ the dynamical equations can wander off and 
+\begin_inset Quotes eld
+\end_inset
+
+denormalize
+\begin_inset Quotes erd
+\end_inset
+
+, but since the values are always on a ray, one can always project back
+ down, in the end, and constrain the finale result to a sphere, if that
+ is your heart's desire.
+ The people writing this paper have never heard of fiber bundles, it seems.
+ Why else wouldn't they do it this way?
+\end_layout
+
+\begin_layout Standard
+Somewhat more remarkable is the general feeling that much of the treatment
+ in section 3 should already be well–developed and present in some or another
+ treatment of homogeneous spaces or something like that, already worked
+ out in some generic Lie algebra setting.
+ The model seems both basic, and yet the treatment, while mostly pretty
+ good, gets pointlessly muddled by this sphere constraint.
+\end_layout
+
+\begin_layout Standard
+I mean, I could figure this out if I spent a day or a week or a month fiddling
+ with pencil and paper and getting lost in the details.
+ I just wish I could instantly see the answer.
+ See the answer more quickly.
+ With less effort.
+ I'd like the math assistant: 
+\begin_inset Quotes eld
+\end_inset
+
+hey, dear AI math assistant, redo this section, but instead of doing it
+ in a sphere, do it on a line bundle.
+\begin_inset Quotes erd
+\end_inset
+
+ Hmm.
+ The singularity is near?
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
