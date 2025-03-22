@@ -7,50 +7,6 @@ Things to read:
   Patrick McMillen & Michael Levin
   https://www.nature.com/articles/s42003-024-06037-4
 
-* Formal Algorithms for Transformers
-  Mary Phuong, Marcus Hutter
-  https://arxiv.org/abs/2207.09238
-
-  In summary: this is a go-to reference for the actual algorithms
-  actually employed in the transformer/learning industry. The algos
-  are precisely defined and explicitly presented, which is a large
-  (huge?) improvement over the considerably cloudier and more opaque
-  descriptions usually given in DL/NN texts.
-
-  No effort is made to provide any sort of intuitive foundations.
-  The paper gives multiple references to some "inuitive explanation"
-  blogs, but those blogs are worse-than-zero: I personally get nothing
-  at all from green and blue boxes with orange arrows. That's just
-  magical, mystical thinking; that's not how actual intuition is built.
-
-  How far can we get with inuition? This paper gives precise, formal
-  definitions for token embeddings, positional embeddings, and single-
-  query attention. ("Algorithms 1,2,3") This is already more than most
-  DL/NN papers do.
-
-  If one comes from a geometry background, and knows what manifolds
-  and tangent spaces are, and what the "exp" mapping is, then you can
-  see this in algo 3. If one comes from a thermodynamics/statistical
-  mechanics background, then you can see Gibbs & Bolzmann & partition
-  functions in algo 3. Wonderful!, one might think, but then full-stop.
-  The authors never even breath the slightest breath that there might
-  be some interpreation w.r.t differential geometry or w.r.t stat mech.
-  Alas.
-
-  This is compounded by the algorithmic approach. The algorithms, 15 in
-  all, written in precise pseudocode, provide excellent precision for
-  implementations. Algorithms, however, obliterate "intuitiveness".
-  Personally, I find that hill-climbing or simulated annealing algos,
-  expressed with differentials and gradients, requiring Newtonian
-  integration, or perhaps thermodynamic cooling and relaxation, are
-  intuitive in the way that a do-loop is not.
-
-  What I am looking for, but have not found, is a hyperdimensional
-  description. High-dimensional cubes and spheres are nothing at all
-  like they are in low dimensions. A lot of these algos boil down
-  to an ant exploring a high-dimensional geometry, but we can't
-  inuit this picture from do-loops.
-
 * 27 papers on LLM from Ilya Sutskever
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
   Posted to twitter in April 2024
@@ -757,6 +713,68 @@ Inspirational
   https://arxiv.org/abs/2410.10762
 
   Actual code and results implementing above ideas.
+
+
+Stuff about Transformers
+------------------------
+Interesting papers, worthwhile, but provide incomplete overviews.
+
+* A mathematical perspective on Transformers
+  Borjan Geshkovski, Cyril Letrouit, Yury Polyanskiy, Philippe Rigollet
+  https://arxiv.org/abs/2312.10794
+
+  The good news:
+  Provides the clearest mathematical presentation of a transformer that
+  I've ever read. In this sense, it's excellent. The transformer can be
+  viewed as a dynamical process, diffusive, resembling the heat
+  equation, taking place on the surface of a sphere.
+
+
+* Formal Algorithms for Transformers
+  Mary Phuong, Marcus Hutter
+  https://arxiv.org/abs/2207.09238
+
+  The good news:
+  This is a go-to reference for the actual algorithms actually employed
+  in the transformer/learning industry. The algos are precisely defined
+  and explicitly presented, which is a large (huge?) improvement over
+  the considerably cloudier and more opaque descriptions usually given
+  in DL/NN texts.
+
+  The bad news:
+  No effort is made to provide any sort of intuitive foundations.
+  The paper gives multiple references to some "inuitive explanation"
+  blogs, but those blogs are worse-than-zero: I personally get nothing
+  at all from green and blue boxes with orange arrows. That's just
+  magical, mystical thinking; that's not how actual intuition is built.
+
+  How far can we get with inuition? This paper gives precise, formal
+  definitions for token embeddings, positional embeddings, and single-
+  query attention. ("Algorithms 1,2,3") This is already more than most
+  DL/NN papers do.
+
+  If one comes from a geometry background, and knows what manifolds
+  and tangent spaces are, and what the "exp" mapping is, then you can
+  see this in algo 3. If one comes from a thermodynamics/statistical
+  mechanics background, then you can see Gibbs & Bolzmann & partition
+  functions in algo 3. Wonderful!, one might think, but then full-stop.
+  The authors never even breath the slightest breath that there might
+  be some interpretation w.r.t differential geometry or w.r.t stat mech.
+  Alas.
+
+  This is compounded by the algorithmic approach. The algorithms, 15 in
+  all, written in precise pseudocode, provide excellent precision for
+  implementations. Algorithms, however, obliterate "intuitiveness".
+  Personally, I find that hill-climbing or simulated annealing algos,
+  expressed with differentials and gradients, requiring Newtonian
+  integration, or perhaps thermodynamic cooling and relaxation, are
+  intuitive in the way that a do-loop is not.
+
+  What I am looking for, but have not found, is a hyperdimensional
+  description. High-dimensional cubes and spheres are nothing at all
+  like they are in low dimensions. A lot of these algos boil down
+  to an ant exploring a high-dimensional geometry, but we can't
+  inuit this picture from do-loops.
 
 
 
