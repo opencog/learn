@@ -1,6 +1,17 @@
 
 Things to read:
 
+* Flow Matching Guide and Code
+  https://arxiv.org/abs/2412.06264
+  Yaron Lipman, et al.
+
+  Abstract:
+  Flow Matching (FM) is a recent framework for generative modeling that
+  has achieved state-of-the-art performance across various domains,
+  including image, video, audio, speech, and biological structures. This
+  guide offers a comprehensive and self-contained review of FM, covering
+  its mathematical foundations, design choices, and extensions.
+
 * Basal cognition
   Collective intelligence: A unifying concept for integrating biology
   across scales and substrates
@@ -11,6 +22,14 @@ Things to read:
   Daniel A. Roberts, Sho Yaida, Boris Hanin
   https://arxiv.org/abs/2106.10165
   471 pages
+
+* Estimating the Probability of Sampling a Trained Neural Network at Random
+  Adam Scherlis, Nora Belrose
+  https://arxiv.org/abs/2501.18812
+
+* Synaptic Field Theory for Neural Networks
+  Donghee Lee, Hye-Sung Lee, Jaeok Yi
+  https://arxiv.org/abs/2503.08827
 
 * 27 papers on LLM from Ilya Sutskever
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
