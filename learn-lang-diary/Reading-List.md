@@ -7,6 +7,11 @@ Things to read:
   Patrick McMillen & Michael Levin
   https://www.nature.com/articles/s42003-024-06037-4
 
+* The Principles of Deep Learning Theory
+  Daniel A. Roberts, Sho Yaida, Boris Hanin
+  https://arxiv.org/abs/2106.10165
+  471 pages
+
 * 27 papers on LLM from Ilya Sutskever
   https://arc.net/folder/D0472A20-9C20-4D3F-B145-D2865C0A9FEE
   Posted to twitter in April 2024
@@ -770,6 +775,9 @@ Interesting papers, worthwhile, but provide incomplete overviews.
   can be thought of as evolving on the hyperbolic upper half-plane,
   with time along the y-axis. Doesn't this analogy extend to this case
   as well? Making this analogy would be oodles of fun.
+
+  The craziest thought of all: what's it look like for the spin
+  structure?
 
 * Formal Algorithms for Transformers
   Mary Phuong, Marcus Hutter
