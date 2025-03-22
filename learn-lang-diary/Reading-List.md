@@ -12,6 +12,9 @@ Things to read:
   guide offers a comprehensive and self-contained review of FM, covering
   its mathematical foundations, design choices, and extensions.
 
+* A Visual Dive into Conditional Flow Matching
+  https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching/
+
 * Basal cognition
   Collective intelligence: A unifying concept for integrating biology
   across scales and substrates
