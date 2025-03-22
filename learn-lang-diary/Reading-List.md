@@ -724,11 +724,52 @@ Interesting papers, worthwhile, but provide incomplete overviews.
   https://arxiv.org/abs/2312.10794
 
   The good news:
-  Provides the clearest mathematical presentation of a transformer that
+  Provides the clearest geometric presentation of a transformer that
   I've ever read. In this sense, it's excellent. The transformer can be
   viewed as a dynamical process, diffusive, resembling the heat
-  equation, taking place on the surface of a sphere.
+  equation, taking place on the surface of a sphere. Provides an energy
+  function as a mean-field eqn.  Points on the sphere are individual
+  tokens (e.g. vocabulary words). Moving in one time direction, these
+  cluster down to just one point. Moving in the other, they diffuse out
+  uniformly.
 
+  Three-fold bad news:
+  1) Although the geometric exposition is excellent, the practical
+  interpretation is missing. For example, given a bunch of input tokens,
+  these move on the sphere, in this mean-field, converging to a single
+  point. I guess this point is supposed to be the "answer" in a
+  question-answering system? Making this clear for newbie readers like
+  me would be nice.
+
+  2) Many simplifying assumptions are made: in particular, the weight
+  matrices are set to the identity. Only the mean-field description
+  remains. Did they throw out the baby with the bath-water? The
+  dynamical behavior they describe is very simple, almost boring, even.
+  Do real nets, with non-trivial weight matrices, behave in essentially
+  the same way? This is not clear. No attempt is made to even speculate
+  on the answer.
+
+  3) If all that is left is a certain kind of diffusive heat-equation-
+  like mean-field theory, then the geometric analysis is perhaps
+  underwhelming. For example: dynamics is constrained to a sphere.
+  Wouldn't it be simpler and easier to pose dynamics on a line bundle
+  with a sphere as a base space? That is, have a horizontal bundle, and
+  a one-dimensional veritcla bundle, and a gauge-fixing term to pin it
+  to the sphere, if that's really needed? That way, all the hemming
+  and hawing about the constraints would go away.
+
+  An energy functional is given, and particle dynamics are obtained as
+  being driven by a vector field defined as the variation of that
+  function. Fine! But I'd like to see the rest of the picture:
+  articulate the Hamiltonian vs Lagrangian dynamics, write down the
+  Lagrangian.
+
+  Heat equations generically have theta functions that go along with
+  them, and these encourage you to think about the moduli space. Where
+  are the modular theta's?  That is, the 1-dimensional heat equation
+  can be thought of as evolving on the hyperbolic upper half-plane,
+  with time along the y-axis. Doesn't this analogy extend to this case
+  as well? Making this analogy would be oodles of fun.
 
 * Formal Algorithms for Transformers
   Mary Phuong, Marcus Hutter
