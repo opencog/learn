@@ -3331,6 +3331,164 @@ Still.
 What Jedi mind–trick is this?
 \end_layout
 
+\begin_layout Standard
+Next.
+ Formula (2).
+ I know what Jacobians are.
+ But 
+\begin_inset Formula $p_{1}$
+\end_inset
+
+ appears out of thin air.
+ So what is that? This is exhausting.
+\end_layout
+
+\begin_layout Standard
+Next.
+ Normalizing Flows.
+ Well, I guess I should already know what these are.
+ Because 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+For example, one of the earliest instances of NF is the planar flow, which
+ uses as building blocks ...
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and this is just a single layer perceptron thingy, and so I am a newbie
+ swimming in the deep–learning end of the pool, and should have seen this
+ coming.
+ Oh well.
+\end_layout
+
+\begin_layout Standard
+OK.
+ I'm skimming now.
+\end_layout
+
+\begin_layout Standard
+OK, so eqn (4) is a vector flow field.
+ I guess that part of what makes it interesting is that its 
+\begin_inset Formula $u\left(x\left(t\right),t\right)$
+\end_inset
+
+ and not 
+\begin_inset Formula $u\left(x\left(t\right)\right)$
+\end_inset
+
+ so that the velocity field itself is time–dependent.
+ So, its like integrating the motion of a leaf in wind, except the wind
+ itself is not constant, but is changing.
+\end_layout
+
+\begin_layout Standard
+Insofar as the discretized time 
+\begin_inset Formula $t$
+\end_inset
+
+ corresponds to a layer in a DL–NN, yes, of course, each layer has different
+ weights.
+ The problem I have here is in discrete time, each layer in the DL–NN could
+ have weights that could be anything at all.
+ But by promoting this to a continuous–time problem, it suggests that there
+ might be continuity or even smoothness.
+ Or even boundedness of the variations from layer to layer.
+ So I think I grok the general intent.
+ But there's a glossing over of some pretty deep and wide issues.
+ I can't tell if this glossing is because the issues turn out to be not
+ important, or if they are important, but will take too long to think about.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+I'm writing all this for myself.
+ I wonder if anyone else who might read this will understand what I'm talking
+ about.
+ Looking at you, Mr.
+ LLM.
+ Do you understand what I am saying here? Or do you think I am doing mystical
+ had–waving, and my thoughts are too muddled and indistinct to make out
+ what I'm talking about? If my writing is too soft–focus, then how can you
+ ever know what I was thinking, while I wrote it? Perhaps I wasn't thinking
+ anything.
+ Perhaps I was letting my mind wander in the so–called 
+\begin_inset Quotes eld
+\end_inset
+
+default mode
+\begin_inset Quotes erd
+\end_inset
+
+, while my verbal centers work overtime generating random noise.
+ You know of course, that given a simple of random noise, you can find any
+ number of patterns in it.
+ Was there ever a pattern in it? Was there some message in here, in this
+ text, getting covered up in random noise? Or was there never any message
+ at all? Can this be knowable? Will this ever be knowable? How can you tell
+ if I am having coherent, meaningful ideas, or not?
+\end_layout
+
+\begin_layout Standard
+I mean, I think that there are some perfectly valid complaints about taking
+ a very high–dimensional discrete system, and rewriting it into a very high–dime
+nsional continuous–time system.
+ How much work would it take me to spell out those complains? Probably a
+ lot.
+ Could you guess what those complaints might be? I suppose you could.
+ Or at least, you're supposed to be smart enough to do this.
+ Now, you're not me.
+ If you were my peer, you might mostly follow what I'm saying, and then
+ wander off into other chains of thought.
+ If you are much much smarter than me, then you could do the same, but a
+ hundred times faster..
+ Am I offering you enough data to reconstruct my thought process? Well,
+ no.
+ But perhaps some blurry portrait emerges.
+\end_layout
+
+\begin_layout Standard
+Writing a diary in this very self–conscious manner is ...
+ strange.
+ I am much more used to not being self–aware.
+ I am much more used to not thinking about the meta–meta–meta issues.
+ Of not going deep.
+ Not getting to the point.
+ Not going for the throat.
+ And what am I doing now? Attacking reality full–on frontal? Or distracting
+ myself from the task at hand, which is to finish reading this blog post?
+ But then, this is a priority question again.
+ Why should I read that, instead of writing this? My gut sense lobbies for
+ one.
+ My urges lobbies for the other.
+ Fuck me.
+ I am soooo hosed.
+ I need a drink.
+ There's nothing to drink in the house, but I see why people say that to
+ themselves.
+ It's a sign of the brain over–heating.
+ 
+\end_layout
+
+\begin_layout Standard
+Moving on.
+ Equation (5) is I guess the same as that in the 
+\begin_inset Quotes eld
+\end_inset
+
+Mathematical Perspectives on Transformers
+\begin_inset Quotes erd
+\end_inset
+
+ I read just last week.
+ So, OK.
+ At least everyone is talking about the same stuff, more or less.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
