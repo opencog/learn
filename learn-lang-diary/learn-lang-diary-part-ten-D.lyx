@@ -3101,10 +3101,117 @@ Next sentence:
  Bummer.
  Oh well.
  I've been guilty of this myself, I suppose.
+ XXX Oh wait, my hot take is wrong.
+ See further below.
 \end_layout
 
 \begin_layout Standard
 Next: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+maximizing the log-likelihood in corresponds to making and close in the
+ sense of the Kullback-Leibler divergence
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ This is not obvious.
+ They provide a footnote.
+ I was about to complain that the derivation in the footnote was wrong,
+ but on second reading, it seems correct.
+ So that's actually pretty nice.
+\end_layout
+
+\begin_layout Standard
+This cause me to read footnote 2, which I'd previously just skimmed.
+ So, OK, calling it the pushfoward is not showing off.
+ This is actually the correct thing to say here.
+ OMG.
+ Well, I could have saved my embarrassment by not committing my faulty thoughts
+ to text.
+\end_layout
+
+\begin_layout Standard
+So that's interesting.
+ I've thought of myself as a master of pushforwards all these years, and
+ here I am, looking at this and feeling surprised.
+ I'm kind of stupid in that way.
+ I get 98% percentile on my exams.
+ Not 99%.
+ That's how it works.
+\end_layout
+
+\begin_layout Standard
+So I'm thinking about formula (1).
+ I can maximize it by having 
+\begin_inset Formula $T_{\theta}^{-1}$
+\end_inset
+
+ map everything to the origin.
+ However, there is no map 
+\begin_inset Formula $T_{\theta}$
+\end_inset
+
+ that has such an inverse.
+ And since 
+\begin_inset Formula $T_{\theta}^{-1}$
+\end_inset
+
+ has to be defined for all of it's domain 
+\begin_inset Formula $\mathbb{R}^{d}$
+\end_inset
+
+, that means 
+\begin_inset Formula $T_{\theta}$
+\end_inset
+
+ has to be onto.
+ Does it have to be one–to–one? Well, I don't see any argument for why it
+ should be one–to–one.
+ In fact, if the sample distribution has some very high–frequency variations
+ in it, these could be aliased down to a multi–valued 
+\begin_inset Formula $T_{\theta}$
+\end_inset
+
+.
+ Aliasing here in the sense of the Nyquist–Shannon sampling theorem.
+ That is, we don't really know if the sample distribution actually has this
+ high–frequency structure, or if there's some other effect going on that
+ caused 
+\begin_inset Formula $T_{\theta}$
+\end_inset
+
+ to fold over.
+ Heck, they haven't stated whether 
+\begin_inset Formula $T_{\theta}$
+\end_inset
+
+ even needs to be continuous or not.
+ I'm guessing that they assume it is, but none of this is clear to me just
+ right now.
+ Lets plow on.
+\end_layout
+
+\begin_layout Standard
+So far I like my experiment with hot takes.
+ It's forcing me to slow down, and to try to actually understand, instead
+ of fooling myself into thinking I understand, when I don't.
+ I guess this is why profs lecture.
+ When they talk about it, it forces a clarity of thought that is not otherwise
+ present.
+ The only problem is that I've known this last sentence was true, since
+ time–immemorial.
+ So what have I learned by writing it down? Nothing.
+ And worse, it makes me feel like I'm writing down banalities.
+ The banal existence of the theoretician.
 \end_layout
 
 \begin_layout Section*
