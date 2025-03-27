@@ -23,7 +23,7 @@ Things to read:
   Michael Levin
   https://osf.io/preprints/psyarxiv/5g2xj_v1
 
-  Preachin to the choir, my man, preachin to the choir.
+  Subversive.
 
 
 * Basal cognition
