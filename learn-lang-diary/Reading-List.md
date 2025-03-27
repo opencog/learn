@@ -15,6 +15,17 @@ Things to read:
 * A Visual Dive into Conditional Flow Matching
   https://dl.heeere.com/conditional-flow-matching/blog/conditional-flow-matching/
 
+  This is rather nice, clear and direct. Has some annoying imprecisions
+  and glosses at the start, but the last 2/3rds of it are excellent.
+
+* Ingressing Minds: Causal Patterns Beyond Genetics and Environment in
+  Natural, Synthetic, and Hybrid Embodiments
+  Michael Levin
+  https://osf.io/preprints/psyarxiv/5g2xj_v1
+
+  Preachin to the choir, my man, preachin to the choir.
+
+
 * Basal cognition
   Collective intelligence: A unifying concept for integrating biology
   across scales and substrates
