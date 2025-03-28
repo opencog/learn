@@ -23,7 +23,11 @@ Things to read:
   Michael Levin
   https://osf.io/preprints/psyarxiv/5g2xj_v1
 
-  Subversive.
+  Preaching to the choir, my man, preaching to the choir.
+  My only complaint is that he talks about things that should be done,
+  unaware that Prusinkiewicz has already done them, over at
+  http://algorithmicbotany.org AlPrusinkiewicz though also: I am quite
+  unclear why Prusinkiewicz isn't much more famous than he is.
 
 
 * Basal cognition
