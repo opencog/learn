@@ -5,8 +5,18 @@ Things to read:
   https://transformer-circuits.pub/2025/attribution-graphs/biology.html
   Most awesome thing in this list, so I am putting it first.
 
-* Random more stuff
 
+* Order parameter dynamics in complex systems: From models to data
+  https://www.researchgate.net/publication/378142766_Order_parameter_dynamics_in_complex_systems_From_models_to_data
+
+
+* Karl Friston Free Energy stuff:
+   https://openreview.net/forum?id=BZ5a1r-kVsf
+   https://arxiv.org/pdf/2301.04104
+   https://arxiv.org/pdf/1803.10122
+   https://www.nature.com/articles/nrn2787
+
+* Random more stuff
 https://paperswithcode.com/paper/context-aware-inductive-knowledge-graph
 https://paperswithcode.com/paper/reevaluation-of-inductive-link-prediction
 https://paperswithcode.com/paper/exploiting-large-language-models-capabilities
