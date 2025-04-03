@@ -1,6 +1,90 @@
 
 Things to read:
 
+* On the Biology of a Large Language Model
+  https://transformer-circuits.pub/2025/attribution-graphs/biology.html
+  Most awesome thing in this list, so I am putting it first.
+
+* Random more stuff
+
+https://paperswithcode.com/paper/context-aware-inductive-knowledge-graph
+https://paperswithcode.com/paper/reevaluation-of-inductive-link-prediction
+https://paperswithcode.com/paper/exploiting-large-language-models-capabilities
+https://paperswithcode.com/paper/learning-rule-induced-subgraph-1
+https://paperswithcode.com/paper/pathformer-recursive-path-query-encoding-for
+https://paperswithcode.com/paper/improving-rule-mining-via-embedding-based (edited)
+
+https://www.academia.edu/3626275/Global_workspace_dynamics_cortical_binding_and_propagation_enables_conscious_contents
+
+https://arxiv.org/pdf/2412.10425
+
+https://direct.mit.edu/books/oa-monograph/5299/Active-InferenceThe-Free-Energy-Principle-in-Mind
+
+
+https://arxiv.org/abs/2502.06034
+https://arxiv.org/abs/1806.05397
+https://www.researchgate.net/publication/255614276_Handling_Complexity_with_Self-Organizing_Fractial_Semantic_Networks
+https://arxiv.org/abs/0806.1655
+
+* Continuous Diffusion Model for Language Modeling
+  https://huggingface.co/papers/2502.11564
+
+* Large Language Diffusion Models
+  https://huggingface.co/papers/2502.09992
+
+* Step Back to Leap Forward: Self-Backtracking for Boosting Reasoning of
+  Language Models
+  https://huggingface.co/papers/2502.04404
+
+* Self-supervised Quantized Representation for Seamlessly Integrating
+  Knowledge Graphs with Large Language Models
+  https://huggingface.co/papers/2501.18119
+
+* Higher-order Laplacian renormalization
+  https://doi.org/10.1038/s41567-025-02784-1
+  nature physics
+
+* Agentic Deep Graph Reasoning Yields Self-Organizing Knowledge Networks
+  https://arxiv.org/abs/2502.13025
+  Abstract:
+    We present an agentic, autonomous graph expansion framework that
+    iteratively structures and refines knowledge in situ. Unlike
+    conventional knowledge graph construction methods relying on static
+    extraction or single-pass learning, our approach couples a
+    reasoning-native large language model with a continually updated graph
+    representation. At each step, the system actively generates new concepts
+    and relationships, merges them into a global graph, and formulates
+    subsequent prompts based on its evolving structure. Through this
+    feedback-driven loop, the model
+
+* KBLaM: Knowledge Base augmented Language Model"
+  https://arxiv.org/abs/2410.10450
+  https://github.com/microsoft/KBLaM
+
+* Holographic Embeddings of Knowledge Graphs
+  https://arxiv.org/abs/1510.04935
+
+  More holographic stuffs:
+  https://medium.com/@persiutebay/transformer-is-a-holographic-associative-memory-f9ea41f343ad
+
+  https://github.com/Agnuxo1/Unified-Holographic-Neural-Network
+
+* https://www.academia.edu/36268689/Biology_of_Consciousness
+  Biology of Consciousness
+  Abstract:
+     The Dynamic Core and Global Workspace hypotheses were independently
+     put forward to provide mechanistic and biologically plausible accounts
+     of how brains generate conscious mental content. The Dynamic Core
+     proposes that reentrant neural activity in ...
+
+* https://www.academia.edu/82328249/The_neuronal_basis_for_consciousness
+  The neuronal basis for consciousness
+  Abstract:
+     Attempting to understand how the brain, as a whole, might be
+     organized seems, for the first time, to be a serious topic of inquiry.
+     One aspect of its neuronal organization that seems particularly central
+     to global function is the rich thalamocortical
+
 * Flow Matching Guide and Code
   https://arxiv.org/abs/2412.06264
   Yaron Lipman, et al.
@@ -17,6 +101,22 @@ Things to read:
 
   This is rather nice, clear and direct. Has some annoying imprecisions
   and glosses at the start, but the last 2/3rds of it are excellent.
+
+* Riemannian Self-Attention Mechanism for SPD Networks
+  https://arxiv.org/abs/2311.16738
+     Symmetric positive definite (SPD) matrix has been demonstrated to
+     be an effective feature descriptor in many scientific areas, as it can
+     encode spatiotemporal statistics of the data adequately on a curved
+     Riemannian manifold, i.e., SPD manifold. Although there are many
+     different ways to design network architectures for SPD matrix nonlinear
+     learning, very few solutions explicitly mine the geometrical
+     dependencies of features at different layers. Motivated by the great
+     success of self-attention mechanism in capturing long-range
+     relationships, an SPD manifold self-attention mechanism (SMSA) is
+     proposed in this paper using some manifold-valued geometric operations,
+     mainly the Riemannian metric…
+
+
 
 * Ingressing Minds: Causal Patterns Beyond Genetics and Environment in
   Natural, Synthetic, and Hybrid Embodiments
