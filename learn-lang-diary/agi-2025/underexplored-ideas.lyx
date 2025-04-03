@@ -181,6 +181,14 @@ Agency and world models and self-awareness.
 \end_layout
 
 \begin_layout Itemize
+PLN criticism
+\end_layout
+
+\begin_layout Itemize
+Hierarachical brain control structures
+\end_layout
+
+\begin_layout Itemize
 genetics in Prusinkiewicz reaction-diffusion
 \end_layout
 
@@ -277,7 +285,7 @@ fluid
  can flow between them.
  How many edges have to be randomly sprinkled before two distant points
  are connected? Quite a lot: it turns out to be precisely 0.221...
- (ref Achime Kleinke 
+ (ref Achim Klenke 
 \begin_inset Quotes eld
 \end_inset
 
@@ -308,7 +316,7 @@ Is this a useful idea? Perhaps.
  Is it difficult? Well, yes.
  We've had many decades of work on scale–free networks and self–organizing
  criticality, but very few of those touched on intelligence until Tononi
- and Tegmark raised the idea to prominence.
+ and Tegmark raised the idea to prominence(ref here).
  Fine.
  But we seem to lack a network model, even a simple one, where, on one side,
  we can say 
@@ -365,13 +373,189 @@ This has happened before.
  After that, any shmuck of mildly above–average intelligence could memorize
  a mere 24 symbols, and the sounds associated with them.
  The ability to read and write created an economic boom in the Ancient Mediterra
-nean.
- Will the present phase–change in network topology be a boon? I hope so.
+nean.(ref meaning crisis on youtube) Will the present phase–change in network
+ topology be a boon? I hope so.
  But the point here is to realize that 
 \emph on
 **this is what's going on**
 \emph default
 , instead of being perennially mystified by the situation.
+\end_layout
+
+\begin_layout Section*
+Agency and Perception
+\end_layout
+
+\begin_layout Standard
+Agency is a hot buzzword as I write this.
+ Everybody thinks they know what perception is, and sensori–motor interfaces
+ are the dry stuff of robotics textbooks.
+ Saying 
+\begin_inset Quotes eld
+\end_inset
+
+autopoesis
+\begin_inset Quotes erd
+\end_inset
+
+ is a social signal that says 
+\begin_inset Quotes eld
+\end_inset
+
+I'm smart
+\begin_inset Quotes erd
+\end_inset
+
+.
+ A short review of these concepts is in order.
+ The review is relevant because despite the obviousness, **
+\emph on
+no
+\emph default
+** present–day AI system is conceptualized this way; this includes self–driving
+ cars and cruise missiles.
+\end_layout
+
+\begin_layout Standard
+Agents have an 
+\begin_inset Quotes eld
+\end_inset
+
+inside
+\begin_inset Quotes erd
+\end_inset
+
+ and an 
+\begin_inset Quotes eld
+\end_inset
+
+outside
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The inside is bounded, limited, finite.
+ The outside is unbounded: the whole universe.
+ In between these two is a sensory system: a way of perceiving the outside,
+ and using that perception to update a world model.
+ Going the other way, agents have a motor system, allowing them to move.
+\end_layout
+
+\begin_layout Standard
+Sight and sound are obvious forms of perception.
+ A more basic model is listing a directory in a file system, and moving
+ to a different directory.
+ Such an agent 
+\begin_inset Quotes eld
+\end_inset
+
+sees
+\begin_inset Quotes erd
+\end_inset
+
+ the file time–stamps, perhaps the file types.
+ Maybe even the file contents.
+ A smart agent might memorize some of this structure, add it to its world–model.
+ Like a web–crawler, it could 
+\begin_inset Quotes eld
+\end_inset
+
+think
+\begin_inset Quotes erd
+\end_inset
+
+ to itself: 
+\begin_inset Quotes eld
+\end_inset
+
+why, I've seen this before, it was over there
+\begin_inset Quotes erd
+\end_inset
+
+ and even: 
+\begin_inset Quotes eld
+\end_inset
+
+this place looks awfully familiar
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+when was a last here?
+\begin_inset Quotes erd
+\end_inset
+
+ Motion here is not motion in a 3D space, but in an abstract, hierarchical
+ tree structured universe.
+ For a web crawler, its a network graph of directed links.
+ Without memory, one can only follow a link.
+ With memory, one can 
+\begin_inset Quotes eld
+\end_inset
+
+go anywhere
+\begin_inset Quotes erd
+\end_inset
+
+, but only if one has committed locations (URL's) to the agent's world–model
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+the world out there
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The update of the agent's world–model requires a bit of perception and action
+ itself: asking 
+\begin_inset Quotes eld
+\end_inset
+
+do I have this item in my memory?
+\begin_inset Quotes erd
+\end_inset
+
+ is a form of perception.
+ Placing it in memory, committing it, is a form of action.
+ One even has to 
+\begin_inset Quotes eld
+\end_inset
+
+move
+\begin_inset Quotes erd
+\end_inset
+
+ to the right place, to put it there.
+ This feels a bit recursive, but eventually it bottoms out: somewhere, there
+ is a hard–coded system that actually places bits and bytes somewhere.
+\end_layout
+
+\begin_layout Standard
+What's the point of this simplistic talk of agency? Three–fold.
+\end_layout
+
+\begin_layout Standard
+auto learning design and description.
+ abstraction
+\end_layout
+
+\begin_layout Standard
+Talking about motion in a crawler is
+\end_layout
+
+\begin_layout Standard
+cat theory
+\end_layout
+
+\begin_layout Standard
+uncle miltie anecdote thermostat
 \end_layout
 
 \begin_layout Standard
