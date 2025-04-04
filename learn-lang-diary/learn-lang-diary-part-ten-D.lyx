@@ -4977,6 +4977,155 @@ y irrelevant information.
  Toxic capitalism exploding into naked fascism.
 \end_layout
 
+\begin_layout Subsection*
+4 April 2025
+\end_layout
+
+\begin_layout Standard
+So I am reading 
+\begin_inset Quotes eld
+\end_inset
+
+On the Biology of a Large Language Model
+\begin_inset Quotes erd
+\end_inset
+
+ and some idea pops in my mind so lets me blurble on about it.
+ This catches my eye: 
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+One reason models are difficult to interpret is that their neurons are typically
+ polysemantic – that is, they perform many different functions that are
+ seemingly unrelated.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ So OK, ah ha! Well, we always knew this was the case, but saying it out
+ loud somehow makes it clear.
+ And this of course leads to the brilliant idea behind this paper (and don't
+ get me wrong, this is a brilliant paper and I think it's a break–through,
+ watershed moment.
+ I think.
+ Maybe I'm naive.
+ Maybe I haven't finished digesting it yet.
+ I might be wrong but so far it knocks my socks off.) 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+we build a replacement model ...
+ based on a cross-layer transcoder (CLT) architecture ...
+ which is trained to replace the model’s MLP neurons with features, sparsely
+ active “replacement neurons” that often represent interpretable concepts.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ Bingo.
+ That's the magic.
+\end_layout
+
+\begin_layout Standard
+So the hold–on wait–a–sec thought that made me stop and write this is ...
+ how do we sharpen this? How do we look at a polysemantic node, and determine
+ how to classify different neuron firings into, well, classes? Group together
+ similar firings into distinct buckets?
+\end_layout
+
+\begin_layout Standard
+Of course I would think this: classification and discrimination is what
+ I've been trying to do since forever with the 'learn' project.
+ I was trying to do it with counting, which suffers from being hard to paralleli
+ze.
+ And so OK...
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ Well, I probably could parallelize counting, I just never made the effort.
+ Should I? I fear the amount of time this would take.
+ Boiling the ocean, again.
+\end_layout
+
+\begin_layout Standard
+Also, I could fiddle with a number of different clustering algorithms.
+ This I already identified as an important step, from the experience of
+ doing genealogy on the familysearch.org site.
+ There is very much a need for a single–shot hierarchical comparison of
+ similarity: not just to identify possible genealogical relationships, but
+ also to compare similar file–system directories, something I need for my
+ file–system maintenance and de–corruption project.
+ Writing similarity and clustering algos by hand is ..
+ again time consuming.
+ I suppose I could try vibe coding but I dunno.
+ I digress.
+ I need to create a position paper on vibe coding.
+ But a different point here is that perhaps trans–layer encoders (CLT) are
+ suitable for clustering.
+ I don;t understand them, yet, but there's some promise:
+\end_layout
+
+\begin_layout Standard
+So the way I've done clustering before was with that voting and membership
+ club idea.
+ And it seems to work.
+ And once membership is granted, it is actually performed, on the spot.
+ It is granted.
+ Then the next update is performed.
+ What the CLT thing is putting into my head is that perhaps the changes
+ to the lowest layers never need to actually be made.
+ The clustering is done at a different layer.
+ Well, this was supposed to be the idea behind data frames.
+ In practice, incoming set lookup in frames is slowwww, which hurts graph
+ traversal performance.
+ Can this be fixed? Don't know, haven't sat down to look.
+\end_layout
+
+\begin_layout Standard
+So, can I instead implement the voting and membership thing as.
+ well, a compute network: some weight matrices, some sigma sharpening accept–rej
+ect filters? The algo I implemented already feels very weight–matrix–and–sigma–l
+ike, but I did not implement it like that; I implemented it as olde–fashioned
+ serial–execution code.
+ My bad.
+ Better late than never? Again, the question: should I go back and try again?
+ Do I have time for this, or has the clock run out?
+\end_layout
+
+\begin_layout Standard
+So, today's to–do list:
+\end_layout
+
+\begin_layout Itemize
+Write up the idea for hierarchical similarity comparison in greater detail.
+ I want to do this, I have a project I need it for, and talked to Adam Vandervor
+st and he would like to see the pseudocode.
+\end_layout
+
+\begin_layout Itemize
+I should try to do this write–up as if it were some transformer–y weight–matrix-
+y multi–layer–y thing.
+ Which it kind of is.
+ Ideally with sparse activation.
+ It would be a true challenge to attempt to do this.
+\end_layout
+
+\begin_layout Itemize
+I need to study CLT.
+\end_layout
+
+\begin_layout Itemize
+I need to develop a strategy for sparse, mono–semantic nodes.
+ I've already started walking that way, but never quite got there.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
