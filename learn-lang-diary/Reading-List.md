@@ -1260,4 +1260,23 @@ Interesting, but maybe less useful
   interpret, and then sprinkles in plenty of unexplained notation.
   Fun, inspirational, but also muddled and impractical. Dissapointing.
 
+  Post script: one of the failures of the paper above, and the paper
+  below, is to realize that the metric distance between individuals is
+  effectively an ultrametric. Yeah, the information–theory perspective is
+  nice, it provides a way to distinguish the individual from the
+  environment. But more profoundly, we want to measure the distance
+  between individuals, and this is where we discover the ultrametric
+  property. Individuals live in deep, deep wells of isolation. Yes, the
+  interact with the environment, but it is only when you start looking at
+  the interactions between individuals that you notice how isolated they
+  are. This seems to be fundamental, and is a property ignored with great
+  theoretical peril.
+
+* All intelligence is collective intelligence
+  Falandays J. Benjamin, Roope Oskari Kaaronen, Cody Moser, Wiktor
+  Rorot, Joshua Tan, Vishwanath Varma, Tevin Williams, Mason Youngblood
+  Journal of Multiscale Neuroscience Vol 2 no 1 169-191 (2023)
+  https://doi.org/10.56280/1564736810
+  https://researchportal.helsinki.fi/en/publications/all-intelligence-is-collective-intelligence
+
 ----------
