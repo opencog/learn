@@ -1242,4 +1242,22 @@ Interesting, but maybe less useful
   be talked about, to exclude the self-reference. This is effectively a
   loop-unroll: a stack of ever-larger cardinals.
 
+* The Information Theory of Individuality
+  David Krakauer, Nils Bertschinger, Eckehard Olbrich, Nihat Ay, Jessica C. Flack
+  https://arxiv.org/abs/1412.2447
+
+  Provides an information-theoretic framework for identifying "an
+  individual" in a dynamical system. Defines the "autonomy" as the
+  quantity MI(S_{n+1}; S_n) where MI(a;b) is the mutual information
+  between a and b, and S_n is the state of the indivitual at time n.
+  The total system is S+E, where E is the environment. By varying the
+  location of the boundary between S and E, and maximizing the MI,
+  the boundary between individual and environment can be found.
+
+  This is a sexy idea in principle. Computationally, it is intractable
+  for all but the simplest systems. Tragically, the paper uses terrible
+  notation, drops grouping parenthesis, making formulas painful to
+  interpret, and then sprinkles in plenty of unexplained notation.
+  Fun, inspirational, but also muddled and impractical. Dissapointing.
+
 ----------
