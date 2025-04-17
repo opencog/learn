@@ -8276,9 +8276,278 @@ The interesting part is what I am explaining.
  So I did that, and my code worked.
  Today, I know that you cannot do bubble sort without that temp variable.
  Its central, unavoidable.
- But I was 15 years old, then and I did not know that.
+ But I was 16 years old, then and I did not know that.
  And I did not think about bubble sort ever again, for a few decades, at
  least, and by then, temp variables were second nature.
+\end_layout
+
+\begin_layout Standard
+So my first FORTRAN program ever was bubble sort, written when I was 16
+ years old.
+ I debugged it in a day, on a teletype machine, written on punched paper
+ tape.
+ I think I still have that paper tape, somewhere.
+\end_layout
+
+\begin_layout Standard
+So, before college starts, its summertime, I know that I will have access
+ to a computer in college, so I get this book from the public library on
+ computer science.
+ And it explains linked lists.
+ And it explains how a polynomial can be encoded as a linked list.
+ And I'm hot shit, this is the thing.
+ So I write down pages and pages and pages of FORTRAN, implementing a computer
+ algebra system that could add and subtract polynomials, and multiply them
+ by a constant, and even multiply two polynomials together, and even divide
+ them, but I was confused about remainders.
+ Because I did not know about prime factors in this way.
+ I knew long division, but I also knew something was out of control, because
+ I could see that 1/(1+x) caused an infinite loop, and I did not understand
+ how to terminate that loop.
+ Mind you, I'm still sixteen, and this is all on paper.
+ I didn't get this onto punch–cards until many months later.
+ And friggin IBM JCL SSYSIN DD * was punching me in the kidneys, which took
+ time away from debugging.
+\end_layout
+
+\begin_layout Standard
+So, anyway, my second FORTRAN program was for polynomial algebra, implemented
+ with linked lists.
+ maybe 100 maybe 120 lines of code, a decent–sized stack of punch cards.
+ Not anywhere ner as the big fat piles of punch cards some people came in
+ with: I was envious.
+ They looked down on me as some weenie college freshman who didn't know
+ anything.
+ I was like 
+\begin_inset Quotes eld
+\end_inset
+
+someday I'll show you and you won't even know it.
+\begin_inset Quotes erd
+\end_inset
+
+ Except by then, I was bored of my linked–list polynomials, because it was
+ more or less bug–free, it was quite easy to punch up, and it ran flawlessly,
+ and I could not think of anything interesting to do with it, so I was loosing
+ interest.
+ And right around that time, I also learned or re–discovered or heard that
+ LISP was an even better way of doing this, and I kind of knew and understood
+ car and cdr and cadr, and even had three or five punch cards of LISP, and
+ that's when SYSIN DD * started punching down.
+ Because you don't just say 
+\begin_inset Quotes eld
+\end_inset
+
+PRINT
+\begin_inset Quotes erd
+\end_inset
+
+ in LISP, that is not how LISP works.
+ So where the fuck does the output go? Into thin air, somwhere, and the
+ help desk guy goes, will, its obvious, you have to arrange an output device.
+ Here's the JCL manual.
+ And the JCL manual is like 300 pages long, and maybe it mentions LISP exactly
+ once, and it does not explain how to make a LISP program generate output.
+ So I'm randomly trying shit, and none of of, absolutely none of it works.
+ And I complain, and this guy goes: 
+\begin_inset Quotes eld
+\end_inset
+
+hey, you know, time share
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+get rid of the card deck.
+ Here's a teletype, there's only three of them in the room, and they are
+ always taken nine to five, but come back after hours, and you can sit there
+ and do TOPS 20 instead of fucking around with card decks and waiting for
+ the batch scheduling system to run your job, and staring at the Hazeltine
+ terminal next to the window where you submit large jobs and pick up your
+ printer output.
+ Whatever.
+ I could go on like this and relay my entire freshman year at U of Chicago,
+ and the 3AM debugging sessions.
+ I swear, I got dumber as I go older.
+ I look back on those days, and I was ...
+ well, I was really pretty smart.
+ Not brilliant, but smart.
+ Looking back I wonder, its like I got stupid as I got older.
+ I dunno.
+ WTF.
+\end_layout
+
+\begin_layout Standard
+So anyway, in my dream, I am explaining, on the blackboard, this polynomial
+ linked–list computer algebra system.
+ And in my dream I'm saying 
+\begin_inset Quotes eld
+\end_inset
+
+See? This is how it works.
+ it's pretty clear.
+ Just do that.
+\begin_inset Quotes erd
+\end_inset
+
+ and the person I'm talking to is, 
+\begin_inset Quotes eld
+\end_inset
+
+oh yeah
+\begin_inset Quotes erd
+\end_inset
+
+, and the dream sort of fades by that point.
+ And I'm now half–awake.
+ and I lie there, and I'm thinking back to the SGI OpenInventor system,
+ a three–dee graphics system, built on top of IrisGL/OpenGL.
+ I'd been at IBM for three or four years by then, I was the OpenGL architect.
+ I understood how Inventor worked.
+ It was a kind of super-duper ultra polynomial linked–list system, kind–of–ish,
+ but 3D color graphics.
+ And I sit down to implement it, to recreate it from scratch, because SGI
+ does not want to license it, or maybe SGI does want to license it, but
+ they want too much money.
+ Or the IBM executives are not interested, or something, and I am too stupid
+ to talk to IBM executives.
+ So instead I stupidly decide I am going to code up, from scratch, on my
+ own, a work–alike of SGI's Inventor.
+ Because basically, its easy, its fun, no one cares, whatever.
+ And Marc Andressen is hanging out, and the world wide web doesn't exist
+ yet, and I'm telling Marc all about my 3D system, and one day he comes
+ back and says 
+\begin_inset Quotes eld
+\end_inset
+
+yeah, and it should run over the net
+\begin_inset Quotes erd
+\end_inset
+
+ and I'm like Marc, what the fuck that's stupid.
+ How the fuck can 3D run over the net? You're just saying random shit now.
+ And I throw him out of the office.
+ Next summer, six months later, he sens me a copy of NCSA Mosaic, version
+ 0.8 or 0.9 or something.
+ He had written it.
+ and I'm like 
+\begin_inset Quotes eld
+\end_inset
+
+whoa...
+ this is ..
+ interesting.
+\begin_inset Quotes erd
+\end_inset
+
+ The pulldown menu has telnet in it but that feels stupid.
+ It has FTP in it and that feels boring.
+ And Archie and Gopher and Veronica, and I have some vague idea of that
+ that is.
+ Something FTP–like, build on top of FTP, and yeah it works.
+ Cool.
+ I can surface distant FTP sites from a browser.
+ And the very last entry in the pull–down menu is HTTP.
+ And I'm like 
+\begin_inset Quotes eld
+\end_inset
+
+What's HTTP? Lets try that.
+\begin_inset Quotes erd
+\end_inset
+
+ and that's when it goes whoa, I did not expect that.
+ Because I'm staring at the worlds first web–sites ever.
+ Oh, I skipped a few parts of the story.
+ The summer before that, I am driving Marc home in my car, and we are talking
+ network protocols, for the web, and like AFS server is licensed and proprietary
+, and that sucks, and NFS is security–hole–of–the–week club, utterly unsafe
+ on the open internet.
+ Telnet is pointless, and FTP is a huge pile of cruft that is not needed,
+ he tells me.
+ Most of what is in FTP is just not needed.
+ So what should be do? And he says maybe he'll create a slimmed–down, cut–down
+ version of FTP.
+ And we don't know it then, but that is what HTTP ends up being.
+ I mean, other people create HTTP, but its right place, right time.
+ Whatever.
+ I knew Marc.
+ Got together with him many times before and since, but not for decades,
+ our paths have parted.
+ he is now associated with the evil Trump, somehow has become evil himself.
+ He was young and sweet and 18 years old when I knew him.
+\end_layout
+
+\begin_layout Standard
+So where was I? So SGI's OpenInventor is like this 3D version of a linked–list,
+ I'm thinking, half–asleep, waking from my dream.
+ And I'm thinking, whatever happened to that code I wrote? I called it 
+\begin_inset Quotes eld
+\end_inset
+
+3Doors
+\begin_inset Quotes erd
+\end_inset
+
+ – 3D Object–Oriented Rendering System.
+ A play on Windows.
+ Doors, for your X–Windows.
+ You didn't have to just look out the window any more, you could step out
+ the door.
+ Andrew Taylor wanted to give it a different name.
+ I forget what.
+ And I'm thinking, half–asleep, where did that code go? Its probably on
+ my website somewhere.
+ I mean, you can probably find it.
+ Good chance that Internet Archive scraped it and is preserving a copy.
+\end_layout
+
+\begin_layout Standard
+And I was thinking ...
+ I've shat out all these little blibs and blobs of code.
+ They're now useless, pointless.
+ obsolete, of course.
+ and I've left behind these little piles of turds in my past, and that is
+ when it comes to me: as an agent, as a living being, I am a lot like one
+ of those sea–bed tube–worms, eating things and shitting out these little
+ intellectual turds.
+ The turds are in the past: not in the here–and–now, but a part of the historica
+l past, frozen, unchangeable records, like a fossils record from some pre–Cambri
+an era.
+\end_layout
+
+\begin_layout Standard
+And I'm thinking, well, isn't all intellectual product like this? Those
+ pieces of software I wrote: the polynomial algebra system, that never connected
+ with anything.
+ It sits there, a disconnected lump in the fossil record of the past.
+ Other things connect: when I talk to people, they hear what I say, and
+ they do something with what it is that they have heard.
+ So my spoken words, uttered to living humans, these connect in a way that
+ my defunct software does not.
+ And this is the web of life, isn't it? We are all just chattering agents,
+ shitting out little blebs of information–containing turds into the historical
+ past.
+ Some of these informational extrusions find a receiving end, like another
+ human, who hears them, or even a dog, who hears me say 
+\begin_inset Quotes eld
+\end_inset
+
+Go fetch! Sit!
+\begin_inset Quotes erd
+\end_inset
+
+ those words, that informational extrusion, does connect, and it connects
+ more strongly that my obsolete 3Doors software ever could.
+ But anyway, that is what humans are: lowly worms shitting out pieces of
+ information.
+ Not even big pieces: just little pieces, of variable size.
+ Some smaller some larger, none particularly impressive.
+ And then I wake, and stumble downstairs to find coffee.
+ And, two coffee cups in, I decide to write this diary entry.
 \end_layout
 
 \begin_layout Section*
