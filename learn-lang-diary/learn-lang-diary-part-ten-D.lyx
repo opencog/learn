@@ -9056,6 +9056,250 @@ So, now the mathematical model is that of a pixel array of sigmoids, which
  Lets take these last few sentences and write some algebra for them.
 \end_layout
 
+\begin_layout Standard
+So: Let there 
+\begin_inset Formula $N$
+\end_inset
+
+ pixels.
+ Each pixel is labelled as 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ standing for 
+\begin_inset Quotes eld
+\end_inset
+
+detector at location 
+\begin_inset Formula $i$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Each detector accepts as input a single real number, the instantaneous
+ power 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ This power is a function of time, 
+\begin_inset Formula $p=p\left(t\right)$
+\end_inset
+
+ and is seems unavoidable to assume that each detector integrates over time,
+ so that the energy absorbed over a time interval 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ is given by 
+\begin_inset Formula $E\left(\Delta t\right)=\int_{0}^{\Delta t}p\left(t\right)dt$
+\end_inset
+
+.
+ The power is position–dependent, so we may as well write 
+\begin_inset Formula $p_{i}=p_{i}\left(t\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $E_{i}=E_{i}\left(\Delta t\right)$
+\end_inset
+
+.
+ The detector response function is then
+\begin_inset Formula 
+\[
+d_{i}\left(E_{i}\right)=\begin{cases}
+1 & \mbox{if }E_{i}\ge h\nu\\
+0 & \mbox{if }E_{i}<h\nu
+\end{cases}
+\]
+
+\end_inset
+
+The detector then 
+\begin_inset Quotes eld
+\end_inset
+
+fires
+\begin_inset Quotes erd
+\end_inset
+
+, and resets back to the zero state.
+ (This concept of firing can be firmed up, but I'm lazy for now; you get
+ the idea, I think.)
+\end_layout
+
+\begin_layout Standard
+This detector array is then illuminated with some non–uniform wave, carrying
+ a total power of 
+\begin_inset Formula 
+\[
+p_{tot}=\sum_{i=1}^{N}p_{i}
+\]
+
+\end_inset
+
+Assume that 
+\begin_inset Formula $p_{tot}$
+\end_inset
+
+ does NOT vary with time: it is a constant.
+ That is, perhaps there is a time variation in the individual power 
+\begin_inset Formula $p_{i}=p_{i}\left(t\right)$
+\end_inset
+
+ at a given detector 
+\begin_inset Formula $i$
+\end_inset
+
+ but this variation cancels out across all detectors.
+ (Stupid fun and games: set 
+\begin_inset Formula $p_{tot}=1$
+\end_inset
+
+.
+ This reminds you of what?) Anyway, the total power over a time interval
+ 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+, the total illumination is
+\begin_inset Formula 
+\[
+E_{tot}=p_{tot}\Delta t
+\]
+
+\end_inset
+
+which increases linearly over time.
+\end_layout
+
+\begin_layout Standard
+So, the above lays out the notation.
+ The mathematical model that we wish to discover is one where exactly one
+ detector 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ fires whenever 
+\begin_inset Formula $h\nu\le E_{tot}<2h\nu$
+\end_inset
+
+.
+ Perhaps we want to loosen the time constraint, and allow for the case where
+ 
+\begin_inset Formula $k$
+\end_inset
+
+ detectors have fired when 
+\begin_inset Formula $kh\nu\le E_{tot}<kh\nu+\varepsilon$
+\end_inset
+
+ for some 
+\begin_inset Quotes eld
+\end_inset
+
+small
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+.
+ If, in addition, the detectors have an efficiency less than 100%, we want
+ to derate proportionately.
+ This is meant to be statistical, so perhaps the detector rate of firing
+ needs to be a Poisson process, so that only the average is maintained,
+ while uncertainty over small time periods is allowed.
+\end_layout
+
+\begin_layout Standard
+And this word 
+\begin_inset Quotes eld
+\end_inset
+
+statistical
+\begin_inset Quotes erd
+\end_inset
+
+ creates huge issues.
+ The problem is that, once we use the word 
+\begin_inset Quotes eld
+\end_inset
+
+statistical
+\begin_inset Quotes erd
+\end_inset
+
+, we enter the conventional regime where anything goes, as long as averages
+ are conserved.
+ There are an infinite number of purely deterministic power distributions
+ 
+\begin_inset Formula $p_{i}\left(t\right)$
+\end_inset
+
+ that given the desired result of 
+\begin_inset Quotes eld
+\end_inset
+
+one wave–function collapse per 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This entirely abandons the original idea of associating a photon with some
+ topological index.
+\end_layout
+
+\begin_layout Standard
+I see two possible directions for cures.
+ One is to reformulate the above to incorporate a Bell measurement.
+\end_layout
+
+\begin_layout Standard
+Another possible cure is to eliminate local time.
+ For this case, set 
+\begin_inset Formula $p_{i}\left(t\right)=const.$
+\end_inset
+
+ so that the conventional idea of constant illumination is retained.
+ This is problematic, though: the illuminating source is presumably dribbling
+ out photons one at a time, so that in fact it is 
+\begin_inset Quotes eld
+\end_inset
+
+dark
+\begin_inset Quotes erd
+\end_inset
+
+ most of the time, and then the source generates a photon, which does it's
+ welcher–weg thing, and then some detector pops off.
+ Another wild idea is to dismiss the notion of linearly–advancing gallilean
+ local time, and leave the progress of time ambiguous at each detector.
+ This is a reuptake of the here–and–now framework, where we don't really
+ know about how the detectors 
+\begin_inset Formula $d_{i}$
+\end_inset
+
+ fired, until much later, when we accumulate the classical bits issued by
+ each detector back to a single location, where we can verify that, indeed,
+ only one detector fired per acceptable interval 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+.
+ What a fucking mess.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
