@@ -8892,7 +8892,168 @@ Whatever.
  It's getting late, and if I don't go hop on my bicycle now, it will get
  dark before I'm done.
  Later.
+\end_layout
+
+\begin_layout Subsection*
+20 April 2025
+\end_layout
+
+\begin_layout Standard
+Dream sequences, continued.
+ While falling asleep, I thought about wave function collapse, again.
+ I'll keep it short.
+ A reasonable model seems to an array of single–pixel antennas, each sufficientl
+y sensitive to detect a single photon with some reasonable efficiency.
+ This array is illuminated with a weak source, having some spatial pattern
+ (two–slit, whatever, doesn't matter.) We know from basic QM that only a
+ single pixel can ever trigger: the wide–field illumination 
+\begin_inset Quotes eld
+\end_inset
+
+collapses
+\begin_inset Quotes erd
+\end_inset
+
+ down to a single pixel.
+ The hypothesis is that in order for this to happen, the photon must be
+ conceived of as a topological soliton of some kind, so as to obtain the
+ desired behavior of wave–function collapse.
+ That is, when the pixel array is illuminated, the brightness is such that
+ one unit of 
+\begin_inset Formula $E=h\nu$
+\end_inset
+
+ impinges on it per observation time.
+ We want to be able to provide a mathematical model for this, that prevents
+ the observation of 2,3,...
+ photons of energy 
+\begin_inset Formula $h\nu/2$
+\end_inset
+
+ or 
+\begin_inset Formula $h\nu/3$
+\end_inset
+
+ ...
+\end_layout
+
+\begin_layout Standard
+How can this interaction be turned into a plausible mathematical setting?
+ I'm thinking that modeling each pixel as a dipole antenna is the place
+ to start, and to treat the photon as a standard crossed electric–magnetic
+ wave maybe I guess with linear polarization.
+ It's unclear if polarization matters.
+ The goal is to look at this mathematical structure, and look for something
+ that has the characteristics topological soliton in it.
+ Seems like a good idea, right?
+\end_layout
+
+\begin_layout Standard
+So, now that I am awake (well, even as I was sleeping) there seems to be
+ a bit of an issue: what is the sensitivity of each dipole? More correctly,
+ what is the frequency response for each dipole? If the frequency response
+ goes below 
+\begin_inset Formula $\nu/2$
+\end_inset
+
+ then I see no reason why a single 
+\begin_inset Formula $E=h\nu$
+\end_inset
+
+ photon might not trigger two antennas.
+ Shit like this happens all the time: high–energy events make lots and lots
+ of detectors light up, with a large variety of physical mechanisms for
+ doing so.
+ So the ability to detect single photons also seems to require that each
+ antenna be insensitive to frequencies much below the photon frequency.
+ This provides the topological constraint.
+ There has to be a threshold: an energy threshold, a mass–gap.
+ This is exactly what the photo–electric effect demonstrates.
+ The band–gap in the metal provides the barrier that prevents more than
+ one electron being ejected by a single photon.
+\end_layout
+
+\begin_layout Standard
+What is the mathematical articulation of this? Treat this as a problem in
+ homotopy.
+ At one end, we have an E&M field describing radiation in free space.
+ What is the homotopic map that takes this field, and maps it to a single
+ pixel detector? Presumably, this map is not just homotopic, but diffeo,
+ as well.
+ Treating each pixel as a dipole antenna seems reasonable.
+ It gives something to work with.
+ The dipole then converts the EM field to an oscillation on a pair of wires:
+ it removes confusion about polarization, it eliminates the wave equation,
+ and no long requires thinking about the EM field: instead, just an oscillating
+ scalar potential on a pair of wires.
+ At the end of the wires, one can place a conventional hi–pass filter.
+ This eliminates the need to think about other quantum effects.
+ That is, in 
+\begin_inset Quotes eld
+\end_inset
+
+real life
+\begin_inset Quotes erd
+\end_inset
+
+, a single–pixel detector has to be either (a) some kind of semi–conductor
+ with some band–gap, or (b) some kind of silver–halide on some photographic
+ film, i.e.
+ a many–body system in some thermal bath, or (c) some photomultiplier tube,
+ again a many–body system with some band–gap in the metal, or (d) some rhodopsin
+ or chlorophyll molecule, potentially getting into superposition with the
+ photon.
+ All of these are distractors and complexifiers of the problem.
+ All of them introduce new conceptual elements that are hard to control
+ for.
+ By contrast, the mathematical description of a transmission line attached
+ to a high–pass filter is unambiguous.
+ Engineering texts have the formula for this.
+\end_layout
+
+\begin_layout Standard
+In this mathematical model, we can then dispense the EM field entirely,
+ get rid of the dipole antennas, get rid of the transmission line from the
+ dipoles to the filter.
+ The mathematical model is then a pixel array of high–pass filters, illuminated
+ by a scalar potential field on the input to the filter.
+ To further simplify, I suppose we can even ground one side of the filter,
+ attach it to a common, so that we really do have a single–wire input.
+ So that's the model.
+\end_layout
+
+\begin_layout Standard
+Now, this array of filters is illuminated by a scale field carrying energy
  
+\begin_inset Formula $E=h\nu$
+\end_inset
+
+ and the filter frequency cutoff is above 
+\begin_inset Formula $\nu/2$
+\end_inset
+
+ (of course).
+ In conventional passive electronics, nothing depends on intensity or power
+ (i.e.
+ has a linear dependence).
+ Only amplifiers, tube circuits, transistor circuits, diodes have a non–linear
+ response.
+ So I guess our filter has to be attached to some non–linear element, so
+ that it triggers only when there is enough energy dumped into that element?
+ Again, to keep things simple, I guess we want to just make up some very
+ simple non–linear element that outputs a zero or a one, generating zero,
+ of below an energy threshold, else generating a one above that threshold.
+ So, a sigmoid function of some kind.
+\end_layout
+
+\begin_layout Standard
+So, now the mathematical model is that of a pixel array of sigmoids, which
+ trigger only if they absorb an amount of energy to push them above a threshold.
+ To recap: this array is illuminated by a very weak illumination, say, thousands
+ or millions of times weaker than the detection threshold.
+ From this wen want to obtain a mathematical description such that energy
+ is conserved.
+ Lets take these last few sentences and write some algebra for them.
 \end_layout
 
 \begin_layout Section*
