@@ -1,8 +1,6 @@
 
 Things to read:
 
-https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.014410
-
 https://pymdp-rtd.readthedocs.io/en/latest/index.html
 https://arxiv.org/abs/2412.14741
 https://osf.io/preprints/psyarxiv/daf5n_v2
@@ -1301,12 +1299,28 @@ Interesting, but maybe less useful
   Provides a mathematical formalization of hierarchical, delegative
   learning (how smaller parts with competencies assemble into larger
   parts.) Or something like that. It is marred by a variety of issues
-  with terminology and defintiions.
+  with terminology and definitions.
 
   Version 4 contains multiple serious typoes that make it hard to
   understand. Version 3 does not have these typos. It also uses a
   a terminology that is at odds with that of general topology.
   e.g. filters are called "extensions" and the cardinality of a filter
   is called its "weakness".
+
+  In the end: I don't get it. It is over-burdened with formal
+  definitions that seem to parallel conventional topics in general
+  topology, but it does not appear to provide any meaningful results.
+  A lack of specific examples futrhter clouds the utility of the
+  abstractions. I don't know what to do with this.
+
+* Complex harmonics reveal low-dimensional manifolds of critical brain
+  dynamics.
+  Gustavo Deco1, Yonatan Sanz Perl1, and Morten L. Kringelbach
+  https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.014410
+
+  Abstract says it is about a framework called CHARM ("Complex Harmonics
+  Decompostion"), applied to 1000 brain scans (a "neuroimaging dataset")
+  Claims brain operates at a critical point, and that long-range
+  connections help control/guide the avalanches that occur there.
 
 ----------
