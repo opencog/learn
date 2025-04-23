@@ -1,6 +1,15 @@
 
 Things to read:
 
+https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.014410
+
+https://pymdp-rtd.readthedocs.io/en/latest/index.html
+https://arxiv.org/abs/2412.14741
+https://osf.io/preprints/psyarxiv/daf5n_v2
+https://matcy.medium.com/achieving-superintelligence-with-active-inference-a125a64d849e
+https://hal.sorbonne-universite.fr/hal-04755289/document
+https://arxiv.org/pdf/2207.06970
+
 * On the Biology of a Large Language Model
   https://transformer-circuits.pub/2025/attribution-graphs/biology.html
   Most awesome thing in this list, so I am putting it first.
@@ -1278,5 +1287,22 @@ Interesting, but maybe less useful
   Journal of Multiscale Neuroscience Vol 2 no 1 169-191 (2023)
   https://doi.org/10.56280/1564736810
   https://researchportal.helsinki.fi/en/publications/all-intelligence-is-collective-intelligence
+
+  Lovely paper. It extensively articulates the claim that the title makes,
+  at all levels of structure, from low-level biochemistry, through animals
+  and brains, up through social structures. Good, fun reading. I comment
+  on it in my diary; I forget what the comments were. Maybe quibbles or
+  something. Fine paper, I agreee fully with the premise.
+
+* Are Biological Systems More Intelligent Than Artificial Intelligence?
+  Michael Timothy Bennett
+  https://arxiv.org/abs/2405.02325
+
+  Provides a mathematical formalization of ... (I'm not sure what to
+  call it.)
+
+  Version 4 contains several serious typoes that make it hard to
+  understand. Version 3 does not have these typos.
+
 
 ----------
