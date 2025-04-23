@@ -1298,11 +1298,15 @@ Interesting, but maybe less useful
   Michael Timothy Bennett
   https://arxiv.org/abs/2405.02325
 
-  Provides a mathematical formalization of ... (I'm not sure what to
-  call it.)
+  Provides a mathematical formalization of hierarchical, delegative
+  learning (how smaller parts with competencies assemble into larger
+  parts.) Or something like that. It is marred by a variety of issues
+  with terminology and defintiions.
 
-  Version 4 contains several serious typoes that make it hard to
-  understand. Version 3 does not have these typos.
-
+  Version 4 contains multiple serious typoes that make it hard to
+  understand. Version 3 does not have these typos. It also uses a
+  a terminology that is at odds with that of general topology.
+  e.g. filters are called "extensions" and the cardinality of a filter
+  is called its "weakness".
 
 ----------
