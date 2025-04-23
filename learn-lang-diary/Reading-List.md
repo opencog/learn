@@ -1315,7 +1315,7 @@ Interesting, but maybe less useful
 
 * Complex harmonics reveal low-dimensional manifolds of critical brain
   dynamics.
-  Gustavo Deco1, Yonatan Sanz Perl1, and Morten L. Kringelbach
+  Gustavo Deco, Yonatan Sanz Perl, and Morten L. Kringelbach
   https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.014410
 
   Abstract says it is about a framework called CHARM ("Complex Harmonics
