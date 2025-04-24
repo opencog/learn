@@ -9430,7 +9430,7 @@ Reading this article:
 \begin_inset Quotes eld
 \end_inset
 
-Complex harmonics reveal low-dimensional manifolds of critical brain dynamics.
+Complex harmonics reveal low–dimensional manifolds of critical brain dynamics.
 \begin_inset Quotes erd
 \end_inset
 
@@ -9451,7 +9451,7 @@ Anyway, this sentence jumps out at me:
 
 T
 \emph on
-his suggests that the long-range interactions are less relevant in deep
+his suggests that the long–range interactions are less relevant in deep
  sleep, which is thus likely to exhibit less critical dynamics than wakefulness
 \emph default
 
@@ -9498,6 +9498,229 @@ this is what we are doing now, get with the program
 \end_inset
 
 ?
+\end_layout
+
+\begin_layout Standard
+Here's my more formal writeup:
+\end_layout
+
+\begin_layout Standard
+Abstract: A framework called CHARM ("Complex Harmonics Decompostion"), applied
+ to 1000 fMRI scans.
+ Describes role of long-distance neural connections in modulating critical
+ avalanches.
+\end_layout
+
+\begin_layout Standard
+The meta-setting of the paper, as best as I can understand it: 
+\end_layout
+
+\begin_layout Itemize
+A characteristic of self-organized systems near criticality is that they
+ exhibit avalanches (in the sense of sand-piles).
+ 
+\end_layout
+
+\begin_layout Itemize
+The human brain (brains in general) operate as self-organized systems near
+ criticality.
+ I think this is called "the Hopf Model" (not sure).
+ 
+\end_layout
+
+\begin_layout Itemize
+Thinking (and fast decision making) is best understood as sequences of avalanche
+s.
+ 
+\end_layout
+
+\begin_layout Itemize
+Long-range neurons modulate the avalanches.
+ 
+\end_layout
+
+\begin_layout Itemize
+This modulation happens only during waking hours, and not during sleep.
+ 
+\end_layout
+
+\begin_layout Itemize
+The CHARM technique is a new and better tool for exposing all this.
+ 
+\end_layout
+
+\begin_layout Standard
+My personal inspiration, having little to do with the paper itself: 
+\end_layout
+
+\begin_layout Itemize
+When I introspect, and think about things, I often feel like I have a menu
+ of choices in front of me: what to say next, what to do next, what to write
+ next.
+ 
+\end_layout
+
+\begin_layout Itemize
+The hardest part of writing/talking is to pick through that menu-choice.
+ This is a characteristic symptom of ADHD, autism.
+ (I am not ADHD/autistic.
+ I can empathize with the "overwhelming flood of stimulous" that is another
+ common description of ADHD/autism.
+ And likewise the concept of "stimming".) 
+\end_layout
+
+\begin_layout Itemize
+I assume that the avalanches seen in the fMRI data are associated with these
+ rapid, short-time-scale choices.
+ That is, a few times a second, I decide "do this and do not do that", and
+ that this decision is associated with an avalanche.
+ 
+\end_layout
+
+\begin_layout Itemize
+The role of the long-range neurons is to consolidate this decision over
+ the whole brain.
+ Basically, to announce far and wide "this is what we're doing now, get
+ with the program".
+ 
+\end_layout
+
+\begin_layout Itemize
+Avalanches amplify tiny, microscopic imbalances into large changes.
+ 
+\end_layout
+
+\begin_layout Itemize
+This is part of the mechanism in which "free will" expresses itself.
+\end_layout
+
+\begin_layout Standard
+I'm now reading 
+\begin_inset Quotes eld
+\end_inset
+
+The Hopf whole-brain model and its linear approximation
+\begin_inset Quotes erd
+\end_inset
+
+ Adrián Ponce-Alvarez Gustavo Deco, https://pmc.ncbi.nlm.nih.gov/articles/PMC1083108
+3/
+\end_layout
+
+\begin_layout Standard
+Distracted.
+ Reading https://en.wikipedia.org/wiki/Hopf_bifurcation but its fucked up.
+ The section labelled 
+\begin_inset Quotes eld
+\end_inset
+
+intuition
+\begin_inset Quotes erd
+\end_inset
+
+ is not intuitive.
+ Can we fix it?
+\begin_inset Formula 
+\[
+{\displaystyle \frac{dz}{dt}=z\left(\left(\lambda+i\right)+b|z|^{2}\right)}
+\]
+
+\end_inset
+
+Let 
+\begin_inset Formula $z=re^{i\theta}$
+\end_inset
+
+ so 
+\begin_inset Formula $\dot{z}=\dot{r}e^{i\theta}+i\dot{\theta}re^{i\theta}$
+\end_inset
+
+ and 
+\begin_inset Formula $b=\alpha+i\beta$
+\end_inset
+
+ so
+\begin_inset Formula 
+\begin{align*}
+\dot{r}e^{i\theta}+i\dot{\theta}re^{i\theta} & =re^{i\theta}\left(\lambda+i\right)+\left(\alpha+i\beta\right)r^{3}e^{i\theta}\\
+\dot{r}+i\dot{\theta}r & =r\left(\lambda+i\right)+\left(\alpha+i\beta\right)r^{3}\\
+\frac{\dot{r}}{r}+i\dot{\theta} & =\lambda+i+\left(\alpha+i\beta\right)r^{2}\\
+\dot{r} & =r\left(\lambda+i-i\dot{\theta}+\left(\alpha+i\beta\right)r^{2}\right)
+\end{align*}
+
+\end_inset
+
+Since 
+\begin_inset Formula $r$
+\end_inset
+
+ is real, we must have that the imaginary part of the last eqn vanishes,
+ so that
+\begin_inset Formula 
+\[
+\dot{\theta}=1+\beta r^{2}
+\]
+
+\end_inset
+
+and the real parts give
+\begin_inset Formula 
+\[
+\dot{r}=r\left(\lambda+\alpha r^{2}\right)
+\]
+
+\end_inset
+
+Rescale time so that 
+\begin_inset Formula $\alpha t=\tau$
+\end_inset
+
+ so that 
+\begin_inset Formula 
+\[
+\dot{r}=\frac{dr}{dt}=\alpha\frac{dr}{d\tau}
+\]
+
+\end_inset
+
+Define 
+\begin_inset Formula $\omega=1/\alpha$
+\end_inset
+
+ and 
+\begin_inset Formula $\mu=\lambda\omega$
+\end_inset
+
+ and plug through to get
+\begin_inset Formula 
+\[
+\frac{dr}{d\tau}=r\left(\mu+r^{2}\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\frac{d\theta}{d\tau}=\omega\left(1+\beta r^{2}\right)
+\]
+
+\end_inset
+
+and the wikipedia form is recovered by setting 
+\begin_inset Formula $\beta=0$
+\end_inset
+
+.
+ I'm not sure why anyone thinks this is 
+\begin_inset Quotes eld
+\end_inset
+
+intuitive
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
