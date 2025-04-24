@@ -1318,9 +1318,67 @@ Interesting, but maybe less useful
   Gustavo Deco, Yonatan Sanz Perl, and Morten L. Kringelbach
   https://journals.aps.org/pre/abstract/10.1103/PhysRevE.111.014410
 
-  Abstract says it is about a framework called CHARM ("Complex Harmonics
-  Decompostion"), applied to 1000 brain scans (a "neuroimaging dataset")
-  Claims brain operates at a critical point, and that long-range
-  connections help control/guide the avalanches that occur there.
+  Abstract: A framework called CHARM ("Complex Harmonics Decompostion"),
+  applied to 1000 fMRI scans. Describes role of long-distance neural
+  connections in modulating critical avalanches.
+
+  The meta-setting of the paper, as best as I can understand it:
+  * A characteristic of self-organized systems near criticality is
+    that they exhibit avalanches (in the sense of sand-piles).
+  * The human brain (brains in general) operate as self-organized
+    systems near criticality. I think this is called "the Hopf Model"
+    (not sure).
+  * Thinking (and fast decision making) is best understood as sequences
+    of avalanches.
+  * Long-range neurons modulate the avalanches.
+  * This modulation happens only during waking hours, and not during
+    sleep.
+  * The CHARM technique is a new and better tool for exposing all this.
+
+  My personal inspiration, having little to do with the paper itself:
+  * When I introspect, and think about things, I often feel like I have
+    a menu of choices in front of me: what to say next, what to do next,
+    what to write next.
+  * The hardest part of writing/talking is to pick through that
+    menu-choice. This is a characteristic symptom of ADHD, autism.
+    (I am not ADHD/autistic. I can empathize with the "overwhelming
+    flood of stimulous" that is another common description of
+    ADHD/autism. And likewise the concept of "stimming".)
+  * I assume that the avalanches seen in the fMRI data are associated
+    with these rapid, short-time-scale choices. That is, a few times a
+    second, I decide "do this and do not do that", and that this
+    decision is associated with an avalanche.
+  * The role of the long-range neurons is to consolidate this decision
+    over the whole brain. Basically, to announce far and wide "this is
+    what we're doing now, get with the program".
+  * Avalanches amplify tiny, microscopic imbalances into large changes.
+  * This is part of the mechanism in which "free will" expresses itself.
+  * You haven't encountered this yet, but I've been nursing along a
+    large, complicated messy collection of hypothesis anchoring
+    free will to physical principles. This is perhaps too far off-topic,
+    so I won't elaborate, for now.
+
+  What the paper actually says:
+  1) Record many signals M for many data points N
+  2) Observe that these are correlated in such a way that they seem to
+     live on a manifold of dimension k<<M (Obtain location that manifold
+     using a certain kind of heat-equation technique. Seems to be a
+     fancy least-squares technique, i.e. minimizing an energy functional.)
+
+     How do I interpret this? Neuron firing may be chaotic, but when
+     averaged over fMRI-sized cells, the correlations across cells seem
+     to be such that ... they lie on a low-dimensional manifold. If this
+     manifold also has some "thickness" in the normal directions, this
+     is not discussed/given.
+
+  3) Modify the maifold reconstruction technique to use Schrodinger eqn
+     instead of the heat eqn. This is called "CHARM". I do not have any
+     insight into what is going on here, or what it means.
+
+  4) The experimental result is CHARM fits the data best.
+
+  5) "Therefore nonlocal effects in the brain are important". But there
+     is only hand-waving as to what complex Schrodinger dynamics has to do
+     with non-locality.
 
 ----------
