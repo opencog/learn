@@ -9622,7 +9622,7 @@ intuition
  Can we fix it?
 \begin_inset Formula 
 \[
-{\displaystyle \frac{dz}{dt}=z\left(\left(\lambda+i\right)+b|z|^{2}\right)}
+\frac{dz}{dt}=z\left(\left(\lambda+i\right)+b|z|^{2}\right)
 \]
 
 \end_inset
@@ -9721,6 +9721,201 @@ intuitive
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+Gahh.
+ Look at https://en.wikipedia.org/wiki/Stuart%E2%80%93Landau_equation and
+ from what I can tell, it is identical to the Hopf bifurcation, up to rescaling.
+ More, it gives an explicit solution.
+ Lets check it out: 
+\begin_inset Formula 
+\begin{align*}
+\dot{r} & =r\left(\lambda+\alpha r^{2}\right)\\
+\frac{\dot{r}}{r^{3}} & =\frac{\lambda}{r^{2}}+\alpha\\
+ & =\frac{d}{dt}\left(\frac{-1}{2r^{2}}\right)
+\end{align*}
+
+\end_inset
+
+which is linear in 
+\begin_inset Formula $\zeta=r^{-2}$
+\end_inset
+
+ so
+\begin_inset Formula 
+\begin{align*}
+\dot{\zeta} & =-2\left(\lambda\zeta+\alpha\right)\\
+ & =-2\lambda\left(\zeta+\frac{\alpha}{\lambda}\right)
+\end{align*}
+
+\end_inset
+
+Absorbing the const: 
+\begin_inset Formula $\eta=\zeta+\alpha/\lambda$
+\end_inset
+
+ gives 
+\begin_inset Formula $\dot{\eta}=-2\lambda\eta$
+\end_inset
+
+ which is solved by 
+\begin_inset Formula $\eta=Ce^{-2\lambda t}$
+\end_inset
+
+.
+ Plugging through, 
+\begin_inset Formula 
+\begin{align*}
+\frac{1}{r^{2}} & =Ce^{-2\lambda t}-\frac{\alpha}{\lambda}\\
+r\left(t\right) & =\sqrt{\frac{1}{Ce^{-2\lambda t}-\alpha/\lambda}}\\
+r_{0}=r\left(0\right) & =\sqrt{\frac{1}{C-\alpha/\lambda}}\\
+C= & \frac{1}{r_{0}^{2}}+\frac{\alpha}{\lambda}
+\end{align*}
+
+\end_inset
+
+So (yuck!?)
+\begin_inset Formula 
+\[
+r\left(t\right)=r_{0}\sqrt{\frac{\lambda}{\left(\lambda+\alpha r_{0}^{2}\right)e^{-2\lambda t}-\alpha r_{0}^{2}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, we want the Jacobian matrix.
+ It can be read off directly from the two eqns 
+\begin_inset Formula $\dot{\theta}=1+\beta r^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\dot{r}=r\left(\lambda+\alpha r^{2}\right)$
+\end_inset
+
+.
+ The Jacobian matrix is
+\begin_inset Formula 
+\[
+J=\left[\begin{array}{cc}
+\frac{\partial\dot{r}}{\partial r} & \frac{\partial\dot{r}}{\partial\theta}\\
+\frac{\partial\dot{\theta}}{\partial r} & \frac{\partial\dot{\theta}}{\partial\theta}
+\end{array}\right]=\left[\begin{array}{cc}
+\lambda+3\alpha r^{2} & 0\\
+2\beta r & 0
+\end{array}\right]
+\]
+
+\end_inset
+
+The characteristic polynomial in 
+\begin_inset Formula $w$
+\end_inset
+
+ is
+\begin_inset Formula 
+\[
+P\left(w\right)=\det\left[J-wI\right]=-w\left(\lambda+3\alpha r^{2}-w\right)
+\]
+
+\end_inset
+
+There are two eigenvalues: 
+\begin_inset Formula $w=0$
+\end_inset
+
+ and 
+\begin_inset Formula $w=\lambda+3\alpha r^{2}$
+\end_inset
+
+.
+ Yuck.
+ This is not the intent.
+ We wanted a pair of pure imaginary eigenvalues and we blew it.
+\end_layout
+
+\begin_layout Standard
+Does this work in cartesian coords? Let try.
+ Set 
+\begin_inset Formula $z=x+iy$
+\end_inset
+
+ and start with
+\begin_inset Formula 
+\begin{align*}
+\frac{dz}{dt} & =z\left(\left(\lambda+i\right)+b|z|^{2}\right)\\
+ & =\left(x+iy\right)\left(\lambda+i\right)+b\left(x+iy\right)\left(x^{2}+y^{2}\right)
+\end{align*}
+
+\end_inset
+
+The split into real+imag parts is
+\begin_inset Formula 
+\begin{align*}
+\dot{x} & =\lambda x-y+\left(\alpha x-\beta y\right)\left(x^{2}+y^{2}\right)\\
+\dot{y} & =x+\lambda y+\left(\beta x+\alpha y\right)\left(x^{2}+y^{2}\right)
+\end{align*}
+
+\end_inset
+
+The Jacobian is
+\begin_inset Formula 
+\[
+J=\left[\begin{array}{cc}
+\frac{\partial\dot{x}}{\partial x} & \frac{\partial\dot{x}}{\partial y}\\
+\frac{\partial\dot{y}}{\partial x} & \frac{\partial\dot{y}}{\partial y}
+\end{array}\right]=\left[\begin{array}{cc}
+\lambda+3\alpha x^{2}-2\beta xy+\alpha y^{2}\quad & -1-3\beta y^{2}+2\alpha xy-\beta x^{2}\\
+1+3\beta x^{2}+2\alpha xy+\beta y^{2}\quad & \lambda+3\alpha y^{2}+2\beta xy+\alpha x^{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+Quite the mess.
+ Linearize by setting 
+\begin_inset Formula $x=y=0$
+\end_inset
+
+ to get
+\begin_inset Formula 
+\[
+J=\left[\begin{array}{cc}
+\lambda & -1\\
+1 & \lambda
+\end{array}\right]
+\]
+
+\end_inset
+
+Then 
+\begin_inset Formula 
+\[
+P\left(w\right)=\det\left[J-wI\right]=\left(\lambda-w\right)^{2}+1
+\]
+
+\end_inset
+
+which has solution 
+\begin_inset Formula $P\left(w\right)=0$
+\end_inset
+
+ given by
+\begin_inset Formula 
+\[
+w=\lambda\pm i
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+I copied all of this to the Wikipedia article.
 \end_layout
 
 \begin_layout Section*
