@@ -1,21 +1,6 @@
 
 Things to read:
 
-* Counterexample Guided Inductive Synthesis Modulo Theories
-  Alessandro Abate, Cristina David, Pascal Kesseli, Daniel Kroening1,
-  and Elizabeth Polgreen
-  Abstract: "Program synthesis is the mechanised construction of software.
-  One of the main diﬃculties is the eﬃcient exploration of the very large
-  solution space, ... We propose a new approach to program synthesis that
-  combines the strengths of a counterexample-guided inductive synthesizer
-  with those of a theory solver, ..."
-
-  Of related interest:
-  The Sketching Approach to Program Synthesis
-  Armando Solar-Lezama
-  https://people.csail.mit.edu/asolar/papers/Solar-Lezama09.pdf
-  Describes a hands-on experiment of actually doing guided software dev.
-
 * More:
 https://pymdp-rtd.readthedocs.io/en/latest/index.html
 https://arxiv.org/abs/2412.14741
@@ -1044,6 +1029,27 @@ anyways:
 
   Concludes with a nice summary of historical developments of
   various vector-encoding schemes.
+
+Generation
+----------
+* Wave function collapse -- search for blog about building Roman villas
+  out of building blocks using an accretion/relaxation algo.
+
+* Counterexample Guided Inductive Synthesis Modulo Theories
+  Alessandro Abate, Cristina David, Pascal Kesseli, Daniel Kroening1,
+  and Elizabeth Polgreen
+  Abstract: "Program synthesis is the mechanised construction of software.
+  One of the main diﬃculties is the eﬃcient exploration of the very large
+  solution space, ... We propose a new approach to program synthesis that
+  combines the strengths of a counterexample-guided inductive synthesizer
+  with those of a theory solver, ..."
+
+  Of related interest:
+  The Sketching Approach to Program Synthesis
+  Armando Solar-Lezama
+  https://people.csail.mit.edu/asolar/papers/Solar-Lezama09.pdf
+  Describes a hands-on experiment of actually doing guided software dev.
+
 
 
 Interesting, but maybe less useful
