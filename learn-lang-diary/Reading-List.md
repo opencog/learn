@@ -13,6 +13,15 @@ https://arxiv.org/pdf/2207.06970
   https://transformer-circuits.pub/2025/attribution-graphs/biology.html
   Most awesome thing in this list, so I am putting it first.
 
+* An Interview with Dunja Šešelja, Samuli Reijula, and Matteo Michelin
+  Casini, L.
+  https://riviste.unimi.it/index.php/thereasoner/article/view/28587/24047
+  Abstract
+  This interview discusses the use of agent-based modelling in
+  philosophy of science with leading scholars in the field, Dunja
+  Šešelja, Samuli Reijula, and Matteo Michelini.
+
+  NetLogo as the modelling language.
 
 * Order parameter dynamics in complex systems: From models to data
   https://www.researchgate.net/publication/378142766_Order_parameter_dynamics_in_complex_systems_From_models_to_data
