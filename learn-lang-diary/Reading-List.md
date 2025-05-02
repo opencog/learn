@@ -9,9 +9,16 @@ https://matcy.medium.com/achieving-superintelligence-with-active-inference-a125a
 https://hal.sorbonne-universite.fr/hal-04755289/document
 https://arxiv.org/pdf/2207.06970
 
+Of course:
+https://www.anthropic.com/news/model-context-protocol
+
 * On the Biology of a Large Language Model
   https://transformer-circuits.pub/2025/attribution-graphs/biology.html
   Most awesome thing in this list, so I am putting it first.
+
+* The process of deciding "what am I actually seeing/feeling/percepting
+  in some other form"  is called "pattern completion":
+  https://link.springer.com/article/10.3758/s13421-020-01072-y
 
 * An Interview with Dunja Šešelja, Samuli Reijula, and Matteo Michelin
   Casini, L.
@@ -26,6 +33,9 @@ https://arxiv.org/pdf/2207.06970
 * Order parameter dynamics in complex systems: From models to data
   https://www.researchgate.net/publication/378142766_Order_parameter_dynamics_in_complex_systems_From_models_to_data
 
+* https://dransyhe.github.io/assets/pdf/sheaf-based-pes.pdf
+  https://openreview.net/forum?id=ZtAabWUPu3
+  Sheaf-based Positional Encodings for Graph Neural Networks
 
 * Karl Friston Free Energy stuff:
    https://openreview.net/forum?id=BZ5a1r-kVsf
