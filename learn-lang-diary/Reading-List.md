@@ -20,16 +20,6 @@ https://www.anthropic.com/news/model-context-protocol
   in some other form"  is called "pattern completion":
   https://link.springer.com/article/10.3758/s13421-020-01072-y
 
-* An Interview with Dunja Šešelja, Samuli Reijula, and Matteo Michelin
-  Casini, L.
-  https://riviste.unimi.it/index.php/thereasoner/article/view/28587/24047
-  Abstract
-  This interview discusses the use of agent-based modelling in
-  philosophy of science with leading scholars in the field, Dunja
-  Šešelja, Samuli Reijula, and Matteo Michelini.
-
-  NetLogo as the modelling language.
-
 * Order parameter dynamics in complex systems: From models to data
   https://www.researchgate.net/publication/378142766_Order_parameter_dynamics_in_complex_systems_From_models_to_data
 
@@ -1421,5 +1411,22 @@ Interesting, but maybe less useful
   5) "Therefore nonlocal effects in the brain are important". But there
      is only hand-waving as to what complex Schrodinger dynamics has to do
      with non-locality.
+
+* An Interview with Dunja Šešelja, Samuli Reijula, and Matteo Michelin
+  Casini, L.
+  https://riviste.unimi.it/index.php/thereasoner/article/view/28587/24047
+  Abstract
+  This interview discusses the use of agent-based modelling in
+  philosophy of science with leading scholars in the field, Dunja
+  Šešelja, Samuli Reijula, and Matteo Michelini.
+
+  Rambling. Primary lessons: there seems to be a field of "experimental
+  philosophy", half-way between sociology philosophy, which involves
+  exploring how humans cooperate (performing scientific research) using
+  agnet-based modelling.
+
+  NetLogo as the modelling language.
+  https://en.wikipedia.org/wiki/NetLogo
+  https://www.complexityexplorer.org/
 
 ----------
