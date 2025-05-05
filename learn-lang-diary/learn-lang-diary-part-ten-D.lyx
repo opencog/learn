@@ -10993,7 +10993,126 @@ cannot work
 
 \begin_layout Standard
 Let me change the topic slightly.
- So I'm reading about Brownian motion on Wikipedia
+ So I'm reading about Brownian motion on Wikipedia, and I was staring at
+ https://en.wikipedia.org/wiki/Kirchhoff%27s_theorem which is about graph
+ Laplacians, and this pops out at me: 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+...the Laplacian L can be factored into the product of the incidence matrix
+ and its transpose, ...
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and two things pop into my mind: First, the smooth–space Laplacian is the
+ infinite–dimensional version of this in that the (transpose of the) incidence
+ matrix is the gradient, an the incidence matrix itself is the divergence,
+ so div dot grad is the Laplacian.
+ But I've never seen a first–principles derivation of that limit.
+\end_layout
+
+\begin_layout Standard
+How would that work? The graph–network connectivity of Euclidean space is
+ kind–of–ish infininte–dimensional, in that the continuum is uncountable.
+ The Laplacian is not 
+\begin_inset Quotes eld
+\end_inset
+
+just
+\begin_inset Quotes erd
+\end_inset
+
+ the limit of the graph laplacian for an 
+\begin_inset Quotes eld
+\end_inset
+
+infinitely small grid
+\begin_inset Quotes erd
+\end_inset
+
+, but is also rotationally invariant, and so ...
+ Ugh.
+ Some mashup of Cantor sets and Grassman variables and tensor algebras.
+ The analogies are all there, the groundwork is laid, the proper, formal
+ treatment of the limit has not been taken.
+ But also, hand in hand with this is the Dirac equation: it's also kind
+ of like the 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+product of the incidence matrix and its transpose
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\emph default
+but going off into the Weyl spinors that can be built from the Clifford
+ algebra on the tangent space.
+ That is, the the 
+\begin_inset Quotes eld
+\end_inset
+
+incidence matrix
+\begin_inset Quotes erd
+\end_inset
+
+ is a map between a manifold and it's tangent space, the divergence goes
+ in the opposite direction (using the manifold metric for the dot product)
+ and so the usual Laplacian is build from the contraction of the two, given
+ a scalar.
+ But one can also build Weyl spinors from the tangent bundle, and contracting
+ those gives the Dirac eqn.
+\end_layout
+
+\begin_layout Standard
+Perhaps the first step is to try to explain how an incidence matrix is just
+ like a map between a manifold and it's tangent space.
+ Having established that analogy, lets now construct a Clifford algebra
+ from the graph edges.
+ Which is fun, because we can now use the notation 
+\begin_inset Quotes eld
+\end_inset
+
+e
+\begin_inset Quotes erd
+\end_inset
+
+ for both an edge, and a basis vector.
+ Heh.
+ And thence, from this Clifford algebra, we construct the graph analog of
+ Weyl spinors, and then, from these, the graph analog of the Dirac equation.
+ Again, I suppose someone has done this already.
+ Who? Would search engines know? Would grok know? 
+\end_layout
+
+\begin_layout Standard
+I was also going to blurble about relationships between:
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Cauchy%E2%80%93Binet_formula
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Riemann_mapping_theorem
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Jordan_curve_theorem
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Viscosity_solution
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Schramm%E2%80%93Loewner_evolution
 \end_layout
 
 \begin_layout Section*
