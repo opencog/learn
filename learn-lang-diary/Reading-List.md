@@ -1429,4 +1429,27 @@ Interesting, but maybe less useful
   https://en.wikipedia.org/wiki/NetLogo
   https://www.complexityexplorer.org/
 
+* Methodical banality
+  Hannah Katznelson   2 May 2025
+  https://aeon.co/essays/who-needs-ai-text-generation-when-theres-erasmus-of-rotterdam
+  Abstract:
+  Like today’s large language models, 16th-century humanists had
+  techniques to automate writing – to the detriment of novelty
+
+  Summary: Erasmus of Rotterdam teaches a commonplace technique for
+  composing in Latin: select choice words and flowery phrases from a
+  "commonplace book": a conccordia or collection of words and phrases
+  taken from the writings of Cicero. Or, for the eclectics, as opposed
+  to the Ciceronians, from a broader collection of Ancient Roman authors.
+  This gives one the ability to "write in the style of", composing much
+  in the way that LLM's do. And, just as with LLM's, such stylistic
+  florid prose becomes illocutionary: Lots of words in which the true
+  meaning is lost. In short, LLM's suck, because they don't really know
+  what they're talking about. To make the critique, Rabelais writes
+  Gargantua and Pantagruel. Diplomatic efforts to avoid a war fail...
+  and how? Because the diplomatic missives are stagnant pools of words,
+  toxic expressions written in the style of tech bros. Text, without
+  reference to truth.
+
+
 ----------
