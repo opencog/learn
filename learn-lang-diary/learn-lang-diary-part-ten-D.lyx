@@ -10740,6 +10740,262 @@ So we have two distinct problems, but they are the same ones as ever: How
  The tree–level interactions are needed.
 \end_layout
 
+\begin_layout Standard
+The following Wikipedia article has some inspirational content:
+\end_layout
+
+\begin_layout Itemize
+https://en.wikipedia.org/wiki/Tensor_network This inspiration is that ...
+ well ...
+ something.
+\end_layout
+
+\begin_layout Itemize
+There's also ...
+ https://en.wikipedia.org/wiki/Viscosity_solution 
+\end_layout
+
+\begin_layout Subsection*
+5 May 2025
+\end_layout
+
+\begin_layout Standard
+Sp a week or two ago I wrote in this diary that I was confused about many–worlds
+ and a transactional interpretation.
+ Last night I was thinking: there should be no confusion: influences move
+ backwards in time, cause states to collapse there, and then move forward
+ in time, to the other interferometer arm.
+ I'm even thinking now that the interferometer does NOT need to be closed!
+ i.e.
+ the two arms don't need to be brought together to force collapse.
+\end_layout
+
+\begin_layout Standard
+So, for example, a singlet state is prepared at 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ out of two half–spins, and these fly off to be measured at 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+ (which can be space–like separated, so as to underline the non–local natures
+ of the measurement.
+ ) The point of using the TSVF formalism is that the measurement at 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ propagates backwards in time to 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ bounces there, maybe causing a partial collapse there, and then travels
+ back up to 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+ causing a collapse there.
+ That is, not only are the spins entangled, but the collapses are entangled.
+\end_layout
+
+\begin_layout Standard
+So I am envisioning the w.f.
+ collapse as being an avalanche at a critical point, analogous to Per Bak's
+ critical sandpiles.
+ Except that in this case, it is not sand–grains but a network of photon–electro
+n interactions, at the tree–level in QED.
+ The spin at 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ is coupled to 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+ and as avalanching starts at 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ it also starts at 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+ and proceeds in both locations in a coupled fashion: each back–reacts on
+ the other.
+ Observe that both 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+ are a part of here–and–now and still in the fluid state, not yet frozen
+ in time.
+ The completion of the avalanche is part of what freezes them.
+\end_layout
+
+\begin_layout Standard
+Even though locations may get frozen in the past, they can still act as
+ conductors of spin information, i.e.
+ act as conductors of qubits.
+ Thus, the point 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ where the singlet was prepared is at the trailing end of here–and–now,
+ with almost all aspects frozen into the past, but a small channel remaining
+ open, to allow qubit info to fly in between 
+\begin_inset Formula $\left(t_{1},x_{1}\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(t_{2},x_{2}\right)$
+\end_inset
+
+, passing through 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ as the avalanche occurs.
+ That is, the 
+\begin_inset Quotes eld
+\end_inset
+
+classical structure
+\begin_inset Quotes erd
+\end_inset
+
+ (whatever that is) surrounding 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ is frozen into the past, but the qubit channel remains open.
+ Which it has to, because of the no–cloning/no–erasure theorem: the no–cloing
+ theorem is a statement that the singlet–entangled qubit channel located
+ at 
+\begin_inset Formula $\left(t_{0},x_{0}\right)$
+\end_inset
+
+ must remain open, and cannot be frozen into the past.
+ As long as qubits flow, they must be able to flow through there.
+\end_layout
+
+\begin_layout Standard
+So this sketch is now concrete enough that perhaps it is open to theoretical
+ modeling.
+ Lets see if we can make this so:
+\end_layout
+
+\begin_layout Itemize
+Create a random network, i.e.
+ a graph of vertexes and edges.
+\end_layout
+
+\begin_layout Itemize
+Place entangled spin states at the vertexes.
+\end_layout
+
+\begin_layout Itemize
+Each edge is a spin-1/2 propagator.
+ For the model, this is just the trivial propagator: we just copy, or rather,
+ mark as identical the two spins at either vertex at the end of the edge.
+\end_layout
+
+\begin_layout Itemize
+Embed the graph into Minkowski spacetime, such that all edges are time–like.
+ (or maybe null?)
+\end_layout
+
+\begin_layout Itemize
+Pick a vertex that has no future edges: i.e.
+ has no edge that connects to a vertex that is to it's future.
+\end_layout
+
+\begin_layout Itemize
+At the selected vertex, twiddle aka 
+\begin_inset Quotes eld
+\end_inset
+
+measure
+\begin_inset Quotes erd
+\end_inset
+
+ the spin.
+ Since this spin is entangled, this should propagate through the network,
+ causing other qubits to correlate.
+\end_layout
+
+\begin_layout Standard
+I imagine there are dozens, if not hundreds of papers describing exactly
+ this.
+ This is part–and–parcel of the central core of quantum computing.
+ But I don't know these papers, I have not read them.
+ I do recall a key–word: 
+\begin_inset Quotes eld
+\end_inset
+
+clock states
+\begin_inset Quotes erd
+\end_inset
+
+, which carry no information, as opposed to some other kind of state, that
+ does.
+ I need to search–engine this and read about it.
+ 
+\end_layout
+
+\begin_layout Standard
+Anyway, part of the exploration of the above network model is to look for
+ avalanching behavior.
+ The quantum computing people treat this as 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ and they want to get rid of it.
+ I want to go in the opposite direction: to discover that 
+\begin_inset Quotes eld
+\end_inset
+
+noise
+\begin_inset Quotes erd
+\end_inset
+
+ and thermalization happen automatically, as the result of avalanching.
+\end_layout
+
+\begin_layout Standard
+This makes it different from, say, Brownian motion.
+ So in 1905, Einstein looks at Brownian motion, and obtains expressions
+ for diffusion.
+ His calculation is a certain kind of ensemble–average calculation.
+ Here, we kind of know that ensemble–averaging 
+\begin_inset Quotes eld
+\end_inset
+
+cannot work
+\begin_inset Quotes erd
+\end_inset
+
+, because the no–cloning theorem blocks it.
+ So we need a different mechanism, and that mechanism has to be avalanching
+ through wave–function phases.
+ Small disturbances have to be amplified into large re–arrangements.
+\end_layout
+
+\begin_layout Standard
+Let me change the topic slightly.
+ So I'm reading about Brownian motion on Wikipedia
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
