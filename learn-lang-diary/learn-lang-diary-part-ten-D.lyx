@@ -11259,6 +11259,169 @@ So what? The above sicks spinors on the vertices of a graph.
  The tricky part is to show the dynamical system does something interesting.
 \end_layout
 
+\begin_layout Subsection*
+8 May 2025
+\end_layout
+
+\begin_layout Standard
+One issue with doing and reading mathematics is that there is a combinatorial
+ explosion of interconnections between concepts, most which do not matter,
+ and some which do.
+ Today, I thought I'd read about the 
+\begin_inset Quotes eld
+\end_inset
+
+Parsi-Sourlas approach to Langevin SDEs
+\begin_inset Quotes erd
+\end_inset
+
+ which is fine, except that almost immediately, I hit on the Fadeev-Popov
+ expression for a Jacobian determinant.
+ The underlying reason for this comes from the Berezinian, or more precisely,
+ the Berezin superintegral representation
+\begin_inset Formula 
+\[
+\int\exp\left[-\theta^{T}A\eta\right]\,d\theta\,d\eta=\det A
+\]
+
+\end_inset
+
+which follows directly from the definition of determinants and the anti-commutin
+g properties of the variables 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $\eta$
+\end_inset
+
+.
+ Then this catches my eye:
+\begin_inset Formula 
+\[
+\int\exp\left[-\tfrac{1}{2}\theta^{T}M\theta\right]\,d\theta=\begin{cases}
+\mathrm{Pf}\,M & n\mbox{ even}\\
+0 & n\mbox{ odd}
+\end{cases}
+\]
+
+\end_inset
+
+which gives the Pfaffian, 
+\begin_inset Formula $(\mathrm{Pf}\,M)^{2}=\det M$
+\end_inset
+
+ and oh, OK, I'd forgotten about that.
+ Thanks for the reminder.
+ So I skim wikipedia, it reminds me that skew–symmetric matrices can be
+ brought into a block-diagonal form.
+ Which makes me think of the canonical symplectic form on symplectic vector
+ spaces and then I spin out, trying to remember everything I know about
+ Hamiltonian mechanics, but this is useless, as its boiling the ocean.
+\end_layout
+
+\begin_layout Standard
+The other direction my mind spins out to is the Jacobian determinant.
+ All those places where there are Jaocobians, what if the above formula
+ was substituted? It boggles the mind.
+ The obvious answer is 
+\begin_inset Quotes eld
+\end_inset
+
+nothing interewsting happens
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This, however, begs the question: why does it become interesting when Fadeev–Po
+pov do it? What's different about this case? Is it because of exp Action?
+\end_layout
+
+\begin_layout Subsection*
+17 May 2025
+\end_layout
+
+\begin_layout Standard
+Where does the time go? What am I doing? Did I drink too much coffee? Did
+ I not get enough exercise? Why can't I live in an endless state of grace?
+ Why am I anxious and irritated? Dear diary, I will unload on you, in the
+ grand hope that it will ...
+ resolve the tension and urge to scream.
+ Or maybe I should go ride a bike instead, that tends to restore a certain
+ amount of hormonal balance.
+\end_layout
+
+\begin_layout Standard
+I was going to write two papers for AGI 2025.
+ I started them over a month ago.
+ They almost wrote themselves, they were so easy – it was a boiled down
+ version of what's in this diary.
+ Since I'd already written, it was easy.
+ Just one more day, to finish them, and then ...
+ a month went by, with nothing at all.
+ Where does the time go?
+\end_layout
+
+\begin_layout Standard
+I did spent the month studying the Wiener process.
+ Wrote the example for the wikipedia article 
+\begin_inset Quotes eld
+\end_inset
+
+Natural filtration
+\begin_inset Quotes erd
+\end_inset
+
+ which seems to have relevance to my conception of here and now.
+ I have more to read, and more to think about, I am distracted.
+ Perhaps dumping more into this diary is waste of time, right now.
+ I guess I did drink too much coffee.
+ I guess I am still ...
+ annoyed about something.
+ I tell myself, 
+\begin_inset Quotes eld
+\end_inset
+
+I should do this
+\begin_inset Quotes erd
+\end_inset
+
+, procrastinate, 
+\begin_inset Quotes eld
+\end_inset
+
+I should do that
+\begin_inset Quotes erd
+\end_inset
+
+, get annoyed, get overwhelmed, ponder the precariousness of human emotional
+ states.
+ Wander off into thinking about what it means to be alive.
+ Wonder about that in some abstract sense, without making progress on my
+ stated goals of axiomatizing all of it mathematically.
+ Getting irrittated at myself for not making progress.
+ Bitching at you, dear diary, for my failures, even as writing this is clearly
+ some distraction from what I should be doing.
+ Or is it? Just two paragraphs ago, I was telling myself that writing here
+ would be soothing.
+ So is it soothing or a waste of time?
+\end_layout
+
+\begin_layout Standard
+Well, since I'm still quasi–capable of focusing, I think I will continue
+ reading that paper on 
+\begin_inset Quotes eld
+\end_inset
+
+Infinite dimensional analysis
+\begin_inset Quotes erd
+\end_inset
+
+ or whatever its called.
+ Then a bike ride.
+ Later, dude.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout

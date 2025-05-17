@@ -1,6 +1,10 @@
 
 Things to read:
 
+* Discrete Visual Tokens of Autoregression, by Diffusion, and for Reasoning
+  Bohan Wang et al
+  https://arxiv.org/abs/2505.07538
+
 * More:
 https://pymdp-rtd.readthedocs.io/en/latest/index.html
 https://arxiv.org/abs/2412.14741
