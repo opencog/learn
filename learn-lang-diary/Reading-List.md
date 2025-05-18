@@ -1406,7 +1406,7 @@ Interesting, but maybe less useful
      manifold also has some "thickness" in the normal directions, this
      is not discussed/given.
 
-  3) Modify the maifold reconstruction technique to use Schrodinger eqn
+  3) Modify the manifold reconstruction technique to use Schrodinger eqn
      instead of the heat eqn. This is called "CHARM". I do not have any
      insight into what is going on here, or what it means.
 
