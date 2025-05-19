@@ -13243,6 +13243,375 @@ But i have to take a break, because I've got other things I have to get
  done.
 \end_layout
 
+\begin_layout Standard
+Hang on, just a few more minutes.
+ I am confused by two things.
+ First, what is the open cover, the metric topology induced by the Minowski
+ metric? It sure doesn't feel Hausdorff to me, but maybe I'm crazy.
+ That's the first topic that needs clarification.
+ The second topic is about the sigma algebra on the space of functions from
+ Minkowski space to Hilbert space.
+ So, write 
+\begin_inset Formula $M$
+\end_inset
+
+ for Minkowski space, write 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ for Hilbert space.
+ I'm concerned about the sigma algebra on the space of functions 
+\begin_inset Formula $\psi:M\to\Psi$
+\end_inset
+
+.
+ What is 
+\begin_inset Formula $\Psi$
+\end_inset
+
+? So here is the sleight–of–hand.
+ For a scalar particle, 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ is one–dimensional! Consider textbook harmonic oscillator (in one dimension).
+ The structure of 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ is so trivial, it is almost not mentioned.
+ Because 
+\begin_inset Formula $\Psi=\mathbb{R}$
+\end_inset
+
+ and there's kind of not a whole lot else that can be said here and its
+ obvious and textbooks promptly move on and define a Hilbert space of 
+\begin_inset Formula $H=\left\{ \psi:\mathbb{R}\to\mathbb{R}\right\} $
+\end_inset
+
+ and show how this space is spanned by the Hermite polynomials.
+ So the sleight–of–hand is to immediately jump from 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ to 
+\begin_inset Formula $H$
+\end_inset
+
+ without remarking very much on this jump.
+ Its too trivial.
+ All of the interesting things to be said are the things to say about 
+\begin_inset Formula $H$
+\end_inset
+
+ and how its square integrable, and about weak convergence on the weak topology
+ in the infinite–dimensional product space 
+\begin_inset Formula $H=\left\{ e_{n}:n\in\mathbb{N}\right\} $
+\end_inset
+
+ because this is where all the conventional interesting things can be said.
+ And this is hammered on in such a way that mediocre students, and even
+ smart students, somehow fail to notice that we are not talking about Euclidean
+ space, but about something completely different, and then we students try
+ to map Euclidean notions from common–sense child–hood experience of space
+ onto this infinite–dimensional Hilbert space, and end up confused by questions
+ like 
+\begin_inset Quotes eld
+\end_inset
+
+how can it be a particle and a wave at the same time?
+\begin_inset Quotes erd
+\end_inset
+
+ And the dis–service of the textbook, and the lecturer is to somehow not
+ hammer on the point 
+\begin_inset Quotes eld
+\end_inset
+
+its not Euclidean space, dear students, its infinite dimensional
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+it is a fundamental error to think about 3D space when you should be thinking
+ of infinite–dimensional space
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The point here is that at the same time, there are business–school students
+ down the hall, studying stochastic processes and Itô calculus and Wiener
+ space, and those students are NOT asking 
+\begin_inset Quotes eld
+\end_inset
+
+how can it be a single stock price and a random process at the same time?
+\begin_inset Quotes erd
+\end_inset
+
+ because they already know stock prices are not 
+\begin_inset Quotes eld
+\end_inset
+
+particles
+\begin_inset Quotes erd
+\end_inset
+
+ localized in 3D space.
+ it would be dumb to ask 
+\begin_inset Quotes eld
+\end_inset
+
+where is the sock price right now, in 3D space?
+\begin_inset Quotes erd
+\end_inset
+
+ because the answer is 
+\begin_inset Quotes eld
+\end_inset
+
+nowhere
+\begin_inset Quotes erd
+\end_inset
+
+ or it is perhaps 
+\begin_inset Quotes eld
+\end_inset
+
+on the trading from of the new York Stock Exchange
+\begin_inset Quotes erd
+\end_inset
+
+ or perhaps 
+\begin_inset Quotes eld
+\end_inset
+
+on the settlement computer.
+\begin_inset Quotes erd
+\end_inset
+
+ But for quantum, everyone asks 
+\begin_inset Quotes eld
+\end_inset
+
+where is the particle right now?
+\begin_inset Quotes erd
+\end_inset
+
+ and talk about particle–wave duality like its a thing, when the obviously
+ analogous situation, of stock–price–stochastic–process duality is not a
+ thing anyone ever talks about.
+ Sheesh.
+ I'm wasting a lot of words and time to write this, but feel compelled to,
+ because there must be a thousand youtube videos on particle–wave duality
+ is if it were a thing, when in fact its kind of the wrong question and
+ the wrong framework predicated on a confusion between 3D Euclidean space
+ and the infinite–dimensional Hilbert space.
+ Fuck me.
+ I am wasting my time even writing this, but whatever.
+ Lets get back on track.
+\end_layout
+
+\begin_layout Standard
+We now have two or three tasks in front of us.
+ First, explain the topology of 
+\begin_inset Formula $H=\left\{ \mathbb{R}^{3}\to\mathbb{C}\right\} $
+\end_inset
+
+ but this is easy because this is conventional Hilbert space.
+ Next, and I am afraid of giving notation to this, is to add time, and describe
+ wave–function collapse.
+ I think this requires using a reproducing kernel Hilbert space, and describing
+ dynamics in that space.
+ I will have to ponder this some more, later on.
+ Not now.
+\end_layout
+
+\begin_layout Standard
+Next on the list is entanglement.
+ Here, its a single spinor, and so 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ is two–dimensional: its the vector space having the basis spin–up and spin–down.
+ And since the topic is entanglement, we really have 
+\begin_inset Formula $\Psi=\mathbf{C}\otimes\mathbf{C}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbf{C}$
+\end_inset
+
+ is the Riemann sphere (complex–projective one–space) which is the Hilbert
+ space inhabited by spin–one–half spinors.
+ This space has to local (tangent space) decomposition 
+\begin_inset Formula $su_{2}\otimes su_{2}=so_{3}\oplus u_{1}$
+\end_inset
+
+ and this is all trivial textbook stuff, but I repeat it to kind of emphasize
+ that these are all different, distinct spaces, each having their own geometry
+ and topology, and that we (meaning I) make grave errors when conflating
+ these distinct objects.
+ So don't conflate them! Well, except I already made a grave error: I'm
+ talking about spinors loosely, when I should distinguish Weyl spinors,
+ Dirac spinors and the much simpler idea of the Riemann sphere.
+ These all inter–relate, of course, but premature abuse of terminology gets
+ us into trouble.
+\end_layout
+
+\begin_layout Standard
+So, lets see ..
+ where were we? I wish to examine the structure of 
+\begin_inset Formula $H=\left\{ \mathbb{R}^{3}\to\mathbf{C}\otimes\mathbf{C}\right\} $
+\end_inset
+
+ except that this is not enough: I want to examine 
+\begin_inset Formula $H_{t}=\left\{ \mathbb{R}^{3}\to\mathbf{C}\otimes\mathbf{C}\right\} $
+\end_inset
+
+ as a function of 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ So really I want to look at 
+\begin_inset Formula $\mathcal{H}=\bigotimes_{t\in\mathbb{R}^{+}}H_{t}\simeq\left\{ \mathbb{R}^{+}\times\mathbb{R}^{3}\to\mathbf{C}\otimes\mathbf{C}\right\} $
+\end_inset
+
+ and I think that is the correct notation but I have to be careful, because
+ there's a sigma algebra that has to manifest here, and I'm not sure I wrote
+ that appropriately.
+ Whatever.
+ Onwards through the fog, Oat Willie! Next, during the analysis of wave
+ function collapse in this space, I want to show that this induces a metric,
+ crudely resembling the Minkowski metric, but instead of it being the speed
+ of light, it has to be at the group velocity of the wave–packets of the
+ two entangled spinors propagating in opposite directions.
+ And calling it an induced metric is kind–of–ish wrong, because the induction
+ only happens at the here–and–now of the collapse, which is 
+\begin_inset Quotes eld
+\end_inset
+
+everywhere
+\begin_inset Quotes erd
+\end_inset
+
+, but more specifically, where the wave packets are localized when they
+ hit the detector.
+ There are two implications here: all points in a single detector are 
+\begin_inset Quotes eld
+\end_inset
+
+at the same place, right now, here–and–now
+\begin_inset Quotes erd
+\end_inset
+
+, AND ALSO, the points in detector A are at the same here–and–now location
+ as the points in detector B.
+ That is, both detectors are entangled.
+ That is, I am looking for a modulo relationship, the here–and–now relationship,
+ write it as 
+\begin_inset Formula $\sim$
+\end_inset
+
+ so that the 
+\begin_inset Quotes eld
+\end_inset
+
+actual space
+\begin_inset Quotes erd
+\end_inset
+
+ is the quotient space 
+\begin_inset Formula $\mathcal{H}/\sim$
+\end_inset
+
+.
+ That is, the 
+\begin_inset Quotes eld
+\end_inset
+
+physical reality
+\begin_inset Quotes erd
+\end_inset
+
+ that we live in is not 
+\begin_inset Formula $H$
+\end_inset
+
+ and its not 
+\begin_inset Formula $\mathcal{H}$
+\end_inset
+
+ but it is 
+\begin_inset Formula $\mathcal{H}/\sim$
+\end_inset
+
+ and the equivalence relation 
+\begin_inset Formula $\sim$
+\end_inset
+
+ induces a Minkowski–like metric–like structure on 
+\begin_inset Formula $\mathcal{H}/\sim$
+\end_inset
+
+ .
+ Its all happening everywhere, all at once! Auumm! We are one with the universe!
+ BTW the movie 
+\begin_inset Quotes eld
+\end_inset
+
+Everything Everywhere All At Once
+\begin_inset Quotes erd
+\end_inset
+
+ is a great movie! And I'm not trying to do pop–culture here, but the appercepti
+on that wave–function collapse happens everywhere all at once is already
+ 
+\begin_inset Quotes eld
+\end_inset
+
+well known
+\begin_inset Quotes erd
+\end_inset
+
+ to everyone, and yet it remains befuddling to actual physicists who have
+ to actually work with this stuff.
+ And it is certainly befuddling to me.
+ And so my goal here is to try to remedy that.
+ Fuck me.
+ Nothing like explaining the obvious.
+ Like 
+\begin_inset Quotes eld
+\end_inset
+
+shit falls down, Newton, yeah, duh
+\begin_inset Quotes erd
+\end_inset
+
+ except I'm not Newton.
+ Fuck me.
+ What am I doing?
+\end_layout
+
+\begin_layout Standard
+OK.
+ Now I really do have to take a break and do something else.
+ But I feel like I have made actual forward progress to pin down the issue,
+ We shall see...
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
