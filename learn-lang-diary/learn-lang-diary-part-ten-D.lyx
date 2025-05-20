@@ -14399,7 +14399,7 @@ Now, for Wiener space
 \begin_inset Formula $\omega\in\Omega$
 \end_inset
 
- correspond to single, specific Browian motion paths, and by taking the
+ correspond to single, specific Brownian motion paths, and by taking the
  Cartesian product 
 \begin_inset Formula $I\times\Omega$
 \end_inset
@@ -14432,11 +14432,315 @@ stochastic process
 \end_layout
 
 \begin_layout Standard
-The intended analogy here is that
+The intended analogy here is that 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ is kind–of–like 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, and that a specific point 
+\begin_inset Formula $q\in\mathscr{P}^{\prime}$
+\end_inset
+
+ corresponds to a specific wave–function collapse onto a single pixel.
+ The Many–Worlds Hypothesis is then the statement that each distinct 
+\begin_inset Formula $q\in\mathscr{P}^{\prime}$
+\end_inset
+
+ is a distinct 
+\begin_inset Quotes eld
+\end_inset
+
+world
+\begin_inset Quotes erd
+\end_inset
+
+, and that all of these worlds 
+\begin_inset Quotes eld
+\end_inset
+
+coexist
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And, in that sense, clearly they do: I have written down an explicit and
+ precise expression for the multiverse: it is exactly 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ and nothing more and nothing less.
 \end_layout
 
 \begin_layout Standard
-x
+Now, since I am wordceling along, here, it is possible that I screwed something
+ up, but for now, it really does seem like 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ is a formal expression for the multiverse.
+ Also, this is so basic, that I assume that I am rediscovering something
+ that others have already published about.
+ Since I have not read sufficiently in those directions, I don't know.
+ And my vocabulary and terminology is sufficiently obtuse that I doubt that
+ I can ask Claude or Grok or Gemini if someone else has already discovered
+ all this.
+ Those systems are not yet capable of answering this kind of a question.
+ So, I must continue, the olde–fashioned way.
+\end_layout
+
+\begin_layout Standard
+Continuing...
+ the sticky part here is that Wiener space has an obvious 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ coordinate: it was build so as to be indexable.
+ The points 
+\begin_inset Formula $\omega\in\Omega$
+\end_inset
+
+ have an explicit interpretation as paths.
+ The sigma algebra 
+\begin_inset Formula $\mathcal{F}$
+\end_inset
+
+ on 
+\begin_inset Formula $\Omega$
+\end_inset
+
+ has an explicit natural filtration 
+\begin_inset Formula $\mathcal{F}_{t}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+And now here is where it gets fun.
+ If we start at time 
+\begin_inset Formula $t=0$
+\end_inset
+
+, all Brownian motion paths are possible.
+ As the time 
+\begin_inset Formula $t$
+\end_inset
+
+ advances, the path 
+\begin_inset Quotes eld
+\end_inset
+
+collapses
+\begin_inset Quotes erd
+\end_inset
+
+, so that there is a cylinder set 
+\begin_inset Formula 
+\[
+C\left(t,\omega\right)=\left\{ \alpha\in\Omega:X\left(s,\alpha\right)=X\left(s,\omega\right)\mbox{ for }s<t\right\} 
+\]
+
+\end_inset
+
+This cylinder set contains all paths that are exactly equal to 
+\begin_inset Formula $X_{s}\left(\omega\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $s<t$
+\end_inset
+
+ and are otherwise unspecified for future times that occur after 
+\begin_inset Formula $t$
+\end_inset
+
+ – i.e.
+ all possibilities are allowed, all futures are still open, subject to the
+ constraint that 
+\begin_inset Formula $X_{s}\left(\omega\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $s<t$
+\end_inset
+
+ has already happened, is in the past, and is immutable.
+ That is, for the Wiener process, here–and–now is cleanly parameterized
+ by a parameter 
+\begin_inset Formula $t$
+\end_inset
+
+ which has a clean and clear interpretation as 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+.
+ What's more the filtration 
+\begin_inset Formula $\mathcal{F}_{t}$
+\end_inset
+
+ provides a clear model for past, present and future, where the pas is fixed,
+ the present is 
+\begin_inset Quotes eld
+\end_inset
+
+now
+\begin_inset Quotes erd
+\end_inset
+
+, and the future is undetermined, because the sigma algebra is too course.
+ That is, the sigma algebras form a filtration 
+\begin_inset Formula $\mathcal{F}_{t}\subset\mathcal{F}_{u}$
+\end_inset
+
+ for future times 
+\begin_inset Formula $u>t$
+\end_inset
+
+.
+ They get finer, as time progresses.
+\end_layout
+
+\begin_layout Standard
+So the sticky part is that 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ was constructed in such a way that, if it has a natural filtration, it
+ is not clear what it is.
+ If it did have a natural filtration, then that filtration could be explicitly
+ identified with the process of wave–function collapse.
+ That is, not only would a single point 
+\begin_inset Formula $q\in\mathscr{P}^{\prime}$
+\end_inset
+
+ correspond to a specific path of collapse, but there would be some parameter
+ 
+\begin_inset Formula $\tau$
+\end_inset
+
+ such that 
+\begin_inset Formula $\Psi\left(\tau,q\right)$
+\end_inset
+
+ indicated the entanglement state of all of the pixels with the ket 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ at that 
+\begin_inset Quotes eld
+\end_inset
+
+instant
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+ So, first of all, I don't yet know how to explicitly write down what this
+ parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is, but the insight is that perhaps wave–function collapse is 
+\begin_inset Quotes eld
+\end_inset
+
+unitary
+\begin_inset Quotes erd
+\end_inset
+
+ in 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+ This parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+ is explicitly not time; it cannot be, because the Renninger setup clearly
+ demonstrates that it could never be, because the Renninger setup explicitly
+ entangles future times with past times (within the same light–cone.) But
+ *if* we had or could find or could impose this structural parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+, then the process 
+\begin_inset Formula $\Psi:I\times\mathcal{P}^{\prime}\to\mathbb{C}$
+\end_inset
+
+ could maybe plausibly describe collapse, and also be interpreted as a kind–of
+ unitary evolution, unitary not in time, but in the parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I dunno.
+ This does skirt dangerously close to the Bohm hidden–variable description,
+ with 
+\begin_inset Formula $\tau$
+\end_inset
+
+ being the hidden variable.
+ And I want to explicitly reject hidden variables, because we already know
+ that those don't work.
+ Perhaps the saving grace is that each 
+\begin_inset Formula $q\in\mathscr{P}^{\prime}$
+\end_inset
+
+ is meant to be interpreted as a different world in the multiverse.
+ I dunno.
+ So this is one of the risky points that would need to be double–checked.
+ Must not accidentally reinvent hidden variables.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ I really have to go.
+ Where are we at?
+\end_layout
+
+\begin_layout Itemize
+I might have screwed up with the definition of 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ or it's interpretation.
+\end_layout
+
+\begin_layout Itemize
+I don't yet know how to find this parameter 
+\begin_inset Formula $\tau$
+\end_inset
+
+ or how to prove that such a parameter even exists.
+\end_layout
+
+\begin_layout Itemize
+I don't have a microscopic model of the pixels.
+\end_layout
+
+\begin_layout Standard
+Still, this feels like forward progress, again.
+ Later, dude.
 \end_layout
 
 \begin_layout Section*
