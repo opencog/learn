@@ -14220,28 +14220,223 @@ with
 \begin_inset Formula $M$
 \end_inset
 
- being Minkowski space–time.
- 
+ being Minkowski space–time, so that 
+\begin_inset Formula $P\subset M$
+\end_inset
+
+ is a manifold.
+ And it really is a manifold, it's smooth, it has coordinate charts, etc.
+ It does have some points missing at some of the dyadic rationals; the pixels
+ are isolated and disjoint.
+ Its not compact in either the space or the time directions, but it could
+ be made compact by making the detector finite–sized, and removing it at
+ some point in the future.
+ This would give it compact support on the light–cone as well (i.e.
+ for the null directions.)
 \end_layout
 
 \begin_layout Standard
-The microscopic model of wave–function collapse requires that all of the
- points in 
+The set of points 
+\begin_inset Formula $\mathscr{P}\subset M$
+\end_inset
+
+ are then
+\begin_inset Formula 
+\[
+\mathscr{P}=\left\{ \left(x,y,t\right)\in M:P\left(x,y,t\right)\left|\psi\left(x,y,t\right)\right|^{2}\ne0\right\} 
+\]
+
+\end_inset
+
+This is again a smooth submanifold that can be given coordinate charts.
+ Its compact in the time direction, because 
+\begin_inset Formula $b\left(\cdot\right)$
+\end_inset
+
+ was defined to be compact.
+ Since the pixels are disjoint, 
 \begin_inset Formula $\mathscr{P}$
 \end_inset
 
- to become entangled.
- I almost wrote 
+ also consists of a set of disjoint manifolds, corresponding to each pixel.
+\end_layout
+
+\begin_layout Standard
+Wave function collapse requires describing how the ket 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ evolves from the distant past, into the distant future, such that it deposits
+ all of it's energy into a single pixel.
+ Again, I emphasize that 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ has no location in space–time; it is 
 \begin_inset Quotes eld
 \end_inset
 
-thermodynamically entangled
+everywhere, all at once
 \begin_inset Quotes erd
 \end_inset
 
 .
- This is where I become confused, again, as to the details.
- 
+ Despite this, we can localize where the collapse happens: it necessarily
+ takes place in the here–and–now, denoted by 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The primary claim of this text is that the ket 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ necessarily entangles all points in 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+ This is where things get difficult, again.
+ Let's try to wordcel our way into what the difficulty is.
+ What do we have? The following points:
+\end_layout
+
+\begin_layout Itemize
+All pixels are QM–entangled in 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+Each pixel should be describable in some unitary QM fashion.
+\end_layout
+
+\begin_layout Itemize
+Each pixel also has a thermodynamic description: the natural vocabulary
+ is that of measure–preserving dynamical systems.
+ The insides of the pixels are ergodic; perhaps some subset of each pixel
+ includes wandering sets, so that sub–portions of the pixels are dissipative.
+\end_layout
+
+\begin_layout Itemize
+All of the particle energy has been deposited into only one pixel in the
+ future light–cone of 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+ This states that the all–pixel unitary entanglement becomes a single–pixel
+ thermodynamic entanglement.
+\end_layout
+
+\begin_layout Standard
+So, again, I have to break, and go do other things now.
+ But still, it feels like I made some minor forward progress.
+ I now have an explicit formal example of here–and–now as a collection of
+ points in classical space–time.
+ I've formalized the claim that 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ necessarily entangles 
+\emph on
+all
+\emph default
+ points in the here–and–now.
+ I've isolated the microscopic model so that it requires both a unitary
+ description, and simultaneously an ergodic, dissipative description.
+\end_layout
+
+\begin_layout Standard
+This description of 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ allows it to be given a sigma algebra, but this is trivial: it is a subalgebra
+ of the sigma algebra on Minkowski space.
+ Which now clarifies what I did wrong above: here–and–now is NOT 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ but instead it is 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ is the dual space of all continuous functions from 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathbb{R}^{+}$
+\end_inset
+
+.
+ I want to endow 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ with some sigma algebra.
+ It is then presumably some kind of Cameron–Martin space, some reproducing
+ kernel Hilbert space, something analogous to how abstract Wiener space
+ is constructed.
+\end_layout
+
+\begin_layout Standard
+Now, for Wiener space 
+\begin_inset Formula $\Omega$
+\end_inset
+
+, the point 
+\begin_inset Formula $\omega\in\Omega$
+\end_inset
+
+ correspond to single, specific Browian motion paths, and by taking the
+ Cartesian product 
+\begin_inset Formula $I\times\Omega$
+\end_inset
+
+ one can define the Wiener process 
+\begin_inset Formula $X$
+\end_inset
+
+ as 
+\begin_inset Formula $X:I\times\Omega\to\mathbb{R}^{n}$
+\end_inset
+
+ so that 
+\begin_inset Formula $X_{t}\equiv X\left(t,\cdot\right)$
+\end_inset
+
+ is called a 
+\begin_inset Quotes eld
+\end_inset
+
+stochastic process
+\begin_inset Quotes erd
+\end_inset
+
+, and selecting a specific point 
+\begin_inset Formula $\omega\in\Omega$
+\end_inset
+
+ identifies a specific Brownian–motion path.
+\end_layout
+
+\begin_layout Standard
+The intended analogy here is that
+\end_layout
+
+\begin_layout Standard
+x
 \end_layout
 
 \begin_layout Section*
