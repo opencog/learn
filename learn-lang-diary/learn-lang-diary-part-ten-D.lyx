@@ -13832,7 +13832,21 @@ For this specific example, it ties together those spacetime points located
 \begin_layout Standard
 Anyway, let us now attempt to write down an expression for the entanglement
  of silver–halide grains in the here–and–now.
- So first, pixelate.
+ I will write three or four paragraphs of quotidian mathematical details
+ below.
+ These will be boring and almost entirely irrelevant to the core idea.
+ They serve only to provide a concrete, specific example, so that you, dear
+ reader, and perhaps I myself, don't remain in the ozone of abstraction,
+ forever.
+ The below will describe the Renninger two–slit setup, but it really could
+ be any detector geometry whatsoever, for detecting any kinds of particles
+ from any kinds of sources.
+ I'm selecting the Reninger two–slit setup because its very specific and
+ concrete.
+\end_layout
+
+\begin_layout Standard
+So first, pixelate.
  We give each grain the size of 
 \begin_inset Formula $2^{-N}$
 \end_inset
@@ -13874,6 +13888,19 @@ within itself
  grains.
  Think CCD camera, if that makes you happier.
  A finite and uniform pixel size.
+\end_layout
+
+\begin_layout Standard
+Mathematically, this is interesting, as it allows the limit 
+\begin_inset Formula $N\to\infty$
+\end_inset
+
+ to be taken.
+ The pixels then become isomorphic to the Cantor set.
+ They hold all of the measure, the are infinitely tiny, they are thermodynamical
+ly disconnected from their neighbors, so that thermodynamic isolation is
+ equivalent to giving them a discrete topology, when using concepts from
+ general topology.
 \end_layout
 
 \begin_layout Standard
@@ -13927,6 +13954,294 @@ This can be arranged so that
 \end_inset
 
 .
+ The wave packet then has the form 
+\begin_inset Formula 
+\[
+\left|\psi\left(x,y,t\right)\right|^{2}\sim f\left(x,y\right)b\left(-\frac{\left(\sqrt{x^{2}+y^{2}}-vt\right)^{2}}{2a}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $f\left(x,y\right)$
+\end_inset
+
+ the diffraction pattern, and 
+\begin_inset Formula $b\left(\cdot\right)$
+\end_inset
+
+ being some bump function: 
+\begin_inset Formula $b:\mathbb{R}\to\mathbb{R}^{+}$
+\end_inset
+
+.
+ In physics, we usually have 
+\begin_inset Formula $b$
+\end_inset
+
+ being exp, so above becomes the Gaussian; however, for the below it will
+ be easier if 
+\begin_inset Formula $b$
+\end_inset
+
+ has compact support.
+ So, in all respects, this is meant to be an industry–standard, textbook
+ wavepacket, just one with compact support.
+\end_layout
+
+\begin_layout Standard
+The rest is as usual: 
+\begin_inset Formula $v$
+\end_inset
+
+ the group velocity of the wave–packet, with of course, 
+\begin_inset Formula $v<c$
+\end_inset
+
+ for massive particles, and 
+\begin_inset Formula $v=c$
+\end_inset
+
+ for photons, and 
+\begin_inset Formula $a=v\Delta t$
+\end_inset
+
+ being the wavepacket size.
+ The interesting geometry is with 
+\begin_inset Formula $D_{near}\gg1$
+\end_inset
+
+ so that we can approximate 
+\begin_inset Formula $f\left(x,y\right)\approx f\left(x\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $f\left(x\right)$
+\end_inset
+
+ the far–field diffraction pattern, i.e.
+ we ignore all near–field effects.
+ I wrote the expression for 
+\begin_inset Formula $\left|\psi\right|^{2}$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\psi$
+\end_inset
+
+ because I don't want to deal with factors of 
+\begin_inset Formula $e^{-i\omega t}$
+\end_inset
+
+ because they do not seem to be relevant at this time.
+ I'm also ignoring any dispersion in velocity: the particles are taken to
+ be monochromatic.
+\end_layout
+
+\begin_layout Standard
+I suppose it's worth pausing a moment to contemplate this.
+ QM superposition fundamentally requires complex numbers, and the different
+ world–lines in the partition function sum with a phase given by the action.
+ For the current thought–experiment, none of this seems to matter, at least,
+ not so far, so I will ignore these details (i.e.
+ the phases) until such time that they become important.
+ 
+\end_layout
+
+\begin_layout Standard
+We can now write down an explicit expression for the location of here–and–now.
+ I'll use the symbol 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ for here–and–now, with P meaning 
+\begin_inset Quotes eld
+\end_inset
+
+present
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Informally, 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ consists of all space–time points where the wave–packet is non–zero at
+ the location of the film plate.
+ That is, the film–plate follows one set of world–lines, stationary in the
+ lab frame, and the particles are moving, so they intersect.
+ I took the effort to give the wave–packet compact support in the time direction.
+ The far–field diffraction pattern is not compactly supported.
+ The film–plate is of finite size, and so some of the diffraction pattern
+ will miss the film–plate entirely.
+ Ideally, we want to make this 
+\begin_inset Quotes eld
+\end_inset
+
+negligibly small
+\begin_inset Quotes erd
+\end_inset
+
+, and I think this is entirely reasonable.
+ The common–sense physics should not depend on out–of–bounds conditions.
+\end_layout
+
+\begin_layout Standard
+So there we have it: the region 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ of space–time is where here–and–now is, at the 
+\begin_inset Quotes eld
+\end_inset
+
+moment of wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Except there's no 
+\begin_inset Quotes eld
+\end_inset
+
+moment
+\begin_inset Quotes erd
+\end_inset
+
+, because the wave–packet size 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ is finite, and because the Renninger setup has that some points in 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ are in the distant future light–cone of others, while other points of 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ are space–like separated.
+ That is, here–and–now is all over the place.
+\end_layout
+
+\begin_layout Standard
+Lets write a formula for this.
+ Again, this is the 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ formula.
+ Writing it down enables this text to vibe like it was written by a shape–rotato
+r instead of a wordcel.
+ Vibes are important.
+ Even engineering texts are 100% vibes, no matter how anhedonic the engineers
+ imagine themselves to be.
+ Where was I? 
+\end_layout
+
+\begin_layout Standard
+Let 
+\begin_inset Formula $p_{i}$
+\end_inset
+
+ denote the 
+\begin_inset Formula $i$
+\end_inset
+
+'th detector pixel; it is an extended object occupying the space–time points
+ 
+\begin_inset Formula $p_{i}\left(x,y,t\right)$
+\end_inset
+
+ given by
+\begin_inset Formula 
+\[
+p_{i}\left(x,y,t\right)=\Theta\left(2^{N}x-i\right)\delta\left(y-D_{i}\right)
+\]
+
+\end_inset
+
+where
+\begin_inset Formula 
+\[
+D_{i}=\begin{cases}
+D_{near} & \mbox{for }i<0\\
+D_{far} & \mbox{for }i\ge0
+\end{cases}
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula $\delta$
+\end_inset
+
+ the Dirac delta (or a suitably widened version thereof.) The function 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ is given by 
+\begin_inset Formula 
+\[
+\Theta\left(w\right)=\begin{cases}
+1 & \mbox{for }-\frac{1}{2}<w<\frac{1}{2}\\
+0 & \mbox{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+The pixel plane 
+\begin_inset Formula $P$
+\end_inset
+
+ consists of all space–time locations 
+\begin_inset Formula 
+\[
+P\left(x,y,t\right)=\sum_{i\in\mathbb{Z}}p_{i}\left(x,y,t\right)
+\]
+
+\end_inset
+
+or perhaps an alternate notation is 
+\begin_inset Formula 
+\[
+P=\left\{ \left(x,y,t\right)\in M:P\left(x,y,t\right)\ne0\right\} 
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $M$
+\end_inset
+
+ being Minkowski space–time.
+ 
+\end_layout
+
+\begin_layout Standard
+The microscopic model of wave–function collapse requires that all of the
+ points in 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ to become entangled.
+ I almost wrote 
+\begin_inset Quotes eld
+\end_inset
+
+thermodynamically entangled
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is where I become confused, again, as to the details.
+ 
 \end_layout
 
 \begin_layout Section*
