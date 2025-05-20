@@ -13117,14 +13117,14 @@ natural structure
 
 \begin_layout Standard
 This does feel a bit circular, and I should address that.
- Two write down the wave equation, I have to write the Laplacian 
+ Two write down the wave equation, I have to write the D'Alambertian 
 \begin_inset Formula $\square$
 \end_inset
 
  and to write that, I have to use the Minkowski metric.
  And yet, I wanted to derive the Minkowski metric, not assume it.
  I think this is OK, because I think I can use conventional concepts of
- atlasses of maps to define the diff geom needed to write down 
+ atlases of maps to define the diff geom needed to write down 
 \begin_inset Formula $\square$
 \end_inset
 
@@ -13630,6 +13630,303 @@ OK.
  Now I really do have to take a break and do something else.
  But I feel like I have made actual forward progress to pin down the issue,
  We shall see...
+\end_layout
+
+\begin_layout Subsection*
+20 May 2025
+\end_layout
+
+\begin_layout Standard
+Please note: For the topics above, I do all my thinking while falling asleep.
+ During the daytime hours, I do something else.
+ So progress can be slow or absent, depending.
+ I'm back down to slow progress, but thought I should write up something
+ obvious, again.
+ So we have a pure state 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ and it has no physical location.
+ To use bad language, 
+\begin_inset Quotes eld
+\end_inset
+
+it's a particle
+\begin_inset Quotes erd
+\end_inset
+
+, but it has no location in 3D space.
+ The formalities of QM allow an expression to be obtained, written as 
+\begin_inset Formula $\left|\left\langle x,t\right.\left|\psi\right\rangle \right|^{2}$
+\end_inset
+
+ which is interpreted as the probability of detecting a particle at location
+ 
+\begin_inset Formula $(x,t)$
+\end_inset
+
+ were there a particle detector placed at that location.
+\end_layout
+
+\begin_layout Standard
+The relationship to choice is this.
+ Consider, to keep things easy, a two–slit setup, with interference fringes,
+ and photographic film as detector.
+ The nature of the interaction with the film is such that the single–photon
+ state 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+, which had no 3D location (let's make it 1D, since this is diffraction)
+ is now forced to choose a location 
+\begin_inset Formula $x_{c}\in\mathbb{R}$
+\end_inset
+
+ such that, upon wave function collapse, 
+\begin_inset Formula $\left|\left\langle x\right.\left|\psi\right\rangle \right|^{2}\approx\delta\left(x-x_{c}\right)$
+\end_inset
+
+ i.e.
+ the photon collided with the silver halide grain located at 
+\begin_inset Formula $x_{c}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+This game seems to have the following rules: (1) the particle is given a
+ choice: the wave function can collapse anywhere at all, but when it does
+ collapse, it must collapse to a single point.
+ (2) Upon many repetitions with the same prepared state, the expectation
+ value of collapse locations will conform to classical diffraction.
+ (3) A micro–theory of photon interaction with silver halide grains needs
+ to be developed.
+\end_layout
+
+\begin_layout Standard
+Now, of course, part (3) is hard, and it is tempting to skip it, and I probably
+ will, eventually.
+ However, it's also the interesting part.
+ As the wave function is collapsing, it is interacting with **all** of the
+ silver–halide grains 
+\begin_inset Quotes eld
+\end_inset
+
+at the same time
+\begin_inset Quotes erd
+\end_inset
+
+, in the here–and–now.
+ That is, all of them are entangled during the collapse process.
+ Huh.
+ I wonder if I can write an expression for this.
+\end_layout
+
+\begin_layout Standard
+But first: Note this entanglement is time–less.
+ That is, imagine that the film is cut, so that the portion of the film
+ for 
+\begin_inset Formula $x<0$
+\end_inset
+
+ is much much closer to the slits than the portion 
+\begin_inset Formula $x>0$
+\end_inset
+
+.
+ This combines the Reninger negative–measurement experiment with the two–slit
+ experiment.
+ The distances are such that the time–of–flight is much larger than the
+ wavepacket size, so that if the wavepacket collapses to a location 
+\begin_inset Formula $x_{c}<0$
+\end_inset
+
+ it does so chronologically much earlier than if it collapsed to 
+\begin_inset Formula $x_{c}>0$
+\end_inset
+
+.
+ What the Reninger negative–measurement experiment tells us is that not
+ only does 
+\begin_inset Formula $\left|\psi\right\rangle $
+\end_inset
+
+ not have a 
+\begin_inset Quotes eld
+\end_inset
+
+location in space
+\begin_inset Quotes erd
+\end_inset
+
+, but it also does not have a 
+\begin_inset Quotes eld
+\end_inset
+
+location in time
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And I think this observation is exactly what I need to resolve the confusion
+ about why here–and–now is insensitive to Lorentz covariance.
+ That is, here–and–now is happening not only everywhere, but it is also
+ happening at all times.
+ The wording of this last sentence is awkward.
+ Perhaps it is this: here–and–now ties together collections of points in
+ spacetime.
+ Not just points in space, but in spacetime.
+ 
+\end_layout
+
+\begin_layout Standard
+For this specific example, it ties together those spacetime points located
+ at the intersection of photo–film location and wave–packet flight–time.
+ Note that some of these points are space–like separated, and some are time–like
+ separated.
+ So, for example, two points 
+\begin_inset Formula $x_{1}<0$
+\end_inset
+
+ and 
+\begin_inset Formula $x_{2}<0$
+\end_inset
+
+ might be space–like separated, if the distance between them is much larger
+ than the wave–packet size 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+.
+ That is, if 
+\begin_inset Formula $\left|x_{1}-x_{2}\right|>c\Delta t$
+\end_inset
+
+.
+ However, imagine doing the experiment with, say, electrons, not photons,
+ so that the wavepacket group velocity is less than 
+\begin_inset Formula $c$
+\end_inset
+
+.
+ Then a point 
+\begin_inset Formula $x_{3}>0$
+\end_inset
+
+ could be in the causal future of 
+\begin_inset Formula $x_{1}<0$
+\end_inset
+
+.
+ Which is the point of the Reninger arrangement: to place the film such
+ that a portion of it is very distinctly in the causal future of the other
+ part, and so far in the future, that it is much larger than 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Anyway, let us now attempt to write down an expression for the entanglement
+ of silver–halide grains in the here–and–now.
+ So first, pixelate.
+ We give each grain the size of 
+\begin_inset Formula $2^{-N}$
+\end_inset
+
+ for some finite integer 
+\begin_inset Formula $N$
+\end_inset
+
+.
+ We do this by taking the continuous space 
+\begin_inset Formula $x\in\mathbb{R}$
+\end_inset
+
+ and removing the dyadic rationals 
+\begin_inset Formula $p/2^{N}$
+\end_inset
+
+ for 
+\begin_inset Formula $p\in\mathbb{Z}$
+\end_inset
+
+ and fixed 
+\begin_inset Formula $N$
+\end_inset
+
+.
+ We've removed a set of measure zero of points, in such a way that each
+ individual silver–halide gran can interact 
+\begin_inset Quotes eld
+\end_inset
+
+within itself
+\begin_inset Quotes erd
+\end_inset
+
+, but cannot interact with its nearest neighbors.
+ That is, the individual grains are thermodynamically isolated, so that
+ whatever energy is deposited into one does not, cannot leak into neighboring
+ grains.
+ Think CCD camera, if that makes you happier.
+ A finite and uniform pixel size.
+\end_layout
+
+\begin_layout Standard
+Next, place the double–slit at location 
+\begin_inset Formula $y=0$
+\end_inset
+
+ and so the film plate is at 
+\begin_inset Formula $y=D_{near}$
+\end_inset
+
+ when 
+\begin_inset Formula $x<0$
+\end_inset
+
+ and 
+\begin_inset Formula $y=D_{far}$
+\end_inset
+
+ for 
+\begin_inset Formula $x>0$
+\end_inset
+
+.
+ That is, the pixel 
+\begin_inset Formula $p$
+\end_inset
+
+ is located at 
+\begin_inset Formula 
+\[
+\left(x,y\right)=\begin{cases}
+\left(p/2^{N},D_{far}\right) & \mbox{for }p\ge0\\
+\left(p/2^{N},D_{near}\right) & \mbox{for }p<0
+\end{cases}
+\]
+
+\end_inset
+
+This can be arranged so that 
+\begin_inset Formula $D_{near}=D_{far}$
+\end_inset
+
+ for the classical two–slit experiment, and, for the Reninger configuration,
+ 
+\begin_inset Formula $D_{far}-D_{near}\gg c\Delta t$
+\end_inset
+
+ for wave–packet size 
+\begin_inset Formula $c\Delta t$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section*
