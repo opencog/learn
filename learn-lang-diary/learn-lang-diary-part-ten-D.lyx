@@ -13213,7 +13213,7 @@ open topological cover of Minkowski psace
 \begin_inset Quotes eld
 \end_inset
 
-On the CausalandTopological Structure of the ...
+On the Causaland Topological Structure of the ...
 \begin_inset Quotes erd
 \end_inset
 
@@ -13736,7 +13736,7 @@ But first: Note this entanglement is time–less.
 \end_inset
 
 .
- This combines the Reninger negative–measurement experiment with the two–slit
+ This combines the Renninger negative–measurement experiment with the two–slit
  experiment.
  The distances are such that the time–of–flight is much larger than the
  wavepacket size, so that if the wavepacket collapses to a location 
@@ -13748,7 +13748,7 @@ But first: Note this entanglement is time–less.
 \end_inset
 
 .
- What the Reninger negative–measurement experiment tells us is that not
+ What the Renninger negative–measurement experiment tells us is that not
  only does 
 \begin_inset Formula $\left|\psi\right\rangle $
 \end_inset
@@ -13820,7 +13820,7 @@ For this specific example, it ties together those spacetime points located
 \end_inset
 
 .
- Which is the point of the Reninger arrangement: to place the film such
+ Which is the point of the Renninger arrangement: to place the film such
  that a portion of it is very distinctly in the causal future of the other
  part, and so far in the future, that it is much larger than 
 \begin_inset Formula $\Delta t$
@@ -13841,7 +13841,7 @@ Anyway, let us now attempt to write down an expression for the entanglement
  The below will describe the Renninger two–slit setup, but it really could
  be any detector geometry whatsoever, for detecting any kinds of particles
  from any kinds of sources.
- I'm selecting the Reninger two–slit setup because its very specific and
+ I'm selecting the Renninger two–slit setup because its very specific and
  concrete.
 \end_layout
 
@@ -13944,7 +13944,7 @@ This can be arranged so that
 \begin_inset Formula $D_{near}=D_{far}$
 \end_inset
 
- for the classical two–slit experiment, and, for the Reninger configuration,
+ for the classical two–slit experiment, and, for the Renninger configuration,
  
 \begin_inset Formula $D_{far}-D_{near}\gg c\Delta t$
 \end_inset
@@ -14741,6 +14741,484 @@ I don't have a microscopic model of the pixels.
 \begin_layout Standard
 Still, this feels like forward progress, again.
  Later, dude.
+\end_layout
+
+\begin_layout Standard
+I guess I can put a sigma algebra and measure on either 
+\begin_inset Formula $P$
+\end_inset
+
+ or 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ and in either case it would correspond to a traditional particle cross–section.
+ In this case, the film plate should also have some finite thickness.
+\end_layout
+
+\begin_layout Subsection*
+21 May 2025
+\end_layout
+
+\begin_layout Standard
+After some thought:
+\end_layout
+
+\begin_layout Itemize
+The definition of 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ as the region of spacetime where collapse takes place is correct.
+\end_layout
+
+\begin_layout Itemize
+The definition of 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ is wrong, the desired interpretation remains desirable.
+\end_layout
+
+\begin_layout Standard
+One problem with 
+\begin_inset Formula $\mathscr{P}^{\prime}$
+\end_inset
+
+ is that if the particle is a photon, its gone, by the end, but if its an
+ electron, its still there.
+ The other problem is that the internal state of the detectors needs to
+ b a part of it.
+ Let 
+\begin_inset Formula $\Omega_{p}$
+\end_inset
+
+ denote the set of all possible pixel states over the entire world–line
+ of pixel 
+\begin_inset Formula $p$
+\end_inset
+
+ so that a point 
+\begin_inset Formula $\omega_{p}\in\Omega_{p}$
+\end_inset
+
+ corresponds to the entire time evolution of the pixel from beginning of
+ time to end of time, from 
+\begin_inset Formula $\left|p,\mbox{initial}\right\rangle $
+\end_inset
+
+ to 
+\begin_inset Formula $\left|p,\omega,\mbox{final}\right\rangle $
+\end_inset
+
+.
+ Note that 
+\begin_inset Formula $\left|p,\mbox{initial}\right\rangle $
+\end_inset
+
+ does NOT depend on 
+\begin_inset Formula $\omega_{p}$
+\end_inset
+
+: no matter what path the pixel takes in the future, it starts in a fixed
+ state.
+ Note that the final state 
+\begin_inset Formula $\left|p,\omega_{p},\mbox{final}\right\rangle $
+\end_inset
+
+ does depend on the path 
+\begin_inset Formula $\omega_{p}$
+\end_inset
+
+ even if the pixel does NOT capture the photon: the entanglement during
+ w.f.
+ collapse might have changed the phase in the pixel.
+ This raises the interesting possibility that there might be some effect
+ similar to Aharonov–Bohm, in that phases change even though there was no
+ direct detection in that pixel.
+\end_layout
+
+\begin_layout Standard
+Likewise, write 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ for the space of all possible continuous evolution paths for the particle,
+ from the distant past to the distant future, so that the point 
+\begin_inset Formula $\psi\in\Psi$
+\end_inset
+
+ corresponds to the time evolution from 
+\begin_inset Formula $\left|\psi,\mbox{initial}\right\rangle $
+\end_inset
+
+ to 
+\begin_inset Formula $\left|\psi,\mbox{final}\right\rangle $
+\end_inset
+
+.
+ With this notation, the total state space is then
+\begin_inset Formula 
+\[
+E=\Psi\times\prod_{p}\Omega_{p}
+\]
+
+\end_inset
+
+so that a point 
+\begin_inset Formula $\eta\in E$
+\end_inset
+
+ corresponds to the evolution of the system from 
+\begin_inset Formula $\left|\eta,\mbox{initial}\right\rangle =\left|\psi,\left\{ p\right\} ,\mbox{initial}\right\rangle $
+\end_inset
+
+ to 
+\begin_inset Formula $\left|\eta,\mbox{final}\right\rangle =\left|\psi,\left\{ p,\omega\right\} ,\mbox{final}\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The notation is meant to enable the use of S–matrix ideas, so that we can
+ write 
+\begin_inset Formula $\left|\eta,\mbox{final}\right\rangle =S\left|\eta,\mbox{initial}\right\rangle $
+\end_inset
+
+.
+ The notation is also meant to allow the explicit analogy to Wiener space,
+ so that points 
+\begin_inset Formula $\eta\in E$
+\end_inset
+
+ correspond to continuous paths in the evolution of the system.
+ The intended path parameter is meant to be here–and–now.
+ This parameter is both a point; I guess we can treat it as a point on the
+ unit real interval 
+\begin_inset Formula $I$
+\end_inset
+
+, and it is also a region of spacetime, so that 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ denotes the location of here–and–now where the wave–function collapse occurs.
+ From the point of view of the S–matrix, 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ is just the interaction region.
+ The point of the Renninger setup is that 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ is not star–shaped or convex.
+\end_layout
+
+\begin_layout Standard
+In this formulation, here–and—now is both 
+\begin_inset Quotes eld
+\end_inset
+
+instantaneous
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+spread out
+\begin_inset Quotes erd
+\end_inset
+
+, so that the w.f.
+ collapse is also both 
+\begin_inset Quotes eld
+\end_inset
+
+instantaneous
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+spread out
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That is, in the parameter space, taken to be the unit interval of the reals
+ 
+\begin_inset Formula $I=\left\{ \rho\in\mathbb{R}:0\le\rho\le1\right\} $
+\end_inset
+
+ there are a bunch of points 
+\begin_inset Formula $\rho$
+\end_inset
+
+ that are before the collapse, and a bunch of points after the collapse,
+ but there is just one point 
+\begin_inset Formula $\rho$
+\end_inset
+
+ that corresponds to the region 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+ For the sake of convenience, lets parameterize this so that 
+\begin_inset Formula $\rho=1/2$
+\end_inset
+
+ when the collapse happens.
+ The parameter interval 
+\begin_inset Formula $0\le\rho<1/2$
+\end_inset
+
+ can be taken to be isomorphic to the passage of Newtonian time, or proper
+ time in the lab frame, up until just before the particle wave packet begins
+ to overlap the detectors.
+ For this region, the Schrodinger equation (or the wave equation, as appropriate
+) fully and completely describes the time evolution of the particle.
+ The pixels likewise 
+\begin_inset Quotes eld
+\end_inset
+
+do their thing
+\begin_inset Quotes erd
+\end_inset
+
+ in this region.
+ Then, at precisely 
+\begin_inset Formula $\rho=1/2$
+\end_inset
+
+ we suspend all of this, and move the discussion of the S–matrix interaction
+ region 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+.
+ The collapse happens 
+\begin_inset Quotes eld
+\end_inset
+
+there
+\begin_inset Quotes erd
+\end_inset
+
+.
+ After that, normal evolution resumes, so that the interval 
+\begin_inset Formula $1/2<\rho\le1$
+\end_inset
+
+ is again isomorphic to lab–frame proper time, and pixel evolution continues
+ normally.
+\end_layout
+
+\begin_layout Standard
+Note that there is a large discontinuity: we run the lab–frame clock until
+ right before the interaction starts: this time is 
+\begin_inset Formula $t_{\mbox{before}}$
+\end_inset
+
+ and corresponds to 
+\begin_inset Formula $\rho\to1/2$
+\end_inset
+
+ from below.
+ The time 
+\begin_inset Formula $t_{\mbox{after}}$
+\end_inset
+
+ corresponds to the lab time after which all possible interactions are over,
+ it corresponds to 
+\begin_inset Formula $\rho\to1/2$
+\end_inset
+
+ from above.
+ However, in the lab, 
+\begin_inset Formula 
+\[
+t_{\mbox{after}}=t_{\mbox{before}}+\Delta t+\frac{D_{far}-D_{near}}{v}
+\]
+
+\end_inset
+
+with, as before, 
+\begin_inset Formula $\Delta t$
+\end_inset
+
+ being the wavepacket width, 
+\begin_inset Formula $v$
+\end_inset
+
+ the group velocity of the wavepacket, and 
+\begin_inset Formula $D_{near}$
+\end_inset
+
+ and 
+\begin_inset Formula $D_{far}$
+\end_inset
+
+ the detector locations.
+ A different way to say this is that 
+\begin_inset Formula $t_{\mbox{before}}$
+\end_inset
+
+ is the infimum of the proper time in 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ and 
+\begin_inset Formula $t_{\mbox{after}}$
+\end_inset
+
+ is the supremum: the lower and upper bounds.
+ Algebraically, 
+\begin_inset Formula 
+\[
+t_{\mbox{before}}=\inf\left\{ t:\left(x,y,t\right)\in\mathscr{P}\right\} 
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+t_{\mbox{after}}=\sup\left\{ t:\left(x,y,t\right)\in\mathscr{P}\right\} 
+\]
+
+\end_inset
+
+That is, the wave–function collapse occurs over this extended region of
+ lab–frame time.
+ The wave–function collapse is instant, in parameter time.
+ Then, a single point 
+\begin_inset Formula $\eta\in E$
+\end_inset
+
+ is an interpolation of the system from 
+\begin_inset Formula $t_{\mbox{before}}$
+\end_inset
+
+ to 
+\begin_inset Formula $t_{\mbox{after}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+OK.
+ My brains are cooked.
+ The efforts of the last 2 or 3 days is a verbose reformulation of well–known
+ physics, the basic ingredients that go into the Mott problem https://en.wikipedi
+a.org/wiki/Mott_problem but adapted to a Renninger two–slit setup.
+\end_layout
+
+\begin_layout Standard
+To make the desired analogy to the Wiener process, I need a measurement
+ process
+\begin_inset Formula 
+\[
+X:I\times E\to Q
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $I$
+\end_inset
+
+ is the unit interval that interpolates between 
+\begin_inset Formula $t_{\mbox{before}}$
+\end_inset
+
+ and 
+\begin_inset Formula $t_{\mbox{after}}$
+\end_inset
+
+, and 
+\begin_inset Formula $E$
+\end_inset
+
+ is the path space and 
+\begin_inset Formula $Q$
+\end_inset
+
+ is ...
+ well, naively, 
+\begin_inset Formula $Q$
+\end_inset
+
+ needs to be a 
+\begin_inset Quotes eld
+\end_inset
+
+slice
+\begin_inset Quotes erd
+\end_inset
+
+ through the detector+particle state, but I'm confused how to write this,
+ because this slice is smeared out over all of the interval 
+\begin_inset Formula $t_{\mbox{before}}<t<t_{\mbox{after}}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Have I made any progress here? A tiny amount.
+ I made some notational progress.
+ Although I kind of bungled 
+\begin_inset Formula $E$
+\end_inset
+
+ because at first, it covers all time, and then later, it covers only 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+ so I should instead I should fix the notation to indicate some intersection
+ between 
+\begin_inset Formula $E$
+\end_inset
+
+ and 
+\begin_inset Formula $\mathscr{P}$
+\end_inset
+
+, because that is what needs to be interpolated.
+ Whatever.
+ That's not hard to fix.
+\end_layout
+
+\begin_layout Standard
+All of the difficult issues remain unscathed.
+ I need a microscopic analysis, analogous to the Mott problem calculation
+ from 1929, and I need to take that analysis and reformulate it into the
+ above notational framework.
+ 
+\end_layout
+
+\begin_layout Standard
+—
+\end_layout
+
+\begin_layout Standard
+I have not read this paper, but it seems to be relevant to what I talk about
+ above, and I believe that also the framework I am trying to develop here
+ resolves the issues raised there.
+ Entanglement of quantum clocks through gravity Esteban Castro Ruiz, Flaminia
+ Giacomini, Časlav Brukner, Proc Natl Acad Sci U S A .
+ 2017 Mar 7;114(12):E2303–E2309.
+ doi: 10.1073/pnas.1616427114 https://pmc.ncbi.nlm.nih.gov/articles/PMC5373405/
+ why the fact this is in PubMed, I don't know, I hope its not a cranky paper.
+ Authors seem to be legit.
 \end_layout
 
 \begin_layout Section*
