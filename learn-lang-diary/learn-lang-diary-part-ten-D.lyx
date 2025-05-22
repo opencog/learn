@@ -15724,7 +15724,8 @@ should not be controversial.
 \begin_inset Formula $\left|b\right\rangle $
 \end_inset
 
- I should have written a mixture sum of states 
+ I should have written a mixture density operator written as a sum of states
+ 
 \begin_inset Formula $\bigcup_{s\in b}\rho\left(s\right)\left|s\right\rangle \left\langle s\right|$
 \end_inset
 
@@ -15742,17 +15743,286 @@ should not be controversial.
 \end_inset
 
 .
+ It's not obvious that I need to invoke density operators; I think it's
+ OK to just acknowledge that 
+\begin_inset Formula $\left|b\right\rangle $
+\end_inset
+
+ is a mixture, and, if needed to explicitly write
+\begin_inset Formula 
+\[
+\left|b\right\rangle =\bigcup_{s\in b}\rho\left(s\right)\left|s\right\rangle 
+\]
+
+\end_inset
+
+as needed to indicate that 
+\begin_inset Formula $b$
+\end_inset
+
+ is just some distribution of pure states on some manifold.
+ And, since we're thermalizing, its reasonable to set 
+\begin_inset Formula $\rho\left(s\right)=1$
+\end_inset
+
+ to indicate that the states are ergodically distributed.
+\end_layout
+
+\begin_layout Standard
+And yet, what is surprising here is that weak–coupling again takes the form
+ of entanglement.
+ That is, in writing 
+\begin_inset Formula $\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|n\right\rangle \otimes\left|b\right\rangle $
+\end_inset
+
+ we again convert a Cartesian product into a tensor product, but this time
+ there's no actual photon needed to create this entanglement.
+ Or rather, there was no explicit photon.
+ At the micro–scale, a weak coupling between oscillators necessarily will
+ entail the exchange of virtual photons, one way or another: either due
+ to Brownian motion collisions in a gas, or some other statistical–mechanical
+ process.
+ That is, measurement is necessarily entanglement.
+ Just that, earlier, we used an explicit, real photon and considered its
+ absorption, vs.
+ now we implicitly assume virtual photon interactions.
+ So this is interesting.
+\end_layout
+
+\begin_layout Standard
+The mixed–state notation implies that
+\begin_inset Formula 
+\[
+\left|n\right\rangle \otimes\left|b\right\rangle =\bigcup_{s\in b}\rho\left(s\right)\left|n\right\rangle \otimes\left|s\right\rangle 
+\]
+
+\end_inset
+
+holds at the microscopic level.
+ I'm not sure what to do with this, or what it really means.
+\end_layout
+
+\begin_layout Standard
+The next formula that was also meant to be non–controversial
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|n\right\rangle \otimes\left|b\right\rangle \rightrightarrows\left|\left(b+n\right)^{\prime}\right\rangle 
+\left|n\right\rangle \otimes\left|b\right\rangle \rightrightarrows\left|\left(b+n\right)^{\prime}\right\rangle 
 \]
 
 \end_inset
 
+but is this really valid? This was meant to denote the thermalization of
+ state 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
 
+ but the set–union notation indicates difficulty.
+ That is, the time evolution is supposed to be given in the Schrodinger
+ picture as 
+\begin_inset Formula $e^{-iEt}$
+\end_inset
+
+ so that
+\begin_inset Formula 
+\begin{align*}
+\left|n\left(t\right)\right\rangle  & =e^{-iE_{n}t}\left|n\left(0\right)\right\rangle \\
+\left|s\left(t\right)\right\rangle  & =e^{-iE_{s}t}\left|s\left(0\right)\right\rangle \\
+\bigcup_{s\in b}\rho\left(s\right)\left|n\left(t\right)\right\rangle \otimes\left|s\left(t\right)\right\rangle  & =\bigcup_{s\in b}\rho\left(s\right)e^{-i\left(E_{n}+E_{s}\right)t}\left|n\left(0\right)\right\rangle \otimes\left|s\left(0\right)\right\rangle 
+\end{align*}
+
+\end_inset
+
+and I'm not sure if this is supposed to be the textbook–standard description
+ of thermalization.
+ It doesn't quite feel right.
+ When I was a kid, my education did not include any formal development of
+ mixed states.
+ Instead, it was some hand–waving: 
+\begin_inset Quotes eld
+\end_inset
+
+oh, its what you get if you run the same experiment over and over
+\begin_inset Quotes erd
+\end_inset
+
+ and the set–union notation was not used, but it could be reasonably inferred:
+ the mixture is just the union of all repetitions of re–running the experiment.
+ Later on, I did eventually realize why the density of states 
+\begin_inset Formula $\rho\left(s\right)$
+\end_inset
+
+ is a real number, and not a complex number, and that it represents a probabilit
+y distribution, not a phase or amplitude.
+ What's more, the pure states 
+\begin_inset Formula $s$
+\end_inset
+
+ correspond to single points on some manifold, and so mixtures were just
+ some distributions of points on a manifold.
+ This is clean and clear–cut, and seems to be straight–forward interpretationall
+y.
+ So why am I balking?
+\end_layout
+
+\begin_layout Standard
+Well, for one, the time evolution 
+\begin_inset Formula $e^{-i\left(E_{n}+E_{s}\right)t}$
+\end_inset
+
+ is unitary, whereas I was expecting something dissipative.
+ Am I supposed to write 
+\begin_inset Formula $\rho\left(s,t\right)$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\rho\left(s\right)$
+\end_inset
+
+ with the understanding that 
+\begin_inset Formula $\rho\left(s,t\right)$
+\end_inset
+
+ is some ergodic process, possibly some Markovian process, maybe even necessaril
+y Markovian? I don't know.
+ If this is the case, this is far outside of anything I've read about, before.
+\end_layout
+
+\begin_layout Standard
+The other reason that I'm balking is that ...
+ wait for it ...
+ 
+\begin_inset Formula $\bigcup_{s\in b}$
+\end_inset
+
+ sure–as–hell feels like a set–union over many–worlds.
+ That is, each 
+\begin_inset Formula $s\in b$
+\end_inset
+
+ is a single world, and 
+\begin_inset Formula $\rho\left(s\right)$
+\end_inset
+
+ is the probability of being in that single world, and 
+\begin_inset Formula $\bigcup_{s\in b}$
+\end_inset
+
+ is just the collection of them.
+ Very strangely, very unexpectedly, this fits with the naive hand–waving
+ description of a mixed state as the union of a repeated collection of experimen
+ts.
+ Because, duh.
+ We ran Stern–Gerlach once, got spin up, ran it a second time, got spin–down
+ and each single run of the experiment, each single sodium atom flying through
+ those magnets, each one of these was a single world, a single experiment,
+ and the union of all of these, the splatter of a trillion sodium atoms
+ on that glass plate forming two distinct spots, that's of course the mixture,
+ that's what we meant by mixture.
+ But fuck me if 
+\begin_inset Formula $\bigcup_{s\in b}$
+\end_inset
+
+ isn't a union over many worlds.
+ This is ...
+ unexpected and surprising.
+ I suppose some future reader of this text is thinking 
+\begin_inset Quotes eld
+\end_inset
+
+yeah, and its also wrong
+\begin_inset Quotes erd
+\end_inset
+
+ but if it's wrong, I do not yet see how.
+ 
+\end_layout
+
+\begin_layout Standard
+This brings us to the one statement that does seem problematic, and is central
+ to the development above.
+ Set 
+\begin_inset Formula $n_{1}=n_{2}=0$
+\end_inset
+
+ and ignore normalization and overall phase to write the prior collapse
+ formula as
+\begin_inset Formula 
+\begin{align*}
+\left(\left|1\right\rangle \otimes\left|0\right\rangle +e^{i\phi}\left|0\right\rangle \otimes\left|1\right\rangle \right)\times\left|b_{1}\right\rangle \times\left|b_{2}\right\rangle  & \mapsto\\
+\left\{ \left[\left(\left|1\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|0\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]\;,\;\left[\left(\left|0\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|1\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]\right\} 
+\end{align*}
+
+\end_inset
+
+Here, the many–worlds interpretation manifests very specifically: there
+ are two experimental outcomes: in one outcome, 
+\begin_inset Formula $\left(\left|1\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|0\right\rangle \otimes\left|b_{2}\right\rangle \right)$
+\end_inset
+
+ is explicitly observed, and in the other outcome 
+\begin_inset Formula $\left(\left|0\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|1\right\rangle \otimes\left|b_{2}\right\rangle \right)$
+\end_inset
+
+ is observed, and these are the only two outcomes possible.
+ Each experimental outcome is equally likely, and so we write 
+\begin_inset Formula $\rho\left(0\times1\right)=\rho\left(1\times0\right)=1/2$
+\end_inset
+
+ and so if we repeat the the experiment a trillion times, it is to be written
+ as 
+\begin_inset Formula 
+\[
+\left|SG\right\rangle =\rho\left(1\times0\right)\left[\left(\left|1\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|0\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]\;\cup\;\rho\left(0\times1\right)\left[\left(\left|0\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|1\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\left|SG\right\rangle $
+\end_inset
+
+ is the **mixed** state representing the outcome of running Stern–Gerlach
+ a trillion times, and 
+\begin_inset Formula $\left|1\right\rangle \otimes\left|b_{1}\right\rangle $
+\end_inset
+
+ is where the sodium atom hits the glass plate in the upper half, and 
+\begin_inset Formula $\left|0\right\rangle \otimes\left|b_{2}\right\rangle $
+\end_inset
+
+ is where the sodium atom does NOT hit in the lower half, because there
+ is only one sodium atom, so if it hits high, then the world, the outcome
+ of a single–sodium–atom experiment is necessarily 
+\begin_inset Formula $\left(\left|1\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|0\right\rangle \otimes\left|b_{2}\right\rangle \right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+And, from this, we get that the earlier notation of using 
+\begin_inset Formula $\left\{ \cdots\right\} $
+\end_inset
+
+ to be the **set** of all possible measurement outcomes is really the same
+ thing as a mixed state, with only the practical different being that we
+ also use 
+\begin_inset Formula $\rho\left(s\right)$
+\end_inset
+
+ to assign a probability to each outcome.
+ Oh, and if we were only to be a bit more careful in our notation, we should
+ eventually discover that 
+\begin_inset Formula $\rho\left(s\right)=\left|\psi\left(s\right)\right|^{2}$
+\end_inset
+
+ but I've been too sloppy in my notation to be able to jump to that conclusion
+ just yet.
+ But that conclusion seems inevitable, so I'm not to worried.
+ 
 \end_layout
 
 \begin_layout Section*
