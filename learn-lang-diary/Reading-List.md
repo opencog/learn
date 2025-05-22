@@ -1,5 +1,8 @@
 
 Things to read:
+* Harnessing the Universal Geometry of Embeddings
+  Rishi Jha, Collin Zhang, Vitaly Shmatikov, John X. Morris
+  https://arxiv.org/abs/2505.12540
 
 * Discrete Visual Tokens of Autoregression, by Diffusion, and for Reasoning
   Bohan Wang et al

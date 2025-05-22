@@ -15226,6 +15226,261 @@ I have not read this paper, but it seems to be relevant to what I talk about
  Authors seem to be legit.
 \end_layout
 
+\begin_layout Subsection*
+22 May 2025
+\end_layout
+
+\begin_layout Standard
+Well, So lets vastly simplify the above setup.
+ Suppose there is a single photon: a plane wave.
+ Suppose there are two simple harmonic oscillators: these are the detectors.
+ The energy of the photon is sufficient to kick one of the oscillators into
+ an excited state, but not both.
+ After photon absorption, this places the system into a superposition: either
+ one or the other oscillator is excited; we don't know which, both possibilities
+ are in superposition.
+ No 
+\begin_inset Quotes eld
+\end_inset
+
+collapse
+\begin_inset Quotes erd
+\end_inset
+
+ has occurred; we've simply used the photon to prepare a superposition.
+ Instead of using harmonic oscillators, one can imagine there being two
+ hydrogen atoms, with the photon being sufficient to excite one of them.
+ This detail doesn't matter.
+\end_layout
+
+\begin_layout Standard
+Next, we want to work with decoherence.
+ So really, the two receiving SHO's should be weakly coupled to some network
+ of other oscillators, so that their energy can bleed out to those, thus
+ resulting in decoherence.
+ Some interesting questions arise: would a linear chain of weakly oscillators
+ be enough to decohere and thermalize? Does it have to be 2D? Some random
+ network? Does it have to be up in the mean–field connectivity range? Lets
+ ignore these questions for now.
+ Interesting, but some other day.
+\end_layout
+
+\begin_layout Standard
+So how does decoherence work? (I still haven't read the Wikipedia article
+ on it ...) Each SHO state is then 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
+
+ and since we have two of them, the combined state is 
+\begin_inset Formula $\left|n_{1}\right\rangle \times\left|n_{2}\right\rangle $
+\end_inset
+
+ with the Cartesian product denoting that they are NOT coherent with respect
+ to one–another; they are (initially) decoupled.
+ The whole point of absorbing a single photon is that it couples the two
+ oscillators together, forming a single pure entangled state out of them.
+ Lets try to write this down:
+\begin_inset Formula 
+\[
+\gamma\times\left|n_{1}\right\rangle \times\left|n_{2}\right\rangle \rightsquigarrow\frac{e^{i\theta}}{\sqrt{2}}\left(\left|n_{1}+1\right\rangle \otimes\left|n_{2}\right\rangle +e^{i\phi}\left|n_{1}\right\rangle \otimes\left|n_{2}+1\right\rangle \right)
+\]
+
+\end_inset
+
+Here, 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ denotes the incoming photon.
+ It also is not 
+\begin_inset Quotes eld
+\end_inset
+
+coherent
+\begin_inset Quotes erd
+\end_inset
+
+ with respect to either oscillator, and so the Cartesian product 
+\begin_inset Formula $\times$
+\end_inset
+
+ symbol is used to denote this.
+ The photon absorption, indicated by the squiggly arrow 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+ places the two oscillators into superposition, and thus the otimes 
+\begin_inset Formula $\otimes$
+\end_inset
+
+ symbol is used.
+ Only one of the two oscillators can be excited, not both, so only 
+\begin_inset Formula $n_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $n_{2}$
+\end_inset
+
+ can be incremented.
+ There is necessarily some fixed phase 
+\begin_inset Formula $e^{i\phi}$
+\end_inset
+
+ between these two.
+ Where it comes from, I don't know.
+ In a 
+\begin_inset Quotes eld
+\end_inset
+
+realistic
+\begin_inset Quotes erd
+\end_inset
+
+ model, it would arise from some detailed description of the photon–oscillator
+ interaction.
+ Perhaps its always the same for every photon interaction, perhaps it changes
+ each time.
+ The point is that the RHS is an entangled state.
+ I've thrown in an extra factor of 
+\begin_inset Formula $e^{i\theta}$
+\end_inset
+
+ which 
+\begin_inset Quotes eld
+\end_inset
+
+doesn't matter
+\begin_inset Quotes erd
+\end_inset
+
+ in the usual sense, and a factor of 
+\begin_inset Formula $1/\sqrt{2}$
+\end_inset
+
+ so as to preserve normalization and minimize hand–waving.
+\end_layout
+
+\begin_layout Standard
+Each of these oscillators is coupled to it's own disjoint thermal bath,
+ and so eventually, these oscillators decohere.
+ Write 
+\begin_inset Formula $\left|b_{1}\right\rangle $
+\end_inset
+
+ and 
+\begin_inset Formula $\left|b_{2}\right\rangle $
+\end_inset
+
+ for these baths.
+ Weak coupling, followed by decoherence can be written as
+\begin_inset Formula 
+\[
+\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|\left(b+n\right)^{\prime}\right\rangle 
+\]
+
+\end_inset
+
+where the mapsto arrow 
+\begin_inset Formula $\mapsto$
+\end_inset
+
+ indicates decoherence.
+ The pure state 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
+
+ appearing on the LHS gets absorbed into the bath on the RHS.
+ The prime denotes that the new bath is not the same as before, and the
+ plus sign indicates that the state has been ergodically mixed into the
+ bath.
+ We retain the 
+\begin_inset Formula $n$
+\end_inset
+
+ to maintain detailed balance, i.e.
+ that the total energy on LHS and RHS is the same.
+ The energy in 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
+
+ was mixed into the bath, raising its energy.
+ The mixing can be assumed to resemble the Fermi–Pasta–Ulam–Tsingou type
+ ergodic mixing, or something along those lines.
+ The use of the Cartesian product on the LHS indicates that the state 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
+
+ is not yet coupled to the bath; we do not want to use the tensor product
+ symbol 
+\begin_inset Formula $\otimes$
+\end_inset
+
+ just yet, because intially, there's no coupling.
+ Perhaps it would be correct to write this, instead: 
+\begin_inset Formula 
+\[
+\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|n\right\rangle \otimes\left|b\right\rangle \rightrightarrows\left|\left(b+n\right)^{\prime}\right\rangle 
+\]
+
+\end_inset
+
+to indicate that the pure state 
+\begin_inset Formula $\left|n\right\rangle $
+\end_inset
+
+ becomes entangles with the bath 
+\begin_inset Formula $\left|b\right\rangle $
+\end_inset
+
+ and then, over time evolves in such a way that 
+\begin_inset Formula $\left|\left(b+n\right)^{\prime}\right\rangle $
+\end_inset
+
+ is the more appropriate notation.
+ The 
+\begin_inset Formula $\rightrightarrows$
+\end_inset
+
+ is intended to denote that the eventual state of the detector SHO might
+ be some mixture of states, given by the thermal bath.
+\end_layout
+
+\begin_layout Standard
+The grand–total process is thus meant to be written algebraically written
+ as
+\begin_inset Formula 
+\begin{align*}
+\frac{e^{i\theta}}{\sqrt{2}}\left(\left|n_{1}+1\right\rangle \otimes\left|n_{2}\right\rangle +e^{i\phi}\left|n_{1}\right\rangle \otimes\left|n_{2}+1\right\rangle \right)\times\left|b_{1}\right\rangle \times\left|b_{2}\right\rangle  & \mapsto\\
+\left\{ \left[\left(\left|n_{1}+1\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|n_{2}\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]\;,\;\left[\left(\left|n_{1}\right\rangle \otimes\left|b_{1}\right\rangle \right)\times\left(\left|n_{2}+1\right\rangle \otimes\left|b_{2}\right\rangle \right)\right]\right\}  & \rightrightarrows\\
+\left\{ \left[\left|\left(b_{1}+n_{1}+1\right)^{\prime}\right\rangle \times\left|\left(b_{2}+n_{2}\right)^{\prime}\right\rangle \right]\;,\;\left[\left|\left(b_{1}+n_{1}\right)^{\prime}\right\rangle \times\left|\left(b_{2}+n_{2}+1\right)^{\prime}\right\rangle \right]\right\} 
+\end{align*}
+
+\end_inset
+
+where the mapsto arrow 
+\begin_inset Formula $\mapsto$
+\end_inset
+
+ indicates decoherence, and the Cartesian product indicates two systems,
+ no longer entangled.
+ The curly braces 
+\begin_inset Formula $\left\{ \cdots\right\} $
+\end_inset
+
+ indicate the set of all possible worlds: the many–worlds outcome.
+ Here, there are two possible worlds after collapse and decoherence: one
+ world, having the state 
+\begin_inset Formula $\left|n_{1}+1\right\rangle \times\left|n_{2}\right\rangle $
+\end_inset
+
+ and another world having the state 
+\begin_inset Formula $\left|n_{1}\right\rangle \times\left|n_{2}+1\right\rangle $
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
