@@ -15452,7 +15452,7 @@ where the mapsto arrow
 \begin_inset Formula $\otimes$
 \end_inset
 
- just yet, because intially, there's no coupling.
+ just yet, because initially, there's no coupling.
  Perhaps it would be correct to write this, instead: 
 \begin_inset Formula 
 \[
@@ -15538,8 +15538,221 @@ What's new here are the curly braces
 \end_layout
 
 \begin_layout Standard
-There are a number of surprising features to the above, and soe reviewing
+There are a number of surprising features to the above, and so reviewing
  these and placing them into context is worthwhile.
+ First, only two detectors were used; the above algebra generalizes 
+\begin_inset Quotes eld
+\end_inset
+
+trivially
+\begin_inset Quotes erd
+\end_inset
+
+ to more than two.
+ Next, SHO's were used as detectors, but for a realistic setup, these could
+ be any quantum system that couples to light.
+ Likewise, the photon was over–simplified in the above; there's no mention
+ of polarization, and no explicit concern about its wavelength, other than
+ that the energy should be matched to what the detector is sensitive to.
+ All this is OK, because it does not seem to impact the general description.
+\end_layout
+
+\begin_layout Standard
+Perhaps the most surprising aspect of the above is the ansatz made for the
+ photon absorption.
+ I did not expect this myself, but got forced into it while attempting to
+ write the text.
+ It is very much the case that the initial state of the two detectors must
+ be a Cartesian product of two distinct, isolated, non–interacting systems.
+ Of this, there's no doubt; we're not causally tracing these back to the
+ Bag Bang to argue that they are secretly entangled.
+ No, they're distinct.
+ However, after the photon absorption, they must necessarily become entangled.
+ This must also be the case, as otherwise, there is no mechanism available
+ to guarantee that the photon is absorbed only once.
+ We must have this, in order to have the linear logic menu–choice operator:
+ either one system absorbs the photon, or the other, but not both.
+ For one dollar, you get this candy–bar, or that one, but not both.
+ The tensor product is the formal procedure that provides the mutual exclusion
+ lock needed for wave function collapse.
+\end_layout
+
+\begin_layout Standard
+So this is perhaps the next surprising thing: the relationship between linear
+ logic and mutex locks in software and vending machines is well–known, and
+ both mutex locks and vending machines are classical objects, not quantum
+ objects.
+ There's no Schrodinger's candy–bar superposition between a Kit–Kat bar
+ and a Snickers.
+ Put the dollar in the machine, open the lid and look: you see a Kit–Kat
+ bar or a Snickers; you cannot infer that they were in a quantum superposition
+ before you inserted the dollar bill.
+ Yet I am absolutely tickled that this classical menu–choice fragment of
+ linear logic is exactly what is needed to describe the state of the system
+ immediately after the photon absorption.
+ Again, I repeat, cut–n–pasting the above formula: the state, after photon
+ absorption, but before decoherence is
+\begin_inset Formula 
+\[
+\left|n_{1}+1\right\rangle \otimes\left|n_{2}\right\rangle +e^{i\phi}\left|n_{1}\right\rangle \otimes\left|n_{2}+1\right\rangle 
+\]
+
+\end_inset
+
+and that is the bona–fide tensor symbol there, and bona–fide vector addition.
+ This is an element of a tensor algebra.
+ Its the real thing, a real quantum state, and more precisely, an entangled
+ quantum state.
+ The absorption of the photon entangled the two detectors.
+ And, again, it seems there is no other way.
+ There is no other mathematical mechanism that I know of that provides the
+ required mutual exclusion.
+\end_layout
+
+\begin_layout Standard
+Now, perhaps, if one got into category theory more deeply, there might perhaps
+ be other algebraic constructions that embed the needed menu–choice fragment
+ of linear logic, and that perhaps one of these other systems could be used
+ in place of the tensor product above.
+ I dunno.
+ It's possible, I suppose, But given that QM is firmly grounded on the ordinary
+ tensor algebra, it seems pointless to hunt for other possibilities at this
+ time.
+ Interesting, perhaps, but not today.
+ And so, for this reason, I conclude that post photon absorption, the two
+ detectors must necessarily be entangled in the fashion as written above.
+ I insist that this must be the case, that there's no other way, and yet
+ I find it kind of surprising and amazing.
+ I guess surprise and amazement is part of the territory.
+ Anyway ...
+\end_layout
+
+\begin_layout Standard
+The next noteworthy point is that these detectors can be placed in a Renninger
+ arrangement: system one might be a meter away from the light source, and
+ system two might be a kilometer away, or a few million light–years away.
+ However distant these two detectors seem to be in the conventional Newtonian
+ sense, they are at distance zero in the Minkowski metric light–cone sense.
+ Although perhaps this is misleading: the above description also works if
+ I replace the photon by some massive particle, e.g.
+ an electron.
+ The Renninger arrangement is still possible: one detector is a few centimeters
+ away, the other is a few meters away in some pumped–out vacuum chamber.
+ The more distant detector is strictly inside the future light–cone of the
+ closer detector.
+ They are time–like separated.
+ And yet, despite this separation, they are entangled.
+ And this is the other remarkable part of the here–and–now interpretation:
+ clocks located in the lab frame, close to the locations of the detectors
+ show distinct times and time ordering.
+ However, the entanglement is 
+\begin_inset Quotes eld
+\end_inset
+
+here and now
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'm studiously avoiding the words 
+\begin_inset Quotes eld
+\end_inset
+
+future
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+past
+\begin_inset Quotes erd
+\end_inset
+
+, because I want to reserve these words to the stuff that happened before
+ here–and–now, vs the stuff that might happen after here–and–now.
+ Shit.
+ I need different vocabulary words to indicate the ordering, because there
+ seems to be two orderings: the relative ordering arising from the (local)
+ Minkowski geometry, and the ordering arising from the measurement entanglement.
+ That is, the entanglement happens in the here–and–now, even though the
+ two entangled systems are causally separated (for electrons) or light–like
+ separated (for photons).
+\end_layout
+
+\begin_layout Standard
+Fuck me.
+ I suppose I should go off and read those Nobel–prize–winning papers from
+ Clauser etal.
+ because for all I know, I'm just re–inventing what they described.
+ See? This is the decision problem: should I forever read what someone else
+ has thought about and discovered, or should I go practice discovering things
+ on my own? Well, here I am, practicing.
+ Maybe this particular rock–climbing wall has been climbed before.
+ Maybe not.
+ Don't know.
+ So it goes.
+\end_layout
+
+\begin_layout Standard
+So where was I? So, the next surprising thing in the development above is
+ where and how many–worlds shows up as a side–effect of decoherence.
+ First, the weak–coupling formula
+\begin_inset Formula 
+\[
+\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|n\right\rangle \otimes\left|b\right\rangle 
+\]
+
+\end_inset
+
+should not be controversial.
+ It just says that there's a thermal bath 
+\begin_inset Formula $b$
+\end_inset
+
+ and that we will use 
+\begin_inset Formula $\left|b\right\rangle $
+\end_inset
+
+ to describe the state of that bath.
+ In particular, 
+\begin_inset Formula $\left|b\right\rangle $
+\end_inset
+
+ is necessarily a mixed state and so instead of writing 
+\begin_inset Formula $\left|b\right\rangle $
+\end_inset
+
+ I should have written a mixture sum of states 
+\begin_inset Formula $\bigcup_{s\in b}\rho\left(s\right)\left|s\right\rangle \left\langle s\right|$
+\end_inset
+
+ for some mixture density 
+\begin_inset Formula $\rho\left(s\right)$
+\end_inset
+
+ and the bigcup union 
+\begin_inset Formula $\bigcup_{s\in b}$
+\end_inset
+
+ is used to remind us that this should be thought of as a topological set–union
+ of all of the pure states 
+\begin_inset Formula $s\in b$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\left|n\right\rangle \times\left|b\right\rangle \mapsto\left|n\right\rangle \otimes\left|b\right\rangle \rightrightarrows\left|\left(b+n\right)^{\prime}\right\rangle 
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
