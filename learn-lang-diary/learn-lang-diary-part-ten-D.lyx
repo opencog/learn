@@ -15362,6 +15362,42 @@ doesn't matter
 \end_layout
 
 \begin_layout Standard
+It is reasonable to take the initial state to be 
+\begin_inset Formula $n_{1}=n_{2}=0$
+\end_inset
+
+ i.e.
+ the ground state, and that would make the notation slightly less busy and
+ verbose.
+ I won't do that for now, because 
+\begin_inset Formula $n_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $n_{2}$
+\end_inset
+
+ serve as useful place–holders to help track what's connected to what.
+ We can set 
+\begin_inset Formula $n_{1}=n_{2}=0$
+\end_inset
+
+ later, if desired.
+ Note that for a 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ system, these detector SHO's might actually be mixtures (not pure states),
+ with some Boltzmann probability of not being in the ground state.
+ This is in a sense inevitable, if the detector SHO's are weakly connected
+ to a thermal bath.
+\end_layout
+
+\begin_layout Standard
 Each of these oscillators is coupled to it's own disjoint thermal bath,
  and so eventually, these oscillators decohere.
  Write 
@@ -15458,27 +15494,52 @@ The grand–total process is thus meant to be written algebraically written
 
 \end_inset
 
-where the mapsto arrow 
+This is a verbose mess, but is not meant to to be difficult.
+ As before, the mapsto arrow 
 \begin_inset Formula $\mapsto$
 \end_inset
 
- indicates decoherence, and the Cartesian product indicates two systems,
- no longer entangled.
- The curly braces 
+ indicates the coupling of the detector SHO to it's bath, and the double
+ arrow 
+\begin_inset Formula $\rightrightarrows$
+\end_inset
+
+ indicates the eventual thermalization.
+ As always, the Cartesian product indicates non–entangled, decoupled systems.
+ 
+\end_layout
+
+\begin_layout Standard
+What's new here are the curly braces 
 \begin_inset Formula $\left\{ \cdots\right\} $
 \end_inset
 
- indicate the set of all possible worlds: the many–worlds outcome.
- Here, there are two possible worlds after collapse and decoherence: one
- world, having the state 
-\begin_inset Formula $\left|n_{1}+1\right\rangle \times\left|n_{2}\right\rangle $
+ which indicate the set of all possible worlds: the many–worlds outcome
+ that is eventually attained.
+ The square brackets 
+\begin_inset Formula $\left[\cdots\right]$
 \end_inset
 
- and another world having the state 
-\begin_inset Formula $\left|n_{1}\right\rangle \times\left|n_{2}+1\right\rangle $
+ denote a single world, used here to improve readability.
+ For readability, set 
+\begin_inset Formula $n_{1}=n_{2}=0$
 \end_inset
 
+, and then the two worlds become a bit more clear:
+\begin_inset Formula 
+\[
+\left\{ \left[\left|\left(b_{1}+1\right)^{\prime}\right\rangle \times\left|b_{2}^{\prime}\right\rangle \right]\;,\;\left[\left|b_{1}^{\prime}\right\rangle \times\left|\left(b_{2}+1\right)^{\prime}\right\rangle \right]\right\} 
+\]
 
+\end_inset
+
+ In one world, detector 1 has absorbed the photon, and in the other world,
+ detector 2 has absorbed it.
+\end_layout
+
+\begin_layout Standard
+There are a number of surprising features to the above, and soe reviewing
+ these and placing them into context is worthwhile.
 \end_layout
 
 \begin_layout Section*
