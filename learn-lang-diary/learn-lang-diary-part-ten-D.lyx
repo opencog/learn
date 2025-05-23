@@ -15937,7 +15937,25 @@ yeah, and its also wrong
 \end_inset
 
  but if it's wrong, I do not yet see how.
- 
+\end_layout
+
+\begin_layout Standard
+Since 
+\begin_inset Formula $b$
+\end_inset
+
+ is a thermal bath, it can also be called a canonical ensemble.
+ So that 
+\begin_inset Formula $\bigcup_{s\in b}$
+\end_inset
+
+ is an enumeration over all states in the canonical ensemble.
+ And 
+\begin_inset Formula $\rho\left(s\right)\sim e^{-E/kT}$
+\end_inset
+
+ is the weighting.
+ But I don't know how to make ends meet, here.
 \end_layout
 
 \begin_layout Standard
@@ -16228,8 +16246,8 @@ imbue
  a measure? How? Which one? The tensor product of two algebraic varieties
  is again an algebraic variety, at least, if you do it correctly with the
  appropriate category–theoretic definition and also the Zariski topology,
- which is NOT the standard topology, but is very weird.
- And these days, you shouldn't say 
+ which is NOT the standard topology, but is very weird (its not Hausdorff,
+ for starters.) And these days, you shouldn't say 
 \begin_inset Quotes eld
 \end_inset
 
@@ -16251,6 +16269,32 @@ scheme
  So, in this sense, imagining tensor spaces to be kind–of–like algebraic
  varieties is kind–of wrong.
  But this needs to be articulated more carefully, and I can't do that today.
+\end_layout
+
+\begin_layout Standard
+A wavefunction describing 
+\begin_inset Formula $n$
+\end_inset
+
+ particles lives in 
+\begin_inset Formula $\mathbb{C}P^{n}$
+\end_inset
+
+ the complex projective sphere, as required by wave–function normalization:
+ the so–called 
+\begin_inset Quotes eld
+\end_inset
+
+vector
+\begin_inset Quotes erd
+\end_inset
+
+ is constrained to be unit length.
+ This is the canonical example of homogeneous coordinates that appears at
+ the start of every book on algebraic geometry.
+ Why it is that Zariski topology never comes up in QM is because I guess
+ maybe because prime ideals never come up, so we're not doing spectra of
+ rings.
 \end_layout
 
 \begin_layout Standard
@@ -16394,6 +16438,25 @@ stic Copenhagen interpretation.
  So it goes.
  Day at a time.
  Later, dude.
+\end_layout
+
+\begin_layout Subsection*
+23 May 2023
+\end_layout
+
+\begin_layout Standard
+While falling asleep, I noticed that cryptocurrencies try to find hashing
+ algos that result in a block of zeros: they are doing a kind of modulo
+ calculation.
+ That mixes inputs from all over the place.
+ That's ergodic and mixing.
+ And puts results onto an unchangeable blockchain.
+ The history.
+ So maybe, but analogy, Bostrom's Simulation Hypothesis says we live on
+ a block–chain.
+ I wonder if there's some hashing function out there that resembles ...
+ physical processes more closely.
+ Hmm.
 \end_layout
 
 \begin_layout Section*
