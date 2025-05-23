@@ -16022,7 +16022,230 @@ And, from this, we get that the earlier notation of using
  but I've been too sloppy in my notation to be able to jump to that conclusion
  just yet.
  But that conclusion seems inevitable, so I'm not to worried.
- 
+\end_layout
+
+\begin_layout Standard
+So this has been a lot of work and effort, and what have we learned, exactly?
+ First, that we have a notation 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+ and also 
+\begin_inset Formula $\mapsto$
+\end_inset
+
+ that both represent the process of entanglement.
+ In the former case, we write
+\begin_inset Formula 
+\[
+\gamma\times\left|a\right\rangle \times\left|b\right\rangle \rightsquigarrow c_{1}\left|a^{\prime}\right\rangle \otimes\left|b^{\prime}\right\rangle +c_{2}\left|a^{\prime\prime}\right\rangle \otimes\left|b^{\prime\prime}\right\rangle +\cdots
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ is some specific real on–mass–shell particle that is absorbed.
+ As before, the Cartesian product on the LHS denotes that the distinct systems
+ can be treated as being distinct, non–interacting, thermally isolated,
+ etc.
+ The tensor product on the RHS is meant to denote a bonafide tensor product,
+ so that the squiggly arrow 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+ is understood to be the quotienting of Cartesian products modulo some bilinear
+ form.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Formula $c_{1},c_{2},\cdots$
+\end_inset
+
+ are understood to be some complex numbers, and the 
+\begin_inset Formula $\left|\psi^{\prime}\right\rangle ,\left|\psi^{\prime\prime}\right\rangle ,\cdots$
+\end_inset
+
+ some collection of states.
+ The entanglement has no specific location in space or time, which is the
+ point of the Renninger arrangement.
+ The location of here–and–now is the collection of points in space–time
+ where the RHS is non–zero.
+ For the most part, we want here–and–now to have compact support, but the
+ lesson from cosmology is that the last photon decoupling from the CMB,
+ and the last neutrino decoupling from nucleosynthesis participates in the
+ here–and–now, if you are so unlucky as to perceive a CMB photon (or neutrino,
+ as the case may be).
+ The point is that here–end–now is localized in space–time, but not in the
+ conventional sense of some Hamiltonian space–like surface.
+ Phew.
+ I marvel at this.
+\end_layout
+
+\begin_layout Standard
+This 
+\begin_inset Formula $\rightsquigarrow$
+\end_inset
+
+ operation meant to be the conventional quotient used to construct tensor
+ spaces from products of vector spaces.
+ Lets recall the textbook definition.
+ Just to be very specific and concrete here: for ordinary vectors 
+\begin_inset Formula $v_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{2}$
+\end_inset
+
+ the tensor product 
+\begin_inset Formula $v_{1}\otimes v_{2}$
+\end_inset
+
+ is defined as
+\begin_inset Formula 
+\[
+v_{1}\otimes v_{2}=v_{1}\times v_{2}\mod\,b\left(u,w\right)
+\]
+
+\end_inset
+
+where mod is modulo, and 
+\begin_inset Formula $b\left(u,w\right)$
+\end_inset
+
+ is the bilinear form obeying 
+\begin_inset Formula $b\left(cu,w\right)=b\left(u,cw\right)=cb\left(u,w\right)$
+\end_inset
+
+ and also 
+\begin_inset Formula $b\left(u+v,w\right)=b\left(u,w\right)+b\left(v,w\right)$
+\end_inset
+
+ and likewise 
+\begin_inset Formula $b\left(u,v+w\right)=b\left(u,v\right)+b\left(u,w\right)$
+\end_inset
+
+ for all scalars 
+\begin_inset Formula $c\in\mathbb{K}$
+\end_inset
+
+ in the real or complex field 
+\begin_inset Formula $\mathbb{K}$
+\end_inset
+
+ and vectors 
+\begin_inset Formula $u,v,w$
+\end_inset
+
+ in the vector spaces 
+\begin_inset Formula $V_{1}$
+\end_inset
+
+ or 
+\begin_inset Formula $V_{2}$
+\end_inset
+
+ as appropriate.
+ In particular, this implies that 
+\begin_inset Formula $v_{1}\otimes v_{2}$
+\end_inset
+
+ is a coset: it is a collection of all Cartesian pairs of the form
+\begin_inset Formula 
+\begin{align*}
+v_{1}\otimes v_{2} & =\left\{ \left(u,w\right):\forall_{c\in\mathbb{K}}u=cv_{1}\mbox{ and }w=v_{2}/c\right\} \\
+ & =\bigcup_{c\in\mathbb{K}}\left\{ \left(cv_{1},v_{2}/c\right)\right\} 
+\end{align*}
+
+\end_inset
+
+and so on for the remaining bilinearity relations.
+ Look them up.
+ Notice how the second form is written as a set union.
+\end_layout
+
+\begin_layout Standard
+I'm belaboring the above because I want to point out that the absorption
+ of the particle 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ creates a tensor space, and that space is not just one point, but a splattering
+, an algebraic variety: insofar as 
+\begin_inset Formula $\left(v_{1},v_{2}\right)$
+\end_inset
+
+ is a single point in the Cartesian space 
+\begin_inset Formula $V_{1}\times V_{2}$
+\end_inset
+
+, the tensor product 
+\begin_inset Formula $v_{1}\otimes v_{2}$
+\end_inset
+
+ is some algebraic variety in 
+\begin_inset Formula $V_{1}\times V_{2}$
+\end_inset
+
+ where all points in that variety are taken to be equivalent, i.e.
+ given by the equivalence relation defined by the bilinear form.
+ So the absorption of the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ causes a single point in the Cartesian space to shatter into a surface.
+ Alternately, the absorption of the 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ causes a surface in the Cartesian space to condense or contract into an
+ equivalence.
+ Take your pick.
+ It's a quotienting modulo operation.
+\end_layout
+
+\begin_layout Standard
+The operator 
+\begin_inset Formula $\mapsto$
+\end_inset
+
+ does the same thing, but it does not involve any explicit particle 
+\begin_inset Formula $\gamma$
+\end_inset
+
+; it is implicit.
+ If this was perturbation theory, this could be treated as an interaction:
+ some exchange of virtual particles, possibly with loop diagrams to your
+ hearts content.
+ It doesn't have to be perturbative, its just again, a map of the form 
+\begin_inset Formula 
+\[
+\left|a\right\rangle \times\left|b\right\rangle \mapsto c_{1}\left|a^{\prime}\right\rangle \otimes\left|b^{\prime}\right\rangle +c_{2}\left|a^{\prime\prime}\right\rangle \otimes\left|b^{\prime\prime}\right\rangle +\cdots
+\]
+
+\end_inset
+
+and for the case of the weak coupling above, we used 
+\begin_inset Formula $c_{2},c_{3},\cdots=0$
+\end_inset
+
+ and 
+\begin_inset Formula $a=a^{\prime}$
+\end_inset
+
+ and 
+\begin_inset Formula $b=b^{\prime}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, there is another difference between 
 \end_layout
 
 \begin_layout Section*
