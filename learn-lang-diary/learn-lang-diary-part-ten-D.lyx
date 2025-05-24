@@ -16576,7 +16576,7 @@ new
 \begin_layout Standard
 The simple harmonic oscillator.
  
-\begin_inset Formula $H=\hbar\omega\left(aa^{*}+1/2\right)$
+\begin_inset Formula $H=\hbar\omega\left(a^{\dagger}a+1/2\right)$
 \end_inset
 
  with states 
@@ -16585,7 +16585,7 @@ The simple harmonic oscillator.
 
  Consider two of them, labelled 1 and 2, with an interaction Hamiltonian
  
-\begin_inset Formula $H_{int}=\epsilon\left(a_{2}^{*}a_{1}+a_{1}^{*}a_{2}\right)$
+\begin_inset Formula $H_{int}=\epsilon\left(a_{2}^{\dagger}a_{1}+a_{1}^{\dagger}a_{2}\right)$
 \end_inset
 
  for some small number 
@@ -16904,7 +16904,7 @@ measurement
  projection
 \begin_inset Formula 
 \[
-P_{B}=e_{2}\left(0\right)e_{2}^{\dagger}\left(0\right)=\left|0\right\rangle \otimes\left|1\right\rangle \left\langle 0\right|\times\left\langle 1\right|=\left[\begin{array}{cc}
+P_{B}=e_{2}\left(0\right)e_{2}^{\dagger}\left(0\right)=\left[\left|0\right\rangle \otimes\left|1\right\rangle \right]\left[\left\langle 0\right|\otimes\left\langle 1\right|\right]=\left[\begin{array}{cc}
 0 & 0\\
 0 & 1
 \end{array}\right]
@@ -16978,7 +16978,269 @@ bath
 \end_inset
 
 .
+ As before, we want a weak coupling 
+\begin_inset Formula $H_{int}\ll H_{0}$
+\end_inset
+
+ but now we have a choice for how the oscillators are to be interconnected.
+ We could arrange them into a linear chain, a la Fermi–Pasta–Ulam–Tsingou
+ geometry.
+ We could arrange them on a hub–n–spoke model.
+ Which seems less interesting but possible.
+ We could arrange them on some random graph, with edges representing pair–wise
+ interactions.
+ What's more, the interactions could be of varying strength.
+ The connectivity of the graph 
+\begin_inset Quotes eld
+\end_inset
+
+determines
+\begin_inset Quotes erd
+\end_inset
+
+ the shape of space.
+ Clearly, a chain is one–dimensional, and 2D and 3D lattices, likewise.
+ Random graphs are of indeterminate dimension, usually some high dimension.
+ 
+\end_layout
+
+\begin_layout Standard
+This implies that the dimension of space is fixed not by Newton, Minkowski
+ or Einstein, but rather the connectivity of the nodes in the thermal bath.
+ Given mean–field results, we know that generically, 1D systems do not have
+ phase transitions, while 2D and 3D systems do, and have complex dynamics,
+ in general.
+ We also know that systems in higher dimensions can be described by mean–fields.
+ This leads to a freaky hypothesis: is space three–dimensional, because
+ there is a phase transition between lower and higher dimensions, at the
+ boundary between chaotic and mean–field results? This sounds insane from
+ any other perspective, but if the goal is to build a thermal bath of SHO's
+ with weak interactions, then the behavior of that network, of that bath,
+ is going to be determined by the network connectivity of the SHO's in that
+ bath.
+\end_layout
+
+\begin_layout Standard
+This is an advanced question that I am not prepared to tackle at this time.
+ Well, but still, a few short comments are in order.
+ The solutions to the Schrodinger equation in 3D give exact results for
+ the spectrum of the hydrogen atom, and this would not hold in 2D or 4D,
+ ergo space is 3D.
+ The solutions to the propagator for the D'Alambertian are exactly 
+\begin_inset Formula $\delta^{4}\left(x-ct\right)$
+\end_inset
+
+ and this would not work in any other dimension.
+ So, in this sense, we 
+\begin_inset Quotes eld
+\end_inset
+
+know
+\begin_inset Quotes erd
+\end_inset
+
+ space is N–dimensional for N=3 an integer.
+ What about non–integral dimensions? Like 
+\begin_inset Formula $N=3+\epsilon$
+\end_inset
+
+, for some small but indeterminate 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ it is stochastic, and whose expectation value is zero? First, we don't
+ really know how to write a Schrodinger equation for this situation: it
+ would require writing down a second–quantized theory, aka QFT for a random
+ network of points, with nearest–neighbor interactions that resemble the
+ D'Alembertian when suitably coarse–grained.
+ i.e.
+ when taking some expectation value over nearest–neighbor interactions.
+ So this random network is imagined to happen 
+\begin_inset Quotes eld
+\end_inset
+
+at the Planck scale
+\begin_inset Quotes erd
+\end_inset
+
+ so that by the time we get to hydrogen–atom scale, space really does average
+ out to an expectation value that looks 3D.
+ FWIW, I see no particular issues with Dirac spinors, either: one can define
+ a Clifford algebra at each point on the network, build Weyl spinors on
+ points, and then have pairwise interactions between them, that, when coarse
+ grained, end up being Dirac spinors.
+ Would it be possible to derive the Einstein Field Equations as the expectation
+ value of a 
+\begin_inset Quotes eld
+\end_inset
+
+thermal bath
+\begin_inset Quotes erd
+\end_inset
+
+ of weakly interacting oscillators, poised at the critical point between
+ hard–chaos in 3D and mean–field theory in 
+\begin_inset Formula $3+\epsilon$
+\end_inset
+
+ dimensions? I dunno.
+ This is not out of bounds.
+ It could be wrong, but it certainly is something that could be analyzed,
+ simulated, etc.
+\end_layout
+
+\begin_layout Standard
+Well, but it is out–of–bounds for today's efforts.
+ We are lacking in the sophistication to make progress.
+ So lets step back a bit, and go through some simpler cases first.
+ Specifically, we want several things: two thermal baths, initially isolated
+ from each other, but then connected with a single Renninger–style wave–collapse
+ entanglement thingy, as described above, and a demonstration that such
+ an entanglement gives us Born–rule type probabilities, and Mott–problem
+ type coherence/decoherence.
+ That needs to remaind the focus, before getting nebulous.
+\end_layout
+
+\begin_layout Standard
+So consider first a 1D chain of SHO's, weak interaction, pumped so that
+ only one excitation is on the chain, so that we can ignore the case of
+ more than one excitation.
+ The low–brow matrix representation is
+\begin_inset Formula 
+\[
+H=\left[\begin{array}{cccc}
+2 & \epsilon\\
+\epsilon & 2 & \epsilon\\
+ & \epsilon & 2 & \ddots\\
+ &  & \ddots & \ddots
+\end{array}\right]
+\]
+
+\end_inset
+
+where the 
+\begin_inset Formula $i$
+\end_inset
+
+'th row/column corresponds to the 
+\begin_inset Formula $i$
+\end_inset
+
+'th SHO being in an excited state.
  As before, 
+\begin_inset Formula $2=\frac{1}{2}+\frac{3}{2}$
+\end_inset
+
+.
+ This tri–diagonal matrix is the block submatrix of the high–brow expression
+ for a 1D chain of SHO's
+\begin_inset Formula 
+\begin{align*}
+H & =H_{0}+H_{int}\\
+ & =\sum_{i=1}^{N}\hbar\left(a_{i}^{\dagger}a_{i}+\frac{1}{2}\right)+\epsilon\sum_{i=1}^{N-1}a_{i+1}^{\dagger}a_{i}+a_{i}^{\dagger}a_{i+1}
+\end{align*}
+
+\end_inset
+
+The single–excitation matrix basis has 
+\begin_inset Formula $N$
+\end_inset
+
+ basis vectors
+\begin_inset Formula 
+\begin{align*}
+e_{1} & =\left|1\right\rangle \otimes\left|0\right\rangle \otimes\left|0\right\rangle \otimes\cdots\otimes\left|0\right\rangle \\
+e_{2} & =\left|0\right\rangle \otimes\left|1\right\rangle \otimes\left|0\right\rangle \otimes\cdots\otimes\left|0\right\rangle \\
+\vdots\\
+e_{N} & =\left|0\right\rangle \otimes\left|0\right\rangle \otimes\left|0\right\rangle \otimes\cdots\otimes\left|1\right\rangle 
+\end{align*}
+
+\end_inset
+
+and, as before, we imagine that it is somehow possible to somehow 
+\begin_inset Quotes eld
+\end_inset
+
+measure
+\begin_inset Quotes erd
+\end_inset
+
+ each of these oscillators individually, even though, as before, the concept
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+measurement
+\begin_inset Quotes erd
+\end_inset
+
+ remains ambiguous.
+ To remove some ambiguity, one kind of measurement involves using conventional
+ algebra to write expressions that belong to some tensor algebra which is
+ used to make formal algebraic statements about the bath.
+ In this case, 
+\begin_inset Quotes eld
+\end_inset
+
+measurements
+\begin_inset Quotes erd
+\end_inset
+
+ are simply the conventional algebraic manipulations associated with conventiona
+l bra-ket notation and conventional tensor algebra stuff.
+ Lets call this the 
+\begin_inset Quotes eld
+\end_inset
+
+bath algebra measurement
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This is distinct from the Renninger entanglement that is the intended topic,
+ which I guess we can still call the 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse measurement
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'm trying to draw a distinct boundary here, to avoid later confusion.
+\end_layout
+
+\begin_layout Standard
+The eigenvalues and eigenvectors of 
+\begin_inset Formula $H$
+\end_inset
+
+ are well–known, and follow from the fact that the tri–diagonal form 
+\begin_inset Quotes eld
+\end_inset
+
+looks like
+\begin_inset Quotes erd
+\end_inset
+
+ a (scaled) 1D Laplacian plus a (scaled) identity matrix.
+ The solutions are the eigenvectors
+\begin_inset Formula 
+\[
+v_{k}=\sum_{j=1}^{N}\cos\left(\frac{2\pi k}{N}j\right)e_{j}
+\]
+
+\end_inset
+
+and the eigenvalues 
+\begin_inset Formula 
+\[
+E_{k}=2+...
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
