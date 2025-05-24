@@ -17296,7 +17296,7 @@ Tsingou problem.
 \end_inset
 
  SHO's, and pair–wise interactions of the form 
-\begin_inset Formula $\epsilon a_{i}^{\dagger}a_{j}$
+\begin_inset Formula $H_{int}=\epsilon a_{i}^{\dagger}a_{j}$
 \end_inset
 
  for 
@@ -17304,7 +17304,137 @@ Tsingou problem.
 \end_inset
 
  is there ever any kind of network of interactions that is not diagonalizable?
+ Insofar as the single–phonon excitation mode (the sub-block of the Hamiltonian)
+ can be written as a matrix, an 
+\begin_inset Formula $N\times N$
+\end_inset
+
+ matrix, a Hermitian one at that, then we know it is always diagonalizable
+ with real eigenvalues.
+ The only ambiguity that can arise is when some of the eigenvalues are degenerat
+e; then these could be imagined to lead to mixing.
+ But to actually get this, we need connectivity so that there's some non–trivial
+ dispersion relation for the modes 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ and the corresponding energy of those modes 
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ that works in analogy to a resonant interaction.
  
+\end_layout
+
+\begin_layout Standard
+And this is where my knowledge of graph theory hits the end of the line:
+ are there any graphs at all, random, on a lattice, whatever, that have
+ a resonant interaction? I studied the preprint A route to thermalization
+ in the α-Fermi-Pasta-Ulam system, Miguel Onorato, Lara Vozella, Davide
+ Proment, Yuri V.
+ Lvov https://arxiv.org/abs/1402.1603 carefully, back in Sept 2020 and added
+ a huge chunk to the FPUT article, and also wrote the wiki page for resonant
+ interaction.
+ So I get all that.
+ What I don't know is whether one can have resonant interactions on random
+ graphs that encode the single–phonon couplings of SHO's on those graphs.
+ If so, then bingo, we've got an answer.
+ If not, then what about two, three or more phonons? If we do have resonant
+ interactions, than what can be said about which graphs allow them, and
+ which ones do not? Is there some phase–transition between the graphs that
+ support thermalization, ad the ones that do not?
+\end_layout
+
+\begin_layout Standard
+This is fascinating! I will hypothesize that, yes, there is such a phase
+ transition, and I suppose several of them: between 1D and higher–dim lattices,
+ and then again, another one between those and the mean–field regime.
+ And these questions are quite precise: I am no longer hand–waving here:
+ We've got a specific Hamiltonian, 
+\begin_inset Formula $H=H_{0}+H_{int}$
+\end_inset
+
+ exactly of the form written above, and we've got a very specific question:
+ what's the dispersion relation? Wowza! this is fucking awesome, because
+ it's concrete, and does not require speculation.
+ Well, it does require actually answering the question, which might be hard.
+ And there's some chance that I'll be disappointed by the answer? Still,
+ hard to see how: arranging for degenerate eigenvalues is not hard, and
+ then associating some wave–vector–like modes that have the appearance of
+ propagating should not be hard...
+ unless these are all 
+\begin_inset Quotes eld
+\end_inset
+
+bound modes
+\begin_inset Quotes erd
+\end_inset
+
+ and not 
+\begin_inset Quotes eld
+\end_inset
+
+free modes
+\begin_inset Quotes erd
+\end_inset
+
+, but it seems like free modes would be the most common case here, since
+ I'm already in the fourrier regime, because that is what diagonalizing
+ a matrix means.
+\end_layout
+
+\begin_layout Standard
+So lets imagine that thermalization is possible, in the form described above.
+ Where does that leave us? We have two baths.
+ Both are in the ground state.
+ We entangle them by hitting them with a single photon, that entangles a
+ single–phonon excitation in one bath, or in the other bath.
+ We can use this single–photon entanglement to write a combined matrix 
+\begin_inset Formula $H=H_{A}+H_{B}+H_{tangle}$
+\end_inset
+
+ where 
+\begin_inset Formula $H_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{B}$
+\end_inset
+
+ are the two thermalizing baths, and 
+\begin_inset Formula $H_{tangle}$
+\end_inset
+
+ is the single–photon Renninger–arrangement entanglement.
+ And I bet dollars to donuts that 
+\begin_inset Formula $H_{tangle}$
+\end_inset
+
+ because it is just a single graph edge, does not allow thermalization to
+ occur between 
+\begin_inset Formula $H_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{B}$
+\end_inset
+
+ so that if one of these two is excited, then the other cannot be.
+ And since the thermalization is irrevocable, this is the fundamental process
+ for wave–function collapse.
+\end_layout
+
+\begin_layout Standard
+There is still one part that is still confusing ...
+ if only one, or the other can accept the phonon, then which one gets it?
+ How does the bifurcation actually work? Once set in motion, I understand
+ it thermalizes, but before that, how ...
+ ??? I cannot yet find words for whatever it is that is confusing me here.
+ Anyway, time for a dinner break.
+ So ...
+ later dude.
+ This is fascinating.
+ Feels like another step, this time a large step.
 \end_layout
 
 \begin_layout Section*
