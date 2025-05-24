@@ -16772,7 +16772,7 @@ which has eigenvalues
 
 \end_inset
 
-What the heck does tthis even mean? As I adiabatically switch on an interaction
+What the heck does this even mean? As I adiabatically switch on an interaction
  
 \begin_inset Formula $\epsilon$
 \end_inset
@@ -16792,7 +16792,193 @@ line splitting
 \end_layout
 
 \begin_layout Standard
-Well, what are the eigenvectors?s
+Well, what are the eigenvectors? That's easy:
+\begin_inset Formula 
+\[
+v_{-}=\frac{1}{\sqrt{2}}\left[\begin{array}{c}
+1\\
+-1
+\end{array}\right]\;\mbox{ and }\;v_{+}=\frac{1}{\sqrt{2}}\left[\begin{array}{c}
+1\\
+1
+\end{array}\right]
+\]
+
+\end_inset
+
+so if we adiabatically increase 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ up from zero, we expect the system to eventually thermalize into the 
+\begin_inset Formula $v_{-}$
+\end_inset
+
+ state in the laboratory frame.
+ Maybe.
+ What is the meaning of 
+\begin_inset Formula $v_{+}$
+\end_inset
+
+? Well, if we really are adiabatic, then there is some chance that the system
+ settles into the 
+\begin_inset Formula $v_{+}$
+\end_inset
+
+ state.
+ It could happen.
+ This is the wrong time to start hand–waving about thermodynamics, but if
+ we did so, then there would be a canonical ensemble (a mixed state) with
+ both 
+\begin_inset Formula $v_{-}$
+\end_inset
+
+ and 
+\begin_inset Formula $v_{+}$
+\end_inset
+
+ populated with probability 
+\begin_inset Formula $e^{-E_{\pm}/kT}$
+\end_inset
+
+ but it is too early to do such hand–waving.
+ Maybe later.
+\end_layout
+
+\begin_layout Standard
+The initial state, just after the detector SHO detects, is given by
+\begin_inset Formula 
+\[
+e_{2}=\left|1\right\rangle \otimes\left|0\right\rangle =\left[\begin{array}{c}
+1\\
+0
+\end{array}\right]=\frac{1}{\sqrt{2}}\left(v_{-}+v_{+}\right)
+\]
+
+\end_inset
+
+and the time evolution of this is
+\begin_inset Formula 
+\[
+e_{2}\left(t\right)=\frac{1}{\sqrt{2}}\left(e^{-iE_{-}t}v_{-}+e^{-iE_{+}t}v_{+}\right)
+\]
+
+\end_inset
+
+or, writing 
+\begin_inset Formula $E_{\pm}=2\pm\epsilon=E_{0}\pm E_{int}$
+\end_inset
+
+ then 
+\begin_inset Formula 
+\begin{align*}
+e_{2}\left(t\right) & =\frac{1}{\sqrt{2}}e^{-iE_{0}t}\left(e^{+iE_{int}t}v_{-}+e^{-iE_{int}t}v_{+}\right)\\
+ & =\frac{e^{-iE_{0}t}}{2}\left[\begin{array}{c}
+e^{-iE_{int}t}+e^{+iE_{int}t}\\
+e^{-iE_{int}t}-e^{+iE_{int}t}
+\end{array}\right]\\
+ & =e^{-iE_{0}t}\left[\begin{array}{c}
+\cos E_{int}t\\
+-i\sin E_{int}t
+\end{array}\right]
+\end{align*}
+
+\end_inset
+
+and so if we later 
+\begin_inset Quotes eld
+\end_inset
+
+measure
+\begin_inset Quotes erd
+\end_inset
+
+ (whatever the fuck that means) the second SHO, by applying the 
+\begin_inset Quotes eld
+\end_inset
+
+measurement
+\begin_inset Quotes erd
+\end_inset
+
+ projection
+\begin_inset Formula 
+\[
+P_{B}=e_{2}\left(0\right)e_{2}^{\dagger}\left(0\right)=\left|0\right\rangle \otimes\left|1\right\rangle \left\langle 0\right|\times\left\langle 1\right|=\left[\begin{array}{cc}
+0 & 0\\
+0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+then there is a beat frequency:
+\begin_inset Formula 
+\[
+\left|P_{B}e_{2}\left(t\right)\right|^{2}=\frac{1}{4}\left|e^{-iE_{int}t}-e^{+iE_{int}t}\right|^{2}=\sin^{2}E_{int}t
+\]
+
+\end_inset
+
+and so one could say that energy is flowing into and out of the second oscillato
+r with the beat frequency 
+\begin_inset Formula $\omega_{int}=E_{int}/\hbar$
+\end_inset
+
+ after reinserting 
+\begin_inset Formula $\hbar=1$
+\end_inset
+
+.
+ This is 100% analogous to the college freshman examples of beat frequencies
+ in AM modulation and whatever it is that are being demonstrated.
+ Except that here, we have to use our imagination for a thought experiment
+ where it is possible to isolate the the second oscillator, and measure
+ the likelihood of it being in some excited state.
+ The problem here is two–fold: the need to imagine measuring, when the whole
+ point of this essay is to figure out what it means to 
+\begin_inset Quotes eld
+\end_inset
+
+measure
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The second problem is we want to eventually arrive at decoherence, where
+ there is no more of this beat–frequency stuff, but instead a canonical
+ ensemble, where, in half of the members of that ensemble have the second
+ oscillator in the excited state, and 
+\begin_inset Quotes eld
+\end_inset
+
+decoherence
+\begin_inset Quotes erd
+\end_inset
+
+ means that the time dependence has been lost.
+ So all this verbiage is a statement that we're not done yet, there's more.
+\end_layout
+
+\begin_layout Standard
+The 
+\begin_inset Quotes eld
+\end_inset
+
+more
+\begin_inset Quotes erd
+\end_inset
+
+, in the present case, is to add more oscillators to the 
+\begin_inset Quotes eld
+\end_inset
+
+bath
+\begin_inset Quotes erd
+\end_inset
+
+.
+ As before, 
 \end_layout
 
 \begin_layout Section*
