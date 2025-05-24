@@ -17224,10 +17224,11 @@ looks like
 \end_inset
 
  a (scaled) 1D Laplacian plus a (scaled) identity matrix.
- The solutions are the eigenvectors
+ The solutions arise via roots–of–unity type manipulations, with the eigenvector
+s
 \begin_inset Formula 
 \[
-v_{k}=\sum_{j=1}^{N}\cos\left(\frac{2\pi k}{N}j\right)e_{j}
+v_{k}=\sum_{j=1}^{N}\cos\left(\frac{2\pi k}{N}\left(j-1\right)\right)e_{j}
 \]
 
 \end_inset
@@ -17235,12 +17236,75 @@ v_{k}=\sum_{j=1}^{N}\cos\left(\frac{2\pi k}{N}j\right)e_{j}
 and the eigenvalues 
 \begin_inset Formula 
 \[
-E_{k}=2+...
+E_{k}=2+\epsilon\cos\left(\frac{2\pi k}{N}\right)
 \]
 
 \end_inset
 
+for 
+\begin_inset Formula $k=0,\cdots,N-1$
+\end_inset
 
+.
+ I think I got that right.
+ I'm doing this from memory.
+ Seems to check out.
+ Hope I didn't blow this.
+ So, as before, line splitting, a bunch of closely spaced levels.
+ Beat–frequency stuff, if I look at only one oscillator.
+ Requires hand–waving to get a canonical ensemble.
+\end_layout
+
+\begin_layout Standard
+Well, lets do some of the hand–waving.
+ If we start with the system in the ground state, and then hit 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ with a hammer, then write 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+ as an expansion in the 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ we find that the energy is distributed across all modes 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ via an equipartition theorem.
+ I'm too lazy to verify this, its boring algebra.
+ However, none of the modes 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+are interacting and so the system will just do its version of Poincare recurrenc
+e, without thermalizing.
+ That is, we distinguish ergodic and mixing: roughly speaking, the wave–modes
+ are ergodic, but not mixing.
+ I'm not sure of what the precise definition is for ergodicity for waves,
+ but I think this is correct.
+\end_layout
+
+\begin_layout Standard
+But this analysis is extremely shallow, and is also unsurprising.
+ Compare, for example to the resonant wave interactions in the Fermi–Pasta–Ulam–
+Tsingou problem.
+ The obvious question then is: given 
+\begin_inset Formula $N$
+\end_inset
+
+ SHO's, and pair–wise interactions of the form 
+\begin_inset Formula $\epsilon a_{i}^{\dagger}a_{j}$
+\end_inset
+
+ for 
+\begin_inset Formula $i\ne j$
+\end_inset
+
+ is there ever any kind of network of interactions that is not diagonalizable?
+ 
 \end_layout
 
 \begin_layout Section*
