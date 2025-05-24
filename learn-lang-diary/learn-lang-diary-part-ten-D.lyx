@@ -16441,7 +16441,7 @@ stic Copenhagen interpretation.
 \end_layout
 
 \begin_layout Subsection*
-23 May 2023
+23 May 2025
 \end_layout
 
 \begin_layout Standard
@@ -16524,6 +16524,275 @@ The point of bath entanglement is the old one, from months/years ago where
  Whatever.
  Later.
  I'm going for a bike ride now.
+\end_layout
+
+\begin_layout Subsection*
+24 May 2025
+\end_layout
+
+\begin_layout Standard
+OK.
+ So what does it mean to 
+\begin_inset Quotes eld
+\end_inset
+
+couple together
+\begin_inset Quotes erd
+\end_inset
+
+ some quantum systems? Well, I could look it up on line.
+ Or I can invent something from scratch.
+ Inventing is so much more fun.
+ Also, infuriating, because, like, shouldn't I have learned this in class,
+ already? How come I don't remember this from homework problems? But I don't.
+ Argh.
+\end_layout
+
+\begin_layout Standard
+Also, FWIW, there is some HUGE quantum computing industry that has been
+ running to decades, and has analyzed problems like these six was from Sunday.
+ So nothing below is 
+\begin_inset Quotes eld
+\end_inset
+
+new
+\begin_inset Quotes erd
+\end_inset
+
+, its just...
+ a personal take, ignoring what scholars in the field have done before.
+ Why am I so constantly defensive in my posture? I know.
+ Because this is a psychological self–protection mechanism.
+ I feel as if I am always dismissed, that nothing and no one cares or is
+ interested.
+ I live in a little isolated bubble, ineffective, unattached, non–interacting.
+ So let it go both ways: they ignore me; I ignore them.
+ Weakly.
+ A weak interaction, only.
+ So with that disclaimer as to the nature of the easily–dismissed unimportant
+ silliness that is to follow, we begin our journey around the garden path.
+\end_layout
+
+\begin_layout Standard
+The simple harmonic oscillator.
+ 
+\begin_inset Formula $H=\hbar\omega\left(aa^{*}+1/2\right)$
+\end_inset
+
+ with states 
+\begin_inset Formula $\left|0\right\rangle ,\left|1\right\rangle ,\cdots$
+\end_inset
+
+ Consider two of them, labelled 1 and 2, with an interaction Hamiltonian
+ 
+\begin_inset Formula $H_{int}=\epsilon\left(a_{2}^{*}a_{1}+a_{1}^{*}a_{2}\right)$
+\end_inset
+
+ for some small number 
+\begin_inset Formula $\epsilon\ll\hbar\omega$
+\end_inset
+
+.
+ The task is to diagonalize the Hamiltonian.
+ To keep with the above, the first oscillator will be the 
+\begin_inset Quotes eld
+\end_inset
+
+detector
+\begin_inset Quotes erd
+\end_inset
+
+, while the second one will be part of the 
+\begin_inset Quotes eld
+\end_inset
+
+thermal bath
+\begin_inset Quotes erd
+\end_inset
+
+.
+ We'll add more to the bath, but for now, just these two.
+ Initially, bot are in the ground state, and nothing interesting.
+ The interesting case is to pump the first oscillator, and watch the time
+ dynamics.
+ But, before that, lets diagonalize, to see what the long–time steady–state
+ is.
+ For this, lets simplify; we know the system will never have more than one
+ quantum of energy, so ignore the states 
+\begin_inset Formula $\left|2\right\rangle ,\left|3\right\rangle ,\cdots$
+\end_inset
+
+ and create a vector basis for the Cartesian product 
+\begin_inset Formula $SHO_{1}\times SHO_{2}$
+\end_inset
+
+ as
+\begin_inset Formula 
+\begin{align*}
+e_{1} & =\left|0\right\rangle \times\left|0\right\rangle \\
+e_{2} & =\left|1\right\rangle \times\left|0\right\rangle \\
+e_{3} & =\left|0\right\rangle \times\left|1\right\rangle \\
+e_{4} & =\left|1\right\rangle \times\left|1\right\rangle 
+\end{align*}
+
+\end_inset
+
+As noted, the Cartesian product is only appropriate for non–interacting,
+ thermally isolated systems, so if they are going to interact, the very
+ first thing we do is to write the tensor product 
+\begin_inset Formula $\otimes$
+\end_inset
+
+ instead.
+ The Hamiltonian in this basis is, in matrix form, a 
+\begin_inset Formula $4\times4$
+\end_inset
+
+ matrix, is
+\begin_inset Formula 
+\[
+H=\left[\begin{array}{cccc}
+1\\
+ & 2 & \epsilon\\
+ & \epsilon & 2\\
+ &  &  & 3
+\end{array}\right]
+\]
+
+\end_inset
+
+so the ground state has energy 
+\begin_inset Formula $\frac{1}{2}+\frac{1}{2}=1$
+\end_inset
+
+ and note that one can write both 
+\begin_inset Formula $e_{1}=\left|0\right\rangle \otimes\left|0\right\rangle $
+\end_inset
+
+ and also 
+\begin_inset Formula $e_{1}=\left|0\right\rangle \times\left|0\right\rangle $
+\end_inset
+
+ because the interaction term never couples to the ground state.
+ In particular, this means that the state 
+\begin_inset Formula $e_{1}=\left|0\right\rangle \times\left|0\right\rangle $
+\end_inset
+
+ can have two distinct phases 
+\begin_inset Formula $e^{i\phi_{1}}$
+\end_inset
+
+ and 
+\begin_inset Formula $e^{i\phi_{2}}$
+\end_inset
+
+ that are entirely independent of one–another, whereas the tensor state
+ 
+\begin_inset Formula $e_{1}=\left|0\right\rangle \otimes\left|0\right\rangle $
+\end_inset
+
+ can only have one phase 
+\begin_inset Formula $e^{i\phi}$
+\end_inset
+
+ by bilinearity.
+ Now, for this simplified model, none of this matters at all.
+ Nor, in general, do overall phases matter ...
+ except in one case: the Bohm–Aharonov effect.
+ So one can imagine some different variant of this thought experiment, having
+ some magnetic field, and having some setup where Cartesian products or
+ not, phase differences, matter.
+ So, for the present case, having 
+\begin_inset Quotes eld
+\end_inset
+
+thermally isolated, non–interacting ground states
+\begin_inset Quotes erd
+\end_inset
+
+ suggests that 
+\begin_inset Formula $e_{1}=\left|0\right\rangle \times\left|0\right\rangle $
+\end_inset
+
+ is the correct notation, but this is kind of meaningless, for the current
+ setup, because there's no way to tell.
+ The experimental setups are 
+\begin_inset Quotes eld
+\end_inset
+
+philosophically indistinguishable
+\begin_inset Quotes erd
+\end_inset
+
+: we can't tell these two cases apart.
+ Enough.
+\end_layout
+
+\begin_layout Standard
+The first excited state has energy 
+\begin_inset Formula $\frac{1}{2}+\frac{3}{2}=\frac{3}{2}+\frac{1}{2}=2$
+\end_inset
+
+ for the 
+\begin_inset Formula $\epsilon=0$
+\end_inset
+
+ case and for the 
+\begin_inset Formula $\epsilon\ne0$
+\end_inset
+
+ case we have the block diagonal
+\begin_inset Formula 
+\[
+H=\left[\begin{array}{cc}
+2 & \epsilon\\
+\epsilon & 2
+\end{array}\right]
+\]
+
+\end_inset
+
+which has eigenvalues 
+\begin_inset Formula $0=\det\left(H-\lambda I\right)$
+\end_inset
+
+ given by the characteristic equation 
+\begin_inset Formula $0=\left(2-\lambda\right)^{2}-\epsilon^{2}$
+\end_inset
+
+ or 
+\begin_inset Formula $0=\lambda^{2}-4\lambda+4-\epsilon^{2}$
+\end_inset
+
+ or 
+\begin_inset Formula 
+\[
+\lambda=\frac{4\pm\sqrt{16-4\left(4-\epsilon^{2}\right)}}{2}=2\pm\epsilon
+\]
+
+\end_inset
+
+What the heck does tthis even mean? As I adiabatically switch on an interaction
+ 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ the system gets a 
+\begin_inset Quotes eld
+\end_inset
+
+line splitting
+\begin_inset Quotes erd
+\end_inset
+
+, where one state has slightly higher energy than the other.
+ How the heck did this happen? I had two SHO's, and wanted to consider the
+ case where one or the other is excited, but not both, and of course they're
+ coupled, duh, but line splitting? Really?
+\end_layout
+
+\begin_layout Standard
+Well, what are the eigenvectors?s
 \end_layout
 
 \begin_layout Section*
