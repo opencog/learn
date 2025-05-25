@@ -18258,7 +18258,301 @@ oh hey, crack open a textbook and look up relativistic QM, not a problem
 \end_inset
 
 .
+ And doing this would not change the conclusions: the bridge created by
  
+\begin_inset Formula $G_{\leftrightsquigarrow}$
+\end_inset
+
+ is extremely narrow, and the two baths at either end have a combinatorially
+ huge bulk, and so are effectively isolated from one–another.
+ So the analysis still holds; nothing is changed.
+\end_layout
+
+\begin_layout Standard
+With that in mind, lets take a quick peek at the eigenmodes.
+ I'm curious.
+ For simplicity, set 
+\begin_inset Formula $\alpha=\beta=0$
+\end_inset
+
+ Then 
+\begin_inset Formula $v_{0}=\left[\begin{array}{ccc}
+1 & 0 & -1\end{array}\right]$
+\end_inset
+
+ corresponds to 
+\begin_inset Formula $\lambda=5/2$
+\end_inset
+
+.
+ This is easy to see.
+ Next, 
+\begin_inset Formula $v_{\pm}=\left[\begin{array}{ccc}
+1 & \;\pm\sqrt{2}\; & 1\end{array}\right]$
+\end_inset
+
+ are the other two.
+ All three are clearly orthogonal.
+ For general 
+\begin_inset Formula $\alpha\ne\beta\ne0$
+\end_inset
+
+ the corresponding vectors are
+\begin_inset Formula 
+\[
+v_{0}=\left[\begin{array}{c}
+e^{i\alpha}\\
+0\\
+-e^{-i\beta}
+\end{array}\right]\quad\mbox{and}\quad v_{\pm}=\left[\begin{array}{c}
+e^{i\alpha}\\
+\pm\sqrt{2}\\
+e^{-i\beta}
+\end{array}\right]
+\]
+
+\end_inset
+
+so much as before, and I see nothing particularly interesting to say here,
+ other than to say that we don't really know how to couple the photon to
+ the baths, and so the phases 
+\begin_inset Formula $\alpha,\beta$
+\end_inset
+
+ really could be anything, and so the reasonable presumption is to take
+ a mixed state, with 
+\begin_inset Formula $\alpha,\beta$
+\end_inset
+
+ being uniformly distributed.
+ Doing so does not appear to change anything in particular.
+\end_layout
+
+\begin_layout Standard
+And now for a word about measurement.
+ Let us take two oscillators, say, two hydrogen atoms, stationary w.r.t.
+ one–another in the lab frame.
+ Do this so that we have no ambiguity about time; its just lab–frame proper
+ time.
+ Illuminate them with a single photon.
+ And then wait.
+ Wait longer than the photon wave–packet size, so that we can consider the
+ situation where the two atoms have interacted, but are now space–like separated.
+ Per conventional analysis, this results in a superposition, where one or
+ the other or both atoms are in the excited state.
+ The superposition is sloshing around with the characteristic beat frequency.
+ Lets take a look.
+ First, lets normalize properly (and go back to 
+\begin_inset Formula $\alpha=\beta=0$
+\end_inset
+
+) so that 
+\begin_inset Formula 
+\[
+v_{0}=\frac{1}{\sqrt{2}}\left[\begin{array}{c}
+1\\
+0\\
+-1
+\end{array}\right]\quad\mbox{and}\quad v_{\pm}=\frac{1}{\sqrt{2}}\left[\begin{array}{c}
+1/\sqrt{2}\\
+\pm1\\
+1/\sqrt{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+and therefore
+\begin_inset Formula 
+\[
+\gamma=\left[\begin{array}{c}
+0\\
+1\\
+0
+\end{array}\right]=\frac{1}{\sqrt{2}}\left(v_{+}-v_{-}\right)
+\]
+
+\end_inset
+
+Then, adding in time, so that 
+\begin_inset Formula $v_{\pm}\left(t\right)=e^{-iE_{\pm}t}v_{\pm}\left(0\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $E_{\pm}=\frac{5}{2}\pm\sqrt{2}$
+\end_inset
+
+ from before, with appropriate factors of 
+\begin_inset Formula $\hbar=1$
+\end_inset
+
+ ignored, and a time–scale so that Lyman alpha frequency is 
+\begin_inset Formula $\omega=1$
+\end_inset
+
+ so that its ignored as well.
+ This gives
+\begin_inset Formula 
+\[
+\gamma\left(t\right)=\frac{1}{2}\left[\begin{array}{c}
+e^{-iE_{+}t}-e^{-iE_{-}t}\\
+\left(e^{-iE_{+}t}+e^{-iE_{-}t}\right)\sqrt{2}\\
+e^{-iE_{+}t}-e^{-iE_{-}t}
+\end{array}\right]
+\]
+
+\end_inset
+
+Now, if this was real–life hydrogen and photons, then the photon capture
+ transfers some momentum to the hydrogen, and both are now drifting at some
+ velocity.
+ Of course, this is in superposition as well, of drifting and not–drifting.
+ I'll spare the details, I don't see anything to be learned, here.
+ Sooner or later, one or the other hits something: the wall, some detector,
+ the thermal bath, and now, everything drains into that thermal bath.
+ The projection operator for system B is
+\begin_inset Formula 
+\[
+\Pi_{B}=\left[\begin{array}{ccc}
+0 & 0 & 0\\
+0 & 0 & 0\\
+0 & 0 & 1
+\end{array}\right]
+\]
+
+\end_inset
+
+and so the probability of discovering the B-system hydrogen atom in the
+ excited state is 
+\begin_inset Formula 
+\[
+P_{B}\left(t\right)=\gamma^{\dagger}\left(t\right)\Pi_{B}\gamma\left(t\right)=\frac{1}{2}\left(1-\cos t\left(E_{+}-E_{-}\right)\right)=\frac{1}{2}\left(1-\cos t\sqrt{2}\right)
+\]
+
+\end_inset
+
+and that's the beat–frequency.
+ If we try to measure at just that specific time, we'll either see it, or
+ we won't.
+ The screwy thing here is that the A system is beating exactly the same
+ way.
+\end_layout
+
+\begin_layout Standard
+And lets make the screwiness very very specific: if we attempt to measure
+ both atoms at time 
+\begin_inset Formula $t=\pi/\sqrt{2}$
+\end_inset
+
+ then we will discover that neither of them are in the excited state! This
+ is sort of an amazing WTF prediction of the analysis above.
+ It is effectively saying that at time 
+\begin_inset Formula $t=\pi/\sqrt{2}$
+\end_inset
+
+ or more generally, at time 
+\begin_inset Formula $t=\pi\left(2n+1\right)/\sqrt{2}$
+\end_inset
+
+ all of the energy is 
+\begin_inset Quotes eld
+\end_inset
+
+back in the photon
+\begin_inset Quotes erd
+\end_inset
+
+, except that the photon is 
+\begin_inset Quotes eld
+\end_inset
+
+in the past
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+was absorbed a long time ago
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And yet, the lab–frame, lab–clock–time hydrogen atoms seem to be beating
+ in a superposed state of having both caught, and not caught the photon,
+ and if we look at just the right time, neither will have caught it! This
+ seems like a paradox, but it also has a solution.
+ If we measure at time 
+\begin_inset Formula $t=2n\pi/\sqrt{2}$
+\end_inset
+
+ then the naive prediction above is that we'll find both atoms in the excited
+ state.
+ This is again impossible, since it violates conservation of energy.
+ To get out of this paradox of both being excited, we have to invoke 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This is a 
+\begin_inset Quotes eld
+\end_inset
+
+kinematical
+\begin_inset Quotes erd
+\end_inset
+
+ conclusion.
+ I am using the word 
+\begin_inset Quotes eld
+\end_inset
+
+kinematic
+\begin_inset Quotes erd
+\end_inset
+
+ correctly here, but perhaps in an unfamiliar way: kinematics says 
+\begin_inset Quotes eld
+\end_inset
+
+the wave function must collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Dynamics explains how it collapses.
+ Collapse is inferred on purely kinematical grounds, that e.g.
+ energy is conserved, so only one or the other atom can be excited, and
+ not both, and not neither..
+\end_layout
+
+\begin_layout Standard
+To find out 
+\begin_inset Quotes eld
+\end_inset
+
+what actually happened
+\begin_inset Quotes erd
+\end_inset
+
+, we have to look at dynamics, and we can do that, now that we have an actual
+ 
+\begin_inset Quotes eld
+\end_inset
+
+microscopic
+\begin_inset Quotes erd
+\end_inset
+
+ model of decoherence.
 \end_layout
 
 \begin_layout Section*
