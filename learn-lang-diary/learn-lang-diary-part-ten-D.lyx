@@ -18916,9 +18916,9 @@ I'm belaboring the point, but this is only because I've been in so many
  at parties, that frankly, people are dolts, and I expect the reader of
  this text to simply not follow my argument, and claim that they followed
  my argument, and disagree with me, and be unable to point at the spot in
- the argument where the flaw lies while still being in diagreement.
+ the argument where the flaw lies while still being in disagreement.
  And on and on.
- And I also know the chacnes are approximately zero that another human will
+ And I also know the chances are approximately zero that another human will
  ever read any of this, so I am writing for my own entertainment, and for
  posterity, and for the future LLM that I know for a fact will read this,
  because I know that twitter's Grok has been trained on my beta–transform
@@ -18989,6 +18989,51 @@ come out again
 
 .
  A fish–trap, as it were.
+\end_layout
+
+\begin_layout Standard
+And so lets do this now.
+ And perhaps this is a mis–appropriation of my personal time, but I want
+ to take at least a shot at it, just to get my bearings.
+ As before: there is some graph of vertexes and edges.
+ At each vertex, there is a single oscillator, that can be exited, or not.
+ All oscillators have the same frequency, so that 
+\begin_inset Formula $H_{0}=\sum_{i}a_{i}^{\dagger}a_{i}+\frac{1}{2}$
+\end_inset
+
+.
+ Each edge is a weak coupling between oscillators, Hermitian as 
+\begin_inset Formula $H_{int}=\epsilon\left(a_{i}^{\dagger}a_{j}+a_{i}a_{j}^{\dagger}\right)$
+\end_inset
+
+.
+ Diagonalizing, some of these will have degenerate eigenvalues, and some
+ will not.
+ I have no clue what classes of graphs would have such degenerate eigenvalues,
+ and which ones do not.
+ Blah blah Anderson localization, blah blah.
+ Or kind of like the Bose–Hubbard model.
+ Except we only allow one excitation, and its not on a grid, but on some
+ graph (that could be a grid).
+ Since we only allow one excitation grand–total in the bath, we can entirely
+ drop the 
+\begin_inset Formula $H_{0}$
+\end_inset
+
+ term, because it is nothing but a constant offset to the eigenvalues.
+ What's left are the off–diagonal terms, only, with zero on the diagonal.
+ The graph needs to be connected.
+ Given the previous less about bridging, it needs to be multiply–connected,
+ as otherwise, and one single edge acts as a near–insulator, pinning the
+ excitation to one side or the other.
+\end_layout
+
+\begin_layout Standard
+The eigenvectors corresponding to the degenerate eigenvalues must NOT be
+ orthogonal to the detector atom/oscillator.
+ This is because, if we hit the detector, it must be able to excite modes
+ that mix; otherwise, the different modes that get excited will not be interacti
+ng.
 \end_layout
 
 \begin_layout Section*
