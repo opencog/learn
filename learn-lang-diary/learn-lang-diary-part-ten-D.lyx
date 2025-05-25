@@ -17437,6 +17437,432 @@ There is still one part that is still confusing ...
  Feels like another step, this time a large step.
 \end_layout
 
+\begin_layout Subsection*
+24 May 2025 Later
+\end_layout
+
+\begin_layout Standard
+Well, see, here's the problem.
+ The above describes a plausible method for creating quantum systems that
+ thermalize, using non–relativistic QM in the lab frame in the Hamiltonian
+ picture.
+ So how do I hook that up to Renninger? To recap: I now have two systems,
+ two thermalizing systems, described by Hamiltonians 
+\begin_inset Formula $H_{A}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{B}$
+\end_inset
+
+, such that when I hit one specific detector SHO, the energy of that hit
+ will get mixed.
+ By convention, call the thing getting thermalized a 
+\begin_inset Quotes eld
+\end_inset
+
+phonon
+\begin_inset Quotes erd
+\end_inset
+
+, just to give it a distinct name.
+ That is, systems A and B start in the ground state (zero phonons), and
+ when detector A or detector B, creating a single phonon 
+\begin_inset Formula $a_{A}^{\dagger}:\left|0_{A}\right\rangle \mapsto\left|1_{A}\right\rangle $
+\end_inset
+
+ or 
+\begin_inset Formula $a_{B}^{\dagger}:\left|0_{B}\right\rangle \mapsto\left|1_{B}\right\rangle $
+\end_inset
+
+, then after some time passes in the lab frame of A and B, that phonon will
+ get thermalized, per the process described/hypothesized above.
+\end_layout
+
+\begin_layout Standard
+The vocabulary that I want to use for the Renninger state is to say that
+ there is a single photon 
+\begin_inset Formula $\gamma$
+\end_inset
+
+ that is absorbed, and it creates a specific superposition of 
+\begin_inset Formula $\left|1_{A}\right\rangle $
+\end_inset
+
+ and 
+\begin_inset Formula $\left|1_{B}\right\rangle $
+\end_inset
+
+.
+ This was given several days ago, so let me repeat in the updated notation:
+ 
+\begin_inset Formula 
+\[
+\gamma\times\left|0_{A}\right\rangle \times\left|0_{B}\right\rangle \rightsquigarrow\frac{e^{i\theta}}{\sqrt{2}}\left(\left|1_{A}\right\rangle \otimes\left|0_{B}\right\rangle +e^{i\phi}\left|0_{A}\right\rangle \otimes\left|1_{B}\right\rangle \right)
+\]
+
+\end_inset
+
+where, again, as before, the LHS uses the Cartesian product to indicate
+ that the systems on the LHS are not yet entangled, while those on the RHS
+ are.
+ This presents a notational difficulty.
+ I would like to write an interaction Hamiltonian 
+\begin_inset Formula $H_{\rightsquigarrow}$
+\end_inset
+
+ but the two different products are problematic.
+ I think the Cartesian product on the LHS needs to be interpreted as a mixed
+ state, so that
+\begin_inset Formula 
+\[
+\left|0_{A}\right\rangle \times\left|0_{B}\right\rangle =\bigcup_{\phi_{A},\phi_{B}}e^{i\phi_{A}}e^{i\phi_{B}}\left|0_{A}\right\rangle \otimes\left|0_{B}\right\rangle 
+\]
+
+\end_inset
+
+Of these two phases, only one matters, so write 
+\begin_inset Formula $\phi_{AB}=\phi_{B}-\phi_{A}$
+\end_inset
+
+ and just drop the other one.
+ Well, maybe.
+ Lets not drop things too soon.
+ The set union 
+\begin_inset Formula $\bigcup$
+\end_inset
+
+ notation can be dropped in favor of a measure–theoretic density 
+\begin_inset Formula $\mu$
+\end_inset
+
+ and I use the 
+\begin_inset Formula $\mu$
+\end_inset
+
+ instead of 
+\begin_inset Formula $\rho$
+\end_inset
+
+ because I want to reserve the notation 
+\begin_inset Formula $\rho$
+\end_inset
+
+ for later, because maybe a density matrix will be required.
+ Maybe.
+ The density is meant to be uniform, that is, 
+\begin_inset Formula $\mu=1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Thus, I think that the notion of a Cartesian product of two isolated, thermally
+ non–interacting systems can be written as
+\begin_inset Formula 
+\begin{align*}
+\left|0_{A}\right\rangle \times\left|0_{B}\right\rangle  & =\int d\mu_{A}d\mu_{B}\,e^{i\left(\phi_{A}+\phi_{B}\right)}\left|0_{A}\right\rangle \otimes\left|0_{B}\right\rangle \\
+ & =\int d\mu_{A}d\mu_{B}\,e^{i\left(\phi_{A}+\phi_{B}\right)}\left|0_{A},0_{B}\right\rangle 
+\end{align*}
+
+\end_inset
+
+where the second line just simplifies the tensor notation.
+ This should now be enough to write the photon wave–function collapse into
+ a phonon in A or a phonon in B in operator form.
+ It is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+G_{\rightsquigarrow}=\frac{e^{i\theta}}{\sqrt{2}}\left(\left|0_{\gamma},1_{A},0_{B}\right\rangle +e^{i\phi}\left|0_{\gamma},0_{A},1_{B}\right\rangle \right)\int d\mu_{A}d\mu_{B}\,e^{i\left(\phi_{A}+\phi_{B}\right)}\left\langle 1_{\gamma},0_{A},0_{B}\right|
+\]
+
+\end_inset
+
+Perhaps there also needs to be an integral over 
+\begin_inset Formula $\theta$
+\end_inset
+
+ and 
+\begin_inset Formula $\phi$
+\end_inset
+
+ – I'm confused by this, for the moment.
+\end_layout
+
+\begin_layout Standard
+I would like to call this 
+\begin_inset Formula $G_{\rightsquigarrow}$
+\end_inset
+
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+interaction Hamiltonian
+\begin_inset Quotes erd
+\end_inset
+
+, but this is dangerous, because there's a problem with time at this stage
+ of the game.
+ Although both systems A and B are thermal in their respective lab frame,
+ they could be flying past each other at relativistic speeds at the time
+ that the interaction 
+\begin_inset Formula $G_{\rightsquigarrow}$
+\end_inset
+
+ takes place, and worse, the Renninger setup means one of them could be
+ far in the future of the other.
+\end_layout
+
+\begin_layout Standard
+There are multiple things to be confused about, here.
+ First: is the thermalization fast, or slow? That is, the photon wave-packet
+ has a finite size: when this hits the two detector SHO's, is that wave–packet
+ done and gone before thermalization starts? Or is the thermalization an
+ ongoing process, even as the photon is still driving one or the other oscillato
+rs? I guess that perhaps this is the core question of the entanglement of
+ the baths, and the relation to collapse.
+ Or is it?
+\end_layout
+
+\begin_layout Standard
+I keep saying 
+\begin_inset Quotes eld
+\end_inset
+
+entanglement
+\begin_inset Quotes erd
+\end_inset
+
+ because the state 
+\begin_inset Formula $\left|1_{A}\right\rangle \otimes\left|0_{B}\right\rangle +e^{i\phi}\left|0_{A}\right\rangle \otimes\left|1_{B}\right\rangle $
+\end_inset
+
+ is clearly entangled.
+ But it does not seem to cause the baths to entangle.
+ Lets say it is system B that is in the Renninger future.
+ Lets say that it is 
+\begin_inset Formula $\left|1_{B}\right\rangle $
+\end_inset
+
+ that thermallizes.
+ I want to use this to solve the analog of the Mott problem and argue that
+ back–when, system A remained in the ground state.
+ So that this here–and–now entanglement correctly resolves the state of
+ 
+\begin_inset Formula $A$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+in the past
+\begin_inset Quotes erd
+\end_inset
+
+ and the state of 
+\begin_inset Formula $B$
+\end_inset
+
+ 
+\begin_inset Quotes eld
+\end_inset
+
+in the future
+\begin_inset Quotes erd
+\end_inset
+
+, although the Renninger setup says that actually, both of these are in
+ the here–and–now.
+ I feel like I am chasing my own tail.
+\end_layout
+
+\begin_layout Standard
+Lets try again.
+ Earlier, I had the interaction Hamiltonians 
+\begin_inset Formula $H_{A}^{int}=\epsilon\sum_{ij}a_{Ai}^{\dagger}a_{Aj}$
+\end_inset
+
+ and likewise 
+\begin_inset Formula $H_{B}^{int}=\epsilon\sum_{ij}a_{Bi}^{\dagger}a_{Bj}$
+\end_inset
+
+ but 
+\begin_inset Formula $G_{\rightsquigarrow}$
+\end_inset
+
+ is not of this form.
+ I could force it into this form by writing
+\begin_inset Formula 
+\[
+G_{\rightsquigarrow}=a_{A0}^{\dagger}a_{\gamma}+e^{i\phi}a_{B0}^{\dagger}a_{\gamma}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $a_{A0}^{\dagger}$
+\end_inset
+
+ is the notation for the creation operator on the detector SHO in system
+ A.
+ I also dropped the mixed–state integrals because they are confusing, and
+ just clutter everything.
+ In this form 
+\begin_inset Formula $G_{\rightsquigarrow}$
+\end_inset
+
+ starts to look Hamiltonian-ish, and the biggest problem is its not time–symmetr
+ic.
+ So we need to write 
+\begin_inset Formula 
+\[
+G_{\leftrightsquigarrow}=a_{A0}^{\dagger}a_{\gamma}+e^{i\phi}a_{B0}^{\dagger}a_{\gamma}+e^{i\alpha}a_{A0}a_{\gamma}^{\dagger}+e^{i\beta}a_{B0}a_{\gamma}^{\dagger}
+\]
+
+\end_inset
+
+and this now finally seems to create a thermalization bridge between systems
+ A and B.
+ Lets set the phases 
+\begin_inset Formula $\phi=\alpha=\beta=0$
+\end_inset
+
+ because these do not seem to be important.
+ This simplifies the expression to 
+\begin_inset Formula 
+\[
+G_{\leftrightsquigarrow}=a_{A0}^{\dagger}a_{\gamma}+a_{B0}^{\dagger}a_{\gamma}+a_{A0}a_{\gamma}^{\dagger}+a_{B0}a_{\gamma}^{\dagger}
+\]
+
+\end_inset
+
+and these phases can be reinserted later, as needed, if needed, which I
+ doubt.
+ In this form, we now have a fully time–symmetric interaction: we can imagine
+ going backwards in time, a phonon in system B getting converted back into
+ a photon, getting radiated, but only long enough to turn back into a phonon
+ in system A, So this now appears to thermally couple the systems A and
+ B, albeit only with a single edge.
+ Again, this is remarkable because the two systems are sitting (by design)
+ in disjoint regions of spacetime, possibly moving at relativistic velocities
+ with respect to one–an other.
+ The so–called photon can be recognized as 
+\begin_inset Quotes eld
+\end_inset
+
+just another state
+\begin_inset Quotes erd
+\end_inset
+
+; it doesn't have to be a literal photon, just like the things I'm calling
+ 
+\begin_inset Quotes eld
+\end_inset
+
+phonons
+\begin_inset Quotes erd
+\end_inset
+
+ aren't literally phonons, I'm just using these as handy vocabulary labels.
+ But I repeat myself.
+ The primary difference here is that the strength of the interaction 
+\begin_inset Formula $G_{\leftrightsquigarrow}$
+\end_inset
+
+ is unity; its not weakly coupled.
+ Which I think is correct, but is again something worth contemplating in
+ greater detail.
+\end_layout
+
+\begin_layout Standard
+Lets contemplate this some more.
+ If everything was in the same Newtonian reference frame, then the hand–waving
+ requires saying something along the lines of the 
+\begin_inset Quotes eld
+\end_inset
+
+photon
+\begin_inset Quotes erd
+\end_inset
+
+ having exactly the same energy as a single SHO oscillator.
+ Recall, I'm using SHO instead of hydrogen atoms simply because I want to
+ avoid the complication of talking about 1s to 2p Lyman alpha transition
+ and the realities of photon polarization.
+ So I'm using scalars all around.
+ However, since the lab frames for system A and B might be moving with respect
+ to each other, it doesn't make sense to talk about 
+\begin_inset Quotes eld
+\end_inset
+
+energy
+\begin_inset Quotes erd
+\end_inset
+
+.
+ However, it still makes sense to write expressions like 
+\begin_inset Formula $a_{A0}^{\dagger}a_{\gamma}$
+\end_inset
+
+ because these are frame–independent.
+ In the abstract state–space notation, this does not have a location.
+ I desperately want to avoid having to write expressions like 
+\begin_inset Formula $a_{A0}^{\dagger}\left(\vec{x}-\vec{x}^{\prime}\right)$
+\end_inset
+
+ to indicate that the creation operator is happening at 
+\begin_inset Quotes eld
+\end_inset
+
+spacetime coordinate 
+\begin_inset Formula $\vec{x}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+, because that way lies madness.
+ There is a curative: the subscript 0 reminds is that this was the detector
+ SHO, and the other SHO's also have subscripts, so we can tell them apart,
+ and then, later on, if we wanted to assign spatial locations to them, we
+ could.
+ This is a long way of saying that, if you were really really desperate,
+ you could take 
+\begin_inset Formula $a_{A0}^{\dagger}a_{\gamma}$
+\end_inset
+
+ and stick a 
+\begin_inset Formula $\frac{-ie}{2\pi}\int d^{4}x$
+\end_inset
+
+ in front of it, or I guess 
+\begin_inset Formula $\frac{-ie}{2\pi}\int d^{4}k$
+\end_inset
+
+ or whatever Feynman rules you want for this vertex, and recast all of this
+ in QFT form.
+ I'm not doing this because its complicated, and it clutters everything,
+ and obscures the underlying algebra.
+ From where I sit, I see no particular conceptual problems or road–blocks
+ here, so it seems this can be left as 
+\begin_inset Quotes eld
+\end_inset
+
+an exercise for the reader
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
