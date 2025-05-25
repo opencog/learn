@@ -17726,7 +17726,7 @@ ic.
  So we need to write 
 \begin_inset Formula 
 \[
-G_{\leftrightsquigarrow}=a_{A0}^{\dagger}a_{\gamma}+e^{i\phi}a_{B0}^{\dagger}a_{\gamma}+e^{i\alpha}a_{A0}a_{\gamma}^{\dagger}+e^{i\beta}a_{B0}a_{\gamma}^{\dagger}
+G_{\leftrightsquigarrow}=e^{i\alpha}a_{A0}^{\dagger}a_{\gamma}+e^{i\phi}a_{B0}^{\dagger}a_{\gamma}+e^{-i\alpha}a_{A0}a_{\gamma}^{\dagger}+e^{-i\phi}a_{B0}a_{\gamma}^{\dagger}
 \]
 
 \end_inset
@@ -17734,7 +17734,7 @@ G_{\leftrightsquigarrow}=a_{A0}^{\dagger}a_{\gamma}+e^{i\phi}a_{B0}^{\dagger}a_{
 and this now finally seems to create a thermalization bridge between systems
  A and B.
  Lets set the phases 
-\begin_inset Formula $\phi=\alpha=\beta=0$
+\begin_inset Formula $\phi=\alpha=0$
 \end_inset
 
  because these do not seem to be important.
@@ -18051,6 +18051,214 @@ The other interesting aspect of graphs is that they kind–of overlap with
  We'll see.
  I think it would be wise for me to stop here.
  See you later, I hope.
+\end_layout
+
+\begin_layout Subsection*
+25 May 2025
+\end_layout
+
+\begin_layout Standard
+Well, this is like picking at a scab.
+ Let's do the two–detector–only system, the simplest possible system.
+\begin_inset Formula 
+\[
+G_{\leftrightsquigarrow}=e^{i\alpha}a_{A0}^{\dagger}a_{\gamma}+e^{i\beta}a_{B0}^{\dagger}a_{\gamma}+e^{-i\alpha}a_{A0}a_{\gamma}^{\dagger}+e^{-i\beta}a_{B0}a_{\gamma}^{\dagger}
+\]
+
+\end_inset
+
+to which we add 
+\begin_inset Formula 
+\begin{align*}
+H_{0} & =H_{A}+H_{B}+H_{\gamma}\\
+ & =a_{A0}a_{A0}^{\dagger}+\frac{1}{2}+a_{B0}a_{B0}^{\dagger}+\frac{1}{2}+a_{\gamma}a_{\gamma}^{\dagger}+\frac{1}{2}
+\end{align*}
+
+\end_inset
+
+For single–excitation mode, this is
+\begin_inset Formula 
+\[
+H_{0}+G_{\leftrightsquigarrow}=\left[\begin{array}{ccc}
+\frac{5}{2} & e^{i\alpha} & 0\\
+e^{-i\alpha} & \frac{5}{2} & e^{i\beta}\\
+0 & e^{-i\beta} & \frac{5}{2}
+\end{array}\right]
+\]
+
+\end_inset
+
+with the initial state being 
+\begin_inset Formula $\left[\begin{array}{ccc}
+0 & 1 & 0\end{array}\right]$
+\end_inset
+
+ i.e.
+ only the photon coming in 
+\begin_inset Quotes eld
+\end_inset
+
+from before
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The characteristic eqn is 
+\begin_inset Formula 
+\[
+\left(\frac{5}{2}-\lambda\right)\left[\left(\frac{5}{2}-\lambda\right)^{2}-2\right]=0
+\]
+
+\end_inset
+
+which has eigenvalues 
+\begin_inset Formula $\lambda=\frac{5}{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $\lambda=\frac{5}{2}\pm\sqrt{2}$
+\end_inset
+
+ if I did that correctly.
+ The modes are distinct, there's no degeneracy, hitting the center will
+ excite all three modes, which will slosh around.
+ The only interesting inference to be made is that, while the modes are
+ sloshing around, lets say constructive interference is such that at some
+ point in time, the mode 
+\begin_inset Formula $\left[\begin{array}{ccc}
+0 & 0 & 1\end{array}\right]$
+\end_inset
+
+ is excited, so that all the energy is in the B detector, then, if just
+ at that moment, we attach a bath to the B detector, then that bath should
+ bleed away all the energy, and none will go back into detector A.
+ If we make 
+\begin_inset Formula $B$
+\end_inset
+
+ very large e.g.
+ having 
+\begin_inset Formula $6\times10^{23}$
+\end_inset
+
+ thermal modes, then the chance that enough energy could ever accumulate
+ at detector B so that it could flow back over to detector A is negligible.
+ We can get more precise: if the bath has 
+\begin_inset Formula $N$
+\end_inset
+
+ oscillators, then there are approximately 
+\begin_inset Formula $N$
+\end_inset
+
+-factorial wave combinations for how the energy might be distributed across
+ the oscillators, so the chances that the energy could re–accumulate at
+ the detector–B oscillator, cross over the photon bridge, and collapse back
+ onto system A is negligible.
+ This is effectively the Mott problem.
+ Once the flow into the bath starts, it is effectively irreversible.
+\end_layout
+
+\begin_layout Standard
+And so these last few sentences really arrive at the final conclusion: the
+ irreversibility of wave–function collapse.
+ The toy problem here really is just a simplified variant of the Mott problem,
+ abstracted away from coordinates.
+ It's almost anti–climactic.
+ I've got two tanks, once the photon mode flows into one tank, or the other,
+ its trapped there, and will never come back.
+ The neck is too narrow: the bridge afforded by 
+\begin_inset Formula $G_{\leftrightsquigarrow}$
+\end_inset
+
+ is too small, and much too weakly connected to the tanks, to allow anything
+ to flow from one to the other, except by combinatorially absurdly tiny
+ amounts.
+ So, again, we seem to now have an intuitive picture of collapse, that does
+ not require any actual collapse, that remains 
+\begin_inset Quotes eld
+\end_inset
+
+unitary
+\begin_inset Quotes erd
+\end_inset
+
+, but is also irreversible, and fully obeys the requirement that a quantum
+ goes either here, or there, but not both places.
+\end_layout
+
+\begin_layout Standard
+The only squirmy aspect of this has to do with the conception of time.
+ The two baths are necessarily each in their own lab frame, and are necessarily
+ static in their lab frame: the assembly of the oscillators forming up the
+ bath has to be static over a long enough period of time that the thermalization
+ can happen.
+ That is, in the lab frame of either detector, the Hamiltonian picture is
+ appropriate, and proper time is the appropriate time for the analysis of
+ that particular bath.
+ However, the two baths may be moving relativistically with respect to each
+ other; so there's no particular need to coordinate the two times in each
+ frame.
+ Worse, the Renninger arrangement allows one to be in the past of the other.
+ Which is OK.
+ This does not invalidate the analysis.
+ The only 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ issue is that the expression 
+\begin_inset Formula $H_{0}+G_{\leftrightsquigarrow}$
+\end_inset
+
+ isn't a 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ Hamiltonian, because the time at detector A is unrelated to the time at
+ detector 
+\begin_inset Formula $B$
+\end_inset
+
+, and the 
+\begin_inset Quotes eld
+\end_inset
+
+photon
+\begin_inset Quotes erd
+\end_inset
+
+ might be either an actual photon, or perhaps an electron.
+ So although we can diagonalize 
+\begin_inset Formula $H_{0}+G_{\leftrightsquigarrow}$
+\end_inset
+
+ and look at the eigenstates, we have trouble talking about their 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ evolution, if system A is moving relativistically to system B.
+ Or do we? We could just hand–wave at this point, and say 
+\begin_inset Quotes eld
+\end_inset
+
+oh hey, crack open a textbook and look up relativistic QM, not a problem
+\begin_inset Quotes erd
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Section*
