@@ -18553,6 +18553,266 @@ microscopic
 \end_inset
 
  model of decoherence.
+ The trick is that, in order to measure atom B, we have to attach it to
+ a heat bath, and wait for any quantum of energy in system B, if it is there,
+ to thermalize, or not.
+ And that means waiting.
+ How long? Well, the characteristic frequency is 
+\begin_inset Formula $\omega=1$
+\end_inset
+
+ so we have to wait at least 
+\begin_inset Formula $\Delta t\gg1$
+\end_inset
+
+ for thermalization to happen.
+ But the beat period is 
+\begin_inset Formula $t_{beat}=2\pi/\sqrt{2}\approx4.443$
+\end_inset
+
+ so the system will beat into and out of an occupied state as the thermalization
+ is happening, and so the atom will reappear in the 
+\begin_inset Quotes eld
+\end_inset
+
+excited
+\begin_inset Quotes erd
+\end_inset
+
+ state while it is connected to the bath.
+ The bath dynamics happens on a much longer time period than this beat frequency
+; the beating will repeatedly drive both baths multiple times before the
+ energy finally bleeds into one tank or the other.
+\end_layout
+
+\begin_layout Standard
+This is the odd state of affairs, the counter–intuitive state of affairs
+ that we're dealing with.
+ The photon–atom interaction region is strictly bounded in space–time: its
+ the photon wave–packet size times the Bohr radius, roughly.
+ And experimentally, we arranged that this interaction region is in the
+ 
+\begin_inset Quotes eld
+\end_inset
+
+distant past
+\begin_inset Quotes erd
+\end_inset
+
+, before undertaking the measurement of the excitation state of the two
+ atoms.
+ (Assuming, that is, that we can discourage the atoms from naturally decaying,
+ maybe by leveraging some forbidden transition or something, I dunno.
+ For the thought experiment, I'm requiring that the atom aka oscillator
+ remain in the excited state indefinitely, until such time that it can be
+ measured.) Where was I?
+\end_layout
+
+\begin_layout Standard
+So the experiment is arranged so that the photon–atom interaction regions
+ are 
+\begin_inset Quotes eld
+\end_inset
+
+in the distant past
+\begin_inset Quotes erd
+\end_inset
+
+, and that the two atoms are space–like separated in the lab frame.
+ Despite all this, the entanglement says that the wave function is beating,
+ with the beat frequency, between these two space–like separated regions
+ and the distant past, where the photon hit.
+ This is the necessary philosophical interpretation of the two state–vector
+ formalism (TSVF), and it works, because in this 
+\begin_inset Quotes eld
+\end_inset
+
+microscopic
+\begin_inset Quotes erd
+\end_inset
+
+ picture, 
+\begin_inset Quotes eld
+\end_inset
+
+before
+\begin_inset Quotes erd
+\end_inset
+
+ attaching the measurement baths, 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ really is 
+\begin_inset Quotes eld
+\end_inset
+
+reversible
+\begin_inset Quotes erd
+\end_inset
+
+, as it is often noted to be in the conventional style of thinking associated
+ with QFT and ideas like CPT symmetry.
+ That is, the TSVF idea is fully consistent with time symmetry.
+ And that's kind of the whole point.
+ However, we've now got this other 
+\begin_inset Quotes eld
+\end_inset
+
+microscopic
+\begin_inset Quotes erd
+\end_inset
+
+ dynamics, of two baths.
+ Those thermalize, force the quanta to go into one bath or the other, and
+ those two baths are connected by a narrow bridge that runs 
+\begin_inset Quotes eld
+\end_inset
+
+both ways
+\begin_inset Quotes erd
+\end_inset
+
+ in time.
+ We've now characterized the size of this bridge: it is 
+\begin_inset Formula $t_{beat}=2\pi/\sqrt{2}\approx4.443$
+\end_inset
+
+ and thus much, uhh, 
+\begin_inset Quotes eld
+\end_inset
+
+shorter
+\begin_inset Quotes erd
+\end_inset
+
+ than the thermalization time 
+\begin_inset Formula $\Delta t\gg1$
+\end_inset
+
+ and this time difference means that the beat frequency can drive the thermal
+ baths repeatedly.
+ I imagine that 
+\begin_inset Formula $\Delta t\gtrsim30$
+\end_inset
+
+ is enough to reach the point of no return for the thermalization.
+ Roughly, this is because of the 
+\begin_inset Quotes eld
+\end_inset
+
+quantum speed limit
+\begin_inset Quotes erd
+\end_inset
+
+ (QSL) theorems (I revised/wrote the Wikipedia articles on that, too) gives
+ us enough time to beat 
+\begin_inset Formula $30/2\pi\approx5$
+\end_inset
+
+ times, resulting in 
+\begin_inset Formula $5!=120$
+\end_inset
+
+ combinatorial possibilities for entangling the oscillators in the bath,
+ and that's enough entanglement to no longer be able to get back out again.
+\end_layout
+
+\begin_layout Standard
+I guess this also gives the characteristic time scale for quantum weak measureme
+nts: weak measurements can only happen on timescales shorter than the QSL
+ timescale: this is not because the wave–function 
+\begin_inset Quotes eld
+\end_inset
+
+uncollapses
+\begin_inset Quotes erd
+\end_inset
+
+ in the weak measurement, but rather because it hasn't thermalized yet,
+ and is coherent enough to be pulled back from the brink.
+ to be re–cohered again.
+\end_layout
+
+\begin_layout Standard
+The beating can pump the baths.
+ That is, its not just some impulse, but an extended time frame.
+ This is nice, because it does fit the conventional intuitive picture of
+ driven oscillators, and how they take time to 
+\begin_inset Quotes eld
+\end_inset
+
+lock on
+\begin_inset Quotes erd
+\end_inset
+
+ to the driving force.
+ The baths are driven over extended cycles.
+ Eventually, one or the other locks on.
+ During this lock–on period, there is no violation of unitarity or unitary
+ 
+\begin_inset Quotes eld
+\end_inset
+
+evolution
+\begin_inset Quotes erd
+\end_inset
+
+: this is because the TSVF bridge is a unitary bridge.
+ I feel like I'm repeating myself over and over, but that is because I'm
+ using words, not formulas: the unitary bridge really is 
+\begin_inset Formula 
+\[
+U\left(t\right)=\exp i\left(H_{0}+G_{\leftrightsquigarrow}\right)t
+\]
+
+\end_inset
+
+as an operator equation.
+ And, as an operator equation, there is no 
+\begin_inset Quotes eld
+\end_inset
+
+flow of time
+\begin_inset Quotes erd
+\end_inset
+
+ here; rather, 
+\begin_inset Quotes eld
+\end_inset
+
+time
+\begin_inset Quotes erd
+\end_inset
+
+ is a parameter, which we can run back and forth, as desired, as needed,
+ to couple the two measurement baths attached to the two atoms.
+ So again: there is no 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+, but there is thermalization that ends up in one bath, or the other, in
+ an irreversible way, and the kinematic conclusion that it must be 
+\begin_inset Quotes eld
+\end_inset
+
+one or the other
+\begin_inset Quotes erd
+\end_inset
+
+ is replaced by the dynamical apparatus of the excitation quanta flowing
+ into one tank or the other.
+ The time scale of the QSL is exactly the time scale of decoherence.
+ All is as it should be in the fairy kingdom of quantum, and they lived
+ happily ever after.
 \end_layout
 
 \begin_layout Section*
