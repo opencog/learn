@@ -19345,6 +19345,140 @@ yes
  But not for today; the much simpler problems above seem challenging enough.
 \end_layout
 
+\begin_layout Standard
+At any rate, the wave–function collapse argument does not require mixing.
+ All that it requires is that after the detector atom is excited, that this
+ excitation drain away, say, to the level of 
+\begin_inset Formula $\left|\psi\right|^{2}\sim10^{-10}$
+\end_inset
+
+ so that it becomes extremely unlikely to ever flow back the other ways
+ across the bridge.
+ Describing a tank model that shows mixing is a bonus.
+ Describing a tank model that does not require the assumption of some 3D
+ geometry seems like an extra bonus.
+ Describing a tank model that does not require explicit Laplacians (second–order
+ derivatives) is an extra bonus, although the SHO provides an implicit one,
+ the 
+\begin_inset Formula $d^{2}/dx^{2}$
+\end_inset
+
+ needed to construct the SHO.
+ Once again, I think I'm done.
+\end_layout
+
+\begin_layout Standard
+Well, there is one more way to talk about mixing and decoherence and dissipation
+, without losing unitarity.
+ Except, wait, hang on ...
+ what I am about to write below is...
+ wrong ...
+ and I know this before I start, but I am going to write it anyway.
+ Or maybe it is not wrong.
+\end_layout
+
+\begin_layout Standard
+Unitary evolution is conventionally said to be time evolution given by 
+\begin_inset Formula $U=e^{-iHt}$
+\end_inset
+
+ for Hermitian 
+\begin_inset Formula $H$
+\end_inset
+
+.
+ Now, for 
+\begin_inset Formula $n$
+\end_inset
+
+ particles, 
+\begin_inset Formula $H$
+\end_inset
+
+ is to be interpreted as an 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ matrix, so 
+\begin_inset Formula $U$
+\end_inset
+
+ is a point living on the manifold of the Lie group 
+\begin_inset Formula $U_{n}$
+\end_inset
+
+.
+ Since this is a manifold, we are free to talk about distributions on a
+ manifold, and then ask about the time evolution of those distributions.
+ The time evolution of that distribution is presumably measure–preserving,
+ and thus we can apply the conventional definitions of ergodicity 
+\begin_inset Formula 
+\[
+\mu\left(\bigcup_{k=1}^{\infty}T^{-k}\left(A\right)\right)=1
+\]
+
+\end_inset
+
+ and mixing
+\begin_inset Formula 
+\[
+\lim_{k\to\infty}\mu\left(T^{-k}\left(A\right)\cap B\right)=\mu\left(A\right)\mu\left(B\right)
+\]
+
+\end_inset
+
+to argue that the distribution eventually spreads over all of 
+\begin_inset Formula $U_{n}$
+\end_inset
+
+.
+ The brick wall from last night was the realization that finite–dimensional
+ 
+\begin_inset Formula $H$
+\end_inset
+
+ is always diagonalizable, and so the paths 
+\begin_inset Formula $e^{-iHt}$
+\end_inset
+
+ are always great circles.
+\end_layout
+
+\begin_layout Standard
+Fuck me.
+ And now I am confusing myself.
+ The four–wave interaction 
+\begin_inset Formula $H_{4}$
+\end_inset
+
+ does ...
+ what ...
+ exactly? I think it says that two particles, i.e.
+ two normal modes, traveling on two different great circles, can collide
+ with each other, with some likelihood obtained from 
+\begin_inset Formula $\epsilon_{4}$
+\end_inset
+
+, and then depart on two other great circles.
+ Thus, mixing arises because this looks like ...
+ a gas.
+ Billiards.
+ WTF.
+ How come I've never heard of anything anywhere that describes the four–wave
+ interaction in this way? Maybe I just slept through it, or skimmed, and
+ did not notice? My lack of knowledge never ceases to amaze me.
+ I keep thinking of these super–duper simple ideas that should have simple
+ answers, and whenever I get one, all I know is that I have no clue what
+ the answer is, and worse, the answer should have been so simple that it
+ should have been a part of my education, but wasn't.
+ Now, the profs always assigned far more than I ever actually read.
+ But still.
+ And I'm not stupid.
+ But still.
+ This should be plain and simple.
+ Why do I not know it? 
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
