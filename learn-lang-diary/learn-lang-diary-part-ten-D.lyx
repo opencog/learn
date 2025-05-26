@@ -19136,6 +19136,100 @@ I dunno.
  Well, shit.
 \end_layout
 
+\begin_layout Subsection*
+26 May 2025
+\end_layout
+
+\begin_layout Standard
+We are so back! This is a model! I have total control! If I want a three–wave
+ interaction I can just add one! Well, but this will not conserve energy,
+ so I need a four–wave interaction.
+ Easy: Just add 
+\begin_inset Formula 
+\[
+H_{4}=\epsilon_{4}\left(a_{i}^{\dagger}a_{j}^{\dagger}a_{k}a_{l}+a_{i}a_{j}a_{k}^{\dagger}a_{l}^{\dagger}\right)
+\]
+
+\end_inset
+
+for assorted oscillators 
+\begin_inset Formula $i,j,k,l$
+\end_inset
+
+ and bingo! The breakage is obvious: A Hamiltonian of this form no longer
+ has a trivial representation as a finite–dimensional Hermitian matrix,
+ because the above cannot be written as an edge in a graph adjacency matrix.
+ The above forces us down the path of conventional perturbation theory:
+ we get normal modes from diagonalizing the quadratic interactions, and
+ perturbative corrections from this quartic form.
+\end_layout
+
+\begin_layout Standard
+Now, I cannot (yet) prove that a quartic term like this is mixing, but it
+ almost surely must be, and I'll try to attack that in a moment.
+ But first, some remarks.
+ 
+\end_layout
+
+\begin_layout Standard
+First, the obvious one: the graph has to have at least two quanta on it,
+ as otherwise, there's nothing to interact with.
+ A single quantum will just remain in whatever normal mode it is in; two
+ are needed in order to collide.
+ Interesting questions then arise about what happens as a function of the
+ number of quanta (phonons) on the graph.
+ 
+\end_layout
+
+\begin_layout Standard
+Second obvious remark: The conventional resonant interaction requires dispersion
+ relations so that both the energy and the momentum cross, because both
+ energy and momentum are conserved.
+ Here, we've defined the system to have an energy, but, for a random graph,
+ there's no obvious corresponding momentum.
+ Now, conserved quantities come from invariance under symmetries, and momentum
+ comes from translational invariance.
+ For some arbitrary graph, there's no translational invariance, but there
+ is a collection of graph isomorphisms.
+ Well, a group of graph isomorphisms.
+ Well, I guess an abelian group of graph isomorphisms.
+ And this is good, because abelian means we can write the group of graph
+ isomorphisms in the form
+\begin_inset Formula 
+\[
+A=\mathbb{Z}_{n_{1}}\oplus\mathbb{Z}_{n_{2}}\oplus\cdots
+\]
+
+\end_inset
+
+for some prime/coprime powers 
+\begin_inset Formula $n_{1},n_{2},\cdots$
+\end_inset
+
+ Then, corresponding to each 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ there is going to be a matching conserved 
+\begin_inset Quotes eld
+\end_inset
+
+wave–vector
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $k_{i}$
+\end_inset
+
+ which can take values 
+\begin_inset Formula $k_{i}\in\left\{ 2\pi m/n_{i}\mbox{ s.t. }m\in\mathbb{Z},0\le m<n_{i}\right\} $
+\end_inset
+
+ forming a resolution of unity.
+ 
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
