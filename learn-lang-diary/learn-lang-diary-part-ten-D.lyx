@@ -19178,7 +19178,25 @@ First, the obvious one: the graph has to have at least two quanta on it,
  are needed in order to collide.
  Interesting questions then arise about what happens as a function of the
  number of quanta (phonons) on the graph.
- 
+\end_layout
+
+\begin_layout Standard
+First–and–a–half remark: does this require abandoning the idea of the two–level
+ atom? That is, the original model said SHO, but then we promptly restricted
+ to just one phonon, so equivalently, a two–level atom suffices.
+ Now, SHO's are bosonic, so returning to the generic SHO case is fine.
+ But perhaps we can keep the two–level model, and declare that the phonons
+ are somehow fermionic.
+ Either Grassman super–numbers, 
+\begin_inset Formula $\theta^{2}=0$
+\end_inset
+
+ or Clifford 
+\begin_inset Formula $\theta^{2}-1=0$
+\end_inset
+
+? This requires details and articulation, which compounds the complexity.
+ Yikes!
 \end_layout
 
 \begin_layout Standard
@@ -19190,11 +19208,13 @@ Second obvious remark: The conventional resonant interaction requires dispersion
  Now, conserved quantities come from invariance under symmetries, and momentum
  comes from translational invariance.
  For some arbitrary graph, there's no translational invariance, but there
- is a collection of graph isomorphisms.
- Well, a group of graph isomorphisms.
- Well, I guess an abelian group of graph isomorphisms.
- And this is good, because abelian means we can write the group of graph
- isomorphisms in the form
+ is a collection of graph automorphisms.
+ Well, a group of graph automorphisms.
+\end_layout
+
+\begin_layout Standard
+If we restrict to the case of abelian groups, then we can write the group
+ as
 \begin_inset Formula 
 \[
 A=\mathbb{Z}_{n_{1}}\oplus\mathbb{Z}_{n_{2}}\oplus\cdots
@@ -19226,8 +19246,103 @@ wave–vector
 \begin_inset Formula $k_{i}\in\left\{ 2\pi m/n_{i}\mbox{ s.t. }m\in\mathbb{Z},0\le m<n_{i}\right\} $
 \end_inset
 
- forming a resolution of unity.
- 
+ forming a roots of unity.
+ Writing 
+\begin_inset Formula $\vec{k}=\left(k_{1},k_{2},\cdots\right)$
+\end_inset
+
+ then presumably we want to restrict ourselves to four–wave interactions
+ that also conserve this 
+\begin_inset Quotes eld
+\end_inset
+
+generalized momentum
+\begin_inset Quotes erd
+\end_inset
+
+.
+ However, this is confusing, however:
+\end_layout
+
+\begin_layout Itemize
+The group of automorphisms of a graph is not in general abelian.
+\end_layout
+
+\begin_layout Itemize
+Wave–vectors in crystallography are always 3D; the different 3D space groups
+ then manifest as different Brillouin zones.
+ This lays to waste the naive description of the wave–vectors of abelian
+ groups above.
+\end_layout
+
+\begin_layout Itemize
+The perturbative prescription is that first one finds the normal modes by
+ diagonalizing the matrix with just the quadratic terms in it.
+ It's a bit unclear what this does to the corresponding wave–vectors; these
+ would usually behave as Fourier dual vectors, but exactly how is not obvious.
+\end_layout
+
+\begin_layout Itemize
+Dispersion relations relate energy to wave–vectors; in the present case,
+ the energy of a normal mode needs to be related to some scalar expression
+ of the matching wave–vectors.
+ What this is and how it works is unclear.
+\end_layout
+
+\begin_layout Standard
+There's also a deeper weirdness, based on 
+\begin_inset Quotes eld
+\end_inset
+
+why Hamiltonian?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+why is time a symmetry?
+\begin_inset Quotes erd
+\end_inset
+
+ In the developments above, a model of a decohering (thermalizing? dissipative?)
+ graph is described, built from a collection of simple harmonic oscillators.
+ Now, SHO's are characterized by having energy levels, and talking about
+ energy implies a corresponding time variable, and energy conservation implies
+ time translation invariance.
+ The above model is kind of shizo, in that it builds time and time invariance
+ deeply into the theory, but layers the concept of momentum onto the graph
+ automorphisms.
+ Is there some more symmetric treatment?
+\end_layout
+
+\begin_layout Standard
+Should there be a more symmetric treatment? Well, Minkowski space invariance
+ suggests the answer should be 
+\begin_inset Quotes eld
+\end_inset
+
+yes
+\begin_inset Quotes erd
+\end_inset
+
+.
+ However, the present–ness of here–and–now really suggests that time is
+ very special; the unit speed of proper time in the lab frame is inviolable.
+ We cannot slow down or speed up time; Minkowski is just an accounting trick.
+ Still, its interesting to wonder if or how we could make the conservation
+ of energy arise from something else, instead of being built–in into the
+ model of a thermalizing tank.
+ But perhaps this question is simply too broad, to general.
+ Perhaps we can discover measure–preserving dynamical systems with two time
+ directions, or more.
+ We don't know what that means, unless by time you mean space, and its all
+ a mush, then.
+ Unless there's some phase transition in that mush, that congeals into just
+ one time direction and multiple space directions.
+ Perhaps such models exist.
+ But not for today; the much simpler problems above seem challenging enough.
 \end_layout
 
 \begin_layout Section*
