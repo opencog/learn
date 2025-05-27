@@ -19476,7 +19476,170 @@ Fuck me.
  And I'm not stupid.
  But still.
  This should be plain and simple.
- Why do I not know it? 
+ Why do I not know it?
+\end_layout
+
+\begin_layout Standard
+Answer: (1) its not billiards scattering, its just plain scattering.
+ (2) there was never talk of manifolds (3) there was no talk of mixing,
+ and little of ergodicty except in hand–waving terms: appeals to the 
+\begin_inset Quotes eld
+\end_inset
+
+ergodic hypothesis
+\begin_inset Quotes erd
+\end_inset
+
+ but without detail.
+ (4) scattering was always in momentum space.
+ And that's why it wasn't in my education.
+\end_layout
+
+\begin_layout Standard
+The idea is quite simple, so lets write it down.
+ Again, the model is of a collection of harmonic oscillators with pair–wise
+ interactions.
+ Each oscillator has an excitation 
+\begin_inset Formula $\left|e_{i}\right\rangle $
+\end_inset
+
+ with the label 
+\begin_inset Formula $i$
+\end_inset
+
+ denoting the i'th oscillator.
+ This index can be thought of as encoding the 
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ of the oscillator (as it would be for e.g.
+ a crystal lattice of atoms).
+ But these are not normal modes aka energy eigenstates.
+ The normal modes are 
+\begin_inset Formula $v_{j}=\sum_{i}c_{ji}e_{i}$
+\end_inset
+
+ where 
+\begin_inset Formula $e_{i}\equiv\left|e_{i}\right\rangle $
+\end_inset
+
+ is just an alternate notation.
+ The 
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+ are complex numbers, satisfying 
+\begin_inset Formula $H_{2}v_{j}=E_{j}v_{j}$
+\end_inset
+
+ where 
+\begin_inset Formula $H_{2}=H_{0}+H_{int}$
+\end_inset
+
+ and 
+\begin_inset Formula $H_{int}$
+\end_inset
+
+ is just the quadratic interactions as defined before.
+ 
+\end_layout
+
+\begin_layout Standard
+The normal modes can be thought of as points on 
+\begin_inset Formula $\mathbf{CP}^{n}$
+\end_inset
+
+ but they are kind of boring because they don't move; only the phase changes
+ and that's moded out.
+ Anything that's an energy eigenstate won't move.
+ If we did it right, the normal modes merely span 
+\begin_inset Formula $\mathbf{CP}^{n}$
+\end_inset
+
+ so again, that's pretty boring.
+ If we look only at the phases of the 
+\begin_inset Formula $c_{ji}$
+\end_inset
+
+ then these form an 
+\begin_inset Formula $n$
+\end_inset
+
+–dimensional torus, and a given normal mode is some geodesic on the torus,
+ probably at some irrational angle so space–filling there, but otherwise
+ pretty boring as well.
+ So thinking of a manifold here is not interesting.
+ In particular, four paragraphs ago, thinking about 
+\begin_inset Formula $U_{n}$
+\end_inset
+
+ also seems to be stupid nonsense, because 
+\begin_inset Formula $H$
+\end_inset
+
+ is fixed, frozen, a constant.
+ So what the heck are we doing here?
+\end_layout
+
+\begin_layout Standard
+The 4–wave scattering can be written as
+\begin_inset Formula 
+\[
+H_{4}=\epsilon_{4}\left(\left|e_{i}e_{j}\right\rangle \left\langle e_{k}e_{l}\right|+\left|e_{k}e_{l}\right\rangle \left\langle e_{i}e_{j}\right|\right)
+\]
+
+\end_inset
+
+and applying this to the scattering of two normal modes 
+\begin_inset Formula $v_{a}=\sum_{m}c_{am}\left|e_{m}\right\rangle $
+\end_inset
+
+ and 
+\begin_inset Formula $v_{b}=\sum_{p}c_{bp}\left|e_{p}\right\rangle $
+\end_inset
+
+ gives
+\begin_inset Formula 
+\begin{align*}
+v_{a}\otimes v_{b} & \to\sum_{m,p\ne i,j,k,l}c_{am}c_{bp}\left|e_{m}e_{p}\right\rangle +c_{ak}c_{bl}\left|e_{i}e_{j}\right\rangle +c_{ai}c_{bj}\left|e_{k}e_{l}\right\rangle \\
+=v_{a}\otimes v_{b} & -c_{ai}c_{bj}\left|e_{i}e_{j}\right\rangle -c_{ak}c_{bl}\left|e_{k}e_{l}\right\rangle \\
+ & +c_{ak}c_{bl}\left|e_{i}e_{j}\right\rangle +c_{ai}c_{bj}\left|e_{k}e_{l}\right\rangle \\
+=v_{a}\otimes v_{b} & +\left(c_{ak}c_{bl}-c_{ai}c_{bj}\right)\left|e_{i}e_{j}\right\rangle \\
+ & +\left(c_{ai}c_{bj}-c_{ak}c_{bl}\right)\left|e_{k}e_{l}\right\rangle \\
+=v_{a}\otimes v_{b} & +\left(c_{ak}c_{bl}-c_{ai}c_{bj}\right)\left(\left|e_{i}e_{j}\right\rangle -\left|e_{k}e_{l}\right\rangle \right)
+\end{align*}
+
+\end_inset
+
+Note that the result of the collision is not in general another product
+ of normal modes.
+ 
+\end_layout
+
+\begin_layout Standard
+How fast does this happen? We apply Fermi's golden rule.
+ Scrounging on Wikipedia, I see it is
+\begin_inset Formula 
+\begin{align*}
+\Gamma_{\left|v_{a}v_{b}\right\rangle \to\left|v_{c}v_{d}\right\rangle } & =\frac{2\pi}{\hbar}\left|\left\langle v_{c}v_{d}\right|H_{4}\left|v_{a}v_{b}\right\rangle \right|^{2}\rho\left(E\right)\\
+ & =\frac{2\pi}{\hbar}\epsilon_{4}\left|\left(c_{ci}^{*}c_{dj}^{*}-c_{ck}^{*}c_{dl}^{*}\right)\left(c_{ak}c_{bl}-c_{ai}c_{bj}\right)\right|^{2}\rho\left(E\right)
+\end{align*}
+
+\end_inset
+
+which is not very edifying.
+\end_layout
+
+\begin_layout Standard
+Anyway, perhaps I am wasting my time.
+ Clicking through, I see that perhaps I am just reinventing https://en.wikipedia.o
+rg/wiki/Quantum_decoherence and doing it badly, in a bit of a ham–handed
+ fashion.
+ Maybe I should just read that article...
 \end_layout
 
 \begin_layout Section*
