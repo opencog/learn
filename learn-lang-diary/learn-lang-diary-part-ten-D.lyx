@@ -19838,30 +19838,25 @@ Part of the deal is that when
 then
 \begin_inset Formula 
 \begin{align*}
-H\left|w_{k}\right\rangle  & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H\left|w_{k}\right\rangle \\
- & =\sum_{ijlm}\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
- & =\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
- & =\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H_{2}\otimes H_{2}+H_{4}\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
- & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
- & \qquad\quad+\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle 
+H\left|w_{k}\right\rangle  & =\left|w_{k}\right\rangle \left\langle w_{k}\right|H\left|w_{k}\right\rangle \\
+ & =\left|w_{k}\right\rangle \sum_{ijlm}\left\langle w_{k}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
+ & =\left|w_{k}\right\rangle \sum_{ijlm}a_{kij}^{*}a_{klm}\left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \\
+ & =\left|w_{k}\right\rangle \sum_{ijlm}a_{kij}^{*}a_{klm}\left\langle v_{i}v_{j}\right|H_{2}\otimes H_{2}+H_{4}\left|v_{l}v_{m}\right\rangle \\
+ & =\left|w_{k}\right\rangle \left[\sum_{ij}a_{kij}^{*}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}+\sum_{ijlm}a_{kij}^{*}a_{klm}\left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \right]\\
+ & =E_{k}\left|w_{k}\right\rangle 
 \end{align*}
 
 \end_inset
 
+and so
+\begin_inset Formula 
+\[
+E_{k}=\sum_{ij}a_{kij}^{*}\left[a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}+\sum_{lm}a_{klm}\left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \right]
+\]
 
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-so ...
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
