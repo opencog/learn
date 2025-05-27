@@ -19840,13 +19840,10 @@ then
 \begin{align*}
 H\left|w_{k}\right\rangle  & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H\left|w_{k}\right\rangle \\
  & =\sum_{ijlm}\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
- & =\\
- & \left[H_{2}\otimes H_{2}+H_{4}\right]\left|w_{k}\right\rangle \\
- & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H_{2}\otimes H_{2}+H_{4}\left|w_{k}\right\rangle \\
- & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\left|v_{i}v_{j}\right\rangle +\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H_{4}\left|w_{k}\right\rangle \\
- & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \\
- & \qquad\quad+\sum_{p}\left|w_{p}\right\rangle \sum_{ijlm}\left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
- & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\left|v_{i}v_{j}\right\rangle +\sum_{ijlm}\left|v_{l}v_{m}\right\rangle 
+ & =\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
+ & =\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H_{2}\otimes H_{2}+H_{4}\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
+ & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle \\
+ & \qquad\quad+\sum_{ijlm}a_{klm}\left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \sum_{p}a_{pij}^{*}\left|w_{p}\right\rangle 
 \end{align*}
 
 \end_inset
@@ -19864,13 +19861,7 @@ H\left|w_{k}\right\rangle  & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p
 \uwave off
 \noun off
 \color none
-H_{4}
-\backslash
-left|w_{k}
-\backslash
-right
-\backslash
-rangle 
+so ...
 \end_layout
 
 \begin_layout Section*
