@@ -19561,17 +19561,6 @@ The normal modes can be thought of as points on
 \end_inset
 
  so again, that's pretty boring.
- If we look only at the phases of the 
-\begin_inset Formula $c_{ji}$
-\end_inset
-
- then these form an 
-\begin_inset Formula $n$
-\end_inset
-
-–dimensional torus, and a given normal mode is some geodesic on the torus,
- probably at some irrational angle so space–filling there, but otherwise
- pretty boring as well.
  So thinking of a manifold here is not interesting.
  In particular, four paragraphs ago, thinking about 
 \begin_inset Formula $U_{n}$
@@ -19640,6 +19629,248 @@ Anyway, perhaps I am wasting my time.
 rg/wiki/Quantum_decoherence and doing it badly, in a bit of a ham–handed
  fashion.
  Maybe I should just read that article...
+\end_layout
+
+\begin_layout Subsection*
+27 May 2025
+\end_layout
+
+\begin_layout Standard
+I forgot to write this up yesterday: it's turtles all the way down.
+ The point is that if you are in the lab frame of the detector, then you
+ have to accept proper time as the relevant parameter for the system, which
+ means you work with a conjugate Hamiltonian, which implies that state transitio
+ns come from Fermi's golden rule, which implies that those state transitions
+ appear to be mixtures in the local time–frame, for the local constant–time
+ slice.
+ The is, 
+\begin_inset Formula $\Gamma_{\left|v_{a}v_{b}\right\rangle \to\left|v_{c}v_{d}\right\rangle }$
+\end_inset
+
+ gives you the branching ratios into the state 
+\begin_inset Formula $\left|v_{c}v_{d}\right\rangle $
+\end_inset
+
+ and once that 
+\begin_inset Quotes eld
+\end_inset
+
+branch is taken
+\begin_inset Quotes erd
+\end_inset
+
+, one can say that 
+\begin_inset Quotes eld
+\end_inset
+
+the wave–function collapsed into 
+\begin_inset Formula $\left|v_{c}v_{d}\right\rangle $
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Each of the branches are meant to be summed incoherently: one gets a mixture
+ of different states 
+\begin_inset Formula $\left|v_{c}v_{d}\right\rangle $
+\end_inset
+
+ and the probability of having 
+\begin_inset Formula $\left|v_{c}v_{d}\right\rangle $
+\end_inset
+
+ in that mixture is given by 
+\begin_inset Formula $\Gamma$
+\end_inset
+
+.
+ Stated differently, decoherence consists of a long sequence of 
+\begin_inset Quotes eld
+\end_inset
+
+wave–function collapses
+\begin_inset Quotes erd
+\end_inset
+
+, each of which contribute a little itty–bitty piece to the canonical ensemble.
+\end_layout
+
+\begin_layout Standard
+The irony here is that we started trying to describe the collapse of an
+ entangled state, either space–like separated, or Renninger–separated, and
+ we did this successfully by describing the coupling to decoherence tanks.
+ But if we look at each tank, we see that it in turn is a very deep cascade
+ of branching measurements.
+ How should that be described? What is the formalism there? What are the
+ equations that give a foundation to the intuition?
+\end_layout
+
+\begin_layout Standard
+Well, for starters, it helps to articulate the tensor algebra more precisely.
+ A single–particle state is described by 
+\begin_inset Formula $\left|v\right\rangle \in V$
+\end_inset
+
+ where 
+\begin_inset Formula $V\cong\mathbb{C}^{n}$
+\end_inset
+
+ for the 
+\begin_inset Formula $n$
+\end_inset
+
+–oscillator system.
+ The Hamiltonian up to quadratic terms is 
+\begin_inset Formula $H_{2}=H_{0}+H_{int}$
+\end_inset
+
+ and we have a choice of notation: either 
+\begin_inset Formula $H_{2}:V\to V$
+\end_inset
+
+ or 
+\begin_inset Formula $H_{2}\in V^{\dagger}\otimes V$
+\end_inset
+
+ given the standard bilinear inner product 
+\begin_inset Formula $\left\langle a|b\right\rangle =\delta_{ab}$
+\end_inset
+
+.
+ The two–particle interaction 
+\begin_inset Formula $H_{4}$
+\end_inset
+
+ is thus 
+\begin_inset Formula $H_{4}:V\otimes V\to V\otimes V$
+\end_inset
+
+ or equivalently 
+\begin_inset Formula $H_{4}\in V^{\dagger}\otimes V^{\dagger}\otimes V\otimes V$
+\end_inset
+
+.
+ Normally one does not have to say these parts out loud, since the extension
+ of operators from tensor spaces to the full tensor algebra follows from
+ the universal property of the tensor product (i.e.
+ it follows from category theory.) I'm taking the effort to say this out
+ loud to focus attention on the needed pieces–parts to assemble everything.
+\end_layout
+
+\begin_layout Standard
+Part of the deal is that when 
+\begin_inset Formula $V\cong\mathbb{C}^{n}$
+\end_inset
+
+ has a basis 
+\begin_inset Formula $\left\{ e_{k}\right\} $
+\end_inset
+
+ then 
+\begin_inset Formula $V\otimes V$
+\end_inset
+
+ can be given the basis 
+\begin_inset Formula $\left\{ e_{jk}=e_{j}\otimes e_{k}=\left|e_{j}e_{k}\right\rangle \right\} $
+\end_inset
+
+ We are free to choose the basis as desired, so its handy to use the normal
+ modes 
+\begin_inset Formula $\left\{ v_{k}\right\} $
+\end_inset
+
+ as the basis, with the normal modes understood as diagonalizing the quadratic
+ Hamiltonian: 
+\begin_inset Formula $H_{2}v_{k}=E_{k}^{\left(2\right)}v_{k}$
+\end_inset
+
+.
+ The quartic interaction means that the basis 
+\begin_inset Formula $\left\{ v_{jk}=v_{j}\otimes v_{k}\right\} $
+\end_inset
+
+ is not orthogonal w.r.t 
+\begin_inset Formula $H=H_{2}\otimes H_{2}+H_{4}$
+\end_inset
+
+.
+ Note the funky way that I wrote this: instead of writing 
+\begin_inset Formula $H=H_{2}+H_{4}$
+\end_inset
+
+ as would be conventional on QM textbooks, I'm using the tensor product
+ to explicitly draw attention to 
+\begin_inset Formula $H_{2}$
+\end_inset
+
+ being a single–particle operator.
+ In the end, its exactly the same thing, because, again, the universal property
+ of tensor products extends automatically, and this extension can be implicitly
+ assumed.
+ I'm just trying to be unambiguous and clear, here.
+ The point is that 
+\begin_inset Formula $H$
+\end_inset
+
+ is hermitian: 
+\begin_inset Formula $H^{\dagger}=H_{2}^{\dagger}\otimes H_{2}^{\dagger}+H_{4}^{\dagger}=H_{2}\otimes H_{2}+H_{4}=H$
+\end_inset
+
+ and so it is possible to orthogonalize this in terms of states 
+\begin_inset Formula $\left\{ w_{k}:w_{k}\in V\otimes V\right\} $
+\end_inset
+
+ solving 
+\begin_inset Formula $Hw_{k}=E_{k}w_{k}$
+\end_inset
+
+.
+ Writing 
+\begin_inset Formula 
+\[
+\left|w_{k}\right\rangle =\sum_{ij}a_{kij}\left|v_{i}v_{j}\right\rangle 
+\]
+
+\end_inset
+
+then
+\begin_inset Formula 
+\begin{align*}
+H\left|w_{k}\right\rangle  & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H\left|w_{k}\right\rangle \\
+ & =\sum_{ijlm}\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
+ & =\\
+ & \left[H_{2}\otimes H_{2}+H_{4}\right]\left|w_{k}\right\rangle \\
+ & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H_{2}\otimes H_{2}+H_{4}\left|w_{k}\right\rangle \\
+ & =\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\left|v_{i}v_{j}\right\rangle +\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|H_{4}\left|w_{k}\right\rangle \\
+ & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\sum_{p}\left|w_{p}\right\rangle \left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \\
+ & \qquad\quad+\sum_{p}\left|w_{p}\right\rangle \sum_{ijlm}\left\langle w_{p}\right|\left.v_{i}v_{j}\right\rangle \left\langle v_{i}v_{j}\right|H_{4}\left|v_{l}v_{m}\right\rangle \left\langle v_{l}v_{m}\right|\left.w_{k}\right\rangle \\
+ & =\sum_{ij}a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\right)}\left|v_{i}v_{j}\right\rangle +\sum_{ijlm}\left|v_{l}v_{m}\right\rangle 
+\end{align*}
+
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+H_{4}
+\backslash
+left|w_{k}
+\backslash
+right
+\backslash
+rangle 
 \end_layout
 
 \begin_layout Section*
