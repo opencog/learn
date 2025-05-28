@@ -12650,14 +12650,14 @@ platonic reality
 
 \begin_layout Standard
 So to wrap it up.
- I plan to re-recall the quantum-immortality/quantum-suicide argument, just
+ I plan to re–recall the quantum–immortality/quantum–suicide argument, just
  for kicks.
  I've determined the obvious: the past is inaccessible; only the present
  memory of the pas is accessible, and the present memory is subject to distortio
 n and loss.
- From postings from omnths and years ealier, the boundary between past and
- present is there, where a two state–vector formalism finally resolves all
- inconsistencies and 
+ From postings from months and years earlier, the boundary between past
+ and present is there, where a two state–vector formalism finally resolves
+ all inconsistencies and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -12797,7 +12797,7 @@ amplification mechanism
 \end_inset
 
 .
- Still, its bedtime so toodle-oo.
+ Still, its bedtime so toodle–oo.
 \end_layout
 
 \begin_layout Subsection*
@@ -19856,7 +19856,230 @@ E_{k}=\sum_{ij}a_{kij}^{*}\left[a_{kij}E_{i}^{\left(2\right)}E_{j}^{\left(2\righ
 
 \end_inset
 
+is the eigenvalue of the two–particle mode that was previously taken to
+ be 
+\begin_inset Quotes eld
+\end_inset
 
+interacting
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In this way, we can orthogonalize all of the two–particle states.
+ These are pure states.
+ They are orthogonal, by construction, whenever the eigenvalues differ,
+ and can be made orthogonal by finding a 
+\begin_inset Quotes eld
+\end_inset
+
+complete set of commuting operators
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Right now, we only have this as a theorem, with no constructive suggestions
+ for how to go about finding this complete set.
+ Doesn't seem like this should be hard, I think this is solvable.
+\end_layout
+
+\begin_layout Standard
+At any rate, since these are pure states, and there are no higher–order
+ terms in the Hamiltonian, these are non–interacting.
+ Fermi's golden rule no longer applies, no longer matters, because there
+ are no more superpositions, no more interactions, no more scattering, and
+ thus, no more 
+\begin_inset Quotes eld
+\end_inset
+
+wave–function collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Now, if one attached some device to a single oscillator, to measure whether
+ or not that oscillator is in the excited state at some particular moment
+ in time in the lab frame, then a wave–function collapse does occur, and
+ we repeat the analysis with a third decoherence tank, connected by a 
+\begin_inset Quotes eld
+\end_inset
+
+narrow bridge
+\begin_inset Quotes erd
+\end_inset
+
+ to the oscillator we are measuring.
+ Similarly, if there was a device for measuring the normal modes of the
+ quadratic Hamiltonian, then again, we're attaching a third tank, just in
+ a different way.
+ Crank the algebra, but nothing changes in the overall theory.
+\end_layout
+
+\begin_layout Standard
+Note that, for 
+\begin_inset Formula $\dim V=n$
+\end_inset
+
+ we have 
+\begin_inset Formula $\dim V\otimes V=n\left(n+1\right)/2$
+\end_inset
+
+ so for 
+\begin_inset Formula $n\sim6\times10^{23}$
+\end_inset
+
+ this gets to be explosively large.
+ We can reasonably talk about 
+\begin_inset Formula $n\sim10^{6}$
+\end_inset
+
+ for a single pixel in some CCD camera, and still, things get explosively
+ large, explosively fast.
+\end_layout
+
+\begin_layout Standard
+Still, can we say anything intelligent bout the three–excitation state?
+ This consists of states 
+\begin_inset Formula $\left|\psi^{\left(3\right)}\right\rangle \in V\otimes V\otimes V=T^{3}V$
+\end_inset
+
+.
+ My gut sense says that this is where we have to start talking about bialgebras,
+ and eventually shuffle algebras, because the four–wave 
+\begin_inset Formula $H$
+\end_inset
+
+ acts only on 
+\begin_inset Formula $T^{2}V$
+\end_inset
+
+ but which 
+\begin_inset Formula $T^{2}V$
+\end_inset
+
+? God help us, I think there is no braiding, but this word 
+\begin_inset Quotes eld
+\end_inset
+
+braiding
+\begin_inset Quotes erd
+\end_inset
+
+ is lurking on the edges, waiting to pounce on the unwary.
+ How do I do this safely, without getting mugged? What I think I'm trying
+ to do here is a pure tensor–algebra variant of the BBGKY hierarchy, without
+ any mention of positions or momenta.
+ Informally, I guess you could say I've replaced 
+\begin_inset Formula $\left(q,p\right)$
+\end_inset
+
+ pairs by the SHO.
+\end_layout
+
+\begin_layout Standard
+...
+ and as I write this, I get totally distracted.
+ I glance at https://en.wikipedia.org/wiki/Ergodic_hypothesis and at the figure
+ labelled 
+\begin_inset Quotes eld
+\end_inset
+
+Maxwell's tunnel
+\begin_inset Quotes erd
+\end_inset
+
+, and I promptly realize the question is about the illumination problem.
+ https://en.wikipedia.org/wiki/Illumination_problem And this is what I write:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+[[File:Ergodic hypothesis w reflecting rays.jpg|thumb|The question of ergodicity
+ in a perfectly collisionless [[ideal gas]] with [[specular reflection]]s.]]
+ The article currently has the figure at right.
+ It can be construed as being answered in the negative, and/or being a misleadin
+g figure.
+ The problem is the caption: "a perfectly collisionless ideal gas with specular
+ reflections." which is the setting for the study of "[[Illumination problem|unil
+luminable room]]s".
+ The thing called "Maxwell's tunnel" is illuminable.
+ I'm not aware of any youtube video showing this, but there's a cottage
+ industry of those.
+ I assume the illumination guys can even provide a theorem that, as drawn,
+ its illuminable; they seem to be able to do this kind of stuff, but I dunno.
+ The WP article also gives examples of unilluminable rooms, so if you limit
+ yourself to "perfectly collisionless" motion, then the ergodic hypothesis
+ fails.
+ Collisions are required, for the ergodic hypothesis to apply.
+ There are several ways of hand-waving this: for waves, one must have a
+ [[resonant interaction]] to have ergodicity and mixing, and for quantum
+ systems, one has to have a QM version thereof, involving either fermion-photon
+ scattering, or four-particle scattering (four, because the QM version of
+ the [[three-wave equation]] cannot conserve both energy and momentum (and
+ particle-number, for a single field).
+ Unless you're a gluon, in which case it can.
+ But gluons are non-obvious, and anyway we don't have non-microscopic systems
+ that behave like gluons, so three-particle scattering would have to be
+ a very arcane example.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+What am I saying here? The figure is ...
+ well, its just wrong.
+ It's trying to illustrate the ergodic hypothesis using some unusual geometry,
+ which made sense in Maxwell's time, 150 years ago, but is now outmoded!?
+ [[Special:Contributions/67.198.37.16|67.198.37.16]] ([[User talk:67.198.37.16|talk]])
+ 00:05, 28 May 2025 (UTC)
+\emph default
+ 
+\end_layout
+
+\begin_layout Standard
+Sooo ...
+ the lightbulb that goes off in my mind is of course the QCD lightbulb.When
+ I was young, and didn't yet understand stuff, I imagined that the Dirac
+ equation could be thought of as the product of two 
+\begin_inset Quotes eld
+\end_inset
+
+derivative
+\begin_inset Quotes erd
+\end_inset
+
+ operators, one acting on space–time, and one acting on the internal spin
+ states.
+ i.e.
+ that the gamma matrices are a kind of derivative (Lie derivative?) acting
+ on the su(2) algebra and I spent a lot of time trying to make this analogy
+ work, but always got stuck because I had not yet invented the diary format
+ I use here, of talking to myself much more informally than I would care
+ to admit to outsiders.
+ But anyway, I think that, appropriately construed, the analogy of a gamma
+ matrix as a kind–of derivative is broadly correct, and the Dirac eqn couples
+ unbounded degrees of freedom (spacetime) to internal degrees of freedom
+ (Bloch sphere, or the tangent thereon.) And so I'm suddenly 
+\begin_inset Quotes eld
+\end_inset
+
+holy fuck, is the su(3) just a three–wave coupling (three–wave equation,
+ https://en.wikipedia.org/wiki/Three-wave_equation but for internal degrees
+ of freedom?
+\begin_inset Quotes erd
+\end_inset
+
+ Well, of course it is.
+ Just ...
+ not scalar.
+ It's non–abelian.
+ And so can I use this insight to say something that has not been said before?
+ Fuck me.
+ Life is too short, I have too many daydreams, too many tasks, not enough
+ time.
+ Dammit.
+ 
 \end_layout
 
 \begin_layout Section*
