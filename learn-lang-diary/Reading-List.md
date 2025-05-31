@@ -1,5 +1,15 @@
 
 Things to read:
+
+* From Tokens to Thoughts:
+  How LLMs and Humans Trade Compression for Meaning
+  Chen Shani, Dan Jurafsky, Yann LeCun, Ravid Shwartz-Ziv
+  https://arxiv.org/pdf/2505.17117
+
+* Beyond Attention: Toward Machines with Intrinsic Higher Mental States
+  Ahsan Adeel
+  https://arxiv.org/abs/2505.06257
+
 * Harnessing the Universal Geometry of Embeddings
   Rishi Jha, Collin Zhang, Vitaly Shmatikov, John X. Morris
   https://arxiv.org/abs/2505.12540
@@ -7,6 +17,14 @@ Things to read:
 * Discrete Visual Tokens of Autoregression, by Diffusion, and for Reasoning
   Bohan Wang et al
   https://arxiv.org/abs/2505.07538
+
+* STaR: Bootstrapping Reasoning With Reasoning
+  Eric Zelikman, Yuhuai Wu, Jesse Mu, Noah D. Goodman
+  https://arxiv.org/abs/2203.14465
+
+* Decision Transformer: Reinforcement Learning via Sequence Modeling
+  Lili Chen, Kevin Lu, Aravind Rajeswaran, Kimin Lee, Aditya Grover, Michael Laskin, Pieter Abbeel, Aravind Srinivas, Igor Mordatch
+  https://arxiv.org/abs/2106.01345
 
 * More:
 https://pymdp-rtd.readthedocs.io/en/latest/index.html
