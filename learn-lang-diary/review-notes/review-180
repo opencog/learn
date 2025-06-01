@@ -38,7 +38,7 @@ Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
 
     This is my best guess as to the intent of these defintions but
     perhaps I misunderstood or garbled something here.
-    
+
     It should be pointed out here that the state transition functions
     of an (ordinary) finite state machine are not linear. However, by
     using the formalism of a probabilistic automaton, you can make it
@@ -64,7 +64,7 @@ Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
 
     Sections 3 and 4 are also mis-labelled: they have nothing to do
     with AGI, or even with computing: they summarize standard school
-    curriculum for physics, with the three letters AGI sprinkled in. 
+    curriculum for physics, with the three letters AGI sprinkled in.
     The space could have beeter been devoted to making contact with
     e.g. the theory of automata, and then asserting "AGI will be on
     a substrate of these kinds of automata"
@@ -90,30 +90,67 @@ Top of page 6:
     "Classical form (HC ind)."
     "Given data D = {(si, ri)}N i=1, model fθ , weights λ"
 
-This is a category error!!!
-
-    What's s_i? What's r_i? The  model fθ appears to be a
-    "parametric predictor with weights θ and sample-weights λi;"
-
     This appears to be some sort of Hamiltonian expression that might
     possibly be used for parametric predictive modelling, e.g. to train
-    some deep learning neural net. But there are several issues here:
+    some deep learning neural net.
 
-    -- Why has the conversation moved to parametric predictive modelling?
-    Is there some claim that AGI will consist of some agents, and those
-    agents will be using parametric predictive modelling to form a
-    world-model? What about all those people doing non-parametric
-    modelling? Are they out of luck?
+    This seems to raise a category error.
+    * Category 1: Hamiltonians that are used to desscribe the time
+      evolution of systems. This includes Hamiltonians that describe
+      a ball rolling down an inclined plane, Hamiltonians that describe
+      mechanical calculators, Hamiltonians that describe transistors and
+      computers, Hamiltonians that describe ergodic and mixing processes,
+      such as the rings of Saturn or the mixing of rum and coke to form
+      a Cuba Libre. The last example is one of a dissipative process.
 
-    -- Is there a claim that *all* agents must necessarily create a
-    world model that is obtained with this specific Hamiltonian form?
-    Might there be some other Hamiltonian form?
+    * Category 2: Machine learning systems that minimize an objective
+      function. It is often the case the objective function is smooth,
+      and arises from some integrability condition. In this case, one
+      can call the resulting foliation a "Hamiltonian", but this is
+      besides the point: in machine learning, one strives to minimize
+      the objective function. When it has a foliation, then one can use
+      gradient descent. The gradient-descent is *orthogonal* to the
+      surfaces of constant energy, the algos search for downhill paths.
 
-    -- Is this formula supposed to be immediately recognizable to
-    readers who do predictive modelling? If I quint, then it does look
-    to be perhaps something that might be used in gradient-descent-ish
-    type training algorithms, 
+   The category error is the confusion between these two. In the first
+   category, energy is conserved; in the second case, the word "energy"
+   is a linguistic flourish, and most certainly, the "energy" is NOT
+   conserved, and the algo specifically attempts to minimize the energy.
 
+   A (classical) AGI agent would necessarily belong to category 1; it
+   might use an algorithm from category 2, if the goal of that agent was
+   to create a world-model using parametric predictive modelling. But
+   that is a big "if". Sure, the current deep-learing neural net
+   industry is centered on parametric predictive modelling, but there
+   are certainly other ways of doing AI.
+
+   However, this paper claims to want to unify classical and quantum
+   models of computing. Confusing the classical computing, which happens
+   in category 1, with specific trade-industry algorithms beloning to
+   category 2 ... is just ... confusing.
+
+   Some narrower remarks:
+   -- What's s_i? What's r_i? The model fθ appears to be a
+      "parametric predictor with weights θ and sample-weights λi;"
+      Is this formula supposed to be immediately recognizable to
+      readers who do parametric predictive modelling? If I squint,
+      then it looks like something I've seen before, but I don't
+      recognize it as some generic form of the utility function that
+      everyone uses.
+
+   -- Is there some intent to say that "every AGI agent will always
+      create a world model, and that every world model is neccessarily
+      equivalent to a parametric predictive model"? If so, both parts
+      of such a claim are remarkable and dramatic, and require strong
+      suppport. It is often presumed, but hardly obvious that AGI
+      agents will create world-models. Some will, but not necessarily in
+      general. To then claim that such a model is equivalent to some
+      other parametric predictive model, this too is ... possible, but
+      hardly obvious. Both parts of such a claim require a deep leap of
+      faith.
+
+Sectiion 5.2:
+      "Boolean clauses φα : T∗C → {0, 1}"
 
 
 
