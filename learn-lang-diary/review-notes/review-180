@@ -27,7 +27,7 @@ Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
     which are the maps between these subspaces."
 
     I think that is the intent. Now, in general, there won't be
-    commutativve subspaces, unless you explicitly add them; so
+    commutative subspaces, unless you explicitly make it so; so
     for example, I think you want the space H = C^|Σ|⊗ R^|Σ| where
     R^|Σ| is real Euclidean space, used to model the space of classical
     registers, C^|Σ| is used for the quantum states, and now the
@@ -39,6 +39,83 @@ Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
     This is my best guess as to the intent of these defintions but
     perhaps I misunderstood or garbled something here.
     
+    It should be pointed out here that the state transition functions
+    of an (ordinary) finite state machine are not linear. However, by
+    using the formalism of a probabilistic automaton, you can make it
+    linear (and every finite classical Turing machine has a finite
+    state machine equivalent.) Then I think what you are shooting for
+    in the quantum half is the "quantum finite automaton". See
+    https://en.wikipedia.org/wiki/Quantum_finite_automaton and
+    https://en.wikipedia.org/wiki/Probabilistic_automaton
+    I think these two articles describe the intended split of the
+    computation into classical and quantum "registers".
+
+    I have never actually contemplated combining these two descriptions
+    into a single unified C*-algebra, and it would be perhaps a good
+    exercise to confirm that the detailed formalisms all pass through
+    exactly as intended (i.e. as direct products, semi-direct products,
+    tensor products, etc. in all those places where they would need to
+    appear.)
+
+    Sections 3 and 4 on pages 3-5 are recapitulations of standard
+    textbook material; it would have been nice if instead this space
+    was devoted to articulating the details of the unified description
+    of quantum and proabilistic automata.
+
+    Sections 3 and 4 are also mis-labelled: they have nothing to do
+    with AGI, or even with computing: they summarize standard school
+    curriculum for physics, with the three letters AGI sprinkled in. 
+    The space could have beeter been devoted to making contact with
+    e.g. the theory of automata, and then asserting "AGI will be on
+    a substrate of these kinds of automata"
+
+Section 5ff.
+    This section attempts to pack too much material in too small a
+    space. The use of jargon does not help. For example, page 5, bottom:
+
+    "In CAGI it equals a quadratic loss surface over an information
+     manifold."
+
+    I think this is trying to say what the next sentence says: the
+    classical mutual information is given by the Fisher metric. And
+    yes, metrics are quadratic. The location of the "surface" is
+    unclear. And the word "loss" has a specific technical meaning in
+    deep learning neural nets, where it refers to the Gibbs measure.
+    Sure, I suppose one can relate the Gibbs measure "loss" to, I guess,
+    some gaussian on some astract Wiener space or something like that,
+    but unpacking all this could be a short paper in itself. Condensing
+    it like this will leave almost all readers confused.
+
+Top of page 6:
+    "Classical form (HC ind)."
+    "Given data D = {(si, ri)}N i=1, model fθ , weights λ"
+
+This is a category error!!!
+
+    What's s_i? What's r_i? The  model fθ appears to be a
+    "parametric predictor with weights θ and sample-weights λi;"
+
+    This appears to be some sort of Hamiltonian expression that might
+    possibly be used for parametric predictive modelling, e.g. to train
+    some deep learning neural net. But there are several issues here:
+
+    -- Why has the conversation moved to parametric predictive modelling?
+    Is there some claim that AGI will consist of some agents, and those
+    agents will be using parametric predictive modelling to form a
+    world-model? What about all those people doing non-parametric
+    modelling? Are they out of luck?
+
+    -- Is there a claim that *all* agents must necessarily create a
+    world model that is obtained with this specific Hamiltonian form?
+    Might there be some other Hamiltonian form?
+
+    -- Is this formula supposed to be immediately recognizable to
+    readers who do predictive modelling? If I quint, then it does look
+    to be perhaps something that might be used in gradient-descent-ish
+    type training algorithms, 
+
+
+
 
 
 Typos:
