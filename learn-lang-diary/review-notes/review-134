@@ -1,0 +1,70 @@
+
+Review for Submission 134
+
+Accept. Clear, well-written, interesting.
+
+A likely framework for the description of intelligence will involve
+agents that self-organize, approaching a phase transition criticality
+where reorganizational avalanches occur.
+
+Although this paper does quite not use these thermodynamic words, 
+it lays much of the background conceptual framework for such a
+description.
+
+-----------
+One suggestion for changing the formula to use more conventional
+notation for the concept:
+
+Page 6 Section 4.2
+A more common way of expressing the relationship here is as a kind
+of generalized enthalpy. The conventional notation would be
+
+"change in task progress" = Delta P
+"amount of communicated data" (change in communication) = Delta C
+and thus 
+  $ Delta P = U + R_CAN Delta C $
+is the formula in thermodynamic form. It avoids the need for epsilon
+and for a "scaling constant" and most importantly, eliminates the time
+derivative, making it clear that this would happen anyway, even if
+the CPU's and communications channels were slower/faster.
+
+This form makes contact with existing literature in the calculus of
+communicating processes, pi-calculus, PEPA, the theory of traces
+(trace and history monoids), etc.
+
+----
+Below follow some typographic corrections.
+
+Page 3
+> Limited memory, free energy, time, information, and other re-
+sources are indispensable; without such limits, the reflexive cycle underlying
+adaptation cannot start.
+
+The opposite of "limited" is "unlimited". Perhaps this means to say
+"available" or "greater than zero".
+
+
+Page 6:
+The formula at the top of page 6 is a bit opaque; First, it is written
+that R_i={r_i,1 ... r_i,N} implying that r has two subscripts: r_i,j
+and that r is a rule.  But then, they symbol r with one subscript
+appears, and it is called a reward, not a rule. Further down,  there
+is a bold-face 1{j = a_i(t)}; the meaning of the bold-face 1 is unclear.
+Is this some indicator funtion? Then a_i(t) is called the "chosen rule"
+even though at the start, the symbol used for rules was "r" not "a".
+
+The idea that there needs to be some update is clear enough. The
+specific example seems quite interesting but is incomprehensible.
+
+Page 6 section 5
+"In table roles and limits of different agents was presented."
+This is grammatically awkward. Perhaps
+"Roles and limits of different agents are presented in the table below."
+
+Next paragraph: the comma after CANs not needed.
+
+Page 8 Table 1
+" For provided example semantic rule"
+should be
+" For the provided example semantic rule"
+

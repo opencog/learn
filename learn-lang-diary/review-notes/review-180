@@ -1,0 +1,41 @@
+
+Review for Submission 180
+
+Troublesome statements:
+-----------------------
+Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
+    This is not correct. Consider the pure state |a>. The corresponding
+    density operator is |a><a| which is clearly diagonal, but one would
+    never call a pure state "classical"; it is just a pure state.
+
+    I think the intent was to say something along the lines of
+    "The observables of a classical system form a commutative
+    C*-algebra" or perhaps "The observables of a classical system
+    commute with density operators that are diagonal in the basis of X"
+
+    This has knock-on effects into the definitions of CTC, CTQ etc.
+    A channel is usually understood to be a map between C*-algebras;
+    a classical channel would then correspond to a map of some
+    commutative subalgebra of the C*-algebra.
+
+    So I think the intended meaning here is somethig like this:
+    "The space L(H) of linear operators on the Hilbert space H can
+    be decomposed into four parts. Select a subspace of C ⊆ L(H)
+    that is commutatitive; this is the "classical" subspace; the
+    (orthogonal?) complement is the "quantum subspace" Q. The space
+    channels Psi:L(H) -> L(H) then splits into CTC, CTQ, QTC, QTQ
+    which are the maps between these subspaces."
+    
+
+
+Typos:
+------
+Page 1 first paragraph: spurious whitespace in "architect ed"
+Page 1 missing references: "ontology [?, ?, ?, 4, 8, 20]"
+       "of these operators [?]."
+       "contextuality [?,3],"
+
+Page 2 "agents and agent are described"
+       "We define a Hilbert space X = C|Σ|" -- I assume C is meant to
+       stand for the complex numbers. Please use \mathbf{C} to avoid
+       ambiguity.
