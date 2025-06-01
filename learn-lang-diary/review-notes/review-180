@@ -1,13 +1,29 @@
 
 Review for Submission 180
 
+Overall:
+--------
+Weak accept. The premise of unifying quantum and classical descriptions
+of computation is quite interesting. However, the paper under-delivers:
+it attempts to pack far too much material into too small a space. Early
+parts of the paper make unpalatable glosses that appear to contain
+errors and are a bit vague. The middle part is a recapitulation of
+standard classroom material. The final part, which should have been
+where the "good stuff" could be found, fails to make contact with the
+conventional formulations of logic and reasoning (for the classical
+case) and with the conventional formulation of quantum computing
+(for the quantum case). As a whole, the paper is poetic and suggestive,
+but the lack of specificity puts the onus on the reader to actually
+develop the theory in a meaningful way.
+
+
 Troublesome statements:
 -----------------------
 Page 2: "Classical states are then ρ which are diagonal in the basis of X ."
 
     This is not correct. Consider the pure state |a>. The corresponding
-    density operator is |a><a| which is clearly diagonal, but one would
-    never call a pure state "classical"; it is just a pure state.
+    density operator is ρ = |a><a| which is clearly diagonal, but one
+    would never call a pure state "classical"; it is just a pure state.
 
     I think the intent was to say something along the lines of
     "The observables of a classical system form a commutative
@@ -149,10 +165,49 @@ Top of page 6:
       hardly obvious. Both parts of such a claim require a deep leap of
       faith.
 
-Sectiion 5.2:
+Section 5.2:
       "Boolean clauses φα : T∗C → {0, 1}"
 
+      How should one make contact between this definition of a "boolean
+      clause" (which seems to be nothing more than an indicator function
+      on the cogtangent bundle) with more conventional concepts like
+      Aristotelan logic or predicate logic or lambda calculus or pi
+      calculus, or even a mechanical calculator or a Babbage analytical
+      engine? Clearly, a stream-driven analytical engine would be
+      classical, but how it is that one should map it's operation to
+      a collection of indicator functions on the cotangent bundle is
+      unfathomable to me. I suppose it's possible, but I've never seen
+      such a treament, nor is a reference given.
 
+Section 5.2:
+      "In the quantum case, clauses lift to projectors Πα on HA:"
+
+      In the conventional articulation of computation (and thus
+      reasoning) in the quantum case, as desribed by Crutchfield
+      (in the 1990's) and by many others, one works with a collection
+      of unitary operators U_n = exp(i H_n) for a collection of
+      non-commuting Hermitian operators H_n, and then considers
+      computational sequence U_a U_b U_c ... U_k |ψ> where each
+      of the U_j are selected from a state transition system given
+      by some geometric finite automaton (the letters j being
+      selected from the "alphabet" Σ defined on page 2. Only in
+      the final measurement, when the quantum system stops,
+      does one apply a projection operator Π to the final state
+      U_a U_b U_c ... U_k |ψ> so that the result of the computation
+      is Tr (Π U_a U_b U_c ... U_k ρ) for the density matrix ρ.
+
+      I don't understtand how to make contact between this conventional
+      form, and equation 10.
+
+Rest of paper
+   I don't know what to make of the rest of the paper. The first
+   half presents a number of formal difficulties that makes it hard
+   to plow on and try to figure out what the rest of it means. It
+   would have been better if the paper took a more liesurely pace,
+   and was careful to define terms and symbols and operations,
+   skipping textbook-obvious sections like sections 3 and 4, while
+   being much more thoughtful and careful in section 5 to make contact
+   with convetional formulations of these topics.
 
 
 Typos:
