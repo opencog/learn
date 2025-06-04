@@ -210,7 +210,7 @@ actual
 
 \begin_layout Itemize
 What about spacetime? Is space–time emergent? The core graph model still
- has a paramter 
+ has a parameter 
 \begin_inset Formula $\tau$
 \end_inset
 
@@ -456,7 +456,7 @@ How it is that the Minkowski structure of space–time emerges from the
 So I kick back here, and here's the train of thought.
  I would like to ask an LLM how to thermalize, but they are too stupid to
  answer that question.
- Because the LLM's don't understand graph theorry, algebra, tensors, none
+ Because the LLM's don't understand graph theory, algebra, tensors, none
  of that.
  Nor can they run experiments on matrices.
  I can't ask the LLM to compute the eigenvalues of things, and then to fiddle
@@ -543,6 +543,228 @@ Whatever.
  So I guess what I really want is an agent that can wander through the space
  of algebra.
  How can I build that?
+\end_layout
+
+\begin_layout Standard
+Well, I want 
+\begin_inset Quotes eld
+\end_inset
+
+like an LLM, but for algebra
+\begin_inset Quotes erd
+\end_inset
+
+ but I don't want an LLM literally, because I don't want to train it on
+ algebra, I want it to discover algebra.
+ So, in some sense, an axiom–explorer.
+ Generate a collection of axioms, treat these as jigsaw pieces, then randomly
+ assemble.
+\end_layout
+
+\begin_layout Standard
+So lets try this with the axioms of set theory? Step one: how do I encode
+ the axioms of set theory as jigsaws? Step two: how do I generate novel
+ combinations? Perhaps the universe of 
+\begin_inset Quotes eld
+\end_inset
+
+out there
+\begin_inset Quotes erd
+\end_inset
+
+ needs to be the collection of 
+\begin_inset Quotes eld
+\end_inset
+
+all possible jigsaws
+\begin_inset Quotes erd
+\end_inset
+
+ (aka 
+\begin_inset Quotes eld
+\end_inset
+
+all possible axioms
+\begin_inset Quotes erd
+\end_inset
+
+) and the agent is an explorer that attempts to grab these, and assemble
+ them.
+ What does it mean 
+\begin_inset Quotes eld
+\end_inset
+
+to assemble
+\begin_inset Quotes erd
+\end_inset
+
+? Well, conventionally, these are proofs – collisions of axioms that can
+ be assembled, and then eventually terminate.
+ For conventional mathematics, they terminate in true/false.
+ I suppose true and false can be considered to be jigsaws themselves.
+ A characteristic of proofs is that they start with small theorems, blow
+ up large in the middle of the proof, and then terminate.
+ I suspect what I really want is 
+\begin_inset Quotes eld
+\end_inset
+
+reverse mathematics
+\begin_inset Quotes erd
+\end_inset
+
+, start with nothing, let the thing blow up, and then wait for it to become
+ small again: to reduce.
+ The result off the reduction is now the theorem.
+ The theorem can now be added to the collection of 
+\begin_inset Quotes eld
+\end_inset
+
+known things
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The collection of 
+\begin_inset Quotes eld
+\end_inset
+
+known things
+\begin_inset Quotes erd
+\end_inset
+
+ are then used during generation.
+\end_layout
+
+\begin_layout Standard
+Here, generation can be viewed as a kind of exploration.
+ What is the difference, really, between MOSES–style genetic generation,
+ and, say exhaustive generation, such as odometers (Markov odometers, etc.)
+ and just, I dunno ...
+ random accretion...
+\end_layout
+
+\begin_layout Standard
+Is the dictionary of accumulated knowledge, well, nominally, it is 
+\begin_inset Quotes eld
+\end_inset
+
+internal
+\begin_inset Quotes erd
+\end_inset
+
+ to the agent, but to the generator, it is 
+\begin_inset Quotes eld
+\end_inset
+
+external
+\begin_inset Quotes erd
+\end_inset
+
+: it is a place where the agent can get things, and put things (i.e.
+ get things that represent axioms and theorems, and put new theorems when
+ they are discovered.
+ So, its memory.
+ It's memory exclusive to the agent, i.e.
+ incorruptible by other agents working in the external world.
+ In a multi–agent system, one will want to have a common, shared memory,
+ when multiple agents can contribute new discoveries.
+ Unlike the private memory, this risks 
+\begin_inset Quotes eld
+\end_inset
+
+corruption
+\begin_inset Quotes erd
+\end_inset
+
+ or unexpected changes.
+ Of course, the external memory is a communications channel between agents.
+\end_layout
+
+\begin_layout Standard
+I wonder if I should use the pi–calculus as the API to memory.
+ it is certainly a minimal model for a multi–agent communications system.
+\end_layout
+
+\begin_layout Standard
+And then my thoughts zoom off again.
+ The pi–calculus can also be used as..
+ well, suppose we have communication over links, on graphs ...
+ Can I look at pi–calculus as some fragment of linear logic?
+\end_layout
+
+\begin_layout Standard
+Which runs me back into a circle: the classical world is a Cartesian category,
+ the quantum world is the dagger–symmetric category; these are known fragments,
+ that is, monoidal categories with some additional axioms.
+ Which I could try to work out by hand, being careful to articulate what's
+ the same, what's different.
+ Perhaps these axioms assemble in a way that resemble Ext and Tor.
+ There are just such a large variety of analogies that can be made, that
+ can be imagined, some of which are maybe widely useful, some maybe dead–ends,
+ and it is very tempting to be the olde–school mathematician and tackle
+ these with pencil and paper, when in fact I recognize an axiomatic system
+ that should be explored using a generative apparatus.
+\end_layout
+
+\begin_layout Standard
+So maybe I should just say 
+\begin_inset Quotes eld
+\end_inset
+
+fuck it
+\begin_inset Quotes erd
+\end_inset
+
+ and start writing code to implement the vision above.
+\end_layout
+
+\begin_layout Standard
+Before I do that, how much time should I sped trying to imagine a structural
+ encoding in terms of binary strings?
+\end_layout
+
+\begin_layout Standard
+I want to bootstrap this, and get to self–modifying ASAP.
+ How? Is pi–calculus a place to start?
+\end_layout
+
+\begin_layout Standard
+Is that premature?
+\end_layout
+
+\begin_layout Standard
+Should I experiment with a specific task? Should I create a system that
+ can do eigenvector solving on a graph, and let it then explore algebraic
+ variants, and thereby maybe discover number fields or something like that?
+ Of course, if it does do this, how do I attach this back to the English
+ language? I need to talk to it.
+ If it discovers a well–known mathematical concept, I certainly do NOT want
+ to try to read through the axioms and figure out what it was.
+ So I also need the evidence–solver, to say 
+\begin_inset Quotes eld
+\end_inset
+
+these two things are probably the same.
+ Except, for pure math, I need to have it work 
+\begin_inset Quotes eld
+\end_inset
+
+absolutely, certainly the same
+\begin_inset Quotes erd
+\end_inset
+
+, and not fuzzy.
+\end_layout
+
+\begin_layout Standard
+...
+ and so I need the unifier.
+ Unification.
+\end_layout
+
+\begin_layout Standard
+Crap.
+ Where to start.
 \end_layout
 
 \begin_layout Section*
