@@ -817,7 +817,191 @@ Somehow, RNN's got past the combinatoric explosion.
 The RNN used a vector encoding.
  Symbols were sprayed onto an n–dimensional sphere, uniformly.
  Then symbol sequences ...
- 
+\end_layout
+
+\begin_layout Subsection*
+6 June 2025
+\end_layout
+
+\begin_layout Standard
+Thought about the wave vectors in the middle of the night, while tossing
+ and turning.
+ It's 
+\begin_inset Quotes eld
+\end_inset
+
+not that hard
+\begin_inset Quotes erd
+\end_inset
+
+, even if the symmetry group of the graph is non–abelian.
+ Keywords are 
+\begin_inset Quotes eld
+\end_inset
+
+normal subgroup
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+group center
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So, for example, imagine the group has as a subgroup the cyclic group 
+\begin_inset Formula $C_{n}$
+\end_inset
+
+.
+ Corresponding to this will be a collection of 
+\begin_inset Formula $n$
+\end_inset
+
+ eigenfunctions, having the form 
+\begin_inset Formula $e^{i\pi km/n}$
+\end_inset
+
+ for the 
+\begin_inset Formula $m$
+\end_inset
+
+'th atom in the 
+\begin_inset Formula $k$
+\end_inset
+
+'th harmonic.
+ Just basic standing–wave harmonics on a necklace with 
+\begin_inset Formula $n$
+\end_inset
+
+ beads.
+ The energy (eigenvalue) of each mode will be 
+\begin_inset Formula $E_{k}$
+\end_inset
+
+ with higher 
+\begin_inset Formula $k$
+\end_inset
+
+ being higher energy: these will not be degenerate eigenmodes.
+ However, the eigenmodes will be degenerate, in general, depending on the
+ divisibility of 
+\begin_inset Formula $n$
+\end_inset
+
+.
+ So, for example, if 
+\begin_inset Formula $n$
+\end_inset
+
+ is divisible by four, and we consider the 
+\begin_inset Formula $k=4$
+\end_inset
+
+'th harmonic, there will be 
+\begin_inset Formula $n/4$
+\end_inset
+
+ distinct eigenmodes, offset by a phase factor of 
+\begin_inset Formula $1,e^{i\pi k/n},e^{i\pi2k/n},\cdots$
+\end_inset
+
+ obtained by rotating the ring, i.e.
+ by restarting the numbering of the 
+\begin_inset Formula $m$
+\end_inset
+
+'th atom by 
+\begin_inset Formula $0,1,2,\cdots$
+\end_inset
+
+.
+ These are orthogonal.
+ All of them are degenerate, having the same energy.
+ The generator of the cyclic group 
+\begin_inset Formula $C_{n}$
+\end_inset
+
+ can be envisioned as a displacement: it just rotates the necklace by one
+ step.
+ This generator just carries the 
+\begin_inset Formula $\left|k,p\right\rangle $
+\end_inset
+
+ eigenfunction to the 
+\begin_inset Formula $\left|k,p+1\right\rangle $
+\end_inset
+
+ eigenfunction, for 
+\begin_inset Formula $0\le p<n/k$
+\end_inset
+
+.
+ Instead of using words, I guess I should use formulas: the 
+\begin_inset Formula $m$
+\end_inset
+
+'th atom has 
+\begin_inset Formula $\left\langle m\vert k,p\right\rangle =e^{i\pi k\left(m+p\right)/n}=e^{i\pi km/n}e^{i\pi kp/n}=e^{i\pi kp/n}\left\langle m\vert k,0\right\rangle $
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ The point is that for each cyclic subgroup of the symmetry group, there's
+ an associated subset of the eigenvectors that are characterized by a collection
+ of orthogonal modes of this conventional standing–wave form, that are character
+ized by a momentum wave–vector that is some integral multiple of the length
+ of that cyclic subgroup.
+ There's also the energy, the eigenvalue for each mode.
+ What is not clear is the dispersion relation that connects the two.
+ Is it linear? Does it have the form of a quadratic polynomial, i.e.
+ having the form 
+\begin_inset Formula $E^{2}=a_{1}p_{1}^{2}+a_{2}p_{2}^{2}+\cdots+m^{2}$
+\end_inset
+
+ for constants 
+\begin_inset Formula $a_{1},a_{2,}\cdots,m^{2}$
+\end_inset
+
+? Or is it some polynomial with higher order terms? I guess it could be
+ something else entirely...
+ although a characterization in terms of the cyclic subgroups remains key.
+\end_layout
+
+\begin_layout Standard
+For large random graphs with 
+\begin_inset Formula $10^{23}$
+\end_inset
+
+ vertices in them, what is the distribution of the graph automorphism groups?
+ What does it mean to have 
+\begin_inset Quotes eld
+\end_inset
+
+a random graph
+\begin_inset Quotes erd
+\end_inset
+
+? Getting the automorphism group is hard.
+ What about the homology groups of the graph? How are they distributed?
+ Is there a relation between the homology groups, and the automorphism group?
+ For every homology group of higher order, I can imagine a collection of
+ harmonics on that group.
+ How do those harmonics tie into the spectrum? I don't recall seeing anything
+ that touches on such questions.
+ I guess I should ask some LLM to see if it knows anything about stuff like
+ this.
+ Which is more work, more reading.
+ The other possibility is to just make an exhaustive list of small graphs,
+ and see if a pattern emerges...
+ when? When will I have time to do this?
 \end_layout
 
 \begin_layout Section*
