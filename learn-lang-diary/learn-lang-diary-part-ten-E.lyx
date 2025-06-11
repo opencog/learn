@@ -1013,10 +1013,10 @@ I don't understand anything any more.
 \end_layout
 
 \begin_layout Standard
-I want to revist certain portions of asm-moses.
+I want to revist certain portions of as–moses.
  But how? Well, I want to create random networks of image processing functions,
- but how? Moses hard-wired a bunch of primitives, and used knob-turning.
- It would be nice to have a dictionary of parts, instead of it being hard-wired.
+ but how? Moses hard–wired a bunch of primitives, and used knob–turning.
+ It would be nice to have a dictionary of parts, instead of it being hard–wired.
 \end_layout
 
 \begin_layout Standard
@@ -1024,30 +1024,30 @@ LTN Logic Tensor Networks has a DL/NN structure.
 \end_layout
 
 \begin_layout Standard
-While I search for that tab to refresh my memory, I glance at the model-context-
-protocol page, and am reminded that I need an MCP for the atmspace, to talk
- about what is in there.
+While I search for that tab to refresh my memory, I glance at the model–context–
+protocol page, and am reminded that I need an MCP for the atomspace, to
+ talk about what is in there.
  A demo tutorial.
 \end_layout
 
 \begin_layout Standard
 LTN is here: https://github.com/logictensornetworks/logictensornetworks It
- is actually kind-of useless.
+ is actually kind–of useless.
  It embeds atomic constants as vectors, predicates as matrices or tensors,
  and atomic formulas as graphs.
- Logic connectives use fuzzy semantics, quantifiers are aggreggates, the
+ Logic connectives use fuzzy semantics, quantifiers are aggregates, the
  whole mess is converted to tensorflow graphs.
  See the README there for more.
 \end_layout
 
 \begin_layout Standard
-Why is this useless? Well, because the list of logic connectives is hard-coded
+Why is this useless? Well, because the list of logic connectives is hard–coded
  – and, or, not, implies.
- The variables ar hard-coded as lists of possible infividuals, quantifiers
- are hard-coded as mean.
+ The variables are hard–coded as lists of possible individuals, quantifiers
+ are hard–coded as mean.
  And the whole thing is pushed into tensorflow.
- which is maybe the ony interesting thing, since it provides a mapping of
- predicate logic into a funky fuzzy NN logic.
+ which is maybe the only interesting thing, since it provides a mapping
+ of predicate logic into a funky fuzzy NN logic.
  Which is ...
  interesting.
 \end_layout
@@ -1055,7 +1055,7 @@ Why is this useless? Well, because the list of logic connectives is hard-coded
 \begin_layout Standard
 Now, lets compare to PLN.
  The idea of PLN was to do forward chaining, backward chaining, etc.
- to find logical inferences, given a collection of interence rules given
+ to find logical inferences, given a collection of inference rules given
  in the PLN book.
  So the 
 \begin_inset Quotes eld
@@ -1066,18 +1066,18 @@ cool project
 \end_inset
 
  to do would be to ..
- well create an automatic chainer, and then convert the chain into LTN-style
+ well create an automatic chainer, and then convert the chain into LTN–style
  tensorflow networks.
- Except that, of course, we want to use MOSES-style tree decorations insteadd
+ Except that, of course, we want to use MOSES–style tree decorations instead
  of chainers.
- And we want to use not MOSES decorators, but a generic jigaw random assembly
+ And we want to use not MOSES decorators, but a generic jigsaw random assembly
  system.
- And I have been stuck at exactly thois point for years.
+ And I have been stuck at exactly this point for years.
  Some kind of ...
  mental block, I know what I want I seem unable to get it.
  Cue Sex Pistols for the refrain.
  The jigsaws are ...
- link-grammar disjuncts.
+ link–grammar disjuncts.
  I tried ten years ago with the Viterbi parser, which ran out of CPU and
  was slow.
  The LG parser is fast.
@@ -1090,6 +1090,230 @@ Where do I begin? I have a cascade ot tasks here.
  I need to organize them into priority.
  Tomorrow, maybe.
  I'm tired, now.
+\end_layout
+
+\begin_layout Subsection*
+11 June 2025
+\end_layout
+
+\begin_layout Standard
+Well, the above got me so excited, I could not fall asleep.
+ I fought the urge to get up and work on it all night.
+ I could not find the usual mindset that would nock me out, sleeping.
+ Perhaps I drank too much coffee the day before, but I doubt it.
+ I also resumed taking magnesium threonate, the second time after a month
+ not taking it, and maybe that kept me awake.
+ I've noticed that hard thinking makes me sleepy, so I thought I'd work
+ on a boring math problem in my head, till that knocked me out.
+ Took a while, but it did.
+ And thus, first thing this morning, instead of working on the above, I
+ has some minor math results to report.
+ Crap.
+ Here goes.
+\end_layout
+
+\begin_layout Standard
+So the math problem is to find the eigenvalues of the fully connected graph.
+ The clique graph.
+ The Hamiltonian for oscillators that interact via graph edges.
+ This has the Hamiltonian 
+\begin_inset Formula $H$
+\end_inset
+
+ with 1 on the diagonal and 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ for all off–diagonal entries.
+ So 
+\begin_inset Formula $H_{ij}=\delta_{ij}+\epsilon\left(1-\delta_{ij}\right)$
+\end_inset
+
+.
+ For small 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+, the rows and columns are already almost orthonormal.
+ Geometrically, the rows and columns form an 
+\begin_inset Formula $n$
+\end_inset
+
+–cube, a bit sheared and compressed along the diagonal 
+\begin_inset Formula $v_{0}=\left[1,1,\cdots,1\right]=\sum_{k=0}^{n-1}e_{k}$
+\end_inset
+
+, and completely rotationally symmetric about this axis.
+ The eigenvalue is 
+\begin_inset Formula $E_{0}=1+\left(n-1\right)\epsilon$
+\end_inset
+
+ so that 
+\begin_inset Formula $Hv_{0}=E_{0}v_{0}$
+\end_inset
+
+.
+ The remaining eigenvectors are all degenerate, and have the energy 
+\begin_inset Formula $E_{1}=1-\epsilon$
+\end_inset
+
+.
+ The rotational symmetry gives a large choice for picking the eigenvectors.
+ It will be convenient to set 
+\begin_inset Formula $v_{k}=e_{0}-e_{k}$
+\end_inset
+
+ for 
+\begin_inset Formula $k\in\left\{ 1,\cdots,n-1\right\} $
+\end_inset
+
+.
+ This gives 
+\begin_inset Formula $Hv_{k}=E_{1}v_{k}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+These 
+\begin_inset Formula $v_{k}$
+\end_inset
+
+ are not orthonormal.
+ Although 
+\begin_inset Formula $v_{0}\cdot v_{k}=n\delta_{k0}$
+\end_inset
+
+ we do have 
+\begin_inset Formula $v_{i}\cdot v_{j}=1$
+\end_inset
+
+ for 
+\begin_inset Formula $i,j>0$
+\end_inset
+
+.
+ I didn't notice this while sleeping.
+\end_layout
+
+\begin_layout Standard
+As before, we want to entangle 
+\begin_inset Formula $e_{0}$
+\end_inset
+
+ with a Renninger photon, or a Clauser–Aspect–Zeilinger doublet.
+ For now, lets just hit it with a hammer.
+ That is, decompose 
+\begin_inset Formula $e_{0}$
+\end_inset
+
+ into a superposition.
+ For this, note that 
+\begin_inset Formula $ne_{0}=\sum_{k=0}^{n-1}v_{k}$
+\end_inset
+
+, and so by normalizing appropriately, we find that hitting 
+\begin_inset Formula $e_{0}$
+\end_inset
+
+ with a hammer excites all the modes.
+ They're not normal modes, because I screwed up and did not orthogonalize.
+\end_layout
+
+\begin_layout Standard
+Anyway, what was interesting was asking the question 
+\begin_inset Quotes eld
+\end_inset
+
+how long before recurrence?
+\begin_inset Quotes erd
+\end_inset
+
+ given that each state evolves as 
+\begin_inset Formula $e^{-iE_{1}t}$
+\end_inset
+
+ and the diagonal as 
+\begin_inset Formula $e^{-iE_{0}t}$
+\end_inset
+
+? Well, for my non–orthonormal basis, the answer is 
+\begin_inset Quotes eld
+\end_inset
+
+really fast.
+\begin_inset Quotes erd
+\end_inset
+
+ And so for the Renninger setup, if one tank is a clique of 
+\begin_inset Formula $n$
+\end_inset
+
+ oscillators and the other is of 
+\begin_inset Formula $m$
+\end_inset
+
+ oscillators, connected by a single edge, then the wave function 
+\begin_inset Quotes eld
+\end_inset
+
+collapses
+\begin_inset Quotes erd
+\end_inset
+
+ into one tank, then 
+\begin_inset Quotes eld
+\end_inset
+
+uncollapses
+\begin_inset Quotes erd
+\end_inset
+
+ and goes into the other tank, resonating at some ratio of 
+\begin_inset Formula $m/n$
+\end_inset
+
+.
+ And of course, this is what we expect, given that the system is in a whole
+ completely linear; there's no non–linear dissipative term, and we're dealing
+ with the problem of 
+\begin_inset Quotes eld
+\end_inset
+
+Wigner's friend
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But I knew that coming in, the goal was to ...
+ I dunno.
+ Think about this till I fell asleep.
+ And so there we are.
+\end_layout
+
+\begin_layout Standard
+The other thoughts were abut what if 
+\begin_inset Formula $H_{ij}$
+\end_inset
+
+ is small but random for 
+\begin_inset Formula $i\ne j$
+\end_inset
+
+, and what if 
+\begin_inset Formula $H_{ij}$
+\end_inset
+
+ is tri–diagonal (a linear chain, but we know that already) and I look at
+ the edges as defining 1-simplexes, and triangles as 2-simplexes, then what
+ if the graph is constructed to have 3-simplexes only? i.e.
+ a cell complex of dimension 3, a piece–wise tessellation of a 3-manifold?
+ I don't know the answers.
+ But again, since we're always dealing with a linear system, its always
+ Wigner's friend.
+ Nothing is evaded here.
+ Still, interesting.
 \end_layout
 
 \begin_layout Section*
