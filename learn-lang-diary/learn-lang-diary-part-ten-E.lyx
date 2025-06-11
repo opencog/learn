@@ -1004,6 +1004,94 @@ a random graph
  when? When will I have time to do this?
 \end_layout
 
+\begin_layout Subsection*
+10 June 2025
+\end_layout
+
+\begin_layout Standard
+I don't understand anything any more.
+\end_layout
+
+\begin_layout Standard
+I want to revist certain portions of asm-moses.
+ But how? Well, I want to create random networks of image processing functions,
+ but how? Moses hard-wired a bunch of primitives, and used knob-turning.
+ It would be nice to have a dictionary of parts, instead of it being hard-wired.
+\end_layout
+
+\begin_layout Standard
+LTN Logic Tensor Networks has a DL/NN structure.
+\end_layout
+
+\begin_layout Standard
+While I search for that tab to refresh my memory, I glance at the model-context-
+protocol page, and am reminded that I need an MCP for the atmspace, to talk
+ about what is in there.
+ A demo tutorial.
+\end_layout
+
+\begin_layout Standard
+LTN is here: https://github.com/logictensornetworks/logictensornetworks It
+ is actually kind-of useless.
+ It embeds atomic constants as vectors, predicates as matrices or tensors,
+ and atomic formulas as graphs.
+ Logic connectives use fuzzy semantics, quantifiers are aggreggates, the
+ whole mess is converted to tensorflow graphs.
+ See the README there for more.
+\end_layout
+
+\begin_layout Standard
+Why is this useless? Well, because the list of logic connectives is hard-coded
+ – and, or, not, implies.
+ The variables ar hard-coded as lists of possible infividuals, quantifiers
+ are hard-coded as mean.
+ And the whole thing is pushed into tensorflow.
+ which is maybe the ony interesting thing, since it provides a mapping of
+ predicate logic into a funky fuzzy NN logic.
+ Which is ...
+ interesting.
+\end_layout
+
+\begin_layout Standard
+Now, lets compare to PLN.
+ The idea of PLN was to do forward chaining, backward chaining, etc.
+ to find logical inferences, given a collection of interence rules given
+ in the PLN book.
+ So the 
+\begin_inset Quotes eld
+\end_inset
+
+cool project
+\begin_inset Quotes erd
+\end_inset
+
+ to do would be to ..
+ well create an automatic chainer, and then convert the chain into LTN-style
+ tensorflow networks.
+ Except that, of course, we want to use MOSES-style tree decorations insteadd
+ of chainers.
+ And we want to use not MOSES decorators, but a generic jigaw random assembly
+ system.
+ And I have been stuck at exactly thois point for years.
+ Some kind of ...
+ mental block, I know what I want I seem unable to get it.
+ Cue Sex Pistols for the refrain.
+ The jigsaws are ...
+ link-grammar disjuncts.
+ I tried ten years ago with the Viterbi parser, which ran out of CPU and
+ was slow.
+ The LG parser is fast.
+ So ...
+ what's the problem?
+\end_layout
+
+\begin_layout Standard
+Where do I begin? I have a cascade ot tasks here.
+ I need to organize them into priority.
+ Tomorrow, maybe.
+ I'm tired, now.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout

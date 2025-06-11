@@ -1,6 +1,10 @@
 
 Things to read:
 
+* A Functorial Perspective on (Multi)computational Irreducibility
+  Jonathan Gorard
+  https://arxiv.org/abs/2301.04690
+
 * From Tokens to Thoughts:
   How LLMs and Humans Trade Compression for Meaning
   Chen Shani, Dan Jurafsky, Yann LeCun, Ravid Shwartz-Ziv
