@@ -1343,6 +1343,94 @@ Coda: The issue is that points
 Anyway, time to get back to coding.
 \end_layout
 
+\begin_layout Subsection*
+13 June 2025
+\end_layout
+
+\begin_layout Standard
+Been using Claude Code for the last week or so, and I have to say that it
+ is actually pretty good with what it does ..
+ at least, if you have it set up with the correct prompt.
+ My first round of attempts with using plain–old web–based Claude, and it
+ made a total hash of things, I spent all day trying to create a functional
+ pyproject.toml for the AtomSpace, and it kept generating broken crap, and
+ then apologizing every time.
+ It would have been faster for me to just read the docs, and do it myself.
+ Which is slow, tedious and painful, because I'm human and my rate of thinking
+ is very limited.
+ ...
+ However ...
+ with the right prompts...
+ Levi has a Claude.md that has very explicit instructions about doing everything,
+ not taking short–cuts, reading the docs in full, double–checking, writing
+ unit tests, making sure the unit tests pass, etc etc.
+ 32KB of explicit instructions, 1K lines, and when Claude reads that, then
+ the code that it generates seems to be of high quality.
+ So far.
+ I still have very limited experience, having created maybe a dozen files,
+ half in python, half in C++, but it seems to be good stuff.
+ I am keeping a careful eye over it.
+ The fiddly bits I am doing myself, this was for the cogserver.
+ Claude wrote the boilerplate, but I manually plugged it into place.
+ I doubt it would have been able to plug it in correctly; I figured it would
+ take too much time to explain how I want it done, so I did that part myself.
+ But still, for the limited tasks so far, I'm impressed.
+ It seems to be a useful coding tool.
+\end_layout
+
+\begin_layout Standard
+So I'm using it to create an MCP server for the cogserver that will be able
+ to access the AtomSpace.
+ So this is kind–of useless, but its a proof–of–concept, to show that ...
+ MCP can be used to talk to the atomspace.
+ Creating individual atoms by talking to claude would be pointlessly inefficient
+, but perhaps ...
+ I dunno, maybe I'll be able to teach claude how to create complex structures.
+ Maybe.
+ That was not the original intent, this just popped in my head as I was
+ writing this.
+ The original intent was to move forward on the ideas re moses+ltn+lg ideas
+ from the 10 June entry above.
+ That will require a lot of heavy lifting and design, but maybe with Claude,
+ I'll be able to get it done...
+ Clearly, no one else is going to help me with this, Ben is utterly disintereste
+d, none of the coders in that sphere are intellectually capable of advancing
+ this.
+ But Claude is compliant and patient.
+ Maybe not exactly smart, but it seems like it will be able to create usable
+ systems much faster than I could if I typed by hand.
+\end_layout
+
+\begin_layout Standard
+Last night, I realized that my mode of work tends to be 
+\begin_inset Quotes eld
+\end_inset
+
+in the flow
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I don't think much, I just flow.
+ So, when designing new systems, I spend ten minutes or half an hour or
+ whatever, decide how to do something, and then spend hours or all day doing
+ it, just coding.
+ And coding is just mindless work – just surfing, not thinking.
+ Its both fun and unrewarding – it feels like doing cross–word puzzles.
+ You solve the puzzle, but have little to show for it, other than some working
+ code, and it took all day to do it.
+ Claude upends this.
+ Claude does the coding grunt–work.
+ I will now have to think at a higher abstraction level? Perhaps working
+ at that level will again turn back into flow, where I mostly just fiddle
+ trying to get Claude to do the right thing.
+ But still, it seems like I will be able to design more sophisticated systems
+ more quickly.
+ Well see.
+ Hang on, I have to break and see what Claude has done.
+ Be right back.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
