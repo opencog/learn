@@ -1825,8 +1825,147 @@ I'm going to fuck you over until you do something that will make this world
  Toodle–oo to you too.
 \end_layout
 
+\begin_layout Subsection*
+19 June 2025 - Vision design
+\end_layout
+
+\begin_layout Standard
+Much later in the day.
+ So I've got this general vision of exactly what to do, but then am stuck
+ at the detailed design decisions, and perhaps by talking about it, I'll
+ get forward progress.
+ The meta–design is for the perception of structure.
+ As a proof–of–concept, it will be for the the perception of structure in
+ 2D images.
+ This forces a generalization of the earlier work on text, replacing the
+ tokenization of text by a tokenization of images.
+\end_layout
+
+\begin_layout Standard
+So, tokenization of images to be done by the vision wrapper, and there are
+ two questions: first, what should the primitives be, and two, what is their
+ meta–description? First was 
+\begin_inset Quotes eld
+\end_inset
+
+what primitives in OpenCV?
+\begin_inset Quotes erd
+\end_inset
+
+ The conventional math orientation is 
+\begin_inset Quotes eld
+\end_inset
+
+some orthogonal basis
+\begin_inset Quotes erd
+\end_inset
+
+, better might be 
+\begin_inset Quotes eld
+\end_inset
+
+generators of some orthogonal basis
+\begin_inset Quotes erd
+\end_inset
+
+, better yet might be 
+\begin_inset Quotes eld
+\end_inset
+
+wavelets
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So I'm thinking: 
+\begin_inset Quotes eld
+\end_inset
+
+enlarge around a centroid
+\begin_inset Quotes erd
+\end_inset
+
+ – magnify, to zoom in on an image detail.
+ Rotate about a point.
+ Rotate and shear about a point.
+ Rotate, shear, displace? Rotate would be one number, or an orthogonal 2x2
+ matrix.
+ But with shear, and with enlarge, and with displace, its a 2x3 homogenous
+ matrix.
+ The hard part is boundary tracking: input images are pixelated rectangles,
+ due to technology.
+ So, rather than actually magnifying, we're really selecting sub–rectangles,
+ and so need to track those.
+\end_layout
+
+\begin_layout Standard
+And rotation is a pair of shears.
+ Should I track these separately, out of of pipe? i.e.
+ instead of applying the transforms to each image, we just track the 2x3
+ matrix mults, and do that only once at the end.
+ I guess.
+ Hmmm.
+ That changes everything.
+\end_layout
+
+\begin_layout Standard
+Then there's color–band selection.
+ That's fairly clean, I guess, apply a transform to RGB or HSV or ...? Then
+ texture selection.
+ Will texture be needed for the ARC competition? Or are these all just simple
+ 2D rectangular graphics? What are the minimal primitives I need for that?
+\end_layout
+
+\begin_layout Standard
+And then, what about detection? A final single–pixel yes/no answer? A single–pix
+el sort–of answer?
+\end_layout
+
+\begin_layout Subsection*
+20 June 2025
+\end_layout
+
+\begin_layout Standard
+OK, a lot of writing in front of me.
+ Not this diary, but I do need to write a paper.
+ But first, while sleeping, (what kind of sleep is this?) I realized that
+ I could unite into one SetLink, SetValue and AtomSpace, and that perhaps
+ I should.
+\end_layout
+
+\begin_layout Standard
+Here's how I got there: I cannot use the pattern matcher as if it were a
+ FilterLink, because I cannot limit it's search to a set; the pattern matcher
+ must run on the entire AtomSpace.
+ But what if I could build a mini–space, that only contained a small subset
+ of atoms? Cause the current frame design assumes a super–set of everything
+ below.
+\end_layout
+
+\begin_layout Standard
+I dunno.
+ I can list the pros and cons, here.
+ But I thought enough about this that I realized it is technically challenging,
+ with a number of tricky issues to resolve.
+ I mean I could do it, but also I do not have a burning need for this just
+ yet.
+ Why was I thinking of this as I tossed and turned in bed? I dunno.
+ Perhaps I was reviewing the role of FilterLink.
+ Well, more generally, the itchy feeling that really I need to have ability
+ with lots of small subspaces.
+\end_layout
+
+\begin_layout Standard
+I mean, if I want to have a multi–agent system, they'll each want to sit
+ in their own containers, but there's a common external world AtomSpace
+ for them all, and the partitioning needs to be fast and simple and direct
+ and easy.
+ Gut sense says I really need this.
+ Current software status has not yet elevated this to the top.
+\end_layout
+
 \begin_layout Section*
-The End,
+The End
 \end_layout
 
 \begin_layout Standard
