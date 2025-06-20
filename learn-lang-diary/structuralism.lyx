@@ -874,11 +874,11 @@ The parse is obtained by considering all possible trees joining the words,
 \begin_inset Quotes eld
 \end_inset
 
-maximal planar parsing
+maximal spanning tree parsing
 \begin_inset Quotes erd
 \end_inset
 
- and is tied to more general principles of 
+ (MST parsing) and is tied to more general principles of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -886,7 +886,7 @@ maximum entropy principles
 \begin_inset Quotes erd
 \end_inset
 
-.
+ (MaxEnt).
 \end_layout
 
 \begin_layout Standard
@@ -1637,7 +1637,148 @@ This will be the topic of the next major section, but the motivation for
 \end_layout
 
 \begin_layout Standard
-Conventional training is 
+Conventional training involves the force–feeding of a blob of text through
+ an algorithmic system.
+ For he Yuret pair–counting pipeline, it is just that: counting word pairs.
+ Upon completion, the MI can be computed.
+ After the MI has been computed, a second pass of the textual data can be
+ made, this time performing Maximum Spanning Tree (MST) parsing (or Maximum
+ Planar Graph (MPG) parsing).
+ This time, the disjuncts are counted, and upon completion, the MI can be
+ computed, and the resulting vectors placed into the lexis (specifically,
+ the Link Grammar (LG) lexis) where it can be used to generate text (random
+ grammatical sentences).
+ Anaphora resolution would require a third pass.
+ Each pass gets progressively longer, uses more CPU time and is a bit more
+ fragile.
+ The more abstract things get, the vaguer and messier the results, the less
+ certain they seem to be, the less accurate.
+ Perhaps a larger corpus solves all? Perhaps a longer training time? These
+ issues sound exactly like the kinds of issues faced by LLM's, transformers,
+ and almost all other machine learning systems.
+ The simple answer is to just throw more data at it, more CPU, crunch longer
+ and harder.
+ But there is a better way.
+\end_layout
+
+\begin_layout Standard
+One desire is to use feedback from higher layers to correct or amplify results
+ from lower layers.
+ The pipeline approach does not allow this.
+ Another desire is to continue reading more text, feeding and expanding
+ the lower layers, even as processing continues at the higher layers.
+ Again, pipelineing does not allow this.
+ Incremental ingestion of data also means that things like MI must also
+ be updated incrementally; the pipeline computes it in one giant batch job
+ (that takes hours to run, depending on the dataset size).Incremental ingestion
+ also suggests that partial results should be saved to disk every so often.
+ For several reasons: The system may crash or lose electric power; one wants
+ to save at least some results.
+ A bug might render later data into garbage; one would like to be able to
+ rewind to earlier forms, without having to restart from scratch.
+ Finally, the system seems to work best if the training done at each stage
+ is on the same dataset as the earlier stages: the grammar induction should
+ be done on the same texts as for which word–pair counting was done.
+\end_layout
+
+\begin_layout Standard
+All this put together suggests that there should be some sensori–motor system
+ put into place.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+sensory
+\begin_inset Quotes erd
+\end_inset
+
+ part of this can be as simple as reading all of the files in a directory.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+motor
+\begin_inset Quotes erd
+\end_inset
+
+ part of this is as simple as changing directories.
+ Finally, there is a very minimalist 
+\begin_inset Quotes eld
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+: it is very small and simple: it consists of filenames (filepaths, or URL's),
+ plus a collection of bit–flags: has pair counting been run on this file,
+ yet? Has MI been done yet, for this pair data? What about grammar induction?
+ Anaphora or higher level counting? And maybe more: when is the last time
+ this file was touched? Perhaps this file is contains similar contents to
+ another file? Perhaps even its an exact duplicate (because we're crawling
+ over web–site mirrors, or backup copies, or other reasons for duplicated
+ files?)
+\end_layout
+
+\begin_layout Standard
+These three parts put together suggests that there is (should be) an agent:
+ this agent perceives files, remembers basic facts about files, and makes
+ decisions to change directories, or to revisit files for a second or third
+ scan.
+\end_layout
+
+\begin_layout Standard
+Once one has the idea of a file system agent firmly rooted in mind, it is
+ easy to imagine more general agents: perhaps chatbot agents that can hop
+ onto chat channels, or twitter/bluesky/facebook agents that can work with
+ social media posts, 
+\begin_inset Quotes eld
+\end_inset
+
+sensing
+\begin_inset Quotes erd
+\end_inset
+
+ (reading) and 
+\begin_inset Quotes eld
+\end_inset
+
+moving
+\begin_inset Quotes erd
+\end_inset
+
+ (going to different channels, or following different users), and remembering
+ some basic status info about the interactions so far.
+ 
+\end_layout
+
+\begin_layout Standard
+This naturally leads to the next major question: what is the appropriate
+ design for an agent, in general? What is a generic description of sensory
+ capabilities, and movement capabilities? Hand in hand with these questions
+ comes the realization that such agents cannot be hand–coded, and must not
+ be engineer–designed.
+ This in turn implies that the agents must be coded in Atomese themselves,
+ represented as graphs, as dataflow arrangements of jigsaw pieces, with
+ the specific agents being generated according to a grammar of what parts
+ of the agent pipeline can be connected to what (e.g.
+ vector outputs must be connected to vector inputs; things that expect strings
+ must not be connected to things that expect floats, and so on: there is
+ a connectivity grammar, of what can be attached to what.
+\end_layout
+
+\begin_layout Standard
+That is, agents should be auto–generated, explored and measured for quality,
+ accuracy, speed and effectiveness; mutated, assembled and recombined, according
+ to the the alloweed grammatical rules.
+ This opens a new vista of design and representation questions.
+ This is just a first taste, a later section will go into more detail.
+ BTW, portions of such an agent system have already been prototyped in Atomese.
+\end_layout
+
+\begin_layout Standard
+But first, lets get back to some baser, more grounded topics, to give a
+ better idea of what other kinds of processing might be encountered.
 \end_layout
 
 \begin_layout Subsection
