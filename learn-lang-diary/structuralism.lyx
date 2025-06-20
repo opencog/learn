@@ -282,6 +282,10 @@ two
  possibilities can be collapsed down to one grand–total.
 \end_layout
 
+\begin_layout Subsection
+Vector representations
+\end_layout
+
 \begin_layout Standard
 The multiple possibilities have a natural representation as a vector; such
  a vector representation make natural contact with the conventional frameworks
@@ -341,10 +345,27 @@ All of these mean exactly the same thing; the notation varies according
  where one talks of conditional probabilities; the first line is typical
  of texts on quantum (in which case the weights are complex numbers) and
  sometimes seen in tensor categories and category–theoretic texts.
- For the present purposes, these differences are immaterial; yes, of course,
+ The 
+\begin_inset Formula $\hat{e}_{k}$
+\end_inset
+
+ are simply unit basis vectors, in the conventional linear algebra sense.
+\end_layout
+
+\begin_layout Standard
+For the present purposes, these differences are immaterial; yes, of course,
  quantum is not the same as Bayesianism, but for now this does not matter.
  The distinctions will be drawn later; for now, the emphasis is that graphical
- elements, such as jigsaws, can be formally combined to form vectors.
+ elements, such as jigsaws, can be formally combined to form vectors, and
+ that distinct graphs are the 
+\begin_inset Quotes eld
+\end_inset
+
+basis vecttors
+\begin_inset Quotes erd
+\end_inset
+
+ of the vector space.
 \end_layout
 
 \begin_layout Standard
@@ -504,11 +525,369 @@ neuro–symbolic
 \end_layout
 
 \begin_layout Standard
-even the applied algorithm 
+The implied context of this text is that the appropriate software system
+ for this work is the AtomSpace.
+ This claim is founded on the author having spent more than a decade to
+ realize the above (and more, some of which touched on below) in a practical,
+ efficient, usable and useful way.
+ The design is imperfect; new insights are gained regularly.
+ Of course, other software frameworks are possible; the engineering task
+ is to avoid common pitfalls, design oversights and, of course, re–inventing
+ the wheel.
+ The AtomSpace is not the be–all, end–all, and it might not be at all suitable
+ for whatever you have in mind.
+ In such a case, use what you need to use.
+ For myself, speaking personally, it is the best that I've got, at the moment.
+ The actual stress of daily use does mean that the process is evolutionary,
+ and that revisions and enhancements are ongoing.
+ Perhaps at a lower rate than before, perhaps limited to narrower sub–modules
+ and subsystems.
+ The theory drives the practice drives the code and the driving also happens
+ in the reverse.
+\end_layout
+
+\begin_layout Subsection
+Frequentist vector representations
+\end_layout
+
+\begin_layout Standard
+In the narrow context of deep–learning neural nets, it is widely understood
+ the vector embeddings work extremely well, taking the form of modern LLM's
+ and a huge variety of applications of transformers to a broad range of
+ topics.
+ What is not well known is that there are other ways of getting at least
+ some of these results.
+\end_layout
+
+\begin_layout Standard
+The original prototype system was WORD2VEC and the prototypical example
+ is the vector relation King–Man+Woman=Queen.
+ Here, the word–tokens for the words 
+\begin_inset Quotes eld
+\end_inset
+
+King
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Queen
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+Man
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Woman
+\begin_inset Quotes erd
+\end_inset
+
+ were given vector embeddings, and the system, a multi–layer recurrent neural
+ net (RNN) was trained on a large body of text, using gradient–descent methods.
+ After training, the resulting vectors have several interesting properties:
+ they exhibit 
+\begin_inset Quotes eld
+\end_inset
+
+associative memory
+\begin_inset Quotes erd
+\end_inset
+
+, in that nearby vectors appear to be related, and, much more surprisingly,
+ vector subtraction, i.e.
+ subtracting the vector for 
+\begin_inset Quotes eld
+\end_inset
+
+Man
+\begin_inset Quotes erd
+\end_inset
+
+ from the vector for 
+\begin_inset Quotes eld
+\end_inset
+
+King
+\begin_inset Quotes erd
+\end_inset
+
+ seems to give a vector representation for 
+\begin_inset Quotes eld
+\end_inset
+
+ruler
+\begin_inset Quotes erd
+\end_inset
+
+ that is gender–neutral, in that 
+\begin_inset Quotes eld
+\end_inset
+
+Queen–Woman
+\begin_inset Quotes erd
+\end_inset
+
+ is another vector that is close to 
+\begin_inset Quotes eld
+\end_inset
+
+King–Man
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Here, 
+\begin_inset Quotes eld
+\end_inset
+
+close
+\begin_inset Quotes erd
+\end_inset
+
+ means that the cosine product (the vector product) is approximately 1.0.
+ Again, this is all well–known.
+\end_layout
+
+\begin_layout Standard
+What is not well–known is that the above results can be obtained in at least
+ one very different way: by frequentist counting.
+ Below follows a short sketch of how this is done.
+ The focus and lesson here is that the algorithm is not only very different
+ from that of RNN's, but is also explicitly graphical (symbolic) in nature.
+ This provides the leverage needed to make the jump from neuro to symbolic
+ (structural) and back.
+\end_layout
+
+\begin_layout Standard
+The algorithm described here was provided by Deniz Yuret in his PhD thesis
+ in the late 1990's.
+ A variety of related formulations were explored by a number of authors
+ (including Dekang Lin and Pedro Domingos) over dozens of publications (if
+ not more).
+ None appear to have made the full conceptual leap being described here,
+ although they all danced very close.
+ I don't entirely understand why; this is perhaps the intermittent nature
+ of scientific discovery.
+\end_layout
+
+\begin_layout Standard
+The Yuret algorithm starts with a text training corpus, and simply 
+\emph on
+counts
+\emph default
+ nearby word–pairs.
+ Nearby simply means 
+\begin_inset Quotes eld
+\end_inset
+
+within a small context window
+\begin_inset Quotes erd
+\end_inset
+
+, traditionally six words wide.
+ This count is written as 
+\begin_inset Formula $N\left(w_{a},w_{b}\right)$
+\end_inset
+
+ for words 
+\begin_inset Formula $w_{a},w_{b}$
+\end_inset
+
+ (no relation to the weights 
+\begin_inset Formula $w$
+\end_inset
+
+ in the previous section.) Yuret defines the mutual information (MI) associated
+ with a word–pair as 
+\begin_inset Formula 
+\[
+MI\left(w_{a},w_{b}\right)=\log_{2}\frac{N\left(w_{a},w_{b}\right)N\left(*,*\right)}{N\left(w_{a},*\right)N\left(*,w_{b}\right)}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $*$
+\end_inset
+
+is 
+\begin_inset Quotes eld
+\end_inset
+
+wild-card
+\begin_inset Quotes erd
+\end_inset
+
+, so that 
+\begin_inset Formula $N\left(w_{a},*\right)=\sum_{u}N\left(w_{a},u\right)$
+\end_inset
+
+ summed over all right–words 
+\begin_inset Formula $u$
+\end_inset
+
+.
+ Yuret observes that words that 
+\begin_inset Quotes eld
+\end_inset
+
+go together
+\begin_inset Quotes erd
+\end_inset
+
+ have a high MI.
+ For example, he finds that the MI for 
+\begin_inset Quotes eld
+\end_inset
+
+Northern Ireland
+\begin_inset Quotes erd
+\end_inset
+
+ to be very high; this has to do with the presence of the word–pair 
+\begin_inset Quotes eld
+\end_inset
+
+Northern Ireland
+\begin_inset Quotes erd
+\end_inset
+
+ in many newspaper stories of the era.
+ 
+\end_layout
+
+\begin_layout Standard
+This allows him to propose a parsing algorithm that gives results rather
+ close to those proposed by linguists, in which a word such as 
+\begin_inset Quotes eld
+\end_inset
+
+Ireland
+\begin_inset Quotes erd
+\end_inset
+
+ is called a 
+\begin_inset Quotes eld
+\end_inset
+
+noun
+\begin_inset Quotes erd
+\end_inset
+
+, while 
+\begin_inset Quotes eld
+\end_inset
+
+Northern
+\begin_inset Quotes erd
+\end_inset
+
+ is taken as an adjective, modifying 
+\begin_inset Quotes eld
+\end_inset
+
+Ireland
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The resulting parses are of the form of a dependency grammar, 
+\emph on
+a la
+\emph default
+ Lucien Tesnière, and more generally along the many rich elaborations of
+ dependency grammars over many decades, hundreds of books and far more papers.
+ An example parse, taken from Yuret's thesis, is shown below.
+ The numbers above the word pairs are the numerical MI value obtained from
+ counting.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename agi-2022-tex/Yuret.eps
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The parse is obtained by considering all possible trees joining the words,
+ and selecting the tree for which the total MI is the largest possible.
+ Basic familiarity with linguistics shows that this parse is exactly correct:
+ all of the dependencies are indicated exactly as they should be.
+ This is remarkable, because it shows that the toil and trouble that linguists
+ have gone through to assemble lexis (dictionaries) by hand, indicating
+ subject–verb–noun relations, adjective–noun relations, determiner–noun
+ relations, prepositions, etc.
+ can be fully automated simply by counting and noting the frequency.
+ This is a remarkable achievement.
+\end_layout
+
+\begin_layout Standard
+There are two things that Yuret does not do, and apparently no one else
+ of that era, exploring variations on this theme, seem to explore or discover.
+ One is that there is a vector embedding, and that this embedding reproduces
+ exactly the famous WORD2VEC result of King–Man+Woman=Queen.
+ What's odd is that, chronologically, this result could have been discovered
+ earlier, but wasn't.
+ The second important step is that more complex structures can be recursively
+ discovered.
+\end_layout
+
+\begin_layout Standard
+First, lets look at the vector embedding.
+ It is nearly trivial, once you see it.
+ 
+\end_layout
+
+\begin_layout Standard
+a 
+\end_layout
+
+\begin_layout Standard
+xxx 
+\end_layout
+
+\begin_layout Standard
+vector
+\end_layout
+
+\begin_layout Subsection
+sensorimotor 
 \end_layout
 
 \begin_layout Standard
 xxxmotor
+\end_layout
+
+\begin_layout Standard
+attention 
+\end_layout
+
+\begin_layout Standard
+associative memory
 \end_layout
 
 \begin_layout Standard
