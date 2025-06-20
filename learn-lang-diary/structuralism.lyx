@@ -1361,15 +1361,37 @@ and after computing the constants
 \end_layout
 
 \begin_layout Standard
-c+3one can get
+All of the results are obtained by counting.
+ None of the current counting algos run on GPU's, nor is it obvious how
+ to port them to GPU's.
+ This is an open, unresolved question.
+ The primary strength of the LLM & transformer algos is that they are extremely
+ parallelizable and can be implemented on GPU's very efficiently.
+ It is not at all clear how to do this for counting.
 \end_layout
 
 \begin_layout Standard
-xxx
+The tease is even worse, in some ways: although vectors and vector embeddings
+ appear, and there is more than just superficial resemblance to RNN's, the
+ precise details of the correspondence remain shrouded in mist.
+ Perhaps a strong correspondence can be made between the above tensor framework,
+ and RNN's, and perhaps not.
+ I have personally attempted to find such a correspondence, but haphazardly,
+ without much of an effort, as my attention is focused elsewhere.
+ Still, having such a correspondence would be a breakthrough, as it would
+ build a bridge between LLM's that currently reign supreme, and more traditional
+ symbolic computing.
 \end_layout
 
 \begin_layout Standard
-vectorGPU
+That concludes this section.
+ The next section attempts to establish the idea that this symbolic counting
+ framework can be applied recursively, obtaining hierarchically deep correlation
+s.
+ But this is a way–point; ultimately the narrative has to return to a more
+ important topic: the idea of sensorimotor agents and the recursive arrangements
+ of these near the critical point.
+ 
 \end_layout
 
 \begin_layout Subsection
