@@ -282,7 +282,21 @@ two
  possibilities can be collapsed down to one grand–total.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Standard
+The following is split into several sections.
+ 
+\end_layout
+
+\begin_layout Itemize
+The first section reviews the concept of vector representations and their
+ relationship to graphical models.
+\end_layout
+
+\begin_layout Itemize
+The second section reviews
+\end_layout
+
+\begin_layout Section
 Vector representations
 \end_layout
 
@@ -303,7 +317,7 @@ The multiple possibilities have a natural representation as a vector; such
 \align center
 \begin_inset Graphics
 	filename struct-image/jigsaw-tensor.eps
-	width 90col%
+	width 100col%
 
 \end_inset
 
@@ -834,6 +848,7 @@ a la
 \align center
 \begin_inset Graphics
 	filename agi-2022-tex/Yuret.eps
+	width 70col%
 
 \end_inset
 
@@ -1360,8 +1375,136 @@ and after computing the constants
  as a vector relation.
 \end_layout
 
+\begin_layout Subsection
+Compositionality and recursion
+\end_layout
+
+\begin_layout Subsection
+Present status and future directions
+\end_layout
+
 \begin_layout Standard
-All of the results are obtained by counting.
+The theories and ideas presented above are old and well–established.
+ The claims made, specifically about the vector representations, the behavior
+ of the vector and matrix embeddings as a form of associative memory, and
+ the ability to extract grammar, this has all been explored and demonstrated,
+ and it works.
+ I've personally written up an extensive body of papers detailing both the
+ theory and presenting the results, analyzing them and putting them in context.
+ There is a mature body of code implemented in the AtomSpace to perform
+ this counting, compute the MI, compute vector products, perform the high–dimens
+ional clustering to obtain categories.
+ All this is attached to a generative system that can generate new sentences
+ conforming to this grammar.
+ Under it all, as a foundational layer, the AtomSpace can save and restore
+ the graphs, weights and vectors to and from disk, and ship them around
+ over the network, expose them on a network server.
+ It works, but a critique is in order.
+\end_layout
+
+\begin_layout Standard
+Some points, from narrow to broad:
+\end_layout
+
+\begin_layout Itemize
+The core foundation provided by the AtomSpace is solid.
+ It stores graphs and vectors just fine.
+\end_layout
+
+\begin_layout Itemize
+The computation of MI and assorted products (cosine, Hamming, etc.) is implemente
+d as a library.
+ It is matrix–oriented: vector elements 
+\begin_inset Formula $v_{i}$
+\end_inset
+
+ and matrix elements 
+\begin_inset Formula $M_{ij}$
+\end_inset
+
+ are exposed; these use graphs as basis elements (as explained above) and
+ the graph representation allows extremely sparse vectors and matrices (after
+ all, 
+\begin_inset Quotes eld
+\end_inset
+
+Kings
+\begin_inset Quotes erd
+\end_inset
+
+ are mostly not related to fire–hydrants, stars and Oolong tea.
+ Relationships are necessarily sparse.)
+\end_layout
+
+\begin_layout Itemize
+The library is just that: a library.
+ It really should be represented as Atomese, that is, as a graph itself.
+ That is, instead of saying that 
+\begin_inset Formula $dot\left(v,w\right)$
+\end_inset
+
+ is some function call to a subroutine called 
+\begin_inset Quotes eld
+\end_inset
+
+dot
+\begin_inset Quotes erd
+\end_inset
+
+, passing two vector arguments 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+, it should instead itself be represented as a graph, as a jigsaw, so that
+ 
+\begin_inset Formula $v$
+\end_inset
+
+ and 
+\begin_inset Formula $w$
+\end_inset
+
+ are input jigsaw connectors, connecting to vectors, and 
+\begin_inset Quotes eld
+\end_inset
+
+dot
+\begin_inset Quotes erd
+\end_inset
+
+ is an output connector, connecting to anything that wants a real number
+ as input.
+\end_layout
+
+\begin_layout Itemize
+The goal of representing the algorithmic elements (dot products, Hamming
+ distances, etc.) as jigsaws is so that meta–algorithms can themselves connect,
+ change and re-arrange what is connected to what.
+ That is, although MI, the mutual information, is a good way to measure
+ affinity, there are in fact a large number of similar measures, some of
+ which might be more accurate, and others which might be faster.
+ The idea is that these should not be explored by human software engineers
+ vibe–coding with Claude, but by meta–algorithms, perhaps genetic algorithms,
+ assembling these (jigsaw) pieces.
+\end_layout
+
+\begin_layout Itemize
+The above idea of implementing algorithms as processing pipelines is partly
+ implemented; mostly implemented at the base layer.
+ The generative parts, where pipeline elements can be reconnected by meta–algori
+thms, this has not been implemented.
+ Both MOSES and AS-MOSES serve as a proof of concept of this idea, but need
+ a fundamental redesign to be generally applicable.
+ A later part of this paper will expand on this, but there is a mire of
+ engineering and design issues to be encountered here.
+\end_layout
+
+\begin_layout Standard
+All of the above–described results are obtained by counting.
  None of the current counting algos run on GPU's, nor is it obvious how
  to port them to GPU's.
  This is an open, unresolved question.
@@ -1383,18 +1526,140 @@ The tease is even worse, in some ways: although vectors and vector embeddings
  symbolic computing.
 \end_layout
 
-\begin_layout Standard
-That concludes this section.
- The next section attempts to establish the idea that this symbolic counting
- framework can be applied recursively, obtaining hierarchically deep correlation
-s.
- But this is a way–point; ultimately the narrative has to return to a more
- important topic: the idea of sensorimotor agents and the recursive arrangements
- of these near the critical point.
- 
+\begin_layout Subsection
+Compositionality and recursion
 \end_layout
 
 \begin_layout Subsection
+Vision
+\end_layout
+
+\begin_layout Standard
+The above uses natural language and grammar as the base example; but the
+ concept generalizes.
+ This is most easily communicated in a few pictures.
+\end_layout
+
+\begin_layout Frame
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename reco-image/traffic-lights.jpg
+	width 20col%
+
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/traffic-light-grammar.eps
+	width 70col%
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Shapes have a structural grammar.
+ The connectors can specify location, color, shape, texture.
+ It's not about pixels, its about element groupings into recognizable, recurring
+ arrangements.
+ 
+\end_layout
+
+\begin_layout Standard
+It is also explicitly symbolic.
+ Each jigsaw piece identifies a specific element of the picture.
+ It is identified in a form that we humans are already comfortable in working
+ with: the round thing in middle, that's the yellow light.
+ As a jigsaw, and its relationship with it's surroundings, it's accessible
+ to reasoning, to logic.
+ This is very different from the situation with neural nets, where you have
+ collections of weights to deal with, and not the objects, the symbolic
+ representations of the objects themselves.
+\end_layout
+
+\begin_layout Subsection
+Sound
+\end_layout
+
+\begin_layout Standard
+The diagram on the left is a sonogram recording of a whale song; on the
+ right is a jigsaw representation of an audio filter sequence that is capable
+ of recognizing the form and structure of that whale–song.
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Frame
+\align center
+\begin_inset Graphics
+	filename reco-image/noaa-fisheries-humpback.jpg
+	width 65col%
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename reco-image/audio-graph.eps
+	width 30col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The goal of this illustration is to show that audio elements can also be
+ decomposed into elements of a symbol nature.
+ Roughly speaking, the diagram on the right can be thought of as a representatio
+n of an electronic circuit, an electronic wiring diagram, a way of hooking
+ together digital signal processing (DSP) functions capable of triggering
+ on the whale song.
+ The claim is that the jigsaw paradigm has legs: its a generic concept applicabl
+e in broad domains.
+\end_layout
+
+\begin_layout Subsection
+Critique redux
+\end_layout
+
+\begin_layout Standard
+The vision and sound processing diagrams above present several new challenges.
+ Starting at the narrowest:
+\end_layout
+
+\begin_layout Itemize
+The library that implements the MI, dot–product, Hamming–distance, etc.
+ functions is only partly pipelined up.
+ It is not GPU–ready.
+ Optimization, data flow, performance is a concern.
+\end_layout
+
+\begin_layout Section
 sensorimotor 
 \end_layout
 
@@ -1407,7 +1672,14 @@ attention
 \end_layout
 
 \begin_layout Standard
-associative memory
+That concludes this section.
+ The next section attempts to establish the idea that this symbolic counting
+ framework can be applied recursively, obtaining hierarchically deep correlation
+s.
+ But this is a way–point; ultimately the narrative has to return to a more
+ important topic: the idea of sensorimotor agents and the recursive arrangements
+ of these near the critical point.
+ 
 \end_layout
 
 \begin_layout Standard
