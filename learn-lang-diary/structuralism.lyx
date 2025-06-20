@@ -314,7 +314,197 @@ The multiple possibilities have a natural representation as a vector; such
 \end_layout
 
 \begin_layout Standard
-Th
+The above is meant to be a diagrammatic representation of a a vctor with
+ three basis elements (eyes, lens, telescope) with three (real number) weights
+ 
+\begin_inset Formula $w_{1},w_{2},w_{3}$
+\end_inset
+
+.
+ The above is drawn diagrammatically; other common notations used in the
+ literature are
+\begin_inset Formula 
+\begin{align*}
+v & =w_{1}\left|\psi_{1}\right\rangle \oplus w_{2}\left|\psi_{2}\right\rangle \oplus w_{3}\left|\psi_{3}\right\rangle \\
+ & =w_{1}\left|\psi_{1}\right\rangle +w_{2}\left|\psi_{2}\right\rangle +w_{3}\left|\psi_{3}\right\rangle \\
+ & =w_{1}\hat{e}_{1}+w_{2}\hat{e}_{2}+w_{3}\hat{e}_{3}\\
+ & =w_{1}e_{1}+w_{2}e_{2}+w_{3}e_{3}\\
+ & =\left[w_{1},w_{2},w_{3}\right]\\
+ & =X_{1}p\left(X\vert x=X_{1}\right)+X_{2}p\left(X\vert x=X_{2}\right)+X_{3}p\left(X\vert x=X_{3}\right)
+\end{align*}
+
+\end_inset
+
+All of these mean exactly the same thing; the notation varies according
+ to the style and preference of the authors.
+ The last line is meant to be typical of notation used in Bayesian texts,
+ where one talks of conditional probabilities; the first line is typical
+ of texts on quantum (in which case the weights are complex numbers) and
+ sometimes seen in tensor categories and category–theoretic texts.
+ For the present purposes, these differences are immaterial; yes, of course,
+ quantum is not the same as Bayesianism, but for now this does not matter.
+ The distinctions will be drawn later; for now, the emphasis is that graphical
+ elements, such as jigsaws, can be formally combined to form vectors.
+\end_layout
+
+\begin_layout Standard
+Computationally, the graphical elements depicted in the diagram should be
+ stored somewhere, for example, in a graph database; and alongside each
+ there should be a floating–point value.
+ It can be stored with the graph, or outside the graph, as a distinct vector;
+ this is a software engineering issue and not a fundamental issue.
+\end_layout
+
+\begin_layout Standard
+What do the vector weights 
+\begin_inset Quotes eld
+\end_inset
+
+mean
+\begin_inset Quotes erd
+\end_inset
+
+? These are perhaps context–dependent.
+ If one is visiting an astronomical observatory, it might make sense to
+ set 
+\begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)=\left(0.05,0.05,0.9\right)$
+\end_inset
+
+ but if one is taking a walk in the park, then perhaps 
+\begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)=\left(0.9,0.1,0\right)$
+\end_inset
+
+ with 
+\begin_inset Formula $w_{2}$
+\end_inset
+
+ non–zero because one wears eye–glasses.
+ But the 
+\begin_inset Quotes eld
+\end_inset
+
+actual meaning
+\begin_inset Quotes erd
+\end_inset
+
+ of this vector is somewhat immaterial; the weights will ultimately be determine
+d by whatever algorithm one uses, and whatever 
+\begin_inset Quotes eld
+\end_inset
+
+meaning
+\begin_inset Quotes erd
+\end_inset
+
+ that algorithm assigns to weights.
+ The algorithm might be some deep–learning neural net transformer; it might
+ be some Bayesian system; it might be a frequentist counting algorithm.
+\end_layout
+
+\begin_layout Standard
+Later on, we will make the conceptual jump that one may work with many different
+ algorithms 
+\begin_inset Quotes eld
+\end_inset
+
+at the same time
+\begin_inset Quotes erd
+\end_inset
+
+, and that one can (meaningfully) arrange these into a vector.
+ The weights 
+\begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)$
+\end_inset
+
+ might indicate how many CPU cycles should be devoted to algorithms 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{3}$
+\end_inset
+
+ but they might also mean how often these algorithms 
+\begin_inset Quotes eld
+\end_inset
+
+get the right answer
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The perceptual framing at this more abstract level is 
+\begin_inset Quotes eld
+\end_inset
+
+how can I perceive which algorithm is the best one?
+\begin_inset Quotes erd
+\end_inset
+
+ The intelligent agent might be an artificial scientist, running experiments
+ to determine which of the scientific hypothesis 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{3}$
+\end_inset
+
+ are correct.
+\end_layout
+
+\begin_layout Standard
+The implied software design principle here is that the software system must
+ be capable of representing 
+\begin_inset Quotes eld
+\end_inset
+
+objects
+\begin_inset Quotes erd
+\end_inset
+
+ like 
+\begin_inset Formula $e_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e_{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $e_{3}$
+\end_inset
+
+ in some abstract way, but also working with vectors and matrices and tensors
+ in a natural way: this is the 
+\begin_inset Quotes eld
+\end_inset
+
+neuro–symbolic
+\begin_inset Quotes erd
+\end_inset
+
+ idea: the 
+\begin_inset Formula $e_{1},e_{2},e_{3}$
+\end_inset
+
+ are symbolic, the 
+\begin_inset Formula $w_{1},w_{2},w_{3}$
+\end_inset
+
+ are neuro.
+\end_layout
+
+\begin_layout Standard
+even the applied algorithm 
 \end_layout
 
 \begin_layout Standard
