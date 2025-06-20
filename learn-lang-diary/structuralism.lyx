@@ -560,6 +560,18 @@ In the narrow context of deep–learning neural nets, it is widely understood
 \end_layout
 
 \begin_layout Standard
+The goal of this section is to show how to obtain these results, and to
+ provide a very short review of linguistics.
+ Now, of course, present–day LLM's far exceed the abilities of present–day
+ traditional linguistics; and the latter have fallen into disfavor threatening
+ obscurity.
+ The ideas developed immediately below is that there is another path, this
+ path is explicitly symbolic, and that this path, to the extent that it
+ has been pursued, actually reproduces at least some neural–net results.
+ 
+\end_layout
+
+\begin_layout Standard
 The original prototype system was WORD2VEC and the prototypical example
  is the vector relation King–Man+Woman=Queen.
  Here, the word–tokens for the words 
@@ -843,6 +855,23 @@ The parse is obtained by considering all possible trees joining the words,
  relations, prepositions, etc.
  can be fully automated simply by counting and noting the frequency.
  This is a remarkable achievement.
+ This result is explored by many authors under the rubric of 
+\begin_inset Quotes eld
+\end_inset
+
+maximal planar parsing
+\begin_inset Quotes erd
+\end_inset
+
+ and is tied to more general principles of 
+\begin_inset Quotes eld
+\end_inset
+
+maximum entropy principles
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -859,19 +888,488 @@ There are two things that Yuret does not do, and apparently no one else
 \begin_layout Standard
 First, lets look at the vector embedding.
  It is nearly trivial, once you see it.
+ The vector to be written is 
+\begin_inset Formula 
+\[
+\left|King\right\rangle =\sum_{a}c_{a}\left|w_{a}\right\rangle 
+\]
+
+\end_inset
+
+where the sum extends over all words in the vocabulary.
+ Each word is associated with a basis vector, written here as 
+\begin_inset Formula $\left|w_{a}\right\rangle $
+\end_inset
+
+.
+ This is in the sense of the diagram up top, except that the graph is a
+ trivial graph: it is just a single vertex, having the word as the vertex
+ label.
+ The 
+\begin_inset Formula $c_{a}$
+\end_inset
+
+ are just floating–point numbers.
+ To belabor the point, the sum over the vocabulary can be written as 
+\begin_inset Formula 
+\[
+\left|King\right\rangle =c_{dog}\left|dog\right\rangle +c_{tall}\left|tall\right\rangle +c_{other}\left|other\right\rangle +\cdots
+\]
+
+\end_inset
+
+and the Ansatz is that the constants 
+\begin_inset Formula $c_{a}$
+\end_inset
+
+ can be taken to be 
+\begin_inset Formula $c_{a}=MI\left(w_{a},King\right)$
+\end_inset
+
+.
+ This gives a bona–fide vector, and, as a vector one can take dot products,
+ and compute the cosine angles between them, and, when one takes care to
+ normalize the vectors to unit length, one recovers the prototypical vector
+ embedding result King–Man+Woman=Queen.
+ This holds entirely without any appeal to RNN's or any of the other mechanics
+ of deep learning.
+ Nor is there any immediate need or appeals to free energy, Boltzmann distributi
+ons, Markov properties, integrated information theory, Tononi's Phi or any
+ other advanced conceptual frameworks.
+ It can be noted (should be noted) that 
+\begin_inset Formula $MI\left(w_{a},w_{b}\right)$
+\end_inset
+
+ is a matrix (a 2–tensor) and that is is kind–of 
+\begin_inset Quotes eld
+\end_inset
+
+Markovian
+\begin_inset Quotes erd
+\end_inset
+
+ in a certain sense, although just how is requires a much fuller theory.
+\end_layout
+
+\begin_layout Standard
+The second 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ extension to the maximum entropy principle that no one seems to make is
+ that it can be extended to obtain the full dependency lexis that is the
+ centerpiece of traditional linguistics.
+ The basic idea is best illustrated with a very simple diagram:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename skimage/disjunct.eps
+	width 60col%
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The top row of the diagram show a parse obtained via Yuret's frequentist
+ maximal MI parsing algorithm.
+ The lower row merely applies a pair of scissors to cut the graph into jigsaws,
+ and labels the cut ends so that they can be reconstructed.
+ This disgram should be compared to the figure below, taken from the 1991
+ paper describing Link Grammar (LG):
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename reco-image/link-grammar.png
+	lyxscale 60
+	width 100col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This figure explicitly shows the jigsaw connectors in a jigsaw–shape form.
+ The point of Link Grammar is that if one abides by the rule that matching
+ connectors must be mated according to the obvious matching rules, the generated
+ sentences are always grammatical.
+ The connectors are labelled with the letters D, S, O, standing for Determiner,
+ Subject and Object.
+ The intransitive verb 
+\begin_inset Quotes eld
+\end_inset
+
+ran
+\begin_inset Quotes erd
+\end_inset
+
+ must take a subject (which is a noun); the transitive verb 
+\begin_inset Quotes eld
+\end_inset
+
+chased
+\begin_inset Quotes erd
+\end_inset
+
+ takes a subject and an object (both nouns).
+\end_layout
+
+\begin_layout Standard
+As a theory of grammar, Link Grammar 
+\begin_inset Quotes eld
+\end_inset
+
+works
+\begin_inset Quotes erd
+\end_inset
+
+: it has fully developed and complete dictionaries for English, Russian
+ and Thai.
+ It has a demo dictionaries for German, Arabic and Persian and proof–of–concept
+ dictionaries for Vietnamese, Turkish, Lithuanian and Indonesian.
+ It works.
+\end_layout
+
+\begin_layout Standard
+A few quick remarks about notation are in order.
+ The formal Link Grammar parse for the prior example would be
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename skimage/parse.ps
+	lyxscale 160
+	width 30col%
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align left
+The lexical entries, in conventional LG notation are
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	ball:  D- & O-;
+\end_layout
+
+\begin_layout Plain Layout
+
+	Kevin: S+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	the:   D+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	threw: S- & O+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\noindent
+The capital letters, together with a 
+\family typewriter
++
+\family default
+/
+\family typewriter
+-
+\family default
+ sign, are called 
+\begin_inset Quotes eld
+\end_inset
+
+connectors
+\begin_inset Quotes erd
+\end_inset
+
+; a pair of connectors form a 
+\begin_inset Quotes eld
+\end_inset
+
+link
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The 
+\family typewriter
++
+\family default
+/
+\family typewriter
+-
+\family default
+ sign indicates a left–right directionality: for example, the 
+\family typewriter
+S+
+\family default
+ connector can only connect to the right; it must mate with an 
+\family typewriter
+S-
+\family default
+ connector to form an 
+\family typewriter
+S
+\family default
+ link.
+ A valid parse exists if and only if all available connectors are paired
+ up.
+ The construction 
+\family typewriter
+S+ & O-
+\family default
+ is called a 
+\begin_inset Quotes eld
+\end_inset
+
+disjunct
+\begin_inset Quotes erd
+\end_inset
+
+; the name has a historical basis that is of no particular concern here.
+ During parsing, all connectors in a disjunct must be satisfied.
+\end_layout
+
+\begin_layout Standard
+Each lexical entry is a word–disjunct pair; they are of the general form
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	word: A- & B+ & C+ & ...;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This is the notation used in the original LG papers.
+ It turns out that this is also an active topic of research in quantum computing
+; Bob Coecke gives a quantum algorithm that can parse LG in linear time.
+ The notation used in those papers would write 
+\begin_inset Formula 
+\[
+\left|word\right\rangle =\left\langle A\right|\otimes\left|B\right\rangle \otimes\left|C\right\rangle \otimes\cdots
+\]
+
+\end_inset
+
+Please note that although the notation is quite different, the intended
+ interpretation is exactly the same.
+ This is not an accident: it turns out that algebraically, the system of
+ jigsaw connectors forms a semi–commutative monoid; the internal logic of
+ this category embeds a fragment of linear logic; this fragment is the same
+ as that for history and trace monoids used to describe communicating computing
+ networks, and the mutex locks needed to serialize access to data.
+ But linear logic is the internal logic of dagger–compact categories, with
+ are the categories that describe Hilbert spaces and quantum mechanics more
+ generally.
+ It is for this reason that one can discover quantum computing algorithms
+ that perform linguistic parsing: the logic of jigsaw assembly is not just
+ a subset of quantum, but is also the correct language for describing communicat
+ing computer processes and the message–passing between them.
+ Informally, you can think of a jigsaw piece as a computer program, and
+ the jigsaw connectors as the ports through which it can communicate.
+\end_layout
+
+\begin_layout Standard
+This last paragraph consisted of a waterfall of jargon and buzzwords.
+ The intent of this paragraph is to make the statement that the jigsaw paradigm
+ is fundamental: it has algebraic properties that are exactly what is needed
+ to describe a vast array of phenomena.
+ The use of jigsaws for linguistics is noted as early as the 1960's; the
+ utility for computing isn't noted till decades later, and the connection
+ to quantum is not noted until the idea of string diagrams and the Mike
+ Stay / John Baez 
+\begin_inset Quotes eld
+\end_inset
+
+Rosetta Stone
+\begin_inset Quotes erd
+\end_inset
+
+ is written.
+ Perhaps this sounds somehow deep and magical; actually, its not.
+ It is simply the observation that if you take a pair of scissors to a graph,
+ and cut up the edges, but preserve the labels, you get jigsaws.
+ Since, in a sense.
  
+\begin_inset Quotes eld
+\end_inset
+
+the universe is just a collection of objects and the relations between them
+\begin_inset Quotes erd
+\end_inset
+
+, it is not a surprise that 
+\begin_inset Quotes eld
+\end_inset
+
+everything is describable with jigsaws
+\begin_inset Quotes erd
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
-a 
+A short note about algorithms.
+ The diagram above yielded a jigsaw
 \end_layout
 
 \begin_layout Standard
-xxx 
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	ball: the- & threw-;
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
-vector
+whereas the desired LG representation would be
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+lstparams "basicstyle={\ttfamily}"
+inline false
+status open
+
+\begin_layout Plain Layout
+
+	ball: D- & O-;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+How can one get from individual words, to connector categories? Easy: clustering.
+ On can again perform frequentist counting, obtain MI , compute cosine products,
+ and create clusters from the resulting 
+\begin_inset Quotes eld
+\end_inset
+
+associative memory
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This has been done in the OpenCog Learn project, circa 2016–2020, and it
+ works fine.
+ The tooling for all this exists for the AtomSpace; however, it is now old,
+ and there is good reason to redesign it from the ground up, as the next
+ sections will review.
+\end_layout
+
+\begin_layout Standard
+BTW, once again, one has embedding vectors: one can write (for example)
+\begin_inset Formula 
+\[
+\left|King\right\rangle =c_{1}\left|the\right\rangle \otimes\left|threw\right\rangle +c_{2}\left|ruled\right\rangle \otimes\left|Poland\right\rangle +\cdots
+\]
+
+\end_inset
+
+and after computing the constants 
+\begin_inset Formula $c_{1},c_{2},\cdots$
+\end_inset
+
+ appropriately, one will find, once again, that King–Man+Woman=Queen holds
+ as a vector relation.
+\end_layout
+
+\begin_layout Standard
+c+3one can get
+\end_layout
+
+\begin_layout Standard
+xxx
+\end_layout
+
+\begin_layout Standard
+vectorGPU
 \end_layout
 
 \begin_layout Subsection
