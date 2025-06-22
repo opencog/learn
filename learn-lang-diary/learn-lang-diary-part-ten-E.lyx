@@ -2131,6 +2131,60 @@ And anyway, I'm bored, because these are shallow insights, and I have some
  important things to do today, so toodle-oo.
 \end_layout
 
+\begin_layout Subsection*
+22 June 2025
+\end_layout
+
+\begin_layout Standard
+OK, lets get back in the game.
+ I've been procrastinating, because the problem is actually hard.
+ But then it seems well within grasp so I relax and procrastinate some more,
+ and bingo: lack of progress.
+\end_layout
+
+\begin_layout Standard
+The image issue is a segmentation issue.
+ One way to do this is to fall back on stereotypical ideas of vision: what's
+ the largest extent of a region with a color or texture? Where are there
+ large color gradient changes? But this is engineering, and I don't want
+ to do engineering.
+ Another thought is to create chains of DSP filters, or perhaps trees, when
+ that is appropriate, that reduce images to a single floating–point signal.
+ There can also be another tree: one that combines these single–float signals
+ arithmetically, algebraically.
+ Even neural–netishly: if I have a vector of filters, each generating a
+ float, then that vector can be manipulated, can be run though summers and
+ sigmoids and what not.
+ But I don't want to do training, I don't want to do gradient descent.
+ I want to perform some sort of MI correlational observations on the outputs.
+\end_layout
+
+\begin_layout Standard
+But what sort of MI should I look for? High–MI? So, high–MI works for language
+ where I know that I've already tokenized into meaningful tokens.
+ And I am not computing the MI of the word against itself.
+ But with some random image processing filter, I risk having two 
+\begin_inset Quotes eld
+\end_inset
+
+different
+\begin_inset Quotes erd
+\end_inset
+
+ filters that just happen to feature–detect exactly the same feature,so
+ of course, they will always be correlated.
+ 
+\end_layout
+
+\begin_layout Standard
+Crap.
+ I'm being interrupted, just as I'm ready to argh ...
+ I've thought through this before, and gone farther, but those thoughts
+ are scattered.
+ I have to unscatter.
+ After I skeedaddle.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
