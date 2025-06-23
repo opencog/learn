@@ -2243,6 +2243,88 @@ This is also distinct from the external stimulus.
 Look at XZ–calculus.
 \end_layout
 
+\begin_layout Standard
+Adam is explaining to me his idea of an action language.
+ There are several levels; the lower level is interesting to me.
+ At the low level, I have a tree, an abstract syntax tree, and a set of
+ 
+\begin_inset Quotes eld
+\end_inset
+
+actions
+\begin_inset Quotes erd
+\end_inset
+
+ that are 
+\begin_inset Quotes eld
+\end_inset
+
+messages
+\begin_inset Quotes erd
+\end_inset
+
+ that perform edits to the tree, at the current cursor location.
+ The edits are always inserts, I guess they could be deletes, too.
+ The base level is some hand–crafted primitives that do these edits.
+ Starting with the empty string, a stream of these edits creates a tree.
+ Cool!
+\end_layout
+
+\begin_layout Standard
+But then, his trees are always programming–language specific, and the actions
+ are auto–generated for that language.
+ These actions are available to the human (the original intent was that
+ humans would be performing these edits) but now we are talking about having
+ a transformer generate these edit streams.
+ But still, all of this happens to human–usable programming language, and
+ not to my Atomese.
+\end_layout
+
+\begin_layout Standard
+However, different Atomese Link types are 
+\begin_inset Quotes eld
+\end_inset
+
+different
+\begin_inset Quotes erd
+\end_inset
+
+, and so conceivably could be constructed with different edit streams.
+\end_layout
+
+\begin_layout Standard
+I don't know if this makes sense to you, but it makes sense to me as I type
+ this.
+ To recap again, there's an edit stream.
+ That edit stream creates trees, moving around a cursor as it does so.
+ i.e.
+ it is a non–linear editor, of sorts.
+ i.e.
+ instead of inserting left to right, it inserts at the syntactically appropriate
+ location at just that moment.
+\end_layout
+
+\begin_layout Standard
+I want to call it 
+\begin_inset Quotes eld
+\end_inset
+
+non–linear editing
+\begin_inset Quotes erd
+\end_inset
+
+ he calls it 
+\begin_inset Quotes eld
+\end_inset
+
+semantic programming
+\begin_inset Quotes erd
+\end_inset
+
+.
+ He says he developed this idea eight years ago.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
