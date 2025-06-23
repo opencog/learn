@@ -2185,6 +2185,64 @@ Crap.
  After I skeedaddle.
 \end_layout
 
+\begin_layout Subsection*
+Four hours later
+\end_layout
+
+\begin_layout Standard
+I'm hung over.
+ Linas Cicenas took me to lunch and feed me too much food and now I'm stuffed
+ and tired, and sleepy even and I should take a nap but I'm drinking coffee.
+ Crap.
+ Definitely not at 100%.
+\end_layout
+
+\begin_layout Standard
+So one solution to the above is to ask that the filters distribute uniformly
+ over some space, e.g.
+ a high–dimensional sphere.
+ But it's not clear how to encode the trees into sphere coordinates.
+\end_layout
+
+\begin_layout Standard
+A related idea that I want to mash into all this is the critical sandpile.
+ So the perception trees need to be organized into little jigsaws ...
+ well, we have that already, and a valid tree is a tree that is a syntactically
+ valid assemblage of pieces, so what am I worried about? Well, I don't see
+ where the avalanches are.
+\end_layout
+
+\begin_layout Standard
+One possible encoding is just to write each tree as a string s–expression
+ and then do a conventional embedding of this string into a fixed N–dimensional
+ space.
+ e.g.
+ a boolean encoding.
+ This is vaguely unsatisfactory as it requires fixing N.
+ 
+\end_layout
+
+\begin_layout Standard
+But also this is not a functional encoding.
+ It encodes the syntactic structure of the tree, but not what it does functional
+ly, and the point is that trees with huge syntactic differences can process
+ data in nearly in a nearly identical fashion.
+\end_layout
+
+\begin_layout Standard
+This is also distinct from the external stimulus.
+ Its the distribution of external stimuli, together with how we process
+ them that we want to distribute in a uniform way.
+\end_layout
+
+\begin_layout Subsection*
+23 June 2025
+\end_layout
+
+\begin_layout Standard
+Look at XZ–calculus.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
