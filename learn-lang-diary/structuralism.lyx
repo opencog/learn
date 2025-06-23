@@ -124,6 +124,7 @@ BrainyBlaze
 
 \begin_layout Abstract
 A summary review of a structuralist, agent approach to machine consciousness.
+ 
 \end_layout
 
 \begin_layout Section*
@@ -151,6 +152,28 @@ Anyone familiar with philosophy or sociology will immediately recognize
  a way as to evoke those ideas, and you the reader should think of them.
  There is much to be said and the author cannot say it all, so it is up
  to the reader to elaborate.
+\end_layout
+
+\begin_layout Standard
+XXX This is an unfinished draft.
+ It's being sent out in its current form, despite not being clean and finished,
+ so as to get it out quickly.
+ This part covers well–established results and is straight–forward.
+ A part two, covering more speculative ideas (
+\begin_inset Quotes eld
+\end_inset
+
+it's agents all the way down
+\begin_inset Quotes erd
+\end_inset
+
+) is to be written; since what is here is already, the commentary on sensori–mot
+or agents will be part two.
+\end_layout
+
+\begin_layout Standard
+XXX This has not been proof–read and there will be errors and mistakes.
+ I'm trying to get this out fast.
 \end_layout
 
 \begin_layout Section
@@ -1620,7 +1643,7 @@ The tease is even worse, in some ways: although vectors and vector embeddings
  Perhaps a strong correspondence can be made between the above tensor framework,
  and RNN's, and perhaps not.
  I have personally attempted to find such a correspondence, but haphazardly,
- without much of an effort, as my attention is focused elsewhere.
+ with only a half–hearted effort, as my attention is focused elsewhere.
  Still, having such a correspondence would be a breakthrough, as it would
  build a bridge between LLM's that currently reign supreme, and more traditional
  symbolic computing.
@@ -1910,22 +1933,464 @@ The library that implements the MI, dot–product, Hamming–distance, etc.
  Optimization, data flow, performance is a concern.
 \end_layout
 
-\begin_layout Section
-sensorimotor 
-\end_layout
-
-\begin_layout Standard
-xxxmotor
-\end_layout
-
-\begin_layout Standard
-attention 
-\end_layout
-
-\begin_layout Standard
-a more important topic: the idea of sensorimotor agents and the recursive
- arrangements of these near the critical point.
+\begin_layout Itemize
+The collection of trees must be equi-dstributed on a manifold, aka MaxEnt
+ aka free energy, etc.
  
+\end_layout
+
+\begin_layout Section
+Sensorimotor aka 
+\begin_inset Quotes eld
+\end_inset
+
+Part Two
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Outline, to be written and expanded on.
+ 
+\end_layout
+
+\begin_layout Itemize
+Sensory perception in any domain, which can be arbitrarily abstract, e.g.
+ the perception of movie plots, the perception of basketball defense strategies,
+ the perception of geopolitical relations, the perception of abstract algebraic
+ mathematical objeccts.
+\end_layout
+
+\begin_layout Itemize
+Movement, as a choice of where attention should be focused, of moving from
+ one topic to the next.
+ Attention as a form of movement through the abstract sensory space.
+\end_layout
+
+\begin_layout Itemize
+Agency as a individual having the ability perceive and move, and having
+ a finite amount of internal state, the 
+\begin_inset Quotes eld
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+, of the exterior world.
+ The exterior world is unbounded, thus, the limited finite model of the
+ agent is necessarily incomplete.
+\end_layout
+
+\begin_layout Itemize
+Example: a text agent.
+ It can 
+\begin_inset Quotes eld
+\end_inset
+
+perceive
+\begin_inset Quotes erd
+\end_inset
+
+ file contents, it can 
+\begin_inset Quotes eld
+\end_inset
+
+move
+\begin_inset Quotes erd
+\end_inset
+
+ by changing directories (changing URL's, 
+\begin_inset Quotes eld
+\end_inset
+
+crawling the web
+\begin_inset Quotes erd
+\end_inset
+
+) and has a finite state: e.g.
+ URL/file file:/usr/include/some/where has been read, split, tokenized and
+ counted at the first level, but second stage has not been done; size of
+ tile is 4321 bytes, and file contents is gziped utf8 text.
+ This is the agents 
+\begin_inset Quotes eld
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+ (internal model) of what the 
+\begin_inset Quotes eld
+\end_inset
+
+external world
+\begin_inset Quotes erd
+\end_inset
+
+ actually looks like.
+\end_layout
+
+\begin_layout Itemize
+Agents are composed of sub–agents, and it is recursively agents 
+\begin_inset Quotes eld
+\end_inset
+
+all the way down
+\begin_inset Quotes erd
+\end_inset
+
+, e.g.
+ humans have a kidney, liver, heart, muscles that function cooperatively.
+ The kidney is built of cells, organized into a social structure suitable
+ for renal function.
+ Each cell is built of mitochondria, centrioles, endoplasmic reticulum,
+ etc.
+ that function as individual agents operating in a cooperative level.
+ Each of these are built of biomolecults, some kilodalton in weight, operating
+ according to the principles of n-wave interactions, e.g.
+ certain shapes of certain molcules fit, like a key in lock, due to not
+ just the 3D shape, but the spectral vibrational electromagnetic properties.
+ I.e.
+ the molecules 
+\begin_inset Quotes eld
+\end_inset
+
+perceive
+\begin_inset Quotes erd
+\end_inset
+
+ shape, and the molecules 
+\begin_inset Quotes eld
+\end_inset
+
+move
+\begin_inset Quotes erd
+\end_inset
+
+ to conform, and they have a 
+\begin_inset Quotes eld
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+ indicating a past path (including hysteresis) to get to the present shape.
+ In short, its agents all the way down.
+\end_layout
+
+\begin_layout Itemize
+Its also agents all the way up: humans organize into social groups, corporations
+, institutions, political groupings, etc.
+ which also exhibit agential properties.
+\end_layout
+
+\begin_layout Itemize
+There is a basic mathematical description of agency in a category–theoretic
+ framework, developed by Greg Merideth; its a half–dozen algebraic structures
+ and a dozen relations that capture the idea of sensing, movement, attentional
+ focus, and having a world mode.
+ As always, anything expressible algebraically is always 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+ to turn into functional computer software, simply because the algebraic
+ preciseness means that it is clear how to write matching code.
+\end_layout
+
+\begin_layout Itemize
+Any algebraic expression is directly representable as 
+\begin_inset Quotes eld
+\end_inset
+
+jigsaw pieces
+\begin_inset Quotes erd
+\end_inset
+
+; the category–theoretic algebraic structure of agency is just a collection
+ of a dozen or so jigsaw pieces that fit together.
+ The various topics, techniques and generative algos touched on in part
+ one can be deployed in this domain as well.
+ This is how we get to 
+\begin_inset Quotes eld
+\end_inset
+
+its agents all the way down
+\begin_inset Quotes erd
+\end_inset
+
+, but also that 
+\begin_inset Quotes eld
+\end_inset
+
+the structures have specific shapes and attachment affinities of what can
+ connect to what.
+\end_layout
+
+\begin_layout Itemize
+The Per Bak model of a sand–pile at the self–organized critical point seems
+ to be the appropriate inspiration for 
+\begin_inset Quotes eld
+\end_inset
+
+what life is
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Recall the sand–pile model.
+ Grains of sand are dropped (at one location) until a hill develops.
+ As the hill grows, the slop of the sides reaches an angle, called the 
+\begin_inset Quotes erd
+\end_inset
+
+critical angle
+\begin_inset Quotes erd
+\end_inset
+
+.
+ At this angle, avalanches occur at all scales: many small avalanches, some
+ medium–sized ones, and rarely, large avalanches.
+ As sand-grains continue to be dropped, the slope remains the same: this
+ is the so-called 
+\begin_inset Quotes eld
+\end_inset
+
+self–organized criticality
+\begin_inset Quotes erd
+\end_inset
+
+: the slope stays near the critical point, despite avalanches, despite additions
+ of new grains of sand.
+\end_layout
+
+\begin_layout Itemize
+The biological inspiration is that the grains of sand are replaced by jigsaw
+ pieces, with either fit, or don't, and build up into structures, but eventually
+ reach a critical point of being unable to sustain further growth at that
+ scale, and must fracture into smaller consistent functional units.
+ These functional units are the 
+\begin_inset Quotes eld
+\end_inset
+
+agents
+\begin_inset Quotes erd
+\end_inset
+
+; the agents form the functional units at the next–higher layer of abstraction.
+\end_layout
+
+\begin_layout Itemize
+A conventional, traditional conception of AI/AGI is, for example, a system
+ capable of 
+\begin_inset Quotes eld
+\end_inset
+
+abstract reasoning
+\begin_inset Quotes erd
+\end_inset
+
+.
+ In formal logic, one has collections of axioms, and theorem provers that
+ can recombine axioms to arrive at proofs: inferences, deductions, abductions,
+ etc.
+ The axioms and the inferences rules are both examples of jigsaw–pieces;
+ the assembled proof is a collection of jigsaws assembled according to the
+ affinity rules for the jigsaws (i.e.
+ one can only use some particular inference rule with only certain inputs,
+ to create other outputs.)
+\end_layout
+
+\begin_layout Itemize
+The traditional issue of using formal logic/theorem proving as a basis for
+ AI/AGI is that human thinking is not axiomatic, and does not conform to
+ the formal systems of e.g.
+ Aristotelian logic (or of predicate logic, or of any of dozens of other
+ kinds of logic): human 
+\begin_inset Quotes eld
+\end_inset
+
+common sense
+\begin_inset Quotes erd
+\end_inset
+
+ is not axiomatizable.
+\end_layout
+
+\begin_layout Itemize
+The proposal being made in this text is that 
+\begin_inset Quotes eld
+\end_inset
+
+common sense
+\begin_inset Quotes erd
+\end_inset
+
+ can be arrived as an agglomeration of events, relations and correlations,
+ decomposed into jigsaw pieces as explained in part one, and rearranged
+ into functional agglomerations that work 
+\begin_inset Quotes eld
+\end_inset
+
+most of the time
+\begin_inset Quotes erd
+\end_inset
+
+, in conventional settings with conventional sensory inputs and tasks.
+ 
+\end_layout
+
+\begin_layout Itemize
+The collection of 
+\begin_inset Quotes eld
+\end_inset
+
+rough and ready
+\begin_inset Quotes erd
+\end_inset
+
+ assemblages self–organizes to a critical state, where each new observation
+ either conforms to a pattern, or forces a re–structuring of 
+\begin_inset Quotes eld
+\end_inset
+
+what is known
+\begin_inset Quotes erd
+\end_inset
+
+ (if you are open–minded) or flat–out rejection (if you are closed–minded)
+ or unwarranted incorporation into your belief system (if you are gullible)
+ or flat–out rejection (because the new evidence is 
+\begin_inset Quotes eld
+\end_inset
+
+just plain wrong
+\begin_inset Quotes erd
+\end_inset
+
+) I'm using human psychological terms in this last sentence, but the intent
+ is that this is happening at the agential level: all agents, at all size
+ scales, are accumulating new sensory inputs, treating them as jigsaws,
+ which either incorporate into the existing structure, or don't.
+ This is an update of the 
+\begin_inset Quotes eld
+\end_inset
+
+world model
+\begin_inset Quotes erd
+\end_inset
+
+, and there may be movement or changes in attentional focus, as a result.
+\end_layout
+
+\begin_layout Itemize
+Examples of avalanches, at the human level, are nervous breakdowns (in the
+ classic 19th century psychological sense: you've built your entire world
+ around a belief in your husband/wife/partner, who has betrayed you.) Non–painful
+, medium–sized avalanches include the epiphany, the 
+\begin_inset Quotes eld
+\end_inset
+
+a–ha
+\begin_inset Quotes erd
+\end_inset
+
+ moment, where the last bit of evidence falls into place, re–arranging into
+ a brand new understanding.
+ Major avalanches include the religious transcendental experience: the ineffable
+ experience,, Moses and the burning bush, inefffable precsiely because the
+ restructuring is so profound that there is no way to put it into words.
+ Moses starts as an ordinary man, and returns with the deep and fundamental
+ realization that the foundations of moral, ethical behavior can be structured
+ on Ten Commandments.
+ Where did these come from? Inexplicable; he spoke to God.
+ In the structuralist vantage? It was an major avalanche, restructuring
+ the fundamental relationships between 
+\begin_inset Quotes eld
+\end_inset
+
+what is true
+\begin_inset Quotes erd
+\end_inset
+
+ into a new and stable form (the Ten Commandments) that can support a weight
+ that the earlier form could not (a random hodge–podge of life lessons in
+ community behaviors, misdemeanors, crimes, wholesome upright behavior and
+ heroic deeds.)
+\end_layout
+
+\begin_layout Itemize
+Examples of avalanches at the superhuman level include financial crises
+ and war, as well as e.g.
+ the industrial revolution.
+ Avalanches at the subhuman biological level include assorted medical conditions
+, both positive (e.g.
+ growth) and negative.
+ Again 
+\begin_inset Quotes eld
+\end_inset
+
+its agents all the way down
+\begin_inset Quotes erd
+\end_inset
+
+, and 
+\begin_inset Quotes eld
+\end_inset
+
+its self–organized criticality all the way down
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+The structuralist, algebraic approach of working with jigsaws appears to
+ be a good way to capture the concept of structure and relationships between
+ 
+\begin_inset Quotes eld
+\end_inset
+
+things
+\begin_inset Quotes erd
+\end_inset
+
+, explaining how/why 
+\begin_inset Quotes eld
+\end_inset
+
+life is living
+\begin_inset Quotes erd
+\end_inset
+
+, while also being sufficiently formal that it is convertable into functional
+ digital computer software.
+\end_layout
+
+\begin_layout Itemize
+Disclaimers: large parts of this section are hypothetical and speculative.
+ Actual computer implementations my very rapidly encounter combinatorial
+ explosions and scaling limits, preventing anything beyond toy models from
+ being workable.
+ Still, there's hope: deep–learning neural nets also had scaling problems
+ and combinatorial explosion problems, until we threw a few tens of millions
+ of GPU's at it.
+ The raw compute power tipped the balance.
+ Well, that, and the discovery of certain algos, such as back–propagation.
+\end_layout
+
+\begin_layout Standard
+The End.
+ Above is an outline.
+ It should be cleaned up.
 \end_layout
 
 \begin_layout Standard
