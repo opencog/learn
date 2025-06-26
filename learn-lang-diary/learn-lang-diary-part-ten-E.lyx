@@ -2463,7 +2463,72 @@ Hmm.
  I've got things to do, stupid but necessary things.
  Later.
  Toodle–oo.
- 
+\end_layout
+
+\begin_layout Subsection*
+26 June 2025
+\end_layout
+
+\begin_layout Standard
+Fixed the leaky shut–off valve, I thnk, and am waiting for Vytas Adomaitis
+ to cal so I don't have much time.
+ Let me try anyway.
+\end_layout
+
+\begin_layout Standard
+Adam's visit makes me think that one should try to write down graph algorithms
+ in such a way that they really are independent of the underlying representation
+, and the performance properties of that representation.
+ One can then contemplate performance as a function of the representation.
+ Naively, this seems like a reasonable idea.
+ It promptly sinks on the recognition that most representations can represent
+ more than just graphs.
+ Adam described the industry–standard quad store (which I've completely
+ ignored all these years) and clearly it can be used to model more than
+ graphs, e.g.
+ it can model hypergraphs, but then of course, hypergraphs can be modeled
+ by collections of trees, and so there's lots of ways to create isomorphic
+ (or rather, homomorphic) representations of graphs, so that performance
+ properties of one determine the performance of the other, in the same way
+ that the performance of algorithms is strongly determined by the CPU insn
+ architecture.
+ I spent the morning reading about 
+\begin_inset Quotes eld
+\end_inset
+
+counter machines
+\begin_inset Quotes erd
+\end_inset
+
+ – finite state machines with registers that can store integers (of unbounded
+ magnitude) and clearly there are huge variations in performance, depending
+ on the architecture.
+\end_layout
+
+\begin_layout Standard
+The meta–context for this is: should I stay married to the AtomSpace architectur
+e? Should I consider something else? Should I continue to think about Atomese,
+ but consider it's implementation on top of something else?
+\end_layout
+
+\begin_layout Standard
+Put differently: Atoms are fat, because they carry a lot of data fields
+ that are not generally used.
+ But when they are used, they are very space–efficient, for the kinds of
+ hypergraphs that they represent.
+ But, for some of the things I wish to represent, e.g.
+ jigsaws, Atomese is verbose and mostly not very space–efficient.
+ Of course, smaller, better representations can be gained for this particular
+ case.
+ So, can we automate translation between different representations? Write,
+ using one syntax, run algos in a different syntax, and store using a third?
+ How can these conversion shims be specified? To what degree can these conversio
+ns be auto–generated?
+\end_layout
+
+\begin_layout Standard
+Vytas called, got to go.
+ Later.
 \end_layout
 
 \begin_layout Section*
