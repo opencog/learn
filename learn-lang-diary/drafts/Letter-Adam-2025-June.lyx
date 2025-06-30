@@ -140,5 +140,679 @@ large structure models
 Without further ado, the diary extract.
 \end_layout
 
+\begin_layout Section*
+Search for Effectiveness
+\end_layout
+
+\begin_layout Standard
+You pointed me at the quad–store, the subtlety I had not previously appreciated.
+ It is a row–column table, fixed at four columns.
+ Two columns can be used for edge head and tail, and two more columns for
+ 
+\begin_inset Quotes eld
+\end_inset
+
+other things
+\begin_inset Quotes erd
+\end_inset
+
+: edge colors, for example, but also graph labels, so that an indicated
+ graph (all colored a single uniform color) can correspond to a vertex,
+ and thus used to represent a certain form of hypergraph.
+\end_layout
+
+\begin_layout Standard
+The structure of this table can be axiomatized.
+ Using conventional axiomatics for directed graphs, requiring two columns,
+ plus to (as of now) unspecified extra columns.
+ From this, we can define a 
+\begin_inset Quotes eld
+\end_inset
+
+Logic of Graphs
+\begin_inset Quotes erd
+\end_inset
+
+, https://en.wikipedia.org/wiki/Logic_of_graphs or more precisely, a loose
+ generalization thereof.
+ 
+\end_layout
+
+\begin_layout Standard
+Keep in mind that I also want to axiomatize logic as jigsaws...
+ but I digress.
+\end_layout
+
+\begin_layout Standard
+Accompanying the axiomatization of the quad–store is an accounting of the
+ space–time usage/performance of performing access.
+ Part of the secret of the quad-store is that one has a collection of maps,
+ and indexes for those maps (indexes providing rapid lookup/access, instead
+ of brute–force search) that give all the different ways of currying four
+ columns 
+\begin_inset Formula 
+\[
+\left(c_{1},c_{2},c_{3},c_{4}\right)=c_{1}\times c_{2}\times c_{3}\times c_{4}
+\]
+
+\end_inset
+
+which I attempt to tabulate:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+curried form
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing\to\left(c_{1},c_{2},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}\to\left(c_{2},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2}\to\left(c_{1},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2}\right)\to\left(c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2},c_{3}\right)\to c_{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2},c_{3},c_{4}\right)\to\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which I guess forms a lattice(?) or I guess can be termed as the 
+\begin_inset Quotes eld
+\end_inset
+
+language of a quad–store
+\begin_inset Quotes erd
+\end_inset
+
+, where 
+\begin_inset Quotes eld
+\end_inset
+
+language
+\begin_inset Quotes erd
+\end_inset
+
+ is used in the sense of model theory.
+ To do this, I have to be careful to write down the term algebra for the
+ model: the variables, terms, predicates, relations that generate the language.
+ And I'm too lazy to write them down write now, and perhaps they've been
+ written down, by someone else, somewhere else.
+ Adam had some notation for the above, presumably from such theoretical
+ analyses.
+\end_layout
+
+\begin_layout Standard
+Let's now change the topic to the axiomatization of computing.
+ The oldest is, of course, the Turing machines, which axiomatize as a set
+ of symbols, an infinite tape, and two transition functions: one that specifies
+ the next state, and one that manipulates the tape.
+ The observation here is that there are other possible axiomatizations.
+ Perhaps the simplest is the counter machine https://en.wikipedia.org/wiki/Counter
+_machine, which have a handful of registers that can store arbitrary–precision
+ integers.
+ 
+\end_layout
+
+\begin_layout Standard
+Two remarkable things happen.
+ First, the transition functions are now understood as 
+\begin_inset Quotes eld
+\end_inset
+
+instructions
+\begin_inset Quotes erd
+\end_inset
+
+, and algorithmic combinatorials of these can be understood as expanded
+ instruction sets.
+ Second, by the clever mapping of Godel numbers, the arbitrary precision
+ numbers can be mapped to tape contents, and a demonstration of the Turing
+ completeness of the counter machine can be derived.
+\end_layout
+
+\begin_layout Standard
+What I want to focus on here is the role that combinatorial generation of
+ the axioms play.
+ That is, we have a bag of axioms, shake them about to generate a free monoid.
+ That free monoid contains 
+\begin_inset Quotes eld
+\end_inset
+
+all possible computer programs
+\begin_inset Quotes erd
+\end_inset
+
+ (written in the language of the counter machine) and this monoid is exactly
+ the same thing as the model–theoretic language generated by the syntax
+ of the model.
+ Elements of the monoid can be understood to be 
+\begin_inset Quotes eld
+\end_inset
+
+abstract syntax trees
+\begin_inset Quotes erd
+\end_inset
+
+; this is the 
+\begin_inset Quotes eld
+\end_inset
+
+shallow
+\begin_inset Quotes erd
+\end_inset
+
+ statement that elements of a monoid are representable as trees.
+\end_layout
+
+\begin_layout Standard
+The equivalence of the counter machine to the Turing machine proceeds via
+ the Godel numbering, plus a clever insight as to cutting the tape in half
+ to create to stack machines, plus one more cleverness to merge two stacks
+ into one, etc.
+ So we have a homomorphism (but not an isomorphism) of counter machines
+ to Turing machines.
+\end_layout
+
+\begin_layout Standard
+Assigning performance metrics to the execution of transition functions aka
+ instructions, we see these have radically different performance profiles.
+ This allows deriving theorems about PSPACE and whatever, to make claims
+ about bounds and runtimes.
+ There are also other models, the register machines https://en.wikipedia.org/wiki/
+Register_machine which include random–access machines and random–access
+ stored–program machines, the latter being a model of present–day digital
+ computers.
+ These all have homomorphisms between each other.
+ These all have different performance profiles.
+\end_layout
+
+\begin_layout Standard
+The meta–perspective is ask about the automatic exploration of these equivalence
+s, of the algorithms, of the optimizations and performance.
+ The algorithms can be viewed in several ways.
+ First, as abstract syntax trees.
+ But also as instruction sequences represented as data–flow graphs.
+ This is in the sense of gimple: an instruction has some input registers,
+ some output registers, some clobbered registers; these are graph vertices,
+ and the dependencies are graph edges.
+ Compiler optimizers can be understood as graph–rewriting systems, recognizing
+ an input subgraph, rewriting it into a more optimal subgraph, with better
+ execution time, or perhaps fewer dependencies (thus, VLIW and/or pipeline
+ stalls.) This is 
+\begin_inset Quotes eld
+\end_inset
+
+existing
+\begin_inset Quotes erd
+\end_inset
+
+ technology (much of which is extremely proprietary, and so hard to evaluate).
+ But this existing technology is limited to the exploration of equivalences
+ of instruction sequences for fixed architectures, whereas I am dreaming
+ of exploration of the equivalences of structures across different architectures
+ (with the most primitive example being the equivalence of Turing machines
+ and counter machines.)
+\end_layout
+
+\begin_layout Standard
+This exploration requires, at a minimum, the construction of an infrastructure
+ in which axioms (model–theoretic terms, syntax) can be represented, and
+ the resulting languages (trees) can be (freely) generated.
+ This infrastructure also requires the ability to represent homomorphisms
+ between different architectures.
+ Some of these homomorphisms are 
+\begin_inset Quotes eld
+\end_inset
+
+single shot
+\begin_inset Quotes erd
+\end_inset
+
+ e.g.
+ the mapping from Turing to counter machines, while other homomorphisms
+ (isomorphisms??) are 
+\begin_inset Quotes eld
+\end_inset
+
+multi–shot
+\begin_inset Quotes erd
+\end_inset
+
+, a sequence of rewrites that may or may not be confluent, but in general
+ are meant to performance–improving.
+\end_layout
+
+\begin_layout Standard
+This immediately raises multiple issues.
+ First and most obviously, it is known that graph rewriting systems are
+ not, in general, confluent; sequences of rewrites drive to different locations.
+ Next is the issue of hill–climbing and local maxima.
+ It is well–understood that different sequences of movements can lead to
+ inescapable local maxima, and algos such as simulated annealing must be
+ applied to escape such maxima.
+\end_layout
+
+\begin_layout Standard
+This now raises a vexing insight.
+ Adam presented a no–information–loss, strictly–uphill climber algorithm,
+ using lattices with Galois connections on them.
+ Brilliant! With one little issue: perhaps it climbs to a local information
+ maximum, and gets trapped there.
+ There are two ways to think about this situation.
+ One is to imagine how great a tragedy this is, that one must first forget
+ stuff (climb down the hill), in order to discover even greater knowledge.
+ And one can, with some wistful emotions, come to terms with this.
+ The other way is to look at this and say 
+\begin_inset Quotes eld
+\end_inset
+
+A hah! This is exactly why the multiverse is needed!
+\begin_inset Quotes erd
+\end_inset
+
+ That is, we explore all possibilities, 
+\begin_inset Quotes eld
+\end_inset
+
+in parallel
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+simultaneously
+\begin_inset Quotes erd
+\end_inset
+
+, as you wish, and then eventually abandon those paths which dead–end on
+ a hilltop, and fail to be on the path to enlightenment.
+ Of course, this now becomes a bit of an intractable problem, as there is
+ a combinatorial explosion of multiverses to explore, and the pruning of
+ dead ends seems to be infrequent.
+ One can, again, wistfully sigh, but now with a different perspective.
+\end_layout
+
+\begin_layout Standard
+If I follow my nose, I now ask: 
+\begin_inset Quotes eld
+\end_inset
+
+what algorithms are best at pruning dead–ends?
+\begin_inset Quotes erd
+\end_inset
+
+ which leads to another awkward situation: 
+\begin_inset Quotes eld
+\end_inset
+
+how do I know I have reached a local maximum
+\begin_inset Quotes erd
+\end_inset
+
+? This question is 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+ if there is a finite number of possibilities to explore: they can be exhaustive
+ly tested.
+ If this finite number is large, there's a problem.
+ If the number of choices is infinite, exhaustive search cannot work, and
+ so now one must depend on theorems that somehow reduce the infinite problem
+ in some algebraic, proof–theoretic fashion, leaving us with only a few
+ choices, each of which leads to a singular conclusion: the hill–top has
+ been found.
+\end_layout
+
+\begin_layout Standard
+Lets return now to the earlier desire to generate (enumerate) monoids.
+ There are several ways in which this can be done.
+ First is to crack open some book on model theory, take a close look at
+ the formal definition of syntax, and to create a generator/enumerator according
+ to that.
+ Of course, this misses the whole point of Atomese, or rather, of jigsaws,
+ which is the claim that jigsaws provide a better formalism for constructive
+ generation, in that a partly–assembled (pre-)sheaf makes it clear what
+ the unattached connectors are.
+ More strongly, the sheaf axioms are more compact, and provide a certain
+ scale independence lacking in other systems.
+\end_layout
+
+\begin_layout Standard
+But is this an illusion? Well, sort–of.
+ The jigsaws can, of course, be represented as lambdas.
+ And lambdas, can, of course, be represented as combinators.
+ And there are homomorphisms: there is a map from jigsaws to lambdas that
+ is onto, and a map from lambdas to jigsaws that is into.
+ Similarly, there is a map from jigsaws to term algebras that is onto, and
+ a map from term algebras to jigsaws that is into.
+ There is a map from jigsaws to quad–stores that is onto, and a map from
+ quad–stores to jigsaws that is into.
+ And likewise for SQL, and column stores, and so on.
+ And presumably Adam's system, although the onto/into relationship is not
+ yet known to me.
+ Each of these different kinds of systems have distinct space and time performan
+ce.
+ My claim has been that jigsaws offer a superior space–time performance
+ profile over all other systems; Adam's work has cast this into doubt.
+\end_layout
+
+\begin_layout Standard
+And that's good, because, first, it highlights the nature of the claim,
+ and second, it opens the door to automatic exploration of the homomorphic
+ maps between these different systems.
+ Adam's structure is apparently embarrassingly parallel for graph–rewriting.
+ The current AtomSpace query engine is parallelizable, and has been parallelized
+, but no present–day applications particularly need to make use of this.
+ Adam's system packs the data representation into cache–lines, for appropriate
+ CPU performance.
+ Is it portable to GPUs? Who knows.
+\end_layout
+
+\begin_layout Standard
+Which raises another class of possible adjoint relationships.
+ But first, an aside/footnote: I think that these onto–into maps between
+ different systems should be properly called adjoint functors, although
+ it will take a bit of work and precision to convince all readers that this
+ is not an abuse of terminology.
+ 
+\end_layout
+
+\begin_layout Standard
+Anyway, there are adjoint relationships between these systems and systems
+ that describe parallelism.
+ At the most base level, this is the pi calculus.
+ At a slightly more general level, the assortment of process calculii.
+ At the string level, there's the history monoid and the trace monoid, which
+ describe partially–commutative monoids.
+ If I recall correctly, these are Zariski topology frames and locales.
+ And frames and locales are examples of the (I don't know what they are
+ called, MacLane something–or–others) pieces making up topoi.
+ So insofar as we wish to think of lambda–calculus as being single–threaded,
+ the process calculii, the partially commutative monoids, the frames and
+ locales, offer a collection of adjoint relationships between single–threaded
+ and parallel systems.
+ So we ask: what are the adjoint relationships that can be mapped to large
+ abelian subalgebras, i.e.
+ that can be highly parallelized? And even more interestingly, what adjoint
+ maps can we discover to SIMD architectures, so that these can be moved
+ to GPU's? I don't know how to take Atomese and make it SIMD; however, I
+ do know how to write Atomese to search for adjoint functors between different
+ axiomatic systems, some of which are parallelizable (MIMD) and some of
+ which are SIMD-izable.
+\end_layout
+
+\begin_layout Standard
+And again, the usual frustration: in principle, the usual theorem provers
+ (e.g.
+ HOL, Agda) should have been usable for these purposes, but are not.
+ The intermediate languages in compilers, e.g.
+ gcc gimple, or Microsoft's IR, can do this but are written to such a narrow
+ and restrictive domain that they are all but unusable.
+ In the middle of gimple sits a several register machine representations,
+ and some homomorphisms between them, as needed to compile and optimize
+ code.
+ Somewhat similar remarks for the VLIW compilers, e.g.
+ LVM clang for Qualcomm hexagon or the ARM Cortex etc.
+ chips.
+ There's nothing salvageable from these systems.
+ Then there's the AtomSpace, where some pieces are robust and general purpose,
+ while other pieces exist as prototypes, and the issues of the generation
+ of jigsaws remain painfully underdeveloped.
+ My gut instinct is to continue onwards with Atomese, rather than abandoning
+ it and starting from scratch.
+ The above paragraphs make it clear that, in the long run, the automatic
+ exploration of adjoint relationships will strongly morph the system into
+ something else.
+ But that is in the mid–term future.
+\end_layout
+
+\begin_layout Standard
+The project then requires several steps.
+ First, an important step is to more closely review the conventional definitions
+ of term algebras, and model theory syntax, and perhaps lambda calc, and
+ write down explicit left and right adjoint functors between these, and
+ jigsaws.
+ Ditto for pi calc, and maybe some process calculus, and maybe for the history
+ and trace monoids.
+ The first few of these should be easy and straight–forward, if a bit verbose.
+ Harder would be to then rephrase these results as frames and locales.
+ At any rate, this lays out the formal groundwork needed so that others
+ can understand what the heck this is about.
+ I started this mapping many years ago, but was never motivated to finish
+ it, because I did not see the 
+\begin_inset Quotes eld
+\end_inset
+
+big picture
+\begin_inset Quotes erd
+\end_inset
+
+ the way I do now.
+ Hopefully those texts are not in a pathetic state and can be salvaged and
+ completed (they are in the 
+\begin_inset Quotes eld
+\end_inset
+
+sheaf
+\begin_inset Quotes erd
+\end_inset
+
+ directory.)
+\end_layout
+
+\begin_layout Standard
+Next, each of these adjoint functors probably should realized as working
+ code.
+ So far, I've taken three baby–step proof–of–concept mappings: one for lisp,
+ one for prolog, and one for python; these are in directories under 
+\begin_inset Quotes eld
+\end_inset
+
+storage
+\begin_inset Quotes erd
+\end_inset
+
+.
+ There's also a half–finished mapping to SQL in the atomspace–bridge git
+ repo.
+ All of these are seat–of–the–pants code, written from gut intuition rather
+ than formal definitions.
+ With some proper notation for the adjoint functors, and a way of talking
+ about frames and locales, and a way for mapping to and from the logic of
+ graphs, perhaps a more sold, stronger, and clearer framework can emerge.
+\end_layout
+
+\begin_layout Standard
+But what is the point of this framework? To see what it looks like.
+ But it also feels like a distraction from the main project, which is to
+ automatically generate sentences from the language, and to automatically
+ discover homorphisms (adjoints) to other kinds of systems, and to find
+ confluent rewrites, and to perform hill–climbing to find more efficient,
+ optimized algos, and specifically, to automatically find both representations
+ and algos that run well in SIMD and MIMD architectures, ideally constrained
+ to specific cache–line sizes, bus latencies, etc.
+\end_layout
+
+\begin_layout Standard
+So what is the best, most efficient, easiest and most direct path from where
+ I am today, to a system capable of implementing the above? What is the
+ path of least resistance? What is the path of least distraction?
+\end_layout
+
+\begin_layout Standard
+Two more topics I need to digest today: revisit the above in the light of
+ sensori–motor agents, and to comment on the very interesting task of correlatin
+g functional descriptions, i.e.
+ instruction sequences, with how these instruction sequences process data
+ streams, and the hope/plan that some RNN or other neural net architecture
+ can be trained to correlate the insn sequences with the data streams.
+ And, as before, the point is that the data sequences are coming from sensory
+ systems, and the insn sequences are applied to the data streams, and that
+ there are two things that happen: a world model is constructed (presumably
+ as a monad, i.e.
+ the agent is a pipeline of monads) and that motor movements result from
+ a similar–but–different insn stream.
+ And to keep in mind that the point of the RNN is to find ...
+ confluent rewrites, or to find optimized rewrites, or to (more generally)
+ evaluate and maintain collections of insns homotopic under the Zariski
+ topology.
+ Or something like that; we are getting vaporous here.
+ Because (1) its time for dinner, and (2) converting this last paragraph
+ into something more specific will require many hours, if not days or weeks.
+\end_layout
+
+\begin_layout Section*
+The End
+\end_layout
+
 \end_body
 \end_document
