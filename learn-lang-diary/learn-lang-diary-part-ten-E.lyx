@@ -2531,6 +2531,500 @@ Vytas called, got to go.
  Later.
 \end_layout
 
+\begin_layout Subsection*
+30 June 2025
+\end_layout
+
+\begin_layout Standard
+Having too many ideas sucks.
+ Can back from the Santara–Šviesa suvažiavimas and listened to many talks
+ that gave me many ideas, and I would like to have written down some of
+ them before I have started forgetting what they all are.
+ But now I am doing email, and it was supposed to be a chore, and instead,
+ one email, plus what Adam said, has incited a brainstorm.
+ I will now try to write the brainstorm here, until I burn out.
+\end_layout
+
+\begin_layout Standard
+Lets begin at the beginning.
+ There will be a lot of reasoning by analogy here.
+\end_layout
+
+\begin_layout Standard
+Adam pointed me at the quad–store, the subtlety I had not previously appreciated.
+ It is a row–column table, fixed at four columns.
+ Two columns can be used for edge head and tail, and two more columns for
+ 
+\begin_inset Quotes eld
+\end_inset
+
+other things
+\begin_inset Quotes erd
+\end_inset
+
+: edge colors, for example, but also graph labels, so that an indicated
+ graph (all colored a single uniform color) can correspond to a vertex,
+ and thus used to represent a certain form of hypergraph.
+\end_layout
+
+\begin_layout Standard
+The structure of this table can be axiomatized.
+ Using conventional axiomatics for directed graphs, requiring two columns,
+ plus to (as of now) unspecified extra columns.
+ From this, we can define a 
+\begin_inset Quotes eld
+\end_inset
+
+Logic of Graphs
+\begin_inset Quotes erd
+\end_inset
+
+, https://en.wikipedia.org/wiki/Logic_of_graphs or more precisely, a loose
+ generalization thereof.
+ 
+\end_layout
+
+\begin_layout Standard
+Keep in mind that I also want to axiomatize logic as jigsaws...
+ but I digress.
+\end_layout
+
+\begin_layout Standard
+Accompanying the axiomatization of the quad–store is an accounting of the
+ space–time usage/performance of performing access.
+ Part of the secret of the quad-store is that one has a collection of functions
+ that give all the different ways of currying four columns 
+\begin_inset Formula 
+\[
+\left(c_{1},c_{2},c_{3},c_{4}\right)=c_{1}\times c_{2}\times c_{3}\times c_{4}
+\]
+
+\end_inset
+
+which I attempt to tabulate:
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset VSpace defskip
+\end_inset
+
+
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="1">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+curried form
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\varnothing\to\left(c_{1},c_{2},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{1}\to\left(c_{2},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $c_{2}\to\left(c_{1},c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2}\right)\to\left(c_{3},c_{4}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2},c_{3}\right)\to c_{4}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\cdots$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\left(c_{1},c_{2},c_{3},c_{4}\right)\to\varnothing$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+which I guess forms a lattice(?) or I guess can be termed as the 
+\begin_inset Quotes eld
+\end_inset
+
+language of a quad–store
+\begin_inset Quotes erd
+\end_inset
+
+, where 
+\begin_inset Quotes eld
+\end_inset
+
+language
+\begin_inset Quotes erd
+\end_inset
+
+ is used in the sense of model theory.
+ To do this, I have to be careful to write down the term algebra for the
+ model: the variables, terms, predicates, relations that generate the language.
+ And I'm too lazy to write them down write now, and perhaps they've been
+ written down, by someone else, somewhere else.
+ Adam had some notation for the above, presumably from such theoretical
+ analyses.
+ 
+\end_layout
+
+\begin_layout Standard
+Let's now change the topic to the axiomatization of computing.
+ The oldest is, of course, the Turing machines, which axiomatizes as a set
+ of symbols, an infinite tape, and two transition functions: one that specifies
+ the next state, and one that manipulates the tape.
+ The observation here is that there are other possible axiomatizations.
+ Perhaps the simplest is the counter machine https://en.wikipedia.org/wiki/Counter
+_machine, which have a handful of registers that can store arbitrary–precision
+ integers.
+ 
+\end_layout
+
+\begin_layout Standard
+Two remarkable things happen.
+ First, the transition functions are now understood as 
+\begin_inset Quotes eld
+\end_inset
+
+instructions
+\begin_inset Quotes erd
+\end_inset
+
+, and algorithmic combinatorials of these can be understood as expanded
+ instruction sets.
+ Second, by the clever mapping of Turing numbers, the arbitrary precision
+ numbers can be mapped to tape contents, and a demonstration of the Turing
+ completeness of the counter machine can be derived.
+\end_layout
+
+\begin_layout Standard
+What I want to focus on here is the role that combinatorial generation of
+ the axioms play.
+ That is, we have a bag of axioms, shake them about to generate a free monoid.
+ That free monoid contains 
+\begin_inset Quotes eld
+\end_inset
+
+all possible computer programs
+\begin_inset Quotes erd
+\end_inset
+
+ (written in the language of the counter machine) and this monoid is exactly
+ the same thing as the model–theoretic language generated by the terms of
+ the model.
+ Elements of the monoid can be understood to be 
+\begin_inset Quotes eld
+\end_inset
+
+abstract syntax trees
+\begin_inset Quotes erd
+\end_inset
+
+; this is the 
+\begin_inset Quotes eld
+\end_inset
+
+shallow
+\begin_inset Quotes erd
+\end_inset
+
+ statement that elements of a monoid are representable as trees.
+\end_layout
+
+\begin_layout Standard
+The equivalence of the counter machine to the Turing machine proceeds via
+ the Turing numbering, plus a clever insight as to cutting the tape in half
+ to create to stack machines, plus one more cleverness to merge two stacks
+ into one, etc.
+ So we have a homomorphism (but not an isomorphism) of counter machines
+ to Turing machines.
+\end_layout
+
+\begin_layout Standard
+Assigning performance metrics to the execution of transition functions aka
+ instructions, we see these have radically different performance profiles.
+ This allows deriving theorems about PSPACE and whatever, to make claims
+ about bounds and runtimes.
+ There are also other models, the register machines https://en.wikipedia.org/wiki/
+Register_machine which include random–access machines and random–access
+ stored–program machines, the latter being a model of present–day digital
+ computers.
+ These all have homomorphisms between each other.
+ These all have different performance profiles.
+\end_layout
+
+\begin_layout Standard
+The meta–perspective is ask about the automatic exploration of these equivalence
+s, of the algorithms, of the optimizations and performance.
+ The algorithms can be viewed in several ways.
+ First, as abstract syntax trees.
+ But also as instruction sequences represented as data–flow graphs.
+ This is in the sense of gimple: an instruction has some input registers,
+ some output registers, some clobbered registers; these are graph vertices,
+ and the dependencies are graph edges.
+ Compiler optimizers can be understood as graph–rewriting systems, recognizing
+ an input subgraph, rewriting it into a more optimal subgraph, with better
+ execution time, or perhaps fewer dependencies (thus, VLIW and/or pipeline
+ stalls.) This is 
+\begin_inset Quotes eld
+\end_inset
+
+existing
+\begin_inset Quotes erd
+\end_inset
+
+ technology (much of which is extremely proprietary, and so hard to evaluate).
+ But this existing technology is limited to the exploration of equivalences
+ of instruction sequences for fixed architectures, whereas I am dreaming
+ of exploration of the equivalences of structures across different architectures
+ (with the most primitive example being the equivalence of Turing machines
+ and counter machines.)
+\end_layout
+
+\begin_layout Standard
+This exploration requires, at a minimum, the construction of an infrastructure
+ in which axioms (model–theoretic terms) can be represented, and the resulting
+ languages (trees) can be (freely) generated.
+ This infrastructure also requires the ability to represent homomorphisms
+ between different architectures.
+ Some of these homomorphisms are 
+\begin_inset Quotes eld
+\end_inset
+
+single shot
+\begin_inset Quotes erd
+\end_inset
+
+ e.g.
+ the mapping from Turing to counter machines, while other homomorphisms
+ (isomorphisms??) are 
+\begin_inset Quotes eld
+\end_inset
+
+multi–shot
+\begin_inset Quotes erd
+\end_inset
+
+, a sequence of rewrites that may or may not be confluent, but in general
+ are meant to performance–improving.
+\end_layout
+
+\begin_layout Standard
+This immediately raises multiple issues.
+ First and most obviously, it is known that graph rewriting systems are
+ not confluent; sequences of rewrites drive to different locations.
+ Next is the issue of hill–climbing and local maxima.
+ It is well–understood that different sequences of movements can lead to
+ inescapable local maxima, and algos such as simulated annealing must be
+ applied to escape such maxima.
+\end_layout
+
+\begin_layout Standard
+This now raises a vexing insight.
+ Adam presented a no–information–loss, strictly–uphill climber algorithm,
+ using lattices with Galois connections on them.
+ Brilliant! With one little issue: perhaps it climbs to a local information
+ maximum, and gets trapped there.
+ There are two ways to think about this situation.
+ One is to imagine how great a tragedy this is, that one must forget stuff,
+ in order to discover more knowledge.
+ And one can, with some wistful emotions, come to terms with this.
+ The other way is to look at this and say 
+\begin_inset Quotes eld
+\end_inset
+
+A hah! This is exactly why the multiverse is needed!
+\begin_inset Quotes erd
+\end_inset
+
+ That is, we explore all possibilities, 
+\begin_inset Quotes eld
+\end_inset
+
+in parallel
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+simultaneously
+\begin_inset Quotes erd
+\end_inset
+
+, as you wish, and then eventually abandon those paths which dead–end on
+ a hilltop, and fail to be on the path to enlightenment.
+ Of course, this now becomes a bit of an intractable problem, as there is
+ a combinatorial explosion of multiverses to explore, and the pruning of
+ dead ends seems to be infrequent.
+ One can, again, wistfully sigh, but now with a different perspective.
+\end_layout
+
+\begin_layout Standard
+If I follow my nose, I now ask: 
+\begin_inset Quotes eld
+\end_inset
+
+what algorithms are best at pruning dead–ends?
+\begin_inset Quotes erd
+\end_inset
+
+ which leads to another awkward situation: 
+\begin_inset Quotes eld
+\end_inset
+
+how do I know I have reached a local maximum
+\begin_inset Quotes erd
+\end_inset
+
+? This question is 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+ if there is a finite number of possibilities to explore: they can be exhaustive
+ly tested.
+ If this finite number is large, there's a problem.
+ If the number of choices is infinite, exhaustive search cannot work, and
+ so now one must depend on theorems that somehow reduce the infinite problem
+ in some algebraic, proof–theoretic fashion, leaving us with only a few
+ choices, each of which leads to a singular conclusion: the hill–top has
+ been found.
+\end_layout
+
+\begin_layout Standard
+Returning 
+\end_layout
+
+\begin_layout Standard
+xxx
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
