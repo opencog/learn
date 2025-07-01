@@ -2551,7 +2551,8 @@ Lets begin at the beginning.
 \end_layout
 
 \begin_layout Standard
-Adam pointed me at the quad–store, the subtlety I had not previously appreciated.
+Adam pointed me at the quad–store, the subtlety of which I had not previously
+ appreciated.
  It is a row–column table, fixed at four columns.
  Two columns can be used for edge head and tail, and two more columns for
  
@@ -2570,7 +2571,7 @@ other things
 \begin_layout Standard
 The structure of this table can be axiomatized.
  Using conventional axiomatics for directed graphs, requiring two columns,
- plus to (as of now) unspecified extra columns.
+ plus two (as of now) unspecified extra columns.
  From this, we can define a 
 \begin_inset Quotes eld
 \end_inset
@@ -2592,7 +2593,7 @@ Keep in mind that I also want to axiomatize logic as jigsaws...
 \begin_layout Standard
 Accompanying the axiomatization of the quad–store is an accounting of the
  space–time usage/performance of performing access.
- Part of the secret of the quad-store is that one has a collection of maps
+ Part of the secret of the quad–store is that one has a collection of maps
  (indexes providing rapid lookup/access, instead of brute–force search)
  that give all the different ways of currying four columns 
 \begin_inset Formula 
@@ -2783,7 +2784,7 @@ language
  is used in the sense of model theory.
  To do this, I have to be careful to write down the term algebra for the
  model: the variables, terms, predicates, relations that generate the language.
- And I'm too lazy to write them down write now, and perhaps they've been
+ And I'm too lazy to write them down right now, and perhaps they've been
  written down, by someone else, somewhere else.
  Adam had some notation for the above, presumably from such theoretical
  analyses.
@@ -2797,7 +2798,7 @@ Let's now change the topic to the axiomatization of computing.
  the next state, and one that manipulates the tape.
  The observation here is that there are other possible axiomatizations.
  Perhaps the simplest is the counter machine https://en.wikipedia.org/wiki/Counter
-_machine, which have a handful of registers that can store arbitrary–precision
+_machine, which has a handful of registers that can store arbitrary–precision
  integers.
  
 \end_layout
@@ -2856,7 +2857,7 @@ shallow
 \begin_layout Standard
 The equivalence of the counter machine to the Turing machine proceeds via
  the Godel numbering, plus a clever insight as to cutting the tape in half
- to create to stack machines, plus one more cleverness to merge two stacks
+ to create two stack machines, plus one more cleverness to merge two stacks
  into one, etc.
  So we have a homomorphism (but not an isomorphism) of counter machines
  to Turing machines.
@@ -3026,7 +3027,7 @@ Lets return now to the earlier desire to generate (enumerate) monoids.
  to that.
  Of course, this misses the whole point of Atomese, or rather, of jigsaws,
  which is the claim that jigsaws provide a better formalism for constructive
- generation, in that a partly–assembled (pre-)sheaf makes it clear what
+ generation, in that a partly–assembled (pre–)sheaf makes it clear what
  the unattached connectors are.
  More strongly, the sheaf axioms are more compact, and provide a certain
  scale independence lacking in other systems.
@@ -3102,7 +3103,7 @@ And again, the usual frustration: in principle, the usual theorem provers
  The intermediate languages in compilers, e.g.
  gcc gimple, or Microsoft's IR, can do this but are written to such a narrow
  and restrictive domain that they are all but unusable.
- In the middle of gimple sits a several register machine representations,
+ In the middle of gimple sits several register machine representations,
  and some homomorphisms between them, as needed to compile and optimize
  code.
  Somewhat similar remarks for the VLIW compilers, e.g.
