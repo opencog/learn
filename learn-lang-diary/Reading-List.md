@@ -1452,7 +1452,11 @@ Interesting, but maybe less useful
   Rambling. Primary lessons: there seems to be a field of "experimental
   philosophy", half-way between sociology philosophy, which involves
   exploring how humans cooperate (performing scientific research) using
-  agnet-based modelling.
+  agent-based modelling.
+
+  Agent-based modelling constructs networks of interacting "agents" that
+  play games, such as prisoners dilemma, with one another, arriving at
+  certain social behaviors.
 
   NetLogo as the modelling language.
   https://en.wikipedia.org/wiki/NetLogo
@@ -1464,6 +1468,8 @@ Interesting, but maybe less useful
   Abstract:
   Like today’s large language models, 16th-century humanists had
   techniques to automate writing – to the detriment of novelty
+
+  My reaction: I like this. Good read. Bravo.
 
   Summary: Erasmus of Rotterdam teaches a commonplace technique for
   composing in Latin: select choice words and flowery phrases from a
@@ -1480,5 +1486,14 @@ Interesting, but maybe less useful
   toxic expressions written in the style of tech bros. Text, without
   reference to truth.
 
+* Marius-Constantin Dinu, Claudiu Leoveanu-Condrei
+  SymbolicAI: A Neuro-Symbolic Perspective on Large Language Models (LLMs)
+  https://github.com/ExtensityAI/symbolicai
+
+  Toolkit that attaches (projects, embeds) words to vectors, short
+  sentences to vectors, and allows you to mess with these vectors
+  in a "semantic" fashion. Written in python.
+
+  My reaction: I don't know what to do with it.
 
 ----------
