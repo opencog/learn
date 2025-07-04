@@ -3221,6 +3221,395 @@ Later.
  Toodle–oo.
 \end_layout
 
+\begin_layout Subsection*
+4 July 2025
+\end_layout
+
+\begin_layout Standard
+OK, so due to a brief encounter last evening with a loud, complicated alpha–male
+ by the name of Gražvidas Kurpininkas (should I even immortalize this name
+ here?) this morning is starting slowly.
+ First time I drank beer in, I dunno, years.
+ So I am not hung over, but I am vaguely thrilled to sit slack–jawed and
+ do nothing.
+ Even writing these sentences is a chore.
+ The life–lesson I am learning here is that it is easy to meet loud, thuggish
+ working–class entrepreneurs with some vague criminal history precisely
+ because they are ...
+ loud, and extroverted.
+ For the case of Gražvidas, he had an absolutely awful mother, to which
+ I attribute his obsession with justice, righteousness and hair–trigger
+ violence.
+ Smart guy, though.
+ Anyway, I digress.
+\end_layout
+
+\begin_layout Standard
+Because this morning is slow (oh, I met him because he was sitting in *my*
+ courtyard, and total strangers sitting in my courtyard are to be investigated.)
+ because this morning is slow, and I don't feel like diving right into something
+ deep and complicated, or even thinking very hard, I thought I'd tackle
+ something easy and short, right? Like what the heck is an axiom, anyway?
+\end_layout
+
+\begin_layout Standard
+I mean, this should be an easy question, right? On the written page, using
+ pencil and paper, one ...
+ jots it down.
+ So this is a representational question.
+ Oh, ..
+ OK, I think I see a plausible answer.
+ Lets try it out and see if it works.
+ So, the axiom for multiplication, needed to axiomatize a huge variety of
+ stuff, is to be written, using category theory, as, well, the category
+ theoretic product, i.e.
+ having two projection morphisms, etc.
+ No need to repeat the Wikipedia article on this.
+ I was thinking, oh, since it just uses dots and arrows, it will be ...
+ easy.
+\end_layout
+
+\begin_layout Standard
+Easy to what? Well, I guess easy to represent in Atomese, where I wish to
+ perform all of my algorithmic explorations.
+ So maybe the question is, how do I represent an axiom in Atomese? And since
+ we're dealing with representational questions, how do I represent an axiom
+ using the notation of term algebras? Distinct from the question of how
+ to represent the axioms of a term algebra? And lets not forget jigsaws
+ as an option.
+ So, in short, I'm totally lost, staring at my own navel.
+\end_layout
+
+\begin_layout Standard
+Well, the Wikipedia article https://en.wikipedia.org/wiki/Axiom makes a chivalrous
+ attempt to explain what an axiom is, but ultimately fails.
+ So it seems I'm in some strange uncharted waters.
+ In predicate logic, its some alphabet, some grouping parens, and an arrow.
+ Whoopie! What the eff am I supposed to do with that?
+\end_layout
+
+\begin_layout Standard
+Well, the original vision above was generative: I define some syntax, and
+ explore the generated language of all possible expressions.
+ In the back of my mind, when I write such things, I envision jigsaws.
+ And I could, I guess, and I will, I guess, hop to that conclusion in the
+ end.
+ But right now, I am trying to drag it out, and look at other symbological
+ alternatives.
+ There's a wealth of these, and that's part of the problem.
+ Of course, one could attempt to write everything with lambda calc.
+ Or with cat theory.
+ Or with term algebras.
+ Or with Chomskian syntactical rewrite rules.
+ Or the formalism of BNF.
+ Or s–expressions, which are lambdas, but sideways, with apply and eval
+ thrown in for good measure.
+ There seem to be many ways of writing things down, as strings, on pieces
+ of paper, that are, in various ways, equivalent or at least homeomorphic.
+ And I suppose I could just pick one and be done.
+ And of course, the one I picked is jigsaws, but somehow I am not done.
+\end_layout
+
+\begin_layout Standard
+And suppose I picked lambdas.
+ And then duuude, OMG, beta–reduction and alpha–conversion are axioms.
+ So there's some infinite regress here: how do I express the axiom of beta–reduc
+tion using the notation of lambda calculus? How do I describe it in some
+ transparent, non–tautological fashion? Has anyone done this? Is it in Barendreg
+t's book? How do I get something from nothing? Every system of symbols requires
+ verbal descriptions of what it is about, to pump the imagination and get
+ going.
+ Even set theory, someone has to explain what those curly braces mean, and
+ that they must be paired (this is a axiom).
+ There's an empty set and the set containing the empty set, and before one
+ is done, naive set theory, which seems simple and intuitively obvious,
+ requires seventeen axioms to define.
+ And how are those axioms written? Why, using the language of, uhh, first
+ order logic, I think.
+ Or is it predicate calculus? And some axiom schemas must be admitted into
+ the zoo.
+\end_layout
+
+\begin_layout Standard
+Part of my agonizing is due to the mismatch between my chosen notational
+ system, the jigsaws, and the base notational system of Atomese, i.e.
+ of Nodes and Links.
+ So fuck it, lets go there.
+\end_layout
+
+\begin_layout Standard
+Nodes and Links map cleanly into s–expressions, and given that the Atom
+ Type comes first, they are, crap, I forget the name, but the first element
+ of a list is not to be evaluated, but the subsequent elements can be.
+ (I forget the keyword here, but it is a nice little insight that I should
+ keep in mind.) At any rate, the Atomese syntax maps cleanly, more or less,
+ into s–expressions.
+ It also maps cleanly, more or less, into term algebras.
+ Because Links correspond to function symbols.
+ And relational symbols can be jammed in there, too.
+ And crisp true–false predicates find a home that is relatively straight–forward.
+ And one of my to–do tasks is to write this down in the most blaringly obvious
+ and boring way possible, so that it can be used as a reference manual.
+ So in this sense, all is good.
+\end_layout
+
+\begin_layout Standard
+But two things are not good.
+ First, the old one that caused Nil to rush headlong into a brick wall.
+ This is the LambdaLink, and all the accompanying baggage of variables,
+ alpha–conversion, beta–reduction, normal order, etc.
+ that has a mountain of C++ code created to implement it.
+ It is quite non–trivial, complicated, mostly debugged I guess, but how
+ could one ever know if its been debugged fully? The mountain of code is
+ too large to fit in one's head.
+ The friggin QuoteLink.
+ I hate the friggin QuoteLink.
+ But there we have it; it is what it is.
+ A mountain of hidden complexity.
+\end_layout
+
+\begin_layout Standard
+And what is the origin of this complexity? Well, a desire to represent the
+ seemingly simple idea of lambda calculus, in Atomese.
+ The situation is like naive set theory: intuitively obvious, but requiring
+ seventeen axioms and an axiom schema to define it cleanly.
+ So also naive lambda calculus: intuitively obvious, but you just try to
+ implement it in code, and the niggling little issues of bound and free
+ variables raise their large heads, and the simple idea of beta–reduction
+ becomes a mountain of intricate code.
+\end_layout
+
+\begin_layout Standard
+Did I do something wrong? Maybe.
+ The canonical story of scheme (lisp) is that a scheme interpreter can be
+ written in only a small number of lines of code.
+ But this is a lie, because there's the issue of bootstrapping, wherein
+ something else has to count and balance parenthesis, and something else
+ has to find white–space, and chunk up the things that contain no whitespace
+ into some sort of tokens.
+ Which isn't 
+\begin_inset Quotes eld
+\end_inset
+
+hard
+\begin_inset Quotes erd
+\end_inset
+
+, but ...
+ there's enough of it that it becomes ...
+ well, its not so trivial.
+ Still, I guess, easier than the machinery underneath LambdaLink.
+ But ...
+ well, you get my point.
+ Base Atomese is easy, in a sense, but then layering something else 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+, like lambda calculus, on top of it, turned into quite the chore.
+\end_layout
+
+\begin_layout Standard
+The above is a digression from the topic that irritates me: the representation
+ of jigsaws, in the language of Atomese, is also non–trivial, and annoyingly
+ verbose.
+ I have to define Connectors, which have a Sex, and a ConnectorType.
+ And lists of Connectors, grouped into a named Section.
+ And that is just to represent them.
+ That does not even get started with joining them together, using them to
+ generate.
+ Which will result in another small mountain of code.
+\end_layout
+
+\begin_layout Standard
+One question: if I were to start from scratch, blank slate, how would a
+ system for representing jigsaws actually best be implemented? What is the
+ most minimal form that it could take? Well, if I go back to foundational
+ Link Grammar, I still have a connector being an ordered pair (connector-type,
+ connector-sex) which is an s–expression, if you wish, or a cartesian product,
+ which feels like overkill, or a list of length two, or even a lisp pair,
+ with car and cdr elements in it.
+ So this is unavoidable.
+\end_layout
+
+\begin_layout Standard
+Next, LG defines disjuncts as lists of connectors, with infix–ampersand
+ notation.
+ But its a list, and so again, could be written as an s–expression, with
+ implicit ampersand–ness of the list.
+ But we also have Atomese, and so instead of writing A+ & B+ & C- we already
+ had to general sex and write (A, +) & (B, +) & (C, -) and the penultimate
+ Atomese form really does have to be (& (A, +) (B, +) (C,-)) with the leading
+ & being the Atomese type saying that everything in the subsequent list
+ is conjoined with an operator called 
+\begin_inset Quotes eld
+\end_inset
+
+ampersand
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Finally, in LG, we have a lexis, so it is not enough to write a disjunct,
+ but we need to have a lexical entry foo: A+ & B+ & C- which becomes the
+ s–expression (: foo (& (A, +) (B, +) (C,-))) where the type : indicates
+ a pair, the first of which is the lexical item, and the second of which
+ is the connector set (of type &).
+ So the s–expression form of LG is forced, and there's not much simplification
+ over the current situation in Atomese.
+\end_layout
+
+\begin_layout Standard
+At any rate, it is clear that : and & are Link types.
+ What about the terminal symbols? Aka the Nodes? In Chompskian notation,
+ or in BNF, the terminal symbols are just symbols, taken from some alphabet.
+ Again, writing on paper, its easy to just say, hey, use some greco–roman
+ alphabet with of without uppercase, alternate fonts, maybe some Hebrew
+ letters or gothic blackpage thrown in for good luck.
+ But for computatinal matters, this is not practical, and the terminal symbols
+ have to be written as (Node 
+\begin_inset Quotes eld
+\end_inset
+
+foo
+\begin_inset Quotes erd
+\end_inset
+
+) and (Node 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+) and (Node 
+\begin_inset Quotes eld
+\end_inset
+
++
+\begin_inset Quotes erd
+\end_inset
+
+) and so the pair (A, +) becomes ((Node 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+) (Node 
+\begin_inset Quotes eld
+\end_inset
+
++
+\begin_inset Quotes erd
+\end_inset
+
+)) and since this is a pair, we give it a type: (ConnectorLink (Node 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+) (Node 
+\begin_inset Quotes eld
+\end_inset
+
++
+\begin_inset Quotes erd
+\end_inset
+
+)) and we may as well split the set of terminal symbols into functional
+ groupings, and write (ConnectorLink (ConnectorTypeNode 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+) (ConnectorSexNode 
+\begin_inset Quotes eld
+\end_inset
+
++
+\begin_inset Quotes erd
+\end_inset
+
+)) and now we have fully re–entered the verbose Atomese form that I was
+ expressing dissatisfaction with.
+\end_layout
+
+\begin_layout Standard
+Nothing whatsoever is gained by writing this as a term algebra.
+ That is, cracking open a book on model theory, and using the notation of
+ terms or atomic sentences, or whatever, simply seems to take the parenthesis,
+ and rearrange them.
+ The point is that an LG lexis has a non-trivial form when written as a
+ term algebra, because there are multiple function symbols (one each, for
+ each Link type) and multiple constant symbols (one each for the connector
+ types, and another for the sex types.) That is, s–expressions and term algebras
+ are sufficiently similar that a straight–forward notational conversion
+ is immediately obvious.
+ The LG jigsaws are necessarily more complex, notationally.
+ So s–expressions really are notationally minimal, and this is inescapable.
+ So I'm thinking that I cannot really make any forward progress and find
+ some simplifying format.
+\end_layout
+
+\begin_layout Standard
+The only remaining possibility is that Atomese carries some fairly hefty
+ baggage of indexes, weak pointers, kvp trees, smart pointers and reference
+ counting, and maybe this baggage could be trimmed down if I knew that,
+ from here on out, I would be working with connectors, forevermore.
+ But this is not yet a viable bet.
+ I would have to find a way of re–writing everything in terms of connectors.
+ I mean, yes, I already know how: term algebra functions are explicitly
+ jigsaws, in that the term algebra function symbol f(x,y,z) corresponds
+ to the lexical entry (: f (& (type-of-f, output) (type-of-x, input) (type-of-y,
+ input) (type-of-z, input))) and the only thing I get from writing f(x,y,z)
+ is that I can make the types implicit, as otherwise, I would have needed
+ to write F:f(X:x, Y:y, Z:z) which starts to get unreadable.
+ So as I've known for a decade, 
+\begin_inset Quotes eld
+\end_inset
+
+everything is a jigsaw
+\begin_inset Quotes erd
+\end_inset
+
+, and type considerations force us into a notational corner that ultimately
+ looks exactly like Atomese.
+ And its a Chinese finger trap, and I keep thinking I can escape it, but
+ I cannot.
+ Crap.
+\end_layout
+
+\begin_layout Standard
+And I still don't know what an axiom is.
+ I seem to have a notation for it, come the day I find out what it is.
+ That is, I now face the task of taking conventional axioms, and converting
+ them into not just Atomese, but specifically into jigsaws.
+ And this is a significantly large task that awaits future elaboration.
+\end_layout
+
+\begin_layout Standard
+I need to do three things, now: (1) go for a walk, (2) read the papers on
+ Hinze, and on XZ-calculus, and (3) do the chores.
+ Probably the chores, first.
+\end_layout
+
+\begin_layout Standard
+Toodle–oo.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
