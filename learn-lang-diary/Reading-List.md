@@ -1,6 +1,9 @@
 
 Things to read:
 
+* Parallel Optical Computing
+  https://elight/springeropen.com/articles/10.1186/s43593-025-00088-8
+
 * A Functorial Perspective on (Multi)computational Irreducibility
   Jonathan Gorard
   https://arxiv.org/abs/2301.04690
