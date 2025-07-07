@@ -3622,8 +3622,1249 @@ While sitting to do chores, I got distracted, started reading about enriched
  Otherwise I remain lost in a daze of confusion.
 \end_layout
 
+\begin_layout Subsection*
+7 July 2025
+\end_layout
+
+\begin_layout Standard
+Well, I screwed myself over but good.
+ I started writing the paper that would explain it all, demonstrating how
+ jigsaws can be used as the representational device capable of representing
+ all mathematical structures.
+ I mean, it seems so obvious.
+ And the obvious parts are indeed ...
+ obvious.
+ And then I hit a wall.
+ Hubris? Or stupidity? Mostly the latter.
+ Well, I could sit at the keyboard, smooth–brained, trying to resolve the
+ issues, or I can verbalize here and hope that something becomes clear.
+\end_layout
+
+\begin_layout Standard
+There seem to be three things tangled into one issue.
+ First, disjoint unions: the set of all jigsaws is a ...
+ set, existing outside of the jigsaw notation.
+ Second, flow.
+ I can build 
+\begin_inset Formula $and(x,y)$
+\end_inset
+
+ as a jigsaw, but how do I explain that 
+\begin_inset Formula $T,F$
+\end_inset
+
+ flow through that? In Atomese, I have flows, but how do I source and sink
+ them? Generators! The point is that I want to avoid writing (syntactic)
+ truth tables 
+\begin_inset Formula $and\left(F,F\right)\to F$
+\end_inset
+
+ because these are explosively large.
+ Combinatorially explosive.
+ This is one of the reason that a distinction is drawn between Moore and
+ Mealey machines: the probabilistic machines are far more compact in the
+ treatment and notation of state transitions, and I want to apply the same
+ trick here.
+ That is, I want to treat the type 
+\begin_inset Formula $B$
+\end_inset
+
+ as a set 
+\begin_inset Formula $B=\left\{ T,F\right\} $
+\end_inset
+
+ and then somehow say 
+\begin_inset Quotes eld
+\end_inset
+
+whenever you see a jigsaw with a 
+\begin_inset Formula $B$
+\end_inset
+
+ connector on it, it is to be understood as flowing one of these values.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There seem to be two or three distinct requirements: have a generator, that
+ is capable of generating or flowing these values, possibly with some probabilit
+y distribution.
+ This sends us down another rabbit–hole: how do I flow complex–valued probabilit
+y amplitudes? Well, the same way anything else flows: the value being flowed
+ is a vector with complex coefficients.
+ But this is annoying different from how a probability–valued flow behaves:
+ select one item, and only one item, with probability 
+\begin_inset Formula $p$
+\end_inset
+
+.
+ Do NOT flow me the whole vector.
+ Anyway, lets call this generator confusion.
+\end_layout
+
+\begin_layout Standard
+Next is enumeration confusion: given any possible type, then if that type
+ describes a set, then please enumerate all of the members of the set, independe
+nt of any probability distribution on them.
+ Which is a plausible request for finite sets, but becomes insane for anything
+ infinite.
+\end_layout
+
+\begin_layout Standard
+The syntax–semantics divide in predicate logic illustrates the problem:
+ on the syntactic side, we enumerate all of the possibilities e.g.
+ in a truth table (and use the turnstile entailment symbol 
+\begin_inset Formula $\vdash$
+\end_inset
+
+); on the semantic side, we say it holds generically, (and use the double–turnst
+ile 
+\begin_inset Formula $\vDash$
+\end_inset
+
+ or the models 
+\begin_inset Formula $\models$
+\end_inset
+
+ symbols) and stitch them together with assorted upwards and downward Skolem–Low
+enheim theorems, or, for modelling, present definitions and theorems for
+ modelling.
+\end_layout
+
+\begin_layout Standard
+So I guess the task includes a formalization of all these upward–downward
+ etc.
+ modelling precepts, as composed of jigsaws.
+ But how? Maybe the deal is I have to crack open Wikipedia, and start going
+ through these one by one, but as I do, I will just wind up back at the
+ top of this diary entry, so the core issue is unavoidable.
+ But maybe I can find insight and inspiration by consulting the texts, the
+ tools of divination, and find the answer sitting in front of me.
+ Hmm.
+\end_layout
+
+\begin_layout Standard
+But I dunno.
+ I read those texts before.
+ Reading them again won't make me wiser, will they? What I am looking for
+ is already in my memory; I just have to remember it.
+ (??)
+\end_layout
+
+\begin_layout Standard
+The point of generators is that they generate infinite sequences; and more,
+ they generate languages, and the generator can be described via production
+ rules, which (for example) describe state transition machines, which are
+ finite graphs with marked edges, marked probabilities, and we are back
+ to Markov machines, or at least Moore and Mealy machines.
+ And the Turning machines are just finite state machines plus a tape.
+ So this provides a complete theory of generation.
+ And finite state machines have the usual, obvious description as graphs,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+sofic systems
+\begin_inset Quotes erd
+\end_inset
+
+ if we endow a topology; but a graph is, at any rate, decomposable into
+ jigsaws.
+\end_layout
+
+\begin_layout Standard
+And is this the reification? We take a graph, decompose it into jigsaws.
+ If we label the connectors appropriately, then the jigsaw can be reassembled
+ uniquely: it generates exactly one graph, and then it stops.
+ The graph that is generated just so happens to be interpretable as a finite
+ state machine.
+\end_layout
+
+\begin_layout Standard
+So, how to think about this? Well, interpreting it as such, I can say 
+\begin_inset Quotes eld
+\end_inset
+
+it flows
+\begin_inset Quotes erd
+\end_inset
+
+, and attach a tap to it somewhere, and get a flowing list of generated
+ items coming out.
+ In this form, the entire graph forms the generator.
+ In the sensori–motor framework, the generated outputs are kind–of–like
+ the motored thing: motors generate sequences of actions; the generator
+ just generates sequences, not yet interpretable as actions.
+\end_layout
+
+\begin_layout Standard
+How does this reify? I need some special constructor, some type constructor,
+ some articulator, some actionator, something that takes a generating graph,
+ attaches a tap to it, and flowing out from that tap are the generated items.
+ I mean I can just write down some symbol for this, the exercise here is
+ to make it pretty, but some vague undefined sensibility of 
+\begin_inset Quotes eld
+\end_inset
+
+pretty
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well, specifically, I want it to be a jigsaw, again.
+\end_layout
+
+\begin_layout Standard
+LG Jigsaws are called 
+\begin_inset Quotes eld
+\end_inset
+
+disjuncts
+\begin_inset Quotes erd
+\end_inset
+
+ for a reason; the LG grammar explicitly includes & and the disjoined–or,
+ while the story of jigsaws omits the disjoined–or as an explicit 
+\begin_inset Quotes eld
+\end_inset
+
+thing
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And yet, this is what the generator ultimately is: the generator of disjoined
+ collections.
+ So I need it.
+\end_layout
+
+\begin_layout Standard
+Can I steal an idea from boolean algebra? Everything can be built form a
+ single symbol, nand.
+ But I don't have a conception of 
+\begin_inset Quotes eld
+\end_inset
+
+not
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Hmm.
+ How do I build the disjoint union type constructor from jigsaws? Or more
+ generally, type constructors in general? The product type is ...
+ too straightfoward? The function type is obtained by currying, and works
+ by converting in–sexes to out–sexes.
+ So currying becomes a sex–inversion on connector sex, and currying then
+ only works if there are exactly two sexes.
+\end_layout
+
+\begin_layout Standard
+This is stupid, and a side–track from what we need to do, but lets get side
+ tracked.
+ In my imagination, I am writing 
+\begin_inset Formula $\mathrm{curry}:\left(A\times B\to C\right)\to\left(A\to B\to C\right)$
+\end_inset
+
+ or perhaps 
+\begin_inset Formula $\mathrm{curry}:\left(A\times B\to\varnothing\right)\to\left(A\to B\to\varnothing\right)$
+\end_inset
+
+ or simplifying 
+\begin_inset Formula $\mathrm{curry}:\left(A\times B\right)\to\left(A\to B\right)$
+\end_inset
+
+ because it is not clear if I have to write the empty set; this is not some
+ exact sequence.
+ As a jigsaw, how does this work? I confuse myself, now.
+ This was supposed to be obvious.
+\end_layout
+
+\begin_layout Standard
+Clearly, 
+\begin_inset Formula $A\to B$
+\end_inset
+
+ is supposed to be this:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\family sans
+(LexicalEntryType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ItemType 
+\begin_inset Quotes eld
+\end_inset
+
+func-type
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorListType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+))))
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And I guess that the product type 
+\begin_inset Formula $A\times B$
+\end_inset
+
+ is supposed to be:
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\family sans
+(LexicalEntryType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ItemType 
+\begin_inset Quotes eld
+\end_inset
+
+func-type
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorListType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+))))
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where the sex is marked 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+ on both, since this will be implicitly used as a source for some later
+ operation, and not as a sink.
+\end_layout
+
+\begin_layout Standard
+Curry is then
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\family sans
+(LexicalEntryType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ItemType 
+\begin_inset Quotes eld
+\end_inset
+
+curry
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorListType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+product-type
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+function-type
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+))))
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+There are two issues here.
+ The first issue is that it is tempting to expand in place, and write
+\end_layout
+
+\begin_layout Standard
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "100col%"
+special "none"
+height "1in"
+height_special "totalheight"
+thickness "0.4pt"
+separation "3pt"
+shadowsize "4pt"
+framecolor "black"
+backgroundcolor "none"
+status open
+
+\begin_layout Plain Layout
+
+\family sans
+(LexicalEntryType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ItemType 
+\begin_inset Quotes eld
+\end_inset
+
+curry
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorListType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+A
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+input
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(ConnectorType
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(LinkType 
+\begin_inset Quotes eld
+\end_inset
+
+B
+\begin_inset Quotes erd
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Plain Layout
+
+\family sans
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+
+\begin_inset space \qquad{}
+\end_inset
+
+(SexType 
+\begin_inset Quotes eld
+\end_inset
+
+output
+\begin_inset Quotes erd
+\end_inset
+
+))
+\end_layout
+
+\end_inset
+
+
+\begin_inset VSpace defskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+but this is nonsense, incoherent.
+ We can't do that.
+ Another issue is that writing curry in the earlier form requires it to
+ be enriched, in that the A and B types of the product–type must be the
+ A and B types of the function–type, and I don't have any mechanism for
+ writing 
+\begin_inset Quotes eld
+\end_inset
+
+enriched jigsaws
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+But hang on ...
+ the enrichment is kind of a flow, in that curry is not just flowing input
+ to output, but is deconstructing the input (which is a jigsaw itself) and
+ rewriting it to a different jigsaw, as the output.
+ And the re–write rule is what provides the 
+\begin_inset Quotes eld
+\end_inset
+
+enrichment
+\begin_inset Quotes erd
+\end_inset
+
+ of maintaining the correspondances as needed.
+\end_layout
+
+\begin_layout Standard
+But I have very old Atomese for rewrite rules: BindLink and freinds, outgrowths
+ of LambdaLink.
+ Are these to be repurposed as generators? And what of FilterLink?
+\end_layout
+
+\begin_layout Standard
+OK, gotta break, here.
+ Later.
+\end_layout
+
 \begin_layout Section*
-The End
+The End 
 \end_layout
 
 \begin_layout Standard
