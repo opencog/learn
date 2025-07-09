@@ -5307,6 +5307,121 @@ Whatever.
  I think I am done here.
 \end_layout
 
+\begin_layout Subsection*
+9 July 2025
+\end_layout
+
+\begin_layout Standard
+The sleep was refreshing.
+ This mornings task is to read https://adamv.be/Information-programming As
+ I fell asleep last night, I invented/created the Sodoku solver that Adam
+ described verbally.
+ It wasn't hard, but given that it's solution requires hard–coding the rules
+ of sodoku, it not in any way a general solution.
+ I tried to envision the antitone Galois connection he spoke of, but for
+ sudoku, it seemed rather trivial; its just boolean not, at least for the
+ one I was imagining.
+\end_layout
+
+\begin_layout Standard
+Before I start reading Adam's work, here's what I thought/invented.
+ Just to see how close I got, and where things went off the rails.
+\end_layout
+
+\begin_layout Standard
+For every cell in sudoku, write a bitstring, 9 bits long, initialized to
+ all–ones, meaning 
+\begin_inset Quotes eld
+\end_inset
+
+all digits are possible for this square.
+\begin_inset Quotes erd
+\end_inset
+
+ A zero means 
+\begin_inset Quotes eld
+\end_inset
+
+this digit is no possible for this square
+\begin_inset Quotes erd
+\end_inset
+
+, where the bitstring is numbered (big or little) endian, from 1.
+ A bitstring of all zeros is invalid, no solution, a bit string of just
+ one bit set indicates the solution.
+ The fragment here is again a fragment of linear logic: choose one.
+ Boolean–or the list of choices together.
+\end_layout
+
+\begin_layout Standard
+The bitstrings can be thought of as vertices on a 9D hypercube.
+ A poset lattice results from considering the cube edges along the diagonal
+ from all–zeros to all–ones being top and bottom.
+ Cube edges are always to nearest neighbors, to bit strings that differ
+ by one bit.
+ Being able to set a bit location to zero is information gain.
+ The only anti–tone Galois connection I could think of is the one that turns
+ this lattice upside–down, exchanging ones for zeros, but this is rather
+ trivial, so I don't see the point.
+\end_layout
+
+\begin_layout Standard
+Solving is straight–forward: you are given some fixed digits in some fixed
+ cells.
+ These are readily propagated to other cells, in that the solution–one must
+ be zero everywhere else.
+ Since this is a fragment of linear logic, the propagation is not some trivial
+ boolean and/or/not, so I am wondering if Adam spoke of anti-tone just to
+ get the boolean ops working 
+\begin_inset Quotes eld
+\end_inset
+
+normally
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The is, a solution has the form d=000100000 to take not–d to get a mask,
+ boolean–and this mask against all other constrained cells.
+ But this works only if one bit is set.
+ That is, maybe becomes definitely only when all other choices have been
+ killed.
+\end_layout
+
+\begin_layout Standard
+Things I did not think of while sleeping, but only now:
+\end_layout
+
+\begin_layout Itemize
+The constraints can be thought of as the pipes/plumbing, and the cell–values
+ as the things that flow through these constraint–pipes.
+\end_layout
+
+\begin_layout Itemize
+There should be some entropy or MI value for any given lattice config, but
+ I don't see it right now.
+\end_layout
+
+\begin_layout Itemize
+The fact that its choice again says 
+\begin_inset Quotes eld
+\end_inset
+
+jigsaws
+\begin_inset Quotes erd
+\end_inset
+
+ as a generalization (outside of Sudoku.)
+\end_layout
+
+\begin_layout Itemize
+Strength of evidence weighting could be introduced for the general case.
+\end_layout
+
+\begin_layout Standard
+Time to stop writing and read what Adam wrote.
+\end_layout
+
 \begin_layout Section*
 The End 
 \end_layout
