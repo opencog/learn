@@ -5460,6 +5460,63 @@ Long chat over signal.
  Which is why it is not understandable.
 \end_layout
 
+\begin_layout Subsection*
+Later 3PM
+\end_layout
+
+\begin_layout Standard
+I have some time to kill.
+ Let me riff on Logic Tensor Networks (LTN) aka https://github.com/logictensornet
+works/logictensornetworks The idea is painfully simple.
+ Replace any function by a matrix or a tensor, any predicate by a projection.
+ For whatever reason, they picked fuzzy logic for the logical connectors
+ but I don't see why it could not have been something else.
+\end_layout
+
+\begin_layout Standard
+This idea is so goofy simple that I kind of don't get it.
+ What am I missing? Well, lets look at training.
+ Well, that's the hitch, isn't it? It needs to be trained on some dataset(s).
+ That dataset not only needs to include the symbolic data, but also the
+ desired relationships between the data elements, symbolically expressed.
+ Individual symbols can be I guess one–hot, or perhaps vector embeddings.
+ I don't see that it matters.
+\end_layout
+
+\begin_layout Standard
+The predicates in LTN are defined to be combined dot–product, offset and
+ sigmoid; they use 
+\begin_inset Formula $\exp-\left\Vert \vec{\mu}-\vec{\nu}\right\Vert ^{2}$
+\end_inset
+
+ which, for unit–length vectors, would be 
+\begin_inset Formula $\exp-2\left(1-\cos\theta\right)$
+\end_inset
+
+ for 
+\begin_inset Formula $\cos\theta=\hat{\mu}\cdot\hat{\nu}$
+\end_inset
+
+ and they allow non–unit–length vectors.
+ All I get from that is non–unit–length vectors carry an in–built offset
+ viz.
+ 
+\begin_inset Formula $\exp-\left\Vert \vec{\mu}-\vec{\nu}\right\Vert ^{2}=\exp-\left(\left\Vert \vec{\mu}\right\Vert ^{2}+\left\Vert \vec{\nu}\right\Vert ^{2}-2\left\Vert \vec{\mu}\right\Vert \left\Vert \vec{\nu}\right\Vert \cos\theta\right)$
+\end_inset
+
+ but I don't see how that is any simpler or easier than some per–product
+ offset; and of course the exp could be replaced by some other sigmoid.
+ Does it matter? I don't see why.
+ 
+\end_layout
+
+\begin_layout Standard
+I mean, I could take some term algebra, some arbitrary term algebra, replace
+ terms by tensors, and train up the whole mess.
+ Big whup.
+ It only works if there's a training set.
+\end_layout
+
 \begin_layout Section*
 The End 
 \end_layout
