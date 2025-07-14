@@ -1499,4 +1499,33 @@ Interesting, but maybe less useful
 
   My reaction: I don't know what to do with it.
 
+  My meta-reaction: given any network with pretensions of being a term
+  algebra with relations and logical connectives, i.e. a
+  model-theoretic model, one can attach vectors, matrices and tensors
+  to the vertexes with one, two, three edges coming from them, and form
+  a trainable network. But what should one train on?
+
+  The example prototype here is LTN, Logic Tensor Networks, from 
+  https://github.com/logictensornetworks/logictensornetworks
+
+* A cellular entity retaining only its replicative core:
+  Hidden archaeal lineage with an ultra-reduced genome
+  Ryo Harada et al.  May 2, 2025.
+  https://doi.org/10.1101/2025.05.02.651781doi
+
+  Abstract: "... the discovery of a novel archaeon with an
+  unprecedentedly small genome of only 238 kbp.  Its genome is
+  profoundly stripped-down, lacking virtually all recognizable
+  metabolic pathways, and primarily encoding the machinery for its
+  replicative core: DNA replication, transcription, and translation. ..."
+
+  What I find interesting here is the same as what I find interesting
+  about "jumping genes", retrotransposons, in that there are
+  macromolecular systems that can only exist in specific complex
+  environments. Bio guys call these symbionts; they sometimes appear
+  as parasites, but I view them as systemic functional agglomerations
+  of interdependent parts, quite distinct from the host, and yet not
+  viable without the host (a specific host, or perhaps a type or class
+  of hosts.)
+
 ----------
