@@ -1,6 +1,12 @@
 
 Things to read:
 
+* The evolutionary advantage of guilt: co-evolution of social and
+  non-social guilt in structured populations
+  Theodor Cimpeanu, Luis Moniz Pereira and The Anh Han
+  Published:30 July 2025
+  https://royalsocietypublishing.org/doi/10.1098/rsif.2025.0164
+
 * Parallel Optical Computing
   https://elight/springeropen.com/articles/10.1186/s43593-025-00088-8
 

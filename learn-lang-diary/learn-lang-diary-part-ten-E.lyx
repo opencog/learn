@@ -9117,7 +9117,7 @@ d of having one word follow another, and we could, if we wanted to, get
 
 \begin_layout Standard
 Hmm.
- SHould I drop everything, and try to do this now? Maybe.
+ Should I drop everything, and try to do this now? Maybe.
  Or file it away for later.
 \end_layout
 
@@ -9191,14 +9191,14 @@ short
 
 \begin_layout Standard
 Well, then there's this: https://royalsocietypublishing.org/doi/10.1098/rsif.2025.01
-64 The evolutionary advantage of guilt: co-evolution of social and non-social
- guilt in structured populations Theodor Cimpeanu , Luis Moniz Pereira and
+64 The evolutionary advantage of guilt: co–evolution of social and non–social
+ guilt in structured populations, Theodor Cimpeanu, Luis Moniz Pereira and
  The Anh Han.
 \end_layout
 
 \begin_layout Standard
 Of course, I can't keep up.
- Its a tsunami, its washing over me, it's washing over everyone, its self-inflic
+ Its a tsunami, its washing over me, it's washing over everyone, its self–inflic
 ted; we all want to do this, we, the sentient scientists who have nothing
  better to do with our time than to come up with shit like this.
  Well, its not shit.
@@ -9206,6 +9206,224 @@ ted; we all want to do this, we, the sentient scientists who have nothing
  it's a tsunami, its a tornado, its a hurricane.
  The optimist in me is hopeful.
  We'll find out soon enough.
+\end_layout
+
+\begin_layout Subsection*
+5 August 2025
+\end_layout
+
+\begin_layout Standard
+Reading the article about guilt.
+ Very well written.
+ It's reminding me to do something I already know I need to do, but again,
+ a reminder.
+ It's not just the description of a single agent, but the population of
+ interacting agents.
+ The description of reward is ...
+ interesting.
+ Not just the PD payoff, but also a negative payoff from the feeling of
+ guilt upon cheating.
+\end_layout
+
+\begin_layout Subsection*
+12 August 2025
+\end_layout
+
+\begin_layout Standard
+OK.
+ Today is planning session.
+ And also a report.
+ And some new ideas from a few days ago.
+\end_layout
+
+\begin_layout Standard
+First, I realized that I could use the AtomSpace SetValue() method as a
+ generic object-oriented message dispatch point.
+ I have no clue why I did not think of this many many years ago.
+ It would have fixed so many problems.
+ It seems to open up so many doors.
+ For starters, the matrix code could have gone that way.
+ Could still, although it would require a massive reimplementation.
+ I think it might make pipeline easier; I might be able to send entire pipelines
+ to things to have them evaluated there.
+ This will need some pondering.
+ Some of the roadblocks on sensorimotor seem to fall out of the way.
+\end_layout
+
+\begin_layout Standard
+On an unrelated note, Levi has long been infatuated with LTN – Logic Tensor
+ Networks.
+ I realize that I could do a generic version of that in the AtomSpace.
+ But why? Its not clear.
+ This planning session is supposed to help resolve that, but I have no ideas.
+\end_layout
+
+\begin_layout Standard
+Well, one idea.
+ Adam complained that all the transformer training networks are batch–oriented.
+ So I might be able to build a network that is not batched.
+ But I have no idea what I'm talking about.
+ Maybe I just need to attempt and try and experiment.
+\end_layout
+
+\begin_layout Standard
+What else? I have that brain–fart about automatic theorem proving; I need
+ to finish writing that up, and maybe experimenting with it.
+ And I need to finish with...
+ well, a bullet list is in order.
+\end_layout
+
+\begin_layout Itemize
+Create Atomese generalized version of LTN.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Pros: It will help me get more hands–on experience with tensor networks.
+\end_layout
+
+\begin_layout Itemize
+Cons: It's not obviously useful, other than an extended homework exercise.
+\end_layout
+
+\begin_layout Itemize
+Questions: what's the training set? What will I train on?
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Automation of mathematics.
+ Important, but also a homework exercise: I was struggling in finding appropriat
+e Atomese to express and work with axioms.
+ I need to work on this.
+\end_layout
+
+\begin_layout Itemize
+Redo of the sensori–motor work to use the new message–passing style.
+ After all, that was what motivated the recent change.
+ One of the roadblocks there was the same as the axiomatized mathematics
+ roadblock: how to represent the capabilities of the recently opened object.
+\end_layout
+
+\begin_layout Itemize
+Finish Adam;s antitone Galois connection idea.
+ But I don't have much hope for that.
+\end_layout
+
+\begin_layout Itemize
+Look at Adam's superfast query engine thing.
+ Since nothing I'm working on currently requires queries, this seems less
+ urgent.
+\end_layout
+
+\begin_layout Itemize
+Look at the 2025 AGI contest, again.
+ Is it worthy?
+\end_layout
+
+\begin_layout Itemize
+Training...
+\end_layout
+
+\begin_layout Standard
+So one of the things to train on is the matching of hypothesis about the
+ world vs what the world actually does.
+ This is, in fact, insanely intractable and also vitally important.
+\end_layout
+
+\begin_layout Standard
+So a few days ago, as I was sleeping, I realized that how reality works
+ vs.
+ how we model reality can be arbitrarily mismatched.
+ Consider, for example, comparing a busy beaver to an infinite loop.
+ If we have specific encodings of each, as algorithms, we can try to apply
+ some kind of reasoning and deduce facts about the algorithms.
+ But if one is obtained only by observation, how can we ever know? If all
+ that I have is the output of some program, I don't have any way to tell
+ if its an inf loop or a busy beaver, except to wait a very long time.
+ So, in this sense, metrically, the two are 
+\begin_inset Quotes eld
+\end_inset
+
+very close to one another
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Where the metric is an inverse runtime metric.
+\end_layout
+
+\begin_layout Standard
+The generalization I want to make here is how to compare data coming in
+ from the external world, to my internal model of the external world.
+ If I have a good model, the surprise is low.
+ The difference between my model and the external world may be a busy–beaver,
+ in that my model might be very different from the external world, it just
+ happens to match it at run–time output.
+ But matching of outputs does not mean matching of 
+\begin_inset Quotes eld
+\end_inset
+
+what is out there
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I already tripped over this before, where multiple different grammars can
+ generate the same language.
+ Determining of two grammars generate the same language is (presumably)
+ NP–complete (??) in the same sense as determining if two different group
+ presentations generate the same group.
+ So here, I run hard–up against hard issues.
+ And of course, the agent wishing to understand the outside world, as well
+ as an agent that wishes to understand other agents, hits this problem:
+ my model of an agent might be very different from that agent, and this
+ can be true even if both produce the same thing.
+\end_layout
+
+\begin_layout Standard
+Some variant on this question is: how many different group presentations
+ can a group have? What fraction of these are hard to compare, in the NP–complet
+e Turing halting kind of way? Can we enumerate group presentations? How
+ about grammars for a language? Given a language, how do we enumerate all
+ different grammars that produce that language? If I hand–wave to replace
+ 
+\begin_inset Quotes eld
+\end_inset
+
+group
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+language
+\begin_inset Quotes erd
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+sensorimotor I/O
+\begin_inset Quotes erd
+\end_inset
+
+, then how many different kinds of agents might there be for interacting
+ with the external world? This hits up against lots of hard math issues,
+ such as countability or uncountability, descriptive set theory, Borel hierarchy
+, measures, distance metrics, blah blah, bottomless pit of very interesting
+ topics all of which are deserving of attention, but I am getting old and
+ senile, and I can't get to them all, and so the need to plan and prioritize.
+\end_layout
+
+\begin_layout Standard
+Where was I? Training and correlation ...
 \end_layout
 
 \begin_layout Section*
