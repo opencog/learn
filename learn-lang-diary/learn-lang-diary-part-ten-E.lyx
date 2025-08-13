@@ -9426,6 +9426,125 @@ sensorimotor I/O
 Where was I? Training and correlation ...
 \end_layout
 
+\begin_layout Subsection*
+13 August 2025
+\end_layout
+
+\begin_layout Standard
+Continue bullet list:
+\end_layout
+
+\begin_layout Itemize
+Resume work on the file crawler.
+ I like this, because it actually 
+\begin_inset Quotes eld
+\end_inset
+
+moves around
+\begin_inset Quotes erd
+\end_inset
+
+ like an agent, maintains a non–trivial internal model of the external world.
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Cons: It's hand–coded.
+ Not auto–assembling.
+\end_layout
+
+\begin_layout Itemize
+Pros: opportunity to explore similarity in the broader context.
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Text sensing agents.
+ I kind of want to build a blue–sky crawler.
+ Has some autonomy to move.
+ Does nothing but publish text blocks and/or word–streams.
+ Question: how does tokenization fit in? Tokenizationd should be a distinct
+ module.
+ Could be multiple modules.
+\end_layout
+
+\begin_layout Itemize
+Tokenization experiments.
+ Old diaries spoke of using MI for tokenization.
+ Can this be done experimentally, in an agential fashion? That is, create
+ many different tokenizing agents, play them against one–another? What's
+ the score? Who keeps score? Who provides feedback?
+\end_layout
+
+\begin_layout Itemize
+Vision module: this idea was to create many different filter types, and
+ arrange them into random blocks.
+ And then reward the good arrangements.
+\end_layout
+
+\begin_layout Standard
+Let's take a moment to reconsider rewards.
+ And vision.
+ One way to think of a given filter is as a very special weight matrix:
+ the input is the entire image, laid out as a very large vector, and the
+ filter selects just a very few inputs from the vector, and sums and differences
+ them.
+ As a filter, it is presumably much more CPU–efficient than a bulky vector
+ with a super–sparse matrix.
+ But effect–wise, its the same.
+ And a collection of filters arranged in some random way can be collapsed
+ to a matrix, via matrix multiplication.
+ Unless there are sigmoids in there, in which case, it collapses into some
+ RNN.
+\end_layout
+
+\begin_layout Standard
+The issue is training: the RNN can hill–climb the weight matrix, assuming
+ it has some reward signal indicating which way is uphill.
+ Compare this to a 
+\begin_inset Quotes eld
+\end_inset
+
+filter block
+\begin_inset Quotes erd
+\end_inset
+
+ some random arrangement of multiple filters.
+ A filter block is a filter network.
+\end_layout
+
+\begin_layout Standard
+The filter block has ..
+ well it has adjustable parameters, too, so I guess it could be maybe hill–climb
+ed? The vast variety of filter blocks, and the discreteness between them,
+ means that random blocks do need to be generated and explored; one cannot
+ hill–climb out of one block and into another.
+ That is, each filter block is discontinuous from any other: there's no
+ trivial way to organize them into a landscape, to say, 
+\begin_inset Quotes eld
+\end_inset
+
+this filter block with these parameter settings is really quite close to
+ that one, with those settings, and tweaking directions for this filter
+ is similar to tweaking them for that filter.
+ Such isomorphisms, homomorphisms might be discoverable, but this is a distinct
+ learning and discovery task.
+\end_layout
+
+\begin_layout Standard
+The meta–issue is the lack of a feedback signal.
+ It seems this needs to be engineered from the outside.
+ Or rather, the conventional approach is to engineer something.
+\end_layout
+
+\begin_layout Itemize
+Similarity and evidence.
+\end_layout
+
+\begin_layout Standard
+The
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
