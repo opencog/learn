@@ -42,7 +42,7 @@
 ;;; (load-atoms-of-type 'AnchorNode)
 
 ; Reset the parse timer. Yes, this is a hack.
-(monitor-parse-rate #t)
+; (monitor-parse-rate #t)
 
 ; Release the thundering herd.
 (open-gate pair-gate)
