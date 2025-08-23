@@ -1,6 +1,12 @@
 
 Things to read:
 
+* Information Processing in Dynamical Systems: Foundations of Harmony Theory
+  Paul Smolensky
+  University of Colorado at Boulder CU-CS-321-86
+  Feb 1986
+  https://apps.dtic.mil/sti/tr/pdf/ADA620727.pdf
+
 * The evolutionary advantage of guilt: co-evolution of social and
   non-social guilt in structured populations
   Theodor Cimpeanu, Luis Moniz Pereira and The Anh Han

@@ -25,6 +25,7 @@ export MSG="Block word-pair counting"
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17002
+export WEBPORT=18082
 # Colorized prompt. Sadly, this breaks command-line editing.
 # export PROMPT="[0;34mscheme@(count-pairs) [0m"
 export PROMPT="scheme@(count-pairs) "

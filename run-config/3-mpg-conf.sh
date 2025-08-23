@@ -31,6 +31,7 @@ export MSG="MPG-Processing"
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
 export PORT=17003
+export WEBPORT=18083
 # Colorized prompt. Sadly, this wrecks command-line editing.
 # export PROMPT="[0;34mscheme@(mpg-parse) [0m"
 export PROMPT="scheme@(mpg-parse) "

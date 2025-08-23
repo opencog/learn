@@ -29,6 +29,7 @@ fi
 
 export HOSTNAME
 export PORT
+export WEBPORT
 export OBSERVE
 export IN_PROCESS_DIR
 export COMPLETED_DIR

@@ -5,7 +5,8 @@
 #
 # IPv4 hostname and port number of where the cogserver is running.
 export HOSTNAME=localhost
-export PORT=19008
+export PORT=17004
+export WEBPORT=18084
 # export PROMPT="[0;34mscheme@(gram-class) [0m"
 export PROMPT="scheme@(gram-class) "
 export OCPROMPT="[0;32mcogserv@(gram-class) [0m"

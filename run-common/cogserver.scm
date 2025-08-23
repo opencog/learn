@@ -84,10 +84,11 @@
 ; sending data until *after* the DB is opened.
 (start-cogserver
 	#:port (string->number (getenv "PORT"))
+	#:web (string->number (getenv "WEBPORT"))
+	#:mcp 0
 	#:scmprompt (getenv "PROMPT")
 	#:prompt (getenv "OCPROMPT")
-	#:logfile (getenv "LOGFILE")
-	#:web 0)
+	#:logfile (getenv "LOGFILE"))
 
 ; XXX Is this needed? Didn't cogserver already get the top?
 (when (< 0 (length frame-tops))
