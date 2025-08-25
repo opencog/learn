@@ -10188,6 +10188,126 @@ Anyway, this is what I've learned so far.
  Don't ask it to do architecture, and you'll be OK.
 \end_layout
 
+\begin_layout Standard
+Below is a sequence of commit messages from cogserver, where I figured out
+ what the problem is.
+\end_layout
+
+\begin_layout Standard
+commit 68b84befa681f7550248e5f1273a785236397468 Author: Linas Vepštas <linasveps
+tas@gmail.com> Date: Sat Aug 23 22:42:18 2025 -0500
+\end_layout
+
+\begin_layout Standard
+More vibe coding.
+ This is interesting.
+ I am barely reviewing the code that Claude is generating, and wow, is it
+ ever generating a lot of nonsense.
+ And wasting time ...
+ my time in particular.
+ it would have taken less wall clock time if I carefully reviewed all of
+ it's changes.
+ But it also would have been more mentally taxing for me to do this.
+ So instead, I'm letting Claude write crazy convoluted spaghetti code that
+ almost never works correctly, despite my giving it very explicity instructions.
+ What have I learned today? Futue commit messages should include a copy
+ of what I told Clause to do.
+ And I should look more carefully at what it does.
+ I ust figured that for a graphing demo, it really didn't matter.
+\end_layout
+
+\begin_layout Standard
+commit 68159e19a0c83ad3571c378b4163e6c3bf63127b Merge: fcfa2a4 c05ccfb Author:
+ Linas Vepštas <linasvepstas@gmail.com> Date: Sat Aug 23 23:20:29 2025 -0500
+\end_layout
+
+\begin_layout Standard
+Merge large collection of visualizer fixes This is a long list of commits,
+ all written by Claude, bumbling around trying to get the graph display
+ to work correctly.
+ Apparently, I was doing a lot of testing to make sure I got what I wanted,
+ but I was failing to code review Claude, and so it wrote lots of spaghetti
+ and general cruft.
+ Typical is that it would make changes, and then forget that it did so,
+ and then revert them and break something else when adding new code, and
+ this cycle repeated all day long.
+ I finally grabbed it and squeezed, forcing it to refactor into a more coherent
+ structure.
+ This allowed forward progress again.
+ Unfortunately, several features were lost; I'll try to get them back in
+ and working tomorrow.
+ 
+\end_layout
+
+\begin_layout Standard
+This is a curious experience.
+ Claude works great on small, well-defined tasks, when you code reivew the
+ changes and force corrections to poor design choices.
+ However, letting it be the architect appears to be a disaster; it just
+ creates hopeless stew of code where each fix to one thing breaks something
+ else.
+ Of course, unit tests could fix that, but I don't know how to do unit tests
+ for UI's.
+\end_layout
+
+\begin_layout Standard
+commit 5e9b9f6584c4f4fd692c849ce8bf8c4aa7d083ee (HEAD -> master, origin/master,
+ origin/HEAD) Merge: b2d4a40 90016f3 Author: Linas Vepštas <linasvepstas@gmail.co
+m> Date: Sun Aug 24 18:49:46 2025 -0500
+\end_layout
+
+\begin_layout Standard
+Visualization demo fixes.
+ This is a sequence of attempted fixes to the visualization demo, for when
+ cache-size limit i hit, and the cache size is increased.
+ In this collection of fixes, I attempted to be as clear as I can be to
+ Claude, but it made repated mistakes, repeatedly failed to fix the proble
+ I asked it to, while claiming that it did fix it, and repeatedly reverted
+ working code into a non-working state.
+ My conclusion is not to blame Claude, but to realize that Claude is incapabl
+ e of architecting good solutions.
+ What I would need to do is to carefully plan out the deisred GUI behavior,
+ and then to envision a programming API into the atomspace-cache object
+ that would implement the desired GUI behavior.
+ Once this is done, then I am confident that Claude would have been able
+ to implement each of the desired methods, and deliver a working solution
+ on the first try.
+\end_layout
+
+\begin_layout Standard
+I'm confident that it could do this, because earlier small step-wise commits,
+ from this morning, went extremely well, and were delivered in rapid succession,
+ each being accomplished perfectly.
+ I assumed this also would be the case for the cache management and the
+ scheduling of redraws, but this was not the case.
+ It was a train wreck of fails, Something about asking to manage the cache
+ properly has caused it to get confused, and write highly imperfect solutions.
+ That something might have been the fact that when I was asking for changes,
+ Claude was changing large functions that were already quite complex.
+ This, of course, violates modular design, and is exactly the kind of programmin
+g fail that humans fall into.
+ In general, making changes to large complex functions is a bad idea: one
+ must instead re-architect the system to make it modular, so that each function
+ and method would be relatively small and simple and understandable.
+ The objects themselves should not have that many methods, so that the interacti
+ons between methods can be easily understood.
+ All this was apparently violated when I asked Claude to make changes to
+ the max-cache size code.
+ 
+\end_layout
+
+\begin_layout Standard
+This is a lesson.
+ I'm merging this code in the end because: A) it works better than before
+ B) it did not get bloated worse than before C) it's not that important:
+ its a demo, not a polished finshed product.
+ 
+\end_layout
+
+\begin_layout Standard
+xxx
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
