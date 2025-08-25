@@ -10027,6 +10027,167 @@ Morning.
  OK stop writing, and just do it.
 \end_layout
 
+\begin_layout Subsection*
+24 August 2025
+\end_layout
+
+\begin_layout Standard
+I am starting to understand how coding with Claude works.
+ Sometimes it works great, sometimes it fails spectacularly.
+ It took me a while to understand where the boundary between these two cases
+ lies, and to do that, I needed to put the blame on myself, rather than
+ blaming Claude.
+ The short answer is that Claude is utterly incapable of architecting a
+ system, but it won't tell you this; it will not seek architecutral guidance;
+ it will try to muddle through.
+ If you are not paying much attention to what it is generating, you will
+ find that it generates half–way working, halfway–broken junk that is impossible
+ to repair.
+ But if you keep it on a short, tight leash, being very explicit about what
+ you want, and keeping your requirements to about one paragraph of 2-5 sentences
+, then it works great.
+ Brilliantly, even: in five minutes you can get half–a–days worth of work
+ done.
+ You can get several weeks worth of work done in one morning.
+\end_layout
+
+\begin_layout Standard
+And just when you think you've fond your stride, everything collapses.
+ Coming back in the afternoon, after lunch, nothing works.
+ Clause seems to be generating good code: it looks OK, and the changes are
+ not that big.
+ But each change seems to regress something that was working just fine earlier.
+ Worse, Clause claims to fix something, but it doesn't.
+ You can ask it three times, it will give you three reasonable looking fixes,
+ none of which actually fix the problem.
+ Worse, they seem to break something else.
+ What's the problem? What went wrong?
+\end_layout
+
+\begin_layout Standard
+The short answer: lack of architecture, lack of modularity.
+ When Claude enters this cycle of barely fixing things, or not fixing them
+ at all, and then breaking something else, that is because it is modifying
+ large complex existing code.
+ Which it does not understand.
+ It won't tell you that it doesn't understand, it thinks everything is fine,
+ and will spew pages of explanations of what the code does.
+ Yet somehow missing what it *actually does*.
+ What do I mean by 
+\begin_inset Quotes eld
+\end_inset
+
+large and complex
+\begin_inset Quotes erd
+\end_inset
+
+? For functions and methods, it boundary between understanding and not understan
+ding seems to lie between 50 LOC and 100 LOC.
+ For objects or modules, about 400 LOC – so if an object has 5 or 8 different
+ methods on it, interacting in non–trivial ways, then Claude will fail to
+ understand how they interact.
+\end_layout
+
+\begin_layout Standard
+This is not unusual.
+ This is approximately the same location where most human programmers start
+ making mistakes, start introducing bugs by accident, due to seemingly harmless
+ changes.
+ This is why 
+\begin_inset Quotes eld
+\end_inset
+
+modular design
+\begin_inset Quotes erd
+\end_inset
+
+ was introduced as a programming concept: keep your functions under fifty
+ lines of code, keep your files under 500, and you'll do fine.
+ To scale up, consult with your architect, and they will provide you with
+ a programming API for all the objects and pieces that you need.
+ Code that up, and everything will work fine.
+ Architects are smart.
+ They got hired by management to do exactly this job: create interfaces
+ for the programming staff.
+ With luck and proper management, the programmers know when to consult with
+ the architect.
+\end_layout
+
+\begin_layout Standard
+But here, Claude is the programmer: not just a programmer, it works so fast,
+ that its like having a staff of 3 or five or ten programmers, all doing
+ your bidding.
+ However, Claude is not smart enough to know that it has run into trouble,
+ and that it needs to stop what it's doing, and go consult the architect.
+ No; it just keeps trying and trying and trying, muddling it's way through,
+ getting lost in a tangle of code, writhing ergodically exploring every
+ possibility without making forward progress.
+\end_layout
+
+\begin_layout Standard
+This is where its up to you (to me) to spot that Claude is in trouble.
+ When the fixes are not going as hoped, I have to stop and think: what I
+ am asking it to do, this should probably be some module.
+ It should have some kind of API; functions/methods with clear names, clear
+ descriptions.
+ The module should either use other existing subsystems, without modifying
+ them, or the module should provide some service that Clause will need to
+ accomplish it's higher–level tasks.
+\end_layout
+
+\begin_layout Standard
+If you know what that module needs to be, then Claude will write it for
+ you in a jiffy: flawlessly, spotlessly and brilliantly.
+ You just have to feed it a paragraph of text, describing each function.
+ Five minutes later, you get back finished code.
+ You *must* actually review that code.
+ Vibe coding won't work: you can't say 
+\begin_inset Quotes eld
+\end_inset
+
+oh that looks about right, lets go with it
+\begin_inset Quotes erd
+\end_inset
+
+.
+ That way lies madness; you will rip your hair out trying to find and fix
+ the bugs in that code.
+ You must actually review it, and if something looks wrong, it probably
+ is wrong, and you *must* ask Claude to fix it.
+ 
+\end_layout
+
+\begin_layout Standard
+Then commit the working code, and move on to the next method/function.
+ One paragraph of description each.
+ Do this, and you will have a brilliant day where everything works and you
+ got a lot done.
+\end_layout
+
+\begin_layout Standard
+Of course, easier said than done.
+ Most likely, after a few hours of success, you will find yourself on the
+ path to fail.
+ You MUST stop at that point and realize that this is your fault, not Claude's
+ fault.
+ You asked it to do something it doesn't know how to do.
+ At this point, you have to figure out what the actual problem is, and design
+ a module to solve it.
+ Both parts are hard.
+ What's the problem? Hard to spot, sometimes.
+ What's the right module design? Hard to know.
+ Might require several tries.
+ Might have to throw away a bunch of almost–working code, and start all
+ over again.
+\end_layout
+
+\begin_layout Standard
+Anyway, this is what I've learned so far.
+ Seems obvious in retrospect; but it clearly shows where the boundary is
+ between brilliant–Claude and stupid–Claude is.
+ Don't ask it to do architecture, and you'll be OK.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
