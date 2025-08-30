@@ -10304,8 +10304,476 @@ This is a lesson.
  
 \end_layout
 
+\begin_layout Subsection*
+30 August 2025
+\end_layout
+
 \begin_layout Standard
-xxx
+Chat on BlueSky with David Marx.
+\end_layout
+
+\begin_layout Standard
+Sat, March 22 at 1:21 PM I get the impression that we have a lot of similar
+ interests opinions on this space, and likely complementary backgrounds/domains
+ of expertise.
+ Starting a dialogue here to remove some of the frustration of message length
+ constraints and message threading complexity from asymmetric communication
+ I'm also active on the EleutherAI discord if you'd prefer a "public" discussion
+ over DMs regarding spin structure of a reimannian space: this relates to
+ its eigendecomposition, right? 1:25 PM I'm on discord somewhere.
+ I know I have a pending message there that I really need to read.
+ My ID should be my first-name/last-name, I assume that's enough to find
+ me, but I'm not all too clear on such details.
+ bout to go touch grass with the fam, but looking forward to talking more
+ :)
+\end_layout
+
+\begin_layout Standard
+no need to move to discord if that's not a platform you're inclined to use,
+ we can continue here my main interests in the "thermodynamics" component
+ we've been touching on are: * characterizing what it means for something
+ to be a "high quality dataset" in a quantitative sense * identifying what
+ factors contribute to more or less effective transfer of information from
+ the data into the model
+\end_layout
+
+\begin_layout Standard
+My intuition is that model training is probably closely related to the physics/c
+hemistry of crystalization.
+ 
+\end_layout
+
+\begin_layout Standard
+Your ideas about spin structure I think are probably more about understanding
+ the properties of the representation space? Spin structures and eigenspaces
+ have little or nothing do do with one-another.
+ Spin structures arise from Clifford algebras, and you can build a Clifford
+ algebra for more or less anything that has a vector-space as part of it.
+ What makes it interesting is how these algebras glue up at neighboring
+ points.
+ i.e.
+ if you have a vector space here, and you move over just a little bit to
+ the side, how does it twist around? This twisting-about is what spin structures
+ describe, and there's a truck-load of machinery for analyzing, discussing
+ such twists.
+ Oh, but I do use discord a lot, or used to.
+ Just that I don't usually have much time for talking, and you are the lucky
+ recipient of my personal attention today.
+ I have to ignore most people most of the time.
+ :-/ 1:44 PM re thermo and geometry.
+ (thermo vs.
+ geometry?) So ideas like "gradient descent" used in training push a bunch
+ of points around in various directions.
+ Most textbooks describe it as "hill climbing" as if there's a stationary
+ hill, and we just have to hike to the top of it.
+ In reality, a better view is to think of it as a wind-field pushing a leaf
+ around: eddies and swirls and gusts.
+ That's because in mean-field theory, there's no fixed "hill", there's just
+ the action of all the other particles pushing on you.
+ Sometimes it looks like pressure or shear or squashing, but sometimes rotation.
+ thermo is ...
+ well, also deep and broad and I could prattle on forever.
+ Maybe some other day.
+ re: "high quality data" and "rapidly creating high-quality models from
+ that data" ...
+ I've got little/nothing to say about that, beside "it depends".
+ I can tell you all about how a vacuum tube works.
+ It won't help you design a better transistor.
+ 1:54 PM gotcha, yeah ml folks tend to only think in terms of linear motion
+ components.
+ i mentioned earlier how semantics are captured by the inner product: this
+ relates to the distributional hypothesis in comp ling, which essentially
+ asserts that "meaning" reduces to direction, so ml folks tend to concern
+ themselves with vector spaces because that gives us an explicit notion
+ of direction.
+ so "orientation" tends to be limited to parallel/anti-parallel/orthogonal
+ etc, and tensors act as operators on these vectors.
+ i don't think i've ever seen a transformer representation interpreted as
+ a *flag* and having an explicit rotation component like that, and am trying
+ to wrap my brain around how that might fit into the distributional semantics
+ interpretation I presented.
+ i'm sure there are subdomains that concern themselves with representations
+ like this, but if a spin structure is a natural property of any riemannian
+ space then yeah, i think you're hitting on an interesting and super under
+ explored area w/in DNN analysis where DL practitioners tend to touch on
+ this stuff tends to be just for super domain specific representation learning.
+ rather than investigating general geometric properties that may already
+ be present, these folks are usually trying to endow the representation
+ space with specific geometric constraints as an "inductive prior" geometricdeep
+learning.com re distributional semantics, i mean stuff like "king - man +
+ woman = queen" trying to think about what it might mean to apply a rotation
+ to the "king" vector OK, so if you have dynamics on the surface of a sphere,
+ you have a point (or many points: one for each word in a sentence or prompt)
+ these points are getting pushed around in this or that direction on the
+ sphere.
+ Which direction? (the "downhill direction", the "gradient direction" etc.)
+ That direction is a vector, and it is a slightly different vector at each
+ location on the sphere.
+ So the pushing-around is a vector-field.
+ Think of fur on a sphere, and that fur has been combed.
+ 3:09 PM Things like "king-man+woman=queen" hold true at a single location
+ on the sphere surface.
+ and maybe even at many or most of them.
+ But a location on the sphere corresponds to an entire sentence or paragraph,
+ and maybe that sentence is "now insert the king pin into the bushing, while
+ the other man holds the drilling floor steady" ..
+ and the vector gradient for the directions for "queen" and "woman" will
+ be zero.
+ Steepest descent won't guide this sentence in those directions.
+ 3:16 PM However, I am not a "DL practitioner".
+ For me, DL is peripheral to my concerns.
+ I'd like to understand it better.
+ But it's not a cornerstone of my being.
+ 3:21 PM gotcha gotcha.
+ So forget steepest descent ftm.
+ In the nGPT interpretation, each layer of the transformer applies a "nudge"
+ to the representation of the text, and the path traced along the sphere
+ is the integral over those nudges.
+ If you have a 60 layer nGPT, each path is 60 steps, and the operator encoded
+ by the n-th layer maps to the transformation applied at the nth step.
+ so the "embedding" representation space is projected onto the surface of
+ a sphere, but the parameter/operator space I think maps to the flow field
+ you're more interested in.
+ This interpretation of the *inference* operation (NOT the learning dynamics)
+ of DNNs is much more developed in the image processing space than text
+ processing, i.e.
+ diffusion models, score matching, etc.
+ 3:36 PM One thing that's interesting about DNNs is that they seem to naturally
+ want to fall into those kinds of "semantic algebra" representations.
+ So like concretely, when people talk about an "embedding" they're usually
+ talking about the input our output of a network.
+ But you can actually treat the whole thing like an embedding.
+ In the text space, you can see this manifest in the "model merging" community,
+ and in the image space you see it with "concept LoRAs" where a "LoRA" a
+ way of finetuning where the adjustment to the base network is captured
+ in a separate component that is combined with the weights additively.
+ You can treat LoRAs as embeddings and form weighted combinations of them
+ for tightly controlled semantics on images also in diffusion models, it's
+ a bit easier to see how the flow field over the representation space falls
+ into certain attractors.
+ inference in denoising diffusion tends to collapse into certain favorable,
+ narrow, terminal states for example, here's an animation I made by exploring
+ the neighborhood of the attractor associated with "mona lisa" in the particular
+ representation space I was using x.com/DigThatData/...
+ I'll continue reading about DL NN.
+ Integrals along vector flows are 'standard geometry'.
+ Sophus Lie defined the Lie derivative as the infinitessimal flow in a direction
+, back in the late 19th century.
+ That's the language I'm used to, mostly I'm trying to map what I read about
+ DL-NN to this traditional framework, and its dicey because that's not the
+ language that gets used in most preprints I see.
+ Yup, conversely when I try to learn more about diff geom stuff, it's always
+ expressed using physics notation that looks expressive and convenient but
+ is just fundamentally alien to me As to embeddings, those are not unique
+ to DL-NN's, either.
+ You get the same exact results e.g.
+ 'king-man+woman=queen' in traditional frequentist statistical counting.
+ For whatever historical reason, this sucked all the air out of the room
+ when it was announced by the DL-NN guys, but it was already a thing long
+ before that, in more traditional statistical settings.
+ Turns out science research is trendy and fashionable.
+ Like, "I've had that tee-shirt for 20 years, so why is it so cool when
+ *that guy* wears it???" fr though, I think the diffusion modeling stuff
+ is prob right up your alley yang-song.net/blog/2021/sc...
+ yeah the semantic algebra thing I think alludes to "everything is a kind
+ of matrix factorization" like how if you take the PCA of a word co-occurence
+ matrix, you get topics.
+ old school topic modeling, nbd The DL folks were surprised when they observed
+ similar properties in their models because they weren't expecting them
+ to be there, like how you would expect them to be there if you had just
+ explicitly performed SVD so I think this all kind of ties back to what
+ you were saying earlier about how DL people are missing out on some basic
+ diff geo fundamentals, and if that was part of the DL curriculum it would
+ probably be less surprising that our models have these properties because
+ they live in a hilbert space or rwkv or whatever and so they just have
+ to that score matching link is super old, here's a more recent discussion.
+ the topic has advanced a lot since that blog post.
+ arxiv.org/abs/2412.06264 The "diff geom stuff" is a language.
+ Once you understand the language (or geometry in general) you start to
+ think geometrically: things having shapes.
+ For me, geometry is a zillion times easier than algebra.
+ In algebra, you get some random formula and its 'like "wtf does that even
+ mean?" and doing algebra is like trying to memorizing what happened on
+ April 23rd 1692.
+ I can't remember things for shit, and with geometry, I don't have to.
+ I only need to understand them, not memorize them.
+ you've convinced me to revisit a textbook I picked up a while ago (if you
+ have other recommendations, I'm into it).
+ www.goodreads.com/book/show/55...
+ I probably need to just pick up an undergrad general relativity book or
+ something like that hrmm....
+ yeah I don't see "clifford" in the index :/ However, I am 100% impressed
+ with your ability to pull articles out of thin air.
+ It's refreshing and even intimidating.
+ I've never talked to anyone who had any clue about any of this stuff.
+ In my social network, I'm mostly surrounded by nincompoops.
+ lol, yeah I've sort of carved out a niche as a community reference desk
+ you should dust off your discord account and check out eeuther ai.
+ loads of nerds like us, including the authors of that "volume hypothesis"
+ paper I shared this morning discord.gg/zBGx3azzUn I cannot make book recommendat
+ions, but I can recommend a strategy.
+ Find a university library with open stacks.
+ (Here, UT Austin is open: any resident of Texas has the right to go in
+ there.
+ Otherwise, swing a connection through some academic dept.?) Then wand the
+ stacks aimlessly.
+ Pick a book, try to read chapter one.
+ If you understand it, read chapter two.
+ Else put it back and try again.
+ Keep doing that over and over.
+ About one book in twenty will be kick-butt awesome, where you'll think
+ "this is exactly what I've always needed!" oh god, that's a dangerous suggestio
+n Yeah.
+ Do it for an hour or two every 3rd day.
+ Not recommending a new obsession or anything.
+ Just a more fun way of nailing down a broad overview.
+ back when I was first getting into this stuff around 2010-2012ish, I was
+ trying to find a good textbook and kept landing on stuff that was either
+ way over my head or way too intro.
+ I had a similar idea to your suggestion and was like "maybe i can find
+ a university nearby that's teaching this stuff, and then I can go to the
+ uni bookstore and see how I feel about the textbooks they're using before
+ purchasing for myself!" 
+\end_layout
+
+\begin_layout Standard
+That idea led me to the website for georgetown's math/stats grad program
+ via their ML course.
+ but then I saw all the other courses they were offering and next thing
+ I knew I was applying to grad school 4:17 PM ok last one, promise - dl.heeere.com
+/conditional-...
+ 4:25 PM Wednesday at 9:07 PM I think I'm on to something here.
+ Hopefully I'm not just woefully "abusing notation"
+\end_layout
+
+\begin_layout Standard
+chatgpt.com/share/68af7f...
+ 9:07 PM to skip past the conditioning context, ctrl+f `the conjugate of
+ consciousness` 9:16 PM Thursday at 4:03 PM :-) I can't see that and I feel
+ embarrassed cause I don't have a login.
+ (well, technically, I lost it.
+ To lessen my embarrassment, I'm compelled to point out I use Claude a lot...
+ But I'm itching to find out what the "conjugate to consciousness" is..
+ But note also there's a fairly hefty amount of crank physics, math and
+ philosophy papers out there and they're all in the chatgpt training set.
+ So the training set will be polluted.
+ I mean, I know several guys who write brilliantly when they stick to their
+ topic of expertise, and nonsense when they leave it.
+ I assume plain-old google search will find "conjugate of consciousness"refs
+ (but I've not tried) First hit on duck duck go: imoog.substack.com/p/the-consci...
+ The Consciousness Equation: C = ∫ (ψ * ψ†) dτ - Subst...
+ 4:08 PM not worth googling, it's an original idea ? driving, will send
+ you better link in a bit and yeah, entirely possible im babbling schizo
+ nonsense here Heh.
+ That's fine.
+ I mean, I need to point out, if I haven't yet, I've got a PhD in quantum
+ field theory, graviation strings all that, and have 500+ significant edits
+ to wikipedia physics/math articles so words like "conjugate" mean things
+ to me.
+ Plus I've been doing AI and natural language for 20+ years so I'm uhhhhh
+ opinionated.
+ But I also know that I have to work at the level that you give me.
+ Send an email or a blog post or something.
+ 4:39 PM this is a feature not a bug.
+ I'm definitely swimming out of my lane here.
+ here's a TLDR from chatgpt:
+\end_layout
+
+\begin_layout Standard
+We begin from a structural question: if “consciousness” admits a meaningful
+ dual or conjugate—in the sense of state/observable duality, or more generally
+ a dualizing functor—what consequences follow? We argue that once such a
+ dual exists, commutative observable algebras collapse the dual into public
+ data, leaving no irreducible “private remainder.” Thus, subjectivity requires
+ that the observable side of the dual be noncommutative.
+ We show that all contemporary AI systems instantiate commutative observable
+ algebras, and therefore fail the necessary condition for subjectivity.
+ 5:29 PM Part of why I think this is appealing is because (I'm pretty sure)
+ it essentially resolves the "binding problem": we don't need to worry about
+ how different components of subjective experience form a cohesive experience
+ if in fact that decomposition into components is dual to the unified experience
+ we're interested in I'm trying to be careful about necessity vs sufficiency.
+ Rather than making concrete claims about what consciousness might be or
+ what might occupy the (a) dual space, I'm instead proposing reasons why
+ I think it makes sense to model consciousness this way.
+ one of the reasons is that it "makes space" for private knowledge of the
+ kind we would expect "subjective experience" to be in a really clean way,
+ and one of the things we would get for free is a clear reason why systems
+ like LLMs -- as they currently are instantiated -- are structurally incapable
+ of subjective experience.
+ so back to your question of what the "conjugate of consciousness" might
+ be.
+ what I have in mind here (and again, I think for my immediate needs I don't
+ need to pin down exactly what this might be, just directionally that this
+ is an appropriate way to model consciousness) is stuff like drives, values,
+ beliefs, affective states, etc.
+ you can decompose my subjective experience into a bunch of different parts,
+ and there will always necessarily be something "left out" of the description
+ of "what it is like to be David" at any given particular point in time
+ I'm essentially invoking a kind of "fourier decomposition of experience"
+ here, and asserting that my conscious experience probably is an infinite
+ sum of such components.
+ the "infinite" bit isn't really important here as much as the "this object
+ is probably fourier/gabor-like in how it admits decomposition" and a consequenc
+e of that is necessarily an uncertainty relation 5:45 PM my thinking is
+ essentially that the uncertainty relation "creates space" so to speak for
+ subjective experience: whatever externally measurable observables may be
+ exposed about me are going to be in a dual relationship to some unknowable
+ internal state.
+ I'm not making positive assertions about what those observables necessarily
+ are, so much as that the presence of a fourier-like decomposition feels
+ right, potentially accounts for the binding problem, the consequent uncertainty
+ relation is appealing as it might explain subjectivity.
+ On top of all that, we get the consequence that the representational space
+ currently used by contemporary AI systems is "collapsed" and doesn't admit
+ the kind of duality we need for subjectivity to be possible, if it's correct
+ that non-commutative representational space is a necessary condition for
+ it I apologize in advance for probably horribly abusing the vocabulary
+ of your domain 5:53 PM if all of this tracks, one potential path forward
+ -- assuming we *wanted* AI's to be capable of subjective experience, which
+ is a separate question entirely -- could be using something like "scattering
+ networks" to parameterize the representational space using a weyl form,
+ i.e.
+ baking representational non-commutativity directly into the model.
+ This probably wouldn't be sufficient to endow a model with subjective experienc
+e, but my assertion is that an approach like this at least satisfies a necessary
+ condition that current models -- which use commuting (affine) representational
+ spaces -- don't 6:07 PM also there's a whole "sheaf theory of identity"
+ here, but I've abused physics notation enough already 6:13 PM lol...
+ feel like a crank writing that all out :/ 7:23 PM Yesterday at 8:42 AM
+ I've been thinking about this a bit more and I think I can't just hand-wave
+ away the observables.
+ My whole argument hinges on the assumption that conscious experience admits
+ a fourier-like decomposition, and I need to justify that if I want to take
+ the additional, larger cognitive leap of asserting the presence of some
+ kind of uncertainty relation.
+ One more viable approach could be to focus on the binding problem angle
+ here.
+ I could model cognitive load as a diffusion process whose spacial component
+ is dispersion over a volume of experiential processes, where "focus" or
+ "mindfulness" would be manifestations of sharpened locality.
+ motivate a time-space tradeoff from there.
+ 8:46 AM Today at 4:19 PM OK, I'm going to write knee-jerk responses as
+ I read what you wrote.
+ The first paragraph: all this talk of "dualizing functors" comes off as
+ word-salad.
+ However, it is very poetic and suggestive, and is making me stop and think.
+ Maybe there's something there.
+ But first, let me outline the problems.
+ "Dualizing functor" is so abstract, that only some small number of grad
+ students (and profs) in math will know what it is.
+ "noncomutative" is something you might learn as an undergrad, but "non-commuati
+tive" + "dualiznig functor" puts you into non-cummuatitve geometry, the
+ stuff Alain Connes does, the stuff string theorists so.
+ Again, very rarified atmosphere.
+ These considerations suggest "word salad"; ChatGPT is not that smart.
+ This claim "contemporary AI systems instantiate commutative observable
+ algebras" is ..
+ interesting.
+ It might actually be coherent, and it might be even be true, but I don't
+ understand it.
+ Would you be able to personally explain what this means? I'm not seeing
+ where the "algebra" is in "contemporary AI systems".
+ I'm imaging something here, but I have a very vivid imagination, so making
+ this precise would be explicitly required.
+ ...
+ and I just now read the rest of what you wrote.
+ Resolving the loose ends there requires a (very?) long conversation.
+ I'm up for it, but ...
+ 4:31 PM lol yeah But before doing math, I want to do a bit of robotics.
+ I'm not convinced the binding problem is real.
+ I mean, it is for neuroscience, but not for robots.
+ out for a walk with the fam.
+ was probably mostly some light llm psychosis.
+ Yes, we all have a "subjective inner experience", but I sometimes get the
+ impression that there's a lot of solipsistic woo attached to it.
+ Like "I know I'm alive but maybe everyone else is a philosophical zombie"
+ > out for a walk Reply whenever.
+ This subjective-experience, theory-of-consciousness, binding problem is
+ all the rage righ now.
+ I went to a kooky talk about it just yesterday.
+ Total wste of time, but I got a free lunch.
+ i think the most valuable takeaway from rant is the perspective that certain
+ "emergence" questions in this space might make more sense to view from
+ the perspective of duality and whole/decomposition rather than scale and
+ hierarchical emergence You'd have to convince me that "emergence" is a
+ valid concept.
+ I mean I'm willing to play ball, but Its hard to play along if I don't
+ believe in a base assumption.
+ lol fair Two remarks about "the binding problem".
+ First, even ten years ago, pre LLM AI robots had no problem attaching text
+ to images and coupling it to action.
+ The robot had a "world model", and I even hand-crafted a robot (Hanson's
+ Sophia) to be "self-aware" in that she knew she had a world model, and
+ could talk about what she knew.
+ Not just what she saw, but that she was seeing.
+ Now the total number of bits of self-awareness was like five, (I counted)
+ but five is more than zero.
+ Second, long long ago, in high-school, sophomore biology class, teacher
+ shows film clip of pond scum -- amoeba, protozoa, whatever, doing their
+ pond scum thing.
+ And its quite clear to everyone that these are all engaging in willful
+ behavior, doing things "on purpose", and the kid in the back raises their
+ hand and goes "how do they know how to do this? They don't have a brain!?"
+ and the teacher starts denying what everyone saw with their own eyes.
+ From what I can tell, there's a "binding problem" for amoeba and protozoa,
+ and, from what I can tell, they too have "subjective experience".
+ Yes, of course, this can be hotly debated, but that just happens to be
+ what I currently beleive.
+ This tells me that "subjective experience" arises at a very low level.
+ My current working hypothesis is that ...
+ Well, I'm trying to do a kind of category-theory-like description "agency"
+ that looks like this: And "agent" has a finite, bounded "inside" and unbounded
+ "outside" (the perceivable universe).
+ An agent can perceive sensory info (think e.g.
+ "message passing systems" in comp sci) and can use that to update a "world
+ model" (think "database") The agent has the ability to "move" in the external
+ world (e.g.
+ a "file system agent" could "cd to a different directory") -- this is the
+ "action" part of "action-perception".
+ The actions taken are some (possibly non-deterministic, probailistic) function
+ of world model (which includes recent perceptions).
+ Note FYI, my sketch of an agent resembles ...
+ (this is embarrassing) Turing's original formulation of a Turing machine.
+ With some "minor" twists.
+ I think its possible to (1) write down a rather precise category-theoretic,
+ algebraic description for the above, stiched together from conventional
+ wikipedia articles, e.g pi-calculus and stuff like that.
+ and the big claim that goes off the deep end into lala land: (2) that this
+ is enough to have systems capable of having "subjective experience".
+ The hard part in all this is defining what we mean by "subjective experience"
+ anyway.
+ And convincing other humans that its right.
+ And, getting back to your first posts: Yes, this system is "non-commuative"
+ in some way.
+ Probably in many ways.
+ I mean, in parallel computing, mutexes and semaphores are "non-commuting",
+ algebraically speaking; they are a fragment of "linear logic" (see wikipedia)
+ Does this non-commutativity have something to do with "subjectivity"? I
+ dunno.
+ Can I even get any other human to even agree with me that using the word
+ "subjectivity" in this discussion is not some insane mistake? probably
+ not.
+ But you're a good first victim.
+ 5:10 PM Other uses of non-commuting in parallel computing are the "history
+ monoid" and the "trace monoid"; see wikipedia.
+ But what relevance this have to the current conversation is tenuous.
+ The point is that the "trace monoid" (think "ordinary software trace")
+ is a collection of "observables" (the traces themselves) and its non-commutativ
+e (because in parallel processing things can happen in any order, unless
+ you force serialization with a lock) So "observables" and "non-commutativity"
+ already arise in textbook comp-sci; you don't need LLM or agents or anything
+ to get that.
+ And fwiw, you could also shoe-horn a "dual functor" into there; I've read
+ enough papers that do sheaf-theoretic analysis of this-and-such database
+ system, and they have functors dripping out of the wazoo.
+ So if your goal is abstraction, that's certainly possible.
+ But does it help in understanding "subjectivity"? I rather doubt it, even
+ though that is where I look for it myself...
+ Well, that's enough for now.
+ Feel free to challenge or affirm or refine anything I wrote.
+ It's all disposable.
+ 5:21 PM 
 \end_layout
 
 \begin_layout Section*
