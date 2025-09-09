@@ -10773,7 +10773,48 @@ e (because in parallel processing things can happen in any order, unless
  Well, that's enough for now.
  Feel free to challenge or affirm or refine anything I wrote.
  It's all disposable.
- 5:21 PM 
+ 5:21 PM
+\end_layout
+
+\begin_layout Subsection*
+9 September 2025
+\end_layout
+
+\begin_layout Standard
+Motoring along on the atomese-simd design.
+ Agonizing as to whether I am wasting my time here.
+ I am very carefully hand–designing low–level processing elements, so that
+ they are representable and manipulable in Atomese.
+ But for what? I could also ask Claude to use PyTorch or TensorFlow or whatever,
+ and have it do all the low-level stufff for me.
+\end_layout
+
+\begin_layout Standard
+Well, but for two issues: first, Clause currently is unable to manage complex
+ systems.
+ And so building it that way would require commiting to building and maintaining
+ a software stack that I would have to understand, at a level of detail
+ low enough to have Claude work on it (or have other humans work on it).
+ This is a reasonable approach if I were some STSM at some large company,
+ but not single-handedly.
+ And, since in the end, PyTorch or similar is not dynamic, but bulk-oriented,
+ and does not have the correct low level structure, and would have to be
+ redesigned anyway ...
+ fuck it.
+ I should continue with Atomese.
+ Still, I keep thinking that I need to get out of the low-level work, and
+ get into higher-level interfaces.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ I'm doing research.
+ I'd like to step up a level, but there's nothing that does what I want
+ to do, so I am stuck doing it myself, at the low level.
+ I need to ponder this some more.
+ Anyway, I have work to do.
+ Toodle-oo.
+ 
 \end_layout
 
 \begin_layout Section*
