@@ -10786,24 +10786,24 @@ Motoring along on the atomese-simd design.
  I am very carefully hand–designing low–level processing elements, so that
  they are representable and manipulable in Atomese.
  But for what? I could also ask Claude to use PyTorch or TensorFlow or whatever,
- and have it do all the low-level stufff for me.
+ and have it do all the low–level stufff for me.
 \end_layout
 
 \begin_layout Standard
 Well, but for two issues: first, Clause currently is unable to manage complex
  systems.
- And so building it that way would require commiting to building and maintaining
- a software stack that I would have to understand, at a level of detail
+ And so building it that way would require committing to building and maintainin
+g a software stack that I would have to understand, at a level of detail
  low enough to have Claude work on it (or have other humans work on it).
  This is a reasonable approach if I were some STSM at some large company,
- but not single-handedly.
- And, since in the end, PyTorch or similar is not dynamic, but bulk-oriented,
+ but not single–handedly.
+ And, since in the end, PyTorch or similar is not dynamic, but bulk–oriented,
  and does not have the correct low level structure, and would have to be
  redesigned anyway ...
  fuck it.
  I should continue with Atomese.
- Still, I keep thinking that I need to get out of the low-level work, and
- get into higher-level interfaces.
+ Still, I keep thinking that I need to get out of the low–level work, and
+ get into higher–level interfaces.
 \end_layout
 
 \begin_layout Standard
@@ -10813,8 +10813,240 @@ Whatever.
  to do, so I am stuck doing it myself, at the low level.
  I need to ponder this some more.
  Anyway, I have work to do.
- Toodle-oo.
+ Toodle–oo.
+\end_layout
+
+\begin_layout Subsection*
+12 September 2025
+\end_layout
+
+\begin_layout Standard
+Dreamt last night about the Heisenberg uncertainty principle.
+ Given what I've written previously in this diary about the time–less–ness
+ and space–less–ness of quantum states, I realized that the uncertainty
+ principle merits re–examination.
+ Of course, it arises trivially via the Fourier transform.
+ But I was unable to come up with anything meaningful.
+ Seemed odd that crystal lattices of atoms seem to pin down the locations
+ of atoms, robbing them of the ability to Heisenberg uncertainty spread–out.
+ That uncertainty is transferred to the lattice as a whole, and since its
+ mass is so huge, for a given delta–momentum, the delta–velocity is tiny.
+\end_layout
+
+\begin_layout Standard
+Thoughts briefly dwelt on free–will and the search for a physical basis
+ for it.
+ Decision implies bifurcation, so my thoughts shifted to Hopf bifurcations.
+ FWIW, I (re–)wrote the Wikipedia article on that.
+\end_layout
+
+\begin_layout Standard
+Of first interest was the point at which the bifurcation occurs.
+ This is problematic, so my attention shifted what happens if one starts
+ the dynamics at 
+\begin_inset Formula $r=0$
+\end_inset
+
+ in the oscillatory region.
+ Of course, if it is exactly zero to all decimal places, then it stays there.
+ But the smallest perturbation 
+\begin_inset Formula $\varepsilon e^{i\theta}$
+\end_inset
+
+ for tiny 
+\begin_inset Formula $\varepsilon$
+\end_inset
+
+ and any 
+\begin_inset Formula $0\le\theta<2\pi$
+\end_inset
+
+ will send the evolution off towards the limit cycle.
+ Thinking of the flow vector field (the tangent vectors 
+\begin_inset Formula $\dot{z}$
+\end_inset
+
+, i.e.
+ in two dimensions,) one has a point, an unstable fixed point at the origin,
+ and arrows pointing outwards in all directions.
+ The tiniest bump from an air molecule on the trailer hitch will send the
+ system off this fixed point and start it's journey toward the limit cycle.
+\end_layout
+
+\begin_layout Standard
+I wondered what the quantum version of the Hopf bifurcation might look like,
+ but did not think very hard about this.
+ Other than that getting knocked off the unstable fixed point is now 
+\begin_inset Quotes eld
+\end_inset
+
+built in
+\begin_inset Quotes erd
+\end_inset
+
+, and all possible 
+\begin_inset Formula $2\pi$
+\end_inset
+
+ directions must be integrated over.
+ And that all of these directions are equivalent.
  
+\end_layout
+
+\begin_layout Standard
+How tiny is tiny? Well, let's go in the opposite direction; reverse time.
+ Alternately, think about the system in the stable fixed point regime; how
+ quickly is the (attractive) fixed point approached? Well, exponentially
+ quickly.
+ But if one thinks of adding decimal digits to a number, 
+\begin_inset Quotes eld
+\end_inset
+
+exponentially quickly
+\begin_inset Quotes erd
+\end_inset
+
+ is not very quick.
+ It takes forever to get to zero; 
+\begin_inset Formula $e^{-\lambda t}\to0$
+\end_inset
+
+ only as 
+\begin_inset Formula $t\to\infty$
+\end_inset
+
+ and the logarithm means that only a finite, fixed amount of digits go to
+ zero for a fixed time interval.
+ Forever is a long time to make a decision.
+ I wondered if there are any (commonplace) differential equations or physical
+ systems for which the fixed point is approached as 
+\begin_inset Formula $1/\left(t-t_{0}\right)$
+\end_inset
+
+ so that an infinite number of decimal places get nailed to exactly zero
+ in a finite amount of time.
+ I guess I should write 
+\begin_inset Formula $e^{-1/\left(t-t_{0}\right)}$
+\end_inset
+
+ here.
+ I don't know of any examples off the top of my head.
+ Some singularity.
+\end_layout
+
+\begin_layout Standard
+The word 
+\begin_inset Quotes eld
+\end_inset
+
+singularity
+\begin_inset Quotes erd
+\end_inset
+
+ briefly flashed to 
+\begin_inset Quotes eld
+\end_inset
+
+Schwarzschild
+\begin_inset Quotes erd
+\end_inset
+
+ which then wandered off to 
+\begin_inset Quotes erd
+\end_inset
+
+Cauchy surface
+\begin_inset Quotes erd
+\end_inset
+
+ and I briefly wondered 
+\begin_inset Quotes eld
+\end_inset
+
+is this where QM comes from?
+\begin_inset Quotes erd
+\end_inset
+
+ Where a single classical trajectory must bifurcate into all possibilities,
+ all at once? Everything happens, everything is possible, once you cross
+ the Cauchy horizon? Of course, this was inspiring but hard to grasp, ungraspabl
+e, so I wandered back to actually sleeping at this point.
+\end_layout
+
+\begin_layout Standard
+As I write this, I spy a certain absurdity or futility in this project.
+ The last paragraph wants to say 
+\begin_inset Quotes eld
+\end_inset
+
+QM is forced into existence because there are certain classical systems
+ that bifurcate into anything/everything, all possibilities
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Which runs counter to the Platonist view that 
+\begin_inset Quotes eld
+\end_inset
+
+equations exist
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+QM is just an equation, therefore it exists
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Cauchy horizons have no special precedence; one can't say 
+\begin_inset Quotes eld
+\end_inset
+
+they came first and QM came later.
+\begin_inset Quotes erd
+\end_inset
+
+ In the Platonic view, 
+\begin_inset Quotes eld
+\end_inset
+
+infinity exists
+\begin_inset Quotes erd
+\end_inset
+
+, and we tumble through all of descriptive set theory and large cardinal
+ axioms.
+ So it 
+\begin_inset Quotes eld
+\end_inset
+
+all exists
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+has always existed
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So my (literal) dream–thoughts can't be interpreted that way; instead,
+ they point at where, exactly, the quantum/classical aspect of gravitation
+ seems to hit hardest: its at the Cauchy horizon.
+ This is the point of ultimate entanglement, as it were.
+\end_layout
+
+\begin_layout Standard
+Whatever.
+ I can't solve this here and now, and I have other pressing things to do.
+ So later, Toodle–oo.
 \end_layout
 
 \begin_layout Section*
