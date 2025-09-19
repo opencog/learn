@@ -11049,6 +11049,97 @@ Whatever.
  So later, Toodle–oo.
 \end_layout
 
+\begin_layout Subsection*
+19 Sept 2025
+\end_layout
+
+\begin_layout Standard
+So I have multiple half–finished projects that I want to restart, but I
+ have to review the wisdom of doing so, and imagine what the outcomes might
+ look like.
+ By far the most promising remains this one, the learn project, where the
+ system learns through observation and counting.
+ There were three or four issues.
+ Lets review these.
+\end_layout
+
+\begin_layout Itemize
+Matrix code not being in Atomese.
+\end_layout
+
+\begin_layout Itemize
+Non–recursive structure of the code
+\end_layout
+
+\begin_layout Itemize
+Batch processing
+\end_layout
+
+\begin_layout Itemize
+Other vague hand–wringing in diaries part six through nine.
+\end_layout
+
+\begin_layout Standard
+The first bullet has multiple sub–issues.
+ Superficially, it might be easy to solve: with the help of Claude, it will
+ now probably be rather easy and straight–forward to get the old matrix
+ code ported to Atomese.
+ Probably.
+ But what's the point?
+\end_layout
+
+\begin_layout Standard
+Well, the original idea was that the algorithm, e.g.
+ for MI, would be 
+\begin_inset Quotes eld
+\end_inset
+
+locally observable
+\begin_inset Quotes erd
+\end_inset
+
+: it would be a local abstract syntax tree that could be examined without
+ needing to comprehend distant include files, language syntax features.
+ A minimalist syntax tree that was amenable to rewrite rules.
+ Not a bad vision, but three issues crop up: (1) with the availability of
+ Claude (or e.g.
+ chatgpt5 etc.) these systems can do rewrites OK–ish without having to simplify
+ to minimalist AST's.
+ (2) The re–write rules are large, complex, unwieldy, at least for humans.
+ It's not a pretty sight.
+ (3) I keep not getting around to the idea of self–assembly of rewrite rules.
+ In part because the core infrastructure for this remains very difficult.
+ (4) Optimization.
+ I can expand the MI calculations into an (AccumLink (TimesLink A B)) structure,
+ and there is a good chance of loss in performance.
+ So one of the ideas is to employ rewrite rules to rewrite structures into
+ improved performance, a la compiler optimization.
+ But see point (2) Even simple rewrites are hard; the complicated ones are
+ worse.
+ Lets put this on hold, and come back to it.
+\end_layout
+
+\begin_layout Standard
+Related issues come up with the atomese–simd code.
+ The proof of concept there has clarified to where the next step can be
+ taken: run PlusLink, TimesLink directly on GPU's.
+ But how? Should there be a PlusOnGPULink, TimesOnGPULink? Seems dumb, and
+ there's a proliferation of Atoms.
+ Should some implcit decision be made by PlusLink to sometimes dispatch
+ to GPU's? Well, no, that's again a bad idea, because Plus would not know
+ which GPU, if it was available, etc.
+ One can even imagine this as a scheduling problem: I have 5 GPU's and two
+ are busy, so PlusLink needs to pick the ones that are not, even though
+ they are more distant on the network fabric.
+ Yikes! The third possibility is to have a (RunThisOnGPULink AST) which
+ is kind of like (PureExecLink AST) except that instead of running in another
+ AtomSpace, it runs on the GPU.
+ Break.
+ I am going to transpose the conversation from here, to the atomese–simd
+ README files.
+ And then we'll come back here.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
