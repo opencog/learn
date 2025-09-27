@@ -14036,6 +14036,221 @@ Related issues come up with the atomese–simd code.
 27 Sept 2025
 \end_layout
 
+\begin_layout Standard
+Been holding of on writing up at least four different topics that have been on my mind for weeks.
+ But simmering did not cook them;
+ on the contrary,
+ their immediacy and urgency have faded away.
+ One is on physics,
+ one is on sociology,
+ two are on learning.
+ I have limited energy,
+ limited time,
+ which should I writ about first?
+ Perhaps the physics one.
+ It is the one with the least amount of progress.
+ And the sociology one is hand–wringing.
+\end_layout
+
+\begin_layout Standard
+The physics one is about here and now,
+ combines several topics I wrote in Wikipedia about.
+ I've been thinking about the https://en.wikipedia.org/wiki/Mott_problem,
+ but placed a comment on the talk page https://en.wikipedia.org/wiki/Talk:Renninger_negative-result_experiment on 28 May 2025 (all Wikipedia edits from 67.198.37.16 are mine) I'm going to copy it here:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Quotes eld
+\end_inset
+
+The theory/mechanics of the so–called "wave function collapse" in Renninger is more or less the same as in the Mott problem,
+ or as that in the Alain Aspect,
+ Clauser,
+ Zeilinger experiments that they got their Nobel prize for.
+ They did measurements that are space–like separated;
+ whereas the Renninger setup is time–like separated.
+ Both cases are confusing,
+ if you have a naive conception of space and time (and do not fully grok QM):
+ the Clauser etal resolved the spooky–action–at–a–distance that Einstein complained about,
+ and more:
+ faster–than–light correlations between detectors that are space–like separated.
+ The naive question for the Clauser–Aspect setup is:
+ "How can collapse here affect the collapse there,
+ if there is no time for spooky–things to travel between these two?" The naive question for Renninger is "How can collapse in the (distant) past affect the collapse in the distant future?" All three:
+ the Mott problem,
+ the Clauser expts,
+ and Renninger have exactly the same theory behind them:
+ its just bog–standard QM,
+ plus decoherence in the detectors.
+ It just feels super–weird,
+ if you try to use naive ideas about the structure of space and time to try to understand them.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Roughly speaking:
+ Clauser says "you have no clue what space is,
+ here let me show you." Renninger says "you have no clue what time is,
+ here,
+ let me show you." Mott says "you have no clue what a wave–function is,
+ here let me show you."
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+Does that resolve the confusion?
+ I don't want to splatter stuff like the above into the article,
+ because I don't particularly know of any primary or secondary sources for it,
+ and it is sufficiently subtle that naive bystanders will say "oh,
+ its a bunch of OR".
+ But what I wrote above,
+ I think it's the canonical understanding of QM among those who actually think about such things,
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Great.
+ I wrote that.
+ It's no longer so awesome sounding;
+ its really an attempt to summarize in three paragraphs what I spent lots and lots of time on,
+ in this diary.
+\end_layout
+
+\begin_layout Standard
+To recap the Mott problem,
+ working from the Wikipedia article.
+ The calculation involves the alpha ray,
+ and two atoms,
+ I and II.
+ The Born approximation is used.
+ The Wikipedia article is not clear about this,
+ but what it seems is that a wave function for the combined system is expressed as a mixed state.
+ The formula is 
+\begin_inset Formula 
+\[
+F\left(R,r_{1},r_{2}\right)=\sum_{\zeta_{1},\zeta_{2}}f_{\zeta_{1},\zeta_{2}}\left(R\right)\psi_{\zeta_{1}}^{I}\left(r_{1}-a_{1}\right)\psi_{\zeta_{2}}^{II}\left(r_{2}-a_{2}\right)
+\]
+
+\end_inset
+
+So I and II are the two atoms,
+ 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+ are their positions,
+ the sum is over all excited states 
+\begin_inset Formula $\zeta_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\zeta_{2}$
+\end_inset
+
+ of the atoms.
+ The 
+\begin_inset Formula $\psi$
+\end_inset
+
+ are of course probability amplitudes.
+ The article calls 
+\begin_inset Formula $f_{\zeta_{1},\zeta_{2}}\left(R\right)$
+\end_inset
+
+ a conditional probability (that atoms I and II are in excited states) so that implies that 
+\begin_inset Formula $F\left(R,r_{1},r_{2}\right)$
+\end_inset
+
+ is to be interpreted as a mixed state of the two atoms.
+ This feels slightly muddles.
+ Apparently,
+ Schiff,
+ Quantum Mechanics 3rd edition (1968) has this in it,
+ so it would be nice to look that over,
+ but I am lazy just right now.
+\end_layout
+
+\begin_layout Standard
+Reconstructing that intent:
+ the amplitudes are non–zero only for a few Angstroms off of 
+\begin_inset Formula $a_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{2}$
+\end_inset
+
+.
+ The intent is that ...
+ these must be co–linear with the origin,
+ in order for the amplitude to be non–vanishing,
+ but I'm stupid so I don't see this.
+ Argh.
+ I guess I will have to look this up.
+\end_layout
+
+\begin_layout Standard
+See,
+ I'm running out of steam.
+ I wanted to combine this with 
+\begin_inset Quotes eld
+\end_inset
+
+Natural Filtration
+\begin_inset Quotes erd
+\end_inset
+
+;
+ I wrote the Wikipedia article on that,
+ so I won't recap.
+ Now,
+ natural filtrations are used to provide a sequence of measurable sets for a stochastic process,
+ organized in a time–like order,
+ so that the past is fixed,
+ and the future is given by the appropriately narrowed set of choices,
+ given the past.
+ In the present case,
+ I need to (wanted to) rewrite the filtration in such a way that I can use probability amplitudes on it,
+ instead of probability measures.
+\end_layout
+
+\begin_layout Standard
+The other issue is the filtrations have a natural time coordinate,
+ and I need to rework that to fit into the Clauser–Horne–Aspect stuffs.
+ So this is two conflicting goals:
+ in the primordial stochastic process,
+ we've got a process having a position in time,
+ and the filtrations just adjust the probability as time flows.
+ But there's no 
+\begin_inset Quotes eld
+\end_inset
+
+position
+\begin_inset Quotes erd
+\end_inset
+
+ in Bell states,
+ in superpositions,
+ so I'm now struggling to imagine what it would mean to write down a filtration for the measurement here.
+ I will have to sleep on this.
+ I am lacking in energy today.
+ Feeling blah and wiped out today.
+ I need to do something mindless for a while.
+ Toodle-oo.
+ Later.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
