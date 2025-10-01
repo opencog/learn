@@ -1,5 +1,5 @@
-#LyX 2.3 created this file. For more info see http://www.lyx.org/
-\lyxformat 544
+#LyX 2.4 created this file. For more info see https://www.lyx.org/
+\lyxformat 620
 \begin_document
 \begin_header
 \save_transient_properties true
@@ -9,11 +9,11 @@
 \usepackage{url}
 \end_preamble
 \use_default_options true
-\maintain_unincluded_children false
+\maintain_unincluded_children no
 \language english
 \language_package default
 \inputencoding utf8
-\fontencoding global
+\fontencoding auto
 \font_roman "default" "default"
 \font_sans "default" "default"
 \font_typewriter "default" "default"
@@ -21,7 +21,9 @@
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
-\font_osf false
+\font_roman_osf false
+\font_sans_osf false
+\font_typewriter_osf false
 \font_sf_scale 100 100
 \font_tt_scale 100 100
 \use_microtype false
@@ -64,7 +66,9 @@
 \suppress_date false
 \justification true
 \use_refstyle 1
+\use_formatted_ref 0
 \use_minted 0
+\use_lineno 0
 \index Index
 \shortcut idx
 \color #008000
@@ -80,11 +84,16 @@
 \papercolumns 1
 \papersides 1
 \paperpagestyle default
+\tablestyle default
 \tracking_changes false
 \output_changes false
+\change_bars false
+\postpone_fragile_content false
 \html_math_output 0
 \html_css_as_file 0
 \html_be_strict false
+\docbook_table_output 0
+\docbook_mathml_prefix 1
 \end_header
 
 \begin_body
@@ -107,7 +116,8 @@ Linas Vepstas
 \end_layout
 
 \begin_layout Date
-Draft of 30 June 2025; incomplete.
+Draft of 30 June 2025;
+ incomplete.
 \end_layout
 
 \begin_layout Address
@@ -123,7 +133,8 @@ BrainyBlaze
 \end_layout
 
 \begin_layout Abstract
-A summary review of a structuralist, agent approach to machine consciousness.
+A summary review of a structuralist,
+ agent approach to machine consciousness.
  
 \end_layout
 
@@ -133,33 +144,41 @@ Preface / Apologia
 
 \begin_layout Standard
 I will attempt to write as simply as possible.
- This means to some of the below might seem simplistic, obvious and well–known.
- If so, then its a mis–perception: attempting to turn the ideas below into
- working software is a half–finished project, with many difficult technical
- issues.
+ This means to some of the below might seem simplistic,
+ obvious and well–known.
+ If so,
+ then its a mis–perception:
+ attempting to turn the ideas below into working software is a half–finished project,
+ with many difficult technical issues.
  These are accompanied by even harder questions of system architecture,
- design choice, and, at the most base level, the structural representation
- of what superficially seem like simple, easy obvious ideas.
+ design choice,
+ and,
+ at the most base level,
+ the structural representation of what superficially seem like simple,
+ easy obvious ideas.
 \end_layout
 
 \begin_layout Standard
-Anyone familiar with philosophy or sociology will immediately recognize
- a broad range of familiar concepts: the signifier and signifcand, for example.
- Anyone familiar with mathematics will recognize a different set of familiar
- topics, such as monoidal categories and fragments of linear logic (the
- internal logic of dagger–symmetric tensor categories).
- These resemblances are not accidental; this text is being written in such
- a way as to evoke those ideas, and you the reader should think of them.
- There is much to be said and the author cannot say it all, so it is up
- to the reader to elaborate.
+Anyone familiar with philosophy or sociology will immediately recognize a broad range of familiar concepts:
+ the signifier and signifcand,
+ for example.
+ Anyone familiar with mathematics will recognize a different set of familiar topics,
+ such as monoidal categories and fragments of linear logic (the internal logic of dagger–symmetric tensor categories).
+ These resemblances are not accidental;
+ this text is being written in such a way as to evoke those ideas,
+ and you the reader should think of them.
+ There is much to be said and the author cannot say it all,
+ so it is up to the reader to elaborate.
 \end_layout
 
 \begin_layout Standard
 XXX This is an unfinished draft.
- It's being sent out in its current form, despite not being clean and finished,
+ It's being sent out in its current form,
+ despite not being clean and finished,
  so as to get it out quickly.
  This part covers well–established results and is straight–forward.
- A part two, covering more speculative ideas (
+ A part two,
+ covering more speculative ideas (
 \begin_inset Quotes eld
 \end_inset
 
@@ -167,8 +186,9 @@ it's agents all the way down
 \begin_inset Quotes erd
 \end_inset
 
-) is to be written; since what is here is already, the commentary on sensori–mot
-or agents will be part two.
+) is to be written;
+ since what is here is already,
+ the commentary on sensori–motor agents will be part two.
 \end_layout
 
 \begin_layout Standard
@@ -181,15 +201,14 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-It appears that the world is made of things and the relationship between
- things.
- These can be represented as graphs, with objects as vertices, and relations
- as edges.
- Graphs are decomposable into parts; a proper decomposition preserves the
- relationships by marking edges, so that the disassembled parts can be reassembl
-ed appropriately.
- The marked cut edges imply that the graph parts resemble jigsaw puzzle
- pieces:
+It appears that the world is made of things and the relationship between things.
+ These can be represented as graphs,
+ with objects as vertices,
+ and relations as edges.
+ Graphs are decomposable into parts;
+ a proper decomposition preserves the relationships by marking edges,
+ so that the disassembled parts can be reassembled appropriately.
+ The marked cut edges imply that the graph parts resemble jigsaw puzzle pieces:
 \end_layout
 
 \begin_layout Standard
@@ -218,17 +237,21 @@ ed appropriately.
 \end_layout
 
 \begin_layout Standard
-The task of intelligence, of an intelligent agent, is to discover these
- relationships.
- The agent can do so by means of perception; at the lowest levels these
- are concrete: eyes, ears, etc.
+The task of intelligence,
+ of an intelligent agent,
+ is to discover these relationships.
+ The agent can do so by means of perception;
+ at the lowest levels these are concrete:
+ eyes,
+ ears,
+ etc.
  but can also be abstract.
- For example, knowing some facts about geography and politics may still
- leave one ignorant of the relationship between the two, and may require
- a significant intellectual effort to understand this relationship.
- This is again an act of perception: the pattern of relationships between
- politics and geography has to be perceived, although the organ of perception
- is no longer as simple as 
+ For example,
+ knowing some facts about geography and politics may still leave one ignorant of the relationship between the two,
+ and may require a significant intellectual effort to understand this relationship.
+ This is again an act of perception:
+ the pattern of relationships between politics and geography has to be perceived,
+ although the organ of perception is no longer as simple as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -236,12 +259,13 @@ eyes and ears
 \begin_inset Quotes erd
 \end_inset
 
-, but is also abstract.
+,
+ but is also abstract.
 \end_layout
 
 \begin_layout Standard
-An intelligent agent perceives and models the external universe, and constructs
- a provisional model of 
+An intelligent agent perceives and models the external universe,
+ and constructs a provisional model of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -258,7 +282,10 @@ the world model
 \begin_inset Quotes erd
 \end_inset
 
-, is necessarily incomplete, hypothetical, and riddled with errors.
+,
+ is necessarily incomplete,
+ hypothetical,
+ and riddled with errors.
  There may be more than 
 \begin_inset Quotes eld
 \end_inset
@@ -267,7 +294,8 @@ one
 \begin_inset Quotes erd
 \end_inset
 
- model that is active at a time, as one needs to entertain possibilities:
+ model that is active at a time,
+ as one needs to entertain possibilities:
  
 \begin_inset Quotes eld
 \end_inset
@@ -277,7 +305,8 @@ it could be this or it could be that
 \end_inset
 
 .
- This raises a minor philosophical question: is this 
+ This raises a minor philosophical question:
+ is this 
 \begin_inset Quotes eld
 \end_inset
 
@@ -285,7 +314,8 @@ one
 \begin_inset Quotes erd
 \end_inset
 
- world–model, or 
+ world–model,
+ or 
 \begin_inset Quotes eld
 \end_inset
 
@@ -293,8 +323,10 @@ two
 \begin_inset Quotes erd
 \end_inset
 
-? After all, hypothetical relationships can be represented in a variety
- of formal logics; the 
+?
+ After all,
+ hypothetical relationships can be represented in a variety of formal logics;
+ the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -311,8 +343,7 @@ The following is split into several sections.
 \end_layout
 
 \begin_layout Itemize
-The first section reviews the concept of vector representations and their
- relationship to graphical models.
+The first section reviews the concept of vector representations and their relationship to graphical models.
 \end_layout
 
 \begin_layout Itemize
@@ -324,9 +355,8 @@ Vector representations
 \end_layout
 
 \begin_layout Standard
-The multiple possibilities have a natural representation as a vector; such
- a vector representation make natural contact with the conventional frameworks
- of artificial neural nets.
+The multiple possibilities have a natural representation as a vector;
+ such a vector representation make natural contact with the conventional frameworks of artificial neural nets.
 \end_layout
 
 \begin_layout Standard
@@ -355,15 +385,15 @@ The multiple possibilities have a natural representation as a vector; such
 \end_layout
 
 \begin_layout Standard
-The above is meant to be a diagrammatic representation of a a vctor with
- three basis elements (eyes, lens, telescope) with three (real number) weights
- 
+The above is meant to be a diagrammatic representation of a a vctor with three basis elements (eyes,
+ lens,
+ telescope) with three (real number) weights 
 \begin_inset Formula $w_{1},w_{2},w_{3}$
 \end_inset
 
 .
- The above is drawn diagrammatically; other common notations used in the
- literature are
+ The above is drawn diagrammatically;
+ other common notations used in the literature are
 \begin_inset Formula 
 \begin{align*}
 v & =w_{1}\left|\psi_{1}\right\rangle \oplus w_{2}\left|\psi_{2}\right\rangle \oplus w_{3}\left|\psi_{3}\right\rangle \\
@@ -376,25 +406,32 @@ v & =w_{1}\left|\psi_{1}\right\rangle \oplus w_{2}\left|\psi_{2}\right\rangle \o
 
 \end_inset
 
-All of these mean exactly the same thing; the notation varies according
- to the style and preference of the authors.
+All of these mean exactly the same thing;
+ the notation varies according to the style and preference of the authors.
  The last line is meant to be typical of notation used in Bayesian texts,
- where one talks of conditional probabilities; the first line is typical
- of texts on quantum (in which case the weights are complex numbers) and
- sometimes seen in tensor categories and category–theoretic texts.
+ where one talks of conditional probabilities;
+ the first line is typical of texts on quantum (in which case the weights are complex numbers) and sometimes seen in tensor categories and category–theoretic texts.
  The 
 \begin_inset Formula $\hat{e}_{k}$
 \end_inset
 
- are simply unit basis vectors, in the conventional linear algebra sense.
+ are simply unit basis vectors,
+ in the conventional linear algebra sense.
 \end_layout
 
 \begin_layout Standard
-For the present purposes, these differences are immaterial; yes, of course,
- quantum is not the same as Bayesianism, but for now this does not matter.
- The distinctions will be drawn later; for now, the emphasis is that graphical
- elements, such as jigsaws, can be formally combined to form vectors, and
- that distinct graphs are the 
+For the present purposes,
+ these differences are immaterial;
+ yes,
+ of course,
+ quantum is not the same as Bayesianism,
+ but for now this does not matter.
+ The distinctions will be drawn later;
+ for now,
+ the emphasis is that graphical elements,
+ such as jigsaws,
+ can be formally combined to form vectors,
+ and that distinct graphs are the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -406,10 +443,14 @@ basis vecttors
 \end_layout
 
 \begin_layout Standard
-Computationally, the graphical elements depicted in the diagram should be
- stored somewhere, for example, in a graph database; and alongside each
- there should be a floating–point value.
- It can be stored with the graph, or outside the graph, as a distinct vector;
+Computationally,
+ the graphical elements depicted in the diagram should be stored somewhere,
+ for example,
+ in a graph database;
+ and alongside each there should be a floating–point value.
+ It can be stored with the graph,
+ or outside the graph,
+ as a distinct vector;
  this is a software engineering issue and not a fundamental issue.
 \end_layout
 
@@ -422,13 +463,15 @@ mean
 \begin_inset Quotes erd
 \end_inset
 
-? These are perhaps context–dependent.
- If one is visiting an astronomical observatory, it might make sense to
- set 
+?
+ These are perhaps context–dependent.
+ If one is visiting an astronomical observatory,
+ it might make sense to set 
 \begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)=\left(0.05,0.05,0.9\right)$
 \end_inset
 
- but if one is taking a walk in the park, then perhaps 
+ but if one is taking a walk in the park,
+ then perhaps 
 \begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)=\left(0.9,0.1,0\right)$
 \end_inset
 
@@ -445,8 +488,9 @@ actual meaning
 \begin_inset Quotes erd
 \end_inset
 
- of this vector is somewhat immaterial; the weights will ultimately be determine
-d by whatever algorithm one uses, and whatever 
+ of this vector is somewhat immaterial;
+ the weights will ultimately be determined by whatever algorithm one uses,
+ and whatever 
 \begin_inset Quotes eld
 \end_inset
 
@@ -455,13 +499,14 @@ meaning
 \end_inset
 
  that algorithm assigns to weights.
- The algorithm might be some deep–learning neural net transformer; it might
- be some Bayesian system; it might be a frequentist counting algorithm.
+ The algorithm might be some deep–learning neural net transformer;
+ it might be some Bayesian system;
+ it might be a frequentist counting algorithm.
 \end_layout
 
 \begin_layout Standard
-Later on, we will make the conceptual jump that one may work with many different
- algorithms 
+Later on,
+ we will make the conceptual jump that one may work with many different algorithms 
 \begin_inset Quotes eld
 \end_inset
 
@@ -469,7 +514,8 @@ at the same time
 \begin_inset Quotes erd
 \end_inset
 
-, and that one can (meaningfully) arrange these into a vector.
+,
+ and that one can (meaningfully) arrange these into a vector.
  The weights 
 \begin_inset Formula $\left(w_{1},w_{2},w_{3}\right)$
 \end_inset
@@ -478,7 +524,8 @@ at the same time
 \begin_inset Formula $e_{1}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $e_{2}$
 \end_inset
 
@@ -503,12 +550,13 @@ how can I perceive which algorithm is the best one?
 \begin_inset Quotes erd
 \end_inset
 
- The intelligent agent might be an artificial scientist, running experiments
- to determine which of the scientific hypothesis 
+ The intelligent agent might be an artificial scientist,
+ running experiments to determine which of the scientific hypothesis 
 \begin_inset Formula $e_{1}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $e_{2}$
 \end_inset
 
@@ -520,8 +568,7 @@ how can I perceive which algorithm is the best one?
 \end_layout
 
 \begin_layout Standard
-The implied software design principle here is that the software system must
- be capable of representing 
+The implied software design principle here is that the software system must be capable of representing 
 \begin_inset Quotes eld
 \end_inset
 
@@ -533,7 +580,8 @@ objects
 \begin_inset Formula $e_{1}$
 \end_inset
 
-, 
+,
+ 
 \begin_inset Formula $e_{2}$
 \end_inset
 
@@ -541,8 +589,9 @@ objects
 \begin_inset Formula $e_{3}$
 \end_inset
 
- in some abstract way, but also working with vectors and matrices and tensors
- in a natural way: this is the 
+ in some abstract way,
+ but also working with vectors and matrices and tensors in a natural way:
+ this is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -550,11 +599,13 @@ neuro–symbolic
 \begin_inset Quotes erd
 \end_inset
 
- idea: the 
+ idea:
+ the 
 \begin_inset Formula $e_{1},e_{2},e_{3}$
 \end_inset
 
- are symbolic, the 
+ are symbolic,
+ the 
 \begin_inset Formula $w_{1},w_{2},w_{3}$
 \end_inset
 
@@ -562,25 +613,33 @@ neuro–symbolic
 \end_layout
 
 \begin_layout Standard
-The implied context of this text is that the appropriate software system
- for this work is the AtomSpace.
- This claim is founded on the author having spent more than a decade to
- realize the above (and more, some of which touched on below) in a practical,
- efficient, usable and useful way.
- The design is imperfect; new insights are gained regularly.
- Of course, other software frameworks are possible; the engineering task
- is to avoid common pitfalls, design oversights and, of course, re–inventing
- the wheel.
- The AtomSpace is not the be–all, end–all, and it might not be at all suitable
- for whatever you have in mind.
- In such a case, use what you need to use.
- For myself, speaking personally, it is the best that I've got, at the moment.
+The implied context of this text is that the appropriate software system for this work is the AtomSpace.
+ This claim is founded on the author having spent more than a decade to realize the above (and more,
+ some of which touched on below) in a practical,
+ efficient,
+ usable and useful way.
+ The design is imperfect;
+ new insights are gained regularly.
+ Of course,
+ other software frameworks are possible;
+ the engineering task is to avoid common pitfalls,
+ design oversights and,
+ of course,
+ re–inventing the wheel.
+ The AtomSpace is not the be–all,
+ end–all,
+ and it might not be at all suitable for whatever you have in mind.
+ In such a case,
+ use what you need to use.
+ For myself,
+ speaking personally,
+ it is the best that I've got,
+ at the moment.
  The actual stress of daily use does mean that the process is evolutionary,
  and that revisions and enhancements are ongoing.
- Perhaps at a lower rate than before, perhaps limited to narrower sub–modules
- and subsystems.
- The theory drives the practice drives the code and the driving also happens
- in the reverse.
+ Perhaps at a lower rate than before,
+ perhaps limited to narrower sub–modules and subsystems.
+ The theory drives the practice drives the code and the driving also happens in the reverse.
 \end_layout
 
 \begin_layout Subsection
@@ -588,30 +647,31 @@ Frequentist vector representations
 \end_layout
 
 \begin_layout Standard
-In the narrow context of deep–learning neural nets, it is widely understood
- the vector embeddings work extremely well, taking the form of modern LLM's
- and a huge variety of applications of transformers to a broad range of
- topics.
- What is not well known is that there are other ways of getting at least
- some of these results.
+In the narrow context of deep–learning neural nets,
+ it is widely understood the vector embeddings work extremely well,
+ taking the form of modern LLM's and a huge variety of applications of transformers to a broad range of topics.
+ What is not well known is that there are other ways of getting at least some of these results.
 \end_layout
 
 \begin_layout Standard
-The goal of this section is to show how to obtain these results, and to
- provide a very short review of linguistics.
- Now, of course, present–day LLM's far exceed the abilities of present–day
- traditional linguistics; and the latter have fallen into disfavor threatening
- obscurity.
- The ideas developed immediately below is that there is another path, this
- path is explicitly symbolic, and that this path, to the extent that it
- has been pursued, actually reproduces at least some neural–net results.
+The goal of this section is to show how to obtain these results,
+ and to provide a very short review of linguistics.
+ Now,
+ of course,
+ present–day LLM's far exceed the abilities of present–day traditional linguistics;
+ and the latter have fallen into disfavor threatening obscurity.
+ The ideas developed immediately below is that there is another path,
+ this path is explicitly symbolic,
+ and that this path,
+ to the extent that it has been pursued,
+ actually reproduces at least some neural–net results.
  
 \end_layout
 
 \begin_layout Standard
-The original prototype system was WORD2VEC and the prototypical example
- is the vector relation King–Man+Woman=Queen.
- Here, the word–tokens for the words 
+The original prototype system was WORD2VEC and the prototypical example is the vector relation King–Man+Woman=Queen.
+ Here,
+ the word–tokens for the words 
 \begin_inset Quotes eld
 \end_inset
 
@@ -619,7 +679,8 @@ King
 \begin_inset Quotes erd
 \end_inset
 
-, 
+,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -627,7 +688,8 @@ Queen
 \begin_inset Quotes erd
 \end_inset
 
-, 
+,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -643,9 +705,12 @@ Woman
 \begin_inset Quotes erd
 \end_inset
 
- were given vector embeddings, and the system, a multi–layer recurrent neural
- net (RNN) was trained on a large body of text, using gradient–descent methods.
- After training, the resulting vectors have several interesting properties:
+ were given vector embeddings,
+ and the system,
+ a multi–layer recurrent neural net (RNN) was trained on a large body of text,
+ using gradient–descent methods.
+ After training,
+ the resulting vectors have several interesting properties:
  they exhibit 
 \begin_inset Quotes eld
 \end_inset
@@ -654,8 +719,12 @@ associative memory
 \begin_inset Quotes erd
 \end_inset
 
-, in that nearby vectors appear to be related, and, much more surprisingly,
- vector subtraction, i.e.
+,
+ in that nearby vectors appear to be related,
+ and,
+ much more surprisingly,
+ vector subtraction,
+ i.e.
  subtracting the vector for 
 \begin_inset Quotes eld
 \end_inset
@@ -680,7 +749,8 @@ ruler
 \begin_inset Quotes erd
 \end_inset
 
- that is gender–neutral, in that 
+ that is gender–neutral,
+ in that 
 \begin_inset Quotes eld
 \end_inset
 
@@ -697,7 +767,8 @@ King–Man
 \end_inset
 
 .
- Here, 
+ Here,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -706,33 +777,31 @@ close
 \end_inset
 
  means that the cosine product (the vector product) is approximately 1.0.
- Again, this is all well–known.
+ Again,
+ this is all well–known.
 \end_layout
 
 \begin_layout Standard
-What is not well–known is that the above results can be obtained in at least
- one very different way: by frequentist counting.
+What is not well–known is that the above results can be obtained in at least one very different way:
+ by frequentist counting.
  Below follows a short sketch of how this is done.
- The focus and lesson here is that the algorithm is not only very different
- from that of RNN's, but is also explicitly graphical (symbolic) in nature.
- This provides the leverage needed to make the jump from neuro to symbolic
- (structural) and back.
+ The focus and lesson here is that the algorithm is not only very different from that of RNN's,
+ but is also explicitly graphical (symbolic) in nature.
+ This provides the leverage needed to make the jump from neuro to symbolic (structural) and back.
 \end_layout
 
 \begin_layout Standard
-The algorithm described here was provided by Deniz Yuret in his PhD thesis
- in the late 1990's.
- A variety of related formulations were explored by a number of authors
- (including Dekang Lin and Pedro Domingos) over dozens of publications (if
- not more).
+The algorithm described here was provided by Deniz Yuret in his PhD thesis in the late 1990's.
+ A variety of related formulations were explored by a number of authors (including Dekang Lin and Pedro Domingos) over dozens of publications (if not more).
  None appear to have made the full conceptual leap being described here,
  although they all danced very close.
- I don't entirely understand why; this is perhaps the intermittent nature
- of scientific discovery.
+ I don't entirely understand why;
+ this is perhaps the intermittent nature of scientific discovery.
 \end_layout
 
 \begin_layout Standard
-The Yuret algorithm starts with a text training corpus, and simply 
+The Yuret algorithm starts with a text training corpus,
+ and simply 
 \emph on
 counts
 \emph default
@@ -745,7 +814,8 @@ within a small context window
 \begin_inset Quotes erd
 \end_inset
 
-, traditionally six words wide.
+,
+ traditionally six words wide.
  This count is written as 
 \begin_inset Formula $N\left(w_{a},w_{b}\right)$
 \end_inset
@@ -758,8 +828,7 @@ within a small context window
 \begin_inset Formula $w$
 \end_inset
 
- in the previous section.) Yuret defines the mutual information (MI) associated
- with a word–pair as 
+ in the previous section.) Yuret defines the mutual information (MI) associated with a word–pair as 
 \begin_inset Formula 
 \[
 MI\left(w_{a},w_{b}\right)=\log_{2}\frac{N\left(w_{a},w_{b}\right)N\left(*,*\right)}{N\left(w_{a},*\right)N\left(*,w_{b}\right)}
@@ -779,7 +848,8 @@ wild-card
 \begin_inset Quotes erd
 \end_inset
 
-, so that 
+,
+ so that 
 \begin_inset Formula $N\left(w_{a},*\right)=\sum_{u}N\left(w_{a},u\right)$
 \end_inset
 
@@ -797,7 +867,8 @@ go together
 \end_inset
 
  have a high MI.
- For example, he finds that the MI for 
+ For example,
+ he finds that the MI for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -805,7 +876,8 @@ Northern Ireland
 \begin_inset Quotes erd
 \end_inset
 
- to be very high; this has to do with the presence of the word–pair 
+ to be very high;
+ this has to do with the presence of the word–pair 
 \begin_inset Quotes eld
 \end_inset
 
@@ -818,8 +890,8 @@ Northern Ireland
 \end_layout
 
 \begin_layout Standard
-This allows him to propose a parsing algorithm that gives results rather
- close to those proposed by linguists, in which a word such as 
+This allows him to propose a parsing algorithm that gives results rather close to those proposed by linguists,
+ in which a word such as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -835,7 +907,8 @@ noun
 \begin_inset Quotes erd
 \end_inset
 
-, while 
+,
+ while 
 \begin_inset Quotes eld
 \end_inset
 
@@ -843,7 +916,8 @@ Northern
 \begin_inset Quotes erd
 \end_inset
 
- is taken as an adjective, modifying 
+ is taken as an adjective,
+ modifying 
 \begin_inset Quotes eld
 \end_inset
 
@@ -852,15 +926,18 @@ Ireland
 \end_inset
 
 .
- The resulting parses are of the form of a dependency grammar, 
+ The resulting parses are of the form of a dependency grammar,
+ 
 \emph on
 a la
 \emph default
- Lucien Tesnière, and more generally along the many rich elaborations of
- dependency grammars over many decades, hundreds of books and far more papers.
- An example parse, taken from Yuret's thesis, is shown below.
- The numbers above the word pairs are the numerical MI value obtained from
- counting.
+ Lucien Tesnière,
+ and more generally along the many rich elaborations of dependency grammars over many decades,
+ hundreds of books and far more papers.
+ An example parse,
+ taken from Yuret's thesis,
+ is shown below.
+ The numbers above the word pairs are the numerical MI value obtained from counting.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -887,10 +964,13 @@ The parse is obtained by considering all possible trees joining the words,
  and selecting the tree for which the total MI is the largest possible.
  Basic familiarity with linguistics shows that this parse is exactly correct:
  all of the dependencies are indicated exactly as they should be.
- This is remarkable, because it shows that the toil and trouble that linguists
- have gone through to assemble lexis (dictionaries) by hand, indicating
- subject–verb–noun relations, adjective–noun relations, determiner–noun
- relations, prepositions, etc.
+ This is remarkable,
+ because it shows that the toil and trouble that linguists have gone through to assemble lexis (dictionaries) by hand,
+ indicating subject–verb–noun relations,
+ adjective–noun relations,
+ determiner–noun relations,
+ prepositions,
+ etc.
  can be fully automated simply by counting and noting the frequency.
  This is a remarkable achievement.
  This result is explored by many authors under the rubric of 
@@ -913,19 +993,24 @@ maximum entropy principles
 \end_layout
 
 \begin_layout Standard
-There are two things that Yuret does not do, and apparently no one else
- of that era, exploring variations on this theme, seem to explore or discover.
- One is that there is a vector embedding, and that this embedding reproduces
- exactly the famous WORD2VEC result of King–Man+Woman=Queen.
- What's odd is that, chronologically, this result could have been discovered
- earlier, but wasn't.
- The second important step is that more complex structures can be recursively
- discovered.
+There are two things that Yuret does not do,
+ and apparently no one else of that era,
+ exploring variations on this theme,
+ seem to explore or discover.
+ One is that there is a vector embedding,
+ and that this embedding reproduces exactly the famous WORD2VEC result of King–Man+Woman=Queen.
+ What's odd is that,
+ chronologically,
+ this result could have been discovered earlier,
+ but wasn't.
+ The second important step is that more complex structures can be recursively discovered.
 \end_layout
 
 \begin_layout Standard
-First, lets look at the vector embedding.
- It is nearly trivial, once you see it.
+First,
+ lets look at the vector embedding.
+ It is nearly trivial,
+ once you see it.
  The vector to be written is 
 \begin_inset Formula 
 \[
@@ -935,20 +1020,23 @@ First, lets look at the vector embedding.
 \end_inset
 
 where the sum extends over all words in the vocabulary.
- Each word is associated with a basis vector, written here as 
+ Each word is associated with a basis vector,
+ written here as 
 \begin_inset Formula $\left|w_{a}\right\rangle $
 \end_inset
 
 .
- This is in the sense of the diagram up top, except that the graph is a
- trivial graph: it is just a single vertex, having the word as the vertex
- label.
+ This is in the sense of the diagram up top,
+ except that the graph is a trivial graph:
+ it is just a single vertex,
+ having the word as the vertex label.
  The 
 \begin_inset Formula $c_{a}$
 \end_inset
 
  are just floating–point numbers.
- To belabor the point, the sum over the vocabulary can be written as 
+ To belabor the point,
+ the sum over the vocabulary can be written as 
 \begin_inset Formula 
 \[
 \left|King\right\rangle =c_{dog}\left|dog\right\rangle +c_{tall}\left|tall\right\rangle +c_{other}\left|other\right\rangle +\cdots
@@ -965,15 +1053,19 @@ and the Ansatz is that the constants
 \end_inset
 
 .
- This gives a bona–fide vector, and, as a vector one can take dot products,
- and compute the cosine angles between them, and, when one takes care to
- normalize the vectors to unit length, one recovers the prototypical vector
- embedding result King–Man+Woman=Queen.
- This holds entirely without any appeal to RNN's or any of the other mechanics
- of deep learning.
- Nor is there any immediate need or appeals to free energy, Boltzmann distributi
-ons, Markov properties, integrated information theory, Tononi's Phi or any
- other advanced conceptual frameworks.
+ This gives a bona–fide vector,
+ and,
+ as a vector one can take dot products,
+ and compute the cosine angles between them,
+ and,
+ when one takes care to normalize the vectors to unit length,
+ one recovers the prototypical vector embedding result King–Man+Woman=Queen.
+ This holds entirely without any appeal to RNN's or any of the other mechanics of deep learning.
+ Nor is there any immediate need or appeals to free energy,
+ Boltzmann distributions,
+ Markov properties,
+ integrated information theory,
+ Tononi's Phi or any other advanced conceptual frameworks.
  It can be noted (should be noted) that 
 \begin_inset Formula $MI\left(w_{a},w_{b}\right)$
 \end_inset
@@ -986,7 +1078,8 @@ Markovian
 \begin_inset Quotes erd
 \end_inset
 
- in a certain sense, although just how is requires a much fuller theory.
+ in a certain sense,
+ although just how is requires a much fuller theory.
 \end_layout
 
 \begin_layout Standard
@@ -998,9 +1091,7 @@ obvious
 \begin_inset Quotes erd
 \end_inset
 
- extension to the maximum entropy principle that no one seems to make is
- that it can be extended to obtain the full dependency lexis that is the
- centerpiece of traditional linguistics.
+ extension to the maximum entropy principle that no one seems to make is that it can be extended to obtain the full dependency lexis that is the centerpiece of traditional linguistics.
  The basic idea is best illustrated with a very simple diagram:
 \end_layout
 
@@ -1027,12 +1118,11 @@ obvious
 \end_layout
 
 \begin_layout Standard
-The top row of the diagram show a parse obtained via Yuret's frequentist
- maximal MI parsing algorithm.
+The top row of the diagram show a parse obtained via Yuret's frequentist maximal MI parsing algorithm.
  The lower row merely applies a pair of scissors to cut the graph into jigsaws,
  and labels the cut ends so that they can be reconstructed.
- This disgram should be compared to the figure below, taken from the 1991
- paper describing Link Grammar (LG):
+ This disgram should be compared to the figure below,
+ taken from the 1991 paper describing Link Grammar (LG):
 \end_layout
 
 \begin_layout Standard
@@ -1063,10 +1153,12 @@ The top row of the diagram show a parse obtained via Yuret's frequentist
 
 \begin_layout Standard
 This figure explicitly shows the jigsaw connectors in a jigsaw–shape form.
- The point of Link Grammar is that if one abides by the rule that matching
- connectors must be mated according to the obvious matching rules, the generated
- sentences are always grammatical.
- The connectors are labelled with the letters D, S, O, standing for Determiner,
+ The point of Link Grammar is that if one abides by the rule that matching connectors must be mated according to the obvious matching rules,
+ the generated sentences are always grammatical.
+ The connectors are labelled with the letters D,
+ S,
+ O,
+ standing for Determiner,
  Subject and Object.
  The intransitive verb 
 \begin_inset Quotes eld
@@ -1076,7 +1168,8 @@ ran
 \begin_inset Quotes erd
 \end_inset
 
- must take a subject (which is a noun); the transitive verb 
+ must take a subject (which is a noun);
+ the transitive verb 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1088,7 +1181,8 @@ chased
 \end_layout
 
 \begin_layout Standard
-As a theory of grammar, Link Grammar 
+As a theory of grammar,
+ Link Grammar 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1096,10 +1190,13 @@ works
 \begin_inset Quotes erd
 \end_inset
 
-: it has fully developed and complete dictionaries for English, Russian
- and Thai.
- It has a demo dictionaries for German, Arabic and Persian and proof–of–concept
- dictionaries for Vietnamese, Turkish, Lithuanian and Indonesian.
+:
+ it has fully developed and complete dictionaries for English,
+ Russian and Thai.
+ It has a demo dictionaries for German,
+ Arabic and Persian and proof–of–concept dictionaries for Vietnamese,
+ Turkish,
+ Lithuanian and Indonesian.
  It works.
 \end_layout
 
@@ -1137,7 +1234,8 @@ A few quick remarks about notation are in order.
 \begin_layout Standard
 \noindent
 \align left
-The lexical entries, in conventional LG notation are
+The lexical entries,
+ in conventional LG notation are
 \begin_inset listings
 lstparams "basicstyle={\ttfamily}"
 inline false
@@ -1145,22 +1243,26 @@ status open
 
 \begin_layout Plain Layout
 
-	ball:  D- & O-;
+	ball:
+  D- & O-;
 \end_layout
 
 \begin_layout Plain Layout
 
-	Kevin: S+;
+	Kevin:
+ S+;
 \end_layout
 
 \begin_layout Plain Layout
 
-	the:   D+;
+	the:
+   D+;
 \end_layout
 
 \begin_layout Plain Layout
 
-	threw: S- & O+;
+	threw:
+ S- & O+;
 \end_layout
 
 \end_inset
@@ -1170,7 +1272,8 @@ status open
 
 \begin_layout Standard
 \noindent
-The capital letters, together with a 
+The capital letters,
+ together with a 
 \family typewriter
 +
 \family default
@@ -1178,7 +1281,8 @@ The capital letters, together with a
 \family typewriter
 -
 \family default
- sign, are called 
+ sign,
+ are called 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1186,7 +1290,8 @@ connectors
 \begin_inset Quotes erd
 \end_inset
 
-; a pair of connectors form a 
+;
+ a pair of connectors form a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1203,11 +1308,14 @@ link
 \family typewriter
 -
 \family default
- sign indicates a left–right directionality: for example, the 
+ sign indicates a left–right directionality:
+ for example,
+ the 
 \family typewriter
 S+
 \family default
- connector can only connect to the right; it must mate with an 
+ connector can only connect to the right;
+ it must mate with an 
 \family typewriter
 S-
 \family default
@@ -1216,8 +1324,7 @@ S-
 S
 \family default
  link.
- A valid parse exists if and only if all available connectors are paired
- up.
+ A valid parse exists if and only if all available connectors are paired up.
  The construction 
 \family typewriter
 S+ & O-
@@ -1230,12 +1337,15 @@ disjunct
 \begin_inset Quotes erd
 \end_inset
 
-; the name has a historical basis that is of no particular concern here.
- During parsing, all connectors in a disjunct must be satisfied.
+;
+ the name has a historical basis that is of no particular concern here.
+ During parsing,
+ all connectors in a disjunct must be satisfied.
 \end_layout
 
 \begin_layout Standard
-Each lexical entry is a word–disjunct pair; they are of the general form
+Each lexical entry is a word–disjunct pair;
+ they are of the general form
 \begin_inset listings
 lstparams "basicstyle={\ttfamily}"
 inline false
@@ -1243,7 +1353,8 @@ status open
 
 \begin_layout Plain Layout
 
-	word: A- & B+ & C+ & ...;
+	word:
+ A- & B+ & C+ & ...;
 \end_layout
 
 \end_inset
@@ -1253,8 +1364,8 @@ status open
 
 \begin_layout Standard
 This is the notation used in the original LG papers.
- It turns out that this is also an active topic of research in quantum computing
-; Bob Coecke gives a quantum algorithm that can parse LG in linear time.
+ It turns out that this is also an active topic of research in quantum computing;
+ Bob Coecke gives a quantum algorithm that can parse LG in linear time.
  The notation used in those papers would write 
 \begin_inset Formula 
 \[
@@ -1263,33 +1374,31 @@ This is the notation used in the original LG papers.
 
 \end_inset
 
-Please note that although the notation is quite different, the intended
- interpretation is exactly the same.
- This is not an accident: it turns out that algebraically, the system of
- jigsaw connectors forms a semi–commutative monoid; the internal logic of
- this category embeds a fragment of linear logic; this fragment is the same
- as that for history and trace monoids used to describe communicating computing
- networks, and the mutex locks needed to serialize access to data.
- But linear logic is the internal logic of dagger–compact categories, with
- are the categories that describe Hilbert spaces and quantum mechanics more
- generally.
- It is for this reason that one can discover quantum computing algorithms
- that perform linguistic parsing: the logic of jigsaw assembly is not just
- a subset of quantum, but is also the correct language for describing communicat
-ing computer processes and the message–passing between them.
- Informally, you can think of a jigsaw piece as a computer program, and
- the jigsaw connectors as the ports through which it can communicate.
+Please note that although the notation is quite different,
+ the intended interpretation is exactly the same.
+ This is not an accident:
+ it turns out that algebraically,
+ the system of jigsaw connectors forms a semi–commutative monoid;
+ the internal logic of this category embeds a fragment of linear logic;
+ this fragment is the same as that for history and trace monoids used to describe communicating computing networks,
+ and the mutex locks needed to serialize access to data.
+ But linear logic is the internal logic of dagger–compact categories,
+ with are the categories that describe Hilbert spaces and quantum mechanics more generally.
+ It is for this reason that one can discover quantum computing algorithms that perform linguistic parsing:
+ the logic of jigsaw assembly is not just a subset of quantum,
+ but is also the correct language for describing communicating computer processes and the message–passing between them.
+ Informally,
+ you can think of a jigsaw piece as a computer program,
+ and the jigsaw connectors as the ports through which it can communicate.
 \end_layout
 
 \begin_layout Standard
 This last paragraph consisted of a waterfall of jargon and buzzwords.
- The intent of this paragraph is to make the statement that the jigsaw paradigm
- is fundamental: it has algebraic properties that are exactly what is needed
- to describe a vast array of phenomena.
- The use of jigsaws for linguistics is noted as early as the 1960's; the
- utility for computing isn't noted till decades later, and the connection
- to quantum is not noted until the idea of string diagrams and the Mike
- Stay / John Baez 
+ The intent of this paragraph is to make the statement that the jigsaw paradigm is fundamental:
+ it has algebraic properties that are exactly what is needed to describe a vast array of phenomena.
+ The use of jigsaws for linguistics is noted as early as the 1960's;
+ the utility for computing isn't noted till decades later,
+ and the connection to quantum is not noted until the idea of string diagrams and the Mike Stay / John Baez 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1298,10 +1407,15 @@ Rosetta Stone
 \end_inset
 
  is written.
- Perhaps this sounds somehow deep and magical; actually, its not.
+ Perhaps this sounds somehow deep and magical;
+ actually,
+ its not.
  It is simply the observation that if you take a pair of scissors to a graph,
- and cut up the edges, but preserve the labels, you get jigsaws.
- Since, in a sense.
+ and cut up the edges,
+ but preserve the labels,
+ you get jigsaws.
+ Since,
+ in a sense.
  
 \begin_inset Quotes eld
 \end_inset
@@ -1310,7 +1424,8 @@ the universe is just a collection of objects and the relations between them
 \begin_inset Quotes erd
 \end_inset
 
-, it is not a surprise that 
+,
+ it is not a surprise that 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1334,7 +1449,8 @@ status open
 
 \begin_layout Plain Layout
 
-	ball: the- & threw-;
+	ball:
+ the- & threw-;
 \end_layout
 
 \end_inset
@@ -1354,7 +1470,8 @@ status open
 
 \begin_layout Plain Layout
 
-	ball: D- & O-;
+	ball:
+ D- & O-;
 \end_layout
 
 \end_inset
@@ -1363,8 +1480,13 @@ status open
 \end_layout
 
 \begin_layout Standard
-How can one get from individual words, to connector categories? Easy: clustering.
- On can again perform frequentist counting, obtain MI , compute cosine products,
+How can one get from individual words,
+ to connector categories?
+ Easy:
+ clustering.
+ On can again perform frequentist counting,
+ obtain MI ,
+ compute cosine products,
  and create clusters from the resulting 
 \begin_inset Quotes eld
 \end_inset
@@ -1374,15 +1496,21 @@ associative memory
 \end_inset
 
 .
- This has been done in the OpenCog Learn project, circa 2016–2020, and it
- works fine.
- The tooling for all this exists for the AtomSpace; however, it is now old,
- and there is good reason to redesign it from the ground up, as the next
- sections will review.
+ This has been done in the OpenCog Learn project,
+ circa 2016–2020,
+ and it works fine.
+ The tooling for all this exists for the AtomSpace;
+ however,
+ it is now old,
+ and there is good reason to redesign it from the ground up,
+ as the next sections will review.
 \end_layout
 
 \begin_layout Standard
-BTW, once again, one has embedding vectors: one can write (for example)
+BTW,
+ once again,
+ one has embedding vectors:
+ one can write (for example)
 \begin_inset Formula 
 \[
 \left|King\right\rangle =c_{1}\left|the\right\rangle \otimes\left|threw\right\rangle +c_{2}\left|ruled\right\rangle \otimes\left|Poland\right\rangle +\cdots
@@ -1394,8 +1522,10 @@ and after computing the constants
 \begin_inset Formula $c_{1},c_{2},\cdots$
 \end_inset
 
- appropriately, one will find, once again, that King–Man+Woman=Queen holds
- as a vector relation.
+ appropriately,
+ one will find,
+ once again,
+ that King–Man+Woman=Queen holds as a vector relation.
 \end_layout
 
 \begin_layout Subsection
@@ -1403,8 +1533,7 @@ Compositionality and recursion
 \end_layout
 
 \begin_layout Standard
-The jigsaw paradigm allows the structural ideas to be re–applied at higher
- layers of inference.
+The jigsaw paradigm allows the structural ideas to be re–applied at higher layers of inference.
  This is most easily illustrated with a pair of diagrams.
 \begin_inset VSpace defskip
 \end_inset
@@ -1441,10 +1570,11 @@ The jigsaw paradigm allows the structural ideas to be re–applied at higher
 \end_layout
 
 \begin_layout Standard
-The point being illustrated here is that smaller partial assemblages still
- present themselves as structures that can have relations between one–another,
+The point being illustrated here is that smaller partial assemblages still present themselves as structures that can have relations between one–another,
  with open connectors that can be joined together.
- As before, the relations are explicitly identified: the anaphore 
+ As before,
+ the relations are explicitly identified:
+ the anaphore 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1460,14 +1590,18 @@ Susan
 \begin_inset Quotes erd
 \end_inset
 
-, occurring earlier in the text.
- In principle, the same techniques applied at earlier stages to discover
- relationships (the pair–wise relationships between words, and the construction
- of a grammar) can be used again to discern structural relations at this
- higher, more abstract level.
- In principle, this can continue onwards, indefinitely, working at ever–higher
- abstraction layers.
- The above figures are still relatively concrete: 
+,
+ occurring earlier in the text.
+ In principle,
+ the same techniques applied at earlier stages to discover relationships (the pair–wise relationships between words,
+ and the construction of a grammar) can be used again to discern structural relations at this higher,
+ more abstract level.
+ In principle,
+ this can continue onwards,
+ indefinitely,
+ working at ever–higher abstraction layers.
+ The above figures are still relatively concrete:
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1476,11 +1610,11 @@ she
 \end_inset
 
  explicitly refers to someone.
- At the multi–paragraph or page level, the structural relationships may
- be at the abstraction level of a social encounter, and at the multi–page
- level, perhaps some romance or perhaps some adventure or murder mystery.
- It should be possible to recursively discern a web of explicit structural
- relationships between increasingly abstract elements.
+ At the multi–paragraph or page level,
+ the structural relationships may be at the abstraction level of a social encounter,
+ and at the multi–page level,
+ perhaps some romance or perhaps some adventure or murder mystery.
+ It should be possible to recursively discern a web of explicit structural relationships between increasingly abstract elements.
 \end_layout
 
 \begin_layout Standard
@@ -1491,15 +1625,16 @@ It should be possible
 \begin_inset Quotes erd
 \end_inset
 
-, of course, carries a lot of hope.
+,
+ of course,
+ carries a lot of hope.
  Code for working with word–pairs and grammatical structures is fully complete,
  debugged and works great.
  There's a docker container that puts all these software pieces together,
  you turn it on and go.
- Initial steps were taken to work the code base to be able to perform these
- higher levels of recursive abstraction.
- A raft of issues then presented themselves, and so it is appropriate to
- halt for a critique at this point.
+ Initial steps were taken to work the code base to be able to perform these higher levels of recursive abstraction.
+ A raft of issues then presented themselves,
+ and so it is appropriate to halt for a critique at this point.
 \end_layout
 
 \begin_layout Subsection
@@ -1508,25 +1643,32 @@ Present status and future directions
 
 \begin_layout Standard
 The theories and ideas presented above are old and well–established.
- The claims made, specifically about the vector representations, the behavior
- of the vector and matrix embeddings as a form of associative memory, and
- the ability to extract grammar, this has all been explored and demonstrated,
+ The claims made,
+ specifically about the vector representations,
+ the behavior of the vector and matrix embeddings as a form of associative memory,
+ and the ability to extract grammar,
+ this has all been explored and demonstrated,
  and it works.
- I've personally written up an extensive body of papers detailing both the
- theory and presenting the results, analyzing them and putting them in context.
- There is a mature body of code implemented in the AtomSpace to perform
- this counting, compute the MI, compute vector products, perform the high–dimens
-ional clustering to obtain categories.
- All this is attached to a generative system that can generate new sentences
- conforming to this grammar.
- Under it all, as a foundational layer, the AtomSpace can save and restore
- the graphs, weights and vectors to and from disk, and ship them around
- over the network, expose them on a network server.
- It works, but a critique is in order.
+ I've personally written up an extensive body of papers detailing both the theory and presenting the results,
+ analyzing them and putting them in context.
+ There is a mature body of code implemented in the AtomSpace to perform this counting,
+ compute the MI,
+ compute vector products,
+ perform the high–dimensional clustering to obtain categories.
+ All this is attached to a generative system that can generate new sentences conforming to this grammar.
+ Under it all,
+ as a foundational layer,
+ the AtomSpace can save and restore the graphs,
+ weights and vectors to and from disk,
+ and ship them around over the network,
+ expose them on a network server.
+ It works,
+ but a critique is in order.
 \end_layout
 
 \begin_layout Standard
-Some points, from narrow to broad:
+Some points,
+ from narrow to broad:
 \end_layout
 
 \begin_layout Itemize
@@ -1535,9 +1677,11 @@ The core foundation provided by the AtomSpace is solid.
 \end_layout
 
 \begin_layout Itemize
-The computation of MI and assorted products (cosine, Hamming, etc.) is implemente
-d as a library.
- It is matrix–oriented: vector elements 
+The computation of MI and assorted products (cosine,
+ Hamming,
+ etc.) is implemented as a library.
+ It is matrix–oriented:
+ vector elements 
 \begin_inset Formula $v_{i}$
 \end_inset
 
@@ -1545,9 +1689,9 @@ d as a library.
 \begin_inset Formula $M_{ij}$
 \end_inset
 
- are exposed; these use graphs as basis elements (as explained above) and
- the graph representation allows extremely sparse vectors and matrices (after
- all, 
+ are exposed;
+ these use graphs as basis elements (as explained above) and the graph representation allows extremely sparse vectors and matrices (after all,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1555,14 +1699,19 @@ Kings
 \begin_inset Quotes erd
 \end_inset
 
- are mostly not related to fire–hydrants, stars and Oolong tea.
+ are mostly not related to fire–hydrants,
+ stars and Oolong tea.
  Relationships are necessarily sparse.)
 \end_layout
 
 \begin_layout Itemize
-The library is just that: a library.
- It really should be represented as Atomese, that is, as a graph itself.
- That is, instead of saying that 
+The library is just that:
+ a library.
+ It really should be represented as Atomese,
+ that is,
+ as a graph itself.
+ That is,
+ instead of saying that 
 \begin_inset Formula $dot\left(v,w\right)$
 \end_inset
 
@@ -1574,7 +1723,8 @@ dot
 \begin_inset Quotes erd
 \end_inset
 
-, passing two vector arguments 
+,
+ passing two vector arguments 
 \begin_inset Formula $v$
 \end_inset
 
@@ -1582,8 +1732,10 @@ dot
 \begin_inset Formula $w$
 \end_inset
 
-, it should instead itself be represented as a graph, as a jigsaw, so that
- 
+,
+ it should instead itself be represented as a graph,
+ as a jigsaw,
+ so that 
 \begin_inset Formula $v$
 \end_inset
 
@@ -1591,7 +1743,9 @@ dot
 \begin_inset Formula $w$
 \end_inset
 
- are input jigsaw connectors, connecting to vectors, and 
+ are input jigsaw connectors,
+ connecting to vectors,
+ and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1599,114 +1753,138 @@ dot
 \begin_inset Quotes erd
 \end_inset
 
- is an output connector, connecting to anything that wants a real number
- as input.
+ is an output connector,
+ connecting to anything that wants a real number as input.
 \end_layout
 
 \begin_layout Itemize
-The goal of representing the algorithmic elements (dot products, Hamming
- distances, etc.) as jigsaws is so that meta–algorithms can themselves connect,
+The goal of representing the algorithmic elements (dot products,
+ Hamming distances,
+ etc.) as jigsaws is so that meta–algorithms can themselves connect,
  change and re-arrange what is connected to what.
- That is, although MI, the mutual information, is a good way to measure
- affinity, there are in fact a large number of similar measures, some of
- which might be more accurate, and others which might be faster.
- The idea is that these should not be explored by human software engineers
- vibe–coding with Claude, but by meta–algorithms, perhaps genetic algorithms,
+ That is,
+ although MI,
+ the mutual information,
+ is a good way to measure affinity,
+ there are in fact a large number of similar measures,
+ some of which might be more accurate,
+ and others which might be faster.
+ The idea is that these should not be explored by human software engineers vibe–coding with Claude,
+ but by meta–algorithms,
+ perhaps genetic algorithms,
  assembling these (jigsaw) pieces.
 \end_layout
 
 \begin_layout Itemize
-The above idea of implementing algorithms as processing pipelines is partly
- implemented; mostly implemented at the base layer.
- The generative parts, where pipeline elements can be reconnected by meta–algori
-thms, this has not been implemented.
- Both MOSES and AS-MOSES serve as a proof of concept of this idea, but need
- a fundamental redesign to be generally applicable.
- A later part of this paper will expand on this, but there is a mire of
- engineering and design issues to be encountered here.
+The above idea of implementing algorithms as processing pipelines is partly implemented;
+ mostly implemented at the base layer.
+ The generative parts,
+ where pipeline elements can be reconnected by meta–algorithms,
+ this has not been implemented.
+ Both MOSES and AS-MOSES serve as a proof of concept of this idea,
+ but need a fundamental redesign to be generally applicable.
+ A later part of this paper will expand on this,
+ but there is a mire of engineering and design issues to be encountered here.
 \end_layout
 
 \begin_layout Standard
 All of the above–described results are obtained by counting.
- None of the current counting algos run on GPU's, nor is it obvious how
- to port them to GPU's.
- This is an open, unresolved question.
- The primary strength of the LLM & transformer algos is that they are extremely
- parallelizable and can be implemented on GPU's very efficiently.
+ None of the current counting algos run on GPU's,
+ nor is it obvious how to port them to GPU's.
+ This is an open,
+ unresolved question.
+ The primary strength of the LLM & transformer algos is that they are extremely parallelizable and can be implemented on GPU's very efficiently.
  It is not at all clear how to do this for counting.
 \end_layout
 
 \begin_layout Standard
-The tease is even worse, in some ways: although vectors and vector embeddings
- appear, and there is more than just superficial resemblance to RNN's, the
- precise details of the correspondence remain shrouded in mist.
+The tease is even worse,
+ in some ways:
+ although vectors and vector embeddings appear,
+ and there is more than just superficial resemblance to RNN's,
+ the precise details of the correspondence remain shrouded in mist.
  Perhaps a strong correspondence can be made between the above tensor framework,
- and RNN's, and perhaps not.
- I have personally attempted to find such a correspondence, but haphazardly,
- with only a half–hearted effort, as my attention is focused elsewhere.
- Still, having such a correspondence would be a breakthrough, as it would
- build a bridge between LLM's that currently reign supreme, and more traditional
- symbolic computing.
+ and RNN's,
+ and perhaps not.
+ I have personally attempted to find such a correspondence,
+ but haphazardly,
+ with only a half–hearted effort,
+ as my attention is focused elsewhere.
+ Still,
+ having such a correspondence would be a breakthrough,
+ as it would build a bridge between LLM's that currently reign supreme,
+ and more traditional symbolic computing.
 \end_layout
 
 \begin_layout Subsection
-Perception, action and agency
+Perception,
+ action and agency
 \end_layout
 
 \begin_layout Standard
-This will be the topic of the next major section, but the motivation for
- it appears at this point, where one attempts to jump from the lower to
- the higher abstraction layers.
+This will be the topic of the next major section,
+ but the motivation for it appears at this point,
+ where one attempts to jump from the lower to the higher abstraction layers.
 \end_layout
 
 \begin_layout Standard
-Conventional training involves the force–feeding of a blob of text through
- an algorithmic system.
- For he Yuret pair–counting pipeline, it is just that: counting word pairs.
- Upon completion, the MI can be computed.
- After the MI has been computed, a second pass of the textual data can be
- made, this time performing Maximum Spanning Tree (MST) parsing (or Maximum
- Planar Graph (MPG) parsing).
- This time, the disjuncts are counted, and upon completion, the MI can be
- computed, and the resulting vectors placed into the lexis (specifically,
- the Link Grammar (LG) lexis) where it can be used to generate text (random
- grammatical sentences).
+Conventional training involves the force–feeding of a blob of text through an algorithmic system.
+ For he Yuret pair–counting pipeline,
+ it is just that:
+ counting word pairs.
+ Upon completion,
+ the MI can be computed.
+ After the MI has been computed,
+ a second pass of the textual data can be made,
+ this time performing Maximum Spanning Tree (MST) parsing (or Maximum Planar Graph (MPG) parsing).
+ This time,
+ the disjuncts are counted,
+ and upon completion,
+ the MI can be computed,
+ and the resulting vectors placed into the lexis (specifically,
+ the Link Grammar (LG) lexis) where it can be used to generate text (random grammatical sentences).
  Anaphora resolution would require a third pass.
- Each pass gets progressively longer, uses more CPU time and is a bit more
- fragile.
- The more abstract things get, the vaguer and messier the results, the less
- certain they seem to be, the less accurate.
- Perhaps a larger corpus solves all? Perhaps a longer training time? These
- issues sound exactly like the kinds of issues faced by LLM's, transformers,
+ Each pass gets progressively longer,
+ uses more CPU time and is a bit more fragile.
+ The more abstract things get,
+ the vaguer and messier the results,
+ the less certain they seem to be,
+ the less accurate.
+ Perhaps a larger corpus solves all?
+ Perhaps a longer training time?
+ These issues sound exactly like the kinds of issues faced by LLM's,
+ transformers,
  and almost all other machine learning systems.
- The simple answer is to just throw more data at it, more CPU, crunch longer
- and harder.
+ The simple answer is to just throw more data at it,
+ more CPU,
+ crunch longer and harder.
  But there is a better way.
 \end_layout
 
 \begin_layout Standard
-One desire is to use feedback from higher layers to correct or amplify results
- from lower layers.
+One desire is to use feedback from higher layers to correct or amplify results from lower layers.
  The pipeline approach does not allow this.
- Another desire is to continue reading more text, feeding and expanding
- the lower layers, even as processing continues at the higher layers.
- Again, pipelineing does not allow this.
- Incremental ingestion of data also means that things like MI must also
- be updated incrementally; the pipeline computes it in one giant batch job
- (that takes hours to run, depending on the dataset size).Incremental ingestion
- also suggests that partial results should be saved to disk every so often.
- For several reasons: The system may crash or lose electric power; one wants
- to save at least some results.
- A bug might render later data into garbage; one would like to be able to
- rewind to earlier forms, without having to restart from scratch.
- Finally, the system seems to work best if the training done at each stage
- is on the same dataset as the earlier stages: the grammar induction should
- be done on the same texts as for which word–pair counting was done.
+ Another desire is to continue reading more text,
+ feeding and expanding the lower layers,
+ even as processing continues at the higher layers.
+ Again,
+ pipelineing does not allow this.
+ Incremental ingestion of data also means that things like MI must also be updated incrementally;
+ the pipeline computes it in one giant batch job (that takes hours to run,
+ depending on the dataset size).Incremental ingestion also suggests that partial results should be saved to disk every so often.
+ For several reasons:
+ The system may crash or lose electric power;
+ one wants to save at least some results.
+ A bug might render later data into garbage;
+ one would like to be able to rewind to earlier forms,
+ without having to restart from scratch.
+ Finally,
+ the system seems to work best if the training done at each stage is on the same dataset as the earlier stages:
+ the grammar induction should be done on the same texts as for which word–pair counting was done.
 \end_layout
 
 \begin_layout Standard
-All this put together suggests that there should be some sensori–motor system
- put into place.
+All this put together suggests that there should be some sensori–motor system put into place.
  The 
 \begin_inset Quotes eld
 \end_inset
@@ -1725,7 +1903,8 @@ motor
 \end_inset
 
  part of this is as simple as changing directories.
- Finally, there is a very minimalist 
+ Finally,
+ there is a very minimalist 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1733,28 +1912,39 @@ world model
 \begin_inset Quotes erd
 \end_inset
 
-: it is very small and simple: it consists of filenames (filepaths, or URL's),
- plus a collection of bit–flags: has pair counting been run on this file,
- yet? Has MI been done yet, for this pair data? What about grammar induction?
- Anaphora or higher level counting? And maybe more: when is the last time
- this file was touched? Perhaps this file is contains similar contents to
- another file? Perhaps even its an exact duplicate (because we're crawling
- over web–site mirrors, or backup copies, or other reasons for duplicated
- files?)
+:
+ it is very small and simple:
+ it consists of filenames (filepaths,
+ or URL's),
+ plus a collection of bit–flags:
+ has pair counting been run on this file,
+ yet?
+ Has MI been done yet,
+ for this pair data?
+ What about grammar induction?
+ Anaphora or higher level counting?
+ And maybe more:
+ when is the last time this file was touched?
+ Perhaps this file is contains similar contents to another file?
+ Perhaps even its an exact duplicate (because we're crawling over web–site mirrors,
+ or backup copies,
+ or other reasons for duplicated files?)
 \end_layout
 
 \begin_layout Standard
 These three parts put together suggests that there is (should be) an agent:
- this agent perceives files, remembers basic facts about files, and makes
- decisions to change directories, or to revisit files for a second or third
- scan.
+ this agent perceives files,
+ remembers basic facts about files,
+ and makes decisions to change directories,
+ or to revisit files for a second or third scan.
 \end_layout
 
 \begin_layout Standard
-Once one has the idea of a file system agent firmly rooted in mind, it is
- easy to imagine more general agents: perhaps chatbot agents that can hop
- onto chat channels, or twitter/bluesky/facebook agents that can work with
- social media posts, 
+Once one has the idea of a file system agent firmly rooted in mind,
+ it is easy to imagine more general agents:
+ perhaps chatbot agents that can hop onto chat channels,
+ or twitter/bluesky/facebook agents that can work with social media posts,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1770,38 +1960,52 @@ moving
 \begin_inset Quotes erd
 \end_inset
 
- (going to different channels, or following different users), and remembering
- some basic status info about the interactions so far.
+ (going to different channels,
+ or following different users),
+ and remembering some basic status info about the interactions so far.
  
 \end_layout
 
 \begin_layout Standard
-This naturally leads to the next major question: what is the appropriate
- design for an agent, in general? What is a generic description of sensory
- capabilities, and movement capabilities? Hand in hand with these questions
- comes the realization that such agents cannot be hand–coded, and must not
- be engineer–designed.
+This naturally leads to the next major question:
+ what is the appropriate design for an agent,
+ in general?
+ What is a generic description of sensory capabilities,
+ and movement capabilities?
+ Hand in hand with these questions comes the realization that such agents cannot be hand–coded,
+ and must not be engineer–designed.
  This in turn implies that the agents must be coded in Atomese themselves,
- represented as graphs, as dataflow arrangements of jigsaw pieces, with
- the specific agents being generated according to a grammar of what parts
- of the agent pipeline can be connected to what (e.g.
- vector outputs must be connected to vector inputs; things that expect strings
- must not be connected to things that expect floats, and so on: there is
- a connectivity grammar, of what can be attached to what.
+ represented as graphs,
+ as dataflow arrangements of jigsaw pieces,
+ with the specific agents being generated according to a grammar of what parts of the agent pipeline can be connected to what (e.g.
+ vector outputs must be connected to vector inputs;
+ things that expect strings must not be connected to things that expect floats,
+ and so on:
+ there is a connectivity grammar,
+ of what can be attached to what.
 \end_layout
 
 \begin_layout Standard
-That is, agents should be auto–generated, explored and measured for quality,
- accuracy, speed and effectiveness; mutated, assembled and recombined, according
- to the the alloweed grammatical rules.
+That is,
+ agents should be auto–generated,
+ explored and measured for quality,
+ accuracy,
+ speed and effectiveness;
+ mutated,
+ assembled and recombined,
+ according to the the alloweed grammatical rules.
  This opens a new vista of design and representation questions.
- This is just a first taste, a later section will go into more detail.
- BTW, portions of such an agent system have already been prototyped in Atomese.
+ This is just a first taste,
+ a later section will go into more detail.
+ BTW,
+ portions of such an agent system have already been prototyped in Atomese.
 \end_layout
 
 \begin_layout Standard
-But first, lets get back to some baser, more grounded topics, to give a
- better idea of what other kinds of processing might be encountered.
+But first,
+ lets get back to some baser,
+ more grounded topics,
+ to give a better idea of what other kinds of processing might be encountered.
 \end_layout
 
 \begin_layout Subsection
@@ -1809,8 +2013,8 @@ Vision
 \end_layout
 
 \begin_layout Standard
-The above uses natural language and grammar as the base example; but the
- concept generalizes.
+The above uses natural language and grammar as the base example;
+ but the concept generalizes.
  This is most easily communicated in a few pictures.
 \end_layout
 
@@ -1849,22 +2053,30 @@ The above uses natural language and grammar as the base example; but the
 
 \begin_layout Standard
 Shapes have a structural grammar.
- The connectors can specify location, color, shape, texture.
- It's not about pixels, its about element groupings into recognizable, recurring
- arrangements.
+ The connectors can specify location,
+ color,
+ shape,
+ texture.
+ It's not about pixels,
+ its about element groupings into recognizable,
+ recurring arrangements.
  
 \end_layout
 
 \begin_layout Standard
 It is also explicitly symbolic.
  Each jigsaw piece identifies a specific element of the picture.
- It is identified in a form that we humans are already comfortable in working
- with: the round thing in middle, that's the yellow light.
- As a jigsaw, and its relationship with it's surroundings, it's accessible
- to reasoning, to logic.
- This is very different from the situation with neural nets, where you have
- collections of weights to deal with, and not the objects, the symbolic
- representations of the objects themselves.
+ It is identified in a form that we humans are already comfortable in working with:
+ the round thing in middle,
+ that's the yellow light.
+ As a jigsaw,
+ and its relationship with it's surroundings,
+ it's accessible to reasoning,
+ to logic.
+ This is very different from the situation with neural nets,
+ where you have collections of weights to deal with,
+ and not the objects,
+ the symbolic representations of the objects themselves.
 \end_layout
 
 \begin_layout Subsection
@@ -1872,9 +2084,8 @@ Sound
 \end_layout
 
 \begin_layout Standard
-The diagram on the left is a sonogram recording of a whale song; on the
- right is a jigsaw representation of an audio filter sequence that is capable
- of recognizing the form and structure of that whale–song.
+The diagram on the left is a sonogram recording of a whale song;
+ on the right is a jigsaw representation of an audio filter sequence that is capable of recognizing the form and structure of that whale–song.
 \begin_inset VSpace defskip
 \end_inset
 
@@ -1907,14 +2118,13 @@ The diagram on the left is a sonogram recording of a whale song; on the
 \end_layout
 
 \begin_layout Standard
-The goal of this illustration is to show that audio elements can also be
- decomposed into elements of a symbol nature.
- Roughly speaking, the diagram on the right can be thought of as a representatio
-n of an electronic circuit, an electronic wiring diagram, a way of hooking
- together digital signal processing (DSP) functions capable of triggering
- on the whale song.
- The claim is that the jigsaw paradigm has legs: its a generic concept applicabl
-e in broad domains.
+The goal of this illustration is to show that audio elements can also be decomposed into elements of a symbol nature.
+ Roughly speaking,
+ the diagram on the right can be thought of as a representation of an electronic circuit,
+ an electronic wiring diagram,
+ a way of hooking together digital signal processing (DSP) functions capable of triggering on the whale song.
+ The claim is that the jigsaw paradigm has legs:
+ its a generic concept applicable in broad domains.
 \end_layout
 
 \begin_layout Subsection
@@ -1927,15 +2137,21 @@ The vision and sound processing diagrams above present several new challenges.
 \end_layout
 
 \begin_layout Itemize
-The library that implements the MI, dot–product, Hamming–distance, etc.
+The library that implements the MI,
+ dot–product,
+ Hamming–distance,
+ etc.
  functions is only partly pipelined up.
  It is not GPU–ready.
- Optimization, data flow, performance is a concern.
+ Optimization,
+ data flow,
+ performance is a concern.
 \end_layout
 
 \begin_layout Itemize
-The collection of trees must be equi-dstributed on a manifold, aka MaxEnt
- aka free energy, etc.
+The collection of trees must be equi-dstributed on a manifold,
+ aka MaxEnt aka free energy,
+ etc.
  
 \end_layout
 
@@ -1952,26 +2168,32 @@ Part Two
 \end_layout
 
 \begin_layout Standard
-Outline, to be written and expanded on.
+Outline,
+ to be written and expanded on.
  
 \end_layout
 
 \begin_layout Itemize
-Sensory perception in any domain, which can be arbitrarily abstract, e.g.
- the perception of movie plots, the perception of basketball defense strategies,
- the perception of geopolitical relations, the perception of abstract algebraic
- mathematical objeccts.
+Sensory perception in any domain,
+ which can be arbitrarily abstract,
+ e.g.
+ the perception of movie plots,
+ the perception of basketball defense strategies,
+ the perception of geopolitical relations,
+ the perception of abstract algebraic mathematical objeccts.
 \end_layout
 
 \begin_layout Itemize
-Movement, as a choice of where attention should be focused, of moving from
- one topic to the next.
+Movement,
+ as a choice of where attention should be focused,
+ of moving from one topic to the next.
  Attention as a form of movement through the abstract sensory space.
 \end_layout
 
 \begin_layout Itemize
-Agency as a individual having the ability perceive and move, and having
- a finite amount of internal state, the 
+Agency as a individual having the ability perceive and move,
+ and having a finite amount of internal state,
+ the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -1979,13 +2201,16 @@ world model
 \begin_inset Quotes erd
 \end_inset
 
-, of the exterior world.
- The exterior world is unbounded, thus, the limited finite model of the
- agent is necessarily incomplete.
+,
+ of the exterior world.
+ The exterior world is unbounded,
+ thus,
+ the limited finite model of the agent is necessarily incomplete.
 \end_layout
 
 \begin_layout Itemize
-Example: a text agent.
+Example:
+ a text agent.
  It can 
 \begin_inset Quotes eld
 \end_inset
@@ -1994,7 +2219,8 @@ perceive
 \begin_inset Quotes erd
 \end_inset
 
- file contents, it can 
+ file contents,
+ it can 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2002,7 +2228,8 @@ move
 \begin_inset Quotes erd
 \end_inset
 
- by changing directories (changing URL's, 
+ by changing directories (changing URL's,
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2010,10 +2237,14 @@ crawling the web
 \begin_inset Quotes erd
 \end_inset
 
-) and has a finite state: e.g.
- URL/file file:/usr/include/some/where has been read, split, tokenized and
- counted at the first level, but second stage has not been done; size of
- tile is 4321 bytes, and file contents is gziped utf8 text.
+) and has a finite state:
+ e.g.
+ URL/file file:/usr/include/some/where has been read,
+ split,
+ tokenized and counted at the first level,
+ but second stage has not been done;
+ size of tile is 4321 bytes,
+ and file contents is gziped utf8 text.
  This is the agents 
 \begin_inset Quotes eld
 \end_inset
@@ -2034,7 +2265,8 @@ external world
 \end_layout
 
 \begin_layout Itemize
-Agents are composed of sub–agents, and it is recursively agents 
+Agents are composed of sub–agents,
+ and it is recursively agents 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2042,17 +2274,27 @@ all the way down
 \begin_inset Quotes erd
 \end_inset
 
-, e.g.
- humans have a kidney, liver, heart, muscles that function cooperatively.
- The kidney is built of cells, organized into a social structure suitable
- for renal function.
- Each cell is built of mitochondria, centrioles, endoplasmic reticulum,
+,
+ e.g.
+ humans have a kidney,
+ liver,
+ heart,
+ muscles that function cooperatively.
+ The kidney is built of cells,
+ organized into a social structure suitable for renal function.
+ Each cell is built of mitochondria,
+ centrioles,
+ endoplasmic reticulum,
  etc.
  that function as individual agents operating in a cooperative level.
- Each of these are built of biomolecults, some kilodalton in weight, operating
- according to the principles of n-wave interactions, e.g.
- certain shapes of certain molcules fit, like a key in lock, due to not
- just the 3D shape, but the spectral vibrational electromagnetic properties.
+ Each of these are built of biomolecults,
+ some kilodalton in weight,
+ operating according to the principles of n-wave interactions,
+ e.g.
+ certain shapes of certain molcules fit,
+ like a key in lock,
+ due to not just the 3D shape,
+ but the spectral vibrational electromagnetic properties.
  I.e.
  the molecules 
 \begin_inset Quotes eld
@@ -2062,7 +2304,8 @@ perceive
 \begin_inset Quotes erd
 \end_inset
 
- shape, and the molecules 
+ shape,
+ and the molecules 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2070,7 +2313,8 @@ move
 \begin_inset Quotes erd
 \end_inset
 
- to conform, and they have a 
+ to conform,
+ and they have a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2079,21 +2323,29 @@ world model
 \end_inset
 
  indicating a past path (including hysteresis) to get to the present shape.
- In short, its agents all the way down.
+ In short,
+ its agents all the way down.
 \end_layout
 
 \begin_layout Itemize
-Its also agents all the way up: humans organize into social groups, corporations
-, institutions, political groupings, etc.
+Its also agents all the way up:
+ humans organize into social groups,
+ corporations,
+ institutions,
+ political groupings,
+ etc.
  which also exhibit agential properties.
 \end_layout
 
 \begin_layout Itemize
-There is a basic mathematical description of agency in a category–theoretic
- framework, developed by Greg Merideth; its a half–dozen algebraic structures
- and a dozen relations that capture the idea of sensing, movement, attentional
- focus, and having a world mode.
- As always, anything expressible algebraically is always 
+There is a basic mathematical description of agency in a category–theoretic framework,
+ developed by Greg Merideth;
+ its a half–dozen algebraic structures and a dozen relations that capture the idea of sensing,
+ movement,
+ attentional focus,
+ and having a world mode.
+ As always,
+ anything expressible algebraically is always 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2101,8 +2353,8 @@ easy
 \begin_inset Quotes erd
 \end_inset
 
- to turn into functional computer software, simply because the algebraic
- preciseness means that it is clear how to write matching code.
+ to turn into functional computer software,
+ simply because the algebraic preciseness means that it is clear how to write matching code.
 \end_layout
 
 \begin_layout Itemize
@@ -2114,10 +2366,10 @@ jigsaw pieces
 \begin_inset Quotes erd
 \end_inset
 
-; the category–theoretic algebraic structure of agency is just a collection
- of a dozen or so jigsaw pieces that fit together.
- The various topics, techniques and generative algos touched on in part
- one can be deployed in this domain as well.
+;
+ the category–theoretic algebraic structure of agency is just a collection of a dozen or so jigsaw pieces that fit together.
+ The various topics,
+ techniques and generative algos touched on in part one can be deployed in this domain as well.
  This is how we get to 
 \begin_inset Quotes eld
 \end_inset
@@ -2126,17 +2378,16 @@ its agents all the way down
 \begin_inset Quotes erd
 \end_inset
 
-, but also that 
+,
+ but also that 
 \begin_inset Quotes eld
 \end_inset
 
-the structures have specific shapes and attachment affinities of what can
- connect to what.
+the structures have specific shapes and attachment affinities of what can connect to what.
 \end_layout
 
 \begin_layout Itemize
-The Per Bak model of a sand–pile at the self–organized critical point seems
- to be the appropriate inspiration for 
+The Per Bak model of a sand–pile at the self–organized critical point seems to be the appropriate inspiration for 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2147,7 +2398,9 @@ what life is
 .
  Recall the sand–pile model.
  Grains of sand are dropped (at one location) until a hill develops.
- As the hill grows, the slop of the sides reaches an angle, called the 
+ As the hill grows,
+ the slop of the sides reaches an angle,
+ called the 
 \begin_inset Quotes erd
 \end_inset
 
@@ -2156,10 +2409,15 @@ critical angle
 \end_inset
 
 .
- At this angle, avalanches occur at all scales: many small avalanches, some
- medium–sized ones, and rarely, large avalanches.
- As sand-grains continue to be dropped, the slope remains the same: this
- is the so-called 
+ At this angle,
+ avalanches occur at all scales:
+ many small avalanches,
+ some medium–sized ones,
+ and rarely,
+ large avalanches.
+ As sand-grains continue to be dropped,
+ the slope remains the same:
+ this is the so-called 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2167,15 +2425,19 @@ self–organized criticality
 \begin_inset Quotes erd
 \end_inset
 
-: the slope stays near the critical point, despite avalanches, despite additions
- of new grains of sand.
+:
+ the slope stays near the critical point,
+ despite avalanches,
+ despite additions of new grains of sand.
 \end_layout
 
 \begin_layout Itemize
-The biological inspiration is that the grains of sand are replaced by jigsaw
- pieces, with either fit, or don't, and build up into structures, but eventually
- reach a critical point of being unable to sustain further growth at that
- scale, and must fracture into smaller consistent functional units.
+The biological inspiration is that the grains of sand are replaced by jigsaw pieces,
+ with either fit,
+ or don't,
+ and build up into structures,
+ but eventually reach a critical point of being unable to sustain further growth at that scale,
+ and must fracture into smaller consistent functional units.
  These functional units are the 
 \begin_inset Quotes eld
 \end_inset
@@ -2184,12 +2446,15 @@ agents
 \begin_inset Quotes erd
 \end_inset
 
-; the agents form the functional units at the next–higher layer of abstraction.
+;
+ the agents form the functional units at the next–higher layer of abstraction.
 \end_layout
 
 \begin_layout Itemize
-A conventional, traditional conception of AI/AGI is, for example, a system
- capable of 
+A conventional,
+ traditional conception of AI/AGI is,
+ for example,
+ a system capable of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2198,22 +2463,25 @@ abstract reasoning
 \end_inset
 
 .
- In formal logic, one has collections of axioms, and theorem provers that
- can recombine axioms to arrive at proofs: inferences, deductions, abductions,
+ In formal logic,
+ one has collections of axioms,
+ and theorem provers that can recombine axioms to arrive at proofs:
+ inferences,
+ deductions,
+ abductions,
  etc.
  The axioms and the inferences rules are both examples of jigsaw–pieces;
- the assembled proof is a collection of jigsaws assembled according to the
- affinity rules for the jigsaws (i.e.
+ the assembled proof is a collection of jigsaws assembled according to the affinity rules for the jigsaws (i.e.
  one can only use some particular inference rule with only certain inputs,
  to create other outputs.)
 \end_layout
 
 \begin_layout Itemize
-The traditional issue of using formal logic/theorem proving as a basis for
- AI/AGI is that human thinking is not axiomatic, and does not conform to
- the formal systems of e.g.
- Aristotelian logic (or of predicate logic, or of any of dozens of other
- kinds of logic): human 
+The traditional issue of using formal logic/theorem proving as a basis for AI/AGI is that human thinking is not axiomatic,
+ and does not conform to the formal systems of e.g.
+ Aristotelian logic (or of predicate logic,
+ or of any of dozens of other kinds of logic):
+ human 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2233,9 +2501,10 @@ common sense
 \begin_inset Quotes erd
 \end_inset
 
- can be arrived as an agglomeration of events, relations and correlations,
- decomposed into jigsaw pieces as explained in part one, and rearranged
- into functional agglomerations that work 
+ can be arrived as an agglomeration of events,
+ relations and correlations,
+ decomposed into jigsaw pieces as explained in part one,
+ and rearranged into functional agglomerations that work 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2243,7 +2512,8 @@ most of the time
 \begin_inset Quotes erd
 \end_inset
 
-, in conventional settings with conventional sensory inputs and tasks.
+,
+ in conventional settings with conventional sensory inputs and tasks.
  
 \end_layout
 
@@ -2256,8 +2526,9 @@ rough and ready
 \begin_inset Quotes erd
 \end_inset
 
- assemblages self–organizes to a critical state, where each new observation
- either conforms to a pattern, or forces a re–structuring of 
+ assemblages self–organizes to a critical state,
+ where each new observation either conforms to a pattern,
+ or forces a re–structuring of 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2265,9 +2536,7 @@ what is known
 \begin_inset Quotes erd
 \end_inset
 
- (if you are open–minded) or flat–out rejection (if you are closed–minded)
- or unwarranted incorporation into your belief system (if you are gullible)
- or flat–out rejection (because the new evidence is 
+ (if you are open–minded) or flat–out rejection (if you are closed–minded) or unwarranted incorporation into your belief system (if you are gullible) or flat–out rejection (because the new evidence is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2275,10 +2544,14 @@ just plain wrong
 \begin_inset Quotes erd
 \end_inset
 
-) I'm using human psychological terms in this last sentence, but the intent
- is that this is happening at the agential level: all agents, at all size
- scales, are accumulating new sensory inputs, treating them as jigsaws,
- which either incorporate into the existing structure, or don't.
+) I'm using human psychological terms in this last sentence,
+ but the intent is that this is happening at the agential level:
+ all agents,
+ at all size scales,
+ are accumulating new sensory inputs,
+ treating them as jigsaws,
+ which either incorporate into the existing structure,
+ or don't.
  This is an update of the 
 \begin_inset Quotes eld
 \end_inset
@@ -2287,14 +2560,19 @@ world model
 \begin_inset Quotes erd
 \end_inset
 
-, and there may be movement or changes in attentional focus, as a result.
+,
+ and there may be movement or changes in attentional focus,
+ as a result.
 \end_layout
 
 \begin_layout Itemize
-Examples of avalanches, at the human level, are nervous breakdowns (in the
- classic 19th century psychological sense: you've built your entire world
- around a belief in your husband/wife/partner, who has betrayed you.) Non–painful
-, medium–sized avalanches include the epiphany, the 
+Examples of avalanches,
+ at the human level,
+ are nervous breakdowns (in the classic 19th century psychological sense:
+ you've built your entire world around a belief in your husband/wife/partner,
+ who has betrayed you.) Non–painful,
+ medium–sized avalanches include the epiphany,
+ the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2302,17 +2580,22 @@ a–ha
 \begin_inset Quotes erd
 \end_inset
 
- moment, where the last bit of evidence falls into place, re–arranging into
- a brand new understanding.
- Major avalanches include the religious transcendental experience: the ineffable
- experience,, Moses and the burning bush, inefffable precsiely because the
- restructuring is so profound that there is no way to put it into words.
- Moses starts as an ordinary man, and returns with the deep and fundamental
- realization that the foundations of moral, ethical behavior can be structured
- on Ten Commandments.
- Where did these come from? Inexplicable; he spoke to God.
- In the structuralist vantage? It was an major avalanche, restructuring
- the fundamental relationships between 
+ moment,
+ where the last bit of evidence falls into place,
+ re–arranging into a brand new understanding.
+ Major avalanches include the religious transcendental experience:
+ the ineffable experience,,
+ Moses and the burning bush,
+ inefffable precsiely because the restructuring is so profound that there is no way to put it into words.
+ Moses starts as an ordinary man,
+ and returns with the deep and fundamental realization that the foundations of moral,
+ ethical behavior can be structured on Ten Commandments.
+ Where did these come from?
+ Inexplicable;
+ he spoke to God.
+ In the structuralist vantage?
+ It was an major avalanche,
+ restructuring the fundamental relationships between 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2320,18 +2603,18 @@ what is true
 \begin_inset Quotes erd
 \end_inset
 
- into a new and stable form (the Ten Commandments) that can support a weight
- that the earlier form could not (a random hodge–podge of life lessons in
- community behaviors, misdemeanors, crimes, wholesome upright behavior and
- heroic deeds.)
+ into a new and stable form (the Ten Commandments) that can support a weight that the earlier form could not (a random hodge–podge of life lessons in community behaviors,
+ misdemeanors,
+ crimes,
+ wholesome upright behavior and heroic deeds.)
 \end_layout
 
 \begin_layout Itemize
-Examples of avalanches at the superhuman level include financial crises
- and war, as well as e.g.
+Examples of avalanches at the superhuman level include financial crises and war,
+ as well as e.g.
  the industrial revolution.
- Avalanches at the subhuman biological level include assorted medical conditions
-, both positive (e.g.
+ Avalanches at the subhuman biological level include assorted medical conditions,
+ both positive (e.g.
  growth) and negative.
  Again 
 \begin_inset Quotes eld
@@ -2341,7 +2624,8 @@ its agents all the way down
 \begin_inset Quotes erd
 \end_inset
 
-, and 
+,
+ and 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2353,9 +2637,8 @@ its self–organized criticality all the way down
 \end_layout
 
 \begin_layout Itemize
-The structuralist, algebraic approach of working with jigsaws appears to
- be a good way to capture the concept of structure and relationships between
- 
+The structuralist,
+ algebraic approach of working with jigsaws appears to be a good way to capture the concept of structure and relationships between 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2363,7 +2646,8 @@ things
 \begin_inset Quotes erd
 \end_inset
 
-, explaining how/why 
+,
+ explaining how/why 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2371,20 +2655,24 @@ life is living
 \begin_inset Quotes erd
 \end_inset
 
-, while also being sufficiently formal that it is convertable into functional
- digital computer software.
+,
+ while also being sufficiently formal that it is convertable into functional digital computer software.
 \end_layout
 
 \begin_layout Itemize
-Disclaimers: large parts of this section are hypothetical and speculative.
- Actual computer implementations my very rapidly encounter combinatorial
- explosions and scaling limits, preventing anything beyond toy models from
- being workable.
- Still, there's hope: deep–learning neural nets also had scaling problems
- and combinatorial explosion problems, until we threw a few tens of millions
- of GPU's at it.
+Disclaimers:
+ large parts of this section are hypothetical and speculative.
+ Actual computer implementations my very rapidly encounter combinatorial explosions and scaling limits,
+ preventing anything beyond toy models from being workable.
+ Still,
+ there's hope:
+ deep–learning neural nets also had scaling problems and combinatorial explosion problems,
+ until we threw a few tens of millions of GPU's at it.
  The raw compute power tipped the balance.
- Well, that, and the discovery of certain algos, such as back–propagation.
+ Well,
+ that,
+ and the discovery of certain algos,
+ such as back–propagation.
 \end_layout
 
 \begin_layout Standard
@@ -2401,8 +2689,7 @@ Executive summary
 \end_layout
 
 \begin_layout Standard
-Automating the process of discovering equivalences between different computation
-al frameworks.
+Automating the process of discovering equivalences between different computational frameworks.
  The goal of this automation is to find 
 \begin_inset Quotes eld
 \end_inset
@@ -2411,7 +2698,8 @@ effective
 \begin_inset Quotes erd
 \end_inset
 
- algos and architectures that optimize the trade–offs between space, time,
+ algos and architectures that optimize the trade–offs between space,
+ time,
  parallelism and communication costs.
 \end_layout
 
@@ -2420,10 +2708,12 @@ Text
 \end_layout
 
 \begin_layout Standard
-I've recently been pointed at the quad–store, the subtlety of which I had
- not previously appreciated.
- It is a row–column table, fixed at four columns.
- I can store both graphs, by using two columns for the edge head and tail,
+I've recently been pointed at the quad–store,
+ the subtlety of which I had not previously appreciated.
+ It is a row–column table,
+ fixed at four columns.
+ I can store both graphs,
+ by using two columns for the edge head and tail,
  and two more columns for 
 \begin_inset Quotes eld
 \end_inset
@@ -2432,18 +2722,24 @@ other things
 \begin_inset Quotes erd
 \end_inset
 
-: edge colors, for example, but also graph labels, so that an indicated
- graph (all colored a single uniform color) can correspond to a vertex,
+:
+ edge colors,
+ for example,
+ but also graph labels,
+ so that an indicated graph (all colored a single uniform color) can correspond to a vertex,
  and thus used to represent a certain form of hypergraph.
- It might not be the most efficient, fastest or easiest way to store a graph,
+ It might not be the most efficient,
+ fastest or easiest way to store a graph,
  but it is certainly simple and direct.
 \end_layout
 
 \begin_layout Standard
 The structure of this table can be axiomatized.
- Using conventional axiomatics for directed graphs, requiring two columns,
+ Using conventional axiomatics for directed graphs,
+ requiring two columns,
  plus two (as of now) unspecified extra columns.
- From this, we can define a 
+ From this,
+ we can define a 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2460,16 +2756,17 @@ literal "false"
 \begin_inset Quotes erd
 \end_inset
 
-, or rather, a generalization thereof.
+,
+ or rather,
+ a generalization thereof.
  
 \end_layout
 
 \begin_layout Standard
-Accompanying the axiomatization of the quad–store is an accounting of the
- space–time usage/performance of performing access.
+Accompanying the axiomatization of the quad–store is an accounting of the space–time usage/performance of performing access.
  Part of the secret of the quad–store is that one has a collection of maps,
- and indexes for those maps (indexes providing rapid lookup/access, instead
- of brute–force search) that give all the different ways of 
+ and indexes for those maps (indexes providing rapid lookup/access,
+ instead of brute–force search) that give all the different ways of 
 \begin_inset CommandInset href
 LatexCommand href
 name "currying"
@@ -2486,8 +2783,9 @@ literal "false"
 
 \end_inset
 
-Below is a crude tabulation (TODO: there's a conventional notation and expositio
-n for this, which I don't have at my fingertips.)
+Below is a crude tabulation (TODO:
+ there's a conventional notation and exposition for this,
+ which I don't have at my fingertips.)
 \end_layout
 
 \begin_layout Standard
@@ -2657,7 +2955,8 @@ language of a quad–store
 \begin_inset Quotes erd
 \end_inset
 
-, where 
+,
+ where 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2670,7 +2969,9 @@ language
 status open
 
 \begin_layout Plain Layout
-More formally, this is just a product–Hom adjunction; it is the 
+More formally,
+ this is just a product–Hom adjunction;
+ it is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2678,7 +2979,8 @@ internal language of a quad–store
 \begin_inset Quotes erd
 \end_inset
 
-, where the word 
+,
+ where the word 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2691,22 +2993,26 @@ internal
 
 \end_inset
 
- To complete this example requires taking care to write down the term algebra
- for the model: the variables, terms, predicates, relations that generate
- the language.
- At any rate, the result would be a syntactic description of the quad–store
- that can be used to generate the corresponding language.
+ To complete this example requires taking care to write down the term algebra for the model:
+ the variables,
+ terms,
+ predicates,
+ relations that generate the language.
+ At any rate,
+ the result would be a syntactic description of the quad–store that can be used to generate the corresponding language.
 \end_layout
 
 \begin_layout Standard
 Let's now change the topic to the axiomatization of computing.
- The oldest such axiomatization is, of course, the conventional description
- of Turing machines.
- These axiomatize as a set of symbols, an infinite tape, and two transition
- functions: one that specifies the next state, and one that manipulates
- the tape.
- The relevant observation here is that there are many other possible axiomatizat
-ions.
+ The oldest such axiomatization is,
+ of course,
+ the conventional description of Turing machines.
+ These axiomatize as a set of symbols,
+ an infinite tape,
+ and two transition functions:
+ one that specifies the next state,
+ and one that manipulates the tape.
+ The relevant observation here is that there are many other possible axiomatizations.
  Perhaps the simplest is the 
 \begin_inset CommandInset href
 LatexCommand href
@@ -2716,12 +3022,14 @@ literal "false"
 
 \end_inset
 
-, which has a handful of registers that can store arbitrary–precision integers.
+,
+ which has a handful of registers that can store arbitrary–precision integers.
 \end_layout
 
 \begin_layout Standard
 Two remarkable things emerge from the description of counter machines.
- First, the transition functions are now understood as 
+ First,
+ the transition functions are now understood as 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2729,17 +3037,19 @@ instructions
 \begin_inset Quotes erd
 \end_inset
 
-, and algorithmic combinatorials of these can be understood as expanded
- instruction sets.
- Second, by a clever mapping using Godel numbering, the arbitrary precision
- integers can be mapped to tape contents, and a demonstration of the Turing
- completeness of the counter machine can be derived.
+,
+ and algorithmic combinatorials of these can be understood as expanded instruction sets.
+ Second,
+ by a clever mapping using Godel numbering,
+ the arbitrary precision integers can be mapped to tape contents,
+ and a demonstration of the Turing completeness of the counter machine can be derived.
 \end_layout
 
 \begin_layout Standard
-What I want to focus on here is the role that combinatorial generation of
- the axioms play.
- That is, we have a bag of axioms, shake them about to generate a free monoid.
+What I want to focus on here is the role that combinatorial generation of the axioms play.
+ That is,
+ we have a bag of axioms,
+ shake them about to generate a free monoid.
  That free monoid contains 
 \begin_inset Quotes eld
 \end_inset
@@ -2748,9 +3058,7 @@ all possible computer programs
 \begin_inset Quotes erd
 \end_inset
 
- (written in the language of the counter machine) and this monoid is exactly
- the same thing as the model–theoretic language generated by the syntax
- of the model.
+ (written in the language of the counter machine) and this monoid is exactly the same thing as the model–theoretic language generated by the syntax of the model.
  Elements of the monoid can be understood to be 
 \begin_inset Quotes eld
 \end_inset
@@ -2759,7 +3067,8 @@ abstract syntax trees
 \begin_inset Quotes erd
 \end_inset
 
-; this is the 
+;
+ this is the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2771,20 +3080,20 @@ shallow
 \end_layout
 
 \begin_layout Standard
-The equivalence of the counter machine to the Turing machine proceeds via
- the Godel numbering, plus a clever insight as to cutting the tape in half
- to create two stack machines, plus one more cleverness to merge two stacks
- into one, etc.
- So we have a homomorphism (but not an isomorphism) of counter machines
- onto Turing machines.
+The equivalence of the counter machine to the Turing machine proceeds via the Godel numbering,
+ plus a clever insight as to cutting the tape in half to create two stack machines,
+ plus one more cleverness to merge two stacks into one,
+ etc.
+ So we have a homomorphism (but not an isomorphism) of counter machines onto Turing machines.
 \end_layout
 
 \begin_layout Standard
-Assigning performance metrics to the execution of transition functions aka
- instructions, we see these have radically different performance profiles.
- This allows deriving theorems about PSPACE and whatever, to make claims
- about performance bounds and runtimes.
- There are also other models, the 
+Assigning performance metrics to the execution of transition functions aka instructions,
+ we see these have radically different performance profiles.
+ This allows deriving theorems about PSPACE and whatever,
+ to make claims about performance bounds and runtimes.
+ There are also other models,
+ the 
 \begin_inset CommandInset href
 LatexCommand href
 name "register machines"
@@ -2793,15 +3102,20 @@ literal "false"
 
 \end_inset
 
-, which include random–access machines and random–access stored–program
- machines, the latter being a model of present–day digital computers.
+,
+ which include random–access machines and random–access stored–program machines,
+ the latter being a model of present–day digital computers.
  These all have homomorphisms between each other.
  These all have different performance profiles.
 \end_layout
 
 \begin_layout Standard
-Properly speaking, these homomorphisms are adjoint functors, in that in
- one direction, the map onto, and in the other direction, they map into.
+Properly speaking,
+ these homomorphisms are adjoint functors,
+ in that in one direction,
+ the map onto,
+ and in the other direction,
+ they map into.
  Some may factor through a 
 \begin_inset CommandInset href
 LatexCommand href
@@ -2811,8 +3125,11 @@ literal "false"
 
 \end_inset
 
-; the adjunction might not have a simple form.
- For the next few paragraphs, I will talk plainly, and call these 
+;
+ the adjunction might not have a simple form.
+ For the next few paragraphs,
+ I will talk plainly,
+ and call these 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2820,9 +3137,10 @@ equivalences
 \begin_inset Quotes erd
 \end_inset
 
-; this is not the correct word, formally, but it captures the overall spirit
- that there are different descriptions of computing that can be thought
- of as being 
+;
+ this is not the correct word,
+ formally,
+ but it captures the overall spirit that there are different descriptions of computing that can be thought of as being 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2834,18 +3152,25 @@ equivalent
 \end_layout
 
 \begin_layout Standard
-The meta–perspective is ask about the automatic exploration of these equivalence
-s, of the algorithms, of the optimizations and performance.
+The meta–perspective is ask about the automatic exploration of these equivalences,
+ of the algorithms,
+ of the optimizations and performance.
  The algorithms can be viewed in several ways.
- First, as abstract syntax trees.
+ First,
+ as abstract syntax trees.
  But also as instruction sequences represented as data–flow graphs.
- This is in the sense of gimple: an instruction has some input registers,
- some output registers, some clobbered registers; these are graph vertices,
+ This is in the sense of gimple:
+ an instruction has some input registers,
+ some output registers,
+ some clobbered registers;
+ these are graph vertices,
  and the dependencies are graph edges.
- Compiler optimizers can be understood as graph–rewriting systems, recognizing
- an input subgraph, rewriting it into a more optimal subgraph, with better
- execution time, or perhaps fewer dependencies (thus, VLIW and/or pipeline
- stalls.) This is 
+ Compiler optimizers can be understood as graph–rewriting systems,
+ recognizing an input subgraph,
+ rewriting it into a more optimal subgraph,
+ with better execution time,
+ or perhaps fewer dependencies (thus,
+ VLIW and/or pipeline stalls.) This is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2853,20 +3178,19 @@ existing
 \begin_inset Quotes erd
 \end_inset
 
- technology (much of which is extremely proprietary, and so hard to evaluate).
- But this existing technology is limited to the exploration of equivalences
- of instruction sequences for fixed architectures, whereas I am dreaming
- of exploration of the equivalences of structures across different architectures
- (with the most primitive example being the equivalence of Turing machines
- and counter machines.)
+ technology (much of which is extremely proprietary,
+ and so hard to evaluate).
+ But this existing technology is limited to the exploration of equivalences of instruction sequences for fixed architectures,
+ whereas I am dreaming of exploration of the equivalences of structures across different architectures (with the most primitive example being the equivalence of Turing machines and counter machines.)
 \end_layout
 
 \begin_layout Standard
-This exploration requires, at a minimum, the construction of an infrastructure
- in which axioms (model–theoretic terms, syntax) can be represented, and
- the resulting languages (trees) can be (freely) generated.
- This infrastructure also requires the ability to represent homomorphisms
- between different architectures.
+This exploration requires,
+ at a minimum,
+ the construction of an infrastructure in which axioms (model–theoretic terms,
+ syntax) can be represented,
+ and the resulting languages (trees) can be (freely) generated.
+ This infrastructure also requires the ability to represent homomorphisms between different architectures.
  Some of these homomorphisms are 
 \begin_inset Quotes eld
 \end_inset
@@ -2876,8 +3200,8 @@ single shot
 \end_inset
 
  e.g.
- the mapping from Turing to counter machines, while other homomorphisms
- (isomorphisms??) are 
+ the mapping from Turing to counter machines,
+ while other homomorphisms (isomorphisms??) are 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2885,10 +3209,11 @@ multi–shot
 \begin_inset Quotes erd
 \end_inset
 
-, a sequence of rewrites that may or may not be confluent, but in general
- are meant to performance–improving while preserving the semantic function
- (i.e.
- being homotopic in the Zariski topology, i.e.
+,
+ a sequence of rewrites that may or may not be confluent,
+ but in general are meant to performance–improving while preserving the semantic function (i.e.
+ being homotopic in the Zariski topology,
+ i.e.
  can be 
 \begin_inset Quotes eld
 \end_inset
@@ -2902,38 +3227,48 @@ refactored
 
 \begin_layout Standard
 This immediately raises multiple issues.
- First and most obviously, it is known that graph rewriting systems are
- not, in general, confluent; sequences of rewrites drive to different locations.
+ First and most obviously,
+ it is known that graph rewriting systems are not,
+ in general,
+ confluent;
+ sequences of rewrites drive to different locations.
  Next is the issue of hill–climbing and local maxima.
- It is well–understood that different sequences of movements can lead to
- inescapable local maxima, and algos such as simulated annealing must be
- applied to escape such maxima.
+ It is well–understood that different sequences of movements can lead to inescapable local maxima,
+ and algos such as simulated annealing must be applied to escape such maxima.
 \end_layout
 
 \begin_layout Standard
 This now raises a vexing insight.
- Suppose one is in possession of a no–information–loss, strictly–uphill
- climber algorithm.
- Great! With one little issue: perhaps it climbs to a local information
- maximum, and gets trapped there.
+ Suppose one is in possession of a no–information–loss,
+ strictly–uphill climber algorithm.
+ Great!
+ With one little issue:
+ perhaps it climbs to a local information maximum,
+ and gets trapped there.
  There are two ways to think about this situation.
- One is to imagine how great a tragedy this is, that one must first forget
- stuff (climb down the hill), in order to discover even greater knowledge.
- And one can, with some wistful emotions, come to terms with this.
+ One is to imagine how great a tragedy this is,
+ that one must first forget stuff (climb down the hill),
+ in order to discover even greater knowledge.
+ And one can,
+ with some wistful emotions,
+ come to terms with this.
  The other way is to look at this and say 
 \begin_inset Quotes eld
 \end_inset
 
-A hah! This is exactly why the multiverse is needed!
+A hah!
+ This is exactly why the multiverse is needed!
 \begin_inset Quotes erd
 \end_inset
 
- That is, we explore all possibilities,
+ That is,
+ we explore all possibilities,
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-In Bayesian probability, these are simply called 
+In Bayesian probability,
+ these are simply called 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2941,12 +3276,14 @@ Bayesian priors
 \begin_inset Quotes erd
 \end_inset
 
- without much ado; in quantum mechanics, these are the many–worlds over
- which the Feynman path integral is taken.
- There is little substantive difference, other than that the Feynman sums
- are taken over the square–root of the probability, using the Fisher information
- metric (Burres metric) to generate the measure.
- For Bayes, it would be the 
+ without much ado;
+ in quantum mechanics,
+ these are the many–worlds over which the Feynman path integral is taken.
+ There is little substantive difference,
+ other than that the Feynman sums are taken over the square–root of the probability,
+ using the Fisher information metric (Burres metric) to generate the measure.
+ For Bayes,
+ it would be the 
 \begin_inset CommandInset href
 LatexCommand href
 name "abstract Weiner space"
@@ -2956,7 +3293,8 @@ literal "false"
 \end_inset
 
 .
- In pop–sci popularizations, these are called 
+ In pop–sci popularizations,
+ these are called 
 \begin_inset Quotes eld
 \end_inset
 
@@ -2964,7 +3302,8 @@ multiverses
 \begin_inset Quotes erd
 \end_inset
 
-, and this word is certainly more fun than the usual obscure terminology.
+,
+ and this word is certainly more fun than the usual obscure terminology.
  
 \end_layout
 
@@ -2986,16 +3325,24 @@ simultaneously
 \begin_inset Quotes erd
 \end_inset
 
-, as you wish, and then eventually abandon those paths which dead–end on
- a hilltop, and fail to be on the path to enlightenment.
- Of course, this now becomes a bit of an intractable problem, as there is
- a combinatorial explosion of multiverses to explore, and the pruning of
- dead ends seems to be infrequent.
- One can, again, wistfully sigh, but now with a different perspective.
+,
+ as you wish,
+ and then eventually abandon those paths which dead–end on a hilltop,
+ and fail to be on the path to enlightenment.
+ Of course,
+ this now becomes a bit of an intractable problem,
+ as there is a combinatorial explosion of multiverses to explore,
+ and the pruning of dead ends seems to be infrequent.
+ One can,
+ again,
+ wistfully sigh,
+ but now with a different perspective.
 \end_layout
 
 \begin_layout Standard
-If I follow my nose, I now ask: 
+If I follow my nose,
+ I now ask:
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3003,7 +3350,8 @@ what algorithms are best at pruning dead–ends?
 \begin_inset Quotes erd
 \end_inset
 
- which leads to another awkward situation: 
+ which leads to another awkward situation:
+ 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3011,7 +3359,8 @@ how do I know I have reached a local maximum
 \begin_inset Quotes erd
 \end_inset
 
-? This question is 
+?
+ This question is 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3019,55 +3368,69 @@ easy
 \begin_inset Quotes erd
 \end_inset
 
- if there is a finite number of possibilities to explore: they can be exhaustive
-ly tested.
- If this finite number is large, there's a problem.
- If the number of choices is infinite, exhaustive search cannot work, and
- so now one must depend on theorems that somehow reduce the infinite problem
- in some algebraic, proof–theoretic fashion, leaving us with only a few
- choices, each of which leads to a singular conclusion: the hill–top has
- been found.
+ if there is a finite number of possibilities to explore:
+ they can be exhaustively tested.
+ If this finite number is large,
+ there's a problem.
+ If the number of choices is infinite,
+ exhaustive search cannot work,
+ and so now one must depend on theorems that somehow reduce the infinite problem in some algebraic,
+ proof–theoretic fashion,
+ leaving us with only a few choices,
+ each of which leads to a singular conclusion:
+ the hill–top has been found.
 \end_layout
 
 \begin_layout Standard
 Lets return now to the earlier desire to generate (enumerate) monoids.
  There are several ways in which this can be done.
- First is to crack open some book on model theory, take a close look at
- the formal definition of syntax, and to create a generator/enumerator according
- to that.
- Of course, this misses the whole point of Atomese, or rather, of jigsaws,
- which is the claim that jigsaws provide a better formalism for constructive
- generation, in that a partly–assembled (pre–)sheaf makes it clear what
- the unattached connectors are.
- More strongly, the sheaf axioms are more compact, and provide a certain
- scale independence lacking in other systems.
+ First is to crack open some book on model theory,
+ take a close look at the formal definition of syntax,
+ and to create a generator/enumerator according to that.
+ Of course,
+ this misses the whole point of Atomese,
+ or rather,
+ of jigsaws,
+ which is the claim that jigsaws provide a better formalism for constructive generation,
+ in that a partly–assembled (pre–)sheaf makes it clear what the unattached connectors are.
+ More strongly,
+ the sheaf axioms are more compact,
+ and provide a certain scale independence lacking in other systems.
 \end_layout
 
 \begin_layout Standard
-But is this an illusion? Well, sort–of.
- The jigsaws can, of course, be represented as lambdas.
- And lambdas, can, of course, be represented as combinators.
- And there are homomorphisms: there is a map from jigsaws to lambdas that
- is onto, and a map from lambdas to jigsaws that is into.
- Similarly, there is a map from jigsaws to term algebras that is onto, and
- a map from term algebras to jigsaws that is into.
- There is a map from jigsaws to quad–stores that is onto, and a map from
- quad–stores to jigsaws that is into.
- And likewise for SQL, and column stores, and so on.
- Each of these different kinds of systems have distinct space and time performan
-ce.
- My claim has been that jigsaws offer a superior space–time performance
- profile over all other systems; Adam's work has cast this into doubt.
+But is this an illusion?
+ Well,
+ sort–of.
+ The jigsaws can,
+ of course,
+ be represented as lambdas.
+ And lambdas,
+ can,
+ of course,
+ be represented as combinators.
+ And there are homomorphisms:
+ there is a map from jigsaws to lambdas that is onto,
+ and a map from lambdas to jigsaws that is into.
+ Similarly,
+ there is a map from jigsaws to term algebras that is onto,
+ and a map from term algebras to jigsaws that is into.
+ There is a map from jigsaws to quad–stores that is onto,
+ and a map from quad–stores to jigsaws that is into.
+ And likewise for SQL,
+ and column stores,
+ and so on.
+ Each of these different kinds of systems have distinct space and time performance.
+ My claim has been that jigsaws offer a superior space–time performance profile over all other systems;
+ Adam's work has cast this into doubt.
 \begin_inset Foot
 status collapsed
 
 \begin_layout Plain Layout
-More critically, the AtomSpace has ignored work on MPP (Massively Parallel
- Processing) graph databases.
- These trade off space–time efficiency for parallelism in ways that have
- made them very popular in Big Data applications.
- The following paragraphs describe how MPP algorithms might be discovered
- automatically.
+More critically,
+ the AtomSpace has ignored work on MPP (Massively Parallel Processing) graph databases.
+ These trade off space–time efficiency for parallelism in ways that have made them very popular in Big Data applications.
+ The following paragraphs describe how MPP algorithms might be discovered automatically.
 \end_layout
 
 \end_inset
@@ -3076,15 +3439,20 @@ More critically, the AtomSpace has ignored work on MPP (Massively Parallel
 \end_layout
 
 \begin_layout Standard
-And that's good, because, first, it highlights the nature of the claim,
- and second, it opens the door to automatic exploration of the homomorphic
- maps between these different systems.
+And that's good,
+ because,
+ first,
+ it highlights the nature of the claim,
+ and second,
+ it opens the door to automatic exploration of the homomorphic maps between these different systems.
  Adam's structure is apparently embarrassingly parallel for graph–rewriting.
- The current AtomSpace query engine is parallelizable, and has been parallelized
-, but no present–day applications particularly need to make use of this.
- Adam's system packs the data representation into cache–lines, for appropriate
- CPU performance.
- Is it portable to GPUs? Who knows.
+ The current AtomSpace query engine is parallelizable,
+ and has been parallelized,
+ but no present–day applications particularly need to make use of this.
+ Adam's system packs the data representation into cache–lines,
+ for appropriate CPU performance.
+ Is it portable to GPUs?
+ Who knows.
 \end_layout
 
 \begin_layout Standard
@@ -3093,17 +3461,16 @@ Which raises another class of possible adjoint relationships.
 status collapsed
 
 \begin_layout Plain Layout
-I think that these onto–into maps between different systems should be properly
- called adjoint functors, although it will take a bit of work and technical
- precision to convince all readers that this is not an abuse of terminology.
+I think that these onto–into maps between different systems should be properly called adjoint functors,
+ although it will take a bit of work and technical precision to convince all readers that this is not an abuse of terminology.
  
 \end_layout
 
 \end_inset
 
- These are the adjoint relationships between these serial–processing systems
- and systems that describe parallelism.
- At the most base level, this is the 
+ These are the adjoint relationships between these serial–processing systems and systems that describe parallelism.
+ At the most base level,
+ this is the 
 \begin_inset CommandInset href
 LatexCommand href
 name "pi calculus"
@@ -3113,65 +3480,85 @@ literal "false"
 \end_inset
 
 .
- At a slightly more general level, the assortment of process calculii.
- At the string level, there's the history monoid and the trace monoid, which
- describe partially–commutative monoids.
- If I recall correctly, these are Zariski topology frames and locales.
- And frames and locales are examples of the (I don't recall what they are
- called, MacLane something–or–others) pieces making up topoi.
+ At a slightly more general level,
+ the assortment of process calculii.
+ At the string level,
+ there's the history monoid and the trace monoid,
+ which describe partially–commutative monoids.
+ If I recall correctly,
+ these are Zariski topology frames and locales.
+ And frames and locales are examples of the (I don't recall what they are called,
+ MacLane something–or–others) pieces making up topoi.
  So insofar as we wish to think of lambda–calculus as being single–threaded,
- the process calculii, the partially commutative monoids, the frames and
- locales, offer a collection of adjoint relationships between single–threaded
- and parallel systems.
- So we ask: what are the adjoint relationships that can be mapped to large
- abelian subalgebras, i.e.
- that can be highly parallelized? And even more interestingly, what adjoint
- maps can we discover to SIMD architectures, so that these can be moved
- to GPU's? I don't know how to take Atomese and make it SIMD; however, I
- do know how to write Atomese to search for adjoint functors between different
- axiomatic systems, some of which are parallelizable (MIMD) and some of
- which are SIMD-izable.
+ the process calculii,
+ the partially commutative monoids,
+ the frames and locales,
+ offer a collection of adjoint relationships between single–threaded and parallel systems.
+ So we ask:
+ what are the adjoint relationships that can be mapped to large abelian subalgebras,
+ i.e.
+ that can be highly parallelized?
+ And even more interestingly,
+ what adjoint maps can we discover to SIMD architectures,
+ so that these can be moved to GPU's?
+ I don't know how to take Atomese and make it SIMD;
+ however,
+ I do know how to write Atomese to search for adjoint functors between different axiomatic systems,
+ some of which are parallelizable (MIMD) and some of which are SIMD-izable.
 \end_layout
 
 \begin_layout Standard
-And again, the usual frustration: in principle, the usual theorem provers
- (e.g.
- HOL, Agda) should have been usable for these purposes, but are not.
- The intermediate languages in compilers, e.g.
- gcc gimple, or Microsoft's IR, can do this but are written to such a narrow
- and restrictive domain that they are all but unusable.
+And again,
+ the usual frustration:
+ in principle,
+ the usual theorem provers (e.g.
+ HOL,
+ Agda) should have been usable for these purposes,
+ but are not.
+ The intermediate languages in compilers,
+ e.g.
+ gcc gimple,
+ or Microsoft's IR,
+ can do this but are written to such a narrow and restrictive domain that they are all but unusable.
  In the middle of gimple sits several register machine representations,
- and some homomorphisms between them, as needed to compile and optimize
- code.
- Somewhat similar remarks for the VLIW compilers, e.g.
+ and some homomorphisms between them,
+ as needed to compile and optimize code.
+ Somewhat similar remarks for the VLIW compilers,
+ e.g.
  LVM clang for Qualcomm hexagon or the ARM Cortex etc.
  chips.
  There's nothing salvageable from these systems.
- Then there's the AtomSpace, where some pieces are robust and general purpose,
- while other pieces exist as prototypes, and the issues of the generation
- of jigsaws remain painfully underdeveloped.
- My gut instinct is to continue onwards with Atomese, rather than abandoning
- it and starting from scratch.
- The above paragraphs make it clear that, in the long run, the automatic
- exploration of adjoint relationships will strongly morph the system into
- something else.
+ Then there's the AtomSpace,
+ where some pieces are robust and general purpose,
+ while other pieces exist as prototypes,
+ and the issues of the generation of jigsaws remain painfully underdeveloped.
+ My gut instinct is to continue onwards with Atomese,
+ rather than abandoning it and starting from scratch.
+ The above paragraphs make it clear that,
+ in the long run,
+ the automatic exploration of adjoint relationships will strongly morph the system into something else.
  But that is in the mid–term future.
 \end_layout
 
 \begin_layout Standard
 The project then requires several steps.
- First, an important step is to more closely review the conventional definitions
- of term algebras, and model theory syntax, and perhaps lambda calc, and
- write down explicit left and right adjoint functors between these, and
- jigsaws.
- Ditto for pi calc, and maybe some process calculus, and maybe for the history
- and trace monoids.
- The first few of these should be easy and straight–forward, if a bit verbose.
+ First,
+ an important step is to more closely review the conventional definitions of term algebras,
+ and model theory syntax,
+ and perhaps lambda calc,
+ and write down explicit left and right adjoint functors between these,
+ and jigsaws.
+ Ditto for pi calc,
+ and maybe some process calculus,
+ and maybe for the history and trace monoids.
+ The first few of these should be easy and straight–forward,
+ if a bit verbose.
  Harder would be to then rephrase these results as frames and locales.
- At any rate, this lays out the formal groundwork needed so that others
- can understand what the heck this is about.
- I started this mapping many years ago, but was never motivated to finish
- it, because I did not see the 
+ At any rate,
+ this lays out the formal groundwork needed so that others can understand what the heck this is about.
+ I started this mapping many years ago,
+ but was never motivated to finish it,
+ because I did not see the 
 \begin_inset Quotes eld
 \end_inset
 
@@ -3180,8 +3567,7 @@ big picture
 \end_inset
 
  the way I do now.
- Hopefully those texts are not in a pathetic state and can be salvaged and
- completed (
+ Hopefully those texts are not in a pathetic state and can be salvaged and completed (
 \begin_inset CommandInset href
 LatexCommand href
 name "they are in the “sheaf” directory."
@@ -3194,10 +3580,14 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-Next, each of these adjoint functors probably should realized as working
- code.
- So far, I've taken three baby–step proof–of–concept mappings: one for lisp,
- one for prolog, and one for python; 
+Next,
+ each of these adjoint functors probably should realized as working code.
+ So far,
+ I've taken three baby–step proof–of–concept mappings:
+ one for lisp,
+ one for prolog,
+ and one for python;
+ 
 \begin_inset CommandInset href
 LatexCommand href
 name " these are in directories under “storage”"
@@ -3217,51 +3607,65 @@ literal "false"
 \end_inset
 
  git repo.
- All of these are seat–of–the–pants code, written from gut intuition rather
- than formal definitions.
- With some proper notation for the adjoint functors, and a way of talking
- about frames and locales, and a way for mapping to and from the logic of
- graphs, perhaps a more sold, stronger, and clearer framework can emerge.
+ All of these are seat–of–the–pants code,
+ written from gut intuition rather than formal definitions.
+ With some proper notation for the adjoint functors,
+ and a way of talking about frames and locales,
+ and a way for mapping to and from the logic of graphs,
+ perhaps a more sold,
+ stronger,
+ and clearer framework can emerge.
 \end_layout
 
 \begin_layout Standard
-But what is the point of this framework? To see what it looks like.
- But it also feels like a distraction from the main project, which is to
- automatically generate sentences from the language, and to automatically
- discover homorphisms (adjoints) to other kinds of systems, and to find
- confluent rewrites, and to perform hill–climbing to find more efficient,
- optimized algos, and specifically, to automatically find both representations
- and algos that run well in SIMD and MIMD architectures, ideally constrained
- to specific cache–line sizes, bus latencies, etc.
+But what is the point of this framework?
+ To see what it looks like.
+ But it also feels like a distraction from the main project,
+ which is to automatically generate sentences from the language,
+ and to automatically discover homorphisms (adjoints) to other kinds of systems,
+ and to find confluent rewrites,
+ and to perform hill–climbing to find more efficient,
+ optimized algos,
+ and specifically,
+ to automatically find both representations and algos that run well in SIMD and MIMD architectures,
+ ideally constrained to specific cache–line sizes,
+ bus latencies,
+ etc.
 \end_layout
 
 \begin_layout Standard
-So what is the best, most efficient, easiest and most direct path from where
- I am today, to a system capable of implementing the above? What is the
- path of least resistance? What is the path of least distraction?
+So what is the best,
+ most efficient,
+ easiest and most direct path from where I am today,
+ to a system capable of implementing the above?
+ What is the path of least resistance?
+ What is the path of least distraction?
 \end_layout
 
 \begin_layout Standard
-Two more topics that need to be digested: revisit the above in the light
- of sensori–motor agents, and to comment on the very interesting task of
- correlating functional descriptions, i.e.
- instruction sequences, with how these instruction sequences process data
- streams, and the hope/plan that some RNN or other neural net architecture
- can be trained to correlate the insn sequences (data processing pipelines)
- with the data streams.
- And, as before, the point is that the data sequences are coming from sensory
- systems, and the insn sequences are applied to the data streams, and that
- there are two things that happen: a world model is constructed (presumably
- as a monad, i.e.
- the agent is a pipeline of monads) and that motor movements result from
- a similar–but–different insn stream.
+Two more topics that need to be digested:
+ revisit the above in the light of sensori–motor agents,
+ and to comment on the very interesting task of correlating functional descriptions,
+ i.e.
+ instruction sequences,
+ with how these instruction sequences process data streams,
+ and the hope/plan that some RNN or other neural net architecture can be trained to correlate the insn sequences (data processing pipelines) with the data streams.
+ And,
+ as before,
+ the point is that the data sequences are coming from sensory systems,
+ and the insn sequences are applied to the data streams,
+ and that there are two things that happen:
+ a world model is constructed (presumably as a monad,
+ i.e.
+ the agent is a pipeline of monads) and that motor movements result from a similar–but–different insn stream.
  And to keep in mind that the point of the RNN is to find ...
- confluent rewrites, or to find optimized rewrites, or to (more generally)
- evaluate and maintain collections of insns homotopic under the Zariski
- topology.
- Or something like that; we are getting vaporous here.
- Converting this last paragraph into something more specific will require
- many hours, if not days or weeks.
+ confluent rewrites,
+ or to find optimized rewrites,
+ or to (more generally) evaluate and maintain collections of insns homotopic under the Zariski topology.
+ Or something like that;
+ we are getting vaporous here.
+ Converting this last paragraph into something more specific will require many hours,
+ if not days or weeks.
 \end_layout
 
 \begin_layout Section
