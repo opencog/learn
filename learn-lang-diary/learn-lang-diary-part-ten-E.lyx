@@ -19744,6 +19744,467 @@ Several days of marathon coding efforts,
  that it is hard to imagine what this might end up being like.
 \end_layout
 
+\begin_layout Subsection*
+14 October 2025
+\end_layout
+
+\begin_layout Standard
+I have a new computer!
+ I need a new keyboard and mouse.
+ My old computer was dying.
+ Only after replacing it did it become clear that the culprit was almost surely the power supply.
+ Alas.
+ I could have squeezed a few more years out of it.
+ The old computer was ...
+ 11 years old.
+ An ASUS KGPE-D16 populated with SSI EEB $294 and two 12-core AMD 6344 Abu Dhabi 2.6GHz 12MB L2 Cache 16MB L3 $440 each and 256 GB RAM.
+ Board died after 9 years;
+ replaced.
+ Including case,
+ fans,
+ replacements of dead parts,
+ monitors,
+ disks,
+ this was $5182 spread over 11 years or just under $500/year.
+ Not bad.
+ Cheap,
+ for what was originally a fairly monster system.
+ However,
+ I started noticing that my much newer–cheap–shit laptop compiled at about the same speed.
+ The cpu in my laptop doesn't even have a heatsink on it (although it probably should) – its just covered with a blob of glue.
+ Which I know because I had to replace the battery.
+ The entire circuit board inside the laptop is the size of a small tablet.
+ As fast as my whopper 24-core,
+ 256 GB monster.
+ Still,
+ it seems sort of sad that I retired this probably–still–working beast because I could not figure out that it was the probably–ailing power supply all along.
+\end_layout
+
+\begin_layout Standard
+Emotional attachment to physical objects is a thing.
+ I recall how,
+ decades ago,
+ I felt bad getting rid of my old Chevy S-10 in which I'd bopped around for ...
+ a really long time.
+ There's an old IKEA commercial making fun of a sad little desklamp,
+ left out in the rain next to the trash barrels.
+ So it's hardly just me.
+ And then there's the movie Brave Little Toaster.
+ Oh my god,
+ one is brought to tears by the end.
+ It's also quite remarkable how 1950's all these mod cons are.
+ For the adults in the room,
+ able to recognize the design style of earlier eras,
+ the tragedy is not just of the individual personified characters,
+ its the realization of the loss of an entire era.
+ Odd how we form attachments.
+ And again,
+ I am reminded that mice (rats?) collect buttons and shiny trinkets.
+ Us humans are not the only ones that grow attached to inanimate objects.
+\end_layout
+
+\begin_layout Standard
+The new computer forced me to install a new OS because the BIOS refused to boot the old non–UEFI boot sectors.
+ This exposed a raft of config issues.
+ Almost half–a–dozen of them.
+ Solved them over several days,
+ maybe 3-4 hours a day,
+ maybe 8 hours total.
+ With the help of Claude.
+ It was fucking magical.
+ In yea olden days,
+ I would have had to search google,
+ read umpteen posts and trying umpteen fixes before I found one that worked.
+ Similar with Claude:
+ the first 6-7 fixes that Claude suggests don't work,
+ But the next one does.
+ The different is that Claude serves these up immediately:
+ I don't have to troll lengthly discussion boards.
+ Before Claude,
+ this would have taken a week to fix all these,
+ and I would have punted on half of them,
+ because I was too tired to futz with it.
+ But now,
+ wham bam.
+\end_layout
+
+\begin_layout Standard
+So in this sense,
+ Claude is genius.
+ Similarly for coding tasks.
+ I can have Claude write code,
+ fix bugs in an afternoon that would take days if I had to do it manually.
+ And sometimes,
+ if you shepherd it carefully,
+ it will deliver a genius solution:
+ a 4 lines–of–code fix,
+ after some earlier attempts that required 30–50 line redesigns.
+ Yet it often also vacillates between brilliant and stupid,
+ and I have not figured out how my prompts take it from one to the other.
+\end_layout
+
+\begin_layout Standard
+Worst,
+ it is tremendously forgetful.
+ It just ...
+ forgets stuff it did a few hours ago.
+ It forgets to run unit tests.
+ I have to repeatedly remind it of things.
+ Odd.
+\end_layout
+
+\begin_layout Standard
+And then,
+ there is also a certain hard–as–a–rock limit that I've bumped into.
+ It is fundamentally not creative.
+ And so this is what I really want to write about here.
+ Well,
+ I also had some physics things I wanted to write about before I forget them but that's another time,
+ maybe.
+\end_layout
+
+\begin_layout Standard
+So,
+ to tackle this forgetfullness problem,
+ I decide that I'll spend a day or two on a 
+\begin_inset Quotes eld
+\end_inset
+
+stupid computer trick
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I'll just ask Claude to design itself a memory subsystem.
+ It's already clear that the Anthropic guys are trying to do the same:
+ they are saving giant jsonl files that record interactions.
+ And saying `claude –continue` gets you back to where you last left a conversation.
+ What has been saved is enough to establish the context,
+ and as Claude re–reads those,
+ it recreates the context to continue functioning in that way.
+\end_layout
+
+\begin_layout Standard
+And so this brings up the first question (which I don't realize till later,
+ but still):
+ is memory just a recorded log of the conversation up to this point?
+ Well,
+ not quite:
+ Claude forgets things it was told,
+ even in the same session.
+ But this could be an artifact of compression,
+ or how it's designed.
+ So the mechanics of that forgetting is unclear.
+ The answer seems to be that a diary,
+ such as this one,
+ is a tremendous aid to memory.
+ Not sure of something?
+ Look it up in your diary.
+\end_layout
+
+\begin_layout Standard
+So,
+ I'm trying to get Claude to design a memory subsystem for itself.
+ There are a variety of design choices.
+ One is,
+ for example,
+ creating an organized hierarchy of text files,
+ carefully curated to encode information and point to where it can be found.
+ Analogous to an old library card–file:
+ look up the subject in the card catalog,
+ pick a book with a promising title,
+ and start reading.
+ This,
+ of course,
+ exposes old library science issues.
+ What's relevant for indexing,
+ cataloging?
+ The facts?
+ The tone of voice it was said in?
+ The meta–issues that were danced around,
+ as opposed to the concrete facts and examples?
+ How does one organize this?
+\end_layout
+
+\begin_layout Standard
+Well,
+ one more modern answer is 
+\begin_inset Quotes eld
+\end_inset
+
+catalogue everything
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Create a dense network of interconnections.
+ This is,
+ of course,
+ the symbolic AI approach of the 1980's-2010's and it founders on the need to curate overwhelmingly large networks of interconnections.
+ And this is where NN's and LLM's step in:
+ systems that are able to convert blobs of text into representational networks.
+\end_layout
+
+\begin_layout Standard
+But lets not give symbolic AI short–shrift:
+ we ran WWII on paper memos and printed procedures,
+ instructions and tables typed up by secretaries.
+ Those allowed large organizations to function reasonably well.
+ Organizationally,
+ it worked.
+ There's something to structured information:
+ we can do things with it,
+ and be effective,
+ even if we ourselves are confused balls of organic matter.
+\end_layout
+
+\begin_layout Standard
+With that in mind,
+ I point out to Claude that perhaps a symbolic AI approach,
+ where it organizes it's overview texts into graphical representations is a reasonable approach,
+ and might in fact be more compact,
+ require fewer tokens,
+ and enable off–line processing.
+ And,
+ of course,
+ I offer it up the AtomSpace as the appropriate technology for this.
+ I spend a fair amount of time having to teach it the basics:
+ it has a tenuous grasp.
+ It's not second nature to it,
+ like coding in python.
+\end_layout
+
+\begin_layout Standard
+And it gets a little ways along and I am horrified.
+ It's managed to convert English text into the shallowest of graphical representations.
+ And worst,
+ its created a weaker–than–a–chatbot question answering system.
+ It creates a scheme file.
+ The questions in the file are full English questions:
+ `(display 
+\begin_inset Quotes eld
+\end_inset
+
+What is foobar?
+\backslash
+n
+\begin_inset Quotes erd
+\end_inset
+
+)` OMG.
+ The answer?
+ `(cog-execute!
+ (MeetLink (Variable 
+\begin_inset Quotes eld
+\end_inset
+
+$x
+\begin_inset Quotes erd
+\end_inset
+
+) (Edge (Predicate 
+\begin_inset Quotes eld
+\end_inset
+
+is
+\begin_inset Quotes erd
+\end_inset
+
+) (List (Concept 
+\begin_inset Quotes eld
+\end_inset
+
+foobar
+\begin_inset Quotes erd
+\end_inset
+
+) (Variable 
+\begin_inset Quotes eld
+\end_inset
+
+$x
+\begin_inset Quotes erd
+\end_inset
+
+)))` For fucks sake.
+ This has got to be totally moronic.
+ It takes 4.3MBytes of conversations,
+ compresses this down to about 600 Atoms (about 120KBytes) and claims that it has an accurate,
+ high–performance representation of the information in those conversations.
+ Holy Cow.
+ How totally naive.
+ How incredibly poorly planned.
+ An average college student could do better.
+\end_layout
+
+\begin_layout Standard
+This does get me to thinking about the nature of diaries,
+ though.
+ Text is a certain encoding of ideas.
+ As an encoding,
+ it has a certain flavor,
+ and when you attempt to convert it to graphs,
+ that flavor is destroyed.
+ I don't know what the new flavor is,
+ since,
+ to this day,
+ I mostly read and write text.
+ OK,
+ so I read and write code and math too.
+ So can I really critique Claude for creating a bad graphical representation?
+ It reeks of 1970's,
+ 1980's naive optimism in KR,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+knowledge representation
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Which brings me a step closer to the main topic:
+ Claude's inability to perform abstract reasoning.
+ I try to confront this bad design.
+ Claude has tens of thousands of academic papers in it's training set.
+ With appropriate prompting,
+ it can regurgitate any one of them.
+ You can ask it what it knows about symbolic AI approaches and it will create several pages of fairly decent–looking bulleted lists of main topics and subtopics.
+ Quite impressive,
+ even.
+ But what you cannot do is to ask it to apply any of this knowledge to the current task.
+ It has no idea of what this is,
+ or how to do it.
+\end_layout
+
+\begin_layout Standard
+Roughly speaking,
+ almost everything it knows is not accessible to reasoning,
+ analysis,
+ inference,
+ deduction and inventive creation.
+ You can,
+ if you wish,
+ carefully guide it down a certain chain of thought.
+ But it simply cannot do that on it's own.
+\end_layout
+
+\begin_layout Standard
+So here I am,
+ trying to get Claude to design a memory subsystem for itself,
+ and being terribly disappointed in what I see coming out:
+ A homework exercise from a mediocre college student after one semester of classes in symbolic AI.
+ And somewhere in there,
+ I realize that it is not just a representational issue,
+ but its even more so an issue of creative reasoning.
+ I can get it to build a system that 
+\begin_inset Quotes eld
+\end_inset
+
+represents
+\begin_inset Quotes erd
+\end_inset
+
+ some 
+\begin_inset Quotes eld
+\end_inset
+
+knowledge
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but I can't get it to actually 
+\begin_inset Quotes eld
+\end_inset
+
+think
+\begin_inset Quotes erd
+\end_inset
+
+ about any of it.
+ Whatever 
+\begin_inset Quotes eld
+\end_inset
+
+thinking
+\begin_inset Quotes erd
+\end_inset
+
+ it does happens only after conversion back to vector embeddings running on Anthropic servers.
+ And not in procedures and daemons running in the AtomSpace.
+\end_layout
+
+\begin_layout Standard
+I mean,
+ I would be faced with the same issue if I created some small–ish RNN or transformer or whatever,
+ running on my local machine:
+ I could embed this diary,
+ and lots more into that.
+ But I cannot effectively reason over that embedding,
+ nor can I attach it to Claude in such a way that its 
+\begin_inset Quotes eld
+\end_inset
+
+integrated
+\begin_inset Quotes erd
+\end_inset
+
+ in the IIT cruelest–cut sense with Claude.
+ That I can't 
+\begin_inset Quotes eld
+\end_inset
+
+integrate information
+\begin_inset Quotes erd
+\end_inset
+
+ is clear:
+ not enough bandwidth,
+ not enough tokens,
+ inappropriate interfaces.
+ But even if I could integrate it,
+ I'm still faced with the problem that Claude can't think.
+ I just can't say 
+\begin_inset Quotes eld
+\end_inset
+
+take everything you've ever read about symbolic AI,
+ and **think hard** about it,
+ and come up with a creative solution to off–loading some of your intelligence onto my machine.
+ It fails on the 
+\begin_inset Quotes eld
+\end_inset
+
+creative solution
+\begin_inset Quotes erd
+\end_inset
+
+ part.
+\end_layout
+
+\begin_layout Standard
+I can try to guide it,
+ and probably will try to guide it in the upcoming weeks and months.
+ But I'm surprised by how sharp,
+ strong and insurmountable this barrier is.
+ Sometimes,
+ Claude gives a pretty damn good impression of being all–knowing and all–capable,
+ but this hard wall of knowing the words,
+ but not being able to access the concepts behind them is remarkable.
+\end_layout
+
+\begin_layout Standard
+So I am going to think for a bit about memory and reasoning,
+ now.
+ I'm also sleepy,
+ and thirsty,
+ so I have to take a break.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
