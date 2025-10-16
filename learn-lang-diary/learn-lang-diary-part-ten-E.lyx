@@ -20205,6 +20205,248 @@ So I am going to think for a bit about memory and reasoning,
  so I have to take a break.
 \end_layout
 
+\begin_layout Standard
+—
+
+\end_layout
+
+\begin_layout Standard
+Took a nap.
+ Dangerous,
+ before bedtime.
+ I'm gonna kill some time now.
+ I just told Claude 
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+That's a good point.
+ We need a system that not only remembers "things" by encoding them into some "knowledge representation",
+ but also "watches" you think (listens to your output),
+ interprets it,
+ and makes appropriate suggestions.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ So I am being naive and simplistic with prompts like these:
+ something a not–very–smart aspiring AI hack might write.
+ But this is a screwball experiment:
+ what will Claude do,
+ given such prompts?
+ Of course,
+ in the present case,
+ I'm implicitly saying 
+\begin_inset Quotes eld
+\end_inset
+
+I need a subagent that interacts with you.
+\begin_inset Quotes erd
+\end_inset
+
+ And this subagent,
+ well,
+ yes,
+ it has a sensory system ...
+ and more ...
+ well,
+ and ...
+ look,
+ I'm done here,
+ for now.
+ Let me throw nonsense at Claude and see what sticks.
+\end_layout
+
+\begin_layout Subsection*
+16 October 2025
+\end_layout
+
+\begin_layout Standard
+Here's what sticks with Claude.
+ Tried to do some minor enhancements to the sensory API's,
+ got tangled up in Claude nonsense,
+ and got philosophical,
+ trying to untangle what went wrong.
+ Cut and paste from DesignNotes-K.md:
+\end_layout
+
+\begin_layout Standard
+This fluidity of design choices comes very easily to Claude:
+ it's happy to do anything.
+ Any pile of shit that vaguely matches what you asked for,
+ Claude will generate this.
+ Humans are a little bit better;
+ some of the more obviously flawed design choices are avoided.
+ But humans do this only one abstraction layer up;
+ complexity clouds the issue.
+ Look at the evolution of Linux boot–loaders.
+ One turns into several,
+ the several compete,
+ offering different functions and levels of hardware compatibility.
+ They did not spring "fully formed" from the mind of the author;
+ each new bootloader was created by some developer who thought "I can do this better than that one",
+ and they could,
+ up to a point.
+ Up to that point where software complexity again becomes hard to control,
+ and the future becomes hard to imagine.
+\end_layout
+
+\begin_layout Standard
+This story repeats everywhere:
+ we have dozens or hundreds of programming languages,
+ not one.
+ Many apps for doing almost the same things.
+ The conventional justification is to draw an analogy to evolution:
+ there is a rich variety of creatures,
+ because,
+ in nature,
+ there is a vast choice of possible design alternatives.
+ At each fork,
+ nature tried both.
+ Some design choices really do end up better than others;
+ some are about equal.
+ But an organism consists of more than just just one design choice:
+ they are a sequence of many.
+ Some of these paths are confluent;
+ biologists call this "convergent evolution".
+\end_layout
+
+\begin_layout Standard
+But what happens if you are smart?
+ Well,
+ you can look something over and decide:
+ "gee,
+ that is a stupid way of doing things;
+ this is much better".
+ As an engineer,
+ you can run mini–simulations in your mind,
+ quickly determine that some of the choices are just losers,
+ and avoid those.
+ This short–circuits evolutionary search.
+ The point that I am making here is that the human ability to engineer is limited:
+ we can scale up to a certain complexity level,
+ but no more.
+ Above this complexity level,
+ it looks like evolution:
+ every possible engineering design choice is explored,
+ more or less randomly,
+ by hundreds of different engineers.
+\end_layout
+
+\begin_layout Standard
+That is,
+ the fluidity of design choices invites ergodic exploration.
+ In nature,
+ in Darwian Natural Selection,
+ the exploration of design choices is ergodic.
+ Everything is tried.
+ There is no "intelligent design" in natural selection.
+ Human engineers can apply intelligence,
+ cutting off,
+ drying out some of these design choices.
+ Assigning them a measure of zero.
+ So,
+ what does intelligence do?
+ It takes something that is ergodic,
+ and says,
+ "nah,
+ we care going to prune some of these explorations.
+ Everything that lies behind some certain branch point,
+ it will be give a probability of zero;
+ that side of the branch point will not be explored.
+ That possible world of design choices will be made such that it never occurs,
+ i.e.
+ corresponds to a probability measure of zero.
+\end_layout
+
+\begin_layout Standard
+Is this what intelligence is?
+ Hmm.
+ But I digress.
+ I need to copy above to my diary.
+\end_layout
+
+\begin_layout Standard
+Oh,
+ but the other point I'm making is that human intelligence cannot reach arbitrarily high up the complexity chain.
+ We can see things only up to some certainly level of complexity;
+ above that is a threshold,
+ a phase transition:
+ stuff above is ergodically explored;
+ stuff below can be engineered.
+ That this level depends on intelligence is made clear by Claude:
+ it reaches the ergodic level that is lower than where I am.
+ It will happily propose crappy solutions that I have to weed away.
+ But I myself am limited:
+ this design diary is an exploration of the design choices in front of me,
+ at the edge of the complexity level that I personally can deal with.
+ Something smarter than me can presumably cut through some of the bullshit I've had to muddle through,
+ here.
+\end_layout
+
+\begin_layout Standard
+But this then raises both upward and downward problems.
+ The downward problem is easier to explain:
+ what if I made a poor design choice very early on,
+ and baked it into my system:
+ e.g.
+ choosing Java instead of C++ as the project language.
+ Can evolution be confluent?
+ Yes;
+ things would be different,
+ but could end up in the same place.
+ This is kind of like comparing Turing machines to register machines to RAM machines:
+ they all can,
+ in principle,
+ compute the same things,
+ but have exponentially different demands on time and space.
+ That's hardware;
+ analogous statements can be said for algorithms:
+ some algorithms might compute the same things as others,
+ but are exponentially faster/slower.
+\end_layout
+
+\begin_layout Standard
+The upward problem is that most of activity of coding is tedious,
+ mindless,
+ boring,
+ repetitive.
+ When I port code from here to there,
+ or add this feature or that one,
+ most of it is stupid and time wasting.
+ Type `make` at the command line.
+ Oh,
+ failed to compile?
+ Fix that.
+ Do it again and again and again.
+ Just because I forgot to move some file,
+ copy some code,
+ add a semi–colon to the end of a line.
+ Claude relieves much of this tedium,
+ and,
+ for this,
+ I am grateful:
+ it can do the tedious bits that I don't want to.
+ It can do those tedious bits in a machine–like,
+ mechanical fashion.
+ I am also grateful for jack–hammers,
+ when I am busting concrete.
+ Plain–old chisel and hammer is not fun.
+ So it appears that "the world below" is best treated by mindless,
+ mechanical rearrangements.
+ But "the world above" is impenetrable,
+ unforeseeable,
+ and we have to ergodically try all possibilities.
+ So my intelligence exists at this phase–transition boundary,
+ between what is machine–like and tedious,
+ below,
+ and the unknowable,
+ revealed through epiphanies,
+ above.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
