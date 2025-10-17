@@ -20447,6 +20447,265 @@ The upward problem is that most of activity of coding is tedious,
  above.
 \end_layout
 
+\begin_layout Subsection*
+16 October 2025 Later
+\end_layout
+
+\begin_layout Standard
+Copy from https://github.com/opencog/atomspace/pull/3161
+\end_layout
+
+\begin_layout Standard
+Adam-Vandervorst commented 5 days ago
+\end_layout
+
+\begin_layout Standard
+Woah!
+ That's a telling decision.
+\end_layout
+
+\begin_layout Standard
+linas commented yesterday
+\end_layout
+
+\begin_layout Standard
+Jeez @Adam-Vandervorst -- camping on my high activity but unimportant commits?
+ I have unfinished important conversations with you,
+ which I will get back to "real soon now".
+ As to this:
+\end_layout
+
+\begin_layout Standard
+-- It should have been done 6-7 years ago.
+\end_layout
+
+\begin_layout Standard
+-- it wasn't because it's boring and tedious refactoring
+\end_layout
+
+\begin_layout Standard
+-- Claude Sonnet 4.5 allowed me to do the refactoring in a few days (this and like 6-7 other pull reqs) instead of a few weeks or month.
+\end_layout
+
+\begin_layout Standard
+-- Nothing is actually lost;
+ the FloatValues were added 7-8 years ago,
+ They are vectors of floats and are a generalized replacement for the old "truth values".
+ There's an entire generic,
+ generalized infrastructure for working with these FloatValues;
+ one of the on–again,
+ off–again projects is to get these to migrate to GPU's.
+\end_layout
+
+\begin_layout Standard
+This last bit:
+ GPU–ifying the Atomese abstract syntax trees (ASTs),
+ is one of the more interesting projects.
+ The idea is that an AST is just an abstract description of an algorithm:
+ more concrete than pseudo–code,
+ less concrete than python,
+ scala,
+ c++.
+ Given an AST,
+ an "algorithm",
+ I should be able to say "hey go run yourself over there",
+ and the GPU target seems like a reasonable target.
+\end_layout
+
+\begin_layout Standard
+This would allow the "stupid computer trick" of,
+ for example,
+ writing a transformer in Atomese.
+\end_layout
+
+\begin_layout Standard
+I call it "stupid" because kind of no one is actually interested in such a stunt.
+ I mean,
+ why bother?
+ 99.99% of all programmers in the industry are going to ask Claude or ChatGPT write a blob of python code to do whatever,
+ and if they need changes or add features,
+ they just ask the LLM to do that,
+ until that blob becomes an unmanagable mess.
+ After six months of being stuck in molasses,
+ some fraction of these coders will understand that "good architecture" is a "good idea",
+ and maybe (??) by then,
+ the LLM's will advance far enough to be able to actually architect coherent interfaces.
+ Claude can almost do this now,
+ on a good day.
+ So who needs this stuff,
+ when you can just ask an LLM to write code for you?
+ ...
+ and that is why this is a "stupid idea".
+\end_layout
+
+\begin_layout Standard
+But I dunno,
+ some days it feels like a worthwhile idea.
+\end_layout
+
+\begin_layout Standard
+Adam-Vandervorst commented yesterday
+\end_layout
+
+\begin_layout Standard
+camping on my high activity but unimportant commits
+\end_layout
+
+\begin_layout Standard
+It felt anomalous -- but now I got it explained with "Claude Sonnet 4.5" (not the productivity,
+ which I'm very used to coming from you,
+ but the amount of yak shaving per experiment)
+\end_layout
+
+\begin_layout Standard
+Nothing is actually lost
+\end_layout
+
+\begin_layout Standard
+Right,
+ decreasing the redundancy with the more general mechanism...
+ if it were a commitment to a crisp system,
+ I was going to try and halt you in your tracks by saying I have a good "discrete only" engine.
+\end_layout
+
+\begin_layout Standard
+See you real soon!
+\end_layout
+
+\begin_layout Standard
+linas commented 6 minutes ago
+\end_layout
+
+\begin_layout Standard
+I've daydreamed about "discrete only" engines for..
+ a decade.
+ Obvious choices include attaching to the Uni Potsdam ASP solver.
+ or to the present–day ProLog solver.
+ Or both.
+ I encouraged Nil to do this for PLN:
+ do 100% of PLN inference "discrete only" and then inject flipped bits at various steps in the inference process,
+ and build up a statistical sampling.
+ I figured that this way,
+ he could do thousands of inferences per second,
+ and go deep deep deep into inference chains.
+ He would also be able to isolate which parts of the inference are stable against perturbation,
+ and which points are highly mutable,
+ fluid,
+ are critical branch points.
+ He never really got interested in this and kept banging his head against traditional (classical?) PLN,
+ trying to propagate expectation values,
+ which was a plausible idea in the 1990's but certainly not now.
+\end_layout
+
+\begin_layout Standard
+I still think its a worthy project,
+ especially if it could be carried out rapidly,
+ with minimal fuss.
+ Although,
+ I'm not at all sure what kinds of propositions one would want to apply this to.
+ Toy problems like "the lawn is wet because the sprinkler system is on or its raining" seem pointless.
+ I don't know if there's some corpus out there of "typical inference problems".
+ This kind of sampled–inference starts to get interesting when it goes high–dimensional,
+ and starts to overlap strongly with mean–field type problems,
+ and Ising–type problems.
+ What's the "spin glass" of a high–dimensional inference chain?
+ Something with thousands of variable in it?
+ I'm sure I would love to get lost in the combined math–theory + experiment of this.
+ Presumably,
+ there's more than a little overlap with some of the stranger DL/NN architectures out there.
+\end_layout
+
+\begin_layout Standard
+Back in the 2000's,
+ the idea of "probabilistic programming" was fashionable for a while,
+ where you took an ordinary programming language and mashed probabilities onto each binary decision point.
+ There didn't seem to be any interesting results that came out of that.
+\end_layout
+
+\begin_layout Standard
+I have a gut–sense (i.e.
+ intuitive,
+ but also vague) idea of what happens if you take an algorithm (discrete,
+ not probabilistic),
+ and "unroll" it:
+ turn it into an execution tree,
+ and then imagine how often each different path of the execution tree is visited,
+ as a function of program inputs.
+ I imagine one would find portions that are "highly conserved" (always visited) and portions that are "fluid" (branch points that are very data dependent.
+ I know that the CPU designers at AMD,
+ Intel,
+ IBM do exactly this for their branch–prediction units and that its super–duper highly proprietary secret sauce.
+ It's be interesting to see this done on something that is much much larger than what fits in an L1 cache.
+ Say,
+ some million or billion vector model.
+ I think I would enjoy getting lost in the intricacies of that.
+\end_layout
+
+\begin_layout Standard
+Well,
+ I should be careful.
+ Of course code–coverage and performance–analysis tools do exactly this:
+ coverage looks for branches that are never visited,
+ and performance tools look for hot–spots.
+ But this is always in the context of a specific programming language,
+ a specific code base.
+ and not some "generic tree".
+ I wonder if the proof assistants have hot–spot optimizers.
+ I suppose maybe they do.
+\end_layout
+
+\begin_layout Standard
+I'm getting interested in how one can "fluidly" rewrite execution trees,
+ or proof trees,
+ or inference trees one into another.
+ Again,
+ this is 100% standard practice for compiler internals,
+ and is exactly what compilers have been doing since the were invented 70-odd years ago.
+ But compilers have always been focused on individual (programming) languages and their syntax trees;
+ I'm interested in the broad scope of "any syntax tree" that might be out there.
+ But there's no infrastructure in existence on which I could experiment,
+ so it would have to be built from scratch.
+\end_layout
+
+\begin_layout Standard
+Your rubiks problem falls into that class.
+ Generation is the easy problem of having some structure (the basic rubiks moves) and generating every possible configuration.
+ Inference is the hard problem of being given a collection of patterns,
+ and discovering the underlying structure and moves.
+ Maybe I should work on this:
+ even as I'm typing,
+ I'm having a small epiphany of "oh,
+ here's how to solve Adam's Rubiks problem".
+ Its also a worthy thing to try.
+\end_layout
+
+\begin_layout Standard
+See?
+ I have too many interesting things that are worthy projects.
+ Well,
+ maybe worthy.
+ Maybe after an hour or two I would realize they're stupid and pointless.
+ Alas.
+\end_layout
+
+\begin_layout Standard
+As to Yak shaving,
+ yeah.
+ Well,
+ think Marie Kondo.
+ It was time to clean out a decade of accumulated cruft.
+ It was getting on my nerves.
+\end_layout
+
+\begin_layout Standard
+Oh,
+ you mentioned a fast discrete system.
+ If it could replace/supplement the AtomSpace query engine,
+ that would be quite very nice.
+ But I am currently (this month) not using the query engine for anything.
+ That might change...
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
