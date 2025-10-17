@@ -1517,7 +1517,7 @@ Interesting, but maybe less useful
   to the vertexes with one, two, three edges coming from them, and form
   a trainable network. But what should one train on?
 
-  The example prototype here is LTN, Logic Tensor Networks, from 
+  The example prototype here is LTN, Logic Tensor Networks, from
   https://github.com/logictensornetworks/logictensornetworks
 
 * A cellular entity retaining only its replicative core:
@@ -1539,5 +1539,52 @@ Interesting, but maybe less useful
   of interdependent parts, quite distinct from the host, and yet not
   viable without the host (a specific host, or perhaps a type or class
   of hosts.)
+
+* Sheaves, CoSheaves and Applications (Dissertation)
+  Justin Michael Curry (2014)
+  https://arxiv.org/pdf/1303.3255
+
+  Even if you think you know what a sheaf is, this is tough slogging.
+  The first two-thirds is very abstract, and cannot be read in a day
+  or two. It does provide an extensive review and articulation, and
+  seems fairly complete, when looked at from the conventional
+  mathematical mindset of manifolds and sober spaces. It's lacking,
+  if one is interested in spaces proof-trees or model-theoretic
+  languages, or things with a Zariski topology. Which is what I'm
+  interested in.
+
+  The last 1/3rd makes contact with engineering problems(!) in a
+  somewhat jarring way. The a-ha lightbulb works like this: an array
+  of radars, cameras, microphones spread out over space form a network,
+  and deliver data. How should these be stitched together, to get a
+  coherent whole? This is an important engineering question, especially
+  for the military. It is very obviously sheaf-theoretic: the stitching
+  together of data from neighboring sheafs of sections is more or less
+  pure sheaf theory. Even more so when the sensors are spread over a
+  2D or 3D manifold (well, OK, a network embedded in a manifold,
+  piecewise-linear perhaps. Even GPS satellites can be thought of as
+  being in a netowrk layered on Minkowski space.) So, cellular homology
+  would be the suggestive keyword, here. Multi-modal sensors make the
+  gluing more challenging: how do you align what you see with a camera
+  with what you see with radar?
+
+  Perhaps one can make better engineering decisions with the careful
+  application of sheaf theory to sensor networks. It is certainly
+  entertaining and distracting to think of it this way. it's fun, in
+  the way all math and engineering questions are fun. I expect that,
+  in a few years, I will be able to ask an LLM to design a multi-modal
+  sensor network for me, and it will be able to apply the theory in this
+  dissertation and create a better design as a result.
+
+  But the lack of a sheaf theory for what I am personally interested
+  in: the homotopic deformations of computer programs and mathematical
+  proofs, from one form to another, this is disappointing to me. Here's
+  a simple example: consider two group presentations. Lets say that we
+  already know, from an outside source, that these present the same
+  group. If we take each presentation as a point, and the generated
+  elts above it as sections, then how do these glue together across the
+  two presentations? There's no manifold, and the topology is a Zariski
+  topology. Ideas such as this are never-ever touched on in this
+  dissertation. But this is where my interests wander off to.
 
 ----------
