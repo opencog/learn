@@ -20522,7 +20522,7 @@ This would allow the "stupid computer trick" of,
 I call it "stupid" because kind of no one is actually interested in such a stunt.
  I mean,
  why bother?
- 99.99% of all programmers in the industry are going to ask Claude or ChatGPT write a blob of python code to do whatever,
+ 99.99% of all programmers in the industry are going to ask Claude or ChatGPT to write a blob of python code to do whatever,
  and if they need changes or add features,
  they just ask the LLM to do that,
  until that blob becomes an unmanagable mess.
@@ -20704,6 +20704,282 @@ Oh,
  that would be quite very nice.
  But I am currently (this month) not using the query engine for anything.
  That might change...
+\end_layout
+
+\begin_layout Subsection*
+17 October 2025
+\end_layout
+
+\begin_layout Standard
+Conversation on bluesky:
+\end_layout
+
+\begin_layout Standard
+Post
+\end_layout
+
+\begin_layout Standard
+Fleeky
+\end_layout
+
+\begin_layout Standard
+@fleeky.bsky.social
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+do you have thoughts on integrating claude with opencog ?
+ would it be more useful than just integrating claude with a bunch of markdown files?
+\end_layout
+
+\begin_layout Standard
+October 17,
+ 2025 at 9:04 AM
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 38m
+\end_layout
+
+\begin_layout Standard
+"A bunch of markdown files" I assume you are talking about the cogserver MCP interfaces.
+ When you configure MCP and start Claude,
+ it automatically reads those files,
+ and learns how to use the atomspace,
+ and do this with it.
+ You can tell Claude "create this Atom" or "tell me what's in there"
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 33m
+\end_layout
+
+\begin_layout Standard
+...
+ and it works.
+ Claude can see the insides of the AtomSpace,
+ and manipulate it,
+ and it understands,
+ more or less what it's doing.
+ A bit dazed and confused sometimes,
+ but adequate.
+ This is separate from a different topic,
+ which is what I think you are asking about.
+ Let me tell you about that.
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 30m
+\end_layout
+
+\begin_layout Standard
+So Claude can't remember shit.
+ So I say to myself "maybe I can get it to store memories in the AtomSpace,
+ which would liberate me from token limits and organization problems of storing context as text files.
+ (the jsonl file it works with) I say "why don't you create a memory system for yourself?"
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 26m
+\end_layout
+
+\begin_layout Standard
+It takes me three evenings to tell it that,
+ so its "non-obvious" but pretty soon I figure out it is reinventing some 1970's style chatbot,
+ badly.
+ I spend a few more evenings trying to straighten that out,
+ when it becomes brightly clear:
+ Just because Claude has read every paper ever written on AI
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 22m
+\end_layout
+
+\begin_layout Standard
+Claude can't actually "do anything" with the knowledge it has.
+ Not on it's own.
+ You have to lead it by the hand.
+ You can tell it to implement the algo in table 3 of Chapter 42 of Norvig's textbook on AI and it will do a decent job of actually doing that.
+ But it will never-ever think of doing this...
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 18m
+\end_layout
+
+\begin_layout Standard
+It won't do this on it's own.
+ You can tell it "I want to solve this problem" but it won't ..
+ it can't ...
+ synthesize the knowledge it learned from all these textbooks and papers to synthesize a solution.
+ Only you can do that.
+ And you have to spell out (architect) your solution explicitly.
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 16m
+\end_layout
+
+\begin_layout Standard
+And so I hit this wall.
+ I can't just say "oh,
+ why don't you store your memories in the AtomSpace" It will,
+ but in some really stupid format.
+ Then it doesn't know how to access them.
+ But access is not some table lookup.
+ Remembering things requires active synthesis,
+ inference,
+ deduction.
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 12m
+\end_layout
+
+\begin_layout Standard
+There's even an ur-question:
+ "why should I try to remember Y?" The answer is "oh,
+ I need that to solve problem X" but then "why is Y relevant to solving problem X?" ...
+ "I don't know,
+ maybe if I could remember Y,
+ then it should be clear." It's a bit circular.
+ You can kind of trick Claude into this.
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 9m
+\end_layout
+
+\begin_layout Standard
+But it's not really "thinking",
+ its making lists of bullet items and you have to say things like "now read the bullet list that you wrote and think hard about each item",
+ and after a few more steps,
+ it's lost the plot.
+ I'd like to "store the plot" in the AtomSpace,
+ but ...
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 5m
+\end_layout
+
+\begin_layout Standard
+It's all uphill,
+ and its hard to halt Claude from making really dumb design decisions.
+ You have to keep very close tabs on it.
+ It's a coding wizard.
+ It's excellent at that;
+ all the boring cut-n-paste-n-debug I used to do that took me a week,
+ it can do do in half a day.
+ It's even sometimes brilliant!
+\end_layout
+
+\begin_layout Standard
+Linas Vepstas
+\end_layout
+
+\begin_layout Standard
+@linas.org
+\end_layout
+
+\begin_layout Standard
+· 7m
+\end_layout
+
+\begin_layout Standard
+But it just "doesn't get it".
+ It doesn't get "the big picture",
+ the "what's it all about anyway" stuff.
+ It's the idiot-savant almost like out of some Hollywood movie.
+ It's almost a paperclip maximizer.
+\end_layout
+
+\begin_layout Standard
+
 \end_layout
 
 \begin_layout Section*
