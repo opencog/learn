@@ -1,6 +1,15 @@
 
 Things to read:
 
+* On the Statistical Query Complexity of Learning Semiautomata:
+  a Random Walk Approach
+  George Giaptizakis et al
+  https://arxiv.org/abs/2510.04115
+
+* Efficient noise-tolerant learning from statistical queries
+  Michael Kearns, 1998
+  https://dl.acm.org/doi/abs/10.1145/293347.293351
+
 * Information Processing in Dynamical Systems: Foundations of Harmony Theory
   Paul Smolensky
   University of Colorado at Boulder CU-CS-321-86
