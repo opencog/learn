@@ -12,7 +12,7 @@
 (use-modules (opencog) (opencog logger))
 (use-modules (opencog persist))
 (use-modules (opencog matrix))
-(use-modules (opencog nlp) (opencog learn))
+(use-modules (opencog lg) (opencog learn))
 (use-modules (opencog cogserver))
 (use-modules (srfi srfi-1))
 

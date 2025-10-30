@@ -57,7 +57,7 @@ txt-stream
 ; Demo: Perform processing on the stream. In this case, parse the
 ; input stream into token pairs. Use the LG "any" parser for this.
 
-(use-modules (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog lg))
 
 ; As above: rewind the stream to the begining:
 (cog-execute!

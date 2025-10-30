@@ -16,7 +16,7 @@
 ; `marginals-mst.scm` or `marginals-mst-shape.scm`.
 ;
 (use-modules (opencog) (opencog learn))
-(use-modules (opencog nlp) (opencog persist) (opencog matrix))
+(use-modules (opencog lg) (opencog persist) (opencog matrix))
 (define mst-gate (make-gate))
 
 ; The `make-block-mpg-pipe-observer` is an Atomese pipe observer

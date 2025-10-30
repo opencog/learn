@@ -13,8 +13,7 @@
 (use-modules (srfi srfi-1))
 (use-modules (ice-9 optargs)) ; for define*-public
 
-(use-modules (opencog) (opencog exec) (opencog nlp))
-(use-modules (opencog nlp lg-dict) (opencog nlp lg-parse))
+(use-modules (opencog) (opencog exec) (opencog lg))
 
 
 (define*-public (make-lg-comparator gold-dict test-dict classes #:key

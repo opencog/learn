@@ -11,7 +11,7 @@
 (use-modules (srfi srfi-1))
 
 (use-modules (opencog) (opencog exec) (opencog persist))
-(use-modules (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog lg))
 (use-modules (opencog matrix))
 
 ; XXX FIXME. The next 30 lines of code are a cut-n-paste of the

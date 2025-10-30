@@ -26,7 +26,7 @@
 ;   But this is not urgent, because the count-api itself is hard coded.
 
 (use-modules (opencog) (opencog exec) (opencog persist))
-(use-modules (opencog nlp) (opencog nlp lg-parse))
+(use-modules (opencog lg))
 (use-modules (opencog matrix))
 (use-modules (srfi srfi-1))
 

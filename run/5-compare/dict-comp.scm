@@ -20,7 +20,7 @@
 
 (use-modules (srfi srfi-1))
 (use-modules (ice-9 rdelim))
-(use-modules (opencog) (opencog nlp) (opencog learn))
+(use-modules (opencog) (opencog lg) (opencog learn))
 
 ; Check usage
 (if (not (equal? 4 (length (program-arguments))))
