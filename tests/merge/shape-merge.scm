@@ -24,7 +24,7 @@
 ; Created Jan 2022
 
 (use-modules (opencog) (opencog matrix))
-(use-modules (opencog nlp))
+(use-modules (opencog lg))
 (use-modules (opencog learn))
 
 (use-modules (opencog test-runner))

@@ -2,7 +2,7 @@
 ; class-data.scm
 ; Populate the AtomSpace with multiple clusters.
 
-(use-modules (opencog) (opencog nlp))
+(use-modules (opencog) (opencog lg))
 
 ; ---------------------------------------------------------------
 ; Define sections on two WordClasses, that should be mergeable.

@@ -2,7 +2,7 @@
 ; connector-data.scm
 ; Populate the AtomSpace with assorted test data.
 
-(use-modules (opencog) (opencog nlp))
+(use-modules (opencog) (opencog lg))
 
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.

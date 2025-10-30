@@ -2,7 +2,7 @@
 ; shape-data.scm
 ; Populate the AtomSpace with assorted test data (for the shape-merge test)
 
-(use-modules (opencog) (opencog nlp))
+(use-modules (opencog) (opencog lg))
 
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
