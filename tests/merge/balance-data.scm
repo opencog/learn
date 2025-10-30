@@ -6,8 +6,10 @@
 (use-modules (opencog) (opencog lg))
 
 
+(define tvkeystr "*-TruthValueKey-*")
+
 (define (cog-count ATOM)
-	(cog-value-ref (cog-value ATOM (Predicate ":counter:")) 2))
+	(cog-value-ref (cog-value ATOM (Predicate tvkeystr)) 2))
 
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
@@ -17,7 +19,7 @@
 (define cnt-c-aaa 44)
 
 (define (setup-a-b-sections)
-	(define tvkey (PredicateNode ":counter:"))
+	(define tvkey (PredicateNode tvkeystr))
 
 	(cog-set-value!
 		(Section
@@ -145,7 +147,7 @@
 (define cnt-a-aaa 43)
 
 (define (setup-aaa-sections)
-	(define tvkey (PredicateNode ":counter:"))
+	(define tvkey (PredicateNode tvkeystr))
 	(cog-set-value!
 		(Section
 			(Word "a")
@@ -271,7 +273,7 @@
 (define (setup-aab-sections)
 	(setup-a-b-sections)
 
-	(define tvkey (PredicateNode ":counter:"))
+	(define tvkey (PredicateNode tvkeystr))
 	(cog-set-value!
 		(Section
 			(Word "c")
@@ -302,7 +304,7 @@
 (define (setup-aba-sections)
 	(setup-aab-sections)
 
-	(define tvkey (PredicateNode ":counter:"))
+	(define tvkey (PredicateNode tvkeystr))
 	(cog-set-value!
 		(Section
 			(Word "c")

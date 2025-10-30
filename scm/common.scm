@@ -18,6 +18,11 @@
 ; ---------------------------------------------------------------------
 
 ; get-count ATOM - return the raw observational count on ATOM.
+(define (cog-count ATOM)
+	(cog-value-ref (cog-value ATOM (Predicate "*-TruthValueKey-*")) 2))
+(define (cog-set-tv! ATOM VAL)
+	(cog-set-value! ATOM (Predicate "*-TruthValueKey-*") VAL))
+
 (define-public (get-count ATOM) (cog-count ATOM))
 
 ; set-count ATOM CNT - Set the raw observational count on ATOM.
