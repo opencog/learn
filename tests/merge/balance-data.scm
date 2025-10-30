@@ -5,10 +5,9 @@
 
 (use-modules (opencog) (opencog lg))
 
-(define tvkey (Predicate "*-TruthValueKey-*"))
 
 (define (cog-count ATOM)
-	(cog-value-ref (cog-value ATOM tvkey) 2))
+	(cog-value-ref (cog-value ATOM (Predicate ":counter:")) 2))
 
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
@@ -18,6 +17,8 @@
 (define cnt-c-aaa 44)
 
 (define (setup-a-b-sections)
+	(define tvkey (PredicateNode ":counter:"))
+
 	(cog-set-value!
 		(Section
 			(Word "a")
@@ -35,7 +36,6 @@
 				(Connector (Word "h") (ConnectorDir "+"))))
 		tvkey
 		(FloatValue 1 0 cnt-b-gh))
-
 
 	(cog-set-value!
 		(Section
@@ -145,6 +145,7 @@
 (define cnt-a-aaa 43)
 
 (define (setup-aaa-sections)
+	(define tvkey (PredicateNode ":counter:"))
 	(cog-set-value!
 		(Section
 			(Word "a")
@@ -270,6 +271,7 @@
 (define (setup-aab-sections)
 	(setup-a-b-sections)
 
+	(define tvkey (PredicateNode ":counter:"))
 	(cog-set-value!
 		(Section
 			(Word "c")
@@ -300,14 +302,18 @@
 (define (setup-aba-sections)
 	(setup-aab-sections)
 
-	(Section (ctv 1 0 cnt-c-aba)
-		(Word "c")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "b") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(define tvkey (PredicateNode ":counter:"))
+	(cog-set-value!
+		(Section
+			(Word "c")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "b") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-c-aba))
 
 	*unspecified*
 )
