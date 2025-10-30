@@ -13,24 +13,36 @@
 (define cnt-c-aaa 44)
 
 (define (setup-a-b-sections)
-	(Section (ctv 1 0 cnt-a-gh)
-		(Word "a")
-		(ConnectorSeq
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-b-gh)
-		(Word "b")
-		(ConnectorSeq
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-c-aaa)
-		(Word "c")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "a")
+			(ConnectorSeq
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-a-gh))
+
+	(cog-set-value!
+		(Section
+			(Word "b")
+			(ConnectorSeq
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-b-gh))
+
+
+	(cog-set-value!
+		(Section
+			(Word "c")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-c-aaa))
 
 	*unspecified*
 )
@@ -128,24 +140,35 @@
 (define cnt-a-aaa 43)
 
 (define (setup-aaa-sections)
-	(Section (ctv 1 0 cnt-a-gh)
-		(Word "a")
-		(ConnectorSeq
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-b-gh)
-		(Word "b")
-		(ConnectorSeq
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-a-aaa)
-		(Word "a")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "a")
+			(ConnectorSeq
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-a-gh))
+
+	(cog-set-value!
+		(Section
+			(Word "b")
+			(ConnectorSeq
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-b-gh))
+
+	(cog-set-value!
+		(Section
+			(Word "a")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-a-aaa))
 
 	*unspecified*
 )
@@ -242,14 +265,18 @@
 (define (setup-aab-sections)
 	(setup-a-b-sections)
 
-	(Section (ctv 1 0 cnt-c-aab)
-		(Word "c")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "a") (ConnectorDir "+"))
-			(Connector (Word "b") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "c")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "a") (ConnectorDir "+"))
+				(Connector (Word "b") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		(Predicate "*-TruthValueKey-*")
+		(FloatValue 1 0 cnt-c-aab))
+
 
 	*unspecified*
 )
