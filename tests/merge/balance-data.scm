@@ -5,6 +5,11 @@
 
 (use-modules (opencog) (opencog lg))
 
+(define tvkey (Predicate "*-TruthValueKey-*"))
+
+(define (cog-count ATOM)
+	(cog-value-ref (cog-value ATOM tvkey) 2))
+
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
 
@@ -19,7 +24,7 @@
 			(ConnectorSeq
 				(Connector (Word "g") (ConnectorDir "-"))
 				(Connector (Word "h") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-a-gh))
 
 	(cog-set-value!
@@ -28,7 +33,7 @@
 			(ConnectorSeq
 				(Connector (Word "g") (ConnectorDir "-"))
 				(Connector (Word "h") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-b-gh))
 
 
@@ -41,7 +46,7 @@
 				(Connector (Word "a") (ConnectorDir "+"))
 				(Connector (Word "a") (ConnectorDir "+"))
 				(Connector (Word "m") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-c-aaa))
 
 	*unspecified*
@@ -146,7 +151,7 @@
 			(ConnectorSeq
 				(Connector (Word "g") (ConnectorDir "-"))
 				(Connector (Word "h") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-a-gh))
 
 	(cog-set-value!
@@ -155,7 +160,7 @@
 			(ConnectorSeq
 				(Connector (Word "g") (ConnectorDir "-"))
 				(Connector (Word "h") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-b-gh))
 
 	(cog-set-value!
@@ -167,7 +172,7 @@
 				(Connector (Word "a") (ConnectorDir "+"))
 				(Connector (Word "a") (ConnectorDir "+"))
 				(Connector (Word "m") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-a-aaa))
 
 	*unspecified*
@@ -274,7 +279,7 @@
 				(Connector (Word "a") (ConnectorDir "+"))
 				(Connector (Word "b") (ConnectorDir "+"))
 				(Connector (Word "m") (ConnectorDir "+"))))
-		(Predicate "*-TruthValueKey-*")
+		tvkey
 		(FloatValue 1 0 cnt-c-aab))
 
 
