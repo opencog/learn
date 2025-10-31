@@ -44,9 +44,9 @@ we have those inputs and outputs connected with graph edges, going
 to wherever they are connected. So, a large collection of
 [Abstract Syntax Trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
 (AST).  Not just low-level graphs representing
-`([Plus](https://wiki.opencog.org/w/PlusLink) 2 2)` but also high
-level graphs, like `([Rewrite](https://wiki.opencog.org/w/QueryLink)
-(A (Variable X) B) (D B A (Variable X)))`
+([Plus](https://wiki.opencog.org/w/PlusLink) 2 2) but also high
+level graphs, like ([Rewrite](https://wiki.opencog.org/w/QueryLink)
+(A (Variable X) B) (D B A (Variable X)))
 Think, perhaps regex-as-a-graph, or perhaps SQL-as-a-graph, but far more
 powerful and sophisticated than SQL. But also, not all graphs have to
 be executable: words and sentences aren't, for example. More typically,
