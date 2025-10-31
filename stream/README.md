@@ -69,6 +69,11 @@ just ask Claude to read the text file. But Atomese is different: you
 don't "read a text file" and "try to understand it" by trying to 
 "imagine what it does in your head". Code held graphical form is
 already in graphically sturcutred form. You can just run QueryLink
-over it. If youy want to overlay it with equivalent pseudocode, you
+over it. If you want to overlay it with equivalent pseudocode, you
 can also do that; its all in the AtomSpace, as graphs.
+
+This directory contains (will contain) quasi-architected code, written
+mostly by Claude, with as much supervision as I have patience for, with
+the hope that it can supplant the earlier batch-processing code, while
+remaining true to the idea of explorig neuro-symbolic learning.
 
