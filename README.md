@@ -52,3 +52,23 @@ to words and sentences, You can also attach vectors to AST's and
 to rewrite rules and to queries... its a generic symbolic representation
 system that is interlayered with vectors and weights.
 
+Version one had multiple serious problems. The worst was perhaps that
+it was a batch processing model. A text corpus is downloaded from
+somewhere (Project Gutenberg, Wikipedia), shoved through a pipeline,
+sliced and diced, with the [AtomSpace](https://github.com/opencog/atomspace)
+accumulating the results. The experience of running this was like
+doing laundry: lots of work interleaved with lots of waiting and the
+occasional emergency when you put in too much soap and the washing
+machine is spilling out onto the floor.  Batch processing is not fun.
+
+This prompted exporation of a more autonomuous design; the processing
+would be done by agents, each having considerable independence and
+decision-making authority. This required a sensori-motor subsystem,
+so that the agents could grab and manipualte data, work with it, move
+and read and copy. The current alpha (version-0.5) sensorimotor
+Atomese is located in the [sensory](https://github.com/opencog/sensory)
+git repo.
+
+Work on version two has barely begun: this README, and the
+[README in the stream directory](stream/README.md) is almost the only
+public content.
