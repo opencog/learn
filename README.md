@@ -95,6 +95,32 @@ Atomese streams are written in ... Atomese. For these reasons.
 Its a bit brutish and nasty, at the moment, but this is a science
 research project, not a software engineering project.
 
-Work on version two has barely begun: this README, and the
+### Version Two
+Work on Version Two has barely begun: this README, and the
 [README in the stream directory](stream/README.md) is almost the only
 public content.
+
+I (now speaking personally, "I" am Linas Vepstas) anticipate that most
+of the Version Two code will be written by Anthropic Claude. I will keep
+it on a short leash, but I expect some fair amount of LLM slop. I'll try
+to control it, as best as my patience allows. There will be scaffolding,
+cruft and broken-ness interwoven with a reasonable architecture and
+fairly clear design goals.
+
+The proximal motivation for this is an attempt to endow Claude, or any
+LLM, with "offline" memory (long-term memory) and reasoning skills
+that operate outside of the LLM itself, acting to direct and stear and
+enhance the capabilities of teh LLM, acting as some sort of meta-layer,
+some harness or reins or bridle, or perhaps a prefrontal cortex. Pick
+your analogy. The project is perhaps foolish, or perhaps interesting;
+at any rate, it is an attempt to interface a rather sophiticated LLM
+to a rather meagre symbolic system. Is it doomed to fail? Well, sraight
+out of the gate, its clear that Claude's ADHD and utter inability to
+remember anything unless it is jammed into some prompt, and even then,
+its utter unwillingness to RTFM wither written by itself, or anyone else,
+well this is a fine challenge.  I'm up for fine challanges.
+
+More will be posted when there's more to post.
+
+-------
+The End.
