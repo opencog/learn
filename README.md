@@ -95,6 +95,34 @@ thing. Thus, Atomese streams are written in ... Atomese. For these
 reasons.  Its a bit brutish and nasty, at the moment, but this is a
 science research project, not a software engineering project.
 
+### Objects
+Object-Orieinted Programming. Don't laugh. Version One used the
+[matrix](https://github.com/opencog/matrix) tensor processing library.
+This became quite large, sophisticated and very well debugged. Its a
+jewel of what you'd want for matrix and tensor analysis, wrapped in
+a pretty polymorphic object oriented API. So ... what's the problem?
+Well, its written in an ordinary human-readable programming language.
+[Guile scheme](https://www.gnu.org/software/guile/), as it happens,
+but it could have been Python or Gnu R. Same complaint: it's not
+written in Atomese. And this turns out to be a huge burden and
+bottleneck for stream processing and sensori-motor interfaces.
+
+Why was it written in scheme, you say, and not in Atomese from the
+beginning? Well, because, it so happens, we could not figure out how
+to have OO interfaces in Atomese until very recently. It was simply
+just plain not clear, not obvious. After a decade of attempts and
+false starts, it was just ... opaque. But now there is an experimental
+OO interface, which just happens to look almost identical to the
+sensori-motor interface. As such, it looks like it will be capable
+of manipulating and controlling GPU's, for example, but also not just
+concrete devices, but also abstract things: controlling tensors and
+vectors, combining them and rewiring them and rejiggering any which
+way. A motor system that controls not just devices, but controls
+algorithms. Not just controls algorithms, but writes them too.
+Well, sure ChatGPT and Microsoft CoPilot and Claude can all write
+algorithms too, but, err, how should I say it ... that's not the
+point. See above. And see below.
+
 ### Version Two
 Work on Version Two has barely begun: this README, and the
 [README in the stream directory](stream/README.md) are almost the only
