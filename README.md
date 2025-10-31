@@ -55,7 +55,13 @@ graphs have to be executable: words and sentences aren't, for example.
 More typically, vectors are attached to words and sentences. But you
 can also attach vectors to AST's and to rewrite rules and to queries...
 Its a generic symbolic representation system that is interlayered with
-vectors and weights.
+vectors and weights. Think, maybe,
+[Ising model](https://en.wikipedia.org/wiki/Ising_model) but on a
+network graph, not a grid. With many states not just up/down. With
+many interactions, not just one. And fluid, liquid, changing. Or
+perhaps you'd be happier visualizing an electronic circuit, with
+current flowing through it. These are all valid abstractions that
+give some insight into the intended interpretation.
 
 Version one had multiple serious problems. The worst was perhaps that
 it was a batch processing system. A text corpus is downloaded from
