@@ -38,9 +38,9 @@ as well as the query language, are on equal footing: they're all
 (hyper-)graphs. These graphs are not just passive representations,
 but are also active: most graphs can be executed, and perform some
 action when executed. Thus, it vaguely resembles a programming
-langugage. But, unlike a programming langauge, it is also a graph.
+language. But, unlike a programming language, it is also a graph.
 Imagine, if you wish, a function with inputs and outputs, but now
-we have those inputs and outputs conneted with graph edges, going
+we have those inputs and outputs connected with graph edges, going
 to wherever they are connected. So, a large collection of
 [Abstract Syntax Trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree).
 Not just low-level graphs representing `(Plus 2 2)` but also high
@@ -62,7 +62,7 @@ occasional emergency when you put in too much soap and the washing
 machine is spilling out onto the floor.  Batch processing is not fun.
 
 ### Sensorimotor systems and agency
-This prompted exporation of a more autonomuous design; the processing
+This prompted exploration of a more autonomuous design; the processing
 would be done by agents, each having considerable independence and
 decision-making authority. This required a sensori-motor subsystem,
 so that the agents could grab and manipualte data, work with it, move
@@ -110,15 +110,15 @@ fairly clear design goals.
 The proximal motivation for this is an attempt to endow Claude, or any
 LLM, with "offline" memory (long-term memory) and reasoning skills
 that operate outside of the LLM itself, acting to direct and stear and
-enhance the capabilities of teh LLM, acting as some sort of meta-layer,
+enhance the capabilities of the LLM, acting as some sort of meta-layer,
 some harness or reins or bridle, or perhaps a prefrontal cortex. Pick
 your analogy. The project is perhaps foolish, or perhaps interesting;
 at any rate, it is an attempt to interface a rather sophiticated LLM
 to a rather meagre symbolic system. Is it doomed to fail? Well, sraight
 out of the gate, its clear that Claude's ADHD and utter inability to
 remember anything unless it is jammed into some prompt, and even then,
-its utter unwillingness to RTFM wither written by itself, or anyone else,
-well this is a fine challenge.  I'm up for fine challanges.
+its utter unwillingness to RTFM whether written by itself, or anyone else,
+well this is a fine challenge.  I'm up for fine challenges.
 
 More will be posted when there's more to post.
 

@@ -1,11 +1,11 @@
 Dynamic text streaming
 ----------------------
-The text procesing framework used by this project, from it's inception
+The text processing framework used by this project, from it's inception
 to about 2022, was a batch-processing framework. This proved unworkable,
 as it was difficult to manage processing stages, to control the size of
 the datasets, and frankly, baby-sitting the batch processing felt like
 doing laundry: tedious and boring, consisting of mostly waiting.
-(The batch-processing code is in the varius "run" directories.)
+(The batch-processing code is in the various "run" directories.)
 
 The AtomSpace now has a nascent streaming infrastructure, together with
 some prototype sensorimotor code, and an attempt to provide more agentic
@@ -17,11 +17,11 @@ The proximal driver of the code here is a project that attempts to
 supplement Claude (or perhaps any LLM) with off-line long-term memory,
 analysis and reasoning, a "meta-cognitive layer", external to the
 servers that the LLM's run on. Is this a project worth doing? I dunno.
-It seems intresting at the moment.
+It seems interesting at the moment.
 
 The interface to the LLM is "tokens", or more precisely "text", or
 whatever the Anthropic LLM client can be coaxed to print on screen and
-peform via MCP interfaces. So this is a bit of a narrow straw, backed
+perform via MCP interfaces. So this is a bit of a narrow straw, backed
 by a big brain at the othr end of it. What can be done at this end of
 the straw? Well, you guessed it. I cannot out-LLM the LLM guys; its a
 multi-billion-dollar industry. But I can explore trying to find a
@@ -36,7 +36,7 @@ that doesn't work.
 
 But if I ask Claude to "build me something" it will happily propose some
 stunningly naive approach from some 1980's AI textbook.  For a machine
-trained on hundreds of thousands ot the latest academic journal articles,
+trained on hundreds of thousands of the latest academic journal articles,
 this is deeply disappointing. But we role with the punches.
 
 Claude proposes semantic extraction into graph structures, so OK, this
@@ -57,7 +57,7 @@ its all disorganized, its all spaghetti code, can Claude can't remember
 what it created last week, even though it is right there, in the same
 directory. And this is why I want to create a memory system for it: so
 it can remember these things. I can force it to RTFM once, but after
-that, there needs to be a little birdie reminding him to take anohter
+that, there needs to be a little birdie reminding him to take another
 look before making a decision. I want that little birdie to be written
 in Atomese, to run in the AtomSpace.
 
