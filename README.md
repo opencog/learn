@@ -61,6 +61,7 @@ doing laundry: lots of work interleaved with lots of waiting and the
 occasional emergency when you put in too much soap and the washing
 machine is spilling out onto the floor.  Batch processing is not fun.
 
+### Sensorimotor systems and agency
 This prompted exporation of a more autonomuous design; the processing
 would be done by agents, each having considerable independence and
 decision-making authority. This required a sensori-motor subsystem,
@@ -68,6 +69,31 @@ so that the agents could grab and manipualte data, work with it, move
 and read and copy. The current alpha (version-0.5) sensorimotor
 Atomese is located in the [sensory](https://github.com/opencog/sensory)
 git repo.
+
+### Stream processing
+Together with basic work on a sensori-motor system is work on a
+stream processing system. Prototypical parts are the
+[FilterLink](https://wiki.opencog.org/w/FilterLink) and the
+[RuleLink](https://wiki.opencog.org/w/RuleLink).
+There are an assortment of example demos that can be found in the
+[Atomespace examples directory](https://github.com/opencog/atomspace/tree/master/examples/atomspace)
+and also, for example, the
+[parse-pipeline](https://github.com/opencog/sensory/blob/master/examples/parse-pipeline.scm)
+demo in the sensory project. These demos are alarmingly complicated!!
+No joke, this is not for the faint of heart.  A few words on stream
+processing are due. Of course, this is an ancient idea: Apache Flink,
+Apache Storm, RabbitMQ Streams, and on and on. These are popular and
+production-ready. The Atomese streams are the exact opposite of that.
+Why? The Atomese streams are an attempt to create a graph programming
+system for data processing. Why? you might ask. Why not just use Java
+or Python? Answer: Java and Python aren't graphs. You can't run a query
+on them, except perhaps with `grep` and `find` and `sed` and `awk`.
+Poor-mans tools. You certainly can't slap a 1024-dimmensiona
+floating-point weight vector onto the 42nd line of `foobar.py`. You
+can ask your LLM to do that, but its not the same thing. Thus,
+Atomese streams are written in ... Atomese. For these reasons.
+Its a bit brutish and nasty, at the moment, but this is a science
+research project, not a software engineering project.
 
 Work on version two has barely begun: this README, and the
 [README in the stream directory](stream/README.md) is almost the only
