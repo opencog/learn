@@ -1,5 +1,7 @@
 Structure Learning
 ==================
+(October 2025)
+
 This project is a broad-based exploration of structural learning.
 It has been fashionable to call this "neuro-symbolic learning".
 An earlier incarnation of this project called it "Natural Language
