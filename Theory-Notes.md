@@ -67,5 +67,61 @@ sudoku-solving algorithms, how do we find the one that generates the
 best possible paths? Or, at least, generates reasonably good ones on a
 statistical ensemble of all possible sudoku puzzles?
 
+This fourth item in the paragraph above becomes, again, as
+structure-discernment problem, reified. What is the space of
+sudoku-solving algorithms, and how can that space be described,
+represented, characterized and operated upon? Obviously, there is an
+infinite regress here; however, at each step of the game, there is a
+fairly urgent desire to have optimal representations and optimal
+algorithms for working with them.
+
+Thus, a part (a large part?) of the task here is to obtain, create and
+work with resonable algorithms that can do optimal things, without
+taking too long to get something done. Of course, humans have discovered
+many such: the greedy algorithm or the Davis-Putnam DPLL algorithm.
+The question now is "how can I automate that discovery?"
+
+There are several answers. One is try to stick to a purely symbolic
+approach: write some solver that enumerates all possible cases, in some
+ergodic odometer style, and examine each case. Then if we are lucky,
+perhaps we can DPLL prune some of the branches off that ergodic
+odometer, as we now know that "there is nothing there that is
+worthwhile". The ability to prune gives a superior algo. Then what:
+rinse and repeat?
+
+An issue that arises when seeing a new structure for the first time is
+"have I seen something similar before?" and "what tricks was I able to
+apply last time?" This requires memory -- both working memory and
+long-term memory. This also requires query: several questions are asked
+above; those questions are to be applied as queries to memory. The
+structural representation has to be such that it is effectively
+queriable, and, better yet, optimally queriable. It is no accident that
+"query planning" and "query optimization" were a big deal in 1990's Big
+Data systems, and that Google was founded on a shift-reduce algorithm
+that solved the Markov chain that we called "the Internet". The message
+here is always "reify" and "reify again".
+
+Another issue that arises is that of "percolation". If one tries to
+explore (enumerate) a space whose size explodes combinatorially with
+the number of steps taken, and the size of that space is infinite, then
+one will have a "Turing machine that never halts": you'll just wander
+off, quasi-ergodically into some corner, random-walk-style, never to
+return to the origin to explore other possible paths. There are several
+algorithms for dealing with this. One is to do breadth-first search,
+instead of depth-first. Another is to apply a DPLL-style transformation,
+and prune the finite branches that don't go anywhere (and so avoid
+exploring them entiely).
+
+But how does one know if a branch is finite or not? There might be a
+small and narrow and very thin tube that connects it to some other vast
+network. Like two giant cave systems connected by a small passage, you
+could wander around in one cave system for a very long time, failing to
+discover the path to the other.
+
+Well, so in this very round-about way, we arrive at the idea of using
+LLM's to search for and discover optimal paths and structures and
+algorithms.
+
+
 ### Intrefacing to LLM's
 Dynamic prompts
