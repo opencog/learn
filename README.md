@@ -43,14 +43,17 @@ Imagine, if you wish, a function with inputs and outputs, but now
 we have those inputs and outputs connected with graph edges, going
 to wherever they are connected. So, a large collection of
 [Abstract Syntax Trees](https://en.wikipedia.org/wiki/Abstract_syntax_tree)
-(AST).  Not just low-level graphs representing `(Plus 2 2)` but also high
-level graphs, like `(Rewrite (A (Variable X) B) (D B A (Variable X)))`
-Think, perhaps regex-as-a-graph, or perhaps SQL-as-a-graph, but far
-more powerful/sophisticated than SQL. But also, not all graphs have to
-be executable: words and sentences, for example. You can attach vectors
-to words and sentences. You can also attach vectors to AST's and to
-rewrite rules and to queries... Its a generic symbolic representation
-system that is interlayered with vectors and weights.
+(AST).  Not just low-level graphs representing
+`([Plus](https://wiki.opencog.org/w/PlusLink) 2 2)` but also high
+level graphs, like `([Rewrite](https://wiki.opencog.org/w/QueryLink)
+(A (Variable X) B) (D B A (Variable X)))`
+Think, perhaps regex-as-a-graph, or perhaps SQL-as-a-graph, but far more
+powerful and sophisticated than SQL. But also, not all graphs have to
+be executable: words and sentences aren't, for example. More typically,
+vectors are attached to words and sentences. But you can also attach
+vectors to AST's and to rewrite rules and to queries... Its a generic
+symbolic representation system that is interlayered with vectors and
+weights.
 
 Version one had multiple serious problems. The worst was perhaps that
 it was a batch processing system. A text corpus is downloaded from
@@ -65,7 +68,7 @@ machine is spilling out onto the floor.  Batch processing is not fun.
 This prompted exploration of a more autonomuous design; the processing
 would be done by agents, each having considerable independence and
 decision-making authority. This required a sensori-motor subsystem,
-so that the agents could grab and manipualte data, work with it, move
+so that the agents could grab and manipulate data, work with it, move
 and read and copy. The current alpha (version-0.5) sensorimotor
 Atomese is located in the [sensory](https://github.com/opencog/sensory)
 git repo.
