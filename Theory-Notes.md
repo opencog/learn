@@ -35,7 +35,7 @@ impossible, as the space is highly discontinuous. Machine learning
 systems can attempt hill climbing, but famously get stuck in local
 minima/maxima.
 
-But we're geting ahead of ourselves. The above can come only after some
+But we're getting ahead of ourselves. The above can come only after some
 preliminary structure has been discerned. Homotopic deformations can only
 come after several different structural variations are assigned to a
 given object, together with some judgement of whether there is some
@@ -46,7 +46,7 @@ rules viz, given premise P we can deduce Q via the rule P->Q. That is,
 an inference rule defines a single valid "homotopically continuous"
 deformation from P to Q.  But, of course, inferences are structural
 rewrites. Inference rules are rewrite rules; this is the Curry-Howard
-correspondance.
+correspondence.
 
 This suggests that the discernment of structure in nature can be broken
 into two parts: observing (finding) a structural representation, and
@@ -76,7 +76,7 @@ fairly urgent desire to have optimal representations and optimal
 algorithms for working with them.
 
 Thus, a part (a large part?) of the task here is to obtain, create and
-work with resonable algorithms that can do optimal things, without
+work with reasonable algorithms that can do optimal things, without
 taking too long to get something done. Of course, humans have discovered
 many such: the greedy algorithm or the Davis-Putnam DPLL algorithm.
 The question now is "how can I automate that discovery?"
@@ -95,7 +95,7 @@ apply last time?" This requires memory -- both working memory and
 long-term memory. This also requires query: several questions are asked
 above; those questions are to be applied as queries to memory. The
 structural representation has to be such that it is effectively
-queriable, and, better yet, optimally queriable. It is no accident that
+queryable, and, better yet, optimally queryable. It is no accident that
 "query planning" and "query optimization" were a big deal in 1990's Big
 Data systems, and that Google was founded on a shift-reduce algorithm
 that solved the Markov chain that we called "the Internet". The message
@@ -121,12 +121,12 @@ discover the path to the other.
 Well, so in this very round-about way, we arrive at the idea of using
 LLM's to search for and discover optimal paths and structures and
 algorithms. These work by representing structures with weighted tensor
-structures. Again, a structure: e.g. a transformer is a very specifi
+structures. Again, a structure: e.g. a transformer is a very specific
 wiring diagram that connects up a collection of tensors (well, actually
 functions, since the sigmoid is non-linear) in a very certain way, such
 that vectors flow across this "wiring diagram". By preparing a training
 corpus, one can train this NN so that the weights capture some aspect of
-the structure in the training corpus. In this case, the idea of sructure
+the structure in the training corpus. In this case, the idea of structure
 is "Bayesian": the corpus consists of the likely samples, and the
 unlikely ones are never there, never occur. They are, in some respects,
 given a uniform distribution. In the percolation example above, an NN
@@ -154,7 +154,7 @@ to solve problems. For example: LLM's are trained on hundreds of
 thousands of scientific papers, and, if you prompt them for some
 scientific factoid, the will recall it with very high accuracy.
 Breathtaking, even: the scope of knowledge is amazing. But if you then
-ask it to solve some techical problem that could be solved by applying
+ask it to solve some technical problem that could be solved by applying
 one of these scientific facts, it will utterly fail. Instead, you'll get
 something that sounds like it was cribbed from a textbook in the 1970's
 or the 1980's. Why is that? Well, because the representational emedding
@@ -177,7 +177,7 @@ only up to an extent. The blurriness problem results in confused
 thinking, and sometimes complete logical short-circuits, break-downs.
 The LLM perceives a homotopic defomration from one state to another when
 there is none. it perceives two pieces of software as hving equivalent
-function, when they don't. It percieves a solution of a Sudoku puzzle,
+function, when they don't. It perceives a solution of a Sudoku puzzle,
 when one of the constrins is clearly violated. This is the "blurriness"
 issue.
 
@@ -192,7 +192,7 @@ Recapping:
   mapped close to one-another, and minor perturbations cause the
   one to be confused for the other.
 * Lack of integrated memory. NN memory comes in two forms: the
-  memory/knoledge burning into the weights, which is static, unchanging
+  memory/knowledge burning into the weights, which is static, unchanging
   and determined by the training run, and the current location in the
   hyperspace, which was arrived at by pumping a bunch of tokens through
   the weight structure. This is lost, whenever a new session is started.
@@ -201,16 +201,16 @@ Recapping:
   that encoded vital facts are lost. (Example: I keep having to remind
   Claude to trim trailing whitespace. It keeps forgetting.)
 * Inability to reason in a logical fashion, which drawing on a pool of
-  crisp logical assertions. Since the respresentation system is not
+  crisp logical assertions. Since the representation system is not
   crisp (boolean true/false) the inferencing isn't either. The reasoning
   appears to be emulated: there are de facto reasoning styles embedded
-  in the wieghts, e.g. reasoning by syllogisms, these aren't crisp and
+  in the weights, e.g. reasoning by syllogisms, these aren't crisp and
   precise; rather they are paths through nearby locations in the
   hyperspace. They are "homotpic" only to the degree of blurriness that
   clouds judgements of equality (equivalence).
 * Inability to perform adequate recall of interrelated ideas (without
-  explict prompting). This is a representational short-coming:
-  inter-related ideas are imbedded in such a way that there are no short
+  explicit prompting). This is a representational short-coming:
+  inter-related ideas are embedded in such a way that there are no short
   paths between them, and so they cannot be found, unless the human
   already knows the path, and can guide the LLM. To put it differently,
   the LLM representation is never reified. A structural element is
@@ -220,26 +220,26 @@ Recapping:
   I dunno.
 
 So a big chunk of this project is to attempt to work with and solve the
-above limitations, by explictly attaching a symbolic representation
-system, Atomese, to the vetor embeddings of NN's. How to create such
+above limitations, by explicitly attaching a symbolic representation
+system, Atomese, to the vector embeddings of NN's. How to create such
 attachments is the magic question being wrestled with, here.
 
 ### Intrefacing to LLM's
 Initalial attempts to interface with LLM's can be thought of as being a
 for of "dynamic prompting". I, as a human, have to constantly guide the
 LLM by creating prompts. Some of these are throw-away: I write them
-once, and discard them. Others, the more permanent onces, I stick into
+once, and discard them. Others, the more permanent ones, I stick into
 a file, and force the LLM to read the file every time (burning a bunch
 of tokens in the process.)
 
 The current design is a kind of "dynamic prompting" create a system that
-reminds the LLM to go through some checklist, follow some precedures,
+reminds the LLM to go through some checklist, follow some procedures,
 re-examine assumptions, try things a different way, run the unit tests,
 RTFM, all of that. Its "dynamic" in that such prompts would be
 auto-generated, contextually, depending on the problem at hand.
 
 The other aspect of the design is to obtain these dynamic prompts by
-issueing queries and deductive chains on the contents of the AtomSpace.
+issuing queries and deductive chains on the contents of the AtomSpace.
 That is, some collection of queries (catalog or vector of queries) sits
 in the AtomSpace, accessed, e.g. by DualLink, and get processed and
 sorted by some daemon process/thread, to generate a dynamic prompt that
@@ -259,11 +259,11 @@ outputs are, what is transformed. Atomese is a lot like the insns of a
 CPU insn set, are are meant to assemble and "snap together" just like
 insns are assembled into a working program. Compilers can do this,
 because they have (1) an accurate machine description and (2) a bag of
-agorithms through which source code can betransformed into insns using
+algorithms through which source code can betransformed into insns using
 that machine description. Currently, Claude has neither of these. The
 "machine description" of Atomese is informal: a bunch of wiki pages. I
 could tell Claude to "read the source, Luke" but this offers at best a
-very localized patch, and is insufficent at larger scales. It also
+very localized patch, and is insufficient at larger scales. It also
 doesn't have a "bag of algorithms"; it has a collection of examples,
 which it can reason from by analogy, but again, these are highly
 localized. If the problem solution is not close to what can be found in
