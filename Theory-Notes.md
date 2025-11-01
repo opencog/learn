@@ -120,8 +120,132 @@ discover the path to the other.
 
 Well, so in this very round-about way, we arrive at the idea of using
 LLM's to search for and discover optimal paths and structures and
-algorithms.
+algorithms. These work by representing structures with weighted tensor
+structures. Again, a structure: e.g. a transformer is a very specifi
+wiring diagram that connects up a collection of tensors (well, actually
+functions, since the sigmoid is non-linear) in a very certain way, such
+that vectors flow across this "wiring diagram". By preparing a training
+corpus, one can train this NN so that the weights capture some aspect of
+the structure in the training corpus. In this case, the idea of sructure
+is "Bayesian": the corpus consists of the likely samples, and the
+unlikely ones are never there, never occur. They are, in some respects,
+given a uniform distribution. In the percolation example above, an NN
+trained on a cave system would assign equal probaility of finding the
+"hidden passage" everywhere; the hidden passage could be anywhere in the
+cave system; we don't know where. It is(?) (should be?) given
+equiprobability.
 
+The problems associated with using LLM's are now well known. One is that
+they "hallucinate". More mechanically, one could say that they are
+"blurry", and perceive two different structures as being the similar,
+when they are not, really. This is a vector-space embedding problem, a
+pixelization problem. The floating-point nature of the embedding allows
+bleed-through of unrelated things via small perturbations of the
+weights. Its "blurry", that's all.
+
+A second issue of LLM's is the general lack of working memory. The
+context window of a chat session provides the working memory for some
+given chat, but if you then ask the LLM to RTFM, the context window
+quickly blows up, using tens of thousands, hundreds of thousands of
+tokens. At this size, it struggles to continue to "think" coherently.
+
+A third issue seen in LLM's is the inability to adequately apply recall
+to solve problems. For example: LLM's are trained on hundreds of
+thousands of scientific papers, and, if you prompt them for some
+scientific factoid, the will recall it with very high accuracy.
+Breathtaking, even: the scope of knowledge is amazing. But if you then
+ask it to solve some techical problem that could be solved by applying
+one of these scientific facts, it will utterly fail. Instead, you'll get
+something that sounds like it was cribbed from a textbook in the 1970's
+or the 1980's. Why is that? Well, because the representational emedding
+is such that two closely-related scientific facts are very far from
+one-another, and the system, of course, cannot find the path from here
+to there: its simply too far away. The textbook solution, however, is
+highly clustered. Every scientific paper reviews the textbook solution
+in its introductory paragraphs. This extreme repetition allows the LLM
+to localize this into a distinct cluster. When you ask for a solution,
+it finds the cluster.
+
+The fact that the LLM can operate at a high-school or college level
+clustering of textbooks solutions is certainly quite wonderful. The
+inability to perform recall to obtain related ideas without stringent,
+careful prompting is infuriating.
+
+A fourth issue is "thinking" or "reasoning". The training corpus has
+examples of thinking and reasoning; and the LLM's can emulate this, but
+only up to an extent. The blurriness problem results in confused
+thinking, and sometimes complete logical short-circuits, break-downs.
+The LLM perceives a homotopic defomration from one state to another when
+there is none. it perceives two pieces of software as hving equivalent
+function, when they don't. It percieves a solution of a Sudoku puzzle,
+when one of the constrins is clearly violated. This is the "blurriness"
+issue.
+
+Thus, we have identified several things:
+* NNs offer very powerful representational systems that can discern
+  structure in nature in an effective, efficient and fast manner.
+* The vectorized nature of NN's has three obvious shortfals:
+  blurriness, memory and reasoning.
+
+Recapping:
+* Blurriness and bleed-through, because unrelated concepts are
+  mapped close to one-another, and minor perturbations cause the
+  one to be confused for the other.
+* Lack of integrated memory. NN memory comes in two forms: the
+  memory/knoledge burning into the weights, which is static, unchanging
+  and determined by the training run, and the current location in the
+  hyperspace, which was arrived at by pumping a bunch of tokens through
+  the weight structure. This is lost, whenever a new session is started.
+  And even then, part of this location is path-dependent, so during
+  compaction, even though the location is not lost, older prior prompts
+  that encoded vital facts are lost. (Example: I keep having to remind
+  Claude to trim trailing whitespace. It keeps forgetting.)
+* Inability to reason in a logical fashion, which drawing on a pool of
+  crisp logical assertions. Since the respresentation system is not
+  crisp (boolean true/false) the inferencing isn't either. The reasoning
+  appears to be emulated: there are de facto reasoning styles embedded
+  in the wieghts, e.g. reasoning by syllogisms, these aren't crisp and
+  precise; rather they are paths through nearby locations in the
+  hyperspace. They are "homotpic" only to the degree of blurriness that
+  clouds judgements of equality (equivalence).
+* Inability to perform adequate recall of interrelated ideas (without
+  explict prompting). This is a representational short-coming:
+  inter-related ideas are imbedded in such a way that there are no short
+  paths between them, and so they cannot be found, unless the human
+  already knows the path, and can guide the LLM. To put it differently,
+  the LLM representation is never reified. A structural element is
+  given a vector embedding, full stop. There is no "embedding of the
+  embedding" that would give the "pseudocode representation" of the
+  concrete specifics. I suppose this is a hot topic of research, but
+  I dunno.
+
+So a big chunk of this project is to attempt to work with and solve the
+above limitations, by explictly attaching a symbolic representation
+system, Atomese, to the vetor embeddings of NN's. How to create such
+attachments is the magic question being wrestled with, here.
 
 ### Intrefacing to LLM's
-Dynamic prompts
+Initalial attempts to interface with LLM's can be thought of as being a
+for of "dynamic prompting". I, as a human, have to constantly guide the
+LLM by creating prompts. Some of these are throw-away: I write them
+once, and discard them. Others, the more permanent onces, I stick into
+a file, and force the LLM to read the file every time (burning a bunch
+of tokens in the process.)
+
+The current design is a kind of "dynamic prompting" create a system that
+reminds the LLM to go through some checklist, follow some precedures,
+re-examine assumptions, try things a different way, run the unit tests,
+RTFM, all of that. Its "dynamic" in that such prompts would be
+auto-generated, contextually, depending on the problem at hand.
+
+The other aspect of the design is to obtain these dynamic prompts by
+issueing queries and deductive chains on the contents of the AtomSpace.
+That is, some collection of queries (catalog or vector of queries) sits
+in the AtomSpace, accessed, e.g. by DualLink, and get processed and
+sorted by some daemon process/thread, to generate a dynamic prompt that
+re-routes the LLM to go in a somewhat different direction than it was
+going in, before.
+
+At least, that is the current conception. Most of this work is happening
+in a (currently private) sandbox, where Clause is making quite the mess
+of immature, half-baked, incorrect and confused attempt.
