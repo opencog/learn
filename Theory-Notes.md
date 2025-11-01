@@ -9,9 +9,9 @@ points.
 There's a tangled set of issues that arise when one asks "what is the
 structure of something?" Describing the structure of something is not
 unique, of course. One may have a photograph of a house, or the
-blueprints for it; both provide valid structural deescriptions. In
-protein chemisty, one has the primary, secondary and tertiary
-structures: the sequence of amino acids, the sulfer bonds, and the
+blueprints for it; both provide valid structural descriptions. In
+protein chemistry, one has the primary, secondary and tertiary
+structures: the sequence of amino acids, the sulfur bonds, and the
 folding. In software, one has the code, and the pseudocode.
 
 In software, one has the very important question of "what does this
@@ -21,7 +21,7 @@ those, and set some bits in some flag-word. Compiler optimization is all
 about having an accurate machine description, and then exploring the
 space of combinatoric rewritings of machine instructions that will yield
 the same effects. That is, find some other sequence of instructions that
-hs the same net effect, but is shorter or runs faster or uses less
+has the same net effect, but is shorter or runs faster or uses less
 memory. This is sometimes called "refactoring": rewriting code, without
 altering its function. In mathematics, this is called a "homotopic
 deformation": the start and endpoints are equivalent; the path is
@@ -62,14 +62,14 @@ conception is to find the shortest path to that solution. This is
 optimal, in that there is no shorter path from start to finish.
 Another way is to find an algorithm that generates the shortest path,
 or perhaps an algorithm that generates some reasonably-short path.
-A fourth sense occurs as a meta-problem: in the sapce of all possible
-sudoku-solving algorithms, how do we find the one that generates the
+A fourth sense occurs as a meta-problem: in the space of all possible
+Sudoku-solving algorithms, how do we find the one that generates the
 best possible paths? Or, at least, generates reasonably good ones on a
-statistical ensemble of all possible sudoku puzzles?
+statistical ensemble of all possible Sudoku puzzles?
 
 This fourth item in the paragraph above becomes, again, as
 structure-discernment problem, reified. What is the space of
-sudoku-solving algorithms, and how can that space be described,
+Sudoku-solving algorithms, and how can that space be described,
 represented, characterized and operated upon? Obviously, there is an
 infinite regress here; however, at each step of the game, there is a
 fairly urgent desire to have optimal representations and optimal
@@ -110,7 +110,7 @@ return to the origin to explore other possible paths. There are several
 algorithms for dealing with this. One is to do breadth-first search,
 instead of depth-first. Another is to apply a DPLL-style transformation,
 and prune the finite branches that don't go anywhere (and so avoid
-exploring them entiely).
+exploring them entirely).
 
 But how does one know if a branch is finite or not? There might be a
 small and narrow and very thin tube that connects it to some other vast
@@ -130,7 +130,7 @@ the structure in the training corpus. In this case, the idea of structure
 is "Bayesian": the corpus consists of the likely samples, and the
 unlikely ones are never there, never occur. They are, in some respects,
 given a uniform distribution. In the percolation example above, an NN
-trained on a cave system would assign equal probaility of finding the
+trained on a cave system would assign equal probability of finding the
 "hidden passage" everywhere; the hidden passage could be anywhere in the
 cave system; we don't know where. It is(?) (should be?) given
 equiprobability.
@@ -157,7 +157,7 @@ Breathtaking, even: the scope of knowledge is amazing. But if you then
 ask it to solve some technical problem that could be solved by applying
 one of these scientific facts, it will utterly fail. Instead, you'll get
 something that sounds like it was cribbed from a textbook in the 1970's
-or the 1980's. Why is that? Well, because the representational emedding
+or the 1980's. Why is that? Well, because the representational embedding
 is such that two closely-related scientific facts are very far from
 one-another, and the system, of course, cannot find the path from here
 to there: its simply too far away. The textbook solution, however, is
@@ -175,16 +175,16 @@ A fourth issue is "thinking" or "reasoning". The training corpus has
 examples of thinking and reasoning; and the LLM's can emulate this, but
 only up to an extent. The blurriness problem results in confused
 thinking, and sometimes complete logical short-circuits, break-downs.
-The LLM perceives a homotopic defomration from one state to another when
-there is none. it perceives two pieces of software as hving equivalent
+The LLM perceives a homotopic deformation from one state to another when
+there is none. it perceives two pieces of software as having equivalent
 function, when they don't. It perceives a solution of a Sudoku puzzle,
-when one of the constrins is clearly violated. This is the "blurriness"
+when one of the constrains is clearly violated. This is the "blurriness"
 issue.
 
 Thus, we have identified several things:
 * NNs offer very powerful representational systems that can discern
   structure in nature in an effective, efficient and fast manner.
-* The vectorized nature of NN's has three obvious shortfals:
+* The vectorized nature of NN's has three obvious shortfalls:
   blurriness, memory and reasoning.
 
 Recapping:
@@ -206,7 +206,7 @@ Recapping:
   appears to be emulated: there are de facto reasoning styles embedded
   in the weights, e.g. reasoning by syllogisms, these aren't crisp and
   precise; rather they are paths through nearby locations in the
-  hyperspace. They are "homotpic" only to the degree of blurriness that
+  hyperspace. They are "homotopic" only to the degree of blurriness that
   clouds judgements of equality (equivalence).
 * Inability to perform adequate recall of interrelated ideas (without
   explicit prompting). This is a representational short-coming:
@@ -224,8 +224,8 @@ above limitations, by explicitly attaching a symbolic representation
 system, Atomese, to the vector embeddings of NN's. How to create such
 attachments is the magic question being wrestled with, here.
 
-### Intrefacing to LLM's
-Initalial attempts to interface with LLM's can be thought of as being a
+### Interfacing to LLM's
+Initial attempts to interface with LLM's can be thought of as being a
 for of "dynamic prompting". I, as a human, have to constantly guide the
 LLM by creating prompts. Some of these are throw-away: I write them
 once, and discard them. Others, the more permanent ones, I stick into
@@ -259,7 +259,7 @@ outputs are, what is transformed. Atomese is a lot like the insns of a
 CPU insn set, are are meant to assemble and "snap together" just like
 insns are assembled into a working program. Compilers can do this,
 because they have (1) an accurate machine description and (2) a bag of
-algorithms through which source code can betransformed into insns using
+algorithms through which source code can be transformed into insns using
 that machine description. Currently, Claude has neither of these. The
 "machine description" of Atomese is informal: a bunch of wiki pages. I
 could tell Claude to "read the source, Luke" but this offers at best a

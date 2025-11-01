@@ -78,7 +78,7 @@ occasional emergency when you put in too much soap and the washing
 machine is spilling out onto the floor.  Batch processing is not fun.
 
 ### Sensorimotor systems and agency
-This prompted exploration of a more autonomuous design; the processing
+This prompted exploration of a more autonomous design; the processing
 would be done by agents, each having considerable independence and
 decision-making authority. This required a sensori-motor subsystem,
 so that the agents could grab and manipulate data, work with it, move
@@ -92,7 +92,7 @@ stream processing system. Prototypical parts are the
 [FilterLink](https://wiki.opencog.org/w/FilterLink) and the
 [RuleLink](https://wiki.opencog.org/w/RuleLink).
 There are an assortment of example demos that can be found in the
-[Atomespace examples directory](https://github.com/opencog/atomspace/tree/master/examples/atomspace)
+[AtomSpace examples directory](https://github.com/opencog/atomspace/tree/master/examples/atomspace)
 and also, for example, the
 [parse-pipeline](https://github.com/opencog/sensory/blob/master/examples/parse-pipeline.scm)
 demo in the sensory project. These demos are alarmingly complicated!!
@@ -112,7 +112,7 @@ reasons.  Its a bit brutish and nasty, at the moment, but this is a
 science research project, not a software engineering project.
 
 ### Objects
-Object-Orieinted Programming. Don't laugh. Version One used the
+Object-Oriented Programming. Don't laugh. Version One used the
 [matrix](https://github.com/opencog/matrix) tensor processing library.
 This became quite large, sophisticated and very well debugged. Its a
 jewel of what you'd want for matrix and tensor analysis, wrapped in
@@ -132,7 +132,7 @@ OO interface, which just happens to look almost identical to the
 sensori-motor interface. As such, it looks like it will be capable
 of manipulating and controlling GPU's, for example, but also not just
 concrete devices, but also abstract things: controlling tensors and
-vectors, combining them and rewiring them and rejiggering any which
+vectors, combining them and rewiring them and re-jiggering any which
 way. A motor system that controls not just devices, but controls
 algorithms. Not just controls algorithms, but writes them too.
 Well, sure ChatGPT and Microsoft CoPilot and Claude can all write
@@ -156,11 +156,11 @@ functioning systems.
 The proximal motivation for this is an attempt to endow Claude, or any
 LLM, with "offline" memory (long-term memory) and reasoning skills
 that operate outside of the LLM itself, not on the cloud, but locally,
-acting to direct and stear and enhance the capabilities of the LLM,
+acting to direct and steer and enhance the capabilities of the LLM,
 acting as some sort of meta-control layer, some harness or reins or
 bridle, or perhaps a prefrontal cortex. Pick your analogy. The project
 is perhaps foolish, or perhaps interesting; at any rate, it is an
-attempt to interface a rather sophiticated LLM to a rather meagre
+attempt to interface a rather sophisticated LLM to a rather meagre
 symbolic system. Is it doomed to fail? Well, straight out of the gate,
 its clear that Claude's ADHD and utter inability to remember anything
 unless it is jammed into some prompt, and even then, its utter
