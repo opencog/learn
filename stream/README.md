@@ -22,7 +22,7 @@ It seems interesting at the moment.
 The interface to the LLM is "tokens", or more precisely "text", or
 whatever the Anthropic LLM client can be coaxed to print on screen and
 perform via MCP interfaces. So this is a bit of a narrow straw, backed
-by a big brain at the othr end of it. What can be done at this end of
+by a big brain at the other end of it. What can be done at this end of
 the straw? Well, you guessed it. I cannot out-LLM the LLM guys; its a
 multi-billion-dollar industry. But I can explore trying to find a
 "neuro-symbolic representation", with sparse weights and graph structures
@@ -68,12 +68,12 @@ Atomese can be introspected. Of course, python can be introspected too:
 just ask Claude to read the text file. But Atomese is different: you
 don't "read a text file" and "try to understand it" by trying to 
 "imagine what it does in your head". Code held graphical form is
-already in graphically sturcutred form. You can just run QueryLink
+already in graphically structured form. You can just run QueryLink
 over it. If you want to overlay it with equivalent pseudocode, you
 can also do that; its all in the AtomSpace, as graphs.
 
 This directory contains (will contain) quasi-architected code, written
 mostly by Claude, with as much supervision as I have patience for, with
 the hope that it can supplant the earlier batch-processing code, while
-remaining true to the idea of explorig neuro-symbolic learning.
+remaining true to the idea of exploring neuro-symbolic learning.
 
