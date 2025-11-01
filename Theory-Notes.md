@@ -248,4 +248,30 @@ going in, before.
 
 At least, that is the current conception. Most of this work is happening
 in a (currently private) sandbox, where Clause is making quite the mess
-of immature, half-baked, incorrect and confused attempt.
+of immature, half-baked, incorrect and confused attempts, despite my
+best efforts to lead it by the nose.
+
+Part of the problem is that Claude does not really understand Atomese or
+the AtomSpace, and so has great trouble coding with it. This causes me
+to ruminate about axiomatic descriptions, specifically, axiomatic
+descriptions of Atomese, indicating what the inputs are, what the
+outputs are, what is transformed. Atomese is a lot like the insns of a
+CPU insn set, are are meant to assemble and "snap together" just like
+insns are assembled into a working program. Compilers can do this,
+because they have (1) an accurate machine description and (2) a bag of
+agorithms through which source code can betransformed into insns using
+that machine description. Currently, Claude has neither of these. The
+"machine description" of Atomese is informal: a bunch of wiki pages. I
+could tell Claude to "read the source, Luke" but this offers at best a
+very localized patch, and is insufficent at larger scales. It also
+doesn't have a "bag of algorithms"; it has a collection of examples,
+which it can reason from by analogy, but again, these are highly
+localized. If the problem solution is not close to what can be found in
+an example, Claude is lost again.
+
+This once again highlights the difference between its training (vast
+numbers of algos written in python, and baked into its weights) and what
+it can inference on given some prompts.
+
+The paragraphs above indicate why this is a hard problem, but they also
+indicate that there seems to be a path through this mess.
