@@ -2043,6 +2043,411 @@ So here I am,
 OK,
  before answering the above,
  let me describe the meta–issue.
+ Well,
+ the meta-meta,
+ first.
+ I have three or four or five AI–related projects,
+ and I am trying to push each one of them at the same time,
+ and they are all progressing at a snails pace.
+ They're all inter–related and meant to be mutually supporting,
+ but,
+ like building a bridge,
+ there remains a huge gap in the middle.
+\end_layout
+
+\begin_layout Standard
+So,
+ it's clear that Claude,
+ and LLM's in general,
+ have issues remembering things,
+ and also in thinking clearly.
+ So,
+ a couple of weeks ago,
+ I started what seemed like a foolhardy but small project:
+ provide Claude with long–term memory.
+ Fool–hardy because I had no clear plan,
+ fool–hardy because any simple hack was almost certain to fail.
+ Fool–hardy,
+ because this is in fact a multi–year (multi–decade?) research project and not some quick hack.
+ But whatever.
+ Hack at it.
+ It will clarify the issues.
+ And well,
+ it has.
+ Let me recount in historical order.
+\end_layout
+
+\begin_layout Standard
+So ..
+ long term memory.
+ First,
+ I want to do this symbolically,
+ or neuro–symbolically.
+ I envision storing the info in the AtomSpace,
+ as a graph.
+ Neuro,
+ since I expect the graph to be weighted.
+ Neuro,
+ because I expect the query search to involve taking vector products and projections.
+ Neuro,
+ because I expect priority lists to be generated with vector projections.
+ I said,
+ oh,
+ let DualLink represent the topic,
+ and use that to generate QueryLinks that will find a cluster of relevant queries to run,
+ that will dig up related information.
+ This is NOT vectorial,
+ it's symbolic,
+ but some monkey–shines and it's not all that different.
+ There's clearly a space of design probabilities.
+\end_layout
+
+\begin_layout Standard
+But I need a representational network.
+ Well,
+ on day one,
+ Claude is manually building super–simplistic relational algebra assertions,
+ stuff like 
+\begin_inset Quotes eld
+\end_inset
+
+task fulfills project goal
+\begin_inset Quotes erd
+\end_inset
+
+ and converting that into something like (Inheritance (Concept 
+\begin_inset Quotes eld
+\end_inset
+
+task
+\begin_inset Quotes erd
+\end_inset
+
+) (Concept 
+\begin_inset Quotes eld
+\end_inset
+
+project-goal
+\begin_inset Quotes erd
+\end_inset
+
+)) and it is slaving away at this,
+ one at a time,
+ deliberating and creating a dozen before it collapses of exhaustion.
+ This clearly won't work.
+ These aren't even queriable.
+ So one thing becomes clear:
+ Claude may have read many textbooks and research papers on AI,
+ but its comprehension is such that when asked to actually do it,
+ it takes some 1960's approach.
+ I did not use the words 
+\begin_inset Quotes eld
+\end_inset
+
+knowledge representation
+\begin_inset Quotes erd
+\end_inset
+
+ in any of my prompts,
+ but I guess it inferred that this was the intent,
+ and so coughed up some 1960's design point for that.
+ So then I tried to focus on queriability.
+ This caused it to redesign,
+ and it came up with a five–point ontology.
+ OMG,
+ I'm thinking,
+ we've got SUMO and FrameNet and WordNet and you've got a five–point ontology,
+ but whatever,
+ lets see where this goes.
+\end_layout
+
+\begin_layout Standard
+We discuss reifying the search with DualLink.
+ Of course,
+ more data is needed.
+ I'm envisioning that almost all of the CPU cycles will be offline,
+ with processing done not by Claude,
+ but by daemons and threads running Atomese.
+ But such threads,
+ if they are to be independent,
+ must run some algorithm.
+ There are two or three choices:
+ some discrete algo,
+ in Atomese,
+ or some simple NN that I can run on my local GPU here,
+ or some combo.
+ Lets try the discrete algo first.
+ I try to get it to write the Atomese,
+ it fails,
+ it cannot wrap it's mind around it.
+ So I think well,
+ maybe it's OK for it to run this in little scriptlets,
+ for now,
+ and later,
+ we'll port those scriptlets over.
+ This is when I notice that there are already 170 of these,
+ so its already spun out of control.
+ There's no architecture,
+ there's no framework,
+ there's only an ad hoc collection of utterances,
+ created,
+ used once and discarded.
+\end_layout
+
+\begin_layout Standard
+Of course,
+ this indicates that an architecture is needed,
+ and clearly I will have to be the one to create that architecture.
+ But first,
+ yesterday,
+ I entertain this breif hope that maybe I can get it to organize its scriplets by writing a little guide for what they do and how to use them.
+ And then convert this text guide into it's KR framework.
+\end_layout
+
+\begin_layout Standard
+Well,
+ the KR framework,
+ for that,
+ I decided,
+ last week,
+ that maybe it could be some hack combo of LG and MMT (Meaning–Text Theory).
+ So this is like that couples therapy meme from Arrested Development:
+ it didn't work for any of those other couples,
+ it's clear it can't work,
+ and they were stupid to try ...
+ but maybe it could work for us?
+ My naive idea here is that 
+\begin_inset Quotes eld
+\end_inset
+
+it didn't work for those other people
+\begin_inset Quotes erd
+\end_inset
+
+,
+ because those other people were grad students,
+ and its not scalable.
+ But with Claude,
+ perhaps I can do it at scale.
+ I had not yet realized that in fact,
+ Claude is no match for even one grad student,
+ so there won't be any scalable army,
+ here.
+ Still,
+ Claude's ability to grind through the tedium is not be be discounted.
+ In the 18th century,
+ someone computed pi to a million places,
+ taking several decades to do this.
+ And for what?
+ Certainly tedious.
+\end_layout
+
+\begin_layout Standard
+Well,
+ so the meta issue here is that,
+ still perhaps some old–school KR project could be mounted.
+ God knows,
+ the people hacking on SUMO have not yet given up.
+ It's clear that some vector layering is needed on top of that;
+ this is what my earlier language–learning projects have taught me,
+ and I have a somewhat clear vision for how,
+ exactly,
+ technically,
+ to do this.
+ But,
+ to get started,
+ I need a reasonable dataset.
+\end_layout
+
+\begin_layout Standard
+So,
+ to hack this dataset,
+ I am asking Claude to parse sentences for me.
+ And it generates scriptlets and scriplets which work but they don't work.
+ One of the issues is that it does not understand Atomese.
+ It sort–of–ish does:
+ Atomese is old enough that it has been baked into its weights during training,
+ so it knows about GetLink and BindLink,
+ even though I have marked them obsolete,
+ and removed the documentation for them:
+ it still goes to GetLink,
+ BindLink because these are literally baked into it's weights.
+ So that's novel:
+ it knows shit that I didn't have to explain to it.
+ Still,
+ it fails to grasp the fundamental difference between a Value and an Atom.
+ How to solve this?
+\end_layout
+
+\begin_layout Standard
+So,
+ I have several other older projects.
+ One is the sensory project,
+ where I envision that sensory objects could be equipped with a grammar,
+ and that LG could be used to generate combinations of these objects.
+ This is the 
+\begin_inset Quotes eld
+\end_inset
+
+basal cognition
+\begin_inset Quotes erd
+\end_inset
+
+ idea,
+ or the critical sandpile idea,
+ the self–organizing criticality idea.
+ Just create a syntactic description of functional sensori–motor parts,
+ stick them in a bag,
+ shake,
+ and watch it self–organize.
+ I still think this is a good idea,
+ but it foundered 15 months ago on the practical difficulty of expressing connectors and disjuncts in Atomese.
+ It was too much:
+ I created a handful of extremely long,
+ verbose descriptions,
+ which may or may not have been buggy,
+ and even then,
+ I had no particular way of importing these into LG to generate assemblies.
+ Now,
+ maybe three years ago,
+ I wrote 
+\begin_inset Quotes eld
+\end_inset
+
+generate
+\begin_inset Quotes erd
+\end_inset
+
+ a non–LG way of creating assemblies;
+ I ended up implementing an odometer.
+ A depth–first odometer at that.
+ So,
+ abstractly,
+ philosophically,
+ I had created a recursive enumerator that recursively enumerated expressions described in the syntax of sheaf jigsaw pieces.
+ If I recall correctly,
+ I think I did start to put some weights in there,
+ so that some explorations would be more likely than others (so,
+ no longer strictly an odometer).
+ But I put it down cause ...
+ its complex,
+ time consuming to create this code,
+ and there's a so–what aspect to it:
+ so I enumerate all the possibilities?
+ So what?
+\end_layout
+
+\begin_layout Standard
+So,
+ last week,
+ a few days ago,
+ I'm thinking:
+ well,
+ I could try to provide a close detailed syntactic definition of Atomese,
+ in such a way that fool–proof,
+ syntactically correct Atomese expressions could be created.
+ But I'm also thinking:
+ this is stupid,
+ Claude is already a good coder,
+ all I need is a good verbal description,
+ and it can do the rest.
+ This obviates much of the need for Atomese in the first place:
+ If Claude can write in python,
+ why not?
+ What does it need Atomese for?
+ Well,
+ it still needs Atomese for KR.
+ So this morning,
+ I'm about to start again,
+ I kick Claude off with a fresh session,
+ and it immediately resolves yesterday's bug–confusion.
+ How did it do this?
+ Well it read the fucking source code for s–expression parsing,
+ and understood it that way.
+ I was about to stop it and say 
+\begin_inset Quotes eld
+\end_inset
+
+hey wtf are you doing?
+ lets work at the meta–abstraction level where I tell you that you cannot put Values into Links and you just know that right,
+ OK?
+\begin_inset Quotes erd
+\end_inset
+
+ and there's the rub:
+ This is verbal and it's not enough data from which to abstract syntactically precise structural forms.
+ And in resolving yesterdays all–evening–long confusion in a jiffy,
+ like five minutes or less.
+ I noticed it wrote a few more scriptlets as it crawled through the code.
+ It fucking loves doing this shit,
+ it seems.
+ It loves to code.
+\end_layout
+
+\begin_layout Standard
+So this morning,
+ as I watch in amazement,
+ heightened by yesterday's frustration,
+ that perhaps a close–set syntactical definition of Atomese is not a bad idea.
+ Having a syntactic description at the meta–level,
+ and not at the C++ level,
+ might allow Claude to do reasoning at this meta–level.
+ mean,
+ it already has the chops with C++:
+ It's never been tempted to compile to assembly,
+ and then try to read the assembly.
+ Never,
+ not once.
+ It's happy to work at the C++ level.
+ So,
+ how can I get it to work one cognitive layer up?
+ Well,
+ the answer seems clear:
+ encode that cognitive layer at an abstraction level it can actually work in.
+\end_layout
+
+\begin_layout Standard
+Well,
+ of course,
+ as I write this,
+ I also see a flaw:
+ it 
+\begin_inset Quotes eld
+\end_inset
+
+knows
+\begin_inset Quotes erd
+\end_inset
+
+ C++ because it is,
+ in part,
+ a transformer that has been trained on cross–English–and–code datasets.
+ Plus probably datasets on how to debug using printfs.
+ So this programming ability has been burned into it's weights,
+ and is not something it knows by consulting an explicit,
+ overt syntactic definition of C++.
+ Curiously,
+ it does not demonstrate such mastery over JSON,
+ which you think would be so much easier to deal with,
+ but it makes oceans of JSON errors,
+ and most of it's difficulties with the Atomese MCP tools is that i cannot figure out how to write valid JSON.
+ The other half is that it does not understand that it cannot place a Value into an Atom.
+ Despite it being stated explicitly in documentation files.
+ That documentation never quite made it into the training set,
+ the weight matrices.
+\end_layout
+
+\begin_layout Standard
+So,
+ how do I create a syntax checker,
+ an expression generator,
+ something that can run offline,
+ and allow Claude to operate at a higher abstraction layer,
+ without baking this stuff into its training weights?
+ Well,
+ I have some ideas,
+ but I'm tired or writing and I need to go on a bike–ride,
+ so taking a break here.
 \end_layout
 
 \begin_layout Section*
