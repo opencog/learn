@@ -24,6 +24,8 @@
 	(cog-set-value! ATOM (Predicate "*-TruthValueKey-*") VAL))
 (define (cog-have-tv? ATOM)
 	(not (eq? #f (cog-value ATOM (Predicate "*-TruthValueKey-*")))))
+(define (cog-inc-count! ATOM CNT)
+	(cog-inc-value! ATOM (Predicate "*-TruthValueKey-*") CNT 2))
 
 (define-public (get-count ATOM) (cog-count ATOM))
 
