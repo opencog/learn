@@ -57,9 +57,11 @@ INCLUDE(OpenCogGuile)
 INCLUDE(OpenCogCython)
 
 # ----------------------------------------------------------
-ADD_SUBDIRECTORY (fake)
+# fake and common are in directory version-one and were not
+# going to build them any more, unless there's some crisis...
+# ADD_SUBDIRECTORY (fake)
+# ADD_SUBDIRECTORY (run-common)
 ADD_SUBDIRECTORY (scm)
-ADD_SUBDIRECTORY (run-common)
 
 # Unit tests
 ADD_CUSTOM_TARGET(tests)
