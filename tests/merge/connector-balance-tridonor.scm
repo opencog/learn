@@ -52,12 +52,12 @@
 	(test-equal 3 (length (gsc 'right-stars (Word "c"))))
 
 	; Get the total count on all Sections
-	(define totcnt (fold + 0 (map (lambda (atm) (gsc 'get-count atm)) (cog-get-atoms 'Section))))
+	(define totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section))))
 
 	; Create CrossSections and verify that they got created
 	(gsc 'explode-sections)
 	(test-equal 19 (length (cog-get-atoms 'CrossSection)))
-	(define totcross (fold + 0 (map (lambda (atm) (gsc 'get-count atm)) (cog-get-atoms 'CrossSection))))
+	(define totcross (fold + 0 (map cog-count (cog-get-atoms 'CrossSection))))
 
 	; Verify that direct-sum object is accessing shapes correctly
 	; i.e. the 'explode should have created some CrossSections
@@ -95,7 +95,7 @@
 	; --------------
 	; Validate counts.
 	(define tot-ab
-		(fold (lambda (atm cnt) (+ cnt (gsc 'get-count atm))) 0
+		(fold (lambda (atm cnt) (+ cnt (cog-count atm))) 0
 		(gsc 'right-stars WC-AB)))
 	(define epsilon 1.0e-8)
 	(test-approximate
@@ -106,17 +106,17 @@
 	; To gain access to the counts, load them by name.
 	(expected-aba-sections WC-AB)
 
-	(test-approximate (+ cnt-a-gh cnt-b-gh) (gsc 'get-count sec-ab-gh) epsilon)
+	(test-approximate (+ cnt-a-gh cnt-b-gh) (cog-count sec-ab-gh) epsilon)
 
 	(define cnt-c-tot (+ cnt-c-aaa cnt-c-aab cnt-c-aba))
-	(test-approximate cnt-c-tot (gsc 'get-count sec-c-aaa) epsilon)
+	(test-approximate cnt-c-tot (cog-count sec-c-aaa) epsilon)
 
 	; Validate counts on CrossSections...
-	(test-approximate cnt-c-tot (gsc 'get-count xes-k-c-vaaam) epsilon)
-	(test-approximate cnt-c-tot (gsc 'get-count xes-a-c-kvaam) epsilon)
-	(test-approximate cnt-c-tot (gsc 'get-count xes-a-c-kavam) epsilon)
-	(test-approximate cnt-c-tot (gsc 'get-count xes-a-c-kaavm) epsilon)
-	(test-approximate cnt-c-tot (gsc 'get-count xes-m-c-kaaav) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-k-c-vaaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kvaam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kavam) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-a-c-kaavm) epsilon)
+	(test-approximate cnt-c-tot (cog-count xes-m-c-kaaav) epsilon)
 
 	; -----------------------
 	; Verify detailed balance
@@ -125,9 +125,9 @@
 	(test-assert (check-shapes gsc epsilon))
 
 	; Verify no change in totals
-	(test-approximate totcnt (fold + 0 (map (lambda (atm) (gsc 'get-count atm)) (cog-get-atoms 'Section)))
+	(test-approximate totcnt (fold + 0 (map cog-count (cog-get-atoms 'Section)))
 		epsilon)
-	(test-approximate totcross (fold + 0 (map (lambda (atm) (gsc 'get-count atm)) (cog-get-atoms 'CrossSection)))
+	(test-approximate totcross (fold + 0 (map cog-count (cog-get-atoms 'CrossSection)))
 		epsilon)
 )
 
