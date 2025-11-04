@@ -202,10 +202,10 @@
 	; = (1/N) sum_i n_i log n_i - ((log N) /N) sum_i n_i
 	; = (1/N) sum_i n_i log n_i -  log N
 	(define (cluster-entropy WCLASS)
-		(define tot (fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB)))
+		(define tot (fold (lambda (MEMB SUM) (+ SUM (LLOBJ 'get-count MEMB)))
 			0 (cog-incoming-by-type WCLASS 'MemberLink)))
 		(define nlg (fold (lambda (MEMB SUM)
-					(define cnt (cog-count MEMB))
+					(define cnt (LLOBJ 'get-count MEMB))
 					(if (< 0 cnt)  ; avoid taking log of zero.
 						(+ SUM (* cnt (log cnt)))
 						0))
