@@ -6,6 +6,9 @@
 
 (define tvkeystr "*-TruthValueKey-*")
 
+(define (cog-count ATOM)
+	(cog-value-ref (cog-value ATOM (Predicate tvkeystr)) 2))
+
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
 
