@@ -7,7 +7,6 @@
 ; The files are loaded in pipeline order.
 ; In general, the later files depend on definitions contained
 ; in the earlier files.
-(include-from-path "opencog/learn/common.scm")
 (include-from-path "opencog/learn/utilities.scm")
 (include-from-path "opencog/learn/waiter.scm")
 
@@ -39,4 +38,3 @@
 (include-from-path "opencog/learn/agglo-goe.scm")
 (include-from-path "opencog/learn/singletons.scm")
 (include-from-path "opencog/learn/gram-filters.scm")
-(include-from-path "opencog/learn/lg-compare.scm")
