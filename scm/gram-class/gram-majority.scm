@@ -233,7 +233,7 @@
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 		(define (update-memb-count WRD CLS CNT)
-			(cog-inc-count! (MemberLink WRD CLS) CNT))
+			(LLOBJ 'inc-count (MemberLink WRD CLS) CNT))
 
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
