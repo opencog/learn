@@ -4,6 +4,11 @@
 
 (use-modules (opencog) (opencog lg))
 
+(define tvkeystr "*-TruthValueKey-*")
+
+(define (cog-count ATOM)
+	(cog-value-ref (cog-value ATOM (Predicate tvkeystr)) 2))
+
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
 
@@ -11,16 +16,23 @@
 (define cnt-f-ba 38)
 
 (define (setup-f-sections)
-	(Section (ctv 1 0 cnt-f-aa)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-ba)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "a") (ConnectorDir "+"))))
+	(define tvkey (PredicateNode tvkeystr))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-aa))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "a") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-ba))
 
 	*unspecified*
 )

@@ -44,7 +44,9 @@
 
 	; Define matrix API to the data
 	(define pca (make-pseudo-cset-api))
-	(set! gsc (add-covering-sections pca))
+	(define pcc (add-count-api pca))
+	(define gss (add-covering-sections pcc))
+	(set! gsc (add-count-api gss))
 
 	; Verify that the data loaded correctly
 	; We expect 2 sections on "f"

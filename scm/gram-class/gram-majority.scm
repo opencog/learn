@@ -233,7 +233,7 @@
 			(if MRG-CON (LLOBJ 'make-flat CLUST SECT) SECT))
 
 		(define (update-memb-count WRD CLS CNT)
-			(cog-inc-count! (MemberLink WRD CLS) CNT))
+			(LLOBJ 'inc-count (MemberLink WRD CLS) CNT))
 
 		; Merge the particular DJ, if it is shared by the majority,
 		; or if the count on it is below the noise floor.
@@ -440,7 +440,7 @@
 			; the marginal count. That is, it should equal
 			;   ((add-support-api LLOBJ) 'right-count FROM-CLASS)
 			(define old-count
-				(fold (lambda (MEMB SUM) (+ SUM (cog-count MEMB)))
+				(fold (lambda (MEMB SUM) (+ SUM (LLOBJ 'get-count MEMB)))
 					0 sublist))
 
 			(if (not (< 0 old-count))
@@ -448,17 +448,17 @@
 
 			; Get the total count transfered.
 			(define dmemb (Member FROM-CLASS CLASS))
-			(define new-count (cog-count dmemb))
+			(define new-count (LLOBJ 'get-count dmemb))
 
 			; How much of the old count was transfered.
 			(define fract (/ new-count old-count))
 
 			; Move a proportion of the counts from old to new.
 			(for-each (lambda (FMEMB)
-					(define fcnt (cog-count FMEMB))
+					(define fcnt (LLOBJ 'get-count FMEMB))
 					(define xfer (* fcnt fract))
-					(store-atom (cog-inc-count! (MemberLink (gar FMEMB) CLASS) xfer))
-					(store-atom (cog-inc-count! FMEMB (- xfer))))
+					(store-atom (LLOBJ 'inc-count (MemberLink (gar FMEMB) CLASS) xfer))
+					(store-atom (LLOBJ 'inc-count FMEMB (- xfer))))
 				sublist)
 
 			; Get rid of the class-membership.  This erases the history.

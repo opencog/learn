@@ -4,6 +4,11 @@
 
 (use-modules (opencog) (opencog lg))
 
+(define tvkeystr "*-TruthValueKey-*")
+
+(define (cog-count ATOM)
+	(cog-value-ref (cog-value ATOM (Predicate tvkeystr)) 2))
+
 ; ---------------------------------------------------------------
 ; Define sections on two words, that should be mergeable.
 
@@ -14,38 +19,54 @@
 (define cnt-j-dgh 16)
 
 (define (setup-e-j-sections)
-	(Section (ctv 1 0 cnt-e-abc)
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-e-dgh)
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "d") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-e-klm)
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(define tvkey (PredicateNode tvkeystr))
+	(cog-set-value!
+		(Section
+			(Word "e")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "c") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-e-abc))
+	(cog-set-value!
+		(Section
+			(Word "e")
+			(ConnectorSeq
+				(Connector (Word "d") (ConnectorDir "-"))
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-e-dgh))
+	(cog-set-value!
+		(Section
+			(Word "e")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "l") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-e-klm))
 
 	; Similar to above.
-	(Section (ctv 1 0 cnt-j-abc)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-j-dgh)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "d") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "c") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-abc))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "d") (ConnectorDir "-"))
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-dgh))
 	; (Section k l m) intintionally absent.
 
 	*unspecified*
@@ -127,24 +148,34 @@
 (define cnt-f-klm 34)
 
 (define (setup-f-sections)
-	(Section (ctv 1 0 cnt-f-abc)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "c") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-dgh)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "d") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-klm)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "+"))
-			(Connector (Word "m") (ConnectorDir "+"))))
+	(define tvkey (PredicateNode tvkeystr))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "c") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-abc))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "d") (ConnectorDir "-"))
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-dgh))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "l") (ConnectorDir "+"))
+				(Connector (Word "m") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-klm))
 
 	*unspecified*
 )
@@ -158,20 +189,27 @@
 (define cnt-j-egh 17)
 
 (define (setup-j-extra)
+	(define tvkey (PredicateNode tvkeystr))
 
 	; Some j sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-j-abe)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-j-egh)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-abe))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-egh))
 
 	*unspecified*
 )
@@ -263,21 +301,28 @@
 (define cnt-e-abj 9)
 
 (define (setup-e-extra)
+	(define tvkey (PredicateNode tvkeystr))
 
 	; Some e sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-e-abe)
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "e")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-e-abe))
 
-	(Section (ctv 1 0 cnt-e-abj)
-		(Word "e")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "j") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "e")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "j") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-e-abj))
 
 	*unspecified*
 )
@@ -291,18 +336,25 @@
 (define cnt-f-kle 17)
 
 (define (setup-indirect-sections)
-	(Section (ctv 1 0 cnt-a-kle)
-		(Word "a")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-kle)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "k") (ConnectorDir "-"))
-			(Connector (Word "l") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
+	(define tvkey (PredicateNode tvkeystr))
+	(cog-set-value!
+		(Section
+			(Word "a")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "l") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-a-kle))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "k") (ConnectorDir "-"))
+				(Connector (Word "l") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-kle))
 )
 
 (define sec-a-kle #f)
@@ -351,20 +403,27 @@
 (define cnt-f-egh 25)
 
 (define (setup-f-extra)
+	(define tvkey (PredicateNode tvkeystr))
 
 	; Some j sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-f-abe)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "a") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-egh)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "g") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "a") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-abe))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "g") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-egh))
 
 	*unspecified*
 )
@@ -459,20 +518,27 @@
 (define cnt-j-eeh 19)
 
 (define (setup-j-double-e)
+	(define tvkey (PredicateNode tvkeystr))
 
 	; Some j sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-j-ebe)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-j-eeh)
-		(Word "j")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-ebe))
+	(cog-set-value!
+		(Section
+			(Word "j")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-j-eeh))
 
 	*unspecified*
 )
@@ -564,20 +630,27 @@
 (define cnt-f-eeh 39)
 
 (define (setup-f-double-e)
+	(define tvkey (PredicateNode tvkeystr))
 
 	; Some f sections having "e" as a connector.
-	(Section (ctv 1 0 cnt-f-ebe)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "b") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "+"))))
-	(Section (ctv 1 0 cnt-f-eeh)
-		(Word "f")
-		(ConnectorSeq
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "e") (ConnectorDir "-"))
-			(Connector (Word "h") (ConnectorDir "+"))))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "b") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-ebe))
+	(cog-set-value!
+		(Section
+			(Word "f")
+			(ConnectorSeq
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "e") (ConnectorDir "-"))
+				(Connector (Word "h") (ConnectorDir "+"))))
+		tvkey
+		(FloatValue 1 0 cnt-f-eeh))
 
 	*unspecified*
 )

@@ -76,10 +76,10 @@
 "
 	(every
 		(lambda (sect)
-			(define scnt (cog-count sect))
+			(define scnt (LLOBJ 'get-count sect))
 			(every
 				(lambda (cross)
-					(define diff (- scnt (cog-count cross)))
+					(define diff (- scnt (LLOBJ 'get-count cross)))
 					(if (< (abs diff) EPSILON) #t
 						(begin
 							(format #t "Error: Unbalanced at\n      ~A\n   vs ~A\n"
@@ -101,7 +101,7 @@
 		(begin
 			(format #t "Error: no Section for ~A\n" (prt-element CROSS))
 			#f)
-		(let ((diff (- (cog-count sect) (cog-count CROSS))))
+		(let ((diff (- (LLOBJ 'get-count sect) (LLOBJ 'get-count CROSS))))
 			(if (< (abs diff) EPSILON) #t
 				(begin
 					(format #t "Error: Unbalanced at\n      ~A\n   vs ~A\n"
