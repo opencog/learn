@@ -1,6 +1,10 @@
 
 Things to read:
 
+* Emergent Introspective Awareness in Large Language Models
+  Jack Lindsey  jacklindsey@anthropic.com October 29th, 2025
+  https://transformer-circuits.pub/2025/introspection/index.html
+
 * On the Statistical Query Complexity of Learning Semiautomata:
   a Random Walk Approach
   George Giaptizakis et al
