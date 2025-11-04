@@ -245,10 +245,10 @@
 "
 	(define (is-zero? cnt) (< cnt 1.0e-10))
 
-	(set-count SECTION CNT)
+	(LLOBJ 'set-count SECTION CNT)
 	(if (not (is-zero? CNT)) (store-atom SECTION))
 	(for-each
-		(lambda (XST) (set-count XST CNT))
+		(lambda (XST) (LLOBJ 'set-count XST CNT))
 		(LLOBJ 'make-cross-sections SECTION))
 )
 
