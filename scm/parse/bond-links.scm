@@ -101,7 +101,7 @@
 		(if (equal? nid 1064) (set! nid (+ 1 nid)))
 
 		; Save and store. May need it again, some other day.
-		(cog-set-tv! idanch (CountTruthValue 1 0 nid))
+		(cog-set-tv! idanch (FloatValue 1 0 nid))
 		(store-atom idanch)
 
 		; Return the link string
