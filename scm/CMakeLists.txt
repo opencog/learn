@@ -1,5 +1,6 @@
 ADD_GUILE_MODULE (FILES
 	learn.scm
+	common.scm
 	utils/utilities.scm
 	utils/waiter.scm
 
