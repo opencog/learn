@@ -210,9 +210,9 @@
 			(TypeChoice (LLOBJ 'pair-type) (Type 'CrossSection)))
 
 		; Get the observational count on the word-shape pair
-		(define (get-count SHAPE-PR) (cog-count SHAPE-PR))
+		(define (get-count SHAPE-PR) (LLOBJ 'get-count SHAPE-PR))
 		(define (set-count SHAPE-PR CNT)
-			(cog-set-tv! SHAPE-PR (FloatValue 1 0 CNT)))
+			(LLOBJ 'set-count SHAPE-PR CNT))
 
 		; L-ATOM is a WordNode or WordClassNode. R-ATOM is a shape.
 		(define (get-pair L-ATOM R-ATOM)
