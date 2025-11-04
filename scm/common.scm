@@ -18,19 +18,17 @@
 ; ---------------------------------------------------------------------
 
 ; get-count ATOM - return the raw observational count on ATOM.
-(define (cog-count ATOM)
-	(cog-value-ref (cog-value ATOM (Predicate "*-TruthValueKey-*")) 2))
-(define (cog-set-tv! ATOM VAL)
-	(cog-set-value! ATOM (Predicate "*-TruthValueKey-*") VAL))
-(define (cog-have-tv? ATOM)
+;(define (get-count ATOM)
+;	(cog-value-ref (cog-value ATOM (Predicate "*-TruthValueKey-*")) 2))
+; (define (do-set-tv! ATOM VAL)
+;	(cog-set-value! ATOM (Predicate "*-TruthValueKey-*") VAL))
+(define (do-have-tv? ATOM)
 	(not (eq? #f (cog-value ATOM (Predicate "*-TruthValueKey-*")))))
-(define (cog-inc-count! ATOM CNT)
+(define (do-inc-count! ATOM CNT)
 	(cog-inc-value! ATOM (Predicate "*-TruthValueKey-*") CNT 2))
 
-(define-public (get-count ATOM) (cog-count ATOM))
-
 ; set-count ATOM CNT - Set the raw observational count on ATOM.
-(define (set-count ATOM CNT) (cog-set-tv! ATOM (FloatValue 1 0 CNT)))
+; (define (set-count ATOM CNT) (do-set-tv! ATOM (FloatValue 1 0 CNT)))
 
 ; ---------------------------------------------------------------------
 
@@ -60,14 +58,14 @@
 		; so even if multiple thread increment, there will be only one
 		; fetch. It is not multi-process-safe, e.g. when multiple
 		; writers are using a networked CogStorageNode.
-		(if (not (cog-have-tv? atom))
+		(if (not (do-have-tv? atom))
 			(begin
 				(lock-mutex *-count-upgrade-mutex-*)
-				(if (not (cog-have-tv? atom))
+				(if (not (do-have-tv? atom))
 					(fetch-atom atom))
-				(cog-inc-count! atom CNT)
+				(do-inc-count! atom CNT)
 				(unlock-mutex *-count-upgrade-mutex-*))
-			(cog-inc-count! atom CNT))
+			(do-inc-count! atom CNT))
 	)
 
 	(incr-one ATM) ; increment the count on ATM
