@@ -57,7 +57,8 @@
 
 	; Define matrix API to the data
 	(define pca (make-pseudo-cset-api))
-	(define gss (add-covering-sections pca))
+	(define pcc (add-count-api pca))
+	(define gss (add-covering-sections pcc))
 	(define gsc (add-count-api gss))
 
 	; Verify that the data loaded correctly
