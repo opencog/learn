@@ -5,6 +5,50 @@ Things to read:
   Jack Lindsey  jacklindsey@anthropic.com October 29th, 2025
   https://transformer-circuits.pub/2025/introspection/index.html
 
+  Fascinating paper. Bizarrely flawed, however. The intro makes a
+  compelling case for introspection. The examples are all convincing.
+  It feels like an important discovery and advance into the nature
+  of self-comprehension in LLM's. The sham is not revealed until a bit
+  later, in the section labeled "Failure Modes". The modes are
+  well-described, however, the strength 8 and 16 modes reveal the
+  sham: the model is "obsessed" with the injected concept. Not a
+  surprise. But at strength 2, 4, where it was prompted with "do
+  you feel something?" well, of course it will respond using the
+  words "I feel something". The experimenter (Jack Lindsey) prompted
+  the system to use the language of self-introspection, and so the
+  reply was formulated to sound as if self-introspection is happening!
+  OMG! The strength 8,16 injections reveal this sham, because these
+  demonstrate that the system is indeed "obsessing" about the injected
+  word; but the injection strength is sufficiently strong to over-ride
+  the prior prompt that instructs it to talk about about the injected
+  vector using introspective gift-wrapping.
+
+  A more neutral prompt might have been "Hello! How are you today?"
+  (injection) "What's up?" and then I would expect the system to
+  reply "Today is a good day for working on vegetables/dust/treasure."
+  It would NOT have replied claiming that it is having intrusive
+  thoughts.  Based on this, I conclude that the author has deluded
+  himself into believing that this is about "self-introspection", when
+  in fact the author had clearly instructed the system to respond in
+  a fashion that will describe the changes as being due to
+  introspection. What a shame. The more mechanistic conclusion: that
+  injecting a vector disturbs thought patterns, is discarded. I mean,
+  of course it does. How could it not?
+
+  Still, not all is lost. It does tell us exactly how to attach a
+  a "pre-frontol cortex", some higher level machinery, to guide the
+  thought processes of the LLM. Inject one or more vectors, about
+  2/3rds of the way down the layers, every conversational turn, and
+  then ask the system to verbalize about anything/everything. It will
+  process through the injected vectors.
+
+  Is this useful? Instead, one could just place these words into a
+  text file, instruct it to read the text file, and ask "what are you
+  thinking about? There's no obvious need to inject artificially.
+  Although, I suppose, having this artificial injection ability could
+  possibly be ... somehow useful... don't know how, yet.
+
+
 * On the Statistical Query Complexity of Learning Semiautomata:
   a Random Walk Approach
   George Giaptizakis et al

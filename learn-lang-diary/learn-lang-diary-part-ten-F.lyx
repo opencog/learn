@@ -2630,6 +2630,168 @@ Some days,
  I'm charmed by this thought.
 \end_layout
 
+\begin_layout Subsection*
+5 November 2025
+\end_layout
+
+\begin_layout Standard
+Returning to:
+\end_layout
+
+\begin_layout Standard
+Emergent Introspective Awareness in Large Language Models
+\end_layout
+
+\begin_layout Standard
+Jack Lindsey jacklindsey@anthropic.com October 29th,
+ 2025
+\end_layout
+
+\begin_layout Standard
+https://transformer-circuits.pub/2025/introspection/index.html
+\end_layout
+
+\begin_layout Standard
+Fascinating paper.
+ Bizarrely flawed,
+ however.
+ The intro makes a compelling case for introspection.
+ The examples are all convincing.
+ It feels like an important discovery and advance into the nature of self–comprehension in LLM's.
+ The sham is not revealed until a bit later,
+ in the section labeled "Failure Modes".
+ The modes are well–described,
+ however,
+ the strength 8 and 16 modes reveal the sham:
+ the model is "obsessed" with the injected concept.
+ Not a surprise.
+ But at strength 2,
+ 4,
+ where it was prompted with "do you feel something?" well,
+ of course it will respond using the words "I feel something".
+ The experimenter (Jack Lindsey) prompted the system to use the language of self–introspection,
+ and so the reply was formulated to sound as if self–introspection is happening!
+ OMG!
+ The strength 8,16 injections reveal this sham,
+ because these demonstrate that the system is indeed "obsessing" about the injected word;
+ but the injection strength is sufficiently strong to over–ride the prior prompt that instructs it to talk about about the injected vector using introspective gift–wrapping.
+\end_layout
+
+\begin_layout Standard
+A more neutral prompt might have been "Hello!
+ How are you today?" (injection) "What's up?" and then I would expect the system to reply "Today is a good day for working on vegetables/dust/treasure." It would NOT have replied claiming that it is having intrusive thoughts.
+ Based on this,
+ I conclude that the author has deluded himself into believing that this is about "self–introspection",
+ when in fact the author had clearly instructed the system to respond in a fashion that will describe the changes as being due to introspection.
+ What a shame.
+ The more mechanistic conclusion:
+ that injecting a vector disturbs thought patterns,
+ is discarded.
+ I mean,
+ of course it does.
+ How could it not?
+\end_layout
+
+\begin_layout Standard
+Still,
+ not all is lost.
+ It does tell us exactly how to attach a a "pre–frontol cortex",
+ some higher level machinery,
+ to guide the thought processes of the LLM.
+ Inject one or more vectors,
+ about 2/3rds of the way down the layers,
+ every conversational turn,
+ and then ask the system to verbalize about anything/everything.
+ It will process through the injected vectors.
+\end_layout
+
+\begin_layout Standard
+Is this useful?
+ Instead,
+ one could just place these words into a text file,
+ instruct it to read the text file,
+ and ask "what are you thinking about?
+ There's no obvious need to inject artificially.
+ Although,
+ I suppose,
+ having this artificial injection ability could possibly be ...
+ somehow useful...
+ don't know how,
+ yet.
+\end_layout
+
+\begin_layout Standard
+The issues I am experiencing are manifold:
+\end_layout
+
+\begin_layout Itemize
+Despite being extremely knowledgeable about a vast variety of topics,
+ Claude fails to draw on that knowledge without explicit prompting.
+ Roughly speaking,
+ Claude is not creative.
+\end_layout
+
+\begin_layout Itemize
+The size of the short–term memory is questionable.
+ It constantly repeats the same mistake in the same session,
+ just a few prompt apart.
+ When it enters a failure mode,
+ it will forget (almost) everything that was in the last previous prompt.
+ I conclude that,
+ in some important respect,
+ it's short–term working memory has size one.
+\end_layout
+
+\begin_layout Standard
+Oooh ...
+ that's a good one!
+ How would one experimentally measure it's working memory?
+ Well the claim is that Claude has a context window of 150K tokens,
+ before compaction,
+ so you might think that is huge.
+ If you asked it to memory some long stream of random numbers or nonsense words,
+ it could probably remember an astounding length.
+ But if,
+ in coding,
+ I ask it to remember this and this and that,
+ it seems like it starts forgetting the earlier things in the list quite soon.
+ It can't grapple with the conceptual content of those things.
+ Roughly speaking:
+ it fails to conceptualize.
+ I'm using words,
+ and those words elicit certain general feelings and sensations in me,
+ and I work at this conceptual level.
+ Claude does not:
+ it momentarily ties those words to long sequences of other words,
+ but when the conversation moves on,
+ that tie is lost;
+ it is no longer there.
+\end_layout
+
+\begin_layout Standard
+So,
+ I claim:
+ Claude is not able to conceptualize.
+ The association between some concept that I defined,
+ and the verbal definition is there,
+ as long as it fits into the context window;
+ and more:
+ as long as it is recent.
+ Maybe 5K or 10K tokens recent.
+ More than that,
+ the association fades away.
+\end_layout
+
+\begin_layout Standard
+Thus,
+ the design goal is clear:
+ an LLM must be endowed with not only a long–term memory that lies outside of it's training weights,
+ but also with an adequate short–term working memory.
+ But how?
+ I have some ideas,
+ I cannot verbalize them right now...
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
