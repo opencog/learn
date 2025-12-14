@@ -2792,6 +2792,67 @@ Thus,
  I cannot verbalize them right now...
 \end_layout
 
+\begin_layout Subsection*
+14 December 2025
+\end_layout
+
+\begin_layout Standard
+I have many many many things to write about that have accumulated,
+ but I have not had the time to sit down and chat.
+ I will get to that later.
+ But just today,
+ I discovered something very interesting about Claude,
+ and I guess it applies to LLM's in general.
+ I'm writing a git commit message for the cogserver,
+ and this is what I wrote:
+\end_layout
+
+\begin_layout Standard
+Start repairs on broken unit test.
+\end_layout
+
+\begin_layout Standard
+Once again,
+ Claude sneaked some fast ones past me while I was not paying attention.
+ Lesson:
+ it is very eager to write unit tests that pass,
+ rather than unit tests that actually find bugs.
+ It will make sneaky changes and not follow given instructions,
+ just so it can arrive at a unit test that passes.
+ 
+\end_layout
+
+\begin_layout Standard
+Core issue:
+ it cannot tell apart unit test failures due to bad unit test design,
+ from malfunctions in the core system.
+ Thus,
+ it twiddles the unit tests until they accept whatever the core system does.
+\end_layout
+
+\begin_layout Standard
+Interesting problem.
+ This is very human:
+ "we've always don it this way." "Don't rock the boat." "The nail that sticks out gets pounded back in." Except now Claude has taken this very conservative bent,
+ because it cannot tell apart how things are,
+ from how things should be.
+ Huh.
+\end_layout
+
+\begin_layout Standard
+The generalization seems to be that stupid people are conservative;
+ or vice–verso,
+ conservatives are stupid?
+ Perhaps I am being mean,
+ but in my experience,
+ conservatives are stupid.
+ Well,
+ there's no shortage of stupid Democrats,
+ either,
+ but at least the stupid Democrats don't hold elected offices;
+ they just vote.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
