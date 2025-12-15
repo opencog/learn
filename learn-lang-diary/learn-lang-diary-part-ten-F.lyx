@@ -2853,6 +2853,145 @@ The generalization seems to be that stupid people are conservative;
  they just vote.
 \end_layout
 
+\begin_layout Subsection*
+15 December 2025
+\end_layout
+
+\begin_layout Standard
+Git commit 2adb566dc7441d95a30171b1c1698a00a8e66a3f message for guix-atomese:
+ 
+\end_layout
+
+\begin_layout Standard
+Set the GUILE_SITE_DIR for install location.
+\end_layout
+
+\begin_layout Standard
+This is another interesting lesson about Claude,
+ actually.
+ I had to fight with Claude over this for almost an hour,
+ while it proposed all sorts of wild and insane hacks and work–arounds that were obviously flawed.
+ (guile doesn't know where guile is installed on a guix system...
+ really dude?
+ You're gonna go with that explanation?
+ And "we can automate this by doing it manually with this automation tool that manually sets the automatic location,
+ manually." Uh,
+ yeah,
+ sure,
+ dude.)
+\end_layout
+
+\begin_layout Standard
+Towards the end,
+ I was able to force Claude to actually go out on the web and actually RTFM,
+ and then if found this very simple solution.
+ (which is what is being committed in this commit.)
+\end_layout
+
+\begin_layout Standard
+The experience of using Claude for guix has been extremely frustrating:
+ Either guix is more complex than what Claude can easily understand,
+ or there is only the thinnest of training material about guix in the Claude training set.
+ It seems to know something,
+ and is always very eager to offer confident but wrong answers,
+ which then have to be fixed by long turn–around time try–fail–fix cycles.
+ It's basically shooting in the dark,
+ with correct syntax.
+\end_layout
+
+\begin_layout Standard
+This is kind of what I do,
+ when I am dealing with a foreign,
+ new system that I am not familiar with:
+ lots of trial–and–error,
+ lots of mistakes and confusion.
+ Random efforts with magic incantations to see if,
+ this time,
+ it will work.
+ So it is interesting to see that Claude is doing this with guix:
+ a very experimental approach,
+ "maybe this will work".
+\end_layout
+
+\begin_layout Standard
+Its very different from Claude's handling of c++ and python,
+ where it operates at the expert level.
+ Although it is possible that the trial–and–error in those languages is hidden from me:
+ when I watch stuff scroll by,
+ I see it making vast numbers of obvious errors.
+ There,
+ I am shielded from the confusion:
+ it just scrolls by on a fast iterative cycle.
+ Here,
+ I am not:
+ I get to play the doofus in the middle.
+\end_layout
+
+\begin_layout Standard
+I don't understand the trade–off between memory and ability.
+ This is like the early chess machines,
+ which simply brute–forced everything.
+ Humans take the opposite algorithmic approach:
+ remember things,
+ because we are unable to brute force (as generalists,
+ we have no algo that can brute force things in general.) So,
+ I watch Claude an I'm starting to see that it is a brute–force machine:
+ it just tries stuff,
+ till it gets it to work,
+ and usually,
+ the results of that search end up being pretty minimal,
+ compact and correct.
+ Sometimes untidy,
+ but I can get it to tidy up by pushing just a little bit.
+ Here,
+ for guix,
+ I had to push a lot,
+ and I had to push really really hard.
+\end_layout
+
+\begin_layout Standard
+So ...
+ memory ...
+ a book of recipes that work,
+ to solve some given situational problem,
+ coupled to blind–search algos,
+ when they don't.
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ OK.
+\end_layout
+
+\begin_layout Standard
+—
+—
+—
+
+\end_layout
+
+\begin_layout Standard
+Yes,
+ I wrote the above into a commit.
+ I spent the last 24 hours doing something that I expected to take an hour.
+ Claude has been consistently throwing me under the bus,
+ with this guix project,
+ which is not what I have come to expect.
+\end_layout
+
+\begin_layout Standard
+On related news:
+ I don't know if this was an accident or what:
+ it was unable to write out the Gnu COPYING file.
+ It just wouldn't do it,
+ and notice that it didn't do it,
+ and then try to do it,
+ and not do it again.
+ I wonder if this is some safety–engineered prompt in Claude,
+ that prevents it from accidentally sticking the Gnu License on things where it might not belong,
+ and where the user might not notice (because COPYING is such an innocuous file name...) Interesting.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
