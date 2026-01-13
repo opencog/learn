@@ -3180,6 +3180,77 @@ default mode thinking
 \begin_layout Standard
 And this bring me to the first topic of today's planning session:
  memory for Claude.
+ I started this project a few months ago;
+ should I drop it,
+ or continue?
+ A few months ago,
+ I was using Claude for routine coding tasks,
+ and got frustrated that it seemed unable to remember something I told it just earlier in the session.
+ So I said to myself 
+\begin_inset Quotes eld
+\end_inset
+
+lets fix this
+\begin_inset Quotes erd
+\end_inset
+
+.
+ (I now realize that there are probably dozens if not hundreds of engineers at Anthropic,
+ working hard to fix this as well,
+ and I have an indirect impression that they are making small,
+ incremental progress:
+ Claude seems a little more cognizant each time I use it.
+ Maybe.
+ I could be imagining things;
+ maybe not.)
+\end_layout
+
+\begin_layout Standard
+Anyway,
+ it went like this.
+ I start with a standard prompt:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+before you continue in this task,
+ please review these bullet points.
+\begin_inset Quotes erd
+\end_inset
+
+ But I don't want to write those bullet points,
+ I want Claude to write them.
+ Back then,
+ Claude did not have a 
+\begin_inset Quotes eld
+\end_inset
+
+plan mode
+\begin_inset Quotes erd
+\end_inset
+
+;
+ now it does.
+ So basically,
+ I wanted Claude to create a 
+\begin_inset Quotes eld
+\end_inset
+
+plan
+\begin_inset Quotes erd
+\end_inset
+
+ that it would review,
+ and update,
+ as it performed each step of its task.
+ Now,
+ such plans are,
+ in the current design,
+ text files.
+ Which makes sense:
+ LLMs work with text,
+ soe of course,
+ 
 \end_layout
 
 \begin_layout Section*
