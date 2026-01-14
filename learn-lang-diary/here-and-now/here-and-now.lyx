@@ -731,7 +731,362 @@ Well,
 \end_layout
 
 \begin_layout Standard
-Part 
+The rest of this text is the diary proper.
+ I'll try to avoid making apologies for how demented some of it may sound.
+ I'm not interested in fighting with cranks.
+ The Dunning–Kruger effect is not limited to stupid people:
+ some brilliant people suffer from it as well.
+ Don't be one of them.
+\end_layout
+
+\begin_layout Subsection*
+14 January 2026
+\end_layout
+
+\begin_layout Standard
+So as I am tossing and turning in bed this morning,
+ planning this diary entry,
+ I develop the following chain of ideas.
+ The culmination of these ideas is an attempt to understand non–locality and wave function collapse in QM.
+ Working on this,
+ I kept making steps that go backwards,
+ getting simpler and more basic at each step,
+ until I arrive at a starting point that is absurdly trite.
+ Hah.
+ Rather than walking backwards for this text,
+ let me start at the start.
+\end_layout
+
+\begin_layout Standard
+Consider a function
+\begin_inset Formula 
+\[
+f:I\to\mathbb{R}
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $I=\left[0,1\right]$
+\end_inset
+
+ the closed unit interval of the reals endowed with the standard topology.
+ Likewise,
+ 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ is the unbounded reals,
+ with the standard topology.
+ Other topologies are possible,
+ e.g.
+ the 
+\begin_inset Formula $p$
+\end_inset
+
+–adic topology,
+ so this is already a strong statement.
+ The natural topology allows a metric to be defined,
+ so these are metric spaces.
+\end_layout
+
+\begin_layout Standard
+What is 
+\begin_inset Formula $f$
+\end_inset
+
+?
+ Well,
+ I already said that its a function;
+ thus,
+ it is not a relation.
+ It is a section through 
+\begin_inset Formula $I\times\mathbb{R}$
+\end_inset
+
+ viewed as a line bundle;
+ the base space is 
+\begin_inset Formula $I$
+\end_inset
+
+ and the fiber is 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+.
+ (N.B.
+ 
+\begin_inset Formula $f$
+\end_inset
+
+ is a pre–prototype for a wave–function 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and 
+\begin_inset Formula $I$
+\end_inset
+
+ is a stand–in for space–time.
+ It will take a few steps to get there,
+ though.)
+\end_layout
+
+\begin_layout Standard
+There is a spot of philosophical confusion here.
+ When I write 
+\begin_inset Formula $f:I\to\mathbb{R},$
+\end_inset
+
+this notation suggests,
+ or implies,
+ or has the natural interpretation that there is 
+\begin_inset Quotes eld
+\end_inset
+
+one copy
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ and that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a request to choose 
+\begin_inset Quotes eld
+\end_inset
+
+one value
+\begin_inset Quotes erd
+\end_inset
+
+ out of this 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+ for each 
+\begin_inset Quotes eld
+\end_inset
+
+point
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $I$
+\end_inset
+
+.
+ However,
+ when I say that 
+\begin_inset Formula $f$
+\end_inset
+
+ is a section through the line bundle 
+\begin_inset Formula $I\times\mathbb{R}$
+\end_inset
+
+,
+ the natural interpretation is that each fiber is a 
+\begin_inset Quotes eld
+\end_inset
+
+distinct copy
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+,
+ and that each copy can be labeled by a point 
+\begin_inset Formula $x\in I$
+\end_inset
+
+.
+ So which is it?
+ Are there many copies,
+ or is there just one?
+\end_layout
+
+\begin_layout Standard
+Since I have not asked that 
+\begin_inset Formula $f$
+\end_inset
+
+ be continuous,
+ it would seem that the following rather hallucinatory statement is possible:
+\begin_inset Formula 
+\[
+I\times\mathbb{R}\simeq\prod_{x\in I}\mathbb{R}_{x}=\mathbb{R}\times\mathbb{R}\times\cdots
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula $\mathbb{R}_{x}$
+\end_inset
+
+ is the fiber above the point 
+\begin_inset Formula $x\in I$
+\end_inset
+
+ of the base space.
+ The product 
+\begin_inset Formula $\prod$
+\end_inset
+
+ is the Cartesian product.
+ This product 
+\begin_inset Formula $\prod_{x\in I}$
+\end_inset
+
+ is a product of uncountably many copies of 
+\begin_inset Formula $\mathbb{R}$
+\end_inset
+
+.
+ When written in this way,
+ it's quite the nasty little space,
+ because this notation suggests that the appropriate topology is the so–called 
+\begin_inset Quotes eld
+\end_inset
+
+box topology
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+fine topology
+\begin_inset Quotes erd
+\end_inset
+
+.
+ This topology is very very different from what one might naturally think of,
+ when writing down the Cartesian product 
+\begin_inset Formula $I\times\mathbb{R}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Somewhere in high–school algebra,
+ before the word 
+\begin_inset Quotes eld
+\end_inset
+
+Cartesian
+\begin_inset Quotes erd
+\end_inset
+
+ is used,
+ and long long before the idea of a topology is presented,
+ students are already encouraged to think of the natural topology on 
+\begin_inset Formula $I\times\mathbb{R}$
+\end_inset
+
+.
+ It is like a strip of paper,
+ one inch wide,
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+infinitely long
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Why is this 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Because we live in 3D space,
+ and a piece of paper is naturally 2D,
+ and Euclid could articulate the notion of a flat plain,
+ because in the physical reality in which we live,
+ there are lots of flat planes,
+ and the topology,
+ the natural topology,
+ as defined by Hausdorff and the Poles of the 1930's,
+ and the 
+\begin_inset Quotes eld
+\end_inset
+
+Polish spaces
+\begin_inset Quotes erd
+\end_inset
+
+ that they give us,
+ are naturally metric spaces that can be intuited by high–school students.
+ Metric spaces are axiomatized in mathematics,
+ but ordinary common every–day experience with a ruler provide a natural intuition for metricity.
+ This 
+\begin_inset Quotes eld
+\end_inset
+
+ordinary experience
+\begin_inset Quotes erd
+\end_inset
+
+ is also why mathematicians accept the axioms of metric spaces as being somehow obvious or reasonable or expected or normal,
+ and not some space alien from outer space.
+\end_layout
+
+\begin_layout Standard
+This 
+\begin_inset Quotes eld
+\end_inset
+
+ordinary experience
+\begin_inset Quotes erd
+\end_inset
+
+ is grounded in the physical world,
+ as we live in it,
+ having an 
+\begin_inset Quotes eld
+\end_inset
+
+obvious
+\begin_inset Quotes erd
+\end_inset
+
+ 3D structure,
+ perceived by our brains,
+ or rather,
+ the neurons in our brains.
+ Of course,
+ the brains in mammals and birds perceive this as well;
+ and we can split hairs as to whether spiders and flies perceive space as being 3D as well.
+ I think they do,
+ but there is always someone looking for an argument.
+ Why am I talking about brains in a text ostensibly about QM?
+ Because these same brains that have no issue with metric spaces and natural topologies go hog–wild when confronted with Hilbert spaces.
+\end_layout
+
+\begin_layout Standard
+which suggests or implies the natrual topol
+\end_layout
+
+\begin_layout Standard
+fine top box paradoxes e.g.
+ 
 \end_layout
 
 \begin_layout Section*
