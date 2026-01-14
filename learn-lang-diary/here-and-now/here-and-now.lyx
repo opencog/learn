@@ -1312,11 +1312,573 @@ what is the mechanism?
 \end_layout
 
 \begin_layout Standard
-Anyway...
+So what happens if I try to axiomatize wave function collapse in the above model?
+ Well,
+ I have that 
+\begin_inset Formula $\left|\psi\right\rangle \in H$
+\end_inset
+
+ where 
+\begin_inset Formula $H$
+\end_inset
+
+ is the Hilbert space with all the conventional trimmings:
+ bounded,
+ uniform convergence in the weak topology,
+ square–integrable,
+ 
+\emph on
+etc.
+
+\emph default
+ Note that square–integrable means normalizable,
+ and normalizable means its a projective space.
+ A projective space is one where all the vector lengths are of length–one;
+ the usual examples are real projective space 
+\begin_inset Formula $\mathbb{RP}^{n}$
+\end_inset
+
+ and complex projective space 
+\begin_inset Formula $\mathbb{CP}^{n}$
+\end_inset
+
+.
+ Note that projective spaces are 
+\begin_inset Quotes eld
+\end_inset
+
+kind of like spheres
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and that the conventional Hilbert space of QM is 
+\begin_inset Quotes eld
+\end_inset
+
+kind of like
+\begin_inset Quotes erd
+\end_inset
+
+ an infinite–dimensional sphere,
+ in that 
+\begin_inset Formula $1=\left|c_{1}\right|+\left|c_{2}\right|+\cdots$
+\end_inset
+
+ for any 
+\begin_inset Formula $\psi=c_{1}\psi_{1}+c_{2}\psi_{2}+\cdots$
+\end_inset
+
+ and we know that high–dimensional spheres are bizarre beasts in their own right.
 \end_layout
 
 \begin_layout Standard
-gaussia
+Anyway,
+ a pure–state wave–function 
+\begin_inset Formula $\psi=\left|\psi\right\rangle \in H$
+\end_inset
+
+ is a 
+\begin_inset Quotes eld
+\end_inset
+
+single point
+\begin_inset Quotes erd
+\end_inset
+
+ on this 
+\begin_inset Quotes eld
+\end_inset
+
+infinite–dimensional sphere
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $S^{\omega}\simeq H$
+\end_inset
+
+ (which is then 
+\begin_inset Formula $H\simeq\mathbb{RP}^{\omega}$
+\end_inset
+
+ or 
+\begin_inset Formula $H\simeq\mathbb{CP}^{\omega}$
+\end_inset
+
+,
+ take your pick.) I now want to introduce a new symbol,
+ 
+\begin_inset Formula $r$
+\end_inset
+
+,
+ standing for the 
+\begin_inset Quotes eld
+\end_inset
+
+reduction
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+wave function collapse
+\begin_inset Quotes erd
+\end_inset
+
+.
+ How should that symbol be deployed algebraically?
+ Well,
+ lets start with some wrong answers.
+ its not a function,
+ so I should not write
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+r:H\to I\qquad\mbox{(wrong)}
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $I$
+\end_inset
+
+ is the unit interval from before.
+ The above is wrong for several reasons:
+ its not 
+\begin_inset Quotes eld
+\end_inset
+
+deterministic
+\begin_inset Quotes erd
+\end_inset
+
+,
+ in that I can't say 
+\begin_inset Quotes eld
+\end_inset
+
+for any and every point 
+\begin_inset Formula $\psi\in H$
+\end_inset
+
+ there is a unique point 
+\begin_inset Formula $x\in I$
+\end_inset
+
+ that it collapses to
+\begin_inset Quotes erd
+\end_inset
+
+;
+ at most,
+ all I can say is 
+\begin_inset Quotes eld
+\end_inset
+
+after preparing a state 
+\begin_inset Formula $\psi$
+\end_inset
+
+ and selecting a spatial location 
+\begin_inset Formula $x$
+\end_inset
+
+ then I will have a random chance/probability of 
+\begin_inset Formula $\left|\psi\left(x\right)\right|^{2}$
+\end_inset
+
+ that my detector,
+ located at 
+\begin_inset Formula $x$
+\end_inset
+
+ will detect the prepared state
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Twiddle the above as needed for states that aren't pure,
+ and detectors that are finite–sized.
+ Crack open standard textbooks for this.
+\end_layout
+
+\begin_layout Standard
+The mission here is to find an algebraic infrastructure for talking about 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Discovering notation for it.
+ And ...
+ on this note,
+ I will end today's diary entry,
+ mostly because it took five hours to write the trivialities above,
+ and I'm exhausted,
+ and I really don't have any tricks or anything clever to say about 
+\begin_inset Formula $r$
+\end_inset
+
+ because it was at this point that I rolled out of bed this morning,
+ with an urge to write down the above.
+ So;
+ mission accomplished:
+ I wrote down what I set out to write.
+ I don't think I wrote down anything at all that a normal student of QM would not already know.
+ I did want to sharpen the outlines and relief of what wave–function collapse is.
+ The point is that wave functions 
+\begin_inset Quotes eld
+\end_inset
+
+live in a space 
+\begin_inset Formula $H$
+\end_inset
+
+ the is out there,
+ independent of space and time
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and that the physics happens 
+\begin_inset Quotes eld
+\end_inset
+
+in that space
+\begin_inset Quotes erd
+\end_inset
+
+,
+ which is just as 
+\begin_inset Quotes eld
+\end_inset
+
+real
+\begin_inset Quotes erd
+\end_inset
+
+ as the space that I am accustomed to living in.
+\end_layout
+
+\begin_layout Standard
+The mystery question is 
+\begin_inset Quotes eld
+\end_inset
+
+why is my space 3D?
+\begin_inset Quotes erd
+\end_inset
+
+ and not 5D or something else?
+ The above sketch paints a picture for 1D space;
+ it does not fix the dimension in any way.
+ It also does not explain why the 3D space that I live in is Cartesian,
+ with the natural topology,
+ and not the product of,
+ say,
+ three Cantor sets with some other topology,
+ e.g.
+ 
+\begin_inset Formula $p$
+\end_inset
+
+–adic or whatever.
+ Where does the 3D come from,
+ and where does the natural topology come from?
+\end_layout
+
+\begin_layout Standard
+Oh,
+ I should point out that one of the ingredients to the above construction was the postulation of a differential eqn 
+\begin_inset Formula $d^{2}\psi/dx^{2}=E\psi$
+\end_inset
+
+ because that is how first–quantization works.
+ If I think of this eqn as a 
+\begin_inset Quotes eld
+\end_inset
+
+single point in the space of all differential eqns
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then I have to ask 
+\begin_inset Quotes eld
+\end_inset
+
+what is the space of all differential eqns?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+does it have a topology?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+should I think about non–linear e.g.
+ quadratic terms for 
+\begin_inset Formula $\psi$
+\end_inset
+
+ or more than two derivatives?
+\begin_inset Quotes erd
+\end_inset
+
+ The conventional answer to these questions are 
+\begin_inset Quotes eld
+\end_inset
+
+no you must not do that because
+\begin_inset Quotes erd
+\end_inset
+
+ (a) the Hamilton–Jacobi eqns are naturally quadratic and are the natural setting for geodesics on Riemanninan manifolds (which then beggars the question 
+\begin_inset Quotes eld
+\end_inset
+
+why is it a metric space,
+ anyway?
+\begin_inset Quotes erd
+\end_inset
+
+) or perhaps (b) 
+\begin_inset Quotes eld
+\end_inset
+
+mumble spin statistics and general relativity
+\begin_inset Quotes erd
+\end_inset
+
+ or perhaps (c) non–renormalizability or perhaps (d) 
+\begin_inset Quotes eld
+\end_inset
+
+standard QM is just plain–old linear,
+ deal with it
+\begin_inset Quotes erd
+\end_inset
+
+ or perhaps (e) the propagator for the Laplacian has the very simple null–light–cone form 
+\begin_inset Formula $\delta^{3}\left(x-ct\right)$
+\end_inset
+
+ only in 3+1 D and all other dimensions have derivatives in there,
+ or worse,
+ e.g.
+ water waves in 2+1 D where the propagator has a step function for the retarded wave,
+ and likewise for N+1 for any even N.
+ But all of these hand–waving replies are,
+ well,
+ hand–waving,
+ and serve to obscure the answer even before the question has been clearly posed.
+ The only vaguely reasonable answer (or framework) seems to arise in second quantization,
+ where I write the partition function
+\begin_inset Formula 
+\[
+Z=\int\left[d\phi\right]e^{-iA\left(\phi\right)}
+\]
+
+\end_inset
+
+and the action is 
+\begin_inset Formula $A\left(\phi\right)=\int d^{n}x\mathcal{L}\left(\phi,\dot{\phi}\right)$
+\end_inset
+
+ for some quadratic Lagrangian 
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+.
+ Again,
+ we are back to 
+\begin_inset Formula $\mathcal{L}$
+\end_inset
+
+ being quadratic,
+ but this I can somehow live with and accept,
+ because now,
+ any 
+\begin_inset Formula $\phi$
+\end_inset
+
+ that is not classical,
+ i.e.
+ is not an extremum of the partition function,
+ I can 
+\begin_inset Quotes eld
+\end_inset
+
+imagine
+\begin_inset Quotes erd
+\end_inset
+
+ that 
+\begin_inset Formula $\phi$
+\end_inset
+
+ as 
+\begin_inset Quotes eld
+\end_inset
+
+solving
+\begin_inset Quotes erd
+\end_inset
+
+ some 
+\begin_inset Quotes eld
+\end_inset
+
+other
+\begin_inset Quotes erd
+\end_inset
+
+ differential equation besides 
+\begin_inset Formula $d^{2}\psi/dx^{2}=E\psi$
+\end_inset
+
+,
+ because,
+ in second quantization,
+ these other paths 
+\begin_inset Quotes eld
+\end_inset
+
+exist
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and only the 
+\begin_inset Quotes eld
+\end_inset
+
+classical
+\begin_inset Quotes erd
+\end_inset
+
+ path solves the 
+\begin_inset Quotes eld
+\end_inset
+
+first–order–quantized
+\begin_inset Quotes erd
+\end_inset
+
+ eqn 
+\begin_inset Formula $d^{2}\psi/dx^{2}=E\psi$
+\end_inset
+
+.
+ I'm putting everything in quotes,
+ here,
+ I'm trying to sketch a picture here that fails if the quoted terms are taken at their literal meanings;
+ you have to read a bit of poetry into this.
+ The correct/intended meaning for this is,
+ for example,
+ a brownian motion random walk,
+ where any path can be taken,
+ and the distribution of those paths are clearly Gaussian (i.e.
+ quadratic) but if I select any one given path and 
+\begin_inset Quotes eld
+\end_inset
+
+smooth it
+\begin_inset Quotes erd
+\end_inset
+
+,
+ it seems to 
+\begin_inset Quotes eld
+\end_inset
+
+almost solve
+\begin_inset Quotes erd
+\end_inset
+
+ something that 
+\begin_inset Quotes eld
+\end_inset
+
+looks like
+\begin_inset Quotes erd
+\end_inset
+
+ a differential eqn with non–linear terms and higher derivatives,
+ even though 
+\begin_inset Quotes eld
+\end_inset
+
+the actual diff eq depends on the smoothed path
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This sounds insane so let me re–sketch it as a a kind of inverted–physics.
+ Start with a single stochastic diff eq,
+ say the one for Brownian motion,
+ then select a single path (a single random walk) then smooth that path (with some smoothing function with some smoothing parameter(s)) and then ask:
+ is there some diffeq that this path just happens to accidentally solve?
+ And then perhaps,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+what other solns does this nasty horrible diffeq solve?
+\begin_inset Quotes erd
+\end_inset
+
+ Or perhaps 
+\begin_inset Quotes eld
+\end_inset
+
+what is the topology for the space of these kinds of difffeqs that are constructed in this insane kind of way?
+\begin_inset Quotes erd
+\end_inset
+
+ (where by 
+\begin_inset Quotes eld
+\end_inset
+
+topology
+\begin_inset Quotes erd
+\end_inset
+
+ I also mean 
+\begin_inset Quotes eld
+\end_inset
+
+measure space
+\begin_inset Quotes erd
+\end_inset
+
+,
+ because I want to have some measure on it.) But again,
+ this is not only wacky,
+ but unworkable at this level of description,
+ so I abandon ship here.
+ My apologies to leave you disappointed and empty–handed.
+ It'll be a few weeks before I get back to this;
+ I have other things to do.
+ I also had some other ideas about here and now,
+ a few months ago,
+ and I did not write them down and now I cannot remember them.
 \end_layout
 
 \begin_layout Section*
