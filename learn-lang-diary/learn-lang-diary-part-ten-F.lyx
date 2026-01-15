@@ -3470,6 +3470,1680 @@ So the question becomes:
  The chat log is below.
 \end_layout
 
+\begin_layout Subsubsection*
+—
+ Discord chat log
+\end_layout
+
+\begin_layout Standard
+Hey Linas,
+ have you come across the natural abstraction hypothesis (https://www.lesswrong.com/w/natural-abstraction) or platonic representation hypothesis (https://www.youtube.com/watch?v=Qp0rCU49lMs&t=4716s) ?
+ If there's something to them,
+ I suppose not only may different neural network architectures learn similar representations even when trained on different modalities,
+ but symbolic systems should converge to them as well,
+ assuming anyone finds a way to scale them up sufficiently and in a general enough way.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+1:47 PM
+\end_layout
+
+\begin_layout Standard
+I have not heard of either.
+ However,
+ I already have strong evidence that,
+ yes,
+ different systems converge on the same things.
+ For example,
+ I did my symbolic thing by counting word-pairs,
+ and extracting counts of jigsaws,
+ so utterly and completely different than any neural net,
+ deep-learning algo.
+ And yet I was able to clearly see in my dataset the old classic result "king - man + woman = queen".
+ And so yes,
+ in that sense,
+ my purely-symbolic,
+ frequentist (non-Bayesian) counting system "converged" on the same thing as word2vec/GLoVE did.
+\end_layout
+
+\begin_layout Standard
+The other way to think about this is "uhh,
+ what else could it possibly have converged on,
+ anyway?" so perhaps the result is tautological.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+1:49 PM
+\end_layout
+
+\begin_layout Standard
+I don't think it's tautological.
+ Just as it was surprising to see semantic directions emerge in early neural language model,
+ I think seeing them emerge in a symbolic system in the same way is also surprising.
+\end_layout
+
+\begin_layout Standard
+Very cool that you were able to reproduce this effect without gradient descent!
+\end_layout
+
+\begin_layout Standard
+Makes me wonder,
+ were you able to perform more complex operations due to the symbolic nature of the system?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+1:53 PM
+\end_layout
+
+\begin_layout Standard
+Well,
+ I hit two issues.
+ One is algorithmic efficiency.
+ DL-NN works great on GPU's;
+ my symbolic counting is slow-ish and hard to parallelize-ish,
+ sort-of-I-guess,
+ so I dislike the prospect of head-to-head competition.
+ But maybe that's the small problem.
+ The big problem is this:
+ its still training.
+ Its not "alive".
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+1:54 PM
+\end_layout
+
+\begin_layout Standard
+You mean pre-training vs.
+ online learning?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+1:57 PM
+\end_layout
+
+\begin_layout Standard
+That is,
+ my version 1.0 implementation was a pipeline that pumped text data through a processing system.
+ I hit some matainability walls.,
+ the system was too rigid,
+ too fragile,
+ too hard to maintain,
+ enhance.
+ I went back and (just now) finished redesigning many core elements,
+ so that I could do what you call "online learning".
+ So that's better,
+ but I am still confronted with an issue that bugs me.
+\end_layout
+
+\begin_layout Standard
+So,
+ with "online learning",
+ I still have to be the meta-trainer.
+ I have to say "hey yo,
+ mr.
+ subsystem,
+ aim yourself at these files and go apply these algorithms to them." The "mr.
+ subsystem" is still "robotic",
+ and I am master-in-charge,
+ telling it what to do.
+ Or rather,
+ designing and hand-crafting careful algorithms that cause it to do the things it will do.
+\end_layout
+
+\begin_layout Standard
+And I kind of want to get out of the "carefully hand-crafted algorithm" business.
+\end_layout
+
+\begin_layout Standard
+This is,
+ for me,
+ a very real and present concern.
+ Before the end of this month,
+ starting more or less now,
+ I will have bare-bones pieces parts to work with audio,
+ photos and text,
+ all with a symbolic frequentist-counting approach.
+ Great!
+ And how do I set it up?
+ "yo,
+ randomly explore the filesystem and process any text,
+ audio,
+ photos you find there"?
+ That requires me to create the "random filesystem crawler algo" and I'm tired of creating custom algos.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:05 PM
+\end_layout
+
+\begin_layout Standard
+Even it is as trivial as a "random filesystem crawler"
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:05 PM
+\end_layout
+
+\begin_layout Standard
+So you want something like attention to emerge by itself?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:08 PM
+\end_layout
+
+\begin_layout Standard
+I'm dissatisfied about something,
+ but I can't quite figure out what,
+ or what the correct fix is.
+ Attention is munged into there.
+\end_layout
+
+\begin_layout Standard
+Attention is fascinating.
+ A couple of months ago,
+ I coded up a stupid computer stunt,
+ where I tried to enhance Claude by giving it persistent long-term memory,
+ and the thing that leapt to the fore-front of that project was attention.
+ If that system is going to "remember" something,
+ what,
+ exactly,
+ should it "remember"?
+ How to whittle down everything one could ever think about to the one or two things it should think about?
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:11 PM
+\end_layout
+
+\begin_layout Standard
+Do you want to have a system that can traverse any space fully by itself without knowing anything about the space beforehand,
+ in a maximally general way?
+ Something like a simple but complete ergodic crawler?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:12 PM
+\end_layout
+
+\begin_layout Standard
+I have asked myself exactly that question many times,
+ and I have not been able to find an answer.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:13 PM
+\end_layout
+
+\begin_layout Standard
+Two things that come to my mind there is a) a robot solving any 2d labryrinth just has to stick to the right wall and b) space-filling curves are simple recursions that can fill a whole space.
+ Maybe there's a more general theme like that?
+\end_layout
+
+\begin_layout Standard
+It sounds like on the one hand you need a way to discover all the things (crawler) and on the other hand to prioritize (attention).
+ Or is there more to it?
+\end_layout
+
+\begin_layout Standard
+Dr.
+ Dan
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:14 PM
+\end_layout
+
+\begin_layout Standard
+We live in 3D + time.
+\end_layout
+
+\begin_layout Standard
+That implies that every language/symbology must define those in some way.
+\end_layout
+
+\begin_layout Standard
+That means 3 forms minimum.
+\end_layout
+
+\begin_layout Standard
+We can measure time and energy and distance accurately,
+ everything else is imaginary.
+\end_layout
+
+\begin_layout Standard
+That means the root of every ontology must be reduced to 2 proto-meanings.
+\end_layout
+
+\begin_layout Standard
+Does all that make sense to you?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:18 PM
+\end_layout
+
+\begin_layout Standard
+FWIW,
+ I know exactly how to do a complete ergodic exploration of any arbitrary network of connections;
+ and I can teach you how to do this (off-line,
+ not here) (or you can read about it in wikipedia -- the "odometer" and if you get insanely abstruse,
+ the "bratelli-vershik odometer" -- it will do a complete exhaustive ergodic search.) So that is not a problem,
+ and I know how to deal with that.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:18 PM
+\end_layout
+
+\begin_layout Standard
+Ah nice,
+ then the issue is more about the question of how to prioritize?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:20 PM
+\end_layout
+
+\begin_layout Standard
+In short,
+ I know how to crawl and explore.
+ The question is "what should the system crawl and explore?" and the answer is "gee,
+ it should work on what is important" But what is important?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:20 PM
+\end_layout
+
+\begin_layout Standard
+yes.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:22 PM
+\end_layout
+
+\begin_layout Standard
+Given that it can't know the content before looking at it,
+ the beginning has to be to step into contact with what it finds and then quickly decide whether it is relevant.
+ The relevance may depend on all the other objects that can be found,
+ so ideally it would perform a fast crawl and while doing so order everything just a bit,
+ then deepening that order by taking closer looks.
+ Does it just boild down to a breadth-first (or similar) tree search?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:24 PM
+\end_layout
+
+\begin_layout Standard
+I suspect the answer is this:
+ I should code up those parts that I am able to code up,
+ and maybe the answer to the hard questions will show up later.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:26 PM
+\end_layout
+
+\begin_layout Standard
+Given that you build up a probabilistic system,
+ could you use some existing criterion/heuristic of how much information a new object provides relative to what is known thus far,
+ without having to load in the entire object?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:28 PM
+\end_layout
+
+\begin_layout Standard
+I know that I need a multi-pass system.
+ I need to ingest some minimum number of files -- more than a dozen,
+ less than a thousand,
+ and prime the first stage of processing.
+ Then I have to make a second pass.
+ Either on the same files,
+ or on different ones,
+ and compute the second-level correlations,
+ while refining the first-level structures,
+ too,
+ And then do it again,
+ for the third level,
+ and so on.
+ So crawling a few hundred things is not hard,
+ and maybe I should just shut up and do it...
+ I'm just doing the agony aunt thing here.
+\end_layout
+
+\begin_layout Standard
+I'm wringing my hands about something that maybe isn't a problem.
+ Beats me.
+ It's confusing.
+ 
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:30 PM
+\end_layout
+
+\begin_layout Standard
+In the beginning you expressed that you don't want to code up the algorithm yourself.
+ That doesn't necessarily point to feeling lazy about it,
+ but rather at trying to find something more fundamental,
+ a way to let the system itself solve it as it grows.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:32 PM
+\end_layout
+
+\begin_layout Standard
+Yes.
+ Sorry,
+ I'm confusing you (and myself?) I have a different but related project where I try to find "all possible combinations of some axioms" (maybe by exhaustively,
+ ergodically enumerating them) and,
+ thanks to curry-howard correspondance,
+ some many/all of those things being enumerated are,
+ in fact algorithms.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:33 PM
+\end_layout
+
+\begin_layout Standard
+Looking for wiki entries about the odometer gave me this:
+\end_layout
+
+\begin_layout Standard
+https://en.wikipedia.org/wiki/Markov_odometer
+\end_layout
+
+\begin_layout Standard
+https://en.wikipedia.org/wiki/Abelian_sandpile_model => sounds fun
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:34 PM
+\end_layout
+
+\begin_layout Standard
+The stupid way to say this is to say "ima gonna generate all possible algos" ...
+ which is ...
+ stupid ...
+ but ...
+ not off the mark.
+ So then the question is "which of these ('randomly' generated) algos are 'important''?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:38 PM
+\end_layout
+
+\begin_layout Standard
+Abelian sandpile is very supremely inspirational.
+ The idea is that complex systems drive themselves to a "thermodynamic" "critical point",
+ and that a hallmark of criticality is avalanches at all size scales,
+ and fractal visual structure.
+ And that basically,
+ all of life,
+ from bacteria to national economies and political beliefs,
+ work exactly like that -- networks at the critical point.
+ 
+\end_layout
+
+\begin_layout Standard
+The only problem with that is that Per Bak,
+ when he said this,
+ did so in a condescending and insulting fashion.
+ He actually called biologists "stupid".
+ And so here we are ...
+ 
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:41 PM
+\end_layout
+
+\begin_layout Standard
+That sounds vaguely like AIXI plus the question of how to reduce it down to a practical system?
+ Rather than building up something complex from simple parts,
+ start from something maximally complex (all possible algos) and reducing it down to a moderately complex thing.
+ Drawing vs.
+ sculpting?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:43 PM
+\end_layout
+
+\begin_layout Standard
+Eh?
+ The abelian sandpile starts with the "simplest possible thing" -- sand grains,
+ and discovers that complexity emerges automatically when the critical point is approached.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:43 PM
+\end_layout
+
+\begin_layout Standard
+I wasn't speaking about the sandpile.
+ I was talking about the "generate all possible algos" phrase.
+ 
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:45 PM
+\end_layout
+
+\begin_layout Standard
+For algos ,
+ the starting point would be a "minimal set" -- some axioms (lego building blocks) -- which "self assemble" into complex things.
+ They "self assemble" because that's just what systems at the critical point "do".
+ 
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:46 PM
+\end_layout
+
+\begin_layout Standard
+Ok,
+ in that case it sounds a bit like algorithmic chemistry?
+\end_layout
+
+\begin_layout Standard
+(Maybe my set of reference classes is a bit limited.)
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:46 PM
+\end_layout
+
+\begin_layout Standard
+(in practice,
+ I have to replace "self-assembly" with,
+ uhhhhh,
+ "software")
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:47 PM
+\end_layout
+
+\begin_layout Standard
+yes.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:49 PM
+\end_layout
+
+\begin_layout Standard
+I guess the general question is:
+ If you have a set of objects (e.g.
+ axioms) and ways to combine them (rewrite rules etc.),
+ how can you explore the infinite space defined by those ingredients?
+ If you don't want to do it exhausitevly,
+ you need some criterion of what is "interesting" and some search strategy (pick any tree search or meta-heuristic).
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:50 PM
+\end_layout
+
+\begin_layout Standard
+My claim (Per Bak's claim??) is that all of these things:
+ "algorithmic chemistry",
+ "game theory",
+ "ecology",
+ "theorem proving",
+ sand-piles,
+ political beleif systems,
+ memes,
+ you name it -- are just all the same thing -- some v ery simple pieces that combine and recombine into complex structures (exhibiting avalanches and fractal structure as symptoms)
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:50 PM
+\end_layout
+
+\begin_layout Standard
+Bingo!
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:52 PM
+\end_layout
+
+\begin_layout Standard
+If "interesting" means that the parts show some self-organization,
+ then the search algorithm may be inspired by the criterion.
+ Otherwise the search and the quality criterion are quite independent.
+ The quality criterion could be swapped with any other.
+ If it is extreme,
+ e.g.
+ 0 for all objects and 1 for one particular object,
+ random search will be the best way to explore the space.
+ If the criterion is less extreme,
+ e.g.
+ neighboring objects having similar values most of the time,
+ heuristics will perform better than random search.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:52 PM
+\end_layout
+
+\begin_layout Standard
+FWIW,
+ there is a conventional answer to the "how do I explore an infinite space",
+ and its called "explore vs.
+ exploit".
+ Squirrels use it to find food.
+ Look everywhere,
+ until you get bored of looking.
+ Then exploit the best that you've found.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:53 PM
+\end_layout
+
+\begin_layout Standard
+Yes,
+ different meta-heuristics implement searches with different emphasis on the explore vs.
+ exploit aspect,
+ e.g.
+ modifying it differently over time.
+ Simulated annealing and evolutionary algorithms are perhaps the most prominent ones.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:54 PM
+\end_layout
+
+\begin_layout Standard
+There's a famous "two-armed bandit" "explore vs exploit" experiment done with slime mold,
+ which shows that slime mold implement the best-possible search algo that utilizes zero bits of memory.
+ 
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:56 PM
+\end_layout
+
+\begin_layout Standard
+Nature certainly has solved such problems in many ways and there are a gazillion nature-inspired metaheuristics out there,
+ none particularly better than any other (in general) as far as I can tell.
+ 
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:56 PM
+\end_layout
+
+\begin_layout Standard
+(The best possible two-armed bandit explore algo requires exactly one bit of memory,
+ if I recall correctly)
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:56 PM
+\end_layout
+
+\begin_layout Standard
+Sounds like tit for tat being a winning strategy in some game.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+2:59 PM
+\end_layout
+
+\begin_layout Standard
+Ah!
+ OK,
+ "none particularly better" -- let me show you the ladder.
+ Slime mold uses small polypeptides (short amino acid chains) for communication.
+ (just like "bacterial quorum sensing") There are two problems:
+ (a) the speed of communication is limited to the speed of chemical diffusion,
+ and (b) there's cross-talk,
+ because this is communication-by-smell:
+ the slime mold "smells" the chmical gradient.
+\end_layout
+
+\begin_layout Standard
+The jelly fish overcomes this problem by using the same polypeptides (now called "neurotransmitters") over very short distances (between dendrites) so that the diffusion-limited communication distance is very short.
+ The rest of the message travels 10cm or 20 cm by neuron spiking,
+ in milliseconds.
+ At the far end of the neuron,
+ the polypeptides are released into the synapse.
+ 
+\end_layout
+
+\begin_layout Standard
+Basically,
+ a single neuron is like a stargate,
+ or star-trek teleporter,
+ for polypeptides.
+ Walk in at one end,
+ pop out the other,
+ in milliseconds.
+ Oh,
+ and no crosstalk.
+ Its a fundmanetal leap in capability and technology.
+\end_layout
+
+\begin_layout Standard
+jellyfish can eat (stuff their mouth) and run from predators.
+ They are too stupid to stop eating while running away from predators.
+ To solve that,
+ you need another leap of technology -- the bilaterian.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:06 PM
+\end_layout
+
+\begin_layout Standard
+So you have these technology leaps,
+ this ladder of improvements,
+ till you get to capitalism and wars,
+ corporations and New York City.
+ These are the rungs on ladder we know about.
+ 
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:10 PM
+\end_layout
+
+\begin_layout Standard
+Yes,
+ I can see the progression in embodied information-processing you mean and there are probably many insights one can derive from studying that ladder e.g.
+ with respect to some universal laws that hold in all of them.
+ What I was referring to was that nature-inspired metaheuristics for searching arbitrary spaces to find optimal objects get ever more plenty but not really better (e.g.
+ as measured here or in many other publications https://doi.org/10.1016/j.swevo.2023.101248).
+\end_layout
+
+\begin_layout Standard
+Biological systems probably have to optimize for a wide range of aspects and the diversity of life forms we see might represent something like a pareto front.
+ No bacterium outcompetes all other life and a neocortex also gets you so far.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:13 PM
+\end_layout
+
+\begin_layout Standard
+Both "rule of law" and "the university" are stable social structures,
+ both invented about 800 years ago,
+ both invented by the same people:
+ the Scholastics.
+ They are kind-of-ish "algorithms" that tell you how to accomplish certain tasks (determine criminal guilt,
+ in the first case,
+ and keep geniuses from starving in the gutter,
+ for the second case)
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:14 PM
+\end_layout
+
+\begin_layout Standard
+Yes those might be outcomes of algorithmic chemistry with physical building blocks scaled up to an extreme.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:16 PM
+\end_layout
+
+\begin_layout Standard
+The point of AGI is "the algorithm that discovers algorithms" but well,
+ I've said too much,
+ and well,
+ that's not where my day-to-day software issues lie.
+\end_layout
+
+\begin_layout Standard
+(The university is important,
+ because it solves the problem that anyone who tries to create a commune generally fails to solve:
+ how to feed everyone,
+ how to resolve disputes,
+ and how to guarantee succession when the charismatic leader dies.
+ The modern industrial corporation,
+ with CEO and employees,
+ is another,
+ different social "algo" for solving these problems.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:20 PM
+\end_layout
+
+\begin_layout Standard
+Yes,
+ I think that's also Chollet's understanding of AGI,
+ a system that can discover novel algorithms when faced with new challenges and then incorporate those algorithms into itself to become better when encountering similar challenges.
+ That's what he tries to measure with the latest Arc challenges and LLMs are becoming quite good at the discovering novel algorithms part but afaik nobody found an effective way to incorporate the discovered abilities back into the model.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:23 PM
+\end_layout
+
+\begin_layout Standard
+Communes fail all the time.
+ universities,
+ corporations,
+ the Quakers,
+ the Catholic Church survive longer than nation-states.
+ These are stable organizational structures that emerged out of the ergodic exploration of random social relationships of humans -- stable sand-piles,
+ as it were.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:24 PM
+\end_layout
+
+\begin_layout Standard
+(Another association that came to my mind:
+ https://en.wikipedia.org/wiki/Assembly_theory might be in the reference class of approaches that try to detect an objective succession in systems that grew from simple building blocks and simple rules.
+ Here it's about trying to find a succession in (bio)chemical evolution,
+ but the formalism might be also applicable to math theorems and such I suppose.)
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:25 PM
+\end_layout
+
+\begin_layout Standard
+Ah!
+ Well I think I know exactly how to incorporate the newly discovered algo back into the system.
+ However,
+ I have some vast amount of infrastructure I have to develop,
+ first,
+ and its wayyy too much work,
+ so I plink away at it cause I cannot get anyone to help.
+\end_layout
+
+\begin_layout Standard
+Using Claude to write code,
+ though,
+ wow,
+ that has sped things up a lot.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:32 PM
+\end_layout
+
+\begin_layout Standard
+I don't think any single person can stem such a monumental project without a lot of contributors and resources.
+ I'm unfortunately not able to help much either,
+ I'm struggling to keep up with my own projects and health.
+ LLMs have indeed arrived at a quite impressive stage of coding capabilities and progress hasn't seemed to stall so far.
+ Dario's prediction of a "country of geniuses in a datacenter" coming as early as 2026 doesn't seem completely outlandish to me.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:36 PM
+\end_layout
+
+\begin_layout Standard
+Maybe.
+ 2026 seems a bit optimistic,
+ but maybe.
+ And that is why I am content to plink away at it.
+ I don't need to be in competition with anyone.
+ or to claim fame and fortune.
+ Perhaps that's my personal fuck up:
+ I'm not ego-driven in that particular meglo-manaical direction.
+ So I will be plinking away in my little toybox for now.
+\end_layout
+
+\begin_layout Standard
+As long as people give me money,
+ I'm OK.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:39 PM
+\end_layout
+
+\begin_layout Standard
+LLMs also began as personal toy projects of a few people.
+ Who knows where the journey might lead!
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:41 PM
+\end_layout
+
+\begin_layout Standard
+Perhaps writing down the full vision might draw in some helpers too,
+ along the lines of https://www.goodreads.com/quotes/384067-if-you-want-to-build-a-ship-don-t-drum-up
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:45 PM
+\end_layout
+
+\begin_layout Standard
+I've written up all sorts of variants,
+ in all kinds of media.
+ text design files,
+ formal PDF's and papers suitable for publication,
+ and personal diary entries.
+ The attention I've attracted is minimal.
+ I suspect that the problem with this space is that its filled with cranks and crazies,
+ and,
+ from the distance,
+ I look like just another crank and crazy.
+\end_layout
+
+\begin_layout Standard
+I wrote to Joscha Bach's "California center for consciousness studies" or whatever its called,
+ and they were like "thanks but no thanks"
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:48 PM
+\end_layout
+
+\begin_layout Standard
+Yes,
+ that and the sheer volume of published work is overwhelming.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:48 PM
+\end_layout
+
+\begin_layout Standard
+And Ben has become impossible to communicate with.
+ Well,
+ he's always been impossible to communicate with,
+ but now he actively spurns me.
+ So ..
+ whatever.
+ Odd.
+ I owe him favors,
+ too.
+\end_layout
+
+\begin_layout Standard
+"The sword of working software is mightier than the pen"
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:52 PM
+\end_layout
+
+\begin_layout Standard
+I suppose Ben is on his own particular and strongly driven mission of implementing AGI.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:55 PM
+\end_layout
+
+\begin_layout Standard
+(I believe https://karpathy.github.io/2015/05/21/rnn-effectiveness was quite influential in the years before the guys at Google invented the transformer.)
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+3:59 PM
+\end_layout
+
+\begin_layout Standard
+Someone beamed me an old 1980's NN paper.
+ I only skimmed it but it seemed to be very prescient.
+ lets see...
+\end_layout
+
+\begin_layout Standard
+well its somewhere in some open tab on my desktop,
+ but I've lost it.
+\end_layout
+
+\begin_layout Standard
+Noir
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:02 PM
+\end_layout
+
+\begin_layout Standard
+That's the core of the problem.
+ To explore that space without an exhaustive search,
+ one needs a robust objective function for interestingness.
+ 
+\end_layout
+
+\begin_layout Standard
+One idea I've come across was using the underlying data information gain or entropy as a basis of interest measurement ( usually Shannon).
+ What might also be practical to use is alignment meaning if different chains result in similar behavioral outcomes or structural symmetries,
+ those paths can be fused.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:05 PM
+\end_layout
+
+\begin_layout Standard
+Well,
+ I guess my comment is to the effect of "I know how to hack round this in practice,
+ and even sling around some heavy technical jargon to justify my hacks,
+ but I'm still not satisfied about something I can't articulate"
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:08 PM
+\end_layout
+
+\begin_layout Standard
+Sometimes current LLMs can help with such an issue too.
+ If you can only indirectly and vaguely point at something,
+ they occasionally can guess correctly what you mean and help putting it into clearer terms.
+ Ofc it depends on how novel it is what you try to point at.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:10 PM
+\end_layout
+
+\begin_layout Standard
+To put it in colored emotional terms,
+ its like mathematics is my girlfriend,
+ and I'm like that co-dependent lover:
+ "but if you really loved me,
+ you would reveal the formula for the meaning of life" and my girlfriend sort of walks out of the room without saying anything.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:12 PM
+\end_layout
+
+\begin_layout Standard
+Yes,
+ information theory can certainly provide useful measures as feedback for some searches.
+ I'm not sure there's a relatively application-independent formulation though.
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:12 PM
+\end_layout
+
+\begin_layout Standard
+Don't get me started with how Claude is both brilliant and stunningly stupid at the same time.
+\end_layout
+
+\begin_layout Standard
+Robert
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:13 PM
+\end_layout
+
+\begin_layout Standard
+I guess when mathematics starts talking back you've already solved it.
+ 😉
+\end_layout
+
+\begin_layout Standard
+Noir
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:22 PM
+\end_layout
+
+\begin_layout Standard
+So much hacking around that issue atm...
+ its a weird feeling knowing what you're doing is probably not the correct way but useful for the current task.
+ Fe mapping chains onto hamming cubes.
+ Does it actually reveal something or is it just a useful container to reduce compute?
+ 
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:48 PM
+\end_layout
+
+\begin_layout Standard
+I spend a lot of time trading off between "hacking" and going recursively deeper into a "more fundamental way of doing it".
+ Can't do one without the other.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
