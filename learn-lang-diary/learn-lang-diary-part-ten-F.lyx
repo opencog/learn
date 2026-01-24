@@ -5371,6 +5371,359 @@ WTF Am I doing?
  that is what I am doing.
 \end_layout
 
+\begin_layout Subsection*
+23 Jan 2026 6PM
+\end_layout
+
+\begin_layout Standard
+Have I been just plain wrong for the last 10–plus years?
+ I've been searching for a way to learn by tokenization and counting – counting the co–occurrences of tokens.
+ These naturally fall into a Gaussian distribution,
+ indicating that pair–wise relationships between tokens are uniformly distributed on a very high–dimensional sphere.
+ Since its a sphere,
+ high–dimensional (sparse) vectors and vector products become the natural representational form for the data.
+ The typical results similar to old vector embedding results on neural nets,
+ followed.
+ This implies that the results obtained from gradient descent on neural nets can also be obtained by counting statistics;
+ that the structural vectorization of the data is independent of whether those vectors came from neural–net algorithms,
+ or from counting algos.
+ If the end result is the same – i.e.
+ high–dimensional vectors,
+ then the inquiry pivots to the performance of algorithms,
+ and to second–order effects from the structuralist representation —
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+structuralist representation
+\begin_inset Quotes erd
+\end_inset
+
+ coming naturally from counting,
+ and absent from weight matrices obtained from gradient descent.
+\end_layout
+
+\begin_layout Standard
+Before the advent of LLM coding assistants,
+ the slog was long and slow.
+ I wrote and rewrote MI computation code I don't recall how many times,
+ and the last one,
+ in opencog/matrix 
+\begin_inset Quotes eld
+\end_inset
+
+worked
+\begin_inset Quotes erd
+\end_inset
+
+ but was deficient in that it was (a) batching (b) not Atomese and thus not adaptable to real–time pipeline flows.
+ So my attention shifted to working on real–time processing flows for sensory data.
+ Which has proven to be quite the slog,
+ itself,
+ requiring lots of complex code and devoted attention to debugging.
+\end_layout
+
+\begin_layout Standard
+So I'm writing my bike today,
+ and I realize,
+ well,
+ gee,
+ I don't have to use tokenization and counting for the sensory processing,
+ I could delegate it to DL–NN models.
+ And this thought is what prompts this diary entry.
+\end_layout
+
+\begin_layout Standard
+And,
+ like all my thoughts obtained during bike–riding,
+ it contains a kernel of truth,
+ but now,
+ as I sit here,
+ writing,
+ I'm realizing that perhaps I wasn't wrong for the last ten–plus years.
+ It's not at all clear–cut.
+\end_layout
+
+\begin_layout Standard
+The simplest example arises from LLMs.
+ I can ask an LLM to read a large blob of text,
+ and extract logical (factual) assertions from it.
+ And,
+ as is their nature,
+ convert those assertions into any given symbolic representational form.
+ LLM's excel at this.
+ And ...
+ and then what?
+ Levi asked it to do just this,
+ for a legal document,
+ and asked it to convert the assertions in the legal text into deontic logic,
+ expressed in prolog notation,
+ and then jammed the the prolog into an ASP solver,
+ turned the crank,
+ and lo and behold,
+ finds that that system is able to generate 
+\begin_inset Quotes eld
+\end_inset
+
+correct
+\begin_inset Quotes erd
+\end_inset
+
+ judgements,
+ correct up to the point where any ambiguities in the source text were glossed over.
+\end_layout
+
+\begin_layout Standard
+So what is this?
+ A stupid computer trick,
+ I say.
+ Surely someone has done this before,
+ I imagine.
+ Or maybe not.
+ If not,
+ its a great business opportunity.
+ I don't know the legal profession,
+ what they do,
+ what they want,
+ and have never been particularly drawn to it,
+ beyond some superficial appreciation of it's importance to society.
+ Getting a law degree takes years.
+ I'm not going to put in that kind of time.
+ So sure,
+ the above architecture might be a great product,
+ if some bigger corporate goon is not already creating just exactly that.
+ But is it a good AI idea?
+ That is the question.
+\end_layout
+
+\begin_layout Standard
+So again:
+ my knee–jerk reaction is that it's just some stupid computer trick.
+ Is it a worthy trick?
+ The LLM is being used as a perceptual device,
+ to perceive a certain kind of structure in it's input dataset.
+ The human at the wheel told it exactly what to look for:
+ laws and commandments,
+ permissive and prohibitive expressions,
+ written in English,
+ and convert these to deontic logic.
+ Why deontic logic?
+ Because it is,
+ duhh,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+obviously
+\begin_inset Quotes erd
+\end_inset
+
+ appropriate to the domain:
+ scholars (and philosophers) have developed it precisely for this kind of application.
+ So,
+ there we have it:
+ some software engineering,
+ taken to the next step,
+ thanks to programming assistants like ChatGPT and Claude,
+ that can write code to perform this structural extraction and then apply a symbolic reasoning step to it.
+ It's not a bad idea,
+ and it plays to the strengths of both LLMs and of coding assistants.
+\end_layout
+
+\begin_layout Standard
+So why am I not impressed?
+ Because it seems not to address any of the fundamental or important issues.
+ Am I wrong?
+ Am I missing something?
+ I guess I should attempt to make a list of the fundamental,
+ important issues.
+ And then try to imagine how this kind of layering could represent some kind of important step.
+ Lets try it.
+ Some of these will be cheap shots,
+ but I gotta start somewhere.
+\end_layout
+
+\begin_layout Itemize
+Asking the LLM to extract a certain kind of symbolic data from textual input is clearly a good engineering idea.
+\end_layout
+
+\begin_layout Itemize
+The human engineer has to select what it is that needs to be extracted.
+\end_layout
+
+\begin_layout Itemize
+Works well for scientific and technical texts,
+ where factual statements are easy to come by.
+\end_layout
+
+\begin_layout Itemize
+Works poorly for philosophical texts,
+ love poetry,
+ artistic endeavors,
+ mostly because I don't think a map of the human heart can be reduced to a small number of closed–form statements.
+\end_layout
+
+\begin_layout Standard
+Ohh!!
+ A hah!
+ That last bullet might be the thing!
+ In science,
+ math,
+ law (biology,
+ history ...) we work with a limited (small) number of factoids,
+ limited by human abilities:
+ 5-9 items in short–term memory,
+ the speed of 
+\begin_inset Quotes eld
+\end_inset
+
+System 2
+\begin_inset Quotes erd
+\end_inset
+
+ thinking applied to this collection of 
+\begin_inset Quotes eld
+\end_inset
+
+crisp
+\begin_inset Quotes erd
+\end_inset
+
+ relational assertions:
+ if this,
+ then that,
+ If Czar Nicolas had not wasted his money sending a fleet to attack Japan,
+ he could have instead built a railroad.
+ A single–sentence if–then assertion that has a clear historical foundation from which factual assertions could be made.
+ We humans can work with only a handful of these 
+\begin_inset Quotes eld
+\end_inset
+
+in real time
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and,
+ over a life–time accumulate tens of thousands of these factoids,
+ that we maintain in long–term memory,
+ and call upon,
+ at will,
+ when we cogitate.
+\end_layout
+
+\begin_layout Standard
+Insofar as text replaces long term memory,
+ or,
+ rather,
+ is the mechanical implementation of long–term memory,
+ and insofar as we deal with a domain that is filled with factual assertions,
+ then yes,
+ having the LLM do the reading,
+ and then perform the causitive,
+ logical extraction,
+ which can then be piped into classical symbolic reasoning systems,
+ this works.
+ I will grant even that this will be (if it is not already) a boom industry for any and all domain–specific industrial applications.
+ This is the de facto steam–engine of the modern era.
+ This is the core,
+ central engineering invention.
+ This will drive yet another industrial revolution,
+ and the investment of a trillion dollars into the effort seems not outlandish,
+ given the nature of the beast.
+\end_layout
+
+\begin_layout Standard
+And yet,
+ what do we do with love poetry and the human heart?
+ This seem unscathed by this new invention.
+ Will I still have sleepless nights and anxiety attacks?
+ Of course.
+ OK,
+ disclaimer,
+ I personally have these only somewhat rarely;
+ I single them out as a prototypical human affliction,
+ right up there with falling in love,
+ having a mental disease,
+ being angry,
+ getting drunk,
+ and being a snobby asshole seeking attention because whatever it is I have right now,
+ its not good enough,
+ and I need more,
+ more ketchup,
+ more pickles more than the ordinary grind.
+ Can I ask an LLM to write love poetry?
+ Of course,
+ and it seems pretty damn good at it.
+ Can I ask an LLM to extract logical assertions from it?
+ No,
+ because there is no particular logic to love,
+ anger or being stoned.
+ Can I ask the LLM to cure mental disease?
+ No,
+ or at least,
+ not until NeuralLink or some other sci–fi technology can invade the synapses and perform something more subtle there than a lobotomy,
+ quaaludes or lithium.
+\end_layout
+
+\begin_layout Standard
+So that's my criticism:
+ a symbolic reasoner layered on an LLM is not AGI.
+ Let me resume listing:
+\end_layout
+
+\begin_layout Itemize
+Lack of visual processing.
+ Well,
+ today.
+ It should not be that hard to develop a visual subsystem that can identify a fast–moving object,
+ and perform some motion prediction on it.
+ Ballistic,
+ rocket–power,
+ a helicopter,
+ a football,
+ golf–ball,
+ a ballerina or an ice–skater.
+ Motion is clearly central to sports and the martial arts.
+ I assume the military–industrial complex will continue to pour hudreds of billions of dollars into sensory systems.
+\end_layout
+
+\begin_layout Itemize
+It gets interesting,
+ when applying AI to spy–agency stuff.
+ Contact tracing,
+ terrorist tracking,
+ mole–hunting.
+ And that looming one:
+ disinformation.
+ I have to put these on a back–burner.
+ They deserve much more attention than I've given them in the past,
+ but here and now is not the place to focus on these.
+\end_layout
+
+\begin_layout Standard
+But still,
+ the above touches on the topic of perceiving abstract structure in data.
+ How do I know that Paris is a capital?
+ Because I *read about it* in a wikipedia article,
+ and LLMs are good at reading.
+ How is the ontological relationship grid created?
+ Historically,
+ it was done by humans:
+ scholars and experts defined SUMO,
+ an upper ontology,
+ and developed FrameNet and whatever is the big one these days,
+ whose name I can't remember.
+\end_layout
+
+\begin_layout Itemize
+Engineered:
+\end_layout
+
+\begin_layout Itemize
+axiomatic structure is predefined
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
