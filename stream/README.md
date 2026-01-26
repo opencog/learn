@@ -77,3 +77,4 @@ mostly by Claude, with as much supervision as I have patience for, with
 the hope that it can supplant the earlier batch-processing code, while
 remaining true to the idea of exploring neuro-symbolic learning.
 
+Easier said than done.
