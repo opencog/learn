@@ -6934,7 +6934,8 @@ and
 
 \end_inset
 
-
+Again,
+ this looks correct to me.
 \end_layout
 
 \begin_layout Paragraph*
@@ -6946,7 +6947,7 @@ For
 \begin_inset Formula $e_{\;\mu}^{a}=\lambda\,\delta_{\mu}^{a}$
 \end_inset
 
- this works out to
+ Claude tells me that this works out to
 \begin_inset Formula 
 \[
 \omega_{\;\;\mu}^{ab}=\frac{1}{\lambda}\left(\delta_{\mu}^{a}\partial^{b}\lambda-\delta_{\mu}^{b}\partial^{a}\lambda\right)
@@ -6965,27 +6966,51 @@ or
 
 \end_inset
 
-so for 
+which smells OK.
+\end_layout
+
+\begin_layout Standard
+But now there is stumbling on notational issues.
+ The greek letters are for coordinate spaces;
+ the latin letters are for the tangent spaces.
+ Lots of abuse of notation ensues.
+\end_layout
+
+\begin_layout Standard
+First,
+ 
+\begin_inset Formula $\partial^{a}=e^{a\mu}\partial_{\mu}$
+\end_inset
+
+ with 
+\begin_inset Formula $e^{a\mu}=\delta^{a\mu}/\lambda$
+\end_inset
+
+.
+ The calculation in greek indexes,
+ for 
 \begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
 \end_inset
 
- we get 
+ gives 
 \begin_inset Formula 
 \[
-\partial^{a}\lambda=\frac{4A}{\left(1-r^{2}\right)^{2}}r\partial^{a}r=\frac{\lambda^{2}}{A}r\partial^{a}r=\frac{\lambda^{2}}{A}x^{a}
+\partial_{\mu}\lambda=\frac{4A}{\left(1-r^{2}\right)^{2}}r\partial_{\mu}r=\frac{\lambda^{2}}{A}r\partial_{\mu}r=\frac{\lambda^{2}}{A}x_{\mu}
 \]
 
 \end_inset
 
-Equivalently:
+So converting to latin:
 \begin_inset Formula 
 \[
-\partial_{\mu}\lambda=\frac{\lambda^{2}}{A}x_{\mu}
+\partial^{a}\lambda=\frac{\lambda}{A}x^{a}
 \]
 
 \end_inset
 
-and so as before,
+and so now comes more confusion.
+ Earlier,
+ Claude claimed,
  in Cartesian:
 \begin_inset Formula 
 \[
@@ -6994,7 +7019,16 @@ and so as before,
 
 \end_inset
 
+but this is off by a factor of 
+\begin_inset Formula $\lambda$
+\end_inset
 
+ overall.
+ Fuck me.
+ It is better to avoid using expressions like this.
+ I leave this here,
+ for now,
+ with a ***caution*** sticker on it.
 \end_layout
 
 \begin_layout Paragraph*
@@ -7095,7 +7129,31 @@ e_{3} & =\frac{1}{\lambda r\sin\theta}\partial_{\phi}
 \end_inset
 
 The spin connection.
- No mixed time–space:
+ 
+\begin_inset Formula 
+\[
+\omega^{ab}=\frac{1}{\lambda}\left(dx^{a}\,\partial^{b}\lambda-dx^{b}\,\partial^{a}\lambda\right)
+\]
+
+\end_inset
+
+so for for 
+\begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
+\end_inset
+
+ we get 
+\begin_inset Formula $\partial^{2}\lambda=\partial^{3}\lambda=0$
+\end_inset
+
+ and 
+\begin_inset Formula $\partial^{1}\lambda=\lambda^{-1}\partial_{1}\lambda=\lambda r/A$
+\end_inset
+
+ and so ...
+\end_layout
+
+\begin_layout Standard
+No mixed time–space:
 \begin_inset Formula 
 \begin{align*}
 \omega^{0i} & =0\\
