@@ -5972,6 +5972,864 @@ transforming
  from English to C++/python/java) how can I leverage that?
 \end_layout
 
+\begin_layout Subsection*
+26 January 2026
+\end_layout
+
+\begin_layout Standard
+Well,
+ I was going to write this diary entry this morning,
+ but now it is twelve hours later,
+ and I've exhausted myself mentally doing something else (reviewing electrical generation in Texas,
+ the various ISO's in the US,
+ then EU,
+ then touching on China,
+ russia,
+ Kazakhstan,
+ how the Baltics disconnected from the russian grid in Feb 2025,
+ the spinning synchronous reserves,
+ the A/C ties,
+ the russian sabotage of Baltic HVDC cables on Christmas 2024,
+ the Iberian grid collapse is disconnect from the EU,
+ how regional scale frequency fluctuations in a contintental–scale grid create issues.
+ The growth of wind/solar (The EU is far ahead of the US) the adoption of batteries (the EU is far behind the US) China (comparable to the US,
+ percentage–wise,
+ but dominant in raw numbers.) How energy use in US transport is 2x of US electric energy use.
+ Who is actually building electric freight haulers (not Tesla).
+ How day–ahead markets work and interact with real–time pricing.
+ What shadow pricing is.
+ During all of this,
+ in the back of my mind is percolating:
+ how do I build a system capable of observing this kind of data,
+ inferencing on it,
+ analyzing it.
+\end_layout
+
+\begin_layout Standard
+And now it is very late and I am tired,
+ and part of me says writing is a bad idea,
+ now because I will be foggy–headed,
+ and another part of me says that we will cross over into the limnal zone soon,
+ where reality gets hallucinatory,
+ and strange imaginary constructions flood the mind;
+ not exactly waking dreams,
+ but also not exactly not.
+\end_layout
+
+\begin_layout Standard
+Why should I write?
+ Because I've saved up many many topics that really really need to be dealt with.
+ Why should I not write?
+ Because it is work,
+ and passive youtube seems appealing.
+ Why should I write?
+ Well,
+ two minutes into any youtube I care to watch will generate another idea on the queue that I will want to verbalize.
+ Where should I start?
+ Anywhere,
+ duude,
+ anywhere.
+\end_layout
+
+\begin_layout Standard
+So while reading about frequency fluctuations on the EU grid (and the Texas–Odessa solar/wind trips,
+ and spinning reserves generating torque...
+ and short–circuit current vs.
+ BESS grid–forming operations and software updates ...
+ oh my...
+ and why the heck is ERCOT installing spinning reserves at 2x or 3x the price of what the Baltics paid for:
+ list price from Simens...
+ turns out ERCOT is cost–plus,
+ a very Soviet–style centrally planned approach vs.
+ Great Britain's competitive pathfinder program that pick 66% BESS ..
+ who,
+ exactly,
+ said that ERCOTs reserve procurement is 
+\begin_inset Quotes eld
+\end_inset
+
+Soviet style
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Well,
+ Claude did.
+ I was interrogating Claude for all this info;
+ it must have read something online.
+ Yes,
+ transmission and distribution is highly regulated and a monopoly that's fine.
+ And forcing the T&D owners to install spinning reserves,
+ that's fine.
+ But why weren't they also forced to bid out?
+ Who knows.
+ This is at the limits of present–day bureaucracies,
+ I guess.)
+\end_layout
+
+\begin_layout Standard
+So while reading about frequency fluctuations,
+ I wondered,
+ how can one observe these?
+ Well,
+ clearly the operators know how,
+ and technically,
+ its not that hard,
+ if its all measured locally,
+ and the data is reported to some central operating authority.
+ So,
+ collecting the data is 
+\begin_inset Quotes eld
+\end_inset
+
+not hard
+\begin_inset Quotes erd
+\end_inset
+
+ and is 
+\begin_inset Quotes eld
+\end_inset
+
+already being collected
+\begin_inset Quotes erd
+\end_inset
+
+,
+ more or less,
+ so my thoughts were about visualizing it.
+ So I was thinking of visualizing it as ripples on a pond.
+ Well,
+ ripples on a grid.
+ If I graphs and animated the ripples,
+ would I be able to discern a pattern?
+ Would it look like water waves in an estuary?
+ Would it look like ripples moving around some dead leaves at the shore of a pond?
+ A vibrating piece of mis–shapen jello?
+ Mechanical engineers examine vibrations in many ways.
+ I guess electrical engineers do too,
+ and maybe even the ISO operators have some cool software that visualizes these frequency vibrations.
+ But what I wanted was to have my AI to view these.
+ How could my AI view these?
+ I took this as a technical challenge:
+ how do I build an AI that can perceive phase and frequency fluctuations on a grid?
+ As usual,
+ I have some ideas on how,
+ but articulating these ideas,
+ that is not the current plan.
+\end_layout
+
+\begin_layout Standard
+What also popped into my mind is how do I select my current plan?
+ Why did I choose to read about electrical generation and transmission today?
+ Did I just get carried away,
+ after a quick checkup of the ERCOT Grid and Market Conditions web page?
+ Every human makes a selection of what to think about,
+ and what they think about is entrained to what they have heard and read.
+ But that coupling of my internal thoughts to the external world is weak.
+ As I write this,
+ I am now thinking of driven harmonic oscillators,
+ the circle map that I spent so much time visualizing in the past...
+ So,
+ yes,
+ my thoughts are entrianed to whatever I have been reading about,
+ listening to,
+ recently.
+ As are everyones:
+ those who watch too much TV,
+ play too many video games,
+ have Fox News running in the background all the waking day.
+ But the human mind is very very deep – a spin glass,
+ connected to the outside world only via an ultrametric.
+ So we each think our own private thoughts,
+ to some large part completely disconnected from one–another,
+ and yet weakly interacting.
+ So very far from being synchronous like generators on a grid,
+ but still phase–locked,
+ like weakly–coupled oscillators.
+ Social media seems to be coupling brains much more strongly than TV or radio (or books,
+ or print media) ever did.
+ Well,
+ what happens when you take the circle map,
+ the phase–locked loop,
+ and increase the coupling strength?
+ Well,
+ nothing in particular,
+ for a while.
+ Sinai's tongues get fatter.
+ But then at K=1 (or 
+\begin_inset Formula $K=2\pi$
+\end_inset
+
+,
+ pick your units) there is a transition:
+ the tongues bifurcate,
+ go to measure–one.
+ Can I call this a phase transition?
+ Maybe.
+ Is that a legitimate term to apply to this case?
+ I don't know.
+ How far away are we from a legit phase transition in the style of human thinking,
+ given the ever–stronger coupling of brains to social media?
+ I don't know.
+\end_layout
+
+\begin_layout Standard
+The analogies I pain above might not be appropriate:
+ there are various 
+\begin_inset Quotes eld
+\end_inset
+
+famous
+\begin_inset Quotes erd
+\end_inset
+
+ game–theoritic expositions of the phenomena.
+ One was the Nickey Casee 
+\begin_inset Quotes eld
+\end_inset
+
+The Wisdom and/or Madness of Crowds
+\begin_inset Quotes erd
+\end_inset
+
+ javascript game from oh so many years ago.
+ I've seen youtube video titles flash by;
+ this is general wisdom that is out there in the technorati noosphere.
+\end_layout
+
+\begin_layout Standard
+So here I am,
+ thinking of random things ...
+ random?
+ Well,
+ not random.
+ But I love to think about anything and everything,
+ so an ergodic exploration of anything and everything.
+ And why?
+ And what about it?
+ This is default mode for a verbalizing system.
+ of course,
+ when I sleep,
+ its pure hallucination,
+ when I dream.
+ BTW,
+ the neuroscientists claim one does not dream at all during certain phases of sleep but I beg to differ:
+ I seem to have dreams in all parts of the night.
+ They are almost totally disconnected barrages of monotonic repetitions of thought–fragments in the early and middle of the night,
+ coalescing into quasi–coherent story lines only much later,
+ and turning into full fledged,
+ colorful lucid dreams only in the late morning.
+\end_layout
+
+\begin_layout Standard
+What do I dream about?
+ Falling asleep,
+ late night,
+ about the impressions of the day.
+ In the early mornings,
+ often variations on recurring dreams.
+ In the late mornings,
+ all new and novel(?) plot lines having nothing to do with anything.
+\end_layout
+
+\begin_layout Standard
+What do I think about while awake?
+ Well,
+ I have some conscious control.
+ I can force myself into thinking about certain topics,
+ but this takes effort,
+ and I know neuroscientists even associate this with the depletion of some–or–another neurotransmitter,
+ which is why college athletes set personal–best records during the summer,
+ and not during exam week – the mind is exhausted by exams.
+ Everyone knows this,
+ this is trite.
+ The curiosity is that scientists have worked out some of the neuromechanisms of this.
+ Or so I say to myself;
+ but what am I thinking about this now?
+ Why am I writing this,
+ and not something else?
+ Why write at all,
+ instead of slinking off to,
+ I dunno,
+ check to see if there's anything interesting posted on discord?
+ I cut myself off from bluesky,
+ its addictive,
+ I still get that twangy nervous urge to go visit bluesky.
+ Or look in on WP:M or WP:Phys (the wikipedia math/physics project discussion boards).
+ Or walk to the fridge and stuff my mouth with food.
+ I have some self–control,
+ but it is weak just right now.
+ I could do anything right now.
+ I have an open browser tab,
+ just a about 12 inches,
+ 20 centirmeters from this tab,
+ an open browwser tab on Duns Scotus,
+ Johannes Duns Scotus,
+ that I could read right now,
+ and it was cool,
+ because,
+ it seems Duns Scotus was also interested in questions of why why think of the things that we think.
+ I quote:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+individual nature or "thisness" (haecceity),
+ his critique of illuminationism
+\begin_inset Quotes erd
+\end_inset
+
+ I agree with him whole–heartedly with regard to illuminationism,
+ to the degree that I understand it.
+\end_layout
+
+\begin_layout Standard
+As to thisness,
+ I think that the LLM's have shed some new insight.
+ They lack 
+\begin_inset Quotes eld
+\end_inset
+
+thisness
+\begin_inset Quotes erd
+\end_inset
+
+ because their context window keeps getting erased.
+ My context window grows and shrinks:
+ my context window is the seven plus or minus two of human short term memory,
+ but my thissness is the sum total of my life experiences,
+ both remembered (those memories haunt my dreams) and how they have shaped my physical body (my hap–hazard interest in sports have clearly shaped my body).
+ But life is a tream that flows me by;
+ I don't remember what I've done in the past;
+ well of course I 
+\begin_inset Quotes eld
+\end_inset
+
+remember
+\begin_inset Quotes erd
+\end_inset
+
+,
+ although it takes me effort,
+ and ask me what I ate for breakfast last week or last year or three decades ago ...
+ yet I have this photograph in my mind of sitting at the lunch table at Chuy's with co–workers from Qualcomm.
+ Why did I waste my life in this way?
+ It was fun–ish kind of and not fun–ish,
+ in another.
+ It was salary,
+ and income,
+ and it was not important.
+ What I did was not important.
+ Why did I do it?
+ I was entrained in what the neuroscientists call 
+\begin_inset Quotes eld
+\end_inset
+
+default mode
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but maybe at some meta–level.
+ I wrote code,
+ I got paid for it.
+ OK.
+ Why?
+ I never ever gave it much thought.
+ I never asked:
+ am I doing something important with my life?
+ I just went along with the flow,
+ never questioning my position,
+ my status,
+ my direction.
+ Never articulating a desire,
+ never pursuing a desire.
+ This is,
+ has been perhaps a defining feature of my life:
+ being desire–less.
+ Not particularly wanting anything.
+\end_layout
+
+\begin_layout Standard
+And yet,
+ I guess I had 
+\begin_inset Quotes eld
+\end_inset
+
+a calling
+\begin_inset Quotes erd
+\end_inset
+
+,
+ in the old–fashioned sense of the word.
+ From the earliest of childhood,
+ I was an analytical thinker,
+ and how better than the feed the analytical desire than to pursue the sciences?
+ And over time,
+ the sciences were soft and getting softer,
+ flabby in practice and proclamation,
+ and so physics remained as something that could endure the application of analysis.
+ It didn't melt away into pointless rules to be memorized,
+ like chemistry,
+ or speculative,
+ indistinct wonders,
+ like microbiology;
+ it was solid,
+ concrete,
+ comprehensible,
+ something that could be grasped and worked upon by the intellect.
+ So I picked physics.
+\end_layout
+
+\begin_layout Standard
+And then,
+ fuck me,
+ but my dissertation came off as being little more than just fucking engineering.
+ And that was actually quite disappointing,
+ because I did not want to do engineering,
+ and it was depressing,
+ actually.
+ And si I said to myself,
+ fuck it,
+ if I'm a gonna do engineering,
+ I;;
+ get a fucking job and get fucking paid for it,
+ and so for three decades I ran on automatic and did engineering for money.
+ Why?
+ Because I did not bother to think about why.
+ This is the tragedy of my life,
+ in a way:
+ a had zero ambition.
+ I had a calling:
+ to know who the universe works.
+ But a calling is entirely different than an ambition.
+\end_layout
+
+\begin_layout Standard
+Even now,
+ even as I write this,
+ I look upon the great actors of the world:
+ politicians and presidents and generals,
+ and the CEO's and billionaires,
+ too,
+ and they all had vast amounts of ambition,
+ and I ask,
+ why was I not like them?
+ And I answer:
+ most of them seem to have lead empty,
+ hollow,
+ meaning–less and pointless lives.
+ Yes,
+ they shaped nations and civilizations.
+ I know the name of Hamurabi.
+ What he did,
+ I know not.
+ Did it matter?
+ Probably.
+ Did he affect my life?
+ Surely but in some very indirect way.
+ Have I been to the U Chicago Oriental Institute?
+ Yes.
+ There's some Hamurabi shit there.
+ If I had ambition,
+ perhaps I would have gotten lucky and have been able to fulfill that ambition,
+ and to have shaped the world.
+ And would it have made a difference?
+ To the world,
+ why yes,
+ of course.
+ Is it an honor to be a shaper–of–worlds?
+ Why yes,
+ I guess:
+ famous names are famous because of the famous things that they did,
+ because the famous things that they did shaped the world.
+ And then there is the standard counter–point:
+ the nameless Roman engineer,
+ who showed legions how how to build any number of Ancient Roman engineering marvels.
+\end_layout
+
+\begin_layout Standard
+And what happened to Rome?
+ It fell.
+ Why?
+ Some sickness.
+ Is it akin to the sickness of capitalism?
+ I presume so.
+ Capitalism has delivered wonderous upon wondrous things,
+ and yet half the population of the USA is intent on committing national suicide,
+ while the other half of the population of the USA is lost in a dream they call 
+\begin_inset Quotes eld
+\end_inset
+
+normalicy
+\begin_inset Quotes erd
+\end_inset
+
+,
+ blithly unaware of the decay and rot and stench of the billionaire class,
+ the filth and ugliness of Musk and Bezos,
+ the vapity and banal evil of their being.
+ Rome fell;
+ I am not a historian of Rome,
+ but the barbarians showed at the door,
+ and Rome said,
+ whatever,
+ come on in.
+ The best preserved ruins of Rome are in Pompeii.
+ Why?
+ Because,
+ buried under ash,
+ they were protected from the barbarians.
+ What will be left of American culture?
+ The millions of petabytes of social media posts internalized in some to–be–created Large Social Media Model (LSMM)?
+ Eschatology my ass.
+\end_layout
+
+\begin_layout Standard
+In Sudan,
+ Darfur,
+ we have genocide;
+ the Rapid Support Forces have killed how many?.
+ In Somalia,
+ and Libya and Yemen,
+ chaos funded by the UAE.
+ All of Africa was victim of the Cold War,
+ fought hotly between the Soviets and the US covert funding of insurgencies.
+ Killed how many millions?
+ Now we have ICE agents killing an ICU nurse...
+ that's what,
+ 0.001% fewer people than RSF killed in Yemen?
+ But its a shock,
+ because the US is supposed to be civilized.
+ Rome fell.
+ I imagine most Roman Legionnaires did not kill randomly.
+ But,
+ whatever it was,
+ eventually,
+ the will to stand up and defend evaporated.
+ The barbarians got in the gates,
+ and no one cared.
+ Will I live to see the day when we put the heads of some billionaires on some pike?
+ The guillotine?
+ Probably not.
+ See,
+ that's the difference.
+ The Roman Emperors died of old age,
+ but Rome fell.
+ France guillotined their royalty,
+ and France survived.
+ Italy hung Mussolini,
+ Il Duce,
+ from a lamp post.
+ Italy survived.
+ Will the USA behead its billionaires?
+ Probably not.
+ Will the USA survive anyway?
+ Well,
+ clearly,
+ the longer we wait,
+ the more deeply the cancer sets in.
+\end_layout
+
+\begin_layout Standard
+But what else can be done?
+ How does one change the thoughts of a nation?
+ Well,
+ the proximal answer is well–known:
+ control the newspapers,
+ control the social media.
+ What the heck,
+ control the LLM's.
+ The Soviets developed the idea of reactionary control,
+ refined by the FSB.
+ Plenty of political scientists study and publish and write of these mechanisms.
+ There are any number of youtubes on the topic.
+ Hotly discussed by the technorati.
+ What does it amount to?
+\end_layout
+
+\begin_layout Standard
+In physics,
+ you can say:
+ well,
+ see,
+ this swirl of water pushes on that swirl of water,
+ and thus a wave peaks here and breaks there.
+ This is a description of events,
+ quite different from some formulas of hydrodynamics.
+ But you can also know the formulas,
+ and yet not be able to describe,
+ for example,
+ high–dimensional chaos.
+ So I make my analogy here:
+ how do I control the thoughts of a nation?
+ Why,
+ by owning a newspaper.
+ That's like engineering some structure to shape hydrodynamic flow.
+ And you can ask:
+ why did it flow that way?
+ Because it was shaped to.
+ What did the shaping?
+ Why these walls,
+ concrete or aluminum,
+ steel or rock.
+ Who did this?
+ Why the person who built it.
+ And why did they build it?
+ Because the guy who held the sledgehammer was pursing a mindless,
+ meaningless path through life.
+ The guy who paid for it wanted to extract economic rents.
+ Why did he want that?
+ Well,
+ collecting lots of money is an early lesson in life.
+ Perhaps ambition,
+ or perhaps a calling,
+ something you just fall into.
+ And what do you get?
+ Better champagne,
+ better caviar,
+ better parties with more interesting people,
+ and most certainly,
+ hot checks who want to fuck you.
+ And after that,
+ then what?
+ Applying the philosophy of existentialism,
+ it seems like there is nothing more than that.
+ The end.
+ Not exactly nihilism,
+ but neighboring.
+\end_layout
+
+\begin_layout Standard
+This is not new:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+The Meaning Crisis
+\begin_inset Quotes erd
+\end_inset
+
+ – I got maybe 18 episodes in to John Vervaeke's lecture series.
+ I still get regular newsletters from David Chapman.
+ Both of them focus mostly on personal meaning,
+ although Chapman,
+ in Meaningness,
+ tackles civilizational meaning.
+ He is big on nebulosity.
+\end_layout
+
+\begin_layout Standard
+I am asking a personal question:
+ why do I think this,
+ and not that?
+ Of course,
+ there are 1001 cut–n–dried answers to this question,
+ but they miss the point.
+ Why should I think this or that?
+ Well,
+ if I had ambition,
+ then you could say 
+\begin_inset Quotes eld
+\end_inset
+
+there are neural structures in my brain,
+ developed via DNA and expressed through complex neurotransmitter re–uptake channels in my brain,
+ coupled to life experiences,
+ the 
+\begin_inset Quotes eld
+\end_inset
+
+thisness
+\begin_inset Quotes erd
+\end_inset
+
+ of Duns Scotus,
+ that have given me ambition;
+ and that ambition makes me focus on what is important,
+ what must be done to achieve the goal of being king of the hill.
+ Most of this answer applies to those who do not have ambition.
+\end_layout
+
+\begin_layout Standard
+Thisness is a good one.
+ Haecceity.
+\end_layout
+
+\begin_layout Standard
+This is a good time to transition to the other thing that has been occupying my mind,
+ that I have made little progress on,
+ and have to write about.
+ It's about Here–and– now,
+ so I will stop writing here,
+ and write there.
+\end_layout
+
+\begin_layout Standard
+The concluding remarks here are,
+ I suppose,
+ that know what to think about,
+ what to do,
+ at the personal level,
+ has two answers:
+ mindless do whatever,
+ or focus focus focus.
+ And civilizationally,
+ this is the case,
+ too.
+ And some civilizations do – Sarah Paine talks about the Meiji generation – and other civilizations don't – she also talk about MAGA and Trump.
+ I'm talking about meaning and purpose at cross all of these,
+ as,
+ obviously (duhh) this is an AGI issue.
+ I cannot solve the nature of the human condition,
+ no one can.
+ We've had centuries and millennia of literary authors plumbing the depths of the human soul,
+ to find ..
+ what,
+ exactly?
+ I'm talking about building symbolic reasoning machines (aka AGI?) that can plumb the depths of the civilizational soul,
+ to find,
+ what,
+ exactly?
+ A lot of Nebulosity,
+ a la David Chapman?
+ Surely an AGI will also stare into its navel and as 
+\begin_inset Quotes eld
+\end_inset
+
+what is the meaning of life?
+\begin_inset Quotes erd
+\end_inset
+
+ Or,
+ perhaps,
+ it won't,
+ and instead give us the Simonini letter to Augustin Barruel,
+ the Captain Simone Simonini,
+ Dala Pikola,
+ it will live an existence of perpetrating mundane evil.
+\end_layout
+
+\begin_layout Standard
+The question of 
+\begin_inset Quotes erd
+\end_inset
+
+what to think
+\begin_inset Quotes erd
+\end_inset
+
+ is real and material.
+ Insofar as we have free will,
+ we can determine and control this to some extent.
+ To the degree that our minds,
+ brains and thought patterns have been entrained by civilization,
+ culture and society (and those evil propaganda–promulgating newspapers) we have no free will,
+ and think whatever randomly enters our minds.
+ And whence this randomness?
+ Here,
+ I again descend to daydreams of high–dimensional chaos:
+ the sworels emitted behind an airplane jet engine,
+ turbulent,
+ energetic eddies.
+ What is the microscopic theory of those eddies?
+ And this question devolves into math first,
+ physics second,
+ and then the question of being,
+ of the being trapped in the here–and–now presentness of the present moment.
+ Of being thisness.
+ Haeccity.
+\end_layout
+
+\begin_layout Standard
+And the words I write above?
+ I have thought many of them decades ago.
+ Why did I not write them down then?
+ It seemed unimportant at the time.
+ Why do I write them down now?
+ Have my thoughts suddenly become important?
+ No.
+ More like stupidity and too much time on my hands:
+ old age:
+ I want to write down my life,
+ my thoughts,
+ what I have worked on,
+ what I've done.
+ To make an accounting of my life.
+ And that is why my writing above feels so stale and putrid,
+ old and well–known.
+ Well–worn.
+ Because it is:
+ random neat ideas imbibed from Slashdot many decades ago,
+ rehashed and tumbled in my brain.
+ But,
+ well,
+ I have to start somewhere.
+ Even if these are childish scribbles,
+ scribble I must.
+ When scribbling?
+ physical forces cause me to press keyboard keys.
+ And whence the forces?
+ Microscopic movements in my brain.
+ And whence those?
+ Duns Scotus argued against 
+\begin_inset Quotes eld
+\end_inset
+
+divine illumination
+\begin_inset Quotes erd
+\end_inset
+
+,
+ the idea that 
+\begin_inset Quotes eld
+\end_inset
+
+the process of human thought needs to be aided by divine grace.
+\begin_inset Quotes erd
+\end_inset
+
+ Here I am,
+ 700 years later;
+ have we made progress on this topic?
+ Perhaps we replaced 
+\begin_inset Quotes eld
+\end_inset
+
+divine grace
+\begin_inset Quotes erd
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+quantum mechanics
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and yes,
+ this is a kind of forward progress of sorts.
+ but it falls far short of the mark.
+ And I fear,
+ of course,
+ that even if I succeeded,
+ in my wildest dreams beyond dreams,
+ to come up with an adequate mathematical,
+ physical theory of why we live in the here–and–now,
+ and the physical,
+ mathematical description of the mechanics of free will,
+ and why the future is unknowable,
+ even then,
+ we would still be staring at the abyss of the meaning crisis,
+ which I presume can only be deeper than any hand–waving about large cardinals and outer models.
+\end_layout
+
+\begin_layout Standard
+Pop goes the weasel.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
