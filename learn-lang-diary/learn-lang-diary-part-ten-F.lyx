@@ -6830,6 +6830,170 @@ quantum mechanics
 Pop goes the weasel.
 \end_layout
 
+\begin_layout Subsection*
+27 January 2026
+\end_layout
+
+\begin_layout Standard
+Ok,
+ So there's stuff I should be doing,
+ and then there's a left–over task from last night,
+ which has been percolating in my brain for three decades,
+ so may as well get around to it and do it.
+ Lets try to solve the chiral bad model eqns with the interior of the bag modeled as a hyperbolic space.
+ Claude will do the lifting,
+ I will ask questions and copy results.
+\end_layout
+
+\begin_layout Standard
+Poincare ball metric with curvature 
+\begin_inset Formula $a$
+\end_inset
+
+,
+ conformal factor 
+\begin_inset Formula $\lambda=2a/\left(1-r^{2}\right)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+ds^{2}=\lambda^{2}\left(dx^{2}+dy^{2}+dz^{2}\right)
+\]
+
+\end_inset
+
+This is conformal to flat space,
+ 
+\begin_inset Formula 
+\[
+g_{\mu\nu}=\lambda^{2}\delta_{\mu\nu}=e_{\mu}^{a}e_{\nu}^{b}\delta_{ab}
+\]
+
+\end_inset
+
+The dreibein:
+\begin_inset Formula 
+\[
+e_{\mu}^{a}=\lambda\,\delta_{\mu}^{a}\qquad e_{a}^{\mu}=\frac{1}{\lambda}\,\delta_{a}^{\mu}
+\]
+
+\end_inset
+
+Equivalently
+\begin_inset Formula 
+\[
+e^{a}=\lambda dx^{a}\qquad e_{\mu}=\frac{1}{\lambda}\partial_{\mu}
+\]
+
+\end_inset
+
+The spin connection for a conformally flat metric
+\begin_inset Formula 
+\[
+\omega^{ab}=\lambda\left(x^{b}\,dx^{a}-x^{a}\,dx^{b}\right)
+\]
+
+\end_inset
+
+For spinors:
+\begin_inset Formula 
+\[
+\omega_{\mu}=\frac{1}{4}\omega_{\mu}^{ab}\gamma_{a}\gamma_{b}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The above dropped the time coordinate,
+ but we can just gloss this for now.
+ The Dirac eqn (massless) is
+\begin_inset Formula 
+\[
+iD\!\!\!/\,\psi=i\gamma^{a}e_{a}^{\mu}\left(\partial_{\mu}+\omega_{\mu}\right)\psi=0
+\]
+
+\end_inset
+
+Lets sidetrack to the chiral bag.
+ The boundary condition is
+\begin_inset Formula 
+\[
+i\gamma^{\mu}n_{\mu}\psi=\exp\left(i\Theta\gamma_{5}\vec{\tau}\cdot\hat{\pi}\right)\psi
+\]
+
+\end_inset
+
+The hedgehog is 
+\begin_inset Formula $\hat{\pi}=\hat{r}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+So we need the Dirac eqn is sphere coords,
+ now.
+ All the piddly stupid details follow,
+ since I can't trust Claude for the final answer.
+ And I will make mistakes if I try to solve this in my head.
+ So this is a bit remedial,
+ but whatever.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Good note taking
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The vierbein
+\begin_inset Formula 
+\begin{align*}
+e^{0} & =dt\\
+e^{1} & =\lambda dr\\
+e^{2} & =\lambda rd\theta\\
+e^{3} & =\lambda r\sin\theta d\phi
+\end{align*}
+
+\end_inset
+
+The inverse
+\begin_inset Formula 
+\begin{align*}
+e_{0} & =\partial_{t}\\
+e_{1} & =\frac{1}{\lambda}\partial_{r}\\
+e_{2} & =\frac{1}{\lambda r}\partial_{\theta}\\
+e_{3} & =\frac{1}{\lambda r\sin\theta}\partial_{\phi}
+\end{align*}
+
+\end_inset
+
+The spin connection.
+ No mixed time–space:
+\begin_inset Formula 
+\begin{align*}
+\omega^{0i} & =0\\
+\omega^{12} & =-\frac{1}{\lambda r}d\theta\\
+\omega^{13} & =-\frac{1}{\lambda r}\sin\theta\,d\phi\\
+\omega^{23} & =-\cos\theta\,d\phi
+\end{align*}
+
+\end_inset
+
+I copied these from Claude,
+ but they look maybe not right.
+ Let me check.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
