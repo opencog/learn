@@ -6845,14 +6845,18 @@ Ok,
  I will ask questions and copy results.
 \end_layout
 
+\begin_layout Paragraph*
+Metric
+\end_layout
+
 \begin_layout Standard
 Poincare ball metric with curvature 
-\begin_inset Formula $a$
+\begin_inset Formula $A$
 \end_inset
 
 ,
  conformal factor 
-\begin_inset Formula $\lambda=2a/\left(1-r^{2}\right)$
+\begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
 \end_inset
 
 
@@ -6875,7 +6879,7 @@ g_{\mu\nu}=\lambda^{2}\delta_{\mu\nu}=e_{\mu}^{a}e_{\nu}^{b}\delta_{ab}
 The dreibein:
 \begin_inset Formula 
 \[
-e_{\mu}^{a}=\lambda\,\delta_{\mu}^{a}\qquad e_{a}^{\mu}=\frac{1}{\lambda}\,\delta_{a}^{\mu}
+e_{\;\mu}^{a}=\lambda\,\delta_{\mu}^{a}\qquad e_{a}^{\mu}=\frac{1}{\lambda}\,\delta_{a}^{\mu}
 \]
 
 \end_inset
@@ -6888,14 +6892,116 @@ e^{a}=\lambda dx^{a}\qquad e_{\mu}=\frac{1}{\lambda}\partial_{\mu}
 
 \end_inset
 
-The spin connection for a conformally flat metric
+
+\end_layout
+
+\begin_layout Paragraph*
+Spin connection
+\end_layout
+
+\begin_layout Standard
+The torsion–free spin connection is 
 \begin_inset Formula 
 \[
-\omega^{ab}=\lambda\left(x^{b}\,dx^{a}-x^{a}\,dx^{b}\right)
+de^{a}+\omega_{\;b}^{a}\wedge e^{b}=0
 \]
 
 \end_inset
 
+The anholonomy coefficients aka the Ricci rotation coefficients:
+\begin_inset Formula 
+\[
+\Omega_{ab}^{\;\;c}=e_{a}^{\;\mu}e_{b}^{\;\nu}\left(\partial_{\mu}e_{\;\nu}^{c}-\partial_{\nu}e_{\;\mu}^{c}\right)
+\]
+
+\end_inset
+
+The above formula is vibe–coded but it smells right to me.
+ It matches what I remember from textbooks.
+ The spin connection:
+\begin_inset Formula 
+\[
+\omega_{abc}=\frac{1}{2}\left(\Omega_{abc}-\Omega_{bca}+\Omega_{cab}\right)
+\]
+
+\end_inset
+
+and 
+\begin_inset Formula 
+\[
+\omega_{\;\;\mu}^{ab}=\omega_{\;\;c}^{ab}e_{\;\mu}^{c}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Conformally flat spin connection
+\end_layout
+
+\begin_layout Standard
+For 
+\begin_inset Formula $e_{\;\mu}^{a}=\lambda\,\delta_{\mu}^{a}$
+\end_inset
+
+ this works out to
+\begin_inset Formula 
+\[
+\omega_{\;\;\mu}^{ab}=\frac{1}{\lambda}\left(\delta_{\mu}^{a}\partial^{b}\lambda-\delta_{\mu}^{b}\partial^{a}\lambda\right)
+\]
+
+\end_inset
+
+or
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\omega^{ab}=\frac{1}{\lambda}\left(dx^{a}\,\partial^{b}\lambda-dx^{b}\,\partial^{a}\lambda\right)
+\]
+
+\end_inset
+
+so for 
+\begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
+\end_inset
+
+ we get 
+\begin_inset Formula 
+\[
+\partial^{a}\lambda=\frac{4A}{\left(1-r^{2}\right)^{2}}r\partial^{a}r=\frac{\lambda^{2}}{A}r\partial^{a}r=\frac{\lambda^{2}}{A}x^{a}
+\]
+
+\end_inset
+
+Equivalently:
+\begin_inset Formula 
+\[
+\partial_{\mu}\lambda=\frac{\lambda^{2}}{A}x_{\mu}
+\]
+
+\end_inset
+
+and so as before,
+ in Cartesian:
+\begin_inset Formula 
+\[
+\omega^{ab}=\frac{\lambda}{A}\left(x^{b}dx^{a}-x^{a}dx^{b}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Spinors
+\end_layout
+
+\begin_layout Standard
 For spinors:
 \begin_inset Formula 
 \[
@@ -6918,6 +7024,14 @@ iD\!\!\!/\,\psi=i\gamma^{a}e_{a}^{\mu}\left(\partial_{\mu}+\omega_{\mu}\right)\p
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Paragraph*
+Chiral bag
+\end_layout
+
+\begin_layout Standard
 Lets sidetrack to the chiral bag.
  The boundary condition is
 \begin_inset Formula 
@@ -6932,7 +7046,10 @@ The hedgehog is
 \end_inset
 
 .
- 
+\end_layout
+
+\begin_layout Paragraph*
+Dirac in sphere coords
 \end_layout
 
 \begin_layout Standard
