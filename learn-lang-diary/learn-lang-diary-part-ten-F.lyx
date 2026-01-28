@@ -7525,6 +7525,79 @@ with
  Who knows.
  Assuming it is,
  the radial equations become
+\begin_inset Formula 
+\begin{align*}
+2AEu & =\left(1-r^{2}\right)v^{\prime}-rv\\
+2AEv & =-\left(1-r^{2}\right)u^{\prime}-\frac{2+r^{2}}{r}u
+\end{align*}
+
+\end_inset
+
+with 
+\begin_inset Formula $u^{\prime}=du/dr$
+\end_inset
+
+ etc.
+ Substituting,
+ Claude claims this gives
+\begin_inset Formula 
+\[
+u^{\prime\prime}+\frac{2}{r}u^{\prime}+\frac{\left(2AEr\right)^{2}-\left(2r^{4}-r^{2}+2\right)}{\left(1-r^{2}\right)^{2}r^{2}}u=0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The geodesic distance from the origin is 
+\begin_inset Formula $\rho=\tanh^{-1}r$
+\end_inset
+
+.
+ Viz,
+ 
+\begin_inset Formula $r$
+\end_inset
+
+ was the coordinate chart coordinate,
+ but the geodesic distance gets infinite as 
+\begin_inset Formula $r\to1$
+\end_inset
+
+ which was exactly what makes this model interesting.
+\end_layout
+
+\begin_layout Standard
+Plugging through gives 
+\begin_inset Formula 
+\[
+u^{\prime\prime}+u^{\prime}\,2\coth\rho+\left(\epsilon^{2}-3-\frac{8}{\sinh^{2}2\rho}\right)u=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\epsilon=2AE$
+\end_inset
+
+ and prime is now 
+\begin_inset Formula $d/d\rho$
+\end_inset
+
+.
+ Claude claims that this has the form of a 
+\begin_inset Quotes eld
+\end_inset
+
+Pöschl-Teller potential
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So it knows about this.
+ Someone must have figured this out.
 \end_layout
 
 \begin_layout Paragraph*
