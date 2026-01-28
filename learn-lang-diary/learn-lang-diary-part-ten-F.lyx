@@ -6851,7 +6851,7 @@ Metric
 
 \begin_layout Standard
 Poincare ball metric with curvature 
-\begin_inset Formula $K=-1/A^{2}$
+\begin_inset Formula $\kappa=-1/A^{2}$
 \end_inset
 
 ,
@@ -7466,12 +7466,12 @@ and the flat–space version would have been
 \end_inset
 
 To regain flat space 
-\begin_inset Formula $K=0$
+\begin_inset Formula $\kappa=0$
 \end_inset
 
  in the limit,
  set 
-\begin_inset Formula $K\to0$
+\begin_inset Formula $\kappa\to0$
 \end_inset
 
  which means 
@@ -7523,7 +7523,36 @@ with
  maybe,
  I guess.
  Who knows.
- Assuming it is,
+ Well,
+ not entirely;
+ in fact,
+ Claude assumed that the 
+\begin_inset Quotes eld
+\end_inset
+
+grand spin quantum number
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $K=0$
+\end_inset
+
+ which is OK if all one wants is the ground state,
+ but clearly fails for the vacuum states.
+ I didn't catch this early enough,
+ so the below proceeds with 
+\begin_inset Formula $K=0$
+\end_inset
+
+.
+ That's OK,
+ for now.
+ 
+\end_layout
+
+\begin_layout Standard
+Assuming Claude is otherwise correct,
  the radial equations become
 \begin_inset Formula 
 \begin{align*}
@@ -7596,8 +7625,99 @@ Pöschl-Teller potential
 \end_inset
 
 .
+ Never heard of that before.
  So it knows about this.
  Someone must have figured this out.
+\end_layout
+
+\begin_layout Standard
+Next,
+ we can solve the above.
+ Clause guesses that its hypergeometric,
+ and arrives at the exact solution
+\begin_inset Formula 
+\[
+u=\frac{\sqrt{\xi^{2}-1}}{\xi}\;{}_{2}F_{1}\left(a,b;2;1-\xi^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\xi=\cosh\rho$
+\end_inset
+
+ and 
+\begin_inset Formula $a=\left(3+\sqrt{1+4\epsilon^{2}}\right)/4$
+\end_inset
+
+ and 
+\begin_inset Formula $b=\left(3-\sqrt{1+4\epsilon^{2}}\right)/4$
+\end_inset
+
+ OK,
+ that's trctable.
+ In chart coords its 
+\begin_inset Formula 
+\[
+u=r\;{}_{2}F_{1}\left(a,b;2;-\frac{r^{2}}{1-r^{2}}\right)
+\]
+
+\end_inset
+
+It seems plausible that this might reduce to sphere bessel functions in the 
+\begin_inset Formula $A\to\infty$
+\end_inset
+
+ flat space limit.
+ It should reduce to 
+\begin_inset Formula $j_{0}$
+\end_inset
+
+ with 
+\begin_inset Formula $v$
+\end_inset
+
+ going over to 
+\begin_inset Formula $j_{1}$
+\end_inset
+
+.
+ I'm not doing this now;
+ first we have to get the 
+\begin_inset Formula $K\ne0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Lets pause to look at the boundary conditions.
+ Claude claims that 
+\begin_inset Formula 
+\[
+\left.\frac{v}{u}\right|_{r=R}=-\tan\frac{\Theta}{2}
+\]
+
+\end_inset
+
+which cranked through is supposed to be
+\begin_inset Formula 
+\[
+u^{\prime}\sin\frac{\Theta}{2}=\left(\epsilon\cos\frac{\Theta}{2}-\frac{2+\tanh^{2}\rho_{R}}{\tanh\rho_{R}}\sin\frac{\Theta}{2}\right)u
+\]
+
+\end_inset
+
+which Claude claims is a 
+\begin_inset Quotes erd
+\end_inset
+
+Robin boundary condition
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Never heard of that but OK.
 \end_layout
 
 \begin_layout Paragraph*
