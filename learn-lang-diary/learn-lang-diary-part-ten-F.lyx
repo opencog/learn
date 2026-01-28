@@ -7099,6 +7099,28 @@ The hedgehog is
 \end_inset
 
 .
+ We'll also take 
+\begin_inset Formula $\hat{n}=\hat{r}$
+\end_inset
+
+ viz 
+\begin_inset Formula $n_{\mu}=x_{\mu}/r$
+\end_inset
+
+ and thus 
+\begin_inset Formula $\gamma^{\mu}$
+\end_inset
+
+ is proportional to 
+\begin_inset Formula $\gamma^{a}$
+\end_inset
+
+ and the only question here is,
+ do I need to have a factor of 
+\begin_inset Formula $\lambda$
+\end_inset
+
+ on the left hand side?
 \end_layout
 
 \begin_layout Paragraph*
@@ -7142,6 +7164,121 @@ e_{3} & =\frac{1}{\lambda r\sin\theta}\partial_{\phi}
 
 \begin_layout Paragraph*
 The spin connection
+\end_layout
+
+\begin_layout Standard
+Let assume the earlier expressions for the spin connection were correct.
+ Well,
+ lets assume they are not,
+ and restart from first principles.
+ So
+\begin_inset Formula 
+\begin{align*}
+d\lambda & =d\frac{2A}{1-r^{2}}\\
+ & =\frac{2A}{\left(1-r^{2}\right)^{2}}2rdr\\
+ & =\frac{\lambda^{2}}{A}rdr
+\end{align*}
+
+\end_inset
+
+Right?
+ I think that's right.
+ So
+\begin_inset Formula 
+\begin{align*}
+de^{0} & =0\\
+de^{1} & =0\\
+de^{2} & =d\left(\lambda r\right)\wedge d\theta\\
+de^{3} & =d\left(\lambda r\sin\theta\right)\wedge d\phi
+\end{align*}
+
+\end_inset
+
+So I crank this by hand.
+ Which is tedious,
+ but so it goes.
+ First,
+ 
+\begin_inset Formula 
+\begin{align*}
+d\left(\lambda r\right) & =rd\lambda+\lambda dr\\
+ & =\lambda\left(\frac{\lambda}{A}r^{2}+1\right)dr\\
+ & =\lambda\left(\frac{2}{1-r^{2}}r^{2}+\frac{1-r^{2}}{1-r^{2}}\right)dr\\
+ & =\lambda\left(\frac{1+r^{2}}{1-r^{2}}\right)dr\\
+ & =\left(\frac{1+r^{2}}{1-r^{2}}\right)e^{1}
+\end{align*}
+
+\end_inset
+
+so that
+\begin_inset Formula 
+\[
+de^{2}=\frac{1}{\lambda r}\left(\frac{1+r^{2}}{1-r^{2}}\right)e^{1}\wedge e^{2}
+\]
+
+\end_inset
+
+The next one is 
+\begin_inset Formula 
+\begin{align*}
+d\left(\lambda r\sin\theta\right) & =\sin\theta\;d\left(\lambda r\right)+\lambda r\cos\theta\;d\theta\\
+ & =\lambda\left[\left(\frac{1+r^{2}}{1-r^{2}}\right)\sin\theta\;dr+r\cos\theta\;d\theta\right]\\
+ & =\left(\frac{1+r^{2}}{1-r^{2}}\right)\sin\theta\;e^{1}+\cos\theta\;e^{2}
+\end{align*}
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+de^{3}=\frac{1}{\lambda r}\left[\left(\frac{1+r^{2}}{1-r^{2}}\right)\;e^{1}\wedge e^{3}+\frac{\cos\theta}{\sin\theta}\;e^{2}\wedge e^{3}\right]
+\]
+
+\end_inset
+
+Next,
+ go back to the torsion–free kinematic equation for the spin connection 
+\begin_inset Formula 
+\[
+de^{a}+\omega_{\;b}^{a}\wedge e^{b}=0
+\]
+
+\end_inset
+
+and solve it component by component.
+ Is there an easier way?
+ Not obviously so.
+ Moving through the Ricci components also seems to need a lot of algebra.
+ I could use that to double check my results,
+ which would be cool,
+ if I could trick Claude into not lying to me.
+ But tricking Claude into doing the right thing takes about as much time as not using Claude at all...
+ Fuck me.
+ Whatever.
+ Lets blast ahead,
+ perhaps stupidly,
+ but lets do it anyway.
+\end_layout
+
+\begin_layout Standard
+So 
+\begin_inset Formula $0=\omega_{\;b}^{1}\wedge e^{b}$
+\end_inset
+
+ means that 
+\begin_inset Formula 
+\begin{align*}
+0 & =\omega_{\;1}^{1}\wedge e^{1}+\omega_{\;2}^{1}\wedge e^{2}+\omega_{\;3}^{1}\wedge e^{3}\\
+ & =
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Punt
 \end_layout
 
 \begin_layout Standard
