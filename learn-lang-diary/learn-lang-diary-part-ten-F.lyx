@@ -7058,7 +7058,7 @@ Spinors
 For spinors:
 \begin_inset Formula 
 \[
-\omega_{\mu}=\frac{1}{4}\omega_{\mu}^{ab}\gamma_{a}\gamma_{b}
+\Omega_{\mu}=\frac{1}{4}\omega_{\mu}^{ab}\gamma_{a}\gamma_{b}
 \]
 
 \end_inset
@@ -7072,7 +7072,7 @@ The above dropped the time coordinate,
  The Dirac eqn (massless) is
 \begin_inset Formula 
 \[
-iD\!\!\!/\,\psi=i\gamma^{a}e_{a}^{\mu}\left(\partial_{\mu}+\omega_{\mu}\right)\psi=0
+iD\!\!\!/\,\psi=i\gamma^{a}e_{a}^{\mu}\left(\partial_{\mu}+\Omega_{\mu}\right)\psi=0
 \]
 
 \end_inset
@@ -7102,26 +7102,16 @@ The hedgehog is
 \end_layout
 
 \begin_layout Paragraph*
-Dirac in sphere coords
+Vierbein in sphere coords
 \end_layout
 
 \begin_layout Standard
-So we need the Dirac eqn is sphere coords,
- now.
- All the piddly stupid details follow,
- since I can't trust Claude for the final answer.
- And I will make mistakes if I try to solve this in my head.
- So this is a bit remedial,
- but whatever.
+So eventually,
+ we need the Dirac eqn is sphere coords.
+ Since Claude is now consistently lying to me,
+ we have to start at square one,
+ and just do it the hard way.
  
-\begin_inset Quotes eld
-\end_inset
-
-Good note taking
-\begin_inset Quotes erd
-\end_inset
-
-.
 \end_layout
 
 \begin_layout Standard
@@ -7147,8 +7137,195 @@ e_{3} & =\frac{1}{\lambda r\sin\theta}\partial_{\phi}
 
 \end_inset
 
-The spin connection.
+
+\end_layout
+
+\begin_layout Paragraph*
+The spin connection
+\end_layout
+
+\begin_layout Standard
+Lets assume the earlier expressions for the spin connection were correct.
+\end_layout
+
+\begin_layout Standard
+Punt.
+ I already wasted a few hours on this.
+ It's solvable,
+ but turning the crank and double–checking will take a few more hours.
+\end_layout
+
+\begin_layout Standard
+And that's for the simple case,
+ (the radial–symmetric case) and not for the case that would really be interesting (which would be to allow local curvature to have some kinematic freedom,
+ e.g.
+ back–reacting in such as way as to have (vacuum) energy distribute uniformly.
+ Or then more broadly to explore how much the chiral bag boundary condition can be made to look like AdS horizons.
+ Or,
+ in pop–sci–reporter speak,
+ that 
+\begin_inset Quotes eld
+\end_inset
+
+quark confinement can be modeled by placing the bag boundary infinitely far away,
+ from the quarks point of view
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Which I think is a cool idea,
+ and I'd like to see the answer,
+ I'd like to see how the algebra for this works out.
+\end_layout
+
+\begin_layout Standard
+And I could do it.
+ How long would it take?
+ Well,
+ turns out cranking through mathematical algebra is a lot like writing software.
+ Once you understand what needs to be done,
+ you say 
+\begin_inset Quotes eld
+\end_inset
+
+oh a few hours
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Plus some time for debugging.
+ Software debugging is easy,
+ compared to algebra debugging:
+ you might have made a mistake somewhere,
+ but where?
+ Or maybe you didn't,
+ so how can you check?
+\end_layout
+
+\begin_layout Standard
+So I could do the spin connection in maybe a few hours.
+ Maybe a few hours to double–check that the formulas that Claude quoted are actually correct.
+ Then at least a few hours to remember how to do the hedgehog Ansatz,
+ in this new setting.
+ Then a day to daydream and scramble about and explore related ideas.
+ Then a few days to solve the eigenvalue eqn,
+ assuming,
+ that is,
+ that it is easily solvable;
+ it might not be.
+ A few days to sum the vacuum energy.
+ A few days to rethink how this exerts a kinematic force on the curvature.
+ A few days to daydream whether this should be turned into a full 3D dynamical model,
+ instead of a 1D radial slice.
+ And so now weeks or months have gone by on what was intended to be an afternoon project.
+\end_layout
+
+\begin_layout Standard
+Where was Claude in all of this?
+ I was imagining some super–intelligence,
+ and I just ask it some questions,
+ and get some answers.
+ This conception worked stunning great,
+ when I was asking about electrical generation and transmission around the globe.
+ Claude knew all the basic ideas,
+ and fetched data from specific web searches,
+ as I interrogated.
+ It went well,
+ it went happily.
+ So I vaguely thought that doing some geometry would go equally swimmingly;
+ I'd get some answers that have been bugging me for decades.
+\end_layout
+
+\begin_layout Standard
+Hah.
+ Once again,
+ Claude is revealed to be stupid as a rock.
+ It has no fucking clue what it is talking about.
+ Yes,
+ it trained on some mathematical texts containing latex.
+ Yes,
+ it has committed them to memory.
+ If you ask it a commonplace question,
+ it knows what the answer should be,
+ because it has memorized the answer after seeing it in a dozen textbooks.
+ Ask it to check its work?
+ And endless spew of excuses:
  
+\begin_inset Quotes eld
+\end_inset
+
+you are right,
+ I forgot to divide by r.
+ Let me try again and be more careful.
+\begin_inset Quotes erd
+\end_inset
+
+ OMG.
+ This is exactly like using Claude to write software.
+ But in that case,
+ when it writes something that doesn't compile,
+ I can ask it to use the compiler,
+ and try again till it gets it right.
+ Here,
+ I'm the compiler:
+ I have to double–check the formulas that it is claiming to solve.
+ And fix all the errors.
+ And OMG is it making lots of errors.
+ So,
+ in this sense,
+ I could have made more progress,
+ faster,
+ without using Claude.
+ What's the effective flow?
+ To use it as a hinting tool.
+ I do all the calculations,
+ all the algebra,
+ I get it to reformulate,
+ using a different path,
+ and see if things line up the way they should.
+ So I can use Claude as a kind–of computer algebra system,
+ and perhaps some super–tedious algebra does go faster,
+ and perhaps I can trust it some of the time for some of the results.
+ Maybe.
+ Do I have time for this?
+ Not right now.
+ Maybe someday,
+ when I need a vacation,
+ I can get back to this.
+\end_layout
+
+\begin_layout Standard
+But for now,
+ my questions remain unanswered,
+ and Claude is revealed,
+ yet again,
+ to be an LLM.
+ Ask it about something that is well known and widely understood?
+ You get a great answer.
+ Ask it to write javascript for your web site?
+ Instant and perfect.
+ Why?
+ Because it trained on a million web pages,
+ tens of thousands of javascript snippets.
+ It can interpolate those in an instantaneous and brilliant fashion.
+ Ask it to program in an obscure language (like Atomese) or use some obscure API?
+ It stumbles.
+ Ask it to do geometry?
+ Utter and complete failure.
+ Its a wordcel.
+ It's not a shape rotator.
+ And that's where we are,
+ for today.
+ The End.
+\end_layout
+
+\begin_layout Subsection*
+28 January 2026
+\end_layout
+
+\begin_layout Standard
+OK,
+ so lets get back to the main topic....
 \end_layout
 
 \begin_layout Section*
