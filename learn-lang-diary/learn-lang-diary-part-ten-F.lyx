@@ -6966,33 +6966,46 @@ or
 
 \end_inset
 
-which smells OK.
-\end_layout
-
-\begin_layout Standard
-But now there is stumbling on notational issues.
- The greek letters are for coordinate spaces;
- the latin letters are for the tangent spaces.
- Lots of abuse of notation ensues.
-\end_layout
-
-\begin_layout Standard
-First,
- 
+which is probably right but smells bad.
+ It's probably right because I think Claude copied it out of a book.
+ It smells bad because it is putting tangent–space indexes (the latin letters) on coordinate–space partial derivatives.
+ So let me see if I can patch this up by hand.
+ Let me try to patch this by writing 
 \begin_inset Formula $\partial^{a}=e^{a\mu}\partial_{\mu}$
 \end_inset
 
- with 
+.
+ This is an abuse of notation,
+ but I think we can get away with it if we are careful.
+ This gives
+\begin_inset Formula 
+\[
+\omega_{\;\;\mu}^{ab}=\frac{1}{\lambda}\left(\delta_{\mu}^{a}e^{b\nu}-\delta_{\mu}^{b}e^{a\nu}\right)\partial_{\nu}\lambda
+\]
+
+\end_inset
+
+Then for 
 \begin_inset Formula $e^{a\mu}=\delta^{a\mu}/\lambda$
 \end_inset
 
-.
- The calculation in greek indexes,
+ (another abuse of notation) this becomes
+\begin_inset Formula 
+\[
+\omega_{\;\;\mu}^{ab}=\frac{1}{\lambda^{2}}\left(\delta_{\mu}^{a}\delta^{b\nu}-\delta_{\mu}^{b}\delta^{a\nu}\right)\partial_{\nu}\lambda
+\]
+
+\end_inset
+
+The partial derivative gets done in greek indexes,
+ i.e.
+ in coordinate space,
  for 
 \begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
 \end_inset
 
- gives 
+.
+ This gives
 \begin_inset Formula 
 \[
 \partial_{\mu}\lambda=\frac{4A}{\left(1-r^{2}\right)^{2}}r\partial_{\mu}r=\frac{\lambda^{2}}{A}r\partial_{\mu}r=\frac{\lambda^{2}}{A}x_{\mu}
@@ -7000,35 +7013,41 @@ First,
 
 \end_inset
 
-So converting to latin:
+So
 \begin_inset Formula 
 \[
-\partial^{a}\lambda=\frac{\lambda}{A}x^{a}
+\omega_{\;\;\mu}^{ab}=\frac{1}{A}\left(\delta_{\mu}^{a}\delta^{b\nu}-\delta_{\mu}^{b}\delta^{a\nu}\right)x_{\nu}
 \]
 
 \end_inset
 
-and so now comes more confusion.
- Earlier,
- Claude claimed,
- in Cartesian:
+Drop mu next,
+ to get
 \begin_inset Formula 
-\[
-\omega^{ab}=\frac{\lambda}{A}\left(x^{b}dx^{a}-x^{a}dx^{b}\right)
-\]
+\begin{align*}
+\omega^{ab} & =\frac{1}{A}x_{\nu}\left(\delta^{b\nu}dx^{a}-\delta^{a\nu}dx^{b}\right)\\
+ & =\frac{\lambda}{A}x_{\nu}\left(e^{b\nu}dx^{a}-e^{a\nu}dx^{b}\right)\\
+ & =\frac{\lambda}{A}\left(x^{b}dx^{a}-x^{a}dx^{b}\right)
+\end{align*}
 
 \end_inset
 
-but this is off by a factor of 
-\begin_inset Formula $\lambda$
-\end_inset
-
- overall.
- Fuck me.
- It is better to avoid using expressions like this.
- I leave this here,
- for now,
- with a ***caution*** sticker on it.
+with this third line being the abuse of notion.
+ This need a big ***caution*** sticker on it:
+ its dangerous but OK,
+ as long as one consistently abuses the notation.
+ So we plow ahead,
+ damn the torpedoes.
+ Not sure who ever launched a torpedo towards a plow,
+ but we're not exactly sailing here,
+ either.
+ Claude's wordcel trickery has slowed me down.
+ That it is not a shape rotator becomes exposed very clearly in exercises like this.
+ Alas.
+ For me,
+ alas.
+ I can't trust it.
+ Lets plow some more ravines.
 \end_layout
 
 \begin_layout Paragraph*
@@ -7130,43 +7149,6 @@ e_{3} & =\frac{1}{\lambda r\sin\theta}\partial_{\phi}
 
 The spin connection.
  
-\begin_inset Formula 
-\[
-\omega^{ab}=\frac{1}{\lambda}\left(dx^{a}\,\partial^{b}\lambda-dx^{b}\,\partial^{a}\lambda\right)
-\]
-
-\end_inset
-
-so for for 
-\begin_inset Formula $\lambda=2A/\left(1-r^{2}\right)$
-\end_inset
-
- we get 
-\begin_inset Formula $\partial^{2}\lambda=\partial^{3}\lambda=0$
-\end_inset
-
- and 
-\begin_inset Formula $\partial^{1}\lambda=\lambda^{-1}\partial_{1}\lambda=\lambda r/A$
-\end_inset
-
- and so ...
-\end_layout
-
-\begin_layout Standard
-No mixed time–space:
-\begin_inset Formula 
-\begin{align*}
-\omega^{0i} & =0\\
-\omega^{12} & =-\frac{1}{\lambda r}d\theta\\
-\omega^{13} & =-\frac{1}{\lambda r}\sin\theta\,d\phi\\
-\omega^{23} & =-\cos\theta\,d\phi
-\end{align*}
-
-\end_inset
-
-I copied these from Claude,
- but they look maybe not right.
- Let me check.
 \end_layout
 
 \begin_layout Section*
