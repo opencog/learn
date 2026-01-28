@@ -7261,20 +7261,66 @@ and solve it component by component.
 \end_layout
 
 \begin_layout Standard
-So 
-\begin_inset Formula $0=\omega_{\;b}^{1}\wedge e^{b}$
-\end_inset
-
- means that 
+So then 
 \begin_inset Formula 
 \begin{align*}
-0 & =\omega_{\;1}^{1}\wedge e^{1}+\omega_{\;2}^{1}\wedge e^{2}+\omega_{\;3}^{1}\wedge e^{3}\\
- & =
+0 & =de^{2}+\omega_{\;b}^{2}\wedge e^{b}\\
+ & =de^{2}+\omega_{\;1}^{2}\wedge e^{1}+\omega_{\;2}^{2}\wedge e^{2}+\omega_{\;3}^{2}\wedge e^{3}\\
+ & =\frac{1}{\lambda r}\left(\frac{1+r^{2}}{1-r^{2}}\right)e^{1}\wedge e^{2}+\omega_{\;1}^{2}\wedge e^{1}+\omega_{\;2}^{2}\wedge e^{2}+\omega_{\;3}^{2}\wedge e^{3}
 \end{align*}
 
 \end_inset
 
+so conclude
+\begin_inset Formula 
+\[
+\omega_{\;1}^{2}=\frac{1}{\lambda r}\left(\frac{1+r^{2}}{1-r^{2}}\right)e^{2}
+\]
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The next one is 
+\begin_inset Formula 
+\begin{align*}
+0 & =de^{3}+\omega_{\;1}^{3}\wedge e^{1}+\omega_{\;2}^{3}\wedge e^{2}+\omega_{\;3}^{3}\wedge e^{3}\\
+ & =\frac{1}{\lambda r}\left[\left(\frac{1+r^{2}}{1-r^{2}}\right)\;e^{1}\wedge e^{3}+\frac{\cos\theta}{\sin\theta}\;e^{2}\wedge e^{3}\right]+\omega_{\;1}^{3}\wedge e^{1}+\omega_{\;2}^{3}\wedge e^{2}+\omega_{\;3}^{3}\wedge e^{3}
+\end{align*}
+
+\end_inset
+
+which gives
+\begin_inset Formula 
+\[
+\omega_{\;1}^{3}=\frac{1}{\lambda r}\left(\frac{1+r^{2}}{1-r^{2}}\right)e^{3}
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+\omega_{\;2}^{3}=\frac{1}{\lambda r}\cdot\frac{\cos\theta}{\sin\theta}e^{3}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+Finally 
+\begin_inset Formula $0=\omega_{\;b}^{1}\wedge e^{b}$
+\end_inset
+
+ means that 
+\begin_inset Formula $0=\omega_{\;1}^{1}\wedge e^{1}+\omega_{\;2}^{1}\wedge e^{2}+\omega_{\;3}^{1}\wedge e^{3}$
+\end_inset
+
+ but this is trivially satisfied by the above results.
 \end_layout
 
 \begin_layout Paragraph*
