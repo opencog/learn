@@ -6851,7 +6851,7 @@ Metric
 
 \begin_layout Standard
 Poincare ball metric with curvature 
-\begin_inset Formula $A$
+\begin_inset Formula $K=-1/A^{2}$
 \end_inset
 
 ,
@@ -7168,7 +7168,14 @@ The spin connection
 
 \begin_layout Standard
 Let assume the earlier expressions for the spin connection were correct.
- Well,
+ (I wrote the diatribe about Claude,
+ further below,
+ first,
+ and then circled back here to do this by hand.)
+\end_layout
+
+\begin_layout Standard
+Well,
  lets assume they are not,
  and restart from first principles.
  So
@@ -7321,6 +7328,203 @@ Finally
 \end_inset
 
  but this is trivially satisfied by the above results.
+ I think the above is correct.
+\end_layout
+
+\begin_layout Paragraph*
+Dirac equation
+\end_layout
+
+\begin_layout Standard
+So lets repeat.
+ We have to solve 
+\begin_inset Formula 
+\[
+\gamma^{a}e_{a}^{\mu}\left(\partial_{\mu}+\Omega_{\mu}\right)\psi=0
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula 
+\[
+\Omega_{\mu}=\frac{1}{4}\omega_{\mu}^{ab}\gamma_{a}\gamma_{b}
+\]
+
+\end_inset
+
+subject to the hedgehog boundary conditions applied at 
+\begin_inset Formula $r<1$
+\end_inset
+
+.
+ We comply trickery from here on out.
+ I am using Claude to find the tricks.
+ I'm not verifying them carefully,
+ they smell correct.
+\begin_inset Formula 
+\[
+\left[\gamma_{a},\gamma_{b}\right]=2i\epsilon_{abc}\Sigma^{c}
+\]
+
+\end_inset
+
+with
+\begin_inset Formula 
+\[
+\Sigma^{c}=\left(\begin{array}{cc}
+\sigma^{c} & 0\\
+0 & \sigma^{c}
+\end{array}\right)
+\]
+
+\end_inset
+
+so
+\begin_inset Formula 
+\[
+\Omega_{\mu}=\frac{i}{4}\epsilon_{abc}\omega_{\mu}^{ab}\Sigma^{c}
+\]
+
+\end_inset
+
+Well,
+ OK,
+ baby steps.
+ Next,
+ we have to hedgehog Ansatz our way through.
+ Once again,
+ I think I'll call it quits here,
+ for now.
+ I've actually asked Claude to take many more steps from here.
+ I don't trust it's results,
+ so I am not copying them here,
+ but so far,
+ we're having some amount of fun.
+ The vibes are OK,
+ so far.
+\end_layout
+
+\begin_layout Paragraph*
+Claude code
+\end_layout
+
+\begin_layout Standard
+Err,
+ well I will sketch what Claude is telling me.
+ It smells OK.
+ It might have errors.
+ But the overall picture is not insane.
+ I gather that someone has published these details,
+ and Claude trained on them,
+ and is remembering them.
+ Here goes.
+\end_layout
+
+\begin_layout Standard
+One trick is to absorb the spin connection into an angular momentum term.
+ I won't write that down.
+\end_layout
+
+\begin_layout Standard
+Next trick is to write 
+\begin_inset Formula 
+\[
+\psi=\left(\begin{array}{c}
+\psi_{+}\\
+\psi_{-}
+\end{array}\right)
+\]
+
+\end_inset
+
+with
+\begin_inset Formula 
+\begin{align*}
+E\psi_{+} & =-i\vec{\sigma}\cdot\vec{D}\psi_{-}+m\psi_{+}\\
+E\psi_{-} & =-i\vec{\sigma}\cdot\vec{D}\psi_{+}-m\psi_{-}
+\end{align*}
+
+\end_inset
+
+where
+\begin_inset Formula 
+\begin{align*}
+\vec{\sigma}\cdot\vec{D} & =\frac{\vec{\sigma}\cdot\hat{r}}{\lambda}\left(\partial_{r}+\frac{1}{1-r^{2}}+\frac{1+r^{2}}{1-r^{2}}\frac{\left(\vec{\sigma}\cdot\hat{r}\right)\left(\vec{\sigma}\cdot\vec{L}\right)}{r}\right)\\
+ & =\frac{\vec{\sigma}\cdot\hat{r}}{\lambda}\left(\partial_{r}-\frac{r}{1-r^{2}}+\frac{1+r^{2}}{1-r^{2}}\left[\frac{1+\left(\vec{\sigma}\cdot\hat{r}\right)\left(\vec{\sigma}\cdot\vec{L}\right)}{r}\right]\right)\\
+ & =\frac{\vec{\sigma}\cdot\hat{r}}{2A}\left(\left(1-r^{2}\right)\partial_{r}+1+\left(1+r^{2}\right)\frac{\left(\vec{\sigma}\cdot\hat{r}\right)\left(\vec{\sigma}\cdot\vec{L}\right)}{r}\right)
+\end{align*}
+
+\end_inset
+
+and the flat–space version would have been 
+\begin_inset Formula 
+\[
+\vec{\sigma}\cdot\vec{\nabla}=\vec{\sigma}\cdot\hat{r}\left(\partial_{r}+\frac{1+\left(\vec{\sigma}\cdot\hat{r}\right)\left(\vec{\sigma}\cdot\vec{L}\right)}{r}\right)
+\]
+
+\end_inset
+
+To regain flat space 
+\begin_inset Formula $K=0$
+\end_inset
+
+ in the limit,
+ set 
+\begin_inset Formula $K\to0$
+\end_inset
+
+ which means 
+\begin_inset Formula $A\to\infty$
+\end_inset
+
+ and rescale 
+\begin_inset Formula $r=R/2A$
+\end_inset
+
+ with 
+\begin_inset Formula $R$
+\end_inset
+
+ held fixed.
+ This means all factors 
+\begin_inset Formula $r^{2}\to0$
+\end_inset
+
+ and all the rest works out as expected.
+ Good.
+\end_layout
+
+\begin_layout Standard
+The Hedgehog Ansatz is 
+\begin_inset Formula 
+\[
+\psi_{+}=u\chi\qquad\psi_{-}=iv\left(\vec{\sigma}\cdot\hat{r}\right)\chi
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\left(\vec{\sigma}+\vec{\tau}\right)\chi=0$
+\end_inset
+
+.
+ So 
+\begin_inset Formula $\left(\vec{\sigma}\cdot\hat{r}\right)^{2}=1$
+\end_inset
+
+ and Claude claims 
+\begin_inset Formula $\left(\vec{\sigma}\cdot\hat{L}\right)^{2}\chi=-\chi$
+\end_inset
+
+ for the hedgehog.
+ Is this right?
+ Well,
+ maybe,
+ I guess.
+ Who knows.
+ Assuming it is,
+ the radial equations become
 \end_layout
 
 \begin_layout Paragraph*
@@ -7500,6 +7704,30 @@ But for now,
  And that's where we are,
  for today.
  The End.
+\end_layout
+
+\begin_layout Standard
+Or not.
+ It's not that bad.
+ I gave in to the vibe,
+ and pushing further does not look all that bad.
+ The formulas look OK–ish.
+ I am copying them into place above,
+ without really checking.
+ I am guessing that this is previously published material and Claude is regurgitating it correctly.
+ I feel like this guy and this girl says 
+\begin_inset Quotes eld
+\end_inset
+
+this will feel good
+\begin_inset Quotes erd
+\end_inset
+
+ and she goes down on me,
+ and what's there to complain about?
+ So I'll share some consensual hallucinations with Claude for just a bit longer,
+ and see if it's OK.
+ So scroll back up for the results.
 \end_layout
 
 \begin_layout Subsection*
