@@ -7050,6 +7050,39 @@ with this third line being the abuse of notion.
  Lets plow some more ravines.
 \end_layout
 
+\begin_layout Standard
+Footnote:
+ I can validate that the abuse of notation above still gives the right answer,
+ as follows.
+ So for 
+\begin_inset Formula $g_{\mu\nu}=\lambda^{2}\delta_{\mu\nu}$
+\end_inset
+
+ it follows that 
+\begin_inset Formula $g^{\mu\nu}=\lambda^{-2}\delta^{\mu\nu}$
+\end_inset
+
+ because this gives 
+\begin_inset Formula $g_{\mu\nu}g^{\nu\rho}=\delta_{\mu}^{\rho}$
+\end_inset
+
+ as desired,
+ and then from 
+\begin_inset Formula $e_{\;\mu}^{a}=\lambda\,\delta_{\mu}^{a}$
+\end_inset
+
+ just raise:
+ 
+\begin_inset Formula $e^{a\mu}=e_{\;\nu}^{a}g^{\nu\mu}=\lambda\cdot\lambda^{-2}\delta^{a\mu}=\delta^{a\mu}/\lambda$
+\end_inset
+
+.
+ So this awkward–looking expression contracting greek and roman letters is just fine and fully consistent.
+ The awkwardness of it all,
+ and Claude's glibness,
+ was giving me the willies.
+\end_layout
+
 \begin_layout Paragraph*
 Spinors
 \end_layout
@@ -7328,7 +7361,7 @@ Finally
 \end_inset
 
  but this is trivially satisfied by the above results.
- I think the above is correct.
+ I think the results in this section are correct.
 \end_layout
 
 \begin_layout Paragraph*
@@ -7358,7 +7391,7 @@ subject to the hedgehog boundary conditions applied at
 \end_inset
 
 .
- We comply trickery from here on out.
+ We use trickery from here on out.
  I am using Claude to find the tricks.
  I'm not verifying them carefully,
  they smell correct.
@@ -7648,7 +7681,7 @@ Pöschl-Teller potential
 \begin_layout Standard
 Next,
  we can solve the above.
- Clause guesses that its hypergeometric,
+ Claude guesses that its hypergeometric,
  and arrives at the exact solution
 \begin_inset Formula 
 \[
@@ -7670,8 +7703,9 @@ with
 \end_inset
 
  OK,
- that's trctable.
- In chart coords its 
+ that's tractable.
+ In chart coords,
+ its 
 \begin_inset Formula 
 \[
 u=r\;{}_{2}F_{1}\left(a,b;2;-\frac{r^{2}}{1-r^{2}}\right)
@@ -8143,6 +8177,13 @@ I want the opposite.
  call them screw–ball escapades.
 \end_layout
 
+\begin_layout Standard
+Well,
+ I can tell it's not over.
+ This didn't pan out,
+ but burbling in the back of my mind is the idea that some other screwball twist will work....
+\end_layout
+
 \begin_layout Paragraph*
 Punt
 \end_layout
@@ -8347,12 +8388,238 @@ this will feel good
 \end_layout
 
 \begin_layout Subsection*
-28 January 2026
+29 January 2026
 \end_layout
 
 \begin_layout Standard
 OK,
- so lets get back to the main topic....
+ back to the drawing board.
+ Here I will belly–ache about AI development status,
+ and try to see if there's some better way.
+ There are multiple topics I've been putting off for months.
+ Lets bullet list them.
+ Lets not bullet list them,
+ I can't remember them.
+ They'll come back naturally as I write...
+\end_layout
+
+\begin_layout Standard
+I want to restart rewriting the learning pipeline.
+ So I unleashed Claude and it was a total failure.
+ Because Claude is stupid.
+ So what I envisioned,
+ hoped for,
+ wanted was some autonomous file–system crawler,
+ that would crawl and take notes,
+ build a world–model of what it found,
+ represented in a way that makes it easier to query than the brute–force of actually crawling the file system to find what is there.
+ That is,
+ the world–model is held in the AtomSpace in some 
+\begin_inset Quotes eld
+\end_inset
+
+natural
+\begin_inset Quotes erd
+\end_inset
+
+ representation that is easy to query in some ad hoc manner.
+\end_layout
+
+\begin_layout Standard
+There are two bootstrapping issues here.
+ One is:
+ what is the 
+\begin_inset Quotes eld
+\end_inset
+
+natural representation
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Of course,
+ I can hand–design the initial one,
+ but it would then need to be able to accrete additional information when it becomes available.
+ So then the next question is 
+\begin_inset Quotes eld
+\end_inset
+
+what is that additional information
+\begin_inset Quotes erd
+\end_inset
+
+?
+ and its meant to be pair–counting results,
+ and then the marginal probabilities.
+ So I can hand–engineer all that.
+ I'd done it two or three times before,
+ so this is yet another implementation.
+ At any rate,
+ I'm the one designi9ng where things will get stored,
+ and when I asked Claude to do it,
+ I got a hash,
+ so I have to do it.
+\end_layout
+
+\begin_layout Standard
+The second bootstrapping issue is that I have to explicitly specify the file–walk algo;
+ depth–first or breadth–first or whatever.
+ Again,
+ this does not happen 
+\begin_inset Quotes eld
+\end_inset
+
+naturally
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but is engineered into place.
+\end_layout
+
+\begin_layout Standard
+So let me run with that idea.
+ Can I define a set of axioms and inference rules,
+ such that,
+ when combined,
+ a file–walking algo results?
+ That is,
+ what is the axiomatic system in which tree–walking algos are embedded?
+ And,
+ given this axiomatic system,
+ what can I do to make it self–assemble,
+ like the abelian sand–pile?
+ i.e.
+ to get to a critical point,
+ where the behavior patterns at that critical point are that the avalanches are tree–walks?
+\end_layout
+
+\begin_layout Standard
+To answer that,
+ I dig back to L–systems,
+ and the work that Prusinkiewicz did with them:
+ some simple grammatical rules,
+ and you crank them,
+ and tree structures result.
+ Now I take them and the trees that grow are forced to conform to whatever the actual file–system tree is.
+\end_layout
+
+\begin_layout Standard
+So the new thing here for me is that with an L–system,
+ it is incorrect to think of a single algo,
+ walking a tree.
+ Instead,
+ one has creates a new agent:
+ one for each directory and file,
+ and that agent communicates what it finds with it's neighboring agents.
+ Now,
+ I can force this,
+ project this back down to a single traditional comp–sci algo that is depth–first or breadth–first,
+ but that is a projection (in the sense of a fibre bundle projection) If instead,
+ I am L–system inspired,
+ the fibre of my fibre–bundle is the L–system.
+ Now,
+ the agent at each directory and file is very nearly almost totally trivial:
+ the only thing it can do is to communicate with neighbors.
+ And maybe not even that:
+ it can just statically denotes connections (and I statically represent these in the AtomSpace).
+ The one non–trivial agentic behavior is that when an agent determines 
+\begin_inset Quotes eld
+\end_inset
+
+oh hey I am a directory
+\begin_inset Quotes erd
+\end_inset
+
+ then the grammatical production rules say 
+\begin_inset Quotes eld
+\end_inset
+
+grow a new agent,
+ one for each inode in the directory
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+At this meta–level,
+ at this L–system level,
+ each new agent gets enqueued onto some run–time queue,
+ so that the CPU goes over that queue,
+ and alots some CPU time to each agent.
+ Since agents that have already explored all of their inodes don't really need any more CPU time,
+ they become 
+\begin_inset Quotes eld
+\end_inset
+
+dead
+\begin_inset Quotes erd
+\end_inset
+
+ (or dormant) and can be dequeued,
+ I guess.
+ This search algo is naturally 
+\begin_inset Quotes eld
+\end_inset
+
+parallelizable
+\begin_inset Quotes erd
+\end_inset
+
+,
+ because L–systems are naturally parallel.
+ And,
+ as I write this,
+ I realize that I could also do this for the query engine.
+\end_layout
+
+\begin_layout Standard
+Let me explore the query–engine idea for a moment.
+ Every for–loop is parallelizable in this way:
+ it enqueues a job to explore every item in the loop.
+ Sounds sexy,
+ the reality is data locality:
+ the items being walked in the loop have to be fetched from RAM,
+ or,
+ if its running on a GPU,
+ it has to be copied across some bus to that GPU.
+ Copying is automatic,
+ for CPU's:
+ data is automatically copied from RAM to 3rd,
+ second then 1st level cache,
+ then registers,
+ and I don't have to think about that data movement problem,
+ because the good folks at Intel/AMD have already solved it for me.
+ For GPU's,
+ it is much more hands–on,
+ because the GPU sits on the far side of the PCIe bus,
+ and I have to think about how to convert the body of my for–loop into a vector that I can efficiently pass over to the GPU side.
+ So this is hard and tricky.
+ Thinking about L–systems and agents is inspirational,
+ but hits a wall when I say 
+\begin_inset Quotes eld
+\end_inset
+
+oh gee,
+ I want each agent to run on a GPU,
+ but my agents are so trivial that they do almost nothing
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and that almost the only thing that they do is to vectorize and enqueue the next set of agents to be enqueued on the runtime queue.
+ So this is ...
+ abstractly interesting but profoundly mis–matched to what hardware can actually do.
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ Anyway.
+ it is beautiful outside,
+ so I am going for a bike ride now.
+ Later.
 \end_layout
 
 \begin_layout Section*
