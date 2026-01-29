@@ -7514,7 +7514,7 @@ with
 \end_inset
 
  and Claude claims 
-\begin_inset Formula $\left(\vec{\sigma}\cdot\hat{L}\right)^{2}\chi=-\chi$
+\begin_inset Formula $\left(\vec{\sigma}\cdot\vec{L}\right)^{2}\chi=-\chi$
 \end_inset
 
  for the hedgehog.
@@ -7535,25 +7535,25 @@ grand spin quantum number
 \end_inset
 
  
-\begin_inset Formula $K=0$
+\begin_inset Formula $k=0$
 \end_inset
 
  which is OK if all one wants is the ground state,
  but clearly fails for the vacuum states.
  I didn't catch this early enough,
  so the below proceeds with 
-\begin_inset Formula $K=0$
+\begin_inset Formula $k=0$
 \end_inset
 
 .
  That's OK,
  for now.
- 
+ We redo it further below.
 \end_layout
 
 \begin_layout Standard
 Assuming Claude is otherwise correct,
- the radial equations become
+ the radial equations (for grand spin zero) become
 \begin_inset Formula 
 \begin{align*}
 2AEu & =\left(1-r^{2}\right)v^{\prime}-rv\\
@@ -7567,7 +7567,22 @@ with
 \end_inset
 
  etc.
- Substituting,
+ XXX When I forced Claude to track grand spin 
+\begin_inset Formula $k\ne0$
+\end_inset
+
+ below,
+ it begins to appear that the above are not correct.
+ Maybe.
+ I am once again running out of steam,
+ trying to track down the error.
+ So the derivation below looks pretty but might be wrong.
+ It clearly needs more serious work.
+ XXX Caveat Emptor.
+\end_layout
+
+\begin_layout Standard
+Substituting,
  Claude claims this gives
 \begin_inset Formula 
 \[
@@ -7684,10 +7699,119 @@ It seems plausible that this might reduce to sphere bessel functions in the
 .
  I'm not doing this now;
  first we have to get the 
-\begin_inset Formula $K\ne0$
+\begin_inset Formula $k\ne0$
 \end_inset
 
 .
+ XXX Well,
+ in fact,
+ the above might be wrong,
+ because the 
+\begin_inset Formula $k\ne0$
+\end_inset
+
+ efforts below explode into inconsistencies and bad algebra.
+ So the results above are suspect,
+ too.
+ XXX
+\end_layout
+
+\begin_layout Standard
+Here we go.
+ I had to force Claude to redo this several times before getting this,
+ which smells better than the earlier version
+\begin_inset Formula 
+\[
+\psi_{+}=u\Phi_{k}^{+}+\tilde{u}\Phi_{k}^{-}\qquad\psi_{-}=iv\Phi_{k}^{-}+i\tilde{v}\Phi_{k}^{+}
+\]
+
+\end_inset
+
+for the 
+\begin_inset Formula $\Phi_{k}^{\pm}$
+\end_inset
+
+ the spin–isospin spherical harmonics with Casimir operator angular momentum 
+\begin_inset Formula $K^{2}\Phi_{k}^{\pm}=k\left(k+1\right)\Phi_{k}^{\pm}$
+\end_inset
+
+ .
+ Then 
+\begin_inset Formula 
+\[
+\left(\vec{\sigma}\cdot\vec{L}\right)\Phi_{k}^{+}=\lambda\Phi_{k}^{+}
+\]
+
+\end_inset
+
+and the anticommutator identity
+\begin_inset Formula 
+\[
+\left\{ \left(\vec{\sigma}\cdot\hat{r}\right),\left(\vec{\sigma}\cdot\vec{L}\right)\right\} =-2\left(\vec{\sigma}\cdot\hat{r}\right)
+\]
+
+\end_inset
+
+gives 
+\begin_inset Formula 
+\[
+\left(\vec{\sigma}\cdot\vec{L}\right)\left[\left(\vec{\sigma}\cdot\hat{r}\right)\Phi_{k}^{+}\right]=-\left(\lambda+2\right)\left(\vec{\sigma}\cdot\hat{r}\right)\Phi_{k}^{+}
+\]
+
+\end_inset
+
+and we seem to be converging on the idea that
+\begin_inset Formula 
+\[
+\Phi_{k}^{-}=\left(\vec{\sigma}\cdot\hat{r}\right)\Phi_{k}^{+}
+\]
+
+\end_inset
+
+ which has OK vibes,
+ for now.
+\end_layout
+
+\begin_layout Standard
+This means eigenvalues on the lower component are 
+\begin_inset Formula $-\lambda-2$
+\end_inset
+
+.
+ For the hedge–hog,
+ we get 
+\begin_inset Formula $\lambda=k$
+\end_inset
+
+ or 
+\begin_inset Formula $\lambda=-\left(k+1\right)$
+\end_inset
+
+ when 
+\begin_inset Formula $k\ne0,$
+\end_inset
+
+ while for 
+\begin_inset Formula $k=0$
+\end_inset
+
+ the special case is 
+\begin_inset Formula $\lambda=-1$
+\end_inset
+
+.
+ Plugging through,
+ well,
+ at this point,
+ Claude runs into serious trouble.
+ All sorts of algebra starts fucking up.
+ It cannot get the 
+\begin_inset Formula $k=0$
+\end_inset
+
+ answer to agree with earlier results.
+ I've used up all my allotted time on this task,
+ so must stop.
 \end_layout
 
 \begin_layout Standard
@@ -7718,6 +7842,242 @@ Robin boundary condition
 
 .
  Never heard of that but OK.
+ The coordinate space version with 
+\begin_inset Formula $r$
+\end_inset
+
+ will be simpler to work with.
+\end_layout
+
+\begin_layout Standard
+Lets pause and take stock.
+ Lets assume that,
+ if/when the algebra above is fixed,
+ we get radial functions 
+\begin_inset Formula $u\sim{}_{2}F_{1}$
+\end_inset
+
+.
+ These are nice,
+ and fairly easy to work with and compute numerically;
+ the boundary condition will be solvable in some milliseconds of CPU time,
+ so we can do full vacuum sums in dozens of seconds or maybe minutes.
+ And then what?
+ We have two parameters to play with.
+ Naively,
+ it seems to be three:
+ 
+\begin_inset Formula $\Theta$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ and 
+\begin_inset Formula $A$
+\end_inset
+
+ but I think we can maybe redo to hold 
+\begin_inset Formula $RA$
+\end_inset
+
+ fixed,
+ so that it reduces to two paramters.
+ Or something like that.
+ In the flat–space case it was only one parameter,
+ 
+\begin_inset Formula $\Theta$
+\end_inset
+
+ because the radial coord was always multiplied by energy.
+ Here,
+ we already see that 
+\begin_inset Formula $\epsilon=2AE$
+\end_inset
+
+ and the eigenvalues will be for 
+\begin_inset Formula $\epsilon$
+\end_inset
+
+ so...
+ whatever.
+ Its somehow two parameters.
+\end_layout
+
+\begin_layout Paragraph*
+Why bother?
+\end_layout
+
+\begin_layout Standard
+So,
+ now come two fun questions:
+ Can the energy be made absolutely independent of the bag radius?
+ I assume the answer will be yes.
+ Doing so will then fix the curvature as a function of bag radius.
+ Presumably,
+ the curvature will got to 
+\begin_inset Formula $\kappa\to-1$
+\end_inset
+
+ as the bag radius goes to a femtometer.
+ This would be the desired model of confinement and asymptotic freedom.
+ Next,
+ what about the chiral condensate?
+ In flat space,
+ we had the sigma model 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ being exactly zero inside the bag,
+ and becoming non–zero only exactly on the boundary.
+ So,
+ in flat space,
+ the bag interior did not look like a sigma model.
+ This was a big disappointment.
+ However,
+ now,
+ in curved space,
+ could it be otherwise?
+\end_layout
+
+\begin_layout Standard
+Why do it this way?
+ The core problem is that geometry is hard.
+ If I could do these calculations 
+\begin_inset Quotes eld
+\end_inset
+
+in general
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then it seems there is almost surely some Atiyah–Singer magic happening.
+ But I can't,
+ and even if I could I might be disappointed.
+ So,
+ as a path–finder,
+ do the calculations assuming sphere symmetry,
+ and explore this simplified model.
+ If this simplified model allows the sigma model to emerge from the vacuum,
+ well then happy day.
+ If not,
+ then hopes are dashed.
+ But it would have gotten much farther than would otherwise have been possible in the 
+\begin_inset Quotes eld
+\end_inset
+
+full general
+\begin_inset Quotes erd
+\end_inset
+
+ case.
+\end_layout
+
+\begin_layout Standard
+Suppose the dreams are fulfilled.
+ Then the breakthrough is that the AdS boundary condition is re–identified with the bag boundary,
+ instead of being some cosmological thing.
+ The boundary is also topologically non–trivial,
+ so the chiral model now lets us ask about harmonic forms on this combined structure.
+ viz a spin manifold having some kind of dynamics inside the bag,
+ that spin manifold having some spectrum;
+ that spectrum,
+ or rather,
+ the spectral asymmetry looking like (or I suppose being exactly dual to) a chiral model.
+ That would be pretty cool and spiffy,
+ if it were true and could be done.
+\end_layout
+
+\begin_layout Standard
+But now,
+ I bop my nose up against some age–old (and old–age) concerns.
+ The age–old concern is 
+\begin_inset Quotes eld
+\end_inset
+
+what is the most important thing I should work on right now?
+\begin_inset Quotes erd
+\end_inset
+
+ and the old–age concern is 
+\begin_inset Quotes eld
+\end_inset
+
+shit I'm running out of time,
+ so I better get the correct answer to the previous question.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The problem with doing geometry is my meta–imagination.
+ The geometrical,
+ algebraic universe appears to be constructable by specifying a collection of axioms,
+ and a collection of inference rules,
+ and turning the crank,
+ and discovering gazzillions of identities.
+ This is how math has always been done,
+ traditionally:
+ the more abstract and general and useful identities are given a name,
+ placing the discoverer into the ranks of history.
+ While still alive,
+ mathematicians derive pleasure from finding identities,
+ stating and proving theorems,
+ grasping at hypothesis.
+ The mathematical physics community is less rigorous,
+ but questions of harmonic forms on Riemann surfaces certainly counts as mathematical physics,
+ especially when minor modifications give things like Landau superconductivity or Yang–Mills eqns.
+ So its eminently physics,
+ in that sense.
+ And the academic grind–core,
+ this is what they do:
+ they have fun cranking on this stuff.
+ And in the last 2-4 years,
+ they have been learning how the get LLM's to do some of the more boring parts of the calculations.
+ Just like I have learned above.
+\end_layout
+
+\begin_layout Standard
+The personal problem,
+ for me,
+ is,
+ well,
+ suppose I do discover that some whizzy chiral condensate happens to be equivalent to,
+ dual to some Riemannian manifold?
+ That would be pretty cool.
+ Would it matter?
+ Well,
+ I would have had fun,
+ once again,
+ in the process,
+ but I've had lots of fun over my lifetime,
+ even if the results of most of it have been utterly unimportant in some local scheme of things.
+ I mean,
+ how does this work,
+ anyway?
+ Steven Weinberg wrote an excellent book on gravitation,
+ got the Nobel prize in physics for QFT work,
+ scowled at me when I approached him at a conference,
+ taught lots of students at UTexas for a good salary,
+ and then he died.
+ Whoopla!
+ Hot patootie,
+ bless my soul,
+ I really love that rock–n–roll.
+\end_layout
+
+\begin_layout Standard
+Anyway,
+ the upshot is that I can get paid for doing AI research;
+ I cannot get paid for doing mathematical physics.
+ This is my current economic environment.
+ (This section above was written after the section below.
+ Its placed out of line to conetextualize better with the second attempt to solve the eqns above.)
 \end_layout
 
 \begin_layout Paragraph*
