@@ -8730,7 +8730,7 @@ Well,
  Interesting.
  This is not impractical,
  either,
- it's a realtively easy project,
+ it's a relatively easy project,
  even,
  to implement this.
  Huh.
@@ -8740,6 +8740,295 @@ Well,
 \begin_layout Standard
 Break for dinner.
  The meta issue is ...
+\end_layout
+
+\begin_layout Standard
+There are two meta–issues.
+ Or maybe the same meta–issue?
+ Hmm.
+ So one idea is that there exists a 
+\begin_inset Quotes eld
+\end_inset
+
+natural transform
+\begin_inset Quotes erd
+\end_inset
+
+ between doing loop contents serially,
+ and doing it in parallel.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Natural transform
+\begin_inset Quotes erd
+\end_inset
+
+ in some vague category–theoretic sense.
+ For Atomese,
+ this would be the transformation between (Trigger (FooLink ...)) and (Trigger (CollectionOf (Type 'ParallelLink) (FooLink ...))) Both do 
+\begin_inset Quotes eld
+\end_inset
+
+the same thing
+\begin_inset Quotes erd
+\end_inset
+
+;
+ the first one does it serially,
+ the second in parallel.
+ So if I have a graph–rewriting system,
+ I can rewrite the first into the second,
+ or the second into the first.
+ So the meta issue is this:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+What is the current set of rewrite rules that I am willing to apply to a processing pipeline?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Should these rewrite rules create pressure for more parallelism,
+ or less?
+\begin_inset Quotes erd
+\end_inset
+
+ And there's even a regulatory component:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Apply rewrite rules to pressure the system to run on the GPU's,
+ unless the GPU's are congested,
+ or the PCIe bus is congested,
+ in which case,
+ run things locally on the CPU.
+\begin_inset Quotes erd
+\end_inset
+
+ Then the complexity spirals out of control:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+to know if the PCIe bus is congested,
+ I need a sensor to measure traffic and congestion in real time
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+And then it is recursive:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+if I have sensors that can measure different aspects of system performance,
+ then I can write some optimization algo that uses those sensor inputs.
+\begin_inset Quotes erd
+\end_inset
+
+ Right?
+ But what is the algo?
+ Maybe there are several algos:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+Performance
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+PowerSave
+\begin_inset Quotes erd
+\end_inset
+
+.
+ What are the component pieces–parts of such an algo,
+ and what are all the different ways that I can assemble and re–assemble those pieces–parts?
+ Well,
+ the pieces–parts are jigsaws,
+ and the sensory pipeline is 
+\begin_inset Quotes eld
+\end_inset
+
+PCI congestion sensor -> X
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+if X then Y
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+Y -> execute locally
+\begin_inset Quotes erd
+\end_inset
+
+ but in between X and Y I can insert other kinds of control blocks:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+If X>250 and X<500 then Y
+\begin_inset Quotes erd
+\end_inset
+
+ or it there is another sensor Z for memory pressure,
+ then 
+\begin_inset Quotes eld
+\end_inset
+
+if X>500 and Z<90 then Y
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So my toolkit is a box of Lego MindStorms and I can snap and assemble them any way I want,
+ as long as some basic grammatical rules are obeyed.
+ Writing down the grammatical rules is ...
+ well,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+easy-ish
+\begin_inset Quotes erd
+\end_inset
+
+ or 
+\begin_inset Quotes eld
+\end_inset
+
+a well defined problem that we know how to solve
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But the meta–issue is 
+\begin_inset Quotes eld
+\end_inset
+
+what sort of proccess control system should I build?
+\begin_inset Quotes erd
+\end_inset
+
+ Should it be simple?
+ Complicated?
+ where is the trade–off between simple and complicated?
+\end_layout
+
+\begin_layout Standard
+In the sand–pile model,
+ I have gravity,
+ which is the force causing avalanches,
+ and finite slip,
+ friction coefficients (the sand grains are not infinitely sticky) so the avalanches must necessarily occur.
+ Even if the sand–grains are replaced by thistle,
+ there is only so high you can go with a tower of sticky thistle before it falls over.
+ How do I port over this conception to algorithm–building?
+ When does an algorithm become 
+\begin_inset Quotes eld
+\end_inset
+
+too complex
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and collapse?
+ What drives that collapse?
+ What is analogous to gravity?
+\end_layout
+
+\begin_layout Standard
+Related is this:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+what is the algorithm that finds (optimal) algorithms?
+\begin_inset Quotes erd
+\end_inset
+
+ Of course,
+ if I did not care about 
+\begin_inset Quotes eld
+\end_inset
+
+optimal
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then I could build an odometer that simply listed all of them.
+ But if I want them to be 
+\begin_inset Quotes eld
+\end_inset
+
+optimal
+\begin_inset Quotes erd
+\end_inset
+
+,
+ I have multiple issues:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+what do I mean by optimal?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+what are the different ways I can measure optimality (space–usage,
+ run–time,
+ traffic congestion...)?
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+how do I limit the search space to avoid search regions that are unlikely to yield optimal algorithms?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+S
 \end_layout
 
 \begin_layout Section*
