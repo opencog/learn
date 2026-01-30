@@ -8622,6 +8622,126 @@ Hmm.
  Later.
 \end_layout
 
+\begin_layout Subsection*
+29 January 2026 Later
+\end_layout
+
+\begin_layout Standard
+Well,
+ there is a way of queuing agents in Atomese:
+ just say (CollectionOf (Type 'ParallelLink) (FooLink ...)) where FooLink returns a list of agents.
+ Bingo:
+ L–systems in Atomese are about this trivial.
+ So first,
+ two obvious caveats,
+ and a meta–issue.
+\end_layout
+
+\begin_layout Standard
+The caveat is that the ParallelLink creates (Linux) OS threads (via c++ std::thread),
+ so this is heavyweight,
+ and only 
+\begin_inset Quotes eld
+\end_inset
+
+make sense
+\begin_inset Quotes erd
+\end_inset
+
+ for complex,
+ long–running agents.
+ Now,
+ of course one could try to optimize:
+ perhaps by designing a GreenParallelLink that would use green threads.
+ But this founders:
+ when do you use which?
+ If the agents are tiny,
+ then running them in parallel is wild overkill;
+ just run them serially.
+ There's also a different way of thinking about this:
+ inventing the GPUParallelLink,
+ which would dispatch the agents to GPU's,
+ one each.
+ This then struggles,
+ because each agent needs to access certain unknown data in the AtomSpace,
+ and there's no way for the GPU to 
+\begin_inset Quotes eld
+\end_inset
+
+reach back
+\begin_inset Quotes erd
+\end_inset
+
+ into the AtomSpace to get it.
+ Perhaps with cleverness,
+ this could be engineered around,
+ but in the end,
+ misses the point.
+ And the point is ...
+\end_layout
+
+\begin_layout Standard
+The point is that ParallelLink is a declarative element.
+ At this time,
+ it is tightly coupled to a specific C++ implementation,
+ but abstractly speaking,
+ it should not have been.
+ The actual implementation,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+under the covers
+\begin_inset Quotes erd
+\end_inset
+
+ or in some 
+\begin_inset Quotes eld
+\end_inset
+
+execution context
+\begin_inset Quotes erd
+\end_inset
+
+ could be Linux pthreads or greenthread or GPU threads,
+ or maybe just serial.
+ This 
+\begin_inset Quotes eld
+\end_inset
+
+execution context
+\begin_inset Quotes erd
+\end_inset
+
+ would be a property of ...
+ of what?
+\end_layout
+
+\begin_layout Standard
+Well,
+ the Atom::execute() method has the signature Atom::execute(AtomSpace* scratch) with the pointer pointing at the scratch space inside of which the execution happens.
+ So we could create a custom AtomSpace that replaces execution methods by other algos that run,
+ e.g.
+ on GPU's,
+ or green threads or whatever.
+ So this is...
+ well,
+ at least partly solvable.
+ Interesting.
+ This is not impractical,
+ either,
+ it's a realtively easy project,
+ even,
+ to implement this.
+ Huh.
+ Good.
+\end_layout
+
+\begin_layout Standard
+Break for dinner.
+ The meta issue is ...
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
