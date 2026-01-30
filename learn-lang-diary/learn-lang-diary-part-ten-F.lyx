@@ -8918,7 +8918,7 @@ easy
 \begin_inset Quotes eld
 \end_inset
 
-easy-ish
+easy–ish
 \begin_inset Quotes erd
 \end_inset
 
@@ -8935,7 +8935,7 @@ a well defined problem that we know how to solve
 \begin_inset Quotes eld
 \end_inset
 
-what sort of proccess control system should I build?
+what sort of process control system should I build?
 \begin_inset Quotes erd
 \end_inset
 
@@ -9028,7 +9028,168 @@ how do I limit the search space to avoid search regions that are unlikely to yie
 \end_layout
 
 \begin_layout Standard
-S
+So there are several solutions to the algorithm–discovering algorithm.
+ Aside from employing a bunch of students or engineers,
+ one can also ask an LLM to craft algos for you.
+ The primary issue here is that you are human–in–the–loop.
+ The LLM's can write OK javascript or C++ code if you ride herd and are precise in what you want.
+ If you are not precise,
+ you get crap.
+ Asking the LLM to write Atomese is ...
+ well,
+ it can be done,
+ but its quite low–level work,
+ the LLM's sort–of understand Atomese,
+ but not all that well.
+\end_layout
+
+\begin_layout Standard
+Let me go off on a tangent here,
+ that I've wanted to tangent on for months.
+ I am asking the LLM to write the new counting pipeline in Atomese.
+ But why?
+ Surely it would be more efficient to write it in python or c++ or scheme or ...
+ ah,
+ well,
+ but there's the answer;
+ I think I wrote about this in the diary only a week ago.
+ Right?
+ The previous version of the counting code 
+\begin_inset Quotes eld
+\end_inset
+
+worked great
+\begin_inset Quotes erd
+\end_inset
+
+.
+ It used the 
+\begin_inset Quotes eld
+\end_inset
+
+matrix
+\begin_inset Quotes erd
+\end_inset
+
+ code for maintaining counts and computing marginals,
+ and it was batch oriented and failed to be flexible in all the ways I want it to be flexible.
+ In some imaginary universe,
+ I could work with Claude to refactor that code,
+ so that is become flexible in all the ways I want it to be flexible,
+ but this parallel universe is imaginary:
+ I know from hard experience that either Claude turns it into a complete hash of spaghetti code,
+ or that the code base stays clean,
+ but I put in lots of hard effort and engineering work to make sure its good.
+\end_layout
+
+\begin_layout Standard
+And if I'm going to have to put in lots of hard work,
+ lots of engineering,
+ well,
+ it becomes clear that I do not want to use c++ or python or scheme to write that code...
+ I want to use Atomese.
+ But why?
+ 
+\begin_inset Quotes eld
+\end_inset
+
+It becomes clear
+\begin_inset Quotes erd
+\end_inset
+
+,
+ I say,
+ but really?
+ Does it?
+ Why not write in some other language?
+\end_layout
+
+\begin_layout Standard
+I don't know if I can give any easy answer.
+ I like the self–reflective and recursive properties of Atomese.
+ That is,
+ its a graph,
+ and if I want to redo that graph,
+ I apply a collection of rewrite rules.
+ But if instead it was javascript,
+ I could also ask an LLM to rewrite it for me.
+ The LLM becomes the 
+\begin_inset Quotes eld
+\end_inset
+
+graph rewriting system
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The LLM is of course sloppy,
+ but is it sloppier than what my imagined system of rewrite rules could generate?
+ Is there some intractable complexity limit?
+ Well,
+ naively 
+\begin_inset Quotes eld
+\end_inset
+
+everything becomes spaghetti code
+\begin_inset Quotes erd
+\end_inset
+
+.
+ But the standard counterpoint is that 
+\begin_inset Quotes eld
+\end_inset
+
+good design practice,
+ such as modular code and API's and unit tests
+\begin_inset Quotes erd
+\end_inset
+
+ etc.
+ allow you to scale to arbitrary complexities.
+ And it would seem that those standard engineering design rules would need to apply to Atomese as well.
+\end_layout
+
+\begin_layout Standard
+What tools do I have?
+ Well,
+ judicial use of DefineLink and PipeLink and NameNode allows me to assign names to modular components.
+ I do not have any framework for unit tests at this level.
+ I do not have a good theory of refactoring at this level.
+ I know I want to have rewrite rules,
+ but what are they?
+ How do they work in practice?
+\end_layout
+
+\begin_layout Standard
+For example,
+ the rewrite rule that converts between (Trigger (FooLink ...)) and (Trigger (CollectionOf (Type 'ParallelLink) (FooLink ...))) – where is this rewrite rule?
+ Again,
+ if I have a collection of them ...where?
+ How?
+ Is there a FilterLink that applies this rewrite to a stream?
+ The order of rule applications is important.
+ Do I have to rip some pages out of theorem–proving systems (Agda,
+ HOL,
+ etc.) to create a proper rule management system?
+\end_layout
+
+\begin_layout Standard
+Argh.
+ I go in circles.
+ So then I say to myself 
+\begin_inset Quotes eld
+\end_inset
+
+fuck it.
+ Just write some code ..
+ something or anything ...
+ try to make it work.
+\begin_inset Quotes erd
+\end_inset
+
+ And then my code scales out of control and I am back to theorizing again.
+ Except now five years have slipped by.
+ 
 \end_layout
 
 \begin_layout Section*
