@@ -9276,8 +9276,224 @@ how is it structured?
  I have not tried to have the MCP–examination of this dataset.
  Maybe I should try that,
  and see what happens,
- see if I can get meaningul enlightenment that way ...
+ see if I can get meaningful enlightenment that way ...
+\end_layout
+
+\begin_layout Subsection*
+30 January 2026
+\end_layout
+
+\begin_layout Standard
+Having long conversations on discord.
+ Won't record all of it,
+ but a few comments that I really liked:
+\end_layout
+
+\begin_layout Itemize
+Blah blah paradox/contradiction...
+ that is how you build oscillators ..
+ take a digital NOT gate and wire input to output,
+ and it will oscillate as fast as the transistors can switch.
+ So maybe the origin of time is due to unresolvable logical paradoxes.
+ (That is what got typed into the chat channel,
+ but in the back of my mind is 
+\begin_inset Quotes eld
+\end_inset
+
+here and now
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and I'm like 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ wait a second ..
+ maybe that really is,
+ quite literally,
+ where time comes from,
+ and why we are trapped in the present,
+ and why the future is unknown – because the wiring diagram is not simple like a TTL oscillator,
+ but complicated and fluid and self–assembling.
+ So,
+ yes,
+ ZFC or New Foundations or Girard's paradox,
+ but its cranking,
+ oscillating at the speed of ...
+ time.)
+\end_layout
+
+\begin_layout Itemize
+Everyone struggles to communicate.
+ Not everyone is aware that they struggle.
+ This is,
+ in a sense,
+ the core AGI issue.
+ "What should I say?
+ Why should I say it?
+ How should I say it?
+ what do I want to express?
+ What do I want the other person to understand?" The LLM's are less than that.
+ They communicate clearly and directly...
+ and have not the faintest idea of what they are saying.
+ What I want is a way of working with ideas.
+ Then maybe I can use an LLM to convert those ideas into words.
+ (So above was typed.
+ What I'm thinking is that,
+ yes,
+ I want to encode abstract axiomatic knowledge in Atomese,
+ and then use the LLM to verbalize it.
+\end_layout
+
+\begin_layout Itemize
+The AtomSpace is a reliable mapping from token–to–complex–structure,
+ and also back in the other direction,
+ complex–structure–to–token.
+ (So here,
+ I am thinking the 
+\begin_inset Quotes eld
+\end_inset
+
+tokens
+\begin_inset Quotes erd
+\end_inset
+
+ are PredicateNodes,
+ or similar,
+ so the token–to–structure mapping is 
+\begin_inset Quotes eld
+\end_inset
+
+easy
+\begin_inset Quotes erd
+\end_inset
+
+(???) and the inverse mapping is the query.
+ But the inverse mapping could also be cosine similarity,
+ maybe.
+ But the token–to–structure mapping might be the incoming set of that token.
+ Hmm.
+ Clearly,
+ this needs work.)
+\end_layout
+
+\begin_layout Itemize
+I can use an LLM to mine technical text (scientific papers,
+ wikipedia) for factual expressions,
+ convert those expressions into prolog or just EdgeLinks,
+ and I can count those.
+ These form vectors,
+ whenever an atom appears in in an expression.
+ So I can take distributions
+\end_layout
+
+\begin_layout Itemize
+When Jeff Bezos started amazon.com,
+ the idea of "a store where you go to buy things" was a thousand years old.
+ And the idea of selling on the net was the foundation of dot–com – everyone understood.
+ What Bezos had figured out was monopoly power:
+ the efficiency of centralized structure.
+ It wasn't going to be 1000 small dot–com store–fronts.
+ All the decent people are rebels,
+ saying "I don't like centralized control" and that's valid – but the core confusion is not that "centralization is bad",
+ its that "assholes who run centralized systems are assholes".
+ And so really,
+ decent is all about "no one gets to be asshole in charge because we are going to p2p everything between ourselves." The problem with decent is that it promotes a different kind of deviant perverted behavior:
+ e.g.
+ bitcoin mining.
+\end_layout
+
+\begin_layout Itemize
+Sure.
+ But the Q in SQL stands for "query".
+ and LLM's ask me clarifying questions often enough.
+ And I also know how to make very simple systems where queries emerge automatically.
+ One of them is "here is a sentence.
+ Find all questions for which this sentence is an answer" and then,
+ "pick the top question,
+ and find what other answers it has.
+ Pick the top answer and print it to the screen.
+ " This is how the old SRAI chatbots work.
+ And roughly speaking,
+ its also how LLM's work.
+ The SRAI mapping was very literal.
+ If you say "I like sports",
+ the chatbot would generate "I like *" and "I * sports" and "* like sports" and then look over everything * could be,
+ and respond,
+ maybe "I love sports" or "I like hockey" where * is the wild–card for the query.
+ That was literally the SRAI chatbot algo.
+ LLM's do this too,
+ but the wild–card is not one or two words,
+ but a "context window" of tens of thousands of tokens.
+ Logic is the difference between wordcels and shape rotators.
+ The wordcels,
+ the chatbots,
+ they can just work with context windows – maybe a few words in size for the old ones back in the day,
+ to tens–of–thousands today (big enough to have "skills" in the context window) but that's all they are – context–window-matching wordcels.
+ To get to shape rotators,
+ you need to have contexts that are not just word–to–word relations (weight matrices) but abstraction–to–abstraction relations.
+ (symbol to symbol relations?
+ where you can "easily" look up symbols?) So that's what I work on,
+ roughly.
+ Mostly.
+ The result might be a system that "understands things better",
+ but then after that,
+ my imagination runs out.
+ Is it actually better,
+ or just some stupid computer trick?
  
+\end_layout
+
+\begin_layout Standard
+So riffing on the third and fourth bullets,
+ I need to build an LLM bridge that converts text to relationship expressions.
+ Do the simple stats,
+ and see what happens...
+\end_layout
+
+\begin_layout Standard
+Hmm.
+ I can guess what happens,
+ so this is kind of a 
+\begin_inset Quotes eld
+\end_inset
+
+so what
+\begin_inset Quotes erd
+\end_inset
+
+ exercise,
+ because I want to scale.
+ But also,
+ I have to start somewhere.
+\end_layout
+
+\begin_layout Standard
+So here's another idea:
+ build these vectors these sparse symbolic vectors,
+ then compress them (hash them down to 256 bits or 1024 bits) and use than embedding to ...
+ what?
+ Provide training data to some DL–NN network.
+ That is,
+ a sequence of 
+\begin_inset Quotes eld
+\end_inset
+
+abstract concepts
+\begin_inset Quotes erd
+\end_inset
+
+ in a text is still a sequence.
+ So I can still train on that sequence.
+ The bad news is that,
+ in some sense,
+ inserting this abstraction layer in the middle is likely to lead to worse results than using the word–tokens directly.
+ That seems clear:
+ the attempt to abstract out necessarily entails a loss of (local) fidelity.
+ Nor does it obviously open new vistas.
+ So
 \end_layout
 
 \begin_layout Section*
