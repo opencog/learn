@@ -9518,6 +9518,235 @@ Shut up and calculate
 .
 \end_layout
 
+\begin_layout Subsection*
+1 February 2026
+\end_layout
+
+\begin_layout Standard
+Can I have a quiet day,
+ and get some work done?
+ I want to return to counting.
+ To count words in texts,
+ I need to build a filesystem crawler.
+ It crawls trees.
+ Well,
+ actually I build one a year ago,
+ and I used to crawl my file system,
+ and now I have 400K links that describe my file system:
+ that is,
+ I have a 
+\begin_inset Quotes eld
+\end_inset
+
+model
+\begin_inset Quotes erd
+\end_inset
+
+ of my file system,
+ as it was a year ago.
+ This model includes file metadata:
+ name,
+ type,
+ size,
+ the usual file attributes.
+ So I don't need to (at this particular instant in time) to create another,
+ better,
+ different crawler.
+ I already have this model.
+\end_layout
+
+\begin_layout Standard
+So the question then becomes:
+ how do I crawl this model?
+ This turns into a question:
+ how do I crawl any large complex structure that is already in the AtomSpace?
+ The starting point could be a tally of all the different atom types.
+\end_layout
+
+\begin_layout Standard
+This can be gotten 
+\begin_inset Quotes eld
+\end_inset
+
+directly
+\begin_inset Quotes erd
+\end_inset
+
+ from the AtomSpace,
+ but more rigorously by using the query engine with a lone unrestricted Variable,
+ followed by a TypeOf,
+ followed by an IncrementValue.
+ So I did this in atomspace–viz,
+ and it works.
+\end_layout
+
+\begin_layout Standard
+After this,
+ I run into trouble.
+ Some maybe–interesting questions:
+\end_layout
+
+\begin_layout Itemize
+What is the average size of the incoming set of an Atom?
+\end_layout
+
+\begin_layout Itemize
+What is the average size of the incoming set of an Atom of type T?
+ (visualized as a graph that is a function of T)
+\end_layout
+
+\begin_layout Itemize
+What is the average size of the outgoing vector of a Link of type T?
+ (visualized as a graph...)
+\end_layout
+
+\begin_layout Itemize
+How many Links are there having outgoing vector size 1,2,3,...
+ ?
+\end_layout
+
+\begin_layout Itemize
+How many Atoms are there having an incoming set of size 0,1,2,3...
+ ?
+\end_layout
+
+\begin_layout Itemize
+What is the average height of the trees?
+ (of type T,
+ visualized as a graph?) i.e.
+ starting with those Atoms (Links) that have an incoming set of size 0,
+ what is the distance to the farthest Node under them?
+\end_layout
+
+\begin_layout Itemize
+How many disconnected components are there?
+ That is,
+ unreachable by tracing through incoming,
+ outgoing sets?
+ How does this change if I don't allow reachability through certain types?
+ This is hard – the query engine does this under–the–covers,
+ as it walks,
+ and imposes a zillion constraints while walking,
+ but it does not keep a tally of connected components.
+ I don't have a 
+\begin_inset Quotes eld
+\end_inset
+
+match any tree
+\begin_inset Quotes erd
+\end_inset
+
+ query.
+ Hmm.
+ Maybe with GlobNodes,
+ stacked ...
+ trees of specific size enumerated in ChoiceLink.
+ Whatever.
+ This is an interesting question,
+ and exposes a missing API to the query engine.
+\end_layout
+
+\begin_layout Itemize
+Pair–wise correlations.
+ Pick any two locations in a tree (in the abstract) and show the MI between those locations (or rather,
+ the MI distribution over all trees.)
+\end_layout
+
+\begin_layout Standard
+I'll stop here,
+ and meta–critique.
+ All these are interesting questions that may have curious answers,
+ but they don't offer much in 
+\begin_inset Quotes eld
+\end_inset
+
+understanding
+\begin_inset Quotes erd
+\end_inset
+
+ the dataset.
+ Having these could be useful for categorizing different datasets with respect to one–another,
+ but,
+ for just one dataset,
+ the value is low.
+ That they have any value at all is only due to my own personal experience with trees and graphs,
+ that has been gained over time.
+ That is,
+ these numbers are interesting to me,
+ personally.
+ The intrinsic value is mostly arises when they are used to compare to other datasets.
+ The only other value is if/when a system has some general abstract 
+\begin_inset Quotes eld
+\end_inset
+
+knowledge
+\begin_inset Quotes erd
+\end_inset
+
+ of 
+\begin_inset Quotes eld
+\end_inset
+
+what is a tree
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and therefore can align specific information about collections of specific trees with respect to this general abstract knowledge–base of what trees are.
+\end_layout
+
+\begin_layout Standard
+Well,
+ so one issue is that if I place myself as a proxy for a 
+\begin_inset Quotes eld
+\end_inset
+
+system that posses abstract knowledge of how trees work
+\begin_inset Quotes erd
+\end_inset
+
+,
+ the above statistical information still does not give me very much insight.
+ I know that this tree data is a snapshot of my file system,
+ but so what?
+ Grep,
+ find and locate are still my tools of choice,
+ for the file system.
+ I don't have anything like grep,
+ find and locate for the AtomSpace;
+ I have something more powerful,
+ but also more verbose.
+ Which is OK,
+ because the mantra is machine–accessibility,
+ not human–accessibility.
+ But now that I have made it machine–accessible,
+ now what?
+\end_layout
+
+\begin_layout Standard
+There are several side–tracks to go off on.
+ 
+\end_layout
+
+\begin_layout Itemize
+How does the machine obtain a collection of inbuilt knowledge about trees?
+ This is about axiomatic knowledge.
+\end_layout
+
+\begin_layout Itemize
+What is the human interface to this knowledge set?
+ I would like to use chat to interface to it.
+\end_layout
+
+\begin_layout Itemize
+What happens when I apply my age–old day–dream of leveraging up the structural stack from pair–counting?
+\end_layout
+
+\begin_layout Standard
+The first and third bullets are supposed to be interconnected:
+ infer axioms by observation of structure in data sets.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
