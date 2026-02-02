@@ -9745,6 +9745,55 @@ What happens when I apply my age–old day–dream of leveraging up the structur
 \begin_layout Standard
 The first and third bullets are supposed to be interconnected:
  infer axioms by observation of structure in data sets.
+ I now have to revise these ideas.
+\end_layout
+
+\begin_layout Standard
+The original idea was that tokens arrive in a time–like stream,
+ and I do correlational counting of pairs of tokens that appear near each other,
+ in a window of some size in the stream (e.g.
+ six words,
+ or a sentence that ends with punctuation;
+ whatever.) Then after pair counting,
+ obtain LG–style disjuncts,
+ and then perform clustering on those disjuncts.
+\end_layout
+
+\begin_layout Standard
+Now,
+ my tokens no longer arrive in a stream;
+ they already have some innate structure with respect to one–another.
+ My tokens have already been organized into a graph.
+ Although this is a file–system graph,
+ in the present case,
+ it could have been a parse–graph:
+ something that arises after the first step of counting –> disjuncts –> parsing has been performed.
+ Curiously,
+ I never had a good plan for that before.
+ Or rather,
+ I have a naive plan:
+ look for pairs,
+ again.
+\end_layout
+
+\begin_layout Standard
+The problem here is I have lots of explicitly different pair–relationships.
+ Thus,
+ I store not only the pair–count,
+ but the specific relationship between the pairs.
+ Well,
+ the old matrix code already did this:
+ the matrix was always defined abstractly,
+ in terms of a pair of locations specified by an underlying pattern.
+\end_layout
+
+\begin_layout Standard
+One experiment would be to make a catalog of all tree–shapes in the dataset,
+ then,
+ for each tree,
+ insert variables in every possible location,
+ and do pair–wise counting on those.
+ 
 \end_layout
 
 \begin_layout Section*
