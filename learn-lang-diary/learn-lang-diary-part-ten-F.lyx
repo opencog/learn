@@ -10169,6 +10169,353 @@ proofs are programs
  and having an algorithm that can perceive that structure (never mind perceive it efficiently).
 \end_layout
 
+\begin_layout Subsubsection*
+4 February 2026
+\end_layout
+
+\begin_layout Standard
+So I'm still struggling to close a circular loop,
+ here.
+ I can do pair–counting,
+ if I can get a crawler agent.
+ I can get a crawler agent,
+ if I hand–code it.
+ But then I have to hand–code where it is going to go,
+ and what it will do.
+ So I have to think hard about algorithms.
+ And when I think hard about algorithms,
+ I say to myself 
+\begin_inset Quotes eld
+\end_inset
+
+I know how to do pair–counting
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+pair–counting does not solve my problem of understanding file system contents
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I also don't have a user interface:
+ some why to talk to my system.
+\end_layout
+
+\begin_layout Standard
+What options do we have on the table?
+\end_layout
+
+\begin_layout Itemize
+Continue to agonize about the big plan.
+ But this is best done in the background,
+ quietly,
+ not writing:
+ I jumble things around in my head that are too hard to verbalize and formulate into a plan.
+ Architectural issues.
+\end_layout
+
+\begin_layout Itemize
+I can port a minimal atomspace to the GPU,
+ so that the graph network sits there,
+ in the GPU RAM.
+ Maybe later I can have algos that access values on some atoms,
+ i.e.
+ a port of the matrix code to the GPU.
+ This seems like a needed step at some point,
+ but when?
+\end_layout
+
+\begin_layout Itemize
+I can search for a small,
+ non–cloud non–proprietary LLM that I can run locally.
+ But why,
+ when the cloud versions are usable,
+ even if they cost?
+ I can also generate my own electricity,
+ grow my own food,
+ have some chickens in the back yard ...
+ which unplugs from the existing social infrastructure.
+ So,
+ vaguely appealing,
+ and vaguely impractical.
+\end_layout
+
+\begin_layout Itemize
+I can have Claude write mountains of ad hoc code for me,
+ with the risk that it is all an unmaintainable pile of slop,
+ collapsing under it's own weight.
+\end_layout
+
+\begin_layout Itemize
+I can design and modify a storage proxy that allows me to layer index and analysis on top of other AtomSpaces,
+ pursuing a line of research resembling membrane computing.
+ In that each AtomSpace is behind a membrane,
+ and there are information flows between AtomSpaces.
+ For example,
+ an AtomSpace might be located in GPU RAM,
+ but how does info flow to it?
+ For example,
+ and AtomSpace might contain filesys info,
+ and a layer on top of it contains analytics and indexes.
+ All this needs some heads down tinkering with that code.
+\end_layout
+
+\begin_layout Itemize
+I can resume pair–counting with words and just try to leverage as far as possible,
+ ignoring everything else.
+\end_layout
+
+\begin_layout Itemize
+I can revive pair–counting of image or sound data.
+\end_layout
+
+\begin_layout Itemize
+The pair–counting recursive step requires ...
+ well,
+ the path is clear and direct,
+ but there's just a lot of work in front of me.
+ And,
+ in some sense,
+ the results are guaranteed to be underwhelming,
+ because 3-4-5 recursive steps are required before it is possible to compete with present–day industrial LLM's.
+\end_layout
+
+\begin_layout Itemize
+But what would be the point of that?
+ Suppose I can build some system that does structural analysis at a lower and more basic level than LLM's ...
+ so what?
+ I still have some soul–less machine.
+\end_layout
+
+\begin_layout Standard
+And thus back to agonizing about next steps.
+ I've got competing urges,
+ one of which is to just code as fast as possible,
+ the other is to step back and take in the big picture,
+ and develop a plan that 
+\begin_inset Quotes eld
+\end_inset
+
+goes somewhere
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+At the crux of the plan are two issues.
+ They are:
+\end_layout
+
+\begin_layout Itemize
+My structuralist approach is still several steps away from a 
+\begin_inset Quotes eld
+\end_inset
+
+recursive Curry–Howard system
+\begin_inset Quotes erd
+\end_inset
+
+,
+ where I can (a) observe nature (b) extract structures from that nature (c) extract algorithms appropriate for (dual to?) those structures (d) deploy those algorithms.
+ I know how to do step (b),
+ but I don't know how to do step (c).
+ I can,
+ for example,
+ read the wikipedia article on Curry–Howard,
+ fine.
+ But if I have a link–grammar parse of some structural data (which could be words,
+ photos,
+ sounds) I don't know how to convert a parse of,
+ say,
+ and English–language sentence,
+ into an algo.
+ Now,
+ the parser itself was a program,
+ and there is some Curry–Howard corresponding structure to my parser program,
+ but that corresponding structure is large and complex.
+ I don't yet know how to 
+\begin_inset Quotes eld
+\end_inset
+
+learn a parsing algorithm
+\begin_inset Quotes erd
+\end_inset
+
+ by 
+\begin_inset Quotes eld
+\end_inset
+
+observing data
+\begin_inset Quotes erd
+\end_inset
+
+.
+ I don't yet know how to learn any algo...
+\end_layout
+
+\begin_layout Itemize
+Hmm.
+ Well,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+generative
+\begin_inset Quotes erd
+\end_inset
+
+ is the conventional answer.
+ So,
+ generate a bunch of puny,
+ weeny algos (using some external,
+ a priori,
+ engineer-given generator),
+ and see which of these puny weeny algos generate patterns that correspond to the observed dataset.
+ This goes back to the L–systems idea mentioned above.
+\end_layout
+
+\begin_layout Itemize
+The problem here is similar to what MOSES faced:
+ the evolutionary,
+ selective pressures are weak,
+ and one hits a wall of Kolmogorov complexity and combinatorial explosion quite early in this process.
+ There's no direct way to evolve the system automatically without taking a million years.
+\end_layout
+
+\begin_layout Itemize
+So instead,
+ we do engineering:
+ we,
+ as humans,
+ invent algorithms.
+ Before LLM's,
+ we relied on printed literature,
+ research papers,
+ peers and collaborators,
+ and open source to provide the needed infrastructure to add one more pieces–part to whatever system we were envisioning.
+ At any rate,
+ we did engineering,
+ in the conventional human sense.
+ 
+\end_layout
+
+\begin_layout Itemize
+The arrival of the LLM's allow engineering to be done more quickly.
+\end_layout
+
+\begin_layout Itemize
+To what degree can I take 
+\begin_inset Quotes eld
+\end_inset
+
+human out of the loop?
+\begin_inset Quotes erd
+\end_inset
+
+ Because that is roughly what I am imagining,
+ unspoken,
+ unvoiced,
+ in the previous ruminations about structural learning:
+ building a machine that can perceive structure,
+ and doing so without personal intervention.
+ Have it run on automatic,
+ as it were.
+\end_layout
+
+\begin_layout Itemize
+If I ignore the fact that I'm talking about software,
+ here,
+ this is akin to what a CEO does:
+ he builds a corporation that 
+\begin_inset Quotes eld
+\end_inset
+
+runs on automatic
+\begin_inset Quotes erd
+\end_inset
+
+:
+ a zillion employees 
+\begin_inset Quotes eld
+\end_inset
+
+doing their job
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and the CEO with some light hand guiding the processes.
+ The obvious problem here is that there are few CEO–less corporations that can truly run head–less and not crash and burn.
+\end_layout
+
+\begin_layout Itemize
+The other problem with the above is that many such supra–human systems are toxic.
+ As argued before,
+ WWI and the tobacco industry were both toxic to humanity.
+ WWI explicitly so:
+ a young–man killing machine that only stopped when it ran out of young men.
+ Nicotine is more interesting,
+ since it is an explicit neurotransmitter,
+ so the tobacco industry is a supra–human feedback loop that hooks into a very low cellular level in the brain.
+ The toxicity of tobacco smoke is an unfortunate side–effect.
+ The coffee industry is more neutral,
+ but does not get the shock value of tobacco that makes people sit up and pay attention.
+ And pointing to the agricultural industry,
+ or the cell–phone industry is too abstract;
+ people stop listening because they think they know what these are,
+ without much considering or grasping the feedback effects of the supra–human and the micro–biological ties.
+\end_layout
+
+\begin_layout Itemize
+Anyway,
+ we live entangled in all of these networks,
+ nominally called 
+\begin_inset Quotes eld
+\end_inset
+
+economics
+\begin_inset Quotes erd
+\end_inset
+
+,
+ but also 
+\begin_inset Quotes eld
+\end_inset
+
+culture
+\begin_inset Quotes erd
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+society
+\begin_inset Quotes erd
+\end_inset
+
+ (and government ...) and so tying on yet another feedback loop into the system is not extraordinary per se.
+ What is different is that Moore's law changes everything.
+ All the cognizenti talk about this already,
+ endlessly and breathlessly in every forum imaginable,
+ so why am I repeating it here?
+ Hmmm.
+\end_layout
+
+\begin_layout Itemize
+Because
+\end_layout
+
+\begin_layout Standard
+The
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
