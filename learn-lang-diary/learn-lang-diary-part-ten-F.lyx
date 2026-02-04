@@ -10622,10 +10622,102 @@ Ohh.
  I thought of this three,
  four months ago,
  and still have not really written or designed about this.
+ This is to give Claude the ability to remember things (i.e.
+ in the AtomSpace) and to recall things 
+\begin_inset Quotes eld
+\end_inset
+
+as needed
+\begin_inset Quotes erd
+\end_inset
+
+ (priority and attention queue) and act one them (incorporate them into current thinking) and then file results back into the AtomSpace (long–term memory.) This single sentence sketch evokes a rather traditional AGI engineering plan:
+ short–term and long–term memory,
+ the bridge between the two,
+ the need to provide an attention mechanism that focuses the thinking of the LLM in a certain direction.
 \end_layout
 
 \begin_layout Standard
-The
+This is a kind–of fun thing to do,
+ and I kind of got started doing exactly this,
+ 3–4 months ago,
+ with Claude.
+ It got put on hold.
+ I did not hit any brick wall,
+ but it was definitely an uphill climb.
+ basically,
+ I was trying to create a long–term memory as a collection of prompts,
+ and an indexing system of prompts–that–are–indexes of other prompts,
+ and then,
+ because text does not scale,
+ to somehow do this in the AtomSpace,
+ and then somehow use this as a tap into the attention system.
+ And this is kind–of–ish where I hit the wall,
+ sort of,
+ thinking that I could tap into the attention vectors much more directly,
+ if I could have the LLM running locally on my machine,
+ and twinking the weights directly.
+ Roughly speaking,
+ this is the IIT issue:
+ I need close ties into the system;
+ the connection via prompts is too distant,
+ too remote,
+ and I wanted to have a much closer and tighter integration between weight–vectors in the NN and the specific symbols held in the AtomSpace.
+\end_layout
+
+\begin_layout Standard
+So this minimal sketch suggests that:
+\end_layout
+
+\begin_layout Itemize
+I should in fact look for some minimalist LLM that I can run fully locally on my local GPU,
+ so that I can directly tap into it's weight vectors,
+ and
+\end_layout
+
+\begin_layout Itemize
+I should port some minimalist AtomSpace that will sit in the GPU RAM,
+ so that it can be used to directly poke weights.
+\end_layout
+
+\begin_layout Standard
+Which seems like a good plan.
+\end_layout
+
+\begin_layout Standard
+The agony queen here is that I still don't have a good observer of my file system,
+ which I really do want,
+ and my gut sense is I really need to push forward on pair counting anyway.
+\end_layout
+
+\begin_layout Standard
+And I can twink and twerk with all of these all at the same time,
+ except I have an external constraint that I have to build something along a path that appears to be immediately and intuitively obvious and useful to my current employer,
+ and prospective future employers.
+ Or even to my fan club...
+ And this last constraint is a source of stress.
+ Urgh.
+\end_layout
+
+\begin_layout Standard
+Well,
+ it seems all I've got so far is to continue to twink and twerk whatever sets me afire that day,
+ and if its not the right thing to do,
+ well,
+ its a tragedy,
+ but life (or rather,
+ death?) is coming at me like a bullet,
+ and I'm trying to dodge and weave as best I can,
+ and it seems like the future,
+ as it comes,
+ will come in an inevitable way.
+ OK,
+ so that's a plan,
+ I guess.
+ Enough.
+ Later,
+ dude.
+ 
 \end_layout
 
 \begin_layout Section*
