@@ -9793,7 +9793,380 @@ One experiment would be to make a catalog of all tree–shapes in the dataset,
  for each tree,
  insert variables in every possible location,
  and do pair–wise counting on those.
+\end_layout
+
+\begin_layout Subsection*
+3 February 2026
+\end_layout
+
+\begin_layout Standard
+Why am I procrastinating?
+ Because I know heavy lifting lies ahead.
+ And here I am,
+ evening,
+ blowing it after wasting a nice morning taking care of mundane stuffs.
+ Alas.
+ Well,
+ lets give it a try,
+ anyway.
+\end_layout
+
+\begin_layout Standard
+What is knowledge?
+ What do I mean by 
+\begin_inset Quotes eld
+\end_inset
+
+knowledge
+\begin_inset Quotes erd
+\end_inset
+
+?
+ What do I want my hypothetical AI to accomplish?
+ How can it be accomplished?
+ How could it all work?
+ These are the questions to explore.
+ I have some answers,
+ but lets work up to these.
+\end_layout
+
+\begin_layout Standard
+So I was talking about a record of the files held on my collection of computers (real and virtual,
+ lxc and docker containers,
+ datasets,
+ backup drives...) What is there to know about these files?
+ Well,
+ some are direct copies (backups,
+ archives...) some are functionally similar (different versions of /bin/bash compiled for different OS versions...) some are same in format,
+ but otherwise random (mp3 collection,
+ photo collection,
+ email collection,
+ datasets from experiments,
+ source code archives...) What is there to 
+\begin_inset Quotes eld
+\end_inset
+
+understand
+\begin_inset Quotes erd
+\end_inset
+
+ about this file collection?
+ Not much,
+ beyond what I describe here.
+ Want to know more?
+ Don't ask me;
+ as an LLM front end that can 
+\begin_inset Quotes eld
+\end_inset
+
+see
+\begin_inset Quotes erd
+\end_inset
+
+ the file–system contents.
+ What is there to 
+\begin_inset Quotes eld
+\end_inset
+
+see
+\begin_inset Quotes erd
+\end_inset
+
+?
+ Well not much more than the above.
+ ...
+\end_layout
+
+\begin_layout Standard
+So what might I ask the LLM about my file system?
+\end_layout
+
+\begin_layout Itemize
+How many lxc containers do I have?
+ Which ones have I not used recently?
+ Can I delete some of them?
+\end_layout
+
+\begin_layout Itemize
+I seem to have misplaced the dataset of Project Gutenberg books ...
+ where are they?
+ What about the SFIA dataset?
+ Surely I have some copy somewhere that is NOT in an lxc container,
+ right?
+\end_layout
+
+\begin_layout Itemize
+Crap,
+ when I moved to CephFS,
+ I did not know that it has the terrible flaw of sometimes zeroing out file contents;
+ do I have some copy somewhere of this file that is not all zeros?
+ Can I find all the files for which I have a viable backup copy?
+ Can I identify the files which have been permanently lost?
+\end_layout
+
+\begin_layout Standard
+So how would one make the above work?
+ Lets review what does not work:
+ the old idea of 
+\begin_inset Quotes eld
+\end_inset
+
+pair–wise MI
+\begin_inset Quotes erd
+\end_inset
+
+ –> disjuncts/jigsaws –> higher–level correlations mostly does not work,
+ because there's not much to correlate.
+\end_layout
+
+\begin_layout Standard
+Most of the above questions can be solved by applying old–fashioned find with grep.
+ Since Claude knows about find+grep,
+ I could just let it loose on my file system.
+ But since I don't want to (can't) let it loose on everything (because some of the contents is offline,
+ (e.g.
+ backup disks,
+ USB sticks...) and others require remote login or firewall hole–punches.
+ This would require grep/find–like abilities for the AtomSpace.
+ Which already exist via MeetLink,
+ etc.
+ and so this is about teaching Claude how to write custom Atomese queries.
+\end_layout
+
+\begin_layout Standard
+Next,
+ I have the problem of 
+\begin_inset Quotes eld
+\end_inset
+
+current Claude
+\begin_inset Quotes erd
+\end_inset
+
+ (for which there is a monthly subscription fee) vs.
  
+\begin_inset Quotes eld
+\end_inset
+
+what can I run privately on my own dinky GPU
+\begin_inset Quotes erd
+\end_inset
+
+,
+ and then 
+\begin_inset Quotes eld
+\end_inset
+
+future less dinky GPU that I can own that will be capable of today's Claude
+\begin_inset Quotes erd
+\end_inset
+
+ vs.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+future subscription service
+\begin_inset Quotes erd
+\end_inset
+
+.
+ The issue is that,
+ although I can design and test only for today,
+ I takes a long fucking time to design and test,
+ and so therefore I should target future systems.
+\end_layout
+
+\begin_layout Standard
+Lets take a step back.
+ The old–fashioned locate/plocate/slocate systems build an index of file names,
+ and this pre–built index is searchability so easy to do.
+ I could also build an index in the AtomSpace.
+ How should I package it?
+ Well,
+ I could have a core AtomSpace,
+ containing the file–system model,
+ with no indexes,
+ and then a layer on top of it (child AtomSpace) holding index data.
+ Current infrastructure does not allow me to store this higher layer without storing the lower layer,
+ so current StorageNode design would need some work to make this run.
+\end_layout
+
+\begin_layout Standard
+If I think abstractly in terms of 
+\begin_inset Quotes eld
+\end_inset
+
+science data sets
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then I can imagine all sorts of abstracts and summaries can be developed.
+ I once read through the Vera Rubin telescope data product catalog,
+ and it was quite remarkable,
+ what kind of 
+\begin_inset Quotes eld
+\end_inset
+
+products
+\begin_inset Quotes erd
+\end_inset
+
+ one might have available,
+ and the various time–scales at which they are available.
+ What are these products?
+ They are (abstractly) different kinds of algorithms (some very complex and sophisticated) applied to raw pixels,
+ and then categorized into indexes.
+ Which can then be filtered.
+ All this is hand–built.
+ I suppose someone has already attached an LLM query system to this product catalog ...
+\end_layout
+
+\begin_layout Standard
+And so another step back:
+ the meta–meta layer.
+ Ordinary (but smart) grad students in astronomy are very busy fiddling with LLM's and attaching them to astronomy datasets and discovering new astronomical phenomena).
+ Other ordinary grad students are applying LLM's as coding wizards to the various astrometric algorithms,
+ to improve their operation.
+ And so these advances are happening 
+\begin_inset Quotes eld
+\end_inset
+
+full speed ahead
+\begin_inset Quotes erd
+\end_inset
+
+ without the intervention of any kind of AI I might imagine myself to be designing,
+ and so turn around and ask 
+\begin_inset Quotes erd
+\end_inset
+
+what is knowledge,
+ anyway?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So again,
+ using my own file system as 
+\begin_inset Quotes eld
+\end_inset
+
+a dataset
+\begin_inset Quotes erd
+\end_inset
+
+,
+ what do I hope to 
+\begin_inset Quotes eld
+\end_inset
+
+perceive
+\begin_inset Quotes erd
+\end_inset
+
+ in it?
+ Well,
+ I can hand–design various custom MeetLinks that extract some of the data needed to answer the questions above.
+ How?
+\end_layout
+
+\begin_layout Standard
+lets tackle the first:
+ where are all the lxc containers?
+ Well,
+ on one system,
+ I happen to 
+\begin_inset Quotes eld
+\end_inset
+
+know
+\begin_inset Quotes erd
+\end_inset
+
+ that they are located at /home/lxc,
+ but on another system,
+ I put them somewhere else.
+ How do I know they are LXC?
+ Well,
+ not just due to location,
+ but tell–tale signs,
+ like the names of config files,
+ and the fact that some config files have a certain very peculiar form.
+ That,
+ plus the fact that there is a root directory,
+ with /bin,
+ /usr,
+ /var and /tmp...
+ this common FSSTND file hierarchy.
+ How can I discover this hierarchy?
+ (How can my algo discover this hierarchy?) Well,
+ if I really do want to ratchet up 
+\begin_inset Quotes eld
+\end_inset
+
+from nothing
+\begin_inset Quotes erd
+\end_inset
+
+,
+ then perhaps the pair–count -> jigsaw approach can discover that there are similar fs hierarchies scattered about.
+ The experiment that has not yet been done is to prove that this is indeed discoverable in this way.
+ So I guess that is a big to–do item.
+\end_layout
+
+\begin_layout Standard
+But there are two meta–issues.
+ One is that I would like to attach this subsystem to an LLM,
+ today (using current technology).
+ The other is the 
+\begin_inset Quotes eld
+\end_inset
+
+how do I discover algorithms?
+\begin_inset Quotes erd
+\end_inset
+
+ question.
+ So,
+ a higher–order structure of data correlation is ...
+ a 
+\begin_inset Quotes eld
+\end_inset
+
+static
+\begin_inset Quotes erd
+\end_inset
+
+ structure,
+ in that it just 
+\begin_inset Quotes eld
+\end_inset
+
+exists
+\begin_inset Quotes erd
+\end_inset
+
+;
+ it is NOT an algorithm.
+ This higher–order structure might be describable as a collection of jigsaws,
+ with the connector semantics describing how these connectors are to be connected,
+ but this requires a parsing algorithm,
+ and where did that algorithm come from?
+ Curry–Howard correspondence says 
+\begin_inset Quotes eld
+\end_inset
+
+proofs are programs
+\begin_inset Quotes erd
+\end_inset
+
+ but this is too distant from the more immediate situation of having a structure,
+ and having an algorithm that can perceive that structure (never mind perceive it efficiently).
 \end_layout
 
 \begin_layout Section*
