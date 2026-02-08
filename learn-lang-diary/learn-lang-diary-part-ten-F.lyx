@@ -10752,6 +10752,133 @@ So there's a panoply of options and pieces–parts.
  Should I mess with this today?
 \end_layout
 
+\begin_layout Subsection*
+8 February 2026
+\end_layout
+
+\begin_layout Standard
+In a discord chat,
+ I wrote this:
+ 
+\end_layout
+
+\begin_layout Standard
+Well,
+ if you as the scientist,
+ expect a dataset with all pairs in it and instead you get one with low_MI pairs discarded ..
+ that comes as a surprise.
+\end_layout
+
+\begin_layout Standard
+but also ..
+ MI depends on everything so if you discard the low–MI stuff,
+ the MI of everything else changes.
+\end_layout
+
+\begin_layout Standard
+a science question might be:
+ "what do I get when I sample randomly?" and when you get bored of that,
+ then the next question is "what do I get when I cut away parts p,q,r of the dataset?" and ...
+ well,
+ understanding the answer to the second question is hard,
+ if you (I) don't know what p,q,r were cut.
+\end_layout
+
+\begin_layout Standard
+nordizvaus
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:12 PM
+\end_layout
+
+\begin_layout Standard
+Ok separate question ,
+ so you recommend not cutting out mi < 1.0 pairs ?
+\end_layout
+
+\begin_layout Standard
+Linas
+\end_layout
+
+\begin_layout Standard
+—
+ 
+\end_layout
+
+\begin_layout Standard
+4:17 PM
+\end_layout
+
+\begin_layout Standard
+if you sample randomly and keep all pairs,
+ then you get a nice bell curve.
+ Bell curves look like parabolas on a semi-log plot.
+\end_layout
+
+\begin_layout Standard
+If you cut off the left half of a bell curve,
+ and recompute the MI,
+ you'll get some lop–sided curve,
+ but I have no intuition for that shape,
+ or how to think about it.
+\end_layout
+
+\begin_layout Standard
+Turns out that bell curves correspond to points uniformly distributed over a very high–dimensional sphere.
+ Now,
+ pick a point x on that sphere,
+ call it "the north pole",
+ and throw away everything on the southern hemisphere of that point.
+ Do that from the perspective of each point.
+ ...
+\end_layout
+
+\begin_layout Standard
+It's like an event horizon.
+ throw away all points on the other side of the event horizon from "me",
+ where "me" is some given word,
+ and the event horizon is located at 1.23 < MI("me".
+ "other word") 
+\end_layout
+
+\begin_layout Standard
+So I wrote the above,
+ and as I wrote it,
+ my head started exploding ...
+ what if this is not just a weird analogy,
+ but instead there is something literally true about it?
+ Things on the other side of an event horizon are literally unreachable to us.
+ And we know that QM wave functions live in a high–dimensional (
+\begin_inset Quotes eld
+\end_inset
+
+infinite–dimensional Hilbert
+\begin_inset Quotes erd
+\end_inset
+
+) space,
+ so is there something where there's some cut–off,
+ where the high–MI stuff is our past lightcone and the low–MI stuff is spatially separated?
+ What if this analogy is literally true in some way?
+\end_layout
+
+\begin_layout Standard
+So that's one.
+ And then a far more grounded question:
+ what does happen to a space,
+ when you discard all low–MI pairs?
+ I have no intuition for that.
+ It also needs thinking and re–thinking.
+ (and scratching out some formulas.
+ maybe later.)
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
