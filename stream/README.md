@@ -78,3 +78,21 @@ the hope that it can supplant the earlier batch-processing code, while
 remaining true to the idea of exploring neuro-symbolic learning.
 
 Easier said than done.
+
+Prototypes
+----------
+Some relevant prototype code.  The prototypes are written in "pure
+Atomese". There are many reasons for working in pure Atomese; mostly,
+its about being to hold the processing code in the AtomSpace, directly,
+to intropect and maniuplate it; to hold state in the AtomSpace, to save
+and restore and send Atomese over the net. These are all built-in
+features of Atomese, and so the goal is to leverage this.
+
+* An example of computing mutual information in pure Atomese is given
+  in https://github.com/opencog/atomspace/examples/flow/flow-futures.scm
+* An example parsing pipeline. written in pure Atomese is in
+  https://github.com/opencog/sensory/examples/parse-pipeline.scm
+* Examples of reading and writing files, walking a filesystem, and
+  tailing changing files (e.g. tailing a unix pipe) are in
+  https://github.com/opencog/sensory/examples/ file-read.scm,
+  file-write.scm, filesys.scm, file-tail.scm.
