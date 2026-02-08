@@ -10169,7 +10169,7 @@ proofs are programs
  and having an algorithm that can perceive that structure (never mind perceive it efficiently).
 \end_layout
 
-\begin_layout Subsubsection*
+\begin_layout Subsection*
 4 February 2026
 \end_layout
 
@@ -10717,7 +10717,39 @@ Well,
  Enough.
  Later,
  dude.
+\end_layout
+
+\begin_layout Subsection*
+4 February 2026 Ongoing planning
+\end_layout
+
+\begin_layout Standard
+Now for some LLM slop.
+ I ask:
  
+\begin_inset Quotes eld
+\end_inset
+
+Are there any (open source) LLM's that can run on a small-to-midrange commodity GPU board that also have MCP support in them?
+\begin_inset Quotes erd
+\end_inset
+
+ The answers are:
+\end_layout
+
+\begin_layout Itemize
+Ollama with tool calling models like Qwen3 ...
+ but also Llama 3.1/3.2 8B,
+ Mistral 7B DeepSeek R1 8B ...
+\end_layout
+
+\begin_layout Itemize
+Use ollcmp or ollama–cmp–bridge or AnythingLLM or LibreChat or Chainlit to provide explicit MCP interfaces.
+\end_layout
+
+\begin_layout Standard
+So there's a panoply of options and pieces–parts.
+ Should I mess with this today?
 \end_layout
 
 \begin_layout Section*
