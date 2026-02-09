@@ -10879,6 +10879,208 @@ So that's one.
  maybe later.)
 \end_layout
 
+\begin_layout Subsection*
+8 Feb 2026 Later
+\end_layout
+
+\begin_layout Standard
+Its late,
+ I'm tired,
+ this will probably go badly.
+ But I will agonize if I don't try.
+ Claude math session.
+ I ask Claude questions and try to stitch together a coherent story.
+\end_layout
+
+\begin_layout Paragraph*
+Cosine Distribution for Random Vectors in High Dimensions
+\end_layout
+
+\begin_layout Standard
+Suppose I have a sphere in 
+\begin_inset Formula $N$
+\end_inset
+
+ dimensions,
+ where 
+\begin_inset Formula $N$
+\end_inset
+
+ is large,
+ say 1K or 10K.
+ Suppose I sprinkle 
+\begin_inset Formula $M\times N$
+\end_inset
+
+ random points in that sphere,
+ for 
+\begin_inset Formula $M\approx\sqrt{N}$
+\end_inset
+
+.
+ What formula gives the distribution of cosines between pairs of vectors?
+\end_layout
+
+\begin_layout Standard
+(Below is my imaginative rewrite of what Claude told me.)
+\end_layout
+
+\begin_layout Standard
+The number of points doesn't matter for the pairwise distribution.
+ Each pair of points is independently sampled.
+ For two independent vectors drawn uniformly from the 
+\begin_inset Formula $N$
+\end_inset
+
+–dimensional sphere 
+\begin_inset Formula $S^{N-1}$
+\end_inset
+
+ the cosine is 
+\begin_inset Formula $c=\mathbf{x}\cdot\mathbf{y}/|\mathbf{x}||\mathbf{y}|$
+\end_inset
+
+ and has density 
+\begin_inset Formula $f\left(c\right)=\cdots$
+\end_inset
+
+ and I have to coax from Claude why its that formula.
+ 
+\end_layout
+
+\begin_layout Standard
+Picking random vectors in 
+\begin_inset Formula $\mathbb{R}^{N}$
+\end_inset
+
+ normalized to unit length gives the sphere 
+\begin_inset Formula $S^{N-1}$
+\end_inset
+
+.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+ring
+\begin_inset Quotes erd
+\end_inset
+
+ at polar angle 
+\begin_inset Formula $\theta$
+\end_inset
+
+ is 
+\begin_inset Formula $S^{N-2}$
+\end_inset
+
+ and has radius 
+\begin_inset Formula $\sin\theta$
+\end_inset
+
+ so it's area scales as 
+\begin_inset Formula $\sin^{N-2}\theta$
+\end_inset
+
+.
+ So the distribution of sine's is 
+\begin_inset Formula $\sin^{N-2}\theta\;d\theta$
+\end_inset
+
+ which picks up a Jacobian 
+\begin_inset Formula $ds=\cos\theta\;d\theta$
+\end_inset
+
+ so 
+\begin_inset Formula $ds=d\theta/\sqrt{1-s^{2}}$
+\end_inset
+
+ so the distribution of sines is 
+\begin_inset Formula 
+\[
+g\left(s\right)\propto\frac{s^{N-2}}{\sqrt{1-s^{2}}}
+\]
+
+\end_inset
+
+and so for cosines,
+ the distribution is 
+\begin_inset Formula 
+\[
+f\left(c\right)\propto\frac{\sin^{N-2}\theta}{\sin\theta}=\sin^{N-3}\theta=\left(1-c^{2}\right)^{\left(N-3\right)/2}
+\]
+
+\end_inset
+
+The normaliztion is given by the beta function 
+\begin_inset Formula 
+\[
+\text{Beta}\left(a,b\right)=\int_{0}^{1}t^{a-1}(1-t)^{b-1}\,dt=\frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}
+\]
+
+\end_inset
+
+and so putting it together,
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f(c)=\frac{1}{\text{Beta}\!\left(\frac{1}{2},\,\frac{N-1}{2}\right)}\,(1-c^{2})^{(N-3)/2},\qquad c\in[-1,1]
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Equivalently,
+ 
+\begin_inset Formula $\left(1+c\right)/2\sim\text{Beta}\!\left(\frac{N-1}{2},\,\frac{N-1}{2}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For large 
+\begin_inset Formula $N$
+\end_inset
+
+ this is is Gaussian,
+ so 
+\begin_inset Formula 
+\[
+c\approx\mathcal{N}\left(0,1/N\right)
+\]
+
+\end_inset
+
+or 
+\begin_inset Formula $c\sqrt{N}\approx\mathcal{N}\left(0,1\right)$
+\end_inset
+
+ In other words,
+ in high dimensions,
+ random vectors are almost orthogonal to one–another.
+\end_layout
+
+\begin_layout Standard
+Well,
+ OK.
+ This is the correct answer to my question,
+ but I guess I asked the wrong question...
+ Let me think again...
+\end_layout
+
+\begin_layout Standard
+Or not.
+ It's late.
+ I'm tired.
+ Good night.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
