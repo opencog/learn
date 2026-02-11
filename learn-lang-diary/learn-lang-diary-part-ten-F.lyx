@@ -11012,7 +11012,7 @@ f\left(c\right)\propto\frac{\sin^{N-2}\theta}{\sin\theta}=\sin^{N-3}\theta=\left
 
 \end_inset
 
-The normaliztion is given by the beta function 
+The normalization is given by the beta function 
 \begin_inset Formula 
 \[
 \text{Beta}\left(a,b\right)=\int_{0}^{1}t^{a-1}(1-t)^{b-1}\,dt=\frac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}
@@ -11079,6 +11079,293 @@ Or not.
  It's late.
  I'm tired.
  Good night.
+\end_layout
+
+\begin_layout Subsection*
+11 February 2026
+\end_layout
+
+\begin_layout Standard
+Well,
+ I was going to write about something entirely different,
+ but then I re–read the above,
+ and decided that I have that unfinished business.
+ So I ask Claude a new question:
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Thresholding Random Vectors in High Dimensions
+\end_layout
+
+\begin_layout Standard
+Suppose one has a collection of points,
+ randomly distributed on a very high–dimensional sphere.
+ These points can be understood as vectors,
+ with vector components 
+\begin_inset Formula $-1\le v_{i}\le+1$
+\end_inset
+
+ and of course 
+\begin_inset Formula $\sum_{i}v_{i}^{2}=1$
+\end_inset
+
+.
+ I want to pass these coordinates through a filter,
+ to create a new vector 
+\begin_inset Formula $t_{i}$
+\end_inset
+
+ such that
+\begin_inset Formula 
+\[
+t_{i}=\begin{cases}
+v_{i} & a<v_{i}\\
+0 & v_{i}\le a
+\end{cases}
+\]
+
+\end_inset
+
+I would like to understand the distribution of these new vectors.
+\end_layout
+
+\begin_layout Standard
+The answer?
+ 
+\begin_inset Quotes eld
+\end_inset
+
+This is a nice problem with clean results in the high–dimensional limit.
+\begin_inset Quotes erd
+\end_inset
+
+ But of course.
+ I paraphrase Claude's reply below,
+ shaped to my liking.
+\end_layout
+
+\begin_layout Standard
+In high dimensions,
+ each coord is approximately Gaussian,
+ so 
+\begin_inset Formula 
+\[
+v_{i}\approx\mathcal{N}\left(0,1/N\right)
+\]
+
+\end_inset
+
+The typical scale of each coord is 
+\begin_inset Formula $\sigma=1/\sqrt{N}$
+\end_inset
+
+ and the natural parameter for the cutoff is the scaled variant:
+ 
+\begin_inset Formula $\alpha=a\sqrt{N}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+I'm not really interested in the energy 
+\begin_inset Formula $\left|\vec{t}\right|^{2}=\sum_{i}t_{i}^{2}$
+\end_inset
+
+ but Claude told me and its interesting enough to repeat (and anyway,
+ we'll need it as normalization,
+ for later):
+\begin_inset Formula 
+\[
+\left\langle \left|t\right|^{2}\right\rangle =\int_{\alpha}^{\infty}x^{2}\varphi\left(x\right)dx=\alpha\varphi\left(\alpha\right)+\int_{\alpha}^{\infty}\varphi\left(x\right)dx
+\]
+
+\end_inset
+
+where 
+\begin_inset Formula 
+\[
+\varphi\left(z\right)=\frac{e^{-z^{2}/2}}{\sqrt{2\pi}}\qquad\Phi\left(z\right)=\int_{z}^{\infty}\varphi\left(x\right)dx
+\]
+
+\end_inset
+
+so for 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+ we get an average energy of 1/2.
+ 
+\end_layout
+
+\begin_layout Standard
+The expected value of each component is 
+\begin_inset Formula $\left\langle t_{i}\right\rangle =\varphi\left(\alpha\right)/\sqrt{N}$
+\end_inset
+
+ and so the expected length is 
+\begin_inset Formula 
+\[
+\left|\left\langle \vec{t}\right\rangle \right|=\sqrt{\sum_{i}\left\langle t_{i}\right\rangle ^{2}}=\varphi\left(\alpha\right)
+\]
+
+\end_inset
+
+so the mean vector points in the all–ones direction.
+\end_layout
+
+\begin_layout Standard
+The mean dot product between two truncated random vectors 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ and 
+\begin_inset Formula $\vec{b}$
+\end_inset
+
+ is 
+\begin_inset Formula 
+\[
+\left\langle \vec{a}\cdot\vec{b}\right\rangle =\varphi^{2}\left(\alpha\right)
+\]
+
+\end_inset
+
+The expected cosine similarity is 
+\begin_inset Formula 
+\[
+\cos\theta=\left\langle \hat{a}\cdot\hat{b}\right\rangle =\left\langle \frac{\vec{a}\cdot\vec{b}}{\left|a\right|\left|b\right|}\right\rangle =\frac{\left\langle \vec{a}\cdot\vec{b}\right\rangle }{\sqrt{\left\langle \left|a\right|^{2}\right\rangle \left\langle \left|b\right|^{2}\right\rangle }}=\frac{\varphi^{2}\left(\alpha\right)}{\alpha\varphi\left(\alpha\right)+\Phi\left(\alpha\right)}
+\]
+
+\end_inset
+
+so for 
+\begin_inset Formula $\alpha=0$
+\end_inset
+
+ one gets 
+\begin_inset Formula $\cos\theta=1/\pi\approx0.318$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+More interesting is this,
+ which Claude gives without proof:
+ if two non–truncated vectors 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ have an inner product 
+\begin_inset Formula $\vec{s}\cdot\vec{t}$
+\end_inset
+
+ then,
+ for the corresponding truncated vectors 
+\begin_inset Formula $\vec{a}$
+\end_inset
+
+ ,
+\begin_inset Formula $\vec{b}$
+\end_inset
+
+ one has,
+ to leading order,
+\begin_inset Formula 
+\[
+\vec{a}\cdot\vec{b}=\varphi^{2}\left(\alpha\right)+C\left(\alpha\right)\vec{s}\cdot\vec{t}+\mathcal{O}\left(\left(\vec{s}\cdot\vec{t}\right)^{2}\right)
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $C\left(\alpha\right)$
+\end_inset
+
+ some bivariate truncated Gaussian integral.
+ Claude gives this the name of 
+\emph on
+
+\begin_inset Quotes eld
+\end_inset
+
+signal preservation
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+ and the second term 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+carries the actual geometric signal
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Well,
+ OK,
+ Claude clearly learned this from some texts,
+ but is this supposed to be metaphorical,
+ or does it have a more formal validity?
+ That is,
+ is there a claim that there is some 
+\begin_inset Quotes eld
+\end_inset
+
+information content
+\begin_inset Quotes erd
+\end_inset
+
+ in the two non–truncated vectors 
+\begin_inset Formula $\vec{s}$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\vec{t}$
+\end_inset
+
+ and that truncation reduces the information content?
+ Clearly,
+ truncation discards something,
+ but what is that something being discarded?
+\end_layout
+
+\begin_layout Standard
+The most interesting thing to pop up is this side–comment along the way:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The thresholded,
+ mean–centered vectors then live approximately on a lower–dimensional manifold of dimension
+\emph default
+ 
+\begin_inset Formula $\sim N\Phi\left(\alpha\right)$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ Wow!
+ Really?
+ So truncation is dimensional reduction!?
 \end_layout
 
 \begin_layout Section*
