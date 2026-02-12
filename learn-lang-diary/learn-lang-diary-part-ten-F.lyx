@@ -11368,6 +11368,279 @@ The thresholded,
  So truncation is dimensional reduction!?
 \end_layout
 
+\begin_layout Standard
+Maybe because I got a bump on my head,
+ but I'm annoyed I don't know the above by heart.
+ I got hospitalized,
+ day before yesterday,
+ for a concussion.
+ I'm feeling woozy and carefree just right now.
+ I refuse to think hard,
+ and instead go with the flow here.
+ So let's woozily (as I write this,
+ I realize that it is no accident that this rhymes with 
+\emph on
+boozily
+\emph default
+...) The flow says 
+\begin_inset Quotes eld
+\end_inset
+
+what dimensional reduction?
+\begin_inset Quotes erd
+\end_inset
+
+ Let's find out...
+\end_layout
+
+\begin_layout Standard
+While I wait for Claude's answer,
+ I notice that it is bandying about the word 
+\begin_inset Quotes eld
+\end_inset
+
+sparsity
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Now,
+ almost a decade ago,
+ In my 
+\begin_inset Quotes eld
+\end_inset
+
+sheaves
+\begin_inset Quotes erd
+\end_inset
+
+ paper,
+ I made the claim that one could (approximately) factor a sparse high–dimensional matrix 
+\begin_inset Formula $M$
+\end_inset
+
+ into 
+\begin_inset Formula $M=L^{T}KR$
+\end_inset
+
+ with 
+\begin_inset Formula $K$
+\end_inset
+
+ being a dimensionally reduced dense matrix,
+ and 
+\begin_inset Formula $L$
+\end_inset
+
+,
+ 
+\begin_inset Formula $R$
+\end_inset
+
+ being left and right factors.
+ This was in the context of Link Grammar,
+ where 
+\begin_inset Formula $R$
+\end_inset
+
+ was the sets of words,
+ organized into grammatical classes:
+ viz lots and lots of English words,
+ but only a few hundred(?) (almost a thousand?) grammatical classes,
+ 
+\begin_inset Formula $K$
+\end_inset
+
+ was the collection of disjuncts,
+ and the 
+\begin_inset Formula $L$
+\end_inset
+
+ a bit harder to perceive,
+ but was the recurring patterns in the disjuncts.
+ Strictly speaking,
+ the Link Grammar dictionary was just 
+\begin_inset Formula $L^{T}K$
+\end_inset
+
+ and some work would have been needed to factorize this.
+ At any rate,
+ it was clear that writing a natural language parser was an exercise in dimensional reduction.
+ For English,
+ this is clearly a syntactic exercise;
+ for Lithuanian,
+ its clearly morpho–syntactic.
+ The word–order is relatively free;
+ the factoring is more explicitly in the lexis of suffixes.
+ Hmm.
+ I have to think about that.
+\end_layout
+
+\begin_layout Standard
+The point is that sparsity does imply dimensional reduction,
+ but perhaps the mistake being made here is that it is linear.
+ And the fact that there's this huge statistical component to everything makes it confusing.
+ What now pops into my mind is a botanical bush:
+ the leaves are 2D,
+ they are sparse,
+ but they are arranged into an approximate space–filling arrangement,
+ occupying a 3D volume.
+ The point of that volume is that air is transparent to sunlight,
+ and so the bush is optimizing for sunlight collection,
+ while maintaining short branches,
+ and encoding biological growth rules in some simple DNA encoding.
+ That's the factorization.
+ How much of this analogy can I push into more abstract settings?
+\end_layout
+
+\begin_layout Standard
+OK,
+ Claude's answer has arrived.
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+My original answer was imprecise and deserves pushback.
+ What I should have said is
+\emph default
+ ...
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ duhh.
+ OK,
+ If I have an 
+\begin_inset Formula $N$
+\end_inset
+
+–dimensional vector,
+ and zero out some of the components,
+ then,
+ on average,
+ there are exactly 
+\begin_inset Formula $N\Phi\left(\alpha\right)$
+\end_inset
+
+ non–zero components left,
+ and this is the dimensional reduction.
+\end_layout
+
+\begin_layout Standard
+Next,
+ it points out that the truncated space is not a manifold.
+ So,
+ this is more interesting.
+ For every point 
+\begin_inset Formula $\vec{v}\in S^{N-1}$
+\end_inset
+
+ define the 
+\begin_inset Quotes eld
+\end_inset
+
+support set
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset Formula $S\left(\vec{v}\right)$
+\end_inset
+
+ as the set of indexes (or basis vectors) that pass the thresholding:
+\begin_inset Formula 
+\[
+S\left(\vec{v}\right)=\left\{ i\vert v_{i}>a\right\} 
+\]
+
+\end_inset
+
+The cardinality is variable:
+ 
+\begin_inset Formula $\left|S\right|=k$
+\end_inset
+
+ for some 
+\begin_inset Formula $0\le k\le N$
+\end_inset
+
+.
+ The support set defines an 
+\begin_inset Quotes eld
+\end_inset
+
+orthant
+\begin_inset Quotes erd
+\end_inset
+
+ (quadrant ...
+ octant ...
+ orthant) and the space splits into a union of orthants:
+ 
+\begin_inset Formula 
+\[
+A^{N-1}\left(a\right)=\bigcup_{S\subseteq\left\{ 1,\cdots,N\right\} ,\left|S\right|=k}\mathbb{R}_{+}^{k}
+\]
+
+\end_inset
+
+with 
+\begin_inset Formula $\mathbb{R}_{+}=\left\{ x\in\mathbb{R}\vert x>a\right\} $
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+There are 
+\begin_inset Formula $N$
+\end_inset
+
+ choose 
+\begin_inset Formula $k$
+\end_inset
+
+ orthants,
+ and as 
+\begin_inset Formula $k$
+\end_inset
+
+ varies,
+ we have
+\begin_inset Formula 
+\[
+\frac{{N \choose k+1}}{{N \choose k}}=\frac{N!}{\left(k+1\right)!\left(N-k-1\right)!}\cdot\frac{k!\left(N-k\right)!}{N!}=\frac{N-k}{k+1}
+\]
+
+\end_inset
+
+Hmm.
+ I can't find anything interesting to say here.
+\end_layout
+
+\begin_layout Standard
+Thus rapidly turns into binomial distribution games.
+ If I take heads and tails to stand for keep/cut,
+ then for a random draw,
+ and a cutoff of 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ then I will have 
+\begin_inset Formula $\Phi\left(\alpha\right)$
+\end_inset
+
+ tails in my string,
+ on average.
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
