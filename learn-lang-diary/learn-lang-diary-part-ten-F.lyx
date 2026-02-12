@@ -11641,6 +11641,178 @@ Thus rapidly turns into binomial distribution games.
  on average.
 \end_layout
 
+\begin_layout Standard
+I poked on Claude and it spilled the beans on the Donoho–Candès–Tao results.
+ Interesting story,
+ that.
+ The papers,
+ I am told,
+ are Donoho "Compressed Sensing" (2006) and Candès and Tao "Decoding by Linear Programming" (2005) and later Candès,
+ Romberg,
+ and Tao giving "Robust Uncertainty Principles".
+\end_layout
+
+\begin_layout Standard
+I then asked a different set of questions,
+ and inadvertently opened the door to signal processing in general.
+ A lot of interesting and suggestive pieces–parts but nothing to write home about.
+\end_layout
+
+\begin_layout Subsection*
+12 February 2026 Late
+\end_layout
+
+\begin_layout Standard
+So I keep having these inspirational ideas that I keep planning on getting back to,
+ but then I get distracted and never do.
+ Yesterday,
+ instead of doing the above,
+ I was going to do a riff on 
+\begin_inset Quotes eld
+\end_inset
+
+retrieval assisted generation
+\begin_inset Quotes erd
+\end_inset
+
+ which is about indexing blobs of text with vectors,
+ then doing cosine similarity on the vectors to find the most–related block of text.
+ Perhaps the reason I got distracted is because I knew,
+ subconsciously,
+ that it's hard to do anything with this idea.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+What should I do next?
+\begin_inset Quotes erd
+\end_inset
+
+ Turn this into a vector,
+ run cosine similarity against a DB of texts,
+ and come up with the top dozen similar texts,
+ which will all paraphrase 
+\begin_inset Quotes eld
+\end_inset
+
+what you should do is...
+\begin_inset Quotes erd
+\end_inset
+
+ and ...
+ then what?
+ 
+\begin_inset Quotes eld
+\end_inset
+
+How do I assign priority to this list of things do do?
+\begin_inset Quotes erd
+\end_inset
+
+ and run cosine similarity to a bunch of texts from ...
+ what?
+ business school curricula for busy CEO's?
+ Comp sci texts on priorities?
+ Life coach advice for the love–lorn?
+\end_layout
+
+\begin_layout Standard
+Cosine similarity is a solution looking for a problem.
+\end_layout
+
+\begin_layout Standard
+I got distracted by the above,
+ while examining the API to Ollama.
+ Why am I looking at Ollama?
+ Because I want to have a chat API to the AtomSpace.
+ I already sort of have one with Claude,
+ but Clade is proprietary,
+ and is as stupid as a rock.
+ So if I have to work with something dumb,
+ then maybe it can be something I have more control over.
+ More nuts–n–bolts–y.
+ Like the hobbyist attaching a jet engine to my automobile,
+ where Claude is the jet engine ...I need something more integratable.
+ However,
+ I don't yet know how ...
+ so this is a TBD item.
+\end_layout
+
+\begin_layout Standard
+Earlier today,
+ I posted something short and sweet on Discord that I liked.
+ Lets revisit:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Quotes eld
+\end_inset
+
+The difference between LLM's and the AtomSpace is not efficiency but form.
+ With the 'learn' approach,
+ the attempt is to show the explicit connections between words,
+ (and between words and "things in the world outside") so that explicit rational thought ("reasoning") can be applied.
+
+\emph default
+ 
+\emph on
+They both have vectors with cosine distances between them.
+ The LLM vectors are opaque numbers.
+ The AtomSpace vectors are explicitly words.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So,
+ much as I like that,
+ I also have some ill–formed critiques.
+ One goes like this:
+ what is the minimal number of parts needed to build a steam engine?
+ Clearly,
+ there is a lower bound,
+ and below this bound,
+ one cannot build a steam engine.
+ My concern is that by consistently returning back to just symbolic representations,
+ I'm working below this minimal threshold.
+ In the end,
+ its not 
+\begin_inset Quotes eld
+\end_inset
+
+just all symbols
+\begin_inset Quotes erd
+\end_inset
+
+.
+ And clearly,
+ LLM's have scaled a representational complexity past an important threshold.
+ There are several questions.
+ A very popular one is 
+\begin_inset Quotes eld
+\end_inset
+
+how can I staple symbolic logic onto an LLM?
+\begin_inset Quotes eld
+\end_inset
+
+ An unrelated question is 
+\begin_inset Quotes eld
+\end_inset
+
+what does it take to reproduce LLM–like function using pure AtomSpace symbolic conceptions?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section*
 The End
 \end_layout
