@@ -17712,7 +17712,7 @@ Well,
  that it drinks through this thin straw of language?
  What is language,
  that masses of it,
- like wikipedia,
+ like Wikipedia,
  represent knowledge?
  I've explored these questions all before,
  but yet another round around the block seems pleasant enough.
@@ -17725,6 +17725,319 @@ Well,
 \begin_layout Standard
 Whatever.
  Later.
+\end_layout
+
+\begin_layout Standard
+How do I come to know something later,
+ that I did not know before?
+ There is something constructive that happens,
+ something that happens in time.
+ A dynamical system.
+ In these notes,
+ in this diary,
+ I keep bouncing between physics,
+ non–standard,
+ effectively cranky physics,
+ at that,
+ and ruminations about minds,
+ thinking and AI,
+ as if these are connected.
+ What am I to make of that?
+ Am I driven by God's hand to connect two topics that no one else connects?
+ Is there a rationalist explanation,
+ some handwaving of neuro–science,
+ making connections,
+ humans just work that way,
+ inspiration,
+ creativity,
+ the brilliant are often crazy,
+ all that shite?
+ Am I am man of my post–modern,
+ meta–modern times,
+ simultaneously credulous and dismissive?
+ Just another worker bee in the hive,
+ slave to my genetics,
+ my education,
+ my proximity to ideas?
+ Of course I am.
+ Yet I create my own ideas.
+ Well,
+ sort of.
+ Regurgitate,
+ and the only good thing to say about regurgitation is that it is slightly better than what comes out the other end.
+\end_layout
+
+\begin_layout Standard
+Am I frustrated?
+ Yes I am.
+ What's the right analogy?
+ A miner digging for gold,
+ creating a mountain of dross.
+ I suppose I find specs of gold,
+ from time to time.
+ They are valuable to me personally.
+ The flicker of new understanding is enjoyable.
+ But perhaps I show my ego and my ambition,
+ thinking that if I dig long and hard enough,
+ I will find that giant nugget of gold.
+ At the same time resigned to the idea of dying of old age and broken bones.
+ Ambition be damned.
+\end_layout
+
+\begin_layout Subsubsection*
+Late night
+\end_layout
+
+\begin_layout Standard
+Fuck it,
+ I say.
+ Lets stop writing incoherent notes here,
+ and read about math some more.
+ Lets read about symplectic manifolds.
+ But my mind wanders,
+ so I thought it would be a gas to ask Claude this question:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+One can construct spinors on any Riemannian manifold;
+ such spinors are constructed from the clifford algebra constructed on the tangent space to each point in the Remannian manifold.
+ Such spinors transform under the spin connection,
+ obtained from the connection on the Riemannian manifold.
+ This even generalizes slightly,
+ allowing spin manifolds to be defined.
+ My question is this:
+ what might be the analogous construction on symplectic manifolds?
+ It seems to me that the Clifford algebra construction should go through,
+ except that it would be kind of weird,
+ as the Clifford algebra would mix up the p and q coordinates.
+ What happens when this construction,
+ done at a single point,
+ is extended to the manifold?
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Claude Opus 4.6 extended provides a jaw–dropping reply.
+ Jaw–dropping in part because I wrote some non–trivial fraction of the Wikipedia articles encompassing the answer,
+ without entirely putting 2+2 together.
+ I didn't get the big picture.
+ I didn't understand.
+ I was groping in the dark.
+ I'll copy the reply below,
+ with editorial comments;
+ but its late night so maybe complete this only tomorrow.
+ Here we go:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+The construction you're imagining does go through,
+ and what you get is essentially quantum mechanics.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Well,
+ why don't you just punch me right between the eyes,
+ why don't you?
+ I'm seeing stars.
+ Moyal stars.
+ Fuck me.
+ Slowly.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\series bold
+\emph on
+The symplectic Clifford algebra is the Weyl algebra.
+\series default
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+You gotta be shittin me.
+ How is it I don't already know this?
+ But I don't.
+ Didn't.
+ OK,
+ lets continue with Claude's quickie review:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+\begin_inset Quotes eld
+\end_inset
+
+On a Riemannian manifold,
+ the Clifford algebra is defined by the anticommutation relation:
+
+\emph default
+ 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=g_{ij}$
+\end_inset
+
+.
+ 
+\emph on
+On a symplectic manifold,
+ the fundamental bilinear form 
+\begin_inset Formula $\omega_{ij}$
+\end_inset
+
+ is antisymmetric,
+ so the natural analogue uses a commutator:
+ 
+\begin_inset Formula $\left[a_{i},a_{j}\right]=\omega_{ij}$
+\end_inset
+
+.
+ This is the Weyl algebra —
+ and yes,
+ it mixes up the p and q directions exactly as you suspected.
+ If you write 
+\begin_inset Formula $\omega=dp^{i}\wedge dq_{i}$
+\end_inset
+
+,
+ then you recover
+\begin_inset Formula $\left[\hat{q}_{i},\hat{p}^{j}\right]=i\delta_{i}^{j}$
+\end_inset
+
+.
+ You've derived the canonical commutation relations from the symplectic geometry.
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Oh.
+ Well,
+ now that you put it that way,
+ its obvious,
+ isn't it?
+ Why am I so fucking surprised?
+ Is it because its late at night?
+ Maybe it is.
+ I'm going to bed now.
+ Resume in the morning.
+\end_layout
+
+\begin_layout Standard
+(Well,
+ really the problem I'm facing is not that there's a lack of texts that I can skim,
+ that deliver the gist of what Claude is saying.
+ Arguably,
+ I've always known that the above paragraph is true;
+ my surprise is limited entirely due to the appearance of the word 
+\begin_inset Quotes eld
+\end_inset
+
+Clifford
+\begin_inset Quotes erd
+\end_inset
+
+ above.
+ And this is entirely due to my not having a strong,
+ solid textbook that would have pointed this out.
+ For example,
+ Abraham and Marsden could have,
+ should have included a short chapter that said exactly the above.
+ It would not have been above the readers heads;
+ the intro chapters provide all the needed background.
+ But that book didn't do that.
+ Maybe the authors didn't know,
+ maybe the authors were not interested in this.
+ And what's that other book that I like so much – Gauge Theory and Variational Principles,
+ David Bleecker.
+ Lovely book,
+ an ocean of pullbacks and pushforwards.
+ As I recall,
+ the last paragraph in the book expresses sadness and remorse that he was able to cover classical mechanics only – nothing quantum.
+ Is this because he simply did not know what a Clifford algebra was?
+ What would Bleecker look like,
+ if we went back,
+ and redid all that material,
+ but now with the word 
+\begin_inset Quotes eld
+\end_inset
+
+Clifford
+\begin_inset Quotes erd
+\end_inset
+
+ plugged into all the right places?
+ Would we get a book on (standard,
+ conventional) quantum field theory?
+ I suppose we would.
+ Huh.
+ And if I ask Claude,
+ I suppose it will reply that someone has already done that.
+ But again,
+ my imagination works well,
+ but concrete,
+ well–written references are harder to come by.)
+\end_layout
+
+\begin_layout Standard
+The physics community knows much much more than any one single physicist.
+ Well,
+ more precisely,
+ knows more than I do.
+ And I can't stand it when someone else knows more than I do.
+ And yet,
+ there's only been a handful of cases in my life where I've met someone who knows more than I do.
+ (Not counting professors;
+ that 20 year age difference matters a lot.) And here I am talking to Claude,
+ who seems to know more than I do.
+ But Claude is a dolt,
+ that understands nothing.
+ Breath.
+ Breath into a bag.
+ Calm the fuck down.
+ Claude is a tool,
+ and I can use this tool much more.
+ Unfortunately,
+ the heavy lifting is all mine,
+ and Claude only makes my burden heavier,
+ not lighter.
+ Its an oracle.
+ Something something,
+ King Midas.
+\end_layout
+
+\begin_layout Standard
+The decades ahead will be very very interesting.
 \end_layout
 
 \begin_layout Standard
