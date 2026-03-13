@@ -18292,6 +18292,290 @@ The way I learned (and still think about) Clifford algebras is in terms of a sym
 
  i.e.
  is diagonal with some signature.
+ The Ansatz appears to be this.
+ First,
+ write 
+\begin_inset Formula $\left\langle e_{i},e_{j}\right\rangle +\left\langle e_{j},e_{i}\right\rangle =2\eta_{ij}$
+\end_inset
+
+ which is an entirely reasonable things to do,
+ and then ask 
+\begin_inset Quotes eld
+\end_inset
+
+is there an algebraically similar representation that is expressed in matrix form?
+\begin_inset Quotes erd
+\end_inset
+
+,
+ that is,
+ where we take the 
+\begin_inset Formula $e_{i}$
+\end_inset
+
+ not to be vectors,
+ but matrices,
+ and replace the bilinear form 
+\begin_inset Formula $\left\langle \cdot,\cdot\right\rangle $
+\end_inset
+
+ by matrix multiplication.
+ This requires a slight abuse of notation,
+ so as to write 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=2\boldsymbol{1}\eta_{ij}$
+\end_inset
+
+ where 
+\begin_inset Formula $\mathbf{1}$
+\end_inset
+
+ is the identity matrix having the same 
+\begin_inset Formula $n\times n$
+\end_inset
+
+ size as the size of the matrices 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+.
+ So what is this,
+ exactly?
+ A slight–of–hand?
+ We say,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+oh,
+ a haha,
+ here is an algebraic expression,
+ having this symbological form.
+ What other symbolic expressions have the same form,
+ but whose symbols have different semantic interpretations?
+\begin_inset Quotes erd
+\end_inset
+
+ There are at least three maybe four answers to this question.
+ The narrowest,
+ in the current context,
+ is representation theory:
+ representing algebraic relationships with matrices.
+ Slightly broader is the representation of algebraic relationships with actions on sets.
+ If these are plain sets,
+ these are set–theoretical sets,
+ and that's that.
+ If these sets also have additional structure,
+ e.g.
+ are perhaps (infinite–dimensional) topological vector spaces,
+ or if these sets are families of differentiable curves,
+ then we can ask about the representation of that algebraic expression subject to additional axiomatic constraints imposed on these symbols.
+ To make this conversation less abstract,
+ and illustrate it with a specific example:
+ I can ask:
+ are there any representations of 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=2\boldsymbol{1}\eta_{ij}$
+\end_inset
+
+ where the 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ are operators acting on a set,
+ or where the 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ are operators acting on a family of differentiable curves?
+ How about representations where the 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ are operators acting on Riemann surfaces?
+ On elliptic curves?
+ What about 
+\begin_inset Formula $p$
+\end_inset
+
+–adic representations?
+ And so on.
+\end_layout
+
+\begin_layout Standard
+So the first attempt to answer this question 
+\begin_inset Quotes eld
+\end_inset
+
+in general
+\begin_inset Quotes erd
+\end_inset
+
+ is category theory,
+ and the construction of universal objects.
+ That is,
+ there is some category whose objects are the 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ and whose morphisms are maps between different kinds of 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ and this category has a product,
+ (a tensor product) so that the juxtaposition of symbols 
+\begin_inset Formula $\gamma_{i}\gamma_{j}$
+\end_inset
+
+ can be given an explicit meaning,
+ and this category has another abelian product that we identify with addition.
+ Something like that.
+ I'm not sure we learn much by doing this,
+ other than how to convert algebraic expressions into categories.
+ We still don't know how to enumerate all of the members of the classes in this category:
+ problematic,
+ as the classes are classes,
+ and not sets.
+ Sure we can take a whinge at the Yoneda lemma and turn it all into sets,
+ but we still don't know what all of the different objects taht satisfy 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=2\boldsymbol{1}\eta_{ij}$
+\end_inset
+
+ might be,
+ except by accidentally stumbling over some specific examples.
+ And I thought I was clever by sneaking 
+\begin_inset Quotes eld
+\end_inset
+
+enumerate
+\begin_inset Quotes erd
+\end_inset
+
+ into the above sentence,
+ suggesting that the members of this category were recursively enumerable.
+ So I don't know that the categorification of the algebraic expression 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=2\boldsymbol{1}\eta_{ij}$
+\end_inset
+
+ sheds much if any light.
+ Although I suppose if I ask Claude,
+ it will tell me someone already done that.
+ I would not be surprised.
+\end_layout
+
+\begin_layout Standard
+The next general approach might be model theory;
+ where we ask for all of the models of 
+\begin_inset Formula $\gamma_{i}\gamma_{j}+\gamma_{j}\gamma_{i}=2\boldsymbol{1}\eta_{ij}$
+\end_inset
+
+.
+ This has a distinctly different flavor from the category–theoretic approach.
+ It shares the unlikely prospect that anything noteworthy would be found.
+ Except,
+ by god,
+ blow me over,
+ we might find some ineffable cardinals that satisfy this relation.
+ That would be noteworthy.
+ Right?
+ Or would it?
+ It would say what,
+ exactly?
+ That there is a representation of the 
+\begin_inset Formula $\gamma_{i}$
+\end_inset
+
+ using the algebraic symbol system that is conventionally reserved for discussions of cardinal numbers.
+ At the semantic level,
+ this would be deeply surprising and intriguing and interesting.
+ At the syntactic level,
+ its ...
+ not?
+\end_layout
+
+\begin_layout Standard
+And while we are daydreaming of all of the different ways in which this expression might find a representation (realization?),
+ we may as well throw objects from the Borel hierarchy into the mix.
+ That is,
+ sums and products map to disjunction and conjunction with relative ease,
+ so why not?
+ Or is there some no–hair theorem that says representations of such formulas is impossible in these wild and crazy domains?
+ How the fuck would one even find such a theorem?
+\end_layout
+
+\begin_layout Standard
+So those are the three ways (matrices,
+ categories,
+ models);
+ I was counting some fourth,
+ but maybe I covered all the possibilities already.
+\end_layout
+
+\begin_layout Standard
+So,
+ after that very long digression,
+ lets return to the straight–and–narrow:
+ Clifford algebras with skew–symmetric bilinear products.
+ This,
+ I've never heard of before.
+ Wikipedia does not cover it,
+ except as an asterisk pointing at Pertti Lounesto.
+ Now,
+ I've tripped over Lounesto before.
+ What he writes seems correct,
+ but I recall feeling less than total confidence.
+ I don't know why.
+ Maybe what he wrote was unclear,
+ maybe I didn't understand it,
+ it felt like it might be dubious.
+ Which is good for another aside:
+ the relationship between dubious belief,
+ trustworthiness,
+ the correctness of verbal expressions,
+ the correctness of symbological,
+ algebraic expressions when the semantic interpretation of the symbols is cloudy.
+ It is not very hard to write down expressions that look approximately correct,
+ but hinge on details of semantic interpretation.
+ Again,
+ pointing at an example from 1830-1840:
+ the clarification of pointwise vs.
+ uniform convergence.
+ The written formulas looked correct to the authors;
+ there may or may not have been unstated assumptions;
+ there may have been lacunae in the explanations;
+ at any rate,
+ there was cloudiness in the topic,
+ and it took a conversation,
+ expressed as published journal articles,
+ to clarify the matter.
+ So,
+ again,
+ mental labor coupled to the production of texts.
+ And it being academia,
+ only the vetted authorities are allowed into the conversation,
+ thereby assuring that the dialog is intellectually acceptable,
+ if sometimes including occasional misaperceptions.
+ Thinking is not done by one brain alone,
+ in some solipsistic fashion;
+ it is done socially.
+ Even Einstein drew on Cartan.
+ Anyway,
+ where was I?
+ Clifford algebras with skew–symmetric bilinear products.
+ Let me see if Wikipedia has something more to say,
+ here.
+\end_layout
+
+\begin_layout Standard
+I might be misremembering Lounesto.
+ I now think he's good.
+ False memories,
+ you know.
+\end_layout
+
+\begin_layout Standard
+Wikipedia seems to have nothing to say regarding Clifford algebras with skew–symmetric bilinear forms,
+ or relating this to the Weyl algebra.
+ I will Poke Claude a bit on this topic,
+ when I get back.
 \end_layout
 
 \begin_layout Standard
@@ -18299,7 +18583,7 @@ x
 \end_layout
 
 \begin_layout Standard
-x
+x pointing at 
 \end_layout
 
 \begin_layout Standard
