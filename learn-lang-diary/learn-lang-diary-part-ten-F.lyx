@@ -18760,11 +18760,15 @@ So far,
  and not for a topology;
  and if one was to press the issue,
  there's an inbuilt assumption that its a finite topology,
- with only a finite number of basis elements in any vector having a non–zero coefficient.
- Or one can go off the deep end and start mumbling about topological vector spaces.
+ with only a finite number of basis elements in any vector having a non–zero coefficient (i.e.
+ purely algebraic,
+ and not analytic).
+ Or one can go off the deep end and start mumbling about what it might take to do analysis,
+ and so mumble topological vector spaces.
  The issue here is that the conventional treatment of PBW and universal enveloping algebras,
  as far as I am aware,
  skirts the issue of topology entirely.
+ It's purely algebraic.
 \end_layout
 
 \begin_layout Standard
@@ -18779,6 +18783,63 @@ We need a norm,
  closure.
  The finite topology is dense in these spaces;
  what should the closure be?
+\end_layout
+
+\begin_layout Standard
+Ohh!
+ Google AI provides a very nice summary when I posed it this question.
+ Which then sends me into a tailspin.
+ I quote:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+A Hamel basis is a subset of a vector space that is linearly independent and spans the entire space through finite linear combinations.
+ Every vector in the space has a unique representation as a finite sum of these basis elements.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fuck me.
+ There are a countable number of the PBW basis elements 
+\begin_inset Formula $q_{1}^{k_{1}}\cdots q_{n}^{k_{n}}\partial_{q_{1}}^{m_{1}}\cdots\partial_{q^{n}}^{m_{n}}$
+\end_inset
+
+ but if I take only finite combinations of these,
+ I get a set that is dense in the 
+\begin_inset Quotes eld
+\end_inset
+
+full
+\begin_inset Quotes erd
+\end_inset
+
+ vector space,
+ whatever that is,
+ since I have not yet explained how to take completions or obtain the closure.
+ 
+\end_layout
+
+\begin_layout Standard
+It only gets worse:
+\end_layout
+
+\begin_layout Itemize
+ 
+\begin_inset Quotes eld
+\end_inset
+
+the reals have a Hamel basis over the rationals,
+ but it is very large and non–cosntructive.)
 \end_layout
 
 \begin_layout Standard
