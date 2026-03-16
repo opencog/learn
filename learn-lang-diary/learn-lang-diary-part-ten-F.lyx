@@ -19845,7 +19845,7 @@ its quantum mechanics
 .
  Pushing on this delivers the one–two punch of the Weyl algebra,
  and the rather wild claim that the representations of the Weyl algebra are the square–integrable functions on 
-\begin_inset Formula $L_{2}\left(\mathbb{R}^{2n}\right)$
+\begin_inset Formula $L^{2}\left(\mathbb{R}^{2n}\right)$
 \end_inset
 
  which is still an answer I am not happy with.
@@ -19853,8 +19853,251 @@ its quantum mechanics
 \end_layout
 
 \begin_layout Standard
-well,
+Well,
  bed–time.
+\end_layout
+
+\begin_layout Subsection*
+16 March 2026
+\end_layout
+
+\begin_layout Standard
+I confronted Claude with the above,
+ and it doubled down,
+ and then retracted.
+ First,
+ it says that the Schrodinger representation is 
+\begin_inset Formula $\rho:A_{1}\to\mathrm{End}\left(L_{2}\left(\mathbb{R}\right)\right)$
+\end_inset
+
+ given by 
+\begin_inset Formula $q\mapsto x$
+\end_inset
+
+ and 
+\begin_inset Formula $p\mapsto i\hbar d/dx$
+\end_inset
+
+ and then it says these operators are unbounded,
+ then it says 
+\begin_inset Quotes eld
+\end_inset
+
+you're right,
+ it could be the case that 
+\begin_inset Formula $xf\notin L^{2}$
+\end_inset
+
+ even when 
+\begin_inset Formula $f\in L^{2}$
+\end_inset
+
+
+\begin_inset Quotes erd
+\end_inset
+
+ and then it says 
+\begin_inset Quotes eld
+\end_inset
+
+and that's why people sometimes work with Schwarz space 
+\begin_inset Formula $\mathscr{S}\subset L^{2}$
+\end_inset
+
+ when they want to be rigorous
+\begin_inset Quotes erd
+\end_inset
+
+.
+ So once again,
+ confrontation works,
+ if you already know what the answer should have been,
+ and force the LLM to admit it's mistakes.
+ If you did not understand what the heck was going on,
+ the LLM would continue to gargleblast.
+ This is not all that different from human behavior patterns.
+ If you are with a colleague trying to solve some problem at the blackboard,
+ each of you will pose questions and point out subtle errors,
+ and do so in a collegial way.
+ In this case,
+ Claude did indeed pull back and retract.
+ It was not privy to the conversation I just had with Google,
+ so it is in the dark about the fact that I just hashed out details about Paley–Wiener and Arens–Micheal (oddly,
+ we never talked about David Mumford's Theta representation...
+ I'm asking google now,
+ the reply sees interesting,
+ will copy below.)
+\end_layout
+
+\begin_layout Standard
+I'm compelled to wonder about the nature of privacy and causality.
+ This is the spin–glass thing,
+ again.
+ We live in deep wells,
+ where our private,
+ inner,
+ personal thoughts mostly do not get out.
+ Spy agencies are all about covert action,
+ and knowledge that will never ever get out.
+ The story about the Library of Alexandria is about knowledge forever lost.
+ Here,
+ we have Claude not knowing what it is that I talked about with Google.
+ What makes this interesting and different is that it's digital.
+ Now,
+ of course,
+ I could have written an 8-bit value to a register and then erased it,
+ and say 
+\begin_inset Quotes eld
+\end_inset
+
+a hah,
+ I erased information,
+ I erased exactly 8 bits of it
+\begin_inset Quotes erd
+\end_inset
+
+ but here it's a lot more.
+ Its not just hundreds of kbytes of textual back and forth,
+ its that those hundreds of kbytes were non–rigorous,
+ poetic appeals to the contents of much much larger books,
+ journal articles,
+ Wikipedia articles.
+ They are links in a web.
+ Now,
+ when mathematical formulations of causality are presented,
+ e.g.
+ causal structures,
+ or things like the Feynmann path integral,
+ or even classical ideas like Bayesian networks,
+ everything is connected to everything,
+ and the expressions are intractable.
+ But in the real world,
+ almost nothing is inter–connected.
+ Almost everything is isolated from almost everything else.
+ Claude and Google will never–ever find out what I talked to them about,
+ in part,
+ because the context vectors of the associated conversations will be blanked when I finally close my browser window.
+ My eyes will never see a distant stellar supernova,
+ because those light rays will be blocked by the clouds above my head,
+ and those are in turn blocked by the roof over my head,
+ and my naked eye would not have been sensitive enough anyway:
+ the entanglement of those supernova photons with the 
+\begin_inset Quotes eld
+\end_inset
+
+noise floor
+\begin_inset Quotes erd
+\end_inset
+
+ is truly intractable (a la 
+\begin_inset Quotes eld
+\end_inset
+
+mathematical mixing
+\begin_inset Quotes erd
+\end_inset
+
+,
+ 
+\begin_inset Quotes eld
+\end_inset
+
+ergodic theorem
+\begin_inset Quotes erd
+\end_inset
+
+,
+ both Wikipedia articles where I wrote approx 90% of the content.) The mixing is very very powerful.
+ So,
+ in real life,
+ the causal structure is very very sparse.
+ Two unanswerable questions fly to mind:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+is the real–life causal structure a set of measure zero
+\begin_inset Quotes erd
+\end_inset
+
+?
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+is the real–life causal structure dense in it's closure?
+\begin_inset Quotes erd
+\end_inset
+
+ Neither question makes sense,
+ because we don't know how to define a measure,
+ we don't know how to define the closures,
+ we don't know how to define continuity.
+\end_layout
+
+\begin_layout Standard
+A different set of problems arise when considering the noise floor.
+ When I erase 8 bits from a register,
+ I can say that information is erased forever.
+ But I can also imagine that this erasure displaced a few atoms of silicon here,
+ a few atoms of oxide there,
+ nudged some metal in some via,
+ and left some microscopic trace of the previous contents of that register.
+ That is,
+ there still remains a causal network:
+ it is just extremely weak,
+ and effectively buried in the noise.
+ I have no readout mechanism:
+ I don't know where those atoms used to be,
+ so I cannot know if they moved.
+\end_layout
+
+\begin_layout Standard
+I struggle with these thoughts.
+ The struggle comes in two forms.
+ One is that,
+ technically,
+ the topic is impenetrable.
+ Second is the psycho–social angle,
+ that is to say that the advisable course of action is to be pragmatic,
+ ignore the unknowable,
+ gloss over it,
+ and get on with ordinary life.
+ Like basically 
+\begin_inset Quotes eld
+\end_inset
+
+Linas you are stupid and/or crazy wasting your time hammering away it this impenetrable surface of existence,
+ looking for a chink in the armor that isn't there.
+\begin_inset Quotes erd
+\end_inset
+
+ And that is a valid critique,
+ and is very specifically one that I levy against myself.
+ And being pragmatic is a viable form of being.
+ But socio–culturally,
+ my world is filled with a zillion examples of poets and artists and scientists who dared the impossible,
+ and sometimes succeeded.
+ This cultural message is sometimes taken to be so blatently obvious,
+ it never comes up:
+ e.g.
+ when reading the New York Review of Books.
+ Other times,
+ it is overt and directly presented and discussed,
+ e.g.
+ in every episode of Dr.
+ Who,
+ which appears to be a vehicle for presenting Western culture dumbed down to such a degree that even those with an IQ of 80 can follow the proceedings and cheer on the good guys while looking on in wonder at the unknowable.
+ Who am I?
+ Who is Linas?
+ The one that spends the next five billion years slamming his fist into a diamond wall,
+ so as to break on through,
+ break on through,
+ break on through to the other side.
+ Apparently,
+ the Doors were aspirational.
+ There's no door,
+ breaking and entering is the only mode.
 \end_layout
 
 \begin_layout Standard
