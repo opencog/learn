@@ -19479,7 +19479,7 @@ exponential type
 \begin_layout Standard
 
 \emph on
-The Arens-Michael algebra acts on the Segal-Bargmann space.
+The Arens–Michael algebra acts on the Segal–Bargmann space.
  Specifically:
 \end_layout
 
@@ -19504,15 +19504,62 @@ The Arens–Michael completion contains the "nicest" transcendental operators (l
 \end_layout
 
 \begin_layout Standard
-Next,
- I try to clarify the above,
- and suddenly Google switches into gargle–blast mode,
- and starts spewing obvious falsehoods.
- I'm starting to thing that perhaps there is some kind of context–window pollution,
+The first bullet make sense only when writing down the operator equivalents of (polynomials in) 
+\begin_inset Formula $q,p$
+\end_inset
+
+.
+ I saw the formula earlier.
+ It's some integral and won't look it up now.
+ It's some fairly simple integral...
+ no problem.
+ I suppose there's some equally easy proof that the operators are unbounded.
+\end_layout
+
+\begin_layout Standard
+I try to clarify the above,
+ and Google switches into gargle–blast mode,
+ and starts spewing junk.
+ I'm starting to think that perhaps there is some kind of context–window pollution,
  where it does not quite understand that I changed the topic slightly,
  and its trying to redirect the conversation somewhere,
  where it starts becoming incoherent.
+ Claude also does gargleblasts after a while.
+ So this is a common failure mode.
+ Interesting.
  Let me ask again in a fresh context ...
+\end_layout
+
+\begin_layout Standard
+Much better!
+ Entire functions of exponential type define Paley–Wiener spaces.
+ The fourier xform of such a function has compact support (this is the Paley–Wiener theorem.) Apparently,
+ we can ask for the exponential–type functions to also be 
+\begin_inset Formula $L^{p}\left(\mathbb{R}^{n}\right)$
+\end_inset
+
+ (i.e.
+ exponential on the complex plane,
+ square integral on the real line,
+ so e.g.
+ sine/cosine.) and so for 
+\begin_inset Formula $p=2$
+\end_inset
+
+ this gives a Hilbert space.
+ The Segal–Bargman space is much larger,
+ since it uses the Gaussian measure,
+ i.e.
+ functions can grow faster than exponential,
+ as long as a Gaussian is enough to tamp them down.
+\end_layout
+
+\begin_layout Standard
+The Segal–Bargman transform will get me to 
+\begin_inset Formula $L^{2}\left(\mathbb{R}^{n}\right)$
+\end_inset
+
+ and this is I guess the Stone–von Neumann theorem that Claude could not stop talking about during its gargleblast.
 \end_layout
 
 \begin_layout Standard
@@ -19576,7 +19623,11 @@ Relation to Distributions:
 
 \begin_layout Standard
 Well,
- this last one is closer to the Stone–von Neumann theorem that Claude could not stop talking about.
+ oh.
+ Wait.
+ I'm confused.
+ I ask for clarification,
+ I get this:
 \end_layout
 
 \begin_layout Standard
