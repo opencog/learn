@@ -19017,28 +19017,77 @@ Well,
  The above appears to be a giant mouthful of words that appears to be trying to say that ...
  well,
  I'm not sure of what it is trying to say.
- That the open sets are sets of vectors which are finite sums of the PBW basis vectors?
- WTF?
- What happened so Schauder?
- is there a closure?
- We never picked a norm...
- Algebraic topology.
- Fuck me.
 \end_layout
 
 \begin_layout Standard
-I've read many books on algebraic topology,
- and not once did it ever occur to me to ask about analytic completions,
- convergence,
- series,
- norms,
- metrics.
- Because that is the point:
- these books are written so as to not raise such questions.
- The mild surprise in the back of my mind is that such questions never entered my mind anyway:
- the suspension of disbelief was so total,
- that it was never broken.
- Well well.
+Oh.
+ Fuck me.
+ Google AI knows everything,
+ and understands nothing.
+ It's just a tool.
+ And I'm a shmuck.
+ Poking harder,
+ the above sentence actually means 
+\begin_inset Quotes eld
+\end_inset
+
+the weak topology
+\begin_inset Quotes erd
+\end_inset
+
+ or the 
+\begin_inset Quotes eld
+\end_inset
+
+inductive limit topology
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Google AI says:
+ 
+\begin_inset Quotes eld
+\end_inset
+
+
+\emph on
+a set is open if its intersection with each finite–dimensional subspace 
+\begin_inset Formula $F_{k}$
+\end_inset
+
+ is open.
+\emph default
+
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+God damn it.
+ So 
+\begin_inset Quotes eld
+\end_inset
+
+inductive limit topology
+\begin_inset Quotes erd
+\end_inset
+
+ redirects to 
+\begin_inset Quotes eld
+\end_inset
+
+LF space
+\begin_inset Quotes erd
+\end_inset
+
+ on Wikipedia,
+ which I once skimmed a long time ago.
+ Reading it now.
 \end_layout
 
 \begin_layout Standard
@@ -19131,6 +19180,103 @@ algebraic
  Also needs more investigation.
 \end_layout
 
+\begin_layout Standard
+...
+ A little more poking,
+ and now Google AI calls this the 
+\begin_inset Quotes eld
+\end_inset
+
+analytic topology (instead of the below,
+ which it now calls the 
+\begin_inset Quotes eld
+\end_inset
+
+distributional topology
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Fuck me.
+ So it now says this:
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+2.
+ The Analytic Convention (The "Arens–Michael" View)
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+For those working in functional analysis or with Lie groups,
+ 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
+\end_inset
+
+ is often viewed through its Arens–Michael envelope 
+\begin_inset Formula $\widehat{U\left(\mathfrak{g}\right)}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Construction:
+ This is the completion of 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
+\end_inset
+
+ with respect to all continuous submultiplicative seminorms.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Why it's used:
+ It turns 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
+\end_inset
+
+ into a Fréchet–Arens–Michael algebra.
+ For a simply connected complex Lie group 
+\begin_inset Formula $G$
+\end_inset
+
+,
+ 
+\begin_inset Formula $\widehat{U\left(\mathfrak{g}\right)}$
+\end_inset
+
+ is isomorphic to the algebra of analytic functionals on 
+\begin_inset Formula $G$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+So OK,
+ that provides some search terms for additional reading.
+ Skimmed Frechet long long ago.
+ Arens–Michael is new to me.
+ The Heisenberg groups is simply connected (the exponential map is a diffeomorphism) and I've got a rough intuitive feel for what 
+\begin_inset Quotes eld
+\end_inset
+
+analytic functionals
+\begin_inset Quotes erd
+\end_inset
+
+ are,
+ so this is ...
+ acceptable.
+\end_layout
+
 \begin_layout Paragraph*
 
 \emph on
@@ -19189,104 +19335,286 @@ Analytic Methods:
 \end_layout
 
 \begin_layout Standard
-OK,
- this rings my bell.
- The questions are then:
- what is the formal definition for 
-\begin_inset Quotes eld
-\end_inset
+But when I ask again,
+ the answer changes:
+\end_layout
 
-the space of distributions
-\begin_inset Quotes erd
-\end_inset
+\begin_layout Paragraph*
 
-?
- and when people say 
-\begin_inset Quotes eld
-\end_inset
-
-topological algebra
-\begin_inset Quotes erd
-\end_inset
-
- what do they mean?
- The obvious guess is that they mean TVS that is an algebra.
- So that's not very deep.
- It implies the selection of a norm (e.g.
- Banach or whatever) and the 
-\begin_inset Quotes eld
-\end_inset
-
-space of distributions
-\begin_inset Quotes erd
-\end_inset
-
- is I guess the dual space.
+\emph on
+3.
+ The Representation Theory Convention (Distributions)
 \end_layout
 
 \begin_layout Standard
-This appears to raise a meta–question:
- why is analysis more interesting for physics,
- than algebraic statements?
- The question of 
-\begin_inset Quotes eld
+
+\emph on
+There is a canonical identification of 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
 \end_inset
 
-what happens in the completion/closure/limit
-\begin_inset Quotes erd
+ with distributions supported at the identity on a Lie group 
+\begin_inset Formula $G$
 \end_inset
 
- tickles the physicist in some way that the algebraic statements do not.
- Why?
-\end_layout
-
-\begin_layout Standard
-Statements like 
-\begin_inset Quotes eld
-\end_inset
-
-lets work with the reals,
- not the rationals
-\begin_inset Quotes erd
-\end_inset
-
- work because there's only one kind of reals that matter,
- and its complete,
- and there's no fussiness the way there is with rationals.
- The reals are measurable in a natural way.
- Is it a form of laziness?
+.
  
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Identification:
+ Elements of 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
+\end_inset
+
+ act as left–invariant differential operators.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Topology:
+ In this setting,
+ 
+\begin_inset Formula $U\left(\mathfrak{g}\right)$
+\end_inset
+
+ often inherits the subspace topology from the space of distributions 
+\begin_inset Formula $\mathscr{D}\left(\mathfrak{g}\right)$
+\end_inset
+
+,
+ which is a strong dual topology of a nuclear Fréchet space.
+ 
+\end_layout
+
+\begin_layout Standard
+OK,
+ Well,
+ that's reasonable too.
+\end_layout
+
+\begin_layout Standard
+I now ask Google to specialize the answers 1,2,3 to the case of 
+\begin_inset Formula $\mathfrak{g}=\mathfrak{h}_{n}$
+\end_inset
+
+ the Heisenberg algebra,
+ 
+\begin_inset Formula $U\left(\mathfrak{g}\right)=A_{n}$
+\end_inset
+
+ the Weyl algebra.
+ For case 1,
+ it has nothing new.
+ For case 2:
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+2.
+ The Arens–Michael Topology
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Arens–Michael envelope 
+\begin_inset Formula $\widehat{A_{n}}$
+\end_inset
+
+ is the completion of the Weyl algebra with respect to all continuous submultiplicative seminorms.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Identification:
+ For the Weyl algebra,
+ this completion results in the algebra of entire functions of exponential type on 
+\begin_inset Formula $\mathbb{C}^{2n}$
+\end_inset
+
+ (or similar analytic spaces depending on the chosen growth conditions).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Topology:
+ It is a Fréchet topology defined by a family of seminorms that ensure the convergence of power series 
+\begin_inset Formula $\sum a_{\alpha\beta}q^{\alpha}p^{\beta}$
+\end_inset
+
+ beyond just polynomials.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Context:
+ This is used extensively in noncommutative geometry and the study of solvable Lie algebras to allow for "analytic" operations like the exponential map.
+\end_layout
+
+\begin_layout Standard
+OK.
+ I believe I created the Wikipedia article on 
 \begin_inset Quotes eld
 \end_inset
 
-Lets work with the simpler thing?
+exponential type
 \begin_inset Quotes erd
 \end_inset
 
- A sense of completeness 
+ about 20 years ago.
+ So this is pretty hunky–dory.
+ I probe some more,
+ and get this reply:
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Arens-Michael algebra acts on the Segal-Bargmann space.
+ Specifically:
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Weyl algebra elements (polynomials in 
+\begin_inset Formula $z$
+\end_inset
+
+ and 
+\begin_inset Formula $d/dz$
+\end_inset
+
+) are unbounded operators on the Segal–Bargmann space.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Arens–Michael completion contains the "nicest" transcendental operators (like certain exponentials) that remain continuous when acting on the analytic vectors of the representation.
+\end_layout
+
+\begin_layout Standard
+Next,
+ I try to clarify the above,
+ and suddenly Google switches into gargle–blast mode,
+ and starts spewing obvious falsehoods.
+ I'm starting to thing that perhaps there is some kind of context–window pollution,
+ where it does not quite understand that I changed the topic slightly,
+ and its trying to redirect the conversation somewhere,
+ where it starts becoming incoherent.
+ Let me ask again in a fresh context ...
+\end_layout
+
+\begin_layout Standard
+For part 3,
+ I get:
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+3.
+ The Distribution Topology
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+This convention views the Weyl algebra as acting on a space of smooth functions,
+ typically the Schwartz space 
+\begin_inset Formula $\mathscr{S}\left(\mathbb{R}^{n}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Identification:
+ Elements of the Weyl algebra are identified with differential operators with polynomial coefficients acting on 
+\begin_inset Formula $\mathscr{S}\left(\mathbb{R}^{n}\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Topology:
+ The Weyl algebra inherits the strong operator topology (or the topology of uniform convergence on bounded sets) from the space of continuous linear operators 
+\begin_inset Formula $\mathcal{L}\left(\mathscr{S}\left(\mathbb{R}^{n}\right),\mathscr{S}\left(\mathbb{R}^{n}\right)\right)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+Relation to Distributions:
+ Because 
+\begin_inset Formula $A_{n}$
+\end_inset
+
+ can be viewed as the set of distributions supported at the identity of the Heisenberg group (acting via convolution),
+ its topology is related to the strong dual topology of the nuclear Fréchet space of smooth functions on the group.
+ 
+\end_layout
+
+\begin_layout Standard
+Well,
+ this last one is closer to the Stone–von Neumann theorem that Claude could not stop talking about.
+\end_layout
+
+\begin_layout Standard
+Where does this leave me?
+ The 
 \begin_inset Quotes eld
 \end_inset
 
-that's it,
- its everything,
- we got it all,
- and there is no more?
+How it started:
+ How it's going:
 \begin_inset Quotes erd
 \end_inset
 
- We're just so used to being able to talk about analytic series and convergence and limits and metrics that one feels cheated out of something if one can't.
- The idea that 
+ meme.
+ How it started:
+ I asked Claude 
 \begin_inset Quotes eld
 \end_inset
 
-things might be discrete at the Planck scale
+What's the analog of the Clifford algebra construction for symplectic spaces
 \begin_inset Quotes erd
 \end_inset
 
- seems to be lip–service,
- rather than a heart–felt belief.
- Even things like the Beckenstein bound ...remain ...
- indistinct.
+ and got the unexpected answer 
+\begin_inset Quotes eld
+\end_inset
+
+its quantum mechanics
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Pushing on this delivers the one–two punch of the Weyl algebra,
+ and the rather wild claim that the representations of the Weyl algebra are the square–integrable functions on 
+\begin_inset Formula $L_{2}\left(\mathbb{R}^{2n}\right)$
+\end_inset
+
+ which is still an answer I am not happy with.
 \end_layout
 
 \begin_layout Standard
