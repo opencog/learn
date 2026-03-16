@@ -18775,7 +18775,7 @@ So far,
 We need a norm,
  weak,
  strong or Frechet topology,
- some way of talking about convergence (compact;y generated spaces,
+ some way of talking about convergence (compactly generated spaces,
  Cauchy spaces,
  etc.) and some way of defining the continuity of addition,
  multiplication,
@@ -19630,6 +19630,189 @@ Well,
  I get this:
 \end_layout
 
+\begin_layout Paragraph*
+
+\emph on
+1.
+ Continuity vs.
+ Boundedness
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+In the world of Fréchet spaces (like the Schwartz space 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+ or the space of entire functions 
+\begin_inset Formula $\mathscr{H}$
+\end_inset
+
+),
+ continuity does not imply boundedness.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Weyl Algebra:
+ Elements like 
+\begin_inset Formula $q$
+\end_inset
+
+ (position) and 
+\begin_inset Formula $p$
+\end_inset
+
+ (momentum) are unbounded operators on a Hilbert space,
+ but they are continuous linear maps from 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+ to 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Topology:
+ The "Distribution Topology" is the topology of uniform convergence on bounded subsets of 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+.
+ Because 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+ is a nuclear Fréchet space,
+ this topology is very "tame" and allows the Weyl algebra to be viewed as a dense subspace of the space of all continuous operators on 
+\begin_inset Formula $\mathscr{S}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Oh.
+ OK.
+ Sounds OK to me.
+ The next part is fun,
+ too:
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+2.
+ The Arens–Michael "Trick"
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Arens–Michael topology is actually stronger than the Distribution Topology.
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Goal:
+ Arens–Michael wants to make the algebra "as large as possible" while keeping it a topological algebra (where multiplication is jointly continuous).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Operators:
+ Instead of acting on 
+\begin_inset Formula $\mathscr{S}\left(\mathbb{R}^{n}\right)$
+\end_inset
+
+,
+ you can think of these operators as acting on the space of holomorphic functions (like the Segal–Bargmann space,
+ but specifically the dense subspace of analytic vectors).
+\end_layout
+
+\begin_layout Itemize
+
+\emph on
+The Result:
+ While a polynomial 
+\begin_inset Formula $p^{2}+q^{2}$
+\end_inset
+
+ is an unbounded operator on the Hilbert space 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+,
+ it is a continuous operator on the Fréchet space of entire functions.
+ The Arens–Michael completion includes power series in 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ that converge to new continuous operators on that space.
+\end_layout
+
+\begin_layout Paragraph*
+
+\emph on
+Summary
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+The Distribution topology sees the Weyl algebra as the "polynomial" part of the smooth world.
+ The Arens–Michael topology sees it as the "polynomial" part of the holomorphic world.
+\end_layout
+
+\begin_layout Standard
+
+\emph on
+In both cases,
+ the operators are continuous relative to the Fréchet topology of the test space,
+ even though they are unbounded relative to the 
+\begin_inset Formula $L^{2}$
+\end_inset
+
+ norm.
+\end_layout
+
+\begin_layout Standard
+Well,
+ OK.
+ That sounds like a reasonable,
+ legit summary.
+ I guess I learned something here.
+ Certainly much more quickly than trying to plow through a bunch of Wikipedia articles.
+ (which I plan to go through,
+ anyway...)
+\end_layout
+
+\begin_layout Standard
+However,
+ I'm tired,
+ its bed–time,
+ so ...
+ must finish now.
+\end_layout
+
+\begin_layout Standard
+—
+–
+\end_layout
+
 \begin_layout Standard
 Where does this leave me?
  The 
@@ -19666,6 +19849,12 @@ its quantum mechanics
 \end_inset
 
  which is still an answer I am not happy with.
+ First ...
+\end_layout
+
+\begin_layout Standard
+well,
+ bed–time.
 \end_layout
 
 \begin_layout Standard
